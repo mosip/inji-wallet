@@ -1,5 +1,5 @@
 # inji
-This is a mobile id client.
+MOSIP citizen app.
 
 ## Dependencies
 
@@ -16,9 +16,9 @@ Be sure to have the following build tools installed before proceeding:
 npm install
 # run dev client
 npm start
-# run Mosip ID PASS directly to connected emulator or device (Default)
+# run Inji directly to connected emulator or device (Default)
 npm run android:newlogic
-# run Mosip Philippines directly to connected emulator or device
+# run Inji Philippines directly to connected emulator or device
 npm run android:ph
 ```
 
@@ -32,12 +32,12 @@ More info here: [Build your app using Android Studio](https://developer.android.
 
 ## Build via command line
 
-1. Build for Mosip Philipines
+1. Build for Mosip Philippines test
 ```bash
 npm run build:android:ph
 ```
 
-2. Build for ID PASS
+2. Build for Newlogic test
 
 ```bash
 npm run build:android:newlogic
