@@ -1,0 +1,29 @@
+name: ID PASS - MOSIP Resident Application
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    tags:
+      - '*'
+  pull_request:
+    branches:
+      - '*'
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install npm dependencies
+        run: |
+          npm install
+      - name: Build App Newlogic Release
+        run: |
+          cd android && ./gradlew :app:assembleNewlogicRelease
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: output
+          path: android/app/build/outputs/apk/newlogic/release/
+          retention-days: 1
