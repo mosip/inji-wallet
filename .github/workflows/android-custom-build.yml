@@ -1,0 +1,41 @@
+name: ID PASS - MOSIP Resident Application Custom build
+
+env:
+  backendServiceDefaultUrl: https://resident-app.newlogic.dev
+
+on:
+  workflow_dispatch:
+    inputs:
+      backendServiceUrl:
+        description: 'Backend service URL'
+        required: true
+        default: 'https://resident-app.newlogic.dev'
+        type: choice
+        options:
+        - https://resident-app.newlogic.dev
+        - http://local.newlogic.dev
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install npm dependencies
+        run: |
+          npm install
+      - name: Patch selected backend service URL
+        run: |
+          ESCAPED_BACKEND_SERVICE_URL=$(printf '%s\n' "$BACKEND_SERVICE_URL" | sed -e 's/[\/&]/\\&/g')
+          ESCAPED_BACKEND_SERVICE_DEFAULT_URL=$(printf '%s\n' "${{ env.backendServiceDefaultUrl }}" | sed -e 's/[\/&]/\\&/g')
+          echo "Selected backend service URL: $BACKEND_SERVICE_URL (escaped: $ESCAPED_BACKEND_SERVICE_URL)"
+          sed -i "s/$ESCAPED_BACKEND_SERVICE_DEFAULT_URL/$ESCAPED_BACKEND_SERVICE_URL/g" shared/request.ts
+        env:
+          BACKEND_SERVICE_URL: ${{ github.event.inputs.backendServiceUrl }}
+      - name: Build App Newlogic Release
+        run: |
+          cd android && ./gradlew :app:assembleNewlogicRelease
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: output
+          path: android/app/build/outputs/apk/newlogic/release/
+          retention-days: 1
