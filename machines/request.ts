@@ -1,4 +1,4 @@
-import SmartShare from 'react-native-idpass-smartshare';
+import SmartShare from '@idpass/smartshare-react-native';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import { EmitterSubscription } from 'react-native';
 import { EventFrom, send, sendParent, StateFrom } from 'xstate';
