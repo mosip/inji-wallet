@@ -9,7 +9,7 @@ import {
   selectStatusMessage,
 } from '../../machines/scan';
 import { selectVidLabel } from '../../machines/settings';
-import { selectMyVids } from '../../machines/vid';
+import { selectShareableVids } from '../../machines/vid';
 import { MainRouteProps } from '../../routes/main';
 import { GlobalContext } from '../../shared/GlobalContext';
 
@@ -19,7 +19,7 @@ export function useScanScreen({ navigation }: MainRouteProps) {
   const settingsService = appService.children.get('settings');
   const vidService = appService.children.get('vid');
 
-  const myVids = useSelector(vidService, selectMyVids);
+  const shareableVids = useSelector(vidService, selectShareableVids);
   const isInvalid = useSelector(scanService, selectInvalid);
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export function useScanScreen({ navigation }: MainRouteProps) {
     },
 
     isInvalid,
-    isEmpty: !myVids.length,
+    isEmpty: !shareableVids.length,
     isScanning: useSelector(scanService, selectScanning),
     isReviewing: useSelector(scanService, selectReviewing),
     isLocationDenied: useSelector(scanService, selectLocationDenied),

@@ -11,7 +11,7 @@ import {
   selectVidName,
 } from '../../machines/scan';
 import { selectVidLabel } from '../../machines/settings';
-import { selectMyVids } from '../../machines/vid';
+import { selectShareableVids } from '../../machines/vid';
 import { GlobalContext } from '../../shared/GlobalContext';
 import { VID } from '../../types/vid';
 
@@ -26,7 +26,7 @@ export function useSendVidModal() {
     reason: useSelector(scanService, selectReason),
     vidName: useSelector(scanService, selectVidName),
     vidLabel: useSelector(settingsService, selectVidLabel),
-    vidKeys: useSelector(vidService, selectMyVids),
+    vidKeys: useSelector(vidService, selectShareableVids),
 
     isSelectingVid: useSelector(scanService, selectSelectingVid),
     isSendingVid: useSelector(scanService, selectSendingVid),
