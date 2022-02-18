@@ -1,9 +1,20 @@
 import React from 'react';
 import { Image } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import { Icon, ListItem } from 'react-native-elements';
 import { VC, CredentialSubject } from '../types/vc';
 import { Column, Row, Text } from './ui';
 import { Colors } from './ui/styleUtils';
+
+const VerifiedIcon: React.FC = () => {
+  return (
+    <Icon
+      name="check-circle"
+      color={Colors.Green}
+      size={14}
+      containerStyle={{ marginStart: 4, bottom: 1 }}
+    />
+  );
+};
 
 export const VcDetails: React.FC<VcDetailsProps> = (props) => {
   return (
@@ -18,20 +29,26 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
           </Text>
         </Column>
         <Column fill elevation={1} padding="12 16" margin="0 16 0 0">
-          <Text size="smaller" color={Colors.Grey} style={{ textTransform: 'uppercase' }}>
-            {props.vid?.idType}
+          <Text
+            size="smaller"
+            color={Colors.Grey}
+            style={{ textTransform: 'uppercase' }}>
+            {props.vc?.idType}
           </Text>
           <Text weight="bold" size="smaller">
             {props.vc?.id}
           </Text>
         </Column>
-        <Column fill elevation={1} padding="12 16" margin="">
+        <Column fill elevation={1} padding="12 16">
           <Text size="smaller" color={Colors.Grey}>
             Status
           </Text>
-          <Text weight="bold" size="smaller">
-            Valid
-          </Text>
+          <Row>
+            <Text weight="bold" size="smaller">
+              Valid
+            </Text>
+            {props.vc?.isVerified && <VerifiedIcon />}
+          </Row>
         </Column>
       </Row>
       <ListItem bottomDivider>

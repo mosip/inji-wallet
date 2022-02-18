@@ -6,6 +6,8 @@ export interface VC {
   verifiableCredential: VerifiableCredential;
   generatedOn: Date;
   requestId: string;
+  isVerified: boolean;
+  lastVerifiedOn: number;
   reason?: string;
 }
 

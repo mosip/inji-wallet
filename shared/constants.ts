@@ -17,3 +17,5 @@ export const ACTIVITY_LOG_STORE_KEY = 'activityLog';
 export const SETTINGS_STORE_KEY = 'settings';
 
 export const ONBOARDING_STATUS_STORE_KEY = 'isOnboardingDone';
+
+export const VC_VALIDITY_EXPIRATION_IN_DAYS = 7;

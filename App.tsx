@@ -1,3 +1,7 @@
+import { Buffer } from 'buffer';
+import RNBlob from 'react-native-blob-util';
+global.Buffer = Buffer;
+
 import React, { useContext } from 'react';
 import AppLoading from 'expo-app-loading';
 import { AppLayout } from './screens/AppLayout';
