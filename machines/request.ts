@@ -12,7 +12,7 @@ import { AppServices } from '../shared/GlobalContext';
 import {
   RECEIVED_VIDS_STORE_KEY,
   VID_ITEM_STORE_KEY,
-} from '../shared/storeKeys';
+} from '../shared/constants';
 import { ActivityLogEvents } from './activityLog';
 import { VidEvents } from './vid';
 

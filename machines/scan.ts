@@ -9,7 +9,7 @@ import { getDeviceNameSync } from 'react-native-device-info';
 import { VID } from '../types/vid';
 import { AppServices } from '../shared/GlobalContext';
 import { ActivityLogEvents } from './activityLog';
-import { VID_ITEM_STORE_KEY } from '../shared/storeKeys';
+import { VID_ITEM_STORE_KEY } from '../shared/constants';
 
 const model = createModel(
   {

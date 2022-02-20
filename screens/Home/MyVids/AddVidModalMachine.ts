@@ -9,7 +9,7 @@ import {
 import { log } from 'xstate/lib/actions';
 import { createModel } from 'xstate/lib/model';
 import { BackendResponseError, request } from '../../../shared/request';
-import { VID_ITEM_STORE_KEY } from '../../../shared/storeKeys';
+import { VID_ITEM_STORE_KEY } from '../../../shared/constants';
 
 const model = createModel(
   {
