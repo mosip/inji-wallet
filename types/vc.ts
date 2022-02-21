@@ -8,8 +8,8 @@ export interface VC {
   requestId: string;
   isVerified: boolean;
   lastVerifiedOn: number;
-  reason?: string;
   locked: boolean;
+  reason?: string[];
 }
 
 export type VcIdType = 'UIN' | 'VID';

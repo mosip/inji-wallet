@@ -162,12 +162,24 @@ export const requestMachine = model.createMachine(
                   VC_RESPONSE: [
                     {
                       cond: 'hasExistingVc',
-                      target: '#accepted',
+                      target: 'requestingExistingVc',
                     },
                     {
                       target: 'prependingReceivedVc',
                     },
                   ],
+                },
+              },
+              requestingExistingVc: {
+                entry: ['requestExistingVc'],
+                on: {
+                  STORE_RESPONSE: 'mergingIncomingVc',
+                },
+              },
+              mergingIncomingVc: {
+                entry: ['mergeIncomingVc'],
+                on: {
+                  STORE_RESPONSE: '#accepted',
                 },
               },
               prependingReceivedVc: {
@@ -179,17 +191,14 @@ export const requestMachine = model.createMachine(
               storingVc: {
                 entry: ['storeVc'],
                 on: {
-                  STORE_RESPONSE: {
-                    target: '#accepted',
-                    actions: ['sendVcReceived'],
-                  },
+                  STORE_RESPONSE: '#accepted',
                 },
               },
             },
           },
           accepted: {
-            entry: ['logReceived'],
             id: 'accepted',
+            entry: ['sendVcReceived', 'logReceived'],
             invoke: {
               src: 'sendVcResponse',
               data: {
@@ -292,6 +301,23 @@ export const requestMachine = model.createMachine(
             RECEIVED_VCS_STORE_KEY,
             VC_ITEM_STORE_KEY(context.incomingVc)
           ),
+        { to: (context) => context.serviceRefs.store }
+      ),
+
+      requestExistingVc: send(
+        (context) => StoreEvents.GET(VC_ITEM_STORE_KEY(context.incomingVc)),
+        { to: (context) => context.serviceRefs.store }
+      ),
+
+      mergeIncomingVc: send(
+        (context, event) => {
+          const existing = event.response as VC;
+          const updated: VC = {
+            ...existing,
+            reason: existing.reason.concat(context.incomingVc.reason),
+          };
+          return StoreEvents.SET(VC_ITEM_STORE_KEY(updated), updated);
+        },
         { to: (context) => context.serviceRefs.store }
       ),
 

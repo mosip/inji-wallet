@@ -6,7 +6,6 @@ export interface Typegen0 {
     setReceiverInfo: 'RECEIVE_DEVICE_INFO';
     setSenderInfo: 'EXCHANGE_DONE';
     setIncomingVc: 'VC_RECEIVED';
-    sendVcReceived: 'STORE_RESPONSE';
     removeLoggers:
       | 'SCREEN_BLUR'
       | 'xstate.after(CLEAR_DELAY)#clearingConnection'
@@ -18,9 +17,12 @@ export interface Typegen0 {
       | 'DISMISS';
     requestReceiverInfo: 'CONNECTED';
     requestReceivedVcs: 'xstate.init';
+    requestExistingVc: 'VC_RESPONSE';
+    mergeIncomingVc: 'STORE_RESPONSE';
     prependReceivedVc: 'VC_RESPONSE';
     storeVc: 'STORE_RESPONSE';
-    logReceived: 'VC_RESPONSE' | 'STORE_RESPONSE';
+    sendVcReceived: 'STORE_RESPONSE';
+    logReceived: 'STORE_RESPONSE';
   };
   'internalEvents': {
     'xstate.after(CLEAR_DELAY)#clearingConnection': {
@@ -51,7 +53,7 @@ export interface Typegen0 {
     advertiseDevice: 'xstate.after(CLEAR_DELAY)#clearingConnection' | 'DISMISS';
     exchangeDeviceInfo: 'RECEIVE_DEVICE_INFO';
     receiveVc: 'EXCHANGE_DONE';
-    sendVcResponse: 'REJECT' | 'CANCEL' | 'VC_RESPONSE' | 'STORE_RESPONSE';
+    sendVcResponse: 'REJECT' | 'CANCEL' | 'STORE_RESPONSE';
   };
   'eventsCausingGuards': {
     hasExistingVc: 'VC_RESPONSE';
@@ -75,6 +77,8 @@ export interface Typegen0 {
     | 'reviewing.idle'
     | 'reviewing.accepting'
     | 'reviewing.accepting.requestingReceivedVcs'
+    | 'reviewing.accepting.requestingExistingVc'
+    | 'reviewing.accepting.mergingIncomingVc'
     | 'reviewing.accepting.prependingReceivedVc'
     | 'reviewing.accepting.storingVc'
     | 'reviewing.accepted'
@@ -92,6 +96,8 @@ export interface Typegen0 {
           | {
               accepting?:
                 | 'requestingReceivedVcs'
+                | 'requestingExistingVc'
+                | 'mergingIncomingVc'
                 | 'prependingReceivedVc'
                 | 'storingVc';
             };
