@@ -10,10 +10,8 @@ on:
         description: 'Backend service URL'
         required: true
         default: 'https://resident-app.newlogic.dev'
-        type: choice
-        options:
-        - https://resident-app.newlogic.dev
-        - http://local.newlogic.dev
+        type: string
+
 jobs:
   build-android:
     runs-on: ubuntu-latest
