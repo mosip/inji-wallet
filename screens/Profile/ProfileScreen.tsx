@@ -48,7 +48,7 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
           </ListItem.Title>
         </ListItem.Content>
       </ListItem>
-      <Credits label="Credits" />
+      <Credits label="Credits and legal notices" />
       <ListItem bottomDivider onPress={controller.LOGOUT}>
         <ListItem.Content>
           <ListItem.Title>

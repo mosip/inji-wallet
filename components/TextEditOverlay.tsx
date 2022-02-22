@@ -40,7 +40,7 @@ export const TextEditOverlay: React.FC<EditOverlayProps> = (props) => {
   );
 
   function dismiss() {
-    setValue('');
+    setValue(props.value);
     props.onDismiss();
   }
 
