@@ -1,6 +1,6 @@
 import { ActorRefFrom, ContextFrom, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
-import { VID_ITEM_STORE_KEY } from '../shared/storeKeys';
+import { VID_ITEM_STORE_KEY } from '../shared/constants';
 import { AppServices } from '../shared/GlobalContext';
 import { CredentialDownloadResponse, request } from '../shared/request';
 import { VID, VIDCredential, VIDVerifiableCredential } from '../types/vid';

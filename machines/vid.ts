@@ -10,7 +10,7 @@ import {
   MY_VIDS_STORE_KEY,
   RECEIVED_VIDS_STORE_KEY,
   VID_ITEM_STORE_KEY,
-} from '../shared/storeKeys';
+} from '../shared/constants';
 
 const model = createModel(
   {

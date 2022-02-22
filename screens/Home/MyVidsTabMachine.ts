@@ -16,7 +16,7 @@ import { AppServices } from '../../shared/GlobalContext';
 import {
   MY_VIDS_STORE_KEY,
   ONBOARDING_STATUS_STORE_KEY,
-} from '../../shared/storeKeys';
+} from '../../shared/constants';
 import { AddVidModalMachine } from './MyVids/AddVidModalMachine';
 
 const model = createModel(
