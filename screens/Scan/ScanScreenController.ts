@@ -61,10 +61,15 @@ export function useScanScreen({ navigation }: MainRouteProps) {
     isLocationDenied: useSelector(scanService, selectLocationDenied),
 
     DISMISS,
+    REQUEST,
     SCAN: (qrCode: string) => scanService.send(ScanEvents.SCAN(qrCode)),
   };
 
   function DISMISS() {
     scanService.send(ScanEvents.DISMISS());
+  }
+
+  function REQUEST() {
+    scanService.send(ScanEvents.LOCATION_REQUEST());
   }
 }

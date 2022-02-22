@@ -44,6 +44,7 @@ const model = createModel(
       UPDATE_REASON: (reason: string) => ({ reason }),
       LOCATION_ENABLED: () => ({}),
       LOCATION_DISABLED: () => ({}),
+      LOCATION_REQUEST: () => ({}),
       UPDATE_VID_NAME: (vidName: string) => ({ vidName }),
       STORE_RESPONSE: (response: any) => ({ response }),
     },
@@ -119,6 +120,9 @@ export const scanMachine = model.createMachine(
       },
       locationDenied: {
         id: 'locationDenied',
+        on: {
+          LOCATION_REQUEST: 'checkingLocationService'
+        },
       },
       preparingToConnect: {
         entry: ['requestSenderInfo'],

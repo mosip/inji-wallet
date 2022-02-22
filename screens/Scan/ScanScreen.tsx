@@ -1,11 +1,24 @@
 import React from 'react';
+import { View, StyleSheet } from 'react-native';
 import { QrScanner } from '../../components/QrScanner';
-import { Column, Text } from '../../components/ui';
+import { Button, Column, Text } from '../../components/ui';
 import { Colors } from '../../components/ui/styleUtils';
 import { MainRouteProps } from '../../routes/main';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { SendVidModal } from './SendVidModal';
 import { useScanScreen } from './ScanScreenController';
+
+const styles = StyleSheet.create({
+  buttonContainer: {
+    height: '93%',
+    width: '100%',
+  },
+  buttonStyle: {
+    position: 'absolute',
+    width: '100%',
+    bottom: -90,
+  },
+});
 
 export const ScanScreen: React.FC<MainRouteProps> = (props) => {
   const controller = useScanScreen(props);
@@ -15,9 +28,14 @@ export const ScanScreen: React.FC<MainRouteProps> = (props) => {
       <Column>
         <Text align="center">Scan QR Code</Text>
         {controller.isLocationDenied && (
-          <Text align="center" margin="16 0" color={Colors.Red}>
-            Location access is required for the scanning functionality.
-          </Text>
+          <View style={styles.buttonContainer}>
+            <Text align="center" margin="16 0" color={Colors.Red}>
+              Location access is required for the scanning functionality.
+            </Text>
+            <View style={styles.buttonStyle}>
+              <Button title="Allow access to location" onPress={controller.REQUEST} />
+            </View>
+          </View>
         )}
       </Column>
       {!controller.isEmpty ? (
