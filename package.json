@@ -37,7 +37,6 @@
     "react-native-device-info": "^8.4.8",
     "react-native-elements": "^3.4.2",
     "react-native-gesture-handler": "~1.10.2",
-    "react-native-idpass-smartshare": "^0.1.0",
     "react-native-keychain": "^8.0.0",
     "react-native-location-enabler": "^4.1.0",
     "react-native-qrcode-svg": "^6.1.1",
