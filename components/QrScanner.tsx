@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Camera } from 'expo-camera';
 import { BarCodeEvent, BarCodeScanner } from 'expo-barcode-scanner';
-import { Linking, StyleSheet, View } from 'react-native';
+import { Linking, StyleSheet, TouchableOpacity, View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Colors } from './ui/styleUtils';
 import { Button, Text } from './ui';
 import { GlobalContext } from '../shared/GlobalContext';
@@ -20,15 +21,26 @@ const styles = StyleSheet.create({
   },
   scanner: {
     height: 400,
+    width: '100%',
+    margin: 'auto'
   },
   buttonContainer: {
     height: '100%',
     width: '100%',
   },
+  flipButtonContainer: {
+    position: 'absolute',
+    width: '80%',
+    top: '110%',
+  },
   buttonStyle: {
     position: 'absolute',
     width: '100%',
     bottom: -90,
+  },
+  button: {
+    alignSelf: 'center',
+    alignItems: 'center',
   },
 });
 
@@ -36,6 +48,7 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
   const { appService } = useContext(GlobalContext);
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+  const [type, setType] = useState(Camera.Constants.Type.back);
 
   const isActive = useSelector(appService, selectIsActive);
 
@@ -77,14 +90,30 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
   }
 
   return (
-    <View style={styles.scannerContainer}>
-      <Camera
-        style={styles.scanner}
-        barCodeScannerSettings={{
-          barcodeTypes: [BarCodeScanner.Constants.BarCodeType.qr],
-        }}
-        onBarCodeScanned={scanned ? undefined : onBarcodeScanned}
-      />
+    <View>
+      <View style={styles.scannerContainer}>
+        <Camera
+          style={styles.scanner}
+          barCodeScannerSettings={{
+            barcodeTypes: [BarCodeScanner.Constants.BarCodeType.qr]
+          }}
+          onBarCodeScanned={scanned ? undefined : onBarcodeScanned}
+          type={type}
+          />
+      </View>
+      <View style={styles.flipButtonContainer}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            setType(
+              type === Camera.Constants.Type.back
+                ? Camera.Constants.Type.front
+                : Camera.Constants.Type.back
+            );
+          }}>
+          <Icon name="flip-camera-ios" color={Colors.Black} size={64} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 
