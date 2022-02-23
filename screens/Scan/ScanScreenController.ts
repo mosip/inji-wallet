@@ -2,6 +2,7 @@ import { useSelector } from '@xstate/react';
 import { useContext, useEffect } from 'react';
 import {
   ScanEvents,
+  selectClearingConnection,
   selectInvalid,
   selectLocationDenied,
   selectReviewing,
@@ -59,6 +60,7 @@ export function useScanScreen({ navigation }: MainRouteProps) {
     isScanning: useSelector(scanService, selectScanning),
     isReviewing: useSelector(scanService, selectReviewing),
     isLocationDenied: useSelector(scanService, selectLocationDenied),
+    isClearingConnection: useSelector(scanService, selectClearingConnection),
 
     DISMISS,
     REQUEST,

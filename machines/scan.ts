@@ -89,7 +89,7 @@ export const scanMachine = model.createMachine(
           requesting: {
             entry: ['requestLocationService'],
             on: {
-              LOCATION_DISABLED: '#locationDenied',
+              LOCATION_DISABLED: '#locationDenied'
             },
           },
           enabled: {
@@ -312,6 +312,7 @@ export const scanMachine = model.createMachine(
         const listener = LocationEnabler.addListener(({ locationEnabled }) => {
           if (locationEnabled) {
             callback(model.events.LOCATION_ENABLED());
+
           } else {
             callback(model.events.LOCATION_DISABLED());
           }
