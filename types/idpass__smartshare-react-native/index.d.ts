@@ -1,7 +1,7 @@
 import { EmitterSubscription } from 'react-native';
 import { BluetoothState } from 'react-native-bluetooth-state-manager';
 
-declare module 'react-native-idpass-smartshare' {
+declare module '@idpass/smartshare-react-native' {
   class BluetoothApi {
     getConnectionParameters: () => string;
 

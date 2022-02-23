@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@expo-google-fonts/poppins": "^0.2.0",
+    "@idpass/smartshare-react-native": "^0.2.0",
     "@react-native-async-storage/async-storage": "~1.15.0",
     "@react-native-community/netinfo": "6.0.2",
     "@react-navigation/bottom-tabs": "^6.0.7",
