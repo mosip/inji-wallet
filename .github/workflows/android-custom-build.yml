@@ -1,7 +1,7 @@
 name: ID PASS - MOSIP Resident Application Custom build
 
 env:
-  backendServiceDefaultUrl: https://dev2.mosip.net
+  backendServiceDefaultUrl: https://dev2.mosip.net/residentapp
 
 on:
   workflow_dispatch:
