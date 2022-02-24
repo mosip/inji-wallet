@@ -48,4 +48,4 @@ Note for release builds you will need to have a keystore: [Create a Keystore](ht
 More info here: [Build your app from the command line](https://developer.android.com/studio/build/building-cmdline)
 
 ## Credits
-Credit list at (Credits.md)
+Credit list [here](/Credits.md)
