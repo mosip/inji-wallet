@@ -1,4 +1,4 @@
-const HOST = 'https://resident-app.newlogic.dev';
+import { HOST } from './constants';
 
 export class BackendResponseError extends Error {
   constructor(name: string, message: string) {

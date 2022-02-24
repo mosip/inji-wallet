@@ -1,7 +1,7 @@
 import { EventFrom, send, sendParent, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { AppServices } from '../shared/GlobalContext';
-import { ACTIVITY_LOG_STORE_KEY } from '../shared/storeKeys';
+import { ACTIVITY_LOG_STORE_KEY } from '../shared/constants';
 import { StoreEvents } from './store';
 
 const model = createModel(

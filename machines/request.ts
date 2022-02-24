@@ -1,4 +1,4 @@
-import SmartShare from 'react-native-idpass-smartshare';
+import SmartShare from '@idpass/smartshare-react-native';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import { EmitterSubscription } from 'react-native';
 import { EventFrom, send, sendParent, StateFrom } from 'xstate';
@@ -12,7 +12,7 @@ import { AppServices } from '../shared/GlobalContext';
 import {
   RECEIVED_VIDS_STORE_KEY,
   VID_ITEM_STORE_KEY,
-} from '../shared/storeKeys';
+} from '../shared/constants';
 import { ActivityLogEvents } from './activityLog';
 import { VidEvents } from './vid';
 

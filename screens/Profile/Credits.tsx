@@ -32,7 +32,9 @@ export const Credits: React.FC<CreditsProps> = (props) => {
   return (
     <ListItem bottomDivider onPress={() => setIsViewing(true)}>
       <ListItem.Content>
-        <ListItem.Title>{props.label}</ListItem.Title>
+        <ListItem.Title>
+          <Text>{props.label}</Text>
+        </ListItem.Title>
       </ListItem.Content>
       <Overlay
         overlayStyle={{ padding: 24 }}

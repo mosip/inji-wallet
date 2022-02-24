@@ -1,4 +1,4 @@
-import SmartShare, { ConnectionParams } from 'react-native-idpass-smartshare';
+import SmartShare from '@idpass/smartshare-react-native';
 import { EmitterSubscription } from 'react-native';
 import { createModel } from 'xstate/lib/model';
 import { Message } from '../shared/Message';
@@ -128,7 +128,7 @@ export const smartShareMachine = model.createMachine(
 
     guards: {
       isQrValid: (context, event: DeviceFoundEvent) => {
-        const params: ConnectionParams = Object.create(null);
+        const params: SmartShare.ConnectionParams = Object.create(null);
         try {
           Object.assign(params, JSON.parse(event.qrCode));
           return 'cid' in params && 'pk' in params;

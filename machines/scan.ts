@@ -1,4 +1,4 @@
-import SmartShare, { ConnectionParams } from 'react-native-idpass-smartshare';
+import SmartShare from '@idpass/smartshare-react-native';
 import LocationEnabler from 'react-native-location-enabler';
 import { EventFrom, send, sendParent, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
@@ -9,7 +9,7 @@ import { getDeviceNameSync } from 'react-native-device-info';
 import { VID } from '../types/vid';
 import { AppServices } from '../shared/GlobalContext';
 import { ActivityLogEvents } from './activityLog';
-import { VID_ITEM_STORE_KEY } from '../shared/storeKeys';
+import { VID_ITEM_STORE_KEY } from '../shared/constants';
 
 const model = createModel(
   {
@@ -386,7 +386,7 @@ export const scanMachine = model.createMachine(
 
     guards: {
       isQrValid: (_, event: ScanEvent) => {
-        const param: ConnectionParams = Object.create(null);
+        const param: SmartShare.ConnectionParams = Object.create(null);
         try {
           Object.assign(param, JSON.parse(event.params));
           return 'cid' in param && 'pk' in param;

@@ -1,7 +1,7 @@
 import { ContextFrom, EventFrom, send, sendUpdate, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { AppServices } from '../shared/GlobalContext';
-import { SETTINGS_STORE_KEY } from '../shared/storeKeys';
+import { SETTINGS_STORE_KEY } from '../shared/constants';
 import { VIDLabel } from '../types/vid';
 import { StoreEvents } from './store';
 
