@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { Asset } from 'expo-asset';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { Divider, Icon, ListItem, Overlay } from 'react-native-elements';
 import Markdown from 'react-native-simple-markdown'
 import { Button, Text, Column, Row } from '../../components/ui';
 import { Colors } from '../../components/ui/styleUtils';
+const mdFile = require('../../Credits.md')
 
 export const Credits: React.FC<CreditsProps> = (props) => {
   const [isViewing, setIsViewing] = useState(false);
+  const [content, setContent] = useState("");
 
   const styles = StyleSheet.create({
     buttonContainer: {
@@ -19,7 +22,7 @@ export const Credits: React.FC<CreditsProps> = (props) => {
       width: Dimensions.get('screen').width
     },
     markdownView: {
-      padding: 8
+      padding: 20
     }
   });
 
@@ -28,6 +31,19 @@ export const Credits: React.FC<CreditsProps> = (props) => {
       fontSize: 24,
     }
   }
+
+  const fetchLocalFile = async () => {
+    let file = Asset.fromModule(mdFile)
+    file = await fetch(file.uri)
+    file = await file.text()
+    setContent(file);
+  }
+
+  useEffect(() => {
+    (async () => {
+      await fetchLocalFile();
+    })();
+  }, [])
 
   return (
     <ListItem bottomDivider onPress={() => setIsViewing(true)}>
@@ -45,15 +61,11 @@ export const Credits: React.FC<CreditsProps> = (props) => {
             <View style={styles.buttonContainer}>
               <Button type="clear" icon={<Icon name="chevron-left" color={Colors.Orange} />} title="Back" onPress={() => setIsViewing(false)}/>
             </View>
-            <Text>Credits</Text>
+            <Text size="small">Credits and legal notices</Text>
           </Row>
           <Divider />
-          <View styles={styles.markdownView}>
-            <Markdown styles={markdownStyles}>
-              #Legal Notices! {'\n\n'}
-              #Legal Notices! {'\n\n'}
-              #Legal Notices! {'\n\n'}
-            </Markdown>
+          <View style={styles.markdownView}>
+            <Markdown children={content} />
           </View>
         </View>
 
