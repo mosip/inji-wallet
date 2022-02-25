@@ -1,0 +1,33 @@
+name: ID PASS - MOSIP Resident Application Custom build
+
+env:
+  backendServiceDefaultUrl: https://dev2.mosip.net/residentmobileapp
+
+on:
+  workflow_dispatch:
+    inputs:
+      backendServiceUrl:
+        description: 'Backend service URL'
+        required: true
+        default: 'https://dev2.mosip.net/residentmobileapp'
+        type: string
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install npm dependencies
+        run: |
+          npm install
+      - name: Build App Newlogic Release
+        run: |
+          cd android && ./gradlew :app:assembleNewlogicRelease
+        env:
+          BACKEND_SERVICE_URL: ${{ github.event.inputs.backendServiceUrl }}
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: apk-output
+          path: android/app/build/outputs/apk/newlogic/release/
+          retention-days: 1
