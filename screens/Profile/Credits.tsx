@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Asset } from 'expo-asset';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { Dimensions, Image, StyleSheet, View } from 'react-native';
 import { Divider, Icon, ListItem, Overlay } from 'react-native-elements';
 import Markdown from 'react-native-simple-markdown'
 import { Button, Text, Column, Row } from '../../components/ui';
@@ -10,7 +10,10 @@ const mdFile = require('../../Credits.md')
 export const Credits: React.FC<CreditsProps> = (props) => {
   const [isViewing, setIsViewing] = useState(false);
   const [content, setContent] = useState("");
-
+  const images = {
+    'newlogic_logo.png' : require('../../docs/images/newlogic_logo.png'),
+    'id_pass_logo.png' : require('../../docs/images/id_pass_logo.png'),
+  }
   const styles = StyleSheet.create({
     buttonContainer: {
       position: 'absolute',
@@ -29,6 +32,9 @@ export const Credits: React.FC<CreditsProps> = (props) => {
   const markdownStyles = {
     heading1: {
       fontSize: 24,
+    },
+    image: {
+      maxWidth: 150
     }
   }
 
@@ -37,6 +43,20 @@ export const Credits: React.FC<CreditsProps> = (props) => {
     file = await fetch(file.uri)
     file = await file.text()
     setContent(file);
+  }
+
+  const rules = {
+    image: {
+      react: (node, output, state) => (
+        <View key={`image-${state.key}`}>
+          <Image
+            style={{ width: 150, height: 50 }}
+            source={images[node.target]}
+            resizeMode="contain"
+          />
+        </View>
+      ),
+    }
   }
 
   useEffect(() => {
@@ -65,7 +85,10 @@ export const Credits: React.FC<CreditsProps> = (props) => {
           </Row>
           <Divider />
           <View style={styles.markdownView}>
-            <Markdown children={content} />
+            <Markdown
+              rules={rules}
+              children={content}
+              styles={markdownStyles}/>
           </View>
         </View>
 
