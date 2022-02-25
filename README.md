@@ -46,3 +46,6 @@ npm run build:android:newlogic
 Note for release builds you will need to have a keystore: [Create a Keystore](https://medium.com/@tom.truyen/create-an-android-keystore-using-keytool-commandline-10399a62e774)
 
 More info here: [Build your app from the command line](https://developer.android.com/studio/build/building-cmdline)
+
+## Credits
+Credits listed [here](/Credits.md)
