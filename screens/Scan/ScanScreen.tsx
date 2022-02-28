@@ -58,7 +58,7 @@ export const ScanScreen: React.FC<MainRouteProps> = (props) => {
   }
 
   useEffect(() => {
-    if (!controller.locationDenied && !hasPermission) {
+    if (!controller.isLocationDenied && !hasPermission) {
       (async () => {
         const response = await locationPermission();
         setHasPermission(response === 'granted' ? true : false);
