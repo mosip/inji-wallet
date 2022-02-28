@@ -11,8 +11,8 @@ export const Credits: React.FC<CreditsProps> = (props) => {
   const [isViewing, setIsViewing] = useState(false);
   const [content, setContent] = useState("");
   const images = {
-    'newlogic_logo.png' : require('../../docs/images/newlogic_logo.png'),
-    'id_pass_logo.png' : require('../../docs/images/id_pass_logo.png'),
+    'docs/images/newlogic_logo.png' : require('../../docs/images/newlogic_logo.png'),
+    'docs/images/id_pass_logo.png' : require('../../docs/images/id_pass_logo.png'),
   }
   const styles = StyleSheet.create({
     buttonContainer: {
@@ -34,7 +34,8 @@ export const Credits: React.FC<CreditsProps> = (props) => {
       fontSize: 24,
     },
     image: {
-      maxWidth: 150
+      maxWidth: 150,
+      margin: 0
     }
   }
 
@@ -50,7 +51,7 @@ export const Credits: React.FC<CreditsProps> = (props) => {
       react: (node, output, state) => (
         <View key={`image-${state.key}`}>
           <Image
-            style={{ width: 150, height: 50 }}
+            style={{ maxWidth: 150, height: 100 }}
             source={images[node.target]}
             resizeMode="contain"
           />
