@@ -4,6 +4,7 @@ import {
   NativeStackScreenProps,
 } from '@react-navigation/native-stack';
 import { AuthScreen } from '../screens/AuthScreen';
+import { BiometricScreen } from '../screens/BiometricScreen';
 import { WelcomeScreen } from '../screens/WelcomeScreen';
 import { PasscodeScreen } from '../screens/PasscodeScreen';
 import { MainLayout } from '../screens/MainLayout';
@@ -30,6 +31,10 @@ export const baseRoutes: Screen[] = [
     name: 'Passcode',
     component: PasscodeScreen,
   },
+  {
+    name: 'Biometric',
+    component: BiometricScreen,
+  },
 ];
 
 export const authRoutes: Screen[] = [
@@ -52,6 +57,9 @@ export type RootStackParamList = {
   Passcode: {
     setup: boolean;
   };
+  Biometric: {
+    setup: boolean;
+  };
   Main: undefined;
   Notifications: undefined;
 };
@@ -68,3 +76,8 @@ export type PasscodeRouteProps = NativeStackScreenProps<
   RootStackParamList,
   'Passcode'
 >;
+
+// export type BiometricRouteProps = NativeStackScreenProps<
+//   RootStackParamList,
+//   'Biometric
+// >;
