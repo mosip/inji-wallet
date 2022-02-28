@@ -77,7 +77,7 @@ export type PasscodeRouteProps = NativeStackScreenProps<
   'Passcode'
 >;
 
-// export type BiometricRouteProps = NativeStackScreenProps<
-//   RootStackParamList,
-//   'Biometric
-// >;
+export type BiometricRouteProps = NativeStackScreenProps<
+  RootStackParamList,
+  'Biometric'
+>;
