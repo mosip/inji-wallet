@@ -220,7 +220,7 @@ export const vidItemMachine = model.createMachine(
           if (event.type === 'POLL_STATUS') {
             const response = await request(
               'GET',
-              `/v1/resident/credentialshare/request/status/${context.requestId}`
+              `/credentialshare/request/status/${context.requestId}`
             );
             switch (response.response?.statusCode) {
               case 'NEW':
@@ -249,7 +249,7 @@ export const vidItemMachine = model.createMachine(
           if (event.type === 'POLL_DOWNLOAD') {
             const response: CredentialDownloadResponse = await request(
               'POST',
-              '/v1/resident/credentialshare/download',
+              '/credentialshare/download',
               {
                 individualId: context.uin,
                 requestId: context.requestId,

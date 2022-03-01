@@ -211,7 +211,7 @@ export const AddVidModalMachine = model.createMachine(
 
     services: {
       requestOtp: async (context) => {
-        return request('POST', '/v1/resident/req/otp', {
+        return request('POST', '/req/otp', {
           individualId: context.uin,
           individualIdType: 'UIN',
           otpChannel: ['EMAIL', 'PHONE'],
@@ -220,15 +220,11 @@ export const AddVidModalMachine = model.createMachine(
       },
 
       requestCredential: async (context) => {
-        const response = await request(
-          'POST',
-          '/v1/resident/credentialshare/request',
-          {
-            individualId: context.uin,
-            otp: context.otp,
-            transactionID: context.transactionId,
-          }
-        );
+        const response = await request('POST', '/credentialshare/request', {
+          individualId: context.uin,
+          otp: context.otp,
+          transactionID: context.transactionId,
+        });
         return response.response.requestId;
       },
     },
