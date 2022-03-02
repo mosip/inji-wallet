@@ -75,7 +75,7 @@ export const vidItemMachine = model.createMachine(
             {
               cond: 'hasCredential',
               target: 'idle',
-              actions: ['setCredential'],
+              actions: ['setCredential', 'updateVid'],
             },
             {
               target: 'checkingServerData',
@@ -109,7 +109,12 @@ export const vidItemMachine = model.createMachine(
               },
               CREDENTIAL_DOWNLOADED: {
                 target: '#idle',
-                actions: ['setCredential', 'storeContext', 'logDownloaded'],
+                actions: [
+                  'setCredential',
+                  'storeContext',
+                  'updateVid',
+                  'logDownloaded',
+                ],
               },
             },
           },
@@ -140,6 +145,14 @@ export const vidItemMachine = model.createMachine(
   },
   {
     actions: {
+      updateVid: send(
+        (context) => {
+          const { serviceRefs, ...vid } = context;
+          return { type: 'VID_DOWNLOADED', vid };
+        },
+        { to: (context) => context.serviceRefs.vid }
+      ),
+
       requestVidContext: send(
         (context) => ({
           type: 'GET_VID_ITEM',

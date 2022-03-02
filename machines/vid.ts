@@ -199,6 +199,12 @@ export function selectMyVids(state: State) {
   return state.context.myVids;
 }
 
+export function selectShareableVids(state: State) {
+  return state.context.myVids.filter(
+    (vidKey) => state.context.vids[vidKey]?.credential != null
+  );
+}
+
 export function selectReceivedVids(state: State) {
   return state.context.receivedVids;
 }
