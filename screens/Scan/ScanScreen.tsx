@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 export const ScanScreen: React.FC<MainRouteProps> = (props) => {
   const { appService } = useContext(GlobalContext);
   const controller = useScanScreen(props);
-  console.log('controller', controller)
+  
   return (
     <Column fill padding="98 24" backgroundColor={Colors.LightGrey}>
       <Column>
