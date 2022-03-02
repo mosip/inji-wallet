@@ -243,7 +243,6 @@ export const scanMachine = model.createMachine(
       }),
 
       requestLocationService: (context) => {
-        console.log('------->requestLocationService')
         LocationEnabler.requestResolutionSettings(context.locationConfig);
       },
 
@@ -327,7 +326,6 @@ export const scanMachine = model.createMachine(
 
     services: {
       checkAppLocationService: (context) => (callback) => {
-        console.log('------>checkAppLocationService');
         (async () => {
           const response = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
               {
@@ -347,24 +345,8 @@ export const scanMachine = model.createMachine(
       checkLocationService: (context) => (callback) => {
         const listener = LocationEnabler.addListener(({ locationEnabled }) => {
           if (locationEnabled) {
-            console.log('------->enabled')
             callback(model.events.LOCATION_ENABLED());
-            // (async () => {
-            //   const response = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-            //       {
-            //         title: 'Location access',
-            //         message: 'Location access is required for the scanning functionality.',
-            //         buttonNegative: 'Cancel',
-            //         buttonPositive: 'OK',
-            //       });
-            //   if(response === 'granted') {
-            //     callback(model.events.LOCATION_ENABLED());
-            //   } else {
-            //     callback(model.events.LOCATION_DISABLED());
-            //   }
-            // })();
           } else {
-            console.log('------->disabled')
             callback(model.events.LOCATION_DISABLED());
           }
         });
