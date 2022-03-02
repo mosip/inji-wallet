@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 export const ScanScreen: React.FC<MainRouteProps> = (props) => {
   const { appService } = useContext(GlobalContext);
   const controller = useScanScreen(props);
-  
+
   return (
     <Column fill padding="98 24" backgroundColor={Colors.LightGrey}>
       <Column>
@@ -33,7 +33,7 @@ export const ScanScreen: React.FC<MainRouteProps> = (props) => {
         {controller.isLocationDenied && (
           <View style={styles.buttonContainer}>
             <Text align="center" margin="16 0" color={Colors.Red}>
-              Device location access is required for the scanning functionality.
+              Location access is required for the scanning functionality.
             </Text>
             <View>
               <Button title="Allow access to location" onPress={controller.REQUEST} />
