@@ -2,7 +2,7 @@ import SmartShare from '@idpass/smartshare-react-native';
 import LocationEnabler from 'react-native-location-enabler';
 import { EventFrom, send, sendParent, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
-import { EmitterSubscription } from 'react-native';
+import { EmitterSubscription, Linking, PermissionsAndroid } from 'react-native';
 import { DeviceInfo } from '../components/DeviceInfoList';
 import { Message } from '../shared/Message';
 import { getDeviceNameSync } from 'react-native-device-info';
@@ -77,7 +77,7 @@ export const scanMachine = model.createMachine(
           src: 'checkLocationService',
         },
         on: {
-          LOCATION_ENABLED: '.enabled',
+          LOCATION_ENABLED: '.deviceLocEnabled',
         },
         initial: 'checking',
         states: {
@@ -94,6 +94,15 @@ export const scanMachine = model.createMachine(
           },
           enabled: {
             always: '#clearingConnection',
+          },
+          deviceLocEnabled: {
+            invoke: {
+              src: 'checkAppLocationService',
+            },
+            on: {
+              LOCATION_DISABLED: '#locationDenied',
+              LOCATION_ENABLED: 'enabled'
+            },
           },
         },
       },
@@ -118,10 +127,14 @@ export const scanMachine = model.createMachine(
           ],
         },
       },
+      enableAppLocation: {
+        target: 'checkingLocationService',
+        entry: ['openSettings'],
+      },
       locationDenied: {
         id: 'locationDenied',
         on: {
-          LOCATION_REQUEST: 'checkingLocationService'
+          LOCATION_REQUEST: 'enableAppLocation',
         },
       },
       preparingToConnect: {
@@ -230,6 +243,7 @@ export const scanMachine = model.createMachine(
       }),
 
       requestLocationService: (context) => {
+        console.log('------->requestLocationService')
         LocationEnabler.requestResolutionSettings(context.locationConfig);
       },
 
@@ -305,15 +319,52 @@ export const scanMachine = model.createMachine(
           }),
         { to: (context) => context.serviceRefs.activityLog }
       ),
+
+      openSettings: () => {
+        Linking.openSettings();
+      }
     },
 
     services: {
+      checkAppLocationService: (context) => (callback) => {
+        console.log('------>checkAppLocationService');
+        (async () => {
+          const response = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+              {
+                title: 'Location access',
+                message: 'Location access is required for the scanning functionality.',
+                buttonNegative: 'Cancel',
+                buttonPositive: 'OK',
+              });
+          if(response === 'granted') {
+            callback(model.events.LOCATION_ENABLED());
+          } else {
+            callback(model.events.LOCATION_DISABLED());
+          }
+        })();
+      },
+
       checkLocationService: (context) => (callback) => {
         const listener = LocationEnabler.addListener(({ locationEnabled }) => {
           if (locationEnabled) {
+            console.log('------->enabled')
             callback(model.events.LOCATION_ENABLED());
-
+            // (async () => {
+            //   const response = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            //       {
+            //         title: 'Location access',
+            //         message: 'Location access is required for the scanning functionality.',
+            //         buttonNegative: 'Cancel',
+            //         buttonPositive: 'OK',
+            //       });
+            //   if(response === 'granted') {
+            //     callback(model.events.LOCATION_ENABLED());
+            //   } else {
+            //     callback(model.events.LOCATION_DISABLED());
+            //   }
+            // })();
           } else {
+            console.log('------->disabled')
             callback(model.events.LOCATION_DISABLED());
           }
         });
