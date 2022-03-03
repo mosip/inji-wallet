@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import { VID, VIDCredential } from '../types/vid';
+import { VID, CredentialSubject } from '../types/vid';
 import { Column, Row, Text } from './ui';
 import { Colors } from './ui/styleUtils';
 
@@ -55,40 +55,50 @@ export const VidDetails: React.FC<VidDetailsProps> = (props) => {
       <ListItem bottomDivider>
         <ListItem.Content>
           <ListItem.Subtitle>Full name</ListItem.Subtitle>
-          <ListItem.Title>{props.vid?.credential.fullName}</ListItem.Title>
+          <ListItem.Title>
+            {props.vid?.verifiableCredential.credentialSubject.fullName}
+          </ListItem.Title>
         </ListItem.Content>
       </ListItem>
       <ListItem bottomDivider>
         <ListItem.Content>
           <ListItem.Subtitle>Gender</ListItem.Subtitle>
           <ListItem.Title>
-            {getLocalizedField(props.vid?.credential.gender)}
+            {getLocalizedField(
+              props.vid?.verifiableCredential.credentialSubject.gender
+            )}
           </ListItem.Title>
         </ListItem.Content>
       </ListItem>
       <ListItem bottomDivider>
         <ListItem.Content>
           <ListItem.Subtitle>Date of birth</ListItem.Subtitle>
-          <ListItem.Title>{props.vid?.credential.dateOfBirth}</ListItem.Title>
+          <ListItem.Title>
+            {props.vid?.verifiableCredential.credentialSubject.dateOfBirth}
+          </ListItem.Title>
         </ListItem.Content>
       </ListItem>
       <ListItem bottomDivider>
         <ListItem.Content>
           <ListItem.Subtitle>Phone number</ListItem.Subtitle>
-          <ListItem.Title>{props.vid?.credential.phone}</ListItem.Title>
+          <ListItem.Title>
+            {props.vid?.verifiableCredential.credentialSubject.phone}
+          </ListItem.Title>
         </ListItem.Content>
       </ListItem>
       <ListItem bottomDivider>
         <ListItem.Content>
           <ListItem.Subtitle>Email</ListItem.Subtitle>
-          <ListItem.Title>{props.vid?.credential.email}</ListItem.Title>
+          <ListItem.Title>
+            {props.vid?.verifiableCredential.credentialSubject.email}
+          </ListItem.Title>
         </ListItem.Content>
       </ListItem>
       <ListItem bottomDivider>
         <ListItem.Content>
           <ListItem.Subtitle>Address</ListItem.Subtitle>
           <ListItem.Title>
-            {getFullAddress(props.vid?.credential)}
+            {getFullAddress(props.vid?.verifiableCredential.credentialSubject)}
           </ListItem.Title>
         </ListItem.Content>
       </ListItem>
@@ -113,7 +123,7 @@ interface LocalizedField {
   value: string;
 }
 
-function getFullAddress(credential: VIDCredential) {
+function getFullAddress(credential: CredentialSubject) {
   if (!credential) {
     return '';
   }
@@ -125,18 +135,18 @@ function getFullAddress(credential: VIDCredential) {
     'city',
     'province',
   ];
-  return (
-    fields.map((field) => getLocalizedField(credential[field])).join(', ') +
-    ', ' +
-    credential.postalCode
-  );
+  return fields
+    .map((field) => getLocalizedField(credential[field]))
+    .concat(credential.postalCode)
+    .filter(Boolean)
+    .join(', ');
 }
 
 function getLocalizedField(rawField: string) {
   try {
     const locales: LocalizedField[] = JSON.parse(rawField);
     // TODO: language switching
-    return locales.find((locale) => locale.language === 'eng').value;
+    return locales.find((locale) => locale.language === 'eng').value.trim();
   } catch (e) {
     return '';
   }
