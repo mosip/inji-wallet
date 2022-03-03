@@ -213,7 +213,7 @@ export const AddVidModalMachine = model.createMachine(
       requestOtp: async (context) => {
         return request('POST', '/req/otp', {
           individualId: context.uin,
-          individualIdType: 'UIN',
+          individualIdType: context.uin.length === 10 ? 'UIN' : 'VID',
           otpChannel: ['EMAIL', 'PHONE'],
           transactionID: context.transactionId,
         });
@@ -232,7 +232,7 @@ export const AddVidModalMachine = model.createMachine(
     guards: {
       isEmptyUin: ({ uin }) => !uin || !uin.length,
 
-      isWrongUinFormat: ({ uin }) => !/^[0-9]{10}$/.test(uin),
+      isWrongUinFormat: ({ uin }) => !/^[0-9]{10,16}$/.test(uin),
 
       isUinInvalid: (_, event: any) =>
         ['IDA-MLC-009', 'RES-SER-29', 'IDA-MLC-018'].includes(

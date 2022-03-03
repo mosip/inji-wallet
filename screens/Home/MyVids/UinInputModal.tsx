@@ -10,13 +10,13 @@ import {
 
 export const UinInputModal: React.FC<UinInputModalProps> = (props) => {
   const controller = useUinInputModal(props);
-  const inputLabel = 'UIN';
+  const inputLabel = 'UIN or VID';
 
   return (
     <Modal onDismiss={props.onDismiss} isVisible={props.isVisible}>
       <Column fill align="space-between" padding="32 24">
         <Text align="center">
-          Enter the MOSIP-provided UIN{'\n'}of the{' '}
+          Enter the MOSIP-provided UIN or VID{'\n'}of the{' '}
           {controller.vidLabel.singular} you wish to retrieve
         </Text>
         <Column>
