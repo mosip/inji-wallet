@@ -189,11 +189,11 @@ export const AddVidModalMachine = model.createMachine(
       clearUinError: model.assign({ uinError: '' }),
 
       setUinErrorEmpty: model.assign({
-        uinError: 'The UIN cannot be empty',
+        uinError: 'The input cannot be empty',
       }),
 
       setUinErrorWrongFormat: model.assign({
-        uinError: 'The UIN format is incorrect',
+        uinError: 'The input format is incorrect',
       }),
 
       setOtpError: model.assign({
