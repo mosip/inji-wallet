@@ -83,14 +83,14 @@ export const VidDetails: React.FC<VidDetailsProps> = (props) => {
           Reason(s) for sharing
         </Text>
       )}
-      {props.vid?.reason?.map((reason, index) => {
+      {props.vid?.reason?.map((reason, index) => (
         <TextItem
           key={index}
           divider
           label={formatDistanceToNow(reason.timestamp, { addSuffix: true })}
           text={reason.message}
-        />;
-      })}
+        />
+      ))}
     </Column>
   );
 };
