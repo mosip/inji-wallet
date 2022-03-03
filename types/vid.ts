@@ -1,56 +1,59 @@
 export interface VID {
   tag: string;
   uin: string;
-  credential: VIDCredential;
-  verifiableCredential: VIDVerifiableCredential;
+  credential: {
+    biometrics: {
+      face: string;
+      finger: {
+        left_thumb: string;
+        right_thumb: string;
+      };
+    };
+  };
+  verifiableCredential: VerifiableCredential;
   generatedOn: Date;
   requestId: string;
   reason?: string;
 }
 
-export interface VIDCredential {
-  id: string;
-  uin: string;
-  fullName: string;
-  gender: string;
-  biometrics: {
-    // Encrypted Base64Encoded Biometrics
-    face: string;
-    finger: {
-      left_thumb: string;
-      right_thumb: string;
-    };
-  };
-  dateOfBirth: string;
-  phone: string;
-  email: string;
-  region: string;
+export interface CredentialSubject {
+  UIN: string;
   addressLine1: string;
   addressLine2: string;
   addressLine3: string;
+  biometrics: string; // Encrypted Base64Encoded Biometrics
   city: string;
-  province: string;
+  dateOfBirth: string;
+  email: string;
+  fullName: string;
+  gender: string;
+  id: string;
+  phone: string;
   postalCode: string;
+  province: string;
+  region: string;
 }
 
-export interface VIDVerifiableCredential {
-  id: string;
-  transactionId: string;
-  type: {
-    namespace: string;
-    name: string;
+export interface VerifiableCredential {
+  '@context': (string | Record<string, unknown>)[];
+  'credentialSubject': CredentialSubject;
+  'id': string;
+  'issuanceDate': string;
+  'issuer': string;
+  'proof': {
+    created: string;
+    jws: string;
+    proofPurpose: 'assertionMethod' | string;
+    type: 'RsaSignature2018' | string;
+    verificationMethod: string;
   };
-  timestamp: string;
-  dataShareUri: string;
-  data: {
-    credential: string;
-    proof: {
-      signature: string;
-    };
-    credentialType: string;
-    protectionKey: string;
-  };
+  'type': VerifiableCredentialType[];
 }
+
+export type VerifiableCredentialType =
+  | 'VerifiableCredential'
+  | 'MOSIPVerfiableCredential'
+  | string;
 
 export interface VIDLabel {
   singular: string;

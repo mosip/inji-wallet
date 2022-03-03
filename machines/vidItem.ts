@@ -3,7 +3,7 @@ import { createModel } from 'xstate/lib/model';
 import { VID_ITEM_STORE_KEY } from '../shared/constants';
 import { AppServices } from '../shared/GlobalContext';
 import { CredentialDownloadResponse, request } from '../shared/request';
-import { VID, VIDCredential, VIDVerifiableCredential } from '../types/vid';
+import { VID, CredentialSubject, VerifiableCredential } from '../types/vid';
 import { StoreEvents, storeMachine } from './store';
 import { ActivityLogEvents } from './activityLog';
 
@@ -13,8 +13,8 @@ const model = createModel(
     uin: '',
     tag: '',
     generatedOn: null as Date,
-    credential: null as VIDCredential,
-    verifiableCredential: null as VIDVerifiableCredential,
+    credential: null as CredentialSubject,
+    verifiableCredential: null as VerifiableCredential,
     requestId: '',
   },
   {
