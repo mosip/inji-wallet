@@ -1,5 +1,5 @@
 name: ID PASS - MOSIP Resident Application
-
+  
 on:
   push:
     branches:
@@ -21,6 +21,8 @@ jobs:
       - name: Build App Newlogic Release
         run: |
           cd android && ./gradlew :app:assembleNewlogicRelease
+        env:
+          BACKEND_SERVICE_URL: https://qa-triple-rc2.mosip.net/residentmobileapp
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
