@@ -1,6 +1,6 @@
 import { useSelector } from '@xstate/react';
 import { useContext, useEffect, useState } from 'react';
-import { selectIsActive } from '../../machines/app';
+import { selectIsActive, selectIsFocused } from '../../machines/app';
 import {
   RequestEvents,
   selectAccepted,
@@ -22,6 +22,9 @@ export function useRequestScreen({ navigation }: MainRouteProps) {
   const { appService } = useContext(GlobalContext);
   const requestService = appService.children.get('request');
   const settingsService = appService.children.get('settings');
+  const isActive = useSelector(appService, selectIsActive);
+  const isFocused = useSelector(appService, selectIsFocused);
+  const isBluetoothDenied = useSelector(requestService, selectBluetoothDenied);
 
   useEffect(() => {
     const subscriptions = [
@@ -47,11 +50,11 @@ export function useRequestScreen({ navigation }: MainRouteProps) {
 
   useEffect(() => {
     BluetoothStateManager.getState().then((bluetoothState) => {
-      if(bluetoothState === 'PoweredOn' && RequestEvents.isBluetoothDenied) {
+      if(bluetoothState === 'PoweredOn' && isBluetoothDenied) {
         requestService.send(RequestEvents.SCREEN_FOCUS())
       }
     });
-  }, [RequestEvents.isActive]);
+  }, [isActive, isFocused]);
 
   return {
     connectionParams: useSelector(requestService, selectConnectionParams),
@@ -63,12 +66,11 @@ export function useRequestScreen({ navigation }: MainRouteProps) {
       requestService,
       selectWaitingForConnection
     ),
-    isBluetoothDenied: useSelector(requestService, selectBluetoothDenied),
+    isBluetoothDenied: isBluetoothDenied,
     isReviewing: useSelector(requestService, selectReviewing),
     isAccepted: useSelector(requestService, selectAccepted),
     isRejected: useSelector(requestService, selectRejected),
     isDisconnected: useSelector(requestService, selectDisconnected),
-    isActive: useSelector(appService, selectIsActive),
 
     DISMISS: () => requestService.send(RequestEvents.DISMISS()),
     ACCEPT: () => requestService.send(RequestEvents.ACCEPT()),
