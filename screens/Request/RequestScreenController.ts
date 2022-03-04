@@ -54,7 +54,7 @@ export function useRequestScreen({ navigation }: MainRouteProps) {
         requestService.send(RequestEvents.SCREEN_FOCUS())
       }
     });
-  }, [isActive, isFocused]);
+  }, [isFocused, isActive]);
 
   return {
     connectionParams: useSelector(requestService, selectConnectionParams),
