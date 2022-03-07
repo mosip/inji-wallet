@@ -5,7 +5,7 @@ import {
   getDeviceName,
   getDeviceNameSync,
 } from 'react-native-device-info';
-import { EventFrom, spawn, StateFrom } from 'xstate';
+import { EventFrom, spawn, StateFrom, send } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { authMachine, createAuthMachine } from './auth';
 import { createSettingsMachine, settingsMachine } from './settings';
@@ -14,7 +14,7 @@ import { createVidMachine, vidMachine } from './vid';
 import { createActivityLogMachine, activityLogMachine } from './activityLog';
 import { createRequestMachine, requestMachine } from './request';
 import { createScanMachine, scanMachine } from './scan';
-import { respond } from 'xstate/lib/actions';
+import { pure, respond } from 'xstate/lib/actions';
 import { AppServices } from '../shared/GlobalContext';
 
 const model = createModel(
@@ -98,8 +98,12 @@ export const appMachine = model.createMachine(
             initial: 'checking',
             states: {
               checking: {},
-              active: {},
-              inactive: {},
+              active: {
+                entry: ['forwardToServices'],
+              },
+              inactive: {
+                entry: ['forwardToServices'],
+              },
             },
           },
           network: {
@@ -113,8 +117,12 @@ export const appMachine = model.createMachine(
             initial: 'checking',
             states: {
               checking: {},
-              online: {},
-              offline: {},
+              online: {
+                entry: ['forwardToServices'],
+              },
+              offline: {
+                entry: ['forwardToServices'],
+              },
             },
           },
         },
@@ -123,6 +131,12 @@ export const appMachine = model.createMachine(
   },
   {
     actions: {
+      forwardToServices: pure((context, event) =>
+        Object.values(context.serviceRefs).map((serviceRef) =>
+          send({ ...event, type: `APP_${event.type}` }, { to: serviceRef })
+        )
+      ),
+
       requestDeviceInfo: respond((context) => ({
         type: 'RECEIVE_DEVICE_INFO',
         info: {

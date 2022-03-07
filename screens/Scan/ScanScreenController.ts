@@ -3,7 +3,8 @@ import { useContext, useEffect } from 'react';
 import {
   ScanEvents,
   selectInvalid,
-  selectLocationDenied,
+  selectIsLocationDisabled,
+  selectIsLocationDenied,
   selectReviewing,
   selectScanning,
   selectStatusMessage,
@@ -21,6 +22,20 @@ export function useScanScreen({ navigation }: MainRouteProps) {
 
   const shareableVids = useSelector(vidService, selectShareableVids);
   const isInvalid = useSelector(scanService, selectInvalid);
+
+  const isLocationDisabled = useSelector(scanService, selectIsLocationDisabled);
+  const isLocationDenied = useSelector(scanService, selectIsLocationDenied);
+
+  const locationError = { message: '', button: '' };
+  if (isLocationDisabled) {
+    locationError.message =
+      'Location services must be enabled for the scanning functionality';
+    locationError.button = 'Enable location services';
+  } else if (isLocationDenied) {
+    locationError.message =
+      'Location permission is required for the scanning functionality';
+    locationError.button = 'Allow access to location';
+  }
 
   useEffect(() => {
     const subscriptions = [
@@ -45,31 +60,19 @@ export function useScanScreen({ navigation }: MainRouteProps) {
   }, []);
 
   return {
+    locationError,
     statusMessage: useSelector(scanService, selectStatusMessage),
     vidLabel: useSelector(settingsService, selectVidLabel),
 
-    onDismissInvalid: () => {
-      if (isInvalid) {
-        DISMISS();
-      }
-    },
-
     isInvalid,
     isEmpty: !shareableVids.length,
+    isLocationDisabled,
+    isLocationDenied,
     isScanning: useSelector(scanService, selectScanning),
     isReviewing: useSelector(scanService, selectReviewing),
-    isLocationDenied: useSelector(scanService, selectLocationDenied),
 
-    DISMISS,
-    REQUEST,
+    DISMISS: () => scanService.send(ScanEvents.DISMISS()),
+    LOCATION_REQUEST: () => scanService.send(ScanEvents.LOCATION_REQUEST()),
     SCAN: (qrCode: string) => scanService.send(ScanEvents.SCAN(qrCode)),
   };
-
-  function DISMISS() {
-    scanService.send(ScanEvents.DISMISS());
-  }
-
-  function REQUEST() {
-    scanService.send(ScanEvents.LOCATION_REQUEST());
-  }
 }

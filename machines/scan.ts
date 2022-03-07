@@ -47,6 +47,7 @@ const model = createModel(
       LOCATION_REQUEST: () => ({}),
       UPDATE_VID_NAME: (vidName: string) => ({ vidName }),
       STORE_RESPONSE: (response: any) => ({ response }),
+      APP_ACTIVE: () => ({}),
     },
   }
 );
@@ -74,34 +75,43 @@ export const scanMachine = model.createMachine(
       },
       checkingLocationService: {
         invoke: {
-          src: 'checkLocationService',
+          src: 'checkLocationStatus',
         },
-        on: {
-          LOCATION_ENABLED: '.deviceLocEnabled',
-        },
-        initial: 'checking',
+        initial: 'checkingStatus',
         states: {
-          checking: {
+          checkingStatus: {
             on: {
-              LOCATION_DISABLED: 'requesting',
+              LOCATION_ENABLED: 'checkingPermission',
+              LOCATION_DISABLED: 'requestingToEnable',
             },
           },
-          requesting: {
-            entry: ['requestLocationService'],
+          requestingToEnable: {
+            entry: ['requestToEnableLocation'],
             on: {
-              LOCATION_DISABLED: '#locationDenied'
+              LOCATION_ENABLED: 'checkingPermission',
+              LOCATION_DISABLED: 'disabled',
             },
           },
-          enabled: {
-            always: '#clearingConnection',
-          },
-          deviceLocEnabled: {
+          checkingPermission: {
             invoke: {
-              src: 'checkAppLocationService',
+              src: 'checkLocationPermission',
             },
             on: {
-              LOCATION_DISABLED: '#locationDenied',
-              LOCATION_ENABLED: 'enabled'
+              LOCATION_ENABLED: '#clearingConnection',
+              LOCATION_DISABLED: 'denied',
+            },
+          },
+          denied: {
+            on: {
+              LOCATION_REQUEST: {
+                actions: ['openSettings'],
+              },
+              APP_ACTIVE: 'checkingPermission',
+            },
+          },
+          disabled: {
+            on: {
+              LOCATION_REQUEST: 'requestingToEnable',
             },
           },
         },
@@ -125,16 +135,6 @@ export const scanMachine = model.createMachine(
             },
             { target: 'invalid' },
           ],
-        },
-      },
-      enableAppLocation: {
-        target: 'checkingLocationService',
-        entry: ['openSettings'],
-      },
-      locationDenied: {
-        id: 'locationDenied',
-        on: {
-          LOCATION_REQUEST: 'enableAppLocation',
         },
       },
       preparingToConnect: {
@@ -242,7 +242,7 @@ export const scanMachine = model.createMachine(
         senderInfo: (_, event: ReceiveDeviceInfoEvent) => event.info,
       }),
 
-      requestLocationService: (context) => {
+      requestToEnableLocation: (context) => {
         LocationEnabler.requestResolutionSettings(context.locationConfig);
       },
 
@@ -321,28 +321,37 @@ export const scanMachine = model.createMachine(
 
       openSettings: () => {
         Linking.openSettings();
-      }
+      },
     },
 
     services: {
-      checkAppLocationService: (context) => (callback) => {
-        (async () => {
-          const response = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-              {
-                title: 'Location access',
-                message: 'Location access is required for the scanning functionality.',
-                buttonNegative: 'Cancel',
-                buttonPositive: 'OK',
-              });
-          if(response === 'granted') {
+      checkLocationPermission: () => async (callback) => {
+        try {
+          // TODO: a more reliable way to wait for animation to finish when app becomes active
+          await new Promise((resolve) => setTimeout(resolve, 250));
+
+          const response = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            {
+              title: 'Location access',
+              message:
+                'Location access is required for the scanning functionality.',
+              buttonNegative: 'Cancel',
+              buttonPositive: 'OK',
+            }
+          );
+
+          if (response === 'granted') {
             callback(model.events.LOCATION_ENABLED());
           } else {
             callback(model.events.LOCATION_DISABLED());
           }
-        })();
+        } catch (e) {
+          console.error(e);
+        }
       },
 
-      checkLocationService: (context) => (callback) => {
+      checkLocationStatus: (context) => (callback) => {
         const listener = LocationEnabler.addListener(({ locationEnabled }) => {
           if (locationEnabled) {
             callback(model.events.LOCATION_ENABLED());
@@ -497,6 +506,10 @@ export function selectInvalid(state: State) {
   return state.matches('invalid');
 }
 
-export function selectLocationDenied(state: State) {
-  return state.matches('locationDenied');
+export function selectIsLocationDenied(state: State) {
+  return state.matches('checkingLocationService.denied');
+}
+
+export function selectIsLocationDisabled(state: State) {
+  return state.matches('checkingLocationService.disabled');
 }
