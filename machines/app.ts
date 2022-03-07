@@ -266,6 +266,10 @@ export function selectIsActive(state: State) {
   return state.matches('ready.focus.active');
 }
 
+export function selectIsFocused(state: State) {
+  return state.matches('ready.focus');
+}
+
 export function logState(state) {
   const data = JSON.stringify(state.event);
   console.log(

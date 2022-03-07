@@ -22,8 +22,6 @@ export function useRequestScreen({ navigation }: MainRouteProps) {
   const { appService } = useContext(GlobalContext);
   const requestService = appService.children.get('request');
   const settingsService = appService.children.get('settings');
-  const isActive = useSelector(appService, selectIsActive);
-  const isBluetoothDenied = useSelector(requestService, selectBluetoothDenied);
 
   useEffect(() => {
     const subscriptions = [
@@ -49,11 +47,11 @@ export function useRequestScreen({ navigation }: MainRouteProps) {
 
   useEffect(() => {
     BluetoothStateManager.getState().then((bluetoothState) => {
-      if(bluetoothState === 'PoweredOn' && isBluetoothDenied) {
+      if(bluetoothState === 'PoweredOn' && RequestEvents.isBluetoothDenied) {
         requestService.send(RequestEvents.SCREEN_FOCUS())
       }
     });
-  }, [isActive]);
+  }, [RequestEvents.isActive]);
 
   return {
     connectionParams: useSelector(requestService, selectConnectionParams),
@@ -70,6 +68,7 @@ export function useRequestScreen({ navigation }: MainRouteProps) {
     isAccepted: useSelector(requestService, selectAccepted),
     isRejected: useSelector(requestService, selectRejected),
     isDisconnected: useSelector(requestService, selectDisconnected),
+    isActive: useSelector(appService, selectIsActive),
 
     DISMISS: () => requestService.send(RequestEvents.DISMISS()),
     ACCEPT: () => requestService.send(RequestEvents.ACCEPT()),
