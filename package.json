@@ -54,6 +54,7 @@
     "@babel/core": "^7.12.9",
     "@types/react": "~17.0.21",
     "@types/react-native": "~0.64.12",
+    "babel-plugin-inline-import": "^3.0.0",
     "eas-cli": "^0.37.0",
     "expo-cli": "^4.13.0",
     "sharp": "^0.29.3",

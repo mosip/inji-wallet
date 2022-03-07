@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Asset } from 'expo-asset';
 import { Dimensions, Image, StyleSheet, View } from 'react-native';
 import { Divider, Icon, ListItem, Overlay } from 'react-native-elements';
 import Markdown from 'react-native-simple-markdown'
 import { Button, Text, Column, Row } from '../../components/ui';
 import { Colors } from '../../components/ui/styleUtils';
-const mdFile = require('../../Credits.md')
+import creditsContent from '../../Credits.md';
 
 export const Credits: React.FC<CreditsProps> = (props) => {
   const [isViewing, setIsViewing] = useState(false);
-  const [content, setContent] = useState("");
   const images = {
     'docs/images/newlogic_logo.png' : require('../../docs/images/newlogic_logo.png'),
     'docs/images/id_pass_logo.png' : require('../../docs/images/id_pass_logo.png'),
@@ -39,13 +38,6 @@ export const Credits: React.FC<CreditsProps> = (props) => {
     }
   }
 
-  const fetchLocalFile = async () => {
-    let file = Asset.fromModule(mdFile)
-    file = await fetch(file.uri)
-    file = await file.text()
-    setContent(file);
-  }
-
   const rules = {
     image: {
       react: (node, output, state) => (
@@ -59,12 +51,6 @@ export const Credits: React.FC<CreditsProps> = (props) => {
       ),
     }
   }
-
-  useEffect(() => {
-    (async () => {
-      await fetchLocalFile();
-    })();
-  }, [])
 
   return (
     <ListItem bottomDivider onPress={() => setIsViewing(true)}>
@@ -88,7 +74,7 @@ export const Credits: React.FC<CreditsProps> = (props) => {
           <View style={styles.markdownView}>
             <Markdown
               rules={rules}
-              children={content}
+              children={creditsContent}
               styles={markdownStyles}/>
           </View>
         </View>
