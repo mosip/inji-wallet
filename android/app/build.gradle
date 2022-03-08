@@ -180,6 +180,7 @@ android {
             keyAlias "$keystoreAlias"
             keyPassword "$keystorePass"
             v2SigningEnabled true
+            v1SigningEnabled false
         }
         debug {
             def keystore = System.getenv("DEBUG_KEYSTORE") ?: "debug.keystore"
@@ -190,6 +191,7 @@ android {
             keyAlias "$keystoreAlias"
             keyPassword "$keystorePass"
             v2SigningEnabled true
+            v1SigningEnabled false
         }
     }
     buildTypes {
