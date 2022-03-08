@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Camera } from 'expo-camera';
 import { BarCodeEvent, BarCodeScanner } from 'expo-barcode-scanner';
 import { Linking, StyleSheet, TouchableOpacity, View } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Colors } from './ui/styleUtils';
-import { Button, Text } from './ui';
+import { Column, Button, Text } from './ui';
 import { GlobalContext } from '../shared/GlobalContext';
 import { useSelector } from '@xstate/react';
 import { selectIsActive } from '../machines/app';
@@ -22,16 +22,11 @@ const styles = StyleSheet.create({
   scanner: {
     height: 400,
     width: '100%',
-    margin: 'auto'
+    margin: 'auto',
   },
   buttonContainer: {
     height: '100%',
     width: '100%',
-  },
-  flipButtonContainer: {
-    position: 'absolute',
-    width: '80%',
-    top: '110%',
   },
   buttonStyle: {
     position: 'absolute',
@@ -95,13 +90,13 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
         <Camera
           style={styles.scanner}
           barCodeScannerSettings={{
-            barcodeTypes: [BarCodeScanner.Constants.BarCodeType.qr]
+            barcodeTypes: [BarCodeScanner.Constants.BarCodeType.qr],
           }}
           onBarCodeScanned={scanned ? undefined : onBarcodeScanned}
           type={type}
-          />
+        />
       </View>
-      <View style={styles.flipButtonContainer}>
+      <Column margin="24 0">
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
@@ -113,7 +108,7 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
           }}>
           <Icon name="flip-camera-ios" color={Colors.Black} size={64} />
         </TouchableOpacity>
-      </View>
+      </Column>
     </View>
   );
 
