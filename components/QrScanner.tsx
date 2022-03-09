@@ -24,16 +24,7 @@ const styles = StyleSheet.create({
     width: '100%',
     margin: 'auto',
   },
-  buttonContainer: {
-    height: '100%',
-    width: '100%',
-  },
-  buttonStyle: {
-    position: 'absolute',
-    width: '100%',
-    bottom: -90,
-  },
-  button: {
+  flipIconButton: {
     alignSelf: 'center',
     alignItems: 'center',
   },
@@ -73,14 +64,12 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
 
   if (hasPermission === false) {
     return (
-      <View style={styles.buttonContainer}>
-        <Text align="center">
+      <Column fill align="space-between">
+        <Text align="center" color={Colors.Red}>
           This app uses the camera to scan the QR code of another device.
         </Text>
-        <View style={styles.buttonStyle}>
-          <Button title="Allow access to camera" onPress={openSettings} />
-        </View>
-      </View>
+        <Button title="Allow access to camera" onPress={openSettings} />
+      </Column>
     );
   }
 
@@ -98,7 +87,7 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
       </View>
       <Column margin="24 0">
         <TouchableOpacity
-          style={styles.button}
+          style={styles.flipIconButton}
           onPress={() => {
             setType(
               type === Camera.Constants.Type.back
