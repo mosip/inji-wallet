@@ -211,7 +211,7 @@ export const appMachine = model.createMachine(
       },
 
       checkFocusState: () => (callback) => {
-        const handler = (newState: AppStateStatus) => {
+        const changeHandler = (newState: AppStateStatus) => {
           switch (newState) {
             case 'background':
             case 'inactive':
@@ -223,9 +223,21 @@ export const appMachine = model.createMachine(
           }
         };
 
-        AppState.addEventListener('change', handler);
+        const blurHandler = () => callback({ type: 'INACTIVE' });
+        const focusHandler = () => callback({ type: 'ACTIVE' });
 
-        return () => AppState.removeEventListener('change', handler);
+        AppState.addEventListener('change', changeHandler);
+
+        // android only
+        AppState.addEventListener('blur', blurHandler);
+        AppState.addEventListener('focus', focusHandler);
+
+        return () => {
+          AppState.removeEventListener('change', changeHandler);
+
+          AppState.removeEventListener('blur', blurHandler);
+          AppState.removeEventListener('focus', focusHandler);
+        };
       },
 
       checkNetworkState: () => (callback) => {
