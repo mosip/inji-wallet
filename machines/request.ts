@@ -7,7 +7,7 @@ import { DeviceInfo } from '../components/DeviceInfoList';
 import { Message } from '../shared/Message';
 import { getDeviceNameSync } from 'react-native-device-info';
 import { StoreEvents } from './store';
-import { VID } from '../types/vid';
+import { VC } from '../types/vc';
 import { AppServices } from '../shared/GlobalContext';
 import {
   RECEIVED_VIDS_STORE_KEY,
@@ -21,7 +21,7 @@ const model = createModel(
     serviceRefs: {} as AppServices,
     senderInfo: {} as DeviceInfo,
     receiverInfo: {} as DeviceInfo,
-    incomingVid: {} as VID,
+    incomingVid: {} as VC,
     connectionParams: '',
     loggers: [] as EmitterSubscription[],
   },
@@ -31,7 +31,7 @@ const model = createModel(
       REJECT: () => ({}),
       CANCEL: () => ({}),
       DISMISS: () => ({}),
-      VID_RECEIVED: (vid: VID) => ({ vid }),
+      VID_RECEIVED: (vid: VC) => ({ vid }),
       RESPONSE_SENT: () => ({}),
       CONNECTED: () => ({}),
       DISCONNECT: () => ({}),
@@ -289,10 +289,7 @@ export const requestMachine = model.createMachine(
         (context) =>
           StoreEvents.PREPEND(
             RECEIVED_VIDS_STORE_KEY,
-            VID_ITEM_STORE_KEY(
-              context.incomingVid.uin,
-              context.incomingVid.requestId
-            )
+            VID_ITEM_STORE_KEY(context.incomingVid)
           ),
         { to: (context) => context.serviceRefs.store }
       ),
@@ -300,10 +297,7 @@ export const requestMachine = model.createMachine(
       storeVid: send(
         (context) =>
           StoreEvents.SET(
-            VID_ITEM_STORE_KEY(
-              context.incomingVid.uin,
-              context.incomingVid.requestId
-            ),
+            VID_ITEM_STORE_KEY(context.incomingVid),
             context.incomingVid
           ),
         { to: (context) => context.serviceRefs.store }
@@ -312,15 +306,12 @@ export const requestMachine = model.createMachine(
       logReceived: send(
         (context) =>
           ActivityLogEvents.LOG_ACTIVITY({
-            _vidKey: VID_ITEM_STORE_KEY(
-              context.incomingVid.uin,
-              context.incomingVid.requestId
-            ),
+            _vidKey: VID_ITEM_STORE_KEY(context.incomingVid),
             action: 'received',
             timestamp: Date.now(),
             deviceName:
               context.senderInfo.name || context.senderInfo.deviceName,
-            vidLabel: context.incomingVid.tag || context.incomingVid.uin,
+            vidLabel: context.incomingVid.tag || context.incomingVid.id,
           }),
         { to: (context) => context.serviceRefs.activityLog }
       ),
@@ -328,10 +319,7 @@ export const requestMachine = model.createMachine(
       sendVidReceived: send(
         (context) => {
           return VidEvents.VID_RECEIVED(
-            VID_ITEM_STORE_KEY(
-              context.incomingVid.uin,
-              context.incomingVid.requestId
-            )
+            VID_ITEM_STORE_KEY(context.incomingVid)
           );
         },
         { to: (context) => context.serviceRefs.vid }
@@ -394,7 +382,7 @@ export const requestMachine = model.createMachine(
 
           if (event.type !== 'msg') return;
 
-          const message = Message.fromString<VID>(event.data);
+          const message = Message.fromString<VC>(event.data);
           if (message.type === 'send:vid') {
             callback({ type: 'VID_RECEIVED', vid: message.data });
           }
@@ -418,10 +406,7 @@ export const requestMachine = model.createMachine(
     guards: {
       hasExistingVid: (context, event: VidResponseEvent) => {
         const receivedVids: string[] = event.response;
-        const vidKey = VID_ITEM_STORE_KEY(
-          context.incomingVid.uin,
-          context.incomingVid.requestId
-        );
+        const vidKey = VID_ITEM_STORE_KEY(context.incomingVid);
         return receivedVids.includes(vidKey);
       },
     },

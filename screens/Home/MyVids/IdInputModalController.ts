@@ -12,34 +12,39 @@ import {
   selectIsInvalid,
   selectIsRequestingOtp,
   selectOtpError,
-  selectUin,
-  selectUinError,
-  selectUinInputRef,
+  selectId,
+  selectIdError,
+  selectIdInputRef,
+  selectIdType,
 } from './AddVidModalMachine';
+import { VcIdType } from '../../../types/vc';
 
-export function useUinInputModal({ service }: UinInputModalProps) {
+export function useIdInputModal({ service }: IdInputModalProps) {
   const { appService } = useContext(GlobalContext);
   const settingsService = appService.children.get('settings');
 
   return {
-    uin: useSelector(service, selectUin),
-    uinInputRef: useSelector(service, selectUinInputRef),
+    id: useSelector(service, selectId),
+    idType: useSelector(service, selectIdType),
+    idInputRef: useSelector(service, selectIdInputRef),
     vidLabel: useSelector(settingsService, selectVidLabel),
-    uinError: useSelector(service, selectUinError),
+    idError: useSelector(service, selectIdError),
     otpError: useSelector(service, selectOtpError),
 
     isInvalid: useSelector(service, selectIsInvalid),
     isAcceptingOtpInput: useSelector(service, selectIsAcceptingOtpInput),
     isRequestingOtp: useSelector(service, selectIsRequestingOtp),
 
-    INPUT_UIN: (uin: string) => service.send(AddVidModalEvents.INPUT_UIN(uin)),
+    INPUT_ID: (id: string) => service.send(AddVidModalEvents.INPUT_ID(id)),
+    SELECT_ID_TYPE: (selectedValue: VcIdType) =>
+      service.send(AddVidModalEvents.SELECT_ID_TYPE(selectedValue)),
+    VALIDATE_INPUT: () => service.send(AddVidModalEvents.VALIDATE_INPUT()),
     INPUT_OTP: (otp: string) => service.send(AddVidModalEvents.INPUT_OTP(otp)),
-    VALIDATE_UIN: () => service.send(AddVidModalEvents.VALIDATE_UIN()),
     READY: (input: TextInput) => service.send(AddVidModalEvents.READY(input)),
     DISMISS: () => service.send(AddVidModalEvents.DISMISS()),
   };
 }
 
-export interface UinInputModalProps extends ModalProps {
+export interface IdInputModalProps extends ModalProps {
   service: ActorRefFrom<typeof AddVidModalMachine>;
 }

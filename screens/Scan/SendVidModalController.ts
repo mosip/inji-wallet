@@ -13,7 +13,7 @@ import {
 import { selectVidLabel } from '../../machines/settings';
 import { selectShareableVids } from '../../machines/vid';
 import { GlobalContext } from '../../shared/GlobalContext';
-import { VID } from '../../types/vid';
+import { VC } from '../../types/vc';
 
 export function useSendVidModal() {
   const { appService } = useContext(GlobalContext);
@@ -35,7 +35,7 @@ export function useSendVidModal() {
 
     ACCEPT_REQUEST: () => scanService.send(ScanEvents.ACCEPT_REQUEST()),
     CANCEL: () => scanService.send(ScanEvents.CANCEL()),
-    SELECT_VID: (vid: VID) => scanService.send(ScanEvents.SELECT_VID(vid)),
+    SELECT_VID: (vid: VC) => scanService.send(ScanEvents.SELECT_VID(vid)),
     DISMISS: () => scanService.send(ScanEvents.DISMISS()),
     UPDATE_REASON: (reason: string) =>
       scanService.send(ScanEvents.UPDATE_REASON(reason)),

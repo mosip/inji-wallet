@@ -14,7 +14,7 @@ export const ViewVidModal: React.FC<ViewVidModalProps> = (props) => {
     <Modal
       isVisible={props.isVisible}
       onDismiss={props.onDismiss}
-      headerTitle={controller.vid.tag || controller.vid.uin}
+      headerTitle={controller.vid.tag || controller.vid.id}
       headerElevation={2}
       headerRight={
         <Icon name="edit" onPress={controller.EDIT_TAG} color={Colors.Orange} />
