@@ -16,6 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      # cache npm dependencies for faster builds
       - uses: actions/cache@v2
         with:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
