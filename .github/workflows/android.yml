@@ -27,7 +27,9 @@ jobs:
           npm ci
       - name: Build App Newlogic Release
         run: |
-          cd android && ./gradlew :app:assembleNewlogicRelease
+          cd android
+          gpg -o app/google-services.json --batch --passphrase="${FIREBASE_SECRET}" -d app/google-services.json.gpg
+          ./gradlew :app:assembleNewlogicRelease
         env:
           BACKEND_SERVICE_URL: https://qa-triple-rc2.mosip.net/residentmobileapp
       - name: Upload Artifact
