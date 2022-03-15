@@ -32,6 +32,7 @@ jobs:
           ./gradlew :app:assembleNewlogicRelease
         env:
           BACKEND_SERVICE_URL: https://qa-triple-rc2.mosip.net/residentmobileapp
+          FIREBASE_SECRET: ${{ secrets.FIREBASE_SECRET }}
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
