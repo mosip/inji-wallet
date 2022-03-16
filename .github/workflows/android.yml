@@ -16,6 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      # Cache stuff for faster build
       - name: Cache local npm repository
         uses: actions/cache@v2
         with:
