@@ -39,8 +39,8 @@ export const VidDetails: React.FC<VidDetailsProps> = (props) => {
           <ListItem.Content>
             <ListItem.Subtitle>Photo</ListItem.Subtitle>
             <ListItem.Content>
-              <Image
-                source={{ uri: props.vid?.credential.biometrics.face }}
+              <Image 
+                source = { props.vid?.credential.biometrics.face ?  { uri: props.vid?.credential.biometrics.face } : require('../assets/placeholder-photo.png')} 
                 style={{
                   width: 110,
                   height: 110,
