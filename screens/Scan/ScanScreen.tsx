@@ -9,7 +9,7 @@ import { useScanScreen } from './ScanScreenController';
 
 export const ScanScreen: React.FC<MainRouteProps> = (props) => {
   const controller = useScanScreen(props);
-  console.log('controller', controller)
+  
   return (
     <Column fill padding="98 24 24 24" backgroundColor={Colors.LightGrey}>
       <Text align="center">Scan QR Code</Text>
