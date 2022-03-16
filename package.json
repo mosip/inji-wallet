@@ -46,6 +46,7 @@
     "react-native-securerandom": "^1.0.0",
     "react-native-simple-markdown": "^1.1.0",
     "react-native-svg": "12.1.1",
+    "react-native-system-setting": "^1.7.6",
     "react-native-vector-icons": "^8.1.0",
     "react-native-web": "0.17.1",
     "xstate": "^4.26.0"
