@@ -16,11 +16,25 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # cache npm dependencies for faster builds
-      - uses: actions/cache@v2
+      - name: Cache local npm repository
+        uses: actions/cache@v2
         with:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           path: ~/.npm
+
+      - name: Cache local maven repository
+        uses: actions/cache@v2
+        with:
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          path: ~/.m2
+
+      - name: Cache local gradle repository
+        uses: actions/cache@v2
+        with:
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
 
       - name: Install npm dependencies
         run: |
