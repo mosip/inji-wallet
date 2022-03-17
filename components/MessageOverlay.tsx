@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Dimensions, StyleSheet } from 'react-native';
 import { Overlay, LinearProgress } from 'react-native-elements';
@@ -22,16 +22,10 @@ const styles = StyleSheet.create({
 });
 
 export const MessageOverlay: React.FC<MessageOverlayProps> = (props) => {
-  const [isVisible, setIsVisible] = useState(props.isVisible)
-
-  const onCancelPress = () => {
-    setIsVisible(false);
-    props.onCancel();
-  }
 
   return (
     <Overlay
-      isVisible={isVisible}
+      isVisible={props.isVisible}
       overlayStyle={styles.overlay}
       onBackdropPress={props.onBackdropPress}
     > 
@@ -40,7 +34,7 @@ export const MessageOverlay: React.FC<MessageOverlayProps> = (props) => {
           name="close"
           color={Colors.White}
           style={styles.close}
-          onPress={onCancelPress}
+          onPress={props.onCancel}
           size={20}
         />
       )}
