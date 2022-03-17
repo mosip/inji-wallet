@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, Alert, Platform } from 'react-native';
 import Constants  from 'expo-constants';
-import { LocalAuthentication } from 'expo';
+import  * as  LocalAuthentication from 'expo-local-authentication';
 import { Icon } from 'react-native-elements';
 import { Column, Text } from '../components/ui';
 import { Colors } from '../components/ui/styleUtils';
@@ -59,7 +59,7 @@ export const BiometricScreen: React.FC<RootRouteProps> = (props) => {
       <Text>Scan your finger</Text>
       <View style={styles.container}>
         <Text style={styles.text}>
-          Fingerprings Saved?{' '}
+          Fingerprints Saved?{' '}
           {savedFingerprints === true ? 'True' : 'False'}
         </Text>
         <TouchableOpacity
