@@ -109,9 +109,6 @@ export const requestMachine = model.createMachine(
       waitingForConnection: {
         id: 'waitingForConnection',
         entry: ['removeLoggers', 'registerLoggers', 'generateConnectionParams'],
-        meta: {
-          message: 'Waiting for connection...',
-        },
         invoke: {
           src: 'advertiseDevice',
         },
@@ -130,9 +127,6 @@ export const requestMachine = model.createMachine(
         },
       },
       exchangingDeviceInfo: {
-        meta: {
-          message: 'Exchanging device info...',
-        },
         invoke: {
           src: 'exchangeDeviceInfo',
         },
@@ -144,9 +138,6 @@ export const requestMachine = model.createMachine(
         },
       },
       waitingForVid: {
-        meta: {
-          message: 'Connected to device. Waiting for VID...',
-        },
         invoke: {
           src: 'receiveVid',
         },
@@ -454,34 +445,38 @@ export function selectConnectionParams(state: State) {
   return state.context.connectionParams;
 }
 
-export function selectStatusMessage(state: State) {
-  return state.meta[`${state.machine.id}.${state.value}`]?.message || '';
-}
-
 export function selectIncomingVid(state: State) {
   return state.context.incomingVid;
 }
 
-export function selectReviewing(state: State) {
+export function selectIsReviewing(state: State) {
   return state.matches('reviewing');
 }
 
-export function selectAccepted(state: State) {
+export function selectIsAccepted(state: State) {
   return state.matches('reviewing.accepted');
 }
 
-export function selectRejected(state: State) {
+export function selectIsRejected(state: State) {
   return state.matches('reviewing.rejected');
 }
 
-export function selectDisconnected(state: State) {
+export function selectIsDisconnected(state: State) {
   return state.matches('disconnected');
 }
 
-export function selectWaitingForConnection(state: State) {
+export function selectIsWaitingForConnection(state: State) {
   return state.matches('waitingForConnection');
 }
 
-export function selectBluetoothDenied(state: State) {
+export function selectIsBluetoothDenied(state: State) {
   return state.matches('bluetoothDenied');
+}
+
+export function selectIsExchangingDeviceInfo(state: State) {
+  return state.matches('exchangingDeviceInfo');
+}
+
+export function selectIsWaitingForVid(state: State) {
+  return state.matches('waitingForVid');
 }

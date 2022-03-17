@@ -15,7 +15,8 @@ export const RequestScreen: React.FC<MainRouteProps> = (props) => {
       <Column>
         {controller.isBluetoothDenied ? (
           <Text color={Colors.Red} align="center">
-            Please enable Bluetooth to be able to request a VID
+            Please enable Bluetooth to be able to request a{' '}
+            {controller.vidLabel.singular}
           </Text>
         ) : (
           <Text align="center">
