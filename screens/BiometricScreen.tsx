@@ -46,31 +46,12 @@ export const BiometricScreen: React.FC<RootRouteProps> = (props) => {
 
   const scanFingerprint = async () => {
     let results = await LocalAuthentication.authenticateAsync();
+    console.log('---------->RESULTS', results)
     if (results.success) {
       alert("success!");
     } else {
       alert("fail");
     }
-  };
-
-  const showAndroidAlert = () => {
-    Alert.alert(
-      'Fingerprint Scan',
-      'Place your finger over the touch sensor and press scan.',
-      [
-        {
-          text: 'Scan',
-          onPress: () => {
-            scanFingerprint();
-          },
-        },
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel'),
-          style: 'cancel',
-        },
-      ]
-    );
   };
 
   return (

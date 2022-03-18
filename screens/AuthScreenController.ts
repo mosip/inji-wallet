@@ -18,10 +18,11 @@ export function useAuthScreen(props: RootRouteProps) {
       console.log('-------> biometrics response', response);
       setHasBiometric(response);
       const available = await LocalAuthentication.supportedAuthenticationTypesAsync();
-      console.log('-------> biometrics available', available);
+      console.log('-------> biometrics supported', available);
       const enrolled = await LocalAuthentication.isEnrolledAsync();
       console.log('-------> biometrics enrolled', enrolled);
-
+      const enrollLevel = await LocalAuthentication.getEnrolledLevelAsync();
+      console.log('-------> biometrics enrollLevel', enrollLevel);
     })();
   }, [])
 
