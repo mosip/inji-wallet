@@ -14,14 +14,20 @@ export const ScanScreen: React.FC<MainRouteProps> = (props) => {
     <Column fill padding="98 24 24 24" backgroundColor={Colors.LightGrey}>
       <Text align="center">Scan QR Code</Text>
 
-      {controller.isLocationDisabled || controller.isLocationDenied || controller.isFlightMode ? (
+      {controller.isLocationDisabled ||
+      controller.isLocationDenied ||
+      controller.isFlightMode ? (
         <Column fill align="space-between">
           <Text align="center" margin="16 0" color={Colors.Red}>
             {controller.locationError.message}
           </Text>
           <Button
             title={controller.locationError.button}
-            onPress={controller.isFlightMode ? controller.FLIGHT_REQUEST : controller.LOCATION_REQUEST}
+            onPress={
+              controller.isFlightMode
+                ? controller.FLIGHT_REQUEST
+                : controller.LOCATION_REQUEST
+            }
           />
         </Column>
       ) : null}
@@ -43,7 +49,6 @@ export const ScanScreen: React.FC<MainRouteProps> = (props) => {
         message={controller.statusMessage}
         hasProgress={!controller.isInvalid}
         onBackdropPress={controller.DISMISS_INVALID}
-        onCancel={controller.DISMISS}
       />
 
       <SendVidModal
