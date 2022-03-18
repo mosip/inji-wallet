@@ -84,5 +84,10 @@ export function useScanScreen({ navigation }: MainRouteProps) {
     LOCATION_REQUEST: () => scanService.send(ScanEvents.LOCATION_REQUEST()),
     FLIGHT_REQUEST: () => scanService.send(ScanEvents.FLIGHT_REQUEST()),
     SCAN: (qrCode: string) => scanService.send(ScanEvents.SCAN(qrCode)),
+    DISMISS_INVALID: () => {
+      if(isInvalid) {
+        scanService.send(ScanEvents.DISMISS())
+      }
+    }
   };
 }
