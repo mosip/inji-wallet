@@ -34,24 +34,26 @@ export const VidDetails: React.FC<VidDetailsProps> = (props) => {
           </Text>
         </Column>
       </Row>
-      {props.vid?.credential.biometrics && (
-        <ListItem bottomDivider>
+      <ListItem bottomDivider>
+        <ListItem.Content>
+          <ListItem.Subtitle>Photo</ListItem.Subtitle>
           <ListItem.Content>
-            <ListItem.Subtitle>Photo</ListItem.Subtitle>
-            <ListItem.Content>
-              <Image 
-                source = { props.vid?.credential.biometrics?.face ?  { uri: props.vid?.credential.biometrics.face } : require('../assets/placeholder-photo.png')} 
-                style={{
-                  width: 110,
-                  height: 110,
-                  resizeMode: 'cover',
-                  marginTop: 8,
-                }}
-              />
-            </ListItem.Content>
+            <Image
+              source={
+                props.vid?.credential.biometrics?.face
+                  ? { uri: props.vid?.credential.biometrics.face }
+                  : require('../assets/placeholder-photo.png')
+              }
+              style={{
+                width: 110,
+                height: 110,
+                resizeMode: 'cover',
+                marginTop: 8,
+              }}
+            />
           </ListItem.Content>
-        </ListItem>
-      )}
+        </ListItem.Content>
+      </ListItem>
       <ListItem bottomDivider>
         <ListItem.Content>
           <ListItem.Subtitle>Full name</ListItem.Subtitle>
