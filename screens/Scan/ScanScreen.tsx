@@ -43,7 +43,6 @@ export const ScanScreen: React.FC<MainRouteProps> = (props) => {
         message={controller.statusMessage}
         hasProgress={!controller.isInvalid}
         onBackdropPress={controller.isInvalid && controller.DISMISS}
-        onCancel={controller.DISMISS}
       />
 
       <SendVidModal
