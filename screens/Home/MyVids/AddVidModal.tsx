@@ -27,7 +27,6 @@ export const AddVidModal: React.FC<AddVidModalProps> = (props) => {
         isVisible={controller.isRequestingCredential}
         title="Requesting credential..."
         hasProgress
-        onCancel={controller.DISMISS}
       />
 
       <DownloadingVidModal
