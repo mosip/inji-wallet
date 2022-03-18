@@ -42,7 +42,7 @@ export const ScanScreen: React.FC<MainRouteProps> = (props) => {
         isVisible={controller.statusMessage !== ''}
         message={controller.statusMessage}
         hasProgress={!controller.isInvalid}
-        onBackdropPress={controller.isInvalid && controller.DISMISS}
+        onBackdropPress={controller.DISMISS}
         onCancel={controller.DISMISS}
       />
 
