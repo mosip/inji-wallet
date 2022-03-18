@@ -15,6 +15,7 @@ import {
   MyVidsTabMachine,
   selectAddVidModal,
   selectIsOnboarding,
+  selectIsRequestSuccessful,
 } from './MyVidsTabMachine';
 
 export function useMyVidsTab(props: HomeScreenTabProps) {
@@ -31,6 +32,7 @@ export function useMyVidsTab(props: HomeScreenTabProps) {
     vidLabel: useSelector(settingsService, selectVidLabel),
 
     isRefreshingVids: useSelector(vidService, selectIsRefreshingMyVids),
+    isRequestSuccessful: useSelector(service, selectIsRequestSuccessful),
     isOnboarding: useSelector(service, selectIsOnboarding),
 
     DISMISS: () => service.send(MyVidsTabEvents.DISMISS()),

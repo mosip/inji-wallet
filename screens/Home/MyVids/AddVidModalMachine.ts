@@ -3,6 +3,7 @@ import {
   DoneInvokeEvent,
   ErrorPlatformEvent,
   EventFrom,
+  send,
   sendParent,
   StateFrom,
 } from 'xstate';
@@ -165,6 +166,7 @@ export const AddVidModalMachine = model.createMachine(
         },
       },
       requestSuccessful: {
+        entry: [send('DISMISS')],
         on: {
           DISMISS: 'done',
         },

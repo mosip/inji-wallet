@@ -101,11 +101,16 @@ export const MyVidsTabMachine = model.createMachine(
             entry: ['storeVidItem'],
             on: {
               STORE_RESPONSE: {
-                target: '#idle',
+                target: 'addVidSuccessful',
                 actions: ['sendVidAdded'],
               },
             },
           },
+          addVidSuccessful: {
+            on: {
+              DISMISS: '#idle',
+            },
+          }
         },
       },
     },
@@ -159,4 +164,8 @@ export function selectAddVidModal(state: State) {
 
 export function selectIsOnboarding(state: State) {
   return state.matches('onboarding');
+}
+
+export function selectIsRequestSuccessful(state: State) {
+  return state.matches('addingVid.addVidSuccessful');
 }

@@ -7,12 +7,13 @@ import { RefreshControl } from 'react-native';
 import { useMyVidsTab } from './MyVidsTabController';
 import { HomeScreenTabProps } from './HomeScreen';
 import { AddVidModal } from './MyVids/AddVidModal';
+import { DownloadingVidModal } from './MyVids/DownloadingVidModal';
 import { OnboardingOverlay } from './OnboardingOverlay';
 import { MessageOverlay } from '../../components/MessageOverlay';
 
 export const MyVidsTab: React.FC<HomeScreenTabProps> = (props) => {
   const controller = useMyVidsTab(props);
-
+  
   return (
     <React.Fragment>
       <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
@@ -74,6 +75,12 @@ export const MyVidsTab: React.FC<HomeScreenTabProps> = (props) => {
 
       {controller.AddVidModalService && (
         <AddVidModal service={controller.AddVidModalService} />
+      )}
+      {controller.isRequestSuccessful && (
+        <DownloadingVidModal
+          isVisible={controller.isRequestSuccessful}
+          onDismiss={controller.DISMISS}
+        />
       )}
 
       <OnboardingOverlay
