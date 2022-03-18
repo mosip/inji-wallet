@@ -9,6 +9,12 @@ import { useScanScreen } from './ScanScreenController';
 
 export const ScanScreen: React.FC<MainRouteProps> = (props) => {
   const controller = useScanScreen(props);
+
+  const dismissInvalid = () => {
+    if(controller.isInvalid) {
+      controller.DISMISS()
+    }
+  }
   
   return (
     <Column fill padding="98 24 24 24" backgroundColor={Colors.LightGrey}>
@@ -42,7 +48,7 @@ export const ScanScreen: React.FC<MainRouteProps> = (props) => {
         isVisible={controller.statusMessage !== ''}
         message={controller.statusMessage}
         hasProgress={!controller.isInvalid}
-        onBackdropPress={controller.DISMISS}
+        onBackdropPress={dismissInvalid}
         onCancel={controller.DISMISS}
       />
 
