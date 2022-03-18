@@ -8,6 +8,7 @@ import { useMyVidsTab } from './MyVidsTabController';
 import { HomeScreenTabProps } from './HomeScreen';
 import { AddVidModal } from './MyVids/AddVidModal';
 import { OnboardingOverlay } from './OnboardingOverlay';
+import { MessageOverlay } from '../../components/MessageOverlay';
 
 export const MyVidsTab: React.FC<HomeScreenTabProps> = (props) => {
   const controller = useMyVidsTab(props);

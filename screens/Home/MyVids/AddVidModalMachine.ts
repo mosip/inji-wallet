@@ -152,6 +152,11 @@ export const AddVidModalMachine = model.createMachine(
             },
           ],
         },
+        on: {
+          DISMISS: {
+            actions: [sendParent('DISMISS')],
+          },
+        },
       },
       requestSuccessful: {
         on: {
