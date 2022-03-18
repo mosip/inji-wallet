@@ -15,12 +15,12 @@ export const RequestScreen: React.FC<MainRouteProps> = (props) => {
       <Column>
         {controller.isBluetoothDenied ? (
           <Text color={Colors.Red} align="center">
-            Please enable Bluetooth to be able to request a{' '}
+            Please enable Bluetooth to be able to request{' '}
             {controller.vidLabel.singular}
           </Text>
         ) : (
           <Text align="center">
-            Show this QR code to request a {controller.vidLabel.singular}
+            Show this QR code to request {controller.vidLabel.singular}
           </Text>
         )}
       </Column>
@@ -53,7 +53,7 @@ export const RequestScreen: React.FC<MainRouteProps> = (props) => {
       <MessageOverlay
         isVisible={controller.isAccepted}
         title="Success!"
-        message={`${controller.senderInfo.deviceName}'s ${controller.vidLabel.singular} has been succesfully received'`}
+        message={`${controller.senderInfo.deviceName}'s ${controller.vidLabel.singular} has been succesfully received`}
         onBackdropPress={controller.DISMISS}
       />
 

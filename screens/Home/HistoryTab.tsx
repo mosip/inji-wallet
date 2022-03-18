@@ -6,6 +6,15 @@ import { TextItem } from '../../components/ui/TextItem';
 import { useHistoryTab } from './HistoryTabController';
 import { HomeScreenTabProps } from './HomeScreen';
 import { Icon } from 'react-native-elements';
+import { ActivityLog } from '../../machines/activityLog';
+
+const createLabel = (activity: ActivityLog) =>
+  [
+    activity.deviceName,
+    formatDistanceToNow(activity.timestamp, { addSuffix: true }),
+  ]
+    .filter((label) => label.trim() !== '')
+    .join(' · ');
 
 export const HistoryTab: React.FC<HomeScreenTabProps> = (props) => {
   const controller = useHistoryTab(props);
@@ -24,10 +33,7 @@ export const HistoryTab: React.FC<HomeScreenTabProps> = (props) => {
         {controller.activities.map((activity) => (
           <TextItem
             key={activity.timestamp}
-            label={`${activity.deviceName} · ${formatDistanceToNow(
-              activity.timestamp,
-              { addSuffix: true }
-            )}`}
+            label={createLabel(activity)}
             text={`${activity.vidLabel} ${activity.action}`}
           />
         ))}
