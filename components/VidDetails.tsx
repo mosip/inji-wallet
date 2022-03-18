@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import { VID, CredentialSubject } from '../types/vid';
+import { VC, CredentialSubject } from '../types/vc';
 import { Column, Row, Text } from './ui';
 import { Colors } from './ui/styleUtils';
 
@@ -22,7 +22,7 @@ export const VidDetails: React.FC<VidDetailsProps> = (props) => {
             UIN
           </Text>
           <Text weight="bold" size="smaller">
-            {props.vid?.uin}
+            {props.vid?.id}
           </Text>
         </Column>
         <Column fill elevation={1} padding="12 16" margin="">
@@ -115,7 +115,7 @@ export const VidDetails: React.FC<VidDetailsProps> = (props) => {
 };
 
 interface VidDetailsProps {
-  vid: VID;
+  vid: VC;
 }
 
 interface LocalizedField {

@@ -1,19 +1,24 @@
-export interface VID {
+export interface VC {
+  id: string;
+  idType: VcIdType;
   tag: string;
-  uin: string;
-  credential: {
-    biometrics: {
-      face: string;
-      finger: {
-        left_thumb: string;
-        right_thumb: string;
-      };
-    };
-  };
+  credential: DecodedCredential;
   verifiableCredential: VerifiableCredential;
   generatedOn: Date;
   requestId: string;
   reason?: string;
+}
+
+export type VcIdType = 'UIN' | 'VID';
+
+export interface DecodedCredential {
+  biometrics: {
+    face: string;
+    finger: {
+      left_thumb: string;
+      right_thumb: string;
+    };
+  };
 }
 
 export interface CredentialSubject {
@@ -32,6 +37,7 @@ export interface CredentialSubject {
   postalCode: string;
   province: string;
   region: string;
+  vcVer: 'VC-V1' | string;
 }
 
 export interface VerifiableCredential {

@@ -3,14 +3,14 @@ import { MessageOverlay } from '../../../components/MessageOverlay';
 import { AddVidModalProps, useAddVidModal } from './AddVidModalController';
 import { DownloadingVidModal } from './DownloadingVidModal';
 import { OtpVerificationModal } from './OtpVerificationModal';
-import { UinInputModal } from './UinInputModal';
+import { IdInputModal } from './IdInputModal';
 
 export const AddVidModal: React.FC<AddVidModalProps> = (props) => {
   const controller = useAddVidModal(props);
 
   return (
     <React.Fragment>
-      <UinInputModal
+      <IdInputModal
         service={props.service}
         isVisible={true}
         onDismiss={controller.DISMISS}

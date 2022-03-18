@@ -7,7 +7,7 @@ import { EmitterSubscription, Linking, PermissionsAndroid } from 'react-native';
 import { DeviceInfo } from '../components/DeviceInfoList';
 import { Message } from '../shared/Message';
 import { getDeviceNameSync } from 'react-native-device-info';
-import { VID } from '../types/vid';
+import { VC } from '../types/vc';
 import { AppServices } from '../shared/GlobalContext';
 import { ActivityLogEvents } from './activityLog';
 import { VID_ITEM_STORE_KEY } from '../shared/constants';
@@ -17,7 +17,7 @@ const model = createModel(
     serviceRefs: {} as AppServices,
     senderInfo: {} as DeviceInfo,
     receiverInfo: {} as DeviceInfo,
-    selectedVid: {} as VID,
+    selectedVid: {} as VC,
     reason: '',
     loggers: [] as EmitterSubscription[],
     locationConfig: {
@@ -31,7 +31,7 @@ const model = createModel(
     events: {
       EXCHANGE_DONE: (receiverInfo: DeviceInfo) => ({ receiverInfo }),
       RECEIVE_DEVICE_INFO: (info: DeviceInfo) => ({ info }),
-      SELECT_VID: (vid: VID) => ({ vid }),
+      SELECT_VID: (vid: VC) => ({ vid }),
       SCAN: (params: string) => ({ params }),
       ACCEPT_REQUEST: () => ({}),
       VID_ACCEPTED: () => ({}),
@@ -342,15 +342,12 @@ export const scanMachine = model.createMachine(
       logShared: send(
         (context) =>
           ActivityLogEvents.LOG_ACTIVITY({
-            _vidKey: VID_ITEM_STORE_KEY(
-              context.selectedVid.uin,
-              context.selectedVid.requestId
-            ),
+            _vidKey: VID_ITEM_STORE_KEY(context.selectedVid),
             action: 'shared',
             timestamp: Date.now(),
             deviceName:
               context.receiverInfo.name || context.receiverInfo.deviceName,
-            vidLabel: context.selectedVid.tag || context.selectedVid.uin,
+            vidLabel: context.selectedVid.tag || context.selectedVid.id,
           }),
         { to: (context) => context.serviceRefs.activityLog }
       ),
@@ -449,7 +446,7 @@ export const scanMachine = model.createMachine(
           tag: '',
         };
 
-        const message = new Message<VID>('send:vid', vid);
+        const message = new Message<VC>('send:vid', vid);
 
         SmartShare.send(message.toString(), () => {
           subscription = SmartShare.handleNearbyEvents((event) => {

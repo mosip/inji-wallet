@@ -6,28 +6,30 @@ import {
   sendParent,
   StateFrom,
 } from 'xstate';
-import { log } from 'xstate/lib/actions';
 import { createModel } from 'xstate/lib/model';
 import { BackendResponseError, request } from '../../../shared/request';
 import { VID_ITEM_STORE_KEY } from '../../../shared/constants';
+import { VC, VcIdType } from '../../../types/vc';
 
 const model = createModel(
   {
-    uinInputRef: null as TextInput,
-    uin: '',
+    idInputRef: null as TextInput,
+    id: '',
+    idType: 'UIN' as VcIdType,
+    idError: '',
     otp: '',
-    uinError: '',
     otpError: '',
     transactionId: '',
     requestId: '',
   },
   {
     events: {
-      INPUT_UIN: (uin: string) => ({ uin }),
+      INPUT_ID: (id: string) => ({ id }),
       INPUT_OTP: (otp: string) => ({ otp }),
-      VALIDATE_UIN: () => ({}),
-      READY: (uinInputRef: TextInput) => ({ uinInputRef }),
+      VALIDATE_INPUT: () => ({}),
+      READY: (idInputRef: TextInput) => ({ idInputRef }),
       DISMISS: () => ({}),
+      SELECT_ID_TYPE: (idType: VcIdType) => ({ idType }),
     },
   }
 );
@@ -35,17 +37,18 @@ const model = createModel(
 export const AddVidModalEvents = model.events;
 
 type ReadyEvent = EventFrom<typeof model, 'READY'>;
-type InputUinEvent = EventFrom<typeof model, 'INPUT_UIN'>;
+type InputIdEvent = EventFrom<typeof model, 'INPUT_ID'>;
 type InputOtpEvent = EventFrom<typeof model, 'INPUT_OTP'>;
+type SelectIdTypeEvent = EventFrom<typeof model, 'SELECT_ID_TYPE'>;
 
 export const AddVidModalMachine = model.createMachine(
   {
     id: 'AddVidModal',
     context: model.initialContext,
-    initial: 'acceptingUinInput',
+    initial: 'acceptingIdInput',
     states: {
-      acceptingUinInput: {
-        id: 'acceptingUinInput',
+      acceptingIdInput: {
+        id: 'acceptingIdInput',
         entry: ['setTransactionId', 'clearOtp'],
         initial: 'rendering',
         states: {
@@ -53,7 +56,7 @@ export const AddVidModalMachine = model.createMachine(
             on: {
               READY: {
                 target: 'focusing',
-                actions: ['setUinInputRef'],
+                actions: ['setIdInputRef'],
               },
             },
           },
@@ -64,32 +67,35 @@ export const AddVidModalMachine = model.createMachine(
             },
           },
           idle: {
-            entry: ['focusUinInput'],
+            entry: ['focusInput'],
             on: {
-              INPUT_UIN: {
-                actions: ['setUin'],
+              INPUT_ID: {
+                actions: ['setId'],
               },
-              VALIDATE_UIN: [
-                { cond: 'isEmptyUin', target: 'invalid.empty' },
+              VALIDATE_INPUT: [
+                { cond: 'isEmptyId', target: 'invalid.empty' },
                 {
-                  cond: 'isWrongUinFormat',
+                  cond: 'isWrongIdFormat',
                   target: 'invalid.format',
                 },
                 { target: 'requestingOtp' },
               ],
+              SELECT_ID_TYPE: {
+                actions: ['setIdType', 'clearId'],
+              },
             },
           },
           invalid: {
-            entry: ['focusUinInput'],
+            entry: ['focusInput'],
             on: {
-              INPUT_UIN: {
+              INPUT_ID: {
                 target: 'idle',
-                actions: ['setUin', 'clearUinError'],
+                actions: ['setId', 'clearIdError'],
               },
-              VALIDATE_UIN: [
-                { cond: 'isEmptyUin', target: '.empty' },
+              VALIDATE_INPUT: [
+                { cond: 'isEmptyId', target: '.empty' },
                 {
-                  cond: 'isWrongUinFormat',
+                  cond: 'isWrongIdFormat',
                   target: '.format',
                 },
                 { target: 'requestingOtp' },
@@ -97,10 +103,10 @@ export const AddVidModalMachine = model.createMachine(
             },
             states: {
               empty: {
-                entry: ['setUinErrorEmpty'],
+                entry: ['setIdErrorEmpty'],
               },
               format: {
-                entry: ['setUinErrorWrongFormat'],
+                entry: ['setIdErrorWrongFormat'],
               },
               backend: {},
             },
@@ -111,7 +117,7 @@ export const AddVidModalMachine = model.createMachine(
               onDone: '#acceptingOtpInput',
               onError: {
                 target: 'invalid.backend',
-                actions: ['setUinError'],
+                actions: ['setIdError'],
               },
             },
           },
@@ -130,7 +136,7 @@ export const AddVidModalMachine = model.createMachine(
             target: 'requestingCredential',
             actions: ['setOtp'],
           },
-          DISMISS: '#acceptingUinInput.idle',
+          DISMISS: '#acceptingIdInput.idle',
         },
       },
       requestingCredential: {
@@ -142,9 +148,9 @@ export const AddVidModalMachine = model.createMachine(
           },
           onError: [
             {
-              cond: 'isUinInvalid',
-              target: '#acceptingUinInput.invalid',
-              actions: ['setUinError'],
+              cond: 'isIdInvalid',
+              target: '#acceptingIdInput.invalid',
+              actions: ['setIdError'],
             },
             {
               target: 'acceptingOtpInput',
@@ -165,14 +171,18 @@ export const AddVidModalMachine = model.createMachine(
       },
       done: {
         type: 'final',
-        data: (context) => VID_ITEM_STORE_KEY(context.uin, context.requestId),
+        data: (context) => VID_ITEM_STORE_KEY(context),
       },
     },
   },
   {
     actions: {
-      setUin: model.assign({
-        uin: (_, event: InputUinEvent) => event.uin,
+      setId: model.assign({
+        id: (_, event: InputIdEvent) => event.id,
+      }),
+
+      setIdType: model.assign({
+        idType: (_, event: SelectIdTypeEvent) => event.idType,
       }),
 
       setOtp: model.assign({
@@ -187,38 +197,40 @@ export const AddVidModalMachine = model.createMachine(
         requestId: (_, event: any) => (event as DoneInvokeEvent<string>).data,
       }),
 
-      setUinError: model.assign({
-        uinError: (_, event: any) => (event as ErrorPlatformEvent).data.message,
+      setIdError: model.assign({
+        idError: (_, event: any) => (event as ErrorPlatformEvent).data.message,
       }),
 
-      clearUinError: model.assign({ uinError: '' }),
+      clearId: model.assign({ id: '' }),
 
-      setUinErrorEmpty: model.assign({
-        uinError: 'The UIN cannot be empty',
+      clearIdError: model.assign({ idError: '' }),
+
+      setIdErrorEmpty: model.assign({
+        idError: 'The input cannot be empty',
       }),
 
-      setUinErrorWrongFormat: model.assign({
-        uinError: 'The UIN format is incorrect',
+      setIdErrorWrongFormat: model.assign({
+        idError: 'The input format is incorrect',
       }),
 
       setOtpError: model.assign({
         otpError: (_, event: any) => (event as ErrorPlatformEvent).data.message,
       }),
 
-      setUinInputRef: model.assign({
-        uinInputRef: (_, event: ReadyEvent) => event.uinInputRef,
+      setIdInputRef: model.assign({
+        idInputRef: (_, event: ReadyEvent) => event.idInputRef,
       }),
 
       clearOtp: model.assign({ otp: '' }),
 
-      focusUinInput: (context) => context.uinInputRef.focus(),
+      focusInput: (context) => context.idInputRef.focus(),
     },
 
     services: {
       requestOtp: async (context) => {
         return request('POST', '/req/otp', {
-          individualId: context.uin,
-          individualIdType: 'UIN',
+          individualId: context.id,
+          individualIdType: context.idType,
           otpChannel: ['EMAIL', 'PHONE'],
           transactionID: context.transactionId,
         });
@@ -226,7 +238,8 @@ export const AddVidModalMachine = model.createMachine(
 
       requestCredential: async (context) => {
         const response = await request('POST', '/credentialshare/request', {
-          individualId: context.uin,
+          individualId: context.id,
+          individualIdType: context.idType,
           otp: context.otp,
           transactionID: context.transactionId,
         });
@@ -235,11 +248,11 @@ export const AddVidModalMachine = model.createMachine(
     },
 
     guards: {
-      isEmptyUin: ({ uin }) => !uin || !uin.length,
+      isEmptyId: ({ id }) => !id || !id.length,
 
-      isWrongUinFormat: ({ uin }) => !/^[0-9]{10}$/.test(uin),
+      isWrongIdFormat: ({ id }) => !/^[0-9]{10,16}$/.test(id),
 
-      isUinInvalid: (_, event: any) =>
+      isIdInvalid: (_, event: any) =>
         ['IDA-MLC-009', 'RES-SER-29', 'IDA-MLC-018'].includes(
           (event as BackendResponseError).name
         ),
@@ -252,28 +265,32 @@ export const AddVidModalMachine = model.createMachine(
 
 type State = StateFrom<typeof AddVidModalMachine>;
 
-export function selectUin(state: State) {
-  return state.context.uin;
+export function selectId(state: State) {
+  return state.context.id;
 }
 
-export function selectUinInputRef(state: State) {
-  return state.context.uinInputRef;
+export function selectIdType(state: State) {
+  return state.context.idType;
 }
 
-export function selectUinError(state: State) {
-  return state.context.uinError;
+export function selectIdInputRef(state: State) {
+  return state.context.idInputRef;
+}
+
+export function selectIdError(state: State) {
+  return state.context.idError;
 }
 
 export function selectOtpError(state: State) {
   return state.context.otpError;
 }
 
-export function selectIsAcceptingUinInput(state: State) {
-  return state.matches('acceptingUinInput');
+export function selectIsAcceptingIdInput(state: State) {
+  return state.matches('acceptingIdInput');
 }
 
 export function selectIsInvalid(state: State) {
-  return state.matches('acceptingUinInput.invalid');
+  return state.matches('acceptingIdInput.invalid');
 }
 
 export function selectIsAcceptingOtpInput(state: State) {
@@ -281,7 +298,7 @@ export function selectIsAcceptingOtpInput(state: State) {
 }
 
 export function selectIsRequestingOtp(state: State) {
-  return state.matches('acceptingUinInput.requestingOtp');
+  return state.matches('acceptingIdInput.requestingOtp');
 }
 
 export function selectIsRequestingCredential(state: State) {

@@ -3,17 +3,23 @@ import { createModel } from 'xstate/lib/model';
 import { VID_ITEM_STORE_KEY } from '../shared/constants';
 import { AppServices } from '../shared/GlobalContext';
 import { CredentialDownloadResponse, request } from '../shared/request';
-import { VID, CredentialSubject, VerifiableCredential } from '../types/vid';
-import { StoreEvents, storeMachine } from './store';
+import {
+  VC,
+  VerifiableCredential,
+  VcIdType,
+  DecodedCredential,
+} from '../types/vc';
+import { StoreEvents } from './store';
 import { ActivityLogEvents } from './activityLog';
 
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
-    uin: '',
+    id: '',
+    idType: '' as VcIdType,
     tag: '',
     generatedOn: null as Date,
-    credential: null as CredentialSubject,
+    credential: null as DecodedCredential,
     verifiableCredential: null as VerifiableCredential,
     requestId: '',
   },
@@ -23,11 +29,11 @@ const model = createModel(
       SAVE_TAG: (tag: string) => ({ tag }),
       STORE_READY: () => ({}),
       DISMISS: () => ({}),
-      CREDENTIAL_DOWNLOADED: (vid: VID) => ({ vid }),
-      STORE_RESPONSE: (response: VID) => ({ response }),
+      CREDENTIAL_DOWNLOADED: (vid: VC) => ({ vid }),
+      STORE_RESPONSE: (response: VC) => ({ response }),
       POLL: () => ({}),
       DOWNLOAD_READY: () => ({}),
-      GET_VID_RESPONSE: (vid: VID) => ({ vid }),
+      GET_VID_RESPONSE: (vid: VC) => ({ vid }),
     },
   }
 );
@@ -156,7 +162,7 @@ export const vidItemMachine = model.createMachine(
       requestVidContext: send(
         (context) => ({
           type: 'GET_VID_ITEM',
-          vidKey: VID_ITEM_STORE_KEY(context.uin, context.requestId),
+          vidKey: VID_ITEM_STORE_KEY(context),
         }),
         {
           to: (context) => context.serviceRefs.vid,
@@ -164,8 +170,7 @@ export const vidItemMachine = model.createMachine(
       ),
 
       requestStoredContext: send(
-        (context) =>
-          StoreEvents.GET(VID_ITEM_STORE_KEY(context.uin, context.requestId)),
+        (context) => StoreEvents.GET(VID_ITEM_STORE_KEY(context)),
         {
           to: (context) => context.serviceRefs.store,
         }
@@ -174,10 +179,7 @@ export const vidItemMachine = model.createMachine(
       storeContext: send(
         (context) => {
           const { serviceRefs, ...data } = context;
-          return StoreEvents.SET(
-            VID_ITEM_STORE_KEY(context.uin, context.requestId),
-            data
-          );
+          return StoreEvents.SET(VID_ITEM_STORE_KEY(context), data);
         },
         {
           to: (context) => context.serviceRefs.store,
@@ -191,10 +193,7 @@ export const vidItemMachine = model.createMachine(
       storeTag: send(
         (context) => {
           const { serviceRefs, ...data } = context;
-          return StoreEvents.SET(
-            VID_ITEM_STORE_KEY(context.uin, context.requestId),
-            data
-          );
+          return StoreEvents.SET(VID_ITEM_STORE_KEY(context), data);
         },
         { to: (context) => context.serviceRefs.store }
       ),
@@ -212,11 +211,11 @@ export const vidItemMachine = model.createMachine(
       logDownloaded: send(
         (_, event: CredentialDownloadedEvent) =>
           ActivityLogEvents.LOG_ACTIVITY({
-            _vidKey: VID_ITEM_STORE_KEY(event.vid.uin, event.vid.requestId),
+            _vidKey: VID_ITEM_STORE_KEY(event.vid),
             action: 'downloaded',
             timestamp: Date.now(),
             deviceName: '',
-            vidLabel: event.vid.tag || event.vid.uin,
+            vidLabel: event.vid.tag || event.vid.id,
           }),
         { to: (context) => context.serviceRefs.activityLog }
       ),
@@ -264,7 +263,7 @@ export const vidItemMachine = model.createMachine(
               'POST',
               '/credentialshare/download',
               {
-                individualId: context.uin,
+                individualId: context.id,
                 requestId: context.requestId,
               }
             );
@@ -274,7 +273,8 @@ export const vidItemMachine = model.createMachine(
                 credential: response.credential,
                 verifiableCredential: response.verifiableCredential,
                 generatedOn: new Date(),
-                uin: context.uin,
+                id: context.id,
+                idType: context.idType,
                 tag: '',
                 requestId: context.requestId,
               })
@@ -301,11 +301,12 @@ export const createVidItemMachine = (
   serviceRefs: AppServices,
   vidKey: string
 ) => {
-  const [_, uin, requestId] = vidKey.split(':');
+  const [_, idType, id, requestId] = vidKey.split(':');
   return vidItemMachine.withContext({
     ...vidItemMachine.context,
     serviceRefs,
-    uin,
+    id,
+    idType: idType as VcIdType,
     requestId,
   });
 };
@@ -321,8 +322,12 @@ export function selectGeneratedOn(state: State) {
   return new Date(state.context.generatedOn).toLocaleDateString();
 }
 
-export function selectUin(state: State) {
-  return state.context.uin;
+export function selectId(state: State) {
+  return state.context.id;
+}
+
+export function selectIdType(state: State) {
+  return state.context.idType;
 }
 
 export function selectTag(state: State) {

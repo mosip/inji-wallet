@@ -2,7 +2,7 @@ import { EventFrom, StateFrom } from 'xstate';
 import { send, sendParent } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { StoreEvents } from './store';
-import { VID } from '../types/vid';
+import { VC } from '../types/vc';
 import { AppServices } from '../shared/GlobalContext';
 import { log, respond } from 'xstate/lib/actions';
 import { VidItemEvents } from './vidItem';
@@ -17,17 +17,17 @@ const model = createModel(
     serviceRefs: {} as AppServices,
     myVids: [] as string[],
     receivedVids: [] as string[],
-    vids: {} as Record<string, VID>,
+    vids: {} as Record<string, VC>,
   },
   {
     events: {
-      VIEW_VID: (vid: VID) => ({ vid }),
+      VIEW_VID: (vid: VC) => ({ vid }),
       GET_VID_ITEM: (vidKey: string) => ({ vidKey }),
       STORE_RESPONSE: (response: any) => ({ response }),
       STORE_ERROR: (error: Error) => ({ error }),
       VID_ADDED: (vidKey: string) => ({ vidKey }),
       VID_RECEIVED: (vidKey: string) => ({ vidKey }),
-      VID_DOWNLOADED: (vid: VID) => ({ vid }),
+      VID_DOWNLOADED: (vid: VC) => ({ vid }),
       REFRESH_MY_VIDS: () => ({}),
       REFRESH_RECEIVED_VIDS: () => ({}),
       GET_RECEIVED_VIDS: () => ({}),
@@ -165,8 +165,7 @@ export const vidMachine = model.createMachine(
       }),
 
       setDownloadedVid: (context, event: VidDownloadedEvent) => {
-        context.vids[VID_ITEM_STORE_KEY(event.vid.uin, event.vid.requestId)] =
-          event.vid;
+        context.vids[VID_ITEM_STORE_KEY(event.vid)] = event.vid;
       },
 
       prependToMyVids: model.assign({
