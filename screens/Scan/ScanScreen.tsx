@@ -9,7 +9,7 @@ import { useScanScreen } from './ScanScreenController';
 
 export const ScanScreen: React.FC<MainRouteProps> = (props) => {
   const controller = useScanScreen(props);
-  
+
   return (
     <Column fill padding="98 24 24 24" backgroundColor={Colors.LightGrey}>
       <Text align="center">Scan QR Code</Text>
@@ -42,7 +42,8 @@ export const ScanScreen: React.FC<MainRouteProps> = (props) => {
         isVisible={controller.statusMessage !== ''}
         message={controller.statusMessage}
         hasProgress={!controller.isInvalid}
-        onBackdropPress={controller.isInvalid && controller.DISMISS}
+        onBackdropPress={controller.DISMISS_INVALID}
+        onCancel={controller.DISMISS}
       />
 
       <SendVidModal
