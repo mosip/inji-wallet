@@ -10,8 +10,8 @@ const model = createModel(
     serviceRefs: {} as AppServices,
     name: '',
     vidLabel: {
-      singular: 'VC',
-      plural: 'VCs',
+      singular: 'ID',
+      plural: 'IDs',
     } as VIDLabel,
     isBiometricUnlockEnabled: false,
   },
