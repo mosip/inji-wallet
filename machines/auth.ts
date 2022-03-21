@@ -55,6 +55,7 @@ export const authMachine = model.createMachine(
       checkingAuth: {
         always: [
           { cond: 'hasPasscodeSet', target: 'unauthorized' },
+          { cond: 'hasBiometricSet', target: 'unauthorized' },
           { target: 'settingUp' },
         ],
       },
@@ -64,7 +65,6 @@ export const authMachine = model.createMachine(
             target: 'authorized',
             actions: ['setPasscode', 'storeContext'],
           },
-          // TODO: biometrics login
           SETUP_BIOMETRICS: {
             target: 'authorized',
             actions: ['setBiometrics', 'storeContext'],
@@ -109,7 +109,7 @@ export const authMachine = model.createMachine(
       }),
 
       setBiometrics: model.assign({
-        biometrics: '', // TODO
+        biometrics: () => 'true',
       }),
     },
 
@@ -117,6 +117,7 @@ export const authMachine = model.createMachine(
       hasData: (_, event: StoreResponseEvent) => event.response != null,
 
       hasPasscodeSet: (context) => context.passcode !== '',
+      hasBiometricSet: (context) => context.biometrics !== ''
     },
   }
 );

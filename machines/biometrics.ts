@@ -1,6 +1,6 @@
 import { createModel } from "xstate/lib/model";
 import * as LocalAuthentication from 'expo-local-authentication';
-import { assign, send, StateFrom } from "xstate";
+import { assign, StateFrom } from "xstate";
 
 
 // --- CREATE MODEL -----------------------------------------------------------
@@ -90,9 +90,11 @@ export const biometricsMachine = model.createMachine(
       authenticating: {
         invoke: {
           src: () => async () => {
-            console.log('authenticating invoked');
-            let res = await LocalAuthentication.authenticateAsync()
-            console.log("authenticating result", res)
+            console.log('[BIOMETRIC_MACHINE] authenticating invoked');
+            let res = await LocalAuthentication.authenticateAsync({
+              promptMessage: 'Biometric Authentication',
+            })
+            console.log("[BIOMETRIC_MACHINE] authenticating result", res)
             return res.success;
           },
           onError: 'failure',

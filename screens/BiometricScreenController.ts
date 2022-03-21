@@ -1,17 +1,17 @@
-import { useSelector } from '@xstate/react';
-import { useContext, useEffect, useState } from 'react';
-import { AuthEvents, selectAuthorized, selectBiometrics } from '../machines/auth';
-import { RouteProps } from '../routes';
+import { useMachine, useSelector } from '@xstate/react';
+import { useContext, useEffect } from 'react';
+import { AuthEvents, selectAuthorized } from '../machines/auth';
+import { RootRouteProps } from '../routes';
 import { GlobalContext } from '../shared/GlobalContext';
+import { biometricsMachine } from '../machines/biometrics';
 
-export function useBiometricScreen(props: RouteProps) {
+export function useBiometricScreen(props: RootRouteProps) {
   const { appService } = useContext(GlobalContext);
   const authService = appService.children.get('auth');
 
-  const isAuthorized = useSelector(authService, selectAuthorized);
+  const [biometricState, biometricSend] = useMachine(biometricsMachine);
 
-  const [biometric, setBiometric] = useState('');
-  const [error, setError] = useState('');
+  const isAuthorized = useSelector(authService, selectAuthorized);
 
   useEffect(() => {
     if (isAuthorized) {
@@ -19,23 +19,25 @@ export function useBiometricScreen(props: RouteProps) {
         index: 0,
         routes: [{ name: 'Main' }],
       });
+      return;
     }
-  }, [isAuthorized]);
+
+    console.log("[BIOMETRICS] value", biometricState.value);
+    console.log("[BIOMETRICS] context", biometricState.context);
+
+    // if biometic state is success then lets send auth service BIOMETRICS
+    if (biometricState.matches('success')) {
+      authService.send(AuthEvents.LOGIN());
+      return;
+    }
+
+  }, [isAuthorized, biometricState]);
+
+  const useBiometrics = () => {
+    biometricSend({ type: 'AUTHENTICATE' });
+  };
 
   return {
-    biometric,
-    setBiometric,
-    error,
-    setError,
-
-    storedBiometric: useSelector(authService, selectBiometrics),
-
-    LOGIN: () => {
-      authService.send(AuthEvents.LOGIN());
-    },
-
-    SETUP_BIOMETRIC: () => {
-      authService.send(AuthEvents.SETUP_BIOMETRIC(biometric));
-    },
+    useBiometrics
   };
 }
