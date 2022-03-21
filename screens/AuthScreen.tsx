@@ -8,14 +8,13 @@ import { useAuthScreen } from './AuthScreenController';
 
 export const AuthScreen: React.FC<RootRouteProps> = (props) => {
   const controller = useAuthScreen(props);
-  // console.log('-------->CONTROLLER', controller)
 
   return (
     <Column fill padding="32" backgroundColor={Colors.White}>
       <MessageOverlay
-        isVisible={controller.hasAlertMsg != null}
+        isVisible={controller.alertMsg != ''}
         onBackdropPress={controller.hideAlert}
-        title={controller.hasAlertMsg}
+        title={controller.alertMsg}
       />
       <Column>
         <Text align="center">
@@ -29,7 +28,7 @@ export const AuthScreen: React.FC<RootRouteProps> = (props) => {
         <Button
           title="Use biometrics"
           margin="0 0 8 0"
-          disabled={!controller.enableBiometric}
+          disabled={!controller.isEnabledBio}
           onPress={controller.useBiometrics}
         />
         <Button

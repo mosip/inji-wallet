@@ -13,7 +13,8 @@ const model = createModel(
   {
     events: {
       SETUP_PASSCODE: (passcode: string) => ({ passcode }),
-      SETUP_BIOMETRICS: () => ({}),
+      SETUP_BIOMETRICS: (biometrics: string) => ({  biometrics }),
+      RESET_BIOMETRICS: () => ({}),
       LOGOUT: () => ({}),
       LOGIN: () => ({}),
       STORE_RESPONSE: (response?: unknown) => ({ response }),
@@ -22,6 +23,9 @@ const model = createModel(
 );
 
 export const AuthEvents = model.events;
+
+
+type SetupBiometricsEvent = EventFrom<typeof model, 'SETUP_BIOMETRICS'>;
 
 export const authMachine = model.createMachine(
   {
@@ -74,6 +78,10 @@ export const authMachine = model.createMachine(
       unauthorized: {
         on: {
           LOGIN: 'authorized',
+          RESET_BIOMETRICS: {
+            target: 'settingUp',
+            actions: ['setBiometrics', 'storeContext'],
+          }
         },
       },
       authorized: {
@@ -109,15 +117,19 @@ export const authMachine = model.createMachine(
       }),
 
       setBiometrics: model.assign({
-        biometrics: () => 'true',
+        biometrics: (_, event: SetupBiometricsEvent) => event.biometrics,
       }),
     },
 
     guards: {
       hasData: (_, event: StoreResponseEvent) => event.response != null,
 
-      hasPasscodeSet: (context) => context.passcode !== '',
-      hasBiometricSet: (context) => context.biometrics !== ''
+      hasPasscodeSet: (context) => {
+        return context.passcode !== ''
+      },
+      hasBiometricSet: (context) => {
+        return context.biometrics !== ''
+      }
     },
   }
 );

@@ -1,22 +1,37 @@
-import { useInterpret, useMachine, useSelector } from '@xstate/react';
+import { useMachine, useSelector } from '@xstate/react';
 import { useContext, useEffect, useState } from 'react';
 import { AuthEvents, selectSettingUp, selectAuthorized } from '../machines/auth';
 import { RootRouteProps } from '../routes';
 import { GlobalContext } from '../shared/GlobalContext';
-import { biometricsMachine, selectIsEnabled } from '../machines/biometrics';
+import {
+  biometricsMachine,
+  selectError,
+  selectIsEnabled,
+  selectIsSuccess,
+  selectIsUnvailable,
+  selectUnenrolledNotice
+} from '../machines/biometrics';
 
 export function useAuthScreen(props: RootRouteProps) {
   const { appService } = useContext(GlobalContext);
-  const authService = appService.children.get('auth');
-  const [hasAlertMsg, setHasAlertMsg] = useState(null);
+  const authService    = appService.children.get('auth');
 
-  const isSettingUp = useSelector(authService, selectSettingUp);
-  const isAuthorized = useSelector(authService, selectAuthorized);
+  const isSettingUp    = useSelector(authService, selectSettingUp);
+  const isAuthorized   = useSelector(authService, selectAuthorized);
 
-  const biometricService = useInterpret(biometricsMachine);
-  const [biometricState, biometricSend] = useMachine(biometricsMachine);
+  const [alertMsg, setHasAlertMsg] = useState('');
+  const [
+    biometricState,
+    biometricSend,
+    bioService
+  ] = useMachine(biometricsMachine);
 
-  const enableBiometric:boolean = useSelector(biometricService, selectIsEnabled);
+  const isEnabledBio:boolean       = useSelector(bioService, selectIsEnabled);
+  const isUnavailableBio:boolean   = useSelector(bioService, selectIsUnvailable);
+  const isSuccessBio:boolean       = useSelector(bioService, selectIsSuccess);
+  const errorMsgBio:string         = useSelector(bioService, selectError);
+  const unEnrolledNoticeBio:string = useSelector(bioService, selectUnenrolledNotice);
+
 
   useEffect(() => {
 
@@ -28,43 +43,52 @@ export function useAuthScreen(props: RootRouteProps) {
       return
     }
 
-    console.log("[BIOMETRICS] value", biometricState.value);
-    console.log("[BIOMETRICS] context", biometricState.context);
-
     // if biometic state is success then lets send auth service BIOMETRICS
-    if (biometricState.matches('success')) {
-      authService.send(AuthEvents.SETUP_BIOMETRICS());
+    if (isSuccessBio) {
+      authService.send(AuthEvents.SETUP_BIOMETRICS('true'));
+
+    // handle biometric failure unknown error
+    } else if (errorMsgBio) {
+      // show alert message whenever biometric state gets failure
+      setHasAlertMsg(errorMsgBio);
+
+
+    // handle any unenrolled notice
+    } else if (unEnrolledNoticeBio) {
+      setHasAlertMsg(unEnrolledNoticeBio);
+
+
+    // we dont need to see this page to user once biometric is unavailable on its device
+    } else if (isUnavailableBio) {
+      props.navigation.navigate('Passcode', { setup: isSettingUp });
+    }
+
+
+  }, [
+    isAuthorized,
+    isSuccessBio,
+    isUnavailableBio,
+    errorMsgBio,
+    unEnrolledNoticeBio,
+  ]);
+
+  const useBiometrics = () => {
+    if (biometricState.matches({failure: 'unenrolled'})) {
+      biometricSend({ type: 'RETRY_AUTHENTICATE' });
       return;
     }
 
-    // handle biometric failure
-    if (biometricState.matches('failure')) {
-
-      // we dont need to see this page to user once biometric is unavailable on its device
-      if (biometricState.matches({ failure: 'unavailable' })) {
-        props.navigation.navigate('Passcode', { setup: isSettingUp });
-        return;
-      }
-
-      // show alert message whenever biometric state gets failure
-      setHasAlertMsg(Object.values(biometricState.meta).join(', '));
-    }
-
-  }, [isAuthorized, biometricState]);
-
-
-  const useBiometrics = () => {
     biometricSend({ type: 'AUTHENTICATE' });
   };
 
   const hideAlert = () => {
-    setHasAlertMsg(null);
+    setHasAlertMsg('');
   }
 
   return {
     isSettingUp,
-    hasAlertMsg,
-    enableBiometric,
+    alertMsg,
+    isEnabledBio,
     hideAlert,
     useBiometrics,
     usePasscode: () => {

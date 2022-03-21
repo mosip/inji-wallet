@@ -1,6 +1,6 @@
 import { createModel } from "xstate/lib/model";
 import * as LocalAuthentication from 'expo-local-authentication';
-import { assign, StateFrom } from "xstate";
+import { assign, send, StateFrom } from "xstate";
 
 
 // --- CREATE MODEL -----------------------------------------------------------
@@ -9,11 +9,13 @@ const model = createModel(
     isAvailable : false,
     authTypes   : [],
     isEnrolled  : false,
-    status      : null
+    status      : null,
+    retry       : false,
   },
   {
     events: {
-      AUTHENTICATE: () => ({})
+      AUTHENTICATE: () => ({}),
+      RETRY_AUTHENTICATE: () => ({})
     }
   }
 );
@@ -90,11 +92,11 @@ export const biometricsMachine = model.createMachine(
       authenticating: {
         invoke: {
           src: () => async () => {
-            console.log('[BIOMETRIC_MACHINE] authenticating invoked');
+            // console.log('[BIOMETRIC_MACHINE] authenticating invoked');
             let res = await LocalAuthentication.authenticateAsync({
               promptMessage: 'Biometric Authentication',
             })
-            console.log("[BIOMETRIC_MACHINE] authenticating result", res)
+            // console.log("[BIOMETRIC_MACHINE] authenticating result", res)
             return res.success;
           },
           onError: 'failure',
@@ -103,6 +105,18 @@ export const biometricsMachine = model.createMachine(
             actions: assign({ status: (context, event) => event.data })
           }
         },
+      },
+
+      reauthenticating: {
+        always: [
+          {
+            target: 'authenticating',
+            cond: 'checkIfAvailable'
+          },
+          {
+            target: 'failure.unenrolled'
+          }
+        ]
       },
 
       // checks authentication status
@@ -130,12 +144,21 @@ export const biometricsMachine = model.createMachine(
             meta: 'Device does not support Biometrics'
           },
           unenrolled: {
-            meta: 'To use Biometrics, please enroll your fingerprint in your device settings'
+            meta: 'To use Biometrics, please enroll your fingerprint in your device settings',
+            on: {
+              RETRY_AUTHENTICATE: {
+                actions: assign({retry: (context, event) => true}),
+                target: [
+                  '#biometrics.initEnrolled',
+                  '#biometrics.reauthenticating'
+                ]
+              }
+            }
           },
           failed: {
             after: {
-              // after 3 seconds, transition to available
-              3000: { target: '..available' }
+              // after 1 seconds, transition to available
+              1000: { target: '#biometrics.available' }
             },
             meta: 'Failed to authenticate with Biometrics'
           },
@@ -149,7 +172,8 @@ export const biometricsMachine = model.createMachine(
   },
 
   {
-    actions: {},
+    actions: {
+    },
     guards: {
       checkIfAvailable: ctx => ctx.isAvailable && ctx.isEnrolled,
       checkIfUnavailable: ctx => !ctx.isAvailable,
@@ -167,6 +191,28 @@ export const BiometricsEvents = model.events;
 
 type State = StateFrom<typeof biometricsMachine>;
 
+export function selectFailMessage(state: State) {
+  return Object.values(state.meta).join(', ');
+}
+
 export function selectIsEnabled(state: State) {
-  return state.matches('available');
+  return state.matches('available') ||
+        state.matches({ failure: 'unenrolled' });
+}
+
+export function selectIsUnvailable(state: State) {
+  return state.matches({ failure: 'unavailable' });
+}
+
+export function selectIsSuccess(state: State) {
+  return state.matches('success');
+}
+
+export function selectError(state: State) {
+  return state.matches({failure: 'error'}) ? selectFailMessage(state) : '';
+}
+
+export function selectUnenrolledNotice(state: State) {
+  // console.log("the unenrolled context is?", state.context)
+  return state.matches({ failure: 'unenrolled' }) && state.context.retry ? selectFailMessage(state) : '';
 }
