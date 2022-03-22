@@ -23,12 +23,6 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           path: ~/.npm
 
-      - name: Cache local maven repository
-        uses: actions/cache@v2
-        with:
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          path: ~/.m2
-
       - name: Cache local gradle repository
         uses: actions/cache@v2
         with:
