@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-import * as LocalAuthentication from 'expo-local-authentication';
+import { Camera } from 'expo-camera';
+import { BarCodeEvent, BarCodeScanner } from 'expo-barcode-scanner';
 import { Linking, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Colors } from './ui/styleUtils';
@@ -9,16 +10,45 @@ import { useSelector } from '@xstate/react';
 import { selectIsActive } from '../machines/app';
 
 const styles = StyleSheet.create({
+  scannerContainer: {
+    borderWidth: 4,
+    borderColor: Colors.Black,
+    borderRadius: 32,
+    justifyContent: 'center',
+    height: 300,
+    width: 300,
+    overflow: 'hidden',
+  },
+  scanner: {
+    height: 400,
+    width: '100%',
+    margin: 'auto'
+  },
+  buttonContainer: {
+    height: '100%',
+    width: '100%',
+  },
+  flipButtonContainer: {
+    position: 'absolute',
+    width: '80%',
+    top: '110%',
+  },
+  buttonStyle: {
+    position: 'absolute',
+    width: '100%',
+    bottom: -90,
+  },
   button: {
     alignSelf: 'center',
     alignItems: 'center',
   },
 });
 
-export const Biometrics: React.FC<BiometricsProps> = (props) => {
+export const QrScanner: React.FC<QrScannerProps> = (props) => {
   const { appService } = useContext(GlobalContext);
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+  const [type, setType] = useState(Camera.Constants.Type.back);
 
   const isActive = useSelector(appService, selectIsActive);
 
@@ -28,7 +58,7 @@ export const Biometrics: React.FC<BiometricsProps> = (props) => {
 
   useEffect(() => {
     (async () => {
-      //const response = await Camera.requestCameraPermissionsAsync();
+      const response = await Camera.requestCameraPermissionsAsync();
       setHasPermission(response.granted);
     })();
   }, []);
@@ -36,7 +66,7 @@ export const Biometrics: React.FC<BiometricsProps> = (props) => {
   useEffect(() => {
     if (isActive && hasPermission === false) {
       (async () => {
-        //const response = await Camera.requestCameraPermissionsAsync();
+        const response = await Camera.requestCameraPermissionsAsync();
         setHasPermission(response.granted);
       })();
     }
@@ -93,6 +123,6 @@ export const Biometrics: React.FC<BiometricsProps> = (props) => {
   }
 };
 
-interface BiometricsProps {
+interface QrScannerProps {
   onQrFound: (data: string) => void;
 }
