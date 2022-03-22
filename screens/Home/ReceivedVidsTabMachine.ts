@@ -1,14 +1,10 @@
 import {
   ActorRefFrom,
   EventFrom,
-  sendParent,
-  spawn,
-  send,
-  StateFrom,
+  sendParent
 } from 'xstate';
-import { log } from 'xstate/lib/actions';
 import { createModel } from 'xstate/lib/model';
-import { createVidItemMachine, vidItemMachine } from '../../machines/vidItem';
+import { vidItemMachine } from '../../machines/vidItem';
 import { AppServices } from '../../shared/GlobalContext';
 
 const model = createModel(

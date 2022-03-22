@@ -230,6 +230,7 @@ export async function setItem(key: string, value: any, encryptionKey: string) {
     const encrypted = encryptJson(encryptionKey, data);
     await AsyncStorage.setItem(key, encrypted);
   } catch (e) {
+    console.error('error setItem:', e);
     throw e;
   }
 }
@@ -261,6 +262,7 @@ export async function appendItem(
     const list = await getItem(key, [], encryptionKey);
     await setItem(key, [...list, value], encryptionKey);
   } catch (e) {
+    console.error('error appendItem:', e);
     throw e;
   }
 }
@@ -275,6 +277,7 @@ export async function prependItem(
 
     await setItem(key, [value, ...list], encryptionKey);
   } catch (e) {
+    console.error('error prependItem:', e);
     throw e;
   }
 }
@@ -283,6 +286,7 @@ export async function removeItem(key: string) {
   try {
     await AsyncStorage.removeItem(key);
   } catch (e) {
+    console.error('error removeItem:', e);
     throw e;
   }
 }
@@ -291,6 +295,7 @@ export async function clear() {
   try {
     await AsyncStorage.clear();
   } catch (e) {
+    console.error('error clear:', e);
     throw e;
   }
 }

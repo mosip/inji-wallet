@@ -2,12 +2,10 @@ import {
   ActorRefFrom,
   DoneInvokeEvent,
   EventFrom,
-  forwardTo,
   send,
   sendParent,
   StateFrom,
 } from 'xstate';
-import { log } from 'xstate/lib/actions';
 import { createModel } from 'xstate/lib/model';
 import { StoreEvents, StoreResponseEvent } from '../../machines/store';
 import { VidEvents } from '../../machines/vid';

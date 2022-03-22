@@ -46,7 +46,7 @@ export const PinInput: React.FC<PinInputProps> = (props) => {
           // KNOWN ISSUE: https://github.com/facebook/react-native/issues/19507
           onKeyPress={({ nativeEvent }) => send(KEY_PRESS(nativeEvent.key))}
           onChangeText={(value: string) =>
-            send(UPDATE_INPUT(value.replace(/[^0-9]/g, ''), index))
+            send(UPDATE_INPUT(value.replace(/\D/g, ''), index))
           }
           onFocus={() => send(FOCUS_INPUT(index))}
         />

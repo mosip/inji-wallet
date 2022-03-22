@@ -277,7 +277,7 @@ export const scanMachine = model.createMachine(
       },
 
       requestToDisableFlightMode: () => {
-        SystemSetting.switchAirplane(() => {})
+        SystemSetting.switchAirplane()
       },
 
       disconnect: () => {

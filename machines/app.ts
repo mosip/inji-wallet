@@ -241,15 +241,13 @@ export const appMachine = model.createMachine(
       },
 
       checkNetworkState: () => (callback) => {
-        const unsubscribe = NetInfo.addEventListener((state) => {
+        return NetInfo.addEventListener((state) => {
           if (state.isConnected) {
             callback({ type: 'ONLINE', networkType: state.type });
           } else {
             callback({ type: 'OFFLINE' });
           }
         });
-
-        return unsubscribe;
       },
     },
   }

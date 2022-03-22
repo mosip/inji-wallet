@@ -9,7 +9,7 @@ import {
 import { createModel } from 'xstate/lib/model';
 import { BackendResponseError, request } from '../../../shared/request';
 import { VID_ITEM_STORE_KEY } from '../../../shared/constants';
-import { VC, VcIdType } from '../../../types/vc';
+import { VcIdType } from '../../../types/vc';
 
 const model = createModel(
   {
@@ -245,7 +245,7 @@ export const AddVidModalMachine = model.createMachine(
     guards: {
       isEmptyId: ({ id }) => !id || !id.length,
 
-      isWrongIdFormat: ({ id }) => !/^[0-9]{10,16}$/.test(id),
+      isWrongIdFormat: ({ id }) => !/^\d{10,16}$/.test(id),
 
       isIdInvalid: (_, event: any) =>
         ['IDA-MLC-009', 'RES-SER-29', 'IDA-MLC-018'].includes(

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useRef, useContext } from 'react';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { Icon, Overlay } from 'react-native-elements';
