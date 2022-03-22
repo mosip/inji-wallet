@@ -19,7 +19,7 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
         onEdit={controller.UPDATE_NAME}
       />
       <EditableListItem
-        label="VID Label"
+        label="VC Label"
         value={controller.vidLabel.singular}
         onEdit={controller.UPDATE_VID_LABEL}
       />

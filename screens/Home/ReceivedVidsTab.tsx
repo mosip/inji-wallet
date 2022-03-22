@@ -41,7 +41,7 @@ export const ReceivedVidsTab: React.FC<HomeScreenTabProps> = (props) => {
                 No {controller.vidLabel.plural} available yet
               </Text>
               <Text align="center" color={Colors.Grey}>
-                Tap on Request below to receive a {controller.vidLabel.singular}
+                Tap on Request below to receive {controller.vidLabel.singular}
               </Text>
             </Centered>
           </React.Fragment>

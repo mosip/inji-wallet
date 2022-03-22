@@ -5,7 +5,7 @@ import {
   getDeviceName,
   getDeviceNameSync,
 } from 'react-native-device-info';
-import { EventFrom, spawn, StateFrom } from 'xstate';
+import { EventFrom, spawn, StateFrom, send } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { authMachine, createAuthMachine } from './auth';
 import { createSettingsMachine, settingsMachine } from './settings';
@@ -14,7 +14,7 @@ import { createVidMachine, vidMachine } from './vid';
 import { createActivityLogMachine, activityLogMachine } from './activityLog';
 import { createRequestMachine, requestMachine } from './request';
 import { createScanMachine, scanMachine } from './scan';
-import { respond } from 'xstate/lib/actions';
+import { pure, respond } from 'xstate/lib/actions';
 import { AppServices } from '../shared/GlobalContext';
 
 const model = createModel(
@@ -98,8 +98,12 @@ export const appMachine = model.createMachine(
             initial: 'checking',
             states: {
               checking: {},
-              active: {},
-              inactive: {},
+              active: {
+                entry: ['forwardToServices'],
+              },
+              inactive: {
+                entry: ['forwardToServices'],
+              },
             },
           },
           network: {
@@ -113,8 +117,12 @@ export const appMachine = model.createMachine(
             initial: 'checking',
             states: {
               checking: {},
-              online: {},
-              offline: {},
+              online: {
+                entry: ['forwardToServices'],
+              },
+              offline: {
+                entry: ['forwardToServices'],
+              },
             },
           },
         },
@@ -123,6 +131,12 @@ export const appMachine = model.createMachine(
   },
   {
     actions: {
+      forwardToServices: pure((context, event) =>
+        Object.values(context.serviceRefs).map((serviceRef) =>
+          send({ ...event, type: `APP_${event.type}` }, { to: serviceRef })
+        )
+      ),
+
       requestDeviceInfo: respond((context) => ({
         type: 'RECEIVE_DEVICE_INFO',
         info: {
@@ -197,7 +211,7 @@ export const appMachine = model.createMachine(
       },
 
       checkFocusState: () => (callback) => {
-        const handler = (newState: AppStateStatus) => {
+        const changeHandler = (newState: AppStateStatus) => {
           switch (newState) {
             case 'background':
             case 'inactive':
@@ -209,9 +223,21 @@ export const appMachine = model.createMachine(
           }
         };
 
-        AppState.addEventListener('change', handler);
+        const blurHandler = () => callback({ type: 'INACTIVE' });
+        const focusHandler = () => callback({ type: 'ACTIVE' });
 
-        return () => AppState.removeEventListener('change', handler);
+        AppState.addEventListener('change', changeHandler);
+
+        // android only
+        AppState.addEventListener('blur', blurHandler);
+        AppState.addEventListener('focus', focusHandler);
+
+        return () => {
+          AppState.removeEventListener('change', changeHandler);
+
+          AppState.removeEventListener('blur', blurHandler);
+          AppState.removeEventListener('focus', focusHandler);
+        };
       },
 
       checkNetworkState: () => (callback) => {
@@ -250,6 +276,10 @@ export function selectIsOnline(state: State) {
 
 export function selectIsActive(state: State) {
   return state.matches('ready.focus.active');
+}
+
+export function selectIsFocused(state: State) {
+  return state.matches('ready.focus');
 }
 
 export function logState(state) {

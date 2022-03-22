@@ -24,26 +24,16 @@ export function useHomeScreen(props: HomeRouteProps) {
   const service = useInterpret(machine.current);
   const settingsService = appService.children.get('settings');
 
-  const activeTab = useSelector(service, selectActiveTab);
-
   useEffect(() => {
-    if (
-      props.route.params?.activeTab != null &&
-      props.route.params?.activeTab !== activeTab
-    ) {
+    if (props.route.params?.activeTab != null) {
       SELECT_TAB(props.route.params.activeTab);
-    }
-    if (activeTab === 1) {
-      service.children
-        .get('receivedVids')
-        .send(ReceivedVidsTabEvents.REFRESH());
     }
   }, [props.route.params?.activeTab]);
 
   return {
     service,
 
-    activeTab,
+    activeTab: useSelector(service, selectActiveTab),
     vidLabel: useSelector(settingsService, selectVidLabel),
     selectedVid: useSelector(service, selectSelectedVid),
 

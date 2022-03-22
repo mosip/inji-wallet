@@ -1,12 +1,13 @@
 import SmartShare from '@idpass/smartshare-react-native';
 import LocationEnabler from 'react-native-location-enabler';
+import SystemSetting from 'react-native-system-setting';
 import { EventFrom, send, sendParent, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
-import { EmitterSubscription } from 'react-native';
+import { EmitterSubscription, Linking, PermissionsAndroid } from 'react-native';
 import { DeviceInfo } from '../components/DeviceInfoList';
 import { Message } from '../shared/Message';
 import { getDeviceNameSync } from 'react-native-device-info';
-import { VID } from '../types/vid';
+import { VC } from '../types/vc';
 import { AppServices } from '../shared/GlobalContext';
 import { ActivityLogEvents } from './activityLog';
 import { VID_ITEM_STORE_KEY } from '../shared/constants';
@@ -16,7 +17,7 @@ const model = createModel(
     serviceRefs: {} as AppServices,
     senderInfo: {} as DeviceInfo,
     receiverInfo: {} as DeviceInfo,
-    selectedVid: {} as VID,
+    selectedVid: {} as VC,
     reason: '',
     loggers: [] as EmitterSubscription[],
     locationConfig: {
@@ -30,7 +31,7 @@ const model = createModel(
     events: {
       EXCHANGE_DONE: (receiverInfo: DeviceInfo) => ({ receiverInfo }),
       RECEIVE_DEVICE_INFO: (info: DeviceInfo) => ({ info }),
-      SELECT_VID: (vid: VID) => ({ vid }),
+      SELECT_VID: (vid: VC) => ({ vid }),
       SCAN: (params: string) => ({ params }),
       ACCEPT_REQUEST: () => ({}),
       VID_ACCEPTED: () => ({}),
@@ -44,8 +45,13 @@ const model = createModel(
       UPDATE_REASON: (reason: string) => ({ reason }),
       LOCATION_ENABLED: () => ({}),
       LOCATION_DISABLED: () => ({}),
+      FLIGHT_ENABLED: () => ({}),
+      FLIGHT_DISABLED: () => ({}),
+      FLIGHT_REQUEST: () => ({}),
+      LOCATION_REQUEST: () => ({}),
       UPDATE_VID_NAME: (vidName: string) => ({ vidName }),
       STORE_RESPONSE: (response: any) => ({ response }),
+      APP_ACTIVE: () => ({}),
     },
   }
 );
@@ -65,34 +71,78 @@ export const scanMachine = model.createMachine(
     initial: 'inactive',
     on: {
       SCREEN_BLUR: 'inactive',
-      SCREEN_FOCUS: 'checkingLocationService',
+      SCREEN_FOCUS: 'checkingAirplaneMode',
     },
     states: {
       inactive: {
         entry: ['removeLoggers'],
       },
-      checkingLocationService: {
+      checkingAirplaneMode: {
         invoke: {
-          src: 'checkLocationService',
+          src: 'checkAirplaneMode',
         },
-        on: {
-          LOCATION_ENABLED: '.enabled',
-        },
-        initial: 'checking',
+        initial: 'checkingStatus',
         states: {
-          checking: {
+          checkingStatus: {
             on: {
-              LOCATION_DISABLED: 'requesting',
+              FLIGHT_DISABLED: '#checkingLocationService',
+              FLIGHT_ENABLED: 'enabled',
             },
           },
-          requesting: {
-            entry: ['requestLocationService'],
+          requestingToDisable: {
+            entry: ['requestToDisableFlightMode'],
             on: {
-              LOCATION_DISABLED: '#locationDenied',
+              FLIGHT_DISABLED: 'checkingStatus',
             },
           },
           enabled: {
-            always: '#clearingConnection',
+            on: {
+              FLIGHT_REQUEST: 'requestingToDisable',
+            },
+          },
+        },
+      },
+      checkingLocationService: {
+        id: 'checkingLocationService',
+        invoke: {
+          src: 'checkLocationStatus',
+        },
+        initial: 'checkingStatus',
+        states: {
+          checkingStatus: {
+            on: {
+              LOCATION_ENABLED: 'checkingPermission',
+              LOCATION_DISABLED: 'requestingToEnable',
+            },
+          },
+          requestingToEnable: {
+            entry: ['requestToEnableLocation'],
+            on: {
+              LOCATION_ENABLED: 'checkingPermission',
+              LOCATION_DISABLED: 'disabled',
+            },
+          },
+          checkingPermission: {
+            invoke: {
+              src: 'checkLocationPermission',
+            },
+            on: {
+              LOCATION_ENABLED: '#clearingConnection',
+              LOCATION_DISABLED: 'denied',
+            },
+          },
+          denied: {
+            on: {
+              LOCATION_REQUEST: {
+                actions: ['openSettings'],
+              },
+              APP_ACTIVE: 'checkingPermission',
+            },
+          },
+          disabled: {
+            on: {
+              LOCATION_REQUEST: 'requestingToEnable',
+            },
           },
         },
       },
@@ -116,9 +166,6 @@ export const scanMachine = model.createMachine(
             { target: 'invalid' },
           ],
         },
-      },
-      locationDenied: {
-        id: 'locationDenied',
       },
       preparingToConnect: {
         entry: ['requestSenderInfo'],
@@ -225,8 +272,12 @@ export const scanMachine = model.createMachine(
         senderInfo: (_, event: ReceiveDeviceInfoEvent) => event.info,
       }),
 
-      requestLocationService: (context) => {
+      requestToEnableLocation: (context) => {
         LocationEnabler.requestResolutionSettings(context.locationConfig);
+      },
+
+      requestToDisableFlightMode: () => {
+        SystemSetting.switchAirplane(() => {})
       },
 
       disconnect: () => {
@@ -289,22 +340,49 @@ export const scanMachine = model.createMachine(
       logShared: send(
         (context) =>
           ActivityLogEvents.LOG_ACTIVITY({
-            _vidKey: VID_ITEM_STORE_KEY(
-              context.selectedVid.uin,
-              context.selectedVid.requestId
-            ),
+            _vidKey: VID_ITEM_STORE_KEY(context.selectedVid),
             action: 'shared',
             timestamp: Date.now(),
             deviceName:
               context.receiverInfo.name || context.receiverInfo.deviceName,
-            vidLabel: context.selectedVid.tag || context.selectedVid.uin,
+            vidLabel: context.selectedVid.tag || context.selectedVid.id,
           }),
         { to: (context) => context.serviceRefs.activityLog }
       ),
+
+      openSettings: () => {
+        Linking.openSettings();
+      },
     },
 
     services: {
-      checkLocationService: (context) => (callback) => {
+      checkLocationPermission: () => async (callback) => {
+        try {
+          // TODO: a more reliable way to wait for animation to finish when app becomes active
+          await new Promise((resolve) => setTimeout(resolve, 250));
+
+          const response = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            {
+              title: 'Location access',
+              message:
+                'Location access is required for the scanning functionality.',
+              buttonNegative: 'Cancel',
+              buttonPositive: 'OK',
+            }
+          );
+
+          if (response === 'granted') {
+            callback(model.events.LOCATION_ENABLED());
+          } else {
+            callback(model.events.LOCATION_DISABLED());
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      },
+
+      checkLocationStatus: (context) => (callback) => {
         const listener = LocationEnabler.addListener(({ locationEnabled }) => {
           if (locationEnabled) {
             callback(model.events.LOCATION_ENABLED());
@@ -316,6 +394,16 @@ export const scanMachine = model.createMachine(
         LocationEnabler.checkSettings(context.locationConfig);
 
         return () => listener.remove();
+      },
+
+      checkAirplaneMode: (context) => (callback) => {
+        SystemSetting.isAirplaneEnabled().then((enable) => {
+          if(enable) {
+            callback(model.events.FLIGHT_ENABLED());
+          } else {
+            callback(model.events.FLIGHT_DISABLED());
+          }
+        })
       },
 
       discoverDevice: () => (callback) => {
@@ -356,7 +444,7 @@ export const scanMachine = model.createMachine(
           tag: '',
         };
 
-        const message = new Message<VID>('send:vid', vid);
+        const message = new Message<VC>('send:vid', vid);
 
         SmartShare.send(message.toString(), () => {
           subscription = SmartShare.handleNearbyEvents((event) => {
@@ -459,6 +547,14 @@ export function selectInvalid(state: State) {
   return state.matches('invalid');
 }
 
-export function selectLocationDenied(state: State) {
-  return state.matches('locationDenied');
+export function selectIsLocationDenied(state: State) {
+  return state.matches('checkingLocationService.denied');
+}
+
+export function selectIsLocationDisabled(state: State) {
+  return state.matches('checkingLocationService.disabled');
+}
+
+export function selectIsAirplaneEnabled(state: State) {
+  return state.matches('checkingAirplaneMode.enabled');
 }

@@ -2,7 +2,7 @@ import { ContextFrom, EventFrom, send, sendUpdate, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { AppServices } from '../shared/GlobalContext';
 import { SETTINGS_STORE_KEY } from '../shared/constants';
-import { VIDLabel } from '../types/vid';
+import { VIDLabel } from '../types/vc';
 import { StoreEvents } from './store';
 
 const model = createModel(
@@ -10,8 +10,8 @@ const model = createModel(
     serviceRefs: {} as AppServices,
     name: '',
     vidLabel: {
-      singular: 'VID',
-      plural: 'VIDs',
+      singular: 'ID',
+      plural: 'IDs',
     } as VIDLabel,
     isBiometricUnlockEnabled: false,
   },

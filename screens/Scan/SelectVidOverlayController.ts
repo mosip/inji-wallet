@@ -4,7 +4,7 @@ import { ActorRefFrom } from 'xstate';
 import { selectVidLabel } from '../../machines/settings';
 import { vidItemMachine } from '../../machines/vidItem';
 import { GlobalContext } from '../../shared/GlobalContext';
-import { VID } from '../../types/vid';
+import { VC } from '../../types/vc';
 
 export function useSelectVidOverlay(props: SelectVidOverlayProps) {
   const [selectedIndex, setSelectedIndex] = useState<number>(null);
@@ -37,6 +37,6 @@ export interface SelectVidOverlayProps {
   isVisible: boolean;
   receiverName: string;
   vidKeys: string[];
-  onSelect: (vid: VID) => void;
+  onSelect: (vid: VC) => void;
   onCancel: () => void;
 }

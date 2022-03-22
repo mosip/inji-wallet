@@ -3,6 +3,8 @@ package io.mosip.residentapp;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.facebook.react.PackageList;
@@ -14,8 +16,11 @@ import com.facebook.soloader.SoLoader;
 
 import expo.modules.ApplicationLifecycleDispatcher;
 import expo.modules.ReactNativeHostWrapper;
+import timber.log.Timber;
 
 import com.facebook.react.bridge.JSIModulePackage;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.swmansion.reanimated.ReanimatedJSIModulePackage;
 
 import java.lang.reflect.InvocationTargetException;
@@ -62,6 +67,13 @@ public class MainApplication extends Application implements ReactApplication {
 
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
     ApplicationLifecycleDispatcher.onApplicationCreate(this);
+
+    if (BuildConfig.DEBUG) {
+      Timber.plant(new Timber.DebugTree());
+    }
+    // Setup Firebase
+    FirebaseAnalytics.getInstance(this);
+    Timber.plant(new CrashReportingTree());
   }
 
   @Override
@@ -97,6 +109,28 @@ public class MainApplication extends Application implements ReactApplication {
         e.printStackTrace();
       } catch (InvocationTargetException e) {
         e.printStackTrace();
+      }
+    }
+  }
+  /**
+   * A tree which logs important information for crash reporting.
+   */
+  private static class CrashReportingTree extends Timber.Tree {
+    FirebaseCrashlytics crashlytics = FirebaseCrashlytics.getInstance();
+    @Override
+    protected void log(int priority, String tag, @NonNull String message, Throwable t) {
+      if (priority == Log.VERBOSE || priority == Log.DEBUG) {
+        return;
+      }
+
+      crashlytics.setCustomKey("priority", priority);
+      crashlytics.setCustomKey("tag", tag);
+      crashlytics.log(message);
+
+      if (t != null) {
+        if (priority == Log.ERROR) {
+          crashlytics.recordException(t);
+        }
       }
     }
   }

@@ -7,7 +7,7 @@ import { Colors } from './ui/styleUtils';
 export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
   const [isEditing, setIsEditing] = useState(false);
   const [newValue, setNewValue] = useState(props.value);
-
+  
   return (
     <ListItem bottomDivider onPress={() => setIsEditing(true)}>
       <ListItem.Content>
@@ -28,7 +28,7 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
               fill
               type="clear"
               title="Cancel"
-              onPress={() => setIsEditing(false)}
+              onPress={dismiss}
             />
             <Button fill title="Save" onPress={edit} />
           </Row>
@@ -39,11 +39,11 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
 
   function edit() {
     props.onEdit(newValue);
-    dismiss();
+    setIsEditing(false);
   }
 
   function dismiss() {
-    setNewValue('');
+    setNewValue(props.value);
     setIsEditing(false);
   }
 };
