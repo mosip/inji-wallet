@@ -200,8 +200,16 @@ export function selectIsEnabled(state: State) {
         state.matches({ failure: 'unenrolled' });
 }
 
+export function selectIsAvailable(state: State) {
+  return state.matches('available');
+}
+
 export function selectIsUnvailable(state: State) {
   return state.matches({ failure: 'unavailable' });
+}
+
+export function selectIsUnenrolled(state: State) {
+  return state.matches({ failure: 'unenrolled' });
 }
 
 export function selectIsSuccess(state: State) {

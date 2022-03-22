@@ -3,16 +3,20 @@ import { useContext, useEffect, useState } from 'react';
 import { AuthEvents, selectAuthorized } from '../machines/auth';
 import { RootRouteProps } from '../routes';
 import { GlobalContext } from '../shared/GlobalContext';
-import { biometricsMachine } from '../machines/biometrics';
+import { biometricsMachine, selectIsAvailable, selectIsSuccess, selectIsUnenrolled, selectIsUnvailable } from '../machines/biometrics';
 
 export function useBiometricScreen(props: RootRouteProps) {
   const { appService } = useContext(GlobalContext);
   const authService = appService.children.get('auth');
 
   const [initAuthBio, updateInitAuthBio] = useState(true);
-  const [bioState, bioSend] = useMachine(biometricsMachine);
+  const [bioState, bioSend, bioService] = useMachine(biometricsMachine);
 
-  const isAuthorized = useSelector(authService, selectAuthorized);
+  const isAuthorized:boolean  = useSelector(authService, selectAuthorized);
+  const isAvailable:boolean   = useSelector(bioService, selectIsAvailable);
+  const isUnavailable:boolean = useSelector(bioService, selectIsUnvailable);
+  const isSuccessBio:boolean  = useSelector(bioService, selectIsSuccess);
+  const isUnenrolled:boolean  = useSelector(bioService, selectIsUnenrolled);
 
   useEffect(() => {
     if (isAuthorized) {
@@ -23,7 +27,7 @@ export function useBiometricScreen(props: RootRouteProps) {
       return;
     }
 
-    if (initAuthBio && bioState.matches('available')) {
+    if (initAuthBio && isAvailable) {
       bioSend({ type: 'AUTHENTICATE' });
 
       // so we only init authentication of biometrics just once
@@ -31,15 +35,12 @@ export function useBiometricScreen(props: RootRouteProps) {
     }
 
     // if biometic state is success then lets send auth service BIOMETRICS
-    if (bioState.matches('success')) {
+    if (isSuccessBio) {
       authService.send(AuthEvents.LOGIN());
       return;
     }
 
-    if (
-      bioState.matches({ failure: 'unavailable' }) ||
-      bioState.matches({ failure: 'unenrolled' })
-    ) {
+    if (isUnavailable || isUnenrolled) {
       authService.send(AuthEvents.RESET_BIOMETRICS());
 
       props.navigation.reset({
@@ -49,7 +50,13 @@ export function useBiometricScreen(props: RootRouteProps) {
       return;
     }
 
-  }, [isAuthorized, bioState]);
+  }, [
+    isAuthorized,
+    isSuccessBio,
+    isAvailable,
+    isUnenrolled,
+    isUnavailable
+  ]);
 
   const useBiometrics = () => {
     bioSend({ type: 'AUTHENTICATE' });
