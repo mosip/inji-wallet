@@ -16,10 +16,11 @@ export function useWelcomeScreen(props: RootRouteProps) {
     isSettingUp,
 
     unlockPage: () => {
-      if (!isSettingUp && passcode !== '') {
-        props.navigation.navigate('Passcode', { setup: isSettingUp });
-      } else if (!isSettingUp && biometrics !== '') {
+      // prioritize biometrics
+      if (!isSettingUp && biometrics !== '') {
         props.navigation.navigate('Biometric', { setup: isSettingUp });
+      } else if (!isSettingUp && passcode !== '') {
+        props.navigation.navigate('Passcode', { setup: isSettingUp });
       } else {
         props.navigation.navigate('Auth');
       }

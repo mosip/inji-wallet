@@ -32,6 +32,10 @@ export function useAuthScreen(props: RootRouteProps) {
   const errorMsgBio:string         = useSelector(bioService, selectError);
   const unEnrolledNoticeBio:string = useSelector(bioService, selectUnenrolledNotice);
 
+  const usePasscode = () => {
+    props.navigation.navigate('Passcode', { setup: isSettingUp });
+  }
+
 
   useEffect(() => {
 
@@ -46,6 +50,8 @@ export function useAuthScreen(props: RootRouteProps) {
     // if biometic state is success then lets send auth service BIOMETRICS
     if (isSuccessBio) {
       authService.send(AuthEvents.SETUP_BIOMETRICS('true'));
+      // setup passcode aswell
+      usePasscode();
 
     // handle biometric failure unknown error
     } else if (errorMsgBio) {
@@ -60,12 +66,11 @@ export function useAuthScreen(props: RootRouteProps) {
 
     // we dont need to see this page to user once biometric is unavailable on its device
     } else if (isUnavailableBio) {
-      props.navigation.navigate('Passcode', { setup: isSettingUp });
+      usePasscode();
     }
 
 
   }, [
-    isAuthorized,
     isSuccessBio,
     isUnavailableBio,
     errorMsgBio,
@@ -91,8 +96,6 @@ export function useAuthScreen(props: RootRouteProps) {
     isEnabledBio,
     hideAlert,
     useBiometrics,
-    usePasscode: () => {
-      props.navigation.navigate('Passcode', { setup: isSettingUp });
-    }
+    usePasscode
   };
 }
