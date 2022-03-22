@@ -45,7 +45,7 @@ export function useBiometricScreen(props: RootRouteProps) {
 
       props.navigation.reset({
         index: 0,
-        routes: [{ name: 'Auth' }],
+        routes: [{ name: 'Passcode' }],
       });
       return;
     }
