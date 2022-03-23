@@ -92,11 +92,13 @@ export const biometricsMachine = model.createMachine(
       authenticating: {
         invoke: {
           src: () => async () => {
-            // console.log('[BIOMETRIC_MACHINE] authenticating invoked');
             let res = await LocalAuthentication.authenticateAsync({
               promptMessage: 'Biometric Authentication',
+
+              // below can only works for IOS not android
+              // disableDeviceFallback: true,
+              // fallbackLabel: 'Invalid fingerprint attempts, Please try again.'
             })
-            // console.log("[BIOMETRIC_MACHINE] authenticating result", res)
             return res.success;
           },
           onError: 'failure',
@@ -221,6 +223,5 @@ export function selectError(state: State) {
 }
 
 export function selectUnenrolledNotice(state: State) {
-  // console.log("the unenrolled context is?", state.context)
   return state.matches({ failure: 'unenrolled' }) && state.context.retry ? selectFailMessage(state) : '';
 }
