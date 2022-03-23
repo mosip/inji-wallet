@@ -5,7 +5,6 @@ import {
   AddVidModalMachine,
   selectIsAcceptingOtpInput,
   selectIsRequestingCredential,
-  selectIsRequestSuccessful,
   selectOtpError,
   selectIsAcceptingIdInput,
 } from './AddVidModalMachine';
@@ -13,7 +12,6 @@ import {
 export function useAddVidModal({ service }: AddVidModalProps) {
   return {
     isRequestingCredential: useSelector(service, selectIsRequestingCredential),
-    isRequestSuccessful: useSelector(service, selectIsRequestSuccessful),
 
     otpError: useSelector(service, selectOtpError),
 

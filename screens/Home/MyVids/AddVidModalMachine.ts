@@ -3,6 +3,7 @@ import {
   DoneInvokeEvent,
   ErrorPlatformEvent,
   EventFrom,
+  send,
   sendParent,
   StateFrom,
 } from 'xstate';
@@ -143,7 +144,7 @@ export const AddVidModalMachine = model.createMachine(
         invoke: {
           src: 'requestCredential',
           onDone: {
-            target: 'requestSuccessful',
+            target: 'done',
             actions: ['setRequestId'],
           },
           onError: [
@@ -157,11 +158,6 @@ export const AddVidModalMachine = model.createMachine(
               actions: ['setOtpError'],
             },
           ],
-        },
-      },
-      requestSuccessful: {
-        on: {
-          DISMISS: 'done',
         },
       },
       done: {
@@ -298,8 +294,4 @@ export function selectIsRequestingOtp(state: State) {
 
 export function selectIsRequestingCredential(state: State) {
   return state.matches('requestingCredential');
-}
-
-export function selectIsRequestSuccessful(state: State) {
-  return state.matches('requestSuccessful');
 }
