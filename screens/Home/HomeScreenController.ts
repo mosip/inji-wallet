@@ -11,7 +11,6 @@ import {
   selectTabsLoaded,
   selectViewingVid,
 } from './HomeScreenMachine';
-import { ReceivedVidsTabEvents } from './ReceivedVidsTabMachine';
 
 export function useHomeScreen(props: HomeRouteProps) {
   const { appService } = useContext(GlobalContext);

@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Asset } from 'expo-asset';
 import { Dimensions, Image, StyleSheet, View } from 'react-native';
 import { Divider, Icon, ListItem, Overlay } from 'react-native-elements';
 import Markdown from 'react-native-simple-markdown'
-import { Button, Text, Column, Row } from '../../components/ui';
+import { Button, Text, Row } from '../../components/ui';
 import { Colors } from '../../components/ui/styleUtils';
 import creditsContent from '../../Credits.md';
 

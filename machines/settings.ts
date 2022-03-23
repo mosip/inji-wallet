@@ -1,4 +1,4 @@
-import { ContextFrom, EventFrom, send, sendUpdate, StateFrom } from 'xstate';
+import { ContextFrom, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { AppServices } from '../shared/GlobalContext';
 import { SETTINGS_STORE_KEY } from '../shared/constants';
@@ -98,7 +98,7 @@ export const settingsMachine = model.createMachine(
       updateVidLabel: model.assign({
         vidLabel: (_, event: UpdateVidLabelEvent) => ({
           singular: event.label,
-          plural: event.label + 's', // TODO
+          plural: event.label + 's',
         }),
       }),
     },

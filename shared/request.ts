@@ -15,7 +15,6 @@ export async function request(
   const response = await fetch(HOST + path, {
     method,
     headers: {
-      // TODO: 'Authorization': 'Bearer ...',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(body),

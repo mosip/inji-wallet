@@ -52,7 +52,6 @@ export const appMachine = model.createMachine(
               READY: 'services',
             },
           },
-          // TODO: SafetyNet Attestation check
           // safetyNet: {
           //   invoke: {
           //     id: 'safetynet',
@@ -153,7 +152,9 @@ export const appMachine = model.createMachine(
       }),
 
       logStoreEvents: (context) => {
-        context.serviceRefs.store.subscribe(logState);
+        if (__DEV__) {
+          context.serviceRefs.store.subscribe(logState);
+        }
       },
 
       spawnServiceActors: model.assign({
@@ -187,12 +188,14 @@ export const appMachine = model.createMachine(
       }),
 
       logServiceEvents: (context) => {
-        context.serviceRefs.auth.subscribe(logState);
-        context.serviceRefs.vid.subscribe(logState);
-        context.serviceRefs.settings.subscribe(logState);
-        context.serviceRefs.activityLog.subscribe(logState);
-        context.serviceRefs.scan.subscribe(logState);
-        context.serviceRefs.request.subscribe(logState);
+        if (__DEV__) {
+          context.serviceRefs.auth.subscribe(logState);
+          context.serviceRefs.vid.subscribe(logState);
+          context.serviceRefs.settings.subscribe(logState);
+          context.serviceRefs.activityLog.subscribe(logState);
+          context.serviceRefs.scan.subscribe(logState);
+          context.serviceRefs.request.subscribe(logState);
+        }
       },
 
       setAppInfo: model.assign({
@@ -241,15 +244,13 @@ export const appMachine = model.createMachine(
       },
 
       checkNetworkState: () => (callback) => {
-        const unsubscribe = NetInfo.addEventListener((state) => {
+        return NetInfo.addEventListener((state) => {
           if (state.isConnected) {
             callback({ type: 'ONLINE', networkType: state.type });
           } else {
             callback({ type: 'OFFLINE' });
           }
         });
-
-        return unsubscribe;
       },
     },
   }

@@ -56,6 +56,14 @@ export const VidItem: React.FC<VidItemProps> = (props) => {
   const verifiableCredential = useSelector(service, selectVerifiableCredential);
   const generatedOn = useSelector(service, selectGeneratedOn);
 
+
+  const selectableOrCheck = props.selectable ? <CheckBox
+      checked={props.selected}
+      checkedIcon={<Icon name="radio-button-checked" />}
+      uncheckedIcon={<Icon name="radio-button-unchecked" />}
+      onPress={() => props.onPress(service)}
+    /> : <Icon name="chevron-right" />;
+
   return (
     <Pressable
       onPress={() => props.onPress(service)}
@@ -89,20 +97,7 @@ export const VidItem: React.FC<VidItemProps> = (props) => {
                 generatedOn}
           </Text>
         </Column>
-        {verifiableCredential ? (
-          props.selectable ? (
-            <CheckBox
-              checked={props.selected}
-              checkedIcon={<Icon name="radio-button-checked" />}
-              uncheckedIcon={<Icon name="radio-button-unchecked" />}
-              onPress={() => props.onPress(service)}
-            />
-          ) : (
-            <Icon name="chevron-right" />
-          )
-        ) : (
-          <RotatingIcon name="sync" color={Colors.Grey5} />
-        )}
+        { verifiableCredential ? selectableOrCheck : (<RotatingIcon name="sync" color={Colors.Grey5} />) }
       </Row>
     </Pressable>
   );

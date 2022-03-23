@@ -1,8 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
+import { NativeStackNavigationOptions, createNativeStackNavigator } from '@react-navigation/native-stack';
 import { LanguageSelector } from '../components/LanguageSelector';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { authRoutes, baseRoutes } from '../routes';
 import { useAppLayout } from './AppLayoutController';
 

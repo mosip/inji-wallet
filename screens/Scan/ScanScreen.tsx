@@ -23,11 +23,7 @@ export const ScanScreen: React.FC<MainRouteProps> = (props) => {
           </Text>
           <Button
             title={controller.locationError.button}
-            onPress={
-              controller.isFlightMode
-                ? controller.FLIGHT_REQUEST
-                : controller.LOCATION_REQUEST
-            }
+            onPress={controller.ON_REQUEST}
           />
         </Column>
       ) : null}

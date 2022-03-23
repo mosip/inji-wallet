@@ -1,10 +1,9 @@
-import { EventFrom, StateFrom } from 'xstate';
-import { send, sendParent } from 'xstate';
+import { EventFrom, StateFrom, send, sendParent } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { StoreEvents } from './store';
 import { VC } from '../types/vc';
 import { AppServices } from '../shared/GlobalContext';
-import { log, respond } from 'xstate/lib/actions';
+import { respond } from 'xstate/lib/actions';
 import { VidItemEvents } from './vidItem';
 import {
   MY_VIDS_STORE_KEY,

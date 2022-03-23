@@ -1,4 +1,4 @@
-import { ActorRefFrom, ContextFrom, EventFrom, send, StateFrom } from 'xstate';
+import { EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { VID_ITEM_STORE_KEY } from '../shared/constants';
 import { AppServices } from '../shared/GlobalContext';
@@ -238,9 +238,6 @@ export const vidItemMachine = model.createMachine(
               case 'NEW':
                 break;
               case 'ISSUED':
-                // TODO: remove temporary fix to DataShare API issue blocking us from moving to printing status
-                callback(model.events.DOWNLOAD_READY());
-                break;
               case 'printing':
                 callback(model.events.DOWNLOAD_READY());
                 break;

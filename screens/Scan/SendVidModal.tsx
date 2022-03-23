@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Input } from 'react-native-elements';
 import { DeviceInfoList } from '../../components/DeviceInfoList';
 import { Button, Column } from '../../components/ui';
