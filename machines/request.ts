@@ -260,22 +260,28 @@ export const requestMachine = model.createMachine(
       }),
 
       registerLoggers: model.assign({
-        loggers: () => [
-          SmartShare.handleNearbyEvents((event) => {
-            console.log(
-              getDeviceNameSync(),
-              '<Receiver.Event>',
-              JSON.stringify(event)
-            );
-          }),
-          SmartShare.handleLogEvents((event) => {
-            console.log(
-              getDeviceNameSync(),
-              '<Receiver.Log>',
-              JSON.stringify(event)
-            );
-          }),
-        ],
+        loggers: () => {
+          if (__DEV__) {
+            return [
+              SmartShare.handleNearbyEvents((event) => {
+                console.log(
+                  getDeviceNameSync(),
+                  '<Receiver.Event>',
+                  JSON.stringify(event)
+                );
+              }),
+              SmartShare.handleLogEvents((event) => {
+                console.log(
+                  getDeviceNameSync(),
+                  '<Receiver.Log>',
+                  JSON.stringify(event)
+                );
+              }),
+            ];
+          } else {
+            return [];
+          }
+        },
       }),
 
       removeLoggers: model.assign({
