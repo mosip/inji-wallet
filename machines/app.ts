@@ -52,7 +52,6 @@ export const appMachine = model.createMachine(
               READY: 'services',
             },
           },
-          // TODO: SafetyNet Attestation check
           // safetyNet: {
           //   invoke: {
           //     id: 'safetynet',

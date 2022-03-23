@@ -4,8 +4,6 @@ import { createModel } from 'xstate/lib/model';
 import { Message } from '../shared/Message';
 import { EventFrom } from 'xstate';
 
-// TODO: wip
-
 const model = createModel(
   {
     eventChannel: {} as EmitterSubscription,

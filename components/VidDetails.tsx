@@ -147,7 +147,6 @@ function getFullAddress(credential: CredentialSubject) {
 function getLocalizedField(rawField: string) {
   try {
     const locales: LocalizedField[] = JSON.parse(rawField);
-    // TODO: language switching
     return locales.find((locale) => locale.language === 'eng').value.trim();
   } catch (e) {
     return '';

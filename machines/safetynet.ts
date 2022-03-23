@@ -1,10 +1,8 @@
-// TODO: wip; replace library since this breaks the build
-// import RNSafetyNetClient from '@bitwala/react-native-safetynet';
+import RNSafetyNetClient from '@bitwala/react-native-safetynet';
 import { getDeviceId } from 'react-native-device-info';
 import { ContextFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 
-// TODO: move to env
 const ATTESTATION_API_KEY = 'YOUR API KEY';
 const ATTESTATION_ENDPOINT = '';
 const NONCE_ENDPOINT = '';
@@ -106,7 +104,6 @@ export const safetynetMachine = model.createMachine(
           attestationJws: context.jws,
         })) as VerificationResult;
 
-        // TODO: handle depending on response data from our server
         if (!verification.success) {
           callback(model.events.ERROR('Verfication failed.'));
         } else {

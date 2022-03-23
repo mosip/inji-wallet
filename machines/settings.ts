@@ -98,7 +98,7 @@ export const settingsMachine = model.createMachine(
       updateVidLabel: model.assign({
         vidLabel: (_, event: UpdateVidLabelEvent) => ({
           singular: event.label,
-          plural: event.label + 's', // TODO
+          plural: event.label + 's',
         }),
       }),
     },

@@ -238,7 +238,6 @@ export const vidItemMachine = model.createMachine(
               case 'NEW':
                 break;
               case 'ISSUED':
-                // TODO: remove temporary fix to DataShare API issue blocking us from moving to printing status
               case 'printing':
                 callback(model.events.DOWNLOAD_READY());
                 break;

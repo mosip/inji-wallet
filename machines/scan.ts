@@ -277,7 +277,7 @@ export const scanMachine = model.createMachine(
       },
 
       requestToDisableFlightMode: () => {
-        SystemSetting.switchAirplane()
+        SystemSetting.switchAirplane();
       },
 
       disconnect: () => {
@@ -358,7 +358,7 @@ export const scanMachine = model.createMachine(
     services: {
       checkLocationPermission: () => async (callback) => {
         try {
-          // TODO: a more reliable way to wait for animation to finish when app becomes active
+          // wait a bit for animation to finish when app becomes active
           await new Promise((resolve) => setTimeout(resolve, 250));
 
           const response = await PermissionsAndroid.request(
@@ -398,12 +398,12 @@ export const scanMachine = model.createMachine(
 
       checkAirplaneMode: (context) => (callback) => {
         SystemSetting.isAirplaneEnabled().then((enable) => {
-          if(enable) {
+          if (enable) {
             callback(model.events.FLIGHT_ENABLED());
           } else {
             callback(model.events.FLIGHT_DISABLED());
           }
-        })
+        });
       },
 
       discoverDevice: () => (callback) => {
