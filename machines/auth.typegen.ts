@@ -24,6 +24,7 @@ export interface Typegen0 {
   'eventsCausingGuards': {
     hasData: 'STORE_RESPONSE';
     hasPasscodeSet: '';
+    hasBiometricSet: '';
   };
   'eventsCausingDelays': {};
   'matchesStates':

@@ -41,11 +41,10 @@ export function useBiometricScreen(props: RootRouteProps) {
     }
 
     if (isUnavailable || isUnenrolled) {
-      authService.send(AuthEvents.RESET_BIOMETRICS());
 
       props.navigation.reset({
         index: 0,
-        routes: [{ name: 'Passcode' }],
+        routes: [{ name: 'Passcode'}],
       });
       return;
     }

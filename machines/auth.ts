@@ -14,7 +14,6 @@ const model = createModel(
     events: {
       SETUP_PASSCODE: (passcode: string) => ({ passcode }),
       SETUP_BIOMETRICS: (biometrics: string) => ({  biometrics }),
-      RESET_BIOMETRICS: () => ({}),
       LOGOUT: () => ({}),
       LOGIN: () => ({}),
       STORE_RESPONSE: (response?: unknown) => ({ response }),
@@ -79,10 +78,6 @@ export const authMachine = model.createMachine(
       unauthorized: {
         on: {
           LOGIN: 'authorized',
-          RESET_BIOMETRICS: {
-            target: 'settingUp',
-            actions: ['setBiometrics', 'storeContext'],
-          }
         },
       },
       authorized: {
