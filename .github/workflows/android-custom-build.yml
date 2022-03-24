@@ -1,0 +1,58 @@
+name: ID PASS - MOSIP Resident Application Custom build
+
+env:
+  backendServiceDefaultUrl: https://dev2.mosip.net/residentmobileapp
+
+on:
+  workflow_dispatch:
+    inputs:
+      backendServiceUrl:
+        description: 'Backend service URL'
+        required: true
+        default: 'https://dev2.mosip.net/residentmobileapp'
+        type: string
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      # Cache stuff for faster build
+      - name: Cache local npm repository
+        uses: actions/cache@v2
+        with:
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          path: ~/.npm
+
+      - name: Cache local maven repository
+        uses: actions/cache@v2
+        with:
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          path: ~/.m2
+
+      - name: Cache local gradle repository
+        uses: actions/cache@v2
+        with:
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+
+      - name: Install npm dependencies
+        run: |
+          npm install
+      - name: Build App Newlogic Release
+        run: |
+          cd android
+          [ ! -z "$FIREBASE_SECRET" ] && gpg -o app/google-services.json --batch --passphrase="$FIREBASE_SECRET" -d app/google-services.json.gpg || echo "FIREBASE_SECRET not defined"
+          ./gradlew :app:assembleNewlogicRelease
+        env:
+          BACKEND_SERVICE_URL: ${{ github.event.inputs.backendServiceUrl }}
+          FIREBASE_SECRET: ${{ secrets.FIREBASE_SECRET }}
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: apk-output
+          path: android/app/build/outputs/apk/newlogic/release/
+          retention-days: 1
