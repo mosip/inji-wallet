@@ -1,9 +1,9 @@
 import { createModel } from "xstate/lib/model";
 import * as LocalAuthentication from 'expo-local-authentication';
-import { assign, send, StateFrom } from "xstate";
+import { assign, EventFrom, MetaObject, StateFrom } from "xstate";
 
 
-// --- CREATE MODEL -----------------------------------------------------------
+// ----- CREATE MODEL ---------------------------------------------------------
 const model = createModel(
   {
     isAvailable : false,
@@ -14,6 +14,11 @@ const model = createModel(
   },
   {
     events: {
+      SET_IS_AVAILABLE: (data: boolean) => ({ data }),
+      SET_AUTH: (data: any[]) => ({ data }),
+      SET_IS_ENROLLED: (data: boolean) => ({ data }),
+      SET_STATUS: (data: boolean) => ({ data }),
+
       AUTHENTICATE: () => ({}),
       RETRY_AUTHENTICATE: () => ({})
     }
@@ -21,10 +26,12 @@ const model = createModel(
 );
 // ----------------------------------------------------------------------------
 
-// --- CREATE MACHINE ---------------------------------------------------------
+
+// ----- CREATE MACHINE -------------------------------------------------------
 export const biometricsMachine = model.createMachine(
   {
     id: 'biometrics',
+    context: model.initialContext,
     initial: 'init',
     states: {
 
@@ -35,7 +42,7 @@ export const biometricsMachine = model.createMachine(
           onError: 'failure',
           onDone: {
             target: 'initAuthTypes',
-            actions: assign({ isAvailable: (context, event) => event.data }),
+            actions: ['setIsAvailable'],
           }
         }
       },
@@ -46,7 +53,7 @@ export const biometricsMachine = model.createMachine(
           onError: 'failure',
           onDone: {
             target: 'initEnrolled',
-            actions: assign({ authTypes: (context, event) => event.data }),
+            actions: ['setAuthTypes'],
           }
         }
       },
@@ -57,7 +64,7 @@ export const biometricsMachine = model.createMachine(
           onError: 'failure',
           onDone: {
             target: 'checking',
-            actions: assign({ isEnrolled: (context, event) => event.data }),
+            actions: ['setIsEnrolled']
           }
         }
       },
@@ -104,7 +111,7 @@ export const biometricsMachine = model.createMachine(
           onError: 'failure',
           onDone: {
             target: 'authentication',
-            actions: assign({ status: (context, event) => event.data })
+            actions: ['setStatus']
           }
         },
       },
@@ -126,27 +133,31 @@ export const biometricsMachine = model.createMachine(
         always: [
           {
             target: 'success',
-            cond: ctx => ctx.status
+            cond: 'isStatusSuccess'
           },
           {
             target: 'failure.failed',
-            cond: ctx => !ctx.status
+            cond: 'isStatusFail'
           }
         ]
       },
 
       success: {
-        meta: 'Success authentication with Biometrics',
+        type: 'final'
       },
 
       failure: {
         initial: 'error',
         states: {
           unavailable: {
-            meta: 'Device does not support Biometrics'
+            meta: {
+              message: 'Device does not support Biometrics'
+            }
           },
           unenrolled: {
-            meta: 'To use Biometrics, please enroll your fingerprint in your device settings',
+            meta: {
+              message: 'To use Biometrics, please enroll your fingerprint in your device settings',
+            },
             on: {
               RETRY_AUTHENTICATE: {
                 actions: assign({retry: (context, event) => true}),
@@ -160,12 +171,16 @@ export const biometricsMachine = model.createMachine(
           failed: {
             after: {
               // after 1 seconds, transition to available
-              1000: { target: '#biometrics.available' }
+              1000: '#biometrics.available'
             },
-            meta: 'Failed to authenticate with Biometrics'
+            meta: {
+              message: 'Failed to authenticate with Biometrics'
+            }
           },
           error: {
-            meta: 'There seems to be an error in Biometrics authentication'
+            meta: {
+              message: 'There seems to be an error in Biometrics authentication'
+            }
           },
         }
       }
@@ -175,8 +190,26 @@ export const biometricsMachine = model.createMachine(
 
   {
     actions: {
+
+      setIsAvailable: model.assign({
+        isAvailable: (_, event: SetIsAvailableEvent) => event.data
+      }),
+
+      setAuthTypes: model.assign({
+        authTypes: (_, event: SetAuthTypesEvent) => event.data
+      }),
+
+      setIsEnrolled: model.assign({
+        isEnrolled: (_, event: SetIsEnrolledEvent) => event.data
+      }),
+
+      setStatus: model.assign({
+        status: (_, event: SetStatusEvent) => event.data
+      }),
     },
     guards: {
+      isStatusSuccess: ctx => ctx.status,
+      isStatusFail: ctx => !ctx.status,
       checkIfAvailable: ctx => ctx.isAvailable && ctx.isEnrolled,
       checkIfUnavailable: ctx => !ctx.isAvailable,
       checkIfUnenrolled: ctx => !ctx.isEnrolled
@@ -188,13 +221,26 @@ export const biometricsMachine = model.createMachine(
 // ----------------------------------------------------------------------------
 
 
-// --- OTHER EXPORTS ----------------------------------------------------------
-export const BiometricsEvents = model.events;
 
+// ----- TYPES ----------------------------------------------------------------
+
+type SetStatusEvent = EventFrom<typeof model, 'SET_STATUS'>;
+type SetIsAvailableEvent = EventFrom<typeof model, 'SET_IS_AVAILABLE'>;
+type SetAuthTypesEvent = EventFrom<typeof model, 'SET_AUTH'>;
+type SetIsEnrolledEvent = EventFrom<typeof model, 'SET_IS_ENROLLED'>;
 type State = StateFrom<typeof biometricsMachine>;
 
+
+
+
+// ----- OTHER EXPORTS --------------------------------------------------------
+export const BiometricsEvents = model.events;
+
+
 export function selectFailMessage(state: State) {
-  return Object.values(state.meta).join(', ');
+  return Object.values(state.meta)
+               .map((m: MetaObject) => m.message)
+               .join(', ');
 }
 
 export function selectIsEnabled(state: State) {
