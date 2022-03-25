@@ -3,13 +3,15 @@ import { useContext, useEffect } from 'react';
 import {
   ScanEvents,
   selectInvalid,
-  selectLocationDenied,
+  selectIsAirplaneEnabled,
+  selectIsLocationDisabled,
+  selectIsLocationDenied,
   selectReviewing,
   selectScanning,
   selectStatusMessage,
 } from '../../machines/scan';
 import { selectVidLabel } from '../../machines/settings';
-import { selectMyVids } from '../../machines/vid';
+import { selectShareableVids } from '../../machines/vid';
 import { MainRouteProps } from '../../routes/main';
 import { GlobalContext } from '../../shared/GlobalContext';
 
@@ -19,8 +21,29 @@ export function useScanScreen({ navigation }: MainRouteProps) {
   const settingsService = appService.children.get('settings');
   const vidService = appService.children.get('vid');
 
-  const myVids = useSelector(vidService, selectMyVids);
+  const shareableVids = useSelector(vidService, selectShareableVids);
   const isInvalid = useSelector(scanService, selectInvalid);
+
+  const isLocationDisabled = useSelector(scanService, selectIsLocationDisabled);
+  const isLocationDenied = useSelector(scanService, selectIsLocationDenied);
+  const isFlightMode = useSelector(scanService, selectIsAirplaneEnabled);
+
+  const locationError = { message: '', button: '' };
+  if(isFlightMode) {
+    locationError.message =
+        'Flight mode must be disabled for the scanning functionality';
+      locationError.button = 'Disable flight mode';
+  } else {
+    if (isLocationDisabled) {
+      locationError.message =
+        'Location services must be enabled for the scanning functionality';
+      locationError.button = 'Enable location services';
+    } else if (isLocationDenied) {
+      locationError.message =
+        'Location permission is required for the scanning functionality';
+      locationError.button = 'Allow access to location';
+    }
+  }
 
   useEffect(() => {
     const subscriptions = [
@@ -45,26 +68,26 @@ export function useScanScreen({ navigation }: MainRouteProps) {
   }, []);
 
   return {
+    locationError,
     statusMessage: useSelector(scanService, selectStatusMessage),
     vidLabel: useSelector(settingsService, selectVidLabel),
 
-    onDismissInvalid: () => {
-      if (isInvalid) {
-        DISMISS();
-      }
-    },
-
     isInvalid,
-    isEmpty: !myVids.length,
+    isEmpty: !shareableVids.length,
+    isLocationDisabled,
+    isLocationDenied,
     isScanning: useSelector(scanService, selectScanning),
     isReviewing: useSelector(scanService, selectReviewing),
-    isLocationDenied: useSelector(scanService, selectLocationDenied),
+    isFlightMode,
 
-    DISMISS,
+    DISMISS: () => scanService.send(ScanEvents.DISMISS()),
+    LOCATION_REQUEST: () => scanService.send(ScanEvents.LOCATION_REQUEST()),
+    FLIGHT_REQUEST: () => scanService.send(ScanEvents.FLIGHT_REQUEST()),
     SCAN: (qrCode: string) => scanService.send(ScanEvents.SCAN(qrCode)),
+    DISMISS_INVALID: () => {
+      if(isInvalid) {
+        scanService.send(ScanEvents.DISMISS())
+      }
+    }
   };
-
-  function DISMISS() {
-    scanService.send(ScanEvents.DISMISS());
-  }
 }

@@ -1,13 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import React, { useState } from 'react';
+import { Asset } from 'expo-asset';
+import { Dimensions, Image, StyleSheet, View } from 'react-native';
 import { Divider, Icon, ListItem, Overlay } from 'react-native-elements';
 import Markdown from 'react-native-simple-markdown'
 import { Button, Text, Column, Row } from '../../components/ui';
 import { Colors } from '../../components/ui/styleUtils';
+import creditsContent from '../../Credits.md';
 
 export const Credits: React.FC<CreditsProps> = (props) => {
   const [isViewing, setIsViewing] = useState(false);
-
+  const images = {
+    'docs/images/newlogic_logo.png' : require('../../docs/images/newlogic_logo.png'),
+    'docs/images/id_pass_logo.png' : require('../../docs/images/id_pass_logo.png'),
+  }
   const styles = StyleSheet.create({
     buttonContainer: {
       position: 'absolute',
@@ -19,13 +24,31 @@ export const Credits: React.FC<CreditsProps> = (props) => {
       width: Dimensions.get('screen').width
     },
     markdownView: {
-      padding: 8
+      padding: 20
     }
   });
 
   const markdownStyles = {
     heading1: {
       fontSize: 24,
+    },
+    image: {
+      maxWidth: 150,
+      margin: 0
+    }
+  }
+
+  const rules = {
+    image: {
+      react: (node, output, state) => (
+        <View key={`image-${state.key}`}>
+          <Image
+            style={{ maxWidth: 150, height: 100 }}
+            source={images[node.target]}
+            resizeMode="contain"
+          />
+        </View>
+      ),
     }
   }
 
@@ -45,15 +68,14 @@ export const Credits: React.FC<CreditsProps> = (props) => {
             <View style={styles.buttonContainer}>
               <Button type="clear" icon={<Icon name="chevron-left" color={Colors.Orange} />} title="Back" onPress={() => setIsViewing(false)}/>
             </View>
-            <Text>Credits</Text>
+            <Text size="small">Credits and legal notices</Text>
           </Row>
           <Divider />
-          <View styles={styles.markdownView}>
-            <Markdown styles={markdownStyles}>
-              #Legal Notices! {'\n\n'}
-              #Legal Notices! {'\n\n'}
-              #Legal Notices! {'\n\n'}
-            </Markdown>
+          <View style={styles.markdownView}>
+            <Markdown
+              rules={rules}
+              children={creditsContent}
+              styles={markdownStyles}/>
           </View>
         </View>
 

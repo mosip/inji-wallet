@@ -7,7 +7,7 @@ import { DeviceInfo } from '../components/DeviceInfoList';
 import { Message } from '../shared/Message';
 import { getDeviceNameSync } from 'react-native-device-info';
 import { StoreEvents } from './store';
-import { VID } from '../types/vid';
+import { VC } from '../types/vc';
 import { AppServices } from '../shared/GlobalContext';
 import {
   RECEIVED_VIDS_STORE_KEY,
@@ -21,7 +21,7 @@ const model = createModel(
     serviceRefs: {} as AppServices,
     senderInfo: {} as DeviceInfo,
     receiverInfo: {} as DeviceInfo,
-    incomingVid: {} as VID,
+    incomingVid: {} as VC,
     connectionParams: '',
     loggers: [] as EmitterSubscription[],
   },
@@ -31,7 +31,7 @@ const model = createModel(
       REJECT: () => ({}),
       CANCEL: () => ({}),
       DISMISS: () => ({}),
-      VID_RECEIVED: (vid: VID) => ({ vid }),
+      VID_RECEIVED: (vid: VC) => ({ vid }),
       RESPONSE_SENT: () => ({}),
       CONNECTED: () => ({}),
       DISCONNECT: () => ({}),
@@ -109,9 +109,6 @@ export const requestMachine = model.createMachine(
       waitingForConnection: {
         id: 'waitingForConnection',
         entry: ['removeLoggers', 'registerLoggers', 'generateConnectionParams'],
-        meta: {
-          message: 'Waiting for connection...',
-        },
         invoke: {
           src: 'advertiseDevice',
         },
@@ -130,9 +127,6 @@ export const requestMachine = model.createMachine(
         },
       },
       exchangingDeviceInfo: {
-        meta: {
-          message: 'Exchanging device info...',
-        },
         invoke: {
           src: 'exchangeDeviceInfo',
         },
@@ -144,9 +138,6 @@ export const requestMachine = model.createMachine(
         },
       },
       waitingForVid: {
-        meta: {
-          message: 'Connected to device. Waiting for VID...',
-        },
         invoke: {
           src: 'receiveVid',
         },
@@ -298,10 +289,7 @@ export const requestMachine = model.createMachine(
         (context) =>
           StoreEvents.PREPEND(
             RECEIVED_VIDS_STORE_KEY,
-            VID_ITEM_STORE_KEY(
-              context.incomingVid.uin,
-              context.incomingVid.requestId
-            )
+            VID_ITEM_STORE_KEY(context.incomingVid)
           ),
         { to: (context) => context.serviceRefs.store }
       ),
@@ -309,10 +297,7 @@ export const requestMachine = model.createMachine(
       storeVid: send(
         (context) =>
           StoreEvents.SET(
-            VID_ITEM_STORE_KEY(
-              context.incomingVid.uin,
-              context.incomingVid.requestId
-            ),
+            VID_ITEM_STORE_KEY(context.incomingVid),
             context.incomingVid
           ),
         { to: (context) => context.serviceRefs.store }
@@ -321,15 +306,12 @@ export const requestMachine = model.createMachine(
       logReceived: send(
         (context) =>
           ActivityLogEvents.LOG_ACTIVITY({
-            _vidKey: VID_ITEM_STORE_KEY(
-              context.incomingVid.uin,
-              context.incomingVid.requestId
-            ),
+            _vidKey: VID_ITEM_STORE_KEY(context.incomingVid),
             action: 'received',
             timestamp: Date.now(),
             deviceName:
               context.senderInfo.name || context.senderInfo.deviceName,
-            vidLabel: context.incomingVid.tag || context.incomingVid.uin,
+            vidLabel: context.incomingVid.tag || context.incomingVid.id,
           }),
         { to: (context) => context.serviceRefs.activityLog }
       ),
@@ -337,10 +319,7 @@ export const requestMachine = model.createMachine(
       sendVidReceived: send(
         (context) => {
           return VidEvents.VID_RECEIVED(
-            VID_ITEM_STORE_KEY(
-              context.incomingVid.uin,
-              context.incomingVid.requestId
-            )
+            VID_ITEM_STORE_KEY(context.incomingVid)
           );
         },
         { to: (context) => context.serviceRefs.vid }
@@ -403,7 +382,7 @@ export const requestMachine = model.createMachine(
 
           if (event.type !== 'msg') return;
 
-          const message = Message.fromString<VID>(event.data);
+          const message = Message.fromString<VC>(event.data);
           if (message.type === 'send:vid') {
             callback({ type: 'VID_RECEIVED', vid: message.data });
           }
@@ -427,10 +406,7 @@ export const requestMachine = model.createMachine(
     guards: {
       hasExistingVid: (context, event: VidResponseEvent) => {
         const receivedVids: string[] = event.response;
-        const vidKey = VID_ITEM_STORE_KEY(
-          context.incomingVid.uin,
-          context.incomingVid.requestId
-        );
+        const vidKey = VID_ITEM_STORE_KEY(context.incomingVid);
         return receivedVids.includes(vidKey);
       },
     },
@@ -454,34 +430,38 @@ export function selectConnectionParams(state: State) {
   return state.context.connectionParams;
 }
 
-export function selectStatusMessage(state: State) {
-  return state.meta[`${state.machine.id}.${state.value}`]?.message || '';
-}
-
 export function selectIncomingVid(state: State) {
   return state.context.incomingVid;
 }
 
-export function selectReviewing(state: State) {
+export function selectIsReviewing(state: State) {
   return state.matches('reviewing');
 }
 
-export function selectAccepted(state: State) {
+export function selectIsAccepted(state: State) {
   return state.matches('reviewing.accepted');
 }
 
-export function selectRejected(state: State) {
+export function selectIsRejected(state: State) {
   return state.matches('reviewing.rejected');
 }
 
-export function selectDisconnected(state: State) {
+export function selectIsDisconnected(state: State) {
   return state.matches('disconnected');
 }
 
-export function selectWaitingForConnection(state: State) {
+export function selectIsWaitingForConnection(state: State) {
   return state.matches('waitingForConnection');
 }
 
-export function selectBluetoothDenied(state: State) {
+export function selectIsBluetoothDenied(state: State) {
   return state.matches('bluetoothDenied');
+}
+
+export function selectIsExchangingDeviceInfo(state: State) {
+  return state.matches('exchangingDeviceInfo');
+}
+
+export function selectIsWaitingForVid(state: State) {
+  return state.matches('waitingForVid');
 }

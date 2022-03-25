@@ -5,10 +5,10 @@ import { CheckBox, Icon } from 'react-native-elements';
 import { ActorRefFrom } from 'xstate';
 import {
   createVidItemMachine,
-  selectCredential,
+  selectVerifiableCredential,
   selectGeneratedOn,
   selectTag,
-  selectUin,
+  selectId,
   vidItemMachine,
 } from '../machines/vidItem';
 import { Column, Row, Text } from './ui';
@@ -51,35 +51,45 @@ export const VidItem: React.FC<VidItemProps> = (props) => {
     )
   );
   const service = useInterpret(machine.current);
-  const uin = useSelector(service, selectUin);
+  const uin = useSelector(service, selectId);
   const tag = useSelector(service, selectTag);
-  const credential = useSelector(service, selectCredential);
+  const verifiableCredential = useSelector(service, selectVerifiableCredential);
   const generatedOn = useSelector(service, selectGeneratedOn);
 
   return (
-    <Pressable onPress={() => props.onPress(service)} disabled={!credential}>
+    <Pressable
+      onPress={() => props.onPress(service)}
+      disabled={!verifiableCredential}>
       <Row
-        elevation={!credential ? 0 : 2}
+        elevation={!verifiableCredential ? 0 : 2}
         crossAlign="center"
         margin={props.margin}
-        backgroundColor={!credential ? Colors.Grey6 : Colors.White}
+        backgroundColor={!verifiableCredential ? Colors.Grey6 : Colors.White}
         padding="16 24"
-        style={!credential ? styles.loadingContainer : styles.container}>
+        style={
+          !verifiableCredential ? styles.loadingContainer : styles.container
+        }>
         <Column fill margin="0 24 0 0">
           <Text
             weight="semibold"
-            style={!credential ? styles.loadingTitle : styles.title}
+            style={!verifiableCredential ? styles.loadingTitle : styles.title}
             margin="0 0 6 0">
-            {!credential ? '' : tag || uin}
+            {!verifiableCredential ? '' : tag || uin}
           </Text>
           <Text
             size="smaller"
             numLines={1}
-            style={!credential ? styles.loadingSubtitle : styles.subtitle}>
-            {!credential ? '' : credential.fullName + ' · ' + generatedOn}
+            style={
+              !verifiableCredential ? styles.loadingSubtitle : styles.subtitle
+            }>
+            {!verifiableCredential
+              ? ''
+              : verifiableCredential.credentialSubject.fullName +
+                ' · ' +
+                generatedOn}
           </Text>
         </Column>
-        {credential ? (
+        {verifiableCredential ? (
           props.selectable ? (
             <CheckBox
               checked={props.selected}

@@ -1,9 +1,12 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { Icon, Overlay } from 'react-native-elements';
 import { Button, Column, Text } from '../../components/ui';
 import { Colors } from '../../components/ui/styleUtils';
+import { useSelector } from '@xstate/react';
+import { GlobalContext } from '../../shared/GlobalContext';
+import { selectVidLabel } from '../../machines/settings';
 
 const styles = StyleSheet.create({
   overlay: {
@@ -52,27 +55,31 @@ const styles = StyleSheet.create({
 export const OnboardingOverlay: React.FC<OnboardingProps> = (props) => {
   const slider = useRef<AppIntroSlider>();
 
+  const { appService } = useContext(GlobalContext);
+  const settingsService = appService.children.get('settings');
+  const vidLabel = useSelector(settingsService, selectVidLabel);
+
   const slides = [
     {
       key: 'one',
       title: 'Welcome!',
-      text: 'Keep your digital credential with you at all times. To get started, add VIDs to your profile.',
+      text: `Keep your digital credential with you at all times. To get started, add ${vidLabel.plural} to your profile.`,
     },
     {
       key: 'two',
-      title: 'VID management',
-      text: 'Once generated, VIDs are safely stored on your mobile and can be renamed or shared at any time. ',
+      title: `${vidLabel.singular} management`,
+      text: `Once generated, ${vidLabel.plural} are safely stored on your mobile and can be renamed or shared at any time.`,
     },
     {
       key: 'three',
       title: 'Easy sharing',
-      text: 'Share and receive VIDs switfly using your phone camera to scan QR codes.',
+      text: `Share and receive ${vidLabel.plural} switfly using your phone camera to scan QR codes.`,
       footer: (
         <Button
           margin="24 0 0 0"
           raised
           type="outline"
-          title="Get started and add VID"
+          title={`Get started and add ${vidLabel.singular}`}
           onPress={props.onAddVid}
         />
       ),

@@ -17,6 +17,7 @@ web-build/
 *.aab
 android/app/debug/output-metadata.json
 android/app/release/output-metadata.json
+google-services.json
 
 # OSX
 #
