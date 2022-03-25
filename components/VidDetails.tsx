@@ -18,8 +18,8 @@ export const VidDetails: React.FC<VidDetailsProps> = (props) => {
           </Text>
         </Column>
         <Column fill elevation={1} padding="12 16" margin="0 16 0 0">
-          <Text size="smaller" color={Colors.Grey}>
-            UIN
+          <Text size="smaller" color={Colors.Grey} style={{ textTransform: 'uppercase' }}>
+            {props.vid?.idType}
           </Text>
           <Text weight="bold" size="smaller">
             {props.vid?.id}
