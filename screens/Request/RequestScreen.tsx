@@ -19,9 +19,11 @@ export const RequestScreen: React.FC<MainRouteProps> = (props) => {
             {controller.vidLabel.singular}
           </Text>
         ) : (
-          <Text align="center">
-            Show this QR code to request {controller.vidLabel.singular}
-          </Text>
+          controller.isWaitingForConnection && (
+            <Text align="center">
+              Show this QR code to request {controller.vidLabel.singular}
+            </Text>
+          )
         )}
       </Column>
 
