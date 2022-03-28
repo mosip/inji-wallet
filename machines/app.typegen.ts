@@ -2,16 +2,6 @@
 
 export interface Typegen0 {
   '@@xstate/typegen': true;
-  'eventsCausingActions': {
-    setAppInfo: 'APP_INFO_RECEIVED';
-    setBackendInfo: 'BACKEND_INFO_RECEIVED';
-    requestDeviceInfo: 'REQUEST_DEVICE_INFO';
-    spawnStoreActor: 'xstate.init';
-    logStoreEvents: 'xstate.init';
-    spawnServiceActors: 'READY';
-    logServiceEvents: 'READY';
-    forwardToServices: 'ACTIVE' | 'INACTIVE' | 'ONLINE' | 'OFFLINE';
-  };
   'internalEvents': {
     'xstate.init': { type: 'xstate.init' };
   };
@@ -27,11 +17,21 @@ export interface Typegen0 {
     guards: never;
     delays: never;
   };
+  'eventsCausingActions': {
+    setAppInfo: 'APP_INFO_RECEIVED';
+    setBackendInfo: 'BACKEND_INFO_RECEIVED';
+    requestDeviceInfo: 'REQUEST_DEVICE_INFO';
+    spawnStoreActor: 'xstate.init';
+    logStoreEvents: 'xstate.init';
+    spawnServiceActors: 'READY';
+    logServiceEvents: 'READY';
+    forwardToServices: 'ACTIVE' | 'INACTIVE' | 'ONLINE' | 'OFFLINE';
+  };
   'eventsCausingServices': {
     getAppInfo: 'READY';
     getBackendInfo: 'APP_INFO_RECEIVED';
-    checkFocusState: 'xstate.init';
-    checkNetworkState: 'xstate.init';
+    checkFocusState: 'BACKEND_INFO_RECEIVED';
+    checkNetworkState: 'BACKEND_INFO_RECEIVED';
   };
   'eventsCausingGuards': {};
   'eventsCausingDelays': {};

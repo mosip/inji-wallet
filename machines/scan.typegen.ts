@@ -65,7 +65,8 @@ export interface Typegen0 {
     logShared: 'VC_ACCEPTED';
   };
   'eventsCausingServices': {
-    checkAirplaneMode: 'SCREEN_FOCUS' | 'APP_ACTIVE' | 'FLIGHT_ENABLED';
+    checkConnection: 'SCREEN_BLUR' | 'SCREEN_FOCUS' | 'xstate.init';
+    checkAirplaneMode: 'SCREEN_FOCUS' | 'FLIGHT_ENABLED' | 'APP_ACTIVE';
     checkLocationStatus: 'FLIGHT_DISABLED';
     checkLocationPermission: 'LOCATION_ENABLED' | 'APP_ACTIVE';
     discoverDevice: 'RECEIVE_DEVICE_INFO';

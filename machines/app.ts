@@ -194,7 +194,6 @@ export const appMachine = model.createMachine(
             createRequestMachine(serviceRefs),
             requestMachine.id
           );
-
           return serviceRefs;
         },
       }),
