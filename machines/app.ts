@@ -1,5 +1,5 @@
 import NetInfo, { NetInfoStateType } from '@react-native-community/netinfo';
-import { AppState, AppStateStatus } from 'react-native';
+import { AppState, AppStateStatus, Platform } from 'react-native';
 import {
   getDeviceId,
   getDeviceName,
@@ -186,16 +186,20 @@ export const appMachine = model.createMachine(
             activityLogMachine.id
           );
 
-          serviceRefs.request = null;
-          serviceRefs.scan = null;
-          // serviceRefs.scan = spawn(
-          //   createScanMachine(serviceRefs),
-          //   scanMachine.id
-          // );
-          // serviceRefs.request = spawn(
-          //   createRequestMachine(serviceRefs),
-          //   requestMachine.id
-          // );
+          // if (Platform.OS === 'ios') {
+          //   console.log("the platform IS IOS");
+          //   serviceRefs.request = null;
+          //   serviceRefs.scan = null;
+          // } else {
+          serviceRefs.scan = spawn(
+            createScanMachine(serviceRefs),
+            scanMachine.id
+          );
+          serviceRefs.request = spawn(
+            createRequestMachine(serviceRefs),
+            requestMachine.id
+          );
+          // }
           return serviceRefs;
         },
       }),
@@ -247,33 +251,36 @@ export const appMachine = model.createMachine(
       },
 
       checkFocusState: () => (callback) => {
-        // const changeHandler = (newState: AppStateStatus) => {
-        //   switch (newState) {
-        //     case 'background':
-        //     case 'inactive':
-        //       callback({ type: 'INACTIVE' });
-        //       break;
-        //     case 'active':
-        //       callback({ type: 'ACTIVE' });
-        //       break;
-        //   }
-        // };
 
-        // const blurHandler = () => callback({ type: 'INACTIVE' });
-        // const focusHandler = () => callback({ type: 'ACTIVE' });
+        if (Platform.OS !== 'ios') {
+          const changeHandler = (newState: AppStateStatus) => {
+            switch (newState) {
+              case 'background':
+              case 'inactive':
+                callback({ type: 'INACTIVE' });
+                break;
+              case 'active':
+                callback({ type: 'ACTIVE' });
+                break;
+            }
+          };
 
-        // AppState.addEventListener('change', changeHandler);
+          const blurHandler = () => callback({ type: 'INACTIVE' });
+          const focusHandler = () => callback({ type: 'ACTIVE' });
 
-        // // android only
-        // AppState.addEventListener('blur', blurHandler);
-        // AppState.addEventListener('focus', focusHandler);
+          AppState.addEventListener('change', changeHandler);
 
-        // return () => {
-          // AppState.removeEventListener('change', changeHandler);
+          // android only
+          AppState.addEventListener('blur', blurHandler);
+          AppState.addEventListener('focus', focusHandler);
 
-          // AppState.removeEventListener('blur', blurHandler);
-          // AppState.removeEventListener('focus', focusHandler);
-        // };
+          return () => {
+            AppState.removeEventListener('change', changeHandler);
+
+            AppState.removeEventListener('blur', blurHandler);
+            AppState.removeEventListener('focus', focusHandler);
+          };
+        }
       },
 
       checkNetworkState: () => (callback) => {

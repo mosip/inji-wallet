@@ -1,5 +1,5 @@
-import SmartShare from '@idpass/smartshare-react-native';
-import BluetoothStateManager from 'react-native-bluetooth-state-manager';
+// import SmartShare from '@idpass/smartshare-react-native';
+// import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import { EmitterSubscription } from 'react-native';
 import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
@@ -248,15 +248,15 @@ export const requestMachine = model.createMachine(
       }),
 
       disconnect: () => {
-        try {
-          SmartShare.destroyConnection();
-        } catch (e) {
-          // pass
-        }
+        // try {
+        //   SmartShare.destroyConnection();
+        // } catch (e) {
+        //   // pass
+        // }
       },
 
       generateConnectionParams: assign({
-        connectionParams: () => SmartShare.getConnectionParameters(),
+        // connectionParams: () => SmartShare.getConnectionParameters(),
       }),
 
       setSenderInfo: model.assign({
@@ -269,26 +269,26 @@ export const requestMachine = model.createMachine(
 
       registerLoggers: assign({
         loggers: () => {
-          if (__DEV__) {
-            return [
-              SmartShare.handleNearbyEvents((event) => {
-                console.log(
-                  getDeviceNameSync(),
-                  '<Receiver.Event>',
-                  JSON.stringify(event)
-                );
-              }),
-              SmartShare.handleLogEvents((event) => {
-                console.log(
-                  getDeviceNameSync(),
-                  '<Receiver.Log>',
-                  JSON.stringify(event)
-                );
-              }),
-            ];
-          } else {
-            return [];
-          }
+          // if (__DEV__) {
+          //   return [
+          //     SmartShare.handleNearbyEvents((event) => {
+          //       console.log(
+          //         getDeviceNameSync(),
+          //         '<Receiver.Event>',
+          //         JSON.stringify(event)
+          //       );
+          //     }),
+          //     SmartShare.handleLogEvents((event) => {
+          //       console.log(
+          //         getDeviceNameSync(),
+          //         '<Receiver.Log>',
+          //         JSON.stringify(event)
+          //       );
+          //     }),
+          //   ];
+          // } else {
+          return [];
+          // }
         },
       }),
 
@@ -357,21 +357,20 @@ export const requestMachine = model.createMachine(
 
     services: {
       checkBluetoothService: () => (callback) => {
-        const subscription = BluetoothStateManager.onStateChange((state) => {
-          if (state === 'PoweredOn') {
-            callback(model.events.BLUETOOTH_ENABLED());
-          } else {
-            callback(model.events.BLUETOOTH_DISABLED());
-          }
-        }, true);
-
-        return () => subscription.remove();
+        // const subscription = BluetoothStateManager.onStateChange((state) => {
+        //   if (state === 'PoweredOn') {
+        //     callback(model.events.BLUETOOTH_ENABLED());
+        //   } else {
+        //     callback(model.events.BLUETOOTH_DISABLED());
+        //   }
+        // }, true);
+        // return () => subscription.remove();
       },
 
       requestBluetooth: () => (callback) => {
-        BluetoothStateManager.requestToEnable()
-          .then(() => callback(model.events.BLUETOOTH_ENABLED()))
-          .catch(() => callback(model.events.BLUETOOTH_DISABLED()));
+        // BluetoothStateManager.requestToEnable()
+        //   .then(() => callback(model.events.BLUETOOTH_ENABLED()))
+        //   .catch(() => callback(model.events.BLUETOOTH_DISABLED()));
       },
 
       checkConnection: () => (callback) => {
@@ -385,9 +384,9 @@ export const requestMachine = model.createMachine(
       },
 
       advertiseDevice: () => (callback) => {
-        SmartShare.createConnection('advertiser', () => {
-          callback({ type: 'CONNECTED' });
-        });
+        // SmartShare.createConnection('advertiser', () => {
+        //   callback({ type: 'CONNECTED' });
+        // });
       },
 
       exchangeDeviceInfo: (context) => (callback) => {
@@ -410,20 +409,17 @@ export const requestMachine = model.createMachine(
       },
 
       receiveVc: () => (callback) => {
-        const subscription = SmartShare.handleNearbyEvents((event) => {
-          if (event.type === 'onDisconnected') {
-            callback({ type: 'DISCONNECT' });
-          }
-
-          if (event.type !== 'msg') return;
-
-          const message = Message.fromString<VC>(event.data);
-          if (message.type === 'send:vc') {
-            callback({ type: 'VC_RECEIVED', vc: message.data });
-          }
-        });
-
-        return () => subscription.remove();
+        // const subscription = SmartShare.handleNearbyEvents((event) => {
+        //   if (event.type === 'onDisconnected') {
+        //     callback({ type: 'DISCONNECT' });
+        //   }
+        //   if (event.type !== 'msg') return;
+        // const message = Message.fromString<VC>(event.data);
+        // if (message.type === 'send:vc') {
+        //   callback({ type: 'VC_RECEIVED', vc: message.data });
+        // }
+        // });
+        // return () => subscription.remove();
       },
 
       sendVcResponse: (_context, _event, meta) => (callback) => {
@@ -431,9 +427,9 @@ export const requestMachine = model.createMachine(
           status: meta.data.status,
         });
 
-        SmartShare.send(response.toString(), () => {
-          callback({ type: 'RESPONSE_SENT' });
-        });
+        // SmartShare.send(response.toString(), () => {
+        //   callback({ type: 'RESPONSE_SENT' });
+        // });
       },
     },
 
