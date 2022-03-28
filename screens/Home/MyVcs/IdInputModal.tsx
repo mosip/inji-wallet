@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon, Input } from 'react-native-elements';
 import { Picker } from '@react-native-picker/picker';
-import { Button, Column, Row, Text } from '../../../components/ui';
+import { Button, Centered, Column, Row, Text } from '../../../components/ui';
 import { Modal } from '../../../components/ui/Modal';
 import { Colors } from '../../../components/ui/styleUtils';
 import { IdInputModalProps, useIdInputModal } from './IdInputModalController';

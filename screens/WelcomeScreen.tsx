@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Logo } from '../components/Logo';
-import { Button, Centered, Column, Text } from '../components/ui';
+import { Button, Centered, Column, Row, Text } from '../components/ui';
 import { Colors } from '../components/ui/styleUtils';
 import { RootRouteProps } from '../routes';
 import { useWelcomeScreen } from './WelcomeScreenController';
