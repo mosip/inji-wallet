@@ -215,7 +215,7 @@ export const vcItemMachine = model.createMachine(
             action: 'downloaded',
             timestamp: Date.now(),
             deviceName: '',
-            VCLabel: event.vc.tag || event.vc.id,
+            vcLabel: event.vc.tag || event.vc.id,
           }),
         { to: (context) => context.serviceRefs.activityLog }
       ),

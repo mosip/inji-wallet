@@ -36,7 +36,7 @@ export const ScanScreen: React.FC<MainRouteProps> = (props) => {
         )
       ) : (
         <Text align="center" margin="16 0" color={Colors.Red}>
-          No sharable {controller.VCLabel.plural} are available.
+          No sharable {controller.vcLabel.plural} are available.
         </Text>
       )}
 
@@ -51,7 +51,7 @@ export const ScanScreen: React.FC<MainRouteProps> = (props) => {
         isVisible={controller.isReviewing}
         onDismiss={controller.DISMISS}
         headerElevation={2}
-        headerTitle={`Sharing ${controller.VCLabel.singular}`}
+        headerTitle={`Sharing ${controller.vcLabel.singular}`}
       />
     </Column>
   );

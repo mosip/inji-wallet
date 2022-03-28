@@ -16,7 +16,7 @@ export const RequestScreen: React.FC<MainRouteProps> = (props) => {
         {controller.isBluetoothDenied ? (
           <Text color={Colors.Red} align="center">
             Please enable Bluetooth to be able to request{' '}
-            {controller.VCLabel.singular}
+            {controller.vcLabel.singular}
           </Text>
         ) : (
           controller.isWaitingForConnection && (
@@ -49,7 +49,7 @@ export const RequestScreen: React.FC<MainRouteProps> = (props) => {
         onDismiss={controller.REJECT}
         onAccept={controller.ACCEPT}
         onReject={controller.REJECT}
-        headerTitle={`Incoming ${controller.VCLabel.singular}`}
+        headerTitle={`Incoming ${controller.vcLabel.singular}`}
       />
 
       <MessageOverlay

@@ -351,7 +351,7 @@ export const scanMachine = model.createMachine(
             timestamp: Date.now(),
             deviceName:
               context.receiverInfo.name || context.receiverInfo.deviceName,
-            VCLabel: context.selectedVc.tag || context.selectedVc.id,
+            vcLabel: context.selectedVc.tag || context.selectedVc.id,
           }),
         { to: (context) => context.serviceRefs.activityLog }
       ),

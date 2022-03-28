@@ -10,7 +10,7 @@ import {
   selectSendingVc,
   selectVcName,
 } from '../../machines/scan';
-import { selectVCLabel } from '../../machines/settings';
+import { selectVcLabel } from '../../machines/settings';
 import { selectShareableVcs } from '../../machines/vc';
 import { GlobalContext } from '../../shared/GlobalContext';
 import { VC } from '../../types/vc';
@@ -25,7 +25,7 @@ export function useSendVcModal() {
     receiverInfo: useSelector(scanService, selectReceiverInfo),
     reason: useSelector(scanService, selectReason),
     vcName: useSelector(scanService, selectVcName),
-    VCLabel: useSelector(settingsService, selectVCLabel),
+    vcLabel: useSelector(settingsService, selectVcLabel),
     vcKeys: useSelector(vcService, selectShareableVcs),
 
     isSelectingVc: useSelector(scanService, selectSelectingVc),

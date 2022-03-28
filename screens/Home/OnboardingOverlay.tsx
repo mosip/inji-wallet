@@ -6,7 +6,7 @@ import { Button, Column, Text } from '../../components/ui';
 import { Colors } from '../../components/ui/styleUtils';
 import { useSelector } from '@xstate/react';
 import { GlobalContext } from '../../shared/GlobalContext';
-import { selectVCLabel } from '../../machines/settings';
+import { selectVcLabel } from '../../machines/settings';
 
 const styles = StyleSheet.create({
   overlay: {
@@ -57,29 +57,29 @@ export const OnboardingOverlay: React.FC<OnboardingProps> = (props) => {
 
   const { appService } = useContext(GlobalContext);
   const settingsService = appService.children.get('settings');
-  const VCLabel = useSelector(settingsService, selectVCLabel);
+  const vcLabel = useSelector(settingsService, selectVcLabel);
 
   const slides = [
     {
       key: 'one',
       title: 'Welcome!',
-      text: `Keep your digital credential with you at all times. To get started, add ${VCLabel.plural} to your profile.`,
+      text: `Keep your digital credential with you at all times. To get started, add ${vcLabel.plural} to your profile.`,
     },
     {
       key: 'two',
-      title: `${VCLabel.singular} management`,
-      text: `Once generated, ${VCLabel.plural} are safely stored on your mobile and can be renamed or shared at any time.`,
+      title: `${vcLabel.singular} management`,
+      text: `Once generated, ${vcLabel.plural} are safely stored on your mobile and can be renamed or shared at any time.`,
     },
     {
       key: 'three',
       title: 'Easy sharing',
-      text: `Share and receive ${VCLabel.plural} switfly using your phone camera to scan QR codes.`,
+      text: `Share and receive ${vcLabel.plural} switfly using your phone camera to scan QR codes.`,
       footer: (
         <Button
           margin="24 0 0 0"
           raised
           type="outline"
-          title={`Get started and add ${VCLabel.singular}`}
+          title={`Get started and add ${vcLabel.singular}`}
           onPress={props.onAddVc}
         />
       ),

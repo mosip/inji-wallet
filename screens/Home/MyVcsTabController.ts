@@ -1,7 +1,7 @@
 import { useSelector } from '@xstate/react';
 import { useContext } from 'react';
 import { ActorRefFrom } from 'xstate';
-import { selectVCLabel } from '../../machines/settings';
+import { selectVcLabel } from '../../machines/settings';
 import {
   selectIsRefreshingMyVcs,
   selectMyVcs,
@@ -29,7 +29,7 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
     AddVcModalService: useSelector(service, selectAddVcModal),
 
     vcKeys: useSelector(vcService, selectMyVcs),
-    VCLabel: useSelector(settingsService, selectVCLabel),
+    vcLabel: useSelector(settingsService, selectVcLabel),
 
     isRefreshingVcs: useSelector(vcService, selectIsRefreshingMyVcs),
     isRequestSuccessful: useSelector(service, selectIsRequestSuccessful),

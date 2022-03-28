@@ -27,10 +27,10 @@ export const SelectVcOverlay: React.FC<SelectVcOverlayProps> = (props) => {
         width={Dimensions.get('screen').width * 0.9}
         style={{ maxHeight: Dimensions.get('screen').height * 0.9 }}>
         <Text weight="semibold" margin="0 0 16 0">
-          Share {controller.VCLabel.singular}
+          Share {controller.vcLabel.singular}
         </Text>
         <Text margin="0 0 16 0">
-          Choose the {controller.VCLabel.singular} you'd like to share with{' '}
+          Choose the {controller.vcLabel.singular} you'd like to share with{' '}
           <Text weight="semibold">{props.receiverName}</Text>
         </Text>
         <Column margin="0 0 32 0" scroll>

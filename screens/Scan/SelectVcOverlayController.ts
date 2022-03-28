@@ -1,7 +1,7 @@
 import { useSelector } from '@xstate/react';
 import { useContext, useState } from 'react';
 import { ActorRefFrom } from 'xstate';
-import { selectVCLabel } from '../../machines/settings';
+import { selectVcLabel } from '../../machines/settings';
 import { vcItemMachine } from '../../machines/vcItem';
 import { GlobalContext } from '../../shared/GlobalContext';
 import { VC } from '../../types/vc';
@@ -17,7 +17,7 @@ export function useSelectVcOverlay(props: SelectVcOverlayProps) {
   return {
     selectVcItem,
     selectedIndex,
-    VCLabel: useSelector(settingsService, selectVCLabel),
+    vcLabel: useSelector(settingsService, selectVcLabel),
 
     onSelect: () => {
       const { serviceRefs, ...vc } = selectedVcRef.getSnapshot().context;

@@ -317,7 +317,7 @@ export const requestMachine = model.createMachine(
             timestamp: Date.now(),
             deviceName:
               context.senderInfo.name || context.senderInfo.deviceName,
-            VCLabel: context.incomingVc.tag || context.incomingVc.id,
+            vcLabel: context.incomingVc.tag || context.incomingVc.id,
           }),
         { to: (context) => context.serviceRefs.activityLog }
       ),

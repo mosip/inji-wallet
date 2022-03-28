@@ -38,10 +38,10 @@ export const ReceivedVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                 name="sentiment-dissatisfied"
               />
               <Text align="center" weight="semibold" margin="0 0 4 0">
-                No {controller.VCLabel.plural} available yet
+                No {controller.vcLabel.plural} available yet
               </Text>
               <Text align="center" color={Colors.Grey}>
-                Tap on Request below to receive {controller.VCLabel.singular}
+                Tap on Request below to receive {controller.vcLabel.singular}
               </Text>
             </Centered>
           </React.Fragment>

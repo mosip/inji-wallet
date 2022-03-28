@@ -20,7 +20,7 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
       />
       <EditableListItem
         label="VC Label"
-        value={controller.VCLabel.singular}
+        value={controller.vcLabel.singular}
         onEdit={controller.UPDATE_VC_LABEL}
       />
       <ListItem bottomDivider>

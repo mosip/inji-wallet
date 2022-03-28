@@ -9,7 +9,7 @@ const model = createModel(
   {
     serviceRefs: {} as AppServices,
     name: '',
-    VCLabel: {
+    vcLabel: {
       singular: 'ID',
       plural: 'IDs',
     } as VCLabel,
@@ -30,7 +30,7 @@ export const SettingsEvents = model.events;
 type Context = ContextFrom<typeof model>;
 
 type UpdateNameEvent = EventFrom<typeof model, 'UPDATE_NAME'>;
-type UpdateVCLabelEvent = EventFrom<typeof model, 'UPDATE_VC_LABEL'>;
+type UpdateVcLabelEvent = EventFrom<typeof model, 'UPDATE_VC_LABEL'>;
 type StoreResponseEvent = EventFrom<typeof model, 'STORE_RESPONSE'>;
 
 export const settingsMachine = model.createMachine(
@@ -63,7 +63,7 @@ export const settingsMachine = model.createMachine(
             actions: ['updateName', 'storeContext'],
           },
           UPDATE_VC_LABEL: {
-            actions: ['updateVCLabel', 'storeContext'],
+            actions: ['updateVcLabel', 'storeContext'],
           },
         },
       },
@@ -95,8 +95,8 @@ export const settingsMachine = model.createMachine(
         name: (_, event: UpdateNameEvent) => event.name,
       }),
 
-      updateVCLabel: model.assign({
-        VCLabel: (_, event: UpdateVCLabelEvent) => ({
+      updateVcLabel: model.assign({
+        vcLabel: (_, event: UpdateVcLabelEvent) => ({
           singular: event.label,
           plural: event.label + 's',
         }),
@@ -124,8 +124,8 @@ export function selectName(state: State) {
   return state.context.name;
 }
 
-export function selectVCLabel(state: State) {
-  return state.context.VCLabel;
+export function selectVcLabel(state: State) {
+  return state.context.vcLabel;
 }
 
 export function selectBiometricUnlockEnabled(state: State) {

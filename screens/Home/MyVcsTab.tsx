@@ -40,7 +40,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                 <Button
                   type="clear"
                   disabled={controller.isRefreshingVcs}
-                  title={`Add ${controller.VCLabel.singular}`}
+                  title={`Add ${controller.vcLabel.singular}`}
                   onPress={controller.ADD_VC}
                 />
               </Column>
@@ -50,11 +50,11 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
             <React.Fragment>
               <Centered fill>
                 <Text weight="semibold" margin="0 0 8 0">
-                  Generate your {controller.VCLabel.plural}
+                  Generate your {controller.vcLabel.plural}
                 </Text>
                 <Text color={Colors.Grey} align="center">
-                  Tap on "Add {controller.VCLabel.singular}" below to{'\n'}
-                  download your {controller.VCLabel.singular}
+                  Tap on "Add {controller.vcLabel.singular}" below to{'\n'}
+                  download your {controller.vcLabel.singular}
                 </Text>
                 <Icon
                   name="arrow-downward"
@@ -64,7 +64,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
               </Centered>
               <Button
                 disabled={controller.isRefreshingVcs}
-                title={`Add ${controller.VCLabel.singular}`}
+                title={`Add ${controller.vcLabel.singular}`}
                 onPress={controller.ADD_VC}
               />
             </React.Fragment>

@@ -1,6 +1,6 @@
 import { useInterpret, useSelector } from '@xstate/react';
 import { useContext, useEffect, useRef } from 'react';
-import { selectVCLabel } from '../../machines/settings';
+import { selectVcLabel } from '../../machines/settings';
 import { HomeRouteProps } from '../../routes/main';
 import { GlobalContext } from '../../shared/GlobalContext';
 import {
@@ -33,7 +33,7 @@ export function useHomeScreen(props: HomeRouteProps) {
     service,
 
     activeTab: useSelector(service, selectActiveTab),
-    VCLabel: useSelector(settingsService, selectVCLabel),
+    vcLabel: useSelector(settingsService, selectVcLabel),
     selectedVc: useSelector(service, selectSelectedVc),
 
     isViewingVc: useSelector(service, selectViewingVc),

@@ -15,13 +15,13 @@ export const ReceiveVcModal: React.FC<ReceveVcModalProps> = (props) => {
         <Column>
           <DeviceInfoList of="sender" deviceInfo={controller.senderInfo} />
           <Text weight="semibold" margin="24 24 0 24">
-            {controller.VCLabel.singular} details
+            {controller.vcLabel.singular} details
           </Text>
           <VcDetails vc={controller.incomingVc} />
         </Column>
         <Column padding="0 24" margin="32 0 0 0">
           <Button
-            title={`Accept request and receive ${controller.VCLabel.singular}`}
+            title={`Accept request and receive ${controller.vcLabel.singular}`}
             margin="12 0 12 0"
             onPress={props.onAccept}
           />

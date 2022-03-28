@@ -106,7 +106,7 @@ export interface ActivityLog {
   _vcKey: string;
   timestamp: number;
   deviceName: string;
-  VCLabel: string;
+  vcLabel: string;
   action: ActivityLogAction;
 }
 

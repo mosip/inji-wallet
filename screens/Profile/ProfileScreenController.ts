@@ -4,7 +4,7 @@ import { AuthEvents, selectCanUseBiometrics } from '../../machines/auth';
 import {
   selectBiometricUnlockEnabled,
   selectName,
-  selectVCLabel,
+  selectVcLabel,
   SettingsEvents,
 } from '../../machines/settings';
 import { MainRouteProps } from '../../routes/main';
@@ -17,7 +17,7 @@ export function useProfileScreen({ navigation }: MainRouteProps) {
 
   return {
     name: useSelector(settingsService, selectName),
-    VCLabel: useSelector(settingsService, selectVCLabel),
+    vcLabel: useSelector(settingsService, selectVcLabel),
     isBiometricUnlockEnabled: useSelector(
       settingsService,
       selectBiometricUnlockEnabled

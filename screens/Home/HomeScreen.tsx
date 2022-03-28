@@ -34,8 +34,8 @@ export const HomeScreen: React.FC<HomeRouteProps> = (props) => {
           value={controller.activeTab}
           onChange={controller.SELECT_TAB}
           indicatorStyle={styles.tabIndicator}>
-          {TabItem(`My\n${controller.VCLabel.plural}`)}
-          {TabItem(`Received\n${controller.VCLabel.plural}`)}
+          {TabItem(`My\n${controller.vcLabel.plural}`)}
+          {TabItem(`Received\n${controller.vcLabel.plural}`)}
           {TabItem('History')}
         </Tab>
         {controller.haveTabsLoaded && (

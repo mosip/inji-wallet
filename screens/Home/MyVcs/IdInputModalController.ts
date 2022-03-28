@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { useSelector } from '@xstate/react';
-import { selectVCLabel } from '../../../machines/settings';
+import { selectVcLabel } from '../../../machines/settings';
 import { GlobalContext } from '../../../shared/GlobalContext';
 import { ActorRefFrom } from 'xstate';
 import { TextInput } from 'react-native';
@@ -27,7 +27,7 @@ export function useIdInputModal({ service }: IdInputModalProps) {
     id: useSelector(service, selectId),
     idType: useSelector(service, selectIdType),
     idInputRef: useSelector(service, selectIdInputRef),
-    VCLabel: useSelector(settingsService, selectVCLabel),
+    vcLabel: useSelector(settingsService, selectVcLabel),
     idError: useSelector(service, selectIdError),
     otpError: useSelector(service, selectOtpError),
 

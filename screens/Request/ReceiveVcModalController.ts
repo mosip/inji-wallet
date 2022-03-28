@@ -1,7 +1,7 @@
 import { useSelector } from '@xstate/react';
 import { useContext } from 'react';
 import { selectIncomingVc, selectSenderInfo } from '../../machines/request';
-import { selectVCLabel } from '../../machines/settings';
+import { selectVcLabel } from '../../machines/settings';
 import { GlobalContext } from '../../shared/GlobalContext';
 
 export function useReceiveVcModal() {
@@ -12,6 +12,6 @@ export function useReceiveVcModal() {
   return {
     senderInfo: useSelector(requestService, selectSenderInfo),
     incomingVc: useSelector(requestService, selectIncomingVc),
-    VCLabel: useSelector(settingsService, selectVCLabel),
+    vcLabel: useSelector(settingsService, selectVcLabel),
   };
 }

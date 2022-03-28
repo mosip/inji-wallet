@@ -10,7 +10,7 @@ import {
   selectScanning,
   selectStatusMessage,
 } from '../../machines/scan';
-import { selectVCLabel } from '../../machines/settings';
+import { selectVcLabel } from '../../machines/settings';
 import { selectShareableVcs } from '../../machines/vc';
 import { MainRouteProps } from '../../routes/main';
 import { GlobalContext } from '../../shared/GlobalContext';
@@ -70,7 +70,7 @@ export function useScanScreen({ navigation }: MainRouteProps) {
   return {
     locationError,
     statusMessage: useSelector(scanService, selectStatusMessage),
-    VCLabel: useSelector(settingsService, selectVCLabel),
+    vcLabel: useSelector(settingsService, selectVcLabel),
 
     isInvalid,
     isEmpty: !shareableVcs.length,
