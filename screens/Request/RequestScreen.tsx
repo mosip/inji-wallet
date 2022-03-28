@@ -53,14 +53,14 @@ export const RequestScreen: React.FC<MainRouteProps> = (props) => {
       <MessageOverlay
         isVisible={controller.isAccepted}
         title="Success!"
-        message={`${controller.senderInfo.deviceName}'s ${controller.vidLabel.singular} has been succesfully received`}
+        message={`${controller.vidLabel.singular} has been successfully received from ${controller.senderInfo.deviceName}`}
         onBackdropPress={controller.DISMISS}
       />
 
       <MessageOverlay
         isVisible={controller.isRejected}
         title="Notice"
-        message={`You rejected ${controller.senderInfo.deviceName}'s ${controller.vidLabel.singular}'`}
+        message={`You rejected ${controller.senderInfo.deviceName}'s ${controller.vidLabel.singular}`}
         onBackdropPress={controller.DISMISS}
       />
 
