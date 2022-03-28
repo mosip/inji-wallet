@@ -1,13 +1,13 @@
 import { useSelector } from '@xstate/react';
 import { useContext } from 'react';
-import { selectVidLabel } from '../../../machines/settings';
+import { selectVCLabel } from '../../../machines/settings';
 import { GlobalContext } from '../../../shared/GlobalContext';
 
-export function useDownloadingvidModal() {
+export function useDownloadingvcModal() {
   const { appService } = useContext(GlobalContext);
   const settingsService = appService.children.get('settings');
 
   return {
-    vidLabel: useSelector(settingsService, selectVidLabel),
+    VCLabel: useSelector(settingsService, selectVCLabel),
   };
 }

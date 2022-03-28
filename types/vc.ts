@@ -61,7 +61,7 @@ export type VerifiableCredentialType =
   | 'MOSIPVerfiableCredential'
   | string;
 
-export interface VIDLabel {
+export interface VCLabel {
   singular: string;
   plural: string;
 }

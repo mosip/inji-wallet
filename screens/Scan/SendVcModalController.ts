@@ -6,40 +6,40 @@ import {
   selectReason,
   selectReceiverInfo,
   selectRejected,
-  selectSelectingVid,
-  selectSendingVid,
-  selectVidName,
+  selectSelectingVc,
+  selectSendingVc,
+  selectVcName,
 } from '../../machines/scan';
-import { selectVidLabel } from '../../machines/settings';
-import { selectShareableVids } from '../../machines/vid';
+import { selectVCLabel } from '../../machines/settings';
+import { selectShareableVcs } from '../../machines/vc';
 import { GlobalContext } from '../../shared/GlobalContext';
 import { VC } from '../../types/vc';
 
-export function useSendVidModal() {
+export function useSendVcModal() {
   const { appService } = useContext(GlobalContext);
   const scanService = appService.children.get('scan');
   const settingsService = appService.children.get('settings');
-  const vidService = appService.children.get('vid');
+  const vcService = appService.children.get('vc');
 
   return {
     receiverInfo: useSelector(scanService, selectReceiverInfo),
     reason: useSelector(scanService, selectReason),
-    vidName: useSelector(scanService, selectVidName),
-    vidLabel: useSelector(settingsService, selectVidLabel),
-    vidKeys: useSelector(vidService, selectShareableVids),
+    vcName: useSelector(scanService, selectVcName),
+    VCLabel: useSelector(settingsService, selectVCLabel),
+    vcKeys: useSelector(vcService, selectShareableVcs),
 
-    isSelectingVid: useSelector(scanService, selectSelectingVid),
-    isSendingVid: useSelector(scanService, selectSendingVid),
+    isSelectingVc: useSelector(scanService, selectSelectingVc),
+    isSendingVc: useSelector(scanService, selectSendingVc),
     isAccepted: useSelector(scanService, selectAccepted),
     isRejected: useSelector(scanService, selectRejected),
 
     ACCEPT_REQUEST: () => scanService.send(ScanEvents.ACCEPT_REQUEST()),
     CANCEL: () => scanService.send(ScanEvents.CANCEL()),
-    SELECT_VID: (vid: VC) => scanService.send(ScanEvents.SELECT_VID(vid)),
+    SELECT_VC: (vc: VC) => scanService.send(ScanEvents.SELECT_VC(vc)),
     DISMISS: () => scanService.send(ScanEvents.DISMISS()),
     UPDATE_REASON: (reason: string) =>
       scanService.send(ScanEvents.UPDATE_REASON(reason)),
-    UPDATE_VID_NAME: (vidName: string) =>
-      scanService.send(ScanEvents.UPDATE_VID_NAME(vidName)),
+    UPDATE_VC_NAME: (vcName: string) =>
+      scanService.send(ScanEvents.UPDATE_VC_NAME(vcName)),
   };
 }

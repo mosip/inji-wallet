@@ -34,7 +34,7 @@ export const HistoryTab: React.FC<HomeScreenTabProps> = (props) => {
           <TextItem
             key={activity.timestamp}
             label={createLabel(activity)}
-            text={`${activity.vidLabel} ${activity.action}`}
+            text={`${activity.VCLabel} ${activity.action}`}
           />
         ))}
         {controller.activities.length === 0 && (

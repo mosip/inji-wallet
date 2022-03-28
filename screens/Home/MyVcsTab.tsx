@@ -1,60 +1,60 @@
 import React from 'react';
 import { Button, Column, Text, Centered } from '../../components/ui';
-import { VidItem } from '../../components/VidItem';
+import { VcItem } from '../../components/VcItem';
 import { Icon } from 'react-native-elements';
 import { Colors } from '../../components/ui/styleUtils';
 import { RefreshControl } from 'react-native';
-import { useMyVidsTab } from './MyVidsTabController';
+import { useMyVcsTab } from './MyVcsTabController';
 import { HomeScreenTabProps } from './HomeScreen';
-import { AddVidModal } from './MyVids/AddVidModal';
-import { DownloadingVidModal } from './MyVids/DownloadingVidModal';
+import { AddVcModal } from './MyVcs/AddVcModal';
+import { DownloadingVcModal } from './MyVcs/DownloadingVcModal';
 import { OnboardingOverlay } from './OnboardingOverlay';
 
-export const MyVidsTab: React.FC<HomeScreenTabProps> = (props) => {
-  const controller = useMyVidsTab(props);
+export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
+  const controller = useMyVcsTab(props);
   
   return (
     <React.Fragment>
       <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
         <Column fill padding="32 24">
-          {controller.vidKeys.length > 0 && (
+          {controller.vcKeys.length > 0 && (
             <React.Fragment>
               <Column
                 scroll
                 refreshControl={
                   <RefreshControl
-                    refreshing={controller.isRefreshingVids}
+                    refreshing={controller.isRefreshingVcs}
                     onRefresh={controller.REFRESH}
                   />
                 }>
-                {controller.vidKeys.map((vidKey) => (
-                  <VidItem
-                    key={vidKey}
-                    vidKey={vidKey}
+                {controller.vcKeys.map((vcKey) => (
+                  <VcItem
+                    key={vcKey}
+                    vcKey={vcKey}
                     margin="0 2 8 2"
-                    onPress={controller.VIEW_VID}
+                    onPress={controller.VIEW_VC}
                   />
                 ))}
               </Column>
               <Column elevation={2} margin="0 2">
                 <Button
                   type="clear"
-                  disabled={controller.isRefreshingVids}
-                  title={`Add ${controller.vidLabel.singular}`}
-                  onPress={controller.ADD_VID}
+                  disabled={controller.isRefreshingVcs}
+                  title={`Add ${controller.VCLabel.singular}`}
+                  onPress={controller.ADD_VC}
                 />
               </Column>
             </React.Fragment>
           )}
-          {controller.vidKeys.length === 0 && (
+          {controller.vcKeys.length === 0 && (
             <React.Fragment>
               <Centered fill>
                 <Text weight="semibold" margin="0 0 8 0">
-                  Generate your {controller.vidLabel.plural}
+                  Generate your {controller.VCLabel.plural}
                 </Text>
                 <Text color={Colors.Grey} align="center">
-                  Tap on "Add {controller.vidLabel.singular}" below to{'\n'}
-                  download your {controller.vidLabel.singular}
+                  Tap on "Add {controller.VCLabel.singular}" below to{'\n'}
+                  download your {controller.VCLabel.singular}
                 </Text>
                 <Icon
                   name="arrow-downward"
@@ -63,20 +63,20 @@ export const MyVidsTab: React.FC<HomeScreenTabProps> = (props) => {
                 />
               </Centered>
               <Button
-                disabled={controller.isRefreshingVids}
-                title={`Add ${controller.vidLabel.singular}`}
-                onPress={controller.ADD_VID}
+                disabled={controller.isRefreshingVcs}
+                title={`Add ${controller.VCLabel.singular}`}
+                onPress={controller.ADD_VC}
               />
             </React.Fragment>
           )}
         </Column>
       </Column>
 
-      {controller.AddVidModalService && (
-        <AddVidModal service={controller.AddVidModalService} />
+      {controller.AddVcModalService && (
+        <AddVcModal service={controller.AddVcModalService} />
       )}
       {controller.isRequestSuccessful && (
-        <DownloadingVidModal
+        <DownloadingVcModal
           isVisible={controller.isRequestSuccessful}
           onDismiss={controller.DISMISS}
         />
@@ -85,7 +85,7 @@ export const MyVidsTab: React.FC<HomeScreenTabProps> = (props) => {
       <OnboardingOverlay
         isVisible={controller.isOnboarding}
         onDone={controller.ONBOARDING_DONE}
-        onAddVid={controller.ADD_VID}
+        onAddVc={controller.ADD_VC}
       />
     </React.Fragment>
   );

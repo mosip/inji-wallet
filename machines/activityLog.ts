@@ -103,10 +103,10 @@ export function createActivityLogMachine(serviceRefs: AppServices) {
 }
 
 export interface ActivityLog {
-  _vidKey: string;
+  _vcKey: string;
   timestamp: number;
   deviceName: string;
-  vidLabel: string;
+  VCLabel: string;
   action: ActivityLogAction;
 }
 

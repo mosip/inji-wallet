@@ -2,23 +2,23 @@ import { ContextFrom, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { AppServices } from '../shared/GlobalContext';
 import { SETTINGS_STORE_KEY } from '../shared/constants';
-import { VIDLabel } from '../types/vc';
+import { VCLabel } from '../types/vc';
 import { StoreEvents } from './store';
 
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
     name: '',
-    vidLabel: {
+    VCLabel: {
       singular: 'ID',
       plural: 'IDs',
-    } as VIDLabel,
+    } as VCLabel,
     isBiometricUnlockEnabled: false,
   },
   {
     events: {
       UPDATE_NAME: (name: string) => ({ name }),
-      UPDATE_VID_LABEL: (label: string) => ({ label }),
+      UPDATE_VC_LABEL: (label: string) => ({ label }),
       TOGGLE_BIOMETRIC_UNLOCK: () => ({}),
       STORE_RESPONSE: (response: any) => ({ response }),
     },
@@ -30,7 +30,7 @@ export const SettingsEvents = model.events;
 type Context = ContextFrom<typeof model>;
 
 type UpdateNameEvent = EventFrom<typeof model, 'UPDATE_NAME'>;
-type UpdateVidLabelEvent = EventFrom<typeof model, 'UPDATE_VID_LABEL'>;
+type UpdateVCLabelEvent = EventFrom<typeof model, 'UPDATE_VC_LABEL'>;
 type StoreResponseEvent = EventFrom<typeof model, 'STORE_RESPONSE'>;
 
 export const settingsMachine = model.createMachine(
@@ -62,8 +62,8 @@ export const settingsMachine = model.createMachine(
           UPDATE_NAME: {
             actions: ['updateName', 'storeContext'],
           },
-          UPDATE_VID_LABEL: {
-            actions: ['updateVidLabel', 'storeContext'],
+          UPDATE_VC_LABEL: {
+            actions: ['updateVCLabel', 'storeContext'],
           },
         },
       },
@@ -95,8 +95,8 @@ export const settingsMachine = model.createMachine(
         name: (_, event: UpdateNameEvent) => event.name,
       }),
 
-      updateVidLabel: model.assign({
-        vidLabel: (_, event: UpdateVidLabelEvent) => ({
+      updateVCLabel: model.assign({
+        VCLabel: (_, event: UpdateVCLabelEvent) => ({
           singular: event.label,
           plural: event.label + 's',
         }),
@@ -124,8 +124,8 @@ export function selectName(state: State) {
   return state.context.name;
 }
 
-export function selectVidLabel(state: State) {
-  return state.context.vidLabel;
+export function selectVCLabel(state: State) {
+  return state.context.VCLabel;
 }
 
 export function selectBiometricUnlockEnabled(state: State) {

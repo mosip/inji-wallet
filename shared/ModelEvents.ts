@@ -1,9 +1,9 @@
 import { ActorRefFrom } from 'xstate';
-import { vidItemMachine } from '../machines/vidItem';
+import { vcItemMachine } from '../machines/vcItem';
 
-export const VidTabEvents = {
-  VIEW_VID: (vidItemActor: ActorRefFrom<typeof vidItemMachine>) => ({
-    vidItemActor,
+export const VcTabEvents = {
+  VIEW_VC: (vcItemActor: ActorRefFrom<typeof  vcItemMachine>) => ({
+    vcItemActor,
   }),
   REFRESH: () => ({}),
 };

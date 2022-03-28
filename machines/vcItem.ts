@@ -1,6 +1,6 @@
 import { EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
-import { VID_ITEM_STORE_KEY } from '../shared/constants';
+import { VC_ITEM_STORE_KEY } from '../shared/constants';
 import { AppServices } from '../shared/GlobalContext';
 import { CredentialDownloadResponse, request } from '../shared/request';
 import {
@@ -29,40 +29,40 @@ const model = createModel(
       SAVE_TAG: (tag: string) => ({ tag }),
       STORE_READY: () => ({}),
       DISMISS: () => ({}),
-      CREDENTIAL_DOWNLOADED: (vid: VC) => ({ vid }),
+      CREDENTIAL_DOWNLOADED: (vc: VC) => ({ vc }),
       STORE_RESPONSE: (response: VC) => ({ response }),
       POLL: () => ({}),
       DOWNLOAD_READY: () => ({}),
-      GET_VID_RESPONSE: (vid: VC) => ({ vid }),
+      GET_VC_RESPONSE: (vc: VC) => ({ vc }),
     },
   }
 );
 
-export const VidItemEvents = model.events;
+export const VcItemEvents = model.events;
 
 type SaveTagEvent = EventFrom<typeof model, 'SAVE_TAG'>;
-type GetVidResponseEvent = EventFrom<typeof model, 'GET_VID_RESPONSE'>;
+type GetVcResponseEvent = EventFrom<typeof model, 'GET_VC_RESPONSE'>;
 type StoreResponseEvent = EventFrom<typeof model, 'STORE_RESPONSE'>;
 type CredentialDownloadedEvent = EventFrom<
   typeof model,
   'CREDENTIAL_DOWNLOADED'
 >;
 
-type RequestVidDataEvent =
+type RequestVcDataEvent =
   | StoreResponseEvent
   | CredentialDownloadedEvent
-  | GetVidResponseEvent;
+  | GetVcResponseEvent;
 
-export const vidItemMachine = model.createMachine(
+export const vcItemMachine = model.createMachine(
   {
-    id: 'vid-item',
+    id: 'vc-item',
     context: model.initialContext,
-    initial: 'checkingVid',
+    initial: 'checkingVc',
     states: {
-      checkingVid: {
-        entry: ['requestVidContext'],
+      checkingVc: {
+        entry: ['requestVcContext'],
         on: {
-          GET_VID_RESPONSE: [
+          GET_VC_RESPONSE: [
             {
               cond: 'hasCredential',
               target: 'idle',
@@ -81,7 +81,7 @@ export const vidItemMachine = model.createMachine(
             {
               cond: 'hasCredential',
               target: 'idle',
-              actions: ['setCredential', 'updateVid'],
+              actions: ['setCredential', 'updateVc'],
             },
             {
               target: 'checkingServerData',
@@ -118,7 +118,7 @@ export const vidItemMachine = model.createMachine(
                 actions: [
                   'setCredential',
                   'storeContext',
-                  'updateVid',
+                  'updateVc',
                   'logDownloaded',
                 ],
               },
@@ -151,26 +151,26 @@ export const vidItemMachine = model.createMachine(
   },
   {
     actions: {
-      updateVid: send(
+      updateVc: send(
         (context) => {
-          const { serviceRefs, ...vid } = context;
-          return { type: 'VID_DOWNLOADED', vid };
+          const { serviceRefs, ...vc } = context;
+          return { type: 'VC_DOWNLOADED', vc };
         },
-        { to: (context) => context.serviceRefs.vid }
+        { to: (context) => context.serviceRefs.vc }
       ),
 
-      requestVidContext: send(
+      requestVcContext: send(
         (context) => ({
-          type: 'GET_VID_ITEM',
-          vidKey: VID_ITEM_STORE_KEY(context),
+          type: 'GET_VC_ITEM',
+          vcKey: VC_ITEM_STORE_KEY(context),
         }),
         {
-          to: (context) => context.serviceRefs.vid,
+          to: (context) => context.serviceRefs.vc,
         }
       ),
 
       requestStoredContext: send(
-        (context) => StoreEvents.GET(VID_ITEM_STORE_KEY(context)),
+        (context) => StoreEvents.GET(VC_ITEM_STORE_KEY(context)),
         {
           to: (context) => context.serviceRefs.store,
         }
@@ -179,7 +179,7 @@ export const vidItemMachine = model.createMachine(
       storeContext: send(
         (context) => {
           const { serviceRefs, ...data } = context;
-          return StoreEvents.SET(VID_ITEM_STORE_KEY(context), data);
+          return StoreEvents.SET(VC_ITEM_STORE_KEY(context), data);
         },
         {
           to: (context) => context.serviceRefs.store,
@@ -193,29 +193,29 @@ export const vidItemMachine = model.createMachine(
       storeTag: send(
         (context) => {
           const { serviceRefs, ...data } = context;
-          return StoreEvents.SET(VID_ITEM_STORE_KEY(context), data);
+          return StoreEvents.SET(VC_ITEM_STORE_KEY(context), data);
         },
         { to: (context) => context.serviceRefs.store }
       ),
 
-      setCredential: model.assign((_, event: RequestVidDataEvent) => {
+      setCredential: model.assign((_, event: RequestVcDataEvent) => {
         switch (event.type) {
           case 'STORE_RESPONSE':
             return event.response;
-          case 'GET_VID_RESPONSE':
+          case 'GET_VC_RESPONSE':
           case 'CREDENTIAL_DOWNLOADED':
-            return event.vid;
+            return event.vc;
         }
       }),
 
       logDownloaded: send(
         (_, event: CredentialDownloadedEvent) =>
           ActivityLogEvents.LOG_ACTIVITY({
-            _vidKey: VID_ITEM_STORE_KEY(event.vid),
+            _vcKey: VC_ITEM_STORE_KEY(event.vc),
             action: 'downloaded',
             timestamp: Date.now(),
             deviceName: '',
-            vidLabel: event.vid.tag || event.vid.id,
+            VCLabel: event.vc.tag || event.vc.id,
           }),
         { to: (context) => context.serviceRefs.activityLog }
       ),
@@ -294,13 +294,13 @@ export const vidItemMachine = model.createMachine(
   }
 );
 
-export const createVidItemMachine = (
+export const createVcItemMachine = (
   serviceRefs: AppServices,
-  vidKey: string
+  vcKey: string
 ) => {
-  const [_, idType, id, requestId] = vidKey.split(':');
-  return vidItemMachine.withContext({
-    ...vidItemMachine.context,
+  const [_, idType, id, requestId] = vcKey.split(':');
+  return vcItemMachine.withContext({
+    ...vcItemMachine.context,
     serviceRefs,
     id,
     idType: idType as VcIdType,
@@ -308,9 +308,9 @@ export const createVidItemMachine = (
   });
 };
 
-type State = StateFrom<typeof vidItemMachine>;
+type State = StateFrom<typeof vcItemMachine>;
 
-export function selectVid(state: State) {
+export function selectVc(state: State) {
   const { serviceRefs, ...data } = state.context;
   return data;
 }

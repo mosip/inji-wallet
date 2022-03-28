@@ -5,9 +5,9 @@ import { Column, Text } from '../../components/ui';
 import { Colors } from '../../components/ui/styleUtils';
 import { HomeRouteProps } from '../../routes/main';
 import { HistoryTab } from './HistoryTab';
-import { MyVidsTab } from './MyVidsTab';
-import { ReceivedVidsTab } from './ReceivedVidsTab';
-import { ViewVidModal } from './ViewVidModal';
+import { MyVcsTab } from './MyVcsTab';
+import { ReceivedVcsTab } from './ReceivedVcsTab';
+import { ViewVcModal } from './ViewVcModal';
 import { ActorRefFrom } from 'xstate';
 import { useHomeScreen } from './HomeScreenController';
 
@@ -34,19 +34,19 @@ export const HomeScreen: React.FC<HomeRouteProps> = (props) => {
           value={controller.activeTab}
           onChange={controller.SELECT_TAB}
           indicatorStyle={styles.tabIndicator}>
-          {TabItem(`My\n${controller.vidLabel.plural}`)}
-          {TabItem(`Received\n${controller.vidLabel.plural}`)}
+          {TabItem(`My\n${controller.VCLabel.plural}`)}
+          {TabItem(`Received\n${controller.VCLabel.plural}`)}
           {TabItem('History')}
         </Tab>
         {controller.haveTabsLoaded && (
           <Column fill>
-            <MyVidsTab
+            <MyVcsTab
               isVisible={controller.activeTab === 0}
-              service={controller.service.children.get('myVidsTab')}
+              service={controller.service.children.get('MyVcsTab')}
             />
-            <ReceivedVidsTab
+            <ReceivedVcsTab
               isVisible={controller.activeTab === 1}
-              service={controller.service.children.get('receivedVidsTab')}
+              service={controller.service.children.get('receivedVcsTab')}
             />
             <HistoryTab
               isVisible={controller.activeTab === 2}
@@ -55,11 +55,11 @@ export const HomeScreen: React.FC<HomeRouteProps> = (props) => {
           </Column>
         )}
       </Column>
-      {controller.selectedVid && (
-        <ViewVidModal
-          isVisible={controller.isViewingVid}
+      {controller.selectedVc && (
+        <ViewVcModal
+          isVisible={controller.isViewingVc}
           onDismiss={controller.DISMISS_MODAL}
-          vidItemActor={controller.selectedVid}
+          vcItemActor={controller.selectedVc}
         />
       )}
     </React.Fragment>

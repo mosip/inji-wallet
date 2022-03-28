@@ -4,7 +4,7 @@ import { Button, Column, Text } from '../../components/ui';
 import { Colors } from '../../components/ui/styleUtils';
 import { MainRouteProps } from '../../routes/main';
 import { MessageOverlay } from '../../components/MessageOverlay';
-import { SendVidModal } from './SendVidModal';
+import { SendVcModal } from './SendVcModal';
 import { useScanScreen } from './ScanScreenController';
 
 export const ScanScreen: React.FC<MainRouteProps> = (props) => {
@@ -36,7 +36,7 @@ export const ScanScreen: React.FC<MainRouteProps> = (props) => {
         )
       ) : (
         <Text align="center" margin="16 0" color={Colors.Red}>
-          No sharable {controller.vidLabel.plural} are available.
+          No sharable {controller.VCLabel.plural} are available.
         </Text>
       )}
 
@@ -47,11 +47,11 @@ export const ScanScreen: React.FC<MainRouteProps> = (props) => {
         onBackdropPress={controller.DISMISS_INVALID}
       />
 
-      <SendVidModal
+      <SendVcModal
         isVisible={controller.isReviewing}
         onDismiss={controller.DISMISS}
         headerElevation={2}
-        headerTitle={`Sharing ${controller.vidLabel.singular}`}
+        headerTitle={`Sharing ${controller.VCLabel.singular}`}
       />
     </Column>
   );
