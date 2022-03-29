@@ -5,7 +5,7 @@ import { Buffer } from 'buffer';
 import 'fast-text-encoding';
 import jsonld from 'jsonld';
 import LinkedDataSignature from 'jsonld-signatures/lib/suites/LinkedDataSignature';
-import { encode, decode } from 'base64url-universal';
+import { encode } from 'base64url-universal';
 
 export interface JwsLinkedDataSignature {
   [key: string]: any;
