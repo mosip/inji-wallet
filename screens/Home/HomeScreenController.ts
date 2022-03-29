@@ -27,7 +27,7 @@ export function useHomeScreen(props: HomeRouteProps) {
     if (props.route.params?.activeTab != null) {
       SELECT_TAB(props.route.params.activeTab);
     }
-  }, [props.route.params?.activeTab]);
+  }, [props.route.params, props.route.params?.activeTab]);
 
   return {
     service,
