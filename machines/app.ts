@@ -216,13 +216,13 @@ export const appMachine = model.createMachine(
       checkFocusState: () => (callback) => {
         const changeHandler = (newState: AppStateStatus) => {
           switch (newState) {
-            case 'background':
-            case 'inactive':
-              callback({ type: 'INACTIVE' });
-              break;
-            case 'active':
-              callback({ type: 'ACTIVE' });
-              break;
+          case 'background':
+          case 'inactive':
+            callback({ type: 'INACTIVE' });
+            break;
+          case 'active':
+            callback({ type: 'ACTIVE' });
+            break;
           }
         };
 

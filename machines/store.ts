@@ -141,44 +141,44 @@ export const storeMachine = model.createMachine(
           try {
             let response: any;
             switch (event.type) {
-              case 'GET': {
-                response = await getItem(
-                  event.key,
-                  null,
-                  context.encryptionKey
-                );
-                break;
-              }
-              case 'SET': {
-                await setItem(event.key, event.value, context.encryptionKey);
-                response = event.value;
-                break;
-              }
-              case 'APPEND': {
-                await appendItem(event.key, event.value, context.encryptionKey);
-                response = event.value;
-                break;
-              }
-              case 'PREPEND': {
-                await prependItem(
-                  event.key,
-                  event.value,
-                  context.encryptionKey
-                );
+            case 'GET': {
+              response = await getItem(
+                event.key,
+                null,
+                context.encryptionKey
+              );
+              break;
+            }
+            case 'SET': {
+              await setItem(event.key, event.value, context.encryptionKey);
+              response = event.value;
+              break;
+            }
+            case 'APPEND': {
+              await appendItem(event.key, event.value, context.encryptionKey);
+              response = event.value;
+              break;
+            }
+            case 'PREPEND': {
+              await prependItem(
+                event.key,
+                event.value,
+                context.encryptionKey
+              );
 
-                response = event.value;
-                break;
-              }
-              case 'REMOVE': {
-                await removeItem(event.key);
-                break;
-              }
-              case 'CLEAR': {
-                await clear();
-                break;
-              }
-              default:
-                return;
+              response = event.value;
+              break;
+            }
+            case 'REMOVE': {
+              await removeItem(event.key);
+              break;
+            }
+            case 'CLEAR': {
+              await clear();
+              break;
+            }
+            default:
+              return;
             }
             callback(model.events.STORE_RESPONSE(response, event.requester));
           } catch (e) {

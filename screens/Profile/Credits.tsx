@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Dimensions, Image, StyleSheet, View } from 'react-native';
 import { Divider, Icon, ListItem, Overlay } from 'react-native-elements';
-import Markdown from 'react-native-simple-markdown'
+import Markdown from 'react-native-simple-markdown';
 import { Button, Text, Row } from '../../components/ui';
 import { Colors } from '../../components/ui/styleUtils';
 import creditsContent from '../../Credits.md';
@@ -11,7 +11,7 @@ export const Credits: React.FC<CreditsProps> = (props) => {
   const images = {
     'docs/images/newlogic_logo.png' : require('../../docs/images/newlogic_logo.png'),
     'docs/images/id_pass_logo.png' : require('../../docs/images/id_pass_logo.png'),
-  }
+  };
   const styles = StyleSheet.create({
     buttonContainer: {
       position: 'absolute',
@@ -35,7 +35,7 @@ export const Credits: React.FC<CreditsProps> = (props) => {
       maxWidth: 150,
       margin: 0
     }
-  }
+  };
 
   const rules = {
     image: {
@@ -49,7 +49,7 @@ export const Credits: React.FC<CreditsProps> = (props) => {
         </View>
       ),
     }
-  }
+  };
 
   return (
     <ListItem bottomDivider onPress={() => setIsViewing(true)}>

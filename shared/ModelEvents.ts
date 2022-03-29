@@ -9,7 +9,7 @@ export const VcTabEvents = {
 };
 
 export const StoreEvents = {
-  STORE_RESPONSE: (response: any) => ({ response }),
+  STORE_RESPONSE: (response: unknown) => ({ response }),
   STORE_ERROR: (error: Error) => ({ error }),
 };
 

@@ -100,14 +100,14 @@ export const smartShareMachine = model.createMachine(
 
         onReceive((event: EventFrom<typeof model>) => {
           switch (event.type) {
-            case 'SEND':
-              SmartShare.send(event.message.toString(), () => {
-                callback(model.events.SENT());
-              });
-              break;
-            case 'DESTROY':
-              SmartShare.destroyConnection();
-              break;
+          case 'SEND':
+            SmartShare.send(event.message.toString(), () => {
+              callback(model.events.SENT());
+            });
+            break;
+          case 'DESTROY':
+            SmartShare.destroyConnection();
+            break;
           }
         });
 

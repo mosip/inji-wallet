@@ -7,7 +7,7 @@ import { Colors } from './ui/styleUtils';
 export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
   const [isEditing, setIsEditing] = useState(false);
   const [newValue, setNewValue] = useState(props.value);
-  
+
   return (
     <ListItem bottomDivider onPress={() => setIsEditing(true)}>
       <ListItem.Content>
@@ -24,12 +24,7 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
           <Text>Edit {props.label}</Text>
           <Input autoFocus value={newValue} onChangeText={setNewValue} />
           <Row>
-            <Button
-              fill
-              type="clear"
-              title="Cancel"
-              onPress={dismiss}
-            />
+            <Button fill type="clear" title="Cancel" onPress={dismiss} />
             <Button fill title="Save" onPress={edit} />
           </Row>
         </Column>

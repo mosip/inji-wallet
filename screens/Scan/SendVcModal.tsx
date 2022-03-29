@@ -40,7 +40,7 @@ export const SendVcModal: React.FC<SendVcModalProps> = (props) => {
           <Button type="clear" title="Reject" onPress={controller.CANCEL} />
         </Column>
       </Column>
-      
+
       <SelectVcOverlay
         isVisible={controller.isSelectingVc}
         receiverName={controller.receiverInfo.deviceName}
