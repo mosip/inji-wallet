@@ -9,14 +9,16 @@ import {
   verify,
   createPrivateKey,
   createPublicKey,
-  randomBytes
+  randomBytes,
 } from 'crypto-js';
 
 // used to export node's public keys to buffers
-const publicKeyEncoding = {format: 'der', type: 'spki'};
+const publicKeyEncoding = { format: 'der', type: 'spki' };
 // used to turn private key bytes into a buffer in DER format
 const DER_PRIVATE_KEY_PREFIX = Buffer.from(
-  '302e020100300506032b657004220420', 'hex');
+  '302e020100300506032b657004220420',
+  'hex'
+);
 // used to turn public key bytes into a buffer in DER format
 const DER_PUBLIC_KEY_PREFIX = Buffer.from('302a300506032b6570032100', 'hex');
 
@@ -27,13 +29,13 @@ const api = {
    * @param {Uint8Array} seedBytes - The bytes for the private key.
    *
    * @returns {object} The object with the public and private key material.
-  */
+   */
   async generateKeyPairFromSeed(seedBytes) {
     const privateKey = await createPrivateKey({
       // node is more than happy to create a new private key using a DER
-      key: _privateKeyDerEncode({seedBytes}),
+      key: _privateKeyDerEncode({ seedBytes }),
       format: 'der',
-      type: 'pkcs8'
+      type: 'pkcs8',
     });
     // this expects either a PEM encoded key or a node privateKeyObject
     const publicKey = await createPublicKey(privateKey);
@@ -41,7 +43,7 @@ const api = {
     const publicKeyBytes = getKeyMaterial(publicKeyBuffer);
     return {
       publicKey: publicKeyBytes,
-      secretKey: Buffer.concat([seedBytes, publicKeyBytes])
+      secretKey: Buffer.concat([seedBytes, publicKeyBytes]),
     };
   },
   // generates an ed25519 key using a random seed
@@ -51,20 +53,20 @@ const api = {
   },
   async sign(privateKeyBytes, data) {
     const privateKey = await createPrivateKey({
-      key: _privateKeyDerEncode({privateKeyBytes}),
+      key: _privateKeyDerEncode({ privateKeyBytes }),
       format: 'der',
-      type: 'pkcs8'
+      type: 'pkcs8',
     });
     return sign(null, data, privateKey);
   },
   async verify(publicKeyBytes, data, signature) {
     const publicKey = await createPublicKey({
-      key: _publicKeyDerEncode({publicKeyBytes}),
+      key: _publicKeyDerEncode({ publicKeyBytes }),
       format: 'der',
-      type: 'spki'
+      type: 'spki',
     });
     return verify(null, data, publicKey, signature);
-  }
+  },
 };
 
 export default api;
@@ -77,12 +79,12 @@ export default api;
  * @throws {Error} If the buffer does not contain a valid DER Prefix.
  *
  * @returns {Buffer} The key material part of the Buffer.
-*/
+ */
 function getKeyMaterial(buffer) {
-  if(buffer.indexOf(DER_PUBLIC_KEY_PREFIX) === 0) {
+  if (buffer.indexOf(DER_PUBLIC_KEY_PREFIX) === 0) {
     return buffer.slice(DER_PUBLIC_KEY_PREFIX.length, buffer.length);
   }
-  if(buffer.indexOf(DER_PRIVATE_KEY_PREFIX) === 0) {
+  if (buffer.indexOf(DER_PRIVATE_KEY_PREFIX) === 0) {
     return buffer.slice(DER_PRIVATE_KEY_PREFIX.length, buffer.length);
   }
   throw new Error('Expected Buffer to match Ed25519 Public or Private Prefix');
@@ -100,21 +102,25 @@ function getKeyMaterial(buffer) {
  *  or not a Uint8Array or Buffer.
  *
  * @returns {Buffer} DER private key prefix + key bytes.
-*/
-export function _privateKeyDerEncode({privateKeyBytes, seedBytes}) {
-  if(!(privateKeyBytes || seedBytes)) {
+ */
+export function _privateKeyDerEncode({ privateKeyBytes, seedBytes }: any) {
+  if (!(privateKeyBytes || seedBytes)) {
     throw new TypeError('`privateKeyBytes` or `seedBytes` is required.');
   }
-  if(!privateKeyBytes && !(seedBytes instanceof Uint8Array &&
-    seedBytes.length === 32)) {
+  if (
+    !privateKeyBytes &&
+    !(seedBytes instanceof Uint8Array && seedBytes.length === 32)
+  ) {
     throw new TypeError('`seedBytes` must be a 32 byte Buffer.');
   }
-  if(!seedBytes && !(privateKeyBytes instanceof Uint8Array &&
-    privateKeyBytes.length === 64)) {
+  if (
+    !seedBytes &&
+    !(privateKeyBytes instanceof Uint8Array && privateKeyBytes.length === 64)
+  ) {
     throw new TypeError('`privateKeyBytes` must be a 64 byte Buffer.');
   }
   let p;
-  if(seedBytes) {
+  if (seedBytes) {
     p = seedBytes;
   } else {
     // extract the first 32 bytes of the 64 byte private key representation
@@ -134,9 +140,9 @@ export function _privateKeyDerEncode({privateKeyBytes, seedBytes}) {
  * @throws {TypeError} Throws if the bytes are not Uint8Array or of length 32.
  *
  * @returns {Buffer} DER Public key Prefix + key bytes.
-*/
-export function _publicKeyDerEncode({publicKeyBytes}) {
-  if(!(publicKeyBytes instanceof Uint8Array && publicKeyBytes.length === 32)) {
+ */
+export function _publicKeyDerEncode({ publicKeyBytes }) {
+  if (!(publicKeyBytes instanceof Uint8Array && publicKeyBytes.length === 32)) {
     throw new TypeError('`publicKeyBytes` must be a 32 byte Buffer.');
   }
   return Buffer.concat([DER_PUBLIC_KEY_PREFIX, publicKeyBytes]);

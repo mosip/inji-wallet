@@ -2,6 +2,10 @@
  * Copyright (c) 2018 Digital Bazaar, Inc. All rights reserved.
  */
 
+export interface ProofPurpose {
+  [key: string]: any;
+}
+
 export class ProofPurpose {
   /**
    * @param term {string} the `proofPurpose` term, as defined in the
@@ -11,18 +15,20 @@ export class ProofPurpose {
    * @param [maxTimestampDelta] {integer} a maximum number of seconds that
    *   the date on the signature can deviate from, defaults to `Infinity`.
    */
-  constructor({term, date, maxTimestampDelta = Infinity}: any = {}) {
-    if(term === undefined) {
+  constructor({ term, date, maxTimestampDelta = Infinity }: any = {}) {
+    if (term === undefined) {
       throw new Error('"term" is required.');
     }
-    if(maxTimestampDelta !== undefined &&
-      typeof maxTimestampDelta !== 'number') {
+    if (
+      maxTimestampDelta !== undefined &&
+      typeof maxTimestampDelta !== 'number'
+    ) {
       throw new TypeError('"maxTimestampDelta" must be a number.');
     }
     this.term = term;
-    if(date !== undefined) {
+    if (date !== undefined) {
       this.date = new Date(date);
-      if(isNaN(this.date)) {
+      if (isNaN(this.date)) {
         throw TypeError(`"date" "${date}" is not a valid date.`);
       }
     }
@@ -41,22 +47,26 @@ export class ProofPurpose {
    * @return {Promise<object>} resolves to an object with `valid` and `error`.
    */
   async validate(
-    proof, {/*document, suite, verificationMethod,
-      documentLoader, expansionMap*/}) {
+    proof,
+    {
+      /*document, suite, verificationMethod,
+      documentLoader, expansionMap*/
+    }
+  ) {
     try {
       // check expiration
-      if(this.maxTimestampDelta !== Infinity) {
+      if (this.maxTimestampDelta !== Infinity) {
         const expected = (this.date || new Date()).getTime();
         const delta = this.maxTimestampDelta * 1000;
         const created = new Date(proof.created).getTime();
         // comparing this way handles NaN case where `created` is invalid
-        if(!(created >= (expected - delta) && created <= (expected + delta))) {
-          throw new Error('The proof\'s created timestamp is out of range.');
+        if (!(created >= expected - delta && created <= expected + delta)) {
+          throw new Error("The proof's created timestamp is out of range.");
         }
       }
-      return {valid: true};
-    } catch(error) {
-      return {valid: false, error};
+      return { valid: true };
+    } catch (error) {
+      return { valid: false, error };
     }
   }
 
@@ -72,7 +82,12 @@ export class ProofPurpose {
    * @return {Promise<object>} resolves to the proof instance (in the
    *   `constants.SECURITY_CONTEXT_URL`.
    */
-  async update(proof, {/*document, suite, documentLoader, expansionMap */}) {
+  async update(
+    proof,
+    {
+      /*document, suite, documentLoader, expansionMap */
+    }
+  ) {
     proof.proofPurpose = this.term;
     return proof;
   }
@@ -86,7 +101,12 @@ export class ProofPurpose {
    *
    * @return {Promise<boolean>} `true` if there's a match, `false` if not.
    */
-  async match(proof, {/* document, documentLoader, expansionMap */}) {
+  async match(
+    proof,
+    {
+      /* document, documentLoader, expansionMap */
+    }
+  ) {
     return proof.proofPurpose === this.term;
   }
-};
+}
