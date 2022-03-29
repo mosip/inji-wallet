@@ -5,7 +5,7 @@
     "android:mosip": "expo run:android --variant MosipDebug",
     "android:newlogic": "expo run:android --variant NewlogicDebug",
     "android:ph": "expo run:android --variant PhDebug",
-    "ios": "expo run:ios",
+    "ios": "expo run:ios --device",
     "eject": "expo eject --npm",
     "build:android:mosip": "cd android && ./gradlew :app:assembleMosipRelease && cd ..",
     "build:android:newlogic": "cd android && ./gradlew :app:assembleNewlogicRelease && cd ..",
