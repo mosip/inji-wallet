@@ -27,24 +27,6 @@
       "version": "detect"
     }
   },
-  "rules": {
-    "indent": [
-      "error",
-      2
-    ],
-    "linebreak-style": [
-      "error",
-      "unix"
-    ],
-    "quotes": [
-      "error",
-      "single"
-    ],
-    "semi": [
-      "error",
-      "always"
-    ]
-  },
   "ignorePatterns": [
     "node_modules",
     "android",
@@ -52,5 +34,8 @@
     "assets",
     "*.typegen.ts"
   ],
-  "root": true
+  "root": true,
+  "rules": {
+    "@typescript-eslint/no-unused-vars": ["error", { "ignoreRestSiblings": true }]
+  }
 }
