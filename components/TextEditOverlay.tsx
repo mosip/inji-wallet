@@ -22,7 +22,7 @@ export const TextEditOverlay: React.FC<EditOverlayProps> = (props) => {
       isVisible={props.isVisible}
       overlayStyle={styles.overlay}
       onBackdropPress={props.onDismiss}>
-      <Column padding="24" width={Dimensions.get('screen').width * 0.8}>
+      <Column pX={24} pY={24} width={Dimensions.get('screen').width * 0.8}>
         <Text weight="semibold" margin="0 0 16 0">
           {props.label}
         </Text>

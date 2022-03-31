@@ -39,6 +39,8 @@ function createLayout(
       props.crossAlign ? { alignItems: props.crossAlign } : null,
       props.elevation ? elevation(props.elevation) : null,
       props.style ? props.style : null,
+      props.pY ? { paddingVertical: props.pY } : null,
+      props.pX ? { paddingHorizontal: props.pX } : null,
     ];
 
     return props.scroll ? (
@@ -65,7 +67,7 @@ interface LayoutProps {
   fill?: boolean;
   align?: FlexStyle['justifyContent'];
   crossAlign?: FlexStyle['alignItems'];
-  padding?: string;
+  padding?: string | number;
   margin?: string;
   backgroundColor?: string;
   width?: number | string;
@@ -74,4 +76,6 @@ interface LayoutProps {
   scroll?: boolean;
   refreshControl?: React.ReactElement<RefreshControlProps>;
   style?: StyleProp<ViewStyle>;
+  pY?: number | string | undefined;
+  pX?: number | string | undefined;
 }
