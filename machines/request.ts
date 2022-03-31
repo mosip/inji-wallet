@@ -51,16 +51,14 @@ const model = createModel(
 
 export const RequestEvents = model.events;
 
-type ExchangeDoneEvent = EventFrom<typeof model, 'EXCHANGE_DONE'>;
-type VcReceivedEvent = EventFrom<typeof model, 'VC_RECEIVED'>;
-type ReceiveDeviceInfoEvent = EventFrom<typeof model, 'RECEIVE_DEVICE_INFO'>;
-type StoreResponseEvent = EventFrom<typeof model, 'STORE_RESPONSE'>;
-type VcResponseEvent = EventFrom<typeof model, 'VC_RESPONSE'>;
-
 export const requestMachine = model.createMachine(
   {
+    tsTypes: {} as import('./request.typegen').Typegen0,
+    schema: {
+      context: model.initialContext,
+      events: {} as EventFrom<typeof model>,
+    },
     id: 'request',
-    context: model.initialContext,
     initial: 'inactive',
     on: {
       SCREEN_BLUR: 'inactive',
@@ -103,7 +101,7 @@ export const requestMachine = model.createMachine(
         id: 'clearingConnection',
         entry: ['disconnect'],
         after: {
-          250: 'waitingForConnection',
+          CLEAR_DELAY: 'waitingForConnection',
         },
       },
       waitingForConnection: {
@@ -236,7 +234,7 @@ export const requestMachine = model.createMachine(
       requestReceiverInfo: sendParent('REQUEST_DEVICE_INFO'),
 
       setReceiverInfo: model.assign({
-        receiverInfo: (_, event: ReceiveDeviceInfoEvent) => event.info,
+        receiverInfo: (_, event) => event.info,
       }),
 
       disconnect: () => {
@@ -252,11 +250,11 @@ export const requestMachine = model.createMachine(
       }),
 
       setSenderInfo: model.assign({
-        senderInfo: (_, event: ExchangeDoneEvent) => event.senderInfo,
+        senderInfo: (_, event) => event.senderInfo,
       }),
 
       setIncomingVc: model.assign({
-        incomingVc: (_, event: VcReceivedEvent) => event.vc,
+        incomingVc: (_, event) => event.vc,
       }),
 
       registerLoggers: model.assign({
@@ -397,8 +395,7 @@ export const requestMachine = model.createMachine(
         return () => subscription.remove();
       },
 
-      // tslint:disable-next-line
-      sendVcResponse: (context, event, meta) => (callback) => {
+      sendVcResponse: (_context, _event, meta) => (callback) => {
         const response = new Message('send:vc:response', {
           status: meta.src.status,
         });
@@ -410,11 +407,15 @@ export const requestMachine = model.createMachine(
     },
 
     guards: {
-      hasExistingVc: (context, event: VcResponseEvent) => {
+      hasExistingVc: (context, event) => {
         const receivedVcs: string[] = event.response;
         const vcKey = VC_ITEM_STORE_KEY(context.incomingVc);
         return receivedVcs.includes(vcKey);
       },
+    },
+
+    delays: {
+      CLEAR_DELAY: 250,
     },
   }
 );

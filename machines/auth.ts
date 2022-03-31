@@ -23,14 +23,14 @@ const model = createModel(
 
 export const AuthEvents = model.events;
 
-type Context = ContextFrom<typeof model>;
-
-type SetupPasscodeEvent = EventFrom<typeof model, 'SETUP_PASSCODE'>;
-
 export const authMachine = model.createMachine(
   {
+    tsTypes: {} as import('./auth.typegen').Typegen0,
+    schema: {
+      context: model.initialContext,
+      events: {} as EventFrom<typeof model>,
+    },
     id: 'auth',
-    context: model.initialContext,
     initial: 'init',
     states: {
       init: {
@@ -90,7 +90,7 @@ export const authMachine = model.createMachine(
       }),
 
       storeContext: send(
-        (context: Context) => {
+        (context) => {
           const { serviceRefs, ...data } = context;
           return StoreEvents.SET('auth', data);
         },
@@ -103,7 +103,7 @@ export const authMachine = model.createMachine(
       }),
 
       setPasscode: model.assign({
-        passcode: (_, event: SetupPasscodeEvent) => event.passcode,
+        passcode: (_, event) => event.passcode,
       }),
 
       setBiometrics: model.assign({

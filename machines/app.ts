@@ -24,23 +24,26 @@ const model = createModel(
   },
   {
     events: {
-      ACTIVE: () => ({}),
-      INACTIVE: () => ({}),
-      OFFLINE: () => ({}),
-      ONLINE: (networkType: NetInfoStateType) => ({ networkType }),
-      REQUEST_DEVICE_INFO: () => ({}),
-      READY: (data?: unknown) => ({ data }),
-      APP_INFO_RECEIVED: (info: AppInfo) => ({ info }),
+      'xstate.init': () => ({}),
+      'ACTIVE': () => ({}),
+      'INACTIVE': () => ({}),
+      'OFFLINE': () => ({}),
+      'ONLINE': (networkType: NetInfoStateType) => ({ networkType }),
+      'REQUEST_DEVICE_INFO': () => ({}),
+      'READY': (data?: unknown) => ({ data }),
+      'APP_INFO_RECEIVED': (info: AppInfo) => ({ info }),
     },
   }
 );
 
-type AppInfoReceived = EventFrom<typeof model, 'APP_INFO_RECEIVED'>;
-
 export const appMachine = model.createMachine(
   {
+    tsTypes: {} as import('./app.typegen').Typegen0,
+    schema: {
+      context: model.initialContext,
+      events: {} as EventFrom<typeof model>,
+    },
     id: 'app',
-    context: model.initialContext,
     initial: 'init',
     states: {
       init: {
@@ -52,12 +55,6 @@ export const appMachine = model.createMachine(
               READY: 'services',
             },
           },
-          // safetyNet: {
-          //   invoke: {
-          //     id: 'safetynet',
-          //     src: safetyNetMachine
-          //   },
-          // },
           services: {
             entry: ['spawnServiceActors', 'logServiceEvents'],
             on: {
@@ -199,7 +196,7 @@ export const appMachine = model.createMachine(
       },
 
       setAppInfo: model.assign({
-        info: (_, event: AppInfoReceived) => event.info,
+        info: (_, event) => event.info,
       }),
     },
 
@@ -216,13 +213,13 @@ export const appMachine = model.createMachine(
       checkFocusState: () => (callback) => {
         const changeHandler = (newState: AppStateStatus) => {
           switch (newState) {
-          case 'background':
-          case 'inactive':
-            callback({ type: 'INACTIVE' });
-            break;
-          case 'active':
-            callback({ type: 'ACTIVE' });
-            break;
+            case 'background':
+            case 'inactive':
+              callback({ type: 'INACTIVE' });
+              break;
+            case 'active':
+              callback({ type: 'ACTIVE' });
+              break;
           }
         };
 

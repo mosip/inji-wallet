@@ -18,13 +18,13 @@ const model = createModel(
       KEY_RECEIVED: (key: string) => ({ key }),
       READY: () => ({}),
       GET: (key: string) => ({ key }),
-      SET: (key: string, value: any) => ({ key, value }),
-      APPEND: (key: string, value: any) => ({ key, value }),
-      PREPEND: (key: string, value: any) => ({ key, value }),
+      SET: (key: string, value: unknown) => ({ key, value }),
+      APPEND: (key: string, value: unknown) => ({ key, value }),
+      PREPEND: (key: string, value: unknown) => ({ key, value }),
       REMOVE: (key: string) => ({ key }),
       CLEAR: () => ({}),
       ERROR: (error: Error) => ({ error }),
-      STORE_RESPONSE: (response?: any, requester?: string) => ({
+      STORE_RESPONSE: (response?: unknown, requester?: string) => ({
         response,
         requester,
       }),
@@ -37,16 +37,16 @@ export const StoreEvents = model.events;
 
 export type StoreResponseEvent = EventFrom<typeof model, 'STORE_RESPONSE'>;
 
-type KeyReceivedEvent = EventFrom<typeof model, 'KEY_RECEIVED'>;
-
-type ForwardedEvent = EventFrom<typeof model> & {
-  requester: string;
-};
+type ForwardedEvent = EventFrom<typeof model> & { requester: string };
 
 export const storeMachine = model.createMachine(
   {
+    tsTypes: {} as import('./store.typegen').Typegen0,
+    schema: {
+      context: model.initialContext,
+      events: {} as EventFrom<typeof model>,
+    },
     id: 'store',
-    context: model.initialContext,
     initial: 'gettingEncryptionKey',
     states: {
       gettingEncryptionKey: {
@@ -129,7 +129,7 @@ export const storeMachine = model.createMachine(
       ),
 
       setEncryptionKey: model.assign({
-        encryptionKey: (_, event: KeyReceivedEvent) => event.key,
+        encryptionKey: (_, event) => event.key,
       }),
     },
 
@@ -139,46 +139,46 @@ export const storeMachine = model.createMachine(
       store: (context) => (callback, onReceive: Receiver<ForwardedEvent>) => {
         onReceive(async (event) => {
           try {
-            let response: any;
+            let response: unknown;
             switch (event.type) {
-            case 'GET': {
-              response = await getItem(
-                event.key,
-                null,
-                context.encryptionKey
-              );
-              break;
-            }
-            case 'SET': {
-              await setItem(event.key, event.value, context.encryptionKey);
-              response = event.value;
-              break;
-            }
-            case 'APPEND': {
-              await appendItem(event.key, event.value, context.encryptionKey);
-              response = event.value;
-              break;
-            }
-            case 'PREPEND': {
-              await prependItem(
-                event.key,
-                event.value,
-                context.encryptionKey
-              );
+              case 'GET': {
+                response = await getItem(
+                  event.key,
+                  null,
+                  context.encryptionKey
+                );
+                break;
+              }
+              case 'SET': {
+                await setItem(event.key, event.value, context.encryptionKey);
+                response = event.value;
+                break;
+              }
+              case 'APPEND': {
+                await appendItem(event.key, event.value, context.encryptionKey);
+                response = event.value;
+                break;
+              }
+              case 'PREPEND': {
+                await prependItem(
+                  event.key,
+                  event.value,
+                  context.encryptionKey
+                );
 
-              response = event.value;
-              break;
-            }
-            case 'REMOVE': {
-              await removeItem(event.key);
-              break;
-            }
-            case 'CLEAR': {
-              await clear();
-              break;
-            }
-            default:
-              return;
+                response = event.value;
+                break;
+              }
+              case 'REMOVE': {
+                await removeItem(event.key);
+                break;
+              }
+              case 'CLEAR': {
+                await clear();
+                break;
+              }
+              default:
+                return;
             }
             callback(model.events.STORE_RESPONSE(response, event.requester));
           } catch (e) {
@@ -224,7 +224,11 @@ export const storeMachine = model.createMachine(
   }
 );
 
-export async function setItem(key: string, value: any, encryptionKey: string) {
+export async function setItem(
+  key: string,
+  value: unknown,
+  encryptionKey: string
+) {
   try {
     const data = JSON.stringify(value);
     const encrypted = encryptJson(encryptionKey, data);
@@ -237,7 +241,7 @@ export async function setItem(key: string, value: any, encryptionKey: string) {
 
 export async function getItem(
   key: string,
-  defaultValue: any,
+  defaultValue: unknown,
   encryptionKey: string
 ) {
   try {
@@ -255,7 +259,7 @@ export async function getItem(
 
 export async function appendItem(
   key: string,
-  value: any,
+  value: unknown,
   encryptionKey: string
 ) {
   try {
@@ -269,7 +273,7 @@ export async function appendItem(
 
 export async function prependItem(
   key: string,
-  value: any,
+  value: unknown,
   encryptionKey: string
 ) {
   try {
@@ -310,6 +314,7 @@ export function decryptJson(encryptionKey: string, encrypted: string): string {
       CryptoJS.enc.Utf8
     );
   } catch (e) {
+    console.error('error decryptJson:', e);
     throw e;
   }
 }

@@ -18,7 +18,6 @@ const model = createModel(
   }
 );
 
-type ActivityLogEvents = EventFrom<typeof model>;
 export const ActivityLogEvents = model.events;
 
 export const activityLogMachine =
@@ -28,7 +27,7 @@ export const activityLogMachine =
       tsTypes: {} as import('./activityLog.typegen').Typegen0,
       schema: {
         context: model.initialContext,
-        events: {} as ActivityLogEvents,
+        events: {} as EventFrom<typeof model>,
       },
       id: 'activityLog',
       initial: 'init',
