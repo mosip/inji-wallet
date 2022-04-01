@@ -97,8 +97,10 @@ export const authMachine = model.createMachine(
         { to: (context) => context.serviceRefs.store }
       ),
 
-      setContext: model.assign((_, event: StoreResponseEvent) => {
-        const { serviceRefs, ...data } = event.response;
+      setContext: model.assign((_, event) => {
+        const { serviceRefs, ...data } = event.response as ContextFrom<
+          typeof model
+        >;
         return data;
       }),
 

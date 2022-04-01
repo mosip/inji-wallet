@@ -26,10 +26,9 @@ export default {
       backgroundColor: '#FFFFFF',
     },
   },
-  web: {
-    favicon: './assets/favicon.png',
-  },
   extra: {
     backendServiceUrl: process.env.BACKEND_SERVICE_URL,
   },
+  platforms: ['android', 'ios'],
+  privacy: 'hidden',
 };
