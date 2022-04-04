@@ -72,4 +72,4 @@ export const SendVcModal: React.FC<SendVcModalProps> = (props) => {
   );
 };
 
-interface SendVcModalProps extends ModalProps {}
+type SendVcModalProps = ModalProps;

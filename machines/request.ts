@@ -1,7 +1,7 @@
 import SmartShare from '@idpass/smartshare-react-native';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import { EmitterSubscription } from 'react-native';
-import { EventFrom, send, sendParent, StateFrom } from 'xstate';
+import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { DeviceInfo } from '../components/DeviceInfoList';
 import { Message } from '../shared/Message';
@@ -9,10 +9,7 @@ import { getDeviceNameSync } from 'react-native-device-info';
 import { StoreEvents } from './store';
 import { VC } from '../types/vc';
 import { AppServices } from '../shared/GlobalContext';
-import {
-  RECEIVED_VCS_STORE_KEY,
-  VC_ITEM_STORE_KEY,
-} from '../shared/constants';
+import { RECEIVED_VCS_STORE_KEY, VC_ITEM_STORE_KEY } from '../shared/constants';
 import { ActivityLogEvents } from './activityLog';
 import { VcEvents } from './vc';
 
@@ -41,10 +38,10 @@ const model = createModel(
       BLUETOOTH_ENABLED: () => ({}),
       BLUETOOTH_DISABLED: () => ({}),
       STORE_READY: () => ({}),
-      STORE_RESPONSE: (response: any) => ({ response }),
+      STORE_RESPONSE: (response: unknown) => ({ response }),
       RECEIVE_DEVICE_INFO: (info: DeviceInfo) => ({ info }),
       RECEIVED_VCS_UPDATED: () => ({}),
-      VC_RESPONSE: (response: any) => ({ response }),
+      VC_RESPONSE: (response: unknown) => ({ response }),
     },
   }
 );
@@ -245,7 +242,7 @@ export const requestMachine = model.createMachine(
         }
       },
 
-      generateConnectionParams: model.assign({
+      generateConnectionParams: assign({
         connectionParams: () => SmartShare.getConnectionParameters(),
       }),
 
@@ -257,7 +254,7 @@ export const requestMachine = model.createMachine(
         incomingVc: (_, event) => event.vc,
       }),
 
-      registerLoggers: model.assign({
+      registerLoggers: assign({
         loggers: () => {
           if (__DEV__) {
             return [
@@ -282,7 +279,7 @@ export const requestMachine = model.createMachine(
         },
       }),
 
-      removeLoggers: model.assign({
+      removeLoggers: assign({
         loggers: ({ loggers }) => {
           loggers?.forEach((logger) => logger.remove());
           return null;
@@ -322,9 +319,7 @@ export const requestMachine = model.createMachine(
 
       sendVcReceived: send(
         (context) => {
-          return VcEvents.VC_RECEIVED(
-            VC_ITEM_STORE_KEY(context.incomingVc)
-          );
+          return VcEvents.VC_RECEIVED(VC_ITEM_STORE_KEY(context.incomingVc));
         },
         { to: (context) => context.serviceRefs.vc }
       ),
@@ -408,7 +403,7 @@ export const requestMachine = model.createMachine(
 
     guards: {
       hasExistingVc: (context, event) => {
-        const receivedVcs: string[] = event.response;
+        const receivedVcs = event.response as string[];
         const vcKey = VC_ITEM_STORE_KEY(context.incomingVc);
         return receivedVcs.includes(vcKey);
       },

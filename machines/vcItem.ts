@@ -342,9 +342,8 @@ export const vcItemMachine =
       },
 
     guards: {
-           hasCredential: (_, event) => {
-        const vc =
-          event.type === 'GET_VC_RESPONSE' ? event.vc : event.response;
+      hasCredential: (_, event) => {
+        const vc = event.type === 'GET_VC_RESPONSE' ? event.vc : event.response;
 
         return vc?.credential != null && vc?.verifiableCredential != null;
       },
@@ -359,7 +358,7 @@ export const createVcItemMachine = (
   serviceRefs: AppServices,
   vcKey: string
 ) => {
-  const [_, idType, id, requestId] = vcKey.split(':');
+  const [, idType, id, requestId] = vcKey.split(':');
   return vcItemMachine.withContext({
     ...vcItemMachine.context,
     serviceRefs,

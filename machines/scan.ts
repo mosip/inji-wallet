@@ -1,7 +1,7 @@
 import SmartShare from '@idpass/smartshare-react-native';
 import LocationEnabler from 'react-native-location-enabler';
 import SystemSetting from 'react-native-system-setting';
-import { EventFrom, send, sendParent, StateFrom } from 'xstate';
+import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { EmitterSubscription, Linking, PermissionsAndroid } from 'react-native';
 import { DeviceInfo } from '../components/DeviceInfoList';
@@ -50,7 +50,7 @@ const model = createModel(
       FLIGHT_REQUEST: () => ({}),
       LOCATION_REQUEST: () => ({}),
       UPDATE_VC_NAME: (vcName: string) => ({ vcName }),
-      STORE_RESPONSE: (response: any) => ({ response }),
+      STORE_RESPONSE: (response: unknown) => ({ response }),
       APP_ACTIVE: () => ({}),
     },
   }
@@ -298,7 +298,7 @@ export const scanMachine = model.createMachine(
         reason: (_, event) => event.reason,
       }),
 
-      clearReason: model.assign({ reason: '' }),
+      clearReason: assign({ reason: '' }),
 
       setSelectedVc: model.assign({
         selectedVc: (context, event) => {
@@ -309,7 +309,7 @@ export const scanMachine = model.createMachine(
         },
       }),
 
-      registerLoggers: model.assign({
+      registerLoggers: assign({
         loggers: () => {
           if (__DEV__) {
             return [
@@ -334,7 +334,7 @@ export const scanMachine = model.createMachine(
         },
       }),
 
-      removeLoggers: model.assign({
+      removeLoggers: assign({
         loggers: ({ loggers }) => {
           loggers?.forEach((logger) => logger.remove());
           return [];
@@ -400,7 +400,7 @@ export const scanMachine = model.createMachine(
         return () => listener.remove();
       },
 
-      checkAirplaneMode: (context) => (callback) => {
+      checkAirplaneMode: () => (callback) => {
         SystemSetting.isAirplaneEnabled().then((enable) => {
           if (enable) {
             callback(model.events.FLIGHT_ENABLED());
