@@ -17,7 +17,7 @@ const createLabel = (activity: ActivityLog) =>
     .join(' · ');
 
 export const HistoryTab: React.FC<HomeScreenTabProps> = (props) => {
-  const controller = useHistoryTab(props);
+  const controller = useHistoryTab();
 
   return (
     <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>

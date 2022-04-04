@@ -1,4 +1,3 @@
-import { StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { ActivityLog } from '../../machines/activityLog';
 import { AppServices } from '../../shared/GlobalContext';
@@ -35,5 +34,3 @@ export function createHistoryTabMachine(serviceRefs: AppServices) {
     serviceRefs,
   });
 }
-
-type State = StateFrom<typeof HistoryTabMachine>;

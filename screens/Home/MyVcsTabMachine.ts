@@ -9,7 +9,7 @@ import {
 import { createModel } from 'xstate/lib/model';
 import { StoreEvents, StoreResponseEvent } from '../../machines/store';
 import { VcEvents } from '../../machines/vc';
-import {  vcItemMachine } from '../../machines/vcItem';
+import { vcItemMachine } from '../../machines/vcItem';
 import { AppServices } from '../../shared/GlobalContext';
 import {
   MY_VCS_STORE_KEY,
@@ -24,11 +24,11 @@ const model = createModel(
   {
     events: {
       REFRESH: () => ({}),
-      VIEW_VC: (vcItemActor: ActorRefFrom<typeof  vcItemMachine>) => ({
+      VIEW_VC: (vcItemActor: ActorRefFrom<typeof vcItemMachine>) => ({
         vcItemActor,
       }),
       DISMISS: () => ({}),
-      STORE_RESPONSE: (response?: any) => ({ response }),
+      STORE_RESPONSE: (response?: unknown) => ({ response }),
       ADD_VC: () => ({}),
       ONBOARDING_DONE: () => ({}),
     },
@@ -41,8 +41,12 @@ type ViewVcEvent = EventFrom<typeof model, 'VIEW_VC'>;
 
 export const MyVcsTabMachine = model.createMachine(
   {
+    tsTypes: {} as import('./MyVcsTabMachine.typegen').Typegen0,
+    schema: {
+      context: model.initialContext,
+      events: {} as EventFrom<typeof model>,
+    },
     id: 'MyVcsTab',
-    context: model.initialContext,
     initial: 'checkingOnboardingStatus',
     states: {
       checkingOnboardingStatus: {
@@ -74,11 +78,7 @@ export const MyVcsTabMachine = model.createMachine(
         },
       },
       viewingVc: {
-        entry: [
-          sendParent((_, event: ViewVcEvent) =>
-            model.events.VIEW_VC(event.vcItemActor)
-          ),
-        ],
+        entry: ['viewVcFromParent'],
         on: {
           DISMISS: 'idle',
         },
@@ -108,13 +108,17 @@ export const MyVcsTabMachine = model.createMachine(
             on: {
               DISMISS: '#idle',
             },
-          }
+          },
         },
       },
     },
   },
   {
     actions: {
+      viewVcFromParent: sendParent((_context, event: ViewVcEvent) =>
+        model.events.VIEW_VC(event.vcItemActor)
+      ),
+
       getOnboardingStatus: send(
         () => StoreEvents.GET(ONBOARDING_STATUS_STORE_KEY),
         { to: (context) => context.serviceRefs.store }
@@ -126,21 +130,25 @@ export const MyVcsTabMachine = model.createMachine(
       ),
 
       storeVcItem: send(
-        (_, _event: any) => {
-          const event: DoneInvokeEvent<string> = _event;
-          return StoreEvents.PREPEND(MY_VCS_STORE_KEY, event.data);
+        (_context, event) => {
+          return StoreEvents.PREPEND(
+            MY_VCS_STORE_KEY,
+            (event as DoneInvokeEvent<string>).data
+          );
         },
         { to: (context) => context.serviceRefs.store }
       ),
 
       sendVcAdded: send(
-        (_, event: StoreResponseEvent) => VcEvents.VC_ADDED(event.response),
-        { to: (context) => context.serviceRefs.vc }
+        (_context, event) => VcEvents.VC_ADDED(event.response as string),
+        {
+          to: (context) => context.serviceRefs.vc,
+        }
       ),
     },
 
     guards: {
-      isOnboardingDone: (_, event: StoreResponseEvent) => {
+      isOnboardingDone: (_context, event: StoreResponseEvent) => {
         return event.response === true;
       },
     },

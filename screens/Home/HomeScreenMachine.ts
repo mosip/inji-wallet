@@ -1,4 +1,11 @@
-import { ActorRefFrom, EventFrom, send, spawn, StateFrom } from 'xstate';
+import {
+  ActorRefFrom,
+  assign,
+  EventFrom,
+  send,
+  spawn,
+  StateFrom,
+} from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { vcItemMachine } from '../../machines/vcItem';
 import { AppServices } from '../../shared/GlobalContext';
@@ -20,7 +27,7 @@ const model = createModel(
       receivedVcs: {} as ActorRefFrom<typeof ReceivedVcsTabMachine>,
       history: {} as ActorRefFrom<typeof HistoryTabMachine>,
     },
-    selectedVc: null as ActorRefFrom<typeof  vcItemMachine>,
+    selectedVc: null as ActorRefFrom<typeof vcItemMachine>,
     activeTab: 0,
   },
   {
@@ -28,7 +35,7 @@ const model = createModel(
       SELECT_MY_VCS: () => ({}),
       SELECT_RECEIVED_VCS: () => ({}),
       SELECT_HISTORY: () => ({}),
-      VIEW_VC: (vcItemActor: ActorRefFrom<typeof  vcItemMachine>) => ({
+      VIEW_VC: (vcItemActor: ActorRefFrom<typeof vcItemMachine>) => ({
         vcItemActor,
       }),
       DISMISS_MODAL: () => ({}),
@@ -36,14 +43,25 @@ const model = createModel(
   }
 );
 
+const MY_VCS_TAB_REF_ID = 'myVcsTab';
+const RECEIVED_VCS_TAB_REF_ID = 'receivedVcsTab';
+const HISTORY_TAB_REF_ID = 'historyTab';
+
 export const HomeScreenEvents = model.events;
 
-type ViewVcEvent = EventFrom<typeof model, 'VIEW_VC'>;
+export type TabRef =
+  | ActorRefFrom<typeof MyVcsTabMachine>
+  | ActorRefFrom<typeof ReceivedVcsTabMachine>
+  | ActorRefFrom<typeof HistoryTabMachine>;
 
 export const HomeScreenMachine = model.createMachine(
   {
+    tsTypes: {} as import('./HomeScreenMachine.typegen').Typegen0,
+    schema: {
+      context: model.initialContext,
+      events: {} as EventFrom<typeof model>,
+    },
     id: 'HomeScreen',
-    context: model.initialContext,
     type: 'parallel',
     states: {
       tabs: {
@@ -113,25 +131,25 @@ export const HomeScreenMachine = model.createMachine(
   },
   {
     actions: {
-      spawnTabActors: model.assign({
+      spawnTabActors: assign({
         tabRefs: (context) => ({
           myVcs: spawn(
             createMyVcsTabMachine(context.serviceRefs),
-            'MyVcsTab'
+            MY_VCS_TAB_REF_ID
           ),
           receivedVcs: spawn(
             createReceivedVcsTabMachine(context.serviceRefs),
-            'receivedVcsTab'
+            RECEIVED_VCS_TAB_REF_ID
           ),
           history: spawn(
             createHistoryTabMachine(context.serviceRefs),
-            'historyTab'
+            HISTORY_TAB_REF_ID
           ),
         }),
       }),
 
       setSelectedVc: model.assign({
-        selectedVc: (_, event: ViewVcEvent) => event.vcItemActor,
+        selectedVc: (_, event) => event.vcItemActor,
       }),
 
       resetSelectedVc: model.assign({
@@ -146,6 +164,10 @@ function setActiveTab(activeTab: number) {
 }
 
 type State = StateFrom<typeof HomeScreenMachine>;
+
+export function selectTabRefs(state: State) {
+  return state.context.tabRefs;
+}
 
 export function selectActiveTab(state: State) {
   return state.context.activeTab;

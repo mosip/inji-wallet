@@ -9,22 +9,22 @@ import creditsContent from '../../Credits.md';
 export const Credits: React.FC<CreditsProps> = (props) => {
   const [isViewing, setIsViewing] = useState(false);
   const images = {
-    'docs/images/newlogic_logo.png' : require('../../docs/images/newlogic_logo.png'),
-    'docs/images/id_pass_logo.png' : require('../../docs/images/id_pass_logo.png'),
+    'docs/images/newlogic_logo.png': require('../../docs/images/newlogic_logo.png'),
+    'docs/images/id_pass_logo.png': require('../../docs/images/id_pass_logo.png'),
   };
   const styles = StyleSheet.create({
     buttonContainer: {
       position: 'absolute',
       left: 0,
-      right: 'auto'
+      right: 'auto',
     },
     view: {
       flex: 1,
-      width: Dimensions.get('screen').width
+      width: Dimensions.get('screen').width,
     },
     markdownView: {
-      padding: 20
-    }
+      padding: 20,
+    },
   });
 
   const markdownStyles = {
@@ -33,8 +33,8 @@ export const Credits: React.FC<CreditsProps> = (props) => {
     },
     image: {
       maxWidth: 150,
-      margin: 0
-    }
+      margin: 0,
+    },
   };
 
   const rules = {
@@ -48,7 +48,7 @@ export const Credits: React.FC<CreditsProps> = (props) => {
           />
         </View>
       ),
-    }
+    },
   };
 
   return (
@@ -65,19 +65,22 @@ export const Credits: React.FC<CreditsProps> = (props) => {
         <View style={styles.view}>
           <Row align="center" crossAlign="center" margin="0 0 10 0">
             <View style={styles.buttonContainer}>
-              <Button type="clear" icon={<Icon name="chevron-left" color={Colors.Orange} />} title="Back" onPress={() => setIsViewing(false)}/>
+              <Button
+                type="clear"
+                icon={<Icon name="chevron-left" color={Colors.Orange} />}
+                title="Back"
+                onPress={() => setIsViewing(false)}
+              />
             </View>
             <Text size="small">Credits and legal notices</Text>
           </Row>
           <Divider />
           <View style={styles.markdownView}>
-            <Markdown
-              rules={rules}
-              children={creditsContent}
-              styles={markdownStyles}/>
+            <Markdown rules={rules} styles={markdownStyles}>
+              {creditsContent}
+            </Markdown>
           </View>
         </View>
-
       </Overlay>
     </ListItem>
   );
