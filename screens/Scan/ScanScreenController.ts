@@ -10,8 +10,8 @@ import {
   selectScanning,
   selectStatusMessage,
 } from '../../machines/scan';
-import { selectVidLabel } from '../../machines/settings';
-import { selectShareableVids } from '../../machines/vid';
+import { selectVcLabel } from '../../machines/settings';
+import { selectShareableVcs } from '../../machines/vc';
 import { MainRouteProps } from '../../routes/main';
 import { GlobalContext } from '../../shared/GlobalContext';
 
@@ -19,9 +19,9 @@ export function useScanScreen({ navigation }: MainRouteProps) {
   const { appService } = useContext(GlobalContext);
   const scanService = appService.children.get('scan');
   const settingsService = appService.children.get('settings');
-  const vidService = appService.children.get('vid');
+  const vcService = appService.children.get('vc');
 
-  const shareableVids = useSelector(vidService, selectShareableVids);
+  const shareableVcs = useSelector(vcService, selectShareableVcs);
   const isInvalid = useSelector(scanService, selectInvalid);
 
   const isLocationDisabled = useSelector(scanService, selectIsLocationDisabled);
@@ -70,10 +70,10 @@ export function useScanScreen({ navigation }: MainRouteProps) {
   return {
     locationError,
     statusMessage: useSelector(scanService, selectStatusMessage),
-    vidLabel: useSelector(settingsService, selectVidLabel),
+    vcLabel: useSelector(settingsService, selectVcLabel),
 
     isInvalid,
-    isEmpty: !shareableVids.length,
+    isEmpty: !shareableVcs.length,
     isLocationDisabled,
     isLocationDenied,
     isScanning: useSelector(scanService, selectScanning),

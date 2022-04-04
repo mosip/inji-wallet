@@ -2,12 +2,12 @@ import React from 'react';
 import { DeviceInfoList } from '../../components/DeviceInfoList';
 import { Button, Column, Text } from '../../components/ui';
 import { Colors } from '../../components/ui/styleUtils';
-import { VidDetails } from '../../components/VidDetails';
+import { VcDetails } from '../../components/VcDetails';
 import { Modal, ModalProps } from '../../components/ui/Modal';
-import { useReceiveVidModal } from './ReceiveVidModalController';
+import { useReceiveVcModal } from './ReceiveVcModalController';
 
-export const ReceiveVidModal: React.FC<ReceveVidModalProps> = (props) => {
-  const controller = useReceiveVidModal();
+export const ReceiveVcModal: React.FC<ReceveVcModalProps> = (props) => {
+  const controller = useReceiveVcModal();
 
   return (
     <Modal {...props}>
@@ -15,13 +15,13 @@ export const ReceiveVidModal: React.FC<ReceveVidModalProps> = (props) => {
         <Column>
           <DeviceInfoList of="sender" deviceInfo={controller.senderInfo} />
           <Text weight="semibold" margin="24 24 0 24">
-            {controller.vidLabel.singular} details
+            {controller.vcLabel.singular} details
           </Text>
-          <VidDetails vid={controller.incomingVid} />
+          <VcDetails vc={controller.incomingVc} />
         </Column>
         <Column padding="0 24" margin="32 0 0 0">
           <Button
-            title={`Accept request and receive ${controller.vidLabel.singular}`}
+            title={`Accept request and receive ${controller.vcLabel.singular}`}
             margin="12 0 12 0"
             onPress={props.onAccept}
           />
@@ -37,7 +37,7 @@ export const ReceiveVidModal: React.FC<ReceveVidModalProps> = (props) => {
   );
 };
 
-interface ReceveVidModalProps extends ModalProps {
+interface ReceveVcModalProps extends ModalProps {
   onAccept: () => void;
   onReject: () => void;
 }

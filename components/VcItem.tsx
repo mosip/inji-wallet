@@ -4,13 +4,13 @@ import { Pressable, StyleSheet } from 'react-native';
 import { CheckBox, Icon } from 'react-native-elements';
 import { ActorRefFrom } from 'xstate';
 import {
-  createVidItemMachine,
+  createVcItemMachine,
   selectVerifiableCredential,
   selectGeneratedOn,
   selectTag,
   selectId,
-  vidItemMachine,
-} from '../machines/vidItem';
+  vcItemMachine,
+} from '../machines/vcItem';
 import { Column, Row, Text } from './ui';
 import { Colors } from './ui/styleUtils';
 import { RotatingIcon } from './RotatingIcon';
@@ -42,12 +42,12 @@ const styles = StyleSheet.create({
   },
 });
 
-export const VidItem: React.FC<VidItemProps> = (props) => {
+export const VcItem: React.FC<VcItemProps> = (props) => {
   const { appService } = useContext(GlobalContext);
   const machine = useRef(
-    createVidItemMachine(
+    createVcItemMachine(
       appService.getSnapshot().context.serviceRefs,
-      props.vidKey
+      props.vcKey
     )
   );
   const service = useInterpret(machine.current);
@@ -103,10 +103,10 @@ export const VidItem: React.FC<VidItemProps> = (props) => {
   );
 };
 
-interface VidItemProps {
-  vidKey: string;
+interface VcItemProps {
+  vcKey: string;
   margin?: string;
   selectable?: boolean;
   selected?: boolean;
-  onPress?: (vidRef?: ActorRefFrom<typeof vidItemMachine>) => void;
+  onPress?: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
 }

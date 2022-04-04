@@ -6,7 +6,7 @@ import { Button, Column, Text } from '../../components/ui';
 import { Colors } from '../../components/ui/styleUtils';
 import { useSelector } from '@xstate/react';
 import { GlobalContext } from '../../shared/GlobalContext';
-import { selectVidLabel } from '../../machines/settings';
+import { selectVcLabel } from '../../machines/settings';
 
 const styles = StyleSheet.create({
   overlay: {
@@ -57,30 +57,30 @@ export const OnboardingOverlay: React.FC<OnboardingProps> = (props) => {
 
   const { appService } = useContext(GlobalContext);
   const settingsService = appService.children.get('settings');
-  const vidLabel = useSelector(settingsService, selectVidLabel);
+  const vcLabel = useSelector(settingsService, selectVcLabel);
 
   const slides = [
     {
       key: 'one',
       title: 'Welcome!',
-      text: `Keep your digital credential with you at all times. To get started, add ${vidLabel.plural} to your profile.`,
+      text: `Keep your digital credential with you at all times. To get started, add ${vcLabel.plural} to your profile.`,
     },
     {
       key: 'two',
-      title: `${vidLabel.singular} management`,
-      text: `Once generated, ${vidLabel.plural} are safely stored on your mobile and can be renamed or shared at any time.`,
+      title: `${vcLabel.singular} management`,
+      text: `Once generated, ${vcLabel.plural} are safely stored on your mobile and can be renamed or shared at any time.`,
     },
     {
       key: 'three',
       title: 'Easy sharing',
-      text: `Share and receive ${vidLabel.plural} switfly using your phone camera to scan QR codes.`,
+      text: `Share and receive ${vcLabel.plural} switfly using your phone camera to scan QR codes.`,
       footer: (
         <Button
           margin="24 0 0 0"
           raised
           type="outline"
-          title={`Get started and add ${vidLabel.singular}`}
-          onPress={props.onAddVid}
+          title={`Get started and add ${vcLabel.singular}`}
+          onPress={props.onAddVc}
         />
       ),
     },
@@ -147,5 +147,5 @@ export const OnboardingOverlay: React.FC<OnboardingProps> = (props) => {
 interface OnboardingProps {
   isVisible: boolean;
   onDone: () => void;
-  onAddVid: () => void;
+  onAddVc: () => void;
 }
