@@ -5,11 +5,11 @@ export const HOST =
   Constants.manifest.extra.backendServiceUrl ||
   'https://resident-app.newlogic.dev';
 
-export const MY_VIDS_STORE_KEY = 'myVCs';
+export const MY_VCS_STORE_KEY = 'myVCs';
 
-export const RECEIVED_VIDS_STORE_KEY = 'receivedVCs';
+export const RECEIVED_VCS_STORE_KEY = 'receivedVCs';
 
-export const VID_ITEM_STORE_KEY = (vc: Partial<VC>) =>
+export const VC_ITEM_STORE_KEY = (vc: Partial<VC>) =>
   `vc:${vc.idType}:${vc.id}:${vc.requestId}`;
 
 export const ACTIVITY_LOG_STORE_KEY = 'activityLog';

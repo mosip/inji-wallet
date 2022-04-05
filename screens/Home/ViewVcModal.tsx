@@ -4,31 +4,31 @@ import { TextEditOverlay } from '../../components/TextEditOverlay';
 import { Column } from '../../components/ui';
 import { Modal } from '../../components/ui/Modal';
 import { Colors } from '../../components/ui/styleUtils';
-import { VidDetails } from '../../components/VidDetails';
-import { useViewVidModal, ViewVidModalProps } from './ViewVidModalController';
+import { VcDetails } from '../../components/VcDetails';
+import { useViewVcModal, ViewVcModalProps } from './ViewVcModalController';
 
-export const ViewVidModal: React.FC<ViewVidModalProps> = (props) => {
-  const controller = useViewVidModal(props);
+export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
+  const controller = useViewVcModal(props);
 
   return (
     <Modal
       isVisible={props.isVisible}
       onDismiss={props.onDismiss}
-      headerTitle={controller.vid.tag || controller.vid.id}
+      headerTitle={controller.vc.tag || controller.vc.id}
       headerElevation={2}
       headerRight={
         <Icon name="edit" onPress={controller.EDIT_TAG} color={Colors.Orange} />
       }>
       <Column scroll backgroundColor={Colors.LightGrey}>
         <Column>
-          <VidDetails vid={controller.vid} />
+          <VcDetails vc={controller.vc} />
         </Column>
       </Column>
 
       <TextEditOverlay
         isVisible={controller.isEditingTag}
         label="Edit Tag"
-        value={controller.vid.tag}
+        value={controller.vc.tag}
         onDismiss={controller.DISMISS}
         onSave={controller.SAVE_TAG}
       />

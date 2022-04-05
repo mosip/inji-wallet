@@ -10,14 +10,14 @@ import { getDeviceNameSync } from 'react-native-device-info';
 import { VC } from '../types/vc';
 import { AppServices } from '../shared/GlobalContext';
 import { ActivityLogEvents } from './activityLog';
-import { VID_ITEM_STORE_KEY } from '../shared/constants';
+import { VC_ITEM_STORE_KEY } from '../shared/constants';
 
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
     senderInfo: {} as DeviceInfo,
     receiverInfo: {} as DeviceInfo,
-    selectedVid: {} as VC,
+    selectedVc: {} as VC,
     reason: '',
     loggers: [] as EmitterSubscription[],
     locationConfig: {
@@ -25,17 +25,17 @@ const model = createModel(
       alwaysShow: false,
       needBle: true,
     },
-    vidName: '',
+    vcName: '',
   },
   {
     events: {
       EXCHANGE_DONE: (receiverInfo: DeviceInfo) => ({ receiverInfo }),
       RECEIVE_DEVICE_INFO: (info: DeviceInfo) => ({ info }),
-      SELECT_VID: (vid: VC) => ({ vid }),
+      SELECT_VC: (vc: VC) => ({ vc }),
       SCAN: (params: string) => ({ params }),
       ACCEPT_REQUEST: () => ({}),
-      VID_ACCEPTED: () => ({}),
-      VID_REJECTED: () => ({}),
+      VC_ACCEPTED: () => ({}),
+      VC_REJECTED: () => ({}),
       CANCEL: () => ({}),
       DISMISS: () => ({}),
       CONNECTED: () => ({}),
@@ -49,7 +49,7 @@ const model = createModel(
       FLIGHT_DISABLED: () => ({}),
       FLIGHT_REQUEST: () => ({}),
       LOCATION_REQUEST: () => ({}),
-      UPDATE_VID_NAME: (vidName: string) => ({ vidName }),
+      UPDATE_VC_NAME: (vcName: string) => ({ vcName }),
       STORE_RESPONSE: (response: any) => ({ response }),
       APP_ACTIVE: () => ({}),
     },
@@ -60,7 +60,7 @@ export const ScanEvents = model.events;
 
 type ExchangeDoneEvent = EventFrom<typeof model, 'EXCHANGE_DONE'>;
 type ScanEvent = EventFrom<typeof model, 'SCAN'>;
-type SelectVidEvent = EventFrom<typeof model, 'SELECT_VID'>;
+type selectVcEvent = EventFrom<typeof model, 'SELECT_VC'>;
 type UpdateReasonEvent = EventFrom<typeof model, 'UPDATE_REASON'>;
 type ReceiveDeviceInfoEvent = EventFrom<typeof model, 'RECEIVE_DEVICE_INFO'>;
 
@@ -206,7 +206,7 @@ export const scanMachine = model.createMachine(
         on: {
           CANCEL: 'findingConnection',
           DISMISS: 'findingConnection',
-          ACCEPT_REQUEST: '.selectingVid',
+          ACCEPT_REQUEST: '.selectingVc',
           UPDATE_REASON: {
             actions: ['setReason'],
           },
@@ -215,26 +215,26 @@ export const scanMachine = model.createMachine(
         states: {
           idle: {
             on: {
-              ACCEPT_REQUEST: 'selectingVid',
+              ACCEPT_REQUEST: 'selectingVc',
             },
           },
-          selectingVid: {
+          selectingVc: {
             on: {
-              SELECT_VID: {
-                target: 'sendingVid',
-                actions: ['setSelectedVid'],
+              SELECT_VC: {
+                target: 'sendingVc',
+                actions: ['setSelectedVc'],
               },
               CANCEL: 'idle',
             },
           },
-          sendingVid: {
+          sendingVc: {
             invoke: {
-              src: 'sendVid',
+              src: 'sendVc',
             },
             on: {
               DISCONNECT: '#scan.disconnected',
-              VID_ACCEPTED: 'accepted',
-              VID_REJECTED: 'rejected',
+              VC_ACCEPTED: 'accepted',
+              VC_REJECTED: 'rejected',
             },
           },
           accepted: {
@@ -302,10 +302,10 @@ export const scanMachine = model.createMachine(
 
       clearReason: model.assign({ reason: '' }),
 
-      setSelectedVid: model.assign({
-        selectedVid: (context, event: SelectVidEvent) => {
+      setSelectedVc: model.assign({
+        selectedVc: (context, event: selectVcEvent) => {
           return {
-            ...event.vid,
+            ...event.vc,
             reason: context.reason,
           };
         },
@@ -346,12 +346,12 @@ export const scanMachine = model.createMachine(
       logShared: send(
         (context) =>
           ActivityLogEvents.LOG_ACTIVITY({
-            _vidKey: VID_ITEM_STORE_KEY(context.selectedVid),
+            _vcKey: VC_ITEM_STORE_KEY(context.selectedVc),
             action: 'shared',
             timestamp: Date.now(),
             deviceName:
               context.receiverInfo.name || context.receiverInfo.deviceName,
-            vidLabel: context.selectedVid.tag || context.selectedVid.id,
+            vcLabel: context.selectedVc.tag || context.selectedVc.id,
           }),
         { to: (context) => context.serviceRefs.activityLog }
       ),
@@ -442,15 +442,15 @@ export const scanMachine = model.createMachine(
         return () => subscription?.remove();
       },
 
-      sendVid: (context) => (callback) => {
+      sendVc: (context) => (callback) => {
         let subscription: EmitterSubscription;
 
-        const vid = {
-          ...context.selectedVid,
+        const vc = {
+          ...context.selectedVc,
           tag: '',
         };
 
-        const message = new Message<VC>('send:vid', vid);
+        const message = new Message<VC>('send:vc', vc);
 
         SmartShare.send(message.toString(), () => {
           subscription = SmartShare.handleNearbyEvents((event) => {
@@ -460,13 +460,13 @@ export const scanMachine = model.createMachine(
 
             if (event.type !== 'msg') return;
 
-            const response = Message.fromString<SendVidStatus>(event.data);
-            if (response.type === 'send:vid:response') {
+            const response = Message.fromString<SendVcStatus>(event.data);
+            if (response.type === 'send:vc:response') {
               callback({
                 type:
                   response.data.status === 'accepted'
-                    ? 'VID_ACCEPTED'
-                    : 'VID_REJECTED',
+                    ? 'VC_ACCEPTED'
+                    : 'VC_REJECTED',
               });
             }
           });
@@ -499,7 +499,7 @@ export function createScanMachine(serviceRefs: AppServices) {
   });
 }
 
-interface SendVidStatus {
+interface SendVcStatus {
   status: 'accepted' | 'rejected';
 }
 
@@ -513,8 +513,8 @@ export function selectReason(state: State) {
   return state.context.reason;
 }
 
-export function selectVidName(state: State) {
-  return state.context.vidName;
+export function selectVcName(state: State) {
+  return state.context.vcName;
 }
 
 export function selectStatusMessage(state: State) {
@@ -533,12 +533,12 @@ export function selectReviewing(state: State) {
   return state.matches('reviewing');
 }
 
-export function selectSelectingVid(state: State) {
-  return state.matches('reviewing.selectingVid');
+export function selectSelectingVc(state: State) {
+  return state.matches('reviewing.selectingVc');
 }
 
-export function selectSendingVid(state: State) {
-  return state.matches('reviewing.sendingVid');
+export function selectSendingVc(state: State) {
+  return state.matches('reviewing.sendingVc');
 }
 
 export function selectAccepted(state: State) {

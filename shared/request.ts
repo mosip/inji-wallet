@@ -54,8 +54,8 @@ export type OtpRequestResponse = BackendResponse<{
   maskedEmail?: string;
 }>;
 
-export type VidGenerateResponse = BackendResponse<{
-  vid: string;
+export type VcGenerateResponse = BackendResponse<{
+  vc: string;
   message: string;
 }>;
 

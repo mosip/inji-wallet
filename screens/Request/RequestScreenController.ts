@@ -12,9 +12,9 @@ import {
   selectSenderInfo,
   selectIsWaitingForConnection,
   selectIsExchangingDeviceInfo,
-  selectIsWaitingForVid,
+  selectIsWaitingForVc,
 } from '../../machines/request';
-import { selectVidLabel } from '../../machines/settings';
+import { selectVcLabel } from '../../machines/settings';
 import { MainRouteProps } from '../../routes/main';
 import { GlobalContext } from '../../shared/GlobalContext';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
@@ -22,7 +22,7 @@ import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 export function useRequestScreen({ navigation }: MainRouteProps) {
   const { appService } = useContext(GlobalContext);
   const settingsService = appService.children.get('settings');
-  const vidLabel = useSelector(settingsService, selectVidLabel);
+  const vcLabel = useSelector(settingsService, selectVcLabel);
 
   const requestService = appService.children.get('request');
   const isActive = useSelector(appService, selectIsActive);
@@ -39,15 +39,15 @@ export function useRequestScreen({ navigation }: MainRouteProps) {
     requestService,
     selectIsExchangingDeviceInfo
   );
-  const isWaitingForVid = useSelector(requestService, selectIsWaitingForVid);
+  const isWaitingForVc = useSelector(requestService, selectIsWaitingForVc);
 
   let statusMessage = '';
   if (isWaitingForConnection) {
     statusMessage = 'Waiting for connection...';
   } else if (isExchangingDeviceInfo) {
     statusMessage = 'Exchanging device info...';
-  } else if (isWaitingForVid) {
-    statusMessage = `Connected to device. Waiting for ${vidLabel.singular}...`;
+  } else if (isWaitingForVc) {
+    statusMessage = `Connected to device. Waiting for ${vcLabel.singular}...`;
   }
 
   useEffect(() => {
@@ -81,13 +81,13 @@ export function useRequestScreen({ navigation }: MainRouteProps) {
   }, [isFocused, isActive]);
 
   return {
-    vidLabel,
+    vcLabel,
     statusMessage,
 
     isWaitingForConnection,
     isExchangingDeviceInfo,
 
-    isWaitingForVid,
+    isWaitingForVc,
     isBluetoothDenied,
     connectionParams: useSelector(requestService, selectConnectionParams),
     senderInfo: useSelector(requestService, selectSenderInfo),
