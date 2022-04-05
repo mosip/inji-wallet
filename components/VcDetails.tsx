@@ -153,6 +153,7 @@ function getFullAddress(credential: CredentialSubject) {
     'addressLine3',
     'city',
     'province',
+    'region',
   ];
   return fields
     .map((field) => getLocalizedField(credential[field]))
@@ -161,9 +162,10 @@ function getFullAddress(credential: CredentialSubject) {
     .join(', ');
 }
 
-function getLocalizedField(rawField: string) {
+function getLocalizedField(rawField: string | LocalizedField) {
   try {
-    const locales: LocalizedField[] = JSON.parse(rawField);
+    const locales: LocalizedField[] =
+      typeof rawField === 'string' ? JSON.parse(rawField) : rawField;
     return locales.find((locale) => locale.language === 'eng').value.trim();
   } catch (e) {
     return '';
