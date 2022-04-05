@@ -10,6 +10,11 @@
     "build:android:newlogic": "cd android && ./gradlew :app:assembleNewlogicRelease && cd .."
   },
   "dependencies": {
+    "@digitalbazaar/ed25519-signature-2018": "digitalbazaar/ed25519-signature-2018",
+    "@digitalbazaar/ed25519-verification-key-2018": "digitalbazaar/ed25519-verification-key-2018",
+    "@digitalbazaar/rsa-signature-2018": "digitalbazaar/rsa-signature-2018#initial",
+    "@digitalbazaar/rsa-verification-key-2018": "digitalbazaar/rsa-verification-key-2018#initial",
+    "@digitalcredentials/vc": "^1.1.2",
     "@expo-google-fonts/poppins": "^0.2.0",
     "@idpass/smartshare-react-native": "^0.2.0",
     "@react-native-async-storage/async-storage": "~1.15.0",
@@ -19,6 +24,8 @@
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/native-stack": "^6.1.0",
     "@xstate/react": "^1.6.1",
+    "base64url-universal": "^1.1.0",
+    "buffer": "^6.0.3",
     "crypto-js": "^3.3.0",
     "date-fns": "^2.26.0",
     "expo": "^43.0.0",
@@ -57,6 +64,7 @@
     "@types/react": "~17.0.21",
     "@types/react-native": "~0.64.12",
     "babel-plugin-inline-import": "^3.0.0",
+    "babel-plugin-module-resolver": "^4.1.0",
     "eas-cli": "^0.37.0",
     "expo-cli": "^4.13.0",
     "sharp": "^0.29.3",
