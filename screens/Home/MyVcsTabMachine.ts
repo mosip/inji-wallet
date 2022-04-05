@@ -8,14 +8,14 @@ import {
 } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { StoreEvents, StoreResponseEvent } from '../../machines/store';
-import { VidEvents } from '../../machines/vid';
-import { vidItemMachine } from '../../machines/vidItem';
+import { VcEvents } from '../../machines/vc';
+import {  vcItemMachine } from '../../machines/vcItem';
 import { AppServices } from '../../shared/GlobalContext';
 import {
-  MY_VIDS_STORE_KEY,
+  MY_VCS_STORE_KEY,
   ONBOARDING_STATUS_STORE_KEY,
 } from '../../shared/constants';
-import { AddVidModalMachine } from './MyVids/AddVidModalMachine';
+import { AddVcModalMachine } from './MyVcs/AddVcModalMachine';
 
 const model = createModel(
   {
@@ -24,24 +24,24 @@ const model = createModel(
   {
     events: {
       REFRESH: () => ({}),
-      VIEW_VID: (vidItemActor: ActorRefFrom<typeof vidItemMachine>) => ({
-        vidItemActor,
+      VIEW_VC: (vcItemActor: ActorRefFrom<typeof  vcItemMachine>) => ({
+        vcItemActor,
       }),
       DISMISS: () => ({}),
       STORE_RESPONSE: (response?: any) => ({ response }),
-      ADD_VID: () => ({}),
+      ADD_VC: () => ({}),
       ONBOARDING_DONE: () => ({}),
     },
   }
 );
 
-export const MyVidsTabEvents = model.events;
+export const MyVcsTabEvents = model.events;
 
-type ViewVidEvent = EventFrom<typeof model, 'VIEW_VID'>;
+type ViewVcEvent = EventFrom<typeof model, 'VIEW_VC'>;
 
-export const MyVidsTabMachine = model.createMachine(
+export const MyVcsTabMachine = model.createMachine(
   {
-    id: 'MyVidsTab',
+    id: 'MyVcsTab',
     context: model.initialContext,
     initial: 'checkingOnboardingStatus',
     states: {
@@ -56,8 +56,8 @@ export const MyVidsTabMachine = model.createMachine(
       },
       onboarding: {
         on: {
-          ADD_VID: {
-            target: 'addingVid',
+          ADD_VC: {
+            target: 'addingVc',
             actions: ['completeOnboarding'],
           },
           ONBOARDING_DONE: {
@@ -69,42 +69,42 @@ export const MyVidsTabMachine = model.createMachine(
       idle: {
         id: 'idle',
         on: {
-          ADD_VID: 'addingVid',
-          VIEW_VID: 'viewingVid',
+          ADD_VC: 'addingVc',
+          VIEW_VC: 'viewingVc',
         },
       },
-      viewingVid: {
+      viewingVc: {
         entry: [
-          sendParent((_, event: ViewVidEvent) =>
-            model.events.VIEW_VID(event.vidItemActor)
+          sendParent((_, event: ViewVcEvent) =>
+            model.events.VIEW_VC(event.vcItemActor)
           ),
         ],
         on: {
           DISMISS: 'idle',
         },
       },
-      addingVid: {
+      addingVc: {
         invoke: {
-          id: 'AddVidModal',
-          src: AddVidModalMachine,
+          id: 'AddVcModal',
+          src: AddVcModalMachine,
           onDone: '.storing',
         },
         on: {
           DISMISS: 'idle',
         },
-        initial: 'waitingForVidKey',
+        initial: 'waitingForvcKey',
         states: {
-          waitingForVidKey: {},
+          waitingForvcKey: {},
           storing: {
-            entry: ['storeVidItem'],
+            entry: ['storeVcItem'],
             on: {
               STORE_RESPONSE: {
-                target: 'addVidSuccessful',
-                actions: ['sendVidAdded'],
+                target: 'addVcSuccessful',
+                actions: ['sendVcAdded'],
               },
             },
           },
-          addVidSuccessful: {
+          addVcSuccessful: {
             on: {
               DISMISS: '#idle',
             },
@@ -125,17 +125,17 @@ export const MyVidsTabMachine = model.createMachine(
         { to: (context) => context.serviceRefs.store }
       ),
 
-      storeVidItem: send(
+      storeVcItem: send(
         (_, _event: any) => {
           const event: DoneInvokeEvent<string> = _event;
-          return StoreEvents.PREPEND(MY_VIDS_STORE_KEY, event.data);
+          return StoreEvents.PREPEND(MY_VCS_STORE_KEY, event.data);
         },
         { to: (context) => context.serviceRefs.store }
       ),
 
-      sendVidAdded: send(
-        (_, event: StoreResponseEvent) => VidEvents.VID_ADDED(event.response),
-        { to: (context) => context.serviceRefs.vid }
+      sendVcAdded: send(
+        (_, event: StoreResponseEvent) => VcEvents.VC_ADDED(event.response),
+        { to: (context) => context.serviceRefs.vc }
       ),
     },
 
@@ -147,17 +147,17 @@ export const MyVidsTabMachine = model.createMachine(
   }
 );
 
-export function createMyVidsTabMachine(serviceRefs: AppServices) {
-  return MyVidsTabMachine.withContext({
-    ...MyVidsTabMachine.context,
+export function createMyVcsTabMachine(serviceRefs: AppServices) {
+  return MyVcsTabMachine.withContext({
+    ...MyVcsTabMachine.context,
     serviceRefs,
   });
 }
 
-type State = StateFrom<typeof MyVidsTabMachine>;
+type State = StateFrom<typeof MyVcsTabMachine>;
 
-export function selectAddVidModal(state: State) {
-  return state.children.AddVidModal as ActorRefFrom<typeof AddVidModalMachine>;
+export function selectAddVcModal(state: State) {
+  return state.children.AddVcModal as ActorRefFrom<typeof AddVcModalMachine>;
 }
 
 export function selectIsOnboarding(state: State) {
@@ -165,5 +165,5 @@ export function selectIsOnboarding(state: State) {
 }
 
 export function selectIsRequestSuccessful(state: State) {
-  return state.matches('addingVid.addVidSuccessful');
+  return state.matches('addingVc.addVcSuccessful');
 }

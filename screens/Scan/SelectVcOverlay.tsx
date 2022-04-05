@@ -3,11 +3,11 @@ import { Dimensions, StyleSheet } from 'react-native';
 import { Overlay } from 'react-native-elements/dist/overlay/Overlay';
 import { Button, Column, Row, Text } from '../../components/ui';
 import { Colors, elevation } from '../../components/ui/styleUtils';
-import { VidItem } from '../../components/VidItem';
+import { VcItem } from '../../components/VcItem';
 import {
-  SelectVidOverlayProps,
-  useSelectVidOverlay,
-} from './SelectVidOverlayController';
+  SelectVcOverlayProps,
+  useSelectVcOverlay,
+} from './SelectVcOverlayController';
 
 const styles = StyleSheet.create({
   overlay: {
@@ -17,8 +17,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export const SelectVidOverlay: React.FC<SelectVidOverlayProps> = (props) => {
-  const controller = useSelectVidOverlay(props);
+export const SelectVcOverlay: React.FC<SelectVcOverlayProps> = (props) => {
+  const controller = useSelectVcOverlay(props);
 
   return (
     <Overlay isVisible={props.isVisible} overlayStyle={styles.overlay}>
@@ -27,19 +27,19 @@ export const SelectVidOverlay: React.FC<SelectVidOverlayProps> = (props) => {
         width={Dimensions.get('screen').width * 0.9}
         style={{ maxHeight: Dimensions.get('screen').height * 0.9 }}>
         <Text weight="semibold" margin="0 0 16 0">
-          Share {controller.vidLabel.singular}
+          Share {controller.vcLabel.singular}
         </Text>
         <Text margin="0 0 16 0">
-          Choose the {controller.vidLabel.singular} you'd like to share with{' '}
+          Choose the {controller.vcLabel.singular} you'd like to share with{' '}
           <Text weight="semibold">{props.receiverName}</Text>
         </Text>
         <Column margin="0 0 32 0" scroll>
-          {props.vidKeys.map((vidKey, index) => (
-            <VidItem
-              key={vidKey}
-              vidKey={vidKey}
+          {props.vcKeys.map((vcKey, index) => (
+            <VcItem
+              key={vcKey}
+              vcKey={vcKey}
               margin="0 2 8 2"
-              onPress={controller.selectVidItem(index)}
+              onPress={controller.selectVcItem(index)}
               selectable
               selected={index === controller.selectedIndex}
             />

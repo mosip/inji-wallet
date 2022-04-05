@@ -9,7 +9,7 @@ import {
 } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { BackendResponseError, request } from '../../../shared/request';
-import { VID_ITEM_STORE_KEY } from '../../../shared/constants';
+import { VC_ITEM_STORE_KEY } from '../../../shared/constants';
 import { VcIdType } from '../../../types/vc';
 
 const model = createModel(
@@ -35,16 +35,16 @@ const model = createModel(
   }
 );
 
-export const AddVidModalEvents = model.events;
+export const AddVcModalEvents = model.events;
 
 type ReadyEvent = EventFrom<typeof model, 'READY'>;
 type InputIdEvent = EventFrom<typeof model, 'INPUT_ID'>;
 type InputOtpEvent = EventFrom<typeof model, 'INPUT_OTP'>;
 type SelectIdTypeEvent = EventFrom<typeof model, 'SELECT_ID_TYPE'>;
 
-export const AddVidModalMachine = model.createMachine(
+export const AddVcModalMachine = model.createMachine(
   {
-    id: 'AddVidModal',
+    id: 'AddVcModal',
     context: model.initialContext,
     initial: 'acceptingIdInput',
     states: {
@@ -162,7 +162,7 @@ export const AddVidModalMachine = model.createMachine(
       },
       done: {
         type: 'final',
-        data: (context) => VID_ITEM_STORE_KEY(context),
+        data: (context) => VC_ITEM_STORE_KEY(context),
       },
     },
   },
@@ -254,7 +254,7 @@ export const AddVidModalMachine = model.createMachine(
   }
 );
 
-type State = StateFrom<typeof AddVidModalMachine>;
+type State = StateFrom<typeof AddVcModalMachine>;
 
 export function selectId(state: State) {
   return state.context.id;

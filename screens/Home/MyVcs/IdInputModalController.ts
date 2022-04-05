@@ -1,13 +1,13 @@
 import { useContext } from 'react';
 import { useSelector } from '@xstate/react';
-import { selectVidLabel } from '../../../machines/settings';
+import { selectVcLabel } from '../../../machines/settings';
 import { GlobalContext } from '../../../shared/GlobalContext';
 import { ActorRefFrom } from 'xstate';
 import { TextInput } from 'react-native';
 import { ModalProps } from '../../../components/ui/Modal';
 import {
-  AddVidModalEvents,
-  AddVidModalMachine,
+  AddVcModalEvents,
+  AddVcModalMachine,
   selectIsAcceptingOtpInput,
   selectIsInvalid,
   selectIsRequestingOtp,
@@ -16,7 +16,7 @@ import {
   selectIdError,
   selectIdInputRef,
   selectIdType,
-} from './AddVidModalMachine';
+} from './AddVcModalMachine';
 import { VcIdType } from '../../../types/vc';
 
 export function useIdInputModal({ service }: IdInputModalProps) {
@@ -27,7 +27,7 @@ export function useIdInputModal({ service }: IdInputModalProps) {
     id: useSelector(service, selectId),
     idType: useSelector(service, selectIdType),
     idInputRef: useSelector(service, selectIdInputRef),
-    vidLabel: useSelector(settingsService, selectVidLabel),
+    vcLabel: useSelector(settingsService, selectVcLabel),
     idError: useSelector(service, selectIdError),
     otpError: useSelector(service, selectOtpError),
 
@@ -35,16 +35,16 @@ export function useIdInputModal({ service }: IdInputModalProps) {
     isAcceptingOtpInput: useSelector(service, selectIsAcceptingOtpInput),
     isRequestingOtp: useSelector(service, selectIsRequestingOtp),
 
-    INPUT_ID: (id: string) => service.send(AddVidModalEvents.INPUT_ID(id)),
+    INPUT_ID: (id: string) => service.send(AddVcModalEvents.INPUT_ID(id)),
     SELECT_ID_TYPE: (selectedValue: VcIdType) =>
-      service.send(AddVidModalEvents.SELECT_ID_TYPE(selectedValue)),
-    VALIDATE_INPUT: () => service.send(AddVidModalEvents.VALIDATE_INPUT()),
-    INPUT_OTP: (otp: string) => service.send(AddVidModalEvents.INPUT_OTP(otp)),
-    READY: (input: TextInput) => service.send(AddVidModalEvents.READY(input)),
-    DISMISS: () => service.send(AddVidModalEvents.DISMISS()),
+      service.send(AddVcModalEvents.SELECT_ID_TYPE(selectedValue)),
+    VALIDATE_INPUT: () => service.send(AddVcModalEvents.VALIDATE_INPUT()),
+    INPUT_OTP: (otp: string) => service.send(AddVcModalEvents.INPUT_OTP(otp)),
+    READY: (input: TextInput) => service.send(AddVcModalEvents.READY(input)),
+    DISMISS: () => service.send(AddVcModalEvents.DISMISS()),
   };
 }
 
 export interface IdInputModalProps extends ModalProps {
-  service: ActorRefFrom<typeof AddVidModalMachine>;
+  service: ActorRefFrom<typeof AddVcModalMachine>;
 }

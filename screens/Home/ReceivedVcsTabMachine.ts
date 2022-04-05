@@ -4,7 +4,7 @@ import {
   sendParent
 } from 'xstate';
 import { createModel } from 'xstate/lib/model';
-import { vidItemMachine } from '../../machines/vidItem';
+import { createVcItemMachine, vcItemMachine } from '../../machines/vcItem';
 import { AppServices } from '../../shared/GlobalContext';
 
 const model = createModel(
@@ -14,43 +14,43 @@ const model = createModel(
   },
   {
     events: {
-      VIEW_VID: (vidItemActor: ActorRefFrom<typeof vidItemMachine>) => ({
-        vidItemActor,
+      VIEW_VC: (vcItemActor: ActorRefFrom<typeof vcItemMachine>) => ({
+        vcItemActor,
       }),
       REFRESH: () => ({}),
       DISMISS: () => ({}),
       STORE_RESPONSE: (response?: any) => ({ response }),
       STORE_ERROR: (error: Error) => ({ error }),
       ERROR: (error: Error) => ({ error }),
-      GET_RECEIVED_VIDS_RESPONSE: (vidKeys: string[]) => ({ vidKeys }),
+      GET_RECEIVED_VCS_RESPONSE: (vcKeys: string[]) => ({ vcKeys }),
     },
   }
 );
 
-export const ReceivedVidsTabEvents = model.events;
+export const ReceivedVcsTabEvents = model.events;
 
 type ErrorEvent = EventFrom<typeof model, 'ERROR'>;
-type ViewVidEvent = EventFrom<typeof model, 'VIEW_VID'>;
-type GetReceivedVidListResponseEvent = EventFrom<
+type ViewVcEvent = EventFrom<typeof model, 'VIEW_VC'>;
+type GetReceivedVcListResponseEvent = EventFrom<
   typeof model,
-  'GET_RECEIVED_VIDS_RESPONSE'
+  'GET_RECEIVED_VCS_RESPONSE'
 >;
 
-export const ReceivedVidsTabMachine = model.createMachine(
+export const ReceivedVcsTabMachine = model.createMachine(
   {
-    id: 'ReceivedVidsTab',
+    id: 'ReceivedVcsTab',
     context: model.initialContext,
     initial: 'idle',
     states: {
       idle: {
         on: {
-          VIEW_VID: 'viewingVid',
+          VIEW_VC: 'viewingVc',
         },
       },
-      viewingVid: {
+      viewingVc: {
         entry: [
-          sendParent((_, event: ViewVidEvent) =>
-            model.events.VIEW_VID(event.vidItemActor)
+          sendParent((_, event: ViewVcEvent) =>
+            model.events.VIEW_VC(event.vcItemActor)
           ),
         ],
         on: {
@@ -64,9 +64,9 @@ export const ReceivedVidsTabMachine = model.createMachine(
   }
 );
 
-export function createReceivedVidsTabMachine(serviceRefs: AppServices) {
-  return ReceivedVidsTabMachine.withContext({
-    ...ReceivedVidsTabMachine.context,
+export function createReceivedVcsTabMachine(serviceRefs: AppServices) {
+  return ReceivedVcsTabMachine.withContext({
+    ...ReceivedVcsTabMachine.context,
     serviceRefs,
   });
 }

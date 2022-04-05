@@ -3,13 +3,13 @@ import { Input } from 'react-native-elements';
 import { DeviceInfoList } from '../../components/DeviceInfoList';
 import { Button, Column } from '../../components/ui';
 import { Colors } from '../../components/ui/styleUtils';
-import { SelectVidOverlay } from './SelectVidOverlay';
+import { SelectVcOverlay } from './SelectVcOverlay';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { Modal, ModalProps } from '../../components/ui/Modal';
-import { useSendVidModal } from './SendVidModalController';
+import { useSendVcModal } from './SendVcModalController';
 
-export const SendVidModal: React.FC<SendVidModalProps> = (props) => {
-  const controller = useSendVidModal();
+export const SendVcModal: React.FC<SendVcModalProps> = (props) => {
+  const controller = useSendVcModal();
 
   const reasonLabel = 'Reason for sharing (optional)';
 
@@ -33,24 +33,24 @@ export const SendVidModal: React.FC<SendVidModalProps> = (props) => {
           margin="2 0 0 0"
           elevation={2}>
           <Button
-            title={`Accept request and choose ${controller.vidLabel.singular}`}
+            title={`Accept request and choose ${controller.vcLabel.singular}`}
             margin="12 0 12 0"
             onPress={controller.ACCEPT_REQUEST}
           />
           <Button type="clear" title="Reject" onPress={controller.CANCEL} />
         </Column>
       </Column>
-
-      <SelectVidOverlay
-        isVisible={controller.isSelectingVid}
+      
+      <SelectVcOverlay
+        isVisible={controller.isSelectingVc}
         receiverName={controller.receiverInfo.deviceName}
-        onSelect={controller.SELECT_VID}
+        onSelect={controller.SELECT_VC}
         onCancel={controller.CANCEL}
-        vidKeys={controller.vidKeys}
+        vcKeys={controller.vcKeys}
       />
 
       <MessageOverlay
-        isVisible={controller.isSendingVid}
+        isVisible={controller.isSendingVc}
         title="Sharing..."
         hasProgress
       />
@@ -58,18 +58,18 @@ export const SendVidModal: React.FC<SendVidModalProps> = (props) => {
       <MessageOverlay
         isVisible={controller.isAccepted}
         title="Success!"
-        message={`Your ${controller.vidLabel.singular} has been successfully shared with ${controller.receiverInfo.deviceName}`}
+        message={`Your ${controller.vcLabel.singular} has been successfully shared with ${controller.receiverInfo.deviceName}`}
         onBackdropPress={props.onDismiss}
       />
 
       <MessageOverlay
         isVisible={controller.isRejected}
         title="Notice"
-        message={`Your ${controller.vidLabel.singular} was rejected by ${controller.receiverInfo.deviceName}`}
+        message={`Your ${controller.vcLabel.singular} was rejected by ${controller.receiverInfo.deviceName}`}
         onBackdropPress={props.onDismiss}
       />
     </Modal>
   );
 };
 
-interface SendVidModalProps extends ModalProps {}
+interface SendVcModalProps extends ModalProps {}

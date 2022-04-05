@@ -5,7 +5,7 @@ import { VC, CredentialSubject } from '../types/vc';
 import { Column, Row, Text } from './ui';
 import { Colors } from './ui/styleUtils';
 
-export const VidDetails: React.FC<VidDetailsProps> = (props) => {
+export const VcDetails: React.FC<VcDetailsProps> = (props) => {
   return (
     <Column>
       <Row padding="16 24">
@@ -14,7 +14,7 @@ export const VidDetails: React.FC<VidDetailsProps> = (props) => {
             Generated
           </Text>
           <Text weight="bold" size="smaller">
-            {new Date(props.vid?.generatedOn).toLocaleDateString()}
+            {new Date(props.vc?.generatedOn).toLocaleDateString()}
           </Text>
         </Column>
         <Column fill elevation={1} padding="12 16" margin="0 16 0 0">
@@ -22,7 +22,7 @@ export const VidDetails: React.FC<VidDetailsProps> = (props) => {
             {props.vid?.idType}
           </Text>
           <Text weight="bold" size="smaller">
-            {props.vid?.id}
+            {props.vc?.id}
           </Text>
         </Column>
         <Column fill elevation={1} padding="12 16" margin="">
@@ -40,8 +40,8 @@ export const VidDetails: React.FC<VidDetailsProps> = (props) => {
           <ListItem.Content>
             <Image
               source={
-                props.vid?.credential.biometrics?.face
-                  ? { uri: props.vid?.credential.biometrics.face }
+                props.vc?.credential.biometrics?.face
+                  ? { uri: props.vc?.credential.biometrics.face }
                   : require('../assets/placeholder-photo.png')
               }
               style={{
@@ -58,7 +58,7 @@ export const VidDetails: React.FC<VidDetailsProps> = (props) => {
         <ListItem.Content>
           <ListItem.Subtitle>Full name</ListItem.Subtitle>
           <ListItem.Title>
-            {props.vid?.verifiableCredential.credentialSubject.fullName}
+            {props.vc?.verifiableCredential.credentialSubject.fullName}
           </ListItem.Title>
         </ListItem.Content>
       </ListItem>
@@ -67,7 +67,7 @@ export const VidDetails: React.FC<VidDetailsProps> = (props) => {
           <ListItem.Subtitle>Gender</ListItem.Subtitle>
           <ListItem.Title>
             {getLocalizedField(
-              props.vid?.verifiableCredential.credentialSubject.gender
+              props.vc?.verifiableCredential.credentialSubject.gender
             )}
           </ListItem.Title>
         </ListItem.Content>
@@ -76,7 +76,7 @@ export const VidDetails: React.FC<VidDetailsProps> = (props) => {
         <ListItem.Content>
           <ListItem.Subtitle>Date of birth</ListItem.Subtitle>
           <ListItem.Title>
-            {props.vid?.verifiableCredential.credentialSubject.dateOfBirth}
+            {props.vc?.verifiableCredential.credentialSubject.dateOfBirth}
           </ListItem.Title>
         </ListItem.Content>
       </ListItem>
@@ -84,7 +84,7 @@ export const VidDetails: React.FC<VidDetailsProps> = (props) => {
         <ListItem.Content>
           <ListItem.Subtitle>Phone number</ListItem.Subtitle>
           <ListItem.Title>
-            {props.vid?.verifiableCredential.credentialSubject.phone}
+            {props.vc?.verifiableCredential.credentialSubject.phone}
           </ListItem.Title>
         </ListItem.Content>
       </ListItem>
@@ -92,7 +92,7 @@ export const VidDetails: React.FC<VidDetailsProps> = (props) => {
         <ListItem.Content>
           <ListItem.Subtitle>Email</ListItem.Subtitle>
           <ListItem.Title>
-            {props.vid?.verifiableCredential.credentialSubject.email}
+            {props.vc?.verifiableCredential.credentialSubject.email}
           </ListItem.Title>
         </ListItem.Content>
       </ListItem>
@@ -100,15 +100,15 @@ export const VidDetails: React.FC<VidDetailsProps> = (props) => {
         <ListItem.Content>
           <ListItem.Subtitle>Address</ListItem.Subtitle>
           <ListItem.Title>
-            {getFullAddress(props.vid?.verifiableCredential.credentialSubject)}
+            {getFullAddress(props.vc?.verifiableCredential.credentialSubject)}
           </ListItem.Title>
         </ListItem.Content>
       </ListItem>
-      {Boolean(props.vid?.reason) && (
+      {Boolean(props.vc?.reason) && (
         <ListItem bottomDivider>
           <ListItem.Content>
             <ListItem.Subtitle>Reason for sharing</ListItem.Subtitle>
-            <ListItem.Title>{props.vid?.reason}</ListItem.Title>
+            <ListItem.Title>{props.vc?.reason}</ListItem.Title>
           </ListItem.Content>
         </ListItem>
       )}
@@ -116,8 +116,8 @@ export const VidDetails: React.FC<VidDetailsProps> = (props) => {
   );
 };
 
-interface VidDetailsProps {
-  vid: VC;
+interface VcDetailsProps {
+  vc: VC;
 }
 
 interface LocalizedField {

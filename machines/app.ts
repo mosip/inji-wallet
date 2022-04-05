@@ -10,7 +10,7 @@ import { createModel } from 'xstate/lib/model';
 import { authMachine, createAuthMachine } from './auth';
 import { createSettingsMachine, settingsMachine } from './settings';
 import { storeMachine } from './store';
-import { createVidMachine, vidMachine } from './vid';
+import { createVcMachine, vcMachine } from './vc';
 import { createActivityLogMachine, activityLogMachine } from './activityLog';
 import { createRequestMachine, requestMachine } from './request';
 import { createScanMachine, scanMachine } from './scan';
@@ -166,7 +166,7 @@ export const appMachine = model.createMachine(
             createAuthMachine(serviceRefs),
             authMachine.id
           );
-          serviceRefs.vid = spawn(createVidMachine(serviceRefs), vidMachine.id);
+          serviceRefs.vc = spawn(createVcMachine(serviceRefs), vcMachine.id);
           serviceRefs.settings = spawn(
             createSettingsMachine(serviceRefs),
             settingsMachine.id
@@ -190,7 +190,7 @@ export const appMachine = model.createMachine(
       logServiceEvents: (context) => {
         if (__DEV__) {
           context.serviceRefs.auth.subscribe(logState);
-          context.serviceRefs.vid.subscribe(logState);
+          context.serviceRefs.vc.subscribe(logState);
           context.serviceRefs.settings.subscribe(logState);
           context.serviceRefs.activityLog.subscribe(logState);
           context.serviceRefs.scan.subscribe(logState);
