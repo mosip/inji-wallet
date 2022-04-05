@@ -1,13 +1,12 @@
 import React from 'react';
 import { MessageOverlay } from '../../../components/MessageOverlay';
-import { AddVidModalProps, useAddVidModal } from './AddVidModalController';
-import { DownloadingVidModal } from './DownloadingVidModal';
+import { AddVcModalProps, useAddVcModal } from './AddVcModalController';
 import { OtpVerificationModal } from './OtpVerificationModal';
 import { IdInputModal } from './IdInputModal';
 
-export const AddVidModal: React.FC<AddVidModalProps> = (props) => {
-  const controller = useAddVidModal(props);
-
+export const AddVcModal: React.FC<AddVcModalProps> = (props) => {
+  const controller = useAddVcModal(props);
+  
   return (
     <React.Fragment>
       <IdInputModal
@@ -27,11 +26,6 @@ export const AddVidModal: React.FC<AddVidModalProps> = (props) => {
         isVisible={controller.isRequestingCredential}
         title="Requesting credential..."
         hasProgress
-      />
-
-      <DownloadingVidModal
-        isVisible={controller.isRequestSuccessful}
-        onDismiss={controller.DISMISS}
       />
     </React.Fragment>
   );

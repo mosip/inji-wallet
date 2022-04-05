@@ -1,13 +1,11 @@
 import { useSelector } from '@xstate/react';
 import { useContext } from 'react';
-// import { ActorRefFrom } from 'xstate';
 import {
   ActivityLogEvents,
   selectActivities,
   selectIsRefreshing,
 } from '../../machines/activityLog';
 import { GlobalContext } from '../../shared/GlobalContext';
-// import { HistoryTabMachine } from './HistoryTabMachine';
 import { HomeScreenTabProps } from './HomeScreen';
 
 export function useHistoryTab(props: HomeScreenTabProps) {

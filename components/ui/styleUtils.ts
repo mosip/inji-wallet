@@ -19,7 +19,7 @@ export function spacing(type: 'margin' | 'padding', values: string) {
     [`${type}Top`]: top,
     [`${type}End`]: end != null ? end : top,
     [`${type}Bottom`]: bottom != null ? bottom : top,
-    [`${type}Start`]: start != null ? start : end != null ? end : top,
+    [`${type}Start`]: start != null ? start : (end != null ? end : top),
   };
 }
 

@@ -2,11 +2,7 @@ import { useRef, createRef, MutableRefObject } from 'react';
 import { useMachine } from '@xstate/react';
 import { EventFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
-import {
-  NativeSyntheticEvent,
-  TextInput,
-  TextInputKeyPressEventData,
-} from 'react-native';
+import { TextInput } from 'react-native';
 
 const model = createModel(
   {

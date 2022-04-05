@@ -1,8 +1,7 @@
-import { ActorRefFrom, ContextFrom, EventFrom, send, StateFrom } from 'xstate';
-import { log } from 'xstate/lib/actions';
+import { ContextFrom, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { AppServices } from '../shared/GlobalContext';
-import { StoreEvents, storeMachine, StoreResponseEvent } from './store';
+import { StoreEvents, StoreResponseEvent } from './store';
 
 const model = createModel(
   {

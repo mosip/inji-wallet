@@ -1,5 +1,3 @@
-// TODO: notifications logic (including push to notify VID was downloaded)
-
 import { createModel } from 'xstate/lib/model';
 
 const model = createModel(

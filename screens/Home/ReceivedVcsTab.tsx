@@ -3,12 +3,12 @@ import { RefreshControl } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { Centered, Column, Text } from '../../components/ui';
 import { Colors } from '../../components/ui/styleUtils';
-import { VidItem } from '../../components/VidItem';
+import { VcItem } from '../../components/VcItem';
 import { HomeScreenTabProps } from './HomeScreen';
-import { useReceivedVidsTab } from './ReceivedVidsTabController';
+import { useReceivedVcsTab } from './ReceivedVcsTabController';
 
-export const ReceivedVidsTab: React.FC<HomeScreenTabProps> = (props) => {
-  const controller = useReceivedVidsTab(props);
+export const ReceivedVcsTab: React.FC<HomeScreenTabProps> = (props) => {
+  const controller = useReceivedVcsTab(props);
 
   return (
     <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
@@ -17,19 +17,19 @@ export const ReceivedVidsTab: React.FC<HomeScreenTabProps> = (props) => {
         padding="32 24"
         refreshControl={
           <RefreshControl
-            refreshing={controller.isRefreshingVids}
+            refreshing={controller.isRefreshingVcs}
             onRefresh={controller.REFRESH}
           />
         }>
-        {controller.vidKeys.map((vidKey) => (
-          <VidItem
-            key={vidKey}
-            vidKey={vidKey}
+        {controller.vcKeys.map((vcKey) => (
+          <VcItem
+            key={vcKey}
+            vcKey={vcKey}
             margin="0 2 8 2"
-            onPress={controller.VIEW_VID}
+            onPress={controller.VIEW_VC}
           />
         ))}
-        {controller.vidKeys.length === 0 && (
+        {controller.vcKeys.length === 0 && (
           <React.Fragment>
             <Centered fill>
               <Icon
@@ -38,10 +38,10 @@ export const ReceivedVidsTab: React.FC<HomeScreenTabProps> = (props) => {
                 name="sentiment-dissatisfied"
               />
               <Text align="center" weight="semibold" margin="0 0 4 0">
-                No {controller.vidLabel.plural} available yet
+                No {controller.vcLabel.plural} available yet
               </Text>
               <Text align="center" color={Colors.Grey}>
-                Tap on Request below to receive {controller.vidLabel.singular}
+                Tap on Request below to receive {controller.vcLabel.singular}
               </Text>
             </Centered>
           </React.Fragment>

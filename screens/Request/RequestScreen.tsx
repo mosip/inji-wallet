@@ -3,7 +3,7 @@ import QRCode from 'react-native-qrcode-svg';
 import { Centered, Column, Text } from '../../components/ui';
 import { Colors } from '../../components/ui/styleUtils';
 import { MainRouteProps } from '../../routes/main';
-import { ReceiveVidModal } from './ReceiveVidModal';
+import { ReceiveVcModal } from './ReceiveVcModal';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { useRequestScreen } from './RequestScreenController';
 
@@ -16,12 +16,14 @@ export const RequestScreen: React.FC<MainRouteProps> = (props) => {
         {controller.isBluetoothDenied ? (
           <Text color={Colors.Red} align="center">
             Please enable Bluetooth to be able to request{' '}
-            {controller.vidLabel.singular}
+            {controller.vcLabel.singular}
           </Text>
         ) : (
-          <Text align="center">
-            Show this QR code to request {controller.vidLabel.singular}
-          </Text>
+          controller.isWaitingForConnection && (
+            <Text align="center">
+              Show this QR code to request {controller.vcLabel.singular}
+            </Text>
+          )
         )}
       </Column>
 
@@ -42,25 +44,25 @@ export const RequestScreen: React.FC<MainRouteProps> = (props) => {
         </Column>
       )}
 
-      <ReceiveVidModal
+      <ReceiveVcModal
         isVisible={controller.isReviewing}
         onDismiss={controller.REJECT}
         onAccept={controller.ACCEPT}
         onReject={controller.REJECT}
-        headerTitle={`Incoming ${controller.vidLabel.singular}`}
+        headerTitle={`Incoming ${controller.vcLabel.singular}`}
       />
 
       <MessageOverlay
         isVisible={controller.isAccepted}
         title="Success!"
-        message={`${controller.senderInfo.deviceName}'s ${controller.vidLabel.singular} has been succesfully received`}
+        message={`${controller.vcLabel.singular} has been successfully received from ${controller.senderInfo.deviceName}`}
         onBackdropPress={controller.DISMISS}
       />
 
       <MessageOverlay
         isVisible={controller.isRejected}
         title="Notice"
-        message={`You rejected ${controller.senderInfo.deviceName}'s ${controller.vidLabel.singular}'`}
+        message={`You rejected ${controller.senderInfo.deviceName}'s ${controller.vcLabel.singular}`}
         onBackdropPress={controller.DISMISS}
       />
 

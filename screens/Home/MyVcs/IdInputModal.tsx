@@ -15,7 +15,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
       <Column fill align="space-between" padding="32 24">
         <Text align="center">
           Enter the MOSIP-provided UIN or VID{'\n'}of the{' '}
-          {controller.vidLabel.singular} you wish to retrieve
+          {controller.vcLabel.singular} you wish to retrieve
         </Text>
         <Column>
           <Row crossAlign="flex-end">
@@ -55,7 +55,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
             </Column>
           </Row>
           <Button
-            title={`Generate ${controller.vidLabel.singular}`}
+            title={`Generate ${controller.vcLabel.singular}`}
             margin="24 0 0 0"
             onPress={controller.VALIDATE_INPUT}
             loading={controller.isRequestingOtp}

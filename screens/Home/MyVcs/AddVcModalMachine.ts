@@ -3,13 +3,14 @@ import {
   DoneInvokeEvent,
   ErrorPlatformEvent,
   EventFrom,
+  send,
   sendParent,
   StateFrom,
 } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { BackendResponseError, request } from '../../../shared/request';
-import { VID_ITEM_STORE_KEY } from '../../../shared/constants';
-import { VC, VcIdType } from '../../../types/vc';
+import { VC_ITEM_STORE_KEY } from '../../../shared/constants';
+import { VcIdType } from '../../../types/vc';
 
 const model = createModel(
   {
@@ -34,16 +35,16 @@ const model = createModel(
   }
 );
 
-export const AddVidModalEvents = model.events;
+export const AddVcModalEvents = model.events;
 
 type ReadyEvent = EventFrom<typeof model, 'READY'>;
 type InputIdEvent = EventFrom<typeof model, 'INPUT_ID'>;
 type InputOtpEvent = EventFrom<typeof model, 'INPUT_OTP'>;
 type SelectIdTypeEvent = EventFrom<typeof model, 'SELECT_ID_TYPE'>;
 
-export const AddVidModalMachine = model.createMachine(
+export const AddVcModalMachine = model.createMachine(
   {
-    id: 'AddVidModal',
+    id: 'AddVcModal',
     context: model.initialContext,
     initial: 'acceptingIdInput',
     states: {
@@ -143,7 +144,7 @@ export const AddVidModalMachine = model.createMachine(
         invoke: {
           src: 'requestCredential',
           onDone: {
-            target: 'requestSuccessful',
+            target: 'done',
             actions: ['setRequestId'],
           },
           onError: [
@@ -159,14 +160,9 @@ export const AddVidModalMachine = model.createMachine(
           ],
         },
       },
-      requestSuccessful: {
-        on: {
-          DISMISS: 'done',
-        },
-      },
       done: {
         type: 'final',
-        data: (context) => VID_ITEM_STORE_KEY(context),
+        data: (context) => VC_ITEM_STORE_KEY(context),
       },
     },
   },
@@ -245,7 +241,7 @@ export const AddVidModalMachine = model.createMachine(
     guards: {
       isEmptyId: ({ id }) => !id || !id.length,
 
-      isWrongIdFormat: ({ id }) => !/^[0-9]{10,16}$/.test(id),
+      isWrongIdFormat: ({ id }) => !/^\d{10,16}$/.test(id),
 
       isIdInvalid: (_, event: any) =>
         ['IDA-MLC-009', 'RES-SER-29', 'IDA-MLC-018'].includes(
@@ -258,7 +254,7 @@ export const AddVidModalMachine = model.createMachine(
   }
 );
 
-type State = StateFrom<typeof AddVidModalMachine>;
+type State = StateFrom<typeof AddVcModalMachine>;
 
 export function selectId(state: State) {
   return state.context.id;
@@ -298,8 +294,4 @@ export function selectIsRequestingOtp(state: State) {
 
 export function selectIsRequestingCredential(state: State) {
   return state.matches('requestingCredential');
-}
-
-export function selectIsRequestSuccessful(state: State) {
-  return state.matches('requestSuccessful');
 }

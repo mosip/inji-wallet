@@ -1,17 +1,16 @@
 import { useInterpret, useSelector } from '@xstate/react';
 import { useContext, useEffect, useRef } from 'react';
-import { selectVidLabel } from '../../machines/settings';
+import { selectVcLabel } from '../../machines/settings';
 import { HomeRouteProps } from '../../routes/main';
 import { GlobalContext } from '../../shared/GlobalContext';
 import {
   HomeScreenEvents,
   HomeScreenMachine,
   selectActiveTab,
-  selectSelectedVid,
+  selectSelectedVc,
   selectTabsLoaded,
-  selectViewingVid,
+  selectViewingVc,
 } from './HomeScreenMachine';
-import { ReceivedVidsTabEvents } from './ReceivedVidsTabMachine';
 
 export function useHomeScreen(props: HomeRouteProps) {
   const { appService } = useContext(GlobalContext);
@@ -28,16 +27,16 @@ export function useHomeScreen(props: HomeRouteProps) {
     if (props.route.params?.activeTab != null) {
       SELECT_TAB(props.route.params.activeTab);
     }
-  }, [props.route.params?.activeTab]);
+  }, [props.route.params, props.route.params?.activeTab]);
 
   return {
     service,
 
     activeTab: useSelector(service, selectActiveTab),
-    vidLabel: useSelector(settingsService, selectVidLabel),
-    selectedVid: useSelector(service, selectSelectedVid),
+    vcLabel: useSelector(settingsService, selectVcLabel),
+    selectedVc: useSelector(service, selectSelectedVc),
 
-    isViewingVid: useSelector(service, selectViewingVid),
+    isViewingVc: useSelector(service, selectViewingVc),
     haveTabsLoaded: useSelector(service, selectTabsLoaded),
 
     SELECT_TAB,
@@ -46,8 +45,8 @@ export function useHomeScreen(props: HomeRouteProps) {
 
   function SELECT_TAB(index: number) {
     const tabs = [
-      HomeScreenEvents.SELECT_MY_VIDS,
-      HomeScreenEvents.SELECT_RECEIVED_VIDS,
+      HomeScreenEvents.SELECT_MY_VCS,
+      HomeScreenEvents.SELECT_RECEIVED_VCS,
       HomeScreenEvents.SELECT_HISTORY,
     ];
     service.send(tabs[index]());

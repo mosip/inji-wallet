@@ -7,8 +7,9 @@ import { GlobalContext } from '../shared/GlobalContext';
 export const GlobalContextProvider: React.FC = (props) => {
   const appService = useInterpret(appMachine);
 
-  // TODO: remove in production builds
-  appService.subscribe(logState);
+  if (__DEV__) {
+    appService.subscribe(logState);
+  }
 
   return (
     <GlobalContext.Provider value={{ appService }}>

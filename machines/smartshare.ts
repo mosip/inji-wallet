@@ -2,10 +2,7 @@ import SmartShare from '@idpass/smartshare-react-native';
 import { EmitterSubscription } from 'react-native';
 import { createModel } from 'xstate/lib/model';
 import { Message } from '../shared/Message';
-import { EventFrom, sendParent } from 'xstate';
-import { respond } from 'xstate/lib/actions';
-
-// TODO: wip
+import { EventFrom } from 'xstate';
 
 const model = createModel(
   {
