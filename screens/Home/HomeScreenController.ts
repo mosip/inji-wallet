@@ -8,6 +8,7 @@ import {
   HomeScreenMachine,
   selectActiveTab,
   selectSelectedVc,
+  selectTabRefs,
   selectTabsLoaded,
   selectViewingVc,
 } from './HomeScreenMachine';
@@ -35,6 +36,7 @@ export function useHomeScreen(props: HomeRouteProps) {
     activeTab: useSelector(service, selectActiveTab),
     vcLabel: useSelector(settingsService, selectVcLabel),
     selectedVc: useSelector(service, selectSelectedVc),
+    tabRefs: useSelector(service, selectTabRefs),
 
     isViewingVc: useSelector(service, selectViewingVc),
     haveTabsLoaded: useSelector(service, selectTabsLoaded),

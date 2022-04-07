@@ -1,4 +1,4 @@
-import { EventFrom, send, StateFrom } from 'xstate';
+import { assign, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { VC_ITEM_STORE_KEY } from '../shared/constants';
 import { AppServices } from '../shared/GlobalContext';
@@ -44,24 +44,15 @@ const model = createModel(
 
 export const VcItemEvents = model.events;
 
-type SaveTagEvent = EventFrom<typeof model, 'SAVE_TAG'>;
-type GetVcResponseEvent = EventFrom<typeof model, 'GET_VC_RESPONSE'>;
-type StoreResponseEvent = EventFrom<typeof model, 'STORE_RESPONSE'>;
-type CredentialDownloadedEvent = EventFrom<
-  typeof model,
-  'CREDENTIAL_DOWNLOADED'
->;
-
-type RequestVcDataEvent =
-  | StoreResponseEvent
-  | CredentialDownloadedEvent
-  | GetVcResponseEvent;
-
 export const vcItemMachine =
   /** @xstate-layout N4IgpgJg5mDOIC5QDcDGBaAlgFzAWwDpUALMVAa0wDsoA1VAYgHEBRAFQH1aBhDgJRYBlAAoB5AHKCWiUAAcA9rByZ5VGSAAeiAMwAWAEwFtABmMB2ABwBGfQFYANCACeiK29sEAbLasBOMwbe2r5WFgC+YY5oWLiEJGSUNILY8gBOYAyCbKIC-EJiktJIIApK2CpqxVoI+v4Evr6elsbBtrbmFo4uCBZmZl4+DbbBtbqeEVEYOPhEpBTUUIJgqcjLACIAhtgbswkLyVsArrAMYgAyZ+qlyqrq1Vaehp5WxrX6umZW2mb6D12Inm02gItnepj6r10FlsExA0WmcTmiUWy1WqU22128yS22wxwYa1EAHVxGdRABBNZ5SkATSuihulVA1T0ngIAVsnmMtjGvQczkQAQsXjBLwsFg61lh8NiWORSxW6y2Owg8gA7lQADbyDYQBbcdIQMBUcobTWnUQXellCp3AG2YVNNpmJpc369f4ITy6KwgzwS-TGXTmfzSqay+LYlGK9HKgiqjXa3X6w3G03m7gCNYscRsACS5LOHEJJLJlJYa2tjLtCBCvuMoWM4uhBhd+k9ZhaA0DVkswf8+m0YZiM0wEE1GQrec4bHJTCr5VuVUQdYIDYlzZ5+jbnodugIVlBDf9jTGZl8w4RBDHE4YtBYfDzADE6cVroumZpXH5hZ8bHpjF8bcbF0T0TH3Q9A2MZ4TF8UErEvWVIGUGg2A2KACTzQQAFksMEBdbWXBBQn3CwDG0MigQsb4LF8T03GBNooL8YYbBhSI4XDGZkPKVD0Mycl7w4Wd5zfBkPxrVd1ybcUtx3AUam0NlvCgwJfF0YZ9EQmZYBSVIFjQjCshyFg8hECQpAIpdmW-XxfzcQd+2A95PTsNlINMAwfXUoFxg4mUZjRTAADMnBTSA00wM0GFVKgwGvKhkHkch4oCwggtC8KjRNKLNQQagktQLYKgAbWMABdKzP3uED6kHT5tHeEYoTA0EDyPJsGwaLlwn8rj0uWEKwpoA0Ipy6LllSNICFkTUtmCtJ0v6ggMuGqBRuy9N8sS+Qio-MrKrEm1rK-YjaqA74viaoCWoU3Q6g8w9oPeSxesmEdET2GhaEG4LMD2ioDjxE4qprKwoQghsvjcDSIU6BTrEMUEuW5OxaO3CIOKoeQjXgYo0rlBZ6FBoiDHow9+m8BoW1PD52Peq9I3lPSwBJmyEDJhTfD0dqGhCXpelGbTPqjBU0QxHYmf2XFjjZ06+g7OwQTBQDhm9AIEL6j7CaSVElUxBMtR1PURtTcbNTl6phl8AhoQ3QZfk8Tw6IUswgT9AN9HeFigOFnXo3F5VLcQYZd1eZXgj6Z2yMHC8tavG9WaO6siKem2XgYmHbDh+jtxBaxTG8Xs+k7Mw-Z4gz0ODjn2wUtz2X9Lqnc7Cj6c47XdLSSuoGrl4lK8blnm3HkLHdVz3dR0x9Fottub8hnZVWrLIrNaupMbTdW0eMCzA8SfALsUU24JqXvt+-7itUIHZeTiTU+L23uf-IFGs7eHul3m2+glEMAgacHha93fjoEER5gKHg0u0D4mMwhAA */
   model.createMachine(
     {
-      context: model.initialContext,
+      tsTypes: {} as import('./vcItem.typegen').Typegen0,
+      schema: {
+        context: model.initialContext,
+        events: {} as EventFrom<typeof model>,
+      },
       description: 'VC',
       id: 'vc-item',
       initial: 'checkingVc',
@@ -239,7 +230,7 @@ export const vcItemMachine =
         ),
 
         setTag: model.assign({
-          tag: (_, event: SaveTagEvent) => event.tag,
+          tag: (_, event) => event.tag,
         }),
 
         storeTag: send(
@@ -250,7 +241,7 @@ export const vcItemMachine =
           { to: (context) => context.serviceRefs.store }
         ),
 
-        setCredential: model.assign((_, event: RequestVcDataEvent) => {
+        setCredential: model.assign((_, event) => {
           switch (event.type) {
             case 'STORE_RESPONSE':
               return event.response;
@@ -261,7 +252,7 @@ export const vcItemMachine =
         }),
 
         logDownloaded: send(
-          (_, event: CredentialDownloadedEvent) =>
+          (_, event) =>
             ActivityLogEvents.LOG_ACTIVITY({
               _vcKey: VC_ITEM_STORE_KEY(event.vc),
               action: 'downloaded',
@@ -269,12 +260,17 @@ export const vcItemMachine =
               deviceName: '',
               vcLabel: event.vc.tag || event.vc.id,
             }),
-          { to: (context) => context.serviceRefs.activityLog }
+          {
+            to: (context) => context.serviceRefs.vc,
+          }
         ),
 
-        markVcValid: model.assign({
-          isVerified: true,
-          lastVerifiedOn: () => Date.now(),
+        markVcValid: assign((context) => {
+          return {
+            ...context,
+            isVerified: true,
+            lastVerifiedOn: Date.now(),
+          };
         }),
       },
 
@@ -347,11 +343,11 @@ export const vcItemMachine =
       },
 
       guards: {
-        hasCredential: (_, event: StoreResponseEvent) => {
-          return (
-            event.response?.credential != null &&
-            event.response?.verifiableCredential != null
-          );
+        hasCredential: (_, event) => {
+          const vc =
+            event.type === 'GET_VC_RESPONSE' ? event.vc : event.response;
+
+          return vc?.credential != null && vc?.verifiableCredential != null;
         },
 
         isVcValid: (context) => {
@@ -365,7 +361,7 @@ export const createVcItemMachine = (
   serviceRefs: AppServices,
   vcKey: string
 ) => {
-  const [_, idType, id, requestId] = vcKey.split(':');
+  const [, idType, id, requestId] = vcKey.split(':');
   return vcItemMachine.withContext({
     ...vcItemMachine.context,
     serviceRefs,

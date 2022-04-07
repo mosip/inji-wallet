@@ -1,7 +1,7 @@
 import SmartShare from '@idpass/smartshare-react-native';
 import LocationEnabler from 'react-native-location-enabler';
 import SystemSetting from 'react-native-system-setting';
-import { EventFrom, send, sendParent, StateFrom } from 'xstate';
+import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { EmitterSubscription, Linking, PermissionsAndroid } from 'react-native';
 import { DeviceInfo } from '../components/DeviceInfoList';
@@ -50,7 +50,7 @@ const model = createModel(
       FLIGHT_REQUEST: () => ({}),
       LOCATION_REQUEST: () => ({}),
       UPDATE_VC_NAME: (vcName: string) => ({ vcName }),
-      STORE_RESPONSE: (response: any) => ({ response }),
+      STORE_RESPONSE: (response: unknown) => ({ response }),
       APP_ACTIVE: () => ({}),
     },
   }
@@ -58,16 +58,14 @@ const model = createModel(
 
 export const ScanEvents = model.events;
 
-type ExchangeDoneEvent = EventFrom<typeof model, 'EXCHANGE_DONE'>;
-type ScanEvent = EventFrom<typeof model, 'SCAN'>;
-type selectVcEvent = EventFrom<typeof model, 'SELECT_VC'>;
-type UpdateReasonEvent = EventFrom<typeof model, 'UPDATE_REASON'>;
-type ReceiveDeviceInfoEvent = EventFrom<typeof model, 'RECEIVE_DEVICE_INFO'>;
-
 export const scanMachine = model.createMachine(
   {
+    tsTypes: {} as import('./scan.typegen').Typegen0,
+    schema: {
+      context: model.initialContext,
+      events: {} as EventFrom<typeof model>,
+    },
     id: 'scan',
-    context: model.initialContext,
     initial: 'inactive',
     on: {
       SCREEN_BLUR: 'inactive',
@@ -150,7 +148,7 @@ export const scanMachine = model.createMachine(
         id: 'clearingConnection',
         entry: ['disconnect'],
         after: {
-          250: 'findingConnection',
+          CLEAR_DELAY: 'findingConnection',
         },
       },
       findingConnection: {
@@ -269,7 +267,7 @@ export const scanMachine = model.createMachine(
       requestSenderInfo: sendParent('REQUEST_DEVICE_INFO'),
 
       setSenderInfo: model.assign({
-        senderInfo: (_, event: ReceiveDeviceInfoEvent) => event.info,
+        senderInfo: (_, event) => event.info,
       }),
 
       requestToEnableLocation: (context) => {
@@ -288,22 +286,22 @@ export const scanMachine = model.createMachine(
         }
       },
 
-      setConnectionParams: (_, event: ScanEvent) => {
+      setConnectionParams: (_, event) => {
         SmartShare.setConnectionParameters(event.params);
       },
 
       setReceiverInfo: model.assign({
-        receiverInfo: (_, event: ExchangeDoneEvent) => event.receiverInfo,
+        receiverInfo: (_, event) => event.receiverInfo,
       }),
 
       setReason: model.assign({
-        reason: (_, event: UpdateReasonEvent) => event.reason,
+        reason: (_, event) => event.reason,
       }),
 
-      clearReason: model.assign({ reason: '' }),
+      clearReason: assign({ reason: '' }),
 
       setSelectedVc: model.assign({
-        selectedVc: (context, event: selectVcEvent) => {
+        selectedVc: (context, event) => {
           return {
             ...event.vc,
             reason: context.reason,
@@ -311,7 +309,7 @@ export const scanMachine = model.createMachine(
         },
       }),
 
-      registerLoggers: model.assign({
+      registerLoggers: assign({
         loggers: () => {
           if (__DEV__) {
             return [
@@ -336,7 +334,7 @@ export const scanMachine = model.createMachine(
         },
       }),
 
-      removeLoggers: model.assign({
+      removeLoggers: assign({
         loggers: ({ loggers }) => {
           loggers?.forEach((logger) => logger.remove());
           return [];
@@ -402,7 +400,7 @@ export const scanMachine = model.createMachine(
         return () => listener.remove();
       },
 
-      checkAirplaneMode: (context) => (callback) => {
+      checkAirplaneMode: () => (callback) => {
         SystemSetting.isAirplaneEnabled().then((enable) => {
           if (enable) {
             callback(model.events.FLIGHT_ENABLED());
@@ -476,10 +474,8 @@ export const scanMachine = model.createMachine(
       },
     },
 
-    delays: {},
-
     guards: {
-      isQrValid: (_, event: ScanEvent) => {
+      isQrValid: (_, event) => {
         const param: SmartShare.ConnectionParams = Object.create(null);
         try {
           Object.assign(param, JSON.parse(event.params));
@@ -488,6 +484,10 @@ export const scanMachine = model.createMachine(
           return false;
         }
       },
+    },
+
+    delays: {
+      CLEAR_DELAY: 250,
     },
   }
 );

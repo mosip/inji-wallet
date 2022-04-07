@@ -78,3 +78,4 @@ dist/
 
 .vscode/
 temp/
+.eslintcache

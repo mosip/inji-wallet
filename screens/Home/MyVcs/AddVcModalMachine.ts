@@ -1,9 +1,9 @@
 import { TextInput } from 'react-native';
 import {
+  assign,
   DoneInvokeEvent,
   ErrorPlatformEvent,
   EventFrom,
-  send,
   sendParent,
   StateFrom,
 } from 'xstate';
@@ -37,15 +37,14 @@ const model = createModel(
 
 export const AddVcModalEvents = model.events;
 
-type ReadyEvent = EventFrom<typeof model, 'READY'>;
-type InputIdEvent = EventFrom<typeof model, 'INPUT_ID'>;
-type InputOtpEvent = EventFrom<typeof model, 'INPUT_OTP'>;
-type SelectIdTypeEvent = EventFrom<typeof model, 'SELECT_ID_TYPE'>;
-
 export const AddVcModalMachine = model.createMachine(
   {
+    tsTypes: {} as import('./AddVcModalMachine.typegen').Typegen0,
+    schema: {
+      context: model.initialContext,
+      events: {} as EventFrom<typeof model>,
+    },
     id: 'AddVcModal',
-    context: model.initialContext,
     initial: 'acceptingIdInput',
     states: {
       acceptingIdInput: {
@@ -169,27 +168,28 @@ export const AddVcModalMachine = model.createMachine(
   {
     actions: {
       setId: model.assign({
-        id: (_, event: InputIdEvent) => event.id,
+        id: (_context, event) => event.id,
       }),
 
       setIdType: model.assign({
-        idType: (_, event: SelectIdTypeEvent) => event.idType,
+        idType: (_context, event) => event.idType,
       }),
 
       setOtp: model.assign({
-        otp: (_, event: InputOtpEvent) => event.otp,
+        otp: (_context, event) => event.otp,
       }),
 
-      setTransactionId: model.assign({
+      setTransactionId: assign({
         transactionId: () => String(new Date().valueOf()).substring(3, 13),
       }),
 
-      setRequestId: model.assign({
-        requestId: (_, event: any) => (event as DoneInvokeEvent<string>).data,
+      setRequestId: assign({
+        requestId: (_context, event) => (event as DoneInvokeEvent<string>).data,
       }),
 
-      setIdError: model.assign({
-        idError: (_, event: any) => (event as ErrorPlatformEvent).data.message,
+      setIdError: assign({
+        idError: (_context, event) =>
+          (event as ErrorPlatformEvent).data.message,
       }),
 
       clearId: model.assign({ id: '' }),
@@ -204,15 +204,16 @@ export const AddVcModalMachine = model.createMachine(
         idError: 'The input format is incorrect',
       }),
 
-      setOtpError: model.assign({
-        otpError: (_, event: any) => (event as ErrorPlatformEvent).data.message,
+      setOtpError: assign({
+        otpError: (_context, event) =>
+          (event as ErrorPlatformEvent).data.message,
       }),
 
       setIdInputRef: model.assign({
-        idInputRef: (_, event: ReadyEvent) => event.idInputRef,
+        idInputRef: (_context, event) => event.idInputRef,
       }),
 
-      clearOtp: model.assign({ otp: '' }),
+      clearOtp: assign({ otp: '' }),
 
       focusInput: (context) => context.idInputRef.focus(),
     },
@@ -243,13 +244,10 @@ export const AddVcModalMachine = model.createMachine(
 
       isWrongIdFormat: ({ id }) => !/^\d{10,16}$/.test(id),
 
-      isIdInvalid: (_, event: any) =>
+      isIdInvalid: (_context, event: unknown) =>
         ['IDA-MLC-009', 'RES-SER-29', 'IDA-MLC-018'].includes(
           (event as BackendResponseError).name
         ),
-
-      // isOtpInvalid: (_, event: any) =>
-      //   (event as BackendResponseError).name === 'RES-SER-422',
     },
   }
 );

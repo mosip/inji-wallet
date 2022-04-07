@@ -12,7 +12,7 @@ import { OnboardingOverlay } from './OnboardingOverlay';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
   const controller = useMyVcsTab(props);
-  
+
   return (
     <React.Fragment>
       <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
@@ -53,7 +53,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                   Generate your {controller.vcLabel.plural}
                 </Text>
                 <Text color={Colors.Grey} align="center">
-                  Tap on "Add {controller.vcLabel.singular}" below to{'\n'}
+                  Tap on &quot;Add {controller.vcLabel.singular}&quot; below to
                   download your {controller.vcLabel.singular}
                 </Text>
                 <Icon

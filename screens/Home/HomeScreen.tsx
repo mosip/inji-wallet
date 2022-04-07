@@ -8,8 +8,8 @@ import { HistoryTab } from './HistoryTab';
 import { MyVcsTab } from './MyVcsTab';
 import { ReceivedVcsTab } from './ReceivedVcsTab';
 import { ViewVcModal } from './ViewVcModal';
-import { ActorRefFrom } from 'xstate';
 import { useHomeScreen } from './HomeScreenController';
+import { TabRef } from './HomeScreenMachine';
 
 const styles = StyleSheet.create({
   tabIndicator: {
@@ -42,15 +42,15 @@ export const HomeScreen: React.FC<HomeRouteProps> = (props) => {
           <Column fill>
             <MyVcsTab
               isVisible={controller.activeTab === 0}
-              service={controller.service.children.get('MyVcsTab')}
+              service={controller.tabRefs.myVcs}
             />
             <ReceivedVcsTab
               isVisible={controller.activeTab === 1}
-              service={controller.service.children.get('receivedVcsTab')}
+              service={controller.tabRefs.receivedVcs}
             />
             <HistoryTab
               isVisible={controller.activeTab === 2}
-              service={controller.service.children.get('historyTab')}
+              service={controller.tabRefs.history}
             />
           </Column>
         )}
@@ -81,5 +81,5 @@ function TabItem(title: string) {
 
 export interface HomeScreenTabProps {
   isVisible: boolean;
-  service: ActorRefFrom<any>;
+  service: TabRef;
 }

@@ -4,7 +4,7 @@ import { createModel } from 'xstate/lib/model';
 import { StoreEvents } from './store';
 import { VC } from '../types/vc';
 import { AppServices } from '../shared/GlobalContext';
-import { log, respond } from 'xstate/lib/actions';
+import { respond } from 'xstate/lib/actions';
 import { VcItemEvents } from './vcItem';
 import {
   MY_VCS_STORE_KEY,
@@ -23,7 +23,7 @@ const model = createModel(
     events: {
       VIEW_VC: (vc: VC) => ({ vc }),
       GET_VC_ITEM: (vcKey: string) => ({ vcKey }),
-      STORE_RESPONSE: (response: any) => ({ response }),
+      STORE_RESPONSE: (response: unknown) => ({ response }),
       STORE_ERROR: (error: Error) => ({ error }),
       VC_ADDED: (vcKey: string) => ({ vcKey }),
       VC_RECEIVED: (vcKey: string) => ({ vcKey }),
@@ -37,16 +37,14 @@ const model = createModel(
 
 export const VcEvents = model.events;
 
-type GetVcItemEvent = EventFrom<typeof model, 'GET_VC_ITEM'>;
-type StoreResponseEvent = EventFrom<typeof model, 'STORE_RESPONSE'>;
-type VcDownloadedEvent = EventFrom<typeof model, 'VC_DOWNLOADED'>;
-type VcAddedEvent = EventFrom<typeof model, 'VC_ADDED'>;
-type VcReceivedEvent = EventFrom<typeof model, 'VC_RECEIVED'>;
-
 export const vcMachine = model.createMachine(
   {
+    tsTypes: {} as import('./vc.typegen').Typegen0,
+    schema: {
+      context: model.initialContext,
+      events: {} as EventFrom<typeof model>,
+    },
     id: 'vc',
-    context: model.initialContext,
     initial: 'init',
     states: {
       init: {
@@ -143,7 +141,7 @@ export const vcMachine = model.createMachine(
         response: context.receivedVcs,
       })),
 
-      getVcItemResponse: respond((context, event: GetVcItemEvent) => {
+      getVcItemResponse: respond((context, event) => {
         const vc = context.vcs[event.vcKey];
         return VcItemEvents.GET_VC_RESPONSE(vc);
       }),
@@ -157,29 +155,23 @@ export const vcMachine = model.createMachine(
       }),
 
       setMyVcs: model.assign({
-        myVcs: (_, event: StoreResponseEvent) => event.response || [],
+        myVcs: (_context, event) => (event.response || []) as string[],
       }),
 
       setReceivedVcs: model.assign({
-        receivedVcs: (_, event: StoreResponseEvent) => event.response || [],
+        receivedVcs: (_context, event) => (event.response || []) as string[],
       }),
 
-      setDownloadedVc: (context, event: VcDownloadedEvent) => {
+      setDownloadedVc: (context, event) => {
         context.vcs[VC_ITEM_STORE_KEY(event.vc)] = event.vc;
       },
 
       prependToMyVcs: model.assign({
-        myVcs: (context, event: VcAddedEvent) => [
-          event.vcKey,
-          ...context.myVcs,
-        ],
+        myVcs: (context, event) => [event.vcKey, ...context.myVcs],
       }),
 
       prependToReceivedVcs: model.assign({
-        receivedVcs: (context, event: VcReceivedEvent) => [
-          event.vcKey,
-          ...context.receivedVcs,
-        ],
+        receivedVcs: (context, event) => [event.vcKey, ...context.receivedVcs],
       }),
     },
   }

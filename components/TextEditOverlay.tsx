@@ -43,7 +43,6 @@ export const TextEditOverlay: React.FC<EditOverlayProps> = (props) => {
     setValue(props.value);
     props.onDismiss();
   }
-
 };
 
 interface EditOverlayProps {

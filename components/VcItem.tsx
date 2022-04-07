@@ -56,13 +56,16 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
   const verifiableCredential = useSelector(service, selectVerifiableCredential);
   const generatedOn = useSelector(service, selectGeneratedOn);
 
-
-  const selectableOrCheck = props.selectable ? <CheckBox
+  const selectableOrCheck = props.selectable ? (
+    <CheckBox
       checked={props.selected}
       checkedIcon={<Icon name="radio-button-checked" />}
       uncheckedIcon={<Icon name="radio-button-unchecked" />}
       onPress={() => props.onPress(service)}
-    /> : <Icon name="chevron-right" />;
+    />
+  ) : (
+    <Icon name="chevron-right" />
+  );
 
   return (
     <Pressable
@@ -97,7 +100,11 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
                 generatedOn}
           </Text>
         </Column>
-        { verifiableCredential ? selectableOrCheck : (<RotatingIcon name="sync" color={Colors.Grey5} />) }
+        {verifiableCredential ? (
+          selectableOrCheck
+        ) : (
+          <RotatingIcon name="sync" color={Colors.Grey5} />
+        )}
       </Row>
     </Pressable>
   );

@@ -30,7 +30,7 @@ export const SelectVcOverlay: React.FC<SelectVcOverlayProps> = (props) => {
           Share {controller.vcLabel.singular}
         </Text>
         <Text margin="0 0 16 0">
-          Choose the {controller.vcLabel.singular} you'd like to share with{' '}
+          Choose the {controller.vcLabel.singular} you&apos;d like to share with{' '}
           <Text weight="semibold">{props.receiverName}</Text>
         </Text>
         <Column margin="0 0 32 0" scroll>

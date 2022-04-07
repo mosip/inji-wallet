@@ -30,12 +30,12 @@ export const RequestScreen: React.FC<MainRouteProps> = (props) => {
       <Centered fill>
         {controller.isWaitingForConnection &&
         controller.connectionParams !== '' ? (
-          <QRCode
-            size={200}
-            value={controller.connectionParams}
-            backgroundColor={Colors.LightGrey}
-          />
-        ) : null}
+            <QRCode
+              size={200}
+              value={controller.connectionParams}
+              backgroundColor={Colors.LightGrey}
+            />
+          ) : null}
       </Centered>
 
       {controller.statusMessage !== '' && (

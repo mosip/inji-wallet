@@ -32,7 +32,7 @@ export function useScanScreen({ navigation }: MainRouteProps) {
   if(isFlightMode) {
     locationError.message =
         'Flight mode must be disabled for the scanning functionality';
-      locationError.button = 'Disable flight mode';
+    locationError.button = 'Disable flight mode';
   } else {
     if (isLocationDisabled) {
       locationError.message =
@@ -85,7 +85,7 @@ export function useScanScreen({ navigation }: MainRouteProps) {
     SCAN: (qrCode: string) => scanService.send(ScanEvents.SCAN(qrCode)),
     DISMISS_INVALID: () => {
       if(isInvalid) {
-        scanService.send(ScanEvents.DISMISS())
+        scanService.send(ScanEvents.DISMISS());
       }
     }
   };
