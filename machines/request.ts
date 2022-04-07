@@ -191,8 +191,8 @@ export const requestMachine = model.createMachine(
             entry: ['logReceived'],
             id: 'accepted',
             invoke: {
-              src: {
-                type: 'sendVcResponse',
+              src: 'sendVcResponse',
+              data: {
                 status: 'accepted',
               },
             },
@@ -202,8 +202,8 @@ export const requestMachine = model.createMachine(
           },
           rejected: {
             invoke: {
-              src: {
-                type: 'sendVcResponse',
+              src: 'sendVcResponse',
+              data: {
                 status: 'rejected',
               },
             },
@@ -231,14 +231,14 @@ export const requestMachine = model.createMachine(
       requestReceiverInfo: sendParent('REQUEST_DEVICE_INFO'),
 
       setReceiverInfo: model.assign({
-        receiverInfo: (_, event) => event.info,
+        receiverInfo: (_context, event) => event.info,
       }),
 
       disconnect: () => {
         try {
           SmartShare.destroyConnection();
         } catch (e) {
-          //
+          // pass
         }
       },
 
@@ -247,11 +247,11 @@ export const requestMachine = model.createMachine(
       }),
 
       setSenderInfo: model.assign({
-        senderInfo: (_, event) => event.senderInfo,
+        senderInfo: (_context, event) => event.senderInfo,
       }),
 
       setIncomingVc: model.assign({
-        incomingVc: (_, event) => event.vc,
+        incomingVc: (_context, event) => event.vc,
       }),
 
       registerLoggers: assign({
@@ -392,7 +392,7 @@ export const requestMachine = model.createMachine(
 
       sendVcResponse: (_context, _event, meta) => (callback) => {
         const response = new Message('send:vc:response', {
-          status: meta.src.status,
+          status: meta.data.status,
         });
 
         SmartShare.send(response.toString(), () => {

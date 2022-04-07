@@ -35,6 +35,9 @@ export interface Typegen0 {
     advertiseDevice: 'done.invoke.waitingForConnection:invocation[0]';
     exchangeDeviceInfo: 'done.invoke.request.exchangingDeviceInfo:invocation[0]';
     receiveVc: 'done.invoke.request.waitingForVc:invocation[0]';
+    sendVcResponse:
+      | 'done.invoke.accepted:invocation[0]'
+      | 'done.invoke.request.reviewing.rejected:invocation[0]';
   };
   'missingImplementations': {
     actions: never;
@@ -48,6 +51,7 @@ export interface Typegen0 {
     advertiseDevice: 'xstate.after(CLEAR_DELAY)#clearingConnection' | 'DISMISS';
     exchangeDeviceInfo: 'RECEIVE_DEVICE_INFO';
     receiveVc: 'EXCHANGE_DONE';
+    sendVcResponse: 'REJECT' | 'CANCEL' | 'VC_RESPONSE' | 'STORE_RESPONSE';
   };
   'eventsCausingGuards': {
     hasExistingVc: 'VC_RESPONSE';
