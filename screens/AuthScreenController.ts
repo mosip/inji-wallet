@@ -11,10 +11,12 @@ import {
   selectIsUnvailable,
   selectUnenrolledNotice
 } from '../machines/biometrics';
+import { SettingsEvents } from '../machines/settings';
 
 export function useAuthScreen(props: RootRouteProps) {
   const { appService } = useContext(GlobalContext);
   const authService    = appService.children.get('auth');
+  const settingsService = appService.children.get('settings');
 
   const isSettingUp    = useSelector(authService, selectSettingUp);
   const isAuthorized   = useSelector(authService, selectAuthorized);
@@ -50,6 +52,7 @@ export function useAuthScreen(props: RootRouteProps) {
     // if biometic state is success then lets send auth service BIOMETRICS
     if (isSuccessBio) {
       authService.send(AuthEvents.SETUP_BIOMETRICS('true'));
+      settingsService.send(SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(true));
       // setup passcode aswell
       usePasscode();
 

@@ -30,6 +30,9 @@ export function useProfileScreen({ navigation }: MainRouteProps) {
     UPDATE_VC_LABEL: (label: string) =>
       settingsService.send(SettingsEvents.UPDATE_VC_LABEL(label)),
 
+    TOGGLE_BIOMETRIC: (enable: boolean) =>
+      settingsService.send(SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(enable)),
+
     LOGOUT: () => {
       authService.send(AuthEvents.LOGOUT());
       navigation.navigate('Welcome');

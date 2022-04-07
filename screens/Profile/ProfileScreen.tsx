@@ -39,7 +39,7 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
             <Text>Biometric unlock</Text>
           </ListItem.Title>
         </ListItem.Content>
-        <Switch value={controller.isBiometricUnlockEnabled} />
+        <Switch value={controller.isBiometricUnlockEnabled} onValueChange={controller.TOGGLE_BIOMETRIC} />
       </ListItem>
       <ListItem bottomDivider disabled>
         <ListItem.Content>

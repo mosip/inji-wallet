@@ -62,6 +62,7 @@ export function useBiometricScreen(props: RootRouteProps) {
   };
 
   return {
+    isSuccessBio,
     useBiometrics
   };
 }

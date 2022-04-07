@@ -19,7 +19,7 @@ const model = createModel(
     events: {
       UPDATE_NAME: (name: string) => ({ name }),
       UPDATE_VC_LABEL: (label: string) => ({ label }),
-      TOGGLE_BIOMETRIC_UNLOCK: () => ({}),
+      TOGGLE_BIOMETRIC_UNLOCK: (enable: boolean) => ({ enable }),
       STORE_RESPONSE: (response: unknown) => ({ response }),
     },
   }
@@ -54,9 +54,9 @@ export const settingsMachine = model.createMachine(
       },
       idle: {
         on: {
-          // TOGGLE_BIOMETRIC_UNLOCK: {
-          //   actions: ['toggleBiometricUnlock', sendUpdate()],
-          // },
+          TOGGLE_BIOMETRIC_UNLOCK: {
+            actions: ['toggleBiometricUnlock', 'storeContext'],
+          },
           UPDATE_NAME: {
             actions: ['updateName', 'storeContext'],
           },
@@ -99,6 +99,10 @@ export const settingsMachine = model.createMachine(
           plural: event.label + 's',
         }),
       }),
+
+      toggleBiometricUnlock: model.assign({
+        isBiometricUnlockEnabled: (_, event) => event.enable
+      })
     },
 
     services: {},
