@@ -1,4 +1,5 @@
 import { ContextFrom, EventFrom, send, StateFrom } from 'xstate';
+import { log } from 'xstate/lib/actions';
 import { createModel } from 'xstate/lib/model';
 import { AppServices } from '../shared/GlobalContext';
 import { StoreEvents, StoreResponseEvent } from './store';
@@ -83,6 +84,9 @@ export const authMachine = model.createMachine(
       authorized: {
         on: {
           LOGOUT: 'unauthorized',
+          SETUP_BIOMETRICS: {
+            actions: ['setBiometrics', 'storeContext'],
+          },
         },
       },
     },

@@ -160,7 +160,8 @@ export const biometricsMachine = model.createMachine(
             },
             on: {
               RETRY_AUTHENTICATE: {
-                actions: assign({retry: (context, event) => true}),
+                //actions: assign({retry: (context, event) => true}),
+                actions: ['setRetry'],
                 target: [
                   '#biometrics.initEnrolled',
                   '#biometrics.reauthenticating'
@@ -205,6 +206,10 @@ export const biometricsMachine = model.createMachine(
 
       setStatus: model.assign({
         status: (_, event: SetStatusEvent) => event.data
+      }),
+
+      setRetry: model.assign({
+        retry: () => true
       }),
     },
     guards: {
