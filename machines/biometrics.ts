@@ -1,16 +1,15 @@
-import { createModel } from "xstate/lib/model";
+import { createModel } from 'xstate/lib/model';
 import * as LocalAuthentication from 'expo-local-authentication';
-import { assign, EventFrom, MetaObject, StateFrom } from "xstate";
-
+import { EventFrom, MetaObject, StateFrom } from 'xstate';
 
 // ----- CREATE MODEL ---------------------------------------------------------
 const model = createModel(
   {
-    isAvailable : false,
-    authTypes   : [],
-    isEnrolled  : false,
-    status      : null,
-    retry       : false,
+    isAvailable: false,
+    authTypes: [],
+    isEnrolled: false,
+    status: null,
+    retry: false,
   },
   {
     events: {
@@ -20,12 +19,11 @@ const model = createModel(
       SET_STATUS: (data: boolean) => ({ data }),
 
       AUTHENTICATE: () => ({}),
-      RETRY_AUTHENTICATE: () => ({})
-    }
+      RETRY_AUTHENTICATE: () => ({}),
+    },
   }
 );
 // ----------------------------------------------------------------------------
-
 
 // ----- CREATE MACHINE -------------------------------------------------------
 export const biometricsMachine = model.createMachine(
@@ -34,7 +32,6 @@ export const biometricsMachine = model.createMachine(
     context: model.initialContext,
     initial: 'init',
     states: {
-
       // Initializing biometrics states
       init: {
         invoke: {
@@ -43,8 +40,8 @@ export const biometricsMachine = model.createMachine(
           onDone: {
             target: 'initAuthTypes',
             actions: ['setIsAvailable'],
-          }
-        }
+          },
+        },
       },
 
       initAuthTypes: {
@@ -54,8 +51,8 @@ export const biometricsMachine = model.createMachine(
           onDone: {
             target: 'initEnrolled',
             actions: ['setAuthTypes'],
-          }
-        }
+          },
+        },
       },
 
       initEnrolled: {
@@ -64,9 +61,9 @@ export const biometricsMachine = model.createMachine(
           onError: 'failure',
           onDone: {
             target: 'checking',
-            actions: ['setIsEnrolled']
-          }
-        }
+            actions: ['setIsEnrolled'],
+          },
+        },
       },
 
       // Checks whether we need to proceed if its available otherwise it gets to failure
@@ -74,45 +71,44 @@ export const biometricsMachine = model.createMachine(
         always: [
           {
             target: 'available',
-            cond: 'checkIfAvailable'
+            cond: 'checkIfAvailable',
           },
           {
             target: 'failure.unavailable',
-            cond: 'checkIfUnavailable'
+            cond: 'checkIfUnavailable',
           },
           {
             target: 'failure.unenrolled',
-            cond: 'checkIfUnenrolled'
-          }
-        ]
+            cond: 'checkIfUnenrolled',
+          },
+        ],
       },
-
 
       // if available then wait for any event
       available: {
         on: {
-          AUTHENTICATE: 'authenticating'
-        }
+          AUTHENTICATE: 'authenticating',
+        },
       },
 
       // authenticating biometrics
       authenticating: {
         invoke: {
           src: () => async () => {
-            let res = await LocalAuthentication.authenticateAsync({
+            const res = await LocalAuthentication.authenticateAsync({
               promptMessage: 'Biometric Authentication',
 
               // below can only works for IOS not android
               // disableDeviceFallback: true,
               // fallbackLabel: 'Invalid fingerprint attempts, Please try again.'
-            })
+            });
             return res.success;
           },
           onError: 'failure',
           onDone: {
             target: 'authentication',
-            actions: ['setStatus']
-          }
+            actions: ['setStatus'],
+          },
         },
       },
 
@@ -120,12 +116,12 @@ export const biometricsMachine = model.createMachine(
         always: [
           {
             target: 'authenticating',
-            cond: 'checkIfAvailable'
+            cond: 'checkIfAvailable',
           },
           {
-            target: 'failure.unenrolled'
-          }
-        ]
+            target: 'failure.unenrolled',
+          },
+        ],
       },
 
       // checks authentication status
@@ -133,17 +129,17 @@ export const biometricsMachine = model.createMachine(
         always: [
           {
             target: 'success',
-            cond: 'isStatusSuccess'
+            cond: 'isStatusSuccess',
           },
           {
             target: 'failure.failed',
-            cond: 'isStatusFail'
-          }
-        ]
+            cond: 'isStatusFail',
+          },
+        ],
       },
 
       success: {
-        type: 'final'
+        type: 'final',
       },
 
       failure: {
@@ -151,12 +147,13 @@ export const biometricsMachine = model.createMachine(
         states: {
           unavailable: {
             meta: {
-              message: 'Device does not support Biometrics'
-            }
+              message: 'Device does not support Biometrics',
+            },
           },
           unenrolled: {
             meta: {
-              message: 'To use Biometrics, please enroll your fingerprint in your device settings',
+              message:
+                'To use Biometrics, please enroll your fingerprint in your device settings',
             },
             on: {
               RETRY_AUTHENTICATE: {
@@ -164,68 +161,64 @@ export const biometricsMachine = model.createMachine(
                 actions: ['setRetry'],
                 target: [
                   '#biometrics.initEnrolled',
-                  '#biometrics.reauthenticating'
-                ]
-              }
-            }
+                  '#biometrics.reauthenticating',
+                ],
+              },
+            },
           },
           failed: {
             after: {
               // after 1 seconds, transition to available
-              1000: '#biometrics.available'
+              1000: '#biometrics.available',
             },
             meta: {
-              message: 'Failed to authenticate with Biometrics'
-            }
+              message: 'Failed to authenticate with Biometrics',
+            },
           },
           error: {
             meta: {
-              message: 'There seems to be an error in Biometrics authentication'
-            }
+              message:
+                'There seems to be an error in Biometrics authentication',
+            },
           },
-        }
-      }
-
-    }
+        },
+      },
+    },
   },
 
   {
     actions: {
-
       setIsAvailable: model.assign({
-        isAvailable: (_, event: SetIsAvailableEvent) => event.data
+        isAvailable: (_, event: SetIsAvailableEvent) => event.data,
       }),
 
       setAuthTypes: model.assign({
-        authTypes: (_, event: SetAuthTypesEvent) => event.data
+        authTypes: (_, event: SetAuthTypesEvent) => event.data,
       }),
 
       setIsEnrolled: model.assign({
-        isEnrolled: (_, event: SetIsEnrolledEvent) => event.data
+        isEnrolled: (_, event: SetIsEnrolledEvent) => event.data,
       }),
 
       setStatus: model.assign({
-        status: (_, event: SetStatusEvent) => event.data
+        status: (_, event: SetStatusEvent) => event.data,
       }),
 
       setRetry: model.assign({
-        retry: () => true
+        retry: () => true,
       }),
     },
     guards: {
-      isStatusSuccess: ctx => ctx.status,
-      isStatusFail: ctx => !ctx.status,
-      checkIfAvailable: ctx => ctx.isAvailable && ctx.isEnrolled,
-      checkIfUnavailable: ctx => !ctx.isAvailable,
-      checkIfUnenrolled: ctx => !ctx.isEnrolled
-    }
+      isStatusSuccess: (ctx) => ctx.status,
+      isStatusFail: (ctx) => !ctx.status,
+      checkIfAvailable: (ctx) => ctx.isAvailable && ctx.isEnrolled,
+      checkIfUnavailable: (ctx) => !ctx.isAvailable,
+      checkIfUnenrolled: (ctx) => !ctx.isEnrolled,
+    },
   }
-
 );
 
 // ----------------------------------------------------------------------------
-
-
 
 // ----- TYPES ----------------------------------------------------------------
 
@@ -235,22 +228,17 @@ type SetAuthTypesEvent = EventFrom<typeof model, 'SET_AUTH'>;
 type SetIsEnrolledEvent = EventFrom<typeof model, 'SET_IS_ENROLLED'>;
 type State = StateFrom<typeof biometricsMachine>;
 
-
-
-
 // ----- OTHER EXPORTS --------------------------------------------------------
 export const BiometricsEvents = model.events;
 
-
 export function selectFailMessage(state: State) {
   return Object.values(state.meta)
-               .map((m: MetaObject) => m.message)
-               .join(', ');
+    .map((m: MetaObject) => m.message)
+    .join(', ');
 }
 
 export function selectIsEnabled(state: State) {
-  return state.matches('available') ||
-        state.matches({ failure: 'unenrolled' });
+  return state.matches('available') || state.matches({ failure: 'unenrolled' });
 }
 
 export function selectIsAvailable(state: State) {
@@ -270,9 +258,11 @@ export function selectIsSuccess(state: State) {
 }
 
 export function selectError(state: State) {
-  return state.matches({failure: 'error'}) ? selectFailMessage(state) : '';
+  return state.matches({ failure: 'error' }) ? selectFailMessage(state) : null;
 }
 
 export function selectUnenrolledNotice(state: State) {
-  return state.matches({ failure: 'unenrolled' }) && state.context.retry ? selectFailMessage(state) : '';
+  return state.matches({ failure: 'unenrolled' }) && state.context.retry
+    ? selectFailMessage(state)
+    : null;
 }
