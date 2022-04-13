@@ -1,5 +1,6 @@
 import { useMachine, useSelector } from '@xstate/react';
 import { useContext, useEffect, useState } from 'react';
+import * as LocalAuthentication from 'expo-local-authentication';
 import {
   AuthEvents,
   selectBiometrics,
@@ -39,6 +40,14 @@ export function useProfileScreen({ navigation }: MainRouteProps) {
   );
 
   useEffect(() => {
+    setTimeout(async () => {
+      const hasEnrolledBiometrics = await LocalAuthentication.isEnrolledAsync();
+      if (!hasEnrolledBiometrics) {
+        authService.send(AuthEvents.SETUP_BIOMETRICS(''));
+        settingsService.send(SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(false));
+      }
+    }, 0);
+
     // if biometic state is success then lets send auth service BIOMETRICS
     if (isSuccessBio) {
       authService.send(AuthEvents.SETUP_BIOMETRICS('true'));
