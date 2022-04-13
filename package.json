@@ -36,6 +36,7 @@
     "expo-camera": "~12.1.2",
     "expo-constants": "~13.0.1",
     "expo-font": "~10.0.4",
+    "expo-local-authentication": "~12.0.1",
     "expo-notifications": "~0.14.0",
     "expo-splash-screen": "~0.14.1",
     "expo-status-bar": "~1.2.0",

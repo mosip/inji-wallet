@@ -5,14 +5,20 @@ import { Column, Text } from '../../components/ui';
 import { Colors } from '../../components/ui/styleUtils';
 import { MainRouteProps } from '../../routes/main';
 import { EditableListItem } from '../../components/EditableListItem';
+import { MessageOverlay } from '../../components/MessageOverlay';
 import { Credits } from './Credits';
 import { useProfileScreen } from './ProfileScreenController';
 
 export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
   const controller = useProfileScreen(props);
-
+  
   return (
     <Column fill padding="24 0" backgroundColor={Colors.LightGrey}>
+      <MessageOverlay
+        isVisible={controller.alertMsg != ''}
+        onBackdropPress={controller.hideAlert}
+        title={controller.alertMsg}
+      />
       <EditableListItem
         label="Name"
         value={controller.name}
@@ -39,7 +45,11 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
             <Text>Biometric unlock</Text>
           </ListItem.Title>
         </ListItem.Content>
-        <Switch value={controller.isBiometricUnlockEnabled} />
+        <Switch
+          value={controller.isBiometricUnlockEnabled}
+          onValueChange={controller.useBiometrics}
+          color={Colors.Orange}
+        />
       </ListItem>
       <ListItem bottomDivider disabled>
         <ListItem.Content>

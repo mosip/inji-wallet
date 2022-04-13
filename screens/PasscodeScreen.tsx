@@ -28,11 +28,11 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = (props) => {
         />
       </React.Fragment>
     );
-
+    
   return (
     <Column fill padding="32" backgroundColor={Colors.White}>
       <Icon name="lock" color={Colors.Orange} size={60} />
-      {props.route.params.setup ? (
+      {props.route.params?.setup ? (
         <Column fill align="space-between" width="100%">
           {passcodeSetup}
         </Column>
