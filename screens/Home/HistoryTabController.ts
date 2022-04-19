@@ -8,7 +8,6 @@ import {
 import { GlobalContext } from '../../shared/GlobalContext';
 
 export function useHistoryTab() {
-  // const service = props.service as ActorRefFrom<typeof HistoryTabMachine>;
   const { appService } = useContext(GlobalContext);
   const activityLogService = appService.children.get('activityLog');
 

@@ -18,8 +18,10 @@ import { selectVcLabel } from '../../machines/settings';
 import { MainRouteProps } from '../../routes/main';
 import { GlobalContext } from '../../shared/GlobalContext';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
+import { useTranslation } from 'react-i18next';
 
 export function useRequestScreen({ navigation }: MainRouteProps) {
+  const { t } = useTranslation('RequestScreen');
   const { appService } = useContext(GlobalContext);
   const settingsService = appService.children.get('settings');
   const vcLabel = useSelector(settingsService, selectVcLabel);
@@ -43,11 +45,11 @@ export function useRequestScreen({ navigation }: MainRouteProps) {
 
   let statusMessage = '';
   if (isWaitingForConnection) {
-    statusMessage = 'Waiting for connection...';
+    statusMessage = t('statusWaiting');
   } else if (isExchangingDeviceInfo) {
-    statusMessage = 'Exchanging device info...';
+    statusMessage = t('statusExchanging');
   } else if (isWaitingForVc) {
-    statusMessage = `Connected to device. Waiting for ${vcLabel.singular}...`;
+    statusMessage = t('statusConnected', { vcLabel: vcLabel.singular });
   }
 
   useEffect(() => {

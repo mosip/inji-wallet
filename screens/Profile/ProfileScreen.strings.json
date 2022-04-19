@@ -1,0 +1,9 @@
+{
+  "name": "Name",
+  "vcLabel": "VC Label",
+  "language": "Language",
+  "bioUnlock": "Biometric unlock",
+  "authFactorUnlock": "Unlock auth factor",
+  "credits": "Credits and legal notices",
+  "logout": "Log-out"
+}

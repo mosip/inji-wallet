@@ -1,12 +1,21 @@
 import React from 'react';
+import i18n, { SUPPORTED_LANGUAGES } from '../i18n';
 import { View } from 'react-native';
-import { Icon } from 'react-native-elements';
-import { Colors } from './ui/styleUtils';
+import { Picker } from './ui/Picker';
 
-export function LanguageSelector() {
+export const LanguageSelector: React.FC<LanguageSelectorProps> = (props) => {
   return (
     <View>
-      <Icon name="language" color={Colors.Orange} />
+      <Picker
+        items={SUPPORTED_LANGUAGES}
+        selectedValue={i18n.language}
+        onValueChange={(value) => i18n.changeLanguage(value)}
+        triggerComponent={props.triggerComponent}
+      />
     </View>
   );
+};
+
+interface LanguageSelectorProps {
+  triggerComponent: React.ReactElement;
 }

@@ -9,8 +9,10 @@ import { HomeScreenTabProps } from './HomeScreen';
 import { AddVcModal } from './MyVcs/AddVcModal';
 import { DownloadingVcModal } from './MyVcs/DownloadingVcModal';
 import { OnboardingOverlay } from './OnboardingOverlay';
+import { useTranslation } from 'react-i18next';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
+  const { t } = useTranslation('MyVcsTab');
   const controller = useMyVcsTab(props);
 
   return (
@@ -40,7 +42,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                 <Button
                   type="clear"
                   disabled={controller.isRefreshingVcs}
-                  title={`Add ${controller.vcLabel.singular}`}
+                  title={t('addVcButton')}
                   onPress={controller.ADD_VC}
                 />
               </Column>
@@ -50,11 +52,12 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
             <React.Fragment>
               <Centered fill>
                 <Text weight="semibold" margin="0 0 8 0">
-                  Generate your {controller.vcLabel.plural}
+                  {t('generateVc', { vcLabel: controller.vcLabel.plural })}
                 </Text>
                 <Text color={Colors.Grey} align="center">
-                  Tap on &quot;Add {controller.vcLabel.singular}&quot; below to
-                  download your {controller.vcLabel.singular}
+                  {t('generateVcDescription', {
+                    vcLabel: controller.vcLabel.singular,
+                  })}
                 </Text>
                 <Icon
                   name="arrow-downward"
@@ -64,7 +67,9 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
               </Centered>
               <Button
                 disabled={controller.isRefreshingVcs}
-                title={`Add ${controller.vcLabel.singular}`}
+                title={t('addVcButton', {
+                  vcLabel: controller.vcLabel.singular,
+                })}
                 onPress={controller.ADD_VC}
               />
             </React.Fragment>

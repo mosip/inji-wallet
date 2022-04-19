@@ -1,18 +1,21 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { TextItem } from './ui/TextItem';
 
 export const DeviceInfoList: React.FC<DeviceInfoProps> = (props) => {
+  const { t } = useTranslation('DeviceInfoList');
+
   return (
     <React.Fragment>
       <TextItem
         divider
-        label={props.of === 'receiver' ? 'Requested by' : 'Sent by'}
+        label={props.of === 'receiver' ? t('requestedBy') : t('sentBy')}
         text={props.deviceInfo.deviceName}
       />
-      <TextItem divider label="Name" text={props.deviceInfo.name} />
+      <TextItem divider label={t('name')} text={props.deviceInfo.name} />
       <TextItem
         divider
-        label="Device reference number"
+        label={t('deviceRefNumber')}
         text={props.deviceInfo.deviceId}
       />
     </React.Fragment>

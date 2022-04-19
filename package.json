@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "expo start --dev-client",
+    "prepare": "husky install",
     "android": "expo run:android",
     "android:ph": "expo run:android --variant PhDebug",
     "android:newlogic": "expo run:android --variant NewlogicDebug",
@@ -8,7 +8,7 @@
     "eject": "expo eject --npm",
     "build:android:ph": "cd android && ./gradlew :app:assemblePhRelease && cd ..",
     "build:android:newlogic": "cd android && ./gradlew :app:assembleNewlogicRelease && cd ..",
-    "prepare": "husky install"
+    "i18n:compile-strings": "node scripts/compile-strings.js"
   },
   "dependencies": {
     "@digitalbazaar/ed25519-signature-2018": "digitalbazaar/ed25519-signature-2018",
@@ -42,8 +42,9 @@
     "expo-splash-screen": "~0.14.1",
     "expo-status-bar": "~1.2.0",
     "expo-updates": "~0.11.6",
-    "i18n-js": "^3.9.2",
+    "i18next": "^21.6.16",
     "react": "17.0.1",
+    "react-i18next": "^11.16.6",
     "react-native": "0.64.3",
     "react-native-app-intro-slider": "^4.0.4",
     "react-native-bluetooth-state-manager": "^1.3.2",
@@ -75,6 +76,7 @@
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-sonarjs": "^0.13.0",
     "expo-cli": "^5.3.1",
+    "glob": "^8.0.1",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.7",
     "prettier": "^2.6.1",
@@ -85,6 +87,7 @@
   "version": "1.0.0",
   "lint-staged": {
     "*.{ts,tsx}": "eslint --cache --fix",
-    "*.{ts,tsx,js,css,md}": "prettier --write"
+    "*.{ts,tsx,js,css,md}": "prettier --write",
+    "*.strings.json": "node scripts/compile-strings.js"
   }
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Dimensions, StyleSheet } from 'react-native';
 import { Overlay } from 'react-native-elements/dist/overlay/Overlay';
 import { Button, Column, Row, Text } from '../../components/ui';
@@ -18,6 +19,7 @@ const styles = StyleSheet.create({
 });
 
 export const SelectVcOverlay: React.FC<SelectVcOverlayProps> = (props) => {
+  const { t } = useTranslation('SelectVcOverlay');
   const controller = useSelectVcOverlay(props);
 
   return (
@@ -27,10 +29,10 @@ export const SelectVcOverlay: React.FC<SelectVcOverlayProps> = (props) => {
         width={Dimensions.get('screen').width * 0.9}
         style={{ maxHeight: Dimensions.get('screen').height * 0.9 }}>
         <Text weight="semibold" margin="0 0 16 0">
-          Share {controller.vcLabel.singular}
+          {t('header', { vcLabel: controller.vcLabel.singular })}
         </Text>
         <Text margin="0 0 16 0">
-          Choose the {controller.vcLabel.singular} you&apos;d like to share with{' '}
+          {t('chooseVc', { vcLabel: controller.vcLabel.singular })}{' '}
           <Text weight="semibold">{props.receiverName}</Text>
         </Text>
         <Column margin="0 0 32 0" scroll>
@@ -49,13 +51,13 @@ export const SelectVcOverlay: React.FC<SelectVcOverlayProps> = (props) => {
           <Button
             fill
             type="clear"
-            title="Cancel"
+            title={t('cancel')}
             onPress={() => props.onCancel()}
             margin="0 8 0 0"
           />
           <Button
             fill
-            title="Share"
+            title={t('share')}
             disabled={controller.selectedIndex == null}
             onPress={controller.onSelect}
           />

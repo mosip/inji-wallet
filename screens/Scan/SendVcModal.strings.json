@@ -1,0 +1,16 @@
+{
+  "reasonForSharing": "Reason for sharing (optional)",
+  "acceptRequest": "Accept request and choose {{vcLabel}}",
+  "reject": "Reject",
+  "statusSharing": {
+    "title": "Sharing..."
+  },
+  "statusAccepted": {
+    "title": "Success!",
+    "message": "Your {{vcLabel}} has been successfully shared with {{receiver}}"
+  },
+  "statusRejected": {
+    "title": "Notice",
+    "message": "Your {{vcLabel}} was rejected by {{receiver}}"
+  }
+}
