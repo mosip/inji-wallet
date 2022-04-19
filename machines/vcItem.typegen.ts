@@ -18,11 +18,15 @@ export interface Typegen0 {
     setTag: 'SAVE_TAG';
     markVcValid: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
     logError: 'error.platform.vc-item.verifyingCredential:invocation[0]';
-    lockVc: 'LOCK';
+    setIdError: 'error.platform.vc-item.requestingOtp:invocation[0]';
+    setOtp: 'INPUT_OTP';
+    lockVc: 'done.invoke.vc-item.requestingLock:invocation[0]';
+    setOtpError: 'error.platform.vc-item.requestingLock:invocation[0]';
     requestVcContext: 'xstate.init';
     requestStoredContext: 'GET_VC_RESPONSE';
     storeTag: 'SAVE_TAG';
-    storeVc: 'LOCK';
+    storeLock: 'done.invoke.vc-item.requestingLock:invocation[0]';
+    storeVc: 'xstate.init';
   };
   'internalEvents': {
     'done.invoke.vc-item.verifyingCredential:invocation[0]': {
@@ -32,6 +36,19 @@ export interface Typegen0 {
     };
     'error.platform.vc-item.verifyingCredential:invocation[0]': {
       type: 'error.platform.vc-item.verifyingCredential:invocation[0]';
+      data: unknown;
+    };
+    'error.platform.vc-item.requestingOtp:invocation[0]': {
+      type: 'error.platform.vc-item.requestingOtp:invocation[0]';
+      data: unknown;
+    };
+    'done.invoke.vc-item.requestingLock:invocation[0]': {
+      type: 'done.invoke.vc-item.requestingLock:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
+    'error.platform.vc-item.requestingLock:invocation[0]': {
+      type: 'error.platform.vc-item.requestingLock:invocation[0]';
       data: unknown;
     };
     '': { type: '' };
@@ -59,10 +76,12 @@ export interface Typegen0 {
     checkStatus: 'done.invoke.checkStatus';
     downloadCredential: 'done.invoke.downloadCredential';
     verifyCredential: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
+    requestOtp: 'done.invoke.vc-item.requestingOtp:invocation[0]';
+    requestLock: 'done.invoke.vc-item.requestingLock:invocation[0]';
   };
   'missingImplementations': {
-    actions: 'logError' | 'lockVc' | 'storeVc';
-    services: never;
+    actions: 'logError' | 'setIdError' | 'lockVc' | 'storeVc';
+    services: 'requestOtp';
     guards: never;
     delays: never;
   };
@@ -70,6 +89,8 @@ export interface Typegen0 {
     checkStatus: 'xstate.init';
     downloadCredential: 'DOWNLOAD_READY';
     verifyCredential: 'VERIFY' | '';
+    requestOtp: 'xstate.init';
+    requestLock: 'INPUT_OTP';
   };
   'eventsCausingGuards': {
     hasCredential: 'GET_VC_RESPONSE' | 'STORE_RESPONSE';
@@ -87,7 +108,11 @@ export interface Typegen0 {
     | 'storingTag'
     | 'verifyingCredential'
     | 'checkingVerificationStatus'
+    | 'requestingOtp'
+    | 'acceptingOtpInput'
     | 'lockingVc'
+    | 'requestingLock'
+    | 'lockVc'
     | 'storingVcLock'
     | { checkingServerData?: 'checkingStatus' | 'downloadingCredential' };
   'tags': never;

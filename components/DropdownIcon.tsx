@@ -56,12 +56,12 @@ export const DropdownIcon: React.FC<DropdownProps> = (props) => {
     </View>
   );
 };
-interface item {
-  label: string;
-  onSelect: () => void;
-}
+// interface item {
+//   label: string;
+//   onSelect: () => void;
+// }
 
 interface DropdownProps {
   icon: string;
-  items?: item[];
+  items?: any;
 }
