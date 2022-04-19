@@ -1,4 +1,5 @@
 import { useSelector } from '@xstate/react';
+import { useEffect, useState } from 'react';
 import { ActorRefFrom } from 'xstate';
 import { ModalProps } from '../../components/ui/Modal';
 import {
@@ -13,12 +14,24 @@ import {
 } from '../../machines/vcItem';
 
 export function useViewVcModal({ vcItemActor }: ViewVcModalProps) {
+  const [toastVisible, setToastVisible] = useState(false);
+  const isLockingVc = useSelector(vcItemActor, selectIsLockingVc);
+  useEffect(() => {
+    if (isLockingVc) {
+      setToastVisible(true);
+
+      setTimeout(() => {
+        setToastVisible(false);
+      }, 3000);
+    }
+  }, [isLockingVc]);
   return {
+    toastVisible,
     vc: useSelector(vcItemActor, selectVc),
     otpError: useSelector(vcItemActor, selectOtpError),
 
     isEditingTag: useSelector(vcItemActor, selectIsEditingTag),
-    selectIsLockingVc: useSelector(vcItemActor, selectIsLockingVc),
+    isLockingVc,
     isAcceptingOtpInput: useSelector(vcItemActor, selectIsAcceptingOtpInput),
     isRequestingOtp: useSelector(vcItemActor, selectIsRequestingOtp),
 

@@ -6,25 +6,22 @@ import { Colors } from '../../components/ui/styleUtils';
 import { VcDetails } from '../../components/VcDetails';
 import { DropdownIcon } from '../../components/DropdownIcon';
 import { MessageOverlay } from '../../components/MessageOverlay';
+import { ToastItem } from '../../components/ui/ToastItem';
 import { OtpVerificationModal } from './MyVcs/OtpVerificationModal';
 import { useViewVcModal, ViewVcModalProps } from './ViewVcModalController';
 
 export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
   const controller = useViewVcModal(props);
-
-  const lockVc = () => {
-    if (controller.vc.locked) {
-      controller.UNLOCK_VC();
-    } else {
-      controller.LOCK_VC();
-    }
-  };
+  const message = controller.vc.locked
+    ? 'ID successfully locked'
+    : 'ID successfully unlocked';
 
   const DATA = [
     {
       label: controller.vc.locked ? 'Unlock' : 'Lock',
       icon: 'lock-outline',
-      onPress: () => lockVc(),
+      onPress: () =>
+        controller.vc.locked ? controller.UNLOCK_VC() : controller.LOCK_VC(),
     },
     {
       label: 'Rename',
@@ -74,6 +71,8 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
         title="Requesting OTP..."
         hasProgress
       />
+
+      {controller.toastVisible && <ToastItem message={message} />}
     </Modal>
   );
 };
