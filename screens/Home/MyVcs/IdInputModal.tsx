@@ -6,6 +6,7 @@ import { Modal } from '../../../components/ui/Modal';
 import { Colors } from '../../../components/ui/styleUtils';
 import { IdInputModalProps, useIdInputModal } from './IdInputModalController';
 import { useTranslation } from 'react-i18next';
+import { Platform } from 'react-native';
 
 export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
   const { t } = useTranslation('IdInputModal');
@@ -25,8 +26,9 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
               width="33%"
               style={{
                 borderBottomWidth: 1,
-                borderColor: Colors.Grey,
-                bottom: 24,
+                borderColor: Platform.OS === 'ios' ? 'transparent' : Colors.Grey,
+                bottom: Platform.OS === 'ios' ? 50 : 24,
+                height: Platform.OS === 'ios' ? 100 : 'auto'
               }}>
               <Picker
                 selectedValue={controller.idType}

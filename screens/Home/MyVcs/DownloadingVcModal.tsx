@@ -10,7 +10,7 @@ export const DownloadingVcModal: React.FC<ModalProps> = (props) => {
 
   return (
     <Modal isVisible={props.isVisible} onDismiss={props.onDismiss}>
-      <Column fill padding="32 24" align="space-between">
+      <Column fill pY={32} pX={24} align="space-between">
         <Column fill>
           <Text weight="semibold" align="center">
             {t('header', { vcLabel: controller.vcLabel.singular })}
