@@ -18,9 +18,11 @@ export interface Typegen0 {
     setTag: 'SAVE_TAG';
     markVcValid: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
     logError: 'error.platform.vc-item.verifyingCredential:invocation[0]';
+    lockVc: 'LOCK';
     requestVcContext: 'xstate.init';
     requestStoredContext: 'GET_VC_RESPONSE';
     storeTag: 'SAVE_TAG';
+    storeVc: 'LOCK';
   };
   'internalEvents': {
     'done.invoke.vc-item.verifyingCredential:invocation[0]': {
@@ -59,7 +61,7 @@ export interface Typegen0 {
     verifyCredential: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
   };
   'missingImplementations': {
-    actions: 'logError';
+    actions: 'logError' | 'lockVc' | 'storeVc';
     services: never;
     guards: never;
     delays: never;
@@ -85,6 +87,8 @@ export interface Typegen0 {
     | 'storingTag'
     | 'verifyingCredential'
     | 'checkingVerificationStatus'
+    | 'lockingVc'
+    | 'storingVcLock'
     | { checkingServerData?: 'checkingStatus' | 'downloadingCredential' };
   'tags': never;
 }

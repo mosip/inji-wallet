@@ -25,6 +25,7 @@ const model = createModel(
     requestId: '',
     isVerified: false,
     lastVerifiedOn: null,
+    otp: '',
   },
   {
     events: {
@@ -38,6 +39,8 @@ const model = createModel(
       DOWNLOAD_READY: () => ({}),
       GET_VC_RESPONSE: (vc: VC) => ({ vc }),
       VERIFY: () => ({}),
+      LOCKING_VC: () => ({}),
+      LOCK: (value: boolean) => ({ value }),
     },
   }
 );
@@ -139,6 +142,9 @@ export const vcItemMachine =
             VERIFY: {
               target: 'verifyingCredential',
             },
+            LOCKING_VC: {
+              target: 'lockingVc',
+            },
           },
         },
         editingTag: {
@@ -189,6 +195,26 @@ export const vcItemMachine =
               target: 'verifyingCredential',
             },
           ],
+        },
+        lockingVc: {
+          entry: '',
+          on: {
+            DISMISS: {
+              target: 'idle',
+            },
+            LOCK: {
+              actions: 'lockVc',
+              target: 'storingVcLock',
+            },
+          },
+        },
+        storingVcLock: {
+          entry: 'storeVc',
+          on: {
+            STORE_RESPONSE: {
+              target: 'idle',
+            },
+          },
         },
       },
     },
@@ -272,6 +298,24 @@ export const vcItemMachine =
             lastVerifiedOn: Date.now(),
           };
         }),
+
+        setOtp: model.assign({
+          otp: (_, event) => event.otp,
+        }),
+
+        setOtpError: model.assign({
+          otpError: (_, event) => (event as ErrorPlatformEvent).data.message,
+        }),
+
+        clearOtp: model.assign({ otp: '' }),
+
+        storeLock: send(
+          (context) => {
+            const { serviceRefs, ...data } = context;
+            return StoreEvents.SET(VC_ITEM_STORE_KEY(context), data);
+          },
+          { to: (context) => context.serviceRefs.store }
+        ),
       },
 
       services: {
