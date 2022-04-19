@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { FlatList, Pressable, View } from 'react-native';
 import { Popable } from 'react-native-popable';
 import { Text } from 'react-native-elements';
@@ -7,7 +7,12 @@ import { Row } from './ui';
 import { Colors } from './ui/styleUtils';
 
 export const DropdownIcon: React.FC<DropdownProps> = (props) => {
-  //const [visible, setVisible] = useState(false);
+  const popover = useRef(null);
+
+  const handleOnPress = (item: Item) => {
+    popover.current?.hide();
+    item.onPress();
+  };
 
   const renderItem = ({ item }) => {
     return (
@@ -20,7 +25,7 @@ export const DropdownIcon: React.FC<DropdownProps> = (props) => {
           borderBottomWidth: 1,
         }}>
         <Pressable
-          onPress={item.onPress}
+          onPress={() => handleOnPress(item)}
           style={{ paddingTop: 8, paddingBottom: 8 }}>
           <Row>
             <Icon
@@ -40,6 +45,7 @@ export const DropdownIcon: React.FC<DropdownProps> = (props) => {
     <View>
       <Popable
         position="bottom"
+        ref={popover}
         backgroundColor={Colors.White}
         style={{ top: 10, left: -20, minWidth: 120, elevation: 1 }}
         content={
@@ -56,12 +62,12 @@ export const DropdownIcon: React.FC<DropdownProps> = (props) => {
     </View>
   );
 };
-// interface item {
-//   label: string;
-//   onSelect: () => void;
-// }
+interface Item {
+  label: string;
+  onPress?: () => void;
+}
 
 interface DropdownProps {
   icon: string;
-  items?: any;
+  items: Item[];
 }

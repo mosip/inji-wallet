@@ -5,14 +5,24 @@ import { Modal } from '../../components/ui/Modal';
 import { Colors } from '../../components/ui/styleUtils';
 import { VcDetails } from '../../components/VcDetails';
 import { DropdownIcon } from '../../components/DropdownIcon';
+import { MessageOverlay } from '../../components/MessageOverlay';
+import { OtpVerificationModal } from './MyVcs/OtpVerificationModal';
 import { useViewVcModal, ViewVcModalProps } from './ViewVcModalController';
 
 export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
   const controller = useViewVcModal(props);
 
+  const lockVc = () => {
+    if (controller.vc.locked) {
+      controller.UNLOCK_VC();
+    } else {
+      controller.LOCK_VC();
+    }
+  };
+
   const DATA = [
     {
-      label: 'Lock',
+      label: controller.vc.locked ? 'Unlock' : 'Lock',
       icon: 'lock-outline',
       onPress: () => lockVc(),
     },
@@ -30,10 +40,6 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
       icon: 'delete-outline',
     },
   ];
-
-  const lockVc = () => {
-    controller.LOCKING_VC();
-  };
 
   return (
     <Modal
@@ -54,6 +60,19 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
         value={controller.vc.tag}
         onDismiss={controller.DISMISS}
         onSave={controller.SAVE_TAG}
+      />
+
+      <OtpVerificationModal
+        isVisible={controller.isAcceptingOtpInput}
+        onDismiss={controller.DISMISS}
+        onInputDone={controller.INPUT_OTP}
+        error={controller.otpError}
+      />
+
+      <MessageOverlay
+        isVisible={controller.isRequestingOtp}
+        title="Requesting OTP..."
+        hasProgress
       />
     </Modal>
   );
