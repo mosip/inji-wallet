@@ -21,13 +21,12 @@ import {
 } from '../../machines/biometrics';
 
 export function useViewVcModal({ vcItemActor }: ViewVcModalProps) {
-  const [, bioSend, bioService] = useMachine(biometricsMachine);
-
   const [toastVisible, setToastVisible] = useState(false);
   const [reAuthenticating, setReAuthenticating] = useState('');
   const [error, setError] = useState('');
   const { appService } = useContext(GlobalContext);
   const authService = appService.children.get('auth');
+  const [, bioSend, bioService] = useMachine(biometricsMachine);
   const isAvailable = useSelector(bioService, selectIsAvailable);
   const isSuccessBio = useSelector(bioService, selectIsSuccess);
   const isLockingVc = useSelector(vcItemActor, selectIsLockingVc);
