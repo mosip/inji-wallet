@@ -7,7 +7,8 @@
     "ios": "expo run:ios",
     "eject": "expo eject --npm",
     "build:android:ph": "cd android && ./gradlew :app:assemblePhRelease && cd ..",
-    "build:android:newlogic": "cd android && ./gradlew :app:assembleNewlogicRelease && cd .."
+    "build:android:newlogic": "cd android && ./gradlew :app:assembleNewlogicRelease && cd ..",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@digitalbazaar/ed25519-signature-2018": "digitalbazaar/ed25519-signature-2018",
@@ -79,5 +80,9 @@
   },
   "private": true,
   "name": "mosip-resident-app",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "lint-staged": {
+    "*.{ts,tsx}": "eslint --cache --fix",
+    "*.{ts,tsx,js,css,md}": "prettier --write"
+  }
 }
