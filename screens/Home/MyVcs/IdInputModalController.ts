@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { useSelector } from '@xstate/react';
 import { selectVcLabel } from '../../../machines/settings';
 import { GlobalContext } from '../../../shared/GlobalContext';
 import { ActorRefFrom } from 'xstate';
-import { Keyboard, TextInput } from 'react-native';
+import { TextInput } from 'react-native';
 import { ModalProps } from '../../../components/ui/Modal';
 import {
   AddVcModalEvents,
@@ -23,17 +23,6 @@ export function useIdInputModal({ service }: IdInputModalProps) {
   const { appService } = useContext(GlobalContext);
   const settingsService = appService.children.get('settings');
 
-  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => setKeyboardVisible(true));
-    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => setKeyboardVisible(false));
-
-    return () => {
-      keyboardDidHideListener.remove();
-      keyboardDidShowListener.remove();
-    };
-  }, []);
-
   return {
     id: useSelector(service, selectId),
     idType: useSelector(service, selectIdType),
@@ -45,7 +34,6 @@ export function useIdInputModal({ service }: IdInputModalProps) {
     isInvalid: useSelector(service, selectIsInvalid),
     isAcceptingOtpInput: useSelector(service, selectIsAcceptingOtpInput),
     isRequestingOtp: useSelector(service, selectIsRequestingOtp),
-    isKeyboardVisible,
 
     INPUT_ID: (id: string) => service.send(AddVcModalEvents.INPUT_ID(id)),
     SELECT_ID_TYPE: (selectedValue: VcIdType) =>
