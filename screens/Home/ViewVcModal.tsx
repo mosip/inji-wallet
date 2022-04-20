@@ -13,9 +13,6 @@ import { useViewVcModal, ViewVcModalProps } from './ViewVcModalController';
 
 export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
   const controller = useViewVcModal(props);
-  const message = controller.vc.locked
-    ? 'ID successfully locked'
-    : 'ID successfully unlocked';
 
   const DATA = [
     {
@@ -62,7 +59,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
       <OtpVerificationModal
         isVisible={controller.isAcceptingOtpInput}
         onDismiss={controller.DISMISS}
-        onInputDone={controller.INPUT_OTP}
+        onInputDone={controller.inputOtp}
         error={controller.otpError}
       />
 
@@ -81,7 +78,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
             error={controller.error}
           />
         )}
-      {controller.toastVisible && <ToastItem message={message} />}
+      {controller.toastVisible && <ToastItem message={controller.message} />}
     </Modal>
   );
 };

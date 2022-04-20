@@ -1,5 +1,4 @@
 import { assign, ErrorPlatformEvent, EventFrom, send, StateFrom } from 'xstate';
-import { log } from 'xstate/lib/actions';
 import { createModel } from 'xstate/lib/model';
 import { VC_ITEM_STORE_KEY } from '../shared/constants';
 import { AppServices } from '../shared/GlobalContext';
@@ -47,7 +46,6 @@ const model = createModel(
       LOCK_VC: () => ({}),
       UNLOCK_VC: () => ({}),
       INPUT_OTP: (otp: string) => ({ otp }),
-      LOCK: (value: boolean) => ({ value }),
     },
   }
 );
@@ -210,9 +208,7 @@ export const vcItemMachine =
         },
         invalid: {
           states: {
-            empty: {
-              entry: [log('UPDATE_SERVICE_URL received')],
-            },
+            empty: {},
             backend: {},
           },
           on: {
@@ -240,7 +236,10 @@ export const vcItemMachine =
               target: 'requestingLock',
               actions: ['setOtp'],
             },
-            DISMISS: 'idle',
+            DISMISS: {
+              target: 'idle',
+              actions: ['clearOtp', 'clearTransactionId'],
+            },
           },
         },
         requestingLock: {
@@ -350,6 +349,8 @@ export const vcItemMachine =
         setTransactionId: model.assign({
           transactionId: () => String(new Date().valueOf()).substring(3, 13),
         }),
+
+        clearTransactionId: assign({ transactionId: '' }),
 
         setOtp: model.assign({
           otp: (_, event) => event.otp,

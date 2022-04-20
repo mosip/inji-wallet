@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 import { ActorRefFrom } from 'xstate';
 import { ModalProps } from '../../components/ui/Modal';
 import { GlobalContext } from '../../shared/GlobalContext';
+import { selectIsOnline } from '../../machines/app';
 import {
   selectOtpError,
   selectIsAcceptingOtpInput,
@@ -22,11 +23,13 @@ import {
 
 export function useViewVcModal({ vcItemActor }: ViewVcModalProps) {
   const [toastVisible, setToastVisible] = useState(false);
+  const [message, setMessage] = useState('');
   const [reAuthenticating, setReAuthenticating] = useState('');
   const [error, setError] = useState('');
   const { appService } = useContext(GlobalContext);
   const authService = appService.children.get('auth');
   const [, bioSend, bioService] = useMachine(biometricsMachine);
+  const isOnline = useSelector(appService, selectIsOnline);
   const isAvailable = useSelector(bioService, selectIsAvailable);
   const isSuccessBio = useSelector(bioService, selectIsSuccess);
   const isLockingVc = useSelector(vcItemActor, selectIsLockingVc);
@@ -45,13 +48,20 @@ export function useViewVcModal({ vcItemActor }: ViewVcModalProps) {
     setReAuthenticating('');
   };
 
+  const showToast = (message: string) => {
+    setToastVisible(true);
+    setMessage(message);
+    setTimeout(() => {
+      setToastVisible(false);
+      setMessage('');
+    }, 3000);
+  };
+
   useEffect(() => {
     if (isLockingVc) {
-      setToastVisible(true);
-
-      setTimeout(() => {
-        setToastVisible(false);
-      }, 3000);
+      showToast(
+        vc.locked ? 'ID successfully locked' : 'ID successfully unlocked'
+      );
     }
     if (isSuccessBio) {
       onSuccess();
@@ -60,6 +70,7 @@ export function useViewVcModal({ vcItemActor }: ViewVcModalProps) {
 
   return {
     error,
+    message,
     toastVisible,
     vc,
     otpError: useSelector(vcItemActor, selectOtpError),
@@ -73,18 +84,29 @@ export function useViewVcModal({ vcItemActor }: ViewVcModalProps) {
     setReAuthenticating,
     onError,
     lockVc: () => {
-      if (isAvailable) {
-        setReAuthenticating('biometrics');
-        bioSend({ type: 'AUTHENTICATE' });
+      if (isOnline) {
+        if (isAvailable) {
+          setReAuthenticating('biometrics');
+          bioSend({ type: 'AUTHENTICATE' });
+        } else {
+          setReAuthenticating('passcode');
+        }
       } else {
-        setReAuthenticating('passcode');
+        showToast('Request network failed');
+      }
+    },
+    inputOtp: (otp: string) => {
+      if (isOnline) {
+        vcItemActor.send(VcItemEvents.INPUT_OTP(otp));
+      } else {
+        vcItemActor.send(VcItemEvents.DISMISS());
+        showToast('Request network failed');
       }
     },
     onSuccess,
     EDIT_TAG: () => vcItemActor.send(VcItemEvents.EDIT_TAG()),
     SAVE_TAG: (tag: string) => vcItemActor.send(VcItemEvents.SAVE_TAG(tag)),
     DISMISS: () => vcItemActor.send(VcItemEvents.DISMISS()),
-    LOCK: (value: boolean) => vcItemActor.send(VcItemEvents.LOCK(value)),
     LOCK_VC: () => vcItemActor.send(VcItemEvents.LOCK_VC()),
     UNLOCK_VC: () => vcItemActor.send(VcItemEvents.UNLOCK_VC()),
     INPUT_OTP: (otp: string) => vcItemActor.send(VcItemEvents.INPUT_OTP(otp)),

@@ -20,14 +20,16 @@ export interface Typegen0 {
     markVcValid: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
     logError: 'error.platform.vc-item.verifyingCredential:invocation[0]';
     setOtp: 'INPUT_OTP';
+    clearOtp:
+      | 'DISMISS'
+      | 'done.invoke.vc-item.requestingOtp:invocation[0]'
+      | 'error.platform.vc-item.requestingLock:invocation[0]';
+    clearTransactionId: 'DISMISS';
     setLock: 'done.invoke.vc-item.requestingLock:invocation[0]';
     setOtpError: 'error.platform.vc-item.requestingLock:invocation[0]';
     requestVcContext: 'xstate.init';
     requestStoredContext: 'GET_VC_RESPONSE';
     storeTag: 'SAVE_TAG';
-    clearOtp:
-      | 'done.invoke.vc-item.requestingOtp:invocation[0]'
-      | 'error.platform.vc-item.requestingLock:invocation[0]';
     storeLock: 'done.invoke.vc-item.requestingLock:invocation[0]';
   };
   'internalEvents': {
@@ -40,8 +42,8 @@ export interface Typegen0 {
       type: 'error.platform.vc-item.verifyingCredential:invocation[0]';
       data: unknown;
     };
-    'done.invoke.vc-item.requestingLock:invocation[0]': {
-      type: 'done.invoke.vc-item.requestingLock:invocation[0]';
+    'done.invoke.vc-item.requestingOtp:invocation[0]': {
+      type: 'done.invoke.vc-item.requestingOtp:invocation[0]';
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
@@ -49,12 +51,8 @@ export interface Typegen0 {
       type: 'error.platform.vc-item.requestingLock:invocation[0]';
       data: unknown;
     };
-    'error.platform.vc-item.requestingOtp:invocation[0]': {
-      type: 'error.platform.vc-item.requestingOtp:invocation[0]';
-      data: unknown;
-    };
-    'done.invoke.vc-item.requestingOtp:invocation[0]': {
-      type: 'done.invoke.vc-item.requestingOtp:invocation[0]';
+    'done.invoke.vc-item.requestingLock:invocation[0]': {
+      type: 'done.invoke.vc-item.requestingLock:invocation[0]';
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
