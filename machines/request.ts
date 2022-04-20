@@ -1,5 +1,5 @@
-// import SmartShare from '@idpass/smartshare-react-native';
-// import BluetoothStateManager from 'react-native-bluetooth-state-manager';
+import SmartShare from '@idpass/smartshare-react-native';
+import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import { EmitterSubscription } from 'react-native';
 import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
@@ -248,15 +248,15 @@ export const requestMachine = model.createMachine(
       }),
 
       disconnect: () => {
-        // try {
-        //   SmartShare.destroyConnection();
-        // } catch (e) {
-        //   // pass
-        // }
+        try {
+          SmartShare.destroyConnection();
+        } catch (e) {
+          // pass
+        }
       },
 
       generateConnectionParams: assign({
-        // connectionParams: () => SmartShare.getConnectionParameters(),
+        connectionParams: () => SmartShare.getConnectionParameters(),
       }),
 
       setSenderInfo: model.assign({
@@ -368,9 +368,9 @@ export const requestMachine = model.createMachine(
       },
 
       requestBluetooth: () => (callback) => {
-        // BluetoothStateManager.requestToEnable()
-        //   .then(() => callback(model.events.BLUETOOTH_ENABLED()))
-        //   .catch(() => callback(model.events.BLUETOOTH_DISABLED()));
+        BluetoothStateManager.requestToEnable()
+          .then(() => callback(model.events.BLUETOOTH_ENABLED()))
+          .catch(() => callback(model.events.BLUETOOTH_DISABLED()));
       },
 
       checkConnection: () => (callback) => {
@@ -384,9 +384,9 @@ export const requestMachine = model.createMachine(
       },
 
       advertiseDevice: () => (callback) => {
-        // SmartShare.createConnection('advertiser', () => {
-        //   callback({ type: 'CONNECTED' });
-        // });
+        SmartShare.createConnection('advertiser', () => {
+          callback({ type: 'CONNECTED' });
+        });
       },
 
       exchangeDeviceInfo: (context) => (callback) => {
@@ -427,9 +427,9 @@ export const requestMachine = model.createMachine(
           status: meta.data.status,
         });
 
-        // SmartShare.send(response.toString(), () => {
-        //   callback({ type: 'RESPONSE_SENT' });
-        // });
+        SmartShare.send(response.toString(), () => {
+          callback({ type: 'RESPONSE_SENT' });
+        });
       },
     },
 
