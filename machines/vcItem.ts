@@ -1,4 +1,5 @@
 import { assign, ErrorPlatformEvent, EventFrom, send, StateFrom } from 'xstate';
+import { log } from 'xstate/lib/actions';
 import { createModel } from 'xstate/lib/model';
 import { VC_ITEM_STORE_KEY } from '../shared/constants';
 import { AppServices } from '../shared/GlobalContext';
@@ -140,6 +141,7 @@ export const vcItemMachine =
           },
         },
         idle: {
+          entry: ['clearTransactionId', 'clearOtp'],
           on: {
             EDIT_TAG: {
               target: 'editingTag',
@@ -148,11 +150,9 @@ export const vcItemMachine =
               target: 'verifyingCredential',
             },
             LOCK_VC: {
-              actions: ['setTransactionId'],
               target: 'requestingOtp',
             },
             UNLOCK_VC: {
-              actions: ['setTransactionId'],
               target: 'requestingOtp',
             },
           },
@@ -209,7 +209,9 @@ export const vcItemMachine =
         invalid: {
           states: {
             empty: {},
-            backend: {},
+            backend: {
+              entry: [log('INVALID')],
+            },
           },
           on: {
             INPUT_OTP: {
@@ -220,11 +222,12 @@ export const vcItemMachine =
           },
         },
         requestingOtp: {
+          entry: ['setTransactionId', 'clearOtp'],
           invoke: {
             src: 'requestOtp',
             onDone: '#acceptingOtpInput',
             onError: {
-              target: 'invalid.empty',
+              target: 'invalid.backend',
             },
           },
         },
@@ -247,14 +250,12 @@ export const vcItemMachine =
             src: 'requestLock',
             onDone: {
               target: 'lockingVc',
-              actions: ['setLock'],
+              actions: [log('success otp input'), 'setLock'],
             },
-            onError: [
-              {
-                target: 'acceptingOtpInput',
-                actions: ['setOtpError'],
-              },
-            ],
+            onError: {
+              target: 'invalid.backend',
+              actions: [log('Error with OTP input'), 'setOtpError'],
+            },
           },
         },
         lockingVc: {
@@ -346,7 +347,7 @@ export const vcItemMachine =
           };
         }),
 
-        setTransactionId: model.assign({
+        setTransactionId: assign({
           transactionId: () => String(new Date().valueOf()).substring(3, 13),
         }),
 
@@ -363,7 +364,7 @@ export const vcItemMachine =
 
         clearOtp: assign({ otp: '' }),
 
-        setLock: model.assign({
+        setLock: assign({
           locked: (context) => !context.locked,
         }),
 
@@ -431,6 +432,7 @@ export const vcItemMachine =
                   requestId: context.requestId,
                   isVerified: false,
                   lastVerifiedOn: null,
+                  locked: context.locked,
                 })
               );
             }
@@ -444,30 +446,42 @@ export const vcItemMachine =
         },
 
         requestOtp: async (context) => {
+          console.log('requestOtp id', context.id);
+          console.log('requestOtp idType', context.idType);
+          console.log('requestOtp otp', context.otp);
+          console.log('requestOtp transactionId', context.requestId);
           try {
-            return await request('POST', '/req/otp', {
+            return request('POST', '/req/otp', {
               individualId: context.id,
               individualIdType: context.idType,
               otpChannel: ['EMAIL', 'PHONE'],
               transactionID: context.transactionId,
             });
           } catch (error) {
-            console.error(error);
+            console.log('error dapat', error);
+            //console.error(error);
           }
         },
 
         requestLock: async (context) => {
+          console.log('context', context.id);
+          console.log('context', context.idType);
+          console.log('context', context.otp);
+          console.log('context', context.transactionId);
+          console.log('context', context.locked);
           try {
-            return await request('POST', '/req/auth-lock', {
+            const response = request('POST', '/req/auth-lock', {
               individualId: context.id,
               individualIdType: context.idType,
               otp: context.otp,
               transactionID: context.transactionId,
-              authType: ['bio'],
+              authType: ['bioa'],
               ...(context.locked && { unlockForSeconds: '120' }),
             });
+            console.log('------------->response', response);
           } catch (error) {
-            console.log(error);
+            console.log('error dapat', error);
+            //console.error(error);
           }
         },
       },

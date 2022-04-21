@@ -34,7 +34,8 @@ export function useViewVcModal({ vcItemActor }: ViewVcModalProps) {
   const isSuccessBio = useSelector(bioService, selectIsSuccess);
   const isLockingVc = useSelector(vcItemActor, selectIsLockingVc);
   const vc = useSelector(vcItemActor, selectVc);
-
+  //
+  const otError = useSelector(vcItemActor, selectOtpError);
   const onSuccess = () => {
     if (vc.locked) {
       vcItemActor.send(VcItemEvents.UNLOCK_VC());
@@ -49,6 +50,7 @@ export function useViewVcModal({ vcItemActor }: ViewVcModalProps) {
   };
 
   const showToast = (message: string) => {
+    console.log('SHOULD SHOW TOAST', message);
     setToastVisible(true);
     setMessage(message);
     setTimeout(() => {
@@ -58,6 +60,7 @@ export function useViewVcModal({ vcItemActor }: ViewVcModalProps) {
   };
 
   useEffect(() => {
+    console.log('START SHOWING TOAST', isLockingVc);
     if (isLockingVc) {
       showToast(
         vc.locked ? 'ID successfully locked' : 'ID successfully unlocked'
@@ -66,7 +69,8 @@ export function useViewVcModal({ vcItemActor }: ViewVcModalProps) {
     if (isSuccessBio) {
       onSuccess();
     }
-  }, [isLockingVc, isSuccessBio]);
+    console.log('------->OTP ERROR:', otError);
+  }, [isLockingVc, isSuccessBio, otError]);
 
   return {
     error,
