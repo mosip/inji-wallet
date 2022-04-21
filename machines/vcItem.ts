@@ -454,8 +454,7 @@ export const vcItemMachine =
               transactionID: context.transactionId,
             });
           } catch (error) {
-            console.log('error dapat', error);
-            //console.error(error);
+            console.error(error);
           }
         },
 
@@ -474,7 +473,7 @@ export const vcItemMachine =
                 otp: context.otp,
                 transactionID: context.transactionId,
                 authType: ['bio'],
-                ...(context.locked && { unlockForSeconds: '120' }),
+                unlockForSeconds: '120',
               });
             } else {
               response = await request('POST', '/req/auth-lock', {
@@ -487,7 +486,7 @@ export const vcItemMachine =
             }
 
             console.log('------------->response', response);
-            return response.id;
+            return response.response;
           } catch (error) {
             console.log('error dapat', error);
             //console.error(error);
