@@ -25,8 +25,6 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.verifyingCredential:invocation[0]'
       | 'error.platform.vc-item.verifyingCredential:invocation[0]'
       | ''
-      | 'LOCK_VC'
-      | 'UNLOCK_VC'
       | 'done.invoke.vc-item.requestingOtp:invocation[0]';
     clearTransactionId:
       | 'DISMISS'

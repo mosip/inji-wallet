@@ -222,7 +222,7 @@ export const vcItemMachine =
           },
         },
         requestingOtp: {
-          entry: ['setTransactionId', 'clearOtp'],
+          entry: ['setTransactionId'],
           invoke: {
             src: 'requestOtp',
             onDone: '#acceptingOtpInput',
@@ -446,10 +446,6 @@ export const vcItemMachine =
         },
 
         requestOtp: async (context) => {
-          console.log('requestOtp id', context.id);
-          console.log('requestOtp idType', context.idType);
-          console.log('requestOtp otp', context.otp);
-          console.log('requestOtp transactionId', context.requestId);
           try {
             return request('POST', '/req/otp', {
               individualId: context.id,
@@ -470,15 +466,28 @@ export const vcItemMachine =
           console.log('context', context.transactionId);
           console.log('context', context.locked);
           try {
-            const response = request('POST', '/req/auth-lock', {
-              individualId: context.id,
-              individualIdType: context.idType,
-              otp: context.otp,
-              transactionID: context.transactionId,
-              authType: ['bioa'],
-              ...(context.locked && { unlockForSeconds: '120' }),
-            });
+            let response = null;
+            if (context.locked) {
+              response = await request('POST', '/req/auth-unlock', {
+                individualId: context.id,
+                individualIdType: context.idType,
+                otp: context.otp,
+                transactionID: context.transactionId,
+                authType: ['bio'],
+                ...(context.locked && { unlockForSeconds: '120' }),
+              });
+            } else {
+              response = await request('POST', '/req/auth-lock', {
+                individualId: context.id,
+                individualIdType: context.idType,
+                otp: context.otp,
+                transactionID: context.transactionId,
+                authType: ['bio'],
+              });
+            }
+
             console.log('------------->response', response);
+            return response.id;
           } catch (error) {
             console.log('error dapat', error);
             //console.error(error);
