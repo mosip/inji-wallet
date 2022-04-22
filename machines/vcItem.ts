@@ -540,7 +540,7 @@ export function selectVerifiableCredential(state: State) {
 }
 
 export function selectIsEditingTag(state: State) {
-  return state.matches('invalid.otp');
+  return state.matches('editingTag');
 }
 
 export function selectIsOtpError(state: State) {
