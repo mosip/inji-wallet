@@ -25,7 +25,8 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.verifyingCredential:invocation[0]'
       | 'error.platform.vc-item.verifyingCredential:invocation[0]'
       | ''
-      | 'done.invoke.vc-item.requestingOtp:invocation[0]';
+      | 'done.invoke.vc-item.requestingOtp:invocation[0]'
+      | 'error.platform.vc-item.requestingLock:invocation[0]';
     clearTransactionId:
       | 'DISMISS'
       | 'STORE_RESPONSE'
@@ -56,18 +57,14 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
-    'done.invoke.vc-item.requestingLock:invocation[0]': {
-      type: 'done.invoke.vc-item.requestingLock:invocation[0]';
-      data: unknown;
-      __tip: 'See the XState TS docs to learn how to strongly type this.';
-    };
     'error.platform.vc-item.requestingLock:invocation[0]': {
       type: 'error.platform.vc-item.requestingLock:invocation[0]';
       data: unknown;
     };
-    'error.platform.vc-item.requestingOtp:invocation[0]': {
-      type: 'error.platform.vc-item.requestingOtp:invocation[0]';
+    'done.invoke.vc-item.requestingLock:invocation[0]': {
+      type: 'done.invoke.vc-item.requestingLock:invocation[0]';
       data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
     'xstate.init': { type: 'xstate.init' };
     'done.invoke.checkStatus': {
@@ -126,7 +123,7 @@ export interface Typegen0 {
     | 'verifyingCredential'
     | 'checkingVerificationStatus'
     | 'invalid'
-    | 'invalid.empty'
+    | 'invalid.otp'
     | 'invalid.backend'
     | 'requestingOtp'
     | 'acceptingOtpInput'
@@ -134,7 +131,7 @@ export interface Typegen0 {
     | 'lockingVc'
     | {
         checkingServerData?: 'checkingStatus' | 'downloadingCredential';
-        invalid?: 'empty' | 'backend';
+        invalid?: 'otp' | 'backend';
       };
   'tags': never;
 }
