@@ -1,5 +1,4 @@
 import { assign, ErrorPlatformEvent, EventFrom, send, StateFrom } from 'xstate';
-import { log } from 'xstate/lib/actions';
 import { createModel } from 'xstate/lib/model';
 import { VC_ITEM_STORE_KEY } from '../shared/constants';
 import { AppServices } from '../shared/GlobalContext';
@@ -208,10 +207,8 @@ export const vcItemMachine =
         },
         invalid: {
           states: {
-            empty: {},
-            backend: {
-              entry: [log('INVALID')],
-            },
+            otp: {},
+            backend: {},
           },
           on: {
             INPUT_OTP: {
@@ -250,11 +247,11 @@ export const vcItemMachine =
             src: 'requestLock',
             onDone: {
               target: 'lockingVc',
-              actions: [log('success otp input'), 'setLock'],
+              actions: ['setLock'],
             },
             onError: {
-              target: 'invalid.backend',
-              actions: [log('Error with OTP input'), 'setOtpError'],
+              target: 'acceptingOtpInput',
+              actions: ['setOtpError'],
             },
           },
         },
@@ -459,38 +456,26 @@ export const vcItemMachine =
         },
 
         requestLock: async (context) => {
-          console.log('context', context.id);
-          console.log('context', context.idType);
-          console.log('context', context.otp);
-          console.log('context', context.transactionId);
-          console.log('context', context.locked);
-          try {
-            let response = null;
-            if (context.locked) {
-              response = await request('POST', '/req/auth-unlock', {
-                individualId: context.id,
-                individualIdType: context.idType,
-                otp: context.otp,
-                transactionID: context.transactionId,
-                authType: ['bio'],
-                unlockForSeconds: '120',
-              });
-            } else {
-              response = await request('POST', '/req/auth-lock', {
-                individualId: context.id,
-                individualIdType: context.idType,
-                otp: context.otp,
-                transactionID: context.transactionId,
-                authType: ['bio'],
-              });
-            }
-
-            console.log('------------->response', response);
-            return response.response;
-          } catch (error) {
-            console.log('error dapat', error);
-            //console.error(error);
+          let response = null;
+          if (context.locked) {
+            response = await request('POST', '/req/auth/unlock', {
+              individualId: context.id,
+              individualIdType: context.idType,
+              otp: context.otp,
+              transactionID: context.transactionId,
+              authType: ['bio'],
+              unlockForSeconds: '120',
+            });
+          } else {
+            response = await request('POST', '/req/auth/lock', {
+              individualId: context.id,
+              individualIdType: context.idType,
+              otp: context.otp,
+              transactionID: context.transactionId,
+              authType: ['bio'],
+            });
           }
+          return response.response;
         },
       },
 
@@ -555,7 +540,11 @@ export function selectVerifiableCredential(state: State) {
 }
 
 export function selectIsEditingTag(state: State) {
-  return state.matches('editingTag');
+  return state.matches('invalid.otp');
+}
+
+export function selectIsOtpError(state: State) {
+  return state.context.otpError;
 }
 
 export function selectOtpError(state: State) {

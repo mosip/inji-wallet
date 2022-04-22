@@ -20,6 +20,7 @@ import {
   selectIsAvailable,
   selectIsSuccess,
 } from '../../machines/biometrics';
+import { selectBiometricUnlockEnabled } from '../../machines/settings';
 
 export function useViewVcModal({ vcItemActor }: ViewVcModalProps) {
   const [toastVisible, setToastVisible] = useState(false);
@@ -28,15 +29,21 @@ export function useViewVcModal({ vcItemActor }: ViewVcModalProps) {
   const [error, setError] = useState('');
   const { appService } = useContext(GlobalContext);
   const authService = appService.children.get('auth');
+  const settingsService = appService.children.get('settings');
   const [, bioSend, bioService] = useMachine(biometricsMachine);
   const isOnline = useSelector(appService, selectIsOnline);
+  const isBiometricUnlockEnabled = useSelector(
+    settingsService,
+    selectBiometricUnlockEnabled
+  );
   const isAvailable = useSelector(bioService, selectIsAvailable);
   const isSuccessBio = useSelector(bioService, selectIsSuccess);
   const isLockingVc = useSelector(vcItemActor, selectIsLockingVc);
   const vc = useSelector(vcItemActor, selectVc);
-  //
+
   const otError = useSelector(vcItemActor, selectOtpError);
   const onSuccess = () => {
+    setReAuthenticating('');
     if (vc.locked) {
       vcItemActor.send(VcItemEvents.UNLOCK_VC());
     } else {
@@ -50,7 +57,6 @@ export function useViewVcModal({ vcItemActor }: ViewVcModalProps) {
   };
 
   const showToast = (message: string) => {
-    console.log('SHOULD SHOW TOAST', message);
     setToastVisible(true);
     setMessage(message);
     setTimeout(() => {
@@ -60,7 +66,6 @@ export function useViewVcModal({ vcItemActor }: ViewVcModalProps) {
   };
 
   useEffect(() => {
-    console.log('START SHOWING TOAST', isLockingVc);
     if (isLockingVc) {
       showToast(
         vc.locked ? 'ID successfully locked' : 'ID successfully unlocked'
@@ -69,7 +74,6 @@ export function useViewVcModal({ vcItemActor }: ViewVcModalProps) {
     if (isSuccessBio) {
       onSuccess();
     }
-    console.log('------->OTP ERROR:', otError);
   }, [isLockingVc, isSuccessBio, otError]);
 
   return {
@@ -89,7 +93,7 @@ export function useViewVcModal({ vcItemActor }: ViewVcModalProps) {
     onError,
     lockVc: () => {
       if (isOnline) {
-        if (isAvailable) {
+        if (isAvailable && isBiometricUnlockEnabled) {
           setReAuthenticating('biometrics');
           bioSend({ type: 'AUTHENTICATE' });
         } else {
