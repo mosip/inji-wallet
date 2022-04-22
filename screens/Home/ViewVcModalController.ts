@@ -43,7 +43,8 @@ export function useViewVcModal({ vcItemActor }: ViewVcModalProps) {
 
   const otError = useSelector(vcItemActor, selectOtpError);
   const onSuccess = () => {
-    setReAuthenticating('');
+    bioSend({ type: 'SET_IS_AVAILABLE', data: true });
+    setError('');
     if (vc.locked) {
       vcItemActor.send(VcItemEvents.UNLOCK_VC());
     } else {
@@ -53,7 +54,6 @@ export function useViewVcModal({ vcItemActor }: ViewVcModalProps) {
 
   const onError = (value: string) => {
     setError(value);
-    setReAuthenticating('');
   };
 
   const showToast = (message: string) => {
@@ -71,10 +71,10 @@ export function useViewVcModal({ vcItemActor }: ViewVcModalProps) {
         vc.locked ? 'ID successfully locked' : 'ID successfully unlocked'
       );
     }
-    if (isSuccessBio) {
+    if (isSuccessBio && reAuthenticating != '') {
       onSuccess();
     }
-  }, [isLockingVc, isSuccessBio, otError]);
+  }, [reAuthenticating, isLockingVc, isSuccessBio, otError]);
 
   return {
     error,
