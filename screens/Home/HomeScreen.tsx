@@ -10,6 +10,7 @@ import { ReceivedVcsTab } from './ReceivedVcsTab';
 import { ViewVcModal } from './ViewVcModal';
 import { useHomeScreen } from './HomeScreenController';
 import { TabRef } from './HomeScreenMachine';
+import { useTranslation } from 'react-i18next';
 
 const styles = StyleSheet.create({
   tabIndicator: {
@@ -25,6 +26,7 @@ const styles = StyleSheet.create({
 });
 
 export const HomeScreen: React.FC<HomeRouteProps> = (props) => {
+  const { t } = useTranslation('HomeScreen');
   const controller = useHomeScreen(props);
 
   return (
@@ -34,9 +36,9 @@ export const HomeScreen: React.FC<HomeRouteProps> = (props) => {
           value={controller.activeTab}
           onChange={controller.SELECT_TAB}
           indicatorStyle={styles.tabIndicator}>
-          {TabItem(`My\n${controller.vcLabel.plural}`)}
-          {TabItem(`Received\n${controller.vcLabel.plural}`)}
-          {TabItem('History')}
+          {TabItem(t('myVcsTab', { vcLabel: controller.vcLabel.plural }))}
+          {TabItem(t('receivedVcsTab', { vcLabel: controller.vcLabel.plural }))}
+          {TabItem(t('historyTab'))}
         </Tab>
         {controller.haveTabsLoaded && (
           <Column fill>

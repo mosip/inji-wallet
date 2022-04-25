@@ -7,6 +7,8 @@ import { GlobalContext } from './shared/GlobalContext';
 import { useSelector } from '@xstate/react';
 import { selectIsReady } from './machines/app';
 
+import './i18n';
+
 const AppInitialization: React.FC = () => {
   const { appService } = useContext(GlobalContext);
   const hasFontsLoaded = useFont();

@@ -1,6 +1,7 @@
 import { createModel } from 'xstate/lib/model';
 import * as LocalAuthentication from 'expo-local-authentication';
 import { EventFrom, MetaObject, StateFrom } from 'xstate';
+import i18next from '../i18n';
 
 // ----- CREATE MODEL ---------------------------------------------------------
 const model = createModel(
@@ -151,13 +152,12 @@ export const biometricsMachine = model.createMachine(
         states: {
           unavailable: {
             meta: {
-              message: 'Device does not support Biometrics',
+              message: i18next.t('AuthScreen.errors.unavailable'),
             },
           },
           unenrolled: {
             meta: {
-              message:
-                'To use Biometrics, please enroll your fingerprint in your device settings',
+              message: i18next.t('AuthScreen.errors.unenrolled'),
             },
             on: {
               RETRY_AUTHENTICATE: {
@@ -176,13 +176,12 @@ export const biometricsMachine = model.createMachine(
               1000: '#biometrics.available',
             },
             meta: {
-              message: 'Failed to authenticate with Biometrics',
+              message: i18next.t('AuthScreen.errors.failed'),
             },
           },
           error: {
             meta: {
-              message:
-                'There seems to be an error in Biometrics authentication',
+              message: i18next.t('AuthScreen.errors.generic'),
             },
           },
         },

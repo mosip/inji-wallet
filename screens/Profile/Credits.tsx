@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Dimensions, Image, StyleSheet, View } from 'react-native';
 import { Divider, Icon, ListItem, Overlay } from 'react-native-elements';
 import Markdown from 'react-native-simple-markdown';
@@ -7,6 +8,7 @@ import { Colors } from '../../components/ui/styleUtils';
 import creditsContent from '../../Credits.md';
 
 export const Credits: React.FC<CreditsProps> = (props) => {
+  const { t } = useTranslation('Credits');
   const [isViewing, setIsViewing] = useState(false);
   const images = {
     'docs/images/newlogic_logo.png': require('../../docs/images/newlogic_logo.png'),
@@ -68,11 +70,11 @@ export const Credits: React.FC<CreditsProps> = (props) => {
               <Button
                 type="clear"
                 icon={<Icon name="chevron-left" color={Colors.Orange} />}
-                title="Back"
+                title=""
                 onPress={() => setIsViewing(false)}
               />
             </View>
-            <Text size="small">Credits and legal notices</Text>
+            <Text size="small">{t('header')}</Text>
           </Row>
           <Divider />
           <View style={styles.markdownView}>

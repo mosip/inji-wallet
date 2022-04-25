@@ -5,7 +5,7 @@ import {
   getDeviceName,
   getDeviceNameSync,
 } from 'react-native-device-info';
-import { EventFrom, spawn, StateFrom, send } from 'xstate';
+import { EventFrom, spawn, StateFrom, send, assign } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { authMachine, createAuthMachine } from './auth';
 import { createSettingsMachine, settingsMachine } from './settings';
@@ -24,14 +24,13 @@ const model = createModel(
   },
   {
     events: {
-      'xstate.init': () => ({}),
-      'ACTIVE': () => ({}),
-      'INACTIVE': () => ({}),
-      'OFFLINE': () => ({}),
-      'ONLINE': (networkType: NetInfoStateType) => ({ networkType }),
-      'REQUEST_DEVICE_INFO': () => ({}),
-      'READY': (data?: unknown) => ({ data }),
-      'APP_INFO_RECEIVED': (info: AppInfo) => ({ info }),
+      ACTIVE: () => ({}),
+      INACTIVE: () => ({}),
+      OFFLINE: () => ({}),
+      ONLINE: (networkType: NetInfoStateType) => ({ networkType }),
+      REQUEST_DEVICE_INFO: () => ({}),
+      READY: (data?: unknown) => ({ data }),
+      APP_INFO_RECEIVED: (info: AppInfo) => ({ info }),
     },
   }
 );
@@ -141,7 +140,7 @@ export const appMachine = model.createMachine(
         },
       })),
 
-      spawnStoreActor: model.assign({
+      spawnStoreActor: assign({
         serviceRefs: (context) => ({
           ...context.serviceRefs,
           store: spawn(storeMachine, storeMachine.id),

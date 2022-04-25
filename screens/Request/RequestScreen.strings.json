@@ -1,0 +1,20 @@
+{
+  "bluetoothDenied": "Please enable Bluetooth to be able to request {{vcLabel}}",
+  "showQrCode": "Show this QR code to request {{vcLabel}}",
+  "incomingVc": "Incoming {{vcLabel}}",
+  "statusAccepted": {
+    "title": "Success!",
+    "message": "{{vcLabel}} has been successfully received from {{sender}}"
+  },
+  "statusRejected": {
+    "title": "Notice",
+    "message": "You rejected {{sender}}'s {{vcLabel}}"
+  },
+  "statusDisconnected": {
+    "title": "Disconnected",
+    "message": "The connection was interrupted. Please try again."
+  },
+  "statusWaiting": "Waiting for connection...",
+  "statusExchanging": "Exchanging device info...",
+  "statusConnected": "Connected to device. Waiting for {{vcLabel}}..."
+}

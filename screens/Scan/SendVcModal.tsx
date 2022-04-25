@@ -7,11 +7,13 @@ import { SelectVcOverlay } from './SelectVcOverlay';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { Modal, ModalProps } from '../../components/ui/Modal';
 import { useSendVcModal } from './SendVcModalController';
+import { useTranslation } from 'react-i18next';
 
 export const SendVcModal: React.FC<SendVcModalProps> = (props) => {
+  const { t } = useTranslation('SendVcModal');
   const controller = useSendVcModal();
 
-  const reasonLabel = 'Reason for sharing (optional)';
+  const reasonLabel = t('reasonForSharing');
 
   return (
     <Modal {...props}>
@@ -33,11 +35,15 @@ export const SendVcModal: React.FC<SendVcModalProps> = (props) => {
           margin="2 0 0 0"
           elevation={2}>
           <Button
-            title={`Accept request and choose ${controller.vcLabel.singular}`}
+            title={t('acceptRequest', { vcLabel: controller.vcLabel.singular })}
             margin="12 0 12 0"
             onPress={controller.ACCEPT_REQUEST}
           />
-          <Button type="clear" title="Reject" onPress={controller.CANCEL} />
+          <Button
+            type="clear"
+            title={t('reject')}
+            onPress={controller.CANCEL}
+          />
         </Column>
       </Column>
 
@@ -51,21 +57,27 @@ export const SendVcModal: React.FC<SendVcModalProps> = (props) => {
 
       <MessageOverlay
         isVisible={controller.isSendingVc}
-        title="Sharing..."
+        title={t('statusSharing.title')}
         hasProgress
       />
 
       <MessageOverlay
         isVisible={controller.isAccepted}
-        title="Success!"
-        message={`Your ${controller.vcLabel.singular} has been successfully shared with ${controller.receiverInfo.deviceName}`}
+        title={t('statusAccepted.title')}
+        message={t('statusAccepted.message', {
+          vcLabel: controller.vcLabel.singular,
+          receiver: controller.receiverInfo.deviceName,
+        })}
         onBackdropPress={props.onDismiss}
       />
 
       <MessageOverlay
         isVisible={controller.isRejected}
-        title="Notice"
-        message={`Your ${controller.vcLabel.singular} was rejected by ${controller.receiverInfo.deviceName}`}
+        title={t('statusRejected.title')}
+        message={t('statusRejected.message', {
+          vcLabel: controller.vcLabel.singular,
+          receiver: controller.receiverInfo.deviceName,
+        })}
         onBackdropPress={props.onDismiss}
       />
     </Modal>

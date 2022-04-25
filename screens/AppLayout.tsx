@@ -7,6 +7,8 @@ import {
 import { LanguageSelector } from '../components/LanguageSelector';
 import { authRoutes, baseRoutes } from '../routes';
 import { useAppLayout } from './AppLayoutController';
+import { Icon } from 'react-native-elements';
+import { Colors } from '../components/ui/styleUtils';
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -17,7 +19,11 @@ export const AppLayout: React.FC = () => {
     title: '',
     headerTitleAlign: 'center',
     headerShadowVisible: false,
-    headerRight: () => <LanguageSelector />,
+    headerRight: () => (
+      <LanguageSelector
+        triggerComponent={<Icon name="language" color={Colors.Orange} />}
+      />
+    ),
     headerBackVisible: false,
   };
 

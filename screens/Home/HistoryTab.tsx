@@ -7,6 +7,7 @@ import { useHistoryTab } from './HistoryTabController';
 import { HomeScreenTabProps } from './HomeScreen';
 import { Icon } from 'react-native-elements';
 import { ActivityLog } from '../../machines/activityLog';
+import { useTranslation } from 'react-i18next';
 
 const createLabel = (activity: ActivityLog) =>
   [
@@ -17,6 +18,7 @@ const createLabel = (activity: ActivityLog) =>
     .join(' · ');
 
 export const HistoryTab: React.FC<HomeScreenTabProps> = (props) => {
+  const { t } = useTranslation('HistoryTab');
   const controller = useHistoryTab();
 
   return (
@@ -45,7 +47,7 @@ export const HistoryTab: React.FC<HomeScreenTabProps> = (props) => {
               name="sentiment-dissatisfied"
             />
             <Text align="center" weight="semibold" margin="0 0 4 0">
-              No history available yet
+              {t('noHistory')}
             </Text>
           </Centered>
         )}

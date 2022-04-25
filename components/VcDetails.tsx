@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Image } from 'react-native';
 import { Icon, ListItem } from 'react-native-elements';
 import { VC, CredentialSubject } from '../types/vc';
@@ -17,12 +18,14 @@ const VerifiedIcon: React.FC = () => {
 };
 
 export const VcDetails: React.FC<VcDetailsProps> = (props) => {
+  const { t } = useTranslation('VcDetails');
+
   return (
     <Column>
       <Row padding="16 24">
         <Column fill elevation={1} padding="12 16" margin="0 16 0 0">
           <Text size="smaller" color={Colors.Grey}>
-            Generated
+            {t('generatedOn')}
           </Text>
           <Text weight="bold" size="smaller">
             {new Date(props.vc?.generatedOn).toLocaleDateString()}
@@ -41,11 +44,11 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
         </Column>
         <Column fill elevation={1} padding="12 16">
           <Text size="smaller" color={Colors.Grey}>
-            Status
+            {t('status')}
           </Text>
           <Row>
             <Text weight="bold" size="smaller">
-              Valid
+              {t('valid')}
             </Text>
             {props.vc?.isVerified && <VerifiedIcon />}
           </Row>
@@ -53,7 +56,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
       </Row>
       <ListItem bottomDivider>
         <ListItem.Content>
-          <ListItem.Subtitle>Photo</ListItem.Subtitle>
+          <ListItem.Subtitle>{t('photo')}</ListItem.Subtitle>
           <ListItem.Content>
             <Image
               source={
@@ -73,7 +76,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
       </ListItem>
       <ListItem bottomDivider>
         <ListItem.Content>
-          <ListItem.Subtitle>Full name</ListItem.Subtitle>
+          <ListItem.Subtitle>{t('fullName')}</ListItem.Subtitle>
           <ListItem.Title>
             {props.vc?.verifiableCredential.credentialSubject.fullName}
           </ListItem.Title>
@@ -81,7 +84,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
       </ListItem>
       <ListItem bottomDivider>
         <ListItem.Content>
-          <ListItem.Subtitle>Gender</ListItem.Subtitle>
+          <ListItem.Subtitle>{t('gender')}</ListItem.Subtitle>
           <ListItem.Title>
             {getLocalizedField(
               props.vc?.verifiableCredential.credentialSubject.gender
@@ -91,7 +94,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
       </ListItem>
       <ListItem bottomDivider>
         <ListItem.Content>
-          <ListItem.Subtitle>Date of birth</ListItem.Subtitle>
+          <ListItem.Subtitle>{t('dateOfBirth')}</ListItem.Subtitle>
           <ListItem.Title>
             {props.vc?.verifiableCredential.credentialSubject.dateOfBirth}
           </ListItem.Title>
@@ -99,7 +102,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
       </ListItem>
       <ListItem bottomDivider>
         <ListItem.Content>
-          <ListItem.Subtitle>Phone number</ListItem.Subtitle>
+          <ListItem.Subtitle>{t('phoneNumber')}</ListItem.Subtitle>
           <ListItem.Title>
             {props.vc?.verifiableCredential.credentialSubject.phone}
           </ListItem.Title>
@@ -107,7 +110,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
       </ListItem>
       <ListItem bottomDivider>
         <ListItem.Content>
-          <ListItem.Subtitle>Email</ListItem.Subtitle>
+          <ListItem.Subtitle>{t('email')}</ListItem.Subtitle>
           <ListItem.Title>
             {props.vc?.verifiableCredential.credentialSubject.email}
           </ListItem.Title>
@@ -115,7 +118,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
       </ListItem>
       <ListItem bottomDivider>
         <ListItem.Content>
-          <ListItem.Subtitle>Address</ListItem.Subtitle>
+          <ListItem.Subtitle>{t('address')}</ListItem.Subtitle>
           <ListItem.Title>
             {getFullAddress(props.vc?.verifiableCredential.credentialSubject)}
           </ListItem.Title>
@@ -124,7 +127,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
       {Boolean(props.vc?.reason) && (
         <ListItem bottomDivider>
           <ListItem.Content>
-            <ListItem.Subtitle>Reason for sharing</ListItem.Subtitle>
+            <ListItem.Subtitle>{t('reasonForSharing')}</ListItem.Subtitle>
             <ListItem.Title>{props.vc?.reason}</ListItem.Title>
           </ListItem.Content>
         </ListItem>

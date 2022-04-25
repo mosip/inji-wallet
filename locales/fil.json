@@ -1,0 +1,180 @@
+{
+  "DeviceInfoList": {
+    "requestedBy": "Hiniling ni",
+    "sentBy": "Ipinadala ni",
+    "deviceRefNumber": "Reference number ng device",
+    "name": "Pangalan"
+  },
+  "PasscodeVerify": {
+    "passcodeMismatchError": "Hindi tumugma ang passcode."
+  },
+  "QrScanner": {
+    "missingPermissionText": "Ginagamit ng app na ito ang camera upang i-scan ng QR code ng ibang device.",
+    "allowCameraButton": "Payagan gamitin ang camera"
+  },
+  "VcDetails": {
+    "generatedOn": "Nabuo noong",
+    "status": "Katayuan",
+    "valid": "Napatunayan",
+    "photo": "Larawan",
+    "fullName": "Buong pangalan",
+    "gender": "Kasarian",
+    "dateOfBirth": "Araw ng kapanganakan",
+    "phoneNumber": "Numero ng telepono",
+    "email": "Email",
+    "address": "Tirahan",
+    "reasonForSharing": "Dahilan ng pagbabahagi"
+  },
+  "AuthScreen": {
+    "header": "Gusto mo bang gumamit ng biometrics upang i-unlock ang aplikasyon?",
+    "useBiometrics": "Gamitin ang biometrics",
+    "usePasscode": "Gumamit na lang ng passcode",
+    "errors": {
+      "unavailable": "Hindi sinusuportahan ng device ang Biometrics",
+      "unenrolled": "Upang magamit ang Biometrics, mangyaring i-enroll ang iyong fingerprint sa mga setting ng iyong device",
+      "failed": "Nabigong mag-authenticate gamit ang Biometrics",
+      "generic": "May problema sa Biometrics authentication"
+    }
+  },
+  "BiometricScreen": {
+    "unlock": "I-unlock gamit ang fingerprint"
+  },
+  "HistoryTab": {
+    "noHistory": "Wala pang kasaysayan"
+  },
+  "HomeScreen": {
+    "myVcsTab": "Aking\n{{vcLabel}}",
+    "receivedVcsTab": "Natanggap na\n{{vcLabel}}",
+    "historyTab": "Pangyayari"
+  },
+  "AddVcModal": {
+    "requestingCredential": "Humihiling ng kredensyal..."
+  },
+  "DownloadingVcModal": {
+    "header": "Kinukuha ang iyong {{vcLabel}}",
+    "bodyText": "Maaaring tumagal ito ng ilang oras, ipapaalam namin sayo kung pwede na kunin ang iyong {{vcLabel}}",
+    "backButton": "Bumalik"
+  },
+  "IdInputModal": {
+    "header": "Ilagay ang UIN o VID na ibinigay ng MOSIP upang matanggap ang iyong {{vcLabel}}",
+    "generateVc": "Gumawa ng {{vcLabel}}"
+  },
+  "OtpVerificationModal": {
+    "enterOtp": "Ilagay ang 6 na numerong verification code na ipinadala namin sayo"
+  },
+  "MyVcsTab": {
+    "addVcButton": "Magdagdag ng {{vcLabel}}",
+    "generateVc": "Gumawa ng iyong {{vcLabel}}",
+    "generateVcDescription": "Pindutin ang \"Magdagdag ng {{vcLabel}}\" sa ibaba upang makuha ang iyong {{vcLabel}}"
+  },
+  "OnboardingOverlay": {
+    "stepOneTitle": "Maligayang pagdating!",
+    "stepOneText": "Panatilihin ang iyong digital na kredensyal sa iyo sa lahat ng oras. Upang makapagsimula, idagdag ang {{vcLabel}} sa iyong profile.",
+    "stepTwoTitle": "Pamamahala ng {{vcLabel}}",
+    "stepTwoText": "Kapag nabuo na, ang {{vcLabel}} ay ligtas na nakatago sa iyong mobile at maaaring palitan ang pangalan o ibahagi anumang oras.",
+    "stepThreeTitle": "Madaling pagbabahagi",
+    "stepThreeText": "Ibahagi at tumanggap ng {{vcLabel}} nang mabilis gamit ang camera ng iyong mobile upang mag-scan ng mga QR code.",
+    "stepThreeButton": "Magsimula at magdagdag ng {{vcLabel}}"
+  },
+  "ReceivedVcsTab": {
+    "noReceivedVcsTitle": "Wala pang {{vcLabel}}",
+    "noReceivedVcsText": "Pindutin ang Humiling sa ibaba para makatanggap ng {{vcLabel}}"
+  },
+  "ViewVcModal": {
+    "lock": "Isara ang paggamit",
+    "unlock": "Buksan ang paggamit",
+    "rename": "Palitan ang pangalan",
+    "delete": "Tanggalin",
+    "requestingOtp": "Humihiling ng OTP...",
+    "editTag": "Palitan ang Tag"
+  },
+  "PasscodeScreen": {
+    "header": "Magtakda ng passcode upang masigurado ang iyong aplikasyon",
+    "confirmPasscode": "Kumpirmahin ang iyong passcode",
+    "enterPasscode": "Ilagay ang iyong passcode"
+  },
+  "Credits": {
+    "header": "Mga kredito at legal na abiso",
+    "back": "Bumalik"
+  },
+  "ProfileScreen": {
+    "name": "Pangalan",
+    "vcLabel": "Panawag sa VC",
+    "language": "Wika",
+    "bioUnlock": "Pagbukas gamit Biometric",
+    "authFactorUnlock": "Pagbukas ng auth factor",
+    "credits": "Mga kredito at legal na abiso",
+    "logout": "Mag log-out"
+  },
+  "ReceiveVcModal": {
+    "header": "Detalye ng {{vcLabel}}",
+    "acceptRequest": "Tanggapin ang kahilingan at kunin ang {{vcLabel}}",
+    "reject": "Tanggihan"
+  },
+  "RequestScreen": {
+    "bluetoothDenied": "Mangyaring paganahin ang Bluetooth upang makahiling ng {{vcLabel}}",
+    "showQrCode": "Ipakita ang QR code na ito para makahiling ng {{vcLabel}}",
+    "incomingVc": "Padating na {{vcLabel}}",
+    "statusAccepted": {
+      "title": "Tagumpay!",
+      "message": "Matagumpay na natanggap ang {{vcLabel}} mula kay {{sender}}"
+    },
+    "statusRejected": {
+      "title": "Paunawa",
+      "message": "Tinanggihan mo ang {{vcLabel}} ni {{sender}}"
+    },
+    "statusDisconnected": {
+      "title": "Nadiskonekta",
+      "message": "Naputol ang koneksyon. Pakiulit."
+    },
+    "statusWaiting": "Naghihintay ng koneksyon...",
+    "statusExchanging": "Nagpapalitan ng impormasyon ng device...",
+    "statusConnected": "Nakakonekta sa device. Naghihintay ng {{vcLabel}}..."
+  },
+  "ScanScreen": {
+    "header": "I-scan ang QR Code",
+    "noShareableVcs": "Walang magagamit na maibabahaging {{vcLabel}}.",
+    "sharingVc": "Pagbabahagi ng {{vcLabel}}",
+    "errors": {
+      "flightMode": {
+        "message": "Dapat na hindi nakabukas ang flight mode ng iyong mobile para maaaring makapag-scan",
+        "button": "Isara ang flight mode"
+      },
+      "locationDisabled": {
+        "message": "Dapat na nakabukas ang Location services ng iyong mobile para maaaring makapag-scan",
+        "button": "Buksan ang location services"
+      },
+      "locationDenied": {
+        "message": "Kinakailangan ang pahintulot sa lokasyon ng iyong mobile para maaaring makapag-scan",
+        "button": "Payagan ng pahintulot sa lokasyon"
+      }
+    }
+  },
+  "SelectVcOverlay": {
+    "header": "Ibahagi ang {{vcLabel}}",
+    "chooseVc": "Piliin ang {{vcLabel}} na gusto mong ibahagi",
+    "cancel": "Kanselahin",
+    "share": "Ibahagi"
+  },
+  "SendVcModal": {
+    "reasonForSharing": "Dahilan ng pagbabahagi (hindi ubligado)",
+    "acceptRequest": "Tanggapin ang kahilingan at piliin ang {{vcLabel}}",
+    "reject": "Tanggihan",
+    "statusSharing": {
+      "title": "Pagbabahagi..."
+    },
+    "statusAccepted": {
+      "title": "Tagumpay!",
+      "message": "Ang iyong {{vcLabel}} ay matagumpay na naibahagi sa {{receiver}}"
+    },
+    "statusRejected": {
+      "title": "Paunawa",
+      "message": "Ang iyong {{vcLabel}} ay tinanggihan ni {{receiver}}"
+    }
+  },
+  "WelcomeScreen": {
+    "title": "Open Source Identity Solution",
+    "getStarted": "Magsimula",
+    "unlockApp": "Buksan ang aplikasyon"
+  }
+}

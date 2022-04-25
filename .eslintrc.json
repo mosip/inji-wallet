@@ -17,11 +17,7 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": [
-    "react",
-    "@typescript-eslint",
-    "sonarjs"
-  ],
+  "plugins": ["react", "@typescript-eslint", "sonarjs"],
   "settings": {
     "react": {
       "version": "detect"
@@ -32,10 +28,14 @@
     "android",
     "ios",
     "assets",
+    "scripts",
     "*.typegen.ts"
   ],
   "root": true,
   "rules": {
-    "@typescript-eslint/no-unused-vars": ["error", { "ignoreRestSiblings": true }]
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "ignoreRestSiblings": true }
+    ]
   }
 }

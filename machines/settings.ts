@@ -21,6 +21,7 @@ const model = createModel(
       UPDATE_VC_LABEL: (label: string) => ({ label }),
       TOGGLE_BIOMETRIC_UNLOCK: (enable: boolean) => ({ enable }),
       STORE_RESPONSE: (response: unknown) => ({ response }),
+      CHANGE_LANGUAGE: (language: string) => ({ language }),
     },
   }
 );
@@ -101,8 +102,8 @@ export const settingsMachine = model.createMachine(
       }),
 
       toggleBiometricUnlock: model.assign({
-        isBiometricUnlockEnabled: (_, event) => event.enable
-      })
+        isBiometricUnlockEnabled: (_, event) => event.enable,
+      }),
     },
 
     services: {},

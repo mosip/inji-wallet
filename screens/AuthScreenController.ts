@@ -1,6 +1,10 @@
 import { useMachine, useSelector } from '@xstate/react';
 import { useContext, useEffect, useState } from 'react';
-import { AuthEvents, selectSettingUp, selectAuthorized } from '../machines/auth';
+import {
+  AuthEvents,
+  selectSettingUp,
+  selectAuthorized,
+} from '../machines/auth';
 import { RootRouteProps } from '../routes';
 import { GlobalContext } from '../shared/GlobalContext';
 import {
@@ -9,44 +13,39 @@ import {
   selectIsEnabled,
   selectIsSuccess,
   selectIsUnvailable,
-  selectUnenrolledNotice
+  selectUnenrolledNotice,
 } from '../machines/biometrics';
 import { SettingsEvents } from '../machines/settings';
 
 export function useAuthScreen(props: RootRouteProps) {
   const { appService } = useContext(GlobalContext);
-  const authService    = appService.children.get('auth');
+  const authService = appService.children.get('auth');
   const settingsService = appService.children.get('settings');
 
-  const isSettingUp    = useSelector(authService, selectSettingUp);
-  const isAuthorized   = useSelector(authService, selectAuthorized);
+  const isSettingUp = useSelector(authService, selectSettingUp);
+  const isAuthorized = useSelector(authService, selectAuthorized);
 
   const [alertMsg, setHasAlertMsg] = useState('');
-  const [
-    biometricState,
-    biometricSend,
-    bioService
-  ] = useMachine(biometricsMachine);
+  const [biometricState, biometricSend, bioService] =
+    useMachine(biometricsMachine);
 
-  const isEnabledBio:boolean       = useSelector(bioService, selectIsEnabled);
-  const isUnavailableBio:boolean   = useSelector(bioService, selectIsUnvailable);
-  const isSuccessBio:boolean       = useSelector(bioService, selectIsSuccess);
-  const errorMsgBio:string         = useSelector(bioService, selectError);
-  const unEnrolledNoticeBio:string = useSelector(bioService, selectUnenrolledNotice);
+  const isEnabledBio = useSelector(bioService, selectIsEnabled);
+  const isUnavailableBio = useSelector(bioService, selectIsUnvailable);
+  const isSuccessBio = useSelector(bioService, selectIsSuccess);
+  const errorMsgBio = useSelector(bioService, selectError);
+  const unEnrolledNoticeBio = useSelector(bioService, selectUnenrolledNotice);
 
   const usePasscode = () => {
     props.navigation.navigate('Passcode', { setup: isSettingUp });
-  }
-
+  };
 
   useEffect(() => {
-
     if (isAuthorized) {
       props.navigation.reset({
         index: 0,
         routes: [{ name: 'Main' }],
       });
-      return
+      return;
     }
 
     // if biometic state is success then lets send auth service BIOMETRICS
@@ -56,32 +55,23 @@ export function useAuthScreen(props: RootRouteProps) {
       // setup passcode aswell
       usePasscode();
 
-    // handle biometric failure unknown error
+      // handle biometric failure unknown error
     } else if (errorMsgBio) {
       // show alert message whenever biometric state gets failure
       setHasAlertMsg(errorMsgBio);
 
-
-    // handle any unenrolled notice
+      // handle any unenrolled notice
     } else if (unEnrolledNoticeBio) {
       setHasAlertMsg(unEnrolledNoticeBio);
 
-
-    // we dont need to see this page to user once biometric is unavailable on its device
+      // we dont need to see this page to user once biometric is unavailable on its device
     } else if (isUnavailableBio) {
       usePasscode();
     }
-
-
-  }, [
-    isSuccessBio,
-    isUnavailableBio,
-    errorMsgBio,
-    unEnrolledNoticeBio,
-  ]);
+  }, [isSuccessBio, isUnavailableBio, errorMsgBio, unEnrolledNoticeBio]);
 
   const useBiometrics = () => {
-    if (biometricState.matches({failure: 'unenrolled'})) {
+    if (biometricState.matches({ failure: 'unenrolled' })) {
       biometricSend({ type: 'RETRY_AUTHENTICATE' });
       return;
     }
@@ -91,7 +81,7 @@ export function useAuthScreen(props: RootRouteProps) {
 
   const hideAlert = () => {
     setHasAlertMsg('');
-  }
+  };
 
   return {
     isSettingUp,
@@ -99,6 +89,6 @@ export function useAuthScreen(props: RootRouteProps) {
     isEnabledBio,
     hideAlert,
     useBiometrics,
-    usePasscode
+    usePasscode,
   };
 }

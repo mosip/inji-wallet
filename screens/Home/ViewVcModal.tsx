@@ -10,28 +10,36 @@ import { ToastItem } from '../../components/ui/ToastItem';
 import { Passcode } from '../../components/Passcode';
 import { OtpVerificationModal } from './MyVcs/OtpVerificationModal';
 import { useViewVcModal, ViewVcModalProps } from './ViewVcModalController';
+import { useTranslation } from 'react-i18next';
 
 export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
+  const { t } = useTranslation('ViewVcModal');
   const controller = useViewVcModal(props);
 
   const DATA = [
     {
-      label: controller.vc.locked ? 'Unlock' : 'Lock',
+      label: controller.vc.locked ? t('unlock') : t('lock'),
       icon: 'lock-outline',
       onPress: () => controller.lockVc(),
     },
     {
-      label: 'Rename',
+      label: t('rename'),
       icon: 'pencil-outline',
       onPress: () => controller.EDIT_TAG(),
     },
     {
-      label: 'Revoke',
+      label: t('revoke'),
       icon: 'close-circle-outline',
+      onPress: () => {
+        // TODO
+      },
     },
     {
-      label: 'Delete',
+      label: t('delete'),
       icon: 'delete-outline',
+      onPress: () => {
+        // TODO
+      },
     },
   ];
 
@@ -50,7 +58,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
 
       <TextEditOverlay
         isVisible={controller.isEditingTag}
-        label="Edit Tag"
+        label={t('editTag')}
         value={controller.vc.tag}
         onDismiss={controller.DISMISS}
         onSave={controller.SAVE_TAG}
@@ -65,7 +73,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
 
       <MessageOverlay
         isVisible={controller.isRequestingOtp}
-        title="Requesting OTP..."
+        title={t('requestingOtp')}
         hasProgress
       />
       {controller.reAuthenticating !== '' &&

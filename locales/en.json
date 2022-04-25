@@ -1,0 +1,180 @@
+{
+  "DeviceInfoList": {
+    "requestedBy": "Requested by",
+    "sentBy": "Sent by",
+    "deviceRefNumber": "Device reference number",
+    "name": "Name"
+  },
+  "PasscodeVerify": {
+    "passcodeMismatchError": "Passcode did not match."
+  },
+  "QrScanner": {
+    "missingPermissionText": "This app uses the camera to scan the QR code of another device.",
+    "allowCameraButton": "Allow access to camera"
+  },
+  "VcDetails": {
+    "generatedOn": "Generated on",
+    "status": "Status",
+    "valid": "Valid",
+    "photo": "Photo",
+    "fullName": "Full name",
+    "gender": "Gender",
+    "dateOfBirth": "Date of birth",
+    "phoneNumber": "Phone number",
+    "email": "Email",
+    "address": "Address",
+    "reasonForSharing": "Reason for sharing"
+  },
+  "AuthScreen": {
+    "header": "Would you like to use biometrics to unlock the application?",
+    "useBiometrics": "Use biometrics",
+    "usePasscode": "I'd rather use a passcode",
+    "errors": {
+      "unavailable": "Device does not support Biometrics",
+      "unenrolled": "To use Biometrics, please enroll your fingerprint in your device settings",
+      "failed": "Failed to authenticate with Biometrics",
+      "generic": "There seems to be an error in Biometrics authentication"
+    }
+  },
+  "BiometricScreen": {
+    "unlock": "Unlock with fingerprint"
+  },
+  "HistoryTab": {
+    "noHistory": "No history available yet"
+  },
+  "HomeScreen": {
+    "myVcsTab": "My\n{{vcLabel}}",
+    "receivedVcsTab": "Received\n{{vcLabel}}",
+    "historyTab": "History"
+  },
+  "AddVcModal": {
+    "requestingCredential": "Requesting credential..."
+  },
+  "DownloadingVcModal": {
+    "header": "Downloading your {{vcLabel}}",
+    "bodyText": "This may take some time, we will notify you when your {{vcLabel}} has been downloaded and is available",
+    "backButton": "Back home"
+  },
+  "IdInputModal": {
+    "header": "Enter the MOSIP-provided UIN or VID of the {{vcLabel}} you wish to retrieve",
+    "generateVc": "Generate {{vcLabel}}"
+  },
+  "OtpVerificationModal": {
+    "enterOtp": "Enter the 6-digit verification code we sent you"
+  },
+  "MyVcsTab": {
+    "addVcButton": "Add {{vcLabel}}",
+    "generateVc": "Generate your {{vcLabel}}",
+    "generateVcDescription": "Tap on \"Add {{vcLabel}}\" below to download your {{vcLabel}}"
+  },
+  "OnboardingOverlay": {
+    "stepOneTitle": "Welcome!",
+    "stepOneText": "Keep your digital credential with you at all times. To get started, add {{vcLabel}} to your profile.",
+    "stepTwoTitle": "{{vcLabel}} management",
+    "stepTwoText": "Once generated, {{vcLabel}} are safely stored on your mobile and can be renamed or shared at any time.",
+    "stepThreeTitle": "Easy sharing",
+    "stepThreeText": "Share and receive {{vcLabel}} switfly using your phone camera to scan QR codes.",
+    "stepThreeButton": "Get started and add {{vcLabel}}"
+  },
+  "ReceivedVcsTab": {
+    "noReceivedVcsTitle": "No {{vcLabel}} available yet",
+    "noReceivedVcsText": "Tap on Request below to receive {{vcLabel}}"
+  },
+  "ViewVcModal": {
+    "lock": "Lock",
+    "unlock": "Unlock",
+    "rename": "Rename",
+    "delete": "Delete",
+    "requestingOtp": "Requesting OTP...",
+    "editTag": "Edit Tag"
+  },
+  "PasscodeScreen": {
+    "header": "Set a passcode to secure your application",
+    "confirmPasscode": "Confirm your passcode",
+    "enterPasscode": "Enter your passcode"
+  },
+  "Credits": {
+    "header": "Credits and legal notices",
+    "back": "Back"
+  },
+  "ProfileScreen": {
+    "name": "Name",
+    "vcLabel": "VC Label",
+    "language": "Language",
+    "bioUnlock": "Biometric unlock",
+    "authFactorUnlock": "Unlock auth factor",
+    "credits": "Credits and legal notices",
+    "logout": "Log-out"
+  },
+  "ReceiveVcModal": {
+    "header": "{{vcLabel}} details",
+    "acceptRequest": "Accept request and receive {{vcLabel}}",
+    "reject": "Reject"
+  },
+  "RequestScreen": {
+    "bluetoothDenied": "Please enable Bluetooth to be able to request {{vcLabel}}",
+    "showQrCode": "Show this QR code to request {{vcLabel}}",
+    "incomingVc": "Incoming {{vcLabel}}",
+    "statusAccepted": {
+      "title": "Success!",
+      "message": "{{vcLabel}} has been successfully received from {{sender}}"
+    },
+    "statusRejected": {
+      "title": "Notice",
+      "message": "You rejected {{sender}}'s {{vcLabel}}"
+    },
+    "statusDisconnected": {
+      "title": "Disconnected",
+      "message": "The connection was interrupted. Please try again."
+    },
+    "statusWaiting": "Waiting for connection...",
+    "statusExchanging": "Exchanging device info...",
+    "statusConnected": "Connected to device. Waiting for {{vcLabel}}..."
+  },
+  "ScanScreen": {
+    "header": "Scan QR Code",
+    "noShareableVcs": "No shareable {{vcLabel}} are available.",
+    "sharingVc": "Sharing {{vcLabel}}",
+    "errors": {
+      "flightMode": {
+        "message": "Flight mode must be disabled for the scanning functionality",
+        "button": "Disable flight mode"
+      },
+      "locationDisabled": {
+        "message": "Location services must be enabled for the scanning functionality",
+        "button": "Enable location services"
+      },
+      "locationDenied": {
+        "message": "Location permission is required for the scanning functionality",
+        "button": "Allow access to location"
+      }
+    }
+  },
+  "SelectVcOverlay": {
+    "header": "Share {{vcLabel}}",
+    "chooseVc": "Choose the {{vcLabel}} you'd like to share with",
+    "cancel": "Cancel",
+    "share": "Share"
+  },
+  "SendVcModal": {
+    "reasonForSharing": "Reason for sharing (optional)",
+    "acceptRequest": "Accept request and choose {{vcLabel}}",
+    "reject": "Reject",
+    "statusSharing": {
+      "title": "Sharing..."
+    },
+    "statusAccepted": {
+      "title": "Success!",
+      "message": "Your {{vcLabel}} has been successfully shared with {{receiver}}"
+    },
+    "statusRejected": {
+      "title": "Notice",
+      "message": "Your {{vcLabel}} was rejected by {{receiver}}"
+    }
+  },
+  "WelcomeScreen": {
+    "title": "Open Source Identity Solution",
+    "getStarted": "Get started",
+    "unlockApp": "Unlock application"
+  }
+}
