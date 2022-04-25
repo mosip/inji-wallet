@@ -9,6 +9,7 @@ export interface VC {
   isVerified: boolean;
   lastVerifiedOn: number;
   reason?: string;
+  locked: boolean;
 }
 
 export type VcIdType = 'UIN' | 'VID';

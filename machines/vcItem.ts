@@ -1,4 +1,4 @@
-import { assign, EventFrom, send, StateFrom } from 'xstate';
+import { assign, ErrorPlatformEvent, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { VC_ITEM_STORE_KEY } from '../shared/constants';
 import { AppServices } from '../shared/GlobalContext';
@@ -25,6 +25,11 @@ const model = createModel(
     requestId: '',
     isVerified: false,
     lastVerifiedOn: null,
+    locked: false,
+    otp: '',
+    otpError: '',
+    idError: '',
+    transactionId: '',
   },
   {
     events: {
@@ -38,6 +43,9 @@ const model = createModel(
       DOWNLOAD_READY: () => ({}),
       GET_VC_RESPONSE: (vc: VC) => ({ vc }),
       VERIFY: () => ({}),
+      LOCK_VC: () => ({}),
+      UNLOCK_VC: () => ({}),
+      INPUT_OTP: (otp: string) => ({ otp }),
     },
   }
 );
@@ -132,12 +140,19 @@ export const vcItemMachine =
           },
         },
         idle: {
+          entry: ['clearTransactionId', 'clearOtp'],
           on: {
             EDIT_TAG: {
               target: 'editingTag',
             },
             VERIFY: {
               target: 'verifyingCredential',
+            },
+            LOCK_VC: {
+              target: 'requestingOtp',
+            },
+            UNLOCK_VC: {
+              target: 'requestingOtp',
             },
           },
         },
@@ -189,6 +204,62 @@ export const vcItemMachine =
               target: 'verifyingCredential',
             },
           ],
+        },
+        invalid: {
+          states: {
+            otp: {},
+            backend: {},
+          },
+          on: {
+            INPUT_OTP: {
+              target: 'requestingLock',
+              actions: ['setOtp'],
+            },
+            DISMISS: 'idle',
+          },
+        },
+        requestingOtp: {
+          entry: ['setTransactionId'],
+          invoke: {
+            src: 'requestOtp',
+            onDone: '#acceptingOtpInput',
+            onError: {
+              target: 'invalid.backend',
+            },
+          },
+        },
+        acceptingOtpInput: {
+          id: 'acceptingOtpInput',
+          entry: ['clearOtp'],
+          on: {
+            INPUT_OTP: {
+              target: 'requestingLock',
+              actions: ['setOtp'],
+            },
+            DISMISS: {
+              target: 'idle',
+              actions: ['clearOtp', 'clearTransactionId'],
+            },
+          },
+        },
+        requestingLock: {
+          invoke: {
+            src: 'requestLock',
+            onDone: {
+              target: 'lockingVc',
+              actions: ['setLock'],
+            },
+            onError: {
+              target: 'acceptingOtpInput',
+              actions: ['setOtpError'],
+            },
+          },
+        },
+        lockingVc: {
+          entry: ['storeLock'],
+          on: {
+            STORE_RESPONSE: 'idle',
+          },
         },
       },
     },
@@ -272,6 +343,35 @@ export const vcItemMachine =
             lastVerifiedOn: Date.now(),
           };
         }),
+
+        setTransactionId: assign({
+          transactionId: () => String(new Date().valueOf()).substring(3, 13),
+        }),
+
+        clearTransactionId: assign({ transactionId: '' }),
+
+        setOtp: model.assign({
+          otp: (_, event) => event.otp,
+        }),
+
+        setOtpError: assign({
+          otpError: (_context, event) =>
+            (event as ErrorPlatformEvent).data.message,
+        }),
+
+        clearOtp: assign({ otp: '' }),
+
+        setLock: assign({
+          locked: (context) => !context.locked,
+        }),
+
+        storeLock: send(
+          (context) => {
+            const { serviceRefs, ...data } = context;
+            return StoreEvents.SET(VC_ITEM_STORE_KEY(context), data);
+          },
+          { to: (context) => context.serviceRefs.store }
+        ),
       },
 
       services: {
@@ -329,6 +429,7 @@ export const vcItemMachine =
                   requestId: context.requestId,
                   isVerified: false,
                   lastVerifiedOn: null,
+                  locked: context.locked,
                 })
               );
             }
@@ -339,6 +440,42 @@ export const vcItemMachine =
 
         verifyCredential: async (context) => {
           return verifyCredential(context.verifiableCredential);
+        },
+
+        requestOtp: async (context) => {
+          try {
+            return request('POST', '/req/otp', {
+              individualId: context.id,
+              individualIdType: context.idType,
+              otpChannel: ['EMAIL', 'PHONE'],
+              transactionID: context.transactionId,
+            });
+          } catch (error) {
+            console.error(error);
+          }
+        },
+
+        requestLock: async (context) => {
+          let response = null;
+          if (context.locked) {
+            response = await request('POST', '/req/auth/unlock', {
+              individualId: context.id,
+              individualIdType: context.idType,
+              otp: context.otp,
+              transactionID: context.transactionId,
+              authType: ['bio'],
+              unlockForSeconds: '120',
+            });
+          } else {
+            response = await request('POST', '/req/auth/lock', {
+              individualId: context.id,
+              individualIdType: context.idType,
+              otp: context.otp,
+              transactionID: context.transactionId,
+              authType: ['bio'],
+            });
+          }
+          return response.response;
         },
       },
 
@@ -404,4 +541,24 @@ export function selectVerifiableCredential(state: State) {
 
 export function selectIsEditingTag(state: State) {
   return state.matches('editingTag');
+}
+
+export function selectIsOtpError(state: State) {
+  return state.context.otpError;
+}
+
+export function selectOtpError(state: State) {
+  return state.context.otpError;
+}
+
+export function selectIsLockingVc(state: State) {
+  return state.matches('lockingVc');
+}
+
+export function selectIsAcceptingOtpInput(state: State) {
+  return state.matches('acceptingOtpInput');
+}
+
+export function selectIsRequestingOtp(state: State) {
+  return state.matches('requestingOtp');
 }
