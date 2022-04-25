@@ -25,7 +25,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
       <Row padding="16 24">
         <Column fill elevation={1} padding="12 16" margin="0 16 0 0">
           <Text size="smaller" color={Colors.Grey}>
-            Generated
+            {t('generatedOn')}
           </Text>
           <Text weight="bold" size="smaller">
             {new Date(props.vc?.generatedOn).toLocaleDateString()}

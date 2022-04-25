@@ -80,6 +80,14 @@
     "noReceivedVcsTitle": "Wala pang {{vcLabel}}",
     "noReceivedVcsText": "Pindutin ang Humiling sa ibaba para makatanggap ng {{vcLabel}}"
   },
+  "ViewVcModal": {
+    "lock": "Isara ang paggamit",
+    "unlock": "Buksan ang paggamit",
+    "rename": "Palitan ang pangalan",
+    "delete": "Tanggalin",
+    "requestingOtp": "Humihiling ng OTP...",
+    "editTag": "Palitan ang Tag"
+  },
   "PasscodeScreen": {
     "header": "Magtakda ng passcode upang masigurado ang iyong aplikasyon",
     "confirmPasscode": "Kumpirmahin ang iyong passcode",

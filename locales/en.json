@@ -80,6 +80,14 @@
     "noReceivedVcsTitle": "No {{vcLabel}} available yet",
     "noReceivedVcsText": "Tap on Request below to receive {{vcLabel}}"
   },
+  "ViewVcModal": {
+    "lock": "Lock",
+    "unlock": "Unlock",
+    "rename": "Rename",
+    "delete": "Delete",
+    "requestingOtp": "Requesting OTP...",
+    "editTag": "Edit Tag"
+  },
   "PasscodeScreen": {
     "header": "Set a passcode to secure your application",
     "confirmPasscode": "Confirm your passcode",
