@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions, Pressable } from 'react-native';
 import { Icon, ListItem, Overlay } from 'react-native-elements';
 import { Column } from './Layout';
@@ -10,9 +10,13 @@ interface Picker extends React.VFC<PickerProps<unknown>> {
 
 export const Picker: Picker = (props: PickerProps<unknown>) => {
   const [isContentVisible, setIsContentVisible] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(
-    props.items.findIndex(({ value }) => value === props.selectedValue)
-  );
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+
+  useEffect(() => {
+    setSelectedIndex(
+      props.items.findIndex(({ value }) => value === props.selectedValue)
+    );
+  }, [props.selectedValue]);
 
   const toggleContent = () => setIsContentVisible(!isContentVisible);
 
