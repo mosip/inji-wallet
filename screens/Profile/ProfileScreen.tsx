@@ -25,11 +25,7 @@ const LanguageSetting: React.FC = () => {
             </ListItem.Title>
           </ListItem.Content>
           <Text margin="0 12 0 0" color={Colors.Grey}>
-            {
-              SUPPORTED_LANGUAGES.find(
-                (lang) => lang.value === i18next.language
-              ).label
-            }
+            {SUPPORTED_LANGUAGES[i18next.language]}
           </Text>
         </ListItem>
       }

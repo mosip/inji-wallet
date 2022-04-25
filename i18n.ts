@@ -4,20 +4,34 @@ import { initReactI18next } from 'react-i18next';
 
 import en from './locales/en.json';
 import fil from './locales/fil.json';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const resources = { en, fil };
 
-export const SUPPORTED_LANGUAGES = [
-  { label: 'English', value: 'en' },
-  { label: 'Filipino', value: 'fil' },
-];
+export const SUPPORTED_LANGUAGES = {
+  en: 'English',
+  fil: 'Filipino',
+};
 
-i18next.use(initReactI18next).init({
-  compatibilityJSON: 'v3',
-  resources,
-  lng: locale,
-  fallbackLng: 'en',
-  supportedLngs: SUPPORTED_LANGUAGES.map(({ value }) => value),
-});
+i18next
+  .use(initReactI18next)
+  .init({
+    compatibilityJSON: 'v3',
+    resources,
+    lng: getLanguageCode(locale),
+    fallbackLng: getLanguageCode,
+    supportedLngs: Object.keys(SUPPORTED_LANGUAGES),
+  })
+  .then(async () => {
+    const language = await AsyncStorage.getItem('language');
+    if (language !== i18next.language) {
+      i18next.changeLanguage(language);
+    }
+  });
 
 export default i18next;
+
+function getLanguageCode(code: string) {
+  const [language] = code.split('-');
+  return language;
+}

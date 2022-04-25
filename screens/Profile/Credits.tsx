@@ -70,7 +70,7 @@ export const Credits: React.FC<CreditsProps> = (props) => {
               <Button
                 type="clear"
                 icon={<Icon name="chevron-left" color={Colors.Orange} />}
-                title={t('back')}
+                title=""
                 onPress={() => setIsViewing(false)}
               />
             </View>

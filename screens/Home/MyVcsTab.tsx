@@ -42,7 +42,9 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                 <Button
                   type="clear"
                   disabled={controller.isRefreshingVcs}
-                  title={t('addVcButton')}
+                  title={t('addVcButton', {
+                    vcLabel: controller.vcLabel.singular,
+                  })}
                   onPress={controller.ADD_VC}
                 />
               </Column>

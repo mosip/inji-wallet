@@ -15,7 +15,11 @@ export const MainLayout: React.FC<RootRouteProps> = () => {
   const options: BottomTabNavigationOptions = {
     headerLeft: () => <Icon name="notifications" color={Colors.Orange} />,
     headerLeftContainerStyle: { paddingStart: 16 },
-    headerRight: () => <LanguageSelector />,
+    headerRight: () => (
+      <LanguageSelector
+        triggerComponent={<Icon name="language" color={Colors.Orange} />}
+      />
+    ),
     headerRightContainerStyle: { paddingEnd: 16 },
     headerTitleAlign: 'center',
     tabBarShowLabel: false,

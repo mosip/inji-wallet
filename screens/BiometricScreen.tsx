@@ -20,7 +20,7 @@ export const BiometricScreen: React.FC<RootRouteProps> = (props) => {
       </Centered>
 
       <Button
-        title={t('Unlock with Fingerprint')}
+        title={t('unlock')}
         margin="8 0"
         onPress={controller.useBiometrics}
         disabled={controller.isSuccessBio}
