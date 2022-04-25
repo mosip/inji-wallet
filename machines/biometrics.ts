@@ -139,7 +139,11 @@ export const biometricsMachine = model.createMachine(
       },
 
       success: {
-        type: 'final',
+        on: {
+          SET_IS_AVAILABLE: {
+            target: '#biometrics.available',
+          },
+        },
       },
 
       failure: {
