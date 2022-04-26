@@ -332,7 +332,7 @@ export const vcItemMachine =
               vcLabel: event.vc.tag || event.vc.id,
             }),
           {
-            to: (context) => context.serviceRefs.vc,
+            to: (context) => context.serviceRefs.activityLog,
           }
         ),
 
