@@ -57,7 +57,8 @@
   },
   "IdInputModal": {
     "header": "Ilagay ang UIN o VID na ibinigay ng MOSIP upang matanggap ang iyong {{vcLabel}}",
-    "generateVc": "Gumawa ng {{vcLabel}}"
+    "generateVc": "Gumawa ng {{vcLabel}}",
+    "enterId": "Ilagay ang iyong {{idType}}"
   },
   "OtpVerificationModal": {
     "enterOtp": "Ilagay ang 6 na numerong verification code na ipinadala namin sayo"
@@ -85,6 +86,7 @@
     "unlock": "Buksan ang paggamit",
     "rename": "Palitan ang pangalan",
     "delete": "Tanggalin",
+    "revoke": "Bawiin",
     "requestingOtp": "Humihiling ng OTP...",
     "editTag": "Palitan ang Tag"
   },
@@ -176,5 +178,10 @@
     "title": "Open Source Identity Solution",
     "getStarted": "Magsimula",
     "unlockApp": "Buksan ang aplikasyon"
+  },
+  "common": {
+    "cancel": "Kanselahin",
+    "save": "I-save",
+    "editLabel": "Palitan ang {{label}}"
   }
 }

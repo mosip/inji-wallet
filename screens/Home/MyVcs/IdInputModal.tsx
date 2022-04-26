@@ -10,12 +10,15 @@ import { useTranslation } from 'react-i18next';
 export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
   const { t } = useTranslation('IdInputModal');
   const controller = useIdInputModal(props);
-  const inputLabel = `Enter your ${controller.idType}`;
+
+  const inputLabel = t('enterId', { idType: controller.idType });
 
   return (
     <Modal onDismiss={props.onDismiss} isVisible={props.isVisible}>
       <Column fill align="space-between" padding="32 24">
-        <Text align="center">{t('header')}</Text>
+        <Text align="center">
+          {t('header', { vcLabel: controller.vcLabel.singular })}
+        </Text>
         <Column>
           <Row crossAlign="flex-end">
             <Column

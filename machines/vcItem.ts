@@ -53,7 +53,7 @@ const model = createModel(
 export const VcItemEvents = model.events;
 
 export const vcItemMachine =
-  /** @xstate-layout N4IgpgJg5mDOIC5QDcDGBaAlgFzAWwDpUALMVAa0wDsoA1VAYgHEBRAFQH1aBhDgJRYBlAAoB5AHKCWiUAAcA9rByZ5VGSAAeiAMwAWAEwFtABmMB2ABwBGfQFYANCACeiK29sEAbLasBOMwbe2r5WFgC+YY5oWLiEJGSUNILY8gBOYAyCbKIC-EJiktJIIApK2CpqxVoI+v4Evr6elsbBtrbmFo4uCBZmZl4+DbbBtbqeEVEYOPhEpBTUUIJgqcjLACIAhtgbswkLyVsArrAMYgAyZ+qlyqrq1Vaehp5WxrX6umZW2mb6D12Inm02gItnepj6r10FlsExA0WmcTmiUWy1WqU22128yS22wxwYa1EAHVxGdRABBNZ5SkATSuihulVA1T0ngIAVsnmMtjGvQczkQAQsXjBLwsFg61lh8NiWORSxW6y2Owg8gA7lQADbyDYQBbcdIQMBUcobTWnUQXellCp3AG2YVNNpmJpc369f4ITy6KwgzwS-TGXTmfzSqay+LYlGK9HKgiqjXa3X6w3G03m7gCNYscRsACS5LOHEJJLJlJYa2tjLtCBCvuMoWM4uhBhd+k9ZhaA0DVkswf8+m0YZiM0wEE1GQrec4bHJTCr5VuVUQdYIDYlzZ5+jbnodugIVlBDf9jTGZl8w4RBDHE4YtBYfDzADE6cVroumZpXH5hZ8bHpjF8bcbF0T0TH3Q9A2MZ4TF8UErEvWVIGUGg2A2KACTzQQAFksMEBdbWXBBQn3CwDG0MigQsb4LF8T03GBNooL8YYbBhSI4XDGZkPKVD0Mycl7w4Wd5zfBkPxrVd1ybcUtx3AUam0NlvCgwJfF0YZ9EQmZYBSVIFjQjCshyFg8hECQpAIpdmW-XxfzcQd+2A95PTsNlINMAwfXUoFxg4mUZjRTAADMnBTSA00wM0GFVKgwGvKhkHkch4oCwggtC8KjRNKLNQQagktQLYKgAbWMABdKzP3uED6kHT5tHeEYoTA0EDyPJsGwaLlwn8rj0uWEKwpoA0Ipy6LllSNICFkTUtmCtJ0v6ggMuGqBRuy9N8sS+Qio-MrKrEm1rK-YjaqA74viaoCWoU3Q6g8w9oPeSxesmEdET2GhaEG4LMD2ioDjxE4qprKwoQghsvjcDSIU6BTrEMUEuW5OxaO3CIOKoeQjXgYo0rlBZ6FBoiDHow9+m8BoW1PD52Peq9I3lPSwBJmyEDJhTfD0dqGhCXpelGbTPqjBU0QxHYmf2XFjjZ06+g7OwQTBQDhm9AIEL6j7CaSVElUxBMtR1PURtTcbNTl6phl8AhoQ3QZfk8Tw6IUswgT9AN9HeFigOFnXo3F5VLcQYZd1eZXgj6Z2yMHC8tavG9WaO6siKem2XgYmHbDh+jtxBaxTG8Xs+k7Mw-Z4gz0ODjn2wUtz2X9Lqnc7Cj6c47XdLSSuoGrl4lK8blnm3HkLHdVz3dR0x9Fottub8hnZVWrLIrNaupMbTdW0eMCzA8SfALsUU24JqXvt+-7itUIHZeTiTU+L23uf-IFGs7eHul3m2+glEMAgacHha93fjoEER5gKHg0u0D4mMwhAA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QDcDGBaAlgFzAWwDpUALMVAa0wDsoA1VAYgHEBRAFQH1aBhDgJRYBlAAoB5AHKCWiUAAcA9rByZ5VGSAAeiAIwAWAAwFtANgAcAdl0BmAJwAmOxd0BWADQgAnoivHDpx6aBzubGwc6mAL4R7mhYuIQkZJQ0gtjyAE5gDIJsogL8QmKS0kggCkrYKmqlWgh6hiYWDnba4aFW7l4I5qbOBPohvdoW2jbDUTEYOPhEpBTUUIJg6cjLACIAhtgbs0kLqVsArrAMYgAyZ+rlyqrqtdrm2gRWds521vqmusZ2Nr2dOlGugIAXMb1+dn0NnCExAsWmCTmyUWy1W6U22128xS22wxwYa1EAHVxGdRABBNYFSkATSuihu1VAtQMfSsPlCumhVlGjwBdSsumBdh5Vmc1jGznszlh8PiWORSxW6y2Owg8gA7lQADbyDYQBbcTIQMBUSobbWnUQXekVKp3RA-YWtcz6YzQ4y6OzGfnaIEgwJghz2KEw6JwqbyxLYlHK9GqgjqrW6-WG42m82W7gCNYscRsACS5LOHEJJLJlJYa1tjIdCF0pmMz3Mrucgu+7R9nkQjb6Fh87Z5LcCssjM0wEG1WSrBc4bHJTBrlVuNR0bqeNk9A2Mrv0+mc4X5f3MBF0PRFPP8-kso7i48nWVoLD4BYAYnTStdl0zND3nA0rEbUx930OwQlCflTEAggbHMDkwKdfRtFvBECAnKcGDJbgAGkuG4Jd7VXOo2z6T5fDMHwbCQnpIOg2CfCgkJBjFFD5XQrIAFVSVEHC8IIldmR0axTCMYxRhsXRhmsd47H5QZ+mGHdQNGYxKNYmZIGUGg2A2KACQLQQAFkDMEfif3uYYT09XxGx6dk91k7sEGPU9z1CJD-HZKx1MITTKm03TsnJJ8OHnRdPwZb86z9VpTyosZ3TMAxHK6P1HiML1Xi9YwxIGSJwzlGZYDSdIFh0vScjyFgChECQpDM6L3hEqieh6ExnG0MUOicmKrAIRsrChEVtAcPcZQKsdCDRTAADMPDTSAM0wC0GHVKgwDQqhkHkcgNsKqbllm+aaCNRazWW7UEGobbUC2KoAG19AAXQaojtH0AwCClcxXiGsTQjcJyXEMJDhl5d0eiFXQfIIaa5oWk1zpW5Z0gyAhZG1LYZoyKbJthw74ZO9Mkcu675Fu79HpeiK7QE39nNefrnE9GxAJcSFvX5H47Bg94xJaWxgI+mHo2RWgCcwCmqgOPETlewS6nep5BvdA9XTAsD+VeJsr0CEb3tbdkYeui0JwYAtxGEDjOFENhhHl+nIU9ZtHgPKHBqg31WkMVnEssEwJIbY2ttNiB9KMkyHfuF4bC+0xWm+F5PUA-k2yeAw7Mk8UWnMGwYcyABHQ44H8qBRGwWRVtUDayd22G8cL4vioWcvZCurbybu1QqajnR4760DvX+kI3nMLnNxgs8RTgxwmvMfOwCLkuW4rhgUbRjGsZx+u70IRvl5oVv25uruqB7mnaze+PgTeQJVO+DrOVT+wCDEsFBokyxYLsGGNlQVAwCyFLq3AsVBZCHGwObS21sOC23thfKKb0v5fTAh1Rw4J9BiiPLnXmgp7CtH-N5Cau8CB-wAUAleshQHgMgWsAyxlBCmQQYRBW3tgQ-C6jYewcF7CmCPC0OKvwfBSihE4BeS9m40DOOTcgVd1qbW2nXfaBB96SKgNIigx9O6U2er3OowFY6NmsnuaEF4+E9V+CecUPI8qG2hsQ1CqjS4aNkevdI6NMbYGxukXGJCnELBcVoqW3ddHMLpvcUwVECC5xFKyBCVhLDYNjvYMUXopTSgeDDXUMZ6DZFyPkAQtVih6NaAkow4QRotlCI4aEXsJ6tAkt6B4YJrBEPDFQeQJp4ClGUaLBY9A9FmFfgkrkQpfhjC9N1VKLYjB7iFD0LhBhrD2MmCQvpOIMhgD0dCEEToqKBB5IHKZjoBj9EOTZURwFjAiyRPsVEKpMTrMWLiY42yniPC+N6FwzNVLDF9DyHmw1bB-H-GCcYDioy3JSPc+MmIkw6j1AaImZ1Mx6PCCJc8nVXQ-WCLof5e4QSihyqEL+fwbl7GhXGDEGxBkng+dlb5OVLy+jdH1UEgo4IURWRGEh7ESkPA3AeLlqkHCJKcj0ZqnLfDhCFILGGfkyq6RKVCYEm4pSOB+i0P0LLAj9RFC0HcjhBrzwhUVEqiqoAlMhH0VSZg2q9S7KlX4hg2xeihLnWCXxxqrNQnDY6UBTqI1RWE8yiAqmv1xb0A8Gq2z8g7F9P0UEsVQh8D-U1iIKV0AlsEqgMtXkhrrB8Z4egKn+EcIavFTkcqxz0C2EaXI-j+DzumhRocCDyArnop2Txr49FUvuKClauhoNfn8b2nwTB6G5cok22oJwEAAEZ-12lQCAXb9x9SlL4LkgoHCA2HY2IwDwSLemAu9ZtPq2IhznWugtREOaxy3R9VmmV92IAlKO+O27IkPCQuIpuwDO13tYd8ZJIKhS9D3GYR1iB1Wnj5pJRKwwWi-3-oAwDVCwEQJKbnJ4npwKPD9B9N0ckuFfX-FCN03oQg+H-QfdRMicNRMsTuMUrtLBvsVtBawENXhdRFN6nlqFsli1QCU0e-VbCAU+LYAwoxfToP6NYd6-hxQ-S+D5PR1holSS+UK355iug7lmR9Ic4QWjfHylEIAA */
   model.createMachine(
     {
       tsTypes: {} as import('./vcItem.typegen').Typegen0,
@@ -212,53 +212,66 @@ export const vcItemMachine =
           },
           on: {
             INPUT_OTP: {
+              actions: 'setOtp',
               target: 'requestingLock',
-              actions: ['setOtp'],
-            },
-            DISMISS: 'idle',
-          },
-        },
-        requestingOtp: {
-          entry: ['setTransactionId'],
-          invoke: {
-            src: 'requestOtp',
-            onDone: '#acceptingOtpInput',
-            onError: {
-              target: 'invalid.backend',
-            },
-          },
-        },
-        acceptingOtpInput: {
-          id: 'acceptingOtpInput',
-          entry: ['clearOtp'],
-          on: {
-            INPUT_OTP: {
-              target: 'requestingLock',
-              actions: ['setOtp'],
             },
             DISMISS: {
               target: 'idle',
+            },
+          },
+        },
+        requestingOtp: {
+          entry: 'setTransactionId',
+          invoke: {
+            src: 'requestOtp',
+            onDone: [
+              {
+                target: 'acceptingOtpInput',
+              },
+            ],
+            onError: [
+              {
+                target: '#vc-item.invalid.backend',
+              },
+            ],
+          },
+        },
+        acceptingOtpInput: {
+          entry: 'clearOtp',
+          on: {
+            INPUT_OTP: {
+              actions: 'setOtp',
+              target: 'requestingLock',
+            },
+            DISMISS: {
               actions: ['clearOtp', 'clearTransactionId'],
+              target: 'idle',
             },
           },
         },
         requestingLock: {
           invoke: {
             src: 'requestLock',
-            onDone: {
-              target: 'lockingVc',
-              actions: ['setLock'],
-            },
-            onError: {
-              target: 'acceptingOtpInput',
-              actions: ['setOtpError'],
-            },
+            onDone: [
+              {
+                actions: 'setLock',
+                target: 'lockingVc',
+              },
+            ],
+            onError: [
+              {
+                actions: 'setOtpError',
+                target: 'acceptingOtpInput',
+              },
+            ],
           },
         },
         lockingVc: {
-          entry: ['storeLock'],
+          entry: 'storeLock',
           on: {
-            STORE_RESPONSE: 'idle',
+            STORE_RESPONSE: {
+              target: 'idle',
+            },
           },
         },
       },
@@ -332,7 +345,7 @@ export const vcItemMachine =
               vcLabel: event.vc.tag || event.vc.id,
             }),
           {
-            to: (context) => context.serviceRefs.vc,
+            to: (context) => context.serviceRefs.activityLog,
           }
         ),
 
