@@ -57,7 +57,8 @@
   },
   "IdInputModal": {
     "header": "Enter the MOSIP-provided UIN or VID of the {{vcLabel}} you wish to retrieve",
-    "generateVc": "Generate {{vcLabel}}"
+    "generateVc": "Generate {{vcLabel}}",
+    "enterId": "Enter your {{idType}}"
   },
   "OtpVerificationModal": {
     "enterOtp": "Enter the 6-digit verification code we sent you"
@@ -85,6 +86,7 @@
     "unlock": "Unlock",
     "rename": "Rename",
     "delete": "Delete",
+    "revoke": "Revoke",
     "requestingOtp": "Requesting OTP...",
     "editTag": "Edit Tag"
   },
@@ -176,5 +178,10 @@
     "title": "Open Source Identity Solution",
     "getStarted": "Get started",
     "unlockApp": "Unlock application"
+  },
+  "common": {
+    "cancel": "Cancel",
+    "save": "Save",
+    "editLabel": "Edit {{label}}"
   }
 }

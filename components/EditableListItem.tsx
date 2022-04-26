@@ -3,8 +3,10 @@ import { Dimensions } from 'react-native';
 import { ListItem, Overlay, Input } from 'react-native-elements';
 import { Text, Column, Row, Button } from './ui';
 import { Colors } from './ui/styleUtils';
+import { useTranslation } from 'react-i18next';
 
 export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
+  const { t } = useTranslation('common');
   const [isEditing, setIsEditing] = useState(false);
   const [newValue, setNewValue] = useState(props.value);
 
@@ -21,11 +23,11 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
         isVisible={isEditing}
         onBackdropPress={dismiss}>
         <Column width={Dimensions.get('screen').width * 0.8}>
-          <Text>Edit {props.label}</Text>
+          <Text>{t('editLabel', { label: props.label })}</Text>
           <Input autoFocus value={newValue} onChangeText={setNewValue} />
           <Row>
-            <Button fill type="clear" title="Cancel" onPress={dismiss} />
-            <Button fill title="Save" onPress={edit} />
+            <Button fill type="clear" title={t('cancel')} onPress={dismiss} />
+            <Button fill title={t('save')} onPress={edit} />
           </Row>
         </Column>
       </Overlay>

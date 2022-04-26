@@ -3,6 +3,7 @@ import { Dimensions, StyleSheet } from 'react-native';
 import { Overlay, Input } from 'react-native-elements';
 import { Button, Column, Row, Text } from './ui';
 import { Colors, elevation } from './ui/styleUtils';
+import { useTranslation } from 'react-i18next';
 
 const styles = StyleSheet.create({
   overlay: {
@@ -13,6 +14,7 @@ const styles = StyleSheet.create({
 });
 
 export const TextEditOverlay: React.FC<EditOverlayProps> = (props) => {
+  const { t } = useTranslation('common');
   const [value, setValue] = useState(props.value);
 
   return (
@@ -29,11 +31,11 @@ export const TextEditOverlay: React.FC<EditOverlayProps> = (props) => {
           <Button
             fill
             type="clear"
-            title="Cancel"
+            title={t('cancel')}
             onPress={dismiss}
             margin="0 8 0 0"
           />
-          <Button fill title="Save" onPress={() => props.onSave(value)} />
+          <Button fill title={t('save')} onPress={() => props.onSave(value)} />
         </Row>
       </Column>
     </Overlay>
