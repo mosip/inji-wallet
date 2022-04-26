@@ -34,7 +34,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
             {new Date(props.vc?.generatedOn).toLocaleDateString()}
           </Text>
         </Column>
-        <Column fill elevation={1} pY={12} pX={16} margin="0 16 0 0">
+        <Column fill elevation={1} pY={12} pX={16} margin="0 8">
           <Text
             size="smaller"
             color={Colors.Grey}
