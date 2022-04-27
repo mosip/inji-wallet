@@ -45,6 +45,7 @@ export function useViewVcModal({ vcItemActor }: ViewVcModalProps) {
   const onSuccess = () => {
     bioSend({ type: 'SET_IS_AVAILABLE', data: true });
     setError('');
+    setReAuthenticating('');
     if (vc.locked) {
       vcItemActor.send(VcItemEvents.UNLOCK_VC());
     } else {
