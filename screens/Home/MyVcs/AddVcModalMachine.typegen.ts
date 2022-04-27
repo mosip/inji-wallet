@@ -3,6 +3,7 @@
 export interface Typegen0 {
   '@@xstate/typegen': true;
   'eventsCausingActions': {
+    forwardToParent: 'DISMISS';
     setIdInputRef: 'READY';
     setId: 'INPUT_ID';
     setIdType: 'SELECT_ID_TYPE';
@@ -21,8 +22,8 @@ export interface Typegen0 {
     focusInput:
       | 'xstate.after(100)#AddVcModal.acceptingIdInput.focusing'
       | 'INPUT_ID'
-      | 'DISMISS'
-      | 'error.platform.AddVcModal.requestingCredential:invocation[0]';
+      | 'SELECT_ID_TYPE'
+      | 'DISMISS';
     setIdErrorEmpty: 'VALIDATE_INPUT';
     setIdErrorWrongFormat: 'VALIDATE_INPUT';
   };
