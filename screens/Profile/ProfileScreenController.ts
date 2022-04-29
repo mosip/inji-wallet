@@ -21,6 +21,7 @@ import {
 } from '../../machines/biometrics';
 import { MainRouteProps } from '../../routes/main';
 import { GlobalContext } from '../../shared/GlobalContext';
+import { useTranslation } from 'react-i18next';
 
 export function useProfileScreen({ navigation }: MainRouteProps) {
   const { appService } = useContext(GlobalContext);
@@ -38,6 +39,7 @@ export function useProfileScreen({ navigation }: MainRouteProps) {
     bioService,
     selectUnenrolledNotice
   );
+  const { t } = useTranslation('AuthScreen');
 
   useEffect(() => {
     setTimeout(async () => {
@@ -57,7 +59,7 @@ export function useProfileScreen({ navigation }: MainRouteProps) {
     } else {
       const error: string = errorMsgBio ?? unEnrolledNoticeBio ?? '';
       if (error != '') {
-        setHasAlertMsg(error);
+        setHasAlertMsg(t(error));
       }
     }
   }, [isSuccessBio, errorMsgBio, unEnrolledNoticeBio]);

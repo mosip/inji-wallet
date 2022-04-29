@@ -1,7 +1,6 @@
 import { createModel } from 'xstate/lib/model';
 import * as LocalAuthentication from 'expo-local-authentication';
 import { EventFrom, MetaObject, StateFrom } from 'xstate';
-import i18next from '../i18n';
 
 // ----- CREATE MODEL ---------------------------------------------------------
 const model = createModel(
@@ -15,7 +14,7 @@ const model = createModel(
   {
     events: {
       SET_IS_AVAILABLE: (data: boolean) => ({ data }),
-      SET_AUTH: (data: any[]) => ({ data }),
+      SET_AUTH: (data: unknown[]) => ({ data }),
       SET_IS_ENROLLED: (data: boolean) => ({ data }),
       SET_STATUS: (data: boolean) => ({ data }),
 
@@ -152,12 +151,12 @@ export const biometricsMachine = model.createMachine(
         states: {
           unavailable: {
             meta: {
-              message: i18next.t('AuthScreen.errors.unavailable'),
+              message: 'errors.unavailable',
             },
           },
           unenrolled: {
             meta: {
-              message: i18next.t('AuthScreen.errors.unenrolled'),
+              message: 'errors.unenrolled',
             },
             on: {
               RETRY_AUTHENTICATE: {
@@ -176,12 +175,12 @@ export const biometricsMachine = model.createMachine(
               1000: '#biometrics.available',
             },
             meta: {
-              message: i18next.t('AuthScreen.errors.failed'),
+              message: 'errors.failed',
             },
           },
           error: {
             meta: {
-              message: i18next.t('AuthScreen.errors.generic'),
+              message: 'errors.generic',
             },
           },
         },
