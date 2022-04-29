@@ -16,6 +16,7 @@ import {
   selectUnenrolledNotice,
 } from '../machines/biometrics';
 import { SettingsEvents } from '../machines/settings';
+import { useTranslation } from 'react-i18next';
 
 export function useAuthScreen(props: RootRouteProps) {
   const { appService } = useContext(GlobalContext);
@@ -39,6 +40,8 @@ export function useAuthScreen(props: RootRouteProps) {
     props.navigation.navigate('Passcode', { setup: isSettingUp });
   };
 
+  const { t } = useTranslation('AuthScreen');
+
   useEffect(() => {
     if (isAuthorized) {
       props.navigation.reset({
@@ -58,11 +61,11 @@ export function useAuthScreen(props: RootRouteProps) {
       // handle biometric failure unknown error
     } else if (errorMsgBio) {
       // show alert message whenever biometric state gets failure
-      setHasAlertMsg(errorMsgBio);
+      setHasAlertMsg(t(errorMsgBio));
 
       // handle any unenrolled notice
     } else if (unEnrolledNoticeBio) {
-      setHasAlertMsg(unEnrolledNoticeBio);
+      setHasAlertMsg(t(unEnrolledNoticeBio));
 
       // we dont need to see this page to user once biometric is unavailable on its device
     } else if (isUnavailableBio) {
