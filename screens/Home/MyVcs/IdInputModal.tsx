@@ -20,16 +20,19 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <Column fill align="space-between" pY={32} pX={24}>
-          <Text align="center">{t('header')}</Text>
+          <Text align="center">
+            {t('header', { vcLabel: controller.vcLabel.singular })}
+          </Text>
           <Column>
             <Row crossAlign="flex-end">
               <Column
                 width="33%"
                 style={{
                   borderBottomWidth: 1,
-                  borderColor: Platform.OS === 'ios' ? 'transparent' : Colors.Grey,
+                  borderColor:
+                    Platform.OS === 'ios' ? 'transparent' : Colors.Grey,
                   bottom: Platform.OS === 'ios' ? 50 : 24,
-                  height: Platform.OS === 'ios' ? 100 : 'auto'
+                  height: Platform.OS === 'ios' ? 100 : 'auto',
                 }}>
                 <Picker
                   selectedValue={controller.idType}
@@ -55,7 +58,9 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
                   errorStyle={{ color: Colors.Red }}
                   errorMessage={controller.idError}
                   onChangeText={controller.INPUT_ID}
-                  ref={(node) => !controller.idInputRef && controller.READY(node)}
+                  ref={(node) =>
+                    !controller.idInputRef && controller.READY(node)
+                  }
                 />
               </Column>
             </Row>

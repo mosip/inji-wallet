@@ -12,7 +12,7 @@ export const AuthScreen: React.FC<RootRouteProps> = (props) => {
   const controller = useAuthScreen(props);
 
   return (
-    <Column fill padding="32 32 0 32" backgroundColor={Colors.White}>
+    <Column fill pY={32} pX={32} backgroundColor={Colors.White}>
       <MessageOverlay
         isVisible={controller.alertMsg != ''}
         onBackdropPress={controller.hideAlert}
@@ -24,7 +24,7 @@ export const AuthScreen: React.FC<RootRouteProps> = (props) => {
       <Centered fill>
         <Icon name="fingerprint" size={180} color={Colors.Orange} />
       </Centered>
-      <Column style={{ marginBottom: 32 }}>
+      <Column>
         <Button
           title={t('useBiometrics')}
           margin="0 0 8 0"
