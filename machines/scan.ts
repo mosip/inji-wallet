@@ -13,6 +13,7 @@ import { ActivityLogEvents } from './activityLog';
 import { VC_ITEM_STORE_KEY } from '../shared/constants';
 
 const checkingAirplaneMode = '#checkingAirplaneMode';
+const checkingLocationService = '#checkingLocationService';
 
 const model = createModel(
   {
@@ -86,21 +87,20 @@ export const scanMachine = model.createMachine(
         states: {
           checkingStatus: {
             on: {
-              FLIGHT_DISABLED: '#checkingLocationService',
+              FLIGHT_DISABLED: checkingLocationService,
               FLIGHT_ENABLED: 'enabled',
             },
           },
           requestingToDisable: {
             entry: ['requestToDisableFlightMode'],
             on: {
-              FLIGHT_DISABLED: 'checkingStatus',
+              FLIGHT_DISABLED: checkingLocationService,
             },
           },
           enabled: {
             on: {
               FLIGHT_REQUEST: 'requestingToDisable',
-              FLIGHT_DISABLED: checkingAirplaneMode,
-              FLIGHT_ENABLED: checkingAirplaneMode,
+              FLIGHT_DISABLED: checkingLocationService,
             },
           },
         },
