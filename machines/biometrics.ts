@@ -36,7 +36,7 @@ export const biometricsMachine = model.createMachine(
       init: {
         invoke: {
           src: LocalAuthentication.hasHardwareAsync,
-          onError: 'failure',
+          onError: 'failure.unavailable',
           onDone: {
             target: 'initAuthTypes',
             actions: ['setIsAvailable'],

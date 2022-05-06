@@ -1,5 +1,6 @@
 import { useMachine, useSelector } from '@xstate/react';
 import { useContext, useEffect, useState } from 'react';
+import * as LocalAuthentication from 'expo-local-authentication';
 import {
   AuthEvents,
   selectSettingUp,
@@ -73,8 +74,12 @@ export function useAuthScreen(props: RootRouteProps) {
     }
   }, [isSuccessBio, isUnavailableBio, errorMsgBio, unEnrolledNoticeBio]);
 
-  const useBiometrics = () => {
-    if (biometricState.matches({ failure: 'unenrolled' })) {
+  const useBiometrics = async () => {
+    const isBiometricsEnrolled = await LocalAuthentication.isEnrolledAsync();
+    if (
+      biometricState.matches({ failure: 'unenrolled' }) ||
+      !isBiometricsEnrolled
+    ) {
       biometricSend({ type: 'RETRY_AUTHENTICATE' });
       return;
     }
