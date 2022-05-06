@@ -76,15 +76,16 @@ export function useAuthScreen(props: RootRouteProps) {
 
   const useBiometrics = async () => {
     const isBiometricsEnrolled = await LocalAuthentication.isEnrolledAsync();
-    if (
-      biometricState.matches({ failure: 'unenrolled' }) ||
-      !isBiometricsEnrolled
-    ) {
-      biometricSend({ type: 'RETRY_AUTHENTICATE' });
-      return;
-    }
+    if (isBiometricsEnrolled) {
+      if (biometricState.matches({ failure: 'unenrolled' })) {
+        biometricSend({ type: 'RETRY_AUTHENTICATE' });
+        return;
+      }
 
-    biometricSend({ type: 'AUTHENTICATE' });
+      biometricSend({ type: 'AUTHENTICATE' });
+    } else {
+      setHasAlertMsg(t('errors.unenrolled'));
+    }
   };
 
   const hideAlert = () => {
