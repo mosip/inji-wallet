@@ -43,6 +43,13 @@ export function useAuthScreen(props: RootRouteProps) {
 
   const { t } = useTranslation('AuthScreen');
 
+  let isBiometricsEnrolled = false;
+  useEffect(() => {
+    async () => {
+      isBiometricsEnrolled = await LocalAuthentication.isEnrolledAsync();
+    };
+  }, []);
+
   useEffect(() => {
     if (isAuthorized) {
       props.navigation.reset({
@@ -75,7 +82,6 @@ export function useAuthScreen(props: RootRouteProps) {
   }, [isSuccessBio, isUnavailableBio, errorMsgBio, unEnrolledNoticeBio]);
 
   const useBiometrics = async () => {
-    const isBiometricsEnrolled = await LocalAuthentication.isEnrolledAsync();
     if (isBiometricsEnrolled) {
       if (biometricState.matches({ failure: 'unenrolled' })) {
         biometricSend({ type: 'RETRY_AUTHENTICATE' });
@@ -93,6 +99,7 @@ export function useAuthScreen(props: RootRouteProps) {
   };
 
   return {
+    isBiometricsEnrolled,
     isSettingUp,
     alertMsg,
     isEnabledBio,
