@@ -1,10 +1,10 @@
 import React from 'react';
+import { Icon } from 'react-native-elements';
 import { TextEditOverlay } from '../../components/TextEditOverlay';
 import { Column } from '../../components/ui';
 import { Modal } from '../../components/ui/Modal';
 import { Colors } from '../../components/ui/styleUtils';
 import { VcDetails } from '../../components/VcDetails';
-import { DropdownIcon } from '../../components/DropdownIcon';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { ToastItem } from '../../components/ui/ToastItem';
 import { Passcode } from '../../components/Passcode';
@@ -16,40 +16,15 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
   const { t } = useTranslation('ViewVcModal');
   const controller = useViewVcModal(props);
 
-  const DATA = [
-    {
-      label: controller.vc.locked ? t('unlock') : t('lock'),
-      icon: 'lock-outline',
-      onPress: () => controller.lockVc(),
-    },
-    {
-      label: t('rename'),
-      icon: 'pencil-outline',
-      onPress: () => controller.EDIT_TAG(),
-    },
-    {
-      label: t('revoke'),
-      icon: 'close-circle-outline',
-      onPress: () => {
-        // TODO
-      },
-    },
-    {
-      label: t('delete'),
-      icon: 'delete-outline',
-      onPress: () => {
-        // TODO
-      },
-    },
-  ];
-
   return (
     <Modal
       isVisible={props.isVisible}
       onDismiss={props.onDismiss}
       headerTitle={controller.vc.tag || controller.vc.id}
       headerElevation={2}
-      headerRight={<DropdownIcon icon="dots-vertical" items={DATA} />}>
+      headerRight={
+        <Icon name="edit" onPress={controller.EDIT_TAG} color={Colors.Orange} />
+      }>
       <Column scroll backgroundColor={Colors.LightGrey}>
         <Column>
           <VcDetails vc={controller.vc} />
