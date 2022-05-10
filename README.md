@@ -79,7 +79,7 @@ npm run build:android:mosip
 More info here: [Build your app from the command line](https://developer.android.com/studio/build/building-cmdline)
 
 ## Build using github actions
-One can clone the repo and run the build via github actions as shown below. <TODO add screenshot>
+One can clone the repo and run the build via github actions as shown below. TODO add screenshot.
 
 ## Credits
 
