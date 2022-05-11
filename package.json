@@ -2,12 +2,14 @@
   "scripts": {
     "prepare": "husky install",
     "android": "expo run:android",
-    "android:ph": "expo run:android --variant PhDebug",
+    "android:mosip": "expo run:android --variant MosipDebug",
     "android:newlogic": "expo run:android --variant NewlogicDebug",
+    "android:ph": "expo run:android --variant PhDebug",
     "ios": "expo run:ios",
     "eject": "expo eject --npm",
-    "build:android:ph": "cd android && ./gradlew :app:assemblePhRelease && cd ..",
+    "build:android:mosip": "cd android && ./gradlew :app:assembleMosipRelease && cd ..",
     "build:android:newlogic": "cd android && ./gradlew :app:assembleNewlogicRelease && cd ..",
+    "build:android:ph": "cd android && ./gradlew :app:assemblePhRelease && cd ..",
     "i18n:compile-strings": "node scripts/compile-strings.js"
   },
   "dependencies": {
