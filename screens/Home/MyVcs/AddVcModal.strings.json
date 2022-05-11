@@ -1,3 +1,14 @@
 {
-  "requestingCredential": "Requesting credential..."
+  "requestingCredential": "Requesting credential...",
+  "errors": {
+    "input": {
+      "empty": "The input cannot be empty",
+      "invalidFormat": "The input format is incorrect"
+    },
+    "backend": {
+      "invalidOtp": "OTP is invalid",
+      "invalidUin": "UIN invalid",
+      "invalidVid": "VID invalid"
+    }
+  }
 }

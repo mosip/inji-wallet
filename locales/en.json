@@ -40,7 +40,11 @@
     "unlock": "Unlock with fingerprint"
   },
   "HistoryTab": {
-    "noHistory": "No history available yet"
+    "noHistory": "No history available yet",
+    "downloaded": "downloaded",
+    "shared": "shared",
+    "received": "received",
+    "deleted": "deleted"
   },
   "HomeScreen": {
     "myVcsTab": "My\n{{vcLabel}}",
@@ -48,7 +52,18 @@
     "historyTab": "History"
   },
   "AddVcModal": {
-    "requestingCredential": "Requesting credential..."
+    "requestingCredential": "Requesting credential...",
+    "errors": {
+      "input": {
+        "empty": "The input cannot be empty",
+        "invalidFormat": "The input format is incorrect"
+      },
+      "backend": {
+        "invalidOtp": "OTP is invalid",
+        "invalidUin": "UIN invalid",
+        "invalidVid": "VID invalid"
+      }
+    }
   },
   "DownloadingVcModal": {
     "header": "Downloading your {{vcLabel}}",
@@ -89,6 +104,12 @@
     "revoke": "Revoke",
     "requestingOtp": "Requesting OTP...",
     "editTag": "Edit Tag"
+  },
+  "MainLayout": {
+    "home": "Home",
+    "scan": "Scan",
+    "request": "Request",
+    "profile": "Profile"
   },
   "PasscodeScreen": {
     "header": "Set a passcode to secure your application",

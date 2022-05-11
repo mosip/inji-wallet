@@ -9,7 +9,7 @@ export interface Typegen0 {
     setIdType: 'SELECT_ID_TYPE';
     clearId: 'SELECT_ID_TYPE';
     clearIdError: 'INPUT_ID';
-    setIdError:
+    setIdBackendError:
       | 'error.platform.AddVcModal.acceptingIdInput.requestingOtp:invocation[0]'
       | 'error.platform.AddVcModal.requestingCredential:invocation[0]';
     setOtp: 'INPUT_OTP';

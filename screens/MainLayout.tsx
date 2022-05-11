@@ -8,10 +8,13 @@ import { mainRoutes } from '../routes/main';
 import { RootRouteProps } from '../routes';
 import { LanguageSelector } from '../components/LanguageSelector';
 import { Colors } from '../components/ui/styleUtils';
+import { useTranslation } from 'react-i18next';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
 export const MainLayout: React.FC<RootRouteProps> = () => {
+  const { t } = useTranslation('MainLayout');
+
   const options: BottomTabNavigationOptions = {
     headerLeft: () => <Icon name="notifications" color={Colors.Orange} />,
     headerLeftContainerStyle: { paddingStart: 16 },
@@ -35,6 +38,7 @@ export const MainLayout: React.FC<RootRouteProps> = () => {
           component={route.component}
           options={{
             ...route.options,
+            title: t(route.name.toLowerCase()).toUpperCase(),
             tabBarIcon: ({ focused }) => (
               <Icon
                 name={route.icon}

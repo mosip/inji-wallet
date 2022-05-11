@@ -29,6 +29,7 @@
     "ios",
     "assets",
     "scripts",
+    "lib",
     "*.typegen.ts"
   ],
   "root": true,
