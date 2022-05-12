@@ -1,4 +1,5 @@
 import React from 'react';
+import * as DateFnsLocale from '../../lib/date-fns/locale';
 import { formatDistanceToNow } from 'date-fns';
 import { RefreshControl } from 'react-native';
 import { Centered, Column, Text } from '../../components/ui';
@@ -9,16 +10,19 @@ import { Icon } from 'react-native-elements';
 import { ActivityLog } from '../../machines/activityLog';
 import { useTranslation } from 'react-i18next';
 
-const createLabel = (activity: ActivityLog) =>
+const createLabel = (activity: ActivityLog, language: string) =>
   [
     activity.deviceName,
-    formatDistanceToNow(activity.timestamp, { addSuffix: true }),
+    formatDistanceToNow(activity.timestamp, {
+      addSuffix: true,
+      locale: DateFnsLocale[language],
+    }),
   ]
     .filter((label) => label.trim() !== '')
     .join(' · ');
 
 export const HistoryTab: React.FC<HomeScreenTabProps> = (props) => {
-  const { t } = useTranslation('HistoryTab');
+  const { t, i18n } = useTranslation('HistoryTab');
   const controller = useHistoryTab();
 
   return (
@@ -35,8 +39,8 @@ export const HistoryTab: React.FC<HomeScreenTabProps> = (props) => {
         {controller.activities.map((activity) => (
           <TextItem
             key={activity.timestamp}
-            label={createLabel(activity)}
-            text={`${activity.vcLabel} ${activity.action}`}
+            label={createLabel(activity, i18n.language)}
+            text={`${activity.vcLabel} ${t(activity.action)}`}
           />
         ))}
         {controller.activities.length === 0 && (

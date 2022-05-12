@@ -13,7 +13,7 @@
     "allowCameraButton": "Payagan gamitin ang camera"
   },
   "VcDetails": {
-    "generatedOn": "Nabuo noong",
+    "generatedOn": "Nilikha noong",
     "status": "Katayuan",
     "valid": "Napatunayan",
     "photo": "Larawan",
@@ -40,15 +40,32 @@
     "unlock": "I-unlock gamit ang fingerprint"
   },
   "HistoryTab": {
-    "noHistory": "Wala pang kasaysayan"
+    "noHistory": "Wala pang kasaysayan",
+    "downloaded": "nakuha",
+    "shared": "ibinahagi",
+    "received": "natanggap",
+    "deleted": "tinanggal"
   },
   "HomeScreen": {
     "myVcsTab": "Aking\n{{vcLabel}}",
-    "receivedVcsTab": "Natanggap na\n{{vcLabel}}",
+    "receivedVcsTab": "Nakuhang\n{{vcLabel}}",
     "historyTab": "Pangyayari"
   },
   "AddVcModal": {
-    "requestingCredential": "Humihiling ng kredensyal..."
+    "requestingCredential": "Humihiling ng kredensyal...",
+    "errors": {
+      "input": {
+        "empty": "Hindi maaaring walang laman ang input",
+        "invalidFormat": "Hindi tama ang format ng input"
+      },
+      "backend": {
+        "invalidOtp": "Di-wasto ang OTP",
+        "invalidUin": "Di-wastong UIN",
+        "invalidVid": "Di-wastong VID",
+        "missingUin": "Hindi mahanap ang iyong UIN",
+        "missingVid": "Hindi mahanap ang iyong VID"
+      }
+    }
   },
   "DownloadingVcModal": {
     "header": "Kinukuha ang iyong {{vcLabel}}",
@@ -69,10 +86,10 @@
     "generateVcDescription": "Pindutin ang \"Magdagdag ng {{vcLabel}}\" sa ibaba upang makuha ang iyong {{vcLabel}}"
   },
   "OnboardingOverlay": {
-    "stepOneTitle": "Maligayang pagdating!",
-    "stepOneText": "Panatilihin ang iyong digital na kredensyal sa iyo sa lahat ng oras. Upang makapagsimula, idagdag ang {{vcLabel}} sa iyong profile.",
+    "stepOneTitle": "Mabuhay!",
+    "stepOneText": "Panatilihing pribado ang iyong digital na kredensyal sa lahat ng pagkakataon. Upang makapagsimula, magdagdag ng {{vcLabel}} sa iyong profile.",
     "stepTwoTitle": "Pamamahala ng {{vcLabel}}",
-    "stepTwoText": "Kapag nabuo na, ang {{vcLabel}} ay ligtas na nakatago sa iyong mobile at maaaring palitan ang pangalan o ibahagi anumang oras.",
+    "stepTwoText": "Kapag nalikha na ang {{vcLabel}}, ito ay ligtas na nakatago sa iyong mobile at maaaring palitan ang pangalan o ibahagi anumang oras.",
     "stepThreeTitle": "Madaling pagbabahagi",
     "stepThreeText": "Ibahagi at tumanggap ng {{vcLabel}} nang mabilis gamit ang camera ng iyong mobile upang mag-scan ng mga QR code.",
     "stepThreeButton": "Magsimula at magdagdag ng {{vcLabel}}"
@@ -89,6 +106,12 @@
     "revoke": "Bawiin",
     "requestingOtp": "Humihiling ng OTP...",
     "editTag": "Palitan ang Tag"
+  },
+  "MainLayout": {
+    "home": "Home",
+    "scan": "Scan",
+    "request": "Request",
+    "profile": "Profile"
   },
   "PasscodeScreen": {
     "header": "Magtakda ng passcode upang masigurado ang iyong aplikasyon",
@@ -119,7 +142,7 @@
     "incomingVc": "Padating na {{vcLabel}}",
     "statusAccepted": {
       "title": "Tagumpay!",
-      "message": "Matagumpay na natanggap ang {{vcLabel}} mula kay {{sender}}"
+      "message": "Tagumpay na nakuha ang {{vcLabel}} mula kay {{sender}}"
     },
     "statusRejected": {
       "title": "Paunawa",

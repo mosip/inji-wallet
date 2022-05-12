@@ -11,6 +11,7 @@ import { createModel } from 'xstate/lib/model';
 import { BackendResponseError, request } from '../../../shared/request';
 import { VC_ITEM_STORE_KEY } from '../../../shared/constants';
 import { VcIdType } from '../../../types/vc';
+import i18n from '../../../i18n';
 
 const model = createModel(
   {
@@ -139,7 +140,7 @@ export const AddVcModalMachine =
                 ],
                 onError: [
                   {
-                    actions: 'setIdError',
+                    actions: 'setIdBackendError',
                     target: '#AddVcModal.acceptingIdInput.invalid.backend',
                   },
                 ],
@@ -175,7 +176,7 @@ export const AddVcModalMachine =
             ],
             onError: [
               {
-                actions: 'setIdError',
+                actions: 'setIdBackendError',
                 cond: 'isIdInvalid',
                 target: '#AddVcModal.acceptingIdInput.invalid.backend',
               },
@@ -217,9 +218,23 @@ export const AddVcModalMachine =
             (event as DoneInvokeEvent<string>).data,
         }),
 
-        setIdError: assign({
-          idError: (_context, event) =>
-            (event as ErrorPlatformEvent).data.message,
+        setIdBackendError: assign({
+          idError: (context, event) => {
+            const message = (event as ErrorPlatformEvent).data.message;
+            const ID_ERRORS_MAP = {
+              'UIN invalid': 'invalidUin',
+              'VID invalid': 'invalidVid',
+              'UIN not available in database': 'missingUin',
+              'VID not available in database': 'missingVid',
+              'Invalid Input Parameter - individualId':
+                context.idType === 'UIN' ? 'invalidUin' : 'invalidVid',
+            };
+            return ID_ERRORS_MAP[message]
+              ? i18n.t(`errors.backend.${ID_ERRORS_MAP[message]}`, {
+                  ns: 'AddVcModal',
+                })
+              : message;
+          },
         }),
 
         clearId: model.assign({ id: '' }),
@@ -227,16 +242,26 @@ export const AddVcModalMachine =
         clearIdError: model.assign({ idError: '' }),
 
         setIdErrorEmpty: model.assign({
-          idError: 'The input cannot be empty',
+          idError: () => i18n.t('errors.input.empty', { ns: 'AddVcModal' }),
         }),
 
         setIdErrorWrongFormat: model.assign({
-          idError: 'The input format is incorrect',
+          idError: () =>
+            i18n.t('errors.input.invalidFormat', { ns: 'AddVcModal' }),
         }),
 
         setOtpError: assign({
-          otpError: (_context, event) =>
-            (event as ErrorPlatformEvent).data.message,
+          otpError: (_context, event) => {
+            const message = (event as ErrorPlatformEvent).data.message;
+            const OTP_ERRORS_MAP = {
+              'OTP is invalid': 'invalidOtp',
+            };
+            return OTP_ERRORS_MAP[message]
+              ? i18n.t(`errors.backend.${OTP_ERRORS_MAP[message]}`, {
+                  ns: 'AddVcModal',
+                })
+              : message;
+          },
         }),
 
         setIdInputRef: model.assign({
