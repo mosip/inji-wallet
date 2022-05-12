@@ -22,7 +22,7 @@ import {
 } from '../../machines/biometrics';
 import { selectBiometricUnlockEnabled } from '../../machines/settings';
 
-export function useViewVcModal({ vcItemActor }: ViewVcModalProps) {
+export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
   const [toastVisible, setToastVisible] = useState(false);
   const [message, setMessage] = useState('');
   const [reAuthenticating, setReAuthenticating] = useState('');
@@ -75,6 +75,10 @@ export function useViewVcModal({ vcItemActor }: ViewVcModalProps) {
       onSuccess();
     }
   }, [reAuthenticating, isLockingVc, isSuccessBio, otError]);
+
+  useEffect(() => {
+    vcItemActor.send(VcItemEvents.REFRESH());
+  }, [isVisible]);
 
   return {
     error,

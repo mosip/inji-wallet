@@ -8,8 +8,13 @@ export interface VC {
   requestId: string;
   isVerified: boolean;
   lastVerifiedOn: number;
-  reason?: string;
   locked: boolean;
+  reason?: VCSharingReason[];
+}
+
+export interface VCSharingReason {
+  timestamp: number;
+  message: string;
 }
 
 export type VcIdType = 'UIN' | 'VID';

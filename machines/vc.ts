@@ -37,145 +37,173 @@ const model = createModel(
 
 export const VcEvents = model.events;
 
-export const vcMachine = model.createMachine(
-  {
-    tsTypes: {} as import('./vc.typegen').Typegen0,
-    schema: {
-      context: model.initialContext,
-      events: {} as EventFrom<typeof model>,
-    },
-    id: 'vc',
-    initial: 'init',
-    states: {
-      init: {
-        initial: 'myVcs',
-        states: {
-          myVcs: {
-            entry: ['loadMyVcs'],
-            on: {
-              STORE_RESPONSE: {
-                target: 'receivedVcs',
-                actions: ['setMyVcs'],
-              },
-            },
-          },
-          receivedVcs: {
-            entry: ['loadReceivedVcs'],
-            on: {
-              STORE_RESPONSE: {
-                target: '#ready',
-                actions: ['setReceivedVcs'],
-              },
-            },
-          },
-        },
+export const vcMachine =
+  /** @xstate-layout N4IgpgJg5mDOIC5QDcDGA6AlgO0wF3QFsBPANVVgGIBlAFQHkAlAUQH0XqAFegOWucSgADgHtY+TCOyCQAD0QBmABwAmdAEYALCoCsANgAMOgJx6dAdnNmANCGKIlBvemWbLKvcc06FVgL5+tmhYuAQATmCoYJjIkORUdExsHNx8AkggouJ4ktIZ8gjKalq65qrmmup6SpqatvYI6k6a6HoKmko6OkpK5sb9AUEYEQCGEMREZBRYEAA2YJQsAGIcABKsALIAmqykAMLUMlkSUjIF6uom6JV6ujrqxo7qZfWITRUamgpOKubdWuYVIMQMFRuNJvF0BEAGYRWAACxwUBoDBY7GYXF4-COYhOeVA50u5nQxh8fyKCm6uleCFMxKayjaBgUCjaFmBoLAYwmESiMTi00wcwWyzW6L2zAAkqRmAARXYHHHZXJnN7qXwacwGAyVJymJTqGnqlnoToqFS+XzqA1ODnDLng3nRWIQSEwuGI7DIxJolJY9LCXE5U75NV6dToJy+YwGXrGFRuI0WiNKUnqvS3LwGcwKO1Qh3ESgAcWYtHFUpl8v2hwyx2D+LkbxUplangzPVumhjdTsiEMBg0XWb6rp1vMebBhZLZf2rEltGYGyVeNVjQuEeZvi1zO1Nl7CH7g50w4Uo56E4LlFnAEFZbK5cv66vjAoI1ahyz9OSaYfLsfjCOejmGOF7cleeysLK9AAOo8AAMvQt4PrWQYqqGjTHgokbxhaKgPF46gqEoP7akeug1H0x7aKB4zgeW0rIYGyohgSfa6C4NRVO0mh6DxlQ0n8OitE0mhOD4OpuLmwLYCIEBwDIwQ4PgEIUI+aGsYU1ToBY0baM2Si3LxP5WJGNTNgYeFUgMgQghgSnhJEzoCvAKHMQ2BTtPSRg6o4omVBUNIAcUqgKCoTg9DqJh5vZaksY2hQWho3kdDqOrPD2DSGFhsbaAZDyAjxNETCQkJCvMsXuYgjzOOafxakorJuBaRoWUJ3wWRUHQ+AZehFSpsD5rCcCelAFWriOKbtg1XUmC8+79MYpras2Zj9H0CZ9SVqmuSu6GmGotUWLGjWAgoNKpi0DIhfoFhmFJQz5ty+Z8i6pXCmNe2dBoZj3BZlw1KyRqvhGGYWGtxhlAZSh9U6-KutM7rDUiH0aSOag+I8zQ-N4SYGd9VIPIRzZETDjlw-EKPxaYEZVF0TSWQDehGv9pqkgYENVJcvhFZTBQvvSP30-9XxM-ulgDldvjVA15qaHavOIM2i1NDoPmpf5GWIMe9JDjotSGFm6gBAEQA */
+  model.createMachine(
+    {
+      tsTypes: {} as import('./vc.typegen').Typegen0,
+      schema: {
+        context: model.initialContext,
+        events: {} as EventFrom<typeof model>,
       },
-      ready: {
-        id: 'ready',
-        entry: [sendParent('READY')],
-        on: {
-          GET_RECEIVED_VCS: {
-            actions: ['getReceivedVcsResponse'],
-          },
-          GET_VC_ITEM: {
-            actions: ['getVcItemResponse'],
-          },
-          VC_ADDED: {
-            actions: ['prependToMyVcs'],
-          },
-          VC_DOWNLOADED: {
-            actions: ['setDownloadedVc'],
-          },
-          VC_RECEIVED: {
-            actions: ['prependToReceivedVcs'],
-          },
-        },
-        type: 'parallel',
-        states: {
-          myVcs: {
-            initial: 'idle',
-            states: {
-              idle: {
-                on: {
-                  REFRESH_MY_VCS: 'refreshing',
+      id: 'vc',
+      initial: 'init',
+      states: {
+        init: {
+          initial: 'myVcs',
+          states: {
+            myVcs: {
+              entry: 'loadMyVcs',
+              on: {
+                STORE_RESPONSE: {
+                  actions: 'setMyVcs',
+                  target: 'receivedVcs',
                 },
               },
-              refreshing: {
-                entry: ['loadMyVcs'],
-                on: {
-                  STORE_RESPONSE: {
-                    target: 'idle',
-                    actions: ['setMyVcs'],
+            },
+            receivedVcs: {
+              entry: 'loadReceivedVcs',
+              on: {
+                STORE_RESPONSE: {
+                  actions: 'setReceivedVcs',
+                  target: '#vc.ready',
+                },
+              },
+            },
+          },
+        },
+        ready: {
+          entry: sendParent('READY'),
+          type: 'parallel',
+          states: {
+            myVcs: {
+              initial: 'idle',
+              states: {
+                idle: {
+                  on: {
+                    REFRESH_MY_VCS: {
+                      target: 'refreshing',
+                    },
+                  },
+                },
+                refreshing: {
+                  entry: 'loadMyVcs',
+                  on: {
+                    STORE_RESPONSE: {
+                      actions: 'setMyVcs',
+                      target: 'idle',
+                    },
+                  },
+                },
+              },
+            },
+            receivedVcs: {
+              initial: 'idle',
+              states: {
+                idle: {
+                  on: {
+                    REFRESH_RECEIVED_VCS: {
+                      target: 'refreshing',
+                    },
+                  },
+                },
+                refreshing: {
+                  entry: 'loadReceivedVcs',
+                  on: {
+                    STORE_RESPONSE: {
+                      actions: 'setReceivedVcs',
+                      target: 'idle',
+                    },
                   },
                 },
               },
             },
           },
-          receivedVcs: {
-            initial: 'idle',
-            states: {
-              idle: {
-                on: {
-                  REFRESH_RECEIVED_VCS: 'refreshing',
-                },
-              },
-              refreshing: {
-                entry: ['loadReceivedVcs'],
-                on: {
-                  STORE_RESPONSE: {
-                    target: 'idle',
-                    actions: ['setReceivedVcs'],
-                  },
-                },
-              },
+          on: {
+            GET_RECEIVED_VCS: {
+              actions: 'getReceivedVcsResponse',
             },
+            GET_VC_ITEM: {
+              actions: 'getVcItemResponse',
+            },
+            VC_ADDED: {
+              actions: 'prependToMyVcs',
+            },
+            VC_DOWNLOADED: {
+              actions: 'setDownloadedVc',
+            },
+            VC_RECEIVED: [
+              {
+                actions: 'moveExistingVcToTop',
+                cond: 'hasExistingReceivedVc',
+              },
+              {
+                actions: 'prependToReceivedVcs',
+              },
+            ],
           },
         },
       },
     },
-  },
-  {
-    actions: {
-      getReceivedVcsResponse: respond((context) => ({
-        type: 'VC_RESPONSE',
-        response: context.receivedVcs,
-      })),
+    {
+      actions: {
+        getReceivedVcsResponse: respond((context) => ({
+          type: 'VC_RESPONSE',
+          response: context.receivedVcs,
+        })),
 
-      getVcItemResponse: respond((context, event) => {
-        const vc = context.vcs[event.vcKey];
-        return VcItemEvents.GET_VC_RESPONSE(vc);
-      }),
+        getVcItemResponse: respond((context, event) => {
+          const vc = context.vcs[event.vcKey];
+          return VcItemEvents.GET_VC_RESPONSE(vc);
+        }),
 
-      loadMyVcs: send(StoreEvents.GET(MY_VCS_STORE_KEY), {
-        to: (context) => context.serviceRefs.store,
-      }),
+        loadMyVcs: send(StoreEvents.GET(MY_VCS_STORE_KEY), {
+          to: (context) => context.serviceRefs.store,
+        }),
 
-      loadReceivedVcs: send(StoreEvents.GET(RECEIVED_VCS_STORE_KEY), {
-        to: (context) => context.serviceRefs.store,
-      }),
+        loadReceivedVcs: send(StoreEvents.GET(RECEIVED_VCS_STORE_KEY), {
+          to: (context) => context.serviceRefs.store,
+        }),
 
-      setMyVcs: model.assign({
-        myVcs: (_context, event) => (event.response || []) as string[],
-      }),
+        setMyVcs: model.assign({
+          myVcs: (_context, event) => (event.response || []) as string[],
+        }),
 
-      setReceivedVcs: model.assign({
-        receivedVcs: (_context, event) => (event.response || []) as string[],
-      }),
+        setReceivedVcs: model.assign({
+          receivedVcs: (_context, event) => (event.response || []) as string[],
+        }),
 
-      setDownloadedVc: (context, event) => {
-        context.vcs[VC_ITEM_STORE_KEY(event.vc)] = event.vc;
+        setDownloadedVc: (context, event) => {
+          context.vcs[VC_ITEM_STORE_KEY(event.vc)] = event.vc;
+        },
+
+        prependToMyVcs: model.assign({
+          myVcs: (context, event) => [event.vcKey, ...context.myVcs],
+        }),
+
+        prependToReceivedVcs: model.assign({
+          receivedVcs: (context, event) => [
+            event.vcKey,
+            ...context.receivedVcs,
+          ],
+        }),
+
+        moveExistingVcToTop: model.assign({
+          receivedVcs: (context, event) => {
+            return [
+              event.vcKey,
+              ...context.receivedVcs.filter((value) => value !== event.vcKey),
+            ];
+          },
+        }),
       },
 
-      prependToMyVcs: model.assign({
-        myVcs: (context, event) => [event.vcKey, ...context.myVcs],
-      }),
-
-      prependToReceivedVcs: model.assign({
-        receivedVcs: (context, event) => [event.vcKey, ...context.receivedVcs],
-      }),
-    },
-  }
-);
+      guards: {
+        hasExistingReceivedVc: (context, event) =>
+          context.receivedVcs.includes(event.vcKey),
+      },
+    }
+  );
 
 export function createVcMachine(serviceRefs: AppServices) {
   return vcMachine.withContext({

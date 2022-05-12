@@ -304,7 +304,7 @@ export const scanMachine = model.createMachine(
         selectedVc: (context, event) => {
           return {
             ...event.vc,
-            reason: context.reason,
+            reason: [{ message: context.reason, timestamp: Date.now() }],
           };
         },
       }),

@@ -1,3 +1,4 @@
+import { formatDistanceToNow } from 'date-fns';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Image } from 'react-native';
@@ -5,6 +6,7 @@ import { Icon, ListItem } from 'react-native-elements';
 import { VC, CredentialSubject } from '../types/vc';
 import { Column, Row, Text } from './ui';
 import { Colors } from './ui/styleUtils';
+import { TextItem } from './ui/TextItem';
 
 const VerifiedIcon: React.FC = () => {
   return (
@@ -54,6 +56,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
           </Row>
         </Column>
       </Row>
+
       <ListItem bottomDivider>
         <ListItem.Content>
           <ListItem.Subtitle>{t('photo')}</ListItem.Subtitle>
@@ -74,64 +77,61 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
           </ListItem.Content>
         </ListItem.Content>
       </ListItem>
-      <ListItem bottomDivider>
-        <ListItem.Content>
-          <ListItem.Subtitle>{t('fullName')}</ListItem.Subtitle>
-          <ListItem.Title>
-            {props.vc?.verifiableCredential.credentialSubject.fullName}
-          </ListItem.Title>
-        </ListItem.Content>
-      </ListItem>
-      <ListItem bottomDivider>
-        <ListItem.Content>
-          <ListItem.Subtitle>{t('gender')}</ListItem.Subtitle>
-          <ListItem.Title>
-            {getLocalizedField(
-              props.vc?.verifiableCredential.credentialSubject.gender
-            )}
-          </ListItem.Title>
-        </ListItem.Content>
-      </ListItem>
-      <ListItem bottomDivider>
-        <ListItem.Content>
-          <ListItem.Subtitle>{t('dateOfBirth')}</ListItem.Subtitle>
-          <ListItem.Title>
-            {props.vc?.verifiableCredential.credentialSubject.dateOfBirth}
-          </ListItem.Title>
-        </ListItem.Content>
-      </ListItem>
-      <ListItem bottomDivider>
-        <ListItem.Content>
-          <ListItem.Subtitle>{t('phoneNumber')}</ListItem.Subtitle>
-          <ListItem.Title>
-            {props.vc?.verifiableCredential.credentialSubject.phone}
-          </ListItem.Title>
-        </ListItem.Content>
-      </ListItem>
-      <ListItem bottomDivider>
-        <ListItem.Content>
-          <ListItem.Subtitle>{t('email')}</ListItem.Subtitle>
-          <ListItem.Title>
-            {props.vc?.verifiableCredential.credentialSubject.email}
-          </ListItem.Title>
-        </ListItem.Content>
-      </ListItem>
-      <ListItem bottomDivider>
-        <ListItem.Content>
-          <ListItem.Subtitle>{t('address')}</ListItem.Subtitle>
-          <ListItem.Title>
-            {getFullAddress(props.vc?.verifiableCredential.credentialSubject)}
-          </ListItem.Title>
-        </ListItem.Content>
-      </ListItem>
-      {Boolean(props.vc?.reason) && (
-        <ListItem bottomDivider>
-          <ListItem.Content>
-            <ListItem.Subtitle>{t('reasonForSharing')}</ListItem.Subtitle>
-            <ListItem.Title>{props.vc?.reason}</ListItem.Title>
-          </ListItem.Content>
-        </ListItem>
+
+      <TextItem
+        divider
+        label={t('fullName')}
+        text={props.vc?.verifiableCredential.credentialSubject.fullName}
+      />
+
+      <TextItem
+        divider
+        label={t('gender')}
+        text={getLocalizedField(
+          props.vc?.verifiableCredential.credentialSubject.gender
+        )}
+      />
+
+      <TextItem
+        divider
+        label={t('dateOfBirth')}
+        text={props.vc?.verifiableCredential.credentialSubject.dateOfBirth}
+      />
+
+      <TextItem
+        divider
+        label={t('phoneNumber')}
+        text={props.vc?.verifiableCredential.credentialSubject.phone}
+      />
+
+      <TextItem
+        divider
+        label={t('email')}
+        text={props.vc?.verifiableCredential.credentialSubject.email}
+      />
+
+      <TextItem
+        divider
+        label={t('address')}
+        text={getFullAddress(props.vc?.verifiableCredential.credentialSubject)}
+      />
+
+      {props.vc?.reason?.length > 0 && (
+        <Text margin="24 24 16 24" weight="semibold">
+          {t('reasonForSharing')}
+        </Text>
       )}
+      {props.vc?.reason?.map((reason, index) => (
+        <TextItem
+          key={index}
+          divider
+          label={formatDistanceToNow(reason.timestamp, {
+            addSuffix: true,
+            // locale: DateFnsLocale[i18n.language],
+          })}
+          text={reason.message}
+        />
+      ))}
     </Column>
   );
 };
@@ -158,6 +158,7 @@ function getFullAddress(credential: CredentialSubject) {
     'province',
     'region',
   ];
+
   return fields
     .map((field) => getLocalizedField(credential[field]))
     .concat(credential.postalCode)
