@@ -302,10 +302,11 @@ export const scanMachine = model.createMachine(
 
       setSelectedVc: model.assign({
         selectedVc: (context, event) => {
-          return {
-            ...event.vc,
-            reason: [{ message: context.reason, timestamp: Date.now() }],
-          };
+          const reason = [];
+          if (context.reason.trim() !== '') {
+            reason.push({ message: context.reason, timestamp: Date.now() });
+          }
+          return { ...event.vc, reason };
         },
       }),
 
