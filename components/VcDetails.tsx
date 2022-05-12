@@ -56,6 +56,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
           </Row>
         </Column>
       </Row>
+
       <ListItem bottomDivider>
         <ListItem.Content>
           <ListItem.Subtitle>{t('photo')}</ListItem.Subtitle>
@@ -76,46 +77,58 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
           </ListItem.Content>
         </ListItem.Content>
       </ListItem>
+
       <TextItem
         divider
-        label="Full name"
+        label={t('fullName')}
         text={props.vc?.verifiableCredential.credentialSubject.fullName}
       />
+
       <TextItem
         divider
-        label="Gender"
-        text={props.vc?.verifiableCredential.credentialSubject.gender}
+        label={t('gender')}
+        text={getLocalizedField(
+          props.vc?.verifiableCredential.credentialSubject.gender
+        )}
       />
+
       <TextItem
         divider
-        label="Date of birth"
+        label={t('dateOfBirth')}
         text={props.vc?.verifiableCredential.credentialSubject.dateOfBirth}
       />
+
       <TextItem
         divider
-        label="Phone number"
+        label={t('phoneNumber')}
         text={props.vc?.verifiableCredential.credentialSubject.phone}
       />
+
       <TextItem
         divider
-        label="Email"
+        label={t('email')}
         text={props.vc?.verifiableCredential.credentialSubject.email}
       />
+
       <TextItem
         divider
-        label="Address"
+        label={t('address')}
         text={getFullAddress(props.vc?.verifiableCredential.credentialSubject)}
       />
+
       {props.vc?.reason?.length > 0 && (
         <Text margin="24 24 16 24" weight="semibold">
-          Reason(s) for sharing
+          {t('reasonForSharing')}
         </Text>
       )}
       {props.vc?.reason?.map((reason, index) => (
         <TextItem
           key={index}
           divider
-          label={formatDistanceToNow(reason.timestamp, { addSuffix: true })}
+          label={formatDistanceToNow(reason.timestamp, {
+            addSuffix: true,
+            // locale: DateFnsLocale[i18n.language],
+          })}
           text={reason.message}
         />
       ))}
@@ -152,6 +165,7 @@ function getFullAddress(credential: CredentialSubject) {
     .filter(Boolean)
     .join(', ');
 }
+
 function getLocalizedField(rawField: string | LocalizedField) {
   try {
     const locales: LocalizedField[] =
