@@ -51,6 +51,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
         title={t('requestingOtp')}
         hasProgress
       />
+
       {controller.reAuthenticating !== '' &&
         controller.reAuthenticating == 'passcode' && (
           <Passcode

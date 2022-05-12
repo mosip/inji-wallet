@@ -9,7 +9,12 @@ export interface VC {
   isVerified: boolean;
   lastVerifiedOn: number;
   locked: boolean;
-  reason?: string[];
+  reason?: VCSharingReason[];
+}
+
+export interface VCSharingReason {
+  timestamp: number;
+  message: string;
 }
 
 export type VcIdType = 'UIN' | 'VID';

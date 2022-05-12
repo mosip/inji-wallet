@@ -9,6 +9,7 @@ export interface Typegen0 {
     getVcItemResponse: 'GET_VC_ITEM';
     prependToMyVcs: 'VC_ADDED';
     setDownloadedVc: 'VC_DOWNLOADED';
+    moveExistingVcToTop: 'VC_RECEIVED';
     prependToReceivedVcs: 'VC_RECEIVED';
     loadMyVcs: 'REFRESH_MY_VCS';
     loadReceivedVcs: 'STORE_RESPONSE' | 'REFRESH_RECEIVED_VCS';
@@ -24,7 +25,9 @@ export interface Typegen0 {
     delays: never;
   };
   'eventsCausingServices': {};
-  'eventsCausingGuards': {};
+  'eventsCausingGuards': {
+    hasExistingReceivedVc: 'VC_RECEIVED';
+  };
   'eventsCausingDelays': {};
   'matchesStates':
     | 'init'
