@@ -224,6 +224,8 @@ export const AddVcModalMachine =
             const ID_ERRORS_MAP = {
               'UIN invalid': 'invalidUin',
               'VID invalid': 'invalidVid',
+              'UIN not available in database': 'missingUin',
+              'VID not available in database': 'missingVid',
               'Invalid Input Parameter - individualId':
                 context.idType === 'UIN' ? 'invalidUin' : 'invalidVid',
             };

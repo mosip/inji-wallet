@@ -61,7 +61,9 @@
       "backend": {
         "invalidOtp": "OTP is invalid",
         "invalidUin": "UIN invalid",
-        "invalidVid": "VID invalid"
+        "invalidVid": "VID invalid",
+        "missingUin": "UIN not available in database",
+        "missingVid": "VID not available in database"
       }
     }
   },

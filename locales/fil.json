@@ -61,7 +61,9 @@
       "backend": {
         "invalidOtp": "Di-wasto ang OTP",
         "invalidUin": "Di-wastong UIN",
-        "invalidVid": "Di-wastong VID"
+        "invalidVid": "Di-wastong VID",
+        "missingUin": "Hindi mahanap ang iyong UIN",
+        "missingVid": "Hindi mahanap ang iyong VID"
       }
     }
   },
