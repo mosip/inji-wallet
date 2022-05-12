@@ -1,9 +1,9 @@
 import { useMachine, useSelector } from '@xstate/react';
 import { useContext, useEffect, useState } from 'react';
 import { ActorRefFrom } from 'xstate';
+import NetInfo from '@react-native-community/netinfo';
 import { ModalProps } from '../../components/ui/Modal';
 import { GlobalContext } from '../../shared/GlobalContext';
-import { selectIsOnline } from '../../machines/app';
 import {
   selectOtpError,
   selectIsAcceptingOtpInput,
@@ -31,7 +31,6 @@ export function useViewVcModal({ vcItemActor }: ViewVcModalProps) {
   const authService = appService.children.get('auth');
   const settingsService = appService.children.get('settings');
   const [, bioSend, bioService] = useMachine(biometricsMachine);
-  const isOnline = useSelector(appService, selectIsOnline);
   const isBiometricUnlockEnabled = useSelector(
     settingsService,
     selectBiometricUnlockEnabled
@@ -93,24 +92,28 @@ export function useViewVcModal({ vcItemActor }: ViewVcModalProps) {
     setReAuthenticating,
     onError,
     lockVc: () => {
-      if (isOnline) {
-        if (isAvailable && isBiometricUnlockEnabled) {
-          setReAuthenticating('biometrics');
-          bioSend({ type: 'AUTHENTICATE' });
+      NetInfo.fetch().then((state) => {
+        if (state.isConnected) {
+          if (isAvailable && isBiometricUnlockEnabled) {
+            setReAuthenticating('biometrics');
+            bioSend({ type: 'AUTHENTICATE' });
+          } else {
+            setReAuthenticating('passcode');
+          }
         } else {
-          setReAuthenticating('passcode');
+          showToast('Request network failed');
         }
-      } else {
-        showToast('Request network failed');
-      }
+      });
     },
     inputOtp: (otp: string) => {
-      if (isOnline) {
-        vcItemActor.send(VcItemEvents.INPUT_OTP(otp));
-      } else {
-        vcItemActor.send(VcItemEvents.DISMISS());
-        showToast('Request network failed');
-      }
+      NetInfo.fetch().then((state) => {
+        if (state.isConnected) {
+          vcItemActor.send(VcItemEvents.INPUT_OTP(otp));
+        } else {
+          vcItemActor.send(VcItemEvents.DISMISS());
+          showToast('Request network failed');
+        }
+      });
     },
     onSuccess,
     EDIT_TAG: () => vcItemActor.send(VcItemEvents.EDIT_TAG()),
