@@ -74,7 +74,11 @@ npm run build:android:newlogic
 More info here: [Build your app from the command line](https://developer.android.com/studio/build/building-cmdline)
 
 ## Build using github actions
-One can clone the repo and run the build via github actions as shown below. TODO add screenshot.
+One can clone the repo and run the build via github actions as shown below.
+
+
+![](docs/images/build_github_actions.png)
+
 
 ## Credits
 Credits listed [here](/Credits.md)
