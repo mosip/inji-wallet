@@ -44,7 +44,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
             {props.vc?.id}
           </Text>
         </Column>
-        <Column fill elevation={1} padding="12 16" margin="">
+        <Column fill elevation={1} padding="12 16">
           <Text size="smaller" color={Colors.Grey}>
             {t('status')}
           </Text>

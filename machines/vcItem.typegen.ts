@@ -36,7 +36,7 @@ export interface Typegen0 {
     setLock: 'done.invoke.vc-item.requestingLock:invocation[0]';
     setOtpError: 'error.platform.vc-item.requestingLock:invocation[0]';
     requestVcContext: 'xstate.init';
-    requestStoredContext: 'GET_VC_RESPONSE';
+    requestStoredContext: 'REFRESH' | 'GET_VC_RESPONSE';
     storeTag: 'SAVE_TAG';
     setTransactionId: 'LOCK_VC' | 'UNLOCK_VC';
     storeLock: 'done.invoke.vc-item.requestingLock:invocation[0]';

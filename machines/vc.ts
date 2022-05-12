@@ -192,7 +192,7 @@ export const vcMachine =
           receivedVcs: (context, event) => {
             return [
               event.vcKey,
-              ...context.receivedVcs.filter((value) => value === event.vcKey),
+              ...context.receivedVcs.filter((value) => value !== event.vcKey),
             ];
           },
         }),
