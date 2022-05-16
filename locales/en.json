@@ -140,21 +140,23 @@
     "bluetoothDenied": "Please enable Bluetooth to be able to request {{vcLabel}}",
     "showQrCode": "Show this QR code to request {{vcLabel}}",
     "incomingVc": "Incoming {{vcLabel}}",
-    "statusAccepted": {
-      "title": "Success!",
-      "message": "{{vcLabel}} has been successfully received from {{sender}}"
-    },
-    "statusRejected": {
-      "title": "Notice",
-      "message": "You rejected {{sender}}'s {{vcLabel}}"
-    },
-    "statusDisconnected": {
-      "title": "Disconnected",
-      "message": "The connection was interrupted. Please try again."
-    },
-    "statusWaiting": "Waiting for connection...",
-    "statusExchanging": "Exchanging device info...",
-    "statusConnected": "Connected to device. Waiting for {{vcLabel}}..."
+    "status": {
+      "accepted": {
+        "title": "Success!",
+        "message": "{{vcLabel}} has been successfully received from {{sender}}"
+      },
+      "rejected": {
+        "title": "Notice",
+        "message": "You rejected {{sender}}'s {{vcLabel}}"
+      },
+      "disconnected": {
+        "title": "Disconnected",
+        "message": "The connection was interrupted. Please try again."
+      },
+      "waitingConnection": "Waiting for connection...",
+      "exchangingDeviceInfo": "Exchanging device info...",
+      "connected": "Connected to device. Waiting for {{vcLabel}}..."
+    }
   },
   "ScanScreen": {
     "header": "Scan QR Code",
@@ -173,6 +175,11 @@
         "message": "Location permission is required for the scanning functionality",
         "button": "Allow access to location"
       }
+    },
+    "status": {
+      "connecting": "Connecting...",
+      "exchangingDeviceInfo": "Exchanging device info...",
+      "invalid": "Invalid QR Code"
     }
   },
   "SelectVcOverlay": {

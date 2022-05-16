@@ -140,21 +140,23 @@
     "bluetoothDenied": "Mangyaring paganahin ang Bluetooth upang makahiling ng {{vcLabel}}",
     "showQrCode": "Ipakita ang QR code na ito para makahiling ng {{vcLabel}}",
     "incomingVc": "Padating na {{vcLabel}}",
-    "statusAccepted": {
-      "title": "Tagumpay!",
-      "message": "Tagumpay na nakuha ang {{vcLabel}} mula kay {{sender}}"
-    },
-    "statusRejected": {
-      "title": "Paunawa",
-      "message": "Tinanggihan mo ang {{vcLabel}} ni {{sender}}"
-    },
-    "statusDisconnected": {
-      "title": "Nadiskonekta",
-      "message": "Naputol ang koneksyon. Pakiulit."
-    },
-    "statusWaiting": "Naghihintay ng koneksyon...",
-    "statusExchanging": "Nagpapalitan ng impormasyon ng device...",
-    "statusConnected": "Nakakonekta sa device. Naghihintay ng {{vcLabel}}..."
+    "status": {
+      "accepted": {
+        "title": "Tagumpay!",
+        "message": "Tagumpay na nakuha ang {{vcLabel}} mula kay {{sender}}"
+      },
+      "rejected": {
+        "title": "Paunawa",
+        "message": "Tinanggihan mo ang {{vcLabel}} ni {{sender}}"
+      },
+      "disconnected": {
+        "title": "Nadiskonekta",
+        "message": "Naputol ang koneksyon. Pakiulit."
+      },
+      "waitingConnection": "Naghihintay ng koneksyon...",
+      "exchangingDeviceInfo": "Nagpapalitan ng impormasyon ng device...",
+      "connected": "Nakakonekta sa device. Naghihintay ng {{vcLabel}}..."
+    }
   },
   "ScanScreen": {
     "header": "I-scan ang QR Code",
@@ -173,6 +175,11 @@
         "message": "Kinakailangan ang pahintulot sa lokasyon ng iyong mobile para maaaring makapag-scan",
         "button": "Payagan ng pahintulot sa lokasyon"
       }
+    },
+    "status": {
+      "connecting": "Kumokonekta...",
+      "exchangingDeviceInfo": "Nagpapalitan ng impormasyon ng device...",
+      "invalid": "Di-wasto ang QR Code"
     }
   },
   "SelectVcOverlay": {

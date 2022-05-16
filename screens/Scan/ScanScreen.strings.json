@@ -15,5 +15,10 @@
       "message": "Location permission is required for the scanning functionality",
       "button": "Allow access to location"
     }
+  },
+  "status": {
+    "connecting": "Connecting...",
+    "exchangingDeviceInfo": "Exchanging device info...",
+    "invalid": "Invalid QR Code"
   }
 }
