@@ -28,7 +28,7 @@ export const AuthScreen: React.FC<RootRouteProps> = (props) => {
         <Button
           title={t('useBiometrics')}
           margin="0 0 8 0"
-          disabled={!controller.isEnabledBio}
+          disabled={!controller.isBiometricsEnrolled}
           onPress={controller.useBiometrics}
         />
         <Button

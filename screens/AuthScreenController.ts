@@ -1,5 +1,6 @@
 import { useMachine, useSelector } from '@xstate/react';
 import { useContext, useEffect, useState } from 'react';
+import * as LocalAuthentication from 'expo-local-authentication';
 import {
   AuthEvents,
   selectSettingUp,
@@ -42,6 +43,13 @@ export function useAuthScreen(props: RootRouteProps) {
 
   const { t } = useTranslation('AuthScreen');
 
+  let isBiometricsEnrolled = false;
+  useEffect(() => {
+    async () => {
+      isBiometricsEnrolled = await LocalAuthentication.isEnrolledAsync();
+    };
+  }, []);
+
   useEffect(() => {
     if (isAuthorized) {
       props.navigation.reset({
@@ -73,13 +81,17 @@ export function useAuthScreen(props: RootRouteProps) {
     }
   }, [isSuccessBio, isUnavailableBio, errorMsgBio, unEnrolledNoticeBio]);
 
-  const useBiometrics = () => {
-    if (biometricState.matches({ failure: 'unenrolled' })) {
-      biometricSend({ type: 'RETRY_AUTHENTICATE' });
-      return;
-    }
+  const useBiometrics = async () => {
+    if (isBiometricsEnrolled) {
+      if (biometricState.matches({ failure: 'unenrolled' })) {
+        biometricSend({ type: 'RETRY_AUTHENTICATE' });
+        return;
+      }
 
-    biometricSend({ type: 'AUTHENTICATE' });
+      biometricSend({ type: 'AUTHENTICATE' });
+    } else {
+      setHasAlertMsg(t('errors.unenrolled'));
+    }
   };
 
   const hideAlert = () => {
@@ -87,6 +99,7 @@ export function useAuthScreen(props: RootRouteProps) {
   };
 
   return {
+    isBiometricsEnrolled,
     isSettingUp,
     alertMsg,
     isEnabledBio,
