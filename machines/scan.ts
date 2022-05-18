@@ -175,9 +175,6 @@ export const scanMachine = model.createMachine(
         },
       },
       connecting: {
-        meta: {
-          message: 'Connecting...',
-        },
         invoke: {
           src: 'discoverDevice',
         },
@@ -186,9 +183,6 @@ export const scanMachine = model.createMachine(
         },
       },
       exchangingDeviceInfo: {
-        meta: {
-          message: 'Exchanging device info...',
-        },
         invoke: {
           src: 'exchangeDeviceInfo',
         },
@@ -253,9 +247,6 @@ export const scanMachine = model.createMachine(
         },
       },
       invalid: {
-        meta: {
-          message: 'Invalid QR Code',
-        },
         on: {
           DISMISS: 'findingConnection',
         },
@@ -518,39 +509,39 @@ export function selectVcName(state: State) {
   return state.context.vcName;
 }
 
-export function selectStatusMessage(state: State) {
-  return (
-    state.meta[`${state.machine.id}.${state.value}`]?.message ||
-    state.meta[state.value.toString()]?.message ||
-    ''
-  );
-}
-
-export function selectScanning(state: State) {
+export function selectIsScanning(state: State) {
   return state.matches('findingConnection');
 }
 
-export function selectReviewing(state: State) {
+export function selectIsConnecting(state: State) {
+  return state.matches('connecting');
+}
+
+export function selectIsExchangingDeviceInfo(state: State) {
+  return state.matches('exchangingDeviceInfo');
+}
+
+export function selectIsReviewing(state: State) {
   return state.matches('reviewing');
 }
 
-export function selectSelectingVc(state: State) {
+export function selectIsSelectingVc(state: State) {
   return state.matches('reviewing.selectingVc');
 }
 
-export function selectSendingVc(state: State) {
+export function selectIsSendingVc(state: State) {
   return state.matches('reviewing.sendingVc');
 }
 
-export function selectAccepted(state: State) {
+export function selectIsAccepted(state: State) {
   return state.matches('reviewing.accepted');
 }
 
-export function selectRejected(state: State) {
+export function selectIsRejected(state: State) {
   return state.matches('reviewing.rejected');
 }
 
-export function selectInvalid(state: State) {
+export function selectIsInvalid(state: State) {
   return state.matches('invalid');
 }
 

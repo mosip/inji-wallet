@@ -45,11 +45,11 @@ export function useRequestScreen({ navigation }: MainRouteProps) {
 
   let statusMessage = '';
   if (isWaitingForConnection) {
-    statusMessage = t('statusWaiting');
+    statusMessage = t('status.waitingConnection');
   } else if (isExchangingDeviceInfo) {
-    statusMessage = t('statusExchanging');
+    statusMessage = t('status.exchangingDeviceInfo');
   } else if (isWaitingForVc) {
-    statusMessage = t('statusConnected', { vcLabel: vcLabel.singular });
+    statusMessage = t('status.connected', { vcLabel: vcLabel.singular });
   }
 
   useEffect(() => {

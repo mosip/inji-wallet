@@ -55,8 +55,8 @@ export const RequestScreen: React.FC<MainRouteProps> = (props) => {
 
       <MessageOverlay
         isVisible={controller.isAccepted}
-        title={t('statusAccepted.title')}
-        message={t('statusAccepted.message', {
+        title={t('status.accepted.title')}
+        message={t('status.accepted.message', {
           vcLabel: controller.vcLabel.singular,
           sender: controller.senderInfo.deviceName,
         })}
@@ -65,8 +65,8 @@ export const RequestScreen: React.FC<MainRouteProps> = (props) => {
 
       <MessageOverlay
         isVisible={controller.isRejected}
-        title={t('statusRejected.title')}
-        message={t('statusRejected.message', {
+        title={t('status.rejected.title')}
+        message={t('status.rejected.message', {
           vcLabel: controller.vcLabel.singular,
           sender: controller.senderInfo.deviceName,
         })}
@@ -75,8 +75,8 @@ export const RequestScreen: React.FC<MainRouteProps> = (props) => {
 
       <MessageOverlay
         isVisible={controller.isDisconnected}
-        title={t('statusDisconnected.title')}
-        message={t('statusDisconnected.message')}
+        title={t('status.disconnected.title')}
+        message={t('status.disconnected.message')}
         onBackdropPress={controller.DISMISS}
       />
     </Column>

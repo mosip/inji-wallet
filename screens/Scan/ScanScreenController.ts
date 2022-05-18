@@ -3,13 +3,14 @@ import { useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   ScanEvents,
-  selectInvalid,
+  selectIsInvalid,
   selectIsAirplaneEnabled,
   selectIsLocationDisabled,
   selectIsLocationDenied,
-  selectReviewing,
-  selectScanning,
-  selectStatusMessage,
+  selectIsReviewing,
+  selectIsScanning,
+  selectIsConnecting,
+  selectIsExchangingDeviceInfo,
 } from '../../machines/scan';
 import { selectVcLabel } from '../../machines/settings';
 import { selectShareableVcs } from '../../machines/vc';
@@ -24,7 +25,6 @@ export function useScanScreen({ navigation }: MainRouteProps) {
   const vcService = appService.children.get('vc');
 
   const shareableVcs = useSelector(vcService, selectShareableVcs);
-  const isInvalid = useSelector(scanService, selectInvalid);
 
   const isLocationDisabled = useSelector(scanService, selectIsLocationDisabled);
   const isLocationDenied = useSelector(scanService, selectIsLocationDenied);
@@ -34,14 +34,28 @@ export function useScanScreen({ navigation }: MainRouteProps) {
   if (isFlightMode) {
     locationError.message = t('errors.flightMode.message');
     locationError.button = t('errors.flightMode.button');
-  } else {
-    if (isLocationDisabled) {
-      locationError.message = t('errors.locationDisabled.message');
-      locationError.button = t('errors.locationDisabled.button');
-    } else if (isLocationDenied) {
-      locationError.message = t('errors.locationDenied.message');
-      locationError.button = t('errors.locationDenied.button');
-    }
+  } else if (isLocationDisabled) {
+    locationError.message = t('errors.locationDisabled.message');
+    locationError.button = t('errors.locationDisabled.button');
+  } else if (isLocationDenied) {
+    locationError.message = t('errors.locationDenied.message');
+    locationError.button = t('errors.locationDenied.button');
+  }
+
+  const isInvalid = useSelector(scanService, selectIsInvalid);
+  const isConnecting = useSelector(scanService, selectIsConnecting);
+  const isExchangingDeviceInfo = useSelector(
+    scanService,
+    selectIsExchangingDeviceInfo
+  );
+
+  let statusMessage = '';
+  if (isConnecting) {
+    statusMessage = t('status.connecting');
+  } else if (isExchangingDeviceInfo) {
+    statusMessage = t('status.exchangingDeviceInfo');
+  } else if (isInvalid) {
+    statusMessage = t('status.invalid');
   }
 
   useEffect(() => {
@@ -68,16 +82,16 @@ export function useScanScreen({ navigation }: MainRouteProps) {
 
   return {
     locationError,
-    statusMessage: useSelector(scanService, selectStatusMessage),
     vcLabel: useSelector(settingsService, selectVcLabel),
 
     isInvalid,
     isEmpty: !shareableVcs.length,
     isLocationDisabled,
     isLocationDenied,
-    isScanning: useSelector(scanService, selectScanning),
-    isReviewing: useSelector(scanService, selectReviewing),
+    isScanning: useSelector(scanService, selectIsScanning),
+    isReviewing: useSelector(scanService, selectIsReviewing),
     isFlightMode,
+    statusMessage,
 
     DISMISS: () => scanService.send(ScanEvents.DISMISS()),
     ON_REQUEST: () =>

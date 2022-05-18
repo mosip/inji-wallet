@@ -2,12 +2,12 @@ import { useSelector } from '@xstate/react';
 import { useContext } from 'react';
 import {
   ScanEvents,
-  selectAccepted,
+  selectIsAccepted,
   selectReason,
   selectReceiverInfo,
-  selectRejected,
-  selectSelectingVc,
-  selectSendingVc,
+  selectIsRejected,
+  selectIsSelectingVc,
+  selectIsSendingVc,
   selectVcName,
 } from '../../machines/scan';
 import { selectVcLabel } from '../../machines/settings';
@@ -28,10 +28,10 @@ export function useSendVcModal() {
     vcLabel: useSelector(settingsService, selectVcLabel),
     vcKeys: useSelector(vcService, selectShareableVcs),
 
-    isSelectingVc: useSelector(scanService, selectSelectingVc),
-    isSendingVc: useSelector(scanService, selectSendingVc),
-    isAccepted: useSelector(scanService, selectAccepted),
-    isRejected: useSelector(scanService, selectRejected),
+    isSelectingVc: useSelector(scanService, selectIsSelectingVc),
+    isSendingVc: useSelector(scanService, selectIsSendingVc),
+    isAccepted: useSelector(scanService, selectIsAccepted),
+    isRejected: useSelector(scanService, selectIsRejected),
 
     ACCEPT_REQUEST: () => scanService.send(ScanEvents.ACCEPT_REQUEST()),
     CANCEL: () => scanService.send(ScanEvents.CANCEL()),
