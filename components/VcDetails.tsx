@@ -1,5 +1,6 @@
 import { formatDistanceToNow } from 'date-fns';
 import React from 'react';
+import * as DateFnsLocale from '../lib/date-fns/locale';
 import { useTranslation } from 'react-i18next';
 import { Image } from 'react-native';
 import { Icon, ListItem } from 'react-native-elements';
@@ -20,7 +21,7 @@ const VerifiedIcon: React.FC = () => {
 };
 
 export const VcDetails: React.FC<VcDetailsProps> = (props) => {
-  const { t } = useTranslation('VcDetails');
+  const { t, i18n } = useTranslation('VcDetails');
 
   return (
     <Column>
@@ -127,7 +128,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
           divider
           label={formatDistanceToNow(reason.timestamp, {
             addSuffix: true,
-            // locale: DateFnsLocale[i18n.language],
+            locale: DateFnsLocale[i18n.language],
           })}
           text={reason.message}
         />
