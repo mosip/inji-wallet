@@ -91,7 +91,7 @@ export const OnboardingOverlay: React.FC<OnboardingProps> = (props) => {
   const renderItem = ({ item }) => {
     return (
       <View style={styles.slide}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={true}>
           <Text style={styles.title}>{item.title}</Text>
           <Text style={styles.text}>{item.text}</Text>
           {item.footer}
