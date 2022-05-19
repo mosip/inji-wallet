@@ -59,6 +59,7 @@ export function useScanScreen({ navigation }: MainRouteProps) {
   }
 
   useEffect(() => {
+    console.log('test');
     const subscriptions = [
       navigation.addListener('focus', () =>
         scanService.send(ScanEvents.SCREEN_FOCUS())
