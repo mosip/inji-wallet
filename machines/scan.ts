@@ -12,6 +12,8 @@ import { AppServices } from '../shared/GlobalContext';
 import { ActivityLogEvents } from './activityLog';
 import { VC_ITEM_STORE_KEY } from '../shared/constants';
 
+const checkingAirplaneMode = '#checkingAirplaneMode';
+
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
@@ -76,6 +78,7 @@ export const scanMachine = model.createMachine(
         entry: ['removeLoggers'],
       },
       checkingAirplaneMode: {
+        id: 'checkingAirplaneMode',
         invoke: {
           src: 'checkAirplaneMode',
         },
@@ -96,6 +99,8 @@ export const scanMachine = model.createMachine(
           enabled: {
             on: {
               FLIGHT_REQUEST: 'requestingToDisable',
+              FLIGHT_DISABLED: checkingAirplaneMode,
+              FLIGHT_ENABLED: checkingAirplaneMode,
             },
           },
         },
@@ -111,6 +116,7 @@ export const scanMachine = model.createMachine(
             on: {
               LOCATION_ENABLED: 'checkingPermission',
               LOCATION_DISABLED: 'requestingToEnable',
+              FLIGHT_ENABLED: checkingAirplaneMode,
             },
           },
           requestingToEnable: {
@@ -163,6 +169,7 @@ export const scanMachine = model.createMachine(
             },
             { target: 'invalid' },
           ],
+          FLIGHT_ENABLED: checkingAirplaneMode,
         },
       },
       preparingToConnect: {
