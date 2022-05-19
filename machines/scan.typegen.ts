@@ -32,7 +32,7 @@ export interface Typegen0 {
     'xstate.init': { type: 'xstate.init' };
   };
   'invokeSrcNameMap': {
-    checkAirplaneMode: 'done.invoke.checkingAirplaneMode:invocation[0]';
+    checkAirplaneMode: 'done.invoke.scan.checkingAirplaneMode.checkingStatus:invocation[0]';
     checkLocationStatus: 'done.invoke.checkingLocationService:invocation[0]';
     checkLocationPermission: 'done.invoke.scan.checkingLocationService.checkingPermission:invocation[0]';
     discoverDevice: 'done.invoke.scan.connecting:invocation[0]';
@@ -46,7 +46,7 @@ export interface Typegen0 {
     delays: never;
   };
   'eventsCausingServices': {
-    checkAirplaneMode: 'SCREEN_FOCUS' | 'FLIGHT_ENABLED';
+    checkAirplaneMode: 'APP_ACTIVE';
     checkLocationStatus: 'FLIGHT_DISABLED';
     checkLocationPermission: 'LOCATION_ENABLED' | 'APP_ACTIVE';
     discoverDevice: 'RECEIVE_DEVICE_INFO';

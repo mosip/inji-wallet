@@ -1,7 +1,6 @@
 import { useSelector } from '@xstate/react';
 import { useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import SystemSetting from 'react-native-system-setting';
 import {
   ScanEvents,
   selectIsInvalid,
@@ -15,7 +14,6 @@ import {
 } from '../../machines/scan';
 import { selectVcLabel } from '../../machines/settings';
 import { selectShareableVcs } from '../../machines/vc';
-import { selectIsActive } from '../../machines/app';
 import { MainRouteProps } from '../../routes/main';
 import { GlobalContext } from '../../shared/GlobalContext';
 
@@ -25,7 +23,6 @@ export function useScanScreen({ navigation }: MainRouteProps) {
   const scanService = appService.children.get('scan');
   const settingsService = appService.children.get('settings');
   const vcService = appService.children.get('vc');
-  const isActive = useSelector(appService, selectIsActive);
 
   const shareableVcs = useSelector(vcService, selectShareableVcs);
 
@@ -83,14 +80,6 @@ export function useScanScreen({ navigation }: MainRouteProps) {
     };
   }, []);
 
-  useEffect(() => {
-    SystemSetting.isAirplaneEnabled().then((enable) => {
-      enable
-        ? scanService.send(ScanEvents.FLIGHT_ENABLED())
-        : scanService.send(ScanEvents.FLIGHT_DISABLED());
-    });
-  }, [isActive]);
-
   return {
     locationError,
     vcLabel: useSelector(settingsService, selectVcLabel),
@@ -110,6 +99,7 @@ export function useScanScreen({ navigation }: MainRouteProps) {
         ? scanService.send(ScanEvents.FLIGHT_REQUEST())
         : scanService.send(ScanEvents.LOCATION_REQUEST()),
     SCAN: (qrCode: string) => scanService.send(ScanEvents.SCAN(qrCode)),
-    DISMISS_INVALID: () => scanService.send(ScanEvents.DISMISS()),
+    DISMISS_INVALID: () =>
+      isInvalid ? scanService.send(ScanEvents.DISMISS()) : null,
   };
 }

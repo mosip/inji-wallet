@@ -80,12 +80,15 @@ export const scanMachine = model.createMachine(
       },
       checkingAirplaneMode: {
         id: 'checkingAirplaneMode',
-        invoke: {
-          src: 'checkAirplaneMode',
+        on: {
+          APP_ACTIVE: '.checkingStatus',
         },
         initial: 'checkingStatus',
         states: {
           checkingStatus: {
+            invoke: {
+              src: 'checkAirplaneMode',
+            },
             on: {
               FLIGHT_DISABLED: checkingLocationService,
               FLIGHT_ENABLED: 'enabled',
