@@ -59,7 +59,7 @@
     "babel-plugin-inline-import": "^3.0.0",
     "eas-cli": "^0.37.0",
     "expo-cli": "^4.13.0",
-    "sharp": "^0.29.3",
+    "sharp": "^0.30.5",
     "sharp-cli": "^1.15.0",
     "typescript": "~4.3.5"
   },
