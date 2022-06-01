@@ -47,6 +47,7 @@ export interface Typegen0 {
       | 'error.platform.AddVcModal.acceptingIdInput.requestingOtp:invocation[0]'
       | 'error.platform.AddVcModal.requestingCredential:invocation[0]';
     setOtp: 'INPUT_OTP';
+    resetIdInputRef: 'DISMISS';
     setRequestId: 'done.invoke.AddVcModal.requestingCredential:invocation[0]';
     setOtpError: 'error.platform.AddVcModal.requestingCredential:invocation[0]';
     setTransactionId:
@@ -62,7 +63,6 @@ export interface Typegen0 {
       | 'xstate.after(100)#AddVcModal.acceptingIdInput.focusing'
       | 'INPUT_ID'
       | 'SELECT_ID_TYPE'
-      | 'DISMISS'
       | 'VALIDATE_INPUT'
       | 'error.platform.AddVcModal.acceptingIdInput.requestingOtp:invocation[0]'
       | 'error.platform.AddVcModal.requestingCredential:invocation[0]';

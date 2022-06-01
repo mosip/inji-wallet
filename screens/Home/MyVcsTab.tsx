@@ -2,7 +2,6 @@ import React from 'react';
 import { Button, Column, Text, Centered } from '../../components/ui';
 import { VcItem } from '../../components/VcItem';
 import { Icon } from 'react-native-elements';
-import { SafeAreaView } from 'react-native';
 import { Colors } from '../../components/ui/styleUtils';
 import { RefreshControl } from 'react-native';
 import { useMyVcsTab } from './MyVcsTabController';
