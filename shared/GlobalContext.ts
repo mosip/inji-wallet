@@ -7,7 +7,7 @@ import { requestMachine } from '../machines/request';
 import { scanMachine } from '../machines/scan';
 import { settingsMachine } from '../machines/settings';
 import { storeMachine } from '../machines/store';
-import { vidMachine } from '../machines/vid';
+import { vcMachine } from '../machines/vc';
 
 export const GlobalContext = createContext({} as GlobalServices);
 
@@ -18,7 +18,7 @@ export interface GlobalServices {
 export interface AppServices {
   store: ActorRefFrom<typeof storeMachine>;
   auth: ActorRefFrom<typeof authMachine>;
-  vid: ActorRefFrom<typeof vidMachine>;
+  vc: ActorRefFrom<typeof vcMachine>;
   settings: ActorRefFrom<typeof settingsMachine>;
   activityLog: ActorRefFrom<typeof activityLogMachine>;
   request: ActorRefFrom<typeof requestMachine>;

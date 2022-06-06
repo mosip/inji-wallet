@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Icon } from 'react-native-elements';
 import { MAX_PIN, PasscodeVerify } from '../components/PasscodeVerify';
 import { PinInput } from '../components/PinInput';
@@ -8,34 +9,36 @@ import { PasscodeRouteProps } from '../routes';
 import { usePasscodeScreen } from './PasscodeScreenController';
 
 export const PasscodeScreen: React.FC<PasscodeRouteProps> = (props) => {
+  const { t } = useTranslation('PasscodeScreen');
   const controller = usePasscodeScreen(props);
+
+  const passcodeSetup =
+    controller.passcode === '' ? (
+      <React.Fragment>
+        <Text align="center">{t('header')}</Text>
+        <PinInput length={MAX_PIN} onDone={controller.setPasscode} />
+      </React.Fragment>
+    ) : (
+      <React.Fragment>
+        <Text align="center">{t('confirmPasscode')}</Text>
+        <PasscodeVerify
+          onSuccess={controller.SETUP_PASSCODE}
+          onError={controller.setError}
+          passcode={controller.passcode}
+        />
+      </React.Fragment>
+    );
 
   return (
     <Column fill padding="32" backgroundColor={Colors.White}>
       <Icon name="lock" color={Colors.Orange} size={60} />
-      {props.route.params.setup ? (
+      {props.route.params?.setup ? (
         <Column fill align="space-between" width="100%">
-          {controller.passcode === '' ? (
-            <React.Fragment>
-              <Text align="center">
-                Set a passcode to secure{'\n'}your application
-              </Text>
-              <PinInput length={MAX_PIN} onDone={controller.setPasscode} />
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              <Text align="center">Confirm your passcode</Text>
-              <PasscodeVerify
-                onSuccess={controller.SETUP_PASSCODE}
-                onError={controller.setError}
-                passcode={controller.passcode}
-              />
-            </React.Fragment>
-          )}
+          {passcodeSetup}
         </Column>
       ) : (
         <Column fill align="space-between" width="100%">
-          <Text align="center">Enter your passcode</Text>
+          <Text align="center">{t('enterPasscode')}</Text>
           <PasscodeVerify
             onSuccess={controller.LOGIN}
             onError={controller.setError}

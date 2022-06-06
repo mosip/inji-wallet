@@ -2,7 +2,7 @@ import { EventFrom, StateFrom } from 'xstate';
 import { send, sendParent } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { StoreEvents } from './store';
-import { VC } from '../types/vc';
+import { VID } from '../types/vid';
 import { AppServices } from '../shared/GlobalContext';
 import { log, respond } from 'xstate/lib/actions';
 import { VidItemEvents } from './vidItem';
@@ -17,17 +17,17 @@ const model = createModel(
     serviceRefs: {} as AppServices,
     myVids: [] as string[],
     receivedVids: [] as string[],
-    vids: {} as Record<string, VC>,
+    vids: {} as Record<string, VID>,
   },
   {
     events: {
-      VIEW_VID: (vid: VC) => ({ vid }),
+      VIEW_VID: (vid: VID) => ({ vid }),
       GET_VID_ITEM: (vidKey: string) => ({ vidKey }),
       STORE_RESPONSE: (response: any) => ({ response }),
       STORE_ERROR: (error: Error) => ({ error }),
       VID_ADDED: (vidKey: string) => ({ vidKey }),
       VID_RECEIVED: (vidKey: string) => ({ vidKey }),
-      VID_DOWNLOADED: (vid: VC) => ({ vid }),
+      VID_DOWNLOADED: (vid: VID) => ({ vid }),
       REFRESH_MY_VIDS: () => ({}),
       REFRESH_RECEIVED_VIDS: () => ({}),
       GET_RECEIVED_VIDS: () => ({}),
@@ -88,9 +88,15 @@ export const vidMachine = model.createMachine(
           VID_DOWNLOADED: {
             actions: ['setDownloadedVid'],
           },
-          VID_RECEIVED: {
-            actions: ['prependToReceivedVids'],
-          },
+          VID_RECEIVED: [
+            {
+              cond: 'hasExistingReceivedVid',
+              actions: ['moveExistingVidToTop'],
+            },
+            {
+              actions: ['prependToReceivedVids'],
+            },
+          ],
         },
         type: 'parallel',
         states: {
@@ -165,7 +171,8 @@ export const vidMachine = model.createMachine(
       }),
 
       setDownloadedVid: (context, event: VidDownloadedEvent) => {
-        context.vids[VID_ITEM_STORE_KEY(event.vid)] = event.vid;
+        context.vids[VID_ITEM_STORE_KEY(event.vid.uin, event.vid.requestId)] =
+          event.vid;
       },
 
       prependToMyVids: model.assign({
@@ -181,6 +188,20 @@ export const vidMachine = model.createMachine(
           ...context.receivedVids,
         ],
       }),
+
+      moveExistingVidToTop: model.assign({
+        receivedVids: (context, event: VidReceivedEvent) => {
+          return [
+            event.vidKey,
+            ...context.receivedVids.filter((value) => value === event.vidKey),
+          ];
+        },
+      }),
+    },
+
+    guards: {
+      hasExistingReceivedVid: (context, event: VidReceivedEvent) =>
+        context.receivedVids.includes(event.vidKey),
     },
   }
 );
@@ -196,12 +217,6 @@ type State = StateFrom<typeof vidMachine>;
 
 export function selectMyVids(state: State) {
   return state.context.myVids;
-}
-
-export function selectShareableVids(state: State) {
-  return state.context.myVids.filter(
-    (vidKey) => state.context.vids[vidKey]?.credential != null
-  );
 }
 
 export function selectReceivedVids(state: State) {

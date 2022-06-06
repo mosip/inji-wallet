@@ -1,0 +1,5 @@
+{
+  "header": "Enter the MOSIP-provided UIN or VID of the {{vcLabel}} you wish to retrieve",
+  "generateVc": "Generate {{vcLabel}}",
+  "enterId": "Enter your {{idType}}"
+}

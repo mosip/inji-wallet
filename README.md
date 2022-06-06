@@ -1,4 +1,5 @@
 # inji
+
 MOSIP citizen app.
 
 ## Dependencies
@@ -10,8 +11,8 @@ Be sure to have the following build tools installed before proceeding:
 - [Expo](https://docs.expo.dev/get-started/installation/)
 - [Android SDK](https://developer.android.com/)
 
-
 ## Generate keystore for APK signing
+
 ```shell
 keytool \
  -genkey -v \
@@ -31,10 +32,10 @@ keytool \
 ```shell
 # Install all dependencies
 npm install
-# run dev client
-npm start
-# run Inji directly to connected emulator or device (Default)
+# run Inji Newlogic directly to connected emulator or device (Default)
 npm run android:newlogic
+# run Inji Mosip directly to connected emulator or device
+npm run android:mosip
 # run Inji Philippines directly to connected emulator or device
 npm run android:ph
 ```
@@ -48,6 +49,7 @@ The app is available in this repository's `frontend/android` directory. Open thi
 More info here: [Build your app using Android Studio](https://developer.android.com/studio/run)
 
 ## Build via command line
+
 You need Android SDK CLI to build APK.
 
 ```shell
@@ -67,9 +69,13 @@ npm run build:android:ph
 
 # Build for Newlogic test
 npm run build:android:newlogic
+
+# Build for MOSIP test
+npm run build:android:mosip
 ```
 
 More info here: [Build your app from the command line](https://developer.android.com/studio/build/building-cmdline)
 
 ## Credits
+
 Credits listed [here](/Credits.md)

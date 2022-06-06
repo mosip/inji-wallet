@@ -1,8 +1,8 @@
-import { ActorRefFrom, ContextFrom, EventFrom, send, StateFrom } from 'xstate';
+import { ContextFrom, EventFrom, send, StateFrom } from 'xstate';
 import { log } from 'xstate/lib/actions';
 import { createModel } from 'xstate/lib/model';
 import { AppServices } from '../shared/GlobalContext';
-import { StoreEvents, storeMachine, StoreResponseEvent } from './store';
+import { StoreEvents, StoreResponseEvent } from './store';
 
 const model = createModel(
   {
@@ -14,7 +14,7 @@ const model = createModel(
   {
     events: {
       SETUP_PASSCODE: (passcode: string) => ({ passcode }),
-      SETUP_BIOMETRICS: () => ({}),
+      SETUP_BIOMETRICS: (biometrics: string) => ({  biometrics }),
       LOGOUT: () => ({}),
       LOGIN: () => ({}),
       STORE_RESPONSE: (response?: unknown) => ({ response }),
@@ -24,14 +24,17 @@ const model = createModel(
 
 export const AuthEvents = model.events;
 
-type Context = ContextFrom<typeof model>;
 
-type SetupPasscodeEvent = EventFrom<typeof model, 'SETUP_PASSCODE'>;
+type SetupBiometricsEvent = EventFrom<typeof model, 'SETUP_BIOMETRICS'>;
 
 export const authMachine = model.createMachine(
   {
+    tsTypes: {} as import('./auth.typegen').Typegen0,
+    schema: {
+      context: model.initialContext,
+      events: {} as EventFrom<typeof model>,
+    },
     id: 'auth',
-    context: model.initialContext,
     initial: 'init',
     states: {
       init: {
@@ -56,6 +59,7 @@ export const authMachine = model.createMachine(
       checkingAuth: {
         always: [
           { cond: 'hasPasscodeSet', target: 'unauthorized' },
+          { cond: 'hasBiometricSet', target: 'unauthorized' },
           { target: 'settingUp' },
         ],
       },
@@ -65,9 +69,9 @@ export const authMachine = model.createMachine(
             target: 'authorized',
             actions: ['setPasscode', 'storeContext'],
           },
-          // TODO: biometrics login
           SETUP_BIOMETRICS: {
-            target: 'authorized',
+            // Note! dont authorized yet we need to setup passcode too as discuss
+            // target: 'authorized',
             actions: ['setBiometrics', 'storeContext'],
           },
         },
@@ -80,6 +84,9 @@ export const authMachine = model.createMachine(
       authorized: {
         on: {
           LOGOUT: 'unauthorized',
+          SETUP_BIOMETRICS: {
+            actions: ['setBiometrics', 'storeContext'],
+          },
         },
       },
     },
@@ -91,31 +98,38 @@ export const authMachine = model.createMachine(
       }),
 
       storeContext: send(
-        (context: Context) => {
+        (context) => {
           const { serviceRefs, ...data } = context;
           return StoreEvents.SET('auth', data);
         },
         { to: (context) => context.serviceRefs.store }
       ),
 
-      setContext: model.assign((_, event: StoreResponseEvent) => {
-        const { serviceRefs, ...data } = event.response;
+      setContext: model.assign((_, event) => {
+        const { serviceRefs, ...data } = event.response as ContextFrom<
+          typeof model
+        >;
         return data;
       }),
 
       setPasscode: model.assign({
-        passcode: (_, event: SetupPasscodeEvent) => event.passcode,
+        passcode: (_, event) => event.passcode,
       }),
 
       setBiometrics: model.assign({
-        biometrics: '', // TODO
+        biometrics: (_, event: SetupBiometricsEvent) => event.biometrics,
       }),
     },
 
     guards: {
       hasData: (_, event: StoreResponseEvent) => event.response != null,
 
-      hasPasscodeSet: (context) => context.passcode !== '',
+      hasPasscodeSet: (context) => {
+        return context.passcode !== ''
+      },
+      hasBiometricSet: (context) => {
+        return context.biometrics !== ''
+      }
     },
   }
 );

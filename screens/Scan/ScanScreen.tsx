@@ -4,15 +4,17 @@ import { Button, Column, Text } from '../../components/ui';
 import { Colors } from '../../components/ui/styleUtils';
 import { MainRouteProps } from '../../routes/main';
 import { MessageOverlay } from '../../components/MessageOverlay';
-import { SendVidModal } from './SendVidModal';
+import { SendVcModal } from './SendVcModal';
 import { useScanScreen } from './ScanScreenController';
+import { useTranslation } from 'react-i18next';
 
 export const ScanScreen: React.FC<MainRouteProps> = (props) => {
+  const { t } = useTranslation('ScanScreen');
   const controller = useScanScreen(props);
 
   return (
     <Column fill padding="98 24 24 24" backgroundColor={Colors.LightGrey}>
-      <Text align="center">Scan QR Code</Text>
+      <Text align="center">{t('header')}</Text>
 
       {controller.isLocationDisabled ||
       controller.isLocationDenied ||
@@ -23,11 +25,7 @@ export const ScanScreen: React.FC<MainRouteProps> = (props) => {
           </Text>
           <Button
             title={controller.locationError.button}
-            onPress={
-              controller.isFlightMode
-                ? controller.FLIGHT_REQUEST
-                : controller.LOCATION_REQUEST
-            }
+            onPress={controller.ON_REQUEST}
           />
         </Column>
       ) : null}
@@ -40,7 +38,7 @@ export const ScanScreen: React.FC<MainRouteProps> = (props) => {
         )
       ) : (
         <Text align="center" margin="16 0" color={Colors.Red}>
-          No sharable {controller.vidLabel.plural} are available.
+          {t('noShareableVcs', { vcLabel: controller.vcLabel.plural })}
         </Text>
       )}
 
@@ -51,11 +49,11 @@ export const ScanScreen: React.FC<MainRouteProps> = (props) => {
         onBackdropPress={controller.DISMISS_INVALID}
       />
 
-      <SendVidModal
+      <SendVcModal
         isVisible={controller.isReviewing}
         onDismiss={controller.DISMISS}
         headerElevation={2}
-        headerTitle={`Sharing ${controller.vidLabel.singular}`}
+        headerTitle={t('sharingVc', { vcLabel: controller.vcLabel.singular })}
       />
     </Column>
   );

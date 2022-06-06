@@ -14,16 +14,12 @@ export const mainRoutes: TabScreen[] = [
     name: 'Home',
     component: HomeScreen,
     icon: 'home',
-    options: {
-      title: 'HOME',
-    },
   },
   {
     name: 'Scan',
     component: ScanScreen,
     icon: 'qr-code-scanner',
     options: {
-      title: 'SCAN',
       headerShown: false,
     },
   },
@@ -31,17 +27,11 @@ export const mainRoutes: TabScreen[] = [
     name: 'Request',
     component: RequestScreen,
     icon: 'file-download',
-    options: {
-      title: 'REQUEST',
-    },
   },
   {
     name: 'Profile',
     component: ProfileScreen,
     icon: 'person',
-    options: {
-      title: 'PROFILE',
-    },
   },
 ];
 

@@ -1,85 +1,103 @@
-import { ActorRefFrom, EventFrom, send, spawn, StateFrom } from 'xstate';
+import {
+  ActorRefFrom,
+  assign,
+  EventFrom,
+  send,
+  spawn,
+  StateFrom,
+} from 'xstate';
 import { createModel } from 'xstate/lib/model';
-import { vidItemMachine } from '../../machines/vidItem';
+import { vcItemMachine } from '../../machines/vcItem';
 import { AppServices } from '../../shared/GlobalContext';
 import {
   createHistoryTabMachine,
   HistoryTabMachine,
 } from './HistoryTabMachine';
-import { createMyVidsTabMachine, MyVidsTabMachine } from './MyVidsTabMachine';
+import { createMyVcsTabMachine, MyVcsTabMachine } from './MyVcsTabMachine';
 import {
-  createReceivedVidsTabMachine,
-  ReceivedVidsTabMachine,
-} from './ReceivedVidsTabMachine';
+  createReceivedVcsTabMachine,
+  ReceivedVcsTabMachine,
+} from './ReceivedVcsTabMachine';
 
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
     tabRefs: {
-      myVids: {} as ActorRefFrom<typeof MyVidsTabMachine>,
-      receivedVids: {} as ActorRefFrom<typeof ReceivedVidsTabMachine>,
+      myVcs: {} as ActorRefFrom<typeof MyVcsTabMachine>,
+      receivedVcs: {} as ActorRefFrom<typeof ReceivedVcsTabMachine>,
       history: {} as ActorRefFrom<typeof HistoryTabMachine>,
     },
-    selectedVid: null as ActorRefFrom<typeof vidItemMachine>,
+    selectedVc: null as ActorRefFrom<typeof vcItemMachine>,
     activeTab: 0,
   },
   {
     events: {
-      SELECT_MY_VIDS: () => ({}),
-      SELECT_RECEIVED_VIDS: () => ({}),
+      SELECT_MY_VCS: () => ({}),
+      SELECT_RECEIVED_VCS: () => ({}),
       SELECT_HISTORY: () => ({}),
-      VIEW_VID: (vidItemActor: ActorRefFrom<typeof vidItemMachine>) => ({
-        vidItemActor,
+      VIEW_VC: (vcItemActor: ActorRefFrom<typeof vcItemMachine>) => ({
+        vcItemActor,
       }),
       DISMISS_MODAL: () => ({}),
     },
   }
 );
 
+const MY_VCS_TAB_REF_ID = 'myVcsTab';
+const RECEIVED_VCS_TAB_REF_ID = 'receivedVcsTab';
+const HISTORY_TAB_REF_ID = 'historyTab';
+
 export const HomeScreenEvents = model.events;
 
-type ViewVidEvent = EventFrom<typeof model, 'VIEW_VID'>;
+export type TabRef =
+  | ActorRefFrom<typeof MyVcsTabMachine>
+  | ActorRefFrom<typeof ReceivedVcsTabMachine>
+  | ActorRefFrom<typeof HistoryTabMachine>;
 
 export const HomeScreenMachine = model.createMachine(
   {
+    tsTypes: {} as import('./HomeScreenMachine.typegen').Typegen0,
+    schema: {
+      context: model.initialContext,
+      events: {} as EventFrom<typeof model>,
+    },
     id: 'HomeScreen',
-    context: model.initialContext,
     type: 'parallel',
     states: {
       tabs: {
         id: 'tabs',
         initial: 'init',
         on: {
-          SELECT_MY_VIDS: '.myVids',
-          SELECT_RECEIVED_VIDS: '.receivedVids',
+          SELECT_MY_VCS: '.myVcs',
+          SELECT_RECEIVED_VCS: '.receivedVcs',
           SELECT_HISTORY: '.history',
         },
         states: {
           init: {
             entry: ['spawnTabActors'],
             after: {
-              100: 'myVids',
+              100: 'myVcs',
             },
           },
-          myVids: {
+          myVcs: {
             entry: [setActiveTab(0)],
             on: {
               DISMISS_MODAL: {
                 actions: [
                   send('DISMISS', {
-                    to: (context) => context.tabRefs.myVids,
+                    to: (context) => context.tabRefs.myVcs,
                   }),
                 ],
               },
             },
           },
-          receivedVids: {
+          receivedVcs: {
             entry: [setActiveTab(1)],
             on: {
               DISMISS_MODAL: {
                 actions: [
                   send('DISMISS', {
-                    to: (context) => context.tabRefs.receivedVids,
+                    to: (context) => context.tabRefs.receivedVcs,
                   }),
                 ],
               },
@@ -94,15 +112,15 @@ export const HomeScreenMachine = model.createMachine(
         initial: 'none',
         states: {
           none: {
-            entry: ['resetSelectedVid'],
+            entry: ['resetSelectedVc'],
             on: {
-              VIEW_VID: {
-                target: 'viewingVid',
-                actions: ['setSelectedVid'],
+              VIEW_VC: {
+                target: 'viewingVc',
+                actions: ['setSelectedVc'],
               },
             },
           },
-          viewingVid: {
+          viewingVc: {
             on: {
               DISMISS_MODAL: 'none',
             },
@@ -113,29 +131,29 @@ export const HomeScreenMachine = model.createMachine(
   },
   {
     actions: {
-      spawnTabActors: model.assign({
+      spawnTabActors: assign({
         tabRefs: (context) => ({
-          myVids: spawn(
-            createMyVidsTabMachine(context.serviceRefs),
-            'myVidsTab'
+          myVcs: spawn(
+            createMyVcsTabMachine(context.serviceRefs),
+            MY_VCS_TAB_REF_ID
           ),
-          receivedVids: spawn(
-            createReceivedVidsTabMachine(context.serviceRefs),
-            'receivedVidsTab'
+          receivedVcs: spawn(
+            createReceivedVcsTabMachine(context.serviceRefs),
+            RECEIVED_VCS_TAB_REF_ID
           ),
           history: spawn(
             createHistoryTabMachine(context.serviceRefs),
-            'historyTab'
+            HISTORY_TAB_REF_ID
           ),
         }),
       }),
 
-      setSelectedVid: model.assign({
-        selectedVid: (_, event: ViewVidEvent) => event.vidItemActor,
+      setSelectedVc: model.assign({
+        selectedVc: (_, event) => event.vcItemActor,
       }),
 
-      resetSelectedVid: model.assign({
-        selectedVid: null,
+      resetSelectedVc: model.assign({
+        selectedVc: null,
       }),
     },
   }
@@ -147,16 +165,20 @@ function setActiveTab(activeTab: number) {
 
 type State = StateFrom<typeof HomeScreenMachine>;
 
+export function selectTabRefs(state: State) {
+  return state.context.tabRefs;
+}
+
 export function selectActiveTab(state: State) {
   return state.context.activeTab;
 }
 
-export function selectSelectedVid(state: State) {
-  return state.context.selectedVid;
+export function selectSelectedVc(state: State) {
+  return state.context.selectedVc;
 }
 
-export function selectViewingVid(state: State) {
-  return state.matches('modals.viewingVid');
+export function selectViewingVc(state: State) {
+  return state.matches('modals.viewingVc');
 }
 
 export function selectTabsLoaded(state: State) {

@@ -1,3 +1,4 @@
+import { DecodedCredential, VerifiableCredential } from '../types/vc';
 import { HOST } from './constants';
 
 export class BackendResponseError extends Error {
@@ -15,7 +16,6 @@ export async function request(
   const response = await fetch(HOST + path, {
     method,
     headers: {
-      // TODO: 'Authorization': 'Bearer ...',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(body),
@@ -55,8 +55,8 @@ export type OtpRequestResponse = BackendResponse<{
   maskedEmail?: string;
 }>;
 
-export type VidGenerateResponse = BackendResponse<{
-  vid: string;
+export type VcGenerateResponse = BackendResponse<{
+  vc: string;
   message: string;
 }>;
 
@@ -70,6 +70,6 @@ export type CredentialStatusResponse = BackendResponse<{
 }>;
 
 export interface CredentialDownloadResponse {
-  credential?: any;
-  verifiableCredential?: any;
+  credential?: DecodedCredential;
+  verifiableCredential?: VerifiableCredential;
 }

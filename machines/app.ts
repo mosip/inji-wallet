@@ -5,12 +5,12 @@ import {
   getDeviceName,
   getDeviceNameSync,
 } from 'react-native-device-info';
-import { EventFrom, spawn, StateFrom, send } from 'xstate';
+import { EventFrom, spawn, StateFrom, send, assign } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { authMachine, createAuthMachine } from './auth';
 import { createSettingsMachine, settingsMachine } from './settings';
 import { storeMachine } from './store';
-import { createVidMachine, vidMachine } from './vid';
+import { createVcMachine, vcMachine } from './vc';
 import { createActivityLogMachine, activityLogMachine } from './activityLog';
 import { createRequestMachine, requestMachine } from './request';
 import { createScanMachine, scanMachine } from './scan';
@@ -35,12 +35,14 @@ const model = createModel(
   }
 );
 
-type AppInfoReceived = EventFrom<typeof model, 'APP_INFO_RECEIVED'>;
-
 export const appMachine = model.createMachine(
   {
+    tsTypes: {} as import('./app.typegen').Typegen0,
+    schema: {
+      context: model.initialContext,
+      events: {} as EventFrom<typeof model>,
+    },
     id: 'app',
-    context: model.initialContext,
     initial: 'init',
     states: {
       init: {
@@ -52,13 +54,6 @@ export const appMachine = model.createMachine(
               READY: 'services',
             },
           },
-          // TODO: SafetyNet Attestation check
-          // safetyNet: {
-          //   invoke: {
-          //     id: 'safetynet',
-          //     src: safetyNetMachine
-          //   },
-          // },
           services: {
             entry: ['spawnServiceActors', 'logServiceEvents'],
             on: {
@@ -145,7 +140,7 @@ export const appMachine = model.createMachine(
         },
       })),
 
-      spawnStoreActor: model.assign({
+      spawnStoreActor: assign({
         serviceRefs: (context) => ({
           ...context.serviceRefs,
           store: spawn(storeMachine, storeMachine.id),
@@ -153,7 +148,9 @@ export const appMachine = model.createMachine(
       }),
 
       logStoreEvents: (context) => {
-        context.serviceRefs.store.subscribe(logState);
+        if (__DEV__) {
+          context.serviceRefs.store.subscribe(logState);
+        }
       },
 
       spawnServiceActors: model.assign({
@@ -165,7 +162,7 @@ export const appMachine = model.createMachine(
             createAuthMachine(serviceRefs),
             authMachine.id
           );
-          serviceRefs.vid = spawn(createVidMachine(serviceRefs), vidMachine.id);
+          serviceRefs.vc = spawn(createVcMachine(serviceRefs), vcMachine.id);
           serviceRefs.settings = spawn(
             createSettingsMachine(serviceRefs),
             settingsMachine.id
@@ -187,16 +184,18 @@ export const appMachine = model.createMachine(
       }),
 
       logServiceEvents: (context) => {
-        context.serviceRefs.auth.subscribe(logState);
-        context.serviceRefs.vid.subscribe(logState);
-        context.serviceRefs.settings.subscribe(logState);
-        context.serviceRefs.activityLog.subscribe(logState);
-        context.serviceRefs.scan.subscribe(logState);
-        context.serviceRefs.request.subscribe(logState);
+        if (__DEV__) {
+          context.serviceRefs.auth.subscribe(logState);
+          context.serviceRefs.vc.subscribe(logState);
+          context.serviceRefs.settings.subscribe(logState);
+          context.serviceRefs.activityLog.subscribe(logState);
+          context.serviceRefs.scan.subscribe(logState);
+          context.serviceRefs.request.subscribe(logState);
+        }
       },
 
       setAppInfo: model.assign({
-        info: (_, event: AppInfoReceived) => event.info,
+        info: (_, event) => event.info,
       }),
     },
 
@@ -241,15 +240,13 @@ export const appMachine = model.createMachine(
       },
 
       checkNetworkState: () => (callback) => {
-        const unsubscribe = NetInfo.addEventListener((state) => {
+        return NetInfo.addEventListener((state) => {
           if (state.isConnected) {
             callback({ type: 'ONLINE', networkType: state.type });
           } else {
             callback({ type: 'OFFLINE' });
           }
         });
-
-        return unsubscribe;
       },
     },
   }
