@@ -1,12 +1,13 @@
 import React, { useRef, useContext } from 'react';
 import AppIntroSlider from 'react-native-app-intro-slider';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 import { Icon, Overlay } from 'react-native-elements';
 import { Button, Column, Text } from '../../components/ui';
 import { Colors } from '../../components/ui/styleUtils';
 import { useSelector } from '@xstate/react';
 import { GlobalContext } from '../../shared/GlobalContext';
 import { selectVcLabel } from '../../machines/settings';
+import { useTranslation } from 'react-i18next';
 
 const styles = StyleSheet.create({
   overlay: {
@@ -55,6 +56,7 @@ const styles = StyleSheet.create({
 export const OnboardingOverlay: React.FC<OnboardingProps> = (props) => {
   const slider = useRef<AppIntroSlider>();
 
+  const { t } = useTranslation('OnboardingOverlay');
   const { appService } = useContext(GlobalContext);
   const settingsService = appService.children.get('settings');
   const vcLabel = useSelector(settingsService, selectVcLabel);
@@ -62,24 +64,24 @@ export const OnboardingOverlay: React.FC<OnboardingProps> = (props) => {
   const slides = [
     {
       key: 'one',
-      title: 'Welcome!',
-      text: `Keep your digital credential with you at all times. To get started, add ${vcLabel.plural} to your profile.`,
+      title: t('stepOneTitle'),
+      text: t('stepOneText', { vcLabel: vcLabel.plural }),
     },
     {
       key: 'two',
-      title: `${vcLabel.singular} management`,
-      text: `Once generated, ${vcLabel.plural} are safely stored on your mobile and can be renamed or shared at any time.`,
+      title: t('stepTwoTitle', { vcLabel: vcLabel.singular }),
+      text: t('stepTwoText', { vcLabel: vcLabel.plural }),
     },
     {
       key: 'three',
-      title: 'Easy sharing',
-      text: `Share and receive ${vcLabel.plural} switfly using your phone camera to scan QR codes.`,
+      title: t('stepThreeTitle'),
+      text: t('stepThreeText', { vcLabel: vcLabel.plural }),
       footer: (
         <Button
           margin="24 0 0 0"
           raised
           type="outline"
-          title={`Get started and add ${vcLabel.singular}`}
+          title={t('stepThreeButton', { vcLabel: vcLabel.singular })}
           onPress={props.onAddVc}
         />
       ),
@@ -89,9 +91,11 @@ export const OnboardingOverlay: React.FC<OnboardingProps> = (props) => {
   const renderItem = ({ item }) => {
     return (
       <View style={styles.slide}>
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.text}>{item.text}</Text>
-        {item.footer}
+        <ScrollView showsVerticalScrollIndicator={true}>
+          <Text style={styles.title}>{item.title}</Text>
+          <Text style={styles.text}>{item.text}</Text>
+          {item.footer}
+        </ScrollView>
       </View>
     );
   };

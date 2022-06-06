@@ -1,10 +1,6 @@
-import {
-  ActorRefFrom,
-  EventFrom,
-  sendParent
-} from 'xstate';
+import { ActorRefFrom, EventFrom, sendParent } from 'xstate';
 import { createModel } from 'xstate/lib/model';
-import { createVcItemMachine, vcItemMachine } from '../../machines/vcItem';
+import { vcItemMachine } from '../../machines/vcItem';
 import { AppServices } from '../../shared/GlobalContext';
 
 const model = createModel(
@@ -19,7 +15,7 @@ const model = createModel(
       }),
       REFRESH: () => ({}),
       DISMISS: () => ({}),
-      STORE_RESPONSE: (response?: any) => ({ response }),
+      STORE_RESPONSE: (response?: unknown) => ({ response }),
       STORE_ERROR: (error: Error) => ({ error }),
       ERROR: (error: Error) => ({ error }),
       GET_RECEIVED_VCS_RESPONSE: (vcKeys: string[]) => ({ vcKeys }),
@@ -29,17 +25,14 @@ const model = createModel(
 
 export const ReceivedVcsTabEvents = model.events;
 
-type ErrorEvent = EventFrom<typeof model, 'ERROR'>;
-type ViewVcEvent = EventFrom<typeof model, 'VIEW_VC'>;
-type GetReceivedVcListResponseEvent = EventFrom<
-  typeof model,
-  'GET_RECEIVED_VCS_RESPONSE'
->;
-
 export const ReceivedVcsTabMachine = model.createMachine(
   {
+    tsTypes: {} as import('./ReceivedVcsTabMachine.typegen').Typegen0,
+    schema: {
+      context: model.initialContext,
+      events: {} as EventFrom<typeof model>,
+    },
     id: 'ReceivedVcsTab',
-    context: model.initialContext,
     initial: 'idle',
     states: {
       idle: {
@@ -48,11 +41,7 @@ export const ReceivedVcsTabMachine = model.createMachine(
         },
       },
       viewingVc: {
-        entry: [
-          sendParent((_, event: ViewVcEvent) =>
-            model.events.VIEW_VC(event.vcItemActor)
-          ),
-        ],
+        entry: ['viewVcFromParent'],
         on: {
           DISMISS: 'idle',
         },
@@ -60,7 +49,11 @@ export const ReceivedVcsTabMachine = model.createMachine(
     },
   },
   {
-    actions: {},
+    actions: {
+      viewVcFromParent: sendParent((_context, event) =>
+        model.events.VIEW_VC(event.vcItemActor)
+      ),
+    },
   }
 );
 

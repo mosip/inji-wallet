@@ -1,0 +1,13 @@
+{
+  "generatedOn": "Generated on",
+  "status": "Status",
+  "valid": "Valid",
+  "photo": "Photo",
+  "fullName": "Full name",
+  "gender": "Gender",
+  "dateOfBirth": "Date of birth",
+  "phoneNumber": "Phone number",
+  "email": "Email",
+  "address": "Address",
+  "reasonForSharing": "Reason for sharing"
+}

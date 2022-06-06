@@ -1,9 +1,9 @@
 import { TextInput } from 'react-native';
 import {
+  assign,
   DoneInvokeEvent,
   ErrorPlatformEvent,
   EventFrom,
-  send,
   sendParent,
   StateFrom,
 } from 'xstate';
@@ -11,6 +11,7 @@ import { createModel } from 'xstate/lib/model';
 import { BackendResponseError, request } from '../../../shared/request';
 import { VC_ITEM_STORE_KEY } from '../../../shared/constants';
 import { VcIdType } from '../../../types/vc';
+import i18n from '../../../i18n';
 
 const model = createModel(
   {
@@ -37,222 +38,274 @@ const model = createModel(
 
 export const AddVcModalEvents = model.events;
 
-type ReadyEvent = EventFrom<typeof model, 'READY'>;
-type InputIdEvent = EventFrom<typeof model, 'INPUT_ID'>;
-type InputOtpEvent = EventFrom<typeof model, 'INPUT_OTP'>;
-type SelectIdTypeEvent = EventFrom<typeof model, 'SELECT_ID_TYPE'>;
-
-export const AddVcModalMachine = model.createMachine(
-  {
-    id: 'AddVcModal',
-    context: model.initialContext,
-    initial: 'acceptingIdInput',
-    states: {
-      acceptingIdInput: {
-        id: 'acceptingIdInput',
-        entry: ['setTransactionId', 'clearOtp'],
-        initial: 'rendering',
-        states: {
-          rendering: {
-            on: {
-              READY: {
-                target: 'focusing',
-                actions: ['setIdInputRef'],
-              },
-            },
-          },
-          focusing: {
-            // delay on first render to show keyboard
-            after: {
-              100: 'idle',
-            },
-          },
-          idle: {
-            entry: ['focusInput'],
-            on: {
-              INPUT_ID: {
-                actions: ['setId'],
-              },
-              VALIDATE_INPUT: [
-                { cond: 'isEmptyId', target: 'invalid.empty' },
-                {
-                  cond: 'isWrongIdFormat',
-                  target: 'invalid.format',
+export const AddVcModalMachine =
+  /** @xstate-layout N4IgpgJg5mDOIC5QEEIQGoGMCyB7CAhgDYB0BmmYADgC4CWAdlAJITMNUCuNJATmAwhhejKAGIASgFFkAEQCaiUFVyw69XAyUgAHogC0ARgAsATgDMJAEynjhgBzmArE-v2AbDYA0IAJ4GrAHZ3EkCnKxMrc0NDc1NA+ycAXySfVAwcfGIyCmp6JlZ2Lh4AM1xMTjUmMR1YGgIaMDISxt4ACkMABk6ASjF0rDxCUnJKWlFCjm4SMoqqqG0VNQ0tJF0DWM6QwOjXQydjYyDbH38EIycQ+M6PI6t7TsNTdxS0tEGskdzxgrYpnjoECIYDEzAAcgAFACqABUAPrMWSLVTqOiabR6c6GdxOQIkRydcJRQnudweU6IezGEjGezxKxRQJPTamV4gAaZYY5Mb5Fh-YokQHAsToZAAGURyBhUgRkNhyOWaNWoExRisLmsuPMgSCgUC8XM9gpCCCThI5huNkNpme2qc5jZHKG2VGeQm-OmQpBAGUpGKpABheGIuEw+QQqQK1Hotaq-b2QwkTqmVzBTqBQnmdXGoyGKyheI6xnmYzmMmGR3vTku768yYCxgAN2IgNBcuDSLWS2jyvWWM6ZdCA6c6eMYQtuJz8WshuxHhcVkzDtS7Krzq+PPdRU9DGbRFboolsilMvB0JhUZWGIMpcs+1METHycSnWMxsfSdcZfM2pLFsNlYZOu3Jur824AruLYQGIvr+kGCKyKG4aRl2KJXrGGyEp0JCmPeOKJP+ZbGu4pg4XSOp0q+jgJKyK5Op8IE-Hy4F8GAACOnBwLyADyNBUGIECaE0Ta4AA1k09Fcq6TH1tM-AcVxoi8VQCAiZgDRKgA2p0AC6l5Kte-ZuNYpJ6par6XIExr2DYNI2bigRmDqJKAR8Um1lu-ysQpdRKXxYjCLwuC8CQVBEA0ZS8AAtiQkk1puYFefJnG+Uwymqbu5QaZo2l6ahioxiqBjxPYJAxFseZpnY0TGmYIROA43QPAOpkvHRa4MdJdYejQYiyMw3rYAN3r6YVfb6MY7jUtiWYllY7jYpE7jWWEZVPPcTILQ1FbtUBnUeWlfHgW255wtxMIQqNvZxnE1Iph4i4Wo8LXGqYhJJs1RwPj+32udWG6gVAynHf1g3DVdhkXDsSYJJ0VhmAyDi0rVGopqYVLww8jkmMubx7VyyWKUwAb8EIDD0MQAlCYKmXibFHUE+xKW8iTkACBTRAZY2WUrLlEMYVi2LYfc+xmDaJhklYxpdBaoSixE7gDjcxjJLtbnZITqVQKzZMcwFvBBSFYURcFMVxaQmss6T7N0MQXM81pun80VWKHImMS0sccPuHqUt+IgMTBGVDKLvquLUcYKQrgw+BwNo5uMd1LH8IIwiiM743YvqJBTQ+GZPDstJvv75zzZYYQKz9pYPG1ePqwDMk9TM5SVOn+U9pDsR5kOA4pjirjzU4OZl6E4QzbdhpbH9wFdZ5DZAmAGdxqW1JRM4Nrat0JimMaTJkfSwTGDcWY7XX-2J3PO57oCJBgFFtBnMoaEGQL+g7Hi9g6p49oq735jSzZT8jgEw+1worSOatz6z0Sg2SC+4IDN2ig0JeBhgj5hcIaT++wnhUiNCXEseILQ2TcGEDMP5T6rnxvFQGskILXwQQAI3IOJQQKDzgkUTJmDwOJFY4gsMaEcpEGoPBMGObU7hojT32glZiXkmxQTYW-DwJAMEkOwejZGJdJpAO1HSQ4U1QFSPcjI2h3lmZ+SoIo8qH9nC0gahYBIpJiLahwg+H25FXxxFrpQ+uF8YHcCsWQnOCN84GiLjmUs2wx5mGEdjIx1CmLA3+FYzwpEggPEmgaMueCzj6jxJ7A4r4VbagfPEi2TMiba2tuTW2RArGTXzA4cWJIdieGlo8UqEQDgYPTAQspJBBIMEXu3dCLt9B0ksIrRwtgDi4RtO00scsDiHATCWDJZTAlBGCXnR4YSqQ5kEaPLphgdjpntFSKOSQgA */
+  model.createMachine(
+    {
+      tsTypes: {} as import('./AddVcModalMachine.typegen').Typegen0,
+      schema: {
+        context: model.initialContext,
+        events: {} as EventFrom<typeof model>,
+      },
+      id: 'AddVcModal',
+      initial: 'acceptingIdInput',
+      states: {
+        acceptingIdInput: {
+          entry: ['setTransactionId', 'clearOtp'],
+          initial: 'rendering',
+          states: {
+            rendering: {
+              on: {
+                READY: {
+                  actions: 'setIdInputRef',
+                  target: 'focusing',
                 },
-                { target: 'requestingOtp' },
-              ],
-              SELECT_ID_TYPE: {
-                actions: ['setIdType', 'clearId'],
               },
             },
-          },
-          invalid: {
-            entry: ['focusInput'],
-            on: {
-              INPUT_ID: {
-                target: 'idle',
-                actions: ['setId', 'clearIdError'],
-              },
-              VALIDATE_INPUT: [
-                { cond: 'isEmptyId', target: '.empty' },
-                {
-                  cond: 'isWrongIdFormat',
-                  target: '.format',
+            focusing: {
+              after: {
+                '100': {
+                  description:
+                    'Small delay to properly show the keyboard when focusing input.',
+                  target: 'idle',
                 },
-                { target: 'requestingOtp' },
-              ],
-            },
-            states: {
-              empty: {
-                entry: ['setIdErrorEmpty'],
-              },
-              format: {
-                entry: ['setIdErrorWrongFormat'],
-              },
-              backend: {},
-            },
-          },
-          requestingOtp: {
-            invoke: {
-              src: 'requestOtp',
-              onDone: '#acceptingOtpInput',
-              onError: {
-                target: 'invalid.backend',
-                actions: ['setIdError'],
               },
             },
-          },
-        },
-        on: {
-          DISMISS: {
-            actions: [sendParent('DISMISS')],
-          },
-        },
-      },
-      acceptingOtpInput: {
-        id: 'acceptingOtpInput',
-        entry: ['clearOtp'],
-        on: {
-          INPUT_OTP: {
-            target: 'requestingCredential',
-            actions: ['setOtp'],
-          },
-          DISMISS: '#acceptingIdInput.idle',
-        },
-      },
-      requestingCredential: {
-        invoke: {
-          src: 'requestCredential',
-          onDone: {
-            target: 'done',
-            actions: ['setRequestId'],
-          },
-          onError: [
-            {
-              cond: 'isIdInvalid',
-              target: '#acceptingIdInput.invalid',
-              actions: ['setIdError'],
+            idle: {
+              entry: 'focusInput',
+              on: {
+                INPUT_ID: {
+                  actions: 'setId',
+                },
+                VALIDATE_INPUT: [
+                  {
+                    cond: 'isEmptyId',
+                    target: '#AddVcModal.acceptingIdInput.invalid.empty',
+                  },
+                  {
+                    cond: 'isWrongIdFormat',
+                    target: '#AddVcModal.acceptingIdInput.invalid.format',
+                  },
+                  {
+                    target: 'requestingOtp',
+                  },
+                ],
+                SELECT_ID_TYPE: {
+                  actions: ['setIdType', 'clearId'],
+                },
+              },
             },
-            {
-              target: 'acceptingOtpInput',
-              actions: ['setOtpError'],
+            invalid: {
+              entry: 'focusInput',
+              states: {
+                empty: {
+                  entry: 'setIdErrorEmpty',
+                },
+                format: {
+                  entry: 'setIdErrorWrongFormat',
+                },
+                backend: {},
+              },
+              on: {
+                INPUT_ID: {
+                  actions: ['setId', 'clearIdError'],
+                  target: 'idle',
+                },
+                VALIDATE_INPUT: [
+                  {
+                    cond: 'isEmptyId',
+                    target: '.empty',
+                  },
+                  {
+                    cond: 'isWrongIdFormat',
+                    target: '.format',
+                  },
+                  {
+                    target: 'requestingOtp',
+                  },
+                ],
+                SELECT_ID_TYPE: {
+                  actions: ['setIdType', 'clearId'],
+                  target: 'idle',
+                },
+              },
             },
-          ],
+            requestingOtp: {
+              invoke: {
+                src: 'requestOtp',
+                onDone: [
+                  {
+                    target: '#AddVcModal.acceptingOtpInput',
+                  },
+                ],
+                onError: [
+                  {
+                    actions: 'setIdBackendError',
+                    target: '#AddVcModal.acceptingIdInput.invalid.backend',
+                  },
+                ],
+              },
+            },
+          },
+          on: {
+            DISMISS: {
+              actions: 'forwardToParent',
+            },
+          },
+        },
+        acceptingOtpInput: {
+          entry: 'clearOtp',
+          on: {
+            INPUT_OTP: {
+              actions: 'setOtp',
+              target: 'requestingCredential',
+            },
+            DISMISS: {
+              target: '#AddVcModal.acceptingIdInput.idle',
+            },
+          },
+        },
+        requestingCredential: {
+          invoke: {
+            src: 'requestCredential',
+            onDone: [
+              {
+                actions: 'setRequestId',
+                target: 'done',
+              },
+            ],
+            onError: [
+              {
+                actions: 'setIdBackendError',
+                cond: 'isIdInvalid',
+                target: '#AddVcModal.acceptingIdInput.invalid.backend',
+              },
+              {
+                actions: 'setOtpError',
+                target: 'acceptingOtpInput',
+              },
+            ],
+          },
+        },
+        done: {
+          type: 'final',
+          data: (context) => VC_ITEM_STORE_KEY(context),
         },
       },
-      done: {
-        type: 'final',
-        data: (context) => VC_ITEM_STORE_KEY(context),
+    },
+    {
+      actions: {
+        forwardToParent: sendParent('DISMISS'),
+
+        setId: model.assign({
+          id: (_context, event) => event.id,
+        }),
+
+        setIdType: model.assign({
+          idType: (_context, event) => event.idType,
+        }),
+
+        setOtp: model.assign({
+          otp: (_context, event) => event.otp,
+        }),
+
+        setTransactionId: assign({
+          transactionId: () => String(new Date().valueOf()).substring(3, 13),
+        }),
+
+        setRequestId: assign({
+          requestId: (_context, event) =>
+            (event as DoneInvokeEvent<string>).data,
+        }),
+
+        setIdBackendError: assign({
+          idError: (context, event) => {
+            const message = (event as ErrorPlatformEvent).data.message;
+            const ID_ERRORS_MAP = {
+              'UIN invalid': 'invalidUin',
+              'VID invalid': 'invalidVid',
+              'UIN not available in database': 'missingUin',
+              'VID not available in database': 'missingVid',
+              'Invalid Input Parameter - individualId':
+                context.idType === 'UIN' ? 'invalidUin' : 'invalidVid',
+            };
+            return ID_ERRORS_MAP[message]
+              ? i18n.t(`errors.backend.${ID_ERRORS_MAP[message]}`, {
+                  ns: 'AddVcModal',
+                })
+              : message;
+          },
+        }),
+
+        clearId: model.assign({ id: '' }),
+
+        clearIdError: model.assign({ idError: '' }),
+
+        setIdErrorEmpty: model.assign({
+          idError: () => i18n.t('errors.input.empty', { ns: 'AddVcModal' }),
+        }),
+
+        setIdErrorWrongFormat: model.assign({
+          idError: () =>
+            i18n.t('errors.input.invalidFormat', { ns: 'AddVcModal' }),
+        }),
+
+        setOtpError: assign({
+          otpError: (_context, event) => {
+            const message = (event as ErrorPlatformEvent).data.message;
+            const OTP_ERRORS_MAP = {
+              'OTP is invalid': 'invalidOtp',
+            };
+            return OTP_ERRORS_MAP[message]
+              ? i18n.t(`errors.backend.${OTP_ERRORS_MAP[message]}`, {
+                  ns: 'AddVcModal',
+                })
+              : message;
+          },
+        }),
+
+        setIdInputRef: model.assign({
+          idInputRef: (_context, event) => event.idInputRef,
+        }),
+
+        clearOtp: assign({ otp: '' }),
+
+        focusInput: (context) => context.idInputRef.focus(),
       },
-    },
-  },
-  {
-    actions: {
-      setId: model.assign({
-        id: (_, event: InputIdEvent) => event.id,
-      }),
 
-      setIdType: model.assign({
-        idType: (_, event: SelectIdTypeEvent) => event.idType,
-      }),
+      services: {
+        requestOtp: async (context) => {
+          return request('POST', '/req/otp', {
+            individualId: context.id,
+            individualIdType: context.idType,
+            otpChannel: ['EMAIL', 'PHONE'],
+            transactionID: context.transactionId,
+          });
+        },
 
-      setOtp: model.assign({
-        otp: (_, event: InputOtpEvent) => event.otp,
-      }),
-
-      setTransactionId: model.assign({
-        transactionId: () => String(new Date().valueOf()).substring(3, 13),
-      }),
-
-      setRequestId: model.assign({
-        requestId: (_, event: any) => (event as DoneInvokeEvent<string>).data,
-      }),
-
-      setIdError: model.assign({
-        idError: (_, event: any) => (event as ErrorPlatformEvent).data.message,
-      }),
-
-      clearId: model.assign({ id: '' }),
-
-      clearIdError: model.assign({ idError: '' }),
-
-      setIdErrorEmpty: model.assign({
-        idError: 'The input cannot be empty',
-      }),
-
-      setIdErrorWrongFormat: model.assign({
-        idError: 'The input format is incorrect',
-      }),
-
-      setOtpError: model.assign({
-        otpError: (_, event: any) => (event as ErrorPlatformEvent).data.message,
-      }),
-
-      setIdInputRef: model.assign({
-        idInputRef: (_, event: ReadyEvent) => event.idInputRef,
-      }),
-
-      clearOtp: model.assign({ otp: '' }),
-
-      focusInput: (context) => context.idInputRef.focus(),
-    },
-
-    services: {
-      requestOtp: async (context) => {
-        return request('POST', '/req/otp', {
-          individualId: context.id,
-          individualIdType: context.idType,
-          otpChannel: ['EMAIL', 'PHONE'],
-          transactionID: context.transactionId,
-        });
+        requestCredential: async (context) => {
+          const response = await request('POST', '/credentialshare/request', {
+            individualId: context.id,
+            individualIdType: context.idType,
+            otp: context.otp,
+            transactionID: context.transactionId,
+          });
+          return response.response.requestId;
+        },
       },
 
-      requestCredential: async (context) => {
-        const response = await request('POST', '/credentialshare/request', {
-          individualId: context.id,
-          individualIdType: context.idType,
-          otp: context.otp,
-          transactionID: context.transactionId,
-        });
-        return response.response.requestId;
+      guards: {
+        isEmptyId: ({ id }) => !id || !id.length,
+
+        isWrongIdFormat: ({ id }) => !/^\d{10,16}$/.test(id),
+
+        isIdInvalid: (_context, event: unknown) =>
+          ['IDA-MLC-009', 'RES-SER-29', 'IDA-MLC-018'].includes(
+            (event as BackendResponseError).name
+          ),
       },
-    },
-
-    guards: {
-      isEmptyId: ({ id }) => !id || !id.length,
-
-      isWrongIdFormat: ({ id }) => !/^\d{10,16}$/.test(id),
-
-      isIdInvalid: (_, event: any) =>
-        ['IDA-MLC-009', 'RES-SER-29', 'IDA-MLC-018'].includes(
-          (event as BackendResponseError).name
-        ),
-
-      // isOtpInvalid: (_, event: any) =>
-      //   (event as BackendResponseError).name === 'RES-SER-422',
-    },
-  }
-);
+    }
+  );
 
 type State = StateFrom<typeof AddVcModalMachine>;
 

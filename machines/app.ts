@@ -5,7 +5,7 @@ import {
   getDeviceName,
   getDeviceNameSync,
 } from 'react-native-device-info';
-import { EventFrom, spawn, StateFrom, send } from 'xstate';
+import { EventFrom, spawn, StateFrom, send, assign } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { authMachine, createAuthMachine } from './auth';
 import { createSettingsMachine, settingsMachine } from './settings';
@@ -35,12 +35,14 @@ const model = createModel(
   }
 );
 
-type AppInfoReceived = EventFrom<typeof model, 'APP_INFO_RECEIVED'>;
-
 export const appMachine = model.createMachine(
   {
+    tsTypes: {} as import('./app.typegen').Typegen0,
+    schema: {
+      context: model.initialContext,
+      events: {} as EventFrom<typeof model>,
+    },
     id: 'app',
-    context: model.initialContext,
     initial: 'init',
     states: {
       init: {
@@ -52,12 +54,6 @@ export const appMachine = model.createMachine(
               READY: 'services',
             },
           },
-          // safetyNet: {
-          //   invoke: {
-          //     id: 'safetynet',
-          //     src: safetyNetMachine
-          //   },
-          // },
           services: {
             entry: ['spawnServiceActors', 'logServiceEvents'],
             on: {
@@ -144,7 +140,7 @@ export const appMachine = model.createMachine(
         },
       })),
 
-      spawnStoreActor: model.assign({
+      spawnStoreActor: assign({
         serviceRefs: (context) => ({
           ...context.serviceRefs,
           store: spawn(storeMachine, storeMachine.id),
@@ -199,7 +195,7 @@ export const appMachine = model.createMachine(
       },
 
       setAppInfo: model.assign({
-        info: (_, event: AppInfoReceived) => event.info,
+        info: (_, event) => event.info,
       }),
     },
 

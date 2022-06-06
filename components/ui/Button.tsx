@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.Orange,
   },
   container: {
-    height: 48,
+    minHeight: 48,
     flexDirection: 'row',
   },
   disabled: {
@@ -60,6 +60,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
       title={
         <Text
           weight="semibold"
+          align="center"
           color={type === 'solid' ? Colors.White : Colors.Orange}>
           {props.title}
         </Text>

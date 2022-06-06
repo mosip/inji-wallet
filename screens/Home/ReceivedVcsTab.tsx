@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { RefreshControl } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { Centered, Column, Text } from '../../components/ui';
@@ -8,6 +9,7 @@ import { HomeScreenTabProps } from './HomeScreen';
 import { useReceivedVcsTab } from './ReceivedVcsTabController';
 
 export const ReceivedVcsTab: React.FC<HomeScreenTabProps> = (props) => {
+  const { t } = useTranslation('ReceivedVcsTab');
   const controller = useReceivedVcsTab(props);
 
   return (
@@ -38,10 +40,14 @@ export const ReceivedVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                 name="sentiment-dissatisfied"
               />
               <Text align="center" weight="semibold" margin="0 0 4 0">
-                No {controller.vcLabel.plural} available yet
+                {t('noReceivedVcsTitle', {
+                  vcLabel: controller.vcLabel.plural,
+                })}
               </Text>
               <Text align="center" color={Colors.Grey}>
-                Tap on Request below to receive {controller.vcLabel.singular}
+                {t('noReceivedVcsText', {
+                  vcLabel: controller.vcLabel.singular,
+                })}
               </Text>
             </Centered>
           </React.Fragment>

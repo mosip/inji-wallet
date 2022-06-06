@@ -141,6 +141,7 @@ android {
     ext {
         APP_NAME_RELEASE = "@string/app_name"
         APP_NAME_PH = "@string/app_name_ph"
+        APP_NAME_MOSIP = "@string/app_name_mosip"
         APP_NAME_NEWLOGIC = "@string/app_name_newlogic"
     }
 
@@ -207,22 +208,29 @@ android {
         }
     }
 
-    flavorDimensions "mosip"
+    flavorDimensions "inji"
 
     productFlavors {
-        ph {
-            versionName defaultConfig.versionName + "-ph"
+        mosip {
+            versionName defaultConfig.versionName + "-mosip"
             manifestPlaceholders = [
-                    APP_NAME: APP_NAME_PH
+                    APP_NAME: APP_NAME_MOSIP
             ]
-            dimension "mosip"
+            dimension "inji"
         }
         newlogic {
             versionName defaultConfig.versionName + "-newlogic"
             manifestPlaceholders = [
                     APP_NAME: APP_NAME_NEWLOGIC
             ]
-            dimension "mosip"
+            dimension "inji"
+        }
+        ph {
+            versionName defaultConfig.versionName + "-ph"
+            manifestPlaceholders = [
+                    APP_NAME: APP_NAME_PH
+            ]
+            dimension "inji"
         }
     }
 

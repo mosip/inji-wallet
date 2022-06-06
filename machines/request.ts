@@ -1,7 +1,7 @@
 import SmartShare from '@idpass/smartshare-react-native';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import { EmitterSubscription } from 'react-native';
-import { EventFrom, send, sendParent, StateFrom } from 'xstate';
+import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { DeviceInfo } from '../components/DeviceInfoList';
 import { Message } from '../shared/Message';
@@ -9,10 +9,7 @@ import { getDeviceNameSync } from 'react-native-device-info';
 import { StoreEvents } from './store';
 import { VC } from '../types/vc';
 import { AppServices } from '../shared/GlobalContext';
-import {
-  RECEIVED_VCS_STORE_KEY,
-  VC_ITEM_STORE_KEY,
-} from '../shared/constants';
+import { RECEIVED_VCS_STORE_KEY, VC_ITEM_STORE_KEY } from '../shared/constants';
 import { ActivityLogEvents } from './activityLog';
 import { VcEvents } from './vc';
 
@@ -41,26 +38,24 @@ const model = createModel(
       BLUETOOTH_ENABLED: () => ({}),
       BLUETOOTH_DISABLED: () => ({}),
       STORE_READY: () => ({}),
-      STORE_RESPONSE: (response: any) => ({ response }),
+      STORE_RESPONSE: (response: unknown) => ({ response }),
       RECEIVE_DEVICE_INFO: (info: DeviceInfo) => ({ info }),
       RECEIVED_VCS_UPDATED: () => ({}),
-      VC_RESPONSE: (response: any) => ({ response }),
+      VC_RESPONSE: (response: unknown) => ({ response }),
     },
   }
 );
 
 export const RequestEvents = model.events;
 
-type ExchangeDoneEvent = EventFrom<typeof model, 'EXCHANGE_DONE'>;
-type VcReceivedEvent = EventFrom<typeof model, 'VC_RECEIVED'>;
-type ReceiveDeviceInfoEvent = EventFrom<typeof model, 'RECEIVE_DEVICE_INFO'>;
-type StoreResponseEvent = EventFrom<typeof model, 'STORE_RESPONSE'>;
-type VcResponseEvent = EventFrom<typeof model, 'VC_RESPONSE'>;
-
 export const requestMachine = model.createMachine(
   {
+    tsTypes: {} as import('./request.typegen').Typegen0,
+    schema: {
+      context: model.initialContext,
+      events: {} as EventFrom<typeof model>,
+    },
     id: 'request',
-    context: model.initialContext,
     initial: 'inactive',
     on: {
       SCREEN_BLUR: 'inactive',
@@ -103,7 +98,7 @@ export const requestMachine = model.createMachine(
         id: 'clearingConnection',
         entry: ['disconnect'],
         after: {
-          250: 'waitingForConnection',
+          CLEAR_DELAY: 'waitingForConnection',
         },
       },
       waitingForConnection: {
@@ -167,12 +162,24 @@ export const requestMachine = model.createMachine(
                   VC_RESPONSE: [
                     {
                       cond: 'hasExistingVc',
-                      target: '#accepted',
+                      target: 'requestingExistingVc',
                     },
                     {
                       target: 'prependingReceivedVc',
                     },
                   ],
+                },
+              },
+              requestingExistingVc: {
+                entry: ['requestExistingVc'],
+                on: {
+                  STORE_RESPONSE: 'mergingIncomingVc',
+                },
+              },
+              mergingIncomingVc: {
+                entry: ['mergeIncomingVc'],
+                on: {
+                  STORE_RESPONSE: '#accepted',
                 },
               },
               prependingReceivedVc: {
@@ -184,20 +191,17 @@ export const requestMachine = model.createMachine(
               storingVc: {
                 entry: ['storeVc'],
                 on: {
-                  STORE_RESPONSE: {
-                    target: '#accepted',
-                    actions: ['sendVcReceived'],
-                  },
+                  STORE_RESPONSE: '#accepted',
                 },
               },
             },
           },
           accepted: {
-            entry: ['logReceived'],
             id: 'accepted',
+            entry: ['sendVcReceived', 'logReceived'],
             invoke: {
-              src: {
-                type: 'sendVcResponse',
+              src: 'sendVcResponse',
+              data: {
                 status: 'accepted',
               },
             },
@@ -207,8 +211,8 @@ export const requestMachine = model.createMachine(
           },
           rejected: {
             invoke: {
-              src: {
-                type: 'sendVcResponse',
+              src: 'sendVcResponse',
+              data: {
                 status: 'rejected',
               },
             },
@@ -236,30 +240,30 @@ export const requestMachine = model.createMachine(
       requestReceiverInfo: sendParent('REQUEST_DEVICE_INFO'),
 
       setReceiverInfo: model.assign({
-        receiverInfo: (_, event: ReceiveDeviceInfoEvent) => event.info,
+        receiverInfo: (_context, event) => event.info,
       }),
 
       disconnect: () => {
         try {
           SmartShare.destroyConnection();
         } catch (e) {
-          //
+          // pass
         }
       },
 
-      generateConnectionParams: model.assign({
+      generateConnectionParams: assign({
         connectionParams: () => SmartShare.getConnectionParameters(),
       }),
 
       setSenderInfo: model.assign({
-        senderInfo: (_, event: ExchangeDoneEvent) => event.senderInfo,
+        senderInfo: (_context, event) => event.senderInfo,
       }),
 
       setIncomingVc: model.assign({
-        incomingVc: (_, event: VcReceivedEvent) => event.vc,
+        incomingVc: (_context, event) => event.vc,
       }),
 
-      registerLoggers: model.assign({
+      registerLoggers: assign({
         loggers: () => {
           if (__DEV__) {
             return [
@@ -284,7 +288,7 @@ export const requestMachine = model.createMachine(
         },
       }),
 
-      removeLoggers: model.assign({
+      removeLoggers: assign({
         loggers: ({ loggers }) => {
           loggers?.forEach((logger) => logger.remove());
           return null;
@@ -297,6 +301,23 @@ export const requestMachine = model.createMachine(
             RECEIVED_VCS_STORE_KEY,
             VC_ITEM_STORE_KEY(context.incomingVc)
           ),
+        { to: (context) => context.serviceRefs.store }
+      ),
+
+      requestExistingVc: send(
+        (context) => StoreEvents.GET(VC_ITEM_STORE_KEY(context.incomingVc)),
+        { to: (context) => context.serviceRefs.store }
+      ),
+
+      mergeIncomingVc: send(
+        (context, event) => {
+          const existing = event.response as VC;
+          const updated: VC = {
+            ...existing,
+            reason: existing.reason.concat(context.incomingVc.reason),
+          };
+          return StoreEvents.SET(VC_ITEM_STORE_KEY(updated), updated);
+        },
         { to: (context) => context.serviceRefs.store }
       ),
 
@@ -324,9 +345,7 @@ export const requestMachine = model.createMachine(
 
       sendVcReceived: send(
         (context) => {
-          return VcEvents.VC_RECEIVED(
-            VC_ITEM_STORE_KEY(context.incomingVc)
-          );
+          return VcEvents.VC_RECEIVED(VC_ITEM_STORE_KEY(context.incomingVc));
         },
         { to: (context) => context.serviceRefs.vc }
       ),
@@ -397,10 +416,9 @@ export const requestMachine = model.createMachine(
         return () => subscription.remove();
       },
 
-      // tslint:disable-next-line
-      sendVcResponse: (context, event, meta) => (callback) => {
+      sendVcResponse: (_context, _event, meta) => (callback) => {
         const response = new Message('send:vc:response', {
-          status: meta.src.status,
+          status: meta.data.status,
         });
 
         SmartShare.send(response.toString(), () => {
@@ -410,11 +428,15 @@ export const requestMachine = model.createMachine(
     },
 
     guards: {
-      hasExistingVc: (context, event: VcResponseEvent) => {
-        const receivedVcs: string[] = event.response;
+      hasExistingVc: (context, event) => {
+        const receivedVcs = event.response as string[];
         const vcKey = VC_ITEM_STORE_KEY(context.incomingVc);
         return receivedVcs.includes(vcKey);
       },
+    },
+
+    delays: {
+      CLEAR_DELAY: 250,
     },
   }
 );

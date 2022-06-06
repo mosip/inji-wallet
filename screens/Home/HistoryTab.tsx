@@ -1,4 +1,5 @@
 import React from 'react';
+import * as DateFnsLocale from '../../lib/date-fns/locale';
 import { formatDistanceToNow } from 'date-fns';
 import { RefreshControl } from 'react-native';
 import { Centered, Column, Text } from '../../components/ui';
@@ -7,17 +8,22 @@ import { useHistoryTab } from './HistoryTabController';
 import { HomeScreenTabProps } from './HomeScreen';
 import { Icon } from 'react-native-elements';
 import { ActivityLog } from '../../machines/activityLog';
+import { useTranslation } from 'react-i18next';
 
-const createLabel = (activity: ActivityLog) =>
+const createLabel = (activity: ActivityLog, language: string) =>
   [
     activity.deviceName,
-    formatDistanceToNow(activity.timestamp, { addSuffix: true }),
+    formatDistanceToNow(activity.timestamp, {
+      addSuffix: true,
+      locale: DateFnsLocale[language],
+    }),
   ]
     .filter((label) => label.trim() !== '')
     .join(' · ');
 
 export const HistoryTab: React.FC<HomeScreenTabProps> = (props) => {
-  const controller = useHistoryTab(props);
+  const { t, i18n } = useTranslation('HistoryTab');
+  const controller = useHistoryTab();
 
   return (
     <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
@@ -33,8 +39,8 @@ export const HistoryTab: React.FC<HomeScreenTabProps> = (props) => {
         {controller.activities.map((activity) => (
           <TextItem
             key={activity.timestamp}
-            label={createLabel(activity)}
-            text={`${activity.vcLabel} ${activity.action}`}
+            label={createLabel(activity, i18n.language)}
+            text={`${activity.vcLabel} ${t(activity.action)}`}
           />
         ))}
         {controller.activities.length === 0 && (
@@ -45,7 +51,7 @@ export const HistoryTab: React.FC<HomeScreenTabProps> = (props) => {
               name="sentiment-dissatisfied"
             />
             <Text align="center" weight="semibold" margin="0 0 4 0">
-              No history available yet
+              {t('noHistory')}
             </Text>
           </Centered>
         )}

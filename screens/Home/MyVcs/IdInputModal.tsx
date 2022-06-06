@@ -5,17 +5,19 @@ import { Button, Column, Row, Text } from '../../../components/ui';
 import { Modal } from '../../../components/ui/Modal';
 import { Colors } from '../../../components/ui/styleUtils';
 import { IdInputModalProps, useIdInputModal } from './IdInputModalController';
+import { useTranslation } from 'react-i18next';
 
 export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
+  const { t } = useTranslation('IdInputModal');
   const controller = useIdInputModal(props);
-  const inputLabel = `Enter your ${controller.idType}`;
+
+  const inputLabel = t('enterId', { idType: controller.idType });
 
   return (
     <Modal onDismiss={props.onDismiss} isVisible={props.isVisible}>
       <Column fill align="space-between" padding="32 24">
         <Text align="center">
-          Enter the MOSIP-provided UIN or VID{'\n'}of the{' '}
-          {controller.vcLabel.singular} you wish to retrieve
+          {t('header', { vcLabel: controller.vcLabel.singular })}
         </Text>
         <Column>
           <Row crossAlign="flex-end">
@@ -55,7 +57,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
             </Column>
           </Row>
           <Button
-            title={`Generate ${controller.vcLabel.singular}`}
+            title={t('generateVc', { vcLabel: controller.vcLabel.singular })}
             margin="24 0 0 0"
             onPress={controller.VALIDATE_INPUT}
             loading={controller.isRequestingOtp}

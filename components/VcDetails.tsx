@@ -1,42 +1,66 @@
+import { formatDistanceToNow } from 'date-fns';
 import React from 'react';
+import * as DateFnsLocale from '../lib/date-fns/locale';
+import { useTranslation } from 'react-i18next';
 import { Image } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import { Icon, ListItem } from 'react-native-elements';
 import { VC, CredentialSubject } from '../types/vc';
 import { Column, Row, Text } from './ui';
 import { Colors } from './ui/styleUtils';
+import { TextItem } from './ui/TextItem';
+
+const VerifiedIcon: React.FC = () => {
+  return (
+    <Icon
+      name="check-circle"
+      color={Colors.Green}
+      size={14}
+      containerStyle={{ marginStart: 4, bottom: 1 }}
+    />
+  );
+};
 
 export const VcDetails: React.FC<VcDetailsProps> = (props) => {
+  const { t, i18n } = useTranslation('VcDetails');
+
   return (
     <Column>
       <Row padding="16 24">
         <Column fill elevation={1} padding="12 16" margin="0 16 0 0">
           <Text size="smaller" color={Colors.Grey}>
-            Generated
+            {t('generatedOn')}
           </Text>
           <Text weight="bold" size="smaller">
             {new Date(props.vc?.generatedOn).toLocaleDateString()}
           </Text>
         </Column>
         <Column fill elevation={1} padding="12 16" margin="0 16 0 0">
-          <Text size="smaller" color={Colors.Grey} style={{ textTransform: 'uppercase' }}>
-            {props.vid?.idType}
+          <Text
+            size="smaller"
+            color={Colors.Grey}
+            style={{ textTransform: 'uppercase' }}>
+            {props.vc?.idType}
           </Text>
           <Text weight="bold" size="smaller">
             {props.vc?.id}
           </Text>
         </Column>
-        <Column fill elevation={1} padding="12 16" margin="">
+        <Column fill elevation={1} padding="12 16">
           <Text size="smaller" color={Colors.Grey}>
-            Status
+            {t('status')}
           </Text>
-          <Text weight="bold" size="smaller">
-            Valid
-          </Text>
+          <Row>
+            <Text weight="bold" size="smaller">
+              {t('valid')}
+            </Text>
+            {props.vc?.isVerified && <VerifiedIcon />}
+          </Row>
         </Column>
       </Row>
+
       <ListItem bottomDivider>
         <ListItem.Content>
-          <ListItem.Subtitle>Photo</ListItem.Subtitle>
+          <ListItem.Subtitle>{t('photo')}</ListItem.Subtitle>
           <ListItem.Content>
             <Image
               source={
@@ -54,64 +78,61 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
           </ListItem.Content>
         </ListItem.Content>
       </ListItem>
-      <ListItem bottomDivider>
-        <ListItem.Content>
-          <ListItem.Subtitle>Full name</ListItem.Subtitle>
-          <ListItem.Title>
-            {props.vc?.verifiableCredential.credentialSubject.fullName}
-          </ListItem.Title>
-        </ListItem.Content>
-      </ListItem>
-      <ListItem bottomDivider>
-        <ListItem.Content>
-          <ListItem.Subtitle>Gender</ListItem.Subtitle>
-          <ListItem.Title>
-            {getLocalizedField(
-              props.vc?.verifiableCredential.credentialSubject.gender
-            )}
-          </ListItem.Title>
-        </ListItem.Content>
-      </ListItem>
-      <ListItem bottomDivider>
-        <ListItem.Content>
-          <ListItem.Subtitle>Date of birth</ListItem.Subtitle>
-          <ListItem.Title>
-            {props.vc?.verifiableCredential.credentialSubject.dateOfBirth}
-          </ListItem.Title>
-        </ListItem.Content>
-      </ListItem>
-      <ListItem bottomDivider>
-        <ListItem.Content>
-          <ListItem.Subtitle>Phone number</ListItem.Subtitle>
-          <ListItem.Title>
-            {props.vc?.verifiableCredential.credentialSubject.phone}
-          </ListItem.Title>
-        </ListItem.Content>
-      </ListItem>
-      <ListItem bottomDivider>
-        <ListItem.Content>
-          <ListItem.Subtitle>Email</ListItem.Subtitle>
-          <ListItem.Title>
-            {props.vc?.verifiableCredential.credentialSubject.email}
-          </ListItem.Title>
-        </ListItem.Content>
-      </ListItem>
-      <ListItem bottomDivider>
-        <ListItem.Content>
-          <ListItem.Subtitle>Address</ListItem.Subtitle>
-          <ListItem.Title>
-            {getFullAddress(props.vc?.verifiableCredential.credentialSubject)}
-          </ListItem.Title>
-        </ListItem.Content>
-      </ListItem>
-      {Boolean(props.vc?.reason) && (
-        <ListItem bottomDivider>
-          <ListItem.Content>
-            <ListItem.Subtitle>Reason for sharing</ListItem.Subtitle>
-            <ListItem.Title>{props.vc?.reason}</ListItem.Title>
-          </ListItem.Content>
-        </ListItem>
+
+      <TextItem
+        divider
+        label={t('fullName')}
+        text={props.vc?.verifiableCredential.credentialSubject.fullName}
+      />
+
+      <TextItem
+        divider
+        label={t('gender')}
+        text={getLocalizedField(
+          props.vc?.verifiableCredential.credentialSubject.gender
+        )}
+      />
+
+      <TextItem
+        divider
+        label={t('dateOfBirth')}
+        text={props.vc?.verifiableCredential.credentialSubject.dateOfBirth}
+      />
+
+      <TextItem
+        divider
+        label={t('phoneNumber')}
+        text={props.vc?.verifiableCredential.credentialSubject.phone}
+      />
+
+      <TextItem
+        divider
+        label={t('email')}
+        text={props.vc?.verifiableCredential.credentialSubject.email}
+      />
+
+      <TextItem
+        divider
+        label={t('address')}
+        text={getFullAddress(props.vc?.verifiableCredential.credentialSubject)}
+      />
+
+      {props.vc?.reason?.length > 0 && (
+        <Text margin="24 24 16 24" weight="semibold">
+          {t('reasonForSharing')}
+        </Text>
       )}
+      {props.vc?.reason?.map((reason, index) => (
+        <TextItem
+          key={index}
+          divider
+          label={formatDistanceToNow(reason.timestamp, {
+            addSuffix: true,
+            locale: DateFnsLocale[i18n.language],
+          })}
+          text={reason.message}
+        />
+      ))}
     </Column>
   );
 };
@@ -136,7 +157,9 @@ function getFullAddress(credential: CredentialSubject) {
     'addressLine3',
     'city',
     'province',
+    'region',
   ];
+
   return fields
     .map((field) => getLocalizedField(credential[field]))
     .concat(credential.postalCode)
@@ -144,9 +167,10 @@ function getFullAddress(credential: CredentialSubject) {
     .join(', ');
 }
 
-function getLocalizedField(rawField: string) {
+function getLocalizedField(rawField: string | LocalizedField) {
   try {
-    const locales: LocalizedField[] = JSON.parse(rawField);
+    const locales: LocalizedField[] =
+      typeof rawField === 'string' ? JSON.parse(rawField) : rawField;
     return locales.find((locale) => locale.language === 'eng').value.trim();
   } catch (e) {
     return '';

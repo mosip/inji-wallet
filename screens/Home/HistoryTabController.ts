@@ -6,10 +6,8 @@ import {
   selectIsRefreshing,
 } from '../../machines/activityLog';
 import { GlobalContext } from '../../shared/GlobalContext';
-import { HomeScreenTabProps } from './HomeScreen';
 
-export function useHistoryTab(props: HomeScreenTabProps) {
-  // const service = props.service as ActorRefFrom<typeof HistoryTabMachine>;
+export function useHistoryTab() {
   const { appService } = useContext(GlobalContext);
   const activityLogService = appService.children.get('activityLog');
 

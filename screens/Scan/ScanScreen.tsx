@@ -6,13 +6,15 @@ import { MainRouteProps } from '../../routes/main';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { SendVcModal } from './SendVcModal';
 import { useScanScreen } from './ScanScreenController';
+import { useTranslation } from 'react-i18next';
 
 export const ScanScreen: React.FC<MainRouteProps> = (props) => {
+  const { t } = useTranslation('ScanScreen');
   const controller = useScanScreen(props);
 
   return (
     <Column fill padding="98 24 24 24" backgroundColor={Colors.LightGrey}>
-      <Text align="center">Scan QR Code</Text>
+      <Text align="center">{t('header')}</Text>
 
       {controller.isLocationDisabled ||
       controller.isLocationDenied ||
@@ -36,7 +38,7 @@ export const ScanScreen: React.FC<MainRouteProps> = (props) => {
         )
       ) : (
         <Text align="center" margin="16 0" color={Colors.Red}>
-          No sharable {controller.vcLabel.plural} are available.
+          {t('noShareableVcs', { vcLabel: controller.vcLabel.plural })}
         </Text>
       )}
 
@@ -51,7 +53,7 @@ export const ScanScreen: React.FC<MainRouteProps> = (props) => {
         isVisible={controller.isReviewing}
         onDismiss={controller.DISMISS}
         headerElevation={2}
-        headerTitle={`Sharing ${controller.vcLabel.singular}`}
+        headerTitle={t('sharingVc', { vcLabel: controller.vcLabel.singular })}
       />
     </Column>
   );

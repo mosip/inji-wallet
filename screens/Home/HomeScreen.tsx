@@ -8,8 +8,9 @@ import { HistoryTab } from './HistoryTab';
 import { MyVcsTab } from './MyVcsTab';
 import { ReceivedVcsTab } from './ReceivedVcsTab';
 import { ViewVcModal } from './ViewVcModal';
-import { ActorRefFrom } from 'xstate';
 import { useHomeScreen } from './HomeScreenController';
+import { TabRef } from './HomeScreenMachine';
+import { useTranslation } from 'react-i18next';
 
 const styles = StyleSheet.create({
   tabIndicator: {
@@ -25,6 +26,7 @@ const styles = StyleSheet.create({
 });
 
 export const HomeScreen: React.FC<HomeRouteProps> = (props) => {
+  const { t } = useTranslation('HomeScreen');
   const controller = useHomeScreen(props);
 
   return (
@@ -34,23 +36,23 @@ export const HomeScreen: React.FC<HomeRouteProps> = (props) => {
           value={controller.activeTab}
           onChange={controller.SELECT_TAB}
           indicatorStyle={styles.tabIndicator}>
-          {TabItem(`My\n${controller.vcLabel.plural}`)}
-          {TabItem(`Received\n${controller.vcLabel.plural}`)}
-          {TabItem('History')}
+          {TabItem(t('myVcsTab', { vcLabel: controller.vcLabel.plural }))}
+          {TabItem(t('receivedVcsTab', { vcLabel: controller.vcLabel.plural }))}
+          {TabItem(t('historyTab'))}
         </Tab>
         {controller.haveTabsLoaded && (
           <Column fill>
             <MyVcsTab
               isVisible={controller.activeTab === 0}
-              service={controller.service.children.get('MyVcsTab')}
+              service={controller.tabRefs.myVcs}
             />
             <ReceivedVcsTab
               isVisible={controller.activeTab === 1}
-              service={controller.service.children.get('receivedVcsTab')}
+              service={controller.tabRefs.receivedVcs}
             />
             <HistoryTab
               isVisible={controller.activeTab === 2}
-              service={controller.service.children.get('historyTab')}
+              service={controller.tabRefs.history}
             />
           </Column>
         )}
@@ -81,5 +83,5 @@ function TabItem(title: string) {
 
 export interface HomeScreenTabProps {
   isVisible: boolean;
-  service: ActorRefFrom<any>;
+  service: TabRef;
 }

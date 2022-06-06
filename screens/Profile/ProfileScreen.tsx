@@ -5,54 +5,80 @@ import { Column, Text } from '../../components/ui';
 import { Colors } from '../../components/ui/styleUtils';
 import { MainRouteProps } from '../../routes/main';
 import { EditableListItem } from '../../components/EditableListItem';
+import { MessageOverlay } from '../../components/MessageOverlay';
 import { Credits } from './Credits';
 import { useProfileScreen } from './ProfileScreenController';
+import { useTranslation } from 'react-i18next';
+import { LanguageSelector } from '../../components/LanguageSelector';
+import i18next, { SUPPORTED_LANGUAGES } from '../../i18n';
+
+const LanguageSetting: React.FC = () => {
+  const { t } = useTranslation('ProfileScreen');
+
+  return (
+    <LanguageSelector
+      triggerComponent={
+        <ListItem bottomDivider>
+          <ListItem.Content>
+            <ListItem.Title>
+              <Text>{t('language')}</Text>
+            </ListItem.Title>
+          </ListItem.Content>
+          <Text margin="0 12 0 0" color={Colors.Grey}>
+            {SUPPORTED_LANGUAGES[i18next.language]}
+          </Text>
+        </ListItem>
+      }
+    />
+  );
+};
 
 export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
+  const { t } = useTranslation('ProfileScreen');
   const controller = useProfileScreen(props);
 
   return (
     <Column fill padding="24 0" backgroundColor={Colors.LightGrey}>
+      <MessageOverlay
+        isVisible={controller.alertMsg != ''}
+        onBackdropPress={controller.hideAlert}
+        title={controller.alertMsg}
+      />
       <EditableListItem
-        label="Name"
+        label={t('name')}
         value={controller.name}
         onEdit={controller.UPDATE_NAME}
       />
       <EditableListItem
-        label="VC Label"
+        label={t('vcLabel')}
         value={controller.vcLabel.singular}
         onEdit={controller.UPDATE_VC_LABEL}
       />
-      <ListItem bottomDivider>
-        <ListItem.Content>
-          <ListItem.Title>
-            <Text>Language</Text>
-          </ListItem.Title>
-        </ListItem.Content>
-        <Text margin="0 12 0 0" color={Colors.Grey}>
-          English
-        </Text>
-      </ListItem>
+      <LanguageSetting />
       <ListItem bottomDivider disabled={!controller.canUseBiometrics}>
         <ListItem.Content>
           <ListItem.Title>
-            <Text>Biometric unlock</Text>
+            <Text>{t('bioUnlock')}</Text>
           </ListItem.Title>
         </ListItem.Content>
-        <Switch value={controller.isBiometricUnlockEnabled} />
+        <Switch
+          value={controller.isBiometricUnlockEnabled}
+          onValueChange={controller.useBiometrics}
+          color={Colors.Orange}
+        />
       </ListItem>
       <ListItem bottomDivider disabled>
         <ListItem.Content>
           <ListItem.Title>
-            <Text color={Colors.Grey}>Unlock auth factor</Text>
+            <Text color={Colors.Grey}>{t('authFactorUnlock')}</Text>
           </ListItem.Title>
         </ListItem.Content>
       </ListItem>
-      <Credits label="Credits and legal notices" />
+      <Credits label={t('credits')} />
       <ListItem bottomDivider onPress={controller.LOGOUT}>
         <ListItem.Content>
           <ListItem.Title>
-            <Text>Log-out</Text>
+            <Text>{t('logout')}</Text>
           </ListItem.Title>
         </ListItem.Content>
       </ListItem>

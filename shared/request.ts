@@ -1,3 +1,4 @@
+import { DecodedCredential, VerifiableCredential } from '../types/vc';
 import { HOST } from './constants';
 
 export class BackendResponseError extends Error {
@@ -69,6 +70,6 @@ export type CredentialStatusResponse = BackendResponse<{
 }>;
 
 export interface CredentialDownloadResponse {
-  credential?: any;
-  verifiableCredential?: any;
+  credential?: DecodedCredential;
+  verifiableCredential?: VerifiableCredential;
 }

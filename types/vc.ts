@@ -6,7 +6,15 @@ export interface VC {
   verifiableCredential: VerifiableCredential;
   generatedOn: Date;
   requestId: string;
-  reason?: string;
+  isVerified: boolean;
+  lastVerifiedOn: number;
+  locked: boolean;
+  reason?: VCSharingReason[];
+}
+
+export interface VCSharingReason {
+  timestamp: number;
+  message: string;
 }
 
 export type VcIdType = 'UIN' | 'VID';

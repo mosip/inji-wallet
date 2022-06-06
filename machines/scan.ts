@@ -1,7 +1,7 @@
 import SmartShare from '@idpass/smartshare-react-native';
 import LocationEnabler from 'react-native-location-enabler';
 import SystemSetting from 'react-native-system-setting';
-import { EventFrom, send, sendParent, StateFrom } from 'xstate';
+import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { EmitterSubscription, Linking, PermissionsAndroid } from 'react-native';
 import { DeviceInfo } from '../components/DeviceInfoList';
@@ -50,7 +50,7 @@ const model = createModel(
       FLIGHT_REQUEST: () => ({}),
       LOCATION_REQUEST: () => ({}),
       UPDATE_VC_NAME: (vcName: string) => ({ vcName }),
-      STORE_RESPONSE: (response: any) => ({ response }),
+      STORE_RESPONSE: (response: unknown) => ({ response }),
       APP_ACTIVE: () => ({}),
     },
   }
@@ -58,16 +58,14 @@ const model = createModel(
 
 export const ScanEvents = model.events;
 
-type ExchangeDoneEvent = EventFrom<typeof model, 'EXCHANGE_DONE'>;
-type ScanEvent = EventFrom<typeof model, 'SCAN'>;
-type selectVcEvent = EventFrom<typeof model, 'SELECT_VC'>;
-type UpdateReasonEvent = EventFrom<typeof model, 'UPDATE_REASON'>;
-type ReceiveDeviceInfoEvent = EventFrom<typeof model, 'RECEIVE_DEVICE_INFO'>;
-
 export const scanMachine = model.createMachine(
   {
+    tsTypes: {} as import('./scan.typegen').Typegen0,
+    schema: {
+      context: model.initialContext,
+      events: {} as EventFrom<typeof model>,
+    },
     id: 'scan',
-    context: model.initialContext,
     initial: 'inactive',
     on: {
       SCREEN_BLUR: 'inactive',
@@ -150,7 +148,7 @@ export const scanMachine = model.createMachine(
         id: 'clearingConnection',
         entry: ['disconnect'],
         after: {
-          250: 'findingConnection',
+          CLEAR_DELAY: 'findingConnection',
         },
       },
       findingConnection: {
@@ -177,9 +175,6 @@ export const scanMachine = model.createMachine(
         },
       },
       connecting: {
-        meta: {
-          message: 'Connecting...',
-        },
         invoke: {
           src: 'discoverDevice',
         },
@@ -188,9 +183,6 @@ export const scanMachine = model.createMachine(
         },
       },
       exchangingDeviceInfo: {
-        meta: {
-          message: 'Exchanging device info...',
-        },
         invoke: {
           src: 'exchangeDeviceInfo',
         },
@@ -255,9 +247,6 @@ export const scanMachine = model.createMachine(
         },
       },
       invalid: {
-        meta: {
-          message: 'Invalid QR Code',
-        },
         on: {
           DISMISS: 'findingConnection',
         },
@@ -269,7 +258,7 @@ export const scanMachine = model.createMachine(
       requestSenderInfo: sendParent('REQUEST_DEVICE_INFO'),
 
       setSenderInfo: model.assign({
-        senderInfo: (_, event: ReceiveDeviceInfoEvent) => event.info,
+        senderInfo: (_, event) => event.info,
       }),
 
       requestToEnableLocation: (context) => {
@@ -288,30 +277,31 @@ export const scanMachine = model.createMachine(
         }
       },
 
-      setConnectionParams: (_, event: ScanEvent) => {
+      setConnectionParams: (_, event) => {
         SmartShare.setConnectionParameters(event.params);
       },
 
       setReceiverInfo: model.assign({
-        receiverInfo: (_, event: ExchangeDoneEvent) => event.receiverInfo,
+        receiverInfo: (_, event) => event.receiverInfo,
       }),
 
       setReason: model.assign({
-        reason: (_, event: UpdateReasonEvent) => event.reason,
+        reason: (_, event) => event.reason,
       }),
 
-      clearReason: model.assign({ reason: '' }),
+      clearReason: assign({ reason: '' }),
 
       setSelectedVc: model.assign({
-        selectedVc: (context, event: selectVcEvent) => {
-          return {
-            ...event.vc,
-            reason: context.reason,
-          };
+        selectedVc: (context, event) => {
+          const reason = [];
+          if (context.reason.trim() !== '') {
+            reason.push({ message: context.reason, timestamp: Date.now() });
+          }
+          return { ...event.vc, reason };
         },
       }),
 
-      registerLoggers: model.assign({
+      registerLoggers: assign({
         loggers: () => {
           if (__DEV__) {
             return [
@@ -336,7 +326,7 @@ export const scanMachine = model.createMachine(
         },
       }),
 
-      removeLoggers: model.assign({
+      removeLoggers: assign({
         loggers: ({ loggers }) => {
           loggers?.forEach((logger) => logger.remove());
           return [];
@@ -402,7 +392,7 @@ export const scanMachine = model.createMachine(
         return () => listener.remove();
       },
 
-      checkAirplaneMode: (context) => (callback) => {
+      checkAirplaneMode: () => (callback) => {
         SystemSetting.isAirplaneEnabled().then((enable) => {
           if (enable) {
             callback(model.events.FLIGHT_ENABLED());
@@ -476,10 +466,8 @@ export const scanMachine = model.createMachine(
       },
     },
 
-    delays: {},
-
     guards: {
-      isQrValid: (_, event: ScanEvent) => {
+      isQrValid: (_, event) => {
         const param: SmartShare.ConnectionParams = Object.create(null);
         try {
           Object.assign(param, JSON.parse(event.params));
@@ -488,6 +476,10 @@ export const scanMachine = model.createMachine(
           return false;
         }
       },
+    },
+
+    delays: {
+      CLEAR_DELAY: 250,
     },
   }
 );
@@ -517,39 +509,39 @@ export function selectVcName(state: State) {
   return state.context.vcName;
 }
 
-export function selectStatusMessage(state: State) {
-  return (
-    state.meta[`${state.machine.id}.${state.value}`]?.message ||
-    state.meta[state.value.toString()]?.message ||
-    ''
-  );
-}
-
-export function selectScanning(state: State) {
+export function selectIsScanning(state: State) {
   return state.matches('findingConnection');
 }
 
-export function selectReviewing(state: State) {
+export function selectIsConnecting(state: State) {
+  return state.matches('connecting');
+}
+
+export function selectIsExchangingDeviceInfo(state: State) {
+  return state.matches('exchangingDeviceInfo');
+}
+
+export function selectIsReviewing(state: State) {
   return state.matches('reviewing');
 }
 
-export function selectSelectingVc(state: State) {
+export function selectIsSelectingVc(state: State) {
   return state.matches('reviewing.selectingVc');
 }
 
-export function selectSendingVc(state: State) {
+export function selectIsSendingVc(state: State) {
   return state.matches('reviewing.sendingVc');
 }
 
-export function selectAccepted(state: State) {
+export function selectIsAccepted(state: State) {
   return state.matches('reviewing.accepted');
 }
 
-export function selectRejected(state: State) {
+export function selectIsRejected(state: State) {
   return state.matches('reviewing.rejected');
 }
 
-export function selectInvalid(state: State) {
+export function selectIsInvalid(state: State) {
   return state.matches('invalid');
 }
 

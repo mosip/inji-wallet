@@ -16,8 +16,7 @@ export const MessageOverlay: React.FC<MessageOverlayProps> = (props) => {
     <Overlay
       isVisible={props.isVisible}
       overlayStyle={styles.overlay}
-      onBackdropPress={props.onBackdropPress}
-    >
+      onBackdropPress={props.onBackdropPress}>
       <Column padding="24" width={Dimensions.get('screen').width * 0.8}>
         {props.title && (
           <Text weight="semibold" margin="0 0 12 0">
