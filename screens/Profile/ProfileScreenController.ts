@@ -1,6 +1,7 @@
 import { useMachine, useSelector } from '@xstate/react';
 import { useContext, useEffect, useState } from 'react';
 import * as LocalAuthentication from 'expo-local-authentication';
+import { selectBackendInfo } from '../../machines/app';
 import {
   AuthEvents,
   selectBiometrics,
@@ -92,6 +93,7 @@ export function useProfileScreen({ navigation }: MainRouteProps) {
   return {
     alertMsg,
     hideAlert,
+    backendInfo: useSelector(appService, selectBackendInfo),
     name: useSelector(settingsService, selectName),
     vcLabel: useSelector(settingsService, selectVcLabel),
     isBiometricUnlockEnabled: useSelector(

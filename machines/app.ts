@@ -16,10 +16,12 @@ import { createRequestMachine, requestMachine } from './request';
 import { createScanMachine, scanMachine } from './scan';
 import { pure, respond } from 'xstate/lib/actions';
 import { AppServices } from '../shared/GlobalContext';
+import { request } from '../shared/request';
 
 const model = createModel(
   {
     info: {} as AppInfo,
+    backendInfo: {} as BackendInfo,
     serviceRefs: {} as AppServices,
   },
   {
@@ -31,6 +33,7 @@ const model = createModel(
       REQUEST_DEVICE_INFO: () => ({}),
       READY: (data?: unknown) => ({ data }),
       APP_INFO_RECEIVED: (info: AppInfo) => ({ info }),
+      BACKEND_INFO_RECEIVED: (info: BackendInfo) => ({ info }),
     },
   }
 );
@@ -66,8 +69,19 @@ export const appMachine = model.createMachine(
             },
             on: {
               APP_INFO_RECEIVED: {
-                target: '#ready',
+                target: 'devinfo',
                 actions: ['setAppInfo'],
+              },
+            },
+          },
+          devinfo: {
+            invoke: {
+              src: 'getBackendInfo',
+            },
+            on: {
+              BACKEND_INFO_RECEIVED: {
+                target: '#ready',
+                actions: ['setBackendInfo'],
               },
             },
           },
@@ -197,6 +211,10 @@ export const appMachine = model.createMachine(
       setAppInfo: model.assign({
         info: (_, event) => event.info,
       }),
+
+      setBackendInfo: model.assign({
+        backendInfo: (_, event) => event.info,
+      }),
     },
 
     services: {
@@ -205,8 +223,12 @@ export const appMachine = model.createMachine(
           deviceId: getDeviceId(),
           deviceName: await getDeviceName(),
         };
-
         callback(model.events.APP_INFO_RECEIVED(appInfo));
+      },
+
+      getBackendInfo: () => async (callback) => {
+        const backendInfo = await request('GET', '/info');
+        callback(model.events.BACKEND_INFO_RECEIVED(backendInfo));
       },
 
       checkFocusState: () => (callback) => {
@@ -256,11 +278,23 @@ interface AppInfo {
   deviceId: string;
   deviceName: string;
 }
+interface BackendInfo {
+  application: {
+    name: string;
+    version: string;
+  };
+  build: object;
+  config: object;
+}
 
 type State = StateFrom<typeof appMachine>;
 
 export function selectAppInfo(state: State) {
   return state.context.info;
+}
+
+export function selectBackendInfo(state: State) {
+  return state.context.backendInfo;
 }
 
 export function selectIsReady(state: State) {

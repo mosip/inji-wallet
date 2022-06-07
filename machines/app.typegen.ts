@@ -4,6 +4,7 @@ export interface Typegen0 {
   '@@xstate/typegen': true;
   'eventsCausingActions': {
     setAppInfo: 'APP_INFO_RECEIVED';
+    setBackendInfo: 'BACKEND_INFO_RECEIVED';
     requestDeviceInfo: 'REQUEST_DEVICE_INFO';
     spawnStoreActor: 'xstate.init';
     logStoreEvents: 'xstate.init';
@@ -16,6 +17,7 @@ export interface Typegen0 {
   };
   'invokeSrcNameMap': {
     getAppInfo: 'done.invoke.app.init.info:invocation[0]';
+    getBackendInfo: 'done.invoke.app.init.devinfo:invocation[0]';
     checkFocusState: 'done.invoke.app.ready.focus:invocation[0]';
     checkNetworkState: 'done.invoke.app.ready.network:invocation[0]';
   };
@@ -27,6 +29,7 @@ export interface Typegen0 {
   };
   'eventsCausingServices': {
     getAppInfo: 'READY';
+    getBackendInfo: 'APP_INFO_RECEIVED';
     checkFocusState: 'xstate.init';
     checkNetworkState: 'xstate.init';
   };
@@ -37,6 +40,7 @@ export interface Typegen0 {
     | 'init.store'
     | 'init.services'
     | 'init.info'
+    | 'init.devinfo'
     | 'ready'
     | 'ready.focus'
     | 'ready.focus.checking'
@@ -47,7 +51,7 @@ export interface Typegen0 {
     | 'ready.network.online'
     | 'ready.network.offline'
     | {
-        init?: 'store' | 'services' | 'info';
+        init?: 'store' | 'services' | 'info' | 'devinfo';
         ready?:
           | 'focus'
           | 'network'
