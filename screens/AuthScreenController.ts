@@ -28,7 +28,7 @@ export function useAuthScreen(props: RootRouteProps) {
   const isAuthorized = useSelector(authService, selectAuthorized);
 
   const [alertMsg, setHasAlertMsg] = useState('');
-  const [isBiometricsEnrolled, setIsBiometricsEnrolled] = useState(false);
+  const [isBiometricsAvailable, setIsBiometricsAvailable] = useState(false);
   const [biometricState, biometricSend, bioService] =
     useMachine(biometricsMachine);
 
@@ -44,11 +44,11 @@ export function useAuthScreen(props: RootRouteProps) {
 
   const { t } = useTranslation('AuthScreen');
 
-  const fetchIsEnrolled = async () => {
-    const result = await LocalAuthentication.isEnrolledAsync();
-    setIsBiometricsEnrolled(result);
+  const fetchIsAvailable = async () => {
+    const result = await LocalAuthentication.hasHardwareAsync();
+    setIsBiometricsAvailable(result);
   };
-  fetchIsEnrolled();
+  fetchIsAvailable();
 
   useEffect(() => {
     if (isAuthorized) {
@@ -82,6 +82,7 @@ export function useAuthScreen(props: RootRouteProps) {
   }, [isSuccessBio, isUnavailableBio, errorMsgBio, unEnrolledNoticeBio]);
 
   const useBiometrics = async () => {
+    const isBiometricsEnrolled = await LocalAuthentication.isEnrolledAsync();
     if (isBiometricsEnrolled) {
       if (biometricState.matches({ failure: 'unenrolled' })) {
         biometricSend({ type: 'RETRY_AUTHENTICATE' });
@@ -99,7 +100,7 @@ export function useAuthScreen(props: RootRouteProps) {
   };
 
   return {
-    isBiometricsEnrolled,
+    isBiometricsAvailable,
     isSettingUp,
     alertMsg,
     isEnabledBio,
