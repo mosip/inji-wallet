@@ -1,31 +1,32 @@
 import React, { useState } from 'react';
-import { Asset } from 'expo-asset';
+import { useTranslation } from 'react-i18next';
 import { Dimensions, Image, StyleSheet, View } from 'react-native';
 import { Divider, Icon, ListItem, Overlay } from 'react-native-elements';
-import Markdown from 'react-native-simple-markdown'
-import { Button, Text, Column, Row } from '../../components/ui';
+import Markdown from 'react-native-simple-markdown';
+import { Button, Text, Row } from '../../components/ui';
 import { Colors } from '../../components/ui/styleUtils';
 import creditsContent from '../../Credits.md';
 
 export const Credits: React.FC<CreditsProps> = (props) => {
+  const { t } = useTranslation('Credits');
   const [isViewing, setIsViewing] = useState(false);
   const images = {
-    'docs/images/newlogic_logo.png' : require('../../docs/images/newlogic_logo.png'),
-    'docs/images/id_pass_logo.png' : require('../../docs/images/id_pass_logo.png'),
-  }
+    'docs/images/newlogic_logo.png': require('../../docs/images/newlogic_logo.png'),
+    'docs/images/id_pass_logo.png': require('../../docs/images/id_pass_logo.png'),
+  };
   const styles = StyleSheet.create({
     buttonContainer: {
       position: 'absolute',
       left: 0,
-      right: 'auto'
+      right: 'auto',
     },
     view: {
       flex: 1,
-      width: Dimensions.get('screen').width
+      width: Dimensions.get('screen').width,
     },
     markdownView: {
-      padding: 20
-    }
+      padding: 20,
+    },
   });
 
   const markdownStyles = {
@@ -34,9 +35,9 @@ export const Credits: React.FC<CreditsProps> = (props) => {
     },
     image: {
       maxWidth: 150,
-      margin: 0
-    }
-  }
+      margin: 0,
+    },
+  };
 
   const rules = {
     image: {
@@ -49,8 +50,8 @@ export const Credits: React.FC<CreditsProps> = (props) => {
           />
         </View>
       ),
-    }
-  }
+    },
+  };
 
   return (
     <ListItem bottomDivider onPress={() => setIsViewing(true)}>
@@ -66,19 +67,22 @@ export const Credits: React.FC<CreditsProps> = (props) => {
         <View style={styles.view}>
           <Row align="center" crossAlign="center" margin="0 0 10 0">
             <View style={styles.buttonContainer}>
-              <Button type="clear" icon={<Icon name="chevron-left" color={Colors.Orange} />} title="Back" onPress={() => setIsViewing(false)}/>
+              <Button
+                type="clear"
+                icon={<Icon name="chevron-left" color={Colors.Orange} />}
+                title=""
+                onPress={() => setIsViewing(false)}
+              />
             </View>
-            <Text size="small">Credits and legal notices</Text>
+            <Text size="small">{t('header')}</Text>
           </Row>
           <Divider />
           <View style={styles.markdownView}>
-            <Markdown
-              rules={rules}
-              children={creditsContent}
-              styles={markdownStyles}/>
+            <Markdown rules={rules} styles={markdownStyles}>
+              {creditsContent}
+            </Markdown>
           </View>
         </View>
-
       </Overlay>
     </ListItem>
   );

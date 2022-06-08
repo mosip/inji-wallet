@@ -1,26 +1,33 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { SUPPORTED_LANGUAGES } from '../i18n';
 import { View } from 'react-native';
-// import { Picker } from '@react-native-community/picker';
-// import { ItemValue } from '@react-native-community/picker/typings/Picker';
-import { Icon } from 'react-native-elements';
-import { Colors } from './ui/styleUtils';
+import { Picker } from './ui/Picker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useTranslation } from 'react-i18next';
 
-const DEFAULT_LANGUAGE = 'en';
+export const LanguageSelector: React.FC<LanguageSelectorProps> = (props) => {
+  const { i18n } = useTranslation();
+  const languages = Object.entries(SUPPORTED_LANGUAGES).map(
+    ([value, label]) => ({ label, value })
+  );
 
-export function LanguageSelector() {
-  // const [language, setLanguage] = useState<ItemValue>(DEFAULT_LANGUAGE);
+  const changeLanguage = async (value: string) => {
+    await i18n.changeLanguage(value);
+    await AsyncStorage.setItem('language', i18n.language);
+  };
 
   return (
     <View>
-      <Icon name="language" color={Colors.Orange} />
-      {/* <Picker
-        mode="dropdown"
-        selectedValue={language}
-        style={{ height: 50, width: 150 }}
-        onValueChange={(itemValue: ItemValue) => setLanguage(itemValue)}>
-        <Picker.Item label="English" value="en" />
-        <Picker.Item label="Tagalog" value="tl" />
-      </Picker> */}
+      <Picker
+        items={languages}
+        selectedValue={i18n.language}
+        onValueChange={changeLanguage}
+        triggerComponent={props.triggerComponent}
+      />
     </View>
   );
+};
+
+interface LanguageSelectorProps {
+  triggerComponent: React.ReactElement;
 }

@@ -5,11 +5,12 @@ import { Column, Text } from '../../components/ui';
 import { Colors } from '../../components/ui/styleUtils';
 import { HomeRouteProps } from '../../routes/main';
 import { HistoryTab } from './HistoryTab';
-import { MyVidsTab } from './MyVidsTab';
-import { ReceivedVidsTab } from './ReceivedVidsTab';
-import { ViewVidModal } from './ViewVidModal';
-import { ActorRefFrom } from 'xstate';
+import { MyVcsTab } from './MyVcsTab';
+import { ReceivedVcsTab } from './ReceivedVcsTab';
+import { ViewVcModal } from './ViewVcModal';
 import { useHomeScreen } from './HomeScreenController';
+import { TabRef } from './HomeScreenMachine';
+import { useTranslation } from 'react-i18next';
 
 const styles = StyleSheet.create({
   tabIndicator: {
@@ -25,6 +26,7 @@ const styles = StyleSheet.create({
 });
 
 export const HomeScreen: React.FC<HomeRouteProps> = (props) => {
+  const { t } = useTranslation('HomeScreen');
   const controller = useHomeScreen(props);
 
   return (
@@ -34,32 +36,32 @@ export const HomeScreen: React.FC<HomeRouteProps> = (props) => {
           value={controller.activeTab}
           onChange={controller.SELECT_TAB}
           indicatorStyle={styles.tabIndicator}>
-          {TabItem(`My\n${controller.vidLabel.plural}`)}
-          {TabItem(`Received\n${controller.vidLabel.plural}`)}
-          {TabItem('History')}
+          {TabItem(t('myVcsTab', { vcLabel: controller.vcLabel.plural }))}
+          {TabItem(t('receivedVcsTab', { vcLabel: controller.vcLabel.plural }))}
+          {TabItem(t('historyTab'))}
         </Tab>
         {controller.haveTabsLoaded && (
           <Column fill>
-            <MyVidsTab
+            <MyVcsTab
               isVisible={controller.activeTab === 0}
-              service={controller.service.children.get('myVidsTab')}
+              service={controller.tabRefs.myVcs}
             />
-            <ReceivedVidsTab
+            <ReceivedVcsTab
               isVisible={controller.activeTab === 1}
-              service={controller.service.children.get('receivedVidsTab')}
+              service={controller.tabRefs.receivedVcs}
             />
             <HistoryTab
               isVisible={controller.activeTab === 2}
-              service={controller.service.children.get('historyTab')}
+              service={controller.tabRefs.history}
             />
           </Column>
         )}
       </Column>
-      {controller.selectedVid && (
-        <ViewVidModal
-          isVisible={controller.isViewingVid}
+      {controller.selectedVc && (
+        <ViewVcModal
+          isVisible={controller.isViewingVc}
           onDismiss={controller.DISMISS_MODAL}
-          vidItemActor={controller.selectedVid}
+          vcItemActor={controller.selectedVc}
         />
       )}
     </React.Fragment>
@@ -81,5 +83,5 @@ function TabItem(title: string) {
 
 export interface HomeScreenTabProps {
   isVisible: boolean;
-  service: ActorRefFrom<any>;
+  service: TabRef;
 }

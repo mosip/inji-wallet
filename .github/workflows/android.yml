@@ -23,12 +23,6 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           path: ~/.npm
 
-      - name: Cache local maven repository
-        uses: actions/cache@v2
-        with:
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          path: ~/.m2
-
       - name: Cache local gradle repository
         uses: actions/cache@v2
         with:
@@ -43,7 +37,7 @@ jobs:
       - name: Build App Newlogic Release
         run: |
           cd android
-          [ ! -z "$FIREBASE_SECRET" ] && gpg -o app/google-services.json --batch --passphrase="$FIREBASE_SECRET" -d app/google-services.json.gpg || echo "FIREBASE_SECRET not defined"
+          if [ ! -z "$FIREBASE_SECRET" ] && [ -f app/google-services.json.gpg ];then rm -f app/google-services.json;gpg -o app/google-services.json --batch --passphrase="$FIREBASE_SECRET" -d app/google-services.json.gpg;fi
           ./gradlew :app:assembleNewlogicRelease
         env:
           BACKEND_SERVICE_URL: https://qa-triple-rc2.mosip.net/residentmobileapp

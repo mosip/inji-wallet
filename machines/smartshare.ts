@@ -2,10 +2,7 @@ import SmartShare from '@idpass/smartshare-react-native';
 import { EmitterSubscription } from 'react-native';
 import { createModel } from 'xstate/lib/model';
 import { Message } from '../shared/Message';
-import { EventFrom, sendParent } from 'xstate';
-import { respond } from 'xstate/lib/actions';
-
-// TODO: wip
+import { EventFrom } from 'xstate';
 
 const model = createModel(
   {
@@ -103,14 +100,14 @@ export const smartShareMachine = model.createMachine(
 
         onReceive((event: EventFrom<typeof model>) => {
           switch (event.type) {
-            case 'SEND':
-              SmartShare.send(event.message.toString(), () => {
-                callback(model.events.SENT());
-              });
-              break;
-            case 'DESTROY':
-              SmartShare.destroyConnection();
-              break;
+          case 'SEND':
+            SmartShare.send(event.message.toString(), () => {
+              callback(model.events.SENT());
+            });
+            break;
+          case 'DESTROY':
+            SmartShare.destroyConnection();
+            break;
           }
         });
 

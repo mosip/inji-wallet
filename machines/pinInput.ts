@@ -2,11 +2,7 @@ import { useRef, createRef, MutableRefObject } from 'react';
 import { useMachine } from '@xstate/react';
 import { EventFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
-import {
-  NativeSyntheticEvent,
-  TextInput,
-  TextInputKeyPressEventData,
-} from 'react-native';
+import { TextInput } from 'react-native';
 
 const model = createModel(
   {
@@ -24,14 +20,14 @@ const model = createModel(
   }
 );
 
-type SelectInputEvent = EventFrom<typeof model, 'FOCUS_INPUT'>;
-type UpdateInputEvent = EventFrom<typeof model, 'UPDATE_INPUT'>;
-type KeyPressEvent = EventFrom<typeof model, 'KEY_PRESS'>;
-
 export const pinInputMachine = model.createMachine(
   {
+    tsTypes: {} as import('./pinInput.typegen').Typegen0,
+    schema: {
+      context: model.initialContext,
+      events: {} as EventFrom<typeof model>,
+    },
     id: 'pinInput',
-    context: model.initialContext,
     initial: 'idle',
     states: {
       idle: {
@@ -78,7 +74,7 @@ export const pinInputMachine = model.createMachine(
   {
     actions: {
       selectInput: model.assign({
-        selectedIndex: (_, event: SelectInputEvent) => event.index,
+        selectedIndex: (_, event) => event.index,
       }),
 
       selectNextInput: model.assign({
@@ -102,7 +98,7 @@ export const pinInputMachine = model.createMachine(
       }),
 
       updateInput: model.assign({
-        values: ({ values }, event: UpdateInputEvent) => {
+        values: ({ values }, event) => {
           const newValues = [...values];
           newValues[event.index] = event.value;
           return newValues;
@@ -115,11 +111,11 @@ export const pinInputMachine = model.createMachine(
         return selectedIndex + 1 < inputRefs.length;
       },
 
-      isBlank: (_, event: UpdateInputEvent) => {
+      isBlank: (_, event) => {
         return !event.value;
       },
 
-      canGoBack: ({ values, selectedIndex }, event: KeyPressEvent) => {
+      canGoBack: ({ values, selectedIndex }, event) => {
         return (
           selectedIndex - 1 >= 0 &&
           !values[selectedIndex] &&

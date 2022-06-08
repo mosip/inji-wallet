@@ -1,7 +1,7 @@
 import SmartShare from '@idpass/smartshare-react-native';
 import LocationEnabler from 'react-native-location-enabler';
 import SystemSetting from 'react-native-system-setting';
-import { EventFrom, send, sendParent, StateFrom } from 'xstate';
+import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { EmitterSubscription, Linking, PermissionsAndroid } from 'react-native';
 import { DeviceInfo } from '../components/DeviceInfoList';
@@ -10,14 +10,14 @@ import { getDeviceNameSync } from 'react-native-device-info';
 import { VC } from '../types/vc';
 import { AppServices } from '../shared/GlobalContext';
 import { ActivityLogEvents } from './activityLog';
-import { VID_ITEM_STORE_KEY } from '../shared/constants';
+import { VC_ITEM_STORE_KEY } from '../shared/constants';
 
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
     senderInfo: {} as DeviceInfo,
     receiverInfo: {} as DeviceInfo,
-    selectedVid: {} as VC,
+    selectedVc: {} as VC,
     reason: '',
     loggers: [] as EmitterSubscription[],
     locationConfig: {
@@ -25,17 +25,17 @@ const model = createModel(
       alwaysShow: false,
       needBle: true,
     },
-    vidName: '',
+    vcName: '',
   },
   {
     events: {
       EXCHANGE_DONE: (receiverInfo: DeviceInfo) => ({ receiverInfo }),
       RECEIVE_DEVICE_INFO: (info: DeviceInfo) => ({ info }),
-      SELECT_VID: (vid: VC) => ({ vid }),
+      SELECT_VC: (vc: VC) => ({ vc }),
       SCAN: (params: string) => ({ params }),
       ACCEPT_REQUEST: () => ({}),
-      VID_ACCEPTED: () => ({}),
-      VID_REJECTED: () => ({}),
+      VC_ACCEPTED: () => ({}),
+      VC_REJECTED: () => ({}),
       CANCEL: () => ({}),
       DISMISS: () => ({}),
       CONNECTED: () => ({}),
@@ -49,8 +49,8 @@ const model = createModel(
       FLIGHT_DISABLED: () => ({}),
       FLIGHT_REQUEST: () => ({}),
       LOCATION_REQUEST: () => ({}),
-      UPDATE_VID_NAME: (vidName: string) => ({ vidName }),
-      STORE_RESPONSE: (response: any) => ({ response }),
+      UPDATE_VC_NAME: (vcName: string) => ({ vcName }),
+      STORE_RESPONSE: (response: unknown) => ({ response }),
       APP_ACTIVE: () => ({}),
     },
   }
@@ -58,16 +58,14 @@ const model = createModel(
 
 export const ScanEvents = model.events;
 
-type ExchangeDoneEvent = EventFrom<typeof model, 'EXCHANGE_DONE'>;
-type ScanEvent = EventFrom<typeof model, 'SCAN'>;
-type SelectVidEvent = EventFrom<typeof model, 'SELECT_VID'>;
-type UpdateReasonEvent = EventFrom<typeof model, 'UPDATE_REASON'>;
-type ReceiveDeviceInfoEvent = EventFrom<typeof model, 'RECEIVE_DEVICE_INFO'>;
-
 export const scanMachine = model.createMachine(
   {
+    tsTypes: {} as import('./scan.typegen').Typegen0,
+    schema: {
+      context: model.initialContext,
+      events: {} as EventFrom<typeof model>,
+    },
     id: 'scan',
-    context: model.initialContext,
     initial: 'inactive',
     on: {
       SCREEN_BLUR: 'inactive',
@@ -150,7 +148,7 @@ export const scanMachine = model.createMachine(
         id: 'clearingConnection',
         entry: ['disconnect'],
         after: {
-          250: 'findingConnection',
+          CLEAR_DELAY: 'findingConnection',
         },
       },
       findingConnection: {
@@ -177,9 +175,6 @@ export const scanMachine = model.createMachine(
         },
       },
       connecting: {
-        meta: {
-          message: 'Connecting...',
-        },
         invoke: {
           src: 'discoverDevice',
         },
@@ -188,9 +183,6 @@ export const scanMachine = model.createMachine(
         },
       },
       exchangingDeviceInfo: {
-        meta: {
-          message: 'Exchanging device info...',
-        },
         invoke: {
           src: 'exchangeDeviceInfo',
         },
@@ -206,7 +198,7 @@ export const scanMachine = model.createMachine(
         on: {
           CANCEL: 'findingConnection',
           DISMISS: 'findingConnection',
-          ACCEPT_REQUEST: '.selectingVid',
+          ACCEPT_REQUEST: '.selectingVc',
           UPDATE_REASON: {
             actions: ['setReason'],
           },
@@ -215,26 +207,26 @@ export const scanMachine = model.createMachine(
         states: {
           idle: {
             on: {
-              ACCEPT_REQUEST: 'selectingVid',
+              ACCEPT_REQUEST: 'selectingVc',
             },
           },
-          selectingVid: {
+          selectingVc: {
             on: {
-              SELECT_VID: {
-                target: 'sendingVid',
-                actions: ['setSelectedVid'],
+              SELECT_VC: {
+                target: 'sendingVc',
+                actions: ['setSelectedVc'],
               },
               CANCEL: 'idle',
             },
           },
-          sendingVid: {
+          sendingVc: {
             invoke: {
-              src: 'sendVid',
+              src: 'sendVc',
             },
             on: {
               DISCONNECT: '#scan.disconnected',
-              VID_ACCEPTED: 'accepted',
-              VID_REJECTED: 'rejected',
+              VC_ACCEPTED: 'accepted',
+              VC_REJECTED: 'rejected',
             },
           },
           accepted: {
@@ -255,9 +247,6 @@ export const scanMachine = model.createMachine(
         },
       },
       invalid: {
-        meta: {
-          message: 'Invalid QR Code',
-        },
         on: {
           DISMISS: 'findingConnection',
         },
@@ -269,7 +258,7 @@ export const scanMachine = model.createMachine(
       requestSenderInfo: sendParent('REQUEST_DEVICE_INFO'),
 
       setSenderInfo: model.assign({
-        senderInfo: (_, event: ReceiveDeviceInfoEvent) => event.info,
+        senderInfo: (_, event) => event.info,
       }),
 
       requestToEnableLocation: (context) => {
@@ -277,7 +266,7 @@ export const scanMachine = model.createMachine(
       },
 
       requestToDisableFlightMode: () => {
-        SystemSetting.switchAirplane(() => {})
+        SystemSetting.switchAirplane();
       },
 
       disconnect: () => {
@@ -288,49 +277,56 @@ export const scanMachine = model.createMachine(
         }
       },
 
-      setConnectionParams: (_, event: ScanEvent) => {
+      setConnectionParams: (_, event) => {
         SmartShare.setConnectionParameters(event.params);
       },
 
       setReceiverInfo: model.assign({
-        receiverInfo: (_, event: ExchangeDoneEvent) => event.receiverInfo,
+        receiverInfo: (_, event) => event.receiverInfo,
       }),
 
       setReason: model.assign({
-        reason: (_, event: UpdateReasonEvent) => event.reason,
+        reason: (_, event) => event.reason,
       }),
 
-      clearReason: model.assign({ reason: '' }),
+      clearReason: assign({ reason: '' }),
 
-      setSelectedVid: model.assign({
-        selectedVid: (context, event: SelectVidEvent) => {
-          return {
-            ...event.vid,
-            reason: context.reason,
-          };
+      setSelectedVc: model.assign({
+        selectedVc: (context, event) => {
+          const reason = [];
+          if (context.reason.trim() !== '') {
+            reason.push({ message: context.reason, timestamp: Date.now() });
+          }
+          return { ...event.vc, reason };
         },
       }),
 
-      registerLoggers: model.assign({
-        loggers: () => [
-          SmartShare.handleNearbyEvents((event) => {
-            console.log(
-              getDeviceNameSync(),
-              '<Sender.Event>',
-              JSON.stringify(event)
-            );
-          }),
-          SmartShare.handleLogEvents((event) => {
-            console.log(
-              getDeviceNameSync(),
-              '<Sender.Log>',
-              JSON.stringify(event)
-            );
-          }),
-        ],
+      registerLoggers: assign({
+        loggers: () => {
+          if (__DEV__) {
+            return [
+              SmartShare.handleNearbyEvents((event) => {
+                console.log(
+                  getDeviceNameSync(),
+                  '<Sender.Event>',
+                  JSON.stringify(event)
+                );
+              }),
+              SmartShare.handleLogEvents((event) => {
+                console.log(
+                  getDeviceNameSync(),
+                  '<Sender.Log>',
+                  JSON.stringify(event)
+                );
+              }),
+            ];
+          } else {
+            return [];
+          }
+        },
       }),
 
-      removeLoggers: model.assign({
+      removeLoggers: assign({
         loggers: ({ loggers }) => {
           loggers?.forEach((logger) => logger.remove());
           return [];
@@ -340,12 +336,12 @@ export const scanMachine = model.createMachine(
       logShared: send(
         (context) =>
           ActivityLogEvents.LOG_ACTIVITY({
-            _vidKey: VID_ITEM_STORE_KEY(context.selectedVid),
+            _vcKey: VC_ITEM_STORE_KEY(context.selectedVc),
             action: 'shared',
             timestamp: Date.now(),
             deviceName:
               context.receiverInfo.name || context.receiverInfo.deviceName,
-            vidLabel: context.selectedVid.tag || context.selectedVid.id,
+            vcLabel: context.selectedVc.tag || context.selectedVc.id,
           }),
         { to: (context) => context.serviceRefs.activityLog }
       ),
@@ -358,7 +354,7 @@ export const scanMachine = model.createMachine(
     services: {
       checkLocationPermission: () => async (callback) => {
         try {
-          // TODO: a more reliable way to wait for animation to finish when app becomes active
+          // wait a bit for animation to finish when app becomes active
           await new Promise((resolve) => setTimeout(resolve, 250));
 
           const response = await PermissionsAndroid.request(
@@ -396,14 +392,14 @@ export const scanMachine = model.createMachine(
         return () => listener.remove();
       },
 
-      checkAirplaneMode: (context) => (callback) => {
+      checkAirplaneMode: () => (callback) => {
         SystemSetting.isAirplaneEnabled().then((enable) => {
-          if(enable) {
+          if (enable) {
             callback(model.events.FLIGHT_ENABLED());
           } else {
             callback(model.events.FLIGHT_DISABLED());
           }
-        })
+        });
       },
 
       discoverDevice: () => (callback) => {
@@ -436,15 +432,15 @@ export const scanMachine = model.createMachine(
         return () => subscription?.remove();
       },
 
-      sendVid: (context) => (callback) => {
+      sendVc: (context) => (callback) => {
         let subscription: EmitterSubscription;
 
-        const vid = {
-          ...context.selectedVid,
+        const vc = {
+          ...context.selectedVc,
           tag: '',
         };
 
-        const message = new Message<VC>('send:vid', vid);
+        const message = new Message<VC>('send:vc', vc);
 
         SmartShare.send(message.toString(), () => {
           subscription = SmartShare.handleNearbyEvents((event) => {
@@ -454,13 +450,13 @@ export const scanMachine = model.createMachine(
 
             if (event.type !== 'msg') return;
 
-            const response = Message.fromString<SendVidStatus>(event.data);
-            if (response.type === 'send:vid:response') {
+            const response = Message.fromString<SendVcStatus>(event.data);
+            if (response.type === 'send:vc:response') {
               callback({
                 type:
                   response.data.status === 'accepted'
-                    ? 'VID_ACCEPTED'
-                    : 'VID_REJECTED',
+                    ? 'VC_ACCEPTED'
+                    : 'VC_REJECTED',
               });
             }
           });
@@ -470,10 +466,8 @@ export const scanMachine = model.createMachine(
       },
     },
 
-    delays: {},
-
     guards: {
-      isQrValid: (_, event: ScanEvent) => {
+      isQrValid: (_, event) => {
         const param: SmartShare.ConnectionParams = Object.create(null);
         try {
           Object.assign(param, JSON.parse(event.params));
@@ -482,6 +476,10 @@ export const scanMachine = model.createMachine(
           return false;
         }
       },
+    },
+
+    delays: {
+      CLEAR_DELAY: 250,
     },
   }
 );
@@ -493,7 +491,7 @@ export function createScanMachine(serviceRefs: AppServices) {
   });
 }
 
-interface SendVidStatus {
+interface SendVcStatus {
   status: 'accepted' | 'rejected';
 }
 
@@ -507,43 +505,43 @@ export function selectReason(state: State) {
   return state.context.reason;
 }
 
-export function selectVidName(state: State) {
-  return state.context.vidName;
+export function selectVcName(state: State) {
+  return state.context.vcName;
 }
 
-export function selectStatusMessage(state: State) {
-  return (
-    state.meta[`${state.machine.id}.${state.value}`]?.message ||
-    state.meta[state.value.toString()]?.message ||
-    ''
-  );
-}
-
-export function selectScanning(state: State) {
+export function selectIsScanning(state: State) {
   return state.matches('findingConnection');
 }
 
-export function selectReviewing(state: State) {
+export function selectIsConnecting(state: State) {
+  return state.matches('connecting');
+}
+
+export function selectIsExchangingDeviceInfo(state: State) {
+  return state.matches('exchangingDeviceInfo');
+}
+
+export function selectIsReviewing(state: State) {
   return state.matches('reviewing');
 }
 
-export function selectSelectingVid(state: State) {
-  return state.matches('reviewing.selectingVid');
+export function selectIsSelectingVc(state: State) {
+  return state.matches('reviewing.selectingVc');
 }
 
-export function selectSendingVid(state: State) {
-  return state.matches('reviewing.sendingVid');
+export function selectIsSendingVc(state: State) {
+  return state.matches('reviewing.sendingVc');
 }
 
-export function selectAccepted(state: State) {
+export function selectIsAccepted(state: State) {
   return state.matches('reviewing.accepted');
 }
 
-export function selectRejected(state: State) {
+export function selectIsRejected(state: State) {
   return state.matches('reviewing.rejected');
 }
 
-export function selectInvalid(state: State) {
+export function selectIsInvalid(state: State) {
   return state.matches('invalid');
 }
 

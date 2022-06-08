@@ -1,7 +1,7 @@
 import SmartShare from '@idpass/smartshare-react-native';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import { EmitterSubscription } from 'react-native';
-import { EventFrom, send, sendParent, StateFrom } from 'xstate';
+import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { DeviceInfo } from '../components/DeviceInfoList';
 import { Message } from '../shared/Message';
@@ -9,19 +9,16 @@ import { getDeviceNameSync } from 'react-native-device-info';
 import { StoreEvents } from './store';
 import { VC } from '../types/vc';
 import { AppServices } from '../shared/GlobalContext';
-import {
-  RECEIVED_VIDS_STORE_KEY,
-  VID_ITEM_STORE_KEY,
-} from '../shared/constants';
+import { RECEIVED_VCS_STORE_KEY, VC_ITEM_STORE_KEY } from '../shared/constants';
 import { ActivityLogEvents } from './activityLog';
-import { VidEvents } from './vid';
+import { VcEvents } from './vc';
 
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
     senderInfo: {} as DeviceInfo,
     receiverInfo: {} as DeviceInfo,
-    incomingVid: {} as VC,
+    incomingVc: {} as VC,
     connectionParams: '',
     loggers: [] as EmitterSubscription[],
   },
@@ -31,7 +28,7 @@ const model = createModel(
       REJECT: () => ({}),
       CANCEL: () => ({}),
       DISMISS: () => ({}),
-      VID_RECEIVED: (vid: VC) => ({ vid }),
+      VC_RECEIVED: (vc: VC) => ({ vc }),
       RESPONSE_SENT: () => ({}),
       CONNECTED: () => ({}),
       DISCONNECT: () => ({}),
@@ -41,26 +38,24 @@ const model = createModel(
       BLUETOOTH_ENABLED: () => ({}),
       BLUETOOTH_DISABLED: () => ({}),
       STORE_READY: () => ({}),
-      STORE_RESPONSE: (response: any) => ({ response }),
+      STORE_RESPONSE: (response: unknown) => ({ response }),
       RECEIVE_DEVICE_INFO: (info: DeviceInfo) => ({ info }),
-      RECEIVED_VIDS_UPDATED: () => ({}),
-      VID_RESPONSE: (response: any) => ({ response }),
+      RECEIVED_VCS_UPDATED: () => ({}),
+      VC_RESPONSE: (response: unknown) => ({ response }),
     },
   }
 );
 
 export const RequestEvents = model.events;
 
-type ExchangeDoneEvent = EventFrom<typeof model, 'EXCHANGE_DONE'>;
-type VidReceivedEvent = EventFrom<typeof model, 'VID_RECEIVED'>;
-type ReceiveDeviceInfoEvent = EventFrom<typeof model, 'RECEIVE_DEVICE_INFO'>;
-type StoreResponseEvent = EventFrom<typeof model, 'STORE_RESPONSE'>;
-type VidResponseEvent = EventFrom<typeof model, 'VID_RESPONSE'>;
-
 export const requestMachine = model.createMachine(
   {
+    tsTypes: {} as import('./request.typegen').Typegen0,
+    schema: {
+      context: model.initialContext,
+      events: {} as EventFrom<typeof model>,
+    },
     id: 'request',
-    context: model.initialContext,
     initial: 'inactive',
     on: {
       SCREEN_BLUR: 'inactive',
@@ -103,7 +98,7 @@ export const requestMachine = model.createMachine(
         id: 'clearingConnection',
         entry: ['disconnect'],
         after: {
-          250: 'waitingForConnection',
+          CLEAR_DELAY: 'waitingForConnection',
         },
       },
       waitingForConnection: {
@@ -132,20 +127,20 @@ export const requestMachine = model.createMachine(
         },
         on: {
           EXCHANGE_DONE: {
-            target: 'waitingForVid',
+            target: 'waitingForVc',
             actions: ['setSenderInfo'],
           },
         },
       },
-      waitingForVid: {
+      waitingForVc: {
         invoke: {
-          src: 'receiveVid',
+          src: 'receiveVc',
         },
         on: {
           DISCONNECT: 'disconnected',
-          VID_RECEIVED: {
+          VC_RECEIVED: {
             target: 'reviewing',
-            actions: ['setIncomingVid'],
+            actions: ['setIncomingVc'],
           },
         },
       },
@@ -159,45 +154,54 @@ export const requestMachine = model.createMachine(
         states: {
           idle: {},
           accepting: {
-            initial: 'requestingReceivedVids',
+            initial: 'requestingReceivedVcs',
             states: {
-              requestingReceivedVids: {
-                entry: ['requestReceivedVids'],
+              requestingReceivedVcs: {
+                entry: ['requestReceivedVcs'],
                 on: {
-                  VID_RESPONSE: [
+                  VC_RESPONSE: [
                     {
-                      cond: 'hasExistingVid',
-                      target: '#accepted',
+                      cond: 'hasExistingVc',
+                      target: 'requestingExistingVc',
                     },
                     {
-                      target: 'prependingReceivedVid',
+                      target: 'prependingReceivedVc',
                     },
                   ],
                 },
               },
-              prependingReceivedVid: {
-                entry: ['prependReceivedVid'],
+              requestingExistingVc: {
+                entry: ['requestExistingVc'],
                 on: {
-                  STORE_RESPONSE: 'storingVid',
+                  STORE_RESPONSE: 'mergingIncomingVc',
                 },
               },
-              storingVid: {
-                entry: ['storeVid'],
+              mergingIncomingVc: {
+                entry: ['mergeIncomingVc'],
                 on: {
-                  STORE_RESPONSE: {
-                    target: '#accepted',
-                    actions: ['sendVidReceived'],
-                  },
+                  STORE_RESPONSE: '#accepted',
+                },
+              },
+              prependingReceivedVc: {
+                entry: ['prependReceivedVc'],
+                on: {
+                  STORE_RESPONSE: 'storingVc',
+                },
+              },
+              storingVc: {
+                entry: ['storeVc'],
+                on: {
+                  STORE_RESPONSE: '#accepted',
                 },
               },
             },
           },
           accepted: {
-            entry: ['logReceived'],
             id: 'accepted',
+            entry: ['sendVcReceived', 'logReceived'],
             invoke: {
-              src: {
-                type: 'sendVidResponse',
+              src: 'sendVcResponse',
+              data: {
                 status: 'accepted',
               },
             },
@@ -207,8 +211,8 @@ export const requestMachine = model.createMachine(
           },
           rejected: {
             invoke: {
-              src: {
-                type: 'sendVidResponse',
+              src: 'sendVcResponse',
+              data: {
                 status: 'rejected',
               },
             },
@@ -229,76 +233,99 @@ export const requestMachine = model.createMachine(
   },
   {
     actions: {
-      requestReceivedVids: send(VidEvents.GET_RECEIVED_VIDS(), {
-        to: (context) => context.serviceRefs.vid,
+      requestReceivedVcs: send(VcEvents.GET_RECEIVED_VCS(), {
+        to: (context) => context.serviceRefs.vc,
       }),
 
       requestReceiverInfo: sendParent('REQUEST_DEVICE_INFO'),
 
       setReceiverInfo: model.assign({
-        receiverInfo: (_, event: ReceiveDeviceInfoEvent) => event.info,
+        receiverInfo: (_context, event) => event.info,
       }),
 
       disconnect: () => {
         try {
           SmartShare.destroyConnection();
         } catch (e) {
-          //
+          // pass
         }
       },
 
-      generateConnectionParams: model.assign({
+      generateConnectionParams: assign({
         connectionParams: () => SmartShare.getConnectionParameters(),
       }),
 
       setSenderInfo: model.assign({
-        senderInfo: (_, event: ExchangeDoneEvent) => event.senderInfo,
+        senderInfo: (_context, event) => event.senderInfo,
       }),
 
-      setIncomingVid: model.assign({
-        incomingVid: (_, event: VidReceivedEvent) => event.vid,
+      setIncomingVc: model.assign({
+        incomingVc: (_context, event) => event.vc,
       }),
 
-      registerLoggers: model.assign({
-        loggers: () => [
-          SmartShare.handleNearbyEvents((event) => {
-            console.log(
-              getDeviceNameSync(),
-              '<Receiver.Event>',
-              JSON.stringify(event)
-            );
-          }),
-          SmartShare.handleLogEvents((event) => {
-            console.log(
-              getDeviceNameSync(),
-              '<Receiver.Log>',
-              JSON.stringify(event)
-            );
-          }),
-        ],
+      registerLoggers: assign({
+        loggers: () => {
+          if (__DEV__) {
+            return [
+              SmartShare.handleNearbyEvents((event) => {
+                console.log(
+                  getDeviceNameSync(),
+                  '<Receiver.Event>',
+                  JSON.stringify(event)
+                );
+              }),
+              SmartShare.handleLogEvents((event) => {
+                console.log(
+                  getDeviceNameSync(),
+                  '<Receiver.Log>',
+                  JSON.stringify(event)
+                );
+              }),
+            ];
+          } else {
+            return [];
+          }
+        },
       }),
 
-      removeLoggers: model.assign({
+      removeLoggers: assign({
         loggers: ({ loggers }) => {
           loggers?.forEach((logger) => logger.remove());
           return null;
         },
       }),
 
-      prependReceivedVid: send(
+      prependReceivedVc: send(
         (context) =>
           StoreEvents.PREPEND(
-            RECEIVED_VIDS_STORE_KEY,
-            VID_ITEM_STORE_KEY(context.incomingVid)
+            RECEIVED_VCS_STORE_KEY,
+            VC_ITEM_STORE_KEY(context.incomingVc)
           ),
         { to: (context) => context.serviceRefs.store }
       ),
 
-      storeVid: send(
+      requestExistingVc: send(
+        (context) => StoreEvents.GET(VC_ITEM_STORE_KEY(context.incomingVc)),
+        { to: (context) => context.serviceRefs.store }
+      ),
+
+      mergeIncomingVc: send(
+        (context, event) => {
+          const existing = event.response as VC;
+          const updated: VC = {
+            ...existing,
+            reason: existing.reason.concat(context.incomingVc.reason),
+          };
+          return StoreEvents.SET(VC_ITEM_STORE_KEY(updated), updated);
+        },
+        { to: (context) => context.serviceRefs.store }
+      ),
+
+      storeVc: send(
         (context) =>
           StoreEvents.SET(
-            VID_ITEM_STORE_KEY(context.incomingVid),
-            context.incomingVid
+            VC_ITEM_STORE_KEY(context.incomingVc),
+            context.incomingVc
           ),
         { to: (context) => context.serviceRefs.store }
       ),
@@ -306,23 +333,21 @@ export const requestMachine = model.createMachine(
       logReceived: send(
         (context) =>
           ActivityLogEvents.LOG_ACTIVITY({
-            _vidKey: VID_ITEM_STORE_KEY(context.incomingVid),
+            _vcKey: VC_ITEM_STORE_KEY(context.incomingVc),
             action: 'received',
             timestamp: Date.now(),
             deviceName:
               context.senderInfo.name || context.senderInfo.deviceName,
-            vidLabel: context.incomingVid.tag || context.incomingVid.id,
+            vcLabel: context.incomingVc.tag || context.incomingVc.id,
           }),
         { to: (context) => context.serviceRefs.activityLog }
       ),
 
-      sendVidReceived: send(
+      sendVcReceived: send(
         (context) => {
-          return VidEvents.VID_RECEIVED(
-            VID_ITEM_STORE_KEY(context.incomingVid)
-          );
+          return VcEvents.VC_RECEIVED(VC_ITEM_STORE_KEY(context.incomingVc));
         },
-        { to: (context) => context.serviceRefs.vid }
+        { to: (context) => context.serviceRefs.vc }
       ),
     },
 
@@ -374,7 +399,7 @@ export const requestMachine = model.createMachine(
         return () => subscription.remove();
       },
 
-      receiveVid: () => (callback) => {
+      receiveVc: () => (callback) => {
         const subscription = SmartShare.handleNearbyEvents((event) => {
           if (event.type === 'onDisconnected') {
             callback({ type: 'DISCONNECT' });
@@ -383,18 +408,17 @@ export const requestMachine = model.createMachine(
           if (event.type !== 'msg') return;
 
           const message = Message.fromString<VC>(event.data);
-          if (message.type === 'send:vid') {
-            callback({ type: 'VID_RECEIVED', vid: message.data });
+          if (message.type === 'send:vc') {
+            callback({ type: 'VC_RECEIVED', vc: message.data });
           }
         });
 
         return () => subscription.remove();
       },
 
-      // tslint:disable-next-line
-      sendVidResponse: (context, event, meta) => (callback) => {
-        const response = new Message('send:vid:response', {
-          status: meta.src.status,
+      sendVcResponse: (_context, _event, meta) => (callback) => {
+        const response = new Message('send:vc:response', {
+          status: meta.data.status,
         });
 
         SmartShare.send(response.toString(), () => {
@@ -404,11 +428,15 @@ export const requestMachine = model.createMachine(
     },
 
     guards: {
-      hasExistingVid: (context, event: VidResponseEvent) => {
-        const receivedVids: string[] = event.response;
-        const vidKey = VID_ITEM_STORE_KEY(context.incomingVid);
-        return receivedVids.includes(vidKey);
+      hasExistingVc: (context, event) => {
+        const receivedVcs = event.response as string[];
+        const vcKey = VC_ITEM_STORE_KEY(context.incomingVc);
+        return receivedVcs.includes(vcKey);
       },
+    },
+
+    delays: {
+      CLEAR_DELAY: 250,
     },
   }
 );
@@ -430,8 +458,8 @@ export function selectConnectionParams(state: State) {
   return state.context.connectionParams;
 }
 
-export function selectIncomingVid(state: State) {
-  return state.context.incomingVid;
+export function selectIncomingVc(state: State) {
+  return state.context.incomingVc;
 }
 
 export function selectIsReviewing(state: State) {
@@ -462,6 +490,6 @@ export function selectIsExchangingDeviceInfo(state: State) {
   return state.matches('exchangingDeviceInfo');
 }
 
-export function selectIsWaitingForVid(state: State) {
-  return state.matches('waitingForVid');
+export function selectIsWaitingForVc(state: State) {
+  return state.matches('waitingForVc');
 }

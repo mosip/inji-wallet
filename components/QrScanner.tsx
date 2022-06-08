@@ -8,6 +8,7 @@ import { Column, Button, Text } from './ui';
 import { GlobalContext } from '../shared/GlobalContext';
 import { useSelector } from '@xstate/react';
 import { selectIsActive } from '../machines/app';
+import { useTranslation } from 'react-i18next';
 
 const styles = StyleSheet.create({
   scannerContainer: {
@@ -31,6 +32,7 @@ const styles = StyleSheet.create({
 });
 
 export const QrScanner: React.FC<QrScannerProps> = (props) => {
+  const { t } = useTranslation('QrScanner');
   const { appService } = useContext(GlobalContext);
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
@@ -66,9 +68,9 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
     return (
       <Column fill align="space-between">
         <Text align="center" color={Colors.Red}>
-          This app uses the camera to scan the QR code of another device.
+          {t('missingPermissionText')}
         </Text>
-        <Button title="Allow access to camera" onPress={openSettings} />
+        <Button title={t('allowCameraButton')} onPress={openSettings} />
       </Column>
     );
   }

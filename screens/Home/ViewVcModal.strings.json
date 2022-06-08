@@ -1,0 +1,9 @@
+{
+  "lock": "Lock",
+  "unlock": "Unlock",
+  "rename": "Rename",
+  "delete": "Delete",
+  "revoke": "Revoke",
+  "requestingOtp": "Requesting OTP...",
+  "editTag": "Edit Tag"
+}

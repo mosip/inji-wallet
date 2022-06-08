@@ -1,42 +1,41 @@
-import { ContextFrom, EventFrom, send, sendUpdate, StateFrom } from 'xstate';
+import { ContextFrom, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { AppServices } from '../shared/GlobalContext';
 import { SETTINGS_STORE_KEY } from '../shared/constants';
-import { VIDLabel } from '../types/vc';
+import { VCLabel } from '../types/vc';
 import { StoreEvents } from './store';
 
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
     name: '',
-    vidLabel: {
+    vcLabel: {
       singular: 'ID',
       plural: 'IDs',
-    } as VIDLabel,
+    } as VCLabel,
     isBiometricUnlockEnabled: false,
   },
   {
     events: {
       UPDATE_NAME: (name: string) => ({ name }),
-      UPDATE_VID_LABEL: (label: string) => ({ label }),
-      TOGGLE_BIOMETRIC_UNLOCK: () => ({}),
-      STORE_RESPONSE: (response: any) => ({ response }),
+      UPDATE_VC_LABEL: (label: string) => ({ label }),
+      TOGGLE_BIOMETRIC_UNLOCK: (enable: boolean) => ({ enable }),
+      STORE_RESPONSE: (response: unknown) => ({ response }),
+      CHANGE_LANGUAGE: (language: string) => ({ language }),
     },
   }
 );
 
 export const SettingsEvents = model.events;
 
-type Context = ContextFrom<typeof model>;
-
-type UpdateNameEvent = EventFrom<typeof model, 'UPDATE_NAME'>;
-type UpdateVidLabelEvent = EventFrom<typeof model, 'UPDATE_VID_LABEL'>;
-type StoreResponseEvent = EventFrom<typeof model, 'STORE_RESPONSE'>;
-
 export const settingsMachine = model.createMachine(
   {
+    tsTypes: {} as import('./settings.typegen').Typegen0,
+    schema: {
+      context: model.initialContext,
+      events: {} as EventFrom<typeof model>,
+    },
     id: 'settings',
-    context: model.initialContext,
     initial: 'init',
     states: {
       init: {
@@ -56,14 +55,14 @@ export const settingsMachine = model.createMachine(
       },
       idle: {
         on: {
-          // TOGGLE_BIOMETRIC_UNLOCK: {
-          //   actions: ['toggleBiometricUnlock', sendUpdate()],
-          // },
+          TOGGLE_BIOMETRIC_UNLOCK: {
+            actions: ['toggleBiometricUnlock', 'storeContext'],
+          },
           UPDATE_NAME: {
             actions: ['updateName', 'storeContext'],
           },
-          UPDATE_VID_LABEL: {
-            actions: ['updateVidLabel', 'storeContext'],
+          UPDATE_VC_LABEL: {
+            actions: ['updateVcLabel', 'storeContext'],
           },
         },
       },
@@ -83,30 +82,34 @@ export const settingsMachine = model.createMachine(
         { to: (context) => context.serviceRefs.store }
       ),
 
-      setContext: model.assign((context, _event: any) => {
-        const event: StoreResponseEvent = _event;
+      setContext: model.assign((context, event) => {
+        const newContext = event.response as ContextFrom<typeof model>;
         return {
           ...context,
-          ...event.response,
+          ...newContext,
         };
       }),
 
       updateName: model.assign({
-        name: (_, event: UpdateNameEvent) => event.name,
+        name: (_, event) => event.name,
       }),
 
-      updateVidLabel: model.assign({
-        vidLabel: (_, event: UpdateVidLabelEvent) => ({
+      updateVcLabel: model.assign({
+        vcLabel: (_, event) => ({
           singular: event.label,
-          plural: event.label + 's', // TODO
+          plural: event.label + 's',
         }),
+      }),
+
+      toggleBiometricUnlock: model.assign({
+        isBiometricUnlockEnabled: (_, event) => event.enable,
       }),
     },
 
     services: {},
 
     guards: {
-      hasData: (_, event: StoreResponseEvent) => event.response != null,
+      hasData: (_, event) => event.response != null,
     },
   }
 );
@@ -124,8 +127,8 @@ export function selectName(state: State) {
   return state.context.name;
 }
 
-export function selectVidLabel(state: State) {
-  return state.context.vidLabel;
+export function selectVcLabel(state: State) {
+  return state.context.vcLabel;
 }
 
 export function selectBiometricUnlockEnabled(state: State) {
