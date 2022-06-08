@@ -36,7 +36,6 @@ const LanguageSetting: React.FC = () => {
 export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
   const { t } = useTranslation('ProfileScreen');
   const controller = useProfileScreen(props);
-
   return (
     <Column fill padding="24 0" backgroundColor={Colors.LightGrey}>
       <MessageOverlay
@@ -84,11 +83,18 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
       </ListItem>
       <Text
         weight="semibold"
-        margin="32"
+        margin="32 0 0 0"
         align="center"
         size="smaller"
         color={Colors.Grey}>
         Version: {getVersion()}
+      </Text>
+      <Text weight="semibold" align="center" size="smaller" color={Colors.Grey}>
+        {controller.backendInfo.application.name}:{' '}
+        {controller.backendInfo.application.version}
+      </Text>
+      <Text weight="semibold" align="center" size="smaller" color={Colors.Grey}>
+        MOSIP: {controller.backendInfo.config['mosip.host']}
       </Text>
     </Column>
   );
