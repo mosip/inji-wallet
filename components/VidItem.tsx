@@ -84,7 +84,9 @@ export const VidItem: React.FC<VidItemProps> = (props) => {
             }>
             {!verifiableCredential
               ? ''
-              : verifiableCredential.credentialSubject.fullName +
+              : getLocalizedField(
+                  verifiableCredential.credentialSubject.fullName
+                ) +
                 ' · ' +
                 generatedOn}
           </Text>
@@ -114,4 +116,16 @@ interface VidItemProps {
   selectable?: boolean;
   selected?: boolean;
   onPress?: (vidRef?: ActorRefFrom<typeof vidItemMachine>) => void;
+}
+
+function getLocalizedField(rawField: string | LocalizedField) {
+  if (typeof rawField === 'string') {
+    return rawField;
+  }
+  try {
+    const locales: LocalizedField[] = JSON.parse(JSON.stringify(rawField));
+    return locales[0].value;
+  } catch (e) {
+    return '';
+  }
 }
