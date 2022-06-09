@@ -227,8 +227,20 @@ export const appMachine = model.createMachine(
       },
 
       getBackendInfo: () => async (callback) => {
-        const backendInfo = await request('GET', '/info');
-        callback(model.events.BACKEND_INFO_RECEIVED(backendInfo));
+        let backendInfo = {
+          application: {
+            name: '',
+            version: '',
+          },
+          build: {},
+          config: {},
+        };
+        try {
+          backendInfo = await request('GET', '/info');
+          callback(model.events.BACKEND_INFO_RECEIVED(backendInfo));
+        } catch {
+          callback(model.events.BACKEND_INFO_RECEIVED(backendInfo));
+        }
       },
 
       checkFocusState: () => (callback) => {
