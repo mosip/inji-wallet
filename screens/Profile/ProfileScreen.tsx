@@ -89,13 +89,25 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
         color={Colors.Grey}>
         Version: {getVersion()}
       </Text>
-      <Text weight="semibold" align="center" size="smaller" color={Colors.Grey}>
-        {controller.backendInfo.application.name}:{' '}
-        {controller.backendInfo.application.version}
-      </Text>
-      <Text weight="semibold" align="center" size="smaller" color={Colors.Grey}>
-        MOSIP: {controller.backendInfo.config['mosip.host']}
-      </Text>
+      {controller.backendInfo.application.name !== '' ? (
+        <div>
+          <Text
+            weight="semibold"
+            align="center"
+            size="smaller"
+            color={Colors.Grey}>
+            {controller.backendInfo.application.name}:{' '}
+            {controller.backendInfo.application.version}
+          </Text>
+          <Text
+            weight="semibold"
+            align="center"
+            size="smaller"
+            color={Colors.Grey}>
+            MOSIP: {controller.backendInfo.config['mosip.host']}
+          </Text>
+        </div>
+      ) : null}
     </Column>
   );
 };
