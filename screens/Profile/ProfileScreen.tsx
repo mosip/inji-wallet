@@ -83,7 +83,7 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
       </ListItem>
       <Text
         weight="semibold"
-        margin="32 0 0 0"
+        margin="32"
         align="center"
         size="smaller"
         color={Colors.Grey}>
