@@ -3,13 +3,12 @@ import QRCode from 'react-native-qrcode-svg';
 import { Centered, Column, Text } from '../../components/ui';
 import { Colors } from '../../components/ui/styleUtils';
 import { MainRouteProps } from '../../routes/main';
-import { ReceiveVcModal } from './ReceiveVcModal';
+import { TimerBasedReceiveVcModal } from './TimerBasedReceiveVcModal';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { useRequestScreen } from './RequestScreenController';
-import { useTranslation } from 'react-i18next';
+import { SuccesfullyReceived } from '../../components/SuccesfullyReceived';
 
-export const RequestScreen: React.FC<MainRouteProps> = (props) => {
-  const { t } = useTranslation('RequestScreen');
+export const TimerBasedRequestScreen: React.FC<MainRouteProps> = (props) => {
   const controller = useRequestScreen(props);
 
   return (
@@ -17,14 +16,13 @@ export const RequestScreen: React.FC<MainRouteProps> = (props) => {
       <Column>
         {controller.isBluetoothDenied ? (
           <Text color={Colors.Red} align="center">
-            {t('bluetoothDenied', { vcLabel: controller.vcLabel.singular })}
+            Please enable Bluetooth to be able to request{' '}
+            {controller.vcLabel.singular}
           </Text>
         ) : (
-          controller.isWaitingForConnection && (
-            <Text align="center">
-              {t('showQrCode', { vcLabel: controller.vcLabel.singular })}
-            </Text>
-          )
+          <Text align="center">
+            Show this QR code to request {controller.vcLabel.singular}
+          </Text>
         )}
       </Column>
 
@@ -45,39 +43,33 @@ export const RequestScreen: React.FC<MainRouteProps> = (props) => {
         </Column>
       )}
 
-      <ReceiveVcModal
+      <TimerBasedReceiveVcModal
         isVisible={controller.isReviewing}
         onDismiss={controller.REJECT}
         onAccept={controller.ACCEPT}
         onReject={controller.REJECT}
-        onShow={() => console.log('rec')}
-        headerTitle={t('incomingVc', { vcLabel: controller.vcLabel.singular })}
+        onShow={controller.ACCEPT}
+        headerTitle={``}
       />
 
-      <MessageOverlay
+      <SuccesfullyReceived
+        img="true"
         isVisible={controller.isAccepted}
-        title={t('status.accepted.title')}
-        message={t('status.accepted.message', {
-          vcLabel: controller.vcLabel.singular,
-          sender: controller.senderInfo.deviceName,
-        })}
         onBackdropPress={controller.DISMISS}
+        onShow={controller.GOBACK}
       />
 
       <MessageOverlay
         isVisible={controller.isRejected}
-        title={t('status.rejected.title')}
-        message={t('status.rejected.message', {
-          vcLabel: controller.vcLabel.singular,
-          sender: controller.senderInfo.deviceName,
-        })}
+        title="Notice"
+        message={`You rejected ${controller.senderInfo.deviceName}'s ${controller.vcLabel.singular}'`}
         onBackdropPress={controller.DISMISS}
       />
 
       <MessageOverlay
         isVisible={controller.isDisconnected}
-        title={t('status.disconnected.title')}
-        message={t('status.disconnected.message')}
+        title="Disconnected"
+        message="The connection was interrupted. Please try again."
         onBackdropPress={controller.DISMISS}
       />
     </Column>

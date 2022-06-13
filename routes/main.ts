@@ -8,6 +8,7 @@ import { ProfileScreen } from '../screens/Profile/ProfileScreen';
 import { RequestScreen } from '../screens/Request/RequestScreen';
 import { ScanScreen } from '../screens/Scan/ScanScreen';
 import { RootStackParamList } from './index';
+import { TimerBasedRequestScreen } from '../screens/Request/TimerBasedRequestScreen';
 
 export const mainRoutes: TabScreen[] = [
   {
@@ -22,6 +23,11 @@ export const mainRoutes: TabScreen[] = [
     options: {
       headerShown: false,
     },
+  },
+  {
+    name: 'TimerBasedRequest',
+    component: TimerBasedRequestScreen,
+    icon: 'file-download',
   },
   {
     name: 'Request',
@@ -41,6 +47,7 @@ export type MainBottomTabParamList = {
   };
   Scan: undefined;
   Request: undefined;
+  TimerBasedRequest: undefined;
   Profile: undefined;
 };
 
