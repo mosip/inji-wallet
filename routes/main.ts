@@ -25,14 +25,14 @@ export const mainRoutes: TabScreen[] = [
     },
   },
   {
-    name: 'TimerBasedRequest',
-    component: TimerBasedRequestScreen,
-    icon: 'file-download',
-  },
-  {
     name: 'Request',
     component: RequestScreen,
     icon: 'file-download',
+  },
+  {
+    name: 'TimerBasedRequest',
+    component: TimerBasedRequestScreen,
+    icon: 'timer',
   },
   {
     name: 'Profile',

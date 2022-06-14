@@ -9,6 +9,7 @@ import { useSendVcModal } from './SendVcModalController';
 import { useTranslation } from 'react-i18next';
 import { UpdatedVcItem } from '../../components/UpdatedVcItem';
 import { useSelectVcOverlay } from './SelectVcOverlayController';
+import { SingleVcItem } from '../../components/SingleVcItem';
 
 export const UpdatedSendVcModal: React.FC<SendVcModalProps> = (props) => {
   const { t } = useTranslation('UpdatedSendVcModal');
@@ -29,7 +30,7 @@ export const UpdatedSendVcModal: React.FC<SendVcModalProps> = (props) => {
 
   const controller2 = useSelectVcOverlay(details);
 
-  const reasonLabel = t('reasonForSharing');
+  const reasonLabel = t('Reason For Sharing');
 
   return (
     <Modal {...props}>
@@ -45,16 +46,28 @@ export const UpdatedSendVcModal: React.FC<SendVcModalProps> = (props) => {
             />
           </Column>
           <Column>
-            {controller.vcKeys.map((vcKey, index) => (
-              <UpdatedVcItem
-                key={vcKey}
-                vcKey={vcKey}
+            {controller.vcKeys.length === 1 && (
+              <SingleVcItem
+                key={controller.vcKeys[0]}
+                vcKey={controller.vcKeys[0]}
                 margin="0 2 8 2"
-                onPress={controller2.selectVcItem(index)}
+                onShow={controller2.selectVcItem(0)}
                 selectable
-                selected={index === controller2.selectedIndex}
+                selected={0 === controller2.selectedIndex}
               />
-            ))}
+            )}
+
+            {controller.vcKeys.length > 1 &&
+              controller.vcKeys.map((vcKey, index) => (
+                <UpdatedVcItem
+                  key={vcKey}
+                  vcKey={vcKey}
+                  margin="0 2 8 2"
+                  onPress={controller2.selectVcItem(index)}
+                  selectable
+                  selected={index === controller2.selectedIndex}
+                />
+              ))}
           </Column>
         </Column>
         <Column
@@ -76,17 +89,9 @@ export const UpdatedSendVcModal: React.FC<SendVcModalProps> = (props) => {
         </Column>
       </Column>
 
-      {/* <SelectVcOverlay
-        isVisible={controller.isSelectingVc}
-        receiverName={controller.receiverInfo.deviceName}
-        onSelect={controller.SELECT_VC}
-        onCancel={controller.CANCEL}
-        vcKeys={controller.vcKeys}
-      /> */}
-
       <MessageOverlay
         isVisible={controller.isSendingVc}
-        title={t('statusSharing.title')}
+        title={t('Sharing..')}
         hasProgress
       />
 

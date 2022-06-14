@@ -96,7 +96,8 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
             {!verifiableCredential
               ? ''
               : getLocalizedField(
-                  verifiableCredential.credentialSubject.fullName
+                  verifiableCredential.verifiableCredential.credentialSubject
+                    .fullName
                 ) +
                 ' · ' +
                 generatedOn}

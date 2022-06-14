@@ -54,13 +54,11 @@ export const HomeScreen: React.FC<HomeRouteProps> = (props) => {
               isVisible={controller.activeTab === 1}
               service={controller.tabRefs.receivedVcs}
               vcItemActor={controller.selectedVc}
-              onSwipe={() => props.navigation.navigate('TimerBasedRequest')}
             />
             <HistoryTab
               isVisible={controller.activeTab === 2}
               vcItemActor={controller.selectedVc}
               service={controller.tabRefs.history}
-              onSwipe={() => props.navigation.navigate('TimerBasedRequest')}
             />
           </Column>
         )}
@@ -92,6 +90,6 @@ function TabItem(title: string) {
 export interface HomeScreenTabProps {
   isVisible: boolean;
   service: TabRef;
-  onSwipe: () => void;
+  onSwipe?: () => void;
   vcItemActor: ActorRefFrom<typeof vcItemMachine>;
 }

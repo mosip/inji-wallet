@@ -26,7 +26,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
         <Icon name="edit" onPress={controller.EDIT_TAG} color={Colors.Orange} />
       }>
       <Column scroll>
-        <Column fill backgroundColor={'#fef5eb'}>
+        <Column fill>
           <UpdatedVcDetails vc={controller.vc} />
         </Column>
       </Column>

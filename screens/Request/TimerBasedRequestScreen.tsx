@@ -7,9 +7,13 @@ import { TimerBasedReceiveVcModal } from './TimerBasedReceiveVcModal';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { useRequestScreen } from './RequestScreenController';
 import { SuccesfullyReceived } from '../../components/SuccesfullyReceived';
+import { useTranslation } from 'react-i18next';
+import { useIsFocused } from '@react-navigation/native';
 
 export const TimerBasedRequestScreen: React.FC<MainRouteProps> = (props) => {
   const controller = useRequestScreen(props);
+  const { t } = useTranslation('RequestScreen');
+  const isFocused = useIsFocused();
 
   return (
     <Column fill padding="98 24 24 24" backgroundColor={Colors.LightGrey}>
@@ -43,35 +47,43 @@ export const TimerBasedRequestScreen: React.FC<MainRouteProps> = (props) => {
         </Column>
       )}
 
-      <TimerBasedReceiveVcModal
-        isVisible={controller.isReviewing}
-        onDismiss={controller.REJECT}
-        onAccept={controller.ACCEPT}
-        onReject={controller.REJECT}
-        onShow={controller.ACCEPT}
-        headerTitle={``}
-      />
+      {isFocused && (
+        <TimerBasedReceiveVcModal
+          isVisible={controller.isReviewing}
+          onDismiss={controller.REJECT}
+          onAccept={controller.ACCEPT}
+          onReject={controller.REJECT}
+          onShow={controller.ACCEPT}
+          headerTitle={``}
+        />
+      )}
 
-      <SuccesfullyReceived
-        img="true"
-        isVisible={controller.isAccepted}
-        onBackdropPress={controller.DISMISS}
-        onShow={controller.GOBACK}
-      />
+      {isFocused && (
+        <SuccesfullyReceived
+          img="true"
+          isVisible={controller.isAccepted}
+          onBackdropPress={controller.DISMISS}
+          onShow={controller.GOBACK}
+        />
+      )}
 
-      <MessageOverlay
-        isVisible={controller.isRejected}
-        title="Notice"
-        message={`You rejected ${controller.senderInfo.deviceName}'s ${controller.vcLabel.singular}'`}
-        onBackdropPress={controller.DISMISS}
-      />
+      {isFocused && (
+        <MessageOverlay
+          isVisible={controller.isRejected}
+          title="Notice"
+          message={`You rejected ${controller.senderInfo.deviceName}'s ${controller.vcLabel.singular}'`}
+          onBackdropPress={controller.DISMISS}
+        />
+      )}
 
-      <MessageOverlay
-        isVisible={controller.isDisconnected}
-        title="Disconnected"
-        message="The connection was interrupted. Please try again."
-        onBackdropPress={controller.DISMISS}
-      />
+      {isFocused && (
+        <MessageOverlay
+          isVisible={controller.isDisconnected}
+          title={t('Rejected')}
+          message={t('The request to share ID was rejected')}
+          onBackdropPress={controller.DISMISS}
+        />
+      )}
     </Column>
   );
 };
