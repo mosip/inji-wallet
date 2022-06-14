@@ -2,7 +2,7 @@ import { formatDistanceToNow } from 'date-fns';
 import React from 'react';
 import * as DateFnsLocale from '../lib/date-fns/locale';
 import { useTranslation } from 'react-i18next';
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, View, ImageBackground } from 'react-native';
 import { Icon, ListItem } from 'react-native-elements';
 import { VC, CredentialSubject } from '../types/vc';
 import { Column, Row, Text } from './ui';
@@ -24,9 +24,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingLeft: 18,
     margin: 6,
-    // borderRadius: 0,
-    // borderWidth: 0,
-    // marginBottom: 0,
   },
   logo: {
     height: 50,
@@ -67,7 +64,12 @@ export const UpdatedVcDetails: React.FC<VcDetailsProps> = (props) => {
   const { t, i18n } = useTranslation('VcDetails');
 
   return (
-    <Column fill>
+    <ImageBackground
+      style={{
+        width: '100%',
+        height: '100%',
+      }}
+      source={require('../assets/ID-open.png')}>
       <View style={styles.header}>
         <View>
           <Text weight="bold" size="smaller" color={Colors.Orange}>
@@ -242,7 +244,7 @@ export const UpdatedVcDetails: React.FC<VcDetailsProps> = (props) => {
           ))}
         </Column>
       </Row>
-    </Column>
+    </ImageBackground>
   );
 };
 

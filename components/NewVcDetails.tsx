@@ -2,7 +2,7 @@ import { formatDistanceToNow } from 'date-fns';
 import React from 'react';
 import * as DateFnsLocale from '../lib/date-fns/locale';
 import { useTranslation } from 'react-i18next';
-import { Image, StyleSheet } from 'react-native';
+import { Image, StyleSheet, ImageBackground } from 'react-native';
 import { Icon, ListItem } from 'react-native-elements';
 import { VC, CredentialSubject } from '../types/vc';
 import { Column, Row, Text } from './ui';
@@ -69,7 +69,12 @@ export const NewVcDetails: React.FC<VcDetailsProps> = (props) => {
   const controller = useReceiveVcModal();
 
   return (
-    <Column fill>
+    <ImageBackground
+      style={{
+        width: '100%',
+        height: '100%',
+      }}
+      source={require('../assets/ID-open.png')}>
       <Row style={styles.successTag}>
         <Icon name="check-circle" color={Colors.White} size={40} />
         <Text margin="0 10" color={Colors.White}>
@@ -256,7 +261,7 @@ export const NewVcDetails: React.FC<VcDetailsProps> = (props) => {
           </Column>
         </Row>
       </Column>
-    </Column>
+    </ImageBackground>
   );
 };
 

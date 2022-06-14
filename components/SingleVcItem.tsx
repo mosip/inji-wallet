@@ -1,6 +1,6 @@
 import React, { useContext, useRef } from 'react';
 import { useInterpret, useSelector } from '@xstate/react';
-import { Pressable, StyleSheet, Image, ImageBackground } from 'react-native';
+import { StyleSheet, Image, ImageBackground } from 'react-native';
 import { CheckBox, Icon } from 'react-native-elements';
 import { ActorRefFrom } from 'xstate';
 import {
@@ -13,7 +13,6 @@ import {
 } from '../machines/vcItem';
 import { Column, Row, Text } from './ui';
 import { Colors } from './ui/styleUtils';
-import { RotatingIcon } from './RotatingIcon';
 import { GlobalContext } from '../shared/GlobalContext';
 import { useTranslation } from 'react-i18next';
 
@@ -72,9 +71,10 @@ const VerifiedIcon: React.FC = () => {
   );
 };
 
-export const UpdatedVcItem: React.FC<VcItemProps> = (props) => {
+export const SingleVcItem: React.FC<VcItemProps> = (props) => {
   const { appService } = useContext(GlobalContext);
   const { t } = useTranslation('VcDetails');
+
   const machine = useRef(
     createVcItemMachine(
       appService.getSnapshot().context.serviceRefs,
@@ -82,6 +82,7 @@ export const UpdatedVcItem: React.FC<VcItemProps> = (props) => {
     )
   );
   const service = useInterpret(machine.current);
+
   const uin = useSelector(service, selectId);
   const tag = useSelector(service, selectTag);
 
@@ -98,10 +99,7 @@ export const UpdatedVcItem: React.FC<VcItemProps> = (props) => {
   ) : null;
 
   return (
-    <Pressable
-      onPress={() => props.onPress(service)}
-      disabled={!context.verifiableCredential}
-      style={styles.bgContainer}>
+    <Column style={styles.bgContainer} onShow={props.onShow(service)}>
       <ImageBackground
         source={
           !context.verifiableCredential
@@ -211,15 +209,9 @@ export const UpdatedVcItem: React.FC<VcItemProps> = (props) => {
               </Column>
             </Column>
           </Column>
-
-          {context.verifiableCredential ? (
-            selectableOrCheck
-          ) : (
-            <RotatingIcon name="sync" color={Colors.Grey5} />
-          )}
         </Row>
       </ImageBackground>
-    </Pressable>
+    </Column>
   );
 };
 
