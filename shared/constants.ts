@@ -1,7 +1,9 @@
 import { VC } from '../types/vc';
 import Constants from 'expo-constants';
 
-export const HOST = 'https://api-internal.qa4.mosip.net/residentmobileapp/';
+export const HOST =
+  Constants.manifest.extra.backendServiceUrl ||
+  'https://resident-app.newlogic.dev';
 
 export const MY_VCS_STORE_KEY = 'myVCs';
 

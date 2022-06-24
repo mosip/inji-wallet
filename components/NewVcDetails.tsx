@@ -46,7 +46,7 @@ export const NewVcDetails: React.FC<VcDetailsProps> = (props) => {
       </Row>
 
       <Column>
-        <Column style={Styles.header}>
+        <Column style={Styles.closeDetailsHeader}>
           <Column>
             <Text weight="bold" size="smaller" color={Colors.DetailsText}>
               {t('fullName')}
