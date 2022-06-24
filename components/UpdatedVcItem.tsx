@@ -1,6 +1,6 @@
 import React, { useContext, useRef } from 'react';
 import { useInterpret, useSelector } from '@xstate/react';
-import { Pressable, StyleSheet, Image, ImageBackground } from 'react-native';
+import { Pressable, Image, ImageBackground } from 'react-native';
 import { CheckBox, Icon } from 'react-native-elements';
 import { ActorRefFrom } from 'xstate';
 import {
@@ -12,54 +12,10 @@ import {
   vcItemMachine,
 } from '../machines/vcItem';
 import { Column, Row, Text } from './ui';
-import { Colors } from './ui/styleUtils';
+import { Colors, CloseCard, ProfileIcon, Styles } from './ui/styleUtils';
 import { RotatingIcon } from './RotatingIcon';
 import { GlobalContext } from '../shared/GlobalContext';
 import { useTranslation } from 'react-i18next';
-
-const styles = StyleSheet.create({
-  title: {
-    color: Colors.Black,
-    backgroundColor: 'transparent',
-  },
-  loadingTitle: {
-    color: 'transparent',
-    backgroundColor: Colors.Grey5,
-    borderRadius: 4,
-  },
-  subtitle: {
-    backgroundColor: 'transparent',
-  },
-  loadingSubtitle: {
-    backgroundColor: Colors.Grey,
-    borderRadius: 4,
-  },
-  container: {
-    borderRadius: 10,
-  },
-  loadingContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    backgroundColor: Colors.Grey6,
-    borderRadius: 4,
-    margin: 5,
-  },
-  detailsContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    padding: 10,
-  },
-  logoContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    marginLeft: 300,
-  },
-  bgContainer: {
-    borderRadius: 10,
-    margin: 5,
-  },
-});
 
 const VerifiedIcon: React.FC = () => {
   return (
@@ -81,6 +37,7 @@ export const UpdatedVcItem: React.FC<VcItemProps> = (props) => {
       props.vcKey
     )
   );
+
   const service = useInterpret(machine.current);
   const uin = useSelector(service, selectId);
   const tag = useSelector(service, selectTag);
@@ -101,47 +58,39 @@ export const UpdatedVcItem: React.FC<VcItemProps> = (props) => {
     <Pressable
       onPress={() => props.onPress(service)}
       disabled={!context.verifiableCredential}
-      style={styles.bgContainer}>
+      style={Styles.bgContainer}>
       <ImageBackground
-        source={
-          !context.verifiableCredential
-            ? null
-            : require('../assets/ID-closed.png')
-        }
+        source={!context.verifiableCredential ? null : CloseCard}
         style={
           !context.verifiableCredential
-            ? styles.loadingContainer
-            : styles.container
+            ? Styles.loadingContainer
+            : Styles.detailsContainer
         }>
         <Row
           crossAlign="center"
           style={
             !context.verifiableCredential
-              ? styles.loadingContainer
-              : styles.container
+              ? Styles.loadingContainer
+              : Styles.detailsContainer
           }>
           <Column
             style={
               !context.verifiableCredential
-                ? styles.loadingContainer
-                : styles.detailsContainer
+                ? Styles.loadingContainer
+                : Styles.closeDetailsContainer
             }>
             <Image
               source={
                 !context.verifiableCredential
-                  ? require('../assets/placeholder-photo.png')
+                  ? ProfileIcon
                   : { uri: context.credential.biometrics.face }
               }
-              style={{
-                width: 130,
-                height: 145,
-                resizeMode: 'cover',
-              }}
+              style={Styles.closeCardImage}
             />
 
             <Column margin="0 0 0 50">
               <Column>
-                <Text color={Colors.Orange} size="smaller">
+                <Text color={Colors.DetailsText} size="smaller">
                   Full name
                 </Text>
                 <Text
@@ -149,8 +98,8 @@ export const UpdatedVcItem: React.FC<VcItemProps> = (props) => {
                   size="smaller"
                   style={
                     !context.verifiableCredential
-                      ? styles.loadingTitle
-                      : styles.title
+                      ? Styles.loadingTitle
+                      : Styles.title
                   }>
                   {!context.verifiableCredential
                     ? ''
@@ -159,9 +108,8 @@ export const UpdatedVcItem: React.FC<VcItemProps> = (props) => {
                       )}
                 </Text>
               </Column>
-
               <Column>
-                <Text color={Colors.Orange} size="smaller">
+                <Text color={Colors.DetailsText} size="smaller">
                   UIN
                 </Text>
                 <Text
@@ -169,14 +117,14 @@ export const UpdatedVcItem: React.FC<VcItemProps> = (props) => {
                   size="smaller"
                   style={
                     !context.verifiableCredential
-                      ? styles.loadingTitle
-                      : styles.title
+                      ? Styles.loadingTitle
+                      : Styles.title
                   }>
                   {!context.verifiableCredential ? '' : tag || uin}
                 </Text>
               </Column>
               <Column>
-                <Text color={Colors.Orange} size="smaller">
+                <Text color={Colors.DetailsText} size="smaller">
                   Generated on
                 </Text>
                 <Text
@@ -185,14 +133,14 @@ export const UpdatedVcItem: React.FC<VcItemProps> = (props) => {
                   size="smaller"
                   style={
                     !context.verifiableCredential
-                      ? styles.loadingTitle
-                      : styles.subtitle
+                      ? Styles.loadingTitle
+                      : Styles.subtitle
                   }>
                   {!context.verifiableCredential ? '' : generatedOn}
                 </Text>
               </Column>
               <Column>
-                <Text size="smaller" color={Colors.Orange}>
+                <Text size="smaller" color={Colors.DetailsText}>
                   {t('status')}
                 </Text>
                 <Row>
@@ -201,8 +149,8 @@ export const UpdatedVcItem: React.FC<VcItemProps> = (props) => {
                     size="smaller"
                     style={
                       !context.verifiableCredential
-                        ? styles.loadingTitle
-                        : styles.subtitle
+                        ? Styles.loadingTitle
+                        : Styles.subtitle
                     }>
                     {!context.verifiableCredential ? '' : t('valid')}
                   </Text>
@@ -230,6 +178,11 @@ interface VcItemProps {
   selected?: boolean;
   onPress?: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
   onShow?: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
+}
+
+interface LocalizedField {
+  language: string;
+  value: string;
 }
 
 function getLocalizedField(rawField: string | LocalizedField) {
