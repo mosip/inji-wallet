@@ -28,6 +28,67 @@ const VerifiedIcon: React.FC = () => {
   );
 };
 
+const getDetails = (arg1, arg2, context) => {
+  if (arg1 === 'Full name') {
+    return (
+      <Column>
+        <Text color={Colors.DetailsText} size="smaller">
+          {arg1}
+        </Text>
+        <Text
+          weight="bold"
+          size="smaller"
+          style={
+            !context.verifiableCredential ? Styles.loadingTitle : Styles.title
+          }>
+          {!context.verifiableCredential ? '' : arg2}
+        </Text>
+      </Column>
+    );
+  }
+  if (arg1 === 'Status') {
+    return (
+      <Column>
+        <Text size="smaller" color={Colors.DetailsText}>
+          {arg1}
+        </Text>
+        <Row>
+          <Text
+            weight="bold"
+            size="smaller"
+            style={
+              !context.verifiableCredential
+                ? Styles.loadingTitle
+                : Styles.subtitle
+            }>
+            {!context.verifiableCredential ? '' : arg2}
+          </Text>
+          {!context.verifiableCredential ? null : <VerifiedIcon />}
+        </Row>
+      </Column>
+    );
+  } else {
+    return (
+      <Column>
+        <Text color={Colors.DetailsText} size="smaller">
+          {arg1}
+        </Text>
+        <Text
+          numLines={1}
+          weight="bold"
+          size="smaller"
+          style={
+            !context.verifiableCredential
+              ? Styles.loadingTitle
+              : Styles.subtitle
+          }>
+          {arg2}
+        </Text>
+      </Column>
+    );
+  }
+};
+
 export const UpdatedVcItem: React.FC<VcItemProps> = (props) => {
   const { appService } = useContext(GlobalContext);
   const { t } = useTranslation('VcDetails');
@@ -44,6 +105,11 @@ export const UpdatedVcItem: React.FC<VcItemProps> = (props) => {
 
   const context = useSelector(service, selectVerifiableCredential);
   const generatedOn = useSelector(service, selectGeneratedOn);
+  const fullName = !context.verifiableCredential
+    ? ''
+    : getLocalizedField(
+        context.verifiableCredential.credentialSubject.fullName
+      );
 
   const selectableOrCheck = props.selectable ? (
     <CheckBox
@@ -88,75 +154,11 @@ export const UpdatedVcItem: React.FC<VcItemProps> = (props) => {
               style={Styles.closeCardImage}
             />
 
-            <Column margin="0 0 0 50">
-              <Column>
-                <Text color={Colors.DetailsText} size="smaller">
-                  Full name
-                </Text>
-                <Text
-                  weight="bold"
-                  size="smaller"
-                  style={
-                    !context.verifiableCredential
-                      ? Styles.loadingTitle
-                      : Styles.title
-                  }>
-                  {!context.verifiableCredential
-                    ? ''
-                    : getLocalizedField(
-                        context.verifiableCredential.credentialSubject.fullName
-                      )}
-                </Text>
-              </Column>
-              <Column>
-                <Text color={Colors.DetailsText} size="smaller">
-                  UIN
-                </Text>
-                <Text
-                  weight="bold"
-                  size="smaller"
-                  style={
-                    !context.verifiableCredential
-                      ? Styles.loadingTitle
-                      : Styles.title
-                  }>
-                  {!context.verifiableCredential ? '' : tag || uin}
-                </Text>
-              </Column>
-              <Column>
-                <Text color={Colors.DetailsText} size="smaller">
-                  Generated on
-                </Text>
-                <Text
-                  numLines={1}
-                  weight="bold"
-                  size="smaller"
-                  style={
-                    !context.verifiableCredential
-                      ? Styles.loadingTitle
-                      : Styles.subtitle
-                  }>
-                  {!context.verifiableCredential ? '' : generatedOn}
-                </Text>
-              </Column>
-              <Column>
-                <Text size="smaller" color={Colors.DetailsText}>
-                  {t('status')}
-                </Text>
-                <Row>
-                  <Text
-                    weight="bold"
-                    size="smaller"
-                    style={
-                      !context.verifiableCredential
-                        ? Styles.loadingTitle
-                        : Styles.subtitle
-                    }>
-                    {!context.verifiableCredential ? '' : t('valid')}
-                  </Text>
-                  {!context.verifiableCredential ? null : <VerifiedIcon />}
-                </Row>
-              </Column>
+            <Column margin="0 0 0 20">
+              {getDetails('Full name', fullName, context)}
+              {getDetails('UIN', tag || uin, context)}
+              {getDetails('Generated On', generatedOn, context)}
+              {getDetails('Status', t('valid'), context)}
             </Column>
           </Column>
 
