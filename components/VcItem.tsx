@@ -1,6 +1,6 @@
 import React, { useContext, useRef } from 'react';
 import { useInterpret, useSelector } from '@xstate/react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import { CheckBox, Icon } from 'react-native-elements';
 import { ActorRefFrom } from 'xstate';
 import {
@@ -76,7 +76,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
         crossAlign="center"
         margin={props.margin}
         backgroundColor={!verifiableCredential ? Colors.Grey6 : Colors.White}
-        padding="0 16"
+        padding="16"
         style={
           !verifiableCredential ? styles.loadingContainer : styles.container
         }>
