@@ -1,5 +1,5 @@
 import NetInfo, { NetInfoStateType } from '@react-native-community/netinfo';
-import { AppState, AppStateStatus } from 'react-native';
+import { AppState, AppStateStatus, Platform } from 'react-native';
 import {
   getDeviceId,
   getDeviceName,
