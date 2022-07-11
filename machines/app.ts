@@ -1,5 +1,5 @@
 import NetInfo, { NetInfoStateType } from '@react-native-community/netinfo';
-import { AppState, AppStateStatus } from 'react-native';
+import { AppState, AppStateStatus, Platform } from 'react-native';
 import {
   getDeviceId,
   getDeviceName,
@@ -264,14 +264,18 @@ export const appMachine = model.createMachine(
         AppState.addEventListener('change', changeHandler);
 
         // android only
-        AppState.addEventListener('blur', blurHandler);
-        AppState.addEventListener('focus', focusHandler);
+        if (Platform.OS === 'android') {
+          AppState.addEventListener('blur', blurHandler);
+          AppState.addEventListener('focus', focusHandler);
+        }
 
         return () => {
           AppState.removeEventListener('change', changeHandler);
 
-          AppState.removeEventListener('blur', blurHandler);
-          AppState.removeEventListener('focus', focusHandler);
+          if (Platform.OS === 'android') {
+            AppState.removeEventListener('blur', blurHandler);
+            AppState.removeEventListener('focus', focusHandler);
+          }
         };
       },
 

@@ -1,5 +1,7 @@
-import SmartShare from '@idpass/smartshare-react-native';
-import LocationEnabler from 'react-native-location-enabler';
+// import SmartShare from '@idpass/smartshare-react-native';
+const SmartShare = {};
+// import LocationEnabler from 'react-native-location-enabler';
+const LocationEnabler = {};
 import SystemSetting from 'react-native-system-setting';
 import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
@@ -25,7 +27,7 @@ const model = createModel(
     reason: '',
     loggers: [] as EmitterSubscription[],
     locationConfig: {
-      priority: LocationEnabler.PRIORITIES.BALANCED_POWER_ACCURACY,
+      // priority: LocationEnabler.PRIORITIES.BALANCED_POWER_ACCURACY,
       alwaysShow: false,
       needBle: true,
     },
