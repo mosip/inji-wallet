@@ -1,5 +1,4 @@
-// import SmartShare from '@idpass/smartshare-react-native';
-const SmartShare = {};
+import SmartShare from '@idpass/smartshare-react-native';
 // import LocationEnabler from 'react-native-location-enabler';
 const LocationEnabler = {};
 import SystemSetting from 'react-native-system-setting';
