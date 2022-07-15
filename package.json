@@ -19,7 +19,7 @@
     "@digitalcredentials/vc": "^1.1.2",
     "@expo-google-fonts/poppins": "^0.2.0",
     "@expo/metro-config": "^0.3.12",
-    "@idpass/smartshare-react-native": "idpass/smartshare-react-native#fix/ios-native-module",
+    "@idpass/smartshare-react-native": "idpass/smartshare-react-native#v0.2.2",
     "@react-native-async-storage/async-storage": "~1.15.0",
     "@react-native-community/netinfo": "7.1.3",
     "@react-native-picker/picker": "2.2.1",
