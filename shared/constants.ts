@@ -17,3 +17,5 @@ export const ACTIVITY_LOG_STORE_KEY = 'activityLog';
 export const SETTINGS_STORE_KEY = 'settings';
 
 export const ONBOARDING_STATUS_STORE_KEY = 'isOnboardingDone';
+
+export const GNM_API_KEY = 'AIzaSyBt_ne78gyEk5AAsheh6q6TZAgAy1ncFVE';

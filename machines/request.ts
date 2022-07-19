@@ -1,7 +1,7 @@
 // import SmartShare from '@idpass/smartshare-react-native';
 const SmartShare = {};
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
-import { EmitterSubscription } from 'react-native';
+import { EmitterSubscription, Platform } from 'react-native';
 import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { DeviceInfo } from '../components/DeviceInfoList';
@@ -10,9 +10,18 @@ import { getDeviceNameSync } from 'react-native-device-info';
 import { StoreEvents } from './store';
 import { VC } from '../types/vc';
 import { AppServices } from '../shared/GlobalContext';
-import { RECEIVED_VCS_STORE_KEY, VC_ITEM_STORE_KEY } from '../shared/constants';
+import {
+  GNM_API_KEY,
+  RECEIVED_VCS_STORE_KEY,
+  VC_ITEM_STORE_KEY,
+} from '../shared/constants';
 import { ActivityLogEvents } from './activityLog';
 import { VcEvents } from './vc';
+import {
+  addOnErrorListener,
+  connect,
+  publish,
+} from 'react-native-google-nearby-messages';
 
 const model = createModel(
   {
@@ -250,14 +259,20 @@ export const requestMachine = model.createMachine(
 
       disconnect: () => {
         try {
-          SmartShare.destroyConnection();
+          Platform.OS === 'android' && SmartShare.destroyConnection();
         } catch (e) {
           // pass
         }
       },
 
       generateConnectionParams: assign({
-        connectionParams: () => SmartShare.getConnectionParameters(),
+        connectionParams: () => {
+          if (Platform.OS === 'android') {
+            return SmartShare.getConnectionParameters();
+          } else {
+            return 'TEST';
+          }
+        },
       }),
 
       setSenderInfo: model.assign({

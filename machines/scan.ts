@@ -4,14 +4,24 @@ const LocationEnabler = {};
 import SystemSetting from 'react-native-system-setting';
 import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
-import { EmitterSubscription, Linking, PermissionsAndroid } from 'react-native';
+import {
+  EmitterSubscription,
+  Linking,
+  PermissionsAndroid,
+  Platform,
+} from 'react-native';
 import { DeviceInfo } from '../components/DeviceInfoList';
 import { Message } from '../shared/Message';
 import { getDeviceNameSync } from 'react-native-device-info';
 import { VC } from '../types/vc';
 import { AppServices } from '../shared/GlobalContext';
 import { ActivityLogEvents } from './activityLog';
-import { VC_ITEM_STORE_KEY } from '../shared/constants';
+import { GNM_API_KEY, VC_ITEM_STORE_KEY } from '../shared/constants';
+import {
+  addOnErrorListener,
+  connect,
+  subscribe,
+} from 'react-native-google-nearby-messages';
 
 const checkingAirplaneMode = '#checkingAirplaneMode';
 const checkingLocationService = '#checkingLocationService';
@@ -168,6 +178,9 @@ export const scanMachine = model.createMachine(
       findingConnection: {
         id: 'findingConnection',
         entry: ['removeLoggers', 'registerLoggers'],
+        invoke: {
+          src: 'findConnection',
+        },
         on: {
           SCAN: [
             {
@@ -279,7 +292,7 @@ export const scanMachine = model.createMachine(
       }),
 
       requestToEnableLocation: (context) => {
-        LocationEnabler.requestResolutionSettings(context.locationConfig);
+        LocationEnabler?.requestResolutionSettings(context.locationConfig);
       },
 
       requestToDisableFlightMode: () => {
@@ -288,7 +301,7 @@ export const scanMachine = model.createMachine(
 
       disconnect: () => {
         try {
-          SmartShare.destroyConnection();
+          Platform.OS === 'android' && SmartShare.destroyConnection();
         } catch (e) {
           //
         }

@@ -14,13 +14,14 @@ export interface Typegen0 {
     checkAirplaneMode: 'done.invoke.scan.checkingAirplaneMode.checkingStatus:invocation[0]';
     checkLocationStatus: 'done.invoke.checkingLocationService:invocation[0]';
     checkLocationPermission: 'done.invoke.scan.checkingLocationService.checkingPermission:invocation[0]';
+    findConnection: 'done.invoke.findingConnection:invocation[0]';
     discoverDevice: 'done.invoke.scan.connecting:invocation[0]';
     exchangeDeviceInfo: 'done.invoke.scan.exchangingDeviceInfo:invocation[0]';
     sendVc: 'done.invoke.scan.reviewing.sendingVc:invocation[0]';
   };
   'missingImplementations': {
     actions: never;
-    services: never;
+    services: 'findConnection';
     guards: never;
     delays: never;
   };
@@ -69,6 +70,11 @@ export interface Typegen0 {
     checkAirplaneMode: 'SCREEN_FOCUS' | 'FLIGHT_ENABLED' | 'APP_ACTIVE';
     checkLocationStatus: 'FLIGHT_DISABLED';
     checkLocationPermission: 'LOCATION_ENABLED' | 'APP_ACTIVE';
+    findConnection:
+      | 'xstate.after(CLEAR_DELAY)#clearingConnection'
+      | 'CANCEL'
+      | 'DISMISS'
+      | 'DISCONNECT';
     discoverDevice: 'RECEIVE_DEVICE_INFO';
     exchangeDeviceInfo: 'CONNECTED';
     sendVc: 'SELECT_VC';
