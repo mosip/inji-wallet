@@ -12,7 +12,7 @@ export const AuthScreen: React.FC<RootRouteProps> = (props) => {
   const controller = useAuthScreen(props);
 
   return (
-    <Column fill padding="32 32" backgroundColor={Colors.White}>
+    <Column fill padding={[32, 32, 32, 32]} backgroundColor={Colors.White}>
       <MessageOverlay
         isVisible={controller.alertMsg != ''}
         onBackdropPress={controller.hideAlert}

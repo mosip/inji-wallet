@@ -60,6 +60,13 @@
             ReferencedContainer = "container:MOSIPResidentApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "BACKEND_SERVICE_URL"
+            value = "https://api.qa4.mosip.net/residentmobileapp"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
