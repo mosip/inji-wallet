@@ -46,7 +46,7 @@ export interface Typegen0 {
     delays: never;
   };
   'eventsCausingServices': {
-    checkAirplaneMode: 'APP_ACTIVE';
+    checkAirplaneMode: 'SCREEN_FOCUS' | 'APP_ACTIVE' | 'FLIGHT_ENABLED';
     checkLocationStatus: 'FLIGHT_DISABLED';
     checkLocationPermission: 'LOCATION_ENABLED' | 'APP_ACTIVE';
     discoverDevice: 'RECEIVE_DEVICE_INFO';

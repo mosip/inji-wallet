@@ -16,7 +16,7 @@ export interface Typegen0 {
       | 'xstate.after(CLEAR_DELAY)#clearingConnection'
       | 'DISMISS';
     requestReceiverInfo: 'CONNECTED';
-    requestReceivedVcs: 'xstate.init';
+    requestReceivedVcs: 'ACCEPT';
     requestExistingVc: 'VC_RESPONSE';
     mergeIncomingVc: 'STORE_RESPONSE';
     prependReceivedVc: 'VC_RESPONSE';
@@ -48,7 +48,7 @@ export interface Typegen0 {
     delays: never;
   };
   'eventsCausingServices': {
-    checkBluetoothService: 'xstate.init';
+    checkBluetoothService: 'SCREEN_FOCUS';
     requestBluetooth: 'BLUETOOTH_DISABLED';
     advertiseDevice: 'xstate.after(CLEAR_DELAY)#clearingConnection' | 'DISMISS';
     exchangeDeviceInfo: 'RECEIVE_DEVICE_INFO';
