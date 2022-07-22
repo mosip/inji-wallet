@@ -228,7 +228,7 @@ export const requestMachine = model.createMachine(
         exit: ['disconnect'],
       },
       disconnected: {
-        //entry: ['disconnect'],
+        entry: ['disconnect'],
         on: {
           DISMISS: 'waitingForConnection',
         },
@@ -248,7 +248,6 @@ export const requestMachine = model.createMachine(
       }),
 
       disconnect: () => {
-        console.log('request: disconnect');
         try {
           SmartShare.destroyConnection();
         } catch (e) {

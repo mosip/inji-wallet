@@ -10,7 +10,7 @@ export interface Typegen0 {
       | 'SCREEN_BLUR'
       | 'xstate.after(CLEAR_DELAY)#clearingConnection'
       | 'DISMISS';
-    disconnect: '';
+    disconnect: '' | 'DISCONNECT';
     registerLoggers: 'xstate.after(CLEAR_DELAY)#clearingConnection' | 'DISMISS';
     generateConnectionParams:
       | 'xstate.after(CLEAR_DELAY)#clearingConnection'

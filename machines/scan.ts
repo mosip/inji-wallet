@@ -370,7 +370,6 @@ export const scanMachine = model.createMachine(
     services: {
       checkConnection: () => (callback) => {
         const subscription = SmartShare.handleNearbyEvents((event) => {
-          console.log('scan:checkConnection', event);
           if (event.type === 'onDisconnected') {
             callback({ type: 'DISCONNECT' });
           }
