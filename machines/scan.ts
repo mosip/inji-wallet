@@ -14,6 +14,7 @@ import { VC_ITEM_STORE_KEY } from '../shared/constants';
 
 const checkingAirplaneMode = '#checkingAirplaneMode';
 const checkingLocationService = '#checkingLocationService';
+const findingConnection = '#scan.findingConnection';
 
 const model = createModel(
   {
@@ -70,6 +71,9 @@ export const scanMachine = model.createMachine(
     },
     id: 'scan',
     initial: 'inactive',
+    invoke: {
+      src: 'checkConnection',
+    },
     on: {
       SCREEN_BLUR: 'inactive',
       SCREEN_FOCUS: 'checkingAirplaneMode',
@@ -218,10 +222,12 @@ export const scanMachine = model.createMachine(
           idle: {
             on: {
               ACCEPT_REQUEST: 'selectingVc',
+              DISCONNECT: findingConnection,
             },
           },
           selectingVc: {
             on: {
+              DISCONNECT: findingConnection,
               SELECT_VC: {
                 target: 'sendingVc',
                 actions: ['setSelectedVc'],
@@ -234,7 +240,7 @@ export const scanMachine = model.createMachine(
               src: 'sendVc',
             },
             on: {
-              DISCONNECT: '#scan.disconnected',
+              DISCONNECT: findingConnection,
               VC_ACCEPTED: 'accepted',
               VC_REJECTED: 'rejected',
             },
@@ -362,6 +368,17 @@ export const scanMachine = model.createMachine(
     },
 
     services: {
+      checkConnection: () => (callback) => {
+        const subscription = SmartShare.handleNearbyEvents((event) => {
+          console.log('scan:checkConnection', event);
+          if (event.type === 'onDisconnected') {
+            callback({ type: 'DISCONNECT' });
+          }
+        });
+
+        return () => subscription.remove();
+      },
+
       checkLocationPermission: () => async (callback) => {
         try {
           // wait a bit for animation to finish when app becomes active
@@ -424,10 +441,6 @@ export const scanMachine = model.createMachine(
         const message = new Message('exchange:sender-info', context.senderInfo);
         SmartShare.send(message.toString(), () => {
           subscription = SmartShare.handleNearbyEvents((event) => {
-            if (event.type === 'onDisconnected') {
-              callback({ type: 'DISCONNECT' });
-            }
-
             if (event.type !== 'msg') return;
             const response = Message.fromString<DeviceInfo>(event.data);
             if (response.type === 'exchange:receiver-info') {

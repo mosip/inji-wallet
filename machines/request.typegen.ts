@@ -32,6 +32,7 @@ export interface Typegen0 {
     'xstate.init': { type: 'xstate.init' };
   };
   'invokeSrcNameMap': {
+    checkConnection: 'done.invoke.request:invocation[0]';
     checkBluetoothService: 'done.invoke.request.checkingBluetoothService.checking:invocation[0]';
     requestBluetooth: 'done.invoke.request.checkingBluetoothService.requesting:invocation[0]';
     advertiseDevice: 'done.invoke.waitingForConnection:invocation[0]';
@@ -48,6 +49,7 @@ export interface Typegen0 {
     delays: never;
   };
   'eventsCausingServices': {
+    checkConnection: 'xstate.init';
     checkBluetoothService: 'SCREEN_FOCUS';
     requestBluetooth: 'BLUETOOTH_DISABLED';
     advertiseDevice: 'xstate.after(CLEAR_DELAY)#clearingConnection' | 'DISMISS';
