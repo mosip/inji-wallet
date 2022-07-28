@@ -22,7 +22,7 @@ export const SendVcModal: React.FC<SendVcModalProps> = (props) => {
           <DeviceInfoList of="receiver" deviceInfo={controller.receiverInfo} />
           <Column padding="24">
             <Input
-              placeholder={!controller.reason ? reasonLabel : ''}
+              placeholder={reasonLabel}
               label={controller.reason ? reasonLabel : ''}
               onChangeText={controller.UPDATE_REASON}
               containerStyle={{ marginBottom: 24 }}
