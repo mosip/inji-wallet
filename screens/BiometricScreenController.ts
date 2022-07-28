@@ -1,7 +1,7 @@
 import { useMachine, useSelector } from '@xstate/react';
 import { useContext, useEffect, useState } from 'react';
 import RNFingerprintChange from 'react-native-biometrics-changed';
-import { AuthEvents, selectAuthorized } from '../machines/auth';
+import { AuthEvents, selectAuthorized, selectPasscode } from '../machines/auth';
 import { RootRouteProps } from '../routes';
 import { GlobalContext } from '../shared/GlobalContext';
 import {
@@ -16,6 +16,8 @@ export function useBiometricScreen(props: RootRouteProps) {
   const { appService } = useContext(GlobalContext);
   const authService = appService.children.get('auth');
 
+  const [error, setError] = useState('');
+  const [isReEnabling, setReEnabling] = useState(false);
   const [initAuthBio, updateInitAuthBio] = useState(true);
   const [bioState, bioSend, bioService] = useMachine(biometricsMachine);
 
@@ -37,7 +39,6 @@ export function useBiometricScreen(props: RootRouteProps) {
 
     if (initAuthBio && isAvailable) {
       checkBiometricsChange();
-      //bioSend({ type: 'AUTHENTICATE' });
 
       // so we only init authentication of biometrics just once
       updateInitAuthBio(false);
@@ -55,17 +56,16 @@ export function useBiometricScreen(props: RootRouteProps) {
         routes: [{ name: 'Passcode' }],
       });
     }
-  }, [isAuthorized, isAvailable, isUnenrolled, isUnavailable]);
+  }, [isAuthorized, isAvailable, isUnenrolled, isUnavailable, isSuccessBio]);
 
   const checkBiometricsChange = () => {
     RNFingerprintChange.hasFingerPrintChanged().then(
       async (biometricsHasChanged: any) => {
-        console.log('biometricsHasChanged', biometricsHasChanged);
+        //if new biometrics are added, re-enable Biometrics Authentication
         if (biometricsHasChanged) {
-          console.log('naay change');
-          // do what you need when fingerprint change has been detected
+          setReEnabling(true);
         } else {
-          useBiometrics();
+          bioSend({ type: 'AUTHENTICATE' });
         }
       }
     );
@@ -75,8 +75,27 @@ export function useBiometricScreen(props: RootRouteProps) {
     bioSend({ type: 'AUTHENTICATE' });
   };
 
+  const onSuccess = () => {
+    bioSend({ type: 'AUTHENTICATE' });
+  };
+
+  const onError = (value: string) => {
+    setError(value);
+  };
+
+  const onDismiss = () => {
+    setReEnabling(false);
+  };
+
   return {
+    error,
+    isReEnabling,
     isSuccessBio,
+    storedPasscode: useSelector(authService, selectPasscode),
     useBiometrics,
+
+    onSuccess,
+    onError,
+    onDismiss,
   };
 }
