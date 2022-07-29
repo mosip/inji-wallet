@@ -60,8 +60,6 @@ npm install
 export RELEASE_KEYSTORE=release.keystore
 export RELEASE_KEYSTORE_ALIAS=androidreleasekey
 export RELEASE_KEYSTORE_PASSWORD=android
-# https://hostname/residentmobileapp is the Mimoto service url
-export BACKEND_SERVICE_URL=https://hostname/residentmobileapp
 
 # Use DEBUG_KEYSTORE, DEBUG_KEYSTORE_ALIAS, DEBUG_KEYSTORE_PASSWORD for debug build
 
@@ -77,13 +75,6 @@ npm run build:android:mosip
 ```
 
 More info here: [Build your app from the command line](https://developer.android.com/studio/build/building-cmdline)
-
-## Build using github actions
-One can clone the repo and run the build via github actions as shown below.
-
-
-![](docs/images/build_github_actions.png)
-
 
 ## Credits
 
