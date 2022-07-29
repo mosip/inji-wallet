@@ -57,6 +57,9 @@ export const requestMachine = model.createMachine(
     },
     id: 'request',
     initial: 'inactive',
+    invoke: {
+      src: 'checkConnection',
+    },
     on: {
       SCREEN_BLUR: 'inactive',
       SCREEN_FOCUS: 'checkingBluetoothService',
@@ -225,6 +228,7 @@ export const requestMachine = model.createMachine(
         exit: ['disconnect'],
       },
       disconnected: {
+        entry: ['disconnect'],
         on: {
           DISMISS: 'waitingForConnection',
         },
@@ -370,6 +374,16 @@ export const requestMachine = model.createMachine(
           .catch(() => callback(model.events.BLUETOOTH_DISABLED()));
       },
 
+      checkConnection: () => (callback) => {
+        const subscription = SmartShare.handleNearbyEvents((event) => {
+          if (event.type === 'onDisconnected') {
+            callback({ type: 'DISCONNECT' });
+          }
+        });
+
+        return () => subscription.remove();
+      },
+
       advertiseDevice: () => (callback) => {
         SmartShare.createConnection('advertiser', () => {
           callback({ type: 'CONNECTED' });
@@ -378,10 +392,6 @@ export const requestMachine = model.createMachine(
 
       exchangeDeviceInfo: (context) => (callback) => {
         const subscription = SmartShare.handleNearbyEvents((event) => {
-          if (event.type === 'onDisconnected') {
-            callback({ type: 'DISCONNECT' });
-          }
-
           if (event.type !== 'msg') return;
 
           const message = Message.fromString<DeviceInfo>(event.data);

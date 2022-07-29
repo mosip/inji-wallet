@@ -10,13 +10,13 @@ export interface Typegen0 {
       | 'SCREEN_BLUR'
       | 'xstate.after(CLEAR_DELAY)#clearingConnection'
       | 'DISMISS';
-    disconnect: '';
+    disconnect: '' | 'DISCONNECT';
     registerLoggers: 'xstate.after(CLEAR_DELAY)#clearingConnection' | 'DISMISS';
     generateConnectionParams:
       | 'xstate.after(CLEAR_DELAY)#clearingConnection'
       | 'DISMISS';
     requestReceiverInfo: 'CONNECTED';
-    requestReceivedVcs: 'xstate.init';
+    requestReceivedVcs: 'ACCEPT';
     requestExistingVc: 'VC_RESPONSE';
     mergeIncomingVc: 'STORE_RESPONSE';
     prependReceivedVc: 'VC_RESPONSE';
@@ -32,6 +32,7 @@ export interface Typegen0 {
     'xstate.init': { type: 'xstate.init' };
   };
   'invokeSrcNameMap': {
+    checkConnection: 'done.invoke.request:invocation[0]';
     checkBluetoothService: 'done.invoke.request.checkingBluetoothService.checking:invocation[0]';
     requestBluetooth: 'done.invoke.request.checkingBluetoothService.requesting:invocation[0]';
     advertiseDevice: 'done.invoke.waitingForConnection:invocation[0]';
@@ -48,7 +49,8 @@ export interface Typegen0 {
     delays: never;
   };
   'eventsCausingServices': {
-    checkBluetoothService: 'xstate.init';
+    checkConnection: 'xstate.init';
+    checkBluetoothService: 'SCREEN_FOCUS';
     requestBluetooth: 'BLUETOOTH_DISABLED';
     advertiseDevice: 'xstate.after(CLEAR_DELAY)#clearingConnection' | 'DISMISS';
     exchangeDeviceInfo: 'RECEIVE_DEVICE_INFO';

@@ -13,14 +13,16 @@ export interface Typegen0 {
       | 'SCREEN_BLUR'
       | 'xstate.after(CLEAR_DELAY)#clearingConnection'
       | 'CANCEL'
-      | 'DISMISS';
+      | 'DISMISS'
+      | 'DISCONNECT';
     requestToDisableFlightMode: 'FLIGHT_REQUEST';
     requestToEnableLocation: 'LOCATION_DISABLED' | 'LOCATION_REQUEST';
     disconnect: 'LOCATION_ENABLED';
     registerLoggers:
       | 'xstate.after(CLEAR_DELAY)#clearingConnection'
       | 'CANCEL'
-      | 'DISMISS';
+      | 'DISMISS'
+      | 'DISCONNECT';
     requestSenderInfo: 'SCAN';
     clearReason: 'xstate.init';
     logShared: 'VC_ACCEPTED';
@@ -32,6 +34,7 @@ export interface Typegen0 {
     'xstate.init': { type: 'xstate.init' };
   };
   'invokeSrcNameMap': {
+    checkConnection: 'done.invoke.scan:invocation[0]';
     checkAirplaneMode: 'done.invoke.scan.checkingAirplaneMode.checkingStatus:invocation[0]';
     checkLocationStatus: 'done.invoke.checkingLocationService:invocation[0]';
     checkLocationPermission: 'done.invoke.scan.checkingLocationService.checkingPermission:invocation[0]';
@@ -46,7 +49,8 @@ export interface Typegen0 {
     delays: never;
   };
   'eventsCausingServices': {
-    checkAirplaneMode: 'APP_ACTIVE';
+    checkConnection: 'xstate.init';
+    checkAirplaneMode: 'SCREEN_FOCUS' | 'APP_ACTIVE' | 'FLIGHT_ENABLED';
     checkLocationStatus: 'FLIGHT_DISABLED';
     checkLocationPermission: 'LOCATION_ENABLED' | 'APP_ACTIVE';
     discoverDevice: 'RECEIVE_DEVICE_INFO';
