@@ -24,6 +24,7 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Smartphone (please complete the following information):**
+<<<<<<< HEAD
 
 - Device: [e.g. iPhone6]
 - OS: [e.g. iOS8.1]
@@ -31,7 +32,15 @@ If applicable, add screenshots to help explain your problem.
 - Mimoto version: [e.g 1.2.x]
 - MOSIP Version: [e.g. 1.2.1]
 - Mimoto server: [e.g. https://.....com]
+- # MOSIP server: [e.g. https://...mosip.com]
+- Device: [e.g. iPhone6]
+- OS: [e.g. iOS8.1]
+- Inji app version: [e.g 0.3.0]
+- Mimoto version: [e.g 1.2.x]
+- MOSIP Version: [e.g. 1.2.1]
+- Mimoto server: [e.g. https://.....com]
 - MOSIP server: [e.g. https://...mosip.com]
+  > > > > > > > 3752bca (Update issue templates)
 
 **Additional context**
 Add any other context about the problem here.
