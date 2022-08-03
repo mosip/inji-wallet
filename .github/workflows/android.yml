@@ -1,5 +1,5 @@
 name: ID PASS - MOSIP Resident Application
-  
+
 on:
   push:
     branches:
@@ -40,7 +40,7 @@ jobs:
           if [ ! -z "$FIREBASE_SECRET" ] && [ -f app/google-services.json.gpg ];then rm -f app/google-services.json;gpg -o app/google-services.json --batch --passphrase="$FIREBASE_SECRET" -d app/google-services.json.gpg;fi
           ./gradlew :app:assembleNewlogicRelease
         env:
-          BACKEND_SERVICE_URL: https://qa-triple-rc2.mosip.net/residentmobileapp
+          BACKEND_SERVICE_URL: https://api.qa4.mosip.net/residentmobileapp
           FIREBASE_SECRET: ${{ secrets.FIREBASE_SECRET }}
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
