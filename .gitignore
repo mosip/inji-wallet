@@ -67,7 +67,18 @@ buck-out/
 *.jsbundle
 
 # CocoaPods
-/ios/Pods/
+ios/Pods/
+
+# OS X temporary files that should never be committed
+.DS_Store
+src/components/.DS_Store
+
+# user personal info,for example debug info
+ios/ProjectName.xcodeproj/project.xcworkspace/
+ios/ProjectName.xcodeproj/xcuserdata
+
+# Podfile versions
+ios/Podfile.lock
 
 # Expo
 .expo/

@@ -269,26 +269,26 @@ export const requestMachine = model.createMachine(
 
       registerLoggers: assign({
         loggers: () => {
-          if (__DEV__) {
-            return [
-              SmartShare.handleNearbyEvents((event) => {
-                console.log(
-                  getDeviceNameSync(),
-                  '<Receiver.Event>',
-                  JSON.stringify(event)
-                );
-              }),
-              SmartShare.handleLogEvents((event) => {
-                console.log(
-                  getDeviceNameSync(),
-                  '<Receiver.Log>',
-                  JSON.stringify(event)
-                );
-              }),
-            ];
-          } else {
-            return [];
-          }
+          // if (__DEV__) {
+          //   return [
+          //     SmartShare.handleNearbyEvents((event) => {
+          //       console.log(
+          //         getDeviceNameSync(),
+          //         '<Receiver.Event>',
+          //         JSON.stringify(event)
+          //       );
+          //     }),
+          //     SmartShare.handleLogEvents((event) => {
+          //       console.log(
+          //         getDeviceNameSync(),
+          //         '<Receiver.Log>',
+          //         JSON.stringify(event)
+          //       );
+          //     }),
+          //   ];
+          // } else {
+          return [];
+          // }
         },
       }),
 
@@ -357,15 +357,14 @@ export const requestMachine = model.createMachine(
 
     services: {
       checkBluetoothService: () => (callback) => {
-        const subscription = BluetoothStateManager.onStateChange((state) => {
-          if (state === 'PoweredOn') {
-            callback(model.events.BLUETOOTH_ENABLED());
-          } else {
-            callback(model.events.BLUETOOTH_DISABLED());
-          }
-        }, true);
-
-        return () => subscription.remove();
+        // const subscription = BluetoothStateManager.onStateChange((state) => {
+        //   if (state === 'PoweredOn') {
+        //     callback(model.events.BLUETOOTH_ENABLED());
+        //   } else {
+        //     callback(model.events.BLUETOOTH_DISABLED());
+        //   }
+        // }, true);
+        // return () => subscription.remove();
       },
 
       requestBluetooth: () => (callback) => {
@@ -410,20 +409,17 @@ export const requestMachine = model.createMachine(
       },
 
       receiveVc: () => (callback) => {
-        const subscription = SmartShare.handleNearbyEvents((event) => {
-          if (event.type === 'onDisconnected') {
-            callback({ type: 'DISCONNECT' });
-          }
-
-          if (event.type !== 'msg') return;
-
-          const message = Message.fromString<VC>(event.data);
-          if (message.type === 'send:vc') {
-            callback({ type: 'VC_RECEIVED', vc: message.data });
-          }
-        });
-
-        return () => subscription.remove();
+        // const subscription = SmartShare.handleNearbyEvents((event) => {
+        //   if (event.type === 'onDisconnected') {
+        //     callback({ type: 'DISCONNECT' });
+        //   }
+        //   if (event.type !== 'msg') return;
+        // const message = Message.fromString<VC>(event.data);
+        // if (message.type === 'send:vc') {
+        //   callback({ type: 'VC_RECEIVED', vc: message.data });
+        // }
+        // });
+        // return () => subscription.remove();
       },
 
       sendVcResponse: (_context, _event, meta) => (callback) => {

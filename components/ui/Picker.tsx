@@ -31,7 +31,6 @@ export const Picker: Picker = (props: PickerProps<unknown>) => {
       <Pressable onPress={toggleContent}>{props.triggerComponent}</Pressable>
       <Overlay
         isVisible={isContentVisible}
-        onDismiss={toggleContent}
         onBackdropPress={toggleContent}
         overlayStyle={{ padding: 1 }}>
         <Column width={Dimensions.get('window').width * 0.8}>

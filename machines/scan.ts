@@ -1,5 +1,6 @@
 import SmartShare from '@idpass/smartshare-react-native';
-import LocationEnabler from 'react-native-location-enabler';
+// import LocationEnabler from 'react-native-location-enabler';
+const LocationEnabler = {};
 import SystemSetting from 'react-native-system-setting';
 import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
@@ -25,7 +26,7 @@ const model = createModel(
     reason: '',
     loggers: [] as EmitterSubscription[],
     locationConfig: {
-      priority: LocationEnabler.PRIORITIES.BALANCED_POWER_ACCURACY,
+      // priority: LocationEnabler.PRIORITIES.BALANCED_POWER_ACCURACY,
       alwaysShow: false,
       needBle: true,
     },
@@ -319,26 +320,26 @@ export const scanMachine = model.createMachine(
 
       registerLoggers: assign({
         loggers: () => {
-          if (__DEV__) {
-            return [
-              SmartShare.handleNearbyEvents((event) => {
-                console.log(
-                  getDeviceNameSync(),
-                  '<Sender.Event>',
-                  JSON.stringify(event)
-                );
-              }),
-              SmartShare.handleLogEvents((event) => {
-                console.log(
-                  getDeviceNameSync(),
-                  '<Sender.Log>',
-                  JSON.stringify(event)
-                );
-              }),
-            ];
-          } else {
-            return [];
-          }
+          // if (__DEV__) {
+          //   return [
+          //     SmartShare.handleNearbyEvents((event) => {
+          //       console.log(
+          //         getDeviceNameSync(),
+          //         '<Sender.Event>',
+          //         JSON.stringify(event)
+          //       );
+          //     }),
+          //     SmartShare.handleLogEvents((event) => {
+          //       console.log(
+          //         getDeviceNameSync(),
+          //         '<Sender.Log>',
+          //         JSON.stringify(event)
+          //       );
+          //     }),
+          //   ];
+          // } else {
+          return [];
+          // }
         },
       }),
 
@@ -405,17 +406,15 @@ export const scanMachine = model.createMachine(
       },
 
       checkLocationStatus: (context) => (callback) => {
-        const listener = LocationEnabler.addListener(({ locationEnabled }) => {
-          if (locationEnabled) {
-            callback(model.events.LOCATION_ENABLED());
-          } else {
-            callback(model.events.LOCATION_DISABLED());
-          }
-        });
-
-        LocationEnabler.checkSettings(context.locationConfig);
-
-        return () => listener.remove();
+        // const listener = LocationEnabler.addListener(({ locationEnabled }) => {
+        //   if (locationEnabled) {
+        //     callback(model.events.LOCATION_ENABLED());
+        //   } else {
+        //     callback(model.events.LOCATION_DISABLED());
+        //   }
+        // });
+        // LocationEnabler.checkSettings(context.locationConfig);
+        // return () => listener.remove();
       },
 
       checkAirplaneMode: () => (callback) => {
@@ -490,13 +489,13 @@ export const scanMachine = model.createMachine(
 
     guards: {
       isQrValid: (_, event) => {
-        const param: SmartShare.ConnectionParams = Object.create(null);
-        try {
-          Object.assign(param, JSON.parse(event.params));
-          return 'cid' in param && 'pk' in param;
-        } catch (e) {
-          return false;
-        }
+        // const param: SmartShare.ConnectionParams = Object.create(null);
+        // try {
+        //   Object.assign(param, JSON.parse(event.params));
+        //   return 'cid' in param && 'pk' in param;
+        // } catch (e) {
+        return false;
+        // }
       },
     },
 
