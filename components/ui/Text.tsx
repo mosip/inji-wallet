@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleProp, TextStyle, StyleSheet, Text as RNText } from 'react-native';
-import { Colors, spacing } from './styleUtils';
+import { Colors, Spacing, spacing } from './styleUtils';
 
 const styles = StyleSheet.create({
   base: {
@@ -52,7 +52,7 @@ interface TextProps {
   color?: string;
   weight?: 'regular' | 'semibold' | 'bold';
   align?: TextStyle['textAlign'];
-  margin?: string;
+  margin?: Spacing;
   size?: 'small' | 'smaller' | 'regular';
   lineHeight?: number;
   numLines?: number;

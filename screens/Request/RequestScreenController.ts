@@ -13,6 +13,7 @@ import {
   selectIsWaitingForConnection,
   selectIsExchangingDeviceInfo,
   selectIsWaitingForVc,
+  selectSharingProtocol,
 } from '../../machines/request';
 import { selectVcLabel } from '../../machines/settings';
 import { MainRouteProps } from '../../routes/main';
@@ -85,6 +86,7 @@ export function useRequestScreen({ navigation }: MainRouteProps) {
   return {
     vcLabel,
     statusMessage,
+    sharingProtocol: useSelector(requestService, selectSharingProtocol),
 
     isWaitingForConnection,
     isExchangingDeviceInfo,
@@ -102,5 +104,7 @@ export function useRequestScreen({ navigation }: MainRouteProps) {
     ACCEPT: () => requestService.send(RequestEvents.ACCEPT()),
     REJECT: () => requestService.send(RequestEvents.REJECT()),
     REQUEST: () => requestService.send(RequestEvents.SCREEN_FOCUS()),
+    SWITCH_PROTOCOL: (value: boolean) =>
+      requestService.send(RequestEvents.SWITCH_PROTOCOL(value)),
   };
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import {
   FlexStyle,
   StyleProp,
-  SafeAreaView,
+  View,
   ViewStyle,
   StyleSheet,
   ScrollView,
@@ -50,7 +50,7 @@ function createLayout(
         {props.children}
       </ScrollView>
     ) : (
-      <SafeAreaView style={styles}>{props.children}</SafeAreaView>
+      <View style={styles}>{props.children}</View>
     );
   };
 

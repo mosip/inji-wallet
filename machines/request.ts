@@ -1,5 +1,7 @@
-// import SmartShare from '@idpass/smartshare-react-native';
-const SmartShare = {};
+import SmartshareReactNative from '@idpass/smartshare-react-native';
+const { IdpassSmartshare, GoogleNearbyMessages } = SmartshareReactNative;
+
+import uuid from 'react-native-uuid';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import { EmitterSubscription, Platform } from 'react-native';
 import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
@@ -17,11 +19,10 @@ import {
 } from '../shared/constants';
 import { ActivityLogEvents } from './activityLog';
 import { VcEvents } from './vc';
-import {
-  addOnErrorListener,
-  connect,
-  publish,
-} from 'react-native-google-nearby-messages';
+import { ConnectionParams } from '@idpass/smartshare-react-native/lib/typescript/IdpassSmartshare';
+import { gnmSubscribe } from '../shared/smartshare';
+
+type SharingProtocol = 'OFFLINE' | 'ONLINE';
 
 const model = createModel(
   {
@@ -31,6 +32,9 @@ const model = createModel(
     incomingVc: {} as VC,
     connectionParams: '',
     loggers: [] as EmitterSubscription[],
+    sharingProtocol: (Platform.OS === 'ios'
+      ? 'ONLINE'
+      : 'OFFLINE') as SharingProtocol,
   },
   {
     events: {
@@ -39,7 +43,6 @@ const model = createModel(
       CANCEL: () => ({}),
       DISMISS: () => ({}),
       VC_RECEIVED: (vc: VC) => ({ vc }),
-      RESPONSE_SENT: () => ({}),
       CONNECTED: () => ({}),
       DISCONNECT: () => ({}),
       EXCHANGE_DONE: (senderInfo: DeviceInfo) => ({ senderInfo }),
@@ -52,6 +55,7 @@ const model = createModel(
       RECEIVE_DEVICE_INFO: (info: DeviceInfo) => ({ info }),
       RECEIVED_VCS_UPDATED: () => ({}),
       VC_RESPONSE: (response: unknown) => ({ response }),
+      SWITCH_PROTOCOL: (value: boolean) => ({ value }),
     },
   }
 );
@@ -73,6 +77,10 @@ export const requestMachine = model.createMachine(
     on: {
       SCREEN_BLUR: 'inactive',
       SCREEN_FOCUS: 'checkingBluetoothService',
+      SWITCH_PROTOCOL: {
+        target: 'checkingBluetoothService',
+        actions: 'switchProtocol',
+      },
     },
     states: {
       inactive: {
@@ -247,6 +255,11 @@ export const requestMachine = model.createMachine(
   },
   {
     actions: {
+      switchProtocol: assign({
+        sharingProtocol: (_context, event) =>
+          event.value ? 'ONLINE' : 'OFFLINE',
+      }),
+
       requestReceivedVcs: send(VcEvents.GET_RECEIVED_VCS(), {
         to: (context) => context.serviceRefs.vc,
       }),
@@ -257,20 +270,29 @@ export const requestMachine = model.createMachine(
         receiverInfo: (_context, event) => event.info,
       }),
 
-      disconnect: () => {
+      disconnect: (context) => {
         try {
-          Platform.OS === 'android' && SmartShare.destroyConnection();
+          if (context.sharingProtocol === 'OFFLINE') {
+            IdpassSmartshare.destroyConnection();
+          } else {
+            GoogleNearbyMessages.disconnect();
+          }
         } catch (e) {
           // pass
         }
       },
 
       generateConnectionParams: assign({
-        connectionParams: () => {
-          if (Platform.OS === 'android') {
-            return SmartShare.getConnectionParameters();
+        connectionParams: (context) => {
+          if (context.sharingProtocol === 'OFFLINE') {
+            return IdpassSmartshare.getConnectionParameters();
           } else {
-            return 'TEST';
+            const cid = uuid.v4();
+            console.log('ONLINE', cid);
+            return JSON.stringify({
+              pk: '',
+              cid,
+            });
           }
         },
       }),
@@ -285,26 +307,26 @@ export const requestMachine = model.createMachine(
 
       registerLoggers: assign({
         loggers: () => {
-          // if (__DEV__) {
-          //   return [
-          //     SmartShare.handleNearbyEvents((event) => {
-          //       console.log(
-          //         getDeviceNameSync(),
-          //         '<Receiver.Event>',
-          //         JSON.stringify(event)
-          //       );
-          //     }),
-          //     SmartShare.handleLogEvents((event) => {
-          //       console.log(
-          //         getDeviceNameSync(),
-          //         '<Receiver.Log>',
-          //         JSON.stringify(event)
-          //       );
-          //     }),
-          //   ];
-          // } else {
-          return [];
-          // }
+          if (__DEV__) {
+            return [
+              IdpassSmartshare.handleNearbyEvents((event) => {
+                console.log(
+                  getDeviceNameSync(),
+                  '<Receiver.Event>',
+                  JSON.stringify(event)
+                );
+              }),
+              IdpassSmartshare.handleLogEvents((event) => {
+                console.log(
+                  getDeviceNameSync(),
+                  '<Receiver.Log>',
+                  JSON.stringify(event)
+                );
+              }),
+            ];
+          } else {
+            return [];
+          }
         },
       }),
 
@@ -373,14 +395,14 @@ export const requestMachine = model.createMachine(
 
     services: {
       checkBluetoothService: () => (callback) => {
-        // const subscription = BluetoothStateManager.onStateChange((state) => {
-        //   if (state === 'PoweredOn') {
-        //     callback(model.events.BLUETOOTH_ENABLED());
-        //   } else {
-        //     callback(model.events.BLUETOOTH_DISABLED());
-        //   }
-        // }, true);
-        // return () => subscription.remove();
+        const subscription = BluetoothStateManager.onStateChange((state) => {
+          if (state === 'PoweredOn') {
+            callback(model.events.BLUETOOTH_ENABLED());
+          } else {
+            callback(model.events.BLUETOOTH_DISABLED());
+          }
+        }, true);
+        return () => subscription.remove();
       },
 
       requestBluetooth: () => (callback) => {
@@ -389,8 +411,46 @@ export const requestMachine = model.createMachine(
           .catch(() => callback(model.events.BLUETOOTH_DISABLED()));
       },
 
+      advertiseDevice: (context) => (callback) => {
+        if (context.sharingProtocol === 'OFFLINE') {
+          IdpassSmartshare.createConnection('advertiser', () => {
+            callback({ type: 'CONNECTED' });
+          });
+        } else {
+          GoogleNearbyMessages.addOnErrorListener((kind, message) =>
+            console.log('\n\n[request] GNM Error', kind, message)
+          );
+
+          GoogleNearbyMessages.connect({
+            apiKey: GNM_API_KEY,
+            discoveryMediums: ['ble'],
+            discoveryModes: ['broadcast'],
+          }).then(() => {
+            console.log('[request] GNM connected!');
+
+            gnmSubscribe<ConnectionParams>(
+              'pairing',
+              async (scannedQrParams) => {
+                try {
+                  const generatedParams = JSON.parse(
+                    context.connectionParams
+                  ) as ConnectionParams;
+                  if (scannedQrParams.cid === generatedParams.cid) {
+                    const message = new Message('pairing', 'cid:matches');
+                    await GoogleNearbyMessages.publish(message.toString());
+                    callback({ type: 'CONNECTED' });
+                  }
+                } catch (e) {
+                  console.error('Could not parse message.', e);
+                }
+              }
+            );
+          });
+        }
+      },
+
       checkConnection: () => (callback) => {
-        const subscription = SmartShare.handleNearbyEvents((event) => {
+        const subscription = IdpassSmartshare.handleNearbyEvents((event) => {
           if (event.type === 'onDisconnected') {
             callback({ type: 'DISCONNECT' });
           }
@@ -399,53 +459,73 @@ export const requestMachine = model.createMachine(
         return () => subscription.remove();
       },
 
-      advertiseDevice: () => (callback) => {
-        SmartShare.createConnection('advertiser', () => {
-          callback({ type: 'CONNECTED' });
-        });
-      },
-
       exchangeDeviceInfo: (context) => (callback) => {
-        const subscription = SmartShare.handleNearbyEvents((event) => {
-          if (event.type !== 'msg') return;
+        const response = new Message(
+          'exchange:receiver-info',
+          context.receiverInfo
+        );
 
-          const message = Message.fromString<DeviceInfo>(event.data);
-          if (message.type === 'exchange:sender-info') {
-            const response = new Message(
-              'exchange:receiver-info',
-              context.receiverInfo
-            );
-            SmartShare.send(response.toString(), () => {
-              callback({ type: 'EXCHANGE_DONE', senderInfo: message.data });
-            });
-          }
-        });
+        if (context.sharingProtocol === 'OFFLINE') {
+          const subscription = IdpassSmartshare.handleNearbyEvents((event) => {
+            if (event.type !== 'msg') return;
 
-        return () => subscription.remove();
+            const message = Message.fromString<DeviceInfo>(event.data);
+            if (message.type === 'exchange:sender-info') {
+              IdpassSmartshare.send(response.toString(), () => {
+                callback({ type: 'EXCHANGE_DONE', senderInfo: message.data });
+              });
+            }
+          });
+
+          return () => subscription.remove();
+        } else {
+          gnmSubscribe<DeviceInfo>(
+            'exchange:sender-info',
+            async (senderInfo) => {
+              await GoogleNearbyMessages.unpublish();
+              await GoogleNearbyMessages.publish(response.toString());
+              callback({ type: 'EXCHANGE_DONE', senderInfo });
+            }
+          );
+        }
       },
 
-      receiveVc: () => (callback) => {
-        // const subscription = SmartShare.handleNearbyEvents((event) => {
-        //   if (event.type === 'onDisconnected') {
-        //     callback({ type: 'DISCONNECT' });
-        //   }
-        //   if (event.type !== 'msg') return;
-        // const message = Message.fromString<VC>(event.data);
-        // if (message.type === 'send:vc') {
-        //   callback({ type: 'VC_RECEIVED', vc: message.data });
-        // }
-        // });
-        // return () => subscription.remove();
+      receiveVc: (context) => (callback) => {
+        if (context.sharingProtocol === 'OFFLINE') {
+          const subscription = IdpassSmartshare.handleNearbyEvents((event) => {
+            if (event.type === 'onDisconnected') {
+              callback({ type: 'DISCONNECT' });
+            }
+
+            if (event.type !== 'msg') return;
+
+            const message = Message.fromString<VC>(event.data);
+            if (message.type === 'send:vc') {
+              callback({ type: 'VC_RECEIVED', vc: message.data });
+            }
+          });
+
+          return () => subscription.remove();
+        } else {
+          gnmSubscribe<VC>('send:vc', async (vc) => {
+            await GoogleNearbyMessages.unpublish();
+            callback({ type: 'VC_RECEIVED', vc });
+          });
+        }
       },
 
-      sendVcResponse: (_context, _event, meta) => (callback) => {
-        const response = new Message('send:vc:response', {
+      sendVcResponse: (context, _event, meta) => () => {
+        const message = new Message('send:vc:response', {
           status: meta.data.status,
         });
 
-        SmartShare.send(response.toString(), () => {
-          callback({ type: 'RESPONSE_SENT' });
-        });
+        if (context.sharingProtocol === 'OFFLINE') {
+          IdpassSmartshare.send(message.toString(), () => {
+            /*pass*/
+          });
+        } else {
+          GoogleNearbyMessages.publish(message.toString());
+        }
       },
     },
 
@@ -482,6 +562,10 @@ export function selectConnectionParams(state: State) {
 
 export function selectIncomingVc(state: State) {
   return state.context.incomingVc;
+}
+
+export function selectSharingProtocol(state: State) {
+  return state.context.sharingProtocol;
 }
 
 export function selectIsReviewing(state: State) {
