@@ -12,7 +12,7 @@ import {
   vcItemMachine,
 } from '../machines/vcItem';
 import { Column, Row, Text } from './ui';
-import { Colors, CloseCard, ProfileIcon, Styles } from './ui/styleUtils';
+import { Theme } from './ui/styleUtils';
 import { RotatingIcon } from './RotatingIcon';
 import { GlobalContext } from '../shared/GlobalContext';
 import { useTranslation } from 'react-i18next';
@@ -21,7 +21,7 @@ const VerifiedIcon: React.FC = () => {
   return (
     <Icon
       name="check-circle"
-      color={Colors.Green}
+      color={Theme.Colors.Green}
       size={14}
       containerStyle={{ marginStart: 4, bottom: 1 }}
     />
@@ -29,17 +29,21 @@ const VerifiedIcon: React.FC = () => {
 };
 
 const getDetails = (arg1, arg2, context) => {
-  if (arg1 === 'Full name') {
+  if (arg1 === 'Full Name') {
     return (
       <Column>
-        <Text color={Colors.DetailsText} size="smaller">
+        <Text color={Theme.Colors.DetailsLabel} size="smaller">
           {arg1}
         </Text>
         <Text
+          color={Theme.Colors.Details}
+          numLines={1}
           weight="bold"
           size="smaller"
           style={
-            !context.verifiableCredential ? Styles.loadingTitle : Styles.title
+            !context.verifiableCredential
+              ? Theme.Styles.loadingTitle
+              : Theme.Styles.subtitle
           }>
           {!context.verifiableCredential ? '' : arg2}
         </Text>
@@ -49,17 +53,18 @@ const getDetails = (arg1, arg2, context) => {
   if (arg1 === 'Status') {
     return (
       <Column>
-        <Text size="smaller" color={Colors.DetailsText}>
+        <Text size="smaller" color={Theme.Colors.DetailsLabel}>
           {arg1}
         </Text>
         <Row>
           <Text
             weight="bold"
+            color={Theme.Colors.Details}
             size="smaller"
             style={
               !context.verifiableCredential
-                ? Styles.loadingTitle
-                : Styles.subtitle
+                ? Theme.Styles.loadingTitle
+                : Theme.Styles.subtitle
             }>
             {!context.verifiableCredential ? '' : arg2}
           </Text>
@@ -70,17 +75,18 @@ const getDetails = (arg1, arg2, context) => {
   } else {
     return (
       <Column>
-        <Text color={Colors.DetailsText} size="smaller">
+        <Text color={Theme.Colors.DetailsLabel} size="smaller">
           {arg1}
         </Text>
         <Text
           numLines={1}
+          color={Theme.Colors.Details}
           weight="bold"
           size="smaller"
           style={
             !context.verifiableCredential
-              ? Styles.loadingTitle
-              : Styles.subtitle
+              ? Theme.Styles.loadingTitle
+              : Theme.Styles.subtitle
           }>
           {arg2}
         </Text>
@@ -124,38 +130,45 @@ export const UpdatedVcItem: React.FC<VcItemProps> = (props) => {
     <Pressable
       onPress={() => props.onPress(service)}
       disabled={!context.verifiableCredential}
-      style={Styles.bgContainer}>
+      style={Theme.Styles.closeCardBgContainer}>
       <ImageBackground
-        source={!context.verifiableCredential ? null : CloseCard}
+        source={!context.verifiableCredential ? null : Theme.CloseCard}
+        resizeMode="stretch"
         style={
           !context.verifiableCredential
-            ? Styles.loadingContainer
-            : Styles.detailsContainer
+            ? Theme.Styles.vertloadingContainer
+            : Theme.Styles.backgroundImageContainer
         }>
+        <Row style={Theme.Styles.homeCloseCardDetailsHeader}>
+          <Image
+            source={Theme.MosipLogo}
+            style={Theme.Styles.logo}
+            resizeMethod="auto"
+          />
+        </Row>
         <Row
           crossAlign="center"
+          margin="5 0 0 0"
           style={
-            !context.verifiableCredential
-              ? Styles.loadingContainer
-              : Styles.detailsContainer
+            !context.verifiableCredential ? Theme.Styles.loadingContainer : null
           }>
           <Column
             style={
               !context.verifiableCredential
-                ? Styles.loadingContainer
-                : Styles.closeDetailsContainer
+                ? Theme.Styles.loadingContainer
+                : Theme.Styles.closeDetails
             }>
             <Image
               source={
                 !context.verifiableCredential
-                  ? ProfileIcon
+                  ? Theme.ProfileIcon
                   : { uri: context.credential.biometrics.face }
               }
-              style={Styles.closeCardImage}
+              style={Theme.Styles.closeCardImage}
             />
 
-            <Column margin="0 0 0 20">
-              {getDetails('Full name', fullName, context)}
+            <Column margin="0 0 0 10">
+              {getDetails('Full Name', fullName, context)}
               {getDetails('UIN', tag || uin, context)}
               {getDetails('Generated On', generatedOn, context)}
               {getDetails('Status', t('valid'), context)}
@@ -165,7 +178,7 @@ export const UpdatedVcItem: React.FC<VcItemProps> = (props) => {
           {context.verifiableCredential ? (
             selectableOrCheck
           ) : (
-            <RotatingIcon name="sync" color={Colors.Grey5} />
+            <RotatingIcon name="sync" color={Theme.Colors.Grey5} />
           )}
         </Row>
       </ImageBackground>

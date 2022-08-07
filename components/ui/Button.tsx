@@ -10,21 +10,21 @@ import {
   ViewStyle,
 } from 'react-native';
 import { Text } from './Text';
-import { Colors, spacing } from './styleUtils';
+import { Theme, spacing } from './styleUtils';
 
 const styles = StyleSheet.create({
   fill: {
     flex: 1,
   },
   solid: {
-    backgroundColor: Colors.Orange,
+    backgroundColor: Theme.Colors.AddIdBtnBg,
   },
   clear: {
     backgroundColor: 'transparent',
   },
   outline: {
     backgroundColor: 'transparent',
-    borderColor: Colors.Orange,
+    borderColor: Theme.Colors.Orange,
   },
   container: {
     minHeight: 48,
@@ -34,10 +34,10 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   addId: {
-    backgroundColor: Colors.AddIdBtnBg,
+    backgroundColor: Theme.Colors.AddIdBtnBg,
   },
   clearAddIdBtnBg: {
-    backgroundColor: Colors.ClearAddIdBtnBg,
+    backgroundColor: Theme.Colors.ClearAddIdBtnBg,
   },
 });
 
@@ -68,7 +68,9 @@ export const Button: React.FC<ButtonProps> = (props) => {
           weight="semibold"
           align="center"
           color={
-            type === 'solid' || type === 'addId' ? Colors.White : Colors.Orange
+            type === 'solid' || type === 'addId'
+              ? Theme.Colors.White
+              : Theme.Colors.AddIdBtnTxt
           }>
           {props.title}
         </Text>

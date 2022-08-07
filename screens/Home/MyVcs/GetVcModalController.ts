@@ -1,15 +1,15 @@
 import { useSelector } from '@xstate/react';
 import { ActorRefFrom } from 'xstate';
 import {
-  AddVcModalEvents,
-  AddVcModalMachine,
+  GetVcModalEvents,
+  GetVcModalMachine,
   selectIsAcceptingOtpInput,
   selectIsRequestingCredential,
   selectOtpError,
   selectIsAcceptingIdInput,
-} from './AddVcModalMachine';
+} from './GetVcModalMachine';
 
-export function useAddVcModal({ service }: AddVcModalProps) {
+export function useGetVcModal({ service }: GetVcModalProps) {
   return {
     isRequestingCredential: useSelector(service, selectIsRequestingCredential),
 
@@ -18,13 +18,13 @@ export function useAddVcModal({ service }: AddVcModalProps) {
     isAcceptingUinInput: useSelector(service, selectIsAcceptingIdInput),
     isAcceptingOtpInput: useSelector(service, selectIsAcceptingOtpInput),
 
-    INPUT_OTP: (otp: string) => service.send(AddVcModalEvents.INPUT_OTP(otp)),
+    INPUT_OTP: (otp: string) => service.send(GetVcModalEvents.INPUT_OTP(otp)),
 
-    DISMISS: () => service.send(AddVcModalEvents.DISMISS()),
+    DISMISS: () => service.send(GetVcModalEvents.DISMISS()),
   };
 }
 
-export interface AddVcModalProps {
-  service: ActorRefFrom<typeof AddVcModalMachine>;
+export interface GetVcModalProps {
+  service: ActorRefFrom<typeof GetVcModalMachine>;
   onPress?: () => void;
 }

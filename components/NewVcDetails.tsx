@@ -6,13 +6,7 @@ import { Image, ImageBackground } from 'react-native';
 import { Icon, ListItem } from 'react-native-elements';
 import { VC, CredentialSubject } from '../types/vc';
 import { Column, Row, Text } from './ui';
-import {
-  Colors,
-  OpenCard,
-  ProfileIcon,
-  MosipLogo,
-  Styles,
-} from './ui/styleUtils';
+import { Theme } from './ui/styleUtils';
 import { TextItem } from './ui/TextItem';
 import { useReceiveVcModal } from '../screens/Request/ReceiveVcModalController';
 
@@ -20,7 +14,7 @@ const VerifiedIcon: React.FC = () => {
   return (
     <Icon
       name="check-circle"
-      color={Colors.Green}
+      color={Theme.Colors.Green}
       size={14}
       containerStyle={{ marginStart: 4, bottom: 1 }}
     />
@@ -37,30 +31,33 @@ export const NewVcDetails: React.FC<VcDetailsProps> = (props) => {
         width: '100%',
         height: '100%',
       }}
-      source={OpenCard}>
-      <Row style={Styles.successTag}>
-        <Icon name="check-circle" color={Colors.White} size={40} />
-        <Text margin="0 10" color={Colors.White}>
+      source={Theme.OpenCard}>
+      <Row style={Theme.Styles.successTag}>
+        <Icon name="check-circle" color={Theme.Colors.White} size={40} />
+        <Text margin="0 10" color={Theme.Colors.White}>
           {controller.vcLabel.singular} Received
         </Text>
       </Row>
 
       <Column>
-        <Column style={Styles.closeDetailsHeader}>
+        <Column style={Theme.Styles.closeDetailsHeader}>
           <Column>
-            <Text weight="bold" size="smaller" color={Colors.DetailsText}>
+            <Text
+              weight="bold"
+              size="smaller"
+              color={Theme.Colors.DetailsLabel}>
               {t('fullName')}
             </Text>
-            <Text weight="bold" size="smaller">
+            <Text weight="bold" size="smaller" color={Theme.Colors.Details}>
               {getLocalizedField(
                 props.vc?.verifiableCredential.credentialSubject.fullName
               )}
             </Text>
           </Column>
-          <Image source={MosipLogo} style={Styles.logo} />
+          <Image source={Theme.MosipLogo} style={Theme.Styles.logo} />
         </Column>
 
-        <Row style={Styles.openDetailsContainer}>
+        <Row style={Theme.Styles.openDetailsContainer}>
           <ListItem bottomDivider>
             <ListItem.Content>
               <ListItem.Subtitle>{t('photo')}</ListItem.Subtitle>
@@ -69,28 +66,31 @@ export const NewVcDetails: React.FC<VcDetailsProps> = (props) => {
                   source={
                     props.vc?.credential.biometrics?.face
                       ? { uri: props.vc?.credential.biometrics.face }
-                      : ProfileIcon
+                      : Theme.ProfileIcon
                   }
-                  style={Styles.openCardImage}
+                  style={Theme.Styles.openCardImage}
                 />
               </ListItem.Content>
             </ListItem.Content>
           </ListItem>
 
-          <Column style={Styles.details}>
-            <Column style={Styles.labelPart}>
+          <Column style={Theme.Styles.details}>
+            <Column style={Theme.Styles.labelPart}>
               <Column
                 fill
                 padding="12 16"
                 margin="0 16 0 0"
-                style={Styles.labelPart}>
+                style={Theme.Styles.labelPart}>
                 <Text
                   size="smaller"
-                  color={Colors.DetailsText}
+                  color={Theme.Colors.DetailsLabel}
                   style={{ textTransform: 'uppercase', fontWeight: 'bold' }}>
                   {props.vc?.idType}
                 </Text>
-                <Text weight="semibold" size="smaller">
+                <Text
+                  weight="semibold"
+                  size="smaller"
+                  color={Theme.Colors.Details}>
                   {props.vc?.id}
                 </Text>
               </Column>
@@ -98,20 +98,32 @@ export const NewVcDetails: React.FC<VcDetailsProps> = (props) => {
                 fill
                 padding="12 16"
                 margin="0 16 0 0"
-                style={Styles.labelPart}>
-                <Text weight="bold" size="smaller" color={Colors.DetailsText}>
+                style={Theme.Styles.labelPart}>
+                <Text
+                  weight="bold"
+                  size="smaller"
+                  color={Theme.Colors.DetailsLabel}>
                   {t('generatedOn')}
                 </Text>
-                <Text weight="semibold" size="smaller">
+                <Text
+                  weight="semibold"
+                  size="smaller"
+                  color={Theme.Colors.Details}>
                   {new Date(props.vc?.generatedOn).toLocaleDateString()}
                 </Text>
               </Column>
-              <Column fill padding="12 16" style={Styles.labelPart}>
-                <Text weight="bold" size="smaller" color={Colors.DetailsText}>
+              <Column fill padding="12 16" style={Theme.Styles.labelPart}>
+                <Text
+                  weight="bold"
+                  size="smaller"
+                  color={Theme.Colors.DetailsLabel}>
                   {t('status')}
                 </Text>
                 <Row>
-                  <Text weight="semibold" size="smaller">
+                  <Text
+                    weight="semibold"
+                    size="smaller"
+                    color={Theme.Colors.Details}>
                     {t('valid')}
                   </Text>
                   {props.vc?.isVerified && <VerifiedIcon />}
@@ -123,11 +135,17 @@ export const NewVcDetails: React.FC<VcDetailsProps> = (props) => {
               fill
               padding="12 16"
               margin="0 16 0 0"
-              style={Styles.labelPart}>
-              <Text weight="bold" size="smaller" color={Colors.DetailsText}>
+              style={Theme.Styles.labelPart}>
+              <Text
+                weight="bold"
+                size="smaller"
+                color={Theme.Colors.DetailsLabel}>
                 {t('gender')}
               </Text>
-              <Text weight="semibold" size="smaller">
+              <Text
+                weight="semibold"
+                size="smaller"
+                color={Theme.Colors.Details}>
                 {getLocalizedField(
                   props.vc?.verifiableCredential.credentialSubject.gender
                 )}
@@ -138,11 +156,17 @@ export const NewVcDetails: React.FC<VcDetailsProps> = (props) => {
               fill
               padding="12 16"
               margin="0 16 0 0"
-              style={Styles.labelPart}>
-              <Text weight="bold" size="smaller" color={Colors.DetailsText}>
+              style={Theme.Styles.labelPart}>
+              <Text
+                weight="bold"
+                size="smaller"
+                color={Theme.Colors.DetailsLabel}>
                 {t('dateOfBirth')}
               </Text>
-              <Text weight="semibold" size="smaller">
+              <Text
+                weight="semibold"
+                size="smaller"
+                color={Theme.Colors.Details}>
                 {new Date(
                   getLocalizedField(
                     props.vc?.verifiableCredential.credentialSubject.dateOfBirth
@@ -155,11 +179,17 @@ export const NewVcDetails: React.FC<VcDetailsProps> = (props) => {
               fill
               padding="12 16"
               margin="0 16 0 0"
-              style={Styles.labelPart}>
-              <Text weight="bold" size="smaller" color={Colors.DetailsText}>
+              style={Theme.Styles.labelPart}>
+              <Text
+                weight="bold"
+                size="smaller"
+                color={Theme.Colors.DetailsLabel}>
                 {t('phoneNumber')}
               </Text>
-              <Text weight="semibold" size="smaller">
+              <Text
+                weight="semibold"
+                size="smaller"
+                color={Theme.Colors.Details}>
                 {getLocalizedField(
                   props.vc?.verifiableCredential.credentialSubject.phone
                 )}
@@ -170,11 +200,17 @@ export const NewVcDetails: React.FC<VcDetailsProps> = (props) => {
               fill
               padding="12 16"
               margin="0 16 0 0"
-              style={Styles.labelPart}>
-              <Text weight="bold" size="smaller" color={Colors.DetailsText}>
+              style={Theme.Styles.labelPart}>
+              <Text
+                weight="bold"
+                size="smaller"
+                color={Theme.Colors.DetailsLabel}>
                 {t('email')}
               </Text>
-              <Text weight="semibold" size="smaller">
+              <Text
+                weight="semibold"
+                size="smaller"
+                color={Theme.Colors.Details}>
                 {getLocalizedField(
                   props.vc?.verifiableCredential.credentialSubject.email
                 )}
@@ -185,11 +221,17 @@ export const NewVcDetails: React.FC<VcDetailsProps> = (props) => {
               fill
               padding="12 16"
               margin="0 16 0 0"
-              style={Styles.labelPart}>
-              <Text weight="bold" size="smaller" color={Colors.DetailsText}>
+              style={Theme.Styles.labelPart}>
+              <Text
+                weight="bold"
+                size="smaller"
+                color={Theme.Colors.DetailsLabel}>
                 {t('address')}
               </Text>
-              <Text weight="semibold" size="smaller">
+              <Text
+                weight="semibold"
+                size="smaller"
+                color={Theme.Colors.Details}>
                 {getFullAddress(
                   props.vc?.verifiableCredential.credentialSubject
                 )}

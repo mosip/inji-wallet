@@ -2,13 +2,13 @@ import React from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
 import { Overlay, LinearProgress } from 'react-native-elements';
 import { Column, Text } from './ui';
-import { Colors, elevation } from './ui/styleUtils';
+import { elevation, Theme } from './ui/styleUtils';
 import { Icon } from 'react-native-elements';
 
 const styles = StyleSheet.create({
   overlay: {
     ...elevation(5),
-    backgroundColor: Colors.White,
+    backgroundColor: Theme.Colors.White,
   },
 });
 
@@ -37,7 +37,7 @@ export const TimerBasedMessageOverlay: React.FC<MessageOverlayProps> = (
           </Text>
         )}
         {props.hasProgress && (
-          <LinearProgress variant="indeterminate" color={Colors.Orange} />
+          <LinearProgress variant="indeterminate" color={Theme.Colors.Orange} />
         )}
       </Column>
     </Overlay>

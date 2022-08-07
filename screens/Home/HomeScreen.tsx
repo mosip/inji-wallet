@@ -1,8 +1,7 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
 import { Tab } from 'react-native-elements';
 import { Column, Text } from '../../components/ui';
-import { Colors, Styles } from '../../components/ui/styleUtils';
+import { Theme } from '../../components/ui/styleUtils';
 import { HomeRouteProps } from '../../routes/main';
 import { HistoryTab } from './HistoryTab';
 import { MyVcsTab } from './MyVcsTab';
@@ -20,11 +19,11 @@ export const HomeScreen: React.FC<HomeRouteProps> = (props) => {
 
   return (
     <React.Fragment>
-      <Column fill backgroundColor={Colors.LightGrey}>
+      <Column fill backgroundColor={Theme.Colors.LightGrey}>
         <Tab
           value={controller.activeTab}
           onChange={controller.SELECT_TAB}
-          indicatorStyle={Styles.tabIndicator}>
+          indicatorStyle={Theme.Styles.tabIndicator}>
           {TabItem(t('myVcsTab', { vcLabel: controller.vcLabel.plural }))}
           {TabItem(t('receivedVcsTab', { vcLabel: controller.vcLabel.plural }))}
           {TabItem(t('historyTab'))}
@@ -64,9 +63,9 @@ export const HomeScreen: React.FC<HomeRouteProps> = (props) => {
 function TabItem(title: string) {
   return (
     <Tab.Item
-      containerStyle={Styles.tabContainer}
+      containerStyle={Theme.Styles.tabContainer}
       title={
-        <Text align="center" color={Colors.TabItemText}>
+        <Text align="center" color={Theme.Colors.TabItemText}>
           {title}
         </Text>
       }

@@ -2,24 +2,18 @@ import { formatDistanceToNow } from 'date-fns';
 import React from 'react';
 import * as DateFnsLocale from '../lib/date-fns/locale';
 import { useTranslation } from 'react-i18next';
-import { Image, View, ImageBackground } from 'react-native';
-import { Icon, ListItem } from 'react-native-elements';
+import { Image, ImageBackground } from 'react-native';
+import { Icon } from 'react-native-elements';
 import { VC, CredentialSubject } from '../types/vc';
 import { Column, Row, Text } from './ui';
-import {
-  Colors,
-  Styles,
-  ProfileIcon,
-  MosipLogo,
-  OpenCard,
-} from './ui/styleUtils';
+import { Theme } from './ui/styleUtils';
 import { TextItem } from './ui/TextItem';
 
 const VerifiedIcon: React.FC = () => {
   return (
     <Icon
       name="check-circle"
-      color={Colors.Green}
+      color={Theme.Colors.Green}
       size={14}
       containerStyle={{ marginStart: 4, bottom: 1 }}
     />
@@ -30,125 +24,145 @@ export const UpdatedVcDetails: React.FC<VcDetailsProps> = (props) => {
   const { t, i18n } = useTranslation('VcDetails');
 
   return (
-    <ImageBackground style={Styles.bgContainer} source={OpenCard}>
-      <View style={Styles.closeDetailsHeader}>
-        <View>
-          <Text weight="bold" size="smaller" color={Colors.DetailsText}>
+    <ImageBackground
+      borderRadius={10}
+      style={Theme.Styles.openCardBgContainer}
+      source={Theme.OpenCard}>
+      <Row style={Theme.Styles.openDetailsHeader}>
+        <Column>
+          <Text weight="bold" size="smaller" color={Theme.Colors.DetailsLabel}>
             {t('fullName')}
           </Text>
-          <Text weight="bold" size="smaller">
+          <Text weight="bold" size="smaller" color={Theme.Colors.Details}>
             {getLocalizedField(
               props.vc?.verifiableCredential.credentialSubject.fullName
             )}
           </Text>
-        </View>
-        <Image source={MosipLogo} style={Styles.logo} />
-      </View>
+        </Column>
+        <Image source={Theme.MosipLogo} style={Theme.Styles.logo} />
+      </Row>
 
-      <Row style={Styles.openDetailsContainer}>
-        <ListItem bottomDivider>
-          <ListItem.Content>
-            <ListItem.Subtitle>{t('photo')}</ListItem.Subtitle>
-            <ListItem.Content>
-              <Image
-                source={
-                  props.vc?.credential.biometrics?.face
-                    ? { uri: props.vc?.credential.biometrics.face }
-                    : ProfileIcon
-                }
-                style={Styles.openCardImage}
-              />
-            </ListItem.Content>
-          </ListItem.Content>
-        </ListItem>
+      <Row style={Theme.Styles.openDetailsContainer}>
+        <Image
+          source={
+            props.vc?.credential.biometrics?.face
+              ? { uri: props.vc?.credential.biometrics.face }
+              : Theme.ProfileIcon
+          }
+          style={Theme.Styles.openCardImage}
+        />
 
-        <Column style={Styles.details}>
-          <Column style={Styles.labelPart}>
-            <Column fill style={Styles.labelPart}>
-              <Text weight="bold" size="smaller" color={Colors.DetailsText}>
-                {props.vc?.idType}
-              </Text>
-              <Text weight="semibold" size="smaller">
-                {props.vc?.id}
-              </Text>
-            </Column>
+        <Column style={Theme.Styles.labelPartContainer}>
+          <Column fill>
+            <Text
+              weight="bold"
+              size="smaller"
+              color={Theme.Colors.DetailsLabel}>
+              {props.vc?.idType}
+            </Text>
+            <Text weight="semibold" size="smaller" color={Theme.Colors.Details}>
+              {props.vc?.id}
+            </Text>
+          </Column>
 
-            <Column fill style={Styles.labelPart}>
-              <Text weight="bold" size="smaller" color={Colors.DetailsText}>
-                {t('generatedOn')}
-              </Text>
-              <Text weight="semibold" size="smaller">
-                {new Date(props.vc?.generatedOn).toLocaleDateString()}
-              </Text>
-            </Column>
+          <Column fill style={Theme.Styles.labelPart}>
+            <Text
+              weight="bold"
+              size="smaller"
+              color={Theme.Colors.DetailsLabel}>
+              {t('generatedOn')}
+            </Text>
+            <Text weight="semibold" size="smaller" color={Theme.Colors.Details}>
+              {new Date(props.vc?.generatedOn).toLocaleDateString()}
+            </Text>
+          </Column>
 
-            <Column fill style={Styles.labelPart}>
-              <Text weight="bold" size="smaller" color={Colors.DetailsText}>
-                {t('status')}
+          <Column fill style={Theme.Styles.labelPart}>
+            <Text
+              weight="bold"
+              size="smaller"
+              color={Theme.Colors.DetailsLabel}>
+              {t('status')}
+            </Text>
+            <Row>
+              <Text
+                weight="semibold"
+                size="smaller"
+                color={Theme.Colors.Details}>
+                {t('valid')}
               </Text>
-              <Row>
-                <Text weight="semibold" size="smaller">
-                  {t('valid')}
-                </Text>
-                {props.vc?.isVerified && <VerifiedIcon />}
-              </Row>
-            </Column>
-            <Column fill style={Styles.labelPart}>
-              <Text weight="bold" size="smaller" color={Colors.DetailsText}>
-                {t('gender')}
-              </Text>
-              <Text weight="semibold" size="smaller">
-                {getLocalizedField(
-                  props.vc?.verifiableCredential.credentialSubject.gender
-                )}
-              </Text>
-            </Column>
+              {props.vc?.isVerified && <VerifiedIcon />}
+            </Row>
+          </Column>
 
-            <Column fill style={Styles.labelPart}>
-              <Text weight="bold" size="smaller" color={Colors.DetailsText}>
-                {t('dateOfBirth')}
-              </Text>
-              <Text weight="semibold" size="smaller">
-                {new Date(
-                  getLocalizedField(
-                    props.vc?.verifiableCredential.credentialSubject.dateOfBirth
-                  )
-                ).toLocaleDateString()}
-              </Text>
-            </Column>
+          <Column fill style={Theme.Styles.labelPart}>
+            <Text
+              weight="bold"
+              size="smaller"
+              color={Theme.Colors.DetailsLabel}>
+              {t('gender')}
+            </Text>
+            <Text weight="semibold" size="smaller" color={Theme.Colors.Details}>
+              {getLocalizedField(
+                props.vc?.verifiableCredential.credentialSubject.gender
+              )}
+            </Text>
+          </Column>
 
-            <Column fill style={Styles.labelPart}>
-              <Text weight="bold" size="smaller" color={Colors.DetailsText}>
-                {t('phoneNumber')}
-              </Text>
-              <Text weight="semibold" size="smaller">
-                {getLocalizedField(
-                  props.vc?.verifiableCredential.credentialSubject.phone
-                )}
-              </Text>
-            </Column>
+          <Column fill style={Theme.Styles.labelPart}>
+            <Text
+              weight="bold"
+              size="smaller"
+              color={Theme.Colors.DetailsLabel}>
+              {t('dateOfBirth')}
+            </Text>
+            <Text weight="semibold" size="smaller" color={Theme.Colors.Details}>
+              {new Date(
+                getLocalizedField(
+                  props.vc?.verifiableCredential.credentialSubject.dateOfBirth
+                )
+              ).toLocaleDateString()}
+            </Text>
+          </Column>
 
-            <Column fill style={Styles.labelPart}>
-              <Text weight="bold" size="smaller" color={Colors.DetailsText}>
-                {t('email')}
-              </Text>
-              <Text weight="semibold" size="smaller">
-                {getLocalizedField(
-                  props.vc?.verifiableCredential.credentialSubject.email
-                )}
-              </Text>
-            </Column>
+          <Column fill style={Theme.Styles.labelPart}>
+            <Text
+              weight="bold"
+              size="smaller"
+              color={Theme.Colors.DetailsLabel}>
+              {t('phoneNumber')}
+            </Text>
+            <Text weight="semibold" size="smaller" color={Theme.Colors.Details}>
+              {getLocalizedField(
+                props.vc?.verifiableCredential.credentialSubject.phone
+              )}
+            </Text>
+          </Column>
 
-            <Column fill style={Styles.labelPart}>
-              <Text weight="bold" size="smaller" color={Colors.DetailsText}>
-                {t('address')}
-              </Text>
-              <Text weight="semibold" size="smaller">
-                {getFullAddress(
-                  props.vc?.verifiableCredential.credentialSubject
-                )}
-              </Text>
-            </Column>
+          <Column fill style={Theme.Styles.labelPart}>
+            <Text
+              weight="bold"
+              size="smaller"
+              color={Theme.Colors.DetailsLabel}>
+              {t('email')}
+            </Text>
+            <Text weight="semibold" size="smaller" color={Theme.Colors.Details}>
+              {getLocalizedField(
+                props.vc?.verifiableCredential.credentialSubject.email
+              )}
+            </Text>
+          </Column>
+
+          <Column fill style={Theme.Styles.labelPart}>
+            <Text
+              weight="bold"
+              size="smaller"
+              color={Theme.Colors.DetailsLabel}>
+              {t('address')}
+            </Text>
+            <Text weight="semibold" size="smaller" color={Theme.Colors.Details}>
+              {getFullAddress(props.vc?.verifiableCredential.credentialSubject)}
+            </Text>
           </Column>
 
           {props.vc?.reason?.length > 0 && (

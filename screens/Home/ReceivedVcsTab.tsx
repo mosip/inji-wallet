@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { RefreshControl } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { Centered, Column, Text } from '../../components/ui';
-import { Colors } from '../../components/ui/styleUtils';
+import { Theme } from '../../components/ui/styleUtils';
 import { HomeScreenTabProps } from './HomeScreen';
 import { useReceivedVcsTab } from './ReceivedVcsTabController';
 import { UpdatedVcItem } from '../../components/UpdatedVcItem';
@@ -44,7 +44,7 @@ export const ReceivedVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                   vcLabel: controller.vcLabel.plural,
                 })}
               </Text>
-              <Text align="center" color={Colors.Grey}>
+              <Text align="center" color={Theme.Colors.Grey}>
                 {t('noReceivedVcsText', {
                   vcLabel: controller.vcLabel.singular,
                 })}

@@ -1,7 +1,7 @@
 import React, { useContext, useRef } from 'react';
 import { useInterpret, useSelector } from '@xstate/react';
 import { Image, ImageBackground } from 'react-native';
-import { CheckBox, Icon } from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import { ActorRefFrom } from 'xstate';
 import {
   createVcItemMachine,
@@ -12,7 +12,7 @@ import {
   vcItemMachine,
 } from '../machines/vcItem';
 import { Column, Row, Text } from './ui';
-import { Colors, CloseCard, ProfileIcon, Styles } from './ui/styleUtils';
+import { Theme } from './ui/styleUtils';
 import { GlobalContext } from '../shared/GlobalContext';
 import { useTranslation } from 'react-i18next';
 
@@ -20,7 +20,7 @@ const VerifiedIcon: React.FC = () => {
   return (
     <Icon
       name="check-circle"
-      color={Colors.Green}
+      color={Theme.Colors.Green}
       size={14}
       containerStyle={{ marginStart: 4, bottom: 1 }}
     />
@@ -45,49 +45,40 @@ export const SingleVcItem: React.FC<VcItemProps> = (props) => {
   const context = useSelector(service, selectVerifiableCredential);
   const generatedOn = useSelector(service, selectGeneratedOn);
 
-  const selectableOrCheck = props.selectable ? (
-    <CheckBox
-      checked={props.selected}
-      checkedIcon={<Icon name="radio-button-checked" />}
-      uncheckedIcon={<Icon name="radio-button-unchecked" />}
-      onPress={() => props.onPress(service)}
-    />
-  ) : null;
-
   return (
-    <Column style={Styles.bgContainer} onShow={props.onShow(service)}>
+    <Column onShow={props.onShow(service)}>
       <ImageBackground
-        source={!context.verifiableCredential ? null : CloseCard}
+        source={!context.verifiableCredential ? null : Theme.CloseCard}
         style={
           !context.verifiableCredential
-            ? Styles.loadingContainer
-            : Styles.closeDetailsContainer
+            ? Theme.Styles.loadingContainer
+            : Theme.Styles.closeDetailsContainer
         }>
         <Row
           crossAlign="center"
           style={
             !context.verifiableCredential
-              ? Styles.loadingContainer
-              : Styles.closeDetailsContainer
+              ? Theme.Styles.loadingContainer
+              : Theme.Styles.closeDetailsContainer
           }>
           <Column
             style={
               !context.verifiableCredential
-                ? Styles.loadingContainer
-                : Styles.closeDetailsContainer
+                ? Theme.Styles.loadingContainer
+                : Theme.Styles.closeDetailsContainer
             }>
             <Image
               source={
                 !context.verifiableCredential
-                  ? ProfileIcon
+                  ? Theme.ProfileIcon
                   : { uri: context.credential.biometrics.face }
               }
-              style={Styles.closeCardImage}
+              style={Theme.Styles.closeCardImage}
             />
 
             <Column margin="0 0 0 50">
               <Column>
-                <Text color={Colors.DetailsText} size="smaller">
+                <Text color={Theme.Colors.DetailsLabel} size="smaller">
                   Full name
                 </Text>
                 <Text
@@ -95,8 +86,8 @@ export const SingleVcItem: React.FC<VcItemProps> = (props) => {
                   size="smaller"
                   style={
                     !context.verifiableCredential
-                      ? Styles.loadingTitle
-                      : Styles.title
+                      ? Theme.Styles.loadingTitle
+                      : Theme.Styles.title
                   }>
                   {!context.verifiableCredential
                     ? ''
@@ -107,7 +98,7 @@ export const SingleVcItem: React.FC<VcItemProps> = (props) => {
               </Column>
 
               <Column>
-                <Text color={Colors.DetailsText} size="smaller">
+                <Text color={Theme.Colors.DetailsLabel} size="smaller">
                   UIN
                 </Text>
                 <Text
@@ -115,14 +106,14 @@ export const SingleVcItem: React.FC<VcItemProps> = (props) => {
                   size="smaller"
                   style={
                     !context.verifiableCredential
-                      ? Styles.loadingTitle
-                      : Styles.title
+                      ? Theme.Styles.loadingTitle
+                      : Theme.Styles.title
                   }>
                   {!context.verifiableCredential ? '' : tag || uin}
                 </Text>
               </Column>
               <Column>
-                <Text color={Colors.DetailsText} size="smaller">
+                <Text color={Theme.Colors.DetailsLabel} size="smaller">
                   Generated on
                 </Text>
                 <Text
@@ -131,14 +122,14 @@ export const SingleVcItem: React.FC<VcItemProps> = (props) => {
                   size="smaller"
                   style={
                     !context.verifiableCredential
-                      ? Styles.loadingTitle
-                      : Styles.subtitle
+                      ? Theme.Styles.loadingTitle
+                      : Theme.Styles.subtitle
                   }>
                   {!context.verifiableCredential ? '' : generatedOn}
                 </Text>
               </Column>
               <Column>
-                <Text size="smaller" color={Colors.DetailsText}>
+                <Text size="smaller" color={Theme.Colors.DetailsLabel}>
                   {t('status')}
                 </Text>
                 <Row>
@@ -147,8 +138,8 @@ export const SingleVcItem: React.FC<VcItemProps> = (props) => {
                     size="smaller"
                     style={
                       !context.verifiableCredential
-                        ? Styles.loadingTitle
-                        : Styles.subtitle
+                        ? Theme.Styles.loadingTitle
+                        : Theme.Styles.subtitle
                     }>
                     {!context.verifiableCredential ? '' : t('valid')}
                   </Text>

@@ -1,20 +1,31 @@
 import React from 'react';
 import { Button, Column, Text, Centered } from '../../components/ui';
 import { Icon } from 'react-native-elements';
-import { Colors } from '../../components/ui/styleUtils';
+import { Theme } from '../../components/ui/styleUtils';
 import { RefreshControl } from 'react-native';
 import { useMyVcsTab } from './MyVcsTabController';
 import { HomeScreenTabProps } from './HomeScreen';
 import { AddVcModal } from './MyVcs/AddVcModal';
+import { GetVcModal } from './MyVcs/GetVcModal';
 import { DownloadingVcModal } from './MyVcs/DownloadingVcModal';
 import { OnboardingOverlay } from './OnboardingOverlay';
 import { useTranslation } from 'react-i18next';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { UpdatedVcItem } from '../../components/UpdatedVcItem';
+import { GET_INDIVIDUAL_ID } from '../../shared/constants';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
   const { t } = useTranslation('MyVcsTab');
   const controller = useMyVcsTab(props);
+
+  const getId = () => {
+    controller.DISMISS();
+    controller.GET_VC();
+  };
+
+  const clearIndividualId = () => {
+    GET_INDIVIDUAL_ID('');
+  };
 
   return (
     <React.Fragment>
@@ -60,7 +71,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                 <Text weight="semibold" margin="0 0 8 0">
                   {t('generateVc', { vcLabel: controller.vcLabel.plural })}
                 </Text>
-                <Text color={Colors.Grey} align="center">
+                <Text color={Theme.Colors.Grey} align="center">
                   {t('generateVcDescription', {
                     vcLabel: controller.vcLabel.singular,
                   })}
@@ -68,7 +79,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                 <Icon
                   name="arrow-downward"
                   containerStyle={{ marginTop: 20 }}
-                  color={Colors.Orange}
+                  color={Theme.Colors.Icon}
                 />
               </Centered>
 
@@ -88,12 +99,18 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
       </Column>
 
       {controller.AddVcModalService && (
-        <AddVcModal service={controller.AddVcModalService} />
+        <AddVcModal service={controller.AddVcModalService} onPress={getId} />
       )}
+
+      {controller.GetVcModalService && (
+        <GetVcModal service={controller.GetVcModalService} />
+      )}
+
       {controller.isRequestSuccessful && (
         <DownloadingVcModal
           isVisible={controller.isRequestSuccessful}
           onDismiss={controller.DISMISS}
+          onShow={clearIndividualId}
         />
       )}
 

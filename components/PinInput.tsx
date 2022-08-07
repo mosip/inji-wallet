@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { TextInput } from 'react-native';
 import { usePinInput } from '../machines/pinInput';
 import { Row } from './ui';
-import { Colors, Styles } from './ui/styleUtils';
+import { Theme } from './ui/styleUtils';
 
 export const PinInput: React.FC<PinInputProps> = (props) => {
   const { state, send, events } = usePinInput(props.length);
@@ -22,8 +22,8 @@ export const PinInput: React.FC<PinInputProps> = (props) => {
           selectTextOnFocus
           keyboardType="numeric"
           maxLength={1}
-          selectionColor={Colors.Orange}
-          style={Styles.input}
+          selectionColor={Theme.Colors.Orange}
+          style={Theme.Styles.input}
           key={index}
           ref={input}
           value={values[index]}

@@ -9,7 +9,10 @@ export const DownloadingVcModal: React.FC<ModalProps> = (props) => {
   const controller = useDownloadingVcModal();
 
   return (
-    <Modal isVisible={props.isVisible} onDismiss={props.onDismiss}>
+    <Modal
+      isVisible={props.isVisible}
+      onDismiss={props.onDismiss}
+      onShow={props.onShow}>
       <Column fill padding="32 24" align="space-between">
         <Column fill>
           <Text weight="semibold" align="center">

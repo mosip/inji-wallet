@@ -4,7 +4,7 @@ import { Icon } from 'react-native-elements';
 import { MAX_PIN, PasscodeVerify } from '../components/PasscodeVerify';
 import { PinInput } from '../components/PinInput';
 import { Column, Text } from '../components/ui';
-import { Colors } from '../components/ui/styleUtils';
+import { Theme } from '../components/ui/styleUtils';
 import { PasscodeRouteProps } from '../routes';
 import { usePasscodeScreen } from './PasscodeScreenController';
 
@@ -30,8 +30,8 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = (props) => {
     );
 
   return (
-    <Column fill padding="32" backgroundColor={Colors.White}>
-      <Icon name="lock" color={Colors.Orange} size={60} />
+    <Column fill padding="32" backgroundColor={Theme.Colors.White}>
+      <Icon name="lock" color={Theme.Colors.Icon} size={60} />
       {props.route.params?.setup ? (
         <Column fill align="space-between" width="100%">
           {passcodeSetup}
@@ -48,7 +48,7 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = (props) => {
       )}
 
       <Column fill>
-        <Text align="center" color={Colors.Red}>
+        <Text align="center" color={Theme.Colors.Red}>
           {controller.error}
         </Text>
       </Column>

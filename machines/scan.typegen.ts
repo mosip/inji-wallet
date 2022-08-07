@@ -2,39 +2,17 @@
 
 export interface Typegen0 {
   '@@xstate/typegen': true;
-  'eventsCausingActions': {
-    openSettings: 'LOCATION_REQUEST';
-    setConnectionParams: 'SCAN';
-    setSenderInfo: 'RECEIVE_DEVICE_INFO';
-    setReceiverInfo: 'EXCHANGE_DONE';
-    setReason: 'UPDATE_REASON';
-    setSelectedVc: 'SELECT_VC';
-    removeLoggers:
-      | 'SCREEN_BLUR'
-      | 'xstate.after(CLEAR_DELAY)#clearingConnection'
-      | 'CANCEL'
-      | 'DISMISS';
-    requestToDisableFlightMode: 'FLIGHT_REQUEST';
-    requestToEnableLocation: 'LOCATION_DISABLED' | 'LOCATION_REQUEST';
-    disconnect: 'LOCATION_ENABLED';
-    registerLoggers:
-      | 'xstate.after(CLEAR_DELAY)#clearingConnection'
-      | 'CANCEL'
-      | 'DISMISS';
-    requestSenderInfo: 'SCAN';
-    clearReason: 'xstate.init';
-    logShared: 'VC_ACCEPTED';
-  };
   'internalEvents': {
     'xstate.after(CLEAR_DELAY)#clearingConnection': {
       type: 'xstate.after(CLEAR_DELAY)#clearingConnection';
     };
     'xstate.init': { type: 'xstate.init' };
+    'xstate.stop': { type: 'xstate.stop' };
   };
   'invokeSrcNameMap': {
     checkAirplaneMode: 'done.invoke.scan.checkingAirplaneMode.checkingStatus:invocation[0]';
-    checkLocationStatus: 'done.invoke.checkingLocationService:invocation[0]';
     checkLocationPermission: 'done.invoke.scan.checkingLocationService.checkingPermission:invocation[0]';
+    checkLocationStatus: 'done.invoke.checkingLocationService:invocation[0]';
     discoverDevice: 'done.invoke.scan.connecting:invocation[0]';
     exchangeDeviceInfo: 'done.invoke.scan.exchangingDeviceInfo:invocation[0]';
     sendVc: 'done.invoke.scan.reviewing.sendingVc:invocation[0]';
@@ -45,10 +23,48 @@ export interface Typegen0 {
     guards: never;
     delays: never;
   };
+  'eventsCausingActions': {
+    clearReason:
+      | 'CANCEL'
+      | 'DISCONNECT'
+      | 'DISMISS'
+      | 'SCREEN_BLUR'
+      | 'SCREEN_FOCUS'
+      | 'xstate.stop';
+    disconnect:
+      | 'CANCEL'
+      | 'DISCONNECT'
+      | 'DISMISS'
+      | 'LOCATION_ENABLED'
+      | 'SCREEN_BLUR'
+      | 'SCREEN_FOCUS'
+      | 'xstate.stop';
+    logShared: 'VC_ACCEPTED';
+    openSettings: 'LOCATION_REQUEST';
+    registerLoggers:
+      | 'CANCEL'
+      | 'DISMISS'
+      | 'xstate.after(CLEAR_DELAY)#clearingConnection';
+    removeLoggers:
+      | 'CANCEL'
+      | 'DISMISS'
+      | 'SCREEN_BLUR'
+      | 'SCREEN_FOCUS'
+      | 'xstate.after(CLEAR_DELAY)#clearingConnection'
+      | 'xstate.init';
+    requestSenderInfo: 'SCAN';
+    requestToDisableFlightMode: 'FLIGHT_REQUEST';
+    requestToEnableLocation: 'LOCATION_DISABLED' | 'LOCATION_REQUEST';
+    setConnectionParams: 'SCAN';
+    setReason: 'UPDATE_REASON';
+    setReceiverInfo: 'EXCHANGE_DONE';
+    setSelectedVc: 'SELECT_VC';
+    setSenderInfo: 'RECEIVE_DEVICE_INFO';
+  };
   'eventsCausingServices': {
-    checkAirplaneMode: 'APP_ACTIVE';
+    checkAirplaneMode: 'APP_ACTIVE' | 'FLIGHT_ENABLED' | 'SCREEN_FOCUS';
+    checkLocationPermission: 'APP_ACTIVE' | 'LOCATION_ENABLED';
     checkLocationStatus: 'FLIGHT_DISABLED';
-    checkLocationPermission: 'LOCATION_ENABLED' | 'APP_ACTIVE';
     discoverDevice: 'RECEIVE_DEVICE_INFO';
     exchangeDeviceInfo: 'CONNECTED';
     sendVc: 'SELECT_VC';
@@ -57,54 +73,54 @@ export interface Typegen0 {
     isQrValid: 'SCAN';
   };
   'eventsCausingDelays': {
-    CLEAR_DELAY: 'xstate.init';
+    CLEAR_DELAY: 'LOCATION_ENABLED';
   };
   'matchesStates':
-    | 'inactive'
     | 'checkingAirplaneMode'
     | 'checkingAirplaneMode.checkingStatus'
-    | 'checkingAirplaneMode.requestingToDisable'
     | 'checkingAirplaneMode.enabled'
+    | 'checkingAirplaneMode.requestingToDisable'
     | 'checkingLocationService'
-    | 'checkingLocationService.checkingStatus'
-    | 'checkingLocationService.requestingToEnable'
     | 'checkingLocationService.checkingPermission'
+    | 'checkingLocationService.checkingStatus'
     | 'checkingLocationService.denied'
     | 'checkingLocationService.disabled'
+    | 'checkingLocationService.requestingToEnable'
     | 'clearingConnection'
-    | 'findingConnection'
-    | 'preparingToConnect'
     | 'connecting'
+    | 'disconnected'
     | 'exchangingDeviceInfo'
+    | 'findingConnection'
+    | 'inactive'
+    | 'invalid'
+    | 'preparingToConnect'
     | 'reviewing'
+    | 'reviewing.accepted'
+    | 'reviewing.cancelled'
     | 'reviewing.idle'
+    | 'reviewing.navigatingToHome'
+    | 'reviewing.rejected'
     | 'reviewing.selectingVc'
     | 'reviewing.sendingVc'
-    | 'reviewing.accepted'
-    | 'reviewing.rejected'
-    | 'reviewing.cancelled'
-    | 'reviewing.navigatingToHome'
-    | 'disconnected'
-    | 'invalid'
     | {
         checkingAirplaneMode?:
           | 'checkingStatus'
-          | 'requestingToDisable'
-          | 'enabled';
+          | 'enabled'
+          | 'requestingToDisable';
         checkingLocationService?:
-          | 'checkingStatus'
-          | 'requestingToEnable'
           | 'checkingPermission'
+          | 'checkingStatus'
           | 'denied'
-          | 'disabled';
+          | 'disabled'
+          | 'requestingToEnable';
         reviewing?:
-          | 'idle'
-          | 'selectingVc'
-          | 'sendingVc'
           | 'accepted'
-          | 'rejected'
           | 'cancelled'
-          | 'navigatingToHome';
+          | 'idle'
+          | 'navigatingToHome'
+          | 'rejected'
+          | 'selectingVc'
+          | 'sendingVc';
       };
   'tags': never;
 }

@@ -1,21 +1,20 @@
 import React from 'react';
 import { MessageOverlay } from '../../../components/MessageOverlay';
-import { AddVcModalProps, useAddVcModal } from './AddVcModalController';
+import { useGetVcModal, GetVcModalProps } from './GetVcModalController';
 import { OtpVerificationModal } from './OtpVerificationModal';
-import { IdInputModal } from './IdInputModal';
+import { GetIdInputModal } from './GetIdInputModal';
 import { useTranslation } from 'react-i18next';
 
-export const AddVcModal: React.FC<AddVcModalProps> = (props) => {
-  const { t } = useTranslation('AddVcModal');
-  const controller = useAddVcModal(props);
+export const GetVcModal: React.FC<GetVcModalProps> = (props) => {
+  const { t } = useTranslation('GetVcModal');
+  const controller = useGetVcModal(props);
 
   return (
     <React.Fragment>
-      <IdInputModal
+      <GetIdInputModal
         service={props.service}
         isVisible={true}
         onDismiss={controller.DISMISS}
-        onPress={props.onPress}
       />
 
       <OtpVerificationModal
@@ -27,7 +26,7 @@ export const AddVcModal: React.FC<AddVcModalProps> = (props) => {
 
       <MessageOverlay
         isVisible={controller.isRequestingCredential}
-        title={t('requestingCredential')}
+        title={t('retrievingId')}
         hasProgress
       />
     </React.Fragment>

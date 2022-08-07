@@ -1,11 +1,14 @@
 import React from 'react';
 import { View, Image } from 'react-native';
-import { MosipLogo } from './ui/styleUtils';
+import { Theme } from './ui/styleUtils';
 
 export const Logo: React.FC<LogoProps> = (props) => {
   return (
     <View>
-      <Image style={{ resizeMode: 'contain', ...props }} source={MosipLogo} />
+      <Image
+        style={{ resizeMode: 'contain', ...props }}
+        source={Theme.MosipLogo}
+      />
     </View>
   );
 };

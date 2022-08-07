@@ -6,14 +6,14 @@ import { Image } from 'react-native';
 import { Icon, ListItem } from 'react-native-elements';
 import { VC, CredentialSubject } from '../types/vc';
 import { Column, Row, Text } from './ui';
-import { Colors } from './ui/styleUtils';
+import { Theme } from './ui/styleUtils';
 import { TextItem } from './ui/TextItem';
 
 const VerifiedIcon: React.FC = () => {
   return (
     <Icon
       name="check-circle"
-      color={Colors.Green}
+      color={Theme.Colors.Green}
       size={14}
       containerStyle={{ marginStart: 4, bottom: 1 }}
     />
@@ -27,7 +27,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
     <Column>
       <Row padding="16 24">
         <Column fill elevation={1} padding="12 16" margin="0 16 0 0">
-          <Text size="smaller" color={Colors.Grey}>
+          <Text size="smaller" color={Theme.Colors.Grey}>
             {t('generatedOn')}
           </Text>
           <Text weight="bold" size="smaller">
@@ -37,7 +37,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
         <Column fill elevation={1} padding="12 16" margin="0 16 0 0">
           <Text
             size="smaller"
-            color={Colors.Grey}
+            color={Theme.Colors.Grey}
             style={{ textTransform: 'uppercase' }}>
             {props.vc?.idType}
           </Text>
@@ -46,7 +46,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
           </Text>
         </Column>
         <Column fill elevation={1} padding="12 16">
-          <Text size="smaller" color={Colors.Grey}>
+          <Text size="smaller" color={Theme.Colors.Grey}>
             {t('status')}
           </Text>
           <Row>
