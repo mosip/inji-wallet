@@ -7,7 +7,6 @@ import { EmitterSubscription, Platform } from 'react-native';
 import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { DeviceInfo } from '../components/DeviceInfoList';
-import { Message } from '../shared/Message';
 import { getDeviceNameSync } from 'react-native-device-info';
 import { StoreEvents } from './store';
 import { VC } from '../types/vc';
@@ -20,7 +19,15 @@ import {
 import { ActivityLogEvents } from './activityLog';
 import { VcEvents } from './vc';
 import { ConnectionParams } from '@idpass/smartshare-react-native/lib/typescript/IdpassSmartshare';
-import { gnmSubscribe } from '../shared/smartshare';
+import {
+  ExchangeReceiverInfoEvent,
+  onlineSubscribe,
+  offlineSubscribe,
+  PairingResponseEvent,
+  onlineSend,
+  offlineSend,
+  SendVcResponseEvent,
+} from '../shared/smartshare';
 
 type SharingProtocol = 'OFFLINE' | 'ONLINE';
 
@@ -223,7 +230,7 @@ export const requestMachine = model.createMachine(
             invoke: {
               src: 'sendVcResponse',
               data: {
-                status: 'accepted',
+                status: 'ACCEPTED',
               },
             },
             on: {
@@ -234,7 +241,7 @@ export const requestMachine = model.createMachine(
             invoke: {
               src: 'sendVcResponse',
               data: {
-                status: 'rejected',
+                status: 'REJECTED',
               },
             },
             on: {
@@ -417,35 +424,31 @@ export const requestMachine = model.createMachine(
             callback({ type: 'CONNECTED' });
           });
         } else {
-          GoogleNearbyMessages.addOnErrorListener((kind, message) =>
-            console.log('\n\n[request] GNM Error', kind, message)
-          );
+          (async function () {
+            await GoogleNearbyMessages.connect({
+              apiKey: GNM_API_KEY,
+              discoveryMediums: ['ble'],
+              discoveryModes: ['broadcast'],
+            });
 
-          GoogleNearbyMessages.connect({
-            apiKey: GNM_API_KEY,
-            discoveryMediums: ['ble'],
-            discoveryModes: ['broadcast'],
-          }).then(() => {
-            console.log('[request] GNM connected!');
-
-            gnmSubscribe<ConnectionParams>(
-              'pairing',
-              async (scannedQrParams) => {
-                try {
-                  const generatedParams = JSON.parse(
-                    context.connectionParams
-                  ) as ConnectionParams;
-                  if (scannedQrParams.cid === generatedParams.cid) {
-                    const message = new Message('pairing', 'cid:matches');
-                    await GoogleNearbyMessages.publish(message.toString());
-                    callback({ type: 'CONNECTED' });
-                  }
-                } catch (e) {
-                  console.error('Could not parse message.', e);
+            await onlineSubscribe('pairing', async (scannedQrParams) => {
+              try {
+                const generatedParams = JSON.parse(
+                  context.connectionParams
+                ) as ConnectionParams;
+                if (scannedQrParams.cid === generatedParams.cid) {
+                  const event: PairingResponseEvent = {
+                    type: 'pairing:response',
+                    data: 'ok',
+                  };
+                  await onlineSend(event);
+                  callback({ type: 'CONNECTED' });
                 }
+              } catch (e) {
+                console.error('Could not parse message.', e);
               }
-            );
-          });
+            });
+          })();
         }
       },
 
@@ -460,54 +463,51 @@ export const requestMachine = model.createMachine(
       },
 
       exchangeDeviceInfo: (context) => (callback) => {
-        const response = new Message(
-          'exchange:receiver-info',
-          context.receiverInfo
-        );
+        const event: ExchangeReceiverInfoEvent = {
+          type: 'exchange-receiver-info',
+          data: context.receiverInfo,
+        };
 
         if (context.sharingProtocol === 'OFFLINE') {
-          const subscription = IdpassSmartshare.handleNearbyEvents((event) => {
-            if (event.type !== 'msg') return;
+          // const subscription = IdpassSmartshare.handleNearbyEvents((event) => {
+          //   if (event.type !== 'msg') return;
 
-            const message = Message.fromString<DeviceInfo>(event.data);
-            if (message.type === 'exchange:sender-info') {
-              IdpassSmartshare.send(response.toString(), () => {
-                callback({ type: 'EXCHANGE_DONE', senderInfo: message.data });
+          //   const message = Message.fromString<DeviceInfo>(event.data);
+          //   if (message.type === 'exchange:sender-info') {
+          //     IdpassSmartshare.send(response.toString(), () => {
+          //       callback({ type: 'EXCHANGE_DONE', senderInfo: message.data });
+          //     });
+          //   }
+          // });
+
+          const subscription = offlineSubscribe(
+            'exchange-sender-info',
+            (senderInfo) => {
+              offlineSend(event, () => {
+                callback({ type: 'EXCHANGE_DONE', senderInfo });
               });
             }
-          });
+          );
 
           return () => subscription.remove();
         } else {
-          gnmSubscribe<DeviceInfo>(
-            'exchange:sender-info',
-            async (senderInfo) => {
-              await GoogleNearbyMessages.unpublish();
-              await GoogleNearbyMessages.publish(response.toString());
-              callback({ type: 'EXCHANGE_DONE', senderInfo });
-            }
-          );
+          onlineSubscribe('exchange-sender-info', async (senderInfo) => {
+            await GoogleNearbyMessages.unpublish();
+            await onlineSend(event);
+            callback({ type: 'EXCHANGE_DONE', senderInfo });
+          });
         }
       },
 
       receiveVc: (context) => (callback) => {
         if (context.sharingProtocol === 'OFFLINE') {
-          const subscription = IdpassSmartshare.handleNearbyEvents((event) => {
-            if (event.type === 'onDisconnected') {
-              callback({ type: 'DISCONNECT' });
-            }
-
-            if (event.type !== 'msg') return;
-
-            const message = Message.fromString<VC>(event.data);
-            if (message.type === 'send:vc') {
-              callback({ type: 'VC_RECEIVED', vc: message.data });
-            }
+          const subscription = offlineSubscribe('send-vc', (vc) => {
+            callback({ type: 'VC_RECEIVED', vc });
           });
 
           return () => subscription.remove();
         } else {
-          gnmSubscribe<VC>('send:vc', async (vc) => {
+          onlineSubscribe('send-vc', async (vc) => {
             await GoogleNearbyMessages.unpublish();
             callback({ type: 'VC_RECEIVED', vc });
           });
@@ -515,16 +515,17 @@ export const requestMachine = model.createMachine(
       },
 
       sendVcResponse: (context, _event, meta) => () => {
-        const message = new Message('send:vc:response', {
-          status: meta.data.status,
-        });
+        const event: SendVcResponseEvent = {
+          type: 'send-vc:response',
+          data: meta.data.status,
+        };
 
         if (context.sharingProtocol === 'OFFLINE') {
-          IdpassSmartshare.send(message.toString(), () => {
-            /*pass*/
+          offlineSend(event, () => {
+            // pass
           });
         } else {
-          GoogleNearbyMessages.publish(message.toString());
+          onlineSend(event);
         }
       },
     },

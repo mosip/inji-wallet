@@ -9,13 +9,21 @@ import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { EmitterSubscription, Linking, PermissionsAndroid } from 'react-native';
 import { DeviceInfo } from '../components/DeviceInfoList';
-import { Message } from '../shared/Message';
 import { getDeviceNameSync } from 'react-native-device-info';
 import { VC } from '../types/vc';
 import { AppServices } from '../shared/GlobalContext';
 import { ActivityLogEvents } from './activityLog';
 import { GNM_API_KEY, VC_ITEM_STORE_KEY } from '../shared/constants';
-import { gnmSubscribe, issSubscribe } from '../shared/smartshare';
+import {
+  onlineSubscribe,
+  offlineSubscribe,
+  offlineSend,
+  onlineSend,
+  ExchangeSenderInfoEvent,
+  PairingEvent,
+  SendVcEvent,
+  SendVcStatus,
+} from '../shared/smartshare';
 
 const checkingAirplaneMode = '#checkingAirplaneMode';
 const checkingLocationService = '#checkingLocationService';
@@ -38,7 +46,7 @@ const model = createModel(
     },
     vcName: '',
     sharingProtocol: 'OFFLINE' as SharingProtocol,
-    scannedQrParams: '',
+    scannedQrParams: {} as ConnectionParams,
   },
   {
     events: {
@@ -316,12 +324,13 @@ export const scanMachine = model.createMachine(
       },
 
       setScannedQrParams: model.assign({
-        scannedQrParams: (_context, event) => event.params,
+        scannedQrParams: (_context, event) =>
+          JSON.parse(event.params) as ConnectionParams,
         sharingProtocol: 'ONLINE',
       }),
 
       clearScannedQrParams: assign({
-        scannedQrParams: '',
+        scannedQrParams: {} as ConnectionParams,
       }),
 
       setReceiverInfo: model.assign({
@@ -421,14 +430,16 @@ export const scanMachine = model.createMachine(
         }
       },
 
-      monitorConnection: () => (callback) => {
-        const subscription = IdpassSmartshare.handleNearbyEvents((event) => {
-          if (event.type === 'onDisconnected') {
-            callback({ type: 'DISCONNECT' });
-          }
-        });
+      monitorConnection: (context) => (callback) => {
+        if (context.sharingProtocol === 'OFFLINE') {
+          const subscription = IdpassSmartshare.handleNearbyEvents((event) => {
+            if (event.type === 'onDisconnected') {
+              callback({ type: 'DISCONNECT' });
+            }
+          });
 
-        return () => subscription.remove();
+          return () => subscription.remove();
+        }
       },
 
       checkLocationStatus: () => (callback) => {
@@ -460,114 +471,96 @@ export const scanMachine = model.createMachine(
             callback({ type: 'CONNECTED' });
           });
         } else {
-          GoogleNearbyMessages.addOnErrorListener((kind, message) =>
-            console.log('\n\n[scan] GNM Error', kind, message)
-          );
+          (async function () {
+            GoogleNearbyMessages.addOnErrorListener((kind, message) =>
+              console.log('\n\n[scan] GNM Error', kind, message)
+            );
 
-          GoogleNearbyMessages.connect({
-            apiKey: GNM_API_KEY,
-            discoveryMediums: ['ble'],
-            discoveryModes: ['scan'],
-          }).then(() => {
+            await GoogleNearbyMessages.connect({
+              apiKey: GNM_API_KEY,
+              discoveryMediums: ['ble'],
+              discoveryModes: ['scan'],
+            });
             console.log('[scan] GNM connected!');
 
-            gnmSubscribe<string>('pairing', async (status) => {
+            await onlineSubscribe('pairing:response', async (response) => {
               await GoogleNearbyMessages.unpublish();
-              if (status === 'cid:matches') {
+              if (response === 'ok') {
                 callback({ type: 'CONNECTED' });
               }
             });
 
-            const message = new Message(
-              'pairing',
-              JSON.parse(context.scannedQrParams)
-            );
-            GoogleNearbyMessages.publish(message.toString());
-          });
+            const pairingEvent: PairingEvent = {
+              type: 'pairing',
+              data: context.scannedQrParams,
+            };
 
-          // GoogleNearbyMessages.subscribe(
-          //   async (message) => {
-          //     console.log('[scan] discoverDevice FOUND:', message);
-          //     await GoogleNearbyMessages.unpublish();
-          //     message === 'CID_MATCHED' && callback({ type: 'CONNECTED' });
-          //   },
-          //   (message) => console.log('[scan] discoverDevice LOST:', message)
-          // );
+            await onlineSend(pairingEvent);
+          })();
         }
       },
 
       exchangeDeviceInfo: (context) => (callback) => {
-        const message = new Message('exchange:sender-info', context.senderInfo);
+        const event: ExchangeSenderInfoEvent = {
+          type: 'exchange-sender-info',
+          data: context.senderInfo,
+        };
 
         if (context.sharingProtocol === 'OFFLINE') {
           let subscription: EmitterSubscription;
-
-          IdpassSmartshare.send(message.toString(), () => {
-            subscription = IdpassSmartshare.handleNearbyEvents((event) => {
-              if (event.type === 'onDisconnected') {
-                callback({ type: 'DISCONNECT' });
+          offlineSend(event, () => {
+            subscription = offlineSubscribe(
+              'exchange-receiver-info',
+              (receiverInfo) => {
+                callback({ type: 'EXCHANGE_DONE', receiverInfo });
               }
-
-              if (event.type !== 'msg') return;
-              const response = Message.fromString<DeviceInfo>(event.data);
-              if (response.type === 'exchange:receiver-info') {
-                callback({
-                  type: 'EXCHANGE_DONE',
-                  receiverInfo: response.data,
-                });
-              }
-            });
+            );
           });
-
           return () => subscription?.remove();
         } else {
-          gnmSubscribe<DeviceInfo>(
-            'exchange:receiver-info',
-            async (receiverInfo) => {
-              await GoogleNearbyMessages.unpublish();
-              callback({ type: 'EXCHANGE_DONE', receiverInfo });
-            }
-          );
+          (async function () {
+            await onlineSubscribe(
+              'exchange-receiver-info',
+              async (receiverInfo) => {
+                await GoogleNearbyMessages.unpublish();
+                callback({ type: 'EXCHANGE_DONE', receiverInfo });
+              }
+            );
 
-          GoogleNearbyMessages.publish(message.toString());
+            await onlineSend(event);
+          })();
         }
       },
 
       sendVc: (context) => (callback) => {
         let subscription: EmitterSubscription;
-
-        const vc = {
-          ...context.selectedVc,
-          tag: '',
+        const vc = { ...context.selectedVc, tag: '' };
+        const event: SendVcEvent = {
+          type: 'send-vc',
+          data: vc,
         };
-
-        const message = new Message<VC>('send:vc', vc);
-
-        const statusCallback = (data: SendVcStatus) => {
+        const statusCallback = (status: SendVcStatus) => {
           callback({
-            type: data.status === 'accepted' ? 'VC_ACCEPTED' : 'VC_REJECTED',
+            type: status === 'ACCEPTED' ? 'VC_ACCEPTED' : 'VC_REJECTED',
           });
         };
 
         if (context.sharingProtocol === 'OFFLINE') {
-          IdpassSmartshare.send(message.toString(), () => {
-            subscription = issSubscribe<SendVcStatus>(
-              'send:vc:response',
-              statusCallback
-            );
+          offlineSend(event, () => {
+            subscription = offlineSubscribe('send-vc:response', statusCallback);
           });
-
           return () => subscription?.remove();
         } else {
-          gnmSubscribe<SendVcStatus>('send:vc:response', statusCallback);
-          GoogleNearbyMessages.publish(message.toString());
+          (async function () {
+            await onlineSubscribe('send-vc:response', statusCallback);
+            await onlineSend(event);
+          })();
         }
       },
     },
 
     guards: {
       isQrOffline: (_context, event) => {
-        console.log('isQrOffline', event.params);
         const param: ConnectionParams = Object.create(null);
         try {
           Object.assign(param, JSON.parse(event.params));
@@ -578,7 +571,6 @@ export const scanMachine = model.createMachine(
       },
 
       isQrOnline: (_context, event) => {
-        console.log('isQrOnline', event.params);
         const param: ConnectionParams = Object.create(null);
         try {
           Object.assign(param, JSON.parse(event.params));
@@ -600,10 +592,6 @@ export function createScanMachine(serviceRefs: AppServices) {
     ...scanMachine.context,
     serviceRefs,
   });
-}
-
-interface SendVcStatus {
-  status: 'accepted' | 'rejected';
 }
 
 type State = StateFrom<typeof scanMachine>;
