@@ -2,19 +2,18 @@ import React from 'react';
 import QRCode from 'react-native-qrcode-svg';
 import { Centered, Column, Row, Text } from '../../components/ui';
 import { Colors } from '../../components/ui/styleUtils';
-import { MainRouteProps } from '../../routes/main';
-import { ReceiveVcModal } from './ReceiveVcModal';
-import { MessageOverlay } from '../../components/MessageOverlay';
+
 import { useRequestScreen } from './RequestScreenController';
 import { useTranslation } from 'react-i18next';
 import { Switch } from 'react-native-elements';
+import { Platform } from 'react-native';
 
-export const RequestScreen: React.FC<MainRouteProps> = (props) => {
+export const RequestScreen: React.FC = () => {
   const { t } = useTranslation('RequestScreen');
-  const controller = useRequestScreen(props);
+  const controller = useRequestScreen();
 
   return (
-    <Column fill padding="98 24 24 24" backgroundColor={Colors.LightGrey}>
+    <Column fill padding="24" backgroundColor={Colors.LightGrey}>
       <Column>
         {controller.isBluetoothDenied ? (
           <Text color={Colors.Red} align="center">
@@ -55,41 +54,6 @@ export const RequestScreen: React.FC<MainRouteProps> = (props) => {
           <Text>{controller.statusMessage}</Text>
         </Column>
       )}
-
-      <ReceiveVcModal
-        isVisible={controller.isReviewing}
-        onDismiss={controller.REJECT}
-        onAccept={controller.ACCEPT}
-        onReject={controller.REJECT}
-        headerTitle={t('incomingVc', { vcLabel: controller.vcLabel.singular })}
-      />
-
-      <MessageOverlay
-        isVisible={controller.isAccepted}
-        title={t('status.accepted.title')}
-        message={t('status.accepted.message', {
-          vcLabel: controller.vcLabel.singular,
-          sender: controller.senderInfo.deviceName,
-        })}
-        onBackdropPress={controller.DISMISS}
-      />
-
-      <MessageOverlay
-        isVisible={controller.isRejected}
-        title={t('status.rejected.title')}
-        message={t('status.rejected.message', {
-          vcLabel: controller.vcLabel.singular,
-          sender: controller.senderInfo.deviceName,
-        })}
-        onBackdropPress={controller.DISMISS}
-      />
-
-      <MessageOverlay
-        isVisible={controller.isDisconnected}
-        title={t('status.disconnected.title')}
-        message={t('status.disconnected.message')}
-        onBackdropPress={controller.DISMISS}
-      />
     </Column>
   );
 };

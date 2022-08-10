@@ -600,3 +600,7 @@ export function selectIsExchangingDeviceInfo(state: State) {
 export function selectIsWaitingForVc(state: State) {
   return state.matches('waitingForVc');
 }
+
+export function selectIsDone(state: State) {
+  return state.matches('reviewing.navigatingToHome');
+}

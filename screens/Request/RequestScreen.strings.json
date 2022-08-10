@@ -2,6 +2,7 @@
   "bluetoothDenied": "Please enable Bluetooth to be able to request {{vcLabel}}",
   "showQrCode": "Show this QR code to request {{vcLabel}}",
   "incomingVc": "Incoming {{vcLabel}}",
+  "request": "Request",
   "status": {
     "accepted": {
       "title": "Success!",

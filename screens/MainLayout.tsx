@@ -16,7 +16,6 @@ export const MainLayout: React.FC<RootRouteProps> = () => {
   const { t } = useTranslation('MainLayout');
 
   const options: BottomTabNavigationOptions = {
-    headerLeft: () => <Icon name="notifications" color={Colors.Orange} />,
     headerLeftContainerStyle: { paddingStart: 16 },
     headerRight: () => (
       <LanguageSelector
