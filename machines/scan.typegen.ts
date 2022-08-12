@@ -2,36 +2,15 @@
 
 export interface Typegen0 {
   '@@xstate/typegen': true;
-  'eventsCausingActions': {
-    openSettings: 'LOCATION_REQUEST';
-    setConnectionParams: 'SCAN';
-    setSenderInfo: 'RECEIVE_DEVICE_INFO';
-    setReceiverInfo: 'EXCHANGE_DONE';
-    setReason: 'UPDATE_REASON';
-    setSelectedVc: 'SELECT_VC';
-    removeLoggers:
-      | 'SCREEN_BLUR'
-      | 'xstate.after(CLEAR_DELAY)#clearingConnection'
-      | 'CANCEL'
-      | 'DISMISS';
-    requestToDisableFlightMode: 'FLIGHT_REQUEST';
-    requestToEnableLocation: 'LOCATION_DISABLED' | 'LOCATION_REQUEST';
-    disconnect: 'LOCATION_ENABLED';
-    registerLoggers:
-      | 'xstate.after(CLEAR_DELAY)#clearingConnection'
-      | 'CANCEL'
-      | 'DISMISS';
-    requestSenderInfo: 'SCAN';
-    clearReason: 'xstate.init';
-    logShared: 'VC_ACCEPTED';
-  };
   'internalEvents': {
+    'xstate.stop': { type: 'xstate.stop' };
     'xstate.after(CLEAR_DELAY)#clearingConnection': {
       type: 'xstate.after(CLEAR_DELAY)#clearingConnection';
     };
     'xstate.init': { type: 'xstate.init' };
   };
   'invokeSrcNameMap': {
+    checkConnection: 'done.invoke.scan:invocation[0]';
     checkAirplaneMode: 'done.invoke.scan.checkingAirplaneMode.checkingStatus:invocation[0]';
     checkLocationStatus: 'done.invoke.checkingLocationService:invocation[0]';
     checkLocationPermission: 'done.invoke.scan.checkingLocationService.checkingPermission:invocation[0]';
@@ -45,8 +24,48 @@ export interface Typegen0 {
     guards: never;
     delays: never;
   };
+  'eventsCausingActions': {
+    disconnect:
+      | 'SCREEN_BLUR'
+      | 'SCREEN_FOCUS'
+      | 'xstate.stop'
+      | 'CANCEL'
+      | 'DISMISS'
+      | 'DISCONNECT'
+      | 'LOCATION_ENABLED';
+    clearReason:
+      | 'SCREEN_BLUR'
+      | 'SCREEN_FOCUS'
+      | 'xstate.stop'
+      | 'CANCEL'
+      | 'DISMISS'
+      | 'DISCONNECT';
+    openSettings: 'LOCATION_REQUEST';
+    setConnectionParams: 'SCAN';
+    setSenderInfo: 'RECEIVE_DEVICE_INFO';
+    setReceiverInfo: 'EXCHANGE_DONE';
+    setReason: 'UPDATE_REASON';
+    setSelectedVc: 'SELECT_VC';
+    removeLoggers:
+      | 'SCREEN_BLUR'
+      | 'SCREEN_FOCUS'
+      | 'xstate.init'
+      | 'xstate.after(CLEAR_DELAY)#clearingConnection'
+      | 'CANCEL'
+      | 'DISMISS'
+      | 'DISCONNECT';
+    requestToDisableFlightMode: 'FLIGHT_REQUEST';
+    requestToEnableLocation: 'LOCATION_DISABLED' | 'LOCATION_REQUEST';
+    registerLoggers:
+      | 'xstate.after(CLEAR_DELAY)#clearingConnection'
+      | 'CANCEL'
+      | 'DISMISS'
+      | 'DISCONNECT';
+    requestSenderInfo: 'SCAN';
+    logShared: 'VC_ACCEPTED';
+  };
   'eventsCausingServices': {
-    checkAirplaneMode: 'APP_ACTIVE';
+    checkAirplaneMode: 'SCREEN_FOCUS' | 'APP_ACTIVE' | 'FLIGHT_ENABLED';
     checkLocationStatus: 'FLIGHT_DISABLED';
     checkLocationPermission: 'LOCATION_ENABLED' | 'APP_ACTIVE';
     discoverDevice: 'RECEIVE_DEVICE_INFO';
@@ -57,7 +76,7 @@ export interface Typegen0 {
     isQrValid: 'SCAN';
   };
   'eventsCausingDelays': {
-    CLEAR_DELAY: 'xstate.init';
+    CLEAR_DELAY: 'LOCATION_ENABLED';
   };
   'matchesStates':
     | 'inactive'

@@ -76,7 +76,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
         crossAlign="center"
         margin={props.margin}
         backgroundColor={!verifiableCredential ? Colors.Grey6 : Colors.White}
-        padding="16 24"
+        padding={[16, 16]}
         style={
           !verifiableCredential ? styles.loadingContainer : styles.container
         }>

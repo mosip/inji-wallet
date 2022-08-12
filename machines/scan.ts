@@ -1,5 +1,6 @@
 import SmartShare from '@idpass/smartshare-react-native';
-import LocationEnabler from 'react-native-location-enabler';
+// import LocationEnabler from 'react-native-location-enabler';
+const LocationEnabler = {};
 import SystemSetting from 'react-native-system-setting';
 import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
@@ -14,6 +15,7 @@ import { VC_ITEM_STORE_KEY } from '../shared/constants';
 
 const checkingAirplaneMode = '#checkingAirplaneMode';
 const checkingLocationService = '#checkingLocationService';
+const findingConnection = '#scan.findingConnection';
 
 const model = createModel(
   {
@@ -24,7 +26,7 @@ const model = createModel(
     reason: '',
     loggers: [] as EmitterSubscription[],
     locationConfig: {
-      priority: LocationEnabler.PRIORITIES.BALANCED_POWER_ACCURACY,
+      // priority: LocationEnabler.PRIORITIES.BALANCED_POWER_ACCURACY,
       alwaysShow: false,
       needBle: true,
     },
@@ -70,6 +72,9 @@ export const scanMachine = model.createMachine(
     },
     id: 'scan',
     initial: 'inactive',
+    invoke: {
+      src: 'checkConnection',
+    },
     on: {
       SCREEN_BLUR: 'inactive',
       SCREEN_FOCUS: 'checkingAirplaneMode',
@@ -218,10 +223,12 @@ export const scanMachine = model.createMachine(
           idle: {
             on: {
               ACCEPT_REQUEST: 'selectingVc',
+              DISCONNECT: findingConnection,
             },
           },
           selectingVc: {
             on: {
+              DISCONNECT: findingConnection,
               SELECT_VC: {
                 target: 'sendingVc',
                 actions: ['setSelectedVc'],
@@ -234,7 +241,7 @@ export const scanMachine = model.createMachine(
               src: 'sendVc',
             },
             on: {
-              DISCONNECT: '#scan.disconnected',
+              DISCONNECT: findingConnection,
               VC_ACCEPTED: 'accepted',
               VC_REJECTED: 'rejected',
             },
@@ -313,26 +320,26 @@ export const scanMachine = model.createMachine(
 
       registerLoggers: assign({
         loggers: () => {
-          if (__DEV__) {
-            return [
-              SmartShare.handleNearbyEvents((event) => {
-                console.log(
-                  getDeviceNameSync(),
-                  '<Sender.Event>',
-                  JSON.stringify(event)
-                );
-              }),
-              SmartShare.handleLogEvents((event) => {
-                console.log(
-                  getDeviceNameSync(),
-                  '<Sender.Log>',
-                  JSON.stringify(event)
-                );
-              }),
-            ];
-          } else {
-            return [];
-          }
+          // if (__DEV__) {
+          //   return [
+          //     SmartShare.handleNearbyEvents((event) => {
+          //       console.log(
+          //         getDeviceNameSync(),
+          //         '<Sender.Event>',
+          //         JSON.stringify(event)
+          //       );
+          //     }),
+          //     SmartShare.handleLogEvents((event) => {
+          //       console.log(
+          //         getDeviceNameSync(),
+          //         '<Sender.Log>',
+          //         JSON.stringify(event)
+          //       );
+          //     }),
+          //   ];
+          // } else {
+          return [];
+          // }
         },
       }),
 
@@ -362,6 +369,16 @@ export const scanMachine = model.createMachine(
     },
 
     services: {
+      checkConnection: () => (callback) => {
+        const subscription = SmartShare.handleNearbyEvents((event) => {
+          if (event.type === 'onDisconnected') {
+            callback({ type: 'DISCONNECT' });
+          }
+        });
+
+        return () => subscription.remove();
+      },
+
       checkLocationPermission: () => async (callback) => {
         try {
           // wait a bit for animation to finish when app becomes active
@@ -389,17 +406,15 @@ export const scanMachine = model.createMachine(
       },
 
       checkLocationStatus: (context) => (callback) => {
-        const listener = LocationEnabler.addListener(({ locationEnabled }) => {
-          if (locationEnabled) {
-            callback(model.events.LOCATION_ENABLED());
-          } else {
-            callback(model.events.LOCATION_DISABLED());
-          }
-        });
-
-        LocationEnabler.checkSettings(context.locationConfig);
-
-        return () => listener.remove();
+        // const listener = LocationEnabler.addListener(({ locationEnabled }) => {
+        //   if (locationEnabled) {
+        //     callback(model.events.LOCATION_ENABLED());
+        //   } else {
+        //     callback(model.events.LOCATION_DISABLED());
+        //   }
+        // });
+        // LocationEnabler.checkSettings(context.locationConfig);
+        // return () => listener.remove();
       },
 
       checkAirplaneMode: () => (callback) => {
@@ -424,10 +439,6 @@ export const scanMachine = model.createMachine(
         const message = new Message('exchange:sender-info', context.senderInfo);
         SmartShare.send(message.toString(), () => {
           subscription = SmartShare.handleNearbyEvents((event) => {
-            if (event.type === 'onDisconnected') {
-              callback({ type: 'DISCONNECT' });
-            }
-
             if (event.type !== 'msg') return;
             const response = Message.fromString<DeviceInfo>(event.data);
             if (response.type === 'exchange:receiver-info') {
@@ -478,13 +489,13 @@ export const scanMachine = model.createMachine(
 
     guards: {
       isQrValid: (_, event) => {
-        const param: SmartShare.ConnectionParams = Object.create(null);
-        try {
-          Object.assign(param, JSON.parse(event.params));
-          return 'cid' in param && 'pk' in param;
-        } catch (e) {
-          return false;
-        }
+        // const param: SmartShare.ConnectionParams = Object.create(null);
+        // try {
+        //   Object.assign(param, JSON.parse(event.params));
+        //   return 'cid' in param && 'pk' in param;
+        // } catch (e) {
+        return false;
+        // }
       },
     },
 

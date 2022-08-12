@@ -25,8 +25,8 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
 
   return (
     <Column>
-      <Row padding="16 24">
-        <Column fill elevation={1} padding="12 16" margin="0 16 0 0">
+      <Row pY={16} pX={8} align="space-between">
+        <Column fill elevation={1} pY={12} pX={16} margin="0 8">
           <Text size="smaller" color={Colors.Grey}>
             {t('generatedOn')}
           </Text>
@@ -34,7 +34,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
             {new Date(props.vc?.generatedOn).toLocaleDateString()}
           </Text>
         </Column>
-        <Column fill elevation={1} padding="12 16" margin="0 16 0 0">
+        <Column fill elevation={1} pY={12} pX={16} margin="0 8">
           <Text
             size="smaller"
             color={Colors.Grey}
@@ -45,7 +45,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
             {props.vc?.id}
           </Text>
         </Column>
-        <Column fill elevation={1} padding="12 16">
+        <Column fill elevation={1} pY={12} pX={16} margin="0 8">
           <Text size="smaller" color={Colors.Grey}>
             {t('status')}
           </Text>

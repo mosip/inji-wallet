@@ -12,14 +12,26 @@ export const Colors = {
   Green: '#219653',
 };
 
-export function spacing(type: 'margin' | 'padding', values: string) {
-  const [top, end, bottom, start] = values.split(' ').map(Number);
+type SpacingXY = [number, number];
+type SpacingFull = [number, number, number, number];
+export type Spacing = SpacingXY | SpacingFull | string;
+
+export function spacing(type: 'margin' | 'padding', values: Spacing) {
+  if (Array.isArray(values) && values.length === 2) {
+    return {
+      [`${type}Horizontal`]: values[0],
+      [`${type}Vertical`]: values[1],
+    };
+  }
+
+  const [top, end, bottom, start] =
+    typeof values === 'string' ? values.split(' ').map(Number) : values;
 
   return {
     [`${type}Top`]: top,
     [`${type}End`]: end != null ? end : top,
     [`${type}Bottom`]: bottom != null ? bottom : top,
-    [`${type}Start`]: start != null ? start : (end != null ? end : top),
+    [`${type}Start`]: start != null ? start : end != null ? end : top,
   };
 }
 

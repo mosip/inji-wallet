@@ -100,7 +100,7 @@ export interface Typegen0 {
     delays: never;
   };
   'eventsCausingServices': {
-    checkStatus: 'xstate.init';
+    checkStatus: 'STORE_RESPONSE';
     downloadCredential: 'DOWNLOAD_READY';
     verifyCredential: 'VERIFY' | '';
     requestOtp: 'LOCK_VC' | 'UNLOCK_VC';

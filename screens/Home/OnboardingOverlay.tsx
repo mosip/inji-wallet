@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   },
   slider: {
     backgroundColor: Colors.Orange,
-    minHeight: 280,
+    minHeight: 300,
     width: '100%',
     margin: 0,
     borderRadius: 4,
