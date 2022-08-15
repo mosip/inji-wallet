@@ -18,4 +18,8 @@ export const SETTINGS_STORE_KEY = 'settings';
 
 export const ONBOARDING_STATUS_STORE_KEY = 'isOnboardingDone';
 
+// TODO: move API key
 export const GNM_API_KEY = 'AIzaSyBt_ne78gyEk5AAsheh6q6TZAgAy1ncFVE';
+
+// https://developers.google.com/android/reference/com/google/android/gms/nearby/messages/Message#MAX_CONTENT_SIZE_BYTES
+export const GNM_MESSAGE_LIMIT = 102400 - 6400; // allowance for metadata

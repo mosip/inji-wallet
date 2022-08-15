@@ -50,6 +50,8 @@
     <string>Bluetooth is used to allow sharing VCs with another device</string>
     <key>NSBluetoothPeripheralUsageDescription</key>
     <string>Bluetooth is used to allow sharing VCs with another device</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Location access is required for the scanning functionality</string>
     <key>NSCameraUsageDescription</key>
     <string>Allow $(PRODUCT_NAME) to access your camera</string>
     <key>NSMicrophoneUsageDescription</key>

@@ -469,17 +469,6 @@ export const requestMachine = model.createMachine(
         };
 
         if (context.sharingProtocol === 'OFFLINE') {
-          // const subscription = IdpassSmartshare.handleNearbyEvents((event) => {
-          //   if (event.type !== 'msg') return;
-
-          //   const message = Message.fromString<DeviceInfo>(event.data);
-          //   if (message.type === 'exchange:sender-info') {
-          //     IdpassSmartshare.send(response.toString(), () => {
-          //       callback({ type: 'EXCHANGE_DONE', senderInfo: message.data });
-          //     });
-          //   }
-          // });
-
           const subscription = offlineSubscribe(
             'exchange-sender-info',
             (senderInfo) => {
@@ -501,16 +490,42 @@ export const requestMachine = model.createMachine(
 
       receiveVc: (context) => (callback) => {
         if (context.sharingProtocol === 'OFFLINE') {
-          const subscription = offlineSubscribe('send-vc', (vc) => {
+          const subscription = offlineSubscribe('send-vc', ({ vc }) => {
             callback({ type: 'VC_RECEIVED', vc });
           });
 
           return () => subscription.remove();
         } else {
-          onlineSubscribe('send-vc', async (vc) => {
-            await GoogleNearbyMessages.unpublish();
-            callback({ type: 'VC_RECEIVED', vc });
-          });
+          let rawData = '';
+          onlineSubscribe(
+            'send-vc',
+            async ({ isChunked, vc, vcChunk }) => {
+              console.log(
+                'RECEIVE CHUNK',
+                isChunked,
+                vcChunk.chunk,
+                vcChunk.total
+              );
+              await GoogleNearbyMessages.unpublish();
+              if (isChunked) {
+                rawData += vcChunk.rawData;
+                if (vcChunk.chunk === vcChunk.total - 1) {
+                  const vc = JSON.parse(rawData) as VC;
+                  GoogleNearbyMessages.unsubscribe();
+                  callback({ type: 'VC_RECEIVED', vc });
+                } else {
+                  console.log('VC_RESPONSE_SEND', vcChunk.chunk);
+                  await onlineSend({
+                    type: 'send-vc:response',
+                    data: vcChunk.chunk,
+                  });
+                }
+              } else {
+                callback({ type: 'VC_RECEIVED', vc });
+              }
+            },
+            { keepAlive: true }
+          );
         }
       },
 

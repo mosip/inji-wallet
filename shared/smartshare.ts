@@ -12,7 +12,8 @@ import { VC } from '../types/vc';
 
 export function onlineSubscribe<T extends SmartshareEventType>(
   eventType: T,
-  callback: (data: SmartshareEventData<T>) => void
+  callback: (data: SmartshareEventData<T>) => void,
+  config?: { keepAlive: boolean }
 ) {
   return GoogleNearbyMessages.subscribe(
     (foundMessage) => {
@@ -21,7 +22,7 @@ export function onlineSubscribe<T extends SmartshareEventType>(
       }
       const response = SmartshareEvent.fromString<T>(foundMessage);
       if (response.type === eventType) {
-        GoogleNearbyMessages.unsubscribe();
+        !config?.keepAlive && GoogleNearbyMessages.unsubscribe();
         callback(response.data);
       }
     },
@@ -69,7 +70,9 @@ class SmartshareEvent<T extends SmartshareEventType> {
   }
 
   toString() {
-    return this.data ? this.type + '\n' + JSON.stringify(this.data) : this.type;
+    return this.data != null
+      ? this.type + '\n' + JSON.stringify(this.data)
+      : this.type;
   }
 }
 
@@ -93,15 +96,24 @@ export interface ExchangeSenderInfoEvent {
   data: DeviceInfo;
 }
 
+export interface VcChunk {
+  total: number;
+  chunk: number;
+  rawData: string;
+}
 export interface SendVcEvent {
   type: 'send-vc';
-  data: VC;
+  data: {
+    isChunked: boolean;
+    vc?: VC;
+    vcChunk?: VcChunk;
+  };
 }
 
 export type SendVcStatus = 'ACCEPTED' | 'REJECTED';
 export interface SendVcResponseEvent {
   type: 'send-vc:response';
-  data: SendVcStatus;
+  data: SendVcStatus | number;
 }
 
 type SmartshareEventType = SmartshareEvents['type'];
