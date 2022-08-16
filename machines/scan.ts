@@ -3,7 +3,7 @@ import { ConnectionParams } from '@idpass/smartshare-react-native/lib/typescript
 const { IdpassSmartshare, GoogleNearbyMessages } = SmartshareReactNative;
 
 // import LocationEnabler from 'react-native-location-enabler';
-const LocationEnabler = {};
+const LocationEnabler = {} as any;
 import SystemSetting from 'react-native-system-setting';
 import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
@@ -420,7 +420,9 @@ export const scanMachine = model.createMachine(
           if (Platform.OS === 'android') {
             response = await check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
           } else if (Platform.OS === 'ios') {
-            response = await check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+            callback(model.events.LOCATION_ENABLED());
+            return;
+            // response = await check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
           }
 
           // const response = await PermissionsAndroid.request(
@@ -487,13 +489,13 @@ export const scanMachine = model.createMachine(
         } else {
           (async function () {
             GoogleNearbyMessages.addOnErrorListener((kind, message) =>
-              console.log('\n\n[scan] GNM Error', kind, message)
+              console.log('\n\n[scan] GNM_ERROR\n\n', kind, message)
             );
 
             await GoogleNearbyMessages.connect({
               apiKey: GNM_API_KEY,
               discoveryMediums: ['ble'],
-              discoveryModes: ['scan'],
+              discoveryModes: ['scan', 'broadcast'],
             });
             console.log('[scan] GNM connected!');
 
@@ -574,6 +576,8 @@ export const scanMachine = model.createMachine(
 
     guards: {
       isQrOffline: (_context, event) => {
+        if (Platform.OS === 'ios') return false;
+
         const param: ConnectionParams = Object.create(null);
         try {
           Object.assign(param, JSON.parse(event.params));

@@ -3,7 +3,7 @@ import Constants from 'expo-constants';
 
 export const HOST =
   Constants.manifest.extra.backendServiceUrl ||
-  'https://resident-app.newlogic.dev';
+  'https://api.qa4.mosip.net/residentmobileapp'; // 'https://resident-app.newlogic.dev';
 
 export const MY_VCS_STORE_KEY = 'myVCs';
 

@@ -425,11 +425,16 @@ export const requestMachine = model.createMachine(
           });
         } else {
           (async function () {
+            GoogleNearbyMessages.addOnErrorListener((kind, message) =>
+              console.log('\n\n[request] GNM_ERROR\n\n', kind, message)
+            );
+
             await GoogleNearbyMessages.connect({
               apiKey: GNM_API_KEY,
               discoveryMediums: ['ble'],
-              discoveryModes: ['broadcast'],
+              discoveryModes: ['scan', 'broadcast'],
             });
+            console.log('[request] GNM connected!');
 
             await onlineSubscribe('pairing', async (scannedQrParams) => {
               try {
