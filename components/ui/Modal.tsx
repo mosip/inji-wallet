@@ -18,9 +18,15 @@ export const Modal: React.FC<ModalProps> = (props) => {
       style={styles.modal}
       visible={props.isVisible}
       onRequestClose={props.onDismiss}>
-      <Column fill>
+      <Column fill safe>
         <Row elevation={props.headerElevation}>
-          <View style={{flex: 1, flexDirection: 'row', marginHorizontal: 16, marginVertical: 16 }}>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              marginHorizontal: 16,
+              marginVertical: 16,
+            }}>
             {props.headerRight ? (
               <Icon
                 name="chevron-left"
