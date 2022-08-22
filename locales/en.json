@@ -157,7 +157,10 @@
       "waitingConnection": "Waiting for connection...",
       "exchangingDeviceInfo": "Exchanging device info...",
       "connected": "Connected to device. Waiting for {{vcLabel}}..."
-    }
+    },
+    "online": "Online",
+    "offline": "Offline",
+    "gotoSettings": "Go to settings"
   },
   "ScanScreen": {
     "header": "Scan QR Code",

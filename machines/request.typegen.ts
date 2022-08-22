@@ -41,6 +41,7 @@ export interface Typegen0 {
       | 'xstate.after(CLEAR_DELAY)#clearingConnection';
     logReceived: 'STORE_RESPONSE';
     mergeIncomingVc: 'STORE_RESPONSE';
+    openSettings: 'GOTO_SETTINGS';
     prependReceivedVc: 'VC_RESPONSE';
     registerLoggers: 'DISMISS' | 'xstate.after(CLEAR_DELAY)#clearingConnection';
     removeLoggers:

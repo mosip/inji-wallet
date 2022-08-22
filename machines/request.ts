@@ -63,6 +63,7 @@ const model = createModel(
       RECEIVED_VCS_UPDATED: () => ({}),
       VC_RESPONSE: (response: unknown) => ({ response }),
       SWITCH_PROTOCOL: (value: boolean) => ({ value }),
+      GOTO_SETTINGS: () => ({}),
     },
   }
 );
@@ -121,6 +122,11 @@ export const requestMachine = model.createMachine(
       },
       bluetoothDenied: {
         id: 'bluetoothDenied',
+        on: {
+          GOTO_SETTINGS: {
+            actions: ['openSettings'],
+          },
+        },
       },
       clearingConnection: {
         id: 'clearingConnection',
@@ -262,6 +268,10 @@ export const requestMachine = model.createMachine(
   },
   {
     actions: {
+      openSettings: () => {
+        BluetoothStateManager.openSettings();
+      },
+
       switchProtocol: assign({
         sharingProtocol: (_context, event) =>
           event.value ? 'ONLINE' : 'OFFLINE',
