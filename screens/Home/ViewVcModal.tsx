@@ -1,7 +1,9 @@
 import React from 'react';
+import { Dimensions } from 'react-native';
+import { Overlay } from 'react-native-elements';
 import { DropdownIcon } from '../../components/DropdownIcon';
 import { TextEditOverlay } from '../../components/TextEditOverlay';
-import { Column } from '../../components/ui';
+import { Text, Column, Row, Button } from '../../components/ui';
 import { Modal } from '../../components/ui/Modal';
 import { Colors } from '../../components/ui/styleUtils';
 import { VcDetails } from '../../components/VcDetails';
@@ -21,7 +23,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
       idType: 'VID',
       label: t('revoke'),
       icon: 'close-circle-outline',
-      onPress: () => controller.REVOKE_VC(),
+      onPress: () => controller.CONFIRM_REVOKE_VC(),
     },
     {
       label: t('editTag'),
@@ -68,6 +70,29 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
         title={t('requestingOtp')}
         hasProgress
       />
+
+      <Overlay
+        overlayStyle={{ padding: 24, elevation: 6 }}
+        isVisible={controller.isRevoking}
+        onBackdropPress={controller.DISMISS}>
+        <Column width={Dimensions.get('screen').width * 0.8}>
+          <Text weight="semibold" margin="0 0 12 0">
+            {t('revoke')}
+          </Text>
+          <Text margin="0 0 12 0">
+            {t('revoking', { vid: controller.vc.id })}
+          </Text>
+          <Row>
+            <Button
+              fill
+              type="clear"
+              title={t('cancel')}
+              onPress={controller.DISMISS}
+            />
+            <Button fill title={t('revoke')} onPress={controller.REVOKE_VC} />
+          </Row>
+        </Column>
+      </Overlay>
 
       {controller.reAuthenticating !== '' &&
         controller.reAuthenticating == 'passcode' && (

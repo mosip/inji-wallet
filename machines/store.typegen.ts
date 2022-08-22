@@ -3,27 +3,27 @@
 export interface Typegen0 {
   '@@xstate/typegen': true;
   'internalEvents': {
-    'error.platform.store.resettingStorage:invocation[0]': {
-      type: 'error.platform.store.resettingStorage:invocation[0]';
+    'done.invoke._store': {
+      type: 'done.invoke._store';
       data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
     'done.invoke.store.resettingStorage:invocation[0]': {
       type: 'done.invoke.store.resettingStorage:invocation[0]';
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
-    'xstate.init': { type: 'xstate.init' };
-    'done.invoke._store': {
-      type: 'done.invoke._store';
-      data: unknown;
-      __tip: 'See the XState TS docs to learn how to strongly type this.';
-    };
     'error.platform._store': { type: 'error.platform._store'; data: unknown };
+    'error.platform.store.resettingStorage:invocation[0]': {
+      type: 'error.platform.store.resettingStorage:invocation[0]';
+      data: unknown;
+    };
+    'xstate.init': { type: 'xstate.init' };
   };
   'invokeSrcNameMap': {
-    getEncryptionKey: 'done.invoke.store.gettingEncryptionKey:invocation[0]';
-    generateEncryptionKey: 'done.invoke.store.generatingEncryptionKey:invocation[0]';
     clear: 'done.invoke.store.resettingStorage:invocation[0]';
+    generateEncryptionKey: 'done.invoke.store.generatingEncryptionKey:invocation[0]';
+    getEncryptionKey: 'done.invoke.store.gettingEncryptionKey:invocation[0]';
     store: 'done.invoke._store';
   };
   'missingImplementations': {
@@ -33,30 +33,30 @@ export interface Typegen0 {
     delays: never;
   };
   'eventsCausingActions': {
-    setEncryptionKey: 'KEY_RECEIVED';
     forwardStoreRequest:
-      | 'GET'
-      | 'SET'
       | 'APPEND'
+      | 'CLEAR'
+      | 'GET'
       | 'PREPEND'
       | 'REMOVE'
-      | 'CLEAR';
+      | 'SET';
     notifyParent:
       | 'KEY_RECEIVED'
       | 'done.invoke.store.resettingStorage:invocation[0]';
+    setEncryptionKey: 'KEY_RECEIVED';
   };
   'eventsCausingServices': {
-    getEncryptionKey: 'xstate.init';
-    generateEncryptionKey: 'ERROR';
     clear: 'KEY_RECEIVED';
+    generateEncryptionKey: 'ERROR';
+    getEncryptionKey: 'xstate.init';
     store: 'KEY_RECEIVED' | 'done.invoke.store.resettingStorage:invocation[0]';
   };
   'eventsCausingGuards': {};
   'eventsCausingDelays': {};
   'matchesStates':
-    | 'gettingEncryptionKey'
     | 'generatingEncryptionKey'
-    | 'resettingStorage'
-    | 'ready';
+    | 'gettingEncryptionKey'
+    | 'ready'
+    | 'resettingStorage';
   'tags': never;
 }

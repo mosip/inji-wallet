@@ -1,9 +1,11 @@
 {
+  "cancel": "Cancel",
   "lock": "Lock",
   "unlock": "Unlock",
   "rename": "Rename",
   "delete": "Delete",
   "revoke": "Revoke",
+  "revoking": "Your wallet contains a credential with VID {{vid}}. Revoking this will automatically remove the same from the wallet. Are you sure you want to proceed?",
   "requestingOtp": "Requesting OTP...",
   "editTag": "Rename"
 }

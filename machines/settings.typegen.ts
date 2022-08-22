@@ -13,22 +13,22 @@ export interface Typegen0 {
     delays: never;
   };
   'eventsCausingActions': {
+    requestStoredContext: 'xstate.init';
     setContext: 'STORE_RESPONSE';
-    toggleBiometricUnlock: 'TOGGLE_BIOMETRIC_UNLOCK';
     storeContext:
+      | 'STORE_RESPONSE'
       | 'TOGGLE_BIOMETRIC_UNLOCK'
       | 'UPDATE_NAME'
-      | 'UPDATE_VC_LABEL'
-      | 'STORE_RESPONSE';
+      | 'UPDATE_VC_LABEL';
+    toggleBiometricUnlock: 'TOGGLE_BIOMETRIC_UNLOCK';
     updateName: 'UPDATE_NAME';
     updateVcLabel: 'UPDATE_VC_LABEL';
-    requestStoredContext: 'xstate.init';
   };
   'eventsCausingServices': {};
   'eventsCausingGuards': {
     hasData: 'STORE_RESPONSE';
   };
   'eventsCausingDelays': {};
-  'matchesStates': 'init' | 'storingDefaults' | 'idle';
+  'matchesStates': 'idle' | 'init' | 'storingDefaults';
   'tags': never;
 }

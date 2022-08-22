@@ -27,6 +27,7 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
   const [toastVisible, setToastVisible] = useState(false);
   const [message, setMessage] = useState('');
   const [reAuthenticating, setReAuthenticating] = useState('');
+  const [isRevoking, setRevoking] = useState(false);
   const [error, setError] = useState('');
   const { appService } = useContext(GlobalContext);
   const authService = appService.children.get('auth');
@@ -75,8 +76,8 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
     }
     if (isRevokingVc) {
       showToast(
-        vc.revoked === 'REVOKED'
-          ? 'Revocation request submitted'
+        vc.revoked
+          ? `VID ${vc.id} has been revoked. Any credential containing the same will be removed automatically from the wallet`
           : 'De-revocation request submitted'
       );
     }
@@ -96,6 +97,7 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
     vc,
     otpError: useSelector(vcItemActor, selectOtpError),
     reAuthenticating,
+    isRevoking,
 
     isEditingTag: useSelector(vcItemActor, selectIsEditingTag),
     isLockingVc,
@@ -105,11 +107,17 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
 
     getData: (dropDownList: any, idType: string) => {
       return dropDownList.filter(
-        (dropdown) =>
+        (dropdown: any) =>
           dropdown['idType'] === undefined || dropdown['idType'] === idType
       );
     },
-    REVOKE_VC: () => vcItemActor.send(VcItemEvents.REVOKE_VC()),
+    CONFIRM_REVOKE_VC: () => {
+      setRevoking(true);
+    },
+    REVOKE_VC: () => {
+      vcItemActor.send(VcItemEvents.REVOKE_VC());
+      setRevoking(false);
+    },
     setReAuthenticating,
     onError,
     lockVc: () => {

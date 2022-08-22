@@ -13,9 +13,9 @@ export interface Typegen0 {
     delays: never;
   };
   'eventsCausingActions': {
-    setActivities: 'STORE_RESPONSE';
+    loadActivities: 'REFRESH' | 'xstate.init';
     prependActivity: 'STORE_RESPONSE';
-    loadActivities: 'xstate.init' | 'REFRESH';
+    setActivities: 'STORE_RESPONSE';
     storeActivity: 'LOG_ACTIVITY';
   };
   'eventsCausingServices': {};
