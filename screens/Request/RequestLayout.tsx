@@ -21,6 +21,7 @@ export const RequestLayout: React.FC = () => {
       <RequestStack.Navigator
         initialRouteName="RequestScreen"
         screenOptions={{
+          headerTitleAlign: 'center',
           headerRight: () => (
             <LanguageSelector
               triggerComponent={<Icon name="language" color={Colors.Orange} />}
@@ -32,7 +33,7 @@ export const RequestLayout: React.FC = () => {
             name="ReceiveVcScreen"
             component={ReceiveVcScreen}
             options={{
-              headerTitle: t('incomingVc', {
+              title: t('incomingVc', {
                 vcLabel: controller.vcLabel.singular,
               }),
             }}
@@ -42,7 +43,7 @@ export const RequestLayout: React.FC = () => {
           name="RequestScreen"
           component={RequestScreen}
           options={{
-            headerTitle: t('request').toUpperCase(),
+            title: t('request').toUpperCase(),
           }}
         />
       </RequestStack.Navigator>
