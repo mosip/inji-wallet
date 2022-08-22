@@ -259,11 +259,12 @@ export const vcItemMachine =
           on: {
             INPUT_OTP: [
               {
-                actions: 'setOtp',
+                actions: [log('setting OTP'), 'setOtp'],
                 cond: 'isRequestingLock',
                 target: 'requestingLock',
               },
               {
+                actions: [log('setting OTP'), 'setOtp'],
                 cond: 'notRequestingLock',
                 target: 'requestingRevoke',
               },
@@ -566,9 +567,9 @@ export const vcItemMachine =
           try {
             return request('POST', `/vid/${context.id}`, {
               transactionID: context.transactionId,
-              vidStatus: context.revoked,
+              vidStatus: 'REVOKED',
               individualId: context.id,
-              individualIdType: context.idType,
+              individualIdType: 'VID',
               otp: context.otp,
             });
           } catch (error) {

@@ -13,6 +13,8 @@ export async function request(
   path: `/${string}`,
   body?: Record<string, unknown>
 ) {
+  console.log('API endpoint', HOST + path);
+  console.log('payload', body);
   const response = await fetch(HOST + path, {
     method,
     headers: {

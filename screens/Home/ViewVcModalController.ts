@@ -89,7 +89,7 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
   useEffect(() => {
     vcItemActor.send(VcItemEvents.REFRESH());
   }, [isVisible]);
-
+  const isRequestingOtp = useSelector(vcItemActor, selectIsRequestingOtp);
   return {
     error,
     message,
@@ -115,6 +115,7 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
       setRevoking(true);
     },
     REVOKE_VC: () => {
+      console.log('otp', isRequestingOtp);
       vcItemActor.send(VcItemEvents.REVOKE_VC());
       setRevoking(false);
     },

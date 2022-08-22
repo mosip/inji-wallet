@@ -3,8 +3,15 @@
 export interface Typegen0 {
   '@@xstate/typegen': true;
   'internalEvents': {
-    'xstate.after(100)#AddVcModal.acceptingIdInput.focusing': {
-      type: 'xstate.after(100)#AddVcModal.acceptingIdInput.focusing';
+    'done.invoke.AddVcModal.acceptingIdInput.requestingOtp:invocation[0]': {
+      type: 'done.invoke.AddVcModal.acceptingIdInput.requestingOtp:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
+    'done.invoke.AddVcModal.requestingCredential:invocation[0]': {
+      type: 'done.invoke.AddVcModal.requestingCredential:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
     'error.platform.AddVcModal.acceptingIdInput.requestingOtp:invocation[0]': {
       type: 'error.platform.AddVcModal.acceptingIdInput.requestingOtp:invocation[0]';
@@ -14,21 +21,14 @@ export interface Typegen0 {
       type: 'error.platform.AddVcModal.requestingCredential:invocation[0]';
       data: unknown;
     };
-    'done.invoke.AddVcModal.requestingCredential:invocation[0]': {
-      type: 'done.invoke.AddVcModal.requestingCredential:invocation[0]';
-      data: unknown;
-      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    'xstate.after(100)#AddVcModal.acceptingIdInput.focusing': {
+      type: 'xstate.after(100)#AddVcModal.acceptingIdInput.focusing';
     };
     'xstate.init': { type: 'xstate.init' };
-    'done.invoke.AddVcModal.acceptingIdInput.requestingOtp:invocation[0]': {
-      type: 'done.invoke.AddVcModal.acceptingIdInput.requestingOtp:invocation[0]';
-      data: unknown;
-      __tip: 'See the XState TS docs to learn how to strongly type this.';
-    };
   };
   'invokeSrcNameMap': {
-    requestOtp: 'done.invoke.AddVcModal.acceptingIdInput.requestingOtp:invocation[0]';
     requestCredential: 'done.invoke.AddVcModal.requestingCredential:invocation[0]';
+    requestOtp: 'done.invoke.AddVcModal.acceptingIdInput.requestingOtp:invocation[0]';
   };
   'missingImplementations': {
     actions: never;
@@ -37,69 +37,69 @@ export interface Typegen0 {
     delays: never;
   };
   'eventsCausingActions': {
-    forwardToParent: 'DISMISS';
-    setIdInputRef: 'READY';
-    setId: 'INPUT_ID';
-    setIdType: 'SELECT_ID_TYPE';
     clearId: 'SELECT_ID_TYPE';
     clearIdError: 'INPUT_ID';
-    setIdBackendError:
-      | 'error.platform.AddVcModal.acceptingIdInput.requestingOtp:invocation[0]'
-      | 'error.platform.AddVcModal.requestingCredential:invocation[0]';
-    setOtp: 'INPUT_OTP';
-    resetIdInputRef: 'DISMISS';
-    setRequestId: 'done.invoke.AddVcModal.requestingCredential:invocation[0]';
-    setOtpError: 'error.platform.AddVcModal.requestingCredential:invocation[0]';
-    setTransactionId:
-      | 'xstate.init'
-      | 'DISMISS'
-      | 'error.platform.AddVcModal.requestingCredential:invocation[0]';
     clearOtp:
-      | 'xstate.init'
       | 'DISMISS'
+      | 'done.invoke.AddVcModal.acceptingIdInput.requestingOtp:invocation[0]'
       | 'error.platform.AddVcModal.requestingCredential:invocation[0]'
-      | 'done.invoke.AddVcModal.acceptingIdInput.requestingOtp:invocation[0]';
+      | 'xstate.init';
     focusInput:
-      | 'xstate.after(100)#AddVcModal.acceptingIdInput.focusing'
       | 'INPUT_ID'
       | 'SELECT_ID_TYPE'
       | 'VALIDATE_INPUT'
       | 'error.platform.AddVcModal.acceptingIdInput.requestingOtp:invocation[0]'
+      | 'error.platform.AddVcModal.requestingCredential:invocation[0]'
+      | 'xstate.after(100)#AddVcModal.acceptingIdInput.focusing';
+    forwardToParent: 'DISMISS';
+    resetIdInputRef: 'DISMISS';
+    setId: 'INPUT_ID';
+    setIdBackendError:
+      | 'error.platform.AddVcModal.acceptingIdInput.requestingOtp:invocation[0]'
       | 'error.platform.AddVcModal.requestingCredential:invocation[0]';
     setIdErrorEmpty: 'VALIDATE_INPUT';
     setIdErrorWrongFormat: 'VALIDATE_INPUT';
+    setIdInputRef: 'READY';
+    setIdType: 'SELECT_ID_TYPE';
+    setOtp: 'INPUT_OTP';
+    setOtpError: 'error.platform.AddVcModal.requestingCredential:invocation[0]';
+    setRequestId: 'done.invoke.AddVcModal.requestingCredential:invocation[0]';
+    setTransactionId:
+      | 'DISMISS'
+      | 'error.platform.AddVcModal.requestingCredential:invocation[0]'
+      | 'xstate.init';
   };
   'eventsCausingServices': {
-    requestOtp: 'VALIDATE_INPUT';
     requestCredential: 'INPUT_OTP';
+    requestOtp: 'VALIDATE_INPUT';
   };
   'eventsCausingGuards': {
     isEmptyId: 'VALIDATE_INPUT';
-    isWrongIdFormat: 'VALIDATE_INPUT';
     isIdInvalid: 'error.platform.AddVcModal.requestingCredential:invocation[0]';
+    isWrongIdFormat: 'VALIDATE_INPUT';
   };
   'eventsCausingDelays': {};
   'matchesStates':
     | 'acceptingIdInput'
-    | 'acceptingIdInput.rendering'
     | 'acceptingIdInput.focusing'
     | 'acceptingIdInput.idle'
     | 'acceptingIdInput.invalid'
+    | 'acceptingIdInput.invalid.backend'
     | 'acceptingIdInput.invalid.empty'
     | 'acceptingIdInput.invalid.format'
-    | 'acceptingIdInput.invalid.backend'
+    | 'acceptingIdInput.rendering'
     | 'acceptingIdInput.requestingOtp'
     | 'acceptingOtpInput'
-    | 'requestingCredential'
     | 'done'
+    | 'requestingCredential'
     | {
         acceptingIdInput?:
-          | 'rendering'
           | 'focusing'
           | 'idle'
           | 'invalid'
+          | 'rendering'
           | 'requestingOtp'
-          | { invalid?: 'empty' | 'format' | 'backend' };
+          | { invalid?: 'backend' | 'empty' | 'format' };
       };
   'tags': never;
 }
