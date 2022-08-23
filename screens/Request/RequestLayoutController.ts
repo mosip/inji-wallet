@@ -8,6 +8,7 @@ import {
   selectIsDone,
   selectIsRejected,
   selectIsReviewing,
+  selectIsWaitingForConnection,
   selectSenderInfo,
 } from '../../machines/request';
 import { selectVcLabel } from '../../machines/settings';
@@ -46,11 +47,17 @@ export function useRequestLayout() {
 
   const isReviewing = useSelector(requestService, selectIsReviewing);
   const isDone = useSelector(requestService, selectIsDone);
+  const isWaitingForConnection = useSelector(
+    requestService,
+    selectIsWaitingForConnection
+  );
   useEffect(() => {
     if (isDone) {
       navigation.navigate('Home', { activeTab: 1 });
     } else if (isReviewing) {
       navigation.navigate('ReceiveVcScreen');
+    } else if (isWaitingForConnection) {
+      navigation.navigate('RequestScreen');
     }
   }, [isDone, isReviewing]);
 
