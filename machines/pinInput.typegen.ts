@@ -3,11 +3,11 @@
 export interface Typegen0 {
   '@@xstate/typegen': true;
   'internalEvents': {
+    '': { type: '' };
     'xstate.after(INITIAL_FOCUS_DELAY)#pinInput.idle': {
       type: 'xstate.after(INITIAL_FOCUS_DELAY)#pinInput.idle';
     };
     'xstate.init': { type: 'xstate.init' };
-    '': { type: '' };
   };
   'invokeSrcNameMap': {};
   'missingImplementations': {
@@ -17,24 +17,24 @@ export interface Typegen0 {
     delays: never;
   };
   'eventsCausingActions': {
-    selectInput: 'FOCUS_INPUT';
-    updateInput: 'UPDATE_INPUT';
+    clearInput: 'KEY_PRESS';
     focusSelected:
-      | 'xstate.after(INITIAL_FOCUS_DELAY)#pinInput.idle'
+      | 'KEY_PRESS'
       | 'UPDATE_INPUT'
-      | 'KEY_PRESS';
+      | 'xstate.after(INITIAL_FOCUS_DELAY)#pinInput.idle';
+    selectInput: 'FOCUS_INPUT';
     selectNextInput: 'UPDATE_INPUT';
     selectPrevInput: 'KEY_PRESS';
-    clearInput: 'KEY_PRESS';
+    updateInput: 'UPDATE_INPUT';
   };
   'eventsCausingServices': {};
   'eventsCausingGuards': {
-    isBlank: 'UPDATE_INPUT';
-    hasNextInput: 'UPDATE_INPUT';
     canGoBack: 'KEY_PRESS';
+    hasNextInput: 'UPDATE_INPUT';
+    isBlank: 'UPDATE_INPUT';
   };
   'eventsCausingDelays': {
-    INITIAL_FOCUS_DELAY: 'xstate.init' | '';
+    INITIAL_FOCUS_DELAY: '' | 'xstate.init';
   };
   'matchesStates': 'idle' | 'selectingNext' | 'selectingPrev';
   'tags': never;

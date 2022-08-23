@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     left: 16,
     right: 16,
+    zIndex: 1
   },
   messageContainer: {
     fontSize: 12,

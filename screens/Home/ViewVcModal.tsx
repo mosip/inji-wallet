@@ -69,7 +69,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
       <Overlay
         overlayStyle={{ padding: 24, elevation: 6 }}
         isVisible={controller.isRevoking}
-        onBackdropPress={controller.DISMISS}>
+        onBackdropPress={() => controller.setRevoking(false)}>
         <Column width={Dimensions.get('screen').width * 0.8}>
           <Text weight="semibold" margin="0 0 12 0">
             {t('revoke')}
@@ -82,7 +82,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
               fill
               type="clear"
               title={t('cancel')}
-              onPress={controller.DISMISS}
+              onPress={() => controller.setRevoking(false)}
             />
             <Button fill title={t('revoke')} onPress={controller.REVOKE_VC} />
           </Row>

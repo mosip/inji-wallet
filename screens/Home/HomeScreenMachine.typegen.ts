@@ -16,25 +16,25 @@ export interface Typegen0 {
     delays: never;
   };
   'eventsCausingActions': {
+    resetSelectedVc: 'DISMISS_MODAL' | 'xstate.init';
     setSelectedVc: 'VIEW_VC';
-    resetSelectedVc: 'xstate.init' | 'DISMISS_MODAL';
     spawnTabActors: 'xstate.init';
   };
   'eventsCausingServices': {};
   'eventsCausingGuards': {};
   'eventsCausingDelays': {};
   'matchesStates':
-    | 'tabs'
-    | 'tabs.init'
-    | 'tabs.myVcs'
-    | 'tabs.receivedVcs'
-    | 'tabs.history'
     | 'modals'
     | 'modals.none'
     | 'modals.viewingVc'
+    | 'tabs'
+    | 'tabs.history'
+    | 'tabs.init'
+    | 'tabs.myVcs'
+    | 'tabs.receivedVcs'
     | {
-        tabs?: 'init' | 'myVcs' | 'receivedVcs' | 'history';
         modals?: 'none' | 'viewingVc';
+        tabs?: 'history' | 'init' | 'myVcs' | 'receivedVcs';
       };
   'tags': never;
 }
