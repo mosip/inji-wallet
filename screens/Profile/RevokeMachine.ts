@@ -1,19 +1,13 @@
 import { TextInput } from 'react-native';
-import {
-  assign,
-  ErrorPlatformEvent,
-  StateFrom,
-  send
-} from 'xstate';
+import { assign, ErrorPlatformEvent, StateFrom, send } from 'xstate';
 import { AppServices } from '../../shared/GlobalContext';
 import { ActivityLogEvents } from '../../machines/activityLog';
 import { createModel } from 'xstate/lib/model';
 import { request } from '../../shared/request';
-import { VC_ITEM_STORE_KEY } from '../../shared/constants';
 import { VcIdType } from '../../types/vc';
 import i18n from '../../i18n';
+import { log } from 'xstate/lib/actions';
 
-// ----- CREATE MODEL ---------------------------------------------------------
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
@@ -23,7 +17,7 @@ const model = createModel(
     otpError: '',
     transactionId: '',
     requestId: '',
-    VIDs: []
+    VIDs: [],
   },
   {
     events: {
@@ -32,13 +26,11 @@ const model = createModel(
       READY: (idInputRef: TextInput) => ({ idInputRef }),
       DISMISS: () => ({}),
       SELECT_ID_TYPE: (idType: VcIdType) => ({ idType }),
-      REVOKE_VCS: (vcKeys: string[]) => ({vcKeys})
+      REVOKE_VCS: (vcKeys: string[]) => ({ vcKeys }),
     },
   }
 );
-// ----------------------------------------------------------------------------
 
-// ----- CREATE MACHINE -------------------------------------------------------
 export const revokeVidsMachine = model.createMachine(
   {
     id: 'RevokeVids',
@@ -50,6 +42,21 @@ export const revokeVidsMachine = model.createMachine(
           REVOKE_VCS: {
             actions: ['setTransactionId', 'clearOtp'],
             target: 'acceptingOtpInput',
+          },
+        },
+      },
+      invalid: {
+        states: {
+          otp: {},
+          backend: {},
+        },
+        on: {
+          INPUT_OTP: {
+            actions: 'setOtp',
+            target: 'requestingRevoke',
+          },
+          DISMISS: {
+            target: 'idle',
           },
         },
       },
@@ -70,13 +77,14 @@ export const revokeVidsMachine = model.createMachine(
               src: 'requestOtp',
               onDone: [
                 {
+                  actions: [log('accepting OTP')],
                   target: '#RevokeVids.acceptingOtpInput',
                 },
               ],
               onError: [
                 {
-                  actions: 'setIdBackendError',
-                  target: '#RevokeVids.idle',
+                  actions: [log('error OTP'), 'setIdBackendError'],
+                  target: '#RevokeVids.invalid.backend',
                 },
               ],
             },
@@ -174,33 +182,32 @@ export const revokeVidsMachine = model.createMachine(
       }),
 
       clearOtp: assign({ otp: '' }),
-      
-      logRevoked: async(_context) => {
+
+      logRevoked: (_context) => {
         _context.VIDs.forEach((vc) => {
           send(
-            (_context) =>
+            () =>
               ActivityLogEvents.LOG_ACTIVITY({
-                _vcKey: VC_ITEM_STORE_KEY(vc),
+                _vcKey: vc,
                 action: 'revoked',
                 timestamp: Date.now(),
                 deviceName: '',
-                vcLabel: vc.split(":")[2],
+                vcLabel: vc.id,
               }),
             {
               to: (context) => context.serviceRefs.activityLog,
             }
-          )
-          return 
-        })
-      }
+          );
+        });
+      },
     },
 
     services: {
       requestOtp: async (context) => {
         const transactionId = String(new Date().valueOf()).substring(3, 13);
         return request('POST', '/req/otp', {
-          individualId: context.VIDs[0].split(":")[2],
-          individualIdType: "VID",
+          individualId: context.VIDs[0].split(':')[2],
+          individualIdType: 'VID',
           otpChannel: ['EMAIL', 'PHONE'],
           transactionID: transactionId,
         });
@@ -210,8 +217,11 @@ export const revokeVidsMachine = model.createMachine(
         try {
           return await Promise.all(
             context.VIDs.map((vid: string) => {
-              const vidID = vid.split(":")[2];
-              const transactionId = String(new Date().valueOf()).substring(3, 13);
+              const vidID = vid.split(':')[2];
+              const transactionId = String(new Date().valueOf()).substring(
+                3,
+                13
+              );
               return request('PATCH', `/vid/${vidID}`, {
                 transactionID: transactionId,
                 vidStatus: 'REVOKED',
@@ -219,7 +229,7 @@ export const revokeVidsMachine = model.createMachine(
                 individualIdType: 'VID',
                 otp: context.otp,
               });
-            }),
+            })
           );
         } catch (error) {
           console.error(error);
@@ -227,16 +237,12 @@ export const revokeVidsMachine = model.createMachine(
       },
     },
 
-    guards: { },
+    guards: {},
   }
 );
 
-// ----------------------------------------------------------------------------
-
-// ----- TYPES ----------------------------------------------------------------
 type State = StateFrom<typeof revokeVidsMachine>;
 
-// ----- OTHER EXPORTS --------------------------------------------------------
 export const RevokeVidsEvents = model.events;
 
 export function selectIdType(state: State) {
