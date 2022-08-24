@@ -185,27 +185,21 @@ export const revokeVidsMachine = model.createMachine(
       clearOtp: assign({ otp: '' }),
 
       logRevoked: (_context) => {
-        console.log(
-          '_context.VIDs[0].split(":")[2]',
-          _context.VIDs[0].split(':')[2]
-        );
-        // (_context) => {
-        //   console.log('_context.serviceRefs.activityLog', _context.serviceRefs.activityLog)
-        //  _context.VIDs.forEach((vc) => {
-        send(
-          (_context) =>
-            ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: _context.VIDs[0],
-              action: 'revoked',
-              timestamp: Date.now(),
-              deviceName: '',
-              vcLabel: _context.VIDs[0].split(':')[2],
-            }),
-          {
-            to: (_context) => _context.serviceRefs.activityLog,
-          }
-        );
-        //});
+        _context.VIDs.forEach((vc) => {
+          send(
+            () =>
+              ActivityLogEvents.LOG_ACTIVITY({
+                _vcKey: vc,
+                action: 'revoked',
+                timestamp: Date.now(),
+                deviceName: '',
+                vcLabel: vc.split(':')[2],
+              }),
+            {
+              to: (_context) => _context.serviceRefs.activityLog,
+            }
+          );
+        });
       },
     },
 
