@@ -3,7 +3,7 @@ const { IdpassSmartshare, GoogleNearbyMessages } = SmartshareReactNative;
 
 import uuid from 'react-native-uuid';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
-import { EmitterSubscription, Platform } from 'react-native';
+import { EmitterSubscription, Linking, Platform } from 'react-native';
 import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { DeviceInfo } from '../components/DeviceInfoList';
@@ -269,7 +269,7 @@ export const requestMachine = model.createMachine(
   {
     actions: {
       openSettings: () => {
-        BluetoothStateManager.openSettings();
+        Linking.openURL('App-Prefs:Bluetooth');
       },
 
       switchProtocol: assign({
