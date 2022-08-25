@@ -1,6 +1,19 @@
 name: 'Delete old artifacts'
 on:
   workflow_dispatch:
+      message:
+        description: 'Triggered for Delete old artifacts'
+        required: false
+        default: 'Delete old artifacts'
+      releaseTags:
+        description: 'tag to update'
+        required: true
+      snapshotTags:
+        description: 'tag to be replaced'
+        required: true
+      base:
+        description: 'base branch for PR'
+        required: true
 
 jobs:
   delete-artifacts:
