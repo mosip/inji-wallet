@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - develop
+      - release-1.2.0.1
 jobs:
   build:
     name: Build

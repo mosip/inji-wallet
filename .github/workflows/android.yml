@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - develop
+      - release-1.2.0.1
     tags:
       - '*'
   pull_request:
