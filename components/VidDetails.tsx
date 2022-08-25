@@ -58,7 +58,9 @@ export const VidDetails: React.FC<VidDetailsProps> = (props) => {
         <ListItem.Content>
           <ListItem.Subtitle>Full name</ListItem.Subtitle>
           <ListItem.Title>
-            {props.vid?.verifiableCredential.credentialSubject.fullName}
+            {getLocalizedField(
+              props.vid?.verifiableCredential.credentialSubject.fullName
+            )}
           </ListItem.Title>
         </ListItem.Content>
       </ListItem>
@@ -76,7 +78,9 @@ export const VidDetails: React.FC<VidDetailsProps> = (props) => {
         <ListItem.Content>
           <ListItem.Subtitle>Date of birth</ListItem.Subtitle>
           <ListItem.Title>
-            {props.vid?.verifiableCredential.credentialSubject.dateOfBirth}
+            {getLocalizedField(
+              props.vid?.verifiableCredential.credentialSubject.dateOfBirth
+            )}
           </ListItem.Title>
         </ListItem.Content>
       </ListItem>
@@ -84,7 +88,9 @@ export const VidDetails: React.FC<VidDetailsProps> = (props) => {
         <ListItem.Content>
           <ListItem.Subtitle>Phone number</ListItem.Subtitle>
           <ListItem.Title>
-            {props.vid?.verifiableCredential.credentialSubject.phone}
+            {getLocalizedField(
+              props.vid?.verifiableCredential.credentialSubject.phone
+            )}
           </ListItem.Title>
         </ListItem.Content>
       </ListItem>
@@ -92,7 +98,9 @@ export const VidDetails: React.FC<VidDetailsProps> = (props) => {
         <ListItem.Content>
           <ListItem.Subtitle>Email</ListItem.Subtitle>
           <ListItem.Title>
-            {props.vid?.verifiableCredential.credentialSubject.email}
+            {getLocalizedField(
+              props.vid?.verifiableCredential.credentialSubject.email
+            )}
           </ListItem.Title>
         </ListItem.Content>
       </ListItem>
@@ -146,10 +154,12 @@ function getFullAddress(credential: CredentialSubject) {
 }
 
 function getLocalizedField(rawField: string | LocalizedField) {
+  if (typeof rawField === 'string') {
+    return rawField;
+  }
   try {
-    const locales: LocalizedField[] =
-      typeof rawField === 'string' ? JSON.parse(rawField) : rawField;
-    return locales.find((locale) => locale.language === 'eng').value.trim();
+    const locales: LocalizedField[] = JSON.parse(JSON.stringify(rawField));
+    return locales[0].value;
   } catch (e) {
     return '';
   }
