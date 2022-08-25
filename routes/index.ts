@@ -56,6 +56,7 @@ export type RootStackParamList = {
   Auth: undefined;
   Passcode: {
     setup: boolean;
+    message?: string;
   };
   Biometric: {
     setup: boolean;

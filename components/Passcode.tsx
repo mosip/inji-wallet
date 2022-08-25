@@ -22,7 +22,7 @@ export const Passcode: React.FC<PasscodeProps> = (props) => {
       <Column fill padding="32" backgroundColor={Colors.White}>
         <Icon name="lock" color={Colors.Orange} size={60} />
         <Column fill align="space-between" width="100%">
-          <Text align="center">Enter your passcode</Text>
+          <Text align="center">{props.message || 'Enter your passcode'}</Text>
           <PasscodeVerify
             onSuccess={props.onSuccess}
             onError={props.onError}
@@ -40,6 +40,7 @@ export const Passcode: React.FC<PasscodeProps> = (props) => {
 };
 
 interface PasscodeProps {
+  message?: string;
   error: string;
   storedPasscode: string;
   onSuccess: () => void;

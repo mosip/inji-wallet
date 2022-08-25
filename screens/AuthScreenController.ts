@@ -1,6 +1,7 @@
 import { useMachine, useSelector } from '@xstate/react';
 import { useContext, useEffect, useState } from 'react';
 import * as LocalAuthentication from 'expo-local-authentication';
+
 import {
   AuthEvents,
   selectSettingUp,
@@ -104,6 +105,7 @@ export function useAuthScreen(props: RootRouteProps) {
     isSettingUp,
     alertMsg,
     isEnabledBio,
+
     hideAlert,
     useBiometrics,
     usePasscode,
