@@ -16,10 +16,13 @@ export const TimerBasedRequestScreen: React.FC<MainRouteProps> = (props) => {
   const isFocused = useIsFocused();
 
   return (
-    <Column fill padding="98 24 24 24" backgroundColor={Theme.Colors.LightGrey}>
+    <Column
+      fill
+      padding="98 24 24 24"
+      backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
       <Column>
         {controller.isBluetoothDenied ? (
-          <Text color={Theme.Colors.Red} align="center">
+          <Text color={Theme.Colors.errorMessage} align="center">
             Please enable Bluetooth to be able to request{' '}
             {controller.vcLabel.singular}
           </Text>
@@ -36,7 +39,7 @@ export const TimerBasedRequestScreen: React.FC<MainRouteProps> = (props) => {
           <QRCode
             size={200}
             value={controller.connectionParams}
-            backgroundColor={Theme.Colors.LightGrey}
+            backgroundColor={Theme.Colors.QRCodeBackgroundColor}
           />
         ) : null}
       </Centered>

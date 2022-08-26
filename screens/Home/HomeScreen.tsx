@@ -19,7 +19,7 @@ export const HomeScreen: React.FC<HomeRouteProps> = (props) => {
 
   return (
     <React.Fragment>
-      <Column fill backgroundColor={Theme.Colors.LightGrey}>
+      <Column fill backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
         <Tab
           value={controller.activeTab}
           onChange={controller.SELECT_TAB}

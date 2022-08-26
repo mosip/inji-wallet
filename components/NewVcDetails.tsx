@@ -14,7 +14,7 @@ const VerifiedIcon: React.FC = () => {
   return (
     <Icon
       name="check-circle"
-      color={Theme.Colors.Green}
+      color={Theme.Colors.VerifiedIcon}
       size={14}
       containerStyle={{ marginStart: 4, bottom: 1 }}
     />
@@ -33,8 +33,12 @@ export const NewVcDetails: React.FC<VcDetailsProps> = (props) => {
       }}
       source={Theme.OpenCard}>
       <Row style={Theme.Styles.successTag}>
-        <Icon name="check-circle" color={Theme.Colors.White} size={40} />
-        <Text margin="0 10" color={Theme.Colors.White}>
+        <Icon
+          name="check-circle"
+          color={Theme.Colors.checkCircleIcon}
+          size={40}
+        />
+        <Text margin="0 10" color={Theme.Colors.whiteText}>
           {controller.vcLabel.singular} Received
         </Text>
       </Row>

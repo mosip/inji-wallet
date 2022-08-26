@@ -19,7 +19,10 @@ export const Passcode: React.FC<PasscodeProps> = (props) => {
       style={styles.modal}
       visible={true}
       onRequestClose={props.onDismiss}>
-      <Column fill padding="32" backgroundColor={Theme.Colors.White}>
+      <Column
+        fill
+        padding="32"
+        backgroundColor={Theme.Colors.whiteBackgroundColor}>
         <Icon name="lock" color={Theme.Colors.Icon} size={60} />
         <Column fill align="space-between" width="100%">
           <Text align="center">Enter your passcode</Text>
@@ -30,7 +33,7 @@ export const Passcode: React.FC<PasscodeProps> = (props) => {
           />
         </Column>
         <Column fill>
-          <Text align="center" color={Theme.Colors.Red}>
+          <Text align="center" color={Theme.Colors.errorMessage}>
             {props.error}
           </Text>
         </Column>

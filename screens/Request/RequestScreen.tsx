@@ -1,7 +1,7 @@
 import React from 'react';
 import QRCode from 'react-native-qrcode-svg';
 import { Centered, Column, Text } from '../../components/ui';
-import { Colors } from '../../components/ui/styleUtils';
+import { Theme } from '../../components/ui/styleUtils';
 import { MainRouteProps } from '../../routes/main';
 import { ReceiveVcModal } from './ReceiveVcModal';
 import { MessageOverlay } from '../../components/MessageOverlay';
@@ -15,10 +15,13 @@ export const RequestScreen: React.FC<MainRouteProps> = (props) => {
   const isFocused = useIsFocused();
 
   return (
-    <Column fill padding="98 24 24 24" backgroundColor={Colors.LightGrey}>
+    <Column
+      fill
+      padding="98 24 24 24"
+      backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
       <Column>
         {controller.isBluetoothDenied ? (
-          <Text color={Colors.Red} align="center">
+          <Text color={Theme.Colors.errorMessage} align="center">
             {t('bluetoothDenied', { vcLabel: controller.vcLabel.singular })}
           </Text>
         ) : (
@@ -36,7 +39,7 @@ export const RequestScreen: React.FC<MainRouteProps> = (props) => {
           <QRCode
             size={200}
             value={controller.connectionParams}
-            backgroundColor={Colors.LightGrey}
+            backgroundColor={Theme.Colors.QRCodeBackgroundColor}
           />
         ) : null}
       </Centered>

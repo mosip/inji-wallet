@@ -44,7 +44,7 @@ export const ReceivedVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                   vcLabel: controller.vcLabel.plural,
                 })}
               </Text>
-              <Text align="center" color={Theme.Colors.Grey}>
+              <Text align="center" color={Theme.Colors.textLabel}>
                 {t('noReceivedVcsText', {
                   vcLabel: controller.vcLabel.singular,
                 })}

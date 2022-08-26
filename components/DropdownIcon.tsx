@@ -4,7 +4,7 @@ import { Popable } from 'react-native-popable';
 import { Text } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Row } from './ui';
-import { Colors, Theme } from './ui/styleUtils';
+import { Theme } from './ui/styleUtils';
 
 export const DropdownIcon: React.FC<DropdownProps> = (props) => {
   const popover = useRef(null);
@@ -21,7 +21,7 @@ export const DropdownIcon: React.FC<DropdownProps> = (props) => {
           padding: 8,
           paddingTop: 4,
           paddingBottom: 4,
-          borderBottomColor: Colors.Grey6,
+          borderBottomColor: Theme.Colors.borderBottomColor,
           borderBottomWidth: 1,
         }}>
         <Pressable
@@ -46,7 +46,7 @@ export const DropdownIcon: React.FC<DropdownProps> = (props) => {
       <Popable
         position="bottom"
         ref={popover}
-        backgroundColor={Colors.White}
+        backgroundColor={Theme.Colors.whiteBackgroundColor}
         style={{ top: 10, left: -20, minWidth: 120, elevation: 1 }}
         content={
           <View>

@@ -2,12 +2,12 @@ import React from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
 import { Overlay, LinearProgress } from 'react-native-elements';
 import { Column, Text } from './ui';
-import { elevation, Theme } from './ui/styleUtils';
+import { Theme } from './ui/styleUtils';
 
 const styles = StyleSheet.create({
   overlay: {
-    ...elevation(5),
-    backgroundColor: Theme.Colors.White,
+    ...Theme.elevation(5),
+    backgroundColor: Theme.Colors.whiteBackgroundColor,
   },
 });
 

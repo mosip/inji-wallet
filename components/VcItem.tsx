@@ -1,6 +1,6 @@
 import React, { useContext, useRef } from 'react';
 import { useInterpret, useSelector } from '@xstate/react';
-import { Pressable, StyleSheet } from 'react-native';
+import { Pressable } from 'react-native';
 import { CheckBox, Icon } from 'react-native-elements';
 import { ActorRefFrom } from 'xstate';
 import {
@@ -12,35 +12,9 @@ import {
   vcItemMachine,
 } from '../machines/vcItem';
 import { Column, Row, Text } from './ui';
-import { Colors } from './ui/styleUtils';
+import { Theme } from './ui/styleUtils';
 import { RotatingIcon } from './RotatingIcon';
 import { GlobalContext } from '../shared/GlobalContext';
-
-const styles = StyleSheet.create({
-  title: {
-    color: Colors.Black,
-    backgroundColor: 'transparent',
-  },
-  loadingTitle: {
-    color: 'transparent',
-    backgroundColor: Colors.Grey5,
-    borderRadius: 4,
-  },
-  subtitle: {
-    backgroundColor: 'transparent',
-  },
-  loadingSubtitle: {
-    backgroundColor: Colors.Grey,
-    borderRadius: 4,
-  },
-  container: {
-    backgroundColor: Colors.White,
-  },
-  loadingContainer: {
-    backgroundColor: Colors.Grey6,
-    borderRadius: 4,
-  },
-});
 
 export const VcItem: React.FC<VcItemProps> = (props) => {
   const { appService } = useContext(GlobalContext);
@@ -75,15 +49,25 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
         elevation={!verifiableCredential ? 0 : 2}
         crossAlign="center"
         margin={props.margin}
-        backgroundColor={!verifiableCredential ? Colors.Grey6 : Colors.White}
+        backgroundColor={
+          !verifiableCredential
+            ? Theme.Colors.loadingLabel
+            : Theme.Colors.whiteBackgroundColor
+        }
         padding="16 24"
         style={
-          !verifiableCredential ? styles.loadingContainer : styles.container
+          !verifiableCredential
+            ? Theme.VcItemStyles.loadingContainer
+            : Theme.VcItemStyles.container
         }>
         <Column fill margin="0 24 0 0">
           <Text
             weight="semibold"
-            style={!verifiableCredential ? styles.loadingTitle : styles.title}
+            style={
+              !verifiableCredential
+                ? Theme.VcItemStyles.loadingTitle
+                : Theme.VcItemStyles.title
+            }
             margin="0 0 6 0">
             {!verifiableCredential ? '' : tag || uin}
           </Text>
@@ -91,7 +75,9 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
             size="smaller"
             numLines={1}
             style={
-              !verifiableCredential ? styles.loadingSubtitle : styles.subtitle
+              !verifiableCredential
+                ? Theme.VcItemStyles.loadingSubtitle
+                : Theme.VcItemStyles.subtitle
             }>
             {!verifiableCredential
               ? ''
@@ -107,7 +93,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
         {verifiableCredential ? (
           selectableOrCheck
         ) : (
-          <RotatingIcon name="sync" color={Colors.Grey5} />
+          <RotatingIcon name="sync" color={Theme.Colors.rotatingIcon} />
         )}
       </Row>
     </Pressable>

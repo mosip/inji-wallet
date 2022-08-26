@@ -1,23 +1,25 @@
 import React from 'react';
 import { Column, Text } from '.';
-import { Colors } from './styleUtils';
+import { Theme } from './styleUtils';
 
 export const TextItem: React.FC<TextItemProps> = (props) => {
   return (
     <Column
-      backgroundColor={Colors.White}
+      backgroundColor={Theme.Colors.whiteBackgroundColor}
       margin={props.margin}
       padding={props.label ? '16 24' : '12 24'}
       style={{
-        borderBottomColor: Colors.Grey6,
+        borderBottomColor: Theme.Colors.borderBottomColor,
         borderBottomWidth: props.divider ? 1 : 0,
       }}>
       {props.label && (
-        <Text size="smaller" color={Colors.Grey} weight="semibold">
+        <Text size="smaller" color={Theme.Colors.textLabel} weight="semibold">
           {props.label}
         </Text>
       )}
-      <Text color={Colors.Black} weight={props.label ? 'semibold' : 'regular'}>
+      <Text
+        color={Theme.Colors.textValue}
+        weight={props.label ? 'semibold' : 'regular'}>
         {props.text}
       </Text>
     </Column>

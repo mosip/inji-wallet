@@ -31,8 +31,8 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = (props) => {
                 label={controller.id ? inputLabel : ''}
                 labelStyle={{
                   color: controller.isInvalid
-                    ? Theme.Colors.Red
-                    : Theme.Colors.Black,
+                    ? Theme.Colors.errorMessage
+                    : Theme.Colors.textValue,
                 }}
                 style={Theme.Styles.placeholder}
                 value={controller.id}
@@ -44,7 +44,7 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = (props) => {
                     <Icon name="help" size={18} />
                   )
                 }
-                errorStyle={{ color: Theme.Colors.Red }}
+                errorStyle={{ color: Theme.Colors.errorMessage }}
                 errorMessage={controller.idError}
                 onChangeText={controller.INPUT_ID}
                 ref={(node) => !controller.idInputRef && controller.READY(node)}

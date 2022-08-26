@@ -13,7 +13,7 @@ const VerifiedIcon: React.FC = () => {
   return (
     <Icon
       name="check-circle"
-      color={Theme.Colors.Green}
+      color={Theme.Colors.VerifiedIcon}
       size={14}
       containerStyle={{ marginStart: 4, bottom: 1 }}
     />
@@ -27,7 +27,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
     <Column>
       <Row padding="16 24">
         <Column fill elevation={1} padding="12 16" margin="0 16 0 0">
-          <Text size="smaller" color={Theme.Colors.Grey}>
+          <Text size="smaller" color={Theme.Colors.textLabel}>
             {t('generatedOn')}
           </Text>
           <Text weight="bold" size="smaller">
@@ -37,7 +37,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
         <Column fill elevation={1} padding="12 16" margin="0 16 0 0">
           <Text
             size="smaller"
-            color={Theme.Colors.Grey}
+            color={Theme.Colors.textLabel}
             style={{ textTransform: 'uppercase' }}>
             {props.vc?.idType}
           </Text>
@@ -46,7 +46,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
           </Text>
         </Column>
         <Column fill elevation={1} padding="12 16">
-          <Text size="smaller" color={Theme.Colors.Grey}>
+          <Text size="smaller" color={Theme.Colors.textLabel}>
             {t('status')}
           </Text>
           <Row>

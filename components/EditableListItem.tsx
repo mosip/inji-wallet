@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Dimensions } from 'react-native';
 import { ListItem, Overlay, Input } from 'react-native-elements';
 import { Text, Column, Row, Button } from './ui';
-import { Colors } from './ui/styleUtils';
+import { Theme } from './ui/styleUtils';
 import { useTranslation } from 'react-i18next';
 
 export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
@@ -14,10 +14,10 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
     <ListItem bottomDivider onPress={() => setIsEditing(true)}>
       <ListItem.Content>
         <ListItem.Title>
-          <Text>{props.label}</Text>
+          <Text color={Theme.Colors.profileLabel}>{props.label}</Text>
         </ListItem.Title>
       </ListItem.Content>
-      <Text color={Colors.Grey}>{props.value}</Text>
+      <Text color={Theme.Colors.profileValue}>{props.value}</Text>
       <Overlay
         overlayStyle={{ padding: 24, elevation: 6 }}
         isVisible={isEditing}

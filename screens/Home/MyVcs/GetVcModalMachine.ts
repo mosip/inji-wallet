@@ -274,14 +274,9 @@ export const GetVcModalMachine =
 
         requestingUinVid: async (context) => {
           const response = await request('POST', '/aid/get-individual-id', {
-            request: {
-              aid: context.id,
-              transactionID: context.transactionId,
-              otp: context.otp,
-            },
-            requesttime: String(new Date().toISOString()),
-            id: 'mosip.resident.checkstatus',
-            version: 'v1',
+            aid: context.id,
+            otp: context.otp,
+            transactionID: context.transactionId,
           });
           return response.response.individualId;
         },

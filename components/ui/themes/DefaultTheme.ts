@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ViewStyle } from 'react-native';
 
 const colors = {
   Black: '#231F20',
@@ -13,6 +13,8 @@ const colors = {
   Transparent: 'transparent',
 };
 
+export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5;
+
 export const DefaultTheme = {
   Colors: {
     TabItemText: colors.Orange,
@@ -25,15 +27,31 @@ export const DefaultTheme = {
     noUinText: colors.Orange,
     IconBg: colors.Orange,
     Icon: colors.Orange,
-    Black: '#231F20',
-    Grey: '#B0B0B0',
-    Grey5: '#E0E0E0',
-    Grey6: '#F2F2F2',
-    Orange: '#F2811D',
-    LightGrey: '#FAF9FF',
-    White: '#FFFFFF',
-    Red: '#EB5757',
-    Green: '#219653',
+    borderBottomColor: colors.Grey6,
+    whiteBackgroundColor: colors.White,
+    lightGreyBackgroundColor: colors.LightGrey,
+    profileLanguageValue: colors.Grey,
+    profileVersion: colors.Grey,
+    profileAuthFactorUnlock: colors.Grey,
+    profileLabel: colors.Black,
+    profileValue: colors.Grey,
+    overlayBackgroundColor: colors.White,
+    rotatingIcon: colors.Grey5,
+    loadingLabel: colors.Grey6,
+    textLabel: colors.Grey,
+    textValue: colors.Black,
+    errorMessage: colors.Red,
+    QRCodeBackgroundColor: colors.LightGrey,
+    ReceiveVcModalBackgroundColor: colors.LightGrey,
+    ToastItemText: colors.White,
+    VerifiedIcon: colors.Green,
+    whiteText: colors.White,
+    flipCameraIcon: colors.Black,
+    IdInputModalBorder: colors.Grey,
+    inputSelection: colors.Orange,
+    checkCircleIcon: colors.White,
+    OnboardingCircleIcon: colors.White,
+    OnboardingCloseIcon: colors.White,
   },
   Styles: StyleSheet.create({
     title: {
@@ -157,19 +175,6 @@ export const DefaultTheme = {
       height: 100,
       borderRadius: 5,
     },
-    input: {
-      borderBottomWidth: 1,
-      borderColor: colors.Grey,
-      color: colors.Black,
-      flex: 1,
-      fontFamily: 'Poppins_600SemiBold',
-      fontSize: 18,
-      fontWeight: '600',
-      height: 40,
-      lineHeight: 28,
-      margin: 8,
-      textAlign: 'center',
-    },
     scannerContainer: {
       borderWidth: 4,
       borderColor: colors.Black,
@@ -253,8 +258,145 @@ export const DefaultTheme = {
       zIndex: 1,
     },
   }),
+  PinInputStyle: StyleSheet.create({
+    input: {
+      borderBottomWidth: 1,
+      borderColor: colors.Grey,
+      color: colors.Black,
+      flex: 1,
+      fontFamily: 'Poppins_600SemiBold',
+      fontSize: 18,
+      fontWeight: '600',
+      height: 40,
+      lineHeight: 28,
+      margin: 8,
+      textAlign: 'center',
+    },
+  }),
+  TextStyles: StyleSheet.create({
+    base: {
+      color: colors.Black,
+      fontSize: 18,
+      lineHeight: 28,
+    },
+    regular: {
+      fontFamily: 'Poppins_400Regular',
+    },
+    semibold: {
+      fontFamily: 'Poppins_600SemiBold',
+    },
+    bold: {
+      fontFamily: 'Poppins_700Bold',
+    },
+    small: {
+      fontSize: 14,
+      lineHeight: 21,
+    },
+    smaller: {
+      fontSize: 12,
+      lineHeight: 18,
+    },
+  }),
+  VcItemStyles: StyleSheet.create({
+    title: {
+      color: colors.Black,
+      backgroundColor: 'transparent',
+    },
+    loadingTitle: {
+      color: 'transparent',
+      backgroundColor: colors.Grey5,
+      borderRadius: 4,
+    },
+    subtitle: {
+      backgroundColor: 'transparent',
+    },
+    loadingSubtitle: {
+      backgroundColor: colors.Grey,
+      borderRadius: 4,
+    },
+    container: {
+      backgroundColor: colors.White,
+    },
+    loadingContainer: {
+      backgroundColor: colors.Grey6,
+      borderRadius: 4,
+    },
+  }),
+  ToastItemStyles: StyleSheet.create({
+    toastContainer: {
+      backgroundColor: colors.Orange,
+      position: 'absolute',
+      alignSelf: 'center',
+      top: 80,
+      borderRadius: 4,
+    },
+    messageContainer: {
+      fontSize: 12,
+    },
+  }),
+  ButtonStyles: StyleSheet.create({
+    fill: {
+      flex: 1,
+    },
+    solid: {
+      backgroundColor: colors.Orange,
+    },
+    clear: {
+      backgroundColor: colors.Transparent,
+    },
+    outline: {
+      backgroundColor: colors.Transparent,
+      borderColor: colors.Orange,
+    },
+    container: {
+      minHeight: 48,
+      flexDirection: 'row',
+    },
+    disabled: {
+      opacity: 0.5,
+    },
+    addId: {
+      backgroundColor: colors.Orange,
+    },
+    clearAddIdBtnBg: {
+      backgroundColor: colors.Transparent,
+    },
+  }),
   OpenCard: require('../../../assets/ID-open.png'),
   CloseCard: require('../../../assets/ID-closed.png'),
   ProfileIcon: require('../../../assets/placeholder-photo.png'),
   MosipLogo: require('../../../assets/mosip-logo.png'),
+  elevation(level: ElevationLevel): ViewStyle {
+    // https://ethercreative.github.io/react-native-shadow-generator/
+
+    if (level === 0) {
+      return null;
+    }
+
+    const index = level - 1;
+
+    return {
+      shadowColor: colors.Black,
+      shadowOffset: {
+        width: 0,
+        height: [1, 1, 1, 2, 2][index],
+      },
+      shadowOpacity: [0.18, 0.2, 0.22, 0.23, 0.25][index],
+      shadowRadius: [1.0, 1.41, 2.22, 2.62, 3.84][index],
+      elevation: level,
+      zIndex: level,
+      borderRadius: 4,
+      backgroundColor: colors.White,
+    };
+  },
+  spacing(type: 'margin' | 'padding', values: string) {
+    const [top, end, bottom, start] = values.split(' ').map(Number);
+
+    return {
+      [`${type}Top`]: top,
+      [`${type}End`]: end != null ? end : top,
+      [`${type}Bottom`]: bottom != null ? bottom : top,
+      [`${type}Start`]: start != null ? start : end != null ? end : top,
+    };
+  },
 };

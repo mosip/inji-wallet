@@ -1,7 +1,7 @@
 import React from 'react';
 import { QrScanner } from '../../components/QrScanner';
 import { Button, Column, Text } from '../../components/ui';
-import { Colors } from '../../components/ui/styleUtils';
+import { Theme } from '../../components/ui/styleUtils';
 import { MainRouteProps } from '../../routes/main';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { useScanScreen } from './ScanScreenController';
@@ -13,14 +13,17 @@ export const ScanScreen: React.FC<MainRouteProps> = (props) => {
   const controller = useScanScreen(props);
 
   return (
-    <Column fill padding="98 24 24 24" backgroundColor={Colors.LightGrey}>
+    <Column
+      fill
+      padding="98 24 24 24"
+      backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
       <Text align="center">{t('header')}</Text>
 
       {controller.isLocationDisabled ||
       controller.isLocationDenied ||
       controller.isFlightMode ? (
         <Column fill align="space-between">
-          <Text align="center" margin="16 0" color={Colors.Red}>
+          <Text align="center" margin="16 0" color={Theme.Colors.errorMessage}>
             {controller.locationError.message}
           </Text>
           <Button
@@ -37,7 +40,7 @@ export const ScanScreen: React.FC<MainRouteProps> = (props) => {
           </Column>
         )
       ) : (
-        <Text align="center" margin="16 0" color={Colors.Red}>
+        <Text align="center" margin="16 0" color={Theme.Colors.errorMessage}>
           {t('noShareableVcs', { vcLabel: controller.vcLabel.plural })}
         </Text>
       )}

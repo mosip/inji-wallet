@@ -40,7 +40,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
               width="33%"
               style={{
                 borderBottomWidth: 1,
-                borderColor: Theme.Colors.Grey,
+                borderColor: Theme.Colors.IdInputModalBorder,
                 bottom: 24,
               }}>
               <Picker
@@ -57,8 +57,8 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
                 label={controller.id ? inputLabel : ''}
                 labelStyle={{
                   color: controller.isInvalid
-                    ? Theme.Colors.Red
-                    : Theme.Colors.Black,
+                    ? Theme.Colors.errorMessage
+                    : Theme.Colors.textValue,
                 }}
                 value={controller.id}
                 keyboardType="number-pad"
@@ -67,7 +67,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
                     <Icon name="error" size={18} color="red" />
                   ) : null
                 }
-                errorStyle={{ color: Theme.Colors.Red }}
+                errorStyle={{ color: Theme.Colors.errorMessage }}
                 errorMessage={controller.idError}
                 onChangeText={controller.INPUT_ID}
                 ref={(node) => !controller.idInputRef && controller.READY(node)}

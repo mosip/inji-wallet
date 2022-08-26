@@ -53,7 +53,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                 <GestureRecognizer onSwipeLeft={props.onSwipe}>
                   <Column elevation={2} margin="10 2 0 2">
                     <Button
-                      type="clearAddIdBtnBg"
+                      type="clear"
                       disabled={controller.isRefreshingVcs}
                       title={t('addVcButton', {
                         vcLabel: controller.vcLabel.singular,
@@ -71,7 +71,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                 <Text weight="semibold" margin="0 0 8 0">
                   {t('generateVc', { vcLabel: controller.vcLabel.plural })}
                 </Text>
-                <Text color={Theme.Colors.Grey} align="center">
+                <Text color={Theme.Colors.textLabel} align="center">
                   {t('generateVcDescription', {
                     vcLabel: controller.vcLabel.singular,
                   })}

@@ -30,7 +30,10 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = (props) => {
     );
 
   return (
-    <Column fill padding="32" backgroundColor={Theme.Colors.White}>
+    <Column
+      fill
+      padding="32"
+      backgroundColor={Theme.Colors.whiteBackgroundColor}>
       <Icon name="lock" color={Theme.Colors.Icon} size={60} />
       {props.route.params?.setup ? (
         <Column fill align="space-between" width="100%">
@@ -48,7 +51,7 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = (props) => {
       )}
 
       <Column fill>
-        <Text align="center" color={Theme.Colors.Red}>
+        <Text align="center" color={Theme.Colors.errorMessage}>
           {controller.error}
         </Text>
       </Column>

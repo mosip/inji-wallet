@@ -21,7 +21,7 @@ export const TimerBasedReceiveVcModal: React.FC<ReceveVcModalProps> = (
       <Column
         scroll
         padding="0 0 48 0"
-        backgroundColor={Theme.Colors.LightGrey}>
+        backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
         <NewVcDetails vc={controller.incomingVc} />
       </Column>
     </Modal>

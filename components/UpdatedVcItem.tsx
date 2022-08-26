@@ -21,7 +21,7 @@ const VerifiedIcon: React.FC = () => {
   return (
     <Icon
       name="check-circle"
-      color={Theme.Colors.Green}
+      color={Theme.Colors.VerifiedIcon}
       size={14}
       containerStyle={{ marginStart: 4, bottom: 1 }}
     />
@@ -178,7 +178,7 @@ export const UpdatedVcItem: React.FC<VcItemProps> = (props) => {
           {context.verifiableCredential ? (
             selectableOrCheck
           ) : (
-            <RotatingIcon name="sync" color={Theme.Colors.Grey5} />
+            <RotatingIcon name="sync" color={Theme.Colors.rotatingIcon} />
           )}
         </Row>
       </ImageBackground>

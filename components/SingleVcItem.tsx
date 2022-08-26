@@ -20,7 +20,7 @@ const VerifiedIcon: React.FC = () => {
   return (
     <Icon
       name="check-circle"
-      color={Theme.Colors.Green}
+      color={Theme.Colors.VerifiedIcon}
       size={14}
       containerStyle={{ marginStart: 4, bottom: 1 }}
     />

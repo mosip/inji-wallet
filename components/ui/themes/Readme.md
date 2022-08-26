@@ -1,6 +1,6 @@
 # CSS Themes
 
-We can customize the application by adding a new file under components/ui/themes and import that file in components/ui/styleUtils.ts and assign that file to Theme variable
+We can customize the application Theme by adding a new file under components/ui/themes and import that file in components/ui/styleUtils.ts and assign that file to Theme variable
 
 ```
 components/ui/styleUtils.ts
@@ -89,14 +89,14 @@ export const DefaultTheme = {
 }
 ```
 
-To change the color of Details Label Text
+To change the color of Details Text
 
 ![Image](../../../assets/img1.png 'Image')
 
 ```
 export const DefaultTheme = {
   Colors: {
-      DetailsLabel: colors.Orange,
+      Details: colors.Orange,
     ...
   }
 }
@@ -150,6 +150,59 @@ To change the Color of Loading Transition
 export const DefaultTheme = {
   Colors: {
        Loading: colors.Orange,
+    ...
+  }
+}
+```
+
+To change the Color of noUinText
+
+![Image](../../../assets/img9.png 'Image')
+
+```
+export const DefaultTheme = {
+  Colors: {
+       noUinText: colors.Orange,
+    ...
+  }
+}
+```
+
+To change the Color of profileLabel
+
+![Image](../../../assets/img10.png 'Image')
+
+```
+export const DefaultTheme = {
+  Colors: {
+       profileLabel: colors.Black,
+    ...
+  }
+}
+```
+
+To change the Color of profileValue and profileAuthFactorUnlock
+
+![Image](../../../assets/img11.png 'Image')
+
+```
+export const DefaultTheme = {
+  Colors: {
+    profileAuthFactorUnlock: colors.Grey,
+    profileValue: colors.Grey,
+    ...
+  }
+}
+```
+
+To change the Color of profileVersion
+
+![Image](../../../assets/img12.png 'Image')
+
+```
+export const DefaultTheme = {
+  Colors: {
+       profileVersion: colors.Grey,
     ...
   }
 }

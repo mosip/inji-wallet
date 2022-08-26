@@ -24,7 +24,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
             <Icon
               name="chevron-left"
               onPress={props.onDismiss}
-              color={Theme.Colors.Orange}
+              color={Theme.Colors.Icon}
             />
           ) : null}
         </Row>

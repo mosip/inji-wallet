@@ -8,7 +8,7 @@ import {
   ScrollView,
   RefreshControlProps,
 } from 'react-native';
-import { elevation, ElevationLevel, spacing } from './styleUtils';
+import { Theme, ElevationLevel } from './styleUtils';
 
 function createLayout(
   direction: FlexStyle['flexDirection'],
@@ -30,14 +30,14 @@ function createLayout(
     const styles: StyleProp<ViewStyle> = [
       layoutStyles.base,
       props.fill ? layoutStyles.fill : null,
-      props.padding ? spacing('padding', props.padding) : null,
-      props.margin ? spacing('margin', props.margin) : null,
+      props.padding ? Theme.spacing('padding', props.padding) : null,
+      props.margin ? Theme.spacing('margin', props.margin) : null,
       props.backgroundColor ? { backgroundColor: props.backgroundColor } : null,
       props.width ? { width: props.width } : null,
       props.height ? { height: props.height } : null,
       props.align ? { justifyContent: props.align } : null,
       props.crossAlign ? { alignItems: props.crossAlign } : null,
-      props.elevation ? elevation(props.elevation) : null,
+      props.elevation ? Theme.elevation(props.elevation) : null,
       props.style ? props.style : null,
     ];
 

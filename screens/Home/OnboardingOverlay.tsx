@@ -65,7 +65,7 @@ export const OnboardingOverlay: React.FC<OnboardingProps> = (props) => {
               slides.map((_, i) => (
                 <Icon
                   key={i}
-                  color={Theme.Colors.White}
+                  color={Theme.Colors.OnboardingCircleIcon}
                   size={10}
                   name="circle"
                   style={{ opacity: i === activeIndex ? 1 : 0.6, margin: 2 }}
@@ -86,7 +86,7 @@ export const OnboardingOverlay: React.FC<OnboardingProps> = (props) => {
       <Column fill align="flex-end">
         <Icon
           name="close"
-          color={Theme.Colors.White}
+          color={Theme.Colors.OnboardingCloseIcon}
           onPress={props.onDone}
           containerStyle={Theme.Styles.closeIcon}
         />

@@ -46,7 +46,7 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
   if (hasPermission === false) {
     return (
       <Column fill align="space-between">
-        <Text align="center" color={Theme.Colors.Red}>
+        <Text align="center" color={Theme.Colors.errorMessage}>
           {t('missingPermissionText')}
         </Text>
         <Button title={t('allowCameraButton')} onPress={openSettings} />
@@ -76,7 +76,11 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
                 : Camera.Constants.Type.back
             );
           }}>
-          <Icon name="flip-camera-ios" color={Theme.Colors.Black} size={64} />
+          <Icon
+            name="flip-camera-ios"
+            color={Theme.Colors.flipCameraIcon}
+            size={64}
+          />
         </TouchableOpacity>
       </Column>
     </View>

@@ -17,7 +17,10 @@ export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
         <Icon name="lock" color={Theme.Colors.Icon} size={60} />
         <Column fill align="space-between">
           <Text align="center">{t('enterOtp')}</Text>
-          <Text align="center" color={Theme.Colors.Red} margin="16 0 0 0">
+          <Text
+            align="center"
+            color={Theme.Colors.errorMessage}
+            margin="16 0 0 0">
             {props.error}
           </Text>
           <PinInput length={6} onDone={props.onInputDone} />

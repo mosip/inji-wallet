@@ -1,7 +1,7 @@
 import React from 'react';
 import { DeviceInfoList } from '../../components/DeviceInfoList';
 import { Button, Column, Text } from '../../components/ui';
-import { Colors } from '../../components/ui/styleUtils';
+import { Theme } from '../../components/ui/styleUtils';
 import { VcDetails } from '../../components/VcDetails';
 import { Modal, ModalProps } from '../../components/ui/Modal';
 import { useReceiveVcModal } from './ReceiveVcModalController';
@@ -13,7 +13,10 @@ export const ReceiveVcModal: React.FC<ReceveVcModalProps> = (props) => {
 
   return (
     <Modal {...props}>
-      <Column scroll padding="24 0 48 0" backgroundColor={Colors.LightGrey}>
+      <Column
+        scroll
+        padding="24 0 48 0"
+        backgroundColor={Theme.Colors.ReceiveVcModalBackgroundColor}>
         <Column>
           <DeviceInfoList of="sender" deviceInfo={controller.senderInfo} />
           <Text weight="semibold" margin="24 24 0 24">

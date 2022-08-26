@@ -3,52 +3,21 @@ import {
   Button as RNEButton,
   ButtonProps as RNEButtonProps,
 } from 'react-native-elements';
-import {
-  GestureResponderEvent,
-  StyleProp,
-  StyleSheet,
-  ViewStyle,
-} from 'react-native';
+import { GestureResponderEvent, StyleProp, ViewStyle } from 'react-native';
 import { Text } from './Text';
-import { Theme, spacing } from './styleUtils';
-
-const styles = StyleSheet.create({
-  fill: {
-    flex: 1,
-  },
-  solid: {
-    backgroundColor: Theme.Colors.AddIdBtnBg,
-  },
-  clear: {
-    backgroundColor: 'transparent',
-  },
-  outline: {
-    backgroundColor: 'transparent',
-    borderColor: Theme.Colors.Orange,
-  },
-  container: {
-    minHeight: 48,
-    flexDirection: 'row',
-  },
-  disabled: {
-    opacity: 0.5,
-  },
-  addId: {
-    backgroundColor: Theme.Colors.AddIdBtnBg,
-  },
-  clearAddIdBtnBg: {
-    backgroundColor: Theme.Colors.ClearAddIdBtnBg,
-  },
-});
+import { Theme } from './styleUtils';
 
 export const Button: React.FC<ButtonProps> = (props) => {
   const type = props.type || 'solid';
-  const buttonStyle: StyleProp<ViewStyle> = [styles.fill, styles[type]];
+  const buttonStyle: StyleProp<ViewStyle> = [
+    Theme.ButtonStyles.fill,
+    Theme.ButtonStyles[type],
+  ];
 
   const containerStyle: StyleProp<ViewStyle> = [
-    styles.container,
-    props.disabled ? styles.disabled : null,
-    props.margin ? spacing('margin', props.margin) : null,
+    Theme.ButtonStyles.container,
+    props.disabled ? Theme.ButtonStyles.disabled : null,
+    props.margin ? Theme.spacing('margin', props.margin) : null,
   ];
 
   const handleOnPress = (event: GestureResponderEvent) => {
@@ -60,7 +29,10 @@ export const Button: React.FC<ButtonProps> = (props) => {
   return (
     <RNEButton
       buttonStyle={buttonStyle}
-      containerStyle={[props.fill ? styles.fill : null, containerStyle]}
+      containerStyle={[
+        props.fill ? Theme.ButtonStyles.fill : null,
+        containerStyle,
+      ]}
       type={props.type}
       raised={props.raised}
       title={
@@ -69,7 +41,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
           align="center"
           color={
             type === 'solid' || type === 'addId'
-              ? Theme.Colors.White
+              ? Theme.Colors.whiteText
               : Theme.Colors.AddIdBtnTxt
           }>
           {props.title}

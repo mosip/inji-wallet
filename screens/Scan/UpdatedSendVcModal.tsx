@@ -34,7 +34,7 @@ export const UpdatedSendVcModal: React.FC<SendVcModalProps> = (props) => {
 
   return (
     <Modal {...props}>
-      <Column fill backgroundColor={Theme.Colors.LightGrey}>
+      <Column fill backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
         <Column padding="16 0" scroll>
           <DeviceInfoList of="receiver" deviceInfo={controller.receiverInfo} />
           <Column padding="24">
@@ -71,7 +71,7 @@ export const UpdatedSendVcModal: React.FC<SendVcModalProps> = (props) => {
           </Column>
         </Column>
         <Column
-          backgroundColor={Theme.Colors.White}
+          backgroundColor={Theme.Colors.whiteBackgroundColor}
           padding="16 24"
           margin="2 0 0 0"
           elevation={2}>
