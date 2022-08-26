@@ -1,0 +1,12 @@
+name: 'Delete old artifacts'
+on:
+  workflow_dispatch:
+
+jobs:
+  delete-artifacts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: kolpav/purge-artifacts-action@v1
+        with:
+          token: ${{ secrets. access_token }}
+          expire-in: 2days # Setting this to 0 will delete all artifacts
