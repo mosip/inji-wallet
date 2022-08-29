@@ -1,6 +1,8 @@
 import { VC } from '../types/vc';
 
-export const HOST = 'https://api-internal.dev3.mosip.net/resident/v1/';
+export const HOST =
+  Constants.manifest.extra.backendServiceUrl ||
+  'https://resident-app.newlogic.dev';
 
 export const MY_VCS_STORE_KEY = 'myVCs';
 
