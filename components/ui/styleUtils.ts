@@ -5,4 +5,8 @@ import { PurpleTheme } from './themes/PurpleTheme';
 
 export const Theme = DefaultTheme;
 
+type SpacingXY = [number, number];
+type SpacingFull = [number, number, number, number];
+export type Spacing = SpacingXY | SpacingFull | string;
+
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5;

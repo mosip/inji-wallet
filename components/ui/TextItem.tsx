@@ -7,7 +7,8 @@ export const TextItem: React.FC<TextItemProps> = (props) => {
     <Column
       backgroundColor={Theme.Colors.whiteBackgroundColor}
       margin={props.margin}
-      padding={props.label ? '16 24' : '12 24'}
+      pX={24}
+      pY={props.label ? 16 : 12}
       style={{
         borderBottomColor: Theme.Colors.borderBottomColor,
         borderBottomWidth: props.divider ? 1 : 0,

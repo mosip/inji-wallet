@@ -1,4 +1,5 @@
 import React from 'react';
+import { View } from 'react-native';
 import { getVersion } from 'react-native-device-info';
 import { ListItem, Switch } from 'react-native-elements';
 import { Column, Text } from '../../components/ui';
@@ -95,7 +96,7 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
         Version: {getVersion()}
       </Text>
       {controller.backendInfo.application.name !== '' ? (
-        <Column>
+        <View>
           <Text
             weight="semibold"
             align="center"
@@ -111,7 +112,7 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
             color={Theme.Colors.profileValue}>
             MOSIP: {controller.backendInfo.config['mosip.host']}
           </Text>
-        </Column>
+        </View>
       ) : null}
     </Column>
   );

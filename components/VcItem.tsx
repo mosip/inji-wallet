@@ -54,7 +54,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
             ? Theme.Colors.loadingLabel
             : Theme.Colors.whiteBackgroundColor
         }
-        padding="16 24"
+        padding={[16, 16]}
         style={
           !verifiableCredential
             ? Theme.VcItemStyles.loadingContainer

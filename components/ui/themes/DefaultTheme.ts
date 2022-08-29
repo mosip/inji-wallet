@@ -1,4 +1,5 @@
 import { StyleSheet, ViewStyle } from 'react-native';
+import { Spacing } from '../styleUtils'
 
 const colors = {
   Black: '#231F20',
@@ -389,9 +390,17 @@ export const DefaultTheme = {
       backgroundColor: colors.White,
     };
   },
-  spacing(type: 'margin' | 'padding', values: string) {
-    const [top, end, bottom, start] = values.split(' ').map(Number);
-
+  spacing(type: 'margin' | 'padding', values: Spacing) {
+    if (Array.isArray(values) && values.length === 2) {
+      return {
+        [`${type}Horizontal`]: values[0],
+        [`${type}Vertical`]: values[1],
+      };
+    }
+  
+    const [top, end, bottom, start] =
+      typeof values === 'string' ? values.split(' ').map(Number) : values;
+  
     return {
       [`${type}Top`]: top,
       [`${type}End`]: end != null ? end : top,

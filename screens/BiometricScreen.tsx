@@ -12,7 +12,7 @@ export const BiometricScreen: React.FC<RootRouteProps> = (props) => {
   const controller = useBiometricScreen(props);
 
   return (
-    <Column fill padding="32" backgroundColor={Theme.Colors.White}>
+    <Column fill pY={32} pX={32} backgroundColor={Theme.Colors.whiteBackgroundColor}>
       <Centered fill>
         <TouchableOpacity onPress={controller.useBiometrics}>
           <Icon name="fingerprint" size={180} color={Theme.Colors.Icon} />

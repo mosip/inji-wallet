@@ -26,7 +26,13 @@ export const MainLayout: React.FC<RootRouteProps> = () => {
     headerRightContainerStyle: { paddingEnd: 16 },
     headerTitleAlign: 'center',
     tabBarShowLabel: false,
-    tabBarStyle: { height: 86, paddingHorizontal: 36 },
+    tabBarStyle: {
+      height: 86,
+      paddingHorizontal: 36,
+    },
+    tabBarItemStyle: {
+      height: 86,
+    },
   };
 
   return (

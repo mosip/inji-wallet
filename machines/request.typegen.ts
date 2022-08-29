@@ -3,19 +3,20 @@
 export interface Typegen0 {
   '@@xstate/typegen': true;
   'internalEvents': {
+    'xstate.stop': { type: 'xstate.stop' };
     '': { type: '' };
     'xstate.after(CLEAR_DELAY)#clearingConnection': {
       type: 'xstate.after(CLEAR_DELAY)#clearingConnection';
     };
     'xstate.init': { type: 'xstate.init' };
-    'xstate.stop': { type: 'xstate.stop' };
   };
   'invokeSrcNameMap': {
-    advertiseDevice: 'done.invoke.waitingForConnection:invocation[0]';
+    checkConnection: 'done.invoke.request:invocation[0]';
     checkBluetoothService: 'done.invoke.request.checkingBluetoothService.checking:invocation[0]';
+    requestBluetooth: 'done.invoke.request.checkingBluetoothService.requesting:invocation[0]';
+    advertiseDevice: 'done.invoke.waitingForConnection:invocation[0]';
     exchangeDeviceInfo: 'done.invoke.request.exchangingDeviceInfo:invocation[0]';
     receiveVc: 'done.invoke.request.waitingForVc:invocation[0]';
-    requestBluetooth: 'done.invoke.request.checkingBluetoothService.requesting:invocation[0]';
     sendVcResponse:
       | 'done.invoke.accepted:invocation[0]'
       | 'done.invoke.request.reviewing.rejected:invocation[0]';
@@ -28,88 +29,87 @@ export interface Typegen0 {
   };
   'eventsCausingActions': {
     disconnect:
+      | 'SCREEN_BLUR'
+      | 'SCREEN_FOCUS'
+      | 'xstate.stop'
+      | 'DISMISS'
       | ''
-      | 'DISMISS'
-      | 'GOBACK'
-      | 'SCREEN_BLUR'
-      | 'SCREEN_FOCUS'
-      | 'xstate.stop';
-    generateConnectionParams:
-      | 'DISMISS'
-      | 'xstate.after(CLEAR_DELAY)#clearingConnection';
-    logReceived: 'STORE_RESPONSE';
-    mergeIncomingVc: 'STORE_RESPONSE';
-    prependReceivedVc: 'VC_RESPONSE';
-    registerLoggers: 'DISMISS' | 'xstate.after(CLEAR_DELAY)#clearingConnection';
-    removeLoggers:
-      | 'DISMISS'
-      | 'SCREEN_BLUR'
-      | 'SCREEN_FOCUS'
-      | 'xstate.after(CLEAR_DELAY)#clearingConnection'
-      | 'xstate.init';
-    requestExistingVc: 'VC_RESPONSE';
-    requestReceivedVcs: 'ACCEPT';
-    requestReceiverInfo: 'CONNECTED';
-    sendVcReceived: 'STORE_RESPONSE';
-    setIncomingVc: 'VC_RECEIVED';
+      | 'DISCONNECT';
     setReceiverInfo: 'RECEIVE_DEVICE_INFO';
     setSenderInfo: 'EXCHANGE_DONE';
+    setIncomingVc: 'VC_RECEIVED';
+    removeLoggers:
+      | 'SCREEN_BLUR'
+      | 'SCREEN_FOCUS'
+      | 'xstate.init'
+      | 'xstate.after(CLEAR_DELAY)#clearingConnection'
+      | 'DISMISS';
+    registerLoggers: 'xstate.after(CLEAR_DELAY)#clearingConnection' | 'DISMISS';
+    generateConnectionParams:
+      | 'xstate.after(CLEAR_DELAY)#clearingConnection'
+      | 'DISMISS';
+    requestReceiverInfo: 'CONNECTED';
+    requestReceivedVcs: 'ACCEPT';
+    requestExistingVc: 'VC_RESPONSE';
+    mergeIncomingVc: 'STORE_RESPONSE';
+    prependReceivedVc: 'VC_RESPONSE';
     storeVc: 'STORE_RESPONSE';
+    sendVcReceived: 'STORE_RESPONSE';
+    logReceived: 'STORE_RESPONSE';
   };
   'eventsCausingServices': {
-    advertiseDevice: 'DISMISS' | 'xstate.after(CLEAR_DELAY)#clearingConnection';
+    checkConnection: 'SCREEN_BLUR' | 'SCREEN_FOCUS' | 'xstate.init';
     checkBluetoothService: 'SCREEN_FOCUS';
+    requestBluetooth: 'BLUETOOTH_DISABLED';
+    advertiseDevice: 'xstate.after(CLEAR_DELAY)#clearingConnection' | 'DISMISS';
     exchangeDeviceInfo: 'RECEIVE_DEVICE_INFO';
     receiveVc: 'EXCHANGE_DONE';
-    requestBluetooth: 'BLUETOOTH_DISABLED';
-    sendVcResponse: 'CANCEL' | 'REJECT' | 'STORE_RESPONSE';
+    sendVcResponse: 'STORE_RESPONSE' | 'REJECT' | 'CANCEL';
   };
   'eventsCausingGuards': {
     hasExistingVc: 'VC_RESPONSE';
   };
   'eventsCausingDelays': {
-    CLEAR_DELAY: '' | 'GOBACK';
+    CLEAR_DELAY: '';
   };
   'matchesStates':
-    | 'bluetoothDenied'
+    | 'inactive'
     | 'checkingBluetoothService'
     | 'checkingBluetoothService.checking'
-    | 'checkingBluetoothService.enabled'
     | 'checkingBluetoothService.requesting'
+    | 'checkingBluetoothService.enabled'
+    | 'bluetoothDenied'
     | 'clearingConnection'
-    | 'disconnected'
-    | 'exchangingDeviceInfo'
-    | 'inactive'
+    | 'waitingForConnection'
     | 'preparingToExchangeInfo'
+    | 'exchangingDeviceInfo'
+    | 'waitingForVc'
     | 'reviewing'
-    | 'reviewing.accepted'
+    | 'reviewing.idle'
     | 'reviewing.accepting'
+    | 'reviewing.accepting.requestingReceivedVcs'
+    | 'reviewing.accepting.requestingExistingVc'
     | 'reviewing.accepting.mergingIncomingVc'
     | 'reviewing.accepting.prependingReceivedVc'
-    | 'reviewing.accepting.requestingExistingVc'
-    | 'reviewing.accepting.requestingReceivedVcs'
     | 'reviewing.accepting.storingVc'
-    | 'reviewing.idle'
-    | 'reviewing.navigatingToHome'
-    | 'reviewing.navigatingToTimeBasedRequest'
+    | 'reviewing.accepted'
     | 'reviewing.rejected'
-    | 'waitingForConnection'
-    | 'waitingForVc'
+    | 'reviewing.navigatingToHome'
+    | 'disconnected'
     | {
-        checkingBluetoothService?: 'checking' | 'enabled' | 'requesting';
+        checkingBluetoothService?: 'checking' | 'requesting' | 'enabled';
         reviewing?:
-          | 'accepted'
-          | 'accepting'
           | 'idle'
-          | 'navigatingToHome'
-          | 'navigatingToTimeBasedRequest'
+          | 'accepting'
+          | 'accepted'
           | 'rejected'
+          | 'navigatingToHome'
           | {
               accepting?:
+                | 'requestingReceivedVcs'
+                | 'requestingExistingVc'
                 | 'mergingIncomingVc'
                 | 'prependingReceivedVc'
-                | 'requestingExistingVc'
-                | 'requestingReceivedVcs'
                 | 'storingVc';
             };
       };

@@ -9,6 +9,50 @@ import { GlobalContext } from '../../shared/GlobalContext';
 import { selectVcLabel } from '../../machines/settings';
 import { useTranslation } from 'react-i18next';
 
+const styles = StyleSheet.create({
+  overlay: {
+    padding: 24,
+    bottom: 86,
+    backgroundColor: 'transparent',
+    shadowColor: 'transparent',
+  },
+  slide: {
+    width: '100%',
+    padding: 20,
+  },
+  slider: {
+    backgroundColor: Colors.Orange,
+    minHeight: 300,
+    width: '100%',
+    margin: 0,
+    borderRadius: 4,
+  },
+  appSlider: {},
+  title: {
+    color: Colors.White,
+    marginBottom: 20,
+    fontFamily: 'Poppins_700Bold',
+  },
+  text: {
+    color: Colors.White,
+  },
+  paginationContainer: {
+    margin: 10,
+  },
+  paginationDots: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  closeIcon: {
+    alignItems: 'flex-end',
+    end: 16,
+    top: 40,
+    zIndex: 1,
+  },
+});
+
 export const OnboardingOverlay: React.FC<OnboardingProps> = (props) => {
   const slider = useRef<AppIntroSlider>();
 
