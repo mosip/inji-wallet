@@ -78,6 +78,7 @@ export interface Typegen0 {
     clearOtp:
       | ''
       | 'DISMISS'
+      | 'REVOKE_VC'
       | 'STORE_RESPONSE'
       | 'done.invoke.vc-item.requestingOtp:invocation[0]'
       | 'done.invoke.vc-item.verifyingCredential:invocation[0]'
@@ -108,7 +109,7 @@ export interface Typegen0 {
       | 'error.platform.vc-item.requestingRevoke:invocation[0]';
     setRevoke: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
     setTag: 'SAVE_TAG';
-    setTransactionId: 'LOCK_VC' | 'REVOKE_VC' | 'UNLOCK_VC';
+    setTransactionId: 'LOCK_VC' | 'UNLOCK_VC';
     storeContext:
       | 'CREDENTIAL_DOWNLOADED'
       | 'done.invoke.vc-item.requestingRevoke:invocation[0]'
@@ -124,7 +125,7 @@ export interface Typegen0 {
     checkStatus: 'STORE_RESPONSE';
     downloadCredential: 'DOWNLOAD_READY';
     requestLock: 'INPUT_OTP';
-    requestOtp: 'LOCK_VC' | 'REVOKE_VC' | 'UNLOCK_VC';
+    requestOtp: 'LOCK_VC' | 'UNLOCK_VC';
     requestRevoke: 'INPUT_OTP';
     verifyCredential: '' | 'VERIFY';
   };

@@ -10,7 +10,8 @@ import { VcDetails } from '../../components/VcDetails';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { ToastItem } from '../../components/ui/ToastItem';
 import { Passcode } from '../../components/Passcode';
-import { OtpVerificationModal } from './MyVcs/OtpVerificationModal';
+//import { OtpVerificationModal } from './MyVcs/OtpVerificationModal';
+import { OIDcAuthenticationModal } from '../../components/OIDcAuth';
 import { useViewVcModal, ViewVcModalProps } from './ViewVcModalController';
 import { useTranslation } from 'react-i18next';
 
@@ -53,10 +54,13 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
         onSave={controller.SAVE_TAG}
       />
 
-      <OtpVerificationModal
+      <OIDcAuthenticationModal
         isVisible={controller.isAcceptingOtpInput}
         onDismiss={controller.DISMISS}
-        onInputDone={controller.inputOtp}
+        onVerify={() => {
+          console.log('onVerify')
+          controller.revokeVc('1111')
+        }}
         error={controller.otpError}
       />
 

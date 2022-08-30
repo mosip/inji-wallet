@@ -69,7 +69,7 @@ export const revokeVidsMachine = model.createMachine(
             on: {
               REVOKE_VCS: {
                 actions: ['setVIDs'],
-                target: 'requestingOtp',
+                target: '#RevokeVids.acceptingOtpInput',
               },
             },
           },

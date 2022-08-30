@@ -167,7 +167,7 @@ export const vcItemMachine =
               target: 'requestingOtp',
             },
             REVOKE_VC: {
-              target: 'requestingOtp',
+              target: 'acceptingOtpInput',
             },
           },
         },

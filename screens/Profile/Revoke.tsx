@@ -6,14 +6,14 @@ import { VidItem } from '../../components/VidItem';
 import { Colors } from '../../components/ui/styleUtils';
 import { OtpVerificationModal } from '../Home/MyVcs/OtpVerificationModal';
 import { ToastItem } from '../../components/ui/ToastItem';
-
+import { OIDcAuthenticationModal } from '../../components/OIDcAuth';
 import { useTranslation } from 'react-i18next';
 import { useRevoke } from './RevokeController';
 
 export const Revoke: React.FC<RevokeScreenProps> = (props) => {
   const controller = useRevoke();
   const { t } = useTranslation('ProfileScreen');
-  console.log('toastVisible', controller.toastVisible)
+  console.log('isAcceptingOtpInput', controller.isAcceptingOtpInput)
   const styles = StyleSheet.create({
     buttonContainer: {
       position: 'absolute',
@@ -30,7 +30,7 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
   });
 
   return (
-    <ListItem bottomDivider onPress={() => controller.setIsViewing(true)}>
+    <ListItem bottomDivider onPress={() => controller.setAuthenticating(true)}>
       <ListItem.Content>
         <ListItem.Title>
           <Text>{props.label}</Text>
@@ -97,6 +97,18 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
           </Row>
         </View>
       </Overlay>
+      <OIDcAuthenticationModal
+        isVisible={controller.isAuthenticating}
+        onDismiss={() => controller.setAuthenticating(false)}
+        onVerify={() => controller.setIsViewing(true)}
+      />
+      <OIDcAuthenticationModal
+        isVisible={controller.isAcceptingOtpInput}
+        onDismiss={controller.DISMISS}
+        onVerify={() => {
+          controller.revokeVc('1111')
+        }}
+      />
       <Overlay
         overlayStyle={{ padding: 24, elevation: 6 }}
         isVisible={controller.isRevoking}
@@ -128,12 +140,6 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
           </Row>
         </Column>
       </Overlay>
-      <OtpVerificationModal
-        isVisible={controller.isAcceptingOtpInput}
-        onDismiss={controller.DISMISS}
-        onInputDone={controller.INPUT_OTP}
-        error={controller.error}
-      />
     </ListItem>
   );
 };

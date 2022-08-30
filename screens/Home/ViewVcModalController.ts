@@ -24,7 +24,6 @@ import {
 import { selectBiometricUnlockEnabled } from '../../machines/settings';
 
 export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
-  console.log('--------------------->vcItemActor', vcItemActor)
   const [toastVisible, setToastVisible] = useState(false);
   const [message, setMessage] = useState('');
   const [reAuthenticating, setReAuthenticating] = useState('');
@@ -136,6 +135,16 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
       });
     },
     inputOtp: (otp: string) => {
+      NetInfo.fetch().then((state) => {
+        if (state.isConnected) {
+          vcItemActor.send(VcItemEvents.INPUT_OTP(otp));
+        } else {
+          vcItemActor.send(VcItemEvents.DISMISS());
+          showToast('Request network failed');
+        }
+      });
+    },
+    revokeVc: (otp: string) => {
       NetInfo.fetch().then((state) => {
         if (state.isConnected) {
           vcItemActor.send(VcItemEvents.INPUT_OTP(otp));

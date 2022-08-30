@@ -47,7 +47,7 @@ export interface Typegen0 {
     setVIDs: 'REVOKE_VCS';
   };
   'eventsCausingServices': {
-    requestOtp: 'REVOKE_VCS';
+    requestOtp: never;
     requestRevoke: 'INPUT_OTP';
   };
   'eventsCausingGuards': {};

@@ -1,5 +1,6 @@
 import { useSelector, useMachine } from '@xstate/react';
 import { useContext, useEffect, useState } from 'react';
+import NetInfo from '@react-native-community/netinfo';
 import { GlobalContext } from '../../shared/GlobalContext';
 import {
   selectIsRefreshingMyVcs,
@@ -31,6 +32,7 @@ export function useRevoke() {
   );
 
   const [isRevoking, setRevoking] = useState(false);
+  const [isAuthenticating, setAuthenticating] = useState(false);
   const [isViewing, setIsViewing] = useState(false);
   const [toastVisible, setToastVisible] = useState(false);
   const [message, setMessage] = useState('');
@@ -72,6 +74,7 @@ export function useRevoke() {
   return {
     error: '',
     isAcceptingOtpInput,
+    isAuthenticating,
     isRefreshingVcs: useSelector(vcService, selectIsRefreshingMyVcs),
     isRevoking,
     isViewing,
@@ -94,6 +97,17 @@ export function useRevoke() {
       revokeService.send(RevokeVidsEvents.REVOKE_VCS(selectedVidKeys));
       setRevoking(false);
     },
+    revokeVc: (otp: string) => {
+      NetInfo.fetch().then((state) => {
+        if (state.isConnected) {
+          revokeService.send(RevokeVidsEvents.INPUT_OTP(otp));
+        } else {
+          revokeService.send(RevokeVidsEvents.DISMISS());
+          showToast('Request network failed');
+        }
+      });
+    },
+    setAuthenticating,
     selectVcItem,
     setIsViewing,
     setRevoking,

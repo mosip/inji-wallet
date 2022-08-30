@@ -5,6 +5,11 @@
     "deviceRefNumber": "Device reference number",
     "name": "Name"
   },
+  "OIDcAuth": {
+    "title": "Authentication",
+    "text": "To be replaced with the appropriate method of authentication",
+    "verify": "Verify"
+  },
   "PasscodeVerify": {
     "passcodeMismatchError": "Passcode did not match."
   },
