@@ -13,8 +13,8 @@ export async function request(
   path: `/${string}`,
   body?: Record<string, unknown>
 ) {
-  console.log('----->HOST', HOST)
-  console.log('----->body', body)
+  console.log('HOST',HOST + path );
+  console.log('BODY', body)
   const response = await fetch(HOST + path, {
     method,
     headers: {

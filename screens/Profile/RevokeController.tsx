@@ -66,6 +66,7 @@ export function useRevoke() {
 
   useEffect(() => {
     if (isRevokingVc) {
+      setSelectedVidKeys([])
       showToast(t('revokeSuccessful'));
       revokeService.send(RevokeVidsEvents.DISMISS());
     }

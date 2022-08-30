@@ -6,7 +6,7 @@ import { createModel } from 'xstate/lib/model';
 import { request } from '../shared/request';
 import { VcIdType } from '../types/vc';
 import i18n from '../i18n';
-import { log } from 'xstate/lib/actions';
+import { log, pure } from 'xstate/lib/actions';
 
 const model = createModel(
   {
@@ -31,110 +31,112 @@ const model = createModel(
   }
 );
 
-export const revokeVidsMachine = model.createMachine(
+export const revokeVidsMachine = 
+/** @xstate-layout N4IgpgJg5mDOIC5QCUwDcD2BrMA1AlhLAHSEA2YAxMgKK4DyA0jQPq4DCAyoqAA4ax8AF3wYAdjxAAPRACYAHAFZiARhUB2WQDZFABgCcO-boDMWgDQgAnohWyALLOK6X9k-J3zZirfYC+fpaomDgERKRiaACGZISUAJIAcgAKAKoAKiz06cmS-IIi4pIyCOq6TuomjvYqWlpe3iaWNgiKik4u5fK69vr2uipmAUHo2HiEJPiRMXEAIvGcALIL3Egg+cKiEmslZRVVDrX1so3Nclr6zi61pvLyKoY9wyDBY2EkUQDGn2C8ImJQXDxWaTCAUah0JisDirPgCTZFHaIEyydTEe6yEyaQzqXrtM4IeQmXRXcrqDz9dQPEzPV6hCbEL4-P5TQHAkgAJzAAEcAK5wf5QehCXiUCDiMAREKSunjcJM36CoEg4hcvkC1nC3gIKaYT5RQpiADaugAunl4Ybioh8dZbHtiHoevpFESlIp9DTAi9RvT5d9FazlZyefzYIKtZQwByORgOcReGQDQAzOMAW2IsvejIDLIBwdVoY1AK1OsiGH1hpN5rWGytSIQJix6LsWNkOLxsgJKLRnVMlXJdxq-m9WYZCrzbJBlHmSxWFoKW2tjdRLcx2K0uJdXbtCGMpN03Qe-X03VktN9co+uYjIviYl4vKECRSGSyOQXCO2oBKKkPaNdRQqXsRRBi0EwXQJep5EdFxURdTczB0C9pWzCdb14e9H2fWdlk4WF1ktJcGwUZQ1E0HQDCMUwLF3NQ+lJVFN3kXFvBQt4GTVMNBVlMUJSlMZM0vbMuOLKBZTLPUDS2atP3rH9bH-R0lGA0CzAgxQCRqS4nQ0F0-10SoRxGVDOKLcNWV46NY3jRMU3TITTPCUSLIBCTdQraTxFk2siMRBTSh3FpBhdWCeiAqkiSA4yfSckMQiDT4ZwWPCCLrYiAq8AlBgeYg6jKLF1DaB5ygCb0xAwCA4EkMdwnIMA5Iy6RbEMPKNGJSo2nuD17Gyh5lDqC59HUTwVBqL0TI4urpliCBiAwEVGv85rWipZx5GGxRiV8GjNN3BQALg8bMS0citHYv1JhmwhiAAIy+HAxAgJbvxWto0T6doTlkFwtBOFRuzaMK1G6TdqWGi6rylGZnt8xdlpKLaTGIT7vp+3Q-tkAH9pUZRdNOux9KxGLauvZklXZUgwQauGv2XH7LhMOwai+zcfvkXrd3sHQwsPal7C8WpFEhtCbyDSmXIwl7l00btud5twLj-Op5BF8cxfzdlpYbAXspYhW9iG3w1f9cnNTvB8n21gKBbROpHEAhn20UTngp+lRiCx7nN1uAxMRNkN1Vc8TL2tlaiTRQZtBMCKBe+gkXZJJ1tB6ECBf0FQA8LBL80+MPf3bGC7lRDHT1TptuzuMLDhRMwzoD-O5Fd2wYOuVF-raXx7HUMq-CAA */
+model.createMachine(
   {
-    tsTypes: {} as import('./revoke.typegen').Typegen0,
-    id: 'RevokeVids',
-    context: model.initialContext,
-    initial: 'acceptingVIDs',
-    states: {
-      idle: {
-        on: {
-          REVOKE_VCS: {
-            actions: ['setTransactionId', 'clearOtp'],
-            target: 'acceptingOtpInput',
-          },
+  context: model.initialContext,
+  tsTypes: {} as import('./revoke.typegen').Typegen0,
+  id: 'RevokeVids',
+  initial: 'acceptingVIDs',
+  states: {
+    idle: {
+      on: {
+        REVOKE_VCS: {
+          actions: ['setTransactionId', 'clearOtp'],
+          target: 'acceptingOtpInput',
         },
       },
-      invalid: {
-        states: {
-          otp: {},
-          backend: {},
+    },
+    invalid: {
+      states: {
+        otp: {},
+        backend: {},
+      },
+      on: {
+        INPUT_OTP: {
+          actions: 'setOtp',
+          target: 'requestingRevoke',
         },
-        on: {
-          INPUT_OTP: {
-            actions: 'setOtp',
-            target: 'requestingRevoke',
-          },
-          DISMISS: {
-            target: 'idle',
-          },
+        DISMISS: {
+          target: 'idle',
         },
       },
-      acceptingVIDs: {
-        entry: ['setTransactionId', 'clearOtp'],
-        initial: 'idle',
-        states: {
-          idle: {
-            on: {
-              REVOKE_VCS: {
-                actions: ['setVIDs'],
+    },
+    acceptingVIDs: {
+      entry: ['setTransactionId', 'clearOtp'],
+      initial: 'idle',
+      states: {
+        idle: {
+          on: {
+            REVOKE_VCS: {
+              actions: 'setVIDs',
+              target: '#RevokeVids.acceptingOtpInput',
+            },
+          },
+        },
+        requestingOtp: {
+          invoke: {
+            src: 'requestOtp',
+            onDone: [
+              {
+                actions: log('accepting OTP'),
                 target: '#RevokeVids.acceptingOtpInput',
               },
-            },
-          },
-          requestingOtp: {
-            invoke: {
-              src: 'requestOtp',
-              onDone: [
-                {
-                  actions: [log('accepting OTP')],
-                  target: '#RevokeVids.acceptingOtpInput',
-                },
-              ],
-              onError: [
-                {
-                  actions: [log('error OTP'), 'setIdBackendError'],
-                  target: '#RevokeVids.invalid.backend',
-                },
-              ],
-            },
-          },
-        },
-        on: {
-          DISMISS: {
-            target: 'idle',
+            ],
+            onError: [
+              {
+                actions: [log('error OTP'), 'setIdBackendError'],
+                target: '#RevokeVids.invalid.backend',
+              },
+            ],
           },
         },
       },
-      acceptingOtpInput: {
-        entry: 'clearOtp',
-        on: {
-          INPUT_OTP: {
-            actions: 'setOtp',
-            target: 'requestingRevoke',
-          },
-          DISMISS: {
-            target: 'idle',
-          },
+      on: {
+        DISMISS: {
+          target: 'idle',
         },
       },
-      requestingRevoke: {
-        invoke: {
-          src: 'requestRevoke',
-          onDone: [
-            {
-              target: 'revokingVc',
-            },
-          ],
-          onError: [
-            {
-              actions: 'setOtpError',
-              target: 'acceptingOtpInput',
-            },
-          ],
+    },
+    acceptingOtpInput: {
+      entry: 'clearOtp',
+      on: {
+        INPUT_OTP: {
+          actions: 'setOtp',
+          target: 'requestingRevoke',
+        },
+        DISMISS: {
+          target: 'idle',
         },
       },
-      revokingVc: {
-        entry: ['logRevoked'],
-        on: {
-          DISMISS: {
-            target: 'idle',
+    },
+    requestingRevoke: {
+      invoke: {
+        src: 'requestRevoke',
+        onDone: [
+          {
+            target: 'revokingVc',
           },
+        ],
+        onError: [
+          {
+            actions: [log('error on Revoking'), 'setOtpError'],
+            target: 'acceptingOtpInput',
+          },
+        ],
+      },
+    },
+    revokingVc: {
+      entry: 'logRevoked',
+      on: {
+        DISMISS: {
+          target: 'idle',
         },
       },
     },
   },
+},
   {
     actions: {
       setOtp: model.assign({
@@ -184,9 +186,24 @@ export const revokeVidsMachine = model.createMachine(
 
       clearOtp: assign({ otp: '' }),
 
-      logRevoked: (_context) => {
-        _context.VIDs.forEach((vc) => {
-          send(
+      // logRevoked: pure((context) =>
+      //   context.VIDs.map((vc) =>
+      //     send(
+      //       ActivityLogEvents.LOG_ACTIVITY({
+      //         _vcKey: vc,
+      //         action: 'revoked',
+      //         timestamp: Date.now(),
+      //         deviceName: '',
+      //         vcLabel: vc.split(':')[2],
+      //       }),
+      //       { to: () => context.serviceRefs.activityLog }
+      //     )
+      //   )
+      // ),
+
+      logRevoked: pure(
+        (context) => context.VIDs.map(
+          (vc) => send(
             () =>
               ActivityLogEvents.LOG_ACTIVITY({
                 _vcKey: vc,
@@ -198,9 +215,10 @@ export const revokeVidsMachine = model.createMachine(
             {
               to: (_context) => _context.serviceRefs.activityLog,
             }
-          );
-        });
-      },
+          )
+        )
+      ),
+
     },
 
     services: {
@@ -215,6 +233,7 @@ export const revokeVidsMachine = model.createMachine(
       },
 
       requestRevoke: async (context) => {
+        console.log('context.otp', context.otp)
         try {
           return await Promise.all(
             context.VIDs.map((vid: string) => {

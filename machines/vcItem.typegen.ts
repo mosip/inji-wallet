@@ -109,7 +109,12 @@ export interface Typegen0 {
       | 'error.platform.vc-item.requestingRevoke:invocation[0]';
     setRevoke: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
     setTag: 'SAVE_TAG';
-    setTransactionId: 'LOCK_VC' | 'UNLOCK_VC';
+    setTransactionId:
+      | 'INPUT_OTP'
+      | 'REVOKE_VC'
+      | 'done.invoke.vc-item.requestingOtp:invocation[0]'
+      | 'error.platform.vc-item.requestingLock:invocation[0]'
+      | 'error.platform.vc-item.requestingRevoke:invocation[0]';
     storeContext:
       | 'CREDENTIAL_DOWNLOADED'
       | 'done.invoke.vc-item.requestingRevoke:invocation[0]'

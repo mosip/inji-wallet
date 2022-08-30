@@ -100,13 +100,16 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
       <OIDcAuthenticationModal
         isVisible={controller.isAuthenticating}
         onDismiss={() => controller.setAuthenticating(false)}
-        onVerify={() => controller.setIsViewing(true)}
+        onVerify={() => {
+          controller.setAuthenticating(false)
+          controller.setIsViewing(true)
+        }}
       />
       <OIDcAuthenticationModal
         isVisible={controller.isAcceptingOtpInput}
         onDismiss={controller.DISMISS}
         onVerify={() => {
-          controller.revokeVc('1111')
+          controller.revokeVc('111111')
         }}
       />
       <Overlay

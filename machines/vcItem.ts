@@ -237,7 +237,6 @@ export const vcItemMachine =
           },
         },
         requestingOtp: {
-          entry: 'setTransactionId',
           invoke: {
             src: 'requestOtp',
             onDone: [
@@ -255,7 +254,7 @@ export const vcItemMachine =
           },
         },
         acceptingOtpInput: {
-          entry: 'clearOtp',
+          entry: ['clearOtp', 'setTransactionId'],
           on: {
             INPUT_OTP: [
               {
@@ -264,7 +263,7 @@ export const vcItemMachine =
                 target: 'requestingLock',
               },
               {
-                actions: [log('setting OTP'), 'setOtp'],
+                actions: [log('setting OTP'), 'setTransactionId', 'setOtp'],
                 cond: 'notRequestingLock',
                 target: 'requestingRevoke',
               },
@@ -305,13 +304,13 @@ export const vcItemMachine =
             src: 'requestRevoke',
             onDone: [
               {
-                actions: ['setRevoke'],
+                actions: [log('doneRevoking'), 'setRevoke'],
                 target: 'revokingVc',
               },
             ],
             onError: [
               {
-                actions: 'setOtpError',
+                actions: [log('OTP error'), 'setOtpError'],
                 target: 'acceptingOtpInput',
               },
             ],
