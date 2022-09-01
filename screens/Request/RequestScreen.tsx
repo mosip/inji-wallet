@@ -27,17 +27,14 @@ export const RequestScreen: React.FC = () => {
             />
           </React.Fragment>
         ) : (
-          controller.isWaitingForConnection && (
-            <Text align="center">
-              {t('showQrCode', { vcLabel: controller.vcLabel.singular })}
-            </Text>
-          )
+          <Text align="center">
+            {t('showQrCode', { vcLabel: controller.vcLabel.singular })}
+          </Text>
         )}
       </Column>
 
       <Centered fill>
-        {controller.isWaitingForConnection &&
-        controller.connectionParams !== '' ? (
+        {controller.connectionParams !== '' ? (
           <QRCode
             size={200}
             value={controller.connectionParams}
@@ -46,17 +43,15 @@ export const RequestScreen: React.FC = () => {
         ) : null}
       </Centered>
 
-      {controller.isWaitingForConnection ? (
-        <Row align="center" crossAlign="center" margin={[0, 0, 48, 0]}>
-          <Text margin={[0, 16, 0, 0]}>Offline</Text>
-          <Switch
-            value={controller.sharingProtocol === 'ONLINE'}
-            onValueChange={controller.SWITCH_PROTOCOL}
-            disabled={Platform.OS === 'ios'}
-          />
-          <Text margin={[0, 0, 0, 16]}>Online</Text>
-        </Row>
-      ) : null}
+      <Row align="center" crossAlign="center" margin={[0, 0, 48, 0]}>
+        <Text margin={[0, 16, 0, 0]}>Offline</Text>
+        <Switch
+          value={controller.sharingProtocol === 'ONLINE'}
+          onValueChange={controller.SWITCH_PROTOCOL}
+          disabled={Platform.OS === 'ios'}
+        />
+        <Text margin={[0, 0, 0, 16]}>Online</Text>
+      </Row>
 
       {controller.statusMessage !== '' && (
         <Column elevation={1} padding="16 24">
