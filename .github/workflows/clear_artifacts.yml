@@ -8,5 +8,5 @@ jobs:
     steps:
       - uses: kolpav/purge-artifacts-action@v1
         with:
-          token: ${{ secrets. access_token }}
+          token: ${{ secrets.ACTION_PAT }}
           expire-in: 2days # Setting this to 0 will delete all artifacts
