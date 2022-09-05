@@ -30,6 +30,23 @@ keytool \
 
 ## Running the app
 
+### Prepare environment
+
+Create a `.env.local` file using `.env` as your template:
+
+```
+MIMOTO_HOST=
+GOOGLE_NEARBY_MESSAGES_API_KEY=
+```
+
+And `android/local.properties`:
+
+```
+GOOGLE_NEARBY_MESSAGES_API_KEY=
+```
+
+More info here: [Setup Google Nearby Messages in React](https://github.com/mrousavy/react-native-google-nearby-messages#usage)
+
 ### Android
 
 ```shell
@@ -97,22 +114,6 @@ npm run build:android:mosip
 More info here: [Build your app from the command line](https://developer.android.com/studio/build/building-cmdline)
 
 # Developing iOS
-
-## Setup Google Nearby Messages API key
-
-In `shared/constants.ts`:
-
-```js
-export const GNM_API_KEY = '<YOUR_API_KEY>';
-```
-
-In `android/app/src/main/AndroidManifest.xml`:
-
-```xml
-<meta-data android:name="com.google.android.nearby.messages.API_KEY" android:value="<YOUR_API_KEY>" />
-```
-
-More info here: [Get Started with Google Nearby Messages](https://developers.google.com/nearby/messages/android/get-started)
 
 ## Build for TestFlight
 
