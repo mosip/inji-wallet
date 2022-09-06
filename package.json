@@ -9,8 +9,7 @@
     "build:android:mosip": "cd android && ./gradlew :app:assembleMosipRelease && cd ..",
     "build:android:newlogic": "cd android && ./gradlew :app:assembleNewlogicRelease && cd ..",
     "build:android:ph": "cd android && ./gradlew :app:assemblePhRelease && cd ..",
-    "i18n:compile-strings": "node scripts/compile-strings.js",
-    "postinstall": "npx pod-install"
+    "i18n:compile-strings": "node scripts/compile-strings.js"
   },
   "dependencies": {
     "@digitalbazaar/ed25519-signature-2018": "digitalbazaar/ed25519-signature-2018",
