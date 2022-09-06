@@ -11,7 +11,7 @@ module.exports = function (api) {
           path: '.env',
           blocklist: null,
           allowlist: null,
-          safe: true,
+          safe: false,
           allowUndefined: true,
           verbose: false,
         },
