@@ -311,7 +311,11 @@ export const scanMachine = model.createMachine(
       },
 
       requestToDisableFlightMode: () => {
-        SystemSetting.switchAirplane();
+        if (Platform.OS === 'android') {
+          SystemSetting.switchAirplane();
+        } else {
+          Linking.openURL('App-prefs:root=AIRPLANE_MODE');
+        }
       },
 
       disconnect: (context) => {
