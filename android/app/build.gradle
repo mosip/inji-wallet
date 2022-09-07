@@ -159,8 +159,13 @@ android {
         // https://github.com/gladed/gradle-android-git-version#3-use-a-git-tag-to-specify-your-version-number-see-semantic-versioning
         versionName androidGitVersion.name()
         versionCode androidGitVersion.code()
+
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
         manifestPlaceholders = [
-                APP_NAME      : APP_NAME_RELEASE
+            APP_NAME: APP_NAME_RELEASE,
+            GOOGLE_NEARBY_MESSAGES_API_KEY: "${properties.getProperty('GOOGLE_NEARBY_MESSAGES_API_KEY')}"
         ]
     }
     splits {

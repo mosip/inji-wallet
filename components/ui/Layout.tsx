@@ -2,11 +2,12 @@ import React from 'react';
 import {
   FlexStyle,
   StyleProp,
-  SafeAreaView,
+  View,
   ViewStyle,
   StyleSheet,
   ScrollView,
   RefreshControlProps,
+  SafeAreaView,
 } from 'react-native';
 import { elevation, ElevationLevel, Spacing, spacing } from './styleUtils';
 
@@ -43,6 +44,8 @@ function createLayout(
       props.pX ? { paddingHorizontal: props.pX } : null,
     ];
 
+    const ViewType = props.safe ? SafeAreaView : View;
+
     return props.scroll ? (
       <ScrollView
         contentContainerStyle={styles}
@@ -50,7 +53,7 @@ function createLayout(
         {props.children}
       </ScrollView>
     ) : (
-      <SafeAreaView style={styles}>{props.children}</SafeAreaView>
+      <ViewType style={styles}>{props.children}</ViewType>
     );
   };
 
@@ -78,4 +81,5 @@ interface LayoutProps {
   style?: StyleProp<ViewStyle>;
   pY?: number | string | undefined;
   pX?: number | string | undefined;
+  safe?: boolean;
 }

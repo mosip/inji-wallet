@@ -10,7 +10,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import { Text } from './Text';
-import { Colors, spacing } from './styleUtils';
+import { Colors, Spacing, spacing } from './styleUtils';
 
 const styles = StyleSheet.create({
   fill: {
@@ -76,7 +76,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
 interface ButtonProps {
   title: string;
   disabled?: boolean;
-  margin?: string;
+  margin?: Spacing;
   type?: RNEButtonProps['type'];
   onPress?: RNEButtonProps['onPress'];
   fill?: boolean;

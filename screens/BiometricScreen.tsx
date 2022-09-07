@@ -6,6 +6,7 @@ import { Button, Centered, Column } from '../components/ui';
 import { Colors } from '../components/ui/styleUtils';
 import { RootRouteProps } from '../routes';
 import { useBiometricScreen } from './BiometricScreenController';
+import { Passcode } from '../components/Passcode';
 
 export const BiometricScreen: React.FC<RootRouteProps> = (props) => {
   const { t } = useTranslation('BiometricScreen');
@@ -25,6 +26,16 @@ export const BiometricScreen: React.FC<RootRouteProps> = (props) => {
         onPress={controller.useBiometrics}
         disabled={controller.isSuccessBio}
       />
+      {controller.isReEnabling && (
+        <Passcode
+          message="Enter your passcode to re-enable biometrics authentication."
+          onSuccess={() => controller.onSuccess()}
+          onError={(value: any) => controller.onError(value)}
+          storedPasscode={controller.storedPasscode}
+          onDismiss={() => controller.onDismiss()}
+          error={controller.error}
+        />
+      )}
     </Column>
   );
 };
