@@ -2,6 +2,7 @@
   "bluetoothDenied": "Please enable Bluetooth to be able to request {{vcLabel}}",
   "showQrCode": "Show this QR code to request {{vcLabel}}",
   "incomingVc": "Incoming {{vcLabel}}",
+  "request": "Request",
   "status": {
     "accepted": {
       "title": "Success!",
@@ -18,5 +19,8 @@
     "waitingConnection": "Waiting for connection...",
     "exchangingDeviceInfo": "Exchanging device info...",
     "connected": "Connected to device. Waiting for {{vcLabel}}..."
-  }
+  },
+  "online": "Online",
+  "offline": "Offline",
+  "gotoSettings": "Go to settings"
 }

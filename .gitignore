@@ -90,3 +90,4 @@ dist/
 .vscode/
 temp/
 .eslintcache
+.env.local
