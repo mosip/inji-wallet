@@ -49,6 +49,11 @@ export const AddVcModalMachine =
       },
       id: 'AddVcModal',
       initial: 'acceptingIdInput',
+      on: {
+        INPUT_ID: {
+          actions: 'setId',
+        },
+      },
       states: {
         acceptingIdInput: {
           entry: ['setTransactionId', 'clearOtp'],
@@ -87,6 +92,7 @@ export const AddVcModalMachine =
                     target: '#AddVcModal.acceptingIdInput.invalid.format',
                   },
                   {
+                    actions: 'clearIdError',
                     target: 'requestingOtp',
                   },
                 ],
@@ -121,6 +127,7 @@ export const AddVcModalMachine =
                     target: '.format',
                   },
                   {
+                    actions: 'clearIdError',
                     target: 'requestingOtp',
                   },
                 ],
@@ -281,10 +288,13 @@ export const AddVcModalMachine =
       services: {
         requestOtp: async (context) => {
           return request('POST', '/req/otp', {
+            id: 'mosip.identity.otp.internal',
             individualId: context.id,
-            individualIdType: context.idType,
-            otpChannel: ['EMAIL', 'PHONE'],
+            metadata: {},
+            otpChannel: ['PHONE', 'EMAIL'],
+            requestTime: String(new Date().toISOString()),
             transactionID: context.transactionId,
+            version: '1.0',
           });
         },
 
