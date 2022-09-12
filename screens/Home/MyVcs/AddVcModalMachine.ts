@@ -87,6 +87,7 @@ export const AddVcModalMachine =
                     target: '#AddVcModal.acceptingIdInput.invalid.format',
                   },
                   {
+                    actions: 'clearIdError',
                     target: 'requestingOtp',
                   },
                 ],
@@ -121,6 +122,7 @@ export const AddVcModalMachine =
                     target: '.format',
                   },
                   {
+                    actions: 'clearIdError',
                     target: 'requestingOtp',
                   },
                 ],
