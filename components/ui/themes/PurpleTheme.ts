@@ -1,6 +1,7 @@
 import { StyleSheet, ViewStyle } from 'react-native';
+import { Spacing } from '../styleUtils';
 
-const colors = {
+const Colors = {
   Black: '#231F20',
   Grey: '#B0B0B0',
   Grey5: '#E0E0E0',
@@ -18,41 +19,41 @@ export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5;
 
 export const PurpleTheme = {
   Colors: {
-    TabItemText: colors.Purple,
-    Details: colors.White,
-    DetailsLabel: colors.White,
-    AddIdBtnBg: colors.Purple,
-    AddIdBtnTxt: colors.Purple,
+    TabItemText: Colors.Purple,
+    Details: Colors.White,
+    DetailsLabel: Colors.White,
+    AddIdBtnBg: Colors.Purple,
+    AddIdBtnTxt: Colors.Purple,
     ClearAddIdBtnBg: 'transparent',
-    noUinText: colors.Purple,
-    IconBg: colors.Purple,
-    Icon: colors.Purple,
-    Loading: colors.Purple,
-    borderBottomColor: colors.Grey6,
-    whiteBackgroundColor: colors.White,
-    lightGreyBackgroundColor: colors.LightGrey,
-    profileLanguageValue: colors.Grey,
-    profileVersion: colors.Grey,
-    profileAuthFactorUnlock: colors.Grey,
-    profileLabel: colors.Black,
-    profileValue: colors.Grey,
-    overlayBackgroundColor: colors.White,
-    rotatingIcon: colors.Grey5,
-    loadingLabel: colors.Grey6,
-    textLabel: colors.Grey,
-    textValue: colors.Black,
-    errorMessage: colors.Red,
-    QRCodeBackgroundColor: colors.LightGrey,
-    ReceiveVcModalBackgroundColor: colors.LightGrey,
-    ToastItemText: colors.White,
-    VerifiedIcon: colors.Green,
-    whiteText: colors.White,
-    flipCameraIcon: colors.Black,
-    IdInputModalBorder: colors.Grey,
-    inputSelection: colors.Orange,
-    checkCircleIcon: colors.White,
-    OnboardingCircleIcon: colors.White,
-    OnboardingCloseIcon: colors.White,
+    noUinText: Colors.Purple,
+    IconBg: Colors.Purple,
+    Icon: Colors.Purple,
+    Loading: Colors.Purple,
+    borderBottomColor: Colors.Grey6,
+    whiteBackgroundColor: Colors.White,
+    lightGreyBackgroundColor: Colors.LightGrey,
+    profileLanguageValue: Colors.Grey,
+    profileVersion: Colors.Grey,
+    profileAuthFactorUnlock: Colors.Grey,
+    profileLabel: Colors.Black,
+    profileValue: Colors.Grey,
+    overlayBackgroundColor: Colors.White,
+    rotatingIcon: Colors.Grey5,
+    loadingLabel: Colors.Grey6,
+    textLabel: Colors.Grey,
+    textValue: Colors.Black,
+    errorMessage: Colors.Red,
+    QRCodeBackgroundColor: Colors.LightGrey,
+    ReceiveVcModalBackgroundColor: Colors.LightGrey,
+    ToastItemText: Colors.White,
+    VerifiedIcon: Colors.Green,
+    whiteText: Colors.White,
+    flipCameraIcon: Colors.Black,
+    IdInputModalBorder: Colors.Grey,
+    inputSelection: Colors.Orange,
+    checkCircleIcon: Colors.White,
+    OnboardingCircleIcon: Colors.White,
+    OnboardingCloseIcon: Colors.White,
   },
   Styles: StyleSheet.create({
     title: {
@@ -260,8 +261,8 @@ export const PurpleTheme = {
   PinInputStyle: StyleSheet.create({
     input: {
       borderBottomWidth: 1,
-      borderColor: colors.Grey,
-      color: colors.Black,
+      borderColor: Colors.Grey,
+      color: Colors.Black,
       flex: 1,
       fontFamily: 'Poppins_600SemiBold',
       fontSize: 18,
@@ -274,7 +275,7 @@ export const PurpleTheme = {
   }),
   TextStyles: StyleSheet.create({
     base: {
-      color: colors.Black,
+      color: Colors.Black,
       fontSize: 18,
       lineHeight: 28,
     },
@@ -298,32 +299,32 @@ export const PurpleTheme = {
   }),
   VcItemStyles: StyleSheet.create({
     title: {
-      color: colors.Black,
+      color: Colors.Black,
       backgroundColor: 'transparent',
     },
     loadingTitle: {
       color: 'transparent',
-      backgroundColor: colors.Grey5,
+      backgroundColor: Colors.Grey5,
       borderRadius: 4,
     },
     subtitle: {
       backgroundColor: 'transparent',
     },
     loadingSubtitle: {
-      backgroundColor: colors.Grey,
+      backgroundColor: Colors.Grey,
       borderRadius: 4,
     },
     container: {
-      backgroundColor: colors.White,
+      backgroundColor: Colors.White,
     },
     loadingContainer: {
-      backgroundColor: colors.Grey6,
+      backgroundColor: Colors.Grey6,
       borderRadius: 4,
     },
   }),
   ToastItemStyles: StyleSheet.create({
     toastContainer: {
-      backgroundColor: colors.Orange,
+      backgroundColor: Colors.Orange,
       position: 'absolute',
       alignSelf: 'center',
       top: 80,
@@ -338,14 +339,14 @@ export const PurpleTheme = {
       flex: 1,
     },
     solid: {
-      backgroundColor: colors.Purple,
+      backgroundColor: Colors.Purple,
     },
     clear: {
-      backgroundColor: colors.Transparent,
+      backgroundColor: Colors.Transparent,
     },
     outline: {
-      backgroundColor: colors.Transparent,
-      borderColor: colors.Orange,
+      backgroundColor: Colors.Transparent,
+      borderColor: Colors.Purple,
     },
     container: {
       minHeight: 48,
@@ -355,10 +356,53 @@ export const PurpleTheme = {
       opacity: 0.5,
     },
     addId: {
-      backgroundColor: colors.Purple,
+      backgroundColor: Colors.Purple,
     },
     clearAddIdBtnBg: {
-      backgroundColor: colors.Transparent,
+      backgroundColor: Colors.Transparent,
+    },
+  }),
+  OnboardingOverlayStyles: StyleSheet.create({
+    overlay: {
+      padding: 24,
+      bottom: 86,
+      backgroundColor: 'transparent',
+      shadowColor: 'transparent',
+    },
+    slide: {
+      width: '100%',
+      padding: 20,
+    },
+    slider: {
+      backgroundColor: Colors.Purple,
+      minHeight: 300,
+      width: '100%',
+      margin: 0,
+      borderRadius: 4,
+    },
+    appSlider: {},
+    sliderTitle: {
+      color: Colors.White,
+      marginBottom: 20,
+      fontFamily: 'Poppins_700Bold',
+    },
+    text: {
+      color: Colors.White,
+    },
+    paginationContainer: {
+      margin: 10,
+    },
+    paginationDots: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginBottom: 20,
+    },
+    closeIcon: {
+      alignItems: 'flex-end',
+      end: 16,
+      top: 40,
+      zIndex: 1,
     },
   }),
   OpenCard: require('../../../purpleAassets/bg_cart_one.png'),
@@ -375,7 +419,7 @@ export const PurpleTheme = {
     const index = level - 1;
 
     return {
-      shadowColor: colors.Black,
+      shadowColor: Colors.Black,
       shadowOffset: {
         width: 0,
         height: [1, 1, 1, 2, 2][index],
@@ -385,11 +429,19 @@ export const PurpleTheme = {
       elevation: level,
       zIndex: level,
       borderRadius: 4,
-      backgroundColor: colors.White,
+      backgroundColor: Colors.White,
     };
   },
-  spacing(type: 'margin' | 'padding', values: string) {
-    const [top, end, bottom, start] = values.split(' ').map(Number);
+  spacing(type: 'margin' | 'padding', values: Spacing) {
+    if (Array.isArray(values) && values.length === 2) {
+      return {
+        [`${type}Horizontal`]: values[0],
+        [`${type}Vertical`]: values[1],
+      };
+    }
+
+    const [top, end, bottom, start] =
+      typeof values === 'string' ? values.split(' ').map(Number) : values;
 
     return {
       [`${type}Top`]: top,

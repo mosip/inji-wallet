@@ -9,50 +9,6 @@ import { GlobalContext } from '../../shared/GlobalContext';
 import { selectVcLabel } from '../../machines/settings';
 import { useTranslation } from 'react-i18next';
 
-const styles = StyleSheet.create({
-  overlay: {
-    padding: 24,
-    bottom: 86,
-    backgroundColor: 'transparent',
-    shadowColor: 'transparent',
-  },
-  slide: {
-    width: '100%',
-    padding: 20,
-  },
-  slider: {
-    backgroundColor: Colors.Orange,
-    minHeight: 300,
-    width: '100%',
-    margin: 0,
-    borderRadius: 4,
-  },
-  appSlider: {},
-  title: {
-    color: Colors.White,
-    marginBottom: 20,
-    fontFamily: 'Poppins_700Bold',
-  },
-  text: {
-    color: Colors.White,
-  },
-  paginationContainer: {
-    margin: 10,
-  },
-  paginationDots: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  closeIcon: {
-    alignItems: 'flex-end',
-    end: 16,
-    top: 40,
-    zIndex: 1,
-  },
-});
-
 export const OnboardingOverlay: React.FC<OnboardingProps> = (props) => {
   const slider = useRef<AppIntroSlider>();
 
@@ -90,10 +46,12 @@ export const OnboardingOverlay: React.FC<OnboardingProps> = (props) => {
 
   const renderItem = ({ item }) => {
     return (
-      <View style={Theme.Styles.slide}>
+      <View style={Theme.OnboardingOverlayStyles.slide}>
         <ScrollView showsVerticalScrollIndicator={true}>
-          <Text style={Theme.Styles.sliderTitle}>{item.title}</Text>
-          <Text style={Theme.Styles.text}>{item.text}</Text>
+          <Text style={Theme.OnboardingOverlayStyles.sliderTitle}>
+            {item.title}
+          </Text>
+          <Text style={Theme.OnboardingOverlayStyles.text}>{item.text}</Text>
           {item.footer}
         </ScrollView>
       </View>
@@ -102,9 +60,9 @@ export const OnboardingOverlay: React.FC<OnboardingProps> = (props) => {
 
   const renderPagination = (activeIndex: number) => {
     return (
-      <View style={Theme.Styles.paginationContainer}>
+      <View style={Theme.OnboardingOverlayStyles.paginationContainer}>
         <SafeAreaView>
-          <View style={Theme.Styles.paginationDots}>
+          <View style={Theme.OnboardingOverlayStyles.paginationDots}>
             {slides.length > 1 &&
               slides.map((_, i) => (
                 <Icon
@@ -124,7 +82,7 @@ export const OnboardingOverlay: React.FC<OnboardingProps> = (props) => {
   return (
     <Overlay
       isVisible={props.isVisible}
-      overlayStyle={Theme.Styles.overlay}
+      overlayStyle={Theme.OnboardingOverlayStyles.overlay}
       transparent
       onBackdropPress={props.onDone}>
       <Column fill align="flex-end">
@@ -132,13 +90,13 @@ export const OnboardingOverlay: React.FC<OnboardingProps> = (props) => {
           name="close"
           color={Theme.Colors.OnboardingCloseIcon}
           onPress={props.onDone}
-          containerStyle={Theme.Styles.closeIcon}
+          containerStyle={Theme.OnboardingOverlayStyles.closeIcon}
         />
-        <View style={Theme.Styles.slider}>
+        <View style={Theme.OnboardingOverlayStyles.slider}>
           <AppIntroSlider
             renderItem={renderItem}
             data={slides}
-            style={Theme.Styles.appSlider}
+            style={Theme.OnboardingOverlayStyles.appSlider}
             ref={slider}
             renderPagination={renderPagination}
           />

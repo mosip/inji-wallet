@@ -21,7 +21,13 @@ export const Modal: React.FC<ModalProps> = (props) => {
       onRequestClose={props.onDismiss}>
       <Column fill>
         <Row elevation={props.headerElevation}>
-          <View style={{flex: 1, flexDirection: 'row', marginHorizontal: 16, marginVertical: 16 }}>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              marginHorizontal: 16,
+              marginVertical: 16,
+            }}>
             {props.headerRight ? (
               <Icon
                 name="chevron-left"
@@ -36,7 +42,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
               <Icon
                 name="close"
                 onPress={props.onDismiss}
-                color={Colors.Orange}
+                color={Theme.Colors.Icon}
               />
             )}
           </View>

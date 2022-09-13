@@ -556,6 +556,10 @@ export function selectCredential(state: State) {
 }
 
 export function selectVerifiableCredential(state: State) {
+  return state.context.verifiableCredential;
+}
+
+export function selectContext(state: State) {
   return state.context;
 }
 

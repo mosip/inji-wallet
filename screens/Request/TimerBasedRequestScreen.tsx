@@ -23,13 +23,14 @@ export const TimerBasedRequestScreen: React.FC<MainRouteProps> = (props) => {
       <Column>
         {controller.isBluetoothDenied ? (
           <Text color={Theme.Colors.errorMessage} align="center">
-            Please enable Bluetooth to be able to request{' '}
-            {controller.vcLabel.singular}
+            {t('bluetoothDenied', { vcLabel: controller.vcLabel.singular })}
           </Text>
         ) : (
-          <Text align="center">
-            Show this QR code to request {controller.vcLabel.singular}
-          </Text>
+          controller.isWaitingForConnection && (
+            <Text align="center">
+              {t('showQrCode', { vcLabel: controller.vcLabel.singular })}
+            </Text>
+          )
         )}
       </Column>
 

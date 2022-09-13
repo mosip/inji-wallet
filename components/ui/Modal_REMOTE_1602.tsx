@@ -2,7 +2,7 @@ import React from 'react';
 import { Dimensions, Modal as RNModal, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { Column, Row, Text } from '.';
-import { Colors, ElevationLevel } from './styleUtils';
+import { Theme, ElevationLevel } from './styleUtils';
 
 const styles = StyleSheet.create({
   modal: {
@@ -25,7 +25,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
             <Icon
               name="chevron-left"
               onPress={props.onDismiss}
-              color={Colors.Orange}
+              color={Theme.Colors.Icon}
             />
           ) : null}
 

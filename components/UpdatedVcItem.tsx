@@ -10,6 +10,7 @@ import {
   selectTag,
   selectId,
   vcItemMachine,
+  selectContext,
 } from '../machines/vcItem';
 import { Column, Row, Text } from './ui';
 import { Theme } from './ui/styleUtils';
@@ -28,7 +29,7 @@ const VerifiedIcon: React.FC = () => {
   );
 };
 
-const getDetails = (arg1, arg2, context) => {
+const getDetails = (arg1, arg2, verifiableCredential) => {
   if (arg1 === 'Full Name') {
     return (
       <Column>
@@ -41,11 +42,11 @@ const getDetails = (arg1, arg2, context) => {
           weight="bold"
           size="smaller"
           style={
-            !context.verifiableCredential
+            !verifiableCredential
               ? Theme.Styles.loadingTitle
               : Theme.Styles.subtitle
           }>
-          {!context.verifiableCredential ? '' : arg2}
+          {!verifiableCredential ? '' : arg2}
         </Text>
       </Column>
     );
@@ -62,13 +63,13 @@ const getDetails = (arg1, arg2, context) => {
             color={Theme.Colors.Details}
             size="smaller"
             style={
-              !context.verifiableCredential
+              !verifiableCredential
                 ? Theme.Styles.loadingTitle
                 : Theme.Styles.subtitle
             }>
-            {!context.verifiableCredential ? '' : arg2}
+            {!verifiableCredential ? '' : arg2}
           </Text>
-          {!context.verifiableCredential ? null : <VerifiedIcon />}
+          {!verifiableCredential ? null : <VerifiedIcon />}
         </Row>
       </Column>
     );
@@ -84,11 +85,11 @@ const getDetails = (arg1, arg2, context) => {
           weight="bold"
           size="smaller"
           style={
-            !context.verifiableCredential
+            !verifiableCredential
               ? Theme.Styles.loadingTitle
               : Theme.Styles.subtitle
           }>
-          {arg2}
+          {!verifiableCredential ? '' : arg2}
         </Text>
       </Column>
     );
@@ -106,16 +107,14 @@ export const UpdatedVcItem: React.FC<VcItemProps> = (props) => {
   );
 
   const service = useInterpret(machine.current);
+  const context = useSelector(service, selectContext);
+  const verifiableCredential = useSelector(service, selectVerifiableCredential);
   const uin = useSelector(service, selectId);
   const tag = useSelector(service, selectTag);
-
-  const context = useSelector(service, selectVerifiableCredential);
   const generatedOn = useSelector(service, selectGeneratedOn);
-  const fullName = !context.verifiableCredential
+  const fullName = !verifiableCredential
     ? ''
-    : getLocalizedField(
-        context.verifiableCredential.credentialSubject.fullName
-      );
+    : getLocalizedField(verifiableCredential.credentialSubject.fullName);
 
   const selectableOrCheck = props.selectable ? (
     <CheckBox
@@ -129,13 +128,13 @@ export const UpdatedVcItem: React.FC<VcItemProps> = (props) => {
   return (
     <Pressable
       onPress={() => props.onPress(service)}
-      disabled={!context.verifiableCredential}
+      disabled={!verifiableCredential}
       style={Theme.Styles.closeCardBgContainer}>
       <ImageBackground
-        source={!context.verifiableCredential ? null : Theme.CloseCard}
+        source={!verifiableCredential ? null : Theme.CloseCard}
         resizeMode="stretch"
         style={
-          !context.verifiableCredential
+          !verifiableCredential
             ? Theme.Styles.vertloadingContainer
             : Theme.Styles.backgroundImageContainer
         }>
@@ -149,18 +148,16 @@ export const UpdatedVcItem: React.FC<VcItemProps> = (props) => {
         <Row
           crossAlign="center"
           margin="5 0 0 0"
-          style={
-            !context.verifiableCredential ? Theme.Styles.loadingContainer : null
-          }>
+          style={!verifiableCredential ? Theme.Styles.loadingContainer : null}>
           <Column
             style={
-              !context.verifiableCredential
+              !verifiableCredential
                 ? Theme.Styles.loadingContainer
                 : Theme.Styles.closeDetails
             }>
             <Image
               source={
-                !context.verifiableCredential
+                !verifiableCredential
                   ? Theme.ProfileIcon
                   : { uri: context.credential.biometrics.face }
               }
@@ -168,14 +165,14 @@ export const UpdatedVcItem: React.FC<VcItemProps> = (props) => {
             />
 
             <Column margin="0 0 0 10">
-              {getDetails('Full Name', fullName, context)}
-              {getDetails('UIN', tag || uin, context)}
-              {getDetails('Generated On', generatedOn, context)}
-              {getDetails('Status', t('valid'), context)}
+              {getDetails(t('fullName'), fullName, verifiableCredential)}
+              {getDetails(t('uin'), tag || uin, verifiableCredential)}
+              {getDetails(t('generatedOn'), generatedOn, verifiableCredential)}
+              {getDetails(t('status'), t('valid'), verifiableCredential)}
             </Column>
           </Column>
 
-          {context.verifiableCredential ? (
+          {verifiableCredential ? (
             selectableOrCheck
           ) : (
             <RotatingIcon name="sync" color={Theme.Colors.rotatingIcon} />
