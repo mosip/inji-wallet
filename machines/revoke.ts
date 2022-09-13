@@ -1,11 +1,11 @@
 import { TextInput } from 'react-native';
 import { assign, ErrorPlatformEvent, StateFrom, send } from 'xstate';
-import { AppServices } from '../../shared/GlobalContext';
-import { ActivityLogEvents } from '../../machines/activityLog';
+import { AppServices } from '../shared/GlobalContext';
+import { ActivityLogEvents } from '../machines/activityLog';
 import { createModel } from 'xstate/lib/model';
-import { request } from '../../shared/request';
-import { VcIdType } from '../../types/vc';
-import i18n from '../../i18n';
+import { request } from '../shared/request';
+import { VcIdType } from '../types/vc';
+import i18n from '../i18n';
 import { log } from 'xstate/lib/actions';
 
 const model = createModel(
@@ -33,6 +33,7 @@ const model = createModel(
 
 export const revokeVidsMachine = model.createMachine(
   {
+    tsTypes: {} as import('./revoke.typegen').Typegen0,
     id: 'RevokeVids',
     context: model.initialContext,
     initial: 'acceptingVIDs',
@@ -184,21 +185,27 @@ export const revokeVidsMachine = model.createMachine(
       clearOtp: assign({ otp: '' }),
 
       logRevoked: (_context) => {
-        _context.VIDs.forEach((vc) => {
-          send(
-            () =>
-              ActivityLogEvents.LOG_ACTIVITY({
-                _vcKey: vc,
-                action: 'revoked',
-                timestamp: Date.now(),
-                deviceName: '',
-                vcLabel: vc.id,
-              }),
-            {
-              to: (context) => context.serviceRefs.activityLog,
-            }
-          );
-        });
+        console.log(
+          '_context.VIDs[0].split(":")[2]',
+          _context.VIDs[0].split(':')[2]
+        );
+        // (_context) => {
+        //   console.log('_context.serviceRefs.activityLog', _context.serviceRefs.activityLog)
+        //  _context.VIDs.forEach((vc) => {
+        send(
+          (_context) =>
+            ActivityLogEvents.LOG_ACTIVITY({
+              _vcKey: _context.VIDs[0],
+              action: 'revoked',
+              timestamp: Date.now(),
+              deviceName: '',
+              vcLabel: _context.VIDs[0].split(':')[2],
+            }),
+          {
+            to: (_context) => _context.serviceRefs.activityLog,
+          }
+        );
+        //});
       },
     },
 
@@ -241,6 +248,13 @@ export const revokeVidsMachine = model.createMachine(
   }
 );
 
+export function createRevoke(serviceRefs: AppServices) {
+  return revokeVidsMachine.withContext({
+    ...revokeVidsMachine.context,
+    serviceRefs,
+  });
+}
+
 type State = StateFrom<typeof revokeVidsMachine>;
 
 export const RevokeVidsEvents = model.events;
@@ -255,4 +269,12 @@ export function selectIdError(state: State) {
 
 export function selectOtpError(state: State) {
   return state.context.otpError;
+}
+
+export function selectIsRevokingVc(state: State) {
+  return state.matches('revokingVc');
+}
+
+export function selectIsAcceptingOtpInput(state: State) {
+  return state.matches('acceptingOtpInput');
 }
