@@ -305,13 +305,13 @@ export const vcItemMachine =
             src: 'requestRevoke',
             onDone: [
               {
-                actions: 'setRevoke',
+                actions: ['setRevoke'],
                 target: 'revokingVc',
               },
             ],
             onError: [
               {
-                actions: [log('error in Requesting'), 'setOtpError'],
+                actions: 'setOtpError',
                 target: 'acceptingOtpInput',
               },
             ],
@@ -565,7 +565,7 @@ export const vcItemMachine =
 
         requestRevoke: async (context) => {
           try {
-            return request('POST', `/vid/${context.id}`, {
+            return request('PATCH', `/vid/${context.id}`, {
               transactionID: context.transactionId,
               vidStatus: 'REVOKED',
               individualId: context.id,

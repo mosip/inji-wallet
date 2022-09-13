@@ -84,7 +84,7 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
     if (isSuccessBio && reAuthenticating != '') {
       onSuccess();
     }
-  }, [reAuthenticating, isLockingVc, isSuccessBio, otError]);
+  }, [reAuthenticating, isLockingVc, isSuccessBio, otError, isRevokingVc]);
 
   useEffect(() => {
     vcItemActor.send(VcItemEvents.REFRESH());

@@ -9,12 +9,10 @@ export class BackendResponseError extends Error {
 }
 
 export async function request(
-  method: 'GET' | 'POST',
+  method: 'GET' | 'POST' | 'PATCH',
   path: `/${string}`,
   body?: Record<string, unknown>
 ) {
-  console.log('API endpoint', HOST + path);
-  console.log('payload', body);
   const response = await fetch(HOST + path, {
     method,
     headers: {
