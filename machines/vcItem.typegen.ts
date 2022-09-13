@@ -92,6 +92,7 @@ export interface Typegen0 {
       | 'error.platform.vc-item.verifyingCredential:invocation[0]';
     logDownloaded: 'CREDENTIAL_DOWNLOADED';
     logError: 'error.platform.vc-item.verifyingCredential:invocation[0]';
+    logRevoked: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
     markVcValid: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
     requestStoredContext: 'GET_VC_RESPONSE' | 'REFRESH';
     requestVcContext: 'xstate.init';

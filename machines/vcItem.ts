@@ -317,7 +317,7 @@ export const vcItemMachine =
           },
         },
         revokingVc: {
-          entry: 'storeContext',
+          entry: ['storeContext', 'logRevoked'],
           on: {
             STORE_RESPONSE: {
               actions: 'setLocking',
@@ -394,6 +394,20 @@ export const vcItemMachine =
               timestamp: Date.now(),
               deviceName: '',
               vcLabel: event.vc.tag || event.vc.id,
+            }),
+          {
+            to: (context) => context.serviceRefs.activityLog,
+          }
+        ),
+
+        logRevoked: send(
+          (context) =>
+            ActivityLogEvents.LOG_ACTIVITY({
+              _vcKey: VC_ITEM_STORE_KEY(context),
+              action: 'revoked',
+              timestamp: Date.now(),
+              deviceName: '',
+              vcLabel: context.tag || context.id,
             }),
           {
             to: (context) => context.serviceRefs.activityLog,

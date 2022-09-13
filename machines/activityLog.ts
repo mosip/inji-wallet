@@ -118,7 +118,8 @@ export type ActivityLogAction =
   | 'shared'
   | 'received'
   | 'deleted'
-  | 'downloaded';
+  | 'downloaded'
+  | 'revoked';
 
 type State = StateFrom<typeof activityLogMachine>;
 
