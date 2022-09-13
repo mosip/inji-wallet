@@ -1,10 +1,10 @@
 import React from 'react';
 import { Dimensions, RefreshControl, StyleSheet, View } from 'react-native';
 import { Divider, Icon, ListItem, Overlay } from 'react-native-elements';
-import { Button, Column, Centered, Row, Text,  } from '../../components/ui';
+import { Button, Column, Centered, Row, Text } from '../../components/ui';
 import { VidItem } from '../../components/VidItem';
 import { Colors } from '../../components/ui/styleUtils';
-import { OtpVerificationModal } from '../Home/MyVcs/OtpVerificationModal';
+// import { OtpVerificationModal } from '../Home/MyVcs/OtpVerificationModal';
 import { ToastItem } from '../../components/ui/ToastItem';
 import { OIDcAuthenticationModal } from '../../components/OIDcAuth';
 import { useTranslation } from 'react-i18next';
@@ -13,7 +13,7 @@ import { useRevoke } from './RevokeController';
 export const Revoke: React.FC<RevokeScreenProps> = (props) => {
   const controller = useRevoke();
   const { t } = useTranslation('ProfileScreen');
-  console.log('isAcceptingOtpInput', controller.isAcceptingOtpInput)
+
   const styles = StyleSheet.create({
     buttonContainer: {
       position: 'absolute',
@@ -25,8 +25,8 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
       width: Dimensions.get('screen').width,
     },
     revokeView: { padding: 20 },
-    flexRow: {flexDirection: 'row', margin: 0, padding: 0},
-    rowStyle: { flexDirection: 'column', justifyContent: 'space-between'}
+    flexRow: { flexDirection: 'row', margin: 0, padding: 0 },
+    rowStyle: { flexDirection: 'column', justifyContent: 'space-between' },
   });
 
   return (
@@ -54,7 +54,9 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
           </Row>
           <Divider />
           <Row style={styles.rowStyle} fill>
-            {controller.toastVisible && <ToastItem message={controller.message} />}
+            {controller.toastVisible && (
+              <ToastItem message={controller.message} />
+            )}
             <View style={styles.revokeView}>
               {controller.vidKeys.length > 0 && (
                 <Column
@@ -101,15 +103,15 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
         isVisible={controller.isAuthenticating}
         onDismiss={() => controller.setAuthenticating(false)}
         onVerify={() => {
-          controller.setAuthenticating(false)
-          controller.setIsViewing(true)
+          controller.setAuthenticating(false);
+          controller.setIsViewing(true);
         }}
       />
       <OIDcAuthenticationModal
         isVisible={controller.isAcceptingOtpInput}
         onDismiss={controller.DISMISS}
         onVerify={() => {
-          controller.revokeVc('111111')
+          controller.revokeVc('111111');
         }}
       />
       <Overlay
@@ -125,21 +127,27 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
           </Text>
           {controller.selectedVidKeys.map((vcKey, index) => (
             <View style={styles.flexRow} key={index}>
-              <Text margin="0 8" weight="bold">{'\u2022'}</Text>
-              <Text margin="0 0 0 0" weight="bold">{vcKey.split(":")[2]}</Text>
+              <Text margin="0 8" weight="bold">
+                {'\u2022'}
+              </Text>
+              <Text margin="0 0 0 0" weight="bold">
+                {vcKey.split(':')[2]}
+              </Text>
             </View>
           ))}
-          <Text margin="12 0">
-            {t('revokingVidsAfter')}
-          </Text>
+          <Text margin="12 0">{t('revokingVidsAfter')}</Text>
           <Row>
             <Button
               fill
               type="clear"
               title={t('cancel')}
-              onPress={() =>controller.setRevoking(false)}
+              onPress={() => controller.setRevoking(false)}
             />
-            <Button fill title={t('revokeLabel')} onPress={controller.REVOKE_VC} />
+            <Button
+              fill
+              title={t('revokeLabel')}
+              onPress={controller.REVOKE_VC}
+            />
           </Row>
         </Column>
       </Overlay>
@@ -147,6 +155,6 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
   );
 };
 
-interface RevokeScreenProps{
+interface RevokeScreenProps {
   label: string;
 }

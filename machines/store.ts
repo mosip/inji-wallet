@@ -310,8 +310,11 @@ export async function prependItem(
 ) {
   try {
     const list = await getItem(key, [], encryptionKey);
+    const newList = Array.isArray(value)
+      ? [...value, ...list]
+      : [value, ...list];
 
-    await setItem(key, [value, ...list], encryptionKey);
+    await setItem(key, newList, encryptionKey);
   } catch (e) {
     console.error('error prependItem:', e);
     throw e;

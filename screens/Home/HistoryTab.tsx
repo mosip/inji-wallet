@@ -38,7 +38,7 @@ export const HistoryTab: React.FC<HomeScreenTabProps> = (props) => {
         }>
         {controller.activities.map((activity) => (
           <TextItem
-            key={activity.timestamp}
+            key={activity.timestamp + '_' + activity._vcKey}
             label={createLabel(activity, i18n.language)}
             text={`${activity.vcLabel} ${t(activity.action)}`}
           />

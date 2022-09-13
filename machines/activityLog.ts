@@ -12,7 +12,7 @@ const model = createModel(
   {
     events: {
       STORE_RESPONSE: (response: unknown) => ({ response }),
-      LOG_ACTIVITY: (log: ActivityLog) => ({ log }),
+      LOG_ACTIVITY: (log: ActivityLog | ActivityLog[]) => ({ log }),
       REFRESH: () => ({}),
     },
   }
@@ -93,7 +93,9 @@ export const activityLogMachine =
 
         prependActivity: model.assign({
           activities: (context, event) =>
-            [event.response, ...context.activities] as ActivityLog[],
+            (Array.isArray(event.response)
+              ? [...event.response, ...context.activities]
+              : [event.response, ...context.activities]) as ActivityLog[],
         }),
       },
     }

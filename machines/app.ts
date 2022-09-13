@@ -14,7 +14,7 @@ import { createVcMachine, vcMachine } from './vc';
 import { createActivityLogMachine, activityLogMachine } from './activityLog';
 import { createRequestMachine, requestMachine } from './request';
 import { createScanMachine, scanMachine } from './scan';
-import { createRevoke, revokeVidsMachine } from './revoke';
+import { createRevokeMachine, revokeVidsMachine } from './revoke';
 
 import { pure, respond } from 'xstate/lib/actions';
 import { AppServices } from '../shared/GlobalContext';
@@ -174,15 +174,19 @@ export const appMachine = model.createMachine(
           const serviceRefs = {
             ...context.serviceRefs,
           };
+
           serviceRefs.auth = spawn(
             createAuthMachine(serviceRefs),
             authMachine.id
           );
+
           serviceRefs.vc = spawn(createVcMachine(serviceRefs), vcMachine.id);
+
           serviceRefs.settings = spawn(
             createSettingsMachine(serviceRefs),
             settingsMachine.id
           );
+
           serviceRefs.activityLog = spawn(
             createActivityLogMachine(serviceRefs),
             activityLogMachine.id
@@ -192,13 +196,14 @@ export const appMachine = model.createMachine(
             createScanMachine(serviceRefs),
             scanMachine.id
           );
+
           serviceRefs.request = spawn(
             createRequestMachine(serviceRefs),
             requestMachine.id
           );
 
           serviceRefs.revoke = spawn(
-            createRevoke(serviceRefs),
+            createRevokeMachine(serviceRefs),
             revokeVidsMachine.id
           );
 

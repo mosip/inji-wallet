@@ -1,4 +1,4 @@
-import { useSelector, useMachine } from '@xstate/react';
+import { useSelector } from '@xstate/react';
 import { useContext, useEffect, useState } from 'react';
 import NetInfo from '@react-native-community/netinfo';
 import { GlobalContext } from '../../shared/GlobalContext';
@@ -12,7 +12,6 @@ import { useTranslation } from 'react-i18next';
 
 import {
   RevokeVidsEvents,
-  revokeVidsMachine,
   selectIsAcceptingOtpInput,
   selectIsRevokingVc,
 } from '../../machines/revoke';
@@ -23,7 +22,7 @@ export function useRevoke() {
   const { t } = useTranslation('ProfileScreen');
   const { appService } = useContext(GlobalContext);
   const vcService = appService.children.get('vc');
-  const [, , revokeService] = useMachine(revokeVidsMachine);
+  const revokeService = appService.children.get('RevokeVids');
   const vcKeys = useSelector(vcService, selectMyVcs);
   const isRevokingVc = useSelector(revokeService, selectIsRevokingVc);
   const isAcceptingOtpInput = useSelector(
@@ -66,7 +65,7 @@ export function useRevoke() {
 
   useEffect(() => {
     if (isRevokingVc) {
-      setSelectedVidKeys([])
+      setSelectedVidKeys([]);
       showToast(t('revokeSuccessful'));
       revokeService.send(RevokeVidsEvents.DISMISS());
     }
