@@ -1,17 +1,35 @@
-import SmartShare from '@idpass/smartshare-react-native';
+import SmartshareReactNative from '@idpass/smartshare-react-native';
+const { IdpassSmartshare, GoogleNearbyMessages } = SmartshareReactNative;
+
+import uuid from 'react-native-uuid';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
-import { EmitterSubscription } from 'react-native';
+import { EmitterSubscription, Linking, Platform } from 'react-native';
 import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { DeviceInfo } from '../components/DeviceInfoList';
-import { Message } from '../shared/Message';
 import { getDeviceNameSync } from 'react-native-device-info';
 import { StoreEvents } from './store';
 import { VC } from '../types/vc';
 import { AppServices } from '../shared/GlobalContext';
-import { RECEIVED_VCS_STORE_KEY, VC_ITEM_STORE_KEY } from '../shared/constants';
+import {
+  GNM_API_KEY,
+  RECEIVED_VCS_STORE_KEY,
+  VC_ITEM_STORE_KEY,
+} from '../shared/constants';
 import { ActivityLogEvents } from './activityLog';
 import { VcEvents } from './vc';
+import { ConnectionParams } from '@idpass/smartshare-react-native/lib/typescript/IdpassSmartshare';
+import {
+  ExchangeReceiverInfoEvent,
+  onlineSubscribe,
+  offlineSubscribe,
+  PairingResponseEvent,
+  onlineSend,
+  offlineSend,
+  SendVcResponseEvent,
+} from '../shared/smartshare';
+
+type SharingProtocol = 'OFFLINE' | 'ONLINE';
 
 const model = createModel(
   {
@@ -21,6 +39,9 @@ const model = createModel(
     incomingVc: {} as VC,
     connectionParams: '',
     loggers: [] as EmitterSubscription[],
+    sharingProtocol: (Platform.OS === 'ios'
+      ? 'ONLINE'
+      : 'OFFLINE') as SharingProtocol,
   },
   {
     events: {
@@ -30,7 +51,6 @@ const model = createModel(
       DISMISS: () => ({}),
       GOBACK: () => ({}),
       VC_RECEIVED: (vc: VC) => ({ vc }),
-      RESPONSE_SENT: () => ({}),
       CONNECTED: () => ({}),
       DISCONNECT: () => ({}),
       EXCHANGE_DONE: (senderInfo: DeviceInfo) => ({ senderInfo }),
@@ -43,6 +63,8 @@ const model = createModel(
       RECEIVE_DEVICE_INFO: (info: DeviceInfo) => ({ info }),
       RECEIVED_VCS_UPDATED: () => ({}),
       VC_RESPONSE: (response: unknown) => ({ response }),
+      SWITCH_PROTOCOL: (value: boolean) => ({ value }),
+      GOTO_SETTINGS: () => ({}),
     },
   }
 );
@@ -64,6 +86,10 @@ export const requestMachine = model.createMachine(
     on: {
       SCREEN_BLUR: 'inactive',
       SCREEN_FOCUS: 'checkingBluetoothService',
+      SWITCH_PROTOCOL: {
+        target: 'checkingBluetoothService',
+        actions: 'switchProtocol',
+      },
     },
     states: {
       inactive: {
@@ -97,6 +123,11 @@ export const requestMachine = model.createMachine(
       },
       bluetoothDenied: {
         id: 'bluetoothDenied',
+        on: {
+          GOTO_SETTINGS: {
+            actions: ['openSettings'],
+          },
+        },
       },
       clearingConnection: {
         id: 'clearingConnection',
@@ -206,7 +237,7 @@ export const requestMachine = model.createMachine(
             invoke: {
               src: 'sendVcResponse',
               data: {
-                status: 'accepted',
+                status: 'ACCEPTED',
               },
             },
             on: {
@@ -218,7 +249,7 @@ export const requestMachine = model.createMachine(
             invoke: {
               src: 'sendVcResponse',
               data: {
-                status: 'rejected',
+                status: 'REJECTED',
               },
             },
             on: {
@@ -240,6 +271,15 @@ export const requestMachine = model.createMachine(
   },
   {
     actions: {
+      openSettings: () => {
+        Linking.openURL('App-Prefs:Bluetooth');
+      },
+
+      switchProtocol: assign({
+        sharingProtocol: (_context, event) =>
+          event.value ? 'ONLINE' : 'OFFLINE',
+      }),
+
       requestReceivedVcs: send(VcEvents.GET_RECEIVED_VCS(), {
         to: (context) => context.serviceRefs.vc,
       }),
@@ -250,16 +290,31 @@ export const requestMachine = model.createMachine(
         receiverInfo: (_context, event) => event.info,
       }),
 
-      disconnect: () => {
+      disconnect: (context) => {
         try {
-          SmartShare.destroyConnection();
+          if (context.sharingProtocol === 'OFFLINE') {
+            IdpassSmartshare.destroyConnection();
+          } else {
+            GoogleNearbyMessages.disconnect();
+          }
         } catch (e) {
           // pass
         }
       },
 
       generateConnectionParams: assign({
-        connectionParams: () => SmartShare.getConnectionParameters(),
+        connectionParams: (context) => {
+          if (context.sharingProtocol === 'OFFLINE') {
+            return IdpassSmartshare.getConnectionParameters();
+          } else {
+            const cid = uuid.v4();
+            console.log('ONLINE', cid);
+            return JSON.stringify({
+              pk: '',
+              cid,
+            });
+          }
+        },
       }),
 
       setSenderInfo: model.assign({
@@ -272,26 +327,26 @@ export const requestMachine = model.createMachine(
 
       registerLoggers: assign({
         loggers: () => {
-          // if (__DEV__) {
-          //   return [
-          //     SmartShare.handleNearbyEvents((event) => {
-          //       console.log(
-          //         getDeviceNameSync(),
-          //         '<Receiver.Event>',
-          //         JSON.stringify(event)
-          //       );
-          //     }),
-          //     SmartShare.handleLogEvents((event) => {
-          //       console.log(
-          //         getDeviceNameSync(),
-          //         '<Receiver.Log>',
-          //         JSON.stringify(event)
-          //       );
-          //     }),
-          //   ];
-          // } else {
-          return [];
-          // }
+          if (__DEV__) {
+            return [
+              IdpassSmartshare.handleNearbyEvents((event) => {
+                console.log(
+                  getDeviceNameSync(),
+                  '<Receiver.Event>',
+                  JSON.stringify(event)
+                );
+              }),
+              IdpassSmartshare.handleLogEvents((event) => {
+                console.log(
+                  getDeviceNameSync(),
+                  '<Receiver.Log>',
+                  JSON.stringify(event)
+                );
+              }),
+            ];
+          } else {
+            return [];
+          }
         },
       }),
 
@@ -360,14 +415,14 @@ export const requestMachine = model.createMachine(
 
     services: {
       checkBluetoothService: () => (callback) => {
-        // const subscription = BluetoothStateManager.onStateChange((state) => {
-        //   if (state === 'PoweredOn') {
-        //     callback(model.events.BLUETOOTH_ENABLED());
-        //   } else {
-        //     callback(model.events.BLUETOOTH_DISABLED());
-        //   }
-        // }, true);
-        // return () => subscription.remove();
+        const subscription = BluetoothStateManager.onStateChange((state) => {
+          if (state === 'PoweredOn') {
+            callback(model.events.BLUETOOTH_ENABLED());
+          } else {
+            callback(model.events.BLUETOOTH_DISABLED());
+          }
+        }, true);
+        return () => subscription.remove();
       },
 
       requestBluetooth: () => (callback) => {
@@ -376,8 +431,47 @@ export const requestMachine = model.createMachine(
           .catch(() => callback(model.events.BLUETOOTH_DISABLED()));
       },
 
+      advertiseDevice: (context) => (callback) => {
+        if (context.sharingProtocol === 'OFFLINE') {
+          IdpassSmartshare.createConnection('advertiser', () => {
+            callback({ type: 'CONNECTED' });
+          });
+        } else {
+          (async function () {
+            GoogleNearbyMessages.addOnErrorListener((kind, message) =>
+              console.log('\n\n[request] GNM_ERROR\n\n', kind, message)
+            );
+
+            await GoogleNearbyMessages.connect({
+              apiKey: GNM_API_KEY,
+              discoveryMediums: ['ble'],
+              discoveryModes: ['scan', 'broadcast'],
+            });
+            console.log('[request] GNM connected!');
+
+            await onlineSubscribe('pairing', async (scannedQrParams) => {
+              try {
+                const generatedParams = JSON.parse(
+                  context.connectionParams
+                ) as ConnectionParams;
+                if (scannedQrParams.cid === generatedParams.cid) {
+                  const event: PairingResponseEvent = {
+                    type: 'pairing:response',
+                    data: 'ok',
+                  };
+                  await onlineSend(event);
+                  callback({ type: 'CONNECTED' });
+                }
+              } catch (e) {
+                console.error('Could not parse message.', e);
+              }
+            });
+          })();
+        }
+      },
+
       checkConnection: () => (callback) => {
-        const subscription = SmartShare.handleNearbyEvents((event) => {
+        const subscription = IdpassSmartshare.handleNearbyEvents((event) => {
           if (event.type === 'onDisconnected') {
             callback({ type: 'DISCONNECT' });
           }
@@ -386,53 +480,86 @@ export const requestMachine = model.createMachine(
         return () => subscription.remove();
       },
 
-      advertiseDevice: () => (callback) => {
-        SmartShare.createConnection('advertiser', () => {
-          callback({ type: 'CONNECTED' });
-        });
-      },
-
       exchangeDeviceInfo: (context) => (callback) => {
-        const subscription = SmartShare.handleNearbyEvents((event) => {
-          if (event.type !== 'msg') return;
+        const event: ExchangeReceiverInfoEvent = {
+          type: 'exchange-receiver-info',
+          data: context.receiverInfo,
+        };
 
-          const message = Message.fromString<DeviceInfo>(event.data);
-          if (message.type === 'exchange:sender-info') {
-            const response = new Message(
-              'exchange:receiver-info',
-              context.receiverInfo
-            );
-            SmartShare.send(response.toString(), () => {
-              callback({ type: 'EXCHANGE_DONE', senderInfo: message.data });
-            });
-          }
-        });
+        if (context.sharingProtocol === 'OFFLINE') {
+          const subscription = offlineSubscribe(
+            'exchange-sender-info',
+            (senderInfo) => {
+              offlineSend(event, () => {
+                callback({ type: 'EXCHANGE_DONE', senderInfo });
+              });
+            }
+          );
 
-        return () => subscription.remove();
+          return () => subscription.remove();
+        } else {
+          onlineSubscribe('exchange-sender-info', async (senderInfo) => {
+            await GoogleNearbyMessages.unpublish();
+            await onlineSend(event);
+            callback({ type: 'EXCHANGE_DONE', senderInfo });
+          });
+        }
       },
 
-      receiveVc: () => (callback) => {
-        // const subscription = SmartShare.handleNearbyEvents((event) => {
-        //   if (event.type === 'onDisconnected') {
-        //     callback({ type: 'DISCONNECT' });
-        //   }
-        //   if (event.type !== 'msg') return;
-        // const message = Message.fromString<VC>(event.data);
-        // if (message.type === 'send:vc') {
-        //   callback({ type: 'VC_RECEIVED', vc: message.data });
-        // }
-        // });
-        // return () => subscription.remove();
+      receiveVc: (context) => (callback) => {
+        if (context.sharingProtocol === 'OFFLINE') {
+          const subscription = offlineSubscribe('send-vc', ({ vc }) => {
+            callback({ type: 'VC_RECEIVED', vc });
+          });
+
+          return () => subscription.remove();
+        } else {
+          let rawData = '';
+          onlineSubscribe(
+            'send-vc',
+            async ({ isChunked, vc, vcChunk }) => {
+              console.log(
+                'RECEIVE CHUNK',
+                isChunked,
+                vcChunk.chunk,
+                vcChunk.total
+              );
+              await GoogleNearbyMessages.unpublish();
+              if (isChunked) {
+                rawData += vcChunk.rawData;
+                if (vcChunk.chunk === vcChunk.total - 1) {
+                  const vc = JSON.parse(rawData) as VC;
+                  GoogleNearbyMessages.unsubscribe();
+                  callback({ type: 'VC_RECEIVED', vc });
+                } else {
+                  console.log('VC_RESPONSE_SEND', vcChunk.chunk);
+                  await onlineSend({
+                    type: 'send-vc:response',
+                    data: vcChunk.chunk,
+                  });
+                }
+              } else {
+                callback({ type: 'VC_RECEIVED', vc });
+              }
+            },
+            { keepAlive: true }
+          );
+        }
       },
 
-      sendVcResponse: (_context, _event, meta) => (callback) => {
-        const response = new Message('send:vc:response', {
-          status: meta.data.status,
-        });
+      sendVcResponse: (context, _event, meta) => () => {
+        const event: SendVcResponseEvent = {
+          type: 'send-vc:response',
+          data: meta.data.status,
+        };
 
-        SmartShare.send(response.toString(), () => {
-          callback({ type: 'RESPONSE_SENT' });
-        });
+        if (context.sharingProtocol === 'OFFLINE') {
+          offlineSend(event, () => {
+            // pass
+          });
+        } else {
+          onlineSend(event);
+        }
       },
     },
 
@@ -471,6 +598,10 @@ export function selectIncomingVc(state: State) {
   return state.context.incomingVc;
 }
 
+export function selectSharingProtocol(state: State) {
+  return state.context.sharingProtocol;
+}
+
 export function selectIsReviewing(state: State) {
   return state.matches('reviewing');
 }
@@ -501,4 +632,8 @@ export function selectIsExchangingDeviceInfo(state: State) {
 
 export function selectIsWaitingForVc(state: State) {
   return state.matches('waitingForVc');
+}
+
+export function selectIsDone(state: State) {
+  return state.matches('reviewing.navigatingToHome');
 }

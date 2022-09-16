@@ -58,7 +58,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
 interface ButtonProps {
   title: string;
   disabled?: boolean;
-  margin?: string;
+  margin?: Spacing;
   type?: RNEButtonProps['type'];
   onPress?: RNEButtonProps['onPress'];
   fill?: boolean;

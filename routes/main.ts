@@ -5,10 +5,10 @@ import {
 } from '@react-navigation/bottom-tabs';
 import { HomeScreen } from '../screens/Home/HomeScreen';
 import { ProfileScreen } from '../screens/Profile/ProfileScreen';
-import { RequestScreen } from '../screens/Request/RequestScreen';
 import { ScanScreen } from '../screens/Scan/ScanScreen';
 import { RootStackParamList } from './index';
 import { TimerBasedRequestScreen } from '../screens/Request/TimerBasedRequestScreen';
+import { RequestLayout } from '../screens/Request/RequestLayout';
 
 export const mainRoutes: TabScreen[] = [
   {
@@ -26,8 +26,11 @@ export const mainRoutes: TabScreen[] = [
   },
   {
     name: 'Request',
-    component: RequestScreen,
+    component: RequestLayout,
     icon: 'file-download',
+    options: {
+      headerShown: false,
+    },
   },
   {
     name: 'TimerBasedRequest',
@@ -54,7 +57,7 @@ export type MainBottomTabParamList = {
 export interface TabScreen {
   name: string;
   icon: string;
-  component: React.FC<MainRouteProps>;
+  component: React.FC;
   options?: BottomTabNavigationOptions;
 }
 

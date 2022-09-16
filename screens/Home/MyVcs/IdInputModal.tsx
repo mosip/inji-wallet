@@ -28,9 +28,9 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
 
   return (
     <Modal
-     onDismiss={dismissInput}
-     isVisible={props.isVisible}
-     onShow={setIndividualID}>
+      onDismiss={dismissInput}
+      isVisible={props.isVisible}
+      onShow={setIndividualID}>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -45,7 +45,9 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
                 style={{
                   borderBottomWidth: 1,
                   borderColor:
-                    Platform.OS === 'ios' ? 'transparent' : Theme.Colors.IdInputModalBorder,
+                    Platform.OS === 'ios'
+                      ? 'transparent'
+                      : Theme.Colors.IdInputModalBorder,
                   bottom: Platform.OS === 'ios' ? 50 : 24,
                   height: Platform.OS === 'ios' ? 100 : 'auto',
                 }}>
@@ -62,8 +64,8 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
                   label={controller.id ? inputLabel : ''}
                   labelStyle={{
                     color: controller.isInvalid
-                    ? Theme.Colors.errorMessage
-                    : Theme.Colors.textValue,
+                      ? Theme.Colors.errorMessage
+                      : Theme.Colors.textValue,
                   }}
                   value={controller.id}
                   keyboardType="number-pad"
@@ -88,13 +90,13 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
               loading={controller.isRequestingOtp}
             />
             {!controller.id && (
-                <TouchableOpacity
-                  activeOpacity={1}
-                  onPress={props.onPress}
-                  style={Theme.Styles.getId}>
-                  <Text color={Theme.Colors.AddIdBtnBg}>{t('noUIN/VID')}</Text>
-                </TouchableOpacity>
-              )}
+              <TouchableOpacity
+                activeOpacity={1}
+                onPress={props.onPress}
+                style={Theme.Styles.getId}>
+                <Text color={Theme.Colors.AddIdBtnBg}>{t('noUIN/VID')}</Text>
+              </TouchableOpacity>
+            )}
           </Column>
         </Column>
       </KeyboardAvoidingView>

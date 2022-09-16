@@ -3,24 +3,21 @@ import { useContext, useEffect } from 'react';
 import { selectIsActive, selectIsFocused } from '../../machines/app';
 import {
   RequestEvents,
-  selectIsAccepted,
   selectIsBluetoothDenied,
   selectConnectionParams,
-  selectIsDisconnected,
-  selectIsRejected,
   selectIsReviewing,
   selectSenderInfo,
   selectIsWaitingForConnection,
   selectIsExchangingDeviceInfo,
   selectIsWaitingForVc,
+  selectSharingProtocol,
 } from '../../machines/request';
 import { selectVcLabel } from '../../machines/settings';
-import { MainRouteProps } from '../../routes/main';
 import { GlobalContext } from '../../shared/GlobalContext';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import { useTranslation } from 'react-i18next';
 
-export function useRequestScreen({ navigation }: MainRouteProps) {
+export function useRequestScreen() {
   const { t } = useTranslation('RequestScreen');
   const { appService } = useContext(GlobalContext);
   const settingsService = appService.children.get('settings');
@@ -53,31 +50,6 @@ export function useRequestScreen({ navigation }: MainRouteProps) {
   }
 
   useEffect(() => {
-    const subscriptions = [
-      navigation.addListener('focus', () =>
-        requestService.send(RequestEvents.SCREEN_FOCUS())
-      ),
-      navigation.addListener('blur', () =>
-        requestService.send(RequestEvents.SCREEN_BLUR())
-      ),
-    ];
-
-    const navSubscription = requestService.subscribe((state) => {
-      if (state.matches('reviewing.navigatingToHome')) {
-        navigation.navigate('Home', { activeTab: 1 });
-      }
-      if (state.matches('reviewing.navigatingToTimeBasedRequest')) {
-        navigation.navigate('TimerBasedRequest');
-      }
-    });
-
-    return () => {
-      subscriptions.forEach((unsubscribe) => unsubscribe());
-      navSubscription.unsubscribe();
-    };
-  }, []);
-
-  useEffect(() => {
     BluetoothStateManager.getState().then((bluetoothState) => {
       if (bluetoothState === 'PoweredOn' && isBluetoothDenied) {
         requestService.send(RequestEvents.SCREEN_FOCUS());
@@ -88,6 +60,7 @@ export function useRequestScreen({ navigation }: MainRouteProps) {
   return {
     vcLabel,
     statusMessage,
+    sharingProtocol: useSelector(requestService, selectSharingProtocol),
 
     isWaitingForConnection,
     isExchangingDeviceInfo,
@@ -97,14 +70,14 @@ export function useRequestScreen({ navigation }: MainRouteProps) {
     connectionParams: useSelector(requestService, selectConnectionParams),
     senderInfo: useSelector(requestService, selectSenderInfo),
     isReviewing: useSelector(requestService, selectIsReviewing),
-    isAccepted: useSelector(requestService, selectIsAccepted),
-    isRejected: useSelector(requestService, selectIsRejected),
-    isDisconnected: useSelector(requestService, selectIsDisconnected),
 
     DISMISS: () => requestService.send(RequestEvents.DISMISS()),
     ACCEPT: () => requestService.send(RequestEvents.ACCEPT()),
     REJECT: () => requestService.send(RequestEvents.REJECT()),
     REQUEST: () => requestService.send(RequestEvents.SCREEN_FOCUS()),
+    SWITCH_PROTOCOL: (value: boolean) =>
+      requestService.send(RequestEvents.SWITCH_PROTOCOL(value)),
+    GOTO_SETTINGS: () => requestService.send(RequestEvents.GOTO_SETTINGS()),
     GOBACK: () => requestService.send(RequestEvents.GOBACK()),
   };
 }

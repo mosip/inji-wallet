@@ -154,7 +154,7 @@
     "credits": "Credits and legal notices",
     "logout": "Log-out"
   },
-  "ReceiveVcModal": {
+  "ReceiveVcScreen": {
     "header": "{{vcLabel}} details",
     "acceptRequest": "Accept request and receive {{vcLabel}}",
     "reject": "Reject"
@@ -163,6 +163,7 @@
     "bluetoothDenied": "Please enable Bluetooth to be able to request {{vcLabel}}",
     "showQrCode": "Show this QR code to request {{vcLabel}}",
     "incomingVc": "Incoming {{vcLabel}}",
+    "request": "Request",
     "status": {
       "accepted": {
         "title": "Success!",
@@ -179,7 +180,10 @@
       "waitingConnection": "Waiting for connection...",
       "exchangingDeviceInfo": "Exchanging device info...",
       "connected": "Connected to device. Waiting for {{vcLabel}}..."
-    }
+    },
+    "online": "Online",
+    "offline": "Offline",
+    "gotoSettings": "Go to settings"
   },
   "ScanScreen": {
     "header": "Scan QR Code",

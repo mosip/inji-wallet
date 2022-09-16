@@ -12,7 +12,7 @@ export const WelcomeScreen: React.FC<RootRouteProps> = (props) => {
 
   return (
     <Column
-     fill
+      fill
       padding="32 32 0"
       backgroundColor={Theme.Colors.whiteBackgroundColor}>
       <Centered fill>

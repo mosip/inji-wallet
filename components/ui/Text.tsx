@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleProp, TextStyle, Text as RNText } from 'react-native';
-import { Theme } from './styleUtils';
+import { Theme, Spacing } from './styleUtils';
 
 export const Text: React.FC<TextProps> = (props: TextProps) => {
   const weight = props.weight || 'regular';
@@ -27,7 +27,7 @@ interface TextProps {
   color?: string;
   weight?: 'regular' | 'semibold' | 'bold';
   align?: TextStyle['textAlign'];
-  margin?: string;
+  margin?: Spacing;
   size?: 'small' | 'smaller' | 'regular';
   lineHeight?: number;
   numLines?: number;

@@ -194,7 +194,6 @@ export const appMachine = model.createMachine(
             createRequestMachine(serviceRefs),
             requestMachine.id
           );
-
           return serviceRefs;
         },
       }),
@@ -332,10 +331,23 @@ export function selectIsFocused(state: State) {
 }
 
 export function logState(state) {
-  const data = JSON.stringify(state.event);
+  const data = JSON.stringify(
+    state.event,
+    (key, value) => {
+      if (key === 'type') return undefined;
+      if (typeof value === 'string' && value.length >= 100) {
+        return value.slice(0, 100) + '...';
+      }
+      return value;
+    },
+    2
+  );
   console.log(
-    `[${getDeviceNameSync()}] ${state.machine.id}: ${state
-      .toStrings()
-      .join(' ')} ${data.length > 1000 ? data.slice(0, 1000) + '...' : data}`
+    `[${getDeviceNameSync()}] ${state.machine.id}: ${
+      state.event.type
+    } -> ${state.toStrings().pop()}\n${
+      data.length > 1000 ? data.slice(0, 1000) + '...' : data
+    }
+    `
   );
 }

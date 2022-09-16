@@ -3,9 +3,25 @@ module.exports = function (api) {
   return {
     presets: ['babel-preset-expo'],
     plugins: [
-      ['babel-plugin-inline-import', {
-        extensions: ['.md']
-      }],
+      [
+        'module:react-native-dotenv',
+        {
+          envName: 'APP_ENV',
+          moduleName: 'react-native-dotenv',
+          path: '.env',
+          blocklist: null,
+          allowlist: null,
+          safe: false,
+          allowUndefined: true,
+          verbose: false,
+        },
+      ],
+      [
+        'babel-plugin-inline-import',
+        {
+          extensions: ['.md'],
+        },
+      ],
       [
         'module-resolver',
         {

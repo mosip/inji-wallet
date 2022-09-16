@@ -2,19 +2,6 @@
 
 export interface Typegen0 {
   '@@xstate/typegen': true;
-  'eventsCausingActions': {
-    setEncryptionKey: 'KEY_RECEIVED';
-    forwardStoreRequest:
-      | 'GET'
-      | 'SET'
-      | 'APPEND'
-      | 'PREPEND'
-      | 'REMOVE'
-      | 'CLEAR';
-    notifyParent:
-      | 'KEY_RECEIVED'
-      | 'done.invoke.store.resettingStorage:invocation[0]';
-  };
   'internalEvents': {
     'error.platform.store.resettingStorage:invocation[0]': {
       type: 'error.platform.store.resettingStorage:invocation[0]';
@@ -45,11 +32,24 @@ export interface Typegen0 {
     guards: never;
     delays: never;
   };
+  'eventsCausingActions': {
+    setEncryptionKey: 'KEY_RECEIVED';
+    forwardStoreRequest:
+      | 'GET'
+      | 'SET'
+      | 'APPEND'
+      | 'PREPEND'
+      | 'REMOVE'
+      | 'CLEAR';
+    notifyParent:
+      | 'KEY_RECEIVED'
+      | 'done.invoke.store.resettingStorage:invocation[0]';
+  };
   'eventsCausingServices': {
     getEncryptionKey: 'xstate.init';
-    store: 'KEY_RECEIVED' | 'done.invoke.store.resettingStorage:invocation[0]';
     generateEncryptionKey: 'ERROR';
     clear: 'KEY_RECEIVED';
+    store: 'KEY_RECEIVED' | 'done.invoke.store.resettingStorage:invocation[0]';
   };
   'eventsCausingGuards': {};
   'eventsCausingDelays': {};
