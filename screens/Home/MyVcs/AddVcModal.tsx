@@ -17,6 +17,7 @@ export const AddVcModal: React.FC<AddVcModalProps> = (props) => {
           !controller.isAcceptingOtpInput && !controller.isRequestingCredential
         }
         onDismiss={controller.DISMISS}
+        onPress={props.onPress}
       />
 
       <OtpVerificationModal

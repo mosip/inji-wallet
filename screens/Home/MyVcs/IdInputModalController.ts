@@ -47,4 +47,5 @@ export function useIdInputModal({ service }: IdInputModalProps) {
 
 export interface IdInputModalProps extends ModalProps {
   service: ActorRefFrom<typeof AddVcModalMachine>;
+  onPress?: () => void;
 }

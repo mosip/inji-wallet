@@ -14,6 +14,7 @@
   },
   "VcDetails": {
     "generatedOn": "Generated on",
+    "uin":"UIN",
     "status": "Status",
     "valid": "Valid",
     "photo": "Photo",
@@ -67,6 +68,22 @@
       }
     }
   },
+  "GetVcModal": {
+    "retrievingId": "Retrieving UID/VID...",
+    "applicationProcessing": "Your application is still being processed. Please try again after a few days",
+    "errors": {
+      "input": {
+        "empty": "The input cannot be empty",
+        "invalidFormat": "The input format is incorrect"
+      },
+      "backend": {
+        "invalidOtp": "OTP is invalid",
+        "applicationProcessing": "Your application is still being processed. Please try again after a few days",
+        "invalidAid": "AID is not ready",
+        "timeOut": "Requesting Time Out"
+      }
+    }
+  },
   "DownloadingVcModal": {
     "header": "Downloading your {{vcLabel}}",
     "bodyText": "This may take some time, we will notify you when your {{vcLabel}} has been downloaded and is available",
@@ -75,7 +92,13 @@
   "IdInputModal": {
     "header": "Enter the MOSIP-provided UIN or VID of the {{vcLabel}} you wish to retrieve",
     "generateVc": "Generate {{vcLabel}}",
-    "enterId": "Enter your {{idType}}"
+    "enterId": "Enter your {{idType}}",
+    "noUIN/VID": "Don't have your UIN/VID? Get it here"
+  },
+  "GetIdInputModal": {
+    "header": "To retrieve your UIN or VID, enter your Application {{vcLabel}} number",
+    "getUIN": "Get UIN/VID",
+    "applicationId": "Application {{vcLabel}} number"
   },
   "OtpVerificationModal": {
     "enterOtp": "Enter the 6-digit verification code we sent you"

@@ -3,19 +3,34 @@ import { Icon, Input } from 'react-native-elements';
 import { Picker } from '@react-native-picker/picker';
 import { Button, Column, Row, Text } from '../../../components/ui';
 import { Modal } from '../../../components/ui/Modal';
-import { Colors } from '../../../components/ui/styleUtils';
+import { Theme } from '../../../components/ui/styleUtils';
 import { IdInputModalProps, useIdInputModal } from './IdInputModalController';
 import { useTranslation } from 'react-i18next';
 import { KeyboardAvoidingView, Platform } from 'react-native';
+import { TouchableOpacity } from 'react-native';
+import { individualId } from '../../../shared/constants';
+import { GET_INDIVIDUAL_ID } from '../../../shared/constants';
 
 export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
   const { t } = useTranslation('IdInputModal');
   const controller = useIdInputModal(props);
 
+  const setIndividualID = () => {
+    controller.INPUT_ID(individualId);
+  };
+
+  const dismissInput = () => {
+    props.onDismiss();
+    GET_INDIVIDUAL_ID('');
+  };
+
   const inputLabel = t('enterId', { idType: controller.idType });
 
   return (
-    <Modal onDismiss={props.onDismiss} isVisible={props.isVisible}>
+    <Modal
+      onDismiss={dismissInput}
+      isVisible={props.isVisible}
+      onShow={setIndividualID}>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -30,7 +45,9 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
                 style={{
                   borderBottomWidth: 1,
                   borderColor:
-                    Platform.OS === 'ios' ? 'transparent' : Colors.Grey,
+                    Platform.OS === 'ios'
+                      ? 'transparent'
+                      : Theme.Colors.IdInputModalBorder,
                   bottom: Platform.OS === 'ios' ? 50 : 24,
                   height: Platform.OS === 'ios' ? 100 : 'auto',
                 }}>
@@ -46,7 +63,9 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
                   placeholder={!controller.id ? inputLabel : ''}
                   label={controller.id ? inputLabel : ''}
                   labelStyle={{
-                    color: controller.isInvalid ? Colors.Red : Colors.Black,
+                    color: controller.isInvalid
+                      ? Theme.Colors.errorMessage
+                      : Theme.Colors.textValue,
                   }}
                   value={controller.id}
                   keyboardType="number-pad"
@@ -55,7 +74,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
                       <Icon name="error" size={18} color="red" />
                     ) : null
                   }
-                  errorStyle={{ color: Colors.Red }}
+                  errorStyle={{ color: Theme.Colors.errorMessage }}
                   errorMessage={controller.idError}
                   onChangeText={controller.INPUT_ID}
                   ref={(node) =>
@@ -70,6 +89,14 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
               onPress={controller.VALIDATE_INPUT}
               loading={controller.isRequestingOtp}
             />
+            {!controller.id && (
+              <TouchableOpacity
+                activeOpacity={1}
+                onPress={props.onPress}
+                style={Theme.Styles.getId}>
+                <Text color={Theme.Colors.AddIdBtnBg}>{t('noUIN/VID')}</Text>
+              </TouchableOpacity>
+            )}
           </Column>
         </Column>
       </KeyboardAvoidingView>

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Dimensions, StyleSheet } from 'react-native';
 import { Overlay } from 'react-native-elements/dist/overlay/Overlay';
 import { Button, Column, Row, Text } from '../../components/ui';
-import { Colors, elevation } from '../../components/ui/styleUtils';
+import { Theme } from '../../components/ui/styleUtils';
 import { VcItem } from '../../components/VcItem';
 import {
   SelectVcOverlayProps,
@@ -12,8 +12,8 @@ import {
 
 const styles = StyleSheet.create({
   overlay: {
-    ...elevation(5),
-    backgroundColor: Colors.White,
+    ...Theme.elevation(5),
+    backgroundColor: Theme.Colors.overlayBackgroundColor,
     padding: 0,
   },
 });

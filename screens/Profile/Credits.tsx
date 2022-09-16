@@ -4,7 +4,7 @@ import { Dimensions, Image, StyleSheet, View } from 'react-native';
 import { Divider, Icon, ListItem, Overlay } from 'react-native-elements';
 import Markdown from 'react-native-simple-markdown';
 import { Button, Text, Row } from '../../components/ui';
-import { Colors } from '../../components/ui/styleUtils';
+import { Theme } from '../../components/ui/styleUtils';
 import creditsContent from '../../Credits.md';
 
 export const Credits: React.FC<CreditsProps> = (props) => {
@@ -57,7 +57,7 @@ export const Credits: React.FC<CreditsProps> = (props) => {
     <ListItem bottomDivider onPress={() => setIsViewing(true)}>
       <ListItem.Content>
         <ListItem.Title>
-          <Text>{props.label}</Text>
+          <Text color={props.color}>{props.label}</Text>
         </ListItem.Title>
       </ListItem.Content>
       <Overlay
@@ -69,7 +69,7 @@ export const Credits: React.FC<CreditsProps> = (props) => {
             <View style={styles.buttonContainer}>
               <Button
                 type="clear"
-                icon={<Icon name="chevron-left" color={Colors.Orange} />}
+                icon={<Icon name="chevron-left" color={Theme.Colors.Icon} />}
                 title=""
                 onPress={() => setIsViewing(false)}
               />
@@ -90,4 +90,5 @@ export const Credits: React.FC<CreditsProps> = (props) => {
 
 interface CreditsProps {
   label: string;
+  color?: string;
 }

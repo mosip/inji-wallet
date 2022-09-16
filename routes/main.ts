@@ -7,6 +7,7 @@ import { HomeScreen } from '../screens/Home/HomeScreen';
 import { ProfileScreen } from '../screens/Profile/ProfileScreen';
 import { ScanScreen } from '../screens/Scan/ScanScreen';
 import { RootStackParamList } from './index';
+import { TimerBasedRequestScreen } from '../screens/Request/TimerBasedRequestScreen';
 import { RequestLayout } from '../screens/Request/RequestLayout';
 
 export const mainRoutes: TabScreen[] = [
@@ -32,6 +33,11 @@ export const mainRoutes: TabScreen[] = [
     },
   },
   {
+    name: 'TimerBasedRequest',
+    component: TimerBasedRequestScreen,
+    icon: 'timer',
+  },
+  {
     name: 'Profile',
     component: ProfileScreen,
     icon: 'person',
@@ -44,6 +50,7 @@ export type MainBottomTabParamList = {
   };
   Scan: undefined;
   Request: undefined;
+  TimerBasedRequest: undefined;
   Profile: undefined;
 };
 

@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
 import { Overlay, Input } from 'react-native-elements';
 import { Button, Column, Row, Text } from './ui';
-import { Colors, elevation } from './ui/styleUtils';
+import { Theme } from './ui/styleUtils';
 import { useTranslation } from 'react-i18next';
 
 const styles = StyleSheet.create({
   overlay: {
-    ...elevation(5),
-    backgroundColor: Colors.White,
+    ...Theme.elevation(5),
+    backgroundColor: Theme.Colors.overlayBackgroundColor,
     padding: 0,
   },
 });

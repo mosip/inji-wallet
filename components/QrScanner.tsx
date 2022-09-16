@@ -2,34 +2,13 @@ import React, { useContext, useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Camera } from 'expo-camera';
 import { BarCodeEvent, BarCodeScanner } from 'expo-barcode-scanner';
-import { Linking, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Colors } from './ui/styleUtils';
+import { Linking, TouchableOpacity, View } from 'react-native';
+import { Theme } from './ui/styleUtils';
 import { Column, Button, Text } from './ui';
 import { GlobalContext } from '../shared/GlobalContext';
 import { useSelector } from '@xstate/react';
 import { selectIsActive } from '../machines/app';
 import { useTranslation } from 'react-i18next';
-
-const styles = StyleSheet.create({
-  scannerContainer: {
-    borderWidth: 4,
-    borderColor: Colors.Black,
-    borderRadius: 32,
-    justifyContent: 'center',
-    height: 300,
-    width: 300,
-    overflow: 'hidden',
-  },
-  scanner: {
-    height: 400,
-    width: '100%',
-    margin: 'auto',
-  },
-  flipIconButton: {
-    alignSelf: 'center',
-    alignItems: 'center',
-  },
-});
 
 export const QrScanner: React.FC<QrScannerProps> = (props) => {
   const { t } = useTranslation('QrScanner');
@@ -67,7 +46,7 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
   if (hasPermission === false) {
     return (
       <Column fill align="space-between">
-        <Text align="center" color={Colors.Red}>
+        <Text align="center" color={Theme.Colors.errorMessage}>
           {t('missingPermissionText')}
         </Text>
         <Button title={t('allowCameraButton')} onPress={openSettings} />
@@ -77,9 +56,9 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
 
   return (
     <View>
-      <View style={styles.scannerContainer}>
+      <View style={Theme.Styles.scannerContainer}>
         <Camera
-          style={styles.scanner}
+          style={Theme.Styles.scanner}
           barCodeScannerSettings={{
             barcodeTypes: [BarCodeScanner.Constants.BarCodeType.qr],
           }}
@@ -89,7 +68,7 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
       </View>
       <Column margin="24 0">
         <TouchableOpacity
-          style={styles.flipIconButton}
+          style={Theme.Styles.flipIconButton}
           onPress={() => {
             setType(
               type === Camera.Constants.Type.back
@@ -97,7 +76,11 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
                 : Camera.Constants.Type.back
             );
           }}>
-          <Icon name="flip-camera-ios" color={Colors.Black} size={64} />
+          <Icon
+            name="flip-camera-ios"
+            color={Theme.Colors.flipCameraIcon}
+            size={64}
+          />
         </TouchableOpacity>
       </Column>
     </View>
