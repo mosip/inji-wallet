@@ -10,7 +10,6 @@ export interface Typegen0 {
     'xstate.stop': { type: 'xstate.stop' };
   };
   'invokeSrcNameMap': {
-    checkAirplaneMode: 'done.invoke.scan.checkingAirplaneMode.checkingStatus:invocation[0]';
     checkLocationPermission: 'done.invoke.scan.checkingLocationService.checkingPermission:invocation[0]';
     checkLocationStatus: 'done.invoke.checkingLocationService:invocation[0]';
     discoverDevice: 'done.invoke.scan.connecting:invocation[0]';
@@ -61,7 +60,6 @@ export interface Typegen0 {
       | 'xstate.after(CLEAR_DELAY)#clearingConnection'
       | 'xstate.init';
     requestSenderInfo: 'SCAN';
-    requestToDisableFlightMode: 'FLIGHT_REQUEST';
     requestToEnableLocation: 'LOCATION_DISABLED' | 'LOCATION_REQUEST';
     setConnectionParams: 'SCAN';
     setReason: 'UPDATE_REASON';
@@ -71,9 +69,8 @@ export interface Typegen0 {
     setSenderInfo: 'RECEIVE_DEVICE_INFO';
   };
   'eventsCausingServices': {
-    checkAirplaneMode: 'APP_ACTIVE' | 'FLIGHT_ENABLED' | 'SCREEN_FOCUS';
     checkLocationPermission: 'APP_ACTIVE' | 'LOCATION_ENABLED';
-    checkLocationStatus: 'FLIGHT_DISABLED';
+    checkLocationStatus: 'SCREEN_FOCUS';
     discoverDevice: 'RECEIVE_DEVICE_INFO';
     exchangeDeviceInfo: 'CONNECTED';
     monitorConnection: 'SCREEN_BLUR' | 'SCREEN_FOCUS' | 'xstate.init';
@@ -87,10 +84,6 @@ export interface Typegen0 {
     CLEAR_DELAY: 'LOCATION_ENABLED';
   };
   'matchesStates':
-    | 'checkingAirplaneMode'
-    | 'checkingAirplaneMode.checkingStatus'
-    | 'checkingAirplaneMode.enabled'
-    | 'checkingAirplaneMode.requestingToDisable'
     | 'checkingLocationService'
     | 'checkingLocationService.checkingPermission'
     | 'checkingLocationService.checkingStatus'
@@ -114,10 +107,6 @@ export interface Typegen0 {
     | 'reviewing.selectingVc'
     | 'reviewing.sendingVc'
     | {
-        checkingAirplaneMode?:
-          | 'checkingStatus'
-          | 'enabled'
-          | 'requestingToDisable';
         checkingLocationService?:
           | 'checkingPermission'
           | 'checkingStatus'

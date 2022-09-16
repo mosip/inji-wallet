@@ -4,7 +4,6 @@ const { IdpassSmartshare, GoogleNearbyMessages } = SmartshareReactNative;
 
 // import LocationEnabler from 'react-native-location-enabler';
 const LocationEnabler = {} as any;
-import SystemSetting from 'react-native-system-setting';
 import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { EmitterSubscription, Linking, Platform } from 'react-native';
@@ -30,8 +29,6 @@ import {
 } from '../shared/smartshare';
 import { check, PERMISSIONS, PermissionStatus } from 'react-native-permissions';
 
-const checkingAirplaneMode = '#checkingAirplaneMode';
-const checkingLocationService = '#checkingLocationService';
 const findingConnection = '#scan.findingConnection';
 
 type SharingProtocol = 'OFFLINE' | 'ONLINE';
@@ -73,9 +70,6 @@ const model = createModel(
       UPDATE_REASON: (reason: string) => ({ reason }),
       LOCATION_ENABLED: () => ({}),
       LOCATION_DISABLED: () => ({}),
-      FLIGHT_ENABLED: () => ({}),
-      FLIGHT_DISABLED: () => ({}),
-      FLIGHT_REQUEST: () => ({}),
       LOCATION_REQUEST: () => ({}),
       UPDATE_VC_NAME: (vcName: string) => ({ vcName }),
       STORE_RESPONSE: (response: unknown) => ({ response }),
@@ -100,41 +94,11 @@ export const scanMachine = model.createMachine(
     },
     on: {
       SCREEN_BLUR: 'inactive',
-      SCREEN_FOCUS: 'checkingAirplaneMode',
+      SCREEN_FOCUS: 'checkingLocationService',
     },
     states: {
       inactive: {
         entry: ['removeLoggers'],
-      },
-      checkingAirplaneMode: {
-        id: 'checkingAirplaneMode',
-        on: {
-          APP_ACTIVE: '.checkingStatus',
-        },
-        initial: 'checkingStatus',
-        states: {
-          checkingStatus: {
-            invoke: {
-              src: 'checkAirplaneMode',
-            },
-            on: {
-              FLIGHT_DISABLED: checkingLocationService,
-              FLIGHT_ENABLED: 'enabled',
-            },
-          },
-          requestingToDisable: {
-            entry: ['requestToDisableFlightMode'],
-            on: {
-              FLIGHT_DISABLED: checkingLocationService,
-            },
-          },
-          enabled: {
-            on: {
-              FLIGHT_REQUEST: 'requestingToDisable',
-              FLIGHT_DISABLED: checkingLocationService,
-            },
-          },
-        },
       },
       checkingLocationService: {
         id: 'checkingLocationService',
@@ -147,7 +111,6 @@ export const scanMachine = model.createMachine(
             on: {
               LOCATION_ENABLED: 'checkingPermission',
               LOCATION_DISABLED: 'requestingToEnable',
-              FLIGHT_ENABLED: checkingAirplaneMode,
             },
           },
           requestingToEnable: {
@@ -205,7 +168,6 @@ export const scanMachine = model.createMachine(
             },
             { target: 'invalid' },
           ],
-          FLIGHT_ENABLED: checkingAirplaneMode,
         },
       },
       preparingToConnect: {
@@ -308,14 +270,6 @@ export const scanMachine = model.createMachine(
 
       requestToEnableLocation: (context) => {
         LocationEnabler?.requestResolutionSettings(context.locationConfig);
-      },
-
-      requestToDisableFlightMode: () => {
-        if (Platform.OS === 'android') {
-          SystemSetting.switchAirplane();
-        } else {
-          Linking.openURL('App-prefs:root=AIRPLANE_MODE');
-        }
       },
 
       disconnect: (context) => {
@@ -473,16 +427,6 @@ export const scanMachine = model.createMachine(
         // LocationEnabler.checkSettings(context.locationConfig);
         // return () => listener.remove();
         callback(model.events.LOCATION_ENABLED());
-      },
-
-      checkAirplaneMode: () => (callback) => {
-        SystemSetting.isAirplaneEnabled().then((enable) => {
-          if (enable) {
-            callback(model.events.FLIGHT_ENABLED());
-          } else {
-            callback(model.events.FLIGHT_DISABLED());
-          }
-        });
       },
 
       discoverDevice: (context) => (callback) => {
@@ -671,10 +615,6 @@ export function selectIsLocationDenied(state: State) {
 
 export function selectIsLocationDisabled(state: State) {
   return state.matches('checkingLocationService.disabled');
-}
-
-export function selectIsAirplaneEnabled(state: State) {
-  return state.matches('checkingAirplaneMode.enabled');
 }
 
 async function sendVc(vc: VC, callback: (status: SendVcStatus) => void) {

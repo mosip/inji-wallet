@@ -16,16 +16,14 @@ export const ScanScreen: React.FC<MainRouteProps> = (props) => {
     <Column fill padding="98 24 24 24" backgroundColor={Colors.LightGrey}>
       <Text align="center">{t('header')}</Text>
 
-      {controller.isLocationDisabled ||
-      controller.isLocationDenied ||
-      controller.isFlightMode ? (
+      {controller.isLocationDisabled || controller.isLocationDenied ? (
         <Column fill align="space-between">
           <Text align="center" margin="16 0" color={Colors.Red}>
             {controller.locationError.message}
           </Text>
           <Button
             title={controller.locationError.button}
-            onPress={controller.ON_REQUEST}
+            onPress={controller.LOCATION_REQUEST}
           />
         </Column>
       ) : null}
