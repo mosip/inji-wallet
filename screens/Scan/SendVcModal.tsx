@@ -2,7 +2,7 @@ import React from 'react';
 import { Input } from 'react-native-elements';
 import { DeviceInfoList } from '../../components/DeviceInfoList';
 import { Button, Column } from '../../components/ui';
-import { Colors } from '../../components/ui/styleUtils';
+import { Theme } from '../../components/ui/styleUtils';
 import { SelectVcOverlay } from './SelectVcOverlay';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { Modal, ModalProps } from '../../components/ui/Modal';
@@ -17,7 +17,7 @@ export const SendVcModal: React.FC<SendVcModalProps> = (props) => {
 
   return (
     <Modal {...props}>
-      <Column fill backgroundColor={Colors.LightGrey}>
+      <Column fill backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
         <Column padding="16 0" scroll>
           <DeviceInfoList of="receiver" deviceInfo={controller.receiverInfo} />
           <Column padding="24">
@@ -30,7 +30,7 @@ export const SendVcModal: React.FC<SendVcModalProps> = (props) => {
           </Column>
         </Column>
         <Column
-          backgroundColor={Colors.White}
+          backgroundColor={Theme.Colors.whiteBackgroundColor}
           padding="16 24"
           margin="2 0 0 0"
           elevation={2}>

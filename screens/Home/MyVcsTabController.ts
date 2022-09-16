@@ -7,7 +7,7 @@ import {
   selectMyVcs,
   VcEvents,
 } from '../../machines/vc';
-import {  vcItemMachine } from '../../machines/vcItem';
+import { vcItemMachine } from '../../machines/vcItem';
 import { GlobalContext } from '../../shared/GlobalContext';
 import { HomeScreenTabProps } from './HomeScreen';
 import {
@@ -16,6 +16,7 @@ import {
   selectAddVcModal,
   selectIsOnboarding,
   selectIsRequestSuccessful,
+  selectGetVcModal,
 } from './MyVcsTabMachine';
 
 export function useMyVcsTab(props: HomeScreenTabProps) {
@@ -27,6 +28,7 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
   return {
     service,
     AddVcModalService: useSelector(service, selectAddVcModal),
+    GetVcModalService: useSelector(service, selectGetVcModal),
 
     vcKeys: useSelector(vcService, selectMyVcs),
     vcLabel: useSelector(settingsService, selectVcLabel),
@@ -39,9 +41,11 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
 
     ADD_VC: () => service.send(MyVcsTabEvents.ADD_VC()),
 
+    GET_VC: () => service.send(MyVcsTabEvents.GET_VC()),
+
     REFRESH: () => vcService.send(VcEvents.REFRESH_MY_VCS()),
 
-    VIEW_VC: (vcRef: ActorRefFrom<typeof  vcItemMachine>) => {
+    VIEW_VC: (vcRef: ActorRefFrom<typeof vcItemMachine>) => {
       return service.send(MyVcsTabEvents.VIEW_VC(vcRef));
     },
 

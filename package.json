@@ -63,6 +63,7 @@
     "react-native-securerandom": "^1.0.0",
     "react-native-simple-markdown": "^1.1.0",
     "react-native-svg": "12.1.1",
+    "react-native-swipe-gestures": "^1.0.5",
     "react-native-system-setting": "^1.7.6",
     "react-native-uuid": "^2.0.1",
     "react-native-vector-icons": "^8.1.0",
@@ -90,7 +91,6 @@
   "name": "mosip-resident-app",
   "version": "1.0.0",
   "lint-staged": {
-    "*.{ts,tsx}": "eslint --cache --fix",
     "*.{ts,tsx,js,css,md}": "prettier --write",
     "*.strings.json": "node scripts/compile-strings.js"
   },

@@ -2,12 +2,12 @@ import React from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
 import { Overlay, LinearProgress } from 'react-native-elements';
 import { Column, Text } from './ui';
-import { Colors, elevation } from './ui/styleUtils';
+import { Theme } from './ui/styleUtils';
 
 const styles = StyleSheet.create({
   overlay: {
-    ...elevation(5),
-    backgroundColor: Colors.White,
+    ...Theme.elevation(5),
+    backgroundColor: Theme.Colors.whiteBackgroundColor,
   },
 });
 
@@ -16,7 +16,8 @@ export const MessageOverlay: React.FC<MessageOverlayProps> = (props) => {
     <Overlay
       isVisible={props.isVisible}
       overlayStyle={styles.overlay}
-      onBackdropPress={props.onBackdropPress}>
+      onBackdropPress={props.onBackdropPress}
+      onShow={props.onShow}>
       <Column padding="24" width={Dimensions.get('screen').width * 0.8}>
         {props.title && (
           <Text weight="semibold" margin="0 0 12 0">
@@ -25,7 +26,10 @@ export const MessageOverlay: React.FC<MessageOverlayProps> = (props) => {
         )}
         {props.message && <Text margin="0 0 12 0">{props.message}</Text>}
         {props.hasProgress && (
-          <LinearProgress variant="indeterminate" color={Colors.Orange} />
+          <LinearProgress
+            variant="indeterminate"
+            color={Theme.Colors.Loading}
+          />
         )}
       </Column>
     </Overlay>
@@ -38,4 +42,5 @@ interface MessageOverlayProps {
   message?: string;
   hasProgress?: boolean;
   onBackdropPress?: () => void;
+  onShow?: () => void;
 }
