@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Dimensions, Image, StyleSheet, View } from 'react-native';
+import {
+  Dimensions,
+  Image,
+  SafeAreaView,
+  StyleSheet,
+  View,
+} from 'react-native';
 import { Divider, Icon, ListItem, Overlay } from 'react-native-elements';
 import Markdown from 'react-native-simple-markdown';
 import { Button, Text, Row } from '../../components/ui';
@@ -64,25 +70,27 @@ export const Credits: React.FC<CreditsProps> = (props) => {
         overlayStyle={{ padding: 24 }}
         isVisible={isViewing}
         onBackdropPress={() => setIsViewing(false)}>
-        <View style={styles.view}>
-          <Row align="center" crossAlign="center" margin="0 0 10 0">
-            <View style={styles.buttonContainer}>
-              <Button
-                type="clear"
-                icon={<Icon name="chevron-left" color={Colors.Orange} />}
-                title=""
-                onPress={() => setIsViewing(false)}
-              />
+        <SafeAreaView>
+          <View style={styles.view}>
+            <Row align="center" crossAlign="center" margin="0 0 10 0">
+              <View style={styles.buttonContainer}>
+                <Button
+                  type="clear"
+                  icon={<Icon name="chevron-left" color={Colors.Orange} />}
+                  title=""
+                  onPress={() => setIsViewing(false)}
+                />
+              </View>
+              <Text size="small">{t('header')}</Text>
+            </Row>
+            <Divider />
+            <View style={styles.markdownView}>
+              <Markdown rules={rules} styles={markdownStyles}>
+                {creditsContent}
+              </Markdown>
             </View>
-            <Text size="small">{t('header')}</Text>
-          </Row>
-          <Divider />
-          <View style={styles.markdownView}>
-            <Markdown rules={rules} styles={markdownStyles}>
-              {creditsContent}
-            </Markdown>
           </View>
-        </View>
+        </SafeAreaView>
       </Overlay>
     </ListItem>
   );

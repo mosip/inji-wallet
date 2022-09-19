@@ -1,16 +1,14 @@
 import React from 'react';
-import { Dimensions } from 'react-native';
-import { Overlay } from 'react-native-elements';
 import { DropdownIcon } from '../../components/DropdownIcon';
 import { TextEditOverlay } from '../../components/TextEditOverlay';
-import { Text, Column, Row, Button } from '../../components/ui';
+import { Column } from '../../components/ui';
 import { Modal } from '../../components/ui/Modal';
 import { Colors } from '../../components/ui/styleUtils';
 import { VcDetails } from '../../components/VcDetails';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { ToastItem } from '../../components/ui/ToastItem';
 import { Passcode } from '../../components/Passcode';
-// import { OtpVerificationModal } from './MyVcs/OtpVerificationModal';
+import { RevokeConfirmModal } from '../../components/RevokeConfirm';
 import { OIDcAuthenticationModal } from '../../components/OIDcAuth';
 import { useViewVcModal, ViewVcModalProps } from './ViewVcModalController';
 import { useTranslation } from 'react-i18next';
@@ -63,41 +61,19 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
         error={controller.otpError}
       />
 
-      {/* <OtpVerificationModal
-        isVisible={controller.isAcceptingOtpInput}
-        onDismiss={controller.DISMISS}
-        onInputDone={controller.INPUT_OTP}
-        error={controller.otpError}
-      /> */}
-
       <MessageOverlay
         isVisible={controller.isRequestingOtp}
         title={t('requestingOtp')}
         hasProgress
       />
 
-      <Overlay
-        overlayStyle={{ padding: 24, elevation: 6 }}
-        isVisible={controller.isRevoking}
-        onBackdropPress={() => controller.setRevoking(false)}>
-        <Column width={Dimensions.get('screen').width * 0.8}>
-          <Text weight="semibold" margin="0 0 12 0">
-            {t('revoke')}
-          </Text>
-          <Text margin="0 0 12 0">
-            {t('revoking', { vid: controller.vc.id })}
-          </Text>
-          <Row>
-            <Button
-              fill
-              type="clear"
-              title={t('cancel')}
-              onPress={() => controller.setRevoking(false)}
-            />
-            <Button fill title={t('revoke')} onPress={controller.REVOKE_VC} />
-          </Row>
-        </Column>
-      </Overlay>
+      {controller.isRevoking && (
+        <RevokeConfirmModal
+          id={controller.vc.id}
+          onCancel={() => controller.setRevoking(false)}
+          onRevoke={controller.REVOKE_VC}
+        />
+      )}
 
       {controller.reAuthenticating !== '' &&
         controller.reAuthenticating == 'passcode' && (
@@ -109,6 +85,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
             error={controller.error}
           />
         )}
+
       {controller.toastVisible && <ToastItem message={controller.message} />}
     </Modal>
   );

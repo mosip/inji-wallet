@@ -85,6 +85,8 @@ export function useRevoke() {
     vidKeys,
 
     CONFIRM_REVOKE_VC: () => {
+      //new
+      //setIsViewing(false);
       setRevoking(true);
     },
     DISMISS: () => {
@@ -96,6 +98,8 @@ export function useRevoke() {
     REVOKE_VC: () => {
       revokeService.send(RevokeVidsEvents.REVOKE_VCS(selectedVidKeys));
       setRevoking(false);
+      //new
+      //setIsViewing(true);
     },
     revokeVc: (otp: string) => {
       NetInfo.fetch().then((state) => {
