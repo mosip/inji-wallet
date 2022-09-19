@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Dimensions, StyleSheet } from 'react-native';
-import { Overlay, Input } from 'react-native-elements';
-import { Button, Column, Row, Text } from './ui';
+import { Dimensions, StyleSheet, View } from 'react-native';
+import { Input } from 'react-native-elements';
+import { Button, Centered, Column, Row, Text } from './ui';
 import { Colors, elevation } from './ui/styleUtils';
 import { useTranslation } from 'react-i18next';
 
@@ -11,6 +11,20 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.White,
     padding: 0,
   },
+  viewContainer: {
+    backgroundColor: 'rgba(0,0,0,.6)',
+    width: Dimensions.get('screen').width,
+    height: Dimensions.get('screen').height,
+    position: 'absolute',
+    top: 0,
+    zIndex: 9,
+  },
+  boxContainer: {
+    backgroundColor: Colors.White,
+    padding: 24,
+    elevation: 6,
+    borderRadius: 4,
+  },
 });
 
 export const TextEditOverlay: React.FC<EditOverlayProps> = (props) => {
@@ -18,11 +32,12 @@ export const TextEditOverlay: React.FC<EditOverlayProps> = (props) => {
   const [value, setValue] = useState(props.value);
 
   return (
-    <Overlay
-      isVisible={props.isVisible}
-      overlayStyle={styles.overlay}
-      onBackdropPress={props.onDismiss}>
-      <Column pX={24} pY={24} width={Dimensions.get('screen').width * 0.8}>
+    <View style={styles.viewContainer}>
+      <Centered fill>
+        <Column
+          width={Dimensions.get('screen').width * 0.8}
+          style={styles.boxContainer}>
+    
         <Text weight="semibold" margin="0 0 16 0">
           {props.label}
         </Text>
@@ -38,7 +53,8 @@ export const TextEditOverlay: React.FC<EditOverlayProps> = (props) => {
           <Button fill title={t('save')} onPress={() => props.onSave(value)} />
         </Row>
       </Column>
-    </Overlay>
+      </Centered>
+    </View>
   );
 
   function dismiss() {

@@ -114,6 +114,7 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
       setRevoking(true);
     },
     REVOKE_VC: () => {
+      console.log('revoking VC')
       vcItemActor.send(VcItemEvents.REVOKE_VC());
       setRevoking(false);
     },

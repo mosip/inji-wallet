@@ -41,7 +41,7 @@ export const RevokeConfirmModal: React.FC<RevokeConfirmModalProps> = (
               fill
               type="clear"
               title={t('cancel')}
-              onPress={() => props.onCancel}
+              onPress={() => props.onCancel()}
             />
             <Button fill title={t('revoke')} onPress={props.onRevoke} />
           </Row>
