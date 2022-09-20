@@ -1,8 +1,7 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
 import { Tab } from 'react-native-elements';
 import { Column, Text } from '../../components/ui';
-import { Colors } from '../../components/ui/styleUtils';
+import { Theme } from '../../components/ui/styleUtils';
 import { HomeRouteProps } from '../../routes/main';
 import { HistoryTab } from './HistoryTab';
 import { MyVcsTab } from './MyVcsTab';
@@ -11,19 +10,8 @@ import { ViewVcModal } from './ViewVcModal';
 import { useHomeScreen } from './HomeScreenController';
 import { TabRef } from './HomeScreenMachine';
 import { useTranslation } from 'react-i18next';
-
-const styles = StyleSheet.create({
-  tabIndicator: {
-    backgroundColor: Colors.Orange,
-  },
-  tabContainer: {
-    backgroundColor: 'transparent',
-    justifyContent: 'center',
-  },
-  tabView: {
-    flex: 1,
-  },
-});
+import { ActorRefFrom } from 'xstate';
+import { vcItemMachine } from '../../machines/vcItem';
 
 export const HomeScreen: React.FC<HomeRouteProps> = (props) => {
   const { t } = useTranslation('HomeScreen');
@@ -31,11 +19,11 @@ export const HomeScreen: React.FC<HomeRouteProps> = (props) => {
 
   return (
     <React.Fragment>
-      <Column fill backgroundColor={Colors.LightGrey}>
+      <Column fill backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
         <Tab
           value={controller.activeTab}
           onChange={controller.SELECT_TAB}
-          indicatorStyle={styles.tabIndicator}>
+          indicatorStyle={Theme.Styles.tabIndicator}>
           {TabItem(t('myVcsTab', { vcLabel: controller.vcLabel.plural }))}
           {TabItem(t('receivedVcsTab', { vcLabel: controller.vcLabel.plural }))}
           {TabItem(t('historyTab'))}
@@ -45,13 +33,16 @@ export const HomeScreen: React.FC<HomeRouteProps> = (props) => {
             <MyVcsTab
               isVisible={controller.activeTab === 0}
               service={controller.tabRefs.myVcs}
+              vcItemActor={controller.selectedVc}
             />
             <ReceivedVcsTab
               isVisible={controller.activeTab === 1}
               service={controller.tabRefs.receivedVcs}
+              vcItemActor={controller.selectedVc}
             />
             <HistoryTab
               isVisible={controller.activeTab === 2}
+              vcItemActor={controller.selectedVc}
               service={controller.tabRefs.history}
             />
           </Column>
@@ -71,9 +62,9 @@ export const HomeScreen: React.FC<HomeRouteProps> = (props) => {
 function TabItem(title: string) {
   return (
     <Tab.Item
-      containerStyle={styles.tabContainer}
+      containerStyle={Theme.Styles.tabContainer}
       title={
-        <Text align="center" color={Colors.Orange}>
+        <Text align="center" color={Theme.Colors.TabItemText}>
           {title}
         </Text>
       }
@@ -84,4 +75,5 @@ function TabItem(title: string) {
 export interface HomeScreenTabProps {
   isVisible: boolean;
   service: TabRef;
+  vcItemActor: ActorRefFrom<typeof vcItemMachine>;
 }

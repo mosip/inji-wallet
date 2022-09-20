@@ -559,6 +559,10 @@ export function selectVerifiableCredential(state: State) {
   return state.context.verifiableCredential;
 }
 
+export function selectContext(state: State) {
+  return state.context;
+}
+
 export function selectIsEditingTag(state: State) {
   return state.matches('editingTag');
 }

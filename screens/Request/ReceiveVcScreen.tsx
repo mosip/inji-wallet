@@ -1,7 +1,7 @@
 import React from 'react';
 import { DeviceInfoList } from '../../components/DeviceInfoList';
 import { Button, Column, Text } from '../../components/ui';
-import { Colors } from '../../components/ui/styleUtils';
+import { Theme } from '../../components/ui/styleUtils';
 import { VcDetails } from '../../components/VcDetails';
 import { useReceiveVcScreen } from './ReceiveVcScreenController';
 import { useTranslation } from 'react-i18next';
@@ -11,7 +11,10 @@ export const ReceiveVcScreen: React.FC = () => {
   const controller = useReceiveVcScreen();
 
   return (
-    <Column scroll padding="24 0 48 0" backgroundColor={Colors.LightGrey}>
+    <Column
+      scroll
+      padding="24 0 48 0"
+      backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
       <Column>
         <DeviceInfoList of="sender" deviceInfo={controller.senderInfo} />
         <Text weight="semibold" margin="24 24 0 24">
