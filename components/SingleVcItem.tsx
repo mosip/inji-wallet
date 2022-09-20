@@ -101,7 +101,10 @@ export const SingleVcItem: React.FC<VcItemProps> = (props) => {
   const { t } = useTranslation('VcDetails');
 
   const machine = useRef(
-    createVcItemMachine(appService.getSnapshot().serviceRefs, props.vcKey)
+    createVcItemMachine(
+      appService.getSnapshot().context.serviceRefs,
+      props.vcKey
+    )
   );
 
   const service = useInterpret(machine.current);

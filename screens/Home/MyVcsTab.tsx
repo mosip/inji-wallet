@@ -11,7 +11,7 @@ import { DownloadingVcModal } from './MyVcs/DownloadingVcModal';
 import { OnboardingOverlay } from './OnboardingOverlay';
 import { useTranslation } from 'react-i18next';
 import GestureRecognizer from 'react-native-swipe-gestures';
-import { UpdatedVcItem } from '../../components/UpdatedVcItem';
+import { VcItem } from '../../components/VcItem';
 import { GET_INDIVIDUAL_ID } from '../../shared/constants';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
@@ -43,7 +43,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                   />
                 }>
                 {controller.vcKeys.map((vcKey) => (
-                  <UpdatedVcItem
+                  <VcItem
                     key={vcKey}
                     vcKey={vcKey}
                     margin="0 2 8 2"

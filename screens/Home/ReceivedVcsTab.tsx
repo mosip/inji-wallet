@@ -6,7 +6,7 @@ import { Centered, Column, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { HomeScreenTabProps } from './HomeScreen';
 import { useReceivedVcsTab } from './ReceivedVcsTabController';
-import { UpdatedVcItem } from '../../components/UpdatedVcItem';
+import { VcItem } from '../../components/VcItem';
 
 export const ReceivedVcsTab: React.FC<HomeScreenTabProps> = (props) => {
   const { t } = useTranslation('ReceivedVcsTab');
@@ -24,7 +24,7 @@ export const ReceivedVcsTab: React.FC<HomeScreenTabProps> = (props) => {
           />
         }>
         {controller.vcKeys.map((vcKey) => (
-          <UpdatedVcItem
+          <VcItem
             key={vcKey}
             vcKey={vcKey}
             margin="0 2 8 2"

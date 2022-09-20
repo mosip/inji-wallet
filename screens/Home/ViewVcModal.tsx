@@ -10,7 +10,7 @@ import { Passcode } from '../../components/Passcode';
 import { OtpVerificationModal } from './MyVcs/OtpVerificationModal';
 import { useViewVcModal, ViewVcModalProps } from './ViewVcModalController';
 import { useTranslation } from 'react-i18next';
-import { UpdatedVcDetails } from '../../components/UpdatedVcDetails';
+import { VcDetails } from '../../components/VcDetails';
 
 export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
   const { t } = useTranslation('ViewVcModal');
@@ -31,7 +31,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
       }>
       <Column scroll>
         <Column fill>
-          <UpdatedVcDetails vc={controller.vc} />
+          <VcDetails vc={controller.vc} />
         </Column>
       </Column>
 

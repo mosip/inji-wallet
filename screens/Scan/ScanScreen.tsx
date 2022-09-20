@@ -6,7 +6,7 @@ import { MainRouteProps } from '../../routes/main';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { useScanScreen } from './ScanScreenController';
 import { useTranslation } from 'react-i18next';
-import { UpdatedSendVcModal } from './UpdatedSendVcModal';
+import { SendVcModal } from './SendVcModal';
 
 export const ScanScreen: React.FC<MainRouteProps> = (props) => {
   const { t } = useTranslation('ScanScreen');
@@ -52,7 +52,7 @@ export const ScanScreen: React.FC<MainRouteProps> = (props) => {
         onBackdropPress={controller.DISMISS_INVALID}
       />
 
-      <UpdatedSendVcModal
+      <SendVcModal
         isVisible={controller.isReviewing}
         onDismiss={controller.DISMISS}
         headerElevation={2}

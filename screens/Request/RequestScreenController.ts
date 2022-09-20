@@ -78,6 +78,5 @@ export function useRequestScreen() {
     SWITCH_PROTOCOL: (value: boolean) =>
       requestService.send(RequestEvents.SWITCH_PROTOCOL(value)),
     GOTO_SETTINGS: () => requestService.send(RequestEvents.GOTO_SETTINGS()),
-    GOBACK: () => requestService.send(RequestEvents.GOBACK()),
   };
 }

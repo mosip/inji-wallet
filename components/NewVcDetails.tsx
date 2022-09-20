@@ -8,7 +8,7 @@ import { VC, CredentialSubject } from '../types/vc';
 import { Column, Row, Text } from './ui';
 import { Theme } from './ui/styleUtils';
 import { TextItem } from './ui/TextItem';
-import { useReceiveVcModal } from '../screens/Request/ReceiveVcModalController';
+import { useReceiveVcScreen } from '../screens/Request/ReceiveVcScreenController';
 
 const VerifiedIcon: React.FC = () => {
   return (
@@ -23,7 +23,7 @@ const VerifiedIcon: React.FC = () => {
 
 export const NewVcDetails: React.FC<VcDetailsProps> = (props) => {
   const { t, i18n } = useTranslation('VcDetails');
-  const controller = useReceiveVcModal();
+  const controller = useReceiveVcScreen();
 
   return (
     <ImageBackground

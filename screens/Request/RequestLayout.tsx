@@ -8,7 +8,7 @@ import { useRequestLayout } from './RequestLayoutController';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { ReceiveVcScreen } from './ReceiveVcScreen';
 import { LanguageSelector } from '../../components/LanguageSelector';
-import { Colors } from '../../components/ui/styleUtils';
+import { Theme } from '../../components/ui/styleUtils';
 
 const RequestStack = createNativeStackNavigator();
 
@@ -24,7 +24,9 @@ export const RequestLayout: React.FC = () => {
           headerTitleAlign: 'center',
           headerRight: () => (
             <LanguageSelector
-              triggerComponent={<Icon name="language" color={Colors.Orange} />}
+              triggerComponent={
+                <Icon name="language" color={Theme.Colors.Icon} />
+              }
             />
           ),
         }}>

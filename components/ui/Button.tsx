@@ -5,7 +5,7 @@ import {
 } from 'react-native-elements';
 import { GestureResponderEvent, StyleProp, ViewStyle } from 'react-native';
 import { Text } from './Text';
-import { Theme } from './styleUtils';
+import { Theme, Spacing } from './styleUtils';
 
 export const Button: React.FC<ButtonProps> = (props) => {
   const type = props.type || 'solid';
