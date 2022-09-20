@@ -30,7 +30,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
       onPress: () => controller.EDIT_TAG(),
     },
   ];
-  
+
   return (
     <Modal
       isVisible={props.isVisible}
@@ -43,24 +43,26 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
           <VcDetails vc={controller.vc} />
         </Column>
       </Column>
-    {controller.isEditingTag && (
-       <TextEditOverlay
-        isVisible={controller.isEditingTag}
-        label={t('editTag')}
-        value={controller.vc.tag}
-        onDismiss={controller.DISMISS}
-        onSave={controller.SAVE_TAG}
-      />
-    )}
-    
-      <OIDcAuthenticationModal
-        isVisible={controller.isAcceptingOtpInput}
-        onDismiss={controller.DISMISS}
-        onVerify={() => {
-          controller.revokeVc('111111');
-        }}
-        error={controller.otpError}
-      />
+      {controller.isEditingTag && (
+        <TextEditOverlay
+          isVisible={controller.isEditingTag}
+          label={t('editTag')}
+          value={controller.vc.tag}
+          onDismiss={controller.DISMISS}
+          onSave={controller.SAVE_TAG}
+        />
+      )}
+
+      {controller.isAcceptingOtpInput && (
+        <OIDcAuthenticationModal
+          isVisible={controller.isAcceptingOtpInput}
+          onDismiss={controller.DISMISS}
+          onVerify={() => {
+            controller.revokeVc('111111');
+          }}
+          error={controller.otpError}
+        />
+      )}
 
       <MessageOverlay
         isVisible={controller.isRequestingOtp}

@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     height: Dimensions.get('screen').height,
     position: 'absolute',
     top: 0,
-    zIndex: 9,
+    zIndex: 999999,
   },
   boxContainer: {
     backgroundColor: Colors.White,

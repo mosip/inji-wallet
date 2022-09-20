@@ -11,7 +11,7 @@ import { Button, Column, Centered, Row, Text } from '../../components/ui';
 import { VidItem } from '../../components/VidItem';
 import { Colors } from '../../components/ui/styleUtils';
 import { ToastItem } from '../../components/ui/ToastItem';
-import { OIDcAuthenticationModal } from '../../components/OIDcAuth';
+import { OIDcAuthenticationModal } from '../../components/OIDcAuthModal';
 import { useTranslation } from 'react-i18next';
 import { useRevoke } from './RevokeController';
 

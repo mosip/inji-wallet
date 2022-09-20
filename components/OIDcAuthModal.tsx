@@ -1,24 +1,9 @@
 import React from 'react';
-import { Dimensions, Platform, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Button, Centered, Column, Text } from './ui';
-import { ModalProps } from './ui/Modal';
+import { Modal, ModalProps } from './ui/Modal';
 import { Colors } from './ui/styleUtils';
-
-const styles = StyleSheet.create({
-  viewContainer: {
-    backgroundColor: Colors.White,
-    width: Dimensions.get('screen').width,
-    height: Dimensions.get('screen').height,
-    position: 'absolute',
-    top: 0,
-    zIndex: 9,
-  },
-  buttonContainer: {
-    marginBottom: Platform.OS === 'ios' ? 0 : 145,
-  },
-});
 
 export const OIDcAuthenticationModal: React.FC<OIDcAuthenticationModalProps> = (
   props
@@ -26,8 +11,8 @@ export const OIDcAuthenticationModal: React.FC<OIDcAuthenticationModalProps> = (
   const { t } = useTranslation('OIDcAuth');
 
   return (
-    <View style={styles.viewContainer}>
-      <Column fill padding="0 24" align="space-between">
+    <Modal isVisible={props.isVisible} onDismiss={props.onDismiss}>
+      <Column fill padding="32 4" align="space-between">
         <Centered fill>
           <Icon
             name="card-account-details-outline"
@@ -47,11 +32,11 @@ export const OIDcAuthenticationModal: React.FC<OIDcAuthenticationModalProps> = (
           </Text>
         </Centered>
 
-        <Column margin="0 16 32" style={styles.buttonContainer}>
+        <Column margin="0 16 32">
           <Button fill title={t('verify')} onPress={() => props.onVerify()} />
         </Column>
       </Column>
-    </View>
+    </Modal>
   );
 };
 
