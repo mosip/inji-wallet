@@ -10,7 +10,6 @@ import { GetVcModal } from './MyVcs/GetVcModal';
 import { DownloadingVcModal } from './MyVcs/DownloadingVcModal';
 import { OnboardingOverlay } from './OnboardingOverlay';
 import { useTranslation } from 'react-i18next';
-import GestureRecognizer from 'react-native-swipe-gestures';
 import { VcItem } from '../../components/VcItem';
 import { GET_INDIVIDUAL_ID } from '../../shared/constants';
 
@@ -50,18 +49,17 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                     onPress={controller.VIEW_VC}
                   />
                 ))}
-                <GestureRecognizer onSwipeLeft={props.onSwipe}>
-                  <Column elevation={2} margin="10 2 0 2">
-                    <Button
-                      type="clear"
-                      disabled={controller.isRefreshingVcs}
-                      title={t('addVcButton', {
-                        vcLabel: controller.vcLabel.singular,
-                      })}
-                      onPress={controller.ADD_VC}
-                    />
-                  </Column>
-                </GestureRecognizer>
+
+                <Column elevation={2} margin="10 2 0 2">
+                  <Button
+                    type="clear"
+                    disabled={controller.isRefreshingVcs}
+                    title={t('addVcButton', {
+                      vcLabel: controller.vcLabel.singular,
+                    })}
+                    onPress={controller.ADD_VC}
+                  />
+                </Column>
               </Column>
             </React.Fragment>
           )}
@@ -83,16 +81,14 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                 />
               </Centered>
 
-              <GestureRecognizer onSwipeLeft={props.onSwipe}>
-                <Button
-                  type="addId"
-                  disabled={controller.isRefreshingVcs}
-                  title={t('addVcButton', {
-                    vcLabel: controller.vcLabel.singular,
-                  })}
-                  onPress={controller.ADD_VC}
-                />
-              </GestureRecognizer>
+              <Button
+                type="addId"
+                disabled={controller.isRefreshingVcs}
+                title={t('addVcButton', {
+                  vcLabel: controller.vcLabel.singular,
+                })}
+                onPress={controller.ADD_VC}
+              />
             </React.Fragment>
           )}
         </Column>

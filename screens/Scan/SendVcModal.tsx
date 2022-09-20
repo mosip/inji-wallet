@@ -12,7 +12,7 @@ import { useSelectVcOverlay } from './SelectVcOverlayController';
 import { SingleVcItem } from '../../components/SingleVcItem';
 
 export const SendVcModal: React.FC<SendVcModalProps> = (props) => {
-  const { t } = useTranslation('UpdatedSendVcModal');
+  const { t } = useTranslation('SendVcModal');
   const controller = useSendVcModal();
 
   const onShare = () => {
