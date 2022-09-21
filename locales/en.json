@@ -6,8 +6,8 @@
     "name": "Name"
   },
   "OIDcAuth": {
-    "title": "Authentication",
-    "text": "To be replaced with the appropriate method of authentication",
+    "title": "OIDC Authentication",
+    "text": "To be replaced with the OIDC provider UI",
     "verify": "Verify"
   },
   "PasscodeVerify": {
