@@ -16,6 +16,7 @@ import {
   ONBOARDING_STATUS_STORE_KEY,
 } from '../../shared/constants';
 import { AddVcModalMachine } from './MyVcs/AddVcModalMachine';
+import { GetVcModalMachine } from './MyVcs/GetVcModalMachine';
 
 const model = createModel(
   {
@@ -30,6 +31,7 @@ const model = createModel(
       DISMISS: () => ({}),
       STORE_RESPONSE: (response?: unknown) => ({ response }),
       ADD_VC: () => ({}),
+      GET_VC: () => ({}),
       ONBOARDING_DONE: () => ({}),
     },
   }
@@ -75,6 +77,7 @@ export const MyVcsTabMachine = model.createMachine(
         on: {
           ADD_VC: 'addingVc',
           VIEW_VC: 'viewingVc',
+          GET_VC: 'gettingVc',
         },
       },
       viewingVc: {
@@ -109,6 +112,20 @@ export const MyVcsTabMachine = model.createMachine(
               DISMISS: '#idle',
             },
           },
+        },
+      },
+      gettingVc: {
+        invoke: {
+          id: 'GetVcModal',
+          src: GetVcModalMachine,
+          onDone: 'addingVc',
+        },
+        on: {
+          DISMISS: 'idle',
+        },
+        initial: 'waitingForvcKey',
+        states: {
+          waitingForvcKey: {},
         },
       },
     },
@@ -166,6 +183,10 @@ type State = StateFrom<typeof MyVcsTabMachine>;
 
 export function selectAddVcModal(state: State) {
   return state.children.AddVcModal as ActorRefFrom<typeof AddVcModalMachine>;
+}
+
+export function selectGetVcModal(state: State) {
+  return state.children.GetVcModal as ActorRefFrom<typeof GetVcModalMachine>;
 }
 
 export function selectIsOnboarding(state: State) {

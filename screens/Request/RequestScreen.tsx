@@ -1,8 +1,7 @@
 import React from 'react';
 import QRCode from 'react-native-qrcode-svg';
-import { Button, Centered, Column, Row, Text } from '../../components/ui';
-import { Colors } from '../../components/ui/styleUtils';
-
+import { Centered, Button, Row, Column, Text } from '../../components/ui';
+import { Theme } from '../../components/ui/styleUtils';
 import { useRequestScreen } from './RequestScreenController';
 import { useTranslation } from 'react-i18next';
 import { Switch } from 'react-native-elements';
@@ -13,11 +12,14 @@ export const RequestScreen: React.FC = () => {
   const controller = useRequestScreen();
 
   return (
-    <Column fill padding="24" backgroundColor={Colors.LightGrey}>
+    <Column
+      fill
+      padding="24"
+      backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
       <Column>
         {controller.isBluetoothDenied ? (
           <React.Fragment>
-            <Text color={Colors.Red} align="center">
+            <Text color={Theme.Colors.errorMessage} align="center">
               {t('bluetoothDenied', { vcLabel: controller.vcLabel.singular })}
             </Text>
             <Button
@@ -38,7 +40,7 @@ export const RequestScreen: React.FC = () => {
           <QRCode
             size={200}
             value={controller.connectionParams}
-            backgroundColor={Colors.LightGrey}
+            backgroundColor={Theme.Colors.QRCodeBackgroundColor}
           />
         ) : null}
       </Centered>

@@ -26,4 +26,5 @@ export function useAddVcModal({ service }: AddVcModalProps) {
 
 export interface AddVcModalProps {
   service: ActorRefFrom<typeof AddVcModalMachine>;
+  onPress?: () => void;
 }
