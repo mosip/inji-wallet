@@ -608,7 +608,7 @@ SPEC CHECKSUMS:
   EXUpdates: a83e036243b0f6ece53a8c1cb883b6751c88a5f8
   EXUpdatesInterface: a9814f422d3cd6e7cfd260d13c27786148ece20e
   FBLazyVector: c71c5917ec0ad2de41d5d06a5855f6d5eda06971
-  FBReactNativeSpec: 2492beb27d7c97438138799b65e5914def868da4
+  FBReactNativeSpec: b4cea6dceefc7cf1b25592b7aa7d9be51e7ef013
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   GoogleInterchangeUtilities: d5bc4d88d5b661ab72f9d70c58d02ca8c27ad1f7
   GoogleNetworkingUtilities: 3edd3a8161347494f2da60ea0deddc8a472d94cb
