@@ -12,7 +12,7 @@ export const OIDcAuthenticationModal: React.FC<OIDcAuthenticationModalProps> = (
 
   return (
     <Modal isVisible={props.isVisible} onDismiss={props.onDismiss}>
-      <Column fill padding="32 4" align="space-between">
+      <Column fill padding="32" align="space-between">
         <Centered fill>
           <Icon
             name="card-account-details-outline"
@@ -31,9 +31,8 @@ export const OIDcAuthenticationModal: React.FC<OIDcAuthenticationModalProps> = (
             {props.error}
           </Text>
         </Centered>
-
-        <Column margin="0 16 32">
-          <Button fill title={t('verify')} onPress={() => props.onVerify()} />
+        <Column>
+          <Button title={t('verify')} onPress={() => props.onVerify()} />
         </Column>
       </Column>
     </Modal>

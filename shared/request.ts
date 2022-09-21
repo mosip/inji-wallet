@@ -21,7 +21,6 @@ export async function request(
     body: JSON.stringify(body),
   });
 
-  console.log('response', response);
   const jsonResponse = await response.json();
 
   if (response.status >= 400) {
