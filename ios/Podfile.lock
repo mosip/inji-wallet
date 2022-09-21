@@ -85,8 +85,6 @@ PODS:
     - DoubleConversion
     - glog
   - RCTRequired (0.64.3)
-  - RCTSystemSetting (1.7.6):
-    - React
   - RCTTypeSafety (0.64.3):
     - FBLazyVector (= 0.64.3)
     - RCT-Folly (= 2020.01.13.00)
@@ -401,7 +399,6 @@ DEPENDENCIES:
   - Permission-LocationWhenInUse (from `../node_modules/react-native-permissions/ios/LocationWhenInUse`)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
-  - RCTSystemSetting (from `../node_modules/react-native-system-setting`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
   - React (from `../node_modules/react-native/`)
   - React-callinvoker (from `../node_modules/react-native/ReactCommon/callinvoker`)
@@ -510,8 +507,6 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
     :path: "../node_modules/react-native/Libraries/RCTRequired"
-  RCTSystemSetting:
-    :path: "../node_modules/react-native-system-setting"
   RCTTypeSafety:
     :path: "../node_modules/react-native/Libraries/TypeSafety"
   React:
@@ -608,7 +603,7 @@ SPEC CHECKSUMS:
   EXUpdates: a83e036243b0f6ece53a8c1cb883b6751c88a5f8
   EXUpdatesInterface: a9814f422d3cd6e7cfd260d13c27786148ece20e
   FBLazyVector: c71c5917ec0ad2de41d5d06a5855f6d5eda06971
-  FBReactNativeSpec: b4cea6dceefc7cf1b25592b7aa7d9be51e7ef013
+  FBReactNativeSpec: 2492beb27d7c97438138799b65e5914def868da4
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   GoogleInterchangeUtilities: d5bc4d88d5b661ab72f9d70c58d02ca8c27ad1f7
   GoogleNetworkingUtilities: 3edd3a8161347494f2da60ea0deddc8a472d94cb
@@ -621,7 +616,6 @@ SPEC CHECKSUMS:
   Permission-LocationWhenInUse: 51aa065819cd582517e98e89b564e2465a4a83c6
   RCT-Folly: ec7a233ccc97cc556cf7237f0db1ff65b986f27c
   RCTRequired: d34bf57e17cb6e3b2681f4809b13843c021feb6c
-  RCTSystemSetting: 5107b7350d63b3f7b42a1277d07e4e5d9df879be
   RCTTypeSafety: 8dab4933124ed39bb0c1d88d74d61b1eb950f28f
   React: ef700aeb19afabff83a9cc5799ac955a9c6b5e0f
   React-callinvoker: 5547633d44f3e114b17c03c660ccb5faefd9ed2d
