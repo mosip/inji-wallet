@@ -91,3 +91,4 @@ dist/
 temp/
 .eslintcache
 .env.local
+.env
