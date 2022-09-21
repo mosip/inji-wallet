@@ -11,7 +11,7 @@ import { Button, Column, Centered, Row, Text } from '../../components/ui';
 import { VidItem } from '../../components/VidItem';
 import { Colors } from '../../components/ui/styleUtils';
 import { ToastItem } from '../../components/ui/ToastItem';
-import { OIDcAuthenticationModal } from '../../components/OIDcAuthModal';
+import { OIDcAuthenticationOverlay } from '../../components/OIDcAuthModal';
 import { useTranslation } from 'react-i18next';
 import { useRevoke } from './RevokeController';
 
@@ -162,7 +162,8 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
           </View>
         )}
       </Overlay>
-      <OIDcAuthenticationModal
+
+      <OIDcAuthenticationOverlay
         isVisible={controller.isAuthenticating}
         onDismiss={() => controller.setAuthenticating(false)}
         onVerify={() => {
@@ -170,10 +171,12 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
           controller.setIsViewing(true);
         }}
       />
-      <OIDcAuthenticationModal
+
+      <OIDcAuthenticationOverlay
         isVisible={controller.isAcceptingOtpInput}
         onDismiss={controller.DISMISS}
         onVerify={() => {
+          controller.setIsViewing(true);
           controller.revokeVc('111111');
         }}
       />

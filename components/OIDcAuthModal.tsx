@@ -5,9 +5,9 @@ import { Button, Centered, Column, Text } from './ui';
 import { Modal, ModalProps } from './ui/Modal';
 import { Colors } from './ui/styleUtils';
 
-export const OIDcAuthenticationModal: React.FC<OIDcAuthenticationModalProps> = (
-  props
-) => {
+export const OIDcAuthenticationOverlay: React.FC<
+  OIDcAuthenticationModalProps
+> = (props) => {
   const { t } = useTranslation('OIDcAuth');
 
   return (
