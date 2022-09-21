@@ -105,7 +105,7 @@
     "delete": "Delete",
     "revoke": "Revoke",
     "requestingOtp": "Requesting OTP...",
-    "editTag": "Edit Tag"
+    "editTag": "Rename"
   },
   "MainLayout": {
     "home": "Home",
