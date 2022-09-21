@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import {
   ScanEvents,
   selectIsInvalid,
-  selectIsAirplaneEnabled,
+  // selectIsAirplaneEnabled,
   selectIsLocationDisabled,
   selectIsLocationDenied,
   selectIsReviewing,
@@ -28,13 +28,10 @@ export function useScanScreen({ navigation }: MainRouteProps) {
 
   const isLocationDisabled = useSelector(scanService, selectIsLocationDisabled);
   const isLocationDenied = useSelector(scanService, selectIsLocationDenied);
-  const isFlightMode = useSelector(scanService, selectIsAirplaneEnabled);
 
   const locationError = { message: '', button: '' };
-  if (isFlightMode) {
-    locationError.message = t('errors.flightMode.message');
-    locationError.button = t('errors.flightMode.button');
-  } else if (isLocationDisabled) {
+
+  if (isLocationDisabled) {
     locationError.message = t('errors.locationDisabled.message');
     locationError.button = t('errors.locationDisabled.button');
   } else if (isLocationDenied) {
@@ -90,14 +87,11 @@ export function useScanScreen({ navigation }: MainRouteProps) {
     isLocationDenied,
     isScanning: useSelector(scanService, selectIsScanning),
     isReviewing: useSelector(scanService, selectIsReviewing),
-    isFlightMode,
+    // isFlightMode,
     statusMessage,
 
     DISMISS: () => scanService.send(ScanEvents.DISMISS()),
-    ON_REQUEST: () =>
-      isFlightMode
-        ? scanService.send(ScanEvents.FLIGHT_REQUEST())
-        : scanService.send(ScanEvents.LOCATION_REQUEST()),
+    LOCATION_REQUEST: () => scanService.send(ScanEvents.LOCATION_REQUEST()),
     SCAN: (qrCode: string) => scanService.send(ScanEvents.SCAN(qrCode)),
     DISMISS_INVALID: () =>
       isInvalid ? scanService.send(ScanEvents.DISMISS()) : null,

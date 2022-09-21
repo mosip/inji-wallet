@@ -167,10 +167,6 @@
     "noShareableVcs": "No shareable {{vcLabel}} are available.",
     "sharingVc": "Sharing {{vcLabel}}",
     "errors": {
-      "flightMode": {
-        "message": "Flight mode must be disabled for the scanning functionality",
-        "button": "Disable flight mode"
-      },
       "locationDisabled": {
         "message": "Location services must be enabled for the scanning functionality",
         "button": "Enable location services"
