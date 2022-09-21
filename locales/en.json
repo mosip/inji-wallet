@@ -5,6 +5,11 @@
     "deviceRefNumber": "Device reference number",
     "name": "Name"
   },
+  "OIDcAuth": {
+    "title": "OIDC Authentication",
+    "text": "To be replaced with the OIDC provider UI",
+    "verify": "Verify"
+  },
   "PasscodeVerify": {
     "passcodeMismatchError": "Passcode did not match."
   },
@@ -99,13 +104,15 @@
     "noReceivedVcsText": "Tap on Request below to receive {{vcLabel}}"
   },
   "ViewVcModal": {
+    "cancel": "Cancel",
     "lock": "Lock",
     "unlock": "Unlock",
     "rename": "Rename",
     "delete": "Delete",
     "revoke": "Revoke",
+    "revoking": "Your wallet contains a credential with VID {{vid}}. Revoking this will automatically remove the same from the wallet. Are you sure you want to proceed?",
     "requestingOtp": "Requesting OTP...",
-    "editTag": "Edit Tag"
+    "editTag": "Rename"
   },
   "MainLayout": {
     "home": "Home",
@@ -129,7 +136,13 @@
     "bioUnlock": "Biometric unlock",
     "authFactorUnlock": "Unlock auth factor",
     "credits": "Credits and legal notices",
-    "logout": "Log-out"
+    "logout": "Log-out",
+    "revokeLabel": "Revoke VID",
+    "revokeHeader": "REVOKE VID",
+    "revokingVids": "You are about to revoke ({{count}}) VIDs.",
+    "revokingVidsAfter": "This means you will no longer be able to use or view any of the IDs linked to those VID(s). \nAre you sure you want to proceed?",
+    "empty": "Empty",
+    "revokeSuccessful": "VID successfully revoked"
   },
   "ReceiveVcScreen": {
     "header": "{{vcLabel}} details",

@@ -11,6 +11,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     top: 80,
     borderRadius: 4,
+    left: 16,
+    right: 16,
+    zIndex: 9,
   },
   messageContainer: {
     fontSize: 12,

@@ -9,7 +9,7 @@ export class BackendResponseError extends Error {
 }
 
 export async function request(
-  method: 'GET' | 'POST',
+  method: 'GET' | 'POST' | 'PATCH',
   path: `/${string}`,
   body?: Record<string, unknown>
 ) {

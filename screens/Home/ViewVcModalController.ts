@@ -10,6 +10,7 @@ import {
   selectIsEditingTag,
   selectIsLockingVc,
   selectIsRequestingOtp,
+  selectIsRevokingVc,
   selectVc,
   VcItemEvents,
   vcItemMachine,
@@ -26,6 +27,7 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
   const [toastVisible, setToastVisible] = useState(false);
   const [message, setMessage] = useState('');
   const [reAuthenticating, setReAuthenticating] = useState('');
+  const [isRevoking, setRevoking] = useState(false);
   const [error, setError] = useState('');
   const { appService } = useContext(GlobalContext);
   const authService = appService.children.get('auth');
@@ -38,6 +40,7 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
   const isAvailable = useSelector(bioService, selectIsAvailable);
   const isSuccessBio = useSelector(bioService, selectIsSuccess);
   const isLockingVc = useSelector(vcItemActor, selectIsLockingVc);
+  const isRevokingVc = useSelector(vcItemActor, selectIsRevokingVc);
   const vc = useSelector(vcItemActor, selectVc);
 
   const otError = useSelector(vcItemActor, selectOtpError);
@@ -71,15 +74,21 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
         vc.locked ? 'ID successfully locked' : 'ID successfully unlocked'
       );
     }
+    if (isRevokingVc) {
+      showToast(
+        vc.revoked
+          ? `VID ${vc.id} has been revoked. Any credential containing the same will be removed automatically from the wallet`
+          : 'De-revocation request submitted'
+      );
+    }
     if (isSuccessBio && reAuthenticating != '') {
       onSuccess();
     }
-  }, [reAuthenticating, isLockingVc, isSuccessBio, otError]);
+  }, [reAuthenticating, isLockingVc, isSuccessBio, otError, isRevokingVc]);
 
   useEffect(() => {
     vcItemActor.send(VcItemEvents.REFRESH());
   }, [isVisible]);
-
   return {
     error,
     message,
@@ -87,13 +96,30 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
     vc,
     otpError: useSelector(vcItemActor, selectOtpError),
     reAuthenticating,
+    isRevoking,
 
     isEditingTag: useSelector(vcItemActor, selectIsEditingTag),
     isLockingVc,
     isAcceptingOtpInput: useSelector(vcItemActor, selectIsAcceptingOtpInput),
     isRequestingOtp: useSelector(vcItemActor, selectIsRequestingOtp),
     storedPasscode: useSelector(authService, selectPasscode),
+
+    getData: (dropDownList: any, idType: string) => {
+      return dropDownList.filter(
+        (dropdown: any) =>
+          dropdown['idType'] === undefined || dropdown['idType'] === idType
+      );
+    },
+    CONFIRM_REVOKE_VC: () => {
+      setRevoking(true);
+    },
+    REVOKE_VC: () => {
+      console.log('revoking VC')
+      vcItemActor.send(VcItemEvents.REVOKE_VC());
+      setRevoking(false);
+    },
     setReAuthenticating,
+    setRevoking,
     onError,
     lockVc: () => {
       NetInfo.fetch().then((state) => {
@@ -110,6 +136,16 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
       });
     },
     inputOtp: (otp: string) => {
+      NetInfo.fetch().then((state) => {
+        if (state.isConnected) {
+          vcItemActor.send(VcItemEvents.INPUT_OTP(otp));
+        } else {
+          vcItemActor.send(VcItemEvents.DISMISS());
+          showToast('Request network failed');
+        }
+      });
+    },
+    revokeVc: (otp: string) => {
       NetInfo.fetch().then((state) => {
         if (state.isConnected) {
           vcItemActor.send(VcItemEvents.INPUT_OTP(otp));

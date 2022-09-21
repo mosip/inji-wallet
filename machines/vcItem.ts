@@ -12,6 +12,7 @@ import {
 import { StoreEvents } from './store';
 import { ActivityLogEvents } from './activityLog';
 import { verifyCredential } from '../shared/verifyCredential';
+import { log } from 'xstate/lib/actions';
 
 const model = createModel(
   {
@@ -26,10 +27,12 @@ const model = createModel(
     isVerified: false,
     lastVerifiedOn: null,
     locked: false,
+    isLocking: false,
     otp: '',
     otpError: '',
     idError: '',
     transactionId: '',
+    revoked: false,
   },
   {
     events: {
@@ -47,6 +50,7 @@ const model = createModel(
       UNLOCK_VC: () => ({}),
       INPUT_OTP: (otp: string) => ({ otp }),
       REFRESH: () => ({}),
+      REVOKE_VC: () => ({}),
     },
   }
 );
@@ -155,10 +159,15 @@ export const vcItemMachine =
               target: 'verifyingCredential',
             },
             LOCK_VC: {
+              actions: ['setLocking'],
               target: 'requestingOtp',
             },
             UNLOCK_VC: {
+              actions: ['setLocking'],
               target: 'requestingOtp',
+            },
+            REVOKE_VC: {
+              target: 'acceptingOtpInput',
             },
           },
         },
@@ -228,28 +237,37 @@ export const vcItemMachine =
           },
         },
         requestingOtp: {
-          entry: 'setTransactionId',
           invoke: {
             src: 'requestOtp',
             onDone: [
               {
+                actions: [log('accepting OTP')],
                 target: 'acceptingOtpInput',
               },
             ],
             onError: [
               {
+                actions: [log('error OTP')],
                 target: '#vc-item.invalid.backend',
               },
             ],
           },
         },
         acceptingOtpInput: {
-          entry: 'clearOtp',
+          entry: ['clearOtp', 'setTransactionId'],
           on: {
-            INPUT_OTP: {
-              actions: 'setOtp',
-              target: 'requestingLock',
-            },
+            INPUT_OTP: [
+              {
+                actions: [log('setting OTP'), 'setOtp'],
+                cond: 'isRequestingLock',
+                target: 'requestingLock',
+              },
+              {
+                actions: [log('setting OTP'), 'setTransactionId', 'setOtp'],
+                cond: 'notRequestingLock',
+                target: 'requestingRevoke',
+              },
+            ],
             DISMISS: {
               actions: ['clearOtp', 'clearTransactionId'],
               target: 'idle',
@@ -277,6 +295,32 @@ export const vcItemMachine =
           entry: 'storeLock',
           on: {
             STORE_RESPONSE: {
+              target: 'idle',
+            },
+          },
+        },
+        requestingRevoke: {
+          invoke: {
+            src: 'requestRevoke',
+            onDone: [
+              {
+                actions: [log('doneRevoking'), 'setRevoke'],
+                target: 'revokingVc',
+              },
+            ],
+            onError: [
+              {
+                actions: [log('OTP error'), 'setOtpError'],
+                target: 'acceptingOtpInput',
+              },
+            ],
+          },
+        },
+        revokingVc: {
+          entry: ['storeContext', 'logRevoked'],
+          on: {
+            STORE_RESPONSE: {
+              actions: 'setLocking',
               target: 'idle',
             },
           },
@@ -356,6 +400,20 @@ export const vcItemMachine =
           }
         ),
 
+        logRevoked: send(
+          (context) =>
+            ActivityLogEvents.LOG_ACTIVITY({
+              _vcKey: VC_ITEM_STORE_KEY(context),
+              action: 'revoked',
+              timestamp: Date.now(),
+              deviceName: '',
+              vcLabel: context.tag || context.id,
+            }),
+          {
+            to: (context) => context.serviceRefs.activityLog,
+          }
+        ),
+
         markVcValid: assign((context) => {
           return {
             ...context,
@@ -381,8 +439,14 @@ export const vcItemMachine =
 
         clearOtp: assign({ otp: '' }),
 
+        setLocking: assign({ isLocking: (context) => !context.isLocking }),
+
         setLock: assign({
           locked: (context) => !context.locked,
+        }),
+
+        setRevoke: assign({
+          revoked: () => true,
         }),
 
         storeLock: send(
@@ -497,6 +561,20 @@ export const vcItemMachine =
           }
           return response.response;
         },
+
+        requestRevoke: async (context) => {
+          try {
+            return request('PATCH', `/vid/${context.id}`, {
+              transactionID: context.transactionId,
+              vidStatus: 'REVOKED',
+              individualId: context.id,
+              individualIdType: 'VID',
+              otp: context.otp,
+            });
+          } catch (error) {
+            console.error(error);
+          }
+        },
       },
 
       guards: {
@@ -509,6 +587,14 @@ export const vcItemMachine =
 
         isVcValid: (context) => {
           return context.isVerified;
+        },
+
+        isRequestingLock: (context) => {
+          return context.isLocking;
+        },
+
+        notRequestingLock: (context) => {
+          return !context.isLocking;
         },
       },
     }
@@ -573,6 +659,10 @@ export function selectOtpError(state: State) {
 
 export function selectIsLockingVc(state: State) {
   return state.matches('lockingVc');
+}
+
+export function selectIsRevokingVc(state: State) {
+  return state.matches('revokingVc');
 }
 
 export function selectIsAcceptingOtpInput(state: State) {
