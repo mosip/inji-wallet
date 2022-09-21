@@ -24,6 +24,11 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
+    'done.invoke.vc-item.requestingRevoke:invocation[0]': {
+      type: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
     'done.invoke.vc-item.verifyingCredential:invocation[0]': {
       type: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
       data: unknown;
@@ -41,6 +46,14 @@ export interface Typegen0 {
       type: 'error.platform.vc-item.requestingLock:invocation[0]';
       data: unknown;
     };
+    'error.platform.vc-item.requestingOtp:invocation[0]': {
+      type: 'error.platform.vc-item.requestingOtp:invocation[0]';
+      data: unknown;
+    };
+    'error.platform.vc-item.requestingRevoke:invocation[0]': {
+      type: 'error.platform.vc-item.requestingRevoke:invocation[0]';
+      data: unknown;
+    };
     'error.platform.vc-item.verifyingCredential:invocation[0]': {
       type: 'error.platform.vc-item.verifyingCredential:invocation[0]';
       data: unknown;
@@ -52,6 +65,7 @@ export interface Typegen0 {
     downloadCredential: 'done.invoke.downloadCredential';
     requestLock: 'done.invoke.vc-item.requestingLock:invocation[0]';
     requestOtp: 'done.invoke.vc-item.requestingOtp:invocation[0]';
+    requestRevoke: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
     verifyCredential: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
   };
   'missingImplementations': {
@@ -68,6 +82,7 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.requestingOtp:invocation[0]'
       | 'done.invoke.vc-item.verifyingCredential:invocation[0]'
       | 'error.platform.vc-item.requestingLock:invocation[0]'
+      | 'error.platform.vc-item.requestingRevoke:invocation[0]'
       | 'error.platform.vc-item.verifyingCredential:invocation[0]';
     clearTransactionId:
       | ''
@@ -85,12 +100,17 @@ export interface Typegen0 {
       | 'GET_VC_RESPONSE'
       | 'STORE_RESPONSE';
     setLock: 'done.invoke.vc-item.requestingLock:invocation[0]';
+    setLocking: 'LOCK_VC' | 'STORE_RESPONSE' | 'UNLOCK_VC';
     setOtp: 'INPUT_OTP';
-    setOtpError: 'error.platform.vc-item.requestingLock:invocation[0]';
+    setOtpError:
+      | 'error.platform.vc-item.requestingLock:invocation[0]'
+      | 'error.platform.vc-item.requestingRevoke:invocation[0]';
+    setRevoke: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
     setTag: 'SAVE_TAG';
-    setTransactionId: 'LOCK_VC' | 'UNLOCK_VC';
+    setTransactionId: 'LOCK_VC' | 'REVOKE_VC' | 'UNLOCK_VC';
     storeContext:
       | 'CREDENTIAL_DOWNLOADED'
+      | 'done.invoke.vc-item.requestingRevoke:invocation[0]'
       | 'done.invoke.vc-item.verifyingCredential:invocation[0]';
     storeLock: 'done.invoke.vc-item.requestingLock:invocation[0]';
     storeTag: 'SAVE_TAG';
@@ -103,12 +123,15 @@ export interface Typegen0 {
     checkStatus: 'STORE_RESPONSE';
     downloadCredential: 'DOWNLOAD_READY';
     requestLock: 'INPUT_OTP';
-    requestOtp: 'LOCK_VC' | 'UNLOCK_VC';
+    requestOtp: 'LOCK_VC' | 'REVOKE_VC' | 'UNLOCK_VC';
+    requestRevoke: 'INPUT_OTP';
     verifyCredential: '' | 'VERIFY';
   };
   'eventsCausingGuards': {
     hasCredential: 'GET_VC_RESPONSE' | 'STORE_RESPONSE';
+    isRequestingLock: 'INPUT_OTP';
     isVcValid: '';
+    notRequestingLock: 'INPUT_OTP';
   };
   'eventsCausingDelays': {};
   'matchesStates':
@@ -127,6 +150,8 @@ export interface Typegen0 {
     | 'lockingVc'
     | 'requestingLock'
     | 'requestingOtp'
+    | 'requestingRevoke'
+    | 'revokingVc'
     | 'storingTag'
     | 'verifyingCredential'
     | {

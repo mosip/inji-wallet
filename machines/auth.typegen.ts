@@ -2,16 +2,9 @@
 
 export interface Typegen0 {
   '@@xstate/typegen': true;
-  'eventsCausingActions': {
-    setContext: 'STORE_RESPONSE';
-    setPasscode: 'SETUP_PASSCODE';
-    storeContext: 'SETUP_PASSCODE' | 'SETUP_BIOMETRICS' | 'STORE_RESPONSE';
-    setBiometrics: 'SETUP_BIOMETRICS';
-    requestStoredContext: 'xstate.init';
-  };
   'internalEvents': {
-    '': { type: '' };
     'xstate.init': { type: 'xstate.init' };
+    '': { type: '' };
   };
   'invokeSrcNameMap': {};
   'missingImplementations': {
@@ -19,6 +12,13 @@ export interface Typegen0 {
     services: never;
     guards: never;
     delays: never;
+  };
+  'eventsCausingActions': {
+    setContext: 'STORE_RESPONSE';
+    setPasscode: 'SETUP_PASSCODE';
+    storeContext: 'SETUP_PASSCODE' | 'SETUP_BIOMETRICS' | 'STORE_RESPONSE';
+    setBiometrics: 'SETUP_BIOMETRICS';
+    requestStoredContext: 'xstate.init';
   };
   'eventsCausingServices': {};
   'eventsCausingGuards': {

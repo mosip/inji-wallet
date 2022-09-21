@@ -2,11 +2,6 @@
 
 export interface Typegen0 {
   '@@xstate/typegen': true;
-  'eventsCausingActions': {
-    setSelectedVc: 'VIEW_VC';
-    spawnTabActors: 'xstate.init';
-    resetSelectedVc: 'DISMISS_MODAL';
-  };
   'internalEvents': {
     'xstate.after(100)#HomeScreen.tabs.init': {
       type: 'xstate.after(100)#HomeScreen.tabs.init';
@@ -19,6 +14,11 @@ export interface Typegen0 {
     services: never;
     guards: never;
     delays: never;
+  };
+  'eventsCausingActions': {
+    setSelectedVc: 'VIEW_VC';
+    resetSelectedVc: 'xstate.init' | 'DISMISS_MODAL';
+    spawnTabActors: 'xstate.init';
   };
   'eventsCausingServices': {};
   'eventsCausingGuards': {};

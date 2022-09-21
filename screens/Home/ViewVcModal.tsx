@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from 'react-native-elements';
+import { DropdownIcon } from '../../components/DropdownIcon';
 import { TextEditOverlay } from '../../components/TextEditOverlay';
 import { Column } from '../../components/ui';
 import { Modal } from '../../components/ui/Modal';
@@ -16,6 +16,20 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
   const { t } = useTranslation('ViewVcModal');
   const controller = useViewVcModal(props);
 
+  const DATA = [
+    {
+      idType: 'VID',
+      label: t('revoke'),
+      icon: 'close-circle-outline',
+      onPress: () => controller.REVOKE_VC(),
+    },
+    {
+      label: t('editTag'),
+      icon: 'pencil',
+      onPress: () => controller.EDIT_TAG(),
+    },
+  ];
+
   return (
     <Modal
       isVisible={props.isVisible}
@@ -23,7 +37,10 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
       headerTitle={controller.vc.tag || controller.vc.id}
       headerElevation={2}
       headerRight={
-        <Icon name="edit" onPress={controller.EDIT_TAG} color={Colors.Orange} />
+        <DropdownIcon
+          icon="dots-vertical"
+          items={controller.getData(DATA, controller.vc.idType)}
+        />
       }>
       <Column scroll backgroundColor={Colors.LightGrey}>
         <Column>

@@ -2,6 +2,20 @@
 
 export interface Typegen0 {
   '@@xstate/typegen': true;
+  'internalEvents': {
+    'xstate.after(INITIAL_FOCUS_DELAY)#pinInput.idle': {
+      type: 'xstate.after(INITIAL_FOCUS_DELAY)#pinInput.idle';
+    };
+    'xstate.init': { type: 'xstate.init' };
+    '': { type: '' };
+  };
+  'invokeSrcNameMap': {};
+  'missingImplementations': {
+    actions: never;
+    services: never;
+    guards: never;
+    delays: never;
+  };
   'eventsCausingActions': {
     selectInput: 'FOCUS_INPUT';
     updateInput: 'UPDATE_INPUT';
@@ -13,20 +27,6 @@ export interface Typegen0 {
     selectPrevInput: 'KEY_PRESS';
     clearInput: 'KEY_PRESS';
   };
-  'internalEvents': {
-    'xstate.after(INITIAL_FOCUS_DELAY)#pinInput.idle': {
-      type: 'xstate.after(INITIAL_FOCUS_DELAY)#pinInput.idle';
-    };
-    '': { type: '' };
-    'xstate.init': { type: 'xstate.init' };
-  };
-  'invokeSrcNameMap': {};
-  'missingImplementations': {
-    actions: never;
-    services: never;
-    guards: never;
-    delays: never;
-  };
   'eventsCausingServices': {};
   'eventsCausingGuards': {
     isBlank: 'UPDATE_INPUT';
@@ -34,7 +34,7 @@ export interface Typegen0 {
     canGoBack: 'KEY_PRESS';
   };
   'eventsCausingDelays': {
-    INITIAL_FOCUS_DELAY: 'xstate.init';
+    INITIAL_FOCUS_DELAY: 'xstate.init' | '';
   };
   'matchesStates': 'idle' | 'selectingNext' | 'selectingPrev';
   'tags': never;

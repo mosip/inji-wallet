@@ -2,6 +2,16 @@
 
 export interface Typegen0 {
   '@@xstate/typegen': true;
+  'internalEvents': {
+    'xstate.init': { type: 'xstate.init' };
+  };
+  'invokeSrcNameMap': {};
+  'missingImplementations': {
+    actions: never;
+    services: never;
+    guards: never;
+    delays: never;
+  };
   'eventsCausingActions': {
     setContext: 'STORE_RESPONSE';
     toggleBiometricUnlock: 'TOGGLE_BIOMETRIC_UNLOCK';
@@ -13,16 +23,6 @@ export interface Typegen0 {
     updateName: 'UPDATE_NAME';
     updateVcLabel: 'UPDATE_VC_LABEL';
     requestStoredContext: 'xstate.init';
-  };
-  'internalEvents': {
-    'xstate.init': { type: 'xstate.init' };
-  };
-  'invokeSrcNameMap': {};
-  'missingImplementations': {
-    actions: never;
-    services: never;
-    guards: never;
-    delays: never;
   };
   'eventsCausingServices': {};
   'eventsCausingGuards': {

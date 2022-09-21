@@ -10,6 +10,7 @@ import {
   selectIsEditingTag,
   selectIsLockingVc,
   selectIsRequestingOtp,
+  selectIsRevokingVc,
   selectVc,
   VcItemEvents,
   vcItemMachine,
@@ -38,6 +39,7 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
   const isAvailable = useSelector(bioService, selectIsAvailable);
   const isSuccessBio = useSelector(bioService, selectIsSuccess);
   const isLockingVc = useSelector(vcItemActor, selectIsLockingVc);
+  const isRevokingVc = useSelector(vcItemActor, selectIsRevokingVc);
   const vc = useSelector(vcItemActor, selectVc);
 
   const otError = useSelector(vcItemActor, selectOtpError);
@@ -71,6 +73,13 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
         vc.locked ? 'ID successfully locked' : 'ID successfully unlocked'
       );
     }
+    if (isRevokingVc) {
+      showToast(
+        vc.revoked === 'REVOKED'
+          ? 'Revocation request submitted'
+          : 'De-revocation request submitted'
+      );
+    }
     if (isSuccessBio && reAuthenticating != '') {
       onSuccess();
     }
@@ -93,6 +102,14 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
     isAcceptingOtpInput: useSelector(vcItemActor, selectIsAcceptingOtpInput),
     isRequestingOtp: useSelector(vcItemActor, selectIsRequestingOtp),
     storedPasscode: useSelector(authService, selectPasscode),
+
+    getData: (dropDownList: any, idType: string) => {
+      return dropDownList.filter(
+        (dropdown) =>
+          dropdown['idType'] === undefined || dropdown['idType'] === idType
+      );
+    },
+    REVOKE_VC: () => vcItemActor.send(VcItemEvents.REVOKE_VC()),
     setReAuthenticating,
     onError,
     lockVc: () => {
