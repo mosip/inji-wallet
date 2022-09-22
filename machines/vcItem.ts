@@ -403,6 +403,8 @@ export const vcItemMachine =
           }
         }),
 
+        logError: log((_context, event) => (event.data as Error).message),
+
         logDownloaded: send(
           (_, event) =>
             ActivityLogEvents.LOG_ACTIVITY({
@@ -549,8 +551,14 @@ export const vcItemMachine =
           return () => clearInterval(pollInterval);
         },
 
-        verifyCredential: async (context) => {
-          return verifyCredential(context.verifiableCredential);
+        verifyCredential: (context) => {
+          return new Promise((resolve, reject) => {
+            verifyCredential(context.verifiableCredential).then(resolve);
+            setTimeout(
+              () => reject(new Error('VC_VERIFICATION_TIMED_OUT')),
+              5 * 1000
+            );
+          });
         },
 
         requestOtp: async (context) => {
