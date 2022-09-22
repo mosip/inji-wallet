@@ -37,7 +37,7 @@
     }
   },
   "BiometricScreen": {
-    "unlock": "I-unlock gamit ang fingerprint"
+    "unlock": "I-unlock gamit ang biometrics"
   },
   "HistoryTab": {
     "noHistory": "Wala pang kasaysayan",

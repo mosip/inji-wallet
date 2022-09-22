@@ -42,7 +42,7 @@
     }
   },
   "BiometricScreen": {
-    "unlock": "Unlock with fingerprint"
+    "unlock": "Unlock with biometrics"
   },
   "HistoryTab": {
     "noHistory": "No history available yet",
