@@ -8,9 +8,7 @@ on:
       - demobranch
     tags:
       - '*'
-  pull_request:
-    branches:
-      - '*'
+
 jobs:
   build-android:
     runs-on: ubuntu-latest
