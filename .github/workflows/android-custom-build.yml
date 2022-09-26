@@ -61,7 +61,7 @@ jobs:
       - name: Build App Newlogic Release
         run: |
           cd android
-          if [ ! -z "$FIREBASE_SECRET" ] && [ -f app/google-services.json.gpg ];then rm -f app/google-services.json;gpg2 --quiet --batch --passphrase=$FIREBASE_SECRET --decrypt --output google-services.json google-services.json.gpg;fi
+          if [ ! -z "$FIREBASE_SECRET" ] && [ -f app/google-services.json.gpg ];then rm -f app/google-services.json;gpg2 --quiet --batch --passphrase=$FIREBASE_SECRET --decrypt --output app/google-services.json app/mosip-google-services.json;fi
           ./gradlew :app:assembleNewlogicRelease
         env:
           MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
