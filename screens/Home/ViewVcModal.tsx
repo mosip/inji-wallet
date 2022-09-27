@@ -38,8 +38,6 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
     },
   ];
 
-  console.log('controller.isRequestingOtp', controller.isRequestingOtp);
-
   return (
     <Modal
       isVisible={props.isVisible}
