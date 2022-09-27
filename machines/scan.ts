@@ -28,7 +28,8 @@ import {
 import { check, PERMISSIONS, PermissionStatus } from 'react-native-permissions';
 import { checkLocation, requestLocation } from '../shared/location';
 
-const findingConnection = '#scan.findingConnection';
+const findingConnectionId = '#scan.findingConnection';
+const checkingLocationServiceId = '#checkingLocationService';
 
 type SharingProtocol = 'OFFLINE' | 'ONLINE';
 
@@ -180,6 +181,23 @@ export const scanMachine = model.createMachine(
         on: {
           CONNECTED: 'exchangingDeviceInfo',
         },
+        initial: 'inProgress',
+        states: {
+          inProgress: {},
+          timeout: {
+            on: {
+              CANCEL: {
+                actions: 'disconnect',
+                target: checkingLocationServiceId,
+              },
+            },
+          },
+        },
+        after: {
+          CONNECTION_TIMEOUT: {
+            target: '.timeout',
+          },
+        },
       },
       exchangingDeviceInfo: {
         invoke: {
@@ -190,6 +208,23 @@ export const scanMachine = model.createMachine(
           EXCHANGE_DONE: {
             target: 'reviewing',
             actions: ['setReceiverInfo'],
+          },
+        },
+        initial: 'inProgress',
+        states: {
+          inProgress: {},
+          timeout: {
+            on: {
+              CANCEL: {
+                actions: 'disconnect',
+                target: checkingLocationServiceId,
+              },
+            },
+          },
+        },
+        after: {
+          CONNECTION_TIMEOUT: {
+            target: '.timeout',
           },
         },
       },
@@ -207,12 +242,12 @@ export const scanMachine = model.createMachine(
           idle: {
             on: {
               ACCEPT_REQUEST: 'selectingVc',
-              DISCONNECT: findingConnection,
+              DISCONNECT: findingConnectionId,
             },
           },
           selectingVc: {
             on: {
-              DISCONNECT: findingConnection,
+              DISCONNECT: findingConnectionId,
               SELECT_VC: {
                 target: 'sendingVc',
                 actions: ['setSelectedVc'],
@@ -225,9 +260,26 @@ export const scanMachine = model.createMachine(
               src: 'sendVc',
             },
             on: {
-              DISCONNECT: findingConnection,
+              DISCONNECT: findingConnectionId,
               VC_ACCEPTED: 'accepted',
               VC_REJECTED: 'rejected',
+            },
+            initial: 'inProgress',
+            states: {
+              inProgress: {},
+              timeout: {
+                on: {
+                  CANCEL: {
+                    actions: 'disconnect',
+                    target: checkingLocationServiceId,
+                  },
+                },
+              },
+            },
+            after: {
+              CONNECTION_TIMEOUT: {
+                target: '.timeout',
+              },
             },
           },
           accepted: {
@@ -243,6 +295,7 @@ export const scanMachine = model.createMachine(
         exit: ['disconnect', 'clearReason'],
       },
       disconnected: {
+        id: 'disconnected',
         on: {
           DISMISS: 'findingConnection',
         },
@@ -519,6 +572,9 @@ export const scanMachine = model.createMachine(
 
     delays: {
       CLEAR_DELAY: 250,
+      CONNECTION_TIMEOUT: () => {
+        return (Platform.OS === 'ios' ? 15 : 5) * 1000;
+      },
     },
   }
 );
@@ -549,11 +605,19 @@ export function selectIsScanning(state: State) {
 }
 
 export function selectIsConnecting(state: State) {
-  return state.matches('connecting');
+  return state.matches('connecting.inProgress');
+}
+
+export function selectIsConnectingTimeout(state: State) {
+  return state.matches('connecting.timeout');
 }
 
 export function selectIsExchangingDeviceInfo(state: State) {
-  return state.matches('exchangingDeviceInfo');
+  return state.matches('exchangingDeviceInfo.inProgress');
+}
+
+export function selectIsExchangingDeviceInfoTimeout(state: State) {
+  return state.matches('exchangingDeviceInfo.timeout');
 }
 
 export function selectIsReviewing(state: State) {
@@ -565,7 +629,11 @@ export function selectIsSelectingVc(state: State) {
 }
 
 export function selectIsSendingVc(state: State) {
-  return state.matches('reviewing.sendingVc');
+  return state.matches('reviewing.sendingVc.inProgress');
+}
+
+export function selectIsSendingVcTimeout(state: State) {
+  return state.matches('reviewing.sendingVc.timeout');
 }
 
 export function selectIsAccepted(state: State) {

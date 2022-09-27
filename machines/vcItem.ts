@@ -439,7 +439,9 @@ export const vcItemMachine =
 
         clearOtp: assign({ otp: '' }),
 
-        setLocking: assign({ isLocking: (context) => !context.isLocking }),
+        setLocking: assign({
+          isLocking: (context) => !context.isLocking,
+        }),
 
         setLock: assign({
           locked: (context) => !context.locked,

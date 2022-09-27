@@ -168,8 +168,14 @@
         "message": "The connection was interrupted. Please try again."
       },
       "waitingConnection": "Waiting for connection...",
-      "exchangingDeviceInfo": "Exchanging device info...",
-      "connected": "Connected to device. Waiting for {{vcLabel}}..."
+      "exchangingDeviceInfo": {
+        "message": "Exchanging device info...",
+        "timeoutHint": "It's taking too long to exchange device info..."
+      },
+      "connected": {
+        "message": "Connected to device. Waiting for {{vcLabel}}...",
+        "timeoutHint": "No VC data received yet. Is sending device still connected?"
+      }
     },
     "online": "Online",
     "offline": "Offline",
@@ -191,7 +197,9 @@
     },
     "status": {
       "connecting": "Connecting...",
+      "connectingTimeout": "It's taking a while to establish connection. Is the other device open for connections?",
       "exchangingDeviceInfo": "Exchanging device info...",
+      "exchangingDeviceInfoTimeout": "It's taking a while to exchange device info. You may have to reconnect.",
       "invalid": "Invalid QR Code"
     }
   },
@@ -206,7 +214,8 @@
     "acceptRequest": "Accept request and choose {{vcLabel}}",
     "reject": "Reject",
     "statusSharing": {
-      "title": "Sharing..."
+      "title": "Sharing...",
+      "timeoutHint": "It's taking a while to share VC. There could be a problem with the connection."
     },
     "statusAccepted": {
       "title": "Success!",

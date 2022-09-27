@@ -67,7 +67,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
       <MessageOverlay
         isVisible={controller.isRequestingOtp}
         title={t('requestingOtp')}
-        hasProgress
+        progress
       />
 
       {controller.isRevoking && (

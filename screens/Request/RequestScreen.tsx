@@ -56,6 +56,18 @@ export const RequestScreen: React.FC = () => {
       {controller.statusMessage !== '' && (
         <Column elevation={1} padding="16 24">
           <Text>{controller.statusMessage}</Text>
+          {controller.statusHint !== '' && (
+            <Text size="small" color={Colors.Grey}>
+              {controller.statusHint}
+            </Text>
+          )}
+          {controller.isStatusCancellable && (
+            <Button
+              margin={[8, 0, 0, 0]}
+              title={t('cancel', { ns: 'common' })}
+              onPress={controller.CANCEL}
+            />
+          )}
         </Column>
       )}
     </Column>
