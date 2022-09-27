@@ -39,6 +39,7 @@ export const SendVcModal: React.FC<SendVcModalProps> = (props) => {
           <DeviceInfoList of="receiver" deviceInfo={controller.receiverInfo} />
           <Column padding="24">
             <Input
+              value={controller.reason ? controller.reason : ''}
               placeholder={!controller.reason ? reasonLabel : ''}
               label={controller.reason ? reasonLabel : ''}
               onChangeText={controller.UPDATE_REASON}
