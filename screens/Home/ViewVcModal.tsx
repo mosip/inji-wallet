@@ -12,6 +12,8 @@ import { OIDcAuthenticationModal } from '../../components/OIDcAuth';
 import { useViewVcModal, ViewVcModalProps } from './ViewVcModalController';
 import { useTranslation } from 'react-i18next';
 
+import { OtpVerification } from './MyVcs/OtpVerification';
+
 export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
   const { t } = useTranslation('ViewVcModal');
   const controller = useViewVcModal(props);
@@ -35,6 +37,8 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
       onPress: () => controller.EDIT_TAG(),
     },
   ];
+
+  console.log('controller.isRequestingOtp', controller.isRequestingOtp);
 
   return (
     <Modal
@@ -71,6 +75,15 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
           onVerify={() => {
             controller.revokeVc('111111');
           }}
+          error={controller.otpError}
+        />
+      )}
+
+      {controller.isAcceptingOtpInput && controller.isLocking && (
+        <OtpVerification
+          isVisible={controller.isAcceptingOtpInput}
+          onDismiss={controller.DISMISS}
+          onInputDone={controller.inputOtp}
           error={controller.otpError}
         />
       )}

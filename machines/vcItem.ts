@@ -46,7 +46,6 @@ const model = createModel(
       GET_VC_RESPONSE: (vc: VC) => ({ vc }),
       VERIFY: () => ({}),
       LOCK_VC: () => ({}),
-      UNLOCK_VC: () => ({}),
       INPUT_OTP: (otp: string) => ({ otp }),
       REFRESH: () => ({}),
       REVOKE_VC: () => ({}),

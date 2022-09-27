@@ -10,6 +10,7 @@ import {
   selectIsAcceptingRevokeInput,
   selectIsEditingTag,
   selectIsLockingVc,
+  selectIsLocking, //to seaparate from revoke
   selectIsRequestingOtp,
   selectIsRevokingVc,
   selectIsLoggingRevoke,
@@ -36,6 +37,7 @@ export function useViewVcModal({
 
   const isSuccessBio = useSelector(bioService, selectIsSuccess);
   const isLockingVc = useSelector(vcItemActor, selectIsLockingVc);
+  const isLocking = useSelector(vcItemActor, selectIsLocking);
   const isRevokingVc = useSelector(vcItemActor, selectIsRevokingVc);
   const isLoggingRevoke = useSelector(vcItemActor, selectIsLoggingRevoke);
   const vc = useSelector(vcItemActor, selectVc);
@@ -44,11 +46,7 @@ export function useViewVcModal({
     bioSend({ type: 'SET_IS_AVAILABLE', data: true });
     setError('');
     setReAuthenticating('');
-    if (vc.locked) {
-      vcItemActor.send(VcItemEvents.UNLOCK_VC());
-    } else {
-      vcItemActor.send(VcItemEvents.LOCK_VC());
-    }
+    vcItemActor.send(VcItemEvents.LOCK_VC());
   };
 
   const onError = (value: string) => {
@@ -117,6 +115,7 @@ export function useViewVcModal({
 
     isEditingTag: useSelector(vcItemActor, selectIsEditingTag),
     isLockingVc,
+    isLocking,
     isAcceptingOtpInput: useSelector(vcItemActor, selectIsAcceptingOtpInput),
     isAcceptingRevokeInput: useSelector(
       vcItemActor,
@@ -149,7 +148,6 @@ export function useViewVcModal({
     SAVE_TAG: (tag: string) => vcItemActor.send(VcItemEvents.SAVE_TAG(tag)),
     DISMISS: () => vcItemActor.send(VcItemEvents.DISMISS()),
     LOCK_VC: () => vcItemActor.send(VcItemEvents.LOCK_VC()),
-    UNLOCK_VC: () => vcItemActor.send(VcItemEvents.UNLOCK_VC()),
     INPUT_OTP: (otp: string) => vcItemActor.send(VcItemEvents.INPUT_OTP(otp)),
   };
 }
