@@ -14,6 +14,7 @@ import {
   RevokeVidsEvents,
   selectIsAcceptingOtpInput,
   selectIsRevokingVc,
+  selectIsLoggingRevoke,
 } from '../../machines/revoke';
 
 import { ActorRefFrom } from 'xstate';
@@ -25,6 +26,8 @@ export function useRevoke() {
   const revokeService = appService.children.get('RevokeVids');
   const vcKeys = useSelector(vcService, selectMyVcs);
   const isRevokingVc = useSelector(revokeService, selectIsRevokingVc);
+  const [isRefreshing, setRefreshing] = useState(false);
+  const isLoggingRevoke = useSelector(revokeService, selectIsLoggingRevoke);
   const isAcceptingOtpInput = useSelector(
     revokeService,
     selectIsAcceptingOtpInput
@@ -69,7 +72,14 @@ export function useRevoke() {
       showToast(t('revokeSuccessful'));
       revokeService.send(RevokeVidsEvents.DISMISS());
     }
-  }, [isRevokingVc]);
+    if (isLoggingRevoke) {
+      setRefreshing(true);
+      setTimeout(() => {
+        setRefreshing(false);
+        vcService.send(VcEvents.REFRESH_MY_VCS());
+      }, 1000);
+    }
+  }, [isRevokingVc, isLoggingRevoke]);
 
   return {
     error: '',
@@ -77,6 +87,7 @@ export function useRevoke() {
     isAuthenticating,
     isRefreshingVcs: useSelector(vcService, selectIsRefreshingMyVcs),
     isRevoking,
+    isRefreshing,
     isViewing,
     message,
     selectedIndex,

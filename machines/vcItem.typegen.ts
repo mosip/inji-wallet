@@ -69,7 +69,7 @@ export interface Typegen0 {
     verifyCredential: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
   };
   'missingImplementations': {
-    actions: 'setLocking' | 'logError';
+    actions: 'logError';
     services: never;
     guards: never;
     delays: never;
@@ -93,16 +93,16 @@ export interface Typegen0 {
       | 'error.platform.vc-item.verifyingCredential:invocation[0]';
     logDownloaded: 'CREDENTIAL_DOWNLOADED';
     logError: 'error.platform.vc-item.verifyingCredential:invocation[0]';
-    logRevoked: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
+    logRevoked: 'STORE_RESPONSE';
     markVcValid: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
     requestStoredContext: 'GET_VC_RESPONSE' | 'REFRESH';
     requestVcContext: 'xstate.init';
+    revokeVID: 'STORE_RESPONSE';
     setCredential:
       | 'CREDENTIAL_DOWNLOADED'
       | 'GET_VC_RESPONSE'
       | 'STORE_RESPONSE';
     setLock: 'done.invoke.vc-item.requestingLock:invocation[0]';
-    setLocking: 'LOCK_VC' | 'STORE_RESPONSE' | 'UNLOCK_VC';
     setOtp: 'INPUT_OTP';
     setOtpError:
       | 'error.platform.vc-item.requestingLock:invocation[0]'
@@ -154,6 +154,7 @@ export interface Typegen0 {
     | 'invalid.backend'
     | 'invalid.otp'
     | 'lockingVc'
+    | 'loggingRevoke'
     | 'requestingLock'
     | 'requestingOtp'
     | 'requestingRevoke'

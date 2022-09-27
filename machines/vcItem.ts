@@ -1,6 +1,6 @@
 import { assign, ErrorPlatformEvent, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
-import { VC_ITEM_STORE_KEY } from '../shared/constants';
+import { MY_VCS_STORE_KEY, VC_ITEM_STORE_KEY } from '../shared/constants';
 import { AppServices } from '../shared/GlobalContext';
 import { CredentialDownloadResponse, request } from '../shared/request';
 import {
@@ -158,11 +158,9 @@ export const vcItemMachine =
               target: 'verifyingCredential',
             },
             LOCK_VC: {
-              actions: ['setLocking'],
               target: 'requestingOtp',
             },
             UNLOCK_VC: {
-              actions: ['setLocking'],
               target: 'requestingOtp',
             },
             REVOKE_VC: {
@@ -333,10 +331,19 @@ export const vcItemMachine =
           },
         },
         revokingVc: {
-          entry: ['storeContext', 'logRevoked'],
+          entry: ['storeContext'],
           on: {
             STORE_RESPONSE: {
-              actions: 'setLocking',
+              actions: [log('revokingVc'), 'revokeVID'],
+              target: 'loggingRevoke',
+            },
+          },
+        },
+        loggingRevoke: {
+          entry: [log('loggingRevoke'), 'logRevoked'],
+          on: {
+            DISMISS: {
+              actions: [log('idle---')],
               target: 'idle',
             },
           },
@@ -427,6 +434,18 @@ export const vcItemMachine =
             }),
           {
             to: (context) => context.serviceRefs.activityLog,
+          }
+        ),
+
+        revokeVID: send(
+          (context) => {
+            return StoreEvents.REMOVE(
+              MY_VCS_STORE_KEY,
+              VC_ITEM_STORE_KEY(context)
+            );
+          },
+          {
+            to: (context) => context.serviceRefs.store,
           }
         ),
 
@@ -669,6 +688,10 @@ export function selectIsLockingVc(state: State) {
 
 export function selectIsRevokingVc(state: State) {
   return state.matches('revokingVc');
+}
+
+export function selectIsLoggingRevoke(state: State) {
+  return state.matches('loggingRevoke');
 }
 
 export function selectIsAcceptingOtpInput(state: State) {

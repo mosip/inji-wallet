@@ -21,7 +21,8 @@ const model = createModel(
       SET: (key: string, value: unknown) => ({ key, value }),
       APPEND: (key: string, value: unknown) => ({ key, value }),
       PREPEND: (key: string, value: unknown) => ({ key, value }),
-      REMOVE: (key: string) => ({ key }),
+      REMOVE: (key: string, value: string) => ({ key, value }),
+      REMOVE_ITEMS: (key: string, values: string[]) => ({ key, values }),
       CLEAR: () => ({}),
       ERROR: (error: Error) => ({ error }),
       STORE_RESPONSE: (response?: unknown, requester?: string) => ({
@@ -116,6 +117,9 @@ export const storeMachine =
             REMOVE: {
               actions: 'forwardStoreRequest',
             },
+            REMOVE_ITEMS: {
+              actions: 'forwardStoreRequest',
+            },
             CLEAR: {
               actions: 'forwardStoreRequest',
             },
@@ -200,7 +204,19 @@ export const storeMachine =
                   break;
                 }
                 case 'REMOVE': {
-                  await removeItem(event.key);
+                  await removeItem(
+                    event.key,
+                    event.value,
+                    context.encryptionKey
+                  );
+                  break;
+                }
+                case 'REMOVE_ITEMS': {
+                  await removeItems(
+                    event.key,
+                    event.values,
+                    context.encryptionKey
+                  );
                   break;
                 }
                 case 'CLEAR': {
@@ -280,6 +296,7 @@ export async function getItem(
     const data = await AsyncStorage.getItem(key);
     if (data != null) {
       const decrypted = decryptJson(encryptionKey, data);
+
       return JSON.parse(decrypted);
     } else {
       return defaultValue;
@@ -321,11 +338,43 @@ export async function prependItem(
   }
 }
 
-export async function removeItem(key: string) {
+export async function removeItem(
+  key: string,
+  value: string,
+  encryptionKey: string
+) {
   try {
-    await AsyncStorage.removeItem(key);
+    const data = await AsyncStorage.getItem(key);
+    const decrypted = decryptJson(encryptionKey, data);
+    const list = JSON.parse(decrypted);
+    const newList = list.filter((vc: string) => {
+      return vc !== value;
+    });
+
+    await setItem(key, newList, encryptionKey);
   } catch (e) {
     console.error('error removeItem:', e);
+    throw e;
+  }
+}
+
+export async function removeItems(
+  key: string,
+  values: string[],
+  encryptionKey: string
+) {
+  try {
+    const data = await AsyncStorage.getItem(key);
+    const decrypted = decryptJson(encryptionKey, data);
+    const list = JSON.parse(decrypted);
+    const toRemove = new Set(values);
+    const newList = list.filter((vc: string) => {
+      return !toRemove.has(vc);
+    });
+
+    await setItem(key, newList, encryptionKey);
+  } catch (e) {
+    console.error('error removeItems:', e);
     throw e;
   }
 }

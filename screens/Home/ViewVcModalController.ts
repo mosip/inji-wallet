@@ -12,6 +12,7 @@ import {
   selectIsLockingVc,
   selectIsRequestingOtp,
   selectIsRevokingVc,
+  selectIsLoggingRevoke,
   selectVc,
   VcItemEvents,
   vcItemMachine,
@@ -24,11 +25,16 @@ import {
 } from '../../machines/biometrics';
 import { selectBiometricUnlockEnabled } from '../../machines/settings';
 
-export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
+export function useViewVcModal({
+  vcItemActor,
+  isVisible,
+  onRevokeDelete,
+}: ViewVcModalProps) {
   const [toastVisible, setToastVisible] = useState(false);
   const [message, setMessage] = useState('');
   const [reAuthenticating, setReAuthenticating] = useState('');
   const [isRevoking, setRevoking] = useState(false);
+  const [isRedirecting, setRedirecting] = useState(false);
   const [error, setError] = useState('');
   const { appService } = useContext(GlobalContext);
   const authService = appService.children.get('auth');
@@ -42,6 +48,7 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
   const isSuccessBio = useSelector(bioService, selectIsSuccess);
   const isLockingVc = useSelector(vcItemActor, selectIsLockingVc);
   const isRevokingVc = useSelector(vcItemActor, selectIsRevokingVc);
+  const isLoggingRevoke = useSelector(vcItemActor, selectIsLoggingRevoke);
   const vc = useSelector(vcItemActor, selectVc);
   const otError = useSelector(vcItemActor, selectOtpError);
   const onSuccess = () => {
@@ -80,7 +87,6 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
   };
 
   useEffect(() => {
-    console.log('isLockingVc', isLockingVc);
     if (isLockingVc) {
       showToast(
         vc.locked ? 'ID successfully locked' : 'ID successfully unlocked'
@@ -88,15 +94,29 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
     }
     if (isRevokingVc) {
       showToast(
-        vc.revoked
-          ? `VID ${vc.id} has been revoked. Any credential containing the same will be removed automatically from the wallet`
-          : 'De-revocation request submitted'
+        `VID ${vc.id} has been revoked. Any credential containing the same
+        will be removed automatically from the wallet`
       );
+    }
+    if (isLoggingRevoke) {
+      setRedirecting(true);
+      setTimeout(() => {
+        setRedirecting(false);
+        onRevokeDelete();
+      }, 1000);
     }
     if (isSuccessBio && reAuthenticating != '') {
       onSuccess();
     }
-  }, [reAuthenticating, isLockingVc, isSuccessBio, otError, isRevokingVc]);
+  }, [
+    reAuthenticating,
+    isLockingVc,
+    isSuccessBio,
+    otError,
+    isRevokingVc,
+    isLoggingRevoke,
+    vc,
+  ]);
 
   useEffect(() => {
     vcItemActor.send(VcItemEvents.REFRESH());
@@ -109,6 +129,7 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
     otpError: useSelector(vcItemActor, selectOtpError),
     reAuthenticating,
     isRevoking,
+    isRedirecting,
 
     isEditingTag: useSelector(vcItemActor, selectIsEditingTag),
     isLockingVc,
@@ -120,12 +141,6 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
     isRequestingOtp: useSelector(vcItemActor, selectIsRequestingOtp),
     storedPasscode: useSelector(authService, selectPasscode),
 
-    getData: (dropDownList: any, idType: string) => {
-      return dropDownList.filter(
-        (dropdown: any) =>
-          dropdown['idType'] === undefined || dropdown['idType'] === idType
-      );
-    },
     CONFIRM_REVOKE_VC: () => {
       setRevoking(true);
     },
@@ -137,16 +152,18 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
     setRevoking,
     onError,
     lockVc: () => {
-      if (netInfoFetch) {
-        if (isAvailable && isBiometricUnlockEnabled) {
-          setReAuthenticating('biometrics');
-          bioSend({ type: 'AUTHENTICATE' });
+      NetInfo.fetch().then((state) => {
+        if (state.isConnected) {
+          if (isAvailable && isBiometricUnlockEnabled) {
+            setReAuthenticating('biometrics');
+            bioSend({ type: 'AUTHENTICATE' });
+          } else {
+            setReAuthenticating('passcode');
+          }
         } else {
-          setReAuthenticating('passcode');
+          showToast('Request network failed');
         }
-      } else {
-        showToast('Request network failed');
-      }
+      });
     },
     inputOtp: (otp: string) => {
       netInfoFetch(otp);
@@ -166,4 +183,6 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
 
 export interface ViewVcModalProps extends ModalProps {
   vcItemActor: ActorRefFrom<typeof vcItemMachine>;
+  onDismiss: () => void;
+  onRevokeDelete: () => void;
 }
