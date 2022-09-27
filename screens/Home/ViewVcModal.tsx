@@ -7,7 +7,6 @@ import { Colors } from '../../components/ui/styleUtils';
 import { VcDetails } from '../../components/VcDetails';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { ToastItem } from '../../components/ui/ToastItem';
-//import { Passcode } from '../../components/Passcode';
 import { RevokeConfirmModal } from '../../components/RevokeConfirm';
 import { OIDcAuthenticationModal } from '../../components/OIDcAuth';
 import { useViewVcModal, ViewVcModalProps } from './ViewVcModalController';
@@ -88,17 +87,6 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
           onRevoke={controller.REVOKE_VC}
         />
       )}
-
-      {/* {controller.reAuthenticating !== '' &&
-        controller.reAuthenticating == 'passcode' && (
-          <Passcode
-            onSuccess={() => controller.onSuccess()}
-            onError={(value) => controller.onError(value)}
-            storedPasscode={controller.storedPasscode}
-            onDismiss={() => controller.setReAuthenticating('')}
-            error={controller.error}
-          />
-        )} */}
 
       {controller.toastVisible && <ToastItem message={controller.message} />}
     </Modal>
