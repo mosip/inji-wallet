@@ -39,7 +39,8 @@ export interface Typegen0 {
       | 'done.invoke.RevokeVids.acceptingVIDs.requestingOtp:invocation[0]'
       | 'error.platform.RevokeVids.requestingRevoke:invocation[0]'
       | 'xstate.init';
-    logRevoked: 'done.invoke.RevokeVids.requestingRevoke:invocation[0]';
+    logRevoked: 'STORE_RESPONSE';
+    revokeVID: 'done.invoke.RevokeVids.requestingRevoke:invocation[0]';
     setIdBackendError: 'error.platform.RevokeVids.acceptingVIDs.requestingOtp:invocation[0]';
     setOtp: 'INPUT_OTP';
     setOtpError: 'error.platform.RevokeVids.requestingRevoke:invocation[0]';
@@ -61,6 +62,7 @@ export interface Typegen0 {
     | 'invalid'
     | 'invalid.backend'
     | 'invalid.otp'
+    | 'loggingRevoke'
     | 'requestingRevoke'
     | 'revokingVc'
     | { acceptingVIDs?: 'idle' | 'requestingOtp'; invalid?: 'backend' | 'otp' };

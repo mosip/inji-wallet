@@ -14,6 +14,10 @@ export const DropdownIcon: React.FC<DropdownProps> = (props) => {
     item.onPress();
   };
 
+  const filteredItems = (idType: string, items: Item[]) => {
+    return items.filter((item) => !item.idType || item.idType === idType);
+  };
+
   const renderItem = ({ item }) => {
     return (
       <View
@@ -51,7 +55,7 @@ export const DropdownIcon: React.FC<DropdownProps> = (props) => {
         content={
           <View>
             <FlatList
-              data={props.items}
+              data={filteredItems(props.idType, props.items)}
               renderItem={renderItem}
               keyExtractor={(item, index) => index.toString()}
             />
@@ -63,11 +67,13 @@ export const DropdownIcon: React.FC<DropdownProps> = (props) => {
   );
 };
 interface Item {
+  idType?: string;
   label: string;
   onPress?: () => void;
 }
 
 interface DropdownProps {
+  idType: string;
   icon: string;
   items: Item[];
 }

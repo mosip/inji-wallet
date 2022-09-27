@@ -1,6 +1,6 @@
 import { assign, ErrorPlatformEvent, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
-import { VC_ITEM_STORE_KEY } from '../shared/constants';
+import { MY_VCS_STORE_KEY, VC_ITEM_STORE_KEY } from '../shared/constants';
 import { AppServices } from '../shared/GlobalContext';
 import { CredentialDownloadResponse, request } from '../shared/request';
 import {
@@ -27,7 +27,6 @@ const model = createModel(
     isVerified: false,
     lastVerifiedOn: null,
     locked: false,
-    isLocking: false,
     otp: '',
     otpError: '',
     idError: '',
@@ -159,15 +158,13 @@ export const vcItemMachine =
               target: 'verifyingCredential',
             },
             LOCK_VC: {
-              actions: ['setLocking'],
               target: 'requestingOtp',
             },
             UNLOCK_VC: {
-              actions: ['setLocking'],
               target: 'requestingOtp',
             },
             REVOKE_VC: {
-              target: 'acceptingOtpInput',
+              target: 'acceptingRevokeInput',
             },
           },
         },
@@ -258,13 +255,30 @@ export const vcItemMachine =
           on: {
             INPUT_OTP: [
               {
-                actions: [log('setting OTP'), 'setOtp'],
-                cond: 'isRequestingLock',
+                actions: [
+                  log('setting OTP lock'),
+                  'setTransactionId',
+                  'setOtp',
+                ],
                 target: 'requestingLock',
               },
+            ],
+            DISMISS: {
+              actions: ['clearOtp', 'clearTransactionId'],
+              target: 'idle',
+            },
+          },
+        },
+        acceptingRevokeInput: {
+          entry: [log('acceptingRevokeInput'), 'clearOtp', 'setTransactionId'],
+          on: {
+            INPUT_OTP: [
               {
-                actions: [log('setting OTP'), 'setTransactionId', 'setOtp'],
-                cond: 'notRequestingLock',
+                actions: [
+                  log('setting OTP revoke'),
+                  'setTransactionId',
+                  'setOtp',
+                ],
                 target: 'requestingRevoke',
               },
             ],
@@ -317,10 +331,17 @@ export const vcItemMachine =
           },
         },
         revokingVc: {
-          entry: ['storeContext', 'logRevoked'],
+          entry: ['revokeVID'],
           on: {
             STORE_RESPONSE: {
-              actions: 'setLocking',
+              target: 'loggingRevoke',
+            },
+          },
+        },
+        loggingRevoke: {
+          entry: [log('loggingRevoke'), 'logRevoked'],
+          on: {
+            DISMISS: {
               target: 'idle',
             },
           },
@@ -414,6 +435,18 @@ export const vcItemMachine =
           }
         ),
 
+        revokeVID: send(
+          (context) => {
+            return StoreEvents.REMOVE(
+              MY_VCS_STORE_KEY,
+              VC_ITEM_STORE_KEY(context)
+            );
+          },
+          {
+            to: (context) => context.serviceRefs.store,
+          }
+        ),
+
         markVcValid: assign((context) => {
           return {
             ...context,
@@ -438,10 +471,6 @@ export const vcItemMachine =
         }),
 
         clearOtp: assign({ otp: '' }),
-
-        setLocking: assign({
-          isLocking: (context) => !context.isLocking,
-        }),
 
         setLock: assign({
           locked: (context) => !context.locked,
@@ -590,14 +619,6 @@ export const vcItemMachine =
         isVcValid: (context) => {
           return context.isVerified;
         },
-
-        isRequestingLock: (context) => {
-          return context.isLocking;
-        },
-
-        notRequestingLock: (context) => {
-          return !context.isLocking;
-        },
       },
     }
   );
@@ -667,8 +688,16 @@ export function selectIsRevokingVc(state: State) {
   return state.matches('revokingVc');
 }
 
+export function selectIsLoggingRevoke(state: State) {
+  return state.matches('loggingRevoke');
+}
+
 export function selectIsAcceptingOtpInput(state: State) {
   return state.matches('acceptingOtpInput');
+}
+
+export function selectIsAcceptingRevokeInput(state: State) {
+  return state.matches('acceptingRevokeInput');
 }
 
 export function selectIsRequestingOtp(state: State) {

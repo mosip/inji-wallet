@@ -93,16 +93,16 @@ export interface Typegen0 {
       | 'error.platform.vc-item.verifyingCredential:invocation[0]';
     logDownloaded: 'CREDENTIAL_DOWNLOADED';
     logError: 'error.platform.vc-item.verifyingCredential:invocation[0]';
-    logRevoked: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
+    logRevoked: 'STORE_RESPONSE';
     markVcValid: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
     requestStoredContext: 'GET_VC_RESPONSE' | 'REFRESH';
     requestVcContext: 'xstate.init';
+    revokeVID: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
     setCredential:
       | 'CREDENTIAL_DOWNLOADED'
       | 'GET_VC_RESPONSE'
       | 'STORE_RESPONSE';
     setLock: 'done.invoke.vc-item.requestingLock:invocation[0]';
-    setLocking: 'LOCK_VC' | 'STORE_RESPONSE' | 'UNLOCK_VC';
     setOtp: 'INPUT_OTP';
     setOtpError:
       | 'error.platform.vc-item.requestingLock:invocation[0]'
@@ -117,7 +117,6 @@ export interface Typegen0 {
       | 'error.platform.vc-item.requestingRevoke:invocation[0]';
     storeContext:
       | 'CREDENTIAL_DOWNLOADED'
-      | 'done.invoke.vc-item.requestingRevoke:invocation[0]'
       | 'done.invoke.vc-item.verifyingCredential:invocation[0]';
     storeLock: 'done.invoke.vc-item.requestingLock:invocation[0]';
     storeTag: 'SAVE_TAG';
@@ -136,13 +135,12 @@ export interface Typegen0 {
   };
   'eventsCausingGuards': {
     hasCredential: 'GET_VC_RESPONSE' | 'STORE_RESPONSE';
-    isRequestingLock: 'INPUT_OTP';
     isVcValid: '';
-    notRequestingLock: 'INPUT_OTP';
   };
   'eventsCausingDelays': {};
   'matchesStates':
     | 'acceptingOtpInput'
+    | 'acceptingRevokeInput'
     | 'checkingServerData'
     | 'checkingServerData.checkingStatus'
     | 'checkingServerData.downloadingCredential'
@@ -155,6 +153,7 @@ export interface Typegen0 {
     | 'invalid.backend'
     | 'invalid.otp'
     | 'lockingVc'
+    | 'loggingRevoke'
     | 'requestingLock'
     | 'requestingOtp'
     | 'requestingRevoke'

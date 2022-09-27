@@ -4,10 +4,12 @@ import { log } from 'xstate/lib/actions';
 
 import i18n from '../i18n';
 import { AppServices } from '../shared/GlobalContext';
-import { ActivityLogEvents } from '../machines/activityLog';
+import { ActivityLogEvents } from './activityLog';
+import { StoreEvents } from './store';
 import { createModel } from 'xstate/lib/model';
 import { request } from '../shared/request';
 import { VcIdType } from '../types/vc';
+import { MY_VCS_STORE_KEY } from '../shared/constants';
 
 const model = createModel(
   {
@@ -28,6 +30,7 @@ const model = createModel(
       DISMISS: () => ({}),
       SELECT_ID_TYPE: (idType: VcIdType) => ({ idType }),
       REVOKE_VCS: (vcKeys: string[]) => ({ vcKeys }),
+      STORE_RESPONSE: (response: string[]) => ({ response }),
     },
   }
 );
@@ -128,7 +131,15 @@ export const revokeVidsMachine =
           },
         },
         revokingVc: {
-          entry: 'logRevoked',
+          entry: ['revokeVID'],
+          on: {
+            STORE_RESPONSE: {
+              target: 'loggingRevoke',
+            },
+          },
+        },
+        loggingRevoke: {
+          entry: [log('loggingRevoke'), 'logRevoked'],
           on: {
             DISMISS: {
               target: 'idle',
@@ -201,6 +212,15 @@ export const revokeVidsMachine =
             to: (context) => context.serviceRefs.activityLog,
           }
         ),
+
+        revokeVID: send(
+          (context) => {
+            return StoreEvents.REMOVE_ITEMS(MY_VCS_STORE_KEY, context.VIDs);
+          },
+          {
+            to: (context) => context.serviceRefs.store,
+          }
+        ),
       },
 
       services: {
@@ -267,6 +287,10 @@ export function selectOtpError(state: State) {
 
 export function selectIsRevokingVc(state: State) {
   return state.matches('revokingVc');
+}
+
+export function selectIsLoggingRevoke(state: State) {
+  return state.matches('loggingRevoke');
 }
 
 export function selectIsAcceptingOtpInput(state: State) {

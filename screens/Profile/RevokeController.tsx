@@ -14,6 +14,7 @@ import {
   RevokeVidsEvents,
   selectIsAcceptingOtpInput,
   selectIsRevokingVc,
+  selectIsLoggingRevoke,
 } from '../../machines/revoke';
 
 import { ActorRefFrom } from 'xstate';
@@ -25,6 +26,7 @@ export function useRevoke() {
   const revokeService = appService.children.get('RevokeVids');
   const vcKeys = useSelector(vcService, selectMyVcs);
   const isRevokingVc = useSelector(revokeService, selectIsRevokingVc);
+  const isLoggingRevoke = useSelector(revokeService, selectIsLoggingRevoke);
   const isAcceptingOtpInput = useSelector(
     revokeService,
     selectIsAcceptingOtpInput
@@ -67,9 +69,11 @@ export function useRevoke() {
     if (isRevokingVc) {
       setSelectedVidKeys([]);
       showToast(t('revokeSuccessful'));
-      revokeService.send(RevokeVidsEvents.DISMISS());
     }
-  }, [isRevokingVc]);
+    if (isLoggingRevoke) {
+      vcService.send(VcEvents.REFRESH_MY_VCS());
+    }
+  }, [isRevokingVc, isLoggingRevoke]);
 
   return {
     error: '',

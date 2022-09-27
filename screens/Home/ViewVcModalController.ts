@@ -7,10 +7,12 @@ import { GlobalContext } from '../../shared/GlobalContext';
 import {
   selectOtpError,
   selectIsAcceptingOtpInput,
+  selectIsAcceptingRevokeInput,
   selectIsEditingTag,
   selectIsLockingVc,
   selectIsRequestingOtp,
   selectIsRevokingVc,
+  selectIsLoggingRevoke,
   selectVc,
   VcItemEvents,
   vcItemMachine,
@@ -23,7 +25,11 @@ import {
 } from '../../machines/biometrics';
 import { selectBiometricUnlockEnabled } from '../../machines/settings';
 
-export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
+export function useViewVcModal({
+  vcItemActor,
+  isVisible,
+  onRevokeDelete,
+}: ViewVcModalProps) {
   const [toastVisible, setToastVisible] = useState(false);
   const [message, setMessage] = useState('');
   const [reAuthenticating, setReAuthenticating] = useState('');
@@ -41,8 +47,8 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
   const isSuccessBio = useSelector(bioService, selectIsSuccess);
   const isLockingVc = useSelector(vcItemActor, selectIsLockingVc);
   const isRevokingVc = useSelector(vcItemActor, selectIsRevokingVc);
+  const isLoggingRevoke = useSelector(vcItemActor, selectIsLoggingRevoke);
   const vc = useSelector(vcItemActor, selectVc);
-
   const otError = useSelector(vcItemActor, selectOtpError);
   const onSuccess = () => {
     bioSend({ type: 'SET_IS_AVAILABLE', data: true });
@@ -68,6 +74,17 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
     }, 3000);
   };
 
+  const netInfoFetch = (otp: string) => {
+    NetInfo.fetch().then((state) => {
+      if (state.isConnected) {
+        vcItemActor.send(VcItemEvents.INPUT_OTP(otp));
+      } else {
+        vcItemActor.send(VcItemEvents.DISMISS());
+        showToast('Request network failed');
+      }
+    });
+  };
+
   useEffect(() => {
     if (isLockingVc) {
       showToast(
@@ -76,15 +93,25 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
     }
     if (isRevokingVc) {
       showToast(
-        vc.revoked
-          ? `VID ${vc.id} has been revoked. Any credential containing the same will be removed automatically from the wallet`
-          : 'De-revocation request submitted'
+        `VID ${vc.id} has been revoked. Any credential containing the same
+        will be removed automatically from the wallet`
       );
+    }
+    if (isLoggingRevoke) {
+      onRevokeDelete();
     }
     if (isSuccessBio && reAuthenticating != '') {
       onSuccess();
     }
-  }, [reAuthenticating, isLockingVc, isSuccessBio, otError, isRevokingVc]);
+  }, [
+    reAuthenticating,
+    isLockingVc,
+    isSuccessBio,
+    otError,
+    isRevokingVc,
+    isLoggingRevoke,
+    vc,
+  ]);
 
   useEffect(() => {
     vcItemActor.send(VcItemEvents.REFRESH());
@@ -101,20 +128,17 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
     isEditingTag: useSelector(vcItemActor, selectIsEditingTag),
     isLockingVc,
     isAcceptingOtpInput: useSelector(vcItemActor, selectIsAcceptingOtpInput),
+    isAcceptingRevokeInput: useSelector(
+      vcItemActor,
+      selectIsAcceptingRevokeInput
+    ),
     isRequestingOtp: useSelector(vcItemActor, selectIsRequestingOtp),
     storedPasscode: useSelector(authService, selectPasscode),
 
-    getData: (dropDownList: any, idType: string) => {
-      return dropDownList.filter(
-        (dropdown: any) =>
-          dropdown['idType'] === undefined || dropdown['idType'] === idType
-      );
-    },
     CONFIRM_REVOKE_VC: () => {
       setRevoking(true);
     },
     REVOKE_VC: () => {
-      console.log('revoking VC')
       vcItemActor.send(VcItemEvents.REVOKE_VC());
       setRevoking(false);
     },
@@ -136,24 +160,10 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
       });
     },
     inputOtp: (otp: string) => {
-      NetInfo.fetch().then((state) => {
-        if (state.isConnected) {
-          vcItemActor.send(VcItemEvents.INPUT_OTP(otp));
-        } else {
-          vcItemActor.send(VcItemEvents.DISMISS());
-          showToast('Request network failed');
-        }
-      });
+      netInfoFetch(otp);
     },
     revokeVc: (otp: string) => {
-      NetInfo.fetch().then((state) => {
-        if (state.isConnected) {
-          vcItemActor.send(VcItemEvents.INPUT_OTP(otp));
-        } else {
-          vcItemActor.send(VcItemEvents.DISMISS());
-          showToast('Request network failed');
-        }
-      });
+      netInfoFetch(otp);
     },
     onSuccess,
     EDIT_TAG: () => vcItemActor.send(VcItemEvents.EDIT_TAG()),
@@ -167,4 +177,6 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
 
 export interface ViewVcModalProps extends ModalProps {
   vcItemActor: ActorRefFrom<typeof vcItemMachine>;
+  onDismiss: () => void;
+  onRevokeDelete: () => void;
 }

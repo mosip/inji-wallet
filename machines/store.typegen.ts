@@ -39,6 +39,7 @@ export interface Typegen0 {
       | 'GET'
       | 'PREPEND'
       | 'REMOVE'
+      | 'REMOVE_ITEMS'
       | 'SET';
     notifyParent:
       | 'KEY_RECEIVED'

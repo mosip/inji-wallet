@@ -37,7 +37,13 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
       onDismiss={props.onDismiss}
       headerTitle={controller.vc.tag || controller.vc.id}
       headerElevation={2}
-      headerRight={<DropdownIcon icon="dots-vertical" items={DATA} />}>
+      headerRight={
+        <DropdownIcon
+          icon="dots-vertical"
+          idType={controller.vc.idType}
+          items={DATA}
+        />
+      }>
       <Column scroll backgroundColor={Colors.LightGrey}>
         <Column>
           <VcDetails vc={controller.vc} />
@@ -53,9 +59,9 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
         />
       )}
 
-      {controller.isAcceptingOtpInput && (
+      {controller.isAcceptingRevokeInput && (
         <OIDcAuthenticationModal
-          isVisible={controller.isAcceptingOtpInput}
+          isVisible={controller.isAcceptingRevokeInput}
           onDismiss={controller.DISMISS}
           onVerify={() => {
             controller.revokeVc('111111');
