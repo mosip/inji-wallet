@@ -69,7 +69,7 @@ export interface Typegen0 {
     verifyCredential: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
   };
   'missingImplementations': {
-    actions: 'logError';
+    actions: 'setLocking' | 'logError';
     services: never;
     guards: never;
     delays: never;
@@ -136,13 +136,12 @@ export interface Typegen0 {
   };
   'eventsCausingGuards': {
     hasCredential: 'GET_VC_RESPONSE' | 'STORE_RESPONSE';
-    isRequestingLock: 'INPUT_OTP';
     isVcValid: '';
-    notRequestingLock: 'INPUT_OTP';
   };
   'eventsCausingDelays': {};
   'matchesStates':
     | 'acceptingOtpInput'
+    | 'acceptingRevokeInput'
     | 'checkingServerData'
     | 'checkingServerData.checkingStatus'
     | 'checkingServerData.downloadingCredential'

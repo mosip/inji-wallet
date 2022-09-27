@@ -7,6 +7,7 @@ import { GlobalContext } from '../../shared/GlobalContext';
 import {
   selectOtpError,
   selectIsAcceptingOtpInput,
+  selectIsAcceptingRevokeInput,
   selectIsEditingTag,
   selectIsLockingVc,
   selectIsRequestingOtp,
@@ -42,7 +43,6 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
   const isLockingVc = useSelector(vcItemActor, selectIsLockingVc);
   const isRevokingVc = useSelector(vcItemActor, selectIsRevokingVc);
   const vc = useSelector(vcItemActor, selectVc);
-
   const otError = useSelector(vcItemActor, selectOtpError);
   const onSuccess = () => {
     bioSend({ type: 'SET_IS_AVAILABLE', data: true });
@@ -68,7 +68,19 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
     }, 3000);
   };
 
+  const netInfoFetch = (otp: string) => {
+    NetInfo.fetch().then((state) => {
+      if (state.isConnected) {
+        vcItemActor.send(VcItemEvents.INPUT_OTP(otp));
+      } else {
+        vcItemActor.send(VcItemEvents.DISMISS());
+        showToast('Request network failed');
+      }
+    });
+  };
+
   useEffect(() => {
+    console.log('isLockingVc', isLockingVc);
     if (isLockingVc) {
       showToast(
         vc.locked ? 'ID successfully locked' : 'ID successfully unlocked'
@@ -101,6 +113,10 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
     isEditingTag: useSelector(vcItemActor, selectIsEditingTag),
     isLockingVc,
     isAcceptingOtpInput: useSelector(vcItemActor, selectIsAcceptingOtpInput),
+    isAcceptingRevokeInput: useSelector(
+      vcItemActor,
+      selectIsAcceptingRevokeInput
+    ),
     isRequestingOtp: useSelector(vcItemActor, selectIsRequestingOtp),
     storedPasscode: useSelector(authService, selectPasscode),
 
@@ -114,7 +130,6 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
       setRevoking(true);
     },
     REVOKE_VC: () => {
-      console.log('revoking VC')
       vcItemActor.send(VcItemEvents.REVOKE_VC());
       setRevoking(false);
     },
@@ -122,38 +137,22 @@ export function useViewVcModal({ vcItemActor, isVisible }: ViewVcModalProps) {
     setRevoking,
     onError,
     lockVc: () => {
-      NetInfo.fetch().then((state) => {
-        if (state.isConnected) {
-          if (isAvailable && isBiometricUnlockEnabled) {
-            setReAuthenticating('biometrics');
-            bioSend({ type: 'AUTHENTICATE' });
-          } else {
-            setReAuthenticating('passcode');
-          }
+      if (netInfoFetch) {
+        if (isAvailable && isBiometricUnlockEnabled) {
+          setReAuthenticating('biometrics');
+          bioSend({ type: 'AUTHENTICATE' });
         } else {
-          showToast('Request network failed');
+          setReAuthenticating('passcode');
         }
-      });
+      } else {
+        showToast('Request network failed');
+      }
     },
     inputOtp: (otp: string) => {
-      NetInfo.fetch().then((state) => {
-        if (state.isConnected) {
-          vcItemActor.send(VcItemEvents.INPUT_OTP(otp));
-        } else {
-          vcItemActor.send(VcItemEvents.DISMISS());
-          showToast('Request network failed');
-        }
-      });
+      netInfoFetch(otp);
     },
     revokeVc: (otp: string) => {
-      NetInfo.fetch().then((state) => {
-        if (state.isConnected) {
-          vcItemActor.send(VcItemEvents.INPUT_OTP(otp));
-        } else {
-          vcItemActor.send(VcItemEvents.DISMISS());
-          showToast('Request network failed');
-        }
-      });
+      netInfoFetch(otp);
     },
     onSuccess,
     EDIT_TAG: () => vcItemActor.send(VcItemEvents.EDIT_TAG()),

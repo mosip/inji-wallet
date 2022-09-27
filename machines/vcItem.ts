@@ -27,7 +27,6 @@ const model = createModel(
     isVerified: false,
     lastVerifiedOn: null,
     locked: false,
-    isLocking: false,
     otp: '',
     otpError: '',
     idError: '',
@@ -167,7 +166,7 @@ export const vcItemMachine =
               target: 'requestingOtp',
             },
             REVOKE_VC: {
-              target: 'acceptingOtpInput',
+              target: 'acceptingRevokeInput',
             },
           },
         },
@@ -258,13 +257,30 @@ export const vcItemMachine =
           on: {
             INPUT_OTP: [
               {
-                actions: [log('setting OTP'), 'setOtp'],
-                cond: 'isRequestingLock',
+                actions: [
+                  log('setting OTP lock'),
+                  'setTransactionId',
+                  'setOtp',
+                ],
                 target: 'requestingLock',
               },
+            ],
+            DISMISS: {
+              actions: ['clearOtp', 'clearTransactionId'],
+              target: 'idle',
+            },
+          },
+        },
+        acceptingRevokeInput: {
+          entry: [log('acceptingRevokeInput'), 'clearOtp', 'setTransactionId'],
+          on: {
+            INPUT_OTP: [
               {
-                actions: [log('setting OTP'), 'setTransactionId', 'setOtp'],
-                cond: 'notRequestingLock',
+                actions: [
+                  log('setting OTP revoke'),
+                  'setTransactionId',
+                  'setOtp',
+                ],
                 target: 'requestingRevoke',
               },
             ],
@@ -439,10 +455,6 @@ export const vcItemMachine =
 
         clearOtp: assign({ otp: '' }),
 
-        setLocking: assign({
-          isLocking: (context) => !context.isLocking,
-        }),
-
         setLock: assign({
           locked: (context) => !context.locked,
         }),
@@ -590,14 +602,6 @@ export const vcItemMachine =
         isVcValid: (context) => {
           return context.isVerified;
         },
-
-        isRequestingLock: (context) => {
-          return context.isLocking;
-        },
-
-        notRequestingLock: (context) => {
-          return !context.isLocking;
-        },
       },
     }
   );
@@ -669,6 +673,10 @@ export function selectIsRevokingVc(state: State) {
 
 export function selectIsAcceptingOtpInput(state: State) {
   return state.matches('acceptingOtpInput');
+}
+
+export function selectIsAcceptingRevokeInput(state: State) {
+  return state.matches('acceptingRevokeInput');
 }
 
 export function selectIsRequestingOtp(state: State) {
