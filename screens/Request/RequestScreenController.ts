@@ -13,6 +13,7 @@ import {
   selectSharingProtocol,
   selectIsExchangingDeviceInfoTimeout,
   selectIsWaitingForVcTimeout,
+  selectIsCheckingBluetoothService,
 } from '../../machines/request';
 import { selectVcLabel } from '../../machines/settings';
 import { GlobalContext } from '../../shared/GlobalContext';
@@ -93,6 +94,10 @@ export function useRequestScreen() {
     isStatusCancellable,
     isWaitingForVc,
     isBluetoothDenied,
+    isCheckingBluetoothService: useSelector(
+      requestService,
+      selectIsCheckingBluetoothService
+    ),
     connectionParams: useSelector(requestService, selectConnectionParams),
     senderInfo: useSelector(requestService, selectSenderInfo),
     isReviewing: useSelector(requestService, selectIsReviewing),

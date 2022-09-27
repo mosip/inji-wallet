@@ -14,62 +14,64 @@ export const RequestScreen: React.FC = () => {
 
   return (
     <Column fill padding="24" backgroundColor={Colors.LightGrey}>
-      <Column>
-        {controller.isBluetoothDenied ? (
-          <React.Fragment>
-            <Text color={Colors.Red} align="center">
-              {t('bluetoothDenied', { vcLabel: controller.vcLabel.singular })}
-            </Text>
-            <Button
-              margin={[32, 0, 0, 0]}
-              title={t('gotoSettings')}
-              onPress={controller.GOTO_SETTINGS}
-            />
-          </React.Fragment>
-        ) : (
+      {controller.isBluetoothDenied && (
+        <Centered fill>
+          <Text color={Colors.Red} align="center">
+            {t('bluetoothDenied', { vcLabel: controller.vcLabel.singular })}
+          </Text>
+          <Button
+            margin={[32, 0, 0, 0]}
+            title={t('gotoSettings')}
+            onPress={controller.GOTO_SETTINGS}
+          />
+        </Centered>
+      )}
+      {!controller.isCheckingBluetoothService &&
+      !controller.isBluetoothDenied ? (
+        <Column fill>
           <Text align="center">
             {t('showQrCode', { vcLabel: controller.vcLabel.singular })}
           </Text>
-        )}
-      </Column>
 
-      <Centered fill>
-        {controller.connectionParams !== '' ? (
-          <QRCode
-            size={200}
-            value={controller.connectionParams}
-            backgroundColor={Colors.LightGrey}
-          />
-        ) : null}
-      </Centered>
+          <Centered fill>
+            {controller.connectionParams !== '' ? (
+              <QRCode
+                size={200}
+                value={controller.connectionParams}
+                backgroundColor={Colors.LightGrey}
+              />
+            ) : null}
+          </Centered>
 
-      <Row align="center" crossAlign="center" margin={[0, 0, 48, 0]}>
-        <Text margin={[0, 16, 0, 0]}>Offline</Text>
-        <Switch
-          value={controller.sharingProtocol === 'ONLINE'}
-          onValueChange={controller.SWITCH_PROTOCOL}
-          disabled={Platform.OS === 'ios'}
-        />
-        <Text margin={[0, 0, 0, 16]}>Online</Text>
-      </Row>
-
-      {controller.statusMessage !== '' && (
-        <Column elevation={1} padding="16 24">
-          <Text>{controller.statusMessage}</Text>
-          {controller.statusHint !== '' && (
-            <Text size="small" color={Colors.Grey}>
-              {controller.statusHint}
-            </Text>
-          )}
-          {controller.isStatusCancellable && (
-            <Button
-              margin={[8, 0, 0, 0]}
-              title={t('cancel', { ns: 'common' })}
-              onPress={controller.CANCEL}
+          <Row align="center" crossAlign="center" margin={[0, 0, 48, 0]}>
+            <Text margin={[0, 16, 0, 0]}>Offline</Text>
+            <Switch
+              value={controller.sharingProtocol === 'ONLINE'}
+              onValueChange={controller.SWITCH_PROTOCOL}
+              disabled={Platform.OS === 'ios'}
             />
+            <Text margin={[0, 0, 0, 16]}>Online</Text>
+          </Row>
+
+          {controller.statusMessage !== '' && (
+            <Column elevation={1} padding="16 24">
+              <Text>{controller.statusMessage}</Text>
+              {controller.statusHint !== '' && (
+                <Text size="small" color={Colors.Grey}>
+                  {controller.statusHint}
+                </Text>
+              )}
+              {controller.isStatusCancellable && (
+                <Button
+                  margin={[8, 0, 0, 0]}
+                  title={t('cancel', { ns: 'common' })}
+                  onPress={controller.CANCEL}
+                />
+              )}
+            </Column>
           )}
         </Column>
-      )}
+      ) : null}
     </Column>
   );
 };
