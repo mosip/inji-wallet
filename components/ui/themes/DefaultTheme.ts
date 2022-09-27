@@ -154,7 +154,7 @@ export const DefaultTheme = {
     },
     homeCloseCardDetailsHeader: {
       flex: 1,
-      justifyContent: 'flex-end',
+      justifyContent: 'space-between',
     },
     details: {
       width: 290,
@@ -163,17 +163,16 @@ export const DefaultTheme = {
     },
     openDetailsContainer: {
       flex: 1,
-      justifyContent: 'space-between',
       padding: 10,
     },
     closeCardImage: {
       width: 100,
-      height: 100,
+      height: 140,
       borderRadius: 5,
     },
     openCardImage: {
       width: 100,
-      height: 100,
+      height: 140,
       borderRadius: 5,
     },
     scannerContainer: {
@@ -269,6 +268,7 @@ export const DefaultTheme = {
     },
     subtitle: {
       backgroundColor: 'transparent',
+      flex: 1,
     },
     loadingSubtitle: {
       backgroundColor: Colors.Grey,

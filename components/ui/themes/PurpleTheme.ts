@@ -157,12 +157,11 @@ export const PurpleTheme = {
     },
     openDetailsContainer: {
       flex: 1,
-      justifyContent: 'space-between',
       padding: 10,
     },
     closeCardImage: {
       width: 100,
-      height: 100,
+      height: 140,
       borderRadius: 5,
     },
     details: {
@@ -172,7 +171,7 @@ export const PurpleTheme = {
     },
     openCardImage: {
       width: 100,
-      height: 100,
+      height: 140,
       borderRadius: 5,
     },
     scannerContainer: {
@@ -309,6 +308,7 @@ export const PurpleTheme = {
     },
     subtitle: {
       backgroundColor: 'transparent',
+      flex: 1,
     },
     loadingSubtitle: {
       backgroundColor: Colors.Grey,

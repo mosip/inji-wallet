@@ -13,6 +13,8 @@
     "allowCameraButton": "Allow access to camera"
   },
   "VcDetails": {
+    "idType":"ID type",
+    "nationalCard":"National Identity Card",
     "generatedOn": "Generated on",
     "uin":"UIN",
     "status": "Status",
