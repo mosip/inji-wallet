@@ -129,7 +129,7 @@ export interface Typegen0 {
     checkStatus: 'STORE_RESPONSE';
     downloadCredential: 'DOWNLOAD_READY';
     requestLock: 'INPUT_OTP';
-    requestOtp: 'LOCK_VC' | 'UNLOCK_VC';
+    requestOtp: 'LOCK_VC';
     requestRevoke: 'INPUT_OTP';
     verifyCredential: '' | 'VERIFY';
   };

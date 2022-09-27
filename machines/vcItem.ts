@@ -160,9 +160,6 @@ export const vcItemMachine =
             LOCK_VC: {
               target: 'requestingOtp',
             },
-            UNLOCK_VC: {
-              target: 'requestingOtp',
-            },
             REVOKE_VC: {
               target: 'acceptingRevokeInput',
             },
@@ -306,7 +303,7 @@ export const vcItemMachine =
           },
         },
         lockingVc: {
-          entry: 'storeLock',
+          entry: ['storeLock'],
           on: {
             STORE_RESPONSE: {
               target: 'idle',

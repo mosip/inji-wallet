@@ -18,12 +18,7 @@ import {
   vcItemMachine,
 } from '../../machines/vcItem';
 import { selectPasscode } from '../../machines/auth';
-import {
-  biometricsMachine,
-  selectIsAvailable,
-  selectIsSuccess,
-} from '../../machines/biometrics';
-import { selectBiometricUnlockEnabled } from '../../machines/settings';
+import { biometricsMachine, selectIsSuccess } from '../../machines/biometrics';
 
 export function useViewVcModal({
   vcItemActor,
@@ -37,13 +32,8 @@ export function useViewVcModal({
   const [error, setError] = useState('');
   const { appService } = useContext(GlobalContext);
   const authService = appService.children.get('auth');
-  const settingsService = appService.children.get('settings');
   const [, bioSend, bioService] = useMachine(biometricsMachine);
-  const isBiometricUnlockEnabled = useSelector(
-    settingsService,
-    selectBiometricUnlockEnabled
-  );
-  const isAvailable = useSelector(bioService, selectIsAvailable);
+
   const isSuccessBio = useSelector(bioService, selectIsSuccess);
   const isLockingVc = useSelector(vcItemActor, selectIsLockingVc);
   const isRevokingVc = useSelector(vcItemActor, selectIsRevokingVc);
@@ -88,7 +78,7 @@ export function useViewVcModal({
   useEffect(() => {
     if (isLockingVc) {
       showToast(
-        vc.locked ? 'ID successfully locked' : 'ID successfully unlocked'
+        vc.locked ? 'ID successfully unlocked' : 'ID successfully locked'
       );
     }
     if (isRevokingVc) {
@@ -146,18 +136,7 @@ export function useViewVcModal({
     setRevoking,
     onError,
     lockVc: () => {
-      NetInfo.fetch().then((state) => {
-        if (state.isConnected) {
-          if (isAvailable && isBiometricUnlockEnabled) {
-            setReAuthenticating('biometrics');
-            bioSend({ type: 'AUTHENTICATE' });
-          } else {
-            setReAuthenticating('passcode');
-          }
-        } else {
-          showToast('Request network failed');
-        }
-      });
+      vcItemActor.send(VcItemEvents.LOCK_VC());
     },
     inputOtp: (otp: string) => {
       netInfoFetch(otp);
