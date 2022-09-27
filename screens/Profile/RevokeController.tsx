@@ -26,7 +26,6 @@ export function useRevoke() {
   const revokeService = appService.children.get('RevokeVids');
   const vcKeys = useSelector(vcService, selectMyVcs);
   const isRevokingVc = useSelector(revokeService, selectIsRevokingVc);
-  const [isRefreshing, setRefreshing] = useState(false);
   const isLoggingRevoke = useSelector(revokeService, selectIsLoggingRevoke);
   const isAcceptingOtpInput = useSelector(
     revokeService,
@@ -70,14 +69,9 @@ export function useRevoke() {
     if (isRevokingVc) {
       setSelectedVidKeys([]);
       showToast(t('revokeSuccessful'));
-      revokeService.send(RevokeVidsEvents.DISMISS());
     }
     if (isLoggingRevoke) {
-      setRefreshing(true);
-      setTimeout(() => {
-        setRefreshing(false);
-        vcService.send(VcEvents.REFRESH_MY_VCS());
-      }, 1000);
+      vcService.send(VcEvents.REFRESH_MY_VCS());
     }
   }, [isRevokingVc, isLoggingRevoke]);
 
@@ -87,7 +81,6 @@ export function useRevoke() {
     isAuthenticating,
     isRefreshingVcs: useSelector(vcService, selectIsRefreshingMyVcs),
     isRevoking,
-    isRefreshing,
     isViewing,
     message,
     selectedIndex,

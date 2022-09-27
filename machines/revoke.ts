@@ -30,6 +30,7 @@ const model = createModel(
       DISMISS: () => ({}),
       SELECT_ID_TYPE: (idType: VcIdType) => ({ idType }),
       REVOKE_VCS: (vcKeys: string[]) => ({ vcKeys }),
+      STORE_RESPONSE: (response: string[]) => ({ response }),
     },
   }
 );
@@ -130,9 +131,9 @@ export const revokeVidsMachine =
           },
         },
         revokingVc: {
+          entry: ['revokeVID'],
           on: {
-            DISMISS: {
-              actions: [log('revokingVc'), 'revokeVID'],
+            STORE_RESPONSE: {
               target: 'loggingRevoke',
             },
           },

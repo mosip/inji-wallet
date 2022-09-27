@@ -218,6 +218,7 @@ export const storeMachine =
                     event.values,
                     context.encryptionKey
                   );
+                  response = event.values;
                   break;
                 }
                 case 'CLEAR': {
