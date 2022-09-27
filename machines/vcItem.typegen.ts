@@ -69,7 +69,7 @@ export interface Typegen0 {
     verifyCredential: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
   };
   'missingImplementations': {
-    actions: never;
+    actions: 'logError';
     services: never;
     guards: never;
     delays: never;

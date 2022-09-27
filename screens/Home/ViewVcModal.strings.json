@@ -8,5 +8,10 @@
   "revoking": "Your wallet contains a credential with VID {{vid}}. Revoking this will automatically remove the same from the wallet. Are you sure you want to proceed?",
   "requestingOtp": "Requesting OTP...",
   "editTag": "Rename",
-  "redirecting": "Redirecting..."
+  "redirecting": "Redirecting...",
+  "success": {
+    "unlocked": "{{vcLabel}} successfully unlocked",
+    "locked": "{{vcLabel}} successfully locked",
+    "revoked": "VID {{vid}} has been revoked. Any credential containing the same will be removed automatically from the wallet"
+  }
 }

@@ -79,7 +79,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
         />
       )}
 
-      {controller.isAcceptingOtpInput && controller.isLocking && (
+      {controller.isAcceptingOtpInput && (
         <OtpVerification
           isVisible={controller.isAcceptingOtpInput}
           onDismiss={controller.DISMISS}
