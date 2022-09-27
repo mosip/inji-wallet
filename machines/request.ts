@@ -308,7 +308,9 @@ export const requestMachine = model.createMachine(
   {
     actions: {
       openSettings: () => {
-        Linking.openURL('App-Prefs:Bluetooth');
+        Platform.OS === 'android'
+          ? BluetoothStateManager.openSettings().catch()
+          : Linking.openURL('App-Prefs:Bluetooth');
       },
 
       switchProtocol: assign({
@@ -665,6 +667,10 @@ export function selectIsWaitingForConnection(state: State) {
 
 export function selectIsBluetoothDenied(state: State) {
   return state.matches('bluetoothDenied');
+}
+
+export function selectIsCheckingBluetoothService(state: State) {
+  return state.matches('checkingBluetoothService');
 }
 
 export function selectIsExchangingDeviceInfo(state: State) {
