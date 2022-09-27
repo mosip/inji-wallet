@@ -97,7 +97,7 @@ export interface Typegen0 {
     markVcValid: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
     requestStoredContext: 'GET_VC_RESPONSE' | 'REFRESH';
     requestVcContext: 'xstate.init';
-    revokeVID: 'STORE_RESPONSE';
+    revokeVID: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
     setCredential:
       | 'CREDENTIAL_DOWNLOADED'
       | 'GET_VC_RESPONSE'
@@ -117,7 +117,6 @@ export interface Typegen0 {
       | 'error.platform.vc-item.requestingRevoke:invocation[0]';
     storeContext:
       | 'CREDENTIAL_DOWNLOADED'
-      | 'done.invoke.vc-item.requestingRevoke:invocation[0]'
       | 'done.invoke.vc-item.verifyingCredential:invocation[0]';
     storeLock: 'done.invoke.vc-item.requestingLock:invocation[0]';
     storeTag: 'SAVE_TAG';

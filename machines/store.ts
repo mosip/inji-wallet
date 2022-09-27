@@ -209,6 +209,7 @@ export const storeMachine =
                     event.value,
                     context.encryptionKey
                   );
+                  response = event.value;
                   break;
                 }
                 case 'REMOVE_ITEMS': {

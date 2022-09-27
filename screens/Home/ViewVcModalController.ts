@@ -34,7 +34,6 @@ export function useViewVcModal({
   const [message, setMessage] = useState('');
   const [reAuthenticating, setReAuthenticating] = useState('');
   const [isRevoking, setRevoking] = useState(false);
-  const [isRedirecting, setRedirecting] = useState(false);
   const [error, setError] = useState('');
   const { appService } = useContext(GlobalContext);
   const authService = appService.children.get('auth');
@@ -99,11 +98,7 @@ export function useViewVcModal({
       );
     }
     if (isLoggingRevoke) {
-      setRedirecting(true);
-      setTimeout(() => {
-        setRedirecting(false);
-        onRevokeDelete();
-      }, 1000);
+      onRevokeDelete();
     }
     if (isSuccessBio && reAuthenticating != '') {
       onSuccess();
@@ -129,7 +124,6 @@ export function useViewVcModal({
     otpError: useSelector(vcItemActor, selectOtpError),
     reAuthenticating,
     isRevoking,
-    isRedirecting,
 
     isEditingTag: useSelector(vcItemActor, selectIsEditingTag),
     isLockingVc,

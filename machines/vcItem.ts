@@ -331,10 +331,9 @@ export const vcItemMachine =
           },
         },
         revokingVc: {
-          entry: ['storeContext'],
+          entry: ['revokeVID'],
           on: {
             STORE_RESPONSE: {
-              actions: [log('revokingVc'), 'revokeVID'],
               target: 'loggingRevoke',
             },
           },
@@ -343,7 +342,6 @@ export const vcItemMachine =
           entry: [log('loggingRevoke'), 'logRevoked'],
           on: {
             DISMISS: {
-              actions: [log('idle---')],
               target: 'idle',
             },
           },

@@ -76,12 +76,6 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
         progress
       />
 
-      <MessageOverlay
-        isVisible={controller.isRedirecting}
-        title={t('redirecting')}
-        hasProgress
-      />
-
       {controller.isRevoking && (
         <RevokeConfirmModal
           id={controller.vc.id}
