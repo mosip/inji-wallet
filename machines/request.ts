@@ -31,6 +31,9 @@ import {
 
 type SharingProtocol = 'OFFLINE' | 'ONLINE';
 
+const waitingForConnectionId = '#waitingForConnection';
+const checkingBluetoothServiceId = '#checkingBluetoothService';
+
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
@@ -80,7 +83,7 @@ export const requestMachine = model.createMachine(
     id: 'request',
     initial: 'inactive',
     invoke: {
-      src: 'checkConnection',
+      src: 'monitorConnection',
     },
     on: {
       SCREEN_BLUR: 'inactive',
@@ -95,6 +98,7 @@ export const requestMachine = model.createMachine(
         entry: ['removeLoggers'],
       },
       checkingBluetoothService: {
+        id: 'checkingBluetoothService',
         initial: 'checking',
         states: {
           checking: {
@@ -165,6 +169,23 @@ export const requestMachine = model.createMachine(
             actions: ['setSenderInfo'],
           },
         },
+        initial: 'inProgress',
+        states: {
+          inProgress: {},
+          timeout: {
+            on: {
+              CANCEL: {
+                actions: 'disconnect',
+                target: checkingBluetoothServiceId,
+              },
+            },
+          },
+        },
+        after: {
+          CONNECTION_TIMEOUT: {
+            target: '.timeout',
+          },
+        },
       },
       waitingForVc: {
         invoke: {
@@ -175,6 +196,23 @@ export const requestMachine = model.createMachine(
           VC_RECEIVED: {
             target: 'reviewing',
             actions: ['setIncomingVc'],
+          },
+        },
+        initial: 'inProgress',
+        states: {
+          inProgress: {},
+          timeout: {
+            on: {
+              CANCEL: {
+                actions: 'disconnect',
+                target: checkingBluetoothServiceId,
+              },
+            },
+          },
+        },
+        after: {
+          CONNECTION_TIMEOUT: {
+            target: '.timeout',
           },
         },
       },
@@ -251,7 +289,7 @@ export const requestMachine = model.createMachine(
               },
             },
             on: {
-              DISMISS: '#waitingForConnection',
+              DISMISS: waitingForConnectionId,
             },
           },
           navigatingToHome: {},
@@ -259,6 +297,7 @@ export const requestMachine = model.createMachine(
         exit: ['disconnect'],
       },
       disconnected: {
+        id: 'disconnected',
         entry: ['disconnect'],
         on: {
           DISMISS: 'waitingForConnection',
@@ -467,14 +506,16 @@ export const requestMachine = model.createMachine(
         }
       },
 
-      checkConnection: () => (callback) => {
-        const subscription = IdpassSmartshare.handleNearbyEvents((event) => {
-          if (event.type === 'onDisconnected') {
-            callback({ type: 'DISCONNECT' });
-          }
-        });
+      monitorConnection: (context) => (callback) => {
+        if (context.sharingProtocol === 'OFFLINE') {
+          const subscription = IdpassSmartshare.handleNearbyEvents((event) => {
+            if (event.type === 'onDisconnected') {
+              callback({ type: 'DISCONNECT' });
+            }
+          });
 
-        return () => subscription.remove();
+          return () => subscription.remove();
+        }
       },
 
       exchangeDeviceInfo: (context) => (callback) => {
@@ -570,6 +611,9 @@ export const requestMachine = model.createMachine(
 
     delays: {
       CLEAR_DELAY: 250,
+      CONNECTION_TIMEOUT: () => {
+        return (Platform.OS === 'ios' ? 10 : 5) * 1000;
+      },
     },
   }
 );
@@ -624,11 +668,19 @@ export function selectIsBluetoothDenied(state: State) {
 }
 
 export function selectIsExchangingDeviceInfo(state: State) {
-  return state.matches('exchangingDeviceInfo');
+  return state.matches('exchangingDeviceInfo.inProgress');
+}
+
+export function selectIsExchangingDeviceInfoTimeout(state: State) {
+  return state.matches('exchangingDeviceInfo.timeout');
 }
 
 export function selectIsWaitingForVc(state: State) {
-  return state.matches('waitingForVc');
+  return state.matches('waitingForVc.inProgress');
+}
+
+export function selectIsWaitingForVcTimeout(state: State) {
+  return state.matches('waitingForVc.timeout');
 }
 
 export function selectIsDone(state: State) {

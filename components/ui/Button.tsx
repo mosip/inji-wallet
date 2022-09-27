@@ -43,6 +43,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
     styles.container,
     props.disabled ? styles.disabled : null,
     props.margin ? spacing('margin', props.margin) : null,
+    props.styles,
   ];
 
   const handleOnPress = (event: GestureResponderEvent) => {
@@ -83,4 +84,5 @@ interface ButtonProps {
   raised?: boolean;
   loading?: boolean;
   icon?: RNEButtonProps['icon'];
+  styles?: StyleProp<ViewStyle>;
 }

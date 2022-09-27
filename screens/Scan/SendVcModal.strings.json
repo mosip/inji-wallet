@@ -3,7 +3,8 @@
   "acceptRequest": "Accept request and choose {{vcLabel}}",
   "reject": "Reject",
   "statusSharing": {
-    "title": "Sharing..."
+    "title": "Sharing...",
+    "timeoutHint": "It's taking a while to share VC. There could be a problem with the connection."
   },
   "statusAccepted": {
     "title": "Success!",

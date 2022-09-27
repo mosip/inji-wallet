@@ -70,7 +70,7 @@ export interface Typegen0 {
   };
   'eventsCausingServices': {
     checkLocationPermission: 'APP_ACTIVE' | 'LOCATION_ENABLED';
-    checkLocationStatus: 'SCREEN_FOCUS';
+    checkLocationStatus: 'CANCEL' | 'SCREEN_FOCUS';
     discoverDevice: 'RECEIVE_DEVICE_INFO';
     exchangeDeviceInfo: 'CONNECTED';
     monitorConnection: 'SCREEN_BLUR' | 'SCREEN_FOCUS' | 'xstate.init';
@@ -82,6 +82,7 @@ export interface Typegen0 {
   };
   'eventsCausingDelays': {
     CLEAR_DELAY: 'LOCATION_ENABLED';
+    CONNECTION_TIMEOUT: 'CONNECTED' | 'RECEIVE_DEVICE_INFO' | 'SELECT_VC';
   };
   'matchesStates':
     | 'checkingLocationService'
@@ -92,8 +93,12 @@ export interface Typegen0 {
     | 'checkingLocationService.requestingToEnable'
     | 'clearingConnection'
     | 'connecting'
+    | 'connecting.inProgress'
+    | 'connecting.timeout'
     | 'disconnected'
     | 'exchangingDeviceInfo'
+    | 'exchangingDeviceInfo.inProgress'
+    | 'exchangingDeviceInfo.timeout'
     | 'findingConnection'
     | 'inactive'
     | 'invalid'
@@ -106,6 +111,8 @@ export interface Typegen0 {
     | 'reviewing.rejected'
     | 'reviewing.selectingVc'
     | 'reviewing.sendingVc'
+    | 'reviewing.sendingVc.inProgress'
+    | 'reviewing.sendingVc.timeout'
     | {
         checkingLocationService?:
           | 'checkingPermission'
@@ -113,6 +120,8 @@ export interface Typegen0 {
           | 'denied'
           | 'disabled'
           | 'requestingToEnable';
+        connecting?: 'inProgress' | 'timeout';
+        exchangingDeviceInfo?: 'inProgress' | 'timeout';
         reviewing?:
           | 'accepted'
           | 'cancelled'
@@ -120,7 +129,8 @@ export interface Typegen0 {
           | 'navigatingToHome'
           | 'rejected'
           | 'selectingVc'
-          | 'sendingVc';
+          | 'sendingVc'
+          | { sendingVc?: 'inProgress' | 'timeout' };
       };
   'tags': never;
 }

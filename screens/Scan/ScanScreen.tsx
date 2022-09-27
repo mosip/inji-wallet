@@ -41,9 +41,11 @@ export const ScanScreen: React.FC<MainRouteProps> = (props) => {
       )}
 
       <MessageOverlay
-        isVisible={controller.statusMessage !== ''}
-        message={controller.statusMessage}
-        hasProgress={!controller.isInvalid}
+        isVisible={controller.statusOverlay != null}
+        message={controller.statusOverlay?.message}
+        hint={controller.statusOverlay?.hint}
+        onCancel={controller.statusOverlay?.onCancel}
+        progress={!controller.isInvalid}
         onBackdropPress={controller.DISMISS_INVALID}
       />
 

@@ -11,6 +11,8 @@ import {
   selectIsExchangingDeviceInfo,
   selectIsWaitingForVc,
   selectSharingProtocol,
+  selectIsExchangingDeviceInfoTimeout,
+  selectIsWaitingForVcTimeout,
 } from '../../machines/request';
 import { selectVcLabel } from '../../machines/settings';
 import { GlobalContext } from '../../shared/GlobalContext';
@@ -38,15 +40,37 @@ export function useRequestScreen() {
     requestService,
     selectIsExchangingDeviceInfo
   );
+  const isExchangingDeviceInfoTimeout = useSelector(
+    requestService,
+    selectIsExchangingDeviceInfoTimeout
+  );
   const isWaitingForVc = useSelector(requestService, selectIsWaitingForVc);
+  const isWaitingForVcTimeout = useSelector(
+    requestService,
+    selectIsWaitingForVcTimeout
+  );
 
   let statusMessage = '';
+  let statusHint = '';
+  let isStatusCancellable = false;
   if (isWaitingForConnection) {
     statusMessage = t('status.waitingConnection');
   } else if (isExchangingDeviceInfo) {
-    statusMessage = t('status.exchangingDeviceInfo');
+    statusMessage = t('status.exchangingDeviceInfo.message');
+  } else if (isExchangingDeviceInfoTimeout) {
+    statusMessage = t('status.exchangingDeviceInfo.message');
+    statusHint = t('status.exchangingDeviceInfo.timeoutHint');
+    isStatusCancellable = true;
   } else if (isWaitingForVc) {
-    statusMessage = t('status.connected', { vcLabel: vcLabel.singular });
+    statusMessage = t('status.connected.message', {
+      vcLabel: vcLabel.singular,
+    });
+  } else if (isWaitingForVcTimeout) {
+    statusMessage = t('status.connected.message', {
+      vcLabel: vcLabel.singular,
+    });
+    statusHint = t('status.connected.timeoutHint');
+    isStatusCancellable = true;
   }
 
   useEffect(() => {
@@ -60,17 +84,20 @@ export function useRequestScreen() {
   return {
     vcLabel,
     statusMessage,
+    statusHint,
     sharingProtocol: useSelector(requestService, selectSharingProtocol),
 
     isWaitingForConnection,
     isExchangingDeviceInfo,
 
+    isStatusCancellable,
     isWaitingForVc,
     isBluetoothDenied,
     connectionParams: useSelector(requestService, selectConnectionParams),
     senderInfo: useSelector(requestService, selectSenderInfo),
     isReviewing: useSelector(requestService, selectIsReviewing),
 
+    CANCEL: () => requestService.send(RequestEvents.CANCEL()),
     DISMISS: () => requestService.send(RequestEvents.DISMISS()),
     ACCEPT: () => requestService.send(RequestEvents.ACCEPT()),
     REJECT: () => requestService.send(RequestEvents.REJECT()),
