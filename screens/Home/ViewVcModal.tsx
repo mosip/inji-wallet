@@ -7,17 +7,24 @@ import { Colors } from '../../components/ui/styleUtils';
 import { VcDetails } from '../../components/VcDetails';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { ToastItem } from '../../components/ui/ToastItem';
-import { Passcode } from '../../components/Passcode';
 import { RevokeConfirmModal } from '../../components/RevokeConfirm';
 import { OIDcAuthenticationModal } from '../../components/OIDcAuth';
 import { useViewVcModal, ViewVcModalProps } from './ViewVcModalController';
 import { useTranslation } from 'react-i18next';
+
+import { OtpVerification } from './MyVcs/OtpVerification';
 
 export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
   const { t } = useTranslation('ViewVcModal');
   const controller = useViewVcModal(props);
 
   const DATA = [
+    {
+      idType: 'UIN',
+      label: controller.vc.locked ? 'Unlock' : 'Lock',
+      icon: 'lock-outline',
+      onPress: () => controller.lockVc(),
+    },
     {
       idType: 'VID',
       label: t('revoke'),
@@ -70,6 +77,15 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
         />
       )}
 
+      {controller.isAcceptingOtpInput && (
+        <OtpVerification
+          isVisible={controller.isAcceptingOtpInput}
+          onDismiss={controller.DISMISS}
+          onInputDone={controller.inputOtp}
+          error={controller.otpError}
+        />
+      )}
+
       <MessageOverlay
         isVisible={controller.isRequestingOtp}
         title={t('requestingOtp')}
@@ -83,17 +99,6 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
           onRevoke={controller.REVOKE_VC}
         />
       )}
-
-      {controller.reAuthenticating !== '' &&
-        controller.reAuthenticating == 'passcode' && (
-          <Passcode
-            onSuccess={() => controller.onSuccess()}
-            onError={(value) => controller.onError(value)}
-            storedPasscode={controller.storedPasscode}
-            onDismiss={() => controller.setReAuthenticating('')}
-            error={controller.error}
-          />
-        )}
 
       {controller.toastVisible && <ToastItem message={controller.message} />}
     </Modal>

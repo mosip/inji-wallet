@@ -1,6 +1,7 @@
 import { useMachine, useSelector } from '@xstate/react';
 import { useContext, useEffect, useState } from 'react';
 import { ActorRefFrom } from 'xstate';
+import { useTranslation } from 'react-i18next';
 import NetInfo from '@react-native-community/netinfo';
 import { ModalProps } from '../../components/ui/Modal';
 import { GlobalContext } from '../../shared/GlobalContext';
@@ -18,18 +19,15 @@ import {
   vcItemMachine,
 } from '../../machines/vcItem';
 import { selectPasscode } from '../../machines/auth';
-import {
-  biometricsMachine,
-  selectIsAvailable,
-  selectIsSuccess,
-} from '../../machines/biometrics';
-import { selectBiometricUnlockEnabled } from '../../machines/settings';
+import { biometricsMachine, selectIsSuccess } from '../../machines/biometrics';
+import { selectVcLabel } from '../../machines/settings';
 
 export function useViewVcModal({
   vcItemActor,
   isVisible,
   onRevokeDelete,
 }: ViewVcModalProps) {
+  const { t } = useTranslation('ViewVcModal');
   const [toastVisible, setToastVisible] = useState(false);
   const [message, setMessage] = useState('');
   const [reAuthenticating, setReAuthenticating] = useState('');
@@ -39,12 +37,9 @@ export function useViewVcModal({
   const authService = appService.children.get('auth');
   const settingsService = appService.children.get('settings');
   const [, bioSend, bioService] = useMachine(biometricsMachine);
-  const isBiometricUnlockEnabled = useSelector(
-    settingsService,
-    selectBiometricUnlockEnabled
-  );
-  const isAvailable = useSelector(bioService, selectIsAvailable);
+
   const isSuccessBio = useSelector(bioService, selectIsSuccess);
+  const vcLabel = useSelector(settingsService, selectVcLabel);
   const isLockingVc = useSelector(vcItemActor, selectIsLockingVc);
   const isRevokingVc = useSelector(vcItemActor, selectIsRevokingVc);
   const isLoggingRevoke = useSelector(vcItemActor, selectIsLoggingRevoke);
@@ -54,11 +49,7 @@ export function useViewVcModal({
     bioSend({ type: 'SET_IS_AVAILABLE', data: true });
     setError('');
     setReAuthenticating('');
-    if (vc.locked) {
-      vcItemActor.send(VcItemEvents.UNLOCK_VC());
-    } else {
-      vcItemActor.send(VcItemEvents.LOCK_VC());
-    }
+    vcItemActor.send(VcItemEvents.LOCK_VC());
   };
 
   const onError = (value: string) => {
@@ -88,14 +79,13 @@ export function useViewVcModal({
   useEffect(() => {
     if (isLockingVc) {
       showToast(
-        vc.locked ? 'ID successfully locked' : 'ID successfully unlocked'
+        vc.locked
+          ? t('success.unlock', { vcLabel: vcLabel.singular })
+          : t('success.unlocked', { vcLabel: vcLabel.singular })
       );
     }
     if (isRevokingVc) {
-      showToast(
-        `VID ${vc.id} has been revoked. Any credential containing the same
-        will be removed automatically from the wallet`
-      );
+      showToast(t('success.revoked', { vid: vc.id }));
     }
     if (isLoggingRevoke) {
       onRevokeDelete();
@@ -146,18 +136,7 @@ export function useViewVcModal({
     setRevoking,
     onError,
     lockVc: () => {
-      NetInfo.fetch().then((state) => {
-        if (state.isConnected) {
-          if (isAvailable && isBiometricUnlockEnabled) {
-            setReAuthenticating('biometrics');
-            bioSend({ type: 'AUTHENTICATE' });
-          } else {
-            setReAuthenticating('passcode');
-          }
-        } else {
-          showToast('Request network failed');
-        }
-      });
+      vcItemActor.send(VcItemEvents.LOCK_VC());
     },
     inputOtp: (otp: string) => {
       netInfoFetch(otp);
@@ -170,7 +149,6 @@ export function useViewVcModal({
     SAVE_TAG: (tag: string) => vcItemActor.send(VcItemEvents.SAVE_TAG(tag)),
     DISMISS: () => vcItemActor.send(VcItemEvents.DISMISS()),
     LOCK_VC: () => vcItemActor.send(VcItemEvents.LOCK_VC()),
-    UNLOCK_VC: () => vcItemActor.send(VcItemEvents.UNLOCK_VC()),
     INPUT_OTP: (otp: string) => vcItemActor.send(VcItemEvents.INPUT_OTP(otp)),
   };
 }

@@ -46,7 +46,6 @@ const model = createModel(
       GET_VC_RESPONSE: (vc: VC) => ({ vc }),
       VERIFY: () => ({}),
       LOCK_VC: () => ({}),
-      UNLOCK_VC: () => ({}),
       INPUT_OTP: (otp: string) => ({ otp }),
       REFRESH: () => ({}),
       REVOKE_VC: () => ({}),
@@ -158,9 +157,6 @@ export const vcItemMachine =
               target: 'verifyingCredential',
             },
             LOCK_VC: {
-              target: 'requestingOtp',
-            },
-            UNLOCK_VC: {
               target: 'requestingOtp',
             },
             REVOKE_VC: {
@@ -306,7 +302,7 @@ export const vcItemMachine =
           },
         },
         lockingVc: {
-          entry: 'storeLock',
+          entry: ['storeLock'],
           on: {
             STORE_RESPONSE: {
               target: 'idle',
