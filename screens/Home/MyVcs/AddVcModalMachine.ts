@@ -305,9 +305,7 @@ export const AddVcModalMachine =
         isWrongIdFormat: ({ idType, id }) => {
           const validIdType =
             idType === 'UIN' ? id.length === 10 : id.length === 16;
-          const isWrongIdFormat = !(/^\d{10,16}$/.test(id) && validIdType);
-          console.log('isWrongIdFormat', isWrongIdFormat);
-          return isWrongIdFormat;
+          return !(/^\d{10,16}$/.test(id) && validIdType);
         },
 
         isIdInvalid: (_context, event: unknown) =>
