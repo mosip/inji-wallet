@@ -166,13 +166,13 @@ export const DefaultTheme = {
       padding: 10,
     },
     closeCardImage: {
-      width: 100,
-      height: 140,
+      width: 105,
+      height: 135,
       borderRadius: 5,
     },
     openCardImage: {
-      width: 100,
-      height: 140,
+      width: 105,
+      height: 135,
       borderRadius: 5,
     },
     scannerContainer: {

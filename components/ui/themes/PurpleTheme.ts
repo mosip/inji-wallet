@@ -160,8 +160,8 @@ export const PurpleTheme = {
       padding: 10,
     },
     closeCardImage: {
-      width: 100,
-      height: 140,
+      width: 105,
+      height: 135,
       borderRadius: 5,
     },
     details: {
@@ -170,8 +170,8 @@ export const PurpleTheme = {
       marginTop: 0,
     },
     openCardImage: {
-      width: 100,
-      height: 140,
+      width: 105,
+      height: 135,
       borderRadius: 5,
     },
     scannerContainer: {
