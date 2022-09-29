@@ -86,7 +86,9 @@ export function useRevoke() {
     selectedIndex,
     selectedVidKeys,
     toastVisible,
-    vidKeys,
+    vidKeys: vidKeys.filter(
+      (vcKey, index, vid) => vid.indexOf(vcKey) === index
+    ),
 
     CONFIRM_REVOKE_VC: () => {
       setRevoking(true);
