@@ -12,19 +12,21 @@ import {
   selectIsSendingVc,
   selectVcName,
   selectIsSendingVcTimeout,
+  selectIsVerifyingUserIdentity,
+  selectIsInvalidUserIdentity,
 } from '../../machines/scan';
 import { selectVcLabel } from '../../machines/settings';
 import { selectShareableVcs } from '../../machines/vc';
 import { GlobalContext } from '../../shared/GlobalContext';
 import { VC } from '../../types/vc';
 
-export function useSendVcModal() {
+export function useSendVcScreen() {
   const { appService } = useContext(GlobalContext);
   const scanService = appService.children.get('scan');
   const settingsService = appService.children.get('settings');
   const vcService = appService.children.get('vc');
 
-  const { t } = useTranslation('SendVcModal');
+  const { t } = useTranslation('SendVcScreen');
   const isSendingVc = useSelector(scanService, selectIsSendingVc);
   const isSendingVcTimeout = useSelector(scanService, selectIsSendingVcTimeout);
   const CANCEL = () => scanService.send(ScanEvents.CANCEL());
@@ -32,12 +34,12 @@ export function useSendVcModal() {
   let status: Pick<MessageOverlayProps, 'title' | 'hint' | 'onCancel'> = null;
   if (isSendingVc) {
     status = {
-      title: t('statusSharing.title'),
+      title: t('status.sharing.title'),
     };
   } else if (isSendingVcTimeout) {
     status = {
-      title: t('statusSharing.title'),
-      hint: t('statusSharing.timeoutHint'),
+      title: t('status.sharing.title'),
+      hint: t('status.sharing.timeoutHint'),
       onCancel: CANCEL,
     };
   }
@@ -52,16 +54,30 @@ export function useSendVcModal() {
 
     isSelectingVc: useSelector(scanService, selectIsSelectingVc),
     isSendingVc,
+    isSendingVcTimeout,
     isAccepted: useSelector(scanService, selectIsAccepted),
     isRejected: useSelector(scanService, selectIsRejected),
+    isVerifyingUserIdentity: useSelector(
+      scanService,
+      selectIsVerifyingUserIdentity
+    ),
+    isInvalidUserIdentity: useSelector(
+      scanService,
+      selectIsInvalidUserIdentity
+    ),
 
     ACCEPT_REQUEST: () => scanService.send(ScanEvents.ACCEPT_REQUEST()),
     CANCEL,
     SELECT_VC: (vc: VC) => scanService.send(ScanEvents.SELECT_VC(vc)),
+    VERIFY_AND_SELECT_VC: (vc: VC) =>
+      scanService.send(ScanEvents.VERIFY_AND_SELECT_VC(vc)),
     DISMISS: () => scanService.send(ScanEvents.DISMISS()),
     UPDATE_REASON: (reason: string) =>
       scanService.send(ScanEvents.UPDATE_REASON(reason)),
     UPDATE_VC_NAME: (vcName: string) =>
       scanService.send(ScanEvents.UPDATE_VC_NAME(vcName)),
+    FACE_VALID: () => scanService.send(ScanEvents.FACE_VALID()),
+    FACE_INVALID: () => scanService.send(ScanEvents.FACE_INVALID()),
+    RETRY_VERIFICATION: () => scanService.send(ScanEvents.RETRY_VERIFICATION()),
   };
 }

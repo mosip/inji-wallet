@@ -11,7 +11,7 @@ import {
 } from '../types/vc';
 import { StoreEvents } from './store';
 import { ActivityLogEvents } from './activityLog';
-import { verifyCredential } from '../shared/verifyCredential';
+import { verifyCredential } from '../shared/vcjs/verifyCredential';
 import { log } from 'xstate/lib/actions';
 
 const model = createModel(

@@ -6,13 +6,16 @@ import { Modal } from '../../../components/ui/Modal';
 import { Colors } from '../../../components/ui/styleUtils';
 import { IdInputModalProps, useIdInputModal } from './IdInputModalController';
 import { useTranslation } from 'react-i18next';
-import { KeyboardAvoidingView, Platform } from 'react-native';
+import { KeyboardAvoidingView, Platform, TextInput } from 'react-native';
 
 export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
   const { t } = useTranslation('IdInputModal');
   const controller = useIdInputModal(props);
 
   const inputLabel = t('enterId', { idType: controller.idType });
+
+  const setIdInputRef = (node: TextInput) =>
+    !controller.idInputRef && controller.READY(node);
 
   return (
     <Modal onDismiss={props.onDismiss} isVisible={props.isVisible}>
@@ -58,9 +61,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
                   errorStyle={{ color: Colors.Red }}
                   errorMessage={controller.idError}
                   onChangeText={controller.INPUT_ID}
-                  ref={(node) =>
-                    !controller.idInputRef && controller.READY(node)
-                  }
+                  ref={setIdInputRef}
                 />
               </Column>
             </Row>

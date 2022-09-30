@@ -7,7 +7,7 @@ import { createModel } from 'xstate/lib/model';
 import { EmitterSubscription, Linking, Platform } from 'react-native';
 import { DeviceInfo } from '../components/DeviceInfoList';
 import { getDeviceNameSync } from 'react-native-device-info';
-import { VC } from '../types/vc';
+import { VC, VerifiablePresentation } from '../types/vc';
 import { AppServices } from '../shared/GlobalContext';
 import { ActivityLogEvents } from './activityLog';
 import {
@@ -27,6 +27,7 @@ import {
 } from '../shared/smartshare';
 import { check, PERMISSIONS, PermissionStatus } from 'react-native-permissions';
 import { checkLocation, requestLocation } from '../shared/location';
+import { CameraCapturedPicture } from 'expo-camera';
 
 const findingConnectionId = '#scan.findingConnection';
 const checkingLocationServiceId = '#checkingLocationService';
@@ -44,6 +45,7 @@ const model = createModel(
     reason: '',
     loggers: [] as EmitterSubscription[],
     vcName: '',
+    verificationImage: {} as CameraCapturedPicture,
     sharingProtocol: 'OFFLINE' as SharingProtocol,
     scannedQrParams: {} as ConnectionParams,
   },
@@ -69,6 +71,11 @@ const model = createModel(
       UPDATE_VC_NAME: (vcName: string) => ({ vcName }),
       STORE_RESPONSE: (response: unknown) => ({ response }),
       APP_ACTIVE: () => ({}),
+      VERIFY_AND_SELECT_VC: (vc: VC) => ({ vc }),
+      FACE_VALID: () => ({}),
+      FACE_INVALID: () => ({}),
+      RETRY_VERIFICATION: () => ({}),
+      VP_CREATED: (vp: VerifiablePresentation) => ({ vp }),
     },
   }
 );
@@ -252,6 +259,10 @@ export const scanMachine = model.createMachine(
                 target: 'sendingVc',
                 actions: ['setSelectedVc'],
               },
+              VERIFY_AND_SELECT_VC: {
+                target: 'verifyingUserIdentity',
+                actions: ['setSelectedVc'],
+              },
               CANCEL: 'idle',
             },
           },
@@ -291,6 +302,23 @@ export const scanMachine = model.createMachine(
           rejected: {},
           cancelled: {},
           navigatingToHome: {},
+          verifyingUserIdentity: {
+            on: {
+              FACE_VALID: {
+                target: 'sendingVc',
+              },
+              FACE_INVALID: {
+                target: 'invalidUserIdentity',
+              },
+              CANCEL: 'selectingVc',
+            },
+          },
+          invalidUserIdentity: {
+            on: {
+              DISMISS: 'selectingVc',
+              RETRY_VERIFICATION: 'verifyingUserIdentity',
+            },
+          },
         },
         exit: ['disconnect', 'clearReason'],
       },
@@ -531,7 +559,6 @@ export const scanMachine = model.createMachine(
         };
 
         if (context.sharingProtocol === 'OFFLINE') {
-          console.log('OFFLINE?!');
           const event: SendVcEvent = {
             type: 'send-vc',
             data: { isChunked: false, vc },
@@ -600,6 +627,10 @@ export function selectVcName(state: State) {
   return state.context.vcName;
 }
 
+export function selectSelectedVc(state: State) {
+  return state.context.selectedVc;
+}
+
 export function selectIsScanning(state: State) {
   return state.matches('findingConnection');
 }
@@ -656,11 +687,22 @@ export function selectIsLocationDisabled(state: State) {
   return state.matches('checkingLocationService.disabled');
 }
 
+export function selectIsDone(state: State) {
+  return state.matches('reviewing.navigatingToHome');
+}
+
+export function selectIsVerifyingUserIdentity(state: State) {
+  return state.matches('reviewing.verifyingUserIdentity');
+}
+
+export function selectIsInvalidUserIdentity(state: State) {
+  return state.matches('reviewing.invalidUserIdentity');
+}
+
 async function sendVc(vc: VC, callback: (status: SendVcStatus) => void) {
   const rawData = JSON.stringify(vc);
   const chunks = chunkString(rawData, GNM_MESSAGE_LIMIT);
   if (chunks.length > 1) {
-    console.log('CHUNKED!', chunks.length);
     let chunk = 0;
     const vcChunk = {
       total: chunks.length,
@@ -679,7 +721,6 @@ async function sendVc(vc: VC, callback: (status: SendVcStatus) => void) {
       SendVcResponseType,
       async (status) => {
         if (typeof status === 'number' && chunk < event.data.vcChunk.total) {
-          console.log(SendVcResponseType, chunk, chunks[chunk].length);
           chunk += 1;
           await GoogleNearbyMessages.unpublish();
           await onlineSend({
@@ -702,7 +743,6 @@ async function sendVc(vc: VC, callback: (status: SendVcStatus) => void) {
     );
     await onlineSend(event);
   } else {
-    console.log('UNCHUNKED');
     const event: SendVcEvent = {
       type: 'send-vc',
       data: { isChunked: false, vc },
