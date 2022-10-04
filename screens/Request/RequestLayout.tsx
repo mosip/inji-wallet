@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import { RequestScreen } from './RequestScreen';
 import { useRequestLayout } from './RequestLayoutController';
-import { MessageOverlay } from '../../components/MessageOverlay';
+import { Message } from '../../components/Message';
 import { ReceiveVcScreen } from './ReceiveVcScreen';
 import { LanguageSelector } from '../../components/LanguageSelector';
 import { Colors } from '../../components/ui/styleUtils';
@@ -48,32 +48,35 @@ export const RequestLayout: React.FC = () => {
         />
       </RequestStack.Navigator>
 
-      <MessageOverlay
-        isVisible={controller.isAccepted}
-        title={t('status.accepted.title')}
-        message={t('status.accepted.message', {
-          vcLabel: controller.vcLabel.singular,
-          sender: controller.senderInfo.deviceName,
-        })}
-        onBackdropPress={controller.DISMISS}
-      />
+      {controller.isAccepted && (
+        <Message
+          title={t('status.accepted.title')}
+          message={t('status.accepted.message', {
+            vcLabel: controller.vcLabel.singular,
+            sender: controller.senderInfo.deviceName,
+          })}
+          onBackdropPress={controller.DISMISS}
+        />
+      )}
 
-      <MessageOverlay
-        isVisible={controller.isRejected}
-        title={t('status.rejected.title')}
-        message={t('status.rejected.message', {
-          vcLabel: controller.vcLabel.singular,
-          sender: controller.senderInfo.deviceName,
-        })}
-        onBackdropPress={controller.DISMISS}
-      />
+      {controller.isRejected && (
+        <Message
+          title={t('status.rejected.title')}
+          message={t('status.rejected.message', {
+            vcLabel: controller.vcLabel.singular,
+            sender: controller.senderInfo.deviceName,
+          })}
+          onBackdropPress={controller.DISMISS}
+        />
+      )}
 
-      <MessageOverlay
-        isVisible={controller.isDisconnected}
-        title={t('status.disconnected.title')}
-        message={t('status.disconnected.message')}
-        onBackdropPress={controller.DISMISS}
-      />
+      {controller.isDisconnected && (
+        <Message
+          title={t('status.disconnected.title')}
+          message={t('status.disconnected.message')}
+          onBackdropPress={controller.DISMISS}
+        />
+      )}
     </React.Fragment>
   );
 };
