@@ -10,32 +10,34 @@ export const ScanScreen: React.FC = () => {
   const controller = useScanScreen();
 
   return (
-    <Centered fill align="space-evenly" backgroundColor={Colors.LightGrey}>
-      <Text align="center">{t('header')}</Text>
+    <Column fill padding="24 0" backgroundColor={Colors.LightGrey}>
+      <Centered fill align="space-evenly" backgroundColor={Colors.LightGrey}>
+        <Text align="center">{t('header')}</Text>
 
-      {controller.isLocationDisabled || controller.isLocationDenied ? (
-        <Column align="space-between">
-          <Text align="center" margin="16 0" color={Colors.Red}>
-            {controller.locationError.message}
-          </Text>
-          <Button
-            title={controller.locationError.button}
-            onPress={controller.LOCATION_REQUEST}
-          />
-        </Column>
-      ) : null}
-
-      {!controller.isEmpty ? (
-        controller.isScanning && (
-          <Column crossAlign="center">
-            <QrScanner onQrFound={controller.SCAN} />
+        {controller.isLocationDisabled || controller.isLocationDenied ? (
+          <Column align="space-between">
+            <Text align="center" margin="16 0" color={Colors.Red}>
+              {controller.locationError.message}
+            </Text>
+            <Button
+              title={controller.locationError.button}
+              onPress={controller.LOCATION_REQUEST}
+            />
           </Column>
-        )
-      ) : (
-        <Text align="center" color={Colors.Red}>
-          {t('noShareableVcs', { vcLabel: controller.vcLabel.plural })}
-        </Text>
-      )}
-    </Centered>
+        ) : null}
+
+        {!controller.isEmpty ? (
+          controller.isScanning && (
+            <Column crossAlign="center">
+              <QrScanner onQrFound={controller.SCAN} />
+            </Column>
+          )
+        ) : (
+          <Text align="center" color={Colors.Red}>
+            {t('noShareableVcs', { vcLabel: controller.vcLabel.plural })}
+          </Text>
+        )}
+      </Centered>
+    </Column>
   );
 };

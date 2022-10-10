@@ -67,7 +67,7 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
   if (hasPermission === false) {
     return (
       <Column fill align="space-between">
-        <Text align="center" color={Colors.Red}>
+        <Text align="center" margin="16 0" color={Colors.Red}>
           {t('missingPermissionText')}
         </Text>
         <Button title={t('allowCameraButton')} onPress={openSettings} />
