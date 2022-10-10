@@ -89,7 +89,7 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
                     }>
                     {controller.vidKeys.map((vcKey, index) => (
                       <VidItem
-                        key={vcKey}
+                        key={`${vcKey}-${index}`}
                         vcKey={vcKey}
                         margin="0 2 8 2"
                         onPress={controller.selectVcItem(index, vcKey)}

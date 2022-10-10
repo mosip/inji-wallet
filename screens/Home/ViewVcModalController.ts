@@ -88,6 +88,7 @@ export function useViewVcModal({
       showToast(t('success.revoked', { vid: vc.id }));
     }
     if (isLoggingRevoke) {
+      vcItemActor.send(VcItemEvents.DISMISS());
       onRevokeDelete();
     }
     if (isSuccessBio && reAuthenticating != '') {
