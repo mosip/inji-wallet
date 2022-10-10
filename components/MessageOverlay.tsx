@@ -39,14 +39,15 @@ export const MessageOverlay: React.FC<MessageOverlayProps> = (props) => {
               {props.hint}
             </Text>
           )}
+          {props.children}
         </Column>
-        {props.onCancel && (
+        {!props.children && props.onCancel ? (
           <Button
             title={t('cancel')}
             onPress={props.onCancel}
             styles={styles.button}
           />
-        )}
+        ) : null}
       </Column>
     </Overlay>
   );

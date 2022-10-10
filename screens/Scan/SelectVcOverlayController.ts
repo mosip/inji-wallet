@@ -23,6 +23,11 @@ export function useSelectVcOverlay(props: SelectVcOverlayProps) {
       const { serviceRefs, ...vc } = selectedVcRef.getSnapshot().context;
       props.onSelect(vc);
     },
+
+    onVerifyAndSelect: () => {
+      const { serviceRefs, ...vc } = selectedVcRef.getSnapshot().context;
+      props.onVerifyAndSelect(vc);
+    },
   };
 
   function selectVcItem(index: number) {
@@ -38,5 +43,6 @@ export interface SelectVcOverlayProps {
   receiverName: string;
   vcKeys: string[];
   onSelect: (vc: VC) => void;
+  onVerifyAndSelect: (vc: VC) => void;
   onCancel: () => void;
 }

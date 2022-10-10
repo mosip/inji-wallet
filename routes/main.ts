@@ -5,9 +5,9 @@ import {
 } from '@react-navigation/bottom-tabs';
 import { HomeScreen } from '../screens/Home/HomeScreen';
 import { ProfileScreen } from '../screens/Profile/ProfileScreen';
-import { ScanScreen } from '../screens/Scan/ScanScreen';
 import { RootStackParamList } from './index';
 import { RequestLayout } from '../screens/Request/RequestLayout';
+import { ScanLayout } from '../screens/Scan/ScanLayout';
 
 export const mainRoutes: TabScreen[] = [
   {
@@ -17,7 +17,7 @@ export const mainRoutes: TabScreen[] = [
   },
   {
     name: 'Scan',
-    component: ScanScreen,
+    component: ScanLayout,
     icon: 'qr-code-scanner',
     options: {
       headerShown: false,

@@ -65,7 +65,7 @@ export interface Typegen0 {
     setReason: 'UPDATE_REASON';
     setReceiverInfo: 'EXCHANGE_DONE';
     setScannedQrParams: 'SCAN';
-    setSelectedVc: 'SELECT_VC';
+    setSelectedVc: 'SELECT_VC' | 'VERIFY_AND_SELECT_VC';
     setSenderInfo: 'RECEIVE_DEVICE_INFO';
   };
   'eventsCausingServices': {
@@ -74,7 +74,7 @@ export interface Typegen0 {
     discoverDevice: 'RECEIVE_DEVICE_INFO';
     exchangeDeviceInfo: 'CONNECTED';
     monitorConnection: 'SCREEN_BLUR' | 'SCREEN_FOCUS' | 'xstate.init';
-    sendVc: 'SELECT_VC';
+    sendVc: 'FACE_VALID' | 'SELECT_VC';
   };
   'eventsCausingGuards': {
     isQrOffline: 'SCAN';
@@ -82,7 +82,11 @@ export interface Typegen0 {
   };
   'eventsCausingDelays': {
     CLEAR_DELAY: 'LOCATION_ENABLED';
-    CONNECTION_TIMEOUT: 'CONNECTED' | 'RECEIVE_DEVICE_INFO' | 'SELECT_VC';
+    CONNECTION_TIMEOUT:
+      | 'CONNECTED'
+      | 'FACE_VALID'
+      | 'RECEIVE_DEVICE_INFO'
+      | 'SELECT_VC';
   };
   'matchesStates':
     | 'checkingLocationService'
@@ -107,12 +111,14 @@ export interface Typegen0 {
     | 'reviewing.accepted'
     | 'reviewing.cancelled'
     | 'reviewing.idle'
+    | 'reviewing.invalidUserIdentity'
     | 'reviewing.navigatingToHome'
     | 'reviewing.rejected'
     | 'reviewing.selectingVc'
     | 'reviewing.sendingVc'
     | 'reviewing.sendingVc.inProgress'
     | 'reviewing.sendingVc.timeout'
+    | 'reviewing.verifyingUserIdentity'
     | {
         checkingLocationService?:
           | 'checkingPermission'
@@ -126,10 +132,12 @@ export interface Typegen0 {
           | 'accepted'
           | 'cancelled'
           | 'idle'
+          | 'invalidUserIdentity'
           | 'navigatingToHome'
           | 'rejected'
           | 'selectingVc'
           | 'sendingVc'
+          | 'verifyingUserIdentity'
           | { sendingVc?: 'inProgress' | 'timeout' };
       };
   'tags': never;

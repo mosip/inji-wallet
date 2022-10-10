@@ -1,5 +1,6 @@
 {
   "cancel": "Cancel",
   "save": "Save",
-  "editLabel": "Edit {{label}}"
+  "editLabel": "Edit {{label}}",
+  "tryAgain": "Try again"
 }
