@@ -5,6 +5,11 @@
     "deviceRefNumber": "Reference number ng device",
     "name": "Pangalan"
   },
+  "OIDcAuth": {
+    "title": "OIDC Authentication",
+    "text": "Papalitan ng OIDC service provider UI",
+    "verify": "I-verify"
+  },
   "PasscodeVerify": {
     "passcodeMismatchError": "Hindi tumugma ang passcode."
   },
@@ -99,13 +104,21 @@
     "noReceivedVcsText": "Pindutin ang Humiling sa ibaba para makatanggap ng {{vcLabel}}"
   },
   "ViewVcModal": {
+    "cancel": "Kanselahin",
     "lock": "Isara ang paggamit",
     "unlock": "Buksan ang paggamit",
     "rename": "Palitan ang pangalan",
     "delete": "Tanggalin",
     "revoke": "Bawiin",
+    "revoking": "Ang iyong wallet ay naglalaman ng kredensyal na may VID {{vid}}. Ang pagkansela nito ay awtomatikong mag-aalis ng pareho sa wallet. Sigurado ka bang gusto mong magpatuloy?",
     "requestingOtp": "Humihiling ng OTP...",
-    "editTag": "Palitan ang Tag"
+    "editTag": "Palitan ang pangalan",
+    "redirecting": "Redirecting...",
+    "success": {
+      "unlocked": "Ang {{vcLabel}} ay matagumpay na na-unlock",
+      "locked": "Ang {{vcLabel}} ay matagumpay na na-lock",
+      "revoked": "Ang VID {{vid}} ay nakansela. Ang lahat ng mga detalye na naglalaman ng pareho ay awtomatikong aalisin wallet."
+    }
   },
   "MainLayout": {
     "home": "Home",
@@ -129,17 +142,24 @@
     "bioUnlock": "Pagbukas gamit Biometric",
     "authFactorUnlock": "Pagbukas ng auth factor",
     "credits": "Mga kredito at legal na abiso",
-    "logout": "Mag log-out"
+    "logout": "Mag log-out",
+    "revokeLabel": "Kanselahin ang VID",
+    "revokeHeader": "KANSELAHIN ANG VID",
+    "revokingVids": "Kakanselahin mo na ang ({{count}}) na mga VID.",
+    "revokingVidsAfter": "Nangangahulugan ito na hindi mo na maa-access o matitingnan ang anumang mga ID na naka-link sa mga VID na ito. Sigurado ka bang gusto mong magpatuloy?",
+    "empty": "Walang laman",
+    "revokeSuccessful": "Matagumpay na nakansela ang VID"
   },
-  "ReceiveVcModal": {
-    "header": "Detalye ng {{vcLabel}}",
-    "acceptRequest": "Tanggapin ang kahilingan at kunin ang {{vcLabel}}",
+  "ReceiveVcScreen": {
+    "header": "Mga detalye ng {{vcLabel}}",
+    "acceptRequest": "Tanggapin ang kahilingan at tumanggap ng {{vcLabel}}",
     "reject": "Tanggihan"
   },
   "RequestScreen": {
     "bluetoothDenied": "Mangyaring paganahin ang Bluetooth upang makahiling ng {{vcLabel}}",
     "showQrCode": "Ipakita ang QR code na ito para makahiling ng {{vcLabel}}",
     "incomingVc": "Padating na {{vcLabel}}",
+    "request": "Hilingin",
     "status": {
       "accepted": {
         "title": "Tagumpay!",
@@ -154,19 +174,24 @@
         "message": "Naputol ang koneksyon. Pakiulit."
       },
       "waitingConnection": "Naghihintay ng koneksyon...",
-      "exchangingDeviceInfo": "Nagpapalitan ng impormasyon ng device...",
-      "connected": "Nakakonekta sa device. Naghihintay ng {{vcLabel}}..."
-    }
+      "exchangingDeviceInfo": {
+        "message": "Pagpapalitan ng impormasyon ng device...",
+        "timeoutHint": "Masyadong matagal ang pagpapalitan ng impormasyon ng device..."
+      },
+      "connected": {
+        "message": "Nakakonektang device. Naghihintay para sa {{vcLabel}}...",
+        "timeoutHint": "Wala pang natanggap na VC. Nakakonekta pa rin ba ang pagpapadala ng device?"
+      }
+    },
+    "online": "Online",
+    "offline": "Offline",
+    "gotoSettings": "Pumunta sa setting"
   },
   "ScanScreen": {
     "header": "I-scan ang QR Code",
     "noShareableVcs": "Walang magagamit na maibabahaging {{vcLabel}}.",
     "sharingVc": "Pagbabahagi ng {{vcLabel}}",
     "errors": {
-      "flightMode": {
-        "message": "Dapat na hindi nakabukas ang flight mode ng iyong mobile para maaaring makapag-scan",
-        "button": "Isara ang flight mode"
-      },
       "locationDisabled": {
         "message": "Dapat na nakabukas ang Location services ng iyong mobile para maaaring makapag-scan",
         "button": "Buksan ang location services"
@@ -178,7 +203,9 @@
     },
     "status": {
       "connecting": "Kumokonekta...",
+      "connectingTimeout": "Medyo nagtatagal bago magtatag ng koneksyon. Bukas ba ang ibang device para sa mga koneksyon?",
       "exchangingDeviceInfo": "Nagpapalitan ng impormasyon ng device...",
+      "exchangingDeviceInfoTimeout": "Medyo nagtatagal ang paglabas ng impormasyon ng device. Bukas ba ang ibang device para sa mga koneksyon?",
       "invalid": "Di-wasto ang QR Code"
     }
   },
@@ -193,7 +220,8 @@
     "acceptRequest": "Tanggapin ang kahilingan at piliin ang {{vcLabel}}",
     "reject": "Tanggihan",
     "statusSharing": {
-      "title": "Pagbabahagi..."
+      "title": "Pagbabahagi...",
+      "timeoutHint": "Medyo natatagal ang pagbabahagi ng VC. Maaaring may problema sa koneksyon."
     },
     "statusAccepted": {
       "title": "Tagumpay!",
