@@ -289,6 +289,9 @@ export const AddVcModalMachine =
         },
 
         requestCredential: async (context) => {
+          // force wait to fix issue with hanging overlay
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+
           const response = await request('POST', '/credentialshare/request', {
             individualId: context.id,
             individualIdType: context.idType,
