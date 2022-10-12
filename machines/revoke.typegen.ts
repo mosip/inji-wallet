@@ -35,6 +35,7 @@ export interface Typegen0 {
   };
   'eventsCausingActions': {
     clearOtp:
+      | 'DISMISS'
       | 'REVOKE_VCS'
       | 'done.invoke.RevokeVids.acceptingVIDs.requestingOtp:invocation[0]'
       | 'error.platform.RevokeVids.requestingRevoke:invocation[0]'
@@ -44,7 +45,7 @@ export interface Typegen0 {
     setIdBackendError: 'error.platform.RevokeVids.acceptingVIDs.requestingOtp:invocation[0]';
     setOtp: 'INPUT_OTP';
     setOtpError: 'error.platform.RevokeVids.requestingRevoke:invocation[0]';
-    setTransactionId: 'REVOKE_VCS' | 'xstate.init';
+    setTransactionId: 'DISMISS' | 'REVOKE_VCS' | 'xstate.init';
     setVIDs: 'REVOKE_VCS';
   };
   'eventsCausingServices': {
