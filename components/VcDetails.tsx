@@ -23,6 +23,13 @@ const VerifiedIcon: React.FC = () => {
 export const VcDetails: React.FC<VcDetailsProps> = (props) => {
   const { t, i18n } = useTranslation('VcDetails');
 
+  //Assigning the UIN and VID from the VC details to display the idtype label using condition
+  const uin = props.vc?.verifiableCredential.credentialSubject.UIN;
+  const vid = props.vc?.verifiableCredential.credentialSubject.VID;
+
+  //Assigning the idtype based on the policy
+  const idType = uin ? t('uin') : vid ? t('vid') : t('idtype');
+
   return (
     <ImageBackground
       borderRadius={10}
@@ -58,10 +65,10 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
               weight="bold"
               size="smaller"
               color={Theme.Colors.DetailsLabel}>
-              {props.vc?.idType}
+              {idType}
             </Text>
             <Text weight="semibold" size="smaller" color={Theme.Colors.Details}>
-              {props.vc?.id}
+              {uin ? uin : vid ? vid : null}
             </Text>
           </Column>
 

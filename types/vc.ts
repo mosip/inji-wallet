@@ -31,6 +31,7 @@ export interface DecodedCredential {
 
 export interface CredentialSubject {
   UIN: string;
+  VID: string;
   addressLine1: string;
   addressLine2: string;
   addressLine3: string;
