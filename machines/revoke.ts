@@ -142,7 +142,7 @@ export const revokeVidsMachine =
           entry: [log('loggingRevoke'), 'logRevoked'],
           on: {
             DISMISS: {
-              target: 'idle',
+              target: 'acceptingVIDs',
             },
           },
         },

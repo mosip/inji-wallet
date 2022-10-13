@@ -71,6 +71,7 @@ export function useRevoke() {
       showToast(t('revokeSuccessful'));
     }
     if (isLoggingRevoke) {
+      revokeService.send(RevokeVidsEvents.DISMISS());
       vcService.send(VcEvents.REFRESH_MY_VCS());
     }
   }, [isRevokingVc, isLoggingRevoke]);
