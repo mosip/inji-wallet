@@ -80,7 +80,7 @@ export function useViewVcModal({
     if (isLockingVc) {
       showToast(
         vc.locked
-          ? t('success.unlock', { vcLabel: vcLabel.singular })
+          ? t('success.locked', { vcLabel: vcLabel.singular })
           : t('success.unlocked', { vcLabel: vcLabel.singular })
       );
     }
