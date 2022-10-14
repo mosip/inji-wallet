@@ -212,24 +212,33 @@
   "SelectVcOverlay": {
     "header": "Ibahagi ang {{vcLabel}}",
     "chooseVc": "Piliin ang {{vcLabel}} na gusto mong ibahagi",
-    "cancel": "Kanselahin",
-    "share": "Ibahagi"
+    "share": "Ibahagi",
+    "verifyAndShare": "I-verify ang Pagkakakilanlan at Ibahagi"
   },
-  "SendVcModal": {
-    "reasonForSharing": "Dahilan ng pagbabahagi (hindi ubligado)",
+  "SendVcScreen": {
+    "reasonForSharing": "Dahilan ng pagbabahagi (opsyonal)",
     "acceptRequest": "Tanggapin ang kahilingan at piliin ang {{vcLabel}}",
     "reject": "Tanggihan",
-    "statusSharing": {
-      "title": "Pagbabahagi...",
-      "timeoutHint": "Medyo natatagal ang pagbabahagi ng VC. Maaaring may problema sa koneksyon."
+    "status": {
+      "sharing": {
+        "title": "Pagbabahagi",
+        "timeoutHint": "Medyo natatagal ang pagbabahagi ng VC. Maaaring may problema sa koneksyon."
+      },
+      "accepted": {
+        "title": "Tagumpay!",
+        "message": "Ang iyong {{vcLabel}} ay matagumpay na naibahagi kay {{receiver}}"
+      },
+      "rejected": {
+        "title": "Pansinin",
+        "message": "Ang iyong {{vcLabel}} ay tinanggihan ng {{receiver}}"
+      },
+      "verifyingIdentity": "Bine-verify ang pagkakakilanlan..."
     },
-    "statusAccepted": {
-      "title": "Tagumpay!",
-      "message": "Ang iyong {{vcLabel}} ay matagumpay na naibahagi sa {{receiver}}"
-    },
-    "statusRejected": {
-      "title": "Paunawa",
-      "message": "Ang iyong {{vcLabel}} ay tinanggihan ni {{receiver}}"
+    "errors": {
+      "invalidIdentity": {
+        "title": "Hindi ma-verify ang pagkakakilanlan",
+        "message": "May naganap na error at hindi namin ma-scan ang iyong portrait. Subukang muli, tiyaking nakikita ang iyong mukha, walang anumang mga accessory."
+      }
     }
   },
   "WelcomeScreen": {
@@ -240,6 +249,7 @@
   "common": {
     "cancel": "Kanselahin",
     "save": "I-save",
-    "editLabel": "Palitan ang {{label}}"
+    "editLabel": "Palitan ang {{label}}",
+    "tryAgain": "Subukan muli"
   }
 }
