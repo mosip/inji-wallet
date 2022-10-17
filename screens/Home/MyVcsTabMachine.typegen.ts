@@ -2,13 +2,6 @@
 
 export interface Typegen0 {
   '@@xstate/typegen': true;
-  'eventsCausingActions': {
-    completeOnboarding: 'ADD_VC' | 'ONBOARDING_DONE';
-    sendVcAdded: 'STORE_RESPONSE';
-    getOnboardingStatus: 'xstate.init';
-    viewVcFromParent: 'VIEW_VC';
-    storeVcItem: 'done.invoke.AddVcModal';
-  };
   'internalEvents': {
     'done.invoke.AddVcModal': {
       type: 'done.invoke.AddVcModal';
@@ -24,20 +17,27 @@ export interface Typegen0 {
     guards: never;
     delays: never;
   };
+  'eventsCausingActions': {
+    completeOnboarding: 'ADD_VC' | 'ONBOARDING_DONE';
+    getOnboardingStatus: 'xstate.init';
+    sendVcAdded: 'STORE_RESPONSE';
+    storeVcItem: 'done.invoke.AddVcModal';
+    viewVcFromParent: 'VIEW_VC';
+  };
   'eventsCausingServices': {};
   'eventsCausingGuards': {
     isOnboardingDone: 'STORE_RESPONSE';
   };
   'eventsCausingDelays': {};
   'matchesStates':
-    | 'checkingOnboardingStatus'
-    | 'onboarding'
-    | 'idle'
-    | 'viewingVc'
     | 'addingVc'
-    | 'addingVc.waitingForvcKey'
-    | 'addingVc.storing'
     | 'addingVc.addVcSuccessful'
-    | { addingVc?: 'waitingForvcKey' | 'storing' | 'addVcSuccessful' };
+    | 'addingVc.storing'
+    | 'addingVc.waitingForvcKey'
+    | 'checkingOnboardingStatus'
+    | 'idle'
+    | 'onboarding'
+    | 'viewingVc'
+    | { addingVc?: 'addVcSuccessful' | 'storing' | 'waitingForvcKey' };
   'tags': never;
 }
