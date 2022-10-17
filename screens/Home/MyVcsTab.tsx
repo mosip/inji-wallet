@@ -41,9 +41,9 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                     onRefresh={controller.REFRESH}
                   />
                 }>
-                {controller.vcKeys.map((vcKey) => (
+                {controller.vcKeys.map((vcKey, index) => (
                   <VcItem
-                    key={vcKey}
+                    key={`${vcKey}-${index}`}
                     vcKey={vcKey}
                     margin="0 2 8 2"
                     onPress={controller.VIEW_VC}

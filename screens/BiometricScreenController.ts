@@ -11,6 +11,7 @@ import {
   selectIsUnenrolled,
   selectIsUnvailable,
 } from '../machines/biometrics';
+import { Platform } from 'react-native';
 
 export function useBiometricScreen(props: RootRouteProps) {
   const { appService } = useContext(GlobalContext);
@@ -21,11 +22,11 @@ export function useBiometricScreen(props: RootRouteProps) {
   const [initAuthBio, updateInitAuthBio] = useState(true);
   const [bioState, bioSend, bioService] = useMachine(biometricsMachine);
 
-  const isAuthorized: boolean = useSelector(authService, selectAuthorized);
-  const isAvailable: boolean = useSelector(bioService, selectIsAvailable);
-  const isUnavailable: boolean = useSelector(bioService, selectIsUnvailable);
-  const isSuccessBio: boolean = useSelector(bioService, selectIsSuccess);
-  const isUnenrolled: boolean = useSelector(bioService, selectIsUnenrolled);
+  const isAuthorized = useSelector(authService, selectAuthorized);
+  const isAvailable = useSelector(bioService, selectIsAvailable);
+  const isUnavailable = useSelector(bioService, selectIsUnvailable);
+  const isSuccessBio = useSelector(bioService, selectIsSuccess);
+  const isUnenrolled = useSelector(bioService, selectIsUnenrolled);
 
   useEffect(() => {
     console.log('bioState', bioState);
@@ -59,16 +60,20 @@ export function useBiometricScreen(props: RootRouteProps) {
   }, [isAuthorized, isAvailable, isUnenrolled, isUnavailable, isSuccessBio]);
 
   const checkBiometricsChange = () => {
-    RNFingerprintChange.hasFingerPrintChanged().then(
-      async (biometricsHasChanged: any) => {
-        //if new biometrics are added, re-enable Biometrics Authentication
-        if (biometricsHasChanged) {
-          setReEnabling(true);
-        } else {
-          bioSend({ type: 'AUTHENTICATE' });
+    if (Platform.OS === 'android') {
+      RNFingerprintChange.hasFingerPrintChanged().then(
+        async (biometricsHasChanged: any) => {
+          //if new biometrics are added, re-enable Biometrics Authentication
+          if (biometricsHasChanged) {
+            setReEnabling(true);
+          } else {
+            bioSend({ type: 'AUTHENTICATE' });
+          }
         }
-      }
-    );
+      );
+    } else {
+      // TODO: solution for iOS
+    }
   };
 
   const useBiometrics = () => {

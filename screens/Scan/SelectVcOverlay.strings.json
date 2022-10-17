@@ -1,6 +1,6 @@
 {
   "header": "Share {{vcLabel}}",
   "chooseVc": "Choose the {{vcLabel}} you'd like to share with",
-  "cancel": "Cancel",
-  "share": "Share"
+  "share": "Share",
+  "verifyAndShare": "Verify Identity & Share"
 }

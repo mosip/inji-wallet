@@ -8,6 +8,7 @@ import { MainRouteProps } from '../../routes/main';
 import { EditableListItem } from '../../components/EditableListItem';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { Credits } from './Credits';
+import { Revoke } from './Revoke';
 import { useProfileScreen } from './ProfileScreenController';
 import { useTranslation } from 'react-i18next';
 import { LanguageSelector } from '../../components/LanguageSelector';
@@ -58,6 +59,7 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
         onEdit={controller.UPDATE_VC_LABEL}
       />
       <LanguageSetting />
+      <Revoke label={t('revokeLabel')} />
       <ListItem bottomDivider disabled={!controller.canUseBiometrics}>
         <ListItem.Content>
           <ListItem.Title>
