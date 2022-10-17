@@ -3,10 +3,6 @@
   "noShareableVcs": "No shareable {{vcLabel}} are available.",
   "sharingVc": "Sharing {{vcLabel}}",
   "errors": {
-    "flightMode": {
-      "message": "Flight mode must be disabled for the scanning functionality",
-      "button": "Disable flight mode"
-    },
     "locationDisabled": {
       "message": "Location services must be enabled for the scanning functionality",
       "button": "Enable location services"
@@ -18,7 +14,9 @@
   },
   "status": {
     "connecting": "Connecting...",
+    "connectingTimeout": "It's taking a while to establish connection. Is the other device open for connections?",
     "exchangingDeviceInfo": "Exchanging device info...",
+    "exchangingDeviceInfoTimeout": "It's taking a while to exchange device info. You may have to reconnect.",
     "invalid": "Invalid QR Code"
   }
 }

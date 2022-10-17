@@ -13,8 +13,8 @@ export interface Typegen0 {
   'invokeSrcNameMap': {
     advertiseDevice: 'done.invoke.waitingForConnection:invocation[0]';
     checkBluetoothService: 'done.invoke.request.checkingBluetoothService.checking:invocation[0]';
-    checkConnection: 'done.invoke.request:invocation[0]';
     exchangeDeviceInfo: 'done.invoke.request.exchangingDeviceInfo:invocation[0]';
+    monitorConnection: 'done.invoke.request:invocation[0]';
     receiveVc: 'done.invoke.request.waitingForVc:invocation[0]';
     requestBluetooth: 'done.invoke.request.checkingBluetoothService.requesting:invocation[0]';
     sendVcResponse:
@@ -30,6 +30,7 @@ export interface Typegen0 {
   'eventsCausingActions': {
     disconnect:
       | ''
+      | 'CANCEL'
       | 'DISCONNECT'
       | 'DISMISS'
       | 'SCREEN_BLUR'
@@ -63,13 +64,13 @@ export interface Typegen0 {
   };
   'eventsCausingServices': {
     advertiseDevice: 'DISMISS' | 'xstate.after(CLEAR_DELAY)#clearingConnection';
-    checkBluetoothService: 'SCREEN_FOCUS' | 'SWITCH_PROTOCOL';
-    checkConnection:
+    checkBluetoothService: 'CANCEL' | 'SCREEN_FOCUS' | 'SWITCH_PROTOCOL';
+    exchangeDeviceInfo: 'RECEIVE_DEVICE_INFO';
+    monitorConnection:
       | 'SCREEN_BLUR'
       | 'SCREEN_FOCUS'
       | 'SWITCH_PROTOCOL'
       | 'xstate.init';
-    exchangeDeviceInfo: 'RECEIVE_DEVICE_INFO';
     receiveVc: 'EXCHANGE_DONE';
     requestBluetooth: 'BLUETOOTH_DISABLED';
     sendVcResponse: 'CANCEL' | 'REJECT' | 'STORE_RESPONSE';
@@ -79,6 +80,7 @@ export interface Typegen0 {
   };
   'eventsCausingDelays': {
     CLEAR_DELAY: '';
+    CONNECTION_TIMEOUT: 'EXCHANGE_DONE' | 'RECEIVE_DEVICE_INFO';
   };
   'matchesStates':
     | 'bluetoothDenied'
@@ -89,6 +91,8 @@ export interface Typegen0 {
     | 'clearingConnection'
     | 'disconnected'
     | 'exchangingDeviceInfo'
+    | 'exchangingDeviceInfo.inProgress'
+    | 'exchangingDeviceInfo.timeout'
     | 'inactive'
     | 'preparingToExchangeInfo'
     | 'reviewing'
@@ -104,8 +108,11 @@ export interface Typegen0 {
     | 'reviewing.rejected'
     | 'waitingForConnection'
     | 'waitingForVc'
+    | 'waitingForVc.inProgress'
+    | 'waitingForVc.timeout'
     | {
         checkingBluetoothService?: 'checking' | 'enabled' | 'requesting';
+        exchangingDeviceInfo?: 'inProgress' | 'timeout';
         reviewing?:
           | 'accepted'
           | 'accepting'
@@ -120,6 +127,7 @@ export interface Typegen0 {
                 | 'requestingReceivedVcs'
                 | 'storingVc';
             };
+        waitingForVc?: 'inProgress' | 'timeout';
       };
   'tags': never;
 }

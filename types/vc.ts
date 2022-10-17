@@ -32,25 +32,27 @@ export interface DecodedCredential {
 export interface CredentialSubject {
   UIN: string;
   VID: string;
-  addressLine1: string;
-  addressLine2: string;
-  addressLine3: string;
+  addressLine1: LocalizedField[] | string;
+  addressLine2: LocalizedField[] | string;
+  addressLine3: LocalizedField[] | string;
   biometrics: string; // Encrypted Base64Encoded Biometrics
-  city: string;
+  city: LocalizedField[] | string;
   dateOfBirth: string;
   email: string;
   fullName: string;
-  gender: string;
+  gender: LocalizedField[] | string;
   id: string;
   phone: string;
   postalCode: string;
-  province: string;
-  region: string;
+  province: LocalizedField[] | string;
+  region: LocalizedField[] | string;
   vcVer: 'VC-V1' | string;
 }
 
+type VCContext = (string | Record<string, unknown>)[];
+
 export interface VerifiableCredential {
-  '@context': (string | Record<string, unknown>)[];
+  '@context': VCContext;
   'credentialSubject': CredentialSubject;
   'id': string;
   'issuanceDate': string;
@@ -65,6 +67,21 @@ export interface VerifiableCredential {
   'type': VerifiableCredentialType[];
 }
 
+export interface VerifiablePresentation {
+  '@context': VCContext;
+  'verifiableCredential': VerifiableCredential[];
+  'type': 'VerifiablePresentation';
+  'proof': {
+    created: string;
+    jws: string;
+    proofPurpose: 'authentication' | string;
+    type: 'RsaSignature2018' | string;
+    verificationMethod: string;
+    challenge: string;
+    domain: string;
+  };
+}
+
 export type VerifiableCredentialType =
   | 'VerifiableCredential'
   | 'MOSIPVerfiableCredential'
@@ -73,4 +90,9 @@ export type VerifiableCredentialType =
 export interface VCLabel {
   singular: string;
   plural: string;
+}
+
+export interface LocalizedField {
+  language: string;
+  value: string;
 }

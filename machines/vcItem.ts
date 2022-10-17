@@ -1,6 +1,6 @@
 import { assign, ErrorPlatformEvent, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
-import { VC_ITEM_STORE_KEY } from '../shared/constants';
+import { MY_VCS_STORE_KEY, VC_ITEM_STORE_KEY } from '../shared/constants';
 import { AppServices } from '../shared/GlobalContext';
 import { CredentialDownloadResponse, request } from '../shared/request';
 import {
@@ -11,7 +11,8 @@ import {
 } from '../types/vc';
 import { StoreEvents } from './store';
 import { ActivityLogEvents } from './activityLog';
-import { verifyCredential } from '../shared/verifyCredential';
+import { verifyCredential } from '../shared/vcjs/verifyCredential';
+import { log } from 'xstate/lib/actions';
 
 const model = createModel(
   {
@@ -30,6 +31,7 @@ const model = createModel(
     otpError: '',
     idError: '',
     transactionId: '',
+    revoked: false,
   },
   {
     events: {
@@ -44,9 +46,9 @@ const model = createModel(
       GET_VC_RESPONSE: (vc: VC) => ({ vc }),
       VERIFY: () => ({}),
       LOCK_VC: () => ({}),
-      UNLOCK_VC: () => ({}),
       INPUT_OTP: (otp: string) => ({ otp }),
       REFRESH: () => ({}),
+      REVOKE_VC: () => ({}),
     },
   }
 );
@@ -157,8 +159,8 @@ export const vcItemMachine =
             LOCK_VC: {
               target: 'requestingOtp',
             },
-            UNLOCK_VC: {
-              target: 'requestingOtp',
+            REVOKE_VC: {
+              target: 'acceptingRevokeInput',
             },
           },
         },
@@ -228,28 +230,54 @@ export const vcItemMachine =
           },
         },
         requestingOtp: {
-          entry: 'setTransactionId',
           invoke: {
             src: 'requestOtp',
             onDone: [
               {
+                actions: [log('accepting OTP')],
                 target: 'acceptingOtpInput',
               },
             ],
             onError: [
               {
+                actions: [log('error OTP')],
                 target: '#vc-item.invalid.backend',
               },
             ],
           },
         },
         acceptingOtpInput: {
-          entry: 'clearOtp',
+          entry: ['clearOtp', 'setTransactionId'],
           on: {
-            INPUT_OTP: {
-              actions: 'setOtp',
-              target: 'requestingLock',
+            INPUT_OTP: [
+              {
+                actions: [
+                  log('setting OTP lock'),
+                  'setTransactionId',
+                  'setOtp',
+                ],
+                target: 'requestingLock',
+              },
+            ],
+            DISMISS: {
+              actions: ['clearOtp', 'clearTransactionId'],
+              target: 'idle',
             },
+          },
+        },
+        acceptingRevokeInput: {
+          entry: [log('acceptingRevokeInput'), 'clearOtp', 'setTransactionId'],
+          on: {
+            INPUT_OTP: [
+              {
+                actions: [
+                  log('setting OTP revoke'),
+                  'setTransactionId',
+                  'setOtp',
+                ],
+                target: 'requestingRevoke',
+              },
+            ],
             DISMISS: {
               actions: ['clearOtp', 'clearTransactionId'],
               target: 'idle',
@@ -274,9 +302,42 @@ export const vcItemMachine =
           },
         },
         lockingVc: {
-          entry: 'storeLock',
+          entry: ['storeLock'],
           on: {
             STORE_RESPONSE: {
+              target: 'idle',
+            },
+          },
+        },
+        requestingRevoke: {
+          invoke: {
+            src: 'requestRevoke',
+            onDone: [
+              {
+                actions: [log('doneRevoking'), 'setRevoke'],
+                target: 'revokingVc',
+              },
+            ],
+            onError: [
+              {
+                actions: [log('OTP error'), 'setOtpError'],
+                target: 'acceptingOtpInput',
+              },
+            ],
+          },
+        },
+        revokingVc: {
+          entry: ['revokeVID'],
+          on: {
+            STORE_RESPONSE: {
+              target: 'loggingRevoke',
+            },
+          },
+        },
+        loggingRevoke: {
+          entry: [log('loggingRevoke'), 'logRevoked'],
+          on: {
+            DISMISS: {
               target: 'idle',
             },
           },
@@ -356,6 +417,32 @@ export const vcItemMachine =
           }
         ),
 
+        logRevoked: send(
+          (context) =>
+            ActivityLogEvents.LOG_ACTIVITY({
+              _vcKey: VC_ITEM_STORE_KEY(context),
+              action: 'revoked',
+              timestamp: Date.now(),
+              deviceName: '',
+              vcLabel: context.tag || context.id,
+            }),
+          {
+            to: (context) => context.serviceRefs.activityLog,
+          }
+        ),
+
+        revokeVID: send(
+          (context) => {
+            return StoreEvents.REMOVE(
+              MY_VCS_STORE_KEY,
+              VC_ITEM_STORE_KEY(context)
+            );
+          },
+          {
+            to: (context) => context.serviceRefs.store,
+          }
+        ),
+
         markVcValid: assign((context) => {
           return {
             ...context,
@@ -383,6 +470,10 @@ export const vcItemMachine =
 
         setLock: assign({
           locked: (context) => !context.locked,
+        }),
+
+        setRevoke: assign({
+          revoked: () => true,
         }),
 
         storeLock: send(
@@ -497,6 +588,20 @@ export const vcItemMachine =
           }
           return response.response;
         },
+
+        requestRevoke: async (context) => {
+          try {
+            return request('PATCH', `/vid/${context.id}`, {
+              transactionID: context.transactionId,
+              vidStatus: 'REVOKED',
+              individualId: context.id,
+              individualIdType: 'VID',
+              otp: context.otp,
+            });
+          } catch (error) {
+            console.error(error);
+          }
+        },
       },
 
       guards: {
@@ -579,8 +684,20 @@ export function selectIsLockingVc(state: State) {
   return state.matches('lockingVc');
 }
 
+export function selectIsRevokingVc(state: State) {
+  return state.matches('revokingVc');
+}
+
+export function selectIsLoggingRevoke(state: State) {
+  return state.matches('loggingRevoke');
+}
+
 export function selectIsAcceptingOtpInput(state: State) {
   return state.matches('acceptingOtpInput');
+}
+
+export function selectIsAcceptingRevokeInput(state: State) {
+  return state.matches('acceptingRevokeInput');
 }
 
 export function selectIsRequestingOtp(state: State) {

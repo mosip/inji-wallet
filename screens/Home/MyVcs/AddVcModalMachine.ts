@@ -299,6 +299,9 @@ export const AddVcModalMachine =
         },
 
         requestCredential: async (context) => {
+          // force wait to fix issue with hanging overlay
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+
           const response = await request('POST', '/credentialshare/request', {
             individualId: context.id,
             individualIdType: context.idType,
@@ -312,7 +315,11 @@ export const AddVcModalMachine =
       guards: {
         isEmptyId: ({ id }) => !id || !id.length,
 
-        isWrongIdFormat: ({ id }) => !/^\d{10,16}$/.test(id),
+        isWrongIdFormat: ({ idType, id }) => {
+          const validIdType =
+            idType === 'UIN' ? id.length === 10 : id.length === 16;
+          return !(/^\d{10,16}$/.test(id) && validIdType);
+        },
 
         isIdInvalid: (_context, event: unknown) =>
           ['IDA-MLC-009', 'RES-SER-29', 'IDA-MLC-018'].includes(

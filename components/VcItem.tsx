@@ -29,37 +29,17 @@ const VerifiedIcon: React.FC = () => {
 };
 
 const getDetails = (arg1, arg2, verifiableCredential) => {
-  if (arg1 === 'Full Name') {
-    return (
-      <Column>
-        <Text color={Theme.Colors.DetailsLabel} size="smaller">
-          {arg1}
-        </Text>
-        <Text
-          color={Theme.Colors.Details}
-          numLines={1}
-          weight="bold"
-          size="smaller"
-          style={
-            !verifiableCredential
-              ? Theme.Styles.loadingTitle
-              : Theme.Styles.subtitle
-          }>
-          {!verifiableCredential ? '' : arg2}
-        </Text>
-      </Column>
-    );
-  }
   if (arg1 === 'Status') {
     return (
       <Column>
-        <Text size="smaller" color={Theme.Colors.DetailsLabel}>
+        <Text weight="bold" size="smaller" color={Theme.Colors.DetailsLabel}>
           {arg1}
         </Text>
         <Row>
           <Text
-            weight="bold"
+            numLines={1}
             color={Theme.Colors.Details}
+            weight="bold"
             size="smaller"
             style={
               !verifiableCredential
@@ -75,7 +55,7 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
   } else {
     return (
       <Column>
-        <Text color={Theme.Colors.DetailsLabel} size="smaller">
+        <Text color={Theme.Colors.DetailsLabel} weight="bold" size="smaller">
           {arg1}
         </Text>
         <Text
@@ -145,6 +125,25 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
             : Theme.Styles.backgroundImageContainer
         }>
         <Row style={Theme.Styles.homeCloseCardDetailsHeader}>
+          <Column>
+            <Text
+              color={Theme.Colors.DetailsLabel}
+              weight="bold"
+              size="smaller">
+              {t('idType')}
+            </Text>
+            <Text
+              weight="bold"
+              color={Theme.Colors.Details}
+              size="smaller"
+              style={
+                !verifiableCredential
+                  ? Theme.Styles.loadingTitle
+                  : Theme.Styles.subtitle
+              }>
+              {t('nationalCard')}
+            </Text>
+          </Column>
           <Image
             source={Theme.MosipLogo}
             style={Theme.Styles.logo}
@@ -170,7 +169,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
               style={Theme.Styles.closeCardImage}
             />
 
-            <Column margin="0 0 0 10">
+            <Column margin="0 0 0 25">
               {getDetails(t('fullName'), fullName, verifiableCredential)}
               {!verifiableCredential
                 ? getDetails(

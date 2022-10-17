@@ -5,6 +5,11 @@
     "deviceRefNumber": "Device reference number",
     "name": "Name"
   },
+  "OIDcAuth": {
+    "title": "OIDC Authentication",
+    "text": "To be replaced with the OIDC provider UI",
+    "verify": "Verify"
+  },
   "PasscodeVerify": {
     "passcodeMismatchError": "Passcode did not match."
   },
@@ -13,6 +18,8 @@
     "allowCameraButton": "Allow access to camera"
   },
   "VcDetails": {
+    "idType":"ID type",
+    "nationalCard":"National Identity Card",
     "generatedOn": "Generated on",
     "uin":"UIN",
     "vid":"VID",
@@ -40,7 +47,7 @@
     }
   },
   "BiometricScreen": {
-    "unlock": "Unlock with fingerprint"
+    "unlock": "Unlock with biometrics"
   },
   "HistoryTab": {
     "noHistory": "No history available yet",
@@ -124,13 +131,21 @@
     "noReceivedVcsText": "Tap on Request below to receive {{vcLabel}}"
   },
   "ViewVcModal": {
+    "cancel": "Cancel",
     "lock": "Lock",
     "unlock": "Unlock",
     "rename": "Rename",
     "delete": "Delete",
     "revoke": "Revoke",
+    "revoking": "Your wallet contains a credential with VID {{vid}}. Revoking this will automatically remove the same from the wallet. Are you sure you want to proceed?",
     "requestingOtp": "Requesting OTP...",
-    "editTag": "Edit Tag"
+    "editTag": "Rename",
+    "redirecting": "Redirecting...",
+    "success": {
+      "unlocked": "{{vcLabel}} successfully unlocked",
+      "locked": "{{vcLabel}} successfully locked",
+      "revoked": "VID {{vid}} has been revoked. Any credential containing the same will be removed automatically from the wallet"
+    }
   },
   "MainLayout": {
     "home": "Home",
@@ -154,7 +169,13 @@
     "bioUnlock": "Biometric unlock",
     "authFactorUnlock": "Unlock auth factor",
     "credits": "Credits and legal notices",
-    "logout": "Log-out"
+    "logout": "Log-out",
+    "revokeLabel": "Revoke VID",
+    "revokeHeader": "REVOKE VID",
+    "revokingVids": "You are about to revoke ({{count}}) VIDs.",
+    "revokingVidsAfter": "This means you will no longer be able to use or view any of the IDs linked to those VID(s). \nAre you sure you want to proceed?",
+    "empty": "Empty",
+    "revokeSuccessful": "VID successfully revoked"
   },
   "ReceiveVcScreen": {
     "header": "{{vcLabel}} details",
@@ -180,8 +201,14 @@
         "message": "The connection was interrupted. Please try again."
       },
       "waitingConnection": "Waiting for connection...",
-      "exchangingDeviceInfo": "Exchanging device info...",
-      "connected": "Connected to device. Waiting for {{vcLabel}}..."
+      "exchangingDeviceInfo": {
+        "message": "Exchanging device info...",
+        "timeoutHint": "It's taking too long to exchange device info..."
+      },
+      "connected": {
+        "message": "Connected to device. Waiting for {{vcLabel}}...",
+        "timeoutHint": "No VC data received yet. Is sending device still connected?"
+      }
     },
     "online": "Online",
     "offline": "Offline",
@@ -192,10 +219,6 @@
     "noShareableVcs": "No shareable {{vcLabel}} are available.",
     "sharingVc": "Sharing {{vcLabel}}",
     "errors": {
-      "flightMode": {
-        "message": "Flight mode must be disabled for the scanning functionality",
-        "button": "Disable flight mode"
-      },
       "locationDisabled": {
         "message": "Location services must be enabled for the scanning functionality",
         "button": "Enable location services"
@@ -207,30 +230,42 @@
     },
     "status": {
       "connecting": "Connecting...",
+      "connectingTimeout": "It's taking a while to establish connection. Is the other device open for connections?",
       "exchangingDeviceInfo": "Exchanging device info...",
+      "exchangingDeviceInfoTimeout": "It's taking a while to exchange device info. You may have to reconnect.",
       "invalid": "Invalid QR Code"
     }
   },
   "SelectVcOverlay": {
     "header": "Share {{vcLabel}}",
     "chooseVc": "Choose the {{vcLabel}} you'd like to share with",
-    "cancel": "Cancel",
-    "share": "Share"
+    "share": "Share",
+    "verifyAndShare": "Verify Identity & Share"
   },
-  "SendVcModal": {
+  "SendVcScreen": {
     "reasonForSharing": "Reason for sharing (optional)",
     "acceptRequest": "Accept request and choose {{vcLabel}}",
     "reject": "Reject",
-    "statusSharing": {
-      "title": "Sharing..."
+    "status": {
+      "sharing": {
+        "title": "Sharing...",
+        "timeoutHint": "It's taking a while to share VC. There could be a problem with the connection."
+      },
+      "accepted": {
+        "title": "Success!",
+        "message": "Your {{vcLabel}} has been successfully shared with {{receiver}}"
+      },
+      "rejected": {
+        "title": "Notice",
+        "message": "Your {{vcLabel}} was rejected by {{receiver}}"
+      },
+      "verifyingIdentity": "Verifying identity..."
     },
-    "statusAccepted": {
-      "title": "Success!",
-      "message": "Your {{vcLabel}} has been successfully shared with {{receiver}}"
-    },
-    "statusRejected": {
-      "title": "Notice",
-      "message": "Your {{vcLabel}} was rejected by {{receiver}}"
+    "errors": {
+      "invalidIdentity": {
+        "title": "Unable to verify identity",
+        "message": "An error occured and we couldn't scan your portrait. Try again, make sure your face is visible, devoid of any accessories."
+      }
     }
   },
   "WelcomeScreen": {
@@ -241,6 +276,7 @@
   "common": {
     "cancel": "Cancel",
     "save": "Save",
-    "editLabel": "Edit {{label}}"
+    "editLabel": "Edit {{label}}",
+    "tryAgain": "Try again"
   }
 }

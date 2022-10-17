@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Dimensions, StyleSheet } from 'react-native';
 import { Overlay } from 'react-native-elements/dist/overlay/Overlay';
-import { Button, Column, Row, Text } from '../../components/ui';
+import { Button, Column, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { VcItem } from '../../components/VcItem';
 import {
@@ -47,21 +47,25 @@ export const SelectVcOverlay: React.FC<SelectVcOverlayProps> = (props) => {
             />
           ))}
         </Column>
-        <Row margin="16 0 0 0">
-          <Button
-            fill
-            type="clear"
-            title={t('cancel')}
-            onPress={() => props.onCancel()}
-            margin="0 8 0 0"
-          />
-          <Button
-            fill
-            title={t('share')}
-            disabled={controller.selectedIndex == null}
-            onPress={controller.onSelect}
-          />
-        </Row>
+        <Button
+          title={t('share')}
+          disabled={controller.selectedIndex == null}
+          onPress={controller.onSelect}
+          margin="8 0 0 0"
+        />
+        <Button
+          type="outline"
+          title={t('verifyAndShare')}
+          disabled={controller.selectedIndex == null}
+          onPress={controller.onVerifyAndSelect}
+          margin="8 0 0 0"
+        />
+        <Button
+          type="clear"
+          title={t('common:cancel')}
+          onPress={props.onCancel}
+          margin="8 0 0 0"
+        />
       </Column>
     </Overlay>
   );

@@ -21,7 +21,8 @@ const model = createModel(
       SET: (key: string, value: unknown) => ({ key, value }),
       APPEND: (key: string, value: unknown) => ({ key, value }),
       PREPEND: (key: string, value: unknown) => ({ key, value }),
-      REMOVE: (key: string) => ({ key }),
+      REMOVE: (key: string, value: string) => ({ key, value }),
+      REMOVE_ITEMS: (key: string, values: string[]) => ({ key, values }),
       CLEAR: () => ({}),
       ERROR: (error: Error) => ({ error }),
       STORE_RESPONSE: (response?: unknown, requester?: string) => ({
@@ -116,6 +117,9 @@ export const storeMachine =
             REMOVE: {
               actions: 'forwardStoreRequest',
             },
+            REMOVE_ITEMS: {
+              actions: 'forwardStoreRequest',
+            },
             CLEAR: {
               actions: 'forwardStoreRequest',
             },
@@ -200,7 +204,21 @@ export const storeMachine =
                   break;
                 }
                 case 'REMOVE': {
-                  await removeItem(event.key);
+                  await removeItem(
+                    event.key,
+                    event.value,
+                    context.encryptionKey
+                  );
+                  response = event.value;
+                  break;
+                }
+                case 'REMOVE_ITEMS': {
+                  await removeItems(
+                    event.key,
+                    event.values,
+                    context.encryptionKey
+                  );
+                  response = event.values;
                   break;
                 }
                 case 'CLEAR': {
@@ -280,6 +298,7 @@ export async function getItem(
     const data = await AsyncStorage.getItem(key);
     if (data != null) {
       const decrypted = decryptJson(encryptionKey, data);
+
       return JSON.parse(decrypted);
     } else {
       return defaultValue;
@@ -310,19 +329,63 @@ export async function prependItem(
 ) {
   try {
     const list = await getItem(key, [], encryptionKey);
+    const newList = Array.isArray(value)
+      ? [...value, ...list]
+      : [value, ...list];
 
-    await setItem(key, [value, ...list], encryptionKey);
+    await setItem(key, newList, encryptionKey);
   } catch (e) {
     console.error('error prependItem:', e);
     throw e;
   }
 }
 
-export async function removeItem(key: string) {
+export async function removeItem(
+  key: string,
+  value: string,
+  encryptionKey: string
+) {
   try {
-    await AsyncStorage.removeItem(key);
+    const data = await AsyncStorage.getItem(key);
+    const decrypted = decryptJson(encryptionKey, data);
+    const list = JSON.parse(decrypted);
+    const vcKeyArray = value.split(':');
+    const finalVcKeyArray = vcKeyArray.pop();
+    const finalVcKey = vcKeyArray.join(':');
+    console.log('finalVcKeyArray', finalVcKeyArray);
+    const newList = list.filter((vc: string) => {
+      return !vc.includes(finalVcKey);
+    });
+
+    await setItem(key, newList, encryptionKey);
   } catch (e) {
     console.error('error removeItem:', e);
+    throw e;
+  }
+}
+
+export async function removeItems(
+  key: string,
+  values: string[],
+  encryptionKey: string
+) {
+  try {
+    const data = await AsyncStorage.getItem(key);
+    const decrypted = decryptJson(encryptionKey, data);
+    const list = JSON.parse(decrypted);
+    const newList = list.filter(function (vc: string) {
+      return !values.find(function (vcKey: string) {
+        const vcKeyArray = vcKey.split(':');
+        const finalVcKeyArray = vcKeyArray.pop();
+        console.log('finalVcKeyArray', finalVcKeyArray);
+        const finalVcKey = vcKeyArray.join(':');
+        return vc.includes(finalVcKey);
+      });
+    });
+
+    await setItem(key, newList, encryptionKey);
+  } catch (e) {
+    console.error('error removeItems:', e);
     throw e;
   }
 }

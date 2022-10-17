@@ -2,15 +2,12 @@ import SmartshareReactNative from '@idpass/smartshare-react-native';
 import { ConnectionParams } from '@idpass/smartshare-react-native/lib/typescript/IdpassSmartshare';
 const { IdpassSmartshare, GoogleNearbyMessages } = SmartshareReactNative;
 
-// import LocationEnabler from 'react-native-location-enabler';
-const LocationEnabler = {} as any;
-import SystemSetting from 'react-native-system-setting';
 import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { EmitterSubscription, Linking, Platform } from 'react-native';
 import { DeviceInfo } from '../components/DeviceInfoList';
 import { getDeviceNameSync } from 'react-native-device-info';
-import { VC } from '../types/vc';
+import { VC, VerifiablePresentation } from '../types/vc';
 import { AppServices } from '../shared/GlobalContext';
 import { ActivityLogEvents } from './activityLog';
 import {
@@ -29,10 +26,11 @@ import {
   SendVcStatus,
 } from '../shared/smartshare';
 import { check, PERMISSIONS, PermissionStatus } from 'react-native-permissions';
+import { checkLocation, requestLocation } from '../shared/location';
+import { CameraCapturedPicture } from 'expo-camera';
 
-const checkingAirplaneMode = '#checkingAirplaneMode';
-const checkingLocationService = '#checkingLocationService';
-const findingConnection = '#scan.findingConnection';
+const findingConnectionId = '#scan.findingConnection';
+const checkingLocationServiceId = '#checkingLocationService';
 
 type SharingProtocol = 'OFFLINE' | 'ONLINE';
 
@@ -46,12 +44,8 @@ const model = createModel(
     selectedVc: {} as VC,
     reason: '',
     loggers: [] as EmitterSubscription[],
-    locationConfig: {
-      // priority: LocationEnabler.PRIORITIES.BALANCED_POWER_ACCURACY,
-      alwaysShow: false,
-      needBle: true,
-    },
     vcName: '',
+    verificationImage: {} as CameraCapturedPicture,
     sharingProtocol: 'OFFLINE' as SharingProtocol,
     scannedQrParams: {} as ConnectionParams,
   },
@@ -73,13 +67,15 @@ const model = createModel(
       UPDATE_REASON: (reason: string) => ({ reason }),
       LOCATION_ENABLED: () => ({}),
       LOCATION_DISABLED: () => ({}),
-      FLIGHT_ENABLED: () => ({}),
-      FLIGHT_DISABLED: () => ({}),
-      FLIGHT_REQUEST: () => ({}),
       LOCATION_REQUEST: () => ({}),
       UPDATE_VC_NAME: (vcName: string) => ({ vcName }),
       STORE_RESPONSE: (response: unknown) => ({ response }),
       APP_ACTIVE: () => ({}),
+      VERIFY_AND_SELECT_VC: (vc: VC) => ({ vc }),
+      FACE_VALID: () => ({}),
+      FACE_INVALID: () => ({}),
+      RETRY_VERIFICATION: () => ({}),
+      VP_CREATED: (vp: VerifiablePresentation) => ({ vp }),
     },
   }
 );
@@ -100,41 +96,11 @@ export const scanMachine = model.createMachine(
     },
     on: {
       SCREEN_BLUR: 'inactive',
-      SCREEN_FOCUS: 'checkingAirplaneMode',
+      SCREEN_FOCUS: 'checkingLocationService',
     },
     states: {
       inactive: {
         entry: ['removeLoggers'],
-      },
-      checkingAirplaneMode: {
-        id: 'checkingAirplaneMode',
-        on: {
-          APP_ACTIVE: '.checkingStatus',
-        },
-        initial: 'checkingStatus',
-        states: {
-          checkingStatus: {
-            invoke: {
-              src: 'checkAirplaneMode',
-            },
-            on: {
-              FLIGHT_DISABLED: checkingLocationService,
-              FLIGHT_ENABLED: 'enabled',
-            },
-          },
-          requestingToDisable: {
-            entry: ['requestToDisableFlightMode'],
-            on: {
-              FLIGHT_DISABLED: checkingLocationService,
-            },
-          },
-          enabled: {
-            on: {
-              FLIGHT_REQUEST: 'requestingToDisable',
-              FLIGHT_DISABLED: checkingLocationService,
-            },
-          },
-        },
       },
       checkingLocationService: {
         id: 'checkingLocationService',
@@ -147,7 +113,6 @@ export const scanMachine = model.createMachine(
             on: {
               LOCATION_ENABLED: 'checkingPermission',
               LOCATION_DISABLED: 'requestingToEnable',
-              FLIGHT_ENABLED: checkingAirplaneMode,
             },
           },
           requestingToEnable: {
@@ -205,7 +170,6 @@ export const scanMachine = model.createMachine(
             },
             { target: 'invalid' },
           ],
-          FLIGHT_ENABLED: checkingAirplaneMode,
         },
       },
       preparingToConnect: {
@@ -224,6 +188,23 @@ export const scanMachine = model.createMachine(
         on: {
           CONNECTED: 'exchangingDeviceInfo',
         },
+        initial: 'inProgress',
+        states: {
+          inProgress: {},
+          timeout: {
+            on: {
+              CANCEL: {
+                actions: 'disconnect',
+                target: checkingLocationServiceId,
+              },
+            },
+          },
+        },
+        after: {
+          CONNECTION_TIMEOUT: {
+            target: '.timeout',
+          },
+        },
       },
       exchangingDeviceInfo: {
         invoke: {
@@ -234,6 +215,23 @@ export const scanMachine = model.createMachine(
           EXCHANGE_DONE: {
             target: 'reviewing',
             actions: ['setReceiverInfo'],
+          },
+        },
+        initial: 'inProgress',
+        states: {
+          inProgress: {},
+          timeout: {
+            on: {
+              CANCEL: {
+                actions: 'disconnect',
+                target: checkingLocationServiceId,
+              },
+            },
+          },
+        },
+        after: {
+          CONNECTION_TIMEOUT: {
+            target: '.timeout',
           },
         },
       },
@@ -251,14 +249,18 @@ export const scanMachine = model.createMachine(
           idle: {
             on: {
               ACCEPT_REQUEST: 'selectingVc',
-              DISCONNECT: findingConnection,
+              DISCONNECT: findingConnectionId,
             },
           },
           selectingVc: {
             on: {
-              DISCONNECT: findingConnection,
+              DISCONNECT: findingConnectionId,
               SELECT_VC: {
                 target: 'sendingVc',
+                actions: ['setSelectedVc'],
+              },
+              VERIFY_AND_SELECT_VC: {
+                target: 'verifyingUserIdentity',
                 actions: ['setSelectedVc'],
               },
               CANCEL: 'idle',
@@ -269,9 +271,26 @@ export const scanMachine = model.createMachine(
               src: 'sendVc',
             },
             on: {
-              DISCONNECT: findingConnection,
+              DISCONNECT: findingConnectionId,
               VC_ACCEPTED: 'accepted',
               VC_REJECTED: 'rejected',
+            },
+            initial: 'inProgress',
+            states: {
+              inProgress: {},
+              timeout: {
+                on: {
+                  CANCEL: {
+                    actions: 'disconnect',
+                    target: checkingLocationServiceId,
+                  },
+                },
+              },
+            },
+            after: {
+              CONNECTION_TIMEOUT: {
+                target: '.timeout',
+              },
             },
           },
           accepted: {
@@ -283,10 +302,28 @@ export const scanMachine = model.createMachine(
           rejected: {},
           cancelled: {},
           navigatingToHome: {},
+          verifyingUserIdentity: {
+            on: {
+              FACE_VALID: {
+                target: 'sendingVc',
+              },
+              FACE_INVALID: {
+                target: 'invalidUserIdentity',
+              },
+              CANCEL: 'selectingVc',
+            },
+          },
+          invalidUserIdentity: {
+            on: {
+              DISMISS: 'selectingVc',
+              RETRY_VERIFICATION: 'verifyingUserIdentity',
+            },
+          },
         },
         exit: ['disconnect', 'clearReason'],
       },
       disconnected: {
+        id: 'disconnected',
         on: {
           DISMISS: 'findingConnection',
         },
@@ -306,17 +343,7 @@ export const scanMachine = model.createMachine(
         senderInfo: (_, event) => event.info,
       }),
 
-      requestToEnableLocation: (context) => {
-        LocationEnabler?.requestResolutionSettings(context.locationConfig);
-      },
-
-      requestToDisableFlightMode: () => {
-        if (Platform.OS === 'android') {
-          SystemSetting.switchAirplane();
-        } else {
-          Linking.openURL('App-prefs:root=AIRPLANE_MODE');
-        }
-      },
+      requestToEnableLocation: () => requestLocation(),
 
       disconnect: (context) => {
         try {
@@ -409,9 +436,7 @@ export const scanMachine = model.createMachine(
         { to: (context) => context.serviceRefs.activityLog }
       ),
 
-      openSettings: () => {
-        Linking.openSettings();
-      },
+      openSettings: () => Linking.openSettings(),
     },
 
     services: {
@@ -424,21 +449,8 @@ export const scanMachine = model.createMachine(
           if (Platform.OS === 'android') {
             response = await check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
           } else if (Platform.OS === 'ios') {
-            callback(model.events.LOCATION_ENABLED());
-            return;
-            // response = await check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+            return callback(model.events.LOCATION_ENABLED());
           }
-
-          // const response = await PermissionsAndroid.request(
-          //   PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-          //   {
-          //     title: 'Location access',
-          //     message:
-          //       'Location access is required for the scanning functionality.',
-          //     buttonNegative: 'Cancel',
-          //     buttonPositive: 'OK',
-          //   }
-          // );
 
           if (response === 'granted') {
             callback(model.events.LOCATION_ENABLED());
@@ -463,26 +475,10 @@ export const scanMachine = model.createMachine(
       },
 
       checkLocationStatus: () => (callback) => {
-        // const listener = LocationEnabler.addListener(({ locationEnabled }) => {
-        //   if (locationEnabled) {
-        //     callback(model.events.LOCATION_ENABLED());
-        //   } else {
-        //     callback(model.events.LOCATION_DISABLED());
-        //   }
-        // });
-        // LocationEnabler.checkSettings(context.locationConfig);
-        // return () => listener.remove();
-        callback(model.events.LOCATION_ENABLED());
-      },
-
-      checkAirplaneMode: () => (callback) => {
-        SystemSetting.isAirplaneEnabled().then((enable) => {
-          if (enable) {
-            callback(model.events.FLIGHT_ENABLED());
-          } else {
-            callback(model.events.FLIGHT_DISABLED());
-          }
-        });
+        checkLocation(
+          () => callback(model.events.LOCATION_ENABLED()),
+          () => callback(model.events.LOCATION_DISABLED())
+        );
       },
 
       discoverDevice: (context) => (callback) => {
@@ -563,7 +559,6 @@ export const scanMachine = model.createMachine(
         };
 
         if (context.sharingProtocol === 'OFFLINE') {
-          console.log('OFFLINE?!');
           const event: SendVcEvent = {
             type: 'send-vc',
             data: { isChunked: false, vc },
@@ -604,6 +599,9 @@ export const scanMachine = model.createMachine(
 
     delays: {
       CLEAR_DELAY: 250,
+      CONNECTION_TIMEOUT: () => {
+        return (Platform.OS === 'ios' ? 15 : 5) * 1000;
+      },
     },
   }
 );
@@ -629,16 +627,28 @@ export function selectVcName(state: State) {
   return state.context.vcName;
 }
 
+export function selectSelectedVc(state: State) {
+  return state.context.selectedVc;
+}
+
 export function selectIsScanning(state: State) {
   return state.matches('findingConnection');
 }
 
 export function selectIsConnecting(state: State) {
-  return state.matches('connecting');
+  return state.matches('connecting.inProgress');
+}
+
+export function selectIsConnectingTimeout(state: State) {
+  return state.matches('connecting.timeout');
 }
 
 export function selectIsExchangingDeviceInfo(state: State) {
-  return state.matches('exchangingDeviceInfo');
+  return state.matches('exchangingDeviceInfo.inProgress');
+}
+
+export function selectIsExchangingDeviceInfoTimeout(state: State) {
+  return state.matches('exchangingDeviceInfo.timeout');
 }
 
 export function selectIsReviewing(state: State) {
@@ -650,7 +660,11 @@ export function selectIsSelectingVc(state: State) {
 }
 
 export function selectIsSendingVc(state: State) {
-  return state.matches('reviewing.sendingVc');
+  return state.matches('reviewing.sendingVc.inProgress');
+}
+
+export function selectIsSendingVcTimeout(state: State) {
+  return state.matches('reviewing.sendingVc.timeout');
 }
 
 export function selectIsAccepted(state: State) {
@@ -673,15 +687,22 @@ export function selectIsLocationDisabled(state: State) {
   return state.matches('checkingLocationService.disabled');
 }
 
-export function selectIsAirplaneEnabled(state: State) {
-  return state.matches('checkingAirplaneMode.enabled');
+export function selectIsDone(state: State) {
+  return state.matches('reviewing.navigatingToHome');
+}
+
+export function selectIsVerifyingUserIdentity(state: State) {
+  return state.matches('reviewing.verifyingUserIdentity');
+}
+
+export function selectIsInvalidUserIdentity(state: State) {
+  return state.matches('reviewing.invalidUserIdentity');
 }
 
 async function sendVc(vc: VC, callback: (status: SendVcStatus) => void) {
   const rawData = JSON.stringify(vc);
   const chunks = chunkString(rawData, GNM_MESSAGE_LIMIT);
   if (chunks.length > 1) {
-    console.log('CHUNKED!', chunks.length);
     let chunk = 0;
     const vcChunk = {
       total: chunks.length,
@@ -700,7 +721,6 @@ async function sendVc(vc: VC, callback: (status: SendVcStatus) => void) {
       SendVcResponseType,
       async (status) => {
         if (typeof status === 'number' && chunk < event.data.vcChunk.total) {
-          console.log(SendVcResponseType, chunk, chunks[chunk].length);
           chunk += 1;
           await GoogleNearbyMessages.unpublish();
           await onlineSend({
@@ -723,7 +743,6 @@ async function sendVc(vc: VC, callback: (status: SendVcStatus) => void) {
     );
     await onlineSend(event);
   } else {
-    console.log('UNCHUNKED');
     const event: SendVcEvent = {
       type: 'send-vc',
       data: { isChunked: false, vc },

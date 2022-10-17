@@ -2,12 +2,6 @@
 
 export interface Typegen0 {
   '@@xstate/typegen': true;
-  'eventsCausingActions': {
-    setActivities: 'STORE_RESPONSE';
-    prependActivity: 'STORE_RESPONSE';
-    loadActivities: 'REFRESH';
-    storeActivity: 'LOG_ACTIVITY';
-  };
   'internalEvents': {
     'xstate.init': { type: 'xstate.init' };
   };
@@ -17,6 +11,12 @@ export interface Typegen0 {
     services: never;
     guards: never;
     delays: never;
+  };
+  'eventsCausingActions': {
+    loadActivities: 'REFRESH' | 'xstate.init';
+    prependActivity: 'STORE_RESPONSE';
+    setActivities: 'STORE_RESPONSE';
+    storeActivity: 'LOG_ACTIVITY';
   };
   'eventsCausingServices': {};
   'eventsCausingGuards': {};
