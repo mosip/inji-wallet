@@ -4,7 +4,7 @@ import * as DateFnsLocale from '../lib/date-fns/locale';
 import { useTranslation } from 'react-i18next';
 import { Image, ImageBackground } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { VC, CredentialSubject } from '../types/vc';
+import { VC, CredentialSubject, LocalizedField } from '../types/vc';
 import { Column, Row, Text } from './ui';
 import { Theme } from './ui/styleUtils';
 import { TextItem } from './ui/TextItem';
@@ -243,11 +243,6 @@ interface VcDetailsProps {
   vc: VC;
 }
 
-interface LocalizedField {
-  language: string;
-  value: string;
-}
-
 function getFullAddress(credential: CredentialSubject) {
   if (!credential) {
     return '';
@@ -269,7 +264,7 @@ function getFullAddress(credential: CredentialSubject) {
     .join(', ');
 }
 
-function getLocalizedField(rawField: string | LocalizedField) {
+function getLocalizedField(rawField: string | LocalizedField[]) {
   if (typeof rawField === 'string') {
     return rawField;
   }

@@ -2,18 +2,6 @@
 
 export interface Typegen0 {
   '@@xstate/typegen': true;
-  'eventsCausingActions': {
-    setMyVcs: 'STORE_RESPONSE';
-    setReceivedVcs: 'STORE_RESPONSE';
-    getReceivedVcsResponse: 'GET_RECEIVED_VCS';
-    getVcItemResponse: 'GET_VC_ITEM';
-    prependToMyVcs: 'VC_ADDED';
-    setDownloadedVc: 'VC_DOWNLOADED';
-    moveExistingVcToTop: 'VC_RECEIVED';
-    prependToReceivedVcs: 'VC_RECEIVED';
-    loadMyVcs: 'REFRESH_MY_VCS';
-    loadReceivedVcs: 'STORE_RESPONSE' | 'REFRESH_RECEIVED_VCS';
-  };
   'internalEvents': {
     'xstate.init': { type: 'xstate.init' };
   };
@@ -23,6 +11,18 @@ export interface Typegen0 {
     services: never;
     guards: never;
     delays: never;
+  };
+  'eventsCausingActions': {
+    getReceivedVcsResponse: 'GET_RECEIVED_VCS';
+    getVcItemResponse: 'GET_VC_ITEM';
+    loadMyVcs: 'REFRESH_MY_VCS' | 'xstate.init';
+    loadReceivedVcs: 'REFRESH_RECEIVED_VCS' | 'STORE_RESPONSE';
+    moveExistingVcToTop: 'VC_RECEIVED';
+    prependToMyVcs: 'VC_ADDED';
+    prependToReceivedVcs: 'VC_RECEIVED';
+    setDownloadedVc: 'VC_DOWNLOADED';
+    setMyVcs: 'STORE_RESPONSE';
+    setReceivedVcs: 'STORE_RESPONSE';
   };
   'eventsCausingServices': {};
   'eventsCausingGuards': {

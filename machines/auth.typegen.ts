@@ -2,13 +2,6 @@
 
 export interface Typegen0 {
   '@@xstate/typegen': true;
-  'eventsCausingActions': {
-    setContext: 'STORE_RESPONSE';
-    setPasscode: 'SETUP_PASSCODE';
-    storeContext: 'SETUP_PASSCODE' | 'SETUP_BIOMETRICS' | 'STORE_RESPONSE';
-    setBiometrics: 'SETUP_BIOMETRICS';
-    requestStoredContext: 'xstate.init';
-  };
   'internalEvents': {
     '': { type: '' };
     'xstate.init': { type: 'xstate.init' };
@@ -20,19 +13,26 @@ export interface Typegen0 {
     guards: never;
     delays: never;
   };
+  'eventsCausingActions': {
+    requestStoredContext: 'xstate.init';
+    setBiometrics: 'SETUP_BIOMETRICS';
+    setContext: 'STORE_RESPONSE';
+    setPasscode: 'SETUP_PASSCODE';
+    storeContext: 'SETUP_BIOMETRICS' | 'SETUP_PASSCODE' | 'STORE_RESPONSE';
+  };
   'eventsCausingServices': {};
   'eventsCausingGuards': {
+    hasBiometricSet: '';
     hasData: 'STORE_RESPONSE';
     hasPasscodeSet: '';
-    hasBiometricSet: '';
   };
   'eventsCausingDelays': {};
   'matchesStates':
+    | 'authorized'
+    | 'checkingAuth'
     | 'init'
     | 'savingDefaults'
-    | 'checkingAuth'
     | 'settingUp'
-    | 'unauthorized'
-    | 'authorized';
+    | 'unauthorized';
   'tags': never;
 }

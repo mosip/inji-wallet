@@ -30,7 +30,7 @@ export const AddVcModal: React.FC<AddVcModalProps> = (props) => {
       <MessageOverlay
         isVisible={controller.isRequestingCredential}
         title={t('requestingCredential')}
-        hasProgress
+        progress
       />
     </React.Fragment>
   );
