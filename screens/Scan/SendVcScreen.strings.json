@@ -1,0 +1,26 @@
+{
+  "reasonForSharing": "Reason for sharing (optional)",
+  "acceptRequest": "Accept request and choose {{vcLabel}}",
+  "reject": "Reject",
+  "status": {
+    "sharing": {
+      "title": "Sharing...",
+      "timeoutHint": "It's taking a while to share VC. There could be a problem with the connection."
+    },
+    "accepted": {
+      "title": "Success!",
+      "message": "Your {{vcLabel}} has been successfully shared with {{receiver}}"
+    },
+    "rejected": {
+      "title": "Notice",
+      "message": "Your {{vcLabel}} was rejected by {{receiver}}"
+    },
+    "verifyingIdentity": "Verifying identity..."
+  },
+  "errors": {
+    "invalidIdentity": {
+      "title": "Unable to verify identity",
+      "message": "An error occured and we couldn't scan your portrait. Try again, make sure your face is visible, devoid of any accessories."
+    }
+  }
+}

@@ -53,6 +53,9 @@ export const HomeScreen: React.FC<HomeRouteProps> = (props) => {
           isVisible={controller.isViewingVc}
           onDismiss={controller.DISMISS_MODAL}
           vcItemActor={controller.selectedVc}
+          onRevokeDelete={() => {
+            controller.REVOKE();
+          }}
         />
       )}
     </React.Fragment>

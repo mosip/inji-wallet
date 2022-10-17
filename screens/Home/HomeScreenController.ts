@@ -12,6 +12,7 @@ import {
   selectTabsLoaded,
   selectViewingVc,
 } from './HomeScreenMachine';
+import { VcEvents } from '../../machines/vc';
 
 export function useHomeScreen(props: HomeRouteProps) {
   const { appService } = useContext(GlobalContext);
@@ -23,6 +24,7 @@ export function useHomeScreen(props: HomeRouteProps) {
   );
   const service = useInterpret(machine.current);
   const settingsService = appService.children.get('settings');
+  const vcService = appService.children.get('vc');
 
   useEffect(() => {
     if (props.route.params?.activeTab != null) {
@@ -43,6 +45,10 @@ export function useHomeScreen(props: HomeRouteProps) {
 
     SELECT_TAB,
     DISMISS_MODAL: () => service.send(HomeScreenEvents.DISMISS_MODAL()),
+    REVOKE: () => {
+      vcService.send(VcEvents.REFRESH_MY_VCS());
+      service.send(HomeScreenEvents.DISMISS_MODAL());
+    },
   };
 
   function SELECT_TAB(index: number) {
