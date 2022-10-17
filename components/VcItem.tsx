@@ -8,7 +8,6 @@ import {
   selectVerifiableCredential,
   selectGeneratedOn,
   selectTag,
-  selectId,
   vcItemMachine,
   selectContext,
 } from '../machines/vcItem';
@@ -110,7 +109,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
   const context = useSelector(service, selectContext);
   const verifiableCredential = useSelector(service, selectVerifiableCredential);
 
-  //Assigning the UIN and VID from the VC details to display the idtype label using condition
+  //Assigning the UIN and VID from the VC details to display the idtype label
   const uin = verifiableCredential
     ? verifiableCredential.credentialSubject.UIN
     : null;
@@ -123,9 +122,6 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
     ? ''
     : getLocalizedField(verifiableCredential.credentialSubject.fullName);
 
-  //Assigning the idtype based on the policy
-  const idtype = uin ? t('uin') : vid ? t('vid') : t('idtype');
-  const id = tag || uin ? tag || uin : vid ? vid : null;
   const selectableOrCheck = props.selectable ? (
     <CheckBox
       checked={props.selected}
@@ -176,7 +172,17 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
 
             <Column margin="0 0 0 10">
               {getDetails(t('fullName'), fullName, verifiableCredential)}
-              {getDetails(idtype, id, verifiableCredential)}
+              {!verifiableCredential
+                ? getDetails(
+                    t('idtype'),
+                    tag || uin || vid,
+                    verifiableCredential
+                  )
+                : null}
+              {uin
+                ? getDetails(t('uin'), tag || uin, verifiableCredential)
+                : null}
+              {vid ? getDetails(t('vid'), vid, verifiableCredential) : null}
               {getDetails(t('generatedOn'), generatedOn, verifiableCredential)}
               {getDetails(t('status'), t('valid'), verifiableCredential)}
             </Column>
