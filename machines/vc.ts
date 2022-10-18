@@ -4,7 +4,7 @@ import { createModel } from 'xstate/lib/model';
 import { StoreEvents } from './store';
 import { VC } from '../types/vc';
 import { AppServices } from '../shared/GlobalContext';
-import { respond } from 'xstate/lib/actions';
+import { log, respond } from 'xstate/lib/actions';
 import { VcItemEvents } from './vcItem';
 import {
   MY_VCS_STORE_KEY,
@@ -29,6 +29,7 @@ const model = createModel(
       VC_RECEIVED: (vcKey: string) => ({ vcKey }),
       VC_DOWNLOADED: (vc: VC) => ({ vc }),
       REFRESH_MY_VCS: () => ({}),
+      REFRESH_MY_VCS_TWO: (vc: VC) => ({ vc }),
       REFRESH_RECEIVED_VCS: () => ({}),
       GET_RECEIVED_VCS: () => ({}),
     },
@@ -82,6 +83,7 @@ export const vcMachine =
                 idle: {
                   on: {
                     REFRESH_MY_VCS: {
+                      actions: [log('REFRESH_MY_VCS:myVcs---')],
                       target: 'refreshing',
                     },
                   },

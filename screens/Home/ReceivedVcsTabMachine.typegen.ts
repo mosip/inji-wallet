@@ -2,9 +2,6 @@
 
 export interface Typegen0 {
   '@@xstate/typegen': true;
-  'eventsCausingActions': {
-    viewVcFromParent: 'VIEW_VC';
-  };
   'internalEvents': {
     'xstate.init': { type: 'xstate.init' };
   };
@@ -14,6 +11,9 @@ export interface Typegen0 {
     services: never;
     guards: never;
     delays: never;
+  };
+  'eventsCausingActions': {
+    viewVcFromParent: 'VIEW_VC';
   };
   'eventsCausingServices': {};
   'eventsCausingGuards': {};
