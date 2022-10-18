@@ -1,4 +1,4 @@
-import { StyleSheet, ViewStyle } from 'react-native';
+import { Dimensions, StyleSheet, ViewStyle } from 'react-native';
 import { Spacing } from '../styleUtils';
 
 const Colors = {
@@ -320,6 +320,210 @@ export const DefaultTheme = {
     },
     clearAddIdBtnBg: {
       backgroundColor: Colors.Transparent,
+    },
+  }),
+  OIDCAuthStyles: StyleSheet.create({
+    viewContainer: {
+      backgroundColor: Colors.White,
+      width: Dimensions.get('window').width,
+      height: Dimensions.get('window').height,
+      position: 'absolute',
+      top: 0,
+      zIndex: 9,
+      padding: 32,
+    },
+  }),
+  SelectVcOverlayStyles: StyleSheet.create({
+    overlay: {
+      elevation: 5,
+      backgroundColor: Colors.White,
+      padding: 0,
+    },
+  }),
+  CreditsStyles: StyleSheet.create({
+    buttonContainer: {
+      position: 'absolute',
+      left: 0,
+      right: 'auto',
+    },
+    view: {
+      flex: 1,
+      width: Dimensions.get('screen').width,
+    },
+    markdownView: {
+      padding: 20,
+    },
+  }),
+  ModalStyles: StyleSheet.create({
+    modal: {
+      width: Dimensions.get('screen').width,
+      height: Dimensions.get('screen').height,
+    },
+  }),
+  UpdateModalStyles: StyleSheet.create({
+    modal: {
+      width: Dimensions.get('screen').width,
+      height: Dimensions.get('screen').height,
+    },
+  }),
+  TextEditOverlayStyles: StyleSheet.create({
+    overlay: {
+      elevation: 5,
+      backgroundColor: Colors.White,
+      padding: 0,
+    },
+    viewContainer: {
+      backgroundColor: 'rgba(0,0,0,.6)',
+      width: Dimensions.get('screen').width,
+      height: Dimensions.get('screen').height,
+      position: 'absolute',
+      top: 0,
+      zIndex: 9,
+    },
+    boxContainer: {
+      backgroundColor: Colors.White,
+      padding: 24,
+      elevation: 6,
+      borderRadius: 4,
+    },
+  }),
+  PasscodeStyles: StyleSheet.create({
+    modal: {
+      width: Dimensions.get('screen').width,
+      height: Dimensions.get('screen').height,
+    },
+  }),
+  MessageOverlayStyles: StyleSheet.create({
+    overlay: {
+      elevation: 5,
+      backgroundColor: Colors.White,
+      padding: 0,
+    },
+    button: {
+      borderTopLeftRadius: 0,
+      borderTopRightRadius: 0,
+    },
+  }),
+  RevokeStyles: StyleSheet.create({
+    buttonContainer: {
+      position: 'absolute',
+      left: 0,
+      right: 'auto',
+    },
+    view: {
+      flex: 1,
+      width: Dimensions.get('screen').width,
+    },
+    revokeView: { padding: 20 },
+    flexRow: { flexDirection: 'row', margin: 0, padding: 0 },
+    rowStyle: { flexDirection: 'column', justifyContent: 'space-between' },
+    viewContainer: {
+      backgroundColor: 'rgba(0,0,0,.6)',
+      width: Dimensions.get('screen').width,
+      height: Dimensions.get('screen').height,
+      position: 'absolute',
+      top: 0,
+      zIndex: 999,
+    },
+    boxContainer: {
+      backgroundColor: Colors.White,
+      padding: 24,
+      elevation: 6,
+      borderRadius: 4,
+    },
+  }),
+  VerifyIdentityOverlayStyles: StyleSheet.create({
+    content: {
+      width: Dimensions.get('screen').width,
+      height: Dimensions.get('screen').height,
+      backgroundColor: Colors.White,
+    },
+  }),
+  RevokeConfirmStyles: StyleSheet.create({
+    viewContainer: {
+      backgroundColor: 'rgba(0,0,0,.6)',
+      width: Dimensions.get('screen').width,
+      height: Dimensions.get('screen').height,
+      position: 'absolute',
+      top: 0,
+      zIndex: 999999,
+    },
+    boxContainer: {
+      backgroundColor: Colors.White,
+      padding: 24,
+      elevation: 6,
+      borderRadius: 4,
+    },
+  }),
+  OtpVerificationStyles: StyleSheet.create({
+    modal: {
+      width: Dimensions.get('screen').width,
+      height: Dimensions.get('screen').height,
+    },
+    viewContainer: {
+      backgroundColor: Colors.White,
+      width: Dimensions.get('screen').width,
+      height: Dimensions.get('screen').height,
+      position: 'absolute',
+      top: 0,
+      zIndex: 9,
+      padding: 32,
+    },
+    close: {
+      position: 'absolute',
+      top: 32,
+      right: 0,
+      color: Colors.Orange,
+    },
+  }),
+  MessageStyles: StyleSheet.create({
+    overlay: {
+      elevation: 5,
+      backgroundColor: Colors.White,
+      padding: 0,
+    },
+    button: {
+      borderTopLeftRadius: 0,
+      borderTopRightRadius: 0,
+    },
+    viewContainer: {
+      backgroundColor: 'rgba(0,0,0,.6)',
+      width: Dimensions.get('screen').width,
+      height: Dimensions.get('screen').height,
+      position: 'absolute',
+      top: 0,
+      zIndex: 9,
+    },
+    boxContainer: {
+      backgroundColor: Colors.White,
+      padding: 24,
+      elevation: 6,
+      borderRadius: 4,
+    },
+  }),
+  VidItemStyles: StyleSheet.create({
+    title: {
+      color: Colors.Black,
+      backgroundColor: 'transparent',
+    },
+    loadingTitle: {
+      color: 'transparent',
+      backgroundColor: Colors.Grey5,
+      borderRadius: 4,
+    },
+    subtitle: {
+      backgroundColor: 'transparent',
+    },
+    loadingSubtitle: {
+      backgroundColor: Colors.Grey,
+      borderRadius: 4,
+    },
+    container: {
+      backgroundColor: Colors.White,
+    },
+    loadingContainer: {
+      backgroundColor: Colors.Grey6,
+      borderRadius: 4,
     },
   }),
   OnboardingOverlayStyles: StyleSheet.create({

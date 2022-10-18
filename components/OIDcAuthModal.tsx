@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Button, Centered, Column, Text } from './ui';
 import { Modal, ModalProps } from './ui/Modal';
-import { Colors } from './ui/styleUtils';
+import { Theme } from './ui/styleUtils';
 
 export const OIDcAuthenticationOverlay: React.FC<
   OIDcAuthenticationModalProps
@@ -16,7 +16,7 @@ export const OIDcAuthenticationOverlay: React.FC<
         <Centered fill>
           <Icon
             name="card-account-details-outline"
-            color={Colors.Orange}
+            color={Theme.Colors.Icon}
             size={30}
           />
           <Text
@@ -27,7 +27,10 @@ export const OIDcAuthenticationOverlay: React.FC<
             {t('title')}
           </Text>
           <Text align="center">{t('text')}</Text>
-          <Text align="center" color={Colors.Red} margin="16 0 0 0">
+          <Text
+            align="center"
+            color={Theme.Colors.errorMessage}
+            margin="16 0 0 0">
             {props.error}
           </Text>
         </Centered>
