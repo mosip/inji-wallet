@@ -1,21 +1,14 @@
 import React from 'react';
-import { Dimensions, Modal as RNModal, StyleSheet, View } from 'react-native';
+import { Dimensions, Modal as RNModal, View } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { Column, Row, Text } from '.';
 import { ElevationLevel, Theme } from './styleUtils';
-
-const styles = StyleSheet.create({
-  modal: {
-    width: Dimensions.get('screen').width,
-    height: Dimensions.get('screen').height,
-  },
-});
 
 export const Modal: React.FC<ModalProps> = (props) => {
   return (
     <RNModal
       animationType="slide"
-      style={styles.modal}
+      style={Theme.ModalStyles.modal}
       visible={props.isVisible}
       onShow={props.onShow}
       onRequestClose={props.onDismiss}>
