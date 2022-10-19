@@ -10,6 +10,7 @@ import { VcItem } from '../../components/VcItem';
 import { useSelectVcOverlay } from './SelectVcOverlayController';
 import { SingleVcItem } from '../../components/SingleVcItem';
 import { VerifyIdentityOverlay } from './VerifyIdentityOverlay';
+import { SelectVcOverlay } from './SelectVcOverlay';
 
 export const SendVcScreen: React.FC = () => {
   const { t } = useTranslation('SendVcScreen');

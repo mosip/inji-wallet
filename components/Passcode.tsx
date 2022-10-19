@@ -1,22 +1,15 @@
 import React from 'react';
-import { Dimensions, Modal as RNModal, StyleSheet } from 'react-native';
+import { Dimensions, Modal as RNModal } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { PasscodeVerify } from '../components/PasscodeVerify';
 import { Column, Text } from '../components/ui';
 import { Theme } from '../components/ui/styleUtils';
 
-const styles = StyleSheet.create({
-  modal: {
-    width: Dimensions.get('screen').width,
-    height: Dimensions.get('screen').height,
-  },
-});
-
 export const Passcode: React.FC<PasscodeProps> = (props) => {
   return (
     <RNModal
       animationType="slide"
-      style={styles.modal}
+      style={Theme.PasscodeStyles.modal}
       visible={true}
       onRequestClose={props.onDismiss}>
       <Column

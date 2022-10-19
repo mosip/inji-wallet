@@ -1,29 +1,17 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Dimensions, StyleSheet } from 'react-native';
+import { Dimensions } from 'react-native';
 import { Overlay, LinearProgress } from 'react-native-elements';
 import { Button, Column, Text } from './ui';
 import { Theme } from './ui/styleUtils';
-
-const styles = StyleSheet.create({
-  overlay: {
-    ...Theme.elevation(5),
-    backgroundColor: Theme.Colors.whiteBackgroundColor,
-    padding: 0,
-  },
-  button: {
-    borderTopLeftRadius: 0,
-    borderTopRightRadius: 0,
-  },
-});
 
 export const MessageOverlay: React.FC<MessageOverlayProps> = (props) => {
   const { t } = useTranslation('common');
   return (
     <Overlay
       isVisible={props.isVisible}
-      overlayStyle={styles.overlay}
+      overlayStyle={Theme.MessageOverlayStyles.overlay}
       onShow={props.onShow}
       onBackdropPress={props.onBackdropPress}>
       <Column width={Dimensions.get('screen').width * 0.8}>
@@ -49,7 +37,7 @@ export const MessageOverlay: React.FC<MessageOverlayProps> = (props) => {
           <Button
             title={t('cancel')}
             onPress={props.onCancel}
-            styles={styles.button}
+            styles={Theme.MessageOverlayStyles.button}
           />
         ) : null}
       </Column>

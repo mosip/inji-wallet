@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Dimensions,
-  Image,
-  SafeAreaView,
-  StyleSheet,
-  View,
-} from 'react-native';
+import { Dimensions, Image, SafeAreaView, View } from 'react-native';
 import { Divider, Icon, ListItem, Overlay } from 'react-native-elements';
 import Markdown from 'react-native-simple-markdown';
 import { Button, Text, Row } from '../../components/ui';
@@ -20,20 +14,6 @@ export const Credits: React.FC<CreditsProps> = (props) => {
     'docs/images/newlogic_logo.png': require('../../docs/images/newlogic_logo.png'),
     'docs/images/id_pass_logo.png': require('../../docs/images/id_pass_logo.png'),
   };
-  const styles = StyleSheet.create({
-    buttonContainer: {
-      position: 'absolute',
-      left: 0,
-      right: 'auto',
-    },
-    view: {
-      flex: 1,
-      width: Dimensions.get('screen').width,
-    },
-    markdownView: {
-      padding: 20,
-    },
-  });
 
   const markdownStyles = {
     heading1: {
@@ -71,9 +51,9 @@ export const Credits: React.FC<CreditsProps> = (props) => {
         isVisible={isViewing}
         onBackdropPress={() => setIsViewing(false)}>
         <SafeAreaView>
-          <View style={styles.view}>
+          <View style={Theme.CreditsStyles.view}>
             <Row align="center" crossAlign="center" margin="0 0 10 0">
-              <View style={styles.buttonContainer}>
+              <View style={Theme.CreditsStyles.buttonContainer}>
                 <Button
                   type="clear"
                   icon={<Icon name="chevron-left" color={Theme.Colors.Icon} />}
@@ -84,7 +64,7 @@ export const Credits: React.FC<CreditsProps> = (props) => {
               <Text size="small">{t('header')}</Text>
             </Row>
             <Divider />
-            <View style={styles.markdownView}>
+            <View style={Theme.CreditsStyles.markdownView}>
               <Markdown rules={rules} styles={markdownStyles}>
                 {creditsContent}
               </Markdown>
