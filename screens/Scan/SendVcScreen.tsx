@@ -41,6 +41,7 @@ export const SendVcScreen: React.FC = () => {
           />
           <Button
             type="clear"
+            loading={controller.isCancelling}
             title={t('reject')}
             onPress={controller.CANCEL}
           />
