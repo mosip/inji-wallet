@@ -31,6 +31,7 @@ export interface DecodedCredential {
 
 export interface CredentialSubject {
   UIN: string;
+  VID: string;
   addressLine1: LocalizedField[] | string;
   addressLine2: LocalizedField[] | string;
   addressLine3: LocalizedField[] | string;
