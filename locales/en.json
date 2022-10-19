@@ -22,6 +22,8 @@
     "nationalCard":"National Identity Card",
     "generatedOn": "Generated on",
     "uin":"UIN",
+    "vid":"VID",
+    "idtype":"Idtype",
     "status": "Status",
     "valid": "Valid",
     "photo": "Photo",
