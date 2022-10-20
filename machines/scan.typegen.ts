@@ -3,6 +3,9 @@
 export interface Typegen0 {
   '@@xstate/typegen': true;
   'internalEvents': {
+    'xstate.after(3000)#scan.reviewing.cancelling': {
+      type: 'xstate.after(3000)#scan.reviewing.cancelling';
+    };
     'xstate.after(CLEAR_DELAY)#clearingConnection': {
       type: 'xstate.after(CLEAR_DELAY)#clearingConnection';
     };
@@ -15,6 +18,7 @@ export interface Typegen0 {
     discoverDevice: 'done.invoke.scan.connecting:invocation[0]';
     exchangeDeviceInfo: 'done.invoke.scan.exchangingDeviceInfo:invocation[0]';
     monitorConnection: 'done.invoke.scan:invocation[0]';
+    sendDisconnect: 'done.invoke.scan.reviewing.cancelling:invocation[0]';
     sendVc: 'done.invoke.scan.reviewing.sendingVc:invocation[0]';
   };
   'missingImplementations': {
@@ -30,11 +34,13 @@ export interface Typegen0 {
       | 'DISMISS'
       | 'SCREEN_BLUR'
       | 'SCREEN_FOCUS'
+      | 'xstate.after(3000)#scan.reviewing.cancelling'
       | 'xstate.stop';
     clearScannedQrParams:
       | 'CANCEL'
       | 'DISCONNECT'
       | 'DISMISS'
+      | 'xstate.after(3000)#scan.reviewing.cancelling'
       | 'xstate.after(CLEAR_DELAY)#clearingConnection';
     disconnect:
       | 'CANCEL'
@@ -43,6 +49,7 @@ export interface Typegen0 {
       | 'LOCATION_ENABLED'
       | 'SCREEN_BLUR'
       | 'SCREEN_FOCUS'
+      | 'xstate.after(3000)#scan.reviewing.cancelling'
       | 'xstate.stop';
     logShared: 'VC_ACCEPTED';
     openSettings: 'LOCATION_REQUEST';
@@ -50,6 +57,7 @@ export interface Typegen0 {
       | 'CANCEL'
       | 'DISCONNECT'
       | 'DISMISS'
+      | 'xstate.after(3000)#scan.reviewing.cancelling'
       | 'xstate.after(CLEAR_DELAY)#clearingConnection';
     removeLoggers:
       | 'CANCEL'
@@ -57,6 +65,7 @@ export interface Typegen0 {
       | 'DISMISS'
       | 'SCREEN_BLUR'
       | 'SCREEN_FOCUS'
+      | 'xstate.after(3000)#scan.reviewing.cancelling'
       | 'xstate.after(CLEAR_DELAY)#clearingConnection'
       | 'xstate.init';
     requestSenderInfo: 'SCAN';
@@ -74,6 +83,7 @@ export interface Typegen0 {
     discoverDevice: 'RECEIVE_DEVICE_INFO';
     exchangeDeviceInfo: 'CONNECTED';
     monitorConnection: 'SCREEN_BLUR' | 'SCREEN_FOCUS' | 'xstate.init';
+    sendDisconnect: 'CANCEL';
     sendVc: 'FACE_VALID' | 'SELECT_VC';
   };
   'eventsCausingGuards': {
@@ -109,7 +119,7 @@ export interface Typegen0 {
     | 'preparingToConnect'
     | 'reviewing'
     | 'reviewing.accepted'
-    | 'reviewing.cancelled'
+    | 'reviewing.cancelling'
     | 'reviewing.idle'
     | 'reviewing.invalidUserIdentity'
     | 'reviewing.navigatingToHome'
@@ -130,7 +140,7 @@ export interface Typegen0 {
         exchangingDeviceInfo?: 'inProgress' | 'timeout';
         reviewing?:
           | 'accepted'
-          | 'cancelled'
+          | 'cancelling'
           | 'idle'
           | 'invalidUserIdentity'
           | 'navigatingToHome'

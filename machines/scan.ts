@@ -250,6 +250,7 @@ export const scanMachine = model.createMachine(
             on: {
               ACCEPT_REQUEST: 'selectingVc',
               DISCONNECT: findingConnectionId,
+              CANCEL: 'cancelling',
             },
           },
           selectingVc: {
@@ -264,6 +265,14 @@ export const scanMachine = model.createMachine(
                 actions: ['setSelectedVc'],
               },
               CANCEL: 'idle',
+            },
+          },
+          cancelling: {
+            invoke: {
+              src: 'sendDisconnect',
+            },
+            after: {
+              3000: findingConnectionId,
             },
           },
           sendingVc: {
@@ -300,7 +309,6 @@ export const scanMachine = model.createMachine(
             },
           },
           rejected: {},
-          cancelled: {},
           navigatingToHome: {},
           verifyingUserIdentity: {
             on: {
@@ -568,7 +576,16 @@ export const scanMachine = model.createMachine(
           });
           return () => subscription?.remove();
         } else {
-          sendVc(vc, statusCallback);
+          sendVc(vc, statusCallback, () => callback({ type: 'DISCONNECT' }));
+        }
+      },
+
+      sendDisconnect: (context) => () => {
+        if (context.sharingProtocol === 'ONLINE') {
+          onlineSend({
+            type: 'disconnect',
+            data: 'rejected',
+          });
         }
       },
     },
@@ -699,7 +716,15 @@ export function selectIsInvalidUserIdentity(state: State) {
   return state.matches('reviewing.invalidUserIdentity');
 }
 
-async function sendVc(vc: VC, callback: (status: SendVcStatus) => void) {
+export function selectIsCancelling(state: State) {
+  return state.matches('reviewing.cancelling');
+}
+
+async function sendVc(
+  vc: VC,
+  callback: (status: SendVcStatus) => void,
+  disconnectCallback: () => void
+) {
   const rawData = JSON.stringify(vc);
   const chunks = chunkString(rawData, GNM_MESSAGE_LIMIT);
   if (chunks.length > 1) {
@@ -739,6 +764,7 @@ async function sendVc(vc: VC, callback: (status: SendVcStatus) => void) {
           callback(status);
         }
       },
+      disconnectCallback,
       { keepAlive: true }
     );
     await onlineSend(event);

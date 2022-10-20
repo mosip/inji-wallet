@@ -14,6 +14,7 @@ import {
   selectIsSendingVcTimeout,
   selectIsVerifyingUserIdentity,
   selectIsInvalidUserIdentity,
+  selectIsCancelling,
 } from '../../machines/scan';
 import { selectVcLabel } from '../../machines/settings';
 import { selectShareableVcs } from '../../machines/vc';
@@ -65,6 +66,7 @@ export function useSendVcScreen() {
       scanService,
       selectIsInvalidUserIdentity
     ),
+    isCancelling: useSelector(scanService, selectIsCancelling),
 
     ACCEPT_REQUEST: () => scanService.send(ScanEvents.ACCEPT_REQUEST()),
     CANCEL,

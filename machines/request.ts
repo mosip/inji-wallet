@@ -582,6 +582,7 @@ export const requestMachine = model.createMachine(
                 callback({ type: 'VC_RECEIVED', vc });
               }
             },
+            () => callback({ type: 'DISCONNECT' }),
             { keepAlive: true }
           );
         }
