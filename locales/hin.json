@@ -1,0 +1,217 @@
+{
+    "DeviceInfoList": {
+      "requestedBy": "द्वारा अनुरोध किया गया",
+      "sentBy": "द्वारा भेजा गया",
+      "deviceRefNumber": "डिवाइस संदर्भ संख्या",
+      "name": "नाम"
+    },
+    "PasscodeVerify": {
+      "passcodeMismatchError": "पासकोड का मिलान नहीं हुआ।"
+    },
+    "QrScanner": {
+      "missingPermissionText": "यह ऐप किसी अन्य डिवाइस के क्यूआर कोड को स्कैन करने के लिए कैमरे का उपयोग करता है।",
+      "allowCameraButton": "कैमरे तक पहुंच की अनुमति दें"
+    },
+    "VcDetails": {
+      "generatedOn": "जेनरेट ऑन",
+      "status": "स्थिति",
+      "valid": "वैध",
+      "photo": "फोटो",
+      "fullName": "पूरा नाम",
+      "gender": "लिंग",
+      "dateOfBirth": "डेट ऑफ़ बर्थ",
+      "phoneNumber": "फ़ोन नंबर",
+      "email": "ईमेल",
+      "address": "पता",
+      "reasonForSharing": "साझा करने का कारण"
+    },
+    "AuthScreen": {
+      "header": "क्या आप एप्लिकेशन को अनलॉक करने के लिए बायोमेट्रिक्स का उपयोग करना चाहेंगे?",
+      "useBiometrics": "बायोमेट्रिक्स का उपयोग करें",
+      "usePasscode": "मैं एक पासकोड का उपयोग करना चाहूँगा",
+      "errors": {
+        "unavailable": "डिवाइस बायोमेट्रिक्स का समर्थन नहीं करता",
+        "unenrolled": "बायोमेट्रिक्स का उपयोग करने के लिए, कृपया अपने फ़िंगरप्रिंट को अपनी डिवाइस सेटिंग में दर्ज करें",
+        "failed": "बायोमेट्रिक्स से प्रमाणित करने में विफल",
+        "generic": "बायोमेट्रिक्स प्रमाणीकरण में त्रुटि प्रतीत होती है"
+      }
+    },
+    "BiometricScreen": {
+      "unlock": "फिंगरप्रिंट से अनलॉक करें"
+    },
+    "HistoryTab": {
+      "noHistory": "अभी तक कोई इतिहास उपलब्ध नहीं है",
+      "downloaded": "डाउनलोड किया गया",
+      "shared": "साझा",
+      "received": "प्राप्त",
+      "deleted": "डिलीट"
+    },
+    "HomeScreen": {
+      "myVcsTab": "मेरा\n{{vcLabel}}",
+      "receivedVcsTab": "Received\n{{vcLabel}}",
+      "historyTab": "इतिहास"
+    },
+    "AddVcModal": {
+      "requestingCredential": "क्रेडेंशियल का अनुरोध कर रहा है...",
+      "errors": {
+        "input": {
+          "empty": "इनपुट खाली नहीं हो सकता",
+          "invalidFormat": "इनपुट फॉर्मेट गलत है"
+        },
+        "backend": {
+          "invalidOtp": "OTP  अमान्य है",
+          "invalidUin": "UIN अमान्य",
+          "invalidVid": "VID अमान्य",
+          "missingUin": "UIN यूआईएन डेटाबेस में उपलब्ध नहीं है",
+          "missingVid": "VID वीआईडी ​​डेटाबेस में उपलब्ध नहीं है"
+        }
+      }
+    },
+    "DownloadingVcModal": {
+      "header": "अपना{{vcLabel}}डाउनलोड कर रहा है",
+      "bodyText": "इसमें कुछ समय लग सकता है, हम आपको सूचित करेंगे जब आपका {{vcLabel}} डाउनलोड हो जाएगा और उपलब्ध होगा",
+      "backButton": "बैक होम"
+    },
+    "IdInputModal": {
+      "header": "जिस {{vcLabel}} को आप पुनः प्राप्त करना चाहते हैं, उसका MOSIP- प्रदान किया गया UIN या VID दर्ज करें",
+      "generateVc": "जेनरेट {{vcLabel}}",
+      "enterId": "अपना {{idType}} दर्ज करें"
+    },
+    "OtpVerificationModal": {
+      "enterOtp": "हमारे द्वारा भेजा गया 6 अंकों का सत्यापन कोड दर्ज करें"
+    },
+    "MyVcsTab": {
+      "addVcButton": "{{vcLabel}}जोड़ें",
+      "generateVc": "अपना {{vcLabel}}जेनरेट करें",
+      "generateVcDescription": "अपना {{vcLabel}} डाउनलोड करने के लिए नीचे \"जोड़ें {{vcLabel}}\" पर टैप करें"
+    },
+    "OnboardingOverlay": {
+      "stepOneTitle": "स्वागत है!",
+      "stepOneText": "अपना डिजिटल क्रेडेंशियल हमेशा अपने पास रखें। आरंभ करने के लिए, अपनी प्रोफ़ाइल में {{vcLabel}} जोड़ें।",
+      "stepTwoTitle": "{{vcLabel}} प्रबंधन",
+      "stepTwoText": "एक बार जनरेट हो जाने पर, {{vcLabel}} आपके मोबाइल पर सुरक्षित रूप से संगृहीत हो जाते हैं और उनका नाम बदला जा सकता है या किसी भी समय साझा किया जा सकता है।",
+      "stepThreeTitle": "आसान साझा करना",
+      "stepThreeText": "QR कोड स्कैन करने के लिए अपने फ़ोन कैमरे का उपयोग करके {{vcLabel}} switfly साझा करें और प्राप्त करें।",
+      "stepThreeButton": "आरंभ करें और {{vcLabel}} जोड़ें"
+    },
+    "ReceivedVcsTab": {
+      "noReceivedVcsTitle": "नहीं {{vcLabel}} अभी तक उपलब्ध नहीं है",
+      "noReceivedVcsText": "प्राप्त करने के लिए नीचे दिए गए अनुरोध पर टैप करें {{vcLabel}}"
+    },
+    "ViewVcModal": {
+      "lock": "लॉक",
+      "unlock": "अनलॉक",
+      "rename": "नाम बदले",
+      "delete": "हटाएं",
+      "revoke": "निरस्त",
+      "requestingOtp": "OTP का अनुरोध...",
+      "editTag": "टैग संपादित करें"
+    },
+    "MainLayout": {
+      "home": "घर",
+      "scan": "स्कैन",
+      "request": "अनुरोध",
+      "profile": "प्रोफाइल"
+    },
+    "PasscodeScreen": {
+      "header": "अपना आवेदन सुरक्षित करने के लिए पासकोड सेट करें",
+      "confirmPasscode": "अपना पासकोड कन्फर्म करें",
+      "enterPasscode": "अपना पासकोड दर्ज करे"
+    },
+    "Credits": {
+      "header": "क्रेडिट और कानूनी नोटिस",
+      "back": "पीछे"
+    },
+    "ProfileScreen": {
+      "name": "नाम",
+      "vcLabel": "वीसी लेबल",
+      "language": "भाषा",
+      "bioUnlock": "बायोमेट्रिक अनलॉक",
+      "authFactorUnlock": "अनलॉक ऑथ फैक्टर",
+      "credits": "क्रेडिट और कानूनी नोटिस",
+      "logout": "लॉग आउट"
+    },
+    "ReceiveVcModal": {
+      "header": "{{vcLabel}} विवरण",
+      "acceptRequest": "अनुरोध स्वीकार करें और {{vcLabel}} प्राप्त करें",
+      "reject": "अस्वीकार करे"
+    },
+    "RequestScreen": {
+      "bluetoothDenied": "कृपया ब्लूटूथ को सक्षम करें ताकि वह {{vcLabel}} का अनुरोध कर सके",
+      "showQrCode": "{{vcLabel}} का अनुरोध करने के लिए यह QR कोड दिखाएं",
+      "incomingVc": "इनकमिंग {{vcLabel}}",
+      "status": {
+        "accepted": {
+          "title": "सफलता!",
+          "message": "{{vcLabel}} {{sender}} से सफलतापूर्वक प्राप्त हो गया है"
+        },
+        "rejected": {
+          "title": "सूचना",
+          "message": "आपने {{sender}} के {{vcLabel}} को अस्वीकार कर दिया है"
+        },
+        "disconnected": {
+          "title": "डिस्कनेक्ट किया गया",
+          "message": "कनेक्शन बाधित हो गया था। कृपया पुन: प्रयास करें।"
+        },
+        "waitingConnection": "कनेक्शन की प्रतीक्षा कर रहा है...",
+        "exchangingDeviceInfo": "डिवाइस की जानकारी का आदान-प्रदान...",
+        "connected": "डिवाइस से कनेक्टेड। {{vcLabel}} की प्रतीक्षा कर रहा है..."
+      }
+    },
+    "ScanScreen": {
+      "header": "क्यूआर कोड स्कैन करे",
+      "noShareableVcs": "कोई साझा करने योग्य {{vcLabel}} उपलब्ध नहीं है।",
+      "sharingVc": "शेयरिंग {{vcLabel}}",
+      "errors": {
+        "flightMode": {
+          "message": "्कैनिंग कार्यक्षमता के लिए उड़ान मोड अक्षम होना चाहिए",
+          "button": "उड़ान मोड अक्षम करें"
+        },
+        "locationDisabled": {
+          "message": "स्थान सेवाओं को स्कैनिंग कार्यक्षमता के लिए सक्षम किया जाना चाहिए",
+          "button": "स्थान सेवाएं सक्षम करें"
+        },
+        "locationDenied": {
+          "message": "स्कैनिंग कार्यक्षमता के लिए स्थान अनुमति आवश्यक है",
+          "button": "स्थान तक पहुंच की अनुमति दें"
+        }
+      },
+      "status": {
+        "connecting": "कनेक्टिंग...",
+        "exchangingDeviceInfo": "डिवाइस की जानकारी का आदान-प्रदान...",
+        "invalid": "अमान्य क्यूआर कोड"
+      }
+    },
+    "SelectVcOverlay": {
+      "header": "शेयर {{vcLabel}}",
+      "chooseVc": "वह {{vcLabel}} चुनें जिसके साथ आप साझा करना चाहते हैं",
+      "cancel": "रद्द करे",
+      "share": "बाँट"
+    },
+    "SendVcModal": {
+      "reasonForSharing": "साझा करने का कारण (optional)",
+      "acceptRequest": "अनुरोध स्वीकार करें और चुनें {{vcLabel}}",
+      "reject": "अस्वीकार करे",
+      "statusSharing": {
+        "title": "साझा किया जा रहा है..."
+      },
+      "statusAccepted": {
+        "title": "सफलता!",
+        "message": "आपका {{vcLabel}} के साथ सफलतापूर्वक साझा कर दिया गया है {{receiver}}"
+      },
+      "statusRejected": {
+        "title": "सूचना",
+        "message": "आपका {{vcLabel}} ने अस्वीकार कर दिया था {{receiver}}"
+      }
+    },
+    "WelcomeScreen": {
+      "title": "ओपन सोर्स आइडेंटिटी सॉल्यूशन",
+      "getStarted": "आरंभ करें",
+      "unlockApp": "एप्लिकेशन अनलॉक करें"
+    },
+    "common": {
+      "cancel": "रद्द करें",
+      "save": "सहेजें",
+      "editLabel": "संपादित करें {{label}}"
+    }
+  }
