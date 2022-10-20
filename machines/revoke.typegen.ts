@@ -8,17 +8,8 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
-    'done.invoke.RevokeVids.requestingRevoke:invocation[0]': {
-      type: 'done.invoke.RevokeVids.requestingRevoke:invocation[0]';
-      data: unknown;
-      __tip: 'See the XState TS docs to learn how to strongly type this.';
-    };
     'error.platform.RevokeVids.acceptingVIDs.requestingOtp:invocation[0]': {
       type: 'error.platform.RevokeVids.acceptingVIDs.requestingOtp:invocation[0]';
-      data: unknown;
-    };
-    'error.platform.RevokeVids.requestingRevoke:invocation[0]': {
-      type: 'error.platform.RevokeVids.requestingRevoke:invocation[0]';
       data: unknown;
     };
     'xstate.init': { type: 'xstate.init' };
@@ -36,15 +27,15 @@ export interface Typegen0 {
   'eventsCausingActions': {
     clearOtp:
       | 'DISMISS'
+      | 'ERROR'
       | 'REVOKE_VCS'
       | 'done.invoke.RevokeVids.acceptingVIDs.requestingOtp:invocation[0]'
-      | 'error.platform.RevokeVids.requestingRevoke:invocation[0]'
       | 'xstate.init';
     logRevoked: 'STORE_RESPONSE';
-    revokeVID: 'done.invoke.RevokeVids.requestingRevoke:invocation[0]';
+    revokeVID: 'SUCCESS';
     setIdBackendError: 'error.platform.RevokeVids.acceptingVIDs.requestingOtp:invocation[0]';
     setOtp: 'INPUT_OTP';
-    setOtpError: 'error.platform.RevokeVids.requestingRevoke:invocation[0]';
+    setOtpError: 'ERROR';
     setTransactionId: 'DISMISS' | 'REVOKE_VCS' | 'xstate.init';
     setVIDs: 'REVOKE_VCS';
   };
