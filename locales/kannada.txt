@@ -1,0 +1,217 @@
+{
+  "DeviceInfoList": {
+    "requestedBy": "ವಿನಂತಿಸಿದವರು",
+    "sentBy": "ಕಳುಹಿಸಿದವರು",
+    "deviceRefNumber": "ಸಾಧನ ಉಲ್ಲೇಖ ಸಂಖ್ಯೆ",
+    "name": "ಹೆಸರು"
+  },
+  "PasscodeVerify": {
+    "passcodeMismatchError": "ಪಾಸ್ಕೋಡ್ ಹೊಂದಿಕೆಯಾಗಲಿಲ್ಲ."
+  },
+  "QrScanner": {
+    "missingPermissionText": "ಈ ಅಪ್ಲಿಕೇಶನ್ ಇನ್ನೊಂದು ಸಾಧನದ QR ಕೋಡ್ ಅನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಲು ಕ್ಯಾಮರಾವನ್ನು ಬಳಸುತ್ತದೆ.",
+    "allowCameraButton": "ಕ್ಯಾಮೆರಾಗೆ ಪ್ರವೇಶವನ್ನು ಅನುಮತಿಸಿ"
+  },
+  "VcDetails": {
+    "generatedOn": "ಜನರೇಟೆಡ್ ಆನ್",
+    "status": "ಸ್ಥಿತಿ",
+    "valid": "ಮಾನ್ಯ",
+    "photo": "ಫೋಟೋ",
+    "fullName": "ಪೂರ್ಣ ಹೆಸರು",
+    "gender": "ಲಿಂಗ",
+    "dateOfBirth": "ಹುಟ್ಟಿದ ದಿನಾಂಕ",
+    "phoneNumber": "ಫೋನ್ ಸಂಖ್ಯೆ",
+    "email": "ಇಮೇಲ್",
+    "address": "ವಿಳಾಸ",
+    "reasonForSharing": "ಹಂಚಿಕೆಗೆ ಕಾರಣ"
+  },
+  "AuthScreen": {
+    "header": "ಅಪ್ಲಿಕೇಶನ್ ಅನ್‌ಲಾಕ್ ಮಾಡಲು ಬಯೋಮೆಟ್ರಿಕ್ಸ್ ಬಳಸಲು ನೀವು ಬಯಸುವಿರಾ?",
+    "useBiometrics": "ಬಯೋಮೆಟ್ರಿಕ್ಸ್ ಬಳಸಿ",
+    "usePasscode": "ನಾನು ಪಾಸ್ಕೋಡ್ ಅನ್ನು ಬಳಸುತ್ತೇನೆ",
+    "errors": {
+      "unavailable": "ಸಾಧನವು ಬಯೋಮೆಟ್ರಿಕ್‌ಗಳನ್ನು ಬೆಂಬಲಿಸುವುದಿಲ್ಲ",
+      "unenrolled": "ಬಯೋಮೆಟ್ರಿಕ್ಸ್ ಅನ್ನು ಬಳಸಲು, ದಯವಿಟ್ಟು ನಿಮ್ಮ ಸಾಧನದ ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ನಿಮ್ಮ ಫಿಂಗರ್‌ಪ್ರಿಂಟ್ ಅನ್ನು ನೋಂದಾಯಿಸಿ",
+      "failed": "ಬಯೋಮೆಟ್ರಿಕ್ಸ್‌ನೊಂದಿಗೆ ದೃಢೀಕರಿಸಲು ವಿಫಲವಾಗಿದೆ",
+      "generic": "ಬಯೋಮೆಟ್ರಿಕ್ಸ್ ದೃಢೀಕರಣದಲ್ಲಿ ದೋಷ ಕಂಡುಬರುತ್ತಿದೆ"
+    }
+  },
+  "BiometricScreen": {
+    "unlock": "ಫಿಂಗರ್ಪ್ರಿಂಟ್ನೊಂದಿಗೆ ಅನ್ಲಾಕ್"
+  },
+  "HistoryTab": {
+    "noHistory": "ಇನ್ನೂ ಯಾವುದೇ ಇತಿಹಾಸ ಲಭ್ಯವಿಲ್ಲ",
+    "downloaded": "ಡೌನ್‌ಲೋಡ್ ಮಾಡಲಾಗಿದೆ",
+    "shared": "ಹಂಚಿಕೊಂಡಿದೆ",
+    "received": "ಸ್ವೀಕರಿಸಲಾಗಿದೆ",
+    "deleted": "ಅಳಿಸಲಾಗಿದೆ"
+  },
+  "HomeScreen": {
+    "myVcsTab": "ನನ್ನ\n{{vcLabel}}",
+    "receivedVcsTab": "ಸ್ವೀಕರಿಸಲಾಗಿದೆ\n{{vcLabel}}",
+    "historyTab": "ಇತಿಹಾಸ"
+  },
+  "AddVcModal": {
+    "requestingCredential": "ರುಜುವಾತುಗಳನ್ನು ವಿನಂತಿಸಲಾಗುತ್ತಿದೆ...",
+    "errors": {
+      "input": {
+        "empty": "ಇನ್‌ಪುಟ್ ಖಾಲಿ ಇರುವಂತಿಲ್ಲ",
+        "invalidFormat": "ಇನ್‌ಪುಟ್ ಫಾರ್ಮ್ಯಾಟ್ ತಪ್ಪಾಗಿದೆ"
+      },
+      "backend": {
+        "invalidOtp": "OTP ಅಮಾನ್ಯವಾಗಿದೆ",
+        "invalidUin": "UIN ಅಮಾನ್ಯವಾಗಿದೆ",
+        "invalidVid": "VID ಅಮಾನ್ಯವಾಗಿದೆ",
+        "missingUin": "UIN ಡೇಟಾಬೇಸ್‌ನಲ್ಲಿ ಲಭ್ಯವಿಲ್ಲ",
+        "missingVid": "VID ಡೇಟಾಬೇಸ್‌ನಲ್ಲಿ ಲಭ್ಯವಿಲ್ಲ"
+      }
+    }
+  },
+  "DownloadingVcModal": {
+    "header": "ಅನ್ನು ಡೌನ್‌ಲೋಡ್ ಮಾಡಲಾಗುತ್ತಿದೆ {{vcLabel}}",
+    "bodyText": "ಇದು ಸ್ವಲ್ಪ ಸಮಯ ತೆಗೆದುಕೊಳ್ಳಬಹುದು, ನಿಮ್ಮ {{vcLabel}} ಅನ್ನು ಡೌನ್‌ಲೋಡ್ ಮಾಡಿದಾಗ ಮತ್ತು ಲಭ್ಯವಿದ್ದಾಗ ನಾವು ನಿಮಗೆ ತಿಳಿಸುತ್ತೇವೆ",
+    "backButton": "ಬ್ಯಾಕ್ ಹೋಮ್"
+  },
+  "IdInputModal": {
+    "header": "ನೀವು ಹಿಂಪಡೆಯಲು ಬಯಸುವ {{vcLabel}} ನ MOSIP-ಒದಗಿಸಿದ UIN ಅಥವಾ VID ಅನ್ನು ನಮೂದಿಸ",
+    "generateVc": "ರಚಿಸಿ {{vcLabel}}",
+    "enterId": "ನಿಮ್ಮ {{idType}}ನಮೂದಿಸಿ"
+  },
+  "OtpVerificationModal": {
+    "enterOtp": "ನಾವು ನಿಮಗೆ ಕಳುಹಿಸಿದ 6-ಅಂಕಿಯ ಪರಿಶೀಲನೆ ಕೋಡ್ ಅನ್ನು ನಮೂದಿಸಿ"
+  },
+  "MyVcsTab": {
+    "addVcButton": "ಸೇರಿಸಿ {{vcLabel}}",
+    "generateVc": "ನಿಮ್ಮ {{vcLabel}} ಅನ್ನು ರಚಿಸಿ",
+    "generateVcDescription": "ನಿಮ್ಮ \"Add {{vcLabel}}\" ಅನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ {{vcLabel}}"
+  },
+  "OnboardingOverlay": {
+    "stepOneTitle": "ಸ್ವಾಗತ!",
+    "stepOneText": "ನಿಮ್ಮ ಡಿಜಿಟಲ್ ರುಜುವಾತುಗಳನ್ನು ಯಾವಾಗಲೂ ನಿಮ್ಮೊಂದಿಗೆ ಇರಿಸಿಕೊಳ್ಳಿ. ಪ್ರಾರಂಭಿಸಲು, ನಿಮ್ಮ ಪ್ರೊಫೈಲ್‌ಗೆ {{vcLabel}} ಸೇರಿಸಿ.",
+    "stepTwoTitle": "{{vcLabel}} ನಿರ್ವಹಣೆ",
+    "stepTwoText": "ಒಮ್ಮೆ ರಚಿಸಿದ ನಂತರ, {{vcLabel}} ಅನ್ನು ನಿಮ್ಮ ಮೊಬೈಲ್‌ನಲ್ಲಿ ಸುರಕ್ಷಿತವಾಗಿ ಸಂಗ್ರಹಿಸಲಾಗುತ್ತದೆ ಮತ್ತು ಯಾವುದೇ ಸಮಯದಲ್ಲಿ ಮರುಹೆಸರಿಸಬಹುದು ಅಥವಾ ಹಂಚಿಕೊಳ್ಳಬಹುದು.",
+    "stepThreeTitle": "ಸುಲಭ ಹಂಚಿಕೆ",
+    "stepThreeText": "QR ಕೋಡ್‌ಗಳನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಲು ನಿಮ್ಮ ಫೋನ್ ಕ್ಯಾಮರಾವನ್ನು ಬಳಸಿಕೊಂಡು {{vcLabel}} switfly ಅನ್ನು ಹಂಚಿಕೊಳ್ಳಿ ಮತ್ತು ಸ್ವೀಕರಿಸಿ.",
+    "stepThreeButton": "ಪ್ರಾರಂಭಿಸಿ ಮತ್ತು {{vcLabel}} ಸೇರಿಸಿ"
+  },
+  "ReceivedVcsTab": {
+    "noReceivedVcsTitle": "ಇನ್ನೂ ಯಾವುದೇ {{vcLabel}} ಲಭ್ಯವಿಲ್ಲ",
+    "noReceivedVcsText": "{{vcLabel}} ಸ್ವೀಕರಿಸಲು ಕೆಳಗಿನ ವಿನಂತಿಯ ಮೇಲೆ ಟ್ಯಾಪ್ ಮಾಡಿ"
+  },
+  "ViewVcModal": {
+    "lock": "ಲಾಕ್",
+    "unlock": "ಅನ್ಲಾಕ್",
+    "rename": "ಮರುಹೆಸರಿಸು",
+    "delete": "ಅಳಿಸು",
+    "revoke": "ಹಿಂತೆಗೆದುಕೊಳ್ಳಿ",
+    "requestingOtp": "ಒಟಿಪಿಯನ್ನು ವಿನಂತಿಸಲಾಗುತ್ತಿದೆ...",
+    "editTag": "ಟ್ಯಾಗ್ ಸಂಪಾದಿಸು"
+  },
+  "MainLayout": {
+    "home": "ಲೇಔಟ್",
+    "scan": "ಮನೆ",
+    "request": "ವಿನಂತಿ",
+    "profile": "ಪ್ರೊಫೈಲ್"
+  },
+  "PasscodeScreen": {
+    "header": "ನಿಮ್ಮ ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಸುರಕ್ಷಿತವಾಗಿರಿಸಲು ಪಾಸ್ಕೋಡ್ ಅನ್ನು ಹೊಂದಿಸಿ",
+    "confirmPasscode": "ನಿಮ್ಮ ಪಾಸ್ಕೋಡ್ ಅನ್ನು ದೃಢೀಕರಿಸಿ",
+    "enterPasscode": "ನಿಮ್ಮ ಪಾಸ್ಕೋಡ್ ನಮೂದಿಸಿ"
+  },
+  "Credits": {
+    "header": "ಕ್ರೆಡಿಟ್‌ಗಳು ಮತ್ತು ಕಾನೂನು ಸೂಚನೆಗಳು",
+    "back": "ಹಿಂದೆ"
+  },
+  "ProfileScreen": {
+    "name": "ಹೆಸರು",
+    "vcLabel": "VC ಲೇಬಲ್",
+    "language": "ಭಾಷೆ",
+    "bioUnlock": "ಬಯೋಮೆಟ್ರಿಕ್ ಅನ್‌ಲಾಕ್",
+    "authFactorUnlock": "ಅನ್ಲಾಕ್ ದೃಢೀಕರಣ ಅಂಶ",
+    "credits": "ಕ್ರೆಡಿಟ್ಸ್ ಮತ್ತು ಲೀಗಲ್ ನೋಟಿಸ್",
+    "logout": "ಲಾಗ್-ಔಟ್"
+  },
+  "ReceiveVcModal": {
+    "header": "{{vcLabel}} ವಿವರಗಳು",
+    "acceptRequest": "ವಿನಂತಿಯನ್ನು ಸ್ವೀಕರಿಸಿ ಮತ್ತು {{vcLabel}} ಸ್ವೀಕರಿಸಿ",
+    "reject": "ತಿರಸ್ಕರಿಸಿ"
+  },
+  "RequestScreen": {
+    "bluetoothDenied": "ವಿನಂತಿಸಲು ಬ್ಲೂಟೂತ್ ಅನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ{{vcLabel}}",
+    "showQrCode": "ವಿನಂತಿಸಲು ಈ QR ಕೋಡ್ ಅನ್ನು ತೋರಿಸಿ {{vcLabel}}",
+    "incomingVc": "ಒಳಬರುವ {{vcLabel}}",
+    "status": {
+      "accepted": {
+        "title": "ಯಶಸ್ಸು!",
+        "message": "{{vcLabel}}ಅನ್ನು {{sender}} ಅವರಿಂದ ಯಶಸ್ವಿಯಾಗಿ ಸ್ವೀಕರಿಸಲಾಗಿದೆ"
+      },
+      "rejected": {
+        "title": "ಸೂಚನೆ",
+        "message": "ನೀವು {{sender}} ಅವರ {{vcLabel}} ಅನ್ನು ತಿರಸ್ಕರಿಸಿದ್ದೀರಿ"
+      },
+      "disconnected": {
+        "title": "ಸಂಪರ್ಕ ಕಡಿತಗೊಂಡಿದೆ",
+        "message": "ಸಂಪರ್ಕದಲ್ಲಿ ಅಡಚಣೆ ಉಂಟಾಗಿದೆ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ."
+      },
+      "waitingConnection": "ಸಂಪರ್ಕಕ್ಕಾಗಿ ಕಾಯಲಾಗುತ್ತಿದೆ...",
+      "exchangingDeviceInfo": "ಸಾಧನದ ಮಾಹಿತಿಯನ್ನು ವಿನಿಮಯ ಮಾಡಿಕೊಳ್ಳಲಾಗುತ್ತಿದೆ...",
+      "connected": "ಸಾಧನಕ್ಕೆ ಸಂಪರ್ಕಗೊಂಡಿದೆ. {{vcLabel}} ಗಾಗಿ ನಿರೀಕ್ಷಿಸಲಾಗುತ್ತಿದೆ..."
+    }
+  },
+  "ScanScreen": {
+    "header": "ಸ್ಕ್ಯಾನ್ ಕ್ಯೂಆರ್ ಕೋಡ್",
+    "noShareableVcs": "ಯಾವುದೇ ಹಂಚಿಕೊಳ್ಳಬಹುದಾದ {{vcLabel}} ಲಭ್ಯವಿಲ್ಲ.",
+    "sharingVc": "ಹಂಚಿಕೆ {{vcLabel}}",
+    "errors": {
+      "flightMode": {
+        "message": "ಸ್ಕ್ಯಾನಿಂಗ್ ಕಾರ್ಯಕ್ಕಾಗಿ ಫ್ಲೈಟ್ ಮೋಡ್ ಅನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಬೇಕು",
+        "button": "ಫ್ಲೈಟ್ ಮೋಡ್ ಅನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿ"
+      },
+      "locationDisabled": {
+        "message": "ಸ್ಕ್ಯಾನಿಂಗ್ ಕಾರ್ಯಕ್ಕಾಗಿ ಸ್ಥಳ ಸೇವೆಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಬೇಕು",
+        "button": "ಸ್ಥಳ ಸೇವೆಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ"
+      },
+      "locationDenied": {
+        "message": "ಸ್ಕ್ಯಾನಿಂಗ್ ಕಾರ್ಯಕ್ಕಾಗಿ ಸ್ಥಳ ಅನುಮತಿ ಅಗತ್ಯವಿದೆ",
+        "button": "ಸ್ಥಳಕ್ಕೆ ಪ್ರವೇಶವನ್ನು ಅನುಮತಿಸಿ"
+      }
+    },
+    "status": {
+      "connecting": "ಸಂಪರ್ಕಿಸಲಾಗುತ್ತಿದೆ...",
+      "exchangingDeviceInfo": "ಸಾಧನದ ಮಾಹಿತಿಯನ್ನು ವಿನಿಮಯ ಮಾಡಿಕೊಳ್ಳಲಾಗುತ್ತಿದೆ...",
+      "invalid": "ಅಮಾನ್ಯ QR ಕೋಡ್"
+    }
+  },
+  "SelectVcOverlay": {
+    "header": "ಹಂಚಿಕೊಳ್ಳಿ {{vcLabel}}",
+    "chooseVc": "ನೀವು ಹಂಚಿಕೊಳ್ಳಲು ಬಯಸುವ {{vcLabel}} ಅನ್ನು ಆಯ್ಕೆ ಮಾಡಿ",
+    "cancel": "ರದ್ದು",
+    "share": "ಹಂಚಿಕೊಳ್ಳಿ"
+  },
+  "SendVcModal": {
+    "reasonForSharing": "ಹಂಚಿಕೆಗೆ ಕಾರಣ (ಐಚ್ಛಿಕ)",
+    "acceptRequest": "ವಿನಂತಿಯನ್ನು ಸ್ವೀಕರಿಸಿ ಮತ್ತು {{vcLabel}} ಆಯ್ಕೆಮಾಡಿ",
+    "reject": "ತಿರಸ್ಕರಿಸಿ",
+    "statusSharing": {
+      "title": "ಹಂಚಿಕೆ..."
+    },
+    "statusAccepted": {
+      "title": "ಯಶಸ್ಸು!",
+      "message": "ನಿಮ್ಮ {{vcLabel}} ಅನ್ನು ಯಶಸ್ವಿಯಾಗಿ  {{receiver}}ಜೊತೆಗೆ ಹಂಚಿಕೊಳ್ಳಲಾಗಿದೆ"
+    },
+    "statusRejected": {
+      "title": "ಸೂಚನೆ",
+      "message": "ನಿಮ್ಮ {{vcLabel}}ಅನ್ನು {{receiver}}ತಿರಸ್ಕರಿಸಿದ್ದಾರೆ"
+    }
+  },
+  "WelcomeScreen": {
+    "title": "ಓಪನ್ ಸೋರ್ಸ್ ಐಡೆಂಟಿಟಿ ಸೊಲ್ಯೂಷನ್",
+    "getStarted": "ಪ್ರಾರಂಭಿಸಿ",
+    "unlockApp": "Unlock application"
+  },
+  "common": {
+    "cancel": "ರದ್ದು",
+    "save": "ಉಳಿಸು",
+    "editLabel": "ಸಂಪಾದಿಸು {{label}}"
+  }
+}
