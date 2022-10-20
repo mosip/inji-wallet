@@ -33,7 +33,7 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
               <View style={Theme.RevokeStyles.buttonContainer}>
                 <Button
                   type="clear"
-                  icon={<Icon name="chevron-left" color={Colors.Orange} />}
+                  icon={<Icon name="chevron-left" color={Theme.Colors.Icon} />}
                   title=""
                   onPress={() => controller.setIsViewing(false)}
                 />
