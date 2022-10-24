@@ -5,7 +5,6 @@ import {
 } from 'react-native-elements';
 import {
   GestureResponderEvent,
-  Platform,
   StyleProp,
   StyleSheet,
   ViewStyle,
@@ -27,6 +26,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     borderColor: Colors.Orange,
   },
+  container: {
+    minHeight: 48,
+    flexDirection: 'row',
+  },
   disabled: {
     opacity: 0.5,
   },
@@ -34,14 +37,10 @@ const styles = StyleSheet.create({
 
 export const Button: React.FC<ButtonProps> = (props) => {
   const type = props.type || 'solid';
-  const buttonStyle: StyleProp<ViewStyle> = [styles.fill, styles[type]];
+  const buttonStyle: StyleProp<ViewStyle> = [styles[type]];
 
   const containerStyle: StyleProp<ViewStyle> = [
-    {
-      minHeight:
-        props.title.length > 37 && Platform.OS === 'ios' ? 48 * 1.5 : 48,
-      flexDirection: 'row',
-    },
+    styles.container,
     props.disabled ? styles.disabled : null,
     props.margin ? spacing('margin', props.margin) : null,
     props.styles,
@@ -67,7 +66,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
           {props.title}
         </Text>
       }
-      style={buttonStyle}
+      style={[buttonStyle, styles.fill]}
       icon={props.icon}
       onPress={handleOnPress}
       loading={props.loading}
