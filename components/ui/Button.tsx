@@ -33,6 +33,9 @@ const styles = StyleSheet.create({
   disabled: {
     opacity: 0.5,
   },
+  block: {
+    width: '100%',
+  },
 });
 
 export const Button: React.FC<ButtonProps> = (props) => {
@@ -54,7 +57,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
 
   return (
     <RNEButton
-      buttonStyle={buttonStyle}
+      buttonStyle={[buttonStyle, styles.block]}
       containerStyle={[props.fill ? styles.fill : null, containerStyle]}
       type={props.type}
       raised={props.raised}
@@ -66,7 +69,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
           {props.title}
         </Text>
       }
-      style={[buttonStyle, styles.fill]}
+      style={[buttonStyle, styles.block]}
       icon={props.icon}
       onPress={handleOnPress}
       loading={props.loading}
