@@ -4,7 +4,7 @@ import {
   GOOGLE_NEARBY_MESSAGES_API_KEY,
 } from 'react-native-dotenv';
 
-export const HOST = 'https://api-internal.dev.mosip.net/residentmobileapp/';
+export const HOST = MIMOTO_HOST;
 
 export const MY_VCS_STORE_KEY = 'myVCs';
 
@@ -29,3 +29,5 @@ export const GNM_API_KEY = GOOGLE_NEARBY_MESSAGES_API_KEY;
 
 // https://developers.google.com/android/reference/com/google/android/gms/nearby/messages/Message#MAX_CONTENT_SIZE_BYTES
 export const GNM_MESSAGE_LIMIT = 102400 - 6400; // allowance for metadata
+
+0; // allowance for metadata
