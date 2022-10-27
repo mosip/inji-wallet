@@ -346,7 +346,6 @@ export const requestMachine = model.createMachine(
             return IdpassSmartshare.getConnectionParameters();
           } else {
             const cid = uuid.v4();
-            console.log('ONLINE', cid);
             return JSON.stringify({
               pk: '',
               cid,
@@ -558,12 +557,6 @@ export const requestMachine = model.createMachine(
           onlineSubscribe(
             'send-vc',
             async ({ isChunked, vc, vcChunk }) => {
-              console.log(
-                'RECEIVE CHUNK',
-                isChunked,
-                vcChunk.chunk,
-                vcChunk.total
-              );
               await GoogleNearbyMessages.unpublish();
               if (isChunked) {
                 rawData += vcChunk.rawData;
@@ -572,7 +565,6 @@ export const requestMachine = model.createMachine(
                   GoogleNearbyMessages.unsubscribe();
                   callback({ type: 'VC_RECEIVED', vc });
                 } else {
-                  console.log('VC_RESPONSE_SEND', vcChunk.chunk);
                   await onlineSend({
                     type: 'send-vc:response',
                     data: vcChunk.chunk,

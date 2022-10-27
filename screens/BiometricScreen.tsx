@@ -30,7 +30,7 @@ export const BiometricScreen: React.FC<RootRouteProps> = (props) => {
         <Passcode
           message="Enter your passcode to re-enable biometrics authentication."
           onSuccess={() => controller.onSuccess()}
-          onError={(value: any) => controller.onError(value)}
+          onError={(value: string) => controller.onError(value)}
           storedPasscode={controller.storedPasscode}
           onDismiss={() => controller.onDismiss()}
           error={controller.error}
