@@ -44,9 +44,7 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = (props) => {
                   rightIcon={
                     controller.isInvalid ? (
                       <Icon name="error" size={18} color="red" />
-                    ) : (
-                      <Icon name="help" size={18} />
-                    )
+                    ) : null
                   }
                   errorStyle={{ color: Theme.Colors.errorMessage }}
                   errorMessage={controller.idError}
