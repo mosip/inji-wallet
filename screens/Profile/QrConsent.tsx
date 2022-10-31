@@ -81,7 +81,7 @@ export const QrConsent: React.FC<QrConsentProps> = (props) => {
                       <ListItem.Title>
                         <Text color={Theme.Colors.profileLabel}>
                           {t(claim[0]).toUpperCase() +
-                            claim.split(claim[1], claim[L - 1]).toLowerCase()}
+                            claim.split(claim[1], claim[L-1]).toLowerCase()}
                         </Text>
                       </ListItem.Title>
                     </ListItem.Content>
