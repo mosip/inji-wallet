@@ -9,6 +9,7 @@ buildscript {
     }
     repositories {
         google()
+        gradlePluginPortal()
         mavenCentral()
     }
     dependencies {
@@ -34,6 +35,7 @@ allprojects {
         }
 
         google()
+        gradlePluginPortal()
         mavenCentral()
         maven { url 'https://www.jitpack.io' }
 
@@ -42,6 +44,8 @@ allprojects {
                 def url = repo.url.toString()
                 if (url.startsWith('https://jcenter.bintray.com/')) {
                     remove repo
+                    gradlePluginPortal()
+                    mavenCentral()
                 }
             }
         }
