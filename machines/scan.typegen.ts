@@ -3,6 +3,15 @@
 export interface Typegen0 {
   '@@xstate/typegen': true;
   'internalEvents': {
+    'done.invoke.scan.reviewing.creatingVp:invocation[0]': {
+      type: 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
+    'error.platform.scan.reviewing.creatingVp:invocation[0]': {
+      type: 'error.platform.scan.reviewing.creatingVp:invocation[0]';
+      data: unknown;
+    };
     'xstate.after(3000)#scan.reviewing.cancelling': {
       type: 'xstate.after(3000)#scan.reviewing.cancelling';
     };
@@ -15,6 +24,7 @@ export interface Typegen0 {
   'invokeSrcNameMap': {
     checkLocationPermission: 'done.invoke.scan.checkingLocationService.checkingPermission:invocation[0]';
     checkLocationStatus: 'done.invoke.checkingLocationService:invocation[0]';
+    createVp: 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
     discoverDevice: 'done.invoke.scan.connecting:invocation[0]';
     exchangeDeviceInfo: 'done.invoke.scan.exchangingDeviceInfo:invocation[0]';
     monitorConnection: 'done.invoke.scan:invocation[0]';
@@ -28,6 +38,14 @@ export interface Typegen0 {
     delays: never;
   };
   'eventsCausingActions': {
+    clearCreatedVp:
+      | 'CANCEL'
+      | 'DISCONNECT'
+      | 'DISMISS'
+      | 'SCREEN_BLUR'
+      | 'SCREEN_FOCUS'
+      | 'xstate.after(3000)#scan.reviewing.cancelling'
+      | 'xstate.stop';
     clearReason:
       | 'CANCEL'
       | 'DISCONNECT'
@@ -71,6 +89,7 @@ export interface Typegen0 {
     requestSenderInfo: 'SCAN';
     requestToEnableLocation: 'LOCATION_DISABLED' | 'LOCATION_REQUEST';
     setConnectionParams: 'SCAN';
+    setCreatedVp: 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
     setReason: 'UPDATE_REASON';
     setReceiverInfo: 'EXCHANGE_DONE';
     setScannedQrParams: 'SCAN';
@@ -80,11 +99,12 @@ export interface Typegen0 {
   'eventsCausingServices': {
     checkLocationPermission: 'APP_ACTIVE' | 'LOCATION_ENABLED';
     checkLocationStatus: 'CANCEL' | 'SCREEN_FOCUS';
+    createVp: 'FACE_VALID';
     discoverDevice: 'RECEIVE_DEVICE_INFO';
     exchangeDeviceInfo: 'CONNECTED';
     monitorConnection: 'SCREEN_BLUR' | 'SCREEN_FOCUS' | 'xstate.init';
     sendDisconnect: 'CANCEL';
-    sendVc: 'FACE_VALID' | 'SELECT_VC';
+    sendVc: 'SELECT_VC' | 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
   };
   'eventsCausingGuards': {
     isQrOffline: 'SCAN';
@@ -94,9 +114,9 @@ export interface Typegen0 {
     CLEAR_DELAY: 'LOCATION_ENABLED';
     CONNECTION_TIMEOUT:
       | 'CONNECTED'
-      | 'FACE_VALID'
       | 'RECEIVE_DEVICE_INFO'
-      | 'SELECT_VC';
+      | 'SELECT_VC'
+      | 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
   };
   'matchesStates':
     | 'checkingLocationService'
@@ -120,15 +140,16 @@ export interface Typegen0 {
     | 'reviewing'
     | 'reviewing.accepted'
     | 'reviewing.cancelling'
+    | 'reviewing.creatingVp'
     | 'reviewing.idle'
-    | 'reviewing.invalidUserIdentity'
+    | 'reviewing.invalidIdentity'
     | 'reviewing.navigatingToHome'
     | 'reviewing.rejected'
     | 'reviewing.selectingVc'
     | 'reviewing.sendingVc'
     | 'reviewing.sendingVc.inProgress'
     | 'reviewing.sendingVc.timeout'
-    | 'reviewing.verifyingUserIdentity'
+    | 'reviewing.verifyingIdentity'
     | {
         checkingLocationService?:
           | 'checkingPermission'
@@ -141,13 +162,14 @@ export interface Typegen0 {
         reviewing?:
           | 'accepted'
           | 'cancelling'
+          | 'creatingVp'
           | 'idle'
-          | 'invalidUserIdentity'
+          | 'invalidIdentity'
           | 'navigatingToHome'
           | 'rejected'
           | 'selectingVc'
           | 'sendingVc'
-          | 'verifyingUserIdentity'
+          | 'verifyingIdentity'
           | { sendingVc?: 'inProgress' | 'timeout' };
       };
   'tags': never;

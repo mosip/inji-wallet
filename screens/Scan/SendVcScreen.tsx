@@ -1,13 +1,14 @@
 import React from 'react';
 import { Input } from 'react-native-elements';
+import { useTranslation } from 'react-i18next';
+
 import { DeviceInfoList } from '../../components/DeviceInfoList';
 import { Button, Column, Row } from '../../components/ui';
 import { Colors } from '../../components/ui/styleUtils';
 import { SelectVcOverlay } from './SelectVcOverlay';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { useSendVcScreen } from './SendVcScreenController';
-import { useTranslation } from 'react-i18next';
-import { VerifyIdentityOverlay } from './VerifyIdentityOverlay';
+import { VerifyIdentityOverlay } from '../VerifyIdentityOverlay';
 
 export const SendVcScreen: React.FC = () => {
   const { t } = useTranslation('SendVcScreen');
@@ -58,16 +59,17 @@ export const SendVcScreen: React.FC = () => {
       />
 
       <VerifyIdentityOverlay
-        isVisible={controller.isVerifyingUserIdentity}
+        isVisible={controller.isVerifyingIdentity}
+        vc={controller.selectedVc}
         onCancel={controller.CANCEL}
         onFaceValid={controller.FACE_VALID}
         onFaceInvalid={controller.FACE_INVALID}
       />
 
       <MessageOverlay
-        isVisible={controller.isInvalidUserIdentity}
-        title={t('errors.invalidIdentity.title')}
-        message={t('errors.invalidIdentity.message')}
+        isVisible={controller.isInvalidIdentity}
+        title={t('VerifyIdentityOverlay:errors.invalidIdentity.title')}
+        message={t('VerifyIdentityOverlay:errors.invalidIdentity.message')}
         onBackdropPress={controller.DISMISS}>
         <Row>
           <Button

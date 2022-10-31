@@ -4,6 +4,15 @@ export interface Typegen0 {
   '@@xstate/typegen': true;
   'internalEvents': {
     '': { type: '' };
+    'done.invoke.request.reviewing.verifyingVp:invocation[0]': {
+      type: 'done.invoke.request.reviewing.verifyingVp:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
+    'error.platform.request.reviewing.verifyingVp:invocation[0]': {
+      type: 'error.platform.request.reviewing.verifyingVp:invocation[0]';
+      data: unknown;
+    };
     'xstate.after(CLEAR_DELAY)#clearingConnection': {
       type: 'xstate.after(CLEAR_DELAY)#clearingConnection';
     };
@@ -20,6 +29,7 @@ export interface Typegen0 {
     sendVcResponse:
       | 'done.invoke.accepted:invocation[0]'
       | 'done.invoke.request.reviewing.rejected:invocation[0]';
+    verifyVp: 'done.invoke.request.reviewing.verifyingVp:invocation[0]';
   };
   'missingImplementations': {
     actions: never;
@@ -53,7 +63,9 @@ export interface Typegen0 {
       | 'xstate.after(CLEAR_DELAY)#clearingConnection'
       | 'xstate.init';
     requestExistingVc: 'VC_RESPONSE';
-    requestReceivedVcs: 'ACCEPT';
+    requestReceivedVcs:
+      | 'ACCEPT'
+      | 'done.invoke.request.reviewing.verifyingVp:invocation[0]';
     requestReceiverInfo: 'CONNECTED';
     sendVcReceived: 'STORE_RESPONSE';
     setIncomingVc: 'VC_RECEIVED';
@@ -74,6 +86,7 @@ export interface Typegen0 {
     receiveVc: 'EXCHANGE_DONE';
     requestBluetooth: 'BLUETOOTH_DISABLED';
     sendVcResponse: 'CANCEL' | 'REJECT' | 'STORE_RESPONSE';
+    verifyVp: 'FACE_VALID';
   };
   'eventsCausingGuards': {
     hasExistingVc: 'VC_RESPONSE';
@@ -104,8 +117,11 @@ export interface Typegen0 {
     | 'reviewing.accepting.requestingReceivedVcs'
     | 'reviewing.accepting.storingVc'
     | 'reviewing.idle'
+    | 'reviewing.invalidIdentity'
     | 'reviewing.navigatingToHome'
     | 'reviewing.rejected'
+    | 'reviewing.verifyingIdentity'
+    | 'reviewing.verifyingVp'
     | 'waitingForConnection'
     | 'waitingForVc'
     | 'waitingForVc.inProgress'
@@ -117,8 +133,11 @@ export interface Typegen0 {
           | 'accepted'
           | 'accepting'
           | 'idle'
+          | 'invalidIdentity'
           | 'navigatingToHome'
           | 'rejected'
+          | 'verifyingIdentity'
+          | 'verifyingVp'
           | {
               accepting?:
                 | 'mergingIncomingVc'

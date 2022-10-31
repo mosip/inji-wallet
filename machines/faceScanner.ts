@@ -214,6 +214,7 @@ export const createFaceScannerMachine = (vcImage: string) =>
         },
 
         verifyImage: (context) => {
+          context.cameraRef.pausePreview();
           const rxDataURI =
             /data:(?<mime>[\w/\-.]+);(?<encoding>\w+),(?<data>.*)/;
           const matches = rxDataURI.exec(vcImage).groups;
@@ -255,6 +256,10 @@ export function selectIsScanning(state: State) {
 
 export function selectIsCapturing(state: State) {
   return state.matches('capturing');
+}
+
+export function selectIsVerifying(state: State) {
+  return state.matches('verifying');
 }
 
 export function selectIsValid(state: State) {

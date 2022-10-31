@@ -16,6 +16,7 @@ import {
   createFaceScannerMachine,
   selectIsInvalid,
   selectIsCapturing,
+  selectIsVerifying,
 } from '../machines/faceScanner';
 import { GlobalContext } from '../shared/GlobalContext';
 import { selectIsActive } from '../machines/app';
@@ -37,6 +38,7 @@ export const FaceScanner: React.FC<FaceScannerProps> = (props) => {
   const isCheckingPermission = useSelector(service, selectIsCheckingPermission);
   const isScanning = useSelector(service, selectIsScanning);
   const isCapturing = useSelector(service, selectIsCapturing);
+  const isVerifying = useSelector(service, selectIsVerifying);
 
   const setCameraRef = useCallback(
     (node: Camera) => {
@@ -79,7 +81,6 @@ export const FaceScanner: React.FC<FaceScannerProps> = (props) => {
 
   return (
     <Column crossAlign="center">
-      <Text size="smaller">{t('takeSelfie')}</Text>
       <Column style={[styles.scannerContainer]}>
         <Camera
           ratio="4:3"
@@ -89,7 +90,7 @@ export const FaceScanner: React.FC<FaceScannerProps> = (props) => {
         />
       </Column>
       <Centered margin="24 0">
-        {isCapturing ? (
+        {isCapturing || isVerifying ? (
           <RotatingIcon name="sync" size={64} />
         ) : (
           <Row crossAlign="center">

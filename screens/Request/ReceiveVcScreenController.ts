@@ -3,6 +3,9 @@ import { useContext } from 'react';
 import {
   RequestEvents,
   selectIncomingVc,
+  selectIsIncomingVp,
+  selectIsInvalidIdentity,
+  selectIsVerifyingIdentity,
   selectSenderInfo,
 } from '../../machines/request';
 import { selectVcLabel } from '../../machines/settings';
@@ -18,7 +21,19 @@ export function useReceiveVcScreen() {
     incomingVc: useSelector(requestService, selectIncomingVc),
     vcLabel: useSelector(settingsService, selectVcLabel),
 
+    isIncomingVp: useSelector(requestService, selectIsIncomingVp),
+    isVerifyingIdentity: useSelector(requestService, selectIsVerifyingIdentity),
+    isInvalidIdentity: useSelector(requestService, selectIsInvalidIdentity),
+
     ACCEPT: () => requestService.send(RequestEvents.ACCEPT()),
+    ACCEPT_AND_VERIFY: () =>
+      requestService.send(RequestEvents.ACCEPT_AND_VERIFY()),
     REJECT: () => requestService.send(RequestEvents.REJECT()),
+    RETRY_VERIFICATION: () =>
+      requestService.send(RequestEvents.RETRY_VERIFICATION()),
+    CANCEL: () => requestService.send(RequestEvents.CANCEL()),
+    DISMISS: () => requestService.send(RequestEvents.DISMISS()),
+    FACE_VALID: () => requestService.send(RequestEvents.FACE_VALID()),
+    FACE_INVALID: () => requestService.send(RequestEvents.FACE_INVALID()),
   };
 }
