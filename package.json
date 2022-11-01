@@ -9,7 +9,8 @@
     "build:android:mosip": "cd android && ./gradlew :app:assembleMosipRelease && cd ..",
     "build:android:newlogic": "cd android && ./gradlew :app:assembleNewlogicRelease && cd ..",
     "build:android:ph": "cd android && ./gradlew :app:assemblePhRelease && cd ..",
-    "i18n:compile-strings": "node scripts/compile-strings.js"
+    "i18n:compile-strings": "node scripts/compile-strings.js",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix"
   },
   "dependencies": {
     "@digitalbazaar/ed25519-signature-2018": "digitalbazaar/ed25519-signature-2018",
@@ -43,7 +44,7 @@
     "expo-status-bar": "~1.2.0",
     "expo-updates": "~0.11.6",
     "i18next": "^21.6.16",
-    "mosip-mobileid-sdk": "^1.0.10",
+    "mosip-inji-face-sdk": "^0.1.1",
     "react": "17.0.1",
     "react-i18next": "^11.16.6",
     "react-native": "0.64.3",

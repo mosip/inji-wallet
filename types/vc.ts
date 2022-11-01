@@ -4,6 +4,7 @@ export interface VC {
   tag: string;
   credential: DecodedCredential;
   verifiableCredential: VerifiableCredential;
+  verifiablePresentation?: VerifiablePresentation;
   generatedOn: Date;
   requestId: string;
   isVerified: boolean;

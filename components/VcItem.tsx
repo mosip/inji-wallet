@@ -15,6 +15,7 @@ import { Column, Row, Text } from './ui';
 import { Colors } from './ui/styleUtils';
 import { RotatingIcon } from './RotatingIcon';
 import { GlobalContext } from '../shared/GlobalContext';
+import { LocalizedField } from '../types/vc';
 
 const styles = StyleSheet.create({
   title: {

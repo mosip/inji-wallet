@@ -23,6 +23,10 @@ const VerifiedIcon: React.FC = () => {
 export const VcDetails: React.FC<VcDetailsProps> = (props) => {
   const { t, i18n } = useTranslation('VcDetails');
 
+  if (props.vc?.verifiableCredential == null) {
+    return <Text align="center">Loading details...</Text>;
+  }
+
   return (
     <Column>
       <Row pY={16} pX={8} align="space-between">

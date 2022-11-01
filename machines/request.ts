@@ -28,6 +28,8 @@ import {
   offlineSend,
   SendVcResponseEvent,
 } from '../shared/smartshare';
+import { log } from 'xstate/lib/actions';
+// import { verifyPresentation } from '../shared/vcjs/verifyPresentation';
 
 type SharingProtocol = 'OFFLINE' | 'ONLINE';
 
@@ -49,6 +51,7 @@ const model = createModel(
   {
     events: {
       ACCEPT: () => ({}),
+      ACCEPT_AND_VERIFY: () => ({}),
       REJECT: () => ({}),
       CANCEL: () => ({}),
       DISMISS: () => ({}),
@@ -67,6 +70,9 @@ const model = createModel(
       VC_RESPONSE: (response: unknown) => ({ response }),
       SWITCH_PROTOCOL: (value: boolean) => ({ value }),
       GOTO_SETTINGS: () => ({}),
+      FACE_VALID: () => ({}),
+      FACE_INVALID: () => ({}),
+      RETRY_VERIFICATION: () => ({}),
     },
   }
 );
@@ -79,6 +85,11 @@ export const requestMachine = model.createMachine(
     schema: {
       context: model.initialContext,
       events: {} as EventFrom<typeof model>,
+      services: {} as {
+        verifyVp: {
+          data: VC;
+        };
+      },
     },
     id: 'request',
     initial: 'inactive',
@@ -195,7 +206,7 @@ export const requestMachine = model.createMachine(
           DISCONNECT: 'disconnected',
           VC_RECEIVED: {
             target: 'reviewing',
-            actions: ['setIncomingVc'],
+            actions: 'setIncomingVc',
           },
         },
         initial: 'inProgress',
@@ -219,12 +230,42 @@ export const requestMachine = model.createMachine(
       reviewing: {
         on: {
           ACCEPT: '.accepting',
+          ACCEPT_AND_VERIFY: '.verifyingIdentity',
           REJECT: '.rejected',
           CANCEL: '.rejected',
         },
         initial: 'idle',
         states: {
           idle: {},
+          verifyingIdentity: {
+            on: {
+              FACE_VALID: {
+                target: 'verifyingVp',
+              },
+              FACE_INVALID: {
+                target: 'invalidIdentity',
+              },
+              CANCEL: 'idle',
+            },
+          },
+          invalidIdentity: {
+            on: {
+              DISMISS: 'idle',
+              RETRY_VERIFICATION: 'verifyingIdentity',
+            },
+          },
+          verifyingVp: {
+            invoke: {
+              src: 'verifyVp',
+              onDone: {
+                target: 'accepting',
+              },
+              onError: {
+                target: 'idle',
+                actions: log('Failed to verify Verifiable Presentation'),
+              },
+            },
+          },
           accepting: {
             initial: 'requestingReceivedVcs',
             states: {
@@ -346,7 +387,6 @@ export const requestMachine = model.createMachine(
             return IdpassSmartshare.getConnectionParameters();
           } else {
             const cid = uuid.v4();
-            console.log('ONLINE', cid);
             return JSON.stringify({
               pk: '',
               cid,
@@ -359,8 +399,16 @@ export const requestMachine = model.createMachine(
         senderInfo: (_context, event) => event.senderInfo,
       }),
 
-      setIncomingVc: model.assign({
-        incomingVc: (_context, event) => event.vc,
+      setIncomingVc: assign({
+        incomingVc: (_context, event) => {
+          const vp = event.vc.verifiablePresentation;
+          return vp != null
+            ? {
+                ...event.vc,
+                verifiableCredential: vp.verifiableCredential[0],
+              }
+            : event.vc;
+        },
       }),
 
       registerLoggers: assign({
@@ -558,12 +606,6 @@ export const requestMachine = model.createMachine(
           onlineSubscribe(
             'send-vc',
             async ({ isChunked, vc, vcChunk }) => {
-              console.log(
-                'RECEIVE CHUNK',
-                isChunked,
-                vcChunk.chunk,
-                vcChunk.total
-              );
               await GoogleNearbyMessages.unpublish();
               if (isChunked) {
                 rawData += vcChunk.rawData;
@@ -572,7 +614,6 @@ export const requestMachine = model.createMachine(
                   GoogleNearbyMessages.unsubscribe();
                   callback({ type: 'VC_RECEIVED', vc });
                 } else {
-                  console.log('VC_RESPONSE_SEND', vcChunk.chunk);
                   await onlineSend({
                     type: 'send-vc:response',
                     data: vcChunk.chunk,
@@ -601,6 +642,22 @@ export const requestMachine = model.createMachine(
         } else {
           onlineSend(event);
         }
+      },
+
+      verifyVp: (context) => async () => {
+        const vp = context.incomingVc.verifiablePresentation;
+
+        // TODO
+        // const challenge = ?
+        // await verifyPresentation(vp, challenge);
+
+        const vc: VC = {
+          ...context.incomingVc,
+          verifiablePresentation: null,
+          verifiableCredential: vp.verifiableCredential[0],
+        };
+
+        return Promise.resolve(vc);
       },
     },
 
@@ -646,6 +703,10 @@ export function selectSharingProtocol(state: State) {
   return state.context.sharingProtocol;
 }
 
+export function selectIsIncomingVp(state: State) {
+  return state.context.incomingVc?.verifiablePresentation != null;
+}
+
 export function selectIsReviewing(state: State) {
   return state.matches('reviewing');
 }
@@ -656,6 +717,18 @@ export function selectIsAccepted(state: State) {
 
 export function selectIsRejected(state: State) {
   return state.matches('reviewing.rejected');
+}
+
+export function selectIsVerifyingIdentity(state: State) {
+  return state.matches('reviewing.verifyingIdentity');
+}
+
+export function selectIsVerifyingVp(state: State) {
+  return state.matches('reviewing.verifyingVp');
+}
+
+export function selectIsInvalidIdentity(state: State) {
+  return state.matches('reviewing.invalidIdentity');
 }
 
 export function selectIsDisconnected(state: State) {

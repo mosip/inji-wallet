@@ -12,8 +12,9 @@ import {
   selectIsSendingVc,
   selectVcName,
   selectIsSendingVcTimeout,
-  selectIsVerifyingUserIdentity,
-  selectIsInvalidUserIdentity,
+  selectIsVerifyingIdentity,
+  selectIsInvalidIdentity,
+  selectSelectedVc,
   selectIsCancelling,
 } from '../../machines/scan';
 import { selectVcLabel } from '../../machines/settings';
@@ -52,20 +53,15 @@ export function useSendVcScreen() {
     vcName: useSelector(scanService, selectVcName),
     vcLabel: useSelector(settingsService, selectVcLabel),
     vcKeys: useSelector(vcService, selectShareableVcs),
+    selectedVc: useSelector(scanService, selectSelectedVc),
 
     isSelectingVc: useSelector(scanService, selectIsSelectingVc),
     isSendingVc,
     isSendingVcTimeout,
     isAccepted: useSelector(scanService, selectIsAccepted),
     isRejected: useSelector(scanService, selectIsRejected),
-    isVerifyingUserIdentity: useSelector(
-      scanService,
-      selectIsVerifyingUserIdentity
-    ),
-    isInvalidUserIdentity: useSelector(
-      scanService,
-      selectIsInvalidUserIdentity
-    ),
+    isVerifyingIdentity: useSelector(scanService, selectIsVerifyingIdentity),
+    isInvalidIdentity: useSelector(scanService, selectIsInvalidIdentity),
     isCancelling: useSelector(scanService, selectIsCancelling),
 
     ACCEPT_REQUEST: () => scanService.send(ScanEvents.ACCEPT_REQUEST()),
