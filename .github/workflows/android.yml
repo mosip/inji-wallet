@@ -6,7 +6,6 @@ on:
       - main
       - develop
       - demobranch
-      - qa-develop
     tags:
       - '*'
 
