@@ -96,7 +96,7 @@
     "*.strings.json": "node scripts/compile-strings.js"
   },
   "overrides": {
-    "react": "$react",
-    "react-native": "$react-native"
+    "react": "17.0.1",
+    "react-native": "0.64.3"
   }
 }
