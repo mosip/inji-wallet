@@ -65,7 +65,7 @@ eg:-
 
 To change the color of TabItemText
 
-![Image](../../../assets/img3.png 'Image')
+![Image](../../../docs\images\tabItemText.png 'Image')
 
 ```
 export const DefaultTheme = {
@@ -78,7 +78,7 @@ export const DefaultTheme = {
 
 To change the color of Details Label Text
 
-![Image](../../../assets/img1.png 'Image')
+![Image](../../../docs\images\detailsLabel.png 'Image')
 
 ```
 export const DefaultTheme = {
@@ -89,14 +89,14 @@ export const DefaultTheme = {
 }
 ```
 
-To change the color of Details Label Text
+To change the color of Details Value Text
 
-![Image](../../../assets/img1.png 'Image')
+![Image](../../../docs\images\detailsValue.png 'Image')
 
 ```
 export const DefaultTheme = {
   Colors: {
-      DetailsLabel: colors.Orange,
+      Details: Colors.Black,
     ...
   }
 }
@@ -104,7 +104,7 @@ export const DefaultTheme = {
 
 To change the color of AddId Button Text and Background
 
-![Image](../../../assets/img4.png 'Image')
+![Image](../../../docs\images\AddIdButton.png 'Image')
 
 ```
 export const DefaultTheme = {
@@ -118,7 +118,7 @@ export const DefaultTheme = {
 
 To change the color of Icons
 
-![Image](../../../assets/img6.png 'Image')
+![Image](../../../docs\images\Icons.png 'Image')
 
 ```
 export const DefaultTheme = {
@@ -131,7 +131,7 @@ export const DefaultTheme = {
 
 To change the Background Color of Icons
 
-![Image](../../../assets/img7.png 'Image')
+![Image](../../../docs\images\IconBg.png 'Image')
 
 ```
 export const DefaultTheme = {
@@ -144,12 +144,65 @@ export const DefaultTheme = {
 
 To change the Color of Loading Transition
 
-![Image](../../../assets/img8.png 'Image')
+![Image](../../../docs\images\LoadingTransition.png 'Image')
 
 ```
 export const DefaultTheme = {
   Colors: {
        Loading: colors.Orange,
+    ...
+  }
+}
+```
+
+To change the Color of Error message
+
+![Image](../../../docs\images\errorMessage.png 'Image')
+
+```
+export const DefaultTheme = {
+  Colors: {
+      errorMessage: Colors.Red,
+    ...
+  }
+}
+```
+
+To change the Color of noUinText
+
+![Image](../../../docs\images\noUinText.png 'Image')
+
+```
+export const DefaultTheme = {
+  Colors: {
+       noUinText : colors.Orange,
+    ...
+  }
+}
+```
+
+To change the Colors of profile Label and Profile values
+
+![Image](../../../docs\images\Profilevalues.png 'Image')
+
+```
+export const DefaultTheme = {
+  Colors: {
+     profileLabel: Colors.Black,
+     profileValue: Colors.Grey,
+    ...
+  }
+}
+```
+
+To change the Color of profileVersion
+
+![Image](../../../docs\images\profileVersion.png 'Image')
+
+```
+export const DefaultTheme = {
+  Colors: {
+      profileVersion: Colors.Grey,
     ...
   }
 }
