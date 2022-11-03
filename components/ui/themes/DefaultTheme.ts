@@ -99,7 +99,7 @@ export const DefaultTheme = {
       marginLeft: 300,
     },
     closeCardBgContainer: {
-      borderRadius: 10,
+      borderRadius: 26,
       margin: 8,
       backgroundColor: '#fff',
       shadowColor: '#000',
