@@ -113,6 +113,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
       <ImageBackground
         source={!verifiableCredential ? null : Theme.CloseCard}
         resizeMode="stretch"
+        borderRadius={4}
         style={
           !verifiableCredential
             ? Theme.Styles.vertloadingContainer
