@@ -1,15 +1,9 @@
 import React from 'react';
-import {
-  Dimensions,
-  RefreshControl,
-  SafeAreaView,
-  StyleSheet,
-  View,
-} from 'react-native';
+import { Dimensions, RefreshControl, SafeAreaView, View } from 'react-native';
 import { Divider, Icon, ListItem, Overlay } from 'react-native-elements';
 import { Button, Column, Centered, Row, Text } from '../../components/ui';
 import { VidItem } from '../../components/VidItem';
-import { Colors } from '../../components/ui/styleUtils';
+import { Theme } from '../../components/ui/styleUtils';
 import { ToastItem } from '../../components/ui/ToastItem';
 import { OIDcAuthenticationOverlay } from '../../components/OIDcAuthModal';
 import { useTranslation } from 'react-i18next';
@@ -18,35 +12,6 @@ import { useRevoke } from './RevokeController';
 export const Revoke: React.FC<RevokeScreenProps> = (props) => {
   const controller = useRevoke();
   const { t } = useTranslation('ProfileScreen');
-
-  const styles = StyleSheet.create({
-    buttonContainer: {
-      position: 'absolute',
-      left: 0,
-      right: 'auto',
-    },
-    view: {
-      flex: 1,
-      width: Dimensions.get('screen').width,
-    },
-    revokeView: { padding: 20 },
-    flexRow: { flexDirection: 'row', margin: 0, padding: 0 },
-    rowStyle: { flexDirection: 'column', justifyContent: 'space-between' },
-    viewContainer: {
-      backgroundColor: 'rgba(0,0,0,.6)',
-      width: Dimensions.get('screen').width,
-      height: Dimensions.get('screen').height,
-      position: 'absolute',
-      top: 0,
-      zIndex: 999,
-    },
-    boxContainer: {
-      backgroundColor: Colors.White,
-      padding: 24,
-      elevation: 6,
-      borderRadius: 4,
-    },
-  });
 
   return (
     <ListItem bottomDivider onPress={() => controller.setAuthenticating(true)}>
@@ -63,12 +28,12 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
           {controller.toastVisible && (
             <ToastItem message={controller.message} />
           )}
-          <View style={styles.view}>
+          <View style={Theme.RevokeStyles.view}>
             <Row align="center" crossAlign="center" margin="0 0 10 0">
-              <View style={styles.buttonContainer}>
+              <View style={Theme.RevokeStyles.buttonContainer}>
                 <Button
                   type="clear"
-                  icon={<Icon name="chevron-left" color={Colors.Orange} />}
+                  icon={<Icon name="chevron-left" color={Theme.Colors.Icon} />}
                   title=""
                   onPress={() => controller.setIsViewing(false)}
                 />
@@ -76,8 +41,8 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
               <Text size="small">{t('revokeHeader')}</Text>
             </Row>
             <Divider />
-            <Row style={styles.rowStyle} fill>
-              <View style={styles.revokeView}>
+            <Row style={Theme.RevokeStyles.rowStyle} fill>
+              <View style={Theme.RevokeStyles.revokeView}>
                 {controller.vidKeys.length > 0 && (
                   <Column
                     scroll
@@ -120,11 +85,11 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
           </View>
         </SafeAreaView>
         {controller.isRevoking && (
-          <View style={styles.viewContainer}>
+          <View style={Theme.RevokeStyles.viewContainer}>
             <Centered fill>
               <Column
                 width={Dimensions.get('screen').width * 0.8}
-                style={styles.boxContainer}>
+                style={Theme.RevokeStyles.boxContainer}>
                 <Text weight="semibold" margin="0 0 12 0">
                   {t('revokeLabel')}
                 </Text>
@@ -134,7 +99,7 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
                   })}
                 </Text>
                 {controller.selectedVidKeys.map((vcKey, index) => (
-                  <View style={styles.flexRow} key={index}>
+                  <View style={Theme.RevokeStyles.flexRow} key={index}>
                     <Text margin="0 8" weight="bold">
                       {'\u2022'}
                     </Text>

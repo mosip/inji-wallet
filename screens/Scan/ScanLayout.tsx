@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Icon } from 'react-native-elements';
 
-import { Colors } from '../../components/ui/styleUtils';
+import { Theme } from '../../components/ui/styleUtils';
 import { SendVcScreen } from './SendVcScreen';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { useScanLayout } from './ScanLayoutController';
@@ -24,7 +24,9 @@ export const ScanLayout: React.FC = () => {
           headerTitleAlign: 'center',
           headerRight: () => (
             <LanguageSelector
-              triggerComponent={<Icon name="language" color={Colors.Orange} />}
+              triggerComponent={
+                <Icon name="language" color={Theme.Colors.Icon} />
+              }
             />
           ),
         }}>

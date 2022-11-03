@@ -43,18 +43,4 @@ allprojects {
 
 allprojects { repositories { maven { url "$rootDir/../node_modules/expo-camera/android/maven" } } }
 
-sonarqube {
-    properties {
-        property "sonar.host.url", "https://sonarcloud.io"
-        property "sonar.projectKey", "mosip_inji"
-        property "sonar.projectName", "inji"
-        property 'sonar.organization', 'mosip'
-        // property "sonar.projectVersion", project.versionName
-        property "sonar.sourceEncoding", "UTF-8"
-        //ignoring the below files
-        property "sonar.c.file.suffixes", "-"
-        property "sonar.cpp.file.suffixes", "-"
-        property "sonar.objc.file.suffixes", "-"
-    }
-}
 

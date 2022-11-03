@@ -23,6 +23,10 @@ const VerifiedIcon: React.FC = () => {
 export const VcDetails: React.FC<VcDetailsProps> = (props) => {
   const { t, i18n } = useTranslation('VcDetails');
 
+  //Assigning the UIN and VID from the VC details to display the idtype label
+  const uin = props.vc?.verifiableCredential.credentialSubject.UIN;
+  const vid = props.vc?.verifiableCredential.credentialSubject.VID;
+
   return (
     <Column>
       <ImageBackground
@@ -55,36 +59,39 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
           />
 
           <Column style={Theme.Styles.labelPartContainer}>
-            <Column fill>
-              <Text
-                weight="bold"
-                size="smaller"
-                color={Theme.Colors.DetailsLabel}>
-                {t('fullName')}
-              </Text>
-              <Text
-                weight="semibold"
-                size="smaller"
-                color={Theme.Colors.Details}>
-                {getLocalizedField(
-                  props.vc?.verifiableCredential.credentialSubject.fullName
-                )}
-              </Text>
-            </Column>
-            <Column fill style={Theme.Styles.labelPart}>
-              <Text
-                weight="bold"
-                size="smaller"
-                color={Theme.Colors.DetailsLabel}>
-                {props.vc?.idType}
-              </Text>
-              <Text
-                weight="semibold"
-                size="smaller"
-                color={Theme.Colors.Details}>
-                {props.vc?.id}
-              </Text>
-            </Column>
+            {uin ? (
+              <Column fill>
+                <Text
+                  weight="bold"
+                  size="smaller"
+                  color={Theme.Colors.DetailsLabel}>
+                  {t('uin')}
+                </Text>
+                <Text
+                  weight="semibold"
+                  size="smaller"
+                  color={Theme.Colors.Details}>
+                  {uin}
+                </Text>
+              </Column>
+            ) : null}
+
+            {vid ? (
+              <Column fill>
+                <Text
+                  weight="bold"
+                  size="smaller"
+                  color={Theme.Colors.DetailsLabel}>
+                  {t('vid')}
+                </Text>
+                <Text
+                  weight="semibold"
+                  size="smaller"
+                  color={Theme.Colors.Details}>
+                  {vid}
+                </Text>
+              </Column>
+            ) : null}
 
             <Column fill style={Theme.Styles.labelPart}>
               <Text

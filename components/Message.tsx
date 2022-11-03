@@ -1,45 +1,21 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { Dimensions, View } from 'react-native';
 import { LinearProgress } from 'react-native-elements';
 import { Button, Centered, Column, Text } from './ui';
-import { Colors, elevation } from './ui/styleUtils';
-
-const styles = StyleSheet.create({
-  overlay: {
-    ...elevation(5),
-    backgroundColor: Colors.White,
-    padding: 0,
-  },
-  button: {
-    borderTopLeftRadius: 0,
-    borderTopRightRadius: 0,
-  },
-  viewContainer: {
-    backgroundColor: 'rgba(0,0,0,.6)',
-    width: Dimensions.get('screen').width,
-    height: Dimensions.get('screen').height,
-    position: 'absolute',
-    top: 0,
-    zIndex: 9,
-  },
-  boxContainer: {
-    backgroundColor: Colors.White,
-    padding: 24,
-    elevation: 6,
-    borderRadius: 4,
-  },
-});
+import { Theme } from './ui/styleUtils';
 
 export const Message: React.FC<MessageProps> = (props) => {
   const { t } = useTranslation('common');
   return (
-    <View style={styles.viewContainer} onTouchStart={props.onBackdropPress}>
+    <View
+      style={Theme.MessageStyles.viewContainer}
+      onTouchStart={props.onBackdropPress}>
       <Centered fill>
         <Column
           width={Dimensions.get('screen').width * 0.8}
-          style={styles.boxContainer}>
+          style={Theme.MessageStyles.boxContainer}>
           <Column>
             {props.title && (
               <Text weight="semibold" margin="0 0 12 0">
@@ -49,7 +25,10 @@ export const Message: React.FC<MessageProps> = (props) => {
             {props.message && <Text margin="0 0 12 0">{props.message}</Text>}
             {props.progress && <Progress progress={props.progress} />}
             {props.hint && (
-              <Text size="smaller" color={Colors.Grey} margin={[4, 0, 0, 0]}>
+              <Text
+                size="smaller"
+                color={Theme.Colors.textLabel}
+                margin={[4, 0, 0, 0]}>
                 {props.hint}
               </Text>
             )}
@@ -58,7 +37,7 @@ export const Message: React.FC<MessageProps> = (props) => {
             <Button
               title={t('cancel')}
               onPress={props.onCancel}
-              styles={styles.button}
+              styles={Theme.MessageStyles.button}
             />
           )}
         </Column>

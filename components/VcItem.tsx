@@ -8,7 +8,6 @@ import {
   selectVerifiableCredential,
   selectGeneratedOn,
   selectTag,
-  selectId,
   vcItemMachine,
   selectContext,
 } from '../machines/vcItem';
@@ -89,7 +88,14 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
   const service = useInterpret(machine.current);
   const context = useSelector(service, selectContext);
   const verifiableCredential = useSelector(service, selectVerifiableCredential);
-  const uin = useSelector(service, selectId);
+
+  //Assigning the UIN and VID from the VC details to display the idtype label
+  const uin = verifiableCredential
+    ? verifiableCredential.credentialSubject.UIN
+    : null;
+  const vid = verifiableCredential
+    ? verifiableCredential.credentialSubject.VID
+    : null;
   const tag = useSelector(service, selectTag);
   const generatedOn = useSelector(service, selectGeneratedOn);
   const fullName = !verifiableCredential
@@ -166,7 +172,17 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
 
             <Column margin="0 0 0 25">
               {getDetails(t('fullName'), fullName, verifiableCredential)}
-              {getDetails(t('uin'), tag || uin, verifiableCredential)}
+              {!verifiableCredential
+                ? getDetails(
+                    t('idtype'),
+                    tag || uin || vid,
+                    verifiableCredential
+                  )
+                : null}
+              {uin
+                ? getDetails(t('uin'), tag || uin, verifiableCredential)
+                : null}
+              {vid ? getDetails(t('vid'), vid, verifiableCredential) : null}
               {getDetails(t('generatedOn'), generatedOn, verifiableCredential)}
               {getDetails(t('status'), t('valid'), verifiableCredential)}
             </Column>

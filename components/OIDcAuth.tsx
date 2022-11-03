@@ -1,22 +1,10 @@
 import React from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Button, Centered, Column, Text } from './ui';
 import { ModalProps } from './ui/Modal';
-import { Colors } from './ui/styleUtils';
-
-const styles = StyleSheet.create({
-  viewContainer: {
-    backgroundColor: Colors.White,
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
-    position: 'absolute',
-    top: 0,
-    zIndex: 9,
-    padding: 32,
-  },
-});
+import { Theme } from './ui/styleUtils';
 
 export const OIDcAuthenticationModal: React.FC<OIDcAuthenticationModalProps> = (
   props
@@ -24,12 +12,12 @@ export const OIDcAuthenticationModal: React.FC<OIDcAuthenticationModalProps> = (
   const { t } = useTranslation('OIDcAuth');
 
   return (
-    <View style={styles.viewContainer}>
+    <View style={Theme.OIDCAuthStyles.viewContainer}>
       <Column safe fill align="space-between">
         <Centered fill>
           <Icon
             name="card-account-details-outline"
-            color={Colors.Orange}
+            color={Theme.Colors.Icon}
             size={30}
           />
           <Text
@@ -40,7 +28,10 @@ export const OIDcAuthenticationModal: React.FC<OIDcAuthenticationModalProps> = (
             {t('title')}
           </Text>
           <Text align="center">{t('text')}</Text>
-          <Text align="center" color={Colors.Red} margin="16 0 0 0">
+          <Text
+            align="center"
+            color={Theme.Colors.errorMessage}
+            margin="16 0 0 0">
             {props.error}
           </Text>
         </Centered>

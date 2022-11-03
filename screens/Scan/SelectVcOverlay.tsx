@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Dimensions, StyleSheet } from 'react-native';
+import { Dimensions } from 'react-native';
 import { Overlay } from 'react-native-elements/dist/overlay/Overlay';
 import { Button, Column, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
@@ -10,20 +10,14 @@ import {
   useSelectVcOverlay,
 } from './SelectVcOverlayController';
 
-const styles = StyleSheet.create({
-  overlay: {
-    ...Theme.elevation(5),
-    backgroundColor: Theme.Colors.overlayBackgroundColor,
-    padding: 0,
-  },
-});
-
 export const SelectVcOverlay: React.FC<SelectVcOverlayProps> = (props) => {
   const { t } = useTranslation('SelectVcOverlay');
   const controller = useSelectVcOverlay(props);
 
   return (
-    <Overlay isVisible={props.isVisible} overlayStyle={styles.overlay}>
+    <Overlay
+      isVisible={props.isVisible}
+      overlayStyle={Theme.SelectVcOverlayStyles.overlay}>
       <Column
         padding="24"
         width={Dimensions.get('screen').width * 0.9}
