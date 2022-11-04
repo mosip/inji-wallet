@@ -4,13 +4,15 @@ import { initReactI18next } from 'react-i18next';
 
 import en from './locales/en.json';
 import fil from './locales/fil.json';
+import ar from './locales/en.json';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const resources = { en, fil };
+const resources = { en, fil, ar };
 
 export const SUPPORTED_LANGUAGES = {
   en: 'English',
   fil: 'Filipino',
+  ar: 'عربى',
 };
 
 i18next

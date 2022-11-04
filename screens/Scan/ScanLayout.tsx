@@ -9,6 +9,7 @@ import { MessageOverlay } from '../../components/MessageOverlay';
 import { useScanLayout } from './ScanLayoutController';
 import { LanguageSelector } from '../../components/LanguageSelector';
 import { ScanScreen } from './ScanScreen';
+import { I18nManager } from 'react-native';
 
 const ScanStack = createNativeStackNavigator();
 
@@ -22,11 +23,22 @@ export const ScanLayout: React.FC = () => {
         initialRouteName="ScanScreen"
         screenOptions={{
           headerTitleAlign: 'center',
-          headerRight: () => (
-            <LanguageSelector
-              triggerComponent={<Icon name="language" color={Colors.Orange} />}
-            />
-          ),
+          headerRight: () =>
+            I18nManager.isRTL ? null : (
+              <LanguageSelector
+                triggerComponent={
+                  <Icon name="language" color={Colors.Orange} />
+                }
+              />
+            ),
+          headerLeft: () =>
+            I18nManager.isRTL ? (
+              <LanguageSelector
+                triggerComponent={
+                  <Icon name="language" color={Colors.Orange} />
+                }
+              />
+            ) : null,
         }}>
         {!controller.isDone && (
           <ScanStack.Screen

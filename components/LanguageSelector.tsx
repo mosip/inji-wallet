@@ -1,9 +1,11 @@
 import React from 'react';
 import { SUPPORTED_LANGUAGES } from '../i18n';
-import { View } from 'react-native';
+import { I18nManager, View } from 'react-native';
 import { Picker } from './ui/Picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
+import RNRestart from 'react-native-restart';
 
 export const LanguageSelector: React.FC<LanguageSelectorProps> = (props) => {
   const { i18n } = useTranslation();
@@ -11,9 +13,23 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = (props) => {
     ([value, label]) => ({ label, value })
   );
 
-  const changeLanguage = async (value: string) => {
-    await i18n.changeLanguage(value);
-    await AsyncStorage.setItem('language', i18n.language);
+  const changeLanguage = async (language: string) => {
+    if (language !== i18n.language) {
+      await i18n.changeLanguage(language).then(async () => {
+        await AsyncStorage.setItem('language', i18n.language);
+        const isRTL = i18next.dir(language) === 'rtl' ? true : false;
+        if (isRTL !== I18nManager.isRTL) {
+          try {
+            I18nManager.forceRTL(isRTL);
+            setTimeout(() => {
+              RNRestart.Restart();
+            }, 150);
+          } catch (e) {
+            console.log('error', e);
+          }
+        }
+      });
+    }
   };
 
   return (
