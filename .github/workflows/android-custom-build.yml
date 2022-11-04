@@ -16,7 +16,7 @@ jobs:
   build-android:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.5.0
+      - uses: actions/checkout@v3.1.0
 
       # Cache stuff for faster build
       - name: Cache local npm repository
