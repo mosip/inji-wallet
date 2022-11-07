@@ -9,7 +9,7 @@ import { Message } from '../../components/Message';
 import { ReceiveVcScreen } from './ReceiveVcScreen';
 import { LanguageSelector } from '../../components/LanguageSelector';
 import { Colors } from '../../components/ui/styleUtils';
-import { I18nManager } from 'react-native';
+import { I18nManager, Platform } from 'react-native';
 
 const RequestStack = createNativeStackNavigator();
 
@@ -25,7 +25,7 @@ export const RequestLayout: React.FC = () => {
           headerTitleAlign: 'center',
           headerShadowVisible: false,
           headerRight: () =>
-            I18nManager.isRTL ? null : (
+            I18nManager.isRTL && Platform.OS !== 'ios' ? null : (
               <LanguageSelector
                 triggerComponent={
                   <Icon name="language" color={Colors.Orange} />
@@ -33,7 +33,7 @@ export const RequestLayout: React.FC = () => {
               />
             ),
           headerLeft: () =>
-            I18nManager.isRTL ? (
+            I18nManager.isRTL && Platform.OS !== 'ios' ? (
               <LanguageSelector
                 triggerComponent={
                   <Icon name="language" color={Colors.Orange} />
