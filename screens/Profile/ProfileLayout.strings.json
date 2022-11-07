@@ -1,0 +1,24 @@
+{
+  "profile": "Profile",
+  "creditsScreen": {
+    "title": "Credits and legal notices"
+  },
+  "revokeScreen": {
+    "title": "Revoke VID",
+    "revokingVids": "You are about to revoke ({{count}}) VIDs.",
+    "revokingVidsAfter": "This means you will no longer be able to use or view any of the IDs linked to those VID(s). \nAre you sure you want to proceed?",
+    "empty": "Empty",
+    "revokeSuccessful": "VID successfully revoked"
+  },
+  "transactionHistoryScreen": {
+    "title": "Transaction History",
+    "showingRecords": "Showing last {numRecords} records",
+    "filterButton": "Filter"
+  },
+  "name": "Name",
+  "vcLabel": "VC Label",
+  "language": "Language",
+  "bioUnlock": "Biometric unlock",
+  "authFactorUnlock": "Unlock auth factor",
+  "logout": "Log-out"
+}

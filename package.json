@@ -1,6 +1,7 @@
 {
   "scripts": {
     "prepare": "husky install",
+    "prestart": "if which watchman; then watchman watch-del-all; fi",
     "start": "react-native start",
     "android:mosip": "react-native run-android --variant=mosipDebug",
     "android:newlogic": "react-native run-android --variant=newlogicDebug",
