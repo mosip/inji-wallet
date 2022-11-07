@@ -1,6 +1,6 @@
 import React, { useContext, useRef } from 'react';
 import { useInterpret, useSelector } from '@xstate/react';
-import { Pressable, StyleSheet } from 'react-native';
+import { I18nManager, Pressable, StyleSheet } from 'react-native';
 import { CheckBox, Icon } from 'react-native-elements';
 import { ActorRefFrom } from 'xstate';
 import {
@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
   title: {
     color: Colors.Black,
     backgroundColor: 'transparent',
+    textAlign: 'left',
   },
   loadingTitle: {
     color: 'transparent',
@@ -65,7 +66,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
       onPress={() => props.onPress(service)}
     />
   ) : (
-    <Icon name="chevron-right" />
+    <Icon name={I18nManager.isRTL ? 'chevron-left' : 'chevron-right'} />
   );
 
   return (

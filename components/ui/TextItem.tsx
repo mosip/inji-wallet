@@ -12,6 +12,7 @@ export const TextItem: React.FC<TextItemProps> = (props) => {
       style={{
         borderBottomColor: Colors.Grey6,
         borderBottomWidth: props.divider ? 1 : 0,
+        alignItems: 'flex-start',
       }}>
       {props.label && (
         <Text size="smaller" color={Colors.Grey} weight="semibold">

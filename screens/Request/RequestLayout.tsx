@@ -9,6 +9,7 @@ import { Message } from '../../components/Message';
 import { ReceiveVcScreen } from './ReceiveVcScreen';
 import { LanguageSelector } from '../../components/LanguageSelector';
 import { Colors } from '../../components/ui/styleUtils';
+import { I18nManager, Platform } from 'react-native';
 
 const RequestStack = createNativeStackNavigator();
 
@@ -22,11 +23,23 @@ export const RequestLayout: React.FC = () => {
         initialRouteName="RequestScreen"
         screenOptions={{
           headerTitleAlign: 'center',
-          headerRight: () => (
-            <LanguageSelector
-              triggerComponent={<Icon name="language" color={Colors.Orange} />}
-            />
-          ),
+          headerShadowVisible: false,
+          headerRight: () =>
+            I18nManager.isRTL && Platform.OS !== 'ios' ? null : (
+              <LanguageSelector
+                triggerComponent={
+                  <Icon name="language" color={Colors.Orange} />
+                }
+              />
+            ),
+          headerLeft: () =>
+            I18nManager.isRTL && Platform.OS !== 'ios' ? (
+              <LanguageSelector
+                triggerComponent={
+                  <Icon name="language" color={Colors.Orange} />
+                }
+              />
+            ) : null,
         }}>
         {!controller.isDone && (
           <RequestStack.Screen
