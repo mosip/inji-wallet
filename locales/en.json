@@ -146,8 +146,9 @@
     },
     "transactionHistoryScreen": {
       "title": "Transaction History",
-      "showingRecords": "Showing last {numRecords} records",
-      "filterButton": "Filter"
+      "showingRecords": "Showing last {{numRecords}} records",
+      "noRecords": "No records found",
+      "fetchingRecords": "Fetching records..."
     },
     "name": "Name",
     "vcLabel": "VC Label",
