@@ -11,6 +11,7 @@ buildscript {
         google()
         gradlePluginPortal()
         mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath("com.android.tools.build:gradle:4.1.0")
@@ -38,17 +39,7 @@ allprojects {
         gradlePluginPortal()
         mavenCentral()
         maven { url 'https://www.jitpack.io' }
-
-        all { ArtifactRepository repo ->
-            if(repo instanceof MavenArtifactRepository){
-                def url = repo.url.toString()
-                if (url.startsWith('https://jcenter.bintray.com/')) {
-                    remove repo
-                    gradlePluginPortal()
-                    mavenCentral()
-                }
-            }
-        }
+        jcenter()
     }
 }
 
