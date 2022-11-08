@@ -31,30 +31,31 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
     <Column>
       <Row pY={16} pX={8} align="space-between">
         <Column fill elevation={1} pY={12} pX={16} margin="0 8">
-          <Text size="smaller" color={Colors.Grey}>
+          <Text size="smaller" color={Colors.Grey} align="left">
             {t('generatedOn')}
           </Text>
-          <Text weight="bold" size="smaller">
+          <Text weight="bold" size="smaller" align="left">
             {new Date(props.vc?.generatedOn).toLocaleDateString()}
           </Text>
         </Column>
         <Column fill elevation={1} pY={12} pX={16} margin="0 8">
           <Text
             size="smaller"
+            align="left"
             color={Colors.Grey}
             style={{ textTransform: 'uppercase' }}>
             {props.vc?.idType}
           </Text>
-          <Text weight="bold" size="smaller">
+          <Text weight="bold" size="smaller" align="left">
             {props.vc?.id}
           </Text>
         </Column>
         <Column fill elevation={1} pY={12} pX={16} margin="0 8">
-          <Text size="smaller" color={Colors.Grey}>
+          <Text size="smaller" align="left" color={Colors.Grey}>
             {t('status')}
           </Text>
           <Row>
-            <Text weight="bold" size="smaller">
+            <Text weight="bold" size="smaller" align="left">
               {t('valid')}
             </Text>
             {props.vc?.isVerified && <VerifiedIcon />}
