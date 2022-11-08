@@ -3,12 +3,11 @@ import {
   BottomTabNavigationOptions,
   BottomTabScreenProps,
 } from '@react-navigation/bottom-tabs';
-
 import { HomeScreen } from '../screens/Home/HomeScreen';
+import { ProfileScreen } from '../screens/Profile/ProfileScreen';
 import { RootStackParamList } from './index';
 import { RequestLayout } from '../screens/Request/RequestLayout';
 import { ScanLayout } from '../screens/Scan/ScanLayout';
-import { ProfileLayout } from '../screens/Profile/ProfileLayout';
 
 export const mainRoutes: TabScreen[] = [
   {
@@ -34,11 +33,8 @@ export const mainRoutes: TabScreen[] = [
   },
   {
     name: 'Profile',
-    component: ProfileLayout,
+    component: ProfileScreen,
     icon: 'person',
-    options: {
-      headerShown: false,
-    },
   },
 ];
 

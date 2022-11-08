@@ -19,7 +19,7 @@ import {
 
 import { ActorRefFrom } from 'xstate';
 
-export function useRevokeScreen() {
+export function useRevoke() {
   const { t } = useTranslation('ProfileScreen');
   const { appService } = useContext(GlobalContext);
   const vcService = appService.children.get('vc');
