@@ -5,7 +5,7 @@ import {
   getDeviceName,
   getDeviceNameSync,
 } from 'react-native-device-info';
-import { EventFrom, spawn, StateFrom, send, assign } from 'xstate';
+import { EventFrom, spawn, StateFrom, send, assign, AnyState } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { authMachine, createAuthMachine } from './auth';
 import { createSettingsMachine, settingsMachine } from './settings';
@@ -344,7 +344,7 @@ export function selectIsFocused(state: State) {
   return state.matches('ready.focus');
 }
 
-export function logState(state) {
+export function logState(state: AnyState) {
   const data = JSON.stringify(
     state.event,
     (key, value) => {
@@ -360,7 +360,7 @@ export function logState(state) {
     `[${getDeviceNameSync()}] ${state.machine.id}: ${
       state.event.type
     } -> ${state.toStrings().pop()}\n${
-      data.length > 1000 ? data.slice(0, 1000) + '...' : data
+      data.length > 300 ? data.slice(0, 300) + '...' : data
     }
     `
   );

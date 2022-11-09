@@ -1,15 +1,16 @@
 import React from 'react';
 import { Input } from 'react-native-elements';
+import { useTranslation } from 'react-i18next';
+
 import { DeviceInfoList } from '../../components/DeviceInfoList';
 import { Button, Column, Row } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { useSendVcScreen } from './SendVcScreenController';
-import { useTranslation } from 'react-i18next';
+import { VerifyIdentityOverlay } from '../VerifyIdentityOverlay';
 import { VcItem } from '../../components/VcItem';
 import { useSelectVcOverlay } from './SelectVcOverlayController';
 import { SingleVcItem } from '../../components/SingleVcItem';
-import { VerifyIdentityOverlay } from './VerifyIdentityOverlay';
 import { SelectVcOverlay } from './SelectVcOverlay';
 
 export const SendVcScreen: React.FC = () => {
@@ -27,6 +28,7 @@ export const SendVcScreen: React.FC = () => {
     onSelect: controller.SELECT_VC,
     onCancel: controller.CANCEL,
     vcKeys: controller.vcKeys,
+    onVerifyAndSelect: controller.VERIFY_AND_SELECT_VC,
   };
 
   const controller2 = useSelectVcOverlay(details);
@@ -85,7 +87,8 @@ export const SendVcScreen: React.FC = () => {
           />
           <Button
             type="clear"
-            title={t('Reject')}
+            loading={controller.isCancelling}
+            title={t('reject')}
             onPress={controller.CANCEL}
           />
         </Column>
@@ -101,16 +104,17 @@ export const SendVcScreen: React.FC = () => {
       />
 
       <VerifyIdentityOverlay
-        isVisible={controller.isVerifyingUserIdentity}
+        isVisible={controller.isVerifyingIdentity}
+        vc={controller.selectedVc}
         onCancel={controller.CANCEL}
         onFaceValid={controller.FACE_VALID}
         onFaceInvalid={controller.FACE_INVALID}
       />
 
       <MessageOverlay
-        isVisible={controller.isInvalidUserIdentity}
-        title={t('errors.invalidIdentity.title')}
-        message={t('errors.invalidIdentity.message')}
+        isVisible={controller.isInvalidIdentity}
+        title={t('VerifyIdentityOverlay:errors.invalidIdentity.title')}
+        message={t('VerifyIdentityOverlay:errors.invalidIdentity.message')}
         onBackdropPress={controller.DISMISS}>
         <Row>
           <Button

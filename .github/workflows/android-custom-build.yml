@@ -16,17 +16,17 @@ jobs:
   build-android:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3.1.0
 
       # Cache stuff for faster build
       - name: Cache local npm repository
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.11
         with:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           path: ~/.npm
 
       - name: Cache local gradle repository
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.11
         with:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           path: |
@@ -67,7 +67,7 @@ jobs:
           MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
           FIREBASE_SECRET: ${{ secrets.GPG_SECRET }}
       - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3.1.1
         with:
           name: apk-output
           path: android/app/build/outputs/apk/newlogic/release/

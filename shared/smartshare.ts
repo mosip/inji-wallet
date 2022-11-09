@@ -13,6 +13,7 @@ import { VC } from '../types/vc';
 export function onlineSubscribe<T extends SmartshareEventType>(
   eventType: T,
   callback: (data: SmartshareEventData<T>) => void,
+  disconectCallback?: (data: SmartshareEventData<T>) => void,
   config?: { keepAlive: boolean }
 ) {
   return GoogleNearbyMessages.subscribe(
@@ -21,7 +22,9 @@ export function onlineSubscribe<T extends SmartshareEventType>(
         console.log('\n[request] MESSAGE_FOUND', foundMessage);
       }
       const response = SmartshareEvent.fromString<T>(foundMessage);
-      if (response.type === eventType) {
+      if (response.type === 'disconnect') {
+        disconectCallback(response.data);
+      } else if (response.type === eventType) {
         !config?.keepAlive && GoogleNearbyMessages.unsubscribe();
         callback(response.data);
       }
@@ -116,6 +119,11 @@ export interface SendVcResponseEvent {
   data: SendVcStatus | number;
 }
 
+export interface DisconnectEvent {
+  type: 'disconnect';
+  data: string;
+}
+
 type SmartshareEventType = SmartshareEvents['type'];
 
 type SmartshareEventData<T> = Extract<SmartshareEvents, { type: T }>['data'];
@@ -126,4 +134,5 @@ type SmartshareEvents =
   | ExchangeReceiverInfoEvent
   | ExchangeSenderInfoEvent
   | SendVcEvent
-  | SendVcResponseEvent;
+  | SendVcResponseEvent
+  | DisconnectEvent;

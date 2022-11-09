@@ -14,13 +14,6 @@
     "rejected": {
       "title": "Notice",
       "message": "Your {{vcLabel}} was rejected by {{receiver}}"
-    },
-    "verifyingIdentity": "Verifying identity..."
-  },
-  "errors": {
-    "invalidIdentity": {
-      "title": "Unable to verify identity",
-      "message": "An error occured and we couldn't scan your portrait. Try again, make sure your face is visible, devoid of any accessories."
     }
   }
 }
