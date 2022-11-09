@@ -2,7 +2,6 @@ import React, { useCallback, useContext, useEffect, useRef } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Camera } from 'expo-camera';
 import { StyleSheet } from 'react-native';
-import { Colors } from './ui/styleUtils';
 import { Button, Centered, Column, Row, Text } from './ui';
 import { useInterpret, useSelector } from '@xstate/react';
 import { useTranslation } from 'react-i18next';
@@ -21,6 +20,7 @@ import {
 import { GlobalContext } from '../shared/GlobalContext';
 import { selectIsActive } from '../machines/app';
 import { RotatingIcon } from './RotatingIcon';
+import { Theme } from './ui/styleUtils';
 
 export const FaceScanner: React.FC<FaceScannerProps> = (props) => {
   const { t } = useTranslation('FaceScanner');
@@ -68,7 +68,7 @@ export const FaceScanner: React.FC<FaceScannerProps> = (props) => {
   } else if (isPermissionDenied) {
     return (
       <Column padding="24" fill align="space-between">
-        <Text align="center" color={Colors.Red}>
+        <Text align="center" color={Theme.Colors.errorMessage}>
           {t('missingPermissionText')}
         </Text>
         <Button
@@ -96,14 +96,14 @@ export const FaceScanner: React.FC<FaceScannerProps> = (props) => {
           <Row crossAlign="center">
             <Icon
               name="flip-camera-ios"
-              color={Colors.Black}
+              color={Theme.Colors.flipCameraIcon}
               size={64}
               onPress={() => service.send(FaceScannerEvents.FLIP_CAMERA())}
               style={{ margin: 8, marginEnd: 32 }}
             />
             <Icon
               name="photo-camera"
-              color={Colors.Black}
+              color={Theme.Colors.flipCameraIcon}
               size={64}
               onPress={() => service.send(FaceScannerEvents.CAPTURE())}
               style={{ margin: 8, marginTop: 12, marginStart: 32 }}
@@ -124,7 +124,7 @@ interface FaceScannerProps {
 const styles = StyleSheet.create({
   scannerContainer: {
     borderWidth: 4,
-    borderColor: Colors.Black,
+    borderColor: Theme.Colors.textValue,
     borderRadius: 32,
     justifyContent: 'center',
     height: 400,

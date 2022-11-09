@@ -1,4 +1,3 @@
-import { ViewStyle } from 'react-native';
 import { DefaultTheme } from './themes/DefaultTheme';
 
 // To change the theme, CSS theme file has to import and assign it to Theme in line no 6
