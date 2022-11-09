@@ -5,6 +5,7 @@
     "deviceRefNumber": "Device reference number",
     "name": "Name"
   },
+  "FaceScanner": {},
   "OIDcAuth": {
     "title": "OIDC Authentication",
     "text": "To be replaced with the OIDC provider UI",
@@ -181,6 +182,7 @@
   "ReceiveVcScreen": {
     "header": "{{vcLabel}} details",
     "acceptRequest": "Accept request and receive {{vcLabel}}",
+    "acceptRequestAndVerify": "Accept request and verify",
     "reject": "Reject"
   },
   "RequestScreen": {
@@ -259,7 +261,11 @@
       "rejected": {
         "title": "Notice",
         "message": "Your {{vcLabel}} was rejected by {{receiver}}"
-      },
+      }
+    }
+  },
+  "VerifyIdentityOverlay": {
+    "status": {
       "verifyingIdentity": "Verifying identity..."
     },
     "errors": {
@@ -278,6 +284,12 @@
     "cancel": "Cancel",
     "save": "Save",
     "editLabel": "Edit {{label}}",
-    "tryAgain": "Try again"
+    "tryAgain": "Try again",
+    "camera": {
+      "errors": {
+        "missingPermission": "This app uses the camera to scan the QR code of another device."
+      },
+      "allowAccess": "Allow access to camera"
+    }
   }
 }
