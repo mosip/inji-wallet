@@ -74,7 +74,11 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
                   keyboardType="number-pad"
                   rightIcon={
                     controller.isInvalid ? (
-                      <Icon name="error" size={18} color="red" />
+                      <Icon
+                        name="error"
+                        size={18}
+                        color={Theme.Colors.errorMessage}
+                      />
                     ) : null
                   }
                   errorStyle={{ color: Theme.Colors.errorMessage }}

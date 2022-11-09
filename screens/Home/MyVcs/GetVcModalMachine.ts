@@ -21,6 +21,7 @@ const model = createModel(
     otp: '',
     otpError: '',
     transactionId: '',
+    iconColor: false,
     child: null,
   },
   {
@@ -28,6 +29,8 @@ const model = createModel(
       INPUT_ID: (id: string) => ({ id }),
       INPUT_OTP: (otp: string) => ({ otp }),
       VALIDATE_INPUT: () => ({}),
+      ACTIVATE_ICON_COLOR: () => ({}),
+      DEACTIVATE_ICON_COLOR: () => ({}),
       READY: (idInputRef: TextInput) => ({ idInputRef }),
       DISMISS: () => ({}),
       GOT_ID: (id: string) => ({ id }),
@@ -93,6 +96,12 @@ export const GetVcModalMachine =
                     target: 'requestingOtp',
                   },
                 ],
+                ACTIVATE_ICON_COLOR: {
+                  actions: 'setIconColorActivate',
+                },
+                DEACTIVATE_ICON_COLOR: {
+                  actions: 'setIconColorDeactivate',
+                },
               },
             },
             invalid: {
@@ -124,6 +133,12 @@ export const GetVcModalMachine =
                     target: 'requestingOtp',
                   },
                 ],
+                ACTIVATE_ICON_COLOR: {
+                  actions: 'setIconColorActivate',
+                },
+                DEACTIVATE_ICON_COLOR: {
+                  actions: 'setIconColorDeactivate',
+                },
               },
             },
             requestingOtp: {
@@ -256,6 +271,10 @@ export const GetVcModalMachine =
 
         clearOtp: assign({ otp: '' }),
 
+        setIconColorActivate: assign({ iconColor: true }),
+
+        setIconColorDeactivate: assign({ iconColor: false }),
+
         focusInput: (context) => context.idInputRef.focus(),
       },
 
@@ -311,6 +330,10 @@ export function selectIdError(state: State) {
 
 export function selectOtpError(state: State) {
   return state.context.otpError;
+}
+
+export function selectIconColor(state: State) {
+  return state.context.iconColor;
 }
 
 export function selectIsAcceptingIdInput(state: State) {

@@ -14,6 +14,7 @@ import {
   selectOtpError,
   selectId,
   selectIdError,
+  selectIconColor,
   selectIdInputRef,
 } from './GetVcModalMachine';
 
@@ -27,6 +28,7 @@ export function useGetIdInputModal({ service }: GetIdInputModalProps) {
     vcLabel: useSelector(settingsService, selectVcLabel),
     idError: useSelector(service, selectIdError),
     otpError: useSelector(service, selectOtpError),
+    iconColor: useSelector(service, selectIconColor),
 
     isInvalid: useSelector(service, selectIsInvalid),
     isAcceptingOtpInput: useSelector(service, selectIsAcceptingOtpInput),
@@ -34,6 +36,10 @@ export function useGetIdInputModal({ service }: GetIdInputModalProps) {
 
     INPUT_ID: (id: string) => service.send(GetVcModalEvents.INPUT_ID(id)),
     VALIDATE_INPUT: () => service.send(GetVcModalEvents.VALIDATE_INPUT()),
+    ACTIVATE_ICON_COLOR: () =>
+      service.send(GetVcModalEvents.ACTIVATE_ICON_COLOR()),
+    DEACTIVATE_ICON_COLOR: () =>
+      service.send(GetVcModalEvents.DEACTIVATE_ICON_COLOR()),
     INPUT_OTP: (otp: string) => service.send(GetVcModalEvents.INPUT_OTP(otp)),
     READY: (input: TextInput) => service.send(GetVcModalEvents.READY(input)),
     DISMISS: () => service.send(GetVcModalEvents.DISMISS()),
