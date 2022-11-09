@@ -31,6 +31,8 @@ const model = createModel(
       SELECT_ID_TYPE: (idType: VcIdType) => ({ idType }),
       REVOKE_VCS: (vcKeys: string[]) => ({ vcKeys }),
       STORE_RESPONSE: (response: string[]) => ({ response }),
+      ERROR: (data: Error) => ({ data }),
+      SUCCESS: () => ({}),
     },
   }
 );
@@ -121,12 +123,14 @@ export const revokeVidsMachine =
         requestingRevoke: {
           invoke: {
             src: 'requestRevoke',
-            onDone: {
-              target: 'revokingVc',
-            },
-            onError: {
+          },
+          on: {
+            ERROR: {
               actions: [log('error on Revoking'), 'setOtpError'],
               target: 'acceptingOtpInput',
+            },
+            SUCCESS: {
+              target: 'revokingVc',
             },
           },
         },
@@ -234,10 +238,10 @@ export const revokeVidsMachine =
           });
         },
 
-        requestRevoke: async (context) => {
-          try {
-            return await Promise.all(
-              context.VIDs.map((vid: string) => {
+        requestRevoke: (context) => async (callback) => {
+          await Promise.all(
+            context.VIDs.map((vid: string) => {
+              try {
                 const vidID = vid.split(':')[2];
                 const transactionId = String(new Date().valueOf()).substring(
                   3,
@@ -250,11 +254,18 @@ export const revokeVidsMachine =
                   individualIdType: 'VID',
                   otp: context.otp,
                 });
-              })
-            );
-          } catch (error) {
-            console.error(error);
-          }
+              } catch (error) {
+                console.log('error.message', error.message);
+                return error;
+              }
+            })
+          )
+            .then(() => {
+              callback('SUCCESS');
+            })
+            .catch((error) => {
+              callback({ type: 'ERROR', data: error });
+            });
         },
       },
 

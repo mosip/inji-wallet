@@ -27,6 +27,10 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
   const uin = props.vc?.verifiableCredential.credentialSubject.UIN;
   const vid = props.vc?.verifiableCredential.credentialSubject.VID;
 
+  if (props.vc?.verifiableCredential == null) {
+    return <Text align="center">Loading details...</Text>;
+  }
+
   return (
     <Column>
       <ImageBackground
@@ -70,7 +74,8 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                 <Text
                   weight="semibold"
                   size="smaller"
-                  color={Theme.Colors.Details}>
+                  color={Theme.Colors.Details}
+                  align="left">
                   {uin}
                 </Text>
               </Column>
@@ -87,6 +92,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                 <Text
                   weight="semibold"
                   size="smaller"
+                  align="left"
                   color={Theme.Colors.Details}>
                   {vid}
                 </Text>
@@ -97,12 +103,14 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
               <Text
                 weight="bold"
                 size="smaller"
+                align="left"
                 color={Theme.Colors.DetailsLabel}>
                 {t('generatedOn')}
               </Text>
               <Text
                 weight="semibold"
                 size="smaller"
+                align="left"
                 color={Theme.Colors.Details}>
                 {new Date(props.vc?.generatedOn).toLocaleDateString()}
               </Text>
@@ -112,6 +120,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
               <Text
                 weight="bold"
                 size="smaller"
+                align="left"
                 color={Theme.Colors.DetailsLabel}>
                 {t('status')}
               </Text>
@@ -119,6 +128,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                 <Text
                   weight="semibold"
                   size="smaller"
+                  align="left"
                   color={Theme.Colors.Details}>
                   {t('valid')}
                 </Text>
