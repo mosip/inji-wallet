@@ -95,7 +95,7 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
         align="center"
         size="smaller"
         color={Theme.Colors.profileVersion}>
-        Version: {getVersion()}
+        {t('version')}: {getVersion()}
       </Text>
       {controller.backendInfo.application.name !== '' ? (
         <View>

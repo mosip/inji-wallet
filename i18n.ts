@@ -4,21 +4,21 @@ import { initReactI18next } from 'react-i18next';
 
 import en from './locales/en.json';
 import fil from './locales/fil.json';
-import ara from './locales/ara.json';
-import hin from './locales/hin.json';
-import kan from './locales/kan.json';
-import tam from './locales/tam.json';
+import ar from './locales/ara.json';
+import hi from './locales/hin.json';
+import kn from './locales/kan.json';
+import ta from './locales/tam.json';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const resources = { en, fil, ara, hin, kan, tam };
+const resources = { en, fil, ar, hi, kn, ta };
 
 export const SUPPORTED_LANGUAGES = {
   en: 'English',
   fil: 'Filipino',
-  ara: 'Arabic',
-  hin: 'Hindi',
-  kan: 'Kannada',
-  tam: 'Tamil',
+  ar: 'عربى',
+  hi: 'Hindi',
+  kn: 'Kannada',
+  ta: 'Tamil',
 };
 
 i18next

@@ -11,5 +11,6 @@
   "revokingVids": "You are about to revoke ({{count}}) VIDs.",
   "revokingVidsAfter": "This means you will no longer be able to use or view any of the IDs linked to those VID(s). \nAre you sure you want to proceed?",
   "empty": "Empty",
-  "revokeSuccessful": "VID successfully revoked"
+  "revokeSuccessful": "VID successfully revoked",
+  "version": "Version"
 }

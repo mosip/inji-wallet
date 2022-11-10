@@ -110,9 +110,11 @@ export const DefaultTheme = {
     },
     labelPartContainer: {
       marginLeft: 16,
+      flex: 1,
     },
     labelPart: {
       marginTop: 10,
+      alignItems: 'flex-start',
     },
     openCardBgContainer: {
       borderRadius: 10,

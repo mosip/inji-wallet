@@ -33,7 +33,11 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
   if (arg1 === 'Status') {
     return (
       <Column>
-        <Text weight="bold" size="smaller" color={Theme.Colors.DetailsLabel}>
+        <Text
+          weight="bold"
+          size="smaller"
+          align="left"
+          color={Theme.Colors.DetailsLabel}>
           {arg1}
         </Text>
         <Row>
@@ -56,7 +60,11 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
   } else {
     return (
       <Column>
-        <Text color={Theme.Colors.DetailsLabel} weight="bold" size="smaller">
+        <Text
+          color={Theme.Colors.DetailsLabel}
+          weight="bold"
+          size="smaller"
+          align="left">
           {arg1}
         </Text>
         <Text
@@ -128,7 +136,8 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
             <Text
               color={Theme.Colors.DetailsLabel}
               weight="bold"
-              size="smaller">
+              size="smaller"
+              align="left">
               {t('idType')}
             </Text>
             <Text
@@ -168,7 +177,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
               style={Theme.Styles.closeCardImage}
             />
 
-            <Column margin="0 0 0 25">
+            <Column margin="0 0 0 25" style={{ alignItems: 'flex-start' }}>
               {getDetails(t('fullName'), fullName, verifiableCredential)}
               {!verifiableCredential
                 ? getDetails(
