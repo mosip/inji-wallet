@@ -28,6 +28,7 @@ import {
 import { check, PERMISSIONS, PermissionStatus } from 'react-native-permissions';
 import { checkLocation, requestLocation } from '../shared/location';
 import { CameraCapturedPicture } from 'expo-camera';
+import { log } from 'xstate/lib/actions';
 
 const findingConnectionId = '#scan.findingConnection';
 const checkingLocationServiceId = '#checkingLocationService';
@@ -42,6 +43,7 @@ const model = createModel(
     senderInfo: {} as DeviceInfo,
     receiverInfo: {} as DeviceInfo,
     selectedVc: {} as VC,
+    createdVp: null as VC,
     reason: '',
     loggers: [] as EmitterSubscription[],
     vcName: '',
@@ -88,6 +90,11 @@ export const scanMachine = model.createMachine(
     schema: {
       context: model.initialContext,
       events: {} as EventFrom<typeof model>,
+      services: {} as {
+        createVp: {
+          data: VC;
+        };
+      },
     },
     id: 'scan',
     initial: 'inactive',
@@ -250,6 +257,7 @@ export const scanMachine = model.createMachine(
             on: {
               ACCEPT_REQUEST: 'selectingVc',
               DISCONNECT: findingConnectionId,
+              CANCEL: 'cancelling',
             },
           },
           selectingVc: {
@@ -260,10 +268,18 @@ export const scanMachine = model.createMachine(
                 actions: ['setSelectedVc'],
               },
               VERIFY_AND_SELECT_VC: {
-                target: 'verifyingUserIdentity',
+                target: 'verifyingIdentity',
                 actions: ['setSelectedVc'],
               },
               CANCEL: 'idle',
+            },
+          },
+          cancelling: {
+            invoke: {
+              src: 'sendDisconnect',
+            },
+            after: {
+              3000: findingConnectionId,
             },
           },
           sendingVc: {
@@ -300,27 +316,39 @@ export const scanMachine = model.createMachine(
             },
           },
           rejected: {},
-          cancelled: {},
           navigatingToHome: {},
-          verifyingUserIdentity: {
+          verifyingIdentity: {
             on: {
               FACE_VALID: {
-                target: 'sendingVc',
+                target: 'creatingVp',
               },
               FACE_INVALID: {
-                target: 'invalidUserIdentity',
+                target: 'invalidIdentity',
               },
               CANCEL: 'selectingVc',
             },
           },
-          invalidUserIdentity: {
+          creatingVp: {
+            invoke: {
+              src: 'createVp',
+              onDone: {
+                actions: 'setCreatedVp',
+                target: 'sendingVc',
+              },
+              onError: {
+                actions: log('Could not create Verifiable Presentation'),
+                target: 'selectingVc',
+              },
+            },
+          },
+          invalidIdentity: {
             on: {
               DISMISS: 'selectingVc',
-              RETRY_VERIFICATION: 'verifyingUserIdentity',
+              RETRY_VERIFICATION: 'verifyingIdentity',
             },
           },
         },
-        exit: ['disconnect', 'clearReason'],
+        exit: ['disconnect', 'clearReason', 'clearCreatedVp'],
       },
       disconnected: {
         id: 'disconnected',
@@ -340,7 +368,7 @@ export const scanMachine = model.createMachine(
       requestSenderInfo: sendParent('REQUEST_DEVICE_INFO'),
 
       setSenderInfo: model.assign({
-        senderInfo: (_, event) => event.info,
+        senderInfo: (_context, event) => event.info,
       }),
 
       requestToEnableLocation: () => requestLocation(),
@@ -372,16 +400,16 @@ export const scanMachine = model.createMachine(
       }),
 
       setReceiverInfo: model.assign({
-        receiverInfo: (_, event) => event.receiverInfo,
+        receiverInfo: (_context, event) => event.receiverInfo,
       }),
 
       setReason: model.assign({
-        reason: (_, event) => event.reason,
+        reason: (_context, event) => event.reason,
       }),
 
       clearReason: assign({ reason: '' }),
 
-      setSelectedVc: model.assign({
+      setSelectedVc: assign({
         selectedVc: (context, event) => {
           const reason = [];
           if (context.reason.trim() !== '') {
@@ -389,6 +417,14 @@ export const scanMachine = model.createMachine(
           }
           return { ...event.vc, reason };
         },
+      }),
+
+      setCreatedVp: assign({
+        createdVp: (_context, event) => event.data,
+      }),
+
+      clearCreatedVp: assign({
+        createdVp: () => null,
       }),
 
       registerLoggers: assign({
@@ -550,7 +586,12 @@ export const scanMachine = model.createMachine(
 
       sendVc: (context) => (callback) => {
         let subscription: EmitterSubscription;
-        const vc = { ...context.selectedVc, tag: '' };
+        const vp = context.createdVp;
+        const vc = {
+          ...(vp != null ? vp : context.selectedVc),
+          tag: '',
+        };
+
         const statusCallback = (status: SendVcStatus) => {
           if (typeof status === 'number') return;
           callback({
@@ -568,8 +609,37 @@ export const scanMachine = model.createMachine(
           });
           return () => subscription?.remove();
         } else {
-          sendVc(vc, statusCallback);
+          sendVc(vc, statusCallback, () => callback({ type: 'DISCONNECT' }));
         }
+      },
+
+      sendDisconnect: (context) => () => {
+        if (context.sharingProtocol === 'ONLINE') {
+          onlineSend({
+            type: 'disconnect',
+            data: 'rejected',
+          });
+        }
+      },
+
+      createVp: (context) => async () => {
+        // TODO
+        // const verifiablePresentation = await createVerifiablePresentation(...);
+
+        const verifiablePresentation: VerifiablePresentation = {
+          '@context': [''],
+          'proof': null,
+          'type': 'VerifiablePresentation',
+          'verifiableCredential': [context.selectedVc.verifiableCredential],
+        };
+
+        const vc: VC = {
+          ...context.selectedVc,
+          verifiableCredential: null,
+          verifiablePresentation,
+        };
+
+        return Promise.resolve(vc);
       },
     },
 
@@ -691,15 +761,23 @@ export function selectIsDone(state: State) {
   return state.matches('reviewing.navigatingToHome');
 }
 
-export function selectIsVerifyingUserIdentity(state: State) {
-  return state.matches('reviewing.verifyingUserIdentity');
+export function selectIsVerifyingIdentity(state: State) {
+  return state.matches('reviewing.verifyingIdentity');
 }
 
-export function selectIsInvalidUserIdentity(state: State) {
-  return state.matches('reviewing.invalidUserIdentity');
+export function selectIsInvalidIdentity(state: State) {
+  return state.matches('reviewing.invalidIdentity');
 }
 
-async function sendVc(vc: VC, callback: (status: SendVcStatus) => void) {
+export function selectIsCancelling(state: State) {
+  return state.matches('reviewing.cancelling');
+}
+
+async function sendVc(
+  vc: VC,
+  callback: (status: SendVcStatus) => void,
+  disconnectCallback: () => void
+) {
   const rawData = JSON.stringify(vc);
   const chunks = chunkString(rawData, GNM_MESSAGE_LIMIT);
   if (chunks.length > 1) {
@@ -739,6 +817,7 @@ async function sendVc(vc: VC, callback: (status: SendVcStatus) => void) {
           callback(status);
         }
       },
+      disconnectCallback,
       { keepAlive: true }
     );
     await onlineSend(event);

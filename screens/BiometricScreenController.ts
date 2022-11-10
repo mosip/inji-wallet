@@ -62,7 +62,7 @@ export function useBiometricScreen(props: RootRouteProps) {
   const checkBiometricsChange = () => {
     if (Platform.OS === 'android') {
       RNFingerprintChange.hasFingerPrintChanged().then(
-        async (biometricsHasChanged: any) => {
+        async (biometricsHasChanged: boolean) => {
           //if new biometrics are added, re-enable Biometrics Authentication
           if (biometricsHasChanged) {
             setReEnabling(true);

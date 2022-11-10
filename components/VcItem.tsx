@@ -27,6 +27,7 @@ const VerifiedIcon: React.FC = () => {
     />
   );
 };
+import { LocalizedField } from '../types/vc';
 
 const getDetails = (arg1, arg2, verifiableCredential) => {
   if (arg1 === 'Status') {
@@ -85,17 +86,14 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
     )
   );
 
-  const service = useInterpret(machine.current);
+  const service = useInterpret(machine.current, { devTools: __DEV__ });
   const context = useSelector(service, selectContext);
   const verifiableCredential = useSelector(service, selectVerifiableCredential);
 
   //Assigning the UIN and VID from the VC details to display the idtype label
-  const uin = verifiableCredential
-    ? verifiableCredential.credentialSubject.UIN
-    : null;
-  const vid = verifiableCredential
-    ? verifiableCredential.credentialSubject.VID
-    : null;
+  const uin = verifiableCredential?.credentialSubject.UIN;
+  const vid = verifiableCredential?.credentialSubject.VID;
+
   const tag = useSelector(service, selectTag);
   const generatedOn = useSelector(service, selectGeneratedOn);
   const fullName = !verifiableCredential
@@ -206,11 +204,6 @@ interface VcItemProps {
   selected?: boolean;
   onPress?: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
   onShow?: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
-}
-
-interface LocalizedField {
-  language: string;
-  value: string;
 }
 
 function getLocalizedField(rawField: string | LocalizedField) {

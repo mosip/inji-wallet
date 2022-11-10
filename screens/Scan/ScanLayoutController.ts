@@ -121,7 +121,7 @@ export function useScanLayout() {
     } else if (isScanning) {
       navigation.navigate('ScanScreen');
     }
-  }, [isDone, isReviewing]);
+  }, [isDone, isReviewing, isScanning]);
 
   return {
     vcLabel: useSelector(settingsService, selectVcLabel),
