@@ -48,7 +48,7 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = (props) => {
                       </Text>
                     }
                     width={Dimensions.get('screen').width * 0.8}
-                    height={Dimensions.get('screen').height * 0.15}
+                    height={Dimensions.get('screen').height * 0.2}
                     backgroundColor={'lightgray'}
                     withPointer={true}
                     skipAndroidStatusBar={true}
