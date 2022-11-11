@@ -63,8 +63,27 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
           />
 
           <Column style={Theme.Styles.labelPartContainer}>
+            <Column fill>
+              <Text
+                weight="bold"
+                size="smaller"
+                align="left"
+                color={Theme.Colors.DetailsLabel}>
+                {t('fullName')}
+              </Text>
+              <Text
+                weight="semibold"
+                size="smaller"
+                align="left"
+                color={Theme.Colors.Details}>
+                {getLocalizedField(
+                  props.vc?.verifiableCredential.credentialSubject.fullName
+                )}
+              </Text>
+            </Column>
+
             {uin ? (
-              <Column fill>
+              <Column fill style={Theme.Styles.labelPart}>
                 <Text
                   weight="bold"
                   size="smaller"
@@ -82,7 +101,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
             ) : null}
 
             {vid ? (
-              <Column fill>
+              <Column fill style={Theme.Styles.labelPart}>
                 <Text
                   weight="bold"
                   size="smaller"
