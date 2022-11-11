@@ -1,5 +1,6 @@
 import React from 'react';
-import { Icon, Input } from 'react-native-elements';
+import { Dimensions } from 'react-native';
+import { Icon, Input, Tooltip } from 'react-native-elements';
 import { Button, Column, Row, Text } from '../../../components/ui';
 import { Modal } from '../../../components/ui/Modal';
 import { Theme } from '../../../components/ui/styleUtils';
@@ -38,11 +39,39 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = (props) => {
                 value={controller.id}
                 keyboardType="number-pad"
                 rightIcon={
-                  controller.isInvalid ? (
-                    <Icon name="error" size={18} color="red" />
-                  ) : (
-                    <Icon name="help" size={18} />
-                  )
+                  <Tooltip
+                    popover={
+                      <Text>
+                        {t('qstnMarkToolTip', {
+                          vcLabel: controller.vcLabel.singular,
+                        })}
+                      </Text>
+                    }
+                    width={Dimensions.get('screen').width * 0.8}
+                    height={Dimensions.get('screen').height * 0.2}
+                    backgroundColor={'lightgray'}
+                    withPointer={true}
+                    skipAndroidStatusBar={true}
+                    onOpen={controller.ACTIVATE_ICON_COLOR}
+                    onClose={controller.DEACTIVATE_ICON_COLOR}>
+                    {controller.isInvalid ? (
+                      <Icon
+                        name="error"
+                        size={18}
+                        color={
+                          !controller.iconColor
+                            ? Theme.Colors.errorMessage
+                            : Theme.Colors.Icon
+                        }
+                      />
+                    ) : (
+                      <Icon
+                        name={'help'}
+                        size={18}
+                        color={!controller.iconColor ? null : Theme.Colors.Icon}
+                      />
+                    )}
+                  </Tooltip>
                 }
                 errorStyle={{ color: Theme.Colors.errorMessage }}
                 errorMessage={controller.idError}

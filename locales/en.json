@@ -108,7 +108,8 @@
   "GetIdInputModal": {
     "header": "To retrieve your UIN or VID, enter your Application {{vcLabel}} number",
     "getUIN": "Get UIN/VID",
-    "applicationId": "Application {{vcLabel}} number"
+    "applicationId": "Application {{vcLabel}} number",
+    "qstnMarkToolTip" : "Application {{vcLabel}} Number is printed on the acknowledgment provided after enrollment"
   },
   "OtpVerificationModal": {
     "enterOtp": "Enter the 6-digit verification code we sent you"
