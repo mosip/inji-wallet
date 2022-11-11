@@ -1,4 +1,5 @@
 import React from 'react';
+import { Dimensions } from 'react-native';
 import { Icon, Input, Tooltip } from 'react-native-elements';
 import { Button, Column, Row, Text } from '../../../components/ui';
 import { Modal } from '../../../components/ui/Modal';
@@ -46,8 +47,8 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = (props) => {
                         })}
                       </Text>
                     }
-                    width={Theme.ApplicationIdToolTip.width}
-                    height={Theme.ApplicationIdToolTip.height}
+                    width={Dimensions.get('screen').width * 0.8}
+                    height={Dimensions.get('screen').height * 0.15}
                     backgroundColor={'lightgray'}
                     withPointer={true}
                     skipAndroidStatusBar={true}
