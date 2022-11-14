@@ -70,7 +70,7 @@ export const VidItem: React.FC<VcItemProps> = (props) => {
                 : Theme.VidItemStyles.title
             }
             margin="0 0 6 0">
-            {!verifiableCredential ? '' : tag || uin}
+            {!verifiableCredential ? '' : uin}
           </Text>
           <Text
             size="smaller"

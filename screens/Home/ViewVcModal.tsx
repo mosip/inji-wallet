@@ -3,7 +3,6 @@ import { DropdownIcon } from '../../components/DropdownIcon';
 import { TextEditOverlay } from '../../components/TextEditOverlay';
 import { Column } from '../../components/ui';
 import { Modal } from '../../components/ui/Modal';
-import { Theme } from '../../components/ui/styleUtils';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { ToastItem } from '../../components/ui/ToastItem';
 import { RevokeConfirmModal } from '../../components/RevokeConfirm';
