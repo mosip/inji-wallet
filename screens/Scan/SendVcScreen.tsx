@@ -33,7 +33,7 @@ export const SendVcScreen: React.FC = () => {
 
   const controller2 = useSelectVcOverlay(details);
 
-  const reasonLabel = t('Reason For Sharing');
+  const reasonLabel = t('reasonForSharing');
 
   return (
     <React.Fragment>
@@ -80,7 +80,7 @@ export const SendVcScreen: React.FC = () => {
           margin="2 0 0 0"
           elevation={2}>
           <Button
-            title={t('AcceptRequest', { vcLabel: controller.vcLabel.singular })}
+            title={t('acceptRequest', { vcLabel: controller.vcLabel.singular })}
             margin="12 0 12 0"
             disabled={controller2.selectedIndex == null}
             onPress={onShare}
