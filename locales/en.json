@@ -186,7 +186,7 @@
       },
       "connected": {
         "message": "Connected to device. Waiting for {{vcLabel}}...",
-        "timeoutHint": "No VC data received yet. Is sending device still connected?"
+        "timeoutHint": "No data received yet. Is sending device still connected?"
       }
     },
     "online": "Online",
@@ -224,11 +224,12 @@
   "SendVcScreen": {
     "reasonForSharing": "Reason for sharing (optional)",
     "acceptRequest": "Accept request and choose {{vcLabel}}",
+    "acceptRequestAndVerify": "Accept request and verify",
     "reject": "Reject",
     "status": {
       "sharing": {
         "title": "Sharing...",
-        "timeoutHint": "It's taking a while to share VC. There could be a problem with the connection."
+        "timeoutHint": "It's taking longer than expected to share. There could be a problem with the connection."
       },
       "accepted": {
         "title": "Success!",
