@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 import { Dimensions, StyleSheet, ViewStyle } from 'react-native';
 import { Spacing } from '../styleUtils';
 
