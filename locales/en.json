@@ -29,7 +29,10 @@
     "phoneNumber": "Phone number",
     "email": "Email",
     "address": "Address",
-    "reasonForSharing": "Reason for sharing"
+    "reasonForSharing": "Reason for sharing",
+    "idType": "ID type",
+    "nationalCard": "National Card",
+    "uin": "UIN"
   },
   "AuthScreen": {
     "header": "Would you like to use biometrics to unlock the application?",
