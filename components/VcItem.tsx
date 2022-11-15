@@ -171,11 +171,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
             <Column margin="0 0 0 25">
               {getDetails(t('fullName'), fullName, verifiableCredential)}
               {!verifiableCredential
-                ? getDetails(
-                    t('idtype'),
-                    tag || uin || vid,
-                    verifiableCredential
-                  )
+                ? getDetails(t('id'), tag || uin || vid, verifiableCredential)
                 : null}
               {uin
                 ? getDetails(t('uin'), tag || uin, verifiableCredential)
