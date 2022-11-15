@@ -1,11 +1,12 @@
 {
   "reasonForSharing": "Reason for sharing (optional)",
   "acceptRequest": "Accept request and choose {{vcLabel}}",
+  "acceptRequestAndVerify": "Accept request and verify",
   "reject": "Reject",
   "status": {
     "sharing": {
       "title": "Sharing...",
-      "timeoutHint": "It's taking a while to share VC. There could be a problem with the connection."
+      "timeoutHint": "It's taking longer than expected to share. There could be a problem with the connection."
     },
     "accepted": {
       "title": "Success!",
@@ -15,5 +16,6 @@
       "title": "Notice",
       "message": "Your {{vcLabel}} was rejected by {{receiver}}"
     }
-  }
+  },
+  "consentToPhotoVerification": "I give consent to have my photo taken for authentication"
 }

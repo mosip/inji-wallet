@@ -27,7 +27,7 @@ export const ReceiveVcScreen: React.FC = () => {
           <VcDetails vc={controller.incomingVc} />
         </Column>
         <Column padding="0 24" margin="32 0 0 0">
-          {controller.isIncomingVp ? (
+          {controller.incomingVc.shouldVerifyPresence ? (
             <Button
               type="outline"
               title={t('acceptRequestAndVerify')}

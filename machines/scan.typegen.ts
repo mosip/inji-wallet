@@ -55,7 +55,6 @@ export interface Typegen0 {
       | 'xstate.after(3000)#scan.reviewing.cancelling'
       | 'xstate.stop';
     clearScannedQrParams:
-      | 'CANCEL'
       | 'DISCONNECT'
       | 'DISMISS'
       | 'xstate.after(3000)#scan.reviewing.cancelling'
@@ -72,13 +71,11 @@ export interface Typegen0 {
     logShared: 'VC_ACCEPTED';
     openSettings: 'LOCATION_REQUEST';
     registerLoggers:
-      | 'CANCEL'
       | 'DISCONNECT'
       | 'DISMISS'
       | 'xstate.after(3000)#scan.reviewing.cancelling'
       | 'xstate.after(CLEAR_DELAY)#clearingConnection';
     removeLoggers:
-      | 'CANCEL'
       | 'DISCONNECT'
       | 'DISMISS'
       | 'SCREEN_BLUR'
@@ -93,29 +90,35 @@ export interface Typegen0 {
     setReason: 'UPDATE_REASON';
     setReceiverInfo: 'EXCHANGE_DONE';
     setScannedQrParams: 'SCAN';
-    setSelectedVc: 'SELECT_VC' | 'VERIFY_AND_SELECT_VC';
+    setSelectedVc: 'SELECT_VC';
     setSenderInfo: 'RECEIVE_DEVICE_INFO';
+    setShouldVerifyPresence: 'ACCEPT_REQUEST';
   };
   'eventsCausingServices': {
     checkLocationPermission: 'APP_ACTIVE' | 'LOCATION_ENABLED';
     checkLocationStatus: 'CANCEL' | 'SCREEN_FOCUS';
-    createVp: 'FACE_VALID';
+    createVp: never;
     discoverDevice: 'RECEIVE_DEVICE_INFO';
     exchangeDeviceInfo: 'CONNECTED';
     monitorConnection: 'SCREEN_BLUR' | 'SCREEN_FOCUS' | 'xstate.init';
     sendDisconnect: 'CANCEL';
-    sendVc: 'SELECT_VC' | 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
+    sendVc:
+      | 'ACCEPT_REQUEST'
+      | 'FACE_VALID'
+      | 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
   };
   'eventsCausingGuards': {
     isQrOffline: 'SCAN';
     isQrOnline: 'SCAN';
+    shouldVerifySender: 'ACCEPT_REQUEST' | 'VERIFY_AND_ACCEPT_REQUEST';
   };
   'eventsCausingDelays': {
     CLEAR_DELAY: 'LOCATION_ENABLED';
     CONNECTION_TIMEOUT:
+      | 'ACCEPT_REQUEST'
       | 'CONNECTED'
+      | 'FACE_VALID'
       | 'RECEIVE_DEVICE_INFO'
-      | 'SELECT_VC'
       | 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
   };
   'matchesStates':
@@ -141,7 +144,6 @@ export interface Typegen0 {
     | 'reviewing.accepted'
     | 'reviewing.cancelling'
     | 'reviewing.creatingVp'
-    | 'reviewing.idle'
     | 'reviewing.invalidIdentity'
     | 'reviewing.navigatingToHome'
     | 'reviewing.rejected'
@@ -163,7 +165,6 @@ export interface Typegen0 {
           | 'accepted'
           | 'cancelling'
           | 'creatingVp'
-          | 'idle'
           | 'invalidIdentity'
           | 'navigatingToHome'
           | 'rejected'

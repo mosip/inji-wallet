@@ -7,7 +7,6 @@ import {
   createVcItemMachine,
   selectVerifiableCredential,
   selectGeneratedOn,
-  selectTag,
   vcItemMachine,
   selectContext,
 } from '../machines/vcItem';
@@ -102,7 +101,6 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
   const uin = verifiableCredential?.credentialSubject.UIN;
   const vid = verifiableCredential?.credentialSubject.VID;
 
-  const tag = useSelector(service, selectTag);
   const generatedOn = useSelector(service, selectGeneratedOn);
   const fullName = !verifiableCredential
     ? ''
@@ -180,15 +178,9 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
             <Column margin="0 0 0 25" style={{ alignItems: 'flex-start' }}>
               {getDetails(t('fullName'), fullName, verifiableCredential)}
               {!verifiableCredential
-                ? getDetails(
-                    t('idtype'),
-                    tag || uin || vid,
-                    verifiableCredential
-                  )
+                ? getDetails(t('idtype'), uin || vid, verifiableCredential)
                 : null}
-              {uin
-                ? getDetails(t('uin'), tag || uin, verifiableCredential)
-                : null}
+              {uin ? getDetails(t('uin'), uin, verifiableCredential) : null}
               {vid ? getDetails(t('vid'), vid, verifiableCredential) : null}
               {getDetails(t('generatedOn'), generatedOn, verifiableCredential)}
               {getDetails(t('status'), t('valid'), verifiableCredential)}
