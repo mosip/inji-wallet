@@ -240,7 +240,9 @@ export const requestMachine = model.createMachine(
           verifyingIdentity: {
             on: {
               FACE_VALID: {
-                target: 'verifyingVp',
+                target: 'accepting',
+                actions: 'clearShouldVerifyPresence',
+                // target: 'verifyingVp',
               },
               FACE_INVALID: {
                 target: 'invalidIdentity',
@@ -419,14 +421,14 @@ export const requestMachine = model.createMachine(
                 console.log(
                   getDeviceNameSync(),
                   '<Receiver.Event>',
-                  JSON.stringify(event)
+                  JSON.stringify(event).slice(0, 100)
                 );
               }),
               IdpassSmartshare.handleLogEvents((event) => {
                 console.log(
                   getDeviceNameSync(),
                   '<Receiver.Log>',
-                  JSON.stringify(event)
+                  JSON.stringify(event).slice(0, 100)
                 );
               }),
             ];
@@ -497,6 +499,13 @@ export const requestMachine = model.createMachine(
         },
         { to: (context) => context.serviceRefs.vc }
       ),
+
+      clearShouldVerifyPresence: assign({
+        incomingVc: (context) => ({
+          ...context.incomingVc,
+          shouldVerifyPresence: false,
+        }),
+      }),
     },
 
     services: {

@@ -8,7 +8,6 @@ import {
   createVcItemMachine,
   selectVerifiableCredential,
   selectGeneratedOn,
-  selectTag,
   selectId,
   vcItemMachine,
 } from '../machines/vcItem';
@@ -27,7 +26,6 @@ export const VidItem: React.FC<VcItemProps> = (props) => {
   );
   const service = useInterpret(machine.current);
   const uin = useSelector(service, selectId);
-  const tag = useSelector(service, selectTag);
   const verifiableCredential = useSelector(service, selectVerifiableCredential);
   const generatedOn = useSelector(service, selectGeneratedOn);
 

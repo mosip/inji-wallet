@@ -11,6 +11,7 @@ export interface VC {
   lastVerifiedOn: number;
   locked: boolean;
   reason?: VCSharingReason[];
+  shouldVerifyPresence?: boolean;
 }
 
 export interface VCSharingReason {

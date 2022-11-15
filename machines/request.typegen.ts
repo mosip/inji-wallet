@@ -38,6 +38,7 @@ export interface Typegen0 {
     delays: never;
   };
   'eventsCausingActions': {
+    clearShouldVerifyPresence: 'FACE_VALID';
     disconnect:
       | ''
       | 'CANCEL'
@@ -65,6 +66,7 @@ export interface Typegen0 {
     requestExistingVc: 'VC_RESPONSE';
     requestReceivedVcs:
       | 'ACCEPT'
+      | 'FACE_VALID'
       | 'done.invoke.request.reviewing.verifyingVp:invocation[0]';
     requestReceiverInfo: 'CONNECTED';
     sendVcReceived: 'STORE_RESPONSE';
@@ -86,7 +88,7 @@ export interface Typegen0 {
     receiveVc: 'EXCHANGE_DONE';
     requestBluetooth: 'BLUETOOTH_DISABLED';
     sendVcResponse: 'CANCEL' | 'REJECT' | 'STORE_RESPONSE';
-    verifyVp: 'FACE_VALID';
+    verifyVp: never;
   };
   'eventsCausingGuards': {
     hasExistingVc: 'VC_RESPONSE';

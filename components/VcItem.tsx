@@ -7,7 +7,6 @@ import {
   createVcItemMachine,
   selectVerifiableCredential,
   selectGeneratedOn,
-  selectTag,
   vcItemMachine,
   selectContext,
 } from '../machines/vcItem';

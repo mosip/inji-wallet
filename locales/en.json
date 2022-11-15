@@ -239,7 +239,8 @@
         "title": "Notice",
         "message": "Your {{vcLabel}} was rejected by {{receiver}}"
       }
-    }
+    },
+    "consentToPhotoVerification": "I give consent to have my photo taken for authentication"
   },
   "VerifyIdentityOverlay": {
     "status": {
