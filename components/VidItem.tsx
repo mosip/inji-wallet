@@ -15,6 +15,7 @@ import { Column, Row, Text } from './ui';
 import { Theme } from './ui/styleUtils';
 import { RotatingIcon } from './RotatingIcon';
 import { GlobalContext } from '../shared/GlobalContext';
+import { LocalizedField } from '../types/vc';
 
 export const VidItem: React.FC<VcItemProps> = (props) => {
   const { appService } = useContext(GlobalContext);
