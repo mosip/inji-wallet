@@ -10,6 +10,7 @@ import { KeyboardAvoidingView, Platform, TextInput } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import { individualId } from '../../../shared/constants';
 import { GET_INDIVIDUAL_ID } from '../../../shared/constants';
+import { MessageOverlay } from '../../../components/MessageOverlay';
 
 export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
   const { t } = useTranslation('IdInputModal');
@@ -104,6 +105,11 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
             )}
           </Column>
         </Column>
+        <MessageOverlay
+          isVisible={controller.isRequestingOtp}
+          title={t('requestingOTP')}
+          progress
+        />
       </KeyboardAvoidingView>
     </Modal>
   );
