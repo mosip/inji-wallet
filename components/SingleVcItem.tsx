@@ -117,14 +117,7 @@ export const SingleVcItem: React.FC<VcItemProps> = (props) => {
     ? ''
     : getLocalizedField(verifiableCredential.credentialSubject.fullName);
 
-  const selectableOrCheck = props.selectable ? (
-    <CheckBox
-      checked={props.selected}
-      checkedIcon={<Icon name="radio-button-checked" />}
-      uncheckedIcon={<Icon name="radio-button-unchecked" />}
-      onPress={() => props.onPress(service)}
-    />
-  ) : null;
+  const selectableOrCheck = props.selectable ? null : null;
 
   return (
     <Column onShow={props.onShow(service)}>
