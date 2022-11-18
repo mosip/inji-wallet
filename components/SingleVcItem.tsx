@@ -120,10 +120,13 @@ export const SingleVcItem: React.FC<VcItemProps> = (props) => {
   const selectableOrCheck = props.selectable ? null : null;
 
   return (
-    <Column onShow={props.onShow(service)}>
+    <Column
+      onShow={props.onShow(service)}
+      style={Theme.Styles.closeCardBgContainer}>
       <ImageBackground
         source={!verifiableCredential ? null : Theme.CloseCard}
         resizeMode="stretch"
+        borderRadius={4}
         style={
           !verifiableCredential
             ? Theme.Styles.vertloadingContainer
