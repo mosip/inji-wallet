@@ -1,7 +1,8 @@
-import { useMachine, useSelector } from '@xstate/react';
-import { useContext, useEffect, useState } from 'react';
 import * as LocalAuthentication from 'expo-local-authentication';
-import { selectBackendInfo } from '../../machines/app';
+import { useContext, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useMachine, useSelector } from '@xstate/react';
+
 import {
   AuthEvents,
   selectBiometrics,
@@ -13,18 +14,18 @@ import {
   selectVcLabel,
   SettingsEvents,
 } from '../../machines/settings';
-
 import {
   biometricsMachine,
   selectError,
   selectIsSuccess,
   selectUnenrolledNotice,
 } from '../../machines/biometrics';
-import { MainRouteProps } from '../../routes/main';
 import { GlobalContext } from '../../shared/GlobalContext';
-import { useTranslation } from 'react-i18next';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { ProfileStackParamList } from './ProfileLayout';
+import { RootStackParamList } from '../../routes';
 
-export function useProfileScreen({ navigation }: MainRouteProps) {
+export function useProfileScreen({ navigation }: ProfileScreenProps) {
   const { appService } = useContext(GlobalContext);
   const authService = appService.children.get('auth');
   const settingsService = appService.children.get('settings');
@@ -93,7 +94,7 @@ export function useProfileScreen({ navigation }: MainRouteProps) {
   return {
     alertMsg,
     hideAlert,
-    backendInfo: useSelector(appService, selectBackendInfo),
+
     name: useSelector(settingsService, selectName),
     vcLabel: useSelector(settingsService, selectVcLabel),
     isBiometricUnlockEnabled: useSelector(
@@ -118,3 +119,8 @@ export function useProfileScreen({ navigation }: MainRouteProps) {
     },
   };
 }
+
+export type ProfileScreenProps = NativeStackScreenProps<
+  ProfileStackParamList & RootStackParamList,
+  'ProfileScreen'
+>;

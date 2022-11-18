@@ -1,25 +1,37 @@
 import React from 'react';
+<<<<<<< HEAD:screens/Profile/Revoke.tsx
 import { Dimensions, RefreshControl, SafeAreaView, View } from 'react-native';
+=======
+import {
+  Dimensions,
+  RefreshControl,
+  SafeAreaView,
+  StyleSheet,
+  View,
+} from 'react-native';
+import { useTranslation } from 'react-i18next';
+>>>>>>> parent of 3953be2 (Revert "feat: add transaction history"):screens/Profile/RevokeScreen.tsx
 import { Divider, Icon, ListItem, Overlay } from 'react-native-elements';
+
 import { Button, Column, Centered, Row, Text } from '../../components/ui';
 import { VidItem } from '../../components/VidItem';
 import { Theme } from '../../components/ui/styleUtils';
 import { ToastItem } from '../../components/ui/ToastItem';
 import { OIDcAuthenticationOverlay } from '../../components/OIDcAuthModal';
-import { useTranslation } from 'react-i18next';
-import { useRevoke } from './RevokeController';
+import { useRevokeScreen } from './RevokeScreenController';
 
-export const Revoke: React.FC<RevokeScreenProps> = (props) => {
-  const controller = useRevoke();
-  const { t } = useTranslation('ProfileScreen');
+export const RevokeScreen: React.FC = () => {
+  const controller = useRevokeScreen();
+  const { t } = useTranslation('ProfileLayout');
 
   return (
     <ListItem bottomDivider onPress={() => controller.setAuthenticating(true)}>
       <ListItem.Content>
         <ListItem.Title>
-          <Text>{props.label}</Text>
+          <Text>{t('revokeLabel')}</Text>
         </ListItem.Title>
       </ListItem.Content>
+
       <Overlay
         overlayStyle={{ padding: 0 }}
         isVisible={controller.isViewing}
@@ -148,7 +160,3 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
     </ListItem>
   );
 };
-
-interface RevokeScreenProps {
-  label: string;
-}
