@@ -9,6 +9,7 @@ import {
   selectGeneratedOn,
   vcItemMachine,
   selectContext,
+  selectTag,
 } from '../machines/vcItem';
 import { Column, Row, Text } from './ui';
 import { Theme } from './ui/styleUtils';
@@ -27,6 +28,7 @@ const VerifiedIcon: React.FC = () => {
   );
 };
 import { LocalizedField } from '../types/vc';
+import { VcItemTags } from './VcItemTags';
 
 const getDetails = (arg1, arg2, verifiableCredential) => {
   if (arg1 === 'Status') {
@@ -115,6 +117,8 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
     />
   ) : null;
 
+  const tag = useSelector(service, selectTag);
+
   return (
     <Pressable
       onPress={() => props.onPress(service)}
@@ -193,6 +197,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
             <RotatingIcon name="sync" color={Theme.Colors.rotatingIcon} />
           )}
         </Row>
+        <VcItemTags tag={tag} />
       </ImageBackground>
     </Pressable>
   );
