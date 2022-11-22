@@ -217,17 +217,15 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                 color={Theme.Colors.DetailsLabel}>
                 {t('email')}
               </Text>
-              <Row>
-                <Text
-                  style={{ paddingRight: 90 }}
-                  weight="semibold"
-                  size="smaller"
-                  color={Theme.Colors.Details}>
-                  {getLocalizedField(
-                    props.vc?.verifiableCredential.credentialSubject.email
-                  )}
-                </Text>
-              </Row>
+              <Text
+                style={{ paddingRight: 90 }}
+                weight="semibold"
+                size="smaller"
+                color={Theme.Colors.Details}>
+                {getLocalizedField(
+                  props.vc?.verifiableCredential.credentialSubject.email
+                )}
+              </Text>
             </Column>
 
             <Column fill style={Theme.Styles.labelPart}>
@@ -237,17 +235,15 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                 color={Theme.Colors.DetailsLabel}>
                 {t('address')}
               </Text>
-              <Row>
-                <Text
-                  style={{ paddingRight: 90 }}
-                  weight="semibold"
-                  size="smaller"
-                  color={Theme.Colors.Details}>
-                  {getFullAddress(
-                    props.vc?.verifiableCredential.credentialSubject
-                  )}
-                </Text>
-              </Row>
+              <Text
+                style={{ paddingRight: 90 }}
+                weight="semibold"
+                size="smaller"
+                color={Theme.Colors.Details}>
+                {getFullAddress(
+                  props.vc?.verifiableCredential.credentialSubject
+                )}
+              </Text>
             </Column>
           </Column>
         </Row>
