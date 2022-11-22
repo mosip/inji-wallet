@@ -72,6 +72,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                 {t('fullName')}
               </Text>
               <Text
+                style={{ paddingRight: 90 }}
                 weight="semibold"
                 size="smaller"
                 align="left"
@@ -199,6 +200,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                 {t('phoneNumber')}
               </Text>
               <Text
+                style={{ paddingRight: 90 }}
                 weight="semibold"
                 size="smaller"
                 color={Theme.Colors.Details}>
@@ -217,12 +219,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
               </Text>
               <Row>
                 <Text
-                  style={
-                    props.vc?.verifiableCredential.credentialSubject.email
-                      .length > 25
-                      ? { flex: 1 }
-                      : { flex: 0 }
-                  }
+                  style={{ paddingRight: 90 }}
                   weight="semibold"
                   size="smaller"
                   color={Theme.Colors.Details}>
@@ -242,7 +239,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
               </Text>
               <Row>
                 <Text
-                  style={{ flex: 1 }}
+                  style={{ paddingRight: 90 }}
                   weight="semibold"
                   size="smaller"
                   color={Theme.Colors.Details}>
