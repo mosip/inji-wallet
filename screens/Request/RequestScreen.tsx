@@ -88,13 +88,13 @@ const SharingCode: React.FC<RequestScreenProps> = ({ t, controller }) => {
       </Centered>
 
       <Row align="center" crossAlign="center" margin={[0, 0, 48, 0]}>
-        <Text margin={[0, 16, 0, 0]}>Offline</Text>
+        <Text margin={[0, 16, 0, 0]}>{t('offline')}</Text>
         <Switch
           value={controller.sharingProtocol === 'ONLINE'}
           onValueChange={controller.SWITCH_PROTOCOL}
           disabled={Platform.OS === 'ios'}
         />
-        <Text margin={[0, 0, 0, 16]}>Online</Text>
+        <Text margin={[0, 0, 0, 16]}>{t('online')}</Text>
       </Row>
     </React.Fragment>
   );
