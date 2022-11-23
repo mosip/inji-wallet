@@ -90,6 +90,7 @@ const StatusMessage: React.FC<RequestScreenProps> = ({ t, controller }) => {
           <Button
             margin={[8, 0, 0, 0]}
             title={t('cancel', { ns: 'common' })}
+            loading={controller.isCancelling}
             onPress={controller.CANCEL}
           />
         )}

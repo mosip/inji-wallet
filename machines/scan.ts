@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 import SmartshareReactNative from '@idpass/smartshare-react-native';
 import { ConnectionParams } from '@idpass/smartshare-react-native/lib/typescript/IdpassSmartshare';
 const { IdpassSmartshare, GoogleNearbyMessages } = SmartshareReactNative;
@@ -31,7 +32,6 @@ import { CameraCapturedPicture } from 'expo-camera';
 import { log } from 'xstate/lib/actions';
 
 const findingConnectionId = '#scan.findingConnection';
-const checkingLocationServiceId = '#checkingLocationService';
 
 type SharingProtocol = 'OFFLINE' | 'ONLINE';
 
@@ -200,19 +200,17 @@ export const scanMachine = model.createMachine(
         },
         initial: 'inProgress',
         states: {
-          inProgress: {},
-          timeout: {
-            on: {
-              CANCEL: {
-                actions: 'disconnect',
-                target: checkingLocationServiceId,
+          inProgress: {
+            after: {
+              CONNECTION_TIMEOUT: {
+                target: 'timeout',
               },
             },
           },
-        },
-        after: {
-          CONNECTION_TIMEOUT: {
-            target: '.timeout',
+          timeout: {
+            on: {
+              CANCEL: '#scan.reviewing.cancelling',
+            },
           },
         },
       },
@@ -232,10 +230,7 @@ export const scanMachine = model.createMachine(
           inProgress: {},
           timeout: {
             on: {
-              CANCEL: {
-                actions: 'disconnect',
-                target: checkingLocationServiceId,
-              },
+              CANCEL: '#scan.reviewing.cancelling',
             },
           },
         },
@@ -273,7 +268,7 @@ export const scanMachine = model.createMachine(
                   target: 'sendingVc',
                 },
               ],
-              CANCEL: 'cancelling',
+              CANCEL: '#scan.reviewing.cancelling',
             },
           },
           cancelling: {
@@ -281,7 +276,10 @@ export const scanMachine = model.createMachine(
               src: 'sendDisconnect',
             },
             after: {
-              3000: findingConnectionId,
+              CANCEL_TIMEOUT: {
+                actions: 'disconnect',
+                target: findingConnectionId,
+              },
             },
           },
           sendingVc: {
@@ -304,10 +302,7 @@ export const scanMachine = model.createMachine(
               },
               timeout: {
                 on: {
-                  CANCEL: {
-                    actions: 'disconnect',
-                    target: checkingLocationServiceId,
-                  },
+                  CANCEL: '#scan.reviewing.cancelling',
                 },
               },
             },
@@ -686,6 +681,7 @@ export const scanMachine = model.createMachine(
 
     delays: {
       CLEAR_DELAY: 250,
+      CANCEL_TIMEOUT: 3000,
       CONNECTION_TIMEOUT: (context) => {
         return (context.sharingProtocol === 'ONLINE' ? 15 : 5) * 1000;
       },
