@@ -186,7 +186,7 @@
       },
       "connected": {
         "message": "Nakakonektang device. Naghihintay para sa {{vcLabel}}...",
-        "timeoutHint": "Wala pang natanggap na VC. Nakakonekta pa rin ba ang pagpapadala ng device?"
+        "timeoutHint": "Wala pang data na natanggap. Nakakonekta pa rin ba ang nagpapadala na device?"
       }
     },
     "online": "Online",
@@ -224,11 +224,13 @@
   "SendVcScreen": {
     "reasonForSharing": "Dahilan ng pagbabahagi (opsyonal)",
     "acceptRequest": "Tanggapin ang kahilingan at piliin ang {{vcLabel}}",
+    "acceptRequestAndVerify": "Tanggapin ang kahilingan at magpatunay",
     "reject": "Tanggihan",
     "status": {
       "sharing": {
         "title": "Pagbabahagi",
-        "timeoutHint": "Medyo natatagal ang pagbabahagi ng VC. Maaaring may problema sa koneksyon."
+        "hint": "Pakihintay na tanggapin o tanggihan ng tumatanggap na device ang pagbabahagi.",
+        "timeoutHint": "May katagalan ang pagbabahagi. Maaaring may problema sa koneksyon."
       },
       "accepted": {
         "title": "Tagumpay!",
@@ -238,7 +240,8 @@
         "title": "Pansinin",
         "message": "Ang iyong {{vcLabel}} ay tinanggihan ng {{receiver}}"
       }
-    }
+    },
+    "consentToPhotoVerification": "Nagbibigay ako ng pahintulot na kunin ang aking larawan para sa pagpapatunay"
   },
   "VerifyIdentityOverlay": {
     "status": {

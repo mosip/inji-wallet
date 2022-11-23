@@ -72,13 +72,15 @@ export const SendVcScreen: React.FC = () => {
             disabled={controller.selectedIndex == null}
             onPress={controller.ACCEPT_REQUEST}
           />
-          <Button
-            type="outline"
-            title={t('acceptRequestAndVerify')}
-            margin="12 0 12 0"
-            disabled={controller.selectedIndex == null}
-            onPress={controller.VERIFY_AND_ACCEPT_REQUEST}
-          />
+          {!controller.shouldVerifySender && (
+            <Button
+              type="outline"
+              title={t('acceptRequestAndVerify')}
+              margin="12 0 12 0"
+              disabled={controller.selectedIndex == null}
+              onPress={controller.VERIFY_AND_ACCEPT_REQUEST}
+            />
+          )}
           <Button
             type="clear"
             loading={controller.isCancelling}
@@ -121,7 +123,9 @@ export const SendVcScreen: React.FC = () => {
         isVisible={controller.isSendingVc}
         title={t('status.sharing.title')}
         hint={
-          controller.isSendingVcTimeout ? t('status.sharing.timeoutHint') : null
+          controller.isSendingVcTimeout
+            ? t('status.sharing.timeoutHint')
+            : t('status.sharing.hint')
         }
         onCancel={controller.isSendingVcTimeout ? controller.CANCEL : null}
         progress

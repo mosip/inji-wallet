@@ -12,11 +12,17 @@ export interface Typegen0 {
       type: 'error.platform.scan.reviewing.creatingVp:invocation[0]';
       data: unknown;
     };
-    'xstate.after(3000)#scan.reviewing.cancelling': {
-      type: 'xstate.after(3000)#scan.reviewing.cancelling';
+    'xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling': {
+      type: 'xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling';
     };
     'xstate.after(CLEAR_DELAY)#clearingConnection': {
       type: 'xstate.after(CLEAR_DELAY)#clearingConnection';
+    };
+    'xstate.after(CONNECTION_TIMEOUT)#scan.connecting.inProgress': {
+      type: 'xstate.after(CONNECTION_TIMEOUT)#scan.connecting.inProgress';
+    };
+    'xstate.after(SHARING_TIMEOUT)#scan.reviewing.sendingVc.inProgress': {
+      type: 'xstate.after(SHARING_TIMEOUT)#scan.reviewing.sendingVc.inProgress';
     };
     'xstate.init': { type: 'xstate.init' };
     'xstate.stop': { type: 'xstate.stop' };
@@ -39,48 +45,45 @@ export interface Typegen0 {
   };
   'eventsCausingActions': {
     clearCreatedVp:
-      | 'CANCEL'
       | 'DISCONNECT'
       | 'DISMISS'
       | 'SCREEN_BLUR'
       | 'SCREEN_FOCUS'
-      | 'xstate.after(3000)#scan.reviewing.cancelling'
+      | 'xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling'
       | 'xstate.stop';
     clearReason:
-      | 'CANCEL'
       | 'DISCONNECT'
       | 'DISMISS'
       | 'SCREEN_BLUR'
       | 'SCREEN_FOCUS'
-      | 'xstate.after(3000)#scan.reviewing.cancelling'
+      | 'xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling'
       | 'xstate.stop';
     clearScannedQrParams:
       | 'DISCONNECT'
       | 'DISMISS'
-      | 'xstate.after(3000)#scan.reviewing.cancelling'
+      | 'xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling'
       | 'xstate.after(CLEAR_DELAY)#clearingConnection';
     disconnect:
-      | 'CANCEL'
       | 'DISCONNECT'
       | 'DISMISS'
       | 'LOCATION_ENABLED'
       | 'SCREEN_BLUR'
       | 'SCREEN_FOCUS'
-      | 'xstate.after(3000)#scan.reviewing.cancelling'
+      | 'xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling'
       | 'xstate.stop';
     logShared: 'VC_ACCEPTED';
     openSettings: 'LOCATION_REQUEST';
     registerLoggers:
       | 'DISCONNECT'
       | 'DISMISS'
-      | 'xstate.after(3000)#scan.reviewing.cancelling'
+      | 'xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling'
       | 'xstate.after(CLEAR_DELAY)#clearingConnection';
     removeLoggers:
       | 'DISCONNECT'
       | 'DISMISS'
       | 'SCREEN_BLUR'
       | 'SCREEN_FOCUS'
-      | 'xstate.after(3000)#scan.reviewing.cancelling'
+      | 'xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling'
       | 'xstate.after(CLEAR_DELAY)#clearingConnection'
       | 'xstate.init';
     requestSenderInfo: 'SCAN';
@@ -96,7 +99,7 @@ export interface Typegen0 {
   };
   'eventsCausingServices': {
     checkLocationPermission: 'APP_ACTIVE' | 'LOCATION_ENABLED';
-    checkLocationStatus: 'CANCEL' | 'SCREEN_FOCUS';
+    checkLocationStatus: 'SCREEN_FOCUS';
     createVp: never;
     discoverDevice: 'RECEIVE_DEVICE_INFO';
     exchangeDeviceInfo: 'CONNECTED';
@@ -113,12 +116,12 @@ export interface Typegen0 {
     shouldVerifySender: 'ACCEPT_REQUEST' | 'VERIFY_AND_ACCEPT_REQUEST';
   };
   'eventsCausingDelays': {
+    CANCEL_TIMEOUT: 'CANCEL';
     CLEAR_DELAY: 'LOCATION_ENABLED';
-    CONNECTION_TIMEOUT:
+    CONNECTION_TIMEOUT: 'CONNECTED' | 'RECEIVE_DEVICE_INFO';
+    SHARING_TIMEOUT:
       | 'ACCEPT_REQUEST'
-      | 'CONNECTED'
       | 'FACE_VALID'
-      | 'RECEIVE_DEVICE_INFO'
       | 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
   };
   'matchesStates':

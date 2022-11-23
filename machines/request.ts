@@ -185,10 +185,7 @@ export const requestMachine = model.createMachine(
           inProgress: {},
           timeout: {
             on: {
-              CANCEL: {
-                actions: 'disconnect',
-                target: checkingBluetoothServiceId,
-              },
+              CANCEL: '#request.cancelling',
             },
           },
         },
@@ -211,19 +208,28 @@ export const requestMachine = model.createMachine(
         },
         initial: 'inProgress',
         states: {
-          inProgress: {},
-          timeout: {
-            on: {
-              CANCEL: {
-                actions: 'disconnect',
-                target: checkingBluetoothServiceId,
+          inProgress: {
+            after: {
+              SHARING_TIMEOUT: {
+                target: 'timeout',
               },
             },
           },
+          timeout: {
+            on: {
+              CANCEL: '#request.cancelling',
+            },
+          },
+        },
+      },
+      cancelling: {
+        invoke: {
+          src: 'sendDisconnect',
         },
         after: {
-          CONNECTION_TIMEOUT: {
-            target: '.timeout',
+          CANCEL_TIMEOUT: {
+            actions: 'disconnect',
+            target: checkingBluetoothServiceId,
           },
         },
       },
@@ -509,6 +515,15 @@ export const requestMachine = model.createMachine(
     },
 
     services: {
+      sendDisconnect: (context) => () => {
+        if (context.sharingProtocol === 'ONLINE') {
+          onlineSend({
+            type: 'disconnect',
+            data: 'rejected',
+          });
+        }
+      },
+
       checkBluetoothService: () => (callback) => {
         const subscription = BluetoothStateManager.onStateChange((state) => {
           if (state === 'PoweredOn') {
@@ -680,8 +695,12 @@ export const requestMachine = model.createMachine(
 
     delays: {
       CLEAR_DELAY: 250,
-      CONNECTION_TIMEOUT: () => {
-        return (Platform.OS === 'ios' ? 10 : 5) * 1000;
+      CANCEL_TIMEOUT: 3000,
+      CONNECTION_TIMEOUT: (context) => {
+        return (context.sharingProtocol === 'ONLINE' ? 15 : 5) * 1000;
+      },
+      SHARING_TIMEOUT: (context) => {
+        return (context.sharingProtocol === 'ONLINE' ? 45 : 15) * 1000;
       },
     },
   }
@@ -714,6 +733,10 @@ export function selectSharingProtocol(state: State) {
 
 export function selectIsIncomingVp(state: State) {
   return state.context.incomingVc?.verifiablePresentation != null;
+}
+
+export function selectIsCancelling(state: State) {
+  return state.matches('cancelling');
 }
 
 export function selectIsReviewing(state: State) {

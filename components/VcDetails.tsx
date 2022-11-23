@@ -8,6 +8,7 @@ import { VC, CredentialSubject, LocalizedField } from '../types/vc';
 import { Column, Row, Text } from './ui';
 import { Theme } from './ui/styleUtils';
 import { TextItem } from './ui/TextItem';
+import { VcItemTags } from './VcItemTags';
 
 const VerifiedIcon: React.FC = () => {
   return (
@@ -233,6 +234,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
             </Column>
           </Column>
         </Row>
+        <VcItemTags tag={props.vc?.tag} />
       </ImageBackground>
       {props.vc?.reason?.length > 0 && (
         <Text margin="24 24 16 24" weight="semibold">

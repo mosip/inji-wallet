@@ -20,7 +20,7 @@ export function useBiometricScreen(props: RootRouteProps) {
   const [error, setError] = useState('');
   const [isReEnabling, setReEnabling] = useState(false);
   const [initAuthBio, updateInitAuthBio] = useState(true);
-  const [bioSend, bioService] = useMachine(biometricsMachine);
+  const [, bioSend, bioService] = useMachine(biometricsMachine);
 
   const isAuthorized = useSelector(authService, selectAuthorized);
   const isAvailable = useSelector(bioService, selectIsAvailable);
