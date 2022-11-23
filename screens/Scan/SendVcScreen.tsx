@@ -123,7 +123,9 @@ export const SendVcScreen: React.FC = () => {
         isVisible={controller.isSendingVc}
         title={t('status.sharing.title')}
         hint={
-          controller.isSendingVcTimeout ? t('status.sharing.timeoutHint') : null
+          controller.isSendingVcTimeout
+            ? t('status.sharing.timeoutHint')
+            : t('status.sharing.hint')
         }
         onCancel={controller.isSendingVcTimeout ? controller.CANCEL : null}
         progress

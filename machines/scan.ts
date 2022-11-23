@@ -295,7 +295,13 @@ export const scanMachine = model.createMachine(
             },
             initial: 'inProgress',
             states: {
-              inProgress: {},
+              inProgress: {
+                after: {
+                  SHARING_TIMEOUT: {
+                    target: 'timeout',
+                  },
+                },
+              },
               timeout: {
                 on: {
                   CANCEL: {
@@ -303,11 +309,6 @@ export const scanMachine = model.createMachine(
                     target: checkingLocationServiceId,
                   },
                 },
-              },
-            },
-            after: {
-              CONNECTION_TIMEOUT: {
-                target: '.timeout',
               },
             },
           },
@@ -685,8 +686,11 @@ export const scanMachine = model.createMachine(
 
     delays: {
       CLEAR_DELAY: 250,
-      CONNECTION_TIMEOUT: () => {
-        return (Platform.OS === 'ios' ? 15 : 5) * 1000;
+      CONNECTION_TIMEOUT: (context) => {
+        return (context.sharingProtocol === 'ONLINE' ? 15 : 5) * 1000;
+      },
+      SHARING_TIMEOUT: (context) => {
+        return (context.sharingProtocol === 'ONLINE' ? 45 : 15) * 1000;
       },
     },
   }

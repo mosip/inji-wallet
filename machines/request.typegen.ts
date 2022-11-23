@@ -16,6 +16,9 @@ export interface Typegen0 {
     'xstate.after(CLEAR_DELAY)#clearingConnection': {
       type: 'xstate.after(CLEAR_DELAY)#clearingConnection';
     };
+    'xstate.after(SHARING_TIMEOUT)#request.waitingForVc.inProgress': {
+      type: 'xstate.after(SHARING_TIMEOUT)#request.waitingForVc.inProgress';
+    };
     'xstate.init': { type: 'xstate.init' };
     'xstate.stop': { type: 'xstate.stop' };
   };
@@ -95,7 +98,8 @@ export interface Typegen0 {
   };
   'eventsCausingDelays': {
     CLEAR_DELAY: '';
-    CONNECTION_TIMEOUT: 'EXCHANGE_DONE' | 'RECEIVE_DEVICE_INFO';
+    CONNECTION_TIMEOUT: 'RECEIVE_DEVICE_INFO';
+    SHARING_TIMEOUT: 'EXCHANGE_DONE';
   };
   'matchesStates':
     | 'bluetoothDenied'

@@ -1,32 +1,30 @@
 import React from 'react';
-import QRCode from 'react-native-qrcode-svg';
-import { Centered, Button, Row, Column, Text } from '../../components/ui';
-import { Theme } from '../../components/ui/styleUtils';
-import { useRequestScreen } from './RequestScreenController';
 import { TFunction, useTranslation } from 'react-i18next';
 import { Switch } from 'react-native-elements';
 import { Platform } from 'react-native';
+import QRCode from 'react-native-qrcode-svg';
+
+import { Centered, Button, Row, Column, Text } from '../../components/ui';
+import { Theme } from '../../components/ui/styleUtils';
+import { useRequestScreen } from './RequestScreenController';
 
 export const RequestScreen: React.FC = () => {
   const { t } = useTranslation('RequestScreen');
   const controller = useRequestScreen();
+  const props: RequestScreenProps = { t, controller };
 
   return (
     <Column
       fill
       padding="24"
       backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
-      {controller.isBluetoothDenied && (
-        <BluetoothPrompt t={t} controller={controller} />
-      )}
+      {controller.isBluetoothDenied && <BluetoothPrompt {...props} />}
 
       {!controller.isCheckingBluetoothService &&
       !controller.isBluetoothDenied ? (
         <Column align="flex-end" fill>
-          {controller.isWaitingForConnection && (
-            <SharingCode t={t} controller={controller} />
-          )}
-          <StatusMessage t={t} controller={controller} />
+          {controller.isWaitingForConnection && <SharingQR {...props} />}
+          <StatusMessage {...props} />
         </Column>
       ) : null}
     </Column>
@@ -48,29 +46,7 @@ const BluetoothPrompt: React.FC<RequestScreenProps> = ({ t, controller }) => {
   );
 };
 
-const StatusMessage: React.FC<RequestScreenProps> = ({ t, controller }) => {
-  return (
-    controller.statusMessage !== '' && (
-      <Column elevation={1} padding="16 24">
-        <Text>{controller.statusMessage}</Text>
-        {controller.statusHint !== '' && (
-          <Text size="small" color={Theme.Colors.textLabel}>
-            {controller.statusHint}
-          </Text>
-        )}
-        {controller.isStatusCancellable && (
-          <Button
-            margin={[8, 0, 0, 0]}
-            title={t('cancel', { ns: 'common' })}
-            onPress={controller.CANCEL}
-          />
-        )}
-      </Column>
-    )
-  );
-};
-
-const SharingCode: React.FC<RequestScreenProps> = ({ t, controller }) => {
+const SharingQR: React.FC<RequestScreenProps> = ({ t, controller }) => {
   return (
     <React.Fragment>
       <Text align="center">
@@ -97,6 +73,28 @@ const SharingCode: React.FC<RequestScreenProps> = ({ t, controller }) => {
         <Text margin={[0, 0, 0, 16]}>{t('online')}</Text>
       </Row>
     </React.Fragment>
+  );
+};
+
+const StatusMessage: React.FC<RequestScreenProps> = ({ t, controller }) => {
+  return (
+    controller.statusMessage !== '' && (
+      <Column elevation={1} padding="16 24">
+        <Text>{controller.statusMessage}</Text>
+        {controller.statusHint !== '' && (
+          <Text size="small" color={Theme.Colors.textLabel}>
+            {controller.statusHint}
+          </Text>
+        )}
+        {controller.isStatusCancellable && (
+          <Button
+            margin={[8, 0, 0, 0]}
+            title={t('cancel', { ns: 'common' })}
+            onPress={controller.CANCEL}
+          />
+        )}
+      </Column>
+    )
   );
 };
 

@@ -229,6 +229,7 @@
     "status": {
       "sharing": {
         "title": "Pagbabahagi",
+        "hint": "Pakihintay na tanggapin o tanggihan ng tumatanggap na device ang pagbabahagi.",
         "timeoutHint": "May katagalan ang pagbabahagi. Maaaring may problema sa koneksyon."
       },
       "accepted": {

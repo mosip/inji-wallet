@@ -229,6 +229,7 @@
     "status": {
       "sharing": {
         "title": "Sharing...",
+        "hint": "Please wait for the receiving device to accept or reject the share.",
         "timeoutHint": "It's taking longer than expected to share. There could be a problem with the connection."
       },
       "accepted": {

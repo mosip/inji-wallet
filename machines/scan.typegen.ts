@@ -18,6 +18,9 @@ export interface Typegen0 {
     'xstate.after(CLEAR_DELAY)#clearingConnection': {
       type: 'xstate.after(CLEAR_DELAY)#clearingConnection';
     };
+    'xstate.after(SHARING_TIMEOUT)#scan.reviewing.sendingVc.inProgress': {
+      type: 'xstate.after(SHARING_TIMEOUT)#scan.reviewing.sendingVc.inProgress';
+    };
     'xstate.init': { type: 'xstate.init' };
     'xstate.stop': { type: 'xstate.stop' };
   };
@@ -114,11 +117,10 @@ export interface Typegen0 {
   };
   'eventsCausingDelays': {
     CLEAR_DELAY: 'LOCATION_ENABLED';
-    CONNECTION_TIMEOUT:
+    CONNECTION_TIMEOUT: 'CONNECTED' | 'RECEIVE_DEVICE_INFO';
+    SHARING_TIMEOUT:
       | 'ACCEPT_REQUEST'
-      | 'CONNECTED'
       | 'FACE_VALID'
-      | 'RECEIVE_DEVICE_INFO'
       | 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
   };
   'matchesStates':

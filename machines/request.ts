@@ -211,7 +211,13 @@ export const requestMachine = model.createMachine(
         },
         initial: 'inProgress',
         states: {
-          inProgress: {},
+          inProgress: {
+            after: {
+              SHARING_TIMEOUT: {
+                target: 'timeout',
+              },
+            },
+          },
           timeout: {
             on: {
               CANCEL: {
@@ -219,11 +225,6 @@ export const requestMachine = model.createMachine(
                 target: checkingBluetoothServiceId,
               },
             },
-          },
-        },
-        after: {
-          CONNECTION_TIMEOUT: {
-            target: '.timeout',
           },
         },
       },
@@ -680,8 +681,11 @@ export const requestMachine = model.createMachine(
 
     delays: {
       CLEAR_DELAY: 250,
-      CONNECTION_TIMEOUT: () => {
-        return (Platform.OS === 'ios' ? 10 : 5) * 1000;
+      CONNECTION_TIMEOUT: (context) => {
+        return (context.sharingProtocol === 'ONLINE' ? 15 : 5) * 1000;
+      },
+      SHARING_TIMEOUT: (context) => {
+        return (context.sharingProtocol === 'ONLINE' ? 45 : 15) * 1000;
       },
     },
   }
