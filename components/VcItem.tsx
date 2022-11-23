@@ -7,9 +7,9 @@ import {
   createVcItemMachine,
   selectVerifiableCredential,
   selectGeneratedOn,
-  selectTag,
   vcItemMachine,
   selectContext,
+  selectTag,
 } from '../machines/vcItem';
 import { Column, Row, Text } from './ui';
 import { Theme } from './ui/styleUtils';
@@ -28,12 +28,17 @@ const VerifiedIcon: React.FC = () => {
   );
 };
 import { LocalizedField } from '../types/vc';
+import { VcItemTags } from './VcItemTags';
 
 const getDetails = (arg1, arg2, verifiableCredential) => {
   if (arg1 === 'Status') {
     return (
       <Column>
-        <Text weight="bold" size="smaller" color={Theme.Colors.DetailsLabel}>
+        <Text
+          weight="bold"
+          size="smaller"
+          align="left"
+          color={Theme.Colors.DetailsLabel}>
           {arg1}
         </Text>
         <Row>
@@ -56,7 +61,11 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
   } else {
     return (
       <Column>
-        <Text color={Theme.Colors.DetailsLabel} weight="bold" size="smaller">
+        <Text
+          color={Theme.Colors.DetailsLabel}
+          weight="bold"
+          size="smaller"
+          align="left">
           {arg1}
         </Text>
         <Text
@@ -94,7 +103,6 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
   const uin = verifiableCredential?.credentialSubject.UIN;
   const vid = verifiableCredential?.credentialSubject.VID;
 
-  const tag = useSelector(service, selectTag);
   const generatedOn = useSelector(service, selectGeneratedOn);
   const fullName = !verifiableCredential
     ? ''
@@ -108,6 +116,8 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
       onPress={() => props.onPress(service)}
     />
   ) : null;
+
+  const tag = useSelector(service, selectTag);
 
   return (
     <Pressable
@@ -128,7 +138,8 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
             <Text
               color={Theme.Colors.DetailsLabel}
               weight="bold"
-              size="smaller">
+              size="smaller"
+              align="left">
               {t('idType')}
             </Text>
             <Text
@@ -168,18 +179,12 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
               style={Theme.Styles.closeCardImage}
             />
 
-            <Column margin="0 0 0 25">
+            <Column margin="0 0 0 25" style={{ alignItems: 'flex-start' }}>
               {getDetails(t('fullName'), fullName, verifiableCredential)}
               {!verifiableCredential
-                ? getDetails(
-                    t('idtype'),
-                    tag || uin || vid,
-                    verifiableCredential
-                  )
+                ? getDetails(t('id'), uin || vid, verifiableCredential)
                 : null}
-              {uin
-                ? getDetails(t('uin'), tag || uin, verifiableCredential)
-                : null}
+              {uin ? getDetails(t('uin'), uin, verifiableCredential) : null}
               {vid ? getDetails(t('vid'), vid, verifiableCredential) : null}
               {getDetails(t('generatedOn'), generatedOn, verifiableCredential)}
               {getDetails(t('status'), t('valid'), verifiableCredential)}
@@ -192,6 +197,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
             <RotatingIcon name="sync" color={Theme.Colors.rotatingIcon} />
           )}
         </Row>
+        <VcItemTags tag={tag} />
       </ImageBackground>
     </Pressable>
   );

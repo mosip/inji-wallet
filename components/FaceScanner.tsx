@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect, useRef } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Camera } from 'expo-camera';
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { Button, Centered, Column, Row, Text } from './ui';
 import { useInterpret, useSelector } from '@xstate/react';
 import { useTranslation } from 'react-i18next';
@@ -109,6 +109,12 @@ export const FaceScanner: React.FC<FaceScannerProps> = (props) => {
               style={{ margin: 8, marginTop: 12, marginStart: 32 }}
             />
           </Row>
+        )}
+        {/* TODO: remove warning when iOS SDK is ready */}
+        {Platform.OS === 'ios' && (
+          <Text size="smaller" color={Theme.Colors.textLabel} align="center">
+            (face-matching in iOS is mocked)
+          </Text>
         )}
       </Centered>
     </Column>

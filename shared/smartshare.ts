@@ -19,7 +19,7 @@ export function onlineSubscribe<T extends SmartshareEventType>(
   return GoogleNearbyMessages.subscribe(
     (foundMessage) => {
       if (__DEV__) {
-        console.log('\n[request] MESSAGE_FOUND', foundMessage);
+        console.log('\n[request] MESSAGE_FOUND', foundMessage.slice(0, 100));
       }
       const response = SmartshareEvent.fromString<T>(foundMessage);
       if (response.type === 'disconnect') {
@@ -31,7 +31,7 @@ export function onlineSubscribe<T extends SmartshareEventType>(
     },
     (lostMessage) => {
       if (__DEV__) {
-        console.log('\n[request] MESSAGE_LOST', lostMessage);
+        console.log('\n[request] MESSAGE_LOST', lostMessage.slice(0, 100));
       }
     }
   );

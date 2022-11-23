@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 import SmartshareReactNative from '@idpass/smartshare-react-native';
 import { ConnectionParams } from '@idpass/smartshare-react-native/lib/typescript/IdpassSmartshare';
 const { IdpassSmartshare, GoogleNearbyMessages } = SmartshareReactNative;
@@ -31,7 +32,6 @@ import { CameraCapturedPicture } from 'expo-camera';
 import { log } from 'xstate/lib/actions';
 
 const findingConnectionId = '#scan.findingConnection';
-const checkingLocationServiceId = '#checkingLocationService';
 
 type SharingProtocol = 'OFFLINE' | 'ONLINE';
 
@@ -50,6 +50,7 @@ const model = createModel(
     verificationImage: {} as CameraCapturedPicture,
     sharingProtocol: 'OFFLINE' as SharingProtocol,
     scannedQrParams: {} as ConnectionParams,
+    shouldVerifySender: false,
   },
   {
     events: {
@@ -57,7 +58,10 @@ const model = createModel(
       RECEIVE_DEVICE_INFO: (info: DeviceInfo) => ({ info }),
       SELECT_VC: (vc: VC) => ({ vc }),
       SCAN: (params: string) => ({ params }),
-      ACCEPT_REQUEST: () => ({}),
+      ACCEPT_REQUEST: (shouldVerifySender: boolean) => ({ shouldVerifySender }),
+      VERIFY_AND_ACCEPT_REQUEST: (shouldVerifySender: boolean) => ({
+        shouldVerifySender,
+      }),
       VC_ACCEPTED: () => ({}),
       VC_REJECTED: () => ({}),
       CANCEL: () => ({}),
@@ -73,7 +77,6 @@ const model = createModel(
       UPDATE_VC_NAME: (vcName: string) => ({ vcName }),
       STORE_RESPONSE: (response: unknown) => ({ response }),
       APP_ACTIVE: () => ({}),
-      VERIFY_AND_SELECT_VC: (vc: VC) => ({ vc }),
       FACE_VALID: () => ({}),
       FACE_INVALID: () => ({}),
       RETRY_VERIFICATION: () => ({}),
@@ -197,19 +200,17 @@ export const scanMachine = model.createMachine(
         },
         initial: 'inProgress',
         states: {
-          inProgress: {},
-          timeout: {
-            on: {
-              CANCEL: {
-                actions: 'disconnect',
-                target: checkingLocationServiceId,
+          inProgress: {
+            after: {
+              CONNECTION_TIMEOUT: {
+                target: 'timeout',
               },
             },
           },
-        },
-        after: {
-          CONNECTION_TIMEOUT: {
-            target: '.timeout',
+          timeout: {
+            on: {
+              CANCEL: '#scan.reviewing.cancelling',
+            },
           },
         },
       },
@@ -229,10 +230,7 @@ export const scanMachine = model.createMachine(
           inProgress: {},
           timeout: {
             on: {
-              CANCEL: {
-                actions: 'disconnect',
-                target: checkingLocationServiceId,
-              },
+              CANCEL: '#scan.reviewing.cancelling',
             },
           },
         },
@@ -243,35 +241,34 @@ export const scanMachine = model.createMachine(
         },
       },
       reviewing: {
-        on: {
-          CANCEL: 'findingConnection',
-          DISMISS: 'findingConnection',
-          ACCEPT_REQUEST: '.selectingVc',
-          UPDATE_REASON: {
-            actions: ['setReason'],
-          },
-        },
-        initial: 'idle',
+        initial: 'selectingVc',
         states: {
-          idle: {
-            on: {
-              ACCEPT_REQUEST: 'selectingVc',
-              DISCONNECT: findingConnectionId,
-              CANCEL: 'cancelling',
-            },
-          },
           selectingVc: {
             on: {
+              UPDATE_REASON: {
+                actions: ['setReason'],
+              },
               DISCONNECT: findingConnectionId,
               SELECT_VC: {
-                target: 'sendingVc',
                 actions: ['setSelectedVc'],
               },
-              VERIFY_AND_SELECT_VC: {
-                target: 'verifyingIdentity',
-                actions: ['setSelectedVc'],
-              },
-              CANCEL: 'idle',
+              VERIFY_AND_ACCEPT_REQUEST: [
+                {
+                  cond: 'shouldVerifySender',
+                  target: 'verifyingIdentity',
+                },
+                {
+                  target: 'verifyingIdentity',
+                },
+              ],
+              ACCEPT_REQUEST: [
+                {
+                  cond: 'shouldVerifySender',
+                  actions: 'setShouldVerifyPresence',
+                  target: 'sendingVc',
+                },
+              ],
+              CANCEL: '#scan.reviewing.cancelling',
             },
           },
           cancelling: {
@@ -279,7 +276,10 @@ export const scanMachine = model.createMachine(
               src: 'sendDisconnect',
             },
             after: {
-              3000: findingConnectionId,
+              CANCEL_TIMEOUT: {
+                actions: 'disconnect',
+                target: findingConnectionId,
+              },
             },
           },
           sendingVc: {
@@ -293,19 +293,17 @@ export const scanMachine = model.createMachine(
             },
             initial: 'inProgress',
             states: {
-              inProgress: {},
-              timeout: {
-                on: {
-                  CANCEL: {
-                    actions: 'disconnect',
-                    target: checkingLocationServiceId,
+              inProgress: {
+                after: {
+                  SHARING_TIMEOUT: {
+                    target: 'timeout',
                   },
                 },
               },
-            },
-            after: {
-              CONNECTION_TIMEOUT: {
-                target: '.timeout',
+              timeout: {
+                on: {
+                  CANCEL: '#scan.reviewing.cancelling',
+                },
               },
             },
           },
@@ -315,12 +313,17 @@ export const scanMachine = model.createMachine(
               DISMISS: 'navigatingToHome',
             },
           },
-          rejected: {},
+          rejected: {
+            on: {
+              DISMISS: findingConnectionId,
+            },
+          },
           navigatingToHome: {},
           verifyingIdentity: {
             on: {
               FACE_VALID: {
-                target: 'creatingVp',
+                target: 'sendingVc',
+                // target: 'creatingVp',
               },
               FACE_INVALID: {
                 target: 'invalidIdentity',
@@ -435,14 +438,14 @@ export const scanMachine = model.createMachine(
                 console.log(
                   getDeviceNameSync(),
                   '<Sender.Event>',
-                  JSON.stringify(event)
+                  JSON.stringify(event).slice(0, 100)
                 );
               }),
               IdpassSmartshare.handleLogEvents((event) => {
                 console.log(
                   getDeviceNameSync(),
                   '<Sender.Log>',
-                  JSON.stringify(event)
+                  JSON.stringify(event).slice(0, 100)
                 );
               }),
             ];
@@ -473,6 +476,13 @@ export const scanMachine = model.createMachine(
       ),
 
       openSettings: () => Linking.openSettings(),
+
+      setShouldVerifyPresence: assign({
+        selectedVc: (context) => ({
+          ...context.selectedVc,
+          shouldVerifyPresence: true,
+        }),
+      }),
     },
 
     services: {
@@ -665,12 +675,18 @@ export const scanMachine = model.createMachine(
           return false;
         }
       },
+
+      shouldVerifySender: (_context, event) => event.shouldVerifySender,
     },
 
     delays: {
       CLEAR_DELAY: 250,
-      CONNECTION_TIMEOUT: () => {
-        return (Platform.OS === 'ios' ? 15 : 5) * 1000;
+      CANCEL_TIMEOUT: 3000,
+      CONNECTION_TIMEOUT: (context) => {
+        return (context.sharingProtocol === 'ONLINE' ? 15 : 5) * 1000;
+      },
+      SHARING_TIMEOUT: (context) => {
+        return (context.sharingProtocol === 'ONLINE' ? 45 : 15) * 1000;
       },
     },
   }

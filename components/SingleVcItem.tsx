@@ -7,7 +7,6 @@ import {
   createVcItemMachine,
   selectVerifiableCredential,
   selectGeneratedOn,
-  selectTag,
   selectId,
   vcItemMachine,
   selectContext,
@@ -73,27 +72,26 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
         </Row>
       </Column>
     );
-  } else {
-    return (
-      <Column>
-        <Text color={Theme.Colors.DetailsLabel} size="smaller">
-          {arg1}
-        </Text>
-        <Text
-          numLines={1}
-          color={Theme.Colors.Details}
-          weight="bold"
-          size="smaller"
-          style={
-            !verifiableCredential
-              ? Theme.Styles.loadingTitle
-              : Theme.Styles.subtitle
-          }>
-          {!verifiableCredential ? '' : arg2}
-        </Text>
-      </Column>
-    );
   }
+  return (
+    <Column>
+      <Text color={Theme.Colors.DetailsLabel} size="smaller">
+        {arg1}
+      </Text>
+      <Text
+        numLines={1}
+        color={Theme.Colors.Details}
+        weight="bold"
+        size="smaller"
+        style={
+          !verifiableCredential
+            ? Theme.Styles.loadingTitle
+            : Theme.Styles.subtitle
+        }>
+        {!verifiableCredential ? '' : arg2}
+      </Text>
+    </Column>
+  );
 };
 
 export const SingleVcItem: React.FC<VcItemProps> = (props) => {
@@ -111,26 +109,21 @@ export const SingleVcItem: React.FC<VcItemProps> = (props) => {
   const context = useSelector(service, selectContext);
   const verifiableCredential = useSelector(service, selectVerifiableCredential);
   const uin = useSelector(service, selectId);
-  const tag = useSelector(service, selectTag);
   const generatedOn = useSelector(service, selectGeneratedOn);
   const fullName = !verifiableCredential
     ? ''
     : getLocalizedField(verifiableCredential.credentialSubject.fullName);
 
-  const selectableOrCheck = props.selectable ? (
-    <CheckBox
-      checked={props.selected}
-      checkedIcon={<Icon name="radio-button-checked" />}
-      uncheckedIcon={<Icon name="radio-button-unchecked" />}
-      onPress={() => props.onPress(service)}
-    />
-  ) : null;
+  const selectableOrCheck = props.selectable ? null : null;
 
   return (
-    <Column onShow={props.onShow(service)}>
+    <Column
+      onShow={props.onShow(service)}
+      style={Theme.Styles.closeCardBgContainer}>
       <ImageBackground
         source={!verifiableCredential ? null : Theme.CloseCard}
         resizeMode="stretch"
+        borderRadius={4}
         style={
           !verifiableCredential
             ? Theme.Styles.vertloadingContainer
@@ -164,7 +157,7 @@ export const SingleVcItem: React.FC<VcItemProps> = (props) => {
 
             <Column margin="0 0 0 10">
               {getDetails(t('fullName'), fullName, verifiableCredential)}
-              {getDetails(t('uin'), tag || uin, verifiableCredential)}
+              {getDetails(t('uin'), uin, verifiableCredential)}
               {getDetails(t('generatedOn'), generatedOn, verifiableCredential)}
               {getDetails(t('status'), t('valid'), verifiableCredential)}
             </Column>

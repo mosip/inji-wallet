@@ -51,6 +51,8 @@ export interface Typegen0 {
       | 'error.platform.GetVcModal.requestingUinVid:invocation[0]'
       | 'xstate.after(100)#GetVcModal.acceptingIdInput.focusing';
     forwardToParent: 'DISMISS';
+    setIconColorActivate: 'ACTIVATE_ICON_COLOR';
+    setIconColorDeactivate: 'DEACTIVATE_ICON_COLOR';
     setId: 'INPUT_ID';
     setIdBackendError:
       | 'error.platform.GetVcModal.acceptingIdInput.requestingOtp:invocation[0]'
