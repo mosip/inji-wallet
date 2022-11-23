@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Dimensions, Platform } from 'react-native';
+import { Dimensions } from 'react-native';
 import { Overlay } from 'react-native-elements/dist/overlay/Overlay';
 import { Button, Column, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
@@ -47,16 +47,13 @@ export const SelectVcOverlay: React.FC<SelectVcOverlayProps> = (props) => {
           onPress={controller.onSelect}
           margin="8 0 0 0"
         />
-        {/* TODO: presence verification is not yet available for iOS */}
-        {Platform.OS === 'android' && (
-          <Button
-            type="outline"
-            title={t('verifyAndShare')}
-            disabled={controller.selectedIndex == null}
-            onPress={controller.onVerifyAndSelect}
-            margin="8 0 0 0"
-          />
-        )}
+        <Button
+          type="outline"
+          title={t('verifyAndShare')}
+          disabled={controller.selectedIndex == null}
+          onPress={controller.onVerifyAndSelect}
+          margin="8 0 0 0"
+        />
         <Button
           type="clear"
           title={t('common:cancel')}

@@ -8,7 +8,6 @@ import {
   createVcItemMachine,
   selectVerifiableCredential,
   selectGeneratedOn,
-  selectTag,
   selectId,
   vcItemMachine,
 } from '../machines/vcItem';
@@ -16,6 +15,7 @@ import { Column, Row, Text } from './ui';
 import { Theme } from './ui/styleUtils';
 import { RotatingIcon } from './RotatingIcon';
 import { GlobalContext } from '../shared/GlobalContext';
+import { LocalizedField } from '../types/vc';
 
 export const VidItem: React.FC<VcItemProps> = (props) => {
   const { appService } = useContext(GlobalContext);
@@ -27,7 +27,6 @@ export const VidItem: React.FC<VcItemProps> = (props) => {
   );
   const service = useInterpret(machine.current);
   const uin = useSelector(service, selectId);
-  const tag = useSelector(service, selectTag);
   const verifiableCredential = useSelector(service, selectVerifiableCredential);
   const generatedOn = useSelector(service, selectGeneratedOn);
 
@@ -70,7 +69,7 @@ export const VidItem: React.FC<VcItemProps> = (props) => {
                 : Theme.VidItemStyles.title
             }
             margin="0 0 6 0">
-            {!verifiableCredential ? '' : tag || uin}
+            {!verifiableCredential ? '' : uin}
           </Text>
           <Text
             size="smaller"

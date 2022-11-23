@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 import { Dimensions, StyleSheet, ViewStyle } from 'react-native';
 import { Spacing } from '../styleUtils';
 
@@ -110,9 +111,11 @@ export const DefaultTheme = {
     },
     labelPartContainer: {
       marginLeft: 16,
+      flex: 1,
     },
     labelPart: {
       marginTop: 10,
+      alignItems: 'flex-start',
     },
     openCardBgContainer: {
       borderRadius: 10,

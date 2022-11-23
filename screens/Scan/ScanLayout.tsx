@@ -55,7 +55,7 @@ export const ScanLayout: React.FC = () => {
           name="ScanScreen"
           component={ScanScreen}
           options={{
-            title: t('scan').toUpperCase(),
+            title: t('MainLayout:scan').toUpperCase(),
           }}
         />
       </ScanStack.Navigator>

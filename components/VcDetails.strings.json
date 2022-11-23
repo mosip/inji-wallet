@@ -9,5 +9,8 @@
   "phoneNumber": "Phone number",
   "email": "Email",
   "address": "Address",
-  "reasonForSharing": "Reason for sharing"
+  "reasonForSharing": "Reason for sharing",
+  "idType": "ID type",
+  "nationalCard": "National Card",
+  "uin": "UIN"
 }

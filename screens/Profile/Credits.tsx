@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Dimensions, Image, SafeAreaView, View } from 'react-native';
-import { Divider, Icon, ListItem, Overlay } from 'react-native-elements';
 import Markdown from 'react-native-simple-markdown';
+import { useTranslation } from 'react-i18next';
+import { Image, SafeAreaView, View } from 'react-native';
+import { Divider, Icon, ListItem, Overlay } from 'react-native-elements';
+
 import { Button, Text, Row } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import creditsContent from '../../Credits.md';
