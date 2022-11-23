@@ -185,10 +185,7 @@ export const requestMachine = model.createMachine(
           inProgress: {},
           timeout: {
             on: {
-              CANCEL: {
-                actions: 'disconnect',
-                target: checkingBluetoothServiceId,
-              },
+              CANCEL: '#request.cancelling',
             },
           },
         },
@@ -211,19 +208,28 @@ export const requestMachine = model.createMachine(
         },
         initial: 'inProgress',
         states: {
-          inProgress: {},
-          timeout: {
-            on: {
-              CANCEL: {
-                actions: 'disconnect',
-                target: checkingBluetoothServiceId,
+          inProgress: {
+            after: {
+              SHARING_TIMEOUT: {
+                target: 'timeout',
               },
             },
           },
+          timeout: {
+            on: {
+              CANCEL: '#request.cancelling',
+            },
+          },
+        },
+      },
+      cancelling: {
+        invoke: {
+          src: 'sendDisconnect',
         },
         after: {
-          CONNECTION_TIMEOUT: {
-            target: '.timeout',
+          CANCEL_TIMEOUT: {
+            actions: 'disconnect',
+            target: checkingBluetoothServiceId,
           },
         },
       },
@@ -240,7 +246,9 @@ export const requestMachine = model.createMachine(
           verifyingIdentity: {
             on: {
               FACE_VALID: {
-                target: 'verifyingVp',
+                target: 'accepting',
+                actions: 'clearShouldVerifyPresence',
+                // target: 'verifyingVp',
               },
               FACE_INVALID: {
                 target: 'invalidIdentity',
@@ -419,14 +427,14 @@ export const requestMachine = model.createMachine(
                 console.log(
                   getDeviceNameSync(),
                   '<Receiver.Event>',
-                  JSON.stringify(event)
+                  JSON.stringify(event).slice(0, 100)
                 );
               }),
               IdpassSmartshare.handleLogEvents((event) => {
                 console.log(
                   getDeviceNameSync(),
                   '<Receiver.Log>',
-                  JSON.stringify(event)
+                  JSON.stringify(event).slice(0, 100)
                 );
               }),
             ];
@@ -497,9 +505,25 @@ export const requestMachine = model.createMachine(
         },
         { to: (context) => context.serviceRefs.vc }
       ),
+
+      clearShouldVerifyPresence: assign({
+        incomingVc: (context) => ({
+          ...context.incomingVc,
+          shouldVerifyPresence: false,
+        }),
+      }),
     },
 
     services: {
+      sendDisconnect: (context) => () => {
+        if (context.sharingProtocol === 'ONLINE') {
+          onlineSend({
+            type: 'disconnect',
+            data: 'rejected',
+          });
+        }
+      },
+
       checkBluetoothService: () => (callback) => {
         const subscription = BluetoothStateManager.onStateChange((state) => {
           if (state === 'PoweredOn') {
@@ -671,8 +695,12 @@ export const requestMachine = model.createMachine(
 
     delays: {
       CLEAR_DELAY: 250,
-      CONNECTION_TIMEOUT: () => {
-        return (Platform.OS === 'ios' ? 10 : 5) * 1000;
+      CANCEL_TIMEOUT: 3000,
+      CONNECTION_TIMEOUT: (context) => {
+        return (context.sharingProtocol === 'ONLINE' ? 15 : 5) * 1000;
+      },
+      SHARING_TIMEOUT: (context) => {
+        return (context.sharingProtocol === 'ONLINE' ? 45 : 15) * 1000;
       },
     },
   }
@@ -705,6 +733,10 @@ export function selectSharingProtocol(state: State) {
 
 export function selectIsIncomingVp(state: State) {
   return state.context.incomingVc?.verifiablePresentation != null;
+}
+
+export function selectIsCancelling(state: State) {
+  return state.matches('cancelling');
 }
 
 export function selectIsReviewing(state: State) {

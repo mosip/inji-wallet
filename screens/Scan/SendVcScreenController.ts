@@ -1,6 +1,7 @@
 import { useSelector } from '@xstate/react';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ActorRefFrom } from 'xstate';
 import { MessageOverlayProps } from '../../components/MessageOverlay';
 import {
   ScanEvents,
@@ -19,6 +20,7 @@ import {
 } from '../../machines/scan';
 import { selectVcLabel } from '../../machines/settings';
 import { selectShareableVcs } from '../../machines/vc';
+import { vcItemMachine } from '../../machines/vcItem';
 import { GlobalContext } from '../../shared/GlobalContext';
 import { VC } from '../../types/vc';
 
@@ -46,7 +48,21 @@ export function useSendVcScreen() {
     };
   }
 
+  const [shouldVerifySender, setShouldVerifySender] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState<number>(null);
+  const SELECT_VC = (vc: VC) => scanService.send(ScanEvents.SELECT_VC(vc));
+
   return {
+    selectedIndex,
+    shouldVerifySender,
+    TOGGLE_USER_CONSENT: () => setShouldVerifySender(!shouldVerifySender),
+    SELECT_VC_ITEM:
+      (index: number) => (vcRef: ActorRefFrom<typeof vcItemMachine>) => {
+        setSelectedIndex(index);
+        const vcData = vcRef.getSnapshot().context;
+        SELECT_VC(vcData);
+      },
+
     status,
     receiverInfo: useSelector(scanService, selectReceiverInfo),
     reason: useSelector(scanService, selectReason),
@@ -64,11 +80,14 @@ export function useSendVcScreen() {
     isInvalidIdentity: useSelector(scanService, selectIsInvalidIdentity),
     isCancelling: useSelector(scanService, selectIsCancelling),
 
-    ACCEPT_REQUEST: () => scanService.send(ScanEvents.ACCEPT_REQUEST()),
     CANCEL,
-    SELECT_VC: (vc: VC) => scanService.send(ScanEvents.SELECT_VC(vc)),
-    VERIFY_AND_SELECT_VC: (vc: VC) =>
-      scanService.send(ScanEvents.VERIFY_AND_SELECT_VC(vc)),
+    SELECT_VC,
+    ACCEPT_REQUEST: () =>
+      scanService.send(ScanEvents.ACCEPT_REQUEST(shouldVerifySender)),
+    VERIFY_AND_ACCEPT_REQUEST: () =>
+      scanService.send(
+        ScanEvents.VERIFY_AND_ACCEPT_REQUEST(shouldVerifySender)
+      ),
     DISMISS: () => scanService.send(ScanEvents.DISMISS()),
     UPDATE_REASON: (reason: string) =>
       scanService.send(ScanEvents.UPDATE_REASON(reason)),

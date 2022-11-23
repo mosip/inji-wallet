@@ -195,7 +195,7 @@ export const vcItemMachine =
             ],
             onError: [
               {
-                actions: 'logError',
+                actions: log((_, event) => (event.data as Error).message),
                 target: 'idle',
               },
             ],

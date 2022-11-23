@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, Modal as RNModal } from 'react-native';
+import { Modal as RNModal } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { PasscodeVerify } from '../components/PasscodeVerify';
 import { Column, Text } from '../components/ui';

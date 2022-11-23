@@ -5,6 +5,7 @@
     "deviceRefNumber": "Reference number ng device",
     "name": "Pangalan"
   },
+  "FaceScanner": {},
   "OIDcAuth": {
     "title": "OIDC Authentication",
     "text": "Papalitan ng OIDC service provider UI",
@@ -28,7 +29,10 @@
     "phoneNumber": "Numero ng telepono",
     "email": "Email",
     "address": "Tirahan",
-    "reasonForSharing": "Dahilan ng pagbabahagi"
+    "reasonForSharing": "Dahilan ng pagbabahagi",
+    "idType": "Uri ng ID",
+    "nationalCard": "Pambansang Kard",
+    "uin": "UIN"
   },
   "AuthScreen": {
     "header": "Gusto mo bang gumamit ng biometrics upang i-unlock ang aplikasyon?",
@@ -148,11 +152,13 @@
     "revokingVids": "Kakanselahin mo na ang ({{count}}) na mga VID.",
     "revokingVidsAfter": "Nangangahulugan ito na hindi mo na maa-access o matitingnan ang anumang mga ID na naka-link sa mga VID na ito. Sigurado ka bang gusto mong magpatuloy?",
     "empty": "Walang laman",
-    "revokeSuccessful": "Matagumpay na nakansela ang VID"
+    "revokeSuccessful": "Matagumpay na nakansela ang VID",
+    "version": "Bersyon"
   },
   "ReceiveVcScreen": {
     "header": "Mga detalye ng {{vcLabel}}",
     "acceptRequest": "Tanggapin ang kahilingan at tumanggap ng {{vcLabel}}",
+    "acceptRequestAndVerify": "Tanggapin ang kahilingan at i-verify",
     "reject": "Tanggihan"
   },
   "RequestScreen": {
@@ -180,7 +186,7 @@
       },
       "connected": {
         "message": "Nakakonektang device. Naghihintay para sa {{vcLabel}}...",
-        "timeoutHint": "Wala pang natanggap na VC. Nakakonekta pa rin ba ang pagpapadala ng device?"
+        "timeoutHint": "Wala pang data na natanggap. Nakakonekta pa rin ba ang nagpapadala na device?"
       }
     },
     "online": "Online",
@@ -218,11 +224,13 @@
   "SendVcScreen": {
     "reasonForSharing": "Dahilan ng pagbabahagi (opsyonal)",
     "acceptRequest": "Tanggapin ang kahilingan at piliin ang {{vcLabel}}",
+    "acceptRequestAndVerify": "Tanggapin ang kahilingan at magpatunay",
     "reject": "Tanggihan",
     "status": {
       "sharing": {
         "title": "Pagbabahagi",
-        "timeoutHint": "Medyo natatagal ang pagbabahagi ng VC. Maaaring may problema sa koneksyon."
+        "hint": "Pakihintay na tanggapin o tanggihan ng tumatanggap na device ang pagbabahagi.",
+        "timeoutHint": "May katagalan ang pagbabahagi. Maaaring may problema sa koneksyon."
       },
       "accepted": {
         "title": "Tagumpay!",
@@ -231,7 +239,12 @@
       "rejected": {
         "title": "Pansinin",
         "message": "Ang iyong {{vcLabel}} ay tinanggihan ng {{receiver}}"
-      },
+      }
+    },
+    "consentToPhotoVerification": "Nagbibigay ako ng pahintulot na kunin ang aking larawan para sa pagpapatunay"
+  },
+  "VerifyIdentityOverlay": {
+    "status": {
       "verifyingIdentity": "Bine-verify ang pagkakakilanlan..."
     },
     "errors": {
@@ -250,6 +263,12 @@
     "cancel": "Kanselahin",
     "save": "I-save",
     "editLabel": "Palitan ang {{label}}",
-    "tryAgain": "Subukan muli"
+    "tryAgain": "Subukan muli",
+    "camera": {
+      "errors": {
+        "missingPermission": "Ginagamit ng app na ito ang camera upang i-scan ang QR code ng isa pang device."
+      },
+      "allowAccess": "Payagan ang access sa camera"
+    }
   }
 }

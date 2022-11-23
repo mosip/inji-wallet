@@ -34,7 +34,10 @@
     "phoneNumber": "Phone number",
     "email": "Email",
     "address": "Address",
-    "reasonForSharing": "Reason for sharing"
+    "reasonForSharing": "Reason for sharing",
+    "idType": "ID type",
+    "nationalCard": "National Card",
+    "uin": "UIN"
   },
   "AuthScreen": {
     "header": "Would you like to use biometrics to unlock the application?",
@@ -78,22 +81,6 @@
       }
     }
   },
-  "GetVcModal": {
-    "retrievingId": "Retrieving UID/VID...",
-    "applicationProcessing": "Your application is still being processed. Please try again after a few days",
-    "errors": {
-      "input": {
-        "empty": "The input cannot be empty",
-        "invalidFormat": "The input format is incorrect"
-      },
-      "backend": {
-        "invalidOtp": "OTP is invalid",
-        "applicationProcessing": "Your application is still being processed. Please try again after a few days",
-        "invalidAid": "AID is not ready",
-        "timeOut": "Requesting Time Out"
-      }
-    }
-  },
   "DownloadingVcModal": {
     "header": "Downloading your {{vcLabel}}",
     "bodyText": "This may take some time, we will notify you when your {{vcLabel}} has been downloaded and is available",
@@ -111,7 +98,7 @@
     "getUIN": "Get UIN/VID",
     "applicationId": "Application {{vcLabel}} number",
     "requestingOTP": "Requesting OTP...",
-    "qstnMarkToolTip" : "Application {{vcLabel}} Number is printed on the acknowledgment provided after enrollment"
+    "qstnMarkToolTip": "Application {{vcLabel}} Number is printed on the acknowledgment provided after enrollment"
   },
   "OtpVerificationModal": {
     "enterOtp": "Enter the 6-digit verification code we sent you"
@@ -179,7 +166,8 @@
     "revokingVids": "You are about to revoke ({{count}}) VIDs.",
     "revokingVidsAfter": "This means you will no longer be able to use or view any of the IDs linked to those VID(s). \nAre you sure you want to proceed?",
     "empty": "Empty",
-    "revokeSuccessful": "VID successfully revoked"
+    "revokeSuccessful": "VID successfully revoked",
+    "version": "Version"
   },
   "ReceiveVcScreen": {
     "header": "{{vcLabel}} details",
@@ -212,7 +200,7 @@
       },
       "connected": {
         "message": "Connected to device. Waiting for {{vcLabel}}...",
-        "timeoutHint": "No VC data received yet. Is sending device still connected?"
+        "timeoutHint": "No data received yet. Is sending device still connected?"
       }
     },
     "online": "Online",
@@ -250,11 +238,13 @@
   "SendVcScreen": {
     "reasonForSharing": "Reason for sharing (optional)",
     "acceptRequest": "Accept request and choose {{vcLabel}}",
+    "acceptRequestAndVerify": "Accept request and verify",
     "reject": "Reject",
     "status": {
       "sharing": {
         "title": "Sharing...",
-        "timeoutHint": "It's taking a while to share VC. There could be a problem with the connection."
+        "hint": "Please wait for the receiving device to accept or reject the share.",
+        "timeoutHint": "It's taking longer than expected to share. There could be a problem with the connection."
       },
       "accepted": {
         "title": "Success!",
@@ -264,7 +254,8 @@
         "title": "Notice",
         "message": "Your {{vcLabel}} was rejected by {{receiver}}"
       }
-    }
+    },
+    "consentToPhotoVerification": "I give consent to have my photo taken for authentication"
   },
   "VerifyIdentityOverlay": {
     "status": {

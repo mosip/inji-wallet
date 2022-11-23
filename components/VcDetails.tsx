@@ -8,6 +8,7 @@ import { VC, CredentialSubject, LocalizedField } from '../types/vc';
 import { Column, Row, Text } from './ui';
 import { Theme } from './ui/styleUtils';
 import { TextItem } from './ui/TextItem';
+import { VcItemTags } from './VcItemTags';
 
 const VerifiedIcon: React.FC = () => {
   return (
@@ -42,7 +43,8 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
             <Text
               weight="bold"
               size="smaller"
-              color={Theme.Colors.DetailsLabel}>
+              color={Theme.Colors.DetailsLabel}
+              align="left">
               {t('idType')}
             </Text>
             <Text weight="bold" size="smaller" color={Theme.Colors.Details}>
@@ -93,8 +95,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                 <Text
                   weight="semibold"
                   size="smaller"
-                  color={Theme.Colors.Details}
-                  align="left">
+                  color={Theme.Colors.Details}>
                   {uin}
                 </Text>
               </Column>
@@ -111,7 +112,6 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                 <Text
                   weight="semibold"
                   size="smaller"
-                  align="left"
                   color={Theme.Colors.Details}>
                   {vid}
                 </Text>
@@ -122,14 +122,12 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
               <Text
                 weight="bold"
                 size="smaller"
-                align="left"
                 color={Theme.Colors.DetailsLabel}>
                 {t('generatedOn')}
               </Text>
               <Text
                 weight="semibold"
                 size="smaller"
-                align="left"
                 color={Theme.Colors.Details}>
                 {new Date(props.vc?.generatedOn).toLocaleDateString()}
               </Text>
@@ -139,7 +137,6 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
               <Text
                 weight="bold"
                 size="smaller"
-                align="left"
                 color={Theme.Colors.DetailsLabel}>
                 {t('status')}
               </Text>
@@ -225,7 +222,8 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                   }
                   weight="semibold"
                   size="smaller"
-                  color={Theme.Colors.Details}>
+                  color={Theme.Colors.Details}
+                  align="left">
                   {getLocalizedField(
                     props.vc?.verifiableCredential.credentialSubject.email
                   )}
@@ -245,7 +243,8 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                   style={{ flex: 1 }}
                   weight="semibold"
                   size="smaller"
-                  color={Theme.Colors.Details}>
+                  color={Theme.Colors.Details}
+                  align="left">
                   {getFullAddress(
                     props.vc?.verifiableCredential.credentialSubject
                   )}
@@ -254,6 +253,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
             </Column>
           </Column>
         </Row>
+        <VcItemTags tag={props.vc?.tag} />
       </ImageBackground>
       {props.vc?.reason?.length > 0 && (
         <Text margin="24 24 16 24" weight="semibold">
