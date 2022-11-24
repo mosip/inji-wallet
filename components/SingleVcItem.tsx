@@ -36,8 +36,8 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
           {arg1}
         </Text>
         <Text
+          numLines={4}
           color={Theme.Colors.Details}
-          numLines={1}
           weight="bold"
           size="smaller"
           style={
