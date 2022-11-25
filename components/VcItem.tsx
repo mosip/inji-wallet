@@ -69,7 +69,7 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
           {arg1}
         </Text>
         <Text
-          numLines={1}
+          numLines={4}
           color={Theme.Colors.Details}
           weight="bold"
           size="smaller"
