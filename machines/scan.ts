@@ -59,9 +59,7 @@ const model = createModel(
       SELECT_VC: (vc: VC) => ({ vc }),
       SCAN: (params: string) => ({ params }),
       ACCEPT_REQUEST: (shouldVerifySender: boolean) => ({ shouldVerifySender }),
-      VERIFY_AND_ACCEPT_REQUEST: (shouldVerifySender: boolean) => ({
-        shouldVerifySender,
-      }),
+      VERIFY_AND_ACCEPT_REQUEST: () => ({}),
       VC_ACCEPTED: () => ({}),
       VC_REJECTED: () => ({}),
       CANCEL: () => ({}),
@@ -252,22 +250,13 @@ export const scanMachine = model.createMachine(
               SELECT_VC: {
                 actions: ['setSelectedVc'],
               },
-              VERIFY_AND_ACCEPT_REQUEST: [
-                {
-                  cond: 'shouldVerifySender',
-                  target: 'verifyingIdentity',
-                },
-                {
-                  target: 'verifyingIdentity',
-                },
-              ],
-              ACCEPT_REQUEST: [
-                {
-                  cond: 'shouldVerifySender',
-                  actions: 'setShouldVerifyPresence',
-                  target: 'sendingVc',
-                },
-              ],
+              VERIFY_AND_ACCEPT_REQUEST: {
+                target: 'verifyingIdentity',
+              },
+              ACCEPT_REQUEST: {
+                actions: 'setShouldVerifyPresence',
+                target: 'sendingVc',
+              },
               CANCEL: '#scan.reviewing.cancelling',
             },
           },
@@ -480,7 +469,7 @@ export const scanMachine = model.createMachine(
       setShouldVerifyPresence: assign({
         selectedVc: (context) => ({
           ...context.selectedVc,
-          shouldVerifyPresence: true,
+          shouldVerifyPresence: context.shouldVerifySender,
         }),
       }),
     },
@@ -675,8 +664,6 @@ export const scanMachine = model.createMachine(
           return false;
         }
       },
-
-      shouldVerifySender: (_context, event) => event.shouldVerifySender,
     },
 
     delays: {

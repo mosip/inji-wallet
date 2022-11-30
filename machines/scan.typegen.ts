@@ -113,7 +113,6 @@ export interface Typegen0 {
   'eventsCausingGuards': {
     isQrOffline: 'SCAN';
     isQrOnline: 'SCAN';
-    shouldVerifySender: 'ACCEPT_REQUEST' | 'VERIFY_AND_ACCEPT_REQUEST';
   };
   'eventsCausingDelays': {
     CANCEL_TIMEOUT: 'CANCEL';

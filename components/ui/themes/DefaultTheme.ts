@@ -152,7 +152,7 @@ export const DefaultTheme = {
       justifyContent: 'space-between',
     },
     logo: {
-      height: 30,
+      height: 36,
       width: 30,
     },
     homeCloseCardDetailsHeader: {

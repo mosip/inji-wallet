@@ -36,8 +36,8 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
           {arg1}
         </Text>
         <Text
+          numLines={4}
           color={Theme.Colors.Details}
-          numLines={1}
           weight="bold"
           size="smaller"
           style={
@@ -114,12 +114,17 @@ export const SingleVcItem: React.FC<VcItemProps> = (props) => {
     ? ''
     : getLocalizedField(verifiableCredential.credentialSubject.fullName);
 
-  const selectableOrCheck = props.selectable ? null : null;
+  const selectableOrCheck = props.selectable ? (
+    <CheckBox
+      checked={props.selected}
+      checkedIcon={<Icon name="radio-button-checked" />}
+      uncheckedIcon={<Icon name="radio-button-unchecked" />}
+      onPress={() => props.onPress(service)}
+    />
+  ) : null;
 
   return (
-    <Column
-      onShow={props.onShow(service)}
-      style={Theme.Styles.closeCardBgContainer}>
+    <Column style={Theme.Styles.closeCardBgContainer}>
       <ImageBackground
         source={!verifiableCredential ? null : Theme.CloseCard}
         resizeMode="stretch"
