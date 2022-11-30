@@ -41,7 +41,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
     <Modal
       isVisible={props.isVisible}
       onDismiss={props.onDismiss}
-      headerTitle={controller.vc.tag || controller.vc.id}
+      headerTitle={controller.vc.id}
       headerElevation={2}
       headerRight={
         <DropdownIcon
