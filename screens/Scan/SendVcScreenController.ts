@@ -85,9 +85,7 @@ export function useSendVcScreen() {
     ACCEPT_REQUEST: () =>
       scanService.send(ScanEvents.ACCEPT_REQUEST(shouldVerifySender)),
     VERIFY_AND_ACCEPT_REQUEST: () =>
-      scanService.send(
-        ScanEvents.VERIFY_AND_ACCEPT_REQUEST(shouldVerifySender)
-      ),
+      scanService.send(ScanEvents.VERIFY_AND_ACCEPT_REQUEST()),
     DISMISS: () => scanService.send(ScanEvents.DISMISS()),
     UPDATE_REASON: (reason: string) =>
       scanService.send(ScanEvents.UPDATE_REASON(reason)),
