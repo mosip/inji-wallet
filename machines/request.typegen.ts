@@ -48,7 +48,16 @@ export interface Typegen0 {
     delays: never;
   };
   'eventsCausingActions': {
-    clearShouldVerifyPresence: 'FACE_VALID';
+    clearShouldVerifyPresence:
+      | 'ACCEPT'
+      | 'CANCEL'
+      | 'FACE_INVALID'
+      | 'FACE_VALID'
+      | 'REJECT'
+      | 'SCREEN_BLUR'
+      | 'SCREEN_FOCUS'
+      | 'SWITCH_PROTOCOL'
+      | 'xstate.stop';
     disconnect:
       | ''
       | 'DISCONNECT'
@@ -76,11 +85,15 @@ export interface Typegen0 {
     requestExistingVc: 'VC_RESPONSE';
     requestReceivedVcs:
       | 'ACCEPT'
+      | 'DISMISS'
       | 'FACE_VALID'
       | 'done.invoke.request.reviewing.verifyingVp:invocation[0]';
     requestReceiverInfo: 'CONNECTED';
     sendVcReceived: 'STORE_RESPONSE';
     setIncomingVc: 'VC_RECEIVED';
+    setReceiveLogTypeRegular: 'ACCEPT';
+    setReceiveLogTypeUnverified: 'FACE_INVALID';
+    setReceiveLogTypeVerified: 'FACE_VALID';
     setReceiverInfo: 'RECEIVE_DEVICE_INFO';
     setSenderInfo: 'EXCHANGE_DONE';
     storeVc: 'STORE_RESPONSE';

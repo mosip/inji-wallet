@@ -16,7 +16,7 @@ import {
   RECEIVED_VCS_STORE_KEY,
   VC_ITEM_STORE_KEY,
 } from '../shared/constants';
-import { ActivityLogEvents } from './activityLog';
+import { ActivityLogEvents, ActivityLogType } from './activityLog';
 import { VcEvents } from './vc';
 import { ConnectionParams } from '@idpass/smartshare-react-native/lib/typescript/IdpassSmartshare';
 import {
@@ -44,6 +44,7 @@ const model = createModel(
     sharingProtocol: (Platform.OS === 'ios'
       ? 'ONLINE'
       : 'OFFLINE') as SharingProtocol,
+    receiveLogType: '' as ActivityLogType,
   },
   {
     events: {
@@ -77,7 +78,7 @@ const model = createModel(
 export const RequestEvents = model.events;
 
 export const requestMachine =
-  /** @xstate-layout N4IgpgJg5mDOIC5QCcwEcCucAuBiAygMIBKAoqQHID6AQgDICqxA2gAwC6ioADgPawBLbAN4A7LiAAeiAOwA2ABwA6AKwBmAJwBGDazmaF6rQBoQAT0QBaDTIAsSgExrNttXLk61rgL7fTqTBwCEnJqADEAeUIGfDZOJBA+QWExCWkEFVYZJW0ZNQVbTIc5eRLTCwRrO0cvVgU61gcHVizff3QsWDx8AHUASQAVQgAJKgAFYgiBqIi6OIkkoRFxBPS1VjUlGVZbLJUtNwPbBTlyqxUFBxqvJsMHBQV8tpAAzuwlAGMACzAPgGsBKIoDQADZYbC8XjYL74MDIABuAg+YE+P3+gKguHoDFI0ymo0oAEF6KQACLzBKLFIrUDpfRyJSNWwaTLHdaKBRnSr5Bn7DROBxaeQaOS2GQqZ6vHCo34AoGg8GQ6GwhFIlHfWUYrGMXERfFUUl9fDEuhkik8fhLVKrRD1FRKWxyHZaHQPBzaU7mKzMq5yDT+rIu5lOhQySUdaUa9HysFgCFQmFwxHIpRSrpa7G6-VEknkjgLS3UtKIF37Gq2LQOQpuNQycVcyzHbKKOvHFQqOT7BRacOBLoy6PA2Px5VJtWpiPpoHanF4gajQ3G3PmxKF5bFhBaVz2x5b1hCpxqLSeiqWfSsGp6Zr+mQijS9t4DuVDxUJlXJlFgUQAQwARiDIFwFcqXXG1N0aDQlC3dsVA0dkmwbKstCUfQeRZdwClsBwJT8F5J3ef9X2hUkvwEQCAHEpgiKh8FxAY+gocjYnzSk12tWkSw8bI4Nve4xR2GQTC9So2RQ-kty0epHQ8VgcPaPt3g+ADv2QDFCDEURfmpXBJC6b9sBRb8ADMDOQAAKQhTUJYgDVIOhCQATQASlwNNFOU1SgXU0RNI+algLYmkpEQGxlC8QwNAUXQotsRDGX3DxQyyDD8jkvCFKUAB3b8liBMJeGQbzfO0wgIgoChSEIAYzRYi1klAjjwMaB1OzsZwDjUFQKy5NQnCg3rUqDR0H2lbLcqgfLCo0rTllwRdSvKyqBgC+r2OCzdevsYoutYOD9y0WCVC5d0GV61qVCrH05CcEb+24VBuBUjEBl4UhJG+b8gTAPpRCM3hcDIQhSD6AA1UhbJBvogaoBjIhWq0gvSEV7RZW9xUedx3RkLkVG2LYQzcC7-WZe9cLcpQwHer5PqgDESI-H6-twUgAA0RkJRjwdJMrSHhoswMizZimKOtMlgzrseEl1mu7eRq2u3bbFu95KY+oE6bABnft4JRATGZBeCgVBYFgHS9IMpRjNMiyyoqqq+jKqh6IAWVICIGAGFzydV6n1aBem1UZnW9YNo24FgPmGvWrR92UZovEKYoxSEioHmUR1BRZLJZJFORlYpqmaY1rW-qUYQAFswF4DA8EIDmgbmWrV1WxHECde1UMrMWWmcE8Qs6h0Ls7ZO9E60n5MfMbhDygqQY+OajQWu3lqbkC1vSA5-RQjsdmwkmTk5KX7ntBxW2Ty4Dv0fOp4xSa59wEHCCoQHgbBvN4jqhGN39dPJJOeQvCSTyFyA8yhdxFEyLJQwSsyb4SyjlaeE1Z4fF1qIfWhtjam10tgfShkTJwjMvgYY1kGLkSdn0V27tPauTgTfGeyA56oPQWHE2kd14lg2BeWWcE3CXH2J1EBtgxSqG2BcXGzRxHXwQbfZBZcBCV2rrXeudk2GtwQE6C8OxrrS06gUP0IDMjIXqLWKK-Jdg+nzh8T6yIQQgi1Ng3Blt8HmTrhQBu5DKEey9nAqxogbF2KBKojc7oLwXVcI6GwyVepHWEs4IWcFjytjrGnfOqBERgEylqQkhAgZjBXh-ZuX8wJCOUETfIMh6iSWDMdLI2R5DNGZFkYoBxUmazIpk6c2TckDCoBzUkVAwbED6GEByQSwJOiMTocU6h3Slg0DUus+MGm6BkM0tQrT0kdMxGQAAUktMZjUY7digmKXIcFFDSQWXUhWjTVkeGKBs9pWpXENwOetbQYCVm42ZAUe4DgrlLJ2Cs5pDzYEZTSU8oESh4RwgEEZMwGI+gQC-MIbAZhcBhGyeDEGhI6B9HfgWFuG52wXnFHkXaOgWgxxTogYoWQlAnCgYUXYglhpgsfBCjJGJoWwvhYi5FohUXosxdDBiOK8UEtYkS8Zxy6jFH-nWWpMSKhOHUC1V02EnS7HWey6UnKtk8tUnyoESKUVCHRS8lRq9AobhjvoKCYTe5eHbH3BATRnA5B2LtOo2iDppXJvq7lgJ4TfjsRAU1grzUL3wM7I0zEClrzUTHVwqghTuD9DHW8Ipjq4x3I6UMJxOx8MeVyqFwbQ0CHDQKoVANcTEAcgM0gQywhQ0JPRMqbz0iPHsA8DqejjwlFdVWVZjI9xVhKNAnVE89VtNLVAQ1cKEVAhBtwXAEAxAomDbwP4KIA2zoNTCo1S6oAroQFuqx-kOCdpLOoC8uwmjHHuFkMUksVXXUgo8QSm0nDbDDLq-sgaoWHsXRiFduA4QG2QEobgIJ9J-WQOXCc4L93cuA8ak93Az2iHhLwC9yw4jXs3EYRwTRYIugqfkQ+KrnDZFOV4Fkp9oIloNd+D4yJuCIKQ28DExBfhgAEDCiAc9TaP2fqQfAYwyq0UI+KX0uMIq3kSrjY6kVIIvrqOKNwRb-VwMA-O1j7HONuR43xgTkBhMPyfmQCTUneZaATTasCLpT4OulpWfaNhYrCXdFFB0irQzqHcGI5j3KDNgA49y4zQI3oCCnCe+e+BphkDEzZig0nrXSsavUBkzK8juDsPoDQXmKgDQvJWLO-ICg6DFCFqFYWItQsrsgWmJq-G8HLqBhLSXwbWck2l3mGWilZb0IPfi6gisaao4gTqBwoIsi3HYGwTgez-veHpy2bHwucfuuFr8EATPIjM0JrrERku9ds4Rl0fpt5RQujnTI8zYlODK+6B7fFqt-unQBlDdXNsNfnV0AqnWCDdZS319LDnMvR2PJBIt-JYL8nyFWHq-C5v7DFMyVZR5av6b+wZCA0bY34HjYSob60CibHkKsloih2zOEeyV7sygNjow0-IdQOnkObMi2AAAVlpQCi4ick6lWTjeaN+oXErAcbs2EQEMYZfcDwd57ii3zvt2AHxpp+UF0aYXl32xXBZNE9uHZT5ciwtxP0jQWhwQmwoXwuFRC8GRfABIblSf80alWK4jqIm-v0HL4SlgXQxy2LUDkoYDqtFW6g1jwgYWe6jukPIkEyWeYTgdJwDYHiQQGlM3a3ZR6WLRM+BUcYlSJlVMiJP7CMiiiUPkIRtZn2ilgg2VZkFsI8JKZR2SJfNQxiIlXj8T4MS17UfcxvmEW8FcKAzqwhWtjiw5B2XQLoB+DnLyOEf44otQAn9-QoivsKyVPqfpoDYl-inOQ8NftvN9l+HJX9844vx-gAhAQ-TmbdbEpaHwoIUXqBsXYZCPQbsBbTsEJFbL7AiZ-BMEiUQMiL-UXL3aOR0TYLVE4EUY+W8NQBsElUdfcRoZNJoIUSxDyNSbXNAxNb+eoBlXaC4XaXQXaeQBsA6ZCYeI8B4cUUUaSKRcaSaIqGaNaWggWdYRkFZXQLqIRSSf5YSfkLYM-XGcKRg9QfOHbR6TyKAF6N6NWGAIOb-RqFkewY8NzLqCpQoC3JoT1U+PIOwFQ-YfOH2Iuf2NpZEQw1A5PW0XqT1C6OwQwHQbCV9WQY8KCUUZoH9XOWsZwwuP2KAAODw7WJhUOTBIw8neg6Q0+NsII5TYSO4FCUUBORlKrB3WPFw+IxI76ZIiuKuGudIrtSKRwNkdHVVW8LkOCewROa6CpUMLNGBWA+BQQ5BBonw7IJwQwa3XI5wEBbvRkdsI4IrGQqddKSeaRehRhEODBcOUYhAO-GoSY9feHGYqWTQe0GCOwrCTGGA1Y0adYpBBhFBWoxRXYqKBkY8bsRQYoI8XaeQioaPLhDYXcEoI4POWPXxfxcfLwuvNwSCalVZJsA+ZkEBSSU6Q8XgnYM6HHXY3YUJd0cpSpAobNKWOCX3VZcUThC4Y4MowY9bStACXYg4dsB0Y4UKGOaKfA7zAUT1CsCSS4WsNwHHBddDCNIVXY7RPzJwebdqLsY6bk3QbVZKXg0MIU8tMNUU81V4hvE4XGSsWWU+LqHNaoPRI4kolYvdbnIDXlY9FdRkoeLYOsU+RoGCWWY6MUUpQBPQTEzqc03TH7XHQzKEz+NAlPHYbeCpWCRTSSPIlVeQIxbRfQIRQ8ceW477S0gMrbHnBSA7fjQTYTXYusOpVwQsorJoOsBfN1QIxvBWTvbCVVIU+rIzfCDEGLOLOeAswwRvK8MUdsUMHzHqOoPPI8IBefWCAY1Mtbf0jbQMxrOEFrKAH6LXDrZdD4Dsk+S4eoLNQwQwEIhAZwZoT1PhP0QSJoBwBsvHblTQvbHMo7ds6EpNLcK4Dgj45OWoZVabQcxvYc0MUcorc8mcgHCEbQu84M7wzcSSZCeWIUXaEoGsHqXqC8aKTVGwSsJof8rbSANc+YnorCXClkd8vchWHIVwWsQUOss3IU1AfnHXFA0CuvSsCpB0wSDqTQfcOwGpa7JpKKU+JKU+IUn8REKAfSZ6XgYYdrMAV4uoBg66a6C4bCC+HqbQX3Ys4dQkuwdXWLLXHyAXWiwpEMksDArYd0PiGnLqTkioTGVQV7dzZ1FkUmXwIAA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QCcwEcCucAuBiAygMIBKAoqQHID6AQgDICqxA2gAwC6ioADgPawBLbAN4A7LiAAeiAOwA2ABwA6AKwBmAJwBGDazmaF6rQBoQAT0QBaDTIAsSgExrNttXLk61rgL7fTqTBwCEnJqADEAeUIGfDZOJBA+QWExCWkEFVYZJW0ZNQVbTIc5eRLTCwRrO0cvVgU61gcHVizff3QsWDx8AHUASQAVQgAJKgAFYgiBqIi6OIkkoRFxBPS1VjUlGVZbLJUtNwPbBTlyqxUFBxqvJsMHBQV8tpAAzuwlAGMACzAPgGsBKIoDQADZYbC8XjYL74MDIABuAg+YE+P3+gKguHoDFI0ymo0oAEF6KQACLzBKLFIrUDpfRyJSNWwaTLHdaKBRnSr5Bn7DROBxaeQaOS2GQqZ6vHCo34AoGg8GQ6GwhFIlHfWUYrGMXERfFUUl9fDEuhkik8fhLVKrRD1FRKWxyHZaHQPBzaU7mKzMq5yDT+rIu5lOhQySUdaUa9HysFgCFQmFwxHIpRSrpa7G6-VEknkjgLS3UtKIF37Gq2LQOQpuNQycVcyzHbKKOvHFQqOT7BRacOBLoy6PA2Px5VJtWpiPpoHanF4gajQ3G3PmxKF5bFhBaVz2x5b1hCpxqLSeiqWfSsGp6Zr+mQijS9t4DuVDxUJlXJlFgUQAQwARiDIFwFcqXXG1N0aDQlC3dsVA0dkmwbKstCUfQeRZdwClsBwJT8F5J3ef9X2hUkvwEQCAHEpgiKh8FxAY+gocjYnzSk12tWkSw8bI4Nve4xR2GQTC9So2RQ-kty0epHQ8VgcPaPt3g+ADv2QDFCDEURfmpXBJC6b9sBRb8ADMDOQAAKQhTUJYgDVIOhCQATQASlwNNFOU1SgXU0RNI+algLYmkpEQGxlC8QwNAUXQotsRDGX3DxQyyDD8jkvCFKUAB3b8liBMJeGQbzfO0wgIgoChSEIAYzRYi1klAjjwMaB1OzsZwDjUFQKy5NQnCg3rUqDR0H2lbLcqgfLCo0rTllwRdSvKyqBgC+r2OCzdevsYoutYOD9y0WCVC5d0GV61qVCrH05CcEb+24VBuBUjEBl4UhJG+b8gTAPpRCM3hcDIQhSD6AA1UhbJBvogaoBjIhWq0gvSEV7RZW9xUedx3RkLkVG2LYQzcC7-WZe9cLcpQwHer5PqgDESI-H6-twUgAA0RkJRjwdJMrSHhoswMizZimKOtMlgzrseEl1mu7eRq2u3bbFu95KY+oE6bABnft4JRATGZBeCgVBYFgHS9IMpRjNMiyyoqqq+jKqh6IAWVICIGAGFzydV6n1aBem1UZnW9YNo24FgPmGvWrR92UZovEKYoxSEioHmUR1BRZLJZJFORlYpqmaY1rW-qUYQAFswF4DA8EIDmgbmWrV1WxHECde1UMrMWWmcE8Qs6h0Ls7ZO9E60n5MfMbhDygqQY+OajQWu3lqbkC1vSA5-RQjsdmwkmTk5KX7ntBxW2Ty4Dv0fOp4xSa59wEHCCoQHgbBvN4jqhGN39dPJJOeQvCSTyFyA8yhdxFEyLJQwSsyb4SyjlaeE1Z4fF1qIfWhtjam10tgfShkTJwjMvgYY1kGLkSdn0V27tPauTgTfGeyA56oPQWHE2kd14lg2BeWWcE3CXH2J1EBtgxSqG2BcXGzRxHXwQbfZBZcBCV2rrXeudk2GtwQE6C8OxrrS06gUP0IDMjIXqLWKK-Jdg+nzh8T6yIQQgi1Ng3Blt8HmTrhQBu5DKEey9nAqxogbF2KBKojc7oLwXVcI6GwyVepHWEs4IWcFjytjrGnfOqBERgEylqQkhAgZjBXh-ZuX8wI3ByH6Tq7YnTE3UMdWS9gZDQJOFWO0490qPjSWRTJ05sm5IGFQDmpIqBg2IH0MIDkglgSdEYnQ4p1DulLBoGpdZ8bNGZFkYoBxUmaw6VqMgAApJa4zGox27FBMUuQ4KKGkos7I8gVm6BkOs4omz0mdMxK4huhz1raDAfc3GzICj3AcNc5ZOx7mPLzrAjK7SMkYiUPCOEAgjJmAxH0CAX5hDYDMLgMI2TwYg0JHQPo78Cwtw3GcrYXU8jtk6syLCx1CgXl0EKf54o6g3UhW0rZMKgRwoRUilFaLRAYqxTi6GDF8WEuJaxUlYFBIXlvLJbCJQWSPEPhUKsmQcj7jsJFVllw1DPO2Ty+Fql+VAlReioQWL3kqNXoFDcMd9BQTCb3LwFTjqHi1bsaK2iDppXJtC15qD4TfjsRAC1QqrUL3wM7I0zEClrzUa2B0UU7DihsOKSSx1LlQXqIoTshh2wtIDVyoNJrEXIqBCDbguAIBiBRICeEvA-gohLS82F5azVQGrQgRtvArH+Q4J8je6gLy7CaMce4WQxSS3VddSCjxBKbScNsMMHLpSBo7Xyyt3aa1wgNsgJQ3AQT6T+sgcuE4oWlq3aandPa+0DuWHEYdJYjCOCaLBF09T8hqsQIebIZyvAslPtBQ13KoCWw+MibgiDL1vAxMQX4YABDwogHPU2j9n6kHwGMMqtEX0IHFL6XGEVbyJVxsdSKkEZ11HFG4At-q4Gbp5d+KDYAYOwrcghpDKHIDoYfk-MgOG8O8y0Am+1YEXSn2ddLSs+0bCxWEu6KKDo6y0fUO4MRYGg2seg7BrjQI3oCCnN2+e+BphkCw8Jig+G7UysanmweYp6N2H0BoRTFQBoXkrFnfkBQdBim07C3T7HYOV2QLTc1fjeDlwxPfczERLNCdwzZ3mdmikOb0E50RLhaO-oQJ1A4UEWRbh1Q8o8QWWNsY4zy+67GvwQG48iXjaGzMWfBslkTBGXR+m3lFC6OdMgLNiU4bz7oht8QC2uieG7r1Vb07CroBU4ttcSx17DKXbPifs9HY8kEC38lgvyfIVYer8OK-sMUzJys9nXf2ZjEGQswcAouWN+B40koy+tAomx5APJaIoalmgerdmUBsdGtH5DqEY1e9tPLUAACstIvaNG9j70qvsbzRv1C4lYDjdmwiA4DShLgnB0H6e4ot86NdgB8aafkUcxrjd19sVwWTRPbh2U+XIsLcT9I0FocF3N1F8LhUQvA0XwASG5T7-NGpViuC6iJq79CE+EpYF0Mdri6oedhEUCh86AlY8IeFsuo7pDyJBcUaNwkVgumoBsDxIIDWmbtbso9LFomfAqOMSpEyqmRGb9hGRRRKHyEI2s07RSwQbA85Q6bND7Q8E0abrTIxe4xD7kc-uPxPgxEHtRyew+YUj65wow3TxuYpRch4HYmW3Zm-2KM3vhx+-fOOAzUAC-f0KCTj9iqHlFCBerqvCeOR18F57zUMYiI5-HF+P8AEIDd8kwLrYOh9rQSFL1BsuxkJ6G7KVzsISG9p-7IRX3CYSKiDIsvjHcvo6Ok2E6Y4fprqGFvA79X7ZNExxjoKXeQUVPcmJSMAJ6LyenB-RNb+eoEnXaC4XaXQXaeQBsA6ZCYeI8B4cUUUaSKRcaSaIqGaNaaAgWdYRke5XQLqIRSSYfCofkLYRVXGcKeA9QfOOrR6TyKAF6N6NWGAIOFfRqFkewY8WTSlAoGJCoLCNnRoOsWsQoKlU-b2QuP2KAAOZEfg+-c3W0XqLVC6OwQwHQbCWdWQY8FCUUU+f0dwA4U+fOH2Iuf2LZdQ7WJhUOTBAQ77WAyg0+NsQwijYSO4Mw23E4OoCsA3O7FWZQyLVQxw76ZwiuKuGudw9IKKOONkS7JwXGCvfuewROa6epUMW8dzPAxBO+D4JI7Q7IJwQwfnXw5wEBPXVQVnbQPkA-A1cI+BfA2REODBcOcohAWvGoaoplQ7OoqWTQe0GCU+OwYobRYomRBhFBeIxRPoqKBkY8bsRQYoI8XaWg19FoOA-II8EoI4CFRvRSaxMAWxfPTQ4PNwSCP-B5JsA+ZkEBSSU6f9HeVwJ5doh7Po90ewO8cpHeKpL-CoHQSSLYBpHOWsIUGHTlOHCDAQCAACPog4dsB0Y4UKGOaKUEv9AUL1IMGg2sNwSrCDTtHdCNYVPo3GLhIXdQR0eoepDzPE3abeXYB4DOMUU4s-d4B7YNUNJEykq1Po7A05a8fQwSHrY6WCMBQoLqE6B4Y8OE2bBE3lW9OLbgVEoeLYOsU+RoGCWWelepVQQBPQHYZwVgn4ubR7arRBEUnYbeepWCMjSSPw9VW5MPBWfYdwSZTqUkyDBbeHfCJrZDVDdDEUpZNqOsW8KQusLIhAY+ZCNwZoB5Q7DI-0p7fTYMwzSQYzRBOeEUwwMPK8MUdsUMZTHqOoZ3I8IBcvWCGBM4icVUzM2FcLKIn6OnWLKtMom4pNIswFRkn+MRYwgrXqRlNlOvQSJoBwDM202FdghrEMlrAs3sh1LcK4NA9Y5OWoCQxAdYFTdqWsw6Ioq05sucnlJbTglcz+B-DeSSZCeWIUXaEoGsHqMcrVPhP0KcpoWcvTSAQs+0WSPIrCEClkXcgrBWHIVwWsQUbCJVGc08o1CDRHZHO-G8rQzcU+ePOsF0OJJlOwGpXrNZKKLC7YGwxC8DJQH8REKAfSZ6XgYYGLMAFYuoOA66a6C4bCC+HqbQRXVwR4+pWOOwanYzOnHyVC1Ep-LYd0PiAHLqXE9Ra6VQcbOTN1FkUmXwIAA */
   model.createMachine(
     {
       tsTypes: {} as import('./request.typegen').Typegen0,
@@ -272,13 +273,15 @@ export const requestMachine =
           states: {
             idle: {},
             verifyingIdentity: {
+              exit: 'clearShouldVerifyPresence',
               on: {
                 FACE_VALID: {
                   target: 'accepting',
-                  actions: 'clearShouldVerifyPresence',
+                  actions: 'setReceiveLogTypeVerified',
                 },
                 FACE_INVALID: {
                   target: 'invalidIdentity',
+                  actions: 'setReceiveLogTypeUnverified',
                 },
                 CANCEL: {
                   target: 'idle',
@@ -288,10 +291,7 @@ export const requestMachine =
             invalidIdentity: {
               on: {
                 DISMISS: {
-                  target: 'idle',
-                },
-                RETRY_VERIFICATION: {
-                  target: 'verifyingIdentity',
+                  target: 'accepting',
                 },
               },
             },
@@ -388,6 +388,7 @@ export const requestMachine =
           on: {
             ACCEPT: {
               target: '.accepting',
+              actions: 'setReceiveLogTypeRegular',
             },
             ACCEPT_AND_VERIFY: {
               target: '.verifyingIdentity',
@@ -542,11 +543,23 @@ export const requestMachine =
           { to: (context) => context.serviceRefs.store }
         ),
 
+        setReceiveLogTypeRegular: model.assign({
+          receiveLogType: 'VC_RECEIVED',
+        }),
+
+        setReceiveLogTypeVerified: model.assign({
+          receiveLogType: 'VC_RECEIVED_WITH_PRESENCE_VERIFIED',
+        }),
+
+        setReceiveLogTypeUnverified: model.assign({
+          receiveLogType: 'VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED',
+        }),
+
         logReceived: send(
           (context) =>
             ActivityLogEvents.LOG_ACTIVITY({
               _vcKey: VC_ITEM_STORE_KEY(context.incomingVc),
-              action: 'received',
+              type: context.receiveLogType,
               timestamp: Date.now(),
               deviceName:
                 context.senderInfo.name || context.senderInfo.deviceName,

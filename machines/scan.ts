@@ -523,7 +523,9 @@ export const scanMachine =
           (context) =>
             ActivityLogEvents.LOG_ACTIVITY({
               _vcKey: VC_ITEM_STORE_KEY(context.selectedVc),
-              action: 'shared',
+              type: context.selectedVc.shouldVerifyPresence
+                ? 'VC_SHARED_WITH_VERIFICATION_CONSENT'
+                : 'VC_SHARED',
               timestamp: Date.now(),
               deviceName:
                 context.receiverInfo.name || context.receiverInfo.deviceName,
