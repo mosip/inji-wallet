@@ -479,7 +479,11 @@ export const scanMachine =
             if (context.reason.trim() !== '') {
               reason.push({ message: context.reason, timestamp: Date.now() });
             }
-            return { ...event.vc, reason };
+            return {
+              ...event.vc,
+              reason,
+              shouldVerifyPresence: context.selectedVc.shouldVerifyPresence,
+            };
           },
         }),
 
