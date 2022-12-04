@@ -206,7 +206,7 @@ export const revokeVidsMachine =
             ActivityLogEvents.LOG_ACTIVITY(
               context.VIDs.map((vc) => ({
                 _vcKey: vc,
-                action: 'revoked',
+                type: 'VC_REVOKED',
                 timestamp: Date.now(),
                 deviceName: '',
                 vcLabel: vc.split(':')[2],

@@ -63,20 +63,17 @@ export const ReceiveVcScreen: React.FC = () => {
       <MessageOverlay
         isVisible={controller.isInvalidIdentity}
         title={t('VerifyIdentityOverlay:errors.invalidIdentity.title')}
-        message={t('VerifyIdentityOverlay:errors.invalidIdentity.message')}
+        message={t(
+          'VerifyIdentityOverlay:errors.invalidIdentity.messageNoRetry'
+        )}
         onBackdropPress={controller.DISMISS}>
         <Row>
           <Button
             fill
             type="clear"
-            title={t('common:cancel')}
+            title={t('common:dismiss')}
             onPress={controller.DISMISS}
             margin={[0, 8, 0, 0]}
-          />
-          <Button
-            fill
-            title={t('common:tryAgain')}
-            onPress={controller.RETRY_VERIFICATION}
           />
         </Row>
       </MessageOverlay>

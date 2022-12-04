@@ -113,15 +113,20 @@ export interface ActivityLog {
   timestamp: number;
   deviceName: string;
   vcLabel: string;
-  action: ActivityLogAction;
+  type: ActivityLogType;
 }
 
-export type ActivityLogAction =
-  | 'shared'
-  | 'received'
-  | 'deleted'
-  | 'downloaded'
-  | 'revoked';
+export type ActivityLogType =
+  | 'VC_SHARED'
+  | 'VC_RECEIVED'
+  | 'VC_DELETED'
+  | 'VC_DOWNLOADED'
+  | 'VC_REVOKED'
+  | 'VC_SHARED_WITH_VERIFICATION_CONSENT'
+  | 'VC_RECEIVED_WITH_PRESENCE_VERIFIED'
+  | 'VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED'
+  | 'PRESENCE_VERIFIED_AND_VC_SHARED'
+  | 'PRESENCE_VERIFICATION_FAILED';
 
 type State = StateFrom<typeof activityLogMachine>;
 
