@@ -97,7 +97,7 @@ export interface Typegen0 {
     setScannedQrParams: 'SCAN';
     setSelectedVc: 'SELECT_VC';
     setSenderInfo: 'RECEIVE_DEVICE_INFO';
-    setShouldVerifyPresence: 'ACCEPT_REQUEST';
+    toggleShouldVerifyPresence: 'TOGGLE_USER_CONSENT';
   };
   'eventsCausingServices': {
     checkLocationPermission: 'APP_ACTIVE' | 'LOCATION_ENABLED';
