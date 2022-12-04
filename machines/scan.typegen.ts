@@ -74,6 +74,7 @@ export interface Typegen0 {
       | 'SCREEN_FOCUS'
       | 'xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling'
       | 'xstate.stop';
+    logFailedVerification: 'FACE_INVALID';
     logShared: 'VC_ACCEPTED';
     openSettings: 'LOCATION_REQUEST';
     registerLoggers:
@@ -97,6 +98,8 @@ export interface Typegen0 {
     setScannedQrParams: 'SCAN';
     setSelectedVc: 'SELECT_VC';
     setSenderInfo: 'RECEIVE_DEVICE_INFO';
+    setShareLogTypeUnverified: 'ACCEPT_REQUEST';
+    setShareLogTypeVerified: 'FACE_VALID';
     toggleShouldVerifyPresence: 'TOGGLE_USER_CONSENT';
   };
   'eventsCausingServices': {

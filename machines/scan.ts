@@ -10,7 +10,7 @@ import { DeviceInfo } from '../components/DeviceInfoList';
 import { getDeviceNameSync } from 'react-native-device-info';
 import { VC, VerifiablePresentation } from '../types/vc';
 import { AppServices } from '../shared/GlobalContext';
-import { ActivityLogEvents } from './activityLog';
+import { ActivityLogEvents, ActivityLogType } from './activityLog';
 import {
   GNM_API_KEY,
   GNM_MESSAGE_LIMIT,
@@ -48,6 +48,7 @@ const model = createModel(
     verificationImage: {} as CameraCapturedPicture,
     sharingProtocol: 'OFFLINE' as SharingProtocol,
     scannedQrParams: {} as ConnectionParams,
+    shareLogType: '' as ActivityLogType,
   },
   {
     events: {
@@ -234,6 +235,7 @@ export const scanMachine =
                 },
                 ACCEPT_REQUEST: {
                   target: 'sendingVc',
+                  actions: 'setShareLogTypeUnverified',
                 },
                 CANCEL: {
                   target: 'cancelling',
@@ -310,9 +312,11 @@ export const scanMachine =
               on: {
                 FACE_VALID: {
                   target: 'sendingVc',
+                  actions: 'setShareLogTypeVerified',
                 },
                 FACE_INVALID: {
                   target: 'invalidIdentity',
+                  actions: 'logFailedVerification',
                 },
                 CANCEL: {
                   target: 'selectingVc',
@@ -519,13 +523,34 @@ export const scanMachine =
           },
         }),
 
+        setShareLogTypeUnverified: model.assign({
+          shareLogType: 'VC_SHARED',
+        }),
+
+        setShareLogTypeVerified: model.assign({
+          shareLogType: 'PRESENCE_VERIFIED_AND_VC_SHARED',
+        }),
+
         logShared: send(
           (context) =>
             ActivityLogEvents.LOG_ACTIVITY({
               _vcKey: VC_ITEM_STORE_KEY(context.selectedVc),
               type: context.selectedVc.shouldVerifyPresence
                 ? 'VC_SHARED_WITH_VERIFICATION_CONSENT'
-                : 'VC_SHARED',
+                : context.shareLogType,
+              timestamp: Date.now(),
+              deviceName:
+                context.receiverInfo.name || context.receiverInfo.deviceName,
+              vcLabel: context.selectedVc.tag || context.selectedVc.id,
+            }),
+          { to: (context) => context.serviceRefs.activityLog }
+        ),
+
+        logFailedVerification: send(
+          (context) =>
+            ActivityLogEvents.LOG_ACTIVITY({
+              _vcKey: VC_ITEM_STORE_KEY(context.selectedVc),
+              type: 'PRESENCE_VERIFICATION_FAILED',
               timestamp: Date.now(),
               deviceName:
                 context.receiverInfo.name || context.receiverInfo.deviceName,
