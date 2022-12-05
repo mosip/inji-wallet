@@ -24,7 +24,7 @@ export const SendVcScreen: React.FC = () => {
           <DeviceInfoList of="receiver" deviceInfo={controller.receiverInfo} />
           <CheckBox
             title={t('consentToPhotoVerification')}
-            checked={controller.shouldVerifySender}
+            checked={controller.selectedVc.shouldVerifyPresence}
             onPress={controller.TOGGLE_USER_CONSENT}
           />
           <Column padding="24">
@@ -72,7 +72,7 @@ export const SendVcScreen: React.FC = () => {
             disabled={controller.selectedIndex == null}
             onPress={controller.ACCEPT_REQUEST}
           />
-          {!controller.shouldVerifySender && (
+          {!controller.selectedVc.shouldVerifyPresence && (
             <Button
               type="outline"
               title={t('acceptRequestAndVerify')}
