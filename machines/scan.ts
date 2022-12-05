@@ -10,7 +10,7 @@ import { DeviceInfo } from '../components/DeviceInfoList';
 import { getDeviceNameSync } from 'react-native-device-info';
 import { VC, VerifiablePresentation } from '../types/vc';
 import { AppServices } from '../shared/GlobalContext';
-import { ActivityLogEvents } from './activityLog';
+import { ActivityLogEvents, ActivityLogType } from './activityLog';
 import {
   GNM_API_KEY,
   GNM_MESSAGE_LIMIT,
@@ -31,8 +31,6 @@ import { checkLocation, requestLocation } from '../shared/location';
 import { CameraCapturedPicture } from 'expo-camera';
 import { log } from 'xstate/lib/actions';
 
-const findingConnectionId = '#scan.findingConnection';
-
 type SharingProtocol = 'OFFLINE' | 'ONLINE';
 
 const SendVcResponseType = 'send-vc:response';
@@ -50,7 +48,7 @@ const model = createModel(
     verificationImage: {} as CameraCapturedPicture,
     sharingProtocol: 'OFFLINE' as SharingProtocol,
     scannedQrParams: {} as ConnectionParams,
-    shouldVerifySender: false,
+    shareLogType: '' as ActivityLogType,
   },
   {
     events: {
@@ -58,7 +56,7 @@ const model = createModel(
       RECEIVE_DEVICE_INFO: (info: DeviceInfo) => ({ info }),
       SELECT_VC: (vc: VC) => ({ vc }),
       SCAN: (params: string) => ({ params }),
-      ACCEPT_REQUEST: (shouldVerifySender: boolean) => ({ shouldVerifySender }),
+      ACCEPT_REQUEST: () => ({}),
       VERIFY_AND_ACCEPT_REQUEST: () => ({}),
       VC_ACCEPTED: () => ({}),
       VC_REJECTED: () => ({}),
@@ -79,605 +77,711 @@ const model = createModel(
       FACE_INVALID: () => ({}),
       RETRY_VERIFICATION: () => ({}),
       VP_CREATED: (vp: VerifiablePresentation) => ({ vp }),
+      TOGGLE_USER_CONSENT: () => ({}),
     },
   }
 );
 
 export const ScanEvents = model.events;
 
-export const scanMachine = model.createMachine(
-  {
-    tsTypes: {} as import('./scan.typegen').Typegen0,
-    schema: {
-      context: model.initialContext,
-      events: {} as EventFrom<typeof model>,
-      services: {} as {
-        createVp: {
-          data: VC;
-        };
-      },
-    },
-    id: 'scan',
-    initial: 'inactive',
-    invoke: {
-      src: 'monitorConnection',
-    },
-    on: {
-      SCREEN_BLUR: 'inactive',
-      SCREEN_FOCUS: 'checkingLocationService',
-    },
-    states: {
-      inactive: {
-        entry: ['removeLoggers'],
-      },
-      checkingLocationService: {
-        id: 'checkingLocationService',
-        invoke: {
-          src: 'checkLocationStatus',
+export const scanMachine =
+  /** @xstate-layout N4IgpgJg5mDOIC5SwMYEMB2BiAygYQCUBRIgOQH0AhAGQFUCBtABgF1FQAHAe1gEsAXXlwzsQAD0QBmSQDoAjAqYA2AJwAmABxMVAFgDsAViY6ANCACeUgwfkrrWg2oN79SyQF93Z1JlyESFABiAPJ4tDjMbEgg3HyCwqISCAC0TmoyKipKOmp6GvlacnZmlgiS1rb2TI7Orh5eID4YMigANmBoAE68GFB4whhgKPHYYrD8aPxgMmgAZlOdABR41EQAggTkACJE1GsAmgCUWE0t7V09fQNDI5GisQJCItFJcgZyGUpyGkpfakr-NIlRBvFRMDKZXJyST6Jj-eredDNWY9CCXfoYQbDJ5+NakO7RB4jRKIZJKcG-NRMH5yfTQr56YEIb4aGxvDRyAFMPS07IqTyIzAyFEYNG9DFYka4-FyKKcHiPBIvEEGWTclyc-7OYwGDRMoo6cGSJQaY06SQ-U3UgWNJHC1Ho67Y4TShhqOUxBXE5UINRUmSGvTVPRZFSSTlKJlUoMyPRatTGuMmpQ204cTpgDgXXoAFS4EpuWGIeCIAEkAGpEbZEculkvkUukEIE+VxJ4k5mSFQyZzQnkMjSG6FRhM2NRFMEmlQFAypu0oJ2CXpYPDBUikIh4HNELYtz1tpWgV56JQybmOQdfHJxzRRpQGHTycc6NzspgI21CheYm6XGQ9AAFTouCgDNYFgLAxgmKYZnmMAllXddNxzUs13IFCAFkiGCWgc2OU5v0lP9AOA0C4FgPciXbH05HHHtqStHQ5BPN53ijd4jXNY0tGnLs1DnL9Fz-QQAFswC4ABXfgVzxEtqEor1qKPRBnHSDR+x+f4dGsNiLEQJwFB7MMdB0ME5CYIpjAE5owDEFAAAtMCgS4tjAAA3XgUDAUsMFmLgsC2Ut8DXDctwUg9nmUhBrFkEMXGnclciDUw9N9TJHxfKlDQMOwNDsayZFshynJc9zPO83z-KIAANPAAAk8QAcSrLY1yIcLFUi8QVRsPQQxycp8jDTUmUkbRHzG9T1BMlwOQKorHN6UqPK8ny-Mg8ZJmmOYFmWELkNQihMOw3D8LtBaSt6VyVoqvyOu9KKKi+DQnDpS11B+KNdFPHQfhyIpAVe+a7MW5yrrK1bKpkUTxKkmTSDk+6lO6hBDXBQxzKDIpfhylRRoUPQz3KC1qSTFRoQKjMPLAAB3P9YDAdpsV6csUCwWgAK2NZt3IYg1hwNckcPFHkloj4uzyvQ+L6pxjVG+8NB7HKORPE1VRMymytp+nGd-Fm2cC4KkLC1h7kU4WkmSEz0mMLSmIMAF1DkfHmKJ1UHfvZwxtnBpTip3htd6GQGaZpcoFZ3BdmQ8hyzwIWustzGZHvJQ8nJdTU-JxlUvKd4ial5jfnJnKU19u1-cDqBg915nw7ZysCFLQJ9nIPEtlbvASwAnNeaIABFWgiBwHN447MlYpDdLfpPcnWVGwdwWcLQtByQdp016m6aDkO9brrA1k7ohu97geh5H03CXNhPEH0bsTO0r4mFt36mSYmMwycVVtCfyQ9A3gOt5Vx3rXCOeBZK7FHjRU0yc-TZH+NoK8Dt5YcljPkRMoIOT8TLkKCugDq6h0uBHHMwRGqNVWOQcIRBNiIRwGQc+HoqIW1JG8cEaDpD6EMA+Wk2dSgwl-snTOv83BwiKD7QUzRcF-iRF5VorRLgbWgttOCCFwHUHQqWLCOE8InHLlrPB0jGZyN6JAqK5knD0SfjlcyfF8ijSYt2B8kgqS-0yOSHQ-9K7V1FIQg2QVEKhXoWbCKHZeTpGsCGeBSUpYpVKC+N4MhchP2ML8ZQH4-Z6J1t4-WWBY4dy7tuXcF9WydQ7GoXQAYTLky7G4FQLhJCvwBB8IwrgnaqGqB4vBDMsl71ycQAAUshHcJiUZ5Q+MIp+agmJdnpK-UyhMHaDWNBOfk2CJEZO3mAbprN-wYCAiBMCEEoJbVgrtHADVG6kEauozRp0dE4PWUAzZYo647L2WRcCwykiAljExQcBMQyqk+qlEyupk7GGUOOCy6UOmZOedsmGklpJgIRhAop+4Sk+iqRkP6vzNCWIMLM+J5RAzBnHBTVZMhJFBzQCgLyHApgQACkFDCQUIhosYdfMo3wzxckcKofI74eE3x+GqEyyTf5jT6jCoOGYABWNxIBMpwCynAbKGFXxCWU8EL59Cml0N8bkeoc4mVkICpxoI3HSGlVXNy8FeCzHMJcUsEBNmCH4OYLAgQD5VnLGsagpZCnquCT6b28gnFMQBGU1Q2lX4Gh7JoB26gwQhmtTIW13QHVOpdRgN1HqvX1kbL6-1gagkYtMSeIyIjoSOF0M4WNnIzyGC1ayRwcJU3pvtY63ozrXUCA9cixG7KNU+iSjIcM3x3iGnKAmQw884wZAsiav0VipappQBmSYhCOBYAgMIaYPQ3JcAANbTHSZvKRG6w7lg4AgA9XB0C3FYJ8xAN4ElmWpFwz+ahY2mTHXlD2zj7xrsvVurA8FgKdBkBwVokw-KdBEsHXR56g7ro6Fem9d6H1PEiM+hAcZZD0gBDq2i6khVlA5KeLQuQAS-2Yu7VNB60ByIgD2nNfalUqrVaWh6ItxyE2hEULQ3JuROPqTnPK4IoXji+GCHVDGMBuSY7wFj2bc1FiIDmAgLcG5NzrNzQ6uGTRnlZC9C89takEuBdUR8jgymZVZCwtJdo0SoEXIqw2nHDPOADBJv0JqXphjvDGd82RJ7vmYvlCljHmMcdZbhnI3Y-g8i7KpMMRrShUgbSGaEdQ7DGjEZ+ZoDkhhHsuNQe9m7hA4HgjdFo9kSuXBwNBCSEFqChH02hMgawaBDKHcGqKqRXbqGE6ZP06VU76ltkZPqFoeS6H0E5r89WUCld6OVrDVWavlTqw13oTXJgtawG1sBKE0KG266sEtl9+si1+hkE15ltDMRPBZJk5MbaTP+DPWT7iKXFZW2VirIxqudFqxmAAjhJOAYc8xEAwGgAARu0I77XTsUC6z1q7xSeOvBfMnE8l5NBMQNelxAdh+PMWqayYyXwCr-dW1AdblWMAg7B2ASH0PLiw-h0jsAKOTuHW2EFC7vWg1lpRgNGQL1zQ8TmZ-GJiBNKxmsWGXG3JyXiJ2wDtbQOnis+2-Ty4AF4IiV4OBHEx2Ovo9ICLrH6Kccgjx6nE09nifL31MaWQppvj6F1MoZQpdNeG51xtlnW2vJa4Z8b+DZu+Aukt2joXOBbfxdohkVUdhJn3l99+1KtEn5nm-qockP9ftB+WwzpnwPw-TBc4j9ojKE+C+IKfYe8XzEMmcKoHkcVSd4a0AGYlbxfh9VpFg8vu3Ge6826D7b2aA6MrWABACHcUKVni9pWMD5DAAunG8Z2efDXyCMOZd4yV6R04r4D0P+uI-z8VU3tCLfB5t76+LpIqszyaBPG-T3gXD9PRSy6ipwUbaT1ANAYBcAurwDRBNDcbIyWymSSY5DZD2yOzjhRjcqqAPjWC0j5ZUgFanA9A0qCC2rwFMKoxjpCLwKpyaDlC-CzI2BjRjS0TZAmgwhyB07nDdDihCTCwcohIPgBj-DqSTQSxOJ960jeZpD3j5ZwjqQFQijPIFjOhdQCE0Suw+45R+ZJLq76hBini5B5Thi2Yj6B6FZQYZhZg8FQB5gqH8DkGcrJAwjYqSxdiJgioK6+jfxPjhhxisgFyOB05CS9COFjygq5CTJixOJGAJh94zpe5cS6CsiGj-DBE-i1yvKkQHJhE+iizgiRFMTjgxFwgWi54ZYcRS5cQmjaB6rj4WGES7zQy8BiSIq5FRTZT45lKOCcgvjhrsTmRVHSA1G8TqDAzFRLTgw3RrRcDtEoyEzPSvQ8jvSaCRipS5C-oJQy60jk7GjjGgzLTlQzFZH7LkRzGvBlJjoILmjGASyq5Rj5A-R-S-wRIJgmj7GXRQDXRHFQwIpSTnFSBdioJ+isjhgwjZRfR45bHjjqCRoPjWoAkpBahhqCZPxBhSwJijSTLdici75JIciLZrLIaPIEL6yIkNqAguDvgvgTJrG8J9SSZaBqzPZhjvhrqYAyJGJQCIm6CEwGEE5ZDGC0TywOw-JxiGrUifZl4WFUqPJbIoCIkAhgrUHew-DvivxOLpDmSGgzgni5CppdJwooAnHvIwHY4IEgiDHkgqnVBqliaxLaSKxuIQrmQTjSlnoAKwo+LNGtH-HXbv4qTlA9jGjcjkzTiDg8iMFOngqNJQq6Cpo0p0oMqIl0FGTsKTT5ARZ0k3xBg4m0S1rqQ9GGCppyoKoQDkllKmrhjBiajaReHcToyUisjUhPyJSprw4eRQCbq5hcB1RcBiQpnQKn7cgmgzz3yWaxJZAfBpZon5mwntp2qZrdqqZ9opm-ovY6qZCqT9SjT6rJy6hE4vRUbaTAZoZbqIlzZEypzJRd5jT1nThhLGBxhGBPzqRvDyaKbMasa5qImixMSD4-DDTPkOyci7kVpjTCIApPlSoUouaNHDCQCKmGgBgEyWg3jQjxF9R8mU4vhcg+4FTRbKaInTqNrJL-Cci4G-yYF47fzaSqjimrp-ZX4h7M635gC-nInDbJTqBlK8lMi-CnjhbkhxSyEOyX6T5V56416R6NbNZmn24WlImuzlDKDmh9RZCmTfBMicLBmcjhh+aGiRYT7a5T437SUQ5Q7jBc5cBw717sX+kO4IDZCxgYkWSYzmjZATkvoVCqh6W0STKGXunzjMWmWsXSXB5QDR6m7m78HDqmLUg+YfysjJgsF4wAGyBghPyCnmhpZ-xMUSXT5h6z535m52XlkOWKVBjpDJHCWjamiDjaUhgCI9F8QWQ8jiUmWSUz61b37lXmkUEpxPjvDTjTjvgpb6gTgJI5RwjOAPh5TmieCeBAA */
+  model.createMachine(
+    {
+      tsTypes: {} as import('./scan.typegen').Typegen0,
+      schema: {
+        context: model.initialContext,
+        events: {} as EventFrom<typeof model>,
+        services: {} as {
+          createVp: {
+            data: VC;
+          };
         },
-        initial: 'checkingStatus',
-        states: {
-          checkingStatus: {
-            on: {
-              LOCATION_ENABLED: 'checkingPermission',
-              LOCATION_DISABLED: 'requestingToEnable',
+      },
+      invoke: {
+        src: 'monitorConnection',
+      },
+      id: 'scan',
+      initial: 'inactive',
+      on: {
+        SCREEN_BLUR: {
+          target: '.inactive',
+        },
+        SCREEN_FOCUS: {
+          target: '.checkingLocationService',
+        },
+      },
+      states: {
+        inactive: {
+          entry: 'removeLoggers',
+        },
+        clearingConnection: {
+          entry: 'disconnect',
+          after: {
+            CLEAR_DELAY: {
+              target: '#scan.findingConnection',
+              actions: [],
+              internal: false,
             },
           },
-          requestingToEnable: {
-            entry: ['requestToEnableLocation'],
-            on: {
-              LOCATION_ENABLED: 'checkingPermission',
-              LOCATION_DISABLED: 'disabled',
-            },
-          },
-          checkingPermission: {
-            invoke: {
-              src: 'checkLocationPermission',
-            },
-            on: {
-              LOCATION_ENABLED: '#clearingConnection',
-              LOCATION_DISABLED: 'denied',
-            },
-          },
-          denied: {
-            on: {
-              LOCATION_REQUEST: {
-                actions: ['openSettings'],
+        },
+        findingConnection: {
+          entry: ['removeLoggers', 'registerLoggers', 'clearScannedQrParams'],
+          on: {
+            SCAN: [
+              {
+                target: 'preparingToConnect',
+                cond: 'isQrOffline',
+                actions: 'setConnectionParams',
               },
-              APP_ACTIVE: 'checkingPermission',
-            },
-          },
-          disabled: {
-            on: {
-              LOCATION_REQUEST: 'requestingToEnable',
-            },
-          },
-        },
-      },
-      clearingConnection: {
-        id: 'clearingConnection',
-        entry: ['disconnect'],
-        after: {
-          CLEAR_DELAY: 'findingConnection',
-        },
-      },
-      findingConnection: {
-        id: 'findingConnection',
-        entry: ['removeLoggers', 'registerLoggers', 'clearScannedQrParams'],
-        on: {
-          SCAN: [
-            {
-              cond: 'isQrOffline',
-              target: 'preparingToConnect',
-              actions: ['setConnectionParams'],
-            },
-            {
-              cond: 'isQrOnline',
-              target: 'preparingToConnect',
-              actions: ['setScannedQrParams'],
-            },
-            { target: 'invalid' },
-          ],
-        },
-      },
-      preparingToConnect: {
-        entry: ['requestSenderInfo'],
-        on: {
-          RECEIVE_DEVICE_INFO: {
-            target: 'connecting',
-            actions: ['setSenderInfo'],
+              {
+                target: 'preparingToConnect',
+                cond: 'isQrOnline',
+                actions: 'setScannedQrParams',
+              },
+              {
+                target: 'invalid',
+              },
+            ],
           },
         },
-      },
-      connecting: {
-        invoke: {
-          src: 'discoverDevice',
+        preparingToConnect: {
+          entry: 'requestSenderInfo',
+          on: {
+            RECEIVE_DEVICE_INFO: {
+              target: 'connecting',
+              actions: 'setSenderInfo',
+            },
+          },
         },
-        on: {
-          CONNECTED: 'exchangingDeviceInfo',
-        },
-        initial: 'inProgress',
-        states: {
-          inProgress: {
-            after: {
-              CONNECTION_TIMEOUT: {
-                target: 'timeout',
+        connecting: {
+          invoke: {
+            src: 'discoverDevice',
+          },
+          initial: 'inProgress',
+          states: {
+            inProgress: {
+              after: {
+                CONNECTION_TIMEOUT: {
+                  target: '#scan.connecting.timeout',
+                  actions: [],
+                  internal: false,
+                },
+              },
+            },
+            timeout: {
+              on: {
+                CANCEL: {
+                  target: '#scan.reviewing.cancelling',
+                },
               },
             },
           },
-          timeout: {
-            on: {
-              CANCEL: '#scan.reviewing.cancelling',
+          on: {
+            CONNECTED: {
+              target: 'exchangingDeviceInfo',
             },
           },
         },
-      },
-      exchangingDeviceInfo: {
-        invoke: {
-          src: 'exchangeDeviceInfo',
-        },
-        on: {
-          DISCONNECT: '#scan.disconnected',
-          EXCHANGE_DONE: {
-            target: 'reviewing',
-            actions: ['setReceiverInfo'],
+        exchangingDeviceInfo: {
+          invoke: {
+            src: 'exchangeDeviceInfo',
+          },
+          initial: 'inProgress',
+          after: {
+            CONNECTION_TIMEOUT: {
+              target: '#scan.exchangingDeviceInfo.timeout',
+              actions: [],
+              internal: false,
+            },
+          },
+          states: {
+            inProgress: {},
+            timeout: {
+              on: {
+                CANCEL: {
+                  target: '#scan.reviewing.cancelling',
+                },
+              },
+            },
+          },
+          on: {
+            DISCONNECT: {
+              target: 'disconnected',
+            },
+            EXCHANGE_DONE: {
+              target: 'reviewing',
+              actions: 'setReceiverInfo',
+            },
           },
         },
-        initial: 'inProgress',
-        states: {
-          inProgress: {},
-          timeout: {
-            on: {
-              CANCEL: '#scan.reviewing.cancelling',
-            },
-          },
-        },
-        after: {
-          CONNECTION_TIMEOUT: {
-            target: '.timeout',
-          },
-        },
-      },
-      reviewing: {
-        initial: 'selectingVc',
-        states: {
-          selectingVc: {
-            on: {
-              UPDATE_REASON: {
-                actions: ['setReason'],
-              },
-              DISCONNECT: findingConnectionId,
-              SELECT_VC: {
-                actions: ['setSelectedVc'],
-              },
-              VERIFY_AND_ACCEPT_REQUEST: {
-                target: 'verifyingIdentity',
-              },
-              ACCEPT_REQUEST: {
-                actions: 'setShouldVerifyPresence',
-                target: 'sendingVc',
-              },
-              CANCEL: '#scan.reviewing.cancelling',
-            },
-          },
-          cancelling: {
-            invoke: {
-              src: 'sendDisconnect',
-            },
-            after: {
-              CANCEL_TIMEOUT: {
-                actions: 'disconnect',
-                target: findingConnectionId,
+        reviewing: {
+          exit: ['disconnect', 'clearReason', 'clearCreatedVp'],
+          initial: 'selectingVc',
+          states: {
+            selectingVc: {
+              on: {
+                UPDATE_REASON: {
+                  actions: 'setReason',
+                },
+                DISCONNECT: {
+                  target: '#scan.findingConnection',
+                },
+                SELECT_VC: {
+                  actions: 'setSelectedVc',
+                },
+                VERIFY_AND_ACCEPT_REQUEST: {
+                  target: 'verifyingIdentity',
+                },
+                ACCEPT_REQUEST: {
+                  target: 'sendingVc',
+                  actions: 'setShareLogTypeUnverified',
+                },
+                CANCEL: {
+                  target: 'cancelling',
+                },
+                TOGGLE_USER_CONSENT: {
+                  actions: 'toggleShouldVerifyPresence',
+                },
               },
             },
-          },
-          sendingVc: {
-            invoke: {
-              src: 'sendVc',
+            cancelling: {
+              invoke: {
+                src: 'sendDisconnect',
+              },
+              after: {
+                CANCEL_TIMEOUT: {
+                  target: '#scan.findingConnection',
+                  actions: ['disconnect'],
+                  internal: false,
+                },
+              },
             },
-            on: {
-              DISCONNECT: findingConnectionId,
-              VC_ACCEPTED: 'accepted',
-              VC_REJECTED: 'rejected',
-            },
-            initial: 'inProgress',
-            states: {
-              inProgress: {
-                after: {
-                  SHARING_TIMEOUT: {
-                    target: 'timeout',
+            sendingVc: {
+              invoke: {
+                src: 'sendVc',
+              },
+              initial: 'inProgress',
+              states: {
+                inProgress: {
+                  after: {
+                    SHARING_TIMEOUT: {
+                      target: '#scan.reviewing.sendingVc.timeout',
+                      actions: [],
+                      internal: false,
+                    },
+                  },
+                },
+                timeout: {
+                  on: {
+                    CANCEL: {
+                      target: '#scan.reviewing.cancelling',
+                    },
                   },
                 },
               },
-              timeout: {
-                on: {
-                  CANCEL: '#scan.reviewing.cancelling',
+              on: {
+                DISCONNECT: {
+                  target: '#scan.findingConnection',
+                },
+                VC_ACCEPTED: {
+                  target: 'accepted',
+                },
+                VC_REJECTED: {
+                  target: 'rejected',
+                },
+              },
+            },
+            accepted: {
+              entry: 'logShared',
+              on: {
+                DISMISS: {
+                  target: 'navigatingToHome',
+                },
+              },
+            },
+            rejected: {
+              on: {
+                DISMISS: {
+                  target: '#scan.findingConnection',
+                },
+              },
+            },
+            navigatingToHome: {},
+            verifyingIdentity: {
+              on: {
+                FACE_VALID: {
+                  target: 'sendingVc',
+                  actions: 'setShareLogTypeVerified',
+                },
+                FACE_INVALID: {
+                  target: 'invalidIdentity',
+                  actions: 'logFailedVerification',
+                },
+                CANCEL: {
+                  target: 'selectingVc',
+                },
+              },
+            },
+            creatingVp: {
+              invoke: {
+                src: 'createVp',
+                onDone: [
+                  {
+                    target: 'sendingVc',
+                    actions: 'setCreatedVp',
+                  },
+                ],
+                onError: [
+                  {
+                    target: 'selectingVc',
+                    actions: log('Could not create Verifiable Presentation'),
+                  },
+                ],
+              },
+            },
+            invalidIdentity: {
+              on: {
+                DISMISS: {
+                  target: 'selectingVc',
+                },
+                RETRY_VERIFICATION: {
+                  target: 'verifyingIdentity',
                 },
               },
             },
           },
-          accepted: {
-            entry: ['logShared'],
-            on: {
-              DISMISS: 'navigatingToHome',
-            },
-          },
-          rejected: {
-            on: {
-              DISMISS: findingConnectionId,
-            },
-          },
-          navigatingToHome: {},
-          verifyingIdentity: {
-            on: {
-              FACE_VALID: {
-                target: 'sendingVc',
-                // target: 'creatingVp',
-              },
-              FACE_INVALID: {
-                target: 'invalidIdentity',
-              },
-              CANCEL: 'selectingVc',
-            },
-          },
-          creatingVp: {
-            invoke: {
-              src: 'createVp',
-              onDone: {
-                actions: 'setCreatedVp',
-                target: 'sendingVc',
-              },
-              onError: {
-                actions: log('Could not create Verifiable Presentation'),
-                target: 'selectingVc',
-              },
-            },
-          },
-          invalidIdentity: {
-            on: {
-              DISMISS: 'selectingVc',
-              RETRY_VERIFICATION: 'verifyingIdentity',
+        },
+        disconnected: {
+          on: {
+            DISMISS: {
+              target: 'findingConnection',
             },
           },
         },
-        exit: ['disconnect', 'clearReason', 'clearCreatedVp'],
-      },
-      disconnected: {
-        id: 'disconnected',
-        on: {
-          DISMISS: 'findingConnection',
+        invalid: {
+          on: {
+            DISMISS: {
+              target: 'findingConnection',
+            },
+          },
         },
-      },
-      invalid: {
-        on: {
-          DISMISS: 'findingConnection',
+        checkingLocationService: {
+          initial: 'checkingStatus',
+          states: {
+            checkingStatus: {
+              invoke: {
+                src: 'checkLocationStatus',
+              },
+              on: {
+                LOCATION_ENABLED: {
+                  target: 'checkingPermission',
+                },
+                LOCATION_DISABLED: {
+                  target: 'requestingToEnable',
+                },
+              },
+            },
+            requestingToEnable: {
+              entry: 'requestToEnableLocation',
+              on: {
+                LOCATION_ENABLED: {
+                  target: 'checkingPermission',
+                },
+                LOCATION_DISABLED: {
+                  target: 'disabled',
+                },
+              },
+            },
+            checkingPermission: {
+              invoke: {
+                src: 'checkLocationPermission',
+              },
+              on: {
+                LOCATION_ENABLED: {
+                  target: '#scan.clearingConnection',
+                },
+                LOCATION_DISABLED: {
+                  target: 'denied',
+                },
+              },
+            },
+            disabled: {
+              on: {
+                LOCATION_REQUEST: {
+                  target: 'requestingToEnable',
+                },
+              },
+            },
+            denied: {
+              on: {
+                APP_ACTIVE: {
+                  target: 'checkingPermission',
+                },
+                LOCATION_REQUEST: {
+                  actions: 'openSettings',
+                },
+              },
+            },
+          },
         },
       },
     },
-  },
-  {
-    actions: {
-      requestSenderInfo: sendParent('REQUEST_DEVICE_INFO'),
+    {
+      actions: {
+        requestSenderInfo: sendParent('REQUEST_DEVICE_INFO'),
 
-      setSenderInfo: model.assign({
-        senderInfo: (_context, event) => event.info,
-      }),
-
-      requestToEnableLocation: () => requestLocation(),
-
-      disconnect: (context) => {
-        try {
-          if (context.sharingProtocol === 'OFFLINE') {
-            IdpassSmartshare.destroyConnection();
-          } else {
-            GoogleNearbyMessages.disconnect();
-          }
-        } catch (e) {
-          //
-        }
-      },
-
-      setConnectionParams: (_context, event) => {
-        IdpassSmartshare.setConnectionParameters(event.params);
-      },
-
-      setScannedQrParams: model.assign({
-        scannedQrParams: (_context, event) =>
-          JSON.parse(event.params) as ConnectionParams,
-        sharingProtocol: 'ONLINE',
-      }),
-
-      clearScannedQrParams: assign({
-        scannedQrParams: {} as ConnectionParams,
-      }),
-
-      setReceiverInfo: model.assign({
-        receiverInfo: (_context, event) => event.receiverInfo,
-      }),
-
-      setReason: model.assign({
-        reason: (_context, event) => event.reason,
-      }),
-
-      clearReason: assign({ reason: '' }),
-
-      setSelectedVc: assign({
-        selectedVc: (context, event) => {
-          const reason = [];
-          if (context.reason.trim() !== '') {
-            reason.push({ message: context.reason, timestamp: Date.now() });
-          }
-          return { ...event.vc, reason };
-        },
-      }),
-
-      setCreatedVp: assign({
-        createdVp: (_context, event) => event.data,
-      }),
-
-      clearCreatedVp: assign({
-        createdVp: () => null,
-      }),
-
-      registerLoggers: assign({
-        loggers: (context) => {
-          if (context.sharingProtocol === 'OFFLINE' && __DEV__) {
-            return [
-              IdpassSmartshare.handleNearbyEvents((event) => {
-                console.log(
-                  getDeviceNameSync(),
-                  '<Sender.Event>',
-                  JSON.stringify(event).slice(0, 100)
-                );
-              }),
-              IdpassSmartshare.handleLogEvents((event) => {
-                console.log(
-                  getDeviceNameSync(),
-                  '<Sender.Log>',
-                  JSON.stringify(event).slice(0, 100)
-                );
-              }),
-            ];
-          } else {
-            return [];
-          }
-        },
-      }),
-
-      removeLoggers: assign({
-        loggers: ({ loggers }) => {
-          loggers?.forEach((logger) => logger.remove());
-          return [];
-        },
-      }),
-
-      logShared: send(
-        (context) =>
-          ActivityLogEvents.LOG_ACTIVITY({
-            _vcKey: VC_ITEM_STORE_KEY(context.selectedVc),
-            action: 'shared',
-            timestamp: Date.now(),
-            deviceName:
-              context.receiverInfo.name || context.receiverInfo.deviceName,
-            vcLabel: context.selectedVc.tag || context.selectedVc.id,
-          }),
-        { to: (context) => context.serviceRefs.activityLog }
-      ),
-
-      openSettings: () => Linking.openSettings(),
-
-      setShouldVerifyPresence: assign({
-        selectedVc: (context) => ({
-          ...context.selectedVc,
-          shouldVerifyPresence: context.shouldVerifySender,
+        setSenderInfo: model.assign({
+          senderInfo: (_context, event) => event.info,
         }),
-      }),
-    },
 
-    services: {
-      checkLocationPermission: () => async (callback) => {
-        try {
-          // wait a bit for animation to finish when app becomes active
-          await new Promise((resolve) => setTimeout(resolve, 250));
+        requestToEnableLocation: () => requestLocation(),
 
-          let response: PermissionStatus;
-          if (Platform.OS === 'android') {
-            response = await check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
-          } else if (Platform.OS === 'ios') {
-            return callback(model.events.LOCATION_ENABLED());
-          }
-
-          if (response === 'granted') {
-            callback(model.events.LOCATION_ENABLED());
-          } else {
-            callback(model.events.LOCATION_DISABLED());
-          }
-        } catch (e) {
-          console.error(e);
-        }
-      },
-
-      monitorConnection: (context) => (callback) => {
-        if (context.sharingProtocol === 'OFFLINE') {
-          const subscription = IdpassSmartshare.handleNearbyEvents((event) => {
-            if (event.type === 'onDisconnected') {
-              callback({ type: 'DISCONNECT' });
+        disconnect: (context) => {
+          try {
+            if (context.sharingProtocol === 'OFFLINE') {
+              IdpassSmartshare.destroyConnection();
+            } else {
+              GoogleNearbyMessages.disconnect();
             }
-          });
+          } catch (e) {
+            //
+          }
+        },
 
-          return () => subscription.remove();
-        }
-      },
+        setConnectionParams: (_context, event) => {
+          IdpassSmartshare.setConnectionParameters(event.params);
+        },
 
-      checkLocationStatus: () => (callback) => {
-        checkLocation(
-          () => callback(model.events.LOCATION_ENABLED()),
-          () => callback(model.events.LOCATION_DISABLED())
-        );
-      },
+        setScannedQrParams: model.assign({
+          scannedQrParams: (_context, event) =>
+            JSON.parse(event.params) as ConnectionParams,
+          sharingProtocol: 'ONLINE',
+        }),
 
-      discoverDevice: (context) => (callback) => {
-        if (context.sharingProtocol === 'OFFLINE') {
-          IdpassSmartshare.createConnection('discoverer', () => {
-            callback({ type: 'CONNECTED' });
-          });
-        } else {
-          (async function () {
-            GoogleNearbyMessages.addOnErrorListener((kind, message) =>
-              console.log('\n\n[scan] GNM_ERROR\n\n', kind, message)
-            );
+        clearScannedQrParams: assign({
+          scannedQrParams: {} as ConnectionParams,
+        }),
 
-            await GoogleNearbyMessages.connect({
-              apiKey: GNM_API_KEY,
-              discoveryMediums: ['ble'],
-              discoveryModes: ['scan', 'broadcast'],
-            });
-            console.log('[scan] GNM connected!');
+        setReceiverInfo: model.assign({
+          receiverInfo: (_context, event) => event.receiverInfo,
+        }),
 
-            await onlineSubscribe('pairing:response', async (response) => {
-              await GoogleNearbyMessages.unpublish();
-              if (response === 'ok') {
-                callback({ type: 'CONNECTED' });
-              }
-            });
+        setReason: model.assign({
+          reason: (_context, event) => event.reason,
+        }),
 
-            const pairingEvent: PairingEvent = {
-              type: 'pairing',
-              data: context.scannedQrParams,
+        clearReason: assign({ reason: '' }),
+
+        setSelectedVc: assign({
+          selectedVc: (context, event) => {
+            const reason = [];
+            if (context.reason.trim() !== '') {
+              reason.push({ message: context.reason, timestamp: Date.now() });
+            }
+            return {
+              ...event.vc,
+              reason,
+              shouldVerifyPresence: context.selectedVc.shouldVerifyPresence,
             };
+          },
+        }),
 
-            await onlineSend(pairingEvent);
-          })();
-        }
+        setCreatedVp: assign({
+          createdVp: (_context, event) => event.data,
+        }),
+
+        clearCreatedVp: assign({
+          createdVp: () => null,
+        }),
+
+        registerLoggers: assign({
+          loggers: (context) => {
+            if (context.sharingProtocol === 'OFFLINE' && __DEV__) {
+              return [
+                IdpassSmartshare.handleNearbyEvents((event) => {
+                  console.log(
+                    getDeviceNameSync(),
+                    '<Sender.Event>',
+                    JSON.stringify(event).slice(0, 100)
+                  );
+                }),
+                IdpassSmartshare.handleLogEvents((event) => {
+                  console.log(
+                    getDeviceNameSync(),
+                    '<Sender.Log>',
+                    JSON.stringify(event).slice(0, 100)
+                  );
+                }),
+              ];
+            } else {
+              return [];
+            }
+          },
+        }),
+
+        removeLoggers: assign({
+          loggers: ({ loggers }) => {
+            loggers?.forEach((logger) => logger.remove());
+            return [];
+          },
+        }),
+
+        setShareLogTypeUnverified: model.assign({
+          shareLogType: 'VC_SHARED',
+        }),
+
+        setShareLogTypeVerified: model.assign({
+          shareLogType: 'PRESENCE_VERIFIED_AND_VC_SHARED',
+        }),
+
+        logShared: send(
+          (context) =>
+            ActivityLogEvents.LOG_ACTIVITY({
+              _vcKey: VC_ITEM_STORE_KEY(context.selectedVc),
+              type: context.selectedVc.shouldVerifyPresence
+                ? 'VC_SHARED_WITH_VERIFICATION_CONSENT'
+                : context.shareLogType,
+              timestamp: Date.now(),
+              deviceName:
+                context.receiverInfo.name || context.receiverInfo.deviceName,
+              vcLabel: context.selectedVc.tag || context.selectedVc.id,
+            }),
+          { to: (context) => context.serviceRefs.activityLog }
+        ),
+
+        logFailedVerification: send(
+          (context) =>
+            ActivityLogEvents.LOG_ACTIVITY({
+              _vcKey: VC_ITEM_STORE_KEY(context.selectedVc),
+              type: 'PRESENCE_VERIFICATION_FAILED',
+              timestamp: Date.now(),
+              deviceName:
+                context.receiverInfo.name || context.receiverInfo.deviceName,
+              vcLabel: context.selectedVc.tag || context.selectedVc.id,
+            }),
+          { to: (context) => context.serviceRefs.activityLog }
+        ),
+
+        openSettings: () => Linking.openSettings(),
+
+        toggleShouldVerifyPresence: assign({
+          selectedVc: (context) => ({
+            ...context.selectedVc,
+            shouldVerifyPresence: !context.selectedVc.shouldVerifyPresence,
+          }),
+        }),
       },
 
-      exchangeDeviceInfo: (context) => (callback) => {
-        const event: ExchangeSenderInfoEvent = {
-          type: 'exchange-sender-info',
-          data: context.senderInfo,
-        };
+      services: {
+        checkLocationPermission: () => async (callback) => {
+          try {
+            // wait a bit for animation to finish when app becomes active
+            await new Promise((resolve) => setTimeout(resolve, 250));
 
-        if (context.sharingProtocol === 'OFFLINE') {
-          let subscription: EmitterSubscription;
-          offlineSend(event, () => {
-            subscription = offlineSubscribe(
-              'exchange-receiver-info',
-              (receiverInfo) => {
-                callback({ type: 'EXCHANGE_DONE', receiverInfo });
+            let response: PermissionStatus;
+            if (Platform.OS === 'android') {
+              response = await check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
+            } else if (Platform.OS === 'ios') {
+              return callback(model.events.LOCATION_ENABLED());
+            }
+
+            if (response === 'granted') {
+              callback(model.events.LOCATION_ENABLED());
+            } else {
+              callback(model.events.LOCATION_DISABLED());
+            }
+          } catch (e) {
+            console.error(e);
+          }
+        },
+
+        monitorConnection: (context) => (callback) => {
+          if (context.sharingProtocol === 'OFFLINE') {
+            const subscription = IdpassSmartshare.handleNearbyEvents(
+              (event) => {
+                if (event.type === 'onDisconnected') {
+                  callback({ type: 'DISCONNECT' });
+                }
               }
             );
-          });
-          return () => subscription?.remove();
-        } else {
-          (async function () {
-            await onlineSubscribe(
-              'exchange-receiver-info',
-              async (receiverInfo) => {
+
+            return () => subscription.remove();
+          }
+        },
+
+        checkLocationStatus: () => (callback) => {
+          checkLocation(
+            () => callback(model.events.LOCATION_ENABLED()),
+            () => callback(model.events.LOCATION_DISABLED())
+          );
+        },
+
+        discoverDevice: (context) => (callback) => {
+          if (context.sharingProtocol === 'OFFLINE') {
+            IdpassSmartshare.createConnection('discoverer', () => {
+              callback({ type: 'CONNECTED' });
+            });
+          } else {
+            (async function () {
+              GoogleNearbyMessages.addOnErrorListener((kind, message) =>
+                console.log('\n\n[scan] GNM_ERROR\n\n', kind, message)
+              );
+
+              await GoogleNearbyMessages.connect({
+                apiKey: GNM_API_KEY,
+                discoveryMediums: ['ble'],
+                discoveryModes: ['scan', 'broadcast'],
+              });
+              console.log('[scan] GNM connected!');
+
+              await onlineSubscribe('pairing:response', async (response) => {
                 await GoogleNearbyMessages.unpublish();
-                callback({ type: 'EXCHANGE_DONE', receiverInfo });
-              }
-            );
+                if (response === 'ok') {
+                  callback({ type: 'CONNECTED' });
+                }
+              });
 
-            await onlineSend(event);
-          })();
-        }
-      },
+              const pairingEvent: PairingEvent = {
+                type: 'pairing',
+                data: context.scannedQrParams,
+              };
 
-      sendVc: (context) => (callback) => {
-        let subscription: EmitterSubscription;
-        const vp = context.createdVp;
-        const vc = {
-          ...(vp != null ? vp : context.selectedVc),
-          tag: '',
-        };
+              await onlineSend(pairingEvent);
+            })();
+          }
+        },
 
-        const statusCallback = (status: SendVcStatus) => {
-          if (typeof status === 'number') return;
-          callback({
-            type: status === 'ACCEPTED' ? 'VC_ACCEPTED' : 'VC_REJECTED',
-          });
-        };
-
-        if (context.sharingProtocol === 'OFFLINE') {
-          const event: SendVcEvent = {
-            type: 'send-vc',
-            data: { isChunked: false, vc },
+        exchangeDeviceInfo: (context) => (callback) => {
+          const event: ExchangeSenderInfoEvent = {
+            type: 'exchange-sender-info',
+            data: context.senderInfo,
           };
-          offlineSend(event, () => {
-            subscription = offlineSubscribe(SendVcResponseType, statusCallback);
-          });
-          return () => subscription?.remove();
-        } else {
-          sendVc(vc, statusCallback, () => callback({ type: 'DISCONNECT' }));
-        }
+
+          if (context.sharingProtocol === 'OFFLINE') {
+            let subscription: EmitterSubscription;
+            offlineSend(event, () => {
+              subscription = offlineSubscribe(
+                'exchange-receiver-info',
+                (receiverInfo) => {
+                  callback({ type: 'EXCHANGE_DONE', receiverInfo });
+                }
+              );
+            });
+            return () => subscription?.remove();
+          } else {
+            (async function () {
+              await onlineSubscribe(
+                'exchange-receiver-info',
+                async (receiverInfo) => {
+                  await GoogleNearbyMessages.unpublish();
+                  callback({ type: 'EXCHANGE_DONE', receiverInfo });
+                }
+              );
+
+              await onlineSend(event);
+            })();
+          }
+        },
+
+        sendVc: (context) => (callback) => {
+          let subscription: EmitterSubscription;
+          const vp = context.createdVp;
+          const vc = {
+            ...(vp != null ? vp : context.selectedVc),
+            tag: '',
+          };
+
+          const statusCallback = (status: SendVcStatus) => {
+            if (typeof status === 'number') return;
+            callback({
+              type: status === 'ACCEPTED' ? 'VC_ACCEPTED' : 'VC_REJECTED',
+            });
+          };
+
+          if (context.sharingProtocol === 'OFFLINE') {
+            const event: SendVcEvent = {
+              type: 'send-vc',
+              data: { isChunked: false, vc },
+            };
+            offlineSend(event, () => {
+              subscription = offlineSubscribe(
+                SendVcResponseType,
+                statusCallback
+              );
+            });
+            return () => subscription?.remove();
+          } else {
+            sendVc(vc, statusCallback, () => callback({ type: 'DISCONNECT' }));
+          }
+        },
+
+        sendDisconnect: (context) => () => {
+          if (context.sharingProtocol === 'ONLINE') {
+            onlineSend({
+              type: 'disconnect',
+              data: 'rejected',
+            });
+          }
+        },
+
+        createVp: (context) => async () => {
+          // TODO
+          // const verifiablePresentation = await createVerifiablePresentation(...);
+
+          const verifiablePresentation: VerifiablePresentation = {
+            '@context': [''],
+            'proof': null,
+            'type': 'VerifiablePresentation',
+            'verifiableCredential': [context.selectedVc.verifiableCredential],
+          };
+
+          const vc: VC = {
+            ...context.selectedVc,
+            verifiableCredential: null,
+            verifiablePresentation,
+          };
+
+          return Promise.resolve(vc);
+        },
       },
 
-      sendDisconnect: (context) => () => {
-        if (context.sharingProtocol === 'ONLINE') {
-          onlineSend({
-            type: 'disconnect',
-            data: 'rejected',
-          });
-        }
+      guards: {
+        isQrOffline: (_context, event) => {
+          if (Platform.OS === 'ios') return false;
+
+          const param: ConnectionParams = Object.create(null);
+          try {
+            Object.assign(param, JSON.parse(event.params));
+            return 'cid' in param && 'pk' in param && param.pk !== '';
+          } catch (e) {
+            return false;
+          }
+        },
+
+        isQrOnline: (_context, event) => {
+          const param: ConnectionParams = Object.create(null);
+          try {
+            Object.assign(param, JSON.parse(event.params));
+            return 'cid' in param && 'pk' in param && param.pk === '';
+          } catch (e) {
+            return false;
+          }
+        },
       },
 
-      createVp: (context) => async () => {
-        // TODO
-        // const verifiablePresentation = await createVerifiablePresentation(...);
-
-        const verifiablePresentation: VerifiablePresentation = {
-          '@context': [''],
-          'proof': null,
-          'type': 'VerifiablePresentation',
-          'verifiableCredential': [context.selectedVc.verifiableCredential],
-        };
-
-        const vc: VC = {
-          ...context.selectedVc,
-          verifiableCredential: null,
-          verifiablePresentation,
-        };
-
-        return Promise.resolve(vc);
+      delays: {
+        CLEAR_DELAY: 250,
+        CANCEL_TIMEOUT: 3000,
+        CONNECTION_TIMEOUT: (context) => {
+          return (context.sharingProtocol === 'ONLINE' ? 15 : 5) * 1000;
+        },
+        SHARING_TIMEOUT: (context) => {
+          return (context.sharingProtocol === 'ONLINE' ? 45 : 15) * 1000;
+        },
       },
-    },
-
-    guards: {
-      isQrOffline: (_context, event) => {
-        if (Platform.OS === 'ios') return false;
-
-        const param: ConnectionParams = Object.create(null);
-        try {
-          Object.assign(param, JSON.parse(event.params));
-          return 'cid' in param && 'pk' in param && param.pk !== '';
-        } catch (e) {
-          return false;
-        }
-      },
-
-      isQrOnline: (_context, event) => {
-        const param: ConnectionParams = Object.create(null);
-        try {
-          Object.assign(param, JSON.parse(event.params));
-          return 'cid' in param && 'pk' in param && param.pk === '';
-        } catch (e) {
-          return false;
-        }
-      },
-    },
-
-    delays: {
-      CLEAR_DELAY: 250,
-      CANCEL_TIMEOUT: 3000,
-      CONNECTION_TIMEOUT: (context) => {
-        return (context.sharingProtocol === 'ONLINE' ? 15 : 5) * 1000;
-      },
-      SHARING_TIMEOUT: (context) => {
-        return (context.sharingProtocol === 'ONLINE' ? 45 : 15) * 1000;
-      },
-    },
-  }
-);
+    }
+  );
 
 export function createScanMachine(serviceRefs: AppServices) {
   return scanMachine.withContext({

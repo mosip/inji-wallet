@@ -1,6 +1,7 @@
 {
   "cancel": "Cancel",
   "save": "Save",
+  "dismiss": "Dismiss",
   "editLabel": "Edit {{label}}",
   "tryAgain": "Try again",
   "camera": {

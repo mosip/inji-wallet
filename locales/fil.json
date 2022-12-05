@@ -229,7 +229,6 @@
     "status": {
       "sharing": {
         "title": "Pagbabahagi",
-        "hint": "Pakihintay na tanggapin o tanggihan ng tumatanggap na device ang pagbabahagi.",
         "timeoutHint": "May katagalan ang pagbabahagi. Maaaring may problema sa koneksyon."
       },
       "accepted": {
@@ -250,7 +249,7 @@
     "errors": {
       "invalidIdentity": {
         "title": "Hindi ma-verify ang pagkakakilanlan",
-        "message": "May naganap na error at hindi namin ma-scan ang iyong portrait. Subukang muli, tiyaking nakikita ang iyong mukha, walang anumang mga accessory."
+        "message": "May naganap na error at hindi namin ma-scan ang iyong larawan. Subukang muli, tiyaking nakikita ang iyong mukha, walang anumang mga aksesorya."
       }
     }
   },
