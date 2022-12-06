@@ -1,4 +1,16 @@
 {
+  "ActivityLogText": {
+    "VC_SHARED": "ibinahagi",
+    "VC_RECEIVED": "natanggap",
+    "VC_DELETED": "tinanggal",
+    "VC_DOWNLOADED": "na-download",
+    "VC_REVOKED": "binawi",
+    "VC_SHARED_WITH_VERIFICATION_CONSENT": "ibinahagi. Ibinibigay ang pahintulot para sa pag-verify ng presensya",
+    "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "natanggap. Na-verify ang presensya",
+    "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "natanggap. Nabigo ang pag-verify ng presensya",
+    "PRESENCE_VERIFIED_AND_VC_SHARED": "na-verify at ibinahagi",
+    "PRESENCE_VERIFICATION_FAILED": "nabigo ang pag-verify"
+  },
   "DeviceInfoList": {
     "requestedBy": "Hiniling ni",
     "sentBy": "Ipinadala ni",
@@ -31,8 +43,10 @@
     "address": "Tirahan",
     "reasonForSharing": "Dahilan ng pagbabahagi",
     "idType": "Uri ng ID",
+    "id": "Id",
     "nationalCard": "Pambansang Kard",
-    "uin": "UIN"
+    "uin": "UIN",
+    "vid": "VID"
   },
   "AuthScreen": {
     "header": "Gusto mo bang gumamit ng biometrics upang i-unlock ang aplikasyon?",
@@ -81,10 +95,19 @@
     "bodyText": "Maaaring tumagal ito ng ilang oras, ipapaalam namin sayo kung pwede na kunin ang iyong {{vcLabel}}",
     "backButton": "Bumalik"
   },
+  "GetIdInputModal": {
+    "header": "Upang makuha ang iyong UIN o VID, ilagay ang iyong Application {{vcLabel}} na numero",
+    "getUIN": "Kumuha ng UIN/VID",
+    "applicationId": "Numero ng application na {{vcLabel}}.",
+    "requestingOTP": "Humihiling ng OTP...",
+    "qstnMarkToolTip": "Ang numero ng aplikasyon {{vcLabel}} ay naka-print sa ibinigay na pagkilala pagkatapos ng pagpapatala"
+  },
   "IdInputModal": {
     "header": "Ilagay ang UIN o VID na ibinigay ng MOSIP upang matanggap ang iyong {{vcLabel}}",
     "generateVc": "Gumawa ng {{vcLabel}}",
-    "enterId": "Ilagay ang iyong {{idType}}"
+    "enterId": "Ilagay ang iyong {{idType}}",
+    "noUIN/VID": "Wala ka bang UIN/VID? Kuhanin dito",
+    "requestingOTP": "Humihiling ng OTP..."
   },
   "OtpVerificationModal": {
     "enterOtp": "Ilagay ang 6 na numerong verification code na ipinadala namin sayo"
@@ -229,6 +252,7 @@
     "status": {
       "sharing": {
         "title": "Pagbabahagi",
+        "hint": "Pakihintay na tanggapin o tanggihan ng tumatanggap na device ang pagbabahagi.",
         "timeoutHint": "May katagalan ang pagbabahagi. Maaaring may problema sa koneksyon."
       },
       "accepted": {
@@ -249,7 +273,8 @@
     "errors": {
       "invalidIdentity": {
         "title": "Hindi ma-verify ang pagkakakilanlan",
-        "message": "May naganap na error at hindi namin ma-scan ang iyong larawan. Subukang muli, tiyaking nakikita ang iyong mukha, walang anumang mga aksesorya."
+        "message": "May naganap na error at hindi namin ma-scan ang iyong larawan. Subukang muli, tiyaking nakikita ang iyong mukha, walang anumang mga aksesorya.",
+        "messageNoRetry": "May naganap na error at hindi namin ma-scan ang iyong portrait."
       }
     }
   },
@@ -261,6 +286,7 @@
   "common": {
     "cancel": "Kanselahin",
     "save": "I-save",
+    "dismiss": "I-dismiss",
     "editLabel": "Palitan ang {{label}}",
     "tryAgain": "Subukan muli",
     "camera": {
