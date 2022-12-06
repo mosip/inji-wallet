@@ -1,61 +1,88 @@
 import React from 'react';
-import { Divider, Icon, ListItem, Overlay } from 'react-native-elements';
-import { Button, Centered, Column, Row, Text } from '../../components/ui';
+import { ListItem } from 'react-native-elements';
+import { Button, Column, Row, Text } from '../../components/ui';
 import { useTranslation } from 'react-i18next';
-import { FaceScanner } from '../../components/FaceScanner';
 import { useQrLogin } from './QrLoginController';
-import { SafeAreaView, View, RefreshControl, Dimensions } from 'react-native';
-import { ToastItem } from '../../components/ui/ToastItem';
-import { VidItem } from '../../components/VidItem';
 import { Modal } from '../../components/ui/Modal';
-import { Theme } from '../../components/ui/styleUtils';
 import { QrScanner } from '../../components/QrScanner';
+import { VerifyIdentityOverlay } from '../VerifyIdentityOverlay';
+import { MessageOverlay } from '../../components/MessageOverlay';
+import { MyBindedVcs } from './MyBindedVcs';
+import { QrLoginWarning } from './QrLoginWarning';
+import { QrLoginSuccess } from './QrLoginSuccessMessage';
 
 export const QrLogin: React.FC = () => {
   const controller = useQrLogin();
-  const { t } = useTranslation('ProfileScreen');
+  const { t } = useTranslation('QrScreen');
 
   return (
-    <ListItem bottomDivider onPress={() => controller.setQrLogin(true)}>
+    <ListItem
+      bottomDivider
+      onPress={() => {
+        controller.setQrLogin(true);
+      }}>
       <ListItem.Content>
         <ListItem.Title>
-          <Text>{'QR Login'}</Text>
+          <Text>{t('title')}</Text>
         </ListItem.Title>
       </ListItem.Content>
 
-      <Modal isVisible={controller.isQrLogin} onDismiss={controller.DISMISS}>
-        <Column fill padding="32" align="space-between">
-          <Centered fill>
-            <Icon
-              name="card-account-details-outline"
-              color={Theme.Colors.Icon}
-              size={30}
-            />
-            {controller.isQrLogin && (
-              <QrScanner onQrFound={controller.showWarning} />
-            )}
-            <Text
-              align="center"
-              weight="bold"
-              margin="8 0 12 0"
-              style={{ fontSize: 24 }}>
-              {t('title')}
-            </Text>
-            <Text align="center">{t('text')}</Text>
-            <Text
-              align="center"
-              color={Theme.Colors.errorMessage}
-              margin="16 0 0 0">
-              {'errpr'}
-            </Text>
-          </Centered>
-          <Column></Column>
+      <Modal
+        isVisible={controller.isQrLogin}
+        onDismiss={() => {
+          controller.setQrLogin(false), controller.DISMISS();
+        }}>
+        <Column fill>
+          {controller.isScanningQr && (
+            <Column fill padding="32" align="space-between">
+              <QrScanner
+                onQrFound={controller.SCANNING_DONE}
+                title={'Scan the QR Code to initiate the login'}
+              />
+            </Column>
+          )}
+
+          <QrLoginWarning isVisible={controller.isShowWarning} />
+
+          <MyBindedVcs isVisible={controller.isShowingVcList} />
+
+          <VerifyIdentityOverlay
+            isVisible={controller.isVerifyingIdentity}
+            vc={controller.selectedVc}
+            onCancel={controller.CANCEL}
+            onFaceValid={controller.FACE_VALID}
+            onFaceInvalid={controller.FACE_INVALID}
+          />
+
+          <MessageOverlay
+            isVisible={controller.isInvalidIdentity}
+            title={t('VerifyIdentityOverlay:errors.invalidIdentity.title')}
+            message={t('VerifyIdentityOverlay:errors.invalidIdentity.message')}
+            onBackdropPress={controller.DISMISS}>
+            <Row>
+              <Button
+                fill
+                type="clear"
+                title={t('common:cancel')}
+                onPress={controller.DISMISS}
+                margin={[0, 8, 0, 0]}
+              />
+              <Button
+                fill
+                title={t('common:tryAgain')}
+                onPress={controller.RETRY_VERIFICATION}
+              />
+            </Row>
+          </MessageOverlay>
+
+          <QrLoginSuccess
+            isVisible={controller.isVerifyingSuccesful}
+            onPress={() => {
+              controller.setQrLogin(false), controller.DISMISS();
+            }}
+          />
         </Column>
       </Modal>
     </ListItem>
   );
 };
-
-interface RevokeScreenProps {
-  label: string;
-}

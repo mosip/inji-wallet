@@ -34,10 +34,7 @@
     "phoneNumber": "Phone number",
     "email": "Email",
     "address": "Address",
-    "reasonForSharing": "Reason for sharing",
-    "idType": "ID type",
-    "nationalCard": "National Card",
-    "uin": "UIN"
+    "reasonForSharing": "Reason for sharing"
   },
   "AuthScreen": {
     "header": "Would you like to use biometrics to unlock the application?",
@@ -168,6 +165,14 @@
     "empty": "Empty",
     "revokeSuccessful": "VID successfully revoked",
     "version": "Version"
+  },
+  "QrScreen": {
+    "title": "QR Login",
+    "noBindedVc": "No Binded {{vcLabel}} Available to Verify",
+    "back": "Go Back",
+    "confirm": "Confirm",
+    "verify": "Verify",
+    "domineWarning": "Please verify and confirm the domine of the website you are logging into"
   },
   "ReceiveVcScreen": {
     "header": "{{vcLabel}} details",

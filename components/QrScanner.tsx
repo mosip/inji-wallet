@@ -56,6 +56,11 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
 
   return (
     <View>
+      {props.title && (
+        <Text align="center" margin="16 0" color={Theme.Colors.errorMessage}>
+          {props.title}
+        </Text>
+      )}
       <View style={Theme.Styles.scannerContainer}>
         <Camera
           style={Theme.Styles.scanner}
@@ -94,4 +99,5 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
 
 interface QrScannerProps {
   onQrFound: (data: string) => void;
+  title?: string;
 }

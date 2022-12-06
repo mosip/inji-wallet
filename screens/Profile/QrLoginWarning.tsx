@@ -1,32 +1,47 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { View } from 'react-native';
-import { Button, Icon } from 'react-native-elements';
-import { Column } from '../../components/ui';
+import { Button, Centered, Column } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { useQrLogin } from './QrLoginController';
+import { Text } from '../../components/ui';
 
-export const BindStatus: React.FC = () => {
+export const QrLoginWarning: React.FC<QrLoginWarningProps> = (props) => {
   const controller = useQrLogin();
+  const { t } = useTranslation('QrScreen');
 
   return (
-    <View style={Theme.OtpVerificationStyles.viewContainer}>
-      <Column
-        fill
-        padding="32"
-        backgroundColor={Theme.Colors.whiteBackgroundColor}>
-        <View style={Theme.OtpVerificationStyles.close}>
-          <Icon name="close" onPress={() => controller.DISMISS} />
-        </View>
-        <Column fill align="space-between">
-          <Text align="center">{'QR login warning'}</Text>
-          <Text align="center" color={Theme.Colors.textLabel} margin="16 0 0 0">
-            {'Warning'}
-          </Text>
-          <Button title={'GO BACK'} onPress={controller.DISMISS} />
-        </Column>
-        <Column fill></Column>
+    <Column
+      fill
+      align="space-evenly"
+      padding={'10'}
+      style={{ display: props.isVisible ? 'flex' : 'none' }}
+      backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
+      <Column>
+        <Text
+          align="center"
+          style={Theme.TextStyles.semibold}
+          margin="16 0 0 0">
+          {t('domineWarning')}
+        </Text>
       </Column>
-    </View>
+      <Column padding={'20'}>
+        <Button
+          margin={'10 0 0 0'}
+          type="solid"
+          title={t('confirm')}
+          onPress={controller.CONFIRM}
+        />
+        <Button
+          margin={'10 0 0 0'}
+          type="outline"
+          title={t('common:cancel')}
+          onPress={controller.DISMISS}
+        />
+      </Column>
+    </Column>
   );
 };
+
+interface QrLoginWarningProps {
+  isVisible: boolean;
+}
