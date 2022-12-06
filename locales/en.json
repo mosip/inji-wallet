@@ -188,8 +188,9 @@
     "back": "Go Back",
     "confirm": "Confirm",
     "verify": "Verify",
-    "domainWarning": "Please verify and confirm the domain of the website you are logging into",
-    "loadingVc": "Loading credentials"
+    "scannerTitle":"Scan the QR Code to initiate the login",
+    "loadingVcs": "Loading Credential",
+    "domainWarning": "Please verify and confirm the domain of the website you are logging into"
   },
   "ReceiveVcScreen": {
     "header": "{{vcLabel}} details",

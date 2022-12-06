@@ -6,10 +6,12 @@ import {
   selectIsInvalidIdentity,
   selectIsisVerifyingIdentity,
   selectIsloadMyVcs,
+  selectIsRequestConsent,
   selectIsScanning,
   selectIsShowingVcList,
   selectIsShowWarning,
   selectIsVerifyingSuccesful,
+  selectLinkTransactionResponse,
   selectMyVcs,
   selectSelectedVc,
 } from '../../machines/QrLoginMachine';
@@ -37,6 +39,10 @@ export function useQrLogin() {
 
     vcKeys: useSelector(qrLoginService, selectMyVcs),
     selectedVc: useSelector(qrLoginService, selectSelectedVc),
+    LinkTransactionContent: useSelector(
+      qrLoginService,
+      selectLinkTransactionResponse
+    ),
 
     isQrLogin,
     setQrLogin,
@@ -52,6 +58,7 @@ export function useQrLogin() {
       selectIsisVerifyingIdentity
     ),
     isInvalidIdentity: useSelector(qrLoginService, selectIsInvalidIdentity),
+    isRequestingConsent: useSelector(qrLoginService, selectIsRequestConsent),
     isVerifyingSuccesful: useSelector(
       qrLoginService,
       selectIsVerifyingSuccesful

@@ -4,13 +4,15 @@ import { AppServices } from '../shared/GlobalContext';
 import { MY_VCS_STORE_KEY } from '../shared/constants';
 import { StoreEvents } from './store';
 import { VC } from '../types/vc';
+import { request, linkTransactionResponse } from '../shared/request';
 
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
     selectedVc: {} as VC,
-    linkingCode: '',
+    linkCode: '',
     myVcs: [] as string[],
+    linkTransactionResponse: {} as linkTransactionResponse,
   },
   {
     events: {
@@ -64,6 +66,17 @@ export const qrLoginMachine =
             },
           },
         },
+        linkTransaction: {
+          invoke: {
+            src: 'linkTransaction',
+            onDone: [
+              {
+                actions: 'setlinkTransactionResponse',
+                target: 'loadMyVcs',
+              },
+            ],
+          },
+        },
         loadMyVcs: {
           entry: 'loadMyVcs',
           on: {
@@ -89,7 +102,7 @@ export const qrLoginMachine =
         faceAuth: {
           on: {
             FACE_VALID: {
-              target: 'done',
+              target: 'requestConsent',
             },
             FACE_INVALID: {
               target: 'invalidIdentity',
@@ -109,6 +122,16 @@ export const qrLoginMachine =
             },
           },
         },
+        requestConsent: {
+          on: {
+            CONFIRM: {
+              target: 'done',
+            },
+            CANCEL: {
+              target: 'idle',
+            },
+          },
+        },
         done: {
           on: {
             DISMISS: {
@@ -122,7 +145,11 @@ export const qrLoginMachine =
     {
       actions: {
         setScanData: model.assign({
-          linkingCode: (_context, event) => event.params,
+          linkCode: (_context, event) =>
+            event.params.substring(
+              event.params.indexOf('linkCode=') + 9,
+              event.params.indexOf('&')
+            ),
         }),
 
         loadMyVcs: send(StoreEvents.GET(MY_VCS_STORE_KEY), {
@@ -138,8 +165,20 @@ export const qrLoginMachine =
             return { ...event.vc };
           },
         }),
+
+        setlinkTransactionResponse: assign({
+          linkTransactionResponse: (context, event) => event.data,
+        }),
       },
-      services: {},
+      services: {
+        linkTransaction: async (context) => {
+          const response = await request('POST', '/link-transaction', {
+            linkCode: context.linkCode,
+            requestTime: String(new Date().toISOString()),
+          });
+          return response.response;
+        },
+      },
     }
   );
 
@@ -180,10 +219,18 @@ export function selectIsInvalidIdentity(state: State) {
   return state.matches('invalidIdentity');
 }
 
+export function selectIsRequestConsent(state: State) {
+  return state.matches('requestConsent');
+}
+
 export function selectIsVerifyingSuccesful(state: State) {
   return state.matches('done');
 }
 
 export function selectSelectedVc(state: State) {
   return state.context.selectedVc;
+}
+
+export function selectLinkTransactionResponse(state: State) {
+  return state.context.linkTransactionResponse;
 }

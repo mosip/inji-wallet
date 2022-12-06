@@ -2,7 +2,7 @@ import { formatDistanceToNow } from 'date-fns';
 import React from 'react';
 import * as DateFnsLocale from '../lib/date-fns/locale';
 import { useTranslation } from 'react-i18next';
-import { Image, ImageBackground, View } from 'react-native';
+import { Image, ImageBackground } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { VC, CredentialSubject, LocalizedField } from '../types/vc';
 import { Button, Column, Row, Text } from './ui';
