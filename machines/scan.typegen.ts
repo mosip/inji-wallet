@@ -15,11 +15,14 @@ export interface Typegen0 {
     'xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling': {
       type: 'xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling';
     };
-    'xstate.after(CLEAR_DELAY)#clearingConnection': {
-      type: 'xstate.after(CLEAR_DELAY)#clearingConnection';
+    'xstate.after(CLEAR_DELAY)#scan.clearingConnection': {
+      type: 'xstate.after(CLEAR_DELAY)#scan.clearingConnection';
     };
     'xstate.after(CONNECTION_TIMEOUT)#scan.connecting.inProgress': {
       type: 'xstate.after(CONNECTION_TIMEOUT)#scan.connecting.inProgress';
+    };
+    'xstate.after(CONNECTION_TIMEOUT)#scan.exchangingDeviceInfo': {
+      type: 'xstate.after(CONNECTION_TIMEOUT)#scan.exchangingDeviceInfo';
     };
     'xstate.after(SHARING_TIMEOUT)#scan.reviewing.sendingVc.inProgress': {
       type: 'xstate.after(SHARING_TIMEOUT)#scan.reviewing.sendingVc.inProgress';
@@ -29,7 +32,7 @@ export interface Typegen0 {
   };
   'invokeSrcNameMap': {
     checkLocationPermission: 'done.invoke.scan.checkingLocationService.checkingPermission:invocation[0]';
-    checkLocationStatus: 'done.invoke.checkingLocationService:invocation[0]';
+    checkLocationStatus: 'done.invoke.scan.checkingLocationService.checkingStatus:invocation[0]';
     createVp: 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
     discoverDevice: 'done.invoke.scan.connecting:invocation[0]';
     exchangeDeviceInfo: 'done.invoke.scan.exchangingDeviceInfo:invocation[0]';
@@ -62,7 +65,7 @@ export interface Typegen0 {
       | 'DISCONNECT'
       | 'DISMISS'
       | 'xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling'
-      | 'xstate.after(CLEAR_DELAY)#clearingConnection';
+      | 'xstate.after(CLEAR_DELAY)#scan.clearingConnection';
     disconnect:
       | 'DISCONNECT'
       | 'DISMISS'
@@ -71,20 +74,20 @@ export interface Typegen0 {
       | 'SCREEN_FOCUS'
       | 'xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling'
       | 'xstate.stop';
+    logFailedVerification: 'FACE_INVALID';
     logShared: 'VC_ACCEPTED';
     openSettings: 'LOCATION_REQUEST';
     registerLoggers:
       | 'DISCONNECT'
       | 'DISMISS'
       | 'xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling'
-      | 'xstate.after(CLEAR_DELAY)#clearingConnection';
+      | 'xstate.after(CLEAR_DELAY)#scan.clearingConnection';
     removeLoggers:
       | 'DISCONNECT'
       | 'DISMISS'
       | 'SCREEN_BLUR'
-      | 'SCREEN_FOCUS'
       | 'xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling'
-      | 'xstate.after(CLEAR_DELAY)#clearingConnection'
+      | 'xstate.after(CLEAR_DELAY)#scan.clearingConnection'
       | 'xstate.init';
     requestSenderInfo: 'SCAN';
     requestToEnableLocation: 'LOCATION_DISABLED' | 'LOCATION_REQUEST';
@@ -95,15 +98,19 @@ export interface Typegen0 {
     setScannedQrParams: 'SCAN';
     setSelectedVc: 'SELECT_VC';
     setSenderInfo: 'RECEIVE_DEVICE_INFO';
-    setShouldVerifyPresence: 'ACCEPT_REQUEST';
+    setShareLogTypeUnverified: 'ACCEPT_REQUEST';
+    setShareLogTypeVerified: 'FACE_VALID';
+    toggleShouldVerifyPresence: 'TOGGLE_USER_CONSENT';
   };
   'eventsCausingServices': {
     checkLocationPermission: 'APP_ACTIVE' | 'LOCATION_ENABLED';
     checkLocationStatus: 'SCREEN_FOCUS';
     createVp: never;
     discoverDevice: 'RECEIVE_DEVICE_INFO';
-    exchangeDeviceInfo: 'CONNECTED';
-    monitorConnection: 'SCREEN_BLUR' | 'SCREEN_FOCUS' | 'xstate.init';
+    exchangeDeviceInfo:
+      | 'CONNECTED'
+      | 'xstate.after(CONNECTION_TIMEOUT)#scan.exchangingDeviceInfo';
+    monitorConnection: 'xstate.init';
     sendDisconnect: 'CANCEL';
     sendVc:
       | 'ACCEPT_REQUEST'
@@ -113,12 +120,14 @@ export interface Typegen0 {
   'eventsCausingGuards': {
     isQrOffline: 'SCAN';
     isQrOnline: 'SCAN';
-    shouldVerifySender: 'ACCEPT_REQUEST' | 'VERIFY_AND_ACCEPT_REQUEST';
   };
   'eventsCausingDelays': {
     CANCEL_TIMEOUT: 'CANCEL';
     CLEAR_DELAY: 'LOCATION_ENABLED';
-    CONNECTION_TIMEOUT: 'CONNECTED' | 'RECEIVE_DEVICE_INFO';
+    CONNECTION_TIMEOUT:
+      | 'CONNECTED'
+      | 'RECEIVE_DEVICE_INFO'
+      | 'xstate.after(CONNECTION_TIMEOUT)#scan.exchangingDeviceInfo';
     SHARING_TIMEOUT:
       | 'ACCEPT_REQUEST'
       | 'FACE_VALID'

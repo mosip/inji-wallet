@@ -48,14 +48,13 @@ export function useSendVcScreen() {
     };
   }
 
-  const [shouldVerifySender, setShouldVerifySender] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(null);
   const SELECT_VC = (vc: VC) => scanService.send(ScanEvents.SELECT_VC(vc));
 
   return {
     selectedIndex,
-    shouldVerifySender,
-    TOGGLE_USER_CONSENT: () => setShouldVerifySender(!shouldVerifySender),
+    TOGGLE_USER_CONSENT: () =>
+      scanService.send(ScanEvents.TOGGLE_USER_CONSENT()),
     SELECT_VC_ITEM:
       (index: number) => (vcRef: ActorRefFrom<typeof vcItemMachine>) => {
         setSelectedIndex(index);
@@ -82,12 +81,9 @@ export function useSendVcScreen() {
 
     CANCEL,
     SELECT_VC,
-    ACCEPT_REQUEST: () =>
-      scanService.send(ScanEvents.ACCEPT_REQUEST(shouldVerifySender)),
+    ACCEPT_REQUEST: () => scanService.send(ScanEvents.ACCEPT_REQUEST()),
     VERIFY_AND_ACCEPT_REQUEST: () =>
-      scanService.send(
-        ScanEvents.VERIFY_AND_ACCEPT_REQUEST(shouldVerifySender)
-      ),
+      scanService.send(ScanEvents.VERIFY_AND_ACCEPT_REQUEST()),
     DISMISS: () => scanService.send(ScanEvents.DISMISS()),
     UPDATE_REASON: (reason: string) =>
       scanService.send(ScanEvents.UPDATE_REASON(reason)),

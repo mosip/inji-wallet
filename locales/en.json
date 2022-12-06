@@ -1,4 +1,16 @@
 {
+  "ActivityLogText": {
+    "VC_SHARED": "shared",
+    "VC_RECEIVED": "received",
+    "VC_DELETED": "deleted",
+    "VC_DOWNLOADED": "downloaded",
+    "VC_REVOKED": "revoked",
+    "VC_SHARED_WITH_VERIFICATION_CONSENT": "shared. Consent is given for presence verification",
+    "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "received. Presence verified",
+    "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "received. Presence verification failed",
+    "PRESENCE_VERIFIED_AND_VC_SHARED": "verified and shared",
+    "PRESENCE_VERIFICATION_FAILED": "verification failed"
+  },
   "DeviceInfoList": {
     "requestedBy": "Requested by",
     "sentBy": "Sent by",
@@ -19,12 +31,7 @@
     "allowCameraButton": "Allow access to camera"
   },
   "VcDetails": {
-    "idType": "ID type",
-    "nationalCard": "National Identity Card",
     "generatedOn": "Generated on",
-    "uin": "UIN",
-    "vid": "VID",
-    "id": "Id",
     "status": "Status",
     "valid": "Valid",
     "photo": "Photo",
@@ -83,19 +90,19 @@
     "bodyText": "This may take some time, we will notify you when your {{vcLabel}} has been downloaded and is available",
     "backButton": "Back home"
   },
-  "IdInputModal": {
-    "header": "Enter the MOSIP-provided UIN or VID of the {{vcLabel}} you wish to retrieve",
-    "generateVc": "Generate {{vcLabel}}",
-    "enterId": "Enter your {{idType}}",
-    "noUIN/VID": "Don't have your UIN/VID? Get it here",
-    "requestingOTP": "Requesting OTP..."
-  },
   "GetIdInputModal": {
     "header": "To retrieve your UIN or VID, enter your Application {{vcLabel}} number",
     "getUIN": "Get UIN/VID",
     "applicationId": "Application {{vcLabel}} number",
     "requestingOTP": "Requesting OTP...",
     "qstnMarkToolTip": "Application {{vcLabel}} Number is printed on the acknowledgment provided after enrollment"
+  },
+  "IdInputModal": {
+    "header": "Enter the MOSIP-provided UIN or VID of the {{vcLabel}} you wish to retrieve",
+    "generateVc": "Generate {{vcLabel}}",
+    "enterId": "Enter your {{idType}}",
+    "noUIN/VID": "Don't have your UIN/VID? Get it here",
+    "requestingOTP": "Requesting OTP..."
   },
   "OtpVerificationModal": {
     "enterOtp": "Enter the 6-digit verification code we sent you"
@@ -269,7 +276,8 @@
     "errors": {
       "invalidIdentity": {
         "title": "Unable to verify identity",
-        "message": "An error occured and we couldn't scan your portrait. Try again, make sure your face is visible, devoid of any accessories."
+        "message": "An error occured and we couldn't scan your portrait. Try again, make sure your face is visible, devoid of any accessories.",
+        "messageNoRetry": "An error occured and we couldn't scan your portrait."
       }
     }
   },
@@ -281,6 +289,7 @@
   "common": {
     "cancel": "Cancel",
     "save": "Save",
+    "dismiss": "Dismiss",
     "editLabel": "Edit {{label}}",
     "tryAgain": "Try again",
     "camera": {

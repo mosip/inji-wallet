@@ -32,7 +32,7 @@ export const SelectVcOverlay: React.FC<SelectVcOverlayProps> = (props) => {
         <Column margin="0 0 32 0" scroll>
           {props.vcKeys.map((vcKey, index) => (
             <VcItem
-              key={vcKey}
+              key={`${vcKey}-${index}`}
               vcKey={vcKey}
               margin="0 2 8 2"
               onPress={controller.selectVcItem(index)}

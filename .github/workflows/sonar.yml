@@ -15,6 +15,9 @@ jobs:
         run: |
           npm ci
       - uses: sonarsource/sonarqube-scan-action@master
+        with:
+          args:
+            -Dsonar.organization=${{ secrets.ORG_KEY }}
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: https://sonarcloud.io
