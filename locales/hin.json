@@ -23,7 +23,11 @@
       "phoneNumber": "फ़ोन नंबर",
       "email": "ईमेल",
       "address": "पता",
-      "reasonForSharing": "साझा करने का कारण"
+      "reasonForSharing": "साझा करने का कारण",
+      "enableVerification": "सत्यापन सक्षम करें",
+      "offlineAuthDisabledHeader": "ऑफ़लाइन प्रमाणीकरण अक्षम!",
+      "offlineAuthDisabledMessage": "ऑफ़लाइन प्रमाणीकरण के लिए उपयोग किए जाने वाले इन क्रेडेंशियल्स को सक्षम करने के लिए 'प्रमाणीकरण सक्षम करें' पर क्लिक करें।",
+      "profileAuthenticated": "प्रोफ़ाइल प्रमाणित है!"
     },
     "AuthScreen": {
       "header": "क्या आप एप्लिकेशन को अनलॉक करने के लिए बायोमेट्रिक्स का उपयोग करना चाहेंगे?",

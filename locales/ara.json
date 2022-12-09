@@ -23,7 +23,11 @@
       "phoneNumber": "رقم الهاتف",
       "email": "البريد الإلكتروني",
       "address": "عنوان",
-      "reasonForSharing": "سبب المشاركة"
+      "reasonForSharing": "سبب المشاركة",
+      "enableVerification": "تمكين التحقق",
+      "offlineAuthDisabledHeader": "تم تعطيل المصادقة دون اتصال!",
+      "offlineAuthDisabledMessage": "انقر فوق تمكين المصادقة لتمكين استخدام بيانات الاعتماد هذه للمصادقة دون اتصال.",
+      "profileAuthenticated": "تمت مصادقة الملف الشخصي!"
     },
     "AuthScreen": {
       "header": "هل ترغب في استخدام المقاييس الحيوية لفتح التطبيق؟",
