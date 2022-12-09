@@ -1,6 +1,12 @@
 import React, { useContext, useRef } from 'react';
 import { useInterpret, useSelector } from '@xstate/react';
-import { Pressable, Image, ImageBackground } from 'react-native';
+import {
+  Pressable,
+  Image,
+  ImageBackground,
+  TouchableHighlight,
+  View,
+} from 'react-native';
 import { CheckBox, Icon } from 'react-native-elements';
 import { ActorRefFrom } from 'xstate';
 import {
@@ -10,6 +16,8 @@ import {
   vcItemMachine,
   selectContext,
   selectTag,
+  selectWalletBindingId,
+  selectEmptyWalletBindingId,
 } from '../machines/vcItem';
 import { Column, Row, Text } from './ui';
 import { Theme } from './ui/styleUtils';
@@ -85,6 +93,28 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
   }
 };
 
+const WalletVerified: React.FC = () => {
+  return (
+    <Icon
+      name="verified-user"
+      color={'green'}
+      size={28}
+      containerStyle={{ marginStart: 4, bottom: 1 }}
+    />
+  );
+};
+
+const WalletUnverified: React.FC = () => {
+  return (
+    <Icon
+      name="lightbulb"
+      color={'#e8a94f'}
+      size={28}
+      containerStyle={{ marginStart: 4, bottom: 1 }}
+    />
+  );
+};
+
 export const VcItem: React.FC<VcItemProps> = (props) => {
   const { appService } = useContext(GlobalContext);
   const { t } = useTranslation('VcDetails');
@@ -98,6 +128,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
   const service = useInterpret(machine.current, { devTools: __DEV__ });
   const context = useSelector(service, selectContext);
   const verifiableCredential = useSelector(service, selectVerifiableCredential);
+  const emptyWalletBindingId = useSelector(service, selectEmptyWalletBindingId);
 
   //Assigning the UIN and VID from the VC details to display the idtype label
   const uin = verifiableCredential?.credentialSubject.UIN;
@@ -195,6 +226,41 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
             selectableOrCheck
           ) : (
             <RotatingIcon name="sync" color={Theme.Colors.rotatingIcon} />
+          )}
+        </Row>
+        <Row>
+          {emptyWalletBindingId ? (
+            <Row>
+              <WalletUnverified />
+              <Text
+                numLines={1}
+                color={Theme.Colors.Details}
+                weight="bold"
+                size="smaller"
+                margin="10 10 10 10"
+                style={
+                  !verifiableCredential
+                    ? Theme.Styles.loadingTitle
+                    : Theme.Styles.subtitle
+                }
+                children={t('offlineAuthDisabledHeader')}></Text>
+            </Row>
+          ) : (
+            <Row>
+              <WalletVerified />
+              <Text
+                numLines={1}
+                color={Theme.Colors.Details}
+                weight="bold"
+                size="smaller"
+                margin="10 10 10 10"
+                style={
+                  !verifiableCredential
+                    ? Theme.Styles.loadingTitle
+                    : Theme.Styles.subtitle
+                }
+                children={t('profileAuthenticated')}></Text>
+            </Row>
           )}
         </Row>
         <VcItemTags tag={tag} />

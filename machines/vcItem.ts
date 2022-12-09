@@ -13,6 +13,13 @@ import { StoreEvents } from './store';
 import { ActivityLogEvents } from './activityLog';
 import { verifyCredential } from '../shared/vcjs/verifyCredential';
 import { log } from 'xstate/lib/actions';
+import { generateKeys } from '../shared/rsakeypair/rsaKeypair';
+import { KeyPair } from 'react-native-rsa-native';
+import {
+  getPrivateKey,
+  savePrivateKey,
+} from '../shared/keystore/SecureKeystore';
+import { localAssets } from 'expo-updates';
 
 const model = createModel(
   {
@@ -32,9 +39,14 @@ const model = createModel(
     idError: '',
     transactionId: '',
     revoked: false,
+    walletBindingId: '',
+    walletBindingError: '',
+    publicKey: '',
   },
   {
     events: {
+      KEY_RECEIVED: (key: string) => ({ key }),
+      KEY_ERROR: (error: Error) => ({ error }),
       EDIT_TAG: () => ({}),
       SAVE_TAG: (tag: string) => ({ tag }),
       STORE_READY: () => ({}),
@@ -49,6 +61,8 @@ const model = createModel(
       INPUT_OTP: (otp: string) => ({ otp }),
       REFRESH: () => ({}),
       REVOKE_VC: () => ({}),
+      ADD_WALLET_BINDING_ID: () => ({}),
+      BINDING_DONE: () => ({}),
     },
   }
 );
@@ -56,7 +70,7 @@ const model = createModel(
 export const VcItemEvents = model.events;
 
 export const vcItemMachine =
-  /** @xstate-layout N4IgpgJg5mDOIC5QDcDGBaAlgFzAWwDpUALMVAa0wDsoA1VAYgHEBRAFQH1aBhDgJRYBlAAoB5AHKCWiUAAcA9rByZ5VGSAAeiAIwAWAAwFtANgAcAdl0BmAJwAmOxd0BWADQgAnoivHDpx6aBzubGwc6mAL4R7mhYuIQkZJQ0gtjyAE5gDIJsogL8QmKS0kggCkrYKmqlWgh6hiYWDnba4aFW7l4I5qbOBPohvdoW2jbDUTEYOPhEpBTUUIJg6cjLACIAhtgbs0kLqVsArrAMYgAyZ+rlyqrqtdrm2gRWds521vqmusZ2Nr2dOlGugIAXMb1+dn0NnCExAsWmCTmyUWy1W6U22128xS22wxwYa1EAHVxGdRABBNYFSkATSuihu1VAtQMfSsPlCumhVlGjwBdSsumBdh5Vmc1jGznszlh8PiWORSxW6y2Owg8gA7lQADbyDYQBbcTIQMBUSobbWnUQXekVKp3RA-YWtcz6YzQ4y6OzGfnaIEgwJghz2KEw6JwqbyxLYlHK9GqgjqrW6-WG42m82W7gCNYscRsACS5LOHEJJLJlJYa1tjIdCF0pmMz3Mrucgu+7R9nkQjb6Fh87Z5LcCssjM0wEG1WSrBc4bHJTBrlVuNR0bqeNk9A2Mrv0+mc4X5f3MBF0PRFPP8-kso7i48nWVoLD4BYAYnTStdl0zND3nA0rEbUx930OwQlCflTEAggbHMDkwKdfRtFvBECAnKcGDJbgAGkuG4Jd7VXOo2z6T5fDMHwbCQnpIOg2CfCgkJBjFFD5XQrIAFVSVEHC8IIldmR0axTCMYxRhsXRhmsd47H5QZ+mGHdQNGYxKNYmZIGUGg2A2KACQLQQAFkDMEfif3uYYT09XxGx6dk91k7sEGPU9z1CJD-HZKx1MITTKm03TsnJJ8OHnRdPwZb86z9VpTyosZ3TMAxHK6P1HiML1Xi9YwxIGSJwzlGZYDSdIFh0vScjyFgChECQpDM6LXjsAhTAk-RALguCrHMX1tBFAhLGGXoWj+drdB8gg0UwAAzDw00gDNMAtBh1SoMA0KoZB5HIdbCsIKbZvmk0zSW7UEGoLbUC2KoAG19AAXQaojtH0AwCClcxXihb0TAPfkXEMJDhl5d0eiFcaCrHfblhmuaaCNBaTuW5Z0gyAhZG1LZpoyfaocmmHDvh9MkbOi75Cu787seiK7QE39nNeFrnE9GxAJcSFvX5H5mvsb4+u0WxgNeibo2RWgCcwCmqgOPETiewS6hep4rDdaFglAz6eqc14myvQJ+YGfd2Qmi6LQnBgC3EYQOM4UQ2GEeX6chT1m0eA9wZVqDev-GDKJ3ST3SFfLJjvQhTe1c21gM4zBFMmna2el4bHe0xWm+F5PUA-k2yeAw7Mk8UWnMGwJsyABHQ44H8qBRGwWQVtUdayZ2ya8fLyvioWWvZHOzbyeu1Qqcd+5U6sfoHBykwQjeLWukSmCzxFODHHeCxS7ACuq67uuGBRtGMaxnHW9Dgh263mhu97y6B6oIf46i57U+BN5AlU75nF+3Rs-sAgxLBFWJKWFgnYCaGxUCoDALIau3cCxUFkIcbAFsrY2w4HbB299CIKweFyd6YEP6OHBO1NwTlYLJ3sIKewrR-zeUhifMBECoHb1kLA+BiCo5GRMsPHQ-5gQ-DFLYewcF7CmCPC0OKvwfBSihE4dem9O40DOOTcgDc1obS2i3Pap8N4d2rooigV9+6UwelwuowFk6NmsnuaEF4RFOT6rBd61gXo9FbIKWROiFh6OUXvdI6NMbYGxukXGJ8z7yKgF4gxUtB7GIwXTEeVEBrkNZAhbqX8SHFxgiKQuUppQPAmrqGM9Bsi5HyAIWqxQTGtG6kYcIfUWyhEcNCXqm4akSR+i2cUxtYRUHkCaeApRNGiwWPQExZhf6pIkl6GwYwvQdDsS2Iwe4hQ9GmQYawEMQ6oSGTiDIYATHQhBE6KigQeSTLmXPAY-RTk2WkcBYwIskT7FRCqTE2zFi4mOPsp4jwvjehcMzVSwxfQ8maiKAW0zegDA-sHCMJ83lKjRBiNUmodR6gNETRGmYTHhBEueAWrpPrBDSalFWhgwUclCEAv4Dy9gpGefGbYoyTw-Oyv8nKl5fRujHqCCiIQXAbNhahdilSHgbgPBRdODhLByUCDBOCOV9xfAlDCzRfkyq6UqVCYEm4pSOE+i0P0nLZWeRaDuRwKtzATWKhkdVUBKmQj6KpMwPQYoCy7KlX4hg2xeihMXWCXwZS0NQgdOGUAEbHSxbE8yiB6m-yJb0A8eq2z-Ryu9P0UF8VQh8CAoNUZHk0HFqVaaksb4y0+VGusHxnh6Fqf4RwZriWOndBlFsfUuR-H8CXXN45NpmwgAQeQdcTHOyeE-HoqlFWCmzn1X+fxWh7lTmJIUJte0R37QAIzATtKgEBh1G3epuV6rNMrEK6G0IwDwSLemAi9Ltmy2KronHu34B7fBckFA4U9iAJSztToEKC-DPjuPPjXIdFbnrfDIX8cUDZ-xukbN-ZqXpvgB03MMFooDwGQOgXXFhCDKnFyeJ6cCjw-SvTdHJaZ704NUR+DuJ1wGwleIIwk34TExRu0sF+xW0FrCg1ePwrJ+SlHDNQJUmeLVbCAU+LYAwoxfQEP6E4z4WVPpfB8iY6wA0pJ-PFYC2xc8TwvVen89c3wwRRCiEAA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QDcDGBaAlgFzAWwGIAlAUQDFSBlACQG0AGAXUVAAcB7WHTdgOxZAAPRABYATABoQAT0QBGMQA4ArADpFATnEB2AGwBmMcrEjFAXzNS0WXHlWoAFmFQBrTLygA1VAQDiJABUAfU8AYSCqAAUAeQA5ShIGZiQQDi5sHn4U4QQROX1VXRFlDTlNXV1tPX0pWQQ5YzFVekU5PW0NXXzFDosrDBx8eydXdy8ff2CwiJJKGPjEuWS2Tm4+ARy8gqKSss7K6tr5EXpdQpFxVoV9RX19ZT6Qa0G7R2c3D0psdgAnMAJKAFoqQZnM4gkkgI0mssqAcopJDJRHINIpVPcxLorroxBoNGJHs9bMN3mMvr9-oDgSRQfMIUsoasMutsvJ6CJtKoOm08WI7hplPQakj6ko1Kd6FpcaVSg9LE8BsS3qNPmAfsg1QARACG2G1JJVUC+uoArrACDEADKWyEpaHM2FCRBiNqqIzGFEqHGYipHBD6UpNOT0TFGfHaejaRQiQmKobKj5GtUan46vUGxPG7Bmgia6IAdViluiAEFNTMywBNW0rdKZDbIjSqYPiModJTsjR+k76M4SjQB0oh0y6WM2eMjTPJrW6-UQdgAd14ABt2NqIGNQn8IGBeBltcuLdFrTXUkz66yEFV6KoLkojDpWgi-QGxJyyspNJKhUotGOXhmZLTqms6qPOS6ruum7bru+6HqEpCaiQsQBAAkiWlpBHmhbFmWJCaqe9oXnCbLKCIzb3IKqINLoAovqiaLaG+ZHaPo4ghnIMbykSQyYBAy7-PhqHBAEJa+IR54siR9Qok2ygeqibEGJGL7cs2ii6EKmh4oYQr-sSfECQQngkEQqFkNWTCMnWUlOggYgOWcPTGCIOIDrRcjdm+ciqMoKI3DcGiSmxcr9OOdiGf8xahAA0iEoQSTZjo5N56J3AFYhCuyyjCnUulNBGlTRnymmVKFCrhaokXECQnjRDFNJhIlMINqKfoKPpvH8f8ZblvmGGWoEQQAEKobEmpjb4QSoQRVl2pJyXOliBRsScwZ4iGLoviiZxdK5rQGPiLqdXYkDcB4ATalAuaoZQACyt2UM1DqtXIsm+QptyufoKkir2Ea3vceKfoKBzlTxp0bhkF1XQCJYmUEoniXNtYtZeb2aB9LqKd9v15YK5EOdU9A7b2A4naosDfD8YyXddVIglE4KJCjZ5Ja9gpokK+RMYKbQKNoL4E26b7KaTtH6BTKaYAAZtI0GQLBmAHgQ868GAVW8Mg7AuBrEOqNLcsKzue7K8uCDuNrqC6pkSTPcRdkOXITnaC5blk55Io9k0WIlNoewGFUUtqrL8seFuiumyrao-L8qisMuuoy78dj64bYdQBHJtwRbWvsNbDp26zRG2SljnqK7Jjux53ZtGiyiacDGj+-o2hcWFAEJmMnghzLmAF5kWY5vbpfyK0TaKF6lTBfJWL0Zx6klPibFRqYBLcXGryTt3vf9zbfBD+atAMvN7Po+P6hTxGA6z4oXk5ecIj6GUwYk50FOWwefEEGNkQAKrBGiAESII9Fr2X9mlO4txMo-WKLlRAP1ey3lRMUPy9AG58g-lrL+EAbr3UeqA1qqV0oZSynAl8AU3SnCjPJAUD5Rwb0qn8AAjiaOA0MoDRGwKwVWfANaWx1nrTeqgWFsKpmMLhrBc5W33rwIuyw2Zo2kiYTkWgOiTxaJiVoNw-RBTRJxC4rEBSGE5hTUR7CJHcIIDHOOCck4pwNsI8x4iPCSOkfnWR8jrJKMdsoVRHIGKaKxJxdqKIgwhgjNGXmtwKbalQKgMArAOGSNQrwVgJpsA-1iP-QBwDCGXnuDeIoXRW5aF7FRXQfolA9EKHyC40Zm64juLE+JiTkncNSekzJE18GUCesXBarU2JFNcjzMpugKlVMqE0EwtwmLsn9sdRhAE4kJKSWMIgYBta606RkrJOSghAJAQMs+yiVDnBKOyFEkoXRvj9K7JsbcVCfjaCcepLS1kcM2dssAuzum3Qen0-JZy1A7CCnkIK+IBYvg5FyIKHF8QaVKBUMxYBWEWI8JafOLheHq01j8xxTC0ViI4Vi1w7iB58C8afHxOQ24FGdrRIo6DIxNKqaULmT4Qp5HbKi9FLioBkpxTYn48dE7YGTj8VOTjiUYsFdiilnimDArsoU84JSOhPwmZKSpIo3xaEKNqzSfiqiGG0BTVchpvAAiBIzWYdIWYKJLmAt6ztbzO00K3b8Qp4H2QHE2Z+koOT0BDD0SWyziTOK+VswRuL+F511oSgCUaNkxt1oqwuyqTm0sQL7LkuIThkWDDiKofoKgBvWi0eS0Yijrw7pG2VArvmxpFWK+xUqk0Nv5dGn5GbbZZqdYMy8eamJaHQXkU4b5BYiijIxUWnF5J+Kfqi7Z3cfAMxpEzBYKqcg-TUIKENeQcStzuByKp8kmjFAqCoDkvY8gWvYFAKAqafl4MBf0wdpy7IRgKJGH6fJkVdD5Oe4wt4G6+1vcy9uFVk2No4cNdwG5XFWLVvGgl+sU0eAQ7wJDnDuF9qpQO7xL10ZwMKFUCFR1qnTrqGEm8-Ya0-Vds7PlJKxjYdw5I6xPxY6irsRKhxGG4PscQ5YqRAjKVyKIzSkj0lnxexuDeDoIbjHaIch8tpImcNif2QAw5eTs2ybssYJsuIygtBuGUcQyg-TGBvE-S5KI+b8g0+srDonkM8J6e+nd8hDBVJDGoO4bQ-E4j8m9cGwj1wQBimAaQkRtSYB+HG-FgjO1DGi7F+LiWfgEak4wXz-oShck0iIcMYbMRaCqTcJoeIEQug0n5DQsSIAxbiwlpL3HeNtoEx2-WmX2s5by9S1GRnd3Fb0J2N8FXaIiCqZxTkTyLhdHkkxZpEaMutbGPmA8AlsAcbGKhXBqHUuJv61tjwO3lx7YOx4I7w3pOjYdvCTKvkcTXsjD6rseqbjkTfsFCzRQWMbbsNF7bu2wD7Y81AI7XXbHisldKyqYPLsQ6h9pu7EAHsFcM89xACIbwYI+z+gMVTfz5tdgYPIOVPUU1gA4Rct2jR6mzOaUa41JpYTiI64jePRRP3dbRE1Qp1E0edE-HyhUsTUMFPJLi8peDsB3PAFIENeejwQOgXsfp0AKHoyGkmLcSboIbhTLuHhvDq7AeIdqI43s3IaDlKMbEzfb0+NTMAVvWqsQKAe04vY2KOTmyKfIsKG6Sh6LKYobRXeklVOqGceoveXjbqpTShQQxYlohtcN9aJxx6TAnkC6ZzfM9NCrp7GuFCIjqGtX9jdOilMabHw0lBgJpjnIuFca5cNZyVgeZP0kcRojYgFZuBwoXdlDc2O8JSG5lFzzBgy3VB+OwuH94tqITD8jaNtdPe1WLXyqDtCmZ0OF01XzkYMZEKLyQjzROif1nfonWlvsrzd0F0+prTK6l+-NKGbAW2fjel7EzyFiFFUAFEqCCgDDHwYTz1Tl7gzj7yjmXD-3qC3y5GuRKE9SqDuS9gchHzKXC1chNxb0TB7hpj7kk0PnQPyDfEvgvRMHxCvWD1r0yiaFaElFYjKEUG4KwWQBwXQIgRsz+j3TAyKhgNcmMEi0qk-mXD4lUHYG4ToJRF8goXxEgIbmU1gNuHfhB3xRwVUAACM4ldYcM6CHIYU-IJCOg8Qhxr9WM5VJF0CbcQ9nZFtqFJ5eDV460l8MtWk3M8NWA-k6C8ZnQegfJfZAw24ItzUDDVlNMPBm0dk0kMlXCa9EAmJyJgD8gSg-Jt8-ChNu0xghV0Cco1AHItAAkAwPVRC6gzMzhA18QDhZkY8DDLUKDUB0D8QmwLMl4ugKhXl2U3VmjMQ8DTB2iECRFhNki01PcZM+dXImg7MUE2hJQyhMirxzl3IQDOIBwAkV0dY11VCxd7ITMJDPwb1n4MQH0n0X1BFyj0Fmhn4lAMRMQn52Rz03Ur0KhxB8pZDYMSj3MMdgj0CmkzhURUR-ZV5xA2CEE2htgF0okWh-Z5JXN4NocXDFiNcxQLlwVrkoV8C6hhYytbghj-Vm5XYWs2tssktLCzi+Q+CqFplspI9l0EiLsoArsbtocjtyiAYD1r9Q1URwj7IAxyIr0yIcYVBF99Z6dGdodaCcSXV2Q0RSt-iNVjBfVCiWTpcyoTd5czAgA */
   model.createMachine(
     {
       tsTypes: {} as import('./vcItem.typegen').Typegen0,
@@ -161,6 +175,9 @@ export const vcItemMachine =
             },
             REVOKE_VC: {
               target: 'acceptingRevokeInput',
+            },
+            ADD_WALLET_BINDING_ID: {
+              target: 'requestingBindingOtp',
             },
           },
         },
@@ -320,7 +337,10 @@ export const vcItemMachine =
             ],
             onError: [
               {
-                actions: [log('OTP error'), 'setOtpError'],
+                actions: [
+                  log((_, event) => (event.data as Error).message),
+                  'setOtpError',
+                ],
                 target: 'acceptingOtpInput',
               },
             ],
@@ -342,10 +362,115 @@ export const vcItemMachine =
             },
           },
         },
+        requestingBindingOtp: {
+          invoke: {
+            src: 'requestBindingOtp',
+            onDone: [
+              {
+                target: 'acceptingBindingOtp',
+                actions: log('accepting OTP'),
+              },
+            ],
+            onError: [
+              {
+                target: '#vc-item.invalid.backend',
+                actions: log((_, event) => (event.data as Error).message),
+              },
+            ],
+          },
+        },
+        acceptingBindingOtp: {
+          entry: ['clearOtp', 'setTransactionId'],
+          on: {
+            INPUT_OTP: {
+              target: 'addKeyPair',
+              actions: [
+                log('calling addKeyPair'),
+                'setTransactionId',
+                'setOtp',
+              ],
+            },
+            DISMISS: {
+              target: 'idle',
+              actions: ['clearOtp', 'clearTransactionId'],
+            },
+          },
+        },
+        addKeyPair: {
+          invoke: {
+            src: 'generateKeyPair',
+            onDone: {
+              target: 'addingWalletBindingId',
+              actions: ['setPublicKey'],
+            },
+            onError: [
+              {
+                target: 'idle',
+                actions: 'setWalletBindingError',
+              },
+            ],
+          },
+        },
+        addingWalletBindingId: {
+          invoke: {
+            src: 'addWalletBindnigId',
+            onDone: [
+              {
+                target: 'showBindingStatus',
+                actions: [
+                  'setWalletBindingId',
+                  'storeContext',
+                  log(
+                    (_context, event) =>
+                      'Received walletBindingId : ' + _context.walletBindingId
+                  ),
+                ],
+              },
+            ],
+            onError: [
+              {
+                target: 'idle',
+                actions: 'setWalletBindingError',
+              },
+            ],
+          },
+        },
+        // storePrivateKey: {
+        //   invoke: {
+        //     src: 'storePrivateKeyToKeystore',
+        //     onDone: {
+        //       target: 'showBindingStatus',
+        //     },
+        //     onError: {
+        //       actions: 'setWalletBindingError',
+        //         target: 'showBindingStatus',
+        //     },
+        //   }
+
+        // },
+        showBindingStatus: {
+          on: {
+            BINDING_DONE: {
+              target: 'idle',
+            },
+          },
+        },
       },
     },
     {
       actions: {
+        setWalletBindingError: assign({
+          walletBindingError: (context, event) => (event.data as Error).message,
+        }),
+
+        setPublicKey: assign({
+          publicKey: (context, event) => (event.data as KeyPair).public,
+        }),
+
+        setWalletBindingId: assign({
+          walletBindingId: (context, event) => event.data as string,
+        }),
+
         updateVc: send(
           (context) => {
             const { serviceRefs, ...vc } = context;
@@ -486,6 +611,49 @@ export const vcItemMachine =
       },
 
       services: {
+        addWalletBindnigId: async (context) => {
+          let response = null;
+          try {
+            response = await request('POST', '/binding-credential-request', {
+              individualId: context.id,
+              otp: context.otp,
+              transactionID: context.transactionId,
+              publicKey: context.publicKey,
+            });
+          } catch (error) {
+            console.error(error);
+          }
+          return response.response.id;
+        },
+
+        generateKeyPair: async (context) => {
+          let keyPair: KeyPair = await generateKeys();
+
+          const hasSetPrivateKey: boolean = await savePrivateKey(
+            context.verifiableCredential.id,
+            keyPair.private
+          );
+
+          if (!hasSetPrivateKey) {
+            throw new Error('Could not store private key in keystore.');
+          }
+
+          return keyPair;
+        },
+
+        requestBindingOtp: async (context) => {
+          try {
+            return request('POST', '/binding-otp', {
+              individualId: context.id,
+              individualIdType: context.idType,
+              otpChannel: ['EMAIL', 'PHONE'],
+              transactionID: context.transactionId,
+            });
+          } catch (error) {
+            console.error(error);
+          }
+        },
+
         checkStatus: (context) => (callback, onReceive) => {
           const pollInterval = setInterval(
             () => callback(model.events.POLL()),
@@ -541,6 +709,7 @@ export const vcItemMachine =
                   isVerified: false,
                   lastVerifiedOn: null,
                   locked: context.locked,
+                  walletBindingId: context.walletBindingId,
                 })
               );
             }
@@ -702,4 +871,29 @@ export function selectIsAcceptingRevokeInput(state: State) {
 
 export function selectIsRequestingOtp(state: State) {
   return state.matches('requestingOtp');
+}
+
+export function selectIsRequestBindingOtp(state: State) {
+  return state.matches('requestingBindingOtp');
+}
+
+export function selectWalletBindingId(state: State) {
+  return state.context.walletBindingId;
+}
+
+export function selectEmptyWalletBindingId(state: State) {
+  var val = state.context.walletBindingId;
+  return val === undefined || val == null || val.length <= 0 ? true : false;
+}
+
+export function selectWalletBindingError(state: State) {
+  return state.context.walletBindingError;
+}
+
+export function selectAcceptingBindingOtp(state: State) {
+  return state.matches('acceptingBindingOtp');
+}
+
+export function selectShowBindingStatus(state: State) {
+  return state.matches('showBindingStatus');
 }

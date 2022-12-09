@@ -1,7 +1,7 @@
 import React from 'react';
 import { DropdownIcon } from '../../components/DropdownIcon';
 import { TextEditOverlay } from '../../components/TextEditOverlay';
-import { Column } from '../../components/ui';
+import { Column, Text } from '../../components/ui';
 import { Modal } from '../../components/ui/Modal';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { ToastItem } from '../../components/ui/ToastItem';
@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { VcDetails } from '../../components/VcDetails';
 
 import { OtpVerification } from './MyVcs/OtpVerification';
+import { BindStatus } from './MyVcs/BindVcStatus';
 
 export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
   const { t } = useTranslation('ViewVcModal');
@@ -52,7 +53,17 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
       }>
       <Column scroll>
         <Column fill>
-          <VcDetails vc={controller.vc} />
+          <VcDetails
+            vc={controller.vc}
+            onBinding={() => controller.addtoWallet()}
+            isBindingPending={controller.isWalletBindingPending}
+          />
+
+          {controller.walletBindingError !== '' && (
+            <Text style={{ color: 'red', fontSize: 20 }}>
+              Error Occured : {controller.walletBindingError}
+            </Text>
+          )}
         </Column>
       </Column>
       {controller.isEditingTag && (
@@ -82,6 +93,24 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
           onDismiss={controller.DISMISS}
           onInputDone={controller.inputOtp}
           error={controller.otpError}
+        />
+      )}
+
+      {controller.isAcceptingBindingOtp && (
+        <OtpVerification
+          isVisible={controller.isAcceptingBindingOtp}
+          onDismiss={controller.DISMISS}
+          onInputDone={controller.inputOtp}
+          error={controller.otpError}
+        />
+      )}
+
+      {controller.showBindingStatus && (
+        <BindStatus
+          isVisible={controller.showBindingStatus}
+          bindingError={controller.walletBindingError}
+          onDismiss={controller.DISMISS}
+          onDone={controller.BINDING_DONE}
         />
       )}
 

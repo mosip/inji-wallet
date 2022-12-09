@@ -37,7 +37,11 @@
     "reasonForSharing": "Reason for sharing",
     "idType": "ID type",
     "nationalCard": "National Card",
-    "uin": "UIN"
+    "uin": "UIN",
+    "enableVerification": "Enable Verification",
+    "offlineAuthDisabledHeader": "Offline Authentication disabled!",
+    "offlineAuthDisabledMessage": "Click 'Enable Authentication' to enable this credentials to be used for offline authentication.",
+    "profileAuthenticated": "Profile is authenticated!"
   },
   "AuthScreen": {
     "header": "Would you like to use biometrics to unlock the application?",

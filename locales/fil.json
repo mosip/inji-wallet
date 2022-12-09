@@ -32,7 +32,11 @@
     "reasonForSharing": "Dahilan ng pagbabahagi",
     "idType": "Uri ng ID",
     "nationalCard": "Pambansang Kard",
-    "uin": "UIN"
+    "uin": "UIN",
+    "enableVerification": "Paganahin ang Pag-verify",
+    "offlineAuthDisabledHeader": "Na-disable ang Offline Authentication!",
+    "offlineAuthDisabledMessage": "I-click ang 'Paganahin ang Authentication' upang paganahin ang mga kredensyal na ito na magamit para sa offline na pagpapatotoo.",
+    "profileAuthenticated": "Na-authenticate ang profile!"
   },
   "AuthScreen": {
     "header": "Gusto mo bang gumamit ng biometrics upang i-unlock ang aplikasyon?",
