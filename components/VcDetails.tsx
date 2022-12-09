@@ -2,10 +2,10 @@ import { formatDistanceToNow } from 'date-fns';
 import React from 'react';
 import * as DateFnsLocale from '../lib/date-fns/locale';
 import { useTranslation } from 'react-i18next';
-import { Image, ImageBackground } from 'react-native';
+import { Image, ImageBackground, View } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { VC, CredentialSubject, LocalizedField } from '../types/vc';
-import { Column, Row, Text } from './ui';
+import { Button, Column, Row, Text } from './ui';
 import { Theme } from './ui/styleUtils';
 import { TextItem } from './ui/TextItem';
 import { VcItemTags } from './VcItemTags';
@@ -271,12 +271,43 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
           text={reason.message}
         />
       ))}
+
+      {props.isBindingPending && (
+        <ImageBackground
+          borderRadius={10}
+          style={Theme.Styles.openCardBgContainer}
+          source={Theme.OpenCard}>
+          <Column>
+            <Icon name="lightbulb" color={'#e8a94f'} size={40} />
+            <Text
+              style={{ flex: 1 }}
+              weight="semibold"
+              size="small"
+              color={Theme.Colors.Details}
+              align="left">
+              {t('offlineAuthDisabledHeader')}
+            </Text>
+            <Text
+              style={{ flex: 1 }}
+              weight="regular"
+              size="small"
+              color={Theme.Colors.Details}
+              align="left">
+              {t('offlineAuthDisabledMessage')}
+            </Text>
+
+            <Button title={t('enableVerification')} onPress={props.onBinding} />
+          </Column>
+        </ImageBackground>
+      )}
     </Column>
   );
 };
 
 interface VcDetailsProps {
   vc: VC;
+  isBindingPending: boolean;
+  onBinding?: () => void;
 }
 
 function getFullAddress(credential: CredentialSubject) {

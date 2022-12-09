@@ -12,6 +12,7 @@ export interface VC {
   locked: boolean;
   reason?: VCSharingReason[];
   shouldVerifyPresence?: boolean;
+  walletBindingId?: string;
 }
 
 export interface VCSharingReason {

@@ -17,6 +17,12 @@ import {
   selectVc,
   VcItemEvents,
   vcItemMachine,
+  selectWalletBindingId,
+  selectWalletBindingError,
+  selectIsRequestBindingOtp,
+  selectAcceptingBindingOtp,
+  selectShowBindingStatus,
+  selectEmptyWalletBindingId,
 } from '../../machines/vcItem';
 import { selectPasscode } from '../../machines/auth';
 import { biometricsMachine, selectIsSuccess } from '../../machines/biometrics';
@@ -125,6 +131,14 @@ export function useViewVcModal({
     ),
     isRequestingOtp: useSelector(vcItemActor, selectIsRequestingOtp),
     storedPasscode: useSelector(authService, selectPasscode),
+    isBindingOtp: useSelector(vcItemActor, selectIsRequestBindingOtp),
+    isAcceptingBindingOtp: useSelector(vcItemActor, selectAcceptingBindingOtp),
+    showBindingStatus: useSelector(vcItemActor, selectShowBindingStatus),
+    walletBindingError: useSelector(vcItemActor, selectWalletBindingError),
+    isWalletBindingPending: useSelector(
+      vcItemActor,
+      selectEmptyWalletBindingId
+    ),
 
     CONFIRM_REVOKE_VC: () => {
       setRevoking(true);
@@ -136,6 +150,9 @@ export function useViewVcModal({
     setReAuthenticating,
     setRevoking,
     onError,
+    addtoWallet: () => {
+      vcItemActor.send(VcItemEvents.ADD_WALLET_BINDING_ID());
+    },
     lockVc: () => {
       vcItemActor.send(VcItemEvents.LOCK_VC());
     },
@@ -145,10 +162,12 @@ export function useViewVcModal({
     revokeVc: (otp: string) => {
       netInfoFetch(otp);
     },
+    ADD_WALLET: () => vcItemActor.send(VcItemEvents.ADD_WALLET_BINDING_ID()),
     onSuccess,
     EDIT_TAG: () => vcItemActor.send(VcItemEvents.EDIT_TAG()),
     SAVE_TAG: (tag: string) => vcItemActor.send(VcItemEvents.SAVE_TAG(tag)),
     DISMISS: () => vcItemActor.send(VcItemEvents.DISMISS()),
+    BINDING_DONE: () => vcItemActor.send(VcItemEvents.BINDING_DONE()),
     LOCK_VC: () => vcItemActor.send(VcItemEvents.LOCK_VC()),
     INPUT_OTP: (otp: string) => vcItemActor.send(VcItemEvents.INPUT_OTP(otp)),
   };
