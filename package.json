@@ -61,6 +61,7 @@
     "react-native-popable": "^0.4.3",
     "react-native-qrcode-svg": "^6.1.1",
     "react-native-restart": "^0.0.24",
+    "react-native-rsa-native": "^2.0.5",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.10.1",
     "react-native-securerandom": "^1.0.0",

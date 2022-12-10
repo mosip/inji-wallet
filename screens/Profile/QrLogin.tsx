@@ -44,6 +44,12 @@ export const QrLogin: React.FC = () => {
 
           <QrLoginWarning isVisible={controller.isShowWarning} />
 
+          <MessageOverlay
+            isVisible={controller.isLoadingMyVcs}
+            title={t('loadingMyVcs')}
+            progress
+          />
+
           <MyBindedVcs isVisible={controller.isShowingVcList} />
 
           <VerifyIdentityOverlay
@@ -74,6 +80,12 @@ export const QrLogin: React.FC = () => {
               />
             </Row>
           </MessageOverlay>
+
+          <MessageOverlay
+            isVisible={controller.isGeneratingJwtToken}
+            title={'loading jwt token'}
+            progress
+          />
 
           <QrLoginSuccess
             isVisible={controller.isVerifyingSuccesful}

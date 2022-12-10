@@ -21,7 +21,7 @@ export const QrLoginWarning: React.FC<QrLoginWarningProps> = (props) => {
           align="center"
           style={Theme.TextStyles.semibold}
           margin="16 0 0 0">
-          {t('domineWarning')}
+          {t('domainWarning')}
         </Text>
       </Column>
       <Column padding={'20'}>

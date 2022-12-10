@@ -4,6 +4,7 @@ import { AppServices } from '../shared/GlobalContext';
 import { MY_VCS_STORE_KEY } from '../shared/constants';
 import { StoreEvents } from './store';
 import { VC } from '../types/vc';
+import { requestJwt } from '../shared/requestJwt';
 
 const model = createModel(
   {
@@ -50,26 +51,30 @@ export const qrLoginMachine =
             },
             DISMISS: {
               target: 'idle',
-              internal: false,
             },
           },
         },
         showWarning: {
           on: {
             CONFIRM: {
-              target: 'showvcList',
+              target: 'loadMyVcs',
             },
             DISMISS: {
               target: 'idle',
             },
           },
         },
-        showvcList: {
+        loadMyVcs: {
           entry: 'loadMyVcs',
           on: {
             STORE_RESPONSE: {
               actions: 'setMyVcs',
+              target: 'showvcList',
             },
+          },
+        },
+        showvcList: {
+          on: {
             SELECT_VC: {
               actions: 'setSelectedVc',
             },
@@ -84,7 +89,7 @@ export const qrLoginMachine =
         faceAuth: {
           on: {
             FACE_VALID: {
-              target: 'done',
+              target: 'requestingJwtToken',
             },
             FACE_INVALID: {
               target: 'invalidIdentity',
@@ -94,10 +99,32 @@ export const qrLoginMachine =
             },
           },
         },
+        requestingJwtToken: {
+          invoke: {
+            src: 'requestingJwtToken',
+            onDone: [
+              {
+                actions: '',
+                target: 'done',
+              },
+            ],
+            onError: [
+              {
+                actions: '',
+                cond: '',
+                target: '',
+              },
+              {
+                actions: '',
+                target: '',
+              },
+            ],
+          },
+        },
         invalidIdentity: {
           on: {
             DISMISS: {
-              target: 'idle',
+              target: 'showvcList',
             },
             RETRY_VERIFICATION: {
               target: 'faceAuth',
@@ -134,7 +161,11 @@ export const qrLoginMachine =
           },
         }),
       },
-      services: {},
+      services: {
+        requestingJwtToken: async () => {
+          return requestJwt();
+        },
+      },
     }
   );
 
@@ -155,8 +186,16 @@ export function selectIsScanning(state: State) {
   return state.matches('idle');
 }
 
+export function selectIsGeneratingJwtToken(state: State) {
+  return state.matches('requestingJwtToken');
+}
+
 export function selectIsShowWarning(state: State) {
   return state.matches('showWarning');
+}
+
+export function selectIsloadMyVcs(state: State) {
+  return state.matches('loadMyVcs');
 }
 
 export function selectIsShowingVcList(state: State) {

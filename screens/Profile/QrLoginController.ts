@@ -3,8 +3,10 @@ import { useContext, useState } from 'react';
 import { ActorRefFrom } from 'xstate';
 import {
   QrLoginEvents,
+  selectIsGeneratingJwtToken,
   selectIsInvalidIdentity,
   selectIsisVerifyingIdentity,
+  selectIsloadMyVcs,
   selectIsScanning,
   selectIsShowingVcList,
   selectIsShowWarning,
@@ -45,6 +47,11 @@ export function useQrLogin() {
     isScanningQr: useSelector(qrLoginService, selectIsScanning),
     isShowWarning: useSelector(qrLoginService, selectIsShowWarning),
     isShowingVcList: useSelector(qrLoginService, selectIsShowingVcList),
+    isLoadingMyVcs: useSelector(qrLoginService, selectIsloadMyVcs),
+    isGeneratingJwtToken: useSelector(
+      qrLoginService,
+      selectIsGeneratingJwtToken
+    ),
     isVerifyingIdentity: useSelector(
       qrLoginService,
       selectIsisVerifyingIdentity

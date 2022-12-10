@@ -184,7 +184,8 @@
     "back": "Go Back",
     "confirm": "Confirm",
     "verify": "Verify",
-    "domineWarning": "Please verify and confirm the domine of the website you are logging into"
+    "loadingMyVcs":"Loading Credential",
+    "domainWarning": "Please verify and confirm the domain of the website you are logging into"
   },
   "ReceiveVcScreen": {
     "header": "{{vcLabel}} details",
