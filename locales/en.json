@@ -182,6 +182,15 @@
     "revokeSuccessful": "VID successfully revoked",
     "version": "Version"
   },
+  "QrScreen": {
+    "title": "QR Login",
+    "noBindedVc": "No Binded {{vcLabel}} Available to Verify",
+    "back": "Go Back",
+    "confirm": "Confirm",
+    "verify": "Verify",
+    "domainWarning": "Please verify and confirm the domain of the website you are logging into",
+    "loadingVc": "Loading credentials"
+  },
   "ReceiveVcScreen": {
     "header": "{{vcLabel}} details",
     "acceptRequest": "Accept request and receive {{vcLabel}}",
