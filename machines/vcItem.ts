@@ -614,7 +614,7 @@ export const vcItemMachine =
         addWalletBindnigId: async (context) => {
           let response = null;
           try {
-            response = await request('POST', '/binding-credential-request', {
+            response = await request('POST', '/wallet-binding', {
               individualId: context.id,
               otp: context.otp,
               transactionID: context.transactionId,
