@@ -52,7 +52,6 @@ export const qrLoginMachine =
             },
             DISMISS: {
               target: 'idle',
-              internal: false,
             },
           },
         },
@@ -110,6 +109,28 @@ export const qrLoginMachine =
             CANCEL: {
               target: 'idle',
             },
+          },
+        },
+        requestingJwtToken: {
+          invoke: {
+            src: 'requestingJwtToken',
+            onDone: [
+              {
+                actions: '',
+                target: 'done',
+              },
+            ],
+            onError: [
+              {
+                actions: '',
+                cond: '',
+                target: '',
+              },
+              {
+                actions: '',
+                target: '',
+              },
+            ],
           },
         },
         invalidIdentity: {
@@ -197,6 +218,10 @@ export function selectMyVcs(state: State) {
 
 export function selectIsScanning(state: State) {
   return state.matches('idle');
+}
+
+export function selectIsGeneratingJwtToken(state: State) {
+  return state.matches('requestingJwtToken');
 }
 
 export function selectIsShowWarning(state: State) {
