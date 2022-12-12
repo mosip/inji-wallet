@@ -1,217 +1,299 @@
 {
-    "DeviceInfoList": {
-      "requestedBy": "مطلوب بواسطة",
-      "sentBy": "مرسل بواسطة",
-      "deviceRefNumber": "الرقم المرجعي للجهاز",
-      "name": "اسم"
-    },
-    "PasscodeVerify": {
-      "passcodeMismatchError": "رمز المرور غير متطابق."
-    },
-    "QrScanner": {
-      "missingPermissionText": "يستخدم هذا التطبيق الكاميرا لمسح رمز الاستجابة السريعة لجهاز آخر.",
-      "allowCameraButton": "السماح بالوصول إلى الكاميرا"
-    },
-    "VcDetails": {
-      "generatedOn": "تم إنشاؤه في",
-      "status": "الحالة",
-      "valid": "صالح",
-      "photo": " صورة",
-      "fullName": "الاسم الكامل",
-      "gender": "الجنس",
-      "dateOfBirth": "डتاريخ الميلاد",
-      "phoneNumber": "رقم الهاتف",
-      "email": "البريد الإلكتروني",
-      "address": "عنوان",
-      "reasonForSharing": "سبب المشاركة"
-    },
-    "AuthScreen": {
-      "header": "هل ترغب في استخدام المقاييس الحيوية لفتح التطبيق؟",
-      "useBiometrics": "استخدام القياسات الحيوية",
-      "usePasscode": "मأفضل استخدام رمز مرور",
-      "errors": {
-        "unavailable": "س الحيوية",
-        "unenrolled": "إصبعك في إعدادات جهازك",
-        "failed": "الحيوية",
-        "generic": "الحيوية"
-      }
-    },
-    "BiometricScreen": {
-      "unlock": "افتح ببصمة الإصبع"
-    },
-    "HistoryTab": {
-      "noHistory": "لا يوجد سجل متاح حتى الآن",
-      "downloaded": "تم التنزيل",
-      "shared": "مشتركة",
-      "received": "مستلم",
-      "deleted": "محذوف"
-    },
-    "HomeScreen": {
-      "myVcsTab": "محذوف\n{{vcLabel}}",
-      "receivedVcsTab": "مستلم\n{{vcLabel}}",
-      "historyTab": "تاريخ"
-    },
-    "AddVcModal": {
-      "requestingCredential": "جارٍ طلب بيانات الاعتماد...",
-      "errors": {
-        "input": {
-          "empty": "فارغًا",
-          "invalidFormat": "غير صحيح"
-        },
-        "backend": {
-          "invalidOtp": "OTP غير صالح",
-          "invalidUin": "UIN غير صالح",
-          "invalidVid": "VID غير صالح",
-          "missingUin": "UIN غير متوفر في قاعدة البيانات",
-          "missingVid": "VID غير متوفر في قاعدة البيانات"
-        }
-      }
-    },
-    "DownloadingVcModal": {
-      "header": "Downloading your{{vcLabel}}",
-      "bodyText": "قد يستغرق هذا بعض الوقت ، وسنخبرك عندما يتم تنزيل {{vcLabel}} وإتاحته",
-      "backButton": "العودة إلى المنزل"
-    },
-    "IdInputModal": {
-      "header": "أدخل UIN المقدم من MOSIP أو VID لـ {{vcLabel}} الذي تريد استرداده",
-      "generateVc": "إنشاء {{vcLabel}}",
-      "enterId": "أدخل {{idType}}"
-    },
-    "OtpVerificationModal": {
-      "enterOtp": "أدخل رمز التحقق المكون من 6 أرقام الذي أرسلناه إليك"
-    },
-    "MyVcsTab": {
-      "addVcButton": "{{vcLabel}}إضافة",
-      "generateVc": "{{vcLabel}}إنشاء",
-      "generateVcDescription": "إضافة {{vcLabel}} أدناه لتنزيل {{vcLabel}}"
-    },
-    "OnboardingOverlay": {
-      "stepOneTitle": "مرحبًا!",
-      "stepOneText": "احتفظ ببيانات الاعتماد الرقمية معك في جميع الأوقات. للبدء ، أضف {{vcLabel}} إلى ملفك الشخصي.",
-      "stepTwoTitle": "{{vcLabel}} إدارة",
-      "stepTwoText": "بمجرد إنشائه ، يتم تخزين  {{vcLabel}}بأمان على هاتفك المحمول ويمكن إعادة تسميته أو مشاركته في أي وقت.",
-      "stepThreeTitle": "مشاركة سهلة",
-      "stepThreeText": "مشاركة واستلام {{vcLabel}} switflyباستخدام كاميرا هاتفك لمسح رموز QR.",
-      "stepThreeButton": "ابدأ وأضف{{vcLabel}} "
-    },
-    "ReceivedVcsTab": {
-      "noReceivedVcsTitle": "لا يوجد {{vcLabel}} متاح حتى الآن",
-      "noReceivedVcsText": "اضغط على الطلب أدناه لتلقي{{vcLabel}}"
-    },
-    "ViewVcModal": {
-      "lock": "قفل",
-      "unlock": "الغاء القفل",
-      "rename": "إعادة تسمية",
-      "delete": "حذف",
-      "revoke": "إبطال",
-      "requestingOtp": "جارٍ طلب OTP...",
-      "editTag": "टتحرير العلامة"
-    },
-    "MainLayout": {
-      "home": "المنزل",
-      "scan": "مسح",
-      "request": "طلب",
-      "profile": "الملف الشخصي"
-    },
-    "PasscodeScreen": {
-      "header": "تعيين رمز مرور لتأمين تطبيقك",
-      "confirmPasscode": "تأكيد رمز المرور الخاص بك",
-      "enterPasscode": "المرور الخاص بك"
-    },
-    "Credits": {
-      "header": "الائتمانات والإشعارات القانونية",
-      "back": "رجوع"
-    },
-    "ProfileScreen": {
-      "name": "اسم",
-      "vcLabel": "تسمية VC",
-      "language": "اللغة",
-      "bioUnlock": "فتح المقاييس الحيوية",
-      "authFactorUnlock": "إلغاء تأمين عامل المصادقة",
-      "credits": "القانونية",
-      "logout": "تسجيل الخروج"
-    },
-    "ReceiveVcModal": {
-      "header": "{{vcLabel}} تفاصيل",
-      "acceptRequest": "قبول الطلب والاستلام {{vcLabel}}",
-      "reject": "رفض"
-    },
-    "RequestScreen": {
-      "bluetoothDenied": "الرجاء تمكين Bluetooth لتتمكن من طلب{{vcLabel}}",
-      "showQrCode": "{{vcLabel}} أظهر رمز الاستجابة السريعة هذا لطلب ",
-      "incomingVc": "الوارد {{vcLabel}}",
-      "status": {
-        "accepted": {
-          "title": "نجاح!",
-          "message": "تم استلام {{vcLabel}}بنجاح من  {{sender}}"
-        },
-        "rejected": {
-          "title": " إشعار",
-          "message": "لقد رفضت  {{sender}}  {{vcLabel}}"
-        },
-        "disconnected": {
-          "title": "ير متصل",
-          "message": "انقطع الاتصال. يرجى المحاولة مرة أخرى."
-        },
-        "waitingConnection": "انتظار الاتصال ...",
-        "exchangingDeviceInfo": "تبادل معلومات الجهاز...",
-        "connected": "انتظار {{vcLabel}}..."
-      }
-    },
-    "ScanScreen": {
-      "header": "مسح رمز الاستجابة السريعة",
-      "noShareableVcs": "لا يمكن مشاركة {{vcLabel}}",
-      "sharingVc": "مشاركة {{vcLabel}}",
-      "errors": {
-        "flightMode": {
-          "message": "يجب تعطيل وضع الطيران لوظيفة المسح",
-          "button": "الطيران"
-        },
-        "locationDisabled": {
-          "message": "يجب تمكين خدمات الموقع لوظيفة المسح",
-          "button": "تمكين خدمات الموقع"
-        },
-        "locationDenied": {
-          "message": "إذن الموقع مطلوب لوظيفة المسح",
-          "button": "الموقع"
-        }
-      },
-      "status": {
-        "connecting": "ارٍ التوصيل...",
-        "exchangingDeviceInfo": "تبادل معلومات الجهاز ...",
-        "invalid": "غير صالح"
-      }
-    },
-    "SelectVcOverlay": {
-      "header": "يشارك {{vcLabel}}",
-      "chooseVc": "اختر {{vcLabel}} الذي ترغب في المشاركة معه",
-      "cancel": "إلغاء",
-      "share": "شارك"
-    },
-    "SendVcModal": {
-      "reasonForSharing": "سبب المشاركة  (optional)",
-      "acceptRequest": "قبول الطلب واختيار {{vcLabel}}",
-      "reject": "رفض",
-      "statusSharing": {
-        "title": "مشاركة ..."
-      },
-      "statusAccepted": {
-        "title": "نجاح!",
-        "message": "تمت مشاركة {{vcLabel}} بنجاح مع{{receiver}}"
-      },
-      "statusRejected": {
-        "title": " إشعار",
-        "message": "تم رفض  {{vcLabel}}من قِبل {{receiver}}"
-      }
-    },
-    "WelcomeScreen": {
-      "title": "حل هوية مفتوحة المصدر",
-      "getStarted": "البدء",
-      "unlockApp": "فتح التطبيق"
-    },
-    "common": {
-      "cancel": "إلغاء",
-      "save": "حفظ",
-      "editLabel": "يحرر {{label}}"
-    }
-  }
+	"ActivityLogText": {
+		"VC_SHARED": " مشاركة ",
+		"VC_RECEIVED": " مستلم ",
+		"VC_DELETED": " محذوف ",
+		"VC_DOWNLOADED": " تم التنزيل ",
+		"VC_REVOKED": " تم إبطاله ",
+		"VC_SHARED_WITH_VERIFICATION_CONSENT": " مشترك. تم منح الموافقة للتحقق من التواجد ",
+		"VC_RECEIVED_WITH_PRESENCE_VERIFIED": " تم الاستلام. تم التحقق من التواجد ",
+		"VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": " تم استلام. فشل التحقق من التواجد ",
+		"PRESENCE_VERIFIED_AND_VC_SHARED": " تم التحقق منه ومشاركته ",
+		"PRESENCE_VERIFICATION_FAILED": " فشل التحقق "
+	},
+	"DeviceInfoList": {
+		"requestedBy": " مطلوب بواسطة ",
+		"sentBy": " مرسل بواسطة ",
+		"deviceRefNumber": " الرقم المرجعي للجهاز ",
+		"name": " الاسم "
+	},
+	"FaceScanner": {},
+	"OIDcAuth": {
+		"title": " مصادقة OIDC ",
+		"text": " يتم استبداله بواجهة مستخدم موفر OIDC ",
+		"verify": " تحقق "
+	},
+	"PasscodeVerify": {
+		"passcodeMismatchError": " رمز المرور غير متطابق. "
+	},
+	"QrScanner": {
+		"missingPermissionText": " يستخدم هذا التطبيق الكاميرا لمسح رمز الاستجابة السريعة لجهاز آخر. ",
+		"allowCameraButton": " السماح بالوصول إلى الكاميرا "
+	},
+	"VcDetails": {
+		"generatedOn": " تم إنشاؤه في ",
+		"status": " الحالة ",
+		"valid": " صالح ",
+		"photo": " صورة ",
+		"fullName": " الاسم الكامل ",
+		"gender": " الجنس ",
+		"dateOfBirth": " تاريخ الميلاد ",
+		"phoneNumber": " رقم الهاتف ",
+		"email": " البريد الإلكتروني ",
+		"address": " العنوان ",
+		"reasonForSharing": " سبب المشاركة ",
+		"idType": " نوع المعرف ",
+		"id": " المعرّف ",
+		"nationalCard": " البطاقة الوطنية ",
+		"uin": " UIN ",
+		"vid": " VID "
+	},
+	"AuthScreen": {
+		"header": " هل ترغب في استخدام المقاييس الحيوية لفتح التطبيق؟ ",
+		"useBiometrics": " استخدام القياسات الحيوية ",
+		"usePasscode": " أفضل استخدام رمز مرور ",
+		"errors": {
+			"unavailable": " الجهاز لا يدعم المقاييس الحيوية ",
+			"unenrolled": " لاستخدام المقاييس الحيوية, يرجى تسجيل بصمة إصبعك في إعدادات جهازك ",
+			"failed": " فشل المصادقة باستخدام المقاييس الحيوية ",
+			"generic": " يبدو أن هناك خطأ في مصادقة المقاييس الحيوية "
+		}
+	},
+	"BiometricScreen": {
+		"unlock": " افتح مع القياسات الحيوية "
+	},
+	"HistoryTab": {
+		"noHistory": " لا يوجد سجل متاح حتى الآن ",
+		"downloaded": " تم التنزيل ",
+		"shared": " مشتركة ",
+		"received": " مستلم ",
+		"deleted": " محذوف "
+	},
+	"HomeScreen": {
+		"myVcsTab": "{{vcLabel}}",
+		"receivedVcsTab": "{{vcLabel}}",
+		"historyTab": " تاريخ "
+	},
+	"AddVcModal": {
+		"requestingCredential": " جارٍ طلب بيانات الاعتماد ... ",
+		"errors": {
+			"input": {
+				"empty": " لا يمكن أن يكون الإدخال فارغًا ",
+				"invalidFormat": " تنسيق الإدخال غير صحيح "
+			},
+			"backend": {
+				"invalidOtp": " OTP غير صالح ",
+				"invalidUin": " UIN غير صالح ",
+				"invalidVid": " VID غير صالح ",
+				"missingUin": " UIN غير متوفر في قاعدة البيانات ",
+				"missingVid": " VID غير متوفر في قاعدة البيانات "
+			}
+		}
+	},
+	"DownloadingVcModal": {
+		"header": " تنزيل {{vcLabel}} ",
+		"bodyText": " قد يستغرق هذا بعض الوقت, وسنخبرك عندما يتم تنزيل {{vcLabel}} وإتاحته ",
+		"backButton": " العودة إلى المنزل "
+	},
+	"GetIdInputModal": {
+		"header": " لاسترداد UIN أو VID, أدخل رقم التطبيق {{vcLabel}} ",
+		"getUIN": " الحصول على UIN / VID ",
+		"applicationId": " رقم التطبيق {{vcLabel}} ",
+		"requestingOTP": " جارٍ طلب OTP ... ",
+		"qstnMarkToolTip": " رقم التطبيق {{vcLabel}} مطبوع على الإقرار المقدم بعد التسجيل "
+	},
+	"IdInputModal": {
+		"header": " أدخل UIN المقدم من MOSIP أو VID لـ {{vcLabel}} الذي تريد استرداده ",
+		"generateVc": " إنشاء {{vcLabel}} ",
+		"enterId": " أدخل {{idType}} ",
+		"noUIN/VID": " ليس لديك UIN / VID الخاص بك؟ احصل عليه هنا ",
+		"requestingOTP": " جارٍ طلب OTP ... "
+	},
+	"OtpVerificationModal": {
+		"enterOtp": " أدخل رمز التحقق المكون من 6 أرقام الذي أرسلناه إليك "
+	},
+	"MyVcsTab": {
+		"addVcButton": " إضافة {{vcLabel}} ",
+		"generateVc": " إنشاء {{vcLabel}} ",
+		"generateVcDescription": "اضغط على الرقم للتحميل"
+	},
+	"OnboardingOverlay": {
+		"stepOneTitle": " مرحبًا! ",
+		"stepOneText": " احتفظ ببيانات الاعتماد الرقمية معك في جميع الأوقات. للبدء, أضف {{vcLabel}} إلى ملفك الشخصي. ",
+		"stepTwoTitle": " إدارة {{vcLabel}} ",
+		"stepTwoText": " بمجرد إنشائه, يتم تخزين {{vcLabel}} بأمان على هاتفك المحمول ويمكن إعادة تسميته أو مشاركته في أي وقت. ",
+		"stepThreeTitle": " مشاركة سهلة ",
+		"stepThreeText": " مشاركة واستلام {{vcLabel}} switfly باستخدام كاميرا هاتفك لمسح رموز QR. ",
+		"stepThreeButton": " ابدأ وأضف {{vcLabel}} "
+	},
+	"ReceivedVcsTab": {
+		"noReceivedVcsTitle": " لا يوجد {{vcLabel}} متاح حتى الآن ",
+		"noReceivedVcsText": " اضغط على الطلب أدناه لتلقي {{vcLabel}} "
+	},
+	"ViewVcModal": {
+		"cancel": " إلغاء ",
+		"lock": " قفل ",
+		"unlock": " الغاء القفل ",
+		"rename": " إعادة تسمية ",
+		"delete": " حذف ",
+		"revoke": " إبطال ",
+		"revoking": " تحتوي محفظتك على بيانات اعتماد مع VID {{vid}}. سيؤدي إبطال هذا إلى إزالة نفس البيانات تلقائيًا من المحفظة. هل أنت متأكد من أنك تريد المتابعة؟ ",
+		"requestingOtp": " جارٍ طلب OTP ... ",
+		"editTag": " إعادة تسمية ",
+		"redirecting": " إعادة التوجيه ... ",
+		"success": {
+			"unlocked": " تم إلغاء قفل {{vcLabel}} بنجاح ",
+			"locked": " تم قفل {{vcLabel}} بنجاح ",
+			"revoked": " تم إبطال VID {{vid}}. ستتم إزالة أي بيانات اعتماد تحتوي عليها تلقائيًا من المحفظة "
+		}
+	},
+	"MainLayout": {
+		"home": " المنزل ",
+		"scan": " مسح ",
+		"request": " طلب ",
+		"profile": " الملف الشخصي "
+	},
+	"PasscodeScreen": {
+		"header": " تعيين رمز مرور لتأمين تطبيقك ",
+		"confirmPasscode": " تأكيد رمز المرور الخاص بك ",
+		"enterPasscode": " أدخل رمز المرور الخاص بك "
+	},
+	"Credits": {
+		"header": " الائتمانات والإشعارات القانونية ",
+		"back": " رجوع "
+	},
+	"ProfileScreen": {
+		"name": " الاسم ",
+		"vcLabel": " تسمية VC ",
+		"language": " اللغة ",
+		"bioUnlock": " فتح المقاييس الحيوية ",
+		"authFactorUnlock": " إلغاء تأمين عامل المصادقة ",
+		"credits": " الائتمانات والإشعارات القانونية ",
+		"logout": " تسجيل الخروج ",
+		"revokeLabel": " إبطال VID ",
+		"revokeHeader": " سحب او إبطال VID ",
+		"revokingVids": " أنت على وشك إبطال ({{count}}) VIDs. ",
+		"revokingVidsAfter": " هذا يعني أنك لن تكون قادرًا على استخدام أو عرض أي من المعرفات المرتبطة بمعرفات VID هذه. هل أنت متأكد من أنك تريد المتابعة؟ ",
+		"empty": " فارغ ",
+		"revokeSuccessful": " تم إبطال VID بنجاح ",
+		"version": " الإصدار "
+	},
+	"ReceiveVcScreen": {
+		"header": " تفاصيل {{vcLabel}} ",
+		"acceptRequest": " قبول الطلب والاستلام {{vcLabel}} ",
+		"acceptRequestAndVerify": " قبول الطلب والتحقق ",
+		"reject": " رفض "
+	},
+	"RequestScreen": {
+		"bluetoothDenied": " الرجاء تمكين Bluetooth لتتمكن من طلب {{vcLabel}} ",
+		"showQrCode": " أظهر رمز الاستجابة السريعة هذا لطلب {{vcLabel}} ",
+		"incomingVc": " الوارد {{vcLabel}} ",
+		"request": " طلب ",
+		"status": {
+			"accepted": {
+				"title": " نجاح! ",
+				"message": " تم استلام {{vcLabel}} بنجاح من {{sender}} "
+			},
+			"rejected": {
+				"title": " إشعار ",
+				"message": " لقد رفضت {{sender}} {{vcLabel}} "
+			},
+			"disconnected": {
+				"title": " غير متصل ",
+				"message": " انقطع الاتصال. يرجى المحاولة مرة أخرى. "
+			},
+			"waitingConnection": " في انتظار الاتصال ... ",
+			"exchangingDeviceInfo": {
+				"message": " تبادل معلومات الجهاز ... ",
+				"timeoutHint": " يستغرق الأمر وقتًا طويلاً لتبادل معلومات الجهاز ... "
+			},
+			"connected": {
+				"message": " متصل بالجهاز. في انتظار {{vcLabel}} ... ",
+				"timeoutHint": " لم يتم استلام أي بيانات بعد. هل ما زال جهاز الإرسال متصلاً؟ "
+			}
+		},
+		"online": " عبر الإنترنت ",
+		"offline": " غير متصل ",
+		"gotoSettings": " الانتقال إلى الإعدادات "
+	},
+	"ScanScreen": {
+		"header": " مسح رمز الاستجابة السريعة ",
+		"noShareableVcs": " لا يمكن مشاركة {{vcLabel}}. ",
+		"sharingVc": " مشاركة {{vcLabel}} ",
+		"errors": {
+			"locationDisabled": {
+				"message": " يجب تمكين خدمات الموقع لوظيفة المسح ",
+				"button": " تمكين خدمات الموقع "
+			},
+			"locationDenied": {
+				"message": " إذن الموقع مطلوب لوظيفة المسح ",
+				"button": " السماح بالوصول إلى الموقع "
+			}
+		},
+		"status": {
+			"connecting": " جارٍ التوصيل ... ",
+			"connectTimeout": " يستغرق إنشاء الاتصال بعض الوقت. هل الجهاز الآخر مفتوح للاتصالات؟ ",
+			"exchangingDeviceInfo": " تبادل معلومات الجهاز ... ",
+			"exchangingDeviceInfoTimeout": " يستغرق تبادل معلومات الجهاز بعض الوقت. قد تضطر إلى إعادة الاتصال. ",
+			"invalid": " رمز الاستجابة السريعة غير صالح "
+		}
+	},
+	"SelectVcOverlay": {
+		"header": " Share {{vcLabel}} ",
+		"chooseVc": " اختر {{vcLabel}} الذي ترغب في المشاركة معه ",
+		"share": " مشاركة ",
+		"verAndShare": " التحقق من الهوية والمشاركة "
+	},
+	"SendVcScreen": {
+		"reasonForSharing": " سبب المشاركة (اختياري) ",
+		"acceptRequest": " قبول الطلب واختيار {{vcLabel}} ",
+		"acceptRequestAndVerify": " قبول الطلب والتحقق ",
+		"reject": " رفض ",
+		"status": {
+			"sharing": {
+				"title": " مشاركة ... ",
+				"hint": " الرجاء الانتظار حتى يقبل الجهاز المستلم المشاركة أو يرفضها. ",
+				"timeoutHint": " تستغرق المشاركة وقتًا أطول من المتوقع. قد تكون هناك مشكلة في الاتصال. "
+			},
+			"accepted": {
+				"title": " نجاح! ",
+				"message": " تمت مشاركة {{vcLabel}} بنجاح مع {{Receiver}} "
+			},
+			"rejected": {
+				"title": " إشعار ",
+				"message": " تم رفض {{vcLabel}} من قِبل {{Receiver}} "
+			}
+		},
+		"consentToPhotoVerification": " أوافق على التقاط صورتي للمصادقة "
+	},
+	"VerifyIdentityOverlay": {
+		"status": {
+			"verifyingIdentity": " التحقق من الهوية ... "
+		},
+		"errors": {
+			"invalidIdentity": {
+				"title": " تعذر التحقق من الهوية ",
+				"message": " حدث خطأ ولم نتمكن من مسح صورتك ضوئيًا. حاول مرة أخرى وتأكد من أن وجهك مرئي وخلو من أي ملحقات. ",
+				"messageNoRetry": " حدث خطأ ولم نتمكن من مسح صورتك ضوئيًا. "
+			}
+		}
+	},
+	"WelcomeScreen": {
+		"title": " حل هوية مفتوحة المصدر ",
+		"getStarted": " البدء ",
+		"unlockApp": " فتح التطبيق "
+	},
+	"common": {
+		"cancel": " إلغاء ",
+		"save": " حفظ ",
+		"dismiss": " رفض ",
+		"editLabel": " تحرير {{label}} ",
+		"tryAgain": " حاول مرة أخرى ",
+		"camera": {
+			"errors": {
+				"missingPermission": " يستخدم هذا التطبيق الكاميرا لمسح رمز الاستجابة السريعة لجهاز آخر. "
+			},
+			"allowAccess": " السماح بالوصول إلى الكاميرا "
+		}
+	}
+}
