@@ -54,7 +54,7 @@
     "usePasscode": "Gumamit na lang ng passcode",
     "errors": {
       "unavailable": "Hindi sinusuportahan ng device ang Biometrics",
-      "unenrolled": "Upang magamit ang Biometrics, mangyaring i-enroll ang iyong fingerprint sa mga setting ng iyong device",
+      "unenrolled": "Upang magamit ang Biometrics, mangyaring i-enroll ang iyong biometrics sa mga setting ng iyong device",
       "failed": "Nabigong mag-authenticate gamit ang Biometrics",
       "generic": "May problema sa Biometrics authentication"
     }
