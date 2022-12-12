@@ -55,7 +55,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
         <Column fill>
           <VcDetails
             vc={controller.vc}
-            onBinding={() => controller.addtoWallet()}
+            onBinding={controller.addtoWallet}
             isBindingPending={controller.isWalletBindingPending}
           />
 

@@ -73,3 +73,25 @@ export interface CredentialDownloadResponse {
   credential?: DecodedCredential;
   verifiableCredential?: VerifiableCredential;
 }
+
+export type linkTransactionResponse = {
+  authFactors?: [];
+  authorizeScopes?: null;
+  clientName?: string;
+  configs?: {};
+  essentialClaims?: [];
+  linkTransactionId?: string;
+  logoUrl?: string;
+  voluntaryClaims?: [];
+};
+
+//  {
+// "authFactors": [{"count": 0, "subTypes": null, "type": "OTP"}, {"count": 1, "subTypes": null, "type": "BIO"}, {"count": 0, "subTypes": null, "type": "PIN"}],
+// "authorizeScopes": null,
+// "clientName": "Health Service",
+// "configs": {"sbi.env": "Developer", "sbi.timeout.CAPTURE": 30, "sbi.timeout.DINFO": 30, "sbi.timeout.DISC": 30},
+// "essentialClaims": ["email"],
+// "linkTransactionId": "Lw7b1Yu9kJGK2oNzOONDIEpJUTe0nlqTl5PCsrUIjkw",
+// "logoUrl": "https://healthservices.dev.mosip.net/images/doctor_logo.png",
+// "voluntaryClaims": ["birthdate", "gender", "phone", "name", "picture"]
+// }
