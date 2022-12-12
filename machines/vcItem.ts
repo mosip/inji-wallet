@@ -15,11 +15,7 @@ import { verifyCredential } from '../shared/vcjs/verifyCredential';
 import { log } from 'xstate/lib/actions';
 import { generateKeys } from '../shared/rsakeypair/rsaKeypair';
 import { KeyPair } from 'react-native-rsa-native';
-import {
-  getPrivateKey,
-  savePrivateKey,
-} from '../shared/keystore/SecureKeystore';
-import { localAssets } from 'expo-updates';
+import { savePrivateKey } from '../shared/keystore/SecureKeystore';
 
 const model = createModel(
   {
@@ -435,19 +431,6 @@ export const vcItemMachine =
             ],
           },
         },
-        // storePrivateKey: {
-        //   invoke: {
-        //     src: 'storePrivateKeyToKeystore',
-        //     onDone: {
-        //       target: 'showBindingStatus',
-        //     },
-        //     onError: {
-        //       actions: 'setWalletBindingError',
-        //         target: 'showBindingStatus',
-        //     },
-        //   }
-
-        // },
         showBindingStatus: {
           on: {
             BINDING_DONE: {

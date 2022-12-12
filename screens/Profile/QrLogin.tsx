@@ -10,6 +10,7 @@ import { MessageOverlay } from '../../components/MessageOverlay';
 import { MyBindedVcs } from './MyBindedVcs';
 import { QrLoginWarning } from './QrLoginWarning';
 import { QrLoginSuccess } from './QrLoginSuccessMessage';
+import { QrConsent } from './QrConsent';
 
 export const QrLogin: React.FC = () => {
   const controller = useQrLogin();
@@ -49,8 +50,10 @@ export const QrLogin: React.FC = () => {
           />
 
           <MessageOverlay
-            isVisible={controller.isLoadingMyVcs}
-            title={t('loadingMyVcs')}
+            isVisible={
+              controller.isLoadingMyVcs || controller.isLinkTransaction
+            }
+            title={t('loading')}
             progress
           />
 
@@ -84,6 +87,12 @@ export const QrLogin: React.FC = () => {
               />
             </Row>
           </MessageOverlay>
+
+          <QrConsent
+            isVisible={controller.isRequestConsent}
+            onConfirm={controller.CONFIRM}
+            onCancel={controller.CANCEL}
+          />
 
           <QrLoginSuccess
             isVisible={controller.isVerifyingSuccesful}

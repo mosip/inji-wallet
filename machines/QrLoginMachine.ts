@@ -3,8 +3,8 @@ import { createModel } from 'xstate/lib/model';
 import { AppServices } from '../shared/GlobalContext';
 import { MY_VCS_STORE_KEY } from '../shared/constants';
 import { StoreEvents } from './store';
-import { VC } from '../types/vc';
-import { request, linkTransactionResponse } from '../shared/request';
+import { linkTransactionResponse, VC } from '../types/vc';
+import { request } from '../shared/request';
 
 const model = createModel(
   {
@@ -13,6 +13,14 @@ const model = createModel(
     linkCode: '',
     myVcs: [] as string[],
     linkTransactionResponse: {} as linkTransactionResponse,
+    authFactors: [],
+    authorizeScopes: null,
+    clientName: '',
+    configs: {},
+    essentialClaims: [],
+    linkTransactionId: '',
+    logoUrl: '',
+    voluntaryClaims: [],
   },
   {
     events: {
@@ -34,7 +42,7 @@ const model = createModel(
 export const QrLoginEvents = model.events;
 
 export const qrLoginMachine =
-  /** @xstate-layout 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 */
+  /** @xstate-layout N4IgpgJg5mDOIC5QEUBOAZA9lAlgOwDocIAbMAYgGUBhAQQDl6BJegcQH0ARAeXoFEA2gAYAuolAAHTLBwAXHJjziQAD0QBGIQA4ATAXUAWAKwB2MwfMBOAwYA0IAJ6IAzCfUEAbEaFDXHj0ImWiYGHgC+YfZoWLiExGTknEyUALLJlMJiSCBSMvKKymoIlqYERupGRgbqlkI6FpaW9k4IOh7Ont4+Rs6NWr5azhFRGNj4BLAAFpgA7gDqAIaoePhQ5NS8AGJMAEopmcq5cgpK2UWGlh2WJrVaBlr+DxXNLlpaBDdGWuXqHoP1wxA0TGhCms0Wy1WiWSaUoGVEh2kxwKZw0FSEBGcVR02j+OnU5heCGc+P0XSENW0X1CJkBwNiBBI+AA1gAVVALPCwBYAY3yeHIEEUYCIeAAbphmSL6eMmXg2Ryubz+Qh8BKeQt+ZkDtkjvzChoDJcCNdbvdHh5no5EDpvmV-P5nFpNB4LIE6aMGSRMAsICkHAA1HmwKis7g7PjsCOUAAKvEoggRuqR+tRCBqOksJr+7S0tWurqJzlcHyqGZuBiElnUQ0iQM94zBMzFPPQOFgsiofHQfGorPYAeoOskKZOBtaFXclhzpiEHh0zgsRMqJkxvxMznUW7aFnUHpijemzdb7c7Ab4OyYmwAmsOcqOUaAijicR8Ak71DoTP56kYif4DH0as3EGIRqldWk6xlUEjxbNsO2hVJ0jvPUxzTHFPwIMDfkMQxbTcdQiV+DowNMIIAiEIxLGdfcQQIAAzXkwFoABXWRJnITZaGoSMA1odAmE4FCH1OJ8NDMTxsI8b9NAsNodCLX4ykGEkumuHpXFohlGJ5Zi2I4riePYFg+IEoSkxHPI0LE9MJICcCZLAkx5OXAwOhsAl+iCZxXRqLTxh0vT2PWBgePQYSrMfVRxNXez10tJyXOtBBnQII1GktN5MwJfx-LicUFiZCAmAgMA8HkWQHEQ2F4SySzkVE6KEFnTESiCb4TC+atCOSnpV2+QZLRrAJMyMPLRTFQriBKsqKqqiNWR2a8BwvK8mDoVkmF4CKGvHAlYqkxy5PnIkjT0awCWMXxDF6cbUDAABHFi4FkahFFgWb1i2XZ9gs+9IsaooWt6Uw3lMLqtyLHRzsaRpvyxT9KLux7no7N6uU+uh6DCnbUxs4G2rBzq80h5KXwIeo4fU2pKS0cahTwCgkiQuFcesprdD0MGnW+cozC0KGYdh+HyhxMbATwTBSvgbJoMRAHxwAWg8IllawnxKPKHoKWcMCDHG+IwHl3a0zaghnR0bx5xxedrEUrN0WwiocTnSCRgPGDwSWFY8CgY28aaz8SjS35XVMCwnV6Is8wpkpvi3P4SX1qCG0IOUFU5bk+XZ1CovOepV11qpXUt-xnKJfEPE8TnqOrbFOrd+sPcZH0-UDYN-fZ84NyrnFnTuKivnwotvA+T90stjXq3Gps4NPTu85tYjMW+Rd8QeCk7GSrx3i-bxnNCXpanF926MC1j2IXwHEAMBTkqNIwTWqXQemCCkQhPpu6LVKbitK8q5AtHqgHIolY9CuCNMEO404nR3xaK-TEXwfJbh8nUEoyMnovXRh9cqV9xxH30GYbQFg3ByUqIpVc2hiyTyrJ1YsjdoIEAZkbZMCs0wmF8GUIwOIsSBDnD4LeLQSTuVhgWBGYsIgRCAA */
   model.createMachine(
     {
       tsTypes: {} as import('./QrLoginMachine.typegen').Typegen0,
@@ -58,9 +66,9 @@ export const qrLoginMachine =
         showWarning: {
           on: {
             CONFIRM: {
-              target: 'loadMyVcs',
+              target: 'linkTransaction',
             },
-            DISMISS: {
+            CANCEL: {
               target: 'idle',
             },
           },
@@ -70,7 +78,7 @@ export const qrLoginMachine =
             src: 'linkTransaction',
             onDone: [
               {
-                actions: 'setlinkTransactionResponse',
+                actions: ['setlinkTransactionResponse', 'expandLinkTransResp'],
                 target: 'loadMyVcs',
               },
             ],
@@ -109,28 +117,6 @@ export const qrLoginMachine =
             CANCEL: {
               target: 'idle',
             },
-          },
-        },
-        requestingJwtToken: {
-          invoke: {
-            src: 'requestingJwtToken',
-            onDone: [
-              {
-                actions: '',
-                target: 'done',
-              },
-            ],
-            onError: [
-              {
-                actions: '',
-                cond: '',
-                target: '',
-              },
-              {
-                actions: '',
-                target: '',
-              },
-            ],
           },
         },
         invalidIdentity: {
@@ -188,7 +174,30 @@ export const qrLoginMachine =
         }),
 
         setlinkTransactionResponse: assign({
-          linkTransactionResponse: (context, event) => event.data,
+          linkTransactionResponse: (context, event) =>
+            event.data as linkTransactionResponse,
+        }),
+
+        expandLinkTransResp: assign({
+          authFactors: (context) => context.linkTransactionResponse.authFactors,
+
+          authorizeScopes: (context) =>
+            context.linkTransactionResponse.authorizeScopes,
+
+          clientName: (context) => context.linkTransactionResponse.clientName,
+
+          configs: (context) => context.linkTransactionResponse.configs,
+
+          essentialClaims: (context) =>
+            context.linkTransactionResponse.essentialClaims,
+
+          linkTransactionId: (context) =>
+            context.linkTransactionResponse.linkTransactionId,
+
+          logoUrl: (context) => context.linkTransactionResponse.logoUrl,
+
+          voluntaryClaims: (context) =>
+            context.linkTransactionResponse.voluntaryClaims,
         }),
       },
       services: {
@@ -220,12 +229,12 @@ export function selectIsScanning(state: State) {
   return state.matches('idle');
 }
 
-export function selectIsGeneratingJwtToken(state: State) {
-  return state.matches('requestingJwtToken');
-}
-
 export function selectIsShowWarning(state: State) {
   return state.matches('showWarning');
+}
+
+export function selectIsLinkTransaction(state: State) {
+  return state.matches('linkTransaction');
 }
 
 export function selectIsloadMyVcs(state: State) {
@@ -258,4 +267,16 @@ export function selectSelectedVc(state: State) {
 
 export function selectLinkTransactionResponse(state: State) {
   return state.context.linkTransactionResponse;
+}
+
+export function selectVoluntaryClaims(state: State) {
+  return state.context.voluntaryClaims;
+}
+
+export function selectLogoUrl(state: State) {
+  return state.context.logoUrl;
+}
+
+export function selectClientName(state: State) {
+  return state.context.clientName;
 }
