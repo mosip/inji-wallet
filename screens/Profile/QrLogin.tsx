@@ -10,7 +10,6 @@ import { MessageOverlay } from '../../components/MessageOverlay';
 import { MyBindedVcs } from './MyBindedVcs';
 import { QrLoginWarning } from './QrLoginWarning';
 import { QrLoginSuccess } from './QrLoginSuccessMessage';
-import { QrConsent } from './QrConsent';
 
 export const QrLogin: React.FC = () => {
   const controller = useQrLogin();
@@ -36,20 +35,22 @@ export const QrLogin: React.FC = () => {
         <Column fill>
           {controller.isScanningQr && (
             <Column fill padding="32" align="space-between">
-              <Text> {t('scannerTitle')}</Text>
-              <QrScanner onQrFound={controller.SCANNING_DONE} />
+              <QrScanner
+                onQrFound={controller.SCANNING_DONE}
+                title={'Scan the QR Code to initiate the login'}
+              />
             </Column>
           )}
 
           <QrLoginWarning
             isVisible={controller.isShowWarning}
             onConfirm={controller.CONFIRM}
-            onCancel={controller.DISMISS}
+            onCancel={controller.CANCEL}
           />
 
           <MessageOverlay
-            isVisible={controller.isLoadingVc}
-            title={t('loadingVcs')}
+            isVisible={controller.isLoadingMyVcs}
+            title={t('loadingMyVcs')}
             progress
           />
 
@@ -84,12 +85,6 @@ export const QrLogin: React.FC = () => {
             </Row>
           </MessageOverlay>
 
-          <QrConsent
-            isVisible={controller.isRequestingConsent}
-            onConfirm={controller.CONFIRM}
-            onCancel={controller.CANCEL}
-          />
-
           <QrLoginSuccess
             isVisible={controller.isVerifyingSuccesful}
             onPress={() => {
@@ -101,4 +96,3 @@ export const QrLogin: React.FC = () => {
     </ListItem>
   );
 };
-
