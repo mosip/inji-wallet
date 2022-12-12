@@ -1,7 +1,13 @@
-import { assign, ErrorPlatformEvent, EventFrom, send, StateFrom } from 'xstate';
+import {
+  AnyInterpreter,
+  assign,
+  ErrorPlatformEvent,
+  EventFrom,
+  send,
+  StateFrom,
+} from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { MY_VCS_STORE_KEY, VC_ITEM_STORE_KEY } from '../shared/constants';
-import { AppServices } from '../shared/GlobalContext';
 import { CredentialDownloadResponse, request } from '../shared/request';
 import {
   VC,
@@ -16,7 +22,7 @@ import { log } from 'xstate/lib/actions';
 
 const model = createModel(
   {
-    serviceRefs: {} as AppServices,
+    appService: {} as AnyInterpreter, // `InterpreterFrom<typeof appMachine>` does not work for some reason
     id: '',
     idType: '' as VcIdType,
     tag: '',
@@ -358,7 +364,7 @@ export const vcItemMachine =
       actions: {
         updateVc: send(
           (context) => {
-            const { serviceRefs, ...vc } = context;
+            const { appService, ...vc } = context;
             return { type: 'VC_DOWNLOADED', vc };
           },
           {
@@ -372,24 +378,24 @@ export const vcItemMachine =
             vcKey: VC_ITEM_STORE_KEY(context),
           }),
           {
-            to: (context) => context.serviceRefs.vc,
+            to: (context) => context.appService.children.get('vc'),
           }
         ),
 
         requestStoredContext: send(
           (context) => StoreEvents.GET(VC_ITEM_STORE_KEY(context)),
           {
-            to: (context) => context.serviceRefs.store,
+            to: (context) => context.appService.children.get('store'),
           }
         ),
 
         storeContext: send(
           (context) => {
-            const { serviceRefs, ...data } = context;
+            const { appService, ...data } = context;
             return StoreEvents.SET(VC_ITEM_STORE_KEY(context), data);
           },
           {
-            to: (context) => context.serviceRefs.store,
+            to: (context) => context.appService.children.get('store'),
           }
         ),
 
@@ -407,10 +413,10 @@ export const vcItemMachine =
 
         storeTag: send(
           (context) => {
-            const { serviceRefs, ...data } = context;
+            const { appService, ...data } = context;
             return StoreEvents.SET(VC_ITEM_STORE_KEY(context), data);
           },
-          { to: (context) => context.serviceRefs.store }
+          { to: (context) => context.appService.children.get('store') }
         ),
 
         setCredential: model.assign((context, event) => {
@@ -433,7 +439,7 @@ export const vcItemMachine =
               vcLabel: event.vc.tag || event.vc.id,
             }),
           {
-            to: (context) => context.serviceRefs.activityLog,
+            to: (context) => context.appService.children.get('activityLog'),
           }
         ),
 
@@ -447,7 +453,7 @@ export const vcItemMachine =
               vcLabel: context.tag || context.id,
             }),
           {
-            to: (context) => context.serviceRefs.activityLog,
+            to: (context) => context.appService.children.get('activityLog'),
           }
         ),
 
@@ -459,7 +465,7 @@ export const vcItemMachine =
             );
           },
           {
-            to: (context) => context.serviceRefs.store,
+            to: (context) => context.appService.children.get('store'),
           }
         ),
 
@@ -498,10 +504,10 @@ export const vcItemMachine =
 
         storeLock: send(
           (context) => {
-            const { serviceRefs, ...data } = context;
+            const { appService, ...data } = context;
             return StoreEvents.SET(VC_ITEM_STORE_KEY(context), data);
           },
-          { to: (context) => context.serviceRefs.store }
+          { to: (context) => context.appService.children.get('store') }
         ),
       },
 
@@ -644,13 +650,13 @@ export const vcItemMachine =
   );
 
 export const createVcItemMachine = (
-  serviceRefs: AppServices,
+  appService: AnyInterpreter,
   vcKey: string
 ) => {
   const [, idType, id, requestId] = vcKey.split(':');
   return vcItemMachine.withContext({
     ...vcItemMachine.context,
-    serviceRefs,
+    appService,
     id,
     idType: idType as VcIdType,
     requestId,
@@ -660,7 +666,7 @@ export const createVcItemMachine = (
 type State = StateFrom<typeof vcItemMachine>;
 
 export function selectVc(state: State) {
-  const { serviceRefs, ...data } = state.context;
+  const { appService, ...data } = state.context;
   return data;
 }
 
