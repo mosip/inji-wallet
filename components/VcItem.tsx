@@ -88,12 +88,8 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
 export const VcItem: React.FC<VcItemProps> = (props) => {
   const { appService } = useContext(GlobalContext);
   const { t } = useTranslation('VcDetails');
-  const machine = useRef(
-    createVcItemMachine(
-      appService.getSnapshot().context.serviceRefs,
-      props.vcKey
-    )
-  );
+
+  const machine = useRef(createVcItemMachine(appService, props.vcKey));
 
   const service = useInterpret(machine.current, { devTools: __DEV__ });
   const context = useSelector(service, selectContext);
