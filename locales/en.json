@@ -188,8 +188,9 @@
     "back": "Go Back",
     "confirm": "Confirm",
     "verify": "Verify",
-    "loadingMyVcs":"Loading Credential",
-    "domainWarning": "Please verify and confirm the domain of the website you are logging into"
+    "loading": "Loading...",
+    "domainWarning": "Please verify and confirm the domain of the website you are logging into",
+    "access": "is requesting access to:"
   },
   "ReceiveVcScreen": {
     "header": "{{vcLabel}} details",

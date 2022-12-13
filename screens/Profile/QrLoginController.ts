@@ -3,16 +3,21 @@ import { useContext, useState } from 'react';
 import { ActorRefFrom } from 'xstate';
 import {
   QrLoginEvents,
-  selectIsGeneratingJwtToken,
+  selectClientName,
   selectIsInvalidIdentity,
   selectIsisVerifyingIdentity,
+  selectIsLinkTransaction,
   selectIsloadMyVcs,
+  selectIsRequestConsent,
   selectIsScanning,
   selectIsShowingVcList,
   selectIsShowWarning,
   selectIsVerifyingSuccesful,
+  selectLinkTransactionResponse,
+  selectLogoUrl,
   selectMyVcs,
   selectSelectedVc,
+  selectVoluntaryClaims,
 } from '../../machines/QrLoginMachine';
 import { selectVcLabel } from '../../machines/settings';
 import { vcItemMachine } from '../../machines/vcItem';
@@ -38,6 +43,13 @@ export function useQrLogin() {
 
     vcKeys: useSelector(qrLoginService, selectMyVcs),
     selectedVc: useSelector(qrLoginService, selectSelectedVc),
+    linkTransactionResponse: useSelector(
+      qrLoginService,
+      selectLinkTransactionResponse
+    ),
+    logoUrl: useSelector(qrLoginService, selectLogoUrl),
+    claims: useSelector(qrLoginService, selectVoluntaryClaims),
+    clientName: useSelector(qrLoginService, selectClientName),
 
     isQrLogin,
     setQrLogin,
@@ -47,11 +59,10 @@ export function useQrLogin() {
     isScanningQr: useSelector(qrLoginService, selectIsScanning),
     isShowWarning: useSelector(qrLoginService, selectIsShowWarning),
     isShowingVcList: useSelector(qrLoginService, selectIsShowingVcList),
+    isLinkTransaction: useSelector(qrLoginService, selectIsLinkTransaction),
     isLoadingMyVcs: useSelector(qrLoginService, selectIsloadMyVcs),
-    isGeneratingJwtToken: useSelector(
-      qrLoginService,
-      selectIsGeneratingJwtToken
-    ),
+    isRequestConsent: useSelector(qrLoginService, selectIsRequestConsent),
+
     isVerifyingIdentity: useSelector(
       qrLoginService,
       selectIsisVerifyingIdentity
