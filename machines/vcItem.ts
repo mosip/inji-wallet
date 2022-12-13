@@ -13,7 +13,7 @@ import { StoreEvents } from './store';
 import { ActivityLogEvents } from './activityLog';
 import { verifyCredential } from '../shared/vcjs/verifyCredential';
 import { log } from 'xstate/lib/actions';
-import { generateKeys } from '../shared/rsakeypair/rsaKeypair';
+import { generateKeys } from '../shared/cryptoutil/cryptoUtil';
 import { KeyPair } from 'react-native-rsa-native';
 import { savePrivateKey } from '../shared/keystore/SecureKeystore';
 
@@ -38,6 +38,7 @@ const model = createModel(
     walletBindingId: '',
     walletBindingError: '',
     publicKey: '',
+    privateKey: '',
   },
   {
     events: {
@@ -397,7 +398,7 @@ export const vcItemMachine =
             src: 'generateKeyPair',
             onDone: {
               target: 'addingWalletBindingId',
-              actions: ['setPublicKey'],
+              actions: ['setPublicKey', 'setPrivateKey'],
             },
             onError: [
               {
@@ -606,11 +607,18 @@ export const vcItemMachine =
           } catch (error) {
             console.error(error);
           }
+          // this is the binding id -
           return response.response.id;
         },
 
         generateKeyPair: async (context) => {
           let keyPair: KeyPair = await generateKeys();
+
+          console.log(
+            'printing keys ====================================================='
+          );
+          console.log(keyPair.private);
+          console.log(keyPair.public);
 
           const hasSetPrivateKey: boolean = await savePrivateKey(
             context.verifiableCredential.id,
@@ -852,10 +860,6 @@ export function selectIsAcceptingRevokeInput(state: State) {
   return state.matches('acceptingRevokeInput');
 }
 
-export function selectIsRequestingOtp(state: State) {
-  return state.matches('requestingOtp');
-}
-
 export function selectIsRequestBindingOtp(state: State) {
   return state.matches('requestingBindingOtp');
 }
@@ -879,4 +883,12 @@ export function selectAcceptingBindingOtp(state: State) {
 
 export function selectShowBindingStatus(state: State) {
   return state.matches('showBindingStatus');
+}
+
+export function isWalletBindingInProgress(state: State) {
+  return state.matches('requestingBindingOtp') ||
+    state.matches('addingWalletBindingId') ||
+    state.matches('addKeyPair')
+    ? true
+    : false;
 }

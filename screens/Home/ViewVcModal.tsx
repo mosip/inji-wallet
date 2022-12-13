@@ -13,6 +13,7 @@ import { VcDetails } from '../../components/VcDetails';
 
 import { OtpVerification } from './MyVcs/OtpVerification';
 import { BindStatus } from './MyVcs/BindVcStatus';
+import { Overlay } from 'react-native-elements';
 
 export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
   const { t } = useTranslation('ViewVcModal');
@@ -115,8 +116,8 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
       )}
 
       <MessageOverlay
-        isVisible={controller.isRequestingOtp}
-        title={t('requestingOtp')}
+        isVisible={controller.isWalletBindingInProgress}
+        title={'In progress...'}
         progress
       />
 
