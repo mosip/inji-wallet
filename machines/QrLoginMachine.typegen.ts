@@ -8,6 +8,10 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
+    'error.platform.QrLogin.linkTransaction:invocation[0]': {
+      type: 'error.platform.QrLogin.linkTransaction:invocation[0]';
+      data: unknown;
+    };
     'xstate.init': { type: 'xstate.init' };
   };
   'invokeSrcNameMap': {
@@ -20,8 +24,9 @@ export interface Typegen0 {
     services: never;
   };
   'eventsCausingActions': {
+    SetErrorMessage: 'error.platform.QrLogin.linkTransaction:invocation[0]';
     expandLinkTransResp: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
-    loadMyVcs: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
+    loadMyVcs: 'CONFIRM';
     setMyVcs: 'STORE_RESPONSE';
     setScanData: 'SCANNING_DONE';
     setSelectedVc: 'SELECT_VC';
@@ -30,9 +35,10 @@ export interface Typegen0 {
   'eventsCausingDelays': {};
   'eventsCausingGuards': {};
   'eventsCausingServices': {
-    linkTransaction: 'CONFIRM';
+    linkTransaction: 'SCANNING_DONE';
   };
   'matchesStates':
+    | 'ShowError'
     | 'done'
     | 'faceAuth'
     | 'idle'

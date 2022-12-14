@@ -57,6 +57,14 @@ export const QrLogin: React.FC = () => {
             progress
           />
 
+          <MessageOverlay
+            isVisible={controller.isShowingError}
+            title={controller.error}
+            onCancel={() => {
+              controller.setQrLogin(false), controller.CANCEL();
+            }}
+          />
+
           <MyBindedVcs isVisible={controller.isShowingVcList} />
 
           <VerifyIdentityOverlay

@@ -1,4 +1,4 @@
-import { assign, EventFrom, send, StateFrom } from 'xstate';
+import { assign, ErrorPlatformEvent, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { AppServices } from '../shared/GlobalContext';
 import { MY_VCS_STORE_KEY } from '../shared/constants';
@@ -21,6 +21,7 @@ const model = createModel(
     linkTransactionId: '',
     logoUrl: '',
     voluntaryClaims: [],
+    errorMessage: '',
   },
   {
     events: {
@@ -55,20 +56,10 @@ export const qrLoginMachine =
         idle: {
           on: {
             SCANNING_DONE: {
-              target: 'showWarning',
               actions: 'setScanData',
-            },
-            DISMISS: {
-              target: 'idle',
-            },
-          },
-        },
-        showWarning: {
-          on: {
-            CONFIRM: {
               target: 'linkTransaction',
             },
-            CANCEL: {
+            DISMISS: {
               target: 'idle',
             },
           },
@@ -79,9 +70,32 @@ export const qrLoginMachine =
             onDone: [
               {
                 actions: ['setlinkTransactionResponse', 'expandLinkTransResp'],
-                target: 'loadMyVcs',
+                target: 'showWarning',
               },
             ],
+            onError: [
+              {
+                actions: 'SetErrorMessage',
+                target: 'ShowError',
+              },
+            ],
+          },
+        },
+        showWarning: {
+          on: {
+            CONFIRM: {
+              target: 'loadMyVcs',
+            },
+            CANCEL: {
+              target: 'idle',
+            },
+          },
+        },
+        ShowError: {
+          on: {
+            CANCEL: {
+              target: 'idle',
+            },
           },
         },
         loadMyVcs: {
@@ -199,6 +213,11 @@ export const qrLoginMachine =
           voluntaryClaims: (context) =>
             context.linkTransactionResponse.voluntaryClaims,
         }),
+
+        SetErrorMessage: assign({
+          errorMessage: (context, event) =>
+            (event as ErrorPlatformEvent).data.message,
+        }),
       },
       services: {
         linkTransaction: async (context) => {
@@ -253,6 +272,10 @@ export function selectIsInvalidIdentity(state: State) {
   return state.matches('invalidIdentity');
 }
 
+export function selectIsShowError(state: State) {
+  return state.matches('ShowError');
+}
+
 export function selectIsRequestConsent(state: State) {
   return state.matches('requestConsent');
 }
@@ -279,4 +302,8 @@ export function selectLogoUrl(state: State) {
 
 export function selectClientName(state: State) {
   return state.context.clientName;
+}
+
+export function selectErrorMessage(state: State) {
+  return state.context.errorMessage;
 }
