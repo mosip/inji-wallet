@@ -4,12 +4,14 @@ import { ActorRefFrom } from 'xstate';
 import {
   QrLoginEvents,
   selectClientName,
+  selectErrorMessage,
   selectIsInvalidIdentity,
   selectIsisVerifyingIdentity,
   selectIsLinkTransaction,
   selectIsloadMyVcs,
   selectIsRequestConsent,
   selectIsScanning,
+  selectIsShowError,
   selectIsShowingVcList,
   selectIsShowWarning,
   selectIsVerifyingSuccesful,
@@ -50,6 +52,7 @@ export function useQrLogin() {
     logoUrl: useSelector(qrLoginService, selectLogoUrl),
     claims: useSelector(qrLoginService, selectVoluntaryClaims),
     clientName: useSelector(qrLoginService, selectClientName),
+    error: useSelector(qrLoginService, selectErrorMessage),
 
     isQrLogin,
     setQrLogin,
@@ -62,6 +65,7 @@ export function useQrLogin() {
     isLinkTransaction: useSelector(qrLoginService, selectIsLinkTransaction),
     isLoadingMyVcs: useSelector(qrLoginService, selectIsloadMyVcs),
     isRequestConsent: useSelector(qrLoginService, selectIsRequestConsent),
+    isShowingError: useSelector(qrLoginService, selectIsShowError),
 
     isVerifyingIdentity: useSelector(
       qrLoginService,
