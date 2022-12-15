@@ -38,7 +38,11 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
           weight="bold"
           size="smaller"
           align="left"
-          color={Theme.Colors.DetailsLabel}>
+          color={
+            !verifiableCredential
+              ? Theme.Colors.LoadingDetailsLabel
+              : Theme.Colors.DetailsLabel
+          }>
           {arg1}
         </Text>
         <Row>
@@ -62,7 +66,11 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
     return (
       <Column>
         <Text
-          color={Theme.Colors.DetailsLabel}
+          color={
+            !verifiableCredential
+              ? Theme.Colors.LoadingDetailsLabel
+              : Theme.Colors.DetailsLabel
+          }
           weight="bold"
           size="smaller"
           align="left">
@@ -136,7 +144,11 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
         <Row style={Theme.Styles.homeCloseCardDetailsHeader}>
           <Column>
             <Text
-              color={Theme.Colors.DetailsLabel}
+              color={
+                !verifiableCredential
+                  ? Theme.Colors.LoadingDetailsLabel
+                  : Theme.Colors.DetailsLabel
+              }
               weight="bold"
               size="smaller"
               align="left">

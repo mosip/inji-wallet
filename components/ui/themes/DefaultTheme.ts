@@ -22,6 +22,7 @@ export const DefaultTheme = {
     TabItemText: Colors.Orange,
     Details: Colors.Black,
     DetailsLabel: Colors.Orange,
+    LoadingDetailsLabel: Colors.Orange,
     AddIdBtnBg: Colors.Orange,
     AddIdBtnTxt: Colors.Orange,
     ClearAddIdBtnBg: Colors.Transparent,
