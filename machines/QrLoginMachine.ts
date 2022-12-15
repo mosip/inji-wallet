@@ -5,6 +5,8 @@ import { MY_VCS_STORE_KEY } from '../shared/constants';
 import { StoreEvents } from './store';
 import { linkTransactionResponse, VC } from '../types/vc';
 import { request } from '../shared/request';
+import { getJwt } from '../shared/cryptoutil/cryptoUtil';
+import { getPrivateKey } from '../shared/keystore/SecureKeystore';
 
 const model = createModel(
   {
@@ -13,6 +15,7 @@ const model = createModel(
     linkCode: '',
     myVcs: [] as string[],
     linkTransactionResponse: {} as linkTransactionResponse,
+    requestAuthResponse: '',
     authFactors: [],
     authorizeScopes: null,
     clientName: '',
@@ -146,11 +149,28 @@ export const qrLoginMachine =
         requestConsent: {
           on: {
             CONFIRM: {
-              target: 'done',
+              target: 'authRequest',
             },
             CANCEL: {
               target: 'idle',
             },
+          },
+        },
+        authRequest: {
+          invoke: {
+            src: 'requestAuthFactor',
+            onDone: [
+              {
+                actions: 'setRequestAuthResponse',
+                target: 'done',
+              },
+            ],
+            onError: [
+              {
+                actions: 'SetErrorMessage',
+                target: 'ShowError',
+              },
+            ],
           },
         },
         done: {
@@ -192,6 +212,10 @@ export const qrLoginMachine =
             event.data as linkTransactionResponse,
         }),
 
+        setRequestAuthResponse: assign({
+          requestAuthResponse: (context, event) => event.data as string,
+        }),
+
         expandLinkTransResp: assign({
           authFactors: (context) => context.linkTransactionResponse.authFactors,
 
@@ -226,6 +250,22 @@ export const qrLoginMachine =
             requestTime: String(new Date().toISOString()),
           });
           return response.response;
+        },
+
+        requestAuthFactor: async (context) => {
+          const response = await request('POST', '/idp-authenticate', {
+            requestTime: String(new Date().toISOString()),
+            linkTransactionId: context.linkTransactionId,
+            individualId: context.selectedVc.id,
+            authFactorType: 'wla',
+            challenge: getJwt(
+              await getPrivateKey(context.selectedVc.id),
+              JSON.parse('{"key": "value"}')
+            ),
+          });
+          console.log('Sri kanth' + response.response);
+
+          return response.response.linkedTransactionId;
         },
       },
     }
@@ -278,6 +318,10 @@ export function selectIsShowError(state: State) {
 
 export function selectIsRequestConsent(state: State) {
   return state.matches('requestConsent');
+}
+
+export function selectIsRequestAuthFactor(state: State) {
+  return state.matches('authRequest');
 }
 
 export function selectIsVerifyingSuccesful(state: State) {

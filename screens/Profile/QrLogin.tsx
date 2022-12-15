@@ -51,7 +51,9 @@ export const QrLogin: React.FC = () => {
 
           <MessageOverlay
             isVisible={
-              controller.isLoadingMyVcs || controller.isLinkTransaction
+              controller.isLoadingMyVcs ||
+              controller.isLinkTransaction ||
+              controller.isAuthFactorRequest
             }
             title={t('loading')}
             progress

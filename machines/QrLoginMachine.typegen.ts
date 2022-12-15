@@ -3,10 +3,19 @@
 export interface Typegen0 {
   '@@xstate/typegen': true;
   'internalEvents': {
+    'done.invoke.QrLogin.authRequest:invocation[0]': {
+      type: 'done.invoke.QrLogin.authRequest:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
     'done.invoke.QrLogin.linkTransaction:invocation[0]': {
       type: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
+    'error.platform.QrLogin.authRequest:invocation[0]': {
+      type: 'error.platform.QrLogin.authRequest:invocation[0]';
+      data: unknown;
     };
     'error.platform.QrLogin.linkTransaction:invocation[0]': {
       type: 'error.platform.QrLogin.linkTransaction:invocation[0]';
@@ -16,6 +25,7 @@ export interface Typegen0 {
   };
   'invokeSrcNameMap': {
     linkTransaction: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
+    requestAuthFactor: 'done.invoke.QrLogin.authRequest:invocation[0]';
   };
   'missingImplementations': {
     actions: never;
@@ -24,10 +34,13 @@ export interface Typegen0 {
     services: never;
   };
   'eventsCausingActions': {
-    SetErrorMessage: 'error.platform.QrLogin.linkTransaction:invocation[0]';
+    SetErrorMessage:
+      | 'error.platform.QrLogin.authRequest:invocation[0]'
+      | 'error.platform.QrLogin.linkTransaction:invocation[0]';
     expandLinkTransResp: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
     loadMyVcs: 'CONFIRM';
     setMyVcs: 'STORE_RESPONSE';
+    setRequestAuthResponse: 'done.invoke.QrLogin.authRequest:invocation[0]';
     setScanData: 'SCANNING_DONE';
     setSelectedVc: 'SELECT_VC';
     setlinkTransactionResponse: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
@@ -36,9 +49,11 @@ export interface Typegen0 {
   'eventsCausingGuards': {};
   'eventsCausingServices': {
     linkTransaction: 'SCANNING_DONE';
+    requestAuthFactor: 'CONFIRM';
   };
   'matchesStates':
     | 'ShowError'
+    | 'authRequest'
     | 'done'
     | 'faceAuth'
     | 'idle'
