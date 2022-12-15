@@ -263,7 +263,6 @@ export const qrLoginMachine =
               JSON.parse('{"key": "value"}')
             ),
           });
-          console.log('Sri kanth' + response.response);
 
           return response.response.linkedTransactionId;
         },
