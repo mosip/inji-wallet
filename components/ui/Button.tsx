@@ -48,7 +48,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
           {props.title}
         </Text>
       }
-      style={buttonStyle}
+      style={[buttonStyle]}
       icon={props.icon}
       onPress={handleOnPress}
       loading={props.loading}

@@ -69,7 +69,7 @@ export interface Typegen0 {
     verifyCredential: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
   };
   'missingImplementations': {
-    actions: 'logError';
+    actions: never;
     services: never;
     guards: never;
     delays: never;
@@ -92,7 +92,6 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.verifyingCredential:invocation[0]'
       | 'error.platform.vc-item.verifyingCredential:invocation[0]';
     logDownloaded: 'CREDENTIAL_DOWNLOADED';
-    logError: 'error.platform.vc-item.verifyingCredential:invocation[0]';
     logRevoked: 'STORE_RESPONSE';
     markVcValid: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
     requestStoredContext: 'GET_VC_RESPONSE' | 'REFRESH';

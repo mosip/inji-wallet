@@ -1,5 +1,11 @@
 import React, { useRef } from 'react';
-import { FlatList, Pressable, View } from 'react-native';
+import {
+  FlatList,
+  I18nManager,
+  Pressable,
+  StyleSheet,
+  View,
+} from 'react-native';
 import { Popable } from 'react-native-popable';
 import { Text } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -45,13 +51,23 @@ export const DropdownIcon: React.FC<DropdownProps> = (props) => {
     );
   };
 
+  const styles = StyleSheet.create({
+    popoverStyle: {
+      top: 10,
+      right: I18nManager.isRTL ? 20 : 'auto',
+      left: I18nManager.isRTL ? 'auto' : -20,
+      minWidth: 120,
+      elevation: 1,
+    },
+  });
+
   return (
     <View>
       <Popable
         position="bottom"
         ref={popover}
         backgroundColor={Theme.Colors.whiteBackgroundColor}
-        style={{ top: 10, left: -20, minWidth: 120, elevation: 1 }}
+        style={styles.popoverStyle}
         content={
           <View>
             <FlatList

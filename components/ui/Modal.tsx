@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, Modal as RNModal, View } from 'react-native';
+import { Modal as RNModal, View } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { Column, Row, Text } from '.';
 import { ElevationLevel, Theme } from './styleUtils';

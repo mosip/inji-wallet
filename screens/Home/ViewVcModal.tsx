@@ -3,7 +3,6 @@ import { DropdownIcon } from '../../components/DropdownIcon';
 import { TextEditOverlay } from '../../components/TextEditOverlay';
 import { Column } from '../../components/ui';
 import { Modal } from '../../components/ui/Modal';
-import { Theme } from '../../components/ui/styleUtils';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { ToastItem } from '../../components/ui/ToastItem';
 import { RevokeConfirmModal } from '../../components/RevokeConfirm';
@@ -21,7 +20,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
   const DATA = [
     {
       idType: 'UIN',
-      label: controller.vc.locked ? 'Unlock' : 'Lock',
+      label: controller.vc.locked ? t('unlock') : t('lock'),
       icon: 'lock-outline',
       onPress: () => controller.lockVc(),
     },
@@ -42,7 +41,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
     <Modal
       isVisible={props.isVisible}
       onDismiss={props.onDismiss}
-      headerTitle={controller.vc.tag || controller.vc.id}
+      headerTitle={controller.vc.id}
       headerElevation={2}
       headerRight={
         <DropdownIcon

@@ -195,7 +195,7 @@ export const vcItemMachine =
             ],
             onError: [
               {
-                actions: 'logError',
+                actions: log((_, event) => (event.data as Error).message),
                 target: 'idle',
               },
             ],
@@ -407,7 +407,7 @@ export const vcItemMachine =
           (_, event) =>
             ActivityLogEvents.LOG_ACTIVITY({
               _vcKey: VC_ITEM_STORE_KEY(event.vc),
-              action: 'downloaded',
+              type: 'VC_DOWNLOADED',
               timestamp: Date.now(),
               deviceName: '',
               vcLabel: event.vc.tag || event.vc.id,
@@ -421,7 +421,7 @@ export const vcItemMachine =
           (context) =>
             ActivityLogEvents.LOG_ACTIVITY({
               _vcKey: VC_ITEM_STORE_KEY(context),
-              action: 'revoked',
+              type: 'VC_REVOKED',
               timestamp: Date.now(),
               deviceName: '',
               vcLabel: context.tag || context.id,

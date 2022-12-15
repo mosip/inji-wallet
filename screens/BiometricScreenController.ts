@@ -20,7 +20,7 @@ export function useBiometricScreen(props: RootRouteProps) {
   const [error, setError] = useState('');
   const [isReEnabling, setReEnabling] = useState(false);
   const [initAuthBio, updateInitAuthBio] = useState(true);
-  const [bioState, bioSend, bioService] = useMachine(biometricsMachine);
+  const [, bioSend, bioService] = useMachine(biometricsMachine);
 
   const isAuthorized = useSelector(authService, selectAuthorized);
   const isAvailable = useSelector(bioService, selectIsAvailable);
@@ -29,7 +29,6 @@ export function useBiometricScreen(props: RootRouteProps) {
   const isUnenrolled = useSelector(bioService, selectIsUnenrolled);
 
   useEffect(() => {
-    console.log('bioState', bioState);
     if (isAuthorized) {
       props.navigation.reset({
         index: 0,
@@ -62,7 +61,7 @@ export function useBiometricScreen(props: RootRouteProps) {
   const checkBiometricsChange = () => {
     if (Platform.OS === 'android') {
       RNFingerprintChange.hasFingerPrintChanged().then(
-        async (biometricsHasChanged: any) => {
+        async (biometricsHasChanged: boolean) => {
           //if new biometrics are added, re-enable Biometrics Authentication
           if (biometricsHasChanged) {
             setReEnabling(true);

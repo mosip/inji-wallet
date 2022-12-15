@@ -49,17 +49,16 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                     onPress={controller.VIEW_VC}
                   />
                 ))}
-
-                <Column elevation={2} margin="10 2 0 2">
-                  <Button
-                    type="clear"
-                    disabled={controller.isRefreshingVcs}
-                    title={t('addVcButton', {
-                      vcLabel: controller.vcLabel.singular,
-                    })}
-                    onPress={controller.ADD_VC}
-                  />
-                </Column>
+              </Column>
+              <Column elevation={2} margin="10 2 0 2">
+                <Button
+                  type="clear"
+                  disabled={controller.isRefreshingVcs}
+                  title={t('addVcButton', {
+                    vcLabel: controller.vcLabel.singular,
+                  })}
+                  onPress={controller.ADD_VC}
+                />
               </Column>
             </React.Fragment>
           )}

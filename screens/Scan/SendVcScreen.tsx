@@ -1,43 +1,32 @@
 import React from 'react';
-import { Input } from 'react-native-elements';
+import { CheckBox, Input } from 'react-native-elements';
+import { useTranslation } from 'react-i18next';
+
 import { DeviceInfoList } from '../../components/DeviceInfoList';
 import { Button, Column, Row } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { useSendVcScreen } from './SendVcScreenController';
-import { useTranslation } from 'react-i18next';
+import { VerifyIdentityOverlay } from '../VerifyIdentityOverlay';
 import { VcItem } from '../../components/VcItem';
-import { useSelectVcOverlay } from './SelectVcOverlayController';
 import { SingleVcItem } from '../../components/SingleVcItem';
-import { VerifyIdentityOverlay } from './VerifyIdentityOverlay';
-import { SelectVcOverlay } from './SelectVcOverlay';
 
 export const SendVcScreen: React.FC = () => {
   const { t } = useTranslation('SendVcScreen');
   const controller = useSendVcScreen();
 
-  const onShare = () => {
-    controller.ACCEPT_REQUEST();
-    controller2.onSelect();
-  };
-
-  const details = {
-    isVisible: controller.isSelectingVc,
-    receiverName: controller.receiverInfo.deviceName,
-    onSelect: controller.SELECT_VC,
-    onCancel: controller.CANCEL,
-    vcKeys: controller.vcKeys,
-  };
-
-  const controller2 = useSelectVcOverlay(details);
-
-  const reasonLabel = t('Reason For Sharing');
+  const reasonLabel = t('reasonForSharing');
 
   return (
     <React.Fragment>
       <Column fill backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
         <Column padding="16 0" scroll>
           <DeviceInfoList of="receiver" deviceInfo={controller.receiverInfo} />
+          <CheckBox
+            title={t('consentToPhotoVerification')}
+            checked={controller.selectedVc.shouldVerifyPresence}
+            onPress={controller.TOGGLE_USER_CONSENT}
+          />
           <Column padding="24">
             <Input
               value={controller.reason ? controller.reason : ''}
@@ -53,9 +42,9 @@ export const SendVcScreen: React.FC = () => {
                 key={controller.vcKeys[0]}
                 vcKey={controller.vcKeys[0]}
                 margin="0 2 8 2"
-                onShow={controller2.selectVcItem(0)}
+                onPress={controller.SELECT_VC_ITEM(0)}
                 selectable
-                selected={0 === controller2.selectedIndex}
+                selected={0 === controller.selectedIndex}
               />
             )}
 
@@ -65,9 +54,9 @@ export const SendVcScreen: React.FC = () => {
                   key={vcKey}
                   vcKey={vcKey}
                   margin="0 2 8 2"
-                  onPress={controller2.selectVcItem(index)}
+                  onPress={controller.SELECT_VC_ITEM(index)}
                   selectable
-                  selected={index === controller2.selectedIndex}
+                  selected={index === controller.selectedIndex}
                 />
               ))}
           </Column>
@@ -78,39 +67,41 @@ export const SendVcScreen: React.FC = () => {
           margin="2 0 0 0"
           elevation={2}>
           <Button
-            title={t('AcceptRequest', { vcLabel: controller.vcLabel.singular })}
+            title={t('acceptRequest', { vcLabel: controller.vcLabel.singular })}
             margin="12 0 12 0"
-            disabled={controller2.selectedIndex == null}
-            onPress={onShare}
+            disabled={controller.selectedIndex == null}
+            onPress={controller.ACCEPT_REQUEST}
           />
+          {!controller.selectedVc.shouldVerifyPresence && (
+            <Button
+              type="outline"
+              title={t('acceptRequestAndVerify')}
+              margin="12 0 12 0"
+              disabled={controller.selectedIndex == null}
+              onPress={controller.VERIFY_AND_ACCEPT_REQUEST}
+            />
+          )}
           <Button
             type="clear"
-            title={t('Reject')}
+            loading={controller.isCancelling}
+            title={t('reject')}
             onPress={controller.CANCEL}
           />
         </Column>
       </Column>
 
-      <SelectVcOverlay
-        isVisible={controller.isSelectingVc}
-        receiverName={controller.receiverInfo.deviceName}
-        onSelect={controller.SELECT_VC}
-        onVerifyAndSelect={controller.VERIFY_AND_SELECT_VC}
-        onCancel={controller.CANCEL}
-        vcKeys={controller.vcKeys}
-      />
-
       <VerifyIdentityOverlay
-        isVisible={controller.isVerifyingUserIdentity}
+        isVisible={controller.isVerifyingIdentity}
+        vc={controller.selectedVc}
         onCancel={controller.CANCEL}
         onFaceValid={controller.FACE_VALID}
         onFaceInvalid={controller.FACE_INVALID}
       />
 
       <MessageOverlay
-        isVisible={controller.isInvalidUserIdentity}
-        title={t('errors.invalidIdentity.title')}
-        message={t('errors.invalidIdentity.message')}
+        isVisible={controller.isInvalidIdentity}
+        title={t('VerifyIdentityOverlay:errors.invalidIdentity.title')}
+        message={t('VerifyIdentityOverlay:errors.invalidIdentity.message')}
         onBackdropPress={controller.DISMISS}>
         <Row>
           <Button
@@ -132,7 +123,9 @@ export const SendVcScreen: React.FC = () => {
         isVisible={controller.isSendingVc}
         title={t('status.sharing.title')}
         hint={
-          controller.isSendingVcTimeout ? t('status.sharing.timeoutHint') : null
+          controller.isSendingVcTimeout
+            ? t('status.sharing.timeoutHint')
+            : t('status.sharing.hint')
         }
         onCancel={controller.isSendingVcTimeout ? controller.CANCEL : null}
         progress
@@ -153,7 +146,7 @@ export const SendVcScreen: React.FC = () => {
           vcLabel: controller.vcLabel.singular,
           receiver: controller.receiverInfo.deviceName,
         })}
-        onShow={controller.DISMISS}
+        onBackdropPress={controller.DISMISS}
       />
 
       <MessageOverlay

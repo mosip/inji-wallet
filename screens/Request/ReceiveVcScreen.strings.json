@@ -1,5 +1,6 @@
 {
   "header": "{{vcLabel}} details",
   "acceptRequest": "Accept request and receive {{vcLabel}}",
+  "acceptRequestAndVerify": "Accept request and verify",
   "reject": "Reject"
 }

@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 import { Dimensions, StyleSheet, ViewStyle } from 'react-native';
 import { Spacing } from '../styleUtils';
 
@@ -21,6 +22,7 @@ export const DefaultTheme = {
     TabItemText: Colors.Orange,
     Details: Colors.Black,
     DetailsLabel: Colors.Orange,
+    LoadingDetailsLabel: Colors.Orange,
     AddIdBtnBg: Colors.Orange,
     AddIdBtnTxt: Colors.Orange,
     ClearAddIdBtnBg: Colors.Transparent,
@@ -110,9 +112,11 @@ export const DefaultTheme = {
     },
     labelPartContainer: {
       marginLeft: 16,
+      flex: 1,
     },
     labelPart: {
       marginTop: 10,
+      alignItems: 'flex-start',
     },
     openCardBgContainer: {
       borderRadius: 10,
@@ -149,7 +153,7 @@ export const DefaultTheme = {
       justifyContent: 'space-between',
     },
     logo: {
-      height: 30,
+      height: 36,
       width: 30,
     },
     homeCloseCardDetailsHeader: {

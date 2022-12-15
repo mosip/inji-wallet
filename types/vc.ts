@@ -4,12 +4,14 @@ export interface VC {
   tag: string;
   credential: DecodedCredential;
   verifiableCredential: VerifiableCredential;
+  verifiablePresentation?: VerifiablePresentation;
   generatedOn: Date;
   requestId: string;
   isVerified: boolean;
   lastVerifiedOn: number;
   locked: boolean;
   reason?: VCSharingReason[];
+  shouldVerifyPresence?: boolean;
 }
 
 export interface VCSharingReason {

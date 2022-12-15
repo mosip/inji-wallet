@@ -23,7 +23,7 @@
     },
     "connected": {
       "message": "Connected to device. Waiting for {{vcLabel}}...",
-      "timeoutHint": "No VC data received yet. Is sending device still connected?"
+      "timeoutHint": "No data received yet. Is sending device still connected?"
     }
   },
   "online": "Online",
