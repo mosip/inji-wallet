@@ -30,6 +30,8 @@ export const SettingsEvents = model.events;
 
 export const settingsMachine = model.createMachine(
   {
+    predictableActionArguments: true,
+    preserveActionOrder: true,
     tsTypes: {} as import('./settings.typegen').Typegen0,
     schema: {
       context: model.initialContext,

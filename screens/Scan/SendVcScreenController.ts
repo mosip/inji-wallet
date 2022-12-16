@@ -22,7 +22,6 @@ import { selectVcLabel } from '../../machines/settings';
 import { selectShareableVcs } from '../../machines/vc';
 import { vcItemMachine } from '../../machines/vcItem';
 import { GlobalContext } from '../../shared/GlobalContext';
-import { VC } from '../../types/vc';
 
 export function useSendVcScreen() {
   const { appService } = useContext(GlobalContext);
@@ -49,7 +48,6 @@ export function useSendVcScreen() {
   }
 
   const [selectedIndex, setSelectedIndex] = useState<number>(null);
-  const SELECT_VC = (vc: VC) => scanService.send(ScanEvents.SELECT_VC(vc));
 
   return {
     selectedIndex,
@@ -58,8 +56,8 @@ export function useSendVcScreen() {
     SELECT_VC_ITEM:
       (index: number) => (vcRef: ActorRefFrom<typeof vcItemMachine>) => {
         setSelectedIndex(index);
-        const vcData = vcRef.getSnapshot().context;
-        SELECT_VC(vcData);
+        const { serviceRefs, ...vcData } = vcRef.getSnapshot().context;
+        scanService.send(ScanEvents.SELECT_VC(vcData));
       },
 
     status,
@@ -80,7 +78,6 @@ export function useSendVcScreen() {
     isCancelling: useSelector(scanService, selectIsCancelling),
 
     CANCEL,
-    SELECT_VC,
     ACCEPT_REQUEST: () => scanService.send(ScanEvents.ACCEPT_REQUEST()),
     VERIFY_AND_ACCEPT_REQUEST: () =>
       scanService.send(ScanEvents.VERIFY_AND_ACCEPT_REQUEST()),

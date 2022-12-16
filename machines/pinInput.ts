@@ -22,6 +22,8 @@ const model = createModel(
 
 export const pinInputMachine = model.createMachine(
   {
+    predictableActionArguments: true,
+    preserveActionOrder: true,
     tsTypes: {} as import('./pinInput.typegen').Typegen0,
     schema: {
       context: model.initialContext,

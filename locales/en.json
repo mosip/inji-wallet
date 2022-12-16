@@ -54,7 +54,7 @@
     "usePasscode": "I'd rather use a passcode",
     "errors": {
       "unavailable": "Device does not support Biometrics",
-      "unenrolled": "To use Biometrics, please enroll your fingerprint in your device settings",
+      "unenrolled": "To use Biometrics, please enroll your biometrics in your device settings",
       "failed": "Failed to authenticate with Biometrics",
       "generic": "There seems to be an error in Biometrics authentication"
     }

@@ -27,7 +27,7 @@
     "@react-navigation/bottom-tabs": "^6.0.7",
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/native-stack": "^6.1.0",
-    "@xstate/react": "^2.0.1",
+    "@xstate/react": "^3.0.1",
     "base64url-universal": "^1.1.0",
     "buffer": "^6.0.3",
     "crypto-js": "^3.3.0",
@@ -69,7 +69,7 @@
     "react-native-swipe-gestures": "^1.0.5",
     "react-native-uuid": "^2.0.1",
     "react-native-vector-icons": "^8.1.0",
-    "xstate": "^4.26.0"
+    "xstate": "^4.35.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
