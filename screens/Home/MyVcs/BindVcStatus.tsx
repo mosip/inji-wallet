@@ -8,6 +8,7 @@ import { useBindVcStatus, BindVcProps } from './BindVcController';
 
 export const BindStatus: React.FC<BindVcProps> = (props) => {
   const controller = useBindVcStatus(props);
+  const { t, i18n } = useTranslation('VcDetails');
   var message: string = controller.walletBindingError;
 
   return (
@@ -31,11 +32,11 @@ export const BindStatus: React.FC<BindVcProps> = (props) => {
             </Text>
           ) : (
             <Text align="center" margin="16 0 0 0">
-              {'Successfully added to wallet'}
+              {t('verificationEnabledSuccess')}
             </Text>
           )}
 
-          <Button title={'GO BACK'} onPress={props.onDone} />
+          <Button title={t('goback')} onPress={props.onDone} />
         </Column>
         <Column fill></Column>
       </Column>

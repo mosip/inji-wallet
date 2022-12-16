@@ -274,6 +274,7 @@ interface VcItemProps {
   margin?: string;
   selectable?: boolean;
   selected?: boolean;
+  showOnlyBindedVc?: boolean;
   onPress?: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
   onShow?: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
 }
