@@ -23,6 +23,7 @@ import {
   selectShowBindingStatus,
   selectEmptyWalletBindingId,
   isWalletBindingInProgress,
+  selectShowWalletBindingError,
 } from '../../machines/vcItem';
 import { selectPasscode } from '../../machines/auth';
 import { biometricsMachine, selectIsSuccess } from '../../machines/biometrics';
@@ -142,6 +143,7 @@ export function useViewVcModal({
       vcItemActor,
       isWalletBindingInProgress
     ),
+    isBindingError: useSelector(vcItemActor, selectShowWalletBindingError),
 
     CONFIRM_REVOKE_VC: () => {
       setRevoking(true);
@@ -173,6 +175,7 @@ export function useViewVcModal({
     BINDING_DONE: () => vcItemActor.send(VcItemEvents.BINDING_DONE()),
     LOCK_VC: () => vcItemActor.send(VcItemEvents.LOCK_VC()),
     INPUT_OTP: (otp: string) => vcItemActor.send(VcItemEvents.INPUT_OTP(otp)),
+    CANCEL: () => vcItemActor.send(VcItemEvents.CANCEL()),
   };
 }
 

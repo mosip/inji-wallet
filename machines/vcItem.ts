@@ -34,6 +34,7 @@ const model = createModel(
     otpError: '',
     idError: '',
     transactionId: '',
+    bindingTransactionId: '',
     revoked: false,
     walletBindingId: '',
     walletBindingError: '',
@@ -60,6 +61,7 @@ const model = createModel(
       REVOKE_VC: () => ({}),
       ADD_WALLET_BINDING_ID: () => ({}),
       BINDING_DONE: () => ({}),
+      CANCEL: () => ({}),
     },
   }
 );
@@ -67,7 +69,7 @@ const model = createModel(
 export const VcItemEvents = model.events;
 
 export const vcItemMachine =
-  /** @xstate-layout N4IgpgJg5mDOIC5QDcDGBaAlgFzAWwGIAlAUQDFSBlACQG0AGAXUVAAcB7WHTdgOxZAAPRABYATABoQAT0QBGMQA4ArADpFATnEB2AGwBmMcrEjFAXzNS0WXHlWoAFmFQBrTLygA1VAQDiJABUAfU8AYSCqAAUAeQA5ShIGZiQQDi5sHn4U4QQROX1VXRFlDTlNXV1tPX0pWQQ5YzFVekU5PW0NXXzFDosrDBx8eydXdy8ff2CwiJJKGPjEuWS2Tm4+ARy8gqKSss7K6tr5EXpdQpFxVoV9RX19ZT6Qa0G7R2c3D0psdgAnMAJKAFoqQZnM4gkkgI0mssqAcopJDJRHINIpVPcxLorroxBoNGJHs9bMN3mMvr9-oDgSRQfMIUsoasMutsvJ6CJtKoOm08WI7hplPQakj6ko1Kd6FpcaVSg9LE8BsS3qNPmAfsg1QARACG2G1JJVUC+uoArrACDEADKWyEpaHM2FCRBiNqqIzGFEqHGYipHBD6UpNOT0TFGfHaejaRQiQmKobKj5GtUan46vUGxPG7Bmgia6IAdViluiAEFNTMywBNW0rdKZDbIjSqYPiModJTsjR+k76M4SjQB0oh0y6WM2eMjTPJrW6-UQdgAd14ABt2NqIGNQn8IGBeBltcuLdFrTXUkz66yEFV6KoLkojDpWgi-QGxJyyspNJKhUotGOXhmZLTqms6qPOS6ruum7bru+6HqEpCaiQsQBAAkiWlpBHmhbFmWJCaqe9oXnCbLKCIzb3IKqINLoAovqiaLaG+ZHaPo4ghnIMbykSQyYBAy7-PhqHBAEJa+IR54siR9Qok2ygeqibEGJGL7cs2ii6EKmh4oYQr-sSfECQQngkEQqFkNWTCMnWUlOggYgOWcPTGCIOIDrRcjdm+ciqMoKI3DcGiSmxcr9OOdiGf8xahAA0iEoQSTZjo5N56J3AFYhCuyyjCnUulNBGlTRnymmVKFCrhaokXECQnjRDFNJhIlMINqKfoKPpvH8f8ZblvmGGWoEQQAEKobEmpjb4QSoQRVl2pJyXOliBRsScwZ4iGLoviiZxdK5rQGPiLqdXYkDcB4ATalAuaoZQACyt2UM1DqtXIsm+QptyufoKkir2Ea3vceKfoKBzlTxp0bhkF1XQCJYmUEoniXNtYtZeb2aB9LqKd9v15YK5EOdU9A7b2A4naosDfD8YyXddVIglE4KJCjZ5Ja9gpokK+RMYKbQKNoL4E26b7KaTtH6BTKaYAAZtI0GQLBmAHgQ868GAVW8Mg7AuBrEOqNLcsKzue7K8uCDuNrqC6pkSTPcRdkOXITnaC5blk55Io9k0WIlNoewGFUUtqrL8seFuiumyrao-L8qisMuuoy78dj64bYdQBHJtwRbWvsNbDp26zRG2SljnqK7Jjux53ZtGiyiacDGj+-o2hcWFAEJmMnghzLmAF5kWY5vbpfyK0TaKF6lTBfJWL0Zx6klPibFRqYBLcXGryTt3vf9zbfBD+atAMvN7Po+P6hTxGA6z4oXk5ecIj6GUwYk50FOWwefEEGNkQAKrBGiAESII9Fr2X9mlO4txMo-WKLlRAP1ey3lRMUPy9AG58g-lrL+EAbr3UeqA1qqV0oZSynAl8AU3SnCjPJAUD5Rwb0qn8AAjiaOA0MoDRGwKwVWfANaWx1nrTeqgWFsKpmMLhrBc5W33rwIuyw2Zo2kiYTkWgOiTxaJiVoNw-RBTRJxC4rEBSGE5hTUR7CJHcIIDHOOCck4pwNsI8x4iPCSOkfnWR8jrJKMdsoVRHIGKaKxJxdqKIgwhgjNGXmtwKbalQKgMArAOGSNQrwVgJpsA-1iP-QBwDCGXnuDeIoXRW5aF7FRXQfolA9EKHyC40Zm64juLE+JiTkncNSekzJE18GUCesXBarU2JFNcjzMpugKlVMqE0EwtwmLsn9sdRhAE4kJKSWMIgYBta606RkrJOSghAJAQMs+yiVDnBKOyFEkoXRvj9K7JsbcVCfjaCcepLS1kcM2dssAuzum3Qen0-JZy1A7CCnkIK+IBYvg5FyIKHF8QaVKBUMxYBWEWI8JafOLheHq01j8xxTC0ViI4Vi1w7iB58C8afHxOQ24FGdrRIo6DIxNKqaULmT4Qp5HbKi9FLioBkpxTYn48dE7YGTj8VOTjiUYsFdiilnimDArsoU84JSOhPwmZKSpIo3xaEKNqzSfiqiGG0BTVchpvAAiBIzWYdIWYKJLmAt6ztbzO00K3b8Qp4H2QHE2Z+koOT0BDD0SWyziTOK+VswRuL+F511oSgCUaNkxt1oqwuyqTm0sQL7LkuIThkWDDiKofoKgBvWi0eS0Yijrw7pG2VArvmxpFWK+xUqk0Nv5dGn5GbbZZqdYMy8eamJaHQXkU4b5BYiijIxUWnF5J+Kfqi7Z3cfAMxpEzBYKqcg-TUIKENeQcStzuByKp8kmjFAqCoDkvY8gWvYFAKAqafl4MBf0wdpy7IRgKJGH6fJkVdD5Oe4wt4G6+1vcy9uFVk2No4cNdwG5XFWLVvGgl+sU0eAQ7wJDnDuF9qpQO7xL10ZwMKFUCFR1qnTrqGEm8-Ya0-Vds7PlJKxjYdw5I6xPxY6irsRKhxGG4PscQ5YqRAjKVyKIzSkj0lnxexuDeDoIbjHaIch8tpImcNif2QAw5eTs2ybssYJsuIygtBuGUcQyg-TGBvE-S5KI+b8g0+srDonkM8J6e+nd8hDBVJDGoO4bQ-E4j8m9cGwj1wQBimAaQkRtSYB+HG-FgjO1DGi7F+LiWfgEak4wXz-oShck0iIcMYbMRaCqTcJoeIEQug0n5DQsSIAxbiwlpL3HeNtoEx2-WmX2s5by9S1GRnd3Fb0J2N8FXaIiCqZxTkTyLhdHkkxZpEaMutbGPmA8AlsAcbGKhXBqHUuJv61tjwO3lx7YOx4I7w3pOjYdvCTKvkcTXsjD6rseqbjkTfsFCzRQWMbbsNF7bu2wD7Y81AI7XXbHisldKyqYPLsQ6h9pu7EAHsFcM89xACIbwYI+z+gMVTfz5tdgYPIOVPUU1gA4Rct2jR6mzOaUa41JpYTiI64jePRRP3dbRE1Qp1E0edE-HyhUsTUMFPJLi8peDsB3PAFIENeejwQOgXsfp0AKHoyGkmLcSboIbhTLuHhvDq7AeIdqI43s3IaDlKMbEzfb0+NTMAVvWqsQKAe04vY2KOTmyKfIsKG6Sh6LKYobRXeklVOqGceoveXjbqpTShQQxYlohtcN9aJxx6TAnkC6ZzfM9NCrp7GuFCIjqGtX9jdOilMabHw0lBgJpjnIuFca5cNZyVgeZP0kcRojYgFZuBwoXdlDc2O8JSG5lFzzBgy3VB+OwuH94tqITD8jaNtdPe1WLXyqDtCmZ0OF01XzkYMZEKLyQjzROif1nfonWlvsrzd0F0+prTK6l+-NKGbAW2fjel7EzyFiFFUAFEqCCgDDHwYTz1Tl7gzj7yjmXD-3qC3y5GuRKE9SqDuS9gchHzKXC1chNxb0TB7hpj7kk0PnQPyDfEvgvRMHxCvWD1r0yiaFaElFYjKEUG4KwWQBwXQIgRsz+j3TAyKhgNcmMEi0qk-mXD4lUHYG4ToJRF8goXxEgIbmU1gNuHfhB3xRwVUAACM4ldYcM6CHIYU-IJCOg8Qhxr9WM5VJF0CbcQ9nZFtqFJ5eDV460l8MtWk3M8NWA-k6C8ZnQegfJfZAw24ItzUDDVlNMPBm0dk0kMlXCa9EAmJyJgD8gSg-Jt8-ChNu0xghV0Cco1AHItAAkAwPVRC6gzMzhA18QDhZkY8DDLUKDUB0D8QmwLMl4ugKhXl2U3VmjMQ8DTB2iECRFhNki01PcZM+dXImg7MUE2hJQyhMirxzl3IQDOIBwAkV0dY11VCxd7ITMJDPwb1n4MQH0n0X1BFyj0Fmhn4lAMRMQn52Rz03Ur0KhxB8pZDYMSj3MMdgj0CmkzhURUR-ZV5xA2CEE2htgF0okWh-Z5JXN4NocXDFiNcxQLlwVrkoV8C6hhYytbghj-Vm5XYWs2tssktLCzi+Q+CqFplspI9l0EiLsoArsbtocjtyiAYD1r9Q1URwj7IAxyIr0yIcYVBF99Z6dGdodaCcSXV2Q0RSt-iNVjBfVCiWTpcyoTd5czAgA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QDcDGBaAlgFzAWwGIAlAUQDFSBlACQG0AGAXUVAAcB7WHTdgOxZAAPRABYATABoQAT0QBGABwBWAHT0FAZjEB2bSKUBOA9rliAvmalosuPCtQALMKgDWmXlABqqAgHESACoA+p4AwkFUAAoA8gBylCQMzEggHFzYPPwpwggKBiIqcvqaAGwGSvT0SnJSsgjicio69Np5GvTFSiIWVhg4+PZOru5ePv7BYREklDHxiXLJbJzcfAI5eQVFSqXlldW1iO2qmlpKhtpnGkbdliDW-XaOzm4elNjsAE5gBJQB0aRTGZxBJJARpFZZUA5OSmA4IMRyDQFDRKDQmMRiDRyAwKG69GwDJ7DV7vL4-P4AqLA+aLVLLDKrbLyJRiBRNAxybT0MRnQwKBSSGTyXFNERGPIwhFo-k9O59WyDZ4jShgD7IVUAEQAhtgtYriVA3jqAK6wAgxAAyFtBKXBDMhQkQPO0TTORQMJRZ2hKyjhihEbLkHRaXVRcmqCll9wVRJehtV6o+2t1+rjRuwpoIGuiAHVYhbogBBDVTYsATRtS3SmTWokMhWD9HyJRKRUxfuMYjUJQRBnaii6VSj8sJQzTCc1Or1EHYAHdeAAbdhaiAjUJfCBgXgZLUL83RK2VunVxlQxAKIMqETiCVo6pnBR+hQlDSFBTaMQlEQdL8dPFyglHjHZUJyTKcVBneclxXNcNy3Hc91CUgNRIWIAgASULC0gmzPMC2LEgNSPO0ayZBAg3yQoURMGjLg9DsxAKD88gxERsQDVph0AlRMAgBdvkI9DggCQtfGI+lSLPeERBdNiShMIMtDFb8lDhT9ORUNERDKZ9rw-JQuIeHi+O+TwSCIdCyArJgwQk09HXhT8ShUd8ujyFkMUMEo1LEFoVBZbl6BhBQQzRQyFV4-iCALUIAGkQlCcSTwdHIdA0V8kW01k5BKegexaNTvUad9r206of3MW5owGSLvlITxolikgEqSiFa1yQU6lZEKXL0JRPS5AMXwMqqRzsWqCGLEscywi1AiCAAhdDYg1ZbfCCdCiJs207JS+ROv28KBkgbgPACLUoCzdDKAAWWuyhWvtdrMVknKFPoJT8iqNT0voQp9By79TB7AwjrsE6MjOi6fkLMyghEsTtqrNqyMY175JhD7GK+1ShWk6pChbREBQMDpPzBlRYFJEZzsu35-maqk5keySHP645yhbDolMUbQ1IBwnWw0EmyZKCnE0wAAzaRYMgeDMF3AgZ14MAeN4ZB2BcVXqrsCXpdlzdtwVhcEHcDXUB1TIkhZ+zUqc3q3PKDEeXovHfNbFQvwqSoUSbF9xdVKWZY8dc5aNxXVQ+T4VFYBcdUlz5dbGlQ9eDqBQ8NhDTfV9gLfta2kePFGpM85zXIDJ3PNdupsR9T3n3KFFlDYnKKdjEZPEDyXMDzzJ00zG29vI5QDBc5QuSMfqPUUJ8KjfMogp5apurb4CPE7j4pZ7y2+H7s1aAWWzkvagdR-5JQJ856fHzdxRR69gMZP5FptAps3d14ghlsiABVYJogCJEQe7UtAujyjyHQRR5JiD7HCEQVxVBP2MHlPq-tRrcXfguT+q1br3WAWRUB3YIEmG0h+WBeNhZflFMYVsYoSGVXxEZL4ABHY0cBIZQGiNgVgSs+CqzNprbWycWFsKpiMLhrBs7mx3rwAutISK23kDCV8MDfLpX6pUD6cCuTOT7NoShbEL75ApiI9h4juEEEjtHWO8dE4p2EWAVhZiPASKkbnGRcij7FwcjCRE7I1Eolyj7OBQsVDGFJp6fQMCigUy1KgVAYBWAcIkehXgrBjTYC-rEX+-9AH4KkmUVQ4C3S4lKTiOBzQVDMQFEDC+SJYnxMSck7hqT0mZJwXdSgD1C4KKHqYJs9cQrtHKHoRicINAY38iTTQ1waIaAaQkpJIwiBgA1lrVpGSsk5KCAAoBPTdonzeoUIov1tBfRgbjGuiJjjpS0O0TQLIRqMIVHExZHCVlrLABs9p11OndPkQcsiRhGimH0GKAUXIsZwjIVebYPIfSIkfq-dBTDHGiI4RaXOLheEqzVp8+x3FTFiI8Ji1wbje58E8TtY+ZEfRFJ7CUx+eQb51CuM+KpXJzj3MUGLFFCoiUYqxZYj4UcPgxzjtgBOHwk6ErRc4qApKXDko8UwfJDlClEMZWUllog2L3w+n2KUDyhx8oGEuA03hyQM0BLMEE+yaVSV8SogwASNHBLxt+PyRgPTvhyuoF1Ji5XEqgB8wROL+E5y1gS1FTjg2hq1sq-Oqr7XeNSqTJo6g0TekxBeE54yfaC17PJF86hA2xveassNVixU2MlXYnWKgBXLMrQmgRFLZHJoBQ6hyhDimQNITAjQcCYSqACmKPKTt0qBrWR3Hw9NKTTFtYkFNT1aVnJcuUAUFQrifj0PmtEntGKtmbPJb8vLnlmvYFAKAzbPlXVwV0tV0IX5Xh9N6xEaJWQHQQO0A9PZtLsRbHoPKZb0UjAWu4VcLiLHKwjfihtTaPAQd4FBzh3DE1W07V41dUlf1hMgQ8oMRjv3A1UEGM9T8ijiCeQBGNYGkOQfMTw6t4rbHSujfyoNHDkOodcW2lVjAn2HA+vhkwhGqhnO-RURogVi1C36vAimsAHBzhICKz4BBQiFliKEEg1oV2sxyJ6ZypgKjPm9HkPKOqEAeWod6eBjFFJyAWU08DjHoM8O-n-HZeSDOKIQBcWSrQZk5UoeGP0S8qnRPDF+i4wsXNLIYyhpj96-lCYCxfK8wWrihefOFvGF8ux6G9byZ0sSIAQFimAaQkQtSYA+OGvFgiOMDBXJV6rtX6sYcpVh6lqalHyWOfA9oZzvwXIiyKLkJM2ItBkvo8r7Wat1Yayx2tUqZVGTa1VpbXX+NJsE35vpRyYTDZaOc8ofoya9TFIDdK4TkUXrsG1kYOZdz8WwDxkY6EICNYEVGhtz2PCvYXO9z7HhvvdY7Qdrt-Wf0aT7SQ6B5DWWFc0noeS6V9H9Xqaap7FWXtvbAB99zUBvvCtFaxut7GAf46B4T4nyXwcQEh1S5GOGe1+QR1AshQ6KFYk2IxVEAomwohow240rAICWw8JETeyAdRgG279yNQjuIS6lxw2XmB5e4G2yz3rbPDOIFaGRlETKZKYhfOMupmlyiDkChcEDuOVDq+l1ALXOvFfVfJ9YiV62Wt2Fd5ruXCu9d7cw9D7DRuAvKCom5JFlveesv0CZj6ehwxIlMA92jCplNzjB4aXUGYzRLRWmtHCcRl0w-Z9CXy99n7DIvuIEQ4yewyZJhMowPIQojVuLwdgm54ApB1lH-z6AJlwnQP0tQmjTBIgFFnhhOfRxKnXqgUfQ9bPexyuUD0YpDDjNj8V5sQUX4nFXqvwvnwwAb5PgiAomi-YIlZMUfmzlj-FFaF+zEF+DQqjVJOLqLfmRCdn6GUM5LlN+M+O0PJE7o9qmCBAAWBCmO3CSCaEPobv5jlCRvkKPOAr5OoKUoYGLsnKgfGEgcmNOHOIuMuKhhnPLLuMAQUnXEiFmnUqiLoDgVQlsMLPkK0L4uesvuNCZEwQ5NjA-pKKiEYPoroIVDyNdkNPkCOq3M7hDDTBdKIc+t+p+AMmKMYFiO+B6KDM7lTJ8OoVAJoYcLHuEkFMLJ+FiC6t5G7PoH9O5DoB6J+M+BiAHJvPrCHHBOHAuJYfCNyEVtiBiKwb5J+GpIDLbl0F+kYBMkvg2mQRvFvO2nvMEYiINufDRB+BZloDEcLC5KYHXopNsLiG-OrB-BAMEWxFeO+pUDApUB+nAkiH9MUHlNiPoiFMkcnJgrxCoOwNwsEXkA0cCk0aTLYUnrqjoGEtsFnl7MVlUfLlghACoAAEZxJawobBEupwJDSwpnJ8FVD8jZ4IZcZMbBGshUK5QsgTJBQXgi4hIDJTYIjchGB3EJbNKsDfKjHrpfhCzwJ5b6EVKaBhKhYuq6R0IkHcSvKuYeDxpfJpIZLBGBZZb8g5Yvh5aXJKKVBxE95iY3aRjO6IYKpYp1EfiFA8iIichcgnbfrwLlAZq5q+SYxBQUzmpxjeD-F-ThIyQfQwh6B5DjI4gFDeqFLcgfgwiCEXHlq3qCLBHyTDqmBRYN475jbTqayzp1EcgEl6IBjVC8z5pFCHr6BohJF5QdCclXo3qIkto359Y17njrriBiYupOxVC4k-otFmn9S6C4ifioigbyoF4SJ1EkaMR-RTZojTynHGImEqazhqairBFej+QtGFJ7675wi2Yf6-gCjySwmbaNKJZQBhkjFOnR4shsgnCmDKCVAmDlJ4ymZ-S3LNDBiwHGHwFbYdbLZ7FIiaRC6fh0Kfj7EtnZQQmejKDhjigmo9m05QDA6g4k7fZpl8weoQLzEL55TaTzLO5B4jAe6h7VZpn6ANh6ruHwIyTelNyvgnBVAejqBfgknwF56zgF6ZFVlYEFpQKKQchvStDW44hqDTaGl5AWAWBAA */
   model.createMachine(
     {
       tsTypes: {} as import('./vcItem.typegen').Typegen0,
@@ -365,27 +367,30 @@ export const vcItemMachine =
             onDone: [
               {
                 target: 'acceptingBindingOtp',
-                actions: log('accepting OTP'),
+                actions: ['setBindingTransactionId'],
               },
             ],
             onError: [
               {
-                target: '#vc-item.invalid.backend',
-                actions: log((_, event) => (event.data as Error).message),
+                actions: 'setWalletBindingError',
+                target: 'showingWalletBindingError',
               },
             ],
           },
         },
+        showingWalletBindingError: {
+          on: {
+            CANCEL: {
+              target: 'idle',
+            },
+          },
+        },
         acceptingBindingOtp: {
-          entry: ['clearOtp', 'setTransactionId'],
+          entry: ['clearOtp'],
           on: {
             INPUT_OTP: {
               target: 'addKeyPair',
-              actions: [
-                log('calling addKeyPair'),
-                'setTransactionId',
-                'setOtp',
-              ],
+              actions: ['setOtp'],
             },
             DISMISS: {
               target: 'idle',
@@ -402,8 +407,8 @@ export const vcItemMachine =
             },
             onError: [
               {
-                target: 'idle',
                 actions: 'setWalletBindingError',
+                target: 'showingWalletBindingError',
               },
             ],
           },
@@ -413,26 +418,33 @@ export const vcItemMachine =
             src: 'addWalletBindnigId',
             onDone: [
               {
-                target: 'showBindingStatus',
-                actions: [
-                  'setWalletBindingId',
-                  'storeContext',
-                  log(
-                    (_context, event) =>
-                      'Received walletBindingId : ' + _context.walletBindingId
-                  ),
-                ],
+                target: 'updatingPrivateKey',
+                actions: ['setWalletBindingId'],
               },
             ],
             onError: [
               {
-                target: 'idle',
                 actions: 'setWalletBindingError',
+                target: 'showingWalletBindingError',
               },
             ],
           },
         },
+        updatingPrivateKey: {
+          invoke: {
+            src: 'updatePrivateKey',
+            onDone: {
+              target: 'showBindingStatus',
+              actions: ['updatePrivateKey', 'updateVc'],
+            },
+            onError: {
+              actions: 'setWalletBindingError',
+              target: 'showingWalletBindingError',
+            },
+          },
+        },
         showBindingStatus: {
+          entry: 'storeContext',
           on: {
             BINDING_DONE: {
               target: 'idle',
@@ -449,6 +461,14 @@ export const vcItemMachine =
 
         setPublicKey: assign({
           publicKey: (context, event) => (event.data as KeyPair).public,
+        }),
+
+        setPrivateKey: assign({
+          privateKey: (context, event) => (event.data as KeyPair).private,
+        }),
+
+        updatePrivateKey: assign({
+          privateKey: () => '',
         }),
 
         setWalletBindingId: assign({
@@ -564,6 +584,10 @@ export const vcItemMachine =
           transactionId: () => String(new Date().valueOf()).substring(3, 13),
         }),
 
+        setBindingTransactionId: assign({
+          bindingTransactionId: (_, event) => event.data as string,
+        }),
+
         clearTransactionId: assign({ transactionId: '' }),
 
         setOtp: model.assign({
@@ -596,53 +620,48 @@ export const vcItemMachine =
 
       services: {
         addWalletBindnigId: async (context) => {
-          let response = null;
-          try {
-            response = await request('POST', '/wallet-binding', {
-              individualId: context.id,
-              otp: context.otp,
-              transactionID: context.transactionId,
+          const response = await request('POST', '/wallet-binding', {
+            requestTime: String(new Date().toISOString()),
+            request: {
+              individualId: '8267411571',
+              transactionId: context.bindingTransactionId,
               publicKey: context.publicKey,
-            });
-          } catch (error) {
-            console.error(error);
-          }
-          // this is the binding id -
+              challengeList: [
+                {
+                  authFactorType: 'OTP',
+                  challenge: context.otp,
+                },
+              ],
+            },
+          });
           return response.response.id;
+        },
+
+        updatePrivateKey: async (context) => {
+          const hasSetPrivateKey: boolean = await savePrivateKey(
+            context.walletBindingId,
+            context.privateKey
+          );
+          if (!hasSetPrivateKey) {
+            throw new Error('Could not store private key in keystore.');
+          }
+          return '';
         },
 
         generateKeyPair: async (context) => {
           let keyPair: KeyPair = await generateKeys();
-
-          console.log(
-            'printing keys ====================================================='
-          );
-          console.log(keyPair.private);
-          console.log(keyPair.public);
-
-          const hasSetPrivateKey: boolean = await savePrivateKey(
-            context.verifiableCredential.id,
-            keyPair.private
-          );
-
-          if (!hasSetPrivateKey) {
-            throw new Error('Could not store private key in keystore.');
-          }
-
           return keyPair;
         },
 
         requestBindingOtp: async (context) => {
-          try {
-            return request('POST', '/binding-otp', {
-              individualId: context.id,
-              individualIdType: context.idType,
-              otpChannel: ['EMAIL', 'PHONE'],
-              transactionID: context.transactionId,
-            });
-          } catch (error) {
-            console.error(error);
-          }
+          const response = await request('POST', '/binding-otp', {
+            requestTime: String(new Date().toISOString()),
+            request: {
+              individualId: '8267411571',
+              otpChannels: ['EMAIL'],
+            },
+          });
+          return response.response.transactionId;
         },
 
         checkStatus: (context) => (callback, onReceive) => {
@@ -885,10 +904,15 @@ export function selectShowBindingStatus(state: State) {
   return state.matches('showBindingStatus');
 }
 
+export function selectShowWalletBindingError(state: State) {
+  return state.matches('showingWalletBindingError');
+}
+
 export function isWalletBindingInProgress(state: State) {
   return state.matches('requestingBindingOtp') ||
     state.matches('addingWalletBindingId') ||
-    state.matches('addKeyPair')
+    state.matches('addKeyPair') ||
+    state.matches('updatingPrivateKey')
     ? true
     : false;
 }

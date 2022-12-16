@@ -110,14 +110,22 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
         <BindStatus
           isVisible={controller.showBindingStatus}
           bindingError={controller.walletBindingError}
-          onDismiss={controller.DISMISS}
+          onDismiss={controller.BINDING_DONE}
           onDone={controller.BINDING_DONE}
         />
       )}
 
       <MessageOverlay
+        isVisible={controller.isBindingError}
+        title={controller.walletBindingError}
+        onCancel={() => {
+          controller.CANCEL();
+        }}
+      />
+
+      <MessageOverlay
         isVisible={controller.isWalletBindingInProgress}
-        title={'In progress...'}
+        title={t('inProgress')}
         progress
       />
 

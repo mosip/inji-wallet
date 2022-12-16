@@ -47,10 +47,12 @@
     "nationalCard": "National Card",
     "uin": "UIN",
     "enableVerification": "Enable Verification",
-    "profileAuthenticated": "Profile is authenticated!",
-    "offlineAuthDisabledHeader": "Offline Authentication disabled!",
-    "offlineAuthDisabledMessage": "Click 'Enable Authentication' to enable this credentials to be used for offline authentication.",
-    "vid": "VID"
+    "profileAuthenticated": "Verification enabled",
+    "offlineAuthDisabledHeader": "Verification not enabled!",
+    "offlineAuthDisabledMessage": "Click here to enable this credentials to be used for verification.",
+    "vid": "VID",
+    "verificationEnabledSuccess": "Verification has been enabled for this credential.",
+    "goback": "GO BACK"
   },
   "AuthScreen": {
     "header": "Would you like to use biometrics to unlock the application?",
@@ -145,6 +147,7 @@
     "requestingOtp": "Requesting OTP...",
     "editTag": "Rename",
     "redirecting": "Redirecting...",
+    "inProgress": "In progress...",
     "success": {
       "unlocked": "{{vcLabel}} successfully unlocked",
       "locked": "{{vcLabel}} successfully locked",
