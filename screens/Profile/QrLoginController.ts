@@ -22,6 +22,7 @@ import {
   selectVoluntaryClaims,
 } from '../../machines/QrLoginMachine';
 import { selectVcLabel } from '../../machines/settings';
+import { selectBindedVcs } from '../../machines/vc';
 import { vcItemMachine } from '../../machines/vcItem';
 import { GlobalContext } from '../../shared/GlobalContext';
 import { VC } from '../../types/vc';
@@ -31,6 +32,7 @@ export function useQrLogin() {
   const { appService } = useContext(GlobalContext);
   const settingsService = appService.children.get('settings');
   const qrLoginService = appService.children.get('QrLogin');
+  const vcService = appService.children.get('vc');
   const [selectedIndex, setSelectedIndex] = useState<number>(null);
   const SELECT_VC = (vc: VC) =>
     qrLoginService.send(QrLoginEvents.SELECT_VC(vc));
@@ -43,7 +45,7 @@ export function useQrLogin() {
         SELECT_VC(vcData);
       },
 
-    vcKeys: useSelector(qrLoginService, selectMyVcs),
+    vcKeys: useSelector(vcService, selectBindedVcs),
     selectedVc: useSelector(qrLoginService, selectSelectedVc),
     linkTransactionResponse: useSelector(
       qrLoginService,
