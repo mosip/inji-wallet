@@ -27,6 +27,8 @@ export const ReceivedVcsTabEvents = model.events;
 
 export const ReceivedVcsTabMachine = model.createMachine(
   {
+    predictableActionArguments: true,
+    preserveActionOrder: true,
     tsTypes: {} as import('./ReceivedVcsTabMachine.typegen').Typegen0,
     schema: {
       context: model.initialContext,

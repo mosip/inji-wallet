@@ -42,6 +42,8 @@ const model = createModel(
 
 export const appMachine = model.createMachine(
   {
+    predictableActionArguments: true,
+    preserveActionOrder: true,
     tsTypes: {} as import('./app.typegen').Typegen0,
     schema: {
       context: model.initialContext,

@@ -1,6 +1,6 @@
 import React, { useContext, useRef } from 'react';
 import { useInterpret, useSelector } from '@xstate/react';
-import { Image, ImageBackground } from 'react-native';
+import { Image, ImageBackground, Pressable } from 'react-native';
 import { CheckBox, Icon } from 'react-native-elements';
 import { ActorRefFrom } from 'xstate';
 import {
@@ -124,7 +124,9 @@ export const SingleVcItem: React.FC<VcItemProps> = (props) => {
   ) : null;
 
   return (
-    <Column style={Theme.Styles.closeCardBgContainer}>
+    <Pressable
+      style={Theme.Styles.closeCardBgContainer}
+      onPress={() => props.onPress(service)}>
       <ImageBackground
         source={!verifiableCredential ? null : Theme.CloseCard}
         resizeMode="stretch"
@@ -175,7 +177,7 @@ export const SingleVcItem: React.FC<VcItemProps> = (props) => {
           )}
         </Row>
       </ImageBackground>
-    </Column>
+    </Pressable>
   );
 };
 
