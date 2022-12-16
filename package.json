@@ -69,6 +69,7 @@
     "react-native-swipe-gestures": "^1.0.5",
     "react-native-uuid": "^2.0.1",
     "react-native-vector-icons": "^8.1.0",
+    "react-native-openid4vp-ble": "ravikp/tuvali#main",
     "xstate": "^4.26.0"
   },
   "devDependencies": {
