@@ -8,6 +8,11 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
+    'done.invoke.GetVcModal': {
+      type: 'done.invoke.GetVcModal';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
     'xstate.init': { type: 'xstate.init' };
   };
   'invokeSrcNameMap': {};
@@ -35,9 +40,14 @@ export interface Typegen0 {
     | 'addingVc.storing'
     | 'addingVc.waitingForvcKey'
     | 'checkingOnboardingStatus'
+    | 'gettingVc'
+    | 'gettingVc.waitingForvcKey'
     | 'idle'
     | 'onboarding'
     | 'viewingVc'
-    | { addingVc?: 'addVcSuccessful' | 'storing' | 'waitingForvcKey' };
+    | {
+        addingVc?: 'addVcSuccessful' | 'storing' | 'waitingForvcKey';
+        gettingVc?: 'waitingForvcKey';
+      };
   'tags': never;
 }
