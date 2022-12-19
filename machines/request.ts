@@ -1,6 +1,9 @@
 import SmartshareReactNative from '@idpass/smartshare-react-native';
 const { IdpassSmartshare, GoogleNearbyMessages } = SmartshareReactNative;
 
+import Tuvali from 'react-native-openid4vp-ble';
+const { Openid4vpBle } = Tuvali;
+
 import uuid from 'react-native-uuid';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import { EmitterSubscription, Linking, Platform } from 'react-native';
@@ -618,7 +621,7 @@ export const requestMachine =
 
         advertiseDevice: (context) => (callback) => {
           if (context.sharingProtocol === 'OFFLINE') {
-            IdpassSmartshare.createConnection('advertiser', () => {
+            Openid4vpBle.createConnection('advertiser', () => {
               callback({ type: 'CONNECTED' });
             });
           } else {
