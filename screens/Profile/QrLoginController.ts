@@ -11,6 +11,9 @@ import {
   selectIsloadMyVcs,
   selectIsRequestConsent,
   selectIsScanning,
+  selectIsSharingBirthdate,
+  selectIsSharingGender,
+  selectIsSharingPhone,
   selectIsShowError,
   selectIsShowingVcList,
   selectIsShowWarning,
@@ -29,6 +32,7 @@ import { VC } from '../../types/vc';
 
 export function useQrLogin() {
   const [isQrLogin, setQrLogin] = useState(false);
+
   const { appService } = useContext(GlobalContext);
   const settingsService = appService.children.get('settings');
   const qrLoginService = appService.children.get('QrLogin');
@@ -36,6 +40,20 @@ export function useQrLogin() {
   const [selectedIndex, setSelectedIndex] = useState<number>(null);
   const SELECT_VC = (vc: VC) =>
     qrLoginService.send(QrLoginEvents.SELECT_VC(vc));
+
+  const SELECT_CONSENT = (value: boolean, claim: string) => {
+    if (value === false) {
+      qrLoginService.send(QrLoginEvents.TOGGLE_CONSENT_CLAIM(true, claim));
+    } else {
+      qrLoginService.send(QrLoginEvents.TOGGLE_CONSENT_CLAIM(false, claim));
+    }
+  };
+
+  let isShare = {
+    birthdate: useSelector(qrLoginService, selectIsSharingBirthdate),
+    gender: useSelector(qrLoginService, selectIsSharingGender),
+    phone: useSelector(qrLoginService, selectIsSharingPhone),
+  };
 
   return {
     SELECT_VC_ITEM:
@@ -57,10 +75,11 @@ export function useQrLogin() {
     error: useSelector(qrLoginService, selectErrorMessage),
 
     isQrLogin,
+    isShare,
     setQrLogin,
     selectedIndex,
     SELECT_VC,
-
+    SELECT_CONSENT,
     isScanningQr: useSelector(qrLoginService, selectIsScanning),
     isShowWarning: useSelector(qrLoginService, selectIsShowWarning),
     isShowingVcList: useSelector(qrLoginService, selectIsShowingVcList),
