@@ -136,7 +136,9 @@ export const qrLoginMachine =
 
         faceAuth: {
           on: {
-            FACE_VALID: 'requestConsent',
+            FACE_VALID: {
+              target: 'requestConsent',
+            },
             FACE_INVALID: {
               target: 'invalidIdentity',
             },
@@ -308,7 +310,6 @@ export const qrLoginMachine =
         },
 
         sendConsent: async (context) => {
-          console.log('==================================================');
           console.log('Individual id : ' + context.selectedVc.id);
           const resp = await request('POST', '/idp-authenticate', {
             requestTime: String(new Date().toISOString()),
