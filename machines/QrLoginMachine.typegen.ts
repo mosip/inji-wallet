@@ -27,6 +27,7 @@ export interface Typegen0 {
     SetErrorMessage: 'error.platform.QrLogin.linkTransaction:invocation[0]';
     expandLinkTransResp: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
     loadMyVcs: 'CONFIRM';
+    setConsentClaims: 'TOGGLE_CONSENT_CLAIM';
     setMyVcs: 'STORE_RESPONSE';
     setScanData: 'SCANNING_DONE';
     setSelectedVc: 'SELECT_VC';

@@ -22,6 +22,10 @@ const model = createModel(
     logoUrl: '',
     voluntaryClaims: [],
     errorMessage: '',
+    consentClaims: ['name', 'picture'],
+    isSharingBirthdate: false,
+    isSharingPhone: false,
+    isSharingGender: false,
   },
   {
     events: {
@@ -29,6 +33,10 @@ const model = createModel(
       SCANNING_DONE: (params: string) => ({ params }),
       STORE_RESPONSE: (response: unknown) => ({ response }),
       STORE_ERROR: (error: Error) => ({ error }),
+      TOGGLE_CONSENT_CLAIM: (enable: boolean, claim: string) => ({
+        enable,
+        claim,
+      }),
       DISMISS: () => ({}),
       CONFIRM: () => ({}),
       VERIFY: () => ({}),
@@ -148,6 +156,10 @@ export const qrLoginMachine =
             CONFIRM: {
               target: 'done',
             },
+            TOGGLE_CONSENT_CLAIM: {
+              actions: 'setConsentClaims',
+              target: 'requestConsent',
+            },
             CANCEL: {
               target: 'idle',
             },
@@ -217,6 +229,51 @@ export const qrLoginMachine =
         SetErrorMessage: assign({
           errorMessage: (context, event) =>
             (event as ErrorPlatformEvent).data.message,
+        }),
+
+        setConsentClaims: assign({
+          isSharingBirthdate: (_context, event) => {
+            if (event.claim === 'birthdate') {
+              if (event.enable) {
+                _context.consentClaims.push(event.claim);
+              } else {
+                _context.consentClaims = _context.consentClaims.filter(
+                  (claim) => claim !== event.claim
+                );
+              }
+              return event.enable;
+            } else {
+              return _context.isSharingBirthdate;
+            }
+          },
+          isSharingGender: (_context, event) => {
+            if (event.claim === 'gender') {
+              if (event.enable) {
+                _context.consentClaims.push(event.claim);
+              } else {
+                _context.consentClaims = _context.consentClaims.filter(
+                  (claim) => claim !== event.claim
+                );
+              }
+              return event.enable;
+            } else {
+              return _context.isSharingGender;
+            }
+          },
+          isSharingPhone: (_context, event) => {
+            if (event.claim === 'phone') {
+              if (event.enable) {
+                _context.consentClaims.push(event.claim);
+              } else {
+                _context.consentClaims = _context.consentClaims.filter(
+                  (claim) => claim !== event.claim
+                );
+              }
+              return event.enable;
+            } else {
+              return _context.isSharingPhone;
+            }
+          },
         }),
       },
       services: {
@@ -306,4 +363,16 @@ export function selectClientName(state: State) {
 
 export function selectErrorMessage(state: State) {
   return state.context.errorMessage;
+}
+
+export function selectIsSharingBirthdate(state: State) {
+  return state.context.isSharingBirthdate;
+}
+
+export function selectIsSharingPhone(state: State) {
+  return state.context.isSharingPhone;
+}
+
+export function selectIsSharingGender(state: State) {
+  return state.context.isSharingGender;
 }

@@ -37,26 +37,44 @@ export const QrConsent: React.FC<QrConsentProps> = (props) => {
 
         <Column scroll padding="10 0 0 0">
           <Column scroll>
-            <ListItem>
-              <Text color={Theme.Colors.textValue}>
-                {t('Name and Picture')}
-              </Text>
-              <Text color={Theme.Colors.textLabel}>{t('REQUIRED')}</Text>
+            <ListItem bottomDivider>
+              <ListItem.Content>
+                <ListItem.Title>
+                  <Text color={Theme.Colors.profileLabel}>
+                    {t('Name and Picture')}
+                  </Text>
+                </ListItem.Title>
+              </ListItem.Content>
+              <Switch value={true} color={Theme.Colors.Icon} disabled />
             </ListItem>
-            {controller.claims.map((claim, index) => (
-              <ListItem key={index} bottomDivider>
-                <ListItem.Content>
-                  <ListItem.Title>
-                    <Text color={Theme.Colors.profileLabel}>{t(claim)}</Text>
-                  </ListItem.Title>
-                </ListItem.Content>
-                <Switch
-                  value={false}
-                  // onValueChange={}
-                  color={Theme.Colors.Icon}
-                />
-              </ListItem>
-            ))}
+            {controller.claims.map((claim, index) => {
+              if (claim == 'name' || claim == 'picture') {
+                return null;
+              } else {
+                return (
+                  <ListItem key={index} bottomDivider>
+                    <ListItem.Content>
+                      <ListItem.Title>
+                        <Text color={Theme.Colors.profileLabel}>
+                          {t(claim).toUpperCase()}
+                        </Text>
+                      </ListItem.Title>
+                    </ListItem.Content>
+
+                    <Switch
+                      value={controller.isShare[claim]}
+                      onValueChange={() =>
+                        controller.SELECT_CONSENT(
+                          controller.isShare[claim],
+                          claim
+                        )
+                      }
+                      color={Theme.Colors.Icon}
+                    />
+                  </ListItem>
+                );
+              }
+            })}
           </Column>
           <Column>
             <Button
