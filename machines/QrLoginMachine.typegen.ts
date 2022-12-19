@@ -12,10 +12,15 @@ export interface Typegen0 {
       type: 'error.platform.QrLogin.linkTransaction:invocation[0]';
       data: unknown;
     };
+    'error.platform.QrLogin.requestingConsent:invocation[0]': {
+      type: 'error.platform.QrLogin.requestingConsent:invocation[0]';
+      data: unknown;
+    };
     'xstate.init': { type: 'xstate.init' };
   };
   'invokeSrcNameMap': {
     linkTransaction: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
+    sendConsent: 'done.invoke.QrLogin.requestingConsent:invocation[0]';
   };
   'missingImplementations': {
     actions: never;
@@ -24,7 +29,9 @@ export interface Typegen0 {
     services: never;
   };
   'eventsCausingActions': {
-    SetErrorMessage: 'error.platform.QrLogin.linkTransaction:invocation[0]';
+    SetErrorMessage:
+      | 'error.platform.QrLogin.linkTransaction:invocation[0]'
+      | 'error.platform.QrLogin.requestingConsent:invocation[0]';
     expandLinkTransResp: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
     loadMyVcs: 'CONFIRM';
     setConsentClaims: 'TOGGLE_CONSENT_CLAIM';
@@ -37,6 +44,7 @@ export interface Typegen0 {
   'eventsCausingGuards': {};
   'eventsCausingServices': {
     linkTransaction: 'SCANNING_DONE';
+    sendConsent: 'CONFIRM';
   };
   'matchesStates':
     | 'ShowError'
@@ -47,6 +55,7 @@ export interface Typegen0 {
     | 'linkTransaction'
     | 'loadMyVcs'
     | 'requestConsent'
+    | 'requestingConsent'
     | 'showWarning'
     | 'showvcList';
   'tags': never;
