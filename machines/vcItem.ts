@@ -634,7 +634,7 @@ export const vcItemMachine =
               ],
             },
           });
-          return response.response.id;
+          return response.response.encryptedWalletBindingId;
         },
 
         updatePrivateKey: async (context) => {

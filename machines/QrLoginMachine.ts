@@ -51,7 +51,7 @@ const model = createModel(
 export const QrLoginEvents = model.events;
 
 export const qrLoginMachine =
-  /** @xstate-layout N4IgpgJg5mDOIC5QEUBOAZA9lAlgOwDocIAbMAYgGUBhAQQDl6BJegcQH0ARAeXoFEA2gAYAuolAAHTLBwAXHJjziQAD0QBGIQA4ATAXUAWAKwB2MwfMBOAwYA0IAJ6IAzCfUEAbEaFDXHj0ImWiYGHgC+YfZoWLiExGTknEyUALLJlMJiSCBSMvKKymoIlqYERupGRgbqlkI6FpaW9k4IOh7Ont4+Rs6NWr5azhFRGNj4BLAAFpgA7gDqAIaoePhQ5NS8AGJMAEopmcq5cgpK2UWGlh2WJrVaBlr+DxXNLlpaBDdGWuXqHoP1wxA0TGhCms0Wy1WiWSaUoGVEh2kxwKZw0FSEBGcVR02j+OnU5heCGc+P0XSENW0X1CJkBwNiBBI+AA1gAVVALPCwBYAY3yeHIEEUYCIeAAbphmSL6eMmXg2Ryubz+Qh8BKeQt+ZkDtkjvzChoDJcCNdbvdHh5no5EDpvmV-P5nFpNB4LIE6aMGSRMAsICkHAA1HmwKis7g7PjsCOUAAKvEoggRuqR+tRCBqOksJr+7S0tWurqJzlcHyqGZuBiElnUQ0iQM94zBMzFPPQOFgsiofHQfGorPYAeoOskKZOBtaFXclhzpiEHh0zgsRMqJkxvxMznUW7aFnUHpijemzdb7c7Ab4OyYmwAmsOcqOUaAijicR8Ak71DoTP56kYif4DH0as3EGIRqldWk6xlUEjxbNsO2hVJ0jvPUxzTHFPwIMDfkMQxbTcdQiV+DowNMIIAiEIxLGdfcQQIAAzXkwFoABXWRJnITZaGoSMA1odAmE4FCH1OJ8NDMTxsI8b9NAsNodCLX4ykGEkumuHpXFohlGJ5Zi2I4riePYFg+IEoSkxHPI0LE9MJICcCZLAkx5OXAwOhsAl+iCZxXRqLTxh0vT2PWBgePQYSrMfVRxNXez10tJyXOtBBnQII1GktN5MwJfx-LicUFiZCAmAgMA8HkWQHEQ2F4SySzkVE6KEFnTESiCb4TC+atCOSnpV2+QZLRrAJMyMPLRTFQriBKsqKqqiNWR2a8BwvK8mDoVkmF4CKGvHAlYqkxy5PnIkjT0awCWMXxDF6cbUDAABHFi4FkahFFgWb1i2XZ9gs+9IsaooWt6Uw3lMLqtyLHRzsaRpvyxT9KLux7no7N6uU+uh6DCnbUxs4G2rBzq80h5KXwIeo4fU2pKS0cahTwCgkiQuFcesprdD0MGnW+cozC0KGYdh+HyhxMbATwTBSvgbJoMRAHxwAWg8IllawnxKPKHoKWcMCDHG+IwHl3a0zaghnR0bx5xxedrEUrN0WwiocTnSCRgPGDwSWFY8CgY28aaz8SjS35XVMCwnV6Is8wpkpvi3P4SX1qCG0IOUFU5bk+XZ1CovOepV11qpXUt-xnKJfEPE8TnqOrbFOrd+sPcZH0-UDYN-fZ84NyrnFnTuKivnwotvA+T90stjXq3Gps4NPTu85tYjMW+Rd8QeCk7GSrx3i-bxnNCXpanF926MC1j2IXwHEAMBTkqNIwTWqXQemCCkQhPpu6LVKbitK8q5AtHqgHIolY9CuCNMEO404nR3xaK-TEXwfJbh8nUEoyMnovXRh9cqV9xxH30GYbQFg3ByUqIpVc2hiyTyrJ1YsjdoIEAZkbZMCs0wmF8GUIwOIsSBDnD4LeLQSTuVhgWBGYsIgRCAA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QEUBOAZA9lAlgOwDocIAbMAYgGUBhAQQDl6BJegcQH0ARAeXoFEA2gAYAuolAAHTLBwAXHJjziQAD0QBGACzqATAQCs+nZv0BmABzqL50zoA0IAJ6IA7KaEFNATnPmv6oUMhHUMAX1CHNCxcQmIyck4mSgBZJMphMSQQKRl5RWU1BF1zFwIvHQrTFxdNCxcANgdnBH16j1NbdT8vfW8q9XDIjGx8AhJ8AGsAFVQAQzxYWYBjPLxyCEUwIjwAN0wJraiRwnG8abmF5dWEfD2l2dWMjOUcuQUlLMKtXQMjEwsrL5bE1EF4XOYCEJ6iEXF4ekIOppzIMQEcYmNJjN5osVu9yGBUKhMKgCBISA8AGbEgC2BDRo1O52xV3eN12mHuj1Ezyyr1WBQ0JQhmlhotMZmM+hcIIQNX0nnUhh65h06hcOhKKPphFgAAtMAB3ADqs1QeHwUHI1F4ADEmAAlZI8yTSN75T6IEIeHT+eo1Lyaeriwwy+pggiwtXw9SKjU6LXDdF6w0ms0Wq0Mah8dDO7Ku-kehBegg+9R+7yB4P6GV+dQRlwBIRqoTqjX1BPRUaUfUGviE4kZ+hZnOiF7594Coo9TSQtyqqUx9zApyINpeCNIoVaYzlUwd45jTCzCDJRwANSWsCoU249r47DvlAACrxKIJR7zx+7QIU-fLofoMaATYWjaKGLjylCOjQi4gSmJoOgNPuSY9jsSzoDgsCyFQ2Z8NQUzsGe1C5nyE6Fr4M4BkI3j6DYtEttWK4tDGEb1H6DbmEYAZschozJgaaEYVh5Bnnw9pMDaACaJFfh8P6uLRZRIoqKl0UI5gyiK9SQtobjUZu0KaLxOqoehmHYYkKRpDJuRkfJRTqRCpj1PoTYBj01QVKGPwVIBHT6AGqq1MZBAUssYC0AArrIurkDatBZoRtDoEwnA2W6cmqJ6rklr6-qVoYjHNP4kI2Jo1ENr01EBiFYVLBF0WxfFiUsGeyWpelBb2cWpbltxVahiKuVqmGXT1IG6heLV4VRTFg7Dp1dlZUWOW9flQaFTW2glrBYK0SqZaqiFtyzOMEBMBAYB4PIsiOAkSSpJQ6Qfi6tnfstf4EABQFdKYoHqKG1EECUrnmEIcJ+FC7YRKiiajCdZ0XVdN13XeUz2pJhFiRJTB0FMTC8It72FD1eUVhtIZMQF2mRjUHT1FYPTQ0MnaEKgYAAI6RXAsjUIosDI1atoOk6L15m9mW-hBX0hD9IGaGBTEIfKvTNoGOhVF4zOw6zBDs1zPN8wsgt0EO2ZE5Lq7S99ql-QrANMe4M6RqNDa6NC5hGTD2oEBseAUJZj3PZkr0ZZOAS+AQzmuZNNGefYSshAYunUdCmvaz7+vc1hFpGwL13rJs2x7AcdJw2znPZ-IeBQHnyNsncDzvE8YukcTq42GUYYtuNgFsQGMqqnWNjwSNiFeACe7e+XeuVzzuf84LBJEiSZKUjSZe61n8813X10NxyTeKC3Ifi2HhYR05LluXHrY1qYO2OanY1sciKJ4Jgl3wFk2pjhLk4AFpGhMQAfKOE4CIGQKnizA8cQwB-3PvZYoEJVT+FVCUaC-hNDeXlDYCoipwRCCIeKEKjIsSXFxO9NulsiguWdpYIMQZoK9F6DKOmX0FYQSITHHoU1p6634qmc0NcEFdWWghNh4MCBlnqGDLQ7EAxvxgeibsho+wr1EUtEmLYIQqmjvbeCKoiqrgCCWTc4JtzeA1qQo8J5zyXk0e3BAIph7jTYvBQIwQLDgWdv4Bo5UkTqjMCFfiglzKOJoX4bS4oGyIR9FUIhCdmgMz0EEqw4pApaGgTrA8dUGoxQiZOGoX0Si1CDFYAKCEkkaChKVUeHQNYNGosdXYp1iBI2unIZoocxGFCRHoKU40VT+H2n4QG8oqig3Bj4LwUIXAhW3lhPeshCmFiROucqhlYK6AXA7Zoxg6wTwgv09JHRfAhT9vAz8-9Cz+HXJUxUCIzBIiRJpaCOkRoNlMGCME8EFlzxzrvRe11Vn2RBtI1oDM-pGAsF4GsdZXJEI8n8Go41wjhCAA */
   model.createMachine(
     {
       tsTypes: {} as import('./QrLoginMachine.typegen').Typegen0,
@@ -72,6 +72,7 @@ export const qrLoginMachine =
             },
           },
         },
+
         linkTransaction: {
           invoke: {
             src: 'linkTransaction',
@@ -89,6 +90,7 @@ export const qrLoginMachine =
             ],
           },
         },
+
         showWarning: {
           on: {
             CONFIRM: {
@@ -99,6 +101,7 @@ export const qrLoginMachine =
             },
           },
         },
+
         ShowError: {
           on: {
             CANCEL: {
@@ -106,6 +109,7 @@ export const qrLoginMachine =
             },
           },
         },
+
         loadMyVcs: {
           entry: 'loadMyVcs',
           on: {
@@ -115,6 +119,7 @@ export const qrLoginMachine =
             },
           },
         },
+
         showvcList: {
           on: {
             SELECT_VC: {
@@ -128,11 +133,10 @@ export const qrLoginMachine =
             },
           },
         },
+
         faceAuth: {
           on: {
-            FACE_VALID: {
-              target: 'requestConsent',
-            },
+            FACE_VALID: 'requestConsent',
             FACE_INVALID: {
               target: 'invalidIdentity',
             },
@@ -141,6 +145,7 @@ export const qrLoginMachine =
             },
           },
         },
+
         invalidIdentity: {
           on: {
             DISMISS: {
@@ -151,10 +156,11 @@ export const qrLoginMachine =
             },
           },
         },
+
         requestConsent: {
           on: {
             CONFIRM: {
-              target: 'done',
+              target: 'requestingConsent',
             },
             TOGGLE_CONSENT_CLAIM: {
               actions: 'setConsentClaims',
@@ -165,11 +171,27 @@ export const qrLoginMachine =
             },
           },
         },
+
         done: {
           on: {
             DISMISS: {
               target: 'idle',
             },
+          },
+        },
+
+        requestingConsent: {
+          invoke: {
+            src: 'sendConsent',
+            onDone: {
+              target: 'done',
+            },
+            onError: [
+              {
+                actions: 'SetErrorMessage',
+                target: 'ShowError',
+              },
+            ],
           },
         },
       },
@@ -284,6 +306,35 @@ export const qrLoginMachine =
           });
           return response.response;
         },
+
+        sendConsent: async (context) => {
+          console.log('==================================================');
+          console.log('Individual id : ' + context.selectedVc.id);
+          const resp = await request('POST', '/idp-authenticate', {
+            requestTime: String(new Date().toISOString()),
+            request: {
+              linkedTransactionId: context.linkTransactionId,
+              individualId: '3295638027105149',
+              challengeList: [
+                {
+                  authFactorType: 'OTP',
+                  challenge: '111111',
+                },
+              ],
+            },
+          });
+          const trnId = resp.response.linkedTransactionId;
+
+          const response = await request('POST', '/idp-consent', {
+            requestTime: String(new Date().toISOString()),
+            request: {
+              linkedTransactionId: trnId,
+              acceptedClaims: ['email'],
+              permittedAuthorizeScopes: [],
+            },
+          });
+          console.log(response.response.linkedTransactionId);
+        },
       },
     }
   );
@@ -375,4 +426,8 @@ export function selectIsSharingPhone(state: State) {
 
 export function selectIsSharingGender(state: State) {
   return state.context.isSharingGender;
+}
+
+export function selectIsRequestingConsent(state: State) {
+  return state.matches('requestingConsent');
 }
