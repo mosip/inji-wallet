@@ -10,10 +10,9 @@ import { OIDcAuthenticationModal } from '../../components/OIDcAuth';
 import { useViewVcModal, ViewVcModalProps } from './ViewVcModalController';
 import { useTranslation } from 'react-i18next';
 import { VcDetails } from '../../components/VcDetails';
-
 import { OtpVerification } from './MyVcs/OtpVerification';
 import { BindStatus } from './MyVcs/BindVcStatus';
-import { Overlay } from 'react-native-elements';
+import { BindingVcWarningOverlay } from './MyVcs/BindingVcWarningOverlay';
 
 export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
   const { t } = useTranslation('ViewVcModal');
@@ -114,6 +113,12 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
           onDone={controller.BINDING_DONE}
         />
       )}
+
+      <BindingVcWarningOverlay
+        isVisible={controller.isBindingWarning}
+        onConfirm={controller.CONFIRM}
+        onCancel={controller.CANCEL}
+      />
 
       <MessageOverlay
         isVisible={controller.isBindingError}

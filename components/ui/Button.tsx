@@ -41,7 +41,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
           weight="semibold"
           align="center"
           color={
-            type === 'solid' || type === 'addId'
+            type === 'solid' || type === 'addId' || type === 'radius'
               ? Theme.Colors.whiteText
               : Theme.Colors.AddIdBtnTxt
           }>

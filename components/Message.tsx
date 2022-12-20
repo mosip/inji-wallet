@@ -49,7 +49,7 @@ export const Message: React.FC<MessageProps> = (props) => {
 const Progress: React.FC<Pick<MessageProps, 'progress'>> = (props) => {
   return typeof props.progress === 'boolean' ? (
     props.progress && (
-      <LinearProgress variant="indeterminate" color={Colors.Orange} />
+      <LinearProgress variant="indeterminate" color={Theme.Colors.Icon} />
     )
   ) : (
     <LinearProgress variant="determinate" value={props.progress} />

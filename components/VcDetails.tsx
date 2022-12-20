@@ -255,11 +255,13 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
         </Row>
         <VcItemTags tag={props.vc?.tag} />
       </ImageBackground>
+
       {props.vc?.reason?.length > 0 && (
         <Text margin="24 24 16 24" weight="semibold">
           {t('reasonForSharing')}
         </Text>
       )}
+
       {props.vc?.reason?.map((reason, index) => (
         <TextItem
           key={index}
@@ -272,33 +274,58 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
         />
       ))}
 
-      {props.isBindingPending && (
-        <ImageBackground
-          borderRadius={10}
-          style={Theme.Styles.openCardBgContainer}
-          source={Theme.OpenCard}>
-          <Column>
-            <Icon name="lightbulb" color={'#e8a94f'} size={40} />
-            <Text
-              style={{ flex: 1 }}
-              weight="semibold"
-              size="small"
-              color={Theme.Colors.Details}
-              align="left">
-              {t('offlineAuthDisabledHeader')}
-            </Text>
-            <Text
-              style={{ flex: 1 }}
-              weight="regular"
-              size="small"
-              color={Theme.Colors.Details}
-              align="left">
-              {t('offlineAuthDisabledMessage')}
-            </Text>
+      {props.isBindingPending ? (
+        <Column style={Theme.Styles.openCardBgContainer}>
+          <Row margin={'0 0 5 0'}>
+            <Icon
+              name="shield-alert"
+              color={Theme.Colors.Icon}
+              size={30}
+              type="material-community"
+            />
+          </Row>
 
-            <Button title={t('enableVerification')} onPress={props.onBinding} />
-          </Column>
-        </ImageBackground>
+          <Text
+            style={{ flex: 1 }}
+            weight="semibold"
+            size="small"
+            margin={'0 0 5 0'}
+            color={Theme.Colors.Details}>
+            {t('offlineAuthDisabledHeader')}
+          </Text>
+          <Text
+            style={{ flex: 1 }}
+            weight="regular"
+            size="small"
+            margin={'0 0 5 0'}
+            color={Theme.Colors.Details}>
+            {t('offlineAuthDisabledMessage')}
+          </Text>
+
+          <Button
+            title={t('enableVerification')}
+            onPress={props.onBinding}
+            type="radius"
+          />
+        </Column>
+      ) : (
+        <Column style={Theme.Styles.openCardBgContainer}>
+          <Row crossAlign="center">
+            <Icon
+              name="verified-user"
+              color={Theme.Colors.VerifiedIcon}
+              size={28}
+              containerStyle={{ marginStart: 4, bottom: 1 }}
+            />
+            <Text
+              numLines={1}
+              color={Theme.Colors.Details}
+              weight="bold"
+              size="smaller"
+              margin="10 10 10 10"
+              children={t('profileAuthenticated')}></Text>
+          </Row>
+        </Column>
       )}
     </Column>
   );
