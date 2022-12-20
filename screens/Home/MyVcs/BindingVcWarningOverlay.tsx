@@ -28,7 +28,12 @@ export const BindingVcWarningOverlay: React.FC<QrLoginWarningProps> = (
           />
         </Row>
         <Column>
-          <Text align="center" size="regular">
+          <Text align="center" size="regular" weight="bold">
+            {t('pleaseConfirm')}
+          </Text>
+        </Column>
+        <Column>
+          <Text align="center" size="smaller">
             {t('BindingWarning')}
           </Text>
         </Column>
