@@ -56,8 +56,8 @@
     "BindingWarning": "If you have enabled verification for this credential on another wallet, it will get overridden. Do you want to proceed?",
     "yes_confirm": "Yes, I Confirm",
     "no": "No",
-    "pleaseConfirm": "Please Confirm"
-    "ok":"Okay"
+    "pleaseConfirm": "Please Confirm",
+    "ok": "Okay"
   },
   "AuthScreen": {
     "header": "Would you like to use biometrics to unlock the application?",
