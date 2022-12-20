@@ -57,6 +57,7 @@
     "yes_confirm": "Yes, I Confirm",
     "no": "No",
     "pleaseConfirm": "Please Confirm"
+    "ok":"Okay"
   },
   "AuthScreen": {
     "header": "Would you like to use biometrics to unlock the application?",

@@ -30,7 +30,7 @@ export const BindStatus: React.FC<BindVcProps> = (props) => {
           </Text>
         )}
       </Column>
-      <Button title={t('Okay')} onPress={props.onDone} type="radius" />
+      <Button title={t('ok')} onPress={props.onDone} type="radius" />
     </Column>
   );
 };
