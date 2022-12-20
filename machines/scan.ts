@@ -1,10 +1,8 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 import SmartshareReactNative from '@idpass/smartshare-react-native';
 import { ConnectionParams } from '@idpass/smartshare-react-native/lib/typescript/IdpassSmartshare';
-const { IdpassSmartshare, GoogleNearbyMessages } = SmartshareReactNative;
-
-import Tuvali from 'react-native-openid4vp-ble';
-const { Openid4vpBle } = Tuvali;
+import { default as IdpassSmartshare } from '../lib/smartshare';
+const { GoogleNearbyMessages } = SmartshareReactNative;
 
 import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
@@ -622,7 +620,7 @@ export const scanMachine =
 
         discoverDevice: (context) => (callback) => {
           if (context.sharingProtocol === 'OFFLINE') {
-            Openid4vpBle.createConnection('discoverer', () => {
+            IdpassSmartshare.createConnection('discoverer', () => {
               callback({ type: 'CONNECTED' });
             });
           } else {
