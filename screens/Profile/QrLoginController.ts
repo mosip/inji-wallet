@@ -10,6 +10,7 @@ import {
   selectIsLinkTransaction,
   selectIsloadMyVcs,
   selectIsRequestConsent,
+  selectIsRequestAuthFactor,
   selectIsScanning,
   selectIsSharingBirthdate,
   selectIsSharingGender,
@@ -86,6 +87,7 @@ export function useQrLogin() {
     isLinkTransaction: useSelector(qrLoginService, selectIsLinkTransaction),
     isLoadingMyVcs: useSelector(qrLoginService, selectIsloadMyVcs),
     isRequestConsent: useSelector(qrLoginService, selectIsRequestConsent),
+    isAuthFactorRequest: useSelector(qrLoginService, selectIsRequestAuthFactor),
     isShowingError: useSelector(qrLoginService, selectIsShowError),
 
     isVerifyingIdentity: useSelector(

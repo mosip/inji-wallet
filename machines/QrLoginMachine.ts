@@ -5,6 +5,8 @@ import { MY_VCS_STORE_KEY } from '../shared/constants';
 import { StoreEvents } from './store';
 import { linkTransactionResponse, VC } from '../types/vc';
 import { request } from '../shared/request';
+import { getJwt } from '../shared/cryptoutil/cryptoUtil';
+import { getPrivateKey } from '../shared/keystore/SecureKeystore';
 
 const model = createModel(
   {
@@ -13,6 +15,7 @@ const model = createModel(
     linkCode: '',
     myVcs: [] as string[],
     linkTransactionResponse: {} as linkTransactionResponse,
+    requestAuthResponse: '',
     authFactors: [],
     authorizeScopes: null,
     clientName: '',
