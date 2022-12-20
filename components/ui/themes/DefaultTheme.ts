@@ -13,6 +13,8 @@ const Colors = {
   Red: '#EB5757',
   Green: '#219653',
   Transparent: 'transparent',
+  Blue: '#5794f7',
+  LightOrange: '#fce7e3',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5;
@@ -42,6 +44,7 @@ export const DefaultTheme = {
     loadingLabel: Colors.Grey6,
     textLabel: Colors.Grey,
     textValue: Colors.Black,
+    toggleSwitch: Colors.Blue,
     errorMessage: Colors.Red,
     QRCodeBackgroundColor: Colors.LightGrey,
     ReceiveVcModalBackgroundColor: Colors.LightGrey,
@@ -54,6 +57,7 @@ export const DefaultTheme = {
     checkCircleIcon: Colors.White,
     OnboardingCircleIcon: Colors.White,
     OnboardingCloseIcon: Colors.White,
+    ProfileIconBg: Colors.LightOrange,
   },
   Styles: StyleSheet.create({
     title: {
@@ -167,6 +171,23 @@ export const DefaultTheme = {
     openDetailsContainer: {
       flex: 1,
       padding: 10,
+    },
+    profileIconBg: {
+      padding: 8,
+      width: 40,
+      height: 40,
+      borderRadius: 6,
+      backgroundColor: Colors.LightOrange,
+    },
+    domainVerifiyIcon: {
+      padding: 20,
+      marginLeft: 120,
+      width: 130,
+      height: 130,
+      borderRadius: 60,
+      borderWidth: 10,
+      borderColor: Colors.White,
+      backgroundColor: Colors.LightOrange,
     },
     closeCardImage: {
       width: 105,

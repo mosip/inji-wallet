@@ -187,6 +187,7 @@
   },
   "QrScreen": {
     "title": "QR Login",
+    "alignQr": "Align the QR code within the frame to scan",
     "noBindedVc": "No Binded {{vcLabel}} Available to Verify",
     "back": "Go Back",
     "confirm": "Confirm",

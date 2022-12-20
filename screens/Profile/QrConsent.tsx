@@ -4,8 +4,7 @@ import { Button, Column, Row, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { useQrLogin } from './QrLoginController';
 import { Image } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import { ListItem, Switch } from 'react-native-elements';
+import { Icon, ListItem, Switch } from 'react-native-elements';
 
 export const QrConsent: React.FC<QrConsentProps> = (props) => {
   const { t } = useTranslation('QrScreen');
@@ -19,19 +18,22 @@ export const QrConsent: React.FC<QrConsentProps> = (props) => {
       style={{ display: props.isVisible ? 'flex' : 'none' }}
       backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
       {controller.linkTransactionResponse && (
-        <Row align="space-between" crossAlign="center">
+        <Row margin={'0 0 0 38'} crossAlign="center">
+          <Icon name="mobile" type="font-awesome" size={70} />
+          <Text color={'grey'} style={Theme.TextStyles.bold}>
+            {' '}
+            --------------{' '}
+          </Text>
+          {/* <Text>{controller.clientName}</Text> */}
           <Image
             source={controller.logoUrl ? { uri: controller.logoUrl } : null}
-            style={{ width: 100, height: 100 }}
+            style={{ width: 90, height: 90 }}
           />
-          <Icon name="sync" size={50} color={Theme.Colors.Icon} />
-
-          <Text>{controller.clientName}</Text>
         </Row>
       )}
 
       <Column backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
-        <Text weight="semibold">
+        <Text style={Theme.TextStyles.base} margin={'0  0 6'}>
           {controller.clientName} {t('access')}
         </Text>
 
@@ -78,13 +80,13 @@ export const QrConsent: React.FC<QrConsentProps> = (props) => {
           </Column>
           <Column>
             <Button
-              margin={'10 0 0 0'}
+              margin={'20 10 10 10'}
               styles={Theme.ButtonStyles.fill}
               title={'Confirm'}
               onPress={props.onConfirm}
             />
             <Button
-              margin={'10 0 10 0'}
+              margin={'10 10 10 10'}
               type="outline"
               title={'Cancel'}
               onPress={props.onCancel}
