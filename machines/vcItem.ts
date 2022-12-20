@@ -62,6 +62,7 @@ const model = createModel(
       ADD_WALLET_BINDING_ID: () => ({}),
       BINDING_DONE: () => ({}),
       CANCEL: () => ({}),
+      CONFIRM: () => ({}),
     },
   }
 );
@@ -176,7 +177,7 @@ export const vcItemMachine =
               target: 'acceptingRevokeInput',
             },
             ADD_WALLET_BINDING_ID: {
-              target: 'requestingBindingOtp',
+              target: 'showBindingWarning',
             },
           },
         },
@@ -357,6 +358,16 @@ export const vcItemMachine =
           entry: [log('loggingRevoke'), 'logRevoked'],
           on: {
             DISMISS: {
+              target: 'idle',
+            },
+          },
+        },
+        showBindingWarning: {
+          on: {
+            CONFIRM: {
+              target: 'requestingBindingOtp',
+            },
+            CANCEL: {
               target: 'idle',
             },
           },
@@ -915,4 +926,8 @@ export function isWalletBindingInProgress(state: State) {
     state.matches('updatingPrivateKey')
     ? true
     : false;
+}
+
+export function isShowingBindingWarning(state: State) {
+  return state.matches('showBindingWarning');
 }

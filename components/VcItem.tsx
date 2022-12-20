@@ -1,12 +1,6 @@
 import React, { useContext, useRef } from 'react';
 import { useInterpret, useSelector } from '@xstate/react';
-import {
-  Pressable,
-  Image,
-  ImageBackground,
-  TouchableHighlight,
-  View,
-} from 'react-native';
+import { Pressable, Image, ImageBackground, Dimensions } from 'react-native';
 import { CheckBox, Icon } from 'react-native-elements';
 import { ActorRefFrom } from 'xstate';
 import {
@@ -16,7 +10,6 @@ import {
   vcItemMachine,
   selectContext,
   selectTag,
-  selectWalletBindingId,
   selectEmptyWalletBindingId,
 } from '../machines/vcItem';
 import { Column, Row, Text } from './ui';
@@ -97,7 +90,7 @@ const WalletVerified: React.FC = () => {
   return (
     <Icon
       name="verified-user"
-      color={'green'}
+      color={Theme.Colors.VerifiedIcon}
       size={28}
       containerStyle={{ marginStart: 4, bottom: 1 }}
     />
@@ -107,9 +100,10 @@ const WalletVerified: React.FC = () => {
 const WalletUnverified: React.FC = () => {
   return (
     <Icon
-      name="lightbulb"
-      color={'#e8a94f'}
+      name="shield-alert"
+      color={Theme.Colors.Icon}
       size={28}
+      type="material-community"
       containerStyle={{ marginStart: 4, bottom: 1 }}
     />
   );
@@ -228,15 +222,21 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
             <RotatingIcon name="sync" color={Theme.Colors.rotatingIcon} />
           )}
         </Row>
-        <Row>
-          {emptyWalletBindingId ? (
-            <Row>
-              <WalletUnverified />
+        <VcItemTags tag={tag} />
+      </ImageBackground>
+      <Row padding={'10 0 0 0'}>
+        {emptyWalletBindingId ? (
+          <Row
+            width={Dimensions.get('screen').width * 0.8}
+            align="space-between"
+            crossAlign="center">
+            <Row crossAlign="center">
+              {verifiableCredential && <WalletUnverified />}
               <Text
                 numLines={1}
                 color={Theme.Colors.Details}
                 weight="bold"
-                size="smaller"
+                size="small"
                 margin="10 10 10 10"
                 style={
                   !verifiableCredential
@@ -245,8 +245,20 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
                 }
                 children={t('offlineAuthDisabledHeader')}></Text>
             </Row>
-          ) : (
-            <Row>
+            <Pressable>
+              <Icon
+                name="dots-three-horizontal"
+                type="entypo"
+                color={Theme.Colors.GrayIcon}
+              />
+            </Pressable>
+          </Row>
+        ) : (
+          <Row
+            width={Dimensions.get('screen').width * 0.8}
+            align="space-between"
+            crossAlign="center">
+            <Row crossAlign="center">
               <WalletVerified />
               <Text
                 numLines={1}
@@ -261,10 +273,16 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
                 }
                 children={t('profileAuthenticated')}></Text>
             </Row>
-          )}
-        </Row>
-        <VcItemTags tag={tag} />
-      </ImageBackground>
+            <Pressable>
+              <Icon
+                name="dots-three-horizontal"
+                type="entypo"
+                color={Theme.Colors.GrayIcon}
+              />
+            </Pressable>
+          </Row>
+        )}
+      </Row>
     </Pressable>
   );
 };

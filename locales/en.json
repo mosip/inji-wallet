@@ -48,11 +48,16 @@
     "uin": "UIN",
     "enableVerification": "Enable Verification",
     "profileAuthenticated": "Verification enabled",
-    "offlineAuthDisabledHeader": "Verification not enabled!",
+    "offlineAuthDisabledHeader": "Verification not enabled",
     "offlineAuthDisabledMessage": "Click here to enable this credentials to be used for verification.",
     "vid": "VID",
     "verificationEnabledSuccess": "Verification has been enabled for this credential.",
-    "goback": "GO BACK"
+    "goback": "GO BACK",
+    "BindingWarning": "If you have enabled verification for this credential on another wallet, it will get overridden. Do you want to proceed?",
+    "yes_confirm": "Yes, I Confirm",
+    "no": "No",
+    "pleaseConfirm": "Please Confirm",
+    "ok": "Okay"
   },
   "AuthScreen": {
     "header": "Would you like to use biometrics to unlock the application?",
