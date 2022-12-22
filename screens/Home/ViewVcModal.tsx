@@ -41,7 +41,11 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
     <Modal
       isVisible={props.isVisible}
       onDismiss={props.onDismiss}
-      headerTitle={controller.vc.id}
+      headerTitle={
+        controller.vc.verifiableCredential.credentialSubject.UIN
+          ? controller.vc.verifiableCredential.credentialSubject.UIN
+          : controller.vc.verifiableCredential.credentialSubject.VID
+      }
       headerElevation={2}
       headerRight={
         <DropdownIcon
