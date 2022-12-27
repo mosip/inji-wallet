@@ -16,6 +16,8 @@ export const HistoryTabEvents = model.events;
 
 export const HistoryTabMachine = model.createMachine(
   {
+    predictableActionArguments: true,
+    preserveActionOrder: true,
     id: 'HistoryTab',
     context: model.initialContext,
     initial: 'idle',

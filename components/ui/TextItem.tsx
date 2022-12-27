@@ -15,13 +15,18 @@ export const TextItem: React.FC<TextItemProps> = (props) => {
         alignItems: 'flex-start',
       }}>
       {props.label && (
-        <Text size="smaller" color={Theme.Colors.textLabel} weight="semibold">
+        <Text
+          size="smaller"
+          color={Theme.Colors.textLabel}
+          weight="semibold"
+          style={{ textAlign: 'left' }}>
           {props.label}
         </Text>
       )}
       <Text
         color={Theme.Colors.textValue}
-        weight={props.label ? 'semibold' : 'regular'}>
+        weight={props.label ? 'semibold' : 'regular'}
+        style={{ textAlign: 'left' }}>
         {props.text}
       </Text>
     </Column>

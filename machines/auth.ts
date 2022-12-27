@@ -27,6 +27,8 @@ type SetupBiometricsEvent = EventFrom<typeof model, 'SETUP_BIOMETRICS'>;
 
 export const authMachine = model.createMachine(
   {
+    predictableActionArguments: true,
+    preserveActionOrder: true,
     tsTypes: {} as import('./auth.typegen').Typegen0,
     schema: {
       context: model.initialContext,
