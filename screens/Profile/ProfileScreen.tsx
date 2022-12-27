@@ -13,6 +13,7 @@ import { useProfileScreen } from './ProfileScreenController';
 import { useTranslation } from 'react-i18next';
 import { LanguageSelector } from '../../components/LanguageSelector';
 import i18next, { SUPPORTED_LANGUAGES } from '../../i18n';
+import { USE_BLE_SHARE } from 'react-native-dotenv';
 
 const LanguageSetting: React.FC = () => {
   const { t } = useTranslation('ProfileScreen');
@@ -80,6 +81,18 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
             </Text>
           </ListItem.Title>
         </ListItem.Content>
+      </ListItem>
+      <ListItem bottomDivider>
+        <ListItem.Content>
+          <ListItem.Title>
+            <Text color={Theme.Colors.profileLabel}>{t('useBle')}</Text>
+          </ListItem.Title>
+        </ListItem.Content>
+        <Switch
+          value={USE_BLE_SHARE === 'true'}
+          color={Theme.Colors.profileValue}
+          disabled
+        />
       </ListItem>
       <Credits label={t('credits')} color={Theme.Colors.profileLabel} />
       <ListItem bottomDivider onPress={controller.LOGOUT}>
