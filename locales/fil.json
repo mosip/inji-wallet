@@ -17,14 +17,14 @@
     "deviceRefNumber": "Reference number ng device",
     "name": "Pangalan"
   },
+  "PasscodeVerify": {
+    "passcodeMismatchError": "Hindi tumugma ang passcode."
+  },
   "FaceScanner": {},
   "OIDcAuth": {
     "title": "OIDC Authentication",
     "text": "Papalitan ng OIDC service provider UI",
     "verify": "I-verify"
-  },
-  "PasscodeVerify": {
-    "passcodeMismatchError": "Hindi tumugma ang passcode."
   },
   "QrScanner": {
     "missingPermissionText": "Ginagamit ng app na ito ang camera upang i-scan ng QR code ng ibang device.",
@@ -178,10 +178,15 @@
     "revokeSuccessful": "Matagumpay na nakansela ang VID",
     "version": "Bersyon"
   },
+  "ReceiveVcModal": {
+    "header": "{{vcLabel}} mga detalye",
+    "acceptRequest": "Tanggapin ang kahilingan at {{vcLabel}}",
+    "reject": "Tanggihan"
+  },
   "ReceiveVcScreen": {
     "header": "Mga detalye ng {{vcLabel}}",
     "acceptRequest": "Tanggapin ang kahilingan at tumanggap ng {{vcLabel}}",
-    "acceptRequestAndVerify": "Tanggapin ang kahilingan at i-verify",
+    "acceptRequestAndVerify": "Tanggapin ang kahilingan at magpatunay",
     "reject": "Tanggihan"
   },
   "RequestScreen": {
@@ -221,6 +226,10 @@
     "noShareableVcs": "Walang magagamit na maibabahaging {{vcLabel}}.",
     "sharingVc": "Pagbabahagi ng {{vcLabel}}",
     "errors": {
+      "flightMode": {
+        "message": "Dapat na hindi pinagana ang flight mode para sa function ng pag-scan",
+        "button": "Huwag paganahin ang flight mode"
+      },
       "locationDisabled": {
         "message": "Dapat na nakabukas ang Location services ng iyong mobile para maaaring makapag-scan",
         "button": "Buksan ang location services"
@@ -241,6 +250,7 @@
   "SelectVcOverlay": {
     "header": "Ibahagi ang {{vcLabel}}",
     "chooseVc": "Piliin ang {{vcLabel}} na gusto mong ibahagi",
+    "cancel": "kanselahin",
     "share": "Ibahagi",
     "verifyAndShare": "I-verify ang Pagkakakilanlan at Ibahagi"
   },

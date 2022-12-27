@@ -17,14 +17,14 @@
     "deviceRefNumber": "Device reference number",
     "name": "Name"
   },
+  "PasscodeVerify": {
+    "passcodeMismatchError": "Passcode did not match."
+  },
   "FaceScanner": {},
   "OIDcAuth": {
     "title": "OIDC Authentication",
     "text": "To be replaced with the OIDC provider UI",
     "verify": "Verify"
-  },
-  "PasscodeVerify": {
-    "passcodeMismatchError": "Passcode did not match."
   },
   "QrScanner": {
     "missingPermissionText": "This app uses the camera to scan the QR code of another device.",
@@ -96,7 +96,7 @@
     "backButton": "Back home"
   },
   "GetIdInputModal": {
-    "header": "To retrieve your UIN or VID, enter your Application {{vcLabel}} number",
+    "header": "To retrieve your UIN or VID, enter your application {{vcLabel}} number",
     "getUIN": "Get UIN/VID",
     "applicationId": "Application {{vcLabel}} number",
     "requestingOTP": "Requesting OTP...",
@@ -178,6 +178,11 @@
     "revokeSuccessful": "VID successfully revoked",
     "version": "Version"
   },
+  "ReceiveVcModal": {
+    "header": "{{vcLabel}} details",
+    "acceptRequest": "Accept the request and {{vcLabel}}",
+    "reject": "Reject"
+  },
   "ReceiveVcScreen": {
     "header": "{{vcLabel}} details",
     "acceptRequest": "Accept request and receive {{vcLabel}}",
@@ -208,7 +213,7 @@
         "timeoutHint": "It's taking too long to exchange device info..."
       },
       "connected": {
-        "message": "Connected to device. Waiting for {{vcLabel}}...",
+        "message": "Connected to the device. Waiting for {{vcLabel}}...",
         "timeoutHint": "No data received yet. Is sending device still connected?"
       }
     },
@@ -221,6 +226,10 @@
     "noShareableVcs": "No shareable {{vcLabel}} are available.",
     "sharingVc": "Sharing {{vcLabel}}",
     "errors": {
+      "flightMode": {
+        "message": "Flight mode must be disabled for the scanning function",
+        "button": "Disable flight mode"
+      },
       "locationDisabled": {
         "message": "Location services must be enabled for the scanning functionality",
         "button": "Enable location services"
@@ -232,7 +241,7 @@
     },
     "status": {
       "connecting": "Connecting...",
-      "connectingTimeout": "It's taking a while to establish connection. Is the other device open for connections?",
+      "connectingTimeout": "It's taking a while to establish the connection. Is the other device open for connections?",
       "exchangingDeviceInfo": "Exchanging device info...",
       "exchangingDeviceInfoTimeout": "It's taking a while to exchange device info. You may have to reconnect.",
       "invalid": "Invalid QR Code"
@@ -241,6 +250,7 @@
   "SelectVcOverlay": {
     "header": "Share {{vcLabel}}",
     "chooseVc": "Choose the {{vcLabel}} you'd like to share with",
+    "cancel": "Cancel",
     "share": "Share",
     "verifyAndShare": "Verify Identity & Share"
   },
@@ -273,8 +283,8 @@
     "errors": {
       "invalidIdentity": {
         "title": "Unable to verify identity",
-        "message": "An error occured and we couldn't scan your portrait. Try again, make sure your face is visible, devoid of any accessories.",
-        "messageNoRetry": "An error occured and we couldn't scan your portrait."
+        "message": "An error occurred and we couldn't scan your portrait. Try again, make sure your face is visible, devoid of any accessories.",
+        "messageNoRetry": "An error occurred and we couldn't scan your portrait."
       }
     }
   },
@@ -293,7 +303,7 @@
       "errors": {
         "missingPermission": "This app uses the camera to scan the QR code of another device."
       },
-      "allowAccess": "Allow access to camera"
+      "allowAccess": "Allow access to the camera"
     }
   }
 }
