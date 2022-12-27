@@ -46,17 +46,17 @@
     "id": "Id",
     "nationalCard": "National Card",
     "uin": "UIN",
-    "enableVerification": "Enable Verification",
-    "profileAuthenticated": "Verification enabled",
-    "offlineAuthDisabledHeader": "Verification not enabled",
-    "offlineAuthDisabledMessage": "Click here to enable this credentials to be used for verification.",
+    "enableVerification": "Activate",
+    "profileAuthenticated": "Activated for online login",
+    "offlineAuthDisabledHeader": "Activation pending for online login",
+    "offlineAuthDisabledMessage": "Please click the button below to activate this credential to be used for online login.",
     "vid": "VID",
-    "verificationEnabledSuccess": "Verification has been enabled for this credential.",
+    "verificationEnabledSuccess": "Activated for online login",
     "goback": "GO BACK",
-    "BindingWarning": "If you have enabled verification for this credential on another wallet, it will get overridden. Do you want to proceed?",
+    "BindingWarning": "If you have already activated online login for this credential on another device. You will no longer be able to use that device for login if you activate it again on this device.",
     "yes_confirm": "Yes, I Confirm",
     "no": "No",
-    "pleaseConfirm": "Please Confirm",
+    "Alert": "Alert",
     "ok": "Okay"
   },
   "AuthScreen": {
@@ -121,7 +121,8 @@
     "requestingOTP": "Requesting OTP..."
   },
   "OtpVerificationModal": {
-    "enterOtp": "Enter the 6-digit verification code we sent you"
+    "enterOtp": "Enter the 6-digit verification code we sent you",
+    "header": "OTP Verification"
   },
   "MyVcsTab": {
     "addVcButton": "Add {{vcLabel}}",
@@ -152,7 +153,7 @@
     "requestingOtp": "Requesting OTP...",
     "editTag": "Rename",
     "redirecting": "Redirecting...",
-    "inProgress": "In progress...",
+    "inProgress": "Loading...",
     "success": {
       "unlocked": "{{vcLabel}} successfully unlocked",
       "locked": "{{vcLabel}} successfully locked",

@@ -224,20 +224,19 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
         </Row>
         <VcItemTags tag={tag} />
       </ImageBackground>
-      <Row padding={'10 0 0 0'}>
+      <Row>
         {emptyWalletBindingId ? (
           <Row
             width={Dimensions.get('screen').width * 0.8}
             align="space-between"
             crossAlign="center">
-            <Row crossAlign="center">
+            <Row crossAlign="center" style={{ flex: 1 }}>
               {verifiableCredential && <WalletUnverified />}
               <Text
-                numLines={1}
                 color={Theme.Colors.Details}
-                weight="bold"
+                weight="semibold"
                 size="small"
-                margin="10 10 10 10"
+                margin="10 33 10 10"
                 style={
                   !verifiableCredential
                     ? Theme.Styles.loadingTitle
@@ -245,6 +244,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
                 }
                 children={t('offlineAuthDisabledHeader')}></Text>
             </Row>
+
             <Pressable>
               <Icon
                 name="dots-three-horizontal"
@@ -258,12 +258,11 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
             width={Dimensions.get('screen').width * 0.8}
             align="space-between"
             crossAlign="center">
-            <Row crossAlign="center">
+            <Row crossAlign="center" style={{ flex: 1 }}>
               <WalletVerified />
               <Text
-                numLines={1}
                 color={Theme.Colors.Details}
-                weight="bold"
+                weight="semibold"
                 size="smaller"
                 margin="10 10 10 10"
                 style={
@@ -273,6 +272,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
                 }
                 children={t('profileAuthenticated')}></Text>
             </Row>
+
             <Pressable>
               <Icon
                 name="dots-three-horizontal"

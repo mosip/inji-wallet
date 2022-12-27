@@ -598,6 +598,10 @@ export const DefaultTheme = {
   CloseCard: require('../../../assets/ID-closed.png'),
   ProfileIcon: require('../../../assets/placeholder-photo.png'),
   MosipLogo: require('../../../assets/mosip-logo.png'),
+  WarningLogo: require('../../../assets/warningLogo.png'),
+  OtpLogo: require('../../../assets/otp-mobile-logo.png'),
+  SuccessLogo: require('../../../assets/success-logo.png'),
+
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/
 
