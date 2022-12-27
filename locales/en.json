@@ -1,16 +1,4 @@
 {
-  "ActivityLogText": {
-    "VC_SHARED": "shared",
-    "VC_RECEIVED": "received",
-    "VC_DELETED": "deleted",
-    "VC_DOWNLOADED": "downloaded",
-    "VC_REVOKED": "revoked",
-    "VC_SHARED_WITH_VERIFICATION_CONSENT": "shared. Consent is given for presence verification",
-    "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "received. Presence verified",
-    "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "received. Presence verification failed",
-    "PRESENCE_VERIFIED_AND_VC_SHARED": "verified and shared",
-    "PRESENCE_VERIFICATION_FAILED": "verification failed"
-  },
   "DeviceInfoList": {
     "requestedBy": "Requested by",
     "sentBy": "Sent by",
@@ -178,11 +166,6 @@
     "revokeSuccessful": "VID successfully revoked",
     "version": "Version"
   },
-  "ReceiveVcModal": {
-    "header": "{{vcLabel}} details",
-    "acceptRequest": "Accept the request and {{vcLabel}}",
-    "reject": "Reject"
-  },
   "ReceiveVcScreen": {
     "header": "{{vcLabel}} details",
     "acceptRequest": "Accept request and receive {{vcLabel}}",
@@ -226,10 +209,6 @@
     "noShareableVcs": "No shareable {{vcLabel}} are available.",
     "sharingVc": "Sharing {{vcLabel}}",
     "errors": {
-      "flightMode": {
-        "message": "Flight mode must be disabled for the scanning function",
-        "button": "Disable flight mode"
-      },
       "locationDisabled": {
         "message": "Location services must be enabled for the scanning functionality",
         "button": "Enable location services"
@@ -250,7 +229,6 @@
   "SelectVcOverlay": {
     "header": "Share {{vcLabel}}",
     "chooseVc": "Choose the {{vcLabel}} you'd like to share with",
-    "cancel": "Cancel",
     "share": "Share",
     "verifyAndShare": "Verify Identity & Share"
   },

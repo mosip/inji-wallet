@@ -1,16 +1,4 @@
 {   
-    "ActivityLogText": {
-      "VC_SHARED": "பகிர்ந்து கொண்டார்",
-      "VC_RECEIVED": "பெற்றது",
-      "VC_DELETED": "நீக்கப்பட்டது",
-      "VC_DOWNLOADED": "பதிவிறக்கம் செய்யப்பட்டது",
-      "VC_REVOKED": "ரத்து செய்யப்பட்டது",
-      "VC_SHARED_WITH_VERIFICATION_CONSENT": "பகிர்ந்து கொண்டார். இருப்பைச் சரிபார்ப்பதற்கு ஒப்புதல் அளிக்கப்பட்டது",
-      "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "பெற்றது. இருப்பு சரிபார்க்கப்பட்டது",
-      "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "பெற்றது. இருப்பைச் சரிபார்க்க முடியவில்லை",
-      "PRESENCE_VERIFIED_AND_VC_SHARED": "சரிபார்க்கப்பட்டு பகிரப்பட்டது",
-      "PRESENCE_VERIFICATION_FAILED": "சரிபார்ப்பு தோல்வியடைந்தது"
-    },
     "DeviceInfoList": {
       "requestedBy": "கோரியவர்",
       "sentBy": "அனுப்பியவர்",
@@ -178,11 +166,6 @@
       "revokeSuccessful": "VID வெற்றிகரமாக ரத்து செய்யப்பட்டது",
       "version": "பதிப்பு"
     },
-    "ReceiveVcModal": {
-      "header": "{{vcLabel}} விவரங்கள்",
-      "acceptRequest": "கோரிக்கையை ஏற்று {{vcLabel}}ஐப் பெறு",
-      "reject": "நிராகரி"
-    },
     "ReceiveVcScreen": {
       "header": "{{vcLabel}} விவரங்கள்",
       "acceptRequest": "கோரிக்கையை ஏற்று {{vcLabel}} ஐப் பெறவும்",
@@ -226,10 +209,6 @@
       "noShareableVcs": "பகிரக்கூடிய {{vcLabel}} எதுவும் இல்லை.",
       "sharingVc": "பகிர்தல் {{vcLabel}}",
       "errors": {
-        "flightMode": {
-          "message": "ஸ்கேனிங் செயல்பாட்டிற்கு விமானப் பயன்முறையை முடக்க வேண்டும்",
-          "button": "விமானப் பயன்முறையை முடக்கு"
-        },
         "locationDisabled": {
           "message": "ஸ்கேனிங் செயல்பாட்டிற்கு இருப்பிடச் சேவைகள் இயக்கப்பட வேண்டும்",
           "button": "இருப்பிட சேவைகளை இயக்கு"
@@ -250,7 +229,6 @@
     "SelectVcOverlay": {
       "header": "பகிர்வு {{vcLabel}}",
       "chooseVc": "நீங்கள் பகிர விரும்பும் {{vcLabel}} ஐத் தேர்ந்தெடுக்கவும்",
-      "cancel": "ரத்துசெய்",
       "share": "பகிர்",
       "verifyAndShare": "அடையாளத்தைச் சரிபார்த்து பகிரவும்"
     },

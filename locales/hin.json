@@ -1,16 +1,4 @@
 {   
-    "ActivityLogText": {
-      "VC_SHARED": "साझा",
-      "VC_RECEIVED": "प्राप्त किया",
-      "VC_DELETED": "हटाए गए",
-      "VC_DOWNLOADED": "डाउनलोड की गई",
-      "VC_REVOKED": "निरस्त किया गया",
-      "VC_SHARED_WITH_VERIFICATION_CONSENT": "साझा. उपस्थिति सत्यापन के लिए सहमति दी जाती है",
-      "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "प्राप्त किया. उपस्थिति सत्यापित",
-      "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "प्राप्त किया. उपस्थिति सत्यापन विफल रहा",
-      "PRESENCE_VERIFIED_AND_VC_SHARED": "सत्यापित और साझा किया गया",
-      "PRESENCE_VERIFICATION_FAILED": "सत्यापन में विफल"
-    },
     "DeviceInfoList": {
       "requestedBy": "द्वारा अनुरोध किया गया",
       "sentBy": "द्वारा भेजा गया",
@@ -178,11 +166,6 @@
       "revokeSuccessful": "VID को सफलतापूर्वक निरस्त कर दिया गया",
       "version": "संस्करण"
     },
-    "ReceiveVcModal": {
-      "header": "{{vcLabel}} विवरण",
-      "acceptRequest": "अनुरोध स्वीकार करें और {{vcLabel}} प्राप्त करें",
-      "reject": "अस्वीकार करे"
-    },
     "ReceiveVcScreen": {
       "header": "{{vcLabel}} विवरण",
       "acceptRequest": "अनुरोध स्वीकार करें और {{vcLabel}} प्राप्त करें",
@@ -226,10 +209,6 @@
       "noShareableVcs": "कोई साझा करने योग्य {{vcLabel}} उपलब्ध नहीं है।",
       "sharingVc": "शेयरिंग {{vcLabel}}",
       "errors": {
-        "flightMode": {
-          "message": "्कैनिंग कार्यक्षमता के लिए उड़ान मोड अक्षम होना चाहिए",
-          "button": "उड़ान मोड अक्षम करें"
-        },
         "locationDisabled": {
           "message": "स्थान सेवाओं को स्कैनिंग कार्यक्षमता के लिए सक्षम किया जाना चाहिए",
           "button": "स्थान सेवाएं सक्षम करें"
@@ -250,7 +229,6 @@
     "SelectVcOverlay": {
       "header": "शेयर {{vcLabel}}",
       "chooseVc": "वह {{vcLabel}} चुनें जिसके साथ आप साझा करना चाहते हैं",
-      "cancel": "रद्द करे",
       "share": "बाँट",
       "verifyAndShare": "पहचान सत्यापित करें और साझा करें"
     },

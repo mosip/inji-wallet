@@ -1,16 +1,4 @@
 {
-  "ActivityLogText": {
-    "VC_SHARED": "ibinahagi",
-    "VC_RECEIVED": "natanggap",
-    "VC_DELETED": "tinanggal",
-    "VC_DOWNLOADED": "na-download",
-    "VC_REVOKED": "binawi",
-    "VC_SHARED_WITH_VERIFICATION_CONSENT": "ibinahagi. Ibinibigay ang pahintulot para sa pag-verify ng presensya",
-    "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "natanggap. Na-verify ang presensya",
-    "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "natanggap. Nabigo ang pag-verify ng presensya",
-    "PRESENCE_VERIFIED_AND_VC_SHARED": "na-verify at ibinahagi",
-    "PRESENCE_VERIFICATION_FAILED": "nabigo ang pag-verify"
-  },
   "DeviceInfoList": {
     "requestedBy": "Hiniling ni",
     "sentBy": "Ipinadala ni",
@@ -178,11 +166,6 @@
     "revokeSuccessful": "Matagumpay na nakansela ang VID",
     "version": "Bersyon"
   },
-  "ReceiveVcModal": {
-    "header": "{{vcLabel}} mga detalye",
-    "acceptRequest": "Tanggapin ang kahilingan at {{vcLabel}}",
-    "reject": "Tanggihan"
-  },
   "ReceiveVcScreen": {
     "header": "Mga detalye ng {{vcLabel}}",
     "acceptRequest": "Tanggapin ang kahilingan at tumanggap ng {{vcLabel}}",
@@ -226,10 +209,6 @@
     "noShareableVcs": "Walang magagamit na maibabahaging {{vcLabel}}.",
     "sharingVc": "Pagbabahagi ng {{vcLabel}}",
     "errors": {
-      "flightMode": {
-        "message": "Dapat na hindi pinagana ang flight mode para sa function ng pag-scan",
-        "button": "Huwag paganahin ang flight mode"
-      },
       "locationDisabled": {
         "message": "Dapat na nakabukas ang Location services ng iyong mobile para maaaring makapag-scan",
         "button": "Buksan ang location services"
@@ -250,7 +229,6 @@
   "SelectVcOverlay": {
     "header": "Ibahagi ang {{vcLabel}}",
     "chooseVc": "Piliin ang {{vcLabel}} na gusto mong ibahagi",
-    "cancel": "kanselahin",
     "share": "Ibahagi",
     "verifyAndShare": "I-verify ang Pagkakakilanlan at Ibahagi"
   },

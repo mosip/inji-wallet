@@ -1,16 +1,4 @@
 { 
-    "ActivityLogText": {
-      "VC_SHARED": "مشترك",
-      "VC_RECEIVED": "استلمو",
-      "VC_DELETED": "تم الحذف",
-      "VC_DOWNLOADED": "تم تنزيله",
-      "VC_REVOKED": "إلغاء - فسخ",
-      "VC_SHARED_WITH_VERIFICATION_CONSENT": "مشترك. يتم إعطاء الموافقة للتحقق من التواجد",
-      "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "استلمو. تم التحقق من الحضور",
-      "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "استلمو. فشل التحقق من التواجد",
-      "PRESENCE_VERIFIED_AND_VC_SHARED": "التحقق منها ومشاركتها",
-      "PRESENCE_VERIFICATION_FAILED": "فشل التحقق"
-    },
     "DeviceInfoList": {
       "requestedBy": "مطلوب بواسطة",
       "sentBy": "مرسل بواسطة",
@@ -178,11 +166,6 @@
       "revokeSuccessful": "تم إبطال VID بنجاح",
       "version": "الإصدار"
     },
-    "ReceiveVcModal": {
-      "header": "{{vcLabel}} تفاصيل",
-      "acceptRequest": "قبول الطلب والاستلام {{vcLabel}}",
-      "reject": "رفض"
-    },
     "ReceiveVcScreen": {
       "header": "تفاصيل {{vcLabel}}",
       "acceptRequest": "قبول الطلب واستلام {{vcLabel}}",
@@ -226,10 +209,6 @@
       "noShareableVcs": "لا يمكن مشاركة {{vcLabel}}",
       "sharingVc": "مشاركة {{vcLabel}}",
       "errors": {
-        "flightMode": {
-          "message": "يجب تعطيل وضع الطيران لوظيفة المسح",
-          "button": "الطيران"
-        },
         "locationDisabled": {
           "message": "يجب تمكين خدمات الموقع لوظيفة المسح",
           "button": "تمكين خدمات الموقع"
@@ -250,7 +229,6 @@
     "SelectVcOverlay": {
       "header": "يشارك {{vcLabel}}",
       "chooseVc": "اختر {{vcLabel}} الذي ترغب في المشاركة معه",
-      "cancel": "إلغاء",
       "share": "شارك",
       "verifyAndShare": "التحقق من الهوية والمشاركة"
     },
