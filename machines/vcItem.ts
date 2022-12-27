@@ -393,6 +393,7 @@ export const vcItemMachine =
           on: {
             CANCEL: {
               target: 'idle',
+              actions: 'setWalletBindingErrorEmpty',
             },
           },
         },
@@ -459,6 +460,7 @@ export const vcItemMachine =
           on: {
             BINDING_DONE: {
               target: 'idle',
+              actions: 'setWalletBindingErrorEmpty',
             },
           },
         },
@@ -468,6 +470,10 @@ export const vcItemMachine =
       actions: {
         setWalletBindingError: assign({
           walletBindingError: (context, event) => (event.data as Error).message,
+        }),
+
+        setWalletBindingErrorEmpty: assign({
+          walletBindingError: () => '',
         }),
 
         setPublicKey: assign({

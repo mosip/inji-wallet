@@ -1,8 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Dimensions } from 'react-native';
-import { Icon, Overlay } from 'react-native-elements';
-import { Button, Column, Row, Text } from '../../../components/ui';
+import { Dimensions, Image } from 'react-native';
+import { Overlay } from 'react-native-elements';
+import { Button, Column, Text, Row } from '../../../components/ui';
 import { Theme } from '../../../components/ui/styleUtils';
 
 export const BindingVcWarningOverlay: React.FC<QrLoginWarningProps> = (
@@ -16,41 +16,40 @@ export const BindingVcWarningOverlay: React.FC<QrLoginWarningProps> = (
       overlayStyle={Theme.BindingVcWarningOverlay.overlay}>
       <Column
         align="space-between"
+        crossAlign="center"
         padding={'10'}
-        width={Dimensions.get('screen').width * 0.8}
-        height={Dimensions.get('screen').height * 0.5}>
-        <Row align="center">
-          <Icon
-            name={'warning'}
-            size={50}
-            color={Theme.Colors.WarningIcon}
-            type="ionicon"
-          />
+        width={Dimensions.get('screen').width * 0.8}>
+        <Row align="center" crossAlign="center" margin={'0 80 0 0'}>
+          <Image source={Theme.WarningLogo} resizeMethod="auto" />
+          <Text
+            margin={'0 0 0 -80'}
+            color={Theme.Colors.whiteText}
+            weight="bold">
+            !
+          </Text>
         </Row>
-        <Column>
-          <Text align="center" size="regular" weight="bold">
-            {t('pleaseConfirm')}
-          </Text>
-        </Column>
-        <Column>
-          <Text align="center" size="smaller">
-            {t('BindingWarning')}
-          </Text>
-        </Column>
-        <Column padding={'20'}>
-          <Button
-            margin={'10 0 0 0'}
-            type="radius"
-            title={t('yes_confirm')}
-            onPress={props.onConfirm}
-          />
-          <Button
-            margin={'10 0 0 0'}
-            type="clear"
-            title={t('no')}
-            onPress={props.onCancel}
-          />
-        </Column>
+
+        <Text size="regular" weight="bold">
+          {t('Alert')}
+        </Text>
+
+        <Text align="center" size="smaller">
+          {t('BindingWarning')}
+        </Text>
+
+        <Button
+          margin={'10 0 0 0'}
+          type="radius"
+          title={t('yes_confirm')}
+          onPress={props.onConfirm}
+        />
+
+        <Button
+          margin={'10 0 0 0'}
+          type="clear"
+          title={t('no')}
+          onPress={props.onCancel}
+        />
       </Column>
     </Overlay>
   );

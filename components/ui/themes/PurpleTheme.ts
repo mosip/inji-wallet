@@ -432,6 +432,9 @@ export const PurpleTheme = {
   CloseCard: require('../../../purpleAassets/cart_unsel.png'),
   ProfileIcon: require('../../../purpleAassets/profile_icon_unsel.png'),
   MosipLogo: require('../../../purpleAassets/logo.png'),
+  WarningLogo: require('../../../assets/warningLogo.png'),
+  OtpLogo: require('../../../assets/otp-mobile-logo.png'),
+  SuccessLogo: require('../../../assets/success-logo.png'),
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/
 
