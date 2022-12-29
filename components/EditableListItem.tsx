@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Dimensions } from 'react-native';
-import { ListItem, Overlay, Input } from 'react-native-elements';
+import { Icon, ListItem, Overlay, Input } from 'react-native-elements';
 import { Text, Column, Row, Button } from './ui';
 import { Theme } from './ui/styleUtils';
 import { useTranslation } from 'react-i18next';
@@ -12,6 +12,13 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
 
   return (
     <ListItem bottomDivider onPress={() => setIsEditing(true)}>
+      <Icon
+        name={props.Icon}
+        type="antdesign"
+        size={20}
+        style={Theme.Styles.profileIconBg}
+        color={Theme.Colors.Icon}
+      />
       <ListItem.Content>
         <ListItem.Title>
           <Text color={Theme.Colors.profileLabel}>{props.label}</Text>
@@ -48,5 +55,6 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
 interface EditableListItemProps {
   label: string;
   value: string;
+  Icon: string;
   onEdit: (newValue: string) => void;
 }
