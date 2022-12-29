@@ -13,6 +13,7 @@ const Colors = {
   Red: '#EB5757',
   Green: '#219653',
   Transparent: 'transparent',
+  Warning: '#f0ad4e',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5;
@@ -30,6 +31,7 @@ export const DefaultTheme = {
     noUinText: Colors.Orange,
     IconBg: Colors.Orange,
     Icon: Colors.Orange,
+    GrayIcon: Colors.Grey,
     borderBottomColor: Colors.Grey6,
     whiteBackgroundColor: Colors.White,
     lightGreyBackgroundColor: Colors.LightGrey,
@@ -55,6 +57,7 @@ export const DefaultTheme = {
     checkCircleIcon: Colors.White,
     OnboardingCircleIcon: Colors.White,
     OnboardingCloseIcon: Colors.White,
+    WarningIcon: Colors.Warning,
   },
   Styles: StyleSheet.create({
     title: {
@@ -132,6 +135,8 @@ export const DefaultTheme = {
     backgroundImageContainer: {
       flex: 1,
       padding: 10,
+      borderBottomColor: Colors.Grey,
+      borderBottomWidth: 1,
     },
     successTag: {
       backgroundColor: Colors.Green,
@@ -325,6 +330,11 @@ export const DefaultTheme = {
     clearAddIdBtnBg: {
       backgroundColor: Colors.Transparent,
     },
+    radius: {
+      flex: 1,
+      borderRadius: 10,
+      backgroundColor: Colors.Orange,
+    },
   }),
   OIDCAuthStyles: StyleSheet.create({
     viewContainer: {
@@ -402,6 +412,18 @@ export const DefaultTheme = {
       elevation: 5,
       backgroundColor: Colors.White,
       padding: 0,
+    },
+    button: {
+      borderTopLeftRadius: 0,
+      borderTopRightRadius: 0,
+    },
+  }),
+  BindingVcWarningOverlay: StyleSheet.create({
+    overlay: {
+      elevation: 5,
+      backgroundColor: Colors.White,
+      padding: 0,
+      borderRadius: 15,
     },
     button: {
       borderTopLeftRadius: 0,
@@ -577,6 +599,10 @@ export const DefaultTheme = {
   CloseCard: require('../../../assets/ID-closed.png'),
   ProfileIcon: require('../../../assets/placeholder-photo.png'),
   MosipLogo: require('../../../assets/mosip-logo.png'),
+  WarningLogo: require('../../../assets/warningLogo.png'),
+  OtpLogo: require('../../../assets/otp-mobile-logo.png'),
+  SuccessLogo: require('../../../assets/success-logo.png'),
+
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/
 

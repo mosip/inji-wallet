@@ -12,6 +12,7 @@ export interface VC {
   locked: boolean;
   reason?: VCSharingReason[];
   shouldVerifyPresence?: boolean;
+  walletBindingId?: string;
 }
 
 export interface VCSharingReason {
@@ -97,4 +98,15 @@ export interface VCLabel {
 export interface LocalizedField {
   language: string;
   value: string;
+}
+
+export interface linkTransactionResponse {
+  authFactors: Object[];
+  authorizeScopes: null;
+  clientName: string;
+  configs: {};
+  essentialClaims: string[];
+  linkTransactionId: string;
+  logoUrl: string;
+  voluntaryClaims: string[];
 }

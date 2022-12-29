@@ -1,6 +1,6 @@
 import React, { useContext, useRef } from 'react';
 import { useInterpret, useSelector } from '@xstate/react';
-import { Pressable, Image, ImageBackground } from 'react-native';
+import { Pressable, Image, ImageBackground, Dimensions } from 'react-native';
 import { CheckBox, Icon } from 'react-native-elements';
 import { ActorRefFrom } from 'xstate';
 import {
@@ -10,6 +10,7 @@ import {
   vcItemMachine,
   selectContext,
   selectTag,
+  selectEmptyWalletBindingId,
 } from '../machines/vcItem';
 import { Column, Row, Text } from './ui';
 import { Theme } from './ui/styleUtils';
@@ -93,6 +94,29 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
   }
 };
 
+const WalletVerified: React.FC = () => {
+  return (
+    <Icon
+      name="verified-user"
+      color={Theme.Colors.VerifiedIcon}
+      size={28}
+      containerStyle={{ marginStart: 4, bottom: 1 }}
+    />
+  );
+};
+
+const WalletUnverified: React.FC = () => {
+  return (
+    <Icon
+      name="shield-alert"
+      color={Theme.Colors.Icon}
+      size={28}
+      type="material-community"
+      containerStyle={{ marginStart: 4, bottom: 1 }}
+    />
+  );
+};
+
 export const VcItem: React.FC<VcItemProps> = (props) => {
   const { appService } = useContext(GlobalContext);
   const { t } = useTranslation('VcDetails');
@@ -106,6 +130,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
   const service = useInterpret(machine.current, { devTools: __DEV__ });
   const context = useSelector(service, selectContext);
   const verifiableCredential = useSelector(service, selectVerifiableCredential);
+  const emptyWalletBindingId = useSelector(service, selectEmptyWalletBindingId);
 
   //Assigning the UIN and VID from the VC details to display the idtype label
   const uin = verifiableCredential?.credentialSubject.UIN;
@@ -211,6 +236,65 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
         </Row>
         <VcItemTags tag={tag} />
       </ImageBackground>
+      <Row>
+        {emptyWalletBindingId ? (
+          <Row
+            width={Dimensions.get('screen').width * 0.8}
+            align="space-between"
+            crossAlign="center">
+            <Row crossAlign="center" style={{ flex: 1 }}>
+              {verifiableCredential && <WalletUnverified />}
+              <Text
+                color={Theme.Colors.Details}
+                weight="semibold"
+                size="small"
+                margin="10 33 10 10"
+                style={
+                  !verifiableCredential
+                    ? Theme.Styles.loadingTitle
+                    : Theme.Styles.subtitle
+                }
+                children={t('offlineAuthDisabledHeader')}></Text>
+            </Row>
+
+            <Pressable>
+              <Icon
+                name="dots-three-horizontal"
+                type="entypo"
+                color={Theme.Colors.GrayIcon}
+              />
+            </Pressable>
+          </Row>
+        ) : (
+          <Row
+            width={Dimensions.get('screen').width * 0.8}
+            align="space-between"
+            crossAlign="center">
+            <Row crossAlign="center" style={{ flex: 1 }}>
+              <WalletVerified />
+              <Text
+                color={Theme.Colors.Details}
+                weight="semibold"
+                size="smaller"
+                margin="10 10 10 10"
+                style={
+                  !verifiableCredential
+                    ? Theme.Styles.loadingTitle
+                    : Theme.Styles.subtitle
+                }
+                children={t('profileAuthenticated')}></Text>
+            </Row>
+
+            <Pressable>
+              <Icon
+                name="dots-three-horizontal"
+                type="entypo"
+                color={Theme.Colors.GrayIcon}
+              />
+            </Pressable>
+          </Row>
+        )}
+      </Row>
     </Pressable>
   );
 };
@@ -220,6 +304,7 @@ interface VcItemProps {
   margin?: string;
   selectable?: boolean;
   selected?: boolean;
+  showOnlyBindedVc?: boolean;
   onPress?: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
   onShow?: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
 }

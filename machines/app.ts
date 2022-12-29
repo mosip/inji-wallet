@@ -15,6 +15,7 @@ import { createActivityLogMachine, activityLogMachine } from './activityLog';
 import { createRequestMachine, requestMachine } from './request';
 import { createScanMachine, scanMachine } from './scan';
 import { createRevokeMachine, revokeVidsMachine } from './revoke';
+import { createQrLoginMachine, qrLoginMachine } from './QrLoginMachine';
 
 import { pure, respond } from 'xstate/lib/actions';
 import { AppServices } from '../shared/GlobalContext';
@@ -209,6 +210,11 @@ export const appMachine = model.createMachine(
             revokeVidsMachine.id
           );
 
+          serviceRefs.qrLogin = spawn(
+            createQrLoginMachine(serviceRefs),
+            qrLoginMachine.id
+          );
+
           return serviceRefs;
         },
       }),
@@ -222,6 +228,7 @@ export const appMachine = model.createMachine(
           context.serviceRefs.scan.subscribe(logState);
           context.serviceRefs.request.subscribe(logState);
           context.serviceRefs.revoke.subscribe(logState);
+          context.serviceRefs.qrLogin.subscribe(logState);
         }
       },
 

@@ -34,7 +34,18 @@
     "id": "Id",
     "nationalCard": "National Card",
     "uin": "UIN",
-    "vid": "VID"
+    "enableVerification": "Activate",
+    "profileAuthenticated": "Activated for online login",
+    "offlineAuthDisabledHeader": "Activation pending for online login",
+    "offlineAuthDisabledMessage": "Please click the button below to activate this credential to be used for online login.",
+    "vid": "VID",
+    "verificationEnabledSuccess": "Activated for online login",
+    "goback": "GO BACK",
+    "BindingWarning": "If you have already activated online login for this credential on another device. You will no longer be able to use that device for login if you activate it again on this device.",
+    "yes_confirm": "Yes, I Confirm",
+    "no": "No",
+    "Alert": "Alert",
+    "ok": "Okay"
   },
   "AuthScreen": {
     "header": "Would you like to use biometrics to unlock the application?",
@@ -98,7 +109,8 @@
     "requestingOTP": "Requesting OTP..."
   },
   "OtpVerificationModal": {
-    "enterOtp": "Enter the 6-digit verification code we sent you"
+    "enterOtp": "Enter the 6-digit verification code we sent you",
+    "header": "OTP Verification"
   },
   "MyVcsTab": {
     "addVcButton": "Add {{vcLabel}}",
@@ -129,6 +141,7 @@
     "requestingOtp": "Requesting OTP...",
     "editTag": "Rename",
     "redirecting": "Redirecting...",
+    "inProgress": "Loading...",
     "success": {
       "unlocked": "{{vcLabel}} successfully unlocked",
       "locked": "{{vcLabel}} successfully locked",
@@ -165,6 +178,16 @@
     "empty": "Empty",
     "revokeSuccessful": "VID successfully revoked",
     "version": "Version"
+  },
+  "QrScreen": {
+    "title": "QR Login",
+    "noBindedVc": "No Binded {{vcLabel}} Available to Verify",
+    "back": "Go Back",
+    "confirm": "Confirm",
+    "verify": "Verify",
+    "loading": "Loading...",
+    "domainWarning": "Please verify and confirm the domain of the website you are logging into",
+    "access": "is requesting access to:"
   },
   "ReceiveVcScreen": {
     "header": "{{vcLabel}} details",

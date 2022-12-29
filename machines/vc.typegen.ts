@@ -8,9 +8,9 @@ export interface Typegen0 {
   'invokeSrcNameMap': {};
   'missingImplementations': {
     actions: never;
-    services: never;
-    guards: never;
     delays: never;
+    guards: never;
+    services: never;
   };
   'eventsCausingActions': {
     getReceivedVcsResponse: 'GET_RECEIVED_VCS';
@@ -24,11 +24,11 @@ export interface Typegen0 {
     setMyVcs: 'STORE_RESPONSE';
     setReceivedVcs: 'STORE_RESPONSE';
   };
-  'eventsCausingServices': {};
+  'eventsCausingDelays': {};
   'eventsCausingGuards': {
     hasExistingReceivedVc: 'VC_RECEIVED';
   };
-  'eventsCausingDelays': {};
+  'eventsCausingServices': {};
   'matchesStates':
     | 'init'
     | 'init.myVcs'
