@@ -4,48 +4,71 @@ import { Button, Column, Row, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { useQrLogin } from './QrLoginController';
 import { Image } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import { ListItem, Switch } from 'react-native-elements';
+import { Icon, ListItem, Switch } from 'react-native-elements';
+import { Modal } from '../../components/ui/Modal';
 
 export const QrConsent: React.FC<QrConsentProps> = (props) => {
   const { t } = useTranslation('QrScreen');
   const controller = useQrLogin();
 
   return (
-    <Column
-      fill
-      align="space-evenly"
-      padding="0 25 0 25"
-      style={{ display: props.isVisible ? 'flex' : 'none' }}
-      backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
-      {controller.linkTransactionResponse && (
-        <Row align="space-between" crossAlign="center">
-          <Image
-            source={controller.logoUrl ? { uri: controller.logoUrl } : null}
-            style={{ width: 100, height: 100 }}
-          />
-          <Icon name="sync" size={50} color={Theme.Colors.Icon} />
+    <Modal
+      isVisible={controller.isRequestConsent}
+      arrowLeft={<Icon name={''} />}
+      headerTitle={t('consent')}
+      headerElevation={5}
+      onDismiss={props.onCancel}>
+      <Column
+        fill
+        align="space-between"
+        padding="0 24 0 24"
+        style={{ display: props.isVisible ? 'flex' : 'none' }}
+        backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
+        <Column>
+          <Column
+            align="space-evenly"
+            crossAlign="center"
+            margin={'15 0 0 0'}
+            style={Theme.Styles.consentPageTop}
+            elevation={3}>
+            {controller.linkTransactionResponse && (
+              <Row margin={'0 0 0 38'} crossAlign="center">
+                <Icon name="mobile" type="font-awesome" size={60} />
+                <Text
+                  color={'grey'}
+                  weight="semibold"
+                  style={Theme.TextStyles.small}>
+                  {' '}
+                  -----------------------{' '}
+                </Text>
+                <Image
+                  source={
+                    controller.logoUrl ? { uri: controller.logoUrl } : null
+                  }
+                  style={{ width: 60, height: 60 }}
+                />
+              </Row>
+            )}
+            <Text
+              style={Theme.TextStyles.small}
+              weight="bold"
+              margin={'0 0 10 6'}>
+              {controller.clientName} {t('access')}
+            </Text>
+          </Column>
 
-          <Text>{controller.clientName}</Text>
-        </Row>
-      )}
-
-      <Column backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
-        <Text weight="semibold">
-          {controller.clientName} {t('access')}
-        </Text>
-
-        <Column scroll padding="10 0 0 0">
-          <Column scroll>
+          <Column scroll padding="10 0 0 0">
             <ListItem bottomDivider>
               <ListItem.Content>
                 <ListItem.Title>
-                  <Text color={Theme.Colors.profileLabel}>
+                  <Text
+                    color={Theme.Colors.profileLabel}
+                    style={Theme.TextStyles.base}>
                     {t('Name and Picture')}
                   </Text>
                 </ListItem.Title>
               </ListItem.Content>
-              <Switch value={true} color={Theme.Colors.Icon} disabled />
+              <Switch value={true} color={Theme.Colors.ProfileIconBg} />
             </ListItem>
             {controller.claims.map((claim, index) => {
               if (claim == 'name' || claim == 'picture') {
@@ -56,7 +79,8 @@ export const QrConsent: React.FC<QrConsentProps> = (props) => {
                     <ListItem.Content>
                       <ListItem.Title>
                         <Text color={Theme.Colors.profileLabel}>
-                          {t(claim).toUpperCase()}
+                          {t(claim[0]).toUpperCase() +
+                            claim.slice(1).toLowerCase()}
                         </Text>
                       </ListItem.Title>
                     </ListItem.Content>
@@ -76,23 +100,26 @@ export const QrConsent: React.FC<QrConsentProps> = (props) => {
               }
             })}
           </Column>
-          <Column>
-            <Button
-              margin={'10 0 0 0'}
-              styles={Theme.ButtonStyles.fill}
-              title={'Confirm'}
-              onPress={props.onConfirm}
-            />
-            <Button
-              margin={'10 0 10 0'}
-              type="outline"
-              title={'Cancel'}
-              onPress={props.onCancel}
-            />
-          </Column>
+        </Column>
+        <Column
+          margin={'0 -20 0 -20'}
+          style={Theme.Styles.bottomButtonsContainer}
+          elevation={5}>
+          <Button
+            margin={'6 10 0 10'}
+            styles={Theme.ButtonStyles.radius}
+            title={'Confirm'}
+            onPress={props.onConfirm}
+          />
+          <Button
+            margin={'10 10 0 10'}
+            type="clear"
+            title={'Cancel'}
+            onPress={props.onCancel}
+          />
         </Column>
       </Column>
-    </Column>
+    </Modal>
   );
 };
 

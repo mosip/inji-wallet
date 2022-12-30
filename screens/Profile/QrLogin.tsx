@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListItem } from 'react-native-elements';
+import { Icon, ListItem } from 'react-native-elements';
 import { Button, Column, Row, Text } from '../../components/ui';
 import { useTranslation } from 'react-i18next';
 import { useQrLogin } from './QrLoginController';
@@ -11,6 +11,7 @@ import { MyBindedVcs } from './MyBindedVcs';
 import { QrLoginWarning } from './QrLoginWarning';
 import { QrLoginSuccess } from './QrLoginSuccessMessage';
 import { QrConsent } from './QrConsent';
+import { Theme } from '../../components/ui/styleUtils';
 
 export const QrLogin: React.FC = () => {
   const controller = useQrLogin();
@@ -22,6 +23,13 @@ export const QrLogin: React.FC = () => {
       onPress={() => {
         controller.setQrLogin(true);
       }}>
+      <Icon
+        name="scan"
+        type="ionicon"
+        size={20}
+        style={Theme.Styles.profileIconBg}
+        color={Theme.Colors.Icon}
+      />
       <ListItem.Content>
         <ListItem.Title>
           <Text>{t('title')}</Text>
@@ -30,6 +38,9 @@ export const QrLogin: React.FC = () => {
 
       <Modal
         isVisible={controller.isQrLogin}
+        arrowLeft={<Icon name={''} />}
+        headerTitle={t('title')}
+        headerElevation={5}
         onDismiss={() => {
           controller.setQrLogin(false), controller.DISMISS();
         }}>
@@ -38,7 +49,7 @@ export const QrLogin: React.FC = () => {
             <Column fill padding="32" align="space-between">
               <QrScanner
                 onQrFound={controller.SCANNING_DONE}
-                title={'Scan the QR Code to initiate the login'}
+                title={t('alignQr')}
               />
             </Column>
           )}
