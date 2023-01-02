@@ -26,7 +26,7 @@ export const QrLoginWarning: React.FC<QrLoginWarningProps> = (props) => {
         style={{ display: props.isVisible ? 'flex' : 'none' }}
         backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
         <Column align="space-evenly" crossAlign="center" padding={'16 16 0 16'}>
-          <Image source={Theme.domainWarningLogo} resizeMethod="auto" />
+          <Image source={Theme.DomainWarningLogo} resizeMethod="auto" />
           <Text
             align="center"
             style={Theme.Styles.detailsText}
