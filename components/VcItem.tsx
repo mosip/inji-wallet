@@ -81,6 +81,7 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
           color={Theme.Colors.Details}
           weight="bold"
           size="smaller"
+          align="left"
           style={
             !verifiableCredential
               ? Theme.Styles.loadingTitle
