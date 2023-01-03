@@ -116,7 +116,7 @@ export const DefaultTheme = {
     },
     selectedBindedVc: {
       borderRadius: 10,
-      margin: 8,
+      margin: 5,
       borderWidth: 2,
       borderColor: Colors.Orange,
     },

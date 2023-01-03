@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Column, Text, Centered } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { useTranslation } from 'react-i18next';
-import { BindedVcItem } from '../../components/BindedVcItem';
+import { VcItem } from '../../components/VcItem';
 import { useQrLogin } from './QrLoginController';
 import { Icon } from 'react-native-elements';
 import { Modal } from '../../components/ui/Modal';
@@ -32,11 +32,12 @@ export const MyBindedVcs: React.FC<MyBindedVcsProps> = (props) => {
                     <Column pX={14}>
                       {controller.vcKeys.length > 0 &&
                         controller.vcKeys.map((vcKey, index) => (
-                          <BindedVcItem
+                          <VcItem
                             key={vcKey}
                             vcKey={vcKey}
                             margin="0 2 8 2"
                             onPress={controller.SELECT_VC_ITEM(index)}
+                            showOnlyBindedVc
                             selectable
                             selected={index === controller.selectedIndex}
                           />
