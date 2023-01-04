@@ -200,3 +200,7 @@ export function selectUnauthorized(state: State) {
 export function selectSettingUp(state: State) {
   return state.matches('settingUp');
 }
+
+export function selectInjiAppProps(state: State) {
+  return state.context.injiAppProperties;
+}
