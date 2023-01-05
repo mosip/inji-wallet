@@ -177,7 +177,8 @@
     "empty": "Empty",
     "revokeSuccessful": "VID successfully revoked",
     "version": "Version",
-    "useBle": "Share VC using BLE"
+    "useBle": "Powered by BLE",
+    "useGoogleNearby": "Powered by GoogleNearby"
   },
   "ReceiveVcScreen": {
     "header": "{{vcLabel}} details",
@@ -298,3 +299,4 @@
     }
   }
 }
+

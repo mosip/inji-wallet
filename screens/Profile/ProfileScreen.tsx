@@ -85,14 +85,16 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
       <ListItem bottomDivider>
         <ListItem.Content>
           <ListItem.Title>
-            <Text color={Theme.Colors.profileLabel}>{t('useBle')}</Text>
+            <Text
+              color={
+                USE_BLE_SHARE === 'true'
+                  ? Theme.Colors.lightGreyBackgroundColor
+                  : Theme.Colors.profileValue
+              }>
+              {USE_BLE_SHARE === 'true' ? t('useBle') : t('useGoogleNearby')}
+            </Text>
           </ListItem.Title>
         </ListItem.Content>
-        <Switch
-          value={USE_BLE_SHARE === 'true'}
-          color={Theme.Colors.profileValue}
-          disabled
-        />
       </ListItem>
       <Credits label={t('credits')} color={Theme.Colors.profileLabel} />
       <ListItem bottomDivider onPress={controller.LOGOUT}>

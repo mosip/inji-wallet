@@ -9,7 +9,7 @@ const { Openid4vpBle } = OpenIdBle;
 type ShareProtocol = OpenIDBLEShare | IdpassSmartshareType;
 let ShareLib: ShareProtocol;
 
-if (USE_BLE_SHARE) {
+if (USE_BLE_SHARE === 'true') {
   ShareLib = Openid4vpBle;
 } else {
   ShareLib = IdpassSmartshare;
