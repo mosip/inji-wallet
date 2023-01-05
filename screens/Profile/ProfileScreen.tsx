@@ -13,7 +13,6 @@ import { useProfileScreen } from './ProfileScreenController';
 import { useTranslation } from 'react-i18next';
 import { LanguageSelector } from '../../components/LanguageSelector';
 import i18next, { SUPPORTED_LANGUAGES } from '../../i18n';
-import { QrLogin } from './QrLogin';
 
 const LanguageSetting: React.FC = () => {
   const { t } = useTranslation('ProfileScreen');
@@ -61,7 +60,7 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
       />
       <LanguageSetting />
       <Revoke label={t('revokeLabel')} />
-      <QrLogin />
+
       <ListItem bottomDivider disabled={!controller.canUseBiometrics}>
         <ListItem.Content>
           <ListItem.Title>

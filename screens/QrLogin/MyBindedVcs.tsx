@@ -4,9 +4,10 @@ import { Theme } from '../../components/ui/styleUtils';
 import { useTranslation } from 'react-i18next';
 import { VcItem } from '../../components/VcItem';
 import { useQrLogin } from './QrLoginController';
+import { QrLoginRef } from '../../machines/QrLoginMachine';
 
 export const MyBindedVcs: React.FC<MyBindedVcsProps> = (props) => {
-  const controller = useQrLogin();
+  const controller = useQrLogin(props);
   const { t } = useTranslation('QrScreen');
 
   return (
@@ -70,4 +71,5 @@ export const MyBindedVcs: React.FC<MyBindedVcsProps> = (props) => {
 
 interface MyBindedVcsProps {
   isVisible: boolean;
+  service: QrLoginRef;
 }

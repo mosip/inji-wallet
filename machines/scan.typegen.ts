@@ -8,10 +8,6 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
-    'error.platform.scan.reviewing.creatingVp:invocation[0]': {
-      type: 'error.platform.scan.reviewing.creatingVp:invocation[0]';
-      data: unknown;
-    };
     'xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling': {
       type: 'xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling';
     };
@@ -41,10 +37,10 @@ export interface Typegen0 {
     sendVc: 'done.invoke.scan.reviewing.sendingVc:invocation[0]';
   };
   'missingImplementations': {
-    actions: never;
-    services: never;
-    guards: never;
+    actions: 'sendVcAdded';
     delays: never;
+    guards: never;
+    services: 'QrLogin';
   };
   'eventsCausingActions': {
     clearCreatedVp:
@@ -91,8 +87,16 @@ export interface Typegen0 {
       | 'xstate.init';
     requestSenderInfo: 'SCAN';
     requestToEnableLocation: 'LOCATION_DISABLED' | 'LOCATION_REQUEST';
+    sendScanData: 'SCAN';
+    sendVcAdded: 'STORE_RESPONSE';
+    setChildRef:
+      | 'DISCONNECT'
+      | 'DISMISS'
+      | 'xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling'
+      | 'xstate.after(CLEAR_DELAY)#scan.clearingConnection';
     setConnectionParams: 'SCAN';
     setCreatedVp: 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
+    setLinkCode: 'SCAN';
     setReason: 'UPDATE_REASON';
     setReceiverInfo: 'EXCHANGE_DONE';
     setScannedQrParams: 'SCAN';
@@ -102,7 +106,25 @@ export interface Typegen0 {
     setShareLogTypeVerified: 'FACE_VALID';
     toggleShouldVerifyPresence: 'TOGGLE_USER_CONSENT';
   };
+  'eventsCausingDelays': {
+    CANCEL_TIMEOUT: 'CANCEL';
+    CLEAR_DELAY: 'LOCATION_ENABLED';
+    CONNECTION_TIMEOUT:
+      | 'CONNECTED'
+      | 'RECEIVE_DEVICE_INFO'
+      | 'xstate.after(CONNECTION_TIMEOUT)#scan.exchangingDeviceInfo';
+    SHARING_TIMEOUT:
+      | 'ACCEPT_REQUEST'
+      | 'FACE_VALID'
+      | 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
+  };
+  'eventsCausingGuards': {
+    isQrLogin: 'SCAN';
+    isQrOffline: 'SCAN';
+    isQrOnline: 'SCAN';
+  };
   'eventsCausingServices': {
+    QrLogin: 'SCAN';
     checkLocationPermission: 'APP_ACTIVE' | 'LOCATION_ENABLED';
     checkLocationStatus: 'SCREEN_FOCUS';
     createVp: never;
@@ -113,22 +135,6 @@ export interface Typegen0 {
     monitorConnection: 'xstate.init';
     sendDisconnect: 'CANCEL';
     sendVc:
-      | 'ACCEPT_REQUEST'
-      | 'FACE_VALID'
-      | 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
-  };
-  'eventsCausingGuards': {
-    isQrOffline: 'SCAN';
-    isQrOnline: 'SCAN';
-  };
-  'eventsCausingDelays': {
-    CANCEL_TIMEOUT: 'CANCEL';
-    CLEAR_DELAY: 'LOCATION_ENABLED';
-    CONNECTION_TIMEOUT:
-      | 'CONNECTED'
-      | 'RECEIVE_DEVICE_INFO'
-      | 'xstate.after(CONNECTION_TIMEOUT)#scan.exchangingDeviceInfo';
-    SHARING_TIMEOUT:
       | 'ACCEPT_REQUEST'
       | 'FACE_VALID'
       | 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
@@ -164,6 +170,10 @@ export interface Typegen0 {
     | 'reviewing.sendingVc.inProgress'
     | 'reviewing.sendingVc.timeout'
     | 'reviewing.verifyingIdentity'
+    | 'showQrLogin'
+    | 'showQrLogin.idle'
+    | 'showQrLogin.navigatingToHome'
+    | 'showQrLogin.storing'
     | {
         checkingLocationService?:
           | 'checkingPermission'
@@ -184,6 +194,7 @@ export interface Typegen0 {
           | 'sendingVc'
           | 'verifyingIdentity'
           | { sendingVc?: 'inProgress' | 'timeout' };
+        showQrLogin?: 'idle' | 'navigatingToHome' | 'storing';
       };
   'tags': never;
 }

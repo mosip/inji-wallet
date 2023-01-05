@@ -33,30 +33,32 @@ export interface Typegen0 {
       | 'error.platform.QrLogin.linkTransaction:invocation[0]'
       | 'error.platform.QrLogin.requestingConsent:invocation[0]';
     expandLinkTransResp: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
+    forwardToParent: 'DISMISS';
     loadMyVcs: 'CONFIRM';
     setConsentClaims: 'TOGGLE_CONSENT_CLAIM';
     setMyVcs: 'STORE_RESPONSE';
-    setScanData: 'SCANNING_DONE';
+    setScanData: 'GET';
     setSelectedVc: 'SELECT_VC';
     setlinkTransactionResponse: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
   };
   'eventsCausingDelays': {};
   'eventsCausingGuards': {};
   'eventsCausingServices': {
-    linkTransaction: 'SCANNING_DONE';
+    linkTransaction: 'GET';
     sendConsent: 'CONFIRM';
   };
   'matchesStates':
     | 'ShowError'
     | 'done'
     | 'faceAuth'
-    | 'idle'
     | 'invalidIdentity'
     | 'linkTransaction'
     | 'loadMyVcs'
     | 'requestConsent'
     | 'requestingConsent'
     | 'showWarning'
-    | 'showvcList';
+    | 'showvcList'
+    | 'success'
+    | 'waitingForData';
   'tags': never;
 }
