@@ -32,6 +32,7 @@ const model = createModel(
     idError: '',
     transactionId: '',
     revoked: false,
+    downloadCounter: 0,
   },
   {
     events: {
@@ -59,6 +60,8 @@ export const vcItemMachine =
   /** @xstate-layout N4IgpgJg5mDOIC5QDcDGBaAlgFzAWwDpUALMVAa0wDsoA1VAYgHEBRAFQH1aBhDgJRYBlAAoB5AHKCWiUAAcA9rByZ5VGSAAeiAIwAWAAwFtANgAcAdl0BmAJwAmOxd0BWADQgAnoivHDpx6aBzubGwc6mAL4R7mhYuIQkZJQ0gtjyAE5gDIJsogL8QmKS0kggCkrYKmqlWgh6hiYWDnba4aFW7l4I5qbOBPohvdoW2jbDUTEYOPhEpBTUUIJg6cjLACIAhtgbs0kLqVsArrAMYgAyZ+rlyqrqtdrm2gRWds521vqmusZ2Nr2dOlGugIAXMb1+dn0NnCExAsWmCTmyUWy1W6U22128xS22wxwYa1EAHVxGdRABBNYFSkATSuihu1VAtQMfSsPlCumhVlGjwBdSsumBdh5Vmc1jGznszlh8PiWORSxW6y2Owg8gA7lQADbyDYQBbcTIQMBUSobbWnUQXekVKp3RA-YWtcz6YzQ4y6OzGfnaIEgwJghz2KEw6JwqbyxLYlHK9GqgjqrW6-WG42m82W7gCNYscRsACS5LOHEJJLJlJYa1tjIdCF0pmMz3Mrucgu+7R9nkQjb6Fh87Z5LcCssjM0wEG1WSrBc4bHJTBrlVuNR0bqeNk9A2Mrv0+mc4X5f3MBF0PRFPP8-kso7i48nWVoLD4BYAYnTStdl0zND3nA0rEbUx930OwQlCflTEAggbHMDkwKdfRtFvBECAnKcGDJbgAGkuG4Jd7VXOo2z6T5fDMHwbCQnpIOg2CfCgkJBjFFD5XQrIAFVSVEHC8IIldmR0axTCMYxRhsXRhmsd47H5QZ+mGHdQNGYxKNYmZIGUGg2A2KACQLQQAFkDMEfif3uYYT09XxGx6dk91k7sEGPU9z1CJD-HZKx1MITTKm03TsnJJ8OHnRdPwZb86z9VpTyosZ3TMAxHK6P1HiML1Xi9YwxIGSJwzlGZYDSdIFh0vScjyFgChECQpDM6LXjsAhTAk-RALguCrHMX1tBFAhLGGXoWj+drdB8gg0UwAAzDw00gDNMAtBh1SoMA0KoZB5HIdbCsIKbZvmk0zSW7UEGoLbUC2KoAG19AAXQaojtH0AwCClcxXihb0TAPfkXEMJDhl5d0eiFcaCrHfblhmuaaCNBaTuW5Z0gyAhZG1LZpoyfaocmmHDvh9MkbOi75Cu787seiK7QE39nNeFrnE9GxAJcSFvX5H5mvsb4+u0WxgNeibo2RWgCcwCmqgOPETiewS6hep4rDdaFglAz6eqc14myvQJ+YGfd2Qmi6LQnBgC3EYQOM4UQ2GEeX6chT1m0eA9wZVqDev-GDKJ3ST3SFfLJjvQhTe1c21gM4zBFMmna2el4bHe0xWm+F5PUA-k2yeAw7Mk8UWnMGwJsyABHQ44H8qBRGwWQVtUdayZ2ya8fLyvioWWvZHOzbyeu1Qqcd+5U6sfoHBykwQjeLWukSmCzxFODHHeCxS7ACuq67uuGBRtGMaxnHW9Dgh263mhu97y6B6oIf46i57U+BN5AlU75nF+3Rs-sAgxLBFWJKWFgnYCaGxUCoDALIau3cCxUFkIcbAFsrY2w4HbB299CIKweFyd6YEP6OHBO1NwTlYLJ3sIKewrR-zeUhifMBECoHb1kLA+BiCo5GRMsPHQ-5gQ-DFLYewcF7CmCPC0OKvwfBSihE4dem9O40DOOTcgDc1obS2i3Pap8N4d2rooigV9+6UwelwuowFk6NmsnuaEF4RFOT6rBd61gXo9FbIKWROiFh6OUXvdI6NMbYGxukXGJ8z7yKgF4gxUtB7GIwXTEeVEBrkNZAhbqX8SHFxgiKQuUppQPAmrqGM9Bsi5HyAIWqxQTGtG6kYcIfUWyhEcNCXqm4akSR+i2cUxtYRUHkCaeApRNGiwWPQExZhf6pIkl6GwYwvQdDsS2Iwe4hQ9GmQYawEMQ6oSGTiDIYATHQhBE6KigQeSTLmXPAY-RTk2WkcBYwIskT7FRCqTE2zFi4mOPsp4jwvjehcMzVSwxfQ8maiKAW0zegDA-sHCMJ83lKjRBiNUmodR6gNETRGmYTHhBEueAWrpPrBDSalFWhgwUclCEAv4Dy9gpGefGbYoyTw-Oyv8nKl5fRujHqCCiIQXAbNhahdilSHgbgPBRdODhLByUCDBOCOV9xfAlDCzRfkyq6UqVCYEm4pSOE+i0P0nLZWeRaDuRwKtzATWKhkdVUBKmQj6KpMwPQYoCy7KlX4hg2xeihMXWCXwZS0NQgdOGUAEbHSxbE8yiB6m-yJb0A8eq2z-Ryu9P0UF8VQh8CAoNUZHk0HFqVaaksb4y0+VGusHxnh6Fqf4RwZriWOndBlFsfUuR-H8CXXN45NpmwgAQeQdcTHOyeE-HoqlFWCmzn1X+fxWh7lTmJIUJte0R37QAIzATtKgEBh1G3epuV6rNMrEK6G0IwDwSLemAi9Ltmy2KronHu34B7fBckFA4U9iAJSztToEKC-DPjuPPjXIdFbnrfDIX8cUDZ-xukbN-ZqXpvgB03MMFooDwGQOgXXFhCDKnFyeJ6cCjw-SvTdHJaZ704NUR+DuJ1wGwleIIwk34TExRu0sF+xW0FrCg1ePwrJ+SlHDNQJUmeLVbCAU+LYAwoxfQEP6E4z4WVPpfB8iY6wA0pJ-PFYC2xc8TwvVen89c3wwRRCiEAA */
   model.createMachine(
     {
+      predictableActionArguments: true,
+      preserveActionOrder: true,
       tsTypes: {} as import('./vcItem.typegen').Typegen0,
       schema: {
         context: model.initialContext,
@@ -121,6 +124,7 @@ export const vcItemMachine =
                   actions: send('POLL_STATUS', { to: 'checkStatus' }),
                 },
                 DOWNLOAD_READY: {
+                  actions: 'resetDownloadCounter',
                   target: 'downloadingCredential',
                 },
               },
@@ -131,9 +135,15 @@ export const vcItemMachine =
                 id: 'downloadCredential',
               },
               on: {
-                POLL: {
-                  actions: send('POLL_DOWNLOAD', { to: 'downloadCredential' }),
-                },
+                POLL: [
+                  {
+                    cond: 'isDownloadAllowed',
+                    actions: [
+                      send('POLL_DOWNLOAD', { to: 'downloadCredential' }),
+                      'incrementDownloadCounter',
+                    ],
+                  },
+                ],
                 CREDENTIAL_DOWNLOADED: {
                   actions: [
                     'setCredential',
@@ -351,7 +361,9 @@ export const vcItemMachine =
             const { serviceRefs, ...vc } = context;
             return { type: 'VC_DOWNLOADED', vc };
           },
-          { to: (context) => context.serviceRefs.vc }
+          {
+            to: (context) => context.serviceRefs.vc,
+          }
         ),
 
         requestVcContext: send(
@@ -385,6 +397,14 @@ export const vcItemMachine =
           tag: (_, event) => event.tag,
         }),
 
+        resetDownloadCounter: model.assign({
+          downloadCounter: () => 0,
+        }),
+
+        incrementDownloadCounter: model.assign({
+          downloadCounter: ({ downloadCounter }) => downloadCounter + 1,
+        }),
+
         storeTag: send(
           (context) => {
             const { serviceRefs, ...data } = context;
@@ -393,13 +413,13 @@ export const vcItemMachine =
           { to: (context) => context.serviceRefs.store }
         ),
 
-        setCredential: model.assign((_, event) => {
+        setCredential: model.assign((context, event) => {
           switch (event.type) {
             case 'STORE_RESPONSE':
-              return event.response;
+              return { ...context, ...event.response };
             case 'GET_VC_RESPONSE':
             case 'CREDENTIAL_DOWNLOADED':
-              return event.vc;
+              return { ...context, ...event.vc };
           }
         }),
 
@@ -610,6 +630,10 @@ export const vcItemMachine =
             event.type === 'GET_VC_RESPONSE' ? event.vc : event.response;
 
           return vc?.credential != null && vc?.verifiableCredential != null;
+        },
+
+        isDownloadAllowed: (_context, event) => {
+          return _context.downloadCounter < 10;
         },
 
         isVcValid: (context) => {

@@ -44,6 +44,8 @@ export const storeMachine =
   /** @xstate-layout N4IgpgJg5mDOIC5SwC4HsBOYB0MUoEsA7KAUSIGMMBPAB0LSIGkxqBiJ0gTQH0AlUgGFSASQBqpACKJQtNLAIMiMkAA9EAFgCsADmxatARgBsAJgDMJ04YDspjcYA0Iaoh1bj2DYdM3DJgAZvLRtjAF8w51RMHDxCEnIqOiUWdlI+PgB5PhU5BSUVdQRjHQDsAPNTYzMdO2MNHR1nVwRDSuwTDwCATi1K7WMA0wio9CxcMCIwDABDeLJKGnoCRlSObn4hUQlpJBA8xRXlPaL3G2xjO26dbVMtIMtmxErPc3MbD0aqm26KrRGQNFxjAprN5oklilWGx0lkcnsDgUToh-AE9H5rqUtBpzNdqk9Wj5sKEDDpuuYQu5DN4AUCcFhYGB8MQoABlMYzGBsCCMHDEABuaAA1jg6dgGUz5uzMJywAgBWgKHMjgBtAIAXVy8kOjEKblCHW6tkMHg+3RsjxciBsDi89wCQ3JmJstLG9LgkpZ0tmXOmGEw2FoABs5gAzTAAW2wYolzJI3tl8qIgqVSjVmoR2qRoCKhh65n05h0gx0FIpBhsBL6pnKNncNxsARNoXCkUBbvFYBmEHYAHFSAAVLX5I561p3AvGPHdBxtDTdAl2c5BbrXXzGLSmHT2V0xTvd9iswfDnXHHMoicXaez8zzgn1Mr2Vdkm64m3mXfjLAHtgAQQACv+pAAHK7LIWajsi459FexYzsYc4LlaCAGAWGjzquU6mFU1TDG2MZdj2bD-gIQGgSe2ZqBeMFTnBN53shDieBuDpBA6bS6IYn7uj+AgALKZBIFGQee0GTteCG3khLTvN02DuOxealAE-z4R235EYIAAypC-vC4EjrqUE+DREmIQSpjkuU9qGDoJq1BoeGjHuGmHgO2SkJsrL-pkwFHsJRmiSZcnobUDpkm+vgErY5zaA6OKNI29TaNx+5Eay7kCDwsLZAFZ5UeOFrYEWCFrnmAR+E0yG-Bc9r3N0G4fMYFIRG2RBoBAcAqGKcQshCyRHKkeVjt4BYGFYKm2ah5jRQ6HQblo3SWc1tSmqlILTMqCSLANqysMNUE-AWVRBD82J+NWs1lJ0i3LUWTUumpLkenGbIcjAB2iTchheO4DR5pu1gOFWhghXWZgfOhDg3KlrmfQVPjvB05hmLi3glCjTjIduWjyT49SlgYm6Ldx8NFEWcnjWYk3uH0M3IbYtUOr4oToc1jY6K1YRAA */
   model.createMachine(
     {
+      predictableActionArguments: true,
+      preserveActionOrder: true,
       tsTypes: {} as import('./store.typegen').Typegen0,
       schema: {
         context: model.initialContext,
@@ -352,7 +354,7 @@ export async function removeItem(
     const vcKeyArray = value.split(':');
     const finalVcKeyArray = vcKeyArray.pop();
     const finalVcKey = vcKeyArray.join(':');
-    console.log('finalVcKeyArray', finalVcKeyArray);
+    //console.log('finalVcKeyArray', finalVcKeyArray);
     const newList = list.filter((vc: string) => {
       return !vc.includes(finalVcKey);
     });
@@ -377,7 +379,7 @@ export async function removeItems(
       return !values.find(function (vcKey: string) {
         const vcKeyArray = vcKey.split(':');
         const finalVcKeyArray = vcKeyArray.pop();
-        console.log('finalVcKeyArray', finalVcKeyArray);
+        //console.log('finalVcKeyArray', finalVcKeyArray);
         const finalVcKey = vcKeyArray.join(':');
         return vc.includes(finalVcKey);
       });

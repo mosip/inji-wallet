@@ -43,6 +43,8 @@ type ViewVcEvent = EventFrom<typeof model, 'VIEW_VC'>;
 
 export const MyVcsTabMachine = model.createMachine(
   {
+    predictableActionArguments: true,
+    preserveActionOrder: true,
     tsTypes: {} as import('./MyVcsTabMachine.typegen').Typegen0,
     schema: {
       context: model.initialContext,

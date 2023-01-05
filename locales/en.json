@@ -1,30 +1,18 @@
 {
-  "ActivityLogText": {
-    "VC_SHARED": "shared",
-    "VC_RECEIVED": "received",
-    "VC_DELETED": "deleted",
-    "VC_DOWNLOADED": "downloaded",
-    "VC_REVOKED": "revoked",
-    "VC_SHARED_WITH_VERIFICATION_CONSENT": "shared. Consent is given for presence verification",
-    "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "received. Presence verified",
-    "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "received. Presence verification failed",
-    "PRESENCE_VERIFIED_AND_VC_SHARED": "verified and shared",
-    "PRESENCE_VERIFICATION_FAILED": "verification failed"
-  },
   "DeviceInfoList": {
     "requestedBy": "Requested by",
     "sentBy": "Sent by",
     "deviceRefNumber": "Device reference number",
     "name": "Name"
   },
+  "PasscodeVerify": {
+    "passcodeMismatchError": "Passcode did not match."
+  },
   "FaceScanner": {},
   "OIDcAuth": {
     "title": "OIDC Authentication",
     "text": "To be replaced with the OIDC provider UI",
     "verify": "Verify"
-  },
-  "PasscodeVerify": {
-    "passcodeMismatchError": "Passcode did not match."
   },
   "QrScanner": {
     "missingPermissionText": "This app uses the camera to scan the QR code of another device.",
@@ -54,7 +42,7 @@
     "usePasscode": "I'd rather use a passcode",
     "errors": {
       "unavailable": "Device does not support Biometrics",
-      "unenrolled": "To use Biometrics, please enroll your fingerprint in your device settings",
+      "unenrolled": "To use Biometrics, please enroll your biometrics in your device settings",
       "failed": "Failed to authenticate with Biometrics",
       "generic": "There seems to be an error in Biometrics authentication"
     }
@@ -96,7 +84,7 @@
     "backButton": "Back home"
   },
   "GetIdInputModal": {
-    "header": "To retrieve your UIN or VID, enter your Application {{vcLabel}} number",
+    "header": "To retrieve your UIN or VID, enter your application {{vcLabel}} number",
     "getUIN": "Get UIN/VID",
     "applicationId": "Application {{vcLabel}} number",
     "requestingOTP": "Requesting OTP...",
@@ -210,7 +198,7 @@
         "timeoutHint": "It's taking too long to exchange device info..."
       },
       "connected": {
-        "message": "Connected to device. Waiting for {{vcLabel}}...",
+        "message": "Connected to the device. Waiting for {{vcLabel}}...",
         "timeoutHint": "No data received yet. Is sending device still connected?"
       }
     },
@@ -234,7 +222,7 @@
     },
     "status": {
       "connecting": "Connecting...",
-      "connectingTimeout": "It's taking a while to establish connection. Is the other device open for connections?",
+      "connectingTimeout": "It's taking a while to establish the connection. Is the other device open for connections?",
       "exchangingDeviceInfo": "Exchanging device info...",
       "exchangingDeviceInfoTimeout": "It's taking a while to exchange device info. You may have to reconnect.",
       "invalid": "Invalid QR Code"
@@ -275,8 +263,8 @@
     "errors": {
       "invalidIdentity": {
         "title": "Unable to verify identity",
-        "message": "An error occured and we couldn't scan your portrait. Try again, make sure your face is visible, devoid of any accessories.",
-        "messageNoRetry": "An error occured and we couldn't scan your portrait."
+        "message": "An error occurred and we couldn't scan your portrait. Try again, make sure your face is visible, devoid of any accessories.",
+        "messageNoRetry": "An error occurred and we couldn't scan your portrait."
       }
     }
   },
@@ -295,7 +283,7 @@
       "errors": {
         "missingPermission": "This app uses the camera to scan the QR code of another device."
       },
-      "allowAccess": "Allow access to camera"
+      "allowAccess": "Allow access to the camera"
     }
   }
 }

@@ -38,7 +38,7 @@ export interface Typegen0 {
   };
   'eventsCausingActions': {
     clearId: 'SELECT_ID_TYPE';
-    clearIdError: 'INPUT_ID';
+    clearIdError: 'INPUT_ID' | 'VALIDATE_INPUT';
     clearOtp:
       | 'DISMISS'
       | 'done.invoke.AddVcModal.acceptingIdInput.requestingOtp:invocation[0]'

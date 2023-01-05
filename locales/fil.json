@@ -5,14 +5,14 @@
     "deviceRefNumber": "Reference number ng device",
     "name": "Pangalan"
   },
+  "PasscodeVerify": {
+    "passcodeMismatchError": "Hindi tumugma ang passcode."
+  },
   "FaceScanner": {},
   "OIDcAuth": {
     "title": "OIDC Authentication",
     "text": "Papalitan ng OIDC service provider UI",
     "verify": "I-verify"
-  },
-  "PasscodeVerify": {
-    "passcodeMismatchError": "Hindi tumugma ang passcode."
   },
   "QrScanner": {
     "missingPermissionText": "Ginagamit ng app na ito ang camera upang i-scan ng QR code ng ibang device.",
@@ -31,8 +31,10 @@
     "address": "Tirahan",
     "reasonForSharing": "Dahilan ng pagbabahagi",
     "idType": "Uri ng ID",
+    "id": "Id",
     "nationalCard": "Pambansang Kard",
-    "uin": "UIN"
+    "uin": "UIN",
+    "vid": "VID"
   },
   "AuthScreen": {
     "header": "Gusto mo bang gumamit ng biometrics upang i-unlock ang aplikasyon?",
@@ -40,7 +42,7 @@
     "usePasscode": "Gumamit na lang ng passcode",
     "errors": {
       "unavailable": "Hindi sinusuportahan ng device ang Biometrics",
-      "unenrolled": "Upang magamit ang Biometrics, mangyaring i-enroll ang iyong fingerprint sa mga setting ng iyong device",
+      "unenrolled": "Upang magamit ang Biometrics, mangyaring i-enroll ang iyong biometrics sa mga setting ng iyong device",
       "failed": "Nabigong mag-authenticate gamit ang Biometrics",
       "generic": "May problema sa Biometrics authentication"
     }
@@ -81,10 +83,19 @@
     "bodyText": "Maaaring tumagal ito ng ilang oras, ipapaalam namin sayo kung pwede na kunin ang iyong {{vcLabel}}",
     "backButton": "Bumalik"
   },
+  "GetIdInputModal": {
+    "header": "Upang makuha ang iyong UIN o VID, ilagay ang iyong Application {{vcLabel}} na numero",
+    "getUIN": "Kumuha ng UIN/VID",
+    "applicationId": "Numero ng application na {{vcLabel}}.",
+    "requestingOTP": "Humihiling ng OTP...",
+    "qstnMarkToolTip": "Ang numero ng aplikasyon {{vcLabel}} ay naka-print sa ibinigay na pagkilala pagkatapos ng pagpapatala"
+  },
   "IdInputModal": {
     "header": "Ilagay ang UIN o VID na ibinigay ng MOSIP upang matanggap ang iyong {{vcLabel}}",
     "generateVc": "Gumawa ng {{vcLabel}}",
-    "enterId": "Ilagay ang iyong {{idType}}"
+    "enterId": "Ilagay ang iyong {{idType}}",
+    "noUIN/VID": "Wala ka bang UIN/VID? Kuhanin dito",
+    "requestingOTP": "Humihiling ng OTP..."
   },
   "OtpVerificationModal": {
     "enterOtp": "Ilagay ang 6 na numerong verification code na ipinadala namin sayo"
@@ -158,7 +169,7 @@
   "ReceiveVcScreen": {
     "header": "Mga detalye ng {{vcLabel}}",
     "acceptRequest": "Tanggapin ang kahilingan at tumanggap ng {{vcLabel}}",
-    "acceptRequestAndVerify": "Tanggapin ang kahilingan at i-verify",
+    "acceptRequestAndVerify": "Tanggapin ang kahilingan at magpatunay",
     "reject": "Tanggihan"
   },
   "RequestScreen": {
@@ -229,6 +240,7 @@
     "status": {
       "sharing": {
         "title": "Pagbabahagi",
+        "hint": "Pakihintay na tanggapin o tanggihan ng tumatanggap na device ang pagbabahagi.",
         "timeoutHint": "May katagalan ang pagbabahagi. Maaaring may problema sa koneksyon."
       },
       "accepted": {
@@ -249,7 +261,8 @@
     "errors": {
       "invalidIdentity": {
         "title": "Hindi ma-verify ang pagkakakilanlan",
-        "message": "May naganap na error at hindi namin ma-scan ang iyong larawan. Subukang muli, tiyaking nakikita ang iyong mukha, walang anumang mga aksesorya."
+        "message": "May naganap na error at hindi namin ma-scan ang iyong larawan. Subukang muli, tiyaking nakikita ang iyong mukha, walang anumang mga aksesorya.",
+        "messageNoRetry": "May naganap na error at hindi namin ma-scan ang iyong portrait."
       }
     }
   },
@@ -261,6 +274,7 @@
   "common": {
     "cancel": "Kanselahin",
     "save": "I-save",
+    "dismiss": "I-dismiss",
     "editLabel": "Palitan ang {{label}}",
     "tryAgain": "Subukan muli",
     "camera": {

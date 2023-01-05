@@ -14,10 +14,6 @@ export interface Typegen0 {
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
     'error.platform._store': { type: 'error.platform._store'; data: unknown };
-    'error.platform.store.resettingStorage:invocation[0]': {
-      type: 'error.platform.store.resettingStorage:invocation[0]';
-      data: unknown;
-    };
     'xstate.init': { type: 'xstate.init' };
   };
   'invokeSrcNameMap': {
@@ -28,9 +24,9 @@ export interface Typegen0 {
   };
   'missingImplementations': {
     actions: never;
-    services: never;
-    guards: never;
     delays: never;
+    guards: never;
+    services: never;
   };
   'eventsCausingActions': {
     forwardStoreRequest:
@@ -46,14 +42,14 @@ export interface Typegen0 {
       | 'done.invoke.store.resettingStorage:invocation[0]';
     setEncryptionKey: 'KEY_RECEIVED';
   };
+  'eventsCausingDelays': {};
+  'eventsCausingGuards': {};
   'eventsCausingServices': {
     clear: 'KEY_RECEIVED';
     generateEncryptionKey: 'ERROR';
     getEncryptionKey: 'xstate.init';
     store: 'KEY_RECEIVED' | 'done.invoke.store.resettingStorage:invocation[0]';
   };
-  'eventsCausingGuards': {};
-  'eventsCausingDelays': {};
   'matchesStates':
     | 'generatingEncryptionKey'
     | 'gettingEncryptionKey'
