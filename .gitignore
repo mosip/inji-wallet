@@ -91,3 +91,7 @@ dist/
 temp/
 .eslintcache
 .env.local
+
+.yalc/
+yalc.lock
+
