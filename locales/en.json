@@ -1,18 +1,31 @@
 {
+  "ActivityLogText": {
+    "VC_SHARED": "shared",
+    "VC_RECEIVED": "received",
+    "VC_RECEIVED_NOT_SAVED": "received was not saved",
+    "VC_DELETED": "deleted",
+    "VC_DOWNLOADED": "downloaded",
+    "VC_REVOKED": "revoked",
+    "VC_SHARED_WITH_VERIFICATION_CONSENT": "shared. Consent is given for presence verification",
+    "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "received. Presence verified",
+    "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "received. Presence verification failed",
+    "PRESENCE_VERIFIED_AND_VC_SHARED": "verified and shared",
+    "PRESENCE_VERIFICATION_FAILED": "verification failed"
+  },
   "DeviceInfoList": {
     "requestedBy": "Requested by",
     "sentBy": "Sent by",
     "deviceRefNumber": "Device reference number",
     "name": "Name"
   },
-  "PasscodeVerify": {
-    "passcodeMismatchError": "Passcode did not match."
-  },
   "FaceScanner": {},
   "OIDcAuth": {
     "title": "OIDC Authentication",
     "text": "To be replaced with the OIDC provider UI",
     "verify": "Verify"
+  },
+  "PasscodeVerify": {
+    "passcodeMismatchError": "Passcode did not match."
   },
   "QrScanner": {
     "missingPermissionText": "This app uses the camera to scan the QR code of another device.",
@@ -168,9 +181,9 @@
   },
   "ReceiveVcScreen": {
     "header": "{{vcLabel}} details",
-    "acceptRequest": "Accept request and receive {{vcLabel}}",
-    "acceptRequestAndVerify": "Accept request and verify",
-    "reject": "Reject"
+    "save": "Save {{vcLabel}}",
+    "verifyAndSave": "Verify and save",
+    "discard": "Discard"
   },
   "RequestScreen": {
     "bluetoothDenied": "Please enable Bluetooth to be able to request {{vcLabel}}",

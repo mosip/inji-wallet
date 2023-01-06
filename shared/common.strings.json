@@ -8,6 +8,6 @@
     "errors": {
       "missingPermission": "This app uses the camera to scan the QR code of another device."
     },
-    "allowAccess": "Allow access to camera"
+    "allowAccess": "Allow access to the camera"
   }
 }

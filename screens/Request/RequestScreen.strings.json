@@ -22,7 +22,7 @@
       "timeoutHint": "It's taking too long to exchange device info..."
     },
     "connected": {
-      "message": "Connected to device. Waiting for {{vcLabel}}...",
+      "message": "Connected to the device. Waiting for {{vcLabel}}...",
       "timeoutHint": "No data received yet. Is sending device still connected?"
     }
   },

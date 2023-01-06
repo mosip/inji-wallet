@@ -14,7 +14,7 @@
   },
   "status": {
     "connecting": "Connecting...",
-    "connectingTimeout": "It's taking a while to establish connection. Is the other device open for connections?",
+    "connectingTimeout": "It's taking a while to establish the connection. Is the other device open for connections?",
     "exchangingDeviceInfo": "Exchanging device info...",
     "exchangingDeviceInfoTimeout": "It's taking a while to exchange device info. You may have to reconnect.",
     "invalid": "Invalid QR Code"
