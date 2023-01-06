@@ -1,6 +1,6 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 import { Dimensions, StyleSheet, ViewStyle } from 'react-native';
-import { Spacing, Theme } from '../styleUtils';
+import { Spacing } from '../styleUtils';
 
 const Colors = {
   Black: '#231F20',
@@ -129,7 +129,6 @@ export const DefaultTheme = {
       padding: 10,
       borderRadius: 12,
       fontSize: 12,
-      color: Theme.Colors.Icon,
     },
     lockDomainContainer: {
       backgroundColor: Colors.White,

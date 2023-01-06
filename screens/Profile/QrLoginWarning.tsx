@@ -37,6 +37,7 @@ export const QrLoginWarning: React.FC<QrLoginWarningProps> = (props) => {
             align="center"
             margin={'30 15 0 10'}
             weight="regular"
+            color={Theme.Colors.Icon}
             style={Theme.Styles.urlContainer}>
             {controller.logoUrl}
           </Text>
