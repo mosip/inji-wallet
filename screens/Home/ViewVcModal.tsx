@@ -19,12 +19,6 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
 
   const DATA = [
     {
-      idType: 'UIN',
-      label: controller.vc.locked ? t('unlock') : t('lock'),
-      icon: 'lock-outline',
-      onPress: () => controller.lockVc(),
-    },
-    {
       idType: 'VID',
       label: t('revoke'),
       icon: 'close-circle-outline',

@@ -354,7 +354,7 @@ export async function removeItem(
     const vcKeyArray = value.split(':');
     const finalVcKeyArray = vcKeyArray.pop();
     const finalVcKey = vcKeyArray.join(':');
-    console.log('finalVcKeyArray', finalVcKeyArray);
+    //console.log('finalVcKeyArray', finalVcKeyArray);
     const newList = list.filter((vc: string) => {
       return !vc.includes(finalVcKey);
     });
@@ -379,7 +379,7 @@ export async function removeItems(
       return !values.find(function (vcKey: string) {
         const vcKeyArray = vcKey.split(':');
         const finalVcKeyArray = vcKeyArray.pop();
-        console.log('finalVcKeyArray', finalVcKeyArray);
+        //console.log('finalVcKeyArray', finalVcKeyArray);
         const finalVcKey = vcKeyArray.join(':');
         return vc.includes(finalVcKey);
       });

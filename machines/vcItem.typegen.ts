@@ -46,10 +46,6 @@ export interface Typegen0 {
       type: 'error.platform.vc-item.requestingLock:invocation[0]';
       data: unknown;
     };
-    'error.platform.vc-item.requestingOtp:invocation[0]': {
-      type: 'error.platform.vc-item.requestingOtp:invocation[0]';
-      data: unknown;
-    };
     'error.platform.vc-item.requestingRevoke:invocation[0]': {
       type: 'error.platform.vc-item.requestingRevoke:invocation[0]';
       data: unknown;
@@ -70,9 +66,9 @@ export interface Typegen0 {
   };
   'missingImplementations': {
     actions: never;
-    services: never;
-    guards: never;
     delays: never;
+    guards: never;
+    services: never;
   };
   'eventsCausingActions': {
     clearOtp:
@@ -91,11 +87,13 @@ export interface Typegen0 {
       | 'STORE_RESPONSE'
       | 'done.invoke.vc-item.verifyingCredential:invocation[0]'
       | 'error.platform.vc-item.verifyingCredential:invocation[0]';
+    incrementDownloadCounter: 'POLL';
     logDownloaded: 'CREDENTIAL_DOWNLOADED';
     logRevoked: 'STORE_RESPONSE';
     markVcValid: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
     requestStoredContext: 'GET_VC_RESPONSE' | 'REFRESH';
     requestVcContext: 'xstate.init';
+    resetDownloadCounter: 'DOWNLOAD_READY';
     revokeVID: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
     setCredential:
       | 'CREDENTIAL_DOWNLOADED'
@@ -124,6 +122,12 @@ export interface Typegen0 {
       | 'STORE_RESPONSE'
       | 'done.invoke.vc-item.verifyingCredential:invocation[0]';
   };
+  'eventsCausingDelays': {};
+  'eventsCausingGuards': {
+    hasCredential: 'GET_VC_RESPONSE' | 'STORE_RESPONSE';
+    isDownloadAllowed: 'POLL';
+    isVcValid: '';
+  };
   'eventsCausingServices': {
     checkStatus: 'STORE_RESPONSE';
     downloadCredential: 'DOWNLOAD_READY';
@@ -132,11 +136,6 @@ export interface Typegen0 {
     requestRevoke: 'INPUT_OTP';
     verifyCredential: '' | 'VERIFY';
   };
-  'eventsCausingGuards': {
-    hasCredential: 'GET_VC_RESPONSE' | 'STORE_RESPONSE';
-    isVcValid: '';
-  };
-  'eventsCausingDelays': {};
   'matchesStates':
     | 'acceptingOtpInput'
     | 'acceptingRevokeInput'

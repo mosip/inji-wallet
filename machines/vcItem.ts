@@ -32,6 +32,7 @@ const model = createModel(
     idError: '',
     transactionId: '',
     revoked: false,
+    downloadCounter: 0,
   },
   {
     events: {
@@ -123,6 +124,7 @@ export const vcItemMachine =
                   actions: send('POLL_STATUS', { to: 'checkStatus' }),
                 },
                 DOWNLOAD_READY: {
+                  actions: 'resetDownloadCounter',
                   target: 'downloadingCredential',
                 },
               },
@@ -133,9 +135,15 @@ export const vcItemMachine =
                 id: 'downloadCredential',
               },
               on: {
-                POLL: {
-                  actions: send('POLL_DOWNLOAD', { to: 'downloadCredential' }),
-                },
+                POLL: [
+                  {
+                    cond: 'isDownloadAllowed',
+                    actions: [
+                      send('POLL_DOWNLOAD', { to: 'downloadCredential' }),
+                      'incrementDownloadCounter',
+                    ],
+                  },
+                ],
                 CREDENTIAL_DOWNLOADED: {
                   actions: [
                     'setCredential',
@@ -389,6 +397,14 @@ export const vcItemMachine =
           tag: (_, event) => event.tag,
         }),
 
+        resetDownloadCounter: model.assign({
+          downloadCounter: () => 0,
+        }),
+
+        incrementDownloadCounter: model.assign({
+          downloadCounter: ({ downloadCounter }) => downloadCounter + 1,
+        }),
+
         storeTag: send(
           (context) => {
             const { serviceRefs, ...data } = context;
@@ -614,6 +630,10 @@ export const vcItemMachine =
             event.type === 'GET_VC_RESPONSE' ? event.vc : event.response;
 
           return vc?.credential != null && vc?.verifiableCredential != null;
+        },
+
+        isDownloadAllowed: (_context, event) => {
+          return _context.downloadCounter < 10;
         },
 
         isVcValid: (context) => {
