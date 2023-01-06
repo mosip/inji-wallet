@@ -1,8 +1,10 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 import SmartshareReactNative from '@idpass/smartshare-react-native';
 import { ConnectionParams } from '@idpass/smartshare-react-native/lib/typescript/IdpassSmartshare';
-const { IdpassSmartshare, GoogleNearbyMessages } = SmartshareReactNative;
+import { default as IdpassSmartshare } from '../lib/smartshare';
+const { GoogleNearbyMessages } = SmartshareReactNative;
 
+import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { EmitterSubscription, Linking, Platform } from 'react-native';
@@ -66,6 +68,9 @@ const model = createModel(
       DISCONNECT: () => ({}),
       SCREEN_BLUR: () => ({}),
       SCREEN_FOCUS: () => ({}),
+      BLUETOOTH_ENABLED: () => ({}),
+      BLUETOOTH_DISABLED: () => ({}),
+      GOTO_SETTINGS: () => ({}),
       UPDATE_REASON: (reason: string) => ({ reason }),
       LOCATION_ENABLED: () => ({}),
       LOCATION_DISABLED: () => ({}),
@@ -110,12 +115,55 @@ export const scanMachine =
           target: '.inactive',
         },
         SCREEN_FOCUS: {
-          target: '.checkingLocationService',
+          target: '.checkingBluetoothService',
         },
       },
       states: {
         inactive: {
           entry: 'removeLoggers',
+        },
+        checkingBluetoothService: {
+          initial: 'checking',
+          states: {
+            checking: {
+              invoke: {
+                src: 'checkBluetoothService',
+              },
+              on: {
+                BLUETOOTH_ENABLED: {
+                  target: 'enabled',
+                },
+                BLUETOOTH_DISABLED: {
+                  target: 'requesting',
+                },
+              },
+            },
+            requesting: {
+              invoke: {
+                src: 'requestBluetooth',
+              },
+              on: {
+                BLUETOOTH_ENABLED: {
+                  target: 'enabled',
+                },
+                BLUETOOTH_DISABLED: {
+                  target: '#scan.bluetoothDenied',
+                },
+              },
+            },
+            enabled: {
+              always: {
+                target: '#scan.checkingLocationService',
+              },
+            },
+          },
+        },
+        bluetoothDenied: {
+          on: {
+            GOTO_SETTINGS: {
+              actions: 'openBluetoothSettings',
+            },
+          },
         },
         clearingConnection: {
           entry: 'disconnect',
@@ -431,6 +479,12 @@ export const scanMachine =
     },
     {
       actions: {
+        openBluetoothSettings: () => {
+          Platform.OS === 'android'
+            ? BluetoothStateManager.openSettings().catch()
+            : Linking.openURL('App-Prefs:Bluetooth');
+        },
+
         requestSenderInfo: sendParent('REQUEST_DEVICE_INFO'),
 
         setSenderInfo: model.assign({
@@ -576,6 +630,22 @@ export const scanMachine =
       },
 
       services: {
+        checkBluetoothService: () => (callback) => {
+          const subscription = BluetoothStateManager.onStateChange((state) => {
+            if (state === 'PoweredOn') {
+              callback(model.events.BLUETOOTH_ENABLED());
+            } else {
+              callback(model.events.BLUETOOTH_DISABLED());
+            }
+          }, true);
+          return () => subscription.remove();
+        },
+
+        requestBluetooth: () => (callback) => {
+          BluetoothStateManager.requestToEnable()
+            .then(() => callback(model.events.BLUETOOTH_ENABLED()))
+            .catch(() => callback(model.events.BLUETOOTH_DISABLED()));
+        },
         checkLocationPermission: () => async (callback) => {
           try {
             // wait a bit for animation to finish when app becomes active
@@ -856,6 +926,10 @@ export function selectIsRejected(state: State) {
 
 export function selectIsInvalid(state: State) {
   return state.matches('invalid');
+}
+
+export function selectIsBluetoothDenied(state: State) {
+  return state.matches('bluetoothDenied');
 }
 
 export function selectIsLocationDenied(state: State) {

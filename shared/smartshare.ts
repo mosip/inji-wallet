@@ -3,9 +3,11 @@
 //   IdpassSmartshare,
 //   GoogleNearbyMessages,
 // } from '@idpass/smartshare-react-native';
-import Smartshare from '@idpass/smartshare-react-native';
+
+import SmartshareReactNative from '@idpass/smartshare-react-native';
 import { ConnectionParams } from '@idpass/smartshare-react-native/lib/typescript/IdpassSmartshare';
-const { IdpassSmartshare, GoogleNearbyMessages } = Smartshare;
+import { default as IdpassSmartshare } from '../lib/smartshare';
+const { GoogleNearbyMessages } = SmartshareReactNative;
 
 import { DeviceInfo } from '../components/DeviceInfoList';
 import { VC } from '../types/vc';

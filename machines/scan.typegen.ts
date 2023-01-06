@@ -3,14 +3,11 @@
 export interface Typegen0 {
   '@@xstate/typegen': true;
   'internalEvents': {
+    '': { type: '' };
     'done.invoke.scan.reviewing.creatingVp:invocation[0]': {
       type: 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
-    };
-    'error.platform.scan.reviewing.creatingVp:invocation[0]': {
-      type: 'error.platform.scan.reviewing.creatingVp:invocation[0]';
-      data: unknown;
     };
     'xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling': {
       type: 'xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling';
@@ -31,20 +28,22 @@ export interface Typegen0 {
     'xstate.stop': { type: 'xstate.stop' };
   };
   'invokeSrcNameMap': {
+    checkBluetoothService: 'done.invoke.scan.checkingBluetoothService.checking:invocation[0]';
     checkLocationPermission: 'done.invoke.scan.checkingLocationService.checkingPermission:invocation[0]';
     checkLocationStatus: 'done.invoke.scan.checkingLocationService.checkingStatus:invocation[0]';
     createVp: 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
     discoverDevice: 'done.invoke.scan.connecting:invocation[0]';
     exchangeDeviceInfo: 'done.invoke.scan.exchangingDeviceInfo:invocation[0]';
     monitorConnection: 'done.invoke.scan:invocation[0]';
+    requestBluetooth: 'done.invoke.scan.checkingBluetoothService.requesting:invocation[0]';
     sendDisconnect: 'done.invoke.scan.reviewing.cancelling:invocation[0]';
     sendVc: 'done.invoke.scan.reviewing.sendingVc:invocation[0]';
   };
   'missingImplementations': {
     actions: never;
-    services: never;
-    guards: never;
     delays: never;
+    guards: never;
+    services: never;
   };
   'eventsCausingActions': {
     clearCreatedVp:
@@ -76,6 +75,7 @@ export interface Typegen0 {
       | 'xstate.stop';
     logFailedVerification: 'FACE_INVALID';
     logShared: 'VC_ACCEPTED';
+    openBluetoothSettings: 'GOTO_SETTINGS';
     openSettings: 'LOCATION_REQUEST';
     registerLoggers:
       | 'DISCONNECT'
@@ -102,25 +102,6 @@ export interface Typegen0 {
     setShareLogTypeVerified: 'FACE_VALID';
     toggleShouldVerifyPresence: 'TOGGLE_USER_CONSENT';
   };
-  'eventsCausingServices': {
-    checkLocationPermission: 'APP_ACTIVE' | 'LOCATION_ENABLED';
-    checkLocationStatus: 'SCREEN_FOCUS';
-    createVp: never;
-    discoverDevice: 'RECEIVE_DEVICE_INFO';
-    exchangeDeviceInfo:
-      | 'CONNECTED'
-      | 'xstate.after(CONNECTION_TIMEOUT)#scan.exchangingDeviceInfo';
-    monitorConnection: 'xstate.init';
-    sendDisconnect: 'CANCEL';
-    sendVc:
-      | 'ACCEPT_REQUEST'
-      | 'FACE_VALID'
-      | 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
-  };
-  'eventsCausingGuards': {
-    isQrOffline: 'SCAN';
-    isQrOnline: 'SCAN';
-  };
   'eventsCausingDelays': {
     CANCEL_TIMEOUT: 'CANCEL';
     CLEAR_DELAY: 'LOCATION_ENABLED';
@@ -133,7 +114,33 @@ export interface Typegen0 {
       | 'FACE_VALID'
       | 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
   };
+  'eventsCausingGuards': {
+    isQrOffline: 'SCAN';
+    isQrOnline: 'SCAN';
+  };
+  'eventsCausingServices': {
+    checkBluetoothService: 'SCREEN_FOCUS';
+    checkLocationPermission: 'APP_ACTIVE' | 'LOCATION_ENABLED';
+    checkLocationStatus: '';
+    createVp: never;
+    discoverDevice: 'RECEIVE_DEVICE_INFO';
+    exchangeDeviceInfo:
+      | 'CONNECTED'
+      | 'xstate.after(CONNECTION_TIMEOUT)#scan.exchangingDeviceInfo';
+    monitorConnection: 'xstate.init';
+    requestBluetooth: 'BLUETOOTH_DISABLED';
+    sendDisconnect: 'CANCEL';
+    sendVc:
+      | 'ACCEPT_REQUEST'
+      | 'FACE_VALID'
+      | 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
+  };
   'matchesStates':
+    | 'bluetoothDenied'
+    | 'checkingBluetoothService'
+    | 'checkingBluetoothService.checking'
+    | 'checkingBluetoothService.enabled'
+    | 'checkingBluetoothService.requesting'
     | 'checkingLocationService'
     | 'checkingLocationService.checkingPermission'
     | 'checkingLocationService.checkingStatus'
@@ -165,6 +172,7 @@ export interface Typegen0 {
     | 'reviewing.sendingVc.timeout'
     | 'reviewing.verifyingIdentity'
     | {
+        checkingBluetoothService?: 'checking' | 'enabled' | 'requesting';
         checkingLocationService?:
           | 'checkingPermission'
           | 'checkingStatus'

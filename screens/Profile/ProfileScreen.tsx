@@ -13,6 +13,7 @@ import { useProfileScreen } from './ProfileScreenController';
 import { useTranslation } from 'react-i18next';
 import { LanguageSelector } from '../../components/LanguageSelector';
 import i18next, { SUPPORTED_LANGUAGES } from '../../i18n';
+import { USE_BLE_SHARE } from 'react-native-dotenv';
 
 const LanguageSetting: React.FC = () => {
   const { t } = useTranslation('ProfileScreen');
@@ -77,6 +78,15 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
           <ListItem.Title>
             <Text color={Theme.Colors.profileAuthFactorUnlock}>
               {t('authFactorUnlock')}
+            </Text>
+          </ListItem.Title>
+        </ListItem.Content>
+      </ListItem>
+      <ListItem bottomDivider>
+        <ListItem.Content>
+          <ListItem.Title>
+            <Text color={Theme.Colors.profileLabel}>
+              {USE_BLE_SHARE === 'true' ? t('useBle') : t('useGoogleNearby')}
             </Text>
           </ListItem.Title>
         </ListItem.Content>

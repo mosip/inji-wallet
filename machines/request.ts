@@ -1,5 +1,6 @@
 import SmartshareReactNative from '@idpass/smartshare-react-native';
-const { IdpassSmartshare, GoogleNearbyMessages } = SmartshareReactNative;
+import { default as IdpassSmartshare } from '../lib/smartshare';
+const { GoogleNearbyMessages } = SmartshareReactNative;
 
 import uuid from 'react-native-uuid';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
