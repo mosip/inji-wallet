@@ -6,7 +6,12 @@ import { Modal } from '../../../components/ui/Modal';
 import { Theme } from '../../../components/ui/styleUtils';
 import { IdInputModalProps, useIdInputModal } from './IdInputModalController';
 import { useTranslation } from 'react-i18next';
-import { KeyboardAvoidingView, Platform, TextInput } from 'react-native';
+import {
+  I18nManager,
+  KeyboardAvoidingView,
+  Platform,
+  TextInput,
+} from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import { individualId } from '../../../shared/constants';
 import { GET_INDIVIDUAL_ID } from '../../../shared/constants';
@@ -70,6 +75,9 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
                     color: controller.isInvalid
                       ? Theme.Colors.errorMessage
                       : Theme.Colors.textValue,
+                  }}
+                  inputStyle={{
+                    textAlign: I18nManager.isRTL ? 'right' : 'left',
                   }}
                   value={controller.id}
                   keyboardType="number-pad"

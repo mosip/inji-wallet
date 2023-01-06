@@ -121,6 +121,7 @@ export interface ActivityLog {
 export type ActivityLogType =
   | 'VC_SHARED'
   | 'VC_RECEIVED'
+  | 'VC_RECEIVED_NOT_SAVED'
   | 'VC_DELETED'
   | 'VC_DOWNLOADED'
   | 'VC_REVOKED'

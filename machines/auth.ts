@@ -162,7 +162,7 @@ export const authMachine = model.createMachine(
         return context.passcode !== '';
       },
       hasBiometricSet: (context) => {
-        return context.biometrics !== '';
+        return context.biometrics !== '' && context.passcode !== '';
       },
     },
   }

@@ -13,9 +13,9 @@ export interface Typegen0 {
   };
   'missingImplementations': {
     actions: never;
-    services: never;
-    guards: never;
     delays: never;
+    guards: never;
+    services: never;
   };
   'eventsCausingActions': {
     forwardToServices: 'ACTIVE' | 'INACTIVE' | 'OFFLINE' | 'ONLINE';
@@ -27,14 +27,14 @@ export interface Typegen0 {
     spawnServiceActors: 'READY';
     spawnStoreActor: 'xstate.init';
   };
+  'eventsCausingDelays': {};
+  'eventsCausingGuards': {};
   'eventsCausingServices': {
     checkFocusState: 'BACKEND_INFO_RECEIVED';
     checkNetworkState: 'BACKEND_INFO_RECEIVED';
     getAppInfo: 'READY';
     getBackendInfo: 'APP_INFO_RECEIVED';
   };
-  'eventsCausingGuards': {};
-  'eventsCausingDelays': {};
   'matchesStates':
     | 'init'
     | 'init.devinfo'
