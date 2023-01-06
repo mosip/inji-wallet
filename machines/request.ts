@@ -379,6 +379,7 @@ export const requestMachine =
               },
             },
             rejected: {
+              entry: ['setReceiveLogTypeDiscarded', 'logReceived'],
               invoke: {
                 src: 'sendVcResponse',
                 data: {
@@ -561,6 +562,10 @@ export const requestMachine =
 
         setReceiveLogTypeUnverified: model.assign({
           receiveLogType: 'VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED',
+        }),
+
+        setReceiveLogTypeDiscarded: model.assign({
+          receiveLogType: 'VC_RECEIVED_NOT_SAVED',
         }),
 
         logReceived: send(
