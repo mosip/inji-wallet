@@ -218,6 +218,7 @@ export const scanMachine =
           },
         },
         reviewing: {
+          entry: ['resetShouldVerifyPresence'],
           exit: ['disconnect', 'clearReason', 'clearCreatedVp'],
           initial: 'selectingVc',
           states: {
@@ -571,6 +572,13 @@ export const scanMachine =
           selectedVc: (context) => ({
             ...context.selectedVc,
             shouldVerifyPresence: !context.selectedVc.shouldVerifyPresence,
+          }),
+        }),
+
+        resetShouldVerifyPresence: assign({
+          selectedVc: (context) => ({
+            ...context.selectedVc,
+            shouldVerifyPresence: false,
           }),
         }),
       },

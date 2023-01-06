@@ -8,10 +8,6 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
-    'error.platform.scan.reviewing.creatingVp:invocation[0]': {
-      type: 'error.platform.scan.reviewing.creatingVp:invocation[0]';
-      data: unknown;
-    };
     'xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling': {
       type: 'xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling';
     };
@@ -42,9 +38,9 @@ export interface Typegen0 {
   };
   'missingImplementations': {
     actions: never;
-    services: never;
-    guards: never;
     delays: never;
+    guards: never;
+    services: never;
   };
   'eventsCausingActions': {
     clearCreatedVp:
@@ -91,6 +87,7 @@ export interface Typegen0 {
       | 'xstate.init';
     requestSenderInfo: 'SCAN';
     requestToEnableLocation: 'LOCATION_DISABLED' | 'LOCATION_REQUEST';
+    resetShouldVerifyPresence: 'CANCEL' | 'EXCHANGE_DONE';
     setConnectionParams: 'SCAN';
     setCreatedVp: 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
     setReason: 'UPDATE_REASON';
@@ -101,6 +98,22 @@ export interface Typegen0 {
     setShareLogTypeUnverified: 'ACCEPT_REQUEST';
     setShareLogTypeVerified: 'FACE_VALID';
     toggleShouldVerifyPresence: 'TOGGLE_USER_CONSENT';
+  };
+  'eventsCausingDelays': {
+    CANCEL_TIMEOUT: 'CANCEL';
+    CLEAR_DELAY: 'LOCATION_ENABLED';
+    CONNECTION_TIMEOUT:
+      | 'CONNECTED'
+      | 'RECEIVE_DEVICE_INFO'
+      | 'xstate.after(CONNECTION_TIMEOUT)#scan.exchangingDeviceInfo';
+    SHARING_TIMEOUT:
+      | 'ACCEPT_REQUEST'
+      | 'FACE_VALID'
+      | 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
+  };
+  'eventsCausingGuards': {
+    isQrOffline: 'SCAN';
+    isQrOnline: 'SCAN';
   };
   'eventsCausingServices': {
     checkLocationPermission: 'APP_ACTIVE' | 'LOCATION_ENABLED';
@@ -113,22 +126,6 @@ export interface Typegen0 {
     monitorConnection: 'xstate.init';
     sendDisconnect: 'CANCEL';
     sendVc:
-      | 'ACCEPT_REQUEST'
-      | 'FACE_VALID'
-      | 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
-  };
-  'eventsCausingGuards': {
-    isQrOffline: 'SCAN';
-    isQrOnline: 'SCAN';
-  };
-  'eventsCausingDelays': {
-    CANCEL_TIMEOUT: 'CANCEL';
-    CLEAR_DELAY: 'LOCATION_ENABLED';
-    CONNECTION_TIMEOUT:
-      | 'CONNECTED'
-      | 'RECEIVE_DEVICE_INFO'
-      | 'xstate.after(CONNECTION_TIMEOUT)#scan.exchangingDeviceInfo';
-    SHARING_TIMEOUT:
       | 'ACCEPT_REQUEST'
       | 'FACE_VALID'
       | 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
