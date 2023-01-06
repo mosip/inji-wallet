@@ -10,6 +10,7 @@ import { useSendVcScreen } from './SendVcScreenController';
 import { VerifyIdentityOverlay } from '../VerifyIdentityOverlay';
 import { VcItem } from '../../components/VcItem';
 import { SingleVcItem } from '../../components/SingleVcItem';
+import { I18nManager } from 'react-native';
 
 export const SendVcScreen: React.FC = () => {
   const { t } = useTranslation('SendVcScreen');
@@ -32,8 +33,10 @@ export const SendVcScreen: React.FC = () => {
               value={controller.reason ? controller.reason : ''}
               placeholder={!controller.reason ? reasonLabel : ''}
               label={controller.reason ? reasonLabel : ''}
+              labelStyle={{ textAlign: 'left' }}
               onChangeText={controller.UPDATE_REASON}
               containerStyle={{ marginBottom: 24 }}
+              inputStyle={{ textAlign: I18nManager.isRTL ? 'right' : 'left' }}
             />
           </Column>
           <Column>
