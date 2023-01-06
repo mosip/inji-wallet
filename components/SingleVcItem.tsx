@@ -170,9 +170,7 @@ export const SingleVcItem: React.FC<VcItemProps> = (props) => {
             </Column>
           </Column>
 
-          {verifiableCredential ? (
-            selectableOrCheck
-          ) : (
+          {verifiableCredential ? null : (
             <RotatingIcon name="sync" color={Theme.Colors.rotatingIcon} />
           )}
         </Row>
