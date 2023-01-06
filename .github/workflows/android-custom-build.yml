@@ -71,4 +71,8 @@ jobs:
         with:
           name: apk-output
           path: android/app/build/outputs/apk/newlogic/release/
+<<<<<<< HEAD
           retention-days: 10
+=======
+          retention-days: 5
+>>>>>>> 43f265535637b6d6824a58d0763276003d02f862

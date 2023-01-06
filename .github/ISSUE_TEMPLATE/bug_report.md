@@ -4,7 +4,13 @@ name: Bug report
 about: Create a report to help us improve
 title: ''
 labels: bug, triage
+<<<<<<< HEAD
 assignees:
+=======
+assignees: jeremi, kneckinator
+---
+
+> > > > > > > 43f265535637b6d6824a58d0763276003d02f862
 
 **Describe the bug**
 A clear and concise description of what the bug is.

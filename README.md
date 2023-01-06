@@ -115,6 +115,8 @@ npm run build:android:mosip
 
 More info here: [Build your app from the command line](https://developer.android.com/studio/build/building-cmdline)
 
+<<<<<<< HEAD
+
 # Developing iOS
 
 ## Build for TestFlight
@@ -141,7 +143,15 @@ More info here: [Build your app from the command line](https://developer.android
 More info here:
 
 - [React Native - Publishing to the App Store](https://reactnative.dev/docs/publishing-to-app-store)
-- [Apple Developer - Distributing Your App for Beta Testing and Releases](https://developer.apple.com/documentation/xcode/distributing-your-app-for-beta-testing-and-releases)
+- # [Apple Developer - Distributing Your App for Beta Testing and Releases](https://developer.apple.com/documentation/xcode/distributing-your-app-for-beta-testing-and-releases)
+
+## Build using github actions
+
+One can clone the repo and run the build via github actions as shown below.
+
+![](docs/images/build_github_actions.png)
+
+> > > > > > > 43f265535637b6d6824a58d0763276003d02f862
 
 ## Credits
 
