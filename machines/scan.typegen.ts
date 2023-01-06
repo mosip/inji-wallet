@@ -29,6 +29,7 @@ export interface Typegen0 {
   'invokeSrcNameMap': {
     checkLocationPermission: 'done.invoke.scan.checkingLocationService.checkingPermission:invocation[0]';
     checkLocationStatus: 'done.invoke.scan.checkingLocationService.checkingStatus:invocation[0]';
+    checkNetwork: 'done.invoke.scan.checkingNetwork:invocation[0]';
     createVp: 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
     discoverDevice: 'done.invoke.scan.connecting:invocation[0]';
     exchangeDeviceInfo: 'done.invoke.scan.exchangingDeviceInfo:invocation[0]';
@@ -85,7 +86,7 @@ export interface Typegen0 {
       | 'xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling'
       | 'xstate.after(CLEAR_DELAY)#scan.clearingConnection'
       | 'xstate.init';
-    requestSenderInfo: 'SCAN';
+    requestSenderInfo: 'ONLINE' | 'SCAN';
     requestToEnableLocation: 'LOCATION_DISABLED' | 'LOCATION_REQUEST';
     resetShouldVerifyPresence: 'CANCEL' | 'EXCHANGE_DONE';
     setConnectionParams: 'SCAN';
@@ -118,6 +119,7 @@ export interface Typegen0 {
   'eventsCausingServices': {
     checkLocationPermission: 'APP_ACTIVE' | 'LOCATION_ENABLED';
     checkLocationStatus: 'SCREEN_FOCUS';
+    checkNetwork: 'SCAN';
     createVp: never;
     discoverDevice: 'RECEIVE_DEVICE_INFO';
     exchangeDeviceInfo:
@@ -137,6 +139,7 @@ export interface Typegen0 {
     | 'checkingLocationService.denied'
     | 'checkingLocationService.disabled'
     | 'checkingLocationService.requestingToEnable'
+    | 'checkingNetwork'
     | 'clearingConnection'
     | 'connecting'
     | 'connecting.inProgress'
@@ -148,6 +151,7 @@ export interface Typegen0 {
     | 'findingConnection'
     | 'inactive'
     | 'invalid'
+    | 'offline'
     | 'preparingToConnect'
     | 'reviewing'
     | 'reviewing.accepted'

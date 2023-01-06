@@ -211,6 +211,9 @@
       "connected": {
         "message": "Connected to the device. Waiting for {{vcLabel}}...",
         "timeoutHint": "No data received yet. Is sending device still connected?"
+      },
+      "offline": {
+        "message": "Please connect to the internet to enable Online sharing mode"
       }
     },
     "online": "Online",
@@ -236,7 +239,8 @@
       "connectingTimeout": "It's taking a while to establish the connection. Is the other device open for connections?",
       "exchangingDeviceInfo": "Exchanging device info...",
       "exchangingDeviceInfoTimeout": "It's taking a while to exchange device info. You may have to reconnect.",
-      "invalid": "Invalid QR Code"
+      "invalid": "Invalid QR Code",
+      "offline": "Please connect to the internet to scan QR codes using Online sharing mode"
     }
   },
   "SelectVcOverlay": {
