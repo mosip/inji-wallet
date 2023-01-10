@@ -19,12 +19,6 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
 
   const DATA = [
     {
-      idType: 'UIN',
-      label: controller.vc.locked ? t('unlock') : t('lock'),
-      icon: 'lock-outline',
-      onPress: () => controller.lockVc(),
-    },
-    {
       idType: 'VID',
       label: t('revoke'),
       icon: 'close-circle-outline',
@@ -41,7 +35,11 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
     <Modal
       isVisible={props.isVisible}
       onDismiss={props.onDismiss}
-      headerTitle={controller.vc.id}
+      headerTitle={
+        controller.vc.verifiableCredential.credentialSubject.UIN
+          ? controller.vc.verifiableCredential.credentialSubject.UIN
+          : controller.vc.verifiableCredential.credentialSubject.VID
+      }
       headerElevation={2}
       headerRight={
         <DropdownIcon

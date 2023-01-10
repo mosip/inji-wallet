@@ -75,7 +75,7 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
   }
   return (
     <Column>
-      <Text color={Theme.Colors.DetailsLabel} size="smaller">
+      <Text color={Theme.Colors.DetailsLabel} size="smaller" align="left">
         {arg1}
       </Text>
       <Text
@@ -162,7 +162,7 @@ export const SingleVcItem: React.FC<VcItemProps> = (props) => {
               style={Theme.Styles.closeCardImage}
             />
 
-            <Column margin="0 0 0 10">
+            <Column margin="0 0 0 10" style={{ alignItems: 'flex-start' }}>
               {getDetails(t('fullName'), fullName, verifiableCredential)}
               {getDetails(t('uin'), uin, verifiableCredential)}
               {getDetails(t('generatedOn'), generatedOn, verifiableCredential)}

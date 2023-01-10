@@ -2,6 +2,7 @@
   "ActivityLogText": {
     "VC_SHARED": "shared",
     "VC_RECEIVED": "received",
+    "VC_RECEIVED_NOT_SAVED": "received was not saved",
     "VC_DELETED": "deleted",
     "VC_DOWNLOADED": "downloaded",
     "VC_REVOKED": "revoked",
@@ -96,7 +97,7 @@
     "backButton": "Back home"
   },
   "GetIdInputModal": {
-    "header": "To retrieve your UIN or VID, enter your Application {{vcLabel}} number",
+    "header": "To retrieve your UIN or VID, enter your application {{vcLabel}} number",
     "getUIN": "Get UIN/VID",
     "applicationId": "Application {{vcLabel}} number",
     "requestingOTP": "Requesting OTP...",
@@ -123,7 +124,7 @@
     "stepTwoTitle": "{{vcLabel}} management",
     "stepTwoText": "Once generated, {{vcLabel}} are safely stored on your mobile and can be renamed or shared at any time.",
     "stepThreeTitle": "Easy sharing",
-    "stepThreeText": "Share and receive {{vcLabel}} switfly using your phone camera to scan QR codes.",
+    "stepThreeText": "Share and receive {{vcLabel}} swiftly using your phone camera to scan QR codes.",
     "stepThreeButton": "Get started and add {{vcLabel}}"
   },
   "ReceivedVcsTab": {
@@ -180,9 +181,9 @@
   },
   "ReceiveVcScreen": {
     "header": "{{vcLabel}} details",
-    "acceptRequest": "Accept request and receive {{vcLabel}}",
-    "acceptRequestAndVerify": "Accept request and verify",
-    "reject": "Reject"
+    "save": "Save {{vcLabel}}",
+    "verifyAndSave": "Verify and save",
+    "discard": "Discard"
   },
   "RequestScreen": {
     "bluetoothDenied": "Please enable Bluetooth to be able to request {{vcLabel}}",
@@ -208,8 +209,11 @@
         "timeoutHint": "It's taking too long to exchange device info..."
       },
       "connected": {
-        "message": "Connected to device. Waiting for {{vcLabel}}...",
+        "message": "Connected to the device. Waiting for {{vcLabel}}...",
         "timeoutHint": "No data received yet. Is sending device still connected?"
+      },
+      "offline": {
+        "message": "Please connect to the internet to enable Online sharing mode"
       }
     },
     "online": "Online",
@@ -232,10 +236,11 @@
     },
     "status": {
       "connecting": "Connecting...",
-      "connectingTimeout": "It's taking a while to establish connection. Is the other device open for connections?",
+      "connectingTimeout": "It's taking a while to establish the connection. Is the other device open for connections?",
       "exchangingDeviceInfo": "Exchanging device info...",
       "exchangingDeviceInfoTimeout": "It's taking a while to exchange device info. You may have to reconnect.",
-      "invalid": "Invalid QR Code"
+      "invalid": "Invalid QR Code",
+      "offline": "Please connect to the internet to scan QR codes using Online sharing mode"
     }
   },
   "SelectVcOverlay": {
@@ -273,8 +278,8 @@
     "errors": {
       "invalidIdentity": {
         "title": "Unable to verify identity",
-        "message": "An error occured and we couldn't scan your portrait. Try again, make sure your face is visible, devoid of any accessories.",
-        "messageNoRetry": "An error occured and we couldn't scan your portrait."
+        "message": "An error occurred and we couldn't scan your portrait. Try again, make sure your face is visible, devoid of any accessories.",
+        "messageNoRetry": "An error occurred and we couldn't scan your portrait."
       }
     }
   },
@@ -293,7 +298,7 @@
       "errors": {
         "missingPermission": "This app uses the camera to scan the QR code of another device."
       },
-      "allowAccess": "Allow access to camera"
+      "allowAccess": "Allow access to the camera"
     }
   }
 }
