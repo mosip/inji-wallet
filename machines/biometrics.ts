@@ -28,6 +28,8 @@ const model = createModel(
 // ----- CREATE MACHINE -------------------------------------------------------
 export const biometricsMachine = model.createMachine(
   {
+    predictableActionArguments: true,
+    preserveActionOrder: true,
     id: 'biometrics',
     context: model.initialContext,
     initial: 'init',

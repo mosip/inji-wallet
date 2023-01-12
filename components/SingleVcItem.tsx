@@ -1,6 +1,6 @@
 import React, { useContext, useRef } from 'react';
 import { useInterpret, useSelector } from '@xstate/react';
-import { Image, ImageBackground } from 'react-native';
+import { Image, ImageBackground, Pressable } from 'react-native';
 import { CheckBox, Icon } from 'react-native-elements';
 import { ActorRefFrom } from 'xstate';
 import {
@@ -75,7 +75,7 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
   }
   return (
     <Column>
-      <Text color={Theme.Colors.DetailsLabel} size="smaller">
+      <Text color={Theme.Colors.DetailsLabel} size="smaller" align="left">
         {arg1}
       </Text>
       <Text
@@ -124,7 +124,9 @@ export const SingleVcItem: React.FC<VcItemProps> = (props) => {
   ) : null;
 
   return (
-    <Column style={Theme.Styles.closeCardBgContainer}>
+    <Pressable
+      style={Theme.Styles.closeCardBgContainer}
+      onPress={() => props.onPress(service)}>
       <ImageBackground
         source={!verifiableCredential ? null : Theme.CloseCard}
         resizeMode="stretch"
@@ -160,7 +162,7 @@ export const SingleVcItem: React.FC<VcItemProps> = (props) => {
               style={Theme.Styles.closeCardImage}
             />
 
-            <Column margin="0 0 0 10">
+            <Column margin="0 0 0 10" style={{ alignItems: 'flex-start' }}>
               {getDetails(t('fullName'), fullName, verifiableCredential)}
               {getDetails(t('uin'), uin, verifiableCredential)}
               {getDetails(t('generatedOn'), generatedOn, verifiableCredential)}
@@ -175,7 +177,7 @@ export const SingleVcItem: React.FC<VcItemProps> = (props) => {
           )}
         </Row>
       </ImageBackground>
-    </Column>
+    </Pressable>
   );
 };
 

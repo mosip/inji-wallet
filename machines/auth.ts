@@ -1,5 +1,7 @@
+import { init } from 'mosip-inji-face-sdk';
 import { ContextFrom, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
+import getAllProperties from '../shared/commonprops/commonProps';
 import { AppServices } from '../shared/GlobalContext';
 import { StoreEvents, StoreResponseEvent } from './store';
 
@@ -9,6 +11,7 @@ const model = createModel(
     passcode: '',
     biometrics: '',
     canUseBiometrics: false,
+    injiAppProperties: null,
   },
   {
     events: {
@@ -27,6 +30,8 @@ type SetupBiometricsEvent = EventFrom<typeof model, 'SETUP_BIOMETRICS'>;
 
 export const authMachine = model.createMachine(
   {
+    predictableActionArguments: true,
+    preserveActionOrder: true,
     tsTypes: {} as import('./auth.typegen').Typegen0,
     schema: {
       context: model.initialContext,
@@ -80,6 +85,12 @@ export const authMachine = model.createMachine(
         },
       },
       authorized: {
+        invoke: {
+          src: 'downloadFaceSdkModel',
+          onDone: {
+            actions: ['setInjiAppProperties', 'storeContext'],
+          },
+        },
         on: {
           LOGOUT: 'unauthorized',
           SETUP_BIOMETRICS: {
@@ -117,6 +128,31 @@ export const authMachine = model.createMachine(
       setBiometrics: model.assign({
         biometrics: (_, event: SetupBiometricsEvent) => event.biometrics,
       }),
+
+      setInjiAppProperties: model.assign({
+        injiAppProperties: (_, event) => event.data as object,
+      }),
+    },
+
+    services: {
+      downloadFaceSdkModel: (context) => async () => {
+        var injiProp = null;
+        try {
+          if (context.injiAppProperties == null) {
+            injiProp = await getAllProperties();
+          } else {
+            injiProp = context.injiAppProperties;
+          }
+          const resp: string =
+            injiProp != null ? injiProp.faceSdkModelUrl : null;
+          if (resp != null) {
+            init(resp, false);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+        return injiProp;
+      },
     },
 
     guards: {
@@ -126,7 +162,7 @@ export const authMachine = model.createMachine(
         return context.passcode !== '';
       },
       hasBiometricSet: (context) => {
-        return context.biometrics !== '';
+        return context.biometrics !== '' && context.passcode !== '';
       },
     },
   }
@@ -163,4 +199,8 @@ export function selectUnauthorized(state: State) {
 
 export function selectSettingUp(state: State) {
   return state.matches('settingUp');
+}
+
+export function selectInjiAppProps(state: State) {
+  return state.context.injiAppProperties;
 }
