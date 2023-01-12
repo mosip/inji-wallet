@@ -2,6 +2,7 @@
   "ActivityLogText": {
     "VC_SHARED": "ibinahagi",
     "VC_RECEIVED": "natanggap",
+    "VC_RECEIVED_NOT_SAVED": "natanggap ngunit hindi na-save",
     "VC_DELETED": "tinanggal",
     "VC_DOWNLOADED": "na-download",
     "VC_REVOKED": "binawi",
@@ -99,7 +100,7 @@
     "backButton": "Bumalik"
   },
   "GetIdInputModal": {
-    "header": "Upang makuha ang iyong UIN o VID, ilagay ang iyong Application {{vcLabel}} na numero",
+    "header": "Upang makuha ang iyong UIN o VID, ilagay ang iyong application {{vcLabel}} na numero",
     "getUIN": "Kumuha ng UIN/VID",
     "applicationId": "Numero ng application na {{vcLabel}}.",
     "requestingOTP": "Humihiling ng OTP...",
@@ -183,9 +184,9 @@
   },
   "ReceiveVcScreen": {
     "header": "Mga detalye ng {{vcLabel}}",
-    "acceptRequest": "Tanggapin ang kahilingan at tumanggap ng {{vcLabel}}",
-    "acceptRequestAndVerify": "Tanggapin ang kahilingan at i-verify",
-    "reject": "Tanggihan"
+    "save": "I-save {{vcLabel}}",
+    "verifyAndSave": "I-verify at i-save",
+    "discard": "Iwaksi"
   },
   "RequestScreen": {
     "bluetoothDenied": "Mangyaring paganahin ang Bluetooth upang makahiling ng {{vcLabel}}",
@@ -213,6 +214,9 @@
       "connected": {
         "message": "Nakakonektang device. Naghihintay para sa {{vcLabel}}...",
         "timeoutHint": "Wala pang data na natanggap. Nakakonekta pa rin ba ang nagpapadala na device?"
+      },
+      "offline": {
+        "message": "Mangyaring kumonekta sa internet upang magamit ang Online sharing mode"
       }
     },
     "online": "Online",
@@ -238,7 +242,8 @@
       "connectingTimeout": "Medyo nagtatagal bago magtatag ng koneksyon. Bukas ba ang ibang device para sa mga koneksyon?",
       "exchangingDeviceInfo": "Nagpapalitan ng impormasyon ng device...",
       "exchangingDeviceInfoTimeout": "Medyo nagtatagal ang paglabas ng impormasyon ng device. Bukas ba ang ibang device para sa mga koneksyon?",
-      "invalid": "Di-wasto ang QR Code"
+      "invalid": "Di-wasto ang QR Code",
+      "offline": "Mangyaring kumonekta sa internet upang makapag-scan ng QR codes na gumagamit ng Online sharing mode"
     }
   },
   "SelectVcOverlay": {

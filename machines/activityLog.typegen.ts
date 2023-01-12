@@ -8,9 +8,9 @@ export interface Typegen0 {
   'invokeSrcNameMap': {};
   'missingImplementations': {
     actions: never;
-    services: never;
-    guards: never;
     delays: never;
+    guards: never;
+    services: never;
   };
   'eventsCausingActions': {
     loadActivities: 'REFRESH' | 'xstate.init';
@@ -18,9 +18,9 @@ export interface Typegen0 {
     setActivities: 'STORE_RESPONSE';
     storeActivity: 'LOG_ACTIVITY';
   };
-  'eventsCausingServices': {};
-  'eventsCausingGuards': {};
   'eventsCausingDelays': {};
+  'eventsCausingGuards': {};
+  'eventsCausingServices': {};
   'matchesStates':
     | 'init'
     | 'ready'

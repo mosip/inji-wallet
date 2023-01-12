@@ -15,6 +15,7 @@ import {
   selectIsWaitingForVcTimeout,
   selectIsCheckingBluetoothService,
   selectIsCancelling,
+  selectIsOffline,
 } from '../../machines/request';
 import { selectVcLabel } from '../../machines/settings';
 import { GlobalContext } from '../../shared/GlobalContext';
@@ -51,6 +52,7 @@ export function useRequestScreen() {
     requestService,
     selectIsWaitingForVcTimeout
   );
+  const isOffline = useSelector(requestService, selectIsOffline);
 
   let statusMessage = '';
   let statusHint = '';
@@ -59,6 +61,8 @@ export function useRequestScreen() {
     statusMessage = t('status.waitingConnection');
   } else if (isExchangingDeviceInfo) {
     statusMessage = t('status.exchangingDeviceInfo.message');
+  } else if (isOffline) {
+    statusMessage = t('status.offline.message');
   } else if (isExchangingDeviceInfoTimeout) {
     statusMessage = t('status.exchangingDeviceInfo.message');
     statusHint = t('status.exchangingDeviceInfo.timeoutHint');

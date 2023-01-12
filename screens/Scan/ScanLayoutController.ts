@@ -16,6 +16,7 @@ import {
   selectIsReviewing,
   selectIsScanning,
   selectIsQrLoginDone,
+  selectIsOffline,
 } from '../../machines/scan';
 import { selectVcLabel } from '../../machines/settings';
 import { MainBottomTabParamList } from '../../routes/main';
@@ -64,6 +65,7 @@ export function useScanLayout() {
     scanService,
     selectIsExchangingDeviceInfoTimeout
   );
+  const isOffline = useSelector(scanService, selectIsOffline);
 
   const onCancel = () => scanService.send(ScanEvents.CANCEL());
   let statusOverlay: Pick<
@@ -93,6 +95,10 @@ export function useScanLayout() {
   } else if (isInvalid) {
     statusOverlay = {
       message: t('status.invalid'),
+    };
+  } else if (isOffline) {
+    statusOverlay = {
+      message: t('status.offline'),
     };
   }
 
