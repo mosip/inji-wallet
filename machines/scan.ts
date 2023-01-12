@@ -820,7 +820,7 @@ export const scanMachine =
 
       guards: {
         isQrOffline: (_context, event) => {
-          if (Platform.OS === 'ios') return false;
+          // if (Platform.OS === 'ios') return false;
 
           const param: ConnectionParams = Object.create(null);
           try {
