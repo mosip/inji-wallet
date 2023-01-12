@@ -8,12 +8,13 @@ const Colors = {
   Grey5: '#E0E0E0',
   Grey6: '#F2F2F2',
   Orange: '#F2811D',
-  LightGrey: '#FAF9FF',
+  LightGrey: '#f7f5f0',
   White: '#FFFFFF',
   Red: '#EB5757',
   Green: '#219653',
   Transparent: 'transparent',
   Warning: '#f0ad4e',
+  LightOrange: '#fce7e3',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5;
@@ -58,6 +59,7 @@ export const DefaultTheme = {
     OnboardingCircleIcon: Colors.White,
     OnboardingCloseIcon: Colors.White,
     WarningIcon: Colors.Warning,
+    ProfileIconBg: Colors.LightOrange,
   },
   Styles: StyleSheet.create({
     title: {
@@ -113,9 +115,39 @@ export const DefaultTheme = {
       shadowRadius: 3,
       elevation: 4,
     },
+    selectedBindedVc: {
+      borderRadius: 10,
+      margin: 5,
+      borderWidth: 2,
+      borderColor: Colors.Orange,
+    },
     labelPartContainer: {
       marginLeft: 16,
       flex: 1,
+    },
+    urlContainer: {
+      backgroundColor: Colors.White,
+      padding: 10,
+      borderRadius: 12,
+      fontSize: 12,
+    },
+    lockDomainContainer: {
+      backgroundColor: Colors.White,
+      alignSelf: 'center',
+      borderRadius: 15,
+      width: 100,
+    },
+    bottomButtonsContainer: {
+      height: 120,
+      borderTopLeftRadius: 27,
+      borderTopRightRadius: 27,
+      padding: 6,
+      backgroundColor: Colors.White,
+    },
+    consentPageTop: {
+      backgroundColor: Colors.White,
+      height: 160,
+      borderRadius: 6,
     },
     labelPart: {
       marginTop: 10,
@@ -174,6 +206,23 @@ export const DefaultTheme = {
       flex: 1,
       padding: 10,
     },
+    profileIconBg: {
+      padding: 8,
+      width: 40,
+      height: 40,
+      borderRadius: 6,
+      backgroundColor: Colors.LightOrange,
+    },
+    domainVerifiyIcon: {
+      padding: 20,
+      marginLeft: 120,
+      width: 130,
+      height: 130,
+      borderRadius: 60,
+      borderWidth: 10,
+      borderColor: Colors.White,
+      backgroundColor: Colors.LightOrange,
+    },
     closeCardImage: {
       width: 105,
       height: 135,
@@ -192,6 +241,7 @@ export const DefaultTheme = {
       height: 300,
       width: 300,
       overflow: 'hidden',
+      marginLeft: 18,
     },
     scanner: {
       height: 400,
@@ -331,7 +381,6 @@ export const DefaultTheme = {
       backgroundColor: Colors.Transparent,
     },
     radius: {
-      flex: 1,
       borderRadius: 10,
       backgroundColor: Colors.Orange,
     },
@@ -599,6 +648,7 @@ export const DefaultTheme = {
   CloseCard: require('../../../assets/ID-closed.png'),
   ProfileIcon: require('../../../assets/placeholder-photo.png'),
   MosipLogo: require('../../../assets/mosip-logo.png'),
+  DomainWarningLogo: require('../../../assets/domain-warning.png'),
   WarningLogo: require('../../../assets/warningLogo.png'),
   OtpLogo: require('../../../assets/otp-mobile-logo.png'),
   SuccessLogo: require('../../../assets/success-logo.png'),

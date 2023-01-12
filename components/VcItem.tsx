@@ -157,7 +157,11 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
     <Pressable
       onPress={() => props.onPress(service)}
       disabled={!verifiableCredential}
-      style={Theme.Styles.closeCardBgContainer}>
+      style={
+        props.selected
+          ? Theme.Styles.selectedBindedVc
+          : Theme.Styles.closeCardBgContainer
+      }>
       <ImageBackground
         source={!verifiableCredential ? null : Theme.CloseCard}
         resizeMode="stretch"
@@ -286,13 +290,15 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
                 children={t('profileAuthenticated')}></Text>
             </Row>
 
-            <Pressable>
-              <Icon
-                name="dots-three-horizontal"
-                type="entypo"
-                color={Theme.Colors.GrayIcon}
-              />
-            </Pressable>
+            {props.showOnlyBindedVc ? null : (
+              <Pressable>
+                <Icon
+                  name="dots-three-horizontal"
+                  type="entypo"
+                  color={Theme.Colors.GrayIcon}
+                />
+              </Pressable>
+            )}
           </Row>
         )}
       </Row>

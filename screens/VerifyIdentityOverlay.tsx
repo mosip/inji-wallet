@@ -5,15 +5,18 @@ import { FaceScanner } from '../components/FaceScanner';
 import { Column, Row } from '../components/ui';
 import { Theme } from '../components/ui/styleUtils';
 import { VC } from '../types/vc';
+import { Modal } from '../components/ui/Modal';
+import { t } from 'i18next';
 
 export const VerifyIdentityOverlay: React.FC<VerifyIdentityOverlayProps> = (
   props
 ) => {
   return (
-    <Overlay isVisible={props.isVisible}>
-      <Row align="flex-end" padding="16">
-        <Icon name="close" color={Theme.Colors.Icon} onPress={props.onCancel} />
-      </Row>
+    <Modal
+      isVisible={props.isVisible}
+      arrowLeft={<Icon name={''} />}
+      headerTitle={t('faceAuth')}
+      onDismiss={props.onCancel}>
       <Column
         fill
         style={Theme.VerifyIdentityOverlayStyles.content}
@@ -26,7 +29,7 @@ export const VerifyIdentityOverlay: React.FC<VerifyIdentityOverlayProps> = (
           />
         )}
       </Column>
-    </Overlay>
+    </Modal>
   );
 };
 

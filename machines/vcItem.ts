@@ -36,11 +36,11 @@ const model = createModel(
     transactionId: '',
     bindingTransactionId: '',
     revoked: false,
+    downloadCounter: 0,
     walletBindingId: '',
     walletBindingError: '',
     publicKey: '',
     privateKey: '',
-    downloadCounter: 0,
   },
   {
     events: {

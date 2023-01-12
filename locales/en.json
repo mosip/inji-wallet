@@ -47,18 +47,11 @@
     "id": "Id",
     "nationalCard": "National Card",
     "uin": "UIN",
-    "enableVerification": "Activate",
-    "profileAuthenticated": "Activated for online login",
-    "offlineAuthDisabledHeader": "Activation pending for online login",
-    "offlineAuthDisabledMessage": "Please click the button below to activate this credential to be used for online login.",
     "vid": "VID",
-    "verificationEnabledSuccess": "Activated for online login",
-    "goback": "GO BACK",
-    "BindingWarning": "If you have already activated online login for this credential on another device. You will no longer be able to use that device for login if you activate it again on this device.",
-    "yes_confirm": "Yes, I Confirm",
-    "no": "No",
-    "Alert": "Alert",
-    "ok": "Okay"
+    "enableVerification": "Enable Verification",
+    "profileAuthenticated": "Profile is authenticated!",
+    "offlineAuthDisabledHeader": "Offline Authentication disabled!",
+    "offlineAuthDisabledMessage": "Click 'Enable Authentication' to enable this credentials to be used for offline authentication."
   },
   "AuthScreen": {
     "header": "Would you like to use biometrics to unlock the application?",
@@ -122,8 +115,7 @@
     "requestingOTP": "Requesting OTP..."
   },
   "OtpVerificationModal": {
-    "enterOtp": "Enter the 6-digit verification code we sent you",
-    "header": "OTP Verification"
+    "enterOtp": "Enter the 6-digit verification code we sent you"
   },
   "MyVcsTab": {
     "addVcButton": "Add {{vcLabel}}",
@@ -136,7 +128,7 @@
     "stepTwoTitle": "{{vcLabel}} management",
     "stepTwoText": "Once generated, {{vcLabel}} are safely stored on your mobile and can be renamed or shared at any time.",
     "stepThreeTitle": "Easy sharing",
-    "stepThreeText": "Share and receive {{vcLabel}} swiftly using your phone camera to scan QR codes.",
+    "stepThreeText": "Share and receive {{vcLabel}} switfly using your phone camera to scan QR codes.",
     "stepThreeButton": "Get started and add {{vcLabel}}"
   },
   "ReceivedVcsTab": {
@@ -154,7 +146,6 @@
     "requestingOtp": "Requesting OTP...",
     "editTag": "Rename",
     "redirecting": "Redirecting...",
-    "inProgress": "Loading...",
     "success": {
       "unlocked": "{{vcLabel}} successfully unlocked",
       "locked": "{{vcLabel}} successfully locked",
@@ -191,16 +182,6 @@
     "empty": "Empty",
     "revokeSuccessful": "VID successfully revoked",
     "version": "Version"
-  },
-  "QrScreen": {
-    "title": "QR Login",
-    "noBindedVc": "No Binded {{vcLabel}} Available to Verify",
-    "back": "Go Back",
-    "confirm": "Confirm",
-    "verify": "Verify",
-    "loading": "Loading...",
-    "domainWarning": "Please verify and confirm the domain of the website you are logging into",
-    "access": "is requesting access to:"
   },
   "ReceiveVcScreen": {
     "header": "{{vcLabel}} details",

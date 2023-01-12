@@ -47,6 +47,7 @@
     "id": "Id",
     "nationalCard": "Pambansang Kard",
     "uin": "UIN",
+    "vid": "VID",
     "enableVerification": "Paganahin ang Pag-verify",
     "offlineAuthDisabledHeader": "Na-disable ang Offline Authentication!",
     "offlineAuthDisabledMessage": "I-click ang 'Paganahin ang Authentication' upang paganahin ang mga kredensyal na ito na magamit para sa offline na pagpapatotoo.",

@@ -15,6 +15,13 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
 
   return (
     <ListItem bottomDivider onPress={() => controller.setAuthenticating(true)}>
+      <Icon
+        name={props.Icon}
+        type="font-awesome"
+        size={20}
+        style={Theme.Styles.profileIconBg}
+        color={Theme.Colors.Icon}
+      />
       <ListItem.Content>
         <ListItem.Title>
           <Text>{props.label}</Text>
@@ -151,4 +158,5 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
 
 interface RevokeScreenProps {
   label: string;
+  Icon: string;
 }
