@@ -13,12 +13,14 @@ import { storeMachine } from './store';
 import { createVcMachine, vcMachine } from './vc';
 import { createActivityLogMachine, activityLogMachine } from './activityLog';
 import { createRequestMachine, requestMachine } from './request';
+import * as BLEMatchines from './ble/request';
 import { createScanMachine, scanMachine } from './scan';
 import { createRevokeMachine, revokeVidsMachine } from './revoke';
 
 import { pure, respond } from 'xstate/lib/actions';
 import { AppServices } from '../shared/GlobalContext';
 import { request } from '../shared/request';
+import { USE_BLE_SHARE } from 'react-native-dotenv';
 
 const model = createModel(
   {
@@ -199,10 +201,12 @@ export const appMachine = model.createMachine(
             scanMachine.id
           );
 
-          serviceRefs.request = spawn(
-            createRequestMachine(serviceRefs),
-            requestMachine.id
-          );
+          serviceRefs.request = USE_BLE_SHARE
+            ? spawn(
+                BLEMatchines.createRequestMachine(serviceRefs),
+                BLEMatchines.requestMachine.id
+              )
+            : spawn(createRequestMachine(serviceRefs), requestMachine.id);
 
           serviceRefs.revoke = spawn(
             createRevokeMachine(serviceRefs),

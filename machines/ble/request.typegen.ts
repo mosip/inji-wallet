@@ -12,9 +12,6 @@ export interface Typegen0 {
     'xstate.after(CANCEL_TIMEOUT)#request.cancelling': {
       type: 'xstate.after(CANCEL_TIMEOUT)#request.cancelling';
     };
-    'xstate.after(CLEAR_DELAY)#request.clearingConnection': {
-      type: 'xstate.after(CLEAR_DELAY)#request.clearingConnection';
-    };
     'xstate.after(CONNECTION_TIMEOUT)#request.exchangingDeviceInfo.inProgress': {
       type: 'xstate.after(CONNECTION_TIMEOUT)#request.exchangingDeviceInfo.inProgress';
     };
@@ -27,6 +24,7 @@ export interface Typegen0 {
   'invokeSrcNameMap': {
     advertiseDevice: 'done.invoke.request.waitingForConnection:invocation[0]';
     checkBluetoothService: 'done.invoke.request.checkingBluetoothService.checking:invocation[0]';
+    disconnect: 'done.invoke.request.clearingConnection:invocation[0]';
     exchangeDeviceInfo: 'done.invoke.request.exchangingDeviceInfo:invocation[0]';
     monitorConnection: 'done.invoke.request:invocation[0]';
     receiveVc: 'done.invoke.request.waitingForVc:invocation[0]';
@@ -38,7 +36,7 @@ export interface Typegen0 {
     verifyVp: 'done.invoke.request.reviewing.verifyingVp:invocation[0]';
   };
   'missingImplementations': {
-    actions: never;
+    actions: 'disconnect';
     delays: never;
     guards: never;
     services: never;
@@ -54,29 +52,17 @@ export interface Typegen0 {
       | 'SCREEN_FOCUS'
       | 'SWITCH_PROTOCOL'
       | 'xstate.stop';
-    disconnect:
-      | ''
-      | 'DISCONNECT'
-      | 'DISMISS'
-      | 'SCREEN_BLUR'
-      | 'SCREEN_FOCUS'
-      | 'SWITCH_PROTOCOL'
-      | 'xstate.after(CANCEL_TIMEOUT)#request.cancelling'
-      | 'xstate.stop';
-    generateConnectionParams:
-      | 'DISMISS'
-      | 'xstate.after(CLEAR_DELAY)#request.clearingConnection';
+    disconnect: 'xstate.after(CANCEL_TIMEOUT)#request.cancelling';
+    generateConnectionParams: 'CONNECTION_DESTROYED' | 'DISMISS';
     logReceived: 'STORE_RESPONSE';
     mergeIncomingVc: 'STORE_RESPONSE';
     openSettings: 'GOTO_SETTINGS';
     prependReceivedVc: 'VC_RESPONSE';
-    registerLoggers:
-      | 'DISMISS'
-      | 'xstate.after(CLEAR_DELAY)#request.clearingConnection';
+    registerLoggers: 'CONNECTION_DESTROYED' | 'DISMISS';
     removeLoggers:
+      | 'CONNECTION_DESTROYED'
       | 'DISMISS'
       | 'SCREEN_BLUR'
-      | 'xstate.after(CLEAR_DELAY)#request.clearingConnection'
       | 'xstate.init';
     requestExistingVc: 'VC_RESPONSE';
     requestReceivedVcs:
@@ -97,7 +83,6 @@ export interface Typegen0 {
   };
   'eventsCausingDelays': {
     CANCEL_TIMEOUT: 'CANCEL';
-    CLEAR_DELAY: '';
     CONNECTION_TIMEOUT: 'RECEIVE_DEVICE_INFO';
     SHARING_TIMEOUT: 'EXCHANGE_DONE';
   };
@@ -105,13 +90,12 @@ export interface Typegen0 {
     hasExistingVc: 'VC_RESPONSE';
   };
   'eventsCausingServices': {
-    advertiseDevice:
-      | 'DISMISS'
-      | 'xstate.after(CLEAR_DELAY)#request.clearingConnection';
+    advertiseDevice: 'CONNECTION_DESTROYED' | 'DISMISS';
     checkBluetoothService:
       | 'SCREEN_FOCUS'
       | 'SWITCH_PROTOCOL'
       | 'xstate.after(CANCEL_TIMEOUT)#request.cancelling';
+    disconnect: '' | 'DISMISS';
     exchangeDeviceInfo: 'RECEIVE_DEVICE_INFO';
     monitorConnection: 'xstate.init';
     receiveVc: 'EXCHANGE_DONE';

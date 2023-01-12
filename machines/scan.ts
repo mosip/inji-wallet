@@ -497,7 +497,9 @@ export const scanMachine =
         disconnect: (context) => {
           try {
             if (context.sharingProtocol === 'OFFLINE') {
-              IdpassSmartshare.destroyConnection();
+              IdpassSmartshare.destroyConnection(() => {
+                console.log('Disconnected');
+              });
             } else {
               GoogleNearbyMessages.disconnect();
             }

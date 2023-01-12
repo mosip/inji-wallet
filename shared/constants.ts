@@ -4,7 +4,7 @@ import {
   GOOGLE_NEARBY_MESSAGES_API_KEY,
 } from 'react-native-dotenv';
 
-export const HOST = MIMOTO_HOST;
+export const HOST = 'https://api.qa5.mosip.net/residentmobileapp';
 
 export const MY_VCS_STORE_KEY = 'myVCs';
 
