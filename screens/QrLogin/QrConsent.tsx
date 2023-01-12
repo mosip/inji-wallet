@@ -4,14 +4,9 @@ import { Button, Column, Row, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { useQrLogin } from './QrLoginController';
 import { Image } from 'react-native';
-<<<<<<< HEAD:screens/QrLogin/QrConsent.tsx
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import { ListItem, Switch } from 'react-native-elements';
-import { QrLoginRef } from '../../machines/QrLoginMachine';
-=======
 import { Icon, ListItem, Switch } from 'react-native-elements';
 import { Modal } from '../../components/ui/Modal';
->>>>>>> upstream/qrloginfeature:screens/Profile/QrConsent.tsx
+import { QrLoginRef } from '../../machines/QrLoginMachine';
 
 export const QrConsent: React.FC<QrConsentProps> = (props) => {
   const { t } = useTranslation('QrScreen');

@@ -4,12 +4,9 @@ import { Theme } from '../../components/ui/styleUtils';
 import { useTranslation } from 'react-i18next';
 import { VcItem } from '../../components/VcItem';
 import { useQrLogin } from './QrLoginController';
-<<<<<<< HEAD:screens/QrLogin/MyBindedVcs.tsx
 import { QrLoginRef } from '../../machines/QrLoginMachine';
-=======
 import { Icon } from 'react-native-elements';
 import { Modal } from '../../components/ui/Modal';
->>>>>>> upstream/qrloginfeature:screens/Profile/MyBindedVcs.tsx
 
 export const MyBindedVcs: React.FC<MyBindedVcsProps> = (props) => {
   const controller = useQrLogin(props);
