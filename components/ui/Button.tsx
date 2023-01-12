@@ -10,8 +10,9 @@ import { Theme, Spacing } from './styleUtils';
 export const Button: React.FC<ButtonProps> = (props) => {
   const type = props.type || 'solid';
   const buttonStyle: StyleProp<ViewStyle> = [
-    Theme.ButtonStyles.fill,
+    props.fill ? Theme.ButtonStyles.fill : null,
     Theme.ButtonStyles[type],
+    { width: '100%' },
   ];
 
   const containerStyle: StyleProp<ViewStyle> = [

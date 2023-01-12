@@ -56,6 +56,8 @@ export type TabRef =
 
 export const HomeScreenMachine = model.createMachine(
   {
+    predictableActionArguments: true,
+    preserveActionOrder: true,
     tsTypes: {} as import('./HomeScreenMachine.typegen').Typegen0,
     schema: {
       context: model.initialContext,

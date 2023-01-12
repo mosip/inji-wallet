@@ -8,9 +8,9 @@ export interface Typegen0 {
   'invokeSrcNameMap': {};
   'missingImplementations': {
     actions: never;
-    services: never;
-    guards: never;
     delays: never;
+    guards: never;
+    services: never;
   };
   'eventsCausingActions': {
     requestStoredContext: 'xstate.init';
@@ -24,11 +24,11 @@ export interface Typegen0 {
     updateName: 'UPDATE_NAME';
     updateVcLabel: 'UPDATE_VC_LABEL';
   };
-  'eventsCausingServices': {};
+  'eventsCausingDelays': {};
   'eventsCausingGuards': {
     hasData: 'STORE_RESPONSE';
   };
-  'eventsCausingDelays': {};
+  'eventsCausingServices': {};
   'matchesStates': 'idle' | 'init' | 'storingDefaults';
   'tags': never;
 }

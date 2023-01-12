@@ -14,21 +14,6 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
-    'done.invoke.vc-item.addKeyPair:invocation[0]': {
-      type: 'done.invoke.vc-item.addKeyPair:invocation[0]';
-      data: unknown;
-      __tip: 'See the XState TS docs to learn how to strongly type this.';
-    };
-    'done.invoke.vc-item.addingWalletBindingId:invocation[0]': {
-      type: 'done.invoke.vc-item.addingWalletBindingId:invocation[0]';
-      data: unknown;
-      __tip: 'See the XState TS docs to learn how to strongly type this.';
-    };
-    'done.invoke.vc-item.requestingBindingOtp:invocation[0]': {
-      type: 'done.invoke.vc-item.requestingBindingOtp:invocation[0]';
-      data: unknown;
-      __tip: 'See the XState TS docs to learn how to strongly type this.';
-    };
     'done.invoke.vc-item.requestingLock:invocation[0]': {
       type: 'done.invoke.vc-item.requestingLock:invocation[0]';
       data: unknown;
@@ -132,11 +117,13 @@ export interface Typegen0 {
       | 'STORE_RESPONSE'
       | 'done.invoke.vc-item.verifyingCredential:invocation[0]'
       | 'error.platform.vc-item.verifyingCredential:invocation[0]';
+    incrementDownloadCounter: 'POLL';
     logDownloaded: 'CREDENTIAL_DOWNLOADED';
     logRevoked: 'STORE_RESPONSE';
     markVcValid: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
     requestStoredContext: 'GET_VC_RESPONSE' | 'REFRESH';
     requestVcContext: 'xstate.init';
+    resetDownloadCounter: 'DOWNLOAD_READY';
     revokeVID: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
     setBindingTransactionId: 'done.invoke.vc-item.requestingBindingOtp:invocation[0]';
     setCredential:
@@ -181,6 +168,7 @@ export interface Typegen0 {
   'eventsCausingDelays': {};
   'eventsCausingGuards': {
     hasCredential: 'GET_VC_RESPONSE' | 'STORE_RESPONSE';
+    isDownloadAllowed: 'POLL';
     isVcValid: '';
   };
   'eventsCausingServices': {

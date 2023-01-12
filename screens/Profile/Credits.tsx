@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Image, SafeAreaView, View } from 'react-native';
 import { Divider, Icon, ListItem, Overlay } from 'react-native-elements';
 
-import { Button, Text, Row } from '../../components/ui';
+import { Button, Text, Row, Column } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import creditsContent from '../../Credits.md';
 
@@ -19,6 +19,11 @@ export const Credits: React.FC<CreditsProps> = (props) => {
   const markdownStyles = {
     heading1: {
       fontSize: 24,
+      textAlign: 'left',
+    },
+    heading2: {
+      fontSize: 24,
+      textAlign: 'left',
     },
     image: {
       maxWidth: 150,

@@ -1,5 +1,5 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import { StyleSheet, ViewStyle } from 'react-native';
+import { Dimensions, StyleSheet, ViewStyle } from 'react-native';
 import { Spacing } from '../styleUtils';
 
 const Colors = {
@@ -24,6 +24,7 @@ export const PurpleTheme = {
     TabItemText: Colors.Purple,
     Details: Colors.White,
     DetailsLabel: Colors.White,
+    LoadingDetailsLabel: Colors.Black,
     AddIdBtnBg: Colors.Purple,
     AddIdBtnTxt: Colors.Purple,
     ClearAddIdBtnBg: 'transparent',
@@ -61,19 +62,19 @@ export const PurpleTheme = {
   },
   Styles: StyleSheet.create({
     title: {
-      color: '#231F20',
-      backgroundColor: 'transparent',
+      color: Colors.Black,
+      backgroundColor: Colors.Transparent,
     },
     loadingTitle: {
-      color: 'transparent',
-      backgroundColor: '#B0B0B0',
+      color: Colors.Transparent,
+      backgroundColor: Colors.Grey,
       borderRadius: 4,
     },
     subtitle: {
-      backgroundColor: 'transparent',
+      backgroundColor: Colors.Transparent,
     },
     loadingSubtitle: {
-      backgroundColor: '#B0B0B0',
+      backgroundColor: Colors.Grey,
       borderRadius: 4,
     },
     closeDetails: {
@@ -84,15 +85,14 @@ export const PurpleTheme = {
     loadingContainer: {
       flex: 1,
       flexDirection: 'row',
-      backgroundColor: '#F2F2F2',
+      backgroundColor: Colors.Grey6,
       borderRadius: 4,
-      margin: 5,
     },
     vertloadingContainer: {
       flex: 1,
-      backgroundColor: '#F2F2F2',
+      backgroundColor: Colors.Grey6,
       borderRadius: 4,
-      margin: 5,
+      padding: 5,
     },
     closeDetailsContainer: {
       flex: 1,
@@ -105,7 +105,8 @@ export const PurpleTheme = {
       marginLeft: 300,
     },
     closeCardBgContainer: {
-      marginBottom: 10,
+      borderRadius: 10,
+      margin: 8,
       backgroundColor: '#fff',
       shadowColor: '#000',
       shadowOffset: { width: -1, height: 1 },
@@ -115,17 +116,21 @@ export const PurpleTheme = {
     },
     labelPartContainer: {
       marginLeft: 16,
+      flex: 1,
     },
     labelPart: {
       marginTop: 10,
+      alignItems: 'flex-start',
     },
     openCardBgContainer: {
+      borderRadius: 10,
       margin: 8,
+      backgroundColor: '#fff',
       shadowColor: '#000',
       shadowOffset: { width: -1, height: 1 },
-      shadowOpacity: 1,
+      shadowOpacity: 0.4,
       shadowRadius: 3,
-      elevation: 5,
+      elevation: 4,
       padding: 10,
     },
     backgroundImageContainer: {
@@ -135,7 +140,7 @@ export const PurpleTheme = {
       borderBottomWidth: 1,
     },
     successTag: {
-      backgroundColor: '#219653',
+      backgroundColor: Colors.Green,
       height: 43,
       flex: 1,
       alignItems: 'center',
@@ -153,13 +158,18 @@ export const PurpleTheme = {
       flex: 1,
       justifyContent: 'space-between',
     },
+    logo: {
+      height: 36,
+      width: 36,
+    },
     homeCloseCardDetailsHeader: {
       flex: 1,
       justifyContent: 'space-between',
     },
-    logo: {
-      height: 30,
-      width: 30,
+    details: {
+      width: 290,
+      marginLeft: 110,
+      marginTop: 0,
     },
     openDetailsContainer: {
       flex: 1,
@@ -170,11 +180,6 @@ export const PurpleTheme = {
       height: 135,
       borderRadius: 5,
     },
-    details: {
-      width: 290,
-      marginLeft: 110,
-      marginTop: 0,
-    },
     openCardImage: {
       width: 105,
       height: 135,
@@ -182,7 +187,7 @@ export const PurpleTheme = {
     },
     scannerContainer: {
       borderWidth: 4,
-      borderColor: '#231F20',
+      borderColor: Colors.Black,
       borderRadius: 32,
       justifyContent: 'center',
       height: 300,
@@ -199,10 +204,10 @@ export const PurpleTheme = {
       alignItems: 'center',
     },
     tabIndicator: {
-      backgroundColor: '#70308C',
+      backgroundColor: Colors.Purple,
     },
     tabContainer: {
-      backgroundColor: 'transparent',
+      backgroundColor: Colors.Transparent,
       justifyContent: 'center',
     },
     tabView: {
@@ -220,47 +225,6 @@ export const PurpleTheme = {
     },
     placeholder: {
       fontFamily: 'Poppins_400Regular',
-    },
-    overlay: {
-      padding: 24,
-      bottom: 86,
-      backgroundColor: 'transparent',
-      shadowColor: 'transparent',
-    },
-    slide: {
-      width: '100%',
-      padding: 20,
-    },
-    slider: {
-      backgroundColor: '#70308C',
-      minHeight: 280,
-      width: '100%',
-      margin: 0,
-      borderRadius: 4,
-    },
-    appSlider: {},
-    sliderTitle: {
-      color: '#FFFFFF',
-      marginBottom: 20,
-      fontFamily: 'Poppins_700Bold',
-    },
-    text: {
-      color: '#FFFFFF',
-    },
-    paginationContainer: {
-      margin: 10,
-    },
-    paginationDots: {
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginBottom: 20,
-    },
-    closeIcon: {
-      alignItems: 'flex-end',
-      end: 16,
-      top: 40,
-      zIndex: 1,
     },
   }),
   PinInputStyle: StyleSheet.create({
@@ -373,12 +337,216 @@ export const PurpleTheme = {
       backgroundColor: Colors.Orange,
     },
   }),
+  OIDCAuthStyles: StyleSheet.create({
+    viewContainer: {
+      backgroundColor: Colors.White,
+      width: Dimensions.get('window').width,
+      height: Dimensions.get('window').height,
+      position: 'absolute',
+      top: 0,
+      zIndex: 9,
+      padding: 32,
+    },
+  }),
+  SelectVcOverlayStyles: StyleSheet.create({
+    overlay: {
+      elevation: 5,
+      backgroundColor: Colors.White,
+      padding: 0,
+    },
+  }),
+  CreditsStyles: StyleSheet.create({
+    buttonContainer: {
+      position: 'absolute',
+      left: 0,
+      right: 'auto',
+    },
+    view: {
+      flex: 1,
+      width: Dimensions.get('screen').width,
+    },
+    markdownView: {
+      padding: 20,
+    },
+  }),
+  ModalStyles: StyleSheet.create({
+    modal: {
+      width: Dimensions.get('screen').width,
+      height: Dimensions.get('screen').height,
+    },
+  }),
+  UpdateModalStyles: StyleSheet.create({
+    modal: {
+      width: Dimensions.get('screen').width,
+      height: Dimensions.get('screen').height,
+    },
+  }),
+  TextEditOverlayStyles: StyleSheet.create({
+    overlay: {
+      elevation: 5,
+      backgroundColor: Colors.White,
+      padding: 0,
+    },
+    viewContainer: {
+      backgroundColor: 'rgba(0,0,0,.6)',
+      width: Dimensions.get('screen').width,
+      height: Dimensions.get('screen').height,
+      position: 'absolute',
+      top: 0,
+      zIndex: 9,
+    },
+    boxContainer: {
+      backgroundColor: Colors.White,
+      padding: 24,
+      elevation: 6,
+      borderRadius: 4,
+    },
+  }),
+  PasscodeStyles: StyleSheet.create({
+    modal: {
+      width: Dimensions.get('screen').width,
+      height: Dimensions.get('screen').height,
+    },
+  }),
+  MessageOverlayStyles: StyleSheet.create({
+    overlay: {
+      elevation: 5,
+      backgroundColor: Colors.White,
+      padding: 0,
+    },
+    button: {
+      borderTopLeftRadius: 0,
+      borderTopRightRadius: 0,
+    },
+  }),
+  RevokeStyles: StyleSheet.create({
+    buttonContainer: {
+      position: 'absolute',
+      left: 0,
+      right: 'auto',
+    },
+    view: {
+      flex: 1,
+      width: Dimensions.get('screen').width,
+    },
+    revokeView: { padding: 20 },
+    flexRow: { flexDirection: 'row', margin: 0, padding: 0 },
+    rowStyle: { flexDirection: 'column', justifyContent: 'space-between' },
+    viewContainer: {
+      backgroundColor: 'rgba(0,0,0,.6)',
+      width: Dimensions.get('screen').width,
+      height: Dimensions.get('screen').height,
+      position: 'absolute',
+      top: 0,
+      zIndex: 999,
+    },
+    boxContainer: {
+      backgroundColor: Colors.White,
+      padding: 24,
+      elevation: 6,
+      borderRadius: 4,
+    },
+  }),
+  VerifyIdentityOverlayStyles: StyleSheet.create({
+    content: {
+      width: Dimensions.get('screen').width,
+      height: Dimensions.get('screen').height,
+      backgroundColor: Colors.White,
+    },
+  }),
+  RevokeConfirmStyles: StyleSheet.create({
+    viewContainer: {
+      backgroundColor: 'rgba(0,0,0,.6)',
+      width: Dimensions.get('screen').width,
+      height: Dimensions.get('screen').height,
+      position: 'absolute',
+      top: 0,
+      zIndex: 999999,
+    },
+    boxContainer: {
+      backgroundColor: Colors.White,
+      padding: 24,
+      elevation: 6,
+      borderRadius: 4,
+    },
+  }),
+  OtpVerificationStyles: StyleSheet.create({
+    modal: {
+      width: Dimensions.get('screen').width,
+      height: Dimensions.get('screen').height,
+    },
+    viewContainer: {
+      backgroundColor: Colors.White,
+      width: Dimensions.get('screen').width,
+      height: Dimensions.get('screen').height,
+      position: 'absolute',
+      top: 0,
+      zIndex: 9,
+      padding: 32,
+    },
+    close: {
+      position: 'absolute',
+      top: 32,
+      right: 0,
+      color: Colors.Orange,
+    },
+  }),
+  MessageStyles: StyleSheet.create({
+    overlay: {
+      elevation: 5,
+      backgroundColor: Colors.White,
+      padding: 0,
+    },
+    button: {
+      borderTopLeftRadius: 0,
+      borderTopRightRadius: 0,
+    },
+    viewContainer: {
+      backgroundColor: 'rgba(0,0,0,.6)',
+      width: Dimensions.get('screen').width,
+      height: Dimensions.get('screen').height,
+      position: 'absolute',
+      top: 0,
+      zIndex: 9,
+    },
+    boxContainer: {
+      backgroundColor: Colors.White,
+      padding: 24,
+      elevation: 6,
+      borderRadius: 4,
+    },
+  }),
+  VidItemStyles: StyleSheet.create({
+    title: {
+      color: Colors.Black,
+      backgroundColor: 'transparent',
+    },
+    loadingTitle: {
+      color: 'transparent',
+      backgroundColor: Colors.Grey5,
+      borderRadius: 4,
+    },
+    subtitle: {
+      backgroundColor: 'transparent',
+    },
+    loadingSubtitle: {
+      backgroundColor: Colors.Grey,
+      borderRadius: 4,
+    },
+    container: {
+      backgroundColor: Colors.White,
+    },
+    loadingContainer: {
+      backgroundColor: Colors.Grey6,
+      borderRadius: 4,
+    },
+  }),
   OnboardingOverlayStyles: StyleSheet.create({
     overlay: {
       padding: 24,
       bottom: 86,
-      backgroundColor: 'transparent',
-      shadowColor: 'transparent',
+      backgroundColor: Colors.Transparent,
+      shadowColor: Colors.Transparent,
     },
     slide: {
       width: '100%',
