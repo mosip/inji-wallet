@@ -368,7 +368,7 @@ export const vcItemMachine =
             return { type: 'VC_DOWNLOADED', vc };
           },
           {
-            to: (context) => context.serviceRefs.vc,
+            to: (context) => context.appService.children.get('vc'),
           }
         ),
 

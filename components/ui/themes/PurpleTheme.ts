@@ -52,7 +52,7 @@ export const PurpleTheme = {
     whiteText: Colors.White,
     flipCameraIcon: Colors.Black,
     IdInputModalBorder: Colors.Grey,
-    inputSelection: Colors.Orange,
+    inputSelection: Colors.Purple,
     checkCircleIcon: Colors.White,
     OnboardingCircleIcon: Colors.White,
     OnboardingCloseIcon: Colors.White,
