@@ -1,31 +1,18 @@
 {
-  "ActivityLogText": {
-    "VC_SHARED": "ibinahagi",
-    "VC_RECEIVED": "natanggap",
-    "VC_RECEIVED_NOT_SAVED": "natanggap ngunit hindi na-save",
-    "VC_DELETED": "tinanggal",
-    "VC_DOWNLOADED": "na-download",
-    "VC_REVOKED": "binawi",
-    "VC_SHARED_WITH_VERIFICATION_CONSENT": "ibinahagi. Ibinibigay ang pahintulot para sa pag-verify ng presensya",
-    "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "natanggap. Na-verify ang presensya",
-    "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "natanggap. Nabigo ang pag-verify ng presensya",
-    "PRESENCE_VERIFIED_AND_VC_SHARED": "na-verify at ibinahagi",
-    "PRESENCE_VERIFICATION_FAILED": "nabigo ang pag-verify"
-  },
   "DeviceInfoList": {
     "requestedBy": "Hiniling ni",
     "sentBy": "Ipinadala ni",
     "deviceRefNumber": "Reference number ng device",
     "name": "Pangalan"
   },
+  "PasscodeVerify": {
+    "passcodeMismatchError": "Hindi tumugma ang passcode."
+  },
   "FaceScanner": {},
   "OIDcAuth": {
     "title": "OIDC Authentication",
     "text": "Papalitan ng OIDC service provider UI",
     "verify": "I-verify"
-  },
-  "PasscodeVerify": {
-    "passcodeMismatchError": "Hindi tumugma ang passcode."
   },
   "QrScanner": {
     "missingPermissionText": "Ginagamit ng app na ito ang camera upang i-scan ng QR code ng ibang device.",
@@ -47,11 +34,18 @@
     "id": "Id",
     "nationalCard": "Pambansang Kard",
     "uin": "UIN",
+    "enableVerification": "Activate",
+    "profileAuthenticated": "Activated for online login",
+    "offlineAuthDisabledHeader": "Activation pending for online login",
+    "offlineAuthDisabledMessage": "Please click the button below to activate this credential to be used for online login.",
     "vid": "VID",
-    "enableVerification": "Paganahin ang Pag-verify",
-    "offlineAuthDisabledHeader": "Na-disable ang Offline Authentication!",
-    "offlineAuthDisabledMessage": "I-click ang 'Paganahin ang Authentication' upang paganahin ang mga kredensyal na ito na magamit para sa offline na pagpapatotoo.",
-    "profileAuthenticated": "Na-authenticate ang profile!"
+    "verificationEnabledSuccess": "Activated for online login",
+    "goback": "GO BACK",
+    "BindingWarning": "You have already activated online login for this credential on another device. You will no longer be able to use that device for login if you activate it again on this device.",
+    "yes_confirm": "Yes, I Confirm",
+    "no": "No",
+    "Alert": "Alert",
+    "ok": "Okay"
   },
   "AuthScreen": {
     "header": "Gusto mo bang gumamit ng biometrics upang i-unlock ang aplikasyon?",
@@ -115,7 +109,8 @@
     "requestingOTP": "Humihiling ng OTP..."
   },
   "OtpVerificationModal": {
-    "enterOtp": "Ilagay ang 6 na numerong verification code na ipinadala namin sayo"
+    "enterOtp": "Ilagay ang 6 na numerong verification code na ipinadala namin sayo",
+    "header": "OTP Verification"
   },
   "MyVcsTab": {
     "addVcButton": "Magdagdag ng {{vcLabel}}",
@@ -146,6 +141,7 @@
     "requestingOtp": "Humihiling ng OTP...",
     "editTag": "Palitan ang pangalan",
     "redirecting": "Redirecting...",
+    "inProgress": "Loading...",
     "success": {
       "unlocked": "Ang {{vcLabel}} ay matagumpay na na-unlock",
       "locked": "Ang {{vcLabel}} ay matagumpay na na-lock",
@@ -182,6 +178,26 @@
     "empty": "Walang laman",
     "revokeSuccessful": "Matagumpay na nakansela ang VID",
     "version": "Bersyon"
+  },
+  "QrScreen": {
+    "title": "QR Login",
+    "alignQr": "Align the QR code within the frame to scan",
+    "confirmation": "Confirmation",
+    "checkDomain": "Also, check that there is a lock icon on the address bar.",
+    "domainHead": "https://",
+    "selectId": "Select ID",
+    "noBindedVc": "No Binded {{vcLabel}} Available to Verify",
+    "back": "Go Back",
+    "confirm": "Confirm",
+    "verify": "Verify",
+    "faceAuth": "Face Authentication",
+    "consent": "Consent",
+    "loading": "Loading...",
+    "domainWarning": "Please confirm the domain of the website you are scanning the QR code from is as below",
+    "access": " is requesting access to",
+    "status": "Status",
+    "successMessage":"You Have Successfully Logged Into ",
+    "okay": "Okay"
   },
   "ReceiveVcScreen": {
     "header": "Mga detalye ng {{vcLabel}}",
