@@ -6,10 +6,11 @@ import { useQrLogin } from './QrLoginController';
 import { Image } from 'react-native';
 import { Icon, ListItem, Switch } from 'react-native-elements';
 import { Modal } from '../../components/ui/Modal';
+import { QrLoginRef } from '../../machines/QrLoginMachine';
 
 export const QrConsent: React.FC<QrConsentProps> = (props) => {
   const { t } = useTranslation('QrScreen');
-  const controller = useQrLogin();
+  const controller = useQrLogin(props);
 
   return (
     <Modal
@@ -128,4 +129,5 @@ interface QrConsentProps {
   isVisible: boolean;
   onConfirm: () => void;
   onCancel: () => void;
+  service: QrLoginRef;
 }

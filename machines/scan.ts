@@ -3,7 +3,15 @@ import SmartshareReactNative from '@idpass/smartshare-react-native';
 import { ConnectionParams } from '@idpass/smartshare-react-native/lib/typescript/IdpassSmartshare';
 const { IdpassSmartshare, GoogleNearbyMessages } = SmartshareReactNative;
 
-import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
+import {
+  ActorRefFrom,
+  assign,
+  EventFrom,
+  send,
+  sendParent,
+  spawn,
+  StateFrom,
+} from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { EmitterSubscription, Linking, Platform } from 'react-native';
 import { DeviceInfo } from '../components/DeviceInfoList';
@@ -31,6 +39,7 @@ import { checkLocation, requestLocation } from '../shared/location';
 import { CameraCapturedPicture } from 'expo-camera';
 import { log } from 'xstate/lib/actions';
 import NetInfo from '@react-native-community/netinfo';
+import { createQrLoginMachine, qrLoginMachine } from './QrLoginMachine';
 
 type SharingProtocol = 'OFFLINE' | 'ONLINE';
 
@@ -50,6 +59,8 @@ const model = createModel(
     sharingProtocol: 'OFFLINE' as SharingProtocol,
     scannedQrParams: {} as ConnectionParams,
     shareLogType: '' as ActivityLogType,
+    QrLoginRef: {} as ActorRefFrom<typeof qrLoginMachine>,
+    linkCode: '',
   },
   {
     events: {
@@ -84,6 +95,7 @@ const model = createModel(
     },
   }
 );
+const QR_LOGIN_REF_ID = 'QrLogin';
 
 export const ScanEvents = model.events;
 
@@ -133,7 +145,12 @@ export const scanMachine =
         },
 
         findingConnection: {
-          entry: ['removeLoggers', 'registerLoggers', 'clearScannedQrParams'],
+          entry: [
+            'removeLoggers',
+            'registerLoggers',
+            'clearScannedQrParams',
+            'setChildRef',
+          ],
           on: {
             SCAN: [
               {
@@ -147,12 +164,41 @@ export const scanMachine =
                 actions: 'setScannedQrParams',
               },
               {
+                target: 'showQrLogin',
+                cond: 'isQrLogin',
+                actions: 'setLinkCode',
+              },
+              {
                 target: 'invalid',
               },
             ],
           },
         },
-
+        showQrLogin: {
+          invoke: {
+            id: 'QrLogin',
+            src: qrLoginMachine,
+            onDone: '.navigatingToHome',
+          },
+          on: {
+            DISMISS: 'findingConnection',
+          },
+          initial: 'idle',
+          states: {
+            idle: {},
+            storing: {
+              entry: ['storeVcItem'],
+              on: {
+                STORE_RESPONSE: {
+                  target: 'navigatingToHome',
+                  actions: ['sendVcAdded'],
+                },
+              },
+            },
+            navigatingToHome: {},
+          },
+          entry: 'sendScanData',
+        },
         preparingToConnect: {
           entry: 'requestSenderInfo',
           on: {
@@ -461,6 +507,17 @@ export const scanMachine =
     },
     {
       actions: {
+        setChildRef: assign({
+          QrLoginRef: (context) =>
+            spawn(createQrLoginMachine(context.serviceRefs), QR_LOGIN_REF_ID),
+        }),
+
+        sendScanData: (context) =>
+          context.QrLoginRef.send({
+            type: 'GET',
+            value: context.linkCode,
+          }),
+
         requestSenderInfo: sendParent('REQUEST_DEVICE_INFO'),
 
         setSenderInfo: model.assign({
@@ -602,6 +659,14 @@ export const scanMachine =
             ...context.selectedVc,
             shouldVerifyPresence: !context.selectedVc.shouldVerifyPresence,
           }),
+        }),
+
+        setLinkCode: assign({
+          linkCode: (_context, event) =>
+            event.params.substring(
+              event.params.indexOf('linkCode=') + 9,
+              event.params.indexOf('&')
+            ),
         }),
 
         resetShouldVerifyPresence: assign({
@@ -812,6 +877,19 @@ export const scanMachine =
             return false;
           }
         },
+
+        isQrLogin: (_context, event) => {
+          let linkCode = '';
+          try {
+            linkCode = event.params.substring(
+              event.params.indexOf('linkCode=') + 9,
+              event.params.indexOf('&')
+            );
+            return linkCode !== null;
+          } catch (e) {
+            return false;
+          }
+        },
       },
 
       delays: {
@@ -850,6 +928,9 @@ export function selectVcName(state: State) {
 
 export function selectSelectedVc(state: State) {
   return state.context.selectedVc;
+}
+export function selectQrLoginRef(state: State) {
+  return state.context.QrLoginRef;
 }
 
 export function selectIsScanning(state: State) {
@@ -922,6 +1003,14 @@ export function selectIsInvalidIdentity(state: State) {
 
 export function selectIsCancelling(state: State) {
   return state.matches('reviewing.cancelling');
+}
+
+export function selectIsShowQrLogin(state: State) {
+  return state.matches('showQrLogin');
+}
+
+export function selectIsQrLoginDone(state: State) {
+  return state.matches('showQrLogin.navigatingToHome');
 }
 
 export function selectIsOffline(state: State) {

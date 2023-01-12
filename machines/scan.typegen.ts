@@ -38,10 +38,10 @@ export interface Typegen0 {
     sendVc: 'done.invoke.scan.reviewing.sendingVc:invocation[0]';
   };
   'missingImplementations': {
-    actions: never;
+    actions: 'sendVcAdded';
     delays: never;
     guards: never;
-    services: never;
+    services: 'QrLogin';
   };
   'eventsCausingActions': {
     clearCreatedVp:
@@ -88,9 +88,17 @@ export interface Typegen0 {
       | 'xstate.init';
     requestSenderInfo: 'ONLINE' | 'SCAN';
     requestToEnableLocation: 'LOCATION_DISABLED' | 'LOCATION_REQUEST';
+    sendScanData: 'SCAN';
+    sendVcAdded: 'STORE_RESPONSE';
+    setChildRef:
+      | 'DISCONNECT'
+      | 'DISMISS'
+      | 'xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling'
+      | 'xstate.after(CLEAR_DELAY)#scan.clearingConnection';
     resetShouldVerifyPresence: 'CANCEL' | 'EXCHANGE_DONE';
     setConnectionParams: 'SCAN';
     setCreatedVp: 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
+    setLinkCode: 'SCAN';
     setReason: 'UPDATE_REASON';
     setReceiverInfo: 'EXCHANGE_DONE';
     setScannedQrParams: 'SCAN';
@@ -113,10 +121,12 @@ export interface Typegen0 {
       | 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
   };
   'eventsCausingGuards': {
+    isQrLogin: 'SCAN';
     isQrOffline: 'SCAN';
     isQrOnline: 'SCAN';
   };
   'eventsCausingServices': {
+    QrLogin: 'SCAN';
     checkLocationPermission: 'APP_ACTIVE' | 'LOCATION_ENABLED';
     checkLocationStatus: 'SCREEN_FOCUS';
     checkNetwork: 'SCAN';
@@ -165,6 +175,10 @@ export interface Typegen0 {
     | 'reviewing.sendingVc.inProgress'
     | 'reviewing.sendingVc.timeout'
     | 'reviewing.verifyingIdentity'
+    | 'showQrLogin'
+    | 'showQrLogin.idle'
+    | 'showQrLogin.navigatingToHome'
+    | 'showQrLogin.storing'
     | {
         checkingLocationService?:
           | 'checkingPermission'
@@ -185,6 +199,7 @@ export interface Typegen0 {
           | 'sendingVc'
           | 'verifyingIdentity'
           | { sendingVc?: 'inProgress' | 'timeout' };
+        showQrLogin?: 'idle' | 'navigatingToHome' | 'storing';
       };
   'tags': never;
 }

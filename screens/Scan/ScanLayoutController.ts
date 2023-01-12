@@ -15,6 +15,7 @@ import {
   selectIsDone,
   selectIsReviewing,
   selectIsScanning,
+  selectIsQrLoginDone,
   selectIsOffline,
 } from '../../machines/scan';
 import { selectVcLabel } from '../../machines/settings';
@@ -119,6 +120,8 @@ export function useScanLayout() {
   const isDone = useSelector(scanService, selectIsDone);
   const isReviewing = useSelector(scanService, selectIsReviewing);
   const isScanning = useSelector(scanService, selectIsScanning);
+  const isQrLoginDone = useSelector(scanService, selectIsQrLoginDone);
+
   useEffect(() => {
     if (isDone) {
       navigation.navigate('Home', { activeTab: 0 });
@@ -126,8 +129,10 @@ export function useScanLayout() {
       navigation.navigate('SendVcScreen');
     } else if (isScanning) {
       navigation.navigate('ScanScreen');
+    } else if (isQrLoginDone) {
+      navigation.navigate('Home', { activeTab: 2 });
     }
-  }, [isDone, isReviewing, isScanning]);
+  }, [isDone, isReviewing, isScanning, isQrLoginDone]);
 
   return {
     vcLabel: useSelector(settingsService, selectVcLabel),

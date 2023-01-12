@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { getVersion } from 'react-native-device-info';
-import { Icon, ListItem, Switch } from 'react-native-elements';
+import { ListItem, Switch } from 'react-native-elements';
 import { Column, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { MainRouteProps } from '../../routes/main';
@@ -23,13 +23,6 @@ const LanguageSetting: React.FC = () => {
     <LanguageSelector
       triggerComponent={
         <ListItem bottomDivider>
-          <Icon
-            name="globe"
-            type="font-awesome-5"
-            size={20}
-            style={Theme.Styles.profileIconBg}
-            color={Theme.Colors.Icon}
-          />
           <ListItem.Content>
             <ListItem.Title>
               <Text>{t('language')}</Text>

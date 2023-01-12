@@ -26,5 +26,4 @@ export interface AppServices {
   request: ActorRefFrom<typeof requestMachine>;
   scan: ActorRefFrom<typeof scanMachine>;
   revoke: ActorRefFrom<typeof revokeVidsMachine>;
-  qrLogin: ActorRefFrom<typeof qrLoginMachine>;
 }
