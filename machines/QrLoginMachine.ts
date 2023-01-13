@@ -13,6 +13,8 @@ import { MY_VCS_STORE_KEY } from '../shared/constants';
 import { StoreEvents } from './store';
 import { linkTransactionResponse, VC } from '../types/vc';
 import { request } from '../shared/request';
+import { getJwt } from '../shared/cryptoutil/cryptoUtil';
+import { getPrivateKey } from '../shared/keystore/SecureKeystore';
 
 const model = createModel(
   {
@@ -314,20 +316,32 @@ export const qrLoginMachine =
         },
 
         sendConsent: async (context) => {
-          console.log('Individual id : ' + context.selectedVc.id);
+          var privateKey = await getPrivateKey(
+            context.selectedVc.walletBindingResponse?.walletBindingId
+          );
+          var walletBindingResponse = context.selectedVc.walletBindingResponse;
+          var jwt = await getJwt(
+            privateKey,
+            context.selectedVc.id,
+            walletBindingResponse?.keyId,
+            walletBindingResponse?.thumbprint
+          );
+
           const resp = await request('POST', '/idp-authenticate', {
             requestTime: String(new Date().toISOString()),
             request: {
               linkedTransactionId: context.linkTransactionId,
-              individualId: '3295638027105149',
+              individualId: context.selectedVc.id,
               challengeList: [
                 {
-                  authFactorType: 'OTP',
-                  challenge: '111111',
+                  authFactorType: 'WLA',
+                  challenge: jwt,
+                  format: 'jwt',
                 },
               ],
             },
           });
+
           const trnId = resp.response.linkedTransactionId;
 
           const response = await request('POST', '/idp-consent', {
