@@ -7,10 +7,11 @@ import { Icon } from 'react-native-elements';
 import { useQrLogin } from './QrLoginController';
 import { Modal } from '../../components/ui/Modal';
 import { Dimensions, Image } from 'react-native';
+import { QrLoginRef } from '../../machines/QrLoginMachine';
 
 export const QrLoginWarning: React.FC<QrLoginWarningProps> = (props) => {
   const { t } = useTranslation('QrScreen');
-  const controller = useQrLogin();
+  const controller = useQrLogin(props);
 
   return (
     <Modal
@@ -93,4 +94,5 @@ interface QrLoginWarningProps {
   isVisible: boolean;
   onConfirm: () => void;
   onCancel: () => void;
+  service: QrLoginRef;
 }
