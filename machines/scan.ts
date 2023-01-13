@@ -61,6 +61,7 @@ const model = createModel(
       VERIFY_AND_ACCEPT_REQUEST: () => ({}),
       VC_ACCEPTED: () => ({}),
       VC_REJECTED: () => ({}),
+      VC_SENT: () => ({}),
       CANCEL: () => ({}),
       DISMISS: () => ({}),
       CONNECTED: () => ({}),
@@ -232,12 +233,15 @@ export const scanMachine =
           initial: 'selectingVc',
           states: {
             selectingVc: {
+              invoke: {
+                src: 'monitorCancellation',
+              },
               on: {
                 UPDATE_REASON: {
                   actions: 'setReason',
                 },
                 DISCONNECT: {
-                  target: '#scan.findingConnection',
+                  target: '#scan.disconnected',
                 },
                 SELECT_VC: {
                   actions: 'setSelectedVc',
@@ -256,6 +260,7 @@ export const scanMachine =
                   actions: 'toggleShouldVerifyPresence',
                 },
               },
+              exit: ['onlineUnsubscribe'],
             },
             cancelling: {
               invoke: {
@@ -291,16 +296,26 @@ export const scanMachine =
                     },
                   },
                 },
+                sent: {
+                  description:
+                    'VC data has been shared and the receiver should now be viewing it',
+                  on: {
+                    VC_ACCEPTED: {
+                      target: '#scan.reviewing.accepted',
+                    },
+                    VC_REJECTED: {
+                      target: '#scan.reviewing.rejected',
+                    },
+                  },
+                },
               },
               on: {
                 DISCONNECT: {
                   target: '#scan.findingConnection',
                 },
-                VC_ACCEPTED: {
-                  target: 'accepted',
-                },
-                VC_REJECTED: {
-                  target: 'rejected',
+                VC_SENT: {
+                  target: '#scan.reviewing.sendingVc.sent',
+                  internal: true,
                 },
               },
             },
@@ -610,6 +625,10 @@ export const scanMachine =
             shouldVerifyPresence: false,
           }),
         }),
+
+        onlineUnsubscribe: () => {
+          GoogleNearbyMessages.unsubscribe();
+        },
       },
 
       services: {
@@ -646,6 +665,14 @@ export const scanMachine =
             );
 
             return () => subscription.remove();
+          }
+        },
+
+        monitorCancellation: (context) => async (callback) => {
+          if (context.sharingProtocol === 'ONLINE') {
+            await onlineSubscribe('disconnect', null, () =>
+              callback({ type: 'DISCONNECT' })
+            );
           }
         },
 
@@ -737,10 +764,15 @@ export const scanMachine =
           };
 
           const statusCallback = (status: SendVcStatus) => {
+            console.log('[scan] statusCallback', status);
             if (typeof status === 'number') return;
-            callback({
-              type: status === 'ACCEPTED' ? 'VC_ACCEPTED' : 'VC_REJECTED',
-            });
+            if (status === 'RECEIVED') {
+              callback({ type: 'VC_SENT' });
+            } else {
+              callback({
+                type: status === 'ACCEPTED' ? 'VC_ACCEPTED' : 'VC_REJECTED',
+              });
+            }
           };
 
           if (context.sharingProtocol === 'OFFLINE') {
@@ -896,6 +928,10 @@ export function selectIsRejected(state: State) {
   return state.matches('reviewing.rejected');
 }
 
+export function selectIsSent(state: State) {
+  return state.matches('reviewing.sendingVc.sent');
+}
+
 export function selectIsInvalid(state: State) {
   return state.matches('invalid');
 }
@@ -926,6 +962,10 @@ export function selectIsCancelling(state: State) {
 
 export function selectIsOffline(state: State) {
   return state.matches('offline');
+}
+
+export function selectIsDisconnected(state: State) {
+  return state.matches('disconnected');
 }
 
 async function sendVc(
@@ -968,7 +1008,9 @@ async function sendVc(
             },
           });
         } else if (typeof status === 'string') {
-          GoogleNearbyMessages.unsubscribe();
+          if (status === 'ACCEPTED' || status === 'REJECTED') {
+            GoogleNearbyMessages.unsubscribe();
+          }
           callback(status);
         }
       },
