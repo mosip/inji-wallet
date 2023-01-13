@@ -27,6 +27,7 @@ export const QrLogin: React.FC<QrLoginProps> = (props) => {
           isVisible={controller.isShowWarning}
           onConfirm={controller.CONFIRM}
           onCancel={controller.DISMISS}
+          service={props.service}
         />
 
         <MessageOverlay
@@ -89,6 +90,7 @@ export const QrLogin: React.FC<QrLoginProps> = (props) => {
         <QrLoginSuccess
           isVisible={controller.isVerifyingSuccesful}
           onPress={controller.CONFIRM}
+          service={props.service}
         />
       </Column>
     </Modal>

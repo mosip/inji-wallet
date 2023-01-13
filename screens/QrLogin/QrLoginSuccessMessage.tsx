@@ -6,10 +6,11 @@ import { Modal } from '../../components/ui/Modal';
 import { Centered, Button, Text, Column } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { useQrLogin } from './QrLoginController';
+import { QrLoginRef } from '../../machines/QrLoginMachine';
 
 export const QrLoginSuccess: React.FC<QrLoginSuccessProps> = (props) => {
   const { t } = useTranslation('QrScreen');
-  const controller = useQrLogin();
+  const controller = useQrLogin(props);
 
   return (
     <Modal
@@ -17,9 +18,7 @@ export const QrLoginSuccess: React.FC<QrLoginSuccessProps> = (props) => {
       arrowLeft={<Icon name={''} />}
       headerTitle={t('status')}
       headerElevation={5}
-      onDismiss={() => {
-        controller.setQrLogin(false), controller.DISMISS();
-      }}>
+      onDismiss={controller.DISMISS}>
       <Column
         fill
         align="space-between"
@@ -57,4 +56,5 @@ export const QrLoginSuccess: React.FC<QrLoginSuccessProps> = (props) => {
 interface QrLoginSuccessProps {
   isVisible: boolean;
   onPress: () => void;
+  service: QrLoginRef;
 }

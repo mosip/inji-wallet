@@ -75,14 +75,14 @@ export const QrConsent: React.FC<QrConsentProps> = (props) => {
               if (claim == 'name' || claim == 'picture') {
                 return null;
               } else {
-                let L = claim.length();
+                let L = claim.length;
                 return (
                   <ListItem key={index} bottomDivider>
                     <ListItem.Content>
                       <ListItem.Title>
                         <Text color={Theme.Colors.profileLabel}>
-                          {t(claim[0]).toUpperCase() +
-                            claim.split(claim[1], claim[L - 1]).toLowerCase()}
+                          {t(claim[0]).toUpperCase +
+                            claim.split(claim[1], claim[L - 1]).toLowerCase}
                         </Text>
                       </ListItem.Title>
                     </ListItem.Content>

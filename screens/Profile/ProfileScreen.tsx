@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { getVersion } from 'react-native-device-info';
-import { ListItem, Switch } from 'react-native-elements';
+import { Icon, ListItem, Switch } from 'react-native-elements';
 import { Column, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { MainRouteProps } from '../../routes/main';
@@ -13,7 +13,6 @@ import { useProfileScreen } from './ProfileScreenController';
 import { useTranslation } from 'react-i18next';
 import { LanguageSelector } from '../../components/LanguageSelector';
 import i18next, { SUPPORTED_LANGUAGES } from '../../i18n';
-import { QrLogin } from './QrLogin';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const LanguageSetting: React.FC = () => {
@@ -65,7 +64,7 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
         />
         <LanguageSetting />
         <Revoke label={t('revokeLabel')} Icon="rotate-left" />
-        <QrLogin />
+
         <ListItem bottomDivider disabled={!controller.canUseBiometrics}>
           <Icon
             name="fingerprint"
