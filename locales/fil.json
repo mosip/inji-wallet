@@ -1,4 +1,17 @@
-{
+{ 
+  "ActivityLogText": {
+    "VC_SHARED": "ibinahagi",
+    "VC_RECEIVED": "natanggap",
+    "VC_RECEIVED_NOT_SAVED": "natanggap ngunit hindi na-save",
+    "VC_DELETED": "tinanggal",
+    "VC_DOWNLOADED": "na-download",
+    "VC_REVOKED": "binawi",
+    "VC_SHARED_WITH_VERIFICATION_CONSENT": "ibinahagi. Ibinibigay ang pahintulot para sa pag-verify ng presensya",
+    "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "natanggap. Na-verify ang presensya",
+    "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "natanggap. Nabigo ang pag-verify ng presensya",
+    "PRESENCE_VERIFIED_AND_VC_SHARED": "na-verify at ibinahagi",
+    "PRESENCE_VERIFICATION_FAILED": "nabigo ang pag-verify"
+  },
   "DeviceInfoList": {
     "requestedBy": "Hiniling ni",
     "sentBy": "Ipinadala ni",
