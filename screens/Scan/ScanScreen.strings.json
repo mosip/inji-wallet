@@ -18,6 +18,8 @@
     "exchangingDeviceInfo": "Exchanging device info...",
     "exchangingDeviceInfoTimeout": "It's taking a while to exchange device info. You may have to reconnect.",
     "invalid": "Invalid QR Code",
-    "offline": "Please connect to the internet to scan QR codes using Online sharing mode"
+    "offline": "Please connect to the internet to scan QR codes using Online sharing mode",
+    "sent": "{{ vcLabel }} has been sent...",
+    "sentHint": "Waiting for receiver to save or discard your {{ vcLabel }}"
   }
 }

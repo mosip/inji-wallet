@@ -35,7 +35,8 @@ export interface Typegen0 {
     sendDisconnect: 'done.invoke.request.cancelling:invocation[0]';
     sendVcResponse:
       | 'done.invoke.request.reviewing.accepted:invocation[0]'
-      | 'done.invoke.request.reviewing.rejected:invocation[0]';
+      | 'done.invoke.request.reviewing.rejected:invocation[0]'
+      | 'done.invoke.request.reviewing:invocation[0]';
     verifyVp: 'done.invoke.request.reviewing.verifyingVp:invocation[0]';
   };
   'missingImplementations': {
@@ -86,7 +87,6 @@ export interface Typegen0 {
       | 'FACE_VALID'
       | 'done.invoke.request.reviewing.verifyingVp:invocation[0]';
     requestReceiverInfo: 'CONNECTED';
-    sendVcReceived: 'STORE_RESPONSE';
     setIncomingVc: 'VC_RECEIVED';
     setReceiveLogTypeDiscarded: 'CANCEL' | 'REJECT';
     setReceiveLogTypeRegular: 'ACCEPT';
@@ -96,6 +96,7 @@ export interface Typegen0 {
     setSenderInfo: 'EXCHANGE_DONE';
     storeVc: 'STORE_RESPONSE';
     switchProtocol: 'SWITCH_PROTOCOL';
+    updateReceivedVcs: 'STORE_RESPONSE';
   };
   'eventsCausingDelays': {
     CANCEL_TIMEOUT: 'CANCEL';
@@ -122,7 +123,7 @@ export interface Typegen0 {
     receiveVc: 'EXCHANGE_DONE';
     requestBluetooth: 'BLUETOOTH_DISABLED';
     sendDisconnect: 'CANCEL';
-    sendVcResponse: 'CANCEL' | 'REJECT' | 'STORE_RESPONSE';
+    sendVcResponse: 'CANCEL' | 'REJECT' | 'STORE_RESPONSE' | 'VC_RECEIVED';
     verifyVp: never;
   };
   'matchesStates':
