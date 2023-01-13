@@ -19,26 +19,33 @@
       "allowCameraButton": "कैमरे तक पहुंच की अनुमति दें"
     },
     "VcDetails": {
-      "generatedOn": "जेनरेट ऑन",
-      "status": "स्थिति",
+      "generatedOn": "पर उत्पन्न हुआ",
+      "status": "दर्जा",
       "valid": "वैध",
-      "photo": "फोटो",
+      "photo": "फ़ोटो",
       "fullName": "पूरा नाम",
       "gender": "लिंग",
-      "dateOfBirth": "डेट ऑफ़ बर्थ",
+      "dateOfBirth": "जन्म की तारीख",
       "phoneNumber": "फ़ोन नंबर",
       "email": "ईमेल",
       "address": "पता",
       "reasonForSharing": "साझा करने का कारण",
-      "enableVerification": "सत्यापन सक्षम करें",
-      "offlineAuthDisabledHeader": "ऑफ़लाइन प्रमाणीकरण अक्षम!",
-      "offlineAuthDisabledMessage": "ऑफ़लाइन प्रमाणीकरण के लिए उपयोग किए जाने वाले इन क्रेडेंशियल्स को सक्षम करने के लिए 'प्रमाणीकरण सक्षम करें' पर क्लिक करें।",
-      "profileAuthenticated": "प्रोफ़ाइल प्रमाणित है!",
-      "idType": "आईडी का प्रकार",
-      "id": "Id",
+      "idType": "पहचान का प्रकार",
+      "id": "पहचान",
       "nationalCard": "राष्ट्रीय कार्ड",
       "uin": "UIN",
-      "vid": "VID"
+      "enableVerification": "सक्रिय",
+      "profileAuthenticated": "ऑनलाइन लॉगिन के लिए सक्रिय",
+      "offlineAuthDisabledHeader": "ऑनलाइन लॉगिन के लिए सक्रियता लंबित है",
+      "offlineAuthDisabledMessage": "ऑनलाइन लॉगिन के लिए उपयोग किए जाने वाले इस क्रेडेंशियल को सक्रिय करने के लिए कृपया नीचे दिए गए बटन पर क्लिक करें।",
+      "vid": "VID",
+      "verificationEnabledSuccess": "ऑनलाइन लॉगिन के लिए सक्रिय",
+      "goback": "वापस जाओ",
+      "BindingWarning": "आप इस क्रेडेंशियल के लिए किसी दूसरे डिवाइस पर ऑनलाइन लॉगिन पहले ही सक्रिय कर चुके हैं. यदि आप इसे इस डिवाइस पर फिर से सक्रिय करते हैं तो आप लॉगिन के लिए उस डिवाइस का उपयोग नहीं कर पाएंगे।",
+      "yes_confirm": "हां, मैं पुष्टि करता हूं",
+      "no": "नहीं",
+      "Alert": "चेतावनी",
+      "ok": "ठीक"
     },
     "AuthScreen": {
       "header": "क्या आप एप्लिकेशन को अनलॉक करने के लिए बायोमेट्रिक्स का उपयोग करना चाहेंगे?",
@@ -102,7 +109,8 @@
       "requestingOTP": "OTP का अनुरोध..."
     },
     "OtpVerificationModal": {
-      "enterOtp": "हमारे द्वारा भेजा गया 6 अंकों का सत्यापन कोड दर्ज करें"
+      "enterOtp": "हमारे द्वारा भेजा गया 6 अंकों का सत्यापन कोड दर्ज करें",
+      "header": "ओटीपी सत्यापन"
     },
     "MyVcsTab": {
       "addVcButton": "{{vcLabel}} जोड़ें",
@@ -133,6 +141,7 @@
       "requestingOtp": "OTP का अनुरोध...",
       "editTag": "टैग संपादित करें",
       "redirecting": "पुन: निर्देशित...",
+      "inProgress": "लोड हो रहा है...",
       "success": {
         "unlocked": "{{vcLabel}} सफलतापूर्वक अनलॉक किया गया",
         "locked": "{{vcLabel}} सफलतापूर्वक लॉक हो गया",
@@ -169,6 +178,26 @@
       "empty": "खाली",
       "revokeSuccessful": "VID को सफलतापूर्वक निरस्त कर दिया गया",
       "version": "संस्करण"
+    },
+    "QrScreen": {
+      "title": "क्यूआर लॉगिन",
+      "alignQr": "स्कैन करने के लिए फ्रेम के भीतर क्यूआर कोड को संरेखित करें",
+      "confirmation": "पुष्टीकरण",
+      "checkDomain": "यह भी जांचें कि एड्रेस बार पर लॉक आइकन है।",
+      "domainHead": "https://",
+      "selectId": "आईडी चुनें",
+      "noBindedVc": "सत्यापित करने के लिए कोई आबद्ध {{vcLabel}} उपलब्ध नहीं है",
+      "back": "वापस जाओ",
+      "confirm": "पुष्टि करें",
+      "verify": "सत्यापित करना",
+      "faceAuth": "चेहरा प्रमाणीकरण",
+      "consent": "अनुमति",
+      "loading": "लोड हो रहा है...",
+      "domainWarning": "कृपया उस वेबसाइट के डोमेन की पुष्टि करें जिसे आप नीचे दिए गए क्यूआर कोड से स्कैन कर रहे हैं",
+      "access": " तक पहुंच का अनुरोध कर रहा है",
+      "status": "दर्जा",
+      "successMessage":"आपने सफलतापूर्वक लॉग इन कर लिया है ",
+      "okay": "ठीक"
     },
     "ReceiveVcScreen": {
       "header": "{{vcLabel}} विवरण",
