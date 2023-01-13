@@ -13,7 +13,8 @@ import { storeMachine } from './store';
 import { createVcMachine, vcMachine } from './vc';
 import { createActivityLogMachine, activityLogMachine } from './activityLog';
 import { createRequestMachine, requestMachine } from './request';
-import * as BLEMatchines from './ble/request';
+import * as BLERequest from './openIdBle/request';
+import * as BLEScan from './openIdBle/scan';
 import { createScanMachine, scanMachine } from './scan';
 import { createRevokeMachine, revokeVidsMachine } from './revoke';
 
@@ -196,15 +197,17 @@ export const appMachine = model.createMachine(
             activityLogMachine.id
           );
 
-          serviceRefs.scan = spawn(
-            createScanMachine(serviceRefs),
-            scanMachine.id
-          );
+          serviceRefs.scan = USE_BLE_SHARE
+            ? spawn(
+                BLEScan.createScanMachine(serviceRefs),
+                BLEScan.scanMachine.id
+              )
+            : spawn(createScanMachine(serviceRefs), scanMachine.id);
 
           serviceRefs.request = USE_BLE_SHARE
             ? spawn(
-                BLEMatchines.createRequestMachine(serviceRefs),
-                BLEMatchines.requestMachine.id
+                BLERequest.createRequestMachine(serviceRefs),
+                BLERequest.requestMachine.id
               )
             : spawn(createRequestMachine(serviceRefs), requestMachine.id);
 

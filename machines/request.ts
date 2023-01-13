@@ -29,8 +29,7 @@ import {
 import { log } from 'xstate/lib/actions';
 // import { verifyPresentation } from '../shared/vcjs/verifyPresentation';
 
-const { GoogleNearbyMessages } = SmartshareReactNative;
-const { IdpassSmartshare } = SmartshareReactNative;
+const { GoogleNearbyMessages, IdpassSmartshare } = SmartshareReactNative;
 
 type SharingProtocol = 'OFFLINE' | 'ONLINE';
 
