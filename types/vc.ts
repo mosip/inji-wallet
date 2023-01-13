@@ -1,3 +1,5 @@
+import { WalletBindingResponse } from '../shared/cryptoutil/cryptoUtil';
+
 export interface VC {
   id: string;
   idType: VcIdType;
@@ -12,7 +14,7 @@ export interface VC {
   locked: boolean;
   reason?: VCSharingReason[];
   shouldVerifyPresence?: boolean;
-  walletBindingId?: string;
+  walletBindingResponse?: WalletBindingResponse;
 }
 
 export interface VCSharingReason {

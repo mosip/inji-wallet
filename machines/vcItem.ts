@@ -13,9 +13,18 @@ import { StoreEvents } from './store';
 import { ActivityLogEvents } from './activityLog';
 import { verifyCredential } from '../shared/vcjs/verifyCredential';
 import { log } from 'xstate/lib/actions';
-import { generateKeys } from '../shared/cryptoutil/cryptoUtil';
+import {
+  generateKeys,
+  getJwt,
+  WalletBindingResponse,
+} from '../shared/cryptoutil/cryptoUtil';
 import { KeyPair } from 'react-native-rsa-native';
-import { savePrivateKey } from '../shared/keystore/SecureKeystore';
+import {
+  getBindingCertificateConstant,
+  getPrivateKey,
+  savePrivateKey,
+} from '../shared/keystore/SecureKeystore';
+import getAllConfigurations from '../shared/commonprops/commonProps';
 
 const model = createModel(
   {
@@ -37,7 +46,8 @@ const model = createModel(
     bindingTransactionId: '',
     revoked: false,
     downloadCounter: 0,
-    walletBindingId: '',
+    maxDownloadCount: 10,
+    walletBindingResponse: null as WalletBindingResponse,
     walletBindingError: '',
     publicKey: '',
     privateKey: '',
@@ -126,8 +136,20 @@ export const vcItemMachine =
         checkingServerData: {
           description:
             "Download VC data from the server. Uses polling method to check when it's available.",
-          initial: 'checkingStatus',
+          initial: 'verifyingDownloadLimitExpiry',
           states: {
+            verifyingDownloadLimitExpiry: {
+              invoke: {
+                src: 'checkDownloadExpiryLimit',
+                onDone: {
+                  target: 'checkingStatus',
+                  actions: 'setMaxDownloadCount',
+                },
+                onError: {
+                  actions: log((_, event) => (event.data as Error).message),
+                },
+              },
+            },
             checkingStatus: {
               invoke: {
                 src: 'checkStatus',
@@ -135,10 +157,10 @@ export const vcItemMachine =
               },
               on: {
                 POLL: {
+                  cond: 'isDownloadAllowed',
                   actions: send('POLL_STATUS', { to: 'checkStatus' }),
                 },
                 DOWNLOAD_READY: {
-                  actions: 'resetDownloadCounter',
                   target: 'downloadingCredential',
                 },
               },
@@ -388,7 +410,6 @@ export const vcItemMachine =
             onDone: [
               {
                 target: 'acceptingBindingOtp',
-                actions: ['setBindingTransactionId'],
               },
             ],
             onError: [
@@ -499,7 +520,8 @@ export const vcItemMachine =
         }),
 
         setWalletBindingId: assign({
-          walletBindingId: (context, event) => event.data as string,
+          walletBindingResponse: (context, event) =>
+            event.data as WalletBindingResponse,
         }),
 
         updateVc: send(
@@ -543,12 +565,12 @@ export const vcItemMachine =
           tag: (_, event) => event.tag,
         }),
 
-        resetDownloadCounter: model.assign({
-          downloadCounter: () => 0,
-        }),
-
         incrementDownloadCounter: model.assign({
           downloadCounter: ({ downloadCounter }) => downloadCounter + 1,
+        }),
+
+        setMaxDownloadCount: model.assign({
+          maxDownloadCount: (_context, event) => event.data as number,
         }),
 
         storeTag: send(
@@ -621,10 +643,6 @@ export const vcItemMachine =
           transactionId: () => String(new Date().valueOf()).substring(3, 13),
         }),
 
-        setBindingTransactionId: assign({
-          bindingTransactionId: (_, event) => event.data as string,
-        }),
-
         clearTransactionId: assign({ transactionId: '' }),
 
         setOtp: model.assign({
@@ -656,27 +674,54 @@ export const vcItemMachine =
       },
 
       services: {
+        checkDownloadExpiryLimit: async (context) => {
+          var resp = await getAllConfigurations();
+          const maxLimit: number = resp.vcDownloadMaxRetry;
+          console.log(maxLimit);
+          if (maxLimit <= context.downloadCounter) {
+            throw new Error(
+              'Download limit expired for request id: ' + context.requestId
+            );
+          }
+          return maxLimit;
+        },
+
         addWalletBindnigId: async (context) => {
           const response = await request('POST', '/wallet-binding', {
             requestTime: String(new Date().toISOString()),
             request: {
-              individualId: '8267411571',
+              authFactorType: 'WLA',
+              format: 'jwt',
+              individualId: context.id,
               transactionId: context.bindingTransactionId,
               publicKey: context.publicKey,
               challengeList: [
                 {
                   authFactorType: 'OTP',
                   challenge: context.otp,
+                  format: 'alpha-numeric',
                 },
               ],
             },
           });
-          return response.response.encryptedWalletBindingId;
+          const certificate = response.response.certificate;
+          await savePrivateKey(
+            getBindingCertificateConstant(context.id),
+            certificate
+          );
+
+          const walletResponse: WalletBindingResponse = {
+            walletBindingId: response.response.encryptedWalletBindingId,
+            keyId: response.response.keyId,
+            thumbprint: response.response.thumbprint,
+            expireDateTime: response.response.expireDateTime,
+          };
+          return walletResponse;
         },
 
         updatePrivateKey: async (context) => {
           const hasSetPrivateKey: boolean = await savePrivateKey(
-            context.walletBindingId,
+            context.walletBindingResponse.walletBindingId,
             context.privateKey
           );
           if (!hasSetPrivateKey) {
@@ -694,11 +739,13 @@ export const vcItemMachine =
           const response = await request('POST', '/binding-otp', {
             requestTime: String(new Date().toISOString()),
             request: {
-              individualId: '8267411571',
+              individualId: context.id,
               otpChannels: ['EMAIL'],
             },
           });
-          return response.response.transactionId;
+          if (response.response == null) {
+            throw new Error('Could not process request');
+          }
         },
 
         checkStatus: (context) => (callback, onReceive) => {
@@ -756,7 +803,7 @@ export const vcItemMachine =
                   isVerified: false,
                   lastVerifiedOn: null,
                   locked: context.locked,
-                  walletBindingId: context.walletBindingId,
+                  walletBindingResponse: null,
                 })
               );
             }
@@ -829,7 +876,7 @@ export const vcItemMachine =
         },
 
         isDownloadAllowed: (_context, event) => {
-          return _context.downloadCounter < 10;
+          return _context.downloadCounter <= _context.maxDownloadCount;
         },
 
         isVcValid: (context) => {
@@ -925,11 +972,13 @@ export function selectIsRequestBindingOtp(state: State) {
 }
 
 export function selectWalletBindingId(state: State) {
-  return state.context.walletBindingId;
+  return state.context.walletBindingResponse;
 }
 
 export function selectEmptyWalletBindingId(state: State) {
-  var val = state.context.walletBindingId;
+  var val = state.context.walletBindingResponse
+    ? state.context.walletBindingResponse.walletBindingId
+    : undefined;
   return val === undefined || val == null || val.length <= 0 ? true : false;
 }
 
