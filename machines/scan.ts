@@ -2,6 +2,7 @@
 import SmartshareReactNative from '@idpass/smartshare-react-native';
 import { ConnectionParams } from '@idpass/smartshare-react-native/lib/typescript/IdpassSmartshare';
 import { default as IdpassSmartshare } from '../lib/smartshare';
+import { USE_BLE_SHARE } from 'react-native-dotenv';
 const { GoogleNearbyMessages } = SmartshareReactNative;
 
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
@@ -820,7 +821,8 @@ export const scanMachine =
 
       guards: {
         isQrOffline: (_context, event) => {
-          // if (Platform.OS === 'ios') return false;
+          // don't scan if QR is offline and Google Nearby is enabled
+          if (Platform.OS === 'ios' && !USE_BLE_SHARE) return false;
 
           const param: ConnectionParams = Object.create(null);
           try {
