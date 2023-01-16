@@ -7,7 +7,7 @@ import { Image } from 'react-native';
 import { Icon, ListItem, Switch } from 'react-native-elements';
 import { Modal } from '../../components/ui/Modal';
 import { QrLoginRef } from '../../machines/QrLoginMachine';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native';
 
 export const QrConsent: React.FC<QrConsentProps> = (props) => {
   const { t } = useTranslation('QrScreen');
