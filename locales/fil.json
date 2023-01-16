@@ -1,4 +1,4 @@
-{ 
+{
   "ActivityLogText": {
     "VC_SHARED": "ibinahagi",
     "VC_RECEIVED": "natanggap",
@@ -220,7 +220,7 @@
       },
       "rejected": {
         "title": "Paunawa",
-        "message": "Tinanggihan mo ang {{vcLabel}} ni {{sender}}"
+        "message": "Iwinaksi ang {{vcLabel}} ni {{sender}}"
       },
       "disconnected": {
         "title": "Nadiskonekta",
@@ -259,7 +259,10 @@
       "connectingTimeout": "Medyo nagtatagal bago magtatag ng koneksyon. Bukas ba ang ibang device para sa mga koneksyon?",
       "exchangingDeviceInfo": "Nagpapalitan ng impormasyon ng device...",
       "exchangingDeviceInfoTimeout": "Medyo nagtatagal ang paglabas ng impormasyon ng device. Bukas ba ang ibang device para sa mga koneksyon?",
-      "invalid": "Di-wasto ang QR Code"
+      "invalid": "Di-wasto ang QR Code",
+      "offline": "Mangyaring kumonekta sa internet upang makapag-scan ng QR codes na gumagamit ng Online sharing mode",
+      "sent": "Naibahagi na ang {{vcLabel}}...",
+      "sentHint": "Iniintay ang nakatanggap na itabi o iwaksi ang iyong {{vcLabel}}"
     }
   },
   "SelectVcOverlay": {
@@ -284,7 +287,12 @@
       "rejected": {
         "title": "Pansinin",
         "message": "Ang iyong {{vcLabel}} ay tinanggihan ng {{receiver}}"
-      },
+      }
+    },
+    "consentToPhotoVerification": "Nagbibigay ako ng pahintulot na kunin ang aking larawan para sa pagpapatunay"
+  },
+  "VerifyIdentityOverlay": {
+    "status": {
       "verifyingIdentity": "Bine-verify ang pagkakakilanlan..."
     },
     "errors": {
