@@ -16,6 +16,8 @@ import {
   selectIsReviewing,
   selectIsScanning,
   selectIsOffline,
+  selectIsSent,
+  selectIsDisconnected,
 } from '../../machines/scan';
 import { selectVcLabel } from '../../machines/settings';
 import { MainBottomTabParamList } from '../../routes/main';
@@ -30,6 +32,8 @@ type ScanLayoutNavigation = NavigationProp<
   ScanStackParamList & MainBottomTabParamList
 >;
 
+// TODO: refactor
+// eslint-disable-next-line sonarjs/cognitive-complexity
 export function useScanLayout() {
   const { t } = useTranslation('ScanScreen');
   const { appService } = useContext(GlobalContext);
@@ -65,6 +69,9 @@ export function useScanLayout() {
     selectIsExchangingDeviceInfoTimeout
   );
   const isOffline = useSelector(scanService, selectIsOffline);
+  const isSent = useSelector(scanService, selectIsSent);
+
+  const vcLabel = useSelector(settingsService, selectVcLabel);
 
   const onCancel = () => scanService.send(ScanEvents.CANCEL());
   let statusOverlay: Pick<
@@ -90,6 +97,11 @@ export function useScanLayout() {
       message: t('status.exchangingDeviceInfo'),
       hint: t('status.exchangingDeviceInfoTimeout'),
       onCancel,
+    };
+  } else if (isSent) {
+    statusOverlay = {
+      message: t('status.sent', { vcLabel: vcLabel.singular }),
+      hint: t('status.sentHint', { vcLabel: vcLabel.singular }),
     };
   } else if (isInvalid) {
     statusOverlay = {
@@ -130,12 +142,14 @@ export function useScanLayout() {
   }, [isDone, isReviewing, isScanning]);
 
   return {
-    vcLabel: useSelector(settingsService, selectVcLabel),
+    vcLabel,
 
     isInvalid,
     isDone,
+    isDisconnected: useSelector(scanService, selectIsDisconnected),
     statusOverlay,
 
+    DISMISS: () => scanService.send(ScanEvents.DISMISS()),
     DISMISS_INVALID: () =>
       isInvalid ? scanService.send(ScanEvents.DISMISS()) : null,
   };

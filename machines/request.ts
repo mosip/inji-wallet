@@ -304,6 +304,12 @@ export const requestMachine =
         },
 
         reviewing: {
+          invoke: {
+            src: 'sendVcResponse',
+            data: {
+              status: 'RECEIVED',
+            },
+          },
           exit: 'disconnect',
           initial: 'idle',
           states: {
@@ -399,7 +405,7 @@ export const requestMachine =
               },
             },
             accepted: {
-              entry: ['sendVcReceived', 'logReceived'],
+              entry: ['updateReceivedVcs', 'logReceived'],
               invoke: {
                 src: 'sendVcResponse',
                 data: {
@@ -634,7 +640,7 @@ export const requestMachine =
           { to: (context) => context.serviceRefs.activityLog }
         ),
 
-        sendVcReceived: send(
+        updateReceivedVcs: send(
           (context) => {
             return VcEvents.VC_RECEIVED(VC_ITEM_STORE_KEY(context.incomingVc));
           },
@@ -796,7 +802,7 @@ export const requestMachine =
           }
         },
 
-        sendVcResponse: (context, _event, meta) => () => {
+        sendVcResponse: (context, _event, meta) => async () => {
           const event: SendVcResponseEvent = {
             type: 'send-vc:response',
             data: meta.data.status,
@@ -807,7 +813,8 @@ export const requestMachine =
               // pass
             });
           } else {
-            onlineSend(event);
+            await GoogleNearbyMessages.unpublish();
+            await onlineSend(event);
           }
         },
 
