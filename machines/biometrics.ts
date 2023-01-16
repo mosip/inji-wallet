@@ -1,6 +1,7 @@
 import { createModel } from 'xstate/lib/model';
 import * as LocalAuthentication from 'expo-local-authentication';
 import { EventFrom, MetaObject, StateFrom } from 'xstate';
+import { Platform } from 'react-native';
 
 // ----- CREATE MODEL ---------------------------------------------------------
 const model = createModel(
@@ -97,6 +98,9 @@ export const biometricsMachine = model.createMachine(
       authenticating: {
         invoke: {
           src: () => async () => {
+            if (Platform.OS === 'android') {
+              await LocalAuthentication.cancelAuthenticate();
+            }
             const res = await LocalAuthentication.authenticateAsync({
               promptMessage: 'Biometric Authentication',
 
@@ -111,6 +115,9 @@ export const biometricsMachine = model.createMachine(
             target: 'authentication',
             actions: ['setStatus'],
           },
+        },
+        on: {
+          AUTHENTICATE: 'authenticating',
         },
       },
 
@@ -145,6 +152,7 @@ export const biometricsMachine = model.createMachine(
           SET_IS_AVAILABLE: {
             target: '#biometrics.available',
           },
+          AUTHENTICATE: 'authenticating',
         },
       },
 
@@ -185,6 +193,9 @@ export const biometricsMachine = model.createMachine(
               message: 'errors.generic',
             },
           },
+        },
+        on: {
+          AUTHENTICATE: 'authenticating',
         },
       },
     },

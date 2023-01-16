@@ -10,7 +10,7 @@
     },
     "rejected": {
       "title": "Notice",
-      "message": "You rejected {{sender}}'s {{vcLabel}}"
+      "message": "You discarded {{sender}}'s {{vcLabel}}"
     },
     "disconnected": {
       "title": "Disconnected",

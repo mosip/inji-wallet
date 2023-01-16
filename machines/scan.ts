@@ -3,7 +3,16 @@ import SmartshareReactNative from '@idpass/smartshare-react-native';
 import { ConnectionParams } from '@idpass/smartshare-react-native/lib/typescript/IdpassSmartshare';
 const { IdpassSmartshare, GoogleNearbyMessages } = SmartshareReactNative;
 
-import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
+import {
+  ActorRefFrom,
+  assign,
+  DoneInvokeEvent,
+  EventFrom,
+  send,
+  sendParent,
+  spawn,
+  StateFrom,
+} from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { EmitterSubscription, Linking, Platform } from 'react-native';
 import { DeviceInfo } from '../components/DeviceInfoList';
@@ -14,6 +23,7 @@ import { ActivityLogEvents, ActivityLogType } from './activityLog';
 import {
   GNM_API_KEY,
   GNM_MESSAGE_LIMIT,
+  MY_LOGIN_STORE_KEY,
   VC_ITEM_STORE_KEY,
 } from '../shared/constants';
 import {
@@ -31,6 +41,8 @@ import { checkLocation, requestLocation } from '../shared/location';
 import { CameraCapturedPicture } from 'expo-camera';
 import { log } from 'xstate/lib/actions';
 import NetInfo from '@react-native-community/netinfo';
+import { createQrLoginMachine, qrLoginMachine } from './QrLoginMachine';
+import { StoreEvents } from './store';
 
 type SharingProtocol = 'OFFLINE' | 'ONLINE';
 
@@ -50,6 +62,8 @@ const model = createModel(
     sharingProtocol: 'OFFLINE' as SharingProtocol,
     scannedQrParams: {} as ConnectionParams,
     shareLogType: '' as ActivityLogType,
+    QrLoginRef: {} as ActorRefFrom<typeof qrLoginMachine>,
+    linkCode: '',
   },
   {
     events: {
@@ -61,6 +75,7 @@ const model = createModel(
       VERIFY_AND_ACCEPT_REQUEST: () => ({}),
       VC_ACCEPTED: () => ({}),
       VC_REJECTED: () => ({}),
+      VC_SENT: () => ({}),
       CANCEL: () => ({}),
       DISMISS: () => ({}),
       CONNECTED: () => ({}),
@@ -84,6 +99,7 @@ const model = createModel(
     },
   }
 );
+const QR_LOGIN_REF_ID = 'QrLogin';
 
 export const ScanEvents = model.events;
 
@@ -133,7 +149,12 @@ export const scanMachine =
         },
 
         findingConnection: {
-          entry: ['removeLoggers', 'registerLoggers', 'clearScannedQrParams'],
+          entry: [
+            'removeLoggers',
+            'registerLoggers',
+            'clearScannedQrParams',
+            'setChildRef',
+          ],
           on: {
             SCAN: [
               {
@@ -147,12 +168,41 @@ export const scanMachine =
                 actions: 'setScannedQrParams',
               },
               {
+                target: 'showQrLogin',
+                cond: 'isQrLogin',
+                actions: 'setLinkCode',
+              },
+              {
                 target: 'invalid',
               },
             ],
           },
         },
-
+        showQrLogin: {
+          invoke: {
+            id: 'QrLogin',
+            src: qrLoginMachine,
+            onDone: '.storing',
+          },
+          on: {
+            DISMISS: 'findingConnection',
+          },
+          initial: 'idle',
+          states: {
+            idle: {},
+            storing: {
+              entry: ['storeLoginItem'],
+              on: {
+                STORE_RESPONSE: {
+                  target: 'navigatingToHome',
+                  actions: ['storingActivityLog'],
+                },
+              },
+            },
+            navigatingToHome: {},
+          },
+          entry: 'sendScanData',
+        },
         preparingToConnect: {
           entry: 'requestSenderInfo',
           on: {
@@ -232,12 +282,15 @@ export const scanMachine =
           initial: 'selectingVc',
           states: {
             selectingVc: {
+              invoke: {
+                src: 'monitorCancellation',
+              },
               on: {
                 UPDATE_REASON: {
                   actions: 'setReason',
                 },
                 DISCONNECT: {
-                  target: '#scan.findingConnection',
+                  target: '#scan.disconnected',
                 },
                 SELECT_VC: {
                   actions: 'setSelectedVc',
@@ -256,6 +309,7 @@ export const scanMachine =
                   actions: 'toggleShouldVerifyPresence',
                 },
               },
+              exit: ['onlineUnsubscribe'],
             },
             cancelling: {
               invoke: {
@@ -291,16 +345,26 @@ export const scanMachine =
                     },
                   },
                 },
+                sent: {
+                  description:
+                    'VC data has been shared and the receiver should now be viewing it',
+                  on: {
+                    VC_ACCEPTED: {
+                      target: '#scan.reviewing.accepted',
+                    },
+                    VC_REJECTED: {
+                      target: '#scan.reviewing.rejected',
+                    },
+                  },
+                },
               },
               on: {
                 DISCONNECT: {
                   target: '#scan.findingConnection',
                 },
-                VC_ACCEPTED: {
-                  target: 'accepted',
-                },
-                VC_REJECTED: {
-                  target: 'rejected',
+                VC_SENT: {
+                  target: '#scan.reviewing.sendingVc.sent',
+                  internal: true,
                 },
               },
             },
@@ -461,6 +525,17 @@ export const scanMachine =
     },
     {
       actions: {
+        setChildRef: assign({
+          QrLoginRef: (context) =>
+            spawn(createQrLoginMachine(context.serviceRefs), QR_LOGIN_REF_ID),
+        }),
+
+        sendScanData: (context) =>
+          context.QrLoginRef.send({
+            type: 'GET',
+            value: context.linkCode,
+          }),
+
         requestSenderInfo: sendParent('REQUEST_DEVICE_INFO'),
 
         setSenderInfo: model.assign({
@@ -604,12 +679,49 @@ export const scanMachine =
           }),
         }),
 
+        setLinkCode: assign({
+          linkCode: (_context, event) =>
+            event.params.substring(
+              event.params.indexOf('linkCode=') + 9,
+              event.params.indexOf('&')
+            ),
+        }),
+
         resetShouldVerifyPresence: assign({
           selectedVc: (context) => ({
             ...context.selectedVc,
             shouldVerifyPresence: false,
           }),
         }),
+
+        onlineUnsubscribe: () => {
+          GoogleNearbyMessages.unsubscribe();
+        },
+
+        storeLoginItem: send(
+          (_context, event) => {
+            console.log('log from store', event);
+            return StoreEvents.PREPEND(
+              MY_LOGIN_STORE_KEY,
+              (event as DoneInvokeEvent<string>).data
+            );
+          },
+          { to: (context) => context.serviceRefs.store }
+        ),
+
+        storingActivityLog: send(
+          (_, event) =>
+            ActivityLogEvents.LOG_ACTIVITY({
+              _vcKey: '',
+              type: 'QRLOGIN_SUCCESFULL',
+              timestamp: Date.now(),
+              deviceName: '',
+              vcLabel: String(event.response.selectedVc.id),
+            }),
+          {
+            to: (context) => context.serviceRefs.activityLog,
+          }
+        ),
       },
 
       services: {
@@ -646,6 +758,14 @@ export const scanMachine =
             );
 
             return () => subscription.remove();
+          }
+        },
+
+        monitorCancellation: (context) => async (callback) => {
+          if (context.sharingProtocol === 'ONLINE') {
+            await onlineSubscribe('disconnect', null, () =>
+              callback({ type: 'DISCONNECT' })
+            );
           }
         },
 
@@ -737,10 +857,15 @@ export const scanMachine =
           };
 
           const statusCallback = (status: SendVcStatus) => {
+            console.log('[scan] statusCallback', status);
             if (typeof status === 'number') return;
-            callback({
-              type: status === 'ACCEPTED' ? 'VC_ACCEPTED' : 'VC_REJECTED',
-            });
+            if (status === 'RECEIVED') {
+              callback({ type: 'VC_SENT' });
+            } else {
+              callback({
+                type: status === 'ACCEPTED' ? 'VC_ACCEPTED' : 'VC_REJECTED',
+              });
+            }
           };
 
           if (context.sharingProtocol === 'OFFLINE') {
@@ -812,6 +937,19 @@ export const scanMachine =
             return false;
           }
         },
+
+        isQrLogin: (_context, event) => {
+          let linkCode = '';
+          try {
+            linkCode = event.params.substring(
+              event.params.indexOf('linkCode=') + 9,
+              event.params.indexOf('&')
+            );
+            return linkCode !== null;
+          } catch (e) {
+            return false;
+          }
+        },
       },
 
       delays: {
@@ -850,6 +988,9 @@ export function selectVcName(state: State) {
 
 export function selectSelectedVc(state: State) {
   return state.context.selectedVc;
+}
+export function selectQrLoginRef(state: State) {
+  return state.context.QrLoginRef;
 }
 
 export function selectIsScanning(state: State) {
@@ -896,6 +1037,10 @@ export function selectIsRejected(state: State) {
   return state.matches('reviewing.rejected');
 }
 
+export function selectIsSent(state: State) {
+  return state.matches('reviewing.sendingVc.sent');
+}
+
 export function selectIsInvalid(state: State) {
   return state.matches('invalid');
 }
@@ -924,8 +1069,24 @@ export function selectIsCancelling(state: State) {
   return state.matches('reviewing.cancelling');
 }
 
+export function selectIsShowQrLogin(state: State) {
+  return state.matches('showQrLogin');
+}
+
+export function selectIsQrLoginDone(state: State) {
+  return state.matches('showQrLogin.navigatingToHome');
+}
+
+export function selectIsQrLoginStoring(state: State) {
+  return state.matches('showQrLogin.storing');
+}
+
 export function selectIsOffline(state: State) {
   return state.matches('offline');
+}
+
+export function selectIsDisconnected(state: State) {
+  return state.matches('disconnected');
 }
 
 async function sendVc(
@@ -968,7 +1129,9 @@ async function sendVc(
             },
           });
         } else if (typeof status === 'string') {
-          GoogleNearbyMessages.unsubscribe();
+          if (status === 'ACCEPTED' || status === 'REJECTED') {
+            GoogleNearbyMessages.unsubscribe();
+          }
           callback(status);
         }
       },
