@@ -9,6 +9,7 @@
 "xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling": { type: "xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling" };
 "xstate.after(CONNECTION_TIMEOUT)#scan.connecting.inProgress": { type: "xstate.after(CONNECTION_TIMEOUT)#scan.connecting.inProgress" };
 "xstate.after(CONNECTION_TIMEOUT)#scan.exchangingDeviceInfo": { type: "xstate.after(CONNECTION_TIMEOUT)#scan.exchangingDeviceInfo" };
+"xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection": { type: "xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection" };
 "xstate.after(SHARING_TIMEOUT)#scan.reviewing.sendingVc.inProgress": { type: "xstate.after(SHARING_TIMEOUT)#scan.reviewing.sendingVc.inProgress" };
 "xstate.init": { type: "xstate.init" };
 "xstate.stop": { type: "xstate.stop" };
@@ -27,7 +28,7 @@
 "sendVc": "done.invoke.scan.reviewing.sendingVc:invocation[0]";
         };
         missingImplementations: {
-          actions: "disconnect";
+          actions: never;
           delays: never;
           guards: never;
           services: never;
@@ -35,14 +36,13 @@
         eventsCausingActions: {
           "clearCreatedVp": "DISCONNECT" | "DISMISS" | "SCREEN_BLUR" | "SCREEN_FOCUS" | "xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling" | "xstate.stop";
 "clearReason": "DISCONNECT" | "DISMISS" | "SCREEN_BLUR" | "SCREEN_FOCUS" | "xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling" | "xstate.stop";
-"clearScannedQrParams": "CONNECTION_DESTROYED" | "DISCONNECT" | "DISMISS" | "xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling";
-"disconnect": "xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling";
+"clearScannedQrParams": "CONNECTION_DESTROYED" | "DISCONNECT" | "DISMISS" | "xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection";
 "logFailedVerification": "FACE_INVALID";
 "logShared": "VC_ACCEPTED";
 "openBluetoothSettings": "GOTO_SETTINGS";
 "openSettings": "LOCATION_REQUEST";
-"registerLoggers": "CONNECTION_DESTROYED" | "DISCONNECT" | "DISMISS" | "xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling";
-"removeLoggers": "CONNECTION_DESTROYED" | "DISCONNECT" | "DISMISS" | "SCREEN_BLUR" | "xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling" | "xstate.init";
+"registerLoggers": "CONNECTION_DESTROYED" | "DISCONNECT" | "DISMISS" | "xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection";
+"removeLoggers": "CONNECTION_DESTROYED" | "DISCONNECT" | "DISMISS" | "SCREEN_BLUR" | "xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection" | "xstate.init";
 "requestSenderInfo": "SCAN";
 "requestToEnableLocation": "LOCATION_DISABLED" | "LOCATION_REQUEST";
 "setConnectionParams": "SCAN";
@@ -59,6 +59,7 @@
         eventsCausingDelays: {
           "CANCEL_TIMEOUT": "CANCEL";
 "CONNECTION_TIMEOUT": "CONNECTED" | "RECEIVE_DEVICE_INFO" | "xstate.after(CONNECTION_TIMEOUT)#scan.exchangingDeviceInfo";
+"DESTROY_TIMEOUT": "DISMISS" | "LOCATION_ENABLED" | "xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling";
 "SHARING_TIMEOUT": "ACCEPT_REQUEST" | "FACE_VALID" | "done.invoke.scan.reviewing.creatingVp:invocation[0]";
         };
         eventsCausingGuards: {
@@ -70,7 +71,7 @@
 "checkLocationPermission": "APP_ACTIVE" | "LOCATION_ENABLED";
 "checkLocationStatus": "";
 "createVp": never;
-"disconnect": "DISMISS" | "LOCATION_ENABLED";
+"disconnect": "DISMISS" | "LOCATION_ENABLED" | "xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling";
 "discoverDevice": "RECEIVE_DEVICE_INFO";
 "exchangeDeviceInfo": "CONNECTED" | "xstate.after(CONNECTION_TIMEOUT)#scan.exchangingDeviceInfo";
 "monitorConnection": "xstate.init";

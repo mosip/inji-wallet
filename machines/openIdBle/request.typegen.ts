@@ -8,6 +8,7 @@
 "done.invoke.request.reviewing.verifyingVp:invocation[0]": { type: "done.invoke.request.reviewing.verifyingVp:invocation[0]"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
 "xstate.after(CANCEL_TIMEOUT)#request.cancelling": { type: "xstate.after(CANCEL_TIMEOUT)#request.cancelling" };
 "xstate.after(CONNECTION_TIMEOUT)#request.exchangingDeviceInfo.inProgress": { type: "xstate.after(CONNECTION_TIMEOUT)#request.exchangingDeviceInfo.inProgress" };
+"xstate.after(DESTROY_TIMEOUT)#request.clearingConnection": { type: "xstate.after(DESTROY_TIMEOUT)#request.clearingConnection" };
 "xstate.after(SHARING_TIMEOUT)#request.waitingForVc.inProgress": { type: "xstate.after(SHARING_TIMEOUT)#request.waitingForVc.inProgress" };
 "xstate.init": { type: "xstate.init" };
 "xstate.stop": { type: "xstate.stop" };
@@ -33,13 +34,13 @@
         eventsCausingActions: {
           "clearShouldVerifyPresence": "ACCEPT" | "CANCEL" | "FACE_INVALID" | "FACE_VALID" | "REJECT" | "SCREEN_BLUR" | "SCREEN_FOCUS" | "SWITCH_PROTOCOL" | "xstate.stop";
 "disconnect": "xstate.after(CANCEL_TIMEOUT)#request.cancelling";
-"generateConnectionParams": "CONNECTION_DESTROYED" | "DISMISS";
+"generateConnectionParams": "CONNECTION_DESTROYED" | "DISMISS" | "xstate.after(DESTROY_TIMEOUT)#request.clearingConnection";
 "logReceived": "STORE_RESPONSE";
 "mergeIncomingVc": "STORE_RESPONSE";
 "openSettings": "GOTO_SETTINGS";
 "prependReceivedVc": "VC_RESPONSE";
-"registerLoggers": "CONNECTION_DESTROYED" | "DISMISS";
-"removeLoggers": "CONNECTION_DESTROYED" | "DISMISS" | "SCREEN_BLUR" | "xstate.init";
+"registerLoggers": "CONNECTION_DESTROYED" | "DISMISS" | "xstate.after(DESTROY_TIMEOUT)#request.clearingConnection";
+"removeLoggers": "CONNECTION_DESTROYED" | "DISMISS" | "SCREEN_BLUR" | "xstate.after(DESTROY_TIMEOUT)#request.clearingConnection" | "xstate.init";
 "requestExistingVc": "VC_RESPONSE";
 "requestReceivedVcs": "ACCEPT" | "DISMISS" | "FACE_VALID" | "done.invoke.request.reviewing.verifyingVp:invocation[0]";
 "requestReceiverInfo": "CONNECTED";
@@ -56,13 +57,14 @@
         eventsCausingDelays: {
           "CANCEL_TIMEOUT": "CANCEL";
 "CONNECTION_TIMEOUT": "RECEIVE_DEVICE_INFO";
+"DESTROY_TIMEOUT": "" | "DISMISS";
 "SHARING_TIMEOUT": "EXCHANGE_DONE";
         };
         eventsCausingGuards: {
           "hasExistingVc": "VC_RESPONSE";
         };
         eventsCausingServices: {
-          "advertiseDevice": "CONNECTION_DESTROYED" | "DISMISS";
+          "advertiseDevice": "CONNECTION_DESTROYED" | "DISMISS" | "xstate.after(DESTROY_TIMEOUT)#request.clearingConnection";
 "checkBluetoothService": "SCREEN_FOCUS" | "SWITCH_PROTOCOL" | "xstate.after(CANCEL_TIMEOUT)#request.cancelling";
 "disconnect": "" | "DISMISS";
 "exchangeDeviceInfo": "RECEIVE_DEVICE_INFO";
