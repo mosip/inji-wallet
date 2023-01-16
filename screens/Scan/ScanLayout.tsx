@@ -10,6 +10,7 @@ import { useScanLayout } from './ScanLayoutController';
 import { LanguageSelector } from '../../components/LanguageSelector';
 import { ScanScreen } from './ScanScreen';
 import { I18nManager, Platform } from 'react-native';
+import { Message } from '../../components/Message';
 
 const ScanStack = createNativeStackNavigator();
 
@@ -68,6 +69,14 @@ export const ScanLayout: React.FC = () => {
         progress={!controller.isInvalid}
         onBackdropPress={controller.DISMISS_INVALID}
       />
+
+      {controller.isDisconnected && (
+        <Message
+          title={t('RequestScreen:status.disconnected.title')}
+          message={t('RequestScreen:status.disconnected.message')}
+          onBackdropPress={controller.DISMISS}
+        />
+      )}
     </React.Fragment>
   );
 };

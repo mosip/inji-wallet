@@ -13,6 +13,10 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
+    'error.platform.scan.reviewing.creatingVp:invocation[0]': {
+      type: 'error.platform.scan.reviewing.creatingVp:invocation[0]';
+      data: unknown;
+    };
     'xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling': {
       type: 'xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling';
     };
@@ -38,6 +42,7 @@ export interface Typegen0 {
     createVp: 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
     discoverDevice: 'done.invoke.scan.connecting:invocation[0]';
     exchangeDeviceInfo: 'done.invoke.scan.exchangingDeviceInfo:invocation[0]';
+    monitorCancellation: 'done.invoke.scan.reviewing.selectingVc:invocation[0]';
     monitorConnection: 'done.invoke.scan:invocation[0]';
     sendDisconnect: 'done.invoke.scan.reviewing.cancelling:invocation[0]';
     sendVc: 'done.invoke.scan.reviewing.sendingVc:invocation[0]';
@@ -78,6 +83,14 @@ export interface Typegen0 {
       | 'xstate.stop';
     logFailedVerification: 'FACE_INVALID';
     logShared: 'VC_ACCEPTED';
+    onlineUnsubscribe:
+      | 'ACCEPT_REQUEST'
+      | 'CANCEL'
+      | 'DISCONNECT'
+      | 'SCREEN_BLUR'
+      | 'SCREEN_FOCUS'
+      | 'VERIFY_AND_ACCEPT_REQUEST'
+      | 'xstate.stop';
     openSettings: 'LOCATION_REQUEST';
     registerLoggers:
       | 'DISCONNECT'
@@ -124,6 +137,7 @@ export interface Typegen0 {
     SHARING_TIMEOUT:
       | 'ACCEPT_REQUEST'
       | 'FACE_VALID'
+      | 'VC_SENT'
       | 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
   };
   'eventsCausingGuards': {
@@ -141,11 +155,17 @@ export interface Typegen0 {
     exchangeDeviceInfo:
       | 'CONNECTED'
       | 'xstate.after(CONNECTION_TIMEOUT)#scan.exchangingDeviceInfo';
+    monitorCancellation:
+      | 'CANCEL'
+      | 'DISMISS'
+      | 'EXCHANGE_DONE'
+      | 'error.platform.scan.reviewing.creatingVp:invocation[0]';
     monitorConnection: 'xstate.init';
     sendDisconnect: 'CANCEL';
     sendVc:
       | 'ACCEPT_REQUEST'
       | 'FACE_VALID'
+      | 'VC_SENT'
       | 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
   };
   'matchesStates':
@@ -179,6 +199,7 @@ export interface Typegen0 {
     | 'reviewing.selectingVc'
     | 'reviewing.sendingVc'
     | 'reviewing.sendingVc.inProgress'
+    | 'reviewing.sendingVc.sent'
     | 'reviewing.sendingVc.timeout'
     | 'reviewing.verifyingIdentity'
     | 'showQrLogin'
