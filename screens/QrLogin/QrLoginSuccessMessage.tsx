@@ -26,11 +26,12 @@ export const QrLoginSuccess: React.FC<QrLoginSuccessProps> = (props) => {
         <Centered padding={'60 25 0 25'} margin={'60 0'}>
           <Image
             source={controller.logoUrl ? { uri: controller.logoUrl } : null}
-            resizeMethod="auto"
+            style={{ width: 60, height: 60 }}
           />
           <Text
             style={Theme.Styles.detailsText}
             weight="semibold"
+            margin="20 0 0 0"
             align="center">
             {t('successMessage')}
             {controller.clientName}

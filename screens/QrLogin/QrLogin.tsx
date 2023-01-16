@@ -34,7 +34,8 @@ export const QrLogin: React.FC<QrLoginProps> = (props) => {
           isVisible={
             controller.isWaitingForData ||
             controller.isLoadingMyVcs ||
-            controller.isLinkTransaction
+            controller.isLinkTransaction ||
+            controller.isSendingConsent
           }
           title={t('loading')}
           progress
@@ -43,7 +44,7 @@ export const QrLogin: React.FC<QrLoginProps> = (props) => {
         <MessageOverlay
           isVisible={controller.isShowingError}
           title={controller.error}
-          onCancel={controller.CANCEL}
+          onCancel={controller.DISMISS}
         />
 
         <MyBindedVcs

@@ -10,9 +10,8 @@ import {
   selectIsLinkTransaction,
   selectIsloadMyVcs,
   selectIsRequestConsent,
-  selectIsSharingBirthdate,
-  selectIsSharingGender,
-  selectIsSharingPhone,
+  selectIsSendingConsent,
+  selectIsSharing,
   selectIsShowError,
   selectIsShowingVcList,
   selectIsShowWarning,
@@ -20,7 +19,6 @@ import {
   selectIsWaitingForData,
   selectLinkTransactionResponse,
   selectLogoUrl,
-  selectMyVcs,
   selectSelectedVc,
   selectVoluntaryClaims,
 } from '../../machines/QrLoginMachine';
@@ -40,18 +38,10 @@ export function useQrLogin({ service }: QrLoginProps) {
   const SELECT_VC = (vc: VC) => service.send(QrLoginEvents.SELECT_VC(vc));
 
   const SELECT_CONSENT = (value: boolean, claim: string) => {
-    if (value === false) {
-      service.send(QrLoginEvents.TOGGLE_CONSENT_CLAIM(true, claim));
-    } else {
-      service.send(QrLoginEvents.TOGGLE_CONSENT_CLAIM(false, claim));
-    }
+    service.send(QrLoginEvents.TOGGLE_CONSENT_CLAIM(value, claim));
   };
 
-  let isShare = {
-    birthdate: useSelector(service, selectIsSharingBirthdate),
-    gender: useSelector(service, selectIsSharingGender),
-    phone: useSelector(service, selectIsSharingPhone),
-  };
+  const isShare = useSelector(service, selectIsSharing);
 
   return {
     SELECT_VC_ITEM:
@@ -84,7 +74,7 @@ export function useQrLogin({ service }: QrLoginProps) {
     isLoadingMyVcs: useSelector(service, selectIsloadMyVcs),
     isRequestConsent: useSelector(service, selectIsRequestConsent),
     isShowingError: useSelector(service, selectIsShowError),
-
+    isSendingConsent: useSelector(service, selectIsSendingConsent),
     isVerifyingIdentity: useSelector(service, selectIsisVerifyingIdentity),
     isInvalidIdentity: useSelector(service, selectIsInvalidIdentity),
     isVerifyingSuccesful: useSelector(service, selectIsVerifyingSuccesful),

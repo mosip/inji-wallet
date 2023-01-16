@@ -33,9 +33,7 @@ const model = createModel(
     voluntaryClaims: [],
     errorMessage: '',
     consentClaims: ['name', 'picture'],
-    isSharingBirthdate: false,
-    isSharingPhone: false,
-    isSharingGender: false,
+    isSharing: {},
   },
   {
     events: {
@@ -89,7 +87,11 @@ export const qrLoginMachine =
             src: 'linkTransaction',
             onDone: [
               {
-                actions: ['setlinkTransactionResponse', 'expandLinkTransResp'],
+                actions: [
+                  'setlinkTransactionResponse',
+                  'expandLinkTransResp',
+                  'setClaims',
+                ],
                 target: 'showWarning',
               },
             ],
@@ -169,7 +171,7 @@ export const qrLoginMachine =
         requestConsent: {
           on: {
             CONFIRM: {
-              target: 'requestingConsent',
+              target: 'sendingConsent',
             },
             TOGGLE_CONSENT_CLAIM: {
               actions: 'setConsentClaims',
@@ -181,7 +183,7 @@ export const qrLoginMachine =
             },
           },
         },
-        requestingConsent: {
+        sendingConsent: {
           invoke: {
             src: 'sendConsent',
             onDone: {
@@ -256,53 +258,21 @@ export const qrLoginMachine =
             context.linkTransactionResponse.voluntaryClaims,
         }),
 
+        setClaims: (context) => {
+          context.voluntaryClaims.map((claim) => {
+            context.isSharing[claim] = false;
+          });
+        },
+
         SetErrorMessage: assign({
           errorMessage: (context, event) =>
             (event as ErrorPlatformEvent).data.message,
         }),
 
         setConsentClaims: assign({
-          isSharingBirthdate: (_context, event) => {
-            if (event.claim === 'birthdate') {
-              if (event.enable) {
-                _context.consentClaims.push(event.claim);
-              } else {
-                _context.consentClaims = _context.consentClaims.filter(
-                  (claim) => claim !== event.claim
-                );
-              }
-              return event.enable;
-            } else {
-              return _context.isSharingBirthdate;
-            }
-          },
-          isSharingGender: (_context, event) => {
-            if (event.claim === 'gender') {
-              if (event.enable) {
-                _context.consentClaims.push(event.claim);
-              } else {
-                _context.consentClaims = _context.consentClaims.filter(
-                  (claim) => claim !== event.claim
-                );
-              }
-              return event.enable;
-            } else {
-              return _context.isSharingGender;
-            }
-          },
-          isSharingPhone: (_context, event) => {
-            if (event.claim === 'phone') {
-              if (event.enable) {
-                _context.consentClaims.push(event.claim);
-              } else {
-                _context.consentClaims = _context.consentClaims.filter(
-                  (claim) => claim !== event.claim
-                );
-              }
-              return event.enable;
-            } else {
-              return _context.isSharingPhone;
-            }
+          isSharing: (context, event) => {
+            context.isSharing[event.claim] = !event.enable;
+            return { ...context.isSharing };
           },
         }),
       },
@@ -406,6 +376,10 @@ export function selectIsRequestConsent(state: State) {
   return state.matches('requestConsent');
 }
 
+export function selectIsSendingConsent(state: State) {
+  return state.matches('sendingConsent');
+}
+
 export function selectIsVerifyingSuccesful(state: State) {
   return state.matches('success');
 }
@@ -433,19 +407,6 @@ export function selectClientName(state: State) {
 export function selectErrorMessage(state: State) {
   return state.context.errorMessage;
 }
-
-export function selectIsSharingBirthdate(state: State) {
-  return state.context.isSharingBirthdate;
-}
-
-export function selectIsSharingPhone(state: State) {
-  return state.context.isSharingPhone;
-}
-
-export function selectIsSharingGender(state: State) {
-  return state.context.isSharingGender;
-}
-
-export function selectIsRequestingConsent(state: State) {
-  return state.matches('requestingConsent');
+export function selectIsSharing(state: State) {
+  return state.context.isSharing;
 }
