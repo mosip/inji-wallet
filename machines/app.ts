@@ -22,6 +22,7 @@ import { pure, respond } from 'xstate/lib/actions';
 import { AppServices } from '../shared/GlobalContext';
 import { request } from '../shared/request';
 import { USE_BLE_SHARE } from 'react-native-dotenv';
+import { isBLEEnabled } from '../lib/smartshare';
 
 const model = createModel(
   {
@@ -197,14 +198,14 @@ export const appMachine = model.createMachine(
             activityLogMachine.id
           );
 
-          serviceRefs.scan = USE_BLE_SHARE
+          serviceRefs.scan = isBLEEnabled
             ? spawn(
                 BLEScan.createScanMachine(serviceRefs),
                 BLEScan.scanMachine.id
               )
             : spawn(createScanMachine(serviceRefs), scanMachine.id);
 
-          serviceRefs.request = USE_BLE_SHARE
+          serviceRefs.request = isBLEEnabled
             ? spawn(
                 BLERequest.createRequestMachine(serviceRefs),
                 BLERequest.requestMachine.id

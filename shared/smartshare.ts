@@ -50,8 +50,6 @@ export function offlineSubscribe<T extends SmartshareEventType>(
   callback: (data: SmartshareEventData<T>) => void
 ) {
   return IdpassSmartshare.handleNearbyEvents(({ type, data }) => {
-    console.log({ type, data });
-    console.log('{type, data}');
     if (type !== 'msg') return;
 
     const response = SmartshareEvent.fromString<T>(data);
