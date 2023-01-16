@@ -38,7 +38,7 @@ export const ScanScreen: React.FC = () => {
 
         {!controller.isEmpty ? (
           controller.isScanning && (
-            <Column crossAlign="center">
+            <Column crossAlign="center" margin="0 0 0 -6">
               <QrScanner onQrFound={controller.SCAN} />
             </Column>
           )

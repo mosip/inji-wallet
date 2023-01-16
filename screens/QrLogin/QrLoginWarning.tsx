@@ -78,7 +78,7 @@ export const QrLoginWarning: React.FC<QrLoginWarningProps> = (props) => {
             styles={Theme.ButtonStyles.radius}
           />
           <Button
-            margin={'20 12 0 12'}
+            margin={'16 12 0 12'}
             type="clear"
             title={t('common:cancel')}
             onPress={props.onCancel}

@@ -12,7 +12,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
       visible={props.isVisible}
       onShow={props.onShow}
       onRequestClose={props.onDismiss}>
-      <Column fill safe>
+      <Column fill safe align="center">
         <Row elevation={props.headerElevation}>
           <View
             style={{
