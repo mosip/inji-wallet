@@ -1,4 +1,4 @@
-{ 
+{
   "ActivityLogText": {
     "VC_SHARED": "shared",
     "VC_RECEIVED": "received",
@@ -10,7 +10,8 @@
     "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "received. Presence verified",
     "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "received. Presence verification failed",
     "PRESENCE_VERIFIED_AND_VC_SHARED": "verified and shared",
-    "PRESENCE_VERIFICATION_FAILED": "verification failed"
+    "PRESENCE_VERIFICATION_FAILED": "verification failed",
+    "QRLOGIN_SUCCESFULL": "QRLogin sucessfull"
   },
   "DeviceInfoList": {
     "requestedBy": "Requested by",
@@ -209,7 +210,7 @@
     "domainWarning": "Please confirm the domain of the website you are scanning the QR code from is as below",
     "access": " is requesting access to",
     "status": "Status",
-    "successMessage":"You Have Successfully Logged Into ",
+    "successMessage": "You Have Successfully Logged Into ",
     "okay": "Okay"
   },
   "ReceiveVcScreen": {

@@ -3,6 +3,11 @@
 export interface Typegen0 {
   '@@xstate/typegen': true;
   'internalEvents': {
+    'done.invoke.QrLogin': {
+      type: 'done.invoke.QrLogin';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
     'done.invoke.scan.reviewing.creatingVp:invocation[0]': {
       type: 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
       data: unknown;
@@ -38,7 +43,7 @@ export interface Typegen0 {
     sendVc: 'done.invoke.scan.reviewing.sendingVc:invocation[0]';
   };
   'missingImplementations': {
-    actions: 'sendVcAdded';
+    actions: never;
     delays: never;
     guards: never;
     services: 'QrLogin';
@@ -88,14 +93,13 @@ export interface Typegen0 {
       | 'xstate.init';
     requestSenderInfo: 'ONLINE' | 'SCAN';
     requestToEnableLocation: 'LOCATION_DISABLED' | 'LOCATION_REQUEST';
+    resetShouldVerifyPresence: 'CANCEL' | 'EXCHANGE_DONE';
     sendScanData: 'SCAN';
-    sendVcAdded: 'STORE_RESPONSE';
     setChildRef:
       | 'DISCONNECT'
       | 'DISMISS'
       | 'xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling'
       | 'xstate.after(CLEAR_DELAY)#scan.clearingConnection';
-    resetShouldVerifyPresence: 'CANCEL' | 'EXCHANGE_DONE';
     setConnectionParams: 'SCAN';
     setCreatedVp: 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
     setLinkCode: 'SCAN';
@@ -106,6 +110,8 @@ export interface Typegen0 {
     setSenderInfo: 'RECEIVE_DEVICE_INFO';
     setShareLogTypeUnverified: 'ACCEPT_REQUEST';
     setShareLogTypeVerified: 'FACE_VALID';
+    storeLoginItem: 'done.invoke.QrLogin';
+    storingActivityLog: 'STORE_RESPONSE';
     toggleShouldVerifyPresence: 'TOGGLE_USER_CONSENT';
   };
   'eventsCausingDelays': {
