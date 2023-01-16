@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { MessageOverlay } from '../../components/MessageOverlay';
 import { QrScanner } from '../../components/QrScanner';
 import { Button, Centered, Column, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
@@ -53,6 +54,11 @@ export const ScanScreen: React.FC = () => {
             service={controller.isQrRef}
           />
         )}
+        <MessageOverlay
+          isVisible={controller.isQrLoginstoring}
+          title={t('loading')}
+          progress
+        />
       </Centered>
     </Column>
   );

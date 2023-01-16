@@ -6,6 +6,7 @@ const { IdpassSmartshare, GoogleNearbyMessages } = SmartshareReactNative;
 import {
   ActorRefFrom,
   assign,
+  DoneInvokeEvent,
   EventFrom,
   send,
   sendParent,
@@ -22,6 +23,7 @@ import { ActivityLogEvents, ActivityLogType } from './activityLog';
 import {
   GNM_API_KEY,
   GNM_MESSAGE_LIMIT,
+  MY_LOGIN_STORE_KEY,
   VC_ITEM_STORE_KEY,
 } from '../shared/constants';
 import {
@@ -40,6 +42,7 @@ import { CameraCapturedPicture } from 'expo-camera';
 import { log } from 'xstate/lib/actions';
 import NetInfo from '@react-native-community/netinfo';
 import { createQrLoginMachine, qrLoginMachine } from './QrLoginMachine';
+import { StoreEvents } from './store';
 
 type SharingProtocol = 'OFFLINE' | 'ONLINE';
 
@@ -178,7 +181,7 @@ export const scanMachine =
           invoke: {
             id: 'QrLogin',
             src: qrLoginMachine,
-            onDone: '.navigatingToHome',
+            onDone: '.storing',
           },
           on: {
             DISMISS: 'findingConnection',
@@ -187,11 +190,11 @@ export const scanMachine =
           states: {
             idle: {},
             storing: {
-              entry: ['storeVcItem'],
+              entry: ['storeLoginItem'],
               on: {
                 STORE_RESPONSE: {
                   target: 'navigatingToHome',
-                  actions: ['sendVcAdded'],
+                  actions: ['storingActivityLog'],
                 },
               },
             },
@@ -675,6 +678,31 @@ export const scanMachine =
             shouldVerifyPresence: false,
           }),
         }),
+
+        storeLoginItem: send(
+          (_context, event) => {
+            console.log('log from store', event);
+            return StoreEvents.PREPEND(
+              MY_LOGIN_STORE_KEY,
+              (event as DoneInvokeEvent<string>).data
+            );
+          },
+          { to: (context) => context.serviceRefs.store }
+        ),
+
+        storingActivityLog: send(
+          (_, event) =>
+            ActivityLogEvents.LOG_ACTIVITY({
+              _vcKey: '',
+              type: 'QRLOGIN_SUCCESFULL',
+              timestamp: Date.now(),
+              deviceName: '',
+              vcLabel: String(event.response.selectedVc.id),
+            }),
+          {
+            to: (context) => context.serviceRefs.activityLog,
+          }
+        ),
       },
 
       services: {
@@ -1011,6 +1039,10 @@ export function selectIsShowQrLogin(state: State) {
 
 export function selectIsQrLoginDone(state: State) {
   return state.matches('showQrLogin.navigatingToHome');
+}
+
+export function selectIsQrLoginStoring(state: State) {
+  return state.matches('showQrLogin.storing');
 }
 
 export function selectIsOffline(state: State) {
