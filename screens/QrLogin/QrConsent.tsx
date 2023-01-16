@@ -7,6 +7,7 @@ import { Image } from 'react-native';
 import { Icon, ListItem, Switch } from 'react-native-elements';
 import { Modal } from '../../components/ui/Modal';
 import { QrLoginRef } from '../../machines/QrLoginMachine';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export const QrConsent: React.FC<QrConsentProps> = (props) => {
   const { t } = useTranslation('QrScreen');
@@ -25,7 +26,7 @@ export const QrConsent: React.FC<QrConsentProps> = (props) => {
         padding="0 24 0 24"
         style={{ display: props.isVisible ? 'flex' : 'none' }}
         backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
-        <Column>
+        <ScrollView>
           <Column
             align="space-evenly"
             crossAlign="center"
@@ -80,7 +81,7 @@ export const QrConsent: React.FC<QrConsentProps> = (props) => {
                     <ListItem.Content>
                       <ListItem.Title>
                         <Text color={Theme.Colors.profileLabel}>
-                          {t(claim).toUpperCase()}
+                          {t(claim[0].toUpperCase() + claim.slice(1))}
                         </Text>
                       </ListItem.Title>
                     </ListItem.Content>
@@ -100,7 +101,7 @@ export const QrConsent: React.FC<QrConsentProps> = (props) => {
               }
             })}
           </Column>
-        </Column>
+        </ScrollView>
         <Column
           margin={'0 -20 0 -20'}
           style={Theme.Styles.bottomButtonsContainer}
