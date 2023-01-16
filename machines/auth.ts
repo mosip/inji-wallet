@@ -1,7 +1,7 @@
 import { init } from 'mosip-inji-face-sdk';
 import { ContextFrom, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
-import getAllProperties from '../shared/commonprops/commonProps';
+import getAllConfigurations from '../shared/commonprops/commonProps';
 import { AppServices } from '../shared/GlobalContext';
 import { StoreEvents, StoreResponseEvent } from './store';
 
@@ -11,7 +11,6 @@ const model = createModel(
     passcode: '',
     biometrics: '',
     canUseBiometrics: false,
-    injiAppProperties: null,
   },
   {
     events: {
@@ -88,7 +87,7 @@ export const authMachine = model.createMachine(
         invoke: {
           src: 'downloadFaceSdkModel',
           onDone: {
-            actions: ['setInjiAppProperties', 'storeContext'],
+            actions: ['storeContext'],
           },
         },
         on: {
@@ -128,21 +127,13 @@ export const authMachine = model.createMachine(
       setBiometrics: model.assign({
         biometrics: (_, event: SetupBiometricsEvent) => event.biometrics,
       }),
-
-      setInjiAppProperties: model.assign({
-        injiAppProperties: (_, event) => event.data as object,
-      }),
     },
 
     services: {
-      downloadFaceSdkModel: (context) => async () => {
+      downloadFaceSdkModel: () => async () => {
         var injiProp = null;
         try {
-          if (context.injiAppProperties == null) {
-            injiProp = await getAllProperties();
-          } else {
-            injiProp = context.injiAppProperties;
-          }
+          var injiProp = await getAllConfigurations();
           const resp: string =
             injiProp != null ? injiProp.faceSdkModelUrl : null;
           if (resp != null) {
@@ -151,7 +142,6 @@ export const authMachine = model.createMachine(
         } catch (error) {
           console.log(error);
         }
-        return injiProp;
       },
     },
 
@@ -199,8 +189,4 @@ export function selectUnauthorized(state: State) {
 
 export function selectSettingUp(state: State) {
   return state.matches('settingUp');
-}
-
-export function selectInjiAppProps(state: State) {
-  return state.context.injiAppProperties;
 }

@@ -1,8 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { MessageOverlay } from '../../components/MessageOverlay';
 import { QrScanner } from '../../components/QrScanner';
 import { Button, Centered, Column, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
+import { QrLogin } from '../QrLogin/QrLogin';
 import { useScanScreen } from './ScanScreenController';
 
 export const ScanScreen: React.FC = () => {
@@ -37,7 +39,7 @@ export const ScanScreen: React.FC = () => {
 
         {!controller.isEmpty ? (
           controller.isScanning && (
-            <Column crossAlign="center">
+            <Column crossAlign="center" margin="0 0 0 -6">
               <QrScanner onQrFound={controller.SCAN} />
             </Column>
           )
@@ -46,6 +48,17 @@ export const ScanScreen: React.FC = () => {
             {t('noShareableVcs', { vcLabel: controller.vcLabel.plural })}
           </Text>
         )}
+        {controller.isQrLogin && (
+          <QrLogin
+            isVisible={controller.isQrLogin}
+            service={controller.isQrRef}
+          />
+        )}
+        <MessageOverlay
+          isVisible={controller.isQrLoginstoring}
+          title={t('loading')}
+          progress
+        />
       </Centered>
     </Column>
   );

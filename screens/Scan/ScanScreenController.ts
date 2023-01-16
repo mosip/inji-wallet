@@ -7,6 +7,9 @@ import {
   selectIsLocationDisabled,
   selectIsLocationDenied,
   selectIsScanning,
+  selectIsShowQrLogin,
+  selectQrLoginRef,
+  selectIsQrLoginStoring,
 } from '../../machines/scan';
 import { selectVcLabel } from '../../machines/settings';
 import { selectShareableVcs } from '../../machines/vc';
@@ -42,7 +45,9 @@ export function useScanScreen() {
     isLocationDisabled,
     isLocationDenied,
     isScanning: useSelector(scanService, selectIsScanning),
-
+    isQrLogin: useSelector(scanService, selectIsShowQrLogin),
+    isQrLoginstoring: useSelector(scanService, selectIsQrLoginStoring),
+    isQrRef: useSelector(scanService, selectQrLoginRef),
     LOCATION_REQUEST: () => scanService.send(ScanEvents.LOCATION_REQUEST()),
     SCAN: (qrCode: string) => scanService.send(ScanEvents.SCAN(qrCode)),
   };

@@ -1,27 +1,29 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { View } from 'react-native';
-import { Icon } from 'react-native-elements';
 import { PinInput } from '../../../components/PinInput';
 import { Column, Text } from '../../../components/ui';
-import { ModalProps } from '../../../components/ui/Modal';
+import { ModalProps, Modal } from '../../../components/ui/Modal';
 import { Theme } from '../../../components/ui/styleUtils';
+import { Image } from 'react-native';
+import { Icon } from 'react-native-elements';
 
 export const OtpVerification: React.FC<OtpVerificationModalProps> = (props) => {
   const { t } = useTranslation('OtpVerificationModal');
 
   return (
-    <View style={Theme.OtpVerificationStyles.viewContainer}>
+    <Modal
+      isVisible={props.isVisible}
+      onDismiss={props.onDismiss}
+      headerElevation={2}
+      headerTitle={t('header')}
+      headerRight={<Icon name={''} />}>
       <Column
         fill
         padding="32"
-        backgroundColor={Theme.Colors.whiteBackgroundColor}>
-        <View style={Theme.OtpVerificationStyles.close}>
-          <Icon name="close" onPress={() => props.onDismiss()} />
-        </View>
-        <Icon name="lock" color={Theme.Colors.Icon} size={60} />
-        <Column fill align="space-between">
+        backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
+        <Column fill align="space-between" crossAlign="center">
           <Text align="center">{t('enterOtp')}</Text>
+          <Image source={Theme.OtpLogo} resizeMethod="auto" />
           <Text
             align="center"
             color={Theme.Colors.errorMessage}
@@ -32,7 +34,7 @@ export const OtpVerification: React.FC<OtpVerificationModalProps> = (props) => {
         </Column>
         <Column fill></Column>
       </Column>
-    </View>
+    </Modal>
   );
 };
 

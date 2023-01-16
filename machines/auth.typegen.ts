@@ -24,7 +24,6 @@ export interface Typegen0 {
     requestStoredContext: 'xstate.init';
     setBiometrics: 'SETUP_BIOMETRICS';
     setContext: 'STORE_RESPONSE';
-    setInjiAppProperties: 'done.invoke.auth.authorized:invocation[0]';
     setPasscode: 'SETUP_PASSCODE';
     storeContext:
       | 'SETUP_BIOMETRICS'
