@@ -6,7 +6,6 @@
         internalEvents: {
           "": { type: "" };
 "done.invoke.scan.reviewing.creatingVp:invocation[0]": { type: "done.invoke.scan.reviewing.creatingVp:invocation[0]"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
-"xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling": { type: "xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling" };
 "xstate.after(CONNECTION_TIMEOUT)#scan.connecting.inProgress": { type: "xstate.after(CONNECTION_TIMEOUT)#scan.connecting.inProgress" };
 "xstate.after(CONNECTION_TIMEOUT)#scan.exchangingDeviceInfo": { type: "xstate.after(CONNECTION_TIMEOUT)#scan.exchangingDeviceInfo" };
 "xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection": { type: "xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection" };
@@ -34,8 +33,8 @@
           services: never;
         };
         eventsCausingActions: {
-          "clearCreatedVp": "DISCONNECT" | "DISMISS" | "SCREEN_BLUR" | "SCREEN_FOCUS" | "xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling" | "xstate.stop";
-"clearReason": "DISCONNECT" | "DISMISS" | "SCREEN_BLUR" | "SCREEN_FOCUS" | "xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling" | "xstate.stop";
+          "clearCreatedVp": "" | "DISCONNECT" | "DISMISS" | "SCREEN_BLUR" | "SCREEN_FOCUS" | "xstate.stop";
+"clearReason": "" | "DISCONNECT" | "DISMISS" | "SCREEN_BLUR" | "SCREEN_FOCUS" | "xstate.stop";
 "clearScannedQrParams": "CONNECTION_DESTROYED" | "DISCONNECT" | "DISMISS" | "xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection";
 "logFailedVerification": "FACE_INVALID";
 "logShared": "VC_ACCEPTED";
@@ -57,9 +56,8 @@
 "toggleShouldVerifyPresence": "TOGGLE_USER_CONSENT";
         };
         eventsCausingDelays: {
-          "CANCEL_TIMEOUT": "CANCEL";
-"CONNECTION_TIMEOUT": "CONNECTED" | "RECEIVE_DEVICE_INFO" | "xstate.after(CONNECTION_TIMEOUT)#scan.exchangingDeviceInfo";
-"DESTROY_TIMEOUT": "DISMISS" | "LOCATION_ENABLED" | "xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling";
+          "CONNECTION_TIMEOUT": "CONNECTED" | "RECEIVE_DEVICE_INFO" | "xstate.after(CONNECTION_TIMEOUT)#scan.exchangingDeviceInfo";
+"DESTROY_TIMEOUT": "" | "DISMISS" | "LOCATION_ENABLED";
 "SHARING_TIMEOUT": "ACCEPT_REQUEST" | "FACE_VALID" | "done.invoke.scan.reviewing.creatingVp:invocation[0]";
         };
         eventsCausingGuards: {
@@ -71,7 +69,7 @@
 "checkLocationPermission": "APP_ACTIVE" | "LOCATION_ENABLED";
 "checkLocationStatus": "";
 "createVp": never;
-"disconnect": "DISMISS" | "LOCATION_ENABLED" | "xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling";
+"disconnect": "" | "DISMISS" | "LOCATION_ENABLED";
 "discoverDevice": "RECEIVE_DEVICE_INFO";
 "exchangeDeviceInfo": "CONNECTED" | "xstate.after(CONNECTION_TIMEOUT)#scan.exchangingDeviceInfo";
 "monitorConnection": "xstate.init";

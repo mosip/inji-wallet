@@ -310,10 +310,8 @@ export const scanMachine =
               invoke: {
                 src: 'sendDisconnect',
               },
-              after: {
-                CANCEL_TIMEOUT: {
-                  target: '#scan.clearingConnection',
-                },
+              always: {
+                target: '#scan.clearingConnection',
               },
             },
             sendingVc: {
@@ -853,7 +851,6 @@ export const scanMachine =
       },
 
       delays: {
-        CANCEL_TIMEOUT: 3000,
         DESTROY_TIMEOUT: 500,
         CONNECTION_TIMEOUT: (context) => {
           return (context.sharingProtocol === 'ONLINE' ? 15 : 5) * 1000;

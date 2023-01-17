@@ -272,12 +272,8 @@ export const requestMachine =
           invoke: {
             src: 'sendDisconnect',
           },
-          after: {
-            CANCEL_TIMEOUT: {
-              target: '#request.checkingBluetoothService',
-              actions: ['disconnect'],
-              internal: false,
-            },
+          always: {
+            target: '#request.clearingConnection',
           },
         },
         reviewing: {
@@ -784,7 +780,6 @@ export const requestMachine =
       },
 
       delays: {
-        CANCEL_TIMEOUT: 3000,
         DESTROY_TIMEOUT: 500,
         CONNECTION_TIMEOUT: (context) => {
           return (context.sharingProtocol === 'ONLINE' ? 15 : 5) * 1000;
