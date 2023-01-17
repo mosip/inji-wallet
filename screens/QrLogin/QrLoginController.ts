@@ -53,7 +53,7 @@ export function useQrLogin({ service }: QrLoginProps) {
         SELECT_VC(vcData);
       },
 
-    vcKeys: useSelector(vcService, selectMyVcs),
+    vcKeys: useSelector(vcService, selectBindedVcs),
     selectedVc: useSelector(service, selectSelectedVc),
     linkTransactionResponse: useSelector(
       service,
