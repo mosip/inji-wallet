@@ -34,7 +34,7 @@ export const QrConsent: React.FC<QrConsentProps> = (props) => {
             style={Theme.Styles.consentPageTop}
             elevation={3}>
             {controller.linkTransactionResponse && (
-              <Row margin={'0 0 0 38'} crossAlign="center">
+              <Row margin={'0 0 0 11'} crossAlign="center" align="center">
                 <Icon name="mobile" type="font-awesome" size={60} />
                 <Text
                   color={'grey'}

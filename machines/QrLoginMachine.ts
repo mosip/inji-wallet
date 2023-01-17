@@ -15,6 +15,7 @@ import { linkTransactionResponse, VC } from '../types/vc';
 import { request } from '../shared/request';
 import { getJwt } from '../shared/cryptoutil/cryptoUtil';
 import { getPrivateKey } from '../shared/keystore/SecureKeystore';
+import getAllConfigurations from '../shared/commonprops/commonProps';
 
 const model = createModel(
   {
@@ -32,6 +33,7 @@ const model = createModel(
     logoUrl: '',
     voluntaryClaims: [],
     errorMessage: '',
+    domainName: '',
     consentClaims: ['name', 'picture'],
     isSharing: {},
   },
@@ -92,7 +94,7 @@ export const qrLoginMachine =
                   'expandLinkTransResp',
                   'setClaims',
                 ],
-                target: 'showWarning',
+                target: 'WarningDomainName',
               },
             ],
             onError: [
@@ -101,6 +103,15 @@ export const qrLoginMachine =
                 target: 'ShowError',
               },
             ],
+          },
+        },
+        WarningDomainName: {
+          invoke: {
+            src: 'domainName',
+            onDone: {
+              actions: 'setDomainName',
+              target: 'showWarning',
+            },
           },
         },
         showWarning: {
@@ -217,6 +228,10 @@ export const qrLoginMachine =
           linkCode: (context, event) => event.value,
         }),
 
+        setDomainName: assign({
+          domainName: (context) => context.domainName,
+        }),
+
         loadMyVcs: send(StoreEvents.GET(MY_VCS_STORE_KEY), {
           to: (context) => context.serviceRefs.store,
         }),
@@ -285,6 +300,12 @@ export const qrLoginMachine =
           return response.response;
         },
 
+        domainName: async (context) => {
+          var response = await getAllConfigurations();
+          context.domainName = response.warningDomainName;
+          return context.domainName;
+        },
+
         sendConsent: async (context) => {
           var privateKey = await getPrivateKey(
             context.selectedVc.walletBindingResponse?.walletBindingId
@@ -342,6 +363,10 @@ export function selectMyVcs(state: State) {
 }
 export function selectIsWaitingForData(state: State) {
   return state.matches('waitingForData');
+}
+
+export function selectIsDomainName(state: State) {
+  return state.context.domainName;
 }
 
 export function selectIsShowWarning(state: State) {

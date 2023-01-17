@@ -18,7 +18,9 @@ import {
   selectIsVerifyingSuccesful,
   selectIsWaitingForData,
   selectLinkTransactionResponse,
+  selectMyVcs,
   selectLogoUrl,
+  selectIsDomainName,
   selectSelectedVc,
   selectVoluntaryClaims,
 } from '../../machines/QrLoginMachine';
@@ -51,12 +53,13 @@ export function useQrLogin({ service }: QrLoginProps) {
         SELECT_VC(vcData);
       },
 
-    vcKeys: useSelector(vcService, selectBindedVcs),
+    vcKeys: useSelector(vcService, selectMyVcs),
     selectedVc: useSelector(service, selectSelectedVc),
     linkTransactionResponse: useSelector(
       service,
       selectLinkTransactionResponse
     ),
+    domainName: useSelector(service, selectIsDomainName),
     logoUrl: useSelector(service, selectLogoUrl),
     claims: useSelector(service, selectVoluntaryClaims),
     clientName: useSelector(service, selectClientName),
