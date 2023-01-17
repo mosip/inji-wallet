@@ -26,7 +26,7 @@ import {
   onlineSend,
   offlineSend,
   SendVcResponseEvent,
-} from '../../shared/smartshare';
+} from '../../shared/openIdBLE/smartshare';
 import { log } from 'xstate/lib/actions';
 // import { verifyPresentation } from '../shared/vcjs/verifyPresentation';
 

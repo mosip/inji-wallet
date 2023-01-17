@@ -25,7 +25,7 @@ import {
   PairingEvent,
   SendVcEvent,
   SendVcStatus,
-} from '../../shared/smartshare';
+} from '../../shared/openIdBLE/smartshare';
 import { check, PERMISSIONS, PermissionStatus } from 'react-native-permissions';
 import { checkLocation, requestLocation } from '../../shared/location';
 import { CameraCapturedPicture } from 'expo-camera';

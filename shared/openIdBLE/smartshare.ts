@@ -6,10 +6,12 @@
 
 import SmartshareReactNative from '@idpass/smartshare-react-native';
 import { ConnectionParams } from '@idpass/smartshare-react-native/lib/typescript/IdpassSmartshare';
-const { GoogleNearbyMessages, IdpassSmartshare } = SmartshareReactNative;
+import OpenIdBle from 'react-native-openid4vp-ble';
+const { Openid4vpBle } = OpenIdBle;
+const { GoogleNearbyMessages } = SmartshareReactNative;
 
-import { DeviceInfo } from '../components/DeviceInfoList';
-import { VC } from '../types/vc';
+import { DeviceInfo } from '../../components/DeviceInfoList';
+import { VC } from '../../types/vc';
 
 export function onlineSubscribe<T extends SmartshareEventType>(
   eventType: T,
@@ -48,7 +50,7 @@ export function offlineSubscribe<T extends SmartshareEventType>(
   eventType: T,
   callback: (data: SmartshareEventData<T>) => void
 ) {
-  return IdpassSmartshare.handleNearbyEvents(({ type, data }) => {
+  return Openid4vpBle.handleNearbyEvents(({ type, data }) => {
     if (type !== 'msg') return;
 
     const response = SmartshareEvent.fromString<T>(data);
@@ -59,7 +61,7 @@ export function offlineSubscribe<T extends SmartshareEventType>(
 }
 
 export function offlineSend(event: SmartshareEvents, callback: () => void) {
-  IdpassSmartshare.send(
+  Openid4vpBle.send(
     new SmartshareEvent(event.type, event.data).toString(),
     callback
   );
