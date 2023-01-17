@@ -35,6 +35,8 @@ export interface Typegen0 {
     expandLinkTransResp: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
     forwardToParent: 'DISMISS';
     loadMyVcs: 'CONFIRM';
+    resetLinkTransactionId: 'GET';
+    resetSelectedVoluntaryClaims: 'GET';
     setClaims: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
     setConsentClaims: 'TOGGLE_CONSENT_CLAIM';
     setMyVcs: 'STORE_RESPONSE';

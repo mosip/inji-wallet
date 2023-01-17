@@ -225,7 +225,7 @@ export interface Typegen0 {
           | 'selectingVc'
           | 'sendingVc'
           | 'verifyingIdentity'
-          | { sendingVc?: 'inProgress' | 'timeout' };
+          | { sendingVc?: 'inProgress' | 'sent' | 'timeout' };
         showQrLogin?: 'idle' | 'navigatingToHome' | 'storing';
       };
   'tags': never;

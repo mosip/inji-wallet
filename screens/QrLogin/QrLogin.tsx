@@ -84,7 +84,7 @@ export const QrLogin: React.FC<QrLoginProps> = (props) => {
         <QrConsent
           isVisible={controller.isRequestConsent}
           onConfirm={controller.CONFIRM}
-          onCancel={controller.CANCEL}
+          onCancel={controller.DISMISS}
           service={props.service}
         />
 

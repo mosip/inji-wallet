@@ -211,6 +211,7 @@ export const qrLoginMachine =
         },
         done: {
           type: 'final',
+          data: (context) => context,
         },
       },
     },
@@ -284,10 +285,15 @@ export const qrLoginMachine =
 
         setConsentClaims: assign({
           isSharing: (context, event) => {
-            context.selectedVoluntaryClaims.push(
-              context.isSharing[event.claim]
-            );
             context.isSharing[event.claim] = !event.enable;
+            if (!event.enable) {
+              context.selectedVoluntaryClaims.push(event.claim);
+            } else {
+              context.selectedVoluntaryClaims =
+                context.selectedVoluntaryClaims.filter(
+                  (eachClaim) => eachClaim !== event.claim
+                );
+            }
             return { ...context.isSharing };
           },
         }),
