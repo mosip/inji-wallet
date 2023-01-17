@@ -23,7 +23,7 @@ export async function getJwt(
     const md = forge.md.sha256.create();
     const header = {
       'alg': 'RS256',
-      'kid': keyId,
+      //'kid': keyId,
       'x5t#S256': thumbprint,
     };
     var myJSON =
