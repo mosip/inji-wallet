@@ -232,7 +232,7 @@ export const revokeVidsMachine =
       services: {
         requestOtp: async (context) => {
           const transactionId = String(new Date().valueOf()).substring(3, 13);
-          return request('POST', '/req/otp', {
+          return request('POST', '/residentmobileapp/req/otp', {
             individualId: context.VIDs[0].split(':')[2],
             individualIdType: 'VID',
             otpChannel: ['EMAIL', 'PHONE'],
@@ -249,7 +249,7 @@ export const revokeVidsMachine =
                   3,
                   13
                 );
-                return request('PATCH', `/vid/${vidID}`, {
+                return request('PATCH', `/residentmobileapp/vid/${vidID}`, {
                   transactionID: transactionId,
                   vidStatus: 'REVOKED',
                   individualId: vidID,

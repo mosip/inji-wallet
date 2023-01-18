@@ -300,9 +300,11 @@ export const qrLoginMachine =
       },
       services: {
         linkTransaction: async (context) => {
-          const response = await request('POST', '/link-transaction', {
-            linkCode: context.linkCode,
+          const response = await request('POST', '/v1/idp/linked-authorization/link-transaction', {
             requestTime: String(new Date().toISOString()),
+            request: {
+              linkCode: context.linkCode
+            }
           });
           return response.response;
         },
@@ -319,15 +321,11 @@ export const qrLoginMachine =
             walletBindingResponse?.thumbprint
           );
 
-          const resp = await request('POST', '/idp-auth-consent', {
+          const resp = await request('POST', '/v1/idp/linked-authorization/authenticate', {
             requestTime: String(new Date().toISOString()),
             request: {
               linkedTransactionId: context.linkTransactionId,
               individualId: context.selectedVc.id,
-              acceptedClaims: context.essentialClaims.concat(
-                context.selectedVoluntaryClaims
-              ),
-              permittedAuthorizeScopes: context.authorizeScopes,
               challengeList: [
                 {
                   authFactorType: 'WLA',
@@ -337,7 +335,20 @@ export const qrLoginMachine =
               ],
             },
           });
-          console.log(resp.response.linkedTransactionId);
+
+          const trnId = resp.response.linkedTransactionId;
+
+          const response = await request('POST', '/v1/idp/linked-authorization/consent', {
+            requestTime: String(new Date().toISOString()),
+            request: {
+              linkedTransactionId: trnId,
+              acceptedClaims: context.essentialClaims.concat(
+                context.selectedVoluntaryClaims
+              ),
+              permittedAuthorizeScopes: context.authorizeScopes,
+            },
+          });
+          console.log(response.response.linkedTransactionId);
         },
       },
     }

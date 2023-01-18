@@ -253,7 +253,7 @@ export const appMachine = model.createMachine(
           config: {},
         };
         try {
-          backendInfo = await request('GET', '/info');
+          backendInfo = await request('GET', '/residentmobileapp/info');
           callback(model.events.BACKEND_INFO_RECEIVED(backendInfo));
         } catch {
           callback(model.events.BACKEND_INFO_RECEIVED(backendInfo));
