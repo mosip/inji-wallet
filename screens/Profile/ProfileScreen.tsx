@@ -13,7 +13,6 @@ import { useProfileScreen } from './ProfileScreenController';
 import { useTranslation } from 'react-i18next';
 import { LanguageSelector } from '../../components/LanguageSelector';
 import i18next, { SUPPORTED_LANGUAGES } from '../../i18n';
-import { USE_BLE_SHARE } from 'react-native-dotenv';
 import { isBLEEnabled } from '../../lib/smartshare';
 
 const LanguageSetting: React.FC = () => {

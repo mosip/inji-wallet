@@ -21,7 +21,6 @@ import { createRevokeMachine, revokeVidsMachine } from './revoke';
 import { pure, respond } from 'xstate/lib/actions';
 import { AppServices } from '../shared/GlobalContext';
 import { request } from '../shared/request';
-import { USE_BLE_SHARE } from 'react-native-dotenv';
 import { isBLEEnabled } from '../lib/smartshare';
 
 const model = createModel(

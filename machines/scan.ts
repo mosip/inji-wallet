@@ -1,7 +1,6 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 import SmartshareReactNative from '@idpass/smartshare-react-native';
 import { ConnectionParams } from '@idpass/smartshare-react-native/lib/typescript/IdpassSmartshare';
-import { USE_BLE_SHARE } from 'react-native-dotenv';
 
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
@@ -31,6 +30,7 @@ import { check, PERMISSIONS, PermissionStatus } from 'react-native-permissions';
 import { checkLocation, requestLocation } from '../shared/location';
 import { CameraCapturedPicture } from 'expo-camera';
 import { log } from 'xstate/lib/actions';
+import { isBLEEnabled } from '../lib/smartshare';
 
 const { GoogleNearbyMessages, IdpassSmartshare } = SmartshareReactNative;
 
@@ -822,7 +822,7 @@ export const scanMachine =
       guards: {
         isQrOffline: (_context, event) => {
           // don't scan if QR is offline and Google Nearby is enabled
-          if (Platform.OS === 'ios' && !USE_BLE_SHARE) return false;
+          if (Platform.OS === 'ios' && !isBLEEnabled) return false;
 
           const param: ConnectionParams = Object.create(null);
           try {
