@@ -24,7 +24,7 @@ export interface Typegen0 {
     'xstate.init': { type: 'xstate.init' };
   };
   'invokeSrcNameMap': {
-    domainName: 'done.invoke.QrLogin.WarningDomainName:invocation[0]';
+    domainNameConfig: 'done.invoke.QrLogin.WarningDomainName:invocation[0]';
     linkTransaction: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
     sendConsent: 'done.invoke.QrLogin.sendingConsent:invocation[0]';
   };
@@ -32,7 +32,7 @@ export interface Typegen0 {
     actions: never;
     delays: never;
     guards: never;
-    services: never;
+    services: 'domainNameConfig';
   };
   'eventsCausingActions': {
     SetErrorMessage:
@@ -52,7 +52,7 @@ export interface Typegen0 {
   'eventsCausingDelays': {};
   'eventsCausingGuards': {};
   'eventsCausingServices': {
-    domainName: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
+    domainNameConfig: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
     linkTransaction: 'GET';
     sendConsent: 'CONFIRM';
   };

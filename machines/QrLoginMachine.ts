@@ -107,7 +107,7 @@ export const qrLoginMachine =
         },
         WarningDomainName: {
           invoke: {
-            src: 'configs',
+            src: 'domainNameConfig',
             onDone: {
               actions: 'setDomainName',
               target: 'showWarning',
