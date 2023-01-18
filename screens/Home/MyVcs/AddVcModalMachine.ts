@@ -289,7 +289,7 @@ export const AddVcModalMachine =
 
       services: {
         requestOtp: async (context) => {
-          return request('POST', '/req/otp', {
+          return request('POST', '/residentmobileapp/req/otp', {
             id: 'mosip.identity.otp.internal',
             individualId: context.id,
             metadata: {},
@@ -304,7 +304,7 @@ export const AddVcModalMachine =
           // force wait to fix issue with hanging overlay
           await new Promise((resolve) => setTimeout(resolve, 1000));
 
-          const response = await request('POST', '/credentialshare/request', {
+          const response = await request('POST', '/residentmobileapp/credentialshare/request', {
             individualId: context.id,
             individualIdType: context.idType,
             otp: context.otp,
