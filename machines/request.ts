@@ -335,6 +335,9 @@ export const requestMachine =
                 DISMISS: {
                   target: 'accepting',
                 },
+                RETRY_VERIFICATION: {
+                  target: 'verifyingIdentity',
+                },
               },
             },
             verifyingVp: {
