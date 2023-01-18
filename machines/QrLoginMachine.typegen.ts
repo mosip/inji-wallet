@@ -32,7 +32,7 @@ export interface Typegen0 {
     actions: never;
     delays: never;
     guards: never;
-    services: 'domainNameConfig';
+    services: never;
   };
   'eventsCausingActions': {
     SetErrorMessage:

@@ -20,7 +20,7 @@ import {
   selectLinkTransactionResponse,
   selectMyVcs,
   selectLogoUrl,
-  selectIsDomainName,
+  selectDomainName,
   selectSelectedVc,
   selectVoluntaryClaims,
 } from '../../machines/QrLoginMachine';
@@ -59,7 +59,7 @@ export function useQrLogin({ service }: QrLoginProps) {
       service,
       selectLinkTransactionResponse
     ),
-    domainName: useSelector(service, selectIsDomainName),
+    domainName: useSelector(service, selectDomainName),
     logoUrl: useSelector(service, selectLogoUrl),
     claims: useSelector(service, selectVoluntaryClaims),
     clientName: useSelector(service, selectClientName),

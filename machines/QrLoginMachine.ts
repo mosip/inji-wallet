@@ -300,7 +300,7 @@ export const qrLoginMachine =
           return response.response;
         },
 
-        configs: async (context) => {
+        domainNameConfig: async (context) => {
           var response = await getAllConfigurations();
           return response.warningDomainName;
         },
@@ -364,7 +364,7 @@ export function selectIsWaitingForData(state: State) {
   return state.matches('waitingForData');
 }
 
-export function selectIsDomainName(state: State) {
+export function selectDomainName(state: State) {
   return state.context.domainName;
 }
 
