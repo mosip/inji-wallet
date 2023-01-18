@@ -41,7 +41,7 @@ export const QrConsent: React.FC<QrConsentProps> = (props) => {
                   weight="semibold"
                   style={Theme.TextStyles.small}>
                   {' '}
-                  -----------------------{' '}
+                  --------------------{' '}
                 </Text>
                 <Image
                   source={

@@ -107,7 +107,7 @@ export const qrLoginMachine =
         },
         WarningDomainName: {
           invoke: {
-            src: 'domainName',
+            src: 'configs',
             onDone: {
               actions: 'setDomainName',
               target: 'showWarning',
@@ -229,7 +229,7 @@ export const qrLoginMachine =
         }),
 
         setDomainName: assign({
-          domainName: (context) => context.domainName,
+          domainName: (context, event) => event.data,
         }),
 
         loadMyVcs: send(StoreEvents.GET(MY_VCS_STORE_KEY), {
@@ -300,10 +300,9 @@ export const qrLoginMachine =
           return response.response;
         },
 
-        domainName: async (context) => {
+        configs: async (context) => {
           var response = await getAllConfigurations();
-          context.domainName = response.warningDomainName;
-          return context.domainName;
+          return response.warningDomainName;
         },
 
         sendConsent: async (context) => {
