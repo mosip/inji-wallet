@@ -34,20 +34,23 @@ export const QrConsent: React.FC<QrConsentProps> = (props) => {
             style={Theme.Styles.consentPageTop}
             elevation={3}>
             {controller.linkTransactionResponse && (
-              <Row margin={'0 0 0 38'} crossAlign="center">
-                <Icon name="mobile" type="font-awesome" size={60} />
+              <Row margin={'0 0 0 9'} crossAlign="center" align="center">
+                <Image
+                  source={Theme.MosipLogo}
+                  style={{ width: 60, height: 70 }}
+                />
                 <Text
-                  color={'grey'}
+                  color={'gray'}
                   weight="semibold"
                   style={Theme.TextStyles.small}>
                   {' '}
-                  -----------------------{' '}
+                  --------------------{' '}
                 </Text>
                 <Image
                   source={
                     controller.logoUrl ? { uri: controller.logoUrl } : null
                   }
-                  style={{ width: 60, height: 60 }}
+                  style={{ width: 65, height: 65 }}
                 />
               </Row>
             )}

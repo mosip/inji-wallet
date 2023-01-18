@@ -687,23 +687,27 @@ export const vcItemMachine =
         },
 
         addWalletBindnigId: async (context) => {
-          const response = await request('POST', '/residentmobileapp/wallet-binding', {
-            requestTime: String(new Date().toISOString()),
-            request: {
-              authFactorType: 'WLA',
-              format: 'jwt',
-              individualId: context.id,
-              transactionId: context.bindingTransactionId,
-              publicKey: context.publicKey,
-              challengeList: [
-                {
-                  authFactorType: 'OTP',
-                  challenge: context.otp,
-                  format: 'alpha-numeric',
-                },
-              ],
-            },
-          });
+          const response = await request(
+            'POST',
+            '/residentmobileapp/wallet-binding',
+            {
+              requestTime: String(new Date().toISOString()),
+              request: {
+                authFactorType: 'WLA',
+                format: 'jwt',
+                individualId: context.id,
+                transactionId: context.bindingTransactionId,
+                publicKey: context.publicKey,
+                challengeList: [
+                  {
+                    authFactorType: 'OTP',
+                    challenge: context.otp,
+                    format: 'alpha-numeric',
+                  },
+                ],
+              },
+            }
+          );
           const certificate = response.response.certificate;
           await savePrivateKey(
             getBindingCertificateConstant(context.id),
@@ -736,13 +740,17 @@ export const vcItemMachine =
         },
 
         requestBindingOtp: async (context) => {
-          const response = await request('POST', '/residentmobileapp/binding-otp', {
-            requestTime: String(new Date().toISOString()),
-            request: {
-              individualId: context.id,
-              otpChannels: ['EMAIL'],
-            },
-          });
+          const response = await request(
+            'POST',
+            '/residentmobileapp/binding-otp',
+            {
+              requestTime: String(new Date().toISOString()),
+              request: {
+                individualId: context.id,
+                otpChannels: ['EMAIL'],
+              },
+            }
+          );
           if (response.response == null) {
             throw new Error('Could not process request');
           }
@@ -832,22 +840,30 @@ export const vcItemMachine =
         requestLock: async (context) => {
           let response = null;
           if (context.locked) {
-            response = await request('POST', '/residentmobileapp/req/auth/unlock', {
-              individualId: context.id,
-              individualIdType: context.idType,
-              otp: context.otp,
-              transactionID: context.transactionId,
-              authType: ['bio'],
-              unlockForSeconds: '120',
-            });
+            response = await request(
+              'POST',
+              '/residentmobileapp/req/auth/unlock',
+              {
+                individualId: context.id,
+                individualIdType: context.idType,
+                otp: context.otp,
+                transactionID: context.transactionId,
+                authType: ['bio'],
+                unlockForSeconds: '120',
+              }
+            );
           } else {
-            response = await request('POST', '/residentmobileapp/req/auth/lock', {
-              individualId: context.id,
-              individualIdType: context.idType,
-              otp: context.otp,
-              transactionID: context.transactionId,
-              authType: ['bio'],
-            });
+            response = await request(
+              'POST',
+              '/residentmobileapp/req/auth/lock',
+              {
+                individualId: context.id,
+                individualIdType: context.idType,
+                otp: context.otp,
+                transactionID: context.transactionId,
+                authType: ['bio'],
+              }
+            );
           }
           return response.response;
         },

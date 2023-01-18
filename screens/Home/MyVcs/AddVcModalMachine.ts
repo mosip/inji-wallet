@@ -304,12 +304,16 @@ export const AddVcModalMachine =
           // force wait to fix issue with hanging overlay
           await new Promise((resolve) => setTimeout(resolve, 1000));
 
-          const response = await request('POST', '/residentmobileapp/credentialshare/request', {
-            individualId: context.id,
-            individualIdType: context.idType,
-            otp: context.otp,
-            transactionID: context.transactionId,
-          });
+          const response = await request(
+            'POST',
+            '/residentmobileapp/credentialshare/request',
+            {
+              individualId: context.id,
+              individualIdType: context.idType,
+              otp: context.otp,
+              transactionID: context.transactionId,
+            }
+          );
           return response.response.requestId;
         },
       },
