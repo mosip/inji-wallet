@@ -18,6 +18,11 @@ import {
   selectIsOffline,
   selectIsSent,
   selectIsDisconnected,
+  selectIsRejected,
+  selectIsAccepted,
+  selectIsSendingVc,
+  selectIsSendingVcTimeout,
+  selectReceiverInfo,
 } from '../../machines/scan';
 import { selectVcLabel } from '../../machines/settings';
 import { MainBottomTabParamList } from '../../routes/main';
@@ -54,6 +59,11 @@ export function useScanLayout() {
     locationError.button = t('errors.locationDenied.button');
   }
 
+  const DISMISS = () => scanService.send(ScanEvents.DISMISS());
+  const CANCEL = () => scanService.send(ScanEvents.CANCEL());
+
+  const receiverInfo = useSelector(scanService, selectReceiverInfo);
+
   const isInvalid = useSelector(scanService, selectIsInvalid);
   const isConnecting = useSelector(scanService, selectIsConnecting);
   const isConnectingTimeout = useSelector(
@@ -68,44 +78,84 @@ export function useScanLayout() {
     scanService,
     selectIsExchangingDeviceInfoTimeout
   );
-  const isOffline = useSelector(scanService, selectIsOffline);
+  const isAccepted = useSelector(scanService, selectIsAccepted);
+  const isRejected = useSelector(scanService, selectIsRejected);
   const isSent = useSelector(scanService, selectIsSent);
+  const isOffline = useSelector(scanService, selectIsOffline);
+  const isSendingVc = useSelector(scanService, selectIsSendingVc);
+  const isSendingVcTimeout = useSelector(scanService, selectIsSendingVcTimeout);
 
   const vcLabel = useSelector(settingsService, selectVcLabel);
 
   const onCancel = () => scanService.send(ScanEvents.CANCEL());
   let statusOverlay: Pick<
     MessageOverlayProps,
-    'message' | 'hint' | 'onCancel'
+    'title' | 'message' | 'hint' | 'onCancel' | 'progress' | 'onBackdropPress'
   > = null;
   if (isConnecting) {
     statusOverlay = {
       message: t('status.connecting'),
+      progress: true,
     };
   } else if (isConnectingTimeout) {
     statusOverlay = {
       message: t('status.connecting'),
       hint: t('status.connectingTimeout'),
       onCancel,
+      progress: true,
     };
   } else if (isExchangingDeviceInfo) {
     statusOverlay = {
       message: t('status.exchangingDeviceInfo'),
+      progress: true,
     };
   } else if (isExchangingDeviceInfoTimeout) {
     statusOverlay = {
       message: t('status.exchangingDeviceInfo'),
       hint: t('status.exchangingDeviceInfoTimeout'),
       onCancel,
+      progress: true,
     };
   } else if (isSent) {
     statusOverlay = {
       message: t('status.sent', { vcLabel: vcLabel.singular }),
       hint: t('status.sentHint', { vcLabel: vcLabel.singular }),
     };
+  } else if (isSendingVc) {
+    statusOverlay = {
+      title: t('status.sharing.title'),
+      hint: t('status.sharing.hint'),
+      progress: true,
+    };
+  } else if (isSendingVcTimeout) {
+    statusOverlay = {
+      title: t('status.sharing.title'),
+      hint: t('status.sharing.timeoutHint'),
+      onCancel: CANCEL,
+      progress: true,
+    };
+  } else if (isAccepted) {
+    statusOverlay = {
+      title: t('status.accepted.title'),
+      message: t('status.accepted.message', {
+        vcLabel: vcLabel.singular,
+        receiver: receiverInfo.deviceName,
+      }),
+      onBackdropPress: DISMISS,
+    };
+  } else if (isRejected) {
+    statusOverlay = {
+      title: t('status.rejected.title'),
+      message: t('status.rejected.message', {
+        vcLabel: vcLabel.singular,
+        receiver: receiverInfo.deviceName,
+      }),
+      onBackdropPress: DISMISS,
+    };
   } else if (isInvalid) {
     statusOverlay = {
       message: t('status.invalid'),
+      onBackdropPress: DISMISS,
     };
   } else if (isOffline) {
     statusOverlay = {
@@ -149,8 +199,6 @@ export function useScanLayout() {
     isDisconnected: useSelector(scanService, selectIsDisconnected),
     statusOverlay,
 
-    DISMISS: () => scanService.send(ScanEvents.DISMISS()),
-    DISMISS_INVALID: () =>
-      isInvalid ? scanService.send(ScanEvents.DISMISS()) : null,
+    DISMISS,
   };
 }
