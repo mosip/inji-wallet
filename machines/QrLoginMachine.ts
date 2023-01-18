@@ -32,6 +32,7 @@ const model = createModel(
     linkTransactionId: '',
     logoUrl: '',
     voluntaryClaims: [],
+    selectedVoluntaryClaims: [],
     errorMessage: '',
     domainName: '',
     consentClaims: ['name', 'picture'],
@@ -79,7 +80,11 @@ export const qrLoginMachine =
         waitingForData: {
           on: {
             GET: {
-              actions: ['setScanData'],
+              actions: [
+                'setScanData',
+                'resetLinkTransactionId',
+                'resetSelectedVoluntaryClaims',
+              ],
               target: 'linkTransaction',
             },
           },
@@ -217,6 +222,7 @@ export const qrLoginMachine =
         },
         done: {
           type: 'final',
+          data: (context) => context,
         },
       },
     },
@@ -238,6 +244,14 @@ export const qrLoginMachine =
 
         setMyVcs: model.assign({
           myVcs: (_context, event) => (event.response || []) as string[],
+        }),
+
+        resetLinkTransactionId: model.assign({
+          linkTransactionId: () => '',
+        }),
+
+        resetSelectedVoluntaryClaims: model.assign({
+          selectedVoluntaryClaims: () => [],
         }),
 
         setSelectedVc: assign({
@@ -287,16 +301,30 @@ export const qrLoginMachine =
         setConsentClaims: assign({
           isSharing: (context, event) => {
             context.isSharing[event.claim] = !event.enable;
+            if (!event.enable) {
+              context.selectedVoluntaryClaims.push(event.claim);
+            } else {
+              context.selectedVoluntaryClaims =
+                context.selectedVoluntaryClaims.filter(
+                  (eachClaim) => eachClaim !== event.claim
+                );
+            }
             return { ...context.isSharing };
           },
         }),
       },
       services: {
         linkTransaction: async (context) => {
-          const response = await request('POST', '/link-transaction', {
-            linkCode: context.linkCode,
-            requestTime: String(new Date().toISOString()),
-          });
+          const response = await request(
+            'POST',
+            '/v1/idp/linked-authorization/link-transaction',
+            {
+              requestTime: String(new Date().toISOString()),
+              request: {
+                linkCode: context.linkCode,
+              },
+            }
+          );
           return response.response;
         },
 
@@ -317,31 +345,41 @@ export const qrLoginMachine =
             walletBindingResponse?.thumbprint
           );
 
-          const resp = await request('POST', '/idp-authenticate', {
-            requestTime: String(new Date().toISOString()),
-            request: {
-              linkedTransactionId: context.linkTransactionId,
-              individualId: context.selectedVc.id,
-              challengeList: [
-                {
-                  authFactorType: 'WLA',
-                  challenge: jwt,
-                  format: 'jwt',
-                },
-              ],
-            },
-          });
+          const resp = await request(
+            'POST',
+            '/v1/idp/linked-authorization/authenticate',
+            {
+              requestTime: String(new Date().toISOString()),
+              request: {
+                linkedTransactionId: context.linkTransactionId,
+                individualId: context.selectedVc.id,
+                challengeList: [
+                  {
+                    authFactorType: 'WLA',
+                    challenge: jwt,
+                    format: 'jwt',
+                  },
+                ],
+              },
+            }
+          );
 
           const trnId = resp.response.linkedTransactionId;
 
-          const response = await request('POST', '/idp-consent', {
-            requestTime: String(new Date().toISOString()),
-            request: {
-              linkedTransactionId: trnId,
-              acceptedClaims: ['email'],
-              permittedAuthorizeScopes: [],
-            },
-          });
+          const response = await request(
+            'POST',
+            '/v1/idp/linked-authorization/consent',
+            {
+              requestTime: String(new Date().toISOString()),
+              request: {
+                linkedTransactionId: trnId,
+                acceptedClaims: context.essentialClaims.concat(
+                  context.selectedVoluntaryClaims
+                ),
+                permittedAuthorizeScopes: context.authorizeScopes,
+              },
+            }
+          );
           console.log(response.response.linkedTransactionId);
         },
       },

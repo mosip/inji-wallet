@@ -10,7 +10,7 @@ export default async function getAllConfigurations() {
     if (response) {
       return JSON.parse(response);
     } else {
-      const resp = await request('GET', '/allProperties');
+      const resp = await request('GET', '/residentmobileapp/allProperties');
       const injiProps = resp.response;
       const injiPropsString = JSON.stringify(injiProps);
       await AsyncStorage.setItem(COMMON_PROPS_KEY, injiPropsString);
