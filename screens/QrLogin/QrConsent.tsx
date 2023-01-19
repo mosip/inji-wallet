@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, Column, Row, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { useQrLogin } from './QrLoginController';
-import { Image } from 'react-native';
+import { Image, View } from 'react-native';
 import { Icon, ListItem, Switch } from 'react-native-elements';
 import { Modal } from '../../components/ui/Modal';
 import { QrLoginRef } from '../../machines/QrLoginMachine';
@@ -34,20 +34,17 @@ export const QrConsent: React.FC<QrConsentProps> = (props) => {
             style={Theme.Styles.consentPageTop}
             elevation={3}>
             {controller.linkTransactionResponse && (
-              <Row margin={'0 0 0 38'} crossAlign="center">
-                <Icon name="mobile" type="font-awesome" size={60} />
-                <Text
-                  color={'grey'}
-                  weight="semibold"
-                  style={Theme.TextStyles.small}>
-                  {' '}
-                  -----------------------{' '}
-                </Text>
+              <Row margin={'0 0 0 6'} crossAlign="center" align="center">
+                <Image
+                  source={Theme.MosipLogo}
+                  style={{ width: 60, height: 70 }}
+                />
+                <View style={Theme.Styles.consentDottedLine}></View>
                 <Image
                   source={
                     controller.logoUrl ? { uri: controller.logoUrl } : null
                   }
-                  style={{ width: 60, height: 60 }}
+                  style={{ width: 65, height: 65 }}
                 />
               </Row>
             )}

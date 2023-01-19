@@ -700,7 +700,6 @@ export const scanMachine =
 
         storeLoginItem: send(
           (_context, event) => {
-            console.log('log from store', event);
             return StoreEvents.PREPEND(
               MY_LOGIN_STORE_KEY,
               (event as DoneInvokeEvent<string>).data

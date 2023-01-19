@@ -15,6 +15,7 @@ import { linkTransactionResponse, VC } from '../types/vc';
 import { request } from '../shared/request';
 import { getJwt } from '../shared/cryptoutil/cryptoUtil';
 import { getPrivateKey } from '../shared/keystore/SecureKeystore';
+import getAllConfigurations from '../shared/commonprops/commonProps';
 
 const model = createModel(
   {
@@ -33,6 +34,7 @@ const model = createModel(
     voluntaryClaims: [],
     selectedVoluntaryClaims: [],
     errorMessage: '',
+    domainName: '',
     consentClaims: ['name', 'picture'],
     isSharing: {},
   },
@@ -97,7 +99,7 @@ export const qrLoginMachine =
                   'expandLinkTransResp',
                   'setClaims',
                 ],
-                target: 'showWarning',
+                target: 'WarningDomainName',
               },
             ],
             onError: [
@@ -106,6 +108,15 @@ export const qrLoginMachine =
                 target: 'ShowError',
               },
             ],
+          },
+        },
+        WarningDomainName: {
+          invoke: {
+            src: 'domainNameConfig',
+            onDone: {
+              actions: 'setDomainName',
+              target: 'showWarning',
+            },
           },
         },
         showWarning: {
@@ -211,6 +222,7 @@ export const qrLoginMachine =
         },
         done: {
           type: 'final',
+          data: (context) => context,
         },
       },
     },
@@ -220,6 +232,10 @@ export const qrLoginMachine =
 
         setScanData: assign({
           linkCode: (context, event) => event.value,
+        }),
+
+        setDomainName: assign({
+          domainName: (context, event) => event.data,
         }),
 
         loadMyVcs: send(StoreEvents.GET(MY_VCS_STORE_KEY), {
@@ -284,21 +300,37 @@ export const qrLoginMachine =
 
         setConsentClaims: assign({
           isSharing: (context, event) => {
-            context.selectedVoluntaryClaims.push(
-              context.isSharing[event.claim]
-            );
             context.isSharing[event.claim] = !event.enable;
+            if (!event.enable) {
+              context.selectedVoluntaryClaims.push(event.claim);
+            } else {
+              context.selectedVoluntaryClaims =
+                context.selectedVoluntaryClaims.filter(
+                  (eachClaim) => eachClaim !== event.claim
+                );
+            }
             return { ...context.isSharing };
           },
         }),
       },
       services: {
         linkTransaction: async (context) => {
-          const response = await request('POST', '/link-transaction', {
-            linkCode: context.linkCode,
-            requestTime: String(new Date().toISOString()),
-          });
+          const response = await request(
+            'POST',
+            '/v1/idp/linked-authorization/link-transaction',
+            {
+              requestTime: String(new Date().toISOString()),
+              request: {
+                linkCode: context.linkCode,
+              },
+            }
+          );
           return response.response;
+        },
+
+        domainNameConfig: async (context) => {
+          var response = await getAllConfigurations();
+          return response.warningDomainName;
         },
 
         sendConsent: async (context) => {
@@ -313,25 +345,42 @@ export const qrLoginMachine =
             walletBindingResponse?.thumbprint
           );
 
-          const resp = await request('POST', '/idp-auth-consent', {
-            requestTime: String(new Date().toISOString()),
-            request: {
-              linkedTransactionId: context.linkTransactionId,
-              individualId: context.selectedVc.id,
-              acceptedClaims: context.essentialClaims.concat(
-                context.selectedVoluntaryClaims
-              ),
-              permittedAuthorizeScopes: context.authorizeScopes,
-              challengeList: [
-                {
-                  authFactorType: 'WLA',
-                  challenge: jwt,
-                  format: 'jwt',
-                },
-              ],
-            },
-          });
-          console.log(resp.response.linkedTransactionId);
+          const resp = await request(
+            'POST',
+            '/v1/idp/linked-authorization/authenticate',
+            {
+              requestTime: String(new Date().toISOString()),
+              request: {
+                linkedTransactionId: context.linkTransactionId,
+                individualId: context.selectedVc.id,
+                challengeList: [
+                  {
+                    authFactorType: 'WLA',
+                    challenge: jwt,
+                    format: 'jwt',
+                  },
+                ],
+              },
+            }
+          );
+
+          const trnId = resp.response.linkedTransactionId;
+
+          const response = await request(
+            'POST',
+            '/v1/idp/linked-authorization/consent',
+            {
+              requestTime: String(new Date().toISOString()),
+              request: {
+                linkedTransactionId: trnId,
+                acceptedClaims: context.essentialClaims.concat(
+                  context.selectedVoluntaryClaims
+                ),
+                permittedAuthorizeScopes: context.authorizeScopes,
+              },
+            }
+          );
+          console.log(response.response.linkedTransactionId);
         },
       },
     }
@@ -351,6 +400,10 @@ export function selectMyVcs(state: State) {
 }
 export function selectIsWaitingForData(state: State) {
   return state.matches('waitingForData');
+}
+
+export function selectDomainName(state: State) {
+  return state.context.domainName;
 }
 
 export function selectIsShowWarning(state: State) {
