@@ -3,6 +3,11 @@
 export interface Typegen0 {
   '@@xstate/typegen': true;
   'internalEvents': {
+    'done.invoke.QrLogin.WarningDomainName:invocation[0]': {
+      type: 'done.invoke.QrLogin.WarningDomainName:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
     'done.invoke.QrLogin.linkTransaction:invocation[0]': {
       type: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
       data: unknown;
@@ -19,6 +24,7 @@ export interface Typegen0 {
     'xstate.init': { type: 'xstate.init' };
   };
   'invokeSrcNameMap': {
+    domainNameConfig: 'done.invoke.QrLogin.WarningDomainName:invocation[0]';
     linkTransaction: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
     sendConsent: 'done.invoke.QrLogin.sendingConsent:invocation[0]';
   };
@@ -37,6 +43,7 @@ export interface Typegen0 {
     loadMyVcs: 'CONFIRM';
     setClaims: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
     setConsentClaims: 'TOGGLE_CONSENT_CLAIM';
+    setDomainName: 'done.invoke.QrLogin.WarningDomainName:invocation[0]';
     setMyVcs: 'STORE_RESPONSE';
     setScanData: 'GET';
     setSelectedVc: 'SELECT_VC';
@@ -45,11 +52,13 @@ export interface Typegen0 {
   'eventsCausingDelays': {};
   'eventsCausingGuards': {};
   'eventsCausingServices': {
+    domainNameConfig: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
     linkTransaction: 'GET';
     sendConsent: 'CONFIRM';
   };
   'matchesStates':
     | 'ShowError'
+    | 'WarningDomainName'
     | 'done'
     | 'faceAuth'
     | 'invalidIdentity'

@@ -23,15 +23,15 @@ export const QrLoginWarning: React.FC<QrLoginWarningProps> = (props) => {
       <Column
         fill
         align="space-between"
-        padding={'24 0 0 0'}
+        padding={'21 0 0 0'}
         style={{ display: props.isVisible ? 'flex' : 'none' }}
         backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
-        <Column align="space-evenly" crossAlign="center" padding={'16 16 0 16'}>
+        <Column align="space-evenly" crossAlign="center" padding={'16 15 0 15'}>
           <Image source={Theme.DomainWarningLogo} resizeMethod="auto" />
           <Text
             align="center"
             style={Theme.Styles.detailsText}
-            margin="21 15 15 15">
+            margin="30 15 15 15">
             {t('domainWarning')}
           </Text>
           <Text
@@ -40,16 +40,16 @@ export const QrLoginWarning: React.FC<QrLoginWarningProps> = (props) => {
             weight="regular"
             color={Theme.Colors.Icon}
             style={Theme.Styles.urlContainer}>
-            {controller.logoUrl}
+            {controller.domainName}
           </Text>
         </Column>
 
-        <Column padding={'0 14 14 14'}>
+        <Column padding={'0 16 14 16'}>
           <Text
             align="center"
             weight="semibold"
             style={Theme.TextStyles.smaller}
-            margin="0 15 15 15">
+            margin="0 12 10 12">
             {t('checkDomain')}
           </Text>
           <Row
@@ -72,13 +72,13 @@ export const QrLoginWarning: React.FC<QrLoginWarningProps> = (props) => {
           width={Dimensions.get('screen').width * 0.98}
           style={Theme.Styles.bottomButtonsContainer}>
           <Button
-            margin={'2 12 0 12'}
+            margin={'0 12 0 12'}
             title={t('confirm')}
             onPress={props.onConfirm}
             styles={Theme.ButtonStyles.radius}
           />
           <Button
-            margin={'16 12 0 12'}
+            margin={'10 12 0 12'}
             type="clear"
             title={t('common:cancel')}
             onPress={props.onCancel}

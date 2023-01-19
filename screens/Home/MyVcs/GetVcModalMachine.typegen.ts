@@ -32,9 +32,9 @@ export interface Typegen0 {
   };
   'missingImplementations': {
     actions: never;
-    services: never;
-    guards: never;
     delays: never;
+    guards: never;
+    services: 'AddVcModal';
   };
   'eventsCausingActions': {
     clearIdError: 'INPUT_ID';
@@ -68,16 +68,20 @@ export interface Typegen0 {
       | 'error.platform.GetVcModal.requestingUinVid:invocation[0]'
       | 'xstate.init';
   };
-  'eventsCausingServices': {
-    requestOtp: 'VALIDATE_INPUT';
-    requestingUinVid: 'INPUT_OTP';
-  };
+  'eventsCausingDelays': {};
   'eventsCausingGuards': {
     isEmptyId: 'VALIDATE_INPUT';
     isIdInvalid: 'error.platform.GetVcModal.requestingUinVid:invocation[0]';
     isWrongIdFormat: 'VALIDATE_INPUT';
   };
-  'eventsCausingDelays': {};
+  'eventsCausingServices': {
+    AddVcModal:
+      | 'DISMISS'
+      | 'INPUT_ID'
+      | 'xstate.after(100)#GetVcModal.acceptingIdInput.focusing';
+    requestOtp: 'VALIDATE_INPUT';
+    requestingUinVid: 'INPUT_OTP';
+  };
   'matchesStates':
     | 'acceptingIdInput'
     | 'acceptingIdInput.focusing'

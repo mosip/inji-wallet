@@ -72,8 +72,9 @@ export const MyBindedVcs: React.FC<MyBindedVcsProps> = (props) => {
                   </Text>
                 </Centered>
                 <Button
-                  type="solid"
                   title={t('back')}
+                  margin="0 20 12 20"
+                  styles={Theme.ButtonStyles.radius}
                   onPress={controller.DISMISS}
                 />
               </React.Fragment>
