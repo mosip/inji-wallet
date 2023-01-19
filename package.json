@@ -74,7 +74,7 @@
     "react-native-uuid": "^2.0.1",
     "react-native-vector-icons": "^8.1.0",
     "xstate": "^4.35.0",
-    "react-native-openid4vp-ble": "ravikp/tuvali#develop"
+    "react-native-openid4vp-ble": "mosip/tuvali#v0.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
