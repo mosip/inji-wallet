@@ -1,4 +1,17 @@
 {
+  "ActivityLogText": {
+    "VC_SHARED": "ibinahagi",
+    "VC_RECEIVED": "natanggap",
+    "VC_RECEIVED_NOT_SAVED": "natanggap ngunit hindi na-save",
+    "VC_DELETED": "tinanggal",
+    "VC_DOWNLOADED": "na-download",
+    "VC_REVOKED": "binawi",
+    "VC_SHARED_WITH_VERIFICATION_CONSENT": "ibinahagi. Ibinibigay ang pahintulot para sa pag-verify ng presensya",
+    "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "natanggap. Na-verify ang presensya",
+    "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "natanggap. Nabigo ang pag-verify ng presensya",
+    "PRESENCE_VERIFIED_AND_VC_SHARED": "na-verify at ibinahagi",
+    "PRESENCE_VERIFICATION_FAILED": "nabigo ang pag-verify"
+  },
   "DeviceInfoList": {
     "requestedBy": "Hiniling ni",
     "sentBy": "Ipinadala ni",
@@ -34,7 +47,18 @@
     "id": "Id",
     "nationalCard": "Pambansang Kard",
     "uin": "UIN",
-    "vid": "VID"
+    "enableVerification": "I-activate",
+    "profileAuthenticated": "Na-activate para sa online na pag-login",
+    "offlineAuthDisabledHeader": "Nakabinbin ang pag-activate para sa online na pag-login",
+    "offlineAuthDisabledMessage": "Mangyaring i-click ang pindutan sa ibaba upang i-activate ang kredensyal na ito upang magamit para sa online na pag-login.",
+    "vid": "VID",
+    "verificationEnabledSuccess": "Na-activate para sa online na pag-login",
+    "goback": "BUMALIK KA",
+    "BindingWarning": "Na-activate mo na ang isang online na pag-log in para sa kredensyal na ito sa isa pang device. Hindi mo na magagamit ang device na iyon para sa pag-login kung i-activate mo itong muli sa device na ito.",
+    "yes_confirm": "Oo, Kinukumpirma ko",
+    "no": "Hindi",
+    "Alert": "Alerto",
+    "ok": "Sige"
   },
   "AuthScreen": {
     "header": "Gusto mo bang gumamit ng biometrics upang i-unlock ang aplikasyon?",
@@ -42,7 +66,7 @@
     "usePasscode": "Gumamit na lang ng passcode",
     "errors": {
       "unavailable": "Hindi sinusuportahan ng device ang Biometrics",
-      "unenrolled": "Upang magamit ang Biometrics, mangyaring i-enroll ang iyong biometrics sa mga setting ng iyong device",
+      "unenrolled": "Upang magamit ang Biometrics, mangyaring i-enroll ang iyong fingerprint sa mga setting ng iyong device",
       "failed": "Nabigong mag-authenticate gamit ang Biometrics",
       "generic": "May problema sa Biometrics authentication"
     }
@@ -83,22 +107,14 @@
     "bodyText": "Maaaring tumagal ito ng ilang oras, ipapaalam namin sayo kung pwede na kunin ang iyong {{vcLabel}}",
     "backButton": "Bumalik"
   },
-  "GetIdInputModal": {
-    "header": "Upang makuha ang iyong UIN o VID, ilagay ang iyong Application {{vcLabel}} na numero",
-    "getUIN": "Kumuha ng UIN/VID",
-    "applicationId": "Numero ng application na {{vcLabel}}.",
-    "requestingOTP": "Humihiling ng OTP...",
-    "qstnMarkToolTip": "Ang numero ng aplikasyon {{vcLabel}} ay naka-print sa ibinigay na pagkilala pagkatapos ng pagpapatala"
-  },
   "IdInputModal": {
     "header": "Ilagay ang UIN o VID na ibinigay ng MOSIP upang matanggap ang iyong {{vcLabel}}",
     "generateVc": "Gumawa ng {{vcLabel}}",
-    "enterId": "Ilagay ang iyong {{idType}}",
-    "noUIN/VID": "Wala ka bang UIN/VID? Kuhanin dito",
-    "requestingOTP": "Humihiling ng OTP..."
+    "enterId": "Ilagay ang iyong {{idType}}"
   },
   "OtpVerificationModal": {
-    "enterOtp": "Ilagay ang 6 na numerong verification code na ipinadala namin sayo"
+    "enterOtp": "Ilagay ang 6 na numerong verification code na ipinadala namin sayo",
+    "header": "Pag-verify ng OTP"
   },
   "MyVcsTab": {
     "addVcButton": "Magdagdag ng {{vcLabel}}",
@@ -129,6 +145,7 @@
     "requestingOtp": "Humihiling ng OTP...",
     "editTag": "Palitan ang pangalan",
     "redirecting": "Redirecting...",
+    "inProgress": "Naglo-load...",
     "success": {
       "unlocked": "Ang {{vcLabel}} ay matagumpay na na-unlock",
       "locked": "Ang {{vcLabel}} ay matagumpay na na-lock",
@@ -166,10 +183,29 @@
     "revokeSuccessful": "Matagumpay na nakansela ang VID",
     "version": "Bersyon"
   },
+  "QrScreen": {
+    "title": "QR Login",
+    "alignQr": "I-align ang QR code sa loob ng frame para i-scan",
+    "confirmation": "Kumpirmasyon",
+    "checkDomain": "Gayundin, tingnan kung mayroong icon ng lock sa address bar.",
+    "domainHead": "https://",
+    "selectId": "Pumili ng ID",
+    "noBindedVc": "Available sa Verifyct ID ang SeleNo Binded {{vcLabel}}",
+    "back": "Bumalik ka",
+    "confirm": "Kumpirmahin",
+    "verify": "I-verify",
+    "faceAuth": "Face Authentication",
+    "consent": "Pagpayag",
+    "loading": "Naglo-load...",
+    "domainWarning": "Pakikumpirma ang domain ng website kung saan mo ini-scan ang QR code mula sa ibaba",
+    "access": " ay humihiling ng access sa",
+    "status": "Katayuan",
+    "successMessage":"Ikaw ay Matagumpay na Naka-log In ",
+    "okay": "Sige"
+  },
   "ReceiveVcScreen": {
     "header": "Mga detalye ng {{vcLabel}}",
     "acceptRequest": "Tanggapin ang kahilingan at tumanggap ng {{vcLabel}}",
-    "acceptRequestAndVerify": "Tanggapin ang kahilingan at magpatunay",
     "reject": "Tanggihan"
   },
   "RequestScreen": {
@@ -184,7 +220,7 @@
       },
       "rejected": {
         "title": "Paunawa",
-        "message": "Tinanggihan mo ang {{vcLabel}} ni {{sender}}"
+        "message": "Iwinaksi ang {{vcLabel}} ni {{sender}}"
       },
       "disconnected": {
         "title": "Nadiskonekta",
@@ -197,7 +233,7 @@
       },
       "connected": {
         "message": "Nakakonektang device. Naghihintay para sa {{vcLabel}}...",
-        "timeoutHint": "Wala pang data na natanggap. Nakakonekta pa rin ba ang nagpapadala na device?"
+        "timeoutHint": "Wala pang natanggap na VC. Nakakonekta pa rin ba ang pagpapadala ng device?"
       }
     },
     "online": "Online",
@@ -223,7 +259,10 @@
       "connectingTimeout": "Medyo nagtatagal bago magtatag ng koneksyon. Bukas ba ang ibang device para sa mga koneksyon?",
       "exchangingDeviceInfo": "Nagpapalitan ng impormasyon ng device...",
       "exchangingDeviceInfoTimeout": "Medyo nagtatagal ang paglabas ng impormasyon ng device. Bukas ba ang ibang device para sa mga koneksyon?",
-      "invalid": "Di-wasto ang QR Code"
+      "invalid": "Di-wasto ang QR Code",
+      "offline": "Mangyaring kumonekta sa internet upang makapag-scan ng QR codes na gumagamit ng Online sharing mode",
+      "sent": "Naibahagi na ang {{vcLabel}}...",
+      "sentHint": "Iniintay ang nakatanggap na itabi o iwaksi ang iyong {{vcLabel}}"
     }
   },
   "SelectVcOverlay": {
@@ -235,13 +274,11 @@
   "SendVcScreen": {
     "reasonForSharing": "Dahilan ng pagbabahagi (opsyonal)",
     "acceptRequest": "Tanggapin ang kahilingan at piliin ang {{vcLabel}}",
-    "acceptRequestAndVerify": "Tanggapin ang kahilingan at magpatunay",
     "reject": "Tanggihan",
     "status": {
       "sharing": {
         "title": "Pagbabahagi",
-        "hint": "Pakihintay na tanggapin o tanggihan ng tumatanggap na device ang pagbabahagi.",
-        "timeoutHint": "May katagalan ang pagbabahagi. Maaaring may problema sa koneksyon."
+        "timeoutHint": "Medyo natatagal ang pagbabahagi ng VC. Maaaring may problema sa koneksyon."
       },
       "accepted": {
         "title": "Tagumpay!",
@@ -261,8 +298,7 @@
     "errors": {
       "invalidIdentity": {
         "title": "Hindi ma-verify ang pagkakakilanlan",
-        "message": "May naganap na error at hindi namin ma-scan ang iyong larawan. Subukang muli, tiyaking nakikita ang iyong mukha, walang anumang mga aksesorya.",
-        "messageNoRetry": "May naganap na error at hindi namin ma-scan ang iyong portrait."
+        "message": "May naganap na error at hindi namin ma-scan ang iyong portrait. Subukang muli, tiyaking nakikita ang iyong mukha, walang anumang mga accessory."
       }
     }
   },
@@ -274,14 +310,7 @@
   "common": {
     "cancel": "Kanselahin",
     "save": "I-save",
-    "dismiss": "I-dismiss",
     "editLabel": "Palitan ang {{label}}",
-    "tryAgain": "Subukan muli",
-    "camera": {
-      "errors": {
-        "missingPermission": "Ginagamit ng app na ito ang camera upang i-scan ang QR code ng isa pang device."
-      },
-      "allowAccess": "Payagan ang access sa camera"
-    }
+    "tryAgain": "Subukan muli"
   }
 }

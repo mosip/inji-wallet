@@ -13,12 +13,15 @@ import { storeMachine } from './store';
 import { createVcMachine, vcMachine } from './vc';
 import { createActivityLogMachine, activityLogMachine } from './activityLog';
 import { createRequestMachine, requestMachine } from './request';
+import * as BLERequest from './openIdBle/request';
+import * as BLEScan from './openIdBle/scan';
 import { createScanMachine, scanMachine } from './scan';
 import { createRevokeMachine, revokeVidsMachine } from './revoke';
 
 import { pure, respond } from 'xstate/lib/actions';
 import { AppServices } from '../shared/GlobalContext';
 import { request } from '../shared/request';
+import { isBLEEnabled } from '../lib/smartshare';
 
 const model = createModel(
   {
@@ -194,15 +197,19 @@ export const appMachine = model.createMachine(
             activityLogMachine.id
           );
 
-          serviceRefs.scan = spawn(
-            createScanMachine(serviceRefs),
-            scanMachine.id
-          );
+          serviceRefs.scan = isBLEEnabled
+            ? spawn(
+                BLEScan.createScanMachine(serviceRefs),
+                BLEScan.scanMachine.id
+              )
+            : spawn(createScanMachine(serviceRefs), scanMachine.id);
 
-          serviceRefs.request = spawn(
-            createRequestMachine(serviceRefs),
-            requestMachine.id
-          );
+          serviceRefs.request = isBLEEnabled
+            ? spawn(
+                BLERequest.createRequestMachine(serviceRefs),
+                BLERequest.requestMachine.id
+              )
+            : spawn(createRequestMachine(serviceRefs), requestMachine.id);
 
           serviceRefs.revoke = spawn(
             createRevokeMachine(serviceRefs),
@@ -253,7 +260,7 @@ export const appMachine = model.createMachine(
           config: {},
         };
         try {
-          backendInfo = await request('GET', '/info');
+          backendInfo = await request('GET', '/residentmobileapp/info');
           callback(model.events.BACKEND_INFO_RECEIVED(backendInfo));
         } catch {
           callback(model.events.BACKEND_INFO_RECEIVED(backendInfo));

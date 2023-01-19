@@ -15,7 +15,7 @@
     },
     "rejected": {
       "title": "Notice",
-      "message": "Your {{vcLabel}} was rejected by {{receiver}}"
+      "message": "Your {{vcLabel}} was discarded by {{receiver}}"
     }
   },
   "consentToPhotoVerification": "I give consent to have my photo taken for authentication"

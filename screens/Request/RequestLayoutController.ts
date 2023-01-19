@@ -59,7 +59,7 @@ export function useRequestLayout() {
     } else if (isWaitingForConnection) {
       navigation.navigate('RequestScreen');
     }
-  }, [isDone, isReviewing]);
+  }, [isDone, isReviewing, isWaitingForConnection]);
 
   return {
     vcLabel: useSelector(settingsService, selectVcLabel),

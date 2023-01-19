@@ -6,8 +6,7 @@
 
 import SmartshareReactNative from '@idpass/smartshare-react-native';
 import { ConnectionParams } from '@idpass/smartshare-react-native/lib/typescript/IdpassSmartshare';
-import { default as IdpassSmartshare } from '../lib/smartshare';
-const { GoogleNearbyMessages } = SmartshareReactNative;
+const { GoogleNearbyMessages, IdpassSmartshare } = SmartshareReactNative;
 
 import { DeviceInfo } from '../components/DeviceInfoList';
 import { VC } from '../types/vc';
@@ -25,6 +24,7 @@ export function onlineSubscribe<T extends SmartshareEventType>(
       }
       const response = SmartshareEvent.fromString<T>(foundMessage);
       if (response.type === 'disconnect') {
+        GoogleNearbyMessages.unsubscribe();
         disconectCallback(response.data);
       } else if (response.type === eventType) {
         !config?.keepAlive && GoogleNearbyMessages.unsubscribe();
@@ -36,7 +36,12 @@ export function onlineSubscribe<T extends SmartshareEventType>(
         console.log('\n[request] MESSAGE_LOST', lostMessage.slice(0, 100));
       }
     }
-  );
+  ).catch((error: Error) => {
+    if (error.message.includes('existing callback is already subscribed')) {
+      console.log('Existing callback found. Unsubscribing then retrying...');
+      return onlineSubscribe(eventType, callback, disconectCallback, config);
+    }
+  });
 }
 
 export function onlineSend(event: SmartshareEvents) {
@@ -115,7 +120,7 @@ export interface SendVcEvent {
   };
 }
 
-export type SendVcStatus = 'ACCEPTED' | 'REJECTED';
+export type SendVcStatus = 'ACCEPTED' | 'REJECTED' | 'RECEIVED';
 export interface SendVcResponseEvent {
   type: 'send-vc:response';
   data: SendVcStatus | number;

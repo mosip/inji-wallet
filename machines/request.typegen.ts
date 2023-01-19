@@ -9,10 +9,6 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
-    'error.platform.request.reviewing.verifyingVp:invocation[0]': {
-      type: 'error.platform.request.reviewing.verifyingVp:invocation[0]';
-      data: unknown;
-    };
     'xstate.after(CANCEL_TIMEOUT)#request.cancelling': {
       type: 'xstate.after(CANCEL_TIMEOUT)#request.cancelling';
     };
@@ -31,6 +27,7 @@ export interface Typegen0 {
   'invokeSrcNameMap': {
     advertiseDevice: 'done.invoke.request.waitingForConnection:invocation[0]';
     checkBluetoothService: 'done.invoke.request.checkingBluetoothService.checking:invocation[0]';
+    checkNetwork: 'done.invoke.request.checkingNetwork:invocation[0]';
     exchangeDeviceInfo: 'done.invoke.request.exchangingDeviceInfo:invocation[0]';
     monitorConnection: 'done.invoke.request:invocation[0]';
     receiveVc: 'done.invoke.request.waitingForVc:invocation[0]';
@@ -38,14 +35,15 @@ export interface Typegen0 {
     sendDisconnect: 'done.invoke.request.cancelling:invocation[0]';
     sendVcResponse:
       | 'done.invoke.request.reviewing.accepted:invocation[0]'
-      | 'done.invoke.request.reviewing.rejected:invocation[0]';
+      | 'done.invoke.request.reviewing.rejected:invocation[0]'
+      | 'done.invoke.request.reviewing:invocation[0]';
     verifyVp: 'done.invoke.request.reviewing.verifyingVp:invocation[0]';
   };
   'missingImplementations': {
     actions: never;
-    services: never;
-    guards: never;
     delays: never;
+    guards: never;
+    services: never;
   };
   'eventsCausingActions': {
     clearShouldVerifyPresence:
@@ -70,7 +68,7 @@ export interface Typegen0 {
     generateConnectionParams:
       | 'DISMISS'
       | 'xstate.after(CLEAR_DELAY)#request.clearingConnection';
-    logReceived: 'STORE_RESPONSE';
+    logReceived: 'CANCEL' | 'REJECT' | 'STORE_RESPONSE';
     mergeIncomingVc: 'STORE_RESPONSE';
     openSettings: 'GOTO_SETTINGS';
     prependReceivedVc: 'VC_RESPONSE';
@@ -89,8 +87,8 @@ export interface Typegen0 {
       | 'FACE_VALID'
       | 'done.invoke.request.reviewing.verifyingVp:invocation[0]';
     requestReceiverInfo: 'CONNECTED';
-    sendVcReceived: 'STORE_RESPONSE';
     setIncomingVc: 'VC_RECEIVED';
+    setReceiveLogTypeDiscarded: 'CANCEL' | 'REJECT';
     setReceiveLogTypeRegular: 'ACCEPT';
     setReceiveLogTypeUnverified: 'FACE_INVALID';
     setReceiveLogTypeVerified: 'FACE_VALID';
@@ -98,31 +96,35 @@ export interface Typegen0 {
     setSenderInfo: 'EXCHANGE_DONE';
     storeVc: 'STORE_RESPONSE';
     switchProtocol: 'SWITCH_PROTOCOL';
-  };
-  'eventsCausingServices': {
-    advertiseDevice:
-      | 'DISMISS'
-      | 'xstate.after(CLEAR_DELAY)#request.clearingConnection';
-    checkBluetoothService:
-      | 'SCREEN_FOCUS'
-      | 'SWITCH_PROTOCOL'
-      | 'xstate.after(CANCEL_TIMEOUT)#request.cancelling';
-    exchangeDeviceInfo: 'RECEIVE_DEVICE_INFO';
-    monitorConnection: 'xstate.init';
-    receiveVc: 'EXCHANGE_DONE';
-    requestBluetooth: 'BLUETOOTH_DISABLED';
-    sendDisconnect: 'CANCEL';
-    sendVcResponse: 'CANCEL' | 'REJECT' | 'STORE_RESPONSE';
-    verifyVp: never;
-  };
-  'eventsCausingGuards': {
-    hasExistingVc: 'VC_RESPONSE';
+    updateReceivedVcs: 'STORE_RESPONSE';
   };
   'eventsCausingDelays': {
     CANCEL_TIMEOUT: 'CANCEL';
     CLEAR_DELAY: '';
     CONNECTION_TIMEOUT: 'RECEIVE_DEVICE_INFO';
     SHARING_TIMEOUT: 'EXCHANGE_DONE';
+  };
+  'eventsCausingGuards': {
+    hasExistingVc: 'VC_RESPONSE';
+    isModeOnline: 'SCREEN_FOCUS' | 'SWITCH_PROTOCOL';
+  };
+  'eventsCausingServices': {
+    advertiseDevice:
+      | 'DISMISS'
+      | 'xstate.after(CLEAR_DELAY)#request.clearingConnection';
+    checkBluetoothService:
+      | 'ONLINE'
+      | 'SCREEN_FOCUS'
+      | 'SWITCH_PROTOCOL'
+      | 'xstate.after(CANCEL_TIMEOUT)#request.cancelling';
+    checkNetwork: 'APP_ACTIVE' | 'SCREEN_FOCUS' | 'SWITCH_PROTOCOL';
+    exchangeDeviceInfo: 'RECEIVE_DEVICE_INFO';
+    monitorConnection: 'xstate.init';
+    receiveVc: 'EXCHANGE_DONE';
+    requestBluetooth: 'BLUETOOTH_DISABLED';
+    sendDisconnect: 'CANCEL';
+    sendVcResponse: 'CANCEL' | 'REJECT' | 'STORE_RESPONSE' | 'VC_RECEIVED';
+    verifyVp: never;
   };
   'matchesStates':
     | 'bluetoothDenied'
@@ -131,12 +133,14 @@ export interface Typegen0 {
     | 'checkingBluetoothService.checking'
     | 'checkingBluetoothService.enabled'
     | 'checkingBluetoothService.requesting'
+    | 'checkingNetwork'
     | 'clearingConnection'
     | 'disconnected'
     | 'exchangingDeviceInfo'
     | 'exchangingDeviceInfo.inProgress'
     | 'exchangingDeviceInfo.timeout'
     | 'inactive'
+    | 'offline'
     | 'preparingToExchangeInfo'
     | 'reviewing'
     | 'reviewing.accepted'

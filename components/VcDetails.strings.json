@@ -14,5 +14,9 @@
   "id": "Id",
   "nationalCard": "National Card",
   "uin": "UIN",
-  "vid": "VID"
+  "vid": "VID",
+  "enableVerification": "Enable Verification",
+  "profileAuthenticated": "Profile is authenticated!",
+  "offlineAuthDisabledHeader": "Offline Authentication disabled!",
+  "offlineAuthDisabledMessage": "Click 'Enable Authentication' to enable this credentials to be used for offline authentication."
 }

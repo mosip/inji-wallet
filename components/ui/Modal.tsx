@@ -12,13 +12,14 @@ export const Modal: React.FC<ModalProps> = (props) => {
       visible={props.isVisible}
       onShow={props.onShow}
       onRequestClose={props.onDismiss}>
-      <Column fill safe>
+      <Column fill safe align="center">
         <Row elevation={props.headerElevation}>
           <View
             style={{
               flex: 1,
               flexDirection: 'row',
-              marginHorizontal: 16,
+              alignItems: 'center',
+              marginHorizontal: 21,
               marginVertical: 16,
             }}>
             {props.headerRight ? (
@@ -28,10 +29,18 @@ export const Modal: React.FC<ModalProps> = (props) => {
                 color={Theme.Colors.Icon}
               />
             ) : null}
-            <Row fill align="center">
+            {props.arrowLeft ? (
+              <Icon
+                name="arrow-left"
+                type="material-community"
+                onPress={props.onDismiss}
+                color={Theme.Colors.Details}
+              />
+            ) : null}
+            <Row fill align="center" margin={'5 30 0 0'}>
               <Text weight="semibold">{props.headerTitle}</Text>
             </Row>
-            {props.headerRight || (
+            {props.headerRight || props.arrowLeft || (
               <Icon
                 name="close"
                 onPress={props.onDismiss}
@@ -52,5 +61,6 @@ export interface ModalProps {
   headerTitle?: string;
   headerElevation?: ElevationLevel;
   headerRight?: React.ReactElement;
+  arrowLeft?: React.ReactElement;
   onShow?: () => void;
 }

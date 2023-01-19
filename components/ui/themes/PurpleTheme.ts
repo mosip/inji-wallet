@@ -14,6 +14,7 @@ const Colors = {
   Green: '#219653',
   Purple: '#70308C',
   Transparent: 'transparent',
+  Warning: '#f0ad4e',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5;
@@ -30,6 +31,7 @@ export const PurpleTheme = {
     noUinText: Colors.Purple,
     IconBg: Colors.Purple,
     Icon: Colors.Purple,
+    GrayIcon: Colors.Grey,
     Loading: Colors.Purple,
     borderBottomColor: Colors.Grey6,
     whiteBackgroundColor: Colors.White,
@@ -56,6 +58,7 @@ export const PurpleTheme = {
     checkCircleIcon: Colors.White,
     OnboardingCircleIcon: Colors.White,
     OnboardingCloseIcon: Colors.White,
+    WarningIcon: Colors.Warning,
   },
   Styles: StyleSheet.create({
     title: {
@@ -133,6 +136,8 @@ export const PurpleTheme = {
     backgroundImageContainer: {
       flex: 1,
       padding: 10,
+      borderBottomColor: Colors.Grey,
+      borderBottomWidth: 1,
     },
     successTag: {
       backgroundColor: Colors.Green,
@@ -325,6 +330,11 @@ export const PurpleTheme = {
     },
     clearAddIdBtnBg: {
       backgroundColor: Colors.Transparent,
+    },
+    radius: {
+      flex: 1,
+      borderRadius: 10,
+      backgroundColor: Colors.Orange,
     },
   }),
   OIDCAuthStyles: StyleSheet.create({
@@ -574,10 +584,25 @@ export const PurpleTheme = {
       zIndex: 1,
     },
   }),
+  BindingVcWarningOverlay: StyleSheet.create({
+    overlay: {
+      elevation: 5,
+      backgroundColor: Colors.White,
+      padding: 0,
+      borderRadius: 15,
+    },
+    button: {
+      borderTopLeftRadius: 0,
+      borderTopRightRadius: 0,
+    },
+  }),
   OpenCard: require('../../../purpleAassets/bg_cart_one.png'),
   CloseCard: require('../../../purpleAassets/cart_unsel.png'),
   ProfileIcon: require('../../../purpleAassets/profile_icon_unsel.png'),
   MosipLogo: require('../../../purpleAassets/logo.png'),
+  WarningLogo: require('../../../assets/warningLogo.png'),
+  OtpLogo: require('../../../assets/otp-mobile-logo.png'),
+  SuccessLogo: require('../../../assets/success-logo.png'),
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/
 

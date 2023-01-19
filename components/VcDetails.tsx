@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Image, ImageBackground } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { VC, CredentialSubject, LocalizedField } from '../types/vc';
-import { Column, Row, Text } from './ui';
+import { Button, Column, Row, Text } from './ui';
 import { Theme } from './ui/styleUtils';
 import { TextItem } from './ui/TextItem';
 import { VcItemTags } from './VcItemTags';
@@ -255,11 +255,13 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
         </Row>
         <VcItemTags tag={props.vc?.tag} />
       </ImageBackground>
+
       {props.vc?.reason?.length > 0 && (
         <Text margin="24 24 16 24" weight="semibold">
           {t('reasonForSharing')}
         </Text>
       )}
+
       {props.vc?.reason?.map((reason, index) => (
         <TextItem
           key={index}
@@ -271,12 +273,68 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
           text={reason.message}
         />
       ))}
+
+      {props.isBindingPending ? (
+        <Column style={Theme.Styles.openCardBgContainer}>
+          <Row margin={'0 0 5 0'}>
+            <Icon
+              name="shield-alert"
+              color={Theme.Colors.Icon}
+              size={30}
+              type="material-community"
+            />
+          </Row>
+
+          <Text
+            style={{ flex: 1 }}
+            weight="semibold"
+            size="small"
+            margin={'0 0 5 0'}
+            color={Theme.Colors.Details}>
+            {t('offlineAuthDisabledHeader')}
+          </Text>
+          <Text
+            style={{ flex: 1 }}
+            weight="regular"
+            size="small"
+            margin={'0 0 5 0'}
+            color={Theme.Colors.Details}>
+            {t('offlineAuthDisabledMessage')}
+          </Text>
+
+          <Button
+            title={t('enableVerification')}
+            onPress={props.onBinding}
+            type="radius"
+          />
+        </Column>
+      ) : (
+        <Column style={Theme.Styles.openCardBgContainer}>
+          <Row crossAlign="center">
+            <Icon
+              name="verified-user"
+              color={Theme.Colors.VerifiedIcon}
+              size={28}
+              containerStyle={{ marginStart: 4, bottom: 1 }}
+            />
+            <Text
+              numLines={1}
+              color={Theme.Colors.Details}
+              weight="bold"
+              size="smaller"
+              margin="10 10 10 10"
+              children={t('profileAuthenticated')}></Text>
+          </Row>
+        </Column>
+      )}
     </Column>
   );
 };
 
 interface VcDetailsProps {
   vc: VC;
+  isBindingPending: boolean;
+  onBinding?: () => void;
 }
 
 function getFullAddress(credential: CredentialSubject) {

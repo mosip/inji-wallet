@@ -1,6 +1,7 @@
 {
   "VC_SHARED": "shared",
   "VC_RECEIVED": "received",
+  "VC_RECEIVED_NOT_SAVED": "received was not saved",
   "VC_DELETED": "deleted",
   "VC_DOWNLOADED": "downloaded",
   "VC_REVOKED": "revoked",
@@ -8,5 +9,6 @@
   "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "received. Presence verified",
   "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "received. Presence verification failed",
   "PRESENCE_VERIFIED_AND_VC_SHARED": "verified and shared",
-  "PRESENCE_VERIFICATION_FAILED": "verification failed"
+  "PRESENCE_VERIFICATION_FAILED": "verification failed",
+  "QRLOGIN_SUCCESFULL": "QRLogin sucessfull"
 }
