@@ -10,7 +10,7 @@ import { RequestLayout } from '../screens/Request/RequestLayout';
 import { ScanLayout } from '../screens/Scan/ScanLayout';
 import i18n from '../i18n';
 import { Platform } from 'react-native';
-import { isBLEEnabled } from '../lib/smartshare';
+import { isGoogleNearbyEnabled } from '../lib/smartshare';
 
 const home: TabScreen = {
   name: 'Home',
@@ -50,7 +50,11 @@ const profile: TabScreen = {
 export const mainRoutes: TabScreen[] = [];
 mainRoutes.push(home);
 mainRoutes.push(scan);
-!(Platform.OS === 'ios' && isBLEEnabled) && mainRoutes.push(request);
+
+if (Platform.OS !== 'ios' || isGoogleNearbyEnabled) {
+  mainRoutes.push(request);
+}
+
 mainRoutes.push(profile);
 
 export type MainBottomTabParamList = {

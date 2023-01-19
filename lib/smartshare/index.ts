@@ -10,6 +10,7 @@ type ShareProtocol = OpenIDBLEShare | IdpassSmartshareType;
 let ShareLib: ShareProtocol;
 
 export const isBLEEnabled = USE_BLE_SHARE === 'true';
+export const isGoogleNearbyEnabled = !isBLEEnabled;
 
 if (isBLEEnabled) {
   ShareLib = Openid4vpBle;

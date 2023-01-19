@@ -30,6 +30,7 @@ import { check, PERMISSIONS, PermissionStatus } from 'react-native-permissions';
 import { checkLocation, requestLocation } from '../../shared/location';
 import { CameraCapturedPicture } from 'expo-camera';
 import { log } from 'xstate/lib/actions';
+import { isBLEEnabled } from '../../lib/smartshare';
 
 const { GoogleNearbyMessages, IdpassSmartshare } = SmartshareReactNative;
 const { Openid4vpBle } = OpenIdBle;
@@ -828,7 +829,8 @@ export const scanMachine =
 
       guards: {
         isQrOffline: (_context, event) => {
-          if (Platform.OS === 'ios') return false;
+          // don't scan if QR is offline and Google Nearby is enabled
+          if (Platform.OS === 'ios' && !isBLEEnabled) return false;
 
           const param: ConnectionParams = Object.create(null);
           try {
