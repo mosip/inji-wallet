@@ -7,6 +7,7 @@ import QRCode from 'react-native-qrcode-svg';
 import { Centered, Button, Row, Column, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { useRequestScreen } from './RequestScreenController';
+import { isBLEEnabled } from '../../lib/smartshare';
 
 export const RequestScreen: React.FC = () => {
   const { t } = useTranslation('RequestScreen');
@@ -62,16 +63,17 @@ const SharingQR: React.FC<RequestScreenProps> = ({ t, controller }) => {
           />
         ) : null}
       </Centered>
-
-      <Row align="center" crossAlign="center" margin={[0, 0, 48, 0]}>
-        <Text margin={[0, 16, 0, 0]}>{t('offline')}</Text>
-        <Switch
-          value={controller.sharingProtocol === 'ONLINE'}
-          onValueChange={controller.SWITCH_PROTOCOL}
-          disabled={Platform.OS === 'ios'}
-        />
-        <Text margin={[0, 0, 0, 16]}>{t('online')}</Text>
-      </Row>
+      {!isBLEEnabled && (
+        <Row align="center" crossAlign="center" margin={[0, 0, 48, 0]}>
+          <Text margin={[0, 16, 0, 0]}>{t('offline')}</Text>
+          <Switch
+            value={controller.sharingProtocol === 'ONLINE'}
+            onValueChange={controller.SWITCH_PROTOCOL}
+            disabled={Platform.OS === 'ios'}
+          />
+          <Text margin={[0, 0, 0, 16]}>{t('online')}</Text>
+        </Row>
+      )}
     </React.Fragment>
   );
 };

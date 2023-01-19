@@ -10,7 +10,7 @@ import { RequestLayout } from '../screens/Request/RequestLayout';
 import { ScanLayout } from '../screens/Scan/ScanLayout';
 import i18n from '../i18n';
 import { Platform } from 'react-native';
-import { USE_BLE_SHARE } from 'react-native-dotenv';
+import { isBLEEnabled } from '../lib/smartshare';
 
 var home: TabScreen = {
   name: 'Home',
@@ -50,8 +50,7 @@ var profile: TabScreen = {
 export const mainRoutes: TabScreen[] = [];
 mainRoutes.push(home);
 mainRoutes.push(scan);
-!(Platform.OS === 'ios' && USE_BLE_SHARE === 'true') &&
-  mainRoutes.push(request);
+!(Platform.OS === 'ios' && isBLEEnabled) && mainRoutes.push(request);
 mainRoutes.push(profile);
 
 export type MainBottomTabParamList = {
