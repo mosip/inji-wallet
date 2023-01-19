@@ -21,3 +21,8 @@ export default async function getAllConfigurations() {
     throw error;
   }
 }
+
+export interface DownloadProps {
+  maxDownloadLimit: number;
+  downloadInterval: number;
+}
