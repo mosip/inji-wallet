@@ -21,10 +21,11 @@ import {
 import { KeyPair } from 'react-native-rsa-native';
 import {
   getBindingCertificateConstant,
-  getPrivateKey,
   savePrivateKey,
 } from '../shared/keystore/SecureKeystore';
-import getAllConfigurations from '../shared/commonprops/commonProps';
+import getAllConfigurations, {
+  DownloadProps,
+} from '../shared/commonprops/commonProps';
 
 const model = createModel(
   {
@@ -47,6 +48,7 @@ const model = createModel(
     revoked: false,
     downloadCounter: 0,
     maxDownloadCount: 10,
+    downloadInterval: 5000,
     walletBindingResponse: null as WalletBindingResponse,
     walletBindingError: '',
     publicKey: '',
@@ -143,10 +145,11 @@ export const vcItemMachine =
                 src: 'checkDownloadExpiryLimit',
                 onDone: {
                   target: 'checkingStatus',
-                  actions: 'setMaxDownloadCount',
+                  actions: ['setMaxDownloadCount', 'setDownloadInterval'],
                 },
                 onError: {
                   actions: log((_, event) => (event.data as Error).message),
+                  target: 'checkingStatus',
                 },
               },
             },
@@ -570,7 +573,13 @@ export const vcItemMachine =
         }),
 
         setMaxDownloadCount: model.assign({
-          maxDownloadCount: (_context, event) => event.data as number,
+          maxDownloadCount: (_context, event) =>
+            Number((event.data as DownloadProps).maxDownloadLimit),
+        }),
+
+        setDownloadInterval: model.assign({
+          downloadInterval: (_context, event) =>
+            Number((event.data as DownloadProps).downloadInterval),
         }),
 
         storeTag: send(
@@ -677,13 +686,20 @@ export const vcItemMachine =
         checkDownloadExpiryLimit: async (context) => {
           var resp = await getAllConfigurations();
           const maxLimit: number = resp.vcDownloadMaxRetry;
+          const vcDownloadPoolInterval: number = resp.vcDownloadPoolInterval;
           console.log(maxLimit);
           if (maxLimit <= context.downloadCounter) {
             throw new Error(
               'Download limit expired for request id: ' + context.requestId
             );
           }
-          return maxLimit;
+
+          const downloadProps: DownloadProps = {
+            maxDownloadLimit: maxLimit,
+            downloadInterval: vcDownloadPoolInterval,
+          };
+
+          return downloadProps;
         },
 
         addWalletBindnigId: async (context) => {
@@ -747,7 +763,7 @@ export const vcItemMachine =
               requestTime: String(new Date().toISOString()),
               request: {
                 individualId: context.id,
-                otpChannels: ['EMAIL'],
+                otpChannels: ['EMAIL', 'PHONE'],
               },
             }
           );
@@ -759,7 +775,7 @@ export const vcItemMachine =
         checkStatus: (context) => (callback, onReceive) => {
           const pollInterval = setInterval(
             () => callback(model.events.POLL()),
-            5000
+            context.downloadInterval
           );
 
           onReceive(async (event) => {
@@ -785,7 +801,7 @@ export const vcItemMachine =
         downloadCredential: (context) => (callback, onReceive) => {
           const pollInterval = setInterval(
             () => callback(model.events.POLL()),
-            5000
+            context.downloadInterval
           );
 
           onReceive(async (event) => {
