@@ -1,5 +1,5 @@
 {
-  "header": "To retrieve your UIN or VID, enter your Application {{vcLabel}} number",
+  "header": "To retrieve your UIN or VID, enter your application {{vcLabel}} number",
   "getUIN": "Get UIN/VID",
   "applicationId": "Application {{vcLabel}} number",
   "requestingOTP": "Requesting OTP...",

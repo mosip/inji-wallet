@@ -13,6 +13,18 @@ import { StoreEvents } from './store';
 import { ActivityLogEvents } from './activityLog';
 import { verifyCredential } from '../shared/vcjs/verifyCredential';
 import { log } from 'xstate/lib/actions';
+import {
+  generateKeys,
+  getJwt,
+  WalletBindingResponse,
+} from '../shared/cryptoutil/cryptoUtil';
+import { KeyPair } from 'react-native-rsa-native';
+import {
+  getBindingCertificateConstant,
+  getPrivateKey,
+  savePrivateKey,
+} from '../shared/keystore/SecureKeystore';
+import getAllConfigurations from '../shared/commonprops/commonProps';
 
 const model = createModel(
   {
@@ -31,11 +43,19 @@ const model = createModel(
     otpError: '',
     idError: '',
     transactionId: '',
+    bindingTransactionId: '',
     revoked: false,
     downloadCounter: 0,
+    maxDownloadCount: 10,
+    walletBindingResponse: null as WalletBindingResponse,
+    walletBindingError: '',
+    publicKey: '',
+    privateKey: '',
   },
   {
     events: {
+      KEY_RECEIVED: (key: string) => ({ key }),
+      KEY_ERROR: (error: Error) => ({ error }),
       EDIT_TAG: () => ({}),
       SAVE_TAG: (tag: string) => ({ tag }),
       STORE_READY: () => ({}),
@@ -50,6 +70,10 @@ const model = createModel(
       INPUT_OTP: (otp: string) => ({ otp }),
       REFRESH: () => ({}),
       REVOKE_VC: () => ({}),
+      ADD_WALLET_BINDING_ID: () => ({}),
+      BINDING_DONE: () => ({}),
+      CANCEL: () => ({}),
+      CONFIRM: () => ({}),
     },
   }
 );
@@ -57,7 +81,7 @@ const model = createModel(
 export const VcItemEvents = model.events;
 
 export const vcItemMachine =
-  /** @xstate-layout N4IgpgJg5mDOIC5QDcDGBaAlgFzAWwDpUALMVAa0wDsoA1VAYgHEBRAFQH1aBhDgJRYBlAAoB5AHKCWiUAAcA9rByZ5VGSAAeiAIwAWAAwFtANgAcAdl0BmAJwAmOxd0BWADQgAnoivHDpx6aBzubGwc6mAL4R7mhYuIQkZJQ0gtjyAE5gDIJsogL8QmKS0kggCkrYKmqlWgh6hiYWDnba4aFW7l4I5qbOBPohvdoW2jbDUTEYOPhEpBTUUIJg6cjLACIAhtgbs0kLqVsArrAMYgAyZ+rlyqrqtdrm2gRWds521vqmusZ2Nr2dOlGugIAXMb1+dn0NnCExAsWmCTmyUWy1W6U22128xS22wxwYa1EAHVxGdRABBNYFSkATSuihu1VAtQMfSsPlCumhVlGjwBdSsumBdh5Vmc1jGznszlh8PiWORSxW6y2Owg8gA7lQADbyDYQBbcTIQMBUSobbWnUQXekVKp3RA-YWtcz6YzQ4y6OzGfnaIEgwJghz2KEw6JwqbyxLYlHK9GqgjqrW6-WG42m82W7gCNYscRsACS5LOHEJJLJlJYa1tjIdCF0pmMz3Mrucgu+7R9nkQjb6Fh87Z5LcCssjM0wEG1WSrBc4bHJTBrlVuNR0bqeNk9A2Mrv0+mc4X5f3MBF0PRFPP8-kso7i48nWVoLD4BYAYnTStdl0zND3nA0rEbUx930OwQlCflTEAggbHMDkwKdfRtFvBECAnKcGDJbgAGkuG4Jd7VXOo2z6T5fDMHwbCQnpIOg2CfCgkJBjFFD5XQrIAFVSVEHC8IIldmR0axTCMYxRhsXRhmsd47H5QZ+mGHdQNGYxKNYmZIGUGg2A2KACQLQQAFkDMEfif3uYYT09XxGx6dk91k7sEGPU9z1CJD-HZKx1MITTKm03TsnJJ8OHnRdPwZb86z9VpTyosZ3TMAxHK6P1HiML1Xi9YwxIGSJwzlGZYDSdIFh0vScjyFgChECQpDM6LXjsAhTAk-RALguCrHMX1tBFAhLGGXoWj+drdB8gg0UwAAzDw00gDNMAtBh1SoMA0KoZB5HIdbCsIKbZvmk0zSW7UEGoLbUC2KoAG19AAXQaojtH0AwCClcxXihb0TAPfkXEMJDhl5d0eiFcaCrHfblhmuaaCNBaTuW5Z0gyAhZG1LZpoyfaocmmHDvh9MkbOi75Cu787seiK7QE39nNeFrnE9GxAJcSFvX5H5mvsb4+u0WxgNeibo2RWgCcwCmqgOPETiewS6hep4rDdaFglAz6eqc14myvQJ+YGfd2Qmi6LQnBgC3EYQOM4UQ2GEeX6chT1m0eA9wZVqDev-GDKJ3ST3SFfLJjvQhTe1c21gM4zBFMmna2el4bHe0xWm+F5PUA-k2yeAw7Mk8UWnMGwJsyABHQ44H8qBRGwWQVtUdayZ2ya8fLyvioWWvZHOzbyeu1Qqcd+5U6sfoHBykwQjeLWukSmCzxFODHHeCxS7ACuq67uuGBRtGMaxnHW9Dgh263mhu97y6B6oIf46i57U+BN5AlU75nF+3Rs-sAgxLBFWJKWFgnYCaGxUCoDALIau3cCxUFkIcbAFsrY2w4HbB299CIKweFyd6YEP6OHBO1NwTlYLJ3sIKewrR-zeUhifMBECoHb1kLA+BiCo5GRMsPHQ-5gQ-DFLYewcF7CmCPC0OKvwfBSihE4dem9O40DOOTcgDc1obS2i3Pap8N4d2rooigV9+6UwelwuowFk6NmsnuaEF4RFOT6rBd61gXo9FbIKWROiFh6OUXvdI6NMbYGxukXGJ8z7yKgF4gxUtB7GIwXTEeVEBrkNZAhbqX8SHFxgiKQuUppQPAmrqGM9Bsi5HyAIWqxQTGtG6kYcIfUWyhEcNCXqm4akSR+i2cUxtYRUHkCaeApRNGiwWPQExZhf6pIkl6GwYwvQdDsS2Iwe4hQ9GmQYawEMQ6oSGTiDIYATHQhBE6KigQeSTLmXPAY-RTk2WkcBYwIskT7FRCqTE2zFi4mOPsp4jwvjehcMzVSwxfQ8maiKAW0zegDA-sHCMJ83lKjRBiNUmodR6gNETRGmYTHhBEueAWrpPrBDSalFWhgwUclCEAv4Dy9gpGefGbYoyTw-Oyv8nKl5fRujHqCCiIQXAbNhahdilSHgbgPBRdODhLByUCDBOCOV9xfAlDCzRfkyq6UqVCYEm4pSOE+i0P0nLZWeRaDuRwKtzATWKhkdVUBKmQj6KpMwPQYoCy7KlX4hg2xeihMXWCXwZS0NQgdOGUAEbHSxbE8yiB6m-yJb0A8eq2z-Ryu9P0UF8VQh8CAoNUZHk0HFqVaaksb4y0+VGusHxnh6Fqf4RwZriWOndBlFsfUuR-H8CXXN45NpmwgAQeQdcTHOyeE-HoqlFWCmzn1X+fxWh7lTmJIUJte0R37QAIzATtKgEBh1G3epuV6rNMrEK6G0IwDwSLemAi9Ltmy2KronHu34B7fBckFA4U9iAJSztToEKC-DPjuPPjXIdFbnrfDIX8cUDZ-xukbN-ZqXpvgB03MMFooDwGQOgXXFhCDKnFyeJ6cCjw-SvTdHJaZ704NUR+DuJ1wGwleIIwk34TExRu0sF+xW0FrCg1ePwrJ+SlHDNQJUmeLVbCAU+LYAwoxfQEP6E4z4WVPpfB8iY6wA0pJ-PFYC2xc8TwvVen89c3wwRRCiEAA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QDcDGBaAlgFzAWwGIAlAUQDFSBlACQG0AGAXUVAAcB7WHTdgOxZAAPRABYATABoQAT0QBGABwBWAHT0FAZjEB2bSKUBOA9rliAvmalosuPCtQALMKgDWmXlABqqAgHESACoA+p4AwkFUAAoA8gBylCQMzEggHFzYPPwpwggKBiIqcvqaAGwGSvT0SnJSsgjicio69Np5GvTFSiIWVhg4+PZOru5ePv7BYREklDHxiXLJbJzcfAI5eQVFSqXlldW1iO2qmlpKhtpnGkbdliDW-XaOzm4elNjsAE5gBJQB0aRTGZxBJJARpFZZUA5OSmA4IMRyDQFDRKDQmMRiDRyAwKG69GwDJ7DV7vL4-P4AqLA+aLVLLDKrbLyJRiBRNAxybT0MRnQwKBSSGTyXFNERGPIwhFo-k9O59WyDZ4jShgD7IVUAEQAhtgtYriVA3jqAK6wAgxAAyFtBKXBDMhQkQPO0TTORQMJRZ2hKyjhihEbLkHRaXVRcmqCll9wVRJehtV6o+2t1+rjRuwpoIGuiAHVYhbogBBDVTYsATRtS3SmTWokMhWD9HyJRKRUxfuMYjUJQRBnaii6VSj8sJQzTCc1Or1EHYAHdeAAbdhaiAjUJfCBgXgZLUL83RK2VunVxlQxAKIMqETiCVo6pnBR+hQlDSFBTaMQlEQdL8dPFyglHjHZUJyTKcVBneclxXNcNy3Hc91CUgNRIWIAgASULC0gmzPMC2LEgNSPO0ayZBAg3yQoURMGjLg9DsxAKD88gxERsQDVph0AlRMAgBdvkI9DggCQtfGI+lSLPeERBdNiShMIMtDFb8lDhT9ORUNERDKZ9rw-JQuIeHi+O+TwSCIdCyArJgwQk09HXhT8ShUd8ujyFkMUMEo1LEFoVBZbl6BhBQQzRQyFV4-iCALUIAGkQlCcSTwdHIdA0V8kW01k5BKegexaNTvUad9r206of3MW5owGSLvlITxolikgEqSiFa1yQU6lZEKXL0JRPS5AMXwMqqRzsWqCGLEscywi1AiCAAhdDYg1ZbfCCdCiJs207JS+ROv28KBkgbgPACLUoCzdDKAAWWuyhWvtdrMVknKFPoJT8iqNT0voQp9By79TB7AwjrsE6MjOi6fkLMyghEsTtqrNqyMY175JhD7GK+1ShWk6pChbREBQMDpPzBlRYFJEZzsu35-maqk5keySHP645yhbDolMUbQ1IBwnWw0EmyZKCnE0wAAzaRYMgeDMF3AgZ14MAeN4ZB2BcVXqrsCXpdlzdtwVhcEHcDXUB1TIkhZ+zUqc3q3PKDEeXovHfNbFQvwqSoUSbF9xdVKWZY8dc5aNxXVQ+T4VFYBcdUlz5dbGlQ9eDqBQ8NhDTfV9gLfta2kePFGpM85zXIDJ3PNdupsR9T3n3KFFlDYnKKdjEZPEDyXMDzzJ00zG29vI5QDBc5QuSMfqPUUJ8KjfMogp5apurb4CPE7j4pZ7y2+H7s1aAWWzkvagdR-5JQJ856fHzdxRR69gMZP5FptAps3d14ghlsiABVYJogCJEQe7UtAujyjyHQRR5JiD7HCEQVxVBP2MHlPq-tRrcXfguT+q1br3WAWRUB3YIEmG0h+WBeNhZflFMYVsYoSGVXxEZL4ABHY0cBIZQGiNgVgSs+CqzNprbWycWFsKpiMLhrBs7mx3rwAutISK23kDCV8MDfLpX6pUD6cCuTOT7NoShbEL75ApiI9h4juEEEjtHWO8dE4p2EWAVhZiPASKkbnGRcij7FwcjCRE7I1Eolyj7OBQsVDGFJp6fQMCigUy1KgVAYBWAcIkehXgrBjTYC-rEX+-9AH4KkmUVQ4C3S4lKTiOBzQVDMQFEDC+SJYnxMSck7hqT0mZJwXdSgD1C4KKHqYJs9cQrtHKHoRicINAY38iTTQ1waIaAaQkpJIwiBgA1lrVpGSsk5KCAAoBPTdonzeoUIov1tBfRgbjGuiJjjpS0O0TQLIRqMIVHExZHCVlrLABs9p11OndPkQcsiRhGimH0GKAUXIsZwjIVebYPIfSIkfq-dBTDHGiI4RaXOLheEqzVp8+x3FTFiI8Ji1wbje58E8TtY+ZEfRFJ7CUx+eQb51CuM+KpXJzj3MUGLFFCoiUYqxZYj4UcPgxzjtgBOHwk6ErRc4qApKXDko8UwfJDlClEMZWUllog2L3w+n2KUDyhx8oGEuA03hyQM0BLMEE+yaVSV8SogwASNHBLxt+PyRgPTvhyuoF1Ji5XEqgB8wROL+E5y1gS1FTjg2hq1sq-Oqr7XeNSqTJo6g0TekxBeE54yfaC17PJF86hA2xveassNVixU2MlXYnWKgBXLMrQmgRFLZHJoBQ6hyhDimQNITAjQcCYSqACmKPKTt0qBrWR3Hw9NKTTFtYkFNT1aVnJcuUAUFQrifj0PmtEntGKtmbPJb8vLnlmvYFAKAzbPlXVwV0tV0IX5Xh9N6xEaJWQHQQO0A9PZtLsRbHoPKZb0UjAWu4VcLiLHKwjfihtTaPAQd4FBzh3DE1W07V41dUlf1hMgQ8oMRjv3A1UEGM9T8ijiCeQBGNYGkOQfMTw6t4rbHSujfyoNHDkOodcW2lVjAn2HA+vhkwhGqhnO-RURogVi1C36vAimsAHBzhICKz4BBQiFliKEEg1oV2sxyJ6ZypgKjPm9HkPKOqEAeWod6eBjFFJyAWU08DjHoM8O-n-HZeSDOKIQBcWSrQZk5UoeGP0S8qnRPDF+i4wsXNLIYyhpj96-lCYCxfK8wWrihefOFvGF8ux6G9byZ0sSIAQFimAaQkQtSYA+OGvFgiOMDBXJV6rtX6sYcpVh6lqalHyWOfA9oZzvwXIiyKLkJM2ItBkvo8r7Wat1Yayx2tUqZVGTa1VpbXX+NJsE35vpRyYTDZaOc8ofoya9TFIDdK4TkUXrsG1kYOZdz8WwDxkY6EICNYEVGhtz2PCvYXO9z7HhvvdY7Qdrt-Wf0aT7SQ6B5DWWFc0noeS6V9H9Xqaap7FWXtvbAB99zUBvvCtFaxut7GAf46B4T4nyXwcQEh1S5GOGe1+QR1AshQ6KFYk2IxVEAomwohow240rAICWw8JETeyAdRgG279yNQjuIS6lxw2XmB5e4G2yz3rbPDOIFaGRlETKZKYhfOMupmlyiDkChcEDuOVDq+l1ALXOvFfVfJ9YiV62Wt2Fd5ruXCu9d7cw9D7DRuAvKCom5JFlveesv0CZj6ehwxIlMA92jCplNzjB4aXUGYzRLRWmtHCcRl0w-Z9CXy99n7DIvuIEQ4yewyZJhMowPIQojVuLwdgm54ApB1lH-z6AJlwnQP0tQmjTBIgFFnhhOfRxKnXqgUfQ9bPexyuUD0YpDDjNj8V5sQUX4nFXqvwvnwwAb5PgiAomi-YIlZMUfmzlj-FFaF+zEF+DQqjVJOLqLfmRCdn6GUM5LlN+M+O0PJE7o9qmCBAAWBCmO3CSCaEPobv5jlCRvkKPOAr5OoKUoYGLsnKgfGEgcmNOHOIuMuKhhnPLLuMAQUnXEiFmnUqiLoDgVQlsMLPkK0L4uesvuNCZEwQ5NjA-pKKiEYPoroIVDyNdkNPkCOq3M7hDDTBdKIc+t+p+AMmKMYFiO+B6KDM7lTJ8OoVAJoYcLHuEkFMLJ+FiC6t5G7PoH9O5DoB6J+M+BiAHJvPrCHHBOHAuJYfCNyEVtiBiKwb5J+GpIDLbl0F+kYBMkvg2mQRvFvO2nvMEYiINufDRB+BZloDEcLC5KYHXopNsLiG-OrB-BAMEWxFeO+pUDApUB+nAkiH9MUHlNiPoiFMkcnJgrxCoOwNwsEXkA0cCk0aTLYUnrqjoGEtsFnl7MVlUfLlghACoAAEZxJawobBEupwJDSwpnJ8FVD8jZ4IZcZMbBGshUK5QsgTJBQXgi4hIDJTYIjchGB3EJbNKsDfKjHrpfhCzwJ5b6EVKaBhKhYuq6R0IkHcSvKuYeDxpfJpIZLBGBZZb8g5Yvh5aXJKKVBxE95iY3aRjO6IYKpYp1EfiFA8iIichcgnbfrwLlAZq5q+SYxBQUzmpxjeD-F-ThIyQfQwh6B5DjI4gFDeqFLcgfgwiCEXHlq3qCLBHyTDqmBRYN475jbTqayzp1EcgEl6IBjVC8z5pFCHr6BohJF5QdCclXo3qIkto359Y17njrriBiYupOxVC4k-otFmn9S6C4ifioigbyoF4SJ1EkaMR-RTZojTynHGImEqazhqairBFej+QtGFJ7675wi2Yf6-gCjySwmbaNKJZQBhkjFOnR4shsgnCmDKCVAmDlJ4ymZ-S3LNDBiwHGHwFbYdbLZ7FIiaRC6fh0Kfj7EtnZQQmejKDhjigmo9m05QDA6g4k7fZpl8weoQLzEL55TaTzLO5B4jAe6h7VZpn6ANh6ruHwIyTelNyvgnBVAejqBfgknwF56zgF6ZFVlYEFpQKKQchvStDW44hqDTaGl5AWAWBAA */
   model.createMachine(
     {
       predictableActionArguments: true,
@@ -112,8 +136,20 @@ export const vcItemMachine =
         checkingServerData: {
           description:
             "Download VC data from the server. Uses polling method to check when it's available.",
-          initial: 'checkingStatus',
+          initial: 'verifyingDownloadLimitExpiry',
           states: {
+            verifyingDownloadLimitExpiry: {
+              invoke: {
+                src: 'checkDownloadExpiryLimit',
+                onDone: {
+                  target: 'checkingStatus',
+                  actions: 'setMaxDownloadCount',
+                },
+                onError: {
+                  actions: log((_, event) => (event.data as Error).message),
+                },
+              },
+            },
             checkingStatus: {
               invoke: {
                 src: 'checkStatus',
@@ -121,10 +157,10 @@ export const vcItemMachine =
               },
               on: {
                 POLL: {
+                  cond: 'isDownloadAllowed',
                   actions: send('POLL_STATUS', { to: 'checkStatus' }),
                 },
                 DOWNLOAD_READY: {
-                  actions: 'resetDownloadCounter',
                   target: 'downloadingCredential',
                 },
               },
@@ -171,6 +207,9 @@ export const vcItemMachine =
             },
             REVOKE_VC: {
               target: 'acceptingRevokeInput',
+            },
+            ADD_WALLET_BINDING_ID: {
+              target: 'showBindingWarning',
             },
           },
         },
@@ -330,7 +369,10 @@ export const vcItemMachine =
             ],
             onError: [
               {
-                actions: [log('OTP error'), 'setOtpError'],
+                actions: [
+                  log((_, event) => (event.data as Error).message),
+                  'setOtpError',
+                ],
                 target: 'acceptingOtpInput',
               },
             ],
@@ -352,10 +394,136 @@ export const vcItemMachine =
             },
           },
         },
+        showBindingWarning: {
+          on: {
+            CONFIRM: {
+              target: 'requestingBindingOtp',
+            },
+            CANCEL: {
+              target: 'idle',
+            },
+          },
+        },
+        requestingBindingOtp: {
+          invoke: {
+            src: 'requestBindingOtp',
+            onDone: [
+              {
+                target: 'acceptingBindingOtp',
+              },
+            ],
+            onError: [
+              {
+                actions: 'setWalletBindingError',
+                target: 'showingWalletBindingError',
+              },
+            ],
+          },
+        },
+        showingWalletBindingError: {
+          on: {
+            CANCEL: {
+              target: 'idle',
+              actions: 'setWalletBindingErrorEmpty',
+            },
+          },
+        },
+        acceptingBindingOtp: {
+          entry: ['clearOtp'],
+          on: {
+            INPUT_OTP: {
+              target: 'addKeyPair',
+              actions: ['setOtp'],
+            },
+            DISMISS: {
+              target: 'idle',
+              actions: ['clearOtp', 'clearTransactionId'],
+            },
+          },
+        },
+        addKeyPair: {
+          invoke: {
+            src: 'generateKeyPair',
+            onDone: {
+              target: 'addingWalletBindingId',
+              actions: ['setPublicKey', 'setPrivateKey'],
+            },
+            onError: [
+              {
+                actions: 'setWalletBindingError',
+                target: 'showingWalletBindingError',
+              },
+            ],
+          },
+        },
+        addingWalletBindingId: {
+          invoke: {
+            src: 'addWalletBindnigId',
+            onDone: [
+              {
+                target: 'updatingPrivateKey',
+                actions: ['setWalletBindingId'],
+              },
+            ],
+            onError: [
+              {
+                actions: 'setWalletBindingError',
+                target: 'showingWalletBindingError',
+              },
+            ],
+          },
+        },
+        updatingPrivateKey: {
+          invoke: {
+            src: 'updatePrivateKey',
+            onDone: {
+              target: 'showBindingStatus',
+              actions: ['updatePrivateKey', 'updateVc'],
+            },
+            onError: {
+              actions: 'setWalletBindingError',
+              target: 'showingWalletBindingError',
+            },
+          },
+        },
+        showBindingStatus: {
+          entry: 'storeContext',
+          on: {
+            BINDING_DONE: {
+              target: 'idle',
+              actions: 'setWalletBindingErrorEmpty',
+            },
+          },
+        },
       },
     },
     {
       actions: {
+        setWalletBindingError: assign({
+          walletBindingError: (context, event) => (event.data as Error).message,
+        }),
+
+        setWalletBindingErrorEmpty: assign({
+          walletBindingError: () => '',
+        }),
+
+        setPublicKey: assign({
+          publicKey: (context, event) => (event.data as KeyPair).public,
+        }),
+
+        setPrivateKey: assign({
+          privateKey: (context, event) => (event.data as KeyPair).private,
+        }),
+
+        updatePrivateKey: assign({
+          privateKey: () => '',
+        }),
+
+        setWalletBindingId: assign({
+          walletBindingResponse: (context, event) =>
+            event.data as WalletBindingResponse,
+        }),
+
         updateVc: send(
           (context) => {
             const { serviceRefs, ...vc } = context;
@@ -397,12 +565,12 @@ export const vcItemMachine =
           tag: (_, event) => event.tag,
         }),
 
-        resetDownloadCounter: model.assign({
-          downloadCounter: () => 0,
-        }),
-
         incrementDownloadCounter: model.assign({
           downloadCounter: ({ downloadCounter }) => downloadCounter + 1,
+        }),
+
+        setMaxDownloadCount: model.assign({
+          maxDownloadCount: (_context, event) => event.data as number,
         }),
 
         storeTag: send(
@@ -506,6 +674,80 @@ export const vcItemMachine =
       },
 
       services: {
+        checkDownloadExpiryLimit: async (context) => {
+          var resp = await getAllConfigurations();
+          const maxLimit: number = resp.vcDownloadMaxRetry;
+          console.log(maxLimit);
+          if (maxLimit <= context.downloadCounter) {
+            throw new Error(
+              'Download limit expired for request id: ' + context.requestId
+            );
+          }
+          return maxLimit;
+        },
+
+        addWalletBindnigId: async (context) => {
+          const response = await request('POST', '/wallet-binding', {
+            requestTime: String(new Date().toISOString()),
+            request: {
+              authFactorType: 'WLA',
+              format: 'jwt',
+              individualId: context.id,
+              transactionId: context.bindingTransactionId,
+              publicKey: context.publicKey,
+              challengeList: [
+                {
+                  authFactorType: 'OTP',
+                  challenge: context.otp,
+                  format: 'alpha-numeric',
+                },
+              ],
+            },
+          });
+          const certificate = response.response.certificate;
+          await savePrivateKey(
+            getBindingCertificateConstant(context.id),
+            certificate
+          );
+
+          const walletResponse: WalletBindingResponse = {
+            walletBindingId: response.response.encryptedWalletBindingId,
+            keyId: response.response.keyId,
+            thumbprint: response.response.thumbprint,
+            expireDateTime: response.response.expireDateTime,
+          };
+          return walletResponse;
+        },
+
+        updatePrivateKey: async (context) => {
+          const hasSetPrivateKey: boolean = await savePrivateKey(
+            context.walletBindingResponse.walletBindingId,
+            context.privateKey
+          );
+          if (!hasSetPrivateKey) {
+            throw new Error('Could not store private key in keystore.');
+          }
+          return '';
+        },
+
+        generateKeyPair: async (context) => {
+          let keyPair: KeyPair = await generateKeys();
+          return keyPair;
+        },
+
+        requestBindingOtp: async (context) => {
+          const response = await request('POST', '/binding-otp', {
+            requestTime: String(new Date().toISOString()),
+            request: {
+              individualId: context.id,
+              otpChannels: ['EMAIL'],
+            },
+          });
+          if (response.response == null) {
+            throw new Error('Could not process request');
+          }
+        },
+
         checkStatus: (context) => (callback, onReceive) => {
           const pollInterval = setInterval(
             () => callback(model.events.POLL()),
@@ -561,6 +803,7 @@ export const vcItemMachine =
                   isVerified: false,
                   lastVerifiedOn: null,
                   locked: context.locked,
+                  walletBindingResponse: null,
                 })
               );
             }
@@ -633,7 +876,7 @@ export const vcItemMachine =
         },
 
         isDownloadAllowed: (_context, event) => {
-          return _context.downloadCounter < 10;
+          return _context.downloadCounter <= _context.maxDownloadCount;
         },
 
         isVcValid: (context) => {
@@ -724,6 +967,46 @@ export function selectIsAcceptingRevokeInput(state: State) {
   return state.matches('acceptingRevokeInput');
 }
 
-export function selectIsRequestingOtp(state: State) {
-  return state.matches('requestingOtp');
+export function selectIsRequestBindingOtp(state: State) {
+  return state.matches('requestingBindingOtp');
+}
+
+export function selectWalletBindingId(state: State) {
+  return state.context.walletBindingResponse;
+}
+
+export function selectEmptyWalletBindingId(state: State) {
+  var val = state.context.walletBindingResponse
+    ? state.context.walletBindingResponse.walletBindingId
+    : undefined;
+  return val === undefined || val == null || val.length <= 0 ? true : false;
+}
+
+export function selectWalletBindingError(state: State) {
+  return state.context.walletBindingError;
+}
+
+export function selectAcceptingBindingOtp(state: State) {
+  return state.matches('acceptingBindingOtp');
+}
+
+export function selectShowBindingStatus(state: State) {
+  return state.matches('showBindingStatus');
+}
+
+export function selectShowWalletBindingError(state: State) {
+  return state.matches('showingWalletBindingError');
+}
+
+export function isWalletBindingInProgress(state: State) {
+  return state.matches('requestingBindingOtp') ||
+    state.matches('addingWalletBindingId') ||
+    state.matches('addKeyPair') ||
+    state.matches('updatingPrivateKey')
+    ? true
+    : false;
+}
+
+export function isShowingBindingWarning(state: State) {
+  return state.matches('showBindingWarning');
 }

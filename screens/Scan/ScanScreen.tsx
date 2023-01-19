@@ -1,29 +1,15 @@
 import React from 'react';
-import { TFunction, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
+import { MessageOverlay } from '../../components/MessageOverlay';
 import { QrScanner } from '../../components/QrScanner';
 import { Button, Centered, Column, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
+import { QrLogin } from '../QrLogin/QrLogin';
 import { useScanScreen } from './ScanScreenController';
 
 export const ScanScreen: React.FC = () => {
   const { t } = useTranslation('ScanScreen');
   const controller = useScanScreen();
-  const props: ScanScreenProps = { t, controller };
-
-  const BluetoothPrompt: React.FC<ScanScreenProps> = ({ t, controller }) => {
-    return (
-      <Centered fill>
-        <Text color={Theme.Colors.errorMessage} align="center">
-          {t('bluetoothDenied', { vcLabel: controller.vcLabel.singular })}
-        </Text>
-        <Button
-          margin={[32, 0, 0, 0]}
-          title={t('gotoSettings')}
-          onPress={controller.GOTO_SETTINGS}
-        />
-      </Centered>
-    );
-  };
 
   return (
     <Column
@@ -35,8 +21,6 @@ export const ScanScreen: React.FC = () => {
         align="space-evenly"
         backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
         <Text align="center">{t('header')}</Text>
-
-        {controller.isBluetoothDenied && <BluetoothPrompt {...props} />}
 
         {controller.isLocationDisabled || controller.isLocationDenied ? (
           <Column align="space-between">
@@ -55,7 +39,7 @@ export const ScanScreen: React.FC = () => {
 
         {!controller.isEmpty ? (
           controller.isScanning && (
-            <Column crossAlign="center">
+            <Column crossAlign="center" margin="0 0 0 -6">
               <QrScanner onQrFound={controller.SCAN} />
             </Column>
           )
@@ -64,12 +48,18 @@ export const ScanScreen: React.FC = () => {
             {t('noShareableVcs', { vcLabel: controller.vcLabel.plural })}
           </Text>
         )}
+        {controller.isQrLogin && (
+          <QrLogin
+            isVisible={controller.isQrLogin}
+            service={controller.isQrRef}
+          />
+        )}
+        <MessageOverlay
+          isVisible={controller.isQrLoginstoring}
+          title={t('loading')}
+          progress
+        />
       </Centered>
     </Column>
   );
 };
-
-interface ScanScreenProps {
-  t: TFunction;
-  controller: ReturnType<typeof useScanScreen>;
-}

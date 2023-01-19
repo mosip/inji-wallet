@@ -239,3 +239,14 @@ export function selectIsRefreshingMyVcs(state: State) {
 export function selectIsRefreshingReceivedVcs(state: State) {
   return state.matches('ready.receivedVcs.refreshing');
 }
+
+export function selectBindedVcs(state: State) {
+  return (Object.keys(state.context.vcs) as Array<string>).filter((key) => {
+    var walletBindingResponse = state.context.vcs[key].walletBindingResponse;
+    return (
+      walletBindingResponse !== null &&
+      walletBindingResponse.walletBindingId !== null &&
+      walletBindingResponse.walletBindingId !== ''
+    );
+  });
+}

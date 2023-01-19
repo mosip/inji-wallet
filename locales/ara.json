@@ -34,7 +34,18 @@
       "id": "Id",
       "nationalCard": "البطاقة الوطنية",
       "uin": "UIN",
-      "vid": "VID"
+      "enableVerification": "تفعيل",
+      "profileAuthenticated": "تم تنشيطه لتسجيل الدخول عبر الإنترنت",
+      "offlineAuthDisabledHeader": "التنشيط معلق لتسجيل الدخول عبر الإنترنت",
+      "offlineAuthDisabledMessage": "الرجاء النقر فوق الزر أدناه لتفعيل بيانات الاعتماد هذه لاستخدامها في تسجيل الدخول عبر الإنترنت.",
+      "vid": "VID",
+      "verificationEnabledSuccess": "تم تنشيطه لتسجيل الدخول عبر الإنترنت",
+      "goback": "عُد",
+      "BindingWarning": "لقد قمت بالفعل بتنشيط تسجيل الدخول عبر الإنترنت لبيانات الاعتماد هذه على جهاز آخر. لن تتمكن بعد الآن من استخدام هذا الجهاز لتسجيل الدخول إذا قمت بتنشيطه مرة أخرى على هذا الجهاز.",
+      "yes_confirm": "نعم ، أنا أؤكد",
+      "no": "رقم",
+      "Alert": "انذار",
+      "ok": "تمام"
     },
     "AuthScreen": {
       "header": "هل ترغب في استخدام المقاييس الحيوية لفتح التطبيق؟",
@@ -98,7 +109,8 @@
       "requestingOTP": "طلب OTP..."
     },
     "OtpVerificationModal": {
-      "enterOtp": "أدخل رمز التحقق المكون من 6 أرقام الذي أرسلناه إليك"
+      "enterOtp": "أدخل رمز التحقق المكون من 6 أرقام الذي أرسلناه إليك",
+      "header": "التحقق من OTP"
     },
     "MyVcsTab": {
       "addVcButton": "{{vcLabel}} إضافة",
@@ -129,6 +141,7 @@
       "requestingOtp": "جارٍ طلب OTP...",
       "editTag": "टتحرير العلامة",
       "redirecting": "إعادة توجيه...",
+      "inProgress": "جار التحميل...",
       "success": {
         "unlocked": "تم إلغاء قفل {{vcLabel}} بنجاح",
         "locked": "تم قفل {{vcLabel}} بنجاح",
@@ -165,6 +178,26 @@
       "empty": "فارغة",
       "revokeSuccessful": "تم إبطال VID بنجاح",
       "version": "الإصدار"
+    },
+    "QrScreen": {
+      "title": "QR تسجيل الدخول",
+      "alignQr": "قم بمحاذاة رمز الاستجابة السريعة داخل الإطار للمسح الضوئي",
+      "confirmation": "تأكيد",
+      "checkDomain": "تحقق أيضًا من وجود رمز قفل على شريط العناوين.",
+      "domainHead": "https://",
+      "selectId": "حدد المعرف",
+      "noBindedVc": "لا يوجد {{vcLabel}} مرتبط متاح للتحقق",
+      "back": "عُد",
+      "confirm": "يتأكد",
+      "verify": "تحقق",
+      "faceAuth": "مصادقة الوجه",
+      "consent": "موافقة",
+      "loading": "جار التحميل...",
+      "domainWarning": "يرجى تأكيد مجال موقع الويب الذي تقوم بمسح رمز الاستجابة السريعة منه على النحو التالي",
+      "access": " يطلب الوصول إلى",
+      "status": "حالة",
+      "successMessage":"لقد قمت بتسجيل الدخول بنجاح ",
+      "okay": "تمام"
     },
     "ReceiveVcScreen": {
       "header": "تفاصيل {{vcLabel}}",

@@ -24,19 +24,19 @@ export const ReceiveVcScreen: React.FC = () => {
           <Text weight="semibold" margin="24 24 0 24">
             {t('header', { vcLabel: controller.vcLabel.singular })}
           </Text>
-          <VcDetails vc={controller.incomingVc} />
+          <VcDetails vc={controller.incomingVc} isBindingPending={false} />
         </Column>
         <Column padding="0 24" margin="32 0 0 0">
           {controller.incomingVc.shouldVerifyPresence ? (
             <Button
               type="outline"
-              title={t('acceptRequestAndVerify')}
+              title={t('verifyAndSave')}
               margin="12 0 12 0"
               onPress={controller.ACCEPT_AND_VERIFY}
             />
           ) : (
             <Button
-              title={t('acceptRequest', {
+              title={t('save', {
                 vcLabel: controller.vcLabel.singular,
               })}
               margin="12 0 12 0"
@@ -45,7 +45,7 @@ export const ReceiveVcScreen: React.FC = () => {
           )}
           <Button
             type="clear"
-            title={t('reject')}
+            title={t('discard')}
             margin="0 0 12 0"
             onPress={controller.REJECT}
           />

@@ -12,7 +12,7 @@ import i18n from '../i18n';
 import { Platform } from 'react-native';
 import { isBLEEnabled } from '../lib/smartshare';
 
-var home: TabScreen = {
+const home: TabScreen = {
   name: 'Home',
   component: HomeScreen,
   icon: 'home',
@@ -20,7 +20,7 @@ var home: TabScreen = {
     title: i18n.t('MainLayout:home'),
   },
 };
-var scan: TabScreen = {
+const scan: TabScreen = {
   name: 'Scan',
   component: ScanLayout,
   icon: 'qr-code-scanner',
@@ -29,7 +29,7 @@ var scan: TabScreen = {
     headerShown: false,
   },
 };
-var request: TabScreen = {
+const request: TabScreen = {
   name: 'Request',
   component: RequestLayout,
   icon: 'file-download',
@@ -38,7 +38,7 @@ var request: TabScreen = {
     headerShown: false,
   },
 };
-var profile: TabScreen = {
+const profile: TabScreen = {
   name: 'Profile',
   component: ProfileScreen,
   icon: 'person',

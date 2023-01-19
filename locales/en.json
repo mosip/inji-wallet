@@ -1,4 +1,18 @@
 {
+  "ActivityLogText": {
+    "VC_SHARED": "shared",
+    "VC_RECEIVED": "received",
+    "VC_RECEIVED_NOT_SAVED": "received was not saved",
+    "VC_DELETED": "deleted",
+    "VC_DOWNLOADED": "downloaded",
+    "VC_REVOKED": "revoked",
+    "VC_SHARED_WITH_VERIFICATION_CONSENT": "shared. Consent is given for presence verification",
+    "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "received. Presence verified",
+    "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "received. Presence verification failed",
+    "PRESENCE_VERIFIED_AND_VC_SHARED": "verified and shared",
+    "PRESENCE_VERIFICATION_FAILED": "verification failed",
+    "QRLOGIN_SUCCESFULL": "QRLogin sucessfull"
+  },
   "DeviceInfoList": {
     "requestedBy": "Requested by",
     "sentBy": "Sent by",
@@ -34,7 +48,18 @@
     "id": "Id",
     "nationalCard": "National Card",
     "uin": "UIN",
-    "vid": "VID"
+    "enableVerification": "Activate",
+    "profileAuthenticated": "Activated for online login",
+    "offlineAuthDisabledHeader": "Activation pending for online login",
+    "offlineAuthDisabledMessage": "Please click the button below to activate this credential to be used for online login.",
+    "vid": "VID",
+    "verificationEnabledSuccess": "Activated for online login",
+    "goback": "GO BACK",
+    "BindingWarning": "You have already activated online login for this credential on another device. You will no longer be able to use that device for login if you activate it again on this device.",
+    "yes_confirm": "Yes, I Confirm",
+    "no": "No",
+    "Alert": "Alert",
+    "ok": "Okay"
   },
   "AuthScreen": {
     "header": "Would you like to use biometrics to unlock the application?",
@@ -98,7 +123,8 @@
     "requestingOTP": "Requesting OTP..."
   },
   "OtpVerificationModal": {
-    "enterOtp": "Enter the 6-digit verification code we sent you"
+    "enterOtp": "Enter the 6-digit verification code we sent you",
+    "header": "OTP Verification"
   },
   "MyVcsTab": {
     "addVcButton": "Add {{vcLabel}}",
@@ -129,6 +155,7 @@
     "requestingOtp": "Requesting OTP...",
     "editTag": "Rename",
     "redirecting": "Redirecting...",
+    "inProgress": "Loading...",
     "success": {
       "unlocked": "{{vcLabel}} successfully unlocked",
       "locked": "{{vcLabel}} successfully locked",
@@ -168,11 +195,31 @@
     "useBle": "Powered by BLE",
     "useGoogleNearby": "Powered by GoogleNearby"
   },
+  "QrScreen": {
+    "title": "QR Login",
+    "alignQr": "Align the QR code within the frame to scan",
+    "confirmation": "Confirmation",
+    "checkDomain": "Also, check that there is a lock icon on the address bar.",
+    "domainHead": "https://",
+    "selectId": "Select ID",
+    "noBindedVc": "No Binded {{vcLabel}} Available to Verify",
+    "back": "Go Back",
+    "confirm": "Confirm",
+    "verify": "Verify",
+    "faceAuth": "Face Authentication",
+    "consent": "Consent",
+    "loading": "Loading...",
+    "domainWarning": "Please confirm the domain of the website you are scanning the QR code from is as below",
+    "access": " is requesting access to",
+    "status": "Status",
+    "successMessage": "You Have Successfully Logged Into ",
+    "okay": "Okay"
+  },
   "ReceiveVcScreen": {
     "header": "{{vcLabel}} details",
-    "acceptRequest": "Accept request and receive {{vcLabel}}",
-    "acceptRequestAndVerify": "Accept request and verify",
-    "reject": "Reject"
+    "save": "Save {{vcLabel}}",
+    "verifyAndSave": "Verify and save",
+    "discard": "Discard"
   },
   "RequestScreen": {
     "bluetoothDenied": "Please enable Bluetooth to be able to request {{vcLabel}}",
@@ -186,7 +233,7 @@
       },
       "rejected": {
         "title": "Notice",
-        "message": "You rejected {{sender}}'s {{vcLabel}}"
+        "message": "You discarded {{sender}}'s {{vcLabel}}"
       },
       "disconnected": {
         "title": "Disconnected",
@@ -200,6 +247,9 @@
       "connected": {
         "message": "Connected to the device. Waiting for {{vcLabel}}...",
         "timeoutHint": "No data received yet. Is sending device still connected?"
+      },
+      "offline": {
+        "message": "Please connect to the internet to enable Online sharing mode"
       }
     },
     "online": "Online",
@@ -225,7 +275,10 @@
       "connectingTimeout": "It's taking a while to establish the connection. Is the other device open for connections?",
       "exchangingDeviceInfo": "Exchanging device info...",
       "exchangingDeviceInfoTimeout": "It's taking a while to exchange device info. You may have to reconnect.",
-      "invalid": "Invalid QR Code"
+      "invalid": "Invalid QR Code",
+      "offline": "Please connect to the internet to scan QR codes using Online sharing mode",
+      "sent": "{{ vcLabel }} has been sent...",
+      "sentHint": "Waiting for receiver to save or discard your {{ vcLabel }}"
     }
   },
   "SelectVcOverlay": {
@@ -251,7 +304,7 @@
       },
       "rejected": {
         "title": "Notice",
-        "message": "Your {{vcLabel}} was rejected by {{receiver}}"
+        "message": "Your {{vcLabel}} was discarded by {{receiver}}"
       }
     },
     "consentToPhotoVerification": "I give consent to have my photo taken for authentication"

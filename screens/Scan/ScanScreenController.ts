@@ -1,19 +1,19 @@
 import { useSelector } from '@xstate/react';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { selectIsActive, selectIsFocused } from '../../machines/app';
 
 import {
   ScanEvents,
   selectIsLocationDisabled,
   selectIsLocationDenied,
   selectIsScanning,
-  selectIsBluetoothDenied,
+  selectIsShowQrLogin,
+  selectQrLoginRef,
+  selectIsQrLoginStoring,
 } from '../../machines/scan';
 import { selectVcLabel } from '../../machines/settings';
 import { selectShareableVcs } from '../../machines/vc';
 import { GlobalContext } from '../../shared/GlobalContext';
-import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 
 export function useScanScreen() {
   const { t } = useTranslation('ScanScreen');
@@ -23,17 +23,6 @@ export function useScanScreen() {
   const vcService = appService.children.get('vc');
 
   const shareableVcs = useSelector(vcService, selectShareableVcs);
-  const isActive = useSelector(appService, selectIsActive);
-  const isFocused = useSelector(appService, selectIsFocused);
-  const isBluetoothDenied = useSelector(scanService, selectIsBluetoothDenied);
-
-  useEffect(() => {
-    BluetoothStateManager.getState().then((bluetoothState) => {
-      if (bluetoothState === 'PoweredOn' && isBluetoothDenied) {
-        scanService.send(ScanEvents.SCREEN_FOCUS());
-      }
-    });
-  }, [isFocused, isActive]);
 
   const isLocationDisabled = useSelector(scanService, selectIsLocationDisabled);
   const isLocationDenied = useSelector(scanService, selectIsLocationDenied);
@@ -52,14 +41,14 @@ export function useScanScreen() {
     locationError,
     vcLabel: useSelector(settingsService, selectVcLabel),
 
-    isBluetoothDenied,
     isEmpty: !shareableVcs.length,
     isLocationDisabled,
     isLocationDenied,
     isScanning: useSelector(scanService, selectIsScanning),
-
+    isQrLogin: useSelector(scanService, selectIsShowQrLogin),
+    isQrLoginstoring: useSelector(scanService, selectIsQrLoginStoring),
+    isQrRef: useSelector(scanService, selectQrLoginRef),
     LOCATION_REQUEST: () => scanService.send(ScanEvents.LOCATION_REQUEST()),
     SCAN: (qrCode: string) => scanService.send(ScanEvents.SCAN(qrCode)),
-    GOTO_SETTINGS: () => scanService.send(ScanEvents.GOTO_SETTINGS()),
   };
 }

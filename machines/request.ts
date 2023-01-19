@@ -27,6 +27,7 @@ import {
   SendVcResponseEvent,
 } from '../shared/smartshare';
 import { log } from 'xstate/lib/actions';
+import NetInfo from '@react-native-community/netinfo';
 // import { verifyPresentation } from '../shared/vcjs/verifyPresentation';
 
 const { GoogleNearbyMessages, IdpassSmartshare } = SmartshareReactNative;
@@ -71,6 +72,9 @@ const model = createModel(
       FACE_VALID: () => ({}),
       FACE_INVALID: () => ({}),
       RETRY_VERIFICATION: () => ({}),
+      ONLINE: () => ({}),
+      OFFLINE: () => ({}),
+      APP_ACTIVE: () => ({}),
     },
   }
 );
@@ -78,7 +82,7 @@ const model = createModel(
 export const RequestEvents = model.events;
 
 export const requestMachine =
-  /** @xstate-layout N4IgpgJg5mDOIC5QCcwEcCucAuBiAygMIBKAoqQHID6AQgDICqxA2gAwC6ioADgPawBLbAN4A7LiAAeiAOwA2ABwA6AKwBmAJwBGDazmaF6rQBoQAT0QBaDTIAsSgExrNttXLk61rgL7fTqTBwCEnJqADEAeUIGfDZOJBA+QWExCWkEFVYZJW0ZNQVbTIc5eRLTCwRrO0cvVgU61gcHVizff3QsWDx8AHUASQAVQgAJKgAFYgiBqIi6OIkkoRFxBPS1VjUlGVZbLJUtNwPbBTlyqxUFBxqvJsMHBQV8tpAAzuwlAGMACzAPgGsBKIoDQADZYbC8XjYL74MDIABuAg+YE+P3+gKguHoDFI0ymo0oAEF6KQACLzBKLFIrUDpfRyJSNWwaTLHdaKBRnSr5Bn7DROBxaeQaOS2GQqZ6vHCo34AoGg8GQ6GwhFIlHfWUYrGMXERfFUUl9fDEuhkik8fhLVKrRD1FRKWxyHZaHQPBzaU7mKzMq5yDT+rIu5lOhQySUdaUa9HysFgCFQmFwxHIpRSrpa7G6-VEknkjgLS3UtKIF37Gq2LQOQpuNQycVcyzHbKKOvHFQqOT7BRacOBLoy6PA2Px5VJtWpiPpoHanF4gajQ3G3PmxKF5bFhBaVz2x5b1hCpxqLSeiqWfSsGp6Zr+mQijS9t4DuVDxUJlXJlFgUQAQwARiDIFwFcqXXG1N0aDQlC3dsVA0dkmwbKstCUfQeRZdwClsBwJT8F5J3ef9X2hUkvwEQCAHEpgiKh8FxAY+gocjYnzSk12tWkSw8bI4Nve4xR2GQTC9So2RQ-kty0epHQ8VgcPaPt3g+ADv2QDFCDEURfmpXBJC6b9sBRb8ADMDOQAAKQhTUJYgDVIOhCQATQASlwNNFOU1SgXU0RNI+algLYmkpEQGxlC8QwNAUXQotsRDGX3DxQyyDD8jkvCFKUAB3b8liBMJeGQbzfO0wgIgoChSEIAYzRYi1klAjjwMaB1OzsZwDjUFQKy5NQnCg3rUqDR0H2lbLcqgfLCo0rTllwRdSvKyqBgC+r2OCzdevsYoutYOD9y0WCVC5d0GV61qVCrH05CcEb+24VBuBUjEBl4UhJG+b8gTAPpRCM3hcDIQhSD6AA1UhbJBvogaoBjIhWq0gvSEV7RZW9xUedx3RkLkVG2LYQzcC7-WZe9cLcpQwHer5PqgDESI-H6-twUgAA0RkJRjwdJMrSHhoswMizZimKOtMlgzrseEl1mu7eRq2u3bbFu95KY+oE6bABnft4JRATGZBeCgVBYFgHS9IMpRjNMiyyoqqq+jKqh6IAWVICIGAGFzydV6n1aBem1UZnW9YNo24FgPmGvWrR92UZovEKYoxSEioHmUR1BRZLJZJFORlYpqmaY1rW-qUYQAFswF4DA8EIDmgbmWrV1WxHECde1UMrMWWmcE8Qs6h0Ls7ZO9E60n5MfMbhDygqQY+OajQWu3lqbkC1vSA5-RQjsdmwkmTk5KX7ntBxW2Ty4Dv0fOp4xSa59wEHCCoQHgbBvN4jqhGN39dPJJOeQvCSTyFyA8yhdxFEyLJQwSsyb4SyjlaeE1Z4fF1qIfWhtjam10tgfShkTJwjMvgYY1kGLkSdn0V27tPauTgTfGeyA56oPQWHE2kd14lg2BeWWcE3CXH2J1EBtgxSqG2BcXGzRxHXwQbfZBZcBCV2rrXeudk2GtwQE6C8OxrrS06gUP0IDMjIXqLWKK-Jdg+nzh8T6yIQQgi1Ng3Blt8HmTrhQBu5DKEey9nAqxogbF2KBKojc7oLwXVcI6GwyVepHWEs4IWcFjytjrGnfOqBERgEylqQkhAgZjBXh-ZuX8wI3ByH6Tq7YnTE3UMdWS9gZDQJOFWO0490qPjSWRTJ05sm5IGFQDmpIqBg2IH0MIDkglgSdEYnQ4p1DulLBoGpdZ8bNGZFkYoBxUmaw6VqMgAApJa4zGox27FBMUuQ4KKGkos7I8gVm6BkOs4omz0mdMxK4huhz1raDAfc3GzICj3AcNc5ZOx7mPLzrAjK7SMkYiUPCOEAgjJmAxH0CAX5hDYDMLgMI2TwYg0JHQPo78Cwtw3GcrYXU8jtk6syLCx1CgXl0EKf54o6g3UhW0rZMKgRwoRUilFaLRAYqxTi6GDF8WEuJaxUlYFBIXlvLJbCJQWSPEPhUKsmQcj7jsJFVllw1DPO2Ty+Fql+VAlReioQWL3kqNXoFDcMd9BQTCb3LwFTjqHi1bsaK2iDppXJtC15qD4TfjsRAC1QqrUL3wM7I0zEClrzUa2B0UU7DihsOKSSx1LlQXqIoTshh2wtIDVyoNJrEXIqBCDbguAIBiBRICeEvA-gohLS82F5azVQGrQgRtvArH+Q4J8je6gLy7CaMce4WQxSS3VddSCjxBKbScNsMMHLpSBo7Xyyt3aa1wgNsgJQ3AQT6T+sgcuE4oWlq3aandPa+0DuWHEYdJYjCOCaLBF09T8hqsQIebIZyvAslPtBQ13KoCWw+MibgiDL1vAxMQX4YABDwogHPU2j9n6kHwGMMqtEX0IHFL6XGEVbyJVxsdSKkEZ11HFG4At-q4Gbp5d+KDYAYOwrcghpDKHIDoYfk-MgOG8O8y0Am+1YEXSn2ddLSs+0bCxWEu6KKDo6y0fUO4MRYGg2seg7BrjQI3oCCnN2+e+BphkCw8Jig+G7UysanmweYp6N2H0BoRTFQBoXkrFnfkBQdBim07C3T7HYOV2QLTc1fjeDlwxPfczERLNCdwzZ3mdmikOb0E50RLhaO-oQJ1A4UEWRbh1Q8o8QWWNsY4zy+67GvwQG48iXjaGzMWfBslkTBGXR+m3lFC6OdMgLNiU4bz7oht8QC2uieG7r1Vb07CroBU4ttcSx17DKXbPifs9HY8kEC38lgvyfIVYer8OK-sMUzJys9nXf2ZjEGQswcAouWN+B40koy+tAomx5APJaIoalmgerdmUBsdGtH5DqEY1e9tPLUAACstIvaNG9j70qvsbzRv1C4lYDjdmwiA4DShLgnB0H6e4ot86NdgB8aafkUcxrjd19sVwWTRPbh2U+XIsLcT9I0FocF3N1F8LhUQvA0XwASG5T7-NGpViuC6iJq79CE+EpYF0Mdywx2aCcFoWF86AlY8IeFsuo7pDyJBcUaNwkVgumoBsDxIIDWmbtbso9LFomfAqOMSpEyqmRGb9hGRRRKHyEI2s07RSwQbA85Q6aTvul7oJT3moYxEX9x+J8GIg9qI8FccPrhV2OkKMN08bmKUXIeB2Jlt2Zv9ijN74cfv3zjgM1AXP39Cgk4-Yqh5RQgXq4rwnjkNfBep8HD7kcmfxxfj-ABCAnfJMC62Dofa0EhS9QbLsZCehuylc7CEuvrTpSEV9wmEiogyKL4x3L6OjpNhOmOH6a6hhbwO-V+2TRMcdcxywoKabE-BvDyNSenO-RNb+eoEnXaC4XaXQXaeQBsA6ZCYeI8B4cUUUaSKRcaSaIqGaNaCAgWdYRke5XQLqIRSSQfCofkLYRVXGcKGA9QfOOrR6TyKAF6N6NWGAIOJfRqFkewY8WTSlAoGJCof-LVU+PIOweg-YfOH2Iuf2LZZEHg2-c3W0XqLVC6OwQwHQbCWdWQY8FCUUAaXGbYE7OQwuP2KAAOZQ7WJhUOTBXg77KAsg0+NsXQijYSO4Iw23PXfzBQCwrg4uQOOwiuKuGuJw9IKKOONkS7JwXGMvfuewROa6epUMW8dzbAxBO+D4SI9Q7IJwQwfnDw5wEBbCSCGCJVLce4ZlLImRBhFBEODBcOPIhAavGoIoplQ7UoqWTQe0So1sYobROo+hRhMIxRVoqKBkY8bsRQYoI8XaKg19FoaA-II8EoI4CFevRSaxMAWxHPVQ4PNwSCH-B5JsA+ZkEBSSU6f9HeVwJ5O7d4B7Vo90ewO8cpHeKpD-CoHQSSLYaBUUEULCdsGBbYicOHCDAQCAACVog4dsB0Y4UKGOaKb4v9AUL1IMSg2sNwSrCDTtHdCNYVVo3GLhIXdQR0eoepDzNE3abeXYB4DOMULYoAp4ubSE0QENMNQkq1VojA05a8bQwSHrY6WCMBQoLqE6B4Y8GHTlCE3lW9OLbgWEoeLYOsU+RoGCWWelepVQQBPQHYZwJgx48Eo1R7arRBXknYbeepWCMjSSTw9VW5MPBWSKQUHYRoXEyDBbeHfCJrZDVDdDXkpZNqOsW8f-OsRIhAY+ZCNwZoB5Q7eIz0p7fTX0wzSQYzRBOeXkwwMPK8MUdsUMZTHqOoZ3I8IBUvWCUElkk08DL00LWFcLSLKAH6OnWLKtXIw4pNHMwFSkn+MRfQgrXqRlNlGvQSJoBwJM802FFghrP0lrLMzsh1aomTGY5OWoUQxAdYFTdqcsw6TI40h7OsmrCDJbNghcz+O-DeSSZCeWIUXaEoGsHqIcrVPhP0McpoScvTSAbM+0WSVIrCAClkDcgrBWHIVwWsQUbCJVCcg8tkicJHBnG-C8tQzcU+ePOsF0OJJlOwGpXrNZKKNC7YU+T0n8REKAfSZ6XgYYGLMASYuoaA66a6C4bCC+HqbQRXIvKsepWOOwanYzOnHyZHJCwpS8ksB-LYd0PiAHLqVE9Ra6VQcbOTN1FkUmXwIAA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QCcwEcCucAuBiAygMIBKAoqQHID6AQgDICqxA2gAwC6ioADgPawBLbAN4A7LiAAeiAIwAmAMysAdKxkKA7AFY1ADgAsurQDYNAGhABPRAFoAnBrnK7RuVpm6NuuQY0BfPwtUTBwCEnJqADEAeUIGfDZOJBA+QWExCWkELS19ZW9jOTlC1mNjGTsZC2sEeztjZw19OXrvVl1jBTkAoPQsWDwiMkoqGLiEmSSefiERcWSs3SXlYv0NGQ1y9sMFats7OTycw-1WNbdchR6QYP7BgHUASQAVQgAJKgAFYmjn2Oi6IkJKlZhkFrItAplBoXDlmo4ZMZdKw5HtajI1E5mg5jJVkVoitdbqF8E9Xh9vr9-oDJsCZul5qAsoi8qxWDklnIZOctHY0TZeVCZIjNFpvF5ITIiX0cMoAMYACzAcoA1gJRFAaAAbLDYXi8bAK-BgZAANwEcrA8qVqvVUFw9AYpD+vw+lAAgvRSAARIHJEEMzKIToNFH6Ow6HalJb8hQdZTuA5dDa44xrLTSkIDa3KtUa7W6-WG41mi1WxW5u0OxjO6Kuqjex74T10H1+6ZpOZBhD45T6YxnYUubyVYz88NOXF2Oysdbc+rtfyBG4y7MV235nVgPUGo0m82W5TEgZVx21+ser2+jh0ztgpmyGTuFYKfTyfSQzoabTjzzKJHfoYOTGO4uhSsux7YDmG6aluO7FvuZZHquwgatWTous8HyNs2V7tik9JduCCDcgoWj5Ao3JqI4CiUWOVi2J0KiKKUcisNOMK4pmdzQXmsGFruJYHlaYCiAAhgARlqkC4PhAZEQ+JEonYyjcjkgqlIY5gMbUhwyP+tEdBGZQGM0GYQShyhSQJhreqJAgyQA4lSVD4M6zyPBQjkJDe-qEfeUiyOUGjOJoBy+Gc6y-lCuJcm+yL9ls5m9FmUFytJYnIHahBiKIyoMrgkgDGJ2BWmJABmpXIAAFIQrbusQDakHQ7oAJoAJS4JB8oZVlGo5aIeVygycn+YygUIA4ujKK+RguDOuh2Po-JOGyiIeBos4mXGyUrqlygAO5ibMGqRLwyADUNBWENEFAUKQhDPG2vkdqC43MmyWIgU0tHqGRb5ol0QpA0Ywr6P23GykdJ1QGdF25flcy4DhN13Q9zyjXe72yF0eTFLk7FKMKvJaGiLQNF030EuDByFFcFn7dwqDcJldrPLwpCSIqYkamAjyiOVvC4GQhCkI8ABqpBNeLjyi1QnkxJjb3dvU5ERjC2i6AoZQtNpNRaJt0IDlrIEtEt06Q9mYBcwqPNQHadnCfzgu4KQAAa7zul5UverdpBK4GxEuFCxTFN+OiCgbaLCii+Qph+2tsUtltQdb3Mag7YBOwLvDKOqnzILwUCoLAsCFcVpXKBVVW1bd92PY8t1UB5ACypDRAwzydd1ae2xnGqO2Wzu5-nhfF3AsABwpE0Yh4KysK+H6rFFOlLNN-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-h+CnjBHfvBI-sJLQYkiYHkHGJXsMv2B+OwTHqQisIKEiE+JUASAIbfnBA-kJEhDfnaGIa-PIDNKZJoCBmmLyPyJ0CpAutrEsCYImiTtfh7naEIdoYhIeMllAAYUHB+Brl-ASBfiiOPqAZggagAkiEYI7uxBoS4VoYJO4SJOJFJJAN4Zik7tCBUIFmpBsF0OOGoKoCoVtqbImvvNZPfruHZKIA5BAKkTPJVv+GcEZIUEYB4vyDkCkrPCiBiM0FyC1q3muL1NlEbrLlsirMiPkOxGKOxDOOxJsPgc+CApREsNoGmIlKEjYudJdIjAFKMUHEoKoGSjOLkODB4MEQcNCBGgbLNJMZCPvGdizH1FAOzJzOnDAMPLUVkBGHkOtLPIagYNXjUD0daqQkak0Fce4PvIfP3FAIPJaO8TLmgYgFrLshGk0KDOjiAesNNCyEse4KUJtNFjxFCX1jCbcnCTnHYmPGoh8UieMUcaQkBBUG4CAa4P+GmIvLXgYB4JCTbEfAPGSXzBSZEtfNgDST2DwocFrATooAbOwQAnkEvIUPHt+EcusadOEmKVBi+JEYmujrREQuUKoHCMbMUNrGKGqTAsgHApSaohPJqUYNqfYdwW4PqSIpguROpCCc0DrI4VYjQhsVaREgIJfCKZqb-oiJAQUJROxMERIm4gvFrFMuoBDIKrKO0p0voQiXQdrCpLPI4FpB0AYOwcKPGEDKKA3pTCDmKS0HkHssajgkcpCNHAcMxDIryHOssX0XeuTqKgIBANJGKeoDkH2IYFNBiAtMIhaooCiW+NyKcZoNrMLohs+oOl6mKQEkyu6YMsiF4NjggEUOxNgqcNPpcpsMLpen2n2auUWmKSsTiknGiXOIiGTO2fkB+LkOTEsIiISW1rFtmsRsNtwIOcAtCN+KQpIhyBsHGl4AmIIqUGcLRLcamQdn+aDlZpma9EXogJtHkN9FpvUDpiAaQp0PkFrgBFcqsMLsdl1t2p4WJtdlJjJrecSvoJoCqT0SqWTKDDNCUInm4DKVRWDklihHaKluli+nKLeQ6UoKeRyInkfggEoKFr9BtHIbyLIshVBIdlXEJd1iaCSfzIbkNhllJSQt4DudOEYC0WMmxNal4kMvIISJpchD2WhSds6vcRdldhJoxZJVmYkmDE4H5hGaAq+OyIDO0CpCpZ4GpcnM5dpdReDnqI8XAoOR4PpAnMFOxKYDWjZQmvavYesEULAftlpahTpZTjUf5d2BKEaUqc0A1RGACTjiUM4KxZoFyPxSYCVf0WVa5aLuLlVZhYifQTBd+HOLRJgjaicq9rCotKQp4CiF2WZuVeJOaFACVGzLwG8INmAJqe0BMYUIUGKG4BQoDJUE4JcPmV4HoE0HrmloboNINYOfUXxQYGzpcGiDrAmP9gFrWhGDus5XoWnt7r7mKdrPpPOAmUahXk0PyP8aoJRAcKoe0H9PPh3l3vtSQoZAcF4AiO0PDQOAapsLyk3gSPTAEEAA */
   model.createMachine(
     {
       predictableActionArguments: true,
@@ -102,20 +106,36 @@ export const requestMachine =
         SCREEN_BLUR: {
           target: '.inactive',
         },
-        SCREEN_FOCUS: {
-          target: '.checkingBluetoothService',
-        },
-        SWITCH_PROTOCOL: {
-          target: '.checkingBluetoothService',
-          actions: 'switchProtocol',
-        },
+
+        SCREEN_FOCUS: [
+          {
+            target: '.checkingNetwork',
+            cond: 'isModeOnline',
+          },
+          '.checkingBluetoothService',
+        ],
+
+        SWITCH_PROTOCOL: [
+          {
+            target: '.checkingNetwork',
+            actions: 'switchProtocol',
+            cond: 'isModeOnline',
+            description: `Check internet connection for online protocol`,
+          },
+          {
+            target: '.checkingBluetoothService',
+            actions: 'switchProtocol',
+          },
+        ],
       },
       states: {
         inactive: {
           entry: 'removeLoggers',
         },
+
         checkingBluetoothService: {
           initial: 'checking',
+
           states: {
             checking: {
               invoke: {
@@ -130,6 +150,7 @@ export const requestMachine =
                 },
               },
             },
+
             requesting: {
               invoke: {
                 src: 'requestBluetooth',
@@ -143,13 +164,19 @@ export const requestMachine =
                 },
               },
             },
+
             enabled: {
               always: {
                 target: '#request.clearingConnection',
               },
             },
           },
+
+          on: {
+            APP_ACTIVE: 'checkingNetwork',
+          },
         },
+
         bluetoothDenied: {
           on: {
             GOTO_SETTINGS: {
@@ -157,6 +184,7 @@ export const requestMachine =
             },
           },
         },
+
         clearingConnection: {
           entry: 'disconnect',
           after: {
@@ -167,6 +195,7 @@ export const requestMachine =
             },
           },
         },
+
         waitingForConnection: {
           entry: [
             'removeLoggers',
@@ -185,6 +214,7 @@ export const requestMachine =
             },
           },
         },
+
         preparingToExchangeInfo: {
           entry: 'requestReceiverInfo',
           on: {
@@ -194,6 +224,7 @@ export const requestMachine =
             },
           },
         },
+
         exchangingDeviceInfo: {
           invoke: {
             src: 'exchangeDeviceInfo',
@@ -224,6 +255,7 @@ export const requestMachine =
             },
           },
         },
+
         waitingForVc: {
           invoke: {
             src: 'receiveVc',
@@ -257,6 +289,7 @@ export const requestMachine =
             },
           },
         },
+
         cancelling: {
           invoke: {
             src: 'sendDisconnect',
@@ -269,7 +302,14 @@ export const requestMachine =
             },
           },
         },
+
         reviewing: {
+          invoke: {
+            src: 'sendVcResponse',
+            data: {
+              status: 'RECEIVED',
+            },
+          },
           exit: 'disconnect',
           initial: 'idle',
           states: {
@@ -365,7 +405,7 @@ export const requestMachine =
               },
             },
             accepted: {
-              entry: ['sendVcReceived', 'logReceived'],
+              entry: ['updateReceivedVcs', 'logReceived'],
               invoke: {
                 src: 'sendVcResponse',
                 data: {
@@ -379,6 +419,7 @@ export const requestMachine =
               },
             },
             rejected: {
+              entry: ['setReceiveLogTypeDiscarded', 'logReceived'],
               invoke: {
                 src: 'sendVcResponse',
                 data: {
@@ -409,12 +450,31 @@ export const requestMachine =
             },
           },
         },
+
         disconnected: {
           entry: 'disconnect',
           on: {
             DISMISS: {
               target: 'waitingForConnection',
             },
+          },
+        },
+
+        checkingNetwork: {
+          invoke: {
+            src: 'checkNetwork',
+          },
+
+          on: {
+            ONLINE: 'checkingBluetoothService',
+            OFFLINE: 'offline',
+          },
+        },
+
+        offline: {
+          on: {
+            ONLINE: 'checkingBluetoothService',
+            APP_ACTIVE: 'checkingNetwork',
           },
         },
       },
@@ -563,6 +623,10 @@ export const requestMachine =
           receiveLogType: 'VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED',
         }),
 
+        setReceiveLogTypeDiscarded: model.assign({
+          receiveLogType: 'VC_RECEIVED_NOT_SAVED',
+        }),
+
         logReceived: send(
           (context) =>
             ActivityLogEvents.LOG_ACTIVITY({
@@ -576,7 +640,7 @@ export const requestMachine =
           { to: (context) => context.serviceRefs.activityLog }
         ),
 
-        sendVcReceived: send(
+        updateReceivedVcs: send(
           (context) => {
             return VcEvents.VC_RECEIVED(VC_ITEM_STORE_KEY(context.incomingVc));
           },
@@ -610,6 +674,12 @@ export const requestMachine =
             }
           }, true);
           return () => subscription.remove();
+        },
+
+        checkNetwork: () => async (callback) => {
+          const state = await NetInfo.fetch();
+          console.log('test', state);
+          callback({ type: state.isInternetReachable ? 'ONLINE' : 'OFFLINE' });
         },
 
         requestBluetooth: () => (callback) => {
@@ -732,7 +802,7 @@ export const requestMachine =
           }
         },
 
-        sendVcResponse: (context, _event, meta) => () => {
+        sendVcResponse: (context, _event, meta) => async () => {
           const event: SendVcResponseEvent = {
             type: 'send-vc:response',
             data: meta.data.status,
@@ -743,7 +813,8 @@ export const requestMachine =
               // pass
             });
           } else {
-            onlineSend(event);
+            await GoogleNearbyMessages.unpublish();
+            await onlineSend(event);
           }
         },
 
@@ -770,6 +841,11 @@ export const requestMachine =
           const vcKey = VC_ITEM_STORE_KEY(context.incomingVc);
           return receivedVcs.includes(vcKey);
         },
+
+        isModeOnline: (context, event) =>
+          event.type === 'SCREEN_FOCUS'
+            ? context.sharingProtocol === 'ONLINE'
+            : event.value,
       },
 
       delays: {
@@ -876,4 +952,8 @@ export function selectIsWaitingForVcTimeout(state: State) {
 
 export function selectIsDone(state: State) {
   return state.matches('reviewing.navigatingToHome');
+}
+
+export function selectIsOffline(state: State) {
+  return state.matches('offline');
 }
