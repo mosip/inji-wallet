@@ -75,7 +75,7 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
   }
   return (
     <Column>
-      <Text color={Theme.Colors.DetailsLabel} size="smaller" align="left">
+      <Text color={Theme.Colors.DetailsLabel} size="smaller">
         {arg1}
       </Text>
       <Text

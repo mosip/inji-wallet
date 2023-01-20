@@ -249,7 +249,7 @@
         },
         "rejected": {
           "title": "تنويه",
-          "message": "تم رفض {{vcLabel}} من قِبل {{Receiver}}"
+          "message": "تم رفض {{vcLabel}} من قِبل {{receiver}}"
         }
       },
       "consentToPhotoVerification": "أوافق على التقاط صورتي للمصادقة"

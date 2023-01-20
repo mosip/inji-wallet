@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, I18nManager } from 'react-native';
 import { Icon, Input, Tooltip } from 'react-native-elements';
 import { Button, Column, Row, Text } from '../../../components/ui';
 import { Modal } from '../../../components/ui/Modal';
@@ -39,6 +39,10 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = (props) => {
                     color: controller.isInvalid
                       ? Theme.Colors.errorMessage
                       : Theme.Colors.textValue,
+                    textAlign: 'left',
+                  }}
+                  inputStyle={{
+                    textAlign: I18nManager.isRTL ? 'right' : 'left',
                   }}
                   style={Theme.Styles.placeholder}
                   value={controller.id}
