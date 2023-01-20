@@ -121,46 +121,6 @@ export const SendVcScreen: React.FC = () => {
           />
         </Row>
       </MessageOverlay>
-
-      <MessageOverlay
-        isVisible={controller.isSendingVc}
-        title={t('status.sharing.title')}
-        hint={
-          controller.isSendingVcTimeout
-            ? t('status.sharing.timeoutHint')
-            : t('status.sharing.hint')
-        }
-        onCancel={controller.isSendingVcTimeout ? controller.CANCEL : null}
-        progress
-      />
-
-      <MessageOverlay
-        isVisible={controller.status != null}
-        title={controller.status?.title}
-        hint={controller.status?.hint}
-        onCancel={controller.status?.onCancel}
-        progress
-      />
-
-      <MessageOverlay
-        isVisible={controller.isAccepted}
-        title={t('status.accepted.title')}
-        message={t('status.accepted.message', {
-          vcLabel: controller.vcLabel.singular,
-          receiver: controller.receiverInfo.deviceName,
-        })}
-        onBackdropPress={controller.DISMISS}
-      />
-
-      <MessageOverlay
-        isVisible={controller.isRejected}
-        title={t('status.rejected.title')}
-        message={t('status.rejected.message', {
-          vcLabel: controller.vcLabel.singular,
-          receiver: controller.receiverInfo.deviceName,
-        })}
-        onBackdropPress={controller.DISMISS}
-      />
     </React.Fragment>
   );
 };

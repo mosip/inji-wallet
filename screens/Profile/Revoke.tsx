@@ -1,5 +1,11 @@
 import React from 'react';
-import { Dimensions, RefreshControl, SafeAreaView, View } from 'react-native';
+import {
+  Dimensions,
+  I18nManager,
+  RefreshControl,
+  SafeAreaView,
+  View,
+} from 'react-native';
 import { Divider, Icon, ListItem, Overlay } from 'react-native-elements';
 import { Button, Column, Centered, Row, Text } from '../../components/ui';
 import { VidItem } from '../../components/VidItem';
@@ -33,7 +39,14 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
               <View style={Theme.RevokeStyles.buttonContainer}>
                 <Button
                   type="clear"
-                  icon={<Icon name="chevron-left" color={Theme.Colors.Icon} />}
+                  icon={
+                    <Icon
+                      name={
+                        I18nManager.isRTL ? 'chevron-right' : 'chevron-left'
+                      }
+                      color={Theme.Colors.Icon}
+                    />
+                  }
                   title=""
                   onPress={() => controller.setIsViewing(false)}
                 />

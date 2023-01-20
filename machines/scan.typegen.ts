@@ -123,7 +123,6 @@ export interface Typegen0 {
     SHARING_TIMEOUT:
       | 'ACCEPT_REQUEST'
       | 'FACE_VALID'
-      | 'VC_SENT'
       | 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
   };
   'eventsCausingGuards': {
@@ -149,7 +148,6 @@ export interface Typegen0 {
     sendVc:
       | 'ACCEPT_REQUEST'
       | 'FACE_VALID'
-      | 'VC_SENT'
       | 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
   };
   'matchesStates':

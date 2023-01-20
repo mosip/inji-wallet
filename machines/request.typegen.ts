@@ -35,8 +35,7 @@ export interface Typegen0 {
     sendDisconnect: 'done.invoke.request.cancelling:invocation[0]';
     sendVcResponse:
       | 'done.invoke.request.reviewing.accepted:invocation[0]'
-      | 'done.invoke.request.reviewing.rejected:invocation[0]'
-      | 'done.invoke.request.reviewing:invocation[0]';
+      | 'done.invoke.request.reviewing.rejected:invocation[0]';
     verifyVp: 'done.invoke.request.reviewing.verifyingVp:invocation[0]';
   };
   'missingImplementations': {
@@ -123,7 +122,7 @@ export interface Typegen0 {
     receiveVc: 'EXCHANGE_DONE';
     requestBluetooth: 'BLUETOOTH_DISABLED';
     sendDisconnect: 'CANCEL';
-    sendVcResponse: 'CANCEL' | 'REJECT' | 'STORE_RESPONSE' | 'VC_RECEIVED';
+    sendVcResponse: 'CANCEL' | 'REJECT' | 'STORE_RESPONSE';
     verifyVp: never;
   };
   'matchesStates':

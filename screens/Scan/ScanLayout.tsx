@@ -63,11 +63,12 @@ export const ScanLayout: React.FC = () => {
 
       <MessageOverlay
         isVisible={controller.statusOverlay != null}
+        title={controller.statusOverlay?.title}
         message={controller.statusOverlay?.message}
         hint={controller.statusOverlay?.hint}
         onCancel={controller.statusOverlay?.onCancel}
-        progress={!controller.isInvalid}
-        onBackdropPress={controller.DISMISS_INVALID}
+        progress={controller.statusOverlay?.progress}
+        onBackdropPress={controller.statusOverlay?.onBackdropPress}
       />
 
       {controller.isDisconnected && (

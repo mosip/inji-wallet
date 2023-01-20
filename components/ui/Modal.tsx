@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal as RNModal, View } from 'react-native';
+import { I18nManager, Modal as RNModal, View } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { Column, Row, Text } from '.';
 import { ElevationLevel, Theme } from './styleUtils';
@@ -23,7 +23,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
             }}>
             {props.headerRight ? (
               <Icon
-                name="chevron-left"
+                name={I18nManager.isRTL ? 'chevron-right' : 'chevron-left'}
                 onPress={props.onDismiss}
                 color={Theme.Colors.Icon}
               />
