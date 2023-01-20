@@ -160,6 +160,7 @@ export function useScanLayout() {
   } else if (isOffline) {
     statusOverlay = {
       message: t('status.offline'),
+      onBackdropPress: DISMISS,
     };
   }
 
