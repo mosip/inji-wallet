@@ -5,12 +5,13 @@
 // } from '@idpass/smartshare-react-native';
 import Smartshare from '@idpass/smartshare-react-native';
 import { ConnectionParams } from '@idpass/smartshare-react-native/lib/typescript/IdpassSmartshare';
+import { getDeviceNameSync } from 'react-native-device-info';
 const { IdpassSmartshare, GoogleNearbyMessages } = Smartshare;
 
 import { DeviceInfo } from '../components/DeviceInfoList';
 import { VC } from '../types/vc';
 
-export function onlineSubscribe<T extends SmartshareEventType>(
+export async function onlineSubscribe<T extends SmartshareEventType>(
   eventType: T,
   callback: (data: SmartshareEventData<T>) => void,
   disconectCallback?: (data: SmartshareEventData<T>) => void,
@@ -19,7 +20,10 @@ export function onlineSubscribe<T extends SmartshareEventType>(
   return GoogleNearbyMessages.subscribe(
     (foundMessage) => {
       if (__DEV__) {
-        console.log('\n[request] MESSAGE_FOUND', foundMessage.slice(0, 100));
+        console.log(
+          `[${getDeviceNameSync()}] MESSAGE_FOUND`,
+          foundMessage.slice(0, 100)
+        );
       }
       const response = SmartshareEvent.fromString<T>(foundMessage);
       if (response.type === 'disconnect') {
@@ -32,18 +36,23 @@ export function onlineSubscribe<T extends SmartshareEventType>(
     },
     (lostMessage) => {
       if (__DEV__) {
-        console.log('\n[request] MESSAGE_LOST', lostMessage.slice(0, 100));
+        console.log(
+          `[${getDeviceNameSync()}] MESSAGE_LOST`,
+          lostMessage.slice(0, 100)
+        );
       }
     }
   ).catch((error: Error) => {
     if (error.message.includes('existing callback is already subscribed')) {
-      console.log('Existing callback found. Unsubscribing then retrying...');
+      console.log(
+        `${getDeviceNameSync()} Existing callback found for ${eventType}. Unsubscribing then retrying...`
+      );
       return onlineSubscribe(eventType, callback, disconectCallback, config);
     }
   });
 }
 
-export function onlineSend(event: SmartshareEvents) {
+export async function onlineSend(event: SmartshareEvents) {
   return GoogleNearbyMessages.publish(
     new SmartshareEvent(event.type, event.data).toString()
   );

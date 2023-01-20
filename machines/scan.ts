@@ -299,14 +299,6 @@ export const scanMachine =
                 sent: {
                   description:
                     'VC data has been shared and the receiver should now be viewing it',
-                  on: {
-                    VC_ACCEPTED: {
-                      target: '#scan.reviewing.accepted',
-                    },
-                    VC_REJECTED: {
-                      target: '#scan.reviewing.rejected',
-                    },
-                  },
                 },
               },
               on: {
@@ -314,8 +306,13 @@ export const scanMachine =
                   target: '#scan.findingConnection',
                 },
                 VC_SENT: {
-                  target: '#scan.reviewing.sendingVc.sent',
-                  internal: true,
+                  target: '.sent',
+                },
+                VC_ACCEPTED: {
+                  target: '#scan.reviewing.accepted',
+                },
+                VC_REJECTED: {
+                  target: '#scan.reviewing.rejected',
                 },
               },
             },
@@ -690,6 +687,7 @@ export const scanMachine =
 
         discoverDevice: (context) => (callback) => {
           if (context.sharingProtocol === 'OFFLINE') {
+            GoogleNearbyMessages.disconnect();
             IdpassSmartshare.createConnection('discoverer', () => {
               callback({ type: 'CONNECTED' });
             });
@@ -699,11 +697,19 @@ export const scanMachine =
                 console.log('\n\n[scan] GNM_ERROR\n\n', kind, message)
               );
 
-              await GoogleNearbyMessages.connect({
-                apiKey: GNM_API_KEY,
-                discoveryMediums: ['ble'],
-                discoveryModes: ['scan', 'broadcast'],
-              });
+              try {
+                IdpassSmartshare.destroyConnection();
+              } catch (e) {
+                /*pass*/
+              }
+              await GoogleNearbyMessages.connect(
+                Platform.select({
+                  ios: {
+                    apiKey: GNM_API_KEY,
+                  },
+                  default: {},
+                })
+              );
               console.log('[scan] GNM connected!');
 
               await onlineSubscribe('pairing:response', async (response) => {
