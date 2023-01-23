@@ -78,6 +78,7 @@ const model = createModel(
       VERIFY_AND_ACCEPT_REQUEST: () => ({}),
       VC_ACCEPTED: () => ({}),
       VC_REJECTED: () => ({}),
+      VC_SENT: () => ({}),
       CANCEL: () => ({}),
       DISMISS: () => ({}),
       CONNECTED: () => ({}),
@@ -387,16 +388,26 @@ export const scanMachine =
                     },
                   },
                 },
+                sent: {
+                  description:
+                    'VC data has been shared and the receiver should now be viewing it',
+                  on: {
+                    VC_ACCEPTED: {
+                      target: '#scan.reviewing.accepted',
+                    },
+                    VC_REJECTED: {
+                      target: '#scan.reviewing.rejected',
+                    },
+                  },
+                },
               },
               on: {
                 DISCONNECT: {
                   target: '#scan.findingConnection',
                 },
-                VC_ACCEPTED: {
-                  target: 'accepted',
-                },
-                VC_REJECTED: {
-                  target: 'rejected',
+                VC_SENT: {
+                  target: '#scan.reviewing.sendingVc.sent',
+                  internal: true,
                 },
               },
             },
@@ -854,9 +865,13 @@ export const scanMachine =
 
           const statusCallback = (status: SendVcStatus) => {
             if (typeof status === 'number') return;
-            callback({
-              type: status === 'ACCEPTED' ? 'VC_ACCEPTED' : 'VC_REJECTED',
-            });
+            if (status === 'RECEIVED') {
+              callback({ type: 'VC_SENT' });
+            } else {
+              callback({
+                type: status === 'ACCEPTED' ? 'VC_ACCEPTED' : 'VC_REJECTED',
+              });
+            }
           };
 
           if (context.sharingProtocol === 'OFFLINE') {

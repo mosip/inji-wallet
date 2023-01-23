@@ -116,7 +116,7 @@ export interface SendVcEvent {
   };
 }
 
-export type SendVcStatus = 'ACCEPTED' | 'REJECTED';
+export type SendVcStatus = 'RECEIVED' | 'ACCEPTED' | 'REJECTED';
 export interface SendVcResponseEvent {
   type: 'send-vc:response';
   data: SendVcStatus | number;

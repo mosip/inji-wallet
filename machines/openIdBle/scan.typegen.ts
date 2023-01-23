@@ -101,6 +101,7 @@ export interface Typegen0 {
     SHARING_TIMEOUT:
       | 'ACCEPT_REQUEST'
       | 'FACE_VALID'
+      | 'VC_SENT'
       | 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
   };
   'eventsCausingGuards': {
@@ -123,6 +124,7 @@ export interface Typegen0 {
     sendVc:
       | 'ACCEPT_REQUEST'
       | 'FACE_VALID'
+      | 'VC_SENT'
       | 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
   };
   'matchesStates':
@@ -159,6 +161,7 @@ export interface Typegen0 {
     | 'reviewing.selectingVc'
     | 'reviewing.sendingVc'
     | 'reviewing.sendingVc.inProgress'
+    | 'reviewing.sendingVc.sent'
     | 'reviewing.sendingVc.timeout'
     | 'reviewing.verifyingIdentity'
     | {
@@ -181,7 +184,7 @@ export interface Typegen0 {
           | 'selectingVc'
           | 'sendingVc'
           | 'verifyingIdentity'
-          | { sendingVc?: 'inProgress' | 'timeout' };
+          | { sendingVc?: 'inProgress' | 'sent' | 'timeout' };
       };
   'tags': never;
 }
