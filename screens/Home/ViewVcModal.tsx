@@ -11,7 +11,6 @@ import { useViewVcModal, ViewVcModalProps } from './ViewVcModalController';
 import { useTranslation } from 'react-i18next';
 import { VcDetails } from '../../components/VcDetails';
 import { OtpVerification } from './MyVcs/OtpVerification';
-import { BindStatus } from './MyVcs/BindVcStatus';
 import { BindingVcWarningOverlay } from './MyVcs/BindingVcWarningOverlay';
 
 export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
@@ -100,15 +99,6 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
           onDismiss={controller.DISMISS}
           onInputDone={controller.inputOtp}
           error={controller.otpError}
-        />
-      )}
-
-      {controller.showBindingStatus && (
-        <BindStatus
-          isVisible={controller.showBindingStatus}
-          bindingError={controller.walletBindingError}
-          onDismiss={controller.BINDING_DONE}
-          onDone={controller.BINDING_DONE}
         />
       )}
 
