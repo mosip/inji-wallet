@@ -87,6 +87,7 @@ export interface Typegen0 {
       | 'done.invoke.request.reviewing.verifyingVp:invocation[0]';
     requestReceiverInfo: 'CONNECTED';
     setIncomingVc: 'VC_RECEIVED';
+    setPairId: 'CONNECTED';
     setReceiveLogTypeDiscarded: 'CANCEL' | 'REJECT';
     setReceiveLogTypeRegular: 'ACCEPT';
     setReceiveLogTypeUnverified: 'FACE_INVALID';
