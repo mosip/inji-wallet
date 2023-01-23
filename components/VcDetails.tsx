@@ -43,8 +43,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
             <Text
               weight="bold"
               size="smaller"
-              color={Theme.Colors.DetailsLabel}
-              align="left">
+              color={Theme.Colors.DetailsLabel}>
               {t('idType')}
             </Text>
             <Text weight="bold" size="smaller" color={Theme.Colors.Details}>
@@ -69,14 +68,12 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
               <Text
                 weight="bold"
                 size="smaller"
-                align="left"
                 color={Theme.Colors.DetailsLabel}>
                 {t('fullName')}
               </Text>
               <Text
                 weight="semibold"
                 size="smaller"
-                align="left"
                 color={Theme.Colors.Details}>
                 {getLocalizedField(
                   props.vc?.verifiableCredential.credentialSubject.fullName
@@ -144,7 +141,6 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                 <Text
                   weight="semibold"
                   size="smaller"
-                  align="left"
                   color={Theme.Colors.Details}>
                   {t('valid')}
                 </Text>
@@ -222,8 +218,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                   }
                   weight="semibold"
                   size="smaller"
-                  color={Theme.Colors.Details}
-                  align="left">
+                  color={Theme.Colors.Details}>
                   {getLocalizedField(
                     props.vc?.verifiableCredential.credentialSubject.email
                   )}
@@ -243,8 +238,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                   style={{ flex: 1 }}
                   weight="semibold"
                   size="smaller"
-                  color={Theme.Colors.Details}
-                  align="left">
+                  color={Theme.Colors.Details}>
                   {getFullAddress(
                     props.vc?.verifiableCredential.credentialSubject
                   )}
