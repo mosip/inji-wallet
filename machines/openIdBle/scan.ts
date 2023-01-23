@@ -3,7 +3,16 @@ import SmartshareReactNative from '@idpass/smartshare-react-native';
 import { ConnectionParams } from '@idpass/smartshare-react-native/lib/typescript/IdpassSmartshare';
 import OpenIdBle from 'react-native-openid4vp-ble';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
-import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
+import {
+  ActorRefFrom,
+  assign,
+  DoneInvokeEvent,
+  EventFrom,
+  send,
+  sendParent,
+  spawn,
+  StateFrom,
+} from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { EmitterSubscription, Linking, Platform } from 'react-native';
 import { DeviceInfo } from '../../components/DeviceInfoList';
@@ -14,6 +23,7 @@ import { ActivityLogEvents, ActivityLogType } from '../activityLog';
 import {
   GNM_API_KEY,
   GNM_MESSAGE_LIMIT,
+  MY_LOGIN_STORE_KEY,
   VC_ITEM_STORE_KEY,
 } from '../../shared/constants';
 import {
@@ -31,6 +41,8 @@ import { checkLocation, requestLocation } from '../../shared/location';
 import { CameraCapturedPicture } from 'expo-camera';
 import { log } from 'xstate/lib/actions';
 import { isBLEEnabled } from '../../lib/smartshare';
+import { createQrLoginMachine, qrLoginMachine } from '../QrLoginMachine';
+import { StoreEvents } from '../store';
 
 const { GoogleNearbyMessages, IdpassSmartshare } = SmartshareReactNative;
 const { Openid4vpBle } = OpenIdBle;
@@ -53,6 +65,8 @@ const model = createModel(
     sharingProtocol: 'OFFLINE' as SharingProtocol,
     scannedQrParams: {} as ConnectionParams,
     shareLogType: '' as ActivityLogType,
+    QrLoginRef: {} as ActorRefFrom<typeof qrLoginMachine>,
+    linkCode: '',
   },
   {
     events: {
@@ -89,6 +103,7 @@ const model = createModel(
     },
   }
 );
+const QR_LOGIN_REF_ID = 'QrLogin';
 
 export const ScanEvents = model.events;
 
@@ -188,7 +203,12 @@ export const scanMachine =
           },
         },
         findingConnection: {
-          entry: ['removeLoggers', 'registerLoggers', 'clearScannedQrParams'],
+          entry: [
+            'removeLoggers',
+            'registerLoggers',
+            'clearScannedQrParams',
+            'setChildRef',
+          ],
           on: {
             SCAN: [
               {
@@ -202,10 +222,40 @@ export const scanMachine =
                 actions: 'setScannedQrParams',
               },
               {
+                target: 'showQrLogin',
+                cond: 'isQrLogin',
+                actions: 'setLinkCode',
+              },
+              {
                 target: 'invalid',
               },
             ],
           },
+        },
+        showQrLogin: {
+          invoke: {
+            id: 'QrLogin',
+            src: qrLoginMachine,
+            onDone: '.storing',
+          },
+          on: {
+            DISMISS: 'findingConnection',
+          },
+          initial: 'idle',
+          states: {
+            idle: {},
+            storing: {
+              entry: ['storeLoginItem'],
+              on: {
+                STORE_RESPONSE: {
+                  target: 'navigatingToHome',
+                  actions: ['storingActivityLog'],
+                },
+              },
+            },
+            navigatingToHome: {},
+          },
+          entry: 'sendScanData',
         },
         preparingToConnect: {
           entry: 'requestSenderInfo',
@@ -487,6 +537,16 @@ export const scanMachine =
     },
     {
       actions: {
+        setChildRef: assign({
+          QrLoginRef: (context) =>
+            spawn(createQrLoginMachine(context.serviceRefs), QR_LOGIN_REF_ID),
+        }),
+
+        sendScanData: (context) =>
+          context.QrLoginRef.send({
+            type: 'GET',
+            value: context.linkCode,
+          }),
         openBluetoothSettings: () => {
           Platform.OS === 'android'
             ? BluetoothStateManager.openSettings().catch()
@@ -623,6 +683,38 @@ export const scanMachine =
             shouldVerifyPresence: !context.selectedVc.shouldVerifyPresence,
           }),
         }),
+
+        setLinkCode: assign({
+          linkCode: (_context, event) =>
+            event.params.substring(
+              event.params.indexOf('linkCode=') + 9,
+              event.params.indexOf('&')
+            ),
+        }),
+
+        storeLoginItem: send(
+          (_context, event) => {
+            return StoreEvents.PREPEND(
+              MY_LOGIN_STORE_KEY,
+              (event as DoneInvokeEvent<string>).data
+            );
+          },
+          { to: (context) => context.serviceRefs.store }
+        ),
+
+        storingActivityLog: send(
+          (_, event) =>
+            ActivityLogEvents.LOG_ACTIVITY({
+              _vcKey: '',
+              type: 'QRLOGIN_SUCCESFULL',
+              timestamp: Date.now(),
+              deviceName: '',
+              vcLabel: String(event.response.selectedVc.id),
+            }),
+          {
+            to: (context) => context.serviceRefs.activityLog,
+          }
+        ),
       },
 
       services: {
@@ -828,6 +920,22 @@ export const scanMachine =
       },
 
       guards: {
+        isQrLogin: (_context, event) => {
+          let linkCode = '';
+          try {
+            console.log(event.params);
+            linkCode = event.params.substring(
+              event.params.indexOf('linkCode=') + 9,
+              event.params.indexOf('&')
+            );
+            console.log(linkCode);
+            return linkCode !== null;
+          } catch (e) {
+            console.log(e);
+            return false;
+          }
+        },
+
         isQrOffline: (_context, event) => {
           // don't scan if QR is offline and Google Nearby is enabled
           if (Platform.OS === 'ios' && !isBLEEnabled) return false;
