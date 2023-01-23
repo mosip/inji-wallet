@@ -47,6 +47,7 @@ const model = createModel(
       ? 'ONLINE'
       : 'OFFLINE') as SharingProtocol,
     receiveLogType: '' as ActivityLogType,
+    pairId: '',
   },
   {
     events: {
@@ -56,7 +57,7 @@ const model = createModel(
       CANCEL: () => ({}),
       DISMISS: () => ({}),
       VC_RECEIVED: (vc: VC) => ({ vc }),
-      CONNECTED: () => ({}),
+      CONNECTED: (pairId?: string) => ({ pairId: pairId || '' }),
       DISCONNECT: () => ({}),
       EXCHANGE_DONE: (senderInfo: DeviceInfo) => ({ senderInfo }),
       SCREEN_FOCUS: () => ({}),
@@ -208,6 +209,7 @@ export const requestMachine =
           },
           on: {
             CONNECTED: {
+              actions: ['setPairId'],
               target: 'preparingToExchangeInfo',
             },
             DISCONNECT: {
@@ -479,6 +481,10 @@ export const requestMachine =
     },
     {
       actions: {
+        setPairId: assign({
+          pairId: (_context, event) => event.pairId,
+        }),
+
         openSettings: () => {
           Platform.OS === 'android'
             ? BluetoothStateManager.openSettings().catch()
@@ -656,10 +662,13 @@ export const requestMachine =
       services: {
         sendDisconnect: (context) => () => {
           if (context.sharingProtocol === 'ONLINE') {
-            onlineSend({
-              type: 'disconnect',
-              data: 'rejected',
-            });
+            onlineSend(
+              {
+                type: 'disconnect',
+                data: 'rejected',
+              },
+              context.pairId
+            );
           }
         },
 
@@ -691,7 +700,7 @@ export const requestMachine =
           if (context.sharingProtocol === 'OFFLINE') {
             GoogleNearbyMessages.disconnect();
             IdpassSmartshare.createConnection('advertiser', () => {
-              callback({ type: 'CONNECTED' });
+              callback({ type: 'CONNECTED', pairId: '' });
             });
           } else {
             (async function () {
@@ -714,23 +723,32 @@ export const requestMachine =
               );
               console.log('[request] GNM connected!');
 
-              await onlineSubscribe('pairing', async (scannedQrParams) => {
-                try {
-                  const generatedParams = JSON.parse(
-                    context.connectionParams
-                  ) as ConnectionParams;
-                  if (scannedQrParams.cid === generatedParams.cid) {
-                    const event: PairingResponseEvent = {
-                      type: 'pairing:response',
-                      data: 'ok',
-                    };
-                    await onlineSend(event);
-                    callback({ type: 'CONNECTED' });
+              const generatedParams = JSON.parse(
+                context.connectionParams
+              ) as ConnectionParams;
+
+              await onlineSubscribe(
+                'pairing',
+                async (scannedQrParams) => {
+                  try {
+                    if (scannedQrParams.cid === generatedParams.cid) {
+                      const event: PairingResponseEvent = {
+                        type: 'pairing:response',
+                        data: scannedQrParams.cid,
+                      };
+                      await onlineSend(event, scannedQrParams.cid);
+                      callback({
+                        type: 'CONNECTED',
+                        pairId: scannedQrParams.cid,
+                      });
+                    }
+                  } catch (e) {
+                    console.error('Could not parse message.', e);
                   }
-                } catch (e) {
-                  console.error('Could not parse message.', e);
-                }
-              });
+                },
+                null,
+                { pairId: generatedParams.cid }
+              );
             })();
           }
         },
@@ -767,11 +785,16 @@ export const requestMachine =
 
             return () => subscription.remove();
           } else {
-            onlineSubscribe('exchange-sender-info', async (senderInfo) => {
-              await GoogleNearbyMessages.unpublish();
-              await onlineSend(event);
-              callback({ type: 'EXCHANGE_DONE', senderInfo });
-            });
+            onlineSubscribe(
+              'exchange-sender-info',
+              async (senderInfo) => {
+                await GoogleNearbyMessages.unpublish();
+                await onlineSend(event, context.pairId);
+                callback({ type: 'EXCHANGE_DONE', senderInfo });
+              },
+              null,
+              { pairId: context.pairId }
+            );
           }
         },
 
@@ -797,21 +820,24 @@ export const requestMachine =
                   if (vcChunk.chunk === vcChunk.total - 1) {
                     const vc = JSON.parse(rawData) as VC;
                     GoogleNearbyMessages.unsubscribe();
-                    await onlineSend(VcReceivedEvent);
+                    await onlineSend(VcReceivedEvent, context.pairId);
                     callback({ type: 'VC_RECEIVED', vc });
                   } else {
-                    await onlineSend({
-                      type: 'send-vc:response',
-                      data: vcChunk.chunk,
-                    });
+                    await onlineSend(
+                      {
+                        type: 'send-vc:response',
+                        data: vcChunk.chunk,
+                      },
+                      context.pairId
+                    );
                   }
                 } else {
-                  await onlineSend(VcReceivedEvent);
+                  await onlineSend(VcReceivedEvent, context.pairId);
                   callback({ type: 'VC_RECEIVED', vc });
                 }
               },
               () => callback({ type: 'DISCONNECT' }),
-              { keepAlive: true }
+              { keepAlive: true, pairId: context.pairId }
             );
           }
         },
@@ -828,7 +854,7 @@ export const requestMachine =
             });
           } else {
             await GoogleNearbyMessages.unpublish();
-            await onlineSend(event);
+            await onlineSend(event, context.pairId);
           }
         },
 

@@ -15,7 +15,7 @@ export async function onlineSubscribe<T extends SmartshareEventType>(
   eventType: T,
   callback: (data: SmartshareEventData<T>) => void,
   disconectCallback?: (data: SmartshareEventData<T>) => void,
-  config?: { keepAlive: boolean }
+  config?: { keepAlive?: boolean; pairId?: string }
 ) {
   return GoogleNearbyMessages.subscribe(
     (foundMessage) => {
@@ -26,7 +26,9 @@ export async function onlineSubscribe<T extends SmartshareEventType>(
         );
       }
       const response = SmartshareEvent.fromString<T>(foundMessage);
-      if (response.type === 'disconnect') {
+      if (response.pairId !== config?.pairId) {
+        return;
+      } else if (response.type === 'disconnect') {
         GoogleNearbyMessages.unsubscribe();
         disconectCallback(response.data);
       } else if (response.type === eventType) {
@@ -52,9 +54,9 @@ export async function onlineSubscribe<T extends SmartshareEventType>(
   });
 }
 
-export async function onlineSend(event: SmartshareEvents) {
+export async function onlineSend(event: SmartshareEvents, pairId: string) {
   return GoogleNearbyMessages.publish(
-    new SmartshareEvent(event.type, event.data).toString()
+    new SmartshareEvent(event.type, event.data, pairId).toString()
   );
 }
 
@@ -80,17 +82,27 @@ export function offlineSend(event: SmartshareEvents, callback: () => void) {
 }
 
 class SmartshareEvent<T extends SmartshareEventType> {
-  constructor(public type: T | string, public data: SmartshareEventData<T>) {}
+  constructor(
+    public type: T | string,
+    public data: SmartshareEventData<T>,
+    public pairId = ''
+  ) {}
 
   static fromString<T extends SmartshareEventType>(json: string) {
-    const [type, data] = json.split('\n');
-    return new SmartshareEvent<T>(type, data ? JSON.parse(data) : undefined);
+    const [pairId, type, data] = json.split('\n');
+    return new SmartshareEvent<T>(
+      type,
+      data ? JSON.parse(data) : undefined,
+      pairId
+    );
   }
 
   toString() {
-    return this.data != null
-      ? this.type + '\n' + JSON.stringify(this.data)
-      : this.type;
+    const message =
+      this.data != null
+        ? this.type + '\n' + JSON.stringify(this.data)
+        : this.type;
+    return [this.pairId, message].join('\n');
   }
 }
 
@@ -101,7 +113,7 @@ export interface PairingEvent {
 
 export interface PairingResponseEvent {
   type: 'pairing:response';
-  data: 'ok';
+  data: string;
 }
 
 export interface ExchangeReceiverInfoEvent {
