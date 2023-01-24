@@ -644,6 +644,11 @@ export const DefaultTheme = {
       zIndex: 1,
     },
   }),
+  claimsContainer: StyleSheet.create({
+    container: {
+      backgroundColor: Colors.Transparent,
+    },
+  }),
   OpenCard: require('../../../assets/ID-open.png'),
   CloseCard: require('../../../assets/ID-closed.png'),
   ProfileIcon: require('../../../assets/placeholder-photo.png'),
