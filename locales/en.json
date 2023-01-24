@@ -211,7 +211,12 @@
     "access": " is requesting access to",
     "status": "Status",
     "successMessage": "You Have Successfully Logged Into ",
-    "okay": "Okay"
+    "okay": "Okay",
+    "allow": "Allow",
+    "cancel": "Cancel",
+    "essentialClaims": "Essential Claims",
+    "voluntaryClaims": "Voluntary Claims",
+    "required":"Required"
   },
   "ReceiveVcScreen": {
     "header": "{{vcLabel}} details",
