@@ -162,7 +162,7 @@ export const SingleVcItem: React.FC<VcItemProps> = (props) => {
               style={Theme.Styles.closeCardImage}
             />
 
-            <Column margin="0 0 0 10" style={{ alignItems: 'flex-start' }}>
+            <Column margin="0 15 0 18" style={{ alignItems: 'flex-start' }}>
               {getDetails(t('fullName'), fullName, verifiableCredential)}
               {getDetails(t('uin'), uin, verifiableCredential)}
               {getDetails(t('generatedOn'), generatedOn, verifiableCredential)}

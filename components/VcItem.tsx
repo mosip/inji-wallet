@@ -47,7 +47,7 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
         </Text>
         <Row>
           <Text
-            numLines={1}
+            numLines={4}
             color={Theme.Colors.Details}
             weight="bold"
             size="smaller"
@@ -217,7 +217,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
               style={Theme.Styles.closeCardImage}
             />
 
-            <Column margin="0 0 0 25" style={{ alignItems: 'flex-start' }}>
+            <Column margin="0 15 0 18" style={{ alignItems: 'flex-start' }}>
               {getDetails(t('fullName'), fullName, verifiableCredential)}
               {!verifiableCredential
                 ? getDetails(t('id'), uin || vid, verifiableCredential)
