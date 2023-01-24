@@ -19,7 +19,7 @@ export const MyBindedVcs: React.FC<MyBindedVcsProps> = (props) => {
       headerTitle={t('selectId')}
       headerElevation={5}
       onDismiss={() => {
-        controller.setQrLogin(false), controller.DISMISS();
+        controller.DISMISS();
       }}>
       <React.Fragment>
         <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
