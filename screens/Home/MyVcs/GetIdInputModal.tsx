@@ -1,7 +1,7 @@
 import React from 'react';
-import { Dimensions } from 'react-native';
-import { Icon, Input, Tooltip } from 'react-native-elements';
-import { Button, Column, Row, Text } from '../../../components/ui';
+import { Dimensions, I18nManager } from 'react-native';
+import { Icon, Input } from 'react-native-elements';
+import { Button, Centered, Column, Row, Text } from '../../../components/ui';
 import { Modal } from '../../../components/ui/Modal';
 import { Theme } from '../../../components/ui/styleUtils';
 import {
@@ -11,6 +11,7 @@ import {
 import { KeyboardAvoidingView, Platform } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { MessageOverlay } from '../../../components/MessageOverlay';
+import Tooltip from '../../../lib/react-native-elements/tooltip/Tooltip';
 
 export const GetIdInputModal: React.FC<GetIdInputModalProps> = (props) => {
   const { t } = useTranslation('GetIdInputModal');
@@ -39,6 +40,10 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = (props) => {
                     color: controller.isInvalid
                       ? Theme.Colors.errorMessage
                       : Theme.Colors.textValue,
+                    textAlign: 'left',
+                  }}
+                  inputStyle={{
+                    textAlign: I18nManager.isRTL ? 'right' : 'left',
                   }}
                   style={Theme.Styles.placeholder}
                   value={controller.id}
@@ -59,25 +64,27 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = (props) => {
                       skipAndroidStatusBar={true}
                       onOpen={controller.ACTIVATE_ICON_COLOR}
                       onClose={controller.DEACTIVATE_ICON_COLOR}>
-                      {controller.isInvalid ? (
-                        <Icon
-                          name="error"
-                          size={18}
-                          color={
-                            !controller.iconColor
-                              ? Theme.Colors.errorMessage
-                              : Theme.Colors.Icon
-                          }
-                        />
-                      ) : (
-                        <Icon
-                          name={'help'}
-                          size={18}
-                          color={
-                            !controller.iconColor ? null : Theme.Colors.Icon
-                          }
-                        />
-                      )}
+                      <Centered width={32} fill>
+                        {controller.isInvalid ? (
+                          <Icon
+                            name="error"
+                            size={18}
+                            color={
+                              !controller.iconColor
+                                ? Theme.Colors.errorMessage
+                                : Theme.Colors.Icon
+                            }
+                          />
+                        ) : (
+                          <Icon
+                            name={'help'}
+                            size={18}
+                            color={
+                              !controller.iconColor ? null : Theme.Colors.Icon
+                            }
+                          />
+                        )}
+                      </Centered>
                     </Tooltip>
                   }
                   errorStyle={{ color: Theme.Colors.errorMessage }}
