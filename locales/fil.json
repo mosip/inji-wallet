@@ -95,10 +95,30 @@
       },
       "backend": {
         "invalidOtp": "Di-wasto ang OTP",
+        "expiredOtp": "Nag-expire na ang OTP",
         "invalidUin": "Di-wastong UIN",
         "invalidVid": "Di-wastong VID",
         "missingUin": "Hindi mahanap ang iyong UIN",
-        "missingVid": "Hindi mahanap ang iyong VID"
+        "missingVid": "Hindi mahanap ang iyong VID",
+        "noMessageAvailable": "Subukan pagkatapos ng ilang oras",
+        "whileGeneratingOtpErrorIsOccured": "habang ang pagbuo ng OTP error ay naganap",
+        "networkRequestFailed": "Nabigo ang kahilingan sa network"
+      }
+    }
+  },
+  "GetVcModal": {
+    "errors": {
+      "input": {
+        "empty": "Hindi maaaring walang laman ang input",
+        "invalidFormat": "Ang input format ay hindi tama"
+      },
+      "backend":{
+        "invalidOtp": "Di-wasto ang OTP",
+        "expiredOtp": "Nag-expire na ang OTP",
+        "applicationProcessing": "Hindi pa handa ang AID",
+        "noMessageAvailable": "Subukan pagkatapos ng ilang oras",
+        "networkRequestFailed": "Nabigo ang kahilingan sa network",
+        "timeout": "timeout"
       }
     }
   },

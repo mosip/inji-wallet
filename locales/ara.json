@@ -1,4 +1,18 @@
-{ 
+{   
+  "ActivityLogText": {
+    "VC_SHARED": "مشترك",
+    "VC_RECEIVED": "الواردة",
+    "VC_RECEIVED_NOT_SAVED": "تلقى لم يتم حفظها",
+    "VC_DELETED": "تم الحذف",
+    "VC_DOWNLOADED": "تم تنزيله",
+    "VC_REVOKED": "إلغاء - فسخ",
+    "VC_SHARED_WITH_VERIFICATION_CONSENT": "مشترك. يتم إعطاء الموافقة للتحقق من التواجد",
+    "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "الواردة. تم التحقق من الحضور",
+    "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "الواردة. فشل التحقق من التواجد",
+    "PRESENCE_VERIFIED_AND_VC_SHARED": "التحقق منها ومشاركتها",
+    "PRESENCE_VERIFICATION_FAILED": "فشل التحقق",
+    "QRLOGIN_SUCCESFULL": "QRL تم تسجيل الدخول بنجاح"
+  },
     "DeviceInfoList": {
       "requestedBy": "مطلوب بواسطة",
       "sentBy": "مرسل بواسطة",
@@ -82,10 +96,30 @@
         },
         "backend": {
           "invalidOtp": "OTP غير صالح",
+          "expiredOtp": "انتهت صلاحية كلمة المرور لمرة واحدة",
           "invalidUin": "UIN غير صالح",
           "invalidVid": "VID غير صالح",
           "missingUin": "UIN غير متوفر في قاعدة البيانات",
-          "missingVid": "VID غير متوفر في قاعدة البيانات"
+          "missingVid": "VID غير متوفر في قاعدة البيانات",
+          "noMessageAvailable": "حاول بعد فترةe",
+          "whileGeneratingOtpErrorIsOccured": "أثناء إنشاء خطأ OTP",
+          "networkRequestFailed": "فشل طلب الشبكة"
+        }
+      }
+    },
+    "GetVcModal": {
+      "errors": {
+        "input": {
+          "empty": "لا يمكن أن يكون الإدخال فارغًا",
+          "invalidFormat": "تنسيق الإدخال غير صحيح"
+        },
+        "backend":{
+          "invalidOtp": "OTP غير صالح",
+          "expiredOtp": "انتهت صلاحية كلمة المرور لمرة واحدة",
+          "applicationProcessing": "غير جاهز AID",
+          "noMessageAvailable": "حاول بعد فترة",
+          "networkRequestFailed": "فشل طلب الشبكة",
+          "timeout": "نفذ الوقت"
         }
       }
     },

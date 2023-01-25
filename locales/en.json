@@ -96,10 +96,30 @@
       },
       "backend": {
         "invalidOtp": "OTP is invalid",
+        "expiredOtp": "OTP has expired",
         "invalidUin": "UIN invalid",
         "invalidVid": "VID invalid",
         "missingUin": "UIN not available in database",
-        "missingVid": "VID not available in database"
+        "missingVid": "VID not available in database",
+        "noMessageAvailable": "Try after sometime",
+        "whileGeneratingOtpErrorIsOccured": "while generating otp error is occurred",
+        "networkRequestFailed": "Network request failed"
+      }
+    }
+  },
+  "GetVcModal": {
+    "errors": {
+      "input": {
+        "empty": "The input cannot be empty",
+        "invalidFormat": "The input format is incorrect"
+      },
+      "backend":{
+        "invalidOtp": "OTP is invalid",
+        "expiredOtp": "OTP has expired",
+        "applicationProcessing": "AID is not ready",
+        "noMessageAvailable": "Try after sometime",
+        "networkRequestFailed": "Network request failed",
+        "timeOut": "Timeout"
       }
     }
   },

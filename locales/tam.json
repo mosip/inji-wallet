@@ -1,4 +1,18 @@
 {   
+  "ActivityLogText": {
+    "VC_SHARED": "பகிர்ந்து கொண்டார்",
+    "VC_RECEIVED": "பெற்றது",
+    "VC_RECEIVED_NOT_SAVED": "பெறப்பட்டது சேமிக்கப்படவில்லை",
+    "VC_DELETED": "நீக்கப்பட்டது",
+    "VC_DOWNLOADED": "பதிவிறக்கம் செய்யப்பட்டது",
+    "VC_REVOKED": "ரத்து செய்யப்பட்டது",
+    "VC_SHARED_WITH_VERIFICATION_CONSENT": "பகிர்ந்து கொண்டார். இருப்பைச் சரிபார்ப்பதற்கு ஒப்புதல் அளிக்கப்பட்டது",
+    "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "பெற்றது. இருப்பு சரிபார்க்கப்பட்டது",
+    "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "பெற்றது. இருப்பைச் சரிபார்க்க முடியவில்லை",
+    "PRESENCE_VERIFIED_AND_VC_SHARED": "சரிபார்க்கப்பட்டு பகிரப்பட்டது",
+    "PRESENCE_VERIFICATION_FAILED": "சரிபார்ப்பு தோல்வியடைந்தது",
+    "QRLOGIN_SUCCESFULL": "QRஉள்நுழைவு வெற்றிகரமாக உள்ளது"
+  },
     "DeviceInfoList": {
       "requestedBy": "கோரியவர்",
       "sentBy": "அனுப்பியவர்",
@@ -82,10 +96,30 @@
         },
         "backend": {
           "invalidOtp": "OTP தவறானது",
+          "expiredOtp": "OTP காலாவதியானது",
           "invalidUin": "UIN தவறானது",
           "invalidVid": "VID தவறானது",
           "missingUin": "UIN தரவுத்தளத்தில் இல்லை",
-          "missingVid": "VID தரவுத்தளத்தில் இல்லை"
+          "missingVid": "VID தரவுத்தளத்தில் இல்லை",
+          "noMessageAvailable": "சிறிது நேரம் கழித்து முயற்சிக்கவும்",
+          "whileGeneratingOtpErrorIsOccured": "OTP உருவாக்கும் போது பிழை ஏற்பட்டது",
+          "networkRequestFailed": "நெட்வொர்க் கோரிக்கை தோல்வியடைந்தது"
+        }
+      }
+    },
+    "GetVcModal": {
+      "errors": {
+        "input": {
+          "empty": "உள்ளீடு காலியாக இருக்க முடியாது",
+          "invalidFormat": "உள்ளீட்டு வடிவம் தவறானது"
+        },
+        "backend":{
+          "invalidOtp": "OTP தவறானது",
+          "expiredOtp": "OTP காலாவதியானது",
+          "applicationProcessing": "AID தயாராக இல்லை",
+          "noMessageAvailable": "சிறிது நேரம் கழித்து முயற்சிக்கவும்",
+          "networkRequestFailed": "நெட்வொர்க் கோரிக்கை தோல்வியடைந்தது",
+          "timeout": "நேரம் முடிந்தது"
         }
       }
     },
