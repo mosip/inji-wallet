@@ -108,12 +108,12 @@ class SmartshareEvent<T extends SmartshareEventType> {
 
 export interface PairingEvent {
   type: 'pairing';
-  data: ConnectionParams;
+  data: OnlineConnectionParams;
 }
 
 export interface PairingResponseEvent {
   type: 'pairing:response';
-  data: string;
+  data: OnlineConnectionParams;
 }
 
 export interface ExchangeReceiverInfoEvent {
@@ -163,3 +163,7 @@ type SmartshareEvents =
   | SendVcEvent
   | SendVcResponseEvent
   | DisconnectEvent;
+
+export type OnlineConnectionParams = ConnectionParams & {
+  receiverInfo: DeviceInfo;
+};

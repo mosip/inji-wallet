@@ -102,11 +102,11 @@ export interface Typegen0 {
     CANCEL_TIMEOUT: 'CANCEL';
     CLEAR_DELAY: '';
     CONNECTION_TIMEOUT: 'RECEIVE_DEVICE_INFO';
-    SHARING_TIMEOUT: 'EXCHANGE_DONE';
+    SHARING_TIMEOUT: 'EXCHANGE_DONE' | 'RECEIVE_DEVICE_INFO';
   };
   'eventsCausingGuards': {
     hasExistingVc: 'VC_RESPONSE';
-    isModeOnline: 'SCREEN_FOCUS' | 'SWITCH_PROTOCOL';
+    isModeOnline: 'RECEIVE_DEVICE_INFO' | 'SCREEN_FOCUS' | 'SWITCH_PROTOCOL';
   };
   'eventsCausingServices': {
     advertiseDevice:
@@ -120,7 +120,7 @@ export interface Typegen0 {
     checkNetwork: 'APP_ACTIVE' | 'SCREEN_FOCUS' | 'SWITCH_PROTOCOL';
     exchangeDeviceInfo: 'RECEIVE_DEVICE_INFO';
     monitorConnection: 'xstate.init';
-    receiveVc: 'EXCHANGE_DONE';
+    receiveVc: 'EXCHANGE_DONE' | 'RECEIVE_DEVICE_INFO';
     requestBluetooth: 'BLUETOOTH_DISABLED';
     sendDisconnect: 'CANCEL';
     sendVcResponse: 'CANCEL' | 'REJECT' | 'STORE_RESPONSE';

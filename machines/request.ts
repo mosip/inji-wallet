@@ -221,10 +221,16 @@ export const requestMachine =
         preparingToExchangeInfo: {
           entry: 'requestReceiverInfo',
           on: {
-            RECEIVE_DEVICE_INFO: {
-              target: 'exchangingDeviceInfo',
-              actions: 'setReceiverInfo',
-            },
+            RECEIVE_DEVICE_INFO: [
+              {
+                cond: 'isModeOnline',
+                target: 'waitingForVc',
+              },
+              {
+                target: 'exchangingDeviceInfo',
+                actions: 'setReceiverInfo',
+              },
+            ],
           },
         },
 
@@ -519,14 +525,16 @@ export const requestMachine =
         },
 
         generateConnectionParams: assign({
-          connectionParams: (context) => {
-            if (context.sharingProtocol === 'OFFLINE') {
+          connectionParams: ({ sharingProtocol }) => {
+            if (sharingProtocol === 'OFFLINE') {
               return IdpassSmartshare.getConnectionParameters();
             } else {
-              const cid = uuid.v4();
               return JSON.stringify({
                 pk: '',
-                cid,
+                cid: uuid.v4(),
+                receiverInfo: {
+                  deviceName: getDeviceNameSync(),
+                },
               });
             }
           },
@@ -545,6 +553,9 @@ export const requestMachine =
                   verifiableCredential: vp.verifiableCredential[0],
                 }
               : event.vc;
+          },
+          senderInfo: (context, event) => {
+            return event.vc.senderInfo ?? context.senderInfo;
           },
         }),
 
@@ -734,7 +745,7 @@ export const requestMachine =
                     if (scannedQrParams.cid === generatedParams.cid) {
                       const event: PairingResponseEvent = {
                         type: 'pairing:response',
-                        data: scannedQrParams.cid,
+                        data: scannedQrParams,
                       };
                       await onlineSend(event, scannedQrParams.cid);
                       callback({
@@ -785,16 +796,16 @@ export const requestMachine =
 
             return () => subscription.remove();
           } else {
-            onlineSubscribe(
-              'exchange-sender-info',
-              async (senderInfo) => {
-                await GoogleNearbyMessages.unpublish();
-                await onlineSend(event, context.pairId);
-                callback({ type: 'EXCHANGE_DONE', senderInfo });
-              },
-              null,
-              { pairId: context.pairId }
-            );
+            // onlineSubscribe(
+            //   'exchange-sender-info',
+            //   async (senderInfo) => {
+            //     await GoogleNearbyMessages.unpublish();
+            //     await onlineSend(event, context.pairId);
+            //     callback({ type: 'EXCHANGE_DONE', senderInfo });
+            //   },
+            //   null,
+            //   { pairId: context.pairId }
+            // );
           }
         },
 
@@ -882,10 +893,13 @@ export const requestMachine =
           return receivedVcs.includes(vcKey);
         },
 
-        isModeOnline: (context, event) =>
-          event.type === 'SCREEN_FOCUS'
-            ? context.sharingProtocol === 'ONLINE'
-            : event.value,
+        isModeOnline: (context, event) => {
+          if (event.type === 'SWITCH_PROTOCOL') {
+            return event.value;
+          } else {
+            return context.sharingProtocol === 'ONLINE';
+          }
+        },
       },
 
       delays: {

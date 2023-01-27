@@ -101,7 +101,7 @@ export interface Typegen0 {
       | 'xstate.init';
     requestSenderInfo: 'ONLINE' | 'SCAN';
     requestToEnableLocation: 'LOCATION_DISABLED' | 'LOCATION_REQUEST';
-    resetShouldVerifyPresence: 'CANCEL' | 'EXCHANGE_DONE';
+    resetShouldVerifyPresence: 'CONNECTED' | 'EXCHANGE_DONE';
     setConnectionParams: 'SCAN';
     setCreatedVp: 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
     setReason: 'UPDATE_REASON';
@@ -126,6 +126,7 @@ export interface Typegen0 {
       | 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
   };
   'eventsCausingGuards': {
+    isModeOnline: 'CONNECTED';
     isQrOffline: 'SCAN';
     isQrOnline: 'SCAN';
   };
@@ -140,6 +141,7 @@ export interface Typegen0 {
       | 'xstate.after(CONNECTION_TIMEOUT)#scan.exchangingDeviceInfo';
     monitorCancellation:
       | 'CANCEL'
+      | 'CONNECTED'
       | 'DISMISS'
       | 'EXCHANGE_DONE'
       | 'error.platform.scan.reviewing.creatingVp:invocation[0]';
