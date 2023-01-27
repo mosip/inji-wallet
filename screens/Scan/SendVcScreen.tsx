@@ -123,7 +123,7 @@ export const SendVcScreen: React.FC = () => {
       </MessageOverlay>
 
       <MessageOverlay
-        isVisible={controller.isSendingVc}
+        isVisible={controller.isSendingVc || controller.isSendingVcTimeout}
         title={t('status.sharing.title')}
         hint={
           controller.isSendingVcTimeout
