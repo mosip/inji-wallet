@@ -4,6 +4,11 @@ export interface Typegen0 {
   '@@xstate/typegen': true;
   'internalEvents': {
     '': { type: '' };
+    'done.invoke.QrLogin': {
+      type: 'done.invoke.QrLogin';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
     'done.invoke.scan.reviewing.creatingVp:invocation[0]': {
       type: 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
       data: unknown;
@@ -41,7 +46,7 @@ export interface Typegen0 {
     actions: never;
     delays: never;
     guards: never;
-    services: never;
+    services: 'QrLogin';
   };
   'eventsCausingActions': {
     clearCreatedVp:
@@ -81,8 +86,16 @@ export interface Typegen0 {
       | 'xstate.init';
     requestSenderInfo: 'SCAN';
     requestToEnableLocation: 'LOCATION_DISABLED' | 'LOCATION_REQUEST';
+    resetShouldVerifyPresence: 'CANCEL' | 'EXCHANGE_DONE';
+    sendScanData: 'SCAN';
+    setChildRef:
+      | 'CONNECTION_DESTROYED'
+      | 'DISCONNECT'
+      | 'DISMISS'
+      | 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection';
     setConnectionParams: 'SCAN';
     setCreatedVp: 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
+    setLinkCode: 'SCAN';
     setReason: 'UPDATE_REASON';
     setReceiverInfo: 'EXCHANGE_DONE';
     setScannedQrParams: 'SCAN';
@@ -90,6 +103,8 @@ export interface Typegen0 {
     setSenderInfo: 'RECEIVE_DEVICE_INFO';
     setShareLogTypeUnverified: 'ACCEPT_REQUEST';
     setShareLogTypeVerified: 'FACE_VALID';
+    storeLoginItem: 'done.invoke.QrLogin';
+    storingActivityLog: 'STORE_RESPONSE';
     toggleShouldVerifyPresence: 'TOGGLE_USER_CONSENT';
   };
   'eventsCausingDelays': {
@@ -105,10 +120,12 @@ export interface Typegen0 {
       | 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
   };
   'eventsCausingGuards': {
+    isQrLogin: 'SCAN';
     isQrOffline: 'SCAN';
     isQrOnline: 'SCAN';
   };
   'eventsCausingServices': {
+    QrLogin: 'SCAN';
     checkBluetoothService: 'SCREEN_FOCUS';
     checkLocationPermission: 'APP_ACTIVE' | 'LOCATION_ENABLED';
     checkLocationStatus: '';
@@ -164,6 +181,10 @@ export interface Typegen0 {
     | 'reviewing.sendingVc.sent'
     | 'reviewing.sendingVc.timeout'
     | 'reviewing.verifyingIdentity'
+    | 'showQrLogin'
+    | 'showQrLogin.idle'
+    | 'showQrLogin.navigatingToHome'
+    | 'showQrLogin.storing'
     | {
         checkingBluetoothService?: 'checking' | 'enabled' | 'requesting';
         checkingLocationService?:
@@ -185,6 +206,7 @@ export interface Typegen0 {
           | 'sendingVc'
           | 'verifyingIdentity'
           | { sendingVc?: 'inProgress' | 'sent' | 'timeout' };
+        showQrLogin?: 'idle' | 'navigatingToHome' | 'storing';
       };
   'tags': never;
 }

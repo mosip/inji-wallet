@@ -329,6 +329,7 @@ export const scanMachine =
           },
         },
         reviewing: {
+          entry: ['resetShouldVerifyPresence'],
           exit: ['clearReason', 'clearCreatedVp'],
           initial: 'selectingVc',
           states: {
@@ -338,7 +339,7 @@ export const scanMachine =
                   actions: 'setReason',
                 },
                 DISCONNECT: {
-                  target: '#scan.findingConnection',
+                  target: '#scan.disconnected',
                 },
                 SELECT_VC: {
                   actions: 'setSelectedVc',
@@ -703,6 +704,13 @@ export const scanMachine =
             ),
         }),
 
+        resetShouldVerifyPresence: assign({
+          selectedVc: (context) => ({
+            ...context.selectedVc,
+            shouldVerifyPresence: false,
+          }),
+        }),
+
         storeLoginItem: send(
           (_context, event) => {
             return StoreEvents.PREPEND(
@@ -935,22 +943,6 @@ export const scanMachine =
       },
 
       guards: {
-        isQrLogin: (_context, event) => {
-          let linkCode = '';
-          try {
-            console.log(event.params);
-            linkCode = event.params.substring(
-              event.params.indexOf('linkCode=') + 9,
-              event.params.indexOf('&')
-            );
-            console.log(linkCode);
-            return linkCode !== null;
-          } catch (e) {
-            console.log(e);
-            return false;
-          }
-        },
-
         isQrOffline: (_context, event) => {
           // don't scan if QR is offline and Google Nearby is enabled
           if (Platform.OS === 'ios' && !isBLEEnabled) return false;
@@ -970,6 +962,22 @@ export const scanMachine =
             Object.assign(param, JSON.parse(event.params));
             return 'cid' in param && 'pk' in param && param.pk === '';
           } catch (e) {
+            return false;
+          }
+        },
+
+        isQrLogin: (_context, event) => {
+          let linkCode = '';
+          try {
+            console.log(event.params);
+            linkCode = event.params.substring(
+              event.params.indexOf('linkCode=') + 9,
+              event.params.indexOf('&')
+            );
+            console.log(linkCode);
+            return linkCode !== null;
+          } catch (e) {
+            console.log(e);
             return false;
           }
         },
@@ -1128,7 +1136,9 @@ async function sendVc(
             },
           });
         } else if (typeof status === 'string') {
-          GoogleNearbyMessages.unsubscribe();
+          if (status === 'ACCEPTED' || status === 'REJECTED') {
+            GoogleNearbyMessages.unsubscribe();
+          }
           callback(status);
         }
       },
