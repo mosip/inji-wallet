@@ -117,6 +117,10 @@ export const scanMachine =
         SCREEN_FOCUS: {
           target: '.checkingLocationService',
         },
+        OFFLINE: {
+          cond: 'isModeOnline',
+          target: '.offline',
+        },
       },
       states: {
         inactive: {
@@ -457,8 +461,8 @@ export const scanMachine =
           },
 
           on: {
-            OFFLINE: 'offline',
             ONLINE: 'preparingToConnect',
+            OFFLINE: 'offline',
           },
         },
 
@@ -662,6 +666,15 @@ export const scanMachine =
             );
 
             return () => subscription.remove();
+          } else {
+            return NetInfo.addEventListener((state) => {
+              callback({
+                type:
+                  state.isConnected && state.isInternetReachable
+                    ? 'ONLINE'
+                    : 'OFFLINE',
+              });
+            });
           }
         },
 

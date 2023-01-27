@@ -129,6 +129,8 @@ export const requestMachine =
             actions: 'switchProtocol',
           },
         ],
+
+        OFFLINE: 'offline',
       },
       states: {
         inactive: {
@@ -172,10 +174,6 @@ export const requestMachine =
                 target: '#request.clearingConnection',
               },
             },
-          },
-
-          on: {
-            APP_ACTIVE: 'checkingNetwork',
           },
         },
 
@@ -479,8 +477,14 @@ export const requestMachine =
 
         offline: {
           on: {
-            ONLINE: 'checkingBluetoothService',
+            OFFLINE: {
+              internal: true,
+            },
+            SCREEN_FOCUS: 'checkingNetwork',
             APP_ACTIVE: 'checkingNetwork',
+          },
+          after: {
+            500: 'checkingNetwork',
           },
         },
       },
@@ -775,6 +779,15 @@ export const requestMachine =
             );
 
             return () => subscription.remove();
+          } else {
+            return NetInfo.addEventListener((state) => {
+              callback({
+                type:
+                  state.isConnected && state.isInternetReachable
+                    ? 'ONLINE'
+                    : 'OFFLINE',
+              });
+            });
           }
         },
 

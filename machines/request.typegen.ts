@@ -9,6 +9,9 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
+    'xstate.after(500)#request.offline': {
+      type: 'xstate.after(500)#request.offline';
+    };
     'xstate.after(CANCEL_TIMEOUT)#request.cancelling': {
       type: 'xstate.after(CANCEL_TIMEOUT)#request.cancelling';
     };
@@ -50,6 +53,7 @@ export interface Typegen0 {
       | 'CANCEL'
       | 'FACE_INVALID'
       | 'FACE_VALID'
+      | 'OFFLINE'
       | 'REJECT'
       | 'SCREEN_BLUR'
       | 'SCREEN_FOCUS'
@@ -59,6 +63,7 @@ export interface Typegen0 {
       | ''
       | 'DISCONNECT'
       | 'DISMISS'
+      | 'OFFLINE'
       | 'SCREEN_BLUR'
       | 'SCREEN_FOCUS'
       | 'SWITCH_PROTOCOL'
@@ -76,6 +81,7 @@ export interface Typegen0 {
       | 'xstate.after(CLEAR_DELAY)#request.clearingConnection';
     removeLoggers:
       | 'DISMISS'
+      | 'OFFLINE'
       | 'SCREEN_BLUR'
       | 'xstate.after(CLEAR_DELAY)#request.clearingConnection'
       | 'xstate.init';
@@ -117,9 +123,13 @@ export interface Typegen0 {
       | 'SCREEN_FOCUS'
       | 'SWITCH_PROTOCOL'
       | 'xstate.after(CANCEL_TIMEOUT)#request.cancelling';
-    checkNetwork: 'APP_ACTIVE' | 'SCREEN_FOCUS' | 'SWITCH_PROTOCOL';
+    checkNetwork:
+      | 'APP_ACTIVE'
+      | 'SCREEN_FOCUS'
+      | 'SWITCH_PROTOCOL'
+      | 'xstate.after(500)#request.offline';
     exchangeDeviceInfo: 'RECEIVE_DEVICE_INFO';
-    monitorConnection: 'xstate.init';
+    monitorConnection: 'OFFLINE' | 'xstate.init';
     receiveVc: 'EXCHANGE_DONE' | 'RECEIVE_DEVICE_INFO';
     requestBluetooth: 'BLUETOOTH_DISABLED';
     sendDisconnect: 'CANCEL';

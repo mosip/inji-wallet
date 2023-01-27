@@ -52,6 +52,7 @@ export interface Typegen0 {
     clearCreatedVp:
       | 'DISCONNECT'
       | 'DISMISS'
+      | 'OFFLINE'
       | 'SCREEN_BLUR'
       | 'SCREEN_FOCUS'
       | 'xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling'
@@ -59,6 +60,7 @@ export interface Typegen0 {
     clearReason:
       | 'DISCONNECT'
       | 'DISMISS'
+      | 'OFFLINE'
       | 'SCREEN_BLUR'
       | 'SCREEN_FOCUS'
       | 'xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling'
@@ -72,6 +74,7 @@ export interface Typegen0 {
       | 'DISCONNECT'
       | 'DISMISS'
       | 'LOCATION_ENABLED'
+      | 'OFFLINE'
       | 'SCREEN_BLUR'
       | 'SCREEN_FOCUS'
       | 'xstate.after(CANCEL_TIMEOUT)#scan.reviewing.cancelling'
@@ -82,6 +85,7 @@ export interface Typegen0 {
       | 'ACCEPT_REQUEST'
       | 'CANCEL'
       | 'DISCONNECT'
+      | 'OFFLINE'
       | 'SCREEN_BLUR'
       | 'SCREEN_FOCUS'
       | 'VERIFY_AND_ACCEPT_REQUEST'
@@ -126,7 +130,7 @@ export interface Typegen0 {
       | 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
   };
   'eventsCausingGuards': {
-    isModeOnline: 'CONNECTED';
+    isModeOnline: 'CONNECTED' | 'OFFLINE';
     isQrOffline: 'SCAN';
     isQrOnline: 'SCAN';
   };
