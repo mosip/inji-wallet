@@ -8,7 +8,6 @@ import { StoreEvents } from './store';
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
-    name: '',
     vcLabel: {
       singular: 'ID',
       plural: 'IDs',
@@ -17,7 +16,6 @@ const model = createModel(
   },
   {
     events: {
-      UPDATE_NAME: (name: string) => ({ name }),
       UPDATE_VC_LABEL: (label: string) => ({ label }),
       TOGGLE_BIOMETRIC_UNLOCK: (enable: boolean) => ({ enable }),
       STORE_RESPONSE: (response: unknown) => ({ response }),
@@ -60,9 +58,6 @@ export const settingsMachine = model.createMachine(
           TOGGLE_BIOMETRIC_UNLOCK: {
             actions: ['toggleBiometricUnlock', 'storeContext'],
           },
-          UPDATE_NAME: {
-            actions: ['updateName', 'storeContext'],
-          },
           UPDATE_VC_LABEL: {
             actions: ['updateVcLabel', 'storeContext'],
           },
@@ -90,10 +85,6 @@ export const settingsMachine = model.createMachine(
           ...context,
           ...newContext,
         };
-      }),
-
-      updateName: model.assign({
-        name: (_, event) => event.name,
       }),
 
       updateVcLabel: model.assign({
@@ -124,10 +115,6 @@ export function createSettingsMachine(serviceRefs: AppServices) {
 }
 
 type State = StateFrom<typeof settingsMachine>;
-
-export function selectName(state: State) {
-  return state.context.name;
-}
 
 export function selectVcLabel(state: State) {
   return state.context.vcLabel;

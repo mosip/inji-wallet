@@ -47,11 +47,6 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
           title={controller.alertMsg}
         />
         <EditableListItem
-          label={t('name')}
-          value={controller.name}
-          onEdit={controller.UPDATE_NAME}
-        />
-        <EditableListItem
           label={t('vcLabel')}
           value={controller.vcLabel.singular}
           onEdit={controller.UPDATE_VC_LABEL}

@@ -18,10 +18,8 @@ export interface Typegen0 {
     storeContext:
       | 'STORE_RESPONSE'
       | 'TOGGLE_BIOMETRIC_UNLOCK'
-      | 'UPDATE_NAME'
       | 'UPDATE_VC_LABEL';
     toggleBiometricUnlock: 'TOGGLE_BIOMETRIC_UNLOCK';
-    updateName: 'UPDATE_NAME';
     updateVcLabel: 'UPDATE_VC_LABEL';
   };
   'eventsCausingDelays': {};
