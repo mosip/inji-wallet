@@ -119,23 +119,23 @@ export interface Typegen0 {
   'eventsCausingActions': {
     clearOtp:
       | ''
-      | 'BINDING_DONE'
       | 'CANCEL'
       | 'DISMISS'
       | 'REVOKE_VC'
       | 'STORE_RESPONSE'
       | 'done.invoke.vc-item.requestingBindingOtp:invocation[0]'
       | 'done.invoke.vc-item.requestingOtp:invocation[0]'
+      | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]'
       | 'done.invoke.vc-item.verifyingCredential:invocation[0]'
       | 'error.platform.vc-item.requestingLock:invocation[0]'
       | 'error.platform.vc-item.requestingRevoke:invocation[0]'
       | 'error.platform.vc-item.verifyingCredential:invocation[0]';
     clearTransactionId:
       | ''
-      | 'BINDING_DONE'
       | 'CANCEL'
       | 'DISMISS'
       | 'STORE_RESPONSE'
+      | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]'
       | 'done.invoke.vc-item.verifyingCredential:invocation[0]'
       | 'error.platform.vc-item.verifyingCredential:invocation[0]';
     incrementDownloadCounter: 'POLL';
@@ -170,7 +170,9 @@ export interface Typegen0 {
       | 'error.platform.vc-item.addingWalletBindingId:invocation[0]'
       | 'error.platform.vc-item.requestingBindingOtp:invocation[0]'
       | 'error.platform.vc-item.updatingPrivateKey:invocation[0]';
-    setWalletBindingErrorEmpty: 'BINDING_DONE' | 'CANCEL';
+    setWalletBindingErrorEmpty:
+      | 'CANCEL'
+      | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
     setWalletBindingId: 'done.invoke.vc-item.addingWalletBindingId:invocation[0]';
     storeContext:
       | 'CREDENTIAL_DOWNLOADED'
@@ -229,7 +231,6 @@ export interface Typegen0 {
     | 'requestingOtp'
     | 'requestingRevoke'
     | 'revokingVc'
-    | 'showBindingStatus'
     | 'showBindingWarning'
     | 'showingWalletBindingError'
     | 'storingTag'

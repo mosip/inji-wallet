@@ -75,6 +75,11 @@ export const ReceiveVcScreen: React.FC = () => {
             onPress={controller.DISMISS}
             margin={[0, 8, 0, 0]}
           />
+          <Button
+            fill
+            title={t('common:tryAgain')}
+            onPress={controller.RETRY_VERIFICATION}
+          />
         </Row>
       </MessageOverlay>
     </React.Fragment>

@@ -1,18 +1,12 @@
 import { useSelector } from '@xstate/react';
 import { useContext, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { ActorRefFrom } from 'xstate';
-import { MessageOverlayProps } from '../../components/MessageOverlay';
 import {
   ScanEvents,
-  selectIsAccepted,
   selectReason,
   selectReceiverInfo,
-  selectIsRejected,
   selectIsSelectingVc,
-  selectIsSendingVc,
   selectVcName,
-  selectIsSendingVcTimeout,
   selectIsVerifyingIdentity,
   selectIsInvalidIdentity,
   selectSelectedVc,
@@ -29,23 +23,7 @@ export function useSendVcScreen() {
   const settingsService = appService.children.get('settings');
   const vcService = appService.children.get('vc');
 
-  const { t } = useTranslation('SendVcScreen');
-  const isSendingVc = useSelector(scanService, selectIsSendingVc);
-  const isSendingVcTimeout = useSelector(scanService, selectIsSendingVcTimeout);
   const CANCEL = () => scanService.send(ScanEvents.CANCEL());
-
-  let status: Pick<MessageOverlayProps, 'title' | 'hint' | 'onCancel'> = null;
-  if (isSendingVc) {
-    status = {
-      title: t('status.sharing.title'),
-    };
-  } else if (isSendingVcTimeout) {
-    status = {
-      title: t('status.sharing.title'),
-      hint: t('status.sharing.timeoutHint'),
-      onCancel: CANCEL,
-    };
-  }
 
   const [selectedIndex, setSelectedIndex] = useState<number>(null);
 
@@ -60,7 +38,6 @@ export function useSendVcScreen() {
         scanService.send(ScanEvents.SELECT_VC(vcData));
       },
 
-    status,
     receiverInfo: useSelector(scanService, selectReceiverInfo),
     reason: useSelector(scanService, selectReason),
     vcName: useSelector(scanService, selectVcName),
@@ -69,10 +46,6 @@ export function useSendVcScreen() {
     selectedVc: useSelector(scanService, selectSelectedVc),
 
     isSelectingVc: useSelector(scanService, selectIsSelectingVc),
-    isSendingVc,
-    isSendingVcTimeout,
-    isAccepted: useSelector(scanService, selectIsAccepted),
-    isRejected: useSelector(scanService, selectIsRejected),
     isVerifyingIdentity: useSelector(scanService, selectIsVerifyingIdentity),
     isInvalidIdentity: useSelector(scanService, selectIsInvalidIdentity),
     isCancelling: useSelector(scanService, selectIsCancelling),

@@ -301,6 +301,9 @@ export const requestMachine =
                 DISMISS: {
                   target: 'accepting',
                 },
+                RETRY_VERIFICATION: {
+                  target: 'verifyingIdentity',
+                },
               },
             },
             verifyingVp: {
@@ -385,6 +388,7 @@ export const requestMachine =
               },
             },
             rejected: {
+              entry: ['setReceiveLogTypeDiscarded', 'logReceived'],
               invoke: {
                 src: 'sendVcResponse',
                 data: {
@@ -554,6 +558,10 @@ export const requestMachine =
 
         setReceiveLogTypeUnverified: model.assign({
           receiveLogType: 'VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED',
+        }),
+
+        setReceiveLogTypeDiscarded: model.assign({
+          receiveLogType: 'VC_RECEIVED_NOT_SAVED',
         }),
 
         logReceived: send(
@@ -739,7 +747,7 @@ export const requestMachine =
           }
         },
 
-        sendVcResponse: (context, _event, meta) => () => {
+        sendVcResponse: (context, _event, meta) => async () => {
           const event: SendVcResponseEvent = {
             type: 'send-vc:response',
             data: meta.data.status,
@@ -750,7 +758,8 @@ export const requestMachine =
               // pass
             });
           } else {
-            onlineSend(event);
+            await GoogleNearbyMessages.unpublish();
+            await onlineSend(event);
           }
         },
 
