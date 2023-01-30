@@ -1,3 +1,5 @@
+import { DeviceInfo } from '../components/DeviceInfoList';
+
 export interface VC {
   id: string;
   idType: VcIdType;
@@ -12,6 +14,7 @@ export interface VC {
   locked: boolean;
   reason?: VCSharingReason[];
   shouldVerifyPresence?: boolean;
+  senderInfo?: DeviceInfo;
 }
 
 export interface VCSharingReason {
