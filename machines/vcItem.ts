@@ -15,7 +15,6 @@ import { verifyCredential } from '../shared/vcjs/verifyCredential';
 import { log } from 'xstate/lib/actions';
 import {
   generateKeys,
-  getJwt,
   WalletBindingResponse,
 } from '../shared/cryptoutil/cryptoUtil';
 import { KeyPair } from 'react-native-rsa-native';
@@ -73,7 +72,6 @@ const model = createModel(
       REFRESH: () => ({}),
       REVOKE_VC: () => ({}),
       ADD_WALLET_BINDING_ID: () => ({}),
-      BINDING_DONE: () => ({}),
       CANCEL: () => ({}),
       CONFIRM: () => ({}),
     },
@@ -480,21 +478,17 @@ export const vcItemMachine =
           invoke: {
             src: 'updatePrivateKey',
             onDone: {
-              target: 'showBindingStatus',
-              actions: ['updatePrivateKey', 'updateVc'],
+              target: 'idle',
+              actions: [
+                'storeContext',
+                'updatePrivateKey',
+                'updateVc',
+                'setWalletBindingErrorEmpty',
+              ],
             },
             onError: {
               actions: 'setWalletBindingError',
               target: 'showingWalletBindingError',
-            },
-          },
-        },
-        showBindingStatus: {
-          entry: 'storeContext',
-          on: {
-            BINDING_DONE: {
-              target: 'idle',
-              actions: 'setWalletBindingErrorEmpty',
             },
           },
         },
@@ -1020,10 +1014,6 @@ export function selectWalletBindingError(state: State) {
 
 export function selectAcceptingBindingOtp(state: State) {
   return state.matches('acceptingBindingOtp');
-}
-
-export function selectShowBindingStatus(state: State) {
-  return state.matches('showBindingStatus');
 }
 
 export function selectShowWalletBindingError(state: State) {

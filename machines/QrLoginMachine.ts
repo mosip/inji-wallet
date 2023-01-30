@@ -15,7 +15,6 @@ import { linkTransactionResponse, VC } from '../types/vc';
 import { request } from '../shared/request';
 import { getJwt } from '../shared/cryptoutil/cryptoUtil';
 import { getPrivateKey } from '../shared/keystore/SecureKeystore';
-import getAllConfigurations from '../shared/commonprops/commonProps';
 
 const model = createModel(
   {
@@ -37,6 +36,7 @@ const model = createModel(
     domainName: '',
     consentClaims: ['name', 'picture'],
     isSharing: {},
+    linkedTransactionId: '',
   },
   {
     events: {
@@ -99,7 +99,7 @@ export const qrLoginMachine =
                   'expandLinkTransResp',
                   'setClaims',
                 ],
-                target: 'WarningDomainName',
+                target: 'loadMyVcs',
               },
             ],
             onError: [
@@ -108,26 +108,6 @@ export const qrLoginMachine =
                 target: 'ShowError',
               },
             ],
-          },
-        },
-        WarningDomainName: {
-          invoke: {
-            src: 'domainNameConfig',
-            onDone: {
-              actions: 'setDomainName',
-              target: 'showWarning',
-            },
-          },
-        },
-        showWarning: {
-          on: {
-            CONFIRM: {
-              target: 'loadMyVcs',
-            },
-            DISMISS: {
-              actions: 'forwardToParent',
-              target: 'waitingForData',
-            },
           },
         },
         ShowError: {
@@ -164,7 +144,7 @@ export const qrLoginMachine =
         faceAuth: {
           on: {
             FACE_VALID: {
-              target: 'requestConsent',
+              target: 'sendingAuthenticate',
             },
             FACE_INVALID: {
               target: 'invalidIdentity',
@@ -182,6 +162,21 @@ export const qrLoginMachine =
             RETRY_VERIFICATION: {
               target: 'faceAuth',
             },
+          },
+        },
+        sendingAuthenticate: {
+          invoke: {
+            src: 'sendAuthenticate',
+            onDone: {
+              target: 'requestConsent',
+              actions: 'setLinkedTransactionId',
+            },
+            onError: [
+              {
+                actions: 'SetErrorMessage',
+                target: 'ShowError',
+              },
+            ],
           },
         },
         requestConsent: {
@@ -232,10 +227,6 @@ export const qrLoginMachine =
 
         setScanData: assign({
           linkCode: (context, event) => event.value,
-        }),
-
-        setDomainName: assign({
-          domainName: (context, event) => event.data,
         }),
 
         loadMyVcs: send(StoreEvents.GET(MY_VCS_STORE_KEY), {
@@ -312,6 +303,9 @@ export const qrLoginMachine =
             return { ...context.isSharing };
           },
         }),
+        setLinkedTransactionId: assign({
+          linkedTransactionId: (context, event) => event.data as string,
+        }),
       },
       services: {
         linkTransaction: async (context) => {
@@ -328,12 +322,7 @@ export const qrLoginMachine =
           return response.response;
         },
 
-        domainNameConfig: async (context) => {
-          var response = await getAllConfigurations();
-          return response.warningDomainName;
-        },
-
-        sendConsent: async (context) => {
+        sendAuthenticate: async (context) => {
           var privateKey = await getPrivateKey(
             context.selectedVc.walletBindingResponse?.walletBindingId
           );
@@ -345,7 +334,7 @@ export const qrLoginMachine =
             walletBindingResponse?.thumbprint
           );
 
-          const resp = await request(
+          const response = await request(
             'POST',
             '/v1/idp/linked-authorization/authenticate',
             {
@@ -363,16 +352,17 @@ export const qrLoginMachine =
               },
             }
           );
+          return response.response.linkedTransactionId;
+        },
 
-          const trnId = resp.response.linkedTransactionId;
-
+        sendConsent: async (context) => {
           const response = await request(
             'POST',
             '/v1/idp/linked-authorization/consent',
             {
               requestTime: String(new Date().toISOString()),
               request: {
-                linkedTransactionId: trnId,
+                linkedTransactionId: context.linkedTransactionId,
                 acceptedClaims: context.essentialClaims.concat(
                   context.selectedVoluntaryClaims
                 ),
@@ -406,10 +396,6 @@ export function selectDomainName(state: State) {
   return state.context.domainName;
 }
 
-export function selectIsShowWarning(state: State) {
-  return state.matches('showWarning');
-}
-
 export function selectIsLinkTransaction(state: State) {
   return state.matches('linkTransaction');
 }
@@ -437,6 +423,9 @@ export function selectIsShowError(state: State) {
 export function selectIsRequestConsent(state: State) {
   return state.matches('requestConsent');
 }
+export function selectIsSendingAuthenticate(state: State) {
+  return state.matches('sendingAuthenticate');
+}
 
 export function selectIsSendingConsent(state: State) {
   return state.matches('sendingConsent');
@@ -452,6 +441,9 @@ export function selectSelectedVc(state: State) {
 
 export function selectLinkTransactionResponse(state: State) {
   return state.context.linkTransactionResponse;
+}
+export function selectEssentialClaims(state: State) {
+  return state.context.essentialClaims;
 }
 
 export function selectVoluntaryClaims(state: State) {

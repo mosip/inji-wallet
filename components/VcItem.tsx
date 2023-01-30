@@ -38,7 +38,6 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
         <Text
           weight="bold"
           size="smaller"
-          align="left"
           color={
             !verifiableCredential
               ? Theme.Colors.LoadingDetailsLabel
@@ -73,8 +72,7 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
               : Theme.Colors.DetailsLabel
           }
           weight="bold"
-          size="smaller"
-          align="left">
+          size="smaller">
           {arg1}
         </Text>
         <Text
@@ -82,7 +80,6 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
           color={Theme.Colors.Details}
           weight="bold"
           size="smaller"
-          align="left"
           style={
             !verifiableCredential
               ? Theme.Styles.loadingTitle
@@ -180,8 +177,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
                   : Theme.Colors.DetailsLabel
               }
               weight="bold"
-              size="smaller"
-              align="left">
+              size="smaller">
               {t('idType')}
             </Text>
             <Text

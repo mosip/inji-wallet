@@ -392,14 +392,6 @@ export const scanMachine =
                 sent: {
                   description:
                     'VC data has been shared and the receiver should now be viewing it',
-                  on: {
-                    VC_ACCEPTED: {
-                      target: '#scan.reviewing.accepted',
-                    },
-                    VC_REJECTED: {
-                      target: '#scan.reviewing.rejected',
-                    },
-                  },
                 },
               },
               on: {
@@ -407,8 +399,13 @@ export const scanMachine =
                   target: '#scan.findingConnection',
                 },
                 VC_SENT: {
-                  target: '#scan.reviewing.sendingVc.sent',
-                  internal: true,
+                  target: '.sent',
+                },
+                VC_ACCEPTED: {
+                  target: '#scan.reviewing.accepted',
+                },
+                VC_REJECTED: {
+                  target: '#scan.reviewing.rejected',
                 },
               },
             },
@@ -969,15 +966,12 @@ export const scanMachine =
         isQrLogin: (_context, event) => {
           let linkCode = '';
           try {
-            console.log(event.params);
             linkCode = event.params.substring(
               event.params.indexOf('linkCode=') + 9,
               event.params.indexOf('&')
             );
-            console.log(linkCode);
             return linkCode !== null;
           } catch (e) {
-            console.log(e);
             return false;
           }
         },
