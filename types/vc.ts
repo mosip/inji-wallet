@@ -1,5 +1,7 @@
 import { WalletBindingResponse } from '../shared/cryptoutil/cryptoUtil';
 
+import { DeviceInfo } from '../components/DeviceInfoList';
+
 export interface VC {
   id: string;
   idType: VcIdType;
@@ -15,6 +17,7 @@ export interface VC {
   reason?: VCSharingReason[];
   shouldVerifyPresence?: boolean;
   walletBindingResponse?: WalletBindingResponse;
+  senderInfo?: DeviceInfo;
 }
 
 export interface VCSharingReason {

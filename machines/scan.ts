@@ -35,6 +35,7 @@ import {
   PairingEvent,
   SendVcEvent,
   SendVcStatus,
+  OnlineConnectionParams,
 } from '../shared/smartshare';
 import { check, PERMISSIONS, PermissionStatus } from 'react-native-permissions';
 import { checkLocation, requestLocation } from '../shared/location';
@@ -60,7 +61,7 @@ const model = createModel(
     vcName: '',
     verificationImage: {} as CameraCapturedPicture,
     sharingProtocol: 'OFFLINE' as SharingProtocol,
-    scannedQrParams: {} as ConnectionParams,
+    scannedQrParams: {} as ConnectionParams | OnlineConnectionParams,
     shareLogType: '' as ActivityLogType,
     QrLoginRef: {} as ActorRefFrom<typeof qrLoginMachine>,
     linkCode: '',
@@ -78,7 +79,7 @@ const model = createModel(
       VC_SENT: () => ({}),
       CANCEL: () => ({}),
       DISMISS: () => ({}),
-      CONNECTED: () => ({}),
+      CONNECTED: (receiverInfo: DeviceInfo) => ({ receiverInfo }),
       DISCONNECT: () => ({}),
       SCREEN_BLUR: () => ({}),
       SCREEN_FOCUS: () => ({}),
@@ -131,6 +132,10 @@ export const scanMachine =
         SCREEN_FOCUS: {
           target: '.checkingLocationService',
         },
+        OFFLINE: {
+          cond: 'isModeOnline',
+          target: '.offline',
+        },
       },
       states: {
         inactive: {
@@ -142,8 +147,6 @@ export const scanMachine =
           after: {
             CLEAR_DELAY: {
               target: '#scan.findingConnection',
-              actions: [],
-              internal: false,
             },
           },
         },
@@ -223,23 +226,27 @@ export const scanMachine =
               after: {
                 CONNECTION_TIMEOUT: {
                   target: '#scan.connecting.timeout',
-                  actions: [],
-                  internal: false,
                 },
               },
             },
             timeout: {
               on: {
                 CANCEL: {
-                  target: '#scan.reviewing.cancelling',
+                  target: '#scan.disconnected',
                 },
               },
             },
           },
           on: {
-            CONNECTED: {
-              target: 'exchangingDeviceInfo',
-            },
+            CONNECTED: [
+              {
+                cond: 'isModeOnline',
+                target: 'reviewing',
+              },
+              {
+                target: 'exchangingDeviceInfo',
+              },
+            ],
           },
         },
 
@@ -251,8 +258,6 @@ export const scanMachine =
           after: {
             CONNECTION_TIMEOUT: {
               target: '#scan.exchangingDeviceInfo.timeout',
-              actions: [],
-              internal: false,
             },
           },
           states: {
@@ -260,7 +265,7 @@ export const scanMachine =
             timeout: {
               on: {
                 CANCEL: {
-                  target: '#scan.reviewing.cancelling',
+                  target: '#scan.disconnected',
                 },
               },
             },
@@ -319,7 +324,6 @@ export const scanMachine =
                 CANCEL_TIMEOUT: {
                   target: '#scan.findingConnection',
                   actions: ['disconnect'],
-                  internal: false,
                 },
               },
             },
@@ -333,8 +337,6 @@ export const scanMachine =
                   after: {
                     SHARING_TIMEOUT: {
                       target: '#scan.reviewing.sendingVc.timeout',
-                      actions: [],
-                      internal: false,
                     },
                   },
                 },
@@ -508,8 +510,8 @@ export const scanMachine =
           },
 
           on: {
-            OFFLINE: 'offline',
             ONLINE: 'preparingToConnect',
+            OFFLINE: 'offline',
           },
         },
 
@@ -559,8 +561,10 @@ export const scanMachine =
 
         setScannedQrParams: model.assign({
           scannedQrParams: (_context, event) =>
-            JSON.parse(event.params) as ConnectionParams,
+            JSON.parse(event.params) as OnlineConnectionParams,
           sharingProtocol: 'ONLINE',
+          receiverInfo: (_context, event) =>
+            (JSON.parse(event.params) as OnlineConnectionParams).receiverInfo,
         }),
 
         clearScannedQrParams: assign({
@@ -754,6 +758,15 @@ export const scanMachine =
             );
 
             return () => subscription.remove();
+          } else {
+            return NetInfo.addEventListener((state) => {
+              callback({
+                type:
+                  state.isConnected && state.isInternetReachable
+                    ? 'ONLINE'
+                    : 'OFFLINE',
+              });
+            });
           }
         },
 
@@ -784,7 +797,7 @@ export const scanMachine =
           if (context.sharingProtocol === 'OFFLINE') {
             GoogleNearbyMessages.disconnect();
             IdpassSmartshare.createConnection('discoverer', () => {
-              callback({ type: 'CONNECTED' });
+              callback({ type: 'CONNECTED', receiverInfo: null });
             });
           } else {
             (async function () {
@@ -811,8 +824,11 @@ export const scanMachine =
                 'pairing:response',
                 async (response) => {
                   await GoogleNearbyMessages.unpublish();
-                  if (response === context.scannedQrParams.cid) {
-                    callback({ type: 'CONNECTED' });
+                  if (response.cid === context.scannedQrParams.cid) {
+                    callback({
+                      type: 'CONNECTED',
+                      receiverInfo: response.receiverInfo,
+                    });
                   }
                 },
                 null,
@@ -821,7 +837,7 @@ export const scanMachine =
 
               const pairingEvent: PairingEvent = {
                 type: 'pairing',
-                data: context.scannedQrParams,
+                data: context.scannedQrParams as OnlineConnectionParams,
               };
 
               await onlineSend(pairingEvent, context.scannedQrParams.cid);
@@ -847,27 +863,28 @@ export const scanMachine =
             });
             return () => subscription?.remove();
           } else {
-            (async function () {
-              await onlineSubscribe(
-                'exchange-receiver-info',
-                async (receiverInfo) => {
-                  await GoogleNearbyMessages.unpublish();
-                  callback({ type: 'EXCHANGE_DONE', receiverInfo });
-                },
-                null,
-                { pairId: context.scannedQrParams.cid }
-              );
-
-              await onlineSend(event, context.scannedQrParams.cid);
-            })();
+            // (async function () {
+            //   await onlineSubscribe(
+            //     'exchange-receiver-info',
+            //     async (receiverInfo) => {
+            //       await GoogleNearbyMessages.unpublish();
+            //       callback({ type: 'EXCHANGE_DONE', receiverInfo });
+            //     },
+            //     null,
+            //     { pairId: context.scannedQrParams.cid }
+            //   );
+            //   await onlineSend(event, context.scannedQrParams.cid);
+            // })();
           }
         },
 
         sendVc: (context) => (callback) => {
           let subscription: EmitterSubscription;
           const vp = context.createdVp;
-          const vc = {
+          const vc: VC = {
             ...(vp != null ? vp : context.selectedVc),
+            senderInfo:
+              context.sharingProtocol === 'ONLINE' ? context.senderInfo : null,
             tag: '',
           };
 
@@ -973,6 +990,8 @@ export const scanMachine =
             return false;
           }
         },
+
+        isModeOnline: (context) => context.sharingProtocol === 'ONLINE',
       },
 
       delays: {
