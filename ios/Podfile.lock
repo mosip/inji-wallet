@@ -1,5 +1,6 @@
 PODS:
   - boost-for-react-native (1.63.0)
+  - CrcSwift (0.0.3)
   - DoubleConversion (1.1.6)
   - EXApplication (4.0.2):
     - ExpoModulesCore
@@ -62,6 +63,7 @@ PODS:
   - GoogleSymbolUtilities (1.1.2)
   - GoogleUtilitiesLegacy (1.3.2):
     - GoogleSymbolUtilities (~> 1.1)
+  - GzipSwift (5.1.1)
   - mosip-inji-face-sdk (0.1.7):
     - React-Core
   - NearbyMessages (1.1.1):
@@ -272,9 +274,17 @@ PODS:
   - React-jsinspector (0.64.4)
   - react-native-netinfo (7.1.3):
     - React-Core
+  - react-native-openid4vp-ble (0.1.0):
+    - CrcSwift (~> 0.0.3)
+    - GzipSwift
+    - React-Core
   - react-native-restart (0.0.24):
     - React-Core
+  - react-native-rsa-native (2.0.5):
+    - React
   - react-native-safe-area-context (3.3.2):
+    - React-Core
+  - react-native-secure-key-store (2.0.10):
     - React-Core
   - React-perflogger (0.64.4)
   - React-RCTActionSheet (0.64.4):
@@ -418,8 +428,11 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
+  - react-native-openid4vp-ble (from `../node_modules/react-native-openid4vp-ble`)
   - react-native-restart (from `../node_modules/react-native-restart`)
+  - react-native-rsa-native (from `../node_modules/react-native-rsa-native`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - react-native-secure-key-store (from `../node_modules/react-native-secure-key-store`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -450,10 +463,12 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - boost-for-react-native
+    - CrcSwift
     - GoogleInterchangeUtilities
     - GoogleNetworkingUtilities
     - GoogleSymbolUtilities
     - GoogleUtilitiesLegacy
+    - GzipSwift
     - NearbyMessages
     - ZXingObjC
 
@@ -538,10 +553,16 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   react-native-netinfo:
     :path: "../node_modules/@react-native-community/netinfo"
+  react-native-openid4vp-ble:
+    :path: "../node_modules/react-native-openid4vp-ble"
   react-native-restart:
     :path: "../node_modules/react-native-restart"
+  react-native-rsa-native:
+    :path: "../node_modules/react-native-rsa-native"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-secure-key-store:
+    :path: "../node_modules/react-native-secure-key-store"
   React-perflogger:
     :path: "../node_modules/react-native/ReactCommon/reactperflogger"
   React-RCTActionSheet:
@@ -597,6 +618,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
+  CrcSwift: f85dea6b41dddb5f98bb3743fd777ce58b77bc2e
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   EXApplication: 54fe5bd6268d697771645e8f1aef8b806a65247a
   EXBarCodeScanner: e5ca0062d8ad1c4c1d2e386d6a308d5a32213020
@@ -618,12 +640,13 @@ SPEC CHECKSUMS:
   EXUpdates: a83e036243b0f6ece53a8c1cb883b6751c88a5f8
   EXUpdatesInterface: a9814f422d3cd6e7cfd260d13c27786148ece20e
   FBLazyVector: fa8275d5086566e22a26ddc385ab5772e7f9b1bd
-  FBReactNativeSpec: c3dafd68550f3c95f009beee5c20ab07949ec4e4
+  FBReactNativeSpec: 8c984a18702fcebb4b4dd88178aef9dbced89f4a
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   GoogleInterchangeUtilities: d5bc4d88d5b661ab72f9d70c58d02ca8c27ad1f7
   GoogleNetworkingUtilities: 3edd3a8161347494f2da60ea0deddc8a472d94cb
   GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
   GoogleUtilitiesLegacy: 5501bedec1646bd284286eb5fc9453f7e23a12f4
+  GzipSwift: 893f3e48e597a1a4f62fafcb6514220fcf8287fa
   mosip-inji-face-sdk: a1355473a393f2cdd6d927c51af4363be6d97d9f
   NearbyMessages: bd9e88f2df7fbab78be58fed58580d5d5bd62cbf
   Permission-BluetoothPeripheral: 67708853584bb9208c76d36d0e0ea4eafb97ea5b
@@ -642,8 +665,11 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 8c077bef1c64430b6034f27df1000d194551e2eb
   React-jsinspector: d4f6973dd474357dbaaf6f52f31ffc713bf3e766
   react-native-netinfo: 42c0965fca99069b92e3f7360ab2d425985e5104
+  react-native-openid4vp-ble: 2986d550199e02e3ea4d7ea3688fbe00a88b5d03
   react-native-restart: 45c8dca02491980f2958595333cbccd6877cb57e
+  react-native-rsa-native: 12132eb627797529fdb1f0d22fd0f8f9678df64a
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
+  react-native-secure-key-store: 910e6df6bc33cb790aba6ee24bc7818df1fe5898
   React-perflogger: 5a890ca0911669421b7611661e9b58f91c805f5c
   React-RCTActionSheet: bd180e0879f8424a73650c5c28fbef4f3b5b27fb
   React-RCTAnimation: 1004d2b4be1f2cedfdc4cb2326adc95b989e6c6b
@@ -672,6 +698,6 @@ SPEC CHECKSUMS:
   Yoga: d1fc3575b8b68891ff5ef3c276daa855e841eb32
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: aca728a65db3db54edf138095b290280c97a5389
+PODFILE CHECKSUM: 5b97bf5aba623284ca8545706889f881c9b64811
 
 COCOAPODS: 1.11.3

@@ -1,22 +1,22 @@
-/* eslint-disable sonarjs/no-duplicate-string */
 import SmartshareReactNative from '@idpass/smartshare-react-native';
+import OpenIdBle from 'react-native-openid4vp-ble';
 import uuid from 'react-native-uuid';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import { EmitterSubscription, Linking, Platform } from 'react-native';
 import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
-import { DeviceInfo } from '../components/DeviceInfoList';
+import { DeviceInfo } from '../../components/DeviceInfoList';
 import { getDeviceNameSync } from 'react-native-device-info';
-import { StoreEvents } from './store';
-import { VC } from '../types/vc';
-import { AppServices } from '../shared/GlobalContext';
+import { StoreEvents } from '../store';
+import { VC } from '../../types/vc';
+import { AppServices } from '../../shared/GlobalContext';
 import {
   GNM_API_KEY,
   RECEIVED_VCS_STORE_KEY,
   VC_ITEM_STORE_KEY,
-} from '../shared/constants';
-import { ActivityLogEvents, ActivityLogType } from './activityLog';
-import { VcEvents } from './vc';
+} from '../../shared/constants';
+import { ActivityLogEvents, ActivityLogType } from '../activityLog';
+import { VcEvents } from '../vc';
 import { ConnectionParams } from '@idpass/smartshare-react-native/lib/typescript/IdpassSmartshare';
 import {
   ExchangeReceiverInfoEvent,
@@ -26,13 +26,12 @@ import {
   onlineSend,
   offlineSend,
   SendVcResponseEvent,
-} from '../shared/smartshare';
+} from '../../shared/openIdBLE/smartshare';
 import { log } from 'xstate/lib/actions';
-import NetInfo from '@react-native-community/netinfo';
 // import { verifyPresentation } from '../shared/vcjs/verifyPresentation';
 
 const { GoogleNearbyMessages, IdpassSmartshare } = SmartshareReactNative;
-
+const { Openid4vpBle } = OpenIdBle;
 type SharingProtocol = 'OFFLINE' | 'ONLINE';
 
 const model = createModel(
@@ -47,7 +46,6 @@ const model = createModel(
       ? 'ONLINE'
       : 'OFFLINE') as SharingProtocol,
     receiveLogType: '' as ActivityLogType,
-    pairId: '',
   },
   {
     events: {
@@ -57,7 +55,8 @@ const model = createModel(
       CANCEL: () => ({}),
       DISMISS: () => ({}),
       VC_RECEIVED: (vc: VC) => ({ vc }),
-      CONNECTED: (pairId?: string) => ({ pairId: pairId || '' }),
+      CONNECTION_DESTROYED: () => ({}),
+      CONNECTED: () => ({}),
       DISCONNECT: () => ({}),
       EXCHANGE_DONE: (senderInfo: DeviceInfo) => ({ senderInfo }),
       SCREEN_FOCUS: () => ({}),
@@ -74,9 +73,6 @@ const model = createModel(
       FACE_VALID: () => ({}),
       FACE_INVALID: () => ({}),
       RETRY_VERIFICATION: () => ({}),
-      ONLINE: () => ({}),
-      OFFLINE: () => ({}),
-      APP_ACTIVE: () => ({}),
     },
   }
 );
@@ -84,7 +80,7 @@ const model = createModel(
 export const RequestEvents = model.events;
 
 export const requestMachine =
-  /** @xstate-layout N4IgpgJg5mDOIC5QCcwEcCucAuBiAygMIBKAoqQHID6AQgDICqxA2gAwC6ioADgPawBLbAN4A7LiAAeiAIwAmAMysAdKxkKA7AFY1ADgAsurQDYNAGhABPRAFoAnBrnK7RuVpm6NuuQY0BfPwtUTBwCEnJqADEAeUIGfDZOJBA+QWExCWkELS19ZW9jOTlC1mNjGTsZC2sEeztjZw19OXrvVl1jBTkAoPQsWDwiMkoqGLiEmSSefiERcWSs3SXlYv0NGQ1y9sMFats7OTycw-1WNbdchR6QYP7BgHUASQAVQgAJKgAFYmjn2Oi6IkJKlZhkFrItAplBoXDlmo4ZMZdKw5HtajI1E5mg5jJVkVoitdbqF8E9Xh9vr9-oDJsCZul5qAsoi8qxWDklnIZOctHY0TZeVCZIjNFpvF5ITIiX0cMoAMYACzAcoA1gJRFAaAAbLDYXi8bAK-BgZAANwEcrAuAAgp9PlRrYRno8AGqkIHJEEMzKIBT1VQdEwwppNFzmKy2XENQ5LRGmLTB7qBG4ygbypWq9WanVgPUGo0m82W9PKtUa3D0BikP6-D6Ua30UgAEQ90zScx9CE6DRR+jsOh2pSW-IUHWU7gOXQ2UbWWmlITTitLWe1uv1huNZotYBLmfLler0VrVCbj3wDbozdbKXpHfBCHxyn0xjOwpc3kqxn5facuLsdlYdZuXqdp-GTYlFwzMtszXfNNyLHcIOEfdGEPY960bFsODpdswSZWQZHcFYFH0eR9EhToNG0b9PGUJEqMMHJjHcXQpXA1NsF3aDV1zdcCy3YskKzCtUJrZ4PlPc9MOvL073whBuQULR8gUbk1EcBRVK-CNak6FRFFKORWH-GFcXnO4uJXHM8w3Qtt2UMBRAAQwAIy1SBcBk288KkWQUTsZRuRyQVSkMcMahsQ4ZDozSOn7MoDGaOd2IXTi3Ngw0m0cgQPIAcSpKh8GrZ0KFyhJsM9bzGV8hTyg0ZxNAOXwznWGioVxLlSORZ8tmS3pUvldynOQLNCDEURlQZXBJAGJzsB3JyADN5uQAAKQhL2tYgT1IOhrQATQASlwJDBrAYbRvGya5i83DqqyBxdGUEijBcADdDsfR+ScNlEQ8DRAIS0c+pTAaAHcnNmDVIl4ZAxtECa5SmwhogoChSCdK8KrbUF7r8lEn2YppNPUJTSLRLohUpoxhX0Z9zNlCGoagGG4aupG5lwSSUbRjHnlu3HO3UQ4VmY047CUYVeS0NEWgaLoiYJOmDkKK4Uos7hUG4C6NWeXhSEkRUnI1MBHlERbeFwMhCFIV1SB2l1HhtqhHgoGIBe9e96mU-tgzFBQyhacLEATFRNnaAOCX-Ps7AZtMwENhVjagLMsoQs2LdwUgAA13mtUr7abVH3Wxm87s7FwoWKYoqJ0QUEzRYUCdYzZyIDozPrjziE6NjVU7AdPzd4ZR1U+ZBeCgVBYFgabZvm5QlpW9bUfRp1HlRqhnQAWVIaIGGeY7Tp7pO+41NPtwz4fR-Hye4FgD25JqjEPBWVgSPI1ZWp0pYnufLl+0Auyeoxgu4OUTsnfug8LbKGEAAWzALwDAeBCD5xtoCUuskfJZBfMpToqk3DsjZJpbSNQJbKQ-mLdYpQlKx3VozSGyEWawxdHKLmZ4ear35hgqqQs-QBWYi+JKMcOi6Ebj4ZScgGJrA8FyEwat+oWSZow1mLDcAukIFQa2ts3RYSmGXQWXsXBPg8B0TYJF-q7B0hsHwKlCIoh0OyIw+hQFKKzCouUI9RBjwnlPGeM1sBzQWstE0q18BvC2q7XKm9Hg7z3gfE6HFlCuOhswjx18fF3wflgvySh8gbAlgHbw7glKNzpvVUOYoExGSqS4hhbjUkwIEPAxByDUG7SyXjLsbJVB-ybkpAwuJG46GisiTQH0DinB-KAuUxtLRai1MJfxgSF7BLWigigaDomxP3ofRJMzRBzIWRqDpnYWgqCViRXEAMzFuApppFYEtEQMSoj-UBqBzRgDBsJR0NtPhcL0ZgzpJEnD1DIUxYyn1ISy3ZHkCUhhCiGCAW8geOUvnlh+aQP5DoKBNioG6YgjxIj7ROfeF8IyKjaEhC0KWfIdJGSotCEofZALFHUMij5aKoBW1IAAKT5iS+SGJWKBTWJUGEhSerQoZZsIyzLHDlGKOy1Fwl1loIFTVPE+QALaFDAYHwqI6WAXqjKs42rWWKroWmd5yqNTKFNCaAQi1LBZkeBARywhsCWFwJER09sXTWjoI8XROEDHyVFdCXIGglKQlyJ9A1NRDg6GcOpPsngdDeHkaDCy1rPlZjtQ6p1Lq3WiA9V6n1ztXb+sDcGyq5d7xUOhABAkQZ+y6FHLLciKgAIbFTdodoiglW5ttfakahaNSuvdUIL1qr2ncLrYK6hgULkBxIkxWWigoQAXFu0QoUsQanRzZyzxponILIgBOktU62H4C3mecqAKeH1qaE+D6IZeS1w8LLJEeQPBDmYkYHItCFGykPXm9UJ6z0XtLdy54xB9p4tIASyITtrTOlRuqxYRgGqnCuUpNQn1Zb9OcDkLwn0NgA2cZazioHh0FudRqF03BcAQDEDucDvAVSIUSTRqA+bR30agIxhA7GZkMkSBhiEuTThFEMD4QCaxg4IGrgFNt6wujNE0IBQdR6R2OoE4x3AJpx7IGUNwLUc0LbIFgcoA9KKh28d02OwT3BhOiFNLwUTN0OASYUpKFYRReTCi8KOURdLNL1VFSRfskigrabzU5OUlpuCMJsxxLMxBlRgAEPaiALCZ7qM0aQfAnxUZFR89oX8CZXqmQ8A3Olb0nxUVAhRf9+7uN2aPQlpLKWhIagy5abLkA8tqI0WQYrpX3S0lraGp+8h6qESbvINQFKvr1Y+o1gGaaA6tbi7arrYBkt5t61AA2AgBhZlUfgP4ZBCvjYoGVudM3FilCfJG7bTROgEZ0pTFQ8gAFNVIp9MCwGrUdfi4lg7KX4HIBTuOg5vBYEXdYVd6IN2xslfuyXB986arIgaORNY7I-SnE8KFmoSl1CBX7NyUMGk2Ig+o2DvbEPDu2s1gdxyEB0uZcG7l5H137bo4mz54UuI6Jimi0AnQtLycGUCi0aXPhAdrF27x-brPeMDFhkjggAvbsY4e9jp7BExf-oOLySc3hVvk+KVT9waw+x09VwvFn80IDXtvfge9IbPbyQMFCTYjg2RIhyJpGXvpWJPTftoZEnhNgxud6gAAVpNDyklPfe+m77p+wZAr9PkOoVityrHRfyD4cooKfC11AVz2Acp2Zu493ekXxxiNdBMOyEwki0TwmcLiFEbIJafXaNMqCWYKC5jBrDFUuBUaBvRj5sWqgZVIlZWR-kXgGheF8I4LdFRR-Lg1BP7AU-kAz+iJESI8+sc+8ftgpNBhWiQjOPodv-IOhhwTII-sq6B1UeULwItItEclaHPq7DflnnfogDCE9JUn6PKi0KOPGrYJvtCEsApmcoDqAoAcAeqFaLaPaI6M6G6IvkpOOG4M+OoPkmsGTvsCLMcHTC1BcK-gEMmKILwG6vAMkEhLftkgpOyI2gBvCFyEiCiPyLTA0AcA4NoLVmLG1gNOqAlsIParwZ0kttFIcPYqYEKm4OHrUJ4NFPhs0HNoGORAfnuDBLxHBHZJaKoZ2CYHkKOHTJph9uRHoTYI4PVLoe3hyMUJmqdEuBYTxDZPxAhJZBqHYaSvIM9IlC4c+G4fyJ9hGhLEiEYP3sKOYdxNZHxPBPZMdpEfJJCmXgQgSI4DoEUIkX6MkYUmkQBMZJkVZBlKEfZI5K5O5BAAUU-APtCBUMtkFBsF0N+GoKoEiLTPHmcvTlmrKOlFYZlNlJAJ0cyM+O1GcHFIUEYOKvyDkCoGoLsVyGcEUBsNMkNCNBqPDIjNnoChXMiPkMZGKBCoPpsOIURGLKpEsNoMYHTGULUszKzOcddD5FcV7LksZIBE2nTF1MgQgAcNCOyG4FGoiv2JCKAuztrKcVAHrAbL3DAJfIsYgP2D+uUM-JGgYDLDpM0CCiiFRJoORFGu4KAsfBAmfCipaLiZAXwW2pSaUYxBUPCWiOsE9CyKREHqUGKLoAyeAqfFAOfKyUPJ4t4rfNPHiQ+DcU2pIjyebopq4HRJ8e-B-gYB4BKdiZAhfHKXAggkgsqR9E9DGBThpgmHoRLHkBQpIu8TCJ3P-skkwsgCwlaZoMRLUfhm4JpGIuUKoKHo7mUK-l4D8cog0ukoqVwTjNnphhIsDOkebiGVYn6MpMFJIk0MULurGfUj6R4uaS0laf6IiKxKvp0BiAcEMt0qMm2k8uoPTP-vsoclmMqQHAFM-I4GFCIn2I3B4PLBuh8WcArKrsqS0HkKCtGh3tHFClYh9HkOIoYOoKUG-H2M7gIBAO5MqeoDkE+IYI9PWRHOul0MmqRNyDIpoAHM7o5gJlBlOsqaHFqjmZcsiF4NbogEUMZOLiTgMocJsLuW5qenuS+Z6sqR8SKh3E0AYaLrLLyE9KSbkHLLGMxI+XRhdtwIeQSFvlRJIvYhyBsB2l4OOOYlua-kpP4e1hyuDt1t2eyZ0hRuLhKA4PULVoppIp0PkAinLG-KYEmAzqlgxczkxbasdv1lljlnljBdKtGVRHGvmXoeItFO3CyubooPIdmkzmrq7kdmlhqKdudgxnKDBVhkoAipSp4C0LQQgEoOtiTP9G4byJRqJTxi7pJbxtDrDlAGbPXojuZZZRIt4N+f+EYBsXckZMmkUlcvIISP-l5erilqiZztzgNnJRZSxULNyE4AttWdIiROyBTO0AFC5Z4G5R6Z5fpd5ZDnmlruib6blfeMKMKm3HVMZKYCujFV2v2iYA4IlSJVMaDuJQZd1gsa1fJBKOGYUAWc0H2DkBTCUM4DRQiG4G4IUInmACnkjFNcmVAQpK6dCFRMKJpH6CmtCmLiyh9K6QDJIs7s5OaFAHNFmHrG8AjmAFae0LcYUIUGKG4N4FUN9pUE4JcAOV4HoE0DXmdvXgjKnh0dNU-MsdCC0ErsHpcGiIHOQdTkZKuv2EBqNZxIEdBMfqfiqD2WGcBG-J4JpC1L+foeRKoKpAcIRO9KTNgUASAT9WmaOAcF4AiO0O-i+BGuHEtb-mrAEEAA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QCcwEcCucAuBiAygMIBKAoqQHID6AQgDICqxA2gAwC6ioADgPawBLbAN4A7LiAAeiAOwA2ABwA6AKwBmAJwBGDazmaF6rQBoQAT0QBaDTIAsSgExrNttXLk61rgL7fTqTBwCEnJqADEAeUIGfDZOJBA+QWExCWkEFVYZJW0ZNQVbTIc5eRLTCwRrO0cvVgU61gcHVizff3QsWDx8AHUASQAVQgAJKgAFYgiBqIi6OIkkoRFxBPS1VjUlGVZbLJUtNwPbBTlyqxUFBxqvJsMHBQV8tpAAzuwlAGMACzAPgGsBKIoDQADZYbC8XjYL74MDIABuAg+YE+P3+gKguHoDFI0ymo0oAEF6KQACLzBKLFIrUDpfRyJSNWwaTLHdaKBRnSr5Bn7DROBxaeQaOS2GQqZ6vHCo34AoGg8GQ6GwhFIlHfWUYrGMXERfFUUl9fDEuhkik8fhLVKrRD1FRKWxyHZaHQPBzaU7mKzMq5yDT+rIu5lOhQySUdaUa9HysFgCFQmFwxHIpRSrpa7G6-VEknkjgLS3UtKIF37Gq2LQOQpuNQycVcyzHbKKOvHFQqOT7BRacOBLoy6PA2Px5VJtWpiPpoHanF4gajQ3G3PmxKF5bFhBaVz2x5b1hCpxqLSeiqWfSsGp6Zr+mQijS9t4DuVDxUJlXJlFgUQAQwARiDIFwFcqXXG1N0aDQlC3dsVA0dkmwbKstCUfQeRZdwClsBwJT8F5J3ef9X2hUkvwEQCAHEpgiKh8FxAY+gocjYnzSk12tWkSw8bI4Nve4xR2GQTC9So2RQ-kty0epHQ8VgcPaPt3g+ADv2QDFCDEURfmpXBCAiCgKFIQh6L0g1SHwAZJgATTNFiLWSUCOIQDRbHsODHQg45qwcRCL0MR4NkKFRtlgtwH0jZTVKBdTRE0j5tMkLpv2wFFvwAM2S5AAApSTMiyIksqh6IAWVICIGAGABKXA00UiK1I0rTlmAtiaSkRA-SuC5xSw2SVBchQNAbHQlDUC52U7P0dDgsL+wAd2-JYgTCXhkGi2LtN0-TDIGGz4jsq1WvSLQWiuR0gtcI9nD6oSKjUJwoLu-J9i3R0ZveebFqgZbVoauLllwRdNoMozmvs9i2s3O77GKPrWDg-ctFglQuXdBk7s7cUqx9OQnDepRuFQbgVIxAZeFISRvm-IEwD6URUt4XAyEIUg+gANVIUzWb6ZmqAYyJQYOjcRXtFlb3FR53HdGQuSCi95DqNwVHdZz-TxsAKa+KmoAxEiP1p+ncFIAANEZCUYjnST00gBaLMCNEeRwcZKcVZLgoKuRdRolG7eRqxxuHbDVjWtZ1sA9bp3glEBMZkF4KBUFgWBcAS7AkpS9K4UyoHtr6EzitK8qqpqpR1cpoFQ-D+mo9EGO44T2AbYciHjskxwAsKYoxRu20HgdHGdEyYKRTkIOy+1oFdbVfXI+EABbMBeAwPBCDN5m5ls1cwcO9rZJQ5xK0yTINjcLk3YdJXOy7vRRvvXDi4+4QlpW1mPgBo1s5BjeQPBo7NEgiadjYWZPbRQHt7j2gcK2LulxEb6Dxg-DE30X64FZoQKgTMWbszzHtTegs7b2wdJJE48gvCSTyB7GQ9xvZHiKEfC4fV4ELUfl9Z+Hxq613jnAJOKc05KDShlTK+BhiEmIAxcihU+glTKpVaq+ElAIKfsgF+7DY6cMTo3H+JYNi+SFHBNwlx9ijQ9i5bIst6GUNkpQxhn0kFsLngvJeOlV6kHXjg7+28EBOgvDsfux1RoFD9B7TIyF6i1gGvyXYPo8YfCpsiEEIItQ8OSnwjOWUV4UDXhIqRhdZEKU+LEsA8SMQaI8e6C8StXCOhsFkfQ2EuTOE2O6I8zsxQyAeAoPGqBERgFmlqQkhBmZjAGCUjcNwch+lGu2J0-pqwo1kvYNpfUThVjtLfeSj4ulkV6dOfpgyBhUDNqSKg7NRFhEsiMsCToQk6HFOod0pZBrCWaHWLY-tmRZGKAcTpYctlajIAAKW2hcxyx1uxQTFLkOCihpJzJefIZo7zKEeGKN87p2zMTpLXsCiG2hlADT2HYe2WFLiwuyPCnYugkWVhHnfORmyekYiUPCOEAhUpmAxH0CAX5hDYDMLgMI-SOas0JHQPo2CCxbw3BCrYfU8jtlGsyLCKNCgXl0EKZkoZMiXDUKi35QImUsrZRyrlogeV8oFTzBiwrRXitYpKsCgk5a6CVh2W8Y1ORPJVTkfchLNV1FxrSvJ9L0UGtUkaoEnLuVCD5Zilx2KjrXyghU5w+hAonkQE0Zw3rdi6GWaWOSeEg0-IZfqwE8JvwJIgJG010a374CKkaZibiWoblbA6AadhxQ2HFJJFG0KoL1EUJ2Qw7Y1mFo2cWkNzKw3sqBKzbguAIBiBRGW3gfwUTF2DYy6drLZ1QHnQgVdMTqRxHjSWdQF5dhNGOPcLIrS+3umoYJKGThthhkDROtF27DV7vnbgOEsdkD4xBElemyBZ4TiLV+-VO7w37u4Ie0Q8JeDHqahwM9m4jCOCaLBF0bT8geoqIebIEKvAskgdBXVJaoB8I+MibgzDINvAxMQX4YABDMogC-JOqD0FmTGHpWiGHMYoSCoYGwIpJLuyefbSCrS6jijcMOgtm7J2Mu-HRsADHGU1RY2xjjkBuMoLQWQfAAmKBCa0M2+1ILKzZERp7SsCMbC2BRrJh0dYFPqHcPQqjIaNP0cY7poE5MBBTn3a-cyEQyB8bM4J62X8W1gUHefMUSm7D6GcvUpwF5KwsjhnxHQYo-Pqc09p-V89kDjygLTD4vBZ4YmQVFmLpnzNCcSzZiGKXCj8XUM5BThHECjQOFBFkW5CWUKPCV-VAWtOMYJlpr8EA9PIgM1xyL0wWv8fixhl0fpRMDSVq7TIjzbo5agu6E7hXnLvvWdKLdM2yuMa6CtRrG3osc1aztjreDbP7eHfyWC-J8hVnqYY0b+wxTMkmz2D9921OPcC4BRcDb8BNolb9rrrhXkWL0CO5wp2hvdmUBscWCn5DqBU3ShHNHUAACstLI6NKj9HdrMdHTFg9C4lYDjdjqcJAeVxLgnB0B1UM4o8bLdgHVmKjOIB1pZ7t9sVwWR3Q7L1HG0thJYW4n6RoLQ4L9Y6c8UQvAuXwASDVDHttHJVk6lWLwfo321ORsJSwntlB5BzS9NysO7v9kBBp4QzLrdN3SHkSC4oxaVIrErNQDYHiQUejcuG3Zr7RLRM+BUcYlSJlVMiUPmiMiihGphWsd7RSwQbJQ7I2E4IwMeJkOBcP+xRiz8OXP75xxt4xIXjxyLS8uXLxlwohPKiZZlVCh4HY1V+-HZGTPGJs8jjzx+JjOBe9s5tziwo3scOyUgdhRo3k3cT67fowweu4YZ81DGIiq-xxfj-ABCAfeNzHWaFsHQCNoJCjug2XYZCPHIMCnMpOfYuQiHPBMEiUQMiV-LfMPEsR0TYJ0Y4P0HGQwW8ePN3dsbxFuRoY6LCQUW7efVvOqKKX6bfdxIWeob2OGC4OGXQOGeQIaMsS+I8B4cUUUaSaxZhb6NaRqcGagu2dYRkSlZ1FyCsElYSfkLYA-IKLweoFkdQPGBbImSKKAUmcmMeGmCON-O2PqKCDwFuWVAoV3CoIg71SBPIOwBQ-YUeTWcuCeH5ZEaefQxyR4FXA-OwQwHQbCLXCoQSZQY8CsCnF0TQfcBwkOZwyuSOaOVReudwrrWg51SBNsPw6TCoO4FCUULwNAuoKQqIpwqASeVwiOJQexRebAJI9IAaZQFZYbLCUaW8U+Lwc+YoSBTg28ZyXgxBVhGo20WsGoS-NVQHZwMBDwRkZXAadYR4bVXoxRZReIuuLhAYhAafYYmffcMY7AioA4FkVQZXVsYofuBYlhJROxAQeeKotYgaBkY8bsRQYoI8ArIJFoOg-IZpZ9V6FvRSApIpIENYtwSCFuShJsE4AoMfF0E4EaYjdXVwFFX4icaDKANY90VyCZGCaZZydQD2EUWvS-IwC+DCabGjAQCAACNYg4dsB0Y4GwNPXNXYjNAUbNIMSSV9UKJEh7GjWDPdatM1NY2Wb2Q3dQR0eoNpVzJ5a8UTXYB4R0KseQUk6uctStfk6NNYrg8Fa8HwwSPbFGWCPFQKLCEUB4Y8KnKDPVHkn9RrbgKki+LYOsSBRoGCH2ZVNpVQUhPQHYK6HVLkmnWjQLTffabfcPHYUTRZCTDwTAlGEhb2KMrAkoUI30-3d4bkgMubHTfCFbdjTjbjDUuFVwOsW8IgusMfcBZCNwZ5d0bCJwc0z9S09M8rWnLMkLSQMLZhF+DUwwEaK8MUdsUMd0QbBAWYpPI8MhUfWCQOP0lExsxjSrarWrerN7LsiBYXLIf0PyTIobO6VVf1GfQSJoBwJU2bJs-GQmJbbMtbTshAovIMK4BzB4ruWocwobOoUc6E2wlkHo6chsk857CEDQ684MxAzcSSZCP2IUOGEoGsepHc71AxJ3SsJoY8p7SAFcqYzXLCLC5Q+pf2HIC6ShA+bCHGJU+nOXKkzoh03UhpNVOwOZfbD5AaTo7YSBJUn8REKAJKEmXgYYerMAW4uoOgp2bCAxGBepbQTqQshU+occyXMLGXdaNCm8jxLcfQLYasgoFodgrkSWVQS7JzLwJGW+XwIAA */
   model.createMachine(
     {
       predictableActionArguments: true,
@@ -108,36 +104,20 @@ export const requestMachine =
         SCREEN_BLUR: {
           target: '.inactive',
         },
-
-        SCREEN_FOCUS: [
-          {
-            target: '.checkingNetwork',
-            cond: 'isModeOnline',
-          },
-          '.checkingBluetoothService',
-        ],
-
-        SWITCH_PROTOCOL: [
-          {
-            target: '.checkingNetwork',
-            actions: 'switchProtocol',
-            cond: 'isModeOnline',
-            description: `Check internet connection for online protocol`,
-          },
-          {
-            target: '.checkingBluetoothService',
-            actions: 'switchProtocol',
-          },
-        ],
+        SCREEN_FOCUS: {
+          target: '.checkingBluetoothService',
+        },
+        SWITCH_PROTOCOL: {
+          target: '.checkingBluetoothService',
+          actions: 'switchProtocol',
+        },
       },
       states: {
         inactive: {
           entry: 'removeLoggers',
         },
-
         checkingBluetoothService: {
           initial: 'checking',
-
           states: {
             checking: {
               invoke: {
@@ -152,7 +132,6 @@ export const requestMachine =
                 },
               },
             },
-
             requesting: {
               invoke: {
                 src: 'requestBluetooth',
@@ -166,19 +145,13 @@ export const requestMachine =
                 },
               },
             },
-
             enabled: {
               always: {
                 target: '#request.clearingConnection',
               },
             },
           },
-
-          on: {
-            APP_ACTIVE: 'checkingNetwork',
-          },
         },
-
         bluetoothDenied: {
           on: {
             GOTO_SETTINGS: {
@@ -186,18 +159,25 @@ export const requestMachine =
             },
           },
         },
-
         clearingConnection: {
-          entry: 'disconnect',
+          invoke: {
+            src: 'disconnect',
+          },
+          on: {
+            CONNECTION_DESTROYED: {
+              target: '#request.waitingForConnection',
+              actions: [],
+              internal: false,
+            },
+          },
           after: {
-            CLEAR_DELAY: {
+            DESTROY_TIMEOUT: {
               target: '#request.waitingForConnection',
               actions: [],
               internal: false,
             },
           },
         },
-
         waitingForConnection: {
           entry: [
             'removeLoggers',
@@ -209,7 +189,6 @@ export const requestMachine =
           },
           on: {
             CONNECTED: {
-              actions: ['setPairId'],
               target: 'preparingToExchangeInfo',
             },
             DISCONNECT: {
@@ -217,7 +196,6 @@ export const requestMachine =
             },
           },
         },
-
         preparingToExchangeInfo: {
           entry: 'requestReceiverInfo',
           on: {
@@ -227,7 +205,6 @@ export const requestMachine =
             },
           },
         },
-
         exchangingDeviceInfo: {
           invoke: {
             src: 'exchangeDeviceInfo',
@@ -258,7 +235,6 @@ export const requestMachine =
             },
           },
         },
-
         waitingForVc: {
           invoke: {
             src: 'receiveVc',
@@ -292,22 +268,15 @@ export const requestMachine =
             },
           },
         },
-
         cancelling: {
           invoke: {
             src: 'sendDisconnect',
           },
-          after: {
-            CANCEL_TIMEOUT: {
-              target: '#request.checkingBluetoothService',
-              actions: ['disconnect'],
-              internal: false,
-            },
+          always: {
+            target: '#request.clearingConnection',
           },
         },
-
         reviewing: {
-          exit: 'disconnect',
           initial: 'idle',
           states: {
             idle: {},
@@ -405,7 +374,7 @@ export const requestMachine =
               },
             },
             accepted: {
-              entry: ['updateReceivedVcs', 'logReceived'],
+              entry: ['sendVcReceived', 'logReceived'],
               invoke: {
                 src: 'sendVcResponse',
                 data: {
@@ -428,7 +397,7 @@ export const requestMachine =
               },
               on: {
                 DISMISS: {
-                  target: '#request.waitingForConnection',
+                  target: '#request.clearingConnection',
                 },
               },
             },
@@ -450,41 +419,17 @@ export const requestMachine =
             },
           },
         },
-
         disconnected: {
-          entry: 'disconnect',
           on: {
             DISMISS: {
               target: 'waitingForConnection',
             },
           },
         },
-
-        checkingNetwork: {
-          invoke: {
-            src: 'checkNetwork',
-          },
-
-          on: {
-            ONLINE: 'checkingBluetoothService',
-            OFFLINE: 'offline',
-          },
-        },
-
-        offline: {
-          on: {
-            ONLINE: 'checkingBluetoothService',
-            APP_ACTIVE: 'checkingNetwork',
-          },
-        },
       },
     },
     {
       actions: {
-        setPairId: assign({
-          pairId: (_context, event) => event.pairId,
-        }),
-
         openSettings: () => {
           Platform.OS === 'android'
             ? BluetoothStateManager.openSettings().catch()
@@ -506,22 +451,10 @@ export const requestMachine =
           receiverInfo: (_context, event) => event.info,
         }),
 
-        disconnect: (context) => {
-          try {
-            if (context.sharingProtocol === 'OFFLINE') {
-              IdpassSmartshare.destroyConnection();
-            } else {
-              GoogleNearbyMessages.disconnect();
-            }
-          } catch (e) {
-            // pass
-          }
-        },
-
         generateConnectionParams: assign({
           connectionParams: (context) => {
             if (context.sharingProtocol === 'OFFLINE') {
-              return IdpassSmartshare.getConnectionParameters();
+              return Openid4vpBle.getConnectionParameters();
             } else {
               const cid = uuid.v4();
               return JSON.stringify({
@@ -644,7 +577,7 @@ export const requestMachine =
           { to: (context) => context.serviceRefs.activityLog }
         ),
 
-        updateReceivedVcs: send(
+        sendVcReceived: send(
           (context) => {
             return VcEvents.VC_RECEIVED(VC_ITEM_STORE_KEY(context.incomingVc));
           },
@@ -662,13 +595,24 @@ export const requestMachine =
       services: {
         sendDisconnect: (context) => () => {
           if (context.sharingProtocol === 'ONLINE') {
-            onlineSend(
-              {
-                type: 'disconnect',
-                data: 'rejected',
-              },
-              context.pairId
-            );
+            onlineSend({
+              type: 'disconnect',
+              data: 'rejected',
+            });
+          }
+        },
+
+        disconnect: (context) => (callback) => {
+          try {
+            if (context.sharingProtocol === 'OFFLINE') {
+              Openid4vpBle.destroyConnection(() => {
+                callback({ type: 'CONNECTION_DESTROYED' });
+              });
+            } else {
+              GoogleNearbyMessages.disconnect();
+            }
+          } catch (e) {
+            // pass
           }
         },
 
@@ -683,13 +627,6 @@ export const requestMachine =
           return () => subscription.remove();
         },
 
-        checkNetwork: () => async (callback) => {
-          const state = await NetInfo.fetch();
-          callback({
-            type: state.isInternetReachable ? 'ONLINE' : 'OFFLINE',
-          });
-        },
-
         requestBluetooth: () => (callback) => {
           BluetoothStateManager.requestToEnable()
             .then(() => callback(model.events.BLUETOOTH_ENABLED()))
@@ -698,9 +635,8 @@ export const requestMachine =
 
         advertiseDevice: (context) => (callback) => {
           if (context.sharingProtocol === 'OFFLINE') {
-            GoogleNearbyMessages.disconnect();
-            IdpassSmartshare.createConnection('advertiser', () => {
-              callback({ type: 'CONNECTED', pairId: '' });
+            Openid4vpBle.createConnection('advertiser', () => {
+              callback({ type: 'CONNECTED' });
             });
           } else {
             (async function () {
@@ -708,47 +644,30 @@ export const requestMachine =
                 console.log('\n\n[request] GNM_ERROR\n\n', kind, message)
               );
 
-              try {
-                IdpassSmartshare.destroyConnection();
-              } catch (e) {
-                /*pass*/
-              }
-              await GoogleNearbyMessages.connect(
-                Platform.select({
-                  ios: {
-                    apiKey: GNM_API_KEY,
-                  },
-                  default: {},
-                })
-              );
+              await GoogleNearbyMessages.connect({
+                apiKey: GNM_API_KEY,
+                discoveryMediums: ['ble'],
+                discoveryModes: ['scan', 'broadcast'],
+              });
               console.log('[request] GNM connected!');
 
-              const generatedParams = JSON.parse(
-                context.connectionParams
-              ) as ConnectionParams;
-
-              await onlineSubscribe(
-                'pairing',
-                async (scannedQrParams) => {
-                  try {
-                    if (scannedQrParams.cid === generatedParams.cid) {
-                      const event: PairingResponseEvent = {
-                        type: 'pairing:response',
-                        data: scannedQrParams.cid,
-                      };
-                      await onlineSend(event, scannedQrParams.cid);
-                      callback({
-                        type: 'CONNECTED',
-                        pairId: scannedQrParams.cid,
-                      });
-                    }
-                  } catch (e) {
-                    console.error('Could not parse message.', e);
+              await onlineSubscribe('pairing', async (scannedQrParams) => {
+                try {
+                  const generatedParams = JSON.parse(
+                    context.connectionParams
+                  ) as ConnectionParams;
+                  if (scannedQrParams.cid === generatedParams.cid) {
+                    const event: PairingResponseEvent = {
+                      type: 'pairing:response',
+                      data: 'ok',
+                    };
+                    await onlineSend(event);
+                    callback({ type: 'CONNECTED' });
                   }
-                },
-                null,
-                { pairId: generatedParams.cid }
-              );
+                } catch (e) {
+                  console.error('Could not parse message.', e);
+                }
+              });
             })();
           }
         },
@@ -785,16 +704,11 @@ export const requestMachine =
 
             return () => subscription.remove();
           } else {
-            onlineSubscribe(
-              'exchange-sender-info',
-              async (senderInfo) => {
-                await GoogleNearbyMessages.unpublish();
-                await onlineSend(event, context.pairId);
-                callback({ type: 'EXCHANGE_DONE', senderInfo });
-              },
-              null,
-              { pairId: context.pairId }
-            );
+            onlineSubscribe('exchange-sender-info', async (senderInfo) => {
+              await GoogleNearbyMessages.unpublish();
+              await onlineSend(event);
+              callback({ type: 'EXCHANGE_DONE', senderInfo });
+            });
           }
         },
 
@@ -811,33 +725,24 @@ export const requestMachine =
               'send-vc',
               async ({ isChunked, vc, vcChunk }) => {
                 await GoogleNearbyMessages.unpublish();
-                const VcReceivedEvent: SendVcResponseEvent = {
-                  type: 'send-vc:response',
-                  data: 'RECEIVED',
-                };
                 if (isChunked) {
                   rawData += vcChunk.rawData;
                   if (vcChunk.chunk === vcChunk.total - 1) {
                     const vc = JSON.parse(rawData) as VC;
                     GoogleNearbyMessages.unsubscribe();
-                    await onlineSend(VcReceivedEvent, context.pairId);
                     callback({ type: 'VC_RECEIVED', vc });
                   } else {
-                    await onlineSend(
-                      {
-                        type: 'send-vc:response',
-                        data: vcChunk.chunk,
-                      },
-                      context.pairId
-                    );
+                    await onlineSend({
+                      type: 'send-vc:response',
+                      data: vcChunk.chunk,
+                    });
                   }
                 } else {
-                  await onlineSend(VcReceivedEvent, context.pairId);
                   callback({ type: 'VC_RECEIVED', vc });
                 }
               },
               () => callback({ type: 'DISCONNECT' }),
-              { keepAlive: true, pairId: context.pairId }
+              { keepAlive: true }
             );
           }
         },
@@ -854,7 +759,7 @@ export const requestMachine =
             });
           } else {
             await GoogleNearbyMessages.unpublish();
-            await onlineSend(event, context.pairId);
+            await onlineSend(event);
           }
         },
 
@@ -881,16 +786,10 @@ export const requestMachine =
           const vcKey = VC_ITEM_STORE_KEY(context.incomingVc);
           return receivedVcs.includes(vcKey);
         },
-
-        isModeOnline: (context, event) =>
-          event.type === 'SCREEN_FOCUS'
-            ? context.sharingProtocol === 'ONLINE'
-            : event.value,
       },
 
       delays: {
-        CLEAR_DELAY: 250,
-        CANCEL_TIMEOUT: 5000,
+        DESTROY_TIMEOUT: 500,
         CONNECTION_TIMEOUT: (context) => {
           return (context.sharingProtocol === 'ONLINE' ? 15 : 5) * 1000;
         },
@@ -992,8 +891,4 @@ export function selectIsWaitingForVcTimeout(state: State) {
 
 export function selectIsDone(state: State) {
   return state.matches('reviewing.navigatingToHome');
-}
-
-export function selectIsOffline(state: State) {
-  return state.matches('offline');
 }
