@@ -23,6 +23,4 @@ interface DeviceInfoProps {
 
 export interface DeviceInfo {
   deviceName: string;
-  name: string;
-  deviceId: string;
 }

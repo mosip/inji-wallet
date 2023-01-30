@@ -652,8 +652,7 @@ export const requestMachine =
               _vcKey: VC_ITEM_STORE_KEY(context.incomingVc),
               type: context.receiveLogType,
               timestamp: Date.now(),
-              deviceName:
-                context.senderInfo.name || context.senderInfo.deviceName,
+              deviceName: context.senderInfo.deviceName,
               vcLabel: context.incomingVc.tag || context.incomingVc.id,
             }),
           { to: (context) => context.serviceRefs.activityLog }
