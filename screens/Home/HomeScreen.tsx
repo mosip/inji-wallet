@@ -20,14 +20,14 @@ export const HomeScreen: React.FC<HomeRouteProps> = (props) => {
   return (
     <React.Fragment>
       <Column fill backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
-        <Tab
+        {/* <Tab
           value={controller.activeTab}
           onChange={controller.SELECT_TAB}
           indicatorStyle={Theme.Styles.tabIndicator}>
           {TabItem(t('myVcsTab', { vcLabel: controller.vcLabel.plural }))}
           {TabItem(t('receivedVcsTab', { vcLabel: controller.vcLabel.plural }))}
           {TabItem(t('historyTab'))}
-        </Tab>
+        </Tab> */}
         {controller.haveTabsLoaded && (
           <Column fill>
             <MyVcsTab
