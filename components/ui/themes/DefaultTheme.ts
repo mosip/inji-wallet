@@ -63,6 +63,12 @@ export const DefaultTheme = {
     ProfileIconBg: Colors.LightOrange,
   },
   Styles: StyleSheet.create({
+    splashScreen: {
+      height: '100%',
+      width: '100%',
+      alignItems: 'center',
+      paddingTop: '63%',
+    },
     title: {
       color: Colors.Black,
       backgroundColor: Colors.Transparent,
@@ -668,6 +674,7 @@ export const DefaultTheme = {
   OtpLogo: require('../../../assets/otp-mobile-logo.png'),
   SuccessLogo: require('../../../assets/success-logo.png'),
   DigitalIdentityLogo: require('../../../assets/digital_identity_icon.png'),
+  InjiLogo: require('../../../assets/inji_logo.png'),
 
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/
