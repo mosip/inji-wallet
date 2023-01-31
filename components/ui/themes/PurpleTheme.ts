@@ -193,6 +193,9 @@ export const PurpleTheme = {
       flex: 1,
       justifyContent: 'space-between',
     },
+    closecardMosipLogo: {
+      alignSelf: 'flex-end',
+    },
     details: {
       width: 290,
       marginLeft: 110,

@@ -43,7 +43,6 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
         </Text>
         <Row>
           <Text
-            numLines={1}
             color={Theme.Colors.Details}
             weight="bold"
             size="smaller"
@@ -135,6 +134,15 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
   const fullName = !verifiableCredential
     ? ''
     : getLocalizedField(verifiableCredential.credentialSubject.fullName);
+  const isvalid = !verifiableCredential ? '' : t('valid');
+  const selectableOrCheck = props.selectable ? (
+    <CheckBox
+      checked={props.selected}
+      checkedIcon={<Icon name="radio-button-checked" />}
+      uncheckedIcon={<Icon name="radio-button-unchecked" />}
+      onPress={() => props.onPress(service)}
+    />
+  ) : null;
 
   const tag = useSelector(service, selectTag);
 
@@ -156,71 +164,84 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
             ? Theme.Styles.vertloadingContainer
             : Theme.Styles.backgroundImageContainer
         }>
-        <Row style={Theme.Styles.homeCloseCardDetailsHeader}>
-          <Column>
-            <Text
-              color={
-                !verifiableCredential
-                  ? Theme.Colors.LoadingDetailsLabel
-                  : Theme.Colors.DetailsLabel
-              }
-              weight="bold"
-              size="smaller">
-              {t('idType')}
-            </Text>
-            <Text
-              weight="bold"
-              color={Theme.Colors.Details}
-              size="smaller"
-              style={
-                !verifiableCredential
-                  ? Theme.Styles.loadingTitle
-                  : Theme.Styles.subtitle
-              }>
-              {t('nationalCard')}
-            </Text>
-          </Column>
-          <Image
-            source={Theme.MosipLogo}
-            style={Theme.Styles.logo}
-            resizeMethod="auto"
-          />
-        </Row>
-        <Row
-          crossAlign="center"
-          margin="5 0 0 0"
-          style={!verifiableCredential ? Theme.Styles.loadingContainer : null}>
-          <Column
-            style={
-              !verifiableCredential
-                ? Theme.Styles.loadingContainer
-                : Theme.Styles.closeDetails
-            }>
-            <Image
-              source={
-                !verifiableCredential
-                  ? Theme.ProfileIcon
-                  : { uri: context.credential.biometrics.face }
-              }
-              style={Theme.Styles.closeCardImage}
-            />
+        <Column>
+          <Row align="space-between">
+            <Row>
+              <Image
+                source={
+                  !verifiableCredential
+                    ? Theme.ProfileIcon
+                    : { uri: context.credential.biometrics.face }
+                }
+                style={Theme.Styles.closeCardImage}
+              />
+              <Column margin="0 0 0 10">
+                {getDetails(t('fullName'), fullName, verifiableCredential)}
 
-            <Column margin="0 0 0 25" style={{ alignItems: 'flex-start' }}>
-              {getDetails(t('fullName'), fullName, verifiableCredential)}
+                <Column margin="10 0 0 0">
+                  <Text
+                    color={
+                      !verifiableCredential
+                        ? Theme.Colors.LoadingDetailsLabel
+                        : Theme.Colors.DetailsLabel
+                    }
+                    weight="bold"
+                    size="smaller"
+                    align="left">
+                    {t('idType')}
+                  </Text>
+                  <Text
+                    weight="bold"
+                    color={Theme.Colors.Details}
+                    size="smaller"
+                    style={
+                      !verifiableCredential
+                        ? Theme.Styles.loadingTitle
+                        : Theme.Styles.subtitle
+                    }>
+                    {t('nationalCard')}
+                  </Text>
+                </Column>
+              </Column>
+            </Row>
+
+            <Column>
+              {verifiableCredential ? (
+                selectableOrCheck
+              ) : (
+                <RotatingIcon name="sync" color={Theme.Colors.rotatingIcon} />
+              )}
+            </Column>
+          </Row>
+
+          <Row
+            align="space-between"
+            margin="5 0 0 0"
+            style={
+              !verifiableCredential ? Theme.Styles.loadingContainer : null
+            }>
+            <Column>
+              {uin ? getDetails(t('uin'), uin, verifiableCredential) : null}
+              {vid ? getDetails(t('vid'), vid, verifiableCredential) : null}
               {!verifiableCredential
                 ? getDetails(t('id'), uin || vid, verifiableCredential)
                 : null}
-              {uin ? getDetails(t('uin'), uin, verifiableCredential) : null}
-              {vid ? getDetails(t('vid'), vid, verifiableCredential) : null}
               {getDetails(t('generatedOn'), generatedOn, verifiableCredential)}
-              {getDetails(t('status'), t('valid'), verifiableCredential)}
             </Column>
-          </Column>
-
-          {!verifiableCredential && (
-            <RotatingIcon name="sync" color={Theme.Colors.rotatingIcon} />
-          )}
-        </Row>
+            <Column>
+              {verifiableCredential
+                ? getDetails(t('status'), isvalid, verifiableCredential)
+                : null}
+            </Column>
+            <Column style={Theme.Styles.closecardMosipLogo}>
+              <Image
+                source={Theme.MosipLogo}
+                style={Theme.Styles.logo}
+                resizeMethod="auto"
+              />
+            </Column>
+          </Row>
+        </Column>
         <VcItemTags tag={tag} />
       </ImageBackground>
       {props.activeTab !== 'receivedVcsTab' &&

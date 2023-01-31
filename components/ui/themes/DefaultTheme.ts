@@ -222,7 +222,9 @@ export const DefaultTheme = {
     },
     homeCloseCardDetailsHeader: {
       flex: 1,
-      justifyContent: 'space-between',
+    },
+    closecardMosipLogo: {
+      alignSelf: 'flex-end',
     },
     details: {
       width: 290,
