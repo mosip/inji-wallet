@@ -1,8 +1,7 @@
 import React from 'react';
-import { Button, Column, Text, Centered } from '../../components/ui';
-import { Icon } from 'react-native-elements';
+import { Button, Column, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
-import { RefreshControl } from 'react-native';
+import { RefreshControl, Image } from 'react-native';
 import { useMyVcsTab } from './MyVcsTabController';
 import { HomeScreenTabProps } from './HomeScreen';
 import { AddVcModal } from './MyVcs/AddVcModal';
@@ -29,7 +28,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
   return (
     <React.Fragment>
       <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
-        <Column fill pY={32} pX={24}>
+        <Column fill pY={25} pX={22}>
           {controller.vcKeys.length > 0 && (
             <React.Fragment>
               <Column
@@ -52,42 +51,47 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
               </Column>
               <Column elevation={2} margin="10 2 0 2">
                 <Button
-                  type="clear"
+                  type="gradientButton"
+                  linearGradient
+                  isVcThere
                   disabled={controller.isRefreshingVcs}
-                  title={t('addVcButton', {
+                  title={t('downloadId', {
                     vcLabel: controller.vcLabel.singular,
                   })}
-                  onPress={controller.ADD_VC}
+                  onPress={controller.DOWNLOAD_ID}
                 />
               </Column>
             </React.Fragment>
           )}
           {controller.vcKeys.length === 0 && (
             <React.Fragment>
-              <Centered fill>
-                <Text weight="semibold" margin="0 0 8 0">
-                  {t('generateVc', { vcLabel: controller.vcLabel.plural })}
+              <Column fill style={Theme.Styles.homeScreenContainer}>
+                <Image source={Theme.DigitalIdentityLogo} />
+                <Text weight="bold" margin="40 0 15 0">
+                  {t('bringYourDigitalID', {
+                    vcLabel: controller.vcLabel.plural,
+                  })}
                 </Text>
-                <Text color={Theme.Colors.textLabel} align="center">
+                <Text
+                  weight="semibold"
+                  style={Theme.TextStyles.small}
+                  color={Theme.Colors.textLabel}
+                  align="center"
+                  margin="0 12 40 12">
                   {t('generateVcDescription', {
                     vcLabel: controller.vcLabel.singular,
                   })}
                 </Text>
-                <Icon
-                  name="arrow-downward"
-                  containerStyle={{ marginTop: 20 }}
-                  color={Theme.Colors.Icon}
+                <Button
+                  type="gradientButton"
+                  linearGradient
+                  disabled={controller.isRefreshingVcs}
+                  title={t('downloadID', {
+                    vcLabel: controller.vcLabel.singular,
+                  })}
+                  onPress={controller.DOWNLOAD_ID}
                 />
-              </Centered>
-
-              <Button
-                type="addId"
-                disabled={controller.isRefreshingVcs}
-                title={t('addVcButton', {
-                  vcLabel: controller.vcLabel.singular,
-                })}
-                onPress={controller.ADD_VC}
-              />
+              </Column>
             </React.Fragment>
           )}
         </Column>
@@ -112,7 +116,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
       <OnboardingOverlay
         isVisible={controller.isOnboarding}
         onDone={controller.ONBOARDING_DONE}
-        onAddVc={controller.ADD_VC}
+        onAddVc={controller.DOWNLOAD_ID}
       />
     </React.Fragment>
   );

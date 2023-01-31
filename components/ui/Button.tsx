@@ -6,9 +6,10 @@ import {
 import { GestureResponderEvent, StyleProp, ViewStyle } from 'react-native';
 import { Text } from './Text';
 import { Theme, Spacing } from './styleUtils';
+import LinearGradient from 'react-native-linear-gradient';
 
 export const Button: React.FC<ButtonProps> = (props) => {
-  const type = props.type || 'solid';
+  const type = props.type || 'solid' || 'radius';
   const buttonStyle: StyleProp<ViewStyle> = [
     props.fill ? Theme.ButtonStyles.fill : null,
     Theme.ButtonStyles[type],
@@ -28,7 +29,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
     }
   };
 
-  return (
+  return !props.linearGradient ? (
     <RNEButton
       buttonStyle={buttonStyle}
       containerStyle={[
@@ -54,6 +55,41 @@ export const Button: React.FC<ButtonProps> = (props) => {
       onPress={handleOnPress}
       loading={props.loading}
     />
+  ) : (
+    <LinearGradient
+      colors={['#F59B4B', '#E86E04']}
+      style={
+        props.isVcThere
+          ? { width: '33%', borderRadius: 10 }
+          : Theme.ButtonStyles.gradientButton
+      }
+      useAngle={true}
+      angle={180}>
+      <RNEButton
+        buttonStyle={buttonStyle}
+        containerStyle={[
+          props.fill ? Theme.ButtonStyles.fill : null,
+          containerStyle,
+        ]}
+        type={props.type}
+        raised={props.raised}
+        title={
+          <Text
+            weight="semibold"
+            style={Theme.TextStyles.small}
+            color={
+              type === 'solid' || type === 'gradientButton' || type === 'radius'
+                ? Theme.Colors.whiteText
+                : Theme.Colors.AddIdBtnTxt
+            }>
+            {props.title}
+          </Text>
+        }
+        icon={props.icon}
+        onPress={handleOnPress}
+        loading={props.loading}
+      />
+    </LinearGradient>
   );
 };
 
@@ -62,6 +98,8 @@ interface ButtonProps {
   disabled?: boolean;
   margin?: Spacing;
   type?: RNEButtonProps['type'];
+  linearGradient?: boolean;
+  isVcThere?: boolean;
   onPress?: RNEButtonProps['onPress'];
   fill?: boolean;
   raised?: boolean;

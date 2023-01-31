@@ -1,5 +1,6 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 import { Dimensions, StyleSheet, ViewStyle } from 'react-native';
+import { LinearGradient } from 'react-native-svg';
 import { Spacing } from '../styleUtils';
 
 const Colors = {
@@ -8,7 +9,7 @@ const Colors = {
   Grey5: '#E0E0E0',
   Grey6: '#F2F2F2',
   Orange: '#F2811D',
-  LightGrey: '#f7f5f0',
+  LightGrey: '#f0f3f7',
   White: '#FFFFFF',
   Red: '#EB5757',
   Green: '#219653',
@@ -88,6 +89,16 @@ export const DefaultTheme = {
       flexDirection: 'row',
       backgroundColor: Colors.Grey6,
       borderRadius: 4,
+    },
+    homeScreenContainer: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 10,
+      backgroundColor: '#fff',
+      shadowColor: '#000',
+      shadowOpacity: 0.4,
+      elevation: 6,
+      padding: 10,
     },
     vertloadingContainer: {
       flex: 1,
@@ -368,7 +379,7 @@ export const DefaultTheme = {
       borderColor: Colors.Orange,
     },
     container: {
-      minHeight: 48,
+      minHeight: 45,
       flexDirection: 'row',
     },
     disabled: {
@@ -376,6 +387,10 @@ export const DefaultTheme = {
     },
     addId: {
       backgroundColor: Colors.Orange,
+    },
+    gradientButton: {
+      borderRadius: 10,
+      width: '90%',
     },
     clearAddIdBtnBg: {
       backgroundColor: Colors.Transparent,
@@ -652,6 +667,7 @@ export const DefaultTheme = {
   WarningLogo: require('../../../assets/warningLogo.png'),
   OtpLogo: require('../../../assets/otp-mobile-logo.png'),
   SuccessLogo: require('../../../assets/success-logo.png'),
+  DigitalIdentityLogo: require('../../../assets/digital_identity_icon.png'),
 
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/
