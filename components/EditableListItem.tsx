@@ -19,7 +19,7 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
         name={props.Icon}
         type="antdesign"
         size={20}
-        style={Theme.Styles.profileIconBg}
+        style={Theme.Styles.IconContainer}
         color={Theme.Colors.Icon}
       />
       <ListItem.Content>

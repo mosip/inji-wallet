@@ -260,10 +260,11 @@ export const DefaultTheme = {
       flex: 1,
       padding: 10,
     },
-    profileIconBg: {
-      padding: 8,
-      width: 40,
-      height: 40,
+    IconContainer: {
+      padding: 4,
+      width: 36,
+      height: 36,
+      margin: 6,
       borderRadius: 6,
       backgroundColor: Colors.LightOrange,
     },
@@ -764,6 +765,7 @@ export const DefaultTheme = {
   injiSmallLogo: require('../../../assets/inji_small_logo.png'),
   DigitalIdentityLogo: require('../../../assets/digital_identity_icon.png'),
   InjiLogo: require('../../../assets/inji_logo.png'),
+  InjiHomeLogo: require('../../../assets/inji-home-logo.png'),
 
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/
