@@ -22,7 +22,14 @@ export const ScanLayout: React.FC = () => {
       <ScanStack.Navigator
         initialRouteName="ScanScreen"
         screenOptions={{
-          headerTitleAlign: 'center',
+          headerLeft: () =>
+            I18nManager.isRTL && Platform.OS !== 'ios' ? (
+              <LanguageSelector
+                triggerComponent={
+                  <Icon name="language" color={Theme.Colors.Icon} />
+                }
+              />
+            ) : null,
         }}>
         {!controller.isDone && (
           <ScanStack.Screen

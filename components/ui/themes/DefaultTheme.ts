@@ -125,6 +125,15 @@ export const DefaultTheme = {
       backgroundColor: Colors.Grey6,
       borderRadius: 4,
     },
+    bottomTabIconStyle: {},
+    IconContainer: {
+      padding: 4,
+      width: 36,
+      height: 36,
+      margin: 6,
+      borderRadius: 6,
+      backgroundColor: Colors.LightOrange,
+    },
     homeScreenContainer: {
       alignItems: 'center',
       justifyContent: 'center',
@@ -259,14 +268,6 @@ export const DefaultTheme = {
     openDetailsContainer: {
       flex: 1,
       padding: 10,
-    },
-    IconContainer: {
-      padding: 4,
-      width: 36,
-      height: 36,
-      margin: 6,
-      borderRadius: 6,
-      backgroundColor: Colors.LightOrange,
     },
     domainVerifiyIcon: {
       padding: 20,

@@ -3,47 +3,45 @@ import {
   BottomTabNavigationOptions,
   BottomTabScreenProps,
 } from '@react-navigation/bottom-tabs';
+import { Image } from 'react-native';
 import { HomeScreen } from '../screens/Home/HomeScreen';
 import { ProfileScreen } from '../screens/Profile/ProfileScreen';
 import { RootStackParamList } from './index';
 import { RequestLayout } from '../screens/Request/RequestLayout';
 import { ScanLayout } from '../screens/Scan/ScanLayout';
 import i18n from '../i18n';
-import { Platform } from 'react-native';
-import { isGoogleNearbyEnabled } from '../lib/smartshare';
+import { HistoryTab } from '../screens/Home/HistoryTab';
 
-const home: TabScreen = {
-  name: 'Home',
-  component: HomeScreen,
-  icon: 'home',
-  options: {
-    title: i18n.t('MainLayout:home'),
+export const mainRoutes: TabScreen[] = [
+  {
+    name: 'Home',
+    component: HomeScreen,
+    icon: 'home',
+    options: {
+      headerTitle: ' ',
+      headerLeft: () =>
+        React.createElement(Image, {
+          source: require('../assets/inji-home-logo.png'),
+          style: { width: 124, height: 27, resizeMode: 'contain' },
+        }),
+    },
   },
-};
-const scan: TabScreen = {
-  name: 'Scan',
-  component: ScanLayout,
-  icon: 'qr-code-scanner',
-  options: {
-    title: i18n.t('MainLayout:scan'),
-    headerShown: false,
+  {
+    name: 'Scan',
+    component: ScanLayout,
+    icon: 'qr-code-scanner',
+    options: {
+      title: i18n.t('MainLayout:scan'),
+      headerShown: false,
+    },
   },
-};
-const request: TabScreen = {
-  name: 'Request',
-  component: RequestLayout,
-  icon: 'file-download',
-  options: {
-    title: i18n.t('MainLayout:request'),
-    headerShown: false,
-  },
-};
-const settings: TabScreen = {
-  name: 'Settings',
-  component: ProfileScreen,
-  icon: 'settings',
-  options: {
-    title: i18n.t('MainLayout:Settings'),
+  {
+    name: 'Profile',
+    component: ProfileScreen,
+    icon: 'person',
+    options: {
+      title: i18n.t('MainLayout:profile'),
+    },
   },
 };
 
