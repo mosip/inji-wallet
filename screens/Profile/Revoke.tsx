@@ -19,7 +19,7 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
         name={props.Icon}
         type="font-awesome"
         size={20}
-        style={Theme.Styles.profileIconBg}
+        style={Theme.Styles.IconContainer}
         color={Theme.Colors.Icon}
       />
       <ListItem.Content>

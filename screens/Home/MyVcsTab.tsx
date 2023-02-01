@@ -28,7 +28,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
   return (
     <React.Fragment>
       <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
-        <Column fill pY={25} pX={22}>
+        <Column fill pY={20} pX={20}>
           {controller.vcKeys.length > 0 && (
             <React.Fragment>
               <Column
@@ -55,7 +55,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                   linearGradient
                   isVcThere
                   disabled={controller.isRefreshingVcs}
-                  title={t('downloadId', {
+                  title={t('downloadID', {
                     vcLabel: controller.vcLabel.singular,
                   })}
                   onPress={controller.DOWNLOAD_ID}

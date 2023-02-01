@@ -15,7 +15,7 @@ const Colors = {
   Green: '#219653',
   Transparent: 'transparent',
   Warning: '#f0ad4e',
-  LightOrange: '#fce7e3',
+  LightOrange: '#faf1e8',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5;
@@ -60,7 +60,7 @@ export const DefaultTheme = {
     OnboardingCircleIcon: Colors.White,
     OnboardingCloseIcon: Colors.White,
     WarningIcon: Colors.Warning,
-    ProfileIconBg: Colors.LightOrange,
+    DefaultToggle: Colors.LightOrange,
   },
   Styles: StyleSheet.create({
     splashScreen: {
@@ -223,10 +223,11 @@ export const DefaultTheme = {
       flex: 1,
       padding: 10,
     },
-    profileIconBg: {
-      padding: 8,
-      width: 40,
-      height: 40,
+    IconContainer: {
+      padding: 4,
+      width: 36,
+      height: 36,
+      margin: 6,
       borderRadius: 6,
       backgroundColor: Colors.LightOrange,
     },
@@ -673,8 +674,9 @@ export const DefaultTheme = {
   WarningLogo: require('../../../assets/warningLogo.png'),
   OtpLogo: require('../../../assets/otp-mobile-logo.png'),
   SuccessLogo: require('../../../assets/success-logo.png'),
-  DigitalIdentityLogo: require('../../../assets/digital_identity_icon.png'),
-  InjiLogo: require('../../../assets/inji_logo.png'),
+  DigitalIdentityLogo: require('../../../assets/digital-identity-icon.png'),
+  InjiLogo: require('../../../assets/inji-logo.png'),
+  InjiHomeLogo: require('../../../assets/inji-home-logo.png'),
 
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/

@@ -70,7 +70,7 @@ export const QrConsent: React.FC<QrConsentProps> = (props) => {
                   </Text>
                 </ListItem.Title>
               </ListItem.Content>
-              <Switch value={true} color={Theme.Colors.ProfileIconBg} />
+              <Switch value={true} color={Theme.Colors.DefaultToggle} />
             </ListItem>
             {controller.claims.map((claim, index) => {
               if (claim == 'name' || claim == 'picture') {

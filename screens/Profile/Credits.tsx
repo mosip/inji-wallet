@@ -51,7 +51,7 @@ export const Credits: React.FC<CreditsProps> = (props) => {
         name="filetext1"
         type="antdesign"
         size={20}
-        style={Theme.Styles.profileIconBg}
+        style={Theme.Styles.IconContainer}
         color={Theme.Colors.Icon}
       />
       <ListItem.Content>
