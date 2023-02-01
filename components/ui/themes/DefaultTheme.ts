@@ -15,7 +15,7 @@ const Colors = {
   Green: '#219653',
   Transparent: 'transparent',
   Warning: '#f0ad4e',
-  LightOrange: '#faf1e8',
+  LightOrange: '#f7e9dc',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5;
@@ -61,6 +61,7 @@ export const DefaultTheme = {
     OnboardingCloseIcon: Colors.White,
     WarningIcon: Colors.Warning,
     DefaultToggle: Colors.LightOrange,
+    IconBackground: Colors.LightOrange,
   },
   Styles: StyleSheet.create({
     splashScreen: {
@@ -95,6 +96,15 @@ export const DefaultTheme = {
       flexDirection: 'row',
       backgroundColor: Colors.Grey6,
       borderRadius: 4,
+    },
+    bottomTabIconStyle: {},
+    IconContainer: {
+      padding: 4,
+      width: 36,
+      height: 36,
+      margin: 6,
+      borderRadius: 6,
+      backgroundColor: Colors.LightOrange,
     },
     homeScreenContainer: {
       alignItems: 'center',
@@ -222,14 +232,6 @@ export const DefaultTheme = {
     openDetailsContainer: {
       flex: 1,
       padding: 10,
-    },
-    IconContainer: {
-      padding: 4,
-      width: 36,
-      height: 36,
-      margin: 6,
-      borderRadius: 6,
-      backgroundColor: Colors.LightOrange,
     },
     domainVerifiyIcon: {
       padding: 20,

@@ -9,6 +9,8 @@ import { RootRouteProps } from '../routes';
 import { LanguageSelector } from '../components/LanguageSelector';
 import { Theme } from '../components/ui/styleUtils';
 import { useTranslation } from 'react-i18next';
+import { Row } from '../components/ui';
+import LinearGradient from 'react-native-linear-gradient';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -16,16 +18,25 @@ export const MainLayout: React.FC<RootRouteProps> = () => {
   const { t } = useTranslation('MainLayout');
 
   const options: BottomTabNavigationOptions = {
-    headerLeft: () => <Icon name="notifications" color={Theme.Colors.Icon} />,
-    headerLeftContainerStyle: { paddingStart: 16 },
     headerRight: () => (
-      <LanguageSelector
-        triggerComponent={<Icon name="language" color={Theme.Colors.Icon} />}
-      />
+      <Row align="space-between">
+        <Icon
+          name="question"
+          type="ant-design"
+          style={Theme.Styles.IconContainer}
+          color={Theme.Colors.Icon}
+        />
+        <Icon
+          name="settings"
+          type="simple-line-icon"
+          style={Theme.Styles.IconContainer}
+          color={Theme.Colors.Icon}
+        />
+      </Row>
     ),
     headerRightContainerStyle: { paddingEnd: 16 },
     headerTitleAlign: 'center',
-    tabBarShowLabel: false,
+    tabBarShowLabel: true,
     tabBarStyle: {
       height: 86,
       paddingHorizontal: 36,
@@ -44,12 +55,12 @@ export const MainLayout: React.FC<RootRouteProps> = () => {
           component={route.component}
           options={{
             ...route.options,
-            title: t(route.name.toLowerCase()).toUpperCase(),
+            title: t(route.name.toLowerCase()),
             tabBarIcon: ({ focused }) => (
               <Icon
                 name={route.icon}
-                color={focused ? Theme.Colors.IconBg : Theme.Colors.Icon}
-                reverse={focused}
+                color={focused ? Theme.Colors.IconBg : Theme.Colors.GrayIcon}
+                style={focused ? Theme.Styles.IconContainer : null}
               />
             ),
           }}

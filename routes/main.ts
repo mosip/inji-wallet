@@ -3,12 +3,14 @@ import {
   BottomTabNavigationOptions,
   BottomTabScreenProps,
 } from '@react-navigation/bottom-tabs';
+import { Image } from 'react-native';
 import { HomeScreen } from '../screens/Home/HomeScreen';
 import { ProfileScreen } from '../screens/Profile/ProfileScreen';
 import { RootStackParamList } from './index';
 import { RequestLayout } from '../screens/Request/RequestLayout';
 import { ScanLayout } from '../screens/Scan/ScanLayout';
 import i18n from '../i18n';
+import { HistoryTab } from '../screens/Home/HistoryTab';
 
 export const mainRoutes: TabScreen[] = [
   {
@@ -16,7 +18,12 @@ export const mainRoutes: TabScreen[] = [
     component: HomeScreen,
     icon: 'home',
     options: {
-      title: i18n.t('MainLayout:home'),
+      headerTitle: ' ',
+      headerLeft: () =>
+        React.createElement(Image, {
+          source: require('../assets/inji-home-logo.png'),
+          style: { width: 124, height: 27, resizeMode: 'contain' },
+        }),
     },
   },
   {
@@ -25,15 +32,6 @@ export const mainRoutes: TabScreen[] = [
     icon: 'qr-code-scanner',
     options: {
       title: i18n.t('MainLayout:scan'),
-      headerShown: false,
-    },
-  },
-  {
-    name: 'Request',
-    component: RequestLayout,
-    icon: 'file-download',
-    options: {
-      title: i18n.t('MainLayout:request'),
       headerShown: false,
     },
   },

@@ -60,17 +60,12 @@ export const Button: React.FC<ButtonProps> = (props) => {
       colors={['#F59B4B', '#E86E04']}
       style={
         props.isVcThere
-          ? { width: '33%', borderRadius: 10 }
+          ? { width: '33%', borderRadius: 10, alignSelf: 'center' }
           : Theme.ButtonStyles.gradientButton
       }
       useAngle={true}
       angle={180}>
       <RNEButton
-        buttonStyle={buttonStyle}
-        containerStyle={[
-          props.fill ? Theme.ButtonStyles.fill : null,
-          containerStyle,
-        ]}
         type={props.type}
         raised={props.raised}
         title={
