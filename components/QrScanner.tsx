@@ -58,11 +58,6 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
 
   return (
     <View>
-      {props.title && (
-        <Text align="center" margin="16 0" color={Theme.Colors.Details}>
-          {props.title}
-        </Text>
-      )}
       <View style={Theme.Styles.scannerContainer}>
         <Camera
           style={Theme.Styles.scanner}
@@ -73,23 +68,15 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
           type={type}
         />
       </View>
-      <Column margin="24 0">
-        <TouchableOpacity
-          style={Theme.Styles.flipIconButton}
-          onPress={() => {
-            setType(
-              type === Camera.Constants.Type.back
-                ? Camera.Constants.Type.front
-                : Camera.Constants.Type.back
-            );
-          }}>
-          <Icon
-            name="flip-camera-ios"
-            color={Theme.Colors.flipCameraIcon}
-            size={64}
-          />
-        </TouchableOpacity>
-      </Column>
+      {props.title && (
+        <Text
+          align="center"
+          weight="semibold"
+          style={Theme.TextStyles.base}
+          margin="20 64 0 64">
+          {props.title}
+        </Text>
+      )}
     </View>
   );
 

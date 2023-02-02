@@ -284,7 +284,7 @@
     "gotoSettings": "Pumunta sa setting"
   },
   "ScanScreen": {
-    "header": "I-scan ang QR Code",
+    "scanningGuide": "Hawakan ang telepono at i-scan ang QR code",
     "noShareableVcs": "Walang magagamit na maibabahaging {{vcLabel}}.",
     "bluetoothStateAndroid": "Mangyaring i-on ang bluetooth mula sa mga mabilisang setting upang suportahan ang lokal na pagbabahagi",
     "bluetoothStateIos": "Mangyaring i-on ang bluetooth mula sa control center upang suportahan ang lokal na pagbabahagi",

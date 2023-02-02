@@ -305,7 +305,7 @@
     "gotoSettings": "Go to settings"
   },
   "ScanScreen": {
-    "header": "Scan QR Code",
+    "scanningGuide": "Hold the phone steady and scan the QR code",
     "noShareableVcs": "No shareable {{vcLabel}} are available.",
     "sharingVc": "Sharing {{vcLabel}}",
     "bluetoothStateAndroid": "Please turn on bluetooth from quick settings to support local sharing",

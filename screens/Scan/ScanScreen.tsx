@@ -98,8 +98,6 @@ export const ScanScreen: React.FC = () => {
         fill
         align="space-evenly"
         backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
-        <Text align="center">{t('header')}</Text>
-
         {controller.isLocationDisabled || controller.isLocationDenied ? (
           <Column padding="24" fill align="space-between">
             <Centered fill>
