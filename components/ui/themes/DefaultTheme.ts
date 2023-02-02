@@ -15,7 +15,7 @@ const Colors = {
   Green: '#219653',
   Transparent: 'transparent',
   Warning: '#f0ad4e',
-  LightOrange: '#f7e9dc',
+  LightOrange: '#FDF1E6',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5;
@@ -97,7 +97,13 @@ export const DefaultTheme = {
       backgroundColor: Colors.Grey6,
       borderRadius: 4,
     },
-    bottomTabIconStyle: {},
+    bottomTabIconStyle: {
+      padding: 4,
+      width: 36,
+      height: 36,
+      borderRadius: 6,
+      backgroundColor: Colors.LightOrange,
+    },
     IconContainer: {
       padding: 4,
       width: 36,

@@ -37,9 +37,14 @@ export const MainLayout: React.FC<RootRouteProps> = () => {
     headerRightContainerStyle: { paddingEnd: 16 },
     headerTitleAlign: 'center',
     tabBarShowLabel: true,
+    tabBarLabelStyle: {
+      fontSize: 12,
+      color: Theme.Colors.IconBg,
+      marginTop: -10,
+    },
     tabBarStyle: {
-      height: 86,
-      paddingHorizontal: 36,
+      height: 88,
+      paddingHorizontal: 6,
     },
     tabBarItemStyle: {
       height: 86,
@@ -60,7 +65,7 @@ export const MainLayout: React.FC<RootRouteProps> = () => {
               <Icon
                 name={route.icon}
                 color={focused ? Theme.Colors.IconBg : Theme.Colors.GrayIcon}
-                style={focused ? Theme.Styles.IconContainer : null}
+                style={focused ? Theme.Styles.bottomTabIconStyle : null}
               />
             ),
           }}
