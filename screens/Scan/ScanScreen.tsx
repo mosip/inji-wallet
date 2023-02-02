@@ -97,7 +97,7 @@ export const ScanScreen: React.FC = () => {
       <Centered
         fill
         align="space-evenly"
-        backgroundColor={Theme.Colors.whiteBackgroundColor}>
+        backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
         {controller.isLocationDisabled || controller.isLocationDenied ? (
           <Column padding="24" fill align="space-between">
             <Centered fill>
