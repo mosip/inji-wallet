@@ -40,7 +40,6 @@ export const MainLayout: React.FC<RootRouteProps> = () => {
     tabBarLabelStyle: {
       fontSize: 12,
       color: Theme.Colors.IconBg,
-      marginTop: -10,
     },
     tabBarStyle: {
       height: 88,
@@ -48,6 +47,7 @@ export const MainLayout: React.FC<RootRouteProps> = () => {
     },
     tabBarItemStyle: {
       height: 86,
+      padding: 10,
     },
   };
 

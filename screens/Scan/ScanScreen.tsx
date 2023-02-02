@@ -15,11 +15,11 @@ export const ScanScreen: React.FC = () => {
     <Column
       fill
       padding="24 0"
-      backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
+      backgroundColor={Theme.Colors.whiteBackgroundColor}>
       <Centered
         fill
         align="space-evenly"
-        backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
+        backgroundColor={Theme.Colors.whiteBackgroundColor}>
         {controller.isLocationDisabled || controller.isLocationDenied ? (
           <Column align="space-between">
             <Text
