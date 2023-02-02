@@ -241,7 +241,7 @@
     "gotoSettings": "Pumunta sa setting"
   },
   "ScanScreen": {
-    "header": "I-scan ang QR Code",
+    "scanningGuide": "Hawakan ang telepono at i-scan ang QR code",
     "noShareableVcs": "Walang magagamit na maibabahaging {{vcLabel}}.",
     "sharingVc": "Pagbabahagi ng {{vcLabel}}",
     "errors": {

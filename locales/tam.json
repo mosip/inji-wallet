@@ -238,7 +238,7 @@
       "gotoSettings": "அமைப்புகளுக்குச் செல்லவும்"
     },
     "ScanScreen": {
-      "header": "QR குறியீட்டை ஸ்கேன் செய்",
+      "scanningGuide": "மொபைலைப் பிடித்து, QR குறியீட்டை ஸ்கேன் செய்யவும்",
       "noShareableVcs": "பகிரக்கூடிய {{vcLabel}} எதுவும் இல்லை.",
       "sharingVc": "பகிர்தல் {{vcLabel}}",
       "errors": {

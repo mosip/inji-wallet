@@ -238,7 +238,7 @@
       "gotoSettings": "اذهب للاعدادات"
     },
     "ScanScreen": {
-      "header": "مسح رمز الاستجابة السريعة",
+      "scanningGuide": "أمسك الهاتف وافحص رمز الاستجابة السريعة ضوئيًا",
       "noShareableVcs": "لا يمكن مشاركة {{vcLabel}}",
       "sharingVc": "مشاركة {{vcLabel}}",
       "errors": {

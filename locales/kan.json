@@ -238,7 +238,7 @@
       "gotoSettings": "ಸೆಟ್ಟಿಂಗ್‌ಗಳಿಗೆ ಹೋಗಿ"
     },
     "ScanScreen": {
-      "header": "ಸ್ಕ್ಯಾನ್ ಕ್ಯೂಆರ್ ಕೋಡ್",
+      "scanningGuide": "ಫೋನ್ ಹಿಡಿದುಕೊಂಡು QR ಕೋಡ್ ಅನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಿ",
       "noShareableVcs": "ಯಾವುದೇ ಹಂಚಿಕೊಳ್ಳಬಹುದಾದ {{vcLabel}} ಲಭ್ಯವಿಲ್ಲ.",
       "sharingVc": "ಹಂಚಿಕೆ {{vcLabel}}",
       "errors": {

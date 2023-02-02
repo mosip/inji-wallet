@@ -10,7 +10,6 @@ import { RootStackParamList } from './index';
 import { RequestLayout } from '../screens/Request/RequestLayout';
 import { ScanLayout } from '../screens/Scan/ScanLayout';
 import i18n from '../i18n';
-import { HistoryTab } from '../screens/Home/HistoryTab';
 
 export const mainRoutes: TabScreen[] = [
   {
@@ -36,9 +35,9 @@ export const mainRoutes: TabScreen[] = [
     },
   },
   {
-    name: 'Profile',
+    name: 'History',
     component: ProfileScreen,
-    icon: 'person',
+    icon: 'history',
     options: {
       title: i18n.t('MainLayout:profile'),
     },

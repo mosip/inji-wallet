@@ -238,7 +238,7 @@
       "gotoSettings": "सेटिंग्स में जाओ"
     },
     "ScanScreen": {
-      "header": "क्यूआर कोड स्कैन करे",
+      "scanningGuide": "फोन को पकड़ें और क्यूआर कोड को स्कैन करें",
       "noShareableVcs": "कोई साझा करने योग्य {{vcLabel}} उपलब्ध नहीं है।",
       "sharingVc": "शेयरिंग {{vcLabel}}",
       "errors": {

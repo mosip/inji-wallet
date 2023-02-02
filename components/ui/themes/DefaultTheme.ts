@@ -260,14 +260,12 @@ export const DefaultTheme = {
       borderRadius: 5,
     },
     scannerContainer: {
-      borderWidth: 4,
-      borderColor: Colors.Black,
       borderRadius: 32,
-      justifyContent: 'center',
-      height: 300,
-      width: 300,
+      alignSelf: 'center',
+      height: 330,
+      width: 310,
       overflow: 'hidden',
-      marginLeft: 18,
+      marginTop: -35,
     },
     scanner: {
       height: 400,
@@ -320,7 +318,7 @@ export const DefaultTheme = {
   TextStyles: StyleSheet.create({
     base: {
       color: Colors.Black,
-      fontSize: 18,
+      fontSize: 16,
       lineHeight: 28,
     },
     regular: {
