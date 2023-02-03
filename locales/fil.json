@@ -54,7 +54,7 @@
     "vid": "VID",
     "verificationEnabledSuccess": "Na-activate para sa online na pag-login",
     "goback": "BUMALIK KA",
-    "BindingWarning": "Na-activate mo na ang isang online na pag-log in para sa kredensyal na ito sa isa pang device. Hindi mo na magagamit ang device na iyon para sa pag-login kung i-activate mo itong muli sa device na ito.",
+    "BindingWarning": "Kung pinagana mo ang pag-verify para sa kredensyal na ito sa isa pang wallet, ma-override ito. Gusto mo bang magpatuloy?",
     "yes_confirm": "Oo, Kinukumpirma ko",
     "no": "Hindi",
     "Alert": "Alerto",
