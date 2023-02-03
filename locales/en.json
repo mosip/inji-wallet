@@ -55,7 +55,7 @@
     "vid": "VID",
     "verificationEnabledSuccess": "Activated for online login",
     "goback": "GO BACK",
-    "BindingWarning": "You have already activated online login for this credential on another device. You will no longer be able to use that device for login if you activate it again on this device.",
+    "BindingWarning": "If you have enabled verification for this credential on another wallet, it will get overridden. Do you want to proceed?",
     "yes_confirm": "Yes, I Confirm",
     "no": "No",
     "Alert": "Alert",
