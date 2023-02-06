@@ -9,7 +9,7 @@ import { Theme, Spacing } from './styleUtils';
 import LinearGradient from 'react-native-linear-gradient';
 
 export const Button: React.FC<ButtonProps> = (props) => {
-  const type = props.type || 'solid' || 'radius';
+  const type = props.type || 'solid' || 'radius' || 'gradient';
   const buttonStyle: StyleProp<ViewStyle> = [
     props.fill ? Theme.ButtonStyles.fill : null,
     Theme.ButtonStyles[type],
@@ -73,7 +73,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
             weight="semibold"
             style={Theme.TextStyles.small}
             color={
-              type === 'solid' || type === 'gradientButton' || type === 'radius'
+              type === 'gradient' || type === 'radius'
                 ? Theme.Colors.whiteText
                 : Theme.Colors.AddIdBtnTxt
             }>

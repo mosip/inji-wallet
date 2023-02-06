@@ -6,7 +6,6 @@ import {
 import { Icon } from 'react-native-elements';
 import { mainRoutes } from '../routes/main';
 import { RootRouteProps } from '../routes';
-import { LanguageSelector } from '../components/LanguageSelector';
 import { Theme } from '../components/ui/styleUtils';
 import { useTranslation } from 'react-i18next';
 import { Row } from '../components/ui';
@@ -34,20 +33,20 @@ export const MainLayout: React.FC<RootRouteProps> = () => {
         />
       </Row>
     ),
-    headerRightContainerStyle: { paddingEnd: 16 },
-    headerTitleAlign: 'center',
+    headerTitleStyle: { fontFamily: 'Inter_600SemiBold', fontSize: 36 },
     tabBarShowLabel: true,
     tabBarLabelStyle: {
       fontSize: 12,
       color: Theme.Colors.IconBg,
+      fontFamily: 'Inter_600SemiBold',
     },
     tabBarStyle: {
-      height: 88,
-      paddingHorizontal: 6,
+      height: 82,
+      paddingHorizontal: 10,
     },
     tabBarItemStyle: {
-      height: 86,
-      padding: 10,
+      height: 83,
+      padding: 11,
     },
   };
 
@@ -60,7 +59,7 @@ export const MainLayout: React.FC<RootRouteProps> = () => {
           component={route.component}
           options={{
             ...route.options,
-            title: t(route.name.toLowerCase()),
+            title: t(route.name),
             tabBarIcon: ({ focused }) => (
               <Icon
                 name={route.icon}

@@ -47,7 +47,7 @@ export const ScanLayout: React.FC = () => {
           name="ScanScreen"
           component={ScanScreen}
           options={{
-            headerTitleStyle: { fontWeight: '900', fontSize: 33 },
+            headerTitleStyle: { fontSize: 36, fontFamily: 'Inter_600SemiBold' },
             title: t('MainLayout:scan'),
           }}
         />

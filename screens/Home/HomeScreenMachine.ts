@@ -9,10 +9,6 @@ import {
 import { createModel } from 'xstate/lib/model';
 import { vcItemMachine } from '../../machines/vcItem';
 import { AppServices } from '../../shared/GlobalContext';
-import {
-  createHistoryTabMachine,
-  HistoryTabMachine,
-} from './HistoryTabMachine';
 import { createMyVcsTabMachine, MyVcsTabMachine } from './MyVcsTabMachine';
 import {
   createReceivedVcsTabMachine,
@@ -25,7 +21,6 @@ const model = createModel(
     tabRefs: {
       myVcs: {} as ActorRefFrom<typeof MyVcsTabMachine>,
       receivedVcs: {} as ActorRefFrom<typeof ReceivedVcsTabMachine>,
-      history: {} as ActorRefFrom<typeof HistoryTabMachine>,
     },
     selectedVc: null as ActorRefFrom<typeof vcItemMachine>,
     activeTab: 0,
@@ -51,8 +46,7 @@ export const HomeScreenEvents = model.events;
 
 export type TabRef =
   | ActorRefFrom<typeof MyVcsTabMachine>
-  | ActorRefFrom<typeof ReceivedVcsTabMachine>
-  | ActorRefFrom<typeof HistoryTabMachine>;
+  | ActorRefFrom<typeof ReceivedVcsTabMachine>;
 
 export const HomeScreenMachine = model.createMachine(
   {
@@ -142,10 +136,6 @@ export const HomeScreenMachine = model.createMachine(
           receivedVcs: spawn(
             createReceivedVcsTabMachine(context.serviceRefs),
             RECEIVED_VCS_TAB_REF_ID
-          ),
-          history: spawn(
-            createHistoryTabMachine(context.serviceRefs),
-            HISTORY_TAB_REF_ID
           ),
         }),
       }),

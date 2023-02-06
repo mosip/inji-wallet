@@ -10,6 +10,7 @@ import { RootStackParamList } from './index';
 import { RequestLayout } from '../screens/Request/RequestLayout';
 import { ScanLayout } from '../screens/Scan/ScanLayout';
 import i18n from '../i18n';
+import { HistoryScreen } from '../screens/History/HistoryScreen';
 
 export const mainRoutes: TabScreen[] = [
   {
@@ -36,12 +37,21 @@ export const mainRoutes: TabScreen[] = [
   },
   {
     name: 'History',
-    component: ProfileScreen,
+    component: HistoryScreen,
     icon: 'history',
     options: {
-      title: i18n.t('MainLayout:profile'),
+      title: i18n.t('MainLayout:history'),
+      headerRight: null,
     },
   },
+  // {
+  //   name: 'Profile',
+  //   component: ProfileScreen,
+  //   icon: 'person',
+  //   options: {
+  //     title: i18n.t('MainLayout:profile'),
+  //   },
+  // },
 ];
 
 export type MainBottomTabParamList = {
@@ -49,8 +59,8 @@ export type MainBottomTabParamList = {
     activeTab: number;
   };
   Scan: undefined;
-  Request: undefined;
   Profile: undefined;
+  History: undefined;
 };
 
 export interface TabScreen {
