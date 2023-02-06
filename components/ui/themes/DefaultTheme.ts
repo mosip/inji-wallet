@@ -21,7 +21,6 @@ const Colors = {
   Green: '#4B9D20',
   Transparent: 'transparent',
   Warning: '#f0ad4e',
-  LightOrange: '#fce7e3',
   GrayText: '#6F6F6F',
   dorColor: '#CBCBCB',
   plainText: '#FFD6A7',
@@ -87,8 +86,6 @@ export const DefaultTheme = {
     gradientBtn: ['#F59B4B', '#E86E04'],
     dotColor: Colors.dorColor,
     plainText: Colors.plainText,
-    walletbindingLabel: Colors.walletbindingLabel,
-    walletbindingContent: Colors.walletbindingContent,
     DefaultToggle: Colors.LightOrange,
     IconBackground: Colors.LightOrange,
     GradientColors: Colors.GradientColors,
@@ -96,7 +93,6 @@ export const DefaultTheme = {
     getVidColor: Colors.Zambezi,
     TimeoutHintBoxColor: Colors.TimeoutHintBoxColor,
     TimoutText: Colors.TimoutText,
-    ProfileIconBg: Colors.LightOrange,
     walletbindingLabel: Colors.Black,
     walletbindingContent: Colors.Gray40,
   },
@@ -189,6 +185,7 @@ export const DefaultTheme = {
       flex: 1,
       flexDirection: 'row',
       justifyContent: 'flex-end',
+      alignSelf: 'flex-end',
       marginLeft: 300,
     },
     closeCardBgContainer: {
@@ -288,9 +285,6 @@ export const DefaultTheme = {
     homeCloseCardDetailsHeader: {
       flex: 1,
     },
-    closecardMosipLogo: {
-      alignSelf: 'flex-end',
-    },
     details: {
       width: 290,
       marginLeft: 110,
@@ -372,17 +366,7 @@ export const DefaultTheme = {
       borderBottomColor: 'black',
       borderBottomWidth: 1,
       marginTop: 10,
-    },
-    hrLine: {
-      borderBottomColor: 'black',
-      borderBottomWidth: 1,
-      marginTop: 10,
-    },
-    hrLine: {
-      borderBottomColor: 'black',
-      borderBottomWidth: 1,
-      marginTop: 10,
-    },
+    }
   }),
   PinInputStyle: StyleSheet.create({
     input: {
