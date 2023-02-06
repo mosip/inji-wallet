@@ -15,6 +15,7 @@ const Colors = {
   Transparent: 'transparent',
   Warning: '#f0ad4e',
   LightOrange: '#fce7e3',
+  GrayText: '#6F6F6F',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5;
@@ -60,6 +61,7 @@ export const DefaultTheme = {
     OnboardingCloseIcon: Colors.White,
     WarningIcon: Colors.Warning,
     ProfileIconBg: Colors.LightOrange,
+    GrayText: Colors.GrayText,
   },
   Styles: StyleSheet.create({
     title: {

@@ -20,11 +20,6 @@ export const AppLayout: React.FC = () => {
     title: '',
     headerTitleAlign: 'center',
     headerShadowVisible: false,
-    headerRight: () => (
-      <LanguageSelector
-        triggerComponent={<Icon name="language" color={Theme.Colors.Icon} />}
-      />
-    ),
     headerBackVisible: false,
   };
 
