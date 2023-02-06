@@ -18,6 +18,7 @@ const Colors = {
   Warning: '#f0ad4e',
   LightOrange: '#fce7e3',
   GrayText: '#6F6F6F',
+  GrayText: '#6F6F6F',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5;
