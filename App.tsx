@@ -8,13 +8,18 @@ import { useSelector } from '@xstate/react';
 import { selectIsReady } from './machines/app';
 
 import './i18n';
+import { SplashLogoScreen } from './screens/SplashLogoScreen';
 
 const AppInitialization: React.FC = () => {
   const { appService } = useContext(GlobalContext);
   const hasFontsLoaded = useFont();
   const isReady = useSelector(appService, selectIsReady);
 
-  return isReady && hasFontsLoaded ? <AppLayout /> : <AppLoading />;
+  return isReady && hasFontsLoaded ? (
+    <AppLayout />
+  ) : (
+    <SplashLogoScreen navigation={undefined} route={undefined} />
+  );
 };
 
 export default function App() {
