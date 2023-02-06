@@ -27,7 +27,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
   return (
     <React.Fragment>
       <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
-        <Column fill pY={20} pX={20}>
+        <Column fill pY={15} pX={15}>
           {controller.vcKeys.length > 0 && (
             <React.Fragment>
               <Column
@@ -68,7 +68,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
               </Column>
               <Column elevation={2} margin="10 2 0 2">
                 <Button
-                  type="gradientButton"
+                  type="gradient"
                   linearGradient
                   isVcThere
                   disabled={controller.isRefreshingVcs}

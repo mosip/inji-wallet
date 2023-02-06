@@ -10,6 +10,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 export const Button: React.FC<ButtonProps> = (props) => {
   const type = props.type || 'solid' || 'radius' || 'gradient';
+  const type = props.type || 'solid' || 'radius' || 'gradient';
   const buttonStyle: StyleProp<ViewStyle> = [
     props.fill ? Theme.ButtonStyles.fill : null,
     Theme.ButtonStyles[type],

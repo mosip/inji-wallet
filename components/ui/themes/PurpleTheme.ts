@@ -247,7 +247,7 @@ export const PurpleTheme = {
     detailsText: {
       fontWeight: 'bold',
       fontSize: 15,
-      fontFamily: 'Poppins_700Bold',
+      fontFamily: 'Inter_700Bold',
     },
     getId: {
       justifyContent: 'center',
@@ -255,7 +255,7 @@ export const PurpleTheme = {
       marginTop: 10,
     },
     placeholder: {
-      fontFamily: 'Poppins_400Regular',
+      fontFamily: 'Inter_400Regular',
     },
     hrLine: {
       borderBottomColor: 'black',
@@ -269,7 +269,7 @@ export const PurpleTheme = {
       borderColor: Colors.Grey,
       color: Colors.Black,
       flex: 1,
-      fontFamily: 'Poppins_600SemiBold',
+      fontFamily: 'Inter_600SemiBold',
       fontSize: 18,
       fontWeight: '600',
       height: 40,
@@ -285,13 +285,13 @@ export const PurpleTheme = {
       lineHeight: 28,
     },
     regular: {
-      fontFamily: 'Poppins_400Regular',
+      fontFamily: 'Inter_400Regular',
     },
     semibold: {
-      fontFamily: 'Poppins_600SemiBold',
+      fontFamily: 'Inter_600SemiBold',
     },
     bold: {
-      fontFamily: 'Poppins_700Bold',
+      fontFamily: 'Inter_700Bold',
     },
     small: {
       fontSize: 14,
@@ -615,7 +615,7 @@ export const PurpleTheme = {
     sliderTitle: {
       color: Colors.White,
       marginBottom: 20,
-      fontFamily: 'Poppins_700Bold',
+      fontFamily: 'Inter_700Bold',
     },
     text: {
       color: Colors.White,

@@ -154,7 +154,7 @@
   "MyVcsTab": {
     "downloadID": "Download ID",
     "bringYourDigitalID": "Bring your digital identity",
-    "generateVcDescription": "Tap on \"Add {{vcLabel}}\" below to download your {{vcLabel}}"
+    "generateVcDescription": "Tap on \"Download {{vcLabel}}\" below to download your {{vcLabel}}"
   },
   "OnboardingOverlay": {
     "stepOneTitle": "Secure Sharing!",

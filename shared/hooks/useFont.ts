@@ -1,4 +1,7 @@
 import {
+  Inter_400Regular,
+  Inter_600SemiBold,
+  Inter_700Bold,
   useFonts,
   Inter_400Regular,
   Inter_600SemiBold,

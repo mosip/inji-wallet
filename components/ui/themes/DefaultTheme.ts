@@ -25,7 +25,7 @@ const Colors = {
   walletbindingContent: '#666666',
 };
 
-export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5;
+export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 export const DefaultTheme = {
   Colors: {
@@ -445,6 +445,7 @@ export const DefaultTheme = {
     gradientButton: {
       borderRadius: 10,
       width: '90%',
+      height: '9%',
     },
     clearAddIdBtnBg: {
       backgroundColor: Colors.Transparent,
