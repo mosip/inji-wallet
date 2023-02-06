@@ -42,6 +42,14 @@ export const mainRoutes: TabScreen[] = [
       headerRight: null,
     },
   },
+  // {
+  //   name: 'Profile',
+  //   component: ProfileScreen,
+  //   icon: 'person',
+  //   options: {
+  //     title: i18n.t('MainLayout:profile'),
+  //   },
+  // },
 ];
 
 export type MainBottomTabParamList = {
