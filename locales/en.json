@@ -30,6 +30,9 @@
   "PasscodeVerify": {
     "passcodeMismatchError": "Passcode did not match."
   },
+  "PasscodeVerify": {
+    "passcodeMismatchError": "Passcode did not match."
+  },
   "QrScanner": {
     "missingPermissionText": "This app uses the camera to scan the QR code of another device.",
     "allowCameraButton": "Allow access to camera"
@@ -50,10 +53,6 @@
     "id": "Id",
     "nationalCard": "National Card",
     "uin": "UIN",
-    "enableVerification": "Activate",
-    "profileAuthenticated": "Activated for online login",
-    "offlineAuthDisabledHeader": "Activation pending for online login",
-    "offlineAuthDisabledMessage": "Please click the button below to activate this credential to be used for online login.",
     "vid": "VID",
     "verificationEnabledSuccess": "Activated for online login",
     "goback": "GO BACK",
@@ -63,6 +62,10 @@
     "Alert": "Alert",
     "ok": "Okay",
     "downloading": "Downloading Your Card"
+    "enableVerification": "Enable Verification",
+    "profileAuthenticated": "Profile is authenticated!",
+    "offlineAuthDisabledHeader": "Offline Authentication disabled!",
+    "offlineAuthDisabledMessage": "Click 'Enable Authentication' to enable this credentials to be used for offline authentication."
   },
   "AuthScreen": {
     "header": "Select App Unlock Method",
@@ -79,7 +82,7 @@
   "BiometricScreen": {
     "unlock": "Unlock with biometrics"
   },
-  "HistoryTab": {
+  "HistoryScreen": {
     "noHistory": "No history available yet",
     "downloaded": "downloaded",
     "shared": "shared",
@@ -148,13 +151,12 @@
     "requestingOTP": "Requesting OTP..."
   },
   "OtpVerificationModal": {
-    "enterOtp": "Enter the 6-digit verification code we sent you",
-    "header": "OTP Verification"
+    "enterOtp": "Enter the 6-digit verification code we sent you"
   },
   "MyVcsTab": {
-    "downloadID": "Download ID",
-    "bringYourDigitalID": "Bring your digital identity",
-    "generateVcDescription": "Tap on \"Download {{vcLabel}}\" below to download your {{vcLabel}}"
+    "addVcButton": "Add {{vcLabel}}",
+    "generateVc": "Generate your {{vcLabel}}",
+    "generateVcDescription": "Tap on \"Add {{vcLabel}}\" below to download your {{vcLabel}}"
   },
   "OnboardingOverlay": {
     "stepOneTitle": "Secure Sharing!",
@@ -183,7 +185,6 @@
     "requestingOtp": "Requesting OTP...",
     "editTag": "Rename",
     "redirecting": "Redirecting...",
-    "inProgress": "Loading...",
     "success": {
       "unlocked": "{{vcLabel}} successfully unlocked",
       "locked": "{{vcLabel}} successfully locked",
@@ -305,7 +306,7 @@
     "gotoSettings": "Go to settings"
   },
   "ScanScreen": {
-    "scanningGuide": "Hold the phone steady and scan the QR code",
+    "header": "Scan QR Code",
     "noShareableVcs": "No shareable {{vcLabel}} are available.",
     "sharingVc": "Sharing {{vcLabel}}",
     "bluetoothStateAndroid": "Please turn on bluetooth from quick settings to support local sharing",

@@ -5,7 +5,7 @@ import { Image } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Column } from '../components/ui';
 
-export const SplashLogoScreen: React.FC<RootRouteProps> = (props) => {
+export const SplashLogoScreen: React.FC<RootRouteProps> = () => {
   return (
     <Column>
       <LinearGradient
