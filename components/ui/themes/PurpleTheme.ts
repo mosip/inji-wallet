@@ -159,8 +159,8 @@ export const PurpleTheme = {
       justifyContent: 'space-between',
     },
     logo: {
-      height: 36,
-      width: 36,
+      height: 46,
+      width: 40,
     },
     homeCloseCardDetailsHeader: {
       flex: 1,
@@ -228,6 +228,11 @@ export const PurpleTheme = {
     },
     placeholder: {
       fontFamily: 'Poppins_400Regular',
+    },
+    hrLine: {
+      borderBottomColor: 'black',
+      borderBottomWidth: 1,
+      marginTop: 10,
     },
   }),
   PinInputStyle: StyleSheet.create({

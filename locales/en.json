@@ -41,7 +41,7 @@
     "gender": "Gender",
     "dateOfBirth": "Date of birth",
     "phoneNumber": "Phone number",
-    "email": "Email",
+    "email": "Email Address",
     "address": "Address",
     "reasonForSharing": "Reason for sharing",
     "idType": "ID type",
@@ -59,7 +59,8 @@
     "yes_confirm": "Yes, I Confirm",
     "no": "No",
     "Alert": "Alert",
-    "ok": "Okay"
+    "ok": "Okay",
+    "downloading":"Downloading Your Card"
   },
   "AuthScreen": {
     "header": "Would you like to use biometrics to unlock the application?",
@@ -145,6 +146,7 @@
     "noReceivedVcsText": "Tap on Request below to receive {{vcLabel}}"
   },
   "ViewVcModal": {
+    "title":"ID Details",
     "cancel": "Cancel",
     "lock": "Lock",
     "unlock": "Unlock",
