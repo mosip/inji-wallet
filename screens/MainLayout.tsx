@@ -52,7 +52,13 @@ export const MainLayout: React.FC<RootRouteProps> = () => {
         />
       </Row>
     ),
-    headerTitleStyle: {
+    headerTitleStyle: { fontFamily: 'Inter_600SemiBold', fontSize: 30 },
+    headerLeftContainerStyle: { paddingStart: 8 },
+    headerRightContainerStyle: { paddingEnd: 13 },
+    tabBarShowLabel: true,
+    tabBarLabelStyle: {
+      fontSize: 12,
+      color: Theme.Colors.IconBg,
       fontFamily: 'Inter_600SemiBold',
       fontSize: 30,
       margin: 8,

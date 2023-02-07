@@ -16,7 +16,7 @@ export const HistoryScreen: React.FC<MainRouteProps> = () => {
     <Column fill backgroundColor={Theme.Colors.whiteBackgroundColor}>
       <Column
         scroll
-        padding="7 0"
+        padding="18 0"
         refreshControl={
           <RefreshControl
             refreshing={controller.isRefreshing}
