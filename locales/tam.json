@@ -113,9 +113,9 @@
       "header": "OTP சரிபார்ப்பு"
     },
     "MyVcsTab": {
-      "addVcButton": "{{vcLabel}} சேர்",
-      "generateVc": "உங்கள் {{vcLabel}}ஐ உருவாக்கவும்",
-      "generateVcDescription": "உங்கள் \"சேர் {{vcLabel}}\" என்பதைத் தட்டவும் {{vcLabel}}"
+      "downloadID": "ஐடியைப் பதிவிறக்கவும்",
+      "bringYourDigitalID": "உங்கள் டிஜிட்டல் அடையாளத்தை கொண்டு வாருங்கள்",
+      "generateVcDescription": "உங்கள் {{vcLabel}}ஐப் பதிவிறக்க, கீழே உள்ள \"பதிவிறக்க {{vcLabel}}\" என்பதைத் தட்டவும்"
     },
     "OnboardingOverlay": {
       "stepOneTitle": "வரவேற்கிறேன்!",

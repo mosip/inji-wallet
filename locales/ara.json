@@ -113,9 +113,9 @@
       "header": "التحقق من OTP"
     },
     "MyVcsTab": {
-      "addVcButton": "{{vcLabel}} إضافة",
-      "generateVc": "{{vcLabel}}إنشاء",
-      "generateVcDescription": "إضافة {{vcLabel}} أدناه لتنزيل {{vcLabel}}"
+      "downloadID": "معرف التنزيل",
+      "bringYourDigitalID": "أحضر هويتك الرقمية",
+      "generateVcDescription": "اضغط على معرف التنزيل أدناه لتنزيل ملف"
     },
     "OnboardingOverlay": {
       "stepOneTitle": "مرحبًا!",

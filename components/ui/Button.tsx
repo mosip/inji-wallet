@@ -45,7 +45,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
           color={
             type === 'solid' || type === 'addId' || type === 'radius'
               ? Theme.Colors.whiteText
-              : Theme.Colors.AddIdBtnTxt
+              : Theme.Colors.DownloadIdBtnTxt
           }>
           {props.title}
         </Text>
@@ -70,12 +70,12 @@ export const Button: React.FC<ButtonProps> = (props) => {
         raised={props.raised}
         title={
           <Text
-            weight="semibold"
+            weight="bold"
             style={Theme.TextStyles.small}
             color={
               type === 'gradient' || type === 'radius'
                 ? Theme.Colors.whiteText
-                : Theme.Colors.AddIdBtnTxt
+                : Theme.Colors.DownloadIdBtnTxt
             }>
             {props.title}
           </Text>

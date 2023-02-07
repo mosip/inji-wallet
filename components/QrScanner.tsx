@@ -69,7 +69,7 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
       {props.title && (
         <Text
           align="center"
-          weight="semibold"
+          weight="bold"
           style={Theme.TextStyles.base}
           margin="20 64 0 64">
           {props.title}

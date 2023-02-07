@@ -117,9 +117,9 @@
     "header": "Pag-verify ng OTP"
   },
   "MyVcsTab": {
-    "addVcButton": "Magdagdag ng {{vcLabel}}",
-    "generateVc": "Gumawa ng iyong {{vcLabel}}",
-    "generateVcDescription": "Pindutin ang \"Magdagdag ng {{vcLabel}}\" sa ibaba upang makuha ang iyong {{vcLabel}}"
+    "downloadID": "I-download ang ID",
+    "bringYourDigitalID": "Dalhin ang iyong digital identity",
+    "generateVcDescription": "I-tap ang \"Download {{vcLabel}}\" sa ibaba para i-download ang iyong {{vcLabel}}"
   },
   "OnboardingOverlay": {
     "stepOneTitle": "Mabuhay!",
