@@ -45,7 +45,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
           color={
             type === 'solid' || type === 'addId' || type === 'radius'
               ? Theme.Colors.whiteText
-              : Theme.Colors.DownloadIdBtnTxt
+              : Theme.Colors.AddIdBtnTxt
           }>
           {props.title}
         </Text>
@@ -60,12 +60,16 @@ export const Button: React.FC<ButtonProps> = (props) => {
       colors={['#F59B4B', '#E86E04']}
       style={
         props.isVcThere
-          ? { width: '33%', borderRadius: 10, alignSelf: 'center' }
+          ? { width: '30%', borderRadius: 10, alignSelf: 'center' }
           : Theme.ButtonStyles.gradientButton
       }
       useAngle={true}
       angle={180}>
       <RNEButton
+        containerStyle={[
+          props.fill ? Theme.ButtonStyles.fill : null,
+          containerStyle,
+        ]}
         type={props.type}
         raised={props.raised}
         title={
@@ -73,7 +77,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
             weight="bold"
             style={Theme.TextStyles.small}
             color={
-              type === 'gradient' || type === 'radius'
+              type === 'solid' || type === 'gradient' || type === 'radius'
                 ? Theme.Colors.whiteText
                 : Theme.Colors.DownloadIdBtnTxt
             }>
