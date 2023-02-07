@@ -57,6 +57,33 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
         </Row>
       </Column>
     );
+  } else if (arg1 === 'Full name') {
+    return (
+      <Column padding="0 200 0 0" margin="0 10 0 0">
+        <Text
+          color={
+            !verifiableCredential
+              ? Theme.Colors.LoadingDetailsLabel
+              : Theme.Colors.DetailsLabel
+          }
+          weight="bold"
+          size="smaller">
+          {arg1}
+        </Text>
+        <Text
+          numLines={4}
+          color={Theme.Colors.Details}
+          weight="bold"
+          size="smaller"
+          style={
+            !verifiableCredential
+              ? Theme.Styles.loadingTitle
+              : Theme.Styles.subtitle
+          }>
+          {!verifiableCredential ? '' : arg2}
+        </Text>
+      </Column>
+    );
   } else {
     return (
       <Column>
@@ -164,84 +191,74 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
             ? Theme.Styles.vertloadingContainer
             : Theme.Styles.backgroundImageContainer
         }>
-        <Column>
-          <Row align="space-between">
-            <Row>
-              <Image
-                source={
-                  !verifiableCredential
-                    ? Theme.ProfileIcon
-                    : { uri: context.credential.biometrics.face }
-                }
-                style={Theme.Styles.closeCardImage}
-              />
-              <Column margin="0 0 0 10">
-                {getDetails(t('fullName'), fullName, verifiableCredential)}
+        {!verifiableCredential ? (
+          <Column align="space-between" crossAlign="center" padding="50">
+            <RotatingIcon name="sync" color={Theme.Colors.Icon} />
+            <Text margin="20 0 0 0">{t('downloading')}</Text>
+          </Column>
+        ) : (
+          <Column>
+            <Row align="space-between">
+              <Row>
+                <Image
+                  source={{ uri: context.credential.biometrics.face }}
+                  style={Theme.Styles.closeCardImage}
+                />
+                <Column margin="0 0 0 10">
+                  {getDetails(t('fullName'), fullName, verifiableCredential)}
 
-                <Column margin="10 0 0 0">
-                  <Text
-                    color={
-                      !verifiableCredential
-                        ? Theme.Colors.LoadingDetailsLabel
-                        : Theme.Colors.DetailsLabel
-                    }
-                    weight="bold"
-                    size="smaller"
-                    align="left">
-                    {t('idType')}
-                  </Text>
-                  <Text
-                    weight="bold"
-                    color={Theme.Colors.Details}
-                    size="smaller"
-                    style={
-                      !verifiableCredential
-                        ? Theme.Styles.loadingTitle
-                        : Theme.Styles.subtitle
-                    }>
-                    {t('nationalCard')}
-                  </Text>
+                  <Column margin="10 0 0 0">
+                    <Text
+                      color={Theme.Colors.DetailsLabel}
+                      weight="bold"
+                      size="smaller"
+                      align="left">
+                      {t('idType')}
+                    </Text>
+                    <Text
+                      weight="bold"
+                      color={Theme.Colors.Details}
+                      size="smaller"
+                      style={Theme.Styles.subtitle}>
+                      {t('nationalCard')}
+                    </Text>
+                  </Column>
                 </Column>
+              </Row>
+
+              <Column>
+                {verifiableCredential ? (
+                  selectableOrCheck
+                ) : (
+                  <RotatingIcon name="sync" color={Theme.Colors.rotatingIcon} />
+                )}
               </Column>
             </Row>
 
-            <Column>
-              {verifiableCredential ? (
-                selectableOrCheck
-              ) : (
-                <RotatingIcon name="sync" color={Theme.Colors.rotatingIcon} />
-              )}
-            </Column>
-          </Row>
+            <Row align="space-between" margin="5 0 0 0">
+              <Column>
+                {uin ? getDetails(t('uin'), uin, verifiableCredential) : null}
+                {vid ? getDetails(t('vid'), vid, verifiableCredential) : null}
+                {getDetails(
+                  t('generatedOn'),
+                  generatedOn,
+                  verifiableCredential
+                )}
+              </Column>
+              <Column>
+                {getDetails(t('status'), isvalid, verifiableCredential)}
+              </Column>
+              <Column style={Theme.Styles.closecardMosipLogo}>
+                <Image
+                  source={Theme.MosipLogo}
+                  style={Theme.Styles.logo}
+                  resizeMethod="auto"
+                />
+              </Column>
+            </Row>
+          </Column>
+        )}
 
-          <Row
-            align="space-between"
-            margin="5 0 0 0"
-            style={
-              !verifiableCredential ? Theme.Styles.loadingContainer : null
-            }>
-            <Column>
-              {uin ? getDetails(t('uin'), uin, verifiableCredential) : null}
-              {vid ? getDetails(t('vid'), vid, verifiableCredential) : null}
-              {!verifiableCredential
-                ? getDetails(t('id'), uin || vid, verifiableCredential)
-                : null}
-              {getDetails(t('generatedOn'), generatedOn, verifiableCredential)}
-            </Column>
-            <Column>
-              {verifiableCredential
-                ? getDetails(t('status'), isvalid, verifiableCredential)
-                : null}
-            </Column>
-            <Column style={Theme.Styles.closecardMosipLogo}>
-              <Image
-                source={Theme.MosipLogo}
-                style={Theme.Styles.logo}
-                resizeMethod="auto"
-              />
-            </Column>
-          </Row>
-        </Column>
         <VcItemTags tag={tag} />
       </ImageBackground>
       {props.activeTab !== 'receivedVcsTab' &&
