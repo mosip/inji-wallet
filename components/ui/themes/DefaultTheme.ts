@@ -34,8 +34,8 @@ export const DefaultTheme = {
     DetailsLabel: Colors.Orange,
     LoadingDetailsLabel: Colors.Orange,
     AddIdBtnBg: Colors.Orange,
+    AddIdBtnTxt: Colors.Orange,
     DownloadIdBtnTxt: Colors.White,
-    ClearAddIdBtnBg: Colors.Transparent,
     Loading: Colors.Orange,
     noUinText: Colors.Orange,
     IconBg: Colors.Orange,
@@ -133,7 +133,7 @@ export const DefaultTheme = {
       backgroundColor: Colors.LightOrange,
     },
     IconContainer: {
-      padding: 4,
+      padding: 6,
       width: 36,
       height: 36,
       margin: 6,
@@ -301,7 +301,7 @@ export const DefaultTheme = {
       height: 330,
       width: 320,
       overflow: 'hidden',
-      marginTop: -35,
+      marginTop: -65,
     },
     scanner: {
       height: 400,

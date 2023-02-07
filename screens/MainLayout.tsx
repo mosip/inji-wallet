@@ -33,7 +33,9 @@ export const MainLayout: React.FC<RootRouteProps> = () => {
         />
       </Row>
     ),
-    headerTitleStyle: { fontFamily: 'Inter_600SemiBold', fontSize: 36 },
+    headerTitleStyle: { fontFamily: 'Inter_600SemiBold', fontSize: 30 },
+    headerLeftContainerStyle: { paddingStart: 8 },
+    headerRightContainerStyle: { paddingEnd: 13 },
     tabBarShowLabel: true,
     tabBarLabelStyle: {
       fontSize: 12,
