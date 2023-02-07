@@ -54,7 +54,7 @@
     "vid": "VID",
     "verificationEnabledSuccess": "Na-activate para sa online na pag-login",
     "goback": "BUMALIK KA",
-    "BindingWarning": "Na-activate mo na ang isang online na pag-log in para sa kredensyal na ito sa isa pang device. Hindi mo na magagamit ang device na iyon para sa pag-login kung i-activate mo itong muli sa device na ito.",
+    "BindingWarning": "Kung pinagana mo ang pag-verify para sa kredensyal na ito sa isa pang wallet, ma-override ito. Gusto mo bang magpatuloy?",
     "yes_confirm": "Oo, Kinukumpirma ko",
     "no": "Hindi",
     "Alert": "Alerto",
@@ -95,10 +95,30 @@
       },
       "backend": {
         "invalidOtp": "Di-wasto ang OTP",
+        "expiredOtp": "Nag-expire na ang OTP",
         "invalidUin": "Di-wastong UIN",
         "invalidVid": "Di-wastong VID",
         "missingUin": "Hindi mahanap ang iyong UIN",
-        "missingVid": "Hindi mahanap ang iyong VID"
+        "missingVid": "Hindi mahanap ang iyong VID",
+        "noMessageAvailable": "Subukan pagkatapos ng ilang oras",
+        "whileGeneratingOtpErrorIsOccured": "habang ang pagbuo ng OTP error ay naganap",
+        "networkRequestFailed": "Nabigo ang kahilingan sa network"
+      }
+    }
+  },
+  "GetVcModal": {
+    "errors": {
+      "input": {
+        "empty": "Hindi maaaring walang laman ang input",
+        "invalidFormat": "Ang input format ay hindi tama"
+      },
+      "backend":{
+        "invalidOtp": "Di-wasto ang OTP",
+        "expiredOtp": "Nag-expire na ang OTP",
+        "applicationProcessing": "Hindi pa handa ang AID",
+        "noMessageAvailable": "Subukan pagkatapos ng ilang oras",
+        "networkRequestFailed": "Nabigo ang kahilingan sa network",
+        "timeout": "timeout"
       }
     }
   },

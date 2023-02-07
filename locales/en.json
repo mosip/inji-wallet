@@ -48,11 +48,18 @@
     "id": "Id",
     "nationalCard": "National Card",
     "uin": "UIN",
+    "enableVerification": "Activate",
+    "profileAuthenticated": "Activated for online login",
+    "offlineAuthDisabledHeader": "Activation pending for online login",
+    "offlineAuthDisabledMessage": "Please click the button below to activate this credential to be used for online login.",
     "vid": "VID",
-    "enableVerification": "Enable Verification",
-    "profileAuthenticated": "Profile is authenticated!",
-    "offlineAuthDisabledHeader": "Offline Authentication disabled!",
-    "offlineAuthDisabledMessage": "Click 'Enable Authentication' to enable this credentials to be used for offline authentication."
+    "verificationEnabledSuccess": "Activated for online login",
+    "goback": "GO BACK",
+    "BindingWarning": "If you have enabled verification for this credential on another wallet, it will get overridden. Do you want to proceed?",
+    "yes_confirm": "Yes, I Confirm",
+    "no": "No",
+    "Alert": "Alert",
+    "ok": "Okay"
   },
   "AuthScreen": {
     "header": "Would you like to use biometrics to unlock the application?",
@@ -89,10 +96,30 @@
       },
       "backend": {
         "invalidOtp": "OTP is invalid",
+        "expiredOtp": "OTP has expired",
         "invalidUin": "UIN invalid",
         "invalidVid": "VID invalid",
         "missingUin": "UIN not available in database",
-        "missingVid": "VID not available in database"
+        "missingVid": "VID not available in database",
+        "noMessageAvailable": "Try after sometime",
+        "whileGeneratingOtpErrorIsOccured": "while generating otp error is occurred",
+        "networkRequestFailed": "Network request failed"
+      }
+    }
+  },
+  "GetVcModal": {
+    "errors": {
+      "input": {
+        "empty": "The input cannot be empty",
+        "invalidFormat": "The input format is incorrect"
+      },
+      "backend":{
+        "invalidOtp": "OTP is invalid",
+        "expiredOtp": "OTP has expired",
+        "applicationProcessing": "AID is not ready",
+        "noMessageAvailable": "Try after sometime",
+        "networkRequestFailed": "Network request failed",
+        "timeOut": "Timeout"
       }
     }
   },
@@ -116,7 +143,8 @@
     "requestingOTP": "Requesting OTP..."
   },
   "OtpVerificationModal": {
-    "enterOtp": "Enter the 6-digit verification code we sent you"
+    "enterOtp": "Enter the 6-digit verification code we sent you",
+    "header": "OTP Verification"
   },
   "MyVcsTab": {
     "addVcButton": "Add {{vcLabel}}",
@@ -147,6 +175,7 @@
     "requestingOtp": "Requesting OTP...",
     "editTag": "Rename",
     "redirecting": "Redirecting...",
+    "inProgress": "Loading...",
     "success": {
       "unlocked": "{{vcLabel}} successfully unlocked",
       "locked": "{{vcLabel}} successfully locked",
@@ -185,6 +214,31 @@
     "version": "Version",
     "useBle": "Powered by BLE",
     "useGoogleNearby": "Powered by GoogleNearby"
+  },
+  "QrScreen": {
+    "title": "QR Login",
+    "alignQr": "Align the QR code within the frame to scan",
+    "confirmation": "Confirmation",
+    "checkDomain": "Also, check that there is a lock icon on the address bar.",
+    "domainHead": "https://",
+    "selectId": "Select ID",
+    "noBindedVc": "No Binded {{vcLabel}} Available to Verify",
+    "back": "Go Back",
+    "confirm": "Confirm",
+    "verify": "Verify",
+    "faceAuth": "Face Authentication",
+    "consent": "Consent",
+    "loading": "Loading...",
+    "domainWarning": "Please confirm the domain of the website you are scanning the QR code from is as below",
+    "access": " is requesting access to",
+    "status": "Status",
+    "successMessage": "You Have Successfully Logged Into ",
+    "okay": "Okay",
+    "allow": "Allow",
+    "cancel": "Cancel",
+    "essentialClaims": "Essential Claims",
+    "voluntaryClaims": "Voluntary Claims",
+    "required":"Required"
   },
   "ReceiveVcScreen": {
     "header": "{{vcLabel}} details",
@@ -309,4 +363,3 @@
     }
   }
 }
-
