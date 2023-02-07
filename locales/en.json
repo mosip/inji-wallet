@@ -154,9 +154,9 @@
     "enterOtp": "Enter the 6-digit verification code we sent you"
   },
   "MyVcsTab": {
-    "addVcButton": "Add {{vcLabel}}",
-    "generateVc": "Generate your {{vcLabel}}",
-    "generateVcDescription": "Tap on \"Add {{vcLabel}}\" below to download your {{vcLabel}}"
+    "downloadID": "Download ID",
+    "bringYourDigitalID": "Bring your digital identity",
+    "generateVcDescription": "Tap on \"Download {{vcLabel}}\" below to download your {{vcLabel}}"
   },
   "OnboardingOverlay": {
     "stepOneTitle": "Secure Sharing!",
@@ -306,7 +306,7 @@
     "gotoSettings": "Go to settings"
   },
   "ScanScreen": {
-    "header": "Scan QR Code",
+    "scanningGuide": "Hold the phone steady and scan the QR code",
     "noShareableVcs": "No shareable {{vcLabel}} are available.",
     "sharingVc": "Sharing {{vcLabel}}",
     "bluetoothStateAndroid": "Please turn on bluetooth from quick settings to support local sharing",

@@ -34,7 +34,7 @@ export const DefaultTheme = {
     DetailsLabel: Colors.Orange,
     LoadingDetailsLabel: Colors.Orange,
     AddIdBtnBg: Colors.Orange,
-    AddIdBtnTxt: Colors.Orange,
+    DownloadIdBtnTxt: Colors.White,
     ClearAddIdBtnBg: Colors.Transparent,
     Loading: Colors.Orange,
     noUinText: Colors.Orange,
@@ -147,7 +147,7 @@ export const DefaultTheme = {
       backgroundColor: '#fff',
       shadowColor: '#000',
       shadowOpacity: 0.4,
-      elevation: 6,
+      elevation: 5,
       padding: 10,
     },
     vertloadingContainer: {
@@ -299,7 +299,7 @@ export const DefaultTheme = {
       borderRadius: 32,
       alignSelf: 'center',
       height: 330,
-      width: 310,
+      width: 320,
       overflow: 'hidden',
       marginTop: -35,
     },
@@ -444,8 +444,9 @@ export const DefaultTheme = {
     },
     gradientButton: {
       borderRadius: 10,
-      width: '90%',
+      width: '83%',
       height: '9%',
+      alignItems: 'center',
     },
     clearAddIdBtnBg: {
       backgroundColor: Colors.Transparent,

@@ -149,9 +149,9 @@
       "header": "ओटीपी सत्यापन"
     },
     "MyVcsTab": {
-      "addVcButton": "{{vcLabel}} जोड़ें",
-      "generateVc": "अपना {{vcLabel}}जेनरेट करें",
-      "generateVcDescription": "अपना {{vcLabel}} डाउनलोड करने के लिए नीचे \"जोड़ें {{vcLabel}}\" पर टैप करें"
+      "downloadID": "डाउनलोड आईडी",
+      "bringYourDigitalID": "अपनी डिजिटल पहचान लाओ",
+      "generateVcDescription": "अपना {{vcLabel}} डाउनलोड करने के लिए नीचे डाउनलोड {{vcLabel}} पर टैप करें"
     },
     "OnboardingOverlay": {
       "stepOneTitle": "स्वागत है!",
