@@ -1,5 +1,4 @@
 import React, { useContext, useRef, useState } from 'react';
-import React, { useContext, useRef, useState } from 'react';
 import { useInterpret, useSelector } from '@xstate/react';
 import { Pressable, Image, ImageBackground, Dimensions } from 'react-native';
 import { CheckBox, Icon } from 'react-native-elements';
@@ -51,6 +50,33 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
           </Text>
           {!verifiableCredential ? null : <VerifiedIcon />}
         </Row>
+      </Column>
+    );
+  } else {
+    return (
+      <Column padding="0 200 0 0" margin="0 10 0 0">
+        <Text
+          color={
+            !verifiableCredential
+              ? Theme.Colors.LoadingDetailsLabel
+              : Theme.Colors.DetailsLabel
+          }
+          weight="regular"
+          size="smaller">
+          {arg1}
+        </Text>
+        <Text
+          numLines={4}
+          color={Theme.Colors.Details}
+          weight="semibold"
+          size="smaller"
+          style={
+            !verifiableCredential
+              ? Theme.Styles.loadingTitle
+              : Theme.Styles.subtitle
+          }>
+          {!verifiableCredential ? '' : arg2}
+        </Text>
       </Column>
     );
   } else {

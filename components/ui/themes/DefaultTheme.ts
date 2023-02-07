@@ -378,6 +378,11 @@ export const DefaultTheme = {
       borderBottomWidth: 1,
       marginTop: 10,
     },
+    hrLine: {
+      borderBottomColor: 'black',
+      borderBottomWidth: 1,
+      marginTop: 10,
+    },
   }),
   PinInputStyle: StyleSheet.create({
     input: {

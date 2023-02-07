@@ -46,7 +46,6 @@
     "gender": "Gender",
     "dateOfBirth": "Date of birth",
     "phoneNumber": "Phone number",
-    "email": "Email Address",
     "address": "Address",
     "reasonForSharing": "Reason for sharing",
     "idType": "ID type",
