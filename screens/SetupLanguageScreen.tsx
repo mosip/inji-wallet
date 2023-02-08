@@ -1,6 +1,6 @@
 import React from 'react';
 import { SUPPORTED_LANGUAGES } from '../i18n';
-import { Dimensions, I18nManager } from 'react-native';
+import { Dimensions, I18nManager, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
@@ -52,11 +52,7 @@ export const SetupLanguageScreen: React.FC<RootRouteProps> = (props) => {
       />
       <Column crossAlign="center">
         <Text weight="semibold">{t('header')}</Text>
-        <Text
-          style={{ paddingHorizontal: 35 }}
-          weight="regular"
-          align="center"
-          color={Theme.Colors.GrayText}>
+        <Text weight="regular" align="center" color={Theme.Colors.GrayText}>
           {t('description')}
         </Text>
       </Column>
@@ -66,15 +62,17 @@ export const SetupLanguageScreen: React.FC<RootRouteProps> = (props) => {
         selectedValue={i18n.language}
         onValueChange={changeLanguage}
       />
-
-      <Button
-        type="gradient"
-        title={t('save')}
-        styles={{ margin: '0 0 10 0' }}
-        onPress={() => {
-          controller.SELECT(), controller.unlockPage;
-        }}
-      />
+      <Column padding="20" backgroundColor={Theme.Colors.whiteBackgroundColor}>
+        <Button
+          linearGradient
+          type="gradient"
+          title={t('save')}
+          onPress={() => {
+            controller.SELECT(), controller.unlockPage;
+          }}
+          colors={Theme.Colors.gradientBtn}
+        />
+      </Column>
     </Column>
   );
 };

@@ -9,7 +9,6 @@ import { Theme, Spacing } from './styleUtils';
 
 export const Button: React.FC<ButtonProps> = (props) => {
   const type = props.type || 'solid' || 'radius' || 'gradient';
-  const type = props.type || 'solid' || 'radius' || 'gradient';
   const buttonStyle: StyleProp<ViewStyle> = [
     props.fill ? Theme.ButtonStyles.fill : null,
     Theme.ButtonStyles[type],
@@ -98,6 +97,7 @@ interface ButtonProps {
   disabled?: boolean;
   margin?: Spacing;
   type?: RNEButtonProps['type'];
+  linearGradient?: boolean;
   isVcThere?: boolean;
   onPress?: RNEButtonProps['onPress'];
   fill?: boolean;

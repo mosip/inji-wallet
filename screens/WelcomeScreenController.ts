@@ -1,6 +1,7 @@
 import { useSelector } from '@xstate/react';
 import { useContext } from 'react';
 import {
+  AuthEvents,
   selectBiometrics,
   selectLanguagesetup,
   selectPasscode,
@@ -23,19 +24,17 @@ export function useWelcomeScreen(props: RootRouteProps) {
     selectBiometricUnlockEnabled
   );
   const isLanguagesetup = useSelector(authService, selectLanguagesetup);
+  const isBiometricUnlockEnabled = useSelector(
+    settingsService,
+    selectBiometricUnlockEnabled
+  );
+  const isLanguagesetup = useSelector(authService, selectLanguagesetup);
 
   return {
     isSettingUp,
     isLanguagesetup,
-    NEXT: () => {
-      authService.send(AuthEvents.NEXT()), props.navigation.navigate('Auth');
-    },
     SELECT: () => {
       authService.send(AuthEvents.SELECT()),
-        props.navigation.navigate('IntroSliders');
-    },
-    SPLASSH_SCREEN_DONE: () => {
-      authService.send(AuthEvents.SPLASSH_SCREEN_DONE),
         props.navigation.navigate('Welcome');
     },
     unlockPage: () => {
