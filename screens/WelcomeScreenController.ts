@@ -1,6 +1,12 @@
 import { useSelector } from '@xstate/react';
 import { useContext } from 'react';
-import { selectBiometrics, selectPasscode, selectSettingUp } from '../machines/auth';
+import {
+  AuthEvents,
+  selectBiometrics,
+  selectLanguagesetup,
+  selectPasscode,
+  selectSettingUp,
+} from '../machines/auth';
 import { selectBiometricUnlockEnabled } from '../machines/settings';
 import { RootRouteProps } from '../routes';
 import { GlobalContext } from '../shared/GlobalContext';
@@ -13,11 +19,19 @@ export function useWelcomeScreen(props: RootRouteProps) {
   const isSettingUp = useSelector(authService, selectSettingUp);
   const passcode = useSelector(authService, selectPasscode);
   const biometrics = useSelector(authService, selectBiometrics);
-  const isBiometricUnlockEnabled = useSelector(settingsService, selectBiometricUnlockEnabled);
+  const isBiometricUnlockEnabled = useSelector(
+    settingsService,
+    selectBiometricUnlockEnabled
+  );
+  const isLanguagesetup = useSelector(authService, selectLanguagesetup);
 
   return {
     isSettingUp,
-
+    isLanguagesetup,
+    SELECT: () => {
+      authService.send(AuthEvents.SELECT()),
+        props.navigation.navigate('Welcome');
+    },
     unlockPage: () => {
       // prioritize biometrics
       if (!isSettingUp && isBiometricUnlockEnabled && biometrics !== '') {

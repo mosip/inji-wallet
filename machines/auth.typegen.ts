@@ -24,6 +24,7 @@ export interface Typegen0 {
     requestStoredContext: 'xstate.init';
     setBiometrics: 'SETUP_BIOMETRICS';
     setContext: 'STORE_RESPONSE';
+    setLanguage: 'SETUP_BIOMETRICS' | 'SETUP_PASSCODE';
     setPasscode: 'SETUP_PASSCODE';
     storeContext:
       | 'SETUP_BIOMETRICS'
@@ -35,6 +36,7 @@ export interface Typegen0 {
   'eventsCausingGuards': {
     hasBiometricSet: '';
     hasData: 'STORE_RESPONSE';
+    hasLanguageset: '';
     hasPasscodeSet: '';
   };
   'eventsCausingServices': {
@@ -44,6 +46,7 @@ export interface Typegen0 {
     | 'authorized'
     | 'checkingAuth'
     | 'init'
+    | 'languagesetup'
     | 'savingDefaults'
     | 'settingUp'
     | 'unauthorized';
