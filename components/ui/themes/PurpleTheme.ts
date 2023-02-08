@@ -18,6 +18,7 @@ const Colors = {
   Purple2: '#AEA7FF',
   Transparent: 'transparent',
   Warning: '#f0ad4e',
+  GrayText: '#6F6F6F',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5;
@@ -66,9 +67,8 @@ export const PurpleTheme = {
     OnboardingCircleIcon: Colors.White,
     OnboardingCloseIcon: Colors.White,
     WarningIcon: Colors.Warning,
-    Cursor: Colors.Purple,
-    version: Colors.DimGray,
-    poweredByBLE: Colors.Gray9,
+    GrayText: Colors.GrayText,
+    gradientBtn: ['#F59B4B', '#E86E04'],
   },
   Styles: StyleSheet.create({
     title: {
@@ -369,6 +369,9 @@ export const PurpleTheme = {
     radius: {
       borderRadius: 10,
       backgroundColor: Colors.Purple,
+    },
+    gradient: {
+      borderRadius: 10,
     },
   }),
   OIDCAuthStyles: StyleSheet.create({

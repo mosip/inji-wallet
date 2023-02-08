@@ -62,7 +62,7 @@
     "no": "No",
     "Alert": "Alert",
     "ok": "Okay",
-    "downloading":"Downloading Your Card"
+    "downloading": "Downloading Your Card"
   },
   "AuthScreen": {
     "header": "Would you like to use biometrics to unlock the application?",
@@ -168,7 +168,7 @@
     "noReceivedVcsText": "Tap on Request below to receive {{vcLabel}}"
   },
   "ViewVcModal": {
-    "title":"ID Details",
+    "title": "ID Details",
     "cancel": "Cancel",
     "lock": "Lock",
     "unlock": "Unlock",
@@ -375,6 +375,11 @@
     "title": "Open Source Identity Solution",
     "getStarted": "Get started",
     "unlockApp": "Unlock application"
+  },
+  "SetupLanguage": {
+    "header": "Choose Language",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+    "save": "Save Preference"
   },
   "common": {
     "cancel": "Cancel",
