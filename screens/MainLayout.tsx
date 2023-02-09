@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
@@ -10,6 +10,7 @@ import { Theme } from '../components/ui/styleUtils';
 import { useTranslation } from 'react-i18next';
 import { Row } from '../components/ui';
 import LinearGradient from 'react-native-linear-gradient';
+import { SettingScreen } from './Settings/SettingScreen';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -25,11 +26,17 @@ export const MainLayout: React.FC<RootRouteProps> = () => {
           style={Theme.Styles.IconContainer}
           color={Theme.Colors.Icon}
         />
-        <Icon
-          name="settings"
-          type="simple-line-icon"
-          style={Theme.Styles.IconContainer}
-          color={Theme.Colors.Icon}
+        <SettingScreen
+          triggerComponent={
+            <Icon
+              name="settings"
+              type="simple-line-icon"
+              style={Theme.Styles.IconContainer}
+              color={Theme.Colors.Icon}
+            />
+          }
+          navigation={undefined}
+          route={undefined}
         />
       </Row>
     ),
@@ -37,14 +44,14 @@ export const MainLayout: React.FC<RootRouteProps> = () => {
     headerLeftContainerStyle: { paddingStart: 8 },
     headerRightContainerStyle: { paddingEnd: 13 },
     tabBarShowLabel: true,
-    tabBarLabelStyle: {
-      fontSize: 12,
-      color: Theme.Colors.IconBg,
-      fontFamily: 'Inter_600SemiBold',
-    },
+    tabBarActiveTintColor: Theme.Colors.IconBg,
     tabBarStyle: {
       height: 82,
       paddingHorizontal: 10,
+    },
+    tabBarLabelStyle: {
+      fontSize: 12,
+      fontFamily: 'Inter_600SemiBold',
     },
     tabBarItemStyle: {
       height: 83,
@@ -65,7 +72,7 @@ export const MainLayout: React.FC<RootRouteProps> = () => {
             tabBarIcon: ({ focused }) => (
               <Icon
                 name={route.icon}
-                color={focused ? Theme.Colors.IconBg : Theme.Colors.GrayIcon}
+                color={focused ? Theme.Colors.Icon : Theme.Colors.GrayIcon}
                 style={focused ? Theme.Styles.bottomTabIconStyle : null}
               />
             ),

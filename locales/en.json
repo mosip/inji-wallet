@@ -209,6 +209,7 @@
     "useGoogleNearby": "Powered by GoogleNearby"
   },
   "ProfileScreen": {
+    "header": "Settings",
     "name": "Name",
     "vcLabel": "VC Label",
     "language": "Language",

@@ -127,8 +127,8 @@ export const DefaultTheme = {
     },
     bottomTabIconStyle: {
       padding: 4,
-      width: 39,
-      height: 39,
+      width: 36,
+      height: 36,
       borderRadius: 6,
       backgroundColor: Colors.LightOrange,
     },
@@ -445,7 +445,7 @@ export const DefaultTheme = {
     gradientButton: {
       borderRadius: 10,
       width: '83%',
-      height: '9%',
+      height: '8.5%',
       alignItems: 'center',
     },
     clearAddIdBtnBg: {
