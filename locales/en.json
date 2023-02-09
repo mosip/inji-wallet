@@ -63,9 +63,10 @@
     "downloading": "Downloading Your Card"
   },
   "AuthScreen": {
-    "header": "Would you like to use biometrics to unlock the application?",
-    "useBiometrics": "Use biometrics",
-    "usePasscode": "I'd rather use a passcode",
+    "header": "Select App Unlock Method",
+    "Description": "Would you like to use biometrics to unlock the application?",
+    "useBiometrics": "Use Biometrics",
+    "usePasscode": "Use Passcode",
     "errors": {
       "unavailable": "Device does not support Biometrics",
       "unenrolled": "To use Biometrics, please enroll your biometrics in your device settings",
