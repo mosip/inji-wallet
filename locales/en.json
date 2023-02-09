@@ -168,14 +168,15 @@
     "header": "Credits and legal notices",
     "back": "Back"
   },
-  "ProfileScreen": {
+  "SettingScreen": {
     "header": "Settings",
-    "name": "Name",
+    "profile": "Profile",
     "vcLabel": "VC Label",
     "language": "Language",
     "bioUnlock": "Biometric unlock",
     "authFactorUnlock": "Unlock auth factor",
     "credits": "Credits and legal notices",
+    "featuresWalkAround":"Feature Walkaround",
     "logout": "Log-out",
     "revokeLabel": "Revoke VID",
     "revokeHeader": "REVOKE VID",
