@@ -51,6 +51,7 @@ export interface Typegen0 {
   'eventsCausingActions': {
     clearCreatedVp:
       | ''
+      | 'BLE_ERROR'
       | 'DISCONNECT'
       | 'DISMISS'
       | 'SCREEN_BLUR'
@@ -58,6 +59,7 @@ export interface Typegen0 {
       | 'xstate.stop';
     clearReason:
       | ''
+      | 'BLE_ERROR'
       | 'DISCONNECT'
       | 'DISMISS'
       | 'SCREEN_BLUR'
@@ -163,6 +165,7 @@ export interface Typegen0 {
     | 'exchangingDeviceInfo.inProgress'
     | 'exchangingDeviceInfo.timeout'
     | 'findingConnection'
+    | 'handlingBleError'
     | 'inactive'
     | 'invalid'
     | 'preparingToConnect'
