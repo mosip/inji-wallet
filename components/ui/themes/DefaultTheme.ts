@@ -143,8 +143,8 @@ export const DefaultTheme = {
     },
     bottomTabIconStyle: {
       padding: 4,
-      width: 39,
-      height: 39,
+      width: 36,
+      height: 36,
       borderRadius: 6,
       backgroundColor: Colors.LightOrange,
     },
