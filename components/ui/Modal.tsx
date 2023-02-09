@@ -19,8 +19,8 @@ export const Modal: React.FC<ModalProps> = (props) => {
               flex: 1,
               flexDirection: 'row',
               alignItems: 'center',
-              marginHorizontal: 21,
-              marginVertical: 16,
+              marginHorizontal: 12,
+              marginVertical: 12,
             }}>
             {props.headerRight ? (
               <Icon
@@ -34,7 +34,8 @@ export const Modal: React.FC<ModalProps> = (props) => {
                 name="arrow-left"
                 type="material-community"
                 onPress={props.onDismiss}
-                color={Theme.Colors.Details}
+                containerStyle={Theme.Styles.IconContainer}
+                color={Theme.Colors.Icon}
               />
             ) : null}
             <Centered fill align="center">

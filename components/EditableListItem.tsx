@@ -17,17 +17,22 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
       style={{ display: props.display }}>
       <Icon
         name={props.Icon}
-        type="antdesign"
-        size={20}
-        style={Theme.Styles.IconContainer}
+        type={props.IconType}
+        size={22}
         color={Theme.Colors.Icon}
       />
       <ListItem.Content>
         <ListItem.Title>
-          <Text color={Theme.Colors.profileLabel}>{props.label}</Text>
+          <Text weight="semibold" color={Theme.Colors.profileLabel}>
+            {props.label}
+          </Text>
         </ListItem.Title>
       </ListItem.Content>
-      <Text color={Theme.Colors.profileValue}>{props.value}</Text>
+      <Icon
+        name="chevron-right"
+        size={21}
+        color={Theme.Colors.profileLanguageValue}
+      />
       <Overlay
         overlayStyle={{ padding: 24, elevation: 6 }}
         isVisible={isEditing}
@@ -67,6 +72,7 @@ interface EditableListItemProps {
   label: string;
   value: string;
   Icon: string;
+  IconType?: string;
   onEdit: (newValue: string) => void;
   display?: 'none' | 'flex';
 }

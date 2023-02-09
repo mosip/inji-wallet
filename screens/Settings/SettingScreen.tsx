@@ -17,20 +17,29 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Modal } from '../../components/ui/Modal';
 
 const LanguageSetting: React.FC = () => {
-  const { t } = useTranslation('ProfileScreen');
+  const { t } = useTranslation('SettingScreen');
 
   return (
     <LanguageSelector
       triggerComponent={
         <ListItem bottomDivider>
+          <Icon
+            name="globe"
+            size={22}
+            type="simple-line-icon"
+            color={Theme.Colors.Icon}
+          />
           <ListItem.Content>
             <ListItem.Title>
-              <Text>{t('language')}</Text>
+              <Text weight="semibold">{t('language')}</Text>
             </ListItem.Title>
           </ListItem.Content>
-          <Text margin="0 12 0 0" color={Theme.Colors.profileLanguageValue}>
-            {SUPPORTED_LANGUAGES[i18next.language]}
-          </Text>
+          <Icon
+            name="chevron-right"
+            size={21}
+            color={Theme.Colors.profileLanguageValue}
+            style={{ marginRight: 15 }}
+          />
         </ListItem>
       }
     />
@@ -40,7 +49,7 @@ const LanguageSetting: React.FC = () => {
 export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
   props
 ) => {
-  const { t } = useTranslation('ProfileScreen');
+  const { t } = useTranslation('SettingScreen');
   const controller = useProfileScreen(props);
 
   const [isContentVisible, setIsContentVisible] = useState(false);
@@ -56,41 +65,33 @@ export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
         headerElevation={5}
         onDismiss={toggleContent}>
         <ScrollView>
-          <Column
-            fill
-            padding="24 0"
-            backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
+          <Column fill backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
             <MessageOverlay
               isVisible={controller.alertMsg != ''}
               onBackdropPress={controller.hideAlert}
               title={controller.alertMsg}
             />
             <EditableListItem
-              label={t('name')}
+              label={t('profile')}
               value={controller.name}
               onEdit={controller.UPDATE_NAME}
               Icon="user"
+              IconType="ant-design"
             />
             <EditableListItem
               label={t('vcLabel')}
               value={controller.vcLabel.singular}
               onEdit={controller.UPDATE_VC_LABEL}
               Icon="star"
+              IconType="simple-line-icon"
             />
             <LanguageSetting />
-            <Revoke label={t('revokeLabel')} Icon="rotate-left" />
 
             <ListItem bottomDivider disabled={!controller.canUseBiometrics}>
-              <Icon
-                name="fingerprint"
-                type="fontawesome"
-                size={25}
-                style={Theme.Styles.IconContainer}
-                color={Theme.Colors.Icon}
-              />
+              <Icon name="fingerprint" size={22} color={Theme.Colors.Icon} />
               <ListItem.Content>
                 <ListItem.Title>
-                  <Text color={Theme.Colors.profileLabel}>
+                  <Text weight="semibold" color={Theme.Colors.profileLabel}>
                     {t('bioUnlock')}
                   </Text>
                 </ListItem.Title>
@@ -104,42 +105,46 @@ export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
             <ListItem bottomDivider disabled>
               <Icon
                 name="unlock"
-                size={20}
+                size={22}
                 type="antdesign"
-                style={Theme.Styles.IconContainer}
                 color={Theme.Colors.Icon}
               />
               <ListItem.Content>
                 <ListItem.Title>
-                  <Text color={Theme.Colors.profileAuthFactorUnlock}>
+                  <Text
+                    weight="semibold"
+                    color={Theme.Colors.profileAuthFactorUnlock}>
                     {t('authFactorUnlock')}
                   </Text>
                 </ListItem.Title>
               </ListItem.Content>
             </ListItem>
             <Credits label={t('credits')} color={Theme.Colors.profileLabel} />
-            <ListItem bottomDivider onPress={controller.LOGOUT}>
+            <ListItem bottomDivider>
+              <Icon name="file" size={22} color={Theme.Colors.Icon} />
+              <ListItem.Content>
+                <ListItem.Title>
+                  <Text weight="semibold" color={Theme.Colors.profileLabel}>
+                    {t('featuresWalkAround')}
+                  </Text>
+                </ListItem.Title>
+              </ListItem.Content>
+            </ListItem>
+            <ListItem onPress={controller.LOGOUT}>
               <Icon
                 name="logout"
                 type="fontawesome"
-                size={20}
-                style={Theme.Styles.IconContainer}
+                size={22}
                 color={Theme.Colors.Icon}
               />
               <ListItem.Content>
                 <ListItem.Title>
-                  <Text color={Theme.Colors.profileLabel}>{t('logout')}</Text>
+                  <Text weight="semibold" color={Theme.Colors.profileLabel}>
+                    {t('logout')}
+                  </Text>
                 </ListItem.Title>
               </ListItem.Content>
             </ListItem>
-            <Text
-              weight="semibold"
-              margin="32 0 0 0"
-              align="center"
-              size="smaller"
-              color={Theme.Colors.profileVersion}>
-              {t('version')}: {getVersion()}
-            </Text>
             {controller.backendInfo.application.name !== '' ? (
               <View>
                 <Text

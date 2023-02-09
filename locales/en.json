@@ -208,15 +208,16 @@
     "useBle": "Powered by BLE",
     "useGoogleNearby": "Powered by GoogleNearby"
   },
-  "ProfileScreen": {
+  "SettingScreen": {
     "header": "Settings",
-    "name": "Name",
+    "profile": "Profile",
     "vcLabel": "VC Label",
     "language": "Language",
     "bioUnlock": "Unlock with biometrics",
     "authFactorUnlock": "Unlock auth factor",
-    "AppMetaData": "About Inji",
-    "logout": "Logout",
+    "credits": "Credits and legal notices",
+    "featuresWalkAround":"Feature Walkaround",
+    "logout": "Log-out",
     "revokeLabel": "Revoke VID",
     "revokeHeader": "REVOKE VID",
     "revokingVids": "You are about to revoke ({{count}}) VIDs.",
