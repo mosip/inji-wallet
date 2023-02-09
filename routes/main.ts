@@ -5,7 +5,6 @@ import {
 } from '@react-navigation/bottom-tabs';
 import { Image } from 'react-native';
 import { HomeScreen } from '../screens/Home/HomeScreen';
-import { ProfileScreen } from '../screens/Profile/ProfileScreen';
 import { RootStackParamList } from './index';
 import { RequestLayout } from '../screens/Request/RequestLayout';
 import { ScanLayout } from '../screens/Scan/ScanLayout';
@@ -44,14 +43,6 @@ export const mainRoutes: TabScreen[] = [
       headerRight: null,
     },
   },
-  // {
-  //   name: 'Profile',
-  //   component: ProfileScreen,
-  //   icon: 'person',
-  //   options: {
-  //     title: i18n.t('MainLayout:profile'),
-  //   },
-  // },
 ];
 
 export type MainBottomTabParamList = {

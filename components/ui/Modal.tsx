@@ -38,7 +38,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
               />
             ) : null}
             <Row fill align="center" margin={'5 30 0 0'}>
-              <Text weight="semibold">{props.headerTitle}</Text>
+              <Text weight="bold">{props.headerTitle}</Text>
             </Row>
             {props.headerRight || props.arrowLeft || (
               <Icon

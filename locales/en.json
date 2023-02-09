@@ -169,6 +169,7 @@
     "back": "Back"
   },
   "ProfileScreen": {
+    "header": "Settings",
     "name": "Name",
     "vcLabel": "VC Label",
     "language": "Language",

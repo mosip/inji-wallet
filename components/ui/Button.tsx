@@ -60,7 +60,12 @@ export const Button: React.FC<ButtonProps> = (props) => {
       colors={['#F59B4B', '#E86E04']}
       style={
         props.isVcThere
-          ? { width: '30%', borderRadius: 10, alignSelf: 'center' }
+          ? {
+              width: '30%',
+              borderRadius: 10,
+              alignSelf: 'center',
+              alignItems: 'center',
+            }
           : Theme.ButtonStyles.gradientButton
       }
       useAngle={true}

@@ -28,7 +28,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
   return (
     <React.Fragment>
       <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
-        <Column fill pY={20} pX={20}>
+        <Column fill pY={14} pX={14}>
           {controller.vcKeys.length > 0 && (
             <React.Fragment>
               <Column
@@ -65,7 +65,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
             <React.Fragment>
               <Column fill style={Theme.Styles.homeScreenContainer}>
                 <Image source={Theme.DigitalIdentityLogo} />
-                <Text weight="bold" margin="40 0 15 0">
+                <Text weight="bold" margin="33 0 6 0">
                   {t('bringYourDigitalID', {
                     vcLabel: controller.vcLabel.plural,
                   })}
@@ -75,7 +75,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                   style={Theme.TextStyles.small}
                   color={Theme.Colors.textLabel}
                   align="center"
-                  margin="0 12 40 12">
+                  margin="0 12 33 12">
                   {t('generateVcDescription', {
                     vcLabel: controller.vcLabel.singular,
                   })}
