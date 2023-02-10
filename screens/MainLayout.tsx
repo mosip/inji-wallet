@@ -9,10 +9,19 @@ import { RootRouteProps } from '../routes';
 import { Theme } from '../components/ui/styleUtils';
 import { useTranslation } from 'react-i18next';
 import { Row } from '../components/ui';
-import LinearGradient from 'react-native-linear-gradient';
+import { Image, Pressable, View } from 'react-native';
 import { SettingScreen } from './Settings/SettingScreen';
+import { Linking } from 'react-native';
+import getAllConfigurations from '../shared/commonprops/commonProps';
 
 const { Navigator, Screen } = createBottomTabNavigator();
+let helpUrl = '';
+
+const helpLink = getAllConfigurations().then((response) => {
+  helpUrl = response.helpUrl;
+});
+
+console.log(helpUrl);
 
 export const MainLayout: React.FC<RootRouteProps> = () => {
   const { t } = useTranslation('MainLayout');
@@ -20,17 +29,22 @@ export const MainLayout: React.FC<RootRouteProps> = () => {
   const options: BottomTabNavigationOptions = {
     headerRight: () => (
       <Row align="space-between">
-        <Icon
-          name="question"
-          type="ant-design"
-          style={Theme.Styles.IconContainer}
-          color={Theme.Colors.Icon}
-        />
+        <Pressable
+          onPress={() => {
+            Linking.openURL(helpUrl);
+          }}>
+          <Image
+            source={require('../assets/help-icon.png')}
+            style={{ width: 36, height: 36, marginRight: 6 }}
+          />
+        </Pressable>
+
         <SettingScreen
           triggerComponent={
             <Icon
               name="settings"
               type="simple-line-icon"
+              size={21}
               style={Theme.Styles.IconContainer}
               color={Theme.Colors.Icon}
             />

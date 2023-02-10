@@ -136,8 +136,7 @@ export const DefaultTheme = {
       padding: 6,
       width: 36,
       height: 36,
-      margin: 6,
-      borderRadius: 6,
+      borderRadius: 10,
       backgroundColor: Colors.LightOrange,
     },
     downloadingIdTag: {
@@ -780,6 +779,7 @@ export const DefaultTheme = {
   DigitalIdentityLogo: require('../../../assets/digital_identity_icon.png'),
   InjiLogo: require('../../../assets/inji_logo.png'),
   InjiHomeLogo: require('../../../assets/inji-home-logo.png'),
+  HelpIcon: require('../../../assets/help-icon.png'),
 
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/
