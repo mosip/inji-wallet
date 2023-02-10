@@ -51,7 +51,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
     <React.Fragment>
       <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
         <DowmloadingLabel />
-        <Column fill pY={18} pX={21}>
+        <Column fill pY={18} pX={18}>
           {controller.vcKeys.length > 0 && (
             <React.Fragment>
               <Column
