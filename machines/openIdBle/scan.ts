@@ -44,7 +44,7 @@ import { isBLEEnabled } from '../../lib/smartshare';
 import { createQrLoginMachine, qrLoginMachine } from '../QrLoginMachine';
 import { StoreEvents } from '../store';
 
-const { GoogleNearbyMessages, IdpassSmartshare } = SmartshareReactNative;
+const { GoogleNearbyMessages } = SmartshareReactNative;
 const { Openid4vpBle } = OpenIdBle;
 
 type SharingProtocol = 'OFFLINE' | 'ONLINE';
@@ -620,14 +620,14 @@ export const scanMachine =
           loggers: (context) => {
             if (context.sharingProtocol === 'OFFLINE' && __DEV__) {
               return [
-                IdpassSmartshare.handleNearbyEvents((event) => {
+                Openid4vpBle.handleNearbyEvents((event) => {
                   console.log(
                     getDeviceNameSync(),
                     '<Sender.Event>',
                     JSON.stringify(event).slice(0, 100)
                   );
                 }),
-                IdpassSmartshare.handleLogEvents((event) => {
+                Openid4vpBle.handleLogEvents((event) => {
                   console.log(
                     getDeviceNameSync(),
                     '<Sender.Log>',
@@ -774,13 +774,14 @@ export const scanMachine =
 
         monitorConnection: (context) => (callback) => {
           if (context.sharingProtocol === 'OFFLINE') {
-            const subscription = IdpassSmartshare.handleNearbyEvents(
-              (event) => {
-                if (event.type === 'onDisconnected') {
-                  callback({ type: 'DISCONNECT' });
-                }
+            const subscription = Openid4vpBle.handleNearbyEvents((event) => {
+              if (event.type === 'onDisconnected') {
+                callback({ type: 'DISCONNECT' });
               }
-            );
+              if (event.type === 'onDisconnected') {
+                callback({ type: 'DISCONNECT' });
+              }
+            });
 
             return () => subscription.remove();
           }
