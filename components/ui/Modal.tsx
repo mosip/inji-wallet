@@ -62,6 +62,7 @@ export interface ModalProps {
   headerTitle?: string;
   headerElevation?: ElevationLevel;
   headerRight?: React.ReactElement;
+  headerLeft?: React.ReactElement;
   arrowLeft?: React.ReactElement;
   onShow?: () => void;
 }

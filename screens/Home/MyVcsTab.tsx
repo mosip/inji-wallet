@@ -1,5 +1,5 @@
-import React from 'react';
-import { Button, Column, Text } from '../../components/ui';
+import React, { useState } from 'react';
+import { Button, Column, Row, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { RefreshControl, Image } from 'react-native';
 import { useMyVcsTab } from './MyVcsTabController';
@@ -11,6 +11,7 @@ import { OnboardingOverlay } from './OnboardingOverlay';
 import { useTranslation } from 'react-i18next';
 import { VcItem } from '../../components/VcItem';
 import { GET_INDIVIDUAL_ID } from '../../shared/constants';
+import { Icon } from 'react-native-elements';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
   const { t } = useTranslation('MyVcsTab');
@@ -21,6 +22,27 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
     controller.GET_VC();
   };
 
+  const [isLabelVisible, setIsLabelVisible] = useState(false);
+  const toggleContent = () => setIsLabelVisible(!isLabelVisible);
+
+  const DowmloadingLabel: React.FC = () => {
+    return (
+      <Column style={{ display: isLabelVisible ? 'flex' : 'none' }}>
+        <Row align="space-between" style={Theme.Styles.downloadingIdTag}>
+          <Text align="left" size="smaller" weight="semibold" color="white">
+            {t('downloadingIdTag')}
+          </Text>
+          <Icon
+            name="close"
+            color={Theme.Colors.whiteText}
+            size={18}
+            onPress={toggleContent}
+          />
+        </Row>
+      </Column>
+    );
+  };
+
   const clearIndividualId = () => {
     GET_INDIVIDUAL_ID('');
   };
@@ -28,7 +50,8 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
   return (
     <React.Fragment>
       <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
-        <Column fill pY={14} pX={14}>
+        <DowmloadingLabel />
+        <Column fill pY={18} pX={21}>
           {controller.vcKeys.length > 0 && (
             <React.Fragment>
               <Column

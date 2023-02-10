@@ -12,7 +12,7 @@ const Colors = {
   LightGrey: '#f0f3f7',
   White: '#FFFFFF',
   Red: '#EB5757',
-  Green: '#219653',
+  Green: '#4B9D20',
   Transparent: 'transparent',
   Warning: '#f0ad4e',
   LightOrange: '#FDF1E6',
@@ -111,6 +111,13 @@ export const DefaultTheme = {
       margin: 6,
       borderRadius: 6,
       backgroundColor: Colors.LightOrange,
+    },
+    downloadingIdTag: {
+      alignItems: 'center',
+      backgroundColor: Colors.Green,
+      height: 40,
+      paddingHorizontal: 18,
+      position: 'relative',
     },
     homeScreenContainer: {
       alignItems: 'center',
