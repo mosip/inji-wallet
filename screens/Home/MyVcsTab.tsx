@@ -21,6 +21,27 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
     controller.GET_VC();
   };
 
+  const [isLabelVisible, setIsLabelVisible] = useState(false);
+  const toggleContent = () => setIsLabelVisible(!isLabelVisible);
+
+  const DowmloadingLabel: React.FC = () => {
+    return (
+      <Column style={{ display: isLabelVisible ? 'flex' : 'none' }}>
+        <Row align="space-between" style={Theme.Styles.downloadingIdTag}>
+          <Text align="left" size="smaller" weight="semibold" color="white">
+            {t('downloadingIdTag')}
+          </Text>
+          <Icon
+            name="close"
+            color={Theme.Colors.whiteText}
+            size={18}
+            onPress={toggleContent}
+          />
+        </Row>
+      </Column>
+    );
+  };
+
   const clearIndividualId = () => {
     GET_INDIVIDUAL_ID('');
   };
