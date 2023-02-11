@@ -5,11 +5,11 @@ import { Icon } from 'react-native-elements';
 
 import { Theme } from '../../components/ui/styleUtils';
 import { SendVcScreen } from './SendVcScreen';
-import { MessageOverlay } from '../../components/MessageOverlay';
 import { useScanLayout } from './ScanLayoutController';
 import { ScanScreen } from './ScanScreen';
 import { I18nManager, Platform } from 'react-native';
 import { Message } from '../../components/Message';
+import { InProgress } from '../../components/InProgress';
 
 const ScanStack = createNativeStackNavigator();
 
@@ -53,7 +53,7 @@ export const ScanLayout: React.FC = () => {
         />
       </ScanStack.Navigator>
 
-      <MessageOverlay
+      <InProgress
         isVisible={controller.statusOverlay != null}
         title={controller.statusOverlay?.title}
         message={controller.statusOverlay?.message}

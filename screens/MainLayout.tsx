@@ -17,11 +17,9 @@ import getAllConfigurations from '../shared/commonprops/commonProps';
 const { Navigator, Screen } = createBottomTabNavigator();
 let helpUrl = '';
 
-const helpLink = getAllConfigurations().then((response) => {
+getAllConfigurations().then((response) => {
   helpUrl = response.helpUrl;
 });
-
-console.log(helpUrl);
 
 export const MainLayout: React.FC<RootRouteProps> = () => {
   const { t } = useTranslation('MainLayout');

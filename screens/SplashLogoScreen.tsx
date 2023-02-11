@@ -13,7 +13,7 @@ export const SplashLogoScreen: React.FC<RootRouteProps> = () => {
         useAngle={true}
         angle={180}
         style={Theme.Styles.splashScreen}>
-        <Image source={Theme.InjiLogo} height={100} width={100} />
+        <Image source={Theme.InjiLogoWhite} height={100} width={100} />
       </LinearGradient>
     </Column>
   );
