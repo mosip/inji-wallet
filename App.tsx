@@ -8,7 +8,7 @@ import { useSelector } from '@xstate/react';
 import { selectIsReady } from './machines/app';
 
 import './i18n';
-import { SplashLogoScreen } from './screens/SplashLogoScreen';
+import { SplashLogoScreen } from './screens/SplashScreen';
 
 const AppInitialization: React.FC = () => {
   const { appService } = useContext(GlobalContext);

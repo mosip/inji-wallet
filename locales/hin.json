@@ -149,10 +149,10 @@
       }
     },
     "MainLayout": {
-      "home": "घर",
+      "home": "होम",
       "scan": "स्कैन",
       "request": "अनुरोध",
-      "profile": "प्रोफाइल"
+      "history": "इतिहास"
     },
     "PasscodeScreen": {
       "header": "अपना आवेदन सुरक्षित करने के लिए पासकोड सेट करें",
@@ -163,21 +163,13 @@
       "header": "क्रेडिट और कानूनी नोटिस",
       "back": "पीछे"
     },
-    "ProfileScreen": {
-      "name": "नाम",
+    "SettingScreen": {
+      "header": "समायोजन",
+      "profile": "प्रोफ़ाइल",
       "vcLabel": "वीसी लेबल",
       "language": "भाषा",
-      "bioUnlock": "बायोमेट्रिक अनलॉक",
-      "authFactorUnlock": "अनलॉक ऑथ फैक्टर",
-      "credits": "क्रेडिट और कानूनी नोटिस",
-      "logout": "लॉग आउट",
-      "revokeLabel": "VID रद्द करना",
-      "revokeHeader": "VID रद्द करना",
-      "revokingVids": "आप ({{count}}) VID's को निरस्त करने वाले हैं .",
-      "revokingVidsAfter": "इसका अर्थ है कि अब आप उनसे लिंक की गई किसी भी आईडी का उपयोग या देखने में सक्षम नहीं होंगे VID(s). \nक्या आप सुनिश्चित रूप से आगे बढ़ना चाहते हैं?",
-      "empty": "खाली",
-      "revokeSuccessful": "VID को सफलतापूर्वक निरस्त कर दिया गया",
-      "version": "संस्करण"
+      "bioUnlock": "बायो अनलॉक",
+      "logout": "लॉग आउट"
     },
     "QrScreen": {
       "title": "क्यूआर लॉगिन",

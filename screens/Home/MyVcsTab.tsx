@@ -29,7 +29,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
   return (
     <React.Fragment>
       <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
-        <Column fill pY={16} pX={16}>
+        <Column fill pY={16} pX={18}>
           {controller.vcKeys.length > 0 && (
             <React.Fragment>
               <Column

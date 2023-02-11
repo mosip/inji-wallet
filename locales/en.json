@@ -80,6 +80,14 @@
     "receivedVcsTab": "Received\n{{vcLabel}}",
     "historyTab": "History"
   },
+  "SettingScreen": {
+    "header": "Settings",
+    "profile": "Profile",
+    "vcLabel": "Vc Label",
+    "language": "Language",
+    "bioUnlock": "Bio Unlock",
+    "logout": "Logout"
+  },
   "AddVcModal": {
     "requestingCredential": "Requesting credential...",
     "errors": {
@@ -119,9 +127,9 @@
     "enterOtp": "Enter the 6-digit verification code we sent you"
   },
   "MyVcsTab": {
-    "addVcButton": "Add {{vcLabel}}",
-    "generateVc": "Generate your {{vcLabel}}",
-    "generateVcDescription": "Tap on \"Add {{vcLabel}}\" below to download your {{vcLabel}}"
+    "downloadID": "Download ID",
+      "bringYourDigitalID": "Bring Your Digital ID",
+      "generateVcDescription": "To download your {{vcLabel}} tap Download {{vcLabel}} below"
   },
   "OnboardingOverlay": {
     "stepOneTitle": "Welcome!",
@@ -157,7 +165,7 @@
     "home": "Home",
     "scan": "Scan",
     "request": "Request",
-    "profile": "Profile"
+    "history": "History"
   },
   "PasscodeScreen": {
     "header": "Set a passcode to secure your application",

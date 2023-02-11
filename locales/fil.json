@@ -86,6 +86,14 @@
     "receivedVcsTab": "Nakuhang\n{{vcLabel}}",
     "historyTab": "Pangyayari"
   },
+  "SettingScreen": {
+    "header": "Mga setting",
+    "profile": "Profile",
+    "vcLabel": "Label ng Vc",
+    "language": "Wika",
+    "bioUnlock": "Bio Unlock",
+    "logout": "Log out"
+  },
   "AddVcModal": {
     "requestingCredential": "Humihiling ng kredensyal...",
     "errors": {
@@ -153,10 +161,10 @@
     }
   },
   "MainLayout": {
-    "home": "Home",
+    "home": "Bahay",
     "scan": "Scan",
     "request": "Request",
-    "profile": "Profile"
+    "history": "Kasaysayan"
   },
   "PasscodeScreen": {
     "header": "Magtakda ng passcode upang masigurado ang iyong aplikasyon",
@@ -166,22 +174,6 @@
   "Credits": {
     "header": "Mga kredito at legal na abiso",
     "back": "Bumalik"
-  },
-  "ProfileScreen": {
-    "name": "Pangalan",
-    "vcLabel": "Panawag sa VC",
-    "language": "Wika",
-    "bioUnlock": "Pagbukas gamit Biometric",
-    "authFactorUnlock": "Pagbukas ng auth factor",
-    "credits": "Mga kredito at legal na abiso",
-    "logout": "Mag log-out",
-    "revokeLabel": "Kanselahin ang VID",
-    "revokeHeader": "KANSELAHIN ANG VID",
-    "revokingVids": "Kakanselahin mo na ang ({{count}}) na mga VID.",
-    "revokingVidsAfter": "Nangangahulugan ito na hindi mo na maa-access o matitingnan ang anumang mga ID na naka-link sa mga VID na ito. Sigurado ka bang gusto mong magpatuloy?",
-    "empty": "Walang laman",
-    "revokeSuccessful": "Matagumpay na nakansela ang VID",
-    "version": "Bersyon"
   },
   "QrScreen": {
     "title": "QR Login",

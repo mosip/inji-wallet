@@ -8,15 +8,16 @@ import Loader from 'react-native-three-dots-loader';
 
 export const InProgress: React.FC<InProgressProps> = (props) => {
   const { t } = useTranslation('ScanScreen');
+  const progressTitle = props.title;
 
   return (
     <React.Fragment>
       <Modal
         isVisible={props.isVisible}
+        headerLeft={t(props.title)}
         onDismiss={props.onCancel}
-        headerLeft={t('In Progress')}
         headerLabel={props.label}
-        headerElevation={2}>
+        headerElevation={3}>
         <Centered crossAlign="center" fill>
           <Column align="space-around">
             <Image
@@ -35,6 +36,7 @@ export const InProgress: React.FC<InProgressProps> = (props) => {
 
 export interface InProgressProps {
   isVisible: boolean;
+  title?: string;
   label?: string;
   onCancel?: () => void;
 }

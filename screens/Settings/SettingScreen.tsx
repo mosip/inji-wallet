@@ -22,7 +22,7 @@ const LanguageSetting: React.FC = () => {
   return (
     <LanguageSelector
       triggerComponent={
-        <ListItem>
+        <ListItem bottomDivider>
           <Icon
             name="globe"
             size={22}
@@ -62,7 +62,7 @@ export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
         isVisible={isContentVisible}
         arrowLeft={<Icon name={''} />}
         headerTitle={t('header')}
-        headerElevation={5}
+        headerElevation={2}
         onDismiss={toggleContent}>
         <ScrollView>
           <Column fill backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
