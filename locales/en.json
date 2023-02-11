@@ -120,7 +120,7 @@
   },
   "MyVcsTab": {
     "downloadID": "Download ID",
-    "downloadingIdTag": "Downloading your ID, this can take upto 5 minutes",
+    "downloadingIdPopUp": "Downloading your ID, this can take upto 5 minutes",
     "bringYourDigitalID": "Bring your digital identity",
     "generateVcDescription": "Tap on \"Download {{vcLabel}}\" below to download your {{vcLabel}}"
   },
