@@ -22,7 +22,7 @@ const LanguageSetting: React.FC = () => {
   return (
     <LanguageSelector
       triggerComponent={
-        <ListItem bottomDivider>
+        <ListItem>
           <Icon
             name="globe"
             size={22}
