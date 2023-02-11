@@ -19,8 +19,8 @@ export const Modal: React.FC<ModalProps> = (props) => {
               flex: 1,
               flexDirection: 'row',
               alignItems: 'center',
-              marginHorizontal: 12,
-              marginVertical: 12,
+              marginHorizontal: 17,
+              marginVertical: 15,
             }}>
             {props.headerRight ? (
               <Icon
@@ -38,14 +38,28 @@ export const Modal: React.FC<ModalProps> = (props) => {
                 color={Theme.Colors.Icon}
               />
             ) : null}
-            <Row fill align="center" margin={'0 40 0 0'}>
-              <Text weight="bold">{props.headerTitle}</Text>
+            <Row
+              fill
+              align={props.headerLeft ? 'flex-start' : 'center'}
+              margin={'12 0 0 8'}>
+              <Column>
+                <Text style={Theme.TextStyles.header}>
+                  {props.headerTitle || props.headerLeft}
+                </Text>
+                <Text
+                  weight="semibold"
+                  style={Theme.TextStyles.small}
+                  color={Theme.Colors.profileLanguageValue}>
+                  {props.headerLabel}
+                </Text>
+              </Column>
             </Row>
             {props.headerRight || props.arrowLeft || (
               <Icon
                 name="close"
                 onPress={props.onDismiss}
-                color={Theme.Colors.Icon}
+                color={Theme.Colors.Details}
+                size={27}
               />
             )}
           </View>
@@ -61,6 +75,7 @@ export interface ModalProps {
   onDismiss: () => void;
   headerTitle?: string;
   headerElevation?: ElevationLevel;
+  headerLabel?: string;
   headerRight?: React.ReactElement;
   headerLeft?: React.ReactElement;
   arrowLeft?: React.ReactElement;

@@ -5,7 +5,7 @@ import { Spacing } from '../styleUtils';
 
 const Colors = {
   Black: '#231F20',
-  Grey: '#B0B0B0',
+  Grey: '#A7A7A7',
   Grey5: '#E0E0E0',
   Grey6: '#F2F2F2',
   Orange: '#F2811D',
@@ -107,6 +107,8 @@ export const DefaultTheme = {
     IconContainer: {
       padding: 6,
       width: 36,
+      marginLeft: 8,
+      marginRight: 4,
       height: 36,
       borderRadius: 10,
       backgroundColor: Colors.LightOrange,
@@ -322,6 +324,12 @@ export const DefaultTheme = {
     },
   }),
   TextStyles: StyleSheet.create({
+    header: {
+      color: Colors.Black,
+      fontFamily: 'Inter_700Bold',
+      fontSize: 21,
+      lineHeight: 20,
+    },
     base: {
       color: Colors.Black,
       fontSize: 16,
@@ -689,7 +697,8 @@ export const DefaultTheme = {
   OtpLogo: require('../../../assets/otp-mobile-logo.png'),
   SuccessLogo: require('../../../assets/success-logo.png'),
   DigitalIdentityLogo: require('../../../assets/digital-identity-icon.png'),
-  InjiLogo: require('../../../assets/inji-logo.png'),
+  InjiLogoWhite: require('../../../assets/inji-logo-white.png'),
+  InjiProgressingLogo: require('../../../assets/progressing-logo.png'),
   InjiHomeLogo: require('../../../assets/inji-home-logo.png'),
   HelpIcon: require('../../../assets/help-icon.png'),
 
