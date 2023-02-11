@@ -348,14 +348,6 @@ export const scanMachine =
                 sent: {
                   description:
                     'VC data has been shared and the receiver should now be viewing it',
-                  on: {
-                    VC_ACCEPTED: {
-                      target: '#scan.reviewing.accepted',
-                    },
-                    VC_REJECTED: {
-                      target: '#scan.reviewing.rejected',
-                    },
-                  },
                 },
               },
               on: {
@@ -363,8 +355,13 @@ export const scanMachine =
                   target: '#scan.findingConnection',
                 },
                 VC_SENT: {
-                  target: '#scan.reviewing.sendingVc.sent',
-                  internal: true,
+                  target: '.sent',
+                },
+                VC_ACCEPTED: {
+                  target: '#scan.reviewing.accepted',
+                },
+                VC_REJECTED: {
+                  target: '#scan.reviewing.rejected',
                 },
               },
             },
@@ -700,7 +697,6 @@ export const scanMachine =
 
         storeLoginItem: send(
           (_context, event) => {
-            console.log('log from store', event);
             return StoreEvents.PREPEND(
               MY_LOGIN_STORE_KEY,
               (event as DoneInvokeEvent<string>).data
@@ -763,8 +759,11 @@ export const scanMachine =
 
         monitorCancellation: (context) => async (callback) => {
           if (context.sharingProtocol === 'ONLINE') {
-            await onlineSubscribe('disconnect', null, () =>
-              callback({ type: 'DISCONNECT' })
+            await onlineSubscribe(
+              'disconnect',
+              null,
+              () => callback({ type: 'DISCONNECT' }),
+              { pairId: context.scannedQrParams.cid }
             );
           }
         },
@@ -783,6 +782,7 @@ export const scanMachine =
 
         discoverDevice: (context) => (callback) => {
           if (context.sharingProtocol === 'OFFLINE') {
+            GoogleNearbyMessages.disconnect();
             IdpassSmartshare.createConnection('discoverer', () => {
               callback({ type: 'CONNECTED' });
             });
@@ -792,26 +792,39 @@ export const scanMachine =
                 console.log('\n\n[scan] GNM_ERROR\n\n', kind, message)
               );
 
-              await GoogleNearbyMessages.connect({
-                apiKey: GNM_API_KEY,
-                discoveryMediums: ['ble'],
-                discoveryModes: ['scan', 'broadcast'],
-              });
+              try {
+                IdpassSmartshare.destroyConnection();
+              } catch (e) {
+                /*pass*/
+              }
+              await GoogleNearbyMessages.connect(
+                Platform.select({
+                  ios: {
+                    apiKey: GNM_API_KEY,
+                  },
+                  default: {},
+                })
+              );
               console.log('[scan] GNM connected!');
 
-              await onlineSubscribe('pairing:response', async (response) => {
-                await GoogleNearbyMessages.unpublish();
-                if (response === 'ok') {
-                  callback({ type: 'CONNECTED' });
-                }
-              });
+              await onlineSubscribe(
+                'pairing:response',
+                async (response) => {
+                  await GoogleNearbyMessages.unpublish();
+                  if (response === context.scannedQrParams.cid) {
+                    callback({ type: 'CONNECTED' });
+                  }
+                },
+                null,
+                { pairId: context.scannedQrParams.cid }
+              );
 
               const pairingEvent: PairingEvent = {
                 type: 'pairing',
                 data: context.scannedQrParams,
               };
 
-              await onlineSend(pairingEvent);
+              await onlineSend(pairingEvent, context.scannedQrParams.cid);
             })();
           }
         },
@@ -840,10 +853,12 @@ export const scanMachine =
                 async (receiverInfo) => {
                   await GoogleNearbyMessages.unpublish();
                   callback({ type: 'EXCHANGE_DONE', receiverInfo });
-                }
+                },
+                null,
+                { pairId: context.scannedQrParams.cid }
               );
 
-              await onlineSend(event);
+              await onlineSend(event, context.scannedQrParams.cid);
             })();
           }
         },
@@ -881,16 +896,24 @@ export const scanMachine =
             });
             return () => subscription?.remove();
           } else {
-            sendVc(vc, statusCallback, () => callback({ type: 'DISCONNECT' }));
+            sendVc(
+              vc,
+              statusCallback,
+              () => callback({ type: 'DISCONNECT' }),
+              context.scannedQrParams.cid
+            );
           }
         },
 
         sendDisconnect: (context) => () => {
           if (context.sharingProtocol === 'ONLINE') {
-            onlineSend({
-              type: 'disconnect',
-              data: 'rejected',
-            });
+            onlineSend(
+              {
+                type: 'disconnect',
+                data: 'rejected',
+              },
+              context.scannedQrParams.cid
+            );
           }
         },
 
@@ -954,7 +977,7 @@ export const scanMachine =
 
       delays: {
         CLEAR_DELAY: 250,
-        CANCEL_TIMEOUT: 3000,
+        CANCEL_TIMEOUT: 5000,
         CONNECTION_TIMEOUT: (context) => {
           return (context.sharingProtocol === 'ONLINE' ? 15 : 5) * 1000;
         },
@@ -1092,7 +1115,8 @@ export function selectIsDisconnected(state: State) {
 async function sendVc(
   vc: VC,
   callback: (status: SendVcStatus) => void,
-  disconnectCallback: () => void
+  disconnectCallback: () => void,
+  pairId: string
 ) {
   const rawData = JSON.stringify(vc);
   const chunks = chunkString(rawData, GNM_MESSAGE_LIMIT);
@@ -1117,17 +1141,20 @@ async function sendVc(
         if (typeof status === 'number' && chunk < event.data.vcChunk.total) {
           chunk += 1;
           await GoogleNearbyMessages.unpublish();
-          await onlineSend({
-            type: 'send-vc',
-            data: {
-              isChunked: true,
-              vcChunk: {
-                total: chunks.length,
-                chunk,
-                rawData: chunks[chunk],
+          await onlineSend(
+            {
+              type: 'send-vc',
+              data: {
+                isChunked: true,
+                vcChunk: {
+                  total: chunks.length,
+                  chunk,
+                  rawData: chunks[chunk],
+                },
               },
             },
-          });
+            pairId
+          );
         } else if (typeof status === 'string') {
           if (status === 'ACCEPTED' || status === 'REJECTED') {
             GoogleNearbyMessages.unsubscribe();
@@ -1136,16 +1163,16 @@ async function sendVc(
         }
       },
       disconnectCallback,
-      { keepAlive: true }
+      { keepAlive: true, pairId }
     );
-    await onlineSend(event);
+    await onlineSend(event, pairId);
   } else {
     const event: SendVcEvent = {
       type: 'send-vc',
       data: { isChunked: false, vc },
     };
-    await onlineSubscribe(SendVcResponseType, callback);
-    await onlineSend(event);
+    await onlineSubscribe(SendVcResponseType, callback, null, { pairId });
+    await onlineSend(event, pairId);
   }
 }
 

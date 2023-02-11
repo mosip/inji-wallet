@@ -282,23 +282,31 @@ export const GetVcModalMachine =
 
       services: {
         requestOtp: async (context) => {
-          return await request('POST', '/req/individualId/otp', {
-            id: 'mosip.identity.otp.internal',
-            aid: context.id,
-            metadata: {},
-            otpChannel: ['EMAIL', 'PHONE'],
-            requestTime: String(new Date().toISOString()),
-            transactionID: context.transactionId,
-            version: '1.0',
-          });
+          return await request(
+            'POST',
+            '/residentmobileapp/req/individualId/otp',
+            {
+              id: 'mosip.identity.otp.internal',
+              aid: context.id,
+              metadata: {},
+              otpChannel: ['EMAIL', 'PHONE'],
+              requestTime: String(new Date().toISOString()),
+              transactionID: context.transactionId,
+              version: '1.0',
+            }
+          );
         },
 
         requestingUinVid: async (context) => {
-          const response = await request('POST', '/aid/get-individual-id', {
-            aid: context.id,
-            otp: context.otp,
-            transactionID: context.transactionId,
-          });
+          const response = await request(
+            'POST',
+            '/residentmobileapp/aid/get-individual-id',
+            {
+              aid: context.id,
+              otp: context.otp,
+              transactionID: context.transactionId,
+            }
+          );
           return response.response.individualId;
         },
       },

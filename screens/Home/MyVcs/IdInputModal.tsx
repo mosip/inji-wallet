@@ -75,6 +75,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
                     color: controller.isInvalid
                       ? Theme.Colors.errorMessage
                       : Theme.Colors.textValue,
+                    textAlign: 'left',
                   }}
                   inputStyle={{
                     textAlign: I18nManager.isRTL ? 'right' : 'left',

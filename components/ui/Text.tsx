@@ -9,7 +9,7 @@ export const Text: React.FC<TextProps> = (props: TextProps) => {
     Theme.TextStyles.base,
     Theme.TextStyles[weight],
     props.color ? { color: props.color } : null,
-    props.align ? { textAlign: props.align } : null,
+    props.align ? { textAlign: props.align } : { textAlign: 'left' },
     props.margin ? Theme.spacing('margin', props.margin) : null,
     props.size ? Theme.TextStyles[props.size] : null,
     props.style ? props.style : null,

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, Column, Row, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { useQrLogin } from './QrLoginController';
-import { Image } from 'react-native';
+import { Image, View } from 'react-native';
 import { Icon, ListItem, Switch } from 'react-native-elements';
 import { Modal } from '../../components/ui/Modal';
 import { QrLoginRef } from '../../machines/QrLoginMachine';
@@ -15,7 +15,7 @@ export const QrConsent: React.FC<QrConsentProps> = (props) => {
 
   return (
     <Modal
-      isVisible={controller.isRequestConsent}
+      isVisible={props.isVisible}
       arrowLeft={<Icon name={''} />}
       headerTitle={t('consent')}
       headerElevation={5}
@@ -23,83 +23,86 @@ export const QrConsent: React.FC<QrConsentProps> = (props) => {
       <Column
         fill
         align="space-between"
-        padding="0 24 0 24"
+        padding="24 24 0 24"
         style={{ display: props.isVisible ? 'flex' : 'none' }}
         backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
+        <Column>
+          {controller.linkTransactionResponse && (
+            <Row margin={'0 0 0 9'} crossAlign="center" align="center">
+              <Image
+                source={controller.logoUrl ? { uri: controller.logoUrl } : null}
+                style={{ width: 65, height: 65 }}
+              />
+            </Row>
+          )}
+          <Text
+            style={Theme.TextStyles.small}
+            weight="bold"
+            margin={'10 0 0 0'}>
+            {controller.clientName} {t('access')}
+          </Text>
+        </Column>
         <ScrollView>
-          <Column
-            align="space-evenly"
-            crossAlign="center"
-            margin={'15 0 0 0'}
-            style={Theme.Styles.consentPageTop}
-            elevation={3}>
-            {controller.linkTransactionResponse && (
-              <Row margin={'0 0 0 38'} crossAlign="center">
-                <Icon name="mobile" type="font-awesome" size={60} />
+          <Column>
+            {
+              <Text
+                style={Theme.TextStyles.small}
+                weight="bold"
+                margin={'10 0 0 0'}>
+                {t('essentialClaims')}
+              </Text>
+            }
+
+            {controller.essentialClaims.map((claim, index) => (
+              <Row key={index} align={'space-between'} margin={'10 0 0 20'}>
                 <Text
-                  color={'grey'}
-                  weight="semibold"
-                  style={Theme.TextStyles.small}>
-                  {' '}
-                  -----------------------{' '}
+                  color={Theme.Colors.profileLabel}
+                  style={Theme.TextStyles.base}>
+                  {t(claim[0].toUpperCase() + claim.slice(1))}
                 </Text>
-                <Image
-                  source={
-                    controller.logoUrl ? { uri: controller.logoUrl } : null
-                  }
-                  style={{ width: 60, height: 60 }}
-                />
+                <Text
+                  color={Theme.Colors.GrayIcon}
+                  style={Theme.TextStyles.small}
+                  weight="bold"
+                  margin={'10 0 10 6'}>
+                  {t('required')}
+                </Text>
               </Row>
-            )}
-            <Text
-              style={Theme.TextStyles.small}
-              weight="bold"
-              margin={'0 0 10 6'}>
-              {controller.clientName} {t('access')}
-            </Text>
+            ))}
           </Column>
 
-          <Column scroll padding="10 0 0 0">
-            <ListItem bottomDivider>
-              <ListItem.Content>
-                <ListItem.Title>
-                  <Text
-                    color={Theme.Colors.profileLabel}
-                    style={Theme.TextStyles.base}>
-                    {t('Name and Picture')}
-                  </Text>
-                </ListItem.Title>
-              </ListItem.Content>
-              <Switch value={true} color={Theme.Colors.DefaultToggle} />
-            </ListItem>
-            {controller.claims.map((claim, index) => {
-              if (claim == 'name' || claim == 'picture') {
-                return null;
-              } else {
-                return (
-                  <ListItem key={index} bottomDivider>
-                    <ListItem.Content>
-                      <ListItem.Title>
-                        <Text color={Theme.Colors.profileLabel}>
-                          {t(claim[0].toUpperCase() + claim.slice(1))}
-                        </Text>
-                      </ListItem.Title>
-                    </ListItem.Content>
+          <Column>
+            {
+              <Text
+                style={Theme.TextStyles.small}
+                weight="bold"
+                margin={'10 0 0 0'}>
+                {t('voluntaryClaims')}
+              </Text>
+            }
 
-                    <Switch
-                      value={controller.isShare[claim]}
-                      onValueChange={() =>
-                        controller.SELECT_CONSENT(
-                          controller.isShare[claim],
-                          claim
-                        )
-                      }
-                      color={Theme.Colors.Icon}
-                    />
-                  </ListItem>
-                );
-              }
-            })}
+            {controller.voluntaryClaims.map((claim, index) => (
+              <ListItem
+                key={index}
+                bottomDivider
+                containerStyle={Theme.claimsContainer.container}>
+                <ListItem.Content>
+                  <ListItem.Title>
+                    <Text color={Theme.Colors.profileLabel}>
+                      {t(claim[0].toUpperCase() + claim.slice(1))}
+                    </Text>
+                  </ListItem.Title>
+                </ListItem.Content>
+
+                <Switch
+                  value={controller.isShare[claim]}
+                  onValueChange={() =>
+                    controller.SELECT_CONSENT(controller.isShare[claim], claim)
+                  }
+                  color={Theme.Colors.Icon}
+                />
+              </ListItem>
+            ))}
           </Column>
         </ScrollView>
         <Column
@@ -109,13 +112,13 @@ export const QrConsent: React.FC<QrConsentProps> = (props) => {
           <Button
             margin={'6 10 0 10'}
             styles={Theme.ButtonStyles.radius}
-            title={'Confirm'}
+            title={t('allow')}
             onPress={props.onConfirm}
           />
           <Button
             margin={'10 10 0 10'}
             type="clear"
-            title={'Cancel'}
+            title={t('cancel')}
             onPress={props.onCancel}
           />
         </Column>

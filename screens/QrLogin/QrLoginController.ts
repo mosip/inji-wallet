@@ -14,13 +14,15 @@ import {
   selectIsSharing,
   selectIsShowError,
   selectIsShowingVcList,
-  selectIsShowWarning,
   selectIsVerifyingSuccesful,
   selectIsWaitingForData,
   selectLinkTransactionResponse,
   selectLogoUrl,
+  selectDomainName,
   selectSelectedVc,
   selectVoluntaryClaims,
+  selectIsSendingAuthenticate,
+  selectEssentialClaims,
 } from '../../machines/QrLoginMachine';
 import { selectVcLabel } from '../../machines/settings';
 import { selectBindedVcs } from '../../machines/vc';
@@ -57,8 +59,10 @@ export function useQrLogin({ service }: QrLoginProps) {
       service,
       selectLinkTransactionResponse
     ),
+    domainName: useSelector(service, selectDomainName),
     logoUrl: useSelector(service, selectLogoUrl),
-    claims: useSelector(service, selectVoluntaryClaims),
+    essentialClaims: useSelector(service, selectEssentialClaims),
+    voluntaryClaims: useSelector(service, selectVoluntaryClaims),
     clientName: useSelector(service, selectClientName),
     error: useSelector(service, selectErrorMessage),
 
@@ -68,12 +72,12 @@ export function useQrLogin({ service }: QrLoginProps) {
     SELECT_VC,
     SELECT_CONSENT,
     isWaitingForData: useSelector(service, selectIsWaitingForData),
-    isShowWarning: useSelector(service, selectIsShowWarning),
     isShowingVcList: useSelector(service, selectIsShowingVcList),
     isLinkTransaction: useSelector(service, selectIsLinkTransaction),
     isLoadingMyVcs: useSelector(service, selectIsloadMyVcs),
     isRequestConsent: useSelector(service, selectIsRequestConsent),
     isShowingError: useSelector(service, selectIsShowError),
+    isSendingAuthenticate: useSelector(service, selectIsSendingAuthenticate),
     isSendingConsent: useSelector(service, selectIsSendingConsent),
     isVerifyingIdentity: useSelector(service, selectIsisVerifyingIdentity),
     isInvalidIdentity: useSelector(service, selectIsInvalidIdentity),

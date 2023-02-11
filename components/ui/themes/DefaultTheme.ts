@@ -190,6 +190,14 @@ export const DefaultTheme = {
       height: 160,
       borderRadius: 6,
     },
+    consentDottedLine: {
+      width: 182,
+      borderWidth: 2,
+      margin: 5,
+      borderStyle: 'dashed',
+      borderRadius: 1,
+      borderColor: 'grey',
+    },
     labelPart: {
       marginTop: 10,
       alignItems: 'flex-start',
@@ -686,6 +694,11 @@ export const DefaultTheme = {
       end: 16,
       top: 40,
       zIndex: 1,
+    },
+  }),
+  claimsContainer: StyleSheet.create({
+    container: {
+      backgroundColor: Colors.Transparent,
     },
   }),
   OpenCard: require('../../../assets/ID-open.png'),

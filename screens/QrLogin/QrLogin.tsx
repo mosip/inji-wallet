@@ -6,7 +6,6 @@ import { Modal } from '../../components/ui/Modal';
 import { VerifyIdentityOverlay } from '../VerifyIdentityOverlay';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { MyBindedVcs } from './MyBindedVcs';
-import { QrLoginWarning } from './QrLoginWarning';
 import { QrLoginSuccess } from './QrLoginSuccessMessage';
 import { QrConsent } from './QrConsent';
 import { QrLoginRef } from '../../machines/QrLoginMachine';
@@ -23,10 +22,8 @@ export const QrLogin: React.FC<QrLoginProps> = (props) => {
       headerTitle={t('title')}
       headerRight={<Icon name={''} />}>
       <Column fill>
-        <QrLoginWarning
-          isVisible={controller.isShowWarning}
-          onConfirm={controller.CONFIRM}
-          onCancel={controller.DISMISS}
+        <MyBindedVcs
+          isVisible={controller.isShowingVcList}
           service={props.service}
         />
 
@@ -35,7 +32,8 @@ export const QrLogin: React.FC<QrLoginProps> = (props) => {
             controller.isWaitingForData ||
             controller.isLoadingMyVcs ||
             controller.isLinkTransaction ||
-            controller.isSendingConsent
+            controller.isSendingConsent ||
+            controller.isSendingAuthenticate
           }
           title={t('loading')}
           progress
@@ -45,11 +43,6 @@ export const QrLogin: React.FC<QrLoginProps> = (props) => {
           isVisible={controller.isShowingError}
           title={controller.error}
           onCancel={controller.DISMISS}
-        />
-
-        <MyBindedVcs
-          isVisible={controller.isShowingVcList}
-          service={props.service}
         />
 
         <VerifyIdentityOverlay
@@ -84,7 +77,7 @@ export const QrLogin: React.FC<QrLoginProps> = (props) => {
         <QrConsent
           isVisible={controller.isRequestConsent}
           onConfirm={controller.CONFIRM}
-          onCancel={controller.CANCEL}
+          onCancel={controller.DISMISS}
           service={props.service}
         />
 

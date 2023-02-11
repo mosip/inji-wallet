@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Markdown from 'react-native-simple-markdown';
 import { useTranslation } from 'react-i18next';
-import { Image, SafeAreaView, View } from 'react-native';
+import { I18nManager, Image, SafeAreaView, View } from 'react-native';
 import { Divider, Icon, ListItem, Overlay } from 'react-native-elements';
 
 import { Button, Text, Row, Column } from '../../components/ui';
@@ -75,7 +75,14 @@ export const Credits: React.FC<CreditsProps> = (props) => {
               <View style={Theme.CreditsStyles.buttonContainer}>
                 <Button
                   type="clear"
-                  icon={<Icon name="chevron-left" color={Theme.Colors.Icon} />}
+                  icon={
+                    <Icon
+                      name={
+                        I18nManager.isRTL ? 'chevron-right' : 'chevron-left'
+                      }
+                      color={Theme.Colors.Icon}
+                    />
+                  }
                   title=""
                   onPress={() => setIsViewing(false)}
                 />

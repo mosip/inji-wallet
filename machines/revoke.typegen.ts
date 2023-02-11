@@ -20,9 +20,9 @@ export interface Typegen0 {
   };
   'missingImplementations': {
     actions: never;
-    services: never;
-    guards: never;
     delays: never;
+    guards: never;
+    services: never;
   };
   'eventsCausingActions': {
     clearOtp:
@@ -39,12 +39,12 @@ export interface Typegen0 {
     setTransactionId: 'DISMISS' | 'REVOKE_VCS' | 'xstate.init';
     setVIDs: 'REVOKE_VCS';
   };
+  'eventsCausingDelays': {};
+  'eventsCausingGuards': {};
   'eventsCausingServices': {
     requestOtp: never;
     requestRevoke: 'INPUT_OTP';
   };
-  'eventsCausingGuards': {};
-  'eventsCausingDelays': {};
   'matchesStates':
     | 'acceptingOtpInput'
     | 'acceptingVIDs'

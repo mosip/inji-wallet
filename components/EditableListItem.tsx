@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, I18nManager } from 'react-native';
 import { Icon, ListItem, Overlay, Input } from 'react-native-elements';
 import { Text, Column, Row, Button } from './ui';
 import { Theme } from './ui/styleUtils';
@@ -36,7 +36,14 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
         onBackdropPress={dismiss}>
         <Column width={Dimensions.get('screen').width * 0.8}>
           <Text>{t('editLabel', { label: props.label })}</Text>
-          <Input autoFocus value={newValue} onChangeText={setNewValue} />
+          <Input
+            autoFocus
+            value={newValue}
+            onChangeText={setNewValue}
+            inputStyle={{
+              textAlign: I18nManager.isRTL ? 'right' : 'left',
+            }}
+          />
           <Row>
             <Button fill type="clear" title={t('cancel')} onPress={dismiss} />
             <Button fill title={t('save')} onPress={edit} />

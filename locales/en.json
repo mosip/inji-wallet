@@ -187,6 +187,31 @@
     "revokeSuccessful": "VID successfully revoked",
     "version": "Version"
   },
+  "QrScreen": {
+    "title": "QR Login",
+    "alignQr": "Align the QR code within the frame to scan",
+    "confirmation": "Confirmation",
+    "checkDomain": "Also, check that there is a lock icon on the address bar.",
+    "domainHead": "https://",
+    "selectId": "Select ID",
+    "noBindedVc": "No Binded {{vcLabel}} Available to Verify",
+    "back": "Go Back",
+    "confirm": "Confirm",
+    "verify": "Verify",
+    "faceAuth": "Face Authentication",
+    "consent": "Consent",
+    "loading": "Loading...",
+    "domainWarning": "Please confirm the domain of the website you are scanning the QR code from is as below",
+    "access": " is requesting access to",
+    "status": "Status",
+    "successMessage": "You Have Successfully Logged Into ",
+    "okay": "Okay",
+    "allow": "Allow",
+    "cancel": "Cancel",
+    "essentialClaims": "Essential Claims",
+    "voluntaryClaims": "Voluntary Claims",
+    "required":"Required"
+  },
   "ReceiveVcScreen": {
     "header": "{{vcLabel}} details",
     "save": "Save {{vcLabel}}",
@@ -250,21 +275,7 @@
       "invalid": "Invalid QR Code",
       "offline": "Please connect to the internet to scan QR codes using Online sharing mode",
       "sent": "{{ vcLabel }} has been sent...",
-      "sentHint": "Waiting for receiver to save or discard your {{ vcLabel }}"
-    }
-  },
-  "SelectVcOverlay": {
-    "header": "Share {{vcLabel}}",
-    "chooseVc": "Choose the {{vcLabel}} you'd like to share with",
-    "share": "Share",
-    "verifyAndShare": "Verify Identity & Share"
-  },
-  "SendVcScreen": {
-    "reasonForSharing": "Reason for sharing (optional)",
-    "acceptRequest": "Accept request and choose {{vcLabel}}",
-    "acceptRequestAndVerify": "Accept request and verify",
-    "reject": "Reject",
-    "status": {
+      "sentHint": "Waiting for receiver to save or discard your {{ vcLabel }}",
       "sharing": {
         "title": "Sharing...",
         "hint": "Please wait for the receiving device to accept or reject the share.",
@@ -278,7 +289,19 @@
         "title": "Notice",
         "message": "Your {{vcLabel}} was discarded by {{receiver}}"
       }
-    },
+    }
+  },
+  "SelectVcOverlay": {
+    "header": "Share {{vcLabel}}",
+    "chooseVc": "Choose the {{vcLabel}} you'd like to share with",
+    "share": "Share",
+    "verifyAndShare": "Verify Identity & Share"
+  },
+  "SendVcScreen": {
+    "reasonForSharing": "Reason for sharing (optional)",
+    "acceptRequest": "Accept request and choose {{vcLabel}}",
+    "acceptRequestAndVerify": "Accept request and verify",
+    "reject": "Reject",
     "consentToPhotoVerification": "I give consent to have my photo taken for authentication"
   },
   "VerifyIdentityOverlay": {

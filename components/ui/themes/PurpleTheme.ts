@@ -596,6 +596,11 @@ export const PurpleTheme = {
       borderTopRightRadius: 0,
     },
   }),
+  claimsContainer: StyleSheet.create({
+    container: {
+      backgroundColor: Colors.Transparent,
+    },
+  }),
   OpenCard: require('../../../purpleAassets/bg_cart_one.png'),
   CloseCard: require('../../../purpleAassets/cart_unsel.png'),
   ProfileIcon: require('../../../purpleAassets/profile_icon_unsel.png'),

@@ -33,8 +33,10 @@ const model = createModel(
     voluntaryClaims: [],
     selectedVoluntaryClaims: [],
     errorMessage: '',
+    domainName: '',
     consentClaims: ['name', 'picture'],
     isSharing: {},
+    linkedTransactionId: '',
   },
   {
     events: {
@@ -97,7 +99,7 @@ export const qrLoginMachine =
                   'expandLinkTransResp',
                   'setClaims',
                 ],
-                target: 'showWarning',
+                target: 'loadMyVcs',
               },
             ],
             onError: [
@@ -106,17 +108,6 @@ export const qrLoginMachine =
                 target: 'ShowError',
               },
             ],
-          },
-        },
-        showWarning: {
-          on: {
-            CONFIRM: {
-              target: 'loadMyVcs',
-            },
-            DISMISS: {
-              actions: 'forwardToParent',
-              target: 'waitingForData',
-            },
           },
         },
         ShowError: {
@@ -153,7 +144,7 @@ export const qrLoginMachine =
         faceAuth: {
           on: {
             FACE_VALID: {
-              target: 'requestConsent',
+              target: 'sendingAuthenticate',
             },
             FACE_INVALID: {
               target: 'invalidIdentity',
@@ -171,6 +162,21 @@ export const qrLoginMachine =
             RETRY_VERIFICATION: {
               target: 'faceAuth',
             },
+          },
+        },
+        sendingAuthenticate: {
+          invoke: {
+            src: 'sendAuthenticate',
+            onDone: {
+              target: 'requestConsent',
+              actions: 'setLinkedTransactionId',
+            },
+            onError: [
+              {
+                actions: 'SetErrorMessage',
+                target: 'ShowError',
+              },
+            ],
           },
         },
         requestConsent: {
@@ -211,6 +217,7 @@ export const qrLoginMachine =
         },
         done: {
           type: 'final',
+          data: (context) => context,
         },
       },
     },
@@ -284,24 +291,38 @@ export const qrLoginMachine =
 
         setConsentClaims: assign({
           isSharing: (context, event) => {
-            context.selectedVoluntaryClaims.push(
-              context.isSharing[event.claim]
-            );
             context.isSharing[event.claim] = !event.enable;
+            if (!event.enable) {
+              context.selectedVoluntaryClaims.push(event.claim);
+            } else {
+              context.selectedVoluntaryClaims =
+                context.selectedVoluntaryClaims.filter(
+                  (eachClaim) => eachClaim !== event.claim
+                );
+            }
             return { ...context.isSharing };
           },
+        }),
+        setLinkedTransactionId: assign({
+          linkedTransactionId: (context, event) => event.data as string,
         }),
       },
       services: {
         linkTransaction: async (context) => {
-          const response = await request('POST', '/link-transaction', {
-            linkCode: context.linkCode,
-            requestTime: String(new Date().toISOString()),
-          });
+          const response = await request(
+            'POST',
+            '/v1/idp/linked-authorization/link-transaction',
+            {
+              requestTime: String(new Date().toISOString()),
+              request: {
+                linkCode: context.linkCode,
+              },
+            }
+          );
           return response.response;
         },
 
-        sendConsent: async (context) => {
+        sendAuthenticate: async (context) => {
           var privateKey = await getPrivateKey(
             context.selectedVc.walletBindingResponse?.walletBindingId
           );
@@ -313,25 +334,43 @@ export const qrLoginMachine =
             walletBindingResponse?.thumbprint
           );
 
-          const resp = await request('POST', '/idp-auth-consent', {
-            requestTime: String(new Date().toISOString()),
-            request: {
-              linkedTransactionId: context.linkTransactionId,
-              individualId: context.selectedVc.id,
-              acceptedClaims: context.essentialClaims.concat(
-                context.selectedVoluntaryClaims
-              ),
-              permittedAuthorizeScopes: context.authorizeScopes,
-              challengeList: [
-                {
-                  authFactorType: 'WLA',
-                  challenge: jwt,
-                  format: 'jwt',
-                },
-              ],
-            },
-          });
-          console.log(resp.response.linkedTransactionId);
+          const response = await request(
+            'POST',
+            '/v1/idp/linked-authorization/authenticate',
+            {
+              requestTime: String(new Date().toISOString()),
+              request: {
+                linkedTransactionId: context.linkTransactionId,
+                individualId: context.selectedVc.id,
+                challengeList: [
+                  {
+                    authFactorType: 'WLA',
+                    challenge: jwt,
+                    format: 'jwt',
+                  },
+                ],
+              },
+            }
+          );
+          return response.response.linkedTransactionId;
+        },
+
+        sendConsent: async (context) => {
+          const response = await request(
+            'POST',
+            '/v1/idp/linked-authorization/consent',
+            {
+              requestTime: String(new Date().toISOString()),
+              request: {
+                linkedTransactionId: context.linkedTransactionId,
+                acceptedClaims: context.essentialClaims.concat(
+                  context.selectedVoluntaryClaims
+                ),
+                permittedAuthorizeScopes: context.authorizeScopes,
+              },
+            }
+          );
+          console.log(response.response.linkedTransactionId);
         },
       },
     }
@@ -353,8 +392,8 @@ export function selectIsWaitingForData(state: State) {
   return state.matches('waitingForData');
 }
 
-export function selectIsShowWarning(state: State) {
-  return state.matches('showWarning');
+export function selectDomainName(state: State) {
+  return state.context.domainName;
 }
 
 export function selectIsLinkTransaction(state: State) {
@@ -384,6 +423,9 @@ export function selectIsShowError(state: State) {
 export function selectIsRequestConsent(state: State) {
   return state.matches('requestConsent');
 }
+export function selectIsSendingAuthenticate(state: State) {
+  return state.matches('sendingAuthenticate');
+}
 
 export function selectIsSendingConsent(state: State) {
   return state.matches('sendingConsent');
@@ -399,6 +441,9 @@ export function selectSelectedVc(state: State) {
 
 export function selectLinkTransactionResponse(state: State) {
   return state.context.linkTransactionResponse;
+}
+export function selectEssentialClaims(state: State) {
+  return state.context.essentialClaims;
 }
 
 export function selectVoluntaryClaims(state: State) {
