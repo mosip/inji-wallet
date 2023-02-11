@@ -119,10 +119,9 @@
     "enterOtp": "Enter the 6-digit verification code we sent you"
   },
   "MyVcsTab": {
-    "downloadID": "Download ID",
-    "downloadingIdPopUp": "Downloading your ID, this can take upto 5 minutes",
-    "bringYourDigitalID": "Bring your digital identity",
-    "generateVcDescription": "Tap on \"Download {{vcLabel}}\" below to download your {{vcLabel}}"
+    "addVcButton": "Add {{vcLabel}}",
+    "generateVc": "Generate your {{vcLabel}}",
+    "generateVcDescription": "Tap on \"Add {{vcLabel}}\" below to download your {{vcLabel}}"
   },
   "OnboardingOverlay": {
     "stepOneTitle": "Welcome!",
@@ -164,53 +163,6 @@
     "header": "Set a passcode to secure your application",
     "confirmPasscode": "Confirm your passcode",
     "enterPasscode": "Enter your passcode"
-  },
-  "Credits": {
-    "header": "Credits and legal notices",
-    "back": "Back"
-  },
-  "SettingScreen": {
-    "header": "Settings",
-    "profile": "Profile",
-    "vcLabel": "VC Label",
-    "language": "Language",
-    "bioUnlock": "Biometric unlock",
-    "authFactorUnlock": "Unlock auth factor",
-    "credits": "Credits and legal notices",
-    "featuresWalkAround":"Feature Walkaround",
-    "logout": "Log-out",
-    "revokeLabel": "Revoke VID",
-    "revokeHeader": "REVOKE VID",
-    "revokingVids": "You are about to revoke ({{count}}) VIDs.",
-    "revokingVidsAfter": "This means you will no longer be able to use or view any of the IDs linked to those VID(s). \nAre you sure you want to proceed?",
-    "empty": "Empty",
-    "revokeSuccessful": "VID successfully revoked",
-    "version": "Version"
-  },
-  "QrScreen": {
-    "title": "QR Login",
-    "alignQr": "Align the QR code within the frame to scan",
-    "confirmation": "Confirmation",
-    "checkDomain": "Also, check that there is a lock icon on the address bar.",
-    "domainHead": "https://",
-    "selectId": "Select ID",
-    "noBindedVc": "No Binded {{vcLabel}} Available to Verify",
-    "back": "Go Back",
-    "confirm": "Confirm",
-    "verify": "Verify",
-    "faceAuth": "Face Authentication",
-    "consent": "Consent",
-    "loading": "Loading...",
-    "domainWarning": "Please confirm the domain of the website you are scanning the QR code from is as below",
-    "access": " is requesting access to",
-    "status": "Status",
-    "successMessage": "You Have Successfully Logged Into ",
-    "okay": "Okay",
-    "allow": "Allow",
-    "cancel": "Cancel",
-    "essentialClaims": "Essential Claims",
-    "voluntaryClaims": "Voluntary Claims",
-    "required":"Required"
   },
   "ReceiveVcScreen": {
     "header": "{{vcLabel}} details",
@@ -254,7 +206,7 @@
     "gotoSettings": "Go to settings"
   },
   "ScanScreen": {
-    "scanningGuide": "Hold the phone steady and scan the QR code",
+    "header": "Scan QR Code",
     "noShareableVcs": "No shareable {{vcLabel}} are available.",
     "sharingVc": "Sharing {{vcLabel}}",
     "errors": {
@@ -303,6 +255,10 @@
     "acceptRequestAndVerify": "Accept request and verify",
     "reject": "Reject",
     "consentToPhotoVerification": "I give consent to have my photo taken for authentication"
+  },
+  "Credits": {
+    "header": "Credits and legal notices",
+    "back": "Back"
   },
   "VerifyIdentityOverlay": {
     "status": {
