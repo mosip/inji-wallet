@@ -19,7 +19,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
               flex: 1,
               flexDirection: 'row',
               alignItems: 'center',
-              marginHorizontal: 17,
+              marginHorizontal: 18,
               marginVertical: 15,
             }}>
             {props.headerRight ? (
@@ -41,7 +41,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
             <Row
               fill
               align={props.headerLeft ? 'flex-start' : 'center'}
-              margin={'12 0 0 8'}>
+              margin={'12 0 0 0'}>
               <Column>
                 <Text style={Theme.TextStyles.header}>
                   {props.headerTitle || props.headerLeft}
@@ -49,7 +49,11 @@ export const Modal: React.FC<ModalProps> = (props) => {
                 <Text
                   weight="semibold"
                   style={Theme.TextStyles.small}
-                  color={Theme.Colors.profileLanguageValue}>
+                  color={
+                    props.headerLabelColor
+                      ? props.headerLabelColor
+                      : Theme.Colors.profileLanguageValue
+                  }>
                   {props.headerLabel}
                 </Text>
               </Column>
@@ -76,6 +80,7 @@ export interface ModalProps {
   headerTitle?: string;
   headerElevation?: ElevationLevel;
   headerLabel?: string;
+  headerLabelColor?: string;
   headerRight?: React.ReactElement;
   headerLeft?: React.ReactElement;
   arrowLeft?: React.ReactElement;

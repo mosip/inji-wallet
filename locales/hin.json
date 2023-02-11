@@ -185,10 +185,11 @@
       }
     },
     "MainLayout": {
-      "home": "घर",
+      "home": "होम",
       "scan": "स्कैन",
       "request": "अनुरोध",
       "settings": "सेटिंग्स"
+      "history": "इतिहास"
     },
     "PasscodeScreen": {
       "header": "अपना आवेदन सुरक्षित करने के लिए पासकोड सेट करें",
@@ -201,8 +202,9 @@
       "useBle": "Powered by BLE",
       "useGoogleNearby": "Powered by GoogleNearby"
     },
-    "ProfileScreen": {
-      "name": "नाम",
+    "SettingScreen": {
+      "header": "समायोजन",
+      "profile": "प्रोफ़ाइल",
       "vcLabel": "वीसी लेबल",
       "language": "भाषा",
       "bioUnlock": "बायोमेट्रिक्स से अनलॉक करें",

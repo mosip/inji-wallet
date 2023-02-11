@@ -369,7 +369,7 @@ export const DefaultTheme = {
       color: Colors.Black,
       fontFamily: 'Inter_700Bold',
       fontSize: 21,
-      lineHeight: 20,
+      lineHeight: 21,
     },
     base: {
       color: Colors.Black,

@@ -17,7 +17,7 @@ import getAllConfigurations from '../shared/commonprops/commonProps';
 const { Navigator, Screen } = createBottomTabNavigator();
 let helpUrl = '';
 
-getAllConfigurations().then((response) => {
+let helpPage = getAllConfigurations().then((response) => {
   helpUrl = response.helpUrl;
 });
 
@@ -52,9 +52,13 @@ export const MainLayout: React.FC<RootRouteProps> = () => {
         />
       </Row>
     ),
-    headerTitleStyle: { fontFamily: 'Inter_600SemiBold', fontSize: 30 },
-    headerLeftContainerStyle: { paddingStart: 8 },
+    headerTitleStyle: {
+      fontFamily: 'Inter_600SemiBold',
+      fontSize: 30,
+      margin: 8,
+    },
     headerRightContainerStyle: { paddingEnd: 13 },
+    headerLeftContainerStyle: { paddingEnd: 13 },
     tabBarShowLabel: true,
     tabBarActiveTintColor: Theme.Colors.IconBg,
     tabBarStyle: {

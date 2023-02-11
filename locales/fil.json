@@ -89,6 +89,14 @@
     "receivedVcsTab": "Nakuhang\n{{vcLabel}}",
     "historyTab": "Pangyayari"
   },
+  "SettingScreen": {
+    "header": "Mga setting",
+    "profile": "Profile",
+    "vcLabel": "Label ng Vc",
+    "language": "Wika",
+    "bioUnlock": "Bio Unlock",
+    "logout": "Log out"
+  },
   "AddVcModal": {
     "requestingCredential": "Humihiling ng kredensyal...",
     "errors": {
@@ -187,6 +195,7 @@
     "scan": "Scan",
     "request": "Request",
     "settings": "mga setting"
+    "history": "Kasaysayan"
   },
   "PasscodeScreen": {
     "header": "Magtakda ng passcode upang masigurado ang iyong aplikasyon",

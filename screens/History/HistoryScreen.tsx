@@ -9,7 +9,7 @@ import { MainRouteProps } from '../../routes/main';
 import { Theme } from '../../components/ui/styleUtils';
 
 export const HistoryScreen: React.FC<MainRouteProps> = (props) => {
-  const { t } = useTranslation('HistoryTab');
+  const { t } = useTranslation('HistoryScreen');
   const controller = useHistoryTab();
 
   return (
