@@ -21,27 +21,6 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
     controller.GET_VC();
   };
 
-  const [isLabelVisible, setIsLabelVisible] = useState(false);
-  const toggleContent = () => setIsLabelVisible(!isLabelVisible);
-
-  const DowmloadingLabel: React.FC = () => {
-    return (
-      <Column style={{ display: isLabelVisible ? 'flex' : 'none' }}>
-        <Row align="space-between" style={Theme.Styles.downloadingIdTag}>
-          <Text align="left" size="smaller" weight="semibold" color="white">
-            {t('downloadingIdTag')}
-          </Text>
-          <Icon
-            name="close"
-            color={Theme.Colors.whiteText}
-            size={18}
-            onPress={toggleContent}
-          />
-        </Row>
-      </Column>
-    );
-  };
-
   const clearIndividualId = () => {
     GET_INDIVIDUAL_ID('');
   };
@@ -49,13 +28,13 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
   return (
     <React.Fragment>
       <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
-        <DowmloadingLabel />
-        <Column fill pY={18} pX={18}>
+        <Column fill pY={16} pX={16}>
           {controller.vcKeys.length > 0 && (
             <React.Fragment>
               <Column
                 scroll
                 margin="0 0 20 0"
+                backgroundColor={Theme.Colors.lightGreyBackgroundColor}
                 refreshControl={
                   <RefreshControl
                     refreshing={controller.isRefreshingVcs}

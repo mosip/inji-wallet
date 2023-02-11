@@ -22,7 +22,7 @@ const LanguageSetting: React.FC = () => {
   return (
     <LanguageSelector
       triggerComponent={
-        <ListItem bottomDivider>
+        <ListItem>
           <Icon
             name="globe"
             size={22}
@@ -101,34 +101,6 @@ export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
                 onValueChange={controller.useBiometrics}
                 color={Theme.Colors.profileValue}
               />
-            </ListItem>
-            <ListItem bottomDivider disabled>
-              <Icon
-                name="unlock"
-                size={22}
-                type="antdesign"
-                color={Theme.Colors.Icon}
-              />
-              <ListItem.Content>
-                <ListItem.Title>
-                  <Text
-                    weight="semibold"
-                    color={Theme.Colors.profileAuthFactorUnlock}>
-                    {t('authFactorUnlock')}
-                  </Text>
-                </ListItem.Title>
-              </ListItem.Content>
-            </ListItem>
-            <Credits label={t('credits')} color={Theme.Colors.profileLabel} />
-            <ListItem bottomDivider>
-              <Icon name="file" size={22} color={Theme.Colors.Icon} />
-              <ListItem.Content>
-                <ListItem.Title>
-                  <Text weight="semibold" color={Theme.Colors.profileLabel}>
-                    {t('featuresWalkAround')}
-                  </Text>
-                </ListItem.Title>
-              </ListItem.Content>
             </ListItem>
             <ListItem onPress={controller.LOGOUT}>
               <Icon

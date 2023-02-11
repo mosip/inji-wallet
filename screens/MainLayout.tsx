@@ -35,7 +35,7 @@ export const MainLayout: React.FC<RootRouteProps> = () => {
           }}>
           <Image
             source={require('../assets/help-icon.png')}
-            style={{ width: 36, height: 36, marginRight: 6 }}
+            style={{ width: 36, height: 36 }}
           />
         </Pressable>
 
