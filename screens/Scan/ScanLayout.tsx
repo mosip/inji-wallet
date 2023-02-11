@@ -34,7 +34,7 @@ export const ScanLayout: React.FC = () => {
         {!controller.isDone && (
           <ScanStack.Screen
             name="SendVcScreen"
-            component={SendVcScreen}
+            component={ScanScreen}
             options={{
               title: t('requester', {
                 vcLabel: controller.vcLabel.singular,
@@ -45,7 +45,7 @@ export const ScanLayout: React.FC = () => {
         )}
         <ScanStack.Screen
           name="ScanScreen"
-          component={ScanScreen}
+          component={SendVcScreen}
           options={{
             headerTitleStyle: { fontSize: 30, fontFamily: 'Inter_600SemiBold' },
             title: t('MainLayout:scan'),
