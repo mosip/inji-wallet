@@ -4,14 +4,14 @@ import { LinearGradient } from 'react-native-svg';
 import { Spacing } from '../styleUtils';
 
 const Colors = {
-  Black: '#231F20',
-  Grey: '#A7A7A7',
+  Black: '#4A4A4A',
+  Grey: '#C7C7C7',
   Grey5: '#E0E0E0',
   Grey6: '#F2F2F2',
   Gray9: '#171717',
   DimGray: '#737373',
   Orange: '#F2811D',
-  LightGrey: '#f0f3f7',
+  LightGrey: '#F5F5F5',
   White: '#FFFFFF',
   Red: '#EB5757',
   Green: '#4B9D20',
@@ -23,6 +23,8 @@ const Colors = {
   plainText: '#FFD6A7',
   walletbindingLabel: '#000000',
   walletbindingContent: '#666666',
+  LightOrange: '#FDF1E6',
+  GradientColors: ['#F59B4B', '#E86E04'],
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -207,7 +209,7 @@ export const DefaultTheme = {
       width: 100,
     },
     bottomButtonsContainer: {
-      height: 120,
+      height: 'auto',
       borderTopLeftRadius: 27,
       borderTopRightRadius: 27,
       padding: 6,
@@ -316,9 +318,10 @@ export const DefaultTheme = {
       width: '100%',
       margin: 'auto',
     },
-    flipIconButton: {
-      alignSelf: 'center',
-      alignItems: 'center',
+    photoConsentLabel: {
+      backgroundColor: Colors.White,
+      padding: 0,
+      borderWidth: 0,
     },
     tabIndicator: {
       backgroundColor: Colors.Orange,
@@ -377,6 +380,7 @@ export const DefaultTheme = {
       lineHeight: 28,
     },
     regular: {
+      fontSize: 14,
       fontFamily: 'Inter_400Regular',
     },
     semibold: {
@@ -386,11 +390,11 @@ export const DefaultTheme = {
       fontFamily: 'Inter_700Bold',
     },
     small: {
-      fontSize: 14,
+      fontSize: 13,
       lineHeight: 21,
     },
     smaller: {
-      fontSize: 12,
+      fontSize: 11,
       lineHeight: 18,
     },
   }),
@@ -447,20 +451,24 @@ export const DefaultTheme = {
       borderColor: Colors.Orange,
     },
     container: {
-      minHeight: 45,
+      height: 45,
       flexDirection: 'row',
     },
     disabled: {
-      opacity: 0.5,
+      backgroundColor: Colors.Grey,
     },
     addId: {
       backgroundColor: Colors.Orange,
     },
-    gradientButton: {
-      borderRadius: 10,
-      width: '83%',
-      height: '8.5%',
-      alignItems: 'center',
+    gradient: {
+      borderRadius: 9,
+      width: '86%',
+      alignSelf: 'center',
+    },
+    float: {
+      borderRadius: 9,
+      width: '33%',
+      alignSelf: 'center',
     },
     clearAddIdBtnBg: {
       backgroundColor: Colors.Transparent,
