@@ -6,7 +6,6 @@ import {
 import { GestureResponderEvent, StyleProp, ViewStyle } from 'react-native';
 import { Text } from './Text';
 import { Theme, Spacing } from './styleUtils';
-import LinearGradient from 'react-native-linear-gradient';
 
 export const Button: React.FC<ButtonProps> = (props) => {
   const type = props.type || 'solid' || 'radius' || 'gradient';
@@ -18,9 +17,14 @@ export const Button: React.FC<ButtonProps> = (props) => {
   ];
 
   const containerStyle: StyleProp<ViewStyle> = [
-    Theme.ButtonStyles.container,
+    !(type === 'gradient') ? Theme.ButtonStyles.container : null,
     props.disabled ? Theme.ButtonStyles.disabled : null,
     props.margin ? Theme.spacing('margin', props.margin) : null,
+    type === 'gradient'
+      ? props.isVcThere
+        ? Theme.ButtonStyles.float
+        : Theme.ButtonStyles.gradient
+      : null,
     props.styles,
   ];
 
@@ -87,7 +91,6 @@ interface ButtonProps {
   disabled?: boolean;
   margin?: Spacing;
   type?: RNEButtonProps['type'];
-  linearGradient?: boolean;
   isVcThere?: boolean;
   onPress?: RNEButtonProps['onPress'];
   fill?: boolean;
