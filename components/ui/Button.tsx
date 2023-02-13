@@ -6,7 +6,6 @@ import {
 import { GestureResponderEvent, StyleProp, ViewStyle } from 'react-native';
 import { Text } from './Text';
 import { Theme, Spacing } from './styleUtils';
-import LinearGradient from 'react-native-linear-gradient';
 
 export const Button: React.FC<ButtonProps> = (props) => {
   const type = props.type || 'solid' || 'radius' || 'gradient';
@@ -17,9 +16,14 @@ export const Button: React.FC<ButtonProps> = (props) => {
   ];
 
   const containerStyle: StyleProp<ViewStyle> = [
-    Theme.ButtonStyles.container,
+    !(type === 'gradient') ? Theme.ButtonStyles.container : null,
     props.disabled ? Theme.ButtonStyles.disabled : null,
     props.margin ? Theme.spacing('margin', props.margin) : null,
+    type === 'gradient'
+      ? props.isVcThere
+        ? Theme.ButtonStyles.float
+        : Theme.ButtonStyles.gradient
+      : null,
     props.styles,
   ];
 
@@ -29,7 +33,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
     }
   };
 
-  return !props.linearGradient ? (
+  return !(type === 'gradient') ? (
     <RNEButton
       buttonStyle={buttonStyle}
       containerStyle={[
@@ -56,44 +60,31 @@ export const Button: React.FC<ButtonProps> = (props) => {
       loading={props.loading}
     />
   ) : (
-    <LinearGradient
-      colors={['#F59B4B', '#E86E04']}
-      style={
-        props.isVcThere
-          ? {
-              width: '30%',
-              borderRadius: 10,
-              alignSelf: 'center',
-              alignItems: 'center',
-            }
-          : Theme.ButtonStyles.gradientButton
+    <RNEButton
+      ViewComponent={require('react-native-linear-gradient').default}
+      linearGradientProps={{ colors: Theme.Colors.GradientColors }}
+      containerStyle={
+        props.isVcThere ? containerStyle : Theme.ButtonStyles.gradient
       }
-      useAngle={true}
-      angle={180}>
-      <RNEButton
-        containerStyle={[
-          props.fill ? Theme.ButtonStyles.fill : null,
-          containerStyle,
-        ]}
-        type={props.type}
-        raised={props.raised}
-        title={
-          <Text
-            weight="bold"
-            style={Theme.TextStyles.small}
-            color={
-              type === 'solid' || type === 'gradient' || type === 'radius'
-                ? Theme.Colors.whiteText
-                : Theme.Colors.DownloadIdBtnTxt
-            }>
-            {props.title}
-          </Text>
-        }
-        icon={props.icon}
-        onPress={handleOnPress}
-        loading={props.loading}
-      />
-    </LinearGradient>
+      type={props.type}
+      raised={props.raised}
+      title={
+        <Text
+          weight="bold"
+          style={Theme.TextStyles.bold}
+          color={
+            type === 'solid' || type === 'gradient' || type === 'radius'
+              ? Theme.Colors.whiteText
+              : Theme.Colors.DownloadIdBtnTxt
+          }>
+          {props.title}
+        </Text>
+      }
+      buttonStyle={!props.isVcThere ? { height: 45 } : { height: 35 }}
+      icon={props.icon}
+      onPress={handleOnPress}
+      loading={props.loading}
+    />
   );
 };
 
@@ -102,7 +93,6 @@ interface ButtonProps {
   disabled?: boolean;
   margin?: Spacing;
   type?: RNEButtonProps['type'];
-  linearGradient?: boolean;
   isVcThere?: boolean;
   onPress?: RNEButtonProps['onPress'];
   fill?: boolean;

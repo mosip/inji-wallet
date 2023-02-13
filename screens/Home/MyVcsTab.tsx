@@ -53,7 +53,6 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
               </Column>
               <Button
                 type="gradient"
-                linearGradient
                 isVcThere
                 disabled={controller.isRefreshingVcs}
                 title={t('downloadID', {
@@ -74,17 +73,16 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                 </Text>
                 <Text
                   weight="semibold"
-                  style={Theme.TextStyles.small}
+                  style={Theme.TextStyles.bold}
                   color={Theme.Colors.textLabel}
                   align="center"
-                  margin="0 12 33 12">
+                  margin="0 12 30 12">
                   {t('generateVcDescription', {
                     vcLabel: controller.vcLabel.singular,
                   })}
                 </Text>
                 <Button
-                  type="gradientButton"
-                  linearGradient
+                  type="gradient"
                   disabled={controller.isRefreshingVcs}
                   title={t('downloadID', {
                     vcLabel: controller.vcLabel.singular,
