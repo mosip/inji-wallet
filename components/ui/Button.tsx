@@ -6,7 +6,6 @@ import {
 import { GestureResponderEvent, StyleProp, ViewStyle } from 'react-native';
 import { Text } from './Text';
 import { Theme, Spacing } from './styleUtils';
-import LinearGradient from 'react-native-linear-gradient';
 
 export const Button: React.FC<ButtonProps> = (props) => {
   const type = props.type || 'solid' || 'radius' || 'gradient';
@@ -98,7 +97,6 @@ interface ButtonProps {
   disabled?: boolean;
   margin?: Spacing;
   type?: RNEButtonProps['type'];
-  linearGradient?: boolean;
   isVcThere?: boolean;
   onPress?: RNEButtonProps['onPress'];
   fill?: boolean;
