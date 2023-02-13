@@ -8,7 +8,6 @@ import Loader from 'react-native-three-dots-loader';
 
 export const InProgress: React.FC<InProgressProps> = (props) => {
   const { t } = useTranslation('ScanScreen');
-  const progressTitle = props.title;
 
   return (
     <React.Fragment>
