@@ -331,6 +331,9 @@
     "cancel": "Kanselahin",
     "save": "I-save",
     "editLabel": "Palitan ang {{label}}",
-    "tryAgain": "Subukan muli"
+    "tryAgain": "Subukan muli",
+    "errors": {
+      "genericError": "Nagkaproblema. Pakisubukang muli pagkatapos ng ilang oras!"
+    }
   }
 }
