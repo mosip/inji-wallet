@@ -778,9 +778,6 @@ export const scanMachine =
               if (event.type === 'onDisconnected') {
                 callback({ type: 'DISCONNECT' });
               }
-              if (event.type === 'onDisconnected') {
-                callback({ type: 'DISCONNECT' });
-              }
             });
 
             return () => subscription.remove();
