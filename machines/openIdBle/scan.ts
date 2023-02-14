@@ -400,7 +400,7 @@ export const scanMachine =
               },
               on: {
                 DISCONNECT: {
-                  target: '#scan.findingConnection',
+                  target: '#scan.disconnected',
                 },
                 VC_SENT: {
                   target: '.sent',
@@ -476,21 +476,21 @@ export const scanMachine =
         disconnected: {
           on: {
             DISMISS: {
-              target: 'findingConnection',
+              target: '#scan.clearingConnection',
             },
           },
         },
         handlingBleError: {
           on: {
             DISMISS: {
-              target: 'findingConnection',
+              target: '#scan.clearingConnection',
             },
           },
         },
         invalid: {
           on: {
             DISMISS: {
-              target: 'findingConnection',
+              target: '#scan.clearingConnection',
             },
           },
         },
