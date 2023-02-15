@@ -156,7 +156,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
       disabled={!verifiableCredential}
       style={
         props.selected
-          ? Theme.Styles.selectedBindedVc
+          ? Theme.Styles.selectedVc
           : Theme.Styles.closeCardBgContainer
       }>
       <ImageBackground

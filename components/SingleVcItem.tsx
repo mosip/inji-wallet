@@ -125,8 +125,12 @@ export const SingleVcItem: React.FC<VcItemProps> = (props) => {
 
   return (
     <Pressable
-      style={Theme.Styles.closeCardBgContainer}
-      onPress={() => props.onPress(service)}>
+      onPress={() => props.onPress(service)}
+      style={
+        props.selected
+          ? Theme.Styles.selectedVc
+          : Theme.Styles.closeCardBgContainer
+      }>
       <ImageBackground
         source={!verifiableCredential ? null : Theme.CloseCard}
         resizeMode="stretch"

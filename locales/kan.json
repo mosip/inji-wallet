@@ -231,6 +231,7 @@
     },
     "ScanScreen": {
       "scanningGuide": "ಫೋನ್ ಹಿಡಿದುಕೊಂಡು QR ಕೋಡ್ ಅನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಿ",
+      "requester": "ವಿನಂತಿಸುವವರು",
       "noShareableVcs": "ಯಾವುದೇ ಹಂಚಿಕೊಳ್ಳಬಹುದಾದ {{vcLabel}} ಲಭ್ಯವಿಲ್ಲ.",
       "sharingVc": "ಹಂಚಿಕೆ {{vcLabel}}",
       "errors": {

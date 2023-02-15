@@ -234,6 +234,7 @@
   },
   "ScanScreen": {
     "scanningGuide": "Hawakan ang telepono at i-scan ang QR code",
+    "requester": "Humihiling",
     "noShareableVcs": "Walang magagamit na maibabahaging {{vcLabel}}.",
     "sharingVc": "Pagbabahagi ng {{vcLabel}}",
     "errors": {

@@ -231,6 +231,7 @@
     },
     "ScanScreen": {
       "scanningGuide": "أمسك الهاتف وافحص رمز الاستجابة السريعة ضوئيًا",
+      "requester": "مقدم الطلب",
       "noShareableVcs": "لا يمكن مشاركة {{vcLabel}}",
       "sharingVc": "مشاركة {{vcLabel}}",
       "errors": {
