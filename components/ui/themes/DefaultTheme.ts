@@ -25,6 +25,7 @@ const Colors = {
   walletbindingContent: '#666666',
   LightOrange: '#FDF1E6',
   GradientColors: ['#F59B4B', '#E86E04'],
+  DisabledColors: ['#C7C7C7', '#C7C7C7'],
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -79,6 +80,10 @@ export const DefaultTheme = {
     plainText: Colors.plainText,
     walletbindingLabel: Colors.walletbindingLabel,
     walletbindingContent: Colors.walletbindingContent,
+    DefaultToggle: Colors.LightOrange,
+    IconBackground: Colors.LightOrange,
+    GradientColors: Colors.GradientColors,
+    DisabledColors: Colors.DisabledColors,
   },
   Styles: StyleSheet.create({
     splashScreen: {
@@ -186,7 +191,7 @@ export const DefaultTheme = {
       shadowRadius: 3,
       elevation: 4,
     },
-    selectedBindedVc: {
+    selectedVc: {
       borderRadius: 10,
       margin: 5,
       borderWidth: 2,
@@ -462,12 +467,13 @@ export const DefaultTheme = {
     },
     gradient: {
       borderRadius: 9,
-      width: '86%',
+      width: '88%',
       alignSelf: 'center',
+      margin: 4,
     },
     float: {
       borderRadius: 9,
-      width: '33%',
+      width: '34%',
       alignSelf: 'center',
     },
     clearAddIdBtnBg: {
@@ -496,6 +502,13 @@ export const DefaultTheme = {
     overlay: {
       elevation: 5,
       backgroundColor: Colors.White,
+      padding: 0,
+    },
+    consentCheckContainer: {
+      backgroundColor: Colors.White,
+      borderWidth: 0,
+      marginTop: -15,
+      fontFamily: 'Inter_600SemiBold',
       padding: 0,
     },
   }),

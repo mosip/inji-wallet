@@ -317,7 +317,8 @@
     "gotoSettings": "Go to settings"
   },
   "ScanScreen": {
-    "header": "Scan QR Code",
+    "scanningGuide": "Hold the phone study and scan the QR code",
+    "requester": "Requester",
     "noShareableVcs": "No shareable {{vcLabel}} are available.",
     "sharingVc": "Sharing {{vcLabel}}",
     "bluetoothStateAndroid": "Please turn on bluetooth from quick settings to support local sharing",
@@ -369,11 +370,12 @@
     "verifyAndShare": "Verify Identity & Share"
   },
   "SendVcScreen": {
-    "reasonForSharing": "Reason for sharing (optional)",
-    "acceptRequest": "Share",
-    "acceptRequestAndVerify": "Share with Selfie",
-    "reject": "Reject",
-    "consentToPhotoVerification": "I give consent to have my photo taken for authentication"
+    "reasonForSharing": "Reason for sharing",
+    "approveRequest": "Approve request and choose {{vcLabel}}",
+    "approveRequestAndVerify": "Approve request and verify",
+    "consentToPhotoVerification": "I give consent to have my photo taken for authentication",
+    "pleaseSelectAnId": "Please select an ID",
+    "reject": "Reject"
   },
   "Credits": {
     "header": "Credits and legal notices",
