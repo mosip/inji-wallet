@@ -7,7 +7,7 @@ import QRCode from 'react-native-qrcode-svg';
 import { Centered, Button, Row, Column, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { useRequestScreen } from './RequestScreenController';
-import { isBLEEnabled, isGoogleNearbyEnabled } from '../../lib/smartshare';
+import { isGoogleNearbyEnabled } from '../../lib/smartshare';
 
 export const RequestScreen: React.FC = () => {
   const { t } = useTranslation('RequestScreen');

@@ -83,6 +83,7 @@ const model = createModel(
       DISMISS: () => ({}),
       CONNECTED: () => ({}),
       DISCONNECT: () => ({}),
+      BLE_ERROR: () => ({}),
       CONNECTION_DESTROYED: () => ({}),
       SCREEN_BLUR: () => ({}),
       SCREEN_FOCUS: () => ({}),
@@ -135,6 +136,9 @@ export const scanMachine =
         },
         SCREEN_FOCUS: {
           target: '.checkingBluetoothService',
+        },
+        BLE_ERROR: {
+          target: '.handlingBleError',
         },
       },
       states: {
@@ -396,7 +400,7 @@ export const scanMachine =
               },
               on: {
                 DISCONNECT: {
-                  target: '#scan.findingConnection',
+                  target: '#scan.disconnected',
                 },
                 VC_SENT: {
                   target: '.sent',
@@ -472,14 +476,21 @@ export const scanMachine =
         disconnected: {
           on: {
             DISMISS: {
-              target: 'findingConnection',
+              target: '#scan.clearingConnection',
+            },
+          },
+        },
+        handlingBleError: {
+          on: {
+            DISMISS: {
+              target: '#scan.clearingConnection',
             },
           },
         },
         invalid: {
           on: {
             DISMISS: {
-              target: 'findingConnection',
+              target: '#scan.clearingConnection',
             },
           },
         },
@@ -777,6 +788,10 @@ export const scanMachine =
             const subscription = Openid4vpBle.handleNearbyEvents((event) => {
               if (event.type === 'onDisconnected') {
                 callback({ type: 'DISCONNECT' });
+              }
+              if (event.type === 'onError') {
+                callback({ type: 'BLE_ERROR' });
+                console.log('BLE Exception: ' + event.message);
               }
             });
 
@@ -1086,6 +1101,10 @@ export function selectIsInvalidIdentity(state: State) {
 
 export function selectIsCancelling(state: State) {
   return state.matches('reviewing.cancelling');
+}
+
+export function selectIsHandlingBleError(state: State) {
+  return state.matches('handlingBleError');
 }
 
 async function sendVc(

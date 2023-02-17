@@ -28,6 +28,7 @@ import {
 import { selectVcLabel } from '../../machines/settings';
 import { MainBottomTabParamList } from '../../routes/main';
 import { GlobalContext } from '../../shared/GlobalContext';
+import { selectIsHandlingBleError } from '../../machines/openIdBle/scan';
 
 type ScanStackParamList = {
   ScanScreen: undefined;
@@ -49,6 +50,7 @@ export function useScanLayout() {
 
   const isLocationDisabled = useSelector(scanService, selectIsLocationDisabled);
   const isLocationDenied = useSelector(scanService, selectIsLocationDenied);
+  const isBleError = useSelector(scanService, selectIsHandlingBleError);
 
   const locationError = { message: '', button: '' };
 
@@ -163,6 +165,14 @@ export function useScanLayout() {
       message: t('status.offline'),
       onBackdropPress: DISMISS,
     };
+  } else if (isBleError) {
+    statusOverlay = {
+      title: t('status.bleError.title'),
+      message: t('status.bleError.message', {
+        vcLabel: vcLabel.singular,
+      }),
+      onBackdropPress: DISMISS,
+    };
   }
 
   useEffect(() => {
@@ -195,7 +205,7 @@ export function useScanLayout() {
     } else if (isQrLoginDone) {
       navigation.navigate('Home', { activeTab: 2 });
     }
-  }, [isDone, isReviewing, isScanning, isQrLoginDone]);
+  }, [isDone, isReviewing, isScanning, isQrLoginDone, isBleError]);
 
   return {
     vcLabel,

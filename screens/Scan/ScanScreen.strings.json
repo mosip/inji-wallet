@@ -33,6 +33,10 @@
     "rejected": {
       "title": "Notice",
       "message": "Your {{vcLabel}} was discarded by {{receiver}}"
+    },
+    "bleError": {
+      "title": "Failed to transfer!",
+      "message": "Something went wrong while transferring {{vcLabel}}. Please try again."
     }
   }
 }

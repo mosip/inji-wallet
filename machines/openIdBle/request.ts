@@ -30,7 +30,7 @@ import {
 import { log } from 'xstate/lib/actions';
 // import { verifyPresentation } from '../shared/vcjs/verifyPresentation';
 
-const { GoogleNearbyMessages, IdpassSmartshare } = SmartshareReactNative;
+const { GoogleNearbyMessages } = SmartshareReactNative;
 const { Openid4vpBle } = OpenIdBle;
 type SharingProtocol = 'OFFLINE' | 'ONLINE';
 
@@ -58,6 +58,7 @@ const model = createModel(
       CONNECTION_DESTROYED: () => ({}),
       CONNECTED: () => ({}),
       DISCONNECT: () => ({}),
+      BLE_ERROR: () => ({}),
       EXCHANGE_DONE: (senderInfo: DeviceInfo) => ({ senderInfo }),
       SCREEN_FOCUS: () => ({}),
       SCREEN_BLUR: () => ({}),
@@ -110,6 +111,9 @@ export const requestMachine =
         SWITCH_PROTOCOL: {
           target: '.checkingBluetoothService',
           actions: 'switchProtocol',
+        },
+        BLE_ERROR: {
+          target: '.handlingBleError',
         },
       },
       states: {
@@ -426,6 +430,13 @@ export const requestMachine =
             },
           },
         },
+        handlingBleError: {
+          on: {
+            DISMISS: {
+              target: '#request.clearingConnection',
+            },
+          },
+        },
       },
     },
     {
@@ -485,14 +496,14 @@ export const requestMachine =
           loggers: () => {
             if (__DEV__) {
               return [
-                IdpassSmartshare.handleNearbyEvents((event) => {
+                Openid4vpBle.handleNearbyEvents((event) => {
                   console.log(
                     getDeviceNameSync(),
                     '<Receiver.Event>',
                     JSON.stringify(event).slice(0, 100)
                   );
                 }),
-                IdpassSmartshare.handleLogEvents((event) => {
+                Openid4vpBle.handleLogEvents((event) => {
                   console.log(
                     getDeviceNameSync(),
                     '<Receiver.Log>',
@@ -674,13 +685,16 @@ export const requestMachine =
 
         monitorConnection: (context) => (callback) => {
           if (context.sharingProtocol === 'OFFLINE') {
-            const subscription = IdpassSmartshare.handleNearbyEvents(
-              (event) => {
-                if (event.type === 'onDisconnected') {
-                  callback({ type: 'DISCONNECT' });
-                }
+            const subscription = Openid4vpBle.handleNearbyEvents((event) => {
+              if (event.type === 'onDisconnected') {
+                callback({ type: 'DISCONNECT' });
               }
-            );
+
+              if (event.type === 'onError') {
+                callback({ type: 'BLE_ERROR' });
+                console.log('BLE Exception: ' + event.message);
+              }
+            });
 
             return () => subscription.remove();
           }
@@ -891,4 +905,8 @@ export function selectIsWaitingForVcTimeout(state: State) {
 
 export function selectIsDone(state: State) {
   return state.matches('reviewing.navigatingToHome');
+}
+
+export function selectIsHandlingBleError(state: State) {
+  return state.matches('handlingBleError');
 }
