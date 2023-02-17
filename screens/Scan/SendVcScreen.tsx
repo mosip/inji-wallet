@@ -1,8 +1,6 @@
 import React from 'react';
 import { CheckBox, Input } from 'react-native-elements';
 import { useTranslation } from 'react-i18next';
-
-import { DeviceInfoList } from '../../components/DeviceInfoList';
 import { Button, Column, Row, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { MessageOverlay } from '../../components/MessageOverlay';
@@ -22,7 +20,6 @@ export const SendVcScreen: React.FC = () => {
     <React.Fragment>
       <Column fill backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
         <Column>
-          {/* <DeviceInfoList of="receiver" deviceInfo={controller.receiverInfo} /> */}
           <Column
             padding="24 19 14 19"
             backgroundColor={Theme.Colors.whiteBackgroundColor}
