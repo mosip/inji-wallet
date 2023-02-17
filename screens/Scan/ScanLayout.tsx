@@ -8,8 +8,8 @@ import { SendVcScreen } from './SendVcScreen';
 import { useScanLayout } from './ScanLayoutController';
 import { ScanScreen } from './ScanScreen';
 import { I18nManager, Platform } from 'react-native';
-import { Message } from '../../components/Message';
-import { InProgress } from '../../components/InProgress';
+import { ProgressingModal } from '../../components/ProgressingModal';
+import { MessageOverlay } from '../../components/MessageOverlay';
 
 const ScanStack = createNativeStackNavigator();
 
@@ -36,7 +36,7 @@ export const ScanLayout: React.FC = () => {
             name="SendVcScreen"
             component={SendVcScreen}
             options={{
-              title: t('sharingVc', {
+              title: t('requester', {
                 vcLabel: controller.vcLabel.singular,
               }),
               headerBackVisible: false,
@@ -53,8 +53,9 @@ export const ScanLayout: React.FC = () => {
         />
       </ScanStack.Navigator>
 
-      <InProgress
-        title={controller.statusOverlay?.hint}
+      <ProgressingModal
+        title={controller.statusOverlay?.title}
+        timeoutHint={controller.statusOverlay?.hint}
         isVisible={controller.statusOverlay != null}
         title={controller.statusOverlay?.title}
         message={controller.statusOverlay?.message}
@@ -62,10 +63,12 @@ export const ScanLayout: React.FC = () => {
         onCancel={controller.statusOverlay?.onCancel}
         progress={controller.statusOverlay?.progress}
         onBackdropPress={controller.statusOverlay?.onBackdropPress}
+        requester={controller.statusOverlay?.requester}
       />
 
       {controller.isDisconnected && (
-        <Message
+        <MessageOverlay
+          isVisible={controller.isDisconnected}
           title={t('RequestScreen:status.disconnected.title')}
           message={t('RequestScreen:status.disconnected.message')}
           onBackdropPress={controller.DISMISS}

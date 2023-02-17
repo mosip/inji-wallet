@@ -56,7 +56,6 @@ export const SendVcScreen: React.FC = () => {
     <React.Fragment>
       <Column fill backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
         <Column>
-          {/* <DeviceInfoList of="receiver" deviceInfo={controller.receiverInfo} /> */}
           <Column
             padding="24 19 14 19"
             backgroundColor={Theme.Colors.whiteBackgroundColor}

@@ -336,7 +336,9 @@
       }
     },
     "status": {
-      "connecting": "Connecting...",
+      "inProgress" : "In Progress",
+      "establishingConnection": "Establishing Connection",
+      "sharingInProgress": "Sharing in Progress",
       "connectingTimeout": "It's taking a while to establish the connection. Is the other device open for connections?",
       "exchangingDeviceInfo": "Exchanging device info...",
       "exchangingDeviceInfoTimeout": "It's taking a while to exchange device info. You may have to reconnect.",
@@ -350,8 +352,9 @@
         "timeoutHint": "It's taking longer than expected to share. There could be a problem with the connection."
       },
       "accepted": {
-        "title": "Success!",
-        "message": "Your {{vcLabel}} has been successfully shared with {{receiver}}"
+        "title": "ID shared successfully",
+        "message": "Your ID has been successfully shared with ",
+        "gotohome": "Go to home"
       },
       "rejected": {
         "title": "Notice",

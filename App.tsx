@@ -15,11 +15,7 @@ const AppInitialization: React.FC = () => {
   const hasFontsLoaded = useFont();
   const isReady = useSelector(appService, selectIsReady);
 
-  return isReady && hasFontsLoaded ? (
-    <AppLayout />
-  ) : (
-    <SplashLogoScreen navigation={undefined} route={undefined} />
-  );
+  return isReady && hasFontsLoaded ? <AppLayout /> : <AppLoading />;
 };
 
 export default function App() {

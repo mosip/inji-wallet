@@ -26,6 +26,8 @@ const Colors = {
   LightOrange: '#FDF1E6',
   GradientColors: ['#F59B4B', '#E86E04'],
   DisabledColors: ['#C7C7C7', '#C7C7C7'],
+  TimeoutHintBoxColor: '#FFF7E5',
+  TimoutText: '#8B6105',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -60,6 +62,7 @@ export const DefaultTheme = {
     loadingLabel: Colors.Grey6,
     textLabel: Colors.Grey,
     textValue: Colors.Black,
+    requesterName: Colors.Red,
     errorMessage: Colors.Red,
     QRCodeBackgroundColor: Colors.LightGrey,
     ReceiveVcModalBackgroundColor: Colors.LightGrey,
@@ -84,6 +87,8 @@ export const DefaultTheme = {
     IconBackground: Colors.LightOrange,
     GradientColors: Colors.GradientColors,
     DisabledColors: Colors.DisabledColors,
+    TimeoutHintBoxColor: Colors.TimeoutHintBoxColor,
+    TimoutText: Colors.TimoutText,
   },
   Styles: StyleSheet.create({
     splashScreen: {
@@ -511,6 +516,17 @@ export const DefaultTheme = {
       fontFamily: 'Inter_600SemiBold',
       padding: 0,
     },
+    timeoutHintContainer: {
+      backgroundColor: Colors.TimeoutHintBoxColor,
+      margin: 21,
+      paddingHorizontal: 14,
+      paddingVertical: 12,
+      borderRadius: 12,
+    },
+    sharedSuccessfully: {
+      flex: 1,
+      backgroundColor: Colors.White,
+    },
   }),
   AppMetaDataStyles: StyleSheet.create({
     buttonContainer: {
@@ -597,7 +613,12 @@ export const DefaultTheme = {
       backgroundColor: Colors.White,
       padding: 0,
     },
-
+    popupOverLay: {
+      height: 260,
+      backgroundColor: Colors.White,
+      borderRadius: 15,
+      margin: -13.5,
+    },
     button: {
       borderTopLeftRadius: 0,
       borderTopRightRadius: 0,

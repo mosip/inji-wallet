@@ -1,10 +1,14 @@
 import React from 'react';
 import { I18nManager, Modal as RNModal, View } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { Centered, Column, Row, Text } from '.';
+import { Column, Row, Text } from '.';
+import { useSendVcScreen } from '../../screens/Scan/SendVcScreenController';
+import { DeviceInfoList } from '../DeviceInfoList';
 import { ElevationLevel, Theme } from './styleUtils';
 
 export const Modal: React.FC<ModalProps> = (props) => {
+  const controller = useSendVcScreen();
+
   return (
     <RNModal
       animationType="slide"
@@ -46,16 +50,25 @@ export const Modal: React.FC<ModalProps> = (props) => {
                 <Text style={Theme.TextStyles.header}>
                   {props.headerTitle || props.headerLeft}
                 </Text>
-                <Text
-                  weight="semibold"
-                  style={Theme.TextStyles.small}
-                  color={
-                    props.headerLabelColor
-                      ? props.headerLabelColor
-                      : Theme.Colors.profileLanguageValue
-                  }>
-                  {props.headerLabel}
-                </Text>
+                {!props.requester ? (
+                  <Text
+                    weight="semibold"
+                    style={Theme.TextStyles.small}
+                    color={
+                      props.headerLabelColor
+                        ? props.headerLabelColor
+                        : Theme.Colors.profileLanguageValue
+                    }>
+                    {props.headerLabel}
+                  </Text>
+                ) : (
+                  <Text
+                    weight="semibold"
+                    style={Theme.TextStyles.small}
+                    color={Theme.Colors.IconBg}>
+                    <DeviceInfoList deviceInfo={controller.receiverInfo} />
+                  </Text>
+                )}
               </Column>
             </Row>
             {props.headerRight || props.arrowLeft || (
@@ -76,7 +89,8 @@ export const Modal: React.FC<ModalProps> = (props) => {
 
 export interface ModalProps {
   isVisible: boolean;
-  onDismiss: () => void;
+  requester?: boolean;
+  onDismiss?: () => void;
   headerTitle?: string;
   headerElevation?: ElevationLevel;
   headerLabel?: string;
