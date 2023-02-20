@@ -59,7 +59,7 @@
     "react-native-gesture-handler": "~2.1.0",
     "react-native-keychain": "^8.0.0",
     "react-native-location-enabler": "^4.1.0",
-    "react-native-openid4vp-ble": "github:mosip/tuvali#v0.3.2",
+    "react-native-openid4vp-ble": "github:mosip/tuvali#v0.3.3",
     "react-native-permissions": "^3.6.0",
     "react-native-popable": "^0.4.3",
     "react-native-qrcode-svg": "^6.1.1",
