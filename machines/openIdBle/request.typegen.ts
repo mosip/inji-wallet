@@ -44,6 +44,7 @@ export interface Typegen0 {
   'eventsCausingActions': {
     clearShouldVerifyPresence:
       | 'ACCEPT'
+      | 'BLE_ERROR'
       | 'CANCEL'
       | 'FACE_INVALID'
       | 'FACE_VALID'
@@ -123,6 +124,7 @@ export interface Typegen0 {
     | 'exchangingDeviceInfo'
     | 'exchangingDeviceInfo.inProgress'
     | 'exchangingDeviceInfo.timeout'
+    | 'handlingBleError'
     | 'inactive'
     | 'preparingToExchangeInfo'
     | 'reviewing'

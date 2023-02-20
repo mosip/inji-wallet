@@ -51,6 +51,7 @@ export interface Typegen0 {
   'eventsCausingActions': {
     clearCreatedVp:
       | ''
+      | 'BLE_ERROR'
       | 'DISCONNECT'
       | 'DISMISS'
       | 'SCREEN_BLUR'
@@ -58,6 +59,7 @@ export interface Typegen0 {
       | 'xstate.stop';
     clearReason:
       | ''
+      | 'BLE_ERROR'
       | 'DISCONNECT'
       | 'DISMISS'
       | 'SCREEN_BLUR'
@@ -65,7 +67,6 @@ export interface Typegen0 {
       | 'xstate.stop';
     clearScannedQrParams:
       | 'CONNECTION_DESTROYED'
-      | 'DISCONNECT'
       | 'DISMISS'
       | 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection';
     logFailedVerification: 'FACE_INVALID';
@@ -74,12 +75,10 @@ export interface Typegen0 {
     openSettings: 'LOCATION_REQUEST';
     registerLoggers:
       | 'CONNECTION_DESTROYED'
-      | 'DISCONNECT'
       | 'DISMISS'
       | 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection';
     removeLoggers:
       | 'CONNECTION_DESTROYED'
-      | 'DISCONNECT'
       | 'DISMISS'
       | 'SCREEN_BLUR'
       | 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection'
@@ -90,7 +89,6 @@ export interface Typegen0 {
     sendScanData: 'SCAN';
     setChildRef:
       | 'CONNECTION_DESTROYED'
-      | 'DISCONNECT'
       | 'DISMISS'
       | 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection';
     setConnectionParams: 'SCAN';
@@ -163,6 +161,7 @@ export interface Typegen0 {
     | 'exchangingDeviceInfo.inProgress'
     | 'exchangingDeviceInfo.timeout'
     | 'findingConnection'
+    | 'handlingBleError'
     | 'inactive'
     | 'invalid'
     | 'preparingToConnect'

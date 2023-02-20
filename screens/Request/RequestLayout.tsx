@@ -90,6 +90,16 @@ export const RequestLayout: React.FC = () => {
           onBackdropPress={controller.DISMISS}
         />
       )}
+
+      {controller.isBleError && (
+        <Message
+          title={t('status.bleError.title')}
+          message={t('status.bleError.message', {
+            vcLabel: controller.vcLabel.singular,
+          })}
+          onBackdropPress={controller.DISMISS}
+        />
+      )}
     </React.Fragment>
   );
 };
