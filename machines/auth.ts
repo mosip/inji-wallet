@@ -12,6 +12,7 @@ const model = createModel(
     biometrics: '',
     canUseBiometrics: false,
     selectLanguage: false,
+    showSplashScreen: true,
   },
   {
     events: {
@@ -22,6 +23,7 @@ const model = createModel(
       STORE_RESPONSE: (response?: unknown) => ({ response }),
       SELECT: () => ({}),
       NEXT: () => ({}),
+      SPLASSH_SCREEN_DONE: () => ({}),
     },
   }
 );
@@ -64,6 +66,7 @@ export const authMachine = model.createMachine(
       checkingAuth: {
         always: [
           { cond: 'hasLanguageset', target: 'languagesetup' },
+          { cond: 'isSplashShowed', target: 'splashScreen' },
           { cond: 'hasPasscodeSet', target: 'unauthorized' },
           { cond: 'hasBiometricSet', target: 'unauthorized' },
           { target: 'settingUp' },
@@ -79,6 +82,13 @@ export const authMachine = model.createMachine(
       introSlider: {
         on: {
           NEXT: {
+            target: 'settingUp',
+          },
+        },
+      },
+      splashScreen: {
+        on: {
+          SPLASSH_SCREEN_DONE: {
             target: 'settingUp',
           },
         },
@@ -157,6 +167,9 @@ export const authMachine = model.createMachine(
     },
 
     guards: {
+      isSplashShowed: (context) => {
+        return context.showSplashScreen;
+      },
       hasData: (_, event: StoreResponseEvent) => event.response != null,
 
       hasPasscodeSet: (context) => {

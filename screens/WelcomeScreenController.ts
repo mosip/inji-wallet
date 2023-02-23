@@ -35,6 +35,10 @@ export function useWelcomeScreen(props: RootRouteProps) {
       authService.send(AuthEvents.SELECT()),
         props.navigation.navigate('IntroSliders');
     },
+    SPLASSH_SCREEN_DONE: () => {
+      authService.send(AuthEvents.SPLASSH_SCREEN_DONE),
+        props.navigation.navigate('Welcome');
+    },
     unlockPage: () => {
       // prioritize biometrics
       if (!isSettingUp && isBiometricUnlockEnabled && biometrics !== '') {

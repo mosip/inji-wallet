@@ -54,6 +54,7 @@ export const ScanLayout: React.FC = () => {
       </ScanStack.Navigator>
 
       <ProgressingModal
+        isVisible={controller.statusOverlay != null}
         title={controller.statusOverlay?.title}
         timeoutHint={controller.statusOverlay?.hint}
         isVisible={controller.statusOverlay != null}
