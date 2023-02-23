@@ -39,6 +39,7 @@ export interface Typegen0 {
     hasData: 'STORE_RESPONSE';
     hasLanguageset: '';
     hasPasscodeSet: '';
+    isSplashShowed: '';
   };
   'eventsCausingServices': {
     downloadFaceSdkModel: 'LOGIN' | 'SETUP_PASSCODE';
@@ -51,6 +52,7 @@ export interface Typegen0 {
     | 'languagesetup'
     | 'savingDefaults'
     | 'settingUp'
+    | 'splashScreen'
     | 'unauthorized';
   'tags': never;
 }
