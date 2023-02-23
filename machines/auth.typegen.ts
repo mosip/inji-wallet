@@ -36,6 +36,7 @@ export interface Typegen0 {
     hasBiometricSet: '';
     hasData: 'STORE_RESPONSE';
     hasPasscodeSet: '';
+    isSplashShowed: '';
   };
   'eventsCausingServices': {
     downloadFaceSdkModel: 'LOGIN' | 'SETUP_PASSCODE';
@@ -46,6 +47,7 @@ export interface Typegen0 {
     | 'init'
     | 'savingDefaults'
     | 'settingUp'
+    | 'splashScreen'
     | 'unauthorized';
   'tags': never;
 }

@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Centered, Column, Text } from './ui';
 import { Modal } from './ui/Modal';
 import { Image, View } from 'react-native';
 import { Theme } from './ui/styleUtils';
-import Loader from 'react-native-three-dots-loader';
+import PaginationDot from 'react-native-animated-pagination-dot';
 
 export const ProgressingModal: React.FC<ProgressingModalProps> = (props) => {
   const { t } = useTranslation('ScanScreen');
+
+  let n = 0;
+  const [curPage, setCurPage] = useState(n);
+
+  const highLightDot = () => setCurPage(n + 1);
 
   return (
     <React.Fragment>
@@ -24,9 +29,13 @@ export const ProgressingModal: React.FC<ProgressingModalProps> = (props) => {
               source={Theme.InjiProgressingLogo}
               height={2}
               width={2}
-              style={{ marginBottom: 15 }}
+              style={{ marginBottom: 15, marginLeft: -6 }}
             />
-            <Loader size={7} activeBackground={Theme.Colors.Loading} />
+            <PaginationDot
+              activeDotColor={'black'}
+              curPage={curPage}
+              maxPage={3}
+            />
           </Column>
 
           <Column style={{ display: props.timeoutHint ? 'flex' : 'none' }}>

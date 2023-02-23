@@ -11,6 +11,7 @@ const model = createModel(
     passcode: '',
     biometrics: '',
     canUseBiometrics: false,
+    showSplashScreen: true,
   },
   {
     events: {
@@ -19,6 +20,7 @@ const model = createModel(
       LOGOUT: () => ({}),
       LOGIN: () => ({}),
       STORE_RESPONSE: (response?: unknown) => ({ response }),
+      SPLASSH_SCREEN_DONE: () => ({}),
     },
   }
 );
@@ -60,10 +62,18 @@ export const authMachine = model.createMachine(
       },
       checkingAuth: {
         always: [
+          { cond: 'isSplashShowed', target: 'splashScreen' },
           { cond: 'hasPasscodeSet', target: 'unauthorized' },
           { cond: 'hasBiometricSet', target: 'unauthorized' },
           { target: 'settingUp' },
         ],
+      },
+      splashScreen: {
+        on: {
+          SPLASSH_SCREEN_DONE: {
+            target: 'settingUp',
+          },
+        },
       },
       settingUp: {
         on: {
@@ -146,6 +156,9 @@ export const authMachine = model.createMachine(
     },
 
     guards: {
+      isSplashShowed: (context) => {
+        return context.showSplashScreen;
+      },
       hasData: (_, event: StoreResponseEvent) => event.response != null,
 
       hasPasscodeSet: (context) => {
