@@ -24,7 +24,7 @@ import { MainRouteProps } from '../../routes/main';
 import { GlobalContext } from '../../shared/GlobalContext';
 import { useTranslation } from 'react-i18next';
 
-export function useProfileScreen({ navigation }: MainRouteProps) {
+export function useSettingsScreen({ navigation }: MainRouteProps) {
   const { appService } = useContext(GlobalContext);
   const authService = appService.children.get('auth');
   const settingsService = appService.children.get('settings');

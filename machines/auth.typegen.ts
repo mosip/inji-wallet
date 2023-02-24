@@ -14,7 +14,7 @@
         missingImplementations: {
           actions: never;
           delays: never;
-          guards: never;
+          guards: "isSplashShowed";
           services: never;
         };
         eventsCausingActions: {
