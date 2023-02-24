@@ -641,6 +641,17 @@ export const DefaultTheme = {
       borderRadius: 15,
       margin: -13.5,
     },
+    kebabPopUp: {
+      backgroundColor: 'transparent',
+      marginHorizontal: 4,
+    },
+    kebabHeaderStyle: {
+      backgroundColor: 'white',
+      borderTopLeftRadius: 30,
+      borderTopRightRadius: 24,
+      padding: 18,
+      justifyContent: 'space-between',
+    },
     button: {
       borderTopLeftRadius: 0,
       borderTopRightRadius: 0,

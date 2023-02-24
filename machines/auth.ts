@@ -174,9 +174,6 @@ export const authMachine = model.createMachine(
     },
 
     guards: {
-      isSplashShowed: (context) => {
-        return context.showSplashScreen;
-      },
       hasData: (_, event: StoreResponseEvent) => event.response != null,
 
       hasPasscodeSet: (context) => {
