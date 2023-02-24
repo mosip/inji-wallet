@@ -45,8 +45,12 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
     const dependencyData = dependencies[dependencyName];
 
     if (dependencyName == 'react-native-openid4vp-ble') {
-      packageVersion = dependencyData.from.split('#')[1];
-      packageCommitId = dependencyData.version.split('#')[1].substring(0, 7);
+      packageVersion = dependencyData.from
+        ? dependencyData.from.split('#')[1]
+        : 'unknown';
+      if (packageVersion != 'unknown') {
+        packageCommitId = dependencyData.version.split('#')[1].substring(0, 7);
+      }
     }
   });
 
@@ -144,14 +148,16 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
           color={Theme.Colors.profileVersion}>
           {t('version')}: {getVersion()}
         </Text>
-        <Text
-          weight="semibold"
-          margin="32 0 0 0"
-          align="center"
-          size="smaller"
-          color={Theme.Colors.profileVersion}>
-          {t('tuvali-version')}: {packageVersion + '-' + packageCommitId}
-        </Text>
+        {packageVersion != 'unknown' && (
+          <Text
+            weight="semibold"
+            margin="32 0 0 0"
+            align="center"
+            size="smaller"
+            color={Theme.Colors.profileVersion}>
+            {t('tuvali-version')}: {packageVersion + '-' + packageCommitId}
+          </Text>
+        )}
         {controller.backendInfo.application.name !== '' ? (
           <View>
             <Text
