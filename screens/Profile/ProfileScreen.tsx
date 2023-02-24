@@ -18,7 +18,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 const LanguageSetting: React.FC = () => {
   const { t } = useTranslation('ProfileScreen');
-
   return (
     <LanguageSelector
       triggerComponent={
@@ -39,6 +38,22 @@ const LanguageSetting: React.FC = () => {
 
 export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
   const { t } = useTranslation('ProfileScreen');
+  const dependencies = require('../../package-lock.json').dependencies;
+  let packageVersion, packageCommitId;
+
+  Object.keys(dependencies).forEach((dependencyName) => {
+    const dependencyData = dependencies[dependencyName];
+
+    if (dependencyName == 'react-native-openid4vp-ble') {
+      packageVersion = dependencyData.from
+        ? dependencyData.from.split('#')[1]
+        : 'unknown';
+      if (packageVersion != 'unknown') {
+        packageCommitId = dependencyData.version.split('#')[1].substring(0, 7);
+      }
+    }
+  });
+
   const controller = useProfileScreen(props);
   return (
     <ScrollView>
@@ -133,6 +148,16 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
           color={Theme.Colors.profileVersion}>
           {t('version')}: {getVersion()}
         </Text>
+        {packageVersion != 'unknown' && (
+          <Text
+            weight="semibold"
+            margin="32 0 0 0"
+            align="center"
+            size="smaller"
+            color={Theme.Colors.profileVersion}>
+            {t('tuvali-version')}: {packageVersion + '-' + packageCommitId}
+          </Text>
+        )}
         {controller.backendInfo.application.name !== '' ? (
           <View>
             <Text

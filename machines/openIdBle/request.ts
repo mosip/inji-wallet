@@ -237,6 +237,10 @@ export const requestMachine =
               target: 'waitingForVc',
               actions: 'setSenderInfo',
             },
+
+            DISCONNECT: {
+              target: 'disconnected',
+            },
           },
         },
         waitingForVc: {
