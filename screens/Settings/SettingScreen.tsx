@@ -9,7 +9,7 @@ import { EditableListItem } from '../../components/EditableListItem';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { Credits } from './Credits';
 import { Revoke } from './Revoke';
-import { useProfileScreen } from './SettingScreenController';
+import { useSettingsScreen } from './SettingScreenController';
 import { useTranslation } from 'react-i18next';
 import { LanguageSelector } from '../../components/LanguageSelector';
 import i18next, { SUPPORTED_LANGUAGES } from '../../i18n';
@@ -50,7 +50,7 @@ export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
   props
 ) => {
   const { t } = useTranslation('SettingScreen');
-  const controller = useProfileScreen(props);
+  const controller = useSettingsScreen(props);
 
   const [isContentVisible, setIsContentVisible] = useState(false);
   const toggleContent = () => setIsContentVisible(!isContentVisible);

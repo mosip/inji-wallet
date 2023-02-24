@@ -1,7 +1,6 @@
 import { useSelector } from '@xstate/react';
 import { useContext } from 'react';
 import {
-  AuthEvents,
   selectBiometrics,
   selectPasscode,
   selectSettingUp,
@@ -25,10 +24,7 @@ export function useWelcomeScreen(props: RootRouteProps) {
 
   return {
     isSettingUp,
-    SPLASSH_SCREEN_DONE: () => {
-      authService.send(AuthEvents.SPLASSH_SCREEN_DONE),
-        props.navigation.navigate('Welcome');
-    },
+
     unlockPage: () => {
       // prioritize biometrics
       if (!isSettingUp && isBiometricUnlockEnabled && biometrics !== '') {

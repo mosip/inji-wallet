@@ -30,6 +30,7 @@ const VerifiedIcon: React.FC = () => {
 };
 import { LocalizedField } from '../types/vc';
 import { VcItemTags } from './VcItemTags';
+import { KebabPopUpMenu } from './KebabPopUp';
 
 const getDetails = (arg1, arg2, verifiableCredential) => {
   if (arg1 === 'Status') {
@@ -258,13 +259,10 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
                 children={t('offlineAuthDisabledHeader')}></Text>
             </Row>
 
-            <Pressable>
-              <Icon
-                name="dots-three-horizontal"
-                type="entypo"
-                color={Theme.Colors.GrayIcon}
-              />
-            </Pressable>
+            <KebabPopUpMenu
+              iconName="dots-three-horizontal"
+              iconType="entypo"
+            />
           </Row>
         ) : (
           <Row
@@ -287,13 +285,10 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
             </Row>
 
             {props.showOnlyBindedVc ? null : (
-              <Pressable>
-                <Icon
-                  name="dots-three-horizontal"
-                  type="entypo"
-                  color={Theme.Colors.GrayIcon}
-                />
-              </Pressable>
+              <KebabPopUpMenu
+                iconName="dots-three-horizontal"
+                iconType="entypo"
+              />
             )}
           </Row>
         )}
