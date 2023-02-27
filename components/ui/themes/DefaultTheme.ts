@@ -620,14 +620,13 @@ export const DefaultTheme = {
       margin: -13.5,
     },
     kebabPopUp: {
-      backgroundColor: 'transparent',
       marginHorizontal: 4,
     },
     kebabHeaderStyle: {
       backgroundColor: 'white',
       borderTopLeftRadius: 30,
       borderTopRightRadius: 24,
-      padding: 18,
+      padding: 15,
       justifyContent: 'space-between',
     },
     button: {
