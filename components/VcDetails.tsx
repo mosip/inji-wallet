@@ -287,20 +287,24 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
             color={Theme.Colors.Details}>
             {t('offlineAuthDisabledHeader')}
           </Text>
-          <Text
-            style={{ flex: 1 }}
-            weight="regular"
-            size="small"
-            margin={'0 0 5 0'}
-            color={Theme.Colors.Details}>
-            {t('offlineAuthDisabledMessage')}
-          </Text>
+          {props.activeTab !== 1 && (
+            <>
+              <Text
+                style={{ flex: 1 }}
+                weight="regular"
+                size="small"
+                margin={'0 0 5 0'}
+                color={Theme.Colors.Details}>
+                {t('offlineAuthDisabledMessage')}
+              </Text>
 
-          <Button
-            title={t('enableVerification')}
-            onPress={props.onBinding}
-            type="radius"
-          />
+              <Button
+                title={t('enableVerification')}
+                onPress={props.onBinding}
+                type="radius"
+              />
+            </>
+          )}
         </Column>
       ) : (
         <Column style={Theme.Styles.openCardBgContainer}>
@@ -329,6 +333,7 @@ interface VcDetailsProps {
   vc: VC;
   isBindingPending: boolean;
   onBinding?: () => void;
+  activeTab: Number;
 }
 
 function getFullAddress(credential: CredentialSubject) {

@@ -54,6 +54,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
             vc={controller.vc}
             onBinding={controller.addtoWallet}
             isBindingPending={controller.isWalletBindingPending}
+            activeTab={props.activeTab}
           />
 
           {controller.walletBindingError !== '' && (
