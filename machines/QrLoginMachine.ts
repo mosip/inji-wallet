@@ -314,7 +314,7 @@ export const qrLoginMachine =
         linkTransaction: async (context) => {
           const response = await request(
             'POST',
-            '/v1/idp/linked-authorization/link-transaction',
+            '/v1/esignet/linked-authorization/link-transaction',
             {
               requestTime: String(new Date().toISOString()),
               request: {
@@ -339,7 +339,7 @@ export const qrLoginMachine =
 
           const response = await request(
             'POST',
-            '/v1/idp/linked-authorization/authenticate',
+            '/v1/esignet/linked-authorization/authenticate',
             {
               requestTime: String(new Date().toISOString()),
               request: {
@@ -372,7 +372,7 @@ export const qrLoginMachine =
 
           const response = await request(
             'POST',
-            '/v1/idp/linked-authorization/authenticate',
+            '/v1/esignet/linked-authorization/authenticate',
             {
               requestTime: String(new Date().toISOString()),
               request: {
@@ -392,7 +392,7 @@ export const qrLoginMachine =
 
           const resp = await request(
             'POST',
-            '/v1/idp/linked-authorization/consent',
+            '/v1/esignet/linked-authorization/consent',
             {
               requestTime: String(new Date().toISOString()),
               request: {
