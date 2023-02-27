@@ -70,7 +70,7 @@ export const SendVcScreen: React.FC = () => {
           margin="2 0 0 0"
           elevation={2}>
           <Button
-            title={t('acceptRequest', { vcLabel: controller.vcLabel.singular })}
+            title={t('acceptRequest')}
             margin="12 0 12 0"
             disabled={controller.selectedIndex == null}
             onPress={controller.ACCEPT_REQUEST}
