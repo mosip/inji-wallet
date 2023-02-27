@@ -335,8 +335,8 @@
   },
   "SendVcScreen": {
     "reasonForSharing": "Reason for sharing (optional)",
-    "acceptRequest": "Accept request and choose {{vcLabel}}",
-    "acceptRequestAndVerify": "Accept request and verify",
+    "acceptRequest": "Share",
+    "acceptRequestAndVerify": "Share with Selfie",
     "reject": "Reject",
     "consentToPhotoVerification": "I give consent to have my photo taken for authentication"
   },
