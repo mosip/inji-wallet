@@ -75,7 +75,6 @@
     "react-native-simple-markdown": "^1.1.0",
     "react-native-svg": "12.1.1",
     "react-native-swipe-gestures": "^1.0.5",
-    "react-native-three-dots-loader": "^1.0.1",
     "react-native-uuid": "^2.0.1",
     "react-native-vector-icons": "^8.1.0",
     "xstate": "^4.35.0"

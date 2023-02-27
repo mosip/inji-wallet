@@ -1,19 +1,15 @@
 import React, { useRef, useState } from 'react';
 import { t } from 'i18next';
-import {
-  SafeAreaView,
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  Pressable,
-} from 'react-native';
+import { Pressable } from 'react-native';
 import { BottomSheet, Icon, ListItem } from 'react-native-elements';
 import { Theme } from '../components/ui/styleUtils';
 import { Button } from '../components/ui/Button';
 import { Column, Row, Text } from '../components/ui';
+import { useTranslation } from 'react-i18next';
 
 export const KebabPopUpMenu: React.FC<KebabPopUpMenuProps> = (props) => {
   const [visible, setVisible] = useState(false);
+  const { t } = useTranslation('HomeScreenKebabPopUp');
 
   return (
     <Column>
@@ -32,7 +28,7 @@ export const KebabPopUpMenu: React.FC<KebabPopUpMenuProps> = (props) => {
         containerStyle={Theme.MessageOverlayStyles.kebabPopUp}>
         <Row style={Theme.MessageOverlayStyles.kebabHeaderStyle}>
           <Text weight="bold" style={Theme.TextStyles.base}>
-            {t('More Options')}
+            {t('title')}
           </Text>
           <Icon
             name="close"
@@ -43,70 +39,68 @@ export const KebabPopUpMenu: React.FC<KebabPopUpMenuProps> = (props) => {
             size={25}
           />
         </Row>
-        <Column>
-          <ListItem bottomDivider>
-            <ListItem.Content>
-              <ListItem.Title>
-                <Text size="small" style={Theme.TextStyles.bold}>
-                  {t('Unpin Card')}
-                </Text>
-              </ListItem.Title>
-            </ListItem.Content>
-          </ListItem>
-          <ListItem bottomDivider>
-            <ListItem.Content>
-              <ListItem.Title>
-                <Text size="small" style={Theme.TextStyles.bold}>
-                  {t('offlineAuthenticationDisabled!')}
-                </Text>
-              </ListItem.Title>
-              <Text
-                weight="bold"
-                color={Theme.Colors.profileValue}
-                size="smaller">
-                {t(
-                  'Click here to enable the credentials to be used for offline authentication.'
-                )}
+        <ListItem bottomDivider>
+          <ListItem.Content>
+            <ListItem.Title>
+              <Text size="small" style={Theme.TextStyles.bold}>
+                {t('UnpinCard')}
               </Text>
-            </ListItem.Content>
-          </ListItem>
-          <ListItem bottomDivider>
-            <ListItem.Content>
-              <ListItem.Title>
-                <Text size="small" style={Theme.TextStyles.bold}>
-                  {t('View Activity Log')}
-                </Text>
-              </ListItem.Title>
-            </ListItem.Content>
-          </ListItem>
-          <ListItem bottomDivider>
-            <ListItem.Content>
-              <ListItem.Title>
-                <Text size="small" style={Theme.TextStyles.bold}>
-                  {t('Remove from Wallet')}
-                </Text>
-              </ListItem.Title>
-            </ListItem.Content>
-          </ListItem>
-          <ListItem bottomDivider>
-            <ListItem.Content>
-              <ListItem.Title>
-                <Text
-                  color={Theme.Colors.errorMessage}
-                  size="small"
-                  style={Theme.TextStyles.bold}>
-                  {t('Revoke ID')}
-                </Text>
-              </ListItem.Title>
-              <Text
-                weight="bold"
-                color={Theme.Colors.profileValue}
-                size="smaller">
-                {t('Revoke the virtual ID for this profile')}
+            </ListItem.Title>
+          </ListItem.Content>
+        </ListItem>
+        <ListItem bottomDivider>
+          <ListItem.Content>
+            <ListItem.Title>
+              <Text size="small" style={Theme.TextStyles.bold}>
+                {true
+                  ? t('offlineAuthenticationDisabled!')
+                  : t('profileAuthenticated')}
               </Text>
-            </ListItem.Content>
-          </ListItem>
-        </Column>
+            </ListItem.Title>
+            <Text
+              weight="bold"
+              color={Theme.Colors.profileValue}
+              size="smaller">
+              {true ? t('offlineAuthDisabledMessage') : null}
+            </Text>
+          </ListItem.Content>
+        </ListItem>
+        <ListItem bottomDivider>
+          <ListItem.Content>
+            <ListItem.Title>
+              <Text size="small" style={Theme.TextStyles.bold}>
+                {t('ViewActivityLog')}
+              </Text>
+            </ListItem.Title>
+          </ListItem.Content>
+        </ListItem>
+        <ListItem bottomDivider>
+          <ListItem.Content>
+            <ListItem.Title>
+              <Text size="small" style={Theme.TextStyles.bold}>
+                {t('RemoveFromWallet')}
+              </Text>
+            </ListItem.Title>
+          </ListItem.Content>
+        </ListItem>
+        <ListItem bottomDivider>
+          <ListItem.Content>
+            <ListItem.Title>
+              <Text
+                color={Theme.Colors.errorMessage}
+                size="small"
+                style={Theme.TextStyles.bold}>
+                {t('RevokeID')}
+              </Text>
+            </ListItem.Title>
+            <Text
+              weight="bold"
+              color={Theme.Colors.profileValue}
+              size="smaller">
+              {t('RevokeMessage')}
+            </Text>
+          </ListItem.Content>
+        </ListItem>
       </BottomSheet>
     </Column>
   );
