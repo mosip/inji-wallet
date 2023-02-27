@@ -85,6 +85,17 @@
     "yesConfirm": "Yes, I confirm",
     "no" : "No"
   },
+  "HomeScreenKebabPopUp": {
+    "title": "More Options",
+    "UnpinCard": "Unpin Card",
+    "offlineAuthenticationDisabled!": "Offline authentication disabled!",
+    "offlineAuthDisabledMessage": "Click 'Enable Authentication' to enable this credentials to be used for offline authentication.",
+    "ViewActivityLog": "View activity log",
+    "RemoveFromWallet": "Remove from wallet",
+    "RevokeID": "Revoke ID",
+    "RevokeMessage": "Revoke the virtual ID for this profile"
+
+  },
   "AuthScreen": {
     "header": "Select App Unlock Method",
     "Description": "Would you like to use biometrics to unlock the application?",
