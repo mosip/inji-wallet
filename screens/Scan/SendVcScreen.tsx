@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { CheckBox, Input } from 'react-native-elements';
 import { useTranslation } from 'react-i18next';
 
@@ -11,10 +11,26 @@ import { VerifyIdentityOverlay } from '../VerifyIdentityOverlay';
 import { VcItem } from '../../components/VcItem';
 import { SingleVcItem } from '../../components/SingleVcItem';
 import { I18nManager } from 'react-native';
+import { useInterpret } from '@xstate/react';
+import { createVcItemMachine } from '../../machines/vcItem';
+import { GlobalContext } from '../../shared/GlobalContext';
 
 export const SendVcScreen: React.FC = () => {
   const { t } = useTranslation('SendVcScreen');
+  const { appService } = useContext(GlobalContext);
   const controller = useSendVcScreen();
+
+  const firstVCMachine = useRef(
+    createVcItemMachine(
+      appService.getSnapshot().context.serviceRefs,
+      controller.vcKeys[0]
+    )
+  );
+  const service = useInterpret(firstVCMachine.current);
+
+  useEffect(() => {
+    controller.SELECT_VC_ITEM(0)(service);
+  }, [controller.vcKeys]);
 
   const reasonLabel = t('reasonForSharing');
 
