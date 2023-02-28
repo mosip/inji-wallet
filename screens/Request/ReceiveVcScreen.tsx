@@ -24,7 +24,11 @@ export const ReceiveVcScreen: React.FC = () => {
           <Text weight="semibold" margin="24 24 0 24">
             {t('header', { vcLabel: controller.vcLabel.singular })}
           </Text>
-          <VcDetails vc={controller.incomingVc} isBindingPending={false} />
+          <VcDetails
+            vc={controller.incomingVc}
+            isBindingPending={false}
+            activeTab={1}
+          />
         </Column>
         <Column padding="0 24" margin="32 0 0 0">
           {controller.incomingVc.shouldVerifyPresence ? (
