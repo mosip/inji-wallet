@@ -91,12 +91,6 @@ export const DefaultTheme = {
     TimoutText: Colors.TimoutText,
   },
   Styles: StyleSheet.create({
-    splashScreen: {
-      height: '100%',
-      width: '100%',
-      alignItems: 'center',
-      paddingTop: '63%',
-    },
     title: {
       color: Colors.Black,
       backgroundColor: Colors.Transparent,
