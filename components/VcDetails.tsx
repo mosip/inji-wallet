@@ -268,58 +268,62 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
         />
       ))}
 
-      {props.isBindingPending ? (
-        <Column style={Theme.Styles.openCardBgContainer}>
-          <Row margin={'0 0 5 0'}>
-            <Icon
-              name="shield-alert"
-              color={Theme.Colors.Icon}
-              size={30}
-              type="material-community"
-            />
-          </Row>
+      {props.activeTab !== 1 ? (
+        props.isBindingPending ? (
+          <Column style={Theme.Styles.openCardBgContainer}>
+            <Row margin={'0 0 5 0'}>
+              <Icon
+                name="shield-alert"
+                color={Theme.Colors.Icon}
+                size={30}
+                type="material-community"
+              />
+            </Row>
 
-          <Text
-            style={{ flex: 1 }}
-            weight="semibold"
-            size="small"
-            margin={'0 0 5 0'}
-            color={Theme.Colors.Details}>
-            {t('offlineAuthDisabledHeader')}
-          </Text>
-          <Text
-            style={{ flex: 1 }}
-            weight="regular"
-            size="small"
-            margin={'0 0 5 0'}
-            color={Theme.Colors.Details}>
-            {t('offlineAuthDisabledMessage')}
-          </Text>
-
-          <Button
-            title={t('enableVerification')}
-            onPress={props.onBinding}
-            type="radius"
-          />
-        </Column>
-      ) : (
-        <Column style={Theme.Styles.openCardBgContainer}>
-          <Row crossAlign="center">
-            <Icon
-              name="verified-user"
-              color={Theme.Colors.VerifiedIcon}
-              size={28}
-              containerStyle={{ marginStart: 4, bottom: 1 }}
-            />
             <Text
-              numLines={1}
-              color={Theme.Colors.Details}
-              weight="bold"
-              size="smaller"
-              margin="10 10 10 10"
-              children={t('profileAuthenticated')}></Text>
-          </Row>
-        </Column>
+              style={{ flex: 1 }}
+              weight="semibold"
+              size="small"
+              margin={'0 0 5 0'}
+              color={Theme.Colors.Details}>
+              {t('offlineAuthDisabledHeader')}
+            </Text>
+            <Text
+              style={{ flex: 1 }}
+              weight="regular"
+              size="small"
+              margin={'0 0 5 0'}
+              color={Theme.Colors.Details}>
+              {t('offlineAuthDisabledMessage')}
+            </Text>
+
+            <Button
+              title={t('enableVerification')}
+              onPress={props.onBinding}
+              type="radius"
+            />
+          </Column>
+        ) : (
+          <Column style={Theme.Styles.openCardBgContainer}>
+            <Row crossAlign="center">
+              <Icon
+                name="verified-user"
+                color={Theme.Colors.VerifiedIcon}
+                size={28}
+                containerStyle={{ marginStart: 4, bottom: 1 }}
+              />
+              <Text
+                numLines={1}
+                color={Theme.Colors.Details}
+                weight="bold"
+                size="smaller"
+                margin="10 10 10 10"
+                children={t('profileAuthenticated')}></Text>
+            </Row>
+          </Column>
+        )
+      ) : (
+        <></>
       )}
     </Column>
   );
@@ -329,6 +333,7 @@ interface VcDetailsProps {
   vc: VC;
   isBindingPending: boolean;
   onBinding?: () => void;
+  activeTab?: Number;
 }
 
 function getFullAddress(credential: CredentialSubject) {

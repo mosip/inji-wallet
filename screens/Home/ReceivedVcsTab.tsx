@@ -29,6 +29,7 @@ export const ReceivedVcsTab: React.FC<HomeScreenTabProps> = (props) => {
             vcKey={vcKey}
             margin="0 2 8 2"
             onPress={controller.VIEW_VC}
+            activeTab={props.service.id}
           />
         ))}
         {controller.vcKeys.length === 0 && (
