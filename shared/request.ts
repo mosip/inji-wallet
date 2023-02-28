@@ -24,11 +24,28 @@ export async function request(
   const jsonResponse = await response.json();
 
   if (response.status >= 400) {
-    throw new Error(jsonResponse.message || jsonResponse.error);
+    let backendUrl = HOST + path;
+    let errorMessage = jsonResponse.message || jsonResponse.error;
+    console.error(
+      'The backend API ' +
+        backendUrl +
+        ' returned error code 400 with message --> ' +
+        errorMessage
+    );
+    throw new Error(errorMessage);
   }
 
   if (jsonResponse.errors && jsonResponse.errors.length) {
+    let backendUrl = HOST + path;
     const { errorCode, errorMessage } = jsonResponse.errors.shift();
+    console.error(
+      'The backend API ' +
+        backendUrl +
+        ' returned error response --> error code is : ' +
+        errorCode +
+        ' error message is : ' +
+        errorMessage
+    );
     throw new BackendResponseError(errorCode, errorMessage);
   }
 

@@ -247,7 +247,9 @@ export const AddVcModalMachine =
               ? i18n.t(`errors.backend.${ID_ERRORS_MAP[message]}`, {
                   ns: 'AddVcModal',
                 })
-              : message;
+              : i18n.t(`errors.genericError`, {
+                  ns: 'common',
+                });
           },
         }),
 

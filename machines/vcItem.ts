@@ -25,6 +25,7 @@ import {
 import getAllConfigurations, {
   DownloadProps,
 } from '../shared/commonprops/commonProps';
+import i18n from '../i18n';
 
 const model = createModel(
   {
@@ -497,7 +498,10 @@ export const vcItemMachine =
     {
       actions: {
         setWalletBindingError: assign({
-          walletBindingError: (context, event) => (event.data as Error).message,
+          walletBindingError: (context, event) =>
+            i18n.t(`errors.genericError`, {
+              ns: 'common',
+            }),
         }),
 
         setWalletBindingErrorEmpty: assign({
