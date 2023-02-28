@@ -19,17 +19,23 @@ export const SendVcScreen: React.FC = () => {
   const { t } = useTranslation('SendVcScreen');
   const { appService } = useContext(GlobalContext);
   const controller = useSendVcScreen();
+  let service;
 
-  const firstVCMachine = useRef(
-    createVcItemMachine(
-      appService.getSnapshot().context.serviceRefs,
-      controller.vcKeys[0]
-    )
-  );
-  const service = useInterpret(firstVCMachine.current);
+  if (controller.vcKeys?.length > 0) {
+    const firstVCMachine = useRef(
+      createVcItemMachine(
+        appService.getSnapshot().context.serviceRefs,
+        controller.vcKeys[0]
+      )
+    );
+
+    service = useInterpret(firstVCMachine.current);
+  }
 
   useEffect(() => {
-    controller.SELECT_VC_ITEM(0)(service);
+    if (service) {
+      controller.SELECT_VC_ITEM(0)(service);
+    }
   }, [controller.vcKeys]);
 
   const reasonLabel = t('reasonForSharing');
