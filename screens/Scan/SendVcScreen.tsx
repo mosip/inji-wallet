@@ -36,7 +36,7 @@ export const SendVcScreen: React.FC = () => {
     if (service) {
       controller.SELECT_VC_ITEM(0)(service);
     }
-  }, [controller.vcKeys]);
+  }, []);
 
   const reasonLabel = t('reasonForSharing');
 
