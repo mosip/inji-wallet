@@ -45,11 +45,7 @@ export const SendVcScreen: React.FC = () => {
       <Column fill backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
         <Column padding="16 0" scroll>
           <DeviceInfoList of="receiver" deviceInfo={controller.receiverInfo} />
-          <CheckBox
-            title={t('consentToPhotoVerification')}
-            checked={controller.selectedVc.shouldVerifyPresence}
-            onPress={controller.TOGGLE_USER_CONSENT}
-          />
+
           <Column padding="24">
             <Input
               value={controller.reason ? controller.reason : ''}
