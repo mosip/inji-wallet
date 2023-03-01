@@ -1,19 +1,19 @@
 import { useSelector } from '@xstate/react';
 import { useContext } from 'react';
 import {
-  RequestEvents,
+  TimerBaseRequestEvents,
   selectIncomingVc,
   selectIsIncomingVp,
   selectIsInvalidIdentity,
   selectIsVerifyingIdentity,
   selectSenderInfo,
-} from '../../machines/request';
+} from '../../machines/TimerBaseRequest';
 import { selectVcLabel } from '../../machines/settings';
 import { GlobalContext } from '../../shared/GlobalContext';
 
 export function useReceiveVcScreen() {
   const { appService } = useContext(GlobalContext);
-  const requestService = appService.children.get('request');
+  const requestService = appService.children.get('timerBaseRequest');
   const settingsService = appService.children.get('settings');
 
   return {
@@ -25,15 +25,16 @@ export function useReceiveVcScreen() {
     isVerifyingIdentity: useSelector(requestService, selectIsVerifyingIdentity),
     isInvalidIdentity: useSelector(requestService, selectIsInvalidIdentity),
 
-    ACCEPT: () => requestService.send(RequestEvents.ACCEPT()),
+    ACCEPT: () => requestService.send(TimerBaseRequestEvents.ACCEPT()),
     ACCEPT_AND_VERIFY: () =>
-      requestService.send(RequestEvents.ACCEPT_AND_VERIFY()),
-    REJECT: () => requestService.send(RequestEvents.REJECT()),
+      requestService.send(TimerBaseRequestEvents.ACCEPT_AND_VERIFY()),
+    REJECT: () => requestService.send(TimerBaseRequestEvents.REJECT()),
     RETRY_VERIFICATION: () =>
-      requestService.send(RequestEvents.RETRY_VERIFICATION()),
-    CANCEL: () => requestService.send(RequestEvents.CANCEL()),
-    DISMISS: () => requestService.send(RequestEvents.DISMISS()),
-    FACE_VALID: () => requestService.send(RequestEvents.FACE_VALID()),
-    FACE_INVALID: () => requestService.send(RequestEvents.FACE_INVALID()),
+      requestService.send(TimerBaseRequestEvents.RETRY_VERIFICATION()),
+    CANCEL: () => requestService.send(TimerBaseRequestEvents.CANCEL()),
+    DISMISS: () => requestService.send(TimerBaseRequestEvents.DISMISS()),
+    FACE_VALID: () => requestService.send(TimerBaseRequestEvents.FACE_VALID()),
+    FACE_INVALID: () =>
+      requestService.send(TimerBaseRequestEvents.FACE_INVALID()),
   };
 }

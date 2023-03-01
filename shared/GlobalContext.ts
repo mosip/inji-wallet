@@ -9,7 +9,7 @@ import { settingsMachine } from '../machines/settings';
 import { storeMachine } from '../machines/store';
 import { vcMachine } from '../machines/vc';
 import { revokeVidsMachine } from '../machines/revoke';
-import { qrLoginMachine } from '../machines/QrLoginMachine';
+import { TimerBaseRequestMachine } from '../machines/TimerBaseRequest';
 
 export const GlobalContext = createContext({} as GlobalServices);
 
@@ -24,6 +24,7 @@ export interface AppServices {
   settings: ActorRefFrom<typeof settingsMachine>;
   activityLog: ActorRefFrom<typeof activityLogMachine>;
   request: ActorRefFrom<typeof requestMachine>;
+  timerBaseRequest: ActorRefFrom<typeof TimerBaseRequestMachine>;
   scan: ActorRefFrom<typeof scanMachine>;
   revoke: ActorRefFrom<typeof revokeVidsMachine>;
 }

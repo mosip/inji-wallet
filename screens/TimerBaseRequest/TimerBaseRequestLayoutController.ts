@@ -2,7 +2,7 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { useSelector } from '@xstate/react';
 import { useContext, useEffect } from 'react';
 import {
-  RequestEvents,
+  TimerBaseRequestEvents,
   selectIsAccepted,
   selectIsDisconnected,
   selectIsDone,
@@ -10,14 +10,14 @@ import {
   selectIsReviewing,
   selectIsWaitingForConnection,
   selectSenderInfo,
-} from '../../machines/request';
+} from '../../machines/TimerBaseRequest';
 import { selectVcLabel } from '../../machines/settings';
 import { MainBottomTabParamList } from '../../routes/main';
 import { GlobalContext } from '../../shared/GlobalContext';
 
 type RequestStackParamList = {
-  RequestScreen: undefined;
-  ReceiveVcScreen: undefined;
+  TimerBaseRequestScreen: undefined;
+  TimerBaseReceiveVcScreen: undefined;
 };
 
 type RequestLayoutNavigation = NavigationProp<
@@ -27,39 +27,40 @@ type RequestLayoutNavigation = NavigationProp<
 export function useRequestLayout() {
   const { appService } = useContext(GlobalContext);
   const settingsService = appService.children.get('settings');
-  const requestService = appService.children.get('request');
+  const requestService = appService.children.get('timerBaseRequest');
   const navigation = useNavigation<RequestLayoutNavigation>();
-
-  useEffect(() => {
-    const subscriptions = [
-      navigation.addListener('focus', () =>
-        requestService.send(RequestEvents.SCREEN_FOCUS())
-      ),
-      navigation.addListener('blur', () =>
-        requestService.send(RequestEvents.SCREEN_BLUR())
-      ),
-    ];
-
-    return () => {
-      subscriptions.forEach((unsubscribe) => unsubscribe());
-    };
-  }, []);
-
   const isReviewing = useSelector(requestService, selectIsReviewing);
   const isDone = useSelector(requestService, selectIsDone);
   const isWaitingForConnection = useSelector(
     requestService,
     selectIsWaitingForConnection
   );
+  const isAccepted = useSelector(requestService, selectIsAccepted);
+
   useEffect(() => {
-    if (isDone) {
-      navigation.navigate('Home', { activeTab: 1 });
+    const subscriptions = [
+      navigation.addListener('focus', () =>
+        requestService.send(TimerBaseRequestEvents.SCREEN_FOCUS())
+      ),
+      navigation.addListener('blur', () =>
+        requestService.send(TimerBaseRequestEvents.SCREEN_BLUR())
+      ),
+    ];
+
+    return () => {
+      subscriptions.forEach((unsubscribe) => unsubscribe());
+    };
+  }, [isDone]);
+
+  useEffect(() => {
+    if (isAccepted) {
+      navigation.navigate('TimerBaseRequestScreen');
     } else if (isReviewing) {
-      navigation.navigate('ReceiveVcScreen');
+      navigation.navigate('TimerBaseReceiveVcScreen');
     } else if (isWaitingForConnection) {
-      navigation.navigate('RequestScreen');
+      navigation.navigate('TimerBaseRequestScreen');
     }
-  }, [isDone, isReviewing]);
+  }, [isDone, isReviewing, isAccepted]);
 
   return {
     vcLabel: useSelector(settingsService, selectVcLabel),
@@ -71,6 +72,6 @@ export function useRequestLayout() {
     isReviewing,
     isDone,
 
-    DISMISS: () => requestService.send(RequestEvents.DISMISS()),
+    DISMISS: () => requestService.send(TimerBaseRequestEvents.DISMISS()),
   };
 }

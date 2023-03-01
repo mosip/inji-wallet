@@ -81,15 +81,15 @@ const model = createModel(
   }
 );
 
-export const RequestEvents = model.events;
+export const TimerBaseRequestEvents = model.events;
 
-export const requestMachine =
+export const TimerBaseRequestMachine =
   /** @xstate-layout N4IgpgJg5mDOIC5QCcwEcCucAuBiAygMIBKAoqQHID6AQgDICqxA2gAwC6ioADgPawBLbAN4A7LiAAeiAIwAmAMysAdKxkKA7AFY1ADgAsurQDYNAGhABPRAFoAnBrnK7RuVpm6NuuQY0BfPwtUTBwCEnJqADEAeUIGfDZOJBA+QWExCWkELS19ZW9jOTlC1mNjGTsZC2sEeztjZw19OXrvVl1jBTkAoPQsWDwiMkoqGLiEmSSefiERcWSs3SXlYv0NGQ1y9sMFats7OTycw-1WNbdchR6QYP7BgHUASQAVQgAJKgAFYmjn2Oi6IkJKlZhkFrItAplBoXDlmo4ZMZdKw5HtajI1E5mg5jJVkVoitdbqF8E9Xh9vr9-oDJsCZul5qAsoi8qxWDklnIZOctHY0TZeVCZIjNFpvF5ITIiX0cMoAMYACzAcoA1gJRFAaAAbLDYXi8bAK-BgZAANwEcrAuAAgp9PlRrYRno8AGqkIHJEEMzKIBT1VQdEwwppNFzmKy2XENQ5LRGmLTB7qBG4ygbypWq9WanVgPUGo0m82W9PKtUa3D0BikP6-D6Ua30UgAEQ90zScx9CE6DRR+jsOh2pSW-IUHWU7gOXQ2UbWWmlITTitLWe1uv1huNZotYBLmfLler0VrVCbj3wDbozdbKXpHfBCHxyn0xjOwpc3kqxn5facuLsdlYdZuXqdp-GTYlFwzMtszXfNNyLHcIOEfdGEPY960bFsODpdswSZWQZHcFYFH0eR9EhToNG0b9PGUJEqMMHJjHcXQpXA1NsF3aDV1zdcCy3YskKzCtUJrZ4PlPc9MOvL073whBuQULR8gUbk1EcBRVK-CNak6FRFFKORWH-GFcXnO4uJXHM8w3Qtt2UMBRAAQwAIy1SBcBk288KkWQUTsZRuRyQVSkMcMahsQ4ZDozSOn7MoDGaOd2IXTi3Ngw0m0cgQPIAcSpKh8GrZ0KFyhJsM9bzGV8hTyg0ZxNAOXwznWGioVxLlSORZ8tmS3pUvldynOQLNCDEURlQZXBJAGJzsB3JyADN5uQAAKQhL2tYgT1IOhrQATQASlwJDBrAYbRvGya5i83DqqyBxdGUEijBcADdDsfR+ScNlEQ8DRAIS0c+pTAaAHcnNmDVIl4ZAxtECa5SmwhogoChSCdK8KrbUF7r8lEn2YppNPUJTSLRLohUpoxhX0Z9zNlCGoagGG4aupG5lwSSUbRjHnlu3HO3UQ4VmY047CUYVeS0NEWgaLoiYJOmDkKK4Uos7hUG4C6NWeXhSEkRUnI1MBHlERbeFwMhCFIV1SB2l1HhtqhHgoGIBe9e96mU-tgzFBQyhacLEATFRNnaAOCX-Ps7AZtMwENhVjagLMsoQs2LdwUgAA13mtUr7abVH3Wxm87s7FwoWKYoqJ0QUEzRYUCdYzZyIDozPrjziE6NjVU7AdPzd4ZR1U+ZBeCgVBYFgabZvm5QlpW9bUfRp1HlRqhnQAWVIaIGGeY7Tp7pO+41NPtwz4fR-Hye4FgD25JqjEPBWVgSPI1ZWp0pYnufLl+0Auyeoxgu4OUTsnfug8LbKGEAAWzALwDAeBCD5xtoCUuskfJZBfMpToqk3DsjZJpbSNQJbKQ-mLdYpQlKx3VozSGyEWawxdHKLmZ4ear35hgqqQs-QBWYi+JKMcOi6Ebj4ZScgGJrA8FyEwat+oWSZow1mLDcAukIFQa2ts3RYSmGXQWXsXBPg8B0TYJF-q7B0hsHwKlCIoh0OyIw+hQFKKzCouUI9RBjwnlPGeM1sBzQWstE0q18BvC2q7XKm9Hg7z3gfE6HFlCuOhswjx18fF3wflgvySh8gbAlgHbw7glKNzpvVUOYoExGSqS4hhbjUkwIEPAxByDUG7SyXjLsbJVB-ybkpAwuJG46GisiTQH0DinB-KAuUxtLRai1MJfxgSF7BLWigigaDomxP3ofRJMzRBzIWRqDpnYWgqCViRXEAMzFuApppFYEtEQMSoj-UBqBzRgDBsJR0NtPhcL0ZgzpJEnD1DIUxYyn1ISy3ZHkCUhhCiGCAW8geOUvnlh+aQP5DoKBNioG6YgjxIj7ROfeF8IyKjaEhC0KWfIdJGSotCEofZALFHUMij5aKoBW1IAAKT5iS+SGJWKBTWJUGEhSerQoZZsIyzLHDlGKOy1Fwl1loIFTVPE+QALaFDAYHwqI6WAXqjKs42rWWKroWmd5yqNTKFNCaAQi1LBZkeBARywhsCWFwJER09sXTWjoI8XROEDHyVFdCXIGglKQlyJ9A1NRDg6GcOpPsngdDeHkaDCy1rPlZjtQ6p1Lq3WiA9V6n1ztXb+sDcGyq5d7xUOhABAkQZ+y6FHLLciKgAIbFTdodoiglW5ttfakahaNSuvdUIL1qr2ncLrYK6hgULkBxIkxWWigoQAXFu0QoUsQanRzZyzxponILIgBOktU62H4C3mecqAKeH1qaE+D6IZeS1w8LLJEeQPBDmYkYHItCFGykPXm9UJ6z0XtLdy54xB9p4tIASyITtrTOlRuqxYRgGqnCuUpNQn1Zb9OcDkLwn0NgA2cZazioHh0FudRqF03BcAQDEDucDvAVSIUSTRqA+bR30agIxhA7GZkMkSBhiEuTThFEMD4QCaxg4IGrgFNt6wujNE0IBQdR6R2OoE4x3AJpx7IGUNwLUc0LbIFgcoA9KKh28d02OwT3BhOiFNLwUTN0OASYUpKFYRReTCi8KOURdLNL1VFSRfskigrabzU5OUlpuCMJsxxLMxBlRgAEPaiALCZ7qM0aQfAnxUZFR89oX8CZXqmQ8A3Olb0nxUVAhRf9+7uN2aPQlpLKWhIagy5abLkA8tqI0WQYrpX3S0lraGp+8h6qESbvINQFKvr1Y+o1gGaaA6tbi7arrYBkt5t61AA2AgBhZlUfgP4ZBCvjYoGVudM3FilCfJG7bTROgEZ0pTFQ8gAFNVIp9MCwGrUdfi4lg7KX4HIBTuOg5vBYEXdYVd6IN2xslfuyXB986arIgaORNY7I-SnE8KFmoSl1CBX7NyUMGk2Ig+o2DvbEPDu2s1gdxyEB0uZcG7l5H137bo4mz54UuI6Jimi0AnQtLycGUCi0aXPhAdrF27x-brPeMDFhkjggAvbsY4e9jp7BExf-oOLySc3hVvk+KVT9waw+x09VwvFn80IDXtvfge9IbPbyQMFCTYjg2RIhyJpGXvpWJPTftoZEnhNgxud6gAAVpNDyklPfe+m77p+wZAr9PkOoVityrHRfyD4cooKfC11AVz2Acp2Zu493ekXxxiNdBMOyEwki0TwmcLiFEbIJafXaNMqCWYKC5jBrDFUuBUaBvRj5sWqgZVIlZWR-kXgGheF8I4LdFRR-Lg1BP7AU-kAz+iJESI8+sc+8ftgpNBhWiQjOPodv-IOhhwTII-sq6B1UeULwItItEclaHPq7DflnnfogDCE9JUn6PKi0KOPGrYJvtCEsApmcoDqAoAcAeqFaLaPaI6M6G6IvkpOOG4M+OoPkmsGTvsCLMcHTC1BcK-gEMmKILwG6vAMkEhLftkgpOyI2gBvCFyEiCiPyLTA0AcA4NoLVmLG1gNOqAlsIParwZ0kttFIcPYqYEKm4OHrUJ4NFPhs0HNoGORAfnuDBLxHBHZJaKoZ2CYHkKOHTJph9uRHoTYI4PVLoe3hyMUJmqdEuBYTxDZPxAhJZBqHYaSvIM9IlC4c+G4fyJ9hGhLEiEYP3sKOYdxNZHxPBPZMdpEfJJCmXgQgSI4DoEUIkX6MkYUmkQBMZJkVZBlKEfZI5K5O5BAAUU-APtCBUMtkFBsF0N+GoKoEiLTPHmcvTlmrKOlFYZlNlJAJ0cyM+O1GcHFIUEYOKvyDkCoGoLsVyGcEUBsNMkNCNBqPDIjNnoChXMiPkMZGKBCoPpsOIURGLKpEsNoMYHTGULUszKzOcddD5FcV7LksZIBE2nTF1MgQgAcNCOyG4FGoiv2JCKAuztrKcVAHrAbL3DAJfIsYgP2D+uUM-JGgYDLDpM0CCiiFRJoORFGu4KAsfBAmfCipaLiZAXwW2pSaUYxBUPCWiOsE9CyKREHqUGKLoAyeAqfFAOfKyUPJ4t4rfNPHiQ+DcU2pIjyebopq4HRJ8e-B-gYB4BKdiZAhfHKXAggkgsqR9E9DGBThpgmHoRLHkBQpIu8TCJ3P-skkwsgCwlaZoMRLUfhm4JpGIuUKoKHo7mUK-l4D8cog0ukoqVwTjNnphhIsDOkebiGVYn6MpMFJIk0MULurGfUj6R4uaS0laf6IiKxKvp0BiAcEMt0qMm2k8uoPTP-vsoclmMqQHAFM-I4GFCIn2I3B4PLBuh8WcArKrsqS0HkKCtGh3tHFClYh9HkOIoYOoKUG-H2M7gIBAO5MqeoDkE+IYI9PWRHOul0MmqRNyDIpoAHM7o5gJlBlOsqaHFqjmZcsiF4NbogEUMZOLiTgMocJsLuW5qenuS+Z6sqR8SKh3E0AYaLrLLyE9KSbkHLLGMxI+XRhdtwIeQSFvlRJIvYhyBsB2l4OOOYlua-kpP4e1hyuDt1t2eyZ0hRuLhKA4PULVoppIp0PkAinLG-KYEmAzqlgxczkxbasdv1lljlnljBdKtGVRHGvmXoeItFO3CyubooPIdmkzmrq7kdmlhqKdudgxnKDBVhkoAipSp4C0LQQgEoOtiTP9G4byJRqJTxi7pJbxtDrDlAGbPXojuZZZRIt4N+f+EYBsXckZMmkUlcvIISP-l5erilqiZztzgNnJRZSxULNyE4AttWdIiROyBTO0AFC5Z4G5R6Z5fpd5ZDnmlruib6blfeMKMKm3HVMZKYCujFV2v2iYA4IlSJVMaDuJQZd1gsa1fJBKOGYUAWc0H2DkBTCUM4DRQiG4G4IUInmACnkjFNcmVAQpK6dCFRMKJpH6CmtCmLiyh9K6QDJIs7s5OaFAHNFmHrG8AjmAFae0LcYUIUGKG4N4FUN9pUE4JcAOV4HoE0DXmdvXgjKnh0dNU-MsdCC0ErsHpcGiIHOQdTkZKuv2EBqNZxIEdBMfqfiqD2WGcBG-J4JpC1L+foeRKoKpAcIRO9KTNgUASAT9WmaOAcF4AiO0O-i+BGuHEtb-mrAEEAA */
   model.createMachine(
     {
       predictableActionArguments: true,
       preserveActionOrder: true,
-      tsTypes: {} as import('./request.typegen').Typegen0,
+      tsTypes: {} as import('./timerBaseRequest.typegen').Typegen0,
       schema: {
         context: model.initialContext,
         events: {} as EventFrom<typeof model>,
@@ -102,7 +102,7 @@ export const requestMachine =
       invoke: {
         src: 'monitorConnection',
       },
-      id: 'request',
+      id: 'timerBaseRequest',
       initial: 'inactive',
       on: {
         SCREEN_BLUR: {
@@ -162,14 +162,14 @@ export const requestMachine =
                   target: 'enabled',
                 },
                 BLUETOOTH_DISABLED: {
-                  target: '#request.bluetoothDenied',
+                  target: '#timerBaseRequest.bluetoothDenied',
                 },
               },
             },
 
             enabled: {
               always: {
-                target: '#request.clearingConnection',
+                target: '#timerBaseRequest.clearingConnection',
               },
             },
           },
@@ -191,7 +191,7 @@ export const requestMachine =
           entry: 'disconnect',
           after: {
             CLEAR_DELAY: {
-              target: '#request.waitingForConnection',
+              target: '#timerBaseRequest.waitingForConnection',
               actions: [],
               internal: false,
             },
@@ -237,7 +237,7 @@ export const requestMachine =
             inProgress: {
               after: {
                 CONNECTION_TIMEOUT: {
-                  target: '#request.exchangingDeviceInfo.timeout',
+                  target: '#timerBaseRequest.exchangingDeviceInfo.timeout',
                   actions: [],
                   internal: false,
                 },
@@ -246,7 +246,7 @@ export const requestMachine =
             timeout: {
               on: {
                 CANCEL: {
-                  target: '#request.cancelling',
+                  target: '#timerBaseRequest.cancelling',
                 },
               },
             },
@@ -268,7 +268,7 @@ export const requestMachine =
             inProgress: {
               after: {
                 SHARING_TIMEOUT: {
-                  target: '#request.waitingForVc.timeout',
+                  target: '#timerBaseRequest.waitingForVc.timeout',
                   actions: [],
                   internal: false,
                 },
@@ -277,7 +277,7 @@ export const requestMachine =
             timeout: {
               on: {
                 CANCEL: {
-                  target: '#request.cancelling',
+                  target: '#timerBaseRequest.cancelling',
                 },
               },
             },
@@ -299,7 +299,7 @@ export const requestMachine =
           },
           after: {
             CANCEL_TIMEOUT: {
-              target: '#request.checkingBluetoothService',
+              target: '#timerBaseRequest.checkingBluetoothService',
               actions: ['disconnect'],
               internal: false,
             },
@@ -382,7 +382,7 @@ export const requestMachine =
                   entry: 'mergeIncomingVc',
                   on: {
                     STORE_RESPONSE: {
-                      target: '#request.reviewing.accepted',
+                      target: '#timerBaseRequest.reviewing.accepted',
                     },
                   },
                 },
@@ -398,7 +398,7 @@ export const requestMachine =
                   entry: 'storeVc',
                   on: {
                     STORE_RESPONSE: {
-                      target: '#request.reviewing.accepted',
+                      target: '#timerBaseRequest.reviewing.accepted',
                     },
                   },
                 },
@@ -411,11 +411,7 @@ export const requestMachine =
                 data: {
                   status: 'ACCEPTED',
                 },
-              },
-              on: {
-                DISMISS: {
-                  target: 'navigatingToHome',
-                },
+                onDone: '#timerBaseRequest.clearingConnection',
               },
             },
             rejected: {
@@ -428,7 +424,7 @@ export const requestMachine =
               },
               on: {
                 DISMISS: {
-                  target: '#request.waitingForConnection',
+                  target: '#timerBaseRequest.waitingForConnection',
                 },
               },
             },
@@ -901,14 +897,14 @@ export const requestMachine =
     }
   );
 
-export function createRequestMachine(serviceRefs: AppServices) {
-  return requestMachine.withContext({
-    ...requestMachine.context,
+export function createTimerBaseRequestMachine(serviceRefs: AppServices) {
+  return TimerBaseRequestMachine.withContext({
+    ...TimerBaseRequestMachine.context,
     serviceRefs,
   });
 }
 
-type State = StateFrom<typeof requestMachine>;
+type State = StateFrom<typeof TimerBaseRequestMachine>;
 
 export function selectSenderInfo(state: State) {
   return state.context.senderInfo;

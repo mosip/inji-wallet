@@ -1,0 +1,35 @@
+{
+  "bluetoothDenied": "Please enable Bluetooth to be able to request {{vcLabel}}",
+  "showQrCode": "Show this QR code to request {{vcLabel}}",
+  "incomingVc": "Incoming {{vcLabel}}",
+  "request": "Request",
+  "status": {
+    "accepted": {
+      "title": "Success!",
+      "message": "{{vcLabel}} has been successfully received from {{sender}}"
+    },
+    "rejected": {
+      "title": "Notice",
+      "message": "You discarded {{sender}}'s {{vcLabel}}"
+    },
+    "disconnected": {
+      "title": "Disconnected",
+      "message": "The connection was interrupted. Please try again."
+    },
+    "waitingConnection": "Waiting for connection...",
+    "exchangingDeviceInfo": {
+      "message": "Exchanging device info...",
+      "timeoutHint": "It's taking too long to exchange device info..."
+    },
+    "connected": {
+      "message": "Connected to the device. Waiting for {{vcLabel}}...",
+      "timeoutHint": "No data received yet. Is sending device still connected?"
+    },
+    "offline": {
+      "message": "Please connect to the internet to enable Online sharing mode"
+    }
+  },
+  "online": "Online",
+  "offline": "Offline",
+  "gotoSettings": "Go to settings"
+}

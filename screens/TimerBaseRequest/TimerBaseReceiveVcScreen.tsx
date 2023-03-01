@@ -5,7 +5,7 @@ import { DeviceInfoList } from '../../components/DeviceInfoList';
 import { Button, Column, Row, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { VcDetails } from '../../components/VcDetails';
-import { useReceiveVcScreen } from './ReceiveVcScreenController';
+import { useReceiveVcScreen } from './TimerBaseReceiveVcScreenController';
 import { VerifyIdentityOverlay } from '../VerifyIdentityOverlay';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { Overlay } from 'react-native-elements';
@@ -17,10 +17,10 @@ export const TimerBaseReceiveVcScreen: React.FC = () => {
   return (
     <React.Fragment>
       <Overlay
-        isVisible={controller.isReviewing}
+        isVisible={true}
         onShow={() =>
           setTimeout(() => {
-            controller.ACCEPT(), controller.GOBACK();
+            controller.ACCEPT();
           }, 5000)
         }>
         <Column
@@ -36,30 +36,67 @@ export const TimerBaseReceiveVcScreen: React.FC = () => {
           </Column>
           <Column padding="0 24" margin="32 0 0 0">
             {/* {controller.incomingVc.shouldVerifyPresence ? (
-              <Button
-                type="outline"
-                title={t('verifyAndSave')}
-                margin="12 0 12 0"
-                onPress={controller.ACCEPT_AND_VERIFY}
-              />
-            ) : (
-              <Button
-                title={t('save', {
-                  vcLabel: controller.vcLabel.singular,
-                })}
-                margin="12 0 12 0"
-                onPress={controller.ACCEPT}
-              />
-            )} */}
-            {/* <Button
-              type="clear"
-              title={t('discard')}
-              margin="0 0 12 0"
-              onPress={controller.REJECT}
-            /> */}
+            <Button
+              type="outline"
+              title={t('verifyAndSave')}
+              margin="12 0 12 0"
+              onPress={controller.ACCEPT_AND_VERIFY}
+            />
+          ) : (
+            <Button
+              title={t('save', {
+                vcLabel: controller.vcLabel.singular,
+              })}
+              margin="12 0 12 0"
+              onPress={controller.ACCEPT}
+            />
+          )}
+          <Button
+            type="clear"
+            title={t('discard')}
+            margin="0 0 12 0"
+            onPress={controller.REJECT}
+          /> */}
           </Column>
         </Column>
       </Overlay>
+      <Column
+        scroll
+        padding="24 0 48 0"
+        backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
+        <Column>
+          <DeviceInfoList of="sender" deviceInfo={controller.senderInfo} />
+          <Text weight="semibold" margin="24 24 0 24">
+            {t('header', { vcLabel: controller.vcLabel.singular })}
+          </Text>
+          <VcDetails vc={controller.incomingVc} isBindingPending={false} />
+        </Column>
+        <Column padding="0 24" margin="32 0 0 0">
+          {/* {controller.incomingVc.shouldVerifyPresence ? (
+            <Button
+              type="outline"
+              title={t('verifyAndSave')}
+              margin="12 0 12 0"
+              onPress={controller.ACCEPT_AND_VERIFY}
+            />
+          ) : (
+            <Button
+              title={t('save', {
+                vcLabel: controller.vcLabel.singular,
+              })}
+              margin="12 0 12 0"
+              onPress={controller.ACCEPT}
+            />
+          )}
+          <Button
+            type="clear"
+            title={t('discard')}
+            margin="0 0 12 0"
+            onPress={controller.REJECT}
+          /> */}
+        </Column>
+      </Column>
+
       <VerifyIdentityOverlay
         vc={controller.incomingVc}
         isVisible={controller.isVerifyingIdentity}

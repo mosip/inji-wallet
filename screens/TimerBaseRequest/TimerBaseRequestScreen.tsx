@@ -6,7 +6,7 @@ import QRCode from 'react-native-qrcode-svg';
 
 import { Centered, Button, Row, Column, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
-import { useRequestScreen } from './RequestScreenController';
+import { useRequestScreen } from './TimerBaseRequestScreenController';
 
 export const TimerBaseRequestScreen: React.FC = () => {
   const { t } = useTranslation('RequestScreen');

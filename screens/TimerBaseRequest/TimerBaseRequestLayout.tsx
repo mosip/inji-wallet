@@ -2,9 +2,7 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Icon } from 'react-native-elements';
 import { useTranslation } from 'react-i18next';
-
-import { RequestScreen } from './RequestScreen';
-import { useRequestLayout } from './RequestLayoutController';
+import { useRequestLayout } from './TimerBaseRequestLayoutController';
 import { Message } from '../../components/Message';
 import { LanguageSelector } from '../../components/LanguageSelector';
 import { Theme } from '../../components/ui/styleUtils';
@@ -21,7 +19,7 @@ export const TimerBaseRequestLayout: React.FC = () => {
   return (
     <React.Fragment>
       <RequestStack.Navigator
-        initialRouteName="RequestScreen"
+        initialRouteName="TimerBaseRequestScreen"
         screenOptions={{
           headerTitleAlign: 'center',
           headerShadowVisible: false,
@@ -42,12 +40,12 @@ export const TimerBaseRequestLayout: React.FC = () => {
               />
             ) : null,
         }}>
-        {controller.isReviewing && (
+        {!controller.isDone && (
           <RequestStack.Screen
             name="TimerBaseReceiveVcScreen"
             component={TimerBaseReceiveVcScreen}
             options={{
-              title: t('Timer incomingVc', {
+              title: t('incomingVc', {
                 vcLabel: controller.vcLabel.singular,
               }),
             }}
@@ -57,12 +55,12 @@ export const TimerBaseRequestLayout: React.FC = () => {
           name="TimerBaseRequestScreen"
           component={TimerBaseRequestScreen}
           options={{
-            title: t('Timer Base Request').toUpperCase(),
+            title: t('timerequest').toUpperCase(),
           }}
         />
       </RequestStack.Navigator>
 
-      {/* {controller.isAccepted && (
+      {controller.isAccepted && (
         <Message
           title={t('status.accepted.title')}
           message={t('status.accepted.message', {
@@ -71,7 +69,7 @@ export const TimerBaseRequestLayout: React.FC = () => {
           })}
           onBackdropPress={controller.DISMISS}
         />
-      )} */}
+      )}
 
       {controller.isRejected && (
         <Message

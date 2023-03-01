@@ -9,7 +9,7 @@ import { RootStackParamList } from './index';
 import { RequestLayout } from '../screens/Request/RequestLayout';
 import { ScanLayout } from '../screens/Scan/ScanLayout';
 import i18n from '../i18n';
-import { TimerBaseRequestLayout } from '../screens/Request/TimerBaseRequestLayout';
+import { TimerBaseRequestLayout } from '../screens/TimerBaseRequest/TimerBaseRequestLayout';
 
 export const mainRoutes: TabScreen[] = [
   {
@@ -43,10 +43,11 @@ export const mainRoutes: TabScreen[] = [
     component: TimerBaseRequestLayout,
     icon: 'timer',
     options: {
-      title: i18n.t('MainLayout:request'),
+      title: i18n.t('MainLayout:timerrequest'),
       headerShown: false,
     },
   },
+
   {
     name: 'Profile',
     component: ProfileScreen,
