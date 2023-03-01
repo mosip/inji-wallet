@@ -9,6 +9,7 @@ import { RootStackParamList } from './index';
 import { RequestLayout } from '../screens/Request/RequestLayout';
 import { ScanLayout } from '../screens/Scan/ScanLayout';
 import i18n from '../i18n';
+import { TimerBaseRequestLayout } from '../screens/Request/TimerBaseRequestLayout';
 
 export const mainRoutes: TabScreen[] = [
   {
@@ -38,6 +39,15 @@ export const mainRoutes: TabScreen[] = [
     },
   },
   {
+    name: 'TimerBaseRequest',
+    component: TimerBaseRequestLayout,
+    icon: 'timer',
+    options: {
+      title: i18n.t('MainLayout:request'),
+      headerShown: false,
+    },
+  },
+  {
     name: 'Profile',
     component: ProfileScreen,
     icon: 'person',
@@ -53,6 +63,7 @@ export type MainBottomTabParamList = {
   };
   Scan: undefined;
   Request: undefined;
+  TimerBaseRequest: undefined;
   Profile: undefined;
 };
 

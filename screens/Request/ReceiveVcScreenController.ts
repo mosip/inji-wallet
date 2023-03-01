@@ -3,8 +3,10 @@ import { useContext } from 'react';
 import {
   RequestEvents,
   selectIncomingVc,
+  selectIsAccepted,
   selectIsIncomingVp,
   selectIsInvalidIdentity,
+  selectIsReviewing,
   selectIsVerifyingIdentity,
   selectSenderInfo,
 } from '../../machines/request';
@@ -24,7 +26,8 @@ export function useReceiveVcScreen() {
     isIncomingVp: useSelector(requestService, selectIsIncomingVp),
     isVerifyingIdentity: useSelector(requestService, selectIsVerifyingIdentity),
     isInvalidIdentity: useSelector(requestService, selectIsInvalidIdentity),
-
+    isReviewing: useSelector(requestService, selectIsReviewing),
+    isAccepted: useSelector(requestService, selectIsAccepted),
     ACCEPT: () => requestService.send(RequestEvents.ACCEPT()),
     ACCEPT_AND_VERIFY: () =>
       requestService.send(RequestEvents.ACCEPT_AND_VERIFY()),
@@ -35,5 +38,6 @@ export function useReceiveVcScreen() {
     DISMISS: () => requestService.send(RequestEvents.DISMISS()),
     FACE_VALID: () => requestService.send(RequestEvents.FACE_VALID()),
     FACE_INVALID: () => requestService.send(RequestEvents.FACE_INVALID()),
+    GOBACK: () => requestService.send(RequestEvents.GOBACK()),
   };
 }

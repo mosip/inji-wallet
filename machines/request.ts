@@ -77,6 +77,7 @@ const model = createModel(
       ONLINE: () => ({}),
       OFFLINE: () => ({}),
       APP_ACTIVE: () => ({}),
+      GOBACK: () => ({}),
     },
   }
 );
@@ -416,6 +417,10 @@ export const requestMachine =
                 DISMISS: {
                   target: 'navigatingToHome',
                 },
+
+                GOBACK: {
+                  target: 'navigatingToTimerBaseRequest',
+                },
               },
             },
             rejected: {
@@ -433,7 +438,9 @@ export const requestMachine =
               },
             },
             navigatingToHome: {},
+            navigatingToTimerBaseRequest: {},
           },
+
           on: {
             ACCEPT: {
               target: '.accepting',
@@ -992,6 +999,9 @@ export function selectIsWaitingForVcTimeout(state: State) {
 
 export function selectIsDone(state: State) {
   return state.matches('reviewing.navigatingToHome');
+}
+export function selectIsReload(state: State) {
+  return state.matches('reviewing.navigatingToTimerBaseRequest');
 }
 
 export function selectIsOffline(state: State) {

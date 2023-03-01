@@ -7,6 +7,7 @@ import {
   selectIsDisconnected,
   selectIsDone,
   selectIsRejected,
+  selectIsReload,
   selectIsReviewing,
   selectIsWaitingForConnection,
   selectSenderInfo,
@@ -18,6 +19,7 @@ import { GlobalContext } from '../../shared/GlobalContext';
 type RequestStackParamList = {
   RequestScreen: undefined;
   ReceiveVcScreen: undefined;
+  TimerBaseRequestScreen: undefined;
 };
 
 type RequestLayoutNavigation = NavigationProp<
@@ -47,6 +49,7 @@ export function useRequestLayout() {
 
   const isReviewing = useSelector(requestService, selectIsReviewing);
   const isDone = useSelector(requestService, selectIsDone);
+  const isReload = useSelector(requestService, selectIsReload);
   const isWaitingForConnection = useSelector(
     requestService,
     selectIsWaitingForConnection
@@ -58,8 +61,10 @@ export function useRequestLayout() {
       navigation.navigate('ReceiveVcScreen');
     } else if (isWaitingForConnection) {
       navigation.navigate('RequestScreen');
+    } else if (isReload) {
+      navigation.navigate('TimerBaseRequestScreen');
     }
-  }, [isDone, isReviewing]);
+  }, [isDone, isReviewing, isReload]);
 
   return {
     vcLabel: useSelector(settingsService, selectVcLabel),
@@ -70,7 +75,9 @@ export function useRequestLayout() {
     isDisconnected: useSelector(requestService, selectIsDisconnected),
     isReviewing,
     isDone,
+    isReload,
 
     DISMISS: () => requestService.send(RequestEvents.DISMISS()),
+    GOBACK: () => requestService.send(RequestEvents.GOBACK()),
   };
 }
