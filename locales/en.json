@@ -347,8 +347,8 @@
     "errors": {
       "invalidIdentity": {
         "title": "Unable to verify identity",
-        "message": "An error occurred and we couldn't scan your portrait. Try again, make sure your face is visible, devoid of any accessories.",
-        "messageNoRetry": "An error occurred and we couldn't scan your portrait."
+        "message": "Face not recognised. Please try again.",
+        "messageNoRetry": "Face not recognised."
       }
     }
   },
