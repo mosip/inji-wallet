@@ -1,9 +1,7 @@
 import { useSelector } from '@xstate/react';
 import { useContext } from 'react';
 import {
-  AuthEvents,
   selectBiometrics,
-  selectLanguagesetup,
   selectPasscode,
   selectSettingUp,
 } from '../machines/auth';
@@ -23,15 +21,10 @@ export function useWelcomeScreen(props: RootRouteProps) {
     settingsService,
     selectBiometricUnlockEnabled
   );
-  const isLanguagesetup = useSelector(authService, selectLanguagesetup);
 
   return {
     isSettingUp,
-    isLanguagesetup,
-    SELECT: () => {
-      authService.send(AuthEvents.SELECT()),
-        props.navigation.navigate('Welcome');
-    },
+
     unlockPage: () => {
       // prioritize biometrics
       if (!isSettingUp && isBiometricUnlockEnabled && biometrics !== '') {

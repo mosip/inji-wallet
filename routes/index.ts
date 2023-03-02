@@ -9,16 +9,19 @@ import { WelcomeScreen } from '../screens/WelcomeScreen';
 import { PasscodeScreen } from '../screens/PasscodeScreen';
 import { MainLayout } from '../screens/MainLayout';
 import { NotificationsScreen } from '../screens/NotificationsScreen';
-import { SetupLanguageScreen } from '../screens/SetupLanguageScreen';
+import { Image } from 'react-native';
 
 export const baseRoutes: Screen[] = [
   {
-    name: 'Language',
-    component: SetupLanguageScreen,
-  },
-  {
     name: 'Welcome',
     component: WelcomeScreen,
+    options: {
+      headerLeft: () =>
+        React.createElement(Image, {
+          source: require('../assets/idpass-logo.png'),
+          style: { width: 124, height: 27, resizeMode: 'contain' },
+        }),
+    },
   },
   {
     name: 'Auth',
@@ -49,7 +52,6 @@ export const authRoutes: Screen[] = [
 ];
 
 export type RootStackParamList = {
-  Language: undefined;
   Welcome: undefined;
   Auth: undefined;
   Passcode: {

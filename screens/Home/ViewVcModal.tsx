@@ -35,14 +35,26 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
     <Modal
       isVisible={props.isVisible}
       onDismiss={props.onDismiss}
-      headerTitle={t('title')}
-      headerElevation={2}>
+      headerTitle={
+        controller.vc.verifiableCredential.credentialSubject.UIN
+          ? controller.vc.verifiableCredential.credentialSubject.UIN
+          : controller.vc.verifiableCredential.credentialSubject.VID
+      }
+      headerElevation={2}
+      headerRight={
+        <DropdownIcon
+          icon="dots-vertical"
+          idType={controller.vc.idType}
+          items={DATA}
+        />
+      }>
       <Column scroll>
         <Column fill>
           <VcDetails
             vc={controller.vc}
             onBinding={controller.addtoWallet}
             isBindingPending={controller.isWalletBindingPending}
+            activeTab={props.activeTab}
           />
 
           {controller.walletBindingError !== '' && (

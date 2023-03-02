@@ -16,7 +16,6 @@ const Colors = {
   Transparent: 'transparent',
   Warning: '#f0ad4e',
   GrayText: '#6F6F6F',
-  GrayText: '#6F6F6F',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5;
@@ -26,6 +25,7 @@ export const PurpleTheme = {
     TabItemText: Colors.Purple,
     Details: Colors.White,
     DetailsLabel: Colors.White,
+    walletBindingText: Colors.Black,
     LoadingDetailsLabel: Colors.Black,
     AddIdBtnBg: Colors.Purple,
     AddIdBtnTxt: Colors.Purple,
@@ -56,7 +56,7 @@ export const PurpleTheme = {
     whiteText: Colors.White,
     flipCameraIcon: Colors.Black,
     IdInputModalBorder: Colors.Grey,
-    inputSelection: Colors.Orange,
+    inputSelection: Colors.Purple,
     checkCircleIcon: Colors.White,
     OnboardingCircleIcon: Colors.White,
     OnboardingCloseIcon: Colors.White,
@@ -117,6 +117,12 @@ export const PurpleTheme = {
       shadowOpacity: 0.4,
       shadowRadius: 3,
       elevation: 4,
+    },
+    selectedBindedVc: {
+      borderRadius: 10,
+      margin: 5,
+      borderWidth: 2,
+      borderColor: Colors.Orange,
     },
     labelPartContainer: {
       marginLeft: 16,
@@ -346,7 +352,7 @@ export const PurpleTheme = {
     radius: {
       flex: 1,
       borderRadius: 10,
-      backgroundColor: Colors.Orange,
+      backgroundColor: Colors.Purple,
     },
     gradient: {
       borderRadius: 10,

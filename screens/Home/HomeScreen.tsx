@@ -56,6 +56,7 @@ export const HomeScreen: React.FC<HomeRouteProps> = (props) => {
           onRevokeDelete={() => {
             controller.REVOKE();
           }}
+          activeTab={controller.activeTab}
         />
       )}
     </React.Fragment>

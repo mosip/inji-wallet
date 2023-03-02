@@ -4,9 +4,11 @@ import {
   NativeStackNavigationOptions,
   createNativeStackNavigator,
 } from '@react-navigation/native-stack';
+import { LanguageSelector } from '../components/LanguageSelector';
 import { authRoutes, baseRoutes } from '../routes';
 import { useAppLayout } from './AppLayoutController';
-import { StatusBar } from 'react-native';
+import { Icon } from 'react-native-elements';
+import { Theme } from '../components/ui/styleUtils';
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -17,17 +19,17 @@ export const AppLayout: React.FC = () => {
     title: '',
     headerTitleAlign: 'center',
     headerShadowVisible: false,
+    headerRight: () => (
+      <LanguageSelector
+        triggerComponent={<Icon name="language" color={Theme.Colors.Icon} />}
+      />
+    ),
     headerBackVisible: false,
   };
 
   return (
     <NavigationContainer>
-      <StatusBar animated={true} barStyle="dark-content" />
-      <Navigator
-        initialRouteName={
-          controller.isLanguagesetup ? baseRoutes[0].name : baseRoutes[1].name
-        }
-        screenOptions={options}>
+      <Navigator initialRouteName={baseRoutes[0].name} screenOptions={options}>
         {baseRoutes.map((route) => (
           <Screen key={route.name} {...route} />
         ))}
