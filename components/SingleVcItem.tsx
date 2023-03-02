@@ -29,27 +29,6 @@ const VerifiedIcon: React.FC = () => {
 };
 
 const getDetails = (arg1, arg2, verifiableCredential) => {
-  if (arg1 === 'Full Name') {
-    return (
-      <Column>
-        <Text color={Theme.Colors.DetailsLabel} size="smaller">
-          {arg1}
-        </Text>
-        <Text
-          numLines={4}
-          color={Theme.Colors.Details}
-          weight="bold"
-          size="smaller"
-          style={
-            !verifiableCredential
-              ? Theme.Styles.loadingTitle
-              : Theme.Styles.subtitle
-          }>
-          {!verifiableCredential ? '' : arg2}
-        </Text>
-      </Column>
-    );
-  }
   if (arg1 === 'Status') {
     return (
       <Column>
@@ -79,7 +58,7 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
         {arg1}
       </Text>
       <Text
-        numLines={1}
+        numLines={4}
         color={Theme.Colors.Details}
         weight="bold"
         size="smaller"
@@ -114,18 +93,9 @@ export const SingleVcItem: React.FC<VcItemProps> = (props) => {
     ? ''
     : getLocalizedField(verifiableCredential.credentialSubject.fullName);
 
-  const selectableOrCheck = props.selectable ? (
-    <CheckBox
-      checked={props.selected}
-      checkedIcon={<Icon name="radio-button-checked" />}
-      uncheckedIcon={<Icon name="radio-button-unchecked" />}
-      onPress={() => props.onPress(service)}
-    />
-  ) : null;
-
   return (
     <Pressable
-      style={Theme.Styles.closeCardBgContainer}
+      style={Theme.Styles.selectedBindedVc}
       onPress={() => props.onPress(service)}>
       <ImageBackground
         source={!verifiableCredential ? null : Theme.CloseCard}
@@ -170,9 +140,7 @@ export const SingleVcItem: React.FC<VcItemProps> = (props) => {
             </Column>
           </Column>
 
-          {verifiableCredential ? (
-            selectableOrCheck
-          ) : (
+          {!verifiableCredential && (
             <RotatingIcon name="sync" color={Theme.Colors.rotatingIcon} />
           )}
         </Row>
