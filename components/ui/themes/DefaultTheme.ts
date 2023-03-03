@@ -118,7 +118,7 @@ export const DefaultTheme = {
     selectedBindedVc: {
       borderRadius: 10,
       margin: 5,
-      borderWidth: 3,
+      borderWidth: 2,
       borderColor: Colors.Green,
     },
     labelPartContainer: {
