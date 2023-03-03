@@ -1,5 +1,6 @@
 import { request } from '../request';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { init } from 'mosip-inji-face-sdk';
 
 const COMMON_PROPS_KEY: string =
   'CommonPropsKey-' + '6964d04a-9268-11ed-a1eb-0242ac120002';
@@ -19,6 +20,30 @@ export default async function getAllConfigurations() {
   } catch (error) {
     console.log(error);
     throw error;
+  }
+}
+
+export async function downloadModel() {
+  try {
+    var injiProp = await getAllConfigurations();
+    const maxRetryStr = injiProp.modelDownloadMaxRetry;
+    const maxRetry = parseInt(maxRetryStr);
+    const resp: string = injiProp != null ? injiProp.faceSdkModelUrl : null;
+    if (resp != null) {
+      var result = await init(resp, false);
+      console.log('model download result is = ' + result);
+      if (!result) {
+        for (let counter = 0; counter < maxRetry; counter++) {
+          result = await init(resp, false);
+          console.log('model redownload result is = ' + result);
+          if (result) {
+            break;
+          }
+        }
+      }
+    }
+  } catch (error) {
+    console.log(error);
   }
 }
 

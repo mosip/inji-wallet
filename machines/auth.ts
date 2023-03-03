@@ -1,7 +1,7 @@
 import { init } from 'mosip-inji-face-sdk';
 import { ContextFrom, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
-import getAllConfigurations from '../shared/commonprops/commonProps';
+import { downloadModel } from '../shared/commonprops/commonProps';
 import { AppServices } from '../shared/GlobalContext';
 import { StoreEvents, StoreResponseEvent } from './store';
 
@@ -130,18 +130,8 @@ export const authMachine = model.createMachine(
     },
 
     services: {
-      downloadFaceSdkModel: () => async () => {
-        var injiProp = null;
-        try {
-          var injiProp = await getAllConfigurations();
-          const resp: string =
-            injiProp != null ? injiProp.faceSdkModelUrl : null;
-          if (resp != null) {
-            init(resp, false);
-          }
-        } catch (error) {
-          console.log(error);
-        }
+      downloadFaceSdkModel: () => () => {
+        downloadModel();
       },
     },
 
