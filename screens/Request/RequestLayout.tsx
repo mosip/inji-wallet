@@ -24,14 +24,6 @@ export const RequestLayout: React.FC = () => {
         screenOptions={{
           headerTitleAlign: 'center',
           headerShadowVisible: false,
-          headerRight: () =>
-            I18nManager.isRTL && Platform.OS !== 'ios' ? null : (
-              <LanguageSelector
-                triggerComponent={
-                  <Icon name="language" color={Theme.Colors.Icon} />
-                }
-              />
-            ),
           headerLeft: () =>
             I18nManager.isRTL && Platform.OS !== 'ios' ? (
               <LanguageSelector
