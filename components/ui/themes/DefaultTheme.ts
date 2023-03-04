@@ -16,7 +16,8 @@ const Colors = {
   Warning: '#f0ad4e',
   LightOrange: '#fce7e3',
   GrayText: '#6F6F6F',
-  GrayText: '#6F6F6F',
+  dorColor: '#CBCBCB',
+  plainText: '#FFD6A7',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5;
@@ -64,6 +65,8 @@ export const DefaultTheme = {
     ProfileIconBg: Colors.LightOrange,
     GrayText: Colors.GrayText,
     gradientBtn: ['#F59B4B', '#E86E04'],
+    dotColor: Colors.dorColor,
+    plainText: Colors.plainText,
   },
   Styles: StyleSheet.create({
     title: {
@@ -665,6 +668,14 @@ export const DefaultTheme = {
       top: 40,
       zIndex: 1,
     },
+    bottomContainer: {
+      padding: 20,
+      borderTopLeftRadius: 30,
+      borderTopRightRadius: 30,
+      marginTop: -185,
+      paddingBottom: 100,
+      height: 220,
+    },
   }),
   claimsContainer: StyleSheet.create({
     container: {
@@ -679,7 +690,10 @@ export const DefaultTheme = {
   WarningLogo: require('../../../assets/warningLogo.png'),
   OtpLogo: require('../../../assets/otp-mobile-logo.png'),
   SuccessLogo: require('../../../assets/success-logo.png'),
-
+  sharingIntro: require('../../../assets/Secure-Sharing.png'),
+  walletIntro: require('../../../assets/intro-wallet-binding.png'),
+  IntroScanner: require('../../../assets/intro-scanner.png'),
+  injiSmallLogo: require('../../../assets/inji_small_logo.png'),
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/
 

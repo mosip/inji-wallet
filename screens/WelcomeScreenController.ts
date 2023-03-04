@@ -28,9 +28,12 @@ export function useWelcomeScreen(props: RootRouteProps) {
   return {
     isSettingUp,
     isLanguagesetup,
+    NEXT: () => {
+      authService.send(AuthEvents.NEXT()), props.navigation.navigate('Auth');
+    },
     SELECT: () => {
       authService.send(AuthEvents.SELECT()),
-        props.navigation.navigate('Welcome');
+        props.navigation.navigate('IntroSliders');
     },
     unlockPage: () => {
       // prioritize biometrics
