@@ -859,10 +859,7 @@ export const DefaultTheme = {
   walletIntro: require('../../../assets/intro-wallet-binding.png'),
   IntroScanner: require('../../../assets/intro-scanner.png'),
   injiSmallLogo: require('../../../assets/inji_small_logo.png'),
-  DigitalIdentityLogo: require('../../../assets/digital_identity_icon.png'),
   InjiLogo: require('../../../assets/inji_logo.png'),
-  InjiHomeLogo: require('../../../assets/inji-home-logo.png'),
-  HelpIcon: require('../../../assets/help-icon.png'),
 
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/

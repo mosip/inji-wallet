@@ -199,9 +199,9 @@
     "stepOneTitle": "Secure Sharing!",
     "stepOneText": "Share and receive {{vcLabel}} switfly using your phone camera to scan QR codes",
     "stepTwoTitle": "Trusted Digital Wallet",
-    "stepTwoText": "Keep your digital credential with you at all times",
+    "stepTwoText": " Keep your digital credential with you at all times",
     "stepThreeTitle": "Quick Access",
-    "stepThreeText": "Once generated, {{vcLabel}} are safely stored on your mobile.",
+    "stepThreeText": "Once generated, {{vcLabel}} are safely stored on your mobile and can be renamed or shared at any time.",
     "stepThreeButton": "Get Started",
     "skip": "Skip",
     "next": "Next"
