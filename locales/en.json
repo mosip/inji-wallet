@@ -156,13 +156,15 @@
     "generateVcDescription": "Tap on \"Add {{vcLabel}}\" below to download your {{vcLabel}}"
   },
   "OnboardingOverlay": {
-    "stepOneTitle": "Welcome!",
-    "stepOneText": "Keep your digital credential with you at all times. To get started, add {{vcLabel}} to your profile.",
-    "stepTwoTitle": "{{vcLabel}} management",
-    "stepTwoText": "Once generated, {{vcLabel}} are safely stored on your mobile and can be renamed or shared at any time.",
-    "stepThreeTitle": "Easy sharing",
-    "stepThreeText": "Share and receive {{vcLabel}} switfly using your phone camera to scan QR codes.",
-    "stepThreeButton": "Get started and add {{vcLabel}}"
+    "stepOneTitle": "Secure Sharing!",
+    "stepOneText": "Share and receive {{vcLabel}} switfly using your phone camera to scan QR codes",
+    "stepTwoTitle": "Trusted Digital Wallet",
+    "stepTwoText": " Keep your digital credential with you at all times",
+    "stepThreeTitle": "Quick Access",
+    "stepThreeText": "Once generated, {{vcLabel}} are safely stored on your mobile and can be renamed or shared at any time.",
+    "stepThreeButton": "Get Started",
+    "skip": "Skip",
+    "next": "Next"
   },
   "ReceivedVcsTab": {
     "noReceivedVcsTitle": "No {{vcLabel}} available yet",

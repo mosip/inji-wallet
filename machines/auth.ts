@@ -21,6 +21,7 @@ const model = createModel(
       LOGIN: () => ({}),
       STORE_RESPONSE: (response?: unknown) => ({ response }),
       SELECT: () => ({}),
+      NEXT: () => ({}),
     },
   }
 );
@@ -71,6 +72,13 @@ export const authMachine = model.createMachine(
       languagesetup: {
         on: {
           SELECT: {
+            target: 'introSlider',
+          },
+        },
+      },
+      introSlider: {
+        on: {
+          NEXT: {
             target: 'settingUp',
           },
         },
@@ -199,4 +207,7 @@ export function selectSettingUp(state: State) {
 
 export function selectLanguagesetup(state: State) {
   return state.matches('languagesetup');
+}
+export function selectIntroSlider(state: State) {
+  return state.matches('introSlider');
 }

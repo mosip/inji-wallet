@@ -46,6 +46,7 @@ export interface Typegen0 {
     | 'authorized'
     | 'checkingAuth'
     | 'init'
+    | 'introSlider'
     | 'languagesetup'
     | 'savingDefaults'
     | 'settingUp'
