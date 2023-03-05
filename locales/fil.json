@@ -263,6 +263,7 @@
   "ScanScreen": {
     "header": "I-scan ang QR Code",
     "noShareableVcs": "Walang magagamit na maibabahaging {{vcLabel}}.",
+    "BluetoothState": "Bluetooth is not enabled please go to control center and enable it",
     "sharingVc": "Pagbabahagi ng {{vcLabel}}",
     "errors": {
       "locationDisabled": {

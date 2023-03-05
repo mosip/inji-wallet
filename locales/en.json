@@ -288,6 +288,7 @@
   "ScanScreen": {
     "header": "Scan QR Code",
     "noShareableVcs": "No shareable {{vcLabel}} are available.",
+    "BluetoothState": "Bluetooth is not enabled please go to control center and enable it",
     "sharingVc": "Sharing {{vcLabel}}",
     "errors": {
       "locationDisabled": {

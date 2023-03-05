@@ -2,6 +2,7 @@
   "header": "Scan QR Code",
   "noShareableVcs": "No shareable {{vcLabel}} are available.",
   "sharingVc": "Sharing {{vcLabel}}",
+  "BluetoothState": "Bluetooth is not enabled please go to control center and enable it",
   "errors": {
     "locationDisabled": {
       "message": "Location services must be enabled for the scanning functionality",

@@ -274,6 +274,7 @@
     "ScanScreen": {
       "header": "QR குறியீட்டை ஸ்கேன் செய்",
       "noShareableVcs": "பகிரக்கூடிய {{vcLabel}} எதுவும் இல்லை.",
+      "BluetoothState": "Bluetooth is not enabled please go to control center and enable it",
       "sharingVc": "பகிர்தல் {{vcLabel}}",
       "errors": {
         "locationDisabled": {

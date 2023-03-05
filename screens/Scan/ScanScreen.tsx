@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { QrScanner } from '../../components/QrScanner';
@@ -6,10 +6,24 @@ import { Button, Centered, Column, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { QrLogin } from '../QrLogin/QrLogin';
 import { useScanScreen } from './ScanScreenController';
+import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 
 export const ScanScreen: React.FC = () => {
   const { t } = useTranslation('ScanScreen');
   const controller = useScanScreen();
+  const [isBluetoothEnabled, setIsBluetoothEnabled] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      await BluetoothStateManager.onStateChange((state) => {
+        if (state === 'PoweredOff') {
+          setIsBluetoothEnabled(false);
+        } else {
+          setIsBluetoothEnabled(true);
+        }
+      }, true);
+    })();
+  }, [isBluetoothEnabled]);
 
   return (
     <Column
@@ -48,6 +62,13 @@ export const ScanScreen: React.FC = () => {
             {t('noShareableVcs', { vcLabel: controller.vcLabel.plural })}
           </Text>
         )}
+
+        {!isBluetoothEnabled && (
+          <Text align="center" color={Theme.Colors.errorMessage}>
+            {t('BluetoothState')}
+          </Text>
+        )}
+
         {controller.isQrLogin && (
           <QrLogin
             isVisible={controller.isQrLogin}
