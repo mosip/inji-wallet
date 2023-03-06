@@ -318,7 +318,7 @@
     "errors": {
       "invalidIdentity": {
         "title": "Hindi ma-verify ang pagkakakilanlan",
-        "message": "May naganap na error at hindi namin ma-scan ang iyong portrait. Subukang muli, tiyaking nakikita ang iyong mukha, walang anumang mga accessory."
+        "message": "Hindi nakikilala ang mukha. Pakisubukang muli."
       }
     }
   },
