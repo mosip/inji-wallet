@@ -52,7 +52,8 @@ export const ScanScreen: React.FC = () => {
         ) : null}
 
         {!controller.isEmpty ? (
-          controller.isScanning && (
+          controller.isScanning &&
+          isBluetoothEnabled && (
             <Column crossAlign="center" margin="0 0 0 -6">
               <QrScanner onQrFound={controller.SCAN} />
             </Column>

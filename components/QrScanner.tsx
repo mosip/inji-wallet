@@ -9,7 +9,6 @@ import { GlobalContext } from '../shared/GlobalContext';
 import { useSelector } from '@xstate/react';
 import { selectIsActive } from '../machines/app';
 import { useTranslation } from 'react-i18next';
-import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 
 export const QrScanner: React.FC<QrScannerProps> = (props) => {
   const { t } = useTranslation('QrScanner');
@@ -19,20 +18,6 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
   const [type, setType] = useState(Camera.Constants.Type.back);
 
   const isActive = useSelector(appService, selectIsActive);
-
-  const [isBluetoothEnabled, setIsBluetoothEnabled] = useState(false);
-
-  useEffect(() => {
-    (async () => {
-      await BluetoothStateManager.onStateChange((state) => {
-        if (state === 'PoweredOff') {
-          setIsBluetoothEnabled(false);
-        } else {
-          setIsBluetoothEnabled(true);
-        }
-      }, true);
-    })();
-  }, [isBluetoothEnabled]);
 
   const openSettings = () => {
     Linking.openSettings();
@@ -76,37 +61,33 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
           {props.title}
         </Text>
       )}
-      {isBluetoothEnabled && (
-        <View>
-          <View style={Theme.Styles.scannerContainer}>
-            <Camera
-              style={Theme.Styles.scanner}
-              barCodeScannerSettings={{
-                barcodeTypes: [BarCodeScanner.Constants.BarCodeType.qr],
-              }}
-              onBarCodeScanned={scanned ? undefined : onBarcodeScanned}
-              type={type}
-            />
-          </View>
-          <Column margin="24 0">
-            <TouchableOpacity
-              style={Theme.Styles.flipIconButton}
-              onPress={() => {
-                setType(
-                  type === Camera.Constants.Type.back
-                    ? Camera.Constants.Type.front
-                    : Camera.Constants.Type.back
-                );
-              }}>
-              <Icon
-                name="flip-camera-ios"
-                color={Theme.Colors.flipCameraIcon}
-                size={64}
-              />
-            </TouchableOpacity>
-          </Column>
-        </View>
-      )}
+      <View style={Theme.Styles.scannerContainer}>
+        <Camera
+          style={Theme.Styles.scanner}
+          barCodeScannerSettings={{
+            barcodeTypes: [BarCodeScanner.Constants.BarCodeType.qr],
+          }}
+          onBarCodeScanned={scanned ? undefined : onBarcodeScanned}
+          type={type}
+        />
+      </View>
+      <Column margin="24 0">
+        <TouchableOpacity
+          style={Theme.Styles.flipIconButton}
+          onPress={() => {
+            setType(
+              type === Camera.Constants.Type.back
+                ? Camera.Constants.Type.front
+                : Camera.Constants.Type.back
+            );
+          }}>
+          <Icon
+            name="flip-camera-ios"
+            color={Theme.Colors.flipCameraIcon}
+            size={64}
+          />
+        </TouchableOpacity>
+      </Column>
     </View>
   );
 
