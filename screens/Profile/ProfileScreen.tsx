@@ -83,6 +83,7 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
           value={controller.vcLabel.singular}
           onEdit={controller.UPDATE_VC_LABEL}
           Icon="star"
+          display="none"
         />
         <LanguageSetting />
         <Revoke label={t('revokeLabel')} Icon="rotate-left" />
@@ -106,7 +107,7 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
             color={Theme.Colors.profileValue}
           />
         </ListItem>
-        <ListItem bottomDivider disabled>
+        <ListItem bottomDivider disabled style={{ display: 'none' }}>
           <Icon
             name="unlock"
             size={20}

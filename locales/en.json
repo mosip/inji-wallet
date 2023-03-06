@@ -186,7 +186,7 @@
     "home": "Home",
     "scan": "Scan",
     "request": "Request",
-    "profile": "Profile"
+    "settings": "Settings"
   },
   "PasscodeScreen": {
     "header": "Set a passcode to secure your application",
@@ -201,7 +201,7 @@
     "name": "Name",
     "vcLabel": "VC Label",
     "language": "Language",
-    "bioUnlock": "Biometric unlock",
+    "bioUnlock": "Unlock with biometrics",
     "authFactorUnlock": "Unlock auth factor",
     "credits": "Credits and legal notices",
     "logout": "Log-out",

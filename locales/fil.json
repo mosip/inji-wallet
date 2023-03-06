@@ -176,7 +176,7 @@
     "home": "Home",
     "scan": "Scan",
     "request": "Request",
-    "profile": "Profile"
+    "settings": "mga setting"
   },
   "PasscodeScreen": {
     "header": "Magtakda ng passcode upang masigurado ang iyong aplikasyon",
@@ -191,7 +191,7 @@
     "name": "Pangalan",
     "vcLabel": "Panawag sa VC",
     "language": "Wika",
-    "bioUnlock": "Pagbukas gamit Biometric",
+    "bioUnlock": "I-unlock gamit ang biometrics",
     "authFactorUnlock": "Pagbukas ng auth factor",
     "credits": "Mga kredito at legal na abiso",
     "logout": "Mag log-out",

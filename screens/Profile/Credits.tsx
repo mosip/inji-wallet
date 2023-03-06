@@ -46,7 +46,10 @@ export const Credits: React.FC<CreditsProps> = (props) => {
   };
 
   return (
-    <ListItem bottomDivider onPress={() => setIsViewing(true)}>
+    <ListItem
+      bottomDivider
+      onPress={() => setIsViewing(true)}
+      style={{ display: 'none' }}>
       <Icon
         name="filetext1"
         type="antdesign"

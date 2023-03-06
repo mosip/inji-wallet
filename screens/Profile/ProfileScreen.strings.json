@@ -2,7 +2,7 @@
   "name": "Name",
   "vcLabel": "VC Label",
   "language": "Language",
-  "bioUnlock": "Biometric unlock",
+  "bioUnlock": "Unlock with biometrics",
   "authFactorUnlock": "Unlock auth factor",
   "credits": "Credits and legal notices",
   "logout": "Log-out",

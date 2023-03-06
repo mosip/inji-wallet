@@ -20,7 +20,10 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
   const { t } = useTranslation('ProfileScreen');
 
   return (
-    <ListItem bottomDivider onPress={() => controller.setAuthenticating(true)}>
+    <ListItem
+      bottomDivider
+      onPress={() => controller.setAuthenticating(true)}
+      style={{ display: 'none' }}>
       <Icon
         name={props.Icon}
         type="font-awesome"

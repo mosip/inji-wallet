@@ -186,7 +186,7 @@
       "home": "المنزل",
       "scan": "مسح",
       "request": "طلب",
-      "profile": "الملف الشخصي"
+      "settings": "إعدادات"
     },
     "PasscodeScreen": {
       "header": "تعيين رمز مرور لتأمين تطبيقك",
@@ -201,7 +201,7 @@
       "name": "اسم",
       "vcLabel": "تسمية VC",
       "language": "اللغة",
-      "bioUnlock": "فتح المقاييس الحيوية",
+      "bioUnlock":"افتح مع القياسات الحيوية",
       "authFactorUnlock": "إلغاء تأمين عامل المصادقة",
       "credits": "القانونية",
       "logout": "تسجيل الخروج",
