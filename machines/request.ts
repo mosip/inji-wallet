@@ -938,6 +938,10 @@ export function selectIsReviewing(state: State) {
   return state.matches('reviewing');
 }
 
+export function selectIsReviewingInIdle(state: State) {
+  return state.matches('reviewing.idle');
+}
+
 export function selectIsAccepted(state: State) {
   return state.matches('reviewing.accepted');
 }

@@ -22,6 +22,12 @@ const LanguageSetting: React.FC = () => {
     <LanguageSelector
       triggerComponent={
         <ListItem bottomDivider>
+          <Icon
+            name="language"
+            size={20}
+            color={Theme.Colors.Icon}
+            style={Theme.Styles.profileIconBg}
+          />
           <ListItem.Content>
             <ListItem.Title>
               <Text>{t('language')}</Text>

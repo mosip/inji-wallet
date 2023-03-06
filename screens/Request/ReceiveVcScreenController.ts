@@ -5,6 +5,7 @@ import {
   selectIncomingVc,
   selectIsIncomingVp,
   selectIsInvalidIdentity,
+  selectIsReviewingInIdle,
   selectIsVerifyingIdentity,
   selectSenderInfo,
 } from '../../machines/request';
@@ -22,6 +23,7 @@ export function useReceiveVcScreen() {
     vcLabel: useSelector(settingsService, selectVcLabel),
 
     isIncomingVp: useSelector(requestService, selectIsIncomingVp),
+    isReviewingInIdle: useSelector(requestService, selectIsReviewingInIdle),
     isVerifyingIdentity: useSelector(requestService, selectIsVerifyingIdentity),
     isInvalidIdentity: useSelector(requestService, selectIsInvalidIdentity),
 
