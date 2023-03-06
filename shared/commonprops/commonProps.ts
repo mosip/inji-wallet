@@ -30,15 +30,11 @@ export async function downloadModel() {
     const maxRetry = parseInt(maxRetryStr);
     const resp: string = injiProp != null ? injiProp.faceSdkModelUrl : null;
     if (resp != null) {
-      var result = await init(resp, false);
-      console.log('model download result is = ' + result);
-      if (!result) {
-        for (let counter = 0; counter < maxRetry; counter++) {
-          result = await init(resp, false);
-          console.log('model redownload result is = ' + result);
-          if (result) {
-            break;
-          }
+      for (let counter = 0; counter < maxRetry; counter++) {
+        var result = await init(resp, false);
+        console.log('model download result is = ' + result);
+        if (result) {
+          break;
         }
       }
     }
