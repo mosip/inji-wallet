@@ -37,6 +37,7 @@ export const ReceiveVcScreen: React.FC = () => {
               title={t('verifyAndSave')}
               margin="12 0 12 0"
               onPress={controller.ACCEPT_AND_VERIFY}
+              disabled={!controller.isReviewingInIdle}
             />
           ) : (
             <Button
@@ -45,6 +46,7 @@ export const ReceiveVcScreen: React.FC = () => {
               })}
               margin="12 0 12 0"
               onPress={controller.ACCEPT}
+              disabled={!controller.isReviewingInIdle}
             />
           )}
           <Button
@@ -52,6 +54,7 @@ export const ReceiveVcScreen: React.FC = () => {
             title={t('discard')}
             margin="0 0 12 0"
             onPress={controller.REJECT}
+            disabled={!controller.isReviewingInIdle}
           />
         </Column>
       </Column>
