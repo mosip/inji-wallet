@@ -274,7 +274,7 @@
     "ScanScreen": {
       "header": "ಸ್ಕ್ಯಾನ್ ಕ್ಯೂಆರ್ ಕೋಡ್",
       "noShareableVcs": "ಯಾವುದೇ ಹಂಚಿಕೊಳ್ಳಬಹುದಾದ {{vcLabel}} ಲಭ್ಯವಿಲ್ಲ.",
-      "BluetoothState": "Bluetooth is not enabled please go to control center and enable it",
+      "BluetoothState": "ಬ್ಲೂಟೂತ್ ಆನ್ ಆಗಿಲ್ಲ, ದಯವಿಟ್ಟು ಅದನ್ನು ನಿಯಂತ್ರಣ ಕೇಂದ್ರದಿಂದ ಆನ್ ಮಾಡಿ",
       "sharingVc": "ಹಂಚಿಕೆ {{vcLabel}}",
       "errors": {
         "locationDisabled": {

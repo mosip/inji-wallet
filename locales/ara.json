@@ -274,7 +274,7 @@
     "ScanScreen": {
       "header": "مسح رمز الاستجابة السريعة",
       "noShareableVcs": "لا يمكن مشاركة {{vcLabel}}",
-      "BluetoothState": "Bluetooth is not enabled please go to control center and enable it",
+      "BluetoothState": "البلوتوث ليس قيد التشغيل ، يرجى تشغيله من مركز التحكم",
       "sharingVc": "مشاركة {{vcLabel}}",
       "errors": {
         "locationDisabled": {
