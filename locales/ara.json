@@ -129,15 +129,15 @@
       "backButton": "العودة إلى المنزل"
     },
     "GetIdInputModal": {
-      "header": "لاسترداد UIN أو VID ، أدخل رقم التطبيق {{vcLabel}}",
+      "header": "أدخل معرف التطبيق الخاص بك للحصول على UIN الخاص بك",
       "getUIN": "احصل على UIN / VID",
-      "applicationId": "رقم التطبيق {{vcLabel}}",
+      "applicationId": "رقم معرف التطبيق",
       "requestingOTP": "طلب OTP...",
-      "qstnMarkToolTip": "تمت طباعة رقم التطبيق {{vcLabel}} على الإقرار المقدم بعد التسجيل"
+      "qstnMarkToolTip": "معرف التطبيق متاح في الإقرار الذي تم استلامه بعد التسجيل."
     },
     "IdInputModal": {
-      "header": "أدخل UIN المقدم من MOSIP أو VID لـ {{vcLabel}} الذي تريد استرداده",
-      "generateVc": "إنشاء {{vcLabel}}",
+      "header": "أدخل UIN / VID لتنزيل {{vcLabel}}",
+      "generateVc": "يولد لي {{vcLabel}}",
       "enterId": "أدخل {{idType}}",
       "noUIN/VID": "ليس لديك UIN / VID الخاص بك؟ أحضره هنا",
       "requestingOTP": "طلب OTP..."
@@ -241,7 +241,7 @@
     },
     "RequestScreen": {
       "bluetoothDenied": "الرجاء تمكين Bluetooth لتتمكن من طلب{{vcLabel}}",
-      "showQrCode": "{{vcLabel}} أظهر رمز الاستجابة السريعة هذا لطلب ",
+      "showQrCode": "اعرض  رمز الاستجابة السريعة هذا لطلب المقيم {{vcLabel}}",
       "incomingVc": "الوارد {{vcLabel}}",
       "request": "طلب",
       "status": {

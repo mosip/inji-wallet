@@ -128,8 +128,8 @@
     "backButton": "Bumalik"
   },
   "IdInputModal": {
-    "header": "Ilagay ang UIN o VID na ibinigay ng MOSIP upang matanggap ang iyong {{vcLabel}}",
-    "generateVc": "Gumawa ng {{vcLabel}}",
+    "header": "Ilagay ang iyong UIN/VID para i-download ang iyong {{vcLabel}}",
+    "generateVc": "Bumuo ng Aking {{vcLabel}}",
     "enterId": "Ilagay ang iyong {{idType}}"
   },
   "OtpVerificationModal": {
@@ -230,7 +230,7 @@
   },
   "RequestScreen": {
     "bluetoothDenied": "Mangyaring paganahin ang Bluetooth upang makahiling ng {{vcLabel}}",
-    "showQrCode": "Ipakita ang QR code na ito para makahiling ng {{vcLabel}}",
+    "showQrCode": "Ipakita ang QR code na ito para humiling ng resident {{vcLabel}}",
     "incomingVc": "Padating na {{vcLabel}}",
     "request": "Hilingin",
     "status": {

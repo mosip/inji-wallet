@@ -1,6 +1,6 @@
 {
   "bluetoothDenied": "Please enable Bluetooth to be able to request {{vcLabel}}",
-  "showQrCode": "Show this QR code to request {{vcLabel}}",
+  "showQrCode": "Display this QR code to request resident {{vcLabel}}",
   "incomingVc": "Incoming {{vcLabel}}",
   "request": "Request",
   "status": {
