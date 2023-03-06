@@ -119,7 +119,7 @@ export const DefaultTheme = {
       borderRadius: 10,
       margin: 5,
       borderWidth: 2,
-      borderColor: Colors.Orange,
+      borderColor: Colors.Green,
     },
     labelPartContainer: {
       marginLeft: 16,

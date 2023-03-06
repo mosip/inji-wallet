@@ -139,15 +139,6 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
     ? ''
     : getLocalizedField(verifiableCredential.credentialSubject.fullName);
 
-  const selectableOrCheck = props.selectable ? (
-    <CheckBox
-      checked={props.selected}
-      checkedIcon={<Icon name="radio-button-checked" />}
-      uncheckedIcon={<Icon name="radio-button-unchecked" />}
-      onPress={() => props.onPress(service)}
-    />
-  ) : null;
-
   const tag = useSelector(service, selectTag);
 
   return (
@@ -229,9 +220,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
             </Column>
           </Column>
 
-          {verifiableCredential ? (
-            selectableOrCheck
-          ) : (
+          {!verifiableCredential && (
             <RotatingIcon name="sync" color={Theme.Colors.rotatingIcon} />
           )}
         </Row>
