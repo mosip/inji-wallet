@@ -274,7 +274,7 @@
     "ScanScreen": {
       "header": "مسح رمز الاستجابة السريعة",
       "noShareableVcs": "لا يمكن مشاركة {{vcLabel}}",
-      "BluetoothState": "البلوتوث ليس قيد التشغيل ، يرجى تشغيله من مركز التحكم",
+      "BluetoothState": "تم إيقاف تشغيل البلوتوث ، يرجى تشغيله من مركز التحكم",
       "sharingVc": "مشاركة {{vcLabel}}",
       "errors": {
         "locationDisabled": {

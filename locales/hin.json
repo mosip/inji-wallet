@@ -274,7 +274,7 @@
     "ScanScreen": {
       "header": "क्यूआर कोड स्कैन करे",
       "noShareableVcs": "कोई साझा करने योग्य {{vcLabel}} उपलब्ध नहीं है।",
-      "BluetoothState": "ब्लूटूथ चालू नहीं है, कृपया इसे कंट्रोल सेंटर से चालू करें",
+      "BluetoothState": "ब्लूटूथ बंद है, कृपया इसे नियंत्रण केंद्र से चालू करें",
       "sharingVc": "शेयरिंग {{vcLabel}}",
       "errors": {
         "locationDisabled": {
