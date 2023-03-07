@@ -78,6 +78,7 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
           onEdit={controller.UPDATE_NAME}
           Icon="user"
         />
+        {/* Intentionally hided using {display='none'} - Refer mosip/inji/issue#607 */}
         <EditableListItem
           label={t('vcLabel')}
           value={controller.vcLabel.singular}
@@ -107,6 +108,7 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
             color={Theme.Colors.profileValue}
           />
         </ListItem>
+        {/* Intentionally hided using {display:'none'} - Refer mosip/inji/issue#607 */}
         <ListItem bottomDivider disabled style={{ display: 'none' }}>
           <Icon
             name="unlock"
