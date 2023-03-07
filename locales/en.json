@@ -44,7 +44,7 @@
     "email": "Email",
     "address": "Address",
     "reasonForSharing": "Reason for sharing",
-    "idType": "ID type",
+    "idType": "Card type",
     "id": "Id",
     "nationalCard": "National Card",
     "uin": "UIN",
