@@ -9,10 +9,14 @@ import { useReceiveVcScreen } from './ReceiveVcScreenController';
 import { VerifyIdentityOverlay } from '../VerifyIdentityOverlay';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { isBLEEnabled } from '../../lib/smartshare';
+import { useOverlayVisibleAfterTimeout } from '../../shared/hooks/useOverlayVisibleAfterTimeout';
 
 export const ReceiveVcScreen: React.FC = () => {
   const { t } = useTranslation('ReceiveVcScreen');
   const controller = useReceiveVcScreen();
+  const savingOverlayVisible = useOverlayVisibleAfterTimeout(
+    controller.isAccepting
+  );
 
   return (
     <React.Fragment>
@@ -104,7 +108,7 @@ export const ReceiveVcScreen: React.FC = () => {
       </MessageOverlay>
 
       <MessageOverlay
-        isVisible={controller.isAccepting}
+        isVisible={savingOverlayVisible}
         message={t('saving', {
           vcLabel: controller.vcLabel.plural,
         })}

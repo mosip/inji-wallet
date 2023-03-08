@@ -424,7 +424,11 @@ export const requestMachine =
                 },
               },
             },
-            navigatingToHome: {},
+            navigatingToHome: {
+              invoke: {
+                src: 'disconnect',
+              },
+            },
             savingFailed: {
               initial: 'idle',
               entry: ['setReceiveLogTypeDiscarded', 'logReceived'],

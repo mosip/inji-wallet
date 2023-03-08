@@ -24,7 +24,9 @@ export interface Typegen0 {
   'invokeSrcNameMap': {
     advertiseDevice: 'done.invoke.request.waitingForConnection:invocation[0]';
     checkBluetoothService: 'done.invoke.request.checkingBluetoothService.checking:invocation[0]';
-    disconnect: 'done.invoke.request.clearingConnection:invocation[0]';
+    disconnect:
+      | 'done.invoke.request.clearingConnection:invocation[0]'
+      | 'done.invoke.request.reviewing.navigatingToHome:invocation[0]';
     exchangeDeviceInfo: 'done.invoke.request.exchangingDeviceInfo:invocation[0]';
     monitorConnection: 'done.invoke.request:invocation[0]';
     receiveVc: 'done.invoke.request.waitingForVc:invocation[0]';
@@ -105,7 +107,7 @@ export interface Typegen0 {
       | 'DISMISS'
       | 'xstate.after(DESTROY_TIMEOUT)#request.clearingConnection';
     checkBluetoothService: 'SCREEN_FOCUS' | 'SWITCH_PROTOCOL';
-    disconnect: '' | 'DISMISS';
+    disconnect: '' | 'DISMISS' | 'GO_TO_RECEIVED_VC_TAB';
     exchangeDeviceInfo: 'RECEIVE_DEVICE_INFO';
     monitorConnection: 'xstate.init';
     receiveVc: 'EXCHANGE_DONE';
