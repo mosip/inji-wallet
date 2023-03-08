@@ -32,7 +32,8 @@ export interface Typegen0 {
     sendDisconnect: 'done.invoke.request.cancelling:invocation[0]';
     sendVcResponse:
       | 'done.invoke.request.reviewing.accepted:invocation[0]'
-      | 'done.invoke.request.reviewing.rejected:invocation[0]';
+      | 'done.invoke.request.reviewing.rejected:invocation[0]'
+      | 'done.invoke.request.reviewing.savingFailed:invocation[0]';
     verifyVp: 'done.invoke.request.reviewing.verifyingVp:invocation[0]';
   };
   'missingImplementations': {
@@ -57,7 +58,7 @@ export interface Typegen0 {
       | 'CONNECTION_DESTROYED'
       | 'DISMISS'
       | 'xstate.after(DESTROY_TIMEOUT)#request.clearingConnection';
-    logReceived: 'CANCEL' | 'REJECT' | 'STORE_RESPONSE';
+    logReceived: 'CANCEL' | 'REJECT' | 'STORE_ERROR' | 'STORE_RESPONSE';
     mergeIncomingVc: 'STORE_RESPONSE';
     openSettings: 'GOTO_SETTINGS';
     prependReceivedVc: 'VC_RESPONSE';
@@ -81,8 +82,8 @@ export interface Typegen0 {
     requestReceiverInfo: 'CONNECTED';
     sendVcReceived: 'STORE_RESPONSE';
     setIncomingVc: 'VC_RECEIVED';
-    setReceiveLogTypeDiscarded: 'CANCEL' | 'REJECT';
-    setReceiveLogTypeRegular: 'ACCEPT';
+    setReceiveLogTypeDiscarded: 'CANCEL' | 'REJECT' | 'STORE_ERROR';
+    setReceiveLogTypeRegular: 'ACCEPT' | 'STORE_RESPONSE';
     setReceiveLogTypeUnverified: 'FACE_INVALID';
     setReceiveLogTypeVerified: 'FACE_VALID';
     setReceiverInfo: 'RECEIVE_DEVICE_INFO';
@@ -110,7 +111,7 @@ export interface Typegen0 {
     receiveVc: 'EXCHANGE_DONE';
     requestBluetooth: 'BLUETOOTH_DISABLED';
     sendDisconnect: 'CANCEL';
-    sendVcResponse: 'CANCEL' | 'REJECT' | 'STORE_RESPONSE';
+    sendVcResponse: 'CANCEL' | 'REJECT' | 'STORE_ERROR' | 'STORE_RESPONSE';
     verifyVp: never;
   };
   'matchesStates':
@@ -140,6 +141,9 @@ export interface Typegen0 {
     | 'reviewing.invalidIdentity'
     | 'reviewing.navigatingToHome'
     | 'reviewing.rejected'
+    | 'reviewing.savingFailed'
+    | 'reviewing.savingFailed.idle'
+    | 'reviewing.savingFailed.viewingVc'
     | 'reviewing.verifyingIdentity'
     | 'reviewing.verifyingVp'
     | 'waitingForConnection'
@@ -156,6 +160,7 @@ export interface Typegen0 {
           | 'invalidIdentity'
           | 'navigatingToHome'
           | 'rejected'
+          | 'savingFailed'
           | 'verifyingIdentity'
           | 'verifyingVp'
           | {
@@ -165,6 +170,7 @@ export interface Typegen0 {
                 | 'requestingExistingVc'
                 | 'requestingReceivedVcs'
                 | 'storingVc';
+              savingFailed?: 'idle' | 'viewingVc';
             };
         waitingForVc?: 'inProgress' | 'timeout';
       };

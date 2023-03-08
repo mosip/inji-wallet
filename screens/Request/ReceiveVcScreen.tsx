@@ -102,6 +102,25 @@ export const ReceiveVcScreen: React.FC = () => {
           />
         </Row>
       </MessageOverlay>
+
+      <MessageOverlay
+        isVisible={controller.isAccepting}
+        message={t('saving', {
+          vcLabel: controller.vcLabel.plural,
+        })}
+        progress={true}
+      />
+
+      <MessageOverlay
+        isVisible={controller.isSavingFailedIdle}
+        title={t('errors.savingFailed.title', {
+          vcLabel: controller.vcLabel.singular,
+        })}
+        message={t('errors.savingFailed.message', {
+          vcLabel: controller.vcLabel.singular,
+        })}
+        onBackdropPress={controller.DISMISS}
+      />
     </React.Fragment>
   );
 };

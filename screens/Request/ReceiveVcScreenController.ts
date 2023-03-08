@@ -11,6 +11,10 @@ import {
 } from '../../machines/request';
 import { selectVcLabel } from '../../machines/settings';
 import { GlobalContext } from '../../shared/GlobalContext';
+import {
+  selectIsAccepting,
+  selectIsSavingFailedIdle,
+} from '../../machines/openIdBle/request';
 
 export function useReceiveVcScreen() {
   const { appService } = useContext(GlobalContext);
@@ -24,6 +28,8 @@ export function useReceiveVcScreen() {
 
     isIncomingVp: useSelector(requestService, selectIsIncomingVp),
     isReviewingInIdle: useSelector(requestService, selectIsReviewingInIdle),
+    isAccepting: useSelector(requestService, selectIsAccepting),
+    isSavingFailedIdle: useSelector(requestService, selectIsSavingFailedIdle),
     isVerifyingIdentity: useSelector(requestService, selectIsVerifyingIdentity),
     isInvalidIdentity: useSelector(requestService, selectIsInvalidIdentity),
 
