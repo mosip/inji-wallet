@@ -11,9 +11,9 @@
     "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "received. Presence verification failed",
     "PRESENCE_VERIFIED_AND_VC_SHARED": "verified and shared",
     "PRESENCE_VERIFICATION_FAILED": "verification failed",
-    "QRLOGIN_SUCCESFULL": "QRLogin sucessful",
-    "WALLET_BINDING_SUCCESSFULL": "Activation successful",
-    "WALLET_BINDING_FAILURE": "Activation failed"
+    "QRLOGIN_SUCCESFULL": "QRLogin successful",
+    "WALLET_BINDING_SUCCESSFULL": "Wallet binding successful",
+    "WALLET_BINDING_FAILURE": "Wallet binding failed"
   },
   "DeviceInfoList": {
     "requestedBy": "Requested by",
@@ -50,18 +50,11 @@
     "id": "Id",
     "nationalCard": "National Card",
     "uin": "UIN",
-    "enableVerification": "Activate",
-    "profileAuthenticated": "Activated for online login",
-    "offlineAuthDisabledHeader": "Activation pending for online login",
-    "offlineAuthDisabledMessage": "Please click the button below to activate this credential to be used for online login.",
     "vid": "VID",
-    "verificationEnabledSuccess": "Activated for online login",
-    "goback": "GO BACK",
-    "BindingWarning": "If you have enabled verification for this credential on another wallet, it will get overridden. Do you want to proceed?",
-    "yes_confirm": "Yes, I Confirm",
-    "no": "No",
-    "Alert": "Alert",
-    "ok": "Okay"
+    "enableVerification": "Enable Verification",
+    "profileAuthenticated": "Profile is authenticated!",
+    "offlineAuthDisabledHeader": "Offline Authentication disabled!",
+    "offlineAuthDisabledMessage": "Click 'Enable Authentication' to enable this credentials to be used for offline authentication."
   },
   "AuthScreen": {
     "header": "Would you like to use biometrics to unlock the application?",
@@ -98,30 +91,10 @@
       },
       "backend": {
         "invalidOtp": "OTP is invalid",
-        "expiredOtp": "OTP has expired",
         "invalidUin": "UIN invalid",
         "invalidVid": "VID invalid",
         "missingUin": "UIN not available in database",
-        "missingVid": "VID not available in database",
-        "noMessageAvailable": "Try after sometime",
-        "whileGeneratingOtpErrorIsOccured": "while generating otp error is occurred",
-        "networkRequestFailed": "Network request failed"
-      }
-    }
-  },
-  "GetVcModal": {
-    "errors": {
-      "input": {
-        "empty": "The input cannot be empty",
-        "invalidFormat": "The input format is incorrect"
-      },
-      "backend":{
-        "invalidOtp": "OTP is invalid",
-        "expiredOtp": "OTP has expired",
-        "applicationProcessing": "AID is not ready",
-        "noMessageAvailable": "Try after sometime",
-        "networkRequestFailed": "Network request failed",
-        "timeOut": "Timeout"
+        "missingVid": "VID not available in database"
       }
     }
   },
@@ -145,8 +118,7 @@
     "requestingOTP": "Requesting OTP..."
   },
   "OtpVerificationModal": {
-    "enterOtp": "Enter the 6-digit verification code we sent you",
-    "header": "OTP Verification"
+    "enterOtp": "Enter the 6-digit verification code we sent you"
   },
   "MyVcsTab": {
     "addVcButton": "Add {{vcLabel}}",
@@ -177,7 +149,6 @@
     "requestingOtp": "Requesting OTP...",
     "editTag": "Rename",
     "redirecting": "Redirecting...",
-    "inProgress": "Loading...",
     "success": {
       "unlocked": "{{vcLabel}} successfully unlocked",
       "locked": "{{vcLabel}} successfully locked",
@@ -217,31 +188,6 @@
     "useBle": "Powered by BLE",
     "useGoogleNearby": "Powered by GoogleNearby"
   },
-  "QrScreen": {
-    "title": "QR Login",
-    "alignQr": "Align the QR code within the frame to scan",
-    "confirmation": "Confirmation",
-    "checkDomain": "Also, check that there is a lock icon on the address bar.",
-    "domainHead": "https://",
-    "selectId": "Select ID",
-    "noBindedVc": "No Binded {{vcLabel}} Available to Verify",
-    "back": "Go Back",
-    "confirm": "Confirm",
-    "verify": "Verify",
-    "faceAuth": "Face Authentication",
-    "consent": "Consent",
-    "loading": "Loading...",
-    "domainWarning": "Please confirm the domain of the website you are scanning the QR code from is as below",
-    "access": " is requesting access to",
-    "status": "Status",
-    "successMessage": "You Have Successfully Logged Into ",
-    "okay": "Okay",
-    "allow": "Allow",
-    "cancel": "Cancel",
-    "essentialClaims": "Essential Claims",
-    "voluntaryClaims": "Voluntary Claims",
-    "required":"Required"
-  },
   "ReceiveVcScreen": {
     "header": "{{vcLabel}} details",
     "save": "Save {{vcLabel}}",
@@ -279,7 +225,7 @@
         "message": "Please connect to the internet to enable Online sharing mode"
       },
       "bleError": {
-        "title": "Failed to transfer",
+        "title": "Failed to transfer!",
         "message": "Something went wrong while transferring {{vcLabel}}. Please try again."
       }
     },
@@ -337,8 +283,8 @@
   },
   "SendVcScreen": {
     "reasonForSharing": "Reason for sharing (optional)",
-    "acceptRequest": "Share",
-    "acceptRequestAndVerify": "Share with Selfie",
+    "acceptRequest": "Accept request and choose {{vcLabel}}",
+    "acceptRequestAndVerify": "Accept request and verify",
     "reject": "Reject",
     "consentToPhotoVerification": "I give consent to have my photo taken for authentication"
   },
@@ -370,9 +316,6 @@
         "missingPermission": "This app uses the camera to scan the QR code of another device."
       },
       "allowAccess": "Allow access to the camera"
-    },
-    "errors": {
-      "genericError": "Something went wrong. Please try again after some time!"
     }
   }
 }
