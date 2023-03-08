@@ -131,7 +131,7 @@
     "GetIdInputModal": {
       "header": "ನಿಮ್ಮ UIN ಪಡೆಯಲು ನಿಮ್ಮ ಅಪ್ಲಿಕೇಶನ್ ID ನಮೂದಿಸಿ",
       "getUIN": "UIN/VID ಪಡೆಯಿರಿ",
-      "applicationId": "ಅಪ್ಲಿಕೇಶನ್ ID ಸಂಖ್ಯೆ",
+      "applicationId": "ಅಪ್ಲಿಕೇಶನ್ ID",
       "requestingOTP": "OTP ಯನ್ನು ವಿನಂತಿಸಲಾಗುತ್ತಿದೆ...",
       "qstnMarkToolTip": "ನೋಂದಣಿಯ ನಂತರ ಸ್ವೀಕರಿಸಿದ ಸ್ವೀಕೃತಿಯಲ್ಲಿ ಅಪ್ಲಿಕೇಶನ್ ID ಲಭ್ಯವಿದೆ."
     },

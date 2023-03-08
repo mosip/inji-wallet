@@ -131,7 +131,7 @@
     "GetIdInputModal": {
       "header": "अपना यूआईएन प्राप्त करने के लिए अपनी एप्लिकेशन ID दर्ज करें",
       "getUIN": "UIN/VID ​​प्राप्त करें",
-      "applicationId": "आवेदन ID संख्या",
+      "applicationId": "आवेदन ID",
       "requestingOTP": "OTP का अनुरोध...",
       "qstnMarkToolTip": "आवेदन ID नामांकन के बाद प्राप्त पावती में उपलब्ध है।"
     },

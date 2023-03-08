@@ -131,7 +131,7 @@
     "GetIdInputModal": {
       "header": "أدخل معرف التطبيق الخاص بك للحصول على UIN الخاص بك",
       "getUIN": "احصل على UIN / VID",
-      "applicationId": "رقم معرف التطبيق",
+      "applicationId": "رقم الاستمارة",
       "requestingOTP": "طلب OTP...",
       "qstnMarkToolTip": "معرف التطبيق متاح في الإقرار الذي تم استلامه بعد التسجيل."
     },

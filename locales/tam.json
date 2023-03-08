@@ -131,7 +131,7 @@
     "GetIdInputModal": {
       "header": "உங்கள் UIN ஐப் பெற உங்கள் விண்ணப்ப ID ஐ உள்ளிடவும்",
       "getUIN": "UIN/VIDஐப் பெறுங்கள்",
-      "applicationId": "விண்ணப்ப ID எண்",
+      "applicationId": "விண்ணப்ப ID",
       "requestingOTP": "OTP ஐக் கோருகிறது...",
       "qstnMarkToolTip": "விண்ணப்ப ID பதிவுசெய்த பிறகு பெறப்பட்ட ஒப்புகையில் கிடைக்கும்."
     },
