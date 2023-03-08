@@ -44,7 +44,7 @@
       "email": "البريد الإلكتروني",
       "address": "عنوان",
       "reasonForSharing": "سبب المشاركة",
-      "idType": "نوع البطاقة",
+      "idType": "نوع الهوية",
       "id": "Id",
       "nationalCard": "البطاقة الوطنية",
       "uin": "UIN",

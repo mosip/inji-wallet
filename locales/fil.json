@@ -43,7 +43,7 @@
     "email": "Email",
     "address": "Tirahan",
     "reasonForSharing": "Dahilan ng pagbabahagi",
-    "idType": "Uri ng Card",
+    "idType": "Uri ng ID",
     "id": "Id",
     "nationalCard": "Pambansang Kard",
     "uin": "UIN",
@@ -173,7 +173,7 @@
     }
   },
   "MainLayout": {
-    "home": "Bahay",
+    "home": "Home",
     "scan": "Scan",
     "request": "Request",
     "settings": "mga setting"
