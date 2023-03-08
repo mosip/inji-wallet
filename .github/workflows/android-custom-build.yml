@@ -15,7 +15,10 @@ on:
         description: 'Application Theme'
         required: true
         default: 'Default'
-        type: string
+        type: choice
+        options:
+          - Default
+          - Purple
 
 jobs:
   build-android:
@@ -74,7 +77,7 @@ jobs:
         env:
           MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
           FIREBASE_SECRET: ${{ secrets.GPG_SECRET }}
-          APPLICAITON_THEME: ${{ github.event.inputs.theme }}
+          APPLICATION_THEME: ${{ github.event.inputs.theme }}
       - name: Upload Artifact
         uses: actions/upload-artifact@v3.1.1
         with:
