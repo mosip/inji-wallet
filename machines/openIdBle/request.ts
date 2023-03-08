@@ -51,6 +51,7 @@ const model = createModel(
     events: {
       ACCEPT: () => ({}),
       ACCEPT_AND_VERIFY: () => ({}),
+      GO_TO_RECEIVED_VC_TAB: () => ({}),
       REJECT: () => ({}),
       CANCEL: () => ({}),
       DISMISS: () => ({}),
@@ -271,7 +272,7 @@ export const requestMachine =
               target: 'disconnected',
             },
             VC_RECEIVED: {
-              target: 'reviewing',
+              target: 'reviewing.accepting',
               actions: 'setIncomingVc',
             },
           },
@@ -391,6 +392,9 @@ export const requestMachine =
               },
               on: {
                 DISMISS: {
+                  target: 'navigatingToHome',
+                },
+                GO_TO_RECEIVED_VC_TAB: {
                   target: 'navigatingToHome',
                 },
               },

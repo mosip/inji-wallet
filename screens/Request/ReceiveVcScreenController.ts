@@ -31,6 +31,8 @@ export function useReceiveVcScreen() {
     ACCEPT_AND_VERIFY: () =>
       requestService.send(RequestEvents.ACCEPT_AND_VERIFY()),
     REJECT: () => requestService.send(RequestEvents.REJECT()),
+    GO_TO_RECEIVED_VC_TAB: () =>
+      requestService.send(RequestEvents.GO_TO_RECEIVED_VC_TAB()),
     RETRY_VERIFICATION: () =>
       requestService.send(RequestEvents.RETRY_VERIFICATION()),
     CANCEL: () => requestService.send(RequestEvents.CANCEL()),

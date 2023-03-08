@@ -244,7 +244,8 @@
     "header": "{{vcLabel}} details",
     "save": "Save {{vcLabel}}",
     "verifyAndSave": "Verify and save",
-    "discard": "Discard"
+    "discard": "Discard",
+    "goToReceivedVCTab":  "View Received {{vcLabel}}"
   },
   "RequestScreen": {
     "bluetoothDenied": "Please enable Bluetooth to be able to request {{vcLabel}}",

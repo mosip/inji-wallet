@@ -76,6 +76,7 @@ export interface Typegen0 {
       | 'ACCEPT'
       | 'DISMISS'
       | 'FACE_VALID'
+      | 'VC_RECEIVED'
       | 'done.invoke.request.reviewing.verifyingVp:invocation[0]';
     requestReceiverInfo: 'CONNECTED';
     sendVcReceived: 'STORE_RESPONSE';
