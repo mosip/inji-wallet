@@ -14,11 +14,11 @@ on:
       theme:
         description: 'Application Theme'
         required: true
-        default: 'Default'
+        default: 'orange'
         type: choice
         options:
-          - Default
-          - Purple
+          - orange
+          - purple
 
 jobs:
   build-android:
