@@ -125,15 +125,6 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
             </ListItem.Title>
           </ListItem.Content>
         </ListItem>
-        <ListItem bottomDivider>
-          <ListItem.Content>
-            <ListItem.Title>
-              <Text color={Theme.Colors.profileLabel}>
-                {isBLEEnabled ? t('useBle') : t('useGoogleNearby')}
-              </Text>
-            </ListItem.Title>
-          </ListItem.Content>
-        </ListItem>
         <Credits label={t('credits')} color={Theme.Colors.profileLabel} />
         <ListItem bottomDivider onPress={controller.LOGOUT}>
           <Icon
@@ -149,6 +140,14 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
             </ListItem.Title>
           </ListItem.Content>
         </ListItem>
+        <Text
+          weight="semibold"
+          margin="32 0 0 0"
+          align="center"
+          size="smaller"
+          color={Theme.Colors.profileVersion}>
+          {isBLEEnabled ? t('useBle') : t('useGoogleNearby')}
+        </Text>
         <Text
           weight="semibold"
           margin="32 0 0 0"
