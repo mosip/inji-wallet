@@ -204,7 +204,7 @@
       "bioUnlock": "ಬಯೋಮೆಟ್ರಿಕ್‌ಗಳೊಂದಿಗೆ ಅನ್‌ಲಾಕ್ ಮಾಡಿ",
       "authFactorUnlock": "ಅನ್ಲಾಕ್ ದೃಢೀಕರಣ ಅಂಶ",
       "credits": "ಕ್ರೆಡಿಟ್ಸ್ ಮತ್ತು ಲೀಗಲ್ ನೋಟಿಸ್",
-      "logout": "ಲಾಗ್-ಔಟ್",
+      "logout": "ಲಾಗ್ ಔಟ್",
       "revokeLabel": "ರದ್ದು VID",
       "revokeHeader": "ರದ್ದು VID",
       "revokingVids": "ನೀವು ಹಿಂತೆಗೆದುಕೊಳ್ಳಲಿದ್ದೀರಿ ({{count}}) VIDs.",

@@ -204,7 +204,7 @@
     "bioUnlock": "Unlock with biometrics",
     "authFactorUnlock": "Unlock auth factor",
     "credits": "Credits and legal notices",
-    "logout": "Log-out",
+    "logout": "Logout",
     "revokeLabel": "Revoke VID",
     "revokeHeader": "REVOKE VID",
     "revokingVids": "You are about to revoke ({{count}}) VIDs.",

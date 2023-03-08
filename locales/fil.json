@@ -194,7 +194,7 @@
     "bioUnlock": "I-unlock gamit ang biometrics",
     "authFactorUnlock": "Pagbukas ng auth factor",
     "credits": "Mga kredito at legal na abiso",
-    "logout": "Mag log-out",
+    "logout": "Mag-logout",
     "revokeLabel": "Kanselahin ang VID",
     "revokeHeader": "KANSELAHIN ANG VID",
     "revokingVids": "Kakanselahin mo na ang ({{count}}) na mga VID.",

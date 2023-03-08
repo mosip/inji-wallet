@@ -204,7 +204,7 @@
       "bioUnlock":"افتح مع القياسات الحيوية",
       "authFactorUnlock": "إلغاء تأمين عامل المصادقة",
       "credits": "القانونية",
-      "logout": "تسجيل الخروج",
+      "logout": "تسجيل خروج",
       "revokeLabel": "إبطال VID",
       "revokeHeader": "إبطال VID",
       "revokingVids": "({{count}}) أنت على وشك إلغاء معرّفات VID.",
