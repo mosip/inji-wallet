@@ -186,7 +186,7 @@
       "home": "வீடு",
       "scan": "ஸ்கேன்",
       "request": "கோரிக்கை",
-      "profile": "சுயவிவரம்"
+      "settings": "செட்டிங்ஸ்"
     },
     "PasscodeScreen": {
       "header": "உங்கள் விண்ணப்பத்தைப் பாதுகாக்க கடவுக்குறியீட்டை அமைக்கவும்",
@@ -201,7 +201,7 @@
       "name": "பெயர்",
       "vcLabel": "VC லேபிள்",
       "language": "மொழி",
-      "bioUnlock": "பயோமெட்ரிக் அன்லாக்",
+      "bioUnlock": "பயோமெட்ரிக்ஸ் மூலம் திறக்கவும்",
       "authFactorUnlock": "அங்கீகார காரணியைத் திற",
       "credits": "வரவுகள் மற்றும் சட்ட அறிவிப்புகள்",
       "logout": "வெளியேறு",
@@ -211,7 +211,9 @@
       "revokingVidsAfter": "அதாவது, அந்த VID(s) உடன் இணைக்கப்பட்ட எந்த ஐடியையும் நீங்கள் இனி பயன்படுத்தவோ பார்க்கவோ முடியாது. \nநீங்கள் நிச்சயமாக தொடர விரும்புகிறீர்களா?",
       "empty": "காலியாக",
       "revokeSuccessful": "VID வெற்றிகரமாக ரத்து செய்யப்பட்டது",
-      "version": "பதிப்பு"
+      "version": "பதிப்பு",
+      "useBle": "Powered by BLE",
+      "useGoogleNearby": "Powered by GoogleNearby"
     },
     "QrScreen": {
       "title": "QR உள்நுழைவு",
@@ -301,8 +303,8 @@
     },
     "SendVcScreen": {
       "reasonForSharing": "பகிர்வதற்கான காரணம் (விரும்பினால்)",
-      "acceptRequest": "கோரிக்கையை ஏற்று {{vcLabel}}ஐத் தேர்வு செய்யவும்",
-      "acceptRequestAndVerify": "கோரிக்கையை ஏற்று சரிபார்க்கவும்",
+      "acceptRequest": "பகிர்",
+      "acceptRequestAndVerify": "செல்ஃபியுடன் பகிரவும்",
       "reject": "நிராகரிக்கவும்",
       "status": {
         "sharing": {

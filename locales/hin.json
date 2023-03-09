@@ -186,7 +186,7 @@
       "home": "घर",
       "scan": "स्कैन",
       "request": "अनुरोध",
-      "profile": "प्रोफाइल"
+      "settings": "सेटिंग्स"
     },
     "PasscodeScreen": {
       "header": "अपना आवेदन सुरक्षित करने के लिए पासकोड सेट करें",
@@ -201,7 +201,7 @@
       "name": "नाम",
       "vcLabel": "वीसी लेबल",
       "language": "भाषा",
-      "bioUnlock": "बायोमेट्रिक अनलॉक",
+      "bioUnlock": "बायोमेट्रिक्स से अनलॉक करें",
       "authFactorUnlock": "अनलॉक ऑथ फैक्टर",
       "credits": "क्रेडिट और कानूनी नोटिस",
       "logout": "लॉग आउट",
@@ -211,7 +211,9 @@
       "revokingVidsAfter": "इसका अर्थ है कि अब आप उनसे लिंक की गई किसी भी आईडी का उपयोग या देखने में सक्षम नहीं होंगे VID(s). \nक्या आप सुनिश्चित रूप से आगे बढ़ना चाहते हैं?",
       "empty": "खाली",
       "revokeSuccessful": "VID को सफलतापूर्वक निरस्त कर दिया गया",
-      "version": "संस्करण"
+      "version": "संस्करण",
+      "useBle": "Powered by BLE",
+      "useGoogleNearby": "Powered by GoogleNearby"
     },
     "QrScreen": {
       "title": "क्यूआर लॉगिन",
@@ -301,8 +303,8 @@
     },
     "SendVcScreen": {
       "reasonForSharing": "साझा करने का कारण (वैकल्पिक)",
-      "acceptRequest": "अनुरोध स्वीकार करें और चुनें {{vcLabel}}",
-      "acceptRequestAndVerify": "अनुरोध स्वीकार करें और सत्यापित करें",
+      "acceptRequest": "शेयर करना",
+      "acceptRequestAndVerify": "सेल्फी के साथ शेयर करें",
       "reject": "अस्वीकार",
       "status": {
         "sharing": {

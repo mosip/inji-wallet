@@ -11,7 +11,10 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
   const [newValue, setNewValue] = useState(props.value);
 
   return (
-    <ListItem bottomDivider onPress={() => setIsEditing(true)}>
+    <ListItem
+      bottomDivider
+      onPress={() => setIsEditing(true)}
+      style={{ display: props.display }}>
       <Icon
         name={props.Icon}
         type="antdesign"
@@ -64,4 +67,5 @@ interface EditableListItemProps {
   value: string;
   Icon: string;
   onEdit: (newValue: string) => void;
+  display?: 'none' | 'flex';
 }

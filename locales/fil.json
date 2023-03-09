@@ -183,7 +183,7 @@
     "home": "Home",
     "scan": "Scan",
     "request": "Request",
-    "profile": "Profile"
+    "settings": "mga setting"
   },
   "PasscodeScreen": {
     "header": "Magtakda ng passcode upang masigurado ang iyong aplikasyon",
@@ -198,17 +198,19 @@
     "name": "Pangalan",
     "vcLabel": "Panawag sa VC",
     "language": "Wika",
-    "bioUnlock": "Pagbukas gamit Biometric",
+    "bioUnlock": "I-unlock gamit ang biometrics",
     "authFactorUnlock": "Pagbukas ng auth factor",
     "credits": "Mga kredito at legal na abiso",
-    "logout": "Mag log-out",
+    "logout": "Mag-logout",
     "revokeLabel": "Kanselahin ang VID",
     "revokeHeader": "KANSELAHIN ANG VID",
     "revokingVids": "Kakanselahin mo na ang ({{count}}) na mga VID.",
     "revokingVidsAfter": "Nangangahulugan ito na hindi mo na maa-access o matitingnan ang anumang mga ID na naka-link sa mga VID na ito. Sigurado ka bang gusto mong magpatuloy?",
     "empty": "Walang laman",
     "revokeSuccessful": "Matagumpay na nakansela ang VID",
-    "version": "Bersyon"
+    "version": "Bersyon",
+    "useBle": "Powered by BLE",
+    "useGoogleNearby": "Powered by GoogleNearby"
   },
   "QrScreen": {
     "title": "QR Login",
@@ -300,7 +302,8 @@
   },
   "SendVcScreen": {
     "reasonForSharing": "Dahilan ng pagbabahagi (opsyonal)",
-    "acceptRequest": "Tanggapin ang kahilingan at piliin ang {{vcLabel}}",
+    "acceptRequest": "Ibahagi",
+    "acceptRequestAndVerify": "Ibahagi sa Selfie",
     "reject": "Tanggihan",
     "status": {
       "sharing": {

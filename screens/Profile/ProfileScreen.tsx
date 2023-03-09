@@ -78,11 +78,13 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
           onEdit={controller.UPDATE_NAME}
           Icon="user"
         />
+        {/* Intentionally hidden using {display='none'} - Refer mosip/inji/issue#607 */}
         <EditableListItem
           label={t('vcLabel')}
           value={controller.vcLabel.singular}
           onEdit={controller.UPDATE_VC_LABEL}
           Icon="star"
+          display="none"
         />
         <LanguageSetting />
         <Revoke label={t('revokeLabel')} Icon="rotate-left" />
@@ -106,7 +108,8 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
             color={Theme.Colors.profileValue}
           />
         </ListItem>
-        <ListItem bottomDivider disabled>
+        {/* Intentionally hidden using {display:'none'} - Refer mosip/inji/issue#607 */}
+        <ListItem bottomDivider disabled style={{ display: 'none' }}>
           <Icon
             name="unlock"
             size={20}
@@ -118,15 +121,6 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
             <ListItem.Title>
               <Text color={Theme.Colors.profileAuthFactorUnlock}>
                 {t('authFactorUnlock')}
-              </Text>
-            </ListItem.Title>
-          </ListItem.Content>
-        </ListItem>
-        <ListItem bottomDivider>
-          <ListItem.Content>
-            <ListItem.Title>
-              <Text color={Theme.Colors.profileLabel}>
-                {isBLEEnabled ? t('useBle') : t('useGoogleNearby')}
               </Text>
             </ListItem.Title>
           </ListItem.Content>
@@ -146,6 +140,14 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
             </ListItem.Title>
           </ListItem.Content>
         </ListItem>
+        <Text
+          weight="semibold"
+          margin="32 0 0 0"
+          align="center"
+          size="smaller"
+          color={Theme.Colors.profileVersion}>
+          {isBLEEnabled ? t('useBle') : t('useGoogleNearby')}
+        </Text>
         <Text
           weight="semibold"
           margin="32 0 0 0"
