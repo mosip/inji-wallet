@@ -303,8 +303,8 @@
     },
     "SendVcScreen": {
       "reasonForSharing": "பகிர்வதற்கான காரணம் (விரும்பினால்)",
-      "acceptRequest": "கோரிக்கையை ஏற்று {{vcLabel}}ஐத் தேர்வு செய்யவும்",
-      "acceptRequestAndVerify": "கோரிக்கையை ஏற்று சரிபார்க்கவும்",
+      "acceptRequest": "பகிர்",
+      "acceptRequestAndVerify": "செல்ஃபியுடன் பகிரவும்",
       "reject": "நிராகரிக்கவும்",
       "status": {
         "sharing": {

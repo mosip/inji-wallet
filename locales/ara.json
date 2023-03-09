@@ -303,8 +303,8 @@
     },
     "SendVcScreen": {
       "reasonForSharing": "سبب المشاركة (اختياري)",
-      "acceptRequest": "اقبل الطلب واختر {{vcLabel}}",
-      "acceptRequestAndVerify": "قبول الطلب والتحقق",
+      "acceptRequest": "يشارك",
+      "acceptRequestAndVerify":"شارك مع Selfie",
       "reject": "رفض",
       "status": {
         "sharing": {

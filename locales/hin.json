@@ -303,8 +303,8 @@
     },
     "SendVcScreen": {
       "reasonForSharing": "साझा करने का कारण (वैकल्पिक)",
-      "acceptRequest": "अनुरोध स्वीकार करें और चुनें {{vcLabel}}",
-      "acceptRequestAndVerify": "अनुरोध स्वीकार करें और सत्यापित करें",
+      "acceptRequest": "शेयर करना",
+      "acceptRequestAndVerify": "सेल्फी के साथ शेयर करें",
       "reject": "अस्वीकार",
       "status": {
         "sharing": {

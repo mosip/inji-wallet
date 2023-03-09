@@ -295,7 +295,8 @@
   },
   "SendVcScreen": {
     "reasonForSharing": "Dahilan ng pagbabahagi (opsyonal)",
-    "acceptRequest": "Tanggapin ang kahilingan at piliin ang {{vcLabel}}",
+    "acceptRequest": "Ibahagi",
+    "acceptRequestAndVerify": "Ibahagi sa Selfie",
     "reject": "Tanggihan",
     "status": {
       "sharing": {

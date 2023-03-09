@@ -303,8 +303,8 @@
     },
     "SendVcScreen": {
       "reasonForSharing": "ಹಂಚಿಕೆಗೆ ಕಾರಣ (ಐಚ್ಛಿಕ)",
-      "acceptRequest": "ವಿನಂತಿಯನ್ನು ಸ್ವೀಕರಿಸಿ ಮತ್ತು ಆಯ್ಕೆಮಾಡಿ {{vcLabel}}",
-      "acceptRequestAndVerify": "ವಿನಂತಿಯನ್ನು ಸ್ವೀಕರಿಸಿ ಮತ್ತು ಪರಿಶೀಲಿಸಿ",
+      "acceptRequest": "ಹಂಚಿಕೊಳ್ಳಿ",
+      "acceptRequestAndVerify": "ಸೆಲ್ಫಿಯೊಂದಿಗೆ ಹಂಚಿಕೊಳ್ಳಿ",
       "reject": "ತಿರಸ್ಕರಿಸಿ",
       "status": {
         "sharing": {
