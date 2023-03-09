@@ -129,15 +129,15 @@
       "backButton": "பேக் ஹோம்"
     },
     "GetIdInputModal": {
-      "header": "உங்கள் UIN அல்லது VID ஐ மீட்டெடுக்க, உங்கள் விண்ணப்ப {{vcLabel}} எண்ணை உள்ளிடவும்",
+      "header": "உங்கள் UIN ஐப் பெற உங்கள் விண்ணப்ப ID ஐ உள்ளிடவும்",
       "getUIN": "UIN/VIDஐப் பெறுங்கள்",
-      "applicationId": "விண்ணப்பம் {{vcLabel}} எண்",
+      "applicationId": "விண்ணப்ப ID",
       "requestingOTP": "OTP ஐக் கோருகிறது...",
-      "qstnMarkToolTip": "விண்ணப்பம் {{vcLabel}} எண் பதிவுசெய்த பிறகு வழங்கப்படும் ஒப்புகையில் அச்சிடப்பட்டுள்ளது"
+      "qstnMarkToolTip": "விண்ணப்ப ID பதிவுசெய்த பிறகு பெறப்பட்ட ஒப்புகையில் கிடைக்கும்."
     },
     "IdInputModal": {
-      "header": "நீங்கள் மீட்டெடுக்க விரும்பும் {{vcLabel}} இன் MOSIP வழங்கிய UIN அல்லது VID ஐ உள்ளிடவும்",
-      "generateVc": "உருவாக்கு {{vcLabel}}",
+      "header": "உங்கள் {{vcLabel}}ஐப் பதிவிறக்க உங்கள் UIN/VID ஐ உள்ளிடவும்",
+      "generateVc": "எனது {{vcLabel}}ஐ உருவாக்கவும்",
       "enterId": "உங்கள் {{idType}}ஐ உள்ளிடவும்",
       "noUIN/VID": "உங்கள் UIN/VID இல்லையா? இங்கே பெறுங்கள்",
       "requestingOTP": "OTP ஐக் கோருகிறது..."
@@ -186,7 +186,7 @@
       "home": "வீடு",
       "scan": "ஸ்கேன்",
       "request": "கோரிக்கை",
-      "profile": "சுயவிவரம்"
+      "settings": "செட்டிங்ஸ்"
     },
     "PasscodeScreen": {
       "header": "உங்கள் விண்ணப்பத்தைப் பாதுகாக்க கடவுக்குறியீட்டை அமைக்கவும்",
@@ -201,7 +201,7 @@
       "name": "பெயர்",
       "vcLabel": "VC லேபிள்",
       "language": "மொழி",
-      "bioUnlock": "பயோமெட்ரிக் அன்லாக்",
+      "bioUnlock": "பயோமெட்ரிக்ஸ் மூலம் திறக்கவும்",
       "authFactorUnlock": "அங்கீகார காரணியைத் திற",
       "credits": "வரவுகள் மற்றும் சட்ட அறிவிப்புகள்",
       "logout": "வெளியேறு",
@@ -211,7 +211,9 @@
       "revokingVidsAfter": "அதாவது, அந்த VID(s) உடன் இணைக்கப்பட்ட எந்த ஐடியையும் நீங்கள் இனி பயன்படுத்தவோ பார்க்கவோ முடியாது. \nநீங்கள் நிச்சயமாக தொடர விரும்புகிறீர்களா?",
       "empty": "காலியாக",
       "revokeSuccessful": "VID வெற்றிகரமாக ரத்து செய்யப்பட்டது",
-      "version": "பதிப்பு"
+      "version": "பதிப்பு",
+      "useBle": "Powered by BLE",
+      "useGoogleNearby": "Powered by GoogleNearby"
     },
     "QrScreen": {
       "title": "QR உள்நுழைவு",
@@ -241,7 +243,7 @@
     },
     "RequestScreen": {
       "bluetoothDenied": "{{vcLabel}}ஐக் கோர புளூடூத்தை இயக்கவும்",
-      "showQrCode": "{{vcLabel}}ஐக் கோர இந்த QR குறியீட்டைக் காட்டு",
+      "showQrCode": "குடியுரிமை {{vcLabel}}ஐக் கோர இந்த QR குறியீட்டைக் காட்டு",
       "incomingVc": "உள்வரும் {{vcLabel}}",
       "request": "கோரிக்கை",
       "status": {
@@ -301,8 +303,8 @@
     },
     "SendVcScreen": {
       "reasonForSharing": "பகிர்வதற்கான காரணம் (விரும்பினால்)",
-      "acceptRequest": "கோரிக்கையை ஏற்று {{vcLabel}}ஐத் தேர்வு செய்யவும்",
-      "acceptRequestAndVerify": "கோரிக்கையை ஏற்று சரிபார்க்கவும்",
+      "acceptRequest": "பகிர்",
+      "acceptRequestAndVerify": "செல்ஃபியுடன் பகிரவும்",
       "reject": "நிராகரிக்கவும்",
       "status": {
         "sharing": {

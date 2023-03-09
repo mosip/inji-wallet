@@ -129,15 +129,15 @@
     "backButton": "Back home"
   },
   "GetIdInputModal": {
-    "header": "To retrieve your UIN or VID, enter your application {{vcLabel}} number",
+    "header": "Enter your Application ID to get your UIN",
     "getUIN": "Get UIN/VID",
-    "applicationId": "Application {{vcLabel}} number",
+    "applicationId": "Application ID",
     "requestingOTP": "Requesting OTP...",
-    "qstnMarkToolTip": "Application {{vcLabel}} Number is printed on the acknowledgment provided after enrollment"
+    "qstnMarkToolTip": "Application ID is available in the acknowledgement received after enrolment."
   },
   "IdInputModal": {
-    "header": "Enter the MOSIP-provided UIN or VID of the {{vcLabel}} you wish to retrieve",
-    "generateVc": "Generate {{vcLabel}}",
+    "header": "Enter your UIN/VID to download your {{vcLabel}}",
+    "generateVc": "Generate My {{vcLabel}}",
     "enterId": "Enter your {{idType}}",
     "noUIN/VID": "Don't have your UIN/VID? Get it here",
     "requestingOTP": "Requesting OTP..."
@@ -186,7 +186,7 @@
     "home": "Home",
     "scan": "Scan",
     "request": "Request",
-    "profile": "Profile"
+    "settings": "Settings"
   },
   "PasscodeScreen": {
     "header": "Set a passcode to secure your application",
@@ -201,10 +201,10 @@
     "name": "Name",
     "vcLabel": "VC Label",
     "language": "Language",
-    "bioUnlock": "Biometric unlock",
+    "bioUnlock": "Unlock with biometrics",
     "authFactorUnlock": "Unlock auth factor",
     "credits": "Credits and legal notices",
-    "logout": "Log-out",
+    "logout": "Logout",
     "revokeLabel": "Revoke VID",
     "revokeHeader": "REVOKE VID",
     "revokingVids": "You are about to revoke ({{count}}) VIDs.",
@@ -248,7 +248,7 @@
   },
   "RequestScreen": {
     "bluetoothDenied": "Please enable Bluetooth to be able to request {{vcLabel}}",
-    "showQrCode": "Show this QR code to request {{vcLabel}}",
+    "showQrCode": "Display this QR code to request resident {{vcLabel}}",
     "incomingVc": "Incoming {{vcLabel}}",
     "request": "Request",
     "status": {

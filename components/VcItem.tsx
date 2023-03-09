@@ -1,6 +1,12 @@
 import React, { useContext, useRef } from 'react';
 import { useInterpret, useSelector } from '@xstate/react';
-import { Pressable, Image, ImageBackground, Dimensions } from 'react-native';
+import {
+  Pressable,
+  Image,
+  ImageBackground,
+  Dimensions,
+  View,
+} from 'react-native';
 import { CheckBox, Icon } from 'react-native-elements';
 import { ActorRefFrom } from 'xstate';
 import {
@@ -17,19 +23,9 @@ import { Theme } from './ui/styleUtils';
 import { RotatingIcon } from './RotatingIcon';
 import { GlobalContext } from '../shared/GlobalContext';
 import { useTranslation } from 'react-i18next';
-
-const VerifiedIcon: React.FC = () => {
-  return (
-    <Icon
-      name="check-circle"
-      color={Theme.Colors.VerifiedIcon}
-      size={14}
-      containerStyle={{ marginStart: 4, bottom: 1 }}
-    />
-  );
-};
 import { LocalizedField } from '../types/vc';
 import { VcItemTags } from './VcItemTags';
+import VerifiedIcon from './VerifiedIcon';
 
 const getDetails = (arg1, arg2, verifiableCredential) => {
   if (arg1 === 'Status') {
@@ -71,8 +67,9 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
               ? Theme.Colors.LoadingDetailsLabel
               : Theme.Colors.DetailsLabel
           }
-          weight="bold"
-          size="smaller">
+          size="smaller"
+          weight={'bold'}
+          style={Theme.Styles.vcItemLabelHeader}>
           {arg1}
         </Text>
         <Text
@@ -243,7 +240,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
                   style={
                     !verifiableCredential
                       ? Theme.Styles.loadingTitle
-                      : Theme.Styles.subtitle
+                      : Theme.Styles.statusLabel
                   }
                   children={t('offlineAuthDisabledHeader')}></Text>
               </Row>
@@ -264,7 +261,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
               <Row crossAlign="center" style={{ flex: 1 }}>
                 <WalletVerified />
                 <Text
-                  color={Theme.Colors.Details}
+                  color={Theme.Colors.statusLabel}
                   weight="semibold"
                   size="smaller"
                   margin="10 10 10 10"

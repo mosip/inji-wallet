@@ -8,6 +8,7 @@ import { Button, Text, Row, Column } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import creditsContent from '../../Credits.md';
 
+// Intentionally hidden using {display:'none'} - Refer mosip/inji/issue#607
 export const Credits: React.FC<CreditsProps> = (props) => {
   const { t } = useTranslation('Credits');
   const [isViewing, setIsViewing] = useState(false);
@@ -46,7 +47,10 @@ export const Credits: React.FC<CreditsProps> = (props) => {
   };
 
   return (
-    <ListItem bottomDivider onPress={() => setIsViewing(true)}>
+    <ListItem
+      bottomDivider
+      onPress={() => setIsViewing(true)}
+      style={{ display: 'none' }}>
       <Icon
         name="filetext1"
         type="antdesign"

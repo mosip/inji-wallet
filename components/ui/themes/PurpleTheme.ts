@@ -13,6 +13,7 @@ const Colors = {
   Red: '#EB5757',
   Green: '#219653',
   Purple: '#70308C',
+  Purple2: '#AEA7FF',
   Transparent: 'transparent',
   Warning: '#f0ad4e',
 };
@@ -23,8 +24,9 @@ export const PurpleTheme = {
   Colors: {
     TabItemText: Colors.Purple,
     Details: Colors.White,
-    DetailsLabel: Colors.White,
+    DetailsLabel: Colors.Purple2,
     LoadingDetailsLabel: Colors.Black,
+    statusLabel: Colors.Black,
     AddIdBtnBg: Colors.Purple,
     AddIdBtnTxt: Colors.Purple,
     ClearAddIdBtnBg: 'transparent',
@@ -76,6 +78,19 @@ export const PurpleTheme = {
     loadingSubtitle: {
       backgroundColor: Colors.Grey,
       borderRadius: 4,
+    },
+    statusLabel: {
+      color: Colors.Black,
+    },
+    verifiedIconContainer: {
+      marginLeft: 5,
+    },
+    verifiedIconInner: {
+      backgroundColor: 'white',
+      borderRadius: 10,
+    },
+    vcItemLabelHeader: {
+      color: Colors.Purple2,
     },
     closeDetails: {
       flex: 1,
@@ -136,8 +151,6 @@ export const PurpleTheme = {
     backgroundImageContainer: {
       flex: 1,
       padding: 10,
-      borderBottomColor: Colors.Grey,
-      borderBottomWidth: 1,
     },
     successTag: {
       backgroundColor: Colors.Green,
@@ -334,7 +347,7 @@ export const PurpleTheme = {
     radius: {
       flex: 1,
       borderRadius: 10,
-      backgroundColor: Colors.Orange,
+      backgroundColor: Colors.Purple,
     },
   }),
   OIDCAuthStyles: StyleSheet.create({
