@@ -1,6 +1,6 @@
 import React, { useContext, useRef } from 'react';
 import { useInterpret, useSelector } from '@xstate/react';
-import { Image, ImageBackground, Pressable } from 'react-native';
+import { Image, ImageBackground, Pressable, View } from 'react-native';
 import { CheckBox, Icon } from 'react-native-elements';
 import { ActorRefFrom } from 'xstate';
 import {
@@ -16,17 +16,7 @@ import { Theme } from './ui/styleUtils';
 import { GlobalContext } from '../shared/GlobalContext';
 import { RotatingIcon } from './RotatingIcon';
 import { useTranslation } from 'react-i18next';
-
-const VerifiedIcon: React.FC = () => {
-  return (
-    <Icon
-      name="check-circle"
-      color={Theme.Colors.VerifiedIcon}
-      size={14}
-      containerStyle={{ marginStart: 4, bottom: 1 }}
-    />
-  );
-};
+import VerifiedIcon from './VerifiedIcon';
 
 const getDetails = (arg1, arg2, verifiableCredential) => {
   if (arg1 === 'Status') {

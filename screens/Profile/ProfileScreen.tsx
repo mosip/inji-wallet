@@ -91,7 +91,7 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
           <Icon
             name="fingerprint"
             type="fontawesome"
-            size={25}
+            size={20}
             style={Theme.Styles.profileIconBg}
             color={Theme.Colors.Icon}
           />
