@@ -89,7 +89,7 @@ export const DefaultTheme = {
       borderRadius: 10,
     },
     vcItemLabelHeader: {
-      color: Colors.Black,
+      color: Colors.Orange,
     },
     closeDetails: {
       flex: 1,
