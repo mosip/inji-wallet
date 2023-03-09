@@ -1,4 +1,4 @@
-{   
+{
   "ActivityLogText": {
     "VC_SHARED": "साझा",
     "VC_RECEIVED": "प्राप्त किया",
@@ -129,15 +129,15 @@
       "backButton": "बैक होम"
     },
     "GetIdInputModal": {
-      "header": "अपना यूआईएन या वीआईडी पुनर्प्राप्त करने के लिए, अपना ऐप्लिकेशन {{vcLabel}} नंबर दर्ज करें",
+      "header": "अपना यूआईएन प्राप्त करने के लिए अपनी एप्लिकेशन ID दर्ज करें",
       "getUIN": "UIN/VID ​​प्राप्त करें",
-      "applicationId": "एप्लिकेशन {{vcLabel}} संख्या",
+      "applicationId": "आवेदन ID",
       "requestingOTP": "OTP का अनुरोध...",
-      "qstnMarkToolTip": "आवेदन {{vcLabel}} नंबर नामांकन के बाद प्रदान की गई पावती पर मुद्रित होता है"
+      "qstnMarkToolTip": "आवेदन ID नामांकन के बाद प्राप्त पावती में उपलब्ध है।"
     },
     "IdInputModal": {
-      "header": "जिस {{vcLabel}} को आप पुनः प्राप्त करना चाहते हैं, उसका MOSIP- प्रदान किया गया UIN या VID दर्ज करें",
-      "generateVc": "जेनरेट {{vcLabel}}",
+      "header": "अपना {{vcLabel}} डाउनलोड करने के लिए अपना UIN/VID ​​दर्ज करें",
+      "generateVc": "मेरा {{vcLabel}} जनरेट करें",
       "enterId": "अपना {{idType}} दर्ज करें",
       "noUIN/VID": "आपका UIN/VID ​​नहीं है? इसे यहां लाओ",
       "requestingOTP": "OTP का अनुरोध..."
@@ -241,7 +241,7 @@
     },
     "RequestScreen": {
       "bluetoothDenied": "कृपया ब्लूटूथ को सक्षम करें ताकि वह {{vcLabel}} का अनुरोध कर सके",
-      "showQrCode": "{{vcLabel}} का अनुरोध करने के लिए यह QR कोड दिखाएं",
+      "showQrCode": "निवासी {{vcLabel}} का अनुरोध करने के लिए यह क्यूआर कोड प्रदर्शित करें",
       "incomingVc": "इनकमिंग {{vcLabel}}",
       "request": "प्रार्थना",
       "status": {
@@ -317,7 +317,7 @@
         "rejected": {
           "title": "सूचना",
           "message": "आपके {{vcLabel}} को {{receiver}} ने अस्वीकार कर दिया था"
-          
+
         }
       },
       "consentToPhotoVerification": "मैं प्रमाणीकरण के लिए अपनी फोटो लेने की सहमति देता हूं"

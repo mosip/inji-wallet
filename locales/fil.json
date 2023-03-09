@@ -127,9 +127,16 @@
     "bodyText": "Maaaring tumagal ito ng ilang oras, ipapaalam namin sayo kung pwede na kunin ang iyong {{vcLabel}}",
     "backButton": "Bumalik"
   },
+  "GetIdInputModal": {
+    "header": "Ilagay ang iyong Application ID para makuha ang iyong UIN",
+    "getUIN": "Kumuha ng UIN/VID",
+    "applicationId": "Application ID",
+    "requestingOTP": "Humihiling ng OTP...",
+    "qstnMarkToolTip": "Available ang Application ID sa natanggap na acknowledgement pagkatapos ng enrollment."
+  },
   "IdInputModal": {
-    "header": "Ilagay ang UIN o VID na ibinigay ng MOSIP upang matanggap ang iyong {{vcLabel}}",
-    "generateVc": "Gumawa ng {{vcLabel}}",
+    "header": "Ilagay ang iyong UIN/VID para i-download ang iyong {{vcLabel}}",
+    "generateVc": "Bumuo ng Aking {{vcLabel}}",
     "enterId": "Ilagay ang iyong {{idType}}"
   },
   "OtpVerificationModal": {
@@ -230,7 +237,7 @@
   },
   "RequestScreen": {
     "bluetoothDenied": "Mangyaring paganahin ang Bluetooth upang makahiling ng {{vcLabel}}",
-    "showQrCode": "Ipakita ang QR code na ito para makahiling ng {{vcLabel}}",
+    "showQrCode": "Ipakita ang QR code na ito para humiling ng resident {{vcLabel}}",
     "incomingVc": "Padating na {{vcLabel}}",
     "request": "Hilingin",
     "status": {

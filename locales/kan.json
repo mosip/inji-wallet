@@ -129,15 +129,15 @@
       "backButton": "ಬ್ಯಾಕ್ ಹೋಮ್"
     },
     "GetIdInputModal": {
-      "header": "ನಿಮ್ಮ UIN ಅಥವಾ VID ಅನ್ನು ಹಿಂಪಡೆಯಲು, ನಿಮ್ಮ ಅಪ್ಲಿಕೇಶನ್ {{vcLabel}} ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ",
+      "header": "ನಿಮ್ಮ UIN ಪಡೆಯಲು ನಿಮ್ಮ ಅಪ್ಲಿಕೇಶನ್ ID ನಮೂದಿಸಿ",
       "getUIN": "UIN/VID ಪಡೆಯಿರಿ",
-      "applicationId": "ಅಪ್ಲಿಕೇಶನ್ {{vcLabel}} ಸಂಖ್ಯೆ",
+      "applicationId": "ಅಪ್ಲಿಕೇಶನ್ ID",
       "requestingOTP": "OTP ಯನ್ನು ವಿನಂತಿಸಲಾಗುತ್ತಿದೆ...",
-      "qstnMarkToolTip": "ಅರ್ಜಿ {{vcLabel}} ಸಂಖ್ಯೆಯನ್ನು ನೋಂದಣಿಯ ನಂತರ ಒದಗಿಸಲಾದ ಸ್ವೀಕೃತಿಯ ಮೇಲೆ ಮುದ್ರಿಸಲಾಗಿದೆ"
+      "qstnMarkToolTip": "ನೋಂದಣಿಯ ನಂತರ ಸ್ವೀಕರಿಸಿದ ಸ್ವೀಕೃತಿಯಲ್ಲಿ ಅಪ್ಲಿಕೇಶನ್ ID ಲಭ್ಯವಿದೆ."
     },
     "IdInputModal": {
-      "header": "ನೀವು ಹಿಂಪಡೆಯಲು ಬಯಸುವ {{vcLabel}} ನ MOSIP-ಒದಗಿಸಿದ UIN ಅಥವಾ VID ಅನ್ನು ನಮೂದಿಸ",
-      "generateVc": "ರಚಿಸಿ {{vcLabel}}",
+      "header": "ನಿಮ್ಮ {{vcLabel}} ಅನ್ನು ಡೌನ್‌ಲೋಡ್ ಮಾಡಲು ನಿಮ್ಮ UIN/VID ಅನ್ನು ನಮೂದಿಸಿ",
+      "generateVc": "ನನ್ನ {{vcLabel}} ಅನ್ನು ರಚಿಸಿ",
       "enterId": "ನಿಮ್ಮ {{idType}}ನಮೂದಿಸಿ",
       "noUIN/VID": "ನಿಮ್ಮ UIN/VID ಇಲ್ಲವೇ? ಇಲ್ಲಿ ಪಡೆಯಿರಿ",
       "requestingOTP": "OTP ಯನ್ನು ವಿನಂತಿಸಲಾಗುತ್ತಿದೆ..."
@@ -241,7 +241,7 @@
     },
     "RequestScreen": {
       "bluetoothDenied": "ವಿನಂತಿಸಲು ಬ್ಲೂಟೂತ್ ಅನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ{{vcLabel}}",
-      "showQrCode": "ವಿನಂತಿಸಲು ಈ QR ಕೋಡ್ ಅನ್ನು ತೋರಿಸಿ {{vcLabel}}",
+      "showQrCode": "ನಿವಾಸಿ {{vcLabel}} ಅನ್ನು ವಿನಂತಿಸಲು ಈ QR ಕೋಡ್ ಅನ್ನು ಪ್ರದರ್ಶಿಸಿ",
       "incomingVc": "ಒಳಬರುವ {{vcLabel}}",
       "request": "ವಿನಂತಿ",
       "status": {

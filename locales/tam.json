@@ -129,15 +129,15 @@
       "backButton": "பேக் ஹோம்"
     },
     "GetIdInputModal": {
-      "header": "உங்கள் UIN அல்லது VID ஐ மீட்டெடுக்க, உங்கள் விண்ணப்ப {{vcLabel}} எண்ணை உள்ளிடவும்",
+      "header": "உங்கள் UIN ஐப் பெற உங்கள் விண்ணப்ப ID ஐ உள்ளிடவும்",
       "getUIN": "UIN/VIDஐப் பெறுங்கள்",
-      "applicationId": "விண்ணப்பம் {{vcLabel}} எண்",
+      "applicationId": "விண்ணப்ப ID",
       "requestingOTP": "OTP ஐக் கோருகிறது...",
-      "qstnMarkToolTip": "விண்ணப்பம் {{vcLabel}} எண் பதிவுசெய்த பிறகு வழங்கப்படும் ஒப்புகையில் அச்சிடப்பட்டுள்ளது"
+      "qstnMarkToolTip": "விண்ணப்ப ID பதிவுசெய்த பிறகு பெறப்பட்ட ஒப்புகையில் கிடைக்கும்."
     },
     "IdInputModal": {
-      "header": "நீங்கள் மீட்டெடுக்க விரும்பும் {{vcLabel}} இன் MOSIP வழங்கிய UIN அல்லது VID ஐ உள்ளிடவும்",
-      "generateVc": "உருவாக்கு {{vcLabel}}",
+      "header": "உங்கள் {{vcLabel}}ஐப் பதிவிறக்க உங்கள் UIN/VID ஐ உள்ளிடவும்",
+      "generateVc": "எனது {{vcLabel}}ஐ உருவாக்கவும்",
       "enterId": "உங்கள் {{idType}}ஐ உள்ளிடவும்",
       "noUIN/VID": "உங்கள் UIN/VID இல்லையா? இங்கே பெறுங்கள்",
       "requestingOTP": "OTP ஐக் கோருகிறது..."
@@ -241,7 +241,7 @@
     },
     "RequestScreen": {
       "bluetoothDenied": "{{vcLabel}}ஐக் கோர புளூடூத்தை இயக்கவும்",
-      "showQrCode": "{{vcLabel}}ஐக் கோர இந்த QR குறியீட்டைக் காட்டு",
+      "showQrCode": "குடியுரிமை {{vcLabel}}ஐக் கோர இந்த QR குறியீட்டைக் காட்டு",
       "incomingVc": "உள்வரும் {{vcLabel}}",
       "request": "கோரிக்கை",
       "status": {
