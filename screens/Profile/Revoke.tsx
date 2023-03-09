@@ -15,7 +15,7 @@ import { OIDcAuthenticationOverlay } from '../../components/OIDcAuthModal';
 import { useTranslation } from 'react-i18next';
 import { useRevoke } from './RevokeController';
 
-// Intentionally hided using {display:'none'} - Refer mosip/inji/issue#607
+// Intentionally hidden using {display:'none'} - Refer mosip/inji/issue#607
 export const Revoke: React.FC<RevokeScreenProps> = (props) => {
   const controller = useRevoke();
   const { t } = useTranslation('ProfileScreen');

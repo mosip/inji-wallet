@@ -8,7 +8,7 @@ import { Button, Text, Row, Column } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import creditsContent from '../../Credits.md';
 
-// Intentionally hided using {display:'none'} - Refer mosip/inji/issue#607
+// Intentionally hidden using {display:'none'} - Refer mosip/inji/issue#607
 export const Credits: React.FC<CreditsProps> = (props) => {
   const { t } = useTranslation('Credits');
   const [isViewing, setIsViewing] = useState(false);
