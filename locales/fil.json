@@ -201,7 +201,9 @@
     "revokingVidsAfter": "Nangangahulugan ito na hindi mo na maa-access o matitingnan ang anumang mga ID na naka-link sa mga VID na ito. Sigurado ka bang gusto mong magpatuloy?",
     "empty": "Walang laman",
     "revokeSuccessful": "Matagumpay na nakansela ang VID",
-    "version": "Bersyon"
+    "version": "Bersyon",
+    "useBle": "Powered by BLE",
+    "useGoogleNearby": "Powered by GoogleNearby"
   },
   "QrScreen": {
     "title": "QR Login",

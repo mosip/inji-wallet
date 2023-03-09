@@ -211,7 +211,9 @@
       "revokingVidsAfter": "هذا يعني أنك لن تكون قادرًا على استخدام أو عرض أي من المعرفات المرتبطة بمعرف (معرفات) VID هؤلاء. \nهل انت متأكد انك تريد المتابعة?",
       "empty": "فارغة",
       "revokeSuccessful": "تم إبطال VID بنجاح",
-      "version": "الإصدار"
+      "version": "الإصدار",
+      "useBle": "Powered by BLE",
+      "useGoogleNearby": "Powered by GoogleNearby"
     },
     "QrScreen": {
       "title": "QR تسجيل الدخول",

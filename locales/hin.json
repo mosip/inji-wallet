@@ -211,7 +211,9 @@
       "revokingVidsAfter": "इसका अर्थ है कि अब आप उनसे लिंक की गई किसी भी आईडी का उपयोग या देखने में सक्षम नहीं होंगे VID(s). \nक्या आप सुनिश्चित रूप से आगे बढ़ना चाहते हैं?",
       "empty": "खाली",
       "revokeSuccessful": "VID को सफलतापूर्वक निरस्त कर दिया गया",
-      "version": "संस्करण"
+      "version": "संस्करण",
+      "useBle": "Powered by BLE",
+      "useGoogleNearby": "Powered by GoogleNearby"
     },
     "QrScreen": {
       "title": "क्यूआर लॉगिन",

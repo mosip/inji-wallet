@@ -211,7 +211,9 @@
       "revokingVidsAfter": "அதாவது, அந்த VID(s) உடன் இணைக்கப்பட்ட எந்த ஐடியையும் நீங்கள் இனி பயன்படுத்தவோ பார்க்கவோ முடியாது. \nநீங்கள் நிச்சயமாக தொடர விரும்புகிறீர்களா?",
       "empty": "காலியாக",
       "revokeSuccessful": "VID வெற்றிகரமாக ரத்து செய்யப்பட்டது",
-      "version": "பதிப்பு"
+      "version": "பதிப்பு",
+      "useBle": "Powered by BLE",
+      "useGoogleNearby": "Powered by GoogleNearby"
     },
     "QrScreen": {
       "title": "QR உள்நுழைவு",
