@@ -127,6 +127,13 @@
     "bodyText": "Maaaring tumagal ito ng ilang oras, ipapaalam namin sayo kung pwede na kunin ang iyong {{vcLabel}}",
     "backButton": "Bumalik"
   },
+  "GetIdInputModal": {
+    "header": "Ilagay ang iyong Application ID para makuha ang iyong UIN",
+    "getUIN": "Kumuha ng UIN/VID",
+    "applicationId": "Application ID",
+    "requestingOTP": "Humihiling ng OTP...",
+    "qstnMarkToolTip": "Available ang Application ID sa natanggap na acknowledgement pagkatapos ng enrollment."
+  },
   "IdInputModal": {
     "header": "Ilagay ang iyong UIN/VID para i-download ang iyong {{vcLabel}}",
     "generateVc": "Bumuo ng Aking {{vcLabel}}",
