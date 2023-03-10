@@ -150,6 +150,7 @@ export interface Typegen0 {
     requestStoredContext: 'GET_VC_RESPONSE' | 'REFRESH';
     requestVcContext: 'xstate.init';
     revokeVID: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
+    sendVcUpdated: 'STORE_RESPONSE';
     setCredential:
       | 'CREDENTIAL_DOWNLOADED'
       | 'GET_VC_RESPONSE'
@@ -161,6 +162,7 @@ export interface Typegen0 {
     setOtpError:
       | 'error.platform.vc-item.requestingLock:invocation[0]'
       | 'error.platform.vc-item.requestingRevoke:invocation[0]';
+    setPinCard: 'PIN_CARD';
     setPrivateKey: 'done.invoke.vc-item.addKeyPair:invocation[0]';
     setPublicKey: 'done.invoke.vc-item.addKeyPair:invocation[0]';
     setRevoke: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
@@ -182,6 +184,7 @@ export interface Typegen0 {
     setWalletBindingId: 'done.invoke.vc-item.addingWalletBindingId:invocation[0]';
     storeContext:
       | 'CREDENTIAL_DOWNLOADED'
+      | 'PIN_CARD'
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]'
       | 'done.invoke.vc-item.verifyingCredential:invocation[0]';
     storeLock: 'done.invoke.vc-item.requestingLock:invocation[0]';
@@ -234,6 +237,7 @@ export interface Typegen0 {
     | 'invalid.otp'
     | 'lockingVc'
     | 'loggingRevoke'
+    | 'pinCard'
     | 'requestingBindingOtp'
     | 'requestingLock'
     | 'requestingOtp'

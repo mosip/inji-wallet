@@ -722,9 +722,7 @@ export const vcItemMachine =
             const { serviceRefs, ...data } = context;
             return StoreEvents.SET(VC_ITEM_STORE_KEY(context), data);
           },
-          {
-            to: (context) => context.serviceRefs.store,
-          }
+          { to: (context) => context.serviceRefs.store }
         ),
 
         setTag: model.assign({

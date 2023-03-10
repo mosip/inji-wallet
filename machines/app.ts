@@ -228,6 +228,7 @@ export const appMachine = model.createMachine(
           context.serviceRefs.scan.subscribe(logState);
           context.serviceRefs.request.subscribe(logState);
           context.serviceRefs.revoke.subscribe(logState);
+          context.serviceRefs.walletBinding.subscribe(logState);
         }
       },
 

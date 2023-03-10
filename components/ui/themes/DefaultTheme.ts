@@ -1,6 +1,5 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 import { Dimensions, StyleSheet, ViewStyle } from 'react-native';
-import { LinearGradient } from 'react-native-svg';
 import { Spacing } from '../styleUtils';
 
 const Colors = {
@@ -13,7 +12,6 @@ const Colors = {
   DimGray: '#737373',
   Orange: '#F2811D',
   Gray40: '#666666',
-  Orange: '#e3781a',
   LightGrey: '#F5F5F5',
   ShadeOfGrey: '#6F6F6F',
   White: '#FFFFFF',
@@ -417,6 +415,7 @@ export const DefaultTheme = {
     },
     regular: {
       fontSize: 14,
+      fontFamily: 'Inter_400Regular',
     },
     semibold: {
       fontFamily: 'Inter_600SemiBold',
@@ -514,9 +513,6 @@ export const DefaultTheme = {
     radius: {
       borderRadius: 10,
       backgroundColor: Colors.Orange,
-    },
-    gradient: {
-      borderRadius: 10,
     },
   }),
   OIDCAuthStyles: StyleSheet.create({

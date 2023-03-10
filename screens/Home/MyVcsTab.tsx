@@ -154,6 +154,14 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
         onDone={controller.ONBOARDING_DONE}
         onAddVc={controller.DOWNLOAD_ID}
       />
+
+      {controller.isRequestSuccessful && (
+        <DownloadingVcModal
+          isVisible={controller.isRequestSuccessful}
+          onDismiss={controller.DISMISS}
+          onShow={clearIndividualId}
+        />
+      )}
     </React.Fragment>
   );
 };
