@@ -26,6 +26,7 @@ const model = createModel(
       STORE_RESPONSE: (response: unknown) => ({ response }),
       STORE_ERROR: (error: Error) => ({ error }),
       VC_ADDED: (vcKey: string) => ({ vcKey }),
+      VC_UPDATED: (vcKey: string) => ({ vcKey }),
       VC_RECEIVED: (vcKey: string) => ({ vcKey }),
       VC_DOWNLOADED: (vc: VC) => ({ vc }),
       REFRESH_MY_VCS: () => ({}),
@@ -133,6 +134,9 @@ export const vcMachine =
             VC_ADDED: {
               actions: 'prependToMyVcs',
             },
+            VC_UPDATED: {
+              actions: ['updateMyVcs', 'setUpdateVc'],
+            },
             VC_DOWNLOADED: {
               actions: 'setDownloadedVc',
             },
@@ -181,8 +185,29 @@ export const vcMachine =
           context.vcs[VC_ITEM_STORE_KEY(event.vc)] = event.vc;
         },
 
+        setUpdateVc: send(
+          (_context, event) => {
+            return StoreEvents.UPDATE(MY_VCS_STORE_KEY, event.vcKey);
+          },
+          { to: (context) => context.serviceRefs.store }
+        ),
+
         prependToMyVcs: model.assign({
           myVcs: (context, event) => [event.vcKey, ...context.myVcs],
+        }),
+
+        updateMyVcs: model.assign({
+          myVcs: (context, event) =>
+            [
+              event.vcKey,
+              ...context.myVcs.map((value) => {
+                const vc = value.split(':');
+                if (vc[3] !== event.vcKey.split(':')[3]) {
+                  vc[4] = 'false';
+                  return vc.join(':');
+                }
+              }),
+            ].filter((value) => value != undefined),
         }),
 
         prependToReceivedVcs: model.assign({

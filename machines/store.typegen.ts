@@ -36,7 +36,8 @@ export interface Typegen0 {
       | 'PREPEND'
       | 'REMOVE'
       | 'REMOVE_ITEMS'
-      | 'SET';
+      | 'SET'
+      | 'UPDATE';
     notifyParent:
       | 'KEY_RECEIVED'
       | 'done.invoke.store.resettingStorage:invocation[0]';

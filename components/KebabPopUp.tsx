@@ -1,65 +1,70 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { t } from 'i18next';
 import { BottomSheet, Icon, ListItem } from 'react-native-elements';
 import { Theme } from '../components/ui/styleUtils';
 import { Centered, Column, Row, Text } from '../components/ui';
 import { WalletBinding } from '../screens/Home/MyVcs/WalletBinding';
+import { Pressable } from 'react-native';
+import { useKebabPopUp } from './KebabPopUpController';
 
-export const KebabPopUpMenu: React.FC<KebabPopUpMenuProps> = (props) => {
+export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
+  const controller = useKebabPopUp(props);
   return (
-    <BottomSheet
-      isVisible={props.isVisible}
-      containerStyle={{
-        backgroundColor: 'transparent',
-        elevation: 4,
-        marginHorizontal: 4,
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
-      }}>
-      <Row
-        style={{
-          backgroundColor: 'white',
-          borderTopLeftRadius: 30,
-          borderTopRightRadius: 24,
-          padding: 18,
-          justifyContent: 'space-between',
-        }}>
-        <Centered></Centered>
-        <Text
-          weight="bold"
-          style={{ ...Theme.TextStyles.base, flex: 1, alignSelf: 'center' }}>
-          {t('More Options')}
-        </Text>
+    <Column>
+      <Pressable onPress={() => controller.setVisible(true)}>
         <Icon
-          name="close"
-          onPress={props.close}
-          color={Theme.Colors.Details}
-          size={25}
+          name={props.iconName}
+          type={props.iconType}
+          color={Theme.Colors.GrayIcon}
         />
-      </Row>
-      <Column>
-        <ListItem bottomDivider>
-          <ListItem.Content>
-            <ListItem.Title>
-              <Text size="small" style={Theme.TextStyles.bold}>
-                {t('Unpin Card')}
-              </Text>
-            </ListItem.Title>
-          </ListItem.Content>
-        </ListItem>
+      </Pressable>
+      <BottomSheet
+        isVisible={controller.visible}
+        containerStyle={Theme.KebabPopUpStyles.kebabPopUp}>
+        <Row style={Theme.KebabPopUpStyles.kebabHeaderStyle}>
+          <Centered></Centered>
+          <Text
+            weight="bold"
+            style={{ ...Theme.TextStyles.base, flex: 1, alignSelf: 'center' }}>
+            {t('More Options')}
+          </Text>
+          <Icon
+            name="close"
+            onPress={() => controller.setVisible(false)}
+            color={Theme.Colors.Details}
+            size={25}
+          />
+        </Row>
+        <Column>
+          <ListItem bottomDivider>
+            <ListItem.Content>
+              <ListItem.Title>
+                <Pressable onPress={controller.PIN_CARD}>
+                  <Text size="small" weight="bold">
+                    {props.vcKey.split(':')[4] == 'true'
+                      ? t('Unpin Card')
+                      : t('Pin Card')}
+                  </Text>
+                </Pressable>
+              </ListItem.Title>
+            </ListItem.Content>
+          </ListItem>
 
-        <WalletBinding
-          label={t('Offline authentication disabled!')}
-          Content={t(
-            'Click here to enable the credentials to be used for offline authentication.'
-          )}
-        />
-      </Column>
-    </BottomSheet>
+          <WalletBinding
+            label={t('Offline authentication disabled!')}
+            Content={t(
+              'Click here to enable the credentials to be used for offline authentication.'
+            )}
+            vcKey={props.vcKey}
+          />
+        </Column>
+      </BottomSheet>
+    </Column>
   );
 };
 
-interface KebabPopUpMenuProps {
-  isVisible: boolean;
-  close: () => void;
+interface KebabPopUpProps {
+  iconName: string;
+  iconType?: string;
+  vcKey: string;
 }

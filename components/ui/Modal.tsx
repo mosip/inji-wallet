@@ -1,7 +1,7 @@
 import React from 'react';
 import { I18nManager, Modal as RNModal, View } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { Column, Row, Text } from '.';
+import { Centered, Column, Row, Text } from '.';
 import { ElevationLevel, Theme } from './styleUtils';
 
 export const Modal: React.FC<ModalProps> = (props) => {
@@ -37,9 +37,9 @@ export const Modal: React.FC<ModalProps> = (props) => {
                 color={Theme.Colors.Details}
               />
             ) : null}
-            <Row fill align="center" margin={'5 30 0 0'}>
+            <Centered fill align="center">
               <Text weight="semibold">{props.headerTitle}</Text>
-            </Row>
+            </Centered>
             {props.headerRight || props.arrowLeft || (
               <Icon
                 name="close"

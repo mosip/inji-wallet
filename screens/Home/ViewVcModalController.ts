@@ -22,7 +22,7 @@ import {
   selectEmptyWalletBindingId,
   isWalletBindingInProgress,
   selectShowWalletBindingError,
-  isShowingBindingWarning,
+  isShowBindingWarning,
 } from '../../machines/vcItem';
 import { selectPasscode } from '../../machines/auth';
 import { biometricsMachine, selectIsSuccess } from '../../machines/biometrics';
@@ -142,7 +142,7 @@ export function useViewVcModal({
       isWalletBindingInProgress
     ),
     isBindingError: useSelector(vcItemActor, selectShowWalletBindingError),
-    isBindingWarning: useSelector(vcItemActor, isShowingBindingWarning),
+    isBindingWarning: useSelector(vcItemActor, isShowBindingWarning),
 
     CONFIRM_REVOKE_VC: () => {
       setRevoking(true);
