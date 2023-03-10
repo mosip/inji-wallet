@@ -25,6 +25,7 @@ import {
 import getAllConfigurations, {
   DownloadProps,
 } from '../shared/commonprops/commonProps';
+import { VcEvents } from './vc';
 
 const model = createModel(
   {
@@ -37,6 +38,7 @@ const model = createModel(
     verifiableCredential: null as VerifiableCredential,
     requestId: '',
     isVerified: false,
+    isPinned: false,
     lastVerifiedOn: null,
     locked: false,
     otp: '',
@@ -74,6 +76,7 @@ const model = createModel(
       ADD_WALLET_BINDING_ID: () => ({}),
       CANCEL: () => ({}),
       CONFIRM: () => ({}),
+      PIN_CARD: () => ({}),
     },
   }
 );
@@ -211,6 +214,19 @@ export const vcItemMachine =
             },
             ADD_WALLET_BINDING_ID: {
               target: 'showBindingWarning',
+            },
+            PIN_CARD: {
+              target: 'pinCard',
+              actions: 'setPinCard',
+            },
+          },
+        },
+        pinCard: {
+          entry: 'storeContext',
+          on: {
+            STORE_RESPONSE: {
+              actions: 'sendVcUpdated',
+              target: 'idle',
             },
           },
         },
@@ -521,6 +537,21 @@ export const vcItemMachine =
             event.data as WalletBindingResponse,
         }),
 
+        setPinCard: assign((context) => {
+          return {
+            ...context,
+            isPinned: !context.isPinned,
+          };
+        }),
+
+        sendVcUpdated: send(
+          (_context, event) =>
+            VcEvents.VC_UPDATED(VC_ITEM_STORE_KEY(event.response) as string),
+          {
+            to: (context) => context.serviceRefs.vc,
+          }
+        ),
+
         updateVc: send(
           (context) => {
             const { serviceRefs, ...vc } = context;
@@ -553,9 +584,7 @@ export const vcItemMachine =
             const { serviceRefs, ...data } = context;
             return StoreEvents.SET(VC_ITEM_STORE_KEY(context), data);
           },
-          {
-            to: (context) => context.serviceRefs.store,
-          }
+          { to: (context) => context.serviceRefs.store }
         ),
 
         setTag: model.assign({
@@ -819,6 +848,7 @@ export const vcItemMachine =
                   tag: '',
                   requestId: context.requestId,
                   isVerified: false,
+                  isPinned: context.isPinned,
                   lastVerifiedOn: null,
                   locked: context.locked,
                   walletBindingResponse: null,
@@ -972,6 +1002,9 @@ export function selectIsOtpError(state: State) {
 export function selectOtpError(state: State) {
   return state.context.otpError;
 }
+export function selectIsPinned(state: State) {
+  return state.context.isPinned;
+}
 
 export function selectIsLockingVc(state: State) {
   return state.matches('lockingVc');
@@ -1029,6 +1062,6 @@ export function isWalletBindingInProgress(state: State) {
     : false;
 }
 
-export function isShowingBindingWarning(state: State) {
+export function isShowBindingWarning(state: State) {
   return state.matches('showBindingWarning');
 }

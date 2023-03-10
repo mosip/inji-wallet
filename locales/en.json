@@ -90,6 +90,7 @@
     "historyTab": "History"
   },
   "AddVcModal": {
+    "inputIdHeader":"Retrieve your ID",
     "requestingCredential": "Requesting credential...",
     "errors": {
       "input": {
@@ -118,7 +119,7 @@
     "qstnMarkToolTip": "Application {{vcLabel}} Number is printed on the acknowledgment provided after enrollment"
   },
   "IdInputModal": {
-    "header": "Enter the MOSIP-provided UIN or VID of the {{vcLabel}} you wish to retrieve",
+    "header": "Select ID type and enter the MOSIP provided UIN or VID of the ID you wish to retrieve",
     "generateVc": "Generate {{vcLabel}}",
     "enterId": "Enter your {{idType}}",
     "noUIN/VID": "Don't have your UIN/VID? Get it here",
@@ -137,9 +138,9 @@
     "stepOneTitle": "Secure Sharing!",
     "stepOneText": "Share and receive {{vcLabel}} switfly using your phone camera to scan QR codes",
     "stepTwoTitle": "Trusted Digital Wallet",
-    "stepTwoText": " Keep your digital credential with you at all times",
+    "stepTwoText": "Keep your digital credential with you at all times",
     "stepThreeTitle": "Quick Access",
-    "stepThreeText": "Once generated, {{vcLabel}} are safely stored on your mobile and can be renamed or shared at any time.",
+    "stepThreeText": "Once generated, {{vcLabel}} are safely stored on your mobile.",
     "stepThreeButton": "Get Started",
     "skip": "Skip",
     "next": "Next"

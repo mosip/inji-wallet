@@ -51,7 +51,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
     return (
       <LinearGradient colors={Theme.Colors.gradientBtn}>
         <Centered>
-          <Row align="space-between" crossAlign="center">
+          <Row crossAlign="center">
             <Column
               style={{
                 flex: 3,
@@ -81,7 +81,6 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
           <Column
             style={Theme.OnboardingOverlayStyles.bottomContainer}
             crossAlign="center"
-            align="space-between"
             backgroundColor={Theme.Colors.whiteText}
             width={Dimensions.get('screen').width}>
             <Text weight="semibold">{item.title}</Text>
@@ -98,7 +97,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
       <View>
         <LinearGradient
           colors={Theme.Colors.gradientBtn}
-          style={{ borderRadius: 10, height: 50 }}>
+          style={{ borderRadius: 10, height: 50, marginTop: -10 }}>
           <Text
             weight="semibold"
             align="center"
@@ -115,16 +114,14 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
       <View>
         <LinearGradient
           colors={Theme.Colors.gradientBtn}
-          style={{ borderRadius: 10, height: 50 }}>
-          <TouchableOpacity onPress={controller.NEXT}>
-            <Text
-              weight="semibold"
-              align="center"
-              color="#FFFFFF"
-              margin="10 0 0 0">
-              {t('stepThreeButton')}
-            </Text>
-          </TouchableOpacity>
+          style={{ borderRadius: 10, height: 50, marginTop: -10 }}>
+          <Text
+            weight="semibold"
+            align="center"
+            color="#FFFFFF"
+            margin="10 0 0 0">
+            {t('stepThreeButton')}
+          </Text>
         </LinearGradient>
       </View>
     );
@@ -141,6 +138,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
         activeDotStyle={{ backgroundColor: Theme.Colors.Icon }}
         dotStyle={{ backgroundColor: Theme.Colors.dotColor }}
         renderItem={renderItem}
+        onDone={() => controller.NEXT()}
       />
     </View>
   );

@@ -18,6 +18,8 @@ const Colors = {
   GrayText: '#6F6F6F',
   dorColor: '#CBCBCB',
   plainText: '#FFD6A7',
+  walletbindingLabel: '#000000',
+  walletbindingContent: '#666666',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5;
@@ -67,6 +69,8 @@ export const DefaultTheme = {
     gradientBtn: ['#F59B4B', '#E86E04'],
     dotColor: Colors.dorColor,
     plainText: Colors.plainText,
+    walletbindingLabel: Colors.walletbindingLabel,
+    walletbindingContent: Colors.walletbindingContent,
   },
   Styles: StyleSheet.create({
     title: {
@@ -282,7 +286,7 @@ export const DefaultTheme = {
     detailsText: {
       fontWeight: 'bold',
       fontSize: 15,
-      fontFamily: 'Poppins_700Bold',
+      fontFamily: 'Inter_700Bold',
     },
     getId: {
       justifyContent: 'center',
@@ -290,7 +294,7 @@ export const DefaultTheme = {
       marginTop: 10,
     },
     placeholder: {
-      fontFamily: 'Poppins_400Regular',
+      fontFamily: 'Inter_400Regular',
     },
     hrLine: {
       borderBottomColor: 'black',
@@ -304,7 +308,7 @@ export const DefaultTheme = {
       borderColor: Colors.Grey,
       color: Colors.Black,
       flex: 1,
-      fontFamily: 'Poppins_600SemiBold',
+      fontFamily: 'Inter_600SemiBold',
       fontSize: 18,
       fontWeight: '600',
       height: 40,
@@ -320,13 +324,13 @@ export const DefaultTheme = {
       lineHeight: 28,
     },
     regular: {
-      fontFamily: 'Poppins_400Regular',
+      fontFamily: 'Inter_400Regular',
     },
     semibold: {
-      fontFamily: 'Poppins_600SemiBold',
+      fontFamily: 'Inter_600SemiBold',
     },
     bold: {
-      fontFamily: 'Poppins_700Bold',
+      fontFamily: 'Inter_700Bold',
     },
     small: {
       fontSize: 14,
@@ -481,12 +485,25 @@ export const DefaultTheme = {
       height: Dimensions.get('screen').height,
     },
   }),
+  KebabPopUpStyles: StyleSheet.create({
+    kebabPopUp: {
+      marginHorizontal: 4,
+    },
+    kebabHeaderStyle: {
+      backgroundColor: 'white',
+      justifyContent: 'space-between',
+      borderTopLeftRadius: 30,
+      borderTopRightRadius: 24,
+      padding: 18,
+    },
+  }),
   MessageOverlayStyles: StyleSheet.create({
     overlay: {
       elevation: 5,
       backgroundColor: Colors.White,
       padding: 0,
     },
+
     button: {
       borderTopLeftRadius: 0,
       borderTopRightRadius: 0,
@@ -648,7 +665,7 @@ export const DefaultTheme = {
     sliderTitle: {
       color: Colors.White,
       marginBottom: 20,
-      fontFamily: 'Poppins_700Bold',
+      fontFamily: 'Inter_700Bold',
     },
     text: {
       color: Colors.White,
