@@ -345,7 +345,6 @@ export const PurpleTheme = {
       backgroundColor: Colors.Transparent,
     },
     radius: {
-      flex: 1,
       borderRadius: 10,
       backgroundColor: Colors.Purple,
     },
