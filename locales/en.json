@@ -288,8 +288,8 @@
   "ScanScreen": {
     "header": "Scan QR Code",
     "noShareableVcs": "No shareable {{vcLabel}} are available.",
-    "BluetoothState": "Bluetooth is turned OFF, please turn it ON from Control center",
     "sharingVc": "Sharing {{vcLabel}}",
+    "BluetoothState": "Bluetooth is turned OFF, please turn it ON from Control center",
     "errors": {
       "locationDisabled": {
         "message": "Location services must be enabled for the scanning functionality",

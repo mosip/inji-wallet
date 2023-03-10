@@ -51,23 +51,20 @@ export const ScanScreen: React.FC = () => {
           </Column>
         ) : null}
 
-        {!controller.isEmpty ? (
-          controller.isScanning &&
-          isBluetoothEnabled && (
+        {controller.isEmpty ? (
+          <Text align="center" color={Theme.Colors.errorMessage}>
+            {t('noShareableVcs', { vcLabel: controller.vcLabel.plural })}
+          </Text>
+        ) : !isBluetoothEnabled ? (
+          <Text align="center" color={Theme.Colors.errorMessage}>
+            {t('BluetoothState')}
+          </Text>
+        ) : (
+          controller.isScanning && (
             <Column crossAlign="center" margin="0 0 0 -6">
               <QrScanner onQrFound={controller.SCAN} />
             </Column>
           )
-        ) : (
-          <Text align="center" color={Theme.Colors.errorMessage}>
-            {t('noShareableVcs', { vcLabel: controller.vcLabel.plural })}
-          </Text>
-        )}
-
-        {!isBluetoothEnabled && (
-          <Text align="center" color={Theme.Colors.errorMessage}>
-            {t('BluetoothState')}
-          </Text>
         )}
 
         {controller.isQrLogin && (
