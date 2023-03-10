@@ -52,11 +52,11 @@ export const ScanScreen: React.FC = () => {
         ) : null}
 
         {controller.isEmpty ? (
-          <Text align="center" color={Theme.Colors.errorMessage}>
+          <Text align="center" color={Theme.Colors.errorMessage} margin="0 10">
             {t('noShareableVcs', { vcLabel: controller.vcLabel.plural })}
           </Text>
         ) : !isBluetoothEnabled ? (
-          <Text align="center" color={Theme.Colors.errorMessage}>
+          <Text align="center" color={Theme.Colors.errorMessage} margin="0 10">
             {t('BluetoothState')}
           </Text>
         ) : (
