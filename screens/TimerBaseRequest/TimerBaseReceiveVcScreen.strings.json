@@ -1,0 +1,6 @@
+{
+  "header": "{{vcLabel}} details",
+  "save": "Save {{vcLabel}}",
+  "verifyAndSave": "Verify and save",
+  "discard": "Discard"
+}

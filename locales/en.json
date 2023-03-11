@@ -275,6 +275,10 @@
       },
       "offline": {
         "message": "Please connect to the internet to enable Online sharing mode"
+      },
+      "bleError": {
+        "title": "Failed to transfer",
+        "message": "Something went wrong while transferring {{vcLabel}}. Please try again."
       }
     },
     "online": "Online",
@@ -316,6 +320,10 @@
       "rejected": {
         "title": "Notice",
         "message": "Your {{vcLabel}} was discarded by {{receiver}}"
+      },
+      "bleError": {
+        "title": "Failed to transfer!",
+        "message": "Something went wrong while transferring {{vcLabel}}. Please try again."
       }
     }
   },
@@ -327,8 +335,8 @@
   },
   "SendVcScreen": {
     "reasonForSharing": "Reason for sharing (optional)",
-    "acceptRequest": "Accept request and choose {{vcLabel}}",
-    "acceptRequestAndVerify": "Accept request and verify",
+    "acceptRequest": "Share",
+    "acceptRequestAndVerify": "Share with Selfie",
     "reject": "Reject",
     "consentToPhotoVerification": "I give consent to have my photo taken for authentication"
   },
@@ -360,6 +368,9 @@
         "missingPermission": "This app uses the camera to scan the QR code of another device."
       },
       "allowAccess": "Allow access to the camera"
+    },
+    "errors": {
+      "genericError": "Something went wrong. Please try again after some time!"
     }
   }
 }

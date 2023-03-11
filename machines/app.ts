@@ -21,7 +21,10 @@ import { createRevokeMachine, revokeVidsMachine } from './revoke';
 import { pure, respond } from 'xstate/lib/actions';
 import { AppServices } from '../shared/GlobalContext';
 import { request } from '../shared/request';
-import { isBLEEnabled } from '../lib/smartshare';
+import {
+  createTimerBaseRequestMachine,
+  TimerBaseRequestMachine,
+} from './TimerBaseRequest';
 
 const model = createModel(
   {
@@ -204,13 +207,14 @@ export const appMachine = model.createMachine(
               )
             : spawn(createScanMachine(serviceRefs), scanMachine.id);
 
-          serviceRefs.request = isBLEEnabled
-            ? spawn(
-                BLERequest.createRequestMachine(serviceRefs),
-                BLERequest.requestMachine.id
-              )
-            : spawn(createRequestMachine(serviceRefs), requestMachine.id);
-
+          serviceRefs.request = spawn(
+            createRequestMachine(serviceRefs),
+            requestMachine.id
+          );
+          serviceRefs.timerBaseRequest = spawn(
+            createTimerBaseRequestMachine(serviceRefs),
+            TimerBaseRequestMachine.id
+          );
           serviceRefs.revoke = spawn(
             createRevokeMachine(serviceRefs),
             revokeVidsMachine.id
@@ -228,6 +232,7 @@ export const appMachine = model.createMachine(
           context.serviceRefs.activityLog.subscribe(logState);
           context.serviceRefs.scan.subscribe(logState);
           context.serviceRefs.request.subscribe(logState);
+          context.serviceRefs.timerBaseRequest.subscribe(logState);
           context.serviceRefs.revoke.subscribe(logState);
         }
       },

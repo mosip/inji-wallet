@@ -8,7 +8,7 @@ import { Text } from './Text';
 import { Theme, Spacing } from './styleUtils';
 
 export const Button: React.FC<ButtonProps> = (props) => {
-  const type = props.type || 'solid';
+  const type = props.type || 'solid' || 'radius' || 'gradient';
   const buttonStyle: StyleProp<ViewStyle> = [
     props.fill ? Theme.ButtonStyles.fill : null,
     Theme.ButtonStyles[type],
@@ -28,7 +28,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
     }
   };
 
-  return (
+  return !(type === 'gradient') ? (
     <RNEButton
       buttonStyle={buttonStyle}
       containerStyle={[
@@ -54,6 +54,27 @@ export const Button: React.FC<ButtonProps> = (props) => {
       onPress={handleOnPress}
       loading={props.loading}
     />
+  ) : (
+    <RNEButton
+      ViewComponent={require('react-native-linear-gradient').default}
+      linearGradientProps={{ colors: props.colors }}
+      buttonStyle={buttonStyle}
+      containerStyle={[
+        props.fill ? Theme.ButtonStyles.fill : null,
+        containerStyle,
+      ]}
+      type={props.type}
+      raised={props.raised}
+      title={
+        <Text weight="semibold" align="center" color={Theme.Colors.whiteText}>
+          {props.title}
+        </Text>
+      }
+      style={[buttonStyle]}
+      icon={props.icon}
+      onPress={handleOnPress}
+      loading={props.loading}
+    />
   );
 };
 
@@ -62,10 +83,13 @@ interface ButtonProps {
   disabled?: boolean;
   margin?: Spacing;
   type?: RNEButtonProps['type'];
+  linearGradient?: boolean;
+  isVcThere?: boolean;
   onPress?: RNEButtonProps['onPress'];
   fill?: boolean;
   raised?: boolean;
   loading?: boolean;
   icon?: RNEButtonProps['icon'];
   styles?: StyleProp<ViewStyle>;
+  colors?: (string | number)[];
 }

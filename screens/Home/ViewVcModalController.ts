@@ -182,4 +182,5 @@ export interface ViewVcModalProps extends ModalProps {
   vcItemActor: ActorRefFrom<typeof vcItemMachine>;
   onDismiss: () => void;
   onRevokeDelete: () => void;
+  activeTab: Number;
 }

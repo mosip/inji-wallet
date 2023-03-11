@@ -9,7 +9,6 @@ import { authRoutes, baseRoutes } from '../routes';
 import { useAppLayout } from './AppLayoutController';
 import { Icon } from 'react-native-elements';
 import { Theme } from '../components/ui/styleUtils';
-import { StatusBar } from 'react-native';
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -30,7 +29,6 @@ export const AppLayout: React.FC = () => {
 
   return (
     <NavigationContainer>
-      <StatusBar animated={true} barStyle="dark-content" />
       <Navigator initialRouteName={baseRoutes[0].name} screenOptions={options}>
         {baseRoutes.map((route) => (
           <Screen key={route.name} {...route} />
