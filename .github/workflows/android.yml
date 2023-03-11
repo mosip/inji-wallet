@@ -7,6 +7,7 @@ on:
       - develop
       - demobranch
       - qa-develop
+      - timerbasedui
     tags:
       - '*'
 
