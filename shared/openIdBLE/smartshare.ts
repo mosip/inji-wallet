@@ -6,31 +6,26 @@
 
 import SmartshareReactNative from '@idpass/smartshare-react-native';
 import { ConnectionParams } from '@idpass/smartshare-react-native/lib/typescript/IdpassSmartshare';
-const { GoogleNearbyMessages, IdpassSmartshare } = SmartshareReactNative;
-import { getDeviceNameSync } from 'react-native-device-info';
+import OpenIdBle from 'react-native-openid4vp-ble';
+const { Openid4vpBle } = OpenIdBle;
+const { GoogleNearbyMessages } = SmartshareReactNative;
 
-import { DeviceInfo } from '../components/DeviceInfoList';
-import { VC } from '../types/vc';
+import { DeviceInfo } from '../../components/DeviceInfoList';
+import { VC } from '../../types/vc';
 
-export async function onlineSubscribe<T extends SmartshareEventType>(
+export function onlineSubscribe<T extends SmartshareEventType>(
   eventType: T,
   callback: (data: SmartshareEventData<T>) => void,
   disconectCallback?: (data: SmartshareEventData<T>) => void,
-  config?: { keepAlive?: boolean; pairId?: string }
+  config?: { keepAlive: boolean }
 ) {
   return GoogleNearbyMessages.subscribe(
     (foundMessage) => {
       if (__DEV__) {
-        console.log(
-          `[${getDeviceNameSync()}] MESSAGE_FOUND`,
-          foundMessage.slice(0, 100)
-        );
+        console.log('\n[request] MESSAGE_FOUND', foundMessage.slice(0, 100));
       }
       const response = SmartshareEvent.fromString<T>(foundMessage);
-      if (response.pairId !== config?.pairId) {
-        return;
-      } else if (response.type === 'disconnect') {
-        GoogleNearbyMessages.unsubscribe();
+      if (response.type === 'disconnect') {
         disconectCallback(response.data);
       } else if (response.type === eventType) {
         !config?.keepAlive && GoogleNearbyMessages.unsubscribe();
@@ -39,25 +34,15 @@ export async function onlineSubscribe<T extends SmartshareEventType>(
     },
     (lostMessage) => {
       if (__DEV__) {
-        console.log(
-          `[${getDeviceNameSync()}] MESSAGE_LOST`,
-          lostMessage.slice(0, 100)
-        );
+        console.log('\n[request] MESSAGE_LOST', lostMessage.slice(0, 100));
       }
     }
-  ).catch((error: Error) => {
-    if (error.message.includes('existing callback is already subscribed')) {
-      console.log(
-        `${getDeviceNameSync()} Existing callback found for ${eventType}. Unsubscribing then retrying...`
-      );
-      return onlineSubscribe(eventType, callback, disconectCallback, config);
-    }
-  });
+  );
 }
 
-export async function onlineSend(event: SmartshareEvents, pairId: string) {
+export function onlineSend(event: SmartshareEvents) {
   return GoogleNearbyMessages.publish(
-    new SmartshareEvent(event.type, event.data, pairId).toString()
+    new SmartshareEvent(event.type, event.data).toString()
   );
 }
 
@@ -65,7 +50,7 @@ export function offlineSubscribe<T extends SmartshareEventType>(
   eventType: T,
   callback: (data: SmartshareEventData<T>) => void
 ) {
-  return IdpassSmartshare.handleNearbyEvents(({ type, data }) => {
+  return Openid4vpBle.handleNearbyEvents(({ type, data }) => {
     if (type !== 'msg') return;
 
     const response = SmartshareEvent.fromString<T>(data);
@@ -76,34 +61,24 @@ export function offlineSubscribe<T extends SmartshareEventType>(
 }
 
 export function offlineSend(event: SmartshareEvents, callback: () => void) {
-  IdpassSmartshare.send(
+  Openid4vpBle.send(
     new SmartshareEvent(event.type, event.data).toString(),
     callback
   );
 }
 
 class SmartshareEvent<T extends SmartshareEventType> {
-  constructor(
-    public type: T | string,
-    public data: SmartshareEventData<T>,
-    public pairId = ''
-  ) {}
+  constructor(public type: T | string, public data: SmartshareEventData<T>) {}
 
   static fromString<T extends SmartshareEventType>(json: string) {
-    const [pairId, type, data] = json.split('\n');
-    return new SmartshareEvent<T>(
-      type,
-      data ? JSON.parse(data) : undefined,
-      pairId
-    );
+    const [type, data] = json.split('\n');
+    return new SmartshareEvent<T>(type, data ? JSON.parse(data) : undefined);
   }
 
   toString() {
-    const message =
-      this.data != null
-        ? this.type + '\n' + JSON.stringify(this.data)
-        : this.type;
-    return [this.pairId, message].join('\n');
+    return this.data != null
+      ? this.type + '\n' + JSON.stringify(this.data)
+      : this.type;
   }
 }
 
@@ -114,7 +89,7 @@ export interface PairingEvent {
 
 export interface PairingResponseEvent {
   type: 'pairing:response';
-  data: string;
+  data: 'ok';
 }
 
 export interface ExchangeReceiverInfoEvent {
@@ -141,7 +116,7 @@ export interface SendVcEvent {
   };
 }
 
-export type SendVcStatus = 'ACCEPTED' | 'REJECTED' | 'RECEIVED';
+export type SendVcStatus = 'RECEIVED' | 'ACCEPTED' | 'REJECTED';
 export interface SendVcResponseEvent {
   type: 'send-vc:response';
   data: SendVcStatus | number;

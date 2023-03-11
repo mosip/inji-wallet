@@ -13,6 +13,8 @@ import { storeMachine } from './store';
 import { createVcMachine, vcMachine } from './vc';
 import { createActivityLogMachine, activityLogMachine } from './activityLog';
 import { createRequestMachine, requestMachine } from './request';
+import * as BLERequest from './openIdBle/request';
+import * as BLEScan from './openIdBle/scan';
 import { createScanMachine, scanMachine } from './scan';
 import { createRevokeMachine, revokeVidsMachine } from './revoke';
 
@@ -198,10 +200,12 @@ export const appMachine = model.createMachine(
             activityLogMachine.id
           );
 
-          serviceRefs.scan = spawn(
-            createScanMachine(serviceRefs),
-            scanMachine.id
-          );
+          serviceRefs.scan = isBLEEnabled
+            ? spawn(
+                BLEScan.createScanMachine(serviceRefs),
+                BLEScan.scanMachine.id
+              )
+            : spawn(createScanMachine(serviceRefs), scanMachine.id);
 
           serviceRefs.request = spawn(
             createRequestMachine(serviceRefs),

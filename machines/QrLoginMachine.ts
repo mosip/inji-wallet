@@ -144,7 +144,7 @@ export const qrLoginMachine =
         faceAuth: {
           on: {
             FACE_VALID: {
-              target: 'sendingAuthenticate',
+              target: 'requestConsent',
             },
             FACE_INVALID: {
               target: 'invalidIdentity',
@@ -356,13 +356,44 @@ export const qrLoginMachine =
         },
 
         sendConsent: async (context) => {
+          var privateKey = await getPrivateKey(
+            context.selectedVc.walletBindingResponse?.walletBindingId
+          );
+          var walletBindingResponse = context.selectedVc.walletBindingResponse;
+          var jwt = await getJwt(
+            privateKey,
+            context.selectedVc.id,
+            walletBindingResponse?.keyId,
+            walletBindingResponse?.thumbprint
+          );
+
           const response = await request(
+            'POST',
+            '/v1/idp/linked-authorization/authenticate',
+            {
+              requestTime: String(new Date().toISOString()),
+              request: {
+                linkedTransactionId: context.linkTransactionId,
+                individualId: context.selectedVc.id,
+                challengeList: [
+                  {
+                    authFactorType: 'WLA',
+                    challenge: jwt,
+                    format: 'jwt',
+                  },
+                ],
+              },
+            }
+          );
+          var linkedTrnId = response.response.linkedTransactionId;
+
+          const resp = await request(
             'POST',
             '/v1/idp/linked-authorization/consent',
             {
               requestTime: String(new Date().toISOString()),
               request: {
-                linkedTransactionId: context.linkedTransactionId,
+                linkedTransactionId: linkedTrnId,
                 acceptedClaims: context.essentialClaims.concat(
                   context.selectedVoluntaryClaims
                 ),
@@ -370,7 +401,7 @@ export const qrLoginMachine =
               },
             }
           );
-          console.log(response.response.linkedTransactionId);
+          console.log(resp.response.linkedTransactionId);
         },
       },
     }

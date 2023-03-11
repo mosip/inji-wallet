@@ -236,6 +236,10 @@ export const AddVcModalMachine =
               'VID invalid': 'invalidVid',
               'UIN not available in database': 'missingUin',
               'VID not available in database': 'missingVid',
+              'No message available': 'noMessageAvailable',
+              'while generating otp error is occured':
+                'whileGeneratingOtpErrorIsOccured',
+              'Network request failed': 'networkRequestFailed',
               'Invalid Input Parameter - individualId':
                 context.idType === 'UIN' ? 'invalidUin' : 'invalidVid',
             };
@@ -265,6 +269,7 @@ export const AddVcModalMachine =
             const message = (event as ErrorPlatformEvent).data.message;
             const OTP_ERRORS_MAP = {
               'OTP is invalid': 'invalidOtp',
+              'OTP has expired': 'expiredOtp',
             };
             return OTP_ERRORS_MAP[message]
               ? i18n.t(`errors.backend.${OTP_ERRORS_MAP[message]}`, {

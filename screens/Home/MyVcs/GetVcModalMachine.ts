@@ -233,6 +233,8 @@ export const GetVcModalMachine =
             const message = (event as ErrorPlatformEvent).data.message;
             const ID_ERRORS_MAP = {
               'AID is not ready': 'applicationProcessing',
+              'No message available': 'noMessageAvailable',
+              'Network request failed': 'networkRequestFailed',
             };
             return ID_ERRORS_MAP[message]
               ? i18n.t(`errors.backend.${ID_ERRORS_MAP[message]}`, {
@@ -258,6 +260,7 @@ export const GetVcModalMachine =
             const message = (event as ErrorPlatformEvent).data.message;
             const OTP_ERRORS_MAP = {
               'OTP is invalid': 'invalidOtp',
+              'OTP has expired': 'expiredOtp',
             };
             return OTP_ERRORS_MAP[message]
               ? i18n.t(`errors.backend.${OTP_ERRORS_MAP[message]}`, {

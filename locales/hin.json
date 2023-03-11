@@ -1,4 +1,18 @@
 {   
+  "ActivityLogText": {
+    "VC_SHARED": "साझा",
+    "VC_RECEIVED": "प्राप्त किया",
+    "VC_RECEIVED_NOT_SAVED": "प्राप्त सहेजा नहीं गया था",
+    "VC_DELETED": "हटाए गए",
+    "VC_DOWNLOADED": "डाउनलोड की गई",
+    "VC_REVOKED": "निरस्त किया गया",
+    "VC_SHARED_WITH_VERIFICATION_CONSENT": "साझा किया। उपस्थिति सत्यापन के लिए सहमति दी जाती है",
+    "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "प्राप्त किया। उपस्थिति सत्यापित",
+    "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "प्राप्त किया। उपस्थिति सत्यापन विफल रहा",
+    "PRESENCE_VERIFIED_AND_VC_SHARED": "सत्यापित और साझा किया गया",
+    "PRESENCE_VERIFICATION_FAILED": "सत्यापन असफल",
+    "QRLOGIN_SUCCESFULL": "क्यूआरलॉगिन सफल"
+  },
     "DeviceInfoList": {
       "requestedBy": "द्वारा अनुरोध किया गया",
       "sentBy": "द्वारा भेजा गया",
@@ -41,7 +55,7 @@
       "vid": "VID",
       "verificationEnabledSuccess": "ऑनलाइन लॉगिन के लिए सक्रिय",
       "goback": "वापस जाओ",
-      "BindingWarning": "आप इस क्रेडेंशियल के लिए किसी दूसरे डिवाइस पर ऑनलाइन लॉगिन पहले ही सक्रिय कर चुके हैं. यदि आप इसे इस डिवाइस पर फिर से सक्रिय करते हैं तो आप लॉगिन के लिए उस डिवाइस का उपयोग नहीं कर पाएंगे।",
+      "BindingWarning": "यदि आपने किसी अन्य वॉलेट पर इस क्रेडेंशियल के सत्यापन को सक्षम किया है, तो यह ओवरराइड हो जाएगा। क्या आपकी आगे बढ़ने की इच्छा है?",
       "yes_confirm": "हां, मैं पुष्टि करता हूं",
       "no": "नहीं",
       "Alert": "चेतावनी",
@@ -82,10 +96,30 @@
         },
         "backend": {
           "invalidOtp": "OTP  अमान्य है",
+          "expiredOtp": "ओटीपी समाप्त हो गया है",
           "invalidUin": "UIN अमान्य",
           "invalidVid": "VID अमान्य",
           "missingUin": "UIN यूआईएन डेटाबेस में उपलब्ध नहीं है",
-          "missingVid": "VID वीआईडी ​​डेटाबेस में उपलब्ध नहीं है"
+          "missingVid": "VID वीआईडी ​​डेटाबेस में उपलब्ध नहीं है",
+          "noMessageAvailable": "कुछ देर बाद कोशिश करें",
+          "whileGeneratingOtpErrorIsOccured": "ओटीपी जनरेट करते समय एरर आ गया",
+          "networkRequestFailed": "नेटवर्क अनुरोध विफल रहा"
+        }
+      }
+    },
+    "GetVcModal": {
+      "errors": {
+        "input": {
+          "empty": "इनपुट खाली नहीं हो सकता",
+          "invalidFormat": "इनपुट फॉर्मेट गलत"
+        },
+        "backend":{
+          "invalidOtp": "ओटीपी अमान्य है",
+          "expiredOtp": "ओटीपी समाप्त हो गया है",
+          "applicationProcessing": "AID तैयार नहीं है",
+          "noMessageAvailable": "कुछ देर बाद कोशिश करें",
+          "networkRequestFailed": "नेटवर्क अनुरोध विफल रहा",
+          "timeOut": "समय समाप्त"
         }
       }
     },

@@ -1,4 +1,18 @@
 {   
+  "ActivityLogText": {
+    "VC_SHARED": "ಹಂಚಿಕೊಂಡಿದ್ದಾರೆ",
+    "VC_RECEIVED": "ಸ್ವೀಕರಿಸಿದರು",
+    "VC_RECEIVED_NOT_SAVED": "ಸ್ವೀಕರಿಸಿದ ಉಳಿಸಲಾಗಿಲ್ಲ",
+    "VC_DELETED": "ಅಳಿಸಲಾಗಿದೆ",
+    "VC_DOWNLOADED": "ಡೌನ್‌ಲೋಡ್ ಮಾಡಲಾಗಿದೆ",
+    "VC_REVOKED": "ಹಿಂಪಡೆಯಲಾಗಿದೆ",
+    "VC_SHARED_WITH_VERIFICATION_CONSENT": "ಹಂಚಿಕೊಂಡಿದ್ದಾರೆ. ಉಪಸ್ಥಿತಿ ಪರಿಶೀಲನೆಗೆ ಒಪ್ಪಿಗೆ ನೀಡಲಾಗಿದೆ",
+    "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "ಸ್ವೀಕರಿಸಿದರು. ಉಪಸ್ಥಿತಿಯನ್ನು ಪರಿಶೀಲಿಸಲಾಗಿದೆ",
+    "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "ಸ್ವೀಕರಿಸಿದರು. ಉಪಸ್ಥಿತಿ ಪರಿಶೀಲನೆ ವಿಫಲವಾಗಿದೆ",
+    "PRESENCE_VERIFIED_AND_VC_SHARED": "ಪರಿಶೀಲಿಸಲಾಗಿದೆ ಮತ್ತು ಹಂಚಿಕೊಳ್ಳಲಾಗಿದೆ",
+    "PRESENCE_VERIFICATION_FAILED": "ಪರಿಶೀಲನೆ ವಿಫಲವಾಗಿದೆ",
+    "QRLOGIN_SUCCESFULL": "QRಲಾಗಿನ್ ಯಶಸ್ವಿಯಾಗಿದೆ"
+  },
     "DeviceInfoList": {
       "requestedBy": "ವಿನಂತಿಸಿದವರು",
       "sentBy": "ಕಳುಹಿಸಿದವರು",
@@ -41,7 +55,7 @@
       "vid": "VID",
       "verificationEnabledSuccess": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ",
       "goback": "ಹಿಂದೆ ಹೋಗು",
-      "BindingWarning": "ನೀವು ಈಗಾಗಲೇ ಇನ್ನೊಂದು ಸಾಧನದಲ್ಲಿ ಈ ರುಜುವಾತುಗಳಿಗಾಗಿ ಆನ್‌ಲೈನ್ ಲಾಗಿನ್ ಅನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿದ್ದೀರಿ. ಈ ಸಾಧನದಲ್ಲಿ ನೀವು ಅದನ್ನು ಮತ್ತೆ ಸಕ್ರಿಯಗೊಳಿಸಿದರೆ ಲಾಗಿನ್‌ಗಾಗಿ ಆ ಸಾಧನವನ್ನು ಬಳಸಲು ನಿಮಗೆ ಇನ್ನು ಮುಂದೆ ಸಾಧ್ಯವಾಗುವುದಿಲ್ಲ.",
+      "BindingWarning": "ನೀವು ಇನ್ನೊಂದು ವ್ಯಾಲೆಟ್‌ನಲ್ಲಿ ಈ ರುಜುವಾತುಗಳಿಗಾಗಿ ಪರಿಶೀಲನೆಯನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿದ್ದರೆ, ಅದನ್ನು ಅತಿಕ್ರಮಿಸಲಾಗುತ್ತದೆ. ನೀವು ಮುಂದುವರೆಯಲು ಬಯಸುವಿರಾ?",
       "yes_confirm": "ಹೌದು, ನಾನು ದೃಢೀಕರಿಸುತ್ತೇನೆ",
       "no": "ಸಂ",
       "Alert": "ಎಚ್ಚರಿಕೆ",
@@ -82,10 +96,30 @@
         },
         "backend": {
           "invalidOtp": "OTP ಅಮಾನ್ಯವಾಗಿದೆ",
+          "expiredOtp": "OTP ಅವಧಿ ಮುಗಿದಿದೆ",
           "invalidUin": "UIN ಅಮಾನ್ಯವಾಗಿದೆ",
           "invalidVid": "VID ಅಮಾನ್ಯವಾಗಿದೆ",
           "missingUin": "UIN ಡೇಟಾಬೇಸ್‌ನಲ್ಲಿ ಲಭ್ಯವಿಲ್ಲ",
-          "missingVid": "VID ಡೇಟಾಬೇಸ್‌ನಲ್ಲಿ ಲಭ್ಯವಿಲ್ಲ"
+          "missingVid": "VID ಡೇಟಾಬೇಸ್‌ನಲ್ಲಿ ಲಭ್ಯವಿಲ್ಲ",
+          "noMessageAvailable": "ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಪ್ರಯತ್ನಿಸಿ",
+          "whileGeneratingOtpErrorIsOccured": "OTP ರಚಿಸುವಾಗ ದೋಷ ಸಂಭವಿಸಿದೆ",
+          "networkRequestFailed": "ನೆಟ್‌ವರ್ಕ್ ವಿನಂತಿ ವಿಫಲವಾಗಿದೆ"
+        }
+      }
+    },
+    "GetVcModal": {
+      "errors": {
+        "input": {
+          "empty": "ಇನ್ಪುಟ್ ಖಾಲಿ ಇರುವಂತಿಲ್ಲ",
+          "invalidFormat": "ಇನ್‌ಪುಟ್ ಫಾರ್ಮ್ಯಾಟ್ ತಪ್ಪಾಗಿದೆ"
+        },
+        "backend":{
+          "invalidOtp": "OTP ಅಮಾನ್ಯವಾಗಿದೆ",
+          "expiredOtp": "OTP ಅವಧಿ ಮುಗಿದಿದೆ",
+          "applicationProcessing": "AID ಸಿದ್ಧವಾಗಿಲ್ಲ",
+          "noMessageAvailable": "ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಪ್ರಯತ್ನಿಸಿ",
+          "networkRequestFailed": "ನೆಟ್‌ವರ್ಕ್ ವಿನಂತಿ ವಿಫಲವಾಗಿದೆ",
+          "timeout": "ಸಮಯ ಮೀರಿದೆ"
         }
       }
     },

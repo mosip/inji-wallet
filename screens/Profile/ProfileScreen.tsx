@@ -13,6 +13,7 @@ import { useProfileScreen } from './ProfileScreenController';
 import { useTranslation } from 'react-i18next';
 import { LanguageSelector } from '../../components/LanguageSelector';
 import i18next, { SUPPORTED_LANGUAGES } from '../../i18n';
+import { isBLEEnabled } from '../../lib/smartshare';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const LanguageSetting: React.FC = () => {
@@ -96,6 +97,15 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
             <ListItem.Title>
               <Text color={Theme.Colors.profileAuthFactorUnlock}>
                 {t('authFactorUnlock')}
+              </Text>
+            </ListItem.Title>
+          </ListItem.Content>
+        </ListItem>
+        <ListItem bottomDivider>
+          <ListItem.Content>
+            <ListItem.Title>
+              <Text color={Theme.Colors.profileLabel}>
+                {isBLEEnabled ? t('useBle') : t('useGoogleNearby')}
               </Text>
             </ListItem.Title>
           </ListItem.Content>

@@ -10,13 +10,14 @@ import { QrLoginSuccess } from './QrLoginSuccessMessage';
 import { QrConsent } from './QrConsent';
 import { QrLoginRef } from '../../machines/QrLoginMachine';
 import { Icon } from 'react-native-elements';
+import { View } from 'react-native';
 
 export const QrLogin: React.FC<QrLoginProps> = (props) => {
   const controller = useQrLogin(props);
   const { t } = useTranslation('QrScreen');
 
   return (
-    <Modal
+    <View
       isVisible={props.isVisible}
       onDismiss={controller.DISMISS}
       headerTitle={t('title')}
@@ -87,7 +88,7 @@ export const QrLogin: React.FC<QrLoginProps> = (props) => {
           service={props.service}
         />
       </Column>
-    </Modal>
+    </View>
   );
 };
 
