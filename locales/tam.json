@@ -237,7 +237,15 @@
       "header": "{{vcLabel}} விவரங்கள்",
       "acceptRequest": "கோரிக்கையை ஏற்று {{vcLabel}} ஐப் பெறவும்",
       "acceptRequestAndVerify": "கோரிக்கையை ஏற்று சரிபார்க்கவும்",
-      "reject": "நிராகரிக்கவும்"
+      "reject": "நிராகரிக்கவும்",
+      "discard": "நிராகரிக்கவும்",
+      "goToReceivedVCTab": "பெறப்பட்ட {{vcLabel}}களைப் பார்க்கவும் ",
+      "errors": {
+        "savingFailed": {
+          "title": "{{vcLabel}}ஐ சேமிப்பதில் தோல்வி",
+          "message": "கடையில் {{vcLabel}}ஐ சேமிக்கும் போது ஏதோ தவறு ஏற்பட்டது."
+        }
+      }
     },
     "RequestScreen": {
       "bluetoothDenied": "{{vcLabel}}ஐக் கோர புளூடூத்தை இயக்கவும்",

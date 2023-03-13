@@ -237,7 +237,15 @@
       "header": "تفاصيل {{vcLabel}}",
       "acceptRequest": "قبول الطلب واستلام {{vcLabel}}",
       "acceptRequestAndVerify": "قبول الطلب والتحقق",
-      "reject": "رفض"
+      "reject": "رفض",
+      "discard": "ينبذ",
+      "goToReceivedVCTab": "منظر تلقى {{vcLabel}}",
+      "errors": {
+        "savingFailed": {
+          "title": "فشل ل يحفظ {{vcLabel}}",
+          "message": "شئ ما ذهب خطأ بينما إنقاذ {{vcLabel}} ل ال محل."
+        }
+      }
     },
     "RequestScreen": {
       "bluetoothDenied": "الرجاء تمكين Bluetooth لتتمكن من طلب{{vcLabel}}",
