@@ -292,6 +292,13 @@ export const DefaultTheme = {
       flex: 1,
       padding: 10,
     },
+    profileIconBg: {
+      padding: 8,
+      width: 40,
+      height: 40,
+      borderRadius: 6,
+      backgroundColor: Colors.LightOrange,
+    },
     domainVerifiyIcon: {
       padding: 20,
       marginLeft: 120,
@@ -408,7 +415,6 @@ export const DefaultTheme = {
     },
     regular: {
       fontSize: 14,
-      fontFamily: 'Inter_400Regular',
     },
     semibold: {
       fontFamily: 'Inter_600SemiBold',
@@ -489,7 +495,7 @@ export const DefaultTheme = {
     },
     gradient: {
       borderRadius: 9,
-      width: '88%',
+      width: '93%',
       alignSelf: 'center',
       margin: 4,
     },
@@ -634,16 +640,6 @@ export const DefaultTheme = {
       backgroundColor: Colors.White,
       borderRadius: 15,
       margin: -13.5,
-    },
-    kebabPopUp: {
-      marginHorizontal: 4,
-    },
-    kebabHeaderStyle: {
-      backgroundColor: 'white',
-      borderTopLeftRadius: 30,
-      borderTopRightRadius: 24,
-      padding: 15,
-      justifyContent: 'space-between',
     },
     button: {
       borderTopLeftRadius: 0,

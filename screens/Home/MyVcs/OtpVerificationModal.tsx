@@ -9,7 +9,7 @@ import { Image, TouchableOpacity } from 'react-native';
 export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
   props
 ) => {
-  const { t } = useTranslation('OtpVerificationModal');
+  const { t } = useTranslation('OtpVerification');
 
   return (
     <Modal isVisible={props.isVisible} onDismiss={props.onDismiss}>
