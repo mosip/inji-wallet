@@ -99,7 +99,7 @@ export const AddVcModalMachine =
                   },
                 ],
                 SELECT_ID_TYPE: {
-                  actions: ['setIdType', 'clearId'],
+                  actions: ['clearIdError', 'setIdType', 'clearId'],
                 },
               },
             },
@@ -134,7 +134,7 @@ export const AddVcModalMachine =
                   },
                 ],
                 SELECT_ID_TYPE: {
-                  actions: ['setIdType', 'clearId'],
+                  actions: ['clearIdError', 'setIdType', 'clearId'],
                   target: 'idle',
                 },
               },
