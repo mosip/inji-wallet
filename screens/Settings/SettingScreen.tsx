@@ -52,18 +52,17 @@ export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
   const { t } = useTranslation('SettingScreen');
   const controller = useSettingsScreen(props);
 
-  const [isContentVisible, setIsContentVisible] = useState(false);
-  const toggleContent = () => setIsContentVisible(!isContentVisible);
-
   return (
     <React.Fragment>
-      <Pressable onPress={toggleContent}>{props.triggerComponent}</Pressable>
+      <Pressable onPress={controller.TOGGLE_SETTINGS}>
+        {props.triggerComponent}
+      </Pressable>
       <Modal
-        isVisible={isContentVisible}
+        isVisible={controller.isVisible}
         arrowLeft={<Icon name={''} />}
         headerTitle={t('header')}
         headerElevation={2}
-        onDismiss={toggleContent}>
+        onDismiss={controller.TOGGLE_SETTINGS}>
         <ScrollView>
           <Column fill backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
             <MessageOverlay

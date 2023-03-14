@@ -10,7 +10,7 @@ import { OIDcAuthenticationModal } from '../../components/OIDcAuth';
 import { useViewVcModal, ViewVcModalProps } from './ViewVcModalController';
 import { useTranslation } from 'react-i18next';
 import { VcDetails } from '../../components/VcDetails';
-import { OtpVerification } from './MyVcs/OtpVerification';
+import { OtpVerificationModal } from './MyVcs/OtpVerificationModal';
 import { BindingVcWarningOverlay } from './MyVcs/BindingVcWarningOverlay';
 
 export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
@@ -76,7 +76,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
       )}
 
       {controller.isAcceptingOtpInput && (
-        <OtpVerification
+        <OtpVerificationModal
           isVisible={controller.isAcceptingOtpInput}
           onDismiss={controller.DISMISS}
           onInputDone={controller.inputOtp}
@@ -85,7 +85,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
       )}
 
       {controller.isAcceptingBindingOtp && (
-        <OtpVerification
+        <OtpVerificationModal
           isVisible={controller.isAcceptingBindingOtp}
           onDismiss={controller.DISMISS}
           onInputDone={controller.inputOtp}

@@ -4,16 +4,20 @@ import { LinearGradient } from 'react-native-svg';
 import { Spacing } from '../styleUtils';
 
 const Colors = {
-  Black: '#4A4A4A',
+  Black: '#000000',
+  Zambezi: '#5F5F5F',
   Grey: '#C7C7C7',
   Grey5: '#E0E0E0',
   Grey6: '#F2F2F2',
   Gray9: '#171717',
   DimGray: '#737373',
   Orange: '#F2811D',
+  Gray40: '#666666',
+  Orange: '#e3781a',
   LightGrey: '#F5F5F5',
+  ShadeOfGrey: '#6F6F6F',
   White: '#FFFFFF',
-  Red: '#EB5757',
+  Red: '#D52929',
   Green: '#4B9D20',
   Transparent: 'transparent',
   Warning: '#f0ad4e',
@@ -44,6 +48,7 @@ export const DefaultTheme = {
     Loading: Colors.Orange,
     noUinText: Colors.Orange,
     IconBg: Colors.Orange,
+    DownloadingIdPopUp: Colors.Green,
     Icon: Colors.Orange,
     GrayIcon: Colors.Grey,
     borderBottomColor: Colors.Grey6,
@@ -71,6 +76,7 @@ export const DefaultTheme = {
     whiteText: Colors.White,
     flipCameraIcon: Colors.Black,
     IdInputModalBorder: Colors.Grey,
+    RetrieveIdLabel: Colors.ShadeOfGrey,
     inputSelection: Colors.Orange,
     checkCircleIcon: Colors.White,
     OnboardingCircleIcon: Colors.White,
@@ -87,8 +93,12 @@ export const DefaultTheme = {
     IconBackground: Colors.LightOrange,
     GradientColors: Colors.GradientColors,
     DisabledColors: Colors.DisabledColors,
+    getVidColor: Colors.Zambezi,
     TimeoutHintBoxColor: Colors.TimeoutHintBoxColor,
     TimoutText: Colors.TimoutText,
+    ProfileIconBg: Colors.LightOrange,
+    walletbindingLabel: Colors.Black,
+    walletbindingContent: Colors.Gray40,
   },
   Styles: StyleSheet.create({
     title: {
@@ -147,12 +157,13 @@ export const DefaultTheme = {
       borderRadius: 10,
       backgroundColor: Colors.LightOrange,
     },
-    downloadingIdTag: {
+    downloadingIdPopUp: {
       alignItems: 'center',
+      justifyContent: 'space-between',
       backgroundColor: Colors.Green,
-      height: 40,
-      paddingHorizontal: 18,
+      height: 39,
       position: 'relative',
+      paddingHorizontal: 12,
     },
     homeScreenContainer: {
       alignItems: 'center',
@@ -174,7 +185,7 @@ export const DefaultTheme = {
       flex: 1,
       justifyContent: 'flex-start',
     },
-    logoContainer: {
+    closecardMosipLogo: {
       flex: 1,
       flexDirection: 'row',
       justifyContent: 'flex-end',
@@ -289,6 +300,13 @@ export const DefaultTheme = {
       flex: 1,
       padding: 10,
     },
+    profileIconBg: {
+      padding: 8,
+      width: 40,
+      height: 40,
+      borderRadius: 6,
+      backgroundColor: Colors.LightOrange,
+    },
     domainVerifiyIcon: {
       padding: 20,
       marginLeft: 120,
@@ -345,7 +363,7 @@ export const DefaultTheme = {
     getId: {
       justifyContent: 'center',
       alignItems: 'center',
-      marginTop: 10,
+      marginVertical: 6,
     },
     placeholder: {
       fontFamily: 'Inter_400Regular',
@@ -358,15 +376,25 @@ export const DefaultTheme = {
   }),
   PinInputStyle: StyleSheet.create({
     input: {
-      borderBottomWidth: 1,
+      borderBottomWidth: 3,
       borderColor: Colors.Grey,
       color: Colors.Black,
       flex: 1,
-      fontFamily: 'Inter_600SemiBold',
-      fontSize: 18,
-      fontWeight: '600',
+      fontFamily: 'Inter_700Bold',
+      fontSize: 29,
       height: 40,
       lineHeight: 28,
+      margin: 8,
+      textAlign: 'center',
+    },
+    onEnteringPin: {
+      borderBottomWidth: 3,
+      borderColor: Colors.Orange,
+      color: Colors.Black,
+      flex: 1,
+      fontFamily: 'Inter_700Bold',
+      fontSize: 29,
+      height: 40,
       margin: 8,
       textAlign: 'center',
     },
@@ -375,8 +403,19 @@ export const DefaultTheme = {
     header: {
       color: Colors.Black,
       fontFamily: 'Inter_700Bold',
-      fontSize: 21,
-      lineHeight: 21,
+      fontSize: 18,
+      lineHeight: 22,
+      paddingTop: 4,
+    },
+    retrieveIdLabel: {
+      color: Colors.ShadeOfGrey,
+      fontFamily: 'Inter_600SemiBold',
+      paddingHorizontal: 6,
+    },
+    error: {
+      color: Colors.Red,
+      fontFamily: 'Inter_600SemiBold',
+      fontSize: 12,
     },
     base: {
       color: Colors.Black,
@@ -385,7 +424,6 @@ export const DefaultTheme = {
     },
     regular: {
       fontSize: 14,
-      fontFamily: 'Inter_400Regular',
     },
     semibold: {
       fontFamily: 'Inter_600SemiBold',
@@ -466,7 +504,7 @@ export const DefaultTheme = {
     },
     gradient: {
       borderRadius: 9,
-      width: '88%',
+      width: '93%',
       alignSelf: 'center',
       margin: 4,
     },
@@ -474,6 +512,8 @@ export const DefaultTheme = {
       borderRadius: 9,
       width: '34%',
       alignSelf: 'center',
+      fontSize: 10,
+      elevation: 5,
     },
     clearAddIdBtnBg: {
       backgroundColor: Colors.Transparent,
@@ -595,10 +635,10 @@ export const DefaultTheme = {
     },
     kebabHeaderStyle: {
       backgroundColor: 'white',
-      justifyContent: 'space-between',
       borderTopLeftRadius: 30,
       borderTopRightRadius: 24,
-      padding: 18,
+      padding: 15,
+      justifyContent: 'space-between',
     },
   }),
   MessageOverlayStyles: StyleSheet.create({
@@ -612,16 +652,6 @@ export const DefaultTheme = {
       backgroundColor: Colors.White,
       borderRadius: 15,
       margin: -13.5,
-    },
-    kebabPopUp: {
-      marginHorizontal: 4,
-    },
-    kebabHeaderStyle: {
-      backgroundColor: 'white',
-      borderTopLeftRadius: 30,
-      borderTopRightRadius: 24,
-      padding: 15,
-      justifyContent: 'space-between',
     },
     button: {
       borderTopLeftRadius: 0,
