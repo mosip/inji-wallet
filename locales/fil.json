@@ -28,7 +28,7 @@
     "verify": "I-verify"
   },
   "QrScanner": {
-    "missingPermissionText": "Ginagamit ng app na ito ang camera upang i-scan ng QR code ng ibang device.",
+    "missingPermissionText": "Ginagamit ng app na ito ang camera upang i-scan ang QR code ng isa pang device.",
     "allowCameraButton": "Payagan gamitin ang camera"
   },
   "VcDetails": {
