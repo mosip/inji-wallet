@@ -14,6 +14,7 @@ import { GlobalContext } from '../../shared/GlobalContext';
 import {
   selectIsAccepting,
   selectIsSavingFailedInIdle,
+  selectStoreError,
 } from '../../machines/openIdBle/request';
 
 export function useReceiveVcScreen() {
@@ -35,6 +36,8 @@ export function useReceiveVcScreen() {
     ),
     isVerifyingIdentity: useSelector(requestService, selectIsVerifyingIdentity),
     isInvalidIdentity: useSelector(requestService, selectIsInvalidIdentity),
+
+    storeError: useSelector(requestService, selectStoreError),
 
     ACCEPT: () => requestService.send(RequestEvents.ACCEPT()),
     ACCEPT_AND_VERIFY: () =>

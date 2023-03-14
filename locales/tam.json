@@ -1,4 +1,4 @@
-{   
+{
   "ActivityLogText": {
     "VC_SHARED": "பகிர்ந்து கொண்டார்",
     "VC_RECEIVED": "பெற்றது",
@@ -244,8 +244,12 @@
       "goToReceivedVCTab": "பெறப்பட்ட {{vcLabel}}களைப் பார்க்கவும் ",
       "errors": {
         "savingFailed": {
-          "title": "{{vcLabel}}ஐ சேமிப்பதில் தோல்வி",
-          "message": "கடையில் {{vcLabel}}ஐ சேமிக்கும் போது ஏதோ தவறு ஏற்பட்டது."
+          "title": "{{vcLabelSingular}}ஐ சேமிப்பதில் தோல்வி",
+          "message": "கடையில் {{vcLabelSingular}}ஐ சேமிக்கும் போது ஏதோ தவறு ஏற்பட்டது."
+        },
+        "diskFullError": {
+          "title": "{{vcLabelSingular}}ஐ சேமிக்க முடியவில்லை",
+          "message": "ஆப்ஸ் டேட்டா நிரம்பியதால் {{vcLabelPlural}} பெறவோ சேமிக்கவோ முடியாது."
         }
       }
     },

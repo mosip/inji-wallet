@@ -17,6 +17,13 @@ export const ReceiveVcScreen: React.FC = () => {
   const savingOverlayVisible = useOverlayVisibleAfterTimeout(
     controller.isAccepting
   );
+  let storeErrorTranslationPath = 'errors.savingFailed';
+  const isDiskFullError =
+    controller.storeError?.message?.match('SQLITE_FULL') != null;
+
+  if (isDiskFullError) {
+    storeErrorTranslationPath = 'errors.diskFullError';
+  }
 
   return (
     <React.Fragment>
@@ -117,11 +124,13 @@ export const ReceiveVcScreen: React.FC = () => {
 
       <MessageOverlay
         isVisible={controller.IsSavingFailedInIdle}
-        title={t('errors.savingFailed.title', {
-          vcLabel: controller.vcLabel.singular,
+        title={t(storeErrorTranslationPath + '.title', {
+          vcLabelSingular: controller.vcLabel.singular,
+          vcLabelPlural: controller.vcLabel.plural,
         })}
-        message={t('errors.savingFailed.message', {
-          vcLabel: controller.vcLabel.singular,
+        message={t(storeErrorTranslationPath + '.message', {
+          vcLabelSingular: controller.vcLabel.singular,
+          vcLabelPlural: controller.vcLabel.plural,
         })}
         onBackdropPress={controller.DISMISS}
       />

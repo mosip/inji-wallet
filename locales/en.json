@@ -249,8 +249,12 @@
     "goToReceivedVCTab":  "View Received {{vcLabel}}",
     "errors": {
       "savingFailed": {
-        "title": "Failed to save {{vcLabel}}",
-        "message": "Something went wrong while saving {{vcLabel}} to the store."
+        "title": "Failed to save the {{vcLabelSingular}}",
+        "message": "Something went wrong while saving {{vcLabelSingular}} to the store."
+      },
+      "diskFullError": {
+        "title": "Failed to save the {{vcLabelSingular}}",
+        "message": "No more {{vcLabelPlural}} can be received or saved as App Data is full."
       }
     }
   },
@@ -332,7 +336,7 @@
         "message": "Your {{vcLabel}} was discarded by {{receiver}}"
       },
       "bleError": {
-        "title": "Failed to transfer!",
+        "title": "Failed to transfer",
         "message": "Something went wrong while transferring {{vcLabel}}. Please try again."
       }
     }
