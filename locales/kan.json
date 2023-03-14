@@ -1,4 +1,4 @@
-{   
+{
   "ActivityLogText": {
     "VC_SHARED": "ಹಂಚಿಕೊಂಡಿದ್ದಾರೆ",
     "VC_RECEIVED": "ಸ್ವೀಕರಿಸಿದರು",
@@ -242,8 +242,12 @@
       "goToReceivedVCTab": "ಸ್ವೀಕರಿಸಿದ {{vcLabel}} ವೀಕ್ಷಿಸಿ",
       "errors": {
         "savingFailed": {
-          "title": "{{vcLabel}} ಉಳಿಸಲು ವಿಫಲವಾಗಿದೆ",
-          "message": "ಸ್ಟೋರ್‌ನಲ್ಲಿ {{vcLabel}} ಉಳಿಸುವಾಗ ಏನೋ ತಪ್ಪಾಗಿದೆ."
+          "title": "{{vcLabelSingular}} ಉಳಿಸಲು ವಿಫಲವಾಗಿದೆ",
+          "message": "ಸ್ಟೋರ್‌ನಲ್ಲಿ {{vcLabelSingular}} ಉಳಿಸುವಾಗ ಏನೋ ತಪ್ಪಾಗಿದೆ."
+        },
+        "sqlFullError": {
+          "title": "{{vcLabelSingular}} ಉಳಿಸಲು ವಿಫಲವಾಗಿದೆ",
+          "message": "ಅಪ್ಲಿಕೇಶನ್ ಡೇಟಾ ತುಂಬಿರುವುದರಿಂದ ಹೆಚ್ಚಿನ {{vcLabelPlural}} ಸ್ವೀಕರಿಸಲು ಅಥವಾ ಉಳಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ."
         }
       }
     },
@@ -321,7 +325,7 @@
         "accepted": {
           "title": "ಯಶಸ್ಸು!",
           "message": "ನಿಮ್ಮ {{vcLabel}}ನ್ನು {{receiver}} ಅವರೊಂದಿಗೆ ಯಶಸ್ವಿಯಾಗಿ ಹಂಚಿಕೊಳ್ಳಲಾಗಿದೆ"
-          
+
         },
         "rejected": {
           "title": "ಗಮನಿಸಿ",

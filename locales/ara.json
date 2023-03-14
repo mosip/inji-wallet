@@ -1,4 +1,4 @@
-{   
+{
   "ActivityLogText": {
     "VC_SHARED": "مشترك",
     "VC_RECEIVED": "الواردة",
@@ -242,8 +242,12 @@
       "goToReceivedVCTab": "منظر تلقى {{vcLabel}}",
       "errors": {
         "savingFailed": {
-          "title": "فشل ل يحفظ {{vcLabel}}",
+          "title": "فشل حفظ {{vcLabel}}",
           "message": "شئ ما ذهب خطأ بينما إنقاذ {{vcLabel}} ل ال محل."
+        },
+        "sqlFullError": {
+          "title": "فشل حفظ {{vcLabel}}",
+          "message": "لا يمكن استلام المزيد من {{vcLabelPlural}} أو حفظه لأن بيانات التطبيق ممتلئة."
         }
       }
     },
