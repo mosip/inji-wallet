@@ -158,7 +158,8 @@ export const scanMachine =
                 },
                 BLUETOOTH_DISABLED: [
                   {
-                    // In iOS irrespective of bluetooth permission status, the devices goes into disabled state. Hence we are skipping the state and moving to checkLocationServices state
+                    // In iOS, irrespective of bluetooth permission status provided by the User, we always get BLUETOOTH_DENIED event.
+                    // This issue will be handled separately(#580). Temporarily we are allowing to move forward.
                     target: '#scan.checkingLocationService',
                     cond: 'isIOS',
                   },
