@@ -247,7 +247,7 @@
           "title": "{{vcLabelSingular}} ಉಳಿಸಲು ವಿಫಲವಾಗಿದೆ",
           "message": "ಸ್ಟೋರ್‌ನಲ್ಲಿ {{vcLabelSingular}} ಉಳಿಸುವಾಗ ಏನೋ ತಪ್ಪಾಗಿದೆ."
         },
-        "sqlFullError": {
+        "diskFullError": {
           "title": "{{vcLabelSingular}} ಉಳಿಸಲು ವಿಫಲವಾಗಿದೆ",
           "message": "ಅಪ್ಲಿಕೇಶನ್ ಡೇಟಾ ತುಂಬಿರುವುದರಿಂದ ಹೆಚ್ಚಿನ {{vcLabelPlural}} ಸ್ವೀಕರಿಸಲು ಅಥವಾ ಉಳಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ."
         }

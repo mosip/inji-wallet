@@ -247,7 +247,7 @@
           "title": "{{vcLabelSingular}} सहेजने में विफल",
           "message": "{{vcLabelSingular}} को स्टोर में सेव करते समय कोई गड़बड़ी हुई."
         },
-        "sqlFullError": {
+        "diskFullError": {
           "title": "{{vcLabelSingular}} सहेजने में विफल",
           "message": "ऐप डेटा पूर्ण होने के कारण कोई और {{vcLabelPlural}} प्राप्त या सहेजा नहीं जा सकता है।"
         }

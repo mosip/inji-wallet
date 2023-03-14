@@ -247,7 +247,7 @@
           "title": "{{vcLabelSingular}}ஐ சேமிப்பதில் தோல்வி",
           "message": "கடையில் {{vcLabelSingular}}ஐ சேமிக்கும் போது ஏதோ தவறு ஏற்பட்டது."
         },
-        "sqlFullError": {
+        "diskFullError": {
           "title": "{{vcLabelSingular}}ஐ சேமிக்க முடியவில்லை",
           "message": "ஆப்ஸ் டேட்டா நிரம்பியதால் {{vcLabelPlural}} பெறவோ சேமிக்கவோ முடியாது."
         }

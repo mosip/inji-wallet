@@ -18,11 +18,11 @@ export const ReceiveVcScreen: React.FC = () => {
     controller.isAccepting
   );
   let storeErrorTranslationPath = 'errors.savingFailed';
-  const isSQLFullError =
+  const isDiskFullError =
     controller.storeError?.message?.match('SQLITE_FULL') != null;
 
-  if (isSQLFullError) {
-    storeErrorTranslationPath = 'errors.sqlFullError';
+  if (isDiskFullError) {
+    storeErrorTranslationPath = 'errors.diskFullError';
   }
 
   return (

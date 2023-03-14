@@ -247,7 +247,7 @@
           "title": "فشل حفظ {{vcLabel}}",
           "message": "شئ ما ذهب خطأ بينما إنقاذ {{vcLabel}} ل ال محل."
         },
-        "sqlFullError": {
+        "diskFullError": {
           "title": "فشل حفظ {{vcLabel}}",
           "message": "لا يمكن استلام المزيد من {{vcLabelPlural}} أو حفظه لأن بيانات التطبيق ممتلئة."
         }

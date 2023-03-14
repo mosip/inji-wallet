@@ -243,7 +243,7 @@
         "title": "Nabigong i-save ang {{vcLabelSingular}}",
         "message": "Nagkaproblema habang nagse-save ng {{vcLabelSingular}} sa tindahan."
       },
-      "sqlFullError": {
+      "diskFullError": {
         "title": "Nabigong i-save ang {{vcLabelSingular}}",
         "message": "Wala nang mga {{vcLabelSingular}} na matatanggap o mai-save dahil puno na ang Data ng App."
       }

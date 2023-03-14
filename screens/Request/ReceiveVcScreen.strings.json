@@ -10,7 +10,7 @@
       "title": "Failed to save {{vcLabelSingular}}",
       "message": "Something went wrong while saving {{vcLabelSingular}} to the store."
     },
-    "sqlFullError": {
+    "diskFullError": {
       "title": "Failed to save {{vcLabelPlural}}",
       "message": "No more {{vcLabelPlural}} can be received or saved as App Data is full."
     }
