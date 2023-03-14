@@ -80,6 +80,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
                   inputStyle={{
                     textAlign: I18nManager.isRTL ? 'right' : 'left',
                   }}
+                  selectionColor={Theme.Colors.Cursor}
                   value={controller.id}
                   keyboardType="number-pad"
                   rightIcon={
