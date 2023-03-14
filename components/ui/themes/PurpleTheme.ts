@@ -129,6 +129,12 @@ export const PurpleTheme = {
       shadowRadius: 3,
       elevation: 4,
     },
+    selectedBindedVc: {
+      borderRadius: 15,
+      margin: 5,
+      borderWidth: 3,
+      borderColor: Colors.Green,
+    },
     labelPartContainer: {
       marginLeft: 16,
       flex: 1,
