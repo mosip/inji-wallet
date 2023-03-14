@@ -910,7 +910,7 @@ export function selectIsAccepting(state: State) {
   return state.matches('reviewing.accepting');
 }
 
-export function selectIsSavingFailedIdle(state: State) {
+export function selectIsSavingFailedInIdle(state: State) {
   return state.matches('reviewing.savingFailed.idle');
 }
 

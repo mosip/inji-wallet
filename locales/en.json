@@ -244,6 +244,7 @@
     "header": "{{vcLabel}} details",
     "save": "Save {{vcLabel}}",
     "verifyAndSave": "Verify and save",
+    "reject": "Reject",
     "discard": "Discard",
     "goToReceivedVCTab":  "View Received {{vcLabel}}",
     "errors": {

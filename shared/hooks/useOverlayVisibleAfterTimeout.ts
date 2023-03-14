@@ -9,10 +9,10 @@ export const useOverlayVisibleAfterTimeout = (
 
   useEffect(() => {
     if (visibleStart) {
-      const timeout = setTimeout(() => {
+      const timeoutID = setTimeout(() => {
         setVisible(true);
       }, ms);
-      setSavingTimeout(timeout);
+      setSavingTimeout(timeoutID);
     } else {
       clearTimeout(savingTimeout);
       setVisible(false);
