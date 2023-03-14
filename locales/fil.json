@@ -280,6 +280,8 @@
   "ScanScreen": {
     "header": "I-scan ang QR Code",
     "noShareableVcs": "Walang magagamit na maibabahaging {{vcLabel}}.",
+    "BluetoothStateIos": "Naka-OFF ang Bluetooth, paki-ON ito mula sa Control center",
+    "BluetoothStateAndroid": "Naka-OFF ang Bluetooth, paki-ON ito mula sa menu ng Quick settings",
     "sharingVc": "Pagbabahagi ng {{vcLabel}}",
     "errors": {
       "locationDisabled": {

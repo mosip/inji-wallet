@@ -284,6 +284,8 @@
     "ScanScreen": {
       "header": "QR குறியீட்டை ஸ்கேன் செய்",
       "noShareableVcs": "பகிரக்கூடிய {{vcLabel}} எதுவும் இல்லை.",
+      "BluetoothStateIos": "புளூடூத் முடக்கப்பட்டுள்ளது, கட்டுப்பாட்டு மையத்திலிருந்து அதை இயக்கவும்",
+      "BluetoothStateAndroid": "புளூடூத் முடக்கப்பட்டுள்ளது, விரைவு அமைப்புகள் மெனுவிலிருந்து அதை இயக்கவும்",
       "sharingVc": "பகிர்தல் {{vcLabel}}",
       "errors": {
         "locationDisabled": {

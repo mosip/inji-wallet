@@ -284,6 +284,8 @@
     "ScanScreen": {
       "header": "ಸ್ಕ್ಯಾನ್ ಕ್ಯೂಆರ್ ಕೋಡ್",
       "noShareableVcs": "ಯಾವುದೇ ಹಂಚಿಕೊಳ್ಳಬಹುದಾದ {{vcLabel}} ಲಭ್ಯವಿಲ್ಲ.",
+      "BluetoothStateIos": "ಬ್ಲೂಟೂತ್ ಅನ್ನು ಆಫ್ ಮಾಡಲಾಗಿದೆ, ದಯವಿಟ್ಟು ಅದನ್ನು ನಿಯಂತ್ರಣ ಕೇಂದ್ರದಿಂದ ಆನ್ ಮಾಡಿ",
+      "BluetoothStateAndroid": "ಬ್ಲೂಟೂತ್ ಆಫ್ ಆಗಿದೆ, ದಯವಿಟ್ಟು ತ್ವರಿತ ಸೆಟ್ಟಿಂಗ್‌ಗಳ ಮೆನುವಿನಿಂದ ಅದನ್ನು ಆನ್ ಮಾಡಿ",
       "sharingVc": "ಹಂಚಿಕೆ {{vcLabel}}",
       "errors": {
         "locationDisabled": {
