@@ -7,6 +7,7 @@ import { Theme } from '../../components/ui/styleUtils';
 import { QrLogin } from '../QrLogin/QrLogin';
 import { useScanScreen } from './ScanScreenController';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
+import { Platform } from 'react-native';
 
 export const ScanScreen: React.FC = () => {
   const { t } = useTranslation('ScanScreen');
@@ -57,7 +58,11 @@ export const ScanScreen: React.FC = () => {
           </Text>
         ) : !isBluetoothEnabled ? (
           <Text align="center" color={Theme.Colors.errorMessage} margin="0 10">
-            {t('BluetoothState')}
+            {t(
+              Platform.OS === 'ios'
+                ? 'BluetoothStateIos'
+                : 'BluetoothStateAndroid'
+            )}
           </Text>
         ) : (
           controller.isScanning && (
