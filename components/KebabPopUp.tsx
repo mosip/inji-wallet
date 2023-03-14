@@ -1,114 +1,67 @@
 import React, { useRef, useState } from 'react';
 import { t } from 'i18next';
-import { Pressable } from 'react-native';
 import { BottomSheet, Icon, ListItem } from 'react-native-elements';
 import { Theme } from '../components/ui/styleUtils';
-import { Button } from '../components/ui/Button';
-import { Column, Row, Text } from '../components/ui';
+import { Centered, Column, Row, Text } from '../components/ui';
+import { WalletBinding } from '../screens/Home/MyVcs/WalletBinding';
+import { Pressable } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { useKebabPopUp } from './KebabPopUpController';
 
-export const KebabPopUpMenu: React.FC<KebabPopUpMenuProps> = (props) => {
-  const [visible, setVisible] = useState(false);
+export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
   const { t } = useTranslation('HomeScreenKebabPopUp');
+  const controller = useKebabPopUp(props);
 
   return (
     <Column>
-      <Pressable
-        onPress={() => {
-          setVisible(true);
-        }}>
+      <Pressable onPress={controller.TOGGLE_KEBAB_POPUP}>
         <Icon
           name={props.iconName}
-          type={props.iconType ? props.iconType : null}
+          type={props.iconType}
           color={Theme.Colors.GrayIcon}
         />
       </Pressable>
       <BottomSheet
-        isVisible={visible}
-        containerStyle={Theme.MessageOverlayStyles.kebabPopUp}>
-        <Row style={Theme.MessageOverlayStyles.kebabHeaderStyle}>
-          <Text weight="bold" style={Theme.TextStyles.base}>
+        isVisible={controller.visible}
+        containerStyle={Theme.KebabPopUpStyles.kebabPopUp}>
+        <Row style={Theme.KebabPopUpStyles.kebabHeaderStyle}>
+          <Centered></Centered>
+          <Text
+            weight="bold"
+            style={{ ...Theme.TextStyles.base, flex: 1, alignSelf: 'center' }}>
             {t('title')}
           </Text>
           <Icon
             name="close"
-            onPress={() => {
-              setVisible(false);
-            }}
+            onPress={controller.TOGGLE_KEBAB_POPUP}
             color={Theme.Colors.Details}
             size={25}
           />
         </Row>
-        <ListItem bottomDivider>
-          <ListItem.Content>
-            <ListItem.Title>
-              <Text size="small" style={Theme.TextStyles.bold}>
-                {t('UnpinCard')}
-              </Text>
-            </ListItem.Title>
-          </ListItem.Content>
-        </ListItem>
-        <ListItem bottomDivider>
-          <ListItem.Content>
-            <ListItem.Title>
-              <Text size="small" style={Theme.TextStyles.bold}>
-                {true
-                  ? t('offlineAuthenticationDisabled!')
-                  : t('profileAuthenticated')}
-              </Text>
-            </ListItem.Title>
-            <Text
-              weight="bold"
-              color={Theme.Colors.profileValue}
-              size="smaller">
-              {true ? t('offlineAuthDisabledMessage') : null}
-            </Text>
-          </ListItem.Content>
-        </ListItem>
-        <ListItem bottomDivider>
-          <ListItem.Content>
-            <ListItem.Title>
-              <Text size="small" style={Theme.TextStyles.bold}>
-                {t('ViewActivityLog')}
-              </Text>
-            </ListItem.Title>
-          </ListItem.Content>
-        </ListItem>
-        <ListItem bottomDivider>
-          <ListItem.Content>
-            <ListItem.Title>
-              <Text size="small" style={Theme.TextStyles.bold}>
-                {t('RemoveFromWallet')}
-              </Text>
-            </ListItem.Title>
-          </ListItem.Content>
-        </ListItem>
-        <ListItem bottomDivider>
-          <ListItem.Content>
-            <ListItem.Title>
-              <Text
-                color={Theme.Colors.errorMessage}
-                size="small"
-                style={Theme.TextStyles.bold}>
-                {t('RevokeID')}
-              </Text>
-            </ListItem.Title>
-            <Text
-              weight="bold"
-              color={Theme.Colors.profileValue}
-              size="smaller">
-              {t('RevokeMessage')}
-            </Text>
-          </ListItem.Content>
-        </ListItem>
+        <Column>
+          <ListItem bottomDivider>
+            <ListItem.Content>
+              <ListItem.Title>
+                <Text size="small" style={Theme.TextStyles.bold}>
+                  {t('UnpinCard')}
+                </Text>
+              </ListItem.Title>
+            </ListItem.Content>
+          </ListItem>
+
+          <WalletBinding
+            label={t('offlineAuthenticationDisabled!')}
+            Content={t('offlineAuthDisabledMessage')}
+            vcKey={props.vcKey}
+          />
+        </Column>
       </BottomSheet>
     </Column>
   );
 };
 
-interface KebabPopUpMenuProps {
+interface KebabPopUpProps {
   iconName: string;
   iconType?: string;
-  isBindingPending: boolean;
-  onBinding?: () => void;
+  vcKey: string;
 }

@@ -63,7 +63,6 @@
     "RemoveFromWallet": "Remove from wallet",
     "RevokeID": "Revoke ID",
     "RevokeMessage": "Revoke the virtual ID for this profile"
-
   },
   "AuthScreen": {
     "header": "Would you like to use biometrics to unlock the application?",
@@ -129,18 +128,26 @@
   },
   "IdInputModal": {
     "header": "Enter the MOSIP-provided UIN or VID of the {{vcLabel}} you wish to retrieve",
+    "title": "Retrieve your ID",
+    "guideLabel": "Select ID type and enter the MOSIP provided UIN or VID of the ID you wish to retrieve",
     "generateVc": "Generate {{vcLabel}}",
-    "enterId": "Enter your {{idType}}",
-    "noUIN/VID": "Don't have your UIN/VID? Get it here",
+    "downloadID": "Download ID",
+    "enterId": "Enter {{idType}}",
+    "noUIN/VID": "Don't have UIN/VID?",
+    "getItHere": "Get it now",
     "requestingOTP": "Requesting OTP..."
   },
   "OtpVerificationModal": {
-    "enterOtp": "Enter the 6-digit verification code we sent you"
+    "title": "OTP Verification",
+    "otpSentMessage": "We've sent the 6 digit code to your registered mobile number!",
+    "resendTheCode": "You can resend the code in ",
+    "resendCode": "Resend Code"
   },
   "MyVcsTab": {
     "downloadID": "Download ID",
-      "bringYourDigitalID": "Bring Your Digital ID",
-      "generateVcDescription": "To download your {{vcLabel}} tap Download {{vcLabel}} below"
+    "bringYourDigitalID": "Bring Your Digital ID",
+    "generateVcDescription": "To download your {{vcLabel}} tap Download {{vcLabel}} below",
+    "downloadingYourId": "Downloading your ID, this can take upto 5 minutes"
   },
   "OnboardingOverlay": {
     "stepOneTitle": "Welcome!",
@@ -228,6 +235,7 @@
     "scanningGuide": "Hold the phone study and scan the QR code",
     "requester": "Requester",
     "noShareableVcs": "No shareable {{vcLabel}} are available.",
+    "sharingVc": "Sharing {{vcLabel}}",
     "errors": {
       "locationDisabled": {
         "message": "Location services must be enabled for the scanning functionality",
@@ -239,7 +247,7 @@
       }
     },
     "status": {
-      "inProgress" : "In Progress",
+      "inProgress": "In Progress",
       "establishingConnection": "Establishing Connection",
       "sharingInProgress": "Sharing in Progress",
       "connectingTimeout": "It's taking a while to establish the connection. Is the other device open for connections?",

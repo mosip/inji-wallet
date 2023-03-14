@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { useInterpret, useSelector } from '@xstate/react';
 import { Pressable, Image, ImageBackground, Dimensions } from 'react-native';
 import { CheckBox, Icon } from 'react-native-elements';
@@ -30,7 +30,7 @@ const VerifiedIcon: React.FC = () => {
 };
 import { LocalizedField } from '../types/vc';
 import { VcItemTags } from './VcItemTags';
-import { KebabPopUpMenu } from './KebabPopUp';
+import { KebabPopUp } from './KebabPopUp';
 
 const getDetails = (arg1, arg2, verifiableCredential) => {
   if (arg1 === 'Status') {
@@ -48,7 +48,6 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
         </Text>
         <Row>
           <Text
-            numLines={1}
             color={Theme.Colors.Details}
             weight="bold"
             size="smaller"
@@ -139,7 +138,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
   const fullName = !verifiableCredential
     ? ''
     : getLocalizedField(verifiableCredential.credentialSubject.fullName);
-
+  const isvalid = !verifiableCredential ? '' : t('valid');
   const selectableOrCheck = props.selectable ? (
     <CheckBox
       checked={props.selected}
@@ -150,7 +149,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
   ) : null;
 
   const tag = useSelector(service, selectTag);
-
+  const [visible, setVisible] = useState(false);
   return (
     <Pressable
       onPress={() => props.onPress(service)}
@@ -169,73 +168,78 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
             ? Theme.Styles.vertloadingContainer
             : Theme.Styles.backgroundImageContainer
         }>
-        <Row style={Theme.Styles.homeCloseCardDetailsHeader}>
-          <Column>
-            <Text
-              color={
-                !verifiableCredential
-                  ? Theme.Colors.LoadingDetailsLabel
-                  : Theme.Colors.DetailsLabel
-              }
-              weight="bold"
-              size="smaller">
-              {t('idType')}
-            </Text>
-            <Text
-              weight="bold"
-              color={Theme.Colors.Details}
-              size="smaller"
-              style={
-                !verifiableCredential
-                  ? Theme.Styles.loadingTitle
-                  : Theme.Styles.subtitle
-              }>
-              {t('nationalCard')}
-            </Text>
-          </Column>
-          <Image
-            source={Theme.MosipLogo}
-            style={Theme.Styles.logo}
-            resizeMethod="auto"
-          />
-        </Row>
-        <Row
-          crossAlign="center"
-          margin="5 0 0 0"
-          style={!verifiableCredential ? Theme.Styles.loadingContainer : null}>
-          <Column
-            style={
-              !verifiableCredential
-                ? Theme.Styles.loadingContainer
-                : Theme.Styles.closeDetails
-            }>
-            <Image
-              source={
-                !verifiableCredential
-                  ? Theme.ProfileIcon
-                  : { uri: context.credential.biometrics.face }
-              }
-              style={Theme.Styles.closeCardImage}
-            />
+        <Column>
+          <Row align="space-between">
+            <Row>
+              <Image
+                source={
+                  !verifiableCredential
+                    ? Theme.ProfileIcon
+                    : { uri: context.credential.biometrics.face }
+                }
+                style={Theme.Styles.closeCardImage}
+              />
+              <Column margin="0 0 0 10">
+                {getDetails(t('fullName'), fullName, verifiableCredential)}
 
-            <Column margin="0 0 0 25" style={{ alignItems: 'flex-start' }}>
-              {getDetails(t('fullName'), fullName, verifiableCredential)}
+                <Column margin="10 0 0 0">
+                  <Text
+                    color={
+                      !verifiableCredential
+                        ? Theme.Colors.LoadingDetailsLabel
+                        : Theme.Colors.DetailsLabel
+                    }
+                    weight="bold"
+                    size="smaller"
+                    align="left">
+                    {t('idType')}
+                  </Text>
+                  <Text
+                    weight="bold"
+                    color={Theme.Colors.Details}
+                    size="smaller"
+                    style={
+                      !verifiableCredential
+                        ? Theme.Styles.loadingTitle
+                        : Theme.Styles.subtitle
+                    }>
+                    {t('nationalCard')}
+                  </Text>
+                </Column>
+              </Column>
+            </Row>
+
+            <Column>{verifiableCredential ? selectableOrCheck : null}</Column>
+          </Row>
+
+          <Row
+            align="space-between"
+            margin="5 0 0 0"
+            style={
+              !verifiableCredential ? Theme.Styles.loadingContainer : null
+            }>
+            <Column>
+              {uin ? getDetails(t('uin'), uin, verifiableCredential) : null}
+              {vid ? getDetails(t('vid'), vid, verifiableCredential) : null}
               {!verifiableCredential
                 ? getDetails(t('id'), uin || vid, verifiableCredential)
                 : null}
-              {uin ? getDetails(t('uin'), uin, verifiableCredential) : null}
-              {vid ? getDetails(t('vid'), vid, verifiableCredential) : null}
               {getDetails(t('generatedOn'), generatedOn, verifiableCredential)}
-              {getDetails(t('status'), t('valid'), verifiableCredential)}
             </Column>
-          </Column>
-
-          {verifiableCredential ? (
-            selectableOrCheck
-          ) : (
-            <RotatingIcon name="sync" color={Theme.Colors.rotatingIcon} />
-          )}
-        </Row>
+            <Column>
+              {verifiableCredential
+                ? getDetails(t('status'), isvalid, verifiableCredential)
+                : null}
+            </Column>
+            <Column style={Theme.Styles.closecardMosipLogo}>
+              <Image
+                source={Theme.MosipLogo}
+                style={Theme.Styles.logo}
+                resizeMethod="auto"
+              />
+            </Column>
+          </Row>
+        </Column>
         <VcItemTags tag={tag} />
       </ImageBackground>
       <Row>
@@ -258,11 +262,13 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
                 }
                 children={t('offlineAuthDisabledHeader')}></Text>
             </Row>
-
-            <KebabPopUpMenu
-              iconName="dots-three-horizontal"
-              iconType="entypo"
-            />
+            {verifiableCredential ? (
+              <KebabPopUp
+                vcKey={props.vcKey}
+                iconName="dots-three-horizontal"
+                iconType="entypo"
+              />
+            ) : null}
           </Row>
         ) : (
           <Row
@@ -285,10 +291,13 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
             </Row>
 
             {props.showOnlyBindedVc ? null : (
-              <KebabPopUpMenu
-                iconName="dots-three-horizontal"
-                iconType="entypo"
-              />
+              <Pressable>
+                <Icon
+                  name="dots-three-horizontal"
+                  type="entypo"
+                  color={Theme.Colors.GrayIcon}
+                />
+              </Pressable>
             )}
           </Row>
         )}

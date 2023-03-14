@@ -10,7 +10,7 @@ import { Icon } from 'react-native-elements';
 export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
   props
 ) => {
-  const { t } = useTranslation('OtpVerification');
+  const { t } = useTranslation('OtpVerificationModal');
 
   return (
     <Modal isVisible={props.isVisible} onDismiss={props.onDismiss}>
