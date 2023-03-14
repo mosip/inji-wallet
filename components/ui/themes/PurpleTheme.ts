@@ -13,6 +13,7 @@ const Colors = {
   Red: '#EB5757',
   Green: '#219653',
   Purple: '#70308C',
+  Purple2: '#AEA7FF',
   Transparent: 'transparent',
   Warning: '#f0ad4e',
 };
@@ -23,8 +24,9 @@ export const PurpleTheme = {
   Colors: {
     TabItemText: Colors.Purple,
     Details: Colors.White,
-    DetailsLabel: Colors.White,
-    LoadingDetailsLabel: Colors.Black,
+    DetailsLabel: Colors.Purple2,
+    LoadingDetailsLabel: Colors.Purple2,
+    statusLabel: Colors.Black,
     AddIdBtnBg: Colors.Purple,
     AddIdBtnTxt: Colors.Purple,
     ClearAddIdBtnBg: 'transparent',
@@ -54,11 +56,12 @@ export const PurpleTheme = {
     whiteText: Colors.White,
     flipCameraIcon: Colors.Black,
     IdInputModalBorder: Colors.Grey,
-    inputSelection: Colors.Orange,
+    inputSelection: Colors.Purple,
     checkCircleIcon: Colors.White,
     OnboardingCircleIcon: Colors.White,
     OnboardingCloseIcon: Colors.White,
     WarningIcon: Colors.Warning,
+    Cursor: Colors.Purple,
   },
   Styles: StyleSheet.create({
     title: {
@@ -76,6 +79,19 @@ export const PurpleTheme = {
     loadingSubtitle: {
       backgroundColor: Colors.Grey,
       borderRadius: 4,
+    },
+    statusLabel: {
+      color: Colors.Black,
+    },
+    verifiedIconContainer: {
+      marginLeft: 5,
+    },
+    verifiedIconInner: {
+      backgroundColor: 'white',
+      borderRadius: 10,
+    },
+    vcItemLabelHeader: {
+      color: Colors.Purple2,
     },
     closeDetails: {
       flex: 1,
@@ -114,6 +130,12 @@ export const PurpleTheme = {
       shadowRadius: 3,
       elevation: 4,
     },
+    selectedBindedVc: {
+      borderRadius: 15,
+      margin: 5,
+      borderWidth: 3,
+      borderColor: Colors.Green,
+    },
     labelPartContainer: {
       marginLeft: 16,
       flex: 1,
@@ -136,8 +158,6 @@ export const PurpleTheme = {
     backgroundImageContainer: {
       flex: 1,
       padding: 10,
-      borderBottomColor: Colors.Grey,
-      borderBottomWidth: 1,
     },
     successTag: {
       backgroundColor: Colors.Green,
@@ -332,9 +352,8 @@ export const PurpleTheme = {
       backgroundColor: Colors.Transparent,
     },
     radius: {
-      flex: 1,
       borderRadius: 10,
-      backgroundColor: Colors.Orange,
+      backgroundColor: Colors.Purple,
     },
   }),
   OIDCAuthStyles: StyleSheet.create({
@@ -601,12 +620,12 @@ export const PurpleTheme = {
       backgroundColor: Colors.Transparent,
     },
   }),
-  OpenCard: require('../../../purpleAassets/bg_cart_one.png'),
-  CloseCard: require('../../../purpleAassets/cart_unsel.png'),
-  ProfileIcon: require('../../../purpleAassets/profile_icon_unsel.png'),
-  MosipLogo: require('../../../purpleAassets/logo.png'),
+  OpenCard: require('../../../purpleAssets/bg_cart_one.png'),
+  CloseCard: require('../../../purpleAssets/cart_unsel.png'),
+  ProfileIcon: require('../../../purpleAssets/profile_icon_unsel.png'),
+  MosipLogo: require('../../../purpleAssets/logo.png'),
   WarningLogo: require('../../../assets/warningLogo.png'),
-  OtpLogo: require('../../../assets/otp-mobile-logo.png'),
+  OtpLogo: require('../../../purpleAssets/otp-mobile-logo.png'),
   SuccessLogo: require('../../../assets/success-logo.png'),
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/

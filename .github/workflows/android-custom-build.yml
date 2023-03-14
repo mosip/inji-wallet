@@ -11,6 +11,14 @@ on:
         required: true
         default: 'https://api.qa-121.mosip.net/residentmobileapp'
         type: string
+      theme:
+        description: 'Application Theme'
+        required: true
+        default: 'orange'
+        type: choice
+        options:
+          - orange
+          - purple
 
 jobs:
   build-android:
@@ -44,13 +52,13 @@ jobs:
         run: |
           echo "${{ secrets.ENV_FILE }}" > .env.local > android/local.properties
 
-      - name: Setup branch and env 
+      - name: Setup branch and env
         run: |
           # Strip git ref prefix from version
           echo "BRANCH_NAME=$(echo ${{ github.ref }} | sed -e 's,.*/\(.*\),\1,')" >> $GITHUB_ENV
           echo "GPG_TTY=$(tty)" >> $GITHUB_ENV   
 
-      - name: Setup branch and GPG public key 
+      - name: Setup branch and GPG public key
         run: |
           # Strip git ref prefix from version
         
@@ -69,6 +77,7 @@ jobs:
         env:
           MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
           FIREBASE_SECRET: ${{ secrets.GPG_SECRET }}
+          APPLICATION_THEME: ${{ github.event.inputs.theme }}
       - name: Upload Artifact
         uses: actions/upload-artifact@v3.1.1
         with:

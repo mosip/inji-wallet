@@ -29,7 +29,7 @@
       "verify": "सत्यापित करना"
     },
     "QrScanner": {
-      "missingPermissionText": "यह ऐप किसी अन्य डिवाइस के क्यूआर कोड को स्कैन करने के लिए कैमरे का उपयोग करता है।",
+      "missingPermissionText": "यह ऐप दूसरे डिवाइस के क्यूआर कोड को स्कैन करने के लिए कैमरे का इस्तेमाल करता है।",
       "allowCameraButton": "कैमरे तक पहुंच की अनुमति दें"
     },
     "VcDetails": {
@@ -129,15 +129,15 @@
       "backButton": "बैक होम"
     },
     "GetIdInputModal": {
-      "header": "अपना यूआईएन या वीआईडी पुनर्प्राप्त करने के लिए, अपना ऐप्लिकेशन {{vcLabel}} नंबर दर्ज करें",
+      "header": "अपना यूआईएन प्राप्त करने के लिए अपनी एप्लिकेशन ID दर्ज करें",
       "getUIN": "UIN/VID ​​प्राप्त करें",
-      "applicationId": "एप्लिकेशन {{vcLabel}} संख्या",
+      "applicationId": "आवेदन ID",
       "requestingOTP": "OTP का अनुरोध...",
-      "qstnMarkToolTip": "आवेदन {{vcLabel}} नंबर नामांकन के बाद प्रदान की गई पावती पर मुद्रित होता है"
+      "qstnMarkToolTip": "आवेदन ID नामांकन के बाद प्राप्त पावती में उपलब्ध है।"
     },
     "IdInputModal": {
-      "header": "जिस {{vcLabel}} को आप पुनः प्राप्त करना चाहते हैं, उसका MOSIP- प्रदान किया गया UIN या VID दर्ज करें",
-      "generateVc": "जेनरेट {{vcLabel}}",
+      "header": "अपना {{vcLabel}} डाउनलोड करने के लिए अपना UIN/VID ​​दर्ज करें",
+      "generateVc": "मेरा {{vcLabel}} जनरेट करें",
       "enterId": "अपना {{idType}} दर्ज करें",
       "noUIN/VID": "आपका UIN/VID ​​नहीं है? इसे यहां लाओ",
       "requestingOTP": "OTP का अनुरोध..."
@@ -186,7 +186,7 @@
       "home": "घर",
       "scan": "स्कैन",
       "request": "अनुरोध",
-      "profile": "प्रोफाइल"
+      "settings": "सेटिंग्स"
     },
     "PasscodeScreen": {
       "header": "अपना आवेदन सुरक्षित करने के लिए पासकोड सेट करें",
@@ -201,7 +201,7 @@
       "name": "नाम",
       "vcLabel": "वीसी लेबल",
       "language": "भाषा",
-      "bioUnlock": "बायोमेट्रिक अनलॉक",
+      "bioUnlock": "बायोमेट्रिक्स से अनलॉक करें",
       "authFactorUnlock": "अनलॉक ऑथ फैक्टर",
       "credits": "क्रेडिट और कानूनी नोटिस",
       "logout": "लॉग आउट",
@@ -211,7 +211,9 @@
       "revokingVidsAfter": "इसका अर्थ है कि अब आप उनसे लिंक की गई किसी भी आईडी का उपयोग या देखने में सक्षम नहीं होंगे VID(s). \nक्या आप सुनिश्चित रूप से आगे बढ़ना चाहते हैं?",
       "empty": "खाली",
       "revokeSuccessful": "VID को सफलतापूर्वक निरस्त कर दिया गया",
-      "version": "संस्करण"
+      "version": "संस्करण",
+      "useBle": "Powered by BLE",
+      "useGoogleNearby": "Powered by GoogleNearby"
     },
     "QrScreen": {
       "title": "क्यूआर लॉगिन",
@@ -253,7 +255,7 @@
     },
     "RequestScreen": {
       "bluetoothDenied": "कृपया ब्लूटूथ को सक्षम करें ताकि वह {{vcLabel}} का अनुरोध कर सके",
-      "showQrCode": "{{vcLabel}} का अनुरोध करने के लिए यह QR कोड दिखाएं",
+      "showQrCode": "निवासी {{vcLabel}} का अनुरोध करने के लिए यह क्यूआर कोड प्रदर्शित करें",
       "incomingVc": "इनकमिंग {{vcLabel}}",
       "request": "प्रार्थना",
       "status": {
@@ -313,8 +315,8 @@
     },
     "SendVcScreen": {
       "reasonForSharing": "साझा करने का कारण (वैकल्पिक)",
-      "acceptRequest": "अनुरोध स्वीकार करें और चुनें {{vcLabel}}",
-      "acceptRequestAndVerify": "अनुरोध स्वीकार करें और सत्यापित करें",
+      "acceptRequest": "शेयर करना",
+      "acceptRequestAndVerify": "सेल्फी के साथ शेयर करें",
       "reject": "अस्वीकार",
       "status": {
         "sharing": {

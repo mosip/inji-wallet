@@ -38,12 +38,12 @@ const request: TabScreen = {
     headerShown: false,
   },
 };
-const profile: TabScreen = {
-  name: 'Profile',
+const settings: TabScreen = {
+  name: 'Settings',
   component: ProfileScreen,
-  icon: 'person',
+  icon: 'settings',
   options: {
-    title: i18n.t('MainLayout:profile'),
+    title: i18n.t('MainLayout:Settings'),
   },
 };
 
@@ -55,7 +55,7 @@ if (Platform.OS !== 'ios' || isGoogleNearbyEnabled) {
   mainRoutes.push(request);
 }
 
-mainRoutes.push(profile);
+mainRoutes.push(settings);
 
 export type MainBottomTabParamList = {
   Home: {
@@ -63,7 +63,7 @@ export type MainBottomTabParamList = {
   };
   Scan: undefined;
   Request: undefined;
-  Profile: undefined;
+  Settings: undefined;
 };
 
 export interface TabScreen {

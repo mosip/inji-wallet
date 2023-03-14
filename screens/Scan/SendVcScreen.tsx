@@ -55,6 +55,7 @@ export const SendVcScreen: React.FC = () => {
               onChangeText={controller.UPDATE_REASON}
               containerStyle={{ marginBottom: 24 }}
               inputStyle={{ textAlign: I18nManager.isRTL ? 'right' : 'left' }}
+              selectionColor={Theme.Colors.Cursor}
             />
           </Column>
           <Column>

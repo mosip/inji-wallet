@@ -60,6 +60,7 @@ export const DefaultTheme = {
     OnboardingCloseIcon: Colors.White,
     WarningIcon: Colors.Warning,
     ProfileIconBg: Colors.LightOrange,
+    Cursor: Colors.Orange,
   },
   Styles: StyleSheet.create({
     title: {
@@ -77,6 +78,19 @@ export const DefaultTheme = {
     loadingSubtitle: {
       backgroundColor: Colors.Grey,
       borderRadius: 4,
+    },
+    statusLabel: {
+      color: Colors.Black,
+    },
+    verifiedIconContainer: {
+      marginLeft: 5,
+    },
+    verifiedIconInner: {
+      backgroundColor: 'white',
+      borderRadius: 10,
+    },
+    vcItemLabelHeader: {
+      color: Colors.Orange,
     },
     closeDetails: {
       flex: 1,
@@ -175,8 +189,6 @@ export const DefaultTheme = {
     backgroundImageContainer: {
       flex: 1,
       padding: 10,
-      borderBottomColor: Colors.Grey,
-      borderBottomWidth: 1,
     },
     successTag: {
       backgroundColor: Colors.Green,

@@ -15,12 +15,16 @@ import { OIDcAuthenticationOverlay } from '../../components/OIDcAuthModal';
 import { useTranslation } from 'react-i18next';
 import { useRevoke } from './RevokeController';
 
+// Intentionally hidden using {display:'none'} - Refer mosip/inji/issue#607
 export const Revoke: React.FC<RevokeScreenProps> = (props) => {
   const controller = useRevoke();
   const { t } = useTranslation('ProfileScreen');
 
   return (
-    <ListItem bottomDivider onPress={() => controller.setAuthenticating(true)}>
+    <ListItem
+      bottomDivider
+      onPress={() => controller.setAuthenticating(true)}
+      style={{ display: 'none' }}>
       <Icon
         name={props.Icon}
         type="font-awesome"

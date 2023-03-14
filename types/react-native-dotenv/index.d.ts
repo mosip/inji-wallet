@@ -13,4 +13,9 @@ declare module 'react-native-dotenv' {
    * Flag for using BLE share library
    */
   export const USE_BLE_SHARE: string;
+
+  /**
+   * Flag for Toggling Purple Theme and Default Theme
+   */
+  export const APPLICATION_THEME: string;
 }

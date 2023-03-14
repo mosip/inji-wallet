@@ -29,7 +29,7 @@
       "verify": "ಪರಿಶೀಲಿಸಿ"
     },
     "QrScanner": {
-      "missingPermissionText": "ಈ ಅಪ್ಲಿಕೇಶನ್ ಇನ್ನೊಂದು ಸಾಧನದ QR ಕೋಡ್ ಅನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಲು ಕ್ಯಾಮರಾವನ್ನು ಬಳಸುತ್ತದೆ.",
+      "missingPermissionText": "ಮತ್ತೊಂದು ಸಾಧನದ QR ಕೋಡ್ ಅನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಲು ಈ ಅಪ್ಲಿಕೇಶನ್ ಕ್ಯಾಮರಾವನ್ನು ಬಳಸುತ್ತದೆ.",
       "allowCameraButton": "ಕ್ಯಾಮೆರಾಗೆ ಪ್ರವೇಶವನ್ನು ಅನುಮತಿಸಿ"
     },
     "VcDetails": {
@@ -129,15 +129,15 @@
       "backButton": "ಬ್ಯಾಕ್ ಹೋಮ್"
     },
     "GetIdInputModal": {
-      "header": "ನಿಮ್ಮ UIN ಅಥವಾ VID ಅನ್ನು ಹಿಂಪಡೆಯಲು, ನಿಮ್ಮ ಅಪ್ಲಿಕೇಶನ್ {{vcLabel}} ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ",
+      "header": "ನಿಮ್ಮ UIN ಪಡೆಯಲು ನಿಮ್ಮ ಅಪ್ಲಿಕೇಶನ್ ID ನಮೂದಿಸಿ",
       "getUIN": "UIN/VID ಪಡೆಯಿರಿ",
-      "applicationId": "ಅಪ್ಲಿಕೇಶನ್ {{vcLabel}} ಸಂಖ್ಯೆ",
+      "applicationId": "ಅಪ್ಲಿಕೇಶನ್ ID",
       "requestingOTP": "OTP ಯನ್ನು ವಿನಂತಿಸಲಾಗುತ್ತಿದೆ...",
-      "qstnMarkToolTip": "ಅರ್ಜಿ {{vcLabel}} ಸಂಖ್ಯೆಯನ್ನು ನೋಂದಣಿಯ ನಂತರ ಒದಗಿಸಲಾದ ಸ್ವೀಕೃತಿಯ ಮೇಲೆ ಮುದ್ರಿಸಲಾಗಿದೆ"
+      "qstnMarkToolTip": "ನೋಂದಣಿಯ ನಂತರ ಸ್ವೀಕರಿಸಿದ ಸ್ವೀಕೃತಿಯಲ್ಲಿ ಅಪ್ಲಿಕೇಶನ್ ID ಲಭ್ಯವಿದೆ."
     },
     "IdInputModal": {
-      "header": "ನೀವು ಹಿಂಪಡೆಯಲು ಬಯಸುವ {{vcLabel}} ನ MOSIP-ಒದಗಿಸಿದ UIN ಅಥವಾ VID ಅನ್ನು ನಮೂದಿಸ",
-      "generateVc": "ರಚಿಸಿ {{vcLabel}}",
+      "header": "ನಿಮ್ಮ {{vcLabel}} ಅನ್ನು ಡೌನ್‌ಲೋಡ್ ಮಾಡಲು ನಿಮ್ಮ UIN/VID ಅನ್ನು ನಮೂದಿಸಿ",
+      "generateVc": "ನನ್ನ {{vcLabel}} ಅನ್ನು ರಚಿಸಿ",
       "enterId": "ನಿಮ್ಮ {{idType}}ನಮೂದಿಸಿ",
       "noUIN/VID": "ನಿಮ್ಮ UIN/VID ಇಲ್ಲವೇ? ಇಲ್ಲಿ ಪಡೆಯಿರಿ",
       "requestingOTP": "OTP ಯನ್ನು ವಿನಂತಿಸಲಾಗುತ್ತಿದೆ..."
@@ -186,7 +186,7 @@
       "home": "ಲೇಔಟ್",
       "scan": "ಮನೆ",
       "request": "ವಿನಂತಿ",
-      "profile": "ಪ್ರೊಫೈಲ್"
+      "settings": "ಸೆಟ್ಟಿಂಗ್‌ಗಳು"
     },
     "PasscodeScreen": {
       "header": "ನಿಮ್ಮ ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಸುರಕ್ಷಿತವಾಗಿರಿಸಲು ಪಾಸ್ಕೋಡ್ ಅನ್ನು ಹೊಂದಿಸಿ",
@@ -201,17 +201,19 @@
       "name": "ಹೆಸರು",
       "vcLabel": "VC ಲೇಬಲ್",
       "language": "ಭಾಷೆ",
-      "bioUnlock": "ಬಯೋಮೆಟ್ರಿಕ್ ಅನ್‌ಲಾಕ್",
+      "bioUnlock": "ಬಯೋಮೆಟ್ರಿಕ್‌ಗಳೊಂದಿಗೆ ಅನ್‌ಲಾಕ್ ಮಾಡಿ",
       "authFactorUnlock": "ಅನ್ಲಾಕ್ ದೃಢೀಕರಣ ಅಂಶ",
       "credits": "ಕ್ರೆಡಿಟ್ಸ್ ಮತ್ತು ಲೀಗಲ್ ನೋಟಿಸ್",
-      "logout": "ಲಾಗ್-ಔಟ್",
+      "logout": "ಲಾಗ್ ಔಟ್",
       "revokeLabel": "ರದ್ದು VID",
       "revokeHeader": "ರದ್ದು VID",
       "revokingVids": "ನೀವು ಹಿಂತೆಗೆದುಕೊಳ್ಳಲಿದ್ದೀರಿ ({{count}}) VIDs.",
       "revokingVidsAfter": "ಇದರರ್ಥ ನೀವು ಇನ್ನು ಮುಂದೆ ಅವುಗಳಿಗೆ ಲಿಂಕ್ ಮಾಡಲಾದ ಯಾವುದೇ ID ಗಳನ್ನು ಬಳಸಲು ಅಥವಾ ವೀಕ್ಷಿಸಲು ಸಾಧ್ಯವಾಗುವುದಿಲ್ಲ VID(s). \nನೀವು ಮುಂದುವರೆಯಲು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ?",
       "empty": "ಖಾಲಿ",
       "revokeSuccessful": "VID ಯಶಸ್ವಿಯಾಗಿ ಹಿಂಪಡೆಯಲಾಗಿದೆ",
-      "version": "ಆವೃತ್ತಿ"
+      "version": "ಆವೃತ್ತಿ",
+      "useBle": "Powered by BLE",
+      "useGoogleNearby": "Powered by GoogleNearby"
     },
     "QrScreen": {
       "title": "QR ಲಾಗಿನ್",
@@ -253,7 +255,7 @@
     },
     "RequestScreen": {
       "bluetoothDenied": "ವಿನಂತಿಸಲು ಬ್ಲೂಟೂತ್ ಅನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ{{vcLabel}}",
-      "showQrCode": "ವಿನಂತಿಸಲು ಈ QR ಕೋಡ್ ಅನ್ನು ತೋರಿಸಿ {{vcLabel}}",
+      "showQrCode": "ನಿವಾಸಿ {{vcLabel}} ಅನ್ನು ವಿನಂತಿಸಲು ಈ QR ಕೋಡ್ ಅನ್ನು ಪ್ರದರ್ಶಿಸಿ",
       "incomingVc": "ಒಳಬರುವ {{vcLabel}}",
       "request": "ವಿನಂತಿ",
       "status": {
@@ -313,8 +315,8 @@
     },
     "SendVcScreen": {
       "reasonForSharing": "ಹಂಚಿಕೆಗೆ ಕಾರಣ (ಐಚ್ಛಿಕ)",
-      "acceptRequest": "ವಿನಂತಿಯನ್ನು ಸ್ವೀಕರಿಸಿ ಮತ್ತು ಆಯ್ಕೆಮಾಡಿ {{vcLabel}}",
-      "acceptRequestAndVerify": "ವಿನಂತಿಯನ್ನು ಸ್ವೀಕರಿಸಿ ಮತ್ತು ಪರಿಶೀಲಿಸಿ",
+      "acceptRequest": "ಹಂಚಿಕೊಳ್ಳಿ",
+      "acceptRequestAndVerify": "ಸೆಲ್ಫಿಯೊಂದಿಗೆ ಹಂಚಿಕೊಳ್ಳಿ",
       "reject": "ತಿರಸ್ಕರಿಸಿ",
       "status": {
         "sharing": {

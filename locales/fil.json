@@ -28,7 +28,7 @@
     "verify": "I-verify"
   },
   "QrScanner": {
-    "missingPermissionText": "Ginagamit ng app na ito ang camera upang i-scan ng QR code ng ibang device.",
+    "missingPermissionText": "Ginagamit ng app na ito ang camera upang i-scan ang QR code ng isa pang device.",
     "allowCameraButton": "Payagan gamitin ang camera"
   },
   "VcDetails": {
@@ -127,9 +127,16 @@
     "bodyText": "Maaaring tumagal ito ng ilang oras, ipapaalam namin sayo kung pwede na kunin ang iyong {{vcLabel}}",
     "backButton": "Bumalik"
   },
+  "GetIdInputModal": {
+    "header": "Ilagay ang iyong Application ID para makuha ang iyong UIN",
+    "getUIN": "Kumuha ng UIN/VID",
+    "applicationId": "Application ID",
+    "requestingOTP": "Humihiling ng OTP...",
+    "qstnMarkToolTip": "Available ang Application ID sa natanggap na acknowledgement pagkatapos ng enrollment."
+  },
   "IdInputModal": {
-    "header": "Ilagay ang UIN o VID na ibinigay ng MOSIP upang matanggap ang iyong {{vcLabel}}",
-    "generateVc": "Gumawa ng {{vcLabel}}",
+    "header": "Ilagay ang iyong UIN/VID para i-download ang iyong {{vcLabel}}",
+    "generateVc": "Bumuo ng Aking {{vcLabel}}",
     "enterId": "Ilagay ang iyong {{idType}}"
   },
   "OtpVerificationModal": {
@@ -173,10 +180,10 @@
     }
   },
   "MainLayout": {
-    "home": "Home",
+    "home": "Bahay",
     "scan": "Scan",
     "request": "Request",
-    "profile": "Profile"
+    "settings": "mga setting"
   },
   "PasscodeScreen": {
     "header": "Magtakda ng passcode upang masigurado ang iyong aplikasyon",
@@ -191,17 +198,19 @@
     "name": "Pangalan",
     "vcLabel": "Panawag sa VC",
     "language": "Wika",
-    "bioUnlock": "Pagbukas gamit Biometric",
+    "bioUnlock": "I-unlock gamit ang biometrics",
     "authFactorUnlock": "Pagbukas ng auth factor",
     "credits": "Mga kredito at legal na abiso",
-    "logout": "Mag log-out",
+    "logout": "Mag-logout",
     "revokeLabel": "Kanselahin ang VID",
     "revokeHeader": "KANSELAHIN ANG VID",
     "revokingVids": "Kakanselahin mo na ang ({{count}}) na mga VID.",
     "revokingVidsAfter": "Nangangahulugan ito na hindi mo na maa-access o matitingnan ang anumang mga ID na naka-link sa mga VID na ito. Sigurado ka bang gusto mong magpatuloy?",
     "empty": "Walang laman",
     "revokeSuccessful": "Matagumpay na nakansela ang VID",
-    "version": "Bersyon"
+    "version": "Bersyon",
+    "useBle": "Powered by BLE",
+    "useGoogleNearby": "Powered by GoogleNearby"
   },
   "QrScreen": {
     "title": "QR Login",
@@ -242,7 +251,7 @@
   },
   "RequestScreen": {
     "bluetoothDenied": "Mangyaring paganahin ang Bluetooth upang makahiling ng {{vcLabel}}",
-    "showQrCode": "Ipakita ang QR code na ito para makahiling ng {{vcLabel}}",
+    "showQrCode": "Ipakita ang QR code na ito para humiling ng resident {{vcLabel}}",
     "incomingVc": "Padating na {{vcLabel}}",
     "request": "Hilingin",
     "status": {
@@ -305,7 +314,8 @@
   },
   "SendVcScreen": {
     "reasonForSharing": "Dahilan ng pagbabahagi (opsyonal)",
-    "acceptRequest": "Tanggapin ang kahilingan at piliin ang {{vcLabel}}",
+    "acceptRequest": "Ibahagi",
+    "acceptRequestAndVerify": "Ibahagi sa Selfie",
     "reject": "Tanggihan",
     "status": {
       "sharing": {

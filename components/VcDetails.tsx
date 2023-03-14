@@ -2,24 +2,14 @@ import { formatDistanceToNow } from 'date-fns';
 import React from 'react';
 import * as DateFnsLocale from '../lib/date-fns/locale';
 import { useTranslation } from 'react-i18next';
-import { Image, ImageBackground } from 'react-native';
+import { Image, ImageBackground, View } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { VC, CredentialSubject, LocalizedField } from '../types/vc';
 import { Button, Column, Row, Text } from './ui';
 import { Theme } from './ui/styleUtils';
 import { TextItem } from './ui/TextItem';
 import { VcItemTags } from './VcItemTags';
-
-const VerifiedIcon: React.FC = () => {
-  return (
-    <Icon
-      name="check-circle"
-      color={Theme.Colors.VerifiedIcon}
-      size={14}
-      containerStyle={{ marginStart: 4, bottom: 1 }}
-    />
-  );
-};
+import VerifiedIcon from './VerifiedIcon';
 
 export const VcDetails: React.FC<VcDetailsProps> = (props) => {
   const { t, i18n } = useTranslation('VcDetails');
@@ -271,29 +261,28 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
       {props.activeTab !== 1 ? (
         props.isBindingPending ? (
           <Column style={Theme.Styles.openCardBgContainer}>
-            <Row margin={'0 0 5 0'}>
+            <Row margin={'0 0 5 0'} crossAlign={'center'}>
               <Icon
                 name="shield-alert"
                 color={Theme.Colors.Icon}
                 size={30}
                 type="material-community"
               />
+              <Text
+                style={{ flex: 1 }}
+                weight="semibold"
+                size="small"
+                margin={'0 0 5 0'}
+                color={Theme.Colors.statusLabel}>
+                {t('offlineAuthDisabledHeader')}
+              </Text>
             </Row>
-
-            <Text
-              style={{ flex: 1 }}
-              weight="semibold"
-              size="small"
-              margin={'0 0 5 0'}
-              color={Theme.Colors.Details}>
-              {t('offlineAuthDisabledHeader')}
-            </Text>
             <Text
               style={{ flex: 1 }}
               weight="regular"
               size="small"
               margin={'0 0 5 0'}
-              color={Theme.Colors.Details}>
+              color={Theme.Colors.statusLabel}>
               {t('offlineAuthDisabledMessage')}
             </Text>
 
@@ -314,7 +303,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
               />
               <Text
                 numLines={1}
-                color={Theme.Colors.Details}
+                color={Theme.Colors.statusLabel}
                 weight="bold"
                 size="smaller"
                 margin="10 10 10 10"
