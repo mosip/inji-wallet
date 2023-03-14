@@ -40,6 +40,7 @@ const model = createModel(
     senderInfo: {} as DeviceInfo,
     receiverInfo: {} as DeviceInfo,
     incomingVc: {} as VC,
+    storeError: null as Error,
     connectionParams: '',
     loggers: [] as EmitterSubscription[],
     sharingProtocol: (Platform.OS === 'ios'
@@ -67,7 +68,7 @@ const model = createModel(
       BLUETOOTH_DISABLED: () => ({}),
       STORE_READY: () => ({}),
       STORE_RESPONSE: (response: unknown) => ({ response }),
-      STORE_ERROR: () => ({}),
+      STORE_ERROR: (error: Error) => ({ error }),
       RECEIVE_DEVICE_INFO: (info: DeviceInfo) => ({ info }),
       RECEIVED_VCS_UPDATED: () => ({}),
       VC_RESPONSE: (response: unknown) => ({ response }),
@@ -385,6 +386,7 @@ export const requestMachine =
               },
               on: {
                 STORE_ERROR: {
+                  actions: 'setStoringError',
                   target: '#request.reviewing.savingFailed',
                 },
               },
@@ -535,6 +537,10 @@ export const requestMachine =
                 }
               : event.vc;
           },
+        }),
+
+        setStoringError: assign({
+          storeError: (_context, event) => event.error,
         }),
 
         registerLoggers: assign({
@@ -906,6 +912,10 @@ export function selectIsAccepting(state: State) {
 
 export function selectIsSavingFailedIdle(state: State) {
   return state.matches('reviewing.savingFailed.idle');
+}
+
+export function selectStoreError(state: State) {
+  return state.context.storeError;
 }
 
 export function selectIsRejected(state: State) {

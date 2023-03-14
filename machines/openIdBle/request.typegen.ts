@@ -90,6 +90,7 @@ export interface Typegen0 {
     setReceiveLogTypeVerified: 'FACE_VALID';
     setReceiverInfo: 'RECEIVE_DEVICE_INFO';
     setSenderInfo: 'EXCHANGE_DONE';
+    setStoringError: 'STORE_ERROR';
     storeVc: 'STORE_RESPONSE';
     switchProtocol: 'SWITCH_PROTOCOL';
   };
