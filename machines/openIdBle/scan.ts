@@ -156,9 +156,16 @@ export const scanMachine =
                 BLUETOOTH_ENABLED: {
                   target: 'enabled',
                 },
-                BLUETOOTH_DISABLED: {
-                  target: 'requesting',
-                },
+                BLUETOOTH_DISABLED: [
+                  {
+                    // In iOS irrespective of bluetooth permission status, the devices goes into disabled state. Hence we are skipping the state and moving to checkLocationServices state
+                    target: '#scan.checkingLocationService',
+                    cond: 'isIOS',
+                  },
+                  {
+                    target: 'requesting',
+                  },
+                ],
               },
             },
             requesting: {
@@ -953,6 +960,10 @@ export const scanMachine =
       },
 
       guards: {
+        isIOS: () => {
+          return Platform.OS === 'ios';
+        },
+
         isQrOffline: (_context, event) => {
           // don't scan if QR is offline and Google Nearby is enabled
           if (Platform.OS === 'ios' && !isBLEEnabled) return false;
