@@ -1,4 +1,5 @@
 import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { useInterpret, useSelector } from '@xstate/react';
 import { Pressable, Image, ImageBackground, Dimensions } from 'react-native';
 import { CheckBox, Icon } from 'react-native-elements';
@@ -141,6 +142,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
   ) : null;
 
   const tag = useSelector(service, selectTag);
+  const [visible, setVisible] = useState(false);
   return (
     <Pressable
       onPress={() => props.onPress(service)}

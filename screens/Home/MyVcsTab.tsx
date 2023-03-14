@@ -29,7 +29,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
     controller.isRequestSuccessful
       ? setTimeout(() => {
           controller.DISMISS();
-        }, 9000)
+        }, 6000)
       : null;
   }
 
