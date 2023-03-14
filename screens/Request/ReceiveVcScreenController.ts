@@ -13,7 +13,7 @@ import { selectVcLabel } from '../../machines/settings';
 import { GlobalContext } from '../../shared/GlobalContext';
 import {
   selectIsAccepting,
-  selectIsSavingFailedIdle,
+  selectIsSavingFailedInIdle,
 } from '../../machines/openIdBle/request';
 
 export function useReceiveVcScreen() {
@@ -29,7 +29,10 @@ export function useReceiveVcScreen() {
     isIncomingVp: useSelector(requestService, selectIsIncomingVp),
     isReviewingInIdle: useSelector(requestService, selectIsReviewingInIdle),
     isAccepting: useSelector(requestService, selectIsAccepting),
-    isSavingFailedIdle: useSelector(requestService, selectIsSavingFailedIdle),
+    IsSavingFailedInIdle: useSelector(
+      requestService,
+      selectIsSavingFailedInIdle
+    ),
     isVerifyingIdentity: useSelector(requestService, selectIsVerifyingIdentity),
     isInvalidIdentity: useSelector(requestService, selectIsInvalidIdentity),
 

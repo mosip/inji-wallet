@@ -116,7 +116,7 @@ export const ReceiveVcScreen: React.FC = () => {
       />
 
       <MessageOverlay
-        isVisible={controller.isSavingFailedIdle}
+        isVisible={controller.IsSavingFailedInIdle}
         title={t('errors.savingFailed.title', {
           vcLabel: controller.vcLabel.singular,
         })}
