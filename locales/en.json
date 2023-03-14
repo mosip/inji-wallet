@@ -244,7 +244,15 @@
     "header": "{{vcLabel}} details",
     "save": "Save {{vcLabel}}",
     "verifyAndSave": "Verify and save",
-    "discard": "Discard"
+    "reject": "Reject",
+    "discard": "Discard",
+    "goToReceivedVCTab":  "View Received {{vcLabel}}",
+    "errors": {
+      "savingFailed": {
+        "title": "Failed to save {{vcLabel}}",
+        "message": "Something went wrong while saving {{vcLabel}} to the store."
+      }
+    }
   },
   "RequestScreen": {
     "bluetoothDenied": "Please enable Bluetooth to be able to request {{vcLabel}}",

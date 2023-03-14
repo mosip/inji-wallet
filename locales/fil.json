@@ -235,7 +235,15 @@
   "ReceiveVcScreen": {
     "header": "Mga detalye ng {{vcLabel}}",
     "acceptRequest": "Tanggapin ang kahilingan at tumanggap ng {{vcLabel}}",
-    "reject": "Tanggihan"
+    "reject": "Tanggihan",
+    "discard": "Itapon",
+    "goToReceivedVCTab": "Tingnan ang mga Natanggap na {{vcLabel}}",
+    "errors": {
+      "savingFailed": {
+        "title": "Nabigong i-save ang {{vcLabel}}",
+        "message": "Nagkaproblema habang nagse-save ng {{vcLabel}} sa tindahan."
+      }
+    }
   },
   "RequestScreen": {
     "bluetoothDenied": "Mangyaring paganahin ang Bluetooth upang makahiling ng {{vcLabel}}",

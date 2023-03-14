@@ -239,7 +239,15 @@
       "header": "{{vcLabel}} ವಿವರಗಳು",
       "acceptRequest": "ವಿನಂತಿಯನ್ನು ಸ್ವೀಕರಿಸಿ ಮತ್ತು {{vcLabel}} ಸ್ವೀಕರಿಸಿ",
       "acceptRequestAndVerify": "ವಿನಂತಿಯನ್ನು ಸ್ವೀಕರಿಸಿ ಮತ್ತು ಪರಿಶೀಲಿಸಿ",
-      "reject": "ತಿರಸ್ಕರಿಸಿ"
+      "reject": "ತಿರಸ್ಕರಿಸಿ",
+      "discard": "ತಿರಸ್ಕರಿಸು",
+      "goToReceivedVCTab": "ಸ್ವೀಕರಿಸಿದ {{vcLabel}} ವೀಕ್ಷಿಸಿ",
+      "errors": {
+        "savingFailed": {
+          "title": "{{vcLabel}} ಉಳಿಸಲು ವಿಫಲವಾಗಿದೆ",
+          "message": "ಸ್ಟೋರ್‌ನಲ್ಲಿ {{vcLabel}} ಉಳಿಸುವಾಗ ಏನೋ ತಪ್ಪಾಗಿದೆ."
+        }
+      }
     },
     "RequestScreen": {
       "bluetoothDenied": "ವಿನಂತಿಸಲು ಬ್ಲೂಟೂತ್ ಅನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ{{vcLabel}}",

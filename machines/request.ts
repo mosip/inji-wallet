@@ -54,6 +54,7 @@ const model = createModel(
       ACCEPT: () => ({}),
       ACCEPT_AND_VERIFY: () => ({}),
       REJECT: () => ({}),
+      GO_TO_RECEIVED_VC_TAB: () => ({}),
       CANCEL: () => ({}),
       DISMISS: () => ({}),
       VC_RECEIVED: (vc: VC) => ({ vc }),
