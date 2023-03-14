@@ -12,19 +12,55 @@ import { Platform } from 'react-native';
 export const ScanScreen: React.FC = () => {
   const { t } = useTranslation('ScanScreen');
   const controller = useScanScreen();
-  const [isBluetoothEnabled, setIsBluetoothEnabled] = useState(false);
+  const [isBluetoothOn, setIsBluetoothOn] = useState(false);
 
   useEffect(() => {
     (async () => {
       await BluetoothStateManager.onStateChange((state) => {
         if (state === 'PoweredOff') {
-          setIsBluetoothEnabled(false);
+          setIsBluetoothOn(false);
         } else {
-          setIsBluetoothEnabled(true);
+          setIsBluetoothOn(true);
         }
       }, true);
     })();
-  }, [isBluetoothEnabled]);
+  }, [isBluetoothOn]);
+
+  function noShareableVcText() {
+    return (
+      <Text align="center" color={Theme.Colors.errorMessage} margin="0 10">
+        {t('noShareableVcs', { vcLabel: controller.vcLabel.plural })}
+      </Text>
+    );
+  }
+
+  function bluetoothIsOffText() {
+    return (
+      <Text align="center" color={Theme.Colors.errorMessage} margin="0 10">
+        {t(
+          Platform.OS === 'ios' ? 'BluetoothStateIos' : 'BluetoothStateAndroid'
+        )}
+      </Text>
+    );
+  }
+
+  function qrScannerComponent() {
+    return (
+      <Column crossAlign="center" margin="0 0 0 -6">
+        <QrScanner onQrFound={controller.SCAN} />
+      </Column>
+    );
+  }
+
+  function loadQRScanner() {
+    if (controller.isEmpty) {
+      return noShareableVcText();
+    }
+    if (!isBluetoothOn) {
+      return bluetoothIsOffText();
+    }
+    return qrScannerComponent();
+  }
 
   return (
     <Column
@@ -51,27 +87,7 @@ export const ScanScreen: React.FC = () => {
             />
           </Column>
         ) : null}
-
-        {controller.isEmpty ? (
-          <Text align="center" color={Theme.Colors.errorMessage} margin="0 10">
-            {t('noShareableVcs', { vcLabel: controller.vcLabel.plural })}
-          </Text>
-        ) : !isBluetoothEnabled ? (
-          <Text align="center" color={Theme.Colors.errorMessage} margin="0 10">
-            {t(
-              Platform.OS === 'ios'
-                ? 'BluetoothStateIos'
-                : 'BluetoothStateAndroid'
-            )}
-          </Text>
-        ) : (
-          controller.isScanning && (
-            <Column crossAlign="center" margin="0 0 0 -6">
-              <QrScanner onQrFound={controller.SCAN} />
-            </Column>
-          )
-        )}
-
+        {loadQRScanner()}
         {controller.isQrLogin && (
           <QrLogin
             isVisible={controller.isQrLogin}
