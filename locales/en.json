@@ -56,13 +56,18 @@
   },
   "HomeScreenKebabPopUp": {
     "title": "More Options",
-    "UnpinCard": "Unpin Card",
+    "unPinCard": "Unpin Card",
+    "pinCard" : "Pin Card",
     "offlineAuthenticationDisabled!": "Offline authentication disabled!",
     "offlineAuthDisabledMessage": "Click 'Enable Authentication' to enable this credentials to be used for offline authentication.",
     "ViewActivityLog": "View activity log",
     "RemoveFromWallet": "Remove from wallet",
     "RevokeID": "Revoke ID",
     "RevokeMessage": "Revoke the virtual ID for this profile"
+  },
+  "WalletBinding": {
+    "inProgress" : "In Progress",
+    "profileAuthenticated": "Profile is authenticated!"
   },
   "AuthScreen": {
     "header": "Select App Unlock Method",
@@ -191,8 +196,9 @@
     "history": "History"
   },
   "PasscodeScreen": {
-    "header": "Set a passcode to secure your application",
-    "confirmPasscode": "Confirm your passcode",
+    "header": "Set Passcode",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+    "confirmPasscode": "Confirm passcode",
     "enterPasscode": "Enter your passcode"
   },
   "ProfileScreen": {

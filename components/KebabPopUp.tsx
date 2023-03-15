@@ -6,9 +6,11 @@ import { Centered, Column, Row, Text } from '../components/ui';
 import { WalletBinding } from '../screens/Home/MyVcs/WalletBinding';
 import { Pressable } from 'react-native';
 import { useKebabPopUp } from './KebabPopUpController';
+import { useTranslation } from 'react-i18next';
 
 export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
   const controller = useKebabPopUp(props);
+  const { t } = useTranslation('HomeScreenKebabPopUp');
   return (
     <Column>
       <Icon
@@ -24,7 +26,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
           <Text
             weight="bold"
             style={{ ...Theme.TextStyles.base, flex: 1, alignSelf: 'center' }}>
-            {t('More Options')}
+            {t('title')}
           </Text>
           <Icon
             name="close"
@@ -40,8 +42,8 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
                 <Pressable onPress={controller.PIN_CARD}>
                   <Text size="small" weight="bold">
                     {props.vcKey.split(':')[4] == 'true'
-                      ? t('Unpin Card')
-                      : t('Pin Card')}
+                      ? t('unPinCard')
+                      : t('pinCard')}
                   </Text>
                 </Pressable>
               </ListItem.Title>
@@ -49,10 +51,8 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
           </ListItem>
 
           <WalletBinding
-            label={t('Offline authentication disabled!')}
-            Content={t(
-              'Click here to enable the credentials to be used for offline authentication.'
-            )}
+            label={t('OfflineAuthenticationDisabled!')}
+            Content={t('offlineAuthDisabledMessage')}
             vcKey={props.vcKey}
           />
         </Column>

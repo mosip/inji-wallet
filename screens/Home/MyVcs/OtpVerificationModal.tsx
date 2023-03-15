@@ -45,7 +45,7 @@ export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
           </Text>
           <PinInput length={6} onDone={props.onInputDone} />
           <Text
-            margin="39 0 0 0"
+            margin="36 0 0 0"
             color={Theme.Colors.RetrieveIdLabel}
             weight="semibold"
             size="small">

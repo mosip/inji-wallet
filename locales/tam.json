@@ -313,6 +313,11 @@
       "getStarted": "தொடங்கு",
       "unlockApp": "பயன்பாட்டைத் திற"
     },
+    "SetupLanguage": {
+      "header": "மொழியைத் தேர்ந்தெடுக்கவும்",
+      "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+      "save": "விருப்பத்தை சேமிக்கவும்"
+    },
     "common": {
       "cancel": "ரத்துசெய்",
       "save": "சேமி",

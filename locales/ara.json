@@ -313,6 +313,11 @@
       "getStarted": "البدء",
       "unlockApp": "فتح التطبيق"
     },
+    "SetupLanguage": {
+      "header": "اختر اللغة",
+      "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+      "save": "حفظ التفضيل"
+    },
     "common": {
       "cancel": "إلغاء",
       "save": "حفظ",

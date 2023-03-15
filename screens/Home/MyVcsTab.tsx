@@ -148,14 +148,6 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
       {controller.GetVcModalService && (
         <GetVcModal service={controller.GetVcModalService} />
       )}
-
-      {controller.isRequestSuccessful && (
-        <DownloadingVcModal
-          isVisible={controller.isRequestSuccessful}
-          onDismiss={controller.DISMISS}
-          onShow={clearIndividualId}
-        />
-      )}
     </React.Fragment>
   );
 };

@@ -300,6 +300,11 @@
     "getStarted": "Magsimula",
     "unlockApp": "Buksan ang aplikasyon"
   },
+  "SetupLanguage": {
+    "header": "Piliin ang Wika",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+    "save": "I-save ang Kagustuhan"
+  },
   "common": {
     "cancel": "Kanselahin",
     "save": "I-save",

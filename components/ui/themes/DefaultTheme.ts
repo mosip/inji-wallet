@@ -354,9 +354,8 @@ export const DefaultTheme = {
       borderColor: Colors.Grey,
       color: Colors.Black,
       flex: 1,
+      fontSize: 33,
       fontFamily: 'Inter_600SemiBold',
-      fontSize: 18,
-      fontWeight: '600',
       height: 40,
       lineHeight: 28,
       margin: 8,
@@ -385,7 +384,6 @@ export const DefaultTheme = {
     retrieveIdLabel: {
       color: Colors.ShadeOfGrey,
       fontFamily: 'Inter_600SemiBold',
-      paddingHorizontal: 6,
     },
     error: {
       color: Colors.Red,
@@ -479,7 +477,7 @@ export const DefaultTheme = {
     },
     gradient: {
       borderRadius: 9,
-      width: '93%',
+      width: '88%',
       alignSelf: 'center',
       margin: 4,
     },
@@ -816,6 +814,7 @@ export const DefaultTheme = {
   DigitalIdentityLogo: require('../../../assets/digital-identity-icon.png'),
   InjiLogoWhite: require('../../../assets/inji-logo-white.png'),
   InjiProgressingLogo: require('../../../assets/progressing-logo.png'),
+  LockIcon: require('../../../assets/lock-icon.png'),
   InjiHomeLogo: require('../../../assets/inji-home-logo.png'),
   HelpIcon: require('../../../assets/help-icon.png'),
   sharingIntro: require('../../../assets/Secure-Sharing.png'),

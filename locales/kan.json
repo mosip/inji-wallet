@@ -314,6 +314,11 @@
       "getStarted": "ಪ್ರಾರಂಭಿಸಿ",
       "unlockApp": "ಅಪ್ಲಿಕೇಶನ್ ಅನ್ಲಾಕ್ ಮಾಡಿ"
     },
+    "SetupLanguage": {
+      "header": "ಭಾಷೆಯನ್ನು ಆರಿಸಿ",
+      "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+      "save": "ಆದ್ಯತೆಯನ್ನು ಉಳಿಸಿ"
+    },
     "common": {
       "cancel": "ರದ್ದು",
       "save": "ಉಳಿಸು",
