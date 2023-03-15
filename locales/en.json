@@ -11,7 +11,9 @@
     "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "received. Presence verification failed",
     "PRESENCE_VERIFIED_AND_VC_SHARED": "verified and shared",
     "PRESENCE_VERIFICATION_FAILED": "verification failed",
-    "QRLOGIN_SUCCESFULL": "QRLogin sucessfull"
+    "QRLOGIN_SUCCESFULL": "QRLogin successful",
+    "WALLET_BINDING_SUCCESSFULL": "Activation successful",
+    "WALLET_BINDING_FAILURE": "Activation failed"
   },
   "DeviceInfoList": {
     "requestedBy": "Requested by",

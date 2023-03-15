@@ -11,7 +11,9 @@
     "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "प्राप्त किया। उपस्थिति सत्यापन विफल रहा",
     "PRESENCE_VERIFIED_AND_VC_SHARED": "सत्यापित और साझा किया गया",
     "PRESENCE_VERIFICATION_FAILED": "सत्यापन असफल",
-    "QRLOGIN_SUCCESFULL": "क्यूआरलॉगिन सफल"
+    "QRLOGIN_SUCCESFULL": "क्यूआरलॉगिन सफल",
+    "WALLET_BINDING_SUCCESSFULL": "सक्रियण सफल",
+    "WALLET_BINDING_FAILURE": "सक्रियकरण असफल"
   },
     "DeviceInfoList": {
       "requestedBy": "द्वारा अनुरोध किया गया",
