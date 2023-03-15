@@ -7,7 +7,6 @@ import { HomeScreenTabProps } from './HomeScreen';
 import { AddVcModal } from './MyVcs/AddVcModal';
 import { GetVcModal } from './MyVcs/GetVcModal';
 import { DownloadingVcModal } from './MyVcs/DownloadingVcModal';
-import { OnboardingOverlay } from './OnboardingOverlay';
 import { useTranslation } from 'react-i18next';
 import { VcItem } from '../../components/VcItem';
 import { GET_INDIVIDUAL_ID } from '../../shared/constants';
@@ -71,14 +70,32 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                     onRefresh={controller.REFRESH}
                   />
                 }>
-                {controller.vcKeys.map((vcKey, index) => (
-                  <VcItem
-                    key={`${vcKey}-${index}`}
-                    vcKey={vcKey}
-                    margin="0 2 8 2"
-                    onPress={controller.VIEW_VC}
-                  />
-                ))}
+                {controller.vcKeys.map((vcKey, index) => {
+                  if (vcKey.split(':')[4] === 'true') {
+                    return (
+                      <VcItem
+                        key={`${vcKey}-${index}`}
+                        vcKey={vcKey}
+                        margin="0 2 8 2"
+                        onPress={controller.VIEW_VC}
+                        iconName="pushpin"
+                        iconType="antdesign"
+                      />
+                    );
+                  }
+                })}
+                {controller.vcKeys.map((vcKey, index) => {
+                  if (vcKey.split(':')[4] === 'false') {
+                    return (
+                      <VcItem
+                        key={`${vcKey}-${index}`}
+                        vcKey={vcKey}
+                        margin="0 2 8 2"
+                        onPress={controller.VIEW_VC}
+                      />
+                    );
+                  }
+                })}
               </Column>
               <Button
                 type="gradient"
@@ -132,11 +149,13 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
         <GetVcModal service={controller.GetVcModalService} />
       )}
 
-      <OnboardingOverlay
-        isVisible={controller.isOnboarding}
-        onDone={controller.ONBOARDING_DONE}
-        onAddVc={controller.DOWNLOAD_ID}
-      />
+      {controller.isRequestSuccessful && (
+        <DownloadingVcModal
+          isVisible={controller.isRequestSuccessful}
+          onDismiss={controller.DISMISS}
+          onShow={clearIndividualId}
+        />
+      )}
     </React.Fragment>
   );
 };

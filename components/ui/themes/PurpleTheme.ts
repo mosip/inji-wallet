@@ -15,6 +15,8 @@ const Colors = {
   Purple: '#70308C',
   Transparent: 'transparent',
   Warning: '#f0ad4e',
+  GrayText: '#6F6F6F',
+  GrayText: '#6F6F6F',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5;
@@ -59,6 +61,8 @@ export const PurpleTheme = {
     OnboardingCircleIcon: Colors.White,
     OnboardingCloseIcon: Colors.White,
     WarningIcon: Colors.Warning,
+    GrayText: Colors.GrayText,
+    gradientBtn: ['#F59B4B', '#E86E04'],
   },
   Styles: StyleSheet.create({
     title: {
@@ -159,12 +163,15 @@ export const PurpleTheme = {
       justifyContent: 'space-between',
     },
     logo: {
-      height: 36,
-      width: 36,
+      height: 46,
+      width: 40,
     },
     homeCloseCardDetailsHeader: {
       flex: 1,
       justifyContent: 'space-between',
+    },
+    closecardMosipLogo: {
+      alignSelf: 'flex-end',
     },
     details: {
       width: 290,
@@ -225,6 +232,11 @@ export const PurpleTheme = {
     },
     placeholder: {
       fontFamily: 'Inter_400Regular',
+    },
+    hrLine: {
+      borderBottomColor: 'black',
+      borderBottomWidth: 1,
+      marginTop: 10,
     },
   }),
   PinInputStyle: StyleSheet.create({
@@ -335,6 +347,9 @@ export const PurpleTheme = {
       flex: 1,
       borderRadius: 10,
       backgroundColor: Colors.Orange,
+    },
+    gradient: {
+      borderRadius: 10,
     },
   }),
   OIDCAuthStyles: StyleSheet.create({

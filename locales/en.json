@@ -41,7 +41,7 @@
     "gender": "Gender",
     "dateOfBirth": "Date of birth",
     "phoneNumber": "Phone number",
-    "email": "Email",
+    "email": "Email Address",
     "address": "Address",
     "reasonForSharing": "Reason for sharing",
     "idType": "ID type",
@@ -65,9 +65,10 @@
     "RevokeMessage": "Revoke the virtual ID for this profile"
   },
   "AuthScreen": {
-    "header": "Would you like to use biometrics to unlock the application?",
-    "useBiometrics": "Use biometrics",
-    "usePasscode": "I'd rather use a passcode",
+    "header": "Select App Unlock Method",
+    "Description": "Would you like to use biometrics to unlock the application?",
+    "useBiometrics": "Use Biometrics",
+    "usePasscode": "Use Passcode",
     "errors": {
       "unavailable": "Device does not support Biometrics",
       "unenrolled": "To use Biometrics, please enroll your biometrics in your device settings",
@@ -99,6 +100,7 @@
     "logout": "Logout"
   },
   "AddVcModal": {
+    "inputIdHeader":"Retrieve your ID",
     "requestingCredential": "Requesting credential...",
     "errors": {
       "input": {
@@ -150,19 +152,22 @@
     "downloadingYourId": "Downloading your ID, this can take upto 5 minutes"
   },
   "OnboardingOverlay": {
-    "stepOneTitle": "Welcome!",
-    "stepOneText": "Keep your digital credential with you at all times. To get started, add {{vcLabel}} to your profile.",
-    "stepTwoTitle": "{{vcLabel}} management",
-    "stepTwoText": "Once generated, {{vcLabel}} are safely stored on your mobile and can be renamed or shared at any time.",
-    "stepThreeTitle": "Easy sharing",
-    "stepThreeText": "Share and receive {{vcLabel}} switfly using your phone camera to scan QR codes.",
-    "stepThreeButton": "Get started and add {{vcLabel}}"
+    "stepOneTitle": "Secure Sharing!",
+    "stepOneText": "Share and receive {{vcLabel}} switfly using your phone camera to scan QR codes",
+    "stepTwoTitle": "Trusted Digital Wallet",
+    "stepTwoText": "Keep your digital credential with you at all times",
+    "stepThreeTitle": "Quick Access",
+    "stepThreeText": "Once generated, {{vcLabel}} are safely stored on your mobile.",
+    "stepThreeButton": "Get Started",
+    "skip": "Skip",
+    "next": "Next"
   },
   "ReceivedVcsTab": {
     "noReceivedVcsTitle": "No {{vcLabel}} available yet",
     "noReceivedVcsText": "Tap on Request below to receive {{vcLabel}}"
   },
   "ViewVcModal": {
+    "title": "ID Details",
     "cancel": "Cancel",
     "lock": "Lock",
     "unlock": "Unlock",
@@ -189,6 +194,47 @@
     "header": "Set a passcode to secure your application",
     "confirmPasscode": "Confirm your passcode",
     "enterPasscode": "Enter your passcode"
+  },
+  "ProfileScreen": {
+    "name": "Name",
+    "vcLabel": "VC Label",
+    "language": "Language",
+    "bioUnlock": "Biometric unlock",
+    "authFactorUnlock": "Unlock auth factor",
+    "credits": "Credits and legal notices",
+    "logout": "Log-out",
+    "revokeLabel": "Revoke VID",
+    "revokeHeader": "REVOKE VID",
+    "revokingVids": "You are about to revoke ({{count}}) VIDs.",
+    "revokingVidsAfter": "This means you will no longer be able to use or view any of the IDs linked to those VID(s). \nAre you sure you want to proceed?",
+    "empty": "Empty",
+    "revokeSuccessful": "VID successfully revoked",
+    "version": "Version"
+  },
+  "QrScreen": {
+    "title": "QR Login",
+    "alignQr": "Align the QR code within the frame to scan",
+    "confirmation": "Confirmation",
+    "checkDomain": "Also, check that there is a lock icon on the address bar.",
+    "domainHead": "https://",
+    "selectId": "Select ID",
+    "noBindedVc": "No Binded {{vcLabel}} Available to Verify",
+    "back": "Go Back",
+    "confirm": "Confirm",
+    "verify": "Verify",
+    "faceAuth": "Face Authentication",
+    "consent": "Consent",
+    "loading": "Loading...",
+    "domainWarning": "Please confirm the domain of the website you are scanning the QR code from is as below",
+    "access": " is requesting access to",
+    "status": "Status",
+    "successMessage": "You Have Successfully Logged Into ",
+    "okay": "Okay",
+    "allow": "Allow",
+    "cancel": "Cancel",
+    "essentialClaims": "Essential Claims",
+    "voluntaryClaims": "Voluntary Claims",
+    "required": "Required"
   },
   "ReceiveVcScreen": {
     "header": "{{vcLabel}} details",
@@ -307,6 +353,11 @@
     "title": "Open Source Identity Solution",
     "getStarted": "Get started",
     "unlockApp": "Unlock application"
+  },
+  "SetupLanguage": {
+    "header": "Choose Language",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+    "save": "Save Preference"
   },
   "common": {
     "cancel": "Cancel",

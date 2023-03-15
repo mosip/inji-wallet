@@ -15,21 +15,29 @@ export const AuthScreen: React.FC<RootRouteProps> = (props) => {
     <Column
       fill
       padding={[32, 32, 32, 32]}
-      backgroundColor={Theme.Colors.whiteBackgroundColor}>
+      backgroundColor={Theme.Colors.whiteBackgroundColor}
+      align="space-between">
       <MessageOverlay
         isVisible={controller.alertMsg != ''}
         onBackdropPress={controller.hideAlert}
         title={controller.alertMsg}
       />
       <Column>
-        <Text align="center">{t('header')}</Text>
+        <Icon name="fingerprint" size={80} color={Theme.Colors.Icon} />
+        <Column margin="20 0 0 0">
+          <Text weight="semibold" align="center">
+            {t('header')}
+          </Text>
+          <Text align="center" color={Theme.Colors.GrayText}>
+            {t('Description')}{' '}
+          </Text>
+        </Column>
       </Column>
-      <Centered fill>
-        <Icon name="fingerprint" size={180} color={Theme.Colors.Icon} />
-      </Centered>
+
       <Column>
         <Button
           title={t('useBiometrics')}
+          type="radius"
           margin="0 0 8 0"
           disabled={!controller.isBiometricsAvailable}
           onPress={controller.useBiometrics}

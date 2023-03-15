@@ -13,7 +13,7 @@ export const RECEIVED_VCS_STORE_KEY = 'receivedVCs';
 export const MY_LOGIN_STORE_KEY = 'myLogins';
 
 export const VC_ITEM_STORE_KEY = (vc: Partial<VC>) =>
-  `vc:${vc.idType}:${vc.id}:${vc.requestId}`;
+  `vc:${vc.idType}:${vc.id}:${vc.requestId}:${vc.isPinned}`;
 
 export let individualId = '';
 

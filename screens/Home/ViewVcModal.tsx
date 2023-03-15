@@ -22,12 +22,12 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
       idType: 'VID',
       label: t('revoke'),
       icon: 'close-circle-outline',
-      onPress: () => controller.CONFIRM_REVOKE_VC(),
+      onPress: controller.CONFIRM_REVOKE_VC,
     },
     {
       label: t('editTag'),
       icon: 'pencil',
-      onPress: () => controller.EDIT_TAG(),
+      onPress: controller.EDIT_TAG,
     },
   ];
 
@@ -35,19 +35,8 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
     <Modal
       isVisible={props.isVisible}
       onDismiss={props.onDismiss}
-      headerTitle={
-        controller.vc.verifiableCredential.credentialSubject.UIN
-          ? controller.vc.verifiableCredential.credentialSubject.UIN
-          : controller.vc.verifiableCredential.credentialSubject.VID
-      }
-      headerElevation={2}
-      headerRight={
-        <DropdownIcon
-          icon="dots-vertical"
-          idType={controller.vc.idType}
-          items={DATA}
-        />
-      }>
+      headerTitle={t('title')}
+      headerElevation={2}>
       <Column scroll>
         <Column fill>
           <VcDetails

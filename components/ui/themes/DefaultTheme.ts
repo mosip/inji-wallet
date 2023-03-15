@@ -23,6 +23,11 @@ const Colors = {
   DisabledColors: ['#C7C7C7', '#C7C7C7'],
   TimeoutHintBoxColor: '#FFF7E5',
   TimoutText: '#8B6105',
+  GrayText: '#6F6F6F',
+  dorColor: '#CBCBCB',
+  plainText: '#FFD6A7',
+  walletbindingLabel: '#000000',
+  walletbindingContent: '#666666',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -78,6 +83,10 @@ export const DefaultTheme = {
     TimeoutHintBoxColor: Colors.TimeoutHintBoxColor,
     TimoutText: Colors.TimoutText,
     ProfileIconBg: Colors.LightOrange,
+    GrayText: Colors.GrayText,
+    gradientBtn: ['#F59B4B', '#E86E04'],
+    dotColor: Colors.dorColor,
+    plainText: Colors.plainText,
     walletbindingLabel: Colors.Black,
     walletbindingContent: Colors.Gray40,
   },
@@ -252,12 +261,11 @@ export const DefaultTheme = {
       justifyContent: 'space-between',
     },
     logo: {
-      height: 36,
-      width: 30,
+      height: 46,
+      width: 40,
     },
     homeCloseCardDetailsHeader: {
       flex: 1,
-      justifyContent: 'space-between',
     },
     details: {
       width: 290,
@@ -346,8 +354,9 @@ export const DefaultTheme = {
       borderColor: Colors.Grey,
       color: Colors.Black,
       flex: 1,
-      fontFamily: 'Inter_700Bold',
-      fontSize: 29,
+      fontFamily: 'Inter_600SemiBold',
+      fontSize: 18,
+      fontWeight: '600',
       height: 40,
       lineHeight: 28,
       margin: 8,
@@ -389,7 +398,7 @@ export const DefaultTheme = {
       lineHeight: 28,
     },
     regular: {
-      fontSize: 14,
+      fontFamily: 'Inter_400Regular',
     },
     semibold: {
       fontFamily: 'Inter_600SemiBold',
@@ -783,6 +792,13 @@ export const DefaultTheme = {
       top: 40,
       zIndex: 1,
     },
+    bottomContainer: {
+      padding: 20,
+      borderTopLeftRadius: 30,
+      borderTopRightRadius: 30,
+      marginTop: -185,
+      paddingBottom: 100,
+    },
   }),
   claimsContainer: StyleSheet.create({
     container: {
@@ -802,7 +818,10 @@ export const DefaultTheme = {
   InjiProgressingLogo: require('../../../assets/progressing-logo.png'),
   InjiHomeLogo: require('../../../assets/inji-home-logo.png'),
   HelpIcon: require('../../../assets/help-icon.png'),
-
+  sharingIntro: require('../../../assets/Secure-Sharing.png'),
+  walletIntro: require('../../../assets/intro-wallet-binding.png'),
+  IntroScanner: require('../../../assets/intro-scanner.png'),
+  injiSmallLogo: require('../../../assets/inji_small_logo.png'),
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/
 

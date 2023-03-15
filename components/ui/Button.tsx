@@ -49,6 +49,8 @@ export const Button: React.FC<ButtonProps> = (props) => {
           color={
             type === 'solid' || type === 'addId' || type === 'radius'
               ? Theme.Colors.whiteText
+              : type === 'plain'
+              ? Theme.Colors.plainText
               : Theme.Colors.AddIdBtnTxt
           }>
           {props.title}
@@ -104,4 +106,5 @@ interface ButtonProps {
   loading?: boolean;
   icon?: RNEButtonProps['icon'];
   styles?: StyleProp<ViewStyle>;
+  colors?: (string | number)[];
 }

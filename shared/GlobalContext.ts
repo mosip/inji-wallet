@@ -9,9 +9,6 @@ import { settingsMachine } from '../machines/settings';
 import { storeMachine } from '../machines/store';
 import { vcMachine } from '../machines/vc';
 import { revokeVidsMachine } from '../machines/revoke';
-import { qrLoginMachine } from '../machines/QrLoginMachine';
-import { walletBindingMachine } from '../machines/walletBinding';
-
 export const GlobalContext = createContext({} as GlobalServices);
 
 export interface GlobalServices {

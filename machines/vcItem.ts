@@ -25,6 +25,7 @@ import {
 import getAllConfigurations, {
   DownloadProps,
 } from '../shared/commonprops/commonProps';
+import { VcEvents } from './vc';
 
 const model = createModel(
   {
@@ -37,6 +38,7 @@ const model = createModel(
     verifiableCredential: null as VerifiableCredential,
     requestId: '',
     isVerified: false,
+    isPinned: false,
     lastVerifiedOn: null,
     locked: false,
     otp: '',
@@ -74,6 +76,8 @@ const model = createModel(
       ADD_WALLET_BINDING_ID: () => ({}),
       CANCEL: () => ({}),
       CONFIRM: () => ({}),
+      PIN_CARD: () => ({}),
+      KEBAB_POPUP: () => ({}),
     },
   }
 );
@@ -211,6 +215,39 @@ export const vcItemMachine =
             },
             ADD_WALLET_BINDING_ID: {
               target: 'showBindingWarning',
+            },
+            PIN_CARD: {
+              target: 'pinCard',
+              actions: 'setPinCard',
+            },
+            KEBAB_POPUP: {
+              target: 'kebabPopUp',
+            },
+            DISMISS: {
+              target: 'checkingVc',
+            },
+          },
+        },
+        pinCard: {
+          entry: 'storeContext',
+          on: {
+            STORE_RESPONSE: {
+              actions: 'sendVcUpdated',
+              target: 'idle',
+            },
+          },
+        },
+        kebabPopUp: {
+          on: {
+            DISMISS: {
+              target: 'idle',
+            },
+            ADD_WALLET_BINDING_ID: {
+              target: 'showBindingWarning',
+            },
+            PIN_CARD: {
+              target: 'pinCard',
+              actions: 'setPinCard',
             },
           },
         },
@@ -478,13 +515,13 @@ export const vcItemMachine =
           invoke: {
             src: 'updatePrivateKey',
             onDone: {
-              target: 'idle',
               actions: [
                 'storeContext',
                 'updatePrivateKey',
-                'updateVc',
+                'setUpdateVc',
                 'setWalletBindingErrorEmpty',
               ],
+              target: 'idle',
             },
             onError: {
               actions: 'setWalletBindingError',
@@ -521,10 +558,34 @@ export const vcItemMachine =
             event.data as WalletBindingResponse,
         }),
 
+        setPinCard: assign((context) => {
+          return {
+            ...context,
+            isPinned: !context.isPinned,
+          };
+        }),
+
+        sendVcUpdated: send(
+          (_context, event) =>
+            VcEvents.VC_UPDATED(VC_ITEM_STORE_KEY(event.response) as string),
+          {
+            to: (context) => context.serviceRefs.vc,
+          }
+        ),
+
         updateVc: send(
           (context) => {
             const { serviceRefs, ...vc } = context;
             return { type: 'VC_DOWNLOADED', vc };
+          },
+          {
+            to: (context) => context.serviceRefs.vc,
+          }
+        ),
+        setUpdateVc: send(
+          (context) => {
+            const { serviceRefs, ...vc } = context;
+            return { type: 'VC_UPDATE', vc };
           },
           {
             to: (context) => context.serviceRefs.vc,
@@ -553,9 +614,7 @@ export const vcItemMachine =
             const { serviceRefs, ...data } = context;
             return StoreEvents.SET(VC_ITEM_STORE_KEY(context), data);
           },
-          {
-            to: (context) => context.serviceRefs.store,
-          }
+          { to: (context) => context.serviceRefs.store }
         ),
 
         setTag: model.assign({
@@ -706,7 +765,7 @@ export const vcItemMachine =
                 authFactorType: 'WLA',
                 format: 'jwt',
                 individualId: context.id,
-                transactionId: context.bindingTransactionId,
+                transactionId: context.transactionId,
                 publicKey: context.publicKey,
                 challengeList: [
                   {
@@ -819,6 +878,7 @@ export const vcItemMachine =
                   tag: '',
                   requestId: context.requestId,
                   isVerified: false,
+                  isPinned: context.isPinned,
                   lastVerifiedOn: null,
                   locked: context.locked,
                   walletBindingResponse: null,
@@ -972,6 +1032,9 @@ export function selectIsOtpError(state: State) {
 export function selectOtpError(state: State) {
   return state.context.otpError;
 }
+export function selectIsPinned(state: State) {
+  return state.context.isPinned;
+}
 
 export function selectIsLockingVc(state: State) {
   return state.matches('lockingVc');
@@ -997,15 +1060,11 @@ export function selectIsRequestBindingOtp(state: State) {
   return state.matches('requestingBindingOtp');
 }
 
-export function selectWalletBindingId(state: State) {
-  return state.context.walletBindingResponse;
-}
-
 export function selectEmptyWalletBindingId(state: State) {
   var val = state.context.walletBindingResponse
     ? state.context.walletBindingResponse.walletBindingId
     : undefined;
-  return val === undefined || val == null || val.length <= 0 ? true : false;
+  return val == undefined || val == null || val.length <= 0 ? true : false;
 }
 
 export function selectWalletBindingError(state: State) {
@@ -1020,7 +1079,7 @@ export function selectShowWalletBindingError(state: State) {
   return state.matches('showingWalletBindingError');
 }
 
-export function isWalletBindingInProgress(state: State) {
+export function selectWalletBindingInProgress(state: State) {
   return state.matches('requestingBindingOtp') ||
     state.matches('addingWalletBindingId') ||
     state.matches('addKeyPair') ||
@@ -1029,6 +1088,9 @@ export function isWalletBindingInProgress(state: State) {
     : false;
 }
 
-export function isShowingBindingWarning(state: State) {
+export function selectBindingWarning(state: State) {
   return state.matches('showBindingWarning');
+}
+export function selectKebabPopUp(state: State) {
+  return state.matches('kebabPopUp');
 }

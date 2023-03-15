@@ -23,6 +23,7 @@ const model = createModel(
     otpError: '',
     transactionId: '',
     requestId: '',
+    isPinned: false,
   },
   {
     events: {

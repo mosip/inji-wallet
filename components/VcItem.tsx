@@ -11,10 +11,11 @@ import {
   selectContext,
   selectTag,
   selectEmptyWalletBindingId,
+  selectKebabPopUp,
+  VcItemEvents,
 } from '../machines/vcItem';
 import { Column, Row, Text } from './ui';
 import { Theme } from './ui/styleUtils';
-import { RotatingIcon } from './RotatingIcon';
 import { GlobalContext } from '../shared/GlobalContext';
 import { useTranslation } from 'react-i18next';
 
@@ -37,7 +38,7 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
     return (
       <Column>
         <Text
-          weight="bold"
+          weight="regular"
           size="smaller"
           color={
             !verifiableCredential
@@ -49,7 +50,7 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
         <Row>
           <Text
             color={Theme.Colors.Details}
-            weight="bold"
+            weight="semibold"
             size="smaller"
             style={
               !verifiableCredential
@@ -71,14 +72,14 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
               ? Theme.Colors.LoadingDetailsLabel
               : Theme.Colors.DetailsLabel
           }
-          weight="bold"
+          weight="regular"
           size="smaller">
           {arg1}
         </Text>
         <Text
           numLines={4}
           color={Theme.Colors.Details}
-          weight="bold"
+          weight="semibold"
           size="smaller"
           style={
             !verifiableCredential
@@ -129,7 +130,9 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
   const context = useSelector(service, selectContext);
   const verifiableCredential = useSelector(service, selectVerifiableCredential);
   const emptyWalletBindingId = useSelector(service, selectEmptyWalletBindingId);
-
+  const isKebabPopUp = useSelector(service, selectKebabPopUp);
+  const KEBAB_POPUP = () => service.send(VcItemEvents.KEBAB_POPUP());
+  const DISMISS = () => service.send(VcItemEvents.DISMISS());
   //Assigning the UIN and VID from the VC details to display the idtype label
   const uin = verifiableCredential?.credentialSubject.UIN;
   const vid = verifiableCredential?.credentialSubject.VID;
@@ -171,14 +174,22 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
         <Column>
           <Row align="space-between">
             <Row>
-              <Image
+              <ImageBackground
                 source={
                   !verifiableCredential
                     ? Theme.ProfileIcon
                     : { uri: context.credential.biometrics.face }
                 }
-                style={Theme.Styles.closeCardImage}
-              />
+                style={Theme.Styles.closeCardImage}>
+                {props.iconName && (
+                  <Icon
+                    name={props.iconName}
+                    type={props.iconType}
+                    color={Theme.Colors.Icon}
+                    style={{ marginLeft: -80 }}
+                  />
+                )}
+              </ImageBackground>
               <Column margin="0 0 0 10">
                 {getDetails(t('fullName'), fullName, verifiableCredential)}
 
@@ -189,13 +200,13 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
                         ? Theme.Colors.LoadingDetailsLabel
                         : Theme.Colors.DetailsLabel
                     }
-                    weight="bold"
+                    weight="semibold"
                     size="smaller"
                     align="left">
                     {t('idType')}
                   </Text>
                   <Text
-                    weight="bold"
+                    weight="regular"
                     color={Theme.Colors.Details}
                     size="smaller"
                     style={
@@ -242,64 +253,39 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
         </Column>
         <VcItemTags tag={tag} />
       </ImageBackground>
-      <Row>
-        {emptyWalletBindingId ? (
-          <Row
-            width={Dimensions.get('screen').width * 0.8}
-            align="space-between"
-            crossAlign="center">
-            <Row crossAlign="center" style={{ flex: 1 }}>
-              {verifiableCredential && <WalletUnverified />}
-              <Text
-                color={Theme.Colors.Details}
-                weight="semibold"
-                size="small"
-                margin="10 33 10 10"
-                style={
-                  !verifiableCredential
-                    ? Theme.Styles.loadingTitle
-                    : Theme.Styles.subtitle
-                }
-                children={t('offlineAuthDisabledHeader')}></Text>
-            </Row>
-            {verifiableCredential ? (
-              <KebabPopUp
-                vcKey={props.vcKey}
-                iconName="dots-three-horizontal"
-                iconType="entypo"
-              />
-            ) : null}
-          </Row>
-        ) : (
-          <Row
-            width={Dimensions.get('screen').width * 0.8}
-            align="space-between"
-            crossAlign="center">
-            <Row crossAlign="center" style={{ flex: 1 }}>
-              <WalletVerified />
-              <Text
-                color={Theme.Colors.Details}
-                weight="semibold"
-                size="smaller"
-                margin="10 10 10 10"
-                style={
-                  !verifiableCredential
-                    ? Theme.Styles.loadingTitle
-                    : Theme.Styles.subtitle
-                }
-                children={t('profileAuthenticated')}></Text>
-            </Row>
-
-            {props.showOnlyBindedVc ? null : (
-              <Pressable>
-                <Icon
-                  name="dots-three-horizontal"
-                  type="entypo"
-                  color={Theme.Colors.GrayIcon}
-                />
-              </Pressable>
-            )}
-          </Row>
+      <Row
+        width={Dimensions.get('screen').width * 0.8}
+        align="space-between"
+        crossAlign="center">
+        <Row crossAlign="center" style={{ flex: 1 }}>
+          {verifiableCredential &&
+            (emptyWalletBindingId ? <WalletUnverified /> : <WalletVerified />)}
+          <Text
+            color={Theme.Colors.Details}
+            weight="semibold"
+            size="small"
+            margin="10 33 10 10"
+            style={
+              !verifiableCredential
+                ? Theme.Styles.loadingTitle
+                : Theme.Styles.subtitle
+            }
+            children={
+              emptyWalletBindingId
+                ? t('offlineAuthDisabledHeader')
+                : t('profileAuthenticated')
+            }></Text>
+        </Row>
+        {verifiableCredential && (
+          <Pressable onPress={KEBAB_POPUP}>
+            <KebabPopUp
+              vcKey={props.vcKey}
+              iconName="dots-three-horizontal"
+              iconType="entypo"
+              isVisible={isKebabPopUp}
+              onDismiss={DISMISS}
+            />
+          </Pressable>
         )}
       </Row>
     </Pressable>
@@ -314,6 +300,8 @@ interface VcItemProps {
   showOnlyBindedVc?: boolean;
   onPress?: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
   onShow?: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
+  iconName?: string;
+  iconType?: string;
 }
 
 function getLocalizedField(rawField: string | LocalizedField) {
