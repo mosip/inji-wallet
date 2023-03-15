@@ -495,7 +495,7 @@ export const DefaultTheme = {
     },
     gradient: {
       borderRadius: 9,
-      width: '93%',
+      width: '88%',
       alignSelf: 'center',
       margin: 4,
     },
