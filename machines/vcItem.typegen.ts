@@ -147,7 +147,7 @@ export interface Typegen0 {
     logRevoked: 'STORE_RESPONSE';
     markVcValid: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
     requestStoredContext: 'GET_VC_RESPONSE' | 'REFRESH';
-    requestVcContext: 'xstate.init';
+    requestVcContext: 'DISMISS' | 'xstate.init';
     revokeVID: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
     sendVcUpdated: 'STORE_RESPONSE';
     setCredential:
@@ -172,6 +172,7 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.requestingOtp:invocation[0]'
       | 'error.platform.vc-item.requestingLock:invocation[0]'
       | 'error.platform.vc-item.requestingRevoke:invocation[0]';
+    setUpdateVc: 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
     setWalletBindingError:
       | 'error.platform.vc-item.addKeyPair:invocation[0]'
       | 'error.platform.vc-item.addingWalletBindingId:invocation[0]'
@@ -192,7 +193,6 @@ export interface Typegen0 {
     updateVc:
       | 'CREDENTIAL_DOWNLOADED'
       | 'STORE_RESPONSE'
-      | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]'
       | 'done.invoke.vc-item.verifyingCredential:invocation[0]';
   };
   'eventsCausingDelays': {};
@@ -234,6 +234,7 @@ export interface Typegen0 {
     | 'invalid'
     | 'invalid.backend'
     | 'invalid.otp'
+    | 'kebabPopUp'
     | 'lockingVc'
     | 'loggingRevoke'
     | 'pinCard'

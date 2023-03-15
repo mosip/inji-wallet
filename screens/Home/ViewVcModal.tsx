@@ -22,12 +22,12 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
       idType: 'VID',
       label: t('revoke'),
       icon: 'close-circle-outline',
-      onPress: () => controller.CONFIRM_REVOKE_VC(),
+      onPress: controller.CONFIRM_REVOKE_VC,
     },
     {
       label: t('editTag'),
       icon: 'pencil',
-      onPress: () => controller.EDIT_TAG(),
+      onPress: controller.EDIT_TAG,
     },
   ];
 

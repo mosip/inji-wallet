@@ -691,7 +691,6 @@ export const DefaultTheme = {
       borderTopRightRadius: 30,
       marginTop: -185,
       paddingBottom: 100,
-      height: 220,
     },
   }),
   claimsContainer: StyleSheet.create({

@@ -24,6 +24,7 @@ export interface Typegen0 {
     setMyVcs: 'STORE_RESPONSE';
     setReceivedVcs: 'STORE_RESPONSE';
     setUpdateVc: 'VC_UPDATED';
+    setVcUpdate: 'VC_UPDATE';
     updateMyVcs: 'VC_UPDATED';
   };
   'eventsCausingDelays': {};
