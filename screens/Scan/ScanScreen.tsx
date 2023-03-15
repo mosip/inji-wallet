@@ -59,7 +59,9 @@ export const ScanScreen: React.FC = () => {
     if (!isBluetoothOn) {
       return bluetoothIsOffText();
     }
-    return qrScannerComponent();
+    if (controller.isScanning) {
+      return qrScannerComponent();
+    }
   }
 
   return (
