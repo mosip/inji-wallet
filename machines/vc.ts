@@ -29,6 +29,7 @@ const model = createModel(
       VC_UPDATED: (vcKey: string) => ({ vcKey }),
       VC_RECEIVED: (vcKey: string) => ({ vcKey }),
       VC_DOWNLOADED: (vc: VC) => ({ vc }),
+      VC_UPDATE: (vc: VC) => ({ vc }),
       REFRESH_MY_VCS: () => ({}),
       REFRESH_MY_VCS_TWO: (vc: VC) => ({ vc }),
       REFRESH_RECEIVED_VCS: () => ({}),
@@ -140,6 +141,9 @@ export const vcMachine =
             VC_DOWNLOADED: {
               actions: 'setDownloadedVc',
             },
+            VC_UPDATE: {
+              actions: 'setVcUpdate',
+            },
             VC_RECEIVED: [
               {
                 actions: 'moveExistingVcToTop',
@@ -182,6 +186,10 @@ export const vcMachine =
         }),
 
         setDownloadedVc: (context, event) => {
+          context.vcs[VC_ITEM_STORE_KEY(event.vc)] = event.vc;
+        },
+
+        setVcUpdate: (context, event) => {
           context.vcs[VC_ITEM_STORE_KEY(event.vc)] = event.vc;
         },
 

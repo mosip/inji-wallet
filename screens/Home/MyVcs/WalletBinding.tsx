@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon, ListItem } from 'react-native-elements';
-import { Column, Row, Text } from '../../../components/ui';
+import { Row, Text } from '../../../components/ui';
 import { Theme } from '../../../components/ui/styleUtils';
 import { useTranslation } from 'react-i18next';
 import { BindingVcWarningOverlay } from './BindingVcWarningOverlay';

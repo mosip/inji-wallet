@@ -1,19 +1,6 @@
 import React, { useContext, useRef, useState } from 'react';
 import { useInterpret, useSelector } from '@xstate/react';
-import {
-  Pressable,
-  Image,
-  ImageBackground,
-  Dimensions,
-  View,
-} from 'react-native';
-import {
-  Pressable,
-  Image,
-  ImageBackground,
-  Dimensions,
-  View,
-} from 'react-native';
+import { Pressable, Image, ImageBackground, Dimensions } from 'react-native';
 import { CheckBox, Icon } from 'react-native-elements';
 import { ActorRefFrom } from 'xstate';
 import {
@@ -24,6 +11,8 @@ import {
   selectContext,
   selectTag,
   selectEmptyWalletBindingId,
+  selectKebabPopUp,
+  VcItemEvents,
 } from '../machines/vcItem';
 import { Column, Row, Text } from './ui';
 import { Theme } from './ui/styleUtils';
@@ -130,7 +119,9 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
   const context = useSelector(service, selectContext);
   const verifiableCredential = useSelector(service, selectVerifiableCredential);
   const emptyWalletBindingId = useSelector(service, selectEmptyWalletBindingId);
-
+  const isKebabPopUp = useSelector(service, selectKebabPopUp);
+  const KEBAB_POPUP = () => service.send(VcItemEvents.KEBAB_POPUP());
+  const DISMISS = () => service.send(VcItemEvents.DISMISS());
   //Assigning the UIN and VID from the VC details to display the idtype label
   const uin = verifiableCredential?.credentialSubject.UIN;
   const vid = verifiableCredential?.credentialSubject.VID;
@@ -250,62 +241,39 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
         </Column>
         <VcItemTags tag={tag} />
       </ImageBackground>
-      <Row>
-        {emptyWalletBindingId ? (
-          <Row
-            width={Dimensions.get('screen').width * 0.8}
-            align="space-between"
-            crossAlign="center">
-            <Row crossAlign="center" style={{ flex: 1 }}>
-              {verifiableCredential && <WalletUnverified />}
-              <Text
-                color={Theme.Colors.Details}
-                weight="semibold"
-                size="small"
-                margin="10 33 10 10"
-                style={
-                  !verifiableCredential
-                    ? Theme.Styles.loadingTitle
-                    : Theme.Styles.subtitle
-                }
-                children={t('offlineAuthDisabledHeader')}></Text>
-            </Row>
+      <Row
+        width={Dimensions.get('screen').width * 0.8}
+        align="space-between"
+        crossAlign="center">
+        <Row crossAlign="center" style={{ flex: 1 }}>
+          {verifiableCredential &&
+            (emptyWalletBindingId ? <WalletUnverified /> : <WalletVerified />)}
+          <Text
+            color={Theme.Colors.Details}
+            weight="semibold"
+            size="small"
+            margin="10 33 10 10"
+            style={
+              !verifiableCredential
+                ? Theme.Styles.loadingTitle
+                : Theme.Styles.subtitle
+            }
+            children={
+              emptyWalletBindingId
+                ? t('offlineAuthDisabledHeader')
+                : t('profileAuthenticated')
+            }></Text>
+        </Row>
+        {verifiableCredential && (
+          <Pressable onPress={KEBAB_POPUP}>
             <KebabPopUp
               vcKey={props.vcKey}
               iconName="dots-three-horizontal"
               iconType="entypo"
+              isVisible={isKebabPopUp}
+              onDismiss={DISMISS}
             />
-          </Row>
-        ) : (
-          <Row
-            width={Dimensions.get('screen').width * 0.8}
-            align="space-between"
-            crossAlign="center">
-            <Row crossAlign="center" style={{ flex: 1 }}>
-              <WalletVerified />
-              <Text
-                color={Theme.Colors.Details}
-                weight="semibold"
-                size="smaller"
-                margin="10 10 10 10"
-                style={
-                  !verifiableCredential
-                    ? Theme.Styles.loadingTitle
-                    : Theme.Styles.subtitle
-                }
-                children={t('profileAuthenticated')}></Text>
-            </Row>
-
-            {props.showOnlyBindedVc ? null : (
-              <Pressable>
-                <KebabPopUp
-                  vcKey={props.vcKey}
-                  iconName="dots-three-horizontal"
-                  iconType="entypo"
-                />
-              </Pressable>
-            )}
-          </Row>
+          </Pressable>
         )}
       </Row>
     </Pressable>

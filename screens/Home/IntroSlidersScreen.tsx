@@ -1,12 +1,6 @@
 import React, { useRef, useContext } from 'react';
 import AppIntroSlider from 'react-native-app-intro-slider';
-import {
-  Dimensions,
-  Image,
-  StatusBar,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Dimensions, Image, StatusBar, View } from 'react-native';
 import { Centered, Column, Row, Text, Button } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { useSelector } from '@xstate/react';
@@ -59,7 +53,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
                 marginRight: 75,
               }}>
               <Image
-                style={{ marginVertical: 61 }}
+                style={{ marginTop: 50, marginBottom: 30 }}
                 source={Theme.injiSmallLogo}
               />
             </Column>
@@ -76,15 +70,18 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
               />
             </Column>
           </Row>
-
           <Image source={item.image} />
           <Column
             style={Theme.OnboardingOverlayStyles.bottomContainer}
             crossAlign="center"
             backgroundColor={Theme.Colors.whiteText}
             width={Dimensions.get('screen').width}>
-            <Text weight="semibold">{item.title}</Text>
-            <Text color={Theme.Colors.GrayText}>{item.text}</Text>
+            <Text weight="semibold" margin="0 0 18 0">
+              {item.title}
+            </Text>
+            <Text margin="0 0 150 0" color={Theme.Colors.GrayText}>
+              {item.text}
+            </Text>
             {item.footer}
           </Column>
         </Centered>
@@ -135,8 +132,12 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
         renderNextButton={renderNextButton}
         bottomButton
         ref={slider}
-        activeDotStyle={{ backgroundColor: Theme.Colors.Icon }}
-        dotStyle={{ backgroundColor: Theme.Colors.dotColor }}
+        activeDotStyle={{
+          backgroundColor: Theme.Colors.Icon,
+          width: 30,
+          marginBottom: 90,
+        }}
+        dotStyle={{ backgroundColor: Theme.Colors.dotColor, marginBottom: 90 }}
         renderItem={renderItem}
         onDone={() => controller.NEXT()}
       />

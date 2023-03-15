@@ -11,15 +11,13 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
   const controller = useKebabPopUp(props);
   return (
     <Column>
-      <Pressable onPress={() => controller.setVisible(true)}>
-        <Icon
-          name={props.iconName}
-          type={props.iconType}
-          color={Theme.Colors.GrayIcon}
-        />
-      </Pressable>
+      <Icon
+        name={props.iconName}
+        type={props.iconType}
+        color={Theme.Colors.GrayIcon}
+      />
       <BottomSheet
-        isVisible={controller.visible}
+        isVisible={props.isVisible}
         containerStyle={Theme.KebabPopUpStyles.kebabPopUp}>
         <Row style={Theme.KebabPopUpStyles.kebabHeaderStyle}>
           <Centered></Centered>
@@ -30,7 +28,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
           </Text>
           <Icon
             name="close"
-            onPress={() => controller.setVisible(false)}
+            onPress={props.onDismiss}
             color={Theme.Colors.Details}
             size={25}
           />
@@ -67,4 +65,6 @@ interface KebabPopUpProps {
   iconName: string;
   iconType?: string;
   vcKey: string;
+  isVisible: boolean;
+  onDismiss: () => void;
 }

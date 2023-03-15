@@ -77,6 +77,7 @@ const model = createModel(
       CANCEL: () => ({}),
       CONFIRM: () => ({}),
       PIN_CARD: () => ({}),
+      KEBAB_POPUP: () => ({}),
     },
   }
 );
@@ -219,6 +220,12 @@ export const vcItemMachine =
               target: 'pinCard',
               actions: 'setPinCard',
             },
+            KEBAB_POPUP: {
+              target: 'kebabPopUp',
+            },
+            DISMISS: {
+              target: 'checkingVc',
+            },
           },
         },
         pinCard: {
@@ -227,6 +234,20 @@ export const vcItemMachine =
             STORE_RESPONSE: {
               actions: 'sendVcUpdated',
               target: 'idle',
+            },
+          },
+        },
+        kebabPopUp: {
+          on: {
+            DISMISS: {
+              target: 'idle',
+            },
+            ADD_WALLET_BINDING_ID: {
+              target: 'showBindingWarning',
+            },
+            PIN_CARD: {
+              target: 'pinCard',
+              actions: 'setPinCard',
             },
           },
         },
@@ -494,14 +515,14 @@ export const vcItemMachine =
           invoke: {
             src: 'updatePrivateKey',
             onDone: {
-              target: 'idle',
               actions: [
                 'storeContext',
                 'updatePrivateKey',
-                'updateVc',
+                'setUpdateVc',
                 'setWalletBindingErrorEmpty',
                 'logWalletBindingSuccess',
               ],
+              target: 'idle',
             },
             onError: {
               actions: ['setWalletBindingError', 'logWalletBindingFailure'],
@@ -560,6 +581,15 @@ export const vcItemMachine =
           (context) => {
             const { serviceRefs, ...vc } = context;
             return { type: 'VC_DOWNLOADED', vc };
+          },
+          {
+            to: (context) => context.serviceRefs.vc,
+          }
+        ),
+        setUpdateVc: send(
+          (context) => {
+            const { serviceRefs, ...vc } = context;
+            return { type: 'VC_UPDATE', vc };
           },
           {
             to: (context) => context.serviceRefs.vc,
@@ -767,7 +797,7 @@ export const vcItemMachine =
                 authFactorType: 'WLA',
                 format: 'jwt',
                 individualId: context.id,
-                transactionId: context.bindingTransactionId,
+                transactionId: context.transactionId,
                 publicKey: context.publicKey,
                 challengeList: [
                   {
@@ -1062,15 +1092,11 @@ export function selectIsRequestBindingOtp(state: State) {
   return state.matches('requestingBindingOtp');
 }
 
-export function selectWalletBindingId(state: State) {
-  return state.context.walletBindingResponse;
-}
-
 export function selectEmptyWalletBindingId(state: State) {
   var val = state.context.walletBindingResponse
     ? state.context.walletBindingResponse.walletBindingId
     : undefined;
-  return val === undefined || val == null || val.length <= 0 ? true : false;
+  return val == undefined || val == null || val.length <= 0 ? true : false;
 }
 
 export function selectWalletBindingError(state: State) {
@@ -1085,7 +1111,7 @@ export function selectShowWalletBindingError(state: State) {
   return state.matches('showingWalletBindingError');
 }
 
-export function isWalletBindingInProgress(state: State) {
+export function selectWalletBindingInProgress(state: State) {
   return state.matches('requestingBindingOtp') ||
     state.matches('addingWalletBindingId') ||
     state.matches('addKeyPair') ||
@@ -1094,6 +1120,9 @@ export function isWalletBindingInProgress(state: State) {
     : false;
 }
 
-export function isShowBindingWarning(state: State) {
+export function selectBindingWarning(state: State) {
   return state.matches('showBindingWarning');
+}
+export function selectKebabPopUp(state: State) {
+  return state.matches('kebabPopUp');
 }
