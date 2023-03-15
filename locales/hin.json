@@ -377,6 +377,11 @@
       "getStarted": "आरंभ करें",
       "unlockApp": "एप्लिकेशन अनलॉक करें"
     },
+    "SetupLanguage": {
+      "header": "भाषा चुनें",
+      "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+      "save": "वरीयता सहेजें"
+    },
     "common": {
       "cancel": "रद्द करें",
       "save": "सहेजें",

@@ -232,7 +232,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
                 ? getDetails(t('status'), isvalid, verifiableCredential)
                 : null}
             </Column>
-            <Column style={Theme.Styles.closecardMosipLogo}>
+            <Column style={{ display: verifiableCredential ? 'flex' : 'none' }}>
               <Image
                 source={Theme.MosipLogo}
                 style={Theme.Styles.logo}

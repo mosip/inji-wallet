@@ -410,7 +410,6 @@ export const DefaultTheme = {
     retrieveIdLabel: {
       color: Colors.ShadeOfGrey,
       fontFamily: 'Inter_600SemiBold',
-      paddingHorizontal: 6,
     },
     error: {
       color: Colors.Red,
@@ -504,7 +503,7 @@ export const DefaultTheme = {
     },
     gradient: {
       borderRadius: 9,
-      width: '93%',
+      width: '88%',
       alignSelf: 'center',
       margin: 4,
     },
@@ -856,6 +855,12 @@ export const DefaultTheme = {
   WarningLogo: require('../../../assets/warningLogo.png'),
   OtpLogo: require('../../../assets/otp-mobile-logo.png'),
   SuccessLogo: require('../../../assets/success-logo.png'),
+  DigitalIdentityLogo: require('../../../assets/digital-identity-icon.png'),
+  InjiLogoWhite: require('../../../assets/inji-logo-white.png'),
+  InjiProgressingLogo: require('../../../assets/progressing-logo.png'),
+  LockIcon: require('../../../assets/lock-icon.png'),
+  InjiHomeLogo: require('../../../assets/inji-home-logo.png'),
+  HelpIcon: require('../../../assets/help-icon.png'),
   sharingIntro: require('../../../assets/Secure-Sharing.png'),
   walletIntro: require('../../../assets/intro-wallet-binding.png'),
   IntroScanner: require('../../../assets/intro-scanner.png'),
