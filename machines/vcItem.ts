@@ -246,7 +246,6 @@ export const vcItemMachine =
             },
             ADD_WALLET_BINDING_ID: {
               target: '#vc-item.kebabPopUp.showBindingWarning',
-              target: '#vc-item.kebabPopUp.showBindingWarning',
             },
             PIN_CARD: {
               target: '#vc-item.pinCard',
@@ -694,6 +693,15 @@ export const vcItemMachine =
           (context) => {
             const { serviceRefs, ...vc } = context;
             return { type: 'VC_DOWNLOADED', vc };
+          },
+          {
+            to: (context) => context.serviceRefs.vc,
+          }
+        ),
+        setUpdateVc: send(
+          (context) => {
+            const { serviceRefs, ...vc } = context;
+            return { type: 'VC_UPDATE', vc };
           },
           {
             to: (context) => context.serviceRefs.vc,

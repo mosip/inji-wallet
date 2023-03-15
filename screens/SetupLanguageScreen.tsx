@@ -52,7 +52,11 @@ export const SetupLanguageScreen: React.FC<RootRouteProps> = (props) => {
       />
       <Column crossAlign="center">
         <Text weight="semibold">{t('header')}</Text>
-        <Text weight="regular" align="center" color={Theme.Colors.GrayText}>
+        <Text
+          style={{ paddingHorizontal: 35 }}
+          weight="regular"
+          align="center"
+          color={Theme.Colors.GrayText}>
           {t('description')}
         </Text>
       </Column>
