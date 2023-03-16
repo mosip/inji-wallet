@@ -630,7 +630,7 @@ export const vcItemMachine =
               actions: [
                 'storeContext',
                 'updatePrivateKey',
-                'setUpdateVc',
+                'updateVc',
                 'setWalletBindingErrorEmpty',
                 'logWalletBindingSuccess',
               ],
@@ -698,15 +698,6 @@ export const vcItemMachine =
             to: (context) => context.serviceRefs.vc,
           }
         ),
-        setUpdateVc: send(
-          (context) => {
-            const { serviceRefs, ...vc } = context;
-            return { type: 'VC_UPDATE', vc };
-          },
-          {
-            to: (context) => context.serviceRefs.vc,
-          }
-        ),
 
         requestVcContext: send(
           (context) => ({
@@ -730,7 +721,9 @@ export const vcItemMachine =
             const { serviceRefs, ...data } = context;
             return StoreEvents.SET(VC_ITEM_STORE_KEY(context), data);
           },
-          { to: (context) => context.serviceRefs.store }
+          {
+            to: (context) => context.serviceRefs.store,
+          }
         ),
 
         setTag: model.assign({

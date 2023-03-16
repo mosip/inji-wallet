@@ -30,6 +30,26 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
+    'done.invoke.vc-item.kebabPopUp.addKeyPair:invocation[0]': {
+      type: 'done.invoke.vc-item.kebabPopUp.addKeyPair:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
+    'done.invoke.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]': {
+      type: 'done.invoke.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
+    'done.invoke.vc-item.kebabPopUp.requestingBindingOtp:invocation[0]': {
+      type: 'done.invoke.vc-item.kebabPopUp.requestingBindingOtp:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
+    'done.invoke.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]': {
+      type: 'done.invoke.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
     'done.invoke.vc-item.requestingBindingOtp:invocation[0]': {
       type: 'done.invoke.vc-item.requestingBindingOtp:invocation[0]';
       data: unknown;
@@ -80,6 +100,22 @@ export interface Typegen0 {
       type: 'error.platform.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]';
       data: unknown;
     };
+    'error.platform.vc-item.kebabPopUp.addKeyPair:invocation[0]': {
+      type: 'error.platform.vc-item.kebabPopUp.addKeyPair:invocation[0]';
+      data: unknown;
+    };
+    'error.platform.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]': {
+      type: 'error.platform.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]';
+      data: unknown;
+    };
+    'error.platform.vc-item.kebabPopUp.requestingBindingOtp:invocation[0]': {
+      type: 'error.platform.vc-item.kebabPopUp.requestingBindingOtp:invocation[0]';
+      data: unknown;
+    };
+    'error.platform.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]': {
+      type: 'error.platform.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]';
+      data: unknown;
+    };
     'error.platform.vc-item.requestingBindingOtp:invocation[0]': {
       type: 'error.platform.vc-item.requestingBindingOtp:invocation[0]';
       data: unknown;
@@ -103,16 +139,24 @@ export interface Typegen0 {
     'xstate.init': { type: 'xstate.init' };
   };
   'invokeSrcNameMap': {
-    addWalletBindnigId: 'done.invoke.vc-item.addingWalletBindingId:invocation[0]';
+    addWalletBindnigId:
+      | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'
+      | 'done.invoke.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]';
     checkDownloadExpiryLimit: 'done.invoke.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]';
     checkStatus: 'done.invoke.checkStatus';
     downloadCredential: 'done.invoke.downloadCredential';
-    generateKeyPair: 'done.invoke.vc-item.addKeyPair:invocation[0]';
-    requestBindingOtp: 'done.invoke.vc-item.requestingBindingOtp:invocation[0]';
+    generateKeyPair:
+      | 'done.invoke.vc-item.addKeyPair:invocation[0]'
+      | 'done.invoke.vc-item.kebabPopUp.addKeyPair:invocation[0]';
+    requestBindingOtp:
+      | 'done.invoke.vc-item.kebabPopUp.requestingBindingOtp:invocation[0]'
+      | 'done.invoke.vc-item.requestingBindingOtp:invocation[0]';
     requestLock: 'done.invoke.vc-item.requestingLock:invocation[0]';
     requestOtp: 'done.invoke.vc-item.requestingOtp:invocation[0]';
     requestRevoke: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
-    updatePrivateKey: 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
+    updatePrivateKey:
+      | 'done.invoke.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]'
+      | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
     verifyCredential: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
   };
   'missingImplementations': {
@@ -128,6 +172,7 @@ export interface Typegen0 {
       | 'DISMISS'
       | 'REVOKE_VC'
       | 'STORE_RESPONSE'
+      | 'done.invoke.vc-item.kebabPopUp.requestingBindingOtp:invocation[0]'
       | 'done.invoke.vc-item.requestingBindingOtp:invocation[0]'
       | 'done.invoke.vc-item.requestingOtp:invocation[0]'
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]'
@@ -146,6 +191,9 @@ export interface Typegen0 {
     incrementDownloadCounter: 'POLL';
     logDownloaded: 'CREDENTIAL_DOWNLOADED';
     logRevoked: 'STORE_RESPONSE';
+    logWalletBindingSuccess:
+      | 'done.invoke.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]'
+      | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
     markVcValid: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
     requestStoredContext: 'GET_VC_RESPONSE' | 'REFRESH';
     requestVcContext: 'DISMISS' | 'xstate.init';
@@ -163,8 +211,12 @@ export interface Typegen0 {
       | 'error.platform.vc-item.requestingLock:invocation[0]'
       | 'error.platform.vc-item.requestingRevoke:invocation[0]';
     setPinCard: 'PIN_CARD';
-    setPrivateKey: 'done.invoke.vc-item.addKeyPair:invocation[0]';
-    setPublicKey: 'done.invoke.vc-item.addKeyPair:invocation[0]';
+    setPrivateKey:
+      | 'done.invoke.vc-item.addKeyPair:invocation[0]'
+      | 'done.invoke.vc-item.kebabPopUp.addKeyPair:invocation[0]';
+    setPublicKey:
+      | 'done.invoke.vc-item.addKeyPair:invocation[0]'
+      | 'done.invoke.vc-item.kebabPopUp.addKeyPair:invocation[0]';
     setRevoke: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
     setTag: 'SAVE_TAG';
     setTransactionId:
@@ -173,27 +225,38 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.requestingOtp:invocation[0]'
       | 'error.platform.vc-item.requestingLock:invocation[0]'
       | 'error.platform.vc-item.requestingRevoke:invocation[0]';
-    setUpdateVc: 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
     setWalletBindingError:
       | 'error.platform.vc-item.addKeyPair:invocation[0]'
       | 'error.platform.vc-item.addingWalletBindingId:invocation[0]'
+      | 'error.platform.vc-item.kebabPopUp.addKeyPair:invocation[0]'
+      | 'error.platform.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]'
+      | 'error.platform.vc-item.kebabPopUp.requestingBindingOtp:invocation[0]'
+      | 'error.platform.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]'
       | 'error.platform.vc-item.requestingBindingOtp:invocation[0]'
       | 'error.platform.vc-item.updatingPrivateKey:invocation[0]';
     setWalletBindingErrorEmpty:
       | 'CANCEL'
+      | 'done.invoke.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]'
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
-    setWalletBindingId: 'done.invoke.vc-item.addingWalletBindingId:invocation[0]';
+    setWalletBindingId:
+      | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'
+      | 'done.invoke.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]';
     storeContext:
       | 'CREDENTIAL_DOWNLOADED'
       | 'PIN_CARD'
+      | 'done.invoke.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]'
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]'
       | 'done.invoke.vc-item.verifyingCredential:invocation[0]';
     storeLock: 'done.invoke.vc-item.requestingLock:invocation[0]';
     storeTag: 'SAVE_TAG';
-    updatePrivateKey: 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
+    updatePrivateKey:
+      | 'done.invoke.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]'
+      | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
     updateVc:
       | 'CREDENTIAL_DOWNLOADED'
       | 'STORE_RESPONSE'
+      | 'done.invoke.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]'
+      | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]'
       | 'done.invoke.vc-item.verifyingCredential:invocation[0]';
   };
   'eventsCausingDelays': {};
@@ -203,7 +266,9 @@ export interface Typegen0 {
     isVcValid: '';
   };
   'eventsCausingServices': {
-    addWalletBindnigId: 'done.invoke.vc-item.addKeyPair:invocation[0]';
+    addWalletBindnigId:
+      | 'done.invoke.vc-item.addKeyPair:invocation[0]'
+      | 'done.invoke.vc-item.kebabPopUp.addKeyPair:invocation[0]';
     checkDownloadExpiryLimit: 'STORE_RESPONSE';
     checkStatus:
       | 'done.invoke.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]'
@@ -214,7 +279,9 @@ export interface Typegen0 {
     requestLock: 'INPUT_OTP';
     requestOtp: 'LOCK_VC';
     requestRevoke: 'INPUT_OTP';
-    updatePrivateKey: 'done.invoke.vc-item.addingWalletBindingId:invocation[0]';
+    updatePrivateKey:
+      | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'
+      | 'done.invoke.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]';
     verifyCredential: '' | 'VERIFY';
   };
   'matchesStates':
@@ -236,6 +303,14 @@ export interface Typegen0 {
     | 'invalid.backend'
     | 'invalid.otp'
     | 'kebabPopUp'
+    | 'kebabPopUp.acceptingBindingOtp'
+    | 'kebabPopUp.addKeyPair'
+    | 'kebabPopUp.addingWalletBindingId'
+    | 'kebabPopUp.idle'
+    | 'kebabPopUp.requestingBindingOtp'
+    | 'kebabPopUp.showBindingWarning'
+    | 'kebabPopUp.showingWalletBindingError'
+    | 'kebabPopUp.updatingPrivateKey'
     | 'lockingVc'
     | 'loggingRevoke'
     | 'pinCard'
@@ -255,6 +330,15 @@ export interface Typegen0 {
           | 'downloadingCredential'
           | 'verifyingDownloadLimitExpiry';
         invalid?: 'backend' | 'otp';
+        kebabPopUp?:
+          | 'acceptingBindingOtp'
+          | 'addKeyPair'
+          | 'addingWalletBindingId'
+          | 'idle'
+          | 'requestingBindingOtp'
+          | 'showBindingWarning'
+          | 'showingWalletBindingError'
+          | 'updatingPrivateKey';
       };
   'tags': never;
 }

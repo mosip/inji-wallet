@@ -1,4 +1,5 @@
 import React from 'react';
+import { t } from 'i18next';
 import { BottomSheet, Icon, ListItem } from 'react-native-elements';
 import { Theme } from '../components/ui/styleUtils';
 import { Centered, Column, Row, Text } from '../components/ui';
