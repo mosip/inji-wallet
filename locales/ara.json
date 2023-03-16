@@ -212,8 +212,8 @@
       "empty": "فارغة",
       "revokeSuccessful": "تم إبطال VID بنجاح",
       "version": "الإصدار",
-      "useBle": "Powered by BLE",
-      "useGoogleNearby": "Powered by GoogleNearby"
+      "useBle": "مدعوم من BLE",
+      "useGoogleNearby": "مدعوم من GoogleNearby"
     },
     "QrScreen": {
       "title": "QR تسجيل الدخول",
