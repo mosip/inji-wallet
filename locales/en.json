@@ -69,6 +69,12 @@
     "inProgress" : "In Progress",
     "profileAuthenticated": "Profile is authenticated!"
   },
+  "BindingVcWarningOverlay": {
+    "alert": "Please Confirm",
+    "BindingWarning": "If you have enabled verification for this credential on another wallet, it will get overridden. Do you want to proceed?",
+    "yesConfirm": "Yes, I confirm",
+    "no" : "No"
+  },
   "AuthScreen": {
     "header": "Select App Unlock Method",
     "Description": "Would you like to use biometrics to unlock the application?",
