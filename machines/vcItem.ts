@@ -244,6 +244,7 @@ export const vcItemMachine =
             },
             ADD_WALLET_BINDING_ID: {
               target: '#vc-item.kebabPopUp.showBindingWarning',
+              target: '#vc-item.kebabPopUp.showBindingWarning',
             },
             PIN_CARD: {
               target: '#vc-item.pinCard',
@@ -620,9 +621,8 @@ export const vcItemMachine =
               actions: [
                 'storeContext',
                 'updatePrivateKey',
-                'updateVc',
+                'setUpdateVc',
                 'setWalletBindingErrorEmpty',
-                'logWalletBindingSuccess',
                 'logWalletBindingSuccess',
               ],
               target: 'idle',
