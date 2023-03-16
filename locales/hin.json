@@ -214,8 +214,8 @@
       "empty": "खाली",
       "revokeSuccessful": "VID को सफलतापूर्वक निरस्त कर दिया गया",
       "version": "संस्करण",
-      "useBle": "Powered by BLE",
-      "useGoogleNearby": "Powered by GoogleNearby"
+      "useBle": "बीएलई द्वारा संचालित",
+      "useGoogleNearby": "GoogleNearby द्वारा संचालित"
     },
     "QrScreen": {
       "title": "क्यूआर लॉगिन",
