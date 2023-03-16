@@ -212,8 +212,8 @@
     "empty": "Walang laman",
     "revokeSuccessful": "Matagumpay na nakansela ang VID",
     "version": "Bersyon",
-    "useBle": "Powered by BLE",
-    "useGoogleNearby": "Powered by GoogleNearby"
+    "useBle": "Pinapatakbo ng BLE",
+    "useGoogleNearby": "Pinapagana ng GoogleNearby"
   },
   "QrScreen": {
     "title": "QR Login",
