@@ -223,57 +223,29 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
         </Row>
         <VcItemTags tag={tag} />
       </ImageBackground>
-      {props.activeTab !== 'receivedVcsTab' && (
-        <Row>
-          {emptyWalletBindingId ? (
-            <Row
-              width={Dimensions.get('screen').width * 0.8}
-              align="space-between"
-              crossAlign="center">
-              <Row crossAlign="center" style={{ flex: 1 }}>
-                {verifiableCredential && <WalletUnverified />}
-                <Text
-                  color={Theme.Colors.Details}
-                  weight="semibold"
-                  size="small"
-                  margin="10 33 10 10"
-                  style={
-                    !verifiableCredential
-                      ? Theme.Styles.loadingTitle
-                      : Theme.Styles.statusLabel
-                  }
-                  children={t('offlineAuthDisabledHeader')}></Text>
-              </Row>
+      {props.activeTab !== 'receivedVcsTab' &&
+        props.activeTab != 'sharingVcScreen' && (
+          <Row>
+            {emptyWalletBindingId ? (
+              <Row
+                width={Dimensions.get('screen').width * 0.8}
+                align="space-between"
+                crossAlign="center">
+                <Row crossAlign="center" style={{ flex: 1 }}>
+                  {verifiableCredential && <WalletUnverified />}
+                  <Text
+                    color={Theme.Colors.Details}
+                    weight="semibold"
+                    size="small"
+                    margin="10 33 10 10"
+                    style={
+                      !verifiableCredential
+                        ? Theme.Styles.loadingTitle
+                        : Theme.Styles.statusLabel
+                    }
+                    children={t('offlineAuthDisabledHeader')}></Text>
+                </Row>
 
-              <Pressable>
-                <Icon
-                  name="dots-three-horizontal"
-                  type="entypo"
-                  color={Theme.Colors.GrayIcon}
-                />
-              </Pressable>
-            </Row>
-          ) : (
-            <Row
-              width={Dimensions.get('screen').width * 0.8}
-              align="space-between"
-              crossAlign="center">
-              <Row crossAlign="center" style={{ flex: 1 }}>
-                <WalletVerified />
-                <Text
-                  color={Theme.Colors.statusLabel}
-                  weight="semibold"
-                  size="smaller"
-                  margin="10 10 10 10"
-                  style={
-                    !verifiableCredential
-                      ? Theme.Styles.loadingTitle
-                      : Theme.Styles.subtitle
-                  }
-                  children={t('profileAuthenticated')}></Text>
-              </Row>
-
-              {props.showOnlyBindedVc ? null : (
                 <Pressable>
                   <Icon
                     name="dots-three-horizontal"
@@ -281,11 +253,40 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
                     color={Theme.Colors.GrayIcon}
                   />
                 </Pressable>
-              )}
-            </Row>
-          )}
-        </Row>
-      )}
+              </Row>
+            ) : (
+              <Row
+                width={Dimensions.get('screen').width * 0.8}
+                align="space-between"
+                crossAlign="center">
+                <Row crossAlign="center" style={{ flex: 1 }}>
+                  <WalletVerified />
+                  <Text
+                    color={Theme.Colors.statusLabel}
+                    weight="semibold"
+                    size="smaller"
+                    margin="10 10 10 10"
+                    style={
+                      !verifiableCredential
+                        ? Theme.Styles.loadingTitle
+                        : Theme.Styles.subtitle
+                    }
+                    children={t('profileAuthenticated')}></Text>
+                </Row>
+
+                {props.showOnlyBindedVc ? null : (
+                  <Pressable>
+                    <Icon
+                      name="dots-three-horizontal"
+                      type="entypo"
+                      color={Theme.Colors.GrayIcon}
+                    />
+                  </Pressable>
+                )}
+              </Row>
+            )}
+          </Row>
+        )}
     </Pressable>
   );
 };
