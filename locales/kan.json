@@ -214,8 +214,8 @@
       "empty": "ಖಾಲಿ",
       "revokeSuccessful": "VID ಯಶಸ್ವಿಯಾಗಿ ಹಿಂಪಡೆಯಲಾಗಿದೆ",
       "version": "ಆವೃತ್ತಿ",
-      "useBle": "Powered by BLE",
-      "useGoogleNearby": "Powered by GoogleNearby"
+      "useBle": "BLE ನಿಂದ ನಡೆಸಲ್ಪಡುತ್ತಿದೆ",
+      "useGoogleNearby": "GoogleNearby ನಿಂದ ನಡೆಸಲ್ಪಡುತ್ತಿದೆ"
     },
     "QrScreen": {
       "title": "QR ಲಾಗಿನ್",
