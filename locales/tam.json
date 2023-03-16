@@ -212,8 +212,8 @@
       "empty": "காலியாக",
       "revokeSuccessful": "VID வெற்றிகரமாக ரத்து செய்யப்பட்டது",
       "version": "பதிப்பு",
-      "useBle": "Powered by BLE",
-      "useGoogleNearby": "Powered by GoogleNearby"
+      "useBle": "BLE ஆல் இயக்கப்படுகிறது",
+      "useGoogleNearby": "GoogleNearby மூலம் இயக்கப்படுகிறது"
     },
     "QrScreen": {
       "title": "QR உள்நுழைவு",
