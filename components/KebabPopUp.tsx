@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { t } from 'i18next';
 import { BottomSheet, Icon, ListItem } from 'react-native-elements';
 import { Theme } from '../components/ui/styleUtils';
@@ -6,6 +6,8 @@ import { Centered, Column, Row, Text } from '../components/ui';
 import { WalletBinding } from '../screens/Home/MyVcs/WalletBinding';
 import { Pressable } from 'react-native';
 import { useKebabPopUp } from './KebabPopUpController';
+import { ActorRefFrom } from 'xstate';
+import { vcItemMachine } from '../machines/vcItem';
 
 export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
   const controller = useKebabPopUp(props);
@@ -53,7 +55,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
             Content={t(
               'Click here to enable the credentials to be used for offline authentication.'
             )}
-            vcKey={props.vcKey}
+            service={props.service}
           />
         </Column>
       </BottomSheet>
@@ -61,10 +63,11 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
   );
 };
 
-interface KebabPopUpProps {
+export interface KebabPopUpProps {
   iconName: string;
   iconType?: string;
   vcKey: string;
   isVisible: boolean;
   onDismiss: () => void;
+  service: ActorRefFrom<typeof vcItemMachine>;
 }
