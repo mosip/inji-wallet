@@ -8,6 +8,8 @@ import { OtpVerification } from './OtpVerification';
 import { MessageOverlay } from '../../../components/MessageOverlay';
 import { useKebabPopUp } from '../../../components/KebabPopUpController';
 import { Dimensions } from 'react-native';
+import { ActorRefFrom } from 'xstate';
+import { vcItemMachine } from '../../../machines/vcItem';
 
 export const WalletBinding: React.FC<WalletBindingProps> = (props) => {
   const controller = useKebabPopUp(props);
@@ -99,5 +101,5 @@ interface WalletBindingProps {
   label: string;
   Content?: string;
   Icon?: string;
-  vcKey: string;
+  service: ActorRefFrom<typeof vcItemMachine>;
 }
