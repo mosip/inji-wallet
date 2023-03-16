@@ -52,11 +52,9 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
           </ListItem>
 
           <WalletBinding
-            label={t('Offline authentication disabled!')}
-            Content={t(
-              'Click here to enable the credentials to be used for offline authentication.'
-            )}
-            service={props.service}
+            label={t('offlineAuthenticationDisabled!')}
+            Content={t('offlineAuthDisabledMessage')}
+            vcKey={props.vcKey}
           />
         </Column>
       </BottomSheet>

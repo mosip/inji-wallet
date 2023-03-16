@@ -44,6 +44,7 @@ export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
             {props.error}
           </Text>
           <PinInput length={6} onDone={props.onInputDone} />
+
           <Text
             margin="36 0 0 0"
             color={Theme.Colors.RetrieveIdLabel}
@@ -51,6 +52,7 @@ export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
             size="small">
             {t('resendTheCode')}
           </Text>
+
           <TouchableOpacity activeOpacity={1}>
             <Text color={Theme.Colors.AddIdBtnBg} weight="bold" size="regular">
               {t('resendCode')}
