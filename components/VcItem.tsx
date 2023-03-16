@@ -284,6 +284,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
               iconType="entypo"
               isVisible={isKebabPopUp}
               onDismiss={DISMISS}
+              service={service}
             />
           </Pressable>
         )}

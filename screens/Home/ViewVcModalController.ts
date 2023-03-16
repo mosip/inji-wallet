@@ -17,7 +17,7 @@ import {
   VcItemEvents,
   vcItemMachine,
   selectWalletBindingError,
-  selectIsRequestBindingOtp,
+  selectRequestBindingOtp,
   selectAcceptingBindingOtp,
   selectEmptyWalletBindingId,
   selectWalletBindingInProgress,
@@ -130,7 +130,7 @@ export function useViewVcModal({
       selectIsAcceptingRevokeInput
     ),
     storedPasscode: useSelector(authService, selectPasscode),
-    isBindingOtp: useSelector(vcItemActor, selectIsRequestBindingOtp),
+    isBindingOtp: useSelector(vcItemActor, selectRequestBindingOtp),
     isAcceptingBindingOtp: useSelector(vcItemActor, selectAcceptingBindingOtp),
     walletBindingError: useSelector(vcItemActor, selectWalletBindingError),
     isWalletBindingPending: useSelector(

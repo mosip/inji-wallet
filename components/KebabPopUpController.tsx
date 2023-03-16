@@ -1,32 +1,21 @@
-import { useInterpret, useSelector } from '@xstate/react';
-import { useContext, useRef } from 'react';
+import { useSelector } from '@xstate/react';
+import { ActorRefFrom } from 'xstate';
 import {
-  createVcItemMachine,
-  selectWalletBindingInProgress,
+  selectKebabPopUpWalletBindingInProgress,
   selectKebabPopUp,
-  selectAcceptingBindingOtp,
-  selectBindingWarning,
+  selectKebabPopUpAcceptingBindingOtp,
+  selectKebabPopUpBindingWarning,
   selectEmptyWalletBindingId,
   selectIsPinned,
   selectOtpError,
   selectShowWalletBindingError,
   selectWalletBindingError,
   VcItemEvents,
-  selectContext,
-  selectVerifiableCredential,
-  selectGeneratedOn,
+  vcItemMachine,
 } from '../machines/vcItem';
-import { GlobalContext } from '../shared/GlobalContext';
 
 export function useKebabPopUp(props) {
-  const { appService } = useContext(GlobalContext);
-  const machine = useRef(
-    createVcItemMachine(
-      appService.getSnapshot().context.serviceRefs,
-      props.vcKey
-    )
-  );
-  const service = useInterpret(machine.current, { devTools: __DEV__ });
+  const service = props.service as ActorRefFrom<typeof vcItemMachine>;
   const PIN_CARD = () => service.send(VcItemEvents.PIN_CARD());
   const KEBAB_POPUP = () => service.send(VcItemEvents.KEBAB_POPUP());
   const ADD_WALLET_BINDING_ID = () =>
@@ -36,8 +25,11 @@ export function useKebabPopUp(props) {
   const CANCEL = () => service.send(VcItemEvents.CANCEL());
   const INPUT_OTP = (otp: string) => service.send(VcItemEvents.INPUT_OTP(otp));
   const isPinned = useSelector(service, selectIsPinned);
-  const isBindingWarning = useSelector(service, selectBindingWarning);
-  const isAcceptingOtpInput = useSelector(service, selectAcceptingBindingOtp);
+  const isBindingWarning = useSelector(service, selectKebabPopUpBindingWarning);
+  const isAcceptingOtpInput = useSelector(
+    service,
+    selectKebabPopUpAcceptingBindingOtp
+  );
   const isWalletBindingError = useSelector(
     service,
     selectShowWalletBindingError
@@ -46,7 +38,7 @@ export function useKebabPopUp(props) {
   const walletBindingError = useSelector(service, selectWalletBindingError);
   const WalletBindingInProgress = useSelector(
     service,
-    selectWalletBindingInProgress
+    selectKebabPopUpWalletBindingInProgress
   );
   const emptyWalletBindingId = useSelector(service, selectEmptyWalletBindingId);
   const isKebabPopUp = useSelector(service, selectKebabPopUp);
