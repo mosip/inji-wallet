@@ -22,6 +22,13 @@ export const RequestLayout: React.FC = () => {
     <React.Fragment>
       <RequestStack.Navigator
         initialRouteName="RequestScreen"
+        screenListeners={{
+          state: () => {
+            if (controller.IsSavingFailedInViewingVc || controller.isAccepted) {
+              controller.RESET();
+            }
+          },
+        }}
         screenOptions={{
           headerTitleAlign: 'center',
           headerShadowVisible: false,

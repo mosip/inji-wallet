@@ -15,6 +15,7 @@ import { selectVcLabel } from '../../machines/settings';
 import { MainBottomTabParamList } from '../../routes/main';
 import { GlobalContext } from '../../shared/GlobalContext';
 import { selectIsHandlingBleError } from '../../machines/openIdBle/scan';
+import { selectIsSavingFailedInViewingVc } from '../../machines/openIdBle/request';
 
 type RequestStackParamList = {
   RequestScreen: undefined;
@@ -71,9 +72,14 @@ export function useRequestLayout() {
     isDisconnected: useSelector(requestService, selectIsDisconnected),
     isBleError: useSelector(requestService, selectIsHandlingBleError),
 
+    IsSavingFailedInViewingVc: useSelector(
+      requestService,
+      selectIsSavingFailedInViewingVc
+    ),
     isReviewing,
     isDone,
 
     DISMISS: () => requestService.send(RequestEvents.DISMISS()),
+    RESET: () => requestService.send(RequestEvents.RESET()),
   };
 }
