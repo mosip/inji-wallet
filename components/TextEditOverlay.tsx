@@ -18,7 +18,12 @@ export const TextEditOverlay: React.FC<EditOverlayProps> = (props) => {
           <Text weight="semibold" margin="0 0 16 0">
             {props.label}
           </Text>
-          <Input autoFocus value={value} onChangeText={setValue} />
+          <Input
+            autoFocus
+            value={value}
+            selectionColor={Theme.Colors.Cursor}
+            onChangeText={setValue}
+          />
           <Row>
             <Button
               fill

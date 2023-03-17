@@ -60,6 +60,7 @@ export const DefaultTheme = {
     OnboardingCloseIcon: Colors.White,
     WarningIcon: Colors.Warning,
     ProfileIconBg: Colors.LightOrange,
+    Cursor: Colors.Orange,
   },
   Styles: StyleSheet.create({
     title: {

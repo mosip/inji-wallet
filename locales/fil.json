@@ -31,7 +31,7 @@
     "verify": "I-verify"
   },
   "QrScanner": {
-    "missingPermissionText": "Ginagamit ng app na ito ang camera upang i-scan ng QR code ng ibang device.",
+    "missingPermissionText": "Ginagamit ng app na ito ang camera upang i-scan ang QR code ng isa pang device.",
     "allowCameraButton": "Payagan gamitin ang camera"
   },
   "VcDetails": {
@@ -238,7 +238,19 @@
   "ReceiveVcScreen": {
     "header": "Mga detalye ng {{vcLabel}}",
     "acceptRequest": "Tanggapin ang kahilingan at tumanggap ng {{vcLabel}}",
-    "reject": "Tanggihan"
+    "reject": "Tanggihan",
+    "discard": "Itapon",
+    "goToReceivedVCTab": "Tingnan ang mga Natanggap na {{vcLabel}}",
+    "errors": {
+      "savingFailed": {
+        "title": "Nabigong i-save ang {{vcLabelSingular}}",
+        "message": "Nagkaproblema habang nagse-save ng {{vcLabelSingular}} sa tindahan."
+      },
+      "diskFullError": {
+        "title": "Nabigong i-save ang {{vcLabelSingular}}",
+        "message": "Wala nang mga {{vcLabelSingular}} na matatanggap o mai-save dahil puno na ang Data ng App."
+      }
+    }
   },
   "RequestScreen": {
     "bluetoothDenied": "Mangyaring paganahin ang Bluetooth upang makahiling ng {{vcLabel}}",
@@ -275,6 +287,8 @@
   "ScanScreen": {
     "header": "I-scan ang QR Code",
     "noShareableVcs": "Walang magagamit na maibabahaging {{vcLabel}}.",
+    "BluetoothStateIos": "Naka-OFF ang Bluetooth, paki-ON ito mula sa Control center",
+    "BluetoothStateAndroid": "Naka-OFF ang Bluetooth, paki-ON ito mula sa menu ng Quick settings",
     "sharingVc": "Pagbabahagi ng {{vcLabel}}",
     "errors": {
       "locationDisabled": {
