@@ -115,7 +115,7 @@
         "empty": "Hindi maaaring walang laman ang input",
         "invalidFormat": "Ang input format ay hindi tama"
       },
-      "backend":{
+      "backend": {
         "invalidOtp": "Di-wasto ang OTP",
         "expiredOtp": "Nag-expire na ang OTP",
         "applicationProcessing": "Hindi pa handa ang AID",
@@ -233,12 +233,18 @@
     "access": " ay humihiling ng access sa",
     "status": "Katayuan",
     "successMessage":"Ikaw ay Matagumpay na Naka-log In ",
-    "okay": "Sige"
+    "okay": "Sige",
+    "allow": "Payaganlow",
+    "cancel": "Kanselahin",
+    "essentialClaims": "Mahahalagang Claim",
+    "voluntaryClaims": "Mga Kusang-loob na Claim",
+    "required":"Kailangan"
   },
   "ReceiveVcScreen": {
     "header": "Mga detalye ng {{vcLabel}}",
-    "acceptRequest": "Tanggapin ang kahilingan at tumanggap ng {{vcLabel}}",
-    "reject": "Tanggihan"
+    "save": "I-save {{vcLabel}}",
+    "verifyAndSave": "I-verify at i-save",
+    "discard": "Itapon"
   },
   "RequestScreen": {
     "bluetoothDenied": "Mangyaring paganahin ang Bluetooth upang makahiling ng {{vcLabel}}",
@@ -266,6 +272,13 @@
       "connected": {
         "message": "Nakakonektang device. Naghihintay para sa {{vcLabel}}...",
         "timeoutHint": "Wala pang natanggap na VC. Nakakonekta pa rin ba ang pagpapadala ng device?"
+      },
+      "offline": {
+        "message": "Mangyaring kumonekta sa internet upang paganahin ang Online sharing mode"
+      },
+      "bleError": {
+        "title": "Nabigong ilipat",
+        "message": "Nagkaproblema habang inililipat ang {{vcLabel}}. Pakisubukang muli."
       }
     },
     "online": "Online",
@@ -294,7 +307,24 @@
       "invalid": "Di-wasto ang QR Code",
       "offline": "Mangyaring kumonekta sa internet upang makapag-scan ng QR codes na gumagamit ng Online sharing mode",
       "sent": "Naibahagi na ang {{vcLabel}}...",
-      "sentHint": "Iniintay ang nakatanggap na itabi o iwaksi ang iyong {{vcLabel}}"
+      "sentHint": "Iniintay ang nakatanggap na itabi o iwaksi ang iyong {{vcLabel}}",
+      "sharing": {
+        "title": "Pagbabahagi...",
+        "hint": "Pakihintay na tanggapin o tanggihan ng tumatanggap na device ang pagbabahagi.",
+        "timeoutHint": "Mas tumatagal kaysa sa inaasahan ang pagbabahagi. Maaaring may problema sa koneksyon."
+      },
+      "accepted": {
+        "title": "Tagumpay!",
+        "message": "Ang iyong {{vcLabel}} ay matagumpay na naibahagi sa {{receiver}}"
+      },
+      "rejected": {
+        "title": "Pansinin",
+        "message": "Ang iyong {{vcLabel}} ay itinapon ng {{receiver}}"
+      },
+      "bleError": {
+        "title": "Nabigong ilipat!",
+        "message": "Nagkaproblema habang inililipat ang {{vcLabel}}. Pakisubukang muli."
+      }
     }
   },
   "SelectVcOverlay": {
