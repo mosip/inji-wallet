@@ -8,10 +8,22 @@ import { VcDetails } from '../../components/VcDetails';
 import { useReceiveVcScreen } from './ReceiveVcScreenController';
 import { VerifyIdentityOverlay } from '../VerifyIdentityOverlay';
 import { MessageOverlay } from '../../components/MessageOverlay';
+import { isBLEEnabled } from '../../lib/smartshare';
+import { useOverlayVisibleAfterTimeout } from '../../shared/hooks/useOverlayVisibleAfterTimeout';
 
 export const ReceiveVcScreen: React.FC = () => {
   const { t } = useTranslation('ReceiveVcScreen');
   const controller = useReceiveVcScreen();
+  const savingOverlayVisible = useOverlayVisibleAfterTimeout(
+    controller.isAccepting
+  );
+  let storeErrorTranslationPath = 'errors.savingFailed';
+  const isDiskFullError =
+    controller.storeError?.message?.match('SQLITE_FULL') != null;
+
+  if (isDiskFullError) {
+    storeErrorTranslationPath = 'errors.diskFullError';
+  }
 
   return (
     <React.Fragment>
@@ -31,31 +43,43 @@ export const ReceiveVcScreen: React.FC = () => {
           />
         </Column>
         <Column padding="0 24" margin="32 0 0 0">
-          {controller.incomingVc.shouldVerifyPresence ? (
-            <Button
-              type="outline"
-              title={t('verifyAndSave')}
-              margin="12 0 12 0"
-              onPress={controller.ACCEPT_AND_VERIFY}
-              disabled={!controller.isReviewingInIdle}
-            />
+          {!isBLEEnabled ? (
+            <>
+              {controller.incomingVc.shouldVerifyPresence ? (
+                <Button
+                  type="outline"
+                  title={t('verifyAndSave')}
+                  margin="12 0 12 0"
+                  onPress={controller.ACCEPT_AND_VERIFY}
+                  disabled={!controller.isReviewingInIdle}
+                />
+              ) : (
+                <Button
+                  title={t('save', {
+                    vcLabel: controller.vcLabel.singular,
+                  })}
+                  margin="12 0 12 0"
+                  onPress={controller.ACCEPT}
+                  disabled={!controller.isReviewingInIdle}
+                />
+              )}
+              <Button
+                type="clear"
+                title={t('discard')}
+                margin="0 0 12 0"
+                onPress={controller.REJECT}
+                disabled={!controller.isReviewingInIdle}
+              />
+            </>
           ) : (
             <Button
-              title={t('save', {
-                vcLabel: controller.vcLabel.singular,
+              title={t('goToReceivedVCTab', {
+                vcLabel: controller.vcLabel.plural,
               })}
-              margin="12 0 12 0"
-              onPress={controller.ACCEPT}
-              disabled={!controller.isReviewingInIdle}
+              margin="0 0 12 0"
+              onPress={controller.GO_TO_RECEIVED_VC_TAB}
             />
           )}
-          <Button
-            type="clear"
-            title={t('discard')}
-            margin="0 0 12 0"
-            onPress={controller.REJECT}
-            disabled={!controller.isReviewingInIdle}
-          />
         </Column>
       </Column>
 
@@ -89,6 +113,27 @@ export const ReceiveVcScreen: React.FC = () => {
           />
         </Row>
       </MessageOverlay>
+
+      <MessageOverlay
+        isVisible={savingOverlayVisible}
+        message={t('saving', {
+          vcLabel: controller.vcLabel.plural,
+        })}
+        progress={true}
+      />
+
+      <MessageOverlay
+        isVisible={controller.IsSavingFailedInIdle}
+        title={t(storeErrorTranslationPath + '.title', {
+          vcLabelSingular: controller.vcLabel.singular,
+          vcLabelPlural: controller.vcLabel.plural,
+        })}
+        message={t(storeErrorTranslationPath + '.message', {
+          vcLabelSingular: controller.vcLabel.singular,
+          vcLabelPlural: controller.vcLabel.plural,
+        })}
+        onBackdropPress={controller.DISMISS}
+      />
     </React.Fragment>
   );
 };

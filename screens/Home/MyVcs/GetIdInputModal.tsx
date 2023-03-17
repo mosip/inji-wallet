@@ -45,6 +45,7 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = (props) => {
                   inputStyle={{
                     textAlign: I18nManager.isRTL ? 'right' : 'left',
                   }}
+                  selectionColor={Theme.Colors.Cursor}
                   style={Theme.Styles.placeholder}
                   value={controller.id}
                   keyboardType="number-pad"

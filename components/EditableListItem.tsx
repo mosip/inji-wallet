@@ -38,6 +38,7 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
             autoFocus
             value={newValue}
             onChangeText={setNewValue}
+            selectionColor={Theme.Colors.Cursor}
             inputStyle={{
               textAlign: I18nManager.isRTL ? 'right' : 'left',
             }}

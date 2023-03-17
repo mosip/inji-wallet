@@ -1,4 +1,4 @@
-{   
+{
   "ActivityLogText": {
     "VC_SHARED": "ಹಂಚಿಕೊಂಡಿದ್ದಾರೆ",
     "VC_RECEIVED": "ಸ್ವೀಕರಿಸಿದರು",
@@ -31,7 +31,7 @@
       "verify": "ಪರಿಶೀಲಿಸಿ"
     },
     "QrScanner": {
-      "missingPermissionText": "ಈ ಅಪ್ಲಿಕೇಶನ್ ಇನ್ನೊಂದು ಸಾಧನದ QR ಕೋಡ್ ಅನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಲು ಕ್ಯಾಮರಾವನ್ನು ಬಳಸುತ್ತದೆ.",
+      "missingPermissionText": "ಮತ್ತೊಂದು ಸಾಧನದ QR ಕೋಡ್ ಅನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಲು ಈ ಅಪ್ಲಿಕೇಶನ್ ಕ್ಯಾಮರಾವನ್ನು ಬಳಸುತ್ತದೆ.",
       "allowCameraButton": "ಕ್ಯಾಮೆರಾಗೆ ಪ್ರವೇಶವನ್ನು ಅನುಮತಿಸಿ"
     },
     "VcDetails": {
@@ -241,7 +241,19 @@
       "header": "{{vcLabel}} ವಿವರಗಳು",
       "acceptRequest": "ವಿನಂತಿಯನ್ನು ಸ್ವೀಕರಿಸಿ ಮತ್ತು {{vcLabel}} ಸ್ವೀಕರಿಸಿ",
       "acceptRequestAndVerify": "ವಿನಂತಿಯನ್ನು ಸ್ವೀಕರಿಸಿ ಮತ್ತು ಪರಿಶೀಲಿಸಿ",
-      "reject": "ತಿರಸ್ಕರಿಸಿ"
+      "reject": "ತಿರಸ್ಕರಿಸಿ",
+      "discard": "ತಿರಸ್ಕರಿಸು",
+      "goToReceivedVCTab": "ಸ್ವೀಕರಿಸಿದ {{vcLabel}} ವೀಕ್ಷಿಸಿ",
+      "errors": {
+        "savingFailed": {
+          "title": "{{vcLabelSingular}} ಉಳಿಸಲು ವಿಫಲವಾಗಿದೆ",
+          "message": "ಸ್ಟೋರ್‌ನಲ್ಲಿ {{vcLabelSingular}} ಉಳಿಸುವಾಗ ಏನೋ ತಪ್ಪಾಗಿದೆ."
+        },
+        "diskFullError": {
+          "title": "{{vcLabelSingular}} ಉಳಿಸಲು ವಿಫಲವಾಗಿದೆ",
+          "message": "ಅಪ್ಲಿಕೇಶನ್ ಡೇಟಾ ತುಂಬಿರುವುದರಿಂದ ಹೆಚ್ಚಿನ {{vcLabelPlural}} ಸ್ವೀಕರಿಸಲು ಅಥವಾ ಉಳಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ."
+        }
+      }
     },
     "RequestScreen": {
       "bluetoothDenied": "ವಿನಂತಿಸಲು ಬ್ಲೂಟೂತ್ ಅನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ{{vcLabel}}",
@@ -278,6 +290,8 @@
     "ScanScreen": {
       "header": "ಸ್ಕ್ಯಾನ್ ಕ್ಯೂಆರ್ ಕೋಡ್",
       "noShareableVcs": "ಯಾವುದೇ ಹಂಚಿಕೊಳ್ಳಬಹುದಾದ {{vcLabel}} ಲಭ್ಯವಿಲ್ಲ.",
+      "BluetoothStateIos": "ಬ್ಲೂಟೂತ್ ಅನ್ನು ಆಫ್ ಮಾಡಲಾಗಿದೆ, ದಯವಿಟ್ಟು ಅದನ್ನು ನಿಯಂತ್ರಣ ಕೇಂದ್ರದಿಂದ ಆನ್ ಮಾಡಿ",
+      "BluetoothStateAndroid": "ಬ್ಲೂಟೂತ್ ಆಫ್ ಆಗಿದೆ, ದಯವಿಟ್ಟು ತ್ವರಿತ ಸೆಟ್ಟಿಂಗ್‌ಗಳ ಮೆನುವಿನಿಂದ ಅದನ್ನು ಆನ್ ಮಾಡಿ",
       "sharingVc": "ಹಂಚಿಕೆ {{vcLabel}}",
       "errors": {
         "locationDisabled": {
@@ -317,7 +331,7 @@
         "accepted": {
           "title": "ಯಶಸ್ಸು!",
           "message": "ನಿಮ್ಮ {{vcLabel}}ನ್ನು {{receiver}} ಅವರೊಂದಿಗೆ ಯಶಸ್ವಿಯಾಗಿ ಹಂಚಿಕೊಳ್ಳಲಾಗಿದೆ"
-          
+
         },
         "rejected": {
           "title": "ಗಮನಿಸಿ",

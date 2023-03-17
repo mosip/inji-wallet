@@ -1,4 +1,4 @@
-{   
+{
   "ActivityLogText": {
     "VC_SHARED": "பகிர்ந்து கொண்டார்",
     "VC_RECEIVED": "பெற்றது",
@@ -239,7 +239,19 @@
       "header": "{{vcLabel}} விவரங்கள்",
       "acceptRequest": "கோரிக்கையை ஏற்று {{vcLabel}} ஐப் பெறவும்",
       "acceptRequestAndVerify": "கோரிக்கையை ஏற்று சரிபார்க்கவும்",
-      "reject": "நிராகரிக்கவும்"
+      "reject": "நிராகரிக்கவும்",
+      "discard": "நிராகரிக்கவும்",
+      "goToReceivedVCTab": "பெறப்பட்ட {{vcLabel}}களைப் பார்க்கவும் ",
+      "errors": {
+        "savingFailed": {
+          "title": "{{vcLabelSingular}}ஐ சேமிப்பதில் தோல்வி",
+          "message": "கடையில் {{vcLabelSingular}}ஐ சேமிக்கும் போது ஏதோ தவறு ஏற்பட்டது."
+        },
+        "diskFullError": {
+          "title": "{{vcLabelSingular}}ஐ சேமிக்க முடியவில்லை",
+          "message": "ஆப்ஸ் டேட்டா நிரம்பியதால் {{vcLabelPlural}} பெறவோ சேமிக்கவோ முடியாது."
+        }
+      }
     },
     "RequestScreen": {
       "bluetoothDenied": "{{vcLabel}}ஐக் கோர புளூடூத்தை இயக்கவும்",
@@ -276,6 +288,8 @@
     "ScanScreen": {
       "header": "QR குறியீட்டை ஸ்கேன் செய்",
       "noShareableVcs": "பகிரக்கூடிய {{vcLabel}} எதுவும் இல்லை.",
+      "BluetoothStateIos": "புளூடூத் முடக்கப்பட்டுள்ளது, கட்டுப்பாட்டு மையத்திலிருந்து அதை இயக்கவும்",
+      "BluetoothStateAndroid": "புளூடூத் முடக்கப்பட்டுள்ளது, விரைவு அமைப்புகள் மெனுவிலிருந்து அதை இயக்கவும்",
       "sharingVc": "பகிர்தல் {{vcLabel}}",
       "errors": {
         "locationDisabled": {

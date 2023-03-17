@@ -246,7 +246,19 @@
     "header": "{{vcLabel}} details",
     "save": "Save {{vcLabel}}",
     "verifyAndSave": "Verify and save",
-    "discard": "Discard"
+    "reject": "Reject",
+    "discard": "Discard",
+    "goToReceivedVCTab":  "View Received {{vcLabel}}",
+    "errors": {
+      "savingFailed": {
+        "title": "Failed to save the {{vcLabelSingular}}",
+        "message": "Something went wrong while saving {{vcLabelSingular}} to the store."
+      },
+      "diskFullError": {
+        "title": "Failed to save the {{vcLabelSingular}}",
+        "message": "No more {{vcLabelPlural}} can be received or saved as App Data is full."
+      }
+    }
   },
   "RequestScreen": {
     "bluetoothDenied": "Please enable Bluetooth to be able to request {{vcLabel}}",
@@ -291,6 +303,8 @@
     "header": "Scan QR Code",
     "noShareableVcs": "No shareable {{vcLabel}} are available.",
     "sharingVc": "Sharing {{vcLabel}}",
+    "BluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
+    "BluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
     "errors": {
       "locationDisabled": {
         "message": "Location services must be enabled for the scanning functionality",
@@ -324,7 +338,7 @@
         "message": "Your {{vcLabel}} was discarded by {{receiver}}"
       },
       "bleError": {
-        "title": "Failed to transfer!",
+        "title": "Failed to transfer",
         "message": "Something went wrong while transferring {{vcLabel}}. Please try again."
       }
     }

@@ -25,7 +25,7 @@ export const MyBindedVcs: React.FC<MyBindedVcsProps> = (props) => {
         <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
           <Column fill>
             {controller.vcKeys.length > 0 && (
-              <React.Fragment>
+              <>
                 <Column
                   fill
                   backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
@@ -45,24 +45,24 @@ export const MyBindedVcs: React.FC<MyBindedVcsProps> = (props) => {
                         ))}
                     </Column>
                   </Column>
-                  <Column
-                    style={{
-                      borderTopRightRadius: 27,
-                      borderTopLeftRadius: 27,
-                    }}
-                    padding="16 24"
-                    margin="2 0 0 0"
-                    elevation={2}>
-                    <Button
-                      title={t('verify')}
-                      margin="0 0 12 0"
-                      styles={Theme.ButtonStyles.radius}
-                      disabled={controller.selectedIndex == null}
-                      onPress={controller.VERIFY}
-                    />
-                  </Column>
                 </Column>
-              </React.Fragment>
+                <Column
+                  align="flex-end"
+                  style={{
+                    borderTopRightRadius: 27,
+                    borderTopLeftRadius: 27,
+                  }}
+                  padding="16 24"
+                  margin="2 0 0 0"
+                  elevation={2}>
+                  <Button
+                    title={t('verify')}
+                    styles={Theme.ButtonStyles.radius}
+                    disabled={controller.selectedIndex == null}
+                    onPress={controller.VERIFY}
+                  />
+                </Column>
+              </>
             )}
             {controller.vcKeys.length === 0 && (
               <React.Fragment>

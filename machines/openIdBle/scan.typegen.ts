@@ -117,6 +117,7 @@ export interface Typegen0 {
       | 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
   };
   'eventsCausingGuards': {
+    isIOS: 'BLUETOOTH_DISABLED';
     isQrLogin: 'SCAN';
     isQrOffline: 'SCAN';
     isQrOnline: 'SCAN';
@@ -125,7 +126,7 @@ export interface Typegen0 {
     QrLogin: 'SCAN';
     checkBluetoothService: 'SCREEN_FOCUS';
     checkLocationPermission: 'APP_ACTIVE' | 'LOCATION_ENABLED';
-    checkLocationStatus: '';
+    checkLocationStatus: '' | 'BLUETOOTH_DISABLED';
     createVp: never;
     disconnect: '' | 'DISMISS' | 'LOCATION_ENABLED';
     discoverDevice: 'RECEIVE_DEVICE_INFO';

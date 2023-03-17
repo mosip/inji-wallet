@@ -1,4 +1,4 @@
-{   
+{
   "ActivityLogText": {
     "VC_SHARED": "مشترك",
     "VC_RECEIVED": "الواردة",
@@ -239,7 +239,19 @@
       "header": "تفاصيل {{vcLabel}}",
       "acceptRequest": "قبول الطلب واستلام {{vcLabel}}",
       "acceptRequestAndVerify": "قبول الطلب والتحقق",
-      "reject": "رفض"
+      "reject": "رفض",
+      "discard": "ينبذ",
+      "goToReceivedVCTab": "منظر تلقى {{vcLabel}}",
+      "errors": {
+        "savingFailed": {
+          "title": "فشل حفظ {{vcLabel}}",
+          "message": "شئ ما ذهب خطأ بينما إنقاذ {{vcLabel}} ل ال محل."
+        },
+        "diskFullError": {
+          "title": "فشل حفظ {{vcLabel}}",
+          "message": "لا يمكن استلام المزيد من {{vcLabelPlural}} أو حفظه لأن بيانات التطبيق ممتلئة."
+        }
+      }
     },
     "RequestScreen": {
       "bluetoothDenied": "الرجاء تمكين Bluetooth لتتمكن من طلب{{vcLabel}}",
@@ -276,6 +288,8 @@
     "ScanScreen": {
       "header": "مسح رمز الاستجابة السريعة",
       "noShareableVcs": "لا يمكن مشاركة {{vcLabel}}",
+      "BluetoothStateIos": "تم إيقاف تشغيل البلوتوث ، يرجى تشغيله من مركز التحكم",
+      "BluetoothStateAndroid": "تم إيقاف تشغيل البلوتوث ، يرجى تشغيله من قائمة الإعدادات السريعة",
       "sharingVc": "مشاركة {{vcLabel}}",
       "errors": {
         "locationDisabled": {

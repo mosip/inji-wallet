@@ -31,7 +31,7 @@
       "verify": "सत्यापित करना"
     },
     "QrScanner": {
-      "missingPermissionText": "यह ऐप किसी अन्य डिवाइस के क्यूआर कोड को स्कैन करने के लिए कैमरे का उपयोग करता है।",
+      "missingPermissionText": "यह ऐप दूसरे डिवाइस के क्यूआर कोड को स्कैन करने के लिए कैमरे का इस्तेमाल करता है।",
       "allowCameraButton": "कैमरे तक पहुंच की अनुमति दें"
     },
     "VcDetails": {
@@ -241,7 +241,19 @@
       "header": "{{vcLabel}} विवरण",
       "acceptRequest": "अनुरोध स्वीकार करें और {{vcLabel}} प्राप्त करें",
       "acceptRequestAndVerify": "अनुरोध स्वीकार करें और सत्यापित करें",
-      "reject": "अस्वीकार"
+      "reject": "अस्वीकार",
+      "discard": "खारिज करना",
+      "goToReceivedVCTab": "प्राप्त {{vcLabel}} देखें",
+      "errors": {
+        "savingFailed": {
+          "title": "{{vcLabelSingular}} सहेजने में विफल",
+          "message": "{{vcLabelSingular}} को स्टोर में सेव करते समय कोई गड़बड़ी हुई."
+        },
+        "diskFullError": {
+          "title": "{{vcLabelSingular}} सहेजने में विफल",
+          "message": "ऐप डेटा पूर्ण होने के कारण कोई और {{vcLabelPlural}} प्राप्त या सहेजा नहीं जा सकता है।"
+        }
+      }
     },
     "RequestScreen": {
       "bluetoothDenied": "कृपया ब्लूटूथ को सक्षम करें ताकि वह {{vcLabel}} का अनुरोध कर सके",
@@ -278,6 +290,8 @@
     "ScanScreen": {
       "header": "क्यूआर कोड स्कैन करे",
       "noShareableVcs": "कोई साझा करने योग्य {{vcLabel}} उपलब्ध नहीं है।",
+      "BluetoothStateIos": "ब्लूटूथ बंद है, कृपया इसे नियंत्रण केंद्र से चालू करें",
+      "BluetoothStateAndroid": "ब्लूटूथ बंद है, कृपया इसे त्वरित सेटिंग मेनू से चालू करें",
       "sharingVc": "शेयरिंग {{vcLabel}}",
       "errors": {
         "locationDisabled": {
