@@ -13,7 +13,9 @@ export const GetVcModal: React.FC<GetVcModalProps> = (props) => {
     <React.Fragment>
       <GetIdInputModal
         service={props.service}
-        isVisible={true}
+        isVisible={
+          !controller.isAcceptingOtpInput && !controller.isRequestingCredential
+        }
         onDismiss={controller.DISMISS}
       />
 
