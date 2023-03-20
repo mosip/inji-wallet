@@ -36,7 +36,12 @@ import {
   SendVcEvent,
   SendVcStatus,
 } from '../../shared/openIdBLE/smartshare';
-import { check, PERMISSIONS, PermissionStatus } from 'react-native-permissions';
+import {
+  check,
+  PERMISSIONS,
+  PermissionStatus,
+  RESULTS,
+} from 'react-native-permissions';
 import { checkLocation, requestLocation } from '../../shared/location';
 import { CameraCapturedPicture } from 'expo-camera';
 import { log } from 'xstate/lib/actions';
@@ -150,23 +155,15 @@ export const scanMachine =
           states: {
             checking: {
               invoke: {
-                src: 'checkBluetoothService',
+                src: 'checkBluetoothPermission',
               },
               on: {
                 BLUETOOTH_ENABLED: {
                   target: 'enabled',
                 },
-                BLUETOOTH_DISABLED: [
-                  {
-                    // In iOS, irrespective of bluetooth permission status provided by the User, we always get BLUETOOTH_DENIED event.
-                    // This issue will be handled separately(#580). Temporarily we are allowing to move forward.
-                    target: '#scan.checkingLocationService',
-                    cond: 'isIOS',
-                  },
-                  {
-                    target: 'requesting',
-                  },
-                ],
+                BLUETOOTH_DISABLED: {
+                  target: 'requesting',
+                },
               },
             },
             requesting: {
@@ -753,17 +750,25 @@ export const scanMachine =
       },
 
       services: {
-        checkBluetoothService: () => (callback) => {
-          const subscription = BluetoothStateManager.onStateChange((state) => {
-            if (state === 'PoweredOn') {
+        checkBluetoothPermission: () => async (callback) => {
+          // wait a bit for animation to finish when app becomes active
+          await new Promise((resolve) => setTimeout(resolve, 250));
+
+          try {
+            let permission =
+              Platform.OS === 'ios'
+                ? PERMISSIONS.IOS.BLUETOOTH_PERIPHERAL
+                : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
+            let response = await check(permission);
+            if (response === RESULTS.GRANTED) {
               callback(model.events.BLUETOOTH_ENABLED());
             } else {
               callback(model.events.BLUETOOTH_DISABLED());
             }
-          }, true);
-          return () => subscription.remove();
+          } catch (e) {
+            console.error(e);
+          }
         },
-
         requestBluetooth: () => (callback) => {
           BluetoothStateManager.requestToEnable()
             .then(() => callback(model.events.BLUETOOTH_ENABLED()))
@@ -961,10 +966,6 @@ export const scanMachine =
       },
 
       guards: {
-        isIOS: () => {
-          return Platform.OS === 'ios';
-        },
-
         isQrOffline: (_context, event) => {
           // don't scan if QR is offline and Google Nearby is enabled
           if (Platform.OS === 'ios' && !isBLEEnabled) return false;

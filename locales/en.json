@@ -303,6 +303,8 @@
     "sharingVc": "Sharing {{vcLabel}}",
     "BluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
     "BluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
+    "enableBluetoothMessage": "Please enable bluetooth permissions to support local sharing",
+    "enableBluetoothButtonText": "Allow Bluetooth Permissions",
     "errors": {
       "locationDisabled": {
         "message": "Location services must be enabled for the scanning functionality",

@@ -290,6 +290,8 @@
       "noShareableVcs": "ಯಾವುದೇ ಹಂಚಿಕೊಳ್ಳಬಹುದಾದ {{vcLabel}} ಲಭ್ಯವಿಲ್ಲ.",
       "BluetoothStateIos": "ಬ್ಲೂಟೂತ್ ಅನ್ನು ಆಫ್ ಮಾಡಲಾಗಿದೆ, ದಯವಿಟ್ಟು ಅದನ್ನು ನಿಯಂತ್ರಣ ಕೇಂದ್ರದಿಂದ ಆನ್ ಮಾಡಿ",
       "BluetoothStateAndroid": "ಬ್ಲೂಟೂತ್ ಆಫ್ ಆಗಿದೆ, ದಯವಿಟ್ಟು ತ್ವರಿತ ಸೆಟ್ಟಿಂಗ್‌ಗಳ ಮೆನುವಿನಿಂದ ಅದನ್ನು ಆನ್ ಮಾಡಿ",
+      "enableBluetoothMessage": "ದಯವಿಟ್ಟು ಸ್ಥಳೀಯ ಹಂಚಿಕೆಯನ್ನು ಬೆಂಬಲಿಸಲು ಬ್ಲೂಟೂತ್ ಅನುಮತಿಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ",
+      "enableBluetoothButtonText": "ಬ್ಲೂಟೂತ್ ಅನುಮತಿಗಳನ್ನು ಅನುಮತಿಸಿ",
       "sharingVc": "ಹಂಚಿಕೆ {{vcLabel}}",
       "errors": {
         "locationDisabled": {

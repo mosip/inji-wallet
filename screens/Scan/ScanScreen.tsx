@@ -7,7 +7,7 @@ import { Theme } from '../../components/ui/styleUtils';
 import { QrLogin } from '../QrLogin/QrLogin';
 import { useScanScreen } from './ScanScreenController';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
-import { Platform } from 'react-native';
+import { Linking, Platform } from 'react-native';
 
 export const ScanScreen: React.FC = () => {
   const { t } = useTranslation('ScanScreen');
@@ -44,6 +44,21 @@ export const ScanScreen: React.FC = () => {
     );
   }
 
+  function allowBluetoothPermissionComponent() {
+    return (
+      <Column padding="24" fill align="space-between">
+        <Text align="center" margin="0 16" color={Theme.Colors.errorMessage}>
+          {t('enableBluetoothMessage')}
+        </Text>
+        <Button
+          title={t('enableBluetoothButtonText')}
+          onPress={() => {
+            Linking.openSettings();
+          }}></Button>
+      </Column>
+    );
+  }
+
   function qrScannerComponent() {
     return (
       <Column crossAlign="center" margin="0 0 0 -6">
@@ -56,6 +71,11 @@ export const ScanScreen: React.FC = () => {
     if (controller.isEmpty) {
       return noShareableVcText();
     }
+
+    if (controller.isBluetoothPermissionDenied) {
+      return allowBluetoothPermissionComponent();
+    }
+
     if (!isBluetoothOn) {
       return bluetoothIsOffText();
     }

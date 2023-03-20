@@ -30,7 +30,7 @@ export interface Typegen0 {
     'xstate.stop': { type: 'xstate.stop' };
   };
   'invokeSrcNameMap': {
-    checkBluetoothService: 'done.invoke.scan.checkingBluetoothService.checking:invocation[0]';
+    checkBluetoothPermission: 'done.invoke.scan.checkingBluetoothService.checking:invocation[0]';
     checkLocationPermission: 'done.invoke.scan.checkingLocationService.checkingPermission:invocation[0]';
     checkLocationStatus: 'done.invoke.scan.checkingLocationService.checkingStatus:invocation[0]';
     createVp: 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
@@ -117,16 +117,15 @@ export interface Typegen0 {
       | 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
   };
   'eventsCausingGuards': {
-    isIOS: 'BLUETOOTH_DISABLED';
     isQrLogin: 'SCAN';
     isQrOffline: 'SCAN';
     isQrOnline: 'SCAN';
   };
   'eventsCausingServices': {
     QrLogin: 'SCAN';
-    checkBluetoothService: 'SCREEN_FOCUS';
+    checkBluetoothPermission: 'SCREEN_FOCUS';
     checkLocationPermission: 'APP_ACTIVE' | 'LOCATION_ENABLED';
-    checkLocationStatus: '' | 'BLUETOOTH_DISABLED';
+    checkLocationStatus: '';
     createVp: never;
     disconnect: '' | 'DISMISS' | 'LOCATION_ENABLED';
     discoverDevice: 'RECEIVE_DEVICE_INFO';
