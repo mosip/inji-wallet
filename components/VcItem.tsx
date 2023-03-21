@@ -246,7 +246,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
                     children={t('offlineAuthDisabledHeader')}></Text>
                 </Row>
 
-                <Pressable>
+                <Pressable onPress={() => props.onPress(service)}>
                   <Icon
                     name="dots-three-horizontal"
                     type="entypo"
@@ -275,7 +275,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
                 </Row>
 
                 {props.showOnlyBindedVc ? null : (
-                  <Pressable>
+                  <Pressable onPress={() => props.onPress(service)}>
                     <Icon
                       name="dots-three-horizontal"
                       type="entypo"

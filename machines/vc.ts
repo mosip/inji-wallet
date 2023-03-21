@@ -244,6 +244,7 @@ export function selectBindedVcs(state: State) {
   return (Object.keys(state.context.vcs) as Array<string>).filter((key) => {
     var walletBindingResponse = state.context.vcs[key].walletBindingResponse;
     return (
+      state.context.myVcs.includes(key) &&
       walletBindingResponse !== null &&
       walletBindingResponse.walletBindingId !== null &&
       walletBindingResponse.walletBindingId !== ''

@@ -11,7 +11,9 @@
     "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "received. Presence verification failed",
     "PRESENCE_VERIFIED_AND_VC_SHARED": "verified and shared",
     "PRESENCE_VERIFICATION_FAILED": "verification failed",
-    "QRLOGIN_SUCCESFULL": "QRLogin sucessfull"
+    "QRLOGIN_SUCCESFULL": "QRLogin successful",
+    "WALLET_BINDING_SUCCESSFULL": "Activation successful",
+    "WALLET_BINDING_FAILURE": "Activation failed"
   },
   "DeviceInfoList": {
     "requestedBy": "Requested by",
@@ -113,7 +115,7 @@
         "empty": "The input cannot be empty",
         "invalidFormat": "The input format is incorrect"
       },
-      "backend":{
+      "backend": {
         "invalidOtp": "OTP is invalid",
         "expiredOtp": "OTP has expired",
         "applicationProcessing": "AID is not ready",
@@ -238,7 +240,7 @@
     "cancel": "Cancel",
     "essentialClaims": "Essential Claims",
     "voluntaryClaims": "Voluntary Claims",
-    "required":"Required"
+    "required": "Required"
   },
   "ReceiveVcScreen": {
     "header": "{{vcLabel}} details",
@@ -246,7 +248,7 @@
     "verifyAndSave": "Verify and save",
     "reject": "Reject",
     "discard": "Discard",
-    "goToReceivedVCTab":  "View Received {{vcLabel}}",
+    "goToReceivedVCTab": "View Received {{vcLabel}}",
     "errors": {
       "savingFailed": {
         "title": "Failed to save the {{vcLabelSingular}}",

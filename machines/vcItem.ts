@@ -416,7 +416,7 @@ export const vcItemMachine =
             ],
             onError: [
               {
-                actions: 'setWalletBindingError',
+                actions: ['setWalletBindingError', 'logWalletBindingFailure'],
                 target: 'showingWalletBindingError',
               },
             ],
@@ -452,7 +452,7 @@ export const vcItemMachine =
             },
             onError: [
               {
-                actions: 'setWalletBindingError',
+                actions: ['setWalletBindingError', 'logWalletBindingFailure'],
                 target: 'showingWalletBindingError',
               },
             ],
@@ -469,7 +469,7 @@ export const vcItemMachine =
             ],
             onError: [
               {
-                actions: 'setWalletBindingError',
+                actions: ['setWalletBindingError', 'logWalletBindingFailure'],
                 target: 'showingWalletBindingError',
               },
             ],
@@ -485,10 +485,11 @@ export const vcItemMachine =
                 'updatePrivateKey',
                 'updateVc',
                 'setWalletBindingErrorEmpty',
+                'logWalletBindingSuccess',
               ],
             },
             onError: {
-              actions: 'setWalletBindingError',
+              actions: ['setWalletBindingError', 'logWalletBindingFailure'],
               target: 'showingWalletBindingError',
             },
           },
@@ -606,6 +607,34 @@ export const vcItemMachine =
               timestamp: Date.now(),
               deviceName: '',
               vcLabel: event.vc.tag || event.vc.id,
+            }),
+          {
+            to: (context) => context.serviceRefs.activityLog,
+          }
+        ),
+
+        logWalletBindingSuccess: send(
+          (context, event) =>
+            ActivityLogEvents.LOG_ACTIVITY({
+              _vcKey: VC_ITEM_STORE_KEY(context),
+              type: 'WALLET_BINDING_SUCCESSFULL',
+              timestamp: Date.now(),
+              deviceName: '',
+              vcLabel: context.tag || context.id,
+            }),
+          {
+            to: (context) => context.serviceRefs.activityLog,
+          }
+        ),
+
+        logWalletBindingFailure: send(
+          (context, event) =>
+            ActivityLogEvents.LOG_ACTIVITY({
+              _vcKey: VC_ITEM_STORE_KEY(context),
+              type: 'WALLET_BINDING_FAILURE',
+              timestamp: Date.now(),
+              deviceName: '',
+              vcLabel: context.tag || context.id,
             }),
           {
             to: (context) => context.serviceRefs.activityLog,
