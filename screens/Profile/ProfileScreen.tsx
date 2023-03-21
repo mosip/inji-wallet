@@ -105,7 +105,11 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
           <Switch
             value={controller.isBiometricUnlockEnabled}
             onValueChange={controller.useBiometrics}
-            color={Theme.Colors.profileValue}
+            trackColor={{
+              false: Theme.Colors.switchTrackFalse,
+              true: Theme.Colors.switchTrackTrue,
+            }}
+            color={Theme.Colors.switchHead}
           />
         </ListItem>
         {/* Intentionally hidden using {display:'none'} - Refer mosip/inji/issue#607 */}
