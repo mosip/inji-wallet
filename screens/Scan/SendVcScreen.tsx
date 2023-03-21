@@ -9,7 +9,6 @@ import { MessageOverlay } from '../../components/MessageOverlay';
 import { useSendVcScreen } from './SendVcScreenController';
 import { VerifyIdentityOverlay } from '../VerifyIdentityOverlay';
 import { VcItem } from '../../components/VcItem';
-import { SingleVcItem } from '../../components/SingleVcItem';
 import { I18nManager } from 'react-native';
 import { useInterpret } from '@xstate/react';
 import { createVcItemMachine } from '../../machines/vcItem';
@@ -59,28 +58,17 @@ export const SendVcScreen: React.FC = () => {
             />
           </Column>
           <Column>
-            {controller.vcKeys.length === 1 && (
-              <SingleVcItem
-                key={controller.vcKeys[0]}
-                vcKey={controller.vcKeys[0]}
+            {controller.vcKeys.map((vcKey, index) => (
+              <VcItem
+                key={vcKey}
+                vcKey={vcKey}
                 margin="0 2 8 2"
-                onPress={controller.SELECT_VC_ITEM(0)}
+                onPress={controller.SELECT_VC_ITEM(index)}
                 selectable
-                selected={0 === controller.selectedIndex}
+                selected={index === controller.selectedIndex}
+                activeTab={'sharingVcScreen'}
               />
-            )}
-
-            {controller.vcKeys.length > 1 &&
-              controller.vcKeys.map((vcKey, index) => (
-                <VcItem
-                  key={vcKey}
-                  vcKey={vcKey}
-                  margin="0 2 8 2"
-                  onPress={controller.SELECT_VC_ITEM(index)}
-                  selectable
-                  selected={index === controller.selectedIndex}
-                />
-              ))}
+            ))}
           </Column>
         </Column>
         <Column
