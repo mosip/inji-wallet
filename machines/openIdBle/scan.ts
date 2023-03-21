@@ -40,6 +40,7 @@ import {
   check,
   PERMISSIONS,
   PermissionStatus,
+  request,
   RESULTS,
 } from 'react-native-permissions';
 import { checkLocation, requestLocation } from '../../shared/location';
@@ -92,6 +93,8 @@ const model = createModel(
       CONNECTION_DESTROYED: () => ({}),
       SCREEN_BLUR: () => ({}),
       SCREEN_FOCUS: () => ({}),
+      BLUETOOTH_ALLOWED: () => ({}),
+      BLUETOOTH_DENIED: () => ({}),
       BLUETOOTH_ENABLED: () => ({}),
       BLUETOOTH_DISABLED: () => ({}),
       GOTO_SETTINGS: () => ({}),
@@ -158,10 +161,10 @@ export const scanMachine =
                 src: 'checkBluetoothPermission',
               },
               on: {
-                BLUETOOTH_ENABLED: {
+                BLUETOOTH_ALLOWED: {
                   target: 'enabled',
                 },
-                BLUETOOTH_DISABLED: {
+                BLUETOOTH_DENIED: {
                   target: 'requesting',
                 },
               },
@@ -753,27 +756,28 @@ export const scanMachine =
         checkBluetoothPermission: () => async (callback) => {
           // wait a bit for animation to finish when app becomes active
           await new Promise((resolve) => setTimeout(resolve, 250));
-
           try {
-            let permission =
+            const permission =
               Platform.OS === 'ios'
                 ? PERMISSIONS.IOS.BLUETOOTH_PERIPHERAL
                 : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
-            let response = await check(permission);
+            const response = await request(permission);
             if (response === RESULTS.GRANTED) {
-              callback(model.events.BLUETOOTH_ENABLED());
+              callback(model.events.BLUETOOTH_ALLOWED());
             } else {
-              callback(model.events.BLUETOOTH_DISABLED());
+              callback(model.events.BLUETOOTH_DENIED());
             }
           } catch (e) {
             console.error(e);
           }
         },
+
         requestBluetooth: () => (callback) => {
           BluetoothStateManager.requestToEnable()
             .then(() => callback(model.events.BLUETOOTH_ENABLED()))
             .catch(() => callback(model.events.BLUETOOTH_DISABLED()));
         },
+
         checkLocationPermission: () => async (callback) => {
           try {
             // wait a bit for animation to finish when app becomes active

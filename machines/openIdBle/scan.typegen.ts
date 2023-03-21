@@ -133,7 +133,7 @@ export interface Typegen0 {
       | 'CONNECTED'
       | 'xstate.after(CONNECTION_TIMEOUT)#scan.exchangingDeviceInfo';
     monitorConnection: 'xstate.init';
-    requestBluetooth: 'BLUETOOTH_DISABLED';
+    requestBluetooth: 'BLUETOOTH_DENIED';
     sendDisconnect: 'CANCEL';
     sendVc:
       | 'ACCEPT_REQUEST'
