@@ -11,7 +11,9 @@
     "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "ಸ್ವೀಕರಿಸಿದರು. ಉಪಸ್ಥಿತಿ ಪರಿಶೀಲನೆ ವಿಫಲವಾಗಿದೆ",
     "PRESENCE_VERIFIED_AND_VC_SHARED": "ಪರಿಶೀಲಿಸಲಾಗಿದೆ ಮತ್ತು ಹಂಚಿಕೊಳ್ಳಲಾಗಿದೆ",
     "PRESENCE_VERIFICATION_FAILED": "ಪರಿಶೀಲನೆ ವಿಫಲವಾಗಿದೆ",
-    "QRLOGIN_SUCCESFULL": "QRಲಾಗಿನ್ ಯಶಸ್ವಿಯಾಗಿದೆ"
+    "QRLOGIN_SUCCESFULL": "QRಲಾಗಿನ್ ಯಶಸ್ವಿಯಾಗಿದೆ",
+    "WALLET_BINDING_SUCCESSFULL": "ಸಕ್ರಿಯಗೊಳಿಸುವಿಕೆ ಯಶಸ್ವಿಯಾಗಿದೆ",
+    "WALLET_BINDING_FAILURE": "ಸಕ್ರಿಯಗೊಳಿಸುವಿಕೆ ವಿಫಲವಾಗಿದೆ"
   },
     "DeviceInfoList": {
       "requestedBy": "ವಿನಂತಿಸಿದವರು",
