@@ -284,8 +284,7 @@
   "ScanScreen": {
     "header": "I-scan ang QR Code",
     "noShareableVcs": "Walang magagamit na maibabahaging {{vcLabel}}.",
-    "BluetoothStateIos": "Naka-OFF ang Bluetooth, paki-ON ito mula sa Control center",
-    "BluetoothStateAndroid": "Naka-OFF ang Bluetooth, paki-ON ito mula sa menu ng Quick settings",
+    "bluetoothStateMessage": "Mangyaring i-on ang bluetooth upang suportahan ang lokal na pagbabahagi",
     "enableBluetoothMessage": "Mangyaring paganahin ang mga pahintulot ng bluetooth upang suportahan ang lokal na pagbabahagi",
     "enableBluetoothButtonText": "Payagan ang Mga Pahintulot sa Bluetooth",
     "sharingVc": "Pagbabahagi ng {{vcLabel}}",

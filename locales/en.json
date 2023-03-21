@@ -301,8 +301,7 @@
     "header": "Scan QR Code",
     "noShareableVcs": "No shareable {{vcLabel}} are available.",
     "sharingVc": "Sharing {{vcLabel}}",
-    "BluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
-    "BluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
+    "bluetoothStateMessage": "Please turn on bluetooth to support local sharing",
     "enableBluetoothMessage": "Please enable bluetooth permissions to support local sharing",
     "enableBluetoothButtonText": "Allow Bluetooth Permissions",
     "errors": {
