@@ -115,7 +115,7 @@
         "empty": "The input cannot be empty",
         "invalidFormat": "The input format is incorrect"
       },
-      "backend":{
+      "backend": {
         "invalidOtp": "OTP is invalid",
         "expiredOtp": "OTP has expired",
         "applicationProcessing": "AID is not ready",
@@ -240,7 +240,7 @@
     "cancel": "Cancel",
     "essentialClaims": "Essential Claims",
     "voluntaryClaims": "Voluntary Claims",
-    "required":"Required"
+    "required": "Required"
   },
   "ReceiveVcScreen": {
     "header": "{{vcLabel}} details",
@@ -248,7 +248,7 @@
     "verifyAndSave": "Verify and save",
     "reject": "Reject",
     "discard": "Discard",
-    "goToReceivedVCTab":  "View Received {{vcLabel}}",
+    "goToReceivedVCTab": "View Received {{vcLabel}}",
     "errors": {
       "savingFailed": {
         "title": "Failed to save the {{vcLabelSingular}}",

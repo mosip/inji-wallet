@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import { CheckBox, Input } from 'react-native-elements';
 import { useTranslation } from 'react-i18next';
-
+import { useFocusEffect } from '@react-navigation/native';
 import { DeviceInfoList } from '../../components/DeviceInfoList';
 import { Button, Column, Row } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
@@ -9,7 +9,7 @@ import { MessageOverlay } from '../../components/MessageOverlay';
 import { useSendVcScreen } from './SendVcScreenController';
 import { VerifyIdentityOverlay } from '../VerifyIdentityOverlay';
 import { VcItem } from '../../components/VcItem';
-import { I18nManager } from 'react-native';
+import { I18nManager, BackHandler } from 'react-native';
 import { useInterpret } from '@xstate/react';
 import { createVcItemMachine } from '../../machines/vcItem';
 import { GlobalContext } from '../../shared/GlobalContext';
@@ -36,6 +36,19 @@ export const SendVcScreen: React.FC = () => {
       controller.SELECT_VC_ITEM(0)(service);
     }
   }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => true;
+
+      const disableBackHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        onBackPress
+      );
+
+      return () => disableBackHandler.remove();
+    }, [])
+  );
 
   const reasonLabel = t('reasonForSharing');
 
