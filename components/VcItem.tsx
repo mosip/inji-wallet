@@ -246,7 +246,10 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
                     children={t('offlineAuthDisabledHeader')}></Text>
                 </Row>
 
-                <Pressable onPress={() => props.onPress(service)}>
+                <Pressable
+                  onPress={() =>
+                    verifiableCredential ? props.onPress(service) : null
+                  }>
                   <Icon
                     name="dots-three-horizontal"
                     type="entypo"
