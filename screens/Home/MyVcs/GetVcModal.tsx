@@ -13,7 +13,7 @@ export const GetVcModal: React.FC<GetVcModalProps> = (props) => {
     <React.Fragment>
       <GetIdInputModal
         service={props.service}
-        isVisible={true}
+        isVisible={controller.isAcceptingUinInput}
         onDismiss={controller.DISMISS}
       />
 

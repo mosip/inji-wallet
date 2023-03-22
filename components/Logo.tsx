@@ -7,7 +7,7 @@ export const Logo: React.FC<LogoProps> = (props) => {
     <View>
       <Image
         style={{ resizeMode: 'contain', ...props }}
-        source={Theme.MosipLogo}
+        source={Theme.MosipSplashLogo}
       />
     </View>
   );

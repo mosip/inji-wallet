@@ -41,6 +41,7 @@ export const ScanLayout: React.FC = () => {
               title: t('sharingVc', {
                 vcLabel: controller.vcLabel.singular,
               }),
+              headerBackVisible: false,
             }}
           />
         )}
