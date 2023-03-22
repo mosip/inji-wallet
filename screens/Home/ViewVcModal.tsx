@@ -69,6 +69,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
           isVisible={controller.isEditingTag}
           label={t('editTag')}
           value={controller.vc.tag}
+          maxLength={12}
           onDismiss={controller.DISMISS}
           onSave={controller.SAVE_TAG}
         />

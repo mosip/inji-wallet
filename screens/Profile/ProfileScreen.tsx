@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { Platform, View } from 'react-native';
 import { getVersion } from 'react-native-device-info';
 import { Icon, ListItem, Switch } from 'react-native-elements';
 import { Column, Text } from '../../components/ui';
@@ -107,7 +107,10 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
             onValueChange={controller.useBiometrics}
             trackColor={{
               false: Theme.Colors.switchTrackFalse,
-              true: Theme.Colors.switchTrackTrue,
+              true:
+                Platform.OS == 'ios'
+                  ? Theme.Colors.switchHead
+                  : Theme.Colors.switchTrackTrue,
             }}
             color={Theme.Colors.switchHead}
           />
