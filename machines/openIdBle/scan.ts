@@ -165,7 +165,7 @@ export const scanMachine =
                   target: 'enabled',
                 },
                 BLUETOOTH_DENIED: {
-                  target: 'requesting',
+                  target: '#scan.bluetoothDenied',
                 },
               },
             },
@@ -191,6 +191,7 @@ export const scanMachine =
         },
         bluetoothDenied: {
           on: {
+            APP_ACTIVE: '#scan.checkingBluetoothService',
             GOTO_SETTINGS: {
               actions: 'openBluetoothSettings',
             },
@@ -761,7 +762,7 @@ export const scanMachine =
               Platform.OS === 'ios'
                 ? PERMISSIONS.IOS.BLUETOOTH_PERIPHERAL
                 : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
-            const response = await request(permission);
+            const response = await check(permission);
             if (response === RESULTS.GRANTED) {
               callback(model.events.BLUETOOTH_ALLOWED());
             } else {
