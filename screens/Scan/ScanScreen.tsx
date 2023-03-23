@@ -41,7 +41,9 @@ export const ScanScreen: React.FC = () => {
   function bluetoothIsOffText() {
     return (
       <Text align="center" color={Theme.Colors.errorMessage} margin="0 10">
-        {t('bluetoothStateMessage')}
+        {t(
+          Platform.OS === 'ios' ? 'bluetoothStateIos' : 'bluetoothStateAndroid'
+        )}
       </Text>
     );
   }
