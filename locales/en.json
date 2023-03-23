@@ -195,9 +195,11 @@
     "confirmPasscode": "Confirm your passcode",
     "enterPasscode": "Enter your passcode"
   },
-  "Credits": {
-    "header": "Credits and legal notices",
-    "back": "Back"
+  "AppMetaData": {
+    "header": "About Inji",
+    "version": "Version",
+    "useBle": "Powered by BLE",
+    "useGoogleNearby": "Powered by GoogleNearby"
   },
   "ProfileScreen": {
     "name": "Name",
@@ -205,17 +207,14 @@
     "language": "Language",
     "bioUnlock": "Unlock with biometrics",
     "authFactorUnlock": "Unlock auth factor",
-    "credits": "Credits and legal notices",
+    "AppMetaData": "About Inji",
     "logout": "Logout",
     "revokeLabel": "Revoke VID",
     "revokeHeader": "REVOKE VID",
     "revokingVids": "You are about to revoke ({{count}}) VIDs.",
     "revokingVidsAfter": "This means you will no longer be able to use or view any of the IDs linked to those VID(s). \nAre you sure you want to proceed?",
     "empty": "Empty",
-    "revokeSuccessful": "VID successfully revoked",
-    "version": "Version",
-    "useBle": "Powered by BLE",
-    "useGoogleNearby": "Powered by GoogleNearby"
+    "revokeSuccessful": "VID successfully revoked"
   },
   "QrScreen": {
     "title": "QR Login",

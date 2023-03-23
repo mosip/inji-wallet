@@ -7,6 +7,8 @@ const Colors = {
   Grey: '#B0B0B0',
   Grey5: '#E0E0E0',
   Grey6: '#F2F2F2',
+  Gray9: '#171717',
+  DimGray: '#737373',
   Orange: '#F2811D',
   LightGrey: '#FAF9FF',
   White: '#FFFFFF',
@@ -65,6 +67,8 @@ export const PurpleTheme = {
     OnboardingCloseIcon: Colors.White,
     WarningIcon: Colors.Warning,
     Cursor: Colors.Purple,
+    version: Colors.DimGray,
+    poweredByBLE: Colors.Gray9,
   },
   Styles: StyleSheet.create({
     title: {
@@ -377,7 +381,7 @@ export const PurpleTheme = {
       padding: 0,
     },
   }),
-  CreditsStyles: StyleSheet.create({
+  AppMetaDataStyles: StyleSheet.create({
     buttonContainer: {
       position: 'absolute',
       left: 0,
@@ -387,8 +391,23 @@ export const PurpleTheme = {
       flex: 1,
       width: Dimensions.get('screen').width,
     },
-    markdownView: {
+    contentView: {
+      flex: 1,
       padding: 20,
+    },
+    header: {
+      fontSize: 20,
+      fontFamily: 'sans-serif-medium',
+      fontWeight: 'normal',
+      color: 'rgb(28,28,30)',
+    },
+  }),
+  FooterStyles: StyleSheet.create({
+    bottom: {
+      justifyContent: 'flex-end',
+      backgroundColor: Colors.Grey6,
+      borderRadius: 15,
+      padding: 10,
     },
   }),
   ModalStyles: StyleSheet.create({
