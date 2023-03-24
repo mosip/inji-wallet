@@ -1,0 +1,6 @@
+{
+  "header": "About Inji",
+  "version": "Version",
+  "useBle": "Powered by BLE",
+  "useGoogleNearby": "Powered by GoogleNearby"
+}

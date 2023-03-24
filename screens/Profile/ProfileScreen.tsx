@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { Platform, View } from 'react-native';
 import { getVersion } from 'react-native-device-info';
 import { Icon, ListItem, Switch } from 'react-native-elements';
 import { Column, Text } from '../../components/ui';
@@ -7,14 +7,13 @@ import { Theme } from '../../components/ui/styleUtils';
 import { MainRouteProps } from '../../routes/main';
 import { EditableListItem } from '../../components/EditableListItem';
 import { MessageOverlay } from '../../components/MessageOverlay';
-import { Credits } from './Credits';
 import { Revoke } from './Revoke';
 import { useProfileScreen } from './ProfileScreenController';
 import { useTranslation } from 'react-i18next';
 import { LanguageSelector } from '../../components/LanguageSelector';
 import i18next, { SUPPORTED_LANGUAGES } from '../../i18n';
-import { isBLEEnabled } from '../../lib/smartshare';
 import { ScrollView } from 'react-native-gesture-handler';
+import { AppMetaData } from './AppMetaData';
 
 const LanguageSetting: React.FC = () => {
   const { t } = useTranslation('ProfileScreen');
@@ -44,21 +43,6 @@ const LanguageSetting: React.FC = () => {
 
 export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
   const { t } = useTranslation('ProfileScreen');
-  const dependencies = require('../../package-lock.json').dependencies;
-  let packageVersion, packageCommitId;
-
-  Object.keys(dependencies).forEach((dependencyName) => {
-    const dependencyData = dependencies[dependencyName];
-
-    if (dependencyName == 'react-native-openid4vp-ble') {
-      packageVersion = dependencyData.from
-        ? dependencyData.from.split('#')[1]
-        : 'unknown';
-      if (packageVersion != 'unknown') {
-        packageCommitId = dependencyData.version.split('#')[1].substring(0, 7);
-      }
-    }
-  });
 
   const controller = useProfileScreen(props);
   return (
@@ -107,7 +91,10 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
             onValueChange={controller.useBiometrics}
             trackColor={{
               false: Theme.Colors.switchTrackFalse,
-              true: Theme.Colors.switchTrackTrue,
+              true:
+                Platform.OS == 'ios'
+                  ? Theme.Colors.switchHead
+                  : Theme.Colors.switchTrackTrue,
             }}
             color={Theme.Colors.switchHead}
           />
@@ -129,7 +116,10 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
             </ListItem.Title>
           </ListItem.Content>
         </ListItem>
-        <Credits label={t('credits')} color={Theme.Colors.profileLabel} />
+        <AppMetaData
+          label={t('AppMetaData')}
+          color={Theme.Colors.profileLabel}
+        />
         <ListItem bottomDivider onPress={controller.LOGOUT}>
           <Icon
             name="logout"
@@ -144,32 +134,6 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
             </ListItem.Title>
           </ListItem.Content>
         </ListItem>
-        <Text
-          weight="semibold"
-          margin="32 0 0 0"
-          align="center"
-          size="smaller"
-          color={Theme.Colors.profileVersion}>
-          {isBLEEnabled ? t('useBle') : t('useGoogleNearby')}
-        </Text>
-        <Text
-          weight="semibold"
-          margin="32 0 0 0"
-          align="center"
-          size="smaller"
-          color={Theme.Colors.profileVersion}>
-          {t('version')}: {getVersion()}
-        </Text>
-        {packageVersion != 'unknown' && (
-          <Text
-            weight="semibold"
-            margin="32 0 0 0"
-            align="center"
-            size="smaller"
-            color={Theme.Colors.profileVersion}>
-            {t('tuvali-version')}: {packageVersion + '-' + packageCommitId}
-          </Text>
-        )}
         {controller.backendInfo.application.name !== '' ? (
           <View>
             <Text

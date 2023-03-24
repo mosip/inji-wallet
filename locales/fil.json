@@ -115,7 +115,7 @@
         "empty": "Hindi maaaring walang laman ang input",
         "invalidFormat": "Ang input format ay hindi tama"
       },
-      "backend":{
+      "backend": {
         "invalidOtp": "Di-wasto ang OTP",
         "expiredOtp": "Nag-expire na ang OTP",
         "applicationProcessing": "Hindi pa handa ang AID",
@@ -193,9 +193,11 @@
     "confirmPasscode": "Kumpirmahin ang iyong passcode",
     "enterPasscode": "Ilagay ang iyong passcode"
   },
-  "Credits": {
-    "header": "Mga kredito at legal na abiso",
-    "back": "Bumalik"
+  "AppMetaData": {
+    "header": "Tungkol kay Inji",
+    "version": "Bersyon",
+    "useBle": "Powered by BLE",
+    "useGoogleNearby": "Powered by GoogleNearby"
   },
   "ProfileScreen": {
     "name": "Pangalan",
@@ -203,17 +205,14 @@
     "language": "Wika",
     "bioUnlock": "I-unlock gamit ang biometrics",
     "authFactorUnlock": "Pagbukas ng auth factor",
-    "credits": "Mga kredito at legal na abiso",
+    "AppMetaData": "Tungkol kay Inji",
     "logout": "Mag-logout",
     "revokeLabel": "Kanselahin ang VID",
     "revokeHeader": "KANSELAHIN ANG VID",
     "revokingVids": "Kakanselahin mo na ang ({{count}}) na mga VID.",
     "revokingVidsAfter": "Nangangahulugan ito na hindi mo na maa-access o matitingnan ang anumang mga ID na naka-link sa mga VID na ito. Sigurado ka bang gusto mong magpatuloy?",
     "empty": "Walang laman",
-    "revokeSuccessful": "Matagumpay na nakansela ang VID",
-    "version": "Bersyon",
-    "useBle": "Powered by BLE",
-    "useGoogleNearby": "Powered by GoogleNearby"
+    "revokeSuccessful": "Matagumpay na nakansela ang VID"
   },
   "QrScreen": {
     "title": "QR Login",
@@ -232,7 +231,7 @@
     "domainWarning": "Pakikumpirma ang domain ng website kung saan mo ini-scan ang QR code mula sa ibaba",
     "access": " ay humihiling ng access sa",
     "status": "Katayuan",
-    "successMessage":"Ikaw ay Matagumpay na Naka-log In ",
+    "successMessage": "Ikaw ay Matagumpay na Naka-log In ",
     "okay": "Sige"
   },
   "ReceiveVcScreen": {

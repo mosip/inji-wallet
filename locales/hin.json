@@ -195,9 +195,11 @@
       "confirmPasscode": "अपना पासकोड कन्फर्म करें",
       "enterPasscode": "अपना पासकोड दर्ज करे"
     },
-    "Credits": {
-      "header": "क्रेडिट और कानूनी नोटिस",
-      "back": "पीछे"
+    "AppMetaData":{
+      "header": "इंजी के बारे में",
+      "version": "संस्करण",
+      "useBle": "Powered by BLE",
+      "useGoogleNearby": "Powered by GoogleNearby"
     },
     "ProfileScreen": {
       "name": "नाम",
@@ -205,17 +207,14 @@
       "language": "भाषा",
       "bioUnlock": "बायोमेट्रिक्स से अनलॉक करें",
       "authFactorUnlock": "अनलॉक ऑथ फैक्टर",
-      "credits": "क्रेडिट और कानूनी नोटिस",
+      "AppMetaData": "इंजी के बारे में",
       "logout": "लॉग आउट",
       "revokeLabel": "VID रद्द करना",
       "revokeHeader": "VID रद्द करना",
       "revokingVids": "आप ({{count}}) VID's को निरस्त करने वाले हैं .",
       "revokingVidsAfter": "इसका अर्थ है कि अब आप उनसे लिंक की गई किसी भी आईडी का उपयोग या देखने में सक्षम नहीं होंगे VID(s). \nक्या आप सुनिश्चित रूप से आगे बढ़ना चाहते हैं?",
       "empty": "खाली",
-      "revokeSuccessful": "VID को सफलतापूर्वक निरस्त कर दिया गया",
-      "version": "संस्करण",
-      "useBle": "Powered by BLE",
-      "useGoogleNearby": "Powered by GoogleNearby"
+      "revokeSuccessful": "VID को सफलतापूर्वक निरस्त कर दिया गया"
     },
     "QrScreen": {
       "title": "क्यूआर लॉगिन",
