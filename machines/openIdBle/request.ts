@@ -55,6 +55,7 @@ const model = createModel(
       GO_TO_RECEIVED_VC_TAB: () => ({}),
       REJECT: () => ({}),
       CANCEL: () => ({}),
+      RESET: () => ({}),
       DISMISS: () => ({}),
       VC_RECEIVED: (vc: VC) => ({ vc }),
       CONNECTION_DESTROYED: () => ({}),
@@ -109,6 +110,7 @@ export const requestMachine =
           target: '.inactive',
         },
         SCREEN_FOCUS: {
+          // eslint-disable-next-line sonarjs/no-duplicate-string
           target: '.checkingBluetoothService',
         },
         SWITCH_PROTOCOL: {
@@ -117,6 +119,9 @@ export const requestMachine =
         },
         BLE_ERROR: {
           target: '.handlingBleError',
+        },
+        RESET: {
+          target: '.checkingBluetoothService',
         },
       },
       states: {
@@ -912,6 +917,10 @@ export function selectIsAccepting(state: State) {
 
 export function selectIsSavingFailedInIdle(state: State) {
   return state.matches('reviewing.savingFailed.idle');
+}
+
+export function selectIsSavingFailedInViewingVc(state: State) {
+  return state.matches('reviewing.savingFailed.viewingVc');
 }
 
 export function selectStoreError(state: State) {

@@ -7,7 +7,7 @@ import { Theme } from '../../components/ui/styleUtils';
 import { QrLogin } from '../QrLogin/QrLogin';
 import { useScanScreen } from './ScanScreenController';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
-import { Platform } from 'react-native';
+import { Linking, Platform } from 'react-native';
 
 export const ScanScreen: React.FC = () => {
   const { t } = useTranslation('ScanScreen');
@@ -26,6 +26,10 @@ export const ScanScreen: React.FC = () => {
     })();
   }, [isBluetoothOn]);
 
+  const openSettings = () => {
+    Linking.openSettings();
+  };
+
   function noShareableVcText() {
     return (
       <Text align="center" color={Theme.Colors.errorMessage} margin="0 10">
@@ -38,9 +42,25 @@ export const ScanScreen: React.FC = () => {
     return (
       <Text align="center" color={Theme.Colors.errorMessage} margin="0 10">
         {t(
-          Platform.OS === 'ios' ? 'BluetoothStateIos' : 'BluetoothStateAndroid'
+          Platform.OS === 'ios' ? 'bluetoothStateIos' : 'bluetoothStateAndroid'
         )}
       </Text>
+    );
+  }
+
+  function allowBluetoothPermissionComponent() {
+    return (
+      <Column padding="24" fill align="space-between">
+        <Centered fill>
+          <Text align="center" color={Theme.Colors.errorMessage}>
+            {t('enableBluetoothMessage')}
+          </Text>
+        </Centered>
+
+        <Button
+          title={t('enableBluetoothButtonText')}
+          onPress={openSettings}></Button>
+      </Column>
     );
   }
 
@@ -56,6 +76,11 @@ export const ScanScreen: React.FC = () => {
     if (controller.isEmpty) {
       return noShareableVcText();
     }
+
+    if (controller.isBluetoothPermissionDenied) {
+      return allowBluetoothPermissionComponent();
+    }
+
     if (!isBluetoothOn) {
       return bluetoothIsOffText();
     }
@@ -76,13 +101,13 @@ export const ScanScreen: React.FC = () => {
         <Text align="center">{t('header')}</Text>
 
         {controller.isLocationDisabled || controller.isLocationDenied ? (
-          <Column align="space-between">
-            <Text
-              align="center"
-              margin="16 0"
-              color={Theme.Colors.errorMessage}>
-              {controller.locationError.message}
-            </Text>
+          <Column padding="24" fill align="space-between">
+            <Centered fill>
+              <Text align="center" color={Theme.Colors.errorMessage}>
+                {controller.locationError.message}
+              </Text>
+            </Centered>
+
             <Button
               title={controller.locationError.button}
               onPress={controller.LOCATION_REQUEST}

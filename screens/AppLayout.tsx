@@ -4,7 +4,6 @@ import {
   NativeStackNavigationOptions,
   createNativeStackNavigator,
 } from '@react-navigation/native-stack';
-import { LanguageSelector } from '../components/LanguageSelector';
 import { authRoutes, baseRoutes } from '../routes';
 import { useAppLayout } from './AppLayoutController';
 import { Icon } from 'react-native-elements';

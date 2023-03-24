@@ -7,7 +7,6 @@ import { Theme } from '../../components/ui/styleUtils';
 import { SendVcScreen } from './SendVcScreen';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { useScanLayout } from './ScanLayoutController';
-import { LanguageSelector } from '../../components/LanguageSelector';
 import { ScanScreen } from './ScanScreen';
 import { I18nManager, Platform } from 'react-native';
 import { Message } from '../../components/Message';
@@ -24,14 +23,6 @@ export const ScanLayout: React.FC = () => {
         initialRouteName="ScanScreen"
         screenOptions={{
           headerTitleAlign: 'center',
-          headerLeft: () =>
-            I18nManager.isRTL && Platform.OS !== 'ios' ? (
-              <LanguageSelector
-                triggerComponent={
-                  <Icon name="language" color={Theme.Colors.Icon} />
-                }
-              />
-            ) : null,
         }}>
         {!controller.isDone && (
           <ScanStack.Screen
@@ -41,6 +32,7 @@ export const ScanLayout: React.FC = () => {
               title: t('sharingVc', {
                 vcLabel: controller.vcLabel.singular,
               }),
+              headerBackVisible: false,
             }}
           />
         )}
