@@ -758,11 +758,14 @@ export const scanMachine =
           // wait a bit for animation to finish when app becomes active
           await new Promise((resolve) => setTimeout(resolve, 250));
           try {
-            const permission =
-              Platform.OS === 'ios'
-                ? PERMISSIONS.IOS.BLUETOOTH_PERIPHERAL
-                : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
-            const response = await check(permission);
+            let response: PermissionStatus;
+            if (Platform.OS === 'android') {
+              // Passing allowed for now since permission status is always granted even if its denied.
+              callback(model.events.BLUETOOTH_ALLOWED());
+            } else if (Platform.OS === 'ios') {
+              response = await check(PERMISSIONS.IOS.BLUETOOTH_PERIPHERAL);
+            }
+
             if (response === RESULTS.GRANTED) {
               callback(model.events.BLUETOOTH_ALLOWED());
             } else {
