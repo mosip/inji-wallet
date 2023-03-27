@@ -113,9 +113,9 @@
       "header": "ओटीपी सत्यापन"
     },
     "MyVcsTab": {
-      "addVcButton": "{{vcLabel}} जोड़ें",
-      "generateVc": "अपना {{vcLabel}}जेनरेट करें",
-      "generateVcDescription": "अपना {{vcLabel}} डाउनलोड करने के लिए नीचे \"जोड़ें {{vcLabel}}\" पर टैप करें"
+      "downloadID": "डाउनलोड आईडी",
+      "bringYourDigitalID": "अपनी डिजिटल पहचान लाओ",
+      "generateVcDescription": "अपना {{vcLabel}} डाउनलोड करने के लिए नीचे डाउनलोड {{vcLabel}} पर टैप करें"
     },
     "OnboardingOverlay": {
       "stepOneTitle": "स्वागत है!",
@@ -149,10 +149,10 @@
       }
     },
     "MainLayout": {
-      "home": "घर",
+      "home": "होम",
       "scan": "स्कैन",
       "request": "अनुरोध",
-      "profile": "प्रोफाइल"
+      "history": "इतिहास"
     },
     "PasscodeScreen": {
       "header": "अपना आवेदन सुरक्षित करने के लिए पासकोड सेट करें",
@@ -163,21 +163,13 @@
       "header": "क्रेडिट और कानूनी नोटिस",
       "back": "पीछे"
     },
-    "ProfileScreen": {
-      "name": "नाम",
+    "SettingScreen": {
+      "header": "समायोजन",
+      "profile": "प्रोफ़ाइल",
       "vcLabel": "वीसी लेबल",
       "language": "भाषा",
-      "bioUnlock": "बायोमेट्रिक अनलॉक",
-      "authFactorUnlock": "अनलॉक ऑथ फैक्टर",
-      "credits": "क्रेडिट और कानूनी नोटिस",
-      "logout": "लॉग आउट",
-      "revokeLabel": "VID रद्द करना",
-      "revokeHeader": "VID रद्द करना",
-      "revokingVids": "आप ({{count}}) VID's को निरस्त करने वाले हैं .",
-      "revokingVidsAfter": "इसका अर्थ है कि अब आप उनसे लिंक की गई किसी भी आईडी का उपयोग या देखने में सक्षम नहीं होंगे VID(s). \nक्या आप सुनिश्चित रूप से आगे बढ़ना चाहते हैं?",
-      "empty": "खाली",
-      "revokeSuccessful": "VID को सफलतापूर्वक निरस्त कर दिया गया",
-      "version": "संस्करण"
+      "bioUnlock": "बायो अनलॉक",
+      "logout": "लॉग आउट"
     },
     "QrScreen": {
       "title": "क्यूआर लॉगिन",
@@ -238,7 +230,8 @@
       "gotoSettings": "सेटिंग्स में जाओ"
     },
     "ScanScreen": {
-      "header": "क्यूआर कोड स्कैन करे",
+      "scanningGuide": "फोन को पकड़ें और क्यूआर कोड को स्कैन करें",
+      "requester": "अनुरोधकर्ता",
       "noShareableVcs": "कोई साझा करने योग्य {{vcLabel}} उपलब्ध नहीं है।",
       "sharingVc": "शेयरिंग {{vcLabel}}",
       "errors": {
@@ -320,6 +313,11 @@
       "title": "ओपन सोर्स आइडेंटिटी सॉल्यूशन",
       "getStarted": "आरंभ करें",
       "unlockApp": "एप्लिकेशन अनलॉक करें"
+    },
+    "SetupLanguage": {
+      "header": "भाषा चुनें",
+      "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+      "save": "वरीयता सहेजें"
     },
     "common": {
       "cancel": "रद्द करें",

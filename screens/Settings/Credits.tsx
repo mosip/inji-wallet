@@ -50,15 +50,21 @@ export const Credits: React.FC<CreditsProps> = (props) => {
       <Icon
         name="filetext1"
         type="antdesign"
-        size={20}
-        style={Theme.Styles.profileIconBg}
+        size={22}
         color={Theme.Colors.Icon}
       />
       <ListItem.Content>
         <ListItem.Title>
-          <Text color={props.color}>{props.label}</Text>
+          <Text weight="semibold" color={props.color}>
+            {props.label}
+          </Text>
         </ListItem.Title>
       </ListItem.Content>
+      <Icon
+        name="chevron-right"
+        size={21}
+        color={Theme.Colors.profileLanguageValue}
+      />
       <Overlay
         overlayStyle={{ padding: 24 }}
         isVisible={isViewing}

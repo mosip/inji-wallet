@@ -1,10 +1,14 @@
 import React from 'react';
 import { I18nManager, Modal as RNModal, View } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { Centered, Column, Row, Text } from '.';
+import { Column, Row, Text } from '.';
+import { useSendVcScreen } from '../../screens/Scan/SendVcScreenController';
+import { DeviceInfoList } from '../DeviceInfoList';
 import { ElevationLevel, Theme } from './styleUtils';
 
 export const Modal: React.FC<ModalProps> = (props) => {
+  const controller = useSendVcScreen();
+
   return (
     <RNModal
       animationType="slide"
@@ -19,8 +23,8 @@ export const Modal: React.FC<ModalProps> = (props) => {
               flex: 1,
               flexDirection: 'row',
               alignItems: 'center',
-              marginHorizontal: 21,
-              marginVertical: 16,
+              marginHorizontal: 18,
+              marginVertical: 15,
             }}>
             {props.headerRight ? (
               <Icon
@@ -34,17 +38,45 @@ export const Modal: React.FC<ModalProps> = (props) => {
                 name="arrow-left"
                 type="material-community"
                 onPress={props.onDismiss}
-                color={Theme.Colors.Details}
+                containerStyle={Theme.Styles.IconContainer}
+                color={Theme.Colors.Icon}
               />
             ) : null}
-            <Centered fill align="center">
-              <Text weight="semibold">{props.headerTitle}</Text>
-            </Centered>
+            <Row
+              fill
+              align={props.headerLeft ? 'flex-start' : 'center'}
+              margin={'16 0 0 0'}>
+              <Column>
+                <Text style={Theme.TextStyles.header}>
+                  {props.headerTitle || props.headerLeft}
+                </Text>
+                {!props.requester ? (
+                  <Text
+                    weight="semibold"
+                    style={Theme.TextStyles.small}
+                    color={
+                      props.headerLabelColor
+                        ? props.headerLabelColor
+                        : Theme.Colors.profileLanguageValue
+                    }>
+                    {props.headerLabel}
+                  </Text>
+                ) : (
+                  <Text
+                    weight="semibold"
+                    style={Theme.TextStyles.small}
+                    color={Theme.Colors.IconBg}>
+                    <DeviceInfoList deviceInfo={controller.receiverInfo} />
+                  </Text>
+                )}
+              </Column>
+            </Row>
             {props.headerRight || props.arrowLeft || (
               <Icon
                 name="close"
                 onPress={props.onDismiss}
-                color={Theme.Colors.Icon}
+                color={Theme.Colors.Details}
+                size={27}
               />
             )}
           </View>
@@ -57,10 +89,14 @@ export const Modal: React.FC<ModalProps> = (props) => {
 
 export interface ModalProps {
   isVisible: boolean;
-  onDismiss: () => void;
+  requester?: boolean;
+  onDismiss?: () => void;
   headerTitle?: string;
   headerElevation?: ElevationLevel;
+  headerLabel?: string;
+  headerLabelColor?: string;
   headerRight?: React.ReactElement;
+  headerLeft?: React.ReactElement;
   arrowLeft?: React.ReactElement;
   onShow?: () => void;
 }

@@ -113,9 +113,9 @@
       "header": "OTP சரிபார்ப்பு"
     },
     "MyVcsTab": {
-      "addVcButton": "{{vcLabel}} சேர்",
-      "generateVc": "உங்கள் {{vcLabel}}ஐ உருவாக்கவும்",
-      "generateVcDescription": "உங்கள் \"சேர் {{vcLabel}}\" என்பதைத் தட்டவும் {{vcLabel}}"
+      "downloadID": "ஐடியைப் பதிவிறக்கவும்",
+      "bringYourDigitalID": "உங்கள் டிஜிட்டல் அடையாளத்தை கொண்டு வாருங்கள்",
+      "generateVcDescription": "உங்கள் {{vcLabel}}ஐப் பதிவிறக்க, கீழே உள்ள \"பதிவிறக்க {{vcLabel}}\" என்பதைத் தட்டவும்"
     },
     "OnboardingOverlay": {
       "stepOneTitle": "வரவேற்கிறேன்!",
@@ -152,7 +152,7 @@
       "home": "வீடு",
       "scan": "ஸ்கேன்",
       "request": "கோரிக்கை",
-      "profile": "சுயவிவரம்"
+      "history": "வரலாறு"
     },
     "PasscodeScreen": {
       "header": "உங்கள் விண்ணப்பத்தைப் பாதுகாக்க கடவுக்குறியீட்டை அமைக்கவும்",
@@ -163,21 +163,13 @@
       "header": "வரவுகள் மற்றும் சட்ட அறிவிப்புகள்",
       "back": "பின்"
     },
-    "ProfileScreen": {
-      "name": "பெயர்",
-      "vcLabel": "VC லேபிள்",
+    "SettingScreen": {
+      "header": "அமைப்புகள்",
+      "profile": "சுயவிவரம்",
+      "vcLabel": "விசி லேபிள்",
       "language": "மொழி",
-      "bioUnlock": "பயோமெட்ரிக் அன்லாக்",
-      "authFactorUnlock": "அங்கீகார காரணியைத் திற",
-      "credits": "வரவுகள் மற்றும் சட்ட அறிவிப்புகள்",
-      "logout": "வெளியேறு",
-      "revokeLabel": "திரும்பப் பெறு VID",
-      "revokeHeader": "திரும்பப் பெறு VID",
-      "revokingVids": "நீங்கள் ({{count}}) ஐ ரத்து செய்ய உள்ளீர்கள் VIDs.",
-      "revokingVidsAfter": "அதாவது, அந்த VID(s) உடன் இணைக்கப்பட்ட எந்த ஐடியையும் நீங்கள் இனி பயன்படுத்தவோ பார்க்கவோ முடியாது. \nநீங்கள் நிச்சயமாக தொடர விரும்புகிறீர்களா?",
-      "empty": "காலியாக",
-      "revokeSuccessful": "VID வெற்றிகரமாக ரத்து செய்யப்பட்டது",
-      "version": "பதிப்பு"
+      "bioUnlock": "பயோ அன்லாக்",
+      "logout": "வெளியேறு"
     },
     "QrScreen": {
       "title": "QR உள்நுழைவு",
@@ -238,7 +230,8 @@
       "gotoSettings": "அமைப்புகளுக்குச் செல்லவும்"
     },
     "ScanScreen": {
-      "header": "QR குறியீட்டை ஸ்கேன் செய்",
+      "scanningGuide": "மொபைலைப் பிடித்து, QR குறியீட்டை ஸ்கேன் செய்யவும்",
+      "requester": "கோரிக்கையாளர்",
       "noShareableVcs": "பகிரக்கூடிய {{vcLabel}} எதுவும் இல்லை.",
       "sharingVc": "பகிர்தல் {{vcLabel}}",
       "errors": {
@@ -319,6 +312,11 @@
       "title": "திறந்த மூல அடையாள தீர்வு",
       "getStarted": "தொடங்கு",
       "unlockApp": "பயன்பாட்டைத் திற"
+    },
+    "SetupLanguage": {
+      "header": "மொழியைத் தேர்ந்தெடுக்கவும்",
+      "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+      "save": "விருப்பத்தை சேமிக்கவும்"
     },
     "common": {
       "cancel": "ரத்துசெய்",

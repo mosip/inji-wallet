@@ -66,17 +66,14 @@ export const SetupLanguageScreen: React.FC<RootRouteProps> = (props) => {
         selectedValue={i18n.language}
         onValueChange={changeLanguage}
       />
-      <Column padding="20" backgroundColor={Theme.Colors.whiteBackgroundColor}>
-        <Button
-          linearGradient
-          type="gradient"
-          title={t('save')}
-          onPress={() => {
-            controller.SELECT(), controller.unlockPage;
-          }}
-          colors={Theme.Colors.gradientBtn}
-        />
-      </Column>
+
+      <Button
+        type="gradient"
+        title={t('save')}
+        onPress={() => {
+          controller.SELECT(), controller.unlockPage;
+        }}
+      />
     </Column>
   );
 };

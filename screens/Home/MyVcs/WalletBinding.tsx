@@ -4,7 +4,7 @@ import { Row, Text } from '../../../components/ui';
 import { Theme } from '../../../components/ui/styleUtils';
 import { useTranslation } from 'react-i18next';
 import { BindingVcWarningOverlay } from './BindingVcWarningOverlay';
-import { OtpVerification } from './OtpVerification';
+import { OtpVerificationModal } from './OtpVerificationModal';
 import { MessageOverlay } from '../../../components/MessageOverlay';
 import { useKebabPopUp } from '../../../components/KebabPopUpController';
 import { Dimensions } from 'react-native';
@@ -24,7 +24,7 @@ export const WalletBinding: React.FC<WalletBindingProps> = (props) => {
       />
     );
   };
-  const { t } = useTranslation('ProfileScreen');
+  const { t } = useTranslation('WalletBinding');
 
   return controller.emptyWalletBindingId ? (
     <ListItem bottomDivider onPress={controller.ADD_WALLET_BINDING_ID}>
@@ -49,7 +49,7 @@ export const WalletBinding: React.FC<WalletBindingProps> = (props) => {
         <Text
           weight="bold"
           color={Theme.Colors.walletbindingContent}
-          size="smaller">
+          size="small">
           {props.Content}
         </Text>
       </ListItem.Content>
@@ -60,7 +60,7 @@ export const WalletBinding: React.FC<WalletBindingProps> = (props) => {
         onCancel={controller.CANCEL}
       />
 
-      <OtpVerification
+      <OtpVerificationModal
         isVisible={controller.isAcceptingOtpInput}
         onDismiss={controller.DISMISS}
         onInputDone={controller.INPUT_OTP}
@@ -87,8 +87,8 @@ export const WalletBinding: React.FC<WalletBindingProps> = (props) => {
           <WalletVerified />
           <Text
             color={Theme.Colors.Details}
-            weight="semibold"
-            size="smaller"
+            weight="bold"
+            size="small"
             margin="10 10 10 10"
             children={t('profileAuthenticated')}></Text>
         </Row>

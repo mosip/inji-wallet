@@ -19,14 +19,14 @@
     "deviceRefNumber": "Device reference number",
     "name": "Name"
   },
-  "PasscodeVerify": {
-    "passcodeMismatchError": "Passcode did not match."
-  },
   "FaceScanner": {},
   "OIDcAuth": {
     "title": "OIDC Authentication",
     "text": "To be replaced with the OIDC provider UI",
     "verify": "Verify"
+  },
+  "PasscodeVerify": {
+    "passcodeMismatchError": "Passcode did not match."
   },
   "QrScanner": {
     "missingPermissionText": "This app uses the camera to scan the QR code of another device.",
@@ -48,19 +48,32 @@
     "id": "Id",
     "nationalCard": "National Card",
     "uin": "UIN",
-    "enableVerification": "Activate",
-    "profileAuthenticated": "Activated for online login",
-    "offlineAuthDisabledHeader": "Activation pending for online login",
-    "offlineAuthDisabledMessage": "Please click the button below to activate this credential to be used for online login.",
     "vid": "VID",
-    "verificationEnabledSuccess": "Activated for online login",
-    "goback": "GO BACK",
-    "BindingWarning": "You have already activated online login for this credential on another device. You will no longer be able to use that device for login if you activate it again on this device.",
-    "yes_confirm": "Yes, I Confirm",
-    "no": "No",
-    "Alert": "Alert",
-    "ok": "Okay",
-    "downloading": "Downloading Your Card"
+    "enableVerification": "Enable Verification",
+    "profileAuthenticated": "Profile is authenticated!",
+    "offlineAuthDisabledHeader": "Offline Authentication disabled!",
+    "offlineAuthDisabledMessage": "Click 'Enable Authentication' to enable this credentials to be used for offline authentication."
+  },
+  "HomeScreenKebabPopUp": {
+    "title": "More Options",
+    "unPinCard": "Unpin Card",
+    "pinCard" : "Pin Card",
+    "offlineAuthenticationDisabled!": "Offline authentication disabled!",
+    "offlineAuthDisabledMessage": "Click 'Enable Authentication' to enable this credentials to be used for offline authentication.",
+    "ViewActivityLog": "View activity log",
+    "RemoveFromWallet": "Remove from wallet",
+    "RevokeID": "Revoke ID",
+    "RevokeMessage": "Revoke the virtual ID for this profile"
+  },
+  "WalletBinding": {
+    "inProgress" : "In Progress",
+    "profileAuthenticated": "Profile is authenticated!"
+  },
+  "BindingVcWarningOverlay": {
+    "alert": "Please Confirm",
+    "BindingWarning": "If you have enabled verification for this credential on another wallet, it will get overridden. Do you want to proceed?",
+    "yesConfirm": "Yes, I confirm",
+    "no" : "No"
   },
   "AuthScreen": {
     "header": "Select App Unlock Method",
@@ -77,7 +90,7 @@
   "BiometricScreen": {
     "unlock": "Unlock with biometrics"
   },
-  "HistoryTab": {
+  "HistoryScreen": {
     "noHistory": "No history available yet",
     "downloaded": "downloaded",
     "shared": "shared",
@@ -88,6 +101,14 @@
     "myVcsTab": "My\n{{vcLabel}}",
     "receivedVcsTab": "Received\n{{vcLabel}}",
     "historyTab": "History"
+  },
+  "SettingScreen": {
+    "header": "Settings",
+    "profile": "Profile",
+    "vcLabel": "Vc Label",
+    "language": "Language",
+    "bioUnlock": "Bio Unlock",
+    "logout": "Logout"
   },
   "AddVcModal": {
     "inputIdHeader":"Retrieve your ID",
@@ -119,20 +140,27 @@
     "qstnMarkToolTip": "Application {{vcLabel}} Number is printed on the acknowledgment provided after enrollment"
   },
   "IdInputModal": {
-    "header": "Select ID type and enter the MOSIP provided UIN or VID of the ID you wish to retrieve",
+    "header": "Enter the MOSIP-provided UIN or VID of the {{vcLabel}} you wish to retrieve",
+    "title": "Retrieve your ID",
+    "guideLabel": "Select ID type and enter the MOSIP provided UIN or VID of the ID you wish to retrieve",
     "generateVc": "Generate {{vcLabel}}",
-    "enterId": "Enter your {{idType}}",
-    "noUIN/VID": "Don't have your UIN/VID? Get it here",
+    "downloadID": "Download ID",
+    "enterId": "Enter {{idType}}",
+    "noUIN/VID": "Don't have UIN/VID?",
+    "getItHere": "Get it now",
     "requestingOTP": "Requesting OTP..."
   },
   "OtpVerificationModal": {
-    "enterOtp": "Enter the 6-digit verification code we sent you",
-    "header": "OTP Verification"
+    "title": "OTP Verification",
+    "otpSentMessage": "We've sent the 6 digit code to your registered mobile number!",
+    "resendTheCode": "You can resend the code in ",
+    "resendCode": "Resend Code"
   },
   "MyVcsTab": {
-    "addVcButton": "Add {{vcLabel}}",
-    "generateVc": "Generate your {{vcLabel}}",
-    "generateVcDescription": "Tap on \"Add {{vcLabel}}\" below to download your {{vcLabel}}"
+    "downloadID": "Download ID",
+    "bringYourDigitalID": "Bring Your Digital ID",
+    "generateVcDescription": "To download your {{vcLabel}} tap Download {{vcLabel}} below",
+    "downloadingYourId": "Downloading your ID, this can take upto 5 minutes"
   },
   "OnboardingOverlay": {
     "stepOneTitle": "Secure Sharing!",
@@ -161,7 +189,6 @@
     "requestingOtp": "Requesting OTP...",
     "editTag": "Rename",
     "redirecting": "Redirecting...",
-    "inProgress": "Loading...",
     "success": {
       "unlocked": "{{vcLabel}} successfully unlocked",
       "locked": "{{vcLabel}} successfully locked",
@@ -172,16 +199,13 @@
     "home": "Home",
     "scan": "Scan",
     "request": "Request",
-    "profile": "Profile"
+    "history": "History"
   },
   "PasscodeScreen": {
-    "header": "Set a passcode to secure your application",
-    "confirmPasscode": "Confirm your passcode",
+    "header": "Set Passcode",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+    "confirmPasscode": "Confirm passcode",
     "enterPasscode": "Enter your passcode"
-  },
-  "Credits": {
-    "header": "Credits and legal notices",
-    "back": "Back"
   },
   "ProfileScreen": {
     "name": "Name",
@@ -266,7 +290,8 @@
     "gotoSettings": "Go to settings"
   },
   "ScanScreen": {
-    "header": "Scan QR Code",
+    "scanningGuide": "Hold the phone study and scan the QR code",
+    "requester": "Requester",
     "noShareableVcs": "No shareable {{vcLabel}} are available.",
     "sharingVc": "Sharing {{vcLabel}}",
     "errors": {
@@ -280,7 +305,9 @@
       }
     },
     "status": {
-      "connecting": "Connecting...",
+      "inProgress": "In Progress",
+      "establishingConnection": "Establishing Connection",
+      "sharingInProgress": "Sharing in Progress",
       "connectingTimeout": "It's taking a while to establish the connection. Is the other device open for connections?",
       "exchangingDeviceInfo": "Exchanging device info...",
       "exchangingDeviceInfoTimeout": "It's taking a while to exchange device info. You may have to reconnect.",
@@ -294,8 +321,9 @@
         "timeoutHint": "It's taking longer than expected to share. There could be a problem with the connection."
       },
       "accepted": {
-        "title": "Success!",
-        "message": "Your {{vcLabel}} has been successfully shared with {{receiver}}"
+        "title": "ID shared successfully",
+        "message": "Your ID has been successfully shared with ",
+        "gotohome": "Go to home"
       },
       "rejected": {
         "title": "Notice",
@@ -310,11 +338,16 @@
     "verifyAndShare": "Verify Identity & Share"
   },
   "SendVcScreen": {
-    "reasonForSharing": "Reason for sharing (optional)",
-    "acceptRequest": "Accept request and choose {{vcLabel}}",
-    "acceptRequestAndVerify": "Accept request and verify",
-    "reject": "Reject",
-    "consentToPhotoVerification": "I give consent to have my photo taken for authentication"
+    "reasonForSharing": "Reason for sharing",
+    "approveRequest": "Approve request and choose {{vcLabel}}",
+    "approveRequestAndVerify": "Approve request and verify",
+    "consentToPhotoVerification": "I give consent to have my photo taken for authentication",
+    "pleaseSelectAnId": "Please select an ID",
+    "reject": "Reject"
+  },
+  "Credits": {
+    "header": "Credits and legal notices",
+    "back": "Back"
   },
   "VerifyIdentityOverlay": {
     "status": {

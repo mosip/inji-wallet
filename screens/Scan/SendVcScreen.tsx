@@ -1,9 +1,7 @@
 import React from 'react';
 import { CheckBox, Input } from 'react-native-elements';
 import { useTranslation } from 'react-i18next';
-
-import { DeviceInfoList } from '../../components/DeviceInfoList';
-import { Button, Column, Row } from '../../components/ui';
+import { Button, Column, Row, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { useSendVcScreen } from './SendVcScreenController';
@@ -21,65 +19,75 @@ export const SendVcScreen: React.FC = () => {
   return (
     <React.Fragment>
       <Column fill backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
-        <Column padding="16 0" scroll>
-          <DeviceInfoList of="receiver" deviceInfo={controller.receiverInfo} />
-          <CheckBox
-            title={t('consentToPhotoVerification')}
-            checked={controller.selectedVc.shouldVerifyPresence}
-            onPress={controller.TOGGLE_USER_CONSENT}
-          />
-          <Column padding="24">
+        <Column>
+          <Column
+            padding="24 19 14 19"
+            backgroundColor={Theme.Colors.whiteBackgroundColor}
+            style={{ position: 'relative' }}>
             <Input
               value={controller.reason ? controller.reason : ''}
               placeholder={!controller.reason ? reasonLabel : ''}
               label={controller.reason ? reasonLabel : ''}
               labelStyle={{ textAlign: 'left' }}
               onChangeText={controller.UPDATE_REASON}
-              containerStyle={{ marginBottom: 24 }}
+              containerStyle={{ marginBottom: 6 }}
               inputStyle={{ textAlign: I18nManager.isRTL ? 'right' : 'left' }}
             />
-          </Column>
-          <Column>
-            {controller.vcKeys.length === 1 && (
-              <SingleVcItem
-                key={controller.vcKeys[0]}
-                vcKey={controller.vcKeys[0]}
-                margin="0 2 8 2"
-                onPress={controller.SELECT_VC_ITEM(0)}
-                selectable
-                selected={0 === controller.selectedIndex}
-              />
-            )}
 
-            {controller.vcKeys.length > 1 &&
-              controller.vcKeys.map((vcKey, index) => (
-                <VcItem
-                  key={vcKey}
-                  vcKey={vcKey}
-                  margin="0 2 8 2"
-                  onPress={controller.SELECT_VC_ITEM(index)}
-                  selectable
-                  selected={index === controller.selectedIndex}
-                />
-              ))}
+            <CheckBox
+              containerStyle={Theme.SelectVcOverlayStyles.consentCheckContainer}
+              title={t('consentToPhotoVerification')}
+              checked={controller.selectedVc.shouldVerifyPresence}
+              onPress={controller.TOGGLE_USER_CONSENT}
+            />
           </Column>
+          <Text
+            margin="15 0 13 24"
+            weight="bold"
+            color={Theme.Colors.textValue}
+            style={{ position: 'relative' }}>
+            {t('pleaseSelectAnId')}
+          </Text>
         </Column>
-        <Column
-          backgroundColor={Theme.Colors.whiteBackgroundColor}
-          padding="16 24"
-          margin="2 0 0 0"
-          elevation={2}>
+        <Column scroll>
+          {controller.vcKeys.length === 1 && (
+            <SingleVcItem
+              key={controller.vcKeys[0]}
+              vcKey={controller.vcKeys[0]}
+              margin="0 2 8 2"
+              onPress={controller.SELECT_VC_ITEM(0)}
+              selectable
+              selected={0 === controller.selectedIndex}
+            />
+          )}
+
+          {controller.vcKeys.length > 1 &&
+            controller.vcKeys.map((vcKey, index) => (
+              <VcItem
+                key={vcKey}
+                vcKey={vcKey}
+                margin="0 2 8 2"
+                onPress={controller.SELECT_VC_ITEM(index)}
+                selectable
+                selected={index === controller.selectedIndex}
+              />
+            ))}
+        </Column>
+
+        <Column padding="12 0" elevation={2}>
           <Button
-            title={t('acceptRequest', { vcLabel: controller.vcLabel.singular })}
-            margin="12 0 12 0"
+            type="gradient"
+            title={t('approveRequest', {
+              vcLabel: controller.vcLabel.singular,
+            })}
             disabled={controller.selectedIndex == null}
             onPress={controller.ACCEPT_REQUEST}
           />
           {!controller.selectedVc.shouldVerifyPresence && (
             <Button
-              type="outline"
-              title={t('acceptRequestAndVerify')}
-              margin="12 0 12 0"
+              type="gradient"
+              title={t('approveRequestAndVerify')}
+              styles={{ marginTop: '12' }}
               disabled={controller.selectedIndex == null}
               onPress={controller.VERIFY_AND_ACCEPT_REQUEST}
             />

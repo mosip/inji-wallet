@@ -15,13 +15,11 @@ export const ScanScreen: React.FC = () => {
     <Column
       fill
       padding="24 0"
-      backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
+      backgroundColor={Theme.Colors.whiteBackgroundColor}>
       <Centered
         fill
         align="space-evenly"
-        backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
-        <Text align="center">{t('header')}</Text>
-
+        backgroundColor={Theme.Colors.whiteBackgroundColor}>
         {controller.isLocationDisabled || controller.isLocationDenied ? (
           <Column align="space-between">
             <Text
@@ -39,8 +37,11 @@ export const ScanScreen: React.FC = () => {
 
         {!controller.isEmpty ? (
           controller.isScanning && (
-            <Column crossAlign="center" margin="0 0 0 -6">
-              <QrScanner onQrFound={controller.SCAN} />
+            <Column align="center">
+              <QrScanner
+                title={t('scanningGuide')}
+                onQrFound={controller.SCAN}
+              />
             </Column>
           )
         ) : (

@@ -152,13 +152,14 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
   ) : null;
 
   const tag = useSelector(service, selectTag);
+  const [visible, setVisible] = useState(false);
   return (
     <Pressable
       onPress={() => props.onPress(service)}
       disabled={!verifiableCredential}
       style={
         props.selected
-          ? Theme.Styles.selectedBindedVc
+          ? Theme.Styles.selectedVc
           : Theme.Styles.closeCardBgContainer
       }>
       <ImageBackground
@@ -241,7 +242,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
                 ? getDetails(t('status'), isvalid, verifiableCredential)
                 : null}
             </Column>
-            <Column style={Theme.Styles.closecardMosipLogo}>
+            <Column style={{ display: verifiableCredential ? 'flex' : 'none' }}>
               <Image
                 source={Theme.MosipLogo}
                 style={Theme.Styles.logo}

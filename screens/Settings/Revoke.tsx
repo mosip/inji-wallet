@@ -25,12 +25,11 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
         name={props.Icon}
         type="font-awesome"
         size={20}
-        style={Theme.Styles.profileIconBg}
         color={Theme.Colors.Icon}
       />
       <ListItem.Content>
         <ListItem.Title>
-          <Text>{props.label}</Text>
+          <Text weight="semibold">{props.label}</Text>
         </ListItem.Title>
       </ListItem.Content>
       <Overlay
