@@ -4,7 +4,7 @@ import { Camera } from 'expo-camera';
 import { BarCodeEvent, BarCodeScanner } from 'expo-barcode-scanner';
 import { Linking, TouchableOpacity, View } from 'react-native';
 import { Theme } from './ui/styleUtils';
-import { Column, Button, Text } from './ui';
+import { Column, Button, Text, Centered } from './ui';
 import { GlobalContext } from '../shared/GlobalContext';
 import { useSelector } from '@xstate/react';
 import { selectIsActive } from '../machines/app';
@@ -45,11 +45,13 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
 
   if (hasPermission === false) {
     return (
-      <Column fill align="space-between">
-        <Text align="center" margin="0 16" color={Theme.Colors.errorMessage}>
-          {t('missingPermissionText')}
-        </Text>
-        <Button title={t('allowCameraButton')} onPress={openSettings} />
+      <Column padding="24" fill align="space-between">
+        <Centered fill>
+          <Text align="center" color={Theme.Colors.errorMessage}>
+            {t('missingPermissionText')}
+          </Text>
+        </Centered>
+        <Button title={t('allowCameraButton')} onPress={openSettings}></Button>
       </Column>
     );
   }

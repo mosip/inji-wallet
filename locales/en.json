@@ -115,7 +115,7 @@
         "empty": "The input cannot be empty",
         "invalidFormat": "The input format is incorrect"
       },
-      "backend":{
+      "backend": {
         "invalidOtp": "OTP is invalid",
         "expiredOtp": "OTP has expired",
         "applicationProcessing": "AID is not ready",
@@ -195,9 +195,11 @@
     "confirmPasscode": "Confirm your passcode",
     "enterPasscode": "Enter your passcode"
   },
-  "Credits": {
-    "header": "Credits and legal notices",
-    "back": "Back"
+  "AppMetaData": {
+    "header": "About Inji",
+    "version": "Version",
+    "useBle": "Powered by BLE",
+    "useGoogleNearby": "Powered by GoogleNearby"
   },
   "ProfileScreen": {
     "name": "Name",
@@ -205,17 +207,14 @@
     "language": "Language",
     "bioUnlock": "Unlock with biometrics",
     "authFactorUnlock": "Unlock auth factor",
-    "credits": "Credits and legal notices",
+    "AppMetaData": "About Inji",
     "logout": "Logout",
     "revokeLabel": "Revoke VID",
     "revokeHeader": "REVOKE VID",
     "revokingVids": "You are about to revoke ({{count}}) VIDs.",
     "revokingVidsAfter": "This means you will no longer be able to use or view any of the IDs linked to those VID(s). \nAre you sure you want to proceed?",
     "empty": "Empty",
-    "revokeSuccessful": "VID successfully revoked",
-    "version": "Version",
-    "useBle": "Powered by BLE",
-    "useGoogleNearby": "Powered by GoogleNearby"
+    "revokeSuccessful": "VID successfully revoked"
   },
   "QrScreen": {
     "title": "QR Login",
@@ -240,7 +239,7 @@
     "cancel": "Cancel",
     "essentialClaims": "Essential Claims",
     "voluntaryClaims": "Voluntary Claims",
-    "required":"Required"
+    "required": "Required"
   },
   "ReceiveVcScreen": {
     "header": "{{vcLabel}} details",
@@ -248,7 +247,7 @@
     "verifyAndSave": "Verify and save",
     "reject": "Reject",
     "discard": "Discard",
-    "goToReceivedVCTab":  "View Received {{vcLabel}}",
+    "goToReceivedVCTab": "View Received {{vcLabel}}",
     "errors": {
       "savingFailed": {
         "title": "Failed to save the {{vcLabelSingular}}",
@@ -303,8 +302,10 @@
     "header": "Scan QR Code",
     "noShareableVcs": "No shareable {{vcLabel}} are available.",
     "sharingVc": "Sharing {{vcLabel}}",
-    "BluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
-    "BluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
+    "bluetoothStateAndroid": "Please turn on bluetooth from quick settings to support local sharing",
+    "bluetoothStateIos": "Please turn on bluetooth from control center to support local sharing",
+    "enableBluetoothMessage":"Please enable bluetooth permissions to support local sharing",
+    "enableBluetoothButtonText": "Allow Bluetooth Permissions",
     "errors": {
       "locationDisabled": {
         "message": "Location services must be enabled for the scanning functionality",

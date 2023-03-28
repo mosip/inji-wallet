@@ -14,6 +14,7 @@ import {
 import { selectVcLabel } from '../../machines/settings';
 import { selectShareableVcs } from '../../machines/vc';
 import { GlobalContext } from '../../shared/GlobalContext';
+import { selectIsBluetoothDenied } from '../../machines/openIdBle/scan';
 
 export function useScanScreen() {
   const { t } = useTranslation('ScanScreen');
@@ -26,7 +27,10 @@ export function useScanScreen() {
 
   const isLocationDisabled = useSelector(scanService, selectIsLocationDisabled);
   const isLocationDenied = useSelector(scanService, selectIsLocationDenied);
-
+  const isBluetoothPermissionDenied = useSelector(
+    scanService,
+    selectIsBluetoothDenied
+  );
   const locationError = { message: '', button: '' };
 
   if (isLocationDisabled) {
@@ -42,6 +46,7 @@ export function useScanScreen() {
     vcLabel: useSelector(settingsService, selectVcLabel),
 
     isEmpty: !shareableVcs.length,
+    isBluetoothPermissionDenied,
     isLocationDisabled,
     isLocationDenied,
     isScanning: useSelector(scanService, selectIsScanning),

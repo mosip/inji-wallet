@@ -6,7 +6,6 @@ import {
 import { Icon } from 'react-native-elements';
 import { mainRoutes } from '../routes/main';
 import { RootRouteProps } from '../routes';
-import { LanguageSelector } from '../components/LanguageSelector';
 import { Theme } from '../components/ui/styleUtils';
 import { useTranslation } from 'react-i18next';
 

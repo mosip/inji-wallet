@@ -7,6 +7,8 @@ const Colors = {
   Grey: '#B0B0B0',
   Grey5: '#E0E0E0',
   Grey6: '#F2F2F2',
+  Gray9: '#171717',
+  DimGray: '#737373',
   Orange: '#F2811D',
   LightGrey: '#f7f5f0',
   White: '#FFFFFF',
@@ -41,6 +43,9 @@ export const DefaultTheme = {
     profileAuthFactorUnlock: Colors.Grey,
     profileLabel: Colors.Black,
     profileValue: Colors.Grey,
+    switchHead: Colors.Orange,
+    switchTrackTrue: Colors.LightOrange,
+    switchTrackFalse: Colors.Grey,
     overlayBackgroundColor: Colors.White,
     rotatingIcon: Colors.Grey5,
     loadingLabel: Colors.Grey6,
@@ -61,6 +66,8 @@ export const DefaultTheme = {
     WarningIcon: Colors.Warning,
     ProfileIconBg: Colors.LightOrange,
     Cursor: Colors.Orange,
+    version: Colors.DimGray,
+    poweredByBLE: Colors.Gray9,
   },
   Styles: StyleSheet.create({
     title: {
@@ -423,7 +430,7 @@ export const DefaultTheme = {
       padding: 0,
     },
   }),
-  CreditsStyles: StyleSheet.create({
+  AppMetaDataStyles: StyleSheet.create({
     buttonContainer: {
       position: 'absolute',
       left: 0,
@@ -433,8 +440,22 @@ export const DefaultTheme = {
       flex: 1,
       width: Dimensions.get('screen').width,
     },
-    markdownView: {
+    contentView: {
+      flex: 1,
       padding: 20,
+    },
+    header: {
+      fontSize: 20,
+      fontWeight: 'normal',
+      color: 'rgb(28,28,30)',
+    },
+  }),
+  FooterStyles: StyleSheet.create({
+    bottom: {
+      justifyContent: 'flex-end',
+      backgroundColor: Colors.Grey6,
+      borderRadius: 15,
+      padding: 10,
     },
   }),
   ModalStyles: StyleSheet.create({
@@ -672,6 +693,7 @@ export const DefaultTheme = {
   OpenCard: require('../../../assets/ID-open.png'),
   CloseCard: require('../../../assets/ID-closed.png'),
   ProfileIcon: require('../../../assets/placeholder-photo.png'),
+  MosipSplashLogo: require('../../../assets/icon.png'),
   MosipLogo: require('../../../assets/mosip-logo.png'),
   DomainWarningLogo: require('../../../assets/domain-warning.png'),
   WarningLogo: require('../../../assets/warningLogo.png'),

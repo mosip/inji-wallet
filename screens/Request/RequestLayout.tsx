@@ -7,7 +7,6 @@ import { RequestScreen } from './RequestScreen';
 import { useRequestLayout } from './RequestLayoutController';
 import { Message } from '../../components/Message';
 import { ReceiveVcScreen } from './ReceiveVcScreen';
-import { LanguageSelector } from '../../components/LanguageSelector';
 import { Theme } from '../../components/ui/styleUtils';
 import { I18nManager, Platform } from 'react-native';
 import { isBLEEnabled } from '../../lib/smartshare';
@@ -22,17 +21,16 @@ export const RequestLayout: React.FC = () => {
     <React.Fragment>
       <RequestStack.Navigator
         initialRouteName="RequestScreen"
+        screenListeners={{
+          state: () => {
+            if (controller.IsSavingFailedInViewingVc || controller.isAccepted) {
+              controller.RESET();
+            }
+          },
+        }}
         screenOptions={{
           headerTitleAlign: 'center',
           headerShadowVisible: false,
-          headerLeft: () =>
-            I18nManager.isRTL && Platform.OS !== 'ios' ? (
-              <LanguageSelector
-                triggerComponent={
-                  <Icon name="language" color={Theme.Colors.Icon} />
-                }
-              />
-            ) : null,
         }}>
         {!controller.isDone && (
           <RequestStack.Screen
