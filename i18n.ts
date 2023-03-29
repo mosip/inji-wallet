@@ -71,10 +71,11 @@ function populateLanguageCodeMap() {
   const supportedLanguages = Object.keys(SUPPORTED_LANGUAGES);
   supportedLanguages.forEach((languageCode) => {
     let threeLetterLanguageCode = languageCode;
+
     if (isTwoLetterLanguageCode(languageCode)) {
       threeLetterLanguageCode = getThreeLetterLanguageCode(languageCode);
     }
-    return (languageCodeMap[languageCode] = threeLetterLanguageCode);
+    languageCodeMap[languageCode] = threeLetterLanguageCode;
   });
 }
 
