@@ -69,12 +69,12 @@ function getThreeLetterLanguageCode(twoLetterLanguageCode) {
 
 function populateLanguageCodeMap() {
   const supportedLanguages = Object.keys(SUPPORTED_LANGUAGES);
-  supportedLanguages.forEach((twoLetterLanguageCode) => {
-    if (isTwoLetterLanguageCode) {
-      return (languageCodeMap[twoLetterLanguageCode] =
-        getThreeLetterLanguageCode(twoLetterLanguageCode));
+  supportedLanguages.forEach((languageCode) => {
+    let threeLetterLanguageCode = languageCode;
+    if (isTwoLetterLanguageCode(languageCode)) {
+      threeLetterLanguageCode = getThreeLetterLanguageCode(languageCode);
     }
-    return (languageCodeMap[twoLetterLanguageCode] = twoLetterLanguageCode);
+    return (languageCodeMap[languageCode] = threeLetterLanguageCode);
   });
 }
 
