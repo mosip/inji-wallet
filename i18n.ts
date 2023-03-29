@@ -11,6 +11,10 @@ import ta from './locales/tam.json';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const resources = { en, fil, ar, hi, kn, ta };
+import { iso6393To1 } from 'iso-639-3';
+import { LocalizedField } from './types/vc';
+
+const languageCodeMap = {};
 
 export const SUPPORTED_LANGUAGES = {
   en: 'English',
@@ -34,6 +38,7 @@ i18next
     const language = await AsyncStorage.getItem('language');
     if (language !== i18next.language) {
       i18next.changeLanguage(language);
+      populateLanguageCodeMap();
     }
   });
 
@@ -42,4 +47,50 @@ export default i18next;
 function getLanguageCode(code: string) {
   const [language] = code.split('-');
   return language;
+}
+
+export function getVCDetailsForCurrentLanguage(locales) {
+  const currentLanguage = i18next.language;
+  const vcDetailsForCurrentLanguage = locales.filter(
+    (obj) => obj.language === languageCodeMap[currentLanguage]
+  );
+  return vcDetailsForCurrentLanguage[0]?.value
+    ? vcDetailsForCurrentLanguage[0].value
+    : locales[0]?.value;
+}
+
+// This method gets the value from iso-639-3 package, which contains key value pairs of three letter language codes[key] and two letter langugae code[value]. These values are according to iso standards.
+// The response received from the server is three letter language code and the value in the inji code base is two letter language code. Hence the conversion is done.
+function getThreeLetterLanguageCode(twoLetterLanguageCode) {
+  return Object.keys(iso6393To1).find(
+    (key) => iso6393To1[key] === twoLetterLanguageCode
+  );
+}
+
+function populateLanguageCodeMap() {
+  const supportedLanguages = Object.keys(SUPPORTED_LANGUAGES);
+  supportedLanguages.forEach((twoLetterLanguageCode) => {
+    if (isTwoLetterLanguageCode) {
+      return (languageCodeMap[twoLetterLanguageCode] =
+        getThreeLetterLanguageCode(twoLetterLanguageCode));
+    }
+    return (languageCodeMap[twoLetterLanguageCode] = twoLetterLanguageCode);
+  });
+}
+
+export function getLocalizedField(rawField: string | LocalizedField[]) {
+  if (typeof rawField === 'string') {
+    return rawField;
+  }
+  try {
+    const locales: LocalizedField[] = JSON.parse(JSON.stringify(rawField));
+    if (locales.length == 1) return locales[0]?.value;
+    return getVCDetailsForCurrentLanguage(locales);
+  } catch (e) {
+    return '';
+  }
+}
+
+function isTwoLetterLanguageCode(languageCode) {
+  return languageCode.length == 2;
 }
