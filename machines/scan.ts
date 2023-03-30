@@ -81,6 +81,7 @@ const model = createModel(
       DISMISS: () => ({}),
       CONNECTED: () => ({}),
       DISCONNECT: () => ({}),
+      BLE_ERROR: () => ({}),
       SCREEN_BLUR: () => ({}),
       SCREEN_FOCUS: () => ({}),
       UPDATE_REASON: (reason: string) => ({ reason }),
@@ -434,6 +435,14 @@ export const scanMachine =
           },
         },
 
+        handlingBleError: {
+          on: {
+            DISMISS: {
+              target: '#request.clearingConnection',
+            },
+          },
+        },
+
         invalid: {
           on: {
             DISMISS: {
@@ -749,6 +758,11 @@ export const scanMachine =
               (event) => {
                 if (event.type === 'onDisconnected') {
                   callback({ type: 'DISCONNECT' });
+                }
+
+                if (event.type === 'onError') {
+                  callback({ type: 'BLE_ERROR' });
+                  console.error('BLE Exception: ' + event.message);
                 }
               }
             );
