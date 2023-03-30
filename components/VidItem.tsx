@@ -15,7 +15,7 @@ import { Column, Row, Text } from './ui';
 import { Theme } from './ui/styleUtils';
 import { RotatingIcon } from './RotatingIcon';
 import { GlobalContext } from '../shared/GlobalContext';
-import { LocalizedField } from '../types/vc';
+import { getLocalizedField } from '../i18n';
 
 export const VidItem: React.FC<VcItemProps> = (props) => {
   const { appService } = useContext(GlobalContext);
@@ -104,16 +104,4 @@ interface VcItemProps {
   selectable?: boolean;
   selected?: boolean;
   onPress?: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
-}
-
-function getLocalizedField(rawField: string | LocalizedField) {
-  if (typeof rawField === 'string') {
-    return rawField;
-  }
-  try {
-    const locales: LocalizedField[] = JSON.parse(JSON.stringify(rawField));
-    return locales[0].value;
-  } catch (e) {
-    return '';
-  }
 }

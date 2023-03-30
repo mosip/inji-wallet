@@ -23,9 +23,9 @@ import { Theme } from './ui/styleUtils';
 import { RotatingIcon } from './RotatingIcon';
 import { GlobalContext } from '../shared/GlobalContext';
 import { useTranslation } from 'react-i18next';
-import { LocalizedField } from '../types/vc';
 import { VcItemTags } from './VcItemTags';
 import VerifiedIcon from './VerifiedIcon';
+import { getLocalizedField } from '../i18n';
 
 const getDetails = (arg1, arg2, verifiableCredential) => {
   if (arg1 === 'Status') {
@@ -303,16 +303,4 @@ interface VcItemProps {
   onPress?: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
   onShow?: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
   activeTab?: string;
-}
-
-function getLocalizedField(rawField: string | LocalizedField) {
-  if (typeof rawField === 'string') {
-    return rawField;
-  }
-  try {
-    const locales: LocalizedField[] = JSON.parse(JSON.stringify(rawField));
-    return locales[0].value;
-  } catch (e) {
-    return '';
-  }
 }
