@@ -242,10 +242,9 @@ export function selectIsRefreshingReceivedVcs(state: State) {
 
 export function selectBindedVcs(state: State) {
   const distinctBindedVcs = new Set();
-  return (Object.keys(state.context.vcs) as Array<string>).filter((key) => {
-    var walletBindingResponse = state.context.vcs[key].walletBindingResponse;
+  return (state.context.myVcs as Array<string>).filter((key) => {
+    let walletBindingResponse = state.context.vcs[key].walletBindingResponse;
     let validVC =
-      state.context.myVcs.includes(key) &&
       walletBindingResponse !== null &&
       walletBindingResponse.walletBindingId !== null &&
       walletBindingResponse.walletBindingId !== '' &&
