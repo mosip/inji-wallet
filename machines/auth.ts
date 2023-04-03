@@ -4,6 +4,14 @@ import { createModel } from 'xstate/lib/model';
 import getAllConfigurations from '../shared/commonprops/commonProps';
 import { AppServices } from '../shared/GlobalContext';
 import { StoreEvents, StoreResponseEvent } from './store';
+import { locale } from 'expo-localization';
+import { SUPPORTED_LANGUAGES } from '../i18n';
+import { useTranslation } from 'react-i18next';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import i18next from 'i18next';
+import { I18nManager } from 'react-native';
+import RNRestart from 'react-native-restart';
+import { getLanguageCode } from '../i18n';
 
 const model = createModel(
   {
@@ -63,11 +71,26 @@ export const authMachine = model.createMachine(
       },
       checkingAuth: {
         always: [
+          { cond: 'hasLanguageAvailable', target: 'setLanguage' },
           { cond: 'hasLanguageset', target: 'languagesetup' },
           { cond: 'hasPasscodeSet', target: 'unauthorized' },
           { cond: 'hasBiometricSet', target: 'unauthorized' },
           { target: 'settingUp' },
         ],
+      },
+      setLanguage: {
+        invoke: {
+          src: 'setLanguage',
+          onDone: {
+            actions: '',
+            target: 'introSlider',
+          },
+        },
+        on: {
+          NEXT: {
+            target: 'settingUp',
+          },
+        },
       },
       languagesetup: {
         on: {
@@ -145,6 +168,7 @@ export const authMachine = model.createMachine(
       setBiometrics: model.assign({
         biometrics: (_, event: SetupBiometricsEvent) => event.biometrics,
       }),
+
       setLanguage: assign({
         selectLanguage: (context) => !context.selectLanguage,
       }),
@@ -164,6 +188,30 @@ export const authMachine = model.createMachine(
           console.log(error);
         }
       },
+      setLanguage: async () => {
+        const { i18n } = useTranslation();
+        const language = getLanguageCode(locale);
+        try {
+          if (language !== i18n.language) {
+            await i18n.changeLanguage(language).then(async () => {
+              await AsyncStorage.setItem('language', i18n.language);
+              const isRTL = i18next.dir(language) === 'rtl' ? true : false;
+              if (isRTL !== I18nManager.isRTL) {
+                try {
+                  I18nManager.forceRTL(isRTL);
+                  setTimeout(() => {
+                    RNRestart.Restart();
+                  }, 150);
+                } catch (e) {
+                  console.log('error', e);
+                }
+              }
+            });
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      },
     },
 
     guards: {
@@ -177,6 +225,19 @@ export const authMachine = model.createMachine(
       },
       hasLanguageset: (context) => {
         return !context.selectLanguage;
+      },
+      hasLanguageAvailable: (context) => {
+        const language = getLanguageCode(locale);
+        const languages = Object.entries(SUPPORTED_LANGUAGES).map(
+          ([value, label]) => ({ label, value })
+        );
+        let languageAvailable = false;
+        languages.forEach((item) => {
+          if (item.value == language) {
+            languageAvailable = true;
+          }
+        });
+        return !context.selectLanguage && languageAvailable;
       },
     },
   }

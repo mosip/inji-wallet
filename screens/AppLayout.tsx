@@ -25,7 +25,11 @@ export const AppLayout: React.FC = () => {
       <StatusBar animated={true} barStyle="dark-content" />
       <Navigator
         initialRouteName={
-          controller.isLanguagesetup ? baseRoutes[0].name : baseRoutes[2].name
+          controller.isLanguagesetup
+            ? baseRoutes[0].name
+            : controller.isUnAuthorized
+            ? baseRoutes[2].name
+            : baseRoutes[1].name
         }
         screenOptions={options}>
         {baseRoutes.map((route) => (
