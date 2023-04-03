@@ -1,6 +1,6 @@
 import React from 'react';
 import { SUPPORTED_LANGUAGES } from '../i18n';
-import { Dimensions, I18nManager, View } from 'react-native';
+import { Dimensions, I18nManager } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
@@ -70,6 +70,7 @@ export const SetupLanguageScreen: React.FC<RootRouteProps> = (props) => {
       <Button
         type="gradient"
         title={t('save')}
+        styles={{ margin: '0 0 10 0' }}
         onPress={() => {
           controller.SELECT(), controller.unlockPage;
         }}
