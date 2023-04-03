@@ -241,13 +241,16 @@ export function selectIsRefreshingReceivedVcs(state: State) {
 }
 
 export function selectBindedVcs(state: State) {
+  const distinctBindedVcs = new Set();
   return (Object.keys(state.context.vcs) as Array<string>).filter((key) => {
     var walletBindingResponse = state.context.vcs[key].walletBindingResponse;
-    return (
+    let validVC =
       state.context.myVcs.includes(key) &&
       walletBindingResponse !== null &&
       walletBindingResponse.walletBindingId !== null &&
-      walletBindingResponse.walletBindingId !== ''
-    );
+      walletBindingResponse.walletBindingId !== '' &&
+      !distinctBindedVcs.has(walletBindingResponse?.walletBindingId);
+    distinctBindedVcs.add(walletBindingResponse?.walletBindingId);
+    return validVC ? true : false;
   });
 }
