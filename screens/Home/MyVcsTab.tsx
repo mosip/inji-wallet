@@ -45,6 +45,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
             name="close"
             onPress={controller.DISMISS}
             color={Theme.Colors.whiteText}
+            style={{ backgroundColor: 'transparent' }}
             size={19}
           />
           {clearIndividualId()}
@@ -112,7 +113,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
             <React.Fragment>
               <Column fill style={Theme.Styles.homeScreenContainer}>
                 <Image source={Theme.DigitalIdentityLogo} />
-                <Text weight="bold" margin="33 0 6 0">
+                <Text weight="bold" margin="33 0 6 0" lineHeight={1}>
                   {t('bringYourDigitalID', {
                     vcLabel: controller.vcLabel.plural,
                   })}

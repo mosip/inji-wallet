@@ -28,6 +28,7 @@ const LanguageSetting: React.FC = () => {
             size={22}
             type="simple-line-icon"
             color={Theme.Colors.Icon}
+            containerStyle={Theme.Styles.settingsIconBg}
           />
           <ListItem.Content>
             <ListItem.Title>
@@ -87,7 +88,12 @@ export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
             <LanguageSetting />
 
             <ListItem bottomDivider disabled={!controller.canUseBiometrics}>
-              <Icon name="fingerprint" size={22} color={Theme.Colors.Icon} />
+              <Icon
+                name="fingerprint"
+                size={22}
+                color={Theme.Colors.Icon}
+                containerStyle={Theme.Styles.settingsIconBg}
+              />
               <ListItem.Content>
                 <ListItem.Title>
                   <Text weight="semibold" color={Theme.Colors.profileLabel}>
@@ -107,6 +113,7 @@ export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
                 type="fontawesome"
                 size={22}
                 color={Theme.Colors.Icon}
+                containerStyle={Theme.Styles.settingsIconBg}
               />
               <ListItem.Content>
                 <ListItem.Title>

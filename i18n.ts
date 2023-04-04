@@ -16,9 +16,9 @@ export const SUPPORTED_LANGUAGES = {
   en: 'English',
   fil: 'Filipino',
   ar: 'عربى',
-  hi: 'Hindi',
-  kn: 'Kannada',
-  ta: 'Tamil',
+  hi: 'हिंदी',
+  kn: 'ಕನ್ನಡ',
+  ta: 'ತಮಿಳು',
 };
 
 i18next

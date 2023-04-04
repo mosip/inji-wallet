@@ -14,6 +14,7 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
     <ListItem bottomDivider onPress={() => setIsEditing(true)}>
       <Icon
         name={props.Icon}
+        containerStyle={Theme.Styles.settingsIconBg}
         type={props.IconType}
         size={22}
         color={Theme.Colors.Icon}
