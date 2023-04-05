@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Icon } from 'react-native-elements';
 import { MessageOverlay } from '../components/MessageOverlay';
-import { Button, Centered, Column, Text } from '../components/ui';
+import { Button, Column, Text } from '../components/ui';
 import { Theme } from '../components/ui/styleUtils';
 import { RootRouteProps } from '../routes';
 import { useAuthScreen } from './AuthScreenController';
@@ -29,7 +29,7 @@ export const AuthScreen: React.FC<RootRouteProps> = (props) => {
             {t('header')}
           </Text>
           <Text align="center" color={Theme.Colors.GrayText}>
-            {t('Description')}{' '}
+            {t('Description')}
           </Text>
         </Column>
       </Column>

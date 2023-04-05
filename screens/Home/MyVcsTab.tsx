@@ -58,7 +58,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
     <React.Fragment>
       <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
         <DownloadingIdPopUp />
-        <Column fill pY={16} pX={18}>
+        <Column fill pY={10} pX={18}>
           {controller.vcKeys.length > 0 && (
             <React.Fragment>
               <Column
@@ -119,7 +119,6 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                   })}
                 </Text>
                 <Text
-                  weight="semibold"
                   style={Theme.TextStyles.bold}
                   color={Theme.Colors.textLabel}
                   align="center"

@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Icon } from 'react-native-elements';
 import { Image } from 'react-native';
 import { MAX_PIN, PasscodeVerify } from '../components/PasscodeVerify';
 import { PinInput } from '../components/PinInput';

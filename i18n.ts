@@ -32,14 +32,18 @@ i18next
   })
   .then(async () => {
     const language = await AsyncStorage.getItem('language');
-    if (language !== i18next.language) {
-      i18next.changeLanguage(language);
+    if (Object.keys(SUPPORTED_LANGUAGES).includes(i18next.language)) {
+      if (language !== i18next.language) {
+        i18next.changeLanguage(language);
+      }
+    } else {
+      i18next.changeLanguage('en');
     }
   });
 
 export default i18next;
 
-function getLanguageCode(code: string) {
+export function getLanguageCode(code: string) {
   const [language] = code.split('-');
   return language;
 }
