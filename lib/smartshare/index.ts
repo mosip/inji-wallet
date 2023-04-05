@@ -23,5 +23,5 @@ export default ShareLib;
 
 export interface BLEError {
   message?: string;
-  code?: number;
+  code?: string;
 }
