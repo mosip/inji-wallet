@@ -248,16 +248,13 @@ export function selectBindedVcs(state: State) {
   return (state.context.myVcs as Array<string>).filter((key) => {
     let walletBindingResponse = state.context.vcs[key].walletBindingResponse;
     let validVC =
-      isWalletBindingResponseNotEmpty(walletBindingResponse) &&
+      !isEmpty(walletBindingResponse) &&
+      !isEmpty(walletBindingResponse?.walletBindingId) &&
       !distinctBindedVcs.has(walletBindingResponse.walletBindingId);
     distinctBindedVcs.add(walletBindingResponse?.walletBindingId);
     return validVC;
   });
 }
-function isWalletBindingResponseNotEmpty(walletBindingResponse) {
-  return (
-    walletBindingResponse !== null &&
-    walletBindingResponse.walletBindingId !== null &&
-    walletBindingResponse.walletBindingId !== ''
-  );
+function isEmpty(object) {
+  return object == null || object == '' || object == undefined;
 }
