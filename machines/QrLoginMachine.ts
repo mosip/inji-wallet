@@ -333,8 +333,7 @@ export const qrLoginMachine =
           var jwt = await getJwt(
             privateKey,
             context.selectedVc.id,
-            walletBindingResponse?.keyId,
-            walletBindingResponse?.thumbprint
+            walletBindingResponse?.walletBindingId
           );
 
           const response = await request(
@@ -366,8 +365,7 @@ export const qrLoginMachine =
           var jwt = await getJwt(
             privateKey,
             context.selectedVc.id,
-            walletBindingResponse?.keyId,
-            walletBindingResponse?.thumbprint
+            walletBindingResponse?.walletBindingId
           );
 
           const response = await request(
