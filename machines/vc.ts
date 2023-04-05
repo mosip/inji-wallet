@@ -240,16 +240,24 @@ export function selectIsRefreshingReceivedVcs(state: State) {
   return state.matches('ready.receivedVcs.refreshing');
 }
 
+/*
+  This Methods gets the Wallet's Distinct Binded VCs, which got recently added.
+ */
 export function selectBindedVcs(state: State) {
   const distinctBindedVcs = new Set();
   return (state.context.myVcs as Array<string>).filter((key) => {
     let walletBindingResponse = state.context.vcs[key].walletBindingResponse;
     let validVC =
-      walletBindingResponse !== null &&
-      walletBindingResponse.walletBindingId !== null &&
-      walletBindingResponse.walletBindingId !== '' &&
-      !distinctBindedVcs.has(walletBindingResponse?.walletBindingId);
+      isWalletBindingResponseNotEmpty(walletBindingResponse) &&
+      !distinctBindedVcs.has(walletBindingResponse.walletBindingId);
     distinctBindedVcs.add(walletBindingResponse?.walletBindingId);
-    return validVC ? true : false;
+    return validVC;
   });
+}
+function isWalletBindingResponseNotEmpty(walletBindingResponse) {
+  return (
+    walletBindingResponse !== null &&
+    walletBindingResponse.walletBindingId !== null &&
+    walletBindingResponse.walletBindingId !== ''
+  );
 }
