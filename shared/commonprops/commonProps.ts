@@ -1,5 +1,5 @@
 import { request } from '../request';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getDataFromStorage, setDataToStorage } from '../../storage';
 import { init } from 'mosip-inji-face-sdk';
 
 const COMMON_PROPS_KEY: string =
@@ -7,14 +7,14 @@ const COMMON_PROPS_KEY: string =
 
 export default async function getAllConfigurations() {
   try {
-    var response = await AsyncStorage.getItem(COMMON_PROPS_KEY);
+    var response = await getDataFromStorage(COMMON_PROPS_KEY);
     if (response) {
       return JSON.parse(response);
     } else {
       const resp = await request('GET', '/residentmobileapp/allProperties');
       const injiProps = resp.response;
       const injiPropsString = JSON.stringify(injiProps);
-      await AsyncStorage.setItem(COMMON_PROPS_KEY, injiPropsString);
+      await setDataToStorage(COMMON_PROPS_KEY, injiPropsString);
       return injiProps;
     }
   } catch (error) {

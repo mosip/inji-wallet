@@ -1,6 +1,10 @@
 import * as Keychain from 'react-native-keychain';
 import CryptoJS from 'crypto-js';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {
+  clearDataFromStorage,
+  getDataFromStorage,
+  setDataToStorage,
+} from '../storage';
 import binaryToBase64 from 'react-native/Libraries/Utilities/binaryToBase64';
 import { EventFrom, Receiver, sendParent, send, sendUpdate } from 'xstate';
 import { createModel } from 'xstate/lib/model';
@@ -283,8 +287,8 @@ export async function setItem(
 ) {
   try {
     const data = JSON.stringify(value);
-    const encrypted = encryptJson(encryptionKey, data);
-    await AsyncStorage.setItem(key, encrypted);
+    const encryptedData = encryptJson(encryptionKey, data);
+    await setDataToStorage(key, encryptedData);
   } catch (e) {
     console.error('error setItem:', e);
     throw e;
@@ -297,11 +301,10 @@ export async function getItem(
   encryptionKey: string
 ) {
   try {
-    const data = await AsyncStorage.getItem(key);
+    const data = await getDataFromStorage(key);
     if (data != null) {
-      const decrypted = decryptJson(encryptionKey, data);
-
-      return JSON.parse(decrypted);
+      const decryptedData = decryptJson(encryptionKey, data);
+      return JSON.parse(decryptedData);
     } else {
       return defaultValue;
     }
@@ -348,9 +351,9 @@ export async function removeItem(
   encryptionKey: string
 ) {
   try {
-    const data = await AsyncStorage.getItem(key);
-    const decrypted = decryptJson(encryptionKey, data);
-    const list = JSON.parse(decrypted);
+    const data = await getDataFromStorage(key);
+    const decryptedData = decryptJson(encryptionKey, data);
+    const list = JSON.parse(decryptedData);
     const vcKeyArray = value.split(':');
     const finalVcKeyArray = vcKeyArray.pop();
     const finalVcKey = vcKeyArray.join(':');
@@ -372,9 +375,9 @@ export async function removeItems(
   encryptionKey: string
 ) {
   try {
-    const data = await AsyncStorage.getItem(key);
-    const decrypted = decryptJson(encryptionKey, data);
-    const list = JSON.parse(decrypted);
+    const data = await getDataFromStorage(key);
+    const decryptedData = decryptJson(encryptionKey, data);
+    const list = JSON.parse(decryptedData);
     const newList = list.filter(function (vc: string) {
       return !values.find(function (vcKey: string) {
         const vcKeyArray = vcKey.split(':');
@@ -394,7 +397,8 @@ export async function removeItems(
 
 export async function clear() {
   try {
-    await AsyncStorage.clear();
+    console.log('entire storage gets cleared.');
+    await clearDataFromStorage();
   } catch (e) {
     console.error('error clear:', e);
     throw e;
@@ -405,9 +409,12 @@ export function encryptJson(encryptionKey: string, data: string): string {
   return CryptoJS.AES.encrypt(data, encryptionKey).toString();
 }
 
-export function decryptJson(encryptionKey: string, encrypted: string): string {
+export function decryptJson(
+  encryptionKey: string,
+  encryptedData: string
+): string {
   try {
-    return CryptoJS.AES.decrypt(encrypted, encryptionKey).toString(
+    return CryptoJS.AES.decrypt(encryptedData, encryptionKey).toString(
       CryptoJS.enc.Utf8
     );
   } catch (e) {
