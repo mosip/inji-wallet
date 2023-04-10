@@ -8,7 +8,7 @@ import ar from './locales/ara.json';
 import hi from './locales/hin.json';
 import kn from './locales/kan.json';
 import ta from './locales/tam.json';
-import { getDataFromStorage } from './storage';
+import { getDataFromStorage } from './shared/storage';
 
 const resources = { en, fil, ar, hi, kn, ta };
 import { iso6393To1 } from 'iso-639-3';

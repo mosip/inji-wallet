@@ -4,7 +4,7 @@ import {
   clearDataFromStorage,
   getDataFromStorage,
   setDataToStorage,
-} from '../storage';
+} from '../shared/storage';
 import binaryToBase64 from 'react-native/Libraries/Utilities/binaryToBase64';
 import { EventFrom, Receiver, sendParent, send, sendUpdate } from 'xstate';
 import { createModel } from 'xstate/lib/model';

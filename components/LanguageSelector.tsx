@@ -2,7 +2,7 @@ import React from 'react';
 import { SUPPORTED_LANGUAGES } from '../i18n';
 import { I18nManager, View } from 'react-native';
 import { Picker } from './ui/Picker';
-import { setDataToStorage } from '../storage';
+import { setDataToStorage } from '../shared/storage';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
 import RNRestart from 'react-native-restart';
