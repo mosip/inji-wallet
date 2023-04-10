@@ -1,5 +1,5 @@
 import { request } from '../request';
-import { getDataFromStorage, setDataToStorage } from '../../storage';
+import { getDataFromStorage, setDataToStorage } from '../storage';
 import { init } from 'mosip-inji-face-sdk';
 
 const COMMON_PROPS_KEY: string =
