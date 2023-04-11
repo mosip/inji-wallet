@@ -78,6 +78,7 @@ const model = createModel(
       CONFIRM: () => ({}),
       PIN_CARD: () => ({}),
       KEBAB_POPUP: () => ({}),
+      SHOW_ACTIVITY: () => ({}),
     },
   }
 );
@@ -223,6 +224,7 @@ export const vcItemMachine =
             KEBAB_POPUP: {
               target: 'kebabPopUp',
             },
+
             DISMISS: {
               target: 'checkingVc',
             },
@@ -249,6 +251,9 @@ export const vcItemMachine =
             PIN_CARD: {
               target: '#vc-item.pinCard',
               actions: 'setPinCard',
+            },
+            SHOW_ACTIVITY: {
+              target: '#vc-item.kebabPopUp.showActivities',
             },
           },
           initial: 'idle',
@@ -350,6 +355,11 @@ export const vcItemMachine =
                   actions: 'setWalletBindingError',
                   target: '#vc-item.kebabPopUp.showingWalletBindingError',
                 },
+              },
+            },
+            showActivities: {
+              on: {
+                DISMISS: '#vc-item.kebabPopUp',
               },
             },
           },
@@ -1246,4 +1256,8 @@ export function selectKebabPopUpWalletBindingInProgress(state: State) {
 
 export function selectKebabPopUpBindingWarning(state: State) {
   return state.matches('kebabPopUp.showBindingWarning');
+}
+
+export function selectShowActivities(state: State) {
+  return state.matches('kebabPopUp.showActivities');
 }

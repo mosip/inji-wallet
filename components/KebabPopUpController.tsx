@@ -12,7 +12,11 @@ import {
   selectWalletBindingError,
   VcItemEvents,
   vcItemMachine,
+  selectShowActivities,
 } from '../machines/vcItem';
+import { selectActivities } from '../machines/activityLog';
+import { GlobalContext } from '../shared/GlobalContext';
+import { useContext } from 'react';
 
 export function useKebabPopUp(props) {
   const service = props.service as ActorRefFrom<typeof vcItemMachine>;
@@ -23,6 +27,7 @@ export function useKebabPopUp(props) {
   const CONFIRM = () => service.send(VcItemEvents.CONFIRM());
   const DISMISS = () => service.send(VcItemEvents.DISMISS());
   const CANCEL = () => service.send(VcItemEvents.CANCEL());
+  const SHOW_ACTIVITY = () => service.send(VcItemEvents.SHOW_ACTIVITY());
   const INPUT_OTP = (otp: string) => service.send(VcItemEvents.INPUT_OTP(otp));
   const isPinned = useSelector(service, selectIsPinned);
   const isBindingWarning = useSelector(service, selectKebabPopUpBindingWarning);
@@ -42,6 +47,10 @@ export function useKebabPopUp(props) {
   );
   const emptyWalletBindingId = useSelector(service, selectEmptyWalletBindingId);
   const isKebabPopUp = useSelector(service, selectKebabPopUp);
+  const isShowActivities = useSelector(service, selectShowActivities);
+  const { appService } = useContext(GlobalContext);
+  const activityLogService = appService.children.get('activityLog');
+
   return {
     isPinned,
     PIN_CARD,
@@ -51,6 +60,7 @@ export function useKebabPopUp(props) {
     DISMISS,
     CANCEL,
     INPUT_OTP,
+    SHOW_ACTIVITY,
     isBindingWarning,
     isAcceptingOtpInput,
     isWalletBindingError,
@@ -59,5 +69,7 @@ export function useKebabPopUp(props) {
     WalletBindingInProgress,
     emptyWalletBindingId,
     isKebabPopUp,
+    isShowActivities,
+    activities: useSelector(activityLogService, selectActivities),
   };
 }

@@ -65,18 +65,19 @@
     "enableVerification": "Enable Verification",
     "profileAuthenticated": "Profile is authenticated!",
     "offlineAuthDisabledHeader": "Offline Authentication disabled!",
-    "offlineAuthDisabledMessage": "Click 'Enable Authentication' to enable this credentials to be used for offline authentication."
+    "offlineAuthDisabledMessage": "Click here to enable this credentials to be used for offline authentication."
   },
   "HomeScreenKebabPopUp": {
     "title": "More Options",
     "unPinCard": "Unpin Card",
     "pinCard" : "Pin Card",
     "offlineAuthenticationDisabled!": "Offline authentication disabled!",
-    "offlineAuthDisabledMessage": "Click 'Enable Authentication' to enable this credentials to be used for offline authentication.",
+    "offlineAuthDisabledMessage": "Click here to enable this credentials to be used for offline authentication.",
     "ViewActivityLog": "View activity log",
     "RemoveFromWallet": "Remove from wallet",
     "RevokeID": "Revoke ID",
-    "RevokeMessage": "Revoke the virtual ID for this profile"
+    "RevokeMessage": "Revoke the virtual ID for this profile",
+    "ActivityLog":"View Activity Log"
   },
   "WalletBinding": {
     "inProgress" : "In Progress",

@@ -8,7 +8,7 @@ import { ActivityLogText } from '../../components/ActivityLogText';
 import { MainRouteProps } from '../../routes/main';
 import { Theme } from '../../components/ui/styleUtils';
 
-export const HistoryScreen: React.FC<MainRouteProps> = (props) => {
+export const HistoryScreen: React.FC<MainRouteProps> = () => {
   const { t } = useTranslation('HistoryScreen');
   const controller = useHistoryTab();
 
