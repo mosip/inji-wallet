@@ -6,7 +6,6 @@ import {
 import { Image } from 'react-native';
 import { HomeScreen } from '../screens/Home/HomeScreen';
 import { RootStackParamList } from './index';
-import { RequestLayout } from '../screens/Request/RequestLayout';
 import { ScanLayout } from '../screens/Scan/ScanLayout';
 import i18n from '../i18n';
 import { HistoryScreen } from '../screens/History/HistoryScreen';

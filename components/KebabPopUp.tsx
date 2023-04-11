@@ -1,5 +1,4 @@
 import React from 'react';
-import { t } from 'i18next';
 import { BottomSheet, Icon, ListItem } from 'react-native-elements';
 import { Theme } from '../components/ui/styleUtils';
 import { Centered, Column, Row, Text } from '../components/ui';
@@ -9,6 +8,7 @@ import { useKebabPopUp } from './KebabPopUpController';
 import { ActorRefFrom } from 'xstate';
 import { vcItemMachine } from '../machines/vcItem';
 import { useTranslation } from 'react-i18next';
+import { HistoryTab } from '../screens/Home/MyVcs/HistoryTab';
 
 export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
   const controller = useKebabPopUp(props);
@@ -56,6 +56,12 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
             label={t('offlineAuthenticationDisabled!')}
             Content={t('offlineAuthDisabledMessage')}
             service={props.service}
+          />
+
+          <HistoryTab
+            service={props.service}
+            label={t('ActivityLog')}
+            vcKey={props.vcKey}
           />
         </Column>
       </BottomSheet>

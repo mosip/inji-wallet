@@ -347,6 +347,11 @@ export const DefaultTheme = {
     VidInputBottom: {
       borderBottomColor: Colors.Orange,
     },
+    hrLine: {
+      borderBottomColor: 'black',
+      borderBottomWidth: 1,
+      marginTop: 10,
+    },
   }),
   PinInputStyle: StyleSheet.create({
     input: {
@@ -803,8 +808,8 @@ export const DefaultTheme = {
       backgroundColor: Colors.Transparent,
     },
   }),
-  OpenCard: require('../../../assets/ID-open.png'),
-  CloseCard: require('../../../assets/ID-closed.png'),
+  OpenCard: '',
+  CloseCard: '',
   ProfileIcon: require('../../../assets/placeholder-photo.png'),
   MosipLogo: require('../../../assets/mosip-logo.png'),
   DomainWarningLogo: require('../../../assets/domain-warning.png'),

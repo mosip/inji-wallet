@@ -307,6 +307,7 @@ export interface Typegen0 {
     | 'kebabPopUp.addingWalletBindingId'
     | 'kebabPopUp.idle'
     | 'kebabPopUp.requestingBindingOtp'
+    | 'kebabPopUp.showActivities'
     | 'kebabPopUp.showBindingWarning'
     | 'kebabPopUp.showingWalletBindingError'
     | 'kebabPopUp.updatingPrivateKey'
@@ -335,6 +336,7 @@ export interface Typegen0 {
           | 'addingWalletBindingId'
           | 'idle'
           | 'requestingBindingOtp'
+          | 'showActivities'
           | 'showBindingWarning'
           | 'showingWalletBindingError'
           | 'updatingPrivateKey';
