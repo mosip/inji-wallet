@@ -27,6 +27,7 @@ export const setDataToStorage = async (key: string, data: string) => {
 };
 
 export const clearDataFromStorage = async () => {
+  console.log('Clearing the entire storage');
   const filesArr = await readDir(DocumentDirectoryPath);
   filesArr.forEach((file) => unlink(file.path));
   MMKV.clearStore();
