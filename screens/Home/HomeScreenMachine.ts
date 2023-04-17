@@ -40,7 +40,6 @@ const model = createModel(
 
 const MY_VCS_TAB_REF_ID = 'myVcsTab';
 const RECEIVED_VCS_TAB_REF_ID = 'receivedVcsTab';
-const HISTORY_TAB_REF_ID = 'historyTab';
 
 export const HomeScreenEvents = model.events;
 

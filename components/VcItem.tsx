@@ -152,7 +152,6 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
   ) : null;
 
   const tag = useSelector(service, selectTag);
-  const [visible, setVisible] = useState(false);
   return (
     <Pressable
       onPress={() => props.onPress(service)}
