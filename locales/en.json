@@ -49,6 +49,7 @@
     "nationalCard": "National Card",
     "uin": "UIN",
     "vid": "VID",
+    "enabledAuthPopUp":"Credentials are enabled for online authentication.",
     "enableVerification": "Enable Verification",
     "profileAuthenticated": "Profile is authenticated!",
     "offlineAuthDisabledHeader": "Offline Authentication disabled!",
@@ -60,10 +61,10 @@
     "pinCard" : "Pin Card",
     "offlineAuthenticationDisabled!": "Offline authentication disabled!",
     "offlineAuthDisabledMessage": "Click here to enable this credentials to be used for offline authentication.",
-    "ViewActivityLog": "View activity log",
-    "RemoveFromWallet": "Remove from wallet",
-    "RevokeID": "Revoke ID",
-    "RevokeMessage": "Revoke the virtual ID for this profile",
+    "viewActivityLog": "View activity log",
+    "removeFromWallet": "Remove from wallet",
+    "revokeId": "Revoke ID",
+    "revokeMessage": "Revoke the virtual ID for this profile",
     "ActivityLog":"View Activity Log"
   },
   "WalletBinding": {

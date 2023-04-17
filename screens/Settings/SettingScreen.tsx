@@ -22,7 +22,7 @@ const LanguageSetting: React.FC = () => {
   return (
     <LanguageSelector
       triggerComponent={
-        <ListItem bottomDivider>
+        <ListItem bottomDivider topDivider>
           <Icon
             name="globe"
             size={22}
@@ -107,7 +107,7 @@ export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
                 color={Theme.Colors.profileValue}
               />
             </ListItem>
-            <ListItem onPress={controller.LOGOUT}>
+            <ListItem topDivider onPress={controller.LOGOUT}>
               <Icon
                 name="logout"
                 type="fontawesome"

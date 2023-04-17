@@ -39,18 +39,15 @@ export const WalletBinding: React.FC<WalletBindingProps> = (props) => {
       )}
       <ListItem.Content>
         <ListItem.Title>
-          <Text
-            size="small"
-            weight="semibold"
-            color={Theme.Colors.walletbindingLabel}>
+          <Text weight="bold" size="small">
             {props.label}
           </Text>
         </ListItem.Title>
         <Text
-          weight="bold"
+          weight="semibold"
           color={Theme.Colors.walletbindingContent}
-          size="small">
-          {props.Content}
+          size="smaller">
+          {props.content}
         </Text>
       </ListItem.Content>
 
@@ -99,7 +96,7 @@ export const WalletBinding: React.FC<WalletBindingProps> = (props) => {
 
 interface WalletBindingProps {
   label: string;
-  Content?: string;
+  content?: string;
   Icon?: string;
   service: ActorRefFrom<typeof vcItemMachine>;
 }

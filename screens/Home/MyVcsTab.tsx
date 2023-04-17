@@ -37,7 +37,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
     return (
       <View
         style={{ display: controller.isRequestSuccessful ? 'flex' : 'none' }}>
-        <Row style={Theme.Styles.downloadingIdPopUp}>
+        <Row style={Theme.Styles.popUp}>
           <Text color={Theme.Colors.whiteText} weight="semibold" size="smaller">
             {t('downloadingYourId')}
           </Text>
@@ -45,7 +45,6 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
             name="close"
             onPress={controller.DISMISS}
             color={Theme.Colors.whiteText}
-            style={{ backgroundColor: 'transparent' }}
             size={19}
           />
           {clearIndividualId()}

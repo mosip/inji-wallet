@@ -44,7 +44,7 @@ export const DefaultTheme = {
     Loading: Colors.Orange,
     noUinText: Colors.Orange,
     IconBg: Colors.Orange,
-    DownloadingIdPopUp: Colors.Green,
+    popUp: Colors.Green,
     Icon: Colors.Orange,
     GrayIcon: Colors.Grey,
     borderBottomColor: Colors.Grey6,
@@ -125,7 +125,7 @@ export const DefaultTheme = {
       borderRadius: 6,
       backgroundColor: Colors.LightOrange,
     },
-    downloadingIdPopUp: {
+    popUp: {
       alignItems: 'center',
       justifyContent: 'space-between',
       backgroundColor: Colors.Green,
@@ -500,6 +500,8 @@ export const DefaultTheme = {
       alignSelf: 'center',
       fontSize: 10,
       elevation: 5,
+      position: 'absolute',
+      bottom: 24,
     },
     clearAddIdBtnBg: {
       backgroundColor: Colors.Transparent,
@@ -604,10 +606,13 @@ export const DefaultTheme = {
     },
     kebabHeaderStyle: {
       backgroundColor: 'white',
-      borderTopLeftRadius: 30,
+      borderTopLeftRadius: 24,
       borderTopRightRadius: 24,
-      padding: 15,
       justifyContent: 'space-between',
+      fontFamily: 'Inter_700Bold',
+      paddingRight: 15,
+      paddingLeft: 130,
+      paddingTop: 18,
     },
   }),
   MessageOverlayStyles: StyleSheet.create({
