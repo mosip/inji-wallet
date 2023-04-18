@@ -121,6 +121,7 @@
         "applicationProcessing": "AID is not ready",
         "noMessageAvailable": "Try after sometime",
         "networkRequestFailed": "Network request failed",
+        "invalidAid": "AID entered is not available. Please check your AID before entering",
         "timeOut": "Timeout"
       }
     }
@@ -248,6 +249,7 @@
     "reject": "Reject",
     "discard": "Discard",
     "goToReceivedVCTab": "View Received {{vcLabel}}",
+    "saving": "Saving",
     "errors": {
       "savingFailed": {
         "title": "Failed to save the {{vcLabelSingular}}",
@@ -290,7 +292,7 @@
         "message": "Please connect to the internet to enable Online sharing mode"
       },
       "bleError": {
-        "title": "Failed to transfer",
+        "title": "Failed to transfer!",
         "message": "Something went wrong while transferring {{vcLabel}}. Please try again."
       }
     },
@@ -304,7 +306,7 @@
     "sharingVc": "Sharing {{vcLabel}}",
     "bluetoothStateAndroid": "Please turn on bluetooth from quick settings to support local sharing",
     "bluetoothStateIos": "Please turn on bluetooth from control center to support local sharing",
-    "enableBluetoothMessage":"Please enable bluetooth permissions to support local sharing",
+    "enableBluetoothMessage": "Please enable bluetooth permissions to support local sharing",
     "enableBluetoothButtonText": "Allow Bluetooth Permissions",
     "errors": {
       "locationDisabled": {
