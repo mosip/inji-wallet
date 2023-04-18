@@ -4,7 +4,7 @@ import { Row, Text } from '../../../components/ui';
 import { Theme } from '../../../components/ui/styleUtils';
 import { useTranslation } from 'react-i18next';
 import { BindingVcWarningOverlay } from './BindingVcWarningOverlay';
-import { OtpVerification } from './OtpVerification';
+import { OtpVerificationModal } from './OtpVerificationModal';
 import { MessageOverlay } from '../../../components/MessageOverlay';
 import { useKebabPopUp } from '../../../components/KebabPopUpController';
 import { Dimensions } from 'react-native';
@@ -60,7 +60,7 @@ export const WalletBinding: React.FC<WalletBindingProps> = (props) => {
         onCancel={controller.CANCEL}
       />
 
-      <OtpVerification
+      <OtpVerificationModal
         isVisible={controller.isAcceptingOtpInput}
         onDismiss={controller.DISMISS}
         onInputDone={controller.INPUT_OTP}

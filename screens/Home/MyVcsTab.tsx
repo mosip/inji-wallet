@@ -149,6 +149,14 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
         <GetVcModal service={controller.GetVcModalService} />
       )}
 
+      {controller.isRequestSuccessful && (
+        <DownloadingVcModal
+          isVisible={controller.isRequestSuccessful}
+          onDismiss={controller.DISMISS}
+          onShow={clearIndividualId}
+        />
+      )}
+
       <OnboardingOverlay
         isVisible={controller.isOnboarding}
         onDone={controller.ONBOARDING_DONE}

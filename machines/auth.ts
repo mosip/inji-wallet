@@ -1,5 +1,6 @@
 import { init } from 'mosip-inji-face-sdk';
 import { assign, ContextFrom, EventFrom, send, StateFrom } from 'xstate';
+import { assign, ContextFrom, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { downloadModel } from '../shared/commonprops/commonProps';
 import { AppServices } from '../shared/GlobalContext';

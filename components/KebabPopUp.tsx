@@ -63,12 +63,6 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
             label={t('ActivityLog')}
             vcKey={props.vcKey}
           />
-
-          <HistoryTab
-            service={props.service}
-            label={t('ActivityLog')}
-            vcKey={props.vcKey}
-          />
         </Column>
       </BottomSheet>
     </Column>

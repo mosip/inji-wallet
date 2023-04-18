@@ -33,6 +33,9 @@
   "PasscodeVerify": {
     "passcodeMismatchError": "Passcode did not match."
   },
+  "PasscodeVerify": {
+    "passcodeMismatchError": "Passcode did not match."
+  },
   "QrScanner": {
     "missingPermissionText": "This app uses the camera to scan the QR code of another device.",
     "allowCameraButton": "Allow access to camera"
@@ -46,6 +49,7 @@
     "gender": "Gender",
     "dateOfBirth": "Date of birth",
     "phoneNumber": "Phone number",
+    "email": "Email Address",
     "email": "Email Address",
     "address": "Address",
     "reasonForSharing": "Reason for sharing",
@@ -61,7 +65,7 @@
     "no": "No",
     "Alert": "Alert",
     "ok": "Okay",
-    "downloading": "Downloading Your Card"
+    "downloading": "Downloading Your Card",
     "enableVerification": "Enable Verification",
     "profileAuthenticated": "Profile is authenticated!",
     "offlineAuthDisabledHeader": "Offline Authentication disabled!",
@@ -94,6 +98,10 @@
     "Description": "Would you like to use biometrics to unlock the application?",
     "useBiometrics": "Use Biometrics",
     "usePasscode": "Use Passcode",
+    "header": "Select App Unlock Method",
+    "Description": "Would you like to use biometrics to unlock the application?",
+    "useBiometrics": "Use Biometrics",
+    "usePasscode": "Use Passcode",
     "errors": {
       "unavailable": "Device does not support Biometrics",
       "unenrolled": "To use Biometrics, please enroll your biometrics in your device settings",
@@ -104,6 +112,7 @@
   "BiometricScreen": {
     "unlock": "Unlock with biometrics"
   },
+  "HistoryScreen": {
   "HistoryScreen": {
     "noHistory": "No history available yet",
     "downloaded": "downloaded",
@@ -124,7 +133,16 @@
     "bioUnlock": "Bio Unlock",
     "logout": "Logout"
   },
+  "SettingScreen": {
+    "header": "Settings",
+    "profile": "Profile",
+    "vcLabel": "Vc Label",
+    "language": "Language",
+    "bioUnlock": "Bio Unlock",
+    "logout": "Logout"
+  },
   "AddVcModal": {
+    "inputIdHeader":"Retrieve your ID",
     "inputIdHeader":"Retrieve your ID",
     "requestingCredential": "Requesting credential...",
     "errors": {
@@ -177,7 +195,13 @@
     "header": "Enter the MOSIP-provided UIN or VID of the {{vcLabel}} you wish to retrieve",
     "title": "Retrieve your ID",
     "guideLabel": "Select ID type and enter the MOSIP provided UIN or VID of the ID you wish to retrieve",
+    "title": "Retrieve your ID",
+    "guideLabel": "Select ID type and enter the MOSIP provided UIN or VID of the ID you wish to retrieve",
     "generateVc": "Generate {{vcLabel}}",
+    "downloadID": "Download ID",
+    "enterId": "Enter {{idType}}",
+    "noUIN/VID": "Don't have UIN/VID?",
+    "getItHere": "Get it now",
     "downloadID": "Download ID",
     "enterId": "Enter {{idType}}",
     "noUIN/VID": "Don't have UIN/VID?",
@@ -189,8 +213,16 @@
     "otpSentMessage": "We've sent the 6 digit code to your registered mobile number!",
     "resendTheCode": "You can resend the code in ",
     "resendCode": "Resend Code"
+    "title": "OTP Verification",
+    "otpSentMessage": "We've sent the 6 digit code to your registered mobile number!",
+    "resendTheCode": "You can resend the code in ",
+    "resendCode": "Resend Code"
   },
   "MyVcsTab": {
+    "downloadID": "Download ID",
+    "bringYourDigitalID": "Bring Your Digital ID",
+    "generateVcDescription": "To download your {{vcLabel}} tap Download {{vcLabel}} below",
+    "downloadingYourId": "Downloading your ID, this can take upto 5 minutes"
     "downloadID": "Download ID",
     "bringYourDigitalID": "Bring Your Digital ID",
     "generateVcDescription": "To download your {{vcLabel}} tap Download {{vcLabel}} below",
@@ -206,12 +238,22 @@
     "stepThreeButton": "Get Started",
     "skip": "Skip",
     "next": "Next"
+    "stepOneTitle": "Secure Sharing!",
+    "stepOneText": "Share and receive {{vcLabel}} switfly using your phone camera to scan QR codes",
+    "stepTwoTitle": "Trusted Digital Wallet",
+    "stepTwoText": "Keep your digital credential with you at all times",
+    "stepThreeTitle": "Quick Access",
+    "stepThreeText": "Once generated, {{vcLabel}} are safely stored on your mobile.",
+    "stepThreeButton": "Get Started",
+    "skip": "Skip",
+    "next": "Next"
   },
   "ReceivedVcsTab": {
     "noReceivedVcsTitle": "No {{vcLabel}} available yet",
     "noReceivedVcsText": "Tap on Request below to receive {{vcLabel}}"
   },
   "ViewVcModal": {
+    "title": "ID Details",
     "title": "ID Details",
     "cancel": "Cancel",
     "lock": "Lock",
@@ -237,6 +279,9 @@
     "settings": "Settings"
   },
   "PasscodeScreen": {
+    "header": "Set Passcode",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+    "confirmPasscode": "Confirm passcode",
     "header": "Set Passcode",
     "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
     "confirmPasscode": "Confirm passcode",
@@ -288,6 +333,7 @@
     "cancel": "Cancel",
     "essentialClaims": "Essential Claims",
     "voluntaryClaims": "Voluntary Claims",
+    "required": "Required"
     "required": "Required"
   },
   "ReceiveVcScreen": {
@@ -350,6 +396,8 @@
   "ScanScreen": {
     "scanningGuide": "Hold the phone study and scan the QR code",
     "requester": "Requester",
+    "scanningGuide": "Hold the phone study and scan the QR code",
+    "requester": "Requester",
     "noShareableVcs": "No shareable {{vcLabel}} are available.",
     "sharingVc": "Sharing {{vcLabel}}",
     "bluetoothStateAndroid": "Please turn on bluetooth from quick settings to support local sharing",
@@ -370,6 +418,9 @@
       "inProgress": "In Progress",
       "establishingConnection": "Establishing Connection",
       "sharingInProgress": "Sharing in Progress",
+      "inProgress": "In Progress",
+      "establishingConnection": "Establishing Connection",
+      "sharingInProgress": "Sharing in Progress",
       "connectingTimeout": "It's taking a while to establish the connection. Is the other device open for connections?",
       "exchangingDeviceInfo": "Exchanging device info...",
       "exchangingDeviceInfoTimeout": "It's taking a while to exchange device info. You may have to reconnect.",
@@ -383,6 +434,9 @@
         "timeoutHint": "It's taking longer than expected to share. There could be a problem with the connection."
       },
       "accepted": {
+        "title": "ID shared successfully",
+        "message": "Your ID has been successfully shared with ",
+        "gotohome": "Go to home"
         "title": "ID shared successfully",
         "message": "Your ID has been successfully shared with ",
         "gotohome": "Go to home"
@@ -414,6 +468,16 @@
   "Credits": {
     "header": "Credits and legal notices",
     "back": "Back"
+    "reasonForSharing": "Reason for sharing",
+    "approveRequest": "Approve request and choose {{vcLabel}}",
+    "approveRequestAndVerify": "Approve request and verify",
+    "consentToPhotoVerification": "I give consent to have my photo taken for authentication",
+    "pleaseSelectAnId": "Please select an ID",
+    "reject": "Reject"
+  },
+  "Credits": {
+    "header": "Credits and legal notices",
+    "back": "Back"
   },
   "VerifyIdentityOverlay": {
     "status": {
@@ -431,6 +495,11 @@
     "title": "Open Source Identity Solution",
     "getStarted": "Get started",
     "unlockApp": "Unlock application"
+  },
+  "SetupLanguage": {
+    "header": "Choose Language",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+    "save": "Save Preference"
   },
   "SetupLanguage": {
     "header": "Choose Language",

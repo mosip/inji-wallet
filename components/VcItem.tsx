@@ -1,5 +1,4 @@
 import React, { useContext, useRef, useState } from 'react';
-import React, { useContext, useRef, useState } from 'react';
 import { useInterpret, useSelector } from '@xstate/react';
 import { Pressable, Image, ImageBackground, Dimensions } from 'react-native';
 import { CheckBox, Icon } from 'react-native-elements';

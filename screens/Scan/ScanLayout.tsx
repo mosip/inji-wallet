@@ -10,6 +10,8 @@ import { ScanScreen } from './ScanScreen';
 import { I18nManager, Platform } from 'react-native';
 import { ProgressingModal } from '../../components/ProgressingModal';
 import { MessageOverlay } from '../../components/MessageOverlay';
+import { ProgressingModal } from '../../components/ProgressingModal';
+import { MessageOverlay } from '../../components/MessageOverlay';
 
 const ScanStack = createNativeStackNavigator();
 
@@ -59,8 +61,8 @@ export const ScanLayout: React.FC = () => {
         timeoutHint={controller.statusOverlay?.hint}
         isVisible={controller.statusOverlay != null}
         title={controller.statusOverlay?.title}
-        message={controller.statusOverlay?.message}
-        hint={controller.statusOverlay?.hint}
+        timeoutHint={controller.statusOverlay?.hint}
+        label={controller.statusOverlay?.message}
         onCancel={controller.statusOverlay?.onCancel}
         progress={controller.statusOverlay?.progress}
         onBackdropPress={controller.statusOverlay?.onBackdropPress}

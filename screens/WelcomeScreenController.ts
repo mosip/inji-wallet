@@ -1,6 +1,7 @@
 import { useSelector } from '@xstate/react';
 import { useContext } from 'react';
 import {
+  AuthEvents,
   selectBiometrics,
   selectLanguagesetup,
   selectPasscode,

@@ -9,9 +9,6 @@ const Colors = {
   Grey: '#C7C7C7',
   Grey5: '#E0E0E0',
   Grey6: '#F2F2F2',
-  Gray9: '#171717',
-  DimGray: '#737373',
-  Orange: '#F2811D',
   Gray40: '#666666',
   Orange: '#e3781a',
   LightGrey: '#F5F5F5',
@@ -21,17 +18,16 @@ const Colors = {
   Green: '#4B9D20',
   Transparent: 'transparent',
   Warning: '#f0ad4e',
-  LightOrange: '#fce7e3',
-  GrayText: '#6F6F6F',
-  dorColor: '#CBCBCB',
-  plainText: '#FFD6A7',
-  walletbindingLabel: '#000000',
-  walletbindingContent: '#666666',
   LightOrange: '#FDF1E6',
   GradientColors: ['#F59B4B', '#E86E04'],
   DisabledColors: ['#C7C7C7', '#C7C7C7'],
   TimeoutHintBoxColor: '#FFF7E5',
   TimoutText: '#8B6105',
+  GrayText: '#6F6F6F',
+  dorColor: '#CBCBCB',
+  plainText: '#FFD6A7',
+  walletbindingLabel: '#000000',
+  walletbindingContent: '#666666',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -82,13 +78,6 @@ export const DefaultTheme = {
     OnboardingCircleIcon: Colors.White,
     OnboardingCloseIcon: Colors.White,
     WarningIcon: Colors.Warning,
-    ProfileIconBg: Colors.LightOrange,
-    GrayText: Colors.GrayText,
-    gradientBtn: ['#F59B4B', '#E86E04'],
-    dotColor: Colors.dorColor,
-    plainText: Colors.plainText,
-    walletbindingLabel: Colors.walletbindingLabel,
-    walletbindingContent: Colors.walletbindingContent,
     DefaultToggle: Colors.LightOrange,
     IconBackground: Colors.LightOrange,
     GradientColors: Colors.GradientColors,
@@ -97,6 +86,10 @@ export const DefaultTheme = {
     TimeoutHintBoxColor: Colors.TimeoutHintBoxColor,
     TimoutText: Colors.TimoutText,
     ProfileIconBg: Colors.LightOrange,
+    GrayText: Colors.GrayText,
+    gradientBtn: ['#F59B4B', '#E86E04'],
+    dotColor: Colors.dorColor,
+    plainText: Colors.plainText,
     walletbindingLabel: Colors.Black,
     walletbindingContent: Colors.Gray40,
   },
@@ -288,9 +281,6 @@ export const DefaultTheme = {
     homeCloseCardDetailsHeader: {
       flex: 1,
     },
-    closecardMosipLogo: {
-      alignSelf: 'flex-end',
-    },
     details: {
       width: 290,
       marginLeft: 110,
@@ -366,12 +356,10 @@ export const DefaultTheme = {
       marginVertical: 6,
     },
     placeholder: {
-      fontFamily: 'Inter_400Regular',
+      fontFamily: 'Inter_600SemiBold',
     },
-    hrLine: {
-      borderBottomColor: 'black',
-      borderBottomWidth: 1,
-      marginTop: 10,
+    VidInputBottom: {
+      borderBottomColor: Colors.Orange,
     },
     hrLine: {
       borderBottomColor: 'black',
@@ -385,8 +373,8 @@ export const DefaultTheme = {
       borderColor: Colors.Grey,
       color: Colors.Black,
       flex: 1,
-      fontFamily: 'Inter_700Bold',
-      fontSize: 29,
+      fontSize: 33,
+      fontFamily: 'Inter_600SemiBold',
       height: 40,
       lineHeight: 28,
       margin: 8,
@@ -427,7 +415,7 @@ export const DefaultTheme = {
       lineHeight: 28,
     },
     regular: {
-      fontSize: 14,
+      fontFamily: 'Inter_400Regular',
     },
     semibold: {
       fontFamily: 'Inter_600SemiBold',
@@ -870,11 +858,6 @@ export const DefaultTheme = {
   walletIntro: require('../../../assets/intro-wallet-binding.png'),
   IntroScanner: require('../../../assets/intro-scanner.png'),
   injiSmallLogo: require('../../../assets/inji_small_logo.png'),
-  DigitalIdentityLogo: require('../../../assets/digital_identity_icon.png'),
-  InjiLogo: require('../../../assets/inji_logo.png'),
-  InjiHomeLogo: require('../../../assets/inji-home-logo.png'),
-  HelpIcon: require('../../../assets/help-icon.png'),
-
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/
 

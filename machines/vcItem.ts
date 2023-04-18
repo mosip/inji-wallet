@@ -26,6 +26,7 @@ import getAllConfigurations, {
   DownloadProps,
 } from '../shared/commonprops/commonProps';
 import { VcEvents } from './vc';
+import { VcEvents } from './vc';
 
 const model = createModel(
   {
@@ -245,7 +246,6 @@ export const vcItemMachine =
               target: 'idle',
             },
             ADD_WALLET_BINDING_ID: {
-              target: '#vc-item.kebabPopUp.showBindingWarning',
               target: '#vc-item.kebabPopUp.showBindingWarning',
             },
             PIN_CARD: {
