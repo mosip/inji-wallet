@@ -378,6 +378,9 @@ export const PurpleTheme = {
     gradient: {
       borderRadius: 10,
     },
+    gradient: {
+      borderRadius: 10,
+    },
   }),
   OIDCAuthStyles: StyleSheet.create({
     viewContainer: {

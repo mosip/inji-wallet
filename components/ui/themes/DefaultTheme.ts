@@ -8,10 +8,10 @@ const Colors = {
   Grey: '#C7C7C7',
   Grey5: '#E0E0E0',
   Grey6: '#F2F2F2',
+  Gray40: '#666666',
   Gray9: '#171717',
   DimGray: '#737373',
   Orange: '#F2811D',
-  Gray40: '#666666',
   LightGrey: '#F5F5F5',
   ShadeOfGrey: '#6F6F6F',
   White: '#FFFFFF',
@@ -358,13 +358,13 @@ export const DefaultTheme = {
       marginVertical: 6,
     },
     placeholder: {
-      fontFamily: 'Inter_400Regular',
+      fontFamily: 'Inter_600SemiBold',
     },
     hrLine: {
       borderBottomColor: 'black',
       borderBottomWidth: 1,
       marginTop: 10,
-    }
+    },
   }),
   PinInputStyle: StyleSheet.create({
     input: {
@@ -372,8 +372,8 @@ export const DefaultTheme = {
       borderColor: Colors.Grey,
       color: Colors.Black,
       flex: 1,
-      fontFamily: 'Inter_700Bold',
-      fontSize: 29,
+      fontSize: 33,
+      fontFamily: 'Inter_600SemiBold',
       height: 40,
       lineHeight: 28,
       margin: 8,
@@ -414,7 +414,7 @@ export const DefaultTheme = {
       lineHeight: 28,
     },
     regular: {
-      fontSize: 14,
+      fontFamily: 'Inter_400Regular',
     },
     semibold: {
       fontFamily: 'Inter_600SemiBold',

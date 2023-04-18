@@ -64,12 +64,14 @@ export const Button: React.FC<ButtonProps> = (props) => {
   ) : (
     <RNEButton
       ViewComponent={require('react-native-linear-gradient').default}
-      linearGradientProps={{ colors: props.colors }}
-      buttonStyle={buttonStyle}
-      containerStyle={[
-        props.fill ? Theme.ButtonStyles.fill : null,
-        containerStyle,
-      ]}
+      linearGradientProps={{
+        colors: !props.disabled
+          ? Theme.Colors.GradientColors
+          : Theme.Colors.DisabledColors,
+      }}
+      containerStyle={
+        props.isVcThere ? containerStyle : Theme.ButtonStyles.gradient
+      }
       type={props.type}
       raised={props.raised}
       title={
@@ -84,7 +86,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
           {props.title}
         </Text>
       }
-      style={[buttonStyle]}
+      buttonStyle={!props.isVcThere ? { height: 45 } : { height: 39 }}
       icon={props.icon}
       onPress={handleOnPress}
       loading={props.loading}

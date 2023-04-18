@@ -1,5 +1,6 @@
 import { init } from 'mosip-inji-face-sdk';
 import { assign, ContextFrom, EventFrom, send, StateFrom } from 'xstate';
+import { assign, ContextFrom, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { downloadModel } from '../shared/commonprops/commonProps';
 import { AppServices } from '../shared/GlobalContext';
@@ -109,7 +110,7 @@ export const authMachine = model.createMachine(
         on: {
           SETUP_PASSCODE: {
             target: 'authorized',
-            actions: ['setPasscode', 'storeContext', 'setLanguage']
+            actions: ['setPasscode', 'storeContext', 'setLanguage'],
           },
           SETUP_BIOMETRICS: {
             // Note! dont authorized yet we need to setup passcode too as discuss

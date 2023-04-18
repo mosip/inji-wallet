@@ -43,6 +43,7 @@
     "gender": "Gender",
     "dateOfBirth": "Date of birth",
     "phoneNumber": "Phone number",
+    "email": "Email Address",
     "address": "Address",
     "reasonForSharing": "Reason for sharing",
     "idType": "ID type",
@@ -85,28 +86,6 @@
     "yesConfirm": "Yes, I confirm",
     "no" : "No"
   },
-  "HomeScreenKebabPopUp": {
-    "title": "More Options",
-    "unPinCard": "Unpin Card",
-    "pinCard" : "Pin Card",
-    "offlineAuthenticationDisabled!": "Offline authentication disabled!",
-    "offlineAuthDisabledMessage": "Click here to enable this credentials to be used for offline authentication.",
-    "ViewActivityLog": "View activity log",
-    "RemoveFromWallet": "Remove from wallet",
-    "RevokeID": "Revoke ID",
-    "RevokeMessage": "Revoke the virtual ID for this profile",
-    "ActivityLog":"View Activity Log"
-  },
-  "WalletBinding": {
-    "inProgress" : "In Progress",
-    "profileAuthenticated": "Profile is authenticated!"
-  },
-  "BindingVcWarningOverlay": {
-    "alert": "Please Confirm",
-    "BindingWarning": "If you have enabled verification for this credential on another wallet, it will get overridden. Do you want to proceed?",
-    "yesConfirm": "Yes, I confirm",
-    "no" : "No"
-  },
   "AuthScreen": {
     "header": "Select App Unlock Method",
     "Description": "Would you like to use biometrics to unlock the application?",
@@ -121,7 +100,7 @@
   },
   "BiometricScreen": {
     "unlock": "Unlock with biometrics"
-  },
+  },  
   "HistoryScreen": {
     "noHistory": "No history available yet",
     "downloaded": "downloaded",
@@ -133,14 +112,6 @@
     "myVcsTab": "My\n{{vcLabel}}",
     "receivedVcsTab": "Received\n{{vcLabel}}",
     "historyTab": "History"
-  },
-  "SettingScreen": {
-    "header": "Settings",
-    "profile": "Profile",
-    "vcLabel": "Vc Label",
-    "language": "Language",
-    "bioUnlock": "Bio Unlock",
-    "logout": "Logout"
   },
   "AddVcModal": {
     "inputIdHeader":"Retrieve your ID",
@@ -431,7 +402,13 @@
   },
   "Credits": {
     "header": "Credits and legal notices",
-    "back": "Back"
+    "back": "Back",
+    "reasonForSharing": "Reason for sharing",
+    "approveRequest": "Approve request and choose {{vcLabel}}",
+    "approveRequestAndVerify": "Approve request and verify",
+    "consentToPhotoVerification": "I give consent to have my photo taken for authentication",
+    "pleaseSelectAnId": "Please select an ID",
+    "reject": "Reject"
   },
   "VerifyIdentityOverlay": {
     "status": {
