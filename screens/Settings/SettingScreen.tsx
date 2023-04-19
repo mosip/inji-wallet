@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Pressable, View } from 'react-native';
+import { Linking, Pressable, View } from 'react-native';
 import { getVersion } from 'react-native-device-info';
 import { Icon, ListItem, Switch } from 'react-native-elements';
 import { Column, Text } from '../../components/ui';
@@ -9,12 +9,14 @@ import { EditableListItem } from '../../components/EditableListItem';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { Credits } from './Credits';
 import { Revoke } from './Revoke';
+import { Image } from 'react-native';
 import { useSettingsScreen } from './SettingScreenController';
 import { useTranslation } from 'react-i18next';
 import { LanguageSelector } from '../../components/LanguageSelector';
 import i18next, { SUPPORTED_LANGUAGES } from '../../i18n';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Modal } from '../../components/ui/Modal';
+import getAllConfigurations from '../../shared/commonprops/commonProps';
 
 const LanguageSetting: React.FC = () => {
   const { t } = useTranslation('SettingScreen');
@@ -47,6 +49,12 @@ const LanguageSetting: React.FC = () => {
   );
 };
 
+let helpUrl = '';
+
+let helpPage = getAllConfigurations().then((response) => {
+  helpUrl = response.helpUrl;
+});
+
 export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
   props
 ) => {
@@ -71,28 +79,16 @@ export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
               onBackdropPress={controller.hideAlert}
               title={controller.alertMsg}
             />
-            <EditableListItem
-              label={t('profile')}
-              value={controller.name}
-              onEdit={controller.UPDATE_NAME}
-              Icon="user"
-              IconType="ant-design"
-            />
-            <EditableListItem
-              label={t('vcLabel')}
-              value={controller.vcLabel.singular}
-              onEdit={controller.UPDATE_VC_LABEL}
-              Icon="star"
-              IconType="simple-line-icon"
-            />
+
             <LanguageSetting />
 
-            <ListItem bottomDivider disabled={!controller.canUseBiometrics}>
-              <Icon
-                name="fingerprint"
-                size={22}
-                color={Theme.Colors.Icon}
-                containerStyle={Theme.Styles.settingsIconBg}
+            <ListItem
+              topDivider
+              bottomDivider
+              disabled={!controller.canUseBiometrics}>
+              <Image
+                source={require('../../assets/biometric-unlock-icon.png')}
+                style={{ marginLeft: 10, marginRight: 9 }}
               />
               <ListItem.Content>
                 <ListItem.Title>
@@ -107,6 +103,44 @@ export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
                 color={Theme.Colors.profileValue}
               />
             </ListItem>
+
+            <ListItem
+              topDivider
+              bottomDivider
+              onPress={() => {
+                Linking.openURL(helpUrl);
+              }}>
+              <Image
+                source={require('../../assets/legal-notices-icon.png')}
+                style={{ marginLeft: 10, marginRight: 9 }}
+              />
+              <ListItem.Content>
+                <ListItem.Title>
+                  <Text weight="semibold" color={Theme.Colors.profileLabel}>
+                    {t('aboutInji')}
+                  </Text>
+                </ListItem.Title>
+              </ListItem.Content>
+            </ListItem>
+
+            <ListItem
+              topDivider
+              onPress={() => {
+                Linking.openURL(helpUrl);
+              }}>
+              <Image
+                source={require('../../assets/features-walkaround-icon.png')}
+                style={{ marginLeft: 10, marginRight: 9 }}
+              />
+              <ListItem.Content>
+                <ListItem.Title>
+                  <Text weight="semibold" color={Theme.Colors.profileLabel}>
+                    {t('injiTourGuide')}
+                  </Text>
+                </ListItem.Title>
+              </ListItem.Content>
+            </ListItem>
+
             <ListItem topDivider onPress={controller.LOGOUT}>
               <Icon
                 name="logout"

@@ -106,10 +106,10 @@
   },
   "SettingScreen": {
     "header": "Settings",
-    "profile": "Profile",
-    "vcLabel": "Vc Label",
-    "language": "Language",
     "bioUnlock": "Bio Unlock",
+    "language": "Language",
+    "aboutInji": "About Inji",
+    "injiTourGuide": "Inji Tour Guide",
     "logout": "Logout"
   },
   "AddVcModal": {

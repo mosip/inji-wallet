@@ -11,7 +11,7 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
   const [newValue, setNewValue] = useState(props.value);
 
   return (
-    <ListItem bottomDivider onPress={() => setIsEditing(true)}>
+    <ListItem bottomDivider topDivider onPress={() => setIsEditing(true)}>
       <Icon
         name={props.Icon}
         containerStyle={Theme.Styles.settingsIconBg}
