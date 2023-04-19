@@ -284,7 +284,7 @@ export async function setItem(
   try {
     const data = JSON.stringify(value);
     const encryptedData = encryptJson(encryptionKey, data);
-    await Storage.setDataToStorage(key, encryptedData);
+    await Storage.setItem(key, encryptedData);
   } catch (e) {
     console.error('error setItem:', e);
     throw e;
@@ -297,7 +297,7 @@ export async function getItem(
   encryptionKey: string
 ) {
   try {
-    const data = await Storage.getDataFromStorage(key);
+    const data = await Storage.getItem(key);
     if (data != null) {
       const decryptedData = decryptJson(encryptionKey, data);
       return JSON.parse(decryptedData);
@@ -347,7 +347,7 @@ export async function removeItem(
   encryptionKey: string
 ) {
   try {
-    const data = await Storage.getDataFromStorage(key);
+    const data = await Storage.getItem(key);
     const decryptedData = decryptJson(encryptionKey, data);
     const list = JSON.parse(decryptedData);
     const vcKeyArray = value.split(':');
@@ -371,7 +371,7 @@ export async function removeItems(
   encryptionKey: string
 ) {
   try {
-    const data = await Storage.getDataFromStorage(key);
+    const data = await Storage.getItem(key);
     const decryptedData = decryptJson(encryptionKey, data);
     const list = JSON.parse(decryptedData);
     const newList = list.filter(function (vc: string) {
@@ -394,7 +394,7 @@ export async function removeItems(
 export async function clear() {
   try {
     console.log('entire storage gets cleared.');
-    await Storage.clearDataFromStorage();
+    await Storage.clear();
   } catch (e) {
     console.error('error clear:', e);
     throw e;

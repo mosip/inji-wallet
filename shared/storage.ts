@@ -2,7 +2,7 @@ import { MMKVLoader } from 'react-native-mmkv-storage';
 import { VC_ITEM_STORE_KEY_REGEX } from './constants';
 import {
   DocumentDirectoryPath,
-  readDir,
+  mkdir,
   readFile,
   unlink,
   writeFile,
@@ -10,9 +10,10 @@ import {
 
 const MMKV = new MMKVLoader().initialize();
 const vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
+const vcDirectoryPath = `${DocumentDirectoryPath}/inji/VC`;
 
 class Storage {
-  static getDataFromStorage = async (key: string) => {
+  static getItem = async (key: string) => {
     if (vcKeyRegExp.exec(key)) {
       const path = getFilePath(key);
       return await readFile(path, 'utf8');
@@ -20,18 +21,17 @@ class Storage {
     return await MMKV.getItem(key);
   };
 
-  static setDataToStorage = async (key: string, data: string) => {
+  static setItem = async (key: string, data: string) => {
     if (vcKeyRegExp.exec(key)) {
+      await mkdir(vcDirectoryPath);
       const path = getFilePath(key);
       return await writeFile(path, data, 'utf8');
     }
     await MMKV.setItem(key, data);
   };
 
-  static clearDataFromStorage = async () => {
-    console.log('Clearing the entire storage');
-    const filesArr = await readDir(DocumentDirectoryPath);
-    filesArr.forEach((file) => unlink(file.path));
+  static clear = async () => {
+    await unlink(`${vcDirectoryPath}`);
     MMKV.clearStore();
   };
 }
@@ -44,14 +44,13 @@ const getFileName = (key: string) => {
 };
 
 /**
- * iOS: /var/mobile/Containers/Data/Application/196A05AD-6B11-403D-BA2D-6DC1F30075E1/Documents/<filename>
- * android: /data/user/0/io.mosip.residentapp/files/<filename>
+ * iOS: /var/mobile/Containers/Data/Application/196A05AD-6B11-403D-BA2D-6DC1F30075E1/Documents/inji/VC/<filename>
+ * android: /data/user/0/io.mosip.residentapp/files/inji/VC/<filename>
  * These paths are coming from DocumentDirectoryPath in react-native-fs.
  */
 const getFilePath = (key: string) => {
   const fileName = getFileName(key);
-  console.log('Printing file path: ', DocumentDirectoryPath);
-  return `${DocumentDirectoryPath}/${fileName}.txt`;
+  return `${vcDirectoryPath}/${fileName}.txt`;
 };
 
 export default Storage;
