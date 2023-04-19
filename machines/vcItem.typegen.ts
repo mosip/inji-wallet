@@ -159,7 +159,7 @@ export interface Typegen0 {
     verifyCredential: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
   };
   'missingImplementations': {
-    actions: 'setUpdateVc';
+    actions: never;
     delays: never;
     guards: never;
     services: never;
@@ -229,7 +229,6 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.requestingOtp:invocation[0]'
       | 'error.platform.vc-item.requestingLock:invocation[0]'
       | 'error.platform.vc-item.requestingRevoke:invocation[0]';
-    setUpdateVc: 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
     setWalletBindingError:
       | 'error.platform.vc-item.addKeyPair:invocation[0]'
       | 'error.platform.vc-item.addingWalletBindingId:invocation[0]'
@@ -261,6 +260,7 @@ export interface Typegen0 {
       | 'CREDENTIAL_DOWNLOADED'
       | 'STORE_RESPONSE'
       | 'done.invoke.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]'
+      | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]'
       | 'done.invoke.vc-item.verifyingCredential:invocation[0]';
   };
   'eventsCausingDelays': {};

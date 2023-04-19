@@ -10,8 +10,6 @@ import { ScanScreen } from './ScanScreen';
 import { I18nManager, Platform } from 'react-native';
 import { ProgressingModal } from '../../components/ProgressingModal';
 import { MessageOverlay } from '../../components/MessageOverlay';
-import { ProgressingModal } from '../../components/ProgressingModal';
-import { MessageOverlay } from '../../components/MessageOverlay';
 
 const ScanStack = createNativeStackNavigator();
 

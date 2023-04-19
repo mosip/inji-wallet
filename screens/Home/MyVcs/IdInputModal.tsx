@@ -97,7 +97,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
           <Column>
             <Button
               type="gradient"
-              title={t('downloadID', { vcLabel: controller.vcLabel.singular })}
+              title={t('downloadID')}
               disabled={!controller.id}
               margin="24 0 0 0"
               onPress={controller.VALIDATE_INPUT}

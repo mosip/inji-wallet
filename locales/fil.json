@@ -97,14 +97,6 @@
     "bioUnlock": "Bio Unlock",
     "logout": "Log out"
   },
-  "SettingScreen": {
-    "header": "Mga setting",
-    "profile": "Profile",
-    "vcLabel": "Label ng Vc",
-    "language": "Wika",
-    "bioUnlock": "Bio Unlock",
-    "logout": "Log out"
-  },
   "AddVcModal": {
     "requestingCredential": "Humihiling ng kredensyal...",
     "errors": {
@@ -166,9 +158,6 @@
     "downloadID": "I-download ang ID",
     "bringYourDigitalID": "Dalhin ang iyong digital identity",
     "generateVcDescription": "I-tap ang \"Download {{vcLabel}}\" sa ibaba para i-download ang iyong {{vcLabel}}"
-    "downloadID": "I-download ang ID",
-    "bringYourDigitalID": "Dalhin ang iyong digital identity",
-    "generateVcDescription": "I-tap ang \"Download {{vcLabel}}\" sa ibaba para i-download ang iyong {{vcLabel}}"
   },
   "OnboardingOverlay": {
     "stepOneTitle": "Mabuhay!",
@@ -202,7 +191,6 @@
     }
   },
   "MainLayout": {
-    "home": "Bahay",
     "home": "Bahay",
     "scan": "Scan",
     "request": "Request",
@@ -307,8 +295,6 @@
   "ScanScreen": {
     "scanningGuide": "Hawakan ang telepono at i-scan ang QR code",
     "requester": "Humihiling",
-    "scanningGuide": "Hawakan ang telepono at i-scan ang QR code",
-    "requester": "Humihiling",
     "noShareableVcs": "Walang magagamit na maibabahaging {{vcLabel}}.",
     "bluetoothStateAndroid": "Mangyaring i-on ang bluetooth mula sa mga mabilisang setting upang suportahan ang lokal na pagbabahagi",
     "bluetoothStateIos": "Mangyaring i-on ang bluetooth mula sa control center upang suportahan ang lokal na pagbabahagi",
@@ -378,11 +364,6 @@
     "title": "Open Source Identity Solution",
     "getStarted": "Magsimula",
     "unlockApp": "Buksan ang aplikasyon"
-  },
-  "SetupLanguage": {
-    "header": "Piliin ang Wika",
-    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
-    "save": "I-save ang Kagustuhan"
   },
   "SetupLanguage": {
     "header": "Piliin ang Wika",

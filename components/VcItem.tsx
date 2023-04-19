@@ -21,13 +21,14 @@ import { useTranslation } from 'react-i18next';
 import { LocalizedField } from '../types/vc';
 import { VcItemTags } from './VcItemTags';
 import { KebabPopUp } from './KebabPopUp';
+import VerifiedIcon from './VerifiedIcon';
 
 const getDetails = (arg1, arg2, verifiableCredential) => {
   if (arg1 === 'Status') {
     return (
       <Column>
         <Text
-          weight="regular"
+          weight="bold"
           size="smaller"
           color={
             !verifiableCredential
@@ -38,8 +39,9 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
         </Text>
         <Row>
           <Text
+            numLines={1}
             color={Theme.Colors.Details}
-            weight="semibold"
+            weight="bold"
             size="smaller"
             style={
               !verifiableCredential
@@ -54,33 +56,6 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
     );
   } else {
     return (
-      <Column padding="0 200 0 0" margin="0 10 0 0">
-        <Text
-          color={
-            !verifiableCredential
-              ? Theme.Colors.LoadingDetailsLabel
-              : Theme.Colors.DetailsLabel
-          }
-          weight="regular"
-          size="smaller">
-          {arg1}
-        </Text>
-        <Text
-          numLines={4}
-          color={Theme.Colors.Details}
-          weight="semibold"
-          size="smaller"
-          style={
-            !verifiableCredential
-              ? Theme.Styles.loadingTitle
-              : Theme.Styles.subtitle
-          }>
-          {!verifiableCredential ? '' : arg2}
-        </Text>
-      </Column>
-    );
-  } else {
-    return (
       <Column>
         <Text
           color={
@@ -88,14 +63,15 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
               ? Theme.Colors.LoadingDetailsLabel
               : Theme.Colors.DetailsLabel
           }
-          weight="regular"
-          size="smaller">
+          size="smaller"
+          weight={'bold'}
+          style={Theme.Styles.vcItemLabelHeader}>
           {arg1}
         </Text>
         <Text
           numLines={4}
           color={Theme.Colors.Details}
-          weight="semibold"
+          weight="bold"
           size="smaller"
           style={
             !verifiableCredential

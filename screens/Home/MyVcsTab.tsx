@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { VcItem } from '../../components/VcItem';
 import { GET_INDIVIDUAL_ID } from '../../shared/constants';
 import { Icon } from 'react-native-elements';
+import { OnboardingOverlay } from './OnboardingOverlay';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
   const { t } = useTranslation('MyVcsTab');
@@ -122,9 +123,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                 type="gradient"
                 isVcThere
                 disabled={controller.isRefreshingVcs}
-                title={t('downloadID', {
-                  vcLabel: controller.vcLabel.singular,
-                })}
+                title={t('downloadID')}
                 onPress={controller.DOWNLOAD_ID}
               />
             </React.Fragment>
@@ -150,9 +149,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                 <Button
                   type="gradient"
                   disabled={controller.isRefreshingVcs}
-                  title={t('downloadID', {
-                    vcLabel: controller.vcLabel.singular,
-                  })}
+                  title={t('downloadID')}
                   onPress={controller.DOWNLOAD_ID}
                 />
               </Column>

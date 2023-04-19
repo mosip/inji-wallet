@@ -26,7 +26,6 @@ import getAllConfigurations, {
   DownloadProps,
 } from '../shared/commonprops/commonProps';
 import { VcEvents } from './vc';
-import { VcEvents } from './vc';
 
 const model = createModel(
   {

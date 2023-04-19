@@ -19,16 +19,11 @@ export function useWelcomeScreen(props: RootRouteProps) {
   const isSettingUp = useSelector(authService, selectSettingUp);
   const passcode = useSelector(authService, selectPasscode);
   const biometrics = useSelector(authService, selectBiometrics);
-  const isBiometricUnlockEnabled = useSelector(
-    settingsService,
-    selectBiometricUnlockEnabled
-  );
   const isLanguagesetup = useSelector(authService, selectLanguagesetup);
   const isBiometricUnlockEnabled = useSelector(
     settingsService,
     selectBiometricUnlockEnabled
   );
-  const isLanguagesetup = useSelector(authService, selectLanguagesetup);
 
   return {
     isSettingUp,

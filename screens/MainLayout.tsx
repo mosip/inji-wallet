@@ -9,7 +9,7 @@ import { RootRouteProps } from '../routes';
 import { Theme } from '../components/ui/styleUtils';
 import { useTranslation } from 'react-i18next';
 import { Row } from '../components/ui';
-import { Image, Pressable, View } from 'react-native';
+import { Image, Pressable } from 'react-native';
 import { SettingScreen } from './Settings/SettingScreen';
 
 const { Navigator, Screen } = createBottomTabNavigator();
