@@ -35,7 +35,7 @@ i18next
     supportedLngs: Object.keys(SUPPORTED_LANGUAGES),
   })
   .then(async () => {
-    const language = await Storage.getDataFromStorage('language');
+    const language = await Storage.getItem('language');
     if (language !== i18next.language) {
       i18next.changeLanguage(language);
       populateLanguageCodeMap();

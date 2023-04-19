@@ -16,7 +16,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = (props) => {
   const changeLanguage = async (language: string) => {
     if (language !== i18n.language) {
       await i18n.changeLanguage(language).then(async () => {
-        await Storage.setDataToStorage('language', i18n.language);
+        await Storage.setItem('language', i18n.language);
         const isRTL = i18next.dir(language) === 'rtl' ? true : false;
         if (isRTL !== I18nManager.isRTL) {
           try {
