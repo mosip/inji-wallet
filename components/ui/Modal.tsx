@@ -38,7 +38,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
                 name="arrow-left"
                 type="material-community"
                 onPress={props.onDismiss}
-                containerStyle={Theme.Styles.IconContainer}
+                containerStyle={Theme.Styles.backArrowContainer}
                 color={Theme.Colors.Icon}
               />
             ) : null}

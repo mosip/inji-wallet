@@ -18,7 +18,7 @@ export const SUPPORTED_LANGUAGES = {
   ar: 'عربى',
   hi: 'हिंदी',
   kn: 'ಕನ್ನಡ',
-  ta: 'தமிழ்',
+  ta: 'ತಮಿಳು',
 };
 
 i18next

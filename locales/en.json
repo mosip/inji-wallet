@@ -51,6 +51,7 @@
     "nationalCard": "National Card",
     "uin": "UIN",
     "vid": "VID",
+    "enabledAuthPopUp":"Credentials are enabled for online authentication.",
     "verificationEnabledSuccess": "Activated for online login",
     "goback": "GO BACK",
     "BindingWarning": "If you have enabled verification for this credential on another wallet, it will get overridden. Do you want to proceed?",
@@ -70,10 +71,10 @@
     "pinCard" : "Pin Card",
     "offlineAuthenticationDisabled!": "Offline authentication disabled!",
     "offlineAuthDisabledMessage": "Click here to enable this credentials to be used for offline authentication.",
-    "ViewActivityLog": "View activity log",
-    "RemoveFromWallet": "Remove from wallet",
-    "RevokeID": "Revoke ID",
-    "RevokeMessage": "Revoke the virtual ID for this profile",
+    "viewActivityLog": "View activity log",
+    "removeFromWallet": "Remove from wallet",
+    "revokeId": "Revoke ID",
+    "revokeMessage": "Revoke the virtual ID for this profile",
     "ActivityLog":"View Activity Log"
   },
   "WalletBinding": {
@@ -112,6 +113,14 @@
     "myVcsTab": "My\n{{vcLabel}}",
     "receivedVcsTab": "Received\n{{vcLabel}}",
     "historyTab": "History"
+  },
+  "SettingScreen": {
+    "header": "Settings",
+    "bioUnlock": "Bio Unlock",
+    "language": "Language",
+    "aboutInji": "About Inji",
+    "injiTourGuide": "Inji Tour Guide",
+    "logout": "Logout"
   },
   "AddVcModal": {
     "inputIdHeader":"Retrieve your ID",

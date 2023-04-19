@@ -45,7 +45,7 @@ export const DefaultTheme = {
     Loading: Colors.Orange,
     noUinText: Colors.Orange,
     IconBg: Colors.Orange,
-    DownloadingIdPopUp: Colors.Green,
+    popUp: Colors.Green,
     Icon: Colors.Orange,
     GrayIcon: Colors.Grey,
     borderBottomColor: Colors.Grey6,
@@ -142,16 +142,7 @@ export const DefaultTheme = {
       borderRadius: 6,
       backgroundColor: Colors.LightOrange,
     },
-    IconContainer: {
-      padding: 6,
-      width: 36,
-      marginLeft: 8,
-      marginRight: 4,
-      height: 36,
-      borderRadius: 10,
-      backgroundColor: Colors.LightOrange,
-    },
-    downloadingIdPopUp: {
+    popUp: {
       alignItems: 'center',
       justifyContent: 'space-between',
       backgroundColor: Colors.Green,
@@ -292,11 +283,27 @@ export const DefaultTheme = {
       flex: 1,
       padding: 10,
     },
-    profileIconBg: {
-      padding: 8,
-      width: 40,
-      height: 40,
-      borderRadius: 6,
+    IconContainer: {
+      padding: 6,
+      width: 36,
+      marginRight: 4,
+      marginLeft: 10,
+      height: 36,
+      borderRadius: 10,
+      backgroundColor: Colors.LightOrange,
+    },
+    settingsIconBg: {
+      padding: 6,
+      width: 36,
+      marginRight: 4,
+      height: 36,
+      backgroundColor: Colors.Transparent,
+    },
+    backArrowContainer: {
+      padding: 6,
+      width: 36,
+      height: 36,
+      borderRadius: 10,
       backgroundColor: Colors.LightOrange,
     },
     domainVerifiyIcon: {
@@ -402,6 +409,7 @@ export const DefaultTheme = {
     retrieveIdLabel: {
       color: Colors.ShadeOfGrey,
       fontFamily: 'Inter_600SemiBold',
+      lineHeight: 18,
     },
     error: {
       color: Colors.Red,
@@ -411,7 +419,7 @@ export const DefaultTheme = {
     base: {
       color: Colors.Black,
       fontSize: 16,
-      lineHeight: 28,
+      lineHeight: 18,
     },
     regular: {
       fontFamily: 'Inter_400Regular',
@@ -505,6 +513,8 @@ export const DefaultTheme = {
       alignSelf: 'center',
       fontSize: 10,
       elevation: 5,
+      position: 'absolute',
+      bottom: 24,
     },
     clearAddIdBtnBg: {
       backgroundColor: Colors.Transparent,
@@ -623,10 +633,13 @@ export const DefaultTheme = {
     },
     kebabHeaderStyle: {
       backgroundColor: 'white',
-      borderTopLeftRadius: 30,
+      borderTopLeftRadius: 24,
       borderTopRightRadius: 24,
-      padding: 15,
       justifyContent: 'space-between',
+      fontFamily: 'Inter_700Bold',
+      paddingRight: 15,
+      paddingLeft: 130,
+      paddingTop: 18,
     },
   }),
   MessageOverlayStyles: StyleSheet.create({

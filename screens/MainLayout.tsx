@@ -11,15 +11,8 @@ import { useTranslation } from 'react-i18next';
 import { Row } from '../components/ui';
 import { Image, Pressable, View } from 'react-native';
 import { SettingScreen } from './Settings/SettingScreen';
-import { Linking } from 'react-native';
-import getAllConfigurations from '../shared/commonprops/commonProps';
 
 const { Navigator, Screen } = createBottomTabNavigator();
-let helpUrl = '';
-
-let helpPage = getAllConfigurations().then((response) => {
-  helpUrl = response.helpUrl;
-});
 
 export const MainLayout: React.FC<RootRouteProps> = () => {
   const { t } = useTranslation('MainLayout');
@@ -29,7 +22,7 @@ export const MainLayout: React.FC<RootRouteProps> = () => {
       <Row align="space-between">
         <Pressable
           onPress={() => {
-            Linking.openURL(helpUrl);
+            console.log('Help Page');
           }}>
           <Image
             source={require('../assets/help-icon.png')}

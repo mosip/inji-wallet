@@ -58,7 +58,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
     return (
       <View
         style={{ display: controller.isRequestSuccessful ? 'flex' : 'none' }}>
-        <Row style={Theme.Styles.downloadingIdPopUp}>
+        <Row style={Theme.Styles.popUp}>
           <Text color={Theme.Colors.whiteText} weight="semibold" size="smaller">
             {t('downloadingYourId')}
           </Text>
@@ -78,7 +78,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
     <React.Fragment>
       <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
         <DownloadingIdPopUp />
-        <Column fill pY={16} pX={18}>
+        <Column fill pY={10} pX={18}>
           {controller.vcKeys.length > 0 && (
             <React.Fragment>
               <Column
@@ -133,13 +133,12 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
             <React.Fragment>
               <Column fill style={Theme.Styles.homeScreenContainer}>
                 <Image source={Theme.DigitalIdentityLogo} />
-                <Text weight="bold" margin="33 0 6 0">
+                <Text weight="bold" margin="33 0 6 0" lineHeight={1}>
                   {t('bringYourDigitalID', {
                     vcLabel: controller.vcLabel.plural,
                   })}
                 </Text>
                 <Text
-                  weight="semibold"
                   style={Theme.TextStyles.bold}
                   color={Theme.Colors.textLabel}
                   align="center"

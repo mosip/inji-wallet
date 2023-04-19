@@ -24,12 +24,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
         isVisible={props.isVisible}
         containerStyle={Theme.KebabPopUpStyles.kebabPopUp}>
         <Row style={Theme.KebabPopUpStyles.kebabHeaderStyle}>
-          <Centered></Centered>
-          <Text
-            weight="bold"
-            style={{ ...Theme.TextStyles.base, flex: 1, alignSelf: 'center' }}>
-            {t('title')}
-          </Text>
+          <Text weight="bold">{t('title')}</Text>
           <Icon
             name="close"
             onPress={props.onDismiss}
@@ -54,7 +49,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
 
           <WalletBinding
             label={t('offlineAuthenticationDisabled!')}
-            Content={t('offlineAuthDisabledMessage')}
+            content={t('offlineAuthDisabledMessage')}
             service={props.service}
           />
 
