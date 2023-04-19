@@ -1,10 +1,6 @@
 import * as Keychain from 'react-native-keychain';
 import CryptoJS from 'crypto-js';
-import {
-  clearDataFromStorage,
-  getDataFromStorage,
-  setDataToStorage,
-} from '../shared/storage';
+import Storage from '../shared/storage';
 import binaryToBase64 from 'react-native/Libraries/Utilities/binaryToBase64';
 import { EventFrom, Receiver, sendParent, send, sendUpdate } from 'xstate';
 import { createModel } from 'xstate/lib/model';
@@ -288,7 +284,7 @@ export async function setItem(
   try {
     const data = JSON.stringify(value);
     const encryptedData = encryptJson(encryptionKey, data);
-    await setDataToStorage(key, encryptedData);
+    await Storage.setDataToStorage(key, encryptedData);
   } catch (e) {
     console.error('error setItem:', e);
     throw e;
@@ -301,7 +297,7 @@ export async function getItem(
   encryptionKey: string
 ) {
   try {
-    const data = await getDataFromStorage(key);
+    const data = await Storage.getDataFromStorage(key);
     if (data != null) {
       const decryptedData = decryptJson(encryptionKey, data);
       return JSON.parse(decryptedData);
@@ -351,7 +347,7 @@ export async function removeItem(
   encryptionKey: string
 ) {
   try {
-    const data = await getDataFromStorage(key);
+    const data = await Storage.getDataFromStorage(key);
     const decryptedData = decryptJson(encryptionKey, data);
     const list = JSON.parse(decryptedData);
     const vcKeyArray = value.split(':');
@@ -375,7 +371,7 @@ export async function removeItems(
   encryptionKey: string
 ) {
   try {
-    const data = await getDataFromStorage(key);
+    const data = await Storage.getDataFromStorage(key);
     const decryptedData = decryptJson(encryptionKey, data);
     const list = JSON.parse(decryptedData);
     const newList = list.filter(function (vc: string) {
@@ -398,21 +394,18 @@ export async function removeItems(
 export async function clear() {
   try {
     console.log('entire storage gets cleared.');
-    await clearDataFromStorage();
+    await Storage.clearDataFromStorage();
   } catch (e) {
     console.error('error clear:', e);
     throw e;
   }
 }
 
-export function encryptJson(encryptionKey: string, data: string): string {
+function encryptJson(encryptionKey: string, data: string): string {
   return CryptoJS.AES.encrypt(data, encryptionKey).toString();
 }
 
-export function decryptJson(
-  encryptionKey: string,
-  encryptedData: string
-): string {
+function decryptJson(encryptionKey: string, encryptedData: string): string {
   try {
     return CryptoJS.AES.decrypt(encryptedData, encryptionKey).toString(
       CryptoJS.enc.Utf8

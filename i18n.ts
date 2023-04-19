@@ -8,7 +8,7 @@ import ar from './locales/ara.json';
 import hi from './locales/hin.json';
 import kn from './locales/kan.json';
 import ta from './locales/tam.json';
-import { getDataFromStorage } from './shared/storage';
+import Storage from './shared/storage';
 
 const resources = { en, fil, ar, hi, kn, ta };
 import { iso6393To1 } from 'iso-639-3';
@@ -35,7 +35,7 @@ i18next
     supportedLngs: Object.keys(SUPPORTED_LANGUAGES),
   })
   .then(async () => {
-    const language = await getDataFromStorage('language');
+    const language = await Storage.getDataFromStorage('language');
     if (language !== i18next.language) {
       i18next.changeLanguage(language);
       populateLanguageCodeMap();
