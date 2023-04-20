@@ -6,6 +6,7 @@ import {
   readFile,
   unlink,
   writeFile,
+  exists,
 } from 'react-native-fs';
 
 const MMKV = new MMKVLoader().initialize();
@@ -31,8 +32,13 @@ class Storage {
   };
 
   static clear = async () => {
-    await unlink(`${vcDirectoryPath}`);
-    MMKV.clearStore();
+    try {
+      (await exists(`${vcDirectoryPath}`)) &&
+        (await unlink(`${vcDirectoryPath}`));
+      MMKV.clearStore();
+    } catch (e) {
+      console.log('Error Occurred while Clearing Storage.', e);
+    }
   };
 }
 /**
