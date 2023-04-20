@@ -397,7 +397,6 @@ export const PurpleTheme = {
     },
     header: {
       fontSize: 20,
-      fontFamily: 'sans-serif-medium',
       fontWeight: 'normal',
       color: 'rgb(28,28,30)',
     },
