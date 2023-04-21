@@ -149,9 +149,9 @@
       "header": "ओटीपी सत्यापन"
     },
     "MyVcsTab": {
-      "addVcButton": "{{vcLabel}} जोड़ें",
-      "generateVc": "अपना {{vcLabel}}जेनरेट करें",
-      "generateVcDescription": "अपना {{vcLabel}} डाउनलोड करने के लिए नीचे \"जोड़ें {{vcLabel}}\" पर टैप करें"
+      "downloadID": "डाउनलोड आईडी",
+      "bringYourDigitalID": "अपनी डिजिटल पहचान लाओ",
+      "generateVcDescription": "अपना {{vcLabel}} डाउनलोड करने के लिए नीचे डाउनलोड {{vcLabel}} पर टैप करें"
     },
     "OnboardingOverlay": {
       "stepOneTitle": "स्वागत है!",
@@ -185,10 +185,11 @@
       }
     },
     "MainLayout": {
-      "home": "घर",
+      "home": "होम",
       "scan": "स्कैन",
       "request": "अनुरोध",
-      "settings": "सेटिंग्स"
+      "settings": "सेटिंग्स",
+      "history": "इतिहास"
     },
     "PasscodeScreen": {
       "header": "अपना आवेदन सुरक्षित करने के लिए पासकोड सेट करें",
@@ -201,8 +202,9 @@
       "useBle": "Powered by BLE",
       "useGoogleNearby": "Powered by GoogleNearby"
     },
-    "ProfileScreen": {
-      "name": "नाम",
+    "SettingScreen": {
+      "header": "समायोजन",
+      "profile": "प्रोफ़ाइल",
       "vcLabel": "वीसी लेबल",
       "language": "भाषा",
       "bioUnlock": "बायोमेट्रिक्स से अनलॉक करें",
@@ -287,7 +289,8 @@
       "gotoSettings": "सेटिंग्स में जाओ"
     },
     "ScanScreen": {
-      "header": "क्यूआर कोड स्कैन करे",
+      "scanningGuide": "फोन को पकड़ें और क्यूआर कोड को स्कैन करें",
+      "requester": "अनुरोधकर्ता",
       "noShareableVcs": "कोई साझा करने योग्य {{vcLabel}} उपलब्ध नहीं है।",
       "bluetoothStateAndroid": "स्थानीय साझाकरण का समर्थन करने के लिए कृपया त्वरित सेटिंग से ब्लूटूथ चालू करें",
       "bluetoothStateIos": " स्थानीय साझाकरण का समर्थन करने के लिए कृपया नियंत्रण केंद्र से ब्लूटूथ चालू करें",
@@ -373,6 +376,11 @@
       "title": "ओपन सोर्स आइडेंटिटी सॉल्यूशन",
       "getStarted": "आरंभ करें",
       "unlockApp": "एप्लिकेशन अनलॉक करें"
+    },
+    "SetupLanguage": {
+      "header": "भाषा चुनें",
+      "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+      "save": "वरीयता सहेजें"
     },
     "common": {
       "cancel": "रद्द करें",

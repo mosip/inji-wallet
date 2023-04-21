@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import Markdown from 'react-native-simple-markdown';
 import { useTranslation } from 'react-i18next';
-import { I18nManager, Image, SafeAreaView, View } from 'react-native';
+import { I18nManager, SafeAreaView, View } from 'react-native';
 import { Divider, Icon, ListItem, Overlay } from 'react-native-elements';
 
-import { Button, Text, Row, Column } from '../../components/ui';
+import { Button, Text, Row } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import appMetaData from '../../AppMetaData.md';
 import { getVersion } from 'react-native-device-info';
-import { isBLEEnabled } from '../../lib/smartshare';
 
 export const AppMetaData: React.FC<AppMetaDataProps> = (props) => {
   const { t } = useTranslation('AppMetaData');

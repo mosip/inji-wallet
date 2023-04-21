@@ -1,10 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Icon } from 'react-native-elements';
 import { PinInput } from '../../../components/PinInput';
 import { Column, Text } from '../../../components/ui';
-import { Modal, ModalProps } from '../../../components/ui/Modal';
+import { ModalProps, Modal } from '../../../components/ui/Modal';
 import { Theme } from '../../../components/ui/styleUtils';
+import { Image, TouchableOpacity } from 'react-native';
 
 export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
   props
@@ -13,10 +13,29 @@ export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
 
   return (
     <Modal isVisible={props.isVisible} onDismiss={props.onDismiss}>
-      <Column fill padding="32">
-        <Icon name="lock" color={Theme.Colors.Icon} size={60} />
-        <Column fill align="space-between">
-          <Text align="center">{t('enterOtp')}</Text>
+      <Column
+        fill
+        padding="32"
+        backgroundColor={Theme.Colors.whiteBackgroundColor}>
+        <Column fill align="space-between" crossAlign="center">
+          <Column crossAlign="center">
+            <Image source={Theme.OtpLogo} resizeMethod="auto" />
+            <Text
+              margin="24 0 6 0"
+              weight="bold"
+              style={Theme.TextStyles.header}>
+              {t('title')}
+            </Text>
+            <Text
+              margin="0 24 15 24"
+              color={Theme.Colors.RetrieveIdLabel}
+              weight="semibold"
+              size="small"
+              align="center">
+              {t('otpSentMessage')}
+            </Text>
+          </Column>
+
           <Text
             align="center"
             color={Theme.Colors.errorMessage}
@@ -24,6 +43,20 @@ export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
             {props.error}
           </Text>
           <PinInput length={6} onDone={props.onInputDone} />
+
+          <Text
+            margin="36 0 0 0"
+            color={Theme.Colors.RetrieveIdLabel}
+            weight="semibold"
+            size="small">
+            {t('resendTheCode')}
+          </Text>
+
+          <TouchableOpacity activeOpacity={1}>
+            <Text color={Theme.Colors.AddIdBtnBg} weight="bold" size="regular">
+              {t('resendCode')}
+            </Text>
+          </TouchableOpacity>
         </Column>
         <Column fill></Column>
       </Column>

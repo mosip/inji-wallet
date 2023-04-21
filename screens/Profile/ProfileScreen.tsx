@@ -77,8 +77,8 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
           <Icon
             name="fingerprint"
             type="fontawesome"
-            size={20}
-            style={Theme.Styles.profileIconBg}
+            size={25}
+            style={Theme.Styles.IconContainer}
             color={Theme.Colors.Icon}
           />
           <ListItem.Content>
@@ -105,7 +105,7 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
             name="unlock"
             size={20}
             type="antdesign"
-            style={Theme.Styles.profileIconBg}
+            style={Theme.Styles.IconContainer}
             color={Theme.Colors.Icon}
           />
           <ListItem.Content>
@@ -125,7 +125,7 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
             name="logout"
             type="fontawesome"
             size={20}
-            style={Theme.Styles.profileIconBg}
+            style={Theme.Styles.IconContainer}
             color={Theme.Colors.Icon}
           />
           <ListItem.Content>

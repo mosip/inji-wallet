@@ -18,9 +18,9 @@ export interface Typegen0 {
   'invokeSrcNameMap': {};
   'missingImplementations': {
     actions: never;
-    services: never;
-    guards: never;
     delays: never;
+    guards: never;
+    services: 'AddVcModal' | 'GetVcModal';
   };
   'eventsCausingActions': {
     completeOnboarding: 'ADD_VC' | 'ONBOARDING_DONE';
@@ -29,11 +29,14 @@ export interface Typegen0 {
     storeVcItem: 'done.invoke.AddVcModal';
     viewVcFromParent: 'VIEW_VC';
   };
-  'eventsCausingServices': {};
+  'eventsCausingDelays': {};
   'eventsCausingGuards': {
     isOnboardingDone: 'STORE_RESPONSE';
   };
-  'eventsCausingDelays': {};
+  'eventsCausingServices': {
+    AddVcModal: 'ADD_VC' | 'done.invoke.GetVcModal';
+    GetVcModal: 'GET_VC';
+  };
   'matchesStates':
     | 'addingVc'
     | 'addingVc.addVcSuccessful'

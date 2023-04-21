@@ -5,11 +5,11 @@ import { Icon } from 'react-native-elements';
 
 import { Theme } from '../../components/ui/styleUtils';
 import { SendVcScreen } from './SendVcScreen';
-import { MessageOverlay } from '../../components/MessageOverlay';
 import { useScanLayout } from './ScanLayoutController';
 import { ScanScreen } from './ScanScreen';
 import { I18nManager, Platform } from 'react-native';
-import { Message } from '../../components/Message';
+import { ProgressingModal } from '../../components/ProgressingModal';
+import { MessageOverlay } from '../../components/MessageOverlay';
 
 const ScanStack = createNativeStackNavigator();
 
@@ -22,14 +22,21 @@ export const ScanLayout: React.FC = () => {
       <ScanStack.Navigator
         initialRouteName="ScanScreen"
         screenOptions={{
-          headerTitleAlign: 'center',
+          headerLeft: () =>
+            I18nManager.isRTL && Platform.OS !== 'ios' ? (
+              <LanguageSelector
+                triggerComponent={
+                  <Icon name="language" color={Theme.Colors.Icon} />
+                }
+              />
+            ) : null,
         }}>
         {!controller.isDone && (
           <ScanStack.Screen
             name="SendVcScreen"
             component={SendVcScreen}
             options={{
-              title: t('sharingVc', {
+              title: t('requester', {
                 vcLabel: controller.vcLabel.singular,
               }),
               headerBackVisible: false,
@@ -40,23 +47,29 @@ export const ScanLayout: React.FC = () => {
           name="ScanScreen"
           component={ScanScreen}
           options={{
-            title: t('MainLayout:scan').toUpperCase(),
+            headerTitleStyle: { fontSize: 30, fontFamily: 'Inter_600SemiBold' },
+            title: t('MainLayout:scan'),
           }}
         />
       </ScanStack.Navigator>
 
-      <MessageOverlay
+      <ProgressingModal
         isVisible={controller.statusOverlay != null}
         title={controller.statusOverlay?.title}
-        message={controller.statusOverlay?.message}
-        hint={controller.statusOverlay?.hint}
+        timeoutHint={controller.statusOverlay?.hint}
+        isVisible={controller.statusOverlay != null}
+        title={controller.statusOverlay?.title}
+        timeoutHint={controller.statusOverlay?.hint}
+        label={controller.statusOverlay?.message}
         onCancel={controller.statusOverlay?.onCancel}
         progress={controller.statusOverlay?.progress}
         onBackdropPress={controller.statusOverlay?.onBackdropPress}
+        requester={controller.statusOverlay?.requester}
       />
 
       {controller.isDisconnected && (
-        <Message
+        <MessageOverlay
+          isVisible={controller.isDisconnected}
           title={t('RequestScreen:status.disconnected.title')}
           message={t('RequestScreen:status.disconnected.message')}
           onBackdropPress={controller.DISMISS}

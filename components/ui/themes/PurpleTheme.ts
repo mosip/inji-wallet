@@ -18,6 +18,7 @@ const Colors = {
   Purple2: '#AEA7FF',
   Transparent: 'transparent',
   Warning: '#f0ad4e',
+  GrayText: '#6F6F6F',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5;
@@ -66,9 +67,8 @@ export const PurpleTheme = {
     OnboardingCircleIcon: Colors.White,
     OnboardingCloseIcon: Colors.White,
     WarningIcon: Colors.Warning,
-    Cursor: Colors.Purple,
-    version: Colors.DimGray,
-    poweredByBLE: Colors.Gray9,
+    GrayText: Colors.GrayText,
+    gradientBtn: ['#F59B4B', '#E86E04'],
   },
   Styles: StyleSheet.create({
     title: {
@@ -186,12 +186,15 @@ export const PurpleTheme = {
       justifyContent: 'space-between',
     },
     logo: {
-      height: 36,
-      width: 36,
+      height: 46,
+      width: 40,
     },
     homeCloseCardDetailsHeader: {
       flex: 1,
       justifyContent: 'space-between',
+    },
+    closecardMosipLogo: {
+      alignSelf: 'flex-end',
     },
     details: {
       width: 290,
@@ -243,7 +246,7 @@ export const PurpleTheme = {
     detailsText: {
       fontWeight: 'bold',
       fontSize: 15,
-      fontFamily: 'Poppins_700Bold',
+      fontFamily: 'Inter_700Bold',
     },
     getId: {
       justifyContent: 'center',
@@ -251,7 +254,17 @@ export const PurpleTheme = {
       marginTop: 10,
     },
     placeholder: {
-      fontFamily: 'Poppins_400Regular',
+      fontFamily: 'Inter_400Regular',
+    },
+    hrLine: {
+      borderBottomColor: 'black',
+      borderBottomWidth: 1,
+      marginTop: 10,
+    },
+    hrLine: {
+      borderBottomColor: 'black',
+      borderBottomWidth: 1,
+      marginTop: 10,
     },
   }),
   PinInputStyle: StyleSheet.create({
@@ -260,7 +273,7 @@ export const PurpleTheme = {
       borderColor: Colors.Grey,
       color: Colors.Black,
       flex: 1,
-      fontFamily: 'Poppins_600SemiBold',
+      fontFamily: 'Inter_600SemiBold',
       fontSize: 18,
       fontWeight: '600',
       height: 40,
@@ -276,13 +289,13 @@ export const PurpleTheme = {
       lineHeight: 28,
     },
     regular: {
-      fontFamily: 'Poppins_400Regular',
+      fontFamily: 'Inter_400Regular',
     },
     semibold: {
-      fontFamily: 'Poppins_600SemiBold',
+      fontFamily: 'Inter_600SemiBold',
     },
     bold: {
-      fontFamily: 'Poppins_700Bold',
+      fontFamily: 'Inter_700Bold',
     },
     small: {
       fontSize: 14,
@@ -361,6 +374,12 @@ export const PurpleTheme = {
     radius: {
       borderRadius: 10,
       backgroundColor: Colors.Purple,
+    },
+    gradient: {
+      borderRadius: 10,
+    },
+    gradient: {
+      borderRadius: 10,
     },
   }),
   OIDCAuthStyles: StyleSheet.create({
@@ -603,7 +622,7 @@ export const PurpleTheme = {
     sliderTitle: {
       color: Colors.White,
       marginBottom: 20,
-      fontFamily: 'Poppins_700Bold',
+      fontFamily: 'Inter_700Bold',
     },
     text: {
       color: Colors.White,

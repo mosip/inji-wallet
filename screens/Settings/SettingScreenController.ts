@@ -24,10 +24,12 @@ import { MainRouteProps } from '../../routes/main';
 import { GlobalContext } from '../../shared/GlobalContext';
 import { useTranslation } from 'react-i18next';
 
-export function useProfileScreen({ navigation }: MainRouteProps) {
+export function useSettingsScreen({ navigation }: MainRouteProps) {
   const { appService } = useContext(GlobalContext);
   const authService = appService.children.get('auth');
   const settingsService = appService.children.get('settings');
+
+  const [isVisible, setIsVisible] = useState(false);
 
   const [alertMsg, setHasAlertMsg] = useState('');
   const authBiometrics = useSelector(authService, selectBiometrics);
@@ -91,6 +93,7 @@ export function useProfileScreen({ navigation }: MainRouteProps) {
   };
 
   return {
+    isVisible,
     alertMsg,
     hideAlert,
     backendInfo: useSelector(appService, selectBackendInfo),
@@ -105,6 +108,8 @@ export function useProfileScreen({ navigation }: MainRouteProps) {
 
     UPDATE_NAME: (name: string) =>
       settingsService.send(SettingsEvents.UPDATE_NAME(name)),
+
+    TOGGLE_SETTINGS: () => setIsVisible(!isVisible),
 
     UPDATE_VC_LABEL: (label: string) =>
       settingsService.send(SettingsEvents.UPDATE_VC_LABEL(label)),

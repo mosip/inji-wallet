@@ -6,6 +6,7 @@ import { EventFrom, Receiver, sendParent, send, sendUpdate } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { generateSecureRandom } from 'react-native-securerandom';
 import { log } from 'xstate/lib/actions';
+import { VC_ITEM_STORE_KEY } from '../shared/constants';
 
 const ENCRYPTION_ID = 'c7c22a6c-9759-4605-ac88-46f4041d863d';
 
@@ -21,6 +22,7 @@ const model = createModel(
       SET: (key: string, value: unknown) => ({ key, value }),
       APPEND: (key: string, value: unknown) => ({ key, value }),
       PREPEND: (key: string, value: unknown) => ({ key, value }),
+      UPDATE: (key: string, value: string) => ({ key, value }),
       REMOVE: (key: string, value: string) => ({ key, value }),
       REMOVE_ITEMS: (key: string, values: string[]) => ({ key, values }),
       CLEAR: () => ({}),
@@ -116,6 +118,9 @@ export const storeMachine =
             PREPEND: {
               actions: 'forwardStoreRequest',
             },
+            UPDATE: {
+              actions: 'forwardStoreRequest',
+            },
             REMOVE: {
               actions: 'forwardStoreRequest',
             },
@@ -197,6 +202,16 @@ export const storeMachine =
                 }
                 case 'PREPEND': {
                   await prependItem(
+                    event.key,
+                    event.value,
+                    context.encryptionKey
+                  );
+
+                  response = event.value;
+                  break;
+                }
+                case 'UPDATE': {
+                  await updateItem(
                     event.key,
                     event.value,
                     context.encryptionKey
@@ -341,7 +356,30 @@ export async function prependItem(
     throw e;
   }
 }
+export async function updateItem(
+  key: string,
+  value: string,
+  encryptionKey: string
+) {
+  try {
+    const list = await getItem(key, [], encryptionKey);
+    const newList = [
+      value,
+      ...list.map((item) => {
+        const vc = item.split(':');
+        if (vc[3] !== value.split(':')[3]) {
+          vc[4] = 'false';
+          return vc.join(':');
+        }
+      }),
+    ].filter((value) => value != undefined && value !== null);
 
+    await setItem(key, newList, encryptionKey);
+  } catch (e) {
+    console.error('error prependItem:', e);
+    throw e;
+  }
+}
 export async function removeItem(
   key: string,
   value: string,

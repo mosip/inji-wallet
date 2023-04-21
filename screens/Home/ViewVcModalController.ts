@@ -17,12 +17,12 @@ import {
   VcItemEvents,
   vcItemMachine,
   selectWalletBindingError,
-  selectIsRequestBindingOtp,
+  selectRequestBindingOtp,
   selectAcceptingBindingOtp,
   selectEmptyWalletBindingId,
-  isWalletBindingInProgress,
+  selectWalletBindingInProgress,
   selectShowWalletBindingError,
-  isShowingBindingWarning,
+  selectBindingWarning,
 } from '../../machines/vcItem';
 import { selectPasscode } from '../../machines/auth';
 import { biometricsMachine, selectIsSuccess } from '../../machines/biometrics';
@@ -130,7 +130,7 @@ export function useViewVcModal({
       selectIsAcceptingRevokeInput
     ),
     storedPasscode: useSelector(authService, selectPasscode),
-    isBindingOtp: useSelector(vcItemActor, selectIsRequestBindingOtp),
+    isBindingOtp: useSelector(vcItemActor, selectRequestBindingOtp),
     isAcceptingBindingOtp: useSelector(vcItemActor, selectAcceptingBindingOtp),
     walletBindingError: useSelector(vcItemActor, selectWalletBindingError),
     isWalletBindingPending: useSelector(
@@ -139,10 +139,10 @@ export function useViewVcModal({
     ),
     isWalletBindingInProgress: useSelector(
       vcItemActor,
-      isWalletBindingInProgress
+      selectWalletBindingInProgress
     ),
     isBindingError: useSelector(vcItemActor, selectShowWalletBindingError),
-    isBindingWarning: useSelector(vcItemActor, isShowingBindingWarning),
+    isBindingWarning: useSelector(vcItemActor, selectBindingWarning),
 
     CONFIRM_REVOKE_VC: () => {
       setRevoking(true);
