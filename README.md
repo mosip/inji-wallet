@@ -143,6 +143,14 @@ More info here:
 - [React Native - Publishing to the App Store](https://reactnative.dev/docs/publishing-to-app-store)
 - [Apple Developer - Distributing Your App for Beta Testing and Releases](https://developer.apple.com/documentation/xcode/distributing-your-app-for-beta-testing-and-releases)
 
+## View the complete DB :
+
+1. Connect your phone to the laptop and open Android Studio.
+2. On the bottom right vertical tab you will find a `Device File Explorer` button. Click on it and select you phone.
+3. Navigate to `data -> data -> io.mosip.residentapp ->databases`. You will find a file named `RKStorage` in it. Download it.
+4. Download [DB Browser for SQLite](https://sqlitebrowser.org/dl/) .
+5. Open the file in this application. Click on `Browse Data` button and select `catalystLocalStorage` table. Now you should be able to view the entire DB of Inji.
+
 ## Credits
 
 Credits listed [here](/Credits.md)
