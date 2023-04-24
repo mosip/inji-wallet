@@ -2,7 +2,7 @@ import React from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 
-import * as DateFnsLocale from '../lib/date-fns/locale';
+import * as DateFnsLocale from 'date-fns/locale';
 import { ActivityLog } from '../machines/activityLog';
 import { TextItem } from './ui/TextItem';
 
