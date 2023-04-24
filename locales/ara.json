@@ -11,7 +11,9 @@
     "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "الواردة. فشل التحقق من التواجد",
     "PRESENCE_VERIFIED_AND_VC_SHARED": "التحقق منها ومشاركتها",
     "PRESENCE_VERIFICATION_FAILED": "فشل التحقق",
-    "QRLOGIN_SUCCESFULL": "QRL تم تسجيل الدخول بنجاح"
+    "QRLOGIN_SUCCESFULL": "QRL تم تسجيل الدخول بنجاح",
+    "WALLET_BINDING_SUCCESSFULL": "تفعيل ناجحة",
+    "WALLET_BINDING_FAILURE": "فشل التفعيل"
   },
   "DeviceInfoList": {
     "requestedBy": "مطلوب بواسطة",
@@ -119,6 +121,7 @@
         "applicationProcessing": "غير جاهز AID",
         "noMessageAvailable": "حاول بعد فترة",
         "networkRequestFailed": "فشل طلب الشبكة",
+        "invalidAid": "AID الذي تم إدخاله غير متوفر. يرجى التحقق من AID الخاص بك قبل الدخول",
         "timeout": "نفذ الوقت"
       }
     }
@@ -241,6 +244,7 @@
     "reject": "رفض",
     "discard": "ينبذ",
     "goToReceivedVCTab": "منظر تلقى {{vcLabel}}",
+    "saving": "إنقاذ",
     "errors": {
       "savingFailed": {
         "title": "فشل حفظ {{vcLabel}}",
@@ -278,6 +282,13 @@
       "connected": {
         "message": "متصل بالجهاز. في انتظار {{vcLabel}}...",
         "timeoutHint": "لم ترد بيانات حتى الآن. هل جهاز الإرسال لا يزال متصلاً؟"
+      },
+      "offline": {
+        "message": "يرجى الاتصال بالإنترنت لتمكين وضع المشاركة عبر الإنترنت"
+      },
+      "bleError": {
+        "title": "فشل التحويل",
+        "message": "حدث خطأ أثناء نقل {{vcLabel}}. حاول مرة اخرى."
       }
     },
     "online": "متصل",
@@ -307,7 +318,27 @@
       "connectingTimeout": "يستغرق إنشاء الاتصال بعض الوقت. هل الجهاز الآخر مفتوح للاتصالات؟",
       "exchangingDeviceInfo": "تبادل معلومات الجهاز ...",
       "exchangingDeviceInfoTimeout": "يستغرق الأمر بعض الوقت لتبادل معلومات الجهاز. قد تضطر إلى إعادة الاتصال.",
-      "invalid": "غير صالح"
+      "invalid": "غير صالح",
+      "offline": "يرجى الاتصال بالإنترنت لمسح رموز QR ضوئيًا باستخدام وضع المشاركة عبر الإنترنت",
+      "sent": "تم إرسال {{vcLabel}} ...",
+      "sentHint": "في انتظار أن يحفظ المستلم {{vcLabel}} أو يتجاهلها",
+      "sharing": {
+        "title": "مشاركة...",
+        "hint": "الرجاء الانتظار حتى يقبل الجهاز المتلقي المشاركة أو يرفضها.",
+        "timeoutHint": "تستغرق مشاركتها وقتًا أطول من المتوقع. قد تكون هناك مشكلة في الاتصال."
+      },
+      "accepted": {
+        "title": "نجاح!",
+        "message": "تمت مشاركة {{vcLabel}} بنجاح مع {{receiver}}"
+      },
+      "rejected": {
+        "title": "يلاحظ",
+        "message": "تم تجاهل {{vcLabel}} بواسطة {{receiver}}"
+      },
+      "bleError": {
+        "title": "فشل التحويل",
+        "message": "حدث خطأ أثناء نقل {{vcLabel}}. حاول مرة اخرى."
+      }
     }
   },
   "SelectVcOverlay": {
