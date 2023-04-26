@@ -21,6 +21,7 @@ import { KeyPair } from 'react-native-rsa-native';
 import {
   getBindingCertificateConstant,
   savePrivateKey,
+  saveThumbprint,
 } from '../shared/keystore/SecureKeystore';
 import getAllConfigurations, {
   DownloadProps,
@@ -763,6 +764,10 @@ export const vcItemMachine =
             thumbprint: response.response.thumbprint,
             expireDateTime: response.response.expireDateTime,
           };
+          await saveThumbprint(
+            walletResponse.walletBindingId,
+            walletResponse.thumbprint
+          );
           return walletResponse;
         },
 

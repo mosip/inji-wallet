@@ -1,6 +1,7 @@
 import { KeyPair, RSA } from 'react-native-rsa-native';
 import forge from 'node-forge';
 import getAllConfigurations from '../commonprops/commonProps';
+import { getThumbprint } from '../keystore/SecureKeystore';
 
 export function generateKeys(): Promise<KeyPair> {
   return Promise.resolve(RSA.generateKeys(4096));
@@ -9,8 +10,7 @@ export function generateKeys(): Promise<KeyPair> {
 export async function getJwt(
   privateKey: string,
   individualId: string,
-  keyId: string,
-  thumbprint: string
+  walletBindingId: string
 ) {
   var token: string = null;
   try {
@@ -18,6 +18,7 @@ export async function getJwt(
     var exp = Math.floor(new Date().getTime() / 1000) + 18000;
 
     var config = await getAllConfigurations();
+    const thumbprint = await getThumbprint(walletBindingId);
 
     const key = forge.pki.privateKeyFromPem(privateKey);
     const md = forge.md.sha256.create();
