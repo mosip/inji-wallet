@@ -287,7 +287,8 @@
       },
       "bleError": {
         "title": "Nabigong ilipat",
-        "message": "Nagkaproblema habang inililipat ang {{vcLabel}}. Pakisubukang muli."
+        "message": "Nagkaproblema habang inililipat ang {{vcLabel}}. Pakisubukang muli.",
+        "hint": "Pagkakamali: {{code}}"
       }
     },
     "online": "Online",
