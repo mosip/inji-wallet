@@ -21,7 +21,6 @@ import { KeyPair } from 'react-native-rsa-native';
 import {
   getBindingCertificateConstant,
   savePrivateKey,
-  saveThumbprint,
 } from '../shared/keystore/SecureKeystore';
 import getAllConfigurations, {
   DownloadProps,
@@ -465,7 +464,10 @@ export const vcItemMachine =
             onDone: [
               {
                 target: 'updatingPrivateKey',
-                actions: ['setWalletBindingId'],
+                actions: [
+                  'setWalletBindingId',
+                  'setThumbprintForWalletBindingId',
+                ],
               },
             ],
             onError: [
@@ -534,6 +536,21 @@ export const vcItemMachine =
           },
           {
             to: (context) => context.serviceRefs.vc,
+          }
+        ),
+        setThumbprintForWalletBindingId: send(
+          (context) => {
+            const { walletBindingResponse } = context;
+            const walletBindingIdKey = getBindingCertificateConstant(
+              walletBindingResponse.walletBindingId
+            );
+            return StoreEvents.SET(
+              walletBindingIdKey,
+              walletBindingResponse.thumbprint
+            );
+          },
+          {
+            to: (context) => context.serviceRefs.store,
           }
         ),
 
@@ -764,10 +781,6 @@ export const vcItemMachine =
             thumbprint: response.response.thumbprint,
             expireDateTime: response.response.expireDateTime,
           };
-          await saveThumbprint(
-            walletResponse.walletBindingId,
-            walletResponse.thumbprint
-          );
           return walletResponse;
         },
 

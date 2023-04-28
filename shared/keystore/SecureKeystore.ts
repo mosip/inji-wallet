@@ -18,13 +18,3 @@ export async function getPrivateKey(id: string) {
 export function getBindingCertificateConstant(id: string) {
   return id + bindingCertificate;
 }
-
-export async function saveThumbprint(id: string, thumbprint) {
-  const key: string = getBindingCertificateConstant(id);
-  await Storage.setItem(key, thumbprint);
-}
-
-export async function getThumbprint(id: string) {
-  const key: string = getBindingCertificateConstant(id);
-  return await Storage.getItem(key);
-}
