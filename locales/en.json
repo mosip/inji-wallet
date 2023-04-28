@@ -116,14 +116,17 @@
   },
   "SettingScreen": {
     "header": "Settings",
-    "bioUnlock": "Bio Unlock",
+    "bioUnlock": "Unlock with Biometrics",
     "language": "Language",
     "aboutInji": "About Inji",
     "injiTourGuide": "Inji Tour Guide",
     "logout": "Logout"
   },
+  "HelpScreen": {
+    "header": "Help"
+  },
   "AddVcModal": {
-    "inputIdHeader":"Retrieve your ID",
+    "header":"Retrieve your card",
     "requestingCredential": "Requesting credential...",
     "errors": {
       "input": {
@@ -172,8 +175,6 @@
     "qstnMarkToolTip": "Application ID is available in the acknowledgement received after enrolment."
   },
   "IdInputModal": {
-    "header": "Enter the MOSIP-provided UIN or VID of the {{vcLabel}} you wish to retrieve",
-    "title": "Retrieve your ID",
     "guideLabel": "Select ID type and enter the MOSIP provided UIN or VID of the ID you wish to retrieve",
     "generateVc": "Generate {{vcLabel}}",
     "downloadID": "Download ID",
@@ -245,23 +246,6 @@
     "version": "Version",
     "useBle": "Powered by BLE",
     "useGoogleNearby": "Powered by GoogleNearby"
-  },
-  "SettingScreen": {
-    "header": "Settings",
-    "profile": "Profile",
-    "vcLabel": "VC Label",
-    "language": "Language",
-    "bioUnlock": "Unlock with biometrics",
-    "authFactorUnlock": "Unlock auth factor",
-    "credits": "Credits and legal notices",
-    "featuresWalkAround":"Feature Walkaround",
-    "logout": "Log-out",
-    "revokeLabel": "Revoke VID",
-    "revokeHeader": "REVOKE VID",
-    "revokingVids": "You are about to revoke ({{count}}) VIDs.",
-    "revokingVidsAfter": "This means you will no longer be able to use or view any of the IDs linked to those VID(s). \nAre you sure you want to proceed?",
-    "empty": "Empty",
-    "revokeSuccessful": "VID successfully revoked"
   },
   "QrScreen": {
     "title": "QR Login",

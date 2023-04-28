@@ -9,8 +9,9 @@ import { RootRouteProps } from '../routes';
 import { Theme } from '../components/ui/styleUtils';
 import { useTranslation } from 'react-i18next';
 import { Row } from '../components/ui';
-import { Image, Pressable } from 'react-native';
+import { Image } from 'react-native';
 import { SettingScreen } from './Settings/SettingScreen';
+import { HelpScreen } from '../components/HelpScreen';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -20,15 +21,16 @@ export const MainLayout: React.FC<RootRouteProps> = () => {
   const options: BottomTabNavigationOptions = {
     headerRight: () => (
       <Row align="space-between">
-        <Pressable
-          onPress={() => {
-            console.log('Help Page');
-          }}>
-          <Image
-            source={require('../assets/help-icon.png')}
-            style={{ width: 36, height: 36 }}
-          />
-        </Pressable>
+        <HelpScreen
+          triggerComponent={
+            <Image
+              source={require('../assets/help-icon.png')}
+              style={{ width: 36, height: 36 }}
+            />
+          }
+          navigation={undefined}
+          route={undefined}
+        />
 
         <SettingScreen
           triggerComponent={
@@ -46,16 +48,6 @@ export const MainLayout: React.FC<RootRouteProps> = () => {
       </Row>
     ),
     headerTitleStyle: {
-      fontFamily: 'Inter_600SemiBold',
-      fontSize: 30,
-      margin: 8,
-    },
-    headerRightContainerStyle: { paddingEnd: 13 },
-    headerLeftContainerStyle: { paddingEnd: 13 },
-    tabBarShowLabel: true,
-    tabBarLabelStyle: {
-      fontSize: 12,
-      color: Theme.Colors.IconBg,
       fontFamily: 'Inter_600SemiBold',
       fontSize: 30,
       margin: 8,
