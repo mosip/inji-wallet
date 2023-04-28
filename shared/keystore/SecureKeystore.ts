@@ -1,5 +1,4 @@
 import RNSecureKeyStore, { ACCESSIBLE } from 'react-native-secure-key-store';
-import Storage from '../storage';
 
 const bindingCertificate = '-bindingCertificate';
 
