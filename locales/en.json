@@ -43,7 +43,7 @@
     "gender": "Gender",
     "dateOfBirth": "Date of birth",
     "phoneNumber": "Phone number",
-    "email": "Email Address",
+    "email": "Email",
     "address": "Address",
     "reasonForSharing": "Reason for sharing",
     "idType": "ID type",
@@ -51,41 +51,10 @@
     "nationalCard": "National Card",
     "uin": "UIN",
     "vid": "VID",
-    "enabledAuthPopUp":"Credentials are enabled for online authentication.",
-    "verificationEnabledSuccess": "Activated for online login",
-    "goback": "GO BACK",
-    "BindingWarning": "If you have enabled verification for this credential on another wallet, it will get overridden. Do you want to proceed?",
-    "yes_confirm": "Yes, I Confirm",
-    "no": "No",
-    "Alert": "Alert",
-    "ok": "Okay",
-    "downloading": "Downloading Your Card",
-    "enableVerification": "Enable Verification",
+    "enableVerification": "Activate",
     "profileAuthenticated": "Profile is authenticated!",
-    "offlineAuthDisabledHeader": "Offline Authentication disabled!",
-    "offlineAuthDisabledMessage": "Click here to enable this credentials to be used for offline authentication."
-  },
-  "HomeScreenKebabPopUp": {
-    "title": "More Options",
-    "unPinCard": "Unpin Card",
-    "pinCard" : "Pin Card",
-    "offlineAuthenticationDisabled!": "Offline authentication disabled!",
-    "offlineAuthDisabledMessage": "Click here to enable this credentials to be used for offline authentication.",
-    "viewActivityLog": "View activity log",
-    "removeFromWallet": "Remove from wallet",
-    "revokeId": "Revoke ID",
-    "revokeMessage": "Revoke the virtual ID for this profile",
-    "ActivityLog":"View Activity Log"
-  },
-  "WalletBinding": {
-    "inProgress" : "In Progress",
-    "profileAuthenticated": "Profile is authenticated!"
-  },
-  "BindingVcWarningOverlay": {
-    "alert": "Please Confirm",
-    "BindingWarning": "If you have enabled verification for this credential on another wallet, it will get overridden. Do you want to proceed?",
-    "yesConfirm": "Yes, I confirm",
-    "no" : "No"
+    "offlineAuthDisabledHeader": "Activation pending for online login",
+    "offlineAuthDisabledMessage": "Please click the button below to activate this credential to be used for online login."
   },
   "AuthScreen": {
     "header": "Select App Unlock Method",
@@ -101,7 +70,7 @@
   },
   "BiometricScreen": {
     "unlock": "Unlock with biometrics"
-  },  
+  },
   "HistoryScreen": {
     "noHistory": "No history available yet",
     "downloaded": "downloaded",
@@ -114,16 +83,8 @@
     "receivedVcsTab": "Received\n{{vcLabel}}",
     "historyTab": "History"
   },
-  "SettingScreen": {
-    "header": "Settings",
-    "bioUnlock": "Bio Unlock",
-    "language": "Language",
-    "aboutInji": "About Inji",
-    "injiTourGuide": "Inji Tour Guide",
-    "logout": "Logout"
-  },
   "AddVcModal": {
-    "inputIdHeader":"Retrieve your ID",
+    "header": "Retrieve your ID",
     "requestingCredential": "Requesting credential...",
     "errors": {
       "input": {
@@ -132,30 +93,10 @@
       },
       "backend": {
         "invalidOtp": "OTP is invalid",
-        "expiredOtp": "OTP has expired",
         "invalidUin": "UIN invalid",
         "invalidVid": "VID invalid",
         "missingUin": "UIN not available in database",
-        "missingVid": "VID not available in database",
-        "noMessageAvailable": "Try after sometime",
-        "whileGeneratingOtpErrorIsOccured": "while generating otp error is occurred",
-        "networkRequestFailed": "Network request failed"
-      }
-    }
-  },
-  "GetVcModal": {
-    "errors": {
-      "input": {
-        "empty": "The input cannot be empty",
-        "invalidFormat": "The input format is incorrect"
-      },
-      "backend": {
-        "invalidOtp": "OTP is invalid",
-        "expiredOtp": "OTP has expired",
-        "applicationProcessing": "AID is not ready",
-        "noMessageAvailable": "Try after sometime",
-        "networkRequestFailed": "Network request failed",
-        "timeOut": "Timeout"
+        "missingVid": "VID not available in database"
       }
     }
   },
@@ -172,15 +113,12 @@
     "qstnMarkToolTip": "Application ID is available in the acknowledgement received after enrolment."
   },
   "IdInputModal": {
-    "header": "Enter the MOSIP-provided UIN or VID of the {{vcLabel}} you wish to retrieve",
-    "title": "Retrieve your ID",
-    "guideLabel": "Select ID type and enter the MOSIP provided UIN or VID of the ID you wish to retrieve",
-    "generateVc": "Generate {{vcLabel}}",
-    "downloadID": "Download ID",
-    "enterId": "Enter {{idType}}",
-    "noUIN/VID": "Don't have UIN/VID?",
-    "getItHere": "Get it now",
-    "requestingOTP": "Requesting OTP..."
+    "header": "Enter your UIN/VID to download your {{vcLabel}}",
+    "generateVc": "Generate My {{vcLabel}}",
+    "enterId": "Enter your {{idType}}",
+    "noUIN/VID": "Don't have your UIN/VID? Get it here",
+    "requestingOTP": "Requesting OTP...",
+    "guideLabel": "Select ID type and enter the MOSIP provided UIN or VID of the ID you wish to retrieve"
   },
   "OtpVerificationModal": {
     "title": "OTP Verification",
@@ -189,10 +127,26 @@
     "resendCode": "Resend Code"
   },
   "MyVcsTab": {
-    "downloadID": "Download ID",
-    "bringYourDigitalID": "Bring Your Digital ID",
-    "generateVcDescription": "To download your {{vcLabel}} tap Download {{vcLabel}} below",
-    "downloadingYourId": "Downloading your ID, this can take upto 5 minutes"
+    "addVcButton": "Add {{vcLabel}}",
+    "generateVc": "Generate your {{vcLabel}}",
+    "generateVcDescription": "Tap on \"Add {{vcLabel}}\" below to download your {{vcLabel}}"
+  },
+  "SettingScreen": {
+    "header": "Settings",
+    "profile": "Profile",
+    "vcLabel": "VC Label",
+    "language": "Language",
+    "bioUnlock": "Unlock with biometrics",
+    "authFactorUnlock": "Unlock auth factor",
+    "credits": "Credits and legal notices",
+    "featuresWalkAround": "Feature Walkaround",
+    "logout": "Log-out",
+    "revokeLabel": "Revoke VID",
+    "revokeHeader": "REVOKE VID",
+    "revokingVids": "You are about to revoke ({{count}}) VIDs.",
+    "revokingVidsAfter": "This means you will no longer be able to use or view any of the IDs linked to those VID(s). \nAre you sure you want to proceed?",
+    "empty": "Empty",
+    "revokeSuccessful": "VID successfully revoked"
   },
   "OnboardingOverlay": {
     "stepOneTitle": "Secure Sharing!",
@@ -231,7 +185,6 @@
     "home": "Home",
     "scan": "Scan",
     "request": "Request",
-    "history": "History",
     "settings": "Settings"
   },
   "PasscodeScreen": {
@@ -239,54 +192,6 @@
     "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
     "confirmPasscode": "Confirm passcode",
     "enterPasscode": "Enter your passcode"
-  },
-  "AppMetaData": {
-    "header": "About Inji",
-    "version": "Version",
-    "useBle": "Powered by BLE",
-    "useGoogleNearby": "Powered by GoogleNearby"
-  },
-  "SettingScreen": {
-    "header": "Settings",
-    "profile": "Profile",
-    "vcLabel": "VC Label",
-    "language": "Language",
-    "bioUnlock": "Unlock with biometrics",
-    "authFactorUnlock": "Unlock auth factor",
-    "credits": "Credits and legal notices",
-    "featuresWalkAround":"Feature Walkaround",
-    "logout": "Log-out",
-    "revokeLabel": "Revoke VID",
-    "revokeHeader": "REVOKE VID",
-    "revokingVids": "You are about to revoke ({{count}}) VIDs.",
-    "revokingVidsAfter": "This means you will no longer be able to use or view any of the IDs linked to those VID(s). \nAre you sure you want to proceed?",
-    "empty": "Empty",
-    "revokeSuccessful": "VID successfully revoked"
-  },
-  "QrScreen": {
-    "title": "QR Login",
-    "alignQr": "Align the QR code within the frame to scan",
-    "confirmation": "Confirmation",
-    "checkDomain": "Also, check that there is a lock icon on the address bar.",
-    "domainHead": "https://",
-    "selectId": "Select ID",
-    "noBindedVc": "No Binded {{vcLabel}} Available to Verify",
-    "back": "Go Back",
-    "confirm": "Confirm",
-    "verify": "Verify",
-    "faceAuth": "Face Authentication",
-    "consent": "Consent",
-    "loading": "Loading...",
-    "domainWarning": "Please confirm the domain of the website you are scanning the QR code from is as below",
-    "access": " is requesting access to",
-    "status": "Status",
-    "successMessage": "You Have Successfully Logged Into ",
-    "okay": "Okay",
-    "allow": "Allow",
-    "cancel": "Cancel",
-    "essentialClaims": "Essential Claims",
-    "voluntaryClaims": "Voluntary Claims",
-    "required": "Required"
   },
   "ReceiveVcScreen": {
     "header": "{{vcLabel}} details",
@@ -297,11 +202,11 @@
     "goToReceivedVCTab": "View Received {{vcLabel}}",
     "errors": {
       "savingFailed": {
-        "title": "Failed to save the {{vcLabelSingular}}",
+        "title": "Failed to save {{vcLabelSingular}}",
         "message": "Something went wrong while saving {{vcLabelSingular}} to the store."
       },
       "diskFullError": {
-        "title": "Failed to save the {{vcLabelSingular}}",
+        "title": "Failed to save {{vcLabelPlural}}",
         "message": "No more {{vcLabelPlural}} can be received or saved as App Data is full."
       }
     }
@@ -337,7 +242,7 @@
         "message": "Please connect to the internet to enable Online sharing mode"
       },
       "bleError": {
-        "title": "Failed to transfer",
+        "title": "Failed to transfer!",
         "message": "Something went wrong while transferring {{vcLabel}}. Please try again."
       }
     },
@@ -346,14 +251,11 @@
     "gotoSettings": "Go to settings"
   },
   "ScanScreen": {
-    "scanningGuide": "Hold the phone study and scan the QR code",
-    "requester": "Requester",
+    "header": "Scan QR Code",
     "noShareableVcs": "No shareable {{vcLabel}} are available.",
     "sharingVc": "Sharing {{vcLabel}}",
-    "bluetoothStateAndroid": "Please turn on bluetooth from quick settings to support local sharing",
-    "bluetoothStateIos": "Please turn on bluetooth from control center to support local sharing",
-    "enableBluetoothMessage":"Please enable bluetooth permissions to support local sharing",
-    "enableBluetoothButtonText": "Allow Bluetooth Permissions",
+    "BluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
+    "BluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
     "errors": {
       "locationDisabled": {
         "message": "Location services must be enabled for the scanning functionality",
@@ -365,9 +267,7 @@
       }
     },
     "status": {
-      "inProgress": "In Progress",
-      "establishingConnection": "Establishing Connection",
-      "sharingInProgress": "Sharing in Progress",
+      "connecting": "Connecting...",
       "connectingTimeout": "It's taking a while to establish the connection. Is the other device open for connections?",
       "exchangingDeviceInfo": "Exchanging device info...",
       "exchangingDeviceInfoTimeout": "It's taking a while to exchange device info. You may have to reconnect.",
@@ -381,16 +281,15 @@
         "timeoutHint": "It's taking longer than expected to share. There could be a problem with the connection."
       },
       "accepted": {
-        "title": "ID shared successfully",
-        "message": "Your ID has been successfully shared with ",
-        "gotohome": "Go to home"
+        "title": "Success!",
+        "message": "Your {{vcLabel}} has been successfully shared with {{receiver}}"
       },
       "rejected": {
         "title": "Notice",
         "message": "Your {{vcLabel}} was discarded by {{receiver}}"
       },
       "bleError": {
-        "title": "Failed to transfer",
+        "title": "Failed to transfer!",
         "message": "Something went wrong while transferring {{vcLabel}}. Please try again."
       }
     }
@@ -402,22 +301,21 @@
     "verifyAndShare": "Verify Identity & Share"
   },
   "SendVcScreen": {
-    "reasonForSharing": "Reason for sharing",
-    "approveRequest": "Approve request and choose {{vcLabel}}",
-    "approveRequestAndVerify": "Approve request and verify",
-    "consentToPhotoVerification": "I give consent to have my photo taken for authentication",
-    "pleaseSelectAnId": "Please select an ID",
-    "reject": "Reject"
+    "reasonForSharing": "Reason for sharing (optional)",
+    "acceptRequest": "Accept request and choose {{vcLabel}}",
+    "acceptRequestAndVerify": "Accept request and verify",
+    "reject": "Reject",
+    "consentToPhotoVerification": "I give consent to have my photo taken for authentication"
+  },
+  "AppMetaData": {
+    "header": "About Inji",
+    "version": "Version",
+    "useBle": "Powered by BLE",
+    "useGoogleNearby": "Powered by GoogleNearby"
   },
   "Credits": {
     "header": "Credits and legal notices",
-    "back": "Back",
-    "reasonForSharing": "Reason for sharing",
-    "approveRequest": "Approve request and choose {{vcLabel}}",
-    "approveRequestAndVerify": "Approve request and verify",
-    "consentToPhotoVerification": "I give consent to have my photo taken for authentication",
-    "pleaseSelectAnId": "Please select an ID",
-    "reject": "Reject"
+    "back": "Back"
   },
   "VerifyIdentityOverlay": {
     "status": {
@@ -452,9 +350,6 @@
         "missingPermission": "This app uses the camera to scan the QR code of another device."
       },
       "allowAccess": "Allow access to the camera"
-    },
-    "errors": {
-      "genericError": "Something went wrong. Please try again after some time!"
     }
   }
 }

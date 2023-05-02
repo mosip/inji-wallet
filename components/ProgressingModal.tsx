@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Centered, Column, Text } from './ui';
 import { Modal } from './ui/Modal';
-import { Image, View } from 'react-native';
+import { Image } from 'react-native';
 import { Theme } from './ui/styleUtils';
 import PaginationDot from 'react-native-animated-pagination-dot';
 
@@ -66,4 +66,6 @@ export interface ProgressingModalProps {
   timeoutHint?: string;
   onCancel?: () => void;
   requester?: boolean;
+  progress?: boolean | number;
+  onBackdropPress?: () => void;
 }

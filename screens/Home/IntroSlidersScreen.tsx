@@ -99,7 +99,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
             weight="semibold"
             align="center"
             color="#FFFFFF"
-            margin="10 0 0 0">
+            margin="15 0 0 0">
             {t('next')}
           </Text>
         </LinearGradient>
@@ -116,7 +116,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
             weight="semibold"
             align="center"
             color="#FFFFFF"
-            margin="10 0 0 0">
+            margin="15 0 0 0">
             {t('stepThreeButton')}
           </Text>
         </LinearGradient>

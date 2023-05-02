@@ -1,13 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Icon } from 'react-native-elements';
-
-import { Theme } from '../../components/ui/styleUtils';
 import { SendVcScreen } from './SendVcScreen';
 import { useScanLayout } from './ScanLayoutController';
 import { ScanScreen } from './ScanScreen';
-import { I18nManager, Platform } from 'react-native';
 import { ProgressingModal } from '../../components/ProgressingModal';
 import { MessageOverlay } from '../../components/MessageOverlay';
 
@@ -19,18 +15,7 @@ export const ScanLayout: React.FC = () => {
 
   return (
     <React.Fragment>
-      <ScanStack.Navigator
-        initialRouteName="ScanScreen"
-        screenOptions={{
-          headerLeft: () =>
-            I18nManager.isRTL && Platform.OS !== 'ios' ? (
-              <LanguageSelector
-                triggerComponent={
-                  <Icon name="language" color={Theme.Colors.Icon} />
-                }
-              />
-            ) : null,
-        }}>
+      <ScanStack.Navigator initialRouteName="ScanScreen">
         {!controller.isDone && (
           <ScanStack.Screen
             name="SendVcScreen"
@@ -54,9 +39,6 @@ export const ScanLayout: React.FC = () => {
       </ScanStack.Navigator>
 
       <ProgressingModal
-        isVisible={controller.statusOverlay != null}
-        title={controller.statusOverlay?.title}
-        timeoutHint={controller.statusOverlay?.hint}
         isVisible={controller.statusOverlay != null}
         title={controller.statusOverlay?.title}
         timeoutHint={controller.statusOverlay?.hint}

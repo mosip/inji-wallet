@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Theme } from '../../components/ui/styleUtils';
 import { Modal } from '../../components/ui/Modal';
 import { Image } from 'react-native';
-import { Centered, Column, Text } from '../../components/ui';
+import { Column, Text } from '../../components/ui';
 import { DeviceInfoList } from '../../components/DeviceInfoList';
 import { Button } from '../../components/ui';
 import { useScanLayout } from './ScanLayoutController';
@@ -15,9 +15,6 @@ export const SharingSuccessModal: React.FC<SharingSuccessModalProps> = (
   const { t } = useTranslation('ScanScreen');
   const controller = useScanLayout();
   const controller1 = useSendVcScreen();
-
-  const [showSuccessMessage, setIsShowSuccessMessage] = useState(false);
-  const toggle = () => setIsShowSuccessMessage(!showSuccessMessage);
 
   return (
     <React.Fragment>

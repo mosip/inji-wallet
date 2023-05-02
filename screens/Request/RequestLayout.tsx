@@ -1,14 +1,10 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Icon } from 'react-native-elements';
 import { useTranslation } from 'react-i18next';
-
 import { RequestScreen } from './RequestScreen';
 import { useRequestLayout } from './RequestLayoutController';
 import { Message } from '../../components/Message';
 import { ReceiveVcScreen } from './ReceiveVcScreen';
-import { Theme } from '../../components/ui/styleUtils';
-import { I18nManager, Platform } from 'react-native';
 import { isBLEEnabled } from '../../lib/smartshare';
 
 const RequestStack = createNativeStackNavigator();

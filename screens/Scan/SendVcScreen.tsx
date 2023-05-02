@@ -11,6 +11,8 @@ import { I18nManager, BackHandler } from 'react-native';
 import { useInterpret } from '@xstate/react';
 import { createVcItemMachine } from '../../machines/vcItem';
 import { GlobalContext } from '../../shared/GlobalContext';
+import { useFocusEffect } from '@react-navigation/native';
+import { SingleVcItem } from '../../components/SingleVcItem';
 
 export const SendVcScreen: React.FC = () => {
   const { t } = useTranslation('SendVcScreen');

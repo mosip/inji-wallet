@@ -152,6 +152,7 @@ export function useScanLayout() {
         vcLabel: vcLabel.singular,
         receiver: receiverInfo.deviceName,
       }),
+      onCancel: DISMISS,
       onBackdropPress: DISMISS,
     };
   } else if (isRejected) {

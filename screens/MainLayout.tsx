@@ -57,20 +57,12 @@ export const MainLayout: React.FC<RootRouteProps> = () => {
       fontSize: 12,
       color: Theme.Colors.IconBg,
       fontFamily: 'Inter_600SemiBold',
-      fontSize: 30,
       margin: 8,
     },
-    headerRightContainerStyle: { paddingEnd: 13 },
-    headerLeftContainerStyle: { paddingEnd: 13 },
-    tabBarShowLabel: true,
     tabBarActiveTintColor: Theme.Colors.IconBg,
     tabBarStyle: {
       height: 82,
       paddingHorizontal: 10,
-    },
-    tabBarLabelStyle: {
-      fontSize: 12,
-      fontFamily: 'Inter_600SemiBold',
     },
     tabBarItemStyle: {
       height: 83,
