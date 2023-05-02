@@ -139,11 +139,12 @@
     "backButton": "Back home"
   },
   "GetIdInputModal": {
-    "header": "Enter your Application ID to get your UIN",
-    "getUIN": "Get UIN/VID",
-    "applicationId": "Application ID",
+    "header": "Retrieve your UIN/VID",
+    "applicationIdLabel": "Please enter your Application ID",
+    "applicationId": "Enter Application ID",
     "requestingOTP": "Requesting OTP...",
-    "qstnMarkToolTip": "Application ID is available in the acknowledgement received after enrolment."
+    "qstnMarkToolTip": "Application ID is available in the acknowledgement received after enrolment.",
+    "getUIN": "Get UIN/VID"
   },
   "IdInputModal": {
     "title": "Retrieve your ID",
