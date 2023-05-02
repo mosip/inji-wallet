@@ -83,8 +83,19 @@
     "receivedVcsTab": "Received\n{{vcLabel}}",
     "historyTab": "History"
   },
+  "SettingScreen": {
+    "header": "Settings",
+    "bioUnlock": "Unlock with Biometrics",
+    "language": "Language",
+    "aboutInji": "About Inji",
+    "injiTourGuide": "Inji Tour Guide",
+    "logout": "Logout"
+  },
+  "HelpScreen": {
+    "header": "Help"
+  },
   "AddVcModal": {
-    "header": "Retrieve your ID",
+    "header":"Retrieve your card",
     "requestingCredential": "Requesting credential...",
     "errors": {
       "input": {
@@ -192,6 +203,37 @@
     "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
     "confirmPasscode": "Confirm passcode",
     "enterPasscode": "Enter your passcode"
+  },
+  "AppMetaData": {
+    "header": "About Inji",
+    "version": "Version",
+    "useBle": "Powered by BLE",
+    "useGoogleNearby": "Powered by GoogleNearby"
+  },
+  "QrScreen": {
+    "title": "QR Login",
+    "alignQr": "Align the QR code within the frame to scan",
+    "confirmation": "Confirmation",
+    "checkDomain": "Also, check that there is a lock icon on the address bar.",
+    "domainHead": "https://",
+    "selectId": "Select ID",
+    "noBindedVc": "No Binded {{vcLabel}} Available to Verify",
+    "back": "Go Back",
+    "confirm": "Confirm",
+    "verify": "Verify",
+    "faceAuth": "Face Authentication",
+    "consent": "Consent",
+    "loading": "Loading...",
+    "domainWarning": "Please confirm the domain of the website you are scanning the QR code from is as below",
+    "access": " is requesting access to",
+    "status": "Status",
+    "successMessage": "You Have Successfully Logged Into ",
+    "okay": "Okay",
+    "allow": "Allow",
+    "cancel": "Cancel",
+    "essentialClaims": "Essential Claims",
+    "voluntaryClaims": "Voluntary Claims",
+    "required": "Required"
   },
   "ReceiveVcScreen": {
     "header": "{{vcLabel}} details",
