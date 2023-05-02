@@ -142,23 +142,6 @@
     "generateVc": "Generate your {{vcLabel}}",
     "generateVcDescription": "Tap on \"Add {{vcLabel}}\" below to download your {{vcLabel}}"
   },
-  "SettingScreen": {
-    "header": "Settings",
-    "profile": "Profile",
-    "vcLabel": "VC Label",
-    "language": "Language",
-    "bioUnlock": "Unlock with biometrics",
-    "authFactorUnlock": "Unlock auth factor",
-    "credits": "Credits and legal notices",
-    "featuresWalkAround": "Feature Walkaround",
-    "logout": "Log-out",
-    "revokeLabel": "Revoke VID",
-    "revokeHeader": "REVOKE VID",
-    "revokingVids": "You are about to revoke ({{count}}) VIDs.",
-    "revokingVidsAfter": "This means you will no longer be able to use or view any of the IDs linked to those VID(s). \nAre you sure you want to proceed?",
-    "empty": "Empty",
-    "revokeSuccessful": "VID successfully revoked"
-  },
   "OnboardingOverlay": {
     "stepOneTitle": "Secure Sharing!",
     "stepOneText": "Share and receive {{vcLabel}} switfly using your phone camera to scan QR codes",
@@ -348,12 +331,6 @@
     "acceptRequestAndVerify": "Accept request and verify",
     "reject": "Reject",
     "consentToPhotoVerification": "I give consent to have my photo taken for authentication"
-  },
-  "AppMetaData": {
-    "header": "About Inji",
-    "version": "Version",
-    "useBle": "Powered by BLE",
-    "useGoogleNearby": "Powered by GoogleNearby"
   },
   "Credits": {
     "header": "Credits and legal notices",
