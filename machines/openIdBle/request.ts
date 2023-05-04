@@ -1,5 +1,4 @@
-import SmartshareReactNative from '@idpass/smartshare-react-native';
-import { Verifier } from 'react-native-openid4vp-ble';
+import openIdBLE from 'react-native-openid4vp-ble';
 import uuid from 'react-native-uuid';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import { EmitterSubscription, Linking, Platform } from 'react-native';
@@ -11,26 +10,23 @@ import { StoreEvents } from '../store';
 import { VC } from '../../types/vc';
 import { AppServices } from '../../shared/GlobalContext';
 import {
-  GNM_API_KEY,
   RECEIVED_VCS_STORE_KEY,
   VC_ITEM_STORE_KEY,
 } from '../../shared/constants';
 import { ActivityLogEvents, ActivityLogType } from '../activityLog';
 import { VcEvents } from '../vc';
-import { ConnectionParams } from '@idpass/smartshare-react-native/lib/typescript/IdpassSmartshare';
+import {
+  offlineSubscribe,
+  offlineSend,
+} from '../../shared/openIdBLE/verifierEventHandler';
+import { log } from 'xstate/lib/actions';
 import {
   ExchangeReceiverInfoEvent,
-  onlineSubscribe,
-  offlineSubscribe,
-  PairingResponseEvent,
-  onlineSend,
-  offlineSend,
   SendVcResponseEvent,
-} from '../../shared/openIdBLE/smartshare';
-import { log } from 'xstate/lib/actions';
+} from '../../shared/openIdBLE/smartshareEvent';
 // import { verifyPresentation } from '../shared/vcjs/verifyPresentation';
 
-const { GoogleNearbyMessages } = SmartshareReactNative;
+const { verifier } = openIdBLE;
 type SharingProtocol = 'OFFLINE' | 'ONLINE';
 
 const model = createModel(
@@ -285,9 +281,6 @@ export const requestMachine =
           },
         },
         cancelling: {
-          invoke: {
-            src: 'sendDisconnect',
-          },
           always: {
             target: '#request.clearingConnection',
           },
@@ -516,7 +509,7 @@ export const requestMachine =
         generateConnectionParams: assign({
           connectionParams: (context) => {
             if (context.sharingProtocol === 'OFFLINE') {
-              return Openid4vpBle.getConnectionParameters();
+              return verifier.getConnectionParameters();
             } else {
               const cid = uuid.v4();
               return JSON.stringify({
@@ -551,14 +544,14 @@ export const requestMachine =
           loggers: () => {
             if (__DEV__) {
               return [
-                Openid4vpBle.handleNearbyEvents((event) => {
+                verifier.handleNearbyEvents((event) => {
                   console.log(
                     getDeviceNameSync(),
                     '<Receiver.Event>',
                     JSON.stringify(event).slice(0, 100)
                   );
                 }),
-                Openid4vpBle.handleLogEvents((event) => {
+                verifier.handleLogEvents((event) => {
                   console.log(
                     getDeviceNameSync(),
                     '<Receiver.Log>',
@@ -659,24 +652,11 @@ export const requestMachine =
       },
 
       services: {
-        sendDisconnect: (context) => () => {
-          if (context.sharingProtocol === 'ONLINE') {
-            onlineSend({
-              type: 'disconnect',
-              data: 'rejected',
-            });
-          }
-        },
-
-        disconnect: (context) => (callback) => {
+        disconnect: () => (callback) => {
           try {
-            if (context.sharingProtocol === 'OFFLINE') {
-              Openid4vpBle.destroyConnection(() => {
-                callback({ type: 'CONNECTION_DESTROYED' });
-              });
-            } else {
-              GoogleNearbyMessages.disconnect();
-            }
+            verifier.destroyConnection(() => {
+              callback({ type: 'CONNECTION_DESTROYED' });
+            });
           } catch (e) {
             // pass
           }
@@ -699,60 +679,25 @@ export const requestMachine =
             .catch(() => callback(model.events.BLUETOOTH_DISABLED()));
         },
 
-        advertiseDevice: (context) => (callback) => {
-          if (context.sharingProtocol === 'OFFLINE') {
-            Openid4vpBle.createConnection('advertiser', () => {
-              callback({ type: 'CONNECTED' });
-            });
-          } else {
-            (async function () {
-              GoogleNearbyMessages.addOnErrorListener((kind, message) =>
-                console.log('\n\n[request] GNM_ERROR\n\n', kind, message)
-              );
-
-              await GoogleNearbyMessages.connect({
-                apiKey: GNM_API_KEY,
-                discoveryMediums: ['ble'],
-                discoveryModes: ['scan', 'broadcast'],
-              });
-              console.log('[request] GNM connected!');
-
-              await onlineSubscribe('pairing', async (scannedQrParams) => {
-                try {
-                  const generatedParams = JSON.parse(
-                    context.connectionParams
-                  ) as ConnectionParams;
-                  if (scannedQrParams.cid === generatedParams.cid) {
-                    const event: PairingResponseEvent = {
-                      type: 'pairing:response',
-                      data: 'ok',
-                    };
-                    await onlineSend(event);
-                    callback({ type: 'CONNECTED' });
-                  }
-                } catch (e) {
-                  console.error('Could not parse message.', e);
-                }
-              });
-            })();
-          }
+        advertiseDevice: () => (callback) => {
+          verifier.createConnection(() => {
+            callback({ type: 'CONNECTED' });
+          });
         },
 
-        monitorConnection: (context) => (callback) => {
-          if (context.sharingProtocol === 'OFFLINE') {
-            const subscription = Openid4vpBle.handleNearbyEvents((event) => {
-              if (event.type === 'onDisconnected') {
-                callback({ type: 'DISCONNECT' });
-              }
+        monitorConnection: () => (callback) => {
+          const subscription = verifier.handleNearbyEvents((event) => {
+            if (event.type === 'onDisconnected') {
+              callback({ type: 'DISCONNECT' });
+            }
 
-              if (event.type === 'onError') {
-                callback({ type: 'BLE_ERROR' });
-                console.log('BLE Exception: ' + event.message);
-              }
-            });
+            if (event.type === 'onError') {
+              callback({ type: 'BLE_ERROR' });
+              console.log('BLE Exception: ' + event.message);
+            }
+          });
 
-            return () => subscription.remove();
-          }
+          return () => subscription.remove();
         },
 
         exchangeDeviceInfo: (context) => (callback) => {
@@ -761,59 +706,24 @@ export const requestMachine =
             data: context.receiverInfo,
           };
 
-          if (context.sharingProtocol === 'OFFLINE') {
-            const subscription = offlineSubscribe(
-              'exchange-sender-info',
-              (senderInfo) => {
-                offlineSend(event, () => {
-                  callback({ type: 'EXCHANGE_DONE', senderInfo });
-                });
-              }
-            );
+          const subscription = offlineSubscribe(
+            'exchange-sender-info',
+            (senderInfo) => {
+              offlineSend(event, () => {
+                callback({ type: 'EXCHANGE_DONE', senderInfo });
+              });
+            }
+          );
 
-            return () => subscription.remove();
-          } else {
-            onlineSubscribe('exchange-sender-info', async (senderInfo) => {
-              await GoogleNearbyMessages.unpublish();
-              await onlineSend(event);
-              callback({ type: 'EXCHANGE_DONE', senderInfo });
-            });
-          }
+          return () => subscription.remove();
         },
 
-        receiveVc: (context) => (callback) => {
-          if (context.sharingProtocol === 'OFFLINE') {
-            const subscription = offlineSubscribe('send-vc', ({ vc }) => {
-              callback({ type: 'VC_RECEIVED', vc });
-            });
+        receiveVc: () => (callback) => {
+          const subscription = offlineSubscribe('send-vc', ({ vc }) => {
+            callback({ type: 'VC_RECEIVED', vc });
+          });
 
-            return () => subscription.remove();
-          } else {
-            let rawData = '';
-            onlineSubscribe(
-              'send-vc',
-              async ({ isChunked, vc, vcChunk }) => {
-                await GoogleNearbyMessages.unpublish();
-                if (isChunked) {
-                  rawData += vcChunk.rawData;
-                  if (vcChunk.chunk === vcChunk.total - 1) {
-                    const vc = JSON.parse(rawData) as VC;
-                    GoogleNearbyMessages.unsubscribe();
-                    callback({ type: 'VC_RECEIVED', vc });
-                  } else {
-                    await onlineSend({
-                      type: 'send-vc:response',
-                      data: vcChunk.chunk,
-                    });
-                  }
-                } else {
-                  callback({ type: 'VC_RECEIVED', vc });
-                }
-              },
-              () => callback({ type: 'DISCONNECT' }),
-              { keepAlive: true }
-            );
-          }
+          return () => subscription.remove();
         },
 
         sendVcResponse: (context, _event, meta) => async () => {
@@ -822,14 +732,9 @@ export const requestMachine =
             data: meta.data.status,
           };
 
-          if (context.sharingProtocol === 'OFFLINE') {
-            offlineSend(event, () => {
-              // pass
-            });
-          } else {
-            await GoogleNearbyMessages.unpublish();
-            await onlineSend(event);
-          }
+          offlineSend(event, () => {
+            // pass
+          });
         },
 
         verifyVp: (context) => async () => {
@@ -859,12 +764,8 @@ export const requestMachine =
 
       delays: {
         DESTROY_TIMEOUT: 500,
-        CONNECTION_TIMEOUT: (context) => {
-          return (context.sharingProtocol === 'ONLINE' ? 15 : 5) * 1000;
-        },
-        SHARING_TIMEOUT: (context) => {
-          return (context.sharingProtocol === 'ONLINE' ? 45 : 15) * 1000;
-        },
+        CONNECTION_TIMEOUT: 5 * 1000,
+        SHARING_TIMEOUT: 15 * 1000,
       },
     }
   );

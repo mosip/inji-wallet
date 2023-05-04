@@ -39,14 +39,13 @@ export interface Typegen0 {
     exchangeDeviceInfo: 'done.invoke.scan.exchangingDeviceInfo:invocation[0]';
     monitorConnection: 'done.invoke.scan:invocation[0]';
     requestBluetooth: 'done.invoke.scan.checkingBluetoothService.requesting:invocation[0]';
-    sendDisconnect: 'done.invoke.scan.reviewing.cancelling:invocation[0]';
     sendVc: 'done.invoke.scan.reviewing.sendingVc:invocation[0]';
   };
   'missingImplementations': {
     actions: never;
     delays: never;
-    guards: never;
-    services: never;
+    guards: 'isQrOnline';
+    services: 'QrLogin';
   };
   'eventsCausingActions': {
     clearCreatedVp:
@@ -134,7 +133,6 @@ export interface Typegen0 {
       | 'xstate.after(CONNECTION_TIMEOUT)#scan.exchangingDeviceInfo';
     monitorConnection: 'xstate.init';
     requestBluetooth: never;
-    sendDisconnect: 'CANCEL';
     sendVc:
       | 'ACCEPT_REQUEST'
       | 'FACE_VALID'
