@@ -1,7 +1,7 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 import SmartshareReactNative from '@idpass/smartshare-react-native';
 import { ConnectionParams } from '@idpass/smartshare-react-native/lib/typescript/IdpassSmartshare';
-import OpenIdBle from 'react-native-openid4vp-ble';
+import { Wallet } from 'react-native-openid4vp-ble';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import {
   ActorRefFrom,
@@ -51,7 +51,6 @@ import { createQrLoginMachine, qrLoginMachine } from '../QrLoginMachine';
 import { StoreEvents } from '../store';
 
 const { GoogleNearbyMessages } = SmartshareReactNative;
-const { Openid4vpBle } = OpenIdBle;
 
 type SharingProtocol = 'OFFLINE' | 'ONLINE';
 

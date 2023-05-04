@@ -1,5 +1,5 @@
 import SmartshareReactNative from '@idpass/smartshare-react-native';
-import OpenIdBle from 'react-native-openid4vp-ble';
+import { Verifier } from 'react-native-openid4vp-ble';
 import uuid from 'react-native-uuid';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import { EmitterSubscription, Linking, Platform } from 'react-native';
@@ -31,7 +31,6 @@ import { log } from 'xstate/lib/actions';
 // import { verifyPresentation } from '../shared/vcjs/verifyPresentation';
 
 const { GoogleNearbyMessages } = SmartshareReactNative;
-const { Openid4vpBle } = OpenIdBle;
 type SharingProtocol = 'OFFLINE' | 'ONLINE';
 
 const model = createModel(
