@@ -1,11 +1,10 @@
 import {
   ActorRefFrom,
   assign,
-  ErrorPlatformEvent,
   EventFrom,
   send,
-  StateFrom,
   sendParent,
+  StateFrom,
 } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { AppServices } from '../shared/GlobalContext';
@@ -14,7 +13,10 @@ import { StoreEvents } from './store';
 import { linkTransactionResponse, VC } from '../types/vc';
 import { request } from '../shared/request';
 import { getJwt } from '../shared/cryptoutil/cryptoUtil';
-import { getPrivateKey } from '../shared/keystore/SecureKeystore';
+import {
+  getBindingCertificateConstant,
+  getPrivateKey,
+} from '../shared/keystore/SecureKeystore';
 import i18n from '../i18n';
 
 const model = createModel(
@@ -23,6 +25,7 @@ const model = createModel(
     selectedVc: {} as VC,
     linkCode: '',
     myVcs: [] as string[],
+    thumbprint: '',
     linkTransactionResponse: {} as linkTransactionResponse,
     authFactors: [],
     authorizeScopes: null,
@@ -183,7 +186,7 @@ export const qrLoginMachine =
         requestConsent: {
           on: {
             CONFIRM: {
-              target: 'sendingConsent',
+              target: 'loadingThumbprint',
             },
             TOGGLE_CONSENT_CLAIM: {
               actions: 'setConsentClaims',
@@ -192,6 +195,15 @@ export const qrLoginMachine =
             DISMISS: {
               actions: 'forwardToParent',
               target: 'waitingForData',
+            },
+          },
+        },
+        loadingThumbprint: {
+          entry: 'loadThumbprint',
+          on: {
+            STORE_RESPONSE: {
+              actions: 'setThumbprint',
+              target: 'sendingConsent',
             },
           },
         },
@@ -238,6 +250,20 @@ export const qrLoginMachine =
           myVcs: (_context, event) => (event.response || []) as string[],
         }),
 
+        loadThumbprint: send(
+          (context) =>
+            StoreEvents.GET(
+              getBindingCertificateConstant(
+                context.selectedVc.walletBindingResponse?.walletBindingId
+              )
+            ),
+          { to: (context) => context.serviceRefs.store }
+        ),
+        setThumbprint: assign({
+          thumbprint: (_context, event) => {
+            return (event.response || '') as string;
+          },
+        }),
         resetLinkTransactionId: model.assign({
           linkTransactionId: () => '',
         }),
@@ -333,8 +359,7 @@ export const qrLoginMachine =
           var jwt = await getJwt(
             privateKey,
             context.selectedVc.id,
-            walletBindingResponse?.keyId,
-            walletBindingResponse?.thumbprint
+            context.thumbprint
           );
 
           const response = await request(
@@ -366,8 +391,7 @@ export const qrLoginMachine =
           var jwt = await getJwt(
             privateKey,
             context.selectedVc.id,
-            walletBindingResponse?.keyId,
-            walletBindingResponse?.thumbprint
+            context.thumbprint
           );
 
           const response = await request(
