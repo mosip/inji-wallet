@@ -51,7 +51,7 @@ export interface Typegen0 {
     actions: never;
     delays: never;
     guards: never;
-    services: 'QrLogin';
+    services: never;
   };
   'eventsCausingActions': {
     clearCreatedVp:

@@ -41,6 +41,8 @@ import {
   SendVcEvent,
   SendVcStatus,
 } from '../../shared/openIdBLE/smartshareEvent';
+import { WalletDataEvent } from 'react-native-openid4vp-ble/lib/typescript/types/bleshare';
+import { enIE } from 'date-fns/locale';
 
 const { wallet } = openIdBLE;
 
@@ -60,7 +62,7 @@ const model = createModel(
     vcName: '',
     verificationImage: {} as CameraCapturedPicture,
     sharingProtocol: 'OFFLINE' as SharingProtocol,
-    scannedQrParams: {} as ConnectionParams,
+    openId4VpUri: '',
     shareLogType: '' as ActivityLogType,
     QrLoginRef: {} as ActorRefFrom<typeof qrLoginMachine>,
     linkCode: '',
@@ -193,7 +195,7 @@ export const scanMachine =
             src: 'disconnect',
           },
           on: {
-            CONNECTION_DESTROYED: {
+            DISCONNECT: {
               target: '#scan.findingConnection',
               actions: [],
               internal: false,
@@ -211,20 +213,15 @@ export const scanMachine =
           entry: [
             'removeLoggers',
             'registerLoggers',
-            'clearScannedQrParams',
+            'clearUri',
             'setChildRef',
           ],
           on: {
             SCAN: [
               {
-                target: 'preparingToConnect',
-                cond: 'isQrOffline',
-                actions: 'setConnectionParams',
-              },
-              {
-                target: 'preparingToConnect',
-                cond: 'isQrOnline',
-                actions: 'setScannedQrParams',
+                target: 'connecting',
+                cond: 'isOpenIdQr',
+                actions: 'setUri',
               },
               {
                 target: 'showQrLogin',
@@ -262,18 +259,9 @@ export const scanMachine =
           },
           entry: 'sendScanData',
         },
-        preparingToConnect: {
-          entry: 'requestSenderInfo',
-          on: {
-            RECEIVE_DEVICE_INFO: {
-              target: 'connecting',
-              actions: 'setSenderInfo',
-            },
-          },
-        },
         connecting: {
           invoke: {
-            src: 'discoverDevice',
+            src: 'startConnection',
           },
           initial: 'inProgress',
           states: {
@@ -296,39 +284,7 @@ export const scanMachine =
           },
           on: {
             CONNECTED: {
-              target: 'exchangingDeviceInfo',
-            },
-          },
-        },
-        exchangingDeviceInfo: {
-          invoke: {
-            src: 'exchangeDeviceInfo',
-          },
-          initial: 'inProgress',
-          after: {
-            CONNECTION_TIMEOUT: {
-              target: '#scan.exchangingDeviceInfo.timeout',
-              actions: [],
-              internal: false,
-            },
-          },
-          states: {
-            inProgress: {},
-            timeout: {
-              on: {
-                CANCEL: {
-                  target: '#scan.reviewing.cancelling',
-                },
-              },
-            },
-          },
-          on: {
-            DISCONNECT: {
-              target: 'disconnected',
-            },
-            EXCHANGE_DONE: {
               target: 'reviewing',
-              actions: 'setReceiverInfo',
             },
           },
         },
@@ -570,30 +526,14 @@ export const scanMachine =
             : Linking.openURL('App-Prefs:Bluetooth');
         },
 
-        requestSenderInfo: sendParent('REQUEST_DEVICE_INFO'),
-
-        setSenderInfo: model.assign({
-          senderInfo: (_context, event) => event.info,
-        }),
-
         requestToEnableLocation: () => requestLocation(),
 
-        setConnectionParams: (_context, event) => {
-          wallet.setConnectionParameters(event.params);
-        },
-
-        setScannedQrParams: model.assign({
-          scannedQrParams: (_context, event) =>
-            JSON.parse(event.params) as ConnectionParams,
-          sharingProtocol: 'ONLINE',
+        setUri: model.assign({
+          openId4VpUri: (_context, event) => event.params,
         }),
 
-        clearScannedQrParams: assign({
-          scannedQrParams: {} as ConnectionParams,
-        }),
-
-        setReceiverInfo: model.assign({
-          receiverInfo: (_context, event) => event.receiverInfo,
+        clearUri: assign({
+          openId4VpUri: '',
         }),
 
         setReason: model.assign({
@@ -625,20 +565,13 @@ export const scanMachine =
         }),
 
         registerLoggers: assign({
-          loggers: (context) => {
-            if (context.sharingProtocol === 'OFFLINE' && __DEV__) {
+          loggers: () => {
+            if (__DEV__) {
               return [
-                wallet.handleNearbyEvents((event) => {
+                wallet.handleDataEvents((event) => {
                   console.log(
                     getDeviceNameSync(),
                     '<Sender.Event>',
-                    JSON.stringify(event).slice(0, 100)
-                  );
-                }),
-                wallet.handleLogEvents((event) => {
-                  console.log(
-                    getDeviceNameSync(),
-                    '<Sender.Log>',
                     JSON.stringify(event).slice(0, 100)
                   );
                 }),
@@ -792,7 +725,7 @@ export const scanMachine =
         },
 
         monitorConnection: () => (callback) => {
-          const subscription = wallet.handleNearbyEvents((event) => {
+          const subscription = wallet.handleDataEvents((event) => {
             if (event.type === 'onDisconnected') {
               callback({ type: 'DISCONNECT' });
             }
@@ -812,64 +745,38 @@ export const scanMachine =
           );
         },
 
-        discoverDevice: () => (callback) => {
-          wallet.createConnection(() => {
-            callback({ type: 'CONNECTED' });
-          });
-        },
-
-        exchangeDeviceInfo: (context) => (callback) => {
-          const event: ExchangeSenderInfoEvent = {
-            type: 'exchange-sender-info',
-            data: context.senderInfo,
-          };
-
-          let subscription: EmitterSubscription;
-          offlineSend(event, () => {
-            subscription = offlineSubscribe(
-              'exchange-receiver-info',
-              (receiverInfo) => {
-                callback({ type: 'EXCHANGE_DONE', receiverInfo });
-              }
-            );
-          });
-          return () => subscription?.remove();
+        startConnection: (context) => () => {
+          wallet.startConnection('OVPMOSIP', context.openId4VpUri);
         },
 
         sendVc: (context) => (callback) => {
-          let subscription: EmitterSubscription;
           const vp = context.createdVp;
           const vc = {
             ...(vp != null ? vp : context.selectedVc),
             tag: '',
           };
 
-          const statusCallback = (status: SendVcStatus) => {
-            if (typeof status === 'number') return;
-            if (status === 'RECEIVED') {
+          const statusCallback = (event: WalletDataEvent) => {
+            if (
+              event.type === 'onTransferStatusUpdate' &&
+              event.status == 'SUCCESS'
+            ) {
               callback({ type: 'VC_SENT' });
-            } else {
+            } else if (event.type === 'onVerificationStatusReceived') {
               callback({
-                type: status === 'ACCEPTED' ? 'VC_ACCEPTED' : 'VC_REJECTED',
+                type:
+                  event.status === 'APPROVED' ? 'VC_ACCEPTED' : 'VC_REJECTED',
               });
             }
           };
-
-          const event: SendVcEvent = {
-            type: 'send-vc',
-            data: { isChunked: false, vc },
-          };
-          offlineSend(event, () => {
-            subscription = offlineSubscribe(SendVcResponseType, statusCallback);
-          });
+          wallet.send(JSON.stringify(vc));
+          const subscription = offlineSubscribe(statusCallback);
           return () => subscription?.remove();
         },
 
-        disconnect: () => (callback) => {
+        disconnect: () => () => {
           try {
-            wallet.destroyConnection(() => {
-              callback({ type: 'CONNECTION_DESTROYED' });
-            });
+            wallet.disconnect();
           } catch (e) {
             // pass
           }
@@ -896,14 +803,20 @@ export const scanMachine =
       },
 
       guards: {
-        isQrOffline: (_context, event) => {
+        isOpenIdQr: (_context, event) => {
           // don't scan if QR is offline and Google Nearby is enabled
-          if (Platform.OS === 'ios' && !isBLEEnabled) return false;
+          if (
+            Platform.OS === 'ios' &&
+            !isBLEEnabled &&
+            !event.params.includes('OPENID4VP://')
+          )
+            return false;
 
           const param: ConnectionParams = Object.create(null);
           try {
-            Object.assign(param, JSON.parse(event.params));
-            return 'cid' in param && 'pk' in param && param.pk !== '';
+            const pk = event.params.split('OPENID4VP://')[1];
+            Object.assign(param, { pk });
+            return pk != '';
           } catch (e) {
             return false;
           }

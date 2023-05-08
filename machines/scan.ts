@@ -1028,12 +1028,13 @@ export function selectIsConnectingTimeout(state: State) {
   return state.matches('connecting.timeout');
 }
 
+//TODO: post discussion with team remove the selectIsExchangingDeviceInfo & selectIsExchangingDeviceInfoTimeOut functions
 export function selectIsExchangingDeviceInfo(state: State) {
-  return state.matches('exchangingDeviceInfo.inProgress');
+  return true;
 }
 
 export function selectIsExchangingDeviceInfoTimeout(state: State) {
-  return state.matches('exchangingDeviceInfo.timeout');
+  return true;
 }
 
 export function selectIsReviewing(state: State) {

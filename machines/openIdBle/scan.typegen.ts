@@ -17,9 +17,6 @@ export interface Typegen0 {
     'xstate.after(CONNECTION_TIMEOUT)#scan.connecting.inProgress': {
       type: 'xstate.after(CONNECTION_TIMEOUT)#scan.connecting.inProgress';
     };
-    'xstate.after(CONNECTION_TIMEOUT)#scan.exchangingDeviceInfo': {
-      type: 'xstate.after(CONNECTION_TIMEOUT)#scan.exchangingDeviceInfo';
-    };
     'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection': {
       type: 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection';
     };
@@ -35,17 +32,16 @@ export interface Typegen0 {
     checkLocationStatus: 'done.invoke.scan.checkingLocationService.checkingStatus:invocation[0]';
     createVp: 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
     disconnect: 'done.invoke.scan.clearingConnection:invocation[0]';
-    discoverDevice: 'done.invoke.scan.connecting:invocation[0]';
-    exchangeDeviceInfo: 'done.invoke.scan.exchangingDeviceInfo:invocation[0]';
     monitorConnection: 'done.invoke.scan:invocation[0]';
     requestBluetooth: 'done.invoke.scan.checkingBluetoothService.requesting:invocation[0]';
     sendVc: 'done.invoke.scan.reviewing.sendingVc:invocation[0]';
+    startConnection: 'done.invoke.scan.connecting:invocation[0]';
   };
   'missingImplementations': {
     actions: never;
     delays: never;
-    guards: 'isQrOnline';
-    services: 'QrLogin';
+    guards: never;
+    services: never;
   };
   'eventsCausingActions': {
     clearCreatedVp:
@@ -64,8 +60,8 @@ export interface Typegen0 {
       | 'SCREEN_BLUR'
       | 'SCREEN_FOCUS'
       | 'xstate.stop';
-    clearScannedQrParams:
-      | 'CONNECTION_DESTROYED'
+    clearUri:
+      | 'DISCONNECT'
       | 'DISMISS'
       | 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection';
     logFailedVerification: 'FACE_INVALID';
@@ -73,42 +69,35 @@ export interface Typegen0 {
     openBluetoothSettings: 'GOTO_SETTINGS';
     openSettings: 'LOCATION_REQUEST';
     registerLoggers:
-      | 'CONNECTION_DESTROYED'
+      | 'DISCONNECT'
       | 'DISMISS'
       | 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection';
     removeLoggers:
-      | 'CONNECTION_DESTROYED'
+      | 'DISCONNECT'
       | 'DISMISS'
       | 'SCREEN_BLUR'
       | 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection'
       | 'xstate.init';
-    requestSenderInfo: 'SCAN';
     requestToEnableLocation: 'LOCATION_DISABLED' | 'LOCATION_REQUEST';
-    resetShouldVerifyPresence: 'CANCEL' | 'EXCHANGE_DONE';
+    resetShouldVerifyPresence: 'CANCEL' | 'CONNECTED';
     sendScanData: 'SCAN';
     setChildRef:
-      | 'CONNECTION_DESTROYED'
+      | 'DISCONNECT'
       | 'DISMISS'
       | 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection';
-    setConnectionParams: 'SCAN';
     setCreatedVp: 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
     setLinkCode: 'SCAN';
     setReason: 'UPDATE_REASON';
-    setReceiverInfo: 'EXCHANGE_DONE';
-    setScannedQrParams: 'SCAN';
     setSelectedVc: 'SELECT_VC';
-    setSenderInfo: 'RECEIVE_DEVICE_INFO';
     setShareLogTypeUnverified: 'ACCEPT_REQUEST';
     setShareLogTypeVerified: 'FACE_VALID';
+    setUri: 'SCAN';
     storeLoginItem: 'done.invoke.QrLogin';
     storingActivityLog: 'STORE_RESPONSE';
     toggleShouldVerifyPresence: 'TOGGLE_USER_CONSENT';
   };
   'eventsCausingDelays': {
-    CONNECTION_TIMEOUT:
-      | 'CONNECTED'
-      | 'RECEIVE_DEVICE_INFO'
-      | 'xstate.after(CONNECTION_TIMEOUT)#scan.exchangingDeviceInfo';
+    CONNECTION_TIMEOUT: 'SCAN';
     DESTROY_TIMEOUT: '' | 'DISMISS' | 'LOCATION_ENABLED';
     SHARING_TIMEOUT:
       | 'ACCEPT_REQUEST'
@@ -116,9 +105,8 @@ export interface Typegen0 {
       | 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
   };
   'eventsCausingGuards': {
+    isOpenIdQr: 'SCAN';
     isQrLogin: 'SCAN';
-    isQrOffline: 'SCAN';
-    isQrOnline: 'SCAN';
   };
   'eventsCausingServices': {
     QrLogin: 'SCAN';
@@ -127,16 +115,13 @@ export interface Typegen0 {
     checkLocationStatus: '';
     createVp: never;
     disconnect: '' | 'DISMISS' | 'LOCATION_ENABLED';
-    discoverDevice: 'RECEIVE_DEVICE_INFO';
-    exchangeDeviceInfo:
-      | 'CONNECTED'
-      | 'xstate.after(CONNECTION_TIMEOUT)#scan.exchangingDeviceInfo';
     monitorConnection: 'xstate.init';
     requestBluetooth: never;
     sendVc:
       | 'ACCEPT_REQUEST'
       | 'FACE_VALID'
       | 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
+    startConnection: 'SCAN';
   };
   'matchesStates':
     | 'bluetoothDenied'
@@ -155,14 +140,10 @@ export interface Typegen0 {
     | 'connecting.inProgress'
     | 'connecting.timeout'
     | 'disconnected'
-    | 'exchangingDeviceInfo'
-    | 'exchangingDeviceInfo.inProgress'
-    | 'exchangingDeviceInfo.timeout'
     | 'findingConnection'
     | 'handlingBleError'
     | 'inactive'
     | 'invalid'
-    | 'preparingToConnect'
     | 'reviewing'
     | 'reviewing.accepted'
     | 'reviewing.cancelling'
@@ -189,7 +170,6 @@ export interface Typegen0 {
           | 'disabled'
           | 'requestingToEnable';
         connecting?: 'inProgress' | 'timeout';
-        exchangingDeviceInfo?: 'inProgress' | 'timeout';
         reviewing?:
           | 'accepted'
           | 'cancelling'
