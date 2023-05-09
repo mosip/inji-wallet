@@ -9,9 +9,6 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
-    'xstate.after(CONNECTION_TIMEOUT)#request.exchangingDeviceInfo.inProgress': {
-      type: 'xstate.after(CONNECTION_TIMEOUT)#request.exchangingDeviceInfo.inProgress';
-    };
     'xstate.after(DESTROY_TIMEOUT)#request.clearingConnection': {
       type: 'xstate.after(DESTROY_TIMEOUT)#request.clearingConnection';
     };
@@ -27,11 +24,9 @@ export interface Typegen0 {
     disconnect:
       | 'done.invoke.request.clearingConnection:invocation[0]'
       | 'done.invoke.request.reviewing.navigatingToHome:invocation[0]';
-    exchangeDeviceInfo: 'done.invoke.request.exchangingDeviceInfo:invocation[0]';
     monitorConnection: 'done.invoke.request:invocation[0]';
     receiveVc: 'done.invoke.request.waitingForVc:invocation[0]';
     requestBluetooth: 'done.invoke.request.checkingBluetoothService.requesting:invocation[0]';
-    sendDisconnect: 'done.invoke.request.cancelling:invocation[0]';
     sendVcResponse:
       | 'done.invoke.request.reviewing.accepted:invocation[0]'
       | 'done.invoke.request.reviewing.rejected:invocation[0]'
@@ -57,20 +52,16 @@ export interface Typegen0 {
       | 'SCREEN_FOCUS'
       | 'SWITCH_PROTOCOL'
       | 'xstate.stop';
-    generateConnectionParams:
-      | 'CONNECTION_DESTROYED'
-      | 'DISMISS'
-      | 'xstate.after(DESTROY_TIMEOUT)#request.clearingConnection';
     logReceived: 'CANCEL' | 'REJECT' | 'STORE_ERROR' | 'STORE_RESPONSE';
     mergeIncomingVc: 'STORE_RESPONSE';
     openSettings: 'GOTO_SETTINGS';
     prependReceivedVc: 'VC_RESPONSE';
     registerLoggers:
-      | 'CONNECTION_DESTROYED'
+      | 'DISCONNECT'
       | 'DISMISS'
       | 'xstate.after(DESTROY_TIMEOUT)#request.clearingConnection';
     removeLoggers:
-      | 'CONNECTION_DESTROYED'
+      | 'DISCONNECT'
       | 'DISMISS'
       | 'SCREEN_BLUR'
       | 'xstate.after(DESTROY_TIMEOUT)#request.clearingConnection'
@@ -82,39 +73,33 @@ export interface Typegen0 {
       | 'FACE_VALID'
       | 'VC_RECEIVED'
       | 'done.invoke.request.reviewing.verifyingVp:invocation[0]';
-    requestReceiverInfo: 'CONNECTED';
     sendVcReceived: 'STORE_RESPONSE';
     setIncomingVc: 'VC_RECEIVED';
     setReceiveLogTypeDiscarded: 'CANCEL' | 'REJECT' | 'STORE_ERROR';
     setReceiveLogTypeRegular: 'ACCEPT' | 'STORE_RESPONSE';
     setReceiveLogTypeUnverified: 'FACE_INVALID';
     setReceiveLogTypeVerified: 'FACE_VALID';
-    setReceiverInfo: 'RECEIVE_DEVICE_INFO';
-    setSenderInfo: 'EXCHANGE_DONE';
     setStoringError: 'STORE_ERROR';
     storeVc: 'STORE_RESPONSE';
     switchProtocol: 'SWITCH_PROTOCOL';
   };
   'eventsCausingDelays': {
-    CONNECTION_TIMEOUT: 'RECEIVE_DEVICE_INFO';
     DESTROY_TIMEOUT: '' | 'DISMISS';
-    SHARING_TIMEOUT: 'EXCHANGE_DONE';
+    SHARING_TIMEOUT: 'CONNECTED';
   };
   'eventsCausingGuards': {
     hasExistingVc: 'VC_RESPONSE';
   };
   'eventsCausingServices': {
     advertiseDevice:
-      | 'CONNECTION_DESTROYED'
+      | 'DISCONNECT'
       | 'DISMISS'
       | 'xstate.after(DESTROY_TIMEOUT)#request.clearingConnection';
     checkBluetoothService: 'RESET' | 'SCREEN_FOCUS' | 'SWITCH_PROTOCOL';
     disconnect: '' | 'DISMISS' | 'GO_TO_RECEIVED_VC_TAB';
-    exchangeDeviceInfo: 'RECEIVE_DEVICE_INFO';
     monitorConnection: 'xstate.init';
-    receiveVc: 'EXCHANGE_DONE';
+    receiveVc: 'CONNECTED';
     requestBluetooth: 'BLUETOOTH_DISABLED';
-    sendDisconnect: 'CANCEL';
     sendVcResponse: 'CANCEL' | 'REJECT' | 'STORE_ERROR' | 'STORE_RESPONSE';
     verifyVp: never;
   };
@@ -127,12 +112,8 @@ export interface Typegen0 {
     | 'checkingBluetoothService.requesting'
     | 'clearingConnection'
     | 'disconnected'
-    | 'exchangingDeviceInfo'
-    | 'exchangingDeviceInfo.inProgress'
-    | 'exchangingDeviceInfo.timeout'
     | 'handlingBleError'
     | 'inactive'
-    | 'preparingToExchangeInfo'
     | 'reviewing'
     | 'reviewing.accepted'
     | 'reviewing.accepting'
@@ -156,7 +137,6 @@ export interface Typegen0 {
     | 'waitingForVc.timeout'
     | {
         checkingBluetoothService?: 'checking' | 'enabled' | 'requesting';
-        exchangingDeviceInfo?: 'inProgress' | 'timeout';
         reviewing?:
           | 'accepted'
           | 'accepting'

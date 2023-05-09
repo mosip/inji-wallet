@@ -1,8 +1,7 @@
 import openIdBLE from 'react-native-openid4vp-ble';
-import uuid from 'react-native-uuid';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import { EmitterSubscription, Linking, Platform } from 'react-native';
-import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
+import { assign, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { DeviceInfo } from '../../components/DeviceInfoList';
 import { getDeviceNameSync } from 'react-native-device-info';
@@ -15,15 +14,9 @@ import {
 } from '../../shared/constants';
 import { ActivityLogEvents, ActivityLogType } from '../activityLog';
 import { VcEvents } from '../vc';
-import {
-  offlineSubscribe,
-  offlineSend,
-} from '../../shared/openIdBLE/verifierEventHandler';
+import { offlineSubscribe } from '../../shared/openIdBLE/verifierEventHandler';
 import { log } from 'xstate/lib/actions';
-import {
-  ExchangeReceiverInfoEvent,
-  SendVcResponseEvent,
-} from '../../shared/openIdBLE/smartshareEvent';
+import { VerifierDataEvent } from 'react-native-openid4vp-ble/lib/typescript/types/bleshare';
 // import { verifyPresentation } from '../shared/vcjs/verifyPresentation';
 
 const { verifier } = openIdBLE;
@@ -172,7 +165,7 @@ export const requestMachine =
             src: 'disconnect',
           },
           on: {
-            CONNECTION_DESTROYED: {
+            DISCONNECT: {
               target: '#request.waitingForConnection',
               actions: [],
               internal: false,
@@ -187,59 +180,13 @@ export const requestMachine =
           },
         },
         waitingForConnection: {
-          entry: [
-            'removeLoggers',
-            'registerLoggers',
-            'generateConnectionParams',
-          ],
+          entry: ['removeLoggers', 'registerLoggers'],
           invoke: {
             src: 'advertiseDevice',
           },
           on: {
             CONNECTED: {
-              target: 'preparingToExchangeInfo',
-            },
-            DISCONNECT: {
-              target: 'disconnected',
-            },
-          },
-        },
-        preparingToExchangeInfo: {
-          entry: 'requestReceiverInfo',
-          on: {
-            RECEIVE_DEVICE_INFO: {
-              target: 'exchangingDeviceInfo',
-              actions: 'setReceiverInfo',
-            },
-          },
-        },
-        exchangingDeviceInfo: {
-          invoke: {
-            src: 'exchangeDeviceInfo',
-          },
-          initial: 'inProgress',
-          states: {
-            inProgress: {
-              after: {
-                CONNECTION_TIMEOUT: {
-                  target: '#request.exchangingDeviceInfo.timeout',
-                  actions: [],
-                  internal: false,
-                },
-              },
-            },
-            timeout: {
-              on: {
-                CANCEL: {
-                  target: '#request.cancelling',
-                },
-              },
-            },
-          },
-          on: {
-            EXCHANGE_DONE: {
               target: 'waitingForVc',
-              actions: 'setSenderInfo',
             },
 
             DISCONNECT: {
@@ -500,30 +447,6 @@ export const requestMachine =
           to: (context) => context.serviceRefs.vc,
         }),
 
-        requestReceiverInfo: sendParent('REQUEST_DEVICE_INFO'),
-
-        setReceiverInfo: model.assign({
-          receiverInfo: (_context, event) => event.info,
-        }),
-
-        generateConnectionParams: assign({
-          connectionParams: (context) => {
-            if (context.sharingProtocol === 'OFFLINE') {
-              return verifier.getConnectionParameters();
-            } else {
-              const cid = uuid.v4();
-              return JSON.stringify({
-                pk: '',
-                cid,
-              });
-            }
-          },
-        }),
-
-        setSenderInfo: model.assign({
-          senderInfo: (_context, event) => event.senderInfo,
-        }),
-
         setIncomingVc: assign({
           incomingVc: (_context, event) => {
             const vp = event.vc.verifiablePresentation;
@@ -544,17 +467,10 @@ export const requestMachine =
           loggers: () => {
             if (__DEV__) {
               return [
-                verifier.handleNearbyEvents((event) => {
+                verifier.handleDataEvents((event) => {
                   console.log(
                     getDeviceNameSync(),
                     '<Receiver.Event>',
-                    JSON.stringify(event).slice(0, 100)
-                  );
-                }),
-                verifier.handleLogEvents((event) => {
-                  console.log(
-                    getDeviceNameSync(),
-                    '<Receiver.Log>',
                     JSON.stringify(event).slice(0, 100)
                   );
                 }),
@@ -652,11 +568,9 @@ export const requestMachine =
       },
 
       services: {
-        disconnect: () => (callback) => {
+        disconnect: () => () => {
           try {
-            verifier.destroyConnection(() => {
-              callback({ type: 'CONNECTION_DESTROYED' });
-            });
+            verifier.disconnect();
           } catch (e) {
             // pass
           }
@@ -680,13 +594,19 @@ export const requestMachine =
         },
 
         advertiseDevice: () => (callback) => {
-          verifier.createConnection(() => {
-            callback({ type: 'CONNECTED' });
-          });
+          verifier.startAdvertisement('OVPMOSIP');
+
+          const statusCallback = (event: VerifierDataEvent) => {
+            if (event.type === 'onConnected') {
+              callback({ type: 'CONNECTED' });
+            }
+          };
+          const subscription = offlineSubscribe(statusCallback);
+          return () => subscription?.remove();
         },
 
         monitorConnection: () => (callback) => {
-          const subscription = verifier.handleNearbyEvents((event) => {
+          const subscription = verifier.handleDataEvents((event) => {
             if (event.type === 'onDisconnected') {
               callback({ type: 'DISCONNECT' });
             }
@@ -700,41 +620,19 @@ export const requestMachine =
           return () => subscription.remove();
         },
 
-        exchangeDeviceInfo: (context) => (callback) => {
-          const event: ExchangeReceiverInfoEvent = {
-            type: 'exchange-receiver-info',
-            data: context.receiverInfo,
-          };
-
-          const subscription = offlineSubscribe(
-            'exchange-sender-info',
-            (senderInfo) => {
-              offlineSend(event, () => {
-                callback({ type: 'EXCHANGE_DONE', senderInfo });
-              });
-            }
-          );
-
-          return () => subscription.remove();
-        },
-
         receiveVc: () => (callback) => {
-          const subscription = offlineSubscribe('send-vc', ({ vc }) => {
-            callback({ type: 'VC_RECEIVED', vc });
-          });
+          const statusCallback = (event: VerifierDataEvent) => {
+            if (event.type === 'onVCReceived') {
+              callback({ type: 'VC_RECEIVED', vc: JSON.parse(event.vc) });
+            }
+          };
+          const subscription = offlineSubscribe(statusCallback);
 
           return () => subscription.remove();
         },
 
         sendVcResponse: (context, _event, meta) => async () => {
-          const event: SendVcResponseEvent = {
-            type: 'send-vc:response',
-            data: meta.data.status,
-          };
-
-          offlineSend(event, () => {
-            // pass
-          });
+          verifier.sendVerificationStatus(meta.data.status);
         },
 
         verifyVp: (context) => async () => {
@@ -764,7 +662,6 @@ export const requestMachine =
 
       delays: {
         DESTROY_TIMEOUT: 500,
-        CONNECTION_TIMEOUT: 5 * 1000,
         SHARING_TIMEOUT: 15 * 1000,
       },
     }
@@ -858,13 +755,13 @@ export function selectIsBluetoothDenied(state: State) {
 export function selectIsCheckingBluetoothService(state: State) {
   return state.matches('checkingBluetoothService');
 }
-
-export function selectIsExchangingDeviceInfo(state: State) {
-  return state.matches('exchangingDeviceInfo.inProgress');
+//TODO: post discussion with team remove the selectIsExchangingDeviceInfo & selectIsExchangingDeviceInfoTimeOut functions
+export function selectIsExchangingDeviceInfo() {
+  return true;
 }
 
-export function selectIsExchangingDeviceInfoTimeout(state: State) {
-  return state.matches('exchangingDeviceInfo.timeout');
+export function selectIsExchangingDeviceInfoTimeout() {
+  return true;
 }
 
 export function selectIsWaitingForVc(state: State) {
