@@ -1,0 +1,405 @@
+{
+    "ActivityLogText": {
+      "VC_SHARED": "partagé",
+      "VC_RECEIVED": "reçu",
+      "VC_RECEIVED_NOT_SAVED": "reçu n'a pas été enregistré",
+      "VC_DELETED": "supprimé",
+      "VC_DOWNLOADED": "téléchargé",
+      "VC_REVOKED": "révoqué",
+      "VC_SHARED_WITH_VERIFICATION_CONSENT": "partagé. Le consentement est donné pour la vérification de présence",
+      "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "reçu. Présence vérifiée",
+      "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "reçu. La vérification de présence a échoué",
+      "PRESENCE_VERIFIED_AND_VC_SHARED": "vérifié et partagé",
+      "PRESENCE_VERIFICATION_FAILED": "échec de la vérification",
+      "QRLOGIN_SUCCESFULL": "QRLogin réussi",
+      "WALLET_BINDING_SUCCESSFULL": "Activation réussie",
+      "WALLET_BINDING_FAILURE": "Activation echouée"
+    },
+    "DeviceInfoList": {
+      "requestedBy": "Demandé par",
+      "sentBy": "Envoyée par",
+      "deviceRefNumber": "Numéro de référence de l'appareil",
+      "name": "Noms"
+    },
+    "FaceScanner": {},
+    "OIDcAuth": {
+      "title": "Authentification OIDC",
+      "text": "À remplacer par l'interface utilisateur du fournisseur OIDC",
+      "verify": "Vérifier"
+    },
+    "PasscodeVerify": {
+      "passcodeMismatchError": "Le mot de passe ne correspondait pas."
+    },
+    "QrScanner": {
+      "missingPermissionText": "Cette application utilise l'appareil photo pour scanner le code QR d'un autre appareil.",
+      "allowCameraButton": "Autoriser l'accès à la caméra"
+    },
+    "VcDetails": {
+      "generatedOn": "Généré le",
+      "status": "Statut",
+      "valid": "Valide",
+      "photo": "Photo",
+      "fullName": "Nom et prénom",
+      "gender": "Genre",
+      "dateOfBirth": "Date de naissance",
+      "phoneNumber": "Numéro de téléphone",
+      "email": "E-mail",
+      "address": "Adresse",
+      "reasonForSharing": "Raison du partage",
+      "idType": "Type d'identification",
+      "id": "IDENTIFIANT",
+      "nationalCard": "Carte nationale",
+      "uin": "UIN",
+      "vid": "VID",
+      "enableVerification": "Activer",
+      "profileAuthenticated": "Le profil est authentifié !",
+      "offlineAuthDisabledHeader": "Activation en attente pour la connexion en ligne",
+      "offlineAuthDisabledMessage": "Vous pouvez cliquer sur le bouton ci-dessous pour activer cet identifiant pour la connexion en ligne."
+    },
+    "HomeScreenKebabPopUp": {
+      "title": "Plus d'options",
+      "unPinCard": "Détacher la carte",
+      "pinCard" : "Carte Pin",
+      "offlineAuthenticationDisabled!": "L'authentification hors ligne est désactivée !",
+      "offlineAuthDisabledMessage": "Cliquez ici pour activer cette information d'identification à utiliser pour l'authentification hors ligne.",
+      "viewActivityLog": "Afficher le journal d'activité",
+      "removeFromWallet": "Retirer du portefeuille",
+      "revokeId": "Révoquer l'ID",
+      "revokeMessage": "Révoquer l'ID virtuel pour ce profil",
+      "ActivityLog":"Afficher le journal d'activité"
+    },
+    "WalletBinding": {
+      "inProgress" : "En cours",
+      "profileAuthenticated": "Le profil est authentifié !"
+    },
+    "BindingVcWarningOverlay": {
+      "alert": "Veuillez confirmer",
+      "BindingWarning": "Si vous avez activé la vérification de cet identifiant sur un autre portefeuille, il sera remplacé. Voulez-vous poursuivre?",
+      "yesConfirm": "Oui, je confirme",
+      "no" : "Non"
+    },
+    "AuthScreen": {
+      "header": "Sélectionnez la méthode de déverrouillage de l'application",
+      "Description": "Souhaitez-vous utiliser la biométrie pour déverrouiller l'application ?",
+      "useBiometrics": "Utiliser la biométrie",
+      "usePasscode": "Utiliser le code d'accès",
+      "errors": {
+        "unavailable": "L'appareil ne prend pas en charge la biométrie",
+        "unenrolled": "Pour utiliser la biométrie, veuillez enregistrer vos données biométriques dans les paramètres de votre appareil",
+        "failed": "Échec de l'authentification avec la biométrie",
+        "generic": "Il semble y avoir une erreur dans l'authentification biométrique"
+      }
+    },
+    "BiometricScreen": {
+      "unlock": "Déverrouiller avec la biométrie"
+    },
+    "HistoryScreen": {
+      "noHistory": "Aucun historique n'est encore disponible",
+      "downloaded": "téléchargé",
+      "shared": "partagé",
+      "received": "reçu",
+      "deleted": "supprimé"
+    },
+    "SettingScreen": {
+      "header": "Paramètres",
+      "bioUnlock": "Déverrouiller avec la biométrie",
+      "language": "Langue",
+      "aboutInji": "À propos d'Inji",
+      "injiTourGuide": "Guide touristique d'Inji",
+      "logout": "Se déconnecter"
+    },
+    "HelpScreen": {
+      "header": "Aider",
+      "whatisIdDetails?": "Que sont les détails d'identification ?",
+      "howToTurnOnOfflineAuthentication?": "Comment activer l'authentification hors ligne ?",
+      "whatIsRevokeId?": "Qu'est-ce que l'identifiant de révocation ?",
+      "howToViewActivityLog?": "Comment afficher le journal d'activité ?",
+      "detailes": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since."
+    },
+    "AddVcModal": {
+      "header":"Récupérez votre carte",
+      "requestingCredential": "titre de piqûre...",
+      "errors": {
+        "input": {
+          "empty": "L'entrée ne peut pas être vide",
+          "invalidFormat": "Le format d'entrée est incorrect"
+        },
+        "backend": {
+          "invalidOtp": "L'OTP n'est pas valide",
+          "invalidUin": "UIN invalide",
+          "invalidVid": "VID invalide",
+          "missingUin": "UIN n'est pas disponible dans la base de données",
+          "missingVid": "VID n'est pas disponible dans la base de données"
+        }
+      }
+    },
+    "DownloadingVcModal": {
+      "header": "Téléchargement de votre {{vcLabel}}",
+      "bodyText": "Cela peut prendre un certain temps, nous vous informerons lorsque votre {{vcLabel}} aura été téléchargé et sera disponible",
+      "backButton": "Retour à la maison"
+    },
+    "GetIdInputModal": {
+      "header": "Récupérez votre UIN/VID",
+      "applicationIdLabel": "Veuillez saisir votre identifiant de candidature",
+      "applicationId": "Entrez l'identifiant de l'application",
+      "requestingOTP": "Demander OTP...",
+      "qstnMarkToolTip": "L'ID d'application est disponible dans l'accusé de réception reçu après l'inscription.",
+      "getUIN": "Obtenir l'UIN/VID"
+    },
+    "IdInputModal": {
+      "title": "Récupérez votre identifiant",
+      "guideLabel": "Sélectionnez le type d'ID et entrez l'UIN ou le VID fourni par MOSIP de l'ID que vous souhaitez récupérer",
+      "generateVc": "Générer {{vcLabel}}",
+      "downloadID": "ID de téléchargement",
+      "enterId": "Saisissez {{idType}}",
+      "noUIN/VID": "Vous n'avez pas d'UIN/VID ? ",
+      "getItHere": "Obtenez le maintenant",
+      "requestingOTP": "Demander OTP..."
+    },
+    "OtpVerificationModal": {
+      "title": "Vérification OTP",
+      "otpSentMessage": "Nous avons envoyé le code à 6 chiffres à votre numéro de mobile enregistré !",
+      "resendTheCode": "Vous pouvez renvoyer le code dans ",
+      "resendCode": "Renvoyer le code"
+    },
+    "MyVcsTab": {
+      "downloadID": "ID de téléchargement",
+      "bringYourDigitalID": "Apportez votre identification numérique",
+      "generateVcDescription": "Pour télécharger votre {{vcLabel}} appuyez sur Télécharger {{vcLabel}} ci-dessous",
+      "downloadingYourId": "Le téléchargement de votre identifiant peut prendre jusqu'à 5 minutes"
+    },
+    "OnboardingOverlay": {
+      "stepOneTitle": "Partage sécurisé!",
+      "stepOneText": "Partagez et recevez {{vcLabel}} rapidement en utilisant l'appareil photo de votre téléphone pour scanner les codes QR",
+      "stepTwoTitle": "Portefeuille numérique de confiance",
+      "stepTwoText": "Gardez votre identifiant numérique avec vous en tout temps",
+      "stepThreeTitle": "Accès rapide",
+      "stepThreeText": "Une fois générés, les {{vcLabel}} sont stockés en toute sécurité sur votre mobile.",
+      "stepThreeButton": "Commencer",
+      "skip": "Sauter",
+      "next": "Suivant"
+    },
+    "ReceivedVcsTab": {
+      "noReceivedVcsTitle": "Aucun {{vcLabel}} n'est encore disponible",
+      "noReceivedVcsText": "Appuyez sur Demande ci-dessous pour recevoir {{vcLabel}}"
+    },
+    "ViewVcModal": {
+      "title": "Détails de l'identifiant",
+      "cancel": "Annuler",
+      "lock": "Serrure",
+      "unlock": "Ouvrir",
+      "rename": "Renommer",
+      "delete": "Supprimer",
+      "revoke": "Révoquer",
+      "revoking": "Votre portefeuille contient un identifiant avec VID {{vid}}. La révocation supprimera automatiquement la même chose du portefeuille. Êtes-vous sur de vouloir continuer?",
+      "requestingOtp": "Demander OTP...",
+      "editTag": "Renommer",
+      "redirecting": "Redirection...",
+      "success": {
+        "unlocked": "{{vcLabel}} a été déverrouillé avec succès",
+        "locked": "{{vcLabel}} verrouillé avec succès",
+        "revoked": "Le VID {{vid}} a été révoqué. Tout identifiant contenant le même sera automatiquement supprimé du portefeuille"
+      }
+    },
+    "MainLayout": {
+      "home": "Maison",
+      "scan": "Analyse",
+      "request": "Demande",
+      "settings": "SettiParamètresngs"
+    },
+    "PasscodeScreen": {
+      "header": "Définir le code d'accès",
+      "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+      "confirmPasscode": "Confirmer le mot de passe",
+      "enterPasscode": "Entre ton mot de passe"
+    },
+    "AppMetaData": {
+      "header": "À propos d'Inji",
+      "version": "Version",
+      "useBle": "Propulsé par BLE",
+      "useGoogleNearby": "Propulsé par GoogleÀ proximité"
+    },
+    "QrScreen": {
+      "title": "Connexion rapide",
+      "alignQr": "Alignez le code QR dans le cadre pour le scanner",
+      "confirmation": "Confirmation",
+      "checkDomain": "Vérifiez également qu'il y a une icône de cadenas dans la barre d'adresse.",
+      "domainHead": "https://",
+      "selectId": "Sélectionnez l'identifiant",
+      "noBindedVc": "Aucun {{vcLabel}} lié disponible pour vérification",
+      "back": "Retourner",
+      "confirm": "Confirmer",
+      "verify": "Vérifier",
+      "faceAuth": "Authentification faciale",
+      "consent": "Consentement",
+      "loading": "Loading...",
+      "domainWarning": "Veuillez confirmer le domaine du site Web à partir duquel vous scannez le code QR comme ci-dessous",
+      "access": " demande l'accès à",
+      "status": "Statut",
+      "successMessage": "Vous vous êtes connecté avec succès ",
+      "okay": "D'accord",
+      "allow": "Permettre",
+      "cancel": "Annuler",
+      "essentialClaims": "Revendications essentielles",
+      "voluntaryClaims": "Réclamations volontaires",
+      "required": "Requis"
+    },
+    "ReceiveVcScreen": {
+      "header": "{{vcLabel}} détails",
+      "save": "Enregistrer {{vcLabel}}",
+      "verifyAndSave": "Vérifiez et enregistrez",
+      "reject": "Reject",
+      "discard": "Jeter",
+      "goToReceivedVCTab": "Afficher {{vcLabel}} reçu",
+      "errors": {
+        "savingFailed": {
+          "title": "Échec de l'enregistrement de {{vcLabelSingular}}",
+          "message": "Une erreur s'est produite lors de l'enregistrement de {{vcLabelSingular}} dans la boutique."
+        },
+        "diskFullError": {
+          "title": "Échec de l'enregistrement de {{vcLabelPlural}}",
+          "message": "Plus aucun {{vcLabelPlural}} ne peut être reçu ou enregistré car les données d'application sont pleines."
+        }
+      }
+    },
+    "RequestScreen": {
+      "bluetoothDenied": "Veuillez activer Bluetooth pour pouvoir demander {{vcLabel}}",
+      "showQrCode": "Affichez ce code QR pour demander au résident {{vcLabel}}",
+      "incomingVc": "{{vcLabel}} entrant",
+      "request": "Demande",
+      "status": {
+        "accepted": {
+          "title": "Succès!",
+          "message": "{{vcLabel}} a bien été reçu de {{sender}}"
+        },
+        "rejected": {
+          "title": "Avis",
+          "message": "Vous avez supprimé le {{vcLabel}} de {{sender}}"
+        },
+        "disconnected": {
+          "title": "Débranché",
+          "message": "La connexion a été interrompue. Veuillez réessayer."
+        },
+        "waitingConnection": "Attente de connexion...",
+        "exchangingDeviceInfo": {
+          "message": "Échange d'informations sur l'appareil...",
+          "timeoutHint": "L'échange d'informations sur l'appareil prend trop de temps..."
+        },
+        "connected": {
+          "message": "Connecté à l'appareil. En attente de {{vcLabel}}...",
+          "timeoutHint": "Aucune donnée reçue pour le moment. L'appareil émetteur est-il toujours connecté ?"
+        },
+        "offline": {
+          "message": "Veuillez vous connecter à Internet pour activer le mode de partage en ligne"
+        },
+        "bleError": {
+          "title": "Échec du transfert !",
+          "message": "Une erreur s'est produite lors du transfert de {{vcLabel}}. Veuillez réessayer."
+        }
+      },
+      "online": "En ligne",
+      "offline": "Hors ligne",
+      "gotoSettings": "Aller aux paramètres"
+    },
+    "ScanScreen": {
+      "header": "Scanner le code QR",
+      "noShareableVcs": "Aucun {{vcLabel}} partageable n'est disponible.",
+      "sharingVc": "Sharing {{vcLabel}}",
+      "BluetoothStateIos": "Le Bluetooth est désactivé, veuillez l'activer depuis le centre de contrôle",
+      "bluetoothStateAndroid": "Le Bluetooth est désactivé, veuillez l'activer depuis le centre de contrôle",
+      "errors": {
+        "locationDisabled": {
+          "message": "Les services de localisation doivent être activés pour la fonctionnalité de numérisation",
+          "button": "Activer les services de localisation"
+        },
+        "locationDenied": {
+          "message": "Une autorisation de localisation est requise pour la fonctionnalité de numérisation",
+          "button": "Autoriser l'accès à l'emplacement"
+        }
+      },
+      "status": {
+        "inProgress": "En cours",
+        "establishingConnection": "Établir la connexion",
+        "sharingInProgress": "Partage en cours",
+        "connectingTimeout": "Il faut du temps pour établir la connexion. L'autre appareil est-il ouvert pour les connexions ?",
+        "exchangingDeviceInfo": "Échange d'informations sur l'appareil...",
+        "exchangingDeviceInfoTimeout": "L'échange d'informations sur l'appareil prend un certain temps. Vous devrez peut-être vous reconnecter.",
+        "invalid": "Code QR invalide",
+        "offline": "Veuillez vous connecter à Internet pour scanner les codes QR en utilisant le mode de partage en ligne",
+        "sent": "{{ vcLabel }} a été envoyé...",
+        "sentHint": "En attente qu'un destinataire enregistre ou supprime votre {{ vcLabel }}",
+        "sharing": {
+          "title": "Partage...",
+          "hint": "Veuillez attendre que l'appareil récepteur accepte ou refuse le partage.",
+          "timeoutHint": "Le partage prend plus de temps que prévu. Il pourrait y avoir un problème avec la connexion."
+        },
+        "accepted": {
+          "title": "Identifiant partagé avec succès",
+          "message": "Votre {{vcLabel}} a été partagé avec succès avec {{receiver}}",
+          "gotohome": "Aller à la maison"
+        },
+        "rejected": {
+          "title": "Avis",
+          "message": "Votre {{vcLabel}} a été supprimé par {{receiver}}"
+        },
+        "bleError": {
+          "title": "Échec du transfert !",
+          "message": "Something went wrong while transferring {{vcLabel}}. Please try again."
+        }
+      }
+    },
+    "SelectVcOverlay": {
+      "header": "Partager {{vcLabel}}",
+      "chooseVc": "Choisissez le {{vcLabel}} avec lequel vous souhaitez partager",
+      "share": "Partager",
+      "verifyAndShare": "Vérifier l'identité et partager"
+    },
+    "SendVcScreen": {
+      "reasonForSharing": "Raison du partage",
+      "approveRequest": "Approuvez la demande et choisissez {{vcLabel}}",
+      "approveRequestAndVerify": "Approuver la demande et vérifier",
+      "consentToPhotoVerification": "Je consens à ce que ma photo soit prise pour authentification",
+      "pleaseSelectAnId": "Veuillez sélectionner un identifiant",
+      "reject": "Rejeter"
+    },
+    "Credits": {
+      "header": "Crédits et mentions légales",
+      "back": "Dos"
+    },
+    "VerifyIdentityOverlay": {
+      "status": {
+        "verifyingIdentity": "Vérification de l'identité..."
+      },
+      "errors": {
+        "invalidIdentity": {
+          "title": "Impossible de vérifier l'identité",
+          "message": "Visage non reconnu. Veuillez réessayer.",
+          "messageNoRetry": "Visage non reconnu."
+        }
+      }
+    },
+    "WelcomeScreen": {
+      "title": "Solution d'identité open source",
+      "getStarted": "Commencer",
+      "unlockApp": "Déverrouiller l'application"
+    },
+    "SetupLanguage": {
+      "header": "Choisissez la langue",
+      "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+      "save": "Enregistrer la préférence"
+    },
+    "common": {
+      "cancel": "Annuler",
+      "save": "Sauvegarder",
+      "dismiss": "Rejeter",
+      "editLabel": "Modifier {{étiquette}}",
+      "tryAgain": "Essayer à nouveau",
+      "camera": {
+        "errors": {
+          "missingPermission": "Cette application utilise l'appareil photo pour scanner le code QR d'un autre appareil."
+        },
+        "allowAccess": "Autoriser l'accès à la caméra"
+      }
+    }
+  }
+  

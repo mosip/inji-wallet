@@ -61,7 +61,7 @@
     "unPinCard": "Unpin Card",
     "pinCard" : "Pin Card",
     "offlineAuthenticationDisabled!": "Offline authentication disabled!",
-    "offlineAuthDisabledMessage": "Click here to enable this credentials to be used for offline authentication.",
+    "offlineAuthDisabledMessage": "Click here to enable this credential to be used for offline authentication.",
     "viewActivityLog": "View activity log",
     "removeFromWallet": "Remove from wallet",
     "revokeId": "Revoke ID",
@@ -100,11 +100,6 @@
     "received": "received",
     "deleted": "deleted"
   },
-  "HomeScreen": {
-    "myVcsTab": "My\n{{vcLabel}}",
-    "receivedVcsTab": "Received\n{{vcLabel}}",
-    "historyTab": "History"
-  },
   "SettingScreen": {
     "header": "Settings",
     "bioUnlock": "Unlock with Biometrics",
@@ -114,7 +109,12 @@
     "logout": "Logout"
   },
   "HelpScreen": {
-    "header": "Help"
+    "header": "Help",
+    "whatisIdDetails?": "What is ID Details?",
+    "howToTurnOnOfflineAuthentication?": "How to turn on Offline Authentication?",
+    "whatIsRevokeId?": "What is Revoke ID?",
+    "howToViewActivityLog?": "How to view activity log?",
+    "detailes": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since."
   },
   "AddVcModal": {
     "header":"Retrieve your card",
@@ -305,8 +305,8 @@
     "header": "Scan QR Code",
     "noShareableVcs": "No shareable {{vcLabel}} are available.",
     "sharingVc": "Sharing {{vcLabel}}",
-    "BluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
-    "BluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
+    "BluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from control center",
+    "bluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
     "errors": {
       "locationDisabled": {
         "message": "Location services must be enabled for the scanning functionality",
@@ -318,7 +318,9 @@
       }
     },
     "status": {
-      "connecting": "Connecting...",
+      "inProgress": "In Progress",
+      "establishingConnection": "Establishing Connection",
+      "sharingInProgress": "Sharing in Progress",
       "connectingTimeout": "It's taking a while to establish the connection. Is the other device open for connections?",
       "exchangingDeviceInfo": "Exchanging device info...",
       "exchangingDeviceInfoTimeout": "It's taking a while to exchange device info. You may have to reconnect.",
@@ -332,8 +334,9 @@
         "timeoutHint": "It's taking longer than expected to share. There could be a problem with the connection."
       },
       "accepted": {
-        "title": "Success!",
-        "message": "Your {{vcLabel}} has been successfully shared with {{receiver}}"
+        "title": "ID shared successfully",
+        "message": "Your {{vcLabel}} has been successfully shared with {{receiver}}",
+        "gotohome": "Go to home"
       },
       "rejected": {
         "title": "Notice",
@@ -352,11 +355,12 @@
     "verifyAndShare": "Verify Identity & Share"
   },
   "SendVcScreen": {
-    "reasonForSharing": "Reason for sharing (optional)",
-    "acceptRequest": "Accept request and choose {{vcLabel}}",
-    "acceptRequestAndVerify": "Accept request and verify",
-    "reject": "Reject",
-    "consentToPhotoVerification": "I give consent to have my photo taken for authentication"
+    "reasonForSharing": "Reason for sharing",
+    "approveRequest": "Approve request and choose {{vcLabel}}",
+    "approveRequestAndVerify": "Approve request and verify",
+    "consentToPhotoVerification": "I give consent to have my photo taken for authentication",
+    "pleaseSelectAnId": "Please select an ID",
+    "reject": "Reject"
   },
   "Credits": {
     "header": "Credits and legal notices",

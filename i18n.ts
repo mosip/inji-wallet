@@ -8,9 +8,11 @@ import ar from './locales/ara.json';
 import hi from './locales/hin.json';
 import kn from './locales/kan.json';
 import ta from './locales/tam.json';
+import tel from './locales/tel.json';
+import fre from './locales/fre.json';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const resources = { en, fil, ar, hi, kn, ta };
+const resources = { en, fil, ar, hi, kn, ta, tel, fre };
 
 export const SUPPORTED_LANGUAGES = {
   en: 'English',
@@ -19,6 +21,8 @@ export const SUPPORTED_LANGUAGES = {
   hi: 'हिंदी',
   kn: 'ಕನ್ನಡ',
   ta: 'ತಮಿಳು',
+  tel: 'తెలుగు',
+  fre: 'Française',
 };
 
 i18next
