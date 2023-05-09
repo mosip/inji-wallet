@@ -32,14 +32,22 @@ export const HelpScreen: React.FC<HelpScreenProps & MainRouteProps> = (
         }}>
         <ScrollView>
           <Column fill padding="10" align="space-between">
-            <Text style={Theme.TextStyles.header}>What is ID Details?</Text>
-            <Text style={Theme.TextStyles.header}>
-              How to turn on Offline Authentication?
+            <Text margin="7" style={Theme.TextStyles.header}>
+              {t('whatisIdDetails?')}
             </Text>
-            <Text style={Theme.TextStyles.header}>What is Revoke ID?</Text>
-            <Text style={Theme.TextStyles.header}>
-              How to view activity log?
+            <Text style={Theme.TextStyles.helpDetailes}>{t('detailes')}</Text>
+            <Text margin="7" style={Theme.TextStyles.header}>
+              {t('howToTurnOnOfflineAuthentication?')}
             </Text>
+            <Text style={Theme.TextStyles.helpDetailes}>{t('detailes')}</Text>
+            <Text margin="7" style={Theme.TextStyles.header}>
+              {t('whatIsRevokeId?')}
+            </Text>
+            <Text style={Theme.TextStyles.helpDetailes}>{t('detailes')}</Text>
+            <Text margin="7" style={Theme.TextStyles.header}>
+              {t('howToViewActivityLog?')}
+            </Text>
+            <Text style={Theme.TextStyles.helpDetailes}>{t('detailes')}</Text>
           </Column>
         </ScrollView>
       </Modal>

@@ -9,6 +9,7 @@ const Colors = {
   Grey5: '#E0E0E0',
   Grey6: '#F2F2F2',
   Gray40: '#666666',
+  Gray44: '#707070',
   Gray9: '#171717',
   DimGray: '#737373',
   Orange: '#F2811D',
@@ -48,6 +49,7 @@ export const DefaultTheme = {
     popUp: Colors.Green,
     Icon: Colors.Orange,
     GrayIcon: Colors.Grey,
+    helpText: Colors.Gray44,
     borderBottomColor: Colors.Grey6,
     whiteBackgroundColor: Colors.White,
     lightGreyBackgroundColor: Colors.LightGrey,
@@ -410,6 +412,11 @@ export const DefaultTheme = {
       color: Colors.ShadeOfGrey,
       fontFamily: 'Inter_600SemiBold',
       lineHeight: 18,
+    },
+    helpDetailes: {
+      margin: 5,
+      color: Colors.Gray44,
+      fontFamily: 'Inter_600SemiBold',
     },
     error: {
       color: Colors.Red,

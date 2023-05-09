@@ -55,13 +55,11 @@ export const MainLayout: React.FC<RootRouteProps> = () => {
     headerRightContainerStyle: { paddingEnd: 13 },
     headerLeftContainerStyle: { paddingEnd: 13 },
     tabBarShowLabel: true,
+    tabBarActiveTintColor: Theme.Colors.IconBg,
     tabBarLabelStyle: {
       fontSize: 12,
-      color: Theme.Colors.IconBg,
       fontFamily: 'Inter_600SemiBold',
-      margin: 8,
     },
-    tabBarActiveTintColor: Theme.Colors.IconBg,
     tabBarStyle: {
       height: 82,
       paddingHorizontal: 10,
