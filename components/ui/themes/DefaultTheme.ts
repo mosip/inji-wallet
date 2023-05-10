@@ -442,6 +442,9 @@ export const DefaultTheme = {
       fontSize: 11,
       lineHeight: 18,
     },
+    large: {
+      fontSize: 18,
+    },
   }),
   VcItemStyles: StyleSheet.create({
     title: {
@@ -871,6 +874,7 @@ export const DefaultTheme = {
   walletIntro: require('../../../assets/intro-wallet-binding.png'),
   IntroScanner: require('../../../assets/intro-scanner.png'),
   injiSmallLogo: require('../../../assets/inji_small_logo.png'),
+  protectPrivacy: require('../../../assets/phone_mockup_1.png'),
 
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/

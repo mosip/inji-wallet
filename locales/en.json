@@ -174,13 +174,15 @@
     "downloadingYourId": "Downloading your ID, this can take upto 5 minutes"
   },
   "OnboardingOverlay": {
-    "stepOneTitle": "Secure Sharing!",
-    "stepOneText": "Share and receive {{vcLabel}} switfly using your phone camera to scan QR codes",
-    "stepTwoTitle": "Trusted Digital Wallet",
-    "stepTwoText": "Keep your digital credential with you at all times",
-    "stepThreeTitle": "Quick Access",
-    "stepThreeText": "Once generated, {{vcLabel}} are safely stored on your mobile.",
-    "stepThreeButton": "Get Started",
+    "stepOneTitle":"Protect Privacy",
+    "stepOneText":"Lorem Ipsum is simply a standard text of the printing and typesetting industry",
+    "stepTwoTitle": "Secure Sharing!",
+    "stepTwoText": "Share and receive {{vcLabel}} switfly using your phone camera to scan QR codes",
+    "stepThreeTitle": "Trusted Digital Wallet",
+    "stepThreeText": "Keep your digital credential with you at all times",
+    "stepFourTitle": "Quick Access",
+    "stepFourText": "Once generated, {{vcLabel}} are safely stored on your mobile.",
+    "stepFourButton": "Get Started",
     "skip": "Skip",
     "next": "Next"
   },
