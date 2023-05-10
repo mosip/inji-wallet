@@ -1,0 +1,22 @@
+diff --git a/node_modules/react-native-elements/dist/tab/Tab.js b/node_modules/react-native-elements/dist/tab/Tab.js
+index 1204a46..a1af806 100644
+--- a/node_modules/react-native-elements/dist/tab/Tab.js
++++ b/node_modules/react-native-elements/dist/tab/Tab.js
+@@ -10,7 +10,7 @@ var __rest = (this && this.__rest) || function (s, e) {
+     return t;
+ };
+ import React from 'react';
+-import { View, Animated, StyleSheet, } from 'react-native';
++import { View, Animated, StyleSheet, I18nManager } from 'react-native';
+ import Button from '../buttons/Button';
+ import { withTheme } from '../config';
+ import Color from 'color';
+@@ -69,7 +69,7 @@ const TabContainer = (_a) => {
+                 {
+                     translateX: animation.interpolate({
+                         inputRange: [0, 1],
+-                        outputRange: [0, WIDTH],
++                        outputRange: [0, I18nManager.isRTL ? -WIDTH : WIDTH],
+                     }),
+                 },
+             ],
