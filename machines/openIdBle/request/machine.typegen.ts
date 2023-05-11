@@ -75,10 +75,13 @@ export interface Typegen0 {
       | 'done.invoke.request.reviewing.verifyingVp:invocation[0]';
     sendVcReceived: 'STORE_RESPONSE';
     setIncomingVc: 'VC_RECEIVED';
+    setOpenID4VpUri: 'ADV_STARTED';
     setReceiveLogTypeDiscarded: 'CANCEL' | 'REJECT' | 'STORE_ERROR';
     setReceiveLogTypeRegular: 'ACCEPT' | 'STORE_RESPONSE';
     setReceiveLogTypeUnverified: 'FACE_INVALID';
     setReceiveLogTypeVerified: 'FACE_VALID';
+    setReceiverInfo: 'CONNECTED';
+    setSenderInfo: 'CONNECTED';
     setStoringError: 'STORE_ERROR';
     storeVc: 'STORE_RESPONSE';
     switchProtocol: 'SWITCH_PROTOCOL';

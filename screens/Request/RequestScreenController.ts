@@ -1,26 +1,28 @@
 import { useSelector } from '@xstate/react';
 import { useContext, useEffect } from 'react';
 import { selectIsActive, selectIsFocused } from '../../machines/app';
-import {
-  RequestEvents,
-  selectIsBluetoothDenied,
-  selectIsReviewing,
-  selectSenderInfo,
-  selectIsWaitingForConnection,
-  selectIsExchangingDeviceInfo,
-  selectIsWaitingForVc,
-  selectSharingProtocol,
-  selectIsExchangingDeviceInfoTimeout,
-  selectIsWaitingForVcTimeout,
-  selectIsCheckingBluetoothService,
-  selectIsCancelling,
-  selectIsOffline,
-} from '../../machines/request';
 import { selectVcLabel } from '../../machines/settings';
 import { GlobalContext } from '../../shared/GlobalContext';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import { useTranslation } from 'react-i18next';
-import { selectOpenId4VpUri } from '../../machines/openIdBle/request';
+import {
+  selectIsCheckingBluetoothService,
+  selectIsWaitingForConnection,
+  selectIsWaitingForVc,
+  selectIsWaitingForVcTimeout,
+  selectOpenId4VpUri,
+  selectSenderInfo,
+  selectSharingProtocol,
+} from '../../machines/openIdBle/request/selectors';
+import {
+  selectIsBluetoothDenied,
+  selectIsCancelling,
+  selectIsExchangingDeviceInfo,
+  selectIsExchangingDeviceInfoTimeout,
+  selectIsOffline,
+  selectIsReviewing,
+} from '../../machines/openIdBle/commonSelectors';
+import { RequestEvents } from '../../machines/openIdBle/request/machine';
 
 export function useRequestScreen() {
   const { t } = useTranslation('RequestScreen');

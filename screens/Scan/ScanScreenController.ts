@@ -2,19 +2,19 @@ import { useSelector } from '@xstate/react';
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import {
-  ScanEvents,
-  selectIsLocationDisabled,
-  selectIsLocationDenied,
-  selectIsScanning,
-  selectIsShowQrLogin,
-  selectQrLoginRef,
-  selectIsQrLoginStoring,
-} from '../../machines/scan';
 import { selectVcLabel } from '../../machines/settings';
 import { selectShareableVcs } from '../../machines/vc';
 import { GlobalContext } from '../../shared/GlobalContext';
-import { selectIsBluetoothDenied } from '../../machines/openIdBle/scan';
+import {
+  selectIsLocationDenied,
+  selectIsLocationDisabled,
+  selectIsQrLoginStoring,
+  selectIsScanning,
+  selectIsShowQrLogin,
+  selectQrLoginRef,
+} from '../../machines/openIdBle/scan/selectors';
+import { selectIsBluetoothDenied } from '../../machines/openIdBle/commonSelectors';
+import { ScanEvents } from '../../machines/openIdBle/scan/machine';
 
 export function useScanScreen() {
   const { t } = useTranslation('ScanScreen');

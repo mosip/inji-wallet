@@ -1,21 +1,23 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { useSelector } from '@xstate/react';
 import { useContext, useEffect } from 'react';
-import {
-  RequestEvents,
-  selectIsAccepted,
-  selectIsDisconnected,
-  selectIsDone,
-  selectIsRejected,
-  selectIsReviewing,
-  selectIsWaitingForConnection,
-  selectSenderInfo,
-} from '../../machines/request';
 import { selectVcLabel } from '../../machines/settings';
 import { MainBottomTabParamList } from '../../routes/main';
 import { GlobalContext } from '../../shared/GlobalContext';
-import { selectIsHandlingBleError } from '../../machines/openIdBle/scan';
-import { selectIsSavingFailedInViewingVc } from '../../machines/openIdBle/request';
+import {
+  selectIsSavingFailedInViewingVc,
+  selectIsWaitingForConnection,
+  selectSenderInfo,
+} from '../../machines/openIdBle/request/selectors';
+import {
+  selectIsAccepted,
+  selectIsDisconnected,
+  selectIsDone,
+  selectIsHandlingBleError,
+  selectIsRejected,
+  selectIsReviewing,
+} from '../../machines/openIdBle/commonSelectors';
+import { RequestEvents } from '../../machines/openIdBle/request/machine';
 
 type RequestStackParamList = {
   RequestScreen: undefined;

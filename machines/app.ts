@@ -12,16 +12,15 @@ import { createSettingsMachine, settingsMachine } from './settings';
 import { storeMachine } from './store';
 import { createVcMachine, vcMachine } from './vc';
 import { createActivityLogMachine, activityLogMachine } from './activityLog';
-import { createRequestMachine, requestMachine } from './request';
-import * as BLERequest from './openIdBle/request';
-import * as BLEScan from './openIdBle/scan';
-import { createScanMachine, scanMachine } from './scan';
+import {
+  createRequestMachine,
+  requestMachine,
+} from './openIdBle/request/machine';
+import { createScanMachine, scanMachine } from './openIdBle/scan/machine';
 import { createRevokeMachine, revokeVidsMachine } from './revoke';
 
 import { pure, respond } from 'xstate/lib/actions';
 import { AppServices } from '../shared/GlobalContext';
-import { request } from '../shared/request';
-import { isBLEEnabled } from '../lib/smartshare';
 
 const model = createModel(
   {
@@ -197,19 +196,15 @@ export const appMachine = model.createMachine(
             activityLogMachine.id
           );
 
-          serviceRefs.scan = isBLEEnabled
-            ? spawn(
-                BLEScan.createScanMachine(serviceRefs),
-                BLEScan.scanMachine.id
-              )
-            : spawn(createScanMachine(serviceRefs), scanMachine.id);
+          serviceRefs.scan = spawn(
+            createScanMachine(serviceRefs),
+            scanMachine.id
+          );
 
-          serviceRefs.request = isBLEEnabled
-            ? spawn(
-                BLERequest.createRequestMachine(serviceRefs),
-                BLERequest.requestMachine.id
-              )
-            : spawn(createRequestMachine(serviceRefs), requestMachine.id);
+          serviceRefs.request = spawn(
+            createRequestMachine(serviceRefs),
+            requestMachine.id
+          );
 
           serviceRefs.revoke = spawn(
             createRevokeMachine(serviceRefs),
@@ -318,6 +313,7 @@ interface AppInfo {
   deviceId: string;
   deviceName: string;
 }
+
 interface BackendInfo {
   application: {
     name: string;

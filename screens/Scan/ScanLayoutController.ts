@@ -3,32 +3,34 @@ import { useSelector } from '@xstate/react';
 import { useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MessageOverlayProps } from '../../components/MessageOverlay';
-import {
-  ScanEvents,
-  selectIsInvalid,
-  selectIsLocationDisabled,
-  selectIsLocationDenied,
-  selectIsConnecting,
-  selectIsExchangingDeviceInfo,
-  selectIsConnectingTimeout,
-  selectIsExchangingDeviceInfoTimeout,
-  selectIsDone,
-  selectIsReviewing,
-  selectIsScanning,
-  selectIsQrLoginDone,
-  selectIsOffline,
-  selectIsSent,
-  selectIsDisconnected,
-  selectIsRejected,
-  selectIsAccepted,
-  selectIsSendingVc,
-  selectIsSendingVcTimeout,
-  selectReceiverInfo,
-} from '../../machines/scan';
 import { selectVcLabel } from '../../machines/settings';
 import { MainBottomTabParamList } from '../../routes/main';
 import { GlobalContext } from '../../shared/GlobalContext';
-import { selectIsHandlingBleError } from '../../machines/openIdBle/scan';
+import {
+  selectIsConnecting,
+  selectIsConnectingTimeout,
+  selectIsInvalid,
+  selectIsLocationDenied,
+  selectIsLocationDisabled,
+  selectIsQrLoginDone,
+  selectIsScanning,
+  selectIsSendingVc,
+  selectIsSendingVcTimeout,
+  selectIsSent,
+  selectReceiverInfo,
+} from '../../machines/openIdBle/scan/selectors';
+import {
+  selectIsAccepted,
+  selectIsDisconnected,
+  selectIsDone,
+  selectIsExchangingDeviceInfo,
+  selectIsExchangingDeviceInfoTimeout,
+  selectIsHandlingBleError,
+  selectIsOffline,
+  selectIsRejected,
+  selectIsReviewing,
+} from '../../machines/openIdBle/commonSelectors';
+import { ScanEvents } from '../../machines/openIdBle/scan/machine';
 
 type ScanStackParamList = {
   ScanScreen: undefined;
