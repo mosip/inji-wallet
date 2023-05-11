@@ -50,7 +50,6 @@ export interface Typegen0 {
       | 'RESET'
       | 'SCREEN_BLUR'
       | 'SCREEN_FOCUS'
-      | 'SWITCH_PROTOCOL'
       | 'xstate.stop';
     logReceived: 'CANCEL' | 'REJECT' | 'STORE_ERROR' | 'STORE_RESPONSE';
     mergeIncomingVc: 'STORE_RESPONSE';
@@ -84,7 +83,6 @@ export interface Typegen0 {
     setSenderInfo: 'CONNECTED';
     setStoringError: 'STORE_ERROR';
     storeVc: 'STORE_RESPONSE';
-    switchProtocol: 'SWITCH_PROTOCOL';
   };
   'eventsCausingDelays': {
     DESTROY_TIMEOUT: '' | 'DISMISS';
@@ -98,7 +96,7 @@ export interface Typegen0 {
       | 'DISCONNECT'
       | 'DISMISS'
       | 'xstate.after(DESTROY_TIMEOUT)#request.clearingConnection';
-    checkBluetoothService: 'RESET' | 'SCREEN_FOCUS' | 'SWITCH_PROTOCOL';
+    checkBluetoothService: 'RESET' | 'SCREEN_FOCUS';
     disconnect: '' | 'DISMISS' | 'GO_TO_RECEIVED_VC_TAB';
     monitorConnection: 'xstate.init';
     receiveVc: 'CONNECTED';

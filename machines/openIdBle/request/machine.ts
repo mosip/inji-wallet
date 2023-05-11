@@ -20,7 +20,6 @@ import { VerifierDataEvent } from 'react-native-openid4vp-ble/lib/typescript/typ
 // import { verifyPresentation } from '../shared/vcjs/verifyPresentation';
 
 const { verifier } = openIdBLE;
-type SharingProtocol = 'OFFLINE' | 'ONLINE';
 
 const model = createModel(
   {
@@ -31,9 +30,6 @@ const model = createModel(
     storeError: null as Error,
     openId4VpUri: '',
     loggers: [] as EmitterSubscription[],
-    sharingProtocol: (Platform.OS === 'ios'
-      ? 'ONLINE'
-      : 'OFFLINE') as SharingProtocol,
     receiveLogType: '' as ActivityLogType,
   },
   {
@@ -46,12 +42,10 @@ const model = createModel(
       RESET: () => ({}),
       DISMISS: () => ({}),
       VC_RECEIVED: (vc: VC) => ({ vc }),
-      CONNECTION_DESTROYED: () => ({}),
       ADV_STARTED: (openId4VpUri: string) => ({ openId4VpUri }),
       CONNECTED: () => ({}),
       DISCONNECT: () => ({}),
       BLE_ERROR: () => ({}),
-      EXCHANGE_DONE: (senderInfo: DeviceInfo) => ({ senderInfo }),
       SCREEN_FOCUS: () => ({}),
       SCREEN_BLUR: () => ({}),
       BLUETOOTH_ENABLED: () => ({}),
@@ -62,7 +56,6 @@ const model = createModel(
       RECEIVE_DEVICE_INFO: (info: DeviceInfo) => ({ info }),
       RECEIVED_VCS_UPDATED: () => ({}),
       VC_RESPONSE: (response: unknown) => ({ response }),
-      SWITCH_PROTOCOL: (value: boolean) => ({ value }),
       GOTO_SETTINGS: () => ({}),
       FACE_VALID: () => ({}),
       FACE_INVALID: () => ({}),
@@ -100,10 +93,6 @@ export const requestMachine =
         SCREEN_FOCUS: {
           // eslint-disable-next-line sonarjs/no-duplicate-string
           target: '.checkingBluetoothService',
-        },
-        SWITCH_PROTOCOL: {
-          target: '.checkingBluetoothService',
-          actions: 'switchProtocol',
         },
         BLE_ERROR: {
           target: '.handlingBleError',
@@ -441,11 +430,6 @@ export const requestMachine =
             ? BluetoothStateManager.openSettings().catch()
             : Linking.openURL('App-Prefs:Bluetooth');
         },
-
-        switchProtocol: assign({
-          sharingProtocol: (_context, event) =>
-            event.value ? 'ONLINE' : 'OFFLINE',
-        }),
 
         requestReceivedVcs: send(VcEvents.GET_RECEIVED_VCS(), {
           to: (context) => context.serviceRefs.vc,
