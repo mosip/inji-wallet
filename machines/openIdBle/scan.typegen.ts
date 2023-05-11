@@ -88,7 +88,9 @@ export interface Typegen0 {
     setCreatedVp: 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
     setLinkCode: 'SCAN';
     setReason: 'UPDATE_REASON';
+    setReceiverInfo: 'CONNECTED';
     setSelectedVc: 'SELECT_VC';
+    setSenderInfo: 'CONNECTED';
     setShareLogTypeUnverified: 'ACCEPT_REQUEST';
     setShareLogTypeVerified: 'FACE_VALID';
     setUri: 'SCAN';

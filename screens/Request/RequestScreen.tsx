@@ -1,7 +1,7 @@
 import React from 'react';
 import { TFunction, useTranslation } from 'react-i18next';
 import { Switch } from 'react-native-elements';
-import { I18nManager, Platform } from 'react-native';
+import { Platform } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 
 import { Centered, Button, Row, Column, Text } from '../../components/ui';
@@ -55,10 +55,10 @@ const SharingQR: React.FC<RequestScreenProps> = ({ t, controller }) => {
       </Text>
 
       <Centered fill>
-        {controller.connectionParams !== '' ? (
+        {controller.openId4VpUri !== '' ? (
           <QRCode
             size={200}
-            value={controller.connectionParams}
+            value={controller.openId4VpUri}
             backgroundColor={Theme.Colors.QRCodeBackgroundColor}
           />
         ) : null}

@@ -41,7 +41,7 @@ const model = createModel(
     senderInfo: {} as DeviceInfo,
     receiverInfo: {} as DeviceInfo,
     incomingVc: {} as VC,
-    connectionParams: '',
+    openId4VpUri: '',
     loggers: [] as EmitterSubscription[],
     sharingProtocol: (Platform.OS === 'ios'
       ? 'ONLINE'
@@ -521,7 +521,7 @@ export const requestMachine =
         },
 
         generateConnectionParams: assign({
-          connectionParams: (context) => {
+          openId4VpUri: (context) => {
             if (context.sharingProtocol === 'OFFLINE') {
               return IdpassSmartshare.getConnectionParameters();
             } else {
@@ -726,7 +726,7 @@ export const requestMachine =
               console.log('[request] GNM connected!');
 
               const generatedParams = JSON.parse(
-                context.connectionParams
+                context.openId4VpUri
               ) as ConnectionParams;
 
               await onlineSubscribe(
@@ -916,8 +916,8 @@ export function selectSenderInfo(state: State) {
   return state.context.senderInfo;
 }
 
-export function selectConnectionParams(state: State) {
-  return state.context.connectionParams;
+export function selectOpenIdVpUri(state: State) {
+  return state.context.openId4VpUri;
 }
 
 export function selectIncomingVc(state: State) {

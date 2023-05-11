@@ -4,7 +4,6 @@ import { selectIsActive, selectIsFocused } from '../../machines/app';
 import {
   RequestEvents,
   selectIsBluetoothDenied,
-  selectConnectionParams,
   selectIsReviewing,
   selectSenderInfo,
   selectIsWaitingForConnection,
@@ -21,6 +20,7 @@ import { selectVcLabel } from '../../machines/settings';
 import { GlobalContext } from '../../shared/GlobalContext';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import { useTranslation } from 'react-i18next';
+import { selectOpenId4VpUri } from '../../machines/openIdBle/request';
 
 export function useRequestScreen() {
   const { t } = useTranslation('RequestScreen');
@@ -103,7 +103,7 @@ export function useRequestScreen() {
       requestService,
       selectIsCheckingBluetoothService
     ),
-    connectionParams: useSelector(requestService, selectConnectionParams),
+    openId4VpUri: useSelector(requestService, selectOpenId4VpUri),
     senderInfo: useSelector(requestService, selectSenderInfo),
     isReviewing: useSelector(requestService, selectIsReviewing),
     isCancelling: useSelector(requestService, selectIsCancelling),
