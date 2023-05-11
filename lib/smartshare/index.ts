@@ -3,6 +3,7 @@ import OpenIdBle from 'react-native-openid4vp-ble';
 import { OpenIDBLEShare } from 'react-native-openid4vp-ble/lib/typescript/types/bleshare';
 import { IdpassSmartshare as IdpassSmartshareType } from '@idpass/smartshare-react-native/lib/typescript/IdpassSmartshare';
 import { USE_BLE_SHARE } from 'react-native-dotenv';
+
 const { IdpassSmartshare } = SmartshareReactNative;
 const { Openid4vpBle } = OpenIdBle;
 
@@ -19,3 +20,8 @@ if (isBLEEnabled) {
 }
 
 export default ShareLib;
+
+export interface BLEError {
+  message?: string;
+  code?: string;
+}

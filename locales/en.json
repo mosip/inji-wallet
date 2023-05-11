@@ -292,8 +292,9 @@
         "message": "Please connect to the internet to enable Online sharing mode"
       },
       "bleError": {
-        "title": "Failed to transfer!",
-        "message": "Something went wrong while transferring {{vcLabel}}. Please try again."
+        "title": "Failed to transfer",
+        "message": "Something went wrong while transferring {{vcLabel}}. Please try again.",
+        "hint": "Error: {{code}}"
       }
     },
     "online": "Online",
@@ -342,7 +343,8 @@
       },
       "bleError": {
         "title": "Failed to transfer",
-        "message": "Something went wrong while transferring {{vcLabel}}. Please try again."
+        "message": "Something went wrong while transferring {{vcLabel}}. Please try again.",
+        "hint": "Error: {{code}}"
       }
     }
   },

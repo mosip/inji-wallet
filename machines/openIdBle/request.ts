@@ -20,14 +20,15 @@ import { VcEvents } from '../vc';
 import { ConnectionParams } from '@idpass/smartshare-react-native/lib/typescript/IdpassSmartshare';
 import {
   ExchangeReceiverInfoEvent,
-  onlineSubscribe,
-  offlineSubscribe,
-  PairingResponseEvent,
-  onlineSend,
   offlineSend,
+  offlineSubscribe,
+  onlineSend,
+  onlineSubscribe,
+  PairingResponseEvent,
   SendVcResponseEvent,
 } from '../../shared/openIdBLE/smartshare';
 import { log } from 'xstate/lib/actions';
+import { BLEError } from '../../lib/smartshare';
 // import { verifyPresentation } from '../shared/vcjs/verifyPresentation';
 
 const { GoogleNearbyMessages } = SmartshareReactNative;
@@ -41,6 +42,7 @@ const model = createModel(
     receiverInfo: {} as DeviceInfo,
     incomingVc: {} as VC,
     storeError: null as Error,
+    bleError: {} as BLEError,
     connectionParams: '',
     loggers: [] as EmitterSubscription[],
     sharingProtocol: (Platform.OS === 'ios'
@@ -61,7 +63,7 @@ const model = createModel(
       CONNECTION_DESTROYED: () => ({}),
       CONNECTED: () => ({}),
       DISCONNECT: () => ({}),
-      BLE_ERROR: () => ({}),
+      BLE_ERROR: (bleError: BLEError) => ({ bleError }),
       EXCHANGE_DONE: (senderInfo: DeviceInfo) => ({ senderInfo }),
       SCREEN_FOCUS: () => ({}),
       SCREEN_BLUR: () => ({}),
@@ -119,6 +121,7 @@ export const requestMachine =
         },
         BLE_ERROR: {
           target: '.handlingBleError',
+          actions: 'setBleError',
         },
         RESET: {
           target: '.checkingBluetoothService',
@@ -548,6 +551,10 @@ export const requestMachine =
           storeError: (_context, event) => event.error,
         }),
 
+        setBleError: assign({
+          bleError: (_context, event) => event.bleError,
+        }),
+
         registerLoggers: assign({
           loggers: () => {
             if (__DEV__) {
@@ -747,7 +754,10 @@ export const requestMachine =
               }
 
               if (event.type === 'onError') {
-                callback({ type: 'BLE_ERROR' });
+                callback({
+                  type: 'BLE_ERROR',
+                  bleError: { message: event.message, code: event.code },
+                });
                 console.log('BLE Exception: ' + event.message);
               }
             });
@@ -925,6 +935,10 @@ export function selectIsSavingFailedInViewingVc(state: State) {
 
 export function selectStoreError(state: State) {
   return state.context.storeError;
+}
+
+export function selectBleError(state: State) {
+  return state.context.bleError;
 }
 
 export function selectIsRejected(state: State) {
