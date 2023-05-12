@@ -47,14 +47,14 @@
     "address": "ವಿಳಾಸ",
     "reasonForSharing": "ಹಂಚಿಕೆಗೆ ಕಾರಣ",
     "idType": "ಐಡಿಟೈಪ್",
-    "id": "Id",
+    "id": "ಐಡಿ",
     "nationalCard": "ರಾಷ್ಟ್ರೀಯ ಕಾರ್ಡ್",
     "uin": "UIN",
+    "vid": "ವಿಐಡಿ",
     "enableVerification": "ಸಕ್ರಿಯಗೊಳಿಸಿ",
     "profileAuthenticated": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ",
     "offlineAuthDisabledHeader": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಸಕ್ರಿಯಗೊಳಿಸುವಿಕೆ ಬಾಕಿ ಉಳಿದಿದೆ",
     "offlineAuthDisabledMessage": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಬಳಸಲು ಈ ರುಜುವಾತುಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಲು ದಯವಿಟ್ಟು ಕೆಳಗಿನ ಬಟನ್ ಅನ್ನು ಕ್ಲಿಕ್ ಮಾಡಿ.",
-    "vid": "VID",
     "verificationEnabledSuccess": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ",
     "goback": "ಹಿಂದೆ ಹೋಗು",
     "BindingWarning": "ನೀವು ಇನ್ನೊಂದು ವ್ಯಾಲೆಟ್‌ನಲ್ಲಿ ಈ ರುಜುವಾತುಗಳಿಗಾಗಿ ಪರಿಶೀಲನೆಯನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿದ್ದರೆ, ಅದನ್ನು ಅತಿಕ್ರಮಿಸಲಾಗುತ್ತದೆ. ನೀವು ಮುಂದುವರೆಯಲು ಬಯಸುವಿರಾ?",
@@ -63,8 +63,31 @@
     "Alert": "ಎಚ್ಚರಿಕೆ",
     "ok": "ಸರಿ"
   },
+  "HomeScreenKebabPopUp": {
+    "title": "ಇನ್ನಷ್ಟು ಆಯ್ಕೆಗಳು",
+    "unPinCard": "ಅನ್‌ಪಿನ್ ಕಾರ್ಡ್",
+    "pinCard": "ಪಿನ್ ಕಾರ್ಡ್",
+    "offlineAuthenticationDisabled!": "ಆಫ್‌ಲೈನ್ ದೃಢೀಕರಣವನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ!",
+    "offlineAuthDisabledMessage": "ಆಫ್‌ಲೈನ್ ದೃಢೀಕರಣಕ್ಕಾಗಿ ಬಳಸಲು ಈ ರುಜುವಾತುಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ.",
+    "viewActivityLog": "ಚಟುವಟಿಕೆ ಲಾಗ್ ಅನ್ನು ವೀಕ್ಷಿಸಿ",
+    "removeFromWallet": "ಕೈಚೀಲದಿಂದ ತೆಗೆದುಹಾಕಿ",
+    "revokeId": "ID ಹಿಂತೆಗೆದುಕೊಳ್ಳಿ",
+    "revokeMessage": "ಈ ಪ್ರೊಫೈಲ್‌ಗಾಗಿ ವರ್ಚುವಲ್ ಐಡಿಯನ್ನು ಹಿಂತೆಗೆದುಕೊಳ್ಳಿ",
+    "ActivityLog": "ಚಟುವಟಿಕೆ ಲಾಗ್ ಅನ್ನು ವೀಕ್ಷಿಸಿ"
+  },
+  "WalletBinding": {
+    "inProgress": "ಪ್ರಗತಿಯಲ್ಲಿದೆ",
+    "profileAuthenticated": "ಪ್ರೊಫೈಲ್ ಅನ್ನು ದೃಢೀಕರಿಸಲಾಗಿದೆ!"
+  },
+  "BindingVcWarningOverlay": {
+    "alert": "ದಯವಿಟ್ಟು ದ್ರುಡೀಕರಿಸಿ",
+    "BindingWarning": "ನೀವು ಇನ್ನೊಂದು ವ್ಯಾಲೆಟ್‌ನಲ್ಲಿ ಈ ರುಜುವಾತುಗಳಿಗಾಗಿ ಪರಿಶೀಲನೆಯನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿದ್ದರೆ, ಅದನ್ನು ಅತಿಕ್ರಮಿಸಲಾಗುತ್ತದೆ. ನೀವು ಮುಂದುವರೆಯಲು ಬಯಸುವಿರಾ?",
+    "yesConfirm": "ಹೌದು, ನಾನು ದೃಢೀಕರಿಸುತ್ತೇನೆ",
+    "no": "ಸಂ"
+  },
   "AuthScreen": {
     "header": "ಅಪ್ಲಿಕೇಶನ್ ಅನ್‌ಲಾಕ್ ಮಾಡಲು ಬಯೋಮೆಟ್ರಿಕ್ಸ್ ಬಳಸಲು ನೀವು ಬಯಸುವಿರಾ?",
+    "Description": "ಅಪ್ಲಿಕೇಶನ್ ಅನ್‌ಲಾಕ್ ಮಾಡಲು ಬಯೋಮೆಟ್ರಿಕ್ಸ್ ಬಳಸಲು ನೀವು ಬಯಸುವಿರಾ?",
     "useBiometrics": "ಬಯೋಮೆಟ್ರಿಕ್ಸ್ ಬಳಸಿ",
     "usePasscode": "ನಾನು ಪಾಸ್ಕೋಡ್ ಅನ್ನು ಬಳಸುತ್ತೇನೆ",
     "errors": {
@@ -77,12 +100,28 @@
   "BiometricScreen": {
     "unlock": "ಫಿಂಗರ್ಪ್ರಿಂಟ್ನೊಂದಿಗೆ ಅನ್ಲಾಕ್"
   },
-  "HistoryTab": {
-    "noHistory": "ಇನ್ನೂ ಯಾವುದೇ ಇತಿಹಾಸ ಲಭ್ಯವಿಲ್ಲ",
-    "downloaded": "ಡೌನ್‌ಲೋಡ್ ಮಾಡಲಾಗಿದೆ",
-    "shared": "ಹಂಚಿಕೊಂಡಿದೆ",
-    "received": "ಸ್ವೀಕರಿಸಲಾಗಿದೆ",
-    "deleted": "ಅಳಿಸಲಾಗಿದೆ"
+  "HistoryScreen": {
+    "noHistory": "ಇನ್ನೂ ಇತಿಹಾಸವಿಲ್ಲ",
+    "downloaded": "ಸಿಕ್ಕಿತು",
+    "shared": "ಹಂಚಿಕೊಂಡಿದ್ದಾರೆ",
+    "received": "ಸ್ವೀಕರಿಸಿದರು",
+    "deleted": "ತೆಗೆದುಹಾಕಲಾಗಿದೆ"
+  },
+  "SettingScreen": {
+    "header": "ಸಂಯೋಜನೆಗಳು",
+    "bioUnlock": "ಬಯೋಮೆಟ್ರಿಕ್ಸ್‌ನೊಂದಿಗೆ ಅನ್‌ಲಾಕ್ ಮಾಡಿ",
+    "language": "ಭಾಷೆ",
+    "aboutInji": "ಇಂಜಿ ಬಗ್ಗೆ",
+    "injiTourGuide": "ಇಂಜಿ ಪ್ರವಾಸ ಮಾರ್ಗದರ್ಶಿ",
+    "logout": "ಲಾಗ್ ಔಟ್"
+  },
+  "HelpScreen": {
+    "header": "ಸಹಾಯ",
+    "whatisIdDetails?": "ID ವಿವರಗಳು ಎಂದರೇನು?",
+    "howToTurnOnOfflineAuthentication?": "ಆಫ್‌ಲೈನ್ ದೃಢೀಕರಣವನ್ನು ಆನ್ ಮಾಡುವುದು ಹೇಗೆ?",
+    "whatIsRevokeId?": "ಹಿಂತೆಗೆದುಕೊಳ್ಳುವ ಐಡಿ ಎಂದರೇನು?",
+    "howToViewActivityLog?": "ಚಟುವಟಿಕೆಯ ಲಾಗ್ ಅನ್ನು ಹೇಗೆ ವೀಕ್ಷಿಸುವುದು?",
+    "detailes": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since."
   },
   "HomeScreen": {
     "myVcsTab": "ನನ್ನ\n{{vcLabel}}",
@@ -90,6 +129,7 @@
     "historyTab": "ಇತಿಹಾಸ"
   },
   "AddVcModal": {
+    "header": "ನಿಮ್ಮ ಕಾರ್ಡ್ ಹಿಂಪಡೆಯಿರಿ",
     "requestingCredential": "ರುಜುವಾತುಗಳನ್ನು ವಿನಂತಿಸಲಾಗುತ್ತಿದೆ...",
     "errors": {
       "input": {
@@ -131,42 +171,52 @@
     "backButton": "ಬ್ಯಾಕ್ ಹೋಮ್"
   },
   "GetIdInputModal": {
-    "header": "ನಿಮ್ಮ UIN ಪಡೆಯಲು ನಿಮ್ಮ ಅಪ್ಲಿಕೇಶನ್ ID ನಮೂದಿಸಿ",
-    "getUIN": "UIN/VID ಪಡೆಯಿರಿ",
-    "applicationId": "ಅಪ್ಲಿಕೇಶನ್ ID",
+    "header": "ನಿಮ್ಮ ಕಾರ್ಡ್ ಹಿಂಪಡೆಯಿರಿ",
+    "applicationIdLabel": "ದಯವಿಟ್ಟು ನಿಮ್ಮ ಅಪ್ಲಿಕೇಶನ್ ಐಡಿಯನ್ನು ನಮೂದಿಸಿ",
+    "applicationId": "ಅಪ್ಲಿಕೇಶನ್ ID ನಮೂದಿಸಿ",
     "requestingOTP": "OTP ಯನ್ನು ವಿನಂತಿಸಲಾಗುತ್ತಿದೆ...",
-    "qstnMarkToolTip": "ನೋಂದಣಿಯ ನಂತರ ಸ್ವೀಕರಿಸಿದ ಸ್ವೀಕೃತಿಯಲ್ಲಿ ಅಪ್ಲಿಕೇಶನ್ ID ಲಭ್ಯವಿದೆ."
+    "qstnMarkToolTip": "ನೋಂದಣಿಯ ನಂತರ ಸ್ವೀಕರಿಸಿದ ಸ್ವೀಕೃತಿಯಲ್ಲಿ ಅಪ್ಲಿಕೇಶನ್ ID ಲಭ್ಯವಿದೆ.",
+    "getUIN": "UIN/VID ಪಡೆಯಿರಿ"
   },
   "IdInputModal": {
-    "header": "ನಿಮ್ಮ {{vcLabel}} ಅನ್ನು ಡೌನ್‌ಲೋಡ್ ಮಾಡಲು ನಿಮ್ಮ UIN/VID ಅನ್ನು ನಮೂದಿಸಿ",
-    "generateVc": "ನನ್ನ {{vcLabel}} ಅನ್ನು ರಚಿಸಿ",
-    "enterId": "ನಿಮ್ಮ {{idType}}ನಮೂದಿಸಿ",
-    "noUIN/VID": "ನಿಮ್ಮ UIN/VID ಇಲ್ಲವೇ? ಇಲ್ಲಿ ಪಡೆಯಿರಿ",
+    "title": "ನಿಮ್ಮ ಐಡಿಯನ್ನು ಹಿಂಪಡೆಯಿರಿ",
+    "guideLabel": "ID ಪ್ರಕಾರವನ್ನು ಆಯ್ಕೆಮಾಡಿ ಮತ್ತು MOSIP ಒದಗಿಸಿದ UIN ಅಥವಾ ನೀವು ಹಿಂಪಡೆಯಲು ಬಯಸುವ ID ಯ VID ಅನ್ನು ನಮೂದಿಸಿ",
+    "generateVc": "{{vcLabel}} ಅನ್ನು ರಚಿಸಿ",
+    "downloadID": "ಐಡಿ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ",
+    "enterId": "{{idType}} ನಮೂದಿಸಿ",
+    "noUIN/VID": "UIN/VID ಇಲ್ಲವೇ? ",
+    "getItHere": "ಈಗಲೇ ತಾ",
     "requestingOTP": "OTP ಯನ್ನು ವಿನಂತಿಸಲಾಗುತ್ತಿದೆ..."
   },
   "OtpVerificationModal": {
-    "enterOtp": "ನಾವು ನಿಮಗೆ ಕಳುಹಿಸಿದ 6-ಅಂಕಿಯ ಪರಿಶೀಲನೆ ಕೋಡ್ ಅನ್ನು ನಮೂದಿಸಿ",
-    "header": "OTP ಪರಿಶೀಲನೆ"
+    "title": "OTP ಪರಿಶೀಲನೆ",
+    "otpSentMessage": "ನಿಮ್ಮ ನೋಂದಾಯಿತ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಗೆ ನಾವು 6 ಅಂಕಿಗಳ ಕೋಡ್ ಅನ್ನು ಕಳುಹಿಸಿದ್ದೇವೆ!",
+    "resendTheCode": "ನೀವು ಕೋಡ್ ಅನ್ನು ಮತ್ತೆ ಕಳುಹಿಸಬಹುದು ",
+    "resendCode": "ಕೋಡ್ ಅನ್ನು ಮರುಕಳುಹಿಸಿ"
   },
   "MyVcsTab": {
-    "addVcButton": "ಸೇರಿಸಿ {{vcLabel}}",
-    "generateVc": "ನಿಮ್ಮ {{vcLabel}} ಅನ್ನು ರಚಿಸಿ",
-    "generateVcDescription": "ನಿಮ್ಮ \"ಸೇರಿಸಿ {{vcLabel}}\" ಅನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ {{vcLabel}}"
+    "downloadID": "ಕಾರ್ಡ್ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ",
+    "bringYourDigitalID": "ನಿಮ್ಮ ಡಿಜಿಟಲ್ ಐಡಿ ತನ್ನಿ",
+    "generateVcDescription": "ನಿಮ್ಮ {{vcLabel}} ಅನ್ನು ಡೌನ್‌ಲೋಡ್ ಮಾಡಲು ಕೆಳಗಿನ ಡೌನ್‌ಲೋಡ್ {{vcLabel}} ಅನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ",
+    "downloadingYourId": "ನಿಮ್ಮ ಕಾರ್ಡ್ ಅನ್ನು ಡೌನ್‌ಲೋಡ್ ಮಾಡಲಾಗುತ್ತಿದೆ, ಇದು 5 ನಿಮಿಷಗಳವರೆಗೆ ತೆಗೆದುಕೊಳ್ಳಬಹುದು"
   },
   "OnboardingOverlay": {
-    "stepOneTitle": "ಸ್ವಾಗತ!",
-    "stepOneText": "ನಿಮ್ಮ ಡಿಜಿಟಲ್ ರುಜುವಾತುಗಳನ್ನು ಯಾವಾಗಲೂ ನಿಮ್ಮೊಂದಿಗೆ ಇರಿಸಿಕೊಳ್ಳಿ. ಪ್ರಾರಂಭಿಸಲು, ನಿಮ್ಮ ಪ್ರೊಫೈಲ್‌ಗೆ {{vcLabel}} ಸೇರಿಸಿ.",
-    "stepTwoTitle": "{{vcLabel}} ನಿರ್ವಹಣೆ",
-    "stepTwoText": "ಒಮ್ಮೆ ರಚಿಸಿದ ನಂತರ, {{vcLabel}} ಅನ್ನು ನಿಮ್ಮ ಮೊಬೈಲ್‌ನಲ್ಲಿ ಸುರಕ್ಷಿತವಾಗಿ ಸಂಗ್ರಹಿಸಲಾಗುತ್ತದೆ ಮತ್ತು ಯಾವುದೇ ಸಮಯದಲ್ಲಿ ಮರುಹೆಸರಿಸಬಹುದು ಅಥವಾ ಹಂಚಿಕೊಳ್ಳಬಹುದು.",
-    "stepThreeTitle": "ಸುಲಭ ಹಂಚಿಕೆ",
-    "stepThreeText": "QR ಕೋಡ್‌ಗಳನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಲು ನಿಮ್ಮ ಫೋನ್ ಕ್ಯಾಮರಾವನ್ನು ಬಳಸಿಕೊಂಡು {{vcLabel}} switfly ಅನ್ನು ಹಂಚಿಕೊಳ್ಳಿ ಮತ್ತು ಸ್ವೀಕರಿಸಿ.",
-    "stepThreeButton": "ಪ್ರಾರಂಭಿಸಿ ಮತ್ತು {{vcLabel}} ಸೇರಿಸಿ"
+    "stepOneTitle": "ಸುರಕ್ಷಿತ ಹಂಚಿಕೆ!",
+    "stepOneText": "QR ಕೋಡ್‌ಗಳನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಲು ನಿಮ್ಮ ಫೋನ್ ಕ್ಯಾಮರಾವನ್ನು ಬಳಸಿಕೊಂಡು {{vcLabel}} switfly ಅನ್ನು ಹಂಚಿಕೊಳ್ಳಿ ಮತ್ತು ಸ್ವೀಕರಿಸಿ",
+    "stepTwoTitle": "ವಿಶ್ವಾಸಾರ್ಹ ಡಿಜಿಟಲ್ ವಾಲೆಟ್",
+    "stepTwoText": "ನಿಮ್ಮ ಡಿಜಿಟಲ್ ರುಜುವಾತುಗಳನ್ನು ಯಾವಾಗಲೂ ನಿಮ್ಮೊಂದಿಗೆ ಇರಿಸಿಕೊಳ್ಳಿ",
+    "stepThreeTitle": "ತ್ವರಿತ ಪ್ರವೇಶ",
+    "stepThreeText": "ಒಮ್ಮೆ ರಚಿಸಿದ ನಂತರ, {{vcLabel}} ಅನ್ನು ನಿಮ್ಮ ಮೊಬೈಲ್‌ನಲ್ಲಿ ಸುರಕ್ಷಿತವಾಗಿ ಸಂಗ್ರಹಿಸಲಾಗುತ್ತದೆ.",
+    "stepThreeButton": "ಪ್ರಾರಂಭಿಸಿ",
+    "skip": "ಬಿಟ್ಟುಬಿಡಿ",
+    "next": "ಮುಂದೆ"
   },
   "ReceivedVcsTab": {
     "noReceivedVcsTitle": "ಇನ್ನೂ ಯಾವುದೇ {{vcLabel}} ಲಭ್ಯವಿಲ್ಲ",
     "noReceivedVcsText": "{{vcLabel}} ಸ್ವೀಕರಿಸಲು ಕೆಳಗಿನ ವಿನಂತಿಯ ಮೇಲೆ ಟ್ಯಾಪ್ ಮಾಡಿ"
   },
   "ViewVcModal": {
+    "title": "ID ವಿವರಗಳು",
     "cancel": "ರದ್ದುಮಾಡು",
     "lock": "ಲಾಕ್",
     "unlock": "ಅನ್ಲಾಕ್",
@@ -176,11 +226,10 @@
     "revoking": "ನಿಮ್ಮ ವ್ಯಾಲೆಟ್ VID {{vid}} ಜೊತೆಗೆ ರುಜುವಾತುಗಳನ್ನು ಒಳಗೊಂಡಿದೆ. ಇದನ್ನು ಹಿಂತೆಗೆದುಕೊಳ್ಳುವುದರಿಂದ ಅದನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ವ್ಯಾಲೆಟ್‌ನಿಂದ ತೆಗೆದುಹಾಕಲಾಗುತ್ತದೆ. ನೀವು ಮುಂದುವರೆಯಲು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ?",
     "requestingOtp": "ಒಟಿಪಿಯನ್ನು ವಿನಂತಿಸಲಾಗುತ್ತಿದೆ...",
     "editTag": "ಟ್ಯಾಗ್ ಸಂಪಾದಿಸು",
-    "redirecting": "Redirecting...",
-    "inProgress": "ಲೋಡ್ ಆಗುತ್ತಿದೆ...",
+    "redirecting": "ಮರುನಿರ್ದೇಶಿಸಲಾಗುತ್ತಿದೆ...",
     "success": {
       "unlocked": "{{vcLabel}} ಅನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಅನ್‌ಲಾಕ್ ಮಾಡಲಾಗಿದೆ",
-      "locked": "{{vcLabel}} successfully locked",
+      "locked": "{{vcLabel}} ಯಶಸ್ವಿಯಾಗಿ ಲಾಕ್ ಆಗಿದೆ",
       "revoked": "VID {{vid}} ಅನ್ನು ಹಿಂಪಡೆಯಲಾಗಿದೆ. ಅದೇ ಒಳಗೊಂಡಿರುವ ಯಾವುದೇ ರುಜುವಾತುಗಳನ್ನು ವ್ಯಾಲೆಟ್‌ನಿಂದ ಸ್ವಯಂಚಾಲಿತವಾಗಿ ತೆಗೆದುಹಾಕಲಾಗುತ್ತದೆ"
     }
   },
@@ -192,29 +241,15 @@
   },
   "PasscodeScreen": {
     "header": "ನಿಮ್ಮ ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಸುರಕ್ಷಿತವಾಗಿರಿಸಲು ಪಾಸ್ಕೋಡ್ ಅನ್ನು ಹೊಂದಿಸಿ",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
     "confirmPasscode": "ನಿಮ್ಮ ಪಾಸ್ಕೋಡ್ ಅನ್ನು ದೃಢೀಕರಿಸಿ",
     "enterPasscode": "ನಿಮ್ಮ ಪಾಸ್ಕೋಡ್ ನಮೂದಿಸಿ"
   },
   "AppMetaData": {
     "header": "ಇಂಜಿ ಬಗ್ಗೆ",
     "version": "ಆವೃತ್ತಿ",
-    "useBle": "Powered by BLE",
-    "useGoogleNearby": "Powered by GoogleNearby"
-  },
-  "ProfileScreen": {
-    "name": "ಹೆಸರು",
-    "vcLabel": "VC ಲೇಬಲ್",
-    "language": "ಭಾಷೆ",
-    "bioUnlock": "ಬಯೋಮೆಟ್ರಿಕ್‌ಗಳೊಂದಿಗೆ ಅನ್‌ಲಾಕ್ ಮಾಡಿ",
-    "authFactorUnlock": "ಅನ್ಲಾಕ್ ದೃಢೀಕರಣ ಅಂಶ",
-    "AppMetaData": "ಇಂಜಿ ಬಗ್ಗೆ",
-    "logout": "ಲಾಗ್ ಔಟ್",
-    "revokeLabel": "ರದ್ದು VID",
-    "revokeHeader": "ರದ್ದು VID",
-    "revokingVids": "ನೀವು ಹಿಂತೆಗೆದುಕೊಳ್ಳಲಿದ್ದೀರಿ ({{count}}) VIDs.",
-    "revokingVidsAfter": "ಇದರರ್ಥ ನೀವು ಇನ್ನು ಮುಂದೆ ಅವುಗಳಿಗೆ ಲಿಂಕ್ ಮಾಡಲಾದ ಯಾವುದೇ ID ಗಳನ್ನು ಬಳಸಲು ಅಥವಾ ವೀಕ್ಷಿಸಲು ಸಾಧ್ಯವಾಗುವುದಿಲ್ಲ VID(s). \nನೀವು ಮುಂದುವರೆಯಲು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ?",
-    "empty": "ಖಾಲಿ",
-    "revokeSuccessful": "VID ಯಶಸ್ವಿಯಾಗಿ ಹಿಂಪಡೆಯಲಾಗಿದೆ"
+    "useBle": "BLE ನಿಂದ ನಡೆಸಲ್ಪಡುತ್ತಿದೆ",
+    "useGoogleNearby": "GoogleNearby ನಿಂದ ನಡೆಸಲ್ಪಡುತ್ತಿದೆ"
   },
   "QrScreen": {
     "title": "QR ಲಾಗಿನ್",
@@ -234,12 +269,17 @@
     "access": " ಗೆ ಪ್ರವೇಶವನ್ನು ವಿನಂತಿಸುತ್ತಿದೆ",
     "status": "ಸ್ಥಿತಿ",
     "successMessage": "ನೀವು ಯಶಸ್ವಿಯಾಗಿ ಲಾಗ್ ಇನ್ ಆಗಿರುವಿರಿ ",
-    "okay": "ಸರಿ"
+    "okay": "ಸರಿ",
+    "allow": "ಅನುಮತಿಸಿ",
+    "cancel": "ರದ್ದುಮಾಡು",
+    "essentialClaims": "ಅಗತ್ಯ ಹಕ್ಕುಗಳು",
+    "voluntaryClaims": "ಸ್ವಯಂಪ್ರೇರಿತ ಹಕ್ಕುಗಳು",
+    "required": "ಅಗತ್ಯವಿದೆ"
   },
   "ReceiveVcScreen": {
     "header": "{{vcLabel}} ವಿವರಗಳು",
-    "acceptRequest": "ವಿನಂತಿಯನ್ನು ಸ್ವೀಕರಿಸಿ ಮತ್ತು {{vcLabel}} ಸ್ವೀಕರಿಸಿ",
-    "acceptRequestAndVerify": "ವಿನಂತಿಯನ್ನು ಸ್ವೀಕರಿಸಿ ಮತ್ತು ಪರಿಶೀಲಿಸಿ",
+    "save": "{{vcLabel}} ಉಳಿಸಿ",
+    "verifyAndSave": "ಪರಿಶೀಲಿಸಿ ಮತ್ತು ಉಳಿಸಿ",
     "reject": "ತಿರಸ್ಕರಿಸಿ",
     "discard": "ತಿರಸ್ಕರಿಸು",
     "goToReceivedVCTab": "ಸ್ವೀಕರಿಸಿದ {{vcLabel}} ವೀಕ್ಷಿಸಿ",
@@ -280,6 +320,13 @@
       "connected": {
         "message": "ಸಾಧನಕ್ಕೆ ಸಂಪರ್ಕಪಡಿಸಲಾಗಿದೆ. {{vcLabel}} ಗಾಗಿ ನಿರೀಕ್ಷಿಸಲಾಗುತ್ತಿದೆ...",
         "timeoutHint": "ಇನ್ನೂ ಯಾವುದೇ ಡೇಟಾವನ್ನು ಸ್ವೀಕರಿಸಲಾಗಿಲ್ಲ. ಸಾಧನವನ್ನು ಕಳುಹಿಸುವುದು ಇನ್ನೂ ಸಂಪರ್ಕಗೊಂಡಿದೆಯೇ?"
+      },
+      "offline": {
+        "message": "ಆನ್‌ಲೈನ್ ಹಂಚಿಕೆ ಮೋಡ್ ಅನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಲು ದಯವಿಟ್ಟು ಇಂಟರ್ನೆಟ್‌ಗೆ ಸಂಪರ್ಕಪಡಿಸಿ"
+      },
+      "bleError": {
+        "title": "ವರ್ಗಾಯಿಸಲು ವಿಫಲವಾಗಿದೆ!",
+        "message": "{{vcLabel}} ಅನ್ನು ವರ್ಗಾಯಿಸುವಾಗ ಏನೋ ತಪ್ಪಾಗಿದೆ. ದಯವಿಟ್ಟು ಪುನಃ ಪ್ರಯತ್ನಿಸಿ."
       }
     },
     "online": "ಆನ್ಲೈನ್",
@@ -287,13 +334,11 @@
     "gotoSettings": "ಸೆಟ್ಟಿಂಗ್‌ಗಳಿಗೆ ಹೋಗಿ"
   },
   "ScanScreen": {
-    "header": "ಸ್ಕ್ಯಾನ್ ಕ್ಯೂಆರ್ ಕೋಡ್",
+    "header": "QR ಕೋಡ್ ಅನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಿ",
     "noShareableVcs": "ಯಾವುದೇ ಹಂಚಿಕೊಳ್ಳಬಹುದಾದ {{vcLabel}} ಲಭ್ಯವಿಲ್ಲ.",
-    "bluetoothStateAndroid": "ಸ್ಥಳೀಯ ಹಂಚಿಕೆಯನ್ನು ಬೆಂಬಲಿಸಲು ದಯವಿಟ್ಟು ತ್ವರಿತ ಸೆಟ್ಟಿಂಗ್‌ಗಳಿಂದ ಬ್ಲೂಟೂತ್ ಆನ್ ಮಾಡಿ",
-    "bluetoothStateIos": " ಸ್ಥಳೀಯ ಹಂಚಿಕೆಯನ್ನು ಬೆಂಬಲಿಸಲು ದಯವಿಟ್ಟು ನಿಯಂತ್ರಣ ಕೇಂದ್ರದಿಂದ ಬ್ಲೂಟೂತ್ ಆನ್ ಮಾಡಿ",
-    "enableBluetoothMessage":"ದಯವಿಟ್ಟು ಸ್ಥಳೀಯ ಹಂಚಿಕೆಯನ್ನು ಬೆಂಬಲಿಸಲು ಬ್ಲೂಟೂತ್ ಅನುಮತಿಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ",
-    "enableBluetoothButtonText": "ಬ್ಲೂಟೂತ್ ಅನುಮತಿಗಳನ್ನು ಅನುಮತಿಸಿ",
-    "sharingVc": "ಹಂಚಿಕೆ {{vcLabel}}",
+    "sharingVc": "{{vcLabel}} ಹಂಚಿಕೊಳ್ಳಲಾಗುತ್ತಿದೆ",
+    "BluetoothStateIos": "ಬ್ಲೂಟೂತ್ ಆಫ್ ಆಗಿದೆ, ದಯವಿಟ್ಟು ಅದನ್ನು ನಿಯಂತ್ರಣ ಕೇಂದ್ರದಿಂದ ಆನ್ ಮಾಡಿ",
+    "bluetoothStateAndroid": "ಬ್ಲೂಟೂತ್ ಆಫ್ ಆಗಿದೆ, ದಯವಿಟ್ಟು ತ್ವರಿತ ಸೆಟ್ಟಿಂಗ್‌ಗಳ ಮೆನುವಿನಿಂದ ಅದನ್ನು ಆನ್ ಮಾಡಿ",
     "errors": {
       "locationDisabled": {
         "message": "ಸ್ಕ್ಯಾನಿಂಗ್ ಕಾರ್ಯಕ್ಕಾಗಿ ಸ್ಥಳ ಸೇವೆಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಬೇಕು",
@@ -305,11 +350,34 @@
       }
     },
     "status": {
-      "connecting": "ಸಂಪರ್ಕಿಸಲಾಗುತ್ತಿದೆ...",
+      "inProgress": "ಪ್ರಗತಿಯಲ್ಲಿದೆ",
+      "establishingConnection": "ಸಂಪರ್ಕವನ್ನು ಸ್ಥಾಪಿಸುವುದು",
+      "sharingInProgress": "ಹಂಚಿಕೆ ಪ್ರಗತಿಯಲ್ಲಿದೆ",
       "connectingTimeout": "ಸಂಪರ್ಕವನ್ನು ಸ್ಥಾಪಿಸಲು ಸ್ವಲ್ಪ ಸಮಯ ತೆಗೆದುಕೊಳ್ಳುತ್ತದೆ. ಇತರ ಸಾಧನವು ಸಂಪರ್ಕಗಳಿಗಾಗಿ ತೆರೆದಿದೆಯೇ?",
       "exchangingDeviceInfo": "ಸಾಧನದ ಮಾಹಿತಿಯನ್ನು ವಿನಿಮಯ ಮಾಡಿಕೊಳ್ಳಲಾಗುತ್ತಿದೆ...",
       "exchangingDeviceInfoTimeout": "ಸಾಧನದ ಮಾಹಿತಿಯನ್ನು ವಿನಿಮಯ ಮಾಡಿಕೊಳ್ಳಲು ಸ್ವಲ್ಪ ಸಮಯ ತೆಗೆದುಕೊಳ್ಳುತ್ತಿದೆ. ನೀವು ಮರುಸಂಪರ್ಕಿಸಬೇಕಾಗಬಹುದು.",
-      "invalid": "ಅಮಾನ್ಯ QR ಕೋಡ್"
+      "invalid": "ಅಮಾನ್ಯವಾದ QR ಕೋಡ್",
+      "offline": "ಆನ್‌ಲೈನ್ ಹಂಚಿಕೆ ಮೋಡ್ ಅನ್ನು ಬಳಸಿಕೊಂಡು QR ಕೋಡ್‌ಗಳನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಲು ದಯವಿಟ್ಟು ಇಂಟರ್ನೆಟ್‌ಗೆ ಸಂಪರ್ಕಪಡಿಸಿ",
+      "sent": "{{ vcLabel }} ಅನ್ನು ಕಳುಹಿಸಲಾಗಿದೆ...",
+      "sentHint": "ನಿಮ್ಮ {{ vcLabel }} ಅನ್ನು ಉಳಿಸಲು ಅಥವಾ ತ್ಯಜಿಸಲು ರಿಸೀವರ್‌ಗಾಗಿ ನಿರೀಕ್ಷಿಸಲಾಗುತ್ತಿದೆ",
+      "sharing": {
+        "title": "ಹಂಚಿಕೆ...",
+        "hint": "ಸ್ವೀಕರಿಸುವ ಸಾಧನವು ಹಂಚಿಕೆಯನ್ನು ಸ್ವೀಕರಿಸಲು ಅಥವಾ ತಿರಸ್ಕರಿಸಲು ದಯವಿಟ್ಟು ನಿರೀಕ್ಷಿಸಿ.",
+        "timeoutHint": "ಹಂಚಿಕೊಳ್ಳಲು ನಿರೀಕ್ಷಿಸಿದ್ದಕ್ಕಿಂತ ಹೆಚ್ಚು ಸಮಯ ತೆಗೆದುಕೊಳ್ಳುತ್ತಿದೆ. ಸಂಪರ್ಕದಲ್ಲಿ ಸಮಸ್ಯೆ ಇರಬಹುದು."
+      },
+      "accepted": {
+        "title": "ಐಡಿಯನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಹಂಚಿಕೊಳ್ಳಲಾಗಿದೆ",
+        "message": "ನಿಮ್ಮ {{vcLabel}} ಅನ್ನು {{ರಿಸೀವರ್}} ಜೊತೆಗೆ ಯಶಸ್ವಿಯಾಗಿ ಹಂಚಿಕೊಳ್ಳಲಾಗಿದೆ",
+        "gotohome": "ಮನೆಗೆ ಹೋಗು"
+      },
+      "rejected": {
+        "title": "ಗಮನಿಸಿ",
+        "message": "ನಿಮ್ಮ {{vcLabel}} ಅನ್ನು {{ರಿಸೀವರ್}} ತಿರಸ್ಕರಿಸಿದ್ದಾರೆ"
+      },
+      "bleError": {
+        "title": "ವರ್ಗಾಯಿಸಲು ವಿಫಲವಾಗಿದೆ!",
+        "message": "{{vcLabel}} ಅನ್ನು ವರ್ಗಾಯಿಸುವಾಗ ಏನೋ ತಪ್ಪಾಗಿದೆ. ದಯವಿಟ್ಟು ಪುನಃ ಪ್ರಯತ್ನಿಸಿ."
+      }
     }
   },
   "SelectVcOverlay": {
@@ -323,6 +391,8 @@
     "acceptRequest": "ಹಂಚಿಕೊಳ್ಳಿ",
     "acceptRequestAndVerify": "ಸೆಲ್ಫಿಯೊಂದಿಗೆ ಹಂಚಿಕೊಳ್ಳಿ",
     "reject": "ತಿರಸ್ಕರಿಸಿ",
+    "consentToPhotoVerification": "ದೃಢೀಕರಣಕ್ಕಾಗಿ ನನ್ನ ಫೋಟೋ ತೆಗೆಯಲು ನಾನು ಒಪ್ಪಿಗೆ ನೀಡುತ್ತೇನೆ",
+    "pleaseSelectAnId": "ದಯವಿಟ್ಟು ಐಡಿ ಆಯ್ಕೆಮಾಡಿ",
     "status": {
       "sharing": {
         "title": "ಹಂಚಿಕೆ...",
@@ -335,10 +405,9 @@
       },
       "rejected": {
         "title": "ಗಮನಿಸಿ",
-        "message": "Your {{vcLabel}}ನ್ನು {{receiver}} ತಿರಸ್ಕರಿಸಿದ್ದಾರೆ "
+        "message": "ನಿಮ್ಮ {{vcLabel}}ನ್ನು {{receiver}} ತಿರಸ್ಕರಿಸಿದ್ದಾರೆ "
       }
-    },
-    "consentToPhotoVerification": "ದೃಢೀಕರಣಕ್ಕಾಗಿ ನನ್ನ ಫೋಟೋ ತೆಗೆಯಲು ನಾನು ಒಪ್ಪಿಗೆ ನೀಡುತ್ತೇನೆ"
+    }
   },
   "VerifyIdentityOverlay": {
     "status": {

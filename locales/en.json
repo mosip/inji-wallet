@@ -43,11 +43,11 @@
     "gender": "Gender",
     "dateOfBirth": "Date of birth",
     "phoneNumber": "Phone number",
-    "email": "Email",
+    "email": "E-mail",
     "address": "Address",
     "reasonForSharing": "Reason for sharing",
     "idType": "ID type",
-    "id": "Id",
+    "id": "ID",
     "nationalCard": "National Card",
     "uin": "UIN",
     "vid": "VID",
@@ -163,10 +163,10 @@
     "resendCode": "Resend Code"
   },
   "MyVcsTab": {
-    "downloadID": "Download ID",
+    "downloadID": "Download Card",
     "bringYourDigitalID": "Bring Your Digital ID",
     "generateVcDescription": "To download your {{vcLabel}} tap Download {{vcLabel}} below",
-    "downloadingYourId": "Downloading your ID, this can take upto 5 minutes"
+    "downloadingYourId": "Downloading your card, this can take upto 5 minutes"
   },
   "OnboardingOverlay": {
     "stepOneTitle": "Secure Sharing!",
@@ -361,10 +361,6 @@
     "consentToPhotoVerification": "I give consent to have my photo taken for authentication",
     "pleaseSelectAnId": "Please select an ID",
     "reject": "Reject"
-  },
-  "Credits": {
-    "header": "Credits and legal notices",
-    "back": "Back"
   },
   "VerifyIdentityOverlay": {
     "status": {

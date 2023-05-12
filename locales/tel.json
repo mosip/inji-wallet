@@ -1,0 +1,410 @@
+{
+    "ActivityLogText": {
+      "VC_SHARED": "పంపారు",
+      "VC_RECEIVED": "అందుకుంది",
+      "VC_RECEIVED_NOT_SAVED": "పొందింది సేవ్ కాలేదు",
+      "VC_DELETED": "తొలగించబడింది",
+      "VC_DOWNLOADED": "డౌన్‌లోడ్ చేయబడింది",
+      "VC_REVOKED": "రద్దు చేసింది",
+      "VC_SHARED_WITH_VERIFICATION_CONSENT": "పంచుకున్నారు. ఉనికిని ధృవీకరించడానికి సమ్మతి ఇవ్వబడింది",
+      "VC_RECEIVED_WITH_PRESENCE_VERIFIED": "అందుకుంది. ఉనికిని ధృవీకరించారు",
+      "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "అందుకుంది. ఉనికిని ధృవీకరించడం విఫలమైంది",
+      "PRESENCE_VERIFIED_AND_VC_SHARED": "ధృవీకరించబడింది మరియు భాగస్వామ్యం చేయబడింది",
+      "PRESENCE_VERIFICATION_FAILED": "ధృవీకరణ విఫలమైంది",
+      "QRLOGIN_SUCCESFULL": "QR లాగిన్ విజయవంతమైంది",
+      "WALLET_BINDING_SUCCESSFULL": "యాక్టివేషన్ విజయవంతమైంది",
+      "WALLET_BINDING_FAILURE": "యాక్టివేషన్ విఫలమైంది"
+    },
+    "DeviceInfoList": {
+      "requestedBy": "ద్వారా అభ్యర్థించబడింది",
+      "sentBy": "ద్వారా పంపబడింది",
+      "deviceRefNumber": "పరికర సూచన సంఖ్య",
+      "name": "పేరు"
+    },
+    "FaceScanner": {},
+    "OIDcAuth": {
+      "title": "OIDC ప్రమాణీకరణ",
+      "text": "OIDC ప్రొవైడర్ UIతో భర్తీ చేయబడుతుంది",
+      "verify": "ధృవీకరించండి"
+    },
+    "PasscodeVerify": {
+      "passcodeMismatchError": "పాస్‌కోడ్ సరిపోలలేదు."
+    },
+    "QrScanner": {
+      "missingPermissionText": "ఈ యాప్ మరొక పరికరం యొక్క QR కోడ్‌ని స్కాన్ చేయడానికి కెమెరాను ఉపయోగిస్తుంది.",
+      "allowCameraButton": "కెమెరాకు యాక్సెస్‌ను అనుమతించండి"
+    },
+    "VcDetails": {
+      "generatedOn": "న రూపొందించబడింది",
+      "status": "స్థితి",
+      "valid": "చెల్లుబాటు అవుతుంది",
+      "photo": "ఫోటో",
+      "fullName": "పూర్తి పేరు",
+      "gender": "లింగం",
+      "dateOfBirth": "పుట్టిన తేది",
+      "phoneNumber": "ఫోను నంబరు",
+      "email": "ఇ-మెయిల్",
+      "address": "చిరునామా",
+      "reasonForSharing": "భాగస్వామ్యం చేయడానికి కారణం",
+      "idType": "ID రకం",
+      "id": "ID",
+      "nationalCard": "జాతీయ కార్డ్",
+      "uin": "UIN",
+      "vid": "VID",
+      "enableVerification": "Activate",
+      "profileAuthenticated": "ప్రొఫైల్ ప్రమాణీకరించబడింది!",
+      "offlineAuthDisabledHeader": "ఆన్‌లైన్ లాగిన్ కోసం యాక్టివేషన్ పెండింగ్‌లో ఉంది",
+      "offlineAuthDisabledMessage": "దయచేసి ఆన్‌లైన్ లాగిన్ కోసం ఉపయోగించడానికి ఈ ఆధారాలను సక్రియం చేయడానికి దిగువ బటన్‌ను క్లిక్ చేయండి."
+    },
+    "HomeScreenKebabPopUp": {
+      "title": "మరిన్ని ఎంపికలు",
+      "unPinCard": "కార్డ్‌ని అన్‌పిన్ చేయండి",
+      "pinCard" : "పిన్ కార్డ్",
+      "offlineAuthenticationDisabled!": "ఆఫ్‌లైన్ ప్రమాణీకరణ నిలిపివేయబడింది!",
+      "offlineAuthDisabledMessage": "ఆఫ్‌లైన్ ప్రమాణీకరణ కోసం ఈ ఆధారాలను ప్రారంభించడానికి ఇక్కడ క్లిక్ చేయండి.",
+      "viewActivityLog": "కార్యాచరణ లాగ్‌ను వీక్షించండి",
+      "removeFromWallet": "వాలెట్ నుండి తీసివేయండి",
+      "revokeId": "IDని రద్దు చేయండి",
+      "revokeMessage": "ఈ ప్రొఫైల్ కోసం వర్చువల్ IDని ఉపసంహరించుకోండి",
+      "ActivityLog":"కార్యాచరణ లాగ్‌ను వీక్షించండి"
+    },
+    "WalletBinding": {
+      "inProgress" : "పురోగతిలో ఉంది",
+      "profileAuthenticated": "ప్రొఫైల్ ప్రమాణీకరించబడింది!"
+    },
+    "BindingVcWarningOverlay": {
+      "alert": "నిర్ధారించండి",
+      "BindingWarning": "మీరు మరొక వాలెట్‌లో ఈ ఆధారాల కోసం ధృవీకరణను ప్రారంభించినట్లయితే, అది భర్తీ చేయబడుతుంది. మీరు కొనసాగించాలనుకుంటున్నారా ?",
+      "yesConfirm": "అవును, నేను ధృవీకరిస్తున్నాను",
+      "no" : "వద్దు"
+    },
+    "AuthScreen": {
+      "header": "యాప్ అన్‌లాక్ పద్ధతిని ఎంచుకోండి",
+      "Description": "మీరు అప్లికేషన్‌ను అన్‌లాక్ చేయడానికి బయోమెట్రిక్‌లను ఉపయోగించాలనుకుంటున్నారా ?",
+      "useBiometrics": "బయోమెట్రిక్స్ ఉపయోగించండి",
+      "usePasscode": "పాస్‌కోడ్‌ని ఉపయోగించండి",
+      "errors": {
+        "unavailable": "పరికరం బయోమెట్రిక్‌లకు మద్దతు ఇవ్వదు",
+        "unenrolled": "బయోమెట్రిక్‌లను ఉపయోగించడానికి, దయచేసి మీ పరికర సెట్టింగ్‌లలో మీ బయోమెట్రిక్‌లను నమోదు చేయండి",
+        "failed": "బయోమెట్రిక్స్‌తో ప్రామాణీకరించడంలో విఫలమైంది",
+        "generic": "బయోమెట్రిక్స్ ప్రమాణీకరణలో లోపం ఉన్నట్లు కనిపిస్తోంది"
+      }
+    },
+    "BiometricScreen": {
+      "unlock": "బయోమెట్రిక్స్‌తో అన్‌లాక్ చేయండి"
+    },
+    "HistoryScreen": {
+      "noHistory": "చరిత్ర ఇంకా అందుబాటులో లేదు",
+      "downloaded": "డౌన్‌లోడ్ చేయబడింది",
+      "shared": "పంచుకున్నారు",
+      "received": "అందుకుంది",
+      "deleted": "తొలగించబడింది"
+    },
+    "HomeScreen": {
+      "myVcsTab": "My\n{{vcLabel}}",
+      "receivedVcsTab": "Received\n{{vcLabel}}",
+      "historyTab": "History"
+    },
+    "SettingScreen": {
+      "header": "సెట్టింగులు",
+      "bioUnlock": "బయోమెట్రిక్స్‌తో అన్‌లాక్ చేయండి",
+      "language": "భాష",
+      "aboutInji": "ఇంజి గురించి",
+      "injiTourGuide": "ఇంజి టూర్ గైడ్",
+      "logout": "లాగ్అవుట్"
+    },
+    "HelpScreen": {
+      "header": "సహాయం",
+      "whatisIdDetails?": "ID వివరాలు ఏమిటి?",
+      "howToTurnOnOfflineAuthentication?": "ఆఫ్‌లైన్ ప్రమాణీకరణను ఎలా ఆన్ చేయాలి?",
+      "whatIsRevokeId?": "ఉపసంహరణ ID అంటే ఏమిటి?",
+      "howToViewActivityLog?": "కార్యాచరణ లాగ్‌ను ఎలా చూడాలి?",
+      "detailes": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since."
+    },
+    "AddVcModal": {
+      "header":"మీ కార్డును తిరిగి పొందండి",
+      "requestingCredential": "ఆధారాలను అభ్యర్థిస్తోంది...",
+      "errors": {
+        "input": {
+          "empty": "ఇన్‌పుట్ ఖాళీగా ఉండకూడదు",
+          "invalidFormat": "ఇన్‌పుట్ ఫార్మాట్ తప్పు"
+        },
+        "backend": {
+          "invalidOtp": "OTP చెల్లదు",
+          "invalidUin": "UIN చెల్లదు",
+          "invalidVid": "VID invalid",
+          "missingUin": "డేటాబేస్లో UIN అందుబాటులో లేదు",
+          "missingVid": "డేటాబేస్‌లో VID అందుబాటులో లేదు"
+        }
+      }
+    },
+    "DownloadingVcModal": {
+      "header": "మీ {{vcLabel}}ని డౌన్‌లోడ్ చేస్తోంది",
+      "bodyText": "దీనికి కొంత సమయం పట్టవచ్చు, మీ {{vcLabel}} డౌన్‌లోడ్ చేయబడి, అందుబాటులో ఉన్నప్పుడు మేము మీకు తెలియజేస్తాము",
+      "backButton": "తిరిగి హోమ్"
+    },
+    "GetIdInputModal": {
+      "header": "మీ UIN/VIDని తిరిగి పొందండి",
+      "applicationIdLabel": "దయచేసి మీ అప్లికేషన్ IDని నమోదు చేయండి",
+      "applicationId": "అప్లికేషన్ IDని నమోదు చేయండి",
+      "requestingOTP": "OTPని అభ్యర్థిస్తోంది...",
+      "qstnMarkToolTip": "నమోదు చేసిన తర్వాత అందుకున్న రసీదులో అప్లికేషన్ ID అందుబాటులో ఉంటుంది..",
+      "getUIN": "UIN/VIDని పొందండి"
+    },
+    "IdInputModal": {
+      "title": "మీ IDని తిరిగి పొందండి",
+      "guideLabel": "ID రకాన్ని ఎంచుకుని, MOSIP అందించిన UIN లేదా మీరు తిరిగి పొందాలనుకుంటున్న ID యొక్క VIDని నమోదు చేయండి",
+      "generateVc": "{{vcLabel}}ని రూపొందించు",
+      "downloadID": "IDని డౌన్‌లోడ్ చేయండి",
+      "enterId": "{{idType}}ని నమోదు చేయండి",
+      "noUIN/VID": "UIN/VID లేదా? ",
+      "getItHere": "ఇప్పుడు దాన్ని తీసుకురా",
+      "requestingOTP": "OTPని అభ్యర్థిస్తోంది..."
+    },
+    "OtpVerificationModal": {
+      "title": "OTP ధృవీకరణ",
+      "otpSentMessage": "మేము మీ రిజిస్టర్డ్ మొబైల్ నంబర్‌కి 6 అంకెల కోడ్‌ని పంపాము!",
+      "resendTheCode": "మీరు కోడ్‌ని మళ్లీ పంపవచ్చు ",
+      "resendCode": "మళ్ళీ పంపు కోడ్"
+    },
+    "MyVcsTab": {
+      "downloadID": "IDని డౌన్‌లోడ్ చేయండి",
+      "bringYourDigitalID": "మీ డిజిటల్ IDని తీసుకురండి",
+      "generateVcDescription": "మీ {{vcLabel}}ని డౌన్‌లోడ్ చేయడానికి దిగువన డౌన్‌లోడ్ {{vcLabel}}ని నొక్కండి",
+      "downloadingYourId": "మీ IDని డౌన్‌లోడ్ చేయడానికి 5 నిమిషాల వరకు పట్టవచ్చు"
+    },
+    "OnboardingOverlay": {
+      "stepOneTitle": "సురక్షిత భాగస్వామ్యం!",
+      "stepOneText": "QR కోడ్‌లను స్కాన్ చేయడానికి మీ ఫోన్ కెమెరాను ఉపయోగించి {{vcLabel}} switflyని భాగస్వామ్యం చేయండి మరియు స్వీకరించండి",
+      "stepTwoTitle": "విశ్వసనీయ డిజిటల్ వాలెట్",
+      "stepTwoText": "మీ డిజిటల్ ఆధారాలను ఎల్లవేళలా మీతో ఉంచుకోండి",
+      "stepThreeTitle": "త్వరిత యాక్సెస్",
+      "stepThreeText": "ఒకసారి రూపొందించిన తర్వాత, {{vcLabel}} మీ మొబైల్‌లో సురక్షితంగా నిల్వ చేయబడతాయి.",
+      "stepThreeButton": "ప్రారంభించడానికి",
+      "skip": "దాటవేయి",
+      "next": "తరువాత"
+    },
+    "ReceivedVcsTab": {
+      "noReceivedVcsTitle": "ఇంకా {{vcLabel}} అందుబాటులో లేదు",
+      "noReceivedVcsText": "{{vcLabel}}ని స్వీకరించడానికి దిగువన ఉన్న అభ్యర్థనపై నొక్కండి"
+    },
+    "ViewVcModal": {
+      "title": "ID వివరాలు",
+      "cancel": "రద్దు చేయండి",
+      "lock": "తాళం వేయండి",
+      "unlock": "అన్‌లాక్ చేయండి",
+      "rename": "పేరు మార్చండి",
+      "delete": "తొలగించు",
+      "revoke": "ఉపసంహరించుకోండి",
+      "revoking": "మీ వాలెట్ VID {{vid}}తో ఆధారాలను కలిగి ఉంది. దీన్ని ఉపసంహరించుకోవడం వలన వాలెట్ నుండి అదే స్వయంచాలకంగా తీసివేయబడుతుంది. మీరు ఖచ్చితంగా కొనసాగించాలనుకుంటున్నారా?",
+      "requestingOtp": "OTPని అభ్యర్థిస్తోంది...",
+      "editTag": "పేరు మార్చండి",
+      "redirecting": "దారి మళ్లిస్తోంది...",
+      "success": {
+        "unlocked": "{{vcLabel}} విజయవంతంగా అన్‌లాక్ చేయబడింది",
+        "locked": "{{vcLabel}} విజయవంతంగా లాక్ చేయబడింది",
+        "revoked": "VID {{vid}} ఉపసంహరించబడింది. అదే కలిగి ఉన్న ఏదైనా ఆధారాలు వాలెట్ నుండి స్వయంచాలకంగా తీసివేయబడతాయి"
+      }
+    },
+    "MainLayout": {
+      "home": "హోమ్",
+      "scan": "స్కాన్ చేయండి",
+      "request": "అభ్యర్థన",
+      "settings": "సెట్టింగులు"
+    },
+    "PasscodeScreen": {
+      "header": "పాస్‌కోడ్‌ని సెట్ చేయండి",
+      "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+      "confirmPasscode": "పాస్‌కోడ్‌ని నిర్ధారించండి",
+      "enterPasscode": "మీ పాస్‌కోడ్‌ని నమోదు చేయండి"
+    },
+    "AppMetaData": {
+      "header": "ఇంజి గురించి",
+      "version": "సంస్కరణ",
+      "useBle": "BLE ద్వారా ఆధారితం",
+      "useGoogleNearby": "GoogleNearby ద్వారా ఆధారితం"
+    },
+    "QrScreen": {
+      "title": "QR లాగిన్",
+      "alignQr": "స్కాన్ చేయడానికి ఫ్రేమ్‌లోని QR కోడ్‌ని సమలేఖనం చేయండి",
+      "confirmation": "స్థిరపరచుట",
+      "checkDomain": "అలాగే, అడ్రస్ బార్‌లో లాక్ ఐకాన్ ఉందో లేదో తనిఖీ చేయండి.",
+      "domainHead": "https://",
+      "selectId": "IDని ఎంచుకోండి",
+      "noBindedVc": "ధృవీకరించడానికి బైండెడ్ {{vcLabel}} ఏదీ అందుబాటులో లేదు",
+      "back": "వెనక్కి వెళ్ళు",
+      "confirm": "నిర్ధారించండి",
+      "verify": "ధృవీకరించండి",
+      "faceAuth": "ముఖం ప్రమాణీకరణ",
+      "consent": "సమ్మతి",
+      "loading": "లోడ్...",
+      "domainWarning": "దయచేసి మీరు QR కోడ్‌ని స్కాన్ చేస్తున్న వెబ్‌సైట్ డొమైన్ దిగువన ఉన్నట్లు నిర్ధారించండి",
+      "access": " యాక్సెస్‌ని అభ్యర్థిస్తోంది",
+      "status": "స్థితి",
+      "successMessage": "మీరు విజయవంతంగా లాగిన్ చేసారు ",
+      "okay": "సరే",
+      "allow": "అనుమతించు",
+      "cancel": "రద్దు చేయండి",
+      "essentialClaims": "ముఖ్యమైన దావాలు",
+      "voluntaryClaims": "స్వచ్ఛంద దావాలు",
+      "required": "అవసరం"
+    },
+    "ReceiveVcScreen": {
+      "header": "{{vcLabel}} వివరాలు",
+      "save": "{{vcLabel}}ని సేవ్ చేయండి",
+      "verifyAndSave": "ధృవీకరించండి మరియు సేవ్ చేయండి",
+      "reject": "తిరస్కరించు",
+      "discard": "విస్మరించండి",
+      "goToReceivedVCTab": "స్వీకరించిన {{vcLabel}}ని వీక్షించండి",
+      "errors": {
+        "savingFailed": {
+          "title": "{{vcLabelSingular}}ని సేవ్ చేయడంలో విఫలమైంది",
+          "message": "{{vcLabelSingular}}ని స్టోర్‌లో సేవ్ చేస్తున్నప్పుడు ఏదో తప్పు జరిగింది."
+        },
+        "diskFullError": {
+          "title": "{{vcLabelPlural}}ని సేవ్ చేయడంలో విఫలమైంది",
+          "message": "యాప్ డేటా నిండినందున ఇకపై {{vcLabelPlural}} స్వీకరించబడదు లేదా సేవ్ చేయబడదు."
+        }
+      }
+    },
+    "RequestScreen": {
+      "bluetoothDenied": "దయచేసి {{vcLabel}}ని అభ్యర్థించడానికి బ్లూటూత్‌ని ప్రారంభించండి",
+      "showQrCode": "నివాసిని అభ్యర్థించడానికి ఈ QR కోడ్‌ని ప్రదర్శించు {{vcLabel}}",
+      "incomingVc": "ఇన్‌కమింగ్ {{vcLabel}}",
+      "request": "అభ్యర్థన",
+      "status": {
+        "accepted": {
+          "title": "విజయం!",
+          "message": "{{vcLabel}} విజయవంతంగా {{sender}} నుండి స్వీకరించబడింది"
+        },
+        "rejected": {
+          "title": "సమాచారము",
+          "message": "మీరు {{sender}} యొక్క {{vcLabel}}ని విస్మరించారు"
+        },
+        "disconnected": {
+          "title": "డిస్‌కనెక్ట్ చేయబడింది",
+          "message": "కనెక్షన్ అంతరాయం కలిగింది. దయచేసి మళ్లీ ప్రయత్నించండి."
+        },
+        "waitingConnection": "కనెక్షన్ కోసం వేచి ఉంది...",
+        "exchangingDeviceInfo": {
+          "message": "పరికర సమాచారాన్ని మార్పిడి చేస్తోంది...",
+          "timeoutHint": "పరికర సమాచారాన్ని మార్పిడి చేయడానికి ఇది చాలా సమయం తీసుకుంటోంది..."
+        },
+        "connected": {
+          "message": "పరికరానికి కనెక్ట్ చేయబడింది. {{vcLabel}} కోసం వేచి ఉంది...",
+          "timeoutHint": "ఇంకా డేటా అందలేదు. పరికరాన్ని పంపడం ఇప్పటికీ కనెక్ట్ చేయబడి ఉందా?"
+        },
+        "offline": {
+          "message": "ఆన్‌లైన్ షేరింగ్ మోడ్‌ని ప్రారంభించడానికి దయచేసి ఇంటర్నెట్‌కి కనెక్ట్ చేయండి"
+        },
+        "bleError": {
+          "title": "బదిలీ చేయడంలో విఫలమైంది!",
+          "message": "{{vcLabel}}ని బదిలీ చేస్తున్నప్పుడు ఏదో తప్పు జరిగింది. దయచేసి మళ్లీ ప్రయత్నించండి."
+        }
+      },
+      "online": "ఆన్‌లైన్",
+      "offline": "ఆఫ్‌లైన్",
+      "gotoSettings": "సెట్టింగ్‌లకు వెళ్లండి"
+    },
+    "ScanScreen": {
+      "header": "QR కోడ్‌ని స్కాన్ చేయండి",
+      "noShareableVcs": "భాగస్వామ్యం చేయదగిన {{vcLabel}} ఏవీ అందుబాటులో లేవు.",
+      "sharingVc": "{{vcLabel}}ని భాగస్వామ్యం చేస్తోంది",
+      "BluetoothStateIos": "బ్లూటూత్ ఆఫ్ చేయబడింది, దయచేసి నియంత్రణ కేంద్రం నుండి దాన్ని ఆన్ చేయండి",
+      "bluetoothStateAndroid": "బ్లూటూత్ ఆఫ్ చేయబడింది, దయచేసి త్వరిత సెట్టింగ్‌ల మెను నుండి దాన్ని ఆన్ చేయండి",
+      "errors": {
+        "locationDisabled": {
+          "message": "స్కానింగ్ కార్యాచరణ కోసం స్థాన సేవలు తప్పనిసరిగా ప్రారంభించబడాలి",
+          "button": "స్థాన సేవలను ప్రారంభించండి"
+        },
+        "locationDenied": {
+          "message": "స్కానింగ్ కార్యాచరణ కోసం స్థాన అనుమతి అవసరం",
+          "button": "స్థానానికి ప్రాప్యతను అనుమతించండి"
+        }
+      },
+      "status": {
+        "inProgress": "పురోగతిలో ఉంది",
+        "establishingConnection": "కనెక్షన్‌ని ఏర్పాటు చేస్తోంది",
+        "sharingInProgress": "భాగస్వామ్యం ప్రోగ్రెస్‌లో ఉంది",
+        "connectingTimeout": "కనెక్షన్ ఏర్పాటు చేయడానికి కొంత సమయం పడుతుంది. ఇతర పరికరం కనెక్షన్‌ల కోసం తెరిచి ఉందా?",
+        "exchangingDeviceInfo": "పరికర సమాచారాన్ని మార్పిడి చేస్తోంది...",
+        "exchangingDeviceInfoTimeout": "పరికర సమాచారాన్ని మార్పిడి చేసుకోవడానికి కొంత సమయం పడుతుంది. మీరు మళ్లీ కనెక్ట్ చేయాల్సి రావచ్చు.",
+        "invalid": "చెల్లని QR కోడ్",
+        "offline": "ఆన్‌లైన్ షేరింగ్ మోడ్‌ని ఉపయోగించి QR కోడ్‌లను స్కాన్ చేయడానికి దయచేసి ఇంటర్నెట్‌కి కనెక్ట్ చేయండి",
+        "sent": "{{ vcLabel }} పంపబడింది...",
+        "sentHint": "రిసీవర్ మీ {{ vcLabel }}ని సేవ్ చేయడానికి లేదా విస్మరించడానికి వేచి ఉంది",
+        "sharing": {
+          "title": "భాగస్వామ్యం...",
+          "hint": "దయచేసి స్వీకరించే పరికరం భాగస్వామ్యాన్ని ఆమోదించడానికి లేదా తిరస్కరించడానికి వేచి ఉండండి.",
+          "timeoutHint": "భాగస్వామ్యం చేయడానికి ఊహించిన దాని కంటే ఎక్కువ సమయం తీసుకుంటోంది. కనెక్షన్‌లో సమస్య ఉండవచ్చు."
+        },
+        "accepted": {
+          "title": "ID విజయవంతంగా భాగస్వామ్యం చేయబడింది",
+          "message": "మీ {{vcLabel}} విజయవంతంగా {{receiver}}తో భాగస్వామ్యం చేయబడింది",
+          "gotohome": "ఇంటికి వెళ్ళు"
+        },
+        "rejected": {
+          "title": "గమనించండి",
+          "message": "మీ {{vcLabel}}ని {{receiver}} విస్మరించారు"
+        },
+        "bleError": {
+          "title": "బదిలీ చేయడంలో విఫలమైంది!",
+          "message": "{{vcLabel}}ని బదిలీ చేస్తున్నప్పుడు ఏదో తప్పు జరిగింది. దయచేసి మళ్లీ ప్రయత్నించండి."
+        }
+      }
+    },
+    "SelectVcOverlay": {
+      "header": "{{vcLabel}}ని భాగస్వామ్యం చేయండి",
+      "chooseVc": "మీరు భాగస్వామ్యం చేయాలనుకుంటున్న {{vcLabel}}ని ఎంచుకోండి",
+      "share": "షేర్ చేయండి",
+      "verifyAndShare": "గుర్తింపును ధృవీకరించండి & భాగస్వామ్యం చేయండి"
+    },
+    "SendVcScreen": {
+      "reasonForSharing": "భాగస్వామ్యం చేయడానికి కారణం",
+      "approveRequest": "అభ్యర్థనను ఆమోదించి, {{vcLabel}}ని ఎంచుకోండి",
+      "approveRequestAndVerify": "అభ్యర్థనను ఆమోదించండి మరియు ధృవీకరించండి",
+      "consentToPhotoVerification": "ప్రమాణీకరణ కోసం నా ఫోటో తీయడానికి నేను సమ్మతి ఇస్తున్నాను",
+      "pleaseSelectAnId": "దయచేసి IDని ఎంచుకోండి",
+      "reject": "తిరస్కరించు"
+    },
+    "Credits": {
+      "header": "క్రెడిట్‌లు మరియు లీగల్ నోటీసులు",
+      "back": "వెనుకకు"
+    },
+    "VerifyIdentityOverlay": {
+      "status": {
+        "verifyingIdentity": "గుర్తింపును ధృవీకరిస్తోంది..."
+      },
+      "errors": {
+        "invalidIdentity": {
+          "title": "గుర్తింపును ధృవీకరించడం సాధ్యం కాలేదు",
+          "message": "ముఖం గుర్తించబడలేదు. దయచేసి మళ్లీ ప్రయత్నించండి.",
+          "messageNoRetry": "ముఖం గుర్తించబడలేదు."
+        }
+      }
+    },
+    "WelcomeScreen": {
+      "title": "ఓపెన్ సోర్స్ ఐడెంటిటీ సొల్యూషన్",
+      "getStarted": "ప్రారంభించడానికి",
+      "unlockApp": "అప్లికేషన్ అన్‌లాక్ చేయండి"
+    },
+    "SetupLanguage": {
+      "header": "భాషను ఎంచుకోండి",
+      "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+      "save": "ప్రాధాన్యతను సేవ్ చేయండి"
+    },
+    "common": {
+      "cancel": "రద్దు చేయండి",
+      "save": "సేవ్ చేయండి",
+      "dismiss": "రద్దుచేసే",
+      "editLabel": "{{label}}ని సవరించండి",
+      "tryAgain": "మళ్లీ ప్రయత్నించండి",
+      "camera": {
+        "errors": {
+          "missingPermission": "ఈ యాప్ మరొక పరికరం యొక్క QR కోడ్‌ని స్కాన్ చేయడానికి కెమెరాను ఉపయోగిస్తుంది."
+        },
+        "allowAccess": "కెమెరాకు ప్రాప్యతను అనుమతించండి"
+      }
+    }
+  }
+  

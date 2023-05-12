@@ -163,10 +163,10 @@
       "resendCode": "Renvoyer le code"
     },
     "MyVcsTab": {
-      "downloadID": "ID de téléchargement",
+      "downloadID": "Télécharger la carte",
       "bringYourDigitalID": "Apportez votre identification numérique",
       "generateVcDescription": "Pour télécharger votre {{vcLabel}} appuyez sur Télécharger {{vcLabel}} ci-dessous",
-      "downloadingYourId": "Le téléchargement de votre identifiant peut prendre jusqu'à 5 minutes"
+      "downloadingYourId": "Le téléchargement de votre carte peut prendre jusqu'à 5 minutes"
     },
     "OnboardingOverlay": {
       "stepOneTitle": "Partage sécurisé!",
