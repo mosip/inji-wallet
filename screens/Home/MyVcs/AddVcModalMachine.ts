@@ -29,6 +29,7 @@ const model = createModel(
     events: {
       INPUT_ID: (id: string) => ({ id }),
       INPUT_OTP: (otp: string) => ({ otp }),
+      RESEND_OTP: () => ({}),
       VALIDATE_INPUT: () => ({}),
       READY: (idInputRef: TextInput) => ({ idInputRef }),
       DISMISS: () => ({}),
@@ -173,6 +174,29 @@ export const AddVcModalMachine =
             DISMISS: {
               actions: 'resetIdInputRef',
               target: 'acceptingIdInput',
+            },
+            RESEND_OTP: {
+              target: '.resendOTP',
+            },
+          },
+          initial: 'idle',
+          states: {
+            idle: {},
+            resendOTP: {
+              invoke: {
+                src: 'requestOtp',
+                onDone: [
+                  {
+                    target: 'idle',
+                  },
+                ],
+                onError: [
+                  {
+                    actions: 'setIdBackendError',
+                    target: '#AddVcModal.acceptingIdInput.invalid.backend',
+                  },
+                ],
+              },
             },
           },
         },

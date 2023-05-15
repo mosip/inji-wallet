@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PinInput } from '../../../components/PinInput';
 import { Column, Text } from '../../../components/ui';
@@ -11,8 +11,31 @@ export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
 ) => {
   const { t } = useTranslation('OtpVerificationModal');
 
+  const [timer, setTimer] = useState(180); // 30 seconds
+
+  useEffect(() => {
+    if (timer === 0) return;
+
+    const intervalId = setInterval(() => {
+      setTimer(timer - 1);
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [timer]);
+
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const Seconds = seconds % 60;
+    return `${minutes < 10 ? '0' + minutes : minutes}:${
+      Seconds < 10 ? '0' + Seconds : Seconds
+    }`;
+  };
+
   return (
-    <Modal isVisible={props.isVisible} onDismiss={props.onDismiss}>
+    <Modal
+      isVisible={props.isVisible}
+      onDismiss={props.onDismiss}
+      onShow={() => setTimer(180)}>
       <Column
         fill
         padding="32"
@@ -46,14 +69,27 @@ export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
 
           <Text
             margin="36 0 0 0"
-            color={Theme.Colors.RetrieveIdLabel}
-            weight="semibold"
-            size="small">
-            {t('resendTheCode')}
+            color={Theme.Colors.resendCodeTimer}
+            weight="regular">
+            {` ${t('resendTheCode')} :  ${formatTime(timer)}`}
           </Text>
 
-          <TouchableOpacity activeOpacity={1}>
-            <Text color={Theme.Colors.AddIdBtnBg} weight="bold" size="regular">
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={
+              timer > 0
+                ? null
+                : () => {
+                    props.resend();
+                    setTimer(180);
+                  }
+            }>
+            <Text
+              color={
+                timer > 0 ? Theme.Colors.GrayText : Theme.Colors.AddIdBtnBg
+              }
+              margin="10 0 0 0"
+              weight="semibold">
               {t('resendCode')}
             </Text>
           </TouchableOpacity>
@@ -67,4 +103,5 @@ export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
 interface OtpVerificationModalProps extends ModalProps {
   onInputDone: (otp: string) => void;
   error?: string;
+  resend: () => void;
 }

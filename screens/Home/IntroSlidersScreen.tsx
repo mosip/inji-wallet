@@ -24,19 +24,25 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
     {
       key: 'one',
       title: t('stepOneTitle'),
-      text: t('stepOneText', { vcLabel: vcLabel.plural }),
-      image: Theme.sharingIntro,
+      text: t('stepOneText'),
+      image: Theme.protectPrivacy,
     },
     {
       key: 'two',
-      title: t('stepTwoTitle', { vcLabel: vcLabel.singular }),
-      text: t('stepTwoText', { vcLabel: vcLabel.plural }),
-      image: Theme.walletIntro,
+      title: t('stepTwoTitle'),
+      text: t('stepTwoText'),
+      image: Theme.sharingIntro,
     },
     {
       key: 'three',
       title: t('stepThreeTitle'),
-      text: t('stepThreeText', { vcLabel: vcLabel.plural }),
+      text: t('stepThreeText'),
+      image: Theme.walletIntro,
+    },
+    {
+      key: 'four',
+      title: t('stepFourTitle'),
+      text: t('stepFourText', { vcLabel: vcLabel.plural }),
       image: Theme.IntroScanner,
     },
   ];
@@ -79,7 +85,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
             <Text weight="semibold" margin="0 0 18 0">
               {item.title}
             </Text>
-            <Text margin="0 0 150 0" color={Theme.Colors.GrayText}>
+            <Text margin="0 0 150 0" size="large" color={Theme.Colors.GrayText}>
               {item.text}
             </Text>
             {item.footer}
@@ -117,7 +123,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
             align="center"
             color="#FFFFFF"
             margin="15 0 0 0">
-            {t('stepThreeButton')}
+            {t('stepFourButton')}
           </Text>
         </LinearGradient>
       </View>

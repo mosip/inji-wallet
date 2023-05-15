@@ -30,6 +30,7 @@ const Colors = {
   DisabledColors: ['#C7C7C7', '#C7C7C7'],
   TimeoutHintBoxColor: '#FFF7E5',
   TimoutText: '#8B6105',
+  resendCodeTimer: '#555555',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -95,6 +96,7 @@ export const DefaultTheme = {
     TimoutText: Colors.TimoutText,
     walletbindingLabel: Colors.Black,
     walletbindingContent: Colors.Gray40,
+    resendCodeTimer: Colors.resendCodeTimer,
   },
   Styles: StyleSheet.create({
     title: {
@@ -430,9 +432,11 @@ export const DefaultTheme = {
     },
     regular: {
       fontFamily: 'Inter_400Regular',
+      fontSize: 14,
     },
     semibold: {
       fontFamily: 'Inter_600SemiBold',
+      fontSize: 15,
     },
     bold: {
       fontFamily: 'Inter_700Bold',
@@ -444,6 +448,9 @@ export const DefaultTheme = {
     smaller: {
       fontSize: 11,
       lineHeight: 18,
+    },
+    large: {
+      fontSize: 18,
     },
   }),
   VcItemStyles: StyleSheet.create({
@@ -874,6 +881,7 @@ export const DefaultTheme = {
   walletIntro: require('../../../assets/intro-wallet-binding.png'),
   IntroScanner: require('../../../assets/intro-scanner.png'),
   injiSmallLogo: require('../../../assets/inji_small_logo.png'),
+  protectPrivacy: require('../../../assets/phone_mockup_1.png'),
 
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/
