@@ -28,6 +28,7 @@ PROVISIONING_PROFILE_SPECIFIER = ENV["INJI_IOS_PROVISIONING_PROFILE_SPECIFIER"]
 TEMP_KEYCHAIN_USER = ENV["INJI_IOS_TEMP_KEYCHAIN_USER"]
 TEMP_KEYCHAIN_PASSWORD = ENV["INJI_IOS_TEMP_KEYCHAIN_PASSWORD"]
 GIT_AUTHORIZATION = ENV["GIT_AUTHORIZATION"]
+SLACK_URL = ENV["SLACK_URL"]
 
 def delete_temp_keychain(name)
   delete_keychain(
@@ -102,5 +103,10 @@ platform :ios do
 
     delete_temp_keychain(keychain_name)
     
+    slack(
+      message: "App successfully uploaded to iTunesConnect.",
+      success: true,
+      slack_url: "https://hooks.slack.com/services/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"
+    )
   end
 end
