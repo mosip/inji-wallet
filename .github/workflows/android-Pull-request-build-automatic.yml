@@ -1,0 +1,96 @@
+name: Build App automatically when ever a Pull request is raised
+
+env:
+  backendServiceDefaultUrl: https://api.qa-121.mosip.net/residentmobileapp
+
+on:
+  push:
+    branches:
+      - CI-publish
+  # pull_request: #runs automatically when PR is raised
+  #   types: [ opened, synchronize ] # when PR is opened, and commit is added to PR
+  #   branches:
+  #     - develop # specify the branch and use filters if needed -> 'release-**' - pattern -> 'releases/**'
+  #     - 'release/**' #-> release/1, release/01
+    tags: # Sequence of patterns matched against refs/tags
+      - '*'     #all tags 
+     # - v2
+     # - v1.* -> v1.9.1 , v1.23.4 
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.1.0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+
+      - name: Install npm 
+        run: |
+          npm install
+      
+      - name: Cache local npm repository
+        uses: actions/cache@v3.0.11
+        with:
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          path: ~/.npm
+
+      - name: Cache local gradle repository
+        uses: actions/cache@v3.0.11
+        with:
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+
+      - name: Create .env.local file
+        run: |
+          echo "${{ secrets.ENV_FILE }}" > .env.local > android/local.properties
+
+      - name: Setup branch and env
+        run: |
+          # Strip git ref prefix from version
+          echo "BRANCH_NAME=$(echo ${{ github.ref }} | sed -e 's,.*/\(.*\),\1,')" >> $GITHUB_ENV
+          echo "GPG_TTY=$(tty)" >> $GITHUB_ENV   
+
+      - name: GPG public key
+        run: |
+          sudo apt-get --yes install gnupg2
+          gpg2 --import ./.github/keys/mosipgpgkey_pub.gpg 
+          gpg2 --quiet --batch --passphrase=${{secrets.gpg_secret}}  --allow-secret-key-import --import ./.github/keys/mosipgpgkey_sec.gpg
+
+      - name: Setup Firebase
+        run: |
+          cd android
+          if [ ! -z "$FIREBASE_SECRET" ] && [ -f app/google-services.json.gpg ];then rm -f app/google-services.json;gpg2 --quiet --batch --passphrase=$FIREBASE_SECRET --pinentry-mode loopback --decrypt --output app/google-services.json app/mosip-google-services.json.gpg;fi
+        env:
+          FIREBASE_SECRET: ${{ secrets.GPG_SECRET }}
+      
+      - name: Generate keystore
+        run: |
+          keytool \
+          -genkey -v \
+          -storetype PKCS12 \
+          -keyalg RSA \
+          -keysize 2048 \
+          -validity 10000 \
+          -storepass '${{ secrets.INJI_ANDROID_DEBUG_STOREPASS }}' \
+          -keypass '${{ secrets.INJI_ANDROID_DEBUG_KEYPASS }}' \
+          -alias androiddebugkey \
+          -keystore android/app/debug.keystore \
+          -dname "CN=io.mosip.residentapp,OU=,O=,L=,S=,C=US"
+
+      - name: Export variables for keystore
+        run: |
+          export DEBUG_KEYSTORE=debug.keystore
+          export DEBUG_KEYSTORE_ALIAS=androiddebugkey
+          export DEBUG_KEYSTORE_PASSWORD='${{ secrets.INJI_ANDROID_DEBUG_STOREPASS }}'
+
+      - name: Run Fastlane
+        run: | 
+          cd android
+          yes | sudo gem install bundler
+          yes | sudo fastlane install_plugins
+          fastlane test_android_build
+

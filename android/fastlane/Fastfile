@@ -1,0 +1,52 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+
+# Fastfile
+
+
+plugins = [
+  "fastlane-plugin-increment_version_code",
+  "fastlane-plugin-sentry"
+]
+
+default_platform(:android)
+
+desc "Verify Build for Android"
+lane :test_android_build do
+  gradle(
+    task: "assembleNewlogicDebug",
+  )
+end
+
+desc "Build Android and increase version code"
+lane :build_android do
+  increment_version_code(
+    gradle_file_path: "./app/build.gradle",
+  )
+  gradle(
+    task: "assembleNewlogicDebug",
+  )
+end
+
+
+
+
+#   desc "Increment version name"
+#   lane :increment_vname do
+#   increment_version_name(
+#        gradle_file_path: "./app/build.gradle",
+#  )
+#   end
