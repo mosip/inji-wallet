@@ -88,7 +88,7 @@ platform :ios do
       
       export_options: {
         provisioningProfiles: { 
-            "#{DEVELOPER_APP_ID}" => "#{PROVISIONING_PROFILE_SPECIFIER}"
+            "#{FASTLANE_USER}" => "#{PROVISIONING_PROFILE_SPECIFIER}"
         }
       }
     )
@@ -102,7 +102,10 @@ platform :ios do
     )
 
     delete_temp_keychain(keychain_name)
-    
+
+    commit_version_bump(message: 'bump build')
+    push_to_git_remote
+
     slack(
       message: "App successfully uploaded to iTunesConnect.",
       success: true,

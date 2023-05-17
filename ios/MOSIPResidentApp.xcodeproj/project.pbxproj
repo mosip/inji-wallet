@@ -171,6 +171,7 @@
 				LastUpgradeCheck = 1340;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = LD7H4CQ5P9;
 						LastSwiftMigration = 1250;
 					};
 				};
@@ -301,8 +302,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MOSIPResidentApp/MOSIPResidentApp.entitlements;
-				CURRENT_PROJECT_VERSION = 6;
-				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 5;
+				DEVELOPMENT_TEAM = LD7H4CQ5P9;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -317,7 +318,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.newlogic.inji;
+				PRODUCT_BUNDLE_IDENTIFIER = io.mosip.inji.mobileid;
 				PRODUCT_NAME = MOSIPResidentApp;
 				SWIFT_OBJC_BRIDGING_HEADER = "MOSIPResidentApp/MOSIPResidentApp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -334,8 +335,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MOSIPResidentApp/MOSIPResidentApp.entitlements;
-				CURRENT_PROJECT_VERSION = 6;
-				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 5;
+				DEVELOPMENT_TEAM = LD7H4CQ5P9;
 				INFOPLIST_FILE = MOSIPResidentApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -345,7 +346,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.newlogic.inji;
+				PRODUCT_BUNDLE_IDENTIFIER = io.mosip.inji.mobileid;
 				PRODUCT_NAME = MOSIPResidentApp;
 				SWIFT_OBJC_BRIDGING_HEADER = "MOSIPResidentApp/MOSIPResidentApp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
