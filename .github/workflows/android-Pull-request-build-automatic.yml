@@ -88,14 +88,19 @@ jobs:
 
       - name: Export variables for keystore
         run: |
+          cd android/app
+          ls
           export DEBUG_KEYSTORE=debug.keystore
           export DEBUG_KEYSTORE_ALIAS=androiddebugkey
-          export DEBUG_KEYSTORE_PASSWORD='${{ secrets.INJI_ANDROID_DEBUG_STOREPASS }}'
+          export DEBUG_KEYSTORE_PASSWORD='${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
+          echo $DEBUG_KEYSTORE
+          echo $DEBUG_KEYSTORE_ALIAS
+          echo $DEBUG_KEYSTORE_PASSWORD
 
       - name: Run Fastlane
         run: | 
           cd android
           yes | sudo gem install bundler
           yes | sudo fastlane install_plugins
-          bundle exec fastlane test_android_build
+          fastlane test_android_build
 
