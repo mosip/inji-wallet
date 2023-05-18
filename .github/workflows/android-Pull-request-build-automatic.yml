@@ -3,17 +3,17 @@ name: Build App automatically when ever a Pull request is raised
 env:
   backendServiceDefaultUrl: https://api.qa-121.mosip.net/residentmobileapp
 
-on:
-  push:
-    branches:
-      - CI-publish
+# on:
+#   push:
+#     branches:
+#       - CI-publish
   # pull_request: #runs automatically when PR is raised
   #   types: [ opened, synchronize ] # when PR is opened, and commit is added to PR
   #   branches:
   #     - develop # specify the branch and use filters if needed -> 'release-**' - pattern -> 'releases/**'
   #     - 'release/**' #-> release/1, release/01
-    tags: # Sequence of patterns matched against refs/tags
-      - '*'     #all tags 
+    # tags: # Sequence of patterns matched against refs/tags
+      # - '*'     #all tags 
      # - v2
      # - v1.* -> v1.9.1 , v1.23.4 
 

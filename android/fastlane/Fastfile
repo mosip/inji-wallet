@@ -37,7 +37,7 @@ lane :build_android do
     gradle_file_path: "./app/build.gradle",
   )
   gradle(
-    task: "assembleNewlogicDebug",
+    task: "assembleNewlogicRelease",
   )
 end
 
