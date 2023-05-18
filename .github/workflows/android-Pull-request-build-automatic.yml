@@ -71,6 +71,7 @@ jobs:
         run: |
           cd android/app
           ls
+          pwd
           yes | sudo keytool \
           -genkey -v \
           -storetype PKCS12 \
@@ -85,21 +86,16 @@ jobs:
           ls -l debug.keystore
           pwd
 
-      - name: Give read permissions
-        run: |
-          cd android/app
-          ls
-          ls -l debug.keystore
-          chmod +rwx debug.keystore
-          ls -l debug.keystore
-          pwd
-
       - name: Export variables for keystore
         run: |
           pwd
           export DEBUG_KEYSTORE=debug.keystore
           export DEBUG_KEYSTORE_ALIAS=androiddebugkey
           export DEBUG_KEYSTORE_PASSWORD='${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
+          echo $DEBUG_KEYSTORE
+          echo $DEBUG_KEYSTORE_ALIAS
+          echo $DEBUG_KEYSTORE_PASSWORD
+          pwd
 
       - name: Run Fastlane
         run: | 

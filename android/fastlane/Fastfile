@@ -25,6 +25,7 @@ default_platform(:android)
 
 desc "Verify Build for Android"
 lane :test_android_build do
+  sh("pwd")
   gradle(
     task: "assembleNewlogicDebug",
   )
