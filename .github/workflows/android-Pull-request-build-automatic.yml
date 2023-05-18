@@ -98,11 +98,14 @@ jobs:
         with:
           gradlePath: android/app/build.gradle
           versionCode: ${{github.run_number}}
- 
-      - name: Grant rights
+
+      - name: Update Version Code
         run: |
-          cd android/app
-          chmod +x build.gradle
+          current_version_code=$(grep -oP 'versionCode \K\d+' build.gradle)
+          echo "Current Version Code: $current_version_code"
+          sed -i "s/VERSION_CODE_PLACEHOLDER/${{ github.run_number }}/" build.gradle
+          current_version_code=$(grep -oP 'versionCode \K\d+' build.gradle)
+          echo "Current Version Code: $current_version_code"
 
       - name: Run Fastlane
         run: | 
