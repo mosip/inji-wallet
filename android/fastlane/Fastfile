@@ -26,7 +26,6 @@ default_platform(:android)
   end
 desc "Verify Build for Android"
 lane :test_android_build do
-  load_dotenv
   debug_keystore = ENV['DEBUG_KEYSTORE']
   debug_keystore_alias = ENV['DEBUG_KEYSTORE_ALIAS']
   debug_keystore_password = ENV['DEBUG_KEYSTORE_PASSWORD']
