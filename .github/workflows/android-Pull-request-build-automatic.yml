@@ -95,10 +95,9 @@ jobs:
 
       - name: Update Version Code
         run: |
-          cd android
-          cd app
+          cd android/app
           current_version_code=$(grep -oP 'versionCode \K\d+' build.gradle)
-          echo "Current Version Code: $current_version_code"
+          sed -i "s/VERSION_CODE_PLACEHOLDER/${{ github.run_number }}/" build.gradle
 
       - name: Bump version code
         uses: chkfung/android-version-actions@v1.1
@@ -108,11 +107,8 @@ jobs:
 
       - name: rename and check
         run: |
-          cd android
-          cd app
-          sed -i "s/VERSION_CODE_PLACEHOLDER/${{ github.run_number }}/" build.gradle
+          cd android/app
           current_version_code=$(grep -oP 'versionCode \K\d+' build.gradle)
-          echo "Current Version Code: $current_version_code"
 
       - name: Run Fastlane
         run: | 
