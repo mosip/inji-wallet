@@ -94,8 +94,7 @@ jobs:
 
       - name: Run Fastlane
         run: | 
-          cd android/app
-          ls
+          cd android
           yes | sudo gem install bundler
           yes | sudo fastlane install_plugins
           bundle exec fastlane test_android_build
