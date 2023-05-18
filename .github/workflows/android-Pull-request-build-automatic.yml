@@ -8,7 +8,7 @@ on:
     paths:
       - 'android/**'
     branches:
-      - CI-publishc
+      - CI-publish
   pull_request: #runs automatically when PR is raised
     types: [ opened, synchronize ] # when PR is opened, and commit is added to PR
     branches:
@@ -83,7 +83,7 @@ jobs:
           -storepass '${{ secrets.INJI_ANDROID_DEBUG_STOREPASS }}' \
           -keypass '${{ secrets.INJI_ANDROID_DEBUG_STOREPASS }}' \
           -alias androiddebugkey \
-          -keystore debug.keystore \
+          -keystore android/app/debug.keystore \
           -dname "CN=io.mosip.residentapp,OU=,O=,L=,S=,C=US"
           ls -l debug.keystore
           ls
@@ -111,7 +111,7 @@ jobs:
           yes | sudo fastlane install_plugins
           bundle exec fastlane test_android_build
         env:
-          DEBUG_KEYSTORE: app/debug.keystore 
+          DEBUG_KEYSTORE: android/app/debug.keystore 
           DEBUG_KEYSTORE_ALIAS: androiddebugkey
           DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
 

@@ -19,15 +19,17 @@ on:
         options:
           - orange
           - purple
-  push:
-    branches:
-      - CI-publish
-      - develop # specify the branch and use filters if needed -> 'release-**' - pattern -> 'releases/**'
-      - 'release/**' #-> release/1, release/01
-    tags: # Sequence of patterns matched against refs/tags
-      - '*'     #all tags 
-     # - v2
-     # - v1.* -> v1.9.1 , v1.23.4 
+  # push:
+  #   paths:
+  #     - 'android/**'
+  #   branches:
+  #     - CI-publish
+  #     # - develop # specify the branch and use filters if needed -> 'release-**' - pattern -> 'releases/**'
+  #     # - 'release/**' #-> release/1, release/01
+  #   tags: # Sequence of patterns matched against refs/tags
+  #     - '*'     #all tags 
+  #     # - v2
+  #     # - v1.* -> v1.9.1 , v1.23.4 
 
 jobs:
   build-android:
