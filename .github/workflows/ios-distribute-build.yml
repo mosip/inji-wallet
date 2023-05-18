@@ -60,4 +60,4 @@ jobs:
           APPLE_ISSUER_ID: '${{ secrets.APPLE_ISSUER_ID }}'
           APPLE_KEY_CONTENT: '${{ secrets.APPLE_KEY_CONTENT }}'
           SLACK_URL: '${{ secrets.SLACK_WEBHOOK_DEVOPS }}'
-          MATCH_PASSWORD: '${{ secrets.INJI_IOS_MATCH_PASSWORF }}'
+          MATCH_PASSWORD: '${{ secrets.INJI_IOS_MATCH_PASSWORD }}'
