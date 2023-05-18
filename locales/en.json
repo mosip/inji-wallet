@@ -391,7 +391,15 @@
       "allowAccess": "Allow access to the camera"
     },
     "errors": {
-      "genericError": "Something went wrong. Please try again after some time!"
+      "genericError": "Something went wrong. Please try again after some time!",
+      "savingFailed": {
+        "title": "Failed to save the {{vcLabelSingular}}",
+        "message": "Something went wrong while saving {{vcLabelSingular}} to the store."
+      },
+      "diskFullError": {
+        "title": "Failed to save the {{vcLabelSingular}}",
+        "message": "No more {{vcLabelPlural}} can be received or saved as App Data is full."
+      }
     }
   }
 }

@@ -75,6 +75,10 @@ export interface Typegen0 {
       type: 'error.platform.vc-item.addingWalletBindingId:invocation[0]';
       data: unknown;
     };
+    'error.platform.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]': {
+      type: 'error.platform.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]';
+      data: unknown;
+    };
     'error.platform.vc-item.requestingBindingOtp:invocation[0]': {
       type: 'error.platform.vc-item.requestingBindingOtp:invocation[0]';
       data: unknown;
@@ -141,6 +145,12 @@ export interface Typegen0 {
     incrementDownloadCounter: 'POLL';
     logDownloaded: 'CREDENTIAL_DOWNLOADED';
     logRevoked: 'STORE_RESPONSE';
+    logWalletBindingFailure:
+      | 'error.platform.vc-item.addKeyPair:invocation[0]'
+      | 'error.platform.vc-item.addingWalletBindingId:invocation[0]'
+      | 'error.platform.vc-item.requestingBindingOtp:invocation[0]'
+      | 'error.platform.vc-item.updatingPrivateKey:invocation[0]';
+    logWalletBindingSuccess: 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
     markVcValid: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
     requestStoredContext: 'GET_VC_RESPONSE' | 'REFRESH';
     requestVcContext: 'xstate.init';
@@ -149,6 +159,7 @@ export interface Typegen0 {
       | 'CREDENTIAL_DOWNLOADED'
       | 'GET_VC_RESPONSE'
       | 'STORE_RESPONSE';
+    setDownloadInterval: 'done.invoke.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]';
     setLock: 'done.invoke.vc-item.requestingLock:invocation[0]';
     setMaxDownloadCount: 'done.invoke.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]';
     setOtp: 'INPUT_OTP';
@@ -159,6 +170,7 @@ export interface Typegen0 {
     setPublicKey: 'done.invoke.vc-item.addKeyPair:invocation[0]';
     setRevoke: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
     setTag: 'SAVE_TAG';
+    setThumbprintForWalletBindingId: 'done.invoke.vc-item.addingWalletBindingId:invocation[0]';
     setTransactionId:
       | 'INPUT_OTP'
       | 'REVOKE_VC'
@@ -196,7 +208,9 @@ export interface Typegen0 {
   'eventsCausingServices': {
     addWalletBindnigId: 'done.invoke.vc-item.addKeyPair:invocation[0]';
     checkDownloadExpiryLimit: 'STORE_RESPONSE';
-    checkStatus: 'done.invoke.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]';
+    checkStatus:
+      | 'done.invoke.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]'
+      | 'error.platform.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]';
     downloadCredential: 'DOWNLOAD_READY';
     generateKeyPair: 'INPUT_OTP';
     requestBindingOtp: 'CONFIRM';

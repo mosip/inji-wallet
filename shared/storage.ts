@@ -1,13 +1,13 @@
-import { MMKVLoader } from 'react-native-mmkv-storage';
-import { VC_ITEM_STORE_KEY_REGEX } from './constants';
 import {
   DocumentDirectoryPath,
+  exists,
   mkdir,
   readFile,
   unlink,
   writeFile,
-  exists,
 } from 'react-native-fs';
+import { MMKVLoader } from 'react-native-mmkv-storage';
+import { VC_ITEM_STORE_KEY_REGEX } from './constants';
 
 const MMKV = new MMKVLoader().initialize();
 const vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
@@ -23,12 +23,17 @@ class Storage {
   };
 
   static setItem = async (key: string, data: string) => {
-    if (vcKeyRegExp.exec(key)) {
-      await mkdir(vcDirectoryPath);
-      const path = getFilePath(key);
-      return await writeFile(path, data, 'utf8');
+    try {
+      if (vcKeyRegExp.exec(key)) {
+        await mkdir(vcDirectoryPath);
+        const path = getFilePath(key);
+        return await writeFile(path, data, 'utf8');
+      }
+      await MMKV.setItem(key, data);
+    } catch (error) {
+      console.log('Error Occurred while saving in Storage.', error);
+      throw error;
     }
-    await MMKV.setItem(key, data);
   };
 
   static clear = async () => {

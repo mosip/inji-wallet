@@ -12,10 +12,19 @@ import { OnboardingOverlay } from './OnboardingOverlay';
 import { useTranslation } from 'react-i18next';
 import { VcItem } from '../../components/VcItem';
 import { GET_INDIVIDUAL_ID } from '../../shared/constants';
+import { MessageOverlay } from '../../components/MessageOverlay';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
   const { t } = useTranslation('MyVcsTab');
+  const { t: commonTranslate } = useTranslation('common');
   const controller = useMyVcsTab(props);
+  let storeErrorTranslationPath = 'errors.savingFailed';
+  const isDiskFullError =
+    controller.storeError?.message?.match('No space left on device') != null;
+
+  if (isDiskFullError) {
+    storeErrorTranslationPath = 'errors.diskFullError';
+  }
 
   const getId = () => {
     controller.DISMISS();
@@ -113,6 +122,18 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
         isVisible={controller.isOnboarding}
         onDone={controller.ONBOARDING_DONE}
         onAddVc={controller.ADD_VC}
+      />
+      <MessageOverlay
+        isVisible={controller.isSavingFailedInIdle}
+        title={commonTranslate(storeErrorTranslationPath + '.title', {
+          vcLabelSingular: controller.vcLabel.singular,
+          vcLabelPlural: controller.vcLabel.plural,
+        })}
+        message={commonTranslate(storeErrorTranslationPath + '.message', {
+          vcLabelSingular: controller.vcLabel.singular,
+          vcLabelPlural: controller.vcLabel.plural,
+        })}
+        onBackdropPress={controller.DISMISS}
       />
     </React.Fragment>
   );

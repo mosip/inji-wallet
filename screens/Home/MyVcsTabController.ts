@@ -17,6 +17,8 @@ import {
   selectIsOnboarding,
   selectIsRequestSuccessful,
   selectGetVcModal,
+  selectStoreError,
+  selectIsSavingFailedInIdle,
 } from './MyVcsTabMachine';
 
 export function useMyVcsTab(props: HomeScreenTabProps) {
@@ -36,6 +38,8 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
     isRefreshingVcs: useSelector(vcService, selectIsRefreshingMyVcs),
     isRequestSuccessful: useSelector(service, selectIsRequestSuccessful),
     isOnboarding: useSelector(service, selectIsOnboarding),
+    storeError: useSelector(service, selectStoreError),
+    isSavingFailedInIdle: useSelector(service, selectIsSavingFailedInIdle),
 
     DISMISS: () => service.send(MyVcsTabEvents.DISMISS()),
 
