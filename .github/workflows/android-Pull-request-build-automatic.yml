@@ -70,7 +70,8 @@ jobs:
       - name: Generate keystore
         run: |
           cd android/app
-          keytool \
+          ls
+          yes | sudo keytool \
           -genkey -v \
           -storetype PKCS12 \
           -keyalg RSA \
@@ -81,9 +82,21 @@ jobs:
           -alias androiddebugkey \
           -keystore debug.keystore \
           -dname "CN=io.mosip.residentapp,OU=,O=,L=,S=,C=US"
+          ls -l debug.keystore
+          pwd
+
+      - name: Give read permissions
+        run: |
+          cd android/app
+          ls
+          ls -l debug.keystore
+          chmod +rwx debug.keystore
+          ls -l debug.keystore
+          pwd
 
       - name: Export variables for keystore
         run: |
+          pwd
           export DEBUG_KEYSTORE=debug.keystore
           export DEBUG_KEYSTORE_ALIAS=androiddebugkey
           export DEBUG_KEYSTORE_PASSWORD='${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
@@ -91,6 +104,7 @@ jobs:
       - name: Run Fastlane
         run: | 
           cd android
+          pwd
           yes | sudo gem install bundler
           yes | sudo fastlane install_plugins
           fastlane test_android_build
