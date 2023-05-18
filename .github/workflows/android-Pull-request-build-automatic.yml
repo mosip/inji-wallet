@@ -95,7 +95,8 @@ jobs:
 
       - name: Update Version Code
         run: |
-          cd android/app
+          cd android
+          cd app
           current_version_code=$(grep -oP 'versionCode \K\d+' build.gradle)
           echo "Current Version Code: $current_version_code"
 
@@ -105,9 +106,10 @@ jobs:
           gradlePath: android/app/build.gradle
           versionCode: ${{github.run_number}}
 
-      - name: Update Version Code 2
+      - name: rename and check
         run: |
-          cd android/app
+          cd android
+          cd app
           sed -i "s/VERSION_CODE_PLACEHOLDER/${{ github.run_number }}/" build.gradle
           current_version_code=$(grep -oP 'versionCode \K\d+' build.gradle)
           echo "Current Version Code: $current_version_code"
