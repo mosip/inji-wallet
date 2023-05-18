@@ -69,6 +69,7 @@ jobs:
       
       - name: Generate keystore
         run: |
+          cd android/app
           keytool \
           -genkey -v \
           -storetype PKCS12 \
@@ -78,7 +79,7 @@ jobs:
           -storepass '${{ secrets.INJI_ANDROID_DEBUG_STOREPASS }}' \
           -keypass '${{ secrets.INJI_ANDROID_DEBUG_STOREPASS }}' \
           -alias androiddebugkey \
-          -keystore android/app/debug.keystore \
+          -keystore debug.keystore \
           -dname "CN=io.mosip.residentapp,OU=,O=,L=,S=,C=US"
 
       - name: Export variables for keystore
