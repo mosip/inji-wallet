@@ -742,7 +742,7 @@ export const scanMachine =
         },
 
         startConnection: (context) => (callback) => {
-          wallet.startConnection('OVPMOSIP', context.openId4VpUri);
+          wallet.startConnection(context.openId4VpUri);
           const statusCallback = (event: WalletDataEvent) => {
             if (event.type === 'onKeyExchangeSuccess') {
               callback({ type: 'CONNECTED' });

@@ -201,10 +201,12 @@ export const appMachine = model.createMachine(
             scanMachine.id
           );
 
-          serviceRefs.request = spawn(
-            createRequestMachine(serviceRefs),
-            requestMachine.id
-          );
+          if (Platform.OS === 'android') {
+            serviceRefs.request = spawn(
+              createRequestMachine(serviceRefs),
+              requestMachine.id
+            );
+          }
 
           serviceRefs.revoke = spawn(
             createRevokeMachine(serviceRefs),
@@ -222,7 +224,11 @@ export const appMachine = model.createMachine(
           context.serviceRefs.settings.subscribe(logState);
           context.serviceRefs.activityLog.subscribe(logState);
           context.serviceRefs.scan.subscribe(logState);
-          context.serviceRefs.request.subscribe(logState);
+
+          if (Platform.OS === 'android') {
+            context.serviceRefs.request.subscribe(logState);
+          }
+
           context.serviceRefs.revoke.subscribe(logState);
         }
       },
@@ -255,7 +261,7 @@ export const appMachine = model.createMachine(
           config: {},
         };
         try {
-          backendInfo = await request('GET', '/residentmobileapp/info');
+          // backendInfo = await request('GET', '/residentmobileapp/info');
           callback(model.events.BACKEND_INFO_RECEIVED(backendInfo));
         } catch {
           callback(model.events.BACKEND_INFO_RECEIVED(backendInfo));
