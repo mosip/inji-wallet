@@ -34,7 +34,7 @@ export interface Typegen0 {
     actions: never;
     delays: never;
     guards: never;
-    services: 'AddVcModal';
+    services: never;
   };
   'eventsCausingActions': {
     clearIdError: 'INPUT_ID';

@@ -104,9 +104,17 @@
     "header": "Settings",
     "bioUnlock": "Unlock with Biometrics",
     "language": "Language",
-    "aboutInji": "About Inji",
     "injiTourGuide": "Inji Tour Guide",
     "logout": "Logout"
+  },
+  "AboutInji": {
+    "aboutInji": "About Inji",
+    "header": "ABOUT INJI",
+    "aboutDetailes": "Inji is a mobile app that can be used as a digital wallet to store credentials. It also allows verfication of identity in both offline and online modes, at any place ans time.",
+    "forMoreDetailes": "For more detailes",
+    "clickHere": "Click here",
+    "version": "Version: 0.4.1",
+    "tuvaliVersion": "Tuvali-version: v0.3.9-b16c5ea"
   },
   "HelpScreen": {
     "header": "Help",

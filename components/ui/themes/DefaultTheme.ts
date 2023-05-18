@@ -55,7 +55,7 @@ export const DefaultTheme = {
     whiteBackgroundColor: Colors.White,
     lightGreyBackgroundColor: Colors.LightGrey,
     profileLanguageValue: Colors.Grey,
-    profileVersion: Colors.Grey,
+    aboutVersion: Colors.Gray40,
     profileAuthFactorUnlock: Colors.Grey,
     profileLabel: Colors.Black,
     profileValue: Colors.Grey,
@@ -330,6 +330,12 @@ export const DefaultTheme = {
       height: 135,
       borderRadius: 5,
     },
+    versionContainer: {
+      backgroundColor: Colors.Grey6,
+      height: 110,
+      margin: 10,
+      borderRadius: 20,
+    },
     scannerContainer: {
       borderRadius: 32,
       alignSelf: 'center',
@@ -419,6 +425,12 @@ export const DefaultTheme = {
       margin: 5,
       color: Colors.Gray44,
       fontFamily: 'Inter_600SemiBold',
+    },
+    aboutDetailes: {
+      color: Colors.Black,
+      fontSize: 18,
+      margin: 7,
+      lineHeight: 18,
     },
     error: {
       color: Colors.Red,

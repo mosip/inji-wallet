@@ -12,6 +12,7 @@ import { LanguageSelector } from '../../components/LanguageSelector';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Modal } from '../../components/ui/Modal';
 import getAllConfigurations from '../../shared/commonprops/commonProps';
+import { AboutInji } from './AboutInji';
 
 const LanguageSetting: React.FC = () => {
   const { t } = useTranslation('SettingScreen');
@@ -99,24 +100,7 @@ export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
               />
             </ListItem>
 
-            <ListItem
-              topDivider
-              bottomDivider
-              onPress={() => {
-                Linking.openURL(helpUrl);
-              }}>
-              <Image
-                source={require('../../assets/legal-notices-icon.png')}
-                style={{ marginLeft: 10, marginRight: 9 }}
-              />
-              <ListItem.Content>
-                <ListItem.Title>
-                  <Text weight="semibold" color={Theme.Colors.profileLabel}>
-                    {t('aboutInji')}
-                  </Text>
-                </ListItem.Title>
-              </ListItem.Content>
-            </ListItem>
+            <AboutInji />
 
             <ListItem
               topDivider

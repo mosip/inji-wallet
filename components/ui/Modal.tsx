@@ -24,7 +24,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
               flexDirection: 'row',
               alignItems: 'center',
               marginHorizontal: 18,
-              marginVertical: 10,
+              marginVertical: 8,
             }}>
             {props.headerRight ? (
               <Icon
