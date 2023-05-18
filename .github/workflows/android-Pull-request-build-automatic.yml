@@ -5,8 +5,8 @@ env:
 
 on:
   push:
-    paths:
-      - 'android/**'
+    # paths:
+    #   - 'android/**'
     branches:
       - CI-publish
   pull_request: #runs automatically when PR is raised
