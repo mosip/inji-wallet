@@ -1,4 +1,4 @@
-name: Build App automatically when ever a Pull request is raised
+name: Inji Android PR build
 
 env:
   backendServiceDefaultUrl: https://api.qa-121.mosip.net/residentmobileapp
