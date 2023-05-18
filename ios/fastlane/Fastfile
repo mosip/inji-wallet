@@ -30,7 +30,7 @@ TEMP_KEYCHAIN_PASSWORD = ENV["INJI_IOS_TEMP_KEYCHAIN_PASSWORD"]
 GIT_AUTHORIZATION = ENV["GIT_AUTHORIZATION"]
 SLACK_URL = ENV["SLACK_URL"]
 MATCH_PASSWORD = ENV["MATCH_PASSWORD"]
-
+DEVELOPER_APP_ID = 1669162723
 def delete_temp_keychain(name)
   delete_keychain(
     name: name
@@ -90,7 +90,7 @@ platform :ios do
       
       export_options: {
         provisioningProfiles: { 
-            "#{FASTLANE_USER}" => "#{PROVISIONING_PROFILE_SPECIFIER}"
+            "#{DEVELOPER_APP_ID}" => "#{PROVISIONING_PROFILE_SPECIFIER}"
         }
       }
     )
