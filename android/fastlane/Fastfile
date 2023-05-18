@@ -16,18 +16,27 @@
 
 # Fastfile
 
-
 plugins = [
   "fastlane-plugin-increment_version_code"
 ]
 
 default_platform(:android)
-
+  before_all do
+    Dotenv.load ".env"
+  end
 desc "Verify Build for Android"
 lane :test_android_build do
-  sh("pwd")
+  debug_keystore = ENV['DEBUG_KEYSTORE']
+  debug_keystore_alias = ENV['DEBUG_KEYSTORE_ALIAS']
+  debug_keystore_password = ENV['DEBUG_KEYSTORE_PASSWORD']
+
   gradle(
     task: "assembleNewlogicDebug",
+    properties: {
+      'DEBUG_KEYSTORE' => debug_keystore,
+      'DEBUG_KEYSTORE_ALIAS' => debug_keystore_alias,
+      'DEBUG_KEYSTORE_PASSWORD' => debug_keystore_password
+    }
   )
 end
 
