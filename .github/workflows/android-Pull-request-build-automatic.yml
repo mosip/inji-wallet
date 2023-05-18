@@ -76,26 +76,16 @@ jobs:
           -keysize 2048 \
           -validity 10000 \
           -storepass '${{ secrets.INJI_ANDROID_DEBUG_STOREPASS }}' \
-          -keypass '${{ secrets.INJI_ANDROID_DEBUG_KEYPASS }}' \
+          -keypass '${{ secrets.INJI_ANDROID_DEBUG_STOREPASS }}' \
           -alias androiddebugkey \
           -keystore android/app/debug.keystore \
           -dname "CN=io.mosip.residentapp,OU=,O=,L=,S=,C=US"
 
-      - name: Give permissions for keystore file
-        run: |
-          cd android/app
-          chmod +rw debug.keystore
-
       - name: Export variables for keystore
         run: |
-          cd android/app
-          ls
           export DEBUG_KEYSTORE=debug.keystore
           export DEBUG_KEYSTORE_ALIAS=androiddebugkey
           export DEBUG_KEYSTORE_PASSWORD='${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
-          echo $DEBUG_KEYSTORE
-          echo $DEBUG_KEYSTORE_ALIAS
-          echo $DEBUG_KEYSTORE_PASSWORD
 
       - name: Run Fastlane
         run: | 
