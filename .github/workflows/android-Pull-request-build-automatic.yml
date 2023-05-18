@@ -81,6 +81,11 @@ jobs:
           -keystore android/app/debug.keystore \
           -dname "CN=io.mosip.residentapp,OU=,O=,L=,S=,C=US"
 
+      - name: Give permissions for keystore file
+        run: |
+          cd android/app
+          chmod +rw debug.keystore
+
       - name: Export variables for keystore
         run: |
           export DEBUG_KEYSTORE=debug.keystore
@@ -91,7 +96,7 @@ jobs:
         run: | 
           cd android/app
           ls
-          # yes | sudo gem install bundler
-          # yes | sudo fastlane install_plugins
-          # fastlane test_android_build
+          yes | sudo gem install bundler
+          yes | sudo fastlane install_plugins
+          bundle exec fastlane test_android_build
 
