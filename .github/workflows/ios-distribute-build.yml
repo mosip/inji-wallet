@@ -1,4 +1,4 @@
-name: Inji push iOS build to Testflight
+name: Inji iOS build to Testflight
 
 on:           
   workflow_dispatch:
