@@ -72,7 +72,7 @@ jobs:
           cd android/app
           ls
           pwd
-          yes | sudo keytool \
+          keytool \
           -genkey -v \
           -storetype PKCS12 \
           -keyalg RSA \
@@ -84,11 +84,14 @@ jobs:
           -keystore debug.keystore \
           -dname "CN=io.mosip.residentapp,OU=,O=,L=,S=,C=US"
           ls -l debug.keystore
+          ls
           pwd
 
       - name: Export variables for keystore
         run: |
           pwd
+          cd android/app
+          ls
           export DEBUG_KEYSTORE=debug.keystore
           export DEBUG_KEYSTORE_ALIAS=androiddebugkey
           export DEBUG_KEYSTORE_PASSWORD='${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
