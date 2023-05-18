@@ -3,19 +3,21 @@ name: Build App automatically when ever a Pull request is raised
 env:
   backendServiceDefaultUrl: https://api.qa-121.mosip.net/residentmobileapp
 
-# on:
-#   push:
-#     branches:
-#       - CI-publish
-  # pull_request: #runs automatically when PR is raised
-  #   types: [ opened, synchronize ] # when PR is opened, and commit is added to PR
-  #   branches:
-  #     - develop # specify the branch and use filters if needed -> 'release-**' - pattern -> 'releases/**'
-  #     - 'release/**' #-> release/1, release/01
-    # tags: # Sequence of patterns matched against refs/tags
-      # - '*'     #all tags 
-     # - v2
-     # - v1.* -> v1.9.1 , v1.23.4 
+on:
+  push:
+    paths:
+      - 'android/**'
+    branches:
+      - CI-publishc
+  pull_request: #runs automatically when PR is raised
+    types: [ opened, synchronize ] # when PR is opened, and commit is added to PR
+    branches:
+      # - develop # specify the branch and use filters if needed -> 'release-**' - pattern -> 'releases/**'
+      # - 'release-**' #-> release/1, release/01
+    tags: # Sequence of patterns matched against refs/tags
+      - '*'     #all tags 
+      # - v2
+      # - v1.* -> v1.9.1 , v1.23.4 
 
 jobs:
   build-android:
@@ -87,18 +89,19 @@ jobs:
           ls
           pwd
 
-      - name: Export variables for keystore
-        run: |
-          pwd
-          cd android/app
-          ls
-          export DEBUG_KEYSTORE=debug.keystore
-          export DEBUG_KEYSTORE_ALIAS=androiddebugkey
-          export DEBUG_KEYSTORE_PASSWORD='${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
-          echo $DEBUG_KEYSTORE
-          echo $DEBUG_KEYSTORE_ALIAS
-          echo $DEBUG_KEYSTORE_PASSWORD
-          pwd
+      # - name: Export variables for keystore
+      #   run: |
+      #     pwd
+      #     cd android/app
+      #     ls
+      #     echo $DEBUG_KEYSTORE
+      #     echo $DEBUG_KEYSTORE_ALIAS
+      #     echo $DEBUG_KEYSTORE_PASSWORD
+      #     pwd
+      #   env:
+      #     DEBUG_KEYSTORE: debug.keystore 
+      #     DEBUG_KEYSTORE_ALIAS: androiddebugkey
+      #     DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
 
       - name: Run Fastlane
         run: | 
@@ -106,5 +109,9 @@ jobs:
           pwd
           yes | sudo gem install bundler
           yes | sudo fastlane install_plugins
-          fastlane test_android_build
+          bundle exec fastlane test_android_build
+        env:
+          DEBUG_KEYSTORE: app/debug.keystore 
+          DEBUG_KEYSTORE_ALIAS: androiddebugkey
+          DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
 
