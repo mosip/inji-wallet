@@ -96,6 +96,7 @@ jobs:
       - name: Update Version Code
         run: |
           cd android/app
+          chmod +x build.gradle
           current_version_code=$(grep -oP 'versionCode \K\d+' build.gradle)
           sed -i "s/VERSION_CODE_PLACEHOLDER/${{ github.run_number }}/" build.gradle
 
