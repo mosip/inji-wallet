@@ -71,9 +71,6 @@ jobs:
       
       - name: Generate keystore
         run: |
-          cd android/app
-          ls
-          pwd
           keytool \
           -genkey -v \
           -storetype PKCS12 \
@@ -85,9 +82,6 @@ jobs:
           -alias androiddebugkey \
           -keystore android/app/debug.keystore \
           -dname "CN=io.mosip.residentapp,OU=,O=,L=,S=,C=US"
-          ls -l debug.keystore
-          ls
-          pwd
 
       # - name: Export variables for keystore
       #   run: |
