@@ -98,6 +98,16 @@ jobs:
           cd android/app
           current_version_code=$(grep -oP 'versionCode \K\d+' build.gradle)
           echo "Current Version Code: $current_version_code"
+
+      - name: Bump version code
+        uses: chkfung/android-version-actions@v1.1
+        with:
+          gradlePath: android/app/build.gradle
+          versionCode: ${{github.run_number}}
+
+      - name: Update Version Code 2
+        run: |
+          cd android/app
           sed -i "s/VERSION_CODE_PLACEHOLDER/${{ github.run_number }}/" build.gradle
           current_version_code=$(grep -oP 'versionCode \K\d+' build.gradle)
           echo "Current Version Code: $current_version_code"
