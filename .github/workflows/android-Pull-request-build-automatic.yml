@@ -93,6 +93,17 @@ jobs:
           echo $DEBUG_KEYSTORE_ALIAS
           echo $DEBUG_KEYSTORE_PASSWORD
 
+      - name: Bump version code
+        uses: chkfung/android-version-actions@v1.1
+        with:
+          gradlePath: android/app/build.gradle
+          versionCode: ${{github.run_number}}
+ 
+      - name: Grant rights
+        run: |
+          cd android/app
+          chmod +x build.gradle
+
       - name: Run Fastlane
         run: | 
           cd android
@@ -108,3 +119,11 @@ jobs:
           DEBUG_KEYSTORE_ALIAS: androiddebugkey
           DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
 
+# - name: Publish to Play Store BETA
+#         id: publish
+#         uses: r0adkll/upload-google-play@v1
+#         with:
+#           serviceAccountJson: service_account.json
+#           packageName: com.name.appname
+#           releaseFile: app/build/outputs/bundle/prodRelease/app-prod-release.aab
+#           track: beta

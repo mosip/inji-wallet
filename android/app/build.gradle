@@ -158,7 +158,7 @@ android {
         // More info here:
         // https://github.com/gladed/gradle-android-git-version#3-use-a-git-tag-to-specify-your-version-number-see-semantic-versioning
         versionName androidGitVersion.name()
-        versionCode androidGitVersion.code()
+        versionCode 1
 
         Properties properties = new Properties()
         properties.load(project.rootProject.file('local.properties').newDataInputStream())
