@@ -71,6 +71,13 @@ jobs:
           gpg2 --import ./.github/keys/mosipgpgkey_pub.gpg 
           gpg2 --quiet --batch --passphrase=${{secrets.gpg_secret}}  --allow-secret-key-import --import ./.github/keys/mosipgpgkey_sec.gpg
 
+      - name: Setup Firebase
+        run: |
+          cd android
+          if [ ! -z "$FIREBASE_SECRET" ] && [ -f app/google-services.json.gpg ];then rm -f app/google-services.json;gpg2 --quiet --batch --passphrase=$FIREBASE_SECRET --pinentry-mode loopback --decrypt --output app/google-services.json app/mosip-google-services.json.gpg;fi
+        env:
+          FIREBASE_SECRET: ${{ secrets.GPG_SECRET }}
+
       - name: Generate keystore
         run: |
           keytool \
@@ -96,16 +103,16 @@ jobs:
           echo $RELEASE_KEYSTORE_ALIAS
           echo $RELEASE_KEYSTORE_PASSWORD
 
-      - name: Setup Firebase 
-        run: |
-          gpg2 --import ./.github/keys/public_key.gpg
-          gpg2 --quiet --batch --passphrase=${{secrets.gpg_secret}}  --allow-secret-key-import --import ./.github/keys/secret_key.gpg
-          cd android
-          if [ ! -z "$FIREBASE_SECRET" ] && [ -f app/google-services.json.gpg ];then rm -f app/google-services.json;gpg2 --quiet --batch --passphrase=$FIREBASE_SECRET --pinentry-mode loopback --decrypt --output app/google-services.json app/mosip-google-services.json.gpg;fi
-        env:
-          MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
-          FIREBASE_SECRET: ${{ secrets.GPG_SECRET }}
-          APPLICATION_THEME: ${{ github.event.inputs.theme }}
+      # - name: Setup Firebase 
+      #   run: |
+      #     gpg2 --import ./.github/keys/public_key.gpg
+      #     gpg2 --quiet --batch --passphrase=${{secrets.gpg_secret}}  --allow-secret-key-import --import ./.github/keys/secret_key.gpg
+      #     cd android
+      #     if [ ! -z "$FIREBASE_SECRET" ] && [ -f app/google-services.json.gpg ];then rm -f app/google-services.json;gpg2 --quiet --batch --passphrase=$FIREBASE_SECRET --pinentry-mode loopback --decrypt --output app/google-services.json app/mosip-google-services.json.gpg;fi
+      #   env:
+      #     MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
+      #     FIREBASE_SECRET: ${{ secrets.GPG_SECRET }}
+      #     APPLICATION_THEME: ${{ github.event.inputs.theme }}
 
       - name: Run Fastlane
         run: | 
