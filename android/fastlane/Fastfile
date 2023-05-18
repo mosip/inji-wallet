@@ -21,22 +21,15 @@ plugins = [
 ]
 
 default_platform(:android)
-  before_all do
-    Dotenv.load ".env"
-  end
+DEBUG_KEYSTORE = ENV["DEBUG_KEYSTORE"]
+DEBUG_KEYSTORE_ALIAS = ENV["DEBUG_KEYSTORE_ALIAS"]
+DEBUG_KEYSTORE_PASSWORD = ENV["DEBUG_KEYSTORE_PASSWORD"]
+
+
 desc "Verify Build for Android"
 lane :test_android_build do
-  debug_keystore = ENV['DEBUG_KEYSTORE']
-  debug_keystore_alias = ENV['DEBUG_KEYSTORE_ALIAS']
-  debug_keystore_password = ENV['DEBUG_KEYSTORE_PASSWORD']
-
   gradle(
     task: "assembleNewlogicDebug",
-    properties: {
-      'DEBUG_KEYSTORE' => debug_keystore,
-      'DEBUG_KEYSTORE_ALIAS' => debug_keystore_alias,
-      'DEBUG_KEYSTORE_PASSWORD' => debug_keystore_password
-    }
   )
 end
 
