@@ -83,19 +83,15 @@ jobs:
           -keystore android/app/debug.keystore \
           -dname "CN=io.mosip.residentapp,OU=,O=,L=,S=,C=US"
 
-      # - name: Export variables for keystore
-      #   run: |
-      #     pwd
-      #     cd android/app
-      #     ls
-      #     echo $DEBUG_KEYSTORE
-      #     echo $DEBUG_KEYSTORE_ALIAS
-      #     echo $DEBUG_KEYSTORE_PASSWORD
-      #     pwd
-      #   env:
-      #     DEBUG_KEYSTORE: debug.keystore 
-      #     DEBUG_KEYSTORE_ALIAS: androiddebugkey
-      #     DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
+      - name: Export variables for keystore
+        run: |
+          cd android/app
+          export DEBUG_KEYSTORE=debug.keystore
+          export DEBUG_KEYSTORE_ALIAS=androiddebugkey
+          export DEBUG_KEYSTORE_PASSWORD='${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
+          echo $DEBUG_KEYSTORE
+          echo $DEBUG_KEYSTORE_ALIAS
+          echo $DEBUG_KEYSTORE_PASSWORD
 
       - name: Run Fastlane
         run: | 
@@ -103,11 +99,12 @@ jobs:
           echo $DEBUG_KEYSTORE
           echo $DEBUG_KEYSTORE_ALIAS
           echo $DEBUG_KEYSTORE_PASSWORD
-          yes | sudo gem install bundler
-          yes | sudo fastlane install_plugins
-          fastlane test_android_build
+          ./gradlew :app:assembleNewlogicDebug
+          # yes | sudo gem install bundler
+          # yes | sudo fastlane install_plugins
+          # fastlane test_android_build
         env:
-          DEBUG_KEYSTORE: android/app/debug.keystore 
+          DEBUG_KEYSTORE: debug.keystore 
           DEBUG_KEYSTORE_ALIAS: androiddebugkey
           DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
 
