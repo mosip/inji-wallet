@@ -93,12 +93,6 @@ jobs:
           echo $DEBUG_KEYSTORE_ALIAS
           echo $DEBUG_KEYSTORE_PASSWORD
 
-      - name: Bump version code
-        uses: chkfung/android-version-actions@v1.1
-        with:
-          gradlePath: android/app/build.gradle
-          versionCode: ${{github.run_number}}
-
       - name: Update Version Code
         run: |
           cd android/app
