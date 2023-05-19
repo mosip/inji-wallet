@@ -101,7 +101,7 @@ jobs:
           # yes | sudo gem install bundler
           # yes | sudo fastlane install_plugins
           # fastlane test_android_build
-        # env:
-        #   DEBUG_KEYSTORE: debug.keystore 
-        #   DEBUG_KEYSTORE_ALIAS: androiddebugkey
-        #   DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
+        env:
+          DEBUG_KEYSTORE: debug.keystore 
+          DEBUG_KEYSTORE_ALIAS: androiddebugkey
+          DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
