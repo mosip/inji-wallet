@@ -90,7 +90,7 @@ platform :ios do
       
       export_options: {
         provisioningProfiles: { 
-            "#{DEVELOPER_APP_IDENTIFIER}" => "#{PROVISIONING_PROFILE_SPECIFIER}"
+          DEVELOPER_APP_IDENTIFIER => PROVISIONING_PROFILE_SPECIFIER
         }
       }
     )
