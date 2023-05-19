@@ -39,7 +39,6 @@ end
 
 def create_temp_keychain(name, password)
   create_keychain(
-    default_keychain: true,
     name: name,
     password: password,
     unlock: true,
