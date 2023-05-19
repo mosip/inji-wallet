@@ -464,7 +464,10 @@ export const vcItemMachine =
             onDone: [
               {
                 target: 'updatingPrivateKey',
-                actions: ['setWalletBindingId'],
+                actions: [
+                  'setWalletBindingId',
+                  'setThumbprintForWalletBindingId',
+                ],
               },
             ],
             onError: [
@@ -533,6 +536,21 @@ export const vcItemMachine =
           },
           {
             to: (context) => context.serviceRefs.vc,
+          }
+        ),
+        setThumbprintForWalletBindingId: send(
+          (context) => {
+            const { walletBindingResponse } = context;
+            const walletBindingIdKey = getBindingCertificateConstant(
+              walletBindingResponse.walletBindingId
+            );
+            return StoreEvents.SET(
+              walletBindingIdKey,
+              walletBindingResponse.thumbprint
+            );
+          },
+          {
+            to: (context) => context.serviceRefs.store,
           }
         ),
 

@@ -9,7 +9,6 @@ export function generateKeys(): Promise<KeyPair> {
 export async function getJwt(
   privateKey: string,
   individualId: string,
-  keyId: string,
   thumbprint: string
 ) {
   var token: string = null;
