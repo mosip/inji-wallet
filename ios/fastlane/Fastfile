@@ -39,6 +39,7 @@ end
 
 def create_temp_keychain(name, password)
   create_keychain(
+    default_keychain: true,
     name: name,
     password: password,
     unlock: true,
@@ -110,8 +111,8 @@ platform :ios do
 
     slack(
       message: "App successfully uploaded to iTunesConnect.",
-      success: true,
-      slack_url: "https://hooks.slack.com/services/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"
+      success: true, 
+      slack_url: "#{SLACK_URL}"
     )
   end
 end
