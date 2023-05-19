@@ -15,12 +15,13 @@ import { createActivityLogMachine, activityLogMachine } from './activityLog';
 import {
   createRequestMachine,
   requestMachine,
-} from './openIdBle/request/machine';
-import { createScanMachine, scanMachine } from './openIdBle/scan/machine';
+} from './openIdBle/request/requestMachine';
+import { createScanMachine, scanMachine } from './openIdBle/scan/scanMachine';
 import { createRevokeMachine, revokeVidsMachine } from './revoke';
 
 import { pure, respond } from 'xstate/lib/actions';
 import { AppServices } from '../shared/GlobalContext';
+import { request } from '../shared/request';
 
 const model = createModel(
   {
@@ -261,7 +262,7 @@ export const appMachine = model.createMachine(
           config: {},
         };
         try {
-          // backendInfo = await request('GET', '/residentmobileapp/info');
+          backendInfo = await request('GET', '/residentmobileapp/info');
           callback(model.events.BACKEND_INFO_RECEIVED(backendInfo));
         } catch {
           callback(model.events.BACKEND_INFO_RECEIVED(backendInfo));

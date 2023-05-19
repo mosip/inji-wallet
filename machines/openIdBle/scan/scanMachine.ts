@@ -99,7 +99,7 @@ export const scanMachine =
     {
       predictableActionArguments: true,
       preserveActionOrder: true,
-      tsTypes: {} as import('./machine.typegen').Typegen0,
+      tsTypes: {} as import('./scanMachine.typegen').Typegen0,
       schema: {
         context: model.initialContext,
         events: {} as EventFrom<typeof model>,
@@ -744,7 +744,7 @@ export const scanMachine =
         startConnection: (context) => (callback) => {
           wallet.startConnection(context.openId4VpUri);
           const statusCallback = (event: WalletDataEvent) => {
-            if (event.type === 'onKeyExchangeSuccess') {
+            if (event.type === 'onSecureChannelEstablished') {
               callback({ type: 'CONNECTED' });
             }
           };
@@ -761,10 +761,7 @@ export const scanMachine =
           };
 
           const statusCallback = (event: WalletDataEvent) => {
-            if (
-              event.type === 'onTransferStatusUpdate' &&
-              event.status == 'SUCCESS'
-            ) {
+            if (event.type === 'onDataSent') {
               callback({ type: 'VC_SENT' });
             } else if (event.type === 'onVerificationStatusReceived') {
               callback({

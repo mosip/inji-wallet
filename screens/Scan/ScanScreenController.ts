@@ -14,7 +14,7 @@ import {
   selectQrLoginRef,
 } from '../../machines/openIdBle/scan/selectors';
 import { selectIsBluetoothDenied } from '../../machines/openIdBle/commonSelectors';
-import { ScanEvents } from '../../machines/openIdBle/scan/machine';
+import { ScanEvents } from '../../machines/openIdBle/scan/scanMachine';
 
 export function useScanScreen() {
   const { t } = useTranslation('ScanScreen');

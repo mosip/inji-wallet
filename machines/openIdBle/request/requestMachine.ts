@@ -71,7 +71,7 @@ export const requestMachine =
     {
       predictableActionArguments: true,
       preserveActionOrder: true,
-      tsTypes: {} as import('./machine.typegen').Typegen0,
+      tsTypes: {} as import('./requestMachine.typegen').Typegen0,
       schema: {
         context: model.initialContext,
         events: {} as EventFrom<typeof model>,
@@ -604,7 +604,7 @@ export const requestMachine =
           callback({ type: 'ADV_STARTED', openId4VpUri });
 
           const statusCallback = (event: VerifierDataEvent) => {
-            if (event.type === 'onKeyExchangeSuccess') {
+            if (event.type === 'onSecureChannelEstablished') {
               callback({ type: 'CONNECTED' });
             }
           };
@@ -629,8 +629,8 @@ export const requestMachine =
 
         receiveVc: () => (callback) => {
           const statusCallback = (event: VerifierDataEvent) => {
-            if (event.type === 'onVCReceived') {
-              callback({ type: 'VC_RECEIVED', vc: JSON.parse(event.vc) });
+            if (event.type === 'onDataReceived') {
+              callback({ type: 'VC_RECEIVED', vc: JSON.parse(event.data) });
             }
           };
           const subscription = offlineSubscribe(statusCallback);

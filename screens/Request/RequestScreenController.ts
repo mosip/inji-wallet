@@ -22,7 +22,7 @@ import {
   selectIsOffline,
   selectIsReviewing,
 } from '../../machines/openIdBle/commonSelectors';
-import { RequestEvents } from '../../machines/openIdBle/request/machine';
+import { RequestEvents } from '../../machines/openIdBle/request/requestMachine';
 
 export function useRequestScreen() {
   const { t } = useTranslation('RequestScreen');

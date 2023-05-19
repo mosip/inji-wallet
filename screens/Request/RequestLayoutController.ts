@@ -17,7 +17,7 @@ import {
   selectIsRejected,
   selectIsReviewing,
 } from '../../machines/openIdBle/commonSelectors';
-import { RequestEvents } from '../../machines/openIdBle/request/machine';
+import { RequestEvents } from '../../machines/openIdBle/request/requestMachine';
 
 type RequestStackParamList = {
   RequestScreen: undefined;

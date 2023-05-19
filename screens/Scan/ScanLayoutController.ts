@@ -30,7 +30,7 @@ import {
   selectIsRejected,
   selectIsReviewing,
 } from '../../machines/openIdBle/commonSelectors';
-import { ScanEvents } from '../../machines/openIdBle/scan/machine';
+import { ScanEvents } from '../../machines/openIdBle/scan/scanMachine';
 
 type ScanStackParamList = {
   ScanScreen: undefined;

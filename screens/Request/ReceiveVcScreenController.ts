@@ -15,7 +15,7 @@ import {
   selectIsInvalidIdentity,
   selectIsVerifyingIdentity,
 } from '../../machines/openIdBle/commonSelectors';
-import { RequestEvents } from '../../machines/openIdBle/request/machine';
+import { RequestEvents } from '../../machines/openIdBle/request/requestMachine';
 
 export function useReceiveVcScreen() {
   const { appService } = useContext(GlobalContext);
