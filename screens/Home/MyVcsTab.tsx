@@ -16,7 +16,6 @@ import { MessageOverlay } from '../../components/MessageOverlay';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
   const { t } = useTranslation('MyVcsTab');
-  const { t: commonTranslate } = useTranslation('common');
   const controller = useMyVcsTab(props);
   let storeErrorTranslationPath = 'errors.savingFailed';
   const isDiskFullError =
@@ -125,11 +124,11 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
       />
       <MessageOverlay
         isVisible={controller.isSavingFailedInIdle}
-        title={commonTranslate(storeErrorTranslationPath + '.title', {
+        title={t(storeErrorTranslationPath + '.title', {
           vcLabelSingular: controller.vcLabel.singular,
           vcLabelPlural: controller.vcLabel.plural,
         })}
-        message={commonTranslate(storeErrorTranslationPath + '.message', {
+        message={t(storeErrorTranslationPath + '.message', {
           vcLabelSingular: controller.vcLabel.singular,
           vcLabelPlural: controller.vcLabel.plural,
         })}

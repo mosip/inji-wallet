@@ -120,7 +120,6 @@ const WalletUnverified: React.FC = () => {
 export const VcItem: React.FC<VcItemProps> = (props) => {
   const { appService } = useContext(GlobalContext);
   const { t } = useTranslation('VcDetails');
-  const { t: commonTranslate } = useTranslation('common');
   const machine = useRef(
     createVcItemMachine(
       appService.getSnapshot().context.serviceRefs,
@@ -318,11 +317,11 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
       </Pressable>
       <MessageOverlay
         isVisible={isSavingFailedInIdle}
-        title={commonTranslate(storeErrorTranslationPath + '.title', {
+        title={t(storeErrorTranslationPath + '.title', {
           vcLabelSingular: vcLabel.singular,
           vcLabelPlural: vcLabel.plural,
         })}
-        message={commonTranslate(storeErrorTranslationPath + '.message', {
+        message={t(storeErrorTranslationPath + '.message', {
           vcLabelSingular: vcLabel.singular,
           vcLabelPlural: vcLabel.plural,
         })}

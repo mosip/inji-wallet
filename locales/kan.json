@@ -61,7 +61,17 @@
     "yes_confirm": "ಹೌದು, ನಾನು ದೃಢೀಕರಿಸುತ್ತೇನೆ",
     "no": "ಸಂ",
     "Alert": "ಎಚ್ಚರಿಕೆ",
-    "ok": "ಸರಿ"
+    "ok": "ಸರಿ",
+    "errors": {
+      "savingFailed": {
+        "title": "{{vcLabelSingular}} ಉಳಿಸಲು ವಿಫಲವಾಗಿದೆ",
+        "message": "ಸ್ಟೋರ್‌ನಲ್ಲಿ {{vcLabelSingular}} ಉಳಿಸುವಾಗ ಏನೋ ತಪ್ಪಾಗಿದೆ."
+      },
+      "diskFullError": {
+        "title": "{{vcLabelSingular}} ಉಳಿಸಲು ವಿಫಲವಾಗಿದೆ",
+        "message": "ಅಪ್ಲಿಕೇಶನ್ ಡೇಟಾ ತುಂಬಿರುವುದರಿಂದ ಇನ್ನು ಮುಂದೆ {{vcLabelPlural}} ಸ್ವೀಕರಿಸಲು ಅಥವಾ ಉಳಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ."
+      }
+    }
   },
   "AuthScreen": {
     "header": "ಅಪ್ಲಿಕೇಶನ್ ಅನ್‌ಲಾಕ್ ಮಾಡಲು ಬಯೋಮೆಟ್ರಿಕ್ಸ್ ಬಳಸಲು ನೀವು ಬಯಸುವಿರಾ?",
@@ -152,7 +162,17 @@
   "MyVcsTab": {
     "addVcButton": "ಸೇರಿಸಿ {{vcLabel}}",
     "generateVc": "ನಿಮ್ಮ {{vcLabel}} ಅನ್ನು ರಚಿಸಿ",
-    "generateVcDescription": "ನಿಮ್ಮ \"ಸೇರಿಸಿ {{vcLabel}}\" ಅನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ {{vcLabel}}"
+    "generateVcDescription": "ನಿಮ್ಮ \"ಸೇರಿಸಿ {{vcLabel}}\" ಅನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ {{vcLabel}}",
+    "errors": {
+      "savingFailed": {
+        "title": "{{vcLabelSingular}} ಉಳಿಸಲು ವಿಫಲವಾಗಿದೆ",
+        "message": "ಸ್ಟೋರ್‌ನಲ್ಲಿ {{vcLabelSingular}} ಉಳಿಸುವಾಗ ಏನೋ ತಪ್ಪಾಗಿದೆ."
+      },
+      "diskFullError": {
+        "title": "{{vcLabelSingular}} ಉಳಿಸಲು ವಿಫಲವಾಗಿದೆ",
+        "message": "ಅಪ್ಲಿಕೇಶನ್ ಡೇಟಾ ತುಂಬಿರುವುದರಿಂದ ಇನ್ನು ಮುಂದೆ {{vcLabelPlural}} ಸ್ವೀಕರಿಸಲು ಅಥವಾ ಉಳಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ."
+      }
+    }
   },
   "OnboardingOverlay": {
     "stepOneTitle": "ಸ್ವಾಗತ!",
@@ -417,15 +437,7 @@
       "allowAccess": "ಕ್ಯಾಮರಾಗೆ ಪ್ರವೇಶವನ್ನು ಅನುಮತಿಸಿ"
     },
     "errors": {
-      "genericError": "ಏನೋ ತಪ್ಪಾಗಿದೆ. ದಯವಿಟ್ಟು ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ!",
-      "savingFailed": {
-        "title": "{{vcLabelSingular}} ಉಳಿಸಲು ವಿಫಲವಾಗಿದೆ",
-        "message": "ಸ್ಟೋರ್‌ನಲ್ಲಿ {{vcLabelSingular}} ಉಳಿಸುವಾಗ ಏನೋ ತಪ್ಪಾಗಿದೆ."
-      },
-      "diskFullError": {
-        "title": "{{vcLabelSingular}} ಉಳಿಸಲು ವಿಫಲವಾಗಿದೆ",
-        "message": "ಅಪ್ಲಿಕೇಶನ್ ಡೇಟಾ ತುಂಬಿರುವುದರಿಂದ ಇನ್ನು ಮುಂದೆ {{vcLabelPlural}} ಸ್ವೀಕರಿಸಲು ಅಥವಾ ಉಳಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ."
-      }
+      "genericError": "ಏನೋ ತಪ್ಪಾಗಿದೆ. ದಯವಿಟ್ಟು ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ!"
     }
   }
 }

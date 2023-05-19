@@ -61,7 +61,17 @@
     "yes_confirm": "Yes, I Confirm",
     "no": "No",
     "Alert": "Alert",
-    "ok": "Okay"
+    "ok": "Okay",
+    "errors": {
+      "savingFailed": {
+        "title": "Failed to save the {{vcLabelSingular}}",
+        "message": "Something went wrong while saving {{vcLabelSingular}} to the store."
+      },
+      "diskFullError": {
+        "title": "Failed to save the {{vcLabelSingular}}",
+        "message": "No more {{vcLabelPlural}} can be received or saved as App Data is full."
+      }
+    }
   },
   "AuthScreen": {
     "header": "Would you like to use biometrics to unlock the application?",
@@ -152,7 +162,17 @@
   "MyVcsTab": {
     "addVcButton": "Add {{vcLabel}}",
     "generateVc": "Generate your {{vcLabel}}",
-    "generateVcDescription": "Tap on \"Add {{vcLabel}}\" below to download your {{vcLabel}}"
+    "generateVcDescription": "Tap on \"Add {{vcLabel}}\" below to download your {{vcLabel}}",
+    "errors": {
+      "savingFailed": {
+        "title": "Failed to save the {{vcLabelSingular}}",
+        "message": "Something went wrong while saving {{vcLabelSingular}} to the store."
+      },
+      "diskFullError": {
+        "title": "Failed to save the {{vcLabelSingular}}",
+        "message": "No more {{vcLabelPlural}} can be received or saved as App Data is full."
+      }
+    }
   },
   "OnboardingOverlay": {
     "stepOneTitle": "Welcome!",
@@ -391,15 +411,7 @@
       "allowAccess": "Allow access to the camera"
     },
     "errors": {
-      "genericError": "Something went wrong. Please try again after some time!",
-      "savingFailed": {
-        "title": "Failed to save the {{vcLabelSingular}}",
-        "message": "Something went wrong while saving {{vcLabelSingular}} to the store."
-      },
-      "diskFullError": {
-        "title": "Failed to save the {{vcLabelSingular}}",
-        "message": "No more {{vcLabelPlural}} can be received or saved as App Data is full."
-      }
+      "genericError": "Something went wrong. Please try again after some time!"
     }
   }
 }

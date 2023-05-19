@@ -61,7 +61,17 @@
     "yes_confirm": "نعم ، أنا أؤكد",
     "no": "رقم",
     "Alert": "انذار",
-    "ok": "تمام"
+    "ok": "تمام",
+    "errors": {
+      "savingFailed": {
+        "title": "فشل حفظ {{vcLabelSingular}}",
+        "message": "شئ ما ذهب خطأ بينما إنقاذ {{vcLabelSingular}} ل ال محل."
+      },
+      "diskFullError": {
+        "title": "فشل حفظ {{vcLabelSingular}}",
+        "message": "لا يمكن استلام المزيد من {{vcLabelPlural}} أو حفظه لأن بيانات التطبيق ممتلئة."
+      }
+    }
   },
   "AuthScreen": {
     "header": "هل ترغب في استخدام المقاييس الحيوية لفتح التطبيق؟",
@@ -152,7 +162,17 @@
   "MyVcsTab": {
     "addVcButton": "{{vcLabel}} إضافة",
     "generateVc": "{{vcLabel}}إنشاء",
-    "generateVcDescription": "إضافة {{vcLabel}} أدناه لتنزيل {{vcLabel}}"
+    "generateVcDescription": "إضافة {{vcLabel}} أدناه لتنزيل {{vcLabel}}",
+    "errors": {
+      "savingFailed": {
+        "title": "فشل حفظ {{vcLabelSingular}}",
+        "message": "شئ ما ذهب خطأ بينما إنقاذ {{vcLabelSingular}} ل ال محل."
+      },
+      "diskFullError": {
+        "title": "فشل حفظ {{vcLabelSingular}}",
+        "message": "لا يمكن استلام المزيد من {{vcLabelPlural}} أو حفظه لأن بيانات التطبيق ممتلئة."
+      }
+    }
   },
   "OnboardingOverlay": {
     "stepOneTitle": "مرحبًا!",
@@ -247,11 +267,11 @@
     "saving": "إنقاذ",
     "errors": {
       "savingFailed": {
-        "title": "فشل حفظ {{vcLabel}}",
-        "message": "شئ ما ذهب خطأ بينما إنقاذ {{vcLabel}} ل ال محل."
+        "title": "فشل حفظ {{vcLabelSingular}}",
+        "message": "شئ ما ذهب خطأ بينما إنقاذ {{vcLabelSingular}} ل ال محل."
       },
       "diskFullError": {
-        "title": "فشل حفظ {{vcLabel}}",
+        "title": "فشل حفظ {{vcLabelSingular}}",
         "message": "لا يمكن استلام المزيد من {{vcLabelPlural}} أو حفظه لأن بيانات التطبيق ممتلئة."
       }
     }
@@ -415,16 +435,6 @@
         "missingPermission": "يستخدم هذا التطبيق الكاميرا لمسح رمز الاستجابة السريعة لجهاز آخر."
       },
       "allowAccess": "اسمح بالوصول إلى الكاميرا"
-    },
-    "errors": {
-      "savingFailed": {
-        "title": "فشل حفظ {{vcLabelSingular}}",
-        "message": "شئ ما ذهب خطأ بينما إنقاذ {{vcLabelSingular}} ل ال محل."
-      },
-      "diskFullError": {
-        "title": "فشل حفظ {{vcLabelSingular}}",
-        "message": "لا يمكن استلام المزيد من {{vcLabelPlural}} أو حفظه لأن بيانات التطبيق ممتلئة."
-      }
     }
   }
 }

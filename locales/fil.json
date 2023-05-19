@@ -61,7 +61,17 @@
     "yes_confirm": "Oo, Kinukumpirma ko",
     "no": "Hindi",
     "Alert": "Alerto",
-    "ok": "Sige"
+    "ok": "Sige",
+    "errors": {
+      "savingFailed": {
+        "title": "Nabigong i-save ang {{vcLabelSingular}}",
+        "message": "Nagkaproblema habang nagse-save ng {{vcLabelSingular}} sa tindahan."
+      },
+      "diskFullError": {
+        "title": "Nabigong i-save ang {{vcLabelSingular}}",
+        "message": "Wala nang mga {{vcLabelPlural}} na matatanggap o mai-save dahil puno na ang Data ng App."
+      }
+    }
   },
   "AuthScreen": {
     "header": "Gusto mo bang gumamit ng biometrics upang i-unlock ang aplikasyon?",
@@ -152,7 +162,17 @@
   "MyVcsTab": {
     "addVcButton": "Magdagdag ng {{vcLabel}}",
     "generateVc": "Gumawa ng iyong {{vcLabel}}",
-    "generateVcDescription": "Pindutin ang \"Magdagdag ng {{vcLabel}}\" sa ibaba upang makuha ang iyong {{vcLabel}}"
+    "generateVcDescription": "Pindutin ang \"Magdagdag ng {{vcLabel}}\" sa ibaba upang makuha ang iyong {{vcLabel}}",
+    "errors": {
+      "savingFailed": {
+        "title": "Nabigong i-save ang {{vcLabelSingular}}",
+        "message": "Nagkaproblema habang nagse-save ng {{vcLabelSingular}} sa tindahan."
+      },
+      "diskFullError": {
+        "title": "Nabigong i-save ang {{vcLabelSingular}}",
+        "message": "Wala nang mga {{vcLabelPlural}} na matatanggap o mai-save dahil puno na ang Data ng App."
+      }
+    }
   },
   "OnboardingOverlay": {
     "stepOneTitle": "Mabuhay!",
@@ -391,15 +411,7 @@
     "editLabel": "Palitan ang {{label}}",
     "tryAgain": "Subukan muli",
     "errors": {
-      "genericError": "Nagkaproblema. Pakisubukang muli pagkatapos ng ilang oras!",
-      "savingFailed": {
-        "title": "Nabigong i-save ang {{vcLabelSingular}}",
-        "message": "Nagkaproblema habang nagse-save ng {{vcLabelSingular}} sa tindahan."
-      },
-      "diskFullError": {
-        "title": "Nabigong i-save ang {{vcLabelSingular}}",
-        "message": "Wala nang mga {{vcLabelPlural}} na matatanggap o mai-save dahil puno na ang Data ng App."
-      }
+      "genericError": "Nagkaproblema. Pakisubukang muli pagkatapos ng ilang oras!"
     }
   }
 }
