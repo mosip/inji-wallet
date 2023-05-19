@@ -1,31 +1,31 @@
+import { KeyPair } from 'react-native-rsa-native';
 import { assign, ErrorPlatformEvent, EventFrom, send, StateFrom } from 'xstate';
-import { createModel } from 'xstate/lib/model';
-import { MY_VCS_STORE_KEY, VC_ITEM_STORE_KEY } from '../shared/constants';
-import { AppServices } from '../shared/GlobalContext';
-import { CredentialDownloadResponse, request } from '../shared/request';
-import {
-  VC,
-  VerifiableCredential,
-  VcIdType,
-  DecodedCredential,
-} from '../types/vc';
-import { StoreEvents } from './store';
-import { ActivityLogEvents } from './activityLog';
-import { verifyCredential } from '../shared/vcjs/verifyCredential';
 import { log } from 'xstate/lib/actions';
+import { createModel } from 'xstate/lib/model';
+import i18n from '../i18n';
+import getAllConfigurations, {
+  DownloadProps,
+} from '../shared/commonprops/commonProps';
+import { MY_VCS_STORE_KEY, VC_ITEM_STORE_KEY } from '../shared/constants';
 import {
   generateKeys,
   WalletBindingResponse,
 } from '../shared/cryptoutil/cryptoUtil';
-import { KeyPair } from 'react-native-rsa-native';
+import { AppServices } from '../shared/GlobalContext';
 import {
   getBindingCertificateConstant,
   savePrivateKey,
 } from '../shared/keystore/SecureKeystore';
-import getAllConfigurations, {
-  DownloadProps,
-} from '../shared/commonprops/commonProps';
-import i18n from '../i18n';
+import { CredentialDownloadResponse, request } from '../shared/request';
+import { verifyCredential } from '../shared/vcjs/verifyCredential';
+import {
+  DecodedCredential,
+  VC,
+  VcIdType,
+  VerifiableCredential,
+} from '../types/vc';
+import { ActivityLogEvents } from './activityLog';
+import { StoreEvents } from './store';
 
 const model = createModel(
   {
@@ -36,6 +36,7 @@ const model = createModel(
     generatedOn: null as Date,
     credential: null as DecodedCredential,
     verifiableCredential: null as VerifiableCredential,
+    storeVerifiableCredential: null as VerifiableCredential,
     requestId: '',
     isVerified: false,
     lastVerifiedOn: null,
@@ -185,10 +186,14 @@ export const vcItemMachine =
                   },
                 ],
                 CREDENTIAL_DOWNLOADED: {
-                  actions: ['setCredential', 'storeContext'],
+                  actions: ['setStoreVerifiableCredential', 'storeContext'],
                 },
                 STORE_RESPONSE: {
-                  actions: ['updateVc', 'logDownloaded'],
+                  actions: [
+                    'setVerifiableCredential',
+                    'updateVc',
+                    'logDownloaded',
+                  ],
                   target: '#vc-item.checkingVerificationStatus',
                 },
                 STORE_ERROR: {
@@ -518,6 +523,27 @@ export const vcItemMachine =
     },
     {
       actions: {
+        setVerifiableCredential: assign((context) => {
+          return {
+            ...context,
+            verifiableCredential: {
+              ...context.storeVerifiableCredential,
+            },
+            storeVerifiableCredential: null,
+          };
+        }),
+
+        setStoreVerifiableCredential: model.assign((context, event) => {
+          return {
+            ...context,
+            ...event.vc,
+            storeVerifiableCredential: {
+              ...event.vc.verifiableCredential,
+            },
+            verifiableCredential: null,
+          };
+        }),
+
         setStoreError: assign({
           storeError: (_context, event) => event.error,
         }),
