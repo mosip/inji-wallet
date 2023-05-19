@@ -88,6 +88,12 @@ jobs:
       #     export DEBUG_KEYSTORE_ALIAS=androiddebugkey
       #     export DEBUG_KEYSTORE_PASSWORD='${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
 
+      - name: Bump version code
+        uses: chkfung/android-version-actions@v1.2.1
+        with:
+          gradlePath: android/app/build.gradle
+          versionCode: ${{github.run_number}}
+          
       - name: Run Build
         run: | 
           cd android

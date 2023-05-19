@@ -135,6 +135,16 @@ androidGitVersion {
     baseCode 1
 }
 
+//untagged<a7da429><ci-linux-android>
+//tagged - v1.2.3
+def getGitVersionName() {
+    if (androidGitVersion.name().contains("untagged")) {
+        return androidGitVersion.name().substring(8)
+    } else {
+        return androidGitVersion.name().substringBefore("<")
+    }
+}
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
@@ -157,8 +167,8 @@ android {
         // Update versionName and/or versionCode via git tag <XX.xx.xx>
         // More info here:
         // https://github.com/gladed/gradle-android-git-version#3-use-a-git-tag-to-specify-your-version-number-see-semantic-versioning
-        versionName androidGitVersion.name()
-        versionCode VERSION_CODE_PLACEHOLDER
+        versionName getGitVersionName()
+        versionCode 1
 
         Properties properties = new Properties()
         properties.load(project.rootProject.file('local.properties').newDataInputStream())
