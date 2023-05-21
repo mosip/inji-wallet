@@ -9,7 +9,7 @@ import { Button, Column, Row, Text } from './ui';
 import { Theme } from './ui/styleUtils';
 import { TextItem } from './ui/TextItem';
 import { VcItemTags } from './VcItemTags';
-import QRCode from 'react-native-qrcode-svg';
+import { QrCodeOverlay } from './QrCodeOverlay';
 
 const VerifiedIcon: React.FC = () => {
   return (
@@ -52,13 +52,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
             <Column margin="20 0 0 0">
               <Image source={Theme.MosipLogo} style={Theme.Styles.logo} />
             </Column>
-            <Column margin="20 0 0 0">
-              <QRCode
-                size={90}
-                value={String(props.vc.credential)}
-                backgroundColor={Theme.Colors.QRCodeBackgroundColor}
-              />
-            </Column>
+            <QrCodeOverlay qrCodeDetailes={String(props.vc.credential)} />
           </Column>
           <Column align="space-evenly">
             <Column>
