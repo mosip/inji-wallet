@@ -16,7 +16,11 @@ import { ActivityLogEvents, ActivityLogType } from '../../activityLog';
 import { VcEvents } from '../../vc';
 import { offlineSubscribe } from '../../../shared/openIdBLE/verifierEventHandler';
 import { log } from 'xstate/lib/actions';
-import { VerifierDataEvent } from 'react-native-openid4vp-ble/lib/typescript/types/bleshare';
+import {
+  EventTypes,
+  VerificationStatus,
+  VerifierDataEvent,
+} from 'react-native-openid4vp-ble/lib/typescript/types/bleshare';
 // import { verifyPresentation } from '../shared/vcjs/verifyPresentation';
 
 const { verifier } = openIdBLE;
@@ -337,7 +341,7 @@ export const requestMachine =
               invoke: {
                 src: 'sendVcResponse',
                 data: {
-                  status: 'ACCEPTED',
+                  status: VerificationStatus.ACCEPTED,
                 },
               },
               on: {
@@ -354,7 +358,7 @@ export const requestMachine =
               invoke: {
                 src: 'sendVcResponse',
                 data: {
-                  status: 'REJECTED',
+                  status: VerificationStatus.REJECTED,
                 },
               },
               on: {
@@ -374,7 +378,7 @@ export const requestMachine =
               invoke: {
                 src: 'sendVcResponse',
                 data: {
-                  status: 'REJECTED',
+                  status: VerificationStatus.REJECTED,
                 },
               },
               states: {
@@ -604,7 +608,7 @@ export const requestMachine =
           callback({ type: 'ADV_STARTED', openId4VpUri });
 
           const statusCallback = (event: VerifierDataEvent) => {
-            if (event.type === 'onSecureChannelEstablished') {
+            if (event.type === EventTypes.onSecureChannelEstablished) {
               callback({ type: 'CONNECTED' });
             }
           };
@@ -614,11 +618,11 @@ export const requestMachine =
 
         monitorConnection: () => (callback) => {
           const subscription = verifier.handleDataEvents((event) => {
-            if (event.type === 'onDisconnected') {
+            if (event.type === EventTypes.onDisconnected) {
               callback({ type: 'DISCONNECT' });
             }
 
-            if (event.type === 'onError') {
+            if (event.type === EventTypes.onError) {
               callback({ type: 'BLE_ERROR' });
               console.log('BLE Exception: ' + event.message);
             }
@@ -629,7 +633,7 @@ export const requestMachine =
 
         receiveVc: () => (callback) => {
           const statusCallback = (event: VerifierDataEvent) => {
-            if (event.type === 'onDataReceived') {
+            if (event.type === EventTypes.onDataReceived) {
               callback({ type: 'VC_RECEIVED', vc: JSON.parse(event.data) });
             }
           };

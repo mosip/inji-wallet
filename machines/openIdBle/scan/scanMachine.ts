@@ -34,7 +34,11 @@ import { log } from 'xstate/lib/actions';
 import { isBLEEnabled } from '../../../lib/smartshare';
 import { createQrLoginMachine, qrLoginMachine } from '../../QrLoginMachine';
 import { StoreEvents } from '../../store';
-import { WalletDataEvent } from 'react-native-openid4vp-ble/lib/typescript/types/bleshare';
+import {
+  EventTypes,
+  VerificationStatus,
+  WalletDataEvent,
+} from 'react-native-openid4vp-ble/lib/typescript/types/bleshare';
 
 const { wallet } = openIdBLE;
 
@@ -722,10 +726,10 @@ export const scanMachine =
 
         monitorConnection: () => (callback) => {
           const subscription = wallet.handleDataEvents((event) => {
-            if (event.type === 'onDisconnected') {
+            if (event.type === EventTypes.onDisconnected) {
               callback({ type: 'DISCONNECT' });
             }
-            if (event.type === 'onError') {
+            if (event.type === EventTypes.onError) {
               callback({ type: 'BLE_ERROR' });
               console.log('BLE Exception: ' + event.message);
             }
@@ -744,7 +748,7 @@ export const scanMachine =
         startConnection: (context) => (callback) => {
           wallet.startConnection(context.openId4VpUri);
           const statusCallback = (event: WalletDataEvent) => {
-            if (event.type === 'onSecureChannelEstablished') {
+            if (event.type === EventTypes.onSecureChannelEstablished) {
               callback({ type: 'CONNECTED' });
             }
           };
@@ -761,12 +765,14 @@ export const scanMachine =
           };
 
           const statusCallback = (event: WalletDataEvent) => {
-            if (event.type === 'onDataSent') {
+            if (event.type === EventTypes.onDataSent) {
               callback({ type: 'VC_SENT' });
-            } else if (event.type === 'onVerificationStatusReceived') {
+            } else if (event.type === EventTypes.onVerificationStatusReceived) {
               callback({
                 type:
-                  event.status === 'ACCEPTED' ? 'VC_ACCEPTED' : 'VC_REJECTED',
+                  event.status === VerificationStatus.ACCEPTED
+                    ? 'VC_ACCEPTED'
+                    : 'VC_REJECTED',
               });
             }
           };
