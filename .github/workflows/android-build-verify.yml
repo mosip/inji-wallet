@@ -96,18 +96,9 @@ jobs:
 
       - name: Check for git tag
         run: |
-          try {
-            LATEST_COMMIT_TAG=$(git describe --tags --abbrev=0 2>/dev/null)
+          git tag
+          git describe --tags --abbrev=0
 
-            if [[ -z "$LATEST_COMMIT_TAG" ]]; then
-              echo "No Git tag found for latest commit"
-              exit 1
-            fi
-            echo "Git tag for latest commit: $LATEST_COMMIT_TAG"
-          } catch {
-            echo "Error occurred while retrieving Git tag"
-            exit 1
-          }
 
       # - name: Run Build
       #   run: | 
