@@ -173,9 +173,11 @@ export function useScanLayout() {
       message: t('status.bleError.message', {
         vcLabel: vcLabel.singular,
       }),
-      hint: t('status.bleError.hint', {
-        code: bleError.code,
-      }),
+      hint:
+        bleError.code &&
+        t('status.bleError.hint', {
+          code: bleError.code,
+        }),
       onBackdropPress: DISMISS,
     };
   }
