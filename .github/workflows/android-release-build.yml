@@ -1,23 +1,23 @@
-name: Inji Android PR build
+name: Upload to Play store - MOSIP Resident Application
 
 env:
-  backendServiceDefaultUrl: https://api.qa-121.mosip.net/residentmobileapp
-
+  backendServiceDefaultUrl: https://api.qatriple.mosip.net
 on:
-  push:
-    # paths:
-    #   - 'android/**'
-    branches:
-      - CI-publish
-  pull_request: #runs automatically when PR is raised
-    types: [ opened, synchronize ] # when PR is opened, and commit is added to PR
-    branches:
-      # - develop # specify the branch and use filters if needed -> 'release-**' - pattern -> 'releases/**'
-      # - 'release-**' #-> release/1, release/01
-    tags: # Sequence of patterns matched against refs/tags
-      - '*'     #all tags 
-      # - v2
-      # - v1.* -> v1.9.1 , v1.23.4 
+  workflow_dispatch:
+    inputs:
+      backendServiceUrl:
+        description: 'Backend service URL'
+        required: true
+        default: 'https://api.qatriple.mosip.net'
+        type: string
+      theme:
+        description: 'Application Theme'
+        required: true
+        default: 'orange'
+        type: choice
+        options:
+          - orange
+          - purple
 
 jobs:
   build-android:
@@ -52,11 +52,10 @@ jobs:
 
       - name: Setup branch and env
         run: |
-          # Strip git ref prefix from version
           echo "BRANCH_NAME=$(echo ${{ github.ref }} | sed -e 's,.*/\(.*\),\1,')" >> $GITHUB_ENV
           echo "GPG_TTY=$(tty)" >> $GITHUB_ENV   
 
-      - name: GPG public key
+      - name: Setup branch and GPG public key
         run: |
           sudo apt-get --yes install gnupg2
           gpg2 --import ./.github/keys/mosipgpgkey_pub.gpg 
@@ -68,7 +67,7 @@ jobs:
           if [ ! -z "$FIREBASE_SECRET" ] && [ -f app/google-services.json.gpg ];then rm -f app/google-services.json;gpg2 --quiet --batch --passphrase=$FIREBASE_SECRET --pinentry-mode loopback --decrypt --output app/google-services.json app/mosip-google-services.json.gpg;fi
         env:
           FIREBASE_SECRET: ${{ secrets.GPG_SECRET }}
-      
+
       - name: Generate keystore
         run: |
           keytool \
@@ -77,60 +76,51 @@ jobs:
           -keyalg RSA \
           -keysize 2048 \
           -validity 10000 \
-          -storepass '${{ secrets.INJI_ANDROID_DEBUG_STOREPASS }}' \
-          -keypass '${{ secrets.INJI_ANDROID_DEBUG_STOREPASS }}' \
-          -alias androiddebugkey \
-          -keystore android/app/debug.keystore \
+          -storepass '${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}' \
+          -keypass '${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}' \
+          -alias androidreleasekey \
+          -keystore android/app/release.keystore \
           -dname "CN=io.mosip.residentapp,OU=,O=,L=,S=,C=US"
 
       - name: Export variables for keystore
         run: |
           cd android/app
-          export DEBUG_KEYSTORE=debug.keystore
-          export DEBUG_KEYSTORE_ALIAS=androiddebugkey
-          export DEBUG_KEYSTORE_PASSWORD='${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
-          echo $DEBUG_KEYSTORE
-          echo $DEBUG_KEYSTORE_ALIAS
-          echo $DEBUG_KEYSTORE_PASSWORD
-
-      - name: Update Version Code
-        run: |
-          cd android/app
-          chmod +x build.gradle
-          current_version_code=$(grep -oP 'versionCode \K\d+' build.gradle)
-          sed -i "s/VERSION_CODE_PLACEHOLDER/${{ github.run_number }}/" build.gradle
+          export RELEASE_KEYSTORE=release.keystore
+          export RELEASE_KEYSTORE_ALIAS=androidreleasekey
+          export RELEASE_KEYSTORE_PASSWORD='${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}'
 
       - name: Bump version code
-        uses: chkfung/android-version-actions@v1.1
+        uses: chkfung/android-version-actions@v1.2.1
         with:
           gradlePath: android/app/build.gradle
           versionCode: ${{github.run_number}}
 
-      - name: rename and check
-        run: |
-          cd android/app
-          current_version_code=$(grep -oP 'versionCode \K\d+' build.gradle)
-
-      - name: Run Fastlane
+      - name: Run Build
         run: | 
           cd android
-          echo $DEBUG_KEYSTORE
-          echo $DEBUG_KEYSTORE_ALIAS
-          echo $DEBUG_KEYSTORE_PASSWORD
-          ./gradlew :app:assembleNewlogicDebug
+          ./gradlew :app:bundleNewlogicRelease
           # yes | sudo gem install bundler
           # yes | sudo fastlane install_plugins
           # fastlane test_android_build
         env:
-          DEBUG_KEYSTORE: debug.keystore 
-          DEBUG_KEYSTORE_ALIAS: androiddebugkey
-          DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
+          MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
+          APPLICATION_THEME: ${{ github.event.inputs.theme }}
+          RELEASE_KEYSTORE: release.keystore 
+          RELEASE_KEYSTORE_ALIAS: androidreleasekey
+          RELEASE_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_RELEASE_STOREPASS}}'
+      
+      - name: Upload Artifact to Actions
+        uses: actions/upload-artifact@v3.1.1
+        with:
+          name: Inji-apk
+          path: android/app/build/outputs/bundle/newlogicRelease/app-newlogic-release.aab
+          retention-days: 10
 
-# - name: Publish to Play Store BETA
-#         id: publish
-#         uses: r0adkll/upload-google-play@v1
-#         with:
-#           serviceAccountJson: service_account.json
-#           packageName: com.name.appname
-#           releaseFile: app/build/outputs/bundle/prodRelease/app-prod-release.aab
-#           track: beta
+      # - name: Publish to Play Store BETA
+      #   id: publish
+      #   uses: r0adkll/upload-google-play@v1
+      #   with:
+      #     serviceAccountJson: service_account.json - stored in secrets
+      #     packageName: com.name.appname
+      #     releaseFile: app/build/outputs/bundle/newlogicRelease/app-newlogic-release.aab
+      #     track: beta
