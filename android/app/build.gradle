@@ -133,6 +133,7 @@ def enableHermes = project.ext.react.get("enableHermes", false);
 
 androidGitVersion {
     baseCode 1
+    format '%tag%%<commit>%%<branch>%'
 }
 
 //untagged<a7da429><ci-linux-android>
@@ -188,9 +189,9 @@ android {
     }
     signingConfigs {
         release {
-            def keystore = System.getenv("RELEASE_KEYSTORE") 
-            def keystoreAlias = System.getenv("RELEASE_KEYSTORE_ALIAS") 
-            def keystorePass = System.getenv("RELEASE_KEYSTORE_PASSWORD") 
+            def keystore = release.keystore
+            def keystoreAlias = System.getenv("RELEASE_KEYSTORE_ALIAS")
+            def keystorePass = System.getenv("RELEASE_KEYSTORE_PASSWORD")
             storeFile file("$keystore")
             storePassword "$keystorePass"
             keyAlias "$keystoreAlias"
@@ -199,7 +200,7 @@ android {
             v1SigningEnabled false
         }
         debug {
-            def keystore = System.getenv("DEBUG_KEYSTORE") 
+            def keystore = debug.keystore
             def keystoreAlias = System.getenv("DEBUG_KEYSTORE_ALIAS")
             def keystorePass = System.getenv("DEBUG_KEYSTORE_PASSWORD")
             storeFile file("$keystore")

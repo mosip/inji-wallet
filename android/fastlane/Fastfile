@@ -21,10 +21,6 @@ plugins = [
 ]
 
 default_platform(:android)
-DEBUG_KEYSTORE = ENV["DEBUG_KEYSTORE"]
-DEBUG_KEYSTORE_ALIAS = ENV["DEBUG_KEYSTORE_ALIAS"]
-DEBUG_KEYSTORE_PASSWORD = ENV["DEBUG_KEYSTORE_PASSWORD"]
-
 
 desc "Verify Build for Android"
 lane :test_android_build do
@@ -35,11 +31,8 @@ end
 
 desc "Build Android and increase version code"
 lane :build_android do
-  # increment_version_code(
-  #   gradle_file_path: "./app/build.gradle",
-  # )
-  gradle(
-    task: "assembleNewlogicRelease",
+  increment_version_code(
+    gradle_file_path: "./app/build.gradle",
   )
 end
 
