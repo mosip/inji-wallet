@@ -1,13 +1,13 @@
+import { MMKVLoader } from 'react-native-mmkv-storage';
+import { VC_ITEM_STORE_KEY_REGEX } from './constants';
 import {
   DocumentDirectoryPath,
-  exists,
   mkdir,
   readFile,
   unlink,
   writeFile,
+  exists,
 } from 'react-native-fs';
-import { MMKVLoader } from 'react-native-mmkv-storage';
-import { VC_ITEM_STORE_KEY_REGEX } from './constants';
 
 const MMKV = new MMKVLoader().initialize();
 const vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);

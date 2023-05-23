@@ -1,31 +1,31 @@
-import { KeyPair } from 'react-native-rsa-native';
 import { assign, ErrorPlatformEvent, EventFrom, send, StateFrom } from 'xstate';
-import { log } from 'xstate/lib/actions';
 import { createModel } from 'xstate/lib/model';
-import i18n from '../i18n';
-import getAllConfigurations, {
-  DownloadProps,
-} from '../shared/commonprops/commonProps';
 import { MY_VCS_STORE_KEY, VC_ITEM_STORE_KEY } from '../shared/constants';
+import { AppServices } from '../shared/GlobalContext';
+import { CredentialDownloadResponse, request } from '../shared/request';
+import {
+  VC,
+  VerifiableCredential,
+  VcIdType,
+  DecodedCredential,
+} from '../types/vc';
+import { StoreEvents } from './store';
+import { ActivityLogEvents } from './activityLog';
+import { verifyCredential } from '../shared/vcjs/verifyCredential';
+import { log } from 'xstate/lib/actions';
 import {
   generateKeys,
   WalletBindingResponse,
 } from '../shared/cryptoutil/cryptoUtil';
-import { AppServices } from '../shared/GlobalContext';
+import { KeyPair } from 'react-native-rsa-native';
 import {
   getBindingCertificateConstant,
   savePrivateKey,
 } from '../shared/keystore/SecureKeystore';
-import { CredentialDownloadResponse, request } from '../shared/request';
-import { verifyCredential } from '../shared/vcjs/verifyCredential';
-import {
-  DecodedCredential,
-  VC,
-  VcIdType,
-  VerifiableCredential,
-} from '../types/vc';
-import { ActivityLogEvents } from './activityLog';
-import { StoreEvents } from './store';
+import getAllConfigurations, {
+  DownloadProps,
+} from '../shared/commonprops/commonProps';
+import i18n from '../i18n';
 
 const model = createModel(
   {
