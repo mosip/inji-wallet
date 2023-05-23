@@ -9,7 +9,6 @@ import { Message } from '../../components/Message';
 import { ReceiveVcScreen } from './ReceiveVcScreen';
 import { Theme } from '../../components/ui/styleUtils';
 import { I18nManager, Platform } from 'react-native';
-import { isBLEEnabled } from '../../lib/smartshare';
 
 const RequestStack = createNativeStackNavigator();
 
@@ -52,7 +51,7 @@ export const RequestLayout: React.FC = () => {
         />
       </RequestStack.Navigator>
 
-      {!isBLEEnabled && controller.isAccepted && (
+      {controller.isAccepted && (
         <Message
           title={t('status.accepted.title')}
           message={t('status.accepted.message', {

@@ -8,7 +8,6 @@ import { Button, Text, Row, Column } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import appMetaData from '../../AppMetaData.md';
 import { getVersion } from 'react-native-device-info';
-import { isBLEEnabled } from '../../lib/smartshare';
 
 export const AppMetaData: React.FC<AppMetaDataProps> = (props) => {
   const { t } = useTranslation('AppMetaData');

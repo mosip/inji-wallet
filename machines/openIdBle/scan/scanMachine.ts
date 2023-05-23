@@ -31,7 +31,6 @@ import {
 import { checkLocation, requestLocation } from '../../../shared/location';
 import { CameraCapturedPicture } from 'expo-camera';
 import { log } from 'xstate/lib/actions';
-import { isBLEEnabled } from '../../../lib/smartshare';
 import { createQrLoginMachine, qrLoginMachine } from '../../QrLoginMachine';
 import { StoreEvents } from '../../store';
 import {
@@ -812,11 +811,7 @@ export const scanMachine =
       guards: {
         isOpenIdQr: (_context, event) => {
           // don't scan if QR is offline and Google Nearby is enabled
-          if (
-            Platform.OS === 'ios' &&
-            !isBLEEnabled &&
-            !event.params.includes('OPENID4VP://')
-          )
+          if (Platform.OS === 'ios' && !event.params.includes('OPENID4VP://'))
             return false;
 
           const param: ConnectionParams = Object.create(null);
