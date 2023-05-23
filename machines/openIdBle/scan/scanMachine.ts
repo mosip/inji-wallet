@@ -1,5 +1,4 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import { ConnectionParams } from '@idpass/smartshare-react-native/lib/typescript/IdpassSmartshare';
 import openIdBLE from 'react-native-openid4vp-ble';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import {
@@ -814,10 +813,8 @@ export const scanMachine =
           if (Platform.OS === 'ios' && !event.params.includes('OPENID4VP://'))
             return false;
 
-          const param: ConnectionParams = Object.create(null);
           try {
             const pk = event.params.split('OPENID4VP://')[1];
-            Object.assign(param, { pk });
             return pk != '';
           } catch (e) {
             return false;
