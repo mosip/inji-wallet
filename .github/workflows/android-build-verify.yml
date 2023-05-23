@@ -1,23 +1,26 @@
-name: Inji Android PR and commit test build
+name: ID PASS - MOSIP Resident Application
 
 env:
-  backendServiceDefaultUrl: https://api.qa-121.mosip.net/residentmobileapp
+  backendServiceDefaultUrl: https://api.qatriple.mosip.net
 
 on:
-  push: # just for testing remove after testing.
+  push:
     branches:
       - CI-publish
+      - main
+      - develop
+      - demobranch
+      - qa-develop
+      - 0.9
     tags:
       - '*'
-  pull_request: #runs automatically when PR is raised
-    types: [ opened, synchronize ] # when PR is opened, and commit is added to PR
+  pull_request: 
+    types: [ opened, synchronize ]
     branches:
-      # - develop # specify the branch and use filters if needed -> 'release-**' - pattern -> 'releases/**'
-      # - 'release-**' #-> release/1, release/01
-    tags: # Sequence of patterns matched against refs/tags
-      - '*'     #all tags 
-      # - v2
-      # - v1.* -> v1.9.1 , v1.23.4 
+      - develop
+      - 'release-**'
+    tags: 
+      - '*'
 
 jobs:
   build-android:
@@ -27,10 +30,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '16.x'
-
-      - name: Install npm 
-        run: |
-          npm install
       
       - name: Cache local npm repository
         uses: actions/cache@v3.0.11
@@ -45,6 +44,10 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
+      
+      - name: Install npm dependencies
+        run: |
+          npm ci
 
       - name: Create .env.local file
         run: |
@@ -52,7 +55,6 @@ jobs:
 
       - name: Setup branch and env
         run: |
-          # Strip git ref prefix from version
           echo "BRANCH_NAME=$(echo ${{ github.ref }} | sed -e 's,.*/\(.*\),\1,')" >> $GITHUB_ENV
           echo "GPG_TTY=$(tty)" >> $GITHUB_ENV   
 
@@ -95,18 +97,10 @@ jobs:
           gradlePath: android/app/build.gradle
           versionCode: ${{github.run_number}}
 
-      # - name: Check for git tag
-      #   run: |
-      #     git tag
-      #     git describe --tags --abbrev=0
-
-
-      - name: Run Build
+      - name: Run Build using Fastlane
         run: | 
-          cd android
-          yes | sudo gem install bundler
-          yes | sudo fastlane install_plugins
-          fastlane test_android_build
+          cd android/scripts
+          ./run-fastlane.sh 
         env: 
           DEBUG_KEYSTORE_ALIAS: androiddebugkey
           DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'

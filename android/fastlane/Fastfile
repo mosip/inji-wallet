@@ -23,25 +23,8 @@ plugins = [
 default_platform(:android)
 
 desc "Verify Build for Android"
-lane :test_android_build do
+lane :android_build do
   gradle(
     task: "assembleNewlogicDebug",
   )
 end
-
-desc "Build Android and increase version code"
-lane :build_android do
-  increment_version_code(
-    gradle_file_path: "./app/build.gradle",
-  )
-end
-
-
-
-
-#   desc "Increment version name"
-#   lane :increment_vname do
-#   increment_version_name(
-#        gradle_file_path: "./app/build.gradle",
-#  )
-#   end

@@ -28,10 +28,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '16.x'
-
-      - name: Install npm 
-        run: |
-          npm install
       
       - name: Cache local npm repository
         uses: actions/cache@v3.0.11
@@ -46,6 +42,10 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
+
+      - name: Install npm dependencies
+        run: |
+          npm ci
 
       - name: Create .env.local file
         run: |
@@ -86,7 +86,6 @@ jobs:
       - name: Export variables for keystore
         run: |
           cd android/app
-          export DEBUG_KEYSTORE=debug.keystore
           export DEBUG_KEYSTORE_ALIAS=androiddebugkey
           export DEBUG_KEYSTORE_PASSWORD='${{ secrets.INJI_ANDROID_DEBUG_STOREPASS }}'
 
@@ -98,15 +97,11 @@ jobs:
 
       - name: Run Build
         run: | 
-          cd android
-          ./gradlew :app:assembleNewlogicDebug
-          # yes | sudo gem install bundler
-          # yes | sudo fastlane install_plugins
-          # fastlane test_android_build
+          cd android/scripts
+          ./run-fastlane.sh
         env:
           MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
-          APPLICATION_THEME: ${{ github.event.inputs.theme }}
-          DEBUG_KEYSTORE: debug.keystore 
+          APPLICATION_THEME: ${{ github.event.inputs.theme }} 
           DEBUG_KEYSTORE_ALIAS: androiddebugkey
           DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
       
