@@ -1,4 +1,4 @@
-name: Inji iOS build to Testflight
+name: Inji iOS build
 
 on:           
   workflow_dispatch:
@@ -16,9 +16,24 @@ on:
         options:
           - orange
           - purple
+      internal-testers:
+        description: 'Internal Testers Group'
+        required: true
+        default: 'QA-Triple'
+        type: choice
+        options:
+          - Dev
+          - QA-Triple
+          - MEC
+      buildDescription:
+        description: 'What to test'
+        required: true
+        default: 'QA-Triple environment build'
+        type: string
+        
   push:
     branches:
-      - "CI-publish"
+      - ci-publish
 
 jobs:
   build_ios:
@@ -43,11 +58,12 @@ jobs:
       - name: Deploy iOS Beta to TestFlight
         run: |
           cd ios
+          fastlane match appstore
           fastlane beta
           
         env:
           APP_STORE_CONNECT_TEAM_ID: '${{ secrets.APP_STORE_CONNECT_TEAM_ID }}'
-          DEVELOPER_APP_ID: '${{ secrets.DEVELOPER_APP_ID }}'
+          DEVELOPER_APP_ID: '${{ secrets.IOS_INJI_DEVELOPER_APP_ID }}'
           INJI_IOS_DEVELOPER_APP_IDENTIFIER: '${{ secrets.INJI_IOS_DEVELOPER_APP_IDENTIFIER }}'
           INJI_IOS_DEVELOPER_PORTAL_TEAM_ID: '${{ secrets.INJI_IOS_DEVELOPER_PORTAL_TEAM_ID }}'
           INJI_IOS_FASTLANE_APPLE_ID: '${{ secrets.INJI_IOS_FASTLANE_APPLE_ID }}'
@@ -61,3 +77,7 @@ jobs:
           APPLE_KEY_CONTENT: '${{ secrets.APPLE_KEY_CONTENT }}'
           SLACK_URL: '${{ secrets.SLACK_WEBHOOK_DEVOPS }}'
           MATCH_PASSWORD: '${{ secrets.INJI_IOS_MATCH_PASSWORD }}'
+          APPLICATION_THEME: ${{ github.event.inputs.theme }}
+          MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
+          TESTFLIGHT_INTERNAL_TESTERS_GROUP: ${{ github.event.inputs.internal-testers }}
+          TESTFLIGHT_BETA_APP_DESCRIPTION: ${{ github.event.inputs.buildDescription }}
