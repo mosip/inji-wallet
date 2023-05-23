@@ -20,7 +20,7 @@ import {
   EventTypes,
   VerificationStatus,
   VerifierDataEvent,
-} from 'react-native-openid4vp-ble/lib/typescript/types/bleshare';
+} from 'react-native-openid4vp-ble/lib/typescript/types/events';
 // import { verifyPresentation } from '../shared/vcjs/verifyPresentation';
 
 const { verifier } = openIdBLE;
