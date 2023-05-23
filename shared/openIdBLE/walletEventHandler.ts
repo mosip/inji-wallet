@@ -3,7 +3,7 @@ import { WalletDataEvent } from 'react-native-openid4vp-ble/lib/typescript/types
 
 const { wallet } = openIdBLE;
 
-export function offlineSubscribe(callback: (event: WalletDataEvent) => void) {
+export function subscribe(callback: (event: WalletDataEvent) => void) {
   return wallet.handleDataEvents((e) => {
     callback(e);
   });

@@ -20,7 +20,7 @@ import {
   MY_LOGIN_STORE_KEY,
   VC_ITEM_STORE_KEY,
 } from '../../../shared/constants';
-import { offlineSubscribe } from '../../../shared/openIdBLE/walletEventHandler';
+import { subscribe } from '../../../shared/openIdBLE/walletEventHandler';
 import {
   check,
   PERMISSIONS,
@@ -751,7 +751,7 @@ export const scanMachine =
             }
           };
 
-          const subscription = offlineSubscribe(statusCallback);
+          const subscription = subscribe(statusCallback);
           return () => subscription?.remove();
         },
 
@@ -775,7 +775,7 @@ export const scanMachine =
             }
           };
           wallet.sendData(JSON.stringify(vc));
-          const subscription = offlineSubscribe(statusCallback);
+          const subscription = subscribe(statusCallback);
           return () => subscription?.remove();
         },
 

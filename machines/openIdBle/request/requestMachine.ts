@@ -14,7 +14,7 @@ import {
 } from '../../../shared/constants';
 import { ActivityLogEvents, ActivityLogType } from '../../activityLog';
 import { VcEvents } from '../../vc';
-import { offlineSubscribe } from '../../../shared/openIdBLE/verifierEventHandler';
+import { subscribe } from '../../../shared/openIdBLE/verifierEventHandler';
 import { log } from 'xstate/lib/actions';
 import {
   EventTypes,
@@ -612,7 +612,7 @@ export const requestMachine =
               callback({ type: 'CONNECTED' });
             }
           };
-          const subscription = offlineSubscribe(statusCallback);
+          const subscription = subscribe(statusCallback);
           return () => subscription?.remove();
         },
 
@@ -637,7 +637,7 @@ export const requestMachine =
               callback({ type: 'VC_RECEIVED', vc: JSON.parse(event.data) });
             }
           };
-          const subscription = offlineSubscribe(statusCallback);
+          const subscription = subscribe(statusCallback);
 
           return () => subscription.remove();
         },
