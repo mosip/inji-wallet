@@ -90,9 +90,12 @@ export const RequestLayout: React.FC = () => {
           message={t('status.bleError.message', {
             vcLabel: controller.vcLabel.singular,
           })}
-          hint={t('status.bleError.hint', {
-            code: controller.bleError.code,
-          })}
+          hint={
+            controller.bleError.code &&
+            t('status.bleError.hint', {
+              code: controller.bleError.code,
+            })
+          }
           onBackdropPress={controller.DISMISS}
         />
       )}
