@@ -120,12 +120,9 @@ export const MyVcsTabMachine = model.createMachine(
             initial: 'idle',
             states: {
               idle: {},
-              viewingVc: {},
             },
             on: {
-              DISMISS: {
-                target: '.viewingVc',
-              },
+              DISMISS: '#idle',
             },
           },
           addVcSuccessful: {

@@ -43,7 +43,6 @@ export interface Typegen0 {
     | 'addingVc.addVcSuccessful'
     | 'addingVc.savingFailed'
     | 'addingVc.savingFailed.idle'
-    | 'addingVc.savingFailed.viewingVc'
     | 'addingVc.storing'
     | 'addingVc.waitingForvcKey'
     | 'checkingOnboardingStatus'
@@ -58,7 +57,7 @@ export interface Typegen0 {
           | 'savingFailed'
           | 'storing'
           | 'waitingForvcKey'
-          | { savingFailed?: 'idle' | 'viewingVc' };
+          | { savingFailed?: 'idle' };
         gettingVc?: 'waitingForvcKey';
       };
   'tags': never;
