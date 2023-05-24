@@ -12,7 +12,7 @@ import { OnboardingOverlay } from './OnboardingOverlay';
 import { useTranslation } from 'react-i18next';
 import { VcItem } from '../../components/VcItem';
 import { GET_INDIVIDUAL_ID } from '../../shared/constants';
-import { MessageOverlay } from '../../components/MessageOverlay';
+import { ErrorMessageOverlay } from '../../components/MessageOverlay';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
   const { t } = useTranslation('MyVcsTab');
@@ -122,17 +122,12 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
         onDone={controller.ONBOARDING_DONE}
         onAddVc={controller.ADD_VC}
       />
-      <MessageOverlay
+      <ErrorMessageOverlay
+        translationPath={'MyVcsTab'}
         isVisible={controller.isSavingFailedInIdle}
-        title={t(storeErrorTranslationPath + '.title', {
-          vcLabelSingular: controller.vcLabel.singular,
-          vcLabelPlural: controller.vcLabel.plural,
-        })}
-        message={t(storeErrorTranslationPath + '.message', {
-          vcLabelSingular: controller.vcLabel.singular,
-          vcLabelPlural: controller.vcLabel.plural,
-        })}
-        onBackdropPress={controller.DISMISS}
+        error={storeErrorTranslationPath}
+        onDismiss={controller.DISMISS}
+        vcLabel={controller.vcLabel}
       />
     </React.Fragment>
   );

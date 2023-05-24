@@ -21,7 +21,7 @@ import {
   selectIsSavingFailedInIdle,
 } from '../machines/vcItem';
 import { VcItemEvents } from '../machines/vcItem';
-import { MessageOverlay } from '../components/MessageOverlay';
+import { ErrorMessageOverlay } from '../components/MessageOverlay';
 import { Column, Row, Text } from './ui';
 import { Theme } from './ui/styleUtils';
 import { RotatingIcon } from './RotatingIcon';
@@ -315,17 +315,12 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
             </Row>
           )}
       </Pressable>
-      <MessageOverlay
+      <ErrorMessageOverlay
         isVisible={isSavingFailedInIdle}
-        title={t(storeErrorTranslationPath + '.title', {
-          vcLabelSingular: vcLabel.singular,
-          vcLabelPlural: vcLabel.plural,
-        })}
-        message={t(storeErrorTranslationPath + '.message', {
-          vcLabelSingular: vcLabel.singular,
-          vcLabelPlural: vcLabel.plural,
-        })}
-        onBackdropPress={DISMISS}
+        error={storeErrorTranslationPath}
+        onDismiss={DISMISS}
+        vcLabel={vcLabel}
+        translationPath={'VcDetails'}
       />
     </React.Fragment>
   );
