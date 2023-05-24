@@ -32,13 +32,9 @@ import { CameraCapturedPicture } from 'expo-camera';
 import { log } from 'xstate/lib/actions';
 import { createQrLoginMachine, qrLoginMachine } from '../../QrLoginMachine';
 import { StoreEvents } from '../../store';
-import {
-  EventTypes,
-  VerificationStatus,
-  WalletDataEvent,
-} from 'react-native-openid4vp-ble/lib/typescript/types/events';
+import { WalletDataEvent } from 'react-native-openid4vp-ble/lib/typescript/types/events';
 
-const { wallet } = openIdBLE;
+const { wallet, EventTypes, VerificationStatus } = openIdBLE;
 
 const model = createModel(
   {

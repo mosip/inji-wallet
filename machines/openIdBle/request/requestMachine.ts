@@ -16,14 +16,10 @@ import { ActivityLogEvents, ActivityLogType } from '../../activityLog';
 import { VcEvents } from '../../vc';
 import { subscribe } from '../../../shared/openIdBLE/verifierEventHandler';
 import { log } from 'xstate/lib/actions';
-import {
-  EventTypes,
-  VerificationStatus,
-  VerifierDataEvent,
-} from 'react-native-openid4vp-ble/lib/typescript/types/events';
+import { VerifierDataEvent } from 'react-native-openid4vp-ble/src/types/events';
 // import { verifyPresentation } from '../shared/vcjs/verifyPresentation';
 
-const { verifier } = openIdBLE;
+const { verifier, EventTypes, VerificationStatus } = openIdBLE;
 
 const model = createModel(
   {

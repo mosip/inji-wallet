@@ -1,5 +1,5 @@
 import openIdBLE from 'react-native-openid4vp-ble';
-import { WalletDataEvent } from 'react-native-openid4vp-ble/lib/typescript/types/bleshare';
+import { WalletDataEvent } from 'react-native-openid4vp-ble/src/types/events';
 
 const { wallet } = openIdBLE;
 
