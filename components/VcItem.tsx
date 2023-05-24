@@ -138,8 +138,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
   const DISMISS = () => service.send(VcItemEvents.DISMISS());
 
   let storeErrorTranslationPath = 'errors.savingFailed';
-  const isDiskFullError =
-    storeError?.message?.match('No space left on device') != null;
+  const isDiskFullError = storeError?.message?.match('ENOSPC') != null;
   if (isDiskFullError) {
     storeErrorTranslationPath = 'errors.diskFullError';
   }

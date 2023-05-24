@@ -22,7 +22,7 @@ export const ReceiveVcScreen: React.FC = () => {
   );
   let storeErrorTranslationPath = 'errors.savingFailed';
   const isDiskFullError =
-    controller.storeError?.message?.match('No space left on device') != null;
+    controller.storeError?.message?.match('ENOSPC') != null;
 
   if (isDiskFullError) {
     storeErrorTranslationPath = 'errors.diskFullError';
