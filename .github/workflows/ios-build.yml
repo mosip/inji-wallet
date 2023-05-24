@@ -22,7 +22,7 @@ on:
         default: 'QA-Triple'
         type: choice
         options:
-          - Dev
+          - Dev-testers
           - QA-Triple
           - MEC
       buildDescription:
