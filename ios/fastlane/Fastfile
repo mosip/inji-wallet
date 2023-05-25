@@ -120,7 +120,7 @@ platform :ios do
           "default": {
             whats_new: "#{TESTFLIGHT_BETA_APP_DESCRIPTION}", 
           }
-      }
+      },
        skip_waiting_for_build_processing: true,
       # distribute_external: false,
        submit_beta_review: false,  
