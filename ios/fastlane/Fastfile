@@ -31,7 +31,7 @@ GIT_AUTHORIZATION = ENV["GIT_AUTHORIZATION"]
 SLACK_URL = ENV["SLACK_URL"]
 MATCH_PASSWORD = ENV["MATCH_PASSWORD"]
 FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT = "120"
-TESTFLIGHT_INTERNAL_TESTERS_GROUP = ENV["TESTFLIGHT_INTERNAL_TESTERS_GROUP"] 
+TESTFLIGHT_INTERNAL_TESTERS_GROUP = "Dev-testers" #ENV["TESTFLIGHT_INTERNAL_TESTERS_GROUP"] 
 TESTFLIGHT_BETA_APP_DESCRIPTION = ENV["TESTFLIGHT_BETA_APP_DESCRIPTION"] 
 DEVELOPER_APP_ID = ENV["DEVELOPER_APP_ID"]
 
@@ -120,7 +120,7 @@ platform :ios do
        distribute_external: false,
        submit_beta_review: false,  
        groups: ["#{TESTFLIGHT_INTERNAL_TESTERS_GROUP}"],
-       changelog: "#{TESTFLIGHT_BETA_APP_DESCRIPTION}",
+      # changelog: "#{TESTFLIGHT_BETA_APP_DESCRIPTION}",
        localized_build_info: {
           "default": {
             whats_new: "#{TESTFLIGHT_BETA_APP_DESCRIPTION}", 
@@ -128,13 +128,15 @@ platform :ios do
       }
     )
 
+    set_changelog(changelog: "#{TESTFLIGHT_BETA_APP_DESCRIPTION}")  
+
     delete_temp_keychain(keychain_name)
 
-    slack(
-      message: "Inji - #{version} (#{current_build_number}) is uploaded to testflight.", 
-      success: true,
-      slack_url: "#{SLACK_URL}",
-      default_payloads: [:git_branch, :last_git_commit]
-    )
+    # slack(
+    #   message: "Inji - #{version} (#{current_build_number}) is uploaded to testflight.", 
+    #   success: true,
+    #   slack_url: "#{SLACK_URL}",
+    #   default_payloads: [:git_branch, :last_git_commit]
+    # )
   end
 end
