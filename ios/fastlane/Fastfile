@@ -121,7 +121,7 @@ platform :ios do
             whats_new: "#{TESTFLIGHT_BETA_APP_DESCRIPTION}", 
           }
       },
-       skip_waiting_for_build_processing: true,
+       skip_waiting_for_build_processing: false,
        distribute_external: true,
        submit_beta_review: false,  
        groups: ["#{TESTFLIGHT_INTERNAL_TESTERS_GROUP}, MOSIP-Dev"],
