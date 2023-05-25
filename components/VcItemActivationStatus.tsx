@@ -8,7 +8,7 @@ import { VerifiableCredential } from '../types/vc';
 import { Row, Text } from './ui';
 import { Theme } from './ui/styleUtils';
 
-const WalletUnverified: React.FC = () => {
+const WalletUnverifiedIcon: React.FC = () => {
   return (
     <Icon
       name="shield-alert"
@@ -20,7 +20,7 @@ const WalletUnverified: React.FC = () => {
   );
 };
 
-const WalletVerified: React.FC = () => {
+const WalletVerifiedIcon: React.FC = () => {
   return (
     <Icon
       name="verified-user"
@@ -31,81 +31,103 @@ const WalletVerified: React.FC = () => {
   );
 };
 
-export const VcItemActivationStatus: React.FC<VcItemActivationStatusProps> = (
+const WalletUnverifiedActivationDetails: React.FC<
+  WalletUnVerifiedDetailsProps
+> = (props) => {
+  const { t } = useTranslation('VcDetails');
+  return (
+    <Row
+      width={Dimensions.get('screen').width * 0.8}
+      align="space-between"
+      crossAlign="center">
+      <Row
+        crossAlign="center"
+        style={{
+          flex: 1,
+        }}>
+        {props.verifiableCredential && <WalletUnverifiedIcon />}
+        <Text
+          color={Theme.Colors.Details}
+          weight="semibold"
+          size="small"
+          margin="10 33 10 10"
+          style={
+            !props.verifiableCredential
+              ? Theme.Styles.loadingTitle
+              : Theme.Styles.statusLabel
+          }
+          children={t('offlineAuthDisabledHeader')}></Text>
+      </Row>
+
+      <Pressable
+        onPress={() => (props.verifiableCredential ? props.onPress() : null)}>
+        <Icon
+          name="dots-three-horizontal"
+          type="entypo"
+          color={Theme.Colors.GrayIcon}
+        />
+      </Pressable>
+    </Row>
+  );
+};
+
+const WalletVerifiedActivationDetails: React.FC<WalletVerifiedDetailsProps> = (
   props
 ) => {
   const { t } = useTranslation('VcDetails');
   return (
+    <Row
+      width={Dimensions.get('screen').width * 0.8}
+      align="space-between"
+      crossAlign="center">
+      <Row
+        crossAlign="center"
+        style={{
+          flex: 1,
+        }}>
+        <WalletVerifiedIcon />
+        <Text
+          color={Theme.Colors.statusLabel}
+          weight="semibold"
+          size="smaller"
+          margin="10 10 10 10"
+          style={
+            !props.verifiableCredential
+              ? Theme.Styles.loadingTitle
+              : Theme.Styles.subtitle
+          }
+          children={t('profileAuthenticated')}></Text>
+      </Row>
+
+      {props.showOnlyBindedVc ? null : (
+        <Pressable onPress={() => props.onPress()}>
+          <Icon
+            name="dots-three-horizontal"
+            type="entypo"
+            color={Theme.Colors.GrayIcon}
+          />
+        </Pressable>
+      )}
+    </Row>
+  );
+};
+
+export const VcItemActivationStatus: React.FC<VcItemActivationStatusProps> = (
+  props
+) => {
+  return (
     <Row>
       {props.emptyWalletBindingId ? (
-        <Row
-          width={Dimensions.get('screen').width * 0.8}
-          align="space-between"
-          crossAlign="center">
-          <Row
-            crossAlign="center"
-            style={{
-              flex: 1,
-            }}>
-            {props.verifiableCredential && <WalletUnverified />}
-            <Text
-              color={Theme.Colors.Details}
-              weight="semibold"
-              size="small"
-              margin="10 33 10 10"
-              style={
-                !props.verifiableCredential
-                  ? Theme.Styles.loadingTitle
-                  : Theme.Styles.statusLabel
-              }
-              children={t('offlineAuthDisabledHeader')}></Text>
-          </Row>
-
-          <Pressable
-            onPress={() =>
-              props.verifiableCredential ? props.onPress() : null
-            }>
-            <Icon
-              name="dots-three-horizontal"
-              type="entypo"
-              color={Theme.Colors.GrayIcon}
-            />
-          </Pressable>
-        </Row>
+        <WalletUnverifiedActivationDetails
+          verifiableCredential={props.verifiableCredential}
+          onPress={props.onPress}
+        />
       ) : (
-        <Row
-          width={Dimensions.get('screen').width * 0.8}
-          align="space-between"
-          crossAlign="center">
-          <Row
-            crossAlign="center"
-            style={{
-              flex: 1,
-            }}>
-            <WalletVerified />
-            <Text
-              color={Theme.Colors.statusLabel}
-              weight="semibold"
-              size="smaller"
-              margin="10 10 10 10"
-              style={
-                !props.verifiableCredential
-                  ? Theme.Styles.loadingTitle
-                  : Theme.Styles.subtitle
-              }
-              children={t('profileAuthenticated')}></Text>
-          </Row>
-
-          {props.showOnlyBindedVc ? null : (
-            <Pressable onPress={() => props.onPress()}>
-              <Icon
-                name="dots-three-horizontal"
-                type="entypo"
-                color={Theme.Colors.GrayIcon}
-              />
-            </Pressable>
-          )}
-        </Row>
+        <WalletVerifiedActivationDetails
+          verifiableCredential={props.verifiableCredential}
+          showOnlyBindedVc={props.showOnlyBindedVc}
+          onPress={props.onPress}
+        />
       )}
     </Row>
   );
@@ -116,4 +138,15 @@ interface VcItemActivationStatusProps {
   onPress: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
   verifiableCredential: VerifiableCredential;
   emptyWalletBindingId: boolean;
+}
+
+interface WalletVerifiedDetailsProps {
+  showOnlyBindedVc: boolean;
+  onPress: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
+  verifiableCredential: VerifiableCredential;
+}
+
+interface WalletUnVerifiedDetailsProps {
+  onPress: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
+  verifiableCredential: VerifiableCredential;
 }
