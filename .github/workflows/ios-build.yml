@@ -30,9 +30,6 @@ on:
         required: true
         default: 'QA-Triple environment build'
         type: string
-  push:
-    branches:
-      - "ci-publish"
 
 jobs:
   build_ios:
