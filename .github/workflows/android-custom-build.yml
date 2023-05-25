@@ -1,7 +1,7 @@
 name: ID PASS - MOSIP Resident Application Custom build
 
 env:
-  backendServiceDefaultUrl: https://api.qa-121.mosip.net/residentmobileapp
+  backendServiceDefaultUrl: https://api.qatriple.mosip.net
 
 on:
   workflow_dispatch:
@@ -9,7 +9,7 @@ on:
       backendServiceUrl:
         description: 'Backend service URL'
         required: true
-        default: 'https://api.qa-121.mosip.net/residentmobileapp'
+        default: 'https://api.qatriple.mosip.net'
         type: string
       theme:
         description: 'Application Theme'
