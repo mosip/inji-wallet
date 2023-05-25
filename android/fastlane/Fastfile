@@ -16,10 +16,6 @@
 
 # Fastfile
 
-plugins = [
-  "fastlane-plugin-increment_version_code"
-]
-
 default_platform(:android)
 
 desc "Verify Build for Android"

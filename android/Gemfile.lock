@@ -215,8 +215,6 @@ PLATFORMS
 
 DEPENDENCIES
   fastlane
-  fastlane-plugin-increment_version_code
-  fastlane-plugin-increment_version_name
 
 BUNDLED WITH
    2.4.10

@@ -17,6 +17,7 @@ on:
   pull_request: 
     types: [ opened, synchronize ]
     branches:
+      - ci-publish
       - develop
       - 'release-**'
     tags: 
