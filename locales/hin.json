@@ -61,7 +61,18 @@
       "yes_confirm": "हां, मैं पुष्टि करता हूं",
       "no": "नहीं",
       "Alert": "चेतावनी",
-      "ok": "ठीक"
+      "ok": "ठीक",
+      "errors": {
+        "savingFailed": {
+          "title": "{{vcLabelSingular}} सहेजने में विफल",
+          "message1": "{{vcLabelSingular}} को स्टोर में सेव करते समय कोई गड़बड़ी हुई.",
+          "message": "स्टोर में {{vcLabelSingular}} सहेजते समय कोई गड़बड़ी हुई।"
+        },
+        "diskFullError": {
+          "title": "{{vcLabelSingular}} सहेजने में विफल",
+          "message": "ऐप डेटा पूर्ण होने के कारण कोई और {{vcLabelPlural}} प्राप्त या सहेजा नहीं जा सकता है।"
+        }
+      }
     },
     "AuthScreen": {
       "header": "क्या आप एप्लिकेशन को अनलॉक करने के लिए बायोमेट्रिक्स का उपयोग करना चाहेंगे?",
@@ -152,7 +163,18 @@
     "MyVcsTab": {
       "addVcButton": "{{vcLabel}} जोड़ें",
       "generateVc": "अपना {{vcLabel}}जेनरेट करें",
-      "generateVcDescription": "अपना {{vcLabel}} डाउनलोड करने के लिए नीचे \"जोड़ें {{vcLabel}}\" पर टैप करें"
+      "generateVcDescription": "अपना {{vcLabel}} डाउनलोड करने के लिए नीचे \"जोड़ें {{vcLabel}}\" पर टैप करें",
+      "errors": {
+        "savingFailed": {
+          "title": "{{vcLabelSingular}} सहेजने में विफल",
+          "message1": "{{vcLabelSingular}} को स्टोर में सेव करते समय कोई गड़बड़ी हुई.",
+          "message": "स्टोर में {{vcLabelSingular}} सहेजते समय कोई गड़बड़ी हुई।"
+        },
+        "diskFullError": {
+          "title": "{{vcLabelSingular}} सहेजने में विफल",
+          "message": "ऐप डेटा पूर्ण होने के कारण कोई और {{vcLabelPlural}} प्राप्त या सहेजा नहीं जा सकता है।"
+        }
+      }
     },
     "OnboardingOverlay": {
       "stepOneTitle": "स्वागत है!",

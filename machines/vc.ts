@@ -26,6 +26,7 @@ const model = createModel(
       STORE_RESPONSE: (response: unknown) => ({ response }),
       STORE_ERROR: (error: Error) => ({ error }),
       VC_ADDED: (vcKey: string) => ({ vcKey }),
+      REMOVE_VC_FROM_CONTEXT: (vcKey: string) => ({ vcKey }),
       VC_RECEIVED: (vcKey: string) => ({ vcKey }),
       VC_DOWNLOADED: (vc: VC) => ({ vc }),
       REFRESH_MY_VCS: () => ({}),
@@ -133,6 +134,9 @@ export const vcMachine =
             VC_ADDED: {
               actions: 'prependToMyVcs',
             },
+            REMOVE_VC_FROM_CONTEXT: {
+              actions: 'removeVcFromMyVcs',
+            },
             VC_DOWNLOADED: {
               actions: 'setDownloadedVc',
             },
@@ -183,6 +187,11 @@ export const vcMachine =
 
         prependToMyVcs: model.assign({
           myVcs: (context, event) => [event.vcKey, ...context.myVcs],
+        }),
+
+        removeVcFromMyVcs: model.assign({
+          myVcs: (context, event) =>
+            context.myVcs.filter((vc: string) => !vc.includes(event.vcKey)),
         }),
 
         prependToReceivedVcs: model.assign({

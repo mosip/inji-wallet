@@ -12,10 +12,20 @@ import { OnboardingOverlay } from './OnboardingOverlay';
 import { useTranslation } from 'react-i18next';
 import { VcItem } from '../../components/VcItem';
 import { GET_INDIVIDUAL_ID } from '../../shared/constants';
+import { ErrorMessageOverlay } from '../../components/MessageOverlay';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
   const { t } = useTranslation('MyVcsTab');
   const controller = useMyVcsTab(props);
+  let storeErrorTranslationPath = 'errors.savingFailed';
+
+  //ENOSPC - no space left on a device / drive
+  const isDiskFullError =
+    controller.storeError?.message?.match('ENOSPC') != null;
+
+  if (isDiskFullError) {
+    storeErrorTranslationPath = 'errors.diskFullError';
+  }
 
   const getId = () => {
     controller.DISMISS();
@@ -113,6 +123,13 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
         isVisible={controller.isOnboarding}
         onDone={controller.ONBOARDING_DONE}
         onAddVc={controller.ADD_VC}
+      />
+      <ErrorMessageOverlay
+        translationPath={'MyVcsTab'}
+        isVisible={controller.isSavingFailedInIdle}
+        error={storeErrorTranslationPath}
+        onDismiss={controller.DISMISS}
+        vcLabel={controller.vcLabel}
       />
     </React.Fragment>
   );
