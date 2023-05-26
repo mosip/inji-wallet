@@ -1,0 +1,8 @@
+default_platform(:android)
+
+desc "Verify Build for Android"
+lane :android_build do
+  gradle(
+    task: "assembleNewlogicDebug",
+  )
+end
