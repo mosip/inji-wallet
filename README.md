@@ -13,7 +13,6 @@ Be sure to have the following build tools installed before proceeding:
 - [XCode](https://developer.apple.com/xcode/)
 
 
-
 ## Generate keystore for APK signing
 
 ```shell
