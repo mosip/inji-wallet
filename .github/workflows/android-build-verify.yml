@@ -6,7 +6,6 @@ env:
 on:
   push:
     branches:
-      - ci-publish
       - main
       - develop
       - demobranch
