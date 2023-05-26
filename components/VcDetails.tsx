@@ -4,23 +4,13 @@ import * as DateFnsLocale from '../lib/date-fns/locale';
 import { useTranslation } from 'react-i18next';
 import { Image, ImageBackground, View } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { VC, CredentialSubject, LocalizedField } from '../types/vc';
+import { VC, CredentialSubject } from '../types/vc';
 import { Button, Column, Row, Text } from './ui';
 import { Theme } from './ui/styleUtils';
 import { TextItem } from './ui/TextItem';
 import { VcItemTags } from './VcItemTags';
-import QRCode from 'react-native-qrcode-svg';
-
-const VerifiedIcon: React.FC = () => {
-  return (
-    <Icon
-      name="check-circle"
-      color={Theme.Colors.VerifiedIcon}
-      size={14}
-      containerStyle={{ marginStart: 4, bottom: 1 }}
-    />
-  );
-};
+import VerifiedIcon from './VerifiedIcon';
+import { getLocalizedField } from '../i18n';
 
 export const VcDetails: React.FC<VcDetailsProps> = (props) => {
   const { t, i18n } = useTranslation('VcDetails');
@@ -368,16 +358,4 @@ function getFullAddress(credential: CredentialSubject) {
     .concat(credential.postalCode)
     .filter(Boolean)
     .join(', ');
-}
-
-function getLocalizedField(rawField: string | LocalizedField[]) {
-  if (typeof rawField === 'string') {
-    return rawField;
-  }
-  try {
-    const locales: LocalizedField[] = JSON.parse(JSON.stringify(rawField));
-    return locales[0].value;
-  } catch (e) {
-    return '';
-  }
 }
