@@ -1,4 +1,4 @@
-name: ID PASS - MOSIP Resident Application Custom build
+name: Android Custom Build
 
 env:
   backendServiceDefaultUrl: https://api.sandbox.mosip.net

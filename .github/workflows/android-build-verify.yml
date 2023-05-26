@@ -1,4 +1,4 @@
-name: ID PASS - MOSIP Resident Application
+name: Android build verification
 
 env:
   backendServiceDefaultUrl: https://api.sandbox.mosip.net
