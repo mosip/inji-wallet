@@ -136,8 +136,6 @@ androidGitVersion {
     format '%tag%%<commit>%%<branch>%'
 }
 
-//untagged<a7da429><ci-linux-android>
-//tagged - v1.2.3
 def getGitVersionName() {
     if (androidGitVersion.name().contains("untagged")) {
         return androidGitVersion.name().substring(8)
@@ -165,9 +163,6 @@ android {
         applicationId 'io.mosip.residentapp'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        // Update versionName and/or versionCode via git tag <XX.xx.xx>
-        // More info here:
-        // https://github.com/gladed/gradle-android-git-version#3-use-a-git-tag-to-specify-your-version-number-see-semantic-versioning
         versionName getGitVersionName()
         versionCode 1
 

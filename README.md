@@ -2,7 +2,7 @@
 
 MOSIP citizen app.
 
-## Dependencies 
+## Dependencies
 
 Be sure to have the following build tools installed before proceeding:
 

@@ -6,7 +6,7 @@ on:
       backendServiceUrl:
         description: 'Backend service URL'
         required: true
-        default: 'https://api.qatriple.mosip.net'
+        default: 'https://api.qa-121.mosip.net'
         type: string
       theme:
         description: 'Application Theme'

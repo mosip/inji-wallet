@@ -1,8 +1,7 @@
 name: ID PASS - MOSIP Resident Application
 
 env:
-  backendServiceDefaultUrl: https://api.qatriple.mosip.net
-  DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
+  backendServiceDefaultUrl: https://api.qa-121.mosip.net
 
 on:
   push:
@@ -18,7 +17,6 @@ on:
   pull_request: 
     types: [ opened, synchronize ]
     branches:
-      - ci-publish
       - develop
       - 'release-**'
     tags: 
