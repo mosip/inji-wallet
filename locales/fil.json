@@ -48,6 +48,7 @@
     "reasonForSharing": "Dahilan ng pagbabahagi",
     "idType": "Uri ng ID",
     "id": "Id",
+    "qrCodeHeader": "QR Code",
     "nationalCard": "Pambansang Kard",
     "uin": "UIN",
     "vid": "VID",

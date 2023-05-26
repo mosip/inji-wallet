@@ -1,35 +1,52 @@
 import React, { useEffect, useState } from 'react';
 import { Dimensions, Pressable } from 'react-native';
-import { Icon, ListItem, Overlay } from 'react-native-elements';
-import { Column } from './ui';
+import { Icon, Overlay } from 'react-native-elements';
+import { Centered, Column, Row, Text } from './ui';
 import QRCode from 'react-native-qrcode-svg';
 import { Theme } from './ui/styleUtils';
+import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = (props) => {
+  const { t } = useTranslation('VcDetails');
+
   const [isQrOverlayVisible, setIsQrOverlayVisible] = useState(false);
 
   const toggleQrOverlay = () => setIsQrOverlayVisible(!isQrOverlayVisible);
   return (
     <React.Fragment>
       <Pressable onPress={toggleQrOverlay}>
-        <Column margin="20 0 0 0">
+        <Row margin="20 0 0 0">
           <QRCode
             size={90}
             value={props.qrCodeDetailes}
             backgroundColor={Theme.Colors.QRCodeBackgroundColor}
           />
-        </Column>
+        </Row>
       </Pressable>
       <Overlay
         isVisible={isQrOverlayVisible}
         onBackdropPress={toggleQrOverlay}
-        overlayStyle={{ padding: 1 }}>
-        <Column width={Dimensions.get('window').width * 0.8}>
-          <QRCode
-            size={300}
-            value={props.qrCodeDetailes}
-            backgroundColor={Theme.Colors.QRCodeBackgroundColor}
-          />
+        overlayStyle={{ padding: 1, borderRadius: 21 }}>
+        <Column style={Theme.QrCodeStyles.expandedQrCode}>
+          <Row pY={20} style={Theme.QrCodeStyles.QrCodeHeader}>
+            <Text style={Theme.TextStyles.header} weight="bold">
+              {t('qrCodeHeader')}
+            </Text>
+            <Icon
+              name="close"
+              onPress={toggleQrOverlay}
+              color={Theme.Colors.Details}
+              size={32}
+            />
+          </Row>
+          <Centered pY={30}>
+            <QRCode
+              size={300}
+              value={props.qrCodeDetailes}
+              backgroundColor={Theme.Colors.QRCodeBackgroundColor}
+            />
+          </Centered>
         </Column>
       </Overlay>
     </React.Fragment>

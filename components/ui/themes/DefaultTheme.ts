@@ -383,6 +383,31 @@ export const DefaultTheme = {
       marginTop: 10,
     },
   }),
+  QrCodeStyles: StyleSheet.create({
+    magnifierIcon: {
+      position: 'relative',
+      alignSelf: 'flex-end',
+      backgroundColor: Colors.White,
+      width: 36,
+      height: 36,
+    },
+    expandedQrCode: {
+      backgroundColor: Colors.White,
+      width: 350,
+      borderRadius: 21,
+    },
+    QrCodeHeader: {
+      backgroundColor: Colors.White,
+      borderTopLeftRadius: 21,
+      borderTopRightRadius: 21,
+      justifyContent: 'space-between',
+      fontFamily: 'Inter_700Bold',
+      paddingBottom: 10,
+      paddingRight: 15,
+      paddingLeft: 130,
+      elevation: 2,
+    },
+  }),
   PinInputStyle: StyleSheet.create({
     input: {
       borderBottomWidth: 3,
@@ -561,6 +586,9 @@ export const DefaultTheme = {
       padding: 32,
     },
   }),
+  QRCodeOverlay: StyleSheet.create({
+    header: {},
+  }),
   SelectVcOverlayStyles: StyleSheet.create({
     overlay: {
       elevation: 5,
@@ -658,7 +686,7 @@ export const DefaultTheme = {
       marginHorizontal: 4,
     },
     kebabHeaderStyle: {
-      backgroundColor: 'white',
+      backgroundColor: Colors.White,
       borderTopLeftRadius: 24,
       borderTopRightRadius: 24,
       justifyContent: 'space-between',
