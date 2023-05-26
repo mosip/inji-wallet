@@ -77,22 +77,22 @@ jobs:
           -keyalg RSA \
           -keysize 2048 \
           -validity 10000 \
-          -storepass '$DEBUG_KEYSTORE_PASSWORD' \
-          -keypass '$DEBUG_KEYSTORE_PASSWORD' \
+          -storepass $DEBUG_KEYSTORE_PASSWORD \
+          -keypass $DEBUG_KEYSTORE_PASSWORD \
           -alias androiddebugkey \
           -keystore android/app/debug.keystore \
           -dname "CN=io.mosip.residentapp,OU=,O=,L=,S=,C=US"
         env: 
-          DEBUG_KEYSTORE_PASSWORD: ${{ secrets.INJI_ANDROID_DEBUG_STOREPASS }}
+          DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
 
 
       - name: Export variables for keystore
         run: |
           cd android/app
           export DEBUG_KEYSTORE_ALIAS=androiddebugkey
-          export DEBUG_KEYSTORE_PASSWORD='$DEBUG_KEYSTORE_PASSWORD'
+          export DEBUG_KEYSTORE_PASSWORD=$DEBUG_KEYSTORE_PASSWORD
         env: 
-          DEBUG_KEYSTORE_PASSWORD: ${{ secrets.INJI_ANDROID_DEBUG_STOREPASS }}
+          DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
 
       - name: Bump version code
         uses: chkfung/android-version-actions@v1.2.1
