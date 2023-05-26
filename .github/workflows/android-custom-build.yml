@@ -1,7 +1,7 @@
 name: ID PASS - MOSIP Resident Application Custom build
 
 env:
-  backendServiceDefaultUrl: https://api.qa-121.mosip.net
+  backendServiceDefaultUrl: https://api.sandbox.mosip.net
   
 on:
   workflow_dispatch:
@@ -9,7 +9,7 @@ on:
       backendServiceUrl:
         description: 'Backend service URL'
         required: true
-        default: 'https://api.qa-121.mosip.net'
+        default: 'https://api.sandbox.mosip.net'
         type: string
       theme:
         description: 'Application Theme'
@@ -53,11 +53,16 @@ jobs:
 
       - name: Setup branch and env
         run: |
+          # Strip git ref prefix from version
           echo "BRANCH_NAME=$(echo ${{ github.ref }} | sed -e 's,.*/\(.*\),\1,')" >> $GITHUB_ENV
           echo "GPG_TTY=$(tty)" >> $GITHUB_ENV   
 
       - name: Setup branch and GPG public key
         run: |
+          # Strip git ref prefix from version
+          echo ${{ env.BRANCH_NAME }}
+          echo ${{ env.GPG_TTY }}
+
           sudo apt-get --yes install gnupg2
           gpg2 --import ./.github/keys/mosipgpgkey_pub.gpg 
           gpg2 --quiet --batch --passphrase=${{secrets.gpg_secret}}  --allow-secret-key-import --import ./.github/keys/mosipgpgkey_sec.gpg
@@ -113,6 +118,6 @@ jobs:
       - name: Upload Artifact to Actions
         uses: actions/upload-artifact@v3.1.1
         with:
-          name: Inji-apk
+          name: Inji
           path: android/app/build/outputs/apk/newlogic/debug/
           retention-days: 10

@@ -1,7 +1,7 @@
 name: ID PASS - MOSIP Resident Application
 
 env:
-  backendServiceDefaultUrl: https://api.qa-121.mosip.net
+  backendServiceDefaultUrl: https://api.sandbox.mosip.net
 
 on:
   push:
@@ -54,11 +54,16 @@ jobs:
 
       - name: Setup branch and env
         run: |
+          # Strip git ref prefix from version
           echo "BRANCH_NAME=$(echo ${{ github.ref }} | sed -e 's,.*/\(.*\),\1,')" >> $GITHUB_ENV
           echo "GPG_TTY=$(tty)" >> $GITHUB_ENV   
 
-      - name: GPG public key
+      - name: Setup branch and GPG public key
         run: |
+          # Strip git ref prefix from version
+          echo ${{ env.BRANCH_NAME }}
+          echo ${{ env.GPG_TTY }}
+
           sudo apt-get --yes install gnupg2
           gpg2 --import ./.github/keys/mosipgpgkey_pub.gpg 
           gpg2 --quiet --batch --passphrase=${{secrets.gpg_secret}}  --allow-secret-key-import --import ./.github/keys/mosipgpgkey_sec.gpg
