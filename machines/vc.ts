@@ -55,6 +55,11 @@ export const vcMachine =
       initial: 'init',
       states: {
         init: {
+          on: {
+            REFRESH_MY_VCS: {
+              target: '#vc.ready.myVcs.refreshing',
+            },
+          },
           initial: 'myVcs',
           states: {
             myVcs: {

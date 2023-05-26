@@ -199,6 +199,8 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]'
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
     markVcValid: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
+    removeVcItem: 'CONFIRM';
+    removedVc: 'STORE_RESPONSE';
     requestStoredContext: 'GET_VC_RESPONSE' | 'REFRESH';
     requestVcContext: 'DISMISS' | 'xstate.init';
     revokeVID: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
@@ -229,6 +231,7 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.requestingOtp:invocation[0]'
       | 'error.platform.vc-item.requestingLock:invocation[0]'
       | 'error.platform.vc-item.requestingRevoke:invocation[0]';
+    setVcKey: 'REMOVE';
     setWalletBindingError:
       | 'error.platform.vc-item.addKeyPair:invocation[0]'
       | 'error.platform.vc-item.addingWalletBindingId:invocation[0]'
@@ -311,6 +314,8 @@ export interface Typegen0 {
     | 'kebabPopUp.addKeyPair'
     | 'kebabPopUp.addingWalletBindingId'
     | 'kebabPopUp.idle'
+    | 'kebabPopUp.removeWallet'
+    | 'kebabPopUp.removingVc'
     | 'kebabPopUp.requestingBindingOtp'
     | 'kebabPopUp.showActivities'
     | 'kebabPopUp.showBindingWarning'
@@ -340,6 +345,8 @@ export interface Typegen0 {
           | 'addKeyPair'
           | 'addingWalletBindingId'
           | 'idle'
+          | 'removeWallet'
+          | 'removingVc'
           | 'requestingBindingOtp'
           | 'showActivities'
           | 'showBindingWarning'

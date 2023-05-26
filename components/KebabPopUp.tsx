@@ -9,6 +9,7 @@ import { ActorRefFrom } from 'xstate';
 import { vcItemMachine } from '../machines/vcItem';
 import { useTranslation } from 'react-i18next';
 import { HistoryTab } from '../screens/Home/MyVcs/HistoryTab';
+import { RemoveVcWarningOverlay } from '../screens/Home/MyVcs/RemoveVcWarningOverlay';
 
 export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
   const controller = useKebabPopUp(props);
@@ -57,6 +58,24 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
             service={props.service}
             label={t('ActivityLog')}
             vcKey={props.vcKey}
+          />
+
+          <ListItem bottomDivider>
+            <ListItem.Content>
+              <ListItem.Title>
+                <Pressable onPress={() => controller.REMOVE(props.vcKey)}>
+                  <Text size="small" weight="bold">
+                    {t('Remove')}
+                  </Text>
+                </Pressable>
+              </ListItem.Title>
+            </ListItem.Content>
+          </ListItem>
+
+          <RemoveVcWarningOverlay
+            isVisible={controller.isRemoveWalletWarning}
+            onConfirm={controller.CONFIRM}
+            onCancel={controller.CANCEL}
           />
         </Column>
       </BottomSheet>

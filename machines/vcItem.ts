@@ -26,6 +26,7 @@ import getAllConfigurations, {
   DownloadProps,
 } from '../shared/commonprops/commonProps';
 import { VcEvents } from './vc';
+import i18n from '../i18n';
 
 const model = createModel(
   {
@@ -33,6 +34,8 @@ const model = createModel(
     id: '',
     idType: '' as VcIdType,
     tag: '',
+    vcKey: '' as string,
+    myVcs: [] as string[],
     generatedOn: null as Date,
     credential: null as DecodedCredential,
     verifiableCredential: null as VerifiableCredential,
@@ -79,6 +82,7 @@ const model = createModel(
       PIN_CARD: () => ({}),
       KEBAB_POPUP: () => ({}),
       SHOW_ACTIVITY: () => ({}),
+      REMOVE: (vcKey: string) => ({ vcKey }),
     },
   }
 );
@@ -224,7 +228,6 @@ export const vcItemMachine =
             KEBAB_POPUP: {
               target: 'kebabPopUp',
             },
-
             DISMISS: {
               target: 'checkingVc',
             },
@@ -253,6 +256,10 @@ export const vcItemMachine =
             },
             SHOW_ACTIVITY: {
               target: '#vc-item.kebabPopUp.showActivities',
+            },
+            REMOVE: {
+              actions: 'setVcKey',
+              target: '#vc-item.kebabPopUp.removeWallet',
             },
           },
           initial: 'idle',
@@ -359,6 +366,25 @@ export const vcItemMachine =
             showActivities: {
               on: {
                 DISMISS: '#vc-item.kebabPopUp',
+              },
+            },
+            removeWallet: {
+              on: {
+                CONFIRM: {
+                  target: 'removingVc',
+                },
+                CANCEL: {
+                  target: 'idle',
+                },
+              },
+            },
+            removingVc: {
+              entry: 'removeVcItem',
+              on: {
+                STORE_RESPONSE: {
+                  actions: ['removedVc', log('removing Vc')],
+                  target: '#vc-item',
+                },
               },
             },
           },
@@ -699,6 +725,15 @@ export const vcItemMachine =
           }
         ),
 
+        removedVc: send(
+          () => ({
+            type: 'REFRESH_MY_VCS',
+          }),
+          {
+            to: (context) => context.serviceRefs.vc,
+          }
+        ),
+
         requestVcContext: send(
           (context) => ({
             type: 'GET_VC_ITEM',
@@ -848,6 +883,10 @@ export const vcItemMachine =
           otp: (_, event) => event.otp,
         }),
 
+        setVcKey: model.assign({
+          vcKey: (_, event) => event.vcKey,
+        }),
+
         setOtpError: assign({
           otpError: (_context, event) =>
             (event as ErrorPlatformEvent).data.message,
@@ -867,6 +906,17 @@ export const vcItemMachine =
           (context) => {
             const { serviceRefs, ...data } = context;
             return StoreEvents.SET(VC_ITEM_STORE_KEY(context), data);
+          },
+          { to: (context) => context.serviceRefs.store }
+        ),
+
+        loadMyVcs: send(StoreEvents.GET(MY_VCS_STORE_KEY), {
+          to: (context) => context.serviceRefs.store,
+        }),
+
+        removeVcItem: send(
+          (_context, event) => {
+            return StoreEvents.REMOVE(MY_VCS_STORE_KEY, _context.vcKey);
           },
           { to: (context) => context.serviceRefs.store }
         ),
@@ -1255,6 +1305,10 @@ export function selectKebabPopUpWalletBindingInProgress(state: State) {
 
 export function selectKebabPopUpBindingWarning(state: State) {
   return state.matches('kebabPopUp.showBindingWarning');
+}
+
+export function selectRemoveWalletWarning(state: State) {
+  return state.matches('kebabPopUp.removeWallet');
 }
 
 export function selectShowActivities(state: State) {

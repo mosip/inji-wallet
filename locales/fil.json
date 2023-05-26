@@ -65,6 +65,7 @@
   },
   "AuthScreen": {
     "header": "Gusto mo bang gumamit ng biometrics upang i-unlock ang aplikasyon?",
+    "Description": "Gusto mo bang gumamit ng biometrics upang i-unlock ang application?",
     "useBiometrics": "Gamitin ang biometrics",
     "usePasscode": "Gumamit na lang ng passcode",
     "errors": {

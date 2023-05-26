@@ -12,7 +12,6 @@ import { Theme } from '../../../components/ui/styleUtils';
 export const HistoryTab: React.FC<HistoryTabProps> = (props) => {
   const { t } = useTranslation('HistoryTab');
   const controller = useKebabPopUp(props);
-  console.log(controller.isShowActivities, 'log from activities');
   return (
     <ListItem bottomDivider onPress={controller.SHOW_ACTIVITY}>
       <ListItem.Content>
