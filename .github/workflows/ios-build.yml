@@ -34,7 +34,7 @@ on:
 jobs:
   build_ios:
     name: Deploying to Testflight
-    runs-on: self-hosted
+    runs-on: macos-13
     
     steps:
       - uses: actions/checkout@v3.1.0
@@ -54,7 +54,7 @@ jobs:
       - name: Deploy iOS Beta to TestFlight
         run: |
           cd ios
-          fastlane beta
+          bundle exec fastlane beta
         env:
           APP_STORE_CONNECT_TEAM_ID: '${{ secrets.APP_STORE_CONNECT_TEAM_ID }}'
           DEVELOPER_APP_ID: '${{ secrets.IOS_INJI_DEVELOPER_APP_ID }}'
