@@ -40,13 +40,12 @@ import {
   check,
   PERMISSIONS,
   PermissionStatus,
-  request,
   RESULTS,
 } from 'react-native-permissions';
 import { checkLocation, requestLocation } from '../../shared/location';
 import { CameraCapturedPicture } from 'expo-camera';
 import { log } from 'xstate/lib/actions';
-import { isBLEEnabled } from '../../lib/smartshare';
+import { BLEError, isBLEEnabled } from '../../lib/smartshare';
 import { createQrLoginMachine, qrLoginMachine } from '../QrLoginMachine';
 import { StoreEvents } from '../store';
 
@@ -63,6 +62,7 @@ const model = createModel(
     senderInfo: {} as DeviceInfo,
     receiverInfo: {} as DeviceInfo,
     selectedVc: {} as VC,
+    bleError: {} as BLEError,
     createdVp: null as VC,
     reason: '',
     loggers: [] as EmitterSubscription[],
@@ -89,7 +89,7 @@ const model = createModel(
       DISMISS: () => ({}),
       CONNECTED: () => ({}),
       DISCONNECT: () => ({}),
-      BLE_ERROR: () => ({}),
+      BLE_ERROR: (bleError: BLEError) => ({ bleError }),
       CONNECTION_DESTROYED: () => ({}),
       SCREEN_BLUR: () => ({}),
       SCREEN_FOCUS: () => ({}),
@@ -147,6 +147,7 @@ export const scanMachine =
         },
         BLE_ERROR: {
           target: '.handlingBleError',
+          actions: 'setBleError',
         },
       },
       states: {
@@ -636,6 +637,10 @@ export const scanMachine =
           createdVp: () => null,
         }),
 
+        setBleError: assign({
+          bleError: (_context, event) => event.bleError,
+        }),
+
         registerLoggers: assign({
           loggers: (context) => {
             if (context.sharingProtocol === 'OFFLINE' && __DEV__) {
@@ -810,8 +815,11 @@ export const scanMachine =
                 callback({ type: 'DISCONNECT' });
               }
               if (event.type === 'onError') {
-                callback({ type: 'BLE_ERROR' });
-                console.log('BLE Exception: ' + event.message);
+                callback({
+                  type: 'BLE_ERROR',
+                  bleError: { message: event.message, code: event.code },
+                });
+                console.log(`BLE Exception:${event.code} ${event.message}`);
               }
             });
 

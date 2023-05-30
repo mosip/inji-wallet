@@ -22,6 +22,7 @@ const model = createModel(
       APPEND: (key: string, value: unknown) => ({ key, value }),
       PREPEND: (key: string, value: unknown) => ({ key, value }),
       REMOVE: (key: string, value: string) => ({ key, value }),
+      REMOVE_VC_METADATA: (key: string, value: string) => ({ key, value }),
       REMOVE_ITEMS: (key: string, values: string[]) => ({ key, values }),
       CLEAR: () => ({}),
       ERROR: (error: Error) => ({ error }),
@@ -119,6 +120,9 @@ export const storeMachine =
             REMOVE: {
               actions: 'forwardStoreRequest',
             },
+            REMOVE_VC_METADATA: {
+              actions: 'forwardStoreRequest',
+            },
             REMOVE_ITEMS: {
               actions: 'forwardStoreRequest',
             },
@@ -137,12 +141,12 @@ export const storeMachine =
               ],
             },
             STORE_ERROR: {
-              actions: send(
-                (_, event) => model.events.STORE_ERROR(event.error),
-                {
+              actions: [
+                send((_, event) => model.events.STORE_ERROR(event.error), {
                   to: (_, event) => event.requester,
-                }
-              ),
+                }),
+                sendUpdate(),
+              ],
             },
           },
         },
@@ -207,6 +211,15 @@ export const storeMachine =
                 }
                 case 'REMOVE': {
                   await removeItem(
+                    event.key,
+                    event.value,
+                    context.encryptionKey
+                  );
+                  response = event.value;
+                  break;
+                }
+                case 'REMOVE_VC_METADATA': {
+                  await removeVCMetaData(
                     event.key,
                     event.value,
                     context.encryptionKey
@@ -361,6 +374,26 @@ export async function removeItem(
     await setItem(key, newList, encryptionKey);
   } catch (e) {
     console.error('error removeItem:', e);
+    throw e;
+  }
+}
+
+export async function removeVCMetaData(
+  key: string,
+  value: string,
+  encryptionKey: string
+) {
+  try {
+    const data = await Storage.getItem(key);
+    const decryptedData = decryptJson(encryptionKey, data);
+    const list = JSON.parse(decryptedData);
+    const newList = list.filter((vc: string) => {
+      return !vc.includes(value);
+    });
+
+    await setItem(key, newList, encryptionKey);
+  } catch (e) {
+    console.error('error remove VC metadata:', e);
     throw e;
   }
 }

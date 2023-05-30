@@ -1,6 +1,6 @@
 import { formatDistanceToNow } from 'date-fns';
 import React from 'react';
-import * as DateFnsLocale from '../lib/date-fns/locale';
+import * as DateFnsLocale from 'date-fns/locale';
 import { useTranslation } from 'react-i18next';
 import { Image, ImageBackground, View } from 'react-native';
 import { Icon } from 'react-native-elements';

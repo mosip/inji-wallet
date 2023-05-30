@@ -84,6 +84,7 @@ export interface Typegen0 {
       | 'done.invoke.request.reviewing.verifyingVp:invocation[0]';
     requestReceiverInfo: 'CONNECTED';
     sendVcReceived: 'STORE_RESPONSE';
+    setBleError: 'BLE_ERROR';
     setIncomingVc: 'VC_RECEIVED';
     setReceiveLogTypeDiscarded: 'CANCEL' | 'REJECT' | 'STORE_ERROR';
     setReceiveLogTypeRegular: 'ACCEPT' | 'STORE_RESPONSE';
