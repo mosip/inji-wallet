@@ -280,7 +280,7 @@ PODS:
     - React-Core
   - react-native-netinfo (7.1.3):
     - React-Core
-  - react-native-openid4vp-ble (0.3.12):
+  - react-native-openid4vp-ble (0.4.0):
     - CrcSwift (~> 0.0.3)
     - GzipSwift
     - React-Core
@@ -646,7 +646,7 @@ SPEC CHECKSUMS:
   EXUpdates: a83e036243b0f6ece53a8c1cb883b6751c88a5f8
   EXUpdatesInterface: a9814f422d3cd6e7cfd260d13c27786148ece20e
   FBLazyVector: fa8275d5086566e22a26ddc385ab5772e7f9b1bd
-  FBReactNativeSpec: 8c984a18702fcebb4b4dd88178aef9dbced89f4a
+  FBReactNativeSpec: 697645f31dc8937f623394e7b6466e92766dec19
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   GoogleInterchangeUtilities: d5bc4d88d5b661ab72f9d70c58d02ca8c27ad1f7
   GoogleNetworkingUtilities: 3edd3a8161347494f2da60ea0deddc8a472d94cb
@@ -674,7 +674,7 @@ SPEC CHECKSUMS:
   React-jsinspector: d4f6973dd474357dbaaf6f52f31ffc713bf3e766
   react-native-mmkv-storage: 8ba3c0216a6df283ece11205b442a3e435aec4e5
   react-native-netinfo: 42c0965fca99069b92e3f7360ab2d425985e5104
-  react-native-openid4vp-ble: 57aa174ee33cadb1846f542722d950cb8f4fdc81
+  react-native-openid4vp-ble: 8b9ae374aa4cf5f0f6634d32367c1616131da690
   react-native-restart: 45c8dca02491980f2958595333cbccd6877cb57e
   react-native-rsa-native: 12132eb627797529fdb1f0d22fd0f8f9678df64a
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
@@ -708,4 +708,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 5b97bf5aba623284ca8545706889f881c9b64811
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.1
