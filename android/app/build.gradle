@@ -133,15 +133,6 @@ def enableHermes = project.ext.react.get("enableHermes", false);
 
 androidGitVersion {
     baseCode 1
-    format '%tag%%<commit>%%<branch>%'
-}
-
-def getGitVersionName() {
-    if (androidGitVersion.name().contains("untagged")) {
-        return androidGitVersion.name().substring(8)
-    } else {
-        return androidGitVersion.name().substringBefore("<")
-    }
 }
 
 android {
@@ -163,8 +154,11 @@ android {
         applicationId 'io.mosip.residentapp'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionName getGitVersionName()
-        versionCode 1
+        // Update versionName and/or versionCode via git tag <XX.xx.xx>
+        // More info here:
+        // https://github.com/gladed/gradle-android-git-version#3-use-a-git-tag-to-specify-your-version-number-see-semantic-versioning
+        versionName androidGitVersion.name()
+        versionCode androidGitVersion.code()
 
         Properties properties = new Properties()
         properties.load(project.rootProject.file('local.properties').newDataInputStream())
@@ -184,9 +178,9 @@ android {
     }
     signingConfigs {
         release {
-            def keystore = file('release.keystore')
-            def keystoreAlias = System.getenv("RELEASE_KEYSTORE_ALIAS")
-            def keystorePass = System.getenv("RELEASE_KEYSTORE_PASSWORD")
+            def keystore = System.getenv("RELEASE_KEYSTORE") ?: "debug.keystore"
+            def keystoreAlias = System.getenv("RELEASE_KEYSTORE_ALIAS") ?: "androiddebugkey"
+            def keystorePass = System.getenv("RELEASE_KEYSTORE_PASSWORD") ?: "android"
             storeFile file("$keystore")
             storePassword "$keystorePass"
             keyAlias "$keystoreAlias"
@@ -195,9 +189,9 @@ android {
             v1SigningEnabled false
         }
         debug {
-            def keystore = file('debug.keystore')
-            def keystoreAlias = System.getenv("DEBUG_KEYSTORE_ALIAS")
-            def keystorePass = System.getenv("DEBUG_KEYSTORE_PASSWORD")
+            def keystore = System.getenv("DEBUG_KEYSTORE") ?: "debug.keystore"
+            def keystoreAlias = System.getenv("DEBUG_KEYSTORE_ALIAS") ?: "androiddebugkey"
+            def keystorePass = System.getenv("DEBUG_KEYSTORE_PASSWORD") ?: "android"
             storeFile file("$keystore")
             storePassword "$keystorePass"
             keyAlias "$keystoreAlias"
