@@ -133,15 +133,7 @@ def enableHermes = project.ext.react.get("enableHermes", false);
 
 androidGitVersion {
     baseCode 1
-    format '%tag%%<commit>%%<branch>%'
-}
-
-def getGitVersionName() {
-    if (androidGitVersion.name().contains("untagged")) {
-        return androidGitVersion.name().substring(8)
-    } else {
-        return androidGitVersion.name().substringBefore("<")
-    }
+    format '% tag %%<commit>%%<branch>%'
 }
 
 android {
@@ -163,7 +155,7 @@ android {
         applicationId 'io.mosip.residentapp'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionName getGitVersionName()
+        versionName androidGitVersion.name()
         versionCode 1
 
         Properties properties = new Properties()
