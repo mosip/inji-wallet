@@ -153,6 +153,7 @@ platform :ios do
       configuration: "Debug",
       workspace: "MOSIPResidentApp.xcworkspace",
       scheme: "MOSIPResidentApp",
+      export_method: "development",
       export_options: { compileBitcode: false} 
     )
 
