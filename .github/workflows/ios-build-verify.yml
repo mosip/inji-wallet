@@ -1,4 +1,4 @@
-name: Inji iOS build verification
+name: Inji iOS build verification 
 
 on:
   pull_request:

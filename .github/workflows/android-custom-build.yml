@@ -1,4 +1,4 @@
-name: Android Custom Build
+name: Android Custom Build 
 
 env:
   backendServiceDefaultUrl: https://api.sandbox.mosip.net

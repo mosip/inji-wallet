@@ -1,4 +1,4 @@
-name: Android build verification
+name: Android build verification 
 
 env:
   backendServiceDefaultUrl: https://api.sandbox.mosip.net

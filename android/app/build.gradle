@@ -1,4 +1,4 @@
-plugins {
+plugins { 
     id 'com.gladed.androidgitversion' version '0.4.14'
 }
 
