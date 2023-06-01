@@ -150,7 +150,7 @@ platform :ios do
     profile_mapping = Actions.lane_context[SharedValues::MATCH_PROVISIONING_PROFILE_MAPPING]
 
     gym(
-      configuration: "Development",
+      configuration: "Debug",
       workspace: "MOSIPResidentApp.xcworkspace",
       scheme: "MOSIPResidentApp",
       export_method: "development",
