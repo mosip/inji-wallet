@@ -1,14 +1,18 @@
-name: iOS build verification
+name: Inji iOS build verification
 
 on:
-  push:
+  pull_request:
+    types: [ opened, synchronize ]
     branches:
-      - ci-publish
+      - develop
+      - 'release-**'
+    tags:
+      - '*'
 
 jobs:
   build_ios:
     name: Building the IPA
-    runs-on: self-hosted
+    runs-on: macos-13
     
     steps:
       - uses: actions/checkout@v3.1.0
