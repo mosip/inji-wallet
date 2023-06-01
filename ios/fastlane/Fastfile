@@ -147,19 +147,13 @@ platform :ios do
       api_key: api_key
     )
 
-    profile_mapping = Actions.lane_context[SharedValues::MATCH_PROVISIONING_PROFILE_MAPPING]
+    # profile_mapping = Actions.lane_context[SharedValues::MATCH_PROVISIONING_PROFILE_MAPPING]
 
     gym(
-      # configuration: "Release",
+      configuration: "Debug",
       workspace: "MOSIPResidentApp.xcworkspace",
       scheme: "MOSIPResidentApp",
-      # export_method: "ad-hoc",
-      
-      export_options: {
-        provisioningProfiles: { 
-            "#{DEVELOPER_APP_ID}" => "#{PROVISIONING_PROFILE_SPECIFIER}"
-        }
-      }
+      export_options: { compileBitcode: false} 
     )
 
     delete_temp_keychain(keychain_name)
