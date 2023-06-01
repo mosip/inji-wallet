@@ -60,8 +60,6 @@ yarn-error.log
 # BUCK
 buck-out/
 \.buckd/
-*.keystore
-!debug.keystore
 
 # Bundle artifacts
 *.jsbundle

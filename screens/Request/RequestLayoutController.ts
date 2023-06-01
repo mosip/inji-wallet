@@ -16,6 +16,7 @@ import {
   selectIsHandlingBleError,
   selectIsRejected,
   selectIsReviewing,
+  selectBleError,
 } from '../../machines/openIdBle/commonSelectors';
 import { RequestEvents } from '../../machines/openIdBle/request/requestMachine';
 
@@ -73,6 +74,7 @@ export function useRequestLayout() {
     isRejected: useSelector(requestService, selectIsRejected),
     isDisconnected: useSelector(requestService, selectIsDisconnected),
     isBleError: useSelector(requestService, selectIsHandlingBleError),
+    bleError: useSelector(requestService, selectBleError),
 
     IsSavingFailedInViewingVc: useSelector(
       requestService,

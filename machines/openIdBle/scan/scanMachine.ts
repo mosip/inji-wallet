@@ -33,6 +33,7 @@ import { log } from 'xstate/lib/actions';
 import { createQrLoginMachine, qrLoginMachine } from '../../QrLoginMachine';
 import { StoreEvents } from '../../store';
 import { WalletDataEvent } from 'react-native-openid4vp-ble/lib/typescript/types/events';
+import { BLEError } from '../types';
 
 const { wallet, EventTypes, VerificationStatus } = openIdBLE;
 
@@ -42,6 +43,7 @@ const model = createModel(
     senderInfo: {} as DeviceInfo,
     receiverInfo: {} as DeviceInfo,
     selectedVc: {} as VC,
+    bleError: {} as BLEError,
     createdVp: null as VC,
     reason: '',
     loggers: [] as EmitterSubscription[],
@@ -65,7 +67,8 @@ const model = createModel(
       DISMISS: () => ({}),
       CONNECTED: () => ({}),
       DISCONNECT: () => ({}),
-      BLE_ERROR: () => ({}),
+      BLE_ERROR: (bleError: BLEError) => ({ bleError }),
+      CONNECTION_DESTROYED: () => ({}),
       SCREEN_BLUR: () => ({}),
       SCREEN_FOCUS: () => ({}),
       BLUETOOTH_ALLOWED: () => ({}),
@@ -121,6 +124,7 @@ export const scanMachine =
         },
         BLE_ERROR: {
           target: '.handlingBleError',
+          actions: 'setBleError',
         },
       },
       states: {
@@ -558,6 +562,10 @@ export const scanMachine =
           createdVp: () => null,
         }),
 
+        setBleError: assign({
+          bleError: (_context, event) => event.bleError,
+        }),
+
         registerLoggers: assign({
           loggers: () => {
             if (__DEV__) {
@@ -724,7 +732,10 @@ export const scanMachine =
               callback({ type: 'DISCONNECT' });
             }
             if (event.type === EventTypes.onError) {
-              callback({ type: 'BLE_ERROR' });
+              callback({
+                type: 'BLE_ERROR',
+                bleError: { message: event.message, code: event.code },
+              });
               console.log('BLE Exception: ' + event.message);
             }
           });

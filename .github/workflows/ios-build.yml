@@ -1,0 +1,77 @@
+name: Inji iOS build
+
+on:           
+  workflow_dispatch:
+    inputs:
+      backendServiceUrl:
+        description: 'Backend service URL'
+        required: true
+        default: 'https://api.sandbox.mosip.net'
+        type: string
+      theme:
+        description: 'Application Theme'
+        required: true
+        default: 'orange'
+        type: choice
+        options:
+          - orange
+          - purple
+      internal-testers:
+        description: 'Internal Testers Group'
+        required: true
+        default: 'QA-Triple'
+        type: choice
+        options:
+          - Dev-testers
+          - QA-Triple
+          - MEC
+      buildDescription:
+        description: 'What to test'
+        required: true
+        default: 'QA-Triple environment build'
+        type: string
+
+jobs:
+  build_ios:
+    name: Deploying to Testflight
+    runs-on: macos-13
+    
+    steps:
+      - uses: actions/checkout@v3.1.0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+      
+      - name: Install npm dependencies
+        run: |
+          npm install
+        
+      - name: Install Pod
+        run: |
+          cd ios
+          pod install
+        
+      - name: Deploy iOS Beta to TestFlight
+        run: |
+          cd ios
+          fastlane beta
+        env:
+          APP_STORE_CONNECT_TEAM_ID: '${{ secrets.APP_STORE_CONNECT_TEAM_ID }}'
+          DEVELOPER_APP_ID: '${{ secrets.IOS_INJI_DEVELOPER_APP_ID }}'
+          INJI_IOS_DEVELOPER_APP_IDENTIFIER: '${{ secrets.INJI_IOS_DEVELOPER_APP_IDENTIFIER }}'
+          INJI_IOS_DEVELOPER_PORTAL_TEAM_ID: '${{ secrets.INJI_IOS_DEVELOPER_PORTAL_TEAM_ID }}'
+          INJI_IOS_FASTLANE_APPLE_ID: '${{ secrets.INJI_IOS_FASTLANE_APPLE_ID }}'
+          INJI_IOS_FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: '${{ secrets.INJI_IOS_FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}'
+          GIT_AUTHORIZATION: '${{ secrets.GIT_AUTHORIZATION }}'
+          INJI_IOS_PROVISIONING_PROFILE_SPECIFIER: '${{ secrets.INJI_IOS_PROVISIONING_PROFILE_SPECIFIER }}'
+          INJI_IOS_TEMP_KEYCHAIN_PASSWORD: '${{ secrets.INJI_IOS_TEMP_KEYCHAIN_PASSWORD }}'
+          INJI_IOS_TEMP_KEYCHAIN_USER: '${{ secrets.INJI_IOS_TEMP_KEYCHAIN_USER }}'
+          APPLE_KEY_ID: '${{ secrets.APPLE_KEY_ID }}'
+          APPLE_ISSUER_ID: '${{ secrets.APPLE_ISSUER_ID }}'
+          APPLE_KEY_CONTENT: '${{ secrets.APPLE_KEY_CONTENT }}'
+          SLACK_URL: '${{ secrets.SLACK_WEBHOOK_DEVOPS }}'
+          MATCH_PASSWORD: '${{ secrets.INJI_IOS_MATCH_PASSWORD }}'
+          APPLICATION_THEME: ${{ github.event.inputs.theme }}
+          MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
+          TESTFLIGHT_INTERNAL_TESTERS_GROUP: ${{ github.event.inputs.internal-testers }}
+          TESTFLIGHT_BETA_APP_DESCRIPTION: ${{ github.event.inputs.buildDescription }}

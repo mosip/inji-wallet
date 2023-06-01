@@ -36,6 +36,10 @@ export function selectIsBluetoothDenied(state: State) {
   return state.matches('bluetoothDenied');
 }
 
+export function selectBleError(state: State) {
+  return state.context.bleError;
+}
+
 // TODO: Remove these selectors and respective UI code once discussed with team
 export function selectIsExchangingDeviceInfo() {
   return false;

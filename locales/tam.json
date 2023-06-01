@@ -61,7 +61,17 @@
     "yes_confirm": "ஆம், நான் உறுதி செய்கிறேன்",
     "no": "இல்லை",
     "Alert": "எச்சரிக்கை",
-    "ok": "சரி"
+    "ok": "சரி",
+    "errors": {
+      "savingFailed": {
+        "title": "{{vcLabelSingular}}ஐ சேமிப்பதில் தோல்வி",
+        "message": "கடையில் {{vcLabelSingular}}ஐ சேமிக்கும் போது ஏதோ தவறு ஏற்பட்டது."
+      },
+      "diskFullError": {
+        "title": "{{vcLabelSingular}}ஐ சேமிக்க முடியவில்லை",
+        "message": "ஆப்ஸ் டேட்டா நிரம்பியதால் {{vcLabelPlural}} பெறவோ சேமிக்கவோ முடியாது."
+      }
+    }
   },
   "AuthScreen": {
     "header": "பயன்பாட்டைத் திறக்க பயோமெட்ரிக்ஸைப் பயன்படுத்த விரும்புகிறீர்களா?",
@@ -152,7 +162,17 @@
   "MyVcsTab": {
     "addVcButton": "{{vcLabel}} சேர்",
     "generateVc": "உங்கள் {{vcLabel}}ஐ உருவாக்கவும்",
-    "generateVcDescription": "உங்கள் \"சேர் {{vcLabel}}\" என்பதைத் தட்டவும் {{vcLabel}}"
+    "generateVcDescription": "உங்கள் \"சேர் {{vcLabel}}\" என்பதைத் தட்டவும் {{vcLabel}}",
+    "errors": {
+      "savingFailed": {
+        "title": "{{vcLabelSingular}}ஐ சேமிப்பதில் தோல்வி",
+        "message": "கடையில் {{vcLabelSingular}}ஐ சேமிக்கும் போது ஏதோ தவறு ஏற்பட்டது."
+      },
+      "diskFullError": {
+        "title": "{{vcLabelSingular}}ஐ சேமிக்க முடியவில்லை",
+        "message": "ஆப்ஸ் டேட்டா நிரம்பியதால் {{vcLabelPlural}} பெறவோ சேமிக்கவோ முடியாது."
+      }
+    }
   },
   "OnboardingOverlay": {
     "stepOneTitle": "வரவேற்கிறேன்!",
@@ -287,7 +307,8 @@
       },
       "bleError": {
         "title": "இடமாற்றம் செய்ய முடியவில்லை",
-        "message": "{{vcLabel}} ஐ மாற்றும்போது ஏதோ தவறு ஏற்பட்டது. தயவு செய்து மீண்டும் முயற்சிக்கவும்."
+        "message": "{{vcLabel}} ஐ மாற்றும்போது ஏதோ தவறு ஏற்பட்டது. தயவு செய்து மீண்டும் முயற்சிக்கவும்.",
+        "hint": "பிழை: {{code}}"
       }
     },
     "online": "நிகழ்நிலை",
@@ -336,7 +357,8 @@
       },
       "bleError": {
         "title": "இடமாற்றம் செய்ய முடியவில்லை",
-        "message": "{{vcLabel}} ஐ மாற்றும்போது ஏதோ தவறு ஏற்பட்டது. தயவு செய்து மீண்டும் முயற்சிக்கவும்."
+        "message": "{{vcLabel}} ஐ மாற்றும்போது ஏதோ தவறு ஏற்பட்டது. தயவு செய்து மீண்டும் முயற்சிக்கவும்.",
+        "hint": "பிழை: {{code}}"
       }
     }
   },

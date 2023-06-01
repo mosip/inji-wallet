@@ -17,6 +17,7 @@ import { VcEvents } from '../../vc';
 import { subscribe } from '../../../shared/openIdBLE/verifierEventHandler';
 import { log } from 'xstate/lib/actions';
 import { VerifierDataEvent } from 'react-native-openid4vp-ble/src/types/events';
+import { BLEError } from '../types';
 // import { verifyPresentation } from '../shared/vcjs/verifyPresentation';
 
 const { verifier, EventTypes, VerificationStatus } = openIdBLE;
@@ -29,6 +30,7 @@ const model = createModel(
     incomingVc: {} as VC,
     storeError: null as Error,
     openId4VpUri: '',
+    bleError: {} as BLEError,
     loggers: [] as EmitterSubscription[],
     receiveLogType: '' as ActivityLogType,
   },
@@ -45,7 +47,8 @@ const model = createModel(
       ADV_STARTED: (openId4VpUri: string) => ({ openId4VpUri }),
       CONNECTED: () => ({}),
       DISCONNECT: () => ({}),
-      BLE_ERROR: () => ({}),
+      BLE_ERROR: (bleError: BLEError) => ({ bleError }),
+      EXCHANGE_DONE: (senderInfo: DeviceInfo) => ({ senderInfo }),
       SCREEN_FOCUS: () => ({}),
       SCREEN_BLUR: () => ({}),
       BLUETOOTH_ENABLED: () => ({}),
@@ -96,6 +99,7 @@ export const requestMachine =
         },
         BLE_ERROR: {
           target: '.handlingBleError',
+          actions: 'setBleError',
         },
         RESET: {
           target: '.checkingBluetoothService',
@@ -469,6 +473,10 @@ export const requestMachine =
           storeError: (_context, event) => event.error,
         }),
 
+        setBleError: assign({
+          bleError: (_context, event) => event.bleError,
+        }),
+
         registerLoggers: assign({
           loggers: () => {
             if (__DEV__) {
@@ -619,7 +627,10 @@ export const requestMachine =
             }
 
             if (event.type === EventTypes.onError) {
-              callback({ type: 'BLE_ERROR' });
+              callback({
+                type: 'BLE_ERROR',
+                bleError: { message: event.message, code: event.code },
+              });
               console.log('BLE Exception: ' + event.message);
             }
           });
