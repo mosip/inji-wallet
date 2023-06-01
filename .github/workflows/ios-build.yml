@@ -22,11 +22,11 @@ on:
         default: 'QA-Triple'
         type: choice
         options:
-          - QA
+          - Dev-testing
           - MEC
+          - QA
           - MOSIP-Collab
           - MOSIP-Dev-testing
-          - Dev-testing
       buildDescription:
         description: 'What to test'
         required: true
