@@ -151,7 +151,7 @@ platform :ios do
       workspace: "MOSIPResidentApp.xcworkspace",
       scheme: "MOSIPResidentApp",
       export_method: "development",
-      export_options: { compileBitcode: false }
+      export_options: { compileBitcode: false} 
     )
 
     delete_temp_keychain(keychain_name)
