@@ -137,7 +137,7 @@ platform :ios do
     )
 
     match(
-      type: 'development',
+      type: 'appstore',
       app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
       git_basic_authorization: Base64.strict_encode64("#{GIT_AUTHORIZATION}"),
       readonly: false,
@@ -147,11 +147,10 @@ platform :ios do
     )
 
     gym(
-      configuration: "Debug",
+      configuration: "Release",
       workspace: "MOSIPResidentApp.xcworkspace",
       scheme: "MOSIPResidentApp",
-      export_method: "development",
-      export_options: { compileBitcode: false} 
+      export_method: "app-store",
     )
 
     delete_temp_keychain(keychain_name)
