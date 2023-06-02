@@ -61,7 +61,18 @@
       "yes_confirm": "हां, मैं पुष्टि करता हूं",
       "no": "नहीं",
       "Alert": "चेतावनी",
-      "ok": "ठीक"
+      "ok": "ठीक",
+      "errors": {
+        "savingFailed": {
+          "title": "{{vcLabelSingular}} सहेजने में विफल",
+          "message1": "{{vcLabelSingular}} को स्टोर में सेव करते समय कोई गड़बड़ी हुई.",
+          "message": "स्टोर में {{vcLabelSingular}} सहेजते समय कोई गड़बड़ी हुई।"
+        },
+        "diskFullError": {
+          "title": "{{vcLabelSingular}} सहेजने में विफल",
+          "message": "ऐप डेटा पूर्ण होने के कारण कोई और {{vcLabelPlural}} प्राप्त या सहेजा नहीं जा सकता है।"
+        }
+      }
     },
     "AuthScreen": {
       "header": "क्या आप एप्लिकेशन को अनलॉक करने के लिए बायोमेट्रिक्स का उपयोग करना चाहेंगे?",
@@ -121,6 +132,7 @@
           "applicationProcessing": "AID तैयार नहीं है",
           "noMessageAvailable": "कुछ देर बाद कोशिश करें",
           "networkRequestFailed": "नेटवर्क अनुरोध विफल रहा",
+          "invalidAid": "दर्ज सहायता उपलब्ध नहीं है। प्रवेश करने से पहले कृपया अपने सहायता की जाँच करें",
           "timeOut": "समय समाप्त"
         }
       }
@@ -151,7 +163,18 @@
     "MyVcsTab": {
       "addVcButton": "{{vcLabel}} जोड़ें",
       "generateVc": "अपना {{vcLabel}}जेनरेट करें",
-      "generateVcDescription": "अपना {{vcLabel}} डाउनलोड करने के लिए नीचे \"जोड़ें {{vcLabel}}\" पर टैप करें"
+      "generateVcDescription": "अपना {{vcLabel}} डाउनलोड करने के लिए नीचे \"जोड़ें {{vcLabel}}\" पर टैप करें",
+      "errors": {
+        "savingFailed": {
+          "title": "{{vcLabelSingular}} सहेजने में विफल",
+          "message1": "{{vcLabelSingular}} को स्टोर में सेव करते समय कोई गड़बड़ी हुई.",
+          "message": "स्टोर में {{vcLabelSingular}} सहेजते समय कोई गड़बड़ी हुई।"
+        },
+        "diskFullError": {
+          "title": "{{vcLabelSingular}} सहेजने में विफल",
+          "message": "ऐप डेटा पूर्ण होने के कारण कोई और {{vcLabelPlural}} प्राप्त या सहेजा नहीं जा सकता है।"
+        }
+      }
     },
     "OnboardingOverlay": {
       "stepOneTitle": "स्वागत है!",
@@ -243,6 +266,7 @@
       "reject": "अस्वीकार",
       "discard": "खारिज करना",
       "goToReceivedVCTab": "प्राप्त {{vcLabel}} देखें",
+      "saving": "सहेजा जा रहा है",
       "errors": {
         "savingFailed": {
           "title": "{{vcLabelSingular}} सहेजने में विफल",
@@ -280,6 +304,14 @@
         "connected": {
           "message": "डिवाइस से कनेक्ट किया गया। {{vcLabel}} के लिए प्रतीक्षारत...",
           "timeoutHint": "अभी तक कोई डेटा प्राप्त नहीं हुआ है. भेजने वाला उपकरण अभी भी जुड़ा हुआ है?"
+        },
+        "offline": {
+          "message": "ऑनलाइन साझाकरण मोड सक्षम करने के लिए कृपया इंटरनेट से कनेक्ट करें"
+        },
+        "bleError": {
+          "title": "स्थानांतरित करने में विफल",
+          "message": "{{vcLabel}} को स्थानांतरित करते समय कुछ गलत हो गया। कृपया पुन: प्रयास करें।",
+          "hint": "गलती: {{code}}"
         }
       },
       "online": "ऑनलाइन",
@@ -309,7 +341,28 @@
         "connectingTimeout": "कनेक्शन स्थापित करने में कुछ समय लग रहा है. क्या अन्य डिवाइस कनेक्शन के लिए खुला है?",
         "exchangingDeviceInfo": "डिवाइस की जानकारी का आदान-प्रदान...",
         "exchangingDeviceInfoTimeout": "It's taking a while to exchange device info. You may have to reconnect.",
-        "invalid": "अमान्य क्यूआर कोड"
+        "invalid": "अमान्य क्यूआर कोड",
+        "offline": "ऑनलाइन साझाकरण मोड का उपयोग करके क्यूआर कोड स्कैन करने के लिए कृपया इंटरनेट से कनेक्ट करें",
+        "sent": "{{vcLabel}} भेज दिया गया है...",
+        "sentHint": "आपके {{vcLabel }} को सहेजने या छोड़ने के लिए रिसीवर की प्रतीक्षा की जा रही है",
+        "sharing": {
+          "title": "साझा कर रहा है...",
+          "hint": "शेयर को स्वीकार या अस्वीकार करने के लिए कृपया प्राप्त करने वाले डिवाइस की प्रतीक्षा करें।",
+          "timeoutHint": "साझा करने में अपेक्षा से अधिक समय लग रहा है। कनेक्शन में कोई समस्या हो सकती है।"
+        },
+        "accepted": {
+          "title": "सफलता!",
+          "message": "आपका {{vcLabel}} सफलतापूर्वक {{receiver}} के साथ साझा किया गया"
+        },
+        "rejected": {
+          "title": "सूचना",
+          "message": "आपका {{vcLabel}} {{receiver}} द्वारा खारिज कर दिया गया था"
+        },
+        "bleError": {
+          "title": "स्थानांतरित करने में विफल",
+          "message": "{{vcLabel}} को स्थानांतरित करते समय कुछ गलत हो गया। कृपया पुन: प्रयास करें।",
+          "hint": "गलती: {{code}}"
+        }
       }
     },
     "SelectVcOverlay": {
@@ -336,7 +389,6 @@
         "rejected": {
           "title": "सूचना",
           "message": "आपके {{vcLabel}} को {{receiver}} ने अस्वीकार कर दिया था"
-
         }
       },
       "consentToPhotoVerification": "मैं प्रमाणीकरण के लिए अपनी फोटो लेने की सहमति देता हूं"

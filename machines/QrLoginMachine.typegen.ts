@@ -46,6 +46,7 @@ export interface Typegen0 {
     expandLinkTransResp: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
     forwardToParent: 'DISMISS';
     loadMyVcs: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
+    loadThumbprint: 'CONFIRM';
     resetLinkTransactionId: 'GET';
     resetSelectedVoluntaryClaims: 'GET';
     setClaims: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
@@ -54,14 +55,15 @@ export interface Typegen0 {
     setMyVcs: 'STORE_RESPONSE';
     setScanData: 'GET';
     setSelectedVc: 'SELECT_VC';
+    setThumbprint: 'STORE_RESPONSE';
     setlinkTransactionResponse: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
   };
   'eventsCausingDelays': {};
   'eventsCausingGuards': {};
   'eventsCausingServices': {
     linkTransaction: 'GET';
-    sendAuthenticate: 'FACE_VALID';
-    sendConsent: 'CONFIRM';
+    sendAuthenticate: never;
+    sendConsent: 'STORE_RESPONSE';
   };
   'matchesStates':
     | 'ShowError'
@@ -70,6 +72,7 @@ export interface Typegen0 {
     | 'invalidIdentity'
     | 'linkTransaction'
     | 'loadMyVcs'
+    | 'loadingThumbprint'
     | 'requestConsent'
     | 'sendingAuthenticate'
     | 'sendingConsent'

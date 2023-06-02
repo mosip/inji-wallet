@@ -7,7 +7,10 @@ import { Theme } from '../../components/ui/styleUtils';
 import { VcDetails } from '../../components/VcDetails';
 import { useReceiveVcScreen } from './ReceiveVcScreenController';
 import { VerifyIdentityOverlay } from '../VerifyIdentityOverlay';
-import { MessageOverlay } from '../../components/MessageOverlay';
+import {
+  MessageOverlay,
+  ErrorMessageOverlay,
+} from '../../components/MessageOverlay';
 import { isBLEEnabled } from '../../lib/smartshare';
 import { useOverlayVisibleAfterTimeout } from '../../shared/hooks/useOverlayVisibleAfterTimeout';
 
@@ -18,8 +21,10 @@ export const ReceiveVcScreen: React.FC = () => {
     controller.isAccepting
   );
   let storeErrorTranslationPath = 'errors.savingFailed';
+
+  //ENOSPC - no space left on a device / drive
   const isDiskFullError =
-    controller.storeError?.message?.match('SQLITE_FULL') != null;
+    controller.storeError?.message?.match('ENOSPC') != null;
 
   if (isDiskFullError) {
     storeErrorTranslationPath = 'errors.diskFullError';
@@ -121,18 +126,12 @@ export const ReceiveVcScreen: React.FC = () => {
         })}
         progress={true}
       />
-
-      <MessageOverlay
+      <ErrorMessageOverlay
         isVisible={controller.IsSavingFailedInIdle}
-        title={t(storeErrorTranslationPath + '.title', {
-          vcLabelSingular: controller.vcLabel.singular,
-          vcLabelPlural: controller.vcLabel.plural,
-        })}
-        message={t(storeErrorTranslationPath + '.message', {
-          vcLabelSingular: controller.vcLabel.singular,
-          vcLabelPlural: controller.vcLabel.plural,
-        })}
-        onBackdropPress={controller.DISMISS}
+        error={storeErrorTranslationPath}
+        translationPath={'ReceiveVcScreen'}
+        onDismiss={controller.DISMISS}
+        vcLabel={controller.vcLabel}
       />
     </React.Fragment>
   );

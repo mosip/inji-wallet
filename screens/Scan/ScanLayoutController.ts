@@ -29,6 +29,7 @@ import { selectVcLabel } from '../../machines/settings';
 import { MainBottomTabParamList } from '../../routes/main';
 import { GlobalContext } from '../../shared/GlobalContext';
 import { selectIsHandlingBleError } from '../../machines/openIdBle/scan';
+import { selectBleError } from '../../machines/openIdBle/request';
 
 type ScanStackParamList = {
   ScanScreen: undefined;
@@ -51,6 +52,7 @@ export function useScanLayout() {
   const isLocationDisabled = useSelector(scanService, selectIsLocationDisabled);
   const isLocationDenied = useSelector(scanService, selectIsLocationDenied);
   const isBleError = useSelector(scanService, selectIsHandlingBleError);
+  const bleError = useSelector(scanService, selectBleError);
 
   const locationError = { message: '', button: '' };
 
@@ -171,6 +173,11 @@ export function useScanLayout() {
       message: t('status.bleError.message', {
         vcLabel: vcLabel.singular,
       }),
+      hint:
+        bleError.code &&
+        t('status.bleError.hint', {
+          code: bleError.code,
+        }),
       onBackdropPress: DISMISS,
     };
   }

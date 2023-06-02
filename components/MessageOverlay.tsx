@@ -5,6 +5,7 @@ import { Dimensions } from 'react-native';
 import { Overlay, LinearProgress } from 'react-native-elements';
 import { Button, Column, Text } from './ui';
 import { Theme } from './ui/styleUtils';
+import { VCLabel } from '../types/vc';
 
 export const MessageOverlay: React.FC<MessageOverlayProps> = (props) => {
   const { t } = useTranslation('common');
@@ -44,6 +45,39 @@ export const MessageOverlay: React.FC<MessageOverlayProps> = (props) => {
     </Overlay>
   );
 };
+
+export const ErrorMessageOverlay: React.FC<ErrorMessageOverlayProps> = ({
+  isVisible,
+  error,
+  onDismiss,
+  vcLabel,
+  translationPath,
+}) => {
+  const { t } = useTranslation(translationPath);
+
+  return (
+    <MessageOverlay
+      isVisible={isVisible}
+      title={t(error + '.title', {
+        vcLabelSingular: vcLabel.singular,
+        vcLabelPlural: vcLabel.plural,
+      })}
+      message={t(error + '.message', {
+        vcLabelSingular: vcLabel.singular,
+        vcLabelPlural: vcLabel.plural,
+      })}
+      onBackdropPress={onDismiss}
+    />
+  );
+};
+
+export interface ErrorMessageOverlayProps {
+  isVisible: boolean;
+  error?: string;
+  onDismiss?: () => void;
+  vcLabel: VCLabel;
+  translationPath: string;
+}
 
 const Progress: React.FC<Pick<MessageOverlayProps, 'progress'>> = (props) => {
   return typeof props.progress === 'boolean' ? (
