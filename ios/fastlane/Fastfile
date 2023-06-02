@@ -57,9 +57,12 @@ platform :ios do
       is_key_content_base64: true
     )
 
+    version = get_version_number(xcodeproj: "MOSIPResidentApp.xcodeproj")
+
     previous_build_number = latest_testflight_build_number(
       app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
       api_key: api_key,
+      version: version
     )
 
     current_build_number = previous_build_number + 1
@@ -68,8 +71,6 @@ platform :ios do
       xcodeproj: "MOSIPResidentApp.xcodeproj", 
       build_number: current_build_number
     )
-
-    version = get_version_number(xcodeproj: "MOSIPResidentApp.xcodeproj")
 
     match(
       type: 'appstore',
@@ -81,45 +82,45 @@ platform :ios do
       api_key: api_key
     )
 
-    profile_mapping = Actions.lane_context[SharedValues::MATCH_PROVISIONING_PROFILE_MAPPING]
+    # profile_mapping = Actions.lane_context[SharedValues::MATCH_PROVISIONING_PROFILE_MAPPING]
 
-    gym(
-      configuration: "Release",
-      workspace: "MOSIPResidentApp.xcworkspace",
-      scheme: "MOSIPResidentApp",
-      export_method: "app-store",
+    # gym(
+    #   configuration: "Release",
+    #   workspace: "MOSIPResidentApp.xcworkspace",
+    #   scheme: "MOSIPResidentApp",
+    #   export_method: "app-store",
       
-      export_options: {
-        provisioningProfiles: { 
-            "#{DEVELOPER_APP_ID}" => "#{PROVISIONING_PROFILE_SPECIFIER}"
-        }
-      }
-    )
+    #   export_options: {
+    #     provisioningProfiles: { 
+    #         "#{DEVELOPER_APP_ID}" => "#{PROVISIONING_PROFILE_SPECIFIER}"
+    #     }
+    #   }
+    # )
 
-    pilot(
-       app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
-       api_key: api_key,
-       ipa: "./MOSIPResidentApp.ipa",
-       changelog: "#{TESTFLIGHT_BETA_APP_DESCRIPTION}",
-       localized_build_info: {
-          "default": {
-            whats_new: "#{TESTFLIGHT_BETA_APP_DESCRIPTION}", 
-          }
-      },
-       skip_waiting_for_build_processing: false,
-       distribute_external: true,
-       submit_beta_review: false,  
-       groups: ["#{TESTFLIGHT_INTERNAL_TESTERS_GROUP}"],
-    )
+    # pilot(
+    #    app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
+    #    api_key: api_key,
+    #    ipa: "./MOSIPResidentApp.ipa",
+    #    changelog: "#{TESTFLIGHT_BETA_APP_DESCRIPTION}",
+    #    localized_build_info: {
+    #       "default": {
+    #         whats_new: "#{TESTFLIGHT_BETA_APP_DESCRIPTION}", 
+    #       }
+    #   },
+    #    skip_waiting_for_build_processing: false,
+    #    distribute_external: true,
+    #    submit_beta_review: false,  
+    #    groups: ["#{TESTFLIGHT_INTERNAL_TESTERS_GROUP}"],
+    # )
 
     delete_temp_keychain(keychain_name)
 
-    slack(
-      message: "Inji - #{version} (#{current_build_number}) is uploaded to testflight.", 
-      success: true,
-      slack_url: "#{SLACK_URL}",
-      default_payloads: [:git_branch, :last_git_commit]
-    )
+    # slack(
+    #   message: "Inji - #{version} (#{current_build_number}) is uploaded to testflight.", 
+    #   success: true,
+    #   slack_url: "#{SLACK_URL}",
+    #   default_payloads: [:git_branch, :last_git_commit]
+    # )
   end
 
   lane :build_verify do
