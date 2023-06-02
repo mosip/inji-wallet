@@ -111,7 +111,7 @@
   "AboutInji": {
     "aboutInji": "About Inji",
     "header": "ABOUT INJI",
-    "aboutDetailes": "Inji is a mobile app that can be used as a digital wallet to store credentials. It also allows verfication of identity in both offline and online modes, at any place ans time.",
+    "aboutDetailes": "Inji is a mobile app that can be used as a digital wallet to store credentials. It also allows verfication of identity in both offline and online modes, at any place and time.",
     "forMoreDetailes": "For more detailes",
     "clickHere": "Click here",
     "version": "Version: 0.4.1",
@@ -159,7 +159,7 @@
     "title": "Retrieve your ID",
     "guideLabel": "Select ID type and enter the MOSIP provided UIN or VID of the ID you wish to retrieve",
     "generateVc": "Generate {{vcLabel}}",
-    "downloadID": "Download ID",
+    "downloadID": "Download Card",
     "enterId": "Enter {{idType}}",
     "noUIN/VID": "Don't have UIN/VID? ",
     "getItHere": "Get it now",

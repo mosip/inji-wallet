@@ -560,7 +560,6 @@ export const DefaultTheme = {
     },
     float: {
       borderRadius: 9,
-      width: '34%',
       alignSelf: 'center',
       fontSize: 10,
       elevation: 5,
