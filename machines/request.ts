@@ -57,6 +57,7 @@ const model = createModel(
       GO_TO_RECEIVED_VC_TAB: () => ({}),
       CANCEL: () => ({}),
       DISMISS: () => ({}),
+      BLE_ERROR: () => ({}),
       RESET: () => ({}),
       VC_RECEIVED: (vc: VC) => ({ vc }),
       CONNECTED: (pairId?: string) => ({ pairId: pairId || '' }),

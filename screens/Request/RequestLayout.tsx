@@ -10,6 +10,7 @@ import { ReceiveVcScreen } from './ReceiveVcScreen';
 import { Theme } from '../../components/ui/styleUtils';
 import { I18nManager, Platform } from 'react-native';
 import { isBLEEnabled } from '../../lib/smartshare';
+import { MessageOverlay } from '../../components/MessageOverlay';
 
 const RequestStack = createNativeStackNavigator();
 
@@ -83,11 +84,18 @@ export const RequestLayout: React.FC = () => {
       )}
 
       {controller.isBleError && (
-        <Message
+        <MessageOverlay
+          isVisible={controller.isBleError}
           title={t('status.bleError.title')}
           message={t('status.bleError.message', {
             vcLabel: controller.vcLabel.singular,
           })}
+          hint={
+            controller.bleError.code &&
+            t('status.bleError.hint', {
+              code: controller.bleError.code,
+            })
+          }
           onBackdropPress={controller.DISMISS}
         />
       )}

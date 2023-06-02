@@ -1,6 +1,6 @@
 import * as Keychain from 'react-native-keychain';
 import CryptoJS from 'crypto-js';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import Storage from '../shared/storage';
 import binaryToBase64 from 'react-native/Libraries/Utilities/binaryToBase64';
 import { EventFrom, Receiver, sendParent, send, sendUpdate } from 'xstate';
 import { createModel } from 'xstate/lib/model';
@@ -22,6 +22,7 @@ const model = createModel(
       APPEND: (key: string, value: unknown) => ({ key, value }),
       PREPEND: (key: string, value: unknown) => ({ key, value }),
       REMOVE: (key: string, value: string) => ({ key, value }),
+      REMOVE_VC_METADATA: (key: string, value: string) => ({ key, value }),
       REMOVE_ITEMS: (key: string, values: string[]) => ({ key, values }),
       CLEAR: () => ({}),
       ERROR: (error: Error) => ({ error }),
@@ -119,6 +120,9 @@ export const storeMachine =
             REMOVE: {
               actions: 'forwardStoreRequest',
             },
+            REMOVE_VC_METADATA: {
+              actions: 'forwardStoreRequest',
+            },
             REMOVE_ITEMS: {
               actions: 'forwardStoreRequest',
             },
@@ -137,12 +141,12 @@ export const storeMachine =
               ],
             },
             STORE_ERROR: {
-              actions: send(
-                (_, event) => model.events.STORE_ERROR(event.error),
-                {
+              actions: [
+                send((_, event) => model.events.STORE_ERROR(event.error), {
                   to: (_, event) => event.requester,
-                }
-              ),
+                }),
+                sendUpdate(),
+              ],
             },
           },
         },
@@ -207,6 +211,15 @@ export const storeMachine =
                 }
                 case 'REMOVE': {
                   await removeItem(
+                    event.key,
+                    event.value,
+                    context.encryptionKey
+                  );
+                  response = event.value;
+                  break;
+                }
+                case 'REMOVE_VC_METADATA': {
+                  await removeVCMetaData(
                     event.key,
                     event.value,
                     context.encryptionKey
@@ -283,8 +296,8 @@ export async function setItem(
 ) {
   try {
     const data = JSON.stringify(value);
-    const encrypted = encryptJson(encryptionKey, data);
-    await AsyncStorage.setItem(key, encrypted);
+    const encryptedData = encryptJson(encryptionKey, data);
+    await Storage.setItem(key, encryptedData);
   } catch (e) {
     console.error('error setItem:', e);
     throw e;
@@ -297,11 +310,10 @@ export async function getItem(
   encryptionKey: string
 ) {
   try {
-    const data = await AsyncStorage.getItem(key);
+    const data = await Storage.getItem(key);
     if (data != null) {
-      const decrypted = decryptJson(encryptionKey, data);
-
-      return JSON.parse(decrypted);
+      const decryptedData = decryptJson(encryptionKey, data);
+      return JSON.parse(decryptedData);
     } else {
       return defaultValue;
     }
@@ -348,9 +360,9 @@ export async function removeItem(
   encryptionKey: string
 ) {
   try {
-    const data = await AsyncStorage.getItem(key);
-    const decrypted = decryptJson(encryptionKey, data);
-    const list = JSON.parse(decrypted);
+    const data = await Storage.getItem(key);
+    const decryptedData = decryptJson(encryptionKey, data);
+    const list = JSON.parse(decryptedData);
     const vcKeyArray = value.split(':');
     const finalVcKeyArray = vcKeyArray.pop();
     const finalVcKey = vcKeyArray.join(':');
@@ -366,15 +378,35 @@ export async function removeItem(
   }
 }
 
+export async function removeVCMetaData(
+  key: string,
+  value: string,
+  encryptionKey: string
+) {
+  try {
+    const data = await Storage.getItem(key);
+    const decryptedData = decryptJson(encryptionKey, data);
+    const list = JSON.parse(decryptedData);
+    const newList = list.filter((vc: string) => {
+      return !vc.includes(value);
+    });
+
+    await setItem(key, newList, encryptionKey);
+  } catch (e) {
+    console.error('error remove VC metadata:', e);
+    throw e;
+  }
+}
+
 export async function removeItems(
   key: string,
   values: string[],
   encryptionKey: string
 ) {
   try {
-    const data = await AsyncStorage.getItem(key);
-    const decrypted = decryptJson(encryptionKey, data);
-    const list = JSON.parse(decrypted);
+    const data = await Storage.getItem(key);
+    const decryptedData = decryptJson(encryptionKey, data);
+    const list = JSON.parse(decryptedData);
     const newList = list.filter(function (vc: string) {
       return !values.find(function (vcKey: string) {
         const vcKeyArray = vcKey.split(':');
@@ -394,20 +426,21 @@ export async function removeItems(
 
 export async function clear() {
   try {
-    await AsyncStorage.clear();
+    console.log('entire storage gets cleared.');
+    await Storage.clear();
   } catch (e) {
     console.error('error clear:', e);
     throw e;
   }
 }
 
-export function encryptJson(encryptionKey: string, data: string): string {
+function encryptJson(encryptionKey: string, data: string): string {
   return CryptoJS.AES.encrypt(data, encryptionKey).toString();
 }
 
-export function decryptJson(encryptionKey: string, encrypted: string): string {
+function decryptJson(encryptionKey: string, encryptedData: string): string {
   try {
-    return CryptoJS.AES.decrypt(encrypted, encryptionKey).toString(
+    return CryptoJS.AES.decrypt(encryptedData, encryptionKey).toString(
       CryptoJS.enc.Utf8
     );
   } catch (e) {

@@ -15,6 +15,9 @@ export const MY_LOGIN_STORE_KEY = 'myLogins';
 export const VC_ITEM_STORE_KEY = (vc: Partial<VC>) =>
   `vc:${vc.idType}:${vc.id}:${vc.requestId}`;
 
+//Regex expression to evaluate if the key is for a VC
+export const VC_ITEM_STORE_KEY_REGEX = '^vc:(UIN|VID):[0-9]+:[a-z0-9-]+$';
+
 export let individualId = '';
 
 export const GET_INDIVIDUAL_ID = (ind_Id: string) => {

@@ -26,6 +26,7 @@ const model = createModel(
       STORE_RESPONSE: (response: unknown) => ({ response }),
       STORE_ERROR: (error: Error) => ({ error }),
       VC_ADDED: (vcKey: string) => ({ vcKey }),
+      REMOVE_VC_FROM_CONTEXT: (vcKey: string) => ({ vcKey }),
       VC_RECEIVED: (vcKey: string) => ({ vcKey }),
       VC_DOWNLOADED: (vc: VC) => ({ vc }),
       REFRESH_MY_VCS: () => ({}),
@@ -133,6 +134,9 @@ export const vcMachine =
             VC_ADDED: {
               actions: 'prependToMyVcs',
             },
+            REMOVE_VC_FROM_CONTEXT: {
+              actions: 'removeVcFromMyVcs',
+            },
             VC_DOWNLOADED: {
               actions: 'setDownloadedVc',
             },
@@ -183,6 +187,11 @@ export const vcMachine =
 
         prependToMyVcs: model.assign({
           myVcs: (context, event) => [event.vcKey, ...context.myVcs],
+        }),
+
+        removeVcFromMyVcs: model.assign({
+          myVcs: (context, event) =>
+            context.myVcs.filter((vc: string) => !vc.includes(event.vcKey)),
         }),
 
         prependToReceivedVcs: model.assign({
@@ -240,14 +249,18 @@ export function selectIsRefreshingReceivedVcs(state: State) {
   return state.matches('ready.receivedVcs.refreshing');
 }
 
+/*
+  this methods returns all the binded vc's in the wallet.
+ */
 export function selectBindedVcs(state: State) {
-  return (Object.keys(state.context.vcs) as Array<string>).filter((key) => {
-    var walletBindingResponse = state.context.vcs[key].walletBindingResponse;
+  return (state.context.myVcs as Array<string>).filter((key) => {
+    const walletBindingResponse = state.context.vcs[key]?.walletBindingResponse;
     return (
-      state.context.myVcs.includes(key) &&
-      walletBindingResponse !== null &&
-      walletBindingResponse.walletBindingId !== null &&
-      walletBindingResponse.walletBindingId !== ''
+      !isEmpty(walletBindingResponse) &&
+      !isEmpty(walletBindingResponse?.walletBindingId)
     );
   });
+}
+function isEmpty(object) {
+  return object == null || object == '' || object == undefined;
 }

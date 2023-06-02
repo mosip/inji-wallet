@@ -81,6 +81,7 @@ const model = createModel(
       DISMISS: () => ({}),
       CONNECTED: () => ({}),
       DISCONNECT: () => ({}),
+      BLE_ERROR: () => ({}),
       SCREEN_BLUR: () => ({}),
       SCREEN_FOCUS: () => ({}),
       UPDATE_REASON: (reason: string) => ({ reason }),
