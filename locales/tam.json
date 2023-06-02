@@ -11,7 +11,9 @@
     "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "பெற்றது. இருப்பைச் சரிபார்க்க முடியவில்லை",
     "PRESENCE_VERIFIED_AND_VC_SHARED": "சரிபார்க்கப்பட்டு பகிரப்பட்டது",
     "PRESENCE_VERIFICATION_FAILED": "சரிபார்ப்பு தோல்வியடைந்தது",
-    "QRLOGIN_SUCCESFULL": "QRஉள்நுழைவு வெற்றிகரமாக உள்ளது"
+    "QRLOGIN_SUCCESFULL": "QRஉள்நுழைவு வெற்றிகரமாக உள்ளது",
+    "WALLET_BINDING_SUCCESSFULL": "செயல்படுத்தல் வெற்றி",
+    "WALLET_BINDING_FAILURE": "செயல்படுத்துவதில் தோல்வி"
   },
   "DeviceInfoList": {
     "requestedBy": "கோரியவர்",
@@ -59,7 +61,17 @@
     "yes_confirm": "ஆம், நான் உறுதி செய்கிறேன்",
     "no": "இல்லை",
     "Alert": "எச்சரிக்கை",
-    "ok": "சரி"
+    "ok": "சரி",
+    "errors": {
+      "savingFailed": {
+        "title": "{{vcLabelSingular}}ஐ சேமிப்பதில் தோல்வி",
+        "message": "கடையில் {{vcLabelSingular}}ஐ சேமிக்கும் போது ஏதோ தவறு ஏற்பட்டது."
+      },
+      "diskFullError": {
+        "title": "{{vcLabelSingular}}ஐ சேமிக்க முடியவில்லை",
+        "message": "ஆப்ஸ் டேட்டா நிரம்பியதால் {{vcLabelPlural}} பெறவோ சேமிக்கவோ முடியாது."
+      }
+    }
   },
   "AuthScreen": {
     "header": "பயன்பாட்டைத் திறக்க பயோமெட்ரிக்ஸைப் பயன்படுத்த விரும்புகிறீர்களா?",
@@ -119,6 +131,7 @@
         "applicationProcessing": "AID தயாராக இல்லை",
         "noMessageAvailable": "சிறிது நேரம் கழித்து முயற்சிக்கவும்",
         "networkRequestFailed": "நெட்வொர்க் கோரிக்கை தோல்வியடைந்தது",
+        "invalidAid": "உள்ளிடப்பட்ட எய்ட் கிடைக்கவில்லை.நுழைவதற்கு முன் உங்கள் உதவியை சரிபார்க்கவும்",
         "timeout": "நேரம் முடிந்தது"
       }
     }
@@ -149,7 +162,17 @@
   "MyVcsTab": {
     "addVcButton": "{{vcLabel}} சேர்",
     "generateVc": "உங்கள் {{vcLabel}}ஐ உருவாக்கவும்",
-    "generateVcDescription": "உங்கள் \"சேர் {{vcLabel}}\" என்பதைத் தட்டவும் {{vcLabel}}"
+    "generateVcDescription": "உங்கள் \"சேர் {{vcLabel}}\" என்பதைத் தட்டவும் {{vcLabel}}",
+    "errors": {
+      "savingFailed": {
+        "title": "{{vcLabelSingular}}ஐ சேமிப்பதில் தோல்வி",
+        "message": "கடையில் {{vcLabelSingular}}ஐ சேமிக்கும் போது ஏதோ தவறு ஏற்பட்டது."
+      },
+      "diskFullError": {
+        "title": "{{vcLabelSingular}}ஐ சேமிக்க முடியவில்லை",
+        "message": "ஆப்ஸ் டேட்டா நிரம்பியதால் {{vcLabelPlural}} பெறவோ சேமிக்கவோ முடியாது."
+      }
+    }
   },
   "OnboardingOverlay": {
     "stepOneTitle": "வரவேற்கிறேன்!",
@@ -241,6 +264,7 @@
     "reject": "நிராகரிக்கவும்",
     "discard": "நிராகரிக்கவும்",
     "goToReceivedVCTab": "பெறப்பட்ட {{vcLabel}}களைப் பார்க்கவும் ",
+    "saving": "சேமிப்பு",
     "errors": {
       "savingFailed": {
         "title": "{{vcLabelSingular}}ஐ சேமிப்பதில் தோல்வி",
@@ -278,6 +302,14 @@
       "connected": {
         "message": "சாதனத்துடன் இணைக்கப்பட்டது. {{vcLabel}}க்காகக் காத்திருக்கிறது...",
         "timeoutHint": "இதுவரை தரவு எதுவும் பெறப்படவில்லை. சாதனத்தை அனுப்புவது இன்னும் இணைக்கப்பட்டுள்ளதா?"
+      },
+      "offline": {
+        "message": "ஆன்லைன் பகிர்வு பயன்முறையை இயக்க இணையத்துடன் இணைக்கவும்"
+      },
+      "bleError": {
+        "title": "இடமாற்றம் செய்ய முடியவில்லை",
+        "message": "{{vcLabel}} ஐ மாற்றும்போது ஏதோ தவறு ஏற்பட்டது. தயவு செய்து மீண்டும் முயற்சிக்கவும்.",
+        "hint": "பிழை: {{code}}"
       }
     },
     "online": "நிகழ்நிலை",
@@ -289,7 +321,7 @@
     "noShareableVcs": "பகிரக்கூடிய {{vcLabel}} எதுவும் இல்லை.",
     "bluetoothStateAndroid": "உள்ளூர் பகிர்வை ஆதரிக்க விரைவான அமைப்புகளிலிருந்து புளூடூத்தை இயக்கவும்",
     "bluetoothStateIos": "உள்ளூர் பகிர்வை ஆதரிக்க, கட்டுப்பாட்டு மையத்திலிருந்து புளூடூத்தை இயக்கவும்",
-    "enableBluetoothMessage":"உள்ளூர் பகிர்வை ஆதரிக்க புளூடூத் அனுமதிகளை இயக்கவும்",
+    "enableBluetoothMessage": "உள்ளூர் பகிர்வை ஆதரிக்க புளூடூத் அனுமதிகளை இயக்கவும்",
     "enableBluetoothButtonText": "புளூடூத் அனுமதிகளை அனுமதிக்கவும்",
     "sharingVc": "பகிர்தல் {{vcLabel}}",
     "errors": {
@@ -307,7 +339,28 @@
       "connectingTimeout": "இணைப்பை ஏற்படுத்த சிறிது நேரம் ஆகும். மற்ற சாதனம் இணைப்புகளுக்குத் திறந்திருக்கிறதா?",
       "exchangingDeviceInfo": "சாதன தகவல் பரிமாற்றம்...",
       "exchangingDeviceInfoTimeout": "சாதனத் தகவலைப் பரிமாறிக்கொள்ள சிறிது நேரம் ஆகும். நீங்கள் மீண்டும் இணைக்க வேண்டியிருக்கலாம்.",
-      "invalid": "தவறான QR குறியீடு"
+      "invalid": "தவறான QR குறியீடு",
+      "offline": "ஆன்லைன் பகிர்வு பயன்முறையைப் பயன்படுத்தி QR குறியீடுகளை ஸ்கேன் செய்ய இணையத்துடன் இணைக்கவும்",
+      "sent": "{{ vcLabel }} அனுப்பப்பட்டது...",
+      "sentHint": "ரிசீவர் உங்கள் {{ vcLabel }} ஐ சேமிக்க அல்லது நிராகரிக்க காத்திருக்கிறது",
+      "sharing": {
+        "title": "பகிர்கிறது...",
+        "hint": "பெறும் சாதனம் பங்கை ஏற்க அல்லது நிராகரிக்க காத்திருக்கவும்.",
+        "timeoutHint": "பகிர்வதற்கு எதிர்பார்த்ததை விட அதிக நேரம் எடுக்கிறது. இணைப்பில் சிக்கல் இருக்கலாம்."
+      },
+      "accepted": {
+        "title": "வெற்றி!",
+        "message": "உங்கள் {{vcLabel}} வெற்றிகரமாக {{receiver}} உடன் பகிரப்பட்டது"
+      },
+      "rejected": {
+        "title": "கவனிக்கவும்",
+        "message": "உங்கள் {{vcLabel}}, {{receiver}} ஆல் நிராகரிக்கப்பட்டது"
+      },
+      "bleError": {
+        "title": "இடமாற்றம் செய்ய முடியவில்லை",
+        "message": "{{vcLabel}} ஐ மாற்றும்போது ஏதோ தவறு ஏற்பட்டது. தயவு செய்து மீண்டும் முயற்சிக்கவும்.",
+        "hint": "பிழை: {{code}}"
+      }
     }
   },
   "SelectVcOverlay": {

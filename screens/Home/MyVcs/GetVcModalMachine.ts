@@ -236,6 +236,7 @@ export const GetVcModalMachine =
               'AID is not ready': 'applicationProcessing',
               'No message available': 'noMessageAvailable',
               'Network request failed': 'networkRequestFailed',
+              'Invalid Input Parameter- individualId': 'invalidAid',
             };
             return ID_ERRORS_MAP[message]
               ? i18n.t(`errors.backend.${ID_ERRORS_MAP[message]}`, {
