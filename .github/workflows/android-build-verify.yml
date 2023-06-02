@@ -1,4 +1,4 @@
-name: Android build verification 
+name: Android build verification
 
 env:
   backendServiceDefaultUrl: https://api.sandbox.mosip.net
@@ -112,4 +112,3 @@ jobs:
         env: 
           DEBUG_KEYSTORE_ALIAS: androiddebugkey
           DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
-

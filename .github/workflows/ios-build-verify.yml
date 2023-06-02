@@ -1,12 +1,21 @@
 name: Inji iOS build verification 
 
 on:
-  pull_request:
+  push:
+    branches:
+      - main
+      - develop
+      - demobranch
+      - qa-develop
+      - 0.9
+    tags:
+      - '*'
+  pull_request: 
     types: [ opened, synchronize ]
     branches:
       - develop
       - 'release-**'
-    tags:
+    tags: 
       - '*'
 
 jobs:
