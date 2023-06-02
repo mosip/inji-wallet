@@ -1,6 +1,7 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 import { Dimensions, StyleSheet, ViewStyle } from 'react-native';
 import { Spacing } from '../styleUtils';
+import { colors } from 'react-native-elements';
 
 const Colors = {
   Black: '#000000',
@@ -272,7 +273,7 @@ export const DefaultTheme = {
       justifyContent: 'space-between',
     },
     logo: {
-      height: 46,
+      height: 48,
       width: 40,
     },
     homeCloseCardDetailsHeader: {
@@ -384,12 +385,14 @@ export const DefaultTheme = {
     },
   }),
   QrCodeStyles: StyleSheet.create({
-    magnifierIcon: {
-      position: 'relative',
-      alignSelf: 'flex-end',
+    magnifierZoom: {
       backgroundColor: Colors.White,
-      width: 36,
-      height: 36,
+      width: 30,
+      height: 30,
+      alignItems: 'center',
+      padding: 5,
+      borderTopLeftRadius: 11,
+      elevation: 4,
     },
     expandedQrCode: {
       backgroundColor: Colors.White,
@@ -915,6 +918,7 @@ export const DefaultTheme = {
   InjiProgressingLogo: require('../../../assets/progressing-logo.png'),
   LockIcon: require('../../../assets/lock-icon.png'),
   InjiHomeLogo: require('../../../assets/inji-home-logo.png'),
+  MagnifierZoom: require('../../../assets/magnifier-zoom.png'),
   HelpIcon: require('../../../assets/help-icon.png'),
   sharingIntro: require('../../../assets/Secure-Sharing.png'),
   walletIntro: require('../../../assets/intro-wallet-binding.png'),

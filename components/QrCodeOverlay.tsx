@@ -4,7 +4,7 @@ import { Icon, Overlay } from 'react-native-elements';
 import { Centered, Column, Row, Text } from './ui';
 import QRCode from 'react-native-qrcode-svg';
 import { Theme } from './ui/styleUtils';
-import { t } from 'i18next';
+import { Image } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = (props) => {
@@ -22,6 +22,12 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = (props) => {
             value={props.qrCodeDetailes}
             backgroundColor={Theme.Colors.QRCodeBackgroundColor}
           />
+        </Row>
+        <Row
+          align="flex-end"
+          margin="-30 0 0 60"
+          style={Theme.QrCodeStyles.magnifierZoom}>
+          <Image source={Theme.MagnifierZoom} />
         </Row>
       </Pressable>
       <Overlay

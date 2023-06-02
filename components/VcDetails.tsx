@@ -49,10 +49,11 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
               }
               style={Theme.Styles.openCardImage}
             />
+
+            <QrCodeOverlay qrCodeDetailes={String(props.vc.credential)} />
             <Column margin="20 0 0 0">
               <Image source={Theme.MosipLogo} style={Theme.Styles.logo} />
             </Column>
-            <QrCodeOverlay qrCodeDetailes={String(props.vc.credential)} />
           </Column>
           <Column align="space-evenly">
             <Column>
