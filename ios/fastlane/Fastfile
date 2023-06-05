@@ -56,10 +56,12 @@ platform :ios do
       in_house: false,
       is_key_content_base64: true
     )
+    version = get_version_number(xcodeproj: "MOSIPResidentApp.xcodeproj")
 
     previous_build_number = latest_testflight_build_number(
       app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
       api_key: api_key,
+      version: version
     )
 
     current_build_number = previous_build_number + 1
@@ -68,8 +70,6 @@ platform :ios do
       xcodeproj: "MOSIPResidentApp.xcodeproj", 
       build_number: current_build_number
     )
-
-    version = get_version_number(xcodeproj: "MOSIPResidentApp.xcodeproj")
 
     match(
       type: 'appstore',
