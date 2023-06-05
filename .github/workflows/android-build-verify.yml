@@ -1,24 +1,25 @@
-name: Android Custom Build
+name: PR - android build verification
 
 env:
   backendServiceDefaultUrl: https://api.sandbox.mosip.net
 
 on:
-  workflow_dispatch:
-    inputs:
-      backendServiceUrl:
-        description: 'Backend service URL'
-        required: true
-        default: 'https://api.sandbox.mosip.net'
-        type: string
-      theme:
-        description: 'Application Theme'
-        required: true
-        default: 'orange'
-        type: choice
-        options:
-          - orange
-          - purple
+  push:
+    branches:
+      - main
+      - develop
+      - demobranch
+      - qa-develop
+      - 0.9
+    tags:
+      - '*'
+  pull_request: 
+    types: [ opened, synchronize ]
+    branches:
+      - develop
+      - 'release-**'
+    tags: 
+      - '*'
 
 jobs:
   build-android:
@@ -42,7 +43,7 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-
+      
       - name: Install npm dependencies
         run: |
           npm ci
@@ -73,7 +74,7 @@ jobs:
           if [ ! -z "$FIREBASE_SECRET" ] && [ -f app/google-services.json.gpg ];then rm -f app/google-services.json;gpg2 --quiet --batch --passphrase=$FIREBASE_SECRET --pinentry-mode loopback --decrypt --output app/google-services.json app/mosip-google-services.json.gpg;fi
         env:
           FIREBASE_SECRET: ${{ secrets.GPG_SECRET }}
-
+      
       - name: Generate keystore
         run: |
           keytool \
@@ -90,7 +91,6 @@ jobs:
         env: 
           DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
 
-
       - name: Export variables for keystore
         run: |
           cd android/app
@@ -105,19 +105,10 @@ jobs:
           gradlePath: android/app/build.gradle
           versionCode: ${{github.run_number}}
 
-      - name: Run Build
+      - name: Run Build using Fastlane
         run: | 
           cd android/scripts
-          ./run-fastlane.sh
-        env:
-          MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
-          APPLICATION_THEME: ${{ github.event.inputs.theme }} 
+          ./run-fastlane.sh 
+        env: 
           DEBUG_KEYSTORE_ALIAS: androiddebugkey
           DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
-      
-      - name: Upload Artifact to Actions
-        uses: actions/upload-artifact@v3.1.1
-        with:
-          name: Inji
-          path: android/app/build/outputs/apk/newlogic/debug/
-          retention-days: 10
