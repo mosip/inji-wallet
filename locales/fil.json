@@ -19,7 +19,9 @@
     "requestedBy": "Hiniling ni",
     "sentBy": "Ipinadala ni",
     "deviceRefNumber": "Reference number ng device",
-    "name": "Pangalan"
+    "name": "Pangalan",
+    "Verifier": "Verifier",
+    "Wallet": "Wallet"
   },
   "PasscodeVerify": {
     "passcodeMismatchError": "Hindi tumugma ang passcode."

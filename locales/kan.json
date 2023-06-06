@@ -19,7 +19,9 @@
     "requestedBy": "ವಿನಂತಿಸಿದವರು",
     "sentBy": "ಕಳುಹಿಸಿದವರು",
     "deviceRefNumber": "ಸಾಧನ ಉಲ್ಲೇಖ ಸಂಖ್ಯೆ",
-    "name": "ಹೆಸರು"
+    "name": "ಹೆಸರು",
+    "Verifier": "ಪರಿಶೀಲಕ",
+    "Wallet": "ವಾಲೆಟ್"
   },
   "PasscodeVerify": {
     "passcodeMismatchError": "ಪಾಸ್ಕೋಡ್ ಹೊಂದಿಕೆಯಾಗಲಿಲ್ಲ."

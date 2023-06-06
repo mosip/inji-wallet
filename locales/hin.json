@@ -19,7 +19,9 @@
       "requestedBy": "द्वारा अनुरोध किया गया",
       "sentBy": "द्वारा भेजा गया",
       "deviceRefNumber": "डिवाइस संदर्भ संख्या",
-      "name": "नाम"
+      "name": "नाम",
+      "Verifier": "सत्यापनकर्ता",
+      "Wallet": "वॉलेट"
     },
     "PasscodeVerify": {
       "passcodeMismatchError": "पासकोड का मिलान नहीं हुआ।"

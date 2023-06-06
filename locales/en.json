@@ -19,7 +19,9 @@
     "requestedBy": "Requested by",
     "sentBy": "Sent by",
     "deviceRefNumber": "Device reference number",
-    "name": "Name"
+    "name": "Name",
+    "Verifier": "Verifier",
+    "Wallet": "Wallet"
   },
   "FaceScanner": {},
   "OIDcAuth": {

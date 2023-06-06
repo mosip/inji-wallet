@@ -19,7 +19,9 @@
     "requestedBy": "கோரியவர்",
     "sentBy": "அனுப்பியவர்",
     "deviceRefNumber": "சாதன குறிப்பு எண்",
-    "name": "பெயர்"
+    "name": "பெயர்",
+    "Verifier": "சரிபார்ப்பவர்",
+    "Wallet": "பணப்பை"
   },
   "PasscodeVerify": {
     "passcodeMismatchError": "கடவுக்குறியீடு பொருந்தவில்லை."

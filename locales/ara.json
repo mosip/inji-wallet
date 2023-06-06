@@ -19,7 +19,9 @@
     "requestedBy": "مطلوب بواسطة",
     "sentBy": "مرسل بواسطة",
     "deviceRefNumber": "الرقم المرجعي للجهاز",
-    "name": "اسم"
+    "name": "اسم",
+    "Verifier": "المدقق",
+    "Wallet": "محفظة"
   },
   "FaceScanner": {},
   "OIDcAuth": {
