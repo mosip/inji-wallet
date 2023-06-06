@@ -33,7 +33,7 @@ export const ScanScreen: React.FC = () => {
   function noShareableVcText() {
     return (
       <Text align="center" color={Theme.Colors.errorMessage} margin="0 10">
-        {t('noShareableVcs', { vcLabel: controller.vcLabel.plural })}
+        {t('noShareableVcs')}
       </Text>
     );
   }

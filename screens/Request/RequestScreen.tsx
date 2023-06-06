@@ -36,7 +36,7 @@ const BluetoothPrompt: React.FC<RequestScreenProps> = ({ t, controller }) => {
   return (
     <Centered fill>
       <Text color={Theme.Colors.errorMessage} align="center">
-        {t('bluetoothDenied', { vcLabel: controller.vcLabel.singular })}
+        {t('bluetoothDenied')}
       </Text>
       <Button
         margin={[32, 0, 0, 0]}
@@ -50,9 +50,7 @@ const BluetoothPrompt: React.FC<RequestScreenProps> = ({ t, controller }) => {
 const SharingQR: React.FC<RequestScreenProps> = ({ t, controller }) => {
   return (
     <React.Fragment>
-      <Text align="center">
-        {t('showQrCode', { vcLabel: controller.vcLabel.singular })}
-      </Text>
+      <Text align="center">{t('showQrCode')}</Text>
 
       <Centered fill>
         {controller.connectionParams !== '' ? (

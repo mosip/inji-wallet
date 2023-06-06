@@ -11,7 +11,6 @@ import {
   selectIsWaitingForConnection,
   selectSenderInfo,
 } from '../../machines/request';
-import { selectVcLabel } from '../../machines/settings';
 import { MainBottomTabParamList } from '../../routes/main';
 import { GlobalContext } from '../../shared/GlobalContext';
 import { selectIsHandlingBleError } from '../../machines/openIdBle/scan';
@@ -31,7 +30,6 @@ type RequestLayoutNavigation = NavigationProp<
 
 export function useRequestLayout() {
   const { appService } = useContext(GlobalContext);
-  const settingsService = appService.children.get('settings');
   const requestService = appService.children.get('request');
   const navigation = useNavigation<RequestLayoutNavigation>();
 
@@ -67,7 +65,6 @@ export function useRequestLayout() {
   }, [isDone, isReviewing, isWaitingForConnection]);
 
   return {
-    vcLabel: useSelector(settingsService, selectVcLabel),
     senderInfo: useSelector(requestService, selectSenderInfo),
 
     isAccepted: useSelector(requestService, selectIsAccepted),

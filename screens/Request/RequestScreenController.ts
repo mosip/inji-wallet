@@ -17,7 +17,6 @@ import {
   selectIsCancelling,
   selectIsOffline,
 } from '../../machines/request';
-import { selectVcLabel } from '../../machines/settings';
 import { GlobalContext } from '../../shared/GlobalContext';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import { useTranslation } from 'react-i18next';
@@ -25,8 +24,6 @@ import { useTranslation } from 'react-i18next';
 export function useRequestScreen() {
   const { t } = useTranslation('RequestScreen');
   const { appService } = useContext(GlobalContext);
-  const settingsService = appService.children.get('settings');
-  const vcLabel = useSelector(settingsService, selectVcLabel);
 
   const requestService = appService.children.get('request');
   const isActive = useSelector(appService, selectIsActive);
@@ -68,13 +65,9 @@ export function useRequestScreen() {
     statusHint = t('status.exchangingDeviceInfo.timeoutHint');
     isStatusCancellable = true;
   } else if (isWaitingForVc) {
-    statusMessage = t('status.connected.message', {
-      vcLabel: vcLabel.singular,
-    });
+    statusMessage = t('status.connected.message');
   } else if (isWaitingForVcTimeout) {
-    statusMessage = t('status.connected.message', {
-      vcLabel: vcLabel.singular,
-    });
+    statusMessage = t('status.connected.message');
     statusHint = t('status.connected.timeoutHint');
     isStatusCancellable = true;
   }
@@ -88,7 +81,6 @@ export function useRequestScreen() {
   }, [isFocused, isActive]);
 
   return {
-    vcLabel,
     statusMessage,
     statusHint,
     sharingProtocol: useSelector(requestService, selectSharingProtocol),

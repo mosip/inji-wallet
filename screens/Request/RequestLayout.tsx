@@ -38,9 +38,7 @@ export const RequestLayout: React.FC = () => {
             name="ReceiveVcScreen"
             component={ReceiveVcScreen}
             options={{
-              title: t('incomingVc', {
-                vcLabel: controller.vcLabel.singular,
-              }),
+              title: t('incomingVc'),
             }}
           />
         )}
@@ -57,7 +55,6 @@ export const RequestLayout: React.FC = () => {
         <Message
           title={t('status.accepted.title')}
           message={t('status.accepted.message', {
-            vcLabel: controller.vcLabel.singular,
             sender: controller.senderInfo.deviceName,
           })}
           onBackdropPress={controller.DISMISS}
@@ -68,7 +65,6 @@ export const RequestLayout: React.FC = () => {
         <Message
           title={t('status.rejected.title')}
           message={t('status.rejected.message', {
-            vcLabel: controller.vcLabel.singular,
             sender: controller.senderInfo.deviceName,
           })}
           onBackdropPress={controller.DISMISS}
@@ -87,9 +83,7 @@ export const RequestLayout: React.FC = () => {
         <MessageOverlay
           isVisible={controller.isBleError}
           title={t('status.bleError.title')}
-          message={t('status.bleError.message', {
-            vcLabel: controller.vcLabel.singular,
-          })}
+          message={t('status.bleError.message')}
           hint={
             controller.bleError.code &&
             t('status.bleError.hint', {

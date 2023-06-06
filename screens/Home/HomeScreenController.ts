@@ -1,6 +1,5 @@
 import { useInterpret, useSelector } from '@xstate/react';
 import { useContext, useEffect, useRef } from 'react';
-import { selectVcLabel } from '../../machines/settings';
 import { HomeRouteProps } from '../../routes/main';
 import { GlobalContext } from '../../shared/GlobalContext';
 import {
@@ -23,7 +22,6 @@ export function useHomeScreen(props: HomeRouteProps) {
     })
   );
   const service = useInterpret(machine.current);
-  const settingsService = appService.children.get('settings');
   const vcService = appService.children.get('vc');
 
   useEffect(() => {
@@ -36,7 +34,6 @@ export function useHomeScreen(props: HomeRouteProps) {
     service,
 
     activeTab: useSelector(service, selectActiveTab),
-    vcLabel: useSelector(settingsService, selectVcLabel),
     selectedVc: useSelector(service, selectSelectedVc),
     tabRefs: useSelector(service, selectTabRefs),
 

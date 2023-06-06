@@ -12,7 +12,6 @@ import {
   selectSelectedVc,
   selectIsCancelling,
 } from '../../machines/scan';
-import { selectVcLabel } from '../../machines/settings';
 import { selectShareableVcs } from '../../machines/vc';
 import { vcItemMachine } from '../../machines/vcItem';
 import { GlobalContext } from '../../shared/GlobalContext';
@@ -20,7 +19,6 @@ import { GlobalContext } from '../../shared/GlobalContext';
 export function useSendVcScreen() {
   const { appService } = useContext(GlobalContext);
   const scanService = appService.children.get('scan');
-  const settingsService = appService.children.get('settings');
   const vcService = appService.children.get('vc');
 
   const CANCEL = () => scanService.send(ScanEvents.CANCEL());
@@ -41,7 +39,6 @@ export function useSendVcScreen() {
     receiverInfo: useSelector(scanService, selectReceiverInfo),
     reason: useSelector(scanService, selectReason),
     vcName: useSelector(scanService, selectVcName),
-    vcLabel: useSelector(settingsService, selectVcLabel),
     vcKeys: useSelector(vcService, selectShareableVcs),
     selectedVc: useSelector(scanService, selectSelectedVc),
 
