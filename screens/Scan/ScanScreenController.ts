@@ -17,6 +17,7 @@ import {
   selectIsBluetoothPermissionDenied,
   selectIsNearByDevicesPermissionDenied,
   selectIsBluetoothDenied,
+  selectIsStartPermissionCheck,
 } from '../../machines/openIdBle/scan';
 import { ScanEvents as ScanEvent } from '../../machines/openIdBle/scan';
 
@@ -30,6 +31,10 @@ export function useScanScreen() {
 
   const isLocationDisabled = useSelector(scanService, selectIsLocationDisabled);
   const isLocationDenied = useSelector(scanService, selectIsLocationDenied);
+  const isStartPermissionCheck = useSelector(
+    scanService,
+    selectIsStartPermissionCheck
+  );
   const isNearByDevicesPermissionDenied = useSelector(
     scanService,
     selectIsNearByDevicesPermissionDenied
@@ -63,12 +68,15 @@ export function useScanScreen() {
     isLocationDisabled,
     isLocationDenied,
     isBluetoothDenied,
+    isStartPermissionCheck,
     isScanning: useSelector(scanService, selectIsScanning),
     isQrLogin: useSelector(scanService, selectIsShowQrLogin),
     isQrLoginstoring: useSelector(scanService, selectIsQrLoginStoring),
     isQrRef: useSelector(scanService, selectQrLoginRef),
     LOCATION_REQUEST: () => scanService.send(ScanEvents.LOCATION_REQUEST()),
     GOTO_SETTINGS: () => scanService.send(ScanEvent.GOTO_SETTINGS()),
+    START_PERMISSION_CHECK: () =>
+      scanService.send(ScanEvent.START_PERMISSION_CHECK()),
     SCAN: (qrCode: string) => scanService.send(ScanEvents.SCAN(qrCode)),
   };
 }
