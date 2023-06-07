@@ -788,16 +788,19 @@ export const scanMachine =
 
         checkLocationPermission: () => async (callback) => {
           try {
+            if (
+              (Platform.OS === 'android' && Platform.Version >= 31) ||
+              Platform.OS === 'ios'
+            ) {
+              return callback(model.events.LOCATION_ENABLED());
+            }
             // wait a bit for animation to finish when app becomes active
             await new Promise((resolve) => setTimeout(resolve, 250));
 
             let response: PermissionStatus;
             if (Platform.OS === 'android') {
               response = await check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
-            } else if (Platform.OS === 'ios') {
-              return callback(model.events.LOCATION_ENABLED());
             }
-
             if (response === 'granted') {
               callback(model.events.LOCATION_ENABLED());
             } else {
