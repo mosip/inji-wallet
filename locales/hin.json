@@ -62,6 +62,7 @@
       "no": "नहीं",
       "Alert": "चेतावनी",
       "ok": "ठीक",
+      "credentialRegistry": "साख रजिस्ट्री",
       "errors": {
         "savingFailed": {
           "title": "{{vcLabelSingular}} सहेजने में विफल",
@@ -228,6 +229,7 @@
       "name": "नाम",
       "vcLabel": "वीसी लेबल",
       "language": "भाषा",
+      "credentialRegistry": "साख रजिस्ट्री",
       "bioUnlock": "बायोमेट्रिक्स से अनलॉक करें",
       "authFactorUnlock": "अनलॉक ऑथ फैक्टर",
       "AppMetaData": "इंजी के बारे में",

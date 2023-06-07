@@ -78,6 +78,7 @@ jobs:
           MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
           FIREBASE_SECRET: ${{ secrets.GPG_SECRET }}
           APPLICATION_THEME: ${{ github.event.inputs.theme }}
+          CREDENTIAL_REGISTRY_EDIT: ${{ github.event.inputs.registry_edit }}
       - name: Upload Artifact
         uses: actions/upload-artifact@v3.1.1
         with:

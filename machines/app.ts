@@ -9,7 +9,7 @@ import { EventFrom, spawn, StateFrom, send, assign, AnyState } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { authMachine, createAuthMachine } from './auth';
 import { createSettingsMachine, settingsMachine } from './settings';
-import { storeMachine } from './store';
+import { StoreEvents, storeMachine } from './store';
 import { createVcMachine, vcMachine } from './vc';
 import { createActivityLogMachine, activityLogMachine } from './activityLog';
 import { createRequestMachine, requestMachine } from './request';
@@ -22,6 +22,11 @@ import { pure, respond } from 'xstate/lib/actions';
 import { AppServices } from '../shared/GlobalContext';
 import { request } from '../shared/request';
 import { isBLEEnabled } from '../lib/smartshare';
+import {
+  changeCrendetialRegistry,
+  SETTINGS_STORE_KEY,
+} from '../shared/constants';
+import { MIMOTO_HOST } from 'react-native-dotenv';
 
 const model = createModel(
   {
@@ -39,6 +44,7 @@ const model = createModel(
       READY: (data?: unknown) => ({ data }),
       APP_INFO_RECEIVED: (info: AppInfo) => ({ info }),
       BACKEND_INFO_RECEIVED: (info: BackendInfo) => ({ info }),
+      STORE_RESPONSE: (response: unknown) => ({ response }),
     },
   }
 );
@@ -67,7 +73,16 @@ export const appMachine = model.createMachine(
           services: {
             entry: ['spawnServiceActors', 'logServiceEvents'],
             on: {
-              READY: 'info',
+              READY: 'credentialRegistry',
+            },
+          },
+          credentialRegistry: {
+            entry: ['loadCredentialRegistryHostFromStorage'],
+            on: {
+              STORE_RESPONSE: {
+                actions: ['loadCredentialRegistryInConstants'],
+                target: 'info',
+              },
             },
           },
           info: {
@@ -239,6 +254,21 @@ export const appMachine = model.createMachine(
       setBackendInfo: model.assign({
         backendInfo: (_, event) => event.info,
       }),
+
+      loadCredentialRegistryHostFromStorage: send(
+        StoreEvents.GET(SETTINGS_STORE_KEY),
+        {
+          to: (context) => context.serviceRefs.store,
+        }
+      ),
+
+      loadCredentialRegistryInConstants: (_context, event) => {
+        changeCrendetialRegistry(
+          !event.response?.credentialRegistry
+            ? MIMOTO_HOST
+            : event.response?.credentialRegistry
+        );
+      },
     },
 
     services: {

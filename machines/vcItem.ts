@@ -1,6 +1,6 @@
 import { assign, ErrorPlatformEvent, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
-import { MY_VCS_STORE_KEY, VC_ITEM_STORE_KEY } from '../shared/constants';
+import { HOST, MY_VCS_STORE_KEY, VC_ITEM_STORE_KEY } from '../shared/constants';
 import { AppServices } from '../shared/GlobalContext';
 import { CredentialDownloadResponse, request } from '../shared/request';
 import {
@@ -647,6 +647,7 @@ export const vcItemMachine =
         storeContext: send(
           (context) => {
             const { serviceRefs, ...data } = context;
+            data.credentialRegistry = HOST;
             return StoreEvents.SET(VC_ITEM_STORE_KEY(context), data);
           },
           {

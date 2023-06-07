@@ -18,4 +18,9 @@ declare module 'react-native-dotenv' {
    * Flag for Toggling Purple Theme and Default Theme
    */
   export const APPLICATION_THEME: string;
+
+  /**
+   * Flag for Toggling environment url
+   */
+  export const CREDENTIAL_REGISTRY_EDIT: string;
 }
