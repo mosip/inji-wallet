@@ -16,6 +16,14 @@ on:
         options:
           - orange
           - purple
+      registry_edit:
+        description: 'Edit Registry'
+        required: true
+        default: 'true'
+        type: choice
+        options:
+          - false
+          - true
       internal-testers:
         description: 'Internal Testers Group'
         required: true
