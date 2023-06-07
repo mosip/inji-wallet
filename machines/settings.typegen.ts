@@ -34,7 +34,7 @@ export interface Typegen0 {
       | 'UPDATE_VC_LABEL';
     toggleBiometricUnlock: 'TOGGLE_BIOMETRIC_UNLOCK';
     updateCredentialRegistry: 'done.invoke.settings.resetInjiProps:invocation[0]';
-    updateCredentialRegistryError: 'error.platform.settings.resetInjiProps:invocation[0]';
+    updateCredentialRegistryResponse: 'error.platform.settings.resetInjiProps:invocation[0]';
     updateCredentialRegistrySuccess: 'done.invoke.settings.resetInjiProps:invocation[0]';
     updateName: 'UPDATE_NAME';
     updateVcLabel: 'UPDATE_VC_LABEL';

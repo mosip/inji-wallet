@@ -19,7 +19,7 @@ const model = createModel(
     } as VCLabel,
     isBiometricUnlockEnabled: false,
     credentialRegistry: HOST,
-    credentialRegistryError: '',
+    credentialRegistryResponse: '',
   },
   {
     events: {
@@ -31,8 +31,10 @@ const model = createModel(
       UPDATE_CREDENTIAL_REGISTRY: (credentialRegistry: string) => ({
         credentialRegistry,
       }),
-      UPDATE_CREDENTIAL_REGISTRY_ERROR: (credentialRegistryError: string) => ({
-        credentialRegistryError,
+      UPDATE_CREDENTIAL_REGISTRY_RESPONSE: (
+        credentialRegistryResponse: string
+      ) => ({
+        credentialRegistryResponse: credentialRegistryResponse,
       }),
     },
   }
@@ -95,7 +97,7 @@ export const settingsMachine = model.createMachine(
             target: 'idle',
           },
           onError: {
-            actions: ['updateCredentialRegistryError'],
+            actions: ['updateCredentialRegistryResponse'],
             target: 'idle',
           },
         },
@@ -138,16 +140,16 @@ export const settingsMachine = model.createMachine(
         credentialRegistry: (_context, event) => event.data.warningDomainName,
       }),
 
-      updateCredentialRegistryError: model.assign({
-        credentialRegistryError: () => 'error',
+      updateCredentialRegistryResponse: model.assign({
+        credentialRegistryResponse: () => 'error',
       }),
 
       updateCredentialRegistrySuccess: model.assign({
-        credentialRegistryError: () => 'success',
+        credentialRegistryResponse: () => 'success',
       }),
 
       resetCredentialRegistry: model.assign({
-        credentialRegistryError: () => {
+        credentialRegistryResponse: () => {
           console.log('resetCredentialRegistry : called');
           return '';
         },
@@ -196,8 +198,8 @@ export function selectVcLabel(state: State) {
 export function selectCredentialRegistry(state: State) {
   return state.context.credentialRegistry;
 }
-export function selectCredentialRegistryError(state: State) {
-  return state.context.credentialRegistryError;
+export function selectCredentialRegistryResponse(state: State) {
+  return state.context.credentialRegistryResponse;
 }
 
 export function selectBiometricUnlockEnabled(state: State) {

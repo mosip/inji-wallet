@@ -125,7 +125,7 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
           <EditableListItem
             label={t('credentialRegistry')}
             value={controller.credentialRegistry}
-            credentialRegistryError={controller.credentialRegistryError}
+            credentialRegistryResponse={controller.credentialRegistryResponse}
             onEdit={controller.UPDATE_CREDENTIAL_REGISTRY}
             Icon="star"
           />

@@ -12,10 +12,10 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
   const [overlayOpened, setOverlayOpened] = useState(true);
 
   useEffect(() => {
-    if (props.credentialRegistryError === 'success') {
+    if (props.credentialRegistryResponse === 'success') {
       closePopup();
     }
-  }, [props.credentialRegistryError]);
+  }, [props.credentialRegistryResponse]);
 
   return (
     <ListItem
@@ -51,12 +51,12 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
               textAlign: I18nManager.isRTL ? 'right' : 'left',
             }}
           />
-          {props.credentialRegistryError === 'error' && (
+          {props.credentialRegistryResponse === 'error' && (
             <Text style={Theme.Styles.warningText}>
               please try again after sometime...
             </Text>
           )}
-          {props.credentialRegistryError === 'success' &&
+          {props.credentialRegistryResponse === 'success' &&
             overlayOpened &&
             closePopup()}
           <Row>
@@ -70,7 +70,7 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
 
   function edit() {
     props.onEdit(newValue);
-    if (props.credentialRegistryError === undefined) {
+    if (props.credentialRegistryResponse === undefined) {
       setIsEditing(false);
     }
   }
@@ -78,7 +78,7 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
   function dismiss() {
     setNewValue(props.value);
     setIsEditing(false);
-    props.credentialRegistryError = '';
+    props.credentialRegistryResponse = '';
   }
 
   function closePopup() {
@@ -93,5 +93,5 @@ interface EditableListItemProps {
   Icon: string;
   onEdit: (newValue: string) => void;
   display?: 'none' | 'flex';
-  credentialRegistryError: string;
+  credentialRegistryResponse: string;
 }

@@ -10,7 +10,7 @@ import {
 import {
   selectBiometricUnlockEnabled,
   selectName,
-  selectCredentialRegistryError,
+  selectCredentialRegistryResponse,
   selectVcLabel,
   selectCredentialRegistry,
   SettingsEvents,
@@ -99,9 +99,9 @@ export function useProfileScreen({ navigation }: MainRouteProps) {
     name: useSelector(settingsService, selectName),
     vcLabel: useSelector(settingsService, selectVcLabel),
     credentialRegistry: useSelector(settingsService, selectCredentialRegistry),
-    credentialRegistryError: useSelector(
+    credentialRegistryResponse: useSelector(
       settingsService,
-      selectCredentialRegistryError
+      selectCredentialRegistryResponse
     ),
     isBiometricUnlockEnabled: useSelector(
       settingsService,
@@ -121,9 +121,11 @@ export function useProfileScreen({ navigation }: MainRouteProps) {
         SettingsEvents.UPDATE_CREDENTIAL_REGISTRY(credentialRegistry)
       ),
 
-    UPDATE_CREDENTIAL_REGISTRY_ERROR: (credentialRegistryError: string) =>
+    UPDATE_CREDENTIAL_REGISTRY_RESPONSE: (credentialRegistryResponse: string) =>
       settingsService.send(
-        SettingsEvents.UPDATE_CREDENTIAL_REGISTRY_ERROR(credentialRegistryError)
+        SettingsEvents.UPDATE_CREDENTIAL_REGISTRY_RESPONSE(
+          credentialRegistryResponse
+        )
       ),
 
     TOGGLE_BIOMETRIC: (enable: boolean) =>
