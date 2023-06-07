@@ -17,6 +17,7 @@ export const RequestScreen: React.FC = () => {
     <Column
       fill
       padding="24"
+      align="space-between"
       backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
       {controller.isBluetoothDenied && <BluetoothPrompt {...props} />}
       {controller.isNearByDevicesPermissionDenied && (
@@ -47,15 +48,14 @@ const BluetoothPrompt: React.FC<RequestScreenProps> = ({ t, controller }) => {
 
 const NearByPrompt: React.FC<RequestScreenProps> = ({ t, controller }) => {
   return (
-    <Column padding="24" fill align="space-between">
+    <Column fill align="space-between">
       <Centered fill>
         <Text color={Theme.Colors.errorMessage} align="center">
-          {t('nearByPermissionDenied')}
+          {t('errors.nearbyDevicesPermissionDenied.message')}
         </Text>
       </Centered>
       <Button
-        margin={[32, 0, 0, 0]}
-        title={t('gotoSettings')}
+        title={t('errors.nearbyDevicesPermissionDenied.button')}
         onPress={controller.GOTO_SETTINGS}
       />
     </Column>

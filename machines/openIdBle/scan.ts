@@ -41,6 +41,7 @@ import {
   checkMultiple,
   PermissionStatus,
   PERMISSIONS,
+  request,
   requestMultiple,
   RESULTS,
 } from 'react-native-permissions';
