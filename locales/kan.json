@@ -62,6 +62,7 @@
     "no": "ಸಂ",
     "Alert": "ಎಚ್ಚರಿಕೆ",
     "ok": "ಸರಿ",
+    "credentialRegistry": "ರುಜುವಾತುಗಳ ನೋಂದಣಿ",
     "errors": {
       "savingFailed": {
         "title": "{{vcLabelSingular}} ಉಳಿಸಲು ವಿಫಲವಾಗಿದೆ",
@@ -226,6 +227,7 @@
     "name": "ಹೆಸರು",
     "vcLabel": "VC ಲೇಬಲ್",
     "language": "ಭಾಷೆ",
+    "credentialRegistry": "ರುಜುವಾತುಗಳ ನೋಂದಣಿ",
     "bioUnlock": "ಬಯೋಮೆಟ್ರಿಕ್‌ಗಳೊಂದಿಗೆ ಅನ್‌ಲಾಕ್ ಮಾಡಿ",
     "authFactorUnlock": "ಅನ್ಲಾಕ್ ದೃಢೀಕರಣ ಅಂಶ",
     "AppMetaData": "ಇಂಜಿ ಬಗ್ಗೆ",

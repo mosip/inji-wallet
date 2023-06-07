@@ -62,6 +62,7 @@
     "no": "رقم",
     "Alert": "انذار",
     "ok": "تمام",
+    "credentialRegistry": "سجل الاعتماد",
     "errors": {
       "savingFailed": {
         "title": "فشل حفظ {{vcLabelSingular}}",
@@ -226,6 +227,7 @@
     "name": "اسم",
     "vcLabel": "تسمية VC",
     "language": "اللغة",
+    "credentialRegistry": "سجل الاعتماد",
     "bioUnlock": "افتح مع القياسات الحيوية",
     "authFactorUnlock": "إلغاء تأمين عامل المصادقة",
     "AppMetaData": "حول إنجي",

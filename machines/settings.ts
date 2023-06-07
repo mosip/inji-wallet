@@ -1,9 +1,13 @@
 import { ContextFrom, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { AppServices } from '../shared/GlobalContext';
-import { SETTINGS_STORE_KEY } from '../shared/constants';
+import { HOST, SETTINGS_STORE_KEY } from '../shared/constants';
 import { VCLabel } from '../types/vc';
 import { StoreEvents } from './store';
+import getAllConfigurations, {
+  COMMON_PROPS_KEY,
+} from '../shared/commonprops/commonProps';
+import Storage from '../shared/storage';
 
 const model = createModel(
   {
@@ -14,6 +18,8 @@ const model = createModel(
       plural: 'Cards',
     } as VCLabel,
     isBiometricUnlockEnabled: false,
+    credentialRegistry: HOST,
+    credentialRegistryError: '',
   },
   {
     events: {
@@ -22,6 +28,12 @@ const model = createModel(
       TOGGLE_BIOMETRIC_UNLOCK: (enable: boolean) => ({ enable }),
       STORE_RESPONSE: (response: unknown) => ({ response }),
       CHANGE_LANGUAGE: (language: string) => ({ language }),
+      UPDATE_CREDENTIAL_REGISTRY: (credentialRegistry: string) => ({
+        credentialRegistry,
+      }),
+      UPDATE_CREDENTIAL_REGISTRY_ERROR: (credentialRegistryError: string) => ({
+        credentialRegistryError,
+      }),
     },
   }
 );
@@ -66,6 +78,26 @@ export const settingsMachine = model.createMachine(
           UPDATE_VC_LABEL: {
             actions: ['updateVcLabel', 'storeContext'],
           },
+          UPDATE_CREDENTIAL_REGISTRY: {
+            actions: ['resetCredentialRegistry'],
+            target: 'resetInjiProps',
+          },
+        },
+      },
+      resetInjiProps: {
+        invoke: {
+          src: 'resetInjiProps',
+          onDone: {
+            actions: [
+              'updateCredentialRegistrySuccess',
+              'updateCredentialRegistry',
+            ],
+            target: 'idle',
+          },
+          onError: {
+            actions: ['updateCredentialRegistryError'],
+            target: 'idle',
+          },
         },
       },
     },
@@ -102,13 +134,41 @@ export const settingsMachine = model.createMachine(
           plural: event.label + 's',
         }),
       }),
+      updateCredentialRegistry: model.assign({
+        credentialRegistry: (_context, event) => event.data.warningDomainName,
+      }),
+
+      updateCredentialRegistryError: model.assign({
+        credentialRegistryError: () => 'error',
+      }),
+
+      updateCredentialRegistrySuccess: model.assign({
+        credentialRegistryError: () => 'success',
+      }),
+
+      resetCredentialRegistry: model.assign({
+        credentialRegistryError: () => {
+          console.log('resetCredentialRegistry : called');
+          return '';
+        },
+      }),
 
       toggleBiometricUnlock: model.assign({
         isBiometricUnlockEnabled: (_, event) => event.enable,
       }),
     },
 
-    services: {},
+    services: {
+      resetInjiProps: async (context, event) => {
+        try {
+          await Storage.removeItem(COMMON_PROPS_KEY);
+          return await getAllConfigurations(event.credentialRegistry);
+        } catch (error) {
+          console.log('Error from resetInjiProps ', error);
+          throw error;
+        }
+      },
+    },
 
     guards: {
       hasData: (_, event) => event.response != null,
@@ -131,6 +191,13 @@ export function selectName(state: State) {
 
 export function selectVcLabel(state: State) {
   return state.context.vcLabel;
+}
+
+export function selectCredentialRegistry(state: State) {
+  return state.context.credentialRegistry;
+}
+export function selectCredentialRegistryError(state: State) {
+  return state.context.credentialRegistryError;
 }
 
 export function selectBiometricUnlockEnabled(state: State) {

@@ -62,6 +62,7 @@
     "no": "No",
     "Alert": "Alert",
     "ok": "Okay",
+    "credentialRegistry": "Credential Registry",
     "errors": {
       "savingFailed": {
         "title": "Failed to save the {{vcLabelSingular}}",
@@ -226,6 +227,7 @@
     "name": "Name",
     "vcLabel": "VC Label",
     "language": "Language",
+    "credentialRegistry": "Credential Registry",
     "bioUnlock": "Unlock with biometrics",
     "authFactorUnlock": "Unlock auth factor",
     "AppMetaData": "About Inji",

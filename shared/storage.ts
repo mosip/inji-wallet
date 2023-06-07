@@ -36,6 +36,14 @@ class Storage {
     }
   };
 
+  static removeItem = async (key: string) => {
+    if (vcKeyRegExp.exec(key)) {
+      const path = getFilePath(key);
+      return await unlink(path);
+    }
+    MMKV.removeItem(key);
+  };
+
   static clear = async () => {
     try {
       (await exists(`${vcDirectoryPath}`)) &&

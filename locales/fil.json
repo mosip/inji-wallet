@@ -62,6 +62,7 @@
     "no": "Hindi",
     "Alert": "Alerto",
     "ok": "Sige",
+    "credentialRegistry": "Registry ng Mga Kredensyal",
     "errors": {
       "savingFailed": {
         "title": "Nabigong i-save ang {{vcLabelSingular}}",
@@ -226,6 +227,7 @@
     "name": "Pangalan",
     "vcLabel": "Panawag sa VC",
     "language": "Wika",
+    "credentialRegistry": "Registry ng Mga Kredensyal",
     "bioUnlock": "I-unlock gamit ang biometrics",
     "authFactorUnlock": "Pagbukas ng auth factor",
     "AppMetaData": "Tungkol kay Inji",
