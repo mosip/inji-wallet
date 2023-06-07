@@ -73,12 +73,12 @@ export const ScanScreen: React.FC = () => {
       <Column padding="24" fill align="space-between">
         <Centered fill>
           <Text align="center" color={Theme.Colors.errorMessage}>
-            {t('errors.nearbyPermissionDenied.message')}
+            {t('errors.nearbyDevicesPermissionDenied.message')}
           </Text>
         </Centered>
 
         <Button
-          title={t('errors.nearbyPermissionDenied.button')}
+          title={t('errors.nearbyDevicesPermissionDenied.button')}
           onPress={openSettings}></Button>
       </Column>
     );
