@@ -278,7 +278,7 @@
     }
   },
   "RequestScreen": {
-    "bluetoothDenied": "الرجاء تمكين Bluetooth لتتمكن من طلببطاقة ",
+    "bluetoothDenied": "يرجى تمكين البلوتوث لتتمكن من طلب البطاقة",
     "showQrCode": "اعرض  رمز الاستجابة السريعة هذا لطلب المقيم بطاقة ",
     "incomingVc": "بطاقة واردة",
     "request": "طلب",
@@ -373,7 +373,7 @@
   "SendVcScreen": {
     "reasonForSharing": "سبب المشاركة (اختياري)",
     "acceptRequest": "يشارك",
-    "acceptRequestAndVerify": "شارك مع Selfie",
+    "acceptRequestAndVerify": "شارك مع سيلفي",
     "reject": "رفض",
     "status": {
       "sharing": {
