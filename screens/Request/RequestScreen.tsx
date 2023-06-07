@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { TFunction, useTranslation } from 'react-i18next';
 import { Switch } from 'react-native-elements';
 import { I18nManager, Platform } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
-
 import { Centered, Button, Row, Column, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { useRequestScreen } from './RequestScreenController';
@@ -20,7 +19,9 @@ export const RequestScreen: React.FC = () => {
       padding="24"
       backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
       {controller.isBluetoothDenied && <BluetoothPrompt {...props} />}
-
+      {controller.isNearByDevicesPermissionDenied && (
+        <NearByPrompt {...props} />
+      )}
       {!controller.isCheckingBluetoothService &&
       !controller.isBluetoothDenied ? (
         <Column align="flex-end" fill>
@@ -35,15 +36,29 @@ export const RequestScreen: React.FC = () => {
 const BluetoothPrompt: React.FC<RequestScreenProps> = ({ t, controller }) => {
   return (
     <Centered fill>
-      <Text color={Theme.Colors.errorMessage} align="center">
-        {t('bluetoothDenied')}
+      <Text color={Theme.Colors.errorMessage} align="center" margin="0 10">
+        {t(
+          Platform.OS === 'ios' ? 'bluetoothStateIos' : 'bluetoothStateAndroid'
+        )}
       </Text>
+    </Centered>
+  );
+};
+
+const NearByPrompt: React.FC<RequestScreenProps> = ({ t, controller }) => {
+  return (
+    <Column padding="24" fill align="space-between">
+      <Centered fill>
+        <Text color={Theme.Colors.errorMessage} align="center">
+          {t('nearByPermissionDenied')}
+        </Text>
+      </Centered>
       <Button
         margin={[32, 0, 0, 0]}
         title={t('gotoSettings')}
         onPress={controller.GOTO_SETTINGS}
       />
-    </Centered>
+    </Column>
   );
 };
 
