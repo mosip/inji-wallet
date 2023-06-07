@@ -26,6 +26,10 @@ export const ScanScreen: React.FC = () => {
     })();
   }, [isBluetoothOn]);
 
+  useEffect(() => {
+    if (!controller.isEmpty) controller.START_PERMISSION_CHECK();
+  });
+
   const openSettings = () => {
     Linking.openSettings();
   };

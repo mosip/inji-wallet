@@ -102,6 +102,7 @@ const model = createModel(
       NEARBY_ENABLED: () => ({}),
       NEARBY_DISABLED: () => ({}),
       GOTO_SETTINGS: () => ({}),
+      START_PERMISSION_CHECK: () => ({}),
       UPDATE_REASON: (reason: string) => ({ reason }),
       LOCATION_ENABLED: () => ({}),
       LOCATION_DISABLED: () => ({}),
@@ -147,7 +148,7 @@ export const scanMachine =
           target: '.inactive',
         },
         SCREEN_FOCUS: {
-          target: '.checkNearbyDevicesPermission',
+          target: '.startPermissionCheck',
         },
         BLE_ERROR: {
           target: '.handlingBleError',
@@ -157,6 +158,11 @@ export const scanMachine =
       states: {
         inactive: {
           entry: 'removeLoggers',
+        },
+        startPermissionCheck: {
+          on: {
+            START_PERMISSION_CHECK: '#scan.checkNearbyDevicesPermission',
+          },
         },
 
         checkNearbyDevicesPermission: {
@@ -1252,6 +1258,10 @@ export function selectIsBluetoothPermissionDenied(state: State) {
 
 export function selectIsBluetoothDenied(state: State) {
   return state.matches('bluetoothDenied');
+}
+
+export function selectIsStartPermissionCheck(state: State) {
+  return state.matches('startPermissionCheck');
 }
 
 export function selectIsLocationDenied(state: State) {
