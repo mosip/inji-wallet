@@ -7,11 +7,25 @@ import { Centered, Button, Row, Column, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { useRequestScreen } from './RequestScreenController';
 import { isGoogleNearbyEnabled } from '../../lib/smartshare';
+import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 
 export const RequestScreen: React.FC = () => {
   const { t } = useTranslation('RequestScreen');
   const controller = useRequestScreen();
   const props: RequestScreenProps = { t, controller };
+  const [isBluetoothOn, setIsBluetoothOn] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      await BluetoothStateManager.onStateChange((state) => {
+        if (state === 'PoweredOff') {
+          setIsBluetoothOn(false);
+        } else {
+          setIsBluetoothOn(true);
+        }
+      }, true);
+    })();
+  }, [isBluetoothOn]);
 
   return (
     <Column
@@ -19,19 +33,29 @@ export const RequestScreen: React.FC = () => {
       padding="24"
       align="space-between"
       backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
-      {controller.isBluetoothDenied && <BluetoothPrompt {...props} />}
-      {controller.isNearByDevicesPermissionDenied && (
-        <NearByPrompt {...props} />
-      )}
-      {!controller.isCheckingBluetoothService &&
-      !controller.isBluetoothDenied ? (
+      {loadQRCode()}
+    </Column>
+  );
+
+  function loadQRCode() {
+    if (controller.isNearByDevicesPermissionDenied) {
+      return <NearByPrompt {...props} />;
+    }
+    if (controller.isBluetoothDenied || !isBluetoothOn) {
+      return <BluetoothPrompt {...props} />;
+    }
+    if (
+      !controller.isCheckingBluetoothService &&
+      !controller.isBluetoothDenied
+    ) {
+      return (
         <Column align="flex-end" fill>
           {controller.isWaitingForConnection && <SharingQR {...props} />}
           <StatusMessage {...props} />
         </Column>
-      ) : null}
-    </Column>
-  );
+      );
+    }
+  }
 };
 
 const BluetoothPrompt: React.FC<RequestScreenProps> = ({ t, controller }) => {
