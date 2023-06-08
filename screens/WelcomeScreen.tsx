@@ -17,7 +17,6 @@ export const WelcomeScreen: React.FC<RootRouteProps> = (props) => {
       backgroundColor={Theme.Colors.whiteBackgroundColor}>
       <Centered fill>
         <Logo height={182} />
-        <Text margin="16 0 0 0">{t('title')}</Text>
       </Centered>
       <Button
         margin="0 0 32"

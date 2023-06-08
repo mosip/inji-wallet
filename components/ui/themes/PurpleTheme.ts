@@ -111,11 +111,22 @@ export const PurpleTheme = {
       backgroundColor: Colors.Grey6,
       borderRadius: 4,
     },
+    loadingCardDetailsContainer: {
+      flex: 1,
+      flexDirection: 'row',
+      backgroundColor: Colors.Grey6,
+      borderRadius: 4,
+      padding: 5,
+      paddingTop: 0,
+    },
+    cardDetailsContainer: {
+      padding: 10,
+      paddingTop: 0,
+    },
     vertloadingContainer: {
       flex: 1,
       backgroundColor: Colors.Grey6,
       borderRadius: 4,
-      padding: 5,
     },
     closeDetailsContainer: {
       flex: 1,
@@ -164,7 +175,6 @@ export const PurpleTheme = {
     },
     backgroundImageContainer: {
       flex: 1,
-      padding: 10,
     },
     successTag: {
       backgroundColor: Colors.Green,
@@ -186,12 +196,30 @@ export const PurpleTheme = {
       justifyContent: 'space-between',
     },
     logo: {
-      height: 36,
-      width: 36,
+      height: 33,
+      width: 90,
     },
-    homeCloseCardDetailsHeader: {
+    loadingCardDetailsHeader: {
       flex: 1,
       justifyContent: 'space-between',
+      padding: 5,
+      paddingRight: 0,
+      paddingBottom: 0,
+    },
+    cardDetailsHeader: {
+      flex: 1,
+      justifyContent: 'space-between',
+      padding: 10,
+      paddingRight: 0,
+      paddingBottom: 0,
+    },
+    mosipLogoContainer: {
+      backgroundColor: 'white',
+      borderBottomLeftRadius: 50,
+      borderTopLeftRadius: 50,
+      padding: 2,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     details: {
       width: 290,
