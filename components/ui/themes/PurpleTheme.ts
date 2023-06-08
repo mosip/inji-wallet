@@ -171,7 +171,6 @@ export const PurpleTheme = {
       shadowOpacity: 0.4,
       shadowRadius: 3,
       elevation: 4,
-      padding: 10,
     },
     backgroundImageContainer: {
       flex: 1,
@@ -194,6 +193,9 @@ export const PurpleTheme = {
     openDetailsHeader: {
       flex: 1,
       justifyContent: 'space-between',
+      padding: 10,
+      paddingRight: 0,
+      paddingBottom: 0,
     },
     logo: {
       height: 33,
@@ -228,7 +230,8 @@ export const PurpleTheme = {
     },
     openDetailsContainer: {
       flex: 1,
-      padding: 10,
+      padding: 20,
+      paddingTop: 10,
     },
     closeCardImage: {
       width: 105,

@@ -42,7 +42,9 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
               {t('nationalCard')}
             </Text>
           </Column>
-          <Image source={Theme.MosipLogo} style={Theme.Styles.logo} />
+          <View style={Theme.Styles.mosipLogoContainer}>
+            <Image source={Theme.MosipLogo} style={Theme.Styles.logo} />
+          </View>
         </Row>
 
         <Row style={Theme.Styles.openDetailsContainer}>
