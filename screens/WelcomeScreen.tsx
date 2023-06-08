@@ -15,7 +15,7 @@ export const WelcomeScreen: React.FC<RootRouteProps> = (props) => {
       fill
       padding="32 32 0"
       backgroundColor={Theme.Colors.whiteBackgroundColor}>
-      <HorizontallyCentered fill padding="30 0 0 0">
+      <HorizontallyCentered fill>
         <Logo height={182} />
       </HorizontallyCentered>
       <Button
