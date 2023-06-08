@@ -285,7 +285,7 @@
     }
   },
   "RequestScreen": {
-    "bluetoothDenied": "Please enable Bluetooth to be able to request Card",
+    "bluetoothDenied": "Please enable Bluetooth to be able to request {{vcLabel}}",
     "bluetoothStateAndroid": "Please turn on bluetooth from quick settings to support local sharing",
     "bluetoothStateIos": "Please turn on bluetooth from control center to support local sharing",
     "showQrCode": "Display this QR code to request resident Card",
@@ -293,8 +293,8 @@
     "request": "Request",
     "errors": {
       "nearbyDevicesPermissionDenied": {
-        "message": "Please enable Nearby Devices Permission to be able to request Card",
-        "button": "Allow access to Nearby"
+        "message": "Nearby Devices permission is required to be able to request Card",
+        "button": "Allow Permission"
       }
     },
     "status": {
@@ -351,7 +351,7 @@
       },
       "nearbyDevicesPermissionDenied": {
         "message": "Nearby Devices permission is required for the scanning functionality",
-        "button": "Allow access to Nearby"
+        "button": "Allow Permission"
       }
     },
     "status": {
