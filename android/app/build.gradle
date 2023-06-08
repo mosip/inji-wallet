@@ -133,7 +133,7 @@ def enableHermes = project.ext.react.get("enableHermes", false);
 
 androidGitVersion {
     baseCode 1
-    format '% tag %%<commit>%%<branch>%'
+    format '% tag %%commit_%%branch%'
 }
 
 android {
