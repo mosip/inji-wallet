@@ -74,8 +74,8 @@ const model = createModel(
       EXCHANGE_DONE: (senderInfo: DeviceInfo) => ({ senderInfo }),
       SCREEN_FOCUS: () => ({}),
       SCREEN_BLUR: () => ({}),
-      BLUETOOTH_ENABLED: () => ({}),
-      BLUETOOTH_DISABLED: () => ({}),
+      BLUETOOTH_STATE_ENABLED: () => ({}),
+      BLUETOOTH_STATE_DISABLED: () => ({}),
       NEARBY_ENABLED: () => ({}),
       NEARBY_DISABLED: () => ({}),
       STORE_READY: () => ({}),
@@ -182,10 +182,10 @@ export const requestMachine =
                 src: 'checkBluetoothService',
               },
               on: {
-                BLUETOOTH_ENABLED: {
+                BLUETOOTH_STATE_ENABLED: {
                   target: 'enabled',
                 },
-                BLUETOOTH_DISABLED: {
+                BLUETOOTH_STATE_DISABLED: {
                   target: 'requesting',
                 },
               },
@@ -195,10 +195,10 @@ export const requestMachine =
                 src: 'requestBluetooth',
               },
               on: {
-                BLUETOOTH_ENABLED: {
+                BLUETOOTH_STATE_ENABLED: {
                   target: 'enabled',
                 },
-                BLUETOOTH_DISABLED: {
+                BLUETOOTH_STATE_DISABLED: {
                   target: '#request.bluetoothDenied',
                 },
               },
@@ -740,9 +740,9 @@ export const requestMachine =
         checkBluetoothService: () => (callback) => {
           const subscription = BluetoothStateManager.onStateChange((state) => {
             if (state === 'PoweredOn') {
-              callback(model.events.BLUETOOTH_ENABLED());
+              callback(model.events.BLUETOOTH_STATE_ENABLED());
             } else {
-              callback(model.events.BLUETOOTH_DISABLED());
+              callback(model.events.BLUETOOTH_STATE_DISABLED());
             }
           }, true);
           return () => subscription.remove();
@@ -750,8 +750,8 @@ export const requestMachine =
 
         requestBluetooth: () => (callback) => {
           BluetoothStateManager.requestToEnable()
-            .then(() => callback(model.events.BLUETOOTH_ENABLED()))
-            .catch(() => callback(model.events.BLUETOOTH_DISABLED()));
+            .then(() => callback(model.events.BLUETOOTH_STATE_ENABLED()))
+            .catch(() => callback(model.events.BLUETOOTH_STATE_DISABLED()));
         },
 
         requestNearByDevicesPermission: () => (callback) => {
