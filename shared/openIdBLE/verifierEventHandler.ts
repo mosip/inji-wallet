@@ -1,7 +1,7 @@
-import openIdBLE from 'react-native-openid4vp-ble';
-import { VerifierDataEvent } from 'react-native-openid4vp-ble/src/types/events';
+import tuvali from 'react-native-tuvali';
+import { VerifierDataEvent } from 'react-native-tuvali/src/types/events';
 
-const { verifier } = openIdBLE;
+const { verifier } = tuvali;
 export function subscribe(callback: (event: VerifierDataEvent) => void) {
   return verifier.handleDataEvents((e) => {
     callback(e);

@@ -1,10 +1,8 @@
 import React from 'react';
 import { TFunction, useTranslation } from 'react-i18next';
-import { Switch } from 'react-native-elements';
-import { Platform } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 
-import { Centered, Button, Row, Column, Text } from '../../components/ui';
+import { Centered, Button, Column, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { useRequestScreen } from './RequestScreenController';
 

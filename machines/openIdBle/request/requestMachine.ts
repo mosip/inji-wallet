@@ -1,4 +1,4 @@
-import openIdBLE from 'react-native-openid4vp-ble';
+import tuvali from 'react-native-tuvali';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import { EmitterSubscription, Linking, Platform } from 'react-native';
 import { assign, EventFrom, send } from 'xstate';
@@ -16,11 +16,11 @@ import { ActivityLogEvents, ActivityLogType } from '../../activityLog';
 import { VcEvents } from '../../vc';
 import { subscribe } from '../../../shared/openIdBLE/verifierEventHandler';
 import { log } from 'xstate/lib/actions';
-import { VerifierDataEvent } from 'react-native-openid4vp-ble/src/types/events';
+import { VerifierDataEvent } from 'react-native-tuvali/src/types/events';
 import { BLEError } from '../types';
 // import { verifyPresentation } from '../shared/vcjs/verifyPresentation';
 
-const { verifier, EventTypes, VerificationStatus } = openIdBLE;
+const { verifier, EventTypes, VerificationStatus } = tuvali;
 
 const model = createModel(
   {

@@ -1,7 +1,7 @@
-import openIdBLE from 'react-native-openid4vp-ble';
-import { WalletDataEvent } from 'react-native-openid4vp-ble/src/types/events';
+import tuvali from 'react-native-tuvali';
+import { WalletDataEvent } from 'react-native-tuvali/src/types/events';
 
-const { wallet } = openIdBLE;
+const { wallet } = tuvali;
 
 export function subscribe(callback: (event: WalletDataEvent) => void) {
   return wallet.handleDataEvents((e) => {

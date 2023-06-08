@@ -1,5 +1,5 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import openIdBLE from 'react-native-openid4vp-ble';
+import tuvali from 'react-native-tuvali';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import {
   ActorRefFrom,
@@ -32,10 +32,10 @@ import { CameraCapturedPicture } from 'expo-camera';
 import { log } from 'xstate/lib/actions';
 import { createQrLoginMachine, qrLoginMachine } from '../../QrLoginMachine';
 import { StoreEvents } from '../../store';
-import { WalletDataEvent } from 'react-native-openid4vp-ble/lib/typescript/types/events';
+import { WalletDataEvent } from 'react-native-tuvali/lib/typescript/types/events';
 import { BLEError } from '../types';
 
-const { wallet, EventTypes, VerificationStatus } = openIdBLE;
+const { wallet, EventTypes, VerificationStatus } = tuvali;
 
 const model = createModel(
   {
