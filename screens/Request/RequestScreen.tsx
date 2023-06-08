@@ -41,7 +41,10 @@ export const RequestScreen: React.FC = () => {
     if (controller.isNearByDevicesPermissionDenied) {
       return <NearByPrompt {...props} />;
     }
-    if (controller.isBluetoothDenied || !isBluetoothOn) {
+    if (
+      (controller.isBluetoothDenied || !isBluetoothOn) &&
+      controller.isReadyForBluetoothStateCheck
+    ) {
       return <BluetoothPrompt {...props} />;
     }
     if (

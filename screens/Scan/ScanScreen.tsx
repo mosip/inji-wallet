@@ -116,7 +116,10 @@ export const ScanScreen: React.FC = () => {
     if (controller.isNearByDevicesPermissionDenied) {
       return allowNearbyDevicesPermissionComponent();
     }
-    if (controller.isBluetoothDenied || !isBluetoothOn) {
+    if (
+      (controller.isBluetoothDenied || !isBluetoothOn) &&
+      controller.isReadyForBluetoothStateCheck
+    ) {
       return bluetoothIsOffText();
     }
     if (controller.isLocationDisabled || controller.isLocationDenied) {
