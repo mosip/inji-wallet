@@ -54,9 +54,7 @@ export const RequestLayout: React.FC = () => {
       {!isBLEEnabled && controller.isAccepted && (
         <Message
           title={t('status.accepted.title')}
-          message={t('status.accepted.message', {
-            sender: controller.senderInfo.deviceName,
-          })}
+          message={t('status.accepted.message')}
           onBackdropPress={controller.DISMISS}
         />
       )}
@@ -64,9 +62,7 @@ export const RequestLayout: React.FC = () => {
       {controller.isRejected && (
         <Message
           title={t('status.rejected.title')}
-          message={t('status.rejected.message', {
-            sender: controller.senderInfo.deviceName,
-          })}
+          message={t('status.rejected.message')}
           onBackdropPress={controller.DISMISS}
         />
       )}

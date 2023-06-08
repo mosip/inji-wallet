@@ -287,11 +287,11 @@
     "status": {
       "accepted": {
         "title": "نجاح!",
-        "message": "تم استلام بطاقة بنجاح من  {{sender}}"
+        "message": "تم استلام بطاقة بنجاح من  محفظة"
       },
       "rejected": {
         "title": " إشعار",
-        "message": "لقد رفضت  {{sender}}  بطاقة "
+        "message": "تم تجاهل بطاقة المحفظة بواسطتك"
       },
       "disconnected": {
         "title": "ير متصل",
@@ -353,11 +353,11 @@
       },
       "accepted": {
         "title": "نجاح!",
-        "message": "تمت مشاركة بطاقة  بنجاح مع {{receiver}}"
+        "message": "تمت مشاركة بطاقة  بنجاح مع المدقق"
       },
       "rejected": {
         "title": "يلاحظ",
-        "message": "تم تجاهل بطاقة  بواسطة {{receiver}}"
+        "message": "تم تجاهل بطاقة  بواسطة المدقق"
       },
       "bleError": {
         "title": "فشل التحويل",

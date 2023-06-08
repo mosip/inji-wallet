@@ -291,11 +291,11 @@
     "status": {
       "accepted": {
         "title": "Success!",
-        "message": "Card has been successfully received from {{sender}}"
+        "message": "Card has been successfully received from Wallet"
       },
       "rejected": {
         "title": "Notice",
-        "message": "You discarded {{sender}}'s Card"
+        "message": "You discarded Wallet's Card"
       },
       "disconnected": {
         "title": "Disconnected",
@@ -357,11 +357,11 @@
       },
       "accepted": {
         "title": "Success!",
-        "message": "Your Card has been successfully shared with {{receiver}}"
+        "message": "Your Card has been successfully shared with Verifier"
       },
       "rejected": {
         "title": "Notice",
-        "message": "Your Card was discarded by {{receiver}}"
+        "message": "Your Card was discarded by Verifier"
       },
       "bleError": {
         "title": "Failed to transfer",

@@ -138,17 +138,13 @@ export function useScanLayout() {
   } else if (isAccepted) {
     statusOverlay = {
       title: t('status.accepted.title'),
-      message: t('status.accepted.message', {
-        receiver: receiverInfo.deviceName,
-      }),
+      message: t('status.accepted.message'),
       onBackdropPress: DISMISS,
     };
   } else if (isRejected) {
     statusOverlay = {
       title: t('status.rejected.title'),
-      message: t('status.rejected.message', {
-        receiver: receiverInfo.deviceName,
-      }),
+      message: t('status.rejected.message'),
       onBackdropPress: DISMISS,
     };
   } else if (isInvalid) {

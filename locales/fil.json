@@ -286,11 +286,11 @@
     "status": {
       "accepted": {
         "title": "Tagumpay!",
-        "message": "Tagumpay na nakuha ang Card mula kay {{sender}}"
+        "message": "Tagumpay na nakuha ang Card mula kay Wallet"
       },
       "rejected": {
         "title": "Paunawa",
-        "message": "Iwinaksi ang Card ni {{sender}}"
+        "message": "Iwinaksi ang Card ni Wallet"
       },
       "disconnected": {
         "title": "Nadiskonekta",
@@ -352,11 +352,11 @@
       },
       "accepted": {
         "title": "Tagumpay!",
-        "message": "Ang iyong Card ay matagumpay na naibahagi sa {{receiver}}"
+        "message": "Ang iyong Card ay matagumpay na naibahagi sa Verifier"
       },
       "rejected": {
         "title": "Pansinin",
-        "message": "Ang iyong Card ay itinapon ng {{receiver}}"
+        "message": "Ang iyong Card ay itinapon ng Verifier"
       },
       "bleError": {
         "title": "Nabigong ilipat",
