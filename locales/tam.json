@@ -262,7 +262,7 @@
   "ReceiveVcScreen": {
     "header": "அட்டை விவரங்கள்",
     "save": "அட்டையைச் சேமிக்கவும்",
-    "acceptRequest": "கோரிக்கையை ஏற்று {{vcLabel}} ஐப் பெறவும்",
+    "acceptRequest": "கோரிக்கையை ஏற்று அட்டை ஐப் பெறவும்",
     "acceptRequestAndVerify": "கோரிக்கையை ஏற்று சரிபார்க்கவும்",
     "reject": "நிராகரிக்கவும்",
     "discard": "நிராகரிக்கவும்",
@@ -385,11 +385,11 @@
       },
       "accepted": {
         "title": "வெற்றி!",
-        "message": "உங்கள் {{vcLabel}} வெற்றிகரமாக {{receiver}} உடன் பகிரப்பட்டது"
+        "message": "உங்கள் அட்டை வெற்றிகரமாக {{receiver}} உடன் பகிரப்பட்டது"
       },
       "rejected": {
         "title": "கவனிக்கவும்",
-        "message": "உங்கள் {{vcLabel}}, {{receiver}} ஆல் நிராகரிக்கப்பட்டது"
+        "message": "உங்கள் அட்டை, {{receiver}} ஆல் நிராகரிக்கப்பட்டது"
       }
     },
     "consentToPhotoVerification": "அங்கீகாரத்திற்காக எனது புகைப்படத்தை எடுக்க நான் ஒப்புதல் அளிக்கிறேன்"
@@ -410,18 +410,18 @@
   },
   "SendVcModal": {
     "reasonForSharing": "பகிர்வதற்கான காரணம் (விரும்பினால்)",
-    "acceptRequest": "கோரிக்கையை ஏற்று {{vcLabel}} என்பதைத் தேர்ந்தெடுக்கவும்",
+    "acceptRequest": "கோரிக்கையை ஏற்று அட்டை என்பதைத் தேர்ந்தெடுக்கவும்",
     "reject": "நிராகரி",
     "statusSharing": {
       "title": "பகிர்வு..."
     },
     "statusAccepted": {
       "title": "வெற்றி!",
-      "message": "உங்கள் {{vcLabel}} வெற்றிகரமாக {{receiver}} உடன் பகிரப்பட்டது"
+      "message": "உங்கள் அட்டை வெற்றிகரமாக {{receiver}} உடன் பகிரப்பட்டது"
     },
     "statusRejected": {
       "title": "அறிவிப்பு",
-      "message": "உங்கள் {{vcLabel}} ஆனது {{receiver}} ஆல் நிராகரிக்கப்பட்டது"
+      "message": "உங்கள் அட்டை ஆனது {{receiver}} ஆல் நிராகரிக்கப்பட்டது"
     }
   },
   "WelcomeScreen": {

@@ -262,7 +262,7 @@
   "ReceiveVcScreen": {
     "header": "تفاصيل بطاقة ",
     "save": "احفظ البطاقة",
-    "acceptRequest": "قبول الطلب واستلام {{vcLabel}}",
+    "acceptRequest": "قبول الطلب واختيار البطاقة",
     "acceptRequestAndVerify": "قبول الطلب والتحقق",
     "reject": "رفض",
     "discard": "ينبذ",
@@ -385,11 +385,11 @@
       },
       "accepted": {
         "title": "النجاح!",
-        "message": "تمت مشاركة {{vcLabel}} بنجاح مع {{receiver}}"
+        "message": "تمت مشاركة بطاقة بنجاح مع {{receiver}}"
       },
       "rejected": {
         "title": "تنويه",
-        "message": "تم رفض {{vcLabel}} من قِبل {{receiver}}"
+        "message": "تم رفض بطاقة من قِبل {{receiver}}"
       }
     },
     "consentToPhotoVerification": "أوافق على التقاط صورتي للمصادقة"
@@ -408,18 +408,18 @@
   },
   "SendVcModal": {
     "reasonForSharing": "سبب المشاركة  (optional)",
-    "acceptRequest": "قبول الطلب واختيار {{vcLabel}}",
+    "acceptRequest": "اقبل الطلب واختر البطاقة",
     "reject": "رفض",
     "statusSharing": {
       "title": "مشاركة ..."
     },
     "statusAccepted": {
       "title": "نجاح!",
-      "message": "تمت مشاركة {{vcLabel}} بنجاح مع{{receiver}}"
+      "message": "تمت مشاركة بطاقة بنجاح مع{{receiver}}"
     },
     "statusRejected": {
       "title": " إشعار",
-      "message": "تم رفض  {{vcLabel}}من قِبل {{receiver}}"
+      "message": "تم رفض بطاقتك من قِبل {{receiver}}"
     }
   },
   "WelcomeScreen": {

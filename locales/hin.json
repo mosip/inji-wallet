@@ -264,7 +264,7 @@
     "ReceiveVcScreen": {
       "header": "कार्ड विवरण",
       "save": "सेव कार्ड",
-      "acceptRequest": "अनुरोध स्वीकार करें और {{vcLabel}} प्राप्त करें",
+      "acceptRequest": "अनुरोध स्वीकार करें और कार्ड प्राप्त करें",
       "acceptRequestAndVerify": "अनुरोध स्वीकार करें और सत्यापित करें",
       "reject": "अस्वीकार",
       "discard": "खारिज करना",
@@ -387,11 +387,11 @@
         },
         "accepted": {
           "title": "सफलता!",
-          "message": "आपका {{vcLabel}} को {{receiver}} के साथ सफलतापूर्वक साझा कर दिया गया है"
+          "message": "आपका कार्ड को {{receiver}} के साथ सफलतापूर्वक साझा कर दिया गया है"
         },
         "rejected": {
           "title": "सूचना",
-          "message": "आपके {{vcLabel}} को {{receiver}} ने अस्वीकार कर दिया था"
+          "message": "आपके कार्ड को {{receiver}} ने अस्वीकार कर दिया था"
         }
       },
       "consentToPhotoVerification": "मैं प्रमाणीकरण के लिए अपनी फोटो लेने की सहमति देता हूं"
@@ -410,18 +410,18 @@
     },
     "SendVcModal": {
       "reasonForSharing": "साझा करने का कारण (optional)",
-      "acceptRequest": "अनुरोध स्वीकार करें और चुनें {{vcLabel}}",
+      "acceptRequest": "अनुरोध स्वीकार करें और चुनें कार्ड",
       "reject": "अस्वीकार करे",
       "statusSharing": {
         "title": "साझा किया जा रहा है..."
       },
       "statusAccepted": {
         "title": "सफलता!",
-        "message": "आपका {{vcLabel}} के साथ सफलतापूर्वक साझा कर दिया गया है {{receiver}}"
+        "message": "आपका कार्ड के साथ सफलतापूर्वक साझा कर दिया गया है {{receiver}}"
       },
       "statusRejected": {
         "title": "सूचना",
-        "message": "आपका {{vcLabel}} ने अस्वीकार कर दिया था {{receiver}}"
+        "message": "आपका कार्ड ने अस्वीकार कर दिया था {{receiver}}"
       }
     },
     "WelcomeScreen": {

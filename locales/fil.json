@@ -262,7 +262,7 @@
   "ReceiveVcScreen": {
     "header": "Mga detalye ng Card",
     "save": "I-save ang Card",
-    "acceptRequest": "Tanggapin ang kahilingan at tumanggap ng {{vcLabel}}",
+    "acceptRequest": "Tanggapin ang kahilingan at tumanggap ng Card",
     "reject": "Tanggihan",
     "discard": "Itapon",
     "goToReceivedVCTab": "Tingnan ang mga Natanggap na Mga kard",
@@ -383,11 +383,11 @@
       },
       "accepted": {
         "title": "Tagumpay!",
-        "message": "Ang iyong {{vcLabel}} ay matagumpay na naibahagi kay {{receiver}}"
+        "message": "Ang iyong Card ay matagumpay na naibahagi kay {{receiver}}"
       },
       "rejected": {
         "title": "Pansinin",
-        "message": "Ang iyong {{vcLabel}} ay tinanggihan ng {{receiver}}"
+        "message": "Ang iyong Card ay tinanggihan ng {{receiver}}"
       }
     },
     "consentToPhotoVerification": "Nagbibigay ako ng pahintulot na kunin ang aking larawan para sa pagpapatunay"

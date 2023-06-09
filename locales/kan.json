@@ -262,7 +262,7 @@
   "ReceiveVcScreen": {
     "header": "ಕಾರ್ಡ್ ವಿವರಗಳು",
     "save": "ಕಾರ್ಡ್ ಉಳಿಸಿ",
-    "acceptRequest": "ವಿನಂತಿಯನ್ನು ಸ್ವೀಕರಿಸಿ ಮತ್ತು {{vcLabel}} ಸ್ವೀಕರಿಸಿ",
+    "acceptRequest": "ವಿನಂತಿಯನ್ನು ಸ್ವೀಕರಿಸಿ ಮತ್ತು ಕಾರ್ಡ್ ಸ್ವೀಕರಿಸಿ",
     "acceptRequestAndVerify": "ವಿನಂತಿಯನ್ನು ಸ್ವೀಕರಿಸಿ ಮತ್ತು ಪರಿಶೀಲಿಸಿ",
     "reject": "ತಿರಸ್ಕರಿಸಿ",
     "discard": "ತಿರಸ್ಕರಿಸು",
@@ -385,11 +385,11 @@
       },
       "accepted": {
         "title": "ಯಶಸ್ಸು!",
-        "message": "ನಿಮ್ಮ {{vcLabel}}ನ್ನು {{receiver}} ಅವರೊಂದಿಗೆ ಯಶಸ್ವಿಯಾಗಿ ಹಂಚಿಕೊಳ್ಳಲಾಗಿದೆ"
+        "message": "ನಿಮ್ಮ ಕಾರ್ಡ್ನ್ನು {{receiver}} ಅವರೊಂದಿಗೆ ಯಶಸ್ವಿಯಾಗಿ ಹಂಚಿಕೊಳ್ಳಲಾಗಿದೆ"
       },
       "rejected": {
         "title": "ಗಮನಿಸಿ",
-        "message": "Your {{vcLabel}}ನ್ನು {{receiver}} ತಿರಸ್ಕರಿಸಿದ್ದಾರೆ "
+        "message": "Your ಕಾರ್ಡ್ನ್ನು {{receiver}} ತಿರಸ್ಕರಿಸಿದ್ದಾರೆ "
       }
     },
     "consentToPhotoVerification": "ದೃಢೀಕರಣಕ್ಕಾಗಿ ನನ್ನ ಫೋಟೋ ತೆಗೆಯಲು ನಾನು ಒಪ್ಪಿಗೆ ನೀಡುತ್ತೇನೆ"
@@ -408,18 +408,18 @@
   },
   "SendVcModal": {
     "reasonForSharing": "ಹಂಚಿಕೆಗೆ ಕಾರಣ (ಐಚ್ಛಿಕ)",
-    "acceptRequest": "ವಿನಂತಿಯನ್ನು ಸ್ವೀಕರಿಸಿ ಮತ್ತು {{vcLabel}} ಆಯ್ಕೆಮಾಡಿ",
+    "acceptRequest": "ವಿನಂತಿಯನ್ನು ಸ್ವೀಕರಿಸಿ ಮತ್ತು ಕಾರ್ಡ್ ಆಯ್ಕೆಮಾಡಿ",
     "reject": "ತಿರಸ್ಕರಿಸಿ",
     "statusSharing": {
       "title": "ಹಂಚಿಕೆ..."
     },
     "statusAccepted": {
       "title": "ಯಶಸ್ಸು!",
-      "message": "ನಿಮ್ಮ {{vcLabel}} ಅನ್ನು ಯಶಸ್ವಿಯಾಗಿ  {{receiver}}ಜೊತೆಗೆ ಹಂಚಿಕೊಳ್ಳಲಾಗಿದೆ"
+      "message": "ನಿಮ್ಮ ಕಾರ್ಡ್ ಅನ್ನು ಯಶಸ್ವಿಯಾಗಿ  {{receiver}}ಜೊತೆಗೆ ಹಂಚಿಕೊಳ್ಳಲಾಗಿದೆ"
     },
     "statusRejected": {
       "title": "ಸೂಚನೆ",
-      "message": "ನಿಮ್ಮ {{vcLabel}}ಅನ್ನು {{receiver}}ತಿರಸ್ಕರಿಸಿದ್ದಾರೆ"
+      "message": "ನಿಮ್ಮ ಕಾರ್ಡ್ಅನ್ನು {{receiver}}ತಿರಸ್ಕರಿಸಿದ್ದಾರೆ"
     }
   },
   "WelcomeScreen": {
