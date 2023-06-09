@@ -6,3 +6,10 @@ lane :android_build do
     task: "assembleNewlogicDebug",
   )
 end
+
+desc "Deploy a alpha version to the Google Play"
+lane :android_build_alpha do
+    gradle(task: "clean bundleMosipRelease")
+    upload_to_play_store(track: 'alpha')
+end
+
