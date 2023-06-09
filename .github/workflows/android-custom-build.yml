@@ -115,7 +115,7 @@ jobs:
 
       - name: Run Build
         run: |
-          cd scripts
+          cd android/scripts
           ./run-fastlane.sh
         env:
           MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
