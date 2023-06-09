@@ -2,11 +2,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Column, Text } from '../../../components/ui';
 import { Modal, ModalProps } from '../../../components/ui/Modal';
-import { useDownloadingVcModal } from './DownloadingVcModalController';
 
 export const DownloadingVcModal: React.FC<ModalProps> = (props) => {
   const { t } = useTranslation('DownloadingVcModal');
-  const controller = useDownloadingVcModal();
 
   return (
     <Modal
@@ -16,11 +14,9 @@ export const DownloadingVcModal: React.FC<ModalProps> = (props) => {
       <Column fill pY={32} pX={24} align="space-between">
         <Column fill>
           <Text weight="semibold" align="center">
-            {t('header', { vcLabel: controller.vcLabel.singular })}
+            {t('header')}
           </Text>
-          <Text align="center">
-            {t('bodyText', { vcLabel: controller.vcLabel.singular })}
-          </Text>
+          <Text align="center">{t('bodyText')}</Text>
         </Column>
         <Column fill align="flex-end">
           <Button title={t('backButton')} onPress={props.onDismiss} />

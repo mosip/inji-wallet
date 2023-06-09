@@ -17,9 +17,7 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = (props) => {
   const { t } = useTranslation('GetIdInputModal');
   const controller = useGetIdInputModal(props);
 
-  const inputLabel = t('applicationId', {
-    vcLabel: controller.vcLabel.singular,
-  });
+  const inputLabel = t('applicationId');
 
   return (
     <Modal onDismiss={props.onDismiss} isVisible={props.isVisible}>
@@ -27,9 +25,7 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = (props) => {
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <Column fill align="space-between" padding="32 24">
-          <Text align="center">
-            {t('header', { vcLabel: controller.vcLabel.singular })}
-          </Text>
+          <Text align="center">{t('header')}</Text>
           <Column>
             <Row crossAlign="flex-end">
               <Column fill>
@@ -51,13 +47,7 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = (props) => {
                   keyboardType="number-pad"
                   rightIcon={
                     <Tooltip
-                      popover={
-                        <Text>
-                          {t('qstnMarkToolTip', {
-                            vcLabel: controller.vcLabel.singular,
-                          })}
-                        </Text>
-                      }
+                      popover={<Text>{t('qstnMarkToolTip')}</Text>}
                       width={Dimensions.get('screen').width * 0.8}
                       height={Dimensions.get('screen').height * 0.2}
                       backgroundColor={'lightgray'}
@@ -98,7 +88,7 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = (props) => {
               </Column>
             </Row>
             <Button
-              title={t('getUIN', { vcLabel: controller.vcLabel.singular })}
+              title={t('getUIN')}
               margin="24 0 0 0"
               onPress={controller.VALIDATE_INPUT}
               loading={controller.isRequestingOtp}

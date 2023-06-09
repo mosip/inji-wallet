@@ -11,7 +11,6 @@ import {
   selectQrLoginRef,
   selectIsQrLoginStoring,
 } from '../../machines/scan';
-import { selectVcLabel } from '../../machines/settings';
 import { selectShareableVcs } from '../../machines/vc';
 import { GlobalContext } from '../../shared/GlobalContext';
 import { selectIsBluetoothDenied } from '../../machines/openIdBle/scan';
@@ -20,7 +19,6 @@ export function useScanScreen() {
   const { t } = useTranslation('ScanScreen');
   const { appService } = useContext(GlobalContext);
   const scanService = appService.children.get('scan');
-  const settingsService = appService.children.get('settings');
   const vcService = appService.children.get('vc');
 
   const shareableVcs = useSelector(vcService, selectShareableVcs);
@@ -43,7 +41,6 @@ export function useScanScreen() {
 
   return {
     locationError,
-    vcLabel: useSelector(settingsService, selectVcLabel),
 
     isEmpty: !shareableVcs.length,
     isBluetoothPermissionDenied,
