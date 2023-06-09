@@ -300,9 +300,15 @@ export const scanMachine =
               },
             },
             enabled: {
-              always: {
-                target: '#scan.checkingLocationService',
-              },
+              always: [
+                {
+                  cond: 'uptoAndroid11',
+                  target: '#scan.checkingLocationService',
+                },
+                {
+                  target: '#scan.clearingConnection',
+                },
+              ],
             },
           },
         },
