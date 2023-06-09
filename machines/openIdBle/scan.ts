@@ -251,9 +251,15 @@ export const scanMachine =
                 BLUETOOTH_STATE_ENABLED: {
                   target: 'enabled',
                 },
-                BLUETOOTH_STATE_DISABLED: {
-                  target: 'requesting',
-                },
+                BLUETOOTH_STATE_DISABLED: [
+                  {
+                    cond: 'isIOS',
+                    target: '#scan.checkBluetoothPermission',
+                  },
+                  {
+                    target: 'requesting',
+                  },
+                ],
               },
             },
             requesting: {
