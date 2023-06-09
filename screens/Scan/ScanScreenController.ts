@@ -2,7 +2,6 @@ import { useSelector } from '@xstate/react';
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { selectVcLabel } from '../../machines/settings';
 import { selectShareableVcs } from '../../machines/vc';
 import { GlobalContext } from '../../shared/GlobalContext';
 import {
@@ -12,15 +11,14 @@ import {
   selectIsScanning,
   selectIsShowQrLogin,
   selectQrLoginRef,
-} from '../../machines/openIdBle/scan/selectors';
-import { selectIsBluetoothDenied } from '../../machines/openIdBle/commonSelectors';
-import { ScanEvents } from '../../machines/openIdBle/scan/scanMachine';
+} from '../../machines/bleShare/scan/selectors';
+import { selectIsBluetoothDenied } from '../../machines/bleShare/commonSelectors';
+import { ScanEvents } from '../../machines/bleShare/scan/scanMachine';
 
 export function useScanScreen() {
   const { t } = useTranslation('ScanScreen');
   const { appService } = useContext(GlobalContext);
   const scanService = appService.children.get('scan');
-  const settingsService = appService.children.get('settings');
   const vcService = appService.children.get('vc');
 
   const shareableVcs = useSelector(vcService, selectShareableVcs);
@@ -43,7 +41,6 @@ export function useScanScreen() {
 
   return {
     locationError,
-    vcLabel: useSelector(settingsService, selectVcLabel),
 
     isEmpty: !shareableVcs.length,
     isBluetoothPermissionDenied,

@@ -38,7 +38,7 @@ export const ReceiveVcScreen: React.FC = () => {
         <Column>
           <DeviceInfoList of="sender" deviceInfo={controller.senderInfo} />
           <Text weight="semibold" margin="24 24 0 24">
-            {t('header', { vcLabel: controller.vcLabel.singular })}
+            {t('header')}
           </Text>
           <VcDetails
             vc={controller.incomingVc}
@@ -47,15 +47,11 @@ export const ReceiveVcScreen: React.FC = () => {
           />
         </Column>
         <Column padding="0 24" margin="32 0 0 0">
-          {
-            <Button
-              title={t('goToReceivedVCTab', {
-                vcLabel: controller.vcLabel.plural,
-              })}
-              margin="0 0 12 0"
-              onPress={controller.GO_TO_RECEIVED_VC_TAB}
-            />
-          }
+          <Button
+            title={t('goToReceivedVCTab')}
+            margin="0 0 12 0"
+            onPress={controller.GO_TO_RECEIVED_VC_TAB}
+          />
         </Column>
       </Column>
 
@@ -92,9 +88,7 @@ export const ReceiveVcScreen: React.FC = () => {
 
       <MessageOverlay
         isVisible={savingOverlayVisible}
-        message={t('saving', {
-          vcLabel: controller.vcLabel.plural,
-        })}
+        message={t('saving')}
         progress={true}
       />
       <ErrorMessageOverlay
@@ -102,7 +96,6 @@ export const ReceiveVcScreen: React.FC = () => {
         error={storeErrorTranslationPath}
         translationPath={'ReceiveVcScreen'}
         onDismiss={controller.DISMISS}
-        vcLabel={controller.vcLabel}
       />
     </React.Fragment>
   );

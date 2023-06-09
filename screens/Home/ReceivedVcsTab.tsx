@@ -41,14 +41,10 @@ export const ReceivedVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                 name="sentiment-dissatisfied"
               />
               <Text align="center" weight="semibold" margin="0 0 4 0">
-                {t('noReceivedVcsTitle', {
-                  vcLabel: controller.vcLabel.plural,
-                })}
+                {t('noReceivedVcsTitle')}
               </Text>
               <Text align="center" color={Theme.Colors.textLabel}>
-                {t('noReceivedVcsText', {
-                  vcLabel: controller.vcLabel.singular,
-                })}
+                {t('noReceivedVcsText')}
               </Text>
             </Centered>
           </React.Fragment>

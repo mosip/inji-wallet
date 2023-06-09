@@ -48,6 +48,10 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Allow $(PRODUCT_NAME) to access your location</string>
+        <key>NSLocationWhenInUseUsageDescription</key>
+        <string>Allow $(PRODUCT_NAME) to access your location</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>Bluetooth is used to allow sharing VCs with another device</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>

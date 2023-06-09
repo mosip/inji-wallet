@@ -14,6 +14,7 @@ import { LanguageSelector } from '../../components/LanguageSelector';
 import i18next, { SUPPORTED_LANGUAGES } from '../../i18n';
 import { ScrollView } from 'react-native-gesture-handler';
 import { AppMetaData } from './AppMetaData';
+import { CREDENTIAL_REGISTRY_EDIT } from 'react-native-dotenv';
 
 const LanguageSetting: React.FC = () => {
   const { t } = useTranslation('ProfileScreen');
@@ -120,6 +121,15 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
           label={t('AppMetaData')}
           color={Theme.Colors.profileLabel}
         />
+        {CREDENTIAL_REGISTRY_EDIT === 'true' && (
+          <EditableListItem
+            label={t('credentialRegistry')}
+            value={controller.credentialRegistry}
+            credentialRegistryResponse={controller.credentialRegistryResponse}
+            onEdit={controller.UPDATE_CREDENTIAL_REGISTRY}
+            Icon="star"
+          />
+        )}
         <ListItem bottomDivider onPress={controller.LOGOUT}>
           <Icon
             name="logout"

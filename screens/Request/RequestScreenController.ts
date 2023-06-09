@@ -1,7 +1,6 @@
 import { useSelector } from '@xstate/react';
 import { useContext, useEffect } from 'react';
 import { selectIsActive, selectIsFocused } from '../../machines/app';
-import { selectVcLabel } from '../../machines/settings';
 import { GlobalContext } from '../../shared/GlobalContext';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import { useTranslation } from 'react-i18next';
@@ -13,7 +12,7 @@ import {
   selectOpenId4VpUri,
   selectSenderInfo,
   selectSharingProtocol,
-} from '../../machines/openIdBle/request/selectors';
+} from '../../machines/bleShare/request/selectors';
 import {
   selectIsBluetoothDenied,
   selectIsCancelling,
@@ -21,14 +20,12 @@ import {
   selectIsExchangingDeviceInfoTimeout,
   selectIsOffline,
   selectIsReviewing,
-} from '../../machines/openIdBle/commonSelectors';
-import { RequestEvents } from '../../machines/openIdBle/request/requestMachine';
+} from '../../machines/bleShare/commonSelectors';
+import { RequestEvents } from '../../machines/bleShare/request/requestMachine';
 
 export function useRequestScreen() {
   const { t } = useTranslation('RequestScreen');
   const { appService } = useContext(GlobalContext);
-  const settingsService = appService.children.get('settings');
-  const vcLabel = useSelector(settingsService, selectVcLabel);
 
   const requestService = appService.children.get('request');
   const isActive = useSelector(appService, selectIsActive);
@@ -70,13 +67,9 @@ export function useRequestScreen() {
     statusHint = t('status.exchangingDeviceInfo.timeoutHint');
     isStatusCancellable = true;
   } else if (isWaitingForVc) {
-    statusMessage = t('status.connected.message', {
-      vcLabel: vcLabel.singular,
-    });
+    statusMessage = t('status.connected.message');
   } else if (isWaitingForVcTimeout) {
-    statusMessage = t('status.connected.message', {
-      vcLabel: vcLabel.singular,
-    });
+    statusMessage = t('status.connected.message');
     statusHint = t('status.connected.timeoutHint');
     isStatusCancellable = true;
   }
@@ -90,7 +83,6 @@ export function useRequestScreen() {
   }, [isFocused, isActive]);
 
   return {
-    vcLabel,
     statusMessage,
     statusHint,
     sharingProtocol: useSelector(requestService, selectSharingProtocol),

@@ -1,7 +1,6 @@
 import { useSelector } from '@xstate/react';
 import { useContext, useState } from 'react';
 import { ActorRefFrom } from 'xstate';
-import { selectVcLabel } from '../../machines/settings';
 import { selectShareableVcs } from '../../machines/vc';
 import { vcItemMachine } from '../../machines/vcItem';
 import { GlobalContext } from '../../shared/GlobalContext';
@@ -11,18 +10,17 @@ import {
   selectReceiverInfo,
   selectSelectedVc,
   selectVcName,
-} from '../../machines/openIdBle/scan/selectors';
+} from '../../machines/bleShare/scan/selectors';
 import {
   selectIsCancelling,
   selectIsInvalidIdentity,
   selectIsVerifyingIdentity,
-} from '../../machines/openIdBle/commonSelectors';
-import { ScanEvents } from '../../machines/openIdBle/scan/scanMachine';
+} from '../../machines/bleShare/commonSelectors';
+import { ScanEvents } from '../../machines/bleShare/scan/scanMachine';
 
 export function useSendVcScreen() {
   const { appService } = useContext(GlobalContext);
   const scanService = appService.children.get('scan');
-  const settingsService = appService.children.get('settings');
   const vcService = appService.children.get('vc');
 
   const CANCEL = () => scanService.send(ScanEvents.CANCEL());
@@ -43,7 +41,6 @@ export function useSendVcScreen() {
     receiverInfo: useSelector(scanService, selectReceiverInfo),
     reason: useSelector(scanService, selectReason),
     vcName: useSelector(scanService, selectVcName),
-    vcLabel: useSelector(settingsService, selectVcLabel),
     vcKeys: useSelector(vcService, selectShareableVcs),
     selectedVc: useSelector(scanService, selectSelectedVc),
 

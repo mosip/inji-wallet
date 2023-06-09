@@ -44,9 +44,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <Column fill align="space-between" pY={32} pX={24}>
-          <Text align="center">
-            {t('header', { vcLabel: controller.vcLabel.singular })}
-          </Text>
+          <Text align="center">{t('header')}</Text>
           <Column>
             <Row crossAlign="flex-end">
               <Column
@@ -100,7 +98,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
               </Column>
             </Row>
             <Button
-              title={t('generateVc', { vcLabel: controller.vcLabel.singular })}
+              title={t('generateVc')}
               margin="24 0 0 0"
               onPress={controller.VALIDATE_INPUT}
               loading={controller.isRequestingOtp}
