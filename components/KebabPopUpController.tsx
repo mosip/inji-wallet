@@ -5,6 +5,7 @@ import {
   selectKebabPopUp,
   selectKebabPopUpAcceptingBindingOtp,
   selectKebabPopUpBindingWarning,
+  selectRemoveWalletWarning,
   selectEmptyWalletBindingId,
   selectIsPinned,
   selectOtpError,
@@ -25,12 +26,14 @@ export function useKebabPopUp(props) {
   const ADD_WALLET_BINDING_ID = () =>
     service.send(VcItemEvents.ADD_WALLET_BINDING_ID());
   const CONFIRM = () => service.send(VcItemEvents.CONFIRM());
+  const REMOVE = (vcKey: string) => service.send(VcItemEvents.REMOVE(vcKey));
   const DISMISS = () => service.send(VcItemEvents.DISMISS());
   const CANCEL = () => service.send(VcItemEvents.CANCEL());
   const SHOW_ACTIVITY = () => service.send(VcItemEvents.SHOW_ACTIVITY());
   const INPUT_OTP = (otp: string) => service.send(VcItemEvents.INPUT_OTP(otp));
   const isPinned = useSelector(service, selectIsPinned);
   const isBindingWarning = useSelector(service, selectKebabPopUpBindingWarning);
+  const isRemoveWalletWarning = useSelector(service, selectRemoveWalletWarning);
   const isAcceptingOtpInput = useSelector(
     service,
     selectKebabPopUpAcceptingBindingOtp
@@ -58,6 +61,7 @@ export function useKebabPopUp(props) {
     ADD_WALLET_BINDING_ID,
     CONFIRM,
     DISMISS,
+    REMOVE,
     CANCEL,
     INPUT_OTP,
     SHOW_ACTIVITY,
@@ -70,6 +74,7 @@ export function useKebabPopUp(props) {
     emptyWalletBindingId,
     isKebabPopUp,
     isShowActivities,
+    isRemoveWalletWarning,
     activities: useSelector(activityLogService, selectActivities),
   };
 }

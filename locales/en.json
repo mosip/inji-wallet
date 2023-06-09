@@ -79,6 +79,12 @@
     "yesConfirm": "Yes, I confirm",
     "no" : "No"
   },
+  "RemoveVcWarningOverlay":{
+    "alert": "Please Confirm",
+    "BindingWarning": "Do you want to remove this card",
+    "yesConfirm": "Yes, I confirm",
+    "no" : "No"
+  },
   "AuthScreen": {
     "header": "Select App Unlock Method",
     "Description": "Would you like to use biometrics to unlock the application?",
@@ -180,12 +186,12 @@
   "OnboardingOverlay": {
     "stepOneTitle":"Protect Privacy",
     "stepOneText":"Lorem Ipsum is simply a standard text of the printing and typesetting industry",
-    "stepTwoTitle": "Secure Sharing!",
-    "stepTwoText": "Share and receive {{vcLabel}} switfly using your phone camera to scan QR codes",
+    "stepTwoTitle": "Secure Sharing",
+    "stepTwoText": "Share and receive ID switfly using your phone camera to scan QR codes",
     "stepThreeTitle": "Trusted Digital Wallet",
     "stepThreeText": "Keep your digital credential with you at all times",
     "stepFourTitle": "Quick Access",
-    "stepFourText": "Once generated, {{vcLabel}} are safely stored on your mobile.",
+    "stepFourText": "Once generated, ID's are safely stored on your mobile.",
     "stepFourButton": "Get Started",
     "skip": "Skip",
     "next": "Next"
