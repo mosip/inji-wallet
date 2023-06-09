@@ -105,7 +105,7 @@ jobs:
           gradlePath: android/app/build.gradle
           versionCode: ${{github.run_number}}
 
-       - name: Create Google Play Config file
+      - name: Create Google Play Config file
         run : |
           cd android
           echo "$INJI_ANDROID_PLAY_STORE_CONFIG_JSON" > play_config.json.b64
