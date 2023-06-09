@@ -2,7 +2,7 @@ name: Android Custom Build
 
 env:
   backendServiceDefaultUrl: https://api.sandbox.mosip.net
-
+  
 on:
   workflow_dispatch:
     inputs:
