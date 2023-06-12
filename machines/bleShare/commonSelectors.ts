@@ -60,3 +60,19 @@ export function selectIsOffline() {
 export function selectIsHandlingBleError(state: State) {
   return state.matches('handlingBleError');
 }
+
+export function selectReadyForBluetoothStateCheck(state: State) {
+  return state.context.readyForBluetoothStateCheck;
+}
+
+export function selectIsNearByDevicesPermissionDenied(state: State) {
+  return state.matches('nearByDevicesPermissionDenied');
+}
+
+export function selectIsBluetoothPermissionDenied(state: State) {
+  return state.matches('bluetoothPermissionDenied');
+}
+
+export function selectIsStartPermissionCheck(state: State) {
+  return state.matches('startPermissionCheck');
+}

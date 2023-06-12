@@ -228,7 +228,6 @@
     "name": "Name",
     "vcLabel": "VC Label",
     "language": "Language",
-    "credentialRegistry": "Credential Registry",
     "bioUnlock": "Unlock with biometrics",
     "authFactorUnlock": "Unlock auth factor",
     "AppMetaData": "About Inji",
@@ -286,9 +285,17 @@
   },
   "RequestScreen": {
     "bluetoothDenied": "Please enable Bluetooth to be able to request Card",
+    "bluetoothStateAndroid": "Please turn on bluetooth from quick settings to support local sharing",
+    "bluetoothStateIos": "Please turn on bluetooth from control center to support local sharing",
     "showQrCode": "Display this QR code to request resident Card",
     "incomingVc": "Incoming Card",
     "request": "Request",
+    "errors": {
+      "nearbyDevicesPermissionDenied": {
+        "message": "Nearby Devices permission is required to be able to request Card",
+        "button": "Allow Permission"
+      }
+    },
     "status": {
       "accepted": {
         "title": "Success!",
@@ -340,6 +347,10 @@
       "locationDenied": {
         "message": "Location permission is required for the scanning functionality",
         "button": "Allow access to location"
+      },
+      "nearbyDevicesPermissionDenied": {
+        "message": "Nearby Devices permission is required for the scanning functionality",
+        "button": "Allow Permission"
       }
     },
     "status": {

@@ -21,12 +21,14 @@ export interface Typegen0 {
   'invokeSrcNameMap': {
     advertiseDevice: 'done.invoke.request.waitingForConnection:invocation[0]';
     checkBluetoothService: 'done.invoke.request.checkingBluetoothService.checking:invocation[0]';
+    checkNearByDevicesPermission: 'done.invoke.request.checkNearbyDevicesPermission.checking:invocation[0]';
     disconnect:
       | 'done.invoke.request.clearingConnection:invocation[0]'
       | 'done.invoke.request.reviewing.navigatingToHome:invocation[0]';
     monitorConnection: 'done.invoke.request:invocation[0]';
     receiveVc: 'done.invoke.request.waitingForVc:invocation[0]';
     requestBluetooth: 'done.invoke.request.checkingBluetoothService.requesting:invocation[0]';
+    requestNearByDevicesPermission: 'done.invoke.request.checkNearbyDevicesPermission.requesting:invocation[0]';
     sendVcResponse:
       | 'done.invoke.request.reviewing.accepted:invocation[0]'
       | 'done.invoke.request.reviewing.rejected:invocation[0]'
@@ -53,7 +55,7 @@ export interface Typegen0 {
       | 'xstate.stop';
     logReceived: 'CANCEL' | 'REJECT' | 'STORE_ERROR' | 'STORE_RESPONSE';
     mergeIncomingVc: 'STORE_RESPONSE';
-    openSettings: 'GOTO_SETTINGS';
+    openAppPermission: 'GOTO_SETTINGS';
     prependReceivedVc: 'VC_RESPONSE';
     registerLoggers:
       | 'DISCONNECT'
@@ -76,6 +78,7 @@ export interface Typegen0 {
     setBleError: 'BLE_ERROR';
     setIncomingVc: 'VC_RECEIVED';
     setOpenID4VpUri: 'ADV_STARTED';
+    setReadyForBluetoothStateCheck: 'NEARBY_ENABLED';
     setReceiveLogTypeDiscarded: 'CANCEL' | 'REJECT' | 'STORE_ERROR';
     setReceiveLogTypeRegular: 'ACCEPT' | 'STORE_RESPONSE';
     setReceiveLogTypeUnverified: 'FACE_INVALID';
@@ -97,17 +100,22 @@ export interface Typegen0 {
       | 'DISCONNECT'
       | 'DISMISS'
       | 'xstate.after(DESTROY_TIMEOUT)#request.clearingConnection';
-    checkBluetoothService: 'RESET' | 'SCREEN_FOCUS';
+    checkBluetoothService: 'NEARBY_ENABLED';
+    checkNearByDevicesPermission: 'APP_ACTIVE' | 'RESET' | 'SCREEN_FOCUS';
     disconnect: '' | 'DISMISS' | 'GO_TO_RECEIVED_VC_TAB';
     monitorConnection: 'xstate.init';
     receiveVc: 'CONNECTED';
-    requestBluetooth: 'BLUETOOTH_DISABLED';
+    requestBluetooth: 'BLUETOOTH_STATE_DISABLED';
+    requestNearByDevicesPermission: 'NEARBY_DISABLED';
     sendVcResponse: 'CANCEL' | 'REJECT' | 'STORE_ERROR' | 'STORE_RESPONSE';
     verifyVp: never;
   };
   'matchesStates':
     | 'bluetoothDenied'
     | 'cancelling'
+    | 'checkNearbyDevicesPermission'
+    | 'checkNearbyDevicesPermission.checking'
+    | 'checkNearbyDevicesPermission.requesting'
     | 'checkingBluetoothService'
     | 'checkingBluetoothService.checking'
     | 'checkingBluetoothService.enabled'
@@ -116,6 +124,7 @@ export interface Typegen0 {
     | 'disconnected'
     | 'handlingBleError'
     | 'inactive'
+    | 'nearByDevicesPermissionDenied'
     | 'reviewing'
     | 'reviewing.accepted'
     | 'reviewing.accepting'
@@ -138,6 +147,7 @@ export interface Typegen0 {
     | 'waitingForVc.inProgress'
     | 'waitingForVc.timeout'
     | {
+        checkNearbyDevicesPermission?: 'checking' | 'requesting';
         checkingBluetoothService?: 'checking' | 'enabled' | 'requesting';
         reviewing?:
           | 'accepted'

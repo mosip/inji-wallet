@@ -18,8 +18,10 @@ import {
   selectIsCancelling,
   selectIsExchangingDeviceInfo,
   selectIsExchangingDeviceInfoTimeout,
+  selectIsNearByDevicesPermissionDenied,
   selectIsOffline,
   selectIsReviewing,
+  selectReadyForBluetoothStateCheck,
 } from '../../machines/bleShare/commonSelectors';
 import { RequestEvents } from '../../machines/bleShare/request/requestMachine';
 
@@ -30,9 +32,17 @@ export function useRequestScreen() {
   const requestService = appService.children.get('request');
   const isActive = useSelector(appService, selectIsActive);
   const isFocused = useSelector(appService, selectIsFocused);
+  const isReadyForBluetoothStateCheck = useSelector(
+    requestService,
+    selectReadyForBluetoothStateCheck
+  );
   const isBluetoothDenied = useSelector(
     requestService,
     selectIsBluetoothDenied
+  );
+  const isNearByDevicesPermissionDenied = useSelector(
+    requestService,
+    selectIsNearByDevicesPermissionDenied
   );
   const isWaitingForConnection = useSelector(
     requestService,
@@ -93,6 +103,8 @@ export function useRequestScreen() {
     isStatusCancellable,
     isWaitingForVc,
     isBluetoothDenied,
+    isNearByDevicesPermissionDenied,
+    isReadyForBluetoothStateCheck,
     isCheckingBluetoothService: useSelector(
       requestService,
       selectIsCheckingBluetoothService

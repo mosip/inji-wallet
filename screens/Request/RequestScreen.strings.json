@@ -1,5 +1,6 @@
 {
   "bluetoothDenied": "Please enable Bluetooth to be able to request {{vcLabel}}",
+  "nearbyDevicesPermissionDenied": "Please enable Nearby Devices Permission to be able to request card",
   "showQrCode": "Display this QR code to request resident {{vcLabel}}",
   "incomingVc": "Incoming {{vcLabel}}",
   "request": "Request",
