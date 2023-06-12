@@ -1,7 +1,5 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import SmartshareReactNative from '@idpass/smartshare-react-native';
-import { ConnectionParams } from '@idpass/smartshare-react-native/lib/typescript/IdpassSmartshare';
-import OpenIdBle from 'react-native-openid4vp-ble';
+import tuvali from 'react-native-tuvali';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import {
   ActorRefFrom,
@@ -9,33 +7,20 @@ import {
   DoneInvokeEvent,
   EventFrom,
   send,
-  sendParent,
   spawn,
-  StateFrom,
 } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { EmitterSubscription, Linking, Platform } from 'react-native';
-import { DeviceInfo } from '../../components/DeviceInfoList';
+import { DeviceInfo } from '../../../components/DeviceInfoList';
 import { getDeviceNameSync } from 'react-native-device-info';
-import { VC, VerifiablePresentation } from '../../types/vc';
-import { AppServices } from '../../shared/GlobalContext';
-import { ActivityLogEvents, ActivityLogType } from '../activityLog';
+import { VC, VerifiablePresentation } from '../../../types/vc';
+import { AppServices } from '../../../shared/GlobalContext';
+import { ActivityLogEvents, ActivityLogType } from '../../activityLog';
 import {
-  GNM_API_KEY,
-  GNM_MESSAGE_LIMIT,
   MY_LOGIN_STORE_KEY,
   VC_ITEM_STORE_KEY,
-} from '../../shared/constants';
-import {
-  onlineSubscribe,
-  offlineSubscribe,
-  offlineSend,
-  onlineSend,
-  ExchangeSenderInfoEvent,
-  PairingEvent,
-  SendVcEvent,
-  SendVcStatus,
-} from '../../shared/openIdBLE/smartshare';
+} from '../../../shared/constants';
+import { subscribe } from '../../../shared/openIdBLE/walletEventHandler';
 import {
   check,
   checkMultiple,
@@ -44,19 +29,15 @@ import {
   requestMultiple,
   RESULTS,
 } from 'react-native-permissions';
-import { checkLocation, requestLocation } from '../../shared/location';
+import { checkLocation, requestLocation } from '../../../shared/location';
 import { CameraCapturedPicture } from 'expo-camera';
 import { log } from 'xstate/lib/actions';
-import { BLEError, isBLEEnabled } from '../../lib/smartshare';
-import { createQrLoginMachine, qrLoginMachine } from '../QrLoginMachine';
-import { StoreEvents } from '../store';
+import { createQrLoginMachine, qrLoginMachine } from '../../QrLoginMachine';
+import { StoreEvents } from '../../store';
+import { WalletDataEvent } from 'react-native-tuvali/lib/typescript/types/events';
+import { BLEError } from '../types';
 
-const { GoogleNearbyMessages } = SmartshareReactNative;
-const { Openid4vpBle } = OpenIdBle;
-
-type SharingProtocol = 'OFFLINE' | 'ONLINE';
-
-const SendVcResponseType = 'send-vc:response';
+const { wallet, EventTypes, VerificationStatus } = tuvali;
 
 const model = createModel(
   {
@@ -70,8 +51,7 @@ const model = createModel(
     loggers: [] as EmitterSubscription[],
     vcName: '',
     verificationImage: {} as CameraCapturedPicture,
-    sharingProtocol: 'OFFLINE' as SharingProtocol,
-    scannedQrParams: {} as ConnectionParams,
+    openId4VpUri: '',
     shareLogType: '' as ActivityLogType,
     QrLoginRef: {} as ActorRefFrom<typeof qrLoginMachine>,
     linkCode: '',
@@ -79,8 +59,6 @@ const model = createModel(
   },
   {
     events: {
-      EXCHANGE_DONE: (receiverInfo: DeviceInfo) => ({ receiverInfo }),
-      RECEIVE_DEVICE_INFO: (info: DeviceInfo) => ({ info }),
       SELECT_VC: (vc: VC) => ({ vc }),
       SCAN: (params: string) => ({ params }),
       ACCEPT_REQUEST: () => ({}),
@@ -109,7 +87,7 @@ const model = createModel(
       LOCATION_DISABLED: () => ({}),
       LOCATION_REQUEST: () => ({}),
       UPDATE_VC_NAME: (vcName: string) => ({ vcName }),
-      STORE_RESPONSE: (response: unknown) => ({ response }),
+      STORE_RESPONSE: (response: any) => ({ response }),
       APP_ACTIVE: () => ({}),
       FACE_VALID: () => ({}),
       FACE_INVALID: () => ({}),
@@ -120,16 +98,15 @@ const model = createModel(
   }
 );
 const QR_LOGIN_REF_ID = 'QrLogin';
-
 export const ScanEvents = model.events;
 
 export const scanMachine =
-  /** @xstate-layout N4IgpgJg5mDOIC5SwMYEMB2BiAygYQCUBRIgOQH0AhAGQFUCBtABgF1FQAHAe1gEsAXXlwzsQAD0QAWAEwAaEAE9EAZgCsATgB06gGx7py9U3UBGdeYC+F+aky5CJCgDEA8nlo5mbJCG59BwqISCDLySiGSJtqqBobKTBoAHNLSVjbo2DRE5EQEBC6MrKJ+AkIiPsGhiio6yjraygDsierKJpJNkqppILYYmrD8aABO-AAKYMMAtrywfMJ4ABZgKADWuAAqAIIEG+RjuQCyAJI4OMcuFHgAEkR4ANJexTylgRVSkkyaXQnSiRpMNTKaQ6MIfKLqGLKOIJdTJVLWXoZTQoZZrUhgEYAIwUABEwAA3XgoOATaazeb9VErVa8DBQLCkIg7SgATRypC2WVxTx8JQC5VAwRMTEaXyYn2UiUMkg6xmUYIQqh0kk0JmaulUkkaahMyh6fRRaNWGOxeMJxNJkxmczKRppdIZTJZ7Nxpy51CIPKKfJeAqCiBFYs0EsB0vUsvirUVkmSata0lUTFFOh1ooNyOp6Mxwxx+KJJNgZJtlM0wzAAEcAK5wQT0xnMghsjker28zh+soBhAmFVaWO-f46VRS6Ex3TfT4mFpMaRhxomDOYe3Zs35y1F60Uu3l6u1x0Nl3kN04Vve7wd-xd949vvfRKD5Uj6UK6oIaRmb6NMXD1QmEWzk0S5Usapq5uaBZWuStrCJoYAYGgWIADaQFg7a+J2bxCoGd4DjEQ7PmOb5avU6jSOojRwtIjTSF02rASuqyUEhNb8FwXD8IsxbbrBWa0vWNC0EQGwuC4GzXOQWzUNQLgAOptj6l6vIK4iIB+jSqCGI6xs0qiNDo6qvuEMTSN8yiRCKFHJHqiQMXxzGsexnHcTBIEOgJdDCaJ4nHmQxwKReGFXlhqnvqoqiJN8pgJOZahJmoio6vUI4froOgtBRI52caDlgGxHFcVurlwQhyGoeh-LXthYURVFIraXFgKqIqUINNqFG6YmZHZTSuX5ZxOBDPwYCMQegleWJElkGeFWYSpwTmd+mj-G0tEGJCkgUS1sbfH8CTtGREo6Ai6TLvZLF5U5iyDWgw2jR5QkiZNx7utys3BfNKjao0y0jiYa2GFqW1vjoZFqulrTAqDTWND1ax9VdN13buNaDGNnlPT501vYpQXKd2gNRN+tH-dqEqtI0iqpj9ZFzu0MjftO3SIoa52OQVSMjSj+4PRNPknjNuOVSFlTQl8zTkZEiTfvplNvuY9S1CZD5-n8Kpw0xF39ddQ0jfBiEoRAaFC3N3YdPEmgSxG04y6mLV6Wq37JsOor6RGDHlmzl0c7r90MuNmNTZyOOBcLn0IItk7UcYKpasYJiKhGP0qrUCQ6Ewx0qvqLPIp7OVa4jvt8ejj3eRJAsh88H3djR9RdG0L6JJIegGYqIramqtELnO8UmMqHsrPn7MDb7+tlUb734ze5vi8k1vS9+dvy5tarN+YJNixRDHIcPhXQZS+IYLwqFbGMYySXgGzHAAakQk-+je8RtJb+HSskiTpYCiUdJbD5k6DjRPjM1Ov0He3tnJFQPvBY+RsADiYkXDkBwMJK+pBYGeBNtXae5EiZ1GHDLfSHQqY-3VC0Pu6cZDamAUiZcYDtaHxgVgU+58tiXxvnfTBU9qoxDbmYLQhh-xzlTMmP8kgGIYBzJQCCG4XJQKPifM+F8r633vlVUKvYV54T+E+UcRk1Kg20C3f6epfwZ3EZI6RhZZFlAYaheBIkkEoOOGgjBodTY3nIiqNUwIQSpj7qONufworND0OZJgTdmh2RQiMR0eBhASJQAKLAeBLhMjYZcXyOANj5FZAFKuXDQpamUJoeIQ4P7lMBHokI5FNLtF0v8EcypFw5zOtE4YsT4krCSWIQYt0RpoAAGbDWGAAClxEQLJOTyBX0OEQFwtANgAEosCszaR0jACSBSqJFogIpJTwnKnKZ-Ii4RKFfE2uqXQ-wDoMQGXSCA6zNllHsFsUg2zw6WVMjqQ51yWjJBjCTS2tQLIZxESdGh-Q7kYAefSOJGyunPPwK8hgJg3FYOqp8y2ah0q-KojGdomk9BmASNKAyOhbn3MeQi4QLy3nSDRQU4UxgvnYsSLi-5b5IxfGJRRWokJF7UMNFCmFUA4VPJpUit5ygGUPwxeEllPy-x-LkJy4wtSaKeIip8VoDFYCLC4AAdwAIrDGoFwKAdIsAQGECNOkBIuCrBGias1FqMDvO7HqfSIY6jtQ2r2BIMZm6kV5f9cyTd-i6v1ca015rLUnhOGcd1N4RRxm+TipVeLOUaGSnhPuOqWn9D1Ya51sbC1sXafWLJBRsjEBwGMS4yCk0Yo0qZAydNRSJniKKQNMhNCg3-EwDRbK+4MQ4OWDgMT6QbC4GKrpWBiB4CIOw3y19jiLvIM41wTb1ERTrrXdOrQOrhPxenS2Mg5wRhBNquynTEkHhSaQNJGw8m+nRYUlVpzZa-xSOqP4XREw3vhXe+kmg6RjGGOa8scwsA9N9oM4ZIyH1PouBQGZcyFnLNZreusUBQMYHA5BuAsBt3BFiJFGiKVrbNHaPi1oIZYxNxkGYOosMC0omw46TQggphgC4FWfgyTXmLuoCRxAx0YwLh+uREE4TAS0XJWxsAYhUSYFdVAdcJJjgYAGVwLAJ4kN3A2KJhA6dFaJHqh-LUNEEpvmhJCScyQdT1zIvRRTynFiqcdBpsAWmdNYCIAADRuK82B2RcSXA4TKtRwRTN9vMyS4c2oDDNTfPTH64UYj-TZYCSJbmVP0i8xaTT2ndOwb6ZoeDkxEOpMMyh6ZxxZnzKWSs5ESn8tqe875rgxnUr3l+BnZIg6IyglS1qWpelm5-DhC+BibWPMFfpJ1krXHeA8b4wJvAQmiAic4bK0KsX0oWcS9ZlL4Q+4-2HOlKUC5pQdoHkSMABrOOwDAChYDUBr4oCwLQMYuItjPvIMQLYOBLg9dIVFDowikzhN7G3Oe+zTCHIMr2NQ93j5PZAy9t7OHPt6dOAZy+PW9LFKZm0QBqZwojfCNRU92o2itFVmItj5YHsY9w1jhF9JcfIM9Jfcg188Bg7BgYLoZEWhSl7FTwMOpilzg0m0QCIumcgLLBaR7z3Xuc4+192+BBjhOHZK83EF9F1jD2MQI1QksnGfaNCPtZEFy6DFC5yQioe5RDMBoC5ZDlcQtV6zjX2PHS49Yab83RBLcTKM7t6LgZIz2+omYYRLu25GFVBQ6U2o9TTgSGj9XmPNfvdx5t0gwnjPS1lxKAc+k+7HrfNRLo9HExqq6LbvPbOBiF5x19kSsDYGenIB4XI5AH3ININHqLOz3wHRDP+XQah9KxFOzhJoapQWJkoq0Sh7fOMZBJEhJCB5jNkQBcqZadNjH+pHcztXHeXvQuD19-TNXCcx6n4maUaoVrqmbhpZUbv4tDFEwxtvwyFs4VcWd0cNcH8ucdc8BHFx8bcU1HYIlpx-xYwaNbNpxVRmM+VahDBhwd8C8YDtcsABcTciAzcX0lI9thQP5TJZQIwpQkwYgJQ3c4Qoh1JpZPhW86IiD2d4IRVcdyDiAAApQzagvGWgwMf4BgzaDof4frV3WzWiVUMUcyHFaiMhfgzvEgz7PDAjKAKDWAGDXpO6SrUZHAa4HYZxWBerRrDDFrZcSA-PAQvQlAAwiDIwojG3VQ7QTaYENldOczSIRUBXVUSEBnACGcEEHQ+-IQjw7jXjfjQTUvbbG3WQycJgxQ1g5Q6nNlZOdUIpP8NoKUHQtAFAEkDgYaI2eNU4VxfJaQ98FIYpf9LqZMazJudg8zTQLgwBCUURLUHQ8sAAKy6VQjqMTTf3Dg3xJ2-3Jz-ylwjj-HqGY1FAfE3wih0IJEmF4AGQUEdGOAgHgkEH4AUCwCcFYWyGvikmOHPEaNjwQBWl6Krw2IMiTESDCPaEigKP7RVBVnAL9xcI7x2PaX2MOOOIwFOPOMuPXWcRuOoDuJt2TFVHM1MEsnM3aATnr2kziwy0Y3+lFF90NGBM41BL2IOPpCOJOIEHOJLzL2mI9Xj1BkTyd2ZVlDd2THFgzjswpg7XBRJNv133LFumDw4CtRtTw3tUdQGFziFJAxQBFJxw4AQDtS4HQC2VYHL1qBeNlDeNr0+Prw-jUIryxIXHVD0B0MVMxGVKwEmAg2GE0A4CQluh02mFlOcPlNw2tNFK5xVLVI1LKC8GRPImWgol7BaNAP0jhzqGWnqg-zqE7R0LtTQEPwgGpKhNpLxxwATQaNfUZUDBRLjPROMExNCNSzIi0GigllBiMDIgUwgK9KlNTN4HTMhOhPnWEgIHZF131zXX+xQ2RIlGLIHQ4KxLd3VAhE+Hl3Mz-CSgYgeVQGwwmNOFzPLw-SkHiFVFKQ0C9zTgbL93mwgEP3pGYjACIGGAdOzLXMZJvBohjDG0tion2nrPMgYhTLTOvPqOMz2R3PSn-IfBOSkCrzixBAr2BFnH7jY2LnpDNUDOEBwEmEgj9iRirBMJkk2yvgyWxk9HuPzKaKz2SjZPMGnGhDyLE0TG0Aok2lBk2gXGMA1kdDgtFIQqQstBQqGjQqwAwoHIyQrlwuM0Is0GzWd1MBfHIpCDjFqBSGsnSmVFCUYtgvVJYowEQuGGQu5jRinS4CIFKhQm4rcF4ooBwskLDm7ChE0glB-G1AHCWJYN6JiBZOBBYwXEUqgGYoFDUo0srFRhw2nV0oNjAAMswrq34tMvcW4WS3o2ssAQfCWLoiBVKXiAXAPUFUzGNCYuUs8rYpJD9msRpR4qwuMuDgEtvLlQ3OqQzhKXiCTDVhlAPNZgyqUvgtUpypGhgqgHyuwEKtCtelKsn3Dj0g0D7TqDhEhD1H5Ran-CfL+BlEogfEBAavSvcncqyrKC8vYsXMCqNh6oyQtytwnweKnyhEihHCuzFHops1OWHOokWglz9UhDco8vWras0EhMYWYSUXYR-OSE0jWgMg6k1AkubiiCfgMFnGoh1D+CerWtYvUs2ugVQl2ooH2qjx-Mym0GTFrzG3QPxWKX7RBFaFLLZWzkRAwC4GOPgB8D6COvDgAFp1BFQ6bNIKJzA2b2a2b3yEI70djabuwPwohjpaI1U2gbJAEwjYyKIYo-1Q04RdUhhRguqlgaQ+aPFaI4zExmNopYx4re1-1kr14NU0qzpQIcw8wisoISw1EzKbwWS4tYw2bpwG8JKmgiZ0DexF8tVATGqaQwJzbIJNx947QOrVbqp+j7aMoxLnaJNWjZQRRbcPbzMNY-bLFLaeJ+hNKcNQ71FqJLKNBIYJR5Muis0tAzBzSQQbZlRvblrVxwJvNA6rbYIx5DZs7hQpR6h44m4ydgQkw5ZjIvFUxxdIh05O1q6TbeoC4CourW6ZDgRHYM5m55USbGbOUQR4wEw6geTsVWMVcvZtYuq-YZ6exst56U4l7wwpr8am5zAfUVQL0NYEYp7IE7Rm7IAj6SYPdzIDBSFIhAYWoUg2pRyJYbIH7J6R4+kj62gDFIgJQCVrYgEHzTJmM5wYHdIzFoKh5wEdZysQ78LHjgR1Rvh244HIgEHiJDA+0NRyFC6qFQHd5OZVc9wtKoBIGFxilSU5cjB4tu0QYDFf0hx-wHxbIMGJ76HR49K368Gp8pZWiK65wUgVQ2DiIz8LT6cxQO1IgB497C4IGpHw5DBFRrkiGDom4QRAFctGztGfYcGmqWG9HuxpZE4pQwyaJjAyI2hZQd6gTB5RGsGGHX6IAj69ItAY46hDIxZpxE4dp2hah0oDAtDUc2M6ErourbFAn7GPFvwWauoVZzBZzv5VQ9pYw9JAE80lraEwHFg0mj6ugvV9JgjjFzYliAJ6gNI2mIplRFryn+gJERgpF67UnEb0maDHimZVRodYQgwzqliUgtB87Ic-xRRs0x6qQ1lYUOMQobbqpoRIpIYikZxZQPxgaPxWjIRkwpRzAdRmkVdhUqU71NmIrQo4qnyPa9QPjyIAUEgQxKJJdewTEVmBgo0S1XUj69QglFrfUtR-Vl9qkdpKlpY9popjbC0gWY1XVQNjywBQWYHLZXZARD0eDDTTlPhTrZNAQY5IgvHDQi1o0XU6QBhy1HRQXtJvVvxTBdBNpARgbDnhLkwmDOXB0AWaXgX6WEIiQoBfSoBp1rguAeNQXIQkGDAaJop-xM5A1hwqKxQaLFpqJR1x1J0pWZ1sNQWNDvUVRNjh6A1OV-VhLWDVZUxgjAMnl6R36+5dmtQks6hw1sTrqHY9JZwBXB7aInWtdPDCM5h36hFohPGDB0oMDaNTIJRZzSn4mBTMwOMQMkj1t36IoohAI9JFDDntQE36Nk3IhU3Zt3NPNFsLautQWFw+tWC4mhtm4241AkGjAuS6zaJoRK32tCtIIusw3vCI2MnqpqJTJVDLkIpjTQY24da+1B6zrf9fw+35sOta3lss3+MamDJLYQlIQPX04NI24PW1RDlrtSL0wb8A8XWx3QpKI-rXiUwDT52kwRqNBviIpoQ03PTb2BCg9YDQXAUzHlnB1KWfXAwiaiH1jCbu3un-coCFTMB98Ty7GRmp8+EfonaTJ6ywLIP3xpQfpvpwkpQ2UOhiS5T-3dCEjQXQUUCs8yyQj2DoGNjwpKJah1QqWqOkO3CEjh3jDQXkCf6bt0DmOsDARogP477B1-huO-3eOaPH8Vs1sd373hQLrhKyZ5czm2UvjJPIRpOZBZO9I4jBDlP79+BgPZR-CEwgiYdyzwgoG5CNIjP0pKJf2M6myKiqiaj36uXhLTApRaIWhlQKqalIof02VrlZR0phiwAxjElJGMOZjZxxZhbQZUxPWYXgRG85w1BKyBbKIdCxXeAJW-KuAZW5X1O1Iw0SkQDjPAIT368ODLZSF+jeChib3FPyTwSqT2zaT62f5TBIhX5yEiXavZxJwbKDnnwrSlSxSj6u7dTq93i68ztBtloaJvxcuuTkhkyMACQWy2yaSziluf4UHVvX368f9-ClmJc5y6gFzZgUBlzhmpDHjc6O6WTzBjAiS3dGZlo6JJMCG-hhGVcjy0OzyLyHSlu9QVv9SPiwjahiOmgWg5RzJIQAWPzWyTWpuZM9Tu4VRInVURxei77ov+igIRG1hMqWqNqSQanpzfouhjo+XAQCOoHf4CF59Rr81d7bHnq4bkKOrUKqaUuzYuhNJ-hWe5w-u2gWo2UX5ZQ9I9A+X-oYb6fXrM7HR-KJGamKZfpdB-xewoW+4HytBYnf0j3kxpZNeVKGf2rbHp6aulRWeSkRQUgSmyJ1RFeaYBae3QPiuaf+JVqtf4bcqtrx4gn3eFcve2X1JA1LfZz4m4qB0AWOqhfWqI+Rp3rkuPup904LYpZB7AEZBoxiJ2gZrwx2oFqmcrAgA */
+  /** @xstate-layout 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-0LisKKfM8pFikTiXElOcg0Q+jkC7rJUgtjtkDy-NMTQVESyZJ2KlRK2hXruNsBadwJYSxpWcA8tenQwQvBeNCV8BKrq0xtJRdQ9goEQUWIceKloiH00DtYdk819GwsUPCuZJi7zAwqZY-A1ie6fLSLcqslQZhOEIU4Tx0F7pjyguxVYJwOh8WVY8rhQNFmVLwDJMg+L+58viXXOQiwXA6HcbaUwIKIVZEWiHT6XgIWstVc6sJrrGlEGaX3Ek3qwqHG8fsaBTgNrqBZFSZYBySwZGguzW1Qp7WGIRXG9VFiYmtIAFI91TVmdNU1mjaFAhQiu7jGxOinlQgB2l5rzRsMsYwGhY0lKdXWlAr935QB3nvA+R9FBVRqrVHAqIMTVIUjfO+PV+q+gdcE+NFSF1byXZ-XViB+RVHqBAiuKxajSALQ0daeRVj2GAlSadTzz38MUMg1B6DMGkGwbg3lWswpHG3FBPY9FGzcjcAWussxGw6QFZ4f9aAUBgg4OVMSrt3Y4E9mmmDHbXQHP9frI2uxKGUhcEoSFyUjmVBDv+yMAArDyL4SMe1vekewRCkbaHZOoCCrhQGfVAtoysrQdYzMVael+QJAS8EquYaEWoIB3kEPwcwWBQjLJ6HhLEWoMxeso2kKCSgLQMmtmHMtm56ZVHcJWHIArKzMJU9WlVJT1POS0zpvTGADNGZM9g8gWpSDmeoJZoTv1qwmoyC0NKu4hmUgrt4yymWeQ1H-UFzT2mni6f0wIIzbyIMfOg0XMKNp7NGyWnuMlzJTbI28fYXQzG5hTP-SgSMZVFkcBlnLV+itlalOFKpkpg2wDDbCRwBACsuDoENLEJL+hlBQQbDPT0uQQ1UM5sWioyUAJyAG0N8xo3ARbwBIoDgLwyqVTTkg6bVagkv3m4tvhy3VvrbGqwITMhVCgTHph90hY5CbjcLlm0FdDDcn-QrNAXKIDlfC5VzVpHyNtps1Ic12iuLJSNkazxRtaEKC8O4ZYuMUcYCBGj3gGOwsRawMQJqrUqk1K1G83C0i6s-xukWD6TBnDzTcOL7Q6SOv1CqEGuO47UoKrtRcQ6qB278fHLjpLNQzQUVSocnIKx4qfRAjkTanoWjVyylcTAEAuXimfEQAE92ceCaF-g9IjXqzuHUMcBkGUsusmgoKzQUyHOqGKFOxVqP0ce7I0l+oShaik+4j8zm8UoV2E9AxGyACiyt0hP6CWgPhA9nDH6aEOBD78DeHvHE-Or4UFTOmITjLEZfXUJ9ewP6WQQWpI0CCm13Ti5hWr6vTwy-DYr7KKvZ5-S17Kg3rATfREt7HBOdvXvdmei76jfXffnDll3FkY4OsRP0Ira2Ev0IZ+Gkr-KSMMY4CDgRFwIg94nxgDX5EDf18beU4VmFG9Wv8DERCCU3EiUgazgKg5YXaaUEEGUcwRQ+Sxe7Y0+a2s+GAT+fYr+cY0IH+X+j4z4f+ze18rsk4raMMYBN0EB2k6WUusBrMpszgmQBwOsCSkuvmk+i+9+2Bj+8+8o-BTw6EgISCvAu84M6+AurepA1BIB+OdBVghwIEcg7Bv6LQ9Q5Y70xgkKQa7I88GB54D+4weBU+UA4hAIkh0hp0shm+VBO+1mKh4U8060Rs8wLinEuhCuDidQnoDKiwJhpegh5hwh4IGupBL4Dh186yHSnqoBwu8MouDYweaUZOAKjobo2k9EFYLgahtQN+p4d+WB5euBERigYWokWAGEWEyyuEBEW2uMmiywegF+Uy0mbBoytyBwDQuQzQ3oiqohUAZhc+N4kRKEMR-+chrSGyWyLhyR4UwEBu7E80FEzgUyg6iAqB1YgyNQqg3IaevgpwGAXAem8A8Q5wSR3ukgC0NICgmGNgUE9gLIdxByuQT0RwjQlo-Wce94YM6mNxsilQ7m9g7h9gPeDg8Us8+QqgfWUUroIRHYgYUoIYERwJtMDEWQFE2gj6McNkR2OxLEnITg3Egy7EzYfBpRF4gk14vYlhmJX4FkOJ9QdQZJFohJA+jK1YagCgxQ7EuQ80yJzuiE6JExSq-Yb+0ITJDW4uNI+gTCDQhQ7EjGi42Ja0bgVIhQXIvBla9kNJnYaJ9JVed40REAspU0NgRCkmhQxQmpRs3JoyEmnhMU0UWUAkxpwkoklpaQrgloHxCMcgj6Uy8BpsfiH0o6qwzMgKx4fBQ0IM8CYBOytM6glENOeSiO80pqpsS8tgagaWRR9pn0hM56+UJMP8KZzJqwVYzxXENoBwEB8U7EdKyBfycOyUCcjsasjwvpGwFcqe+sToGUxs8UYEdgqBcwcwk8ugXZSc6s68juYAfZrIwZCpBwMwDYcGdYGMUcRQagqUrGc5TsC5qc6cK5mgqwVEJCNk7R0E7itcmQ+sNQ7iWxsEiqAsicJ5jwig94IIUAv2H+qIXAKCF5UESUVI80hwO0bg5yEclQtglsbojWu4FQcCFZTwK588VYdQbmxgUy4ur0wERCk6YeRsboEe6F5Sl6H8u8WF+wWwxO+FaRoCFcVEn0ewFQxw+gcZ+plwz8JSIGaC-AWFFoom3IAeIcqgapOQbFECnF+MPF06K5dxLQDxSpzxFYYZZQ7MWSMwDI0ExwagrQ-6ZSLyKAK5Qac8toRYfiiUjYr0UyRCMwCgFEFc4EA2mAHKTuUAF5AaByegpyBkzWHgBascNGegxYtQLKfmX2M6aqLqK5-qygNkNkZKhhRJCAk83i524J7IBQvFJ6-mjqCVCaNF16dFyhSxgyKV-q6V-IJ+IKDQ247ihlfyi8f0k+s2AGc6wGvAKCwlF5dQmQTlAxNQ2gFQRkx2alRqTIkCZyplpVF6TqIlVV3u96ByMU7E6gxgr6BaEEZotK7I5k9OsVNaJSeGBGRGK5ocLodCRYFEkCapC0VQ7RjIARFonVfF3VPGfGFpa1uygpOJxgzQkmJYGUaGiw2kcw-IYCyiepRVcVv5aA-5gFXAwFoFANC4pOygroBxt0uMBa9Mtg+hjQborQ6GhVM2xVa8xWIWZWbOlWK5+g6hYee4scFcIeCgrQH0hJDK-InGZ1AWlw12I2KlIy6lTxKi3WaphQzgAVdyyUiU21DOTO6OmOEWKl88WQfy1pboxQk8rmbFyM2Q3xdoFEWUGubcSZkAK5DiWwfItEEujYstvuxQnoMe7o5NduDuPlrwYAru92dtLZkZhCTI7tqGuZFQkURYwaNgMwjgWU8eLOolno3alYjQ2MG408jYBun03I0E0yKGIpoxYR4xvYF5ypByDgfWGQuMnRLIn0g5gxugBFQqJdYxFREpIxy+9elxtBSxEKRCyUqgsFXtDduZHEesnaNoJYfiX1t+mBpd5RFhL+A4RBn+3+z4flouu4Ul2Qr5BsQEgqF+x+yUeiHdZdXdDJIx1hthfAakVZYUuMAZOg1sHG+wDEcFZQEE3IAV25et-ql9K9lRURP+-1A93uL9s0CM8uPWX9jomMW5NgFoEK9MVNfEIxndFh1RttWNzJ+4WQVIugeg0E1OmV-Isw-hqDQRsgJx3gQAA */
   model.createMachine(
     {
       predictableActionArguments: true,
       preserveActionOrder: true,
-      tsTypes: {} as import('./scan.typegen').Typegen0,
+      tsTypes: {} as import('./scanMachine.typegen').Typegen0,
       schema: {
         context: model.initialContext,
         events: {} as EventFrom<typeof model>,
@@ -348,7 +325,7 @@ export const scanMachine =
             src: 'disconnect',
           },
           on: {
-            CONNECTION_DESTROYED: {
+            DISCONNECT: {
               target: '#scan.findingConnection',
               actions: [],
               internal: false,
@@ -366,20 +343,15 @@ export const scanMachine =
           entry: [
             'removeLoggers',
             'registerLoggers',
-            'clearScannedQrParams',
+            'clearUri',
             'setChildRef',
           ],
           on: {
             SCAN: [
               {
-                target: 'preparingToConnect',
-                cond: 'isQrOffline',
-                actions: 'setConnectionParams',
-              },
-              {
-                target: 'preparingToConnect',
-                cond: 'isQrOnline',
-                actions: 'setScannedQrParams',
+                target: 'connecting',
+                cond: 'isOpenIdQr',
+                actions: 'setUri',
               },
               {
                 target: 'showQrLogin',
@@ -417,18 +389,9 @@ export const scanMachine =
           },
           entry: 'sendScanData',
         },
-        preparingToConnect: {
-          entry: 'requestSenderInfo',
-          on: {
-            RECEIVE_DEVICE_INFO: {
-              target: 'connecting',
-              actions: 'setSenderInfo',
-            },
-          },
-        },
         connecting: {
           invoke: {
-            src: 'discoverDevice',
+            src: 'startConnection',
           },
           initial: 'inProgress',
           states: {
@@ -451,39 +414,8 @@ export const scanMachine =
           },
           on: {
             CONNECTED: {
-              target: 'exchangingDeviceInfo',
-            },
-          },
-        },
-        exchangingDeviceInfo: {
-          invoke: {
-            src: 'exchangeDeviceInfo',
-          },
-          initial: 'inProgress',
-          after: {
-            CONNECTION_TIMEOUT: {
-              target: '#scan.exchangingDeviceInfo.timeout',
-              actions: [],
-              internal: false,
-            },
-          },
-          states: {
-            inProgress: {},
-            timeout: {
-              on: {
-                CANCEL: {
-                  target: '#scan.reviewing.cancelling',
-                },
-              },
-            },
-          },
-          on: {
-            DISCONNECT: {
-              target: 'disconnected',
-            },
-            EXCHANGE_DONE: {
               target: 'reviewing',
-              actions: 'setReceiverInfo',
+              actions: ['setSenderInfo', 'setReceiverInfo'],
             },
           },
         },
@@ -519,9 +451,6 @@ export const scanMachine =
               },
             },
             cancelling: {
-              invoke: {
-                src: 'sendDisconnect',
-              },
               always: {
                 target: '#scan.clearingConnection',
               },
@@ -727,34 +656,31 @@ export const scanMachine =
             ? BluetoothStateManager.openSettings().catch()
             : Linking.openURL('App-Prefs:Bluetooth');
         },
+
         openAppPermission: () => {
           Linking.openSettings();
         },
 
-        requestSenderInfo: sendParent('REQUEST_DEVICE_INFO'),
-
-        setSenderInfo: model.assign({
-          senderInfo: (_context, event) => event.info,
-        }),
-
         requestToEnableLocation: () => requestLocation(),
 
-        setConnectionParams: (_context, event) => {
-          Openid4vpBle.setConnectionParameters(event.params);
-        },
-
-        setScannedQrParams: model.assign({
-          scannedQrParams: (_context, event) =>
-            JSON.parse(event.params) as ConnectionParams,
-          sharingProtocol: 'ONLINE',
+        setUri: model.assign({
+          openId4VpUri: (_context, event) => event.params,
         }),
 
-        clearScannedQrParams: assign({
-          scannedQrParams: {} as ConnectionParams,
+        clearUri: assign({
+          openId4VpUri: '',
         }),
 
-        setReceiverInfo: model.assign({
-          receiverInfo: (_context, event) => event.receiverInfo,
+        setSenderInfo: assign({
+          senderInfo: () => {
+            return { name: 'Wallet', deviceName: 'Wallet', deviceId: '' };
+          },
+        }),
+
+        setReceiverInfo: assign({
+          receiverInfo: () => {
+            return { name: 'Verifier', deviceName: 'Verifier', deviceId: '' };
+          },
         }),
 
         setReadyForBluetoothStateCheck: model.assign({
@@ -790,20 +716,13 @@ export const scanMachine =
         }),
 
         registerLoggers: assign({
-          loggers: (context) => {
-            if (context.sharingProtocol === 'OFFLINE' && __DEV__) {
+          loggers: () => {
+            if (__DEV__) {
               return [
-                Openid4vpBle.handleNearbyEvents((event) => {
+                wallet.handleDataEvents((event) => {
                   console.log(
                     getDeviceNameSync(),
                     '<Sender.Event>',
-                    JSON.stringify(event).slice(0, 100)
-                  );
-                }),
-                Openid4vpBle.handleLogEvents((event) => {
-                  console.log(
-                    getDeviceNameSync(),
-                    '<Sender.Log>',
                     JSON.stringify(event).slice(0, 100)
                   );
                 }),
@@ -927,6 +846,7 @@ export const scanMachine =
             console.error(e);
           }
         },
+
         checkBluetoothState: () => (callback) => {
           const subscription = BluetoothStateManager.onStateChange((state) => {
             if (state === 'PoweredOn') {
@@ -961,6 +881,23 @@ export const scanMachine =
           } catch (e) {
             console.error(e);
           }
+        },
+
+        monitorConnection: () => (callback) => {
+          const subscription = wallet.handleDataEvents((event) => {
+            if (event.type === EventTypes.onDisconnected) {
+              callback({ type: 'DISCONNECT' });
+            }
+            if (event.type === EventTypes.onError) {
+              callback({
+                type: 'BLE_ERROR',
+                bleError: { message: event.message, code: event.code },
+              });
+              console.log('BLE Exception: ' + event.message);
+            }
+          });
+
+          return () => subscription.remove();
         },
 
         checkNearByDevicesPermission: () => (callback) => {
@@ -1007,25 +944,6 @@ export const scanMachine =
             });
         },
 
-        monitorConnection: (context) => (callback) => {
-          if (context.sharingProtocol === 'OFFLINE') {
-            const subscription = Openid4vpBle.handleNearbyEvents((event) => {
-              if (event.type === 'onDisconnected') {
-                callback({ type: 'DISCONNECT' });
-              }
-              if (event.type === 'onError') {
-                callback({
-                  type: 'BLE_ERROR',
-                  bleError: { message: event.message, code: event.code },
-                });
-                console.log(`BLE Exception:${event.code} ${event.message}`);
-              }
-            });
-
-            return () => subscription.remove();
-          }
-        },
-
         checkLocationStatus: () => (callback) => {
           checkLocation(
             () => callback(model.events.LOCATION_ENABLED()),
@@ -1033,127 +951,45 @@ export const scanMachine =
           );
         },
 
-        discoverDevice: (context) => (callback) => {
-          if (context.sharingProtocol === 'OFFLINE') {
-            Openid4vpBle.createConnection('discoverer', () => {
+        startConnection: (context) => (callback) => {
+          wallet.startConnection(context.openId4VpUri);
+          const statusCallback = (event: WalletDataEvent) => {
+            if (event.type === EventTypes.onSecureChannelEstablished) {
               callback({ type: 'CONNECTED' });
-            });
-          } else {
-            (async function () {
-              GoogleNearbyMessages.addOnErrorListener((kind, message) =>
-                console.log('\n\n[scan] GNM_ERROR\n\n', kind, message)
-              );
-
-              await GoogleNearbyMessages.connect({
-                apiKey: GNM_API_KEY,
-                discoveryMediums: ['ble'],
-                discoveryModes: ['scan', 'broadcast'],
-              });
-              console.log('[scan] GNM connected!');
-
-              await onlineSubscribe('pairing:response', async (response) => {
-                await GoogleNearbyMessages.unpublish();
-                if (response === 'ok') {
-                  callback({ type: 'CONNECTED' });
-                }
-              });
-
-              const pairingEvent: PairingEvent = {
-                type: 'pairing',
-                data: context.scannedQrParams,
-              };
-
-              await onlineSend(pairingEvent);
-            })();
-          }
-        },
-
-        exchangeDeviceInfo: (context) => (callback) => {
-          const event: ExchangeSenderInfoEvent = {
-            type: 'exchange-sender-info',
-            data: context.senderInfo,
+            }
           };
 
-          if (context.sharingProtocol === 'OFFLINE') {
-            let subscription: EmitterSubscription;
-            offlineSend(event, () => {
-              subscription = offlineSubscribe(
-                'exchange-receiver-info',
-                (receiverInfo) => {
-                  callback({ type: 'EXCHANGE_DONE', receiverInfo });
-                }
-              );
-            });
-            return () => subscription?.remove();
-          } else {
-            (async function () {
-              await onlineSubscribe(
-                'exchange-receiver-info',
-                async (receiverInfo) => {
-                  await GoogleNearbyMessages.unpublish();
-                  callback({ type: 'EXCHANGE_DONE', receiverInfo });
-                }
-              );
-
-              await onlineSend(event);
-            })();
-          }
+          const subscription = subscribe(statusCallback);
+          return () => subscription?.remove();
         },
 
         sendVc: (context) => (callback) => {
-          let subscription: EmitterSubscription;
           const vp = context.createdVp;
           const vc = {
             ...(vp != null ? vp : context.selectedVc),
             tag: '',
           };
 
-          const statusCallback = (status: SendVcStatus) => {
-            if (typeof status === 'number') return;
-            if (status === 'RECEIVED') {
+          const statusCallback = (event: WalletDataEvent) => {
+            if (event.type === EventTypes.onDataSent) {
               callback({ type: 'VC_SENT' });
-            } else {
+            } else if (event.type === EventTypes.onVerificationStatusReceived) {
               callback({
-                type: status === 'ACCEPTED' ? 'VC_ACCEPTED' : 'VC_REJECTED',
+                type:
+                  event.status === VerificationStatus.ACCEPTED
+                    ? 'VC_ACCEPTED'
+                    : 'VC_REJECTED',
               });
             }
           };
-
-          if (context.sharingProtocol === 'OFFLINE') {
-            const event: SendVcEvent = {
-              type: 'send-vc',
-              data: { isChunked: false, vc },
-            };
-            offlineSend(event, () => {
-              subscription = offlineSubscribe(
-                SendVcResponseType,
-                statusCallback
-              );
-            });
-            return () => subscription?.remove();
-          } else {
-            sendVc(vc, statusCallback, () => callback({ type: 'DISCONNECT' }));
-          }
+          wallet.sendData(JSON.stringify(vc));
+          const subscription = subscribe(statusCallback);
+          return () => subscription?.remove();
         },
 
-        sendDisconnect: (context) => () => {
-          if (context.sharingProtocol === 'ONLINE') {
-            onlineSend({
-              type: 'disconnect',
-              data: 'rejected',
-            });
-          }
-        },
-
-        disconnect: (context) => (callback) => {
+        disconnect: () => () => {
           try {
-            if (context.sharingProtocol === 'OFFLINE') {
-              Openid4vpBle.destroyConnection(() => {
-                callback({ type: 'CONNECTION_DESTROYED' });
-              });
-            } else {
-              GoogleNearbyMessages.disconnect();
-            }
+            wallet.disconnect();
           } catch (e) {
             // pass
           }
@@ -1180,24 +1016,14 @@ export const scanMachine =
       },
 
       guards: {
-        isQrOffline: (_context, event) => {
+        isOpenIdQr: (_context, event) => {
           // don't scan if QR is offline and Google Nearby is enabled
-          if (Platform.OS === 'ios' && !isBLEEnabled) return false;
-
-          const param: ConnectionParams = Object.create(null);
-          try {
-            Object.assign(param, JSON.parse(event.params));
-            return 'cid' in param && 'pk' in param && param.pk !== '';
-          } catch (e) {
+          if (Platform.OS === 'ios' && !event.params.includes('OPENID4VP://'))
             return false;
-          }
-        },
 
-        isQrOnline: (_context, event) => {
-          const param: ConnectionParams = Object.create(null);
           try {
-            Object.assign(param, JSON.parse(event.params));
-            return 'cid' in param && 'pk' in param && param.pk === '';
+            const pk = event.params.split('OPENID4VP://')[1];
+            return pk != '';
           } catch (e) {
             return false;
           }
@@ -1215,6 +1041,7 @@ export const scanMachine =
             return false;
           }
         },
+
         uptoAndroid11: () => Platform.OS === 'android' && Platform.Version < 31,
 
         isIOS: () => Platform.OS === 'ios',
@@ -1222,12 +1049,8 @@ export const scanMachine =
 
       delays: {
         DESTROY_TIMEOUT: 500,
-        CONNECTION_TIMEOUT: (context) => {
-          return (context.sharingProtocol === 'ONLINE' ? 15 : 5) * 1000;
-        },
-        SHARING_TIMEOUT: (context) => {
-          return (context.sharingProtocol === 'ONLINE' ? 45 : 15) * 1000;
-        },
+        CONNECTION_TIMEOUT: 5 * 1000,
+        SHARING_TIMEOUT: 15 * 1000,
       },
     }
   );
@@ -1237,180 +1060,4 @@ export function createScanMachine(serviceRefs: AppServices) {
     ...scanMachine.context,
     serviceRefs,
   });
-}
-
-type State = StateFrom<typeof scanMachine>;
-
-export function selectReceiverInfo(state: State) {
-  return state.context.receiverInfo;
-}
-
-export function selectReason(state: State) {
-  return state.context.reason;
-}
-export function selectReadyForBluetoothStateCheck(state: State) {
-  return state.context.readyForBluetoothStateCheck;
-}
-
-export function selectVcName(state: State) {
-  return state.context.vcName;
-}
-
-export function selectSelectedVc(state: State) {
-  return state.context.selectedVc;
-}
-
-export function selectIsScanning(state: State) {
-  return state.matches('findingConnection');
-}
-
-export function selectIsConnecting(state: State) {
-  return state.matches('connecting.inProgress');
-}
-
-export function selectIsConnectingTimeout(state: State) {
-  return state.matches('connecting.timeout');
-}
-
-export function selectIsExchangingDeviceInfo(state: State) {
-  return state.matches('exchangingDeviceInfo.inProgress');
-}
-
-export function selectIsExchangingDeviceInfoTimeout(state: State) {
-  return state.matches('exchangingDeviceInfo.timeout');
-}
-
-export function selectIsReviewing(state: State) {
-  return state.matches('reviewing');
-}
-
-export function selectIsSelectingVc(state: State) {
-  return state.matches('reviewing.selectingVc');
-}
-
-export function selectIsSendingVc(state: State) {
-  return state.matches('reviewing.sendingVc.inProgress');
-}
-
-export function selectIsSendingVcTimeout(state: State) {
-  return state.matches('reviewing.sendingVc.timeout');
-}
-
-export function selectIsAccepted(state: State) {
-  return state.matches('reviewing.accepted');
-}
-
-export function selectIsRejected(state: State) {
-  return state.matches('reviewing.rejected');
-}
-
-export function selectIsInvalid(state: State) {
-  return state.matches('invalid');
-}
-
-export function selectIsBluetoothPermissionDenied(state: State) {
-  return state.matches('bluetoothPermissionDenied');
-}
-
-export function selectIsBluetoothDenied(state: State) {
-  return state.matches('bluetoothDenied');
-}
-
-export function selectIsStartPermissionCheck(state: State) {
-  return state.matches('startPermissionCheck');
-}
-
-export function selectIsLocationDenied(state: State) {
-  return state.matches('checkingLocationService.denied');
-}
-export function selectIsNearByDevicesPermissionDenied(state: State) {
-  return state.matches('nearByDevicesPermissionDenied');
-}
-
-export function selectIsLocationDisabled(state: State) {
-  return state.matches('checkingLocationService.disabled');
-}
-
-export function selectIsDone(state: State) {
-  return state.matches('reviewing.navigatingToHome');
-}
-
-export function selectIsVerifyingIdentity(state: State) {
-  return state.matches('reviewing.verifyingIdentity');
-}
-
-export function selectIsInvalidIdentity(state: State) {
-  return state.matches('reviewing.invalidIdentity');
-}
-
-export function selectIsCancelling(state: State) {
-  return state.matches('reviewing.cancelling');
-}
-
-export function selectIsHandlingBleError(state: State) {
-  return state.matches('handlingBleError');
-}
-
-async function sendVc(
-  vc: VC,
-  callback: (status: SendVcStatus) => void,
-  disconnectCallback: () => void
-) {
-  const rawData = JSON.stringify(vc);
-  const chunks = chunkString(rawData, GNM_MESSAGE_LIMIT);
-  if (chunks.length > 1) {
-    let chunk = 0;
-    const vcChunk = {
-      total: chunks.length,
-      chunk,
-      rawData: chunks[chunk],
-    };
-    const event: SendVcEvent = {
-      type: 'send-vc',
-      data: {
-        isChunked: true,
-        vcChunk,
-      },
-    };
-
-    await onlineSubscribe(
-      SendVcResponseType,
-      async (status) => {
-        if (typeof status === 'number' && chunk < event.data.vcChunk.total) {
-          chunk += 1;
-          await GoogleNearbyMessages.unpublish();
-          await onlineSend({
-            type: 'send-vc',
-            data: {
-              isChunked: true,
-              vcChunk: {
-                total: chunks.length,
-                chunk,
-                rawData: chunks[chunk],
-              },
-            },
-          });
-        } else if (typeof status === 'string') {
-          if (status === 'ACCEPTED' || status === 'REJECTED') {
-            GoogleNearbyMessages.unsubscribe();
-          }
-          callback(status);
-        }
-      },
-      disconnectCallback,
-      { keepAlive: true }
-    );
-    await onlineSend(event);
-  } else {
-    const event: SendVcEvent = {
-      type: 'send-vc',
-      data: { isChunked: false, vc },
-    };
-    await onlineSubscribe(SendVcResponseType, callback);
-    await onlineSend(event);
-  }
-}
-
-function chunkString(str: string, length: number) {
-  return str.match(new RegExp('.{1,' + length + '}', 'g'));
 }

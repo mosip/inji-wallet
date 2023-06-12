@@ -3,15 +3,12 @@ import { ActorRefFrom, InterpreterFrom } from 'xstate';
 import { activityLogMachine } from '../machines/activityLog';
 import { appMachine } from '../machines/app';
 import { authMachine } from '../machines/auth';
-import { requestMachine } from '../machines/request';
-import { requestMachine as bleRequestMachine } from '../machines/openIdBle/request';
-import { scanMachine as bleScanMachine } from '../machines/openIdBle/scan';
-import { scanMachine } from '../machines/scan';
+import { requestMachine } from '../machines/openIdBle/request/requestMachine';
+import { scanMachine } from '../machines/openIdBle/scan/scanMachine';
 import { settingsMachine } from '../machines/settings';
 import { storeMachine } from '../machines/store';
 import { vcMachine } from '../machines/vc';
 import { revokeVidsMachine } from '../machines/revoke';
-import { qrLoginMachine } from '../machines/QrLoginMachine';
 
 export const GlobalContext = createContext({} as GlobalServices);
 
@@ -25,7 +22,7 @@ export interface AppServices {
   vc: ActorRefFrom<typeof vcMachine>;
   settings: ActorRefFrom<typeof settingsMachine>;
   activityLog: ActorRefFrom<typeof activityLogMachine>;
-  request: ActorRefFrom<typeof requestMachine & typeof bleRequestMachine>;
-  scan: ActorRefFrom<typeof scanMachine & typeof bleScanMachine>;
+  request: ActorRefFrom<typeof requestMachine>;
+  scan: ActorRefFrom<typeof scanMachine>;
   revoke: ActorRefFrom<typeof revokeVidsMachine>;
 }

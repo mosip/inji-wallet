@@ -3,32 +3,34 @@ import { useSelector } from '@xstate/react';
 import { useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MessageOverlayProps } from '../../components/MessageOverlay';
-import {
-  ScanEvents,
-  selectIsInvalid,
-  selectIsLocationDisabled,
-  selectIsLocationDenied,
-  selectIsConnecting,
-  selectIsExchangingDeviceInfo,
-  selectIsConnectingTimeout,
-  selectIsExchangingDeviceInfoTimeout,
-  selectIsDone,
-  selectIsReviewing,
-  selectIsScanning,
-  selectIsQrLoginDone,
-  selectIsOffline,
-  selectIsSent,
-  selectIsDisconnected,
-  selectIsRejected,
-  selectIsAccepted,
-  selectIsSendingVc,
-  selectIsSendingVcTimeout,
-  selectReceiverInfo,
-} from '../../machines/scan';
 import { MainBottomTabParamList } from '../../routes/main';
 import { GlobalContext } from '../../shared/GlobalContext';
-import { selectIsHandlingBleError } from '../../machines/openIdBle/scan';
-import { selectBleError } from '../../machines/openIdBle/request';
+import {
+  selectIsConnecting,
+  selectIsConnectingTimeout,
+  selectIsInvalid,
+  selectIsLocationDenied,
+  selectIsLocationDisabled,
+  selectIsQrLoginDone,
+  selectIsScanning,
+  selectIsSendingVc,
+  selectIsSendingVcTimeout,
+  selectIsSent,
+  selectReceiverInfo,
+} from '../../machines/bleShare/scan/selectors';
+import {
+  selectIsAccepted,
+  selectIsDisconnected,
+  selectIsDone,
+  selectIsExchangingDeviceInfo,
+  selectIsExchangingDeviceInfoTimeout,
+  selectIsHandlingBleError,
+  selectIsOffline,
+  selectIsRejected,
+  selectIsReviewing,
+  selectBleError,
+} from '../../machines/bleShare/commonSelectors';
+import { ScanEvents } from '../../machines/bleShare/scan/scanMachine';
 
 type ScanStackParamList = {
   ScanScreen: undefined;

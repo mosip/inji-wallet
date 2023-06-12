@@ -1,23 +1,24 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { useSelector } from '@xstate/react';
 import { useContext, useEffect } from 'react';
+
+import { MainBottomTabParamList } from '../../routes/main';
+import { GlobalContext } from '../../shared/GlobalContext';
 import {
-  RequestEvents,
+  selectIsSavingFailedInViewingVc,
+  selectIsWaitingForConnection,
+  selectSenderInfo,
+} from '../../machines/bleShare/request/selectors';
+import {
   selectIsAccepted,
   selectIsDisconnected,
   selectIsDone,
+  selectIsHandlingBleError,
   selectIsRejected,
   selectIsReviewing,
-  selectIsWaitingForConnection,
-  selectSenderInfo,
-} from '../../machines/request';
-import { MainBottomTabParamList } from '../../routes/main';
-import { GlobalContext } from '../../shared/GlobalContext';
-import { selectIsHandlingBleError } from '../../machines/openIdBle/scan';
-import {
   selectBleError,
-  selectIsSavingFailedInViewingVc,
-} from '../../machines/openIdBle/request';
+} from '../../machines/bleShare/commonSelectors';
+import { RequestEvents } from '../../machines/bleShare/request/requestMachine';
 
 type RequestStackParamList = {
   RequestScreen: undefined;

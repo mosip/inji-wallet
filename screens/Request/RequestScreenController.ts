@@ -1,30 +1,29 @@
 import { useSelector } from '@xstate/react';
 import { useContext, useEffect } from 'react';
 import { selectIsActive, selectIsFocused } from '../../machines/app';
-import {
-  RequestEvents,
-  selectIsBluetoothDenied,
-  selectConnectionParams,
-  selectIsReviewing,
-  selectSenderInfo,
-  selectIsWaitingForConnection,
-  selectIsExchangingDeviceInfo,
-  selectIsWaitingForVc,
-  selectSharingProtocol,
-  selectIsExchangingDeviceInfoTimeout,
-  selectIsWaitingForVcTimeout,
-  selectIsCheckingBluetoothService,
-  selectIsCancelling,
-  selectIsOffline,
-} from '../../machines/request';
-import {
-  selectIsNearByDevicesPermissionDenied,
-  selectReadyForBluetoothStateCheck,
-} from '../../machines/openIdBle/request';
-import { selectVcLabel } from '../../machines/settings';
 import { GlobalContext } from '../../shared/GlobalContext';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import { useTranslation } from 'react-i18next';
+import {
+  selectIsCheckingBluetoothService,
+  selectIsWaitingForConnection,
+  selectIsWaitingForVc,
+  selectIsWaitingForVcTimeout,
+  selectOpenId4VpUri,
+  selectSenderInfo,
+  selectSharingProtocol,
+} from '../../machines/bleShare/request/selectors';
+import {
+  selectIsBluetoothDenied,
+  selectIsCancelling,
+  selectIsExchangingDeviceInfo,
+  selectIsExchangingDeviceInfoTimeout,
+  selectIsNearByDevicesPermissionDenied,
+  selectIsOffline,
+  selectIsReviewing,
+  selectReadyForBluetoothStateCheck,
+} from '../../machines/bleShare/commonSelectors';
+import { RequestEvents } from '../../machines/bleShare/request/requestMachine';
 
 export function useRequestScreen() {
   const { t } = useTranslation('RequestScreen');
@@ -110,7 +109,7 @@ export function useRequestScreen() {
       requestService,
       selectIsCheckingBluetoothService
     ),
-    connectionParams: useSelector(requestService, selectConnectionParams),
+    openId4VpUri: useSelector(requestService, selectOpenId4VpUri),
     senderInfo: useSelector(requestService, selectSenderInfo),
     isReviewing: useSelector(requestService, selectIsReviewing),
     isCancelling: useSelector(requestService, selectIsCancelling),
@@ -120,8 +119,6 @@ export function useRequestScreen() {
     ACCEPT: () => requestService.send(RequestEvents.ACCEPT()),
     REJECT: () => requestService.send(RequestEvents.REJECT()),
     REQUEST: () => requestService.send(RequestEvents.SCREEN_FOCUS()),
-    SWITCH_PROTOCOL: (value: boolean) =>
-      requestService.send(RequestEvents.SWITCH_PROTOCOL(value)),
     GOTO_SETTINGS: () => requestService.send(RequestEvents.GOTO_SETTINGS()),
   };
 }

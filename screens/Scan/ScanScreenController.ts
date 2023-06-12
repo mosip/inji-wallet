@@ -2,25 +2,24 @@ import { useSelector } from '@xstate/react';
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import {
-  ScanEvents,
-  selectIsLocationDisabled,
-  selectIsLocationDenied,
-  selectIsScanning,
-  selectIsShowQrLogin,
-  selectQrLoginRef,
-  selectIsQrLoginStoring,
-} from '../../machines/scan';
 import { selectShareableVcs } from '../../machines/vc';
 import { GlobalContext } from '../../shared/GlobalContext';
 import {
-  selectIsBluetoothPermissionDenied,
-  selectIsNearByDevicesPermissionDenied,
+  selectIsLocationDenied,
+  selectIsLocationDisabled,
+  selectIsQrLoginStoring,
+  selectIsScanning,
+  selectIsShowQrLogin,
+  selectQrLoginRef,
+} from '../../machines/bleShare/scan/selectors';
+import {
   selectIsBluetoothDenied,
-  selectIsStartPermissionCheck,
+  selectIsNearByDevicesPermissionDenied,
   selectReadyForBluetoothStateCheck,
-} from '../../machines/openIdBle/scan';
-import { ScanEvents as ScanEvent } from '../../machines/openIdBle/scan';
+  selectIsBluetoothPermissionDenied,
+  selectIsStartPermissionCheck,
+} from '../../machines/bleShare/commonSelectors';
+import { ScanEvents } from '../../machines/bleShare/scan/scanMachine';
 
 export function useScanScreen() {
   const { t } = useTranslation('ScanScreen');
@@ -74,9 +73,9 @@ export function useScanScreen() {
     isQrLoginstoring: useSelector(scanService, selectIsQrLoginStoring),
     isQrRef: useSelector(scanService, selectQrLoginRef),
     LOCATION_REQUEST: () => scanService.send(ScanEvents.LOCATION_REQUEST()),
-    GOTO_SETTINGS: () => scanService.send(ScanEvent.GOTO_SETTINGS()),
+    GOTO_SETTINGS: () => scanService.send(ScanEvents.GOTO_SETTINGS()),
     START_PERMISSION_CHECK: () =>
-      scanService.send(ScanEvent.START_PERMISSION_CHECK()),
+      scanService.send(ScanEvents.START_PERMISSION_CHECK()),
     SCAN: (qrCode: string) => scanService.send(ScanEvents.SCAN(qrCode)),
   };
 }

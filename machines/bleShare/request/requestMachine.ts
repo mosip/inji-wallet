@@ -1,6 +1,4 @@
-import SmartshareReactNative from '@idpass/smartshare-react-native';
-import OpenIdBle from 'react-native-openid4vp-ble';
-import uuid from 'react-native-uuid';
+import tuvali from 'react-native-tuvali';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import { EmitterSubscription, Linking, Platform } from 'react-native';
 import {
@@ -9,37 +7,26 @@ import {
   requestMultiple,
   RESULTS,
 } from 'react-native-permissions';
-import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
+import { assign, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
-import { DeviceInfo } from '../../components/DeviceInfoList';
+import { DeviceInfo } from '../../../components/DeviceInfoList';
 import { getDeviceNameSync } from 'react-native-device-info';
-import { StoreEvents } from '../store';
-import { VC } from '../../types/vc';
-import { AppServices } from '../../shared/GlobalContext';
+import { StoreEvents } from '../../store';
+import { VC } from '../../../types/vc';
+import { AppServices } from '../../../shared/GlobalContext';
 import {
-  GNM_API_KEY,
   RECEIVED_VCS_STORE_KEY,
   VC_ITEM_STORE_KEY,
-} from '../../shared/constants';
-import { ActivityLogEvents, ActivityLogType } from '../activityLog';
-import { VcEvents } from '../vc';
-import { ConnectionParams } from '@idpass/smartshare-react-native/lib/typescript/IdpassSmartshare';
-import {
-  ExchangeReceiverInfoEvent,
-  offlineSend,
-  offlineSubscribe,
-  onlineSend,
-  onlineSubscribe,
-  PairingResponseEvent,
-  SendVcResponseEvent,
-} from '../../shared/openIdBLE/smartshare';
+} from '../../../shared/constants';
+import { ActivityLogEvents, ActivityLogType } from '../../activityLog';
+import { VcEvents } from '../../vc';
+import { subscribe } from '../../../shared/openIdBLE/verifierEventHandler';
 import { log } from 'xstate/lib/actions';
-import { BLEError } from '../../lib/smartshare';
+import { VerifierDataEvent } from 'react-native-tuvali/src/types/events';
+import { BLEError } from '../types';
 // import { verifyPresentation } from '../shared/vcjs/verifyPresentation';
 
-const { GoogleNearbyMessages } = SmartshareReactNative;
-const { Openid4vpBle } = OpenIdBle;
-type SharingProtocol = 'OFFLINE' | 'ONLINE';
+const { verifier, EventTypes, VerificationStatus } = tuvali;
 
 const model = createModel(
   {
@@ -48,12 +35,9 @@ const model = createModel(
     receiverInfo: {} as DeviceInfo,
     incomingVc: {} as VC,
     storeError: null as Error,
+    openId4VpUri: '',
     bleError: {} as BLEError,
-    connectionParams: '',
     loggers: [] as EmitterSubscription[],
-    sharingProtocol: (Platform.OS === 'ios'
-      ? 'ONLINE'
-      : 'OFFLINE') as SharingProtocol,
     receiveLogType: '' as ActivityLogType,
     readyForBluetoothStateCheck: false,
   },
@@ -67,7 +51,7 @@ const model = createModel(
       RESET: () => ({}),
       DISMISS: () => ({}),
       VC_RECEIVED: (vc: VC) => ({ vc }),
-      CONNECTION_DESTROYED: () => ({}),
+      ADV_STARTED: (openId4VpUri: string) => ({ openId4VpUri }),
       CONNECTED: () => ({}),
       DISCONNECT: () => ({}),
       BLE_ERROR: (bleError: BLEError) => ({ bleError }),
@@ -84,7 +68,6 @@ const model = createModel(
       RECEIVE_DEVICE_INFO: (info: DeviceInfo) => ({ info }),
       RECEIVED_VCS_UPDATED: () => ({}),
       VC_RESPONSE: (response: unknown) => ({ response }),
-      SWITCH_PROTOCOL: (value: boolean) => ({ value }),
       GOTO_SETTINGS: () => ({}),
       APP_ACTIVE: () => ({}),
       FACE_VALID: () => ({}),
@@ -93,7 +76,6 @@ const model = createModel(
     },
   }
 );
-
 export const RequestEvents = model.events;
 
 export const requestMachine =
@@ -102,7 +84,7 @@ export const requestMachine =
     {
       predictableActionArguments: true,
       preserveActionOrder: true,
-      tsTypes: {} as import('./request.typegen').Typegen0,
+      tsTypes: {} as import('./requestMachine.typegen').Typegen0,
       schema: {
         context: model.initialContext,
         events: {} as EventFrom<typeof model>,
@@ -124,10 +106,6 @@ export const requestMachine =
         SCREEN_FOCUS: {
           // eslint-disable-next-line sonarjs/no-duplicate-string
           target: '.checkNearbyDevicesPermission',
-        },
-        SWITCH_PROTOCOL: {
-          target: '.checkNearbyDevicesPermission',
-          actions: 'switchProtocol',
         },
         BLE_ERROR: {
           target: '.handlingBleError',
@@ -225,7 +203,7 @@ export const requestMachine =
             src: 'disconnect',
           },
           on: {
-            CONNECTION_DESTROYED: {
+            DISCONNECT: {
               target: '#request.waitingForConnection',
               actions: [],
               internal: false,
@@ -240,59 +218,17 @@ export const requestMachine =
           },
         },
         waitingForConnection: {
-          entry: [
-            'removeLoggers',
-            'registerLoggers',
-            'generateConnectionParams',
-          ],
+          entry: ['removeLoggers', 'registerLoggers'],
           invoke: {
             src: 'advertiseDevice',
           },
           on: {
+            ADV_STARTED: {
+              actions: 'setOpenID4VpUri',
+            },
             CONNECTED: {
-              target: 'preparingToExchangeInfo',
-            },
-            DISCONNECT: {
-              target: 'disconnected',
-            },
-          },
-        },
-        preparingToExchangeInfo: {
-          entry: 'requestReceiverInfo',
-          on: {
-            RECEIVE_DEVICE_INFO: {
-              target: 'exchangingDeviceInfo',
-              actions: 'setReceiverInfo',
-            },
-          },
-        },
-        exchangingDeviceInfo: {
-          invoke: {
-            src: 'exchangeDeviceInfo',
-          },
-          initial: 'inProgress',
-          states: {
-            inProgress: {
-              after: {
-                CONNECTION_TIMEOUT: {
-                  target: '#request.exchangingDeviceInfo.timeout',
-                  actions: [],
-                  internal: false,
-                },
-              },
-            },
-            timeout: {
-              on: {
-                CANCEL: {
-                  target: '#request.cancelling',
-                },
-              },
-            },
-          },
-          on: {
-            EXCHANGE_DONE: {
               target: 'waitingForVc',
-              actions: 'setSenderInfo',
+              actions: ['setSenderInfo', 'setReceiverInfo'],
             },
 
             DISCONNECT: {
@@ -334,9 +270,6 @@ export const requestMachine =
           },
         },
         cancelling: {
-          invoke: {
-            src: 'sendDisconnect',
-          },
           always: {
             target: '#request.clearingConnection',
           },
@@ -453,7 +386,7 @@ export const requestMachine =
               invoke: {
                 src: 'sendVcResponse',
                 data: {
-                  status: 'ACCEPTED',
+                  status: VerificationStatus.ACCEPTED,
                 },
               },
               on: {
@@ -470,7 +403,7 @@ export const requestMachine =
               invoke: {
                 src: 'sendVcResponse',
                 data: {
-                  status: 'REJECTED',
+                  status: VerificationStatus.REJECTED,
                 },
               },
               on: {
@@ -490,7 +423,7 @@ export const requestMachine =
               invoke: {
                 src: 'sendVcResponse',
                 data: {
-                  status: 'REJECTED',
+                  status: VerificationStatus.REJECTED,
                 },
               },
               states: {
@@ -545,41 +478,12 @@ export const requestMachine =
           Linking.openSettings();
         },
 
-        switchProtocol: assign({
-          sharingProtocol: (_context, event) =>
-            event.value ? 'ONLINE' : 'OFFLINE',
-        }),
-
         requestReceivedVcs: send(VcEvents.GET_RECEIVED_VCS(), {
           to: (context) => context.serviceRefs.vc,
         }),
 
-        requestReceiverInfo: sendParent('REQUEST_DEVICE_INFO'),
-
-        setReceiverInfo: model.assign({
-          receiverInfo: (_context, event) => event.info,
-        }),
-
         setReadyForBluetoothStateCheck: model.assign({
           readyForBluetoothStateCheck: () => true,
-        }),
-
-        generateConnectionParams: assign({
-          connectionParams: (context) => {
-            if (context.sharingProtocol === 'OFFLINE') {
-              return Openid4vpBle.getConnectionParameters();
-            } else {
-              const cid = uuid.v4();
-              return JSON.stringify({
-                pk: '',
-                cid,
-              });
-            }
-          },
-        }),
-
-        setSenderInfo: model.assign({
-          senderInfo: (_context, event) => event.senderInfo,
         }),
 
         setIncomingVc: assign({
@@ -591,6 +495,24 @@ export const requestMachine =
                   verifiableCredential: vp.verifiableCredential[0],
                 }
               : event.vc;
+          },
+        }),
+
+        setOpenID4VpUri: assign({
+          openId4VpUri: (_context, event) => {
+            return event.openId4VpUri;
+          },
+        }),
+
+        setSenderInfo: assign({
+          senderInfo: () => {
+            return { name: 'Wallet', deviceName: 'Wallet', deviceId: '' };
+          },
+        }),
+
+        setReceiverInfo: assign({
+          receiverInfo: () => {
+            return { name: 'Verifier', deviceName: 'Verifier', deviceId: '' };
           },
         }),
 
@@ -606,17 +528,10 @@ export const requestMachine =
           loggers: () => {
             if (__DEV__) {
               return [
-                Openid4vpBle.handleNearbyEvents((event) => {
+                verifier.handleDataEvents((event) => {
                   console.log(
                     getDeviceNameSync(),
                     '<Receiver.Event>',
-                    JSON.stringify(event).slice(0, 100)
-                  );
-                }),
-                Openid4vpBle.handleLogEvents((event) => {
-                  console.log(
-                    getDeviceNameSync(),
-                    '<Receiver.Log>',
                     JSON.stringify(event).slice(0, 100)
                   );
                 }),
@@ -714,24 +629,9 @@ export const requestMachine =
       },
 
       services: {
-        sendDisconnect: (context) => () => {
-          if (context.sharingProtocol === 'ONLINE') {
-            onlineSend({
-              type: 'disconnect',
-              data: 'rejected',
-            });
-          }
-        },
-
-        disconnect: (context) => (callback) => {
+        disconnect: () => () => {
           try {
-            if (context.sharingProtocol === 'OFFLINE') {
-              Openid4vpBle.destroyConnection(() => {
-                callback({ type: 'CONNECTION_DESTROYED' });
-              });
-            } else {
-              GoogleNearbyMessages.disconnect();
-            }
+            verifier.disconnect();
           } catch (e) {
             // pass
           }
@@ -752,6 +652,19 @@ export const requestMachine =
           BluetoothStateManager.requestToEnable()
             .then(() => callback(model.events.BLUETOOTH_STATE_ENABLED()))
             .catch(() => callback(model.events.BLUETOOTH_STATE_DISABLED()));
+        },
+
+        advertiseDevice: () => (callback) => {
+          const openId4VpUri = verifier.startAdvertisement('OVPMOSIP');
+          callback({ type: 'ADV_STARTED', openId4VpUri });
+
+          const statusCallback = (event: VerifierDataEvent) => {
+            if (event.type === EventTypes.onSecureChannelEstablished) {
+              callback({ type: 'CONNECTED' });
+            }
+          };
+          const subscription = subscribe(statusCallback);
+          return () => subscription?.remove();
         },
 
         requestNearByDevicesPermission: () => (callback) => {
@@ -802,140 +715,38 @@ export const requestMachine =
             callback(model.events.NEARBY_ENABLED());
           }
         },
-        advertiseDevice: (context) => (callback) => {
-          if (context.sharingProtocol === 'OFFLINE') {
-            Openid4vpBle.createConnection('advertiser', () => {
-              callback({ type: 'CONNECTED' });
-            });
-          } else {
-            (async function () {
-              GoogleNearbyMessages.addOnErrorListener((kind, message) =>
-                console.log('\n\n[request] GNM_ERROR\n\n', kind, message)
-              );
 
-              await GoogleNearbyMessages.connect({
-                apiKey: GNM_API_KEY,
-                discoveryMediums: ['ble'],
-                discoveryModes: ['scan', 'broadcast'],
-              });
-              console.log('[request] GNM connected!');
+        monitorConnection: () => (callback) => {
+          const subscription = verifier.handleDataEvents((event) => {
+            if (event.type === EventTypes.onDisconnected) {
+              callback({ type: 'DISCONNECT' });
+            }
 
-              await onlineSubscribe('pairing', async (scannedQrParams) => {
-                try {
-                  const generatedParams = JSON.parse(
-                    context.connectionParams
-                  ) as ConnectionParams;
-                  if (scannedQrParams.cid === generatedParams.cid) {
-                    const event: PairingResponseEvent = {
-                      type: 'pairing:response',
-                      data: 'ok',
-                    };
-                    await onlineSend(event);
-                    callback({ type: 'CONNECTED' });
-                  }
-                } catch (e) {
-                  console.error('Could not parse message.', e);
-                }
+            if (event.type === EventTypes.onError) {
+              callback({
+                type: 'BLE_ERROR',
+                bleError: { message: event.message, code: event.code },
               });
-            })();
-          }
+              console.log('BLE Exception: ' + event.message);
+            }
+          });
+
+          return () => subscription.remove();
         },
 
-        monitorConnection: (context) => (callback) => {
-          if (context.sharingProtocol === 'OFFLINE') {
-            const subscription = Openid4vpBle.handleNearbyEvents((event) => {
-              if (event.type === 'onDisconnected') {
-                callback({ type: 'DISCONNECT' });
-              }
-
-              if (event.type === 'onError') {
-                callback({
-                  type: 'BLE_ERROR',
-                  bleError: { message: event.message, code: event.code },
-                });
-                console.log('BLE Exception: ' + event.message);
-              }
-            });
-
-            return () => subscription.remove();
-          }
-        },
-
-        exchangeDeviceInfo: (context) => (callback) => {
-          const event: ExchangeReceiverInfoEvent = {
-            type: 'exchange-receiver-info',
-            data: context.receiverInfo,
+        receiveVc: () => (callback) => {
+          const statusCallback = (event: VerifierDataEvent) => {
+            if (event.type === EventTypes.onDataReceived) {
+              callback({ type: 'VC_RECEIVED', vc: JSON.parse(event.data) });
+            }
           };
+          const subscription = subscribe(statusCallback);
 
-          if (context.sharingProtocol === 'OFFLINE') {
-            const subscription = offlineSubscribe(
-              'exchange-sender-info',
-              (senderInfo) => {
-                offlineSend(event, () => {
-                  callback({ type: 'EXCHANGE_DONE', senderInfo });
-                });
-              }
-            );
-
-            return () => subscription.remove();
-          } else {
-            onlineSubscribe('exchange-sender-info', async (senderInfo) => {
-              await GoogleNearbyMessages.unpublish();
-              await onlineSend(event);
-              callback({ type: 'EXCHANGE_DONE', senderInfo });
-            });
-          }
-        },
-
-        receiveVc: (context) => (callback) => {
-          if (context.sharingProtocol === 'OFFLINE') {
-            const subscription = offlineSubscribe('send-vc', ({ vc }) => {
-              callback({ type: 'VC_RECEIVED', vc });
-            });
-
-            return () => subscription.remove();
-          } else {
-            let rawData = '';
-            onlineSubscribe(
-              'send-vc',
-              async ({ isChunked, vc, vcChunk }) => {
-                await GoogleNearbyMessages.unpublish();
-                if (isChunked) {
-                  rawData += vcChunk.rawData;
-                  if (vcChunk.chunk === vcChunk.total - 1) {
-                    const vc = JSON.parse(rawData) as VC;
-                    GoogleNearbyMessages.unsubscribe();
-                    callback({ type: 'VC_RECEIVED', vc });
-                  } else {
-                    await onlineSend({
-                      type: 'send-vc:response',
-                      data: vcChunk.chunk,
-                    });
-                  }
-                } else {
-                  callback({ type: 'VC_RECEIVED', vc });
-                }
-              },
-              () => callback({ type: 'DISCONNECT' }),
-              { keepAlive: true }
-            );
-          }
+          return () => subscription.remove();
         },
 
         sendVcResponse: (context, _event, meta) => async () => {
-          const event: SendVcResponseEvent = {
-            type: 'send-vc:response',
-            data: meta.data.status,
-          };
-
-          if (context.sharingProtocol === 'OFFLINE') {
-            offlineSend(event, () => {
-              // pass
-            });
-          } else {
-            await GoogleNearbyMessages.unpublish();
-            await onlineSend(event);
-          }
+          verifier.sendVerificationStatus(meta.data.status);
         },
 
         verifyVp: (context) => async () => {
@@ -965,12 +776,7 @@ export const requestMachine =
 
       delays: {
         DESTROY_TIMEOUT: 500,
-        CONNECTION_TIMEOUT: (context) => {
-          return (context.sharingProtocol === 'ONLINE' ? 15 : 5) * 1000;
-        },
-        SHARING_TIMEOUT: (context) => {
-          return (context.sharingProtocol === 'ONLINE' ? 45 : 15) * 1000;
-        },
+        SHARING_TIMEOUT: 15 * 1000,
       },
     }
   );
@@ -980,122 +786,4 @@ export function createRequestMachine(serviceRefs: AppServices) {
     ...requestMachine.context,
     serviceRefs,
   });
-}
-
-type State = StateFrom<typeof requestMachine>;
-
-export function selectSenderInfo(state: State) {
-  return state.context.senderInfo;
-}
-
-export function selectConnectionParams(state: State) {
-  return state.context.connectionParams;
-}
-
-export function selectReadyForBluetoothStateCheck(state: State) {
-  return state.context.readyForBluetoothStateCheck;
-}
-
-export function selectIncomingVc(state: State) {
-  return state.context.incomingVc;
-}
-
-export function selectSharingProtocol(state: State) {
-  return state.context.sharingProtocol;
-}
-
-export function selectIsIncomingVp(state: State) {
-  return state.context.incomingVc?.verifiablePresentation != null;
-}
-
-export function selectIsCancelling(state: State) {
-  return state.matches('cancelling');
-}
-
-export function selectIsReviewing(state: State) {
-  return state.matches('reviewing');
-}
-
-export function selectIsAccepted(state: State) {
-  return state.matches('reviewing.accepted');
-}
-
-export function selectIsAccepting(state: State) {
-  return state.matches('reviewing.accepting');
-}
-
-export function selectIsSavingFailedInIdle(state: State) {
-  return state.matches('reviewing.savingFailed.idle');
-}
-
-export function selectIsSavingFailedInViewingVc(state: State) {
-  return state.matches('reviewing.savingFailed.viewingVc');
-}
-
-export function selectStoreError(state: State) {
-  return state.context.storeError;
-}
-
-export function selectBleError(state: State) {
-  return state.context.bleError;
-}
-
-export function selectIsRejected(state: State) {
-  return state.matches('reviewing.rejected');
-}
-
-export function selectIsVerifyingIdentity(state: State) {
-  return state.matches('reviewing.verifyingIdentity');
-}
-
-export function selectIsVerifyingVp(state: State) {
-  return state.matches('reviewing.verifyingVp');
-}
-
-export function selectIsInvalidIdentity(state: State) {
-  return state.matches('reviewing.invalidIdentity');
-}
-
-export function selectIsDisconnected(state: State) {
-  return state.matches('disconnected');
-}
-
-export function selectIsWaitingForConnection(state: State) {
-  return state.matches('waitingForConnection');
-}
-
-export function selectIsBluetoothDenied(state: State) {
-  return state.matches('bluetoothDenied');
-}
-
-export function selectIsNearByDevicesPermissionDenied(state: State) {
-  return state.matches('nearByDevicesPermissionDenied');
-}
-
-export function selectIsCheckingBluetoothService(state: State) {
-  return state.matches('checkingBluetoothService');
-}
-
-export function selectIsExchangingDeviceInfo(state: State) {
-  return state.matches('exchangingDeviceInfo.inProgress');
-}
-
-export function selectIsExchangingDeviceInfoTimeout(state: State) {
-  return state.matches('exchangingDeviceInfo.timeout');
-}
-
-export function selectIsWaitingForVc(state: State) {
-  return state.matches('waitingForVc.inProgress');
-}
-
-export function selectIsWaitingForVcTimeout(state: State) {
-  return state.matches('waitingForVc.timeout');
-}
-
-export function selectIsDone(state: State) {
-  return state.matches('reviewing.navigatingToHome');
-}
-
-export function selectIsHandlingBleError(state: State) {
-  return state.matches('handlingBleError');
 }

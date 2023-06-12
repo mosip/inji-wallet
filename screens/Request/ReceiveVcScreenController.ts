@@ -1,20 +1,20 @@
 import { useSelector } from '@xstate/react';
 import { useContext } from 'react';
-import {
-  RequestEvents,
-  selectIncomingVc,
-  selectIsIncomingVp,
-  selectIsInvalidIdentity,
-  selectIsReviewingInIdle,
-  selectIsVerifyingIdentity,
-  selectSenderInfo,
-} from '../../machines/request';
 import { GlobalContext } from '../../shared/GlobalContext';
 import {
+  selectIncomingVc,
   selectIsAccepting,
+  selectIsIncomingVp,
+  selectIsReviewingInIdle,
   selectIsSavingFailedInIdle,
+  selectSenderInfo,
   selectStoreError,
-} from '../../machines/openIdBle/request';
+} from '../../machines/bleShare/request/selectors';
+import {
+  selectIsInvalidIdentity,
+  selectIsVerifyingIdentity,
+} from '../../machines/bleShare/commonSelectors';
+import { RequestEvents } from '../../machines/bleShare/request/requestMachine';
 
 export function useReceiveVcScreen() {
   const { appService } = useContext(GlobalContext);
