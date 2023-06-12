@@ -28,7 +28,7 @@ export const ScanScreen: React.FC = () => {
 
   useEffect(() => {
     if (!controller.isEmpty) controller.START_PERMISSION_CHECK();
-  });
+  }, [controller.isEmpty]);
 
   const openSettings = () => {
     Linking.openSettings();
