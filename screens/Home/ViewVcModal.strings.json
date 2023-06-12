@@ -10,8 +10,8 @@
   "editTag": "Rename",
   "redirecting": "Redirecting...",
   "success": {
-    "unlocked": "{{vcLabel}} successfully unlocked",
-    "locked": "{{vcLabel}} successfully locked",
+    "unlocked": "Card successfully unlocked",
+    "locked": "Card successfully locked",
     "revoked": "VID {{vid}} has been revoked. Any credential containing the same will be removed automatically from the wallet"
   }
 }

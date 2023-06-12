@@ -1,18 +1,18 @@
 {
-  "header": "{{vcLabel}} details",
-  "save": "Save {{vcLabel}}",
+  "header": "Card details",
+  "save": "Save Card",
   "verifyAndSave": "Verify and save",
   "reject": "Reject",
   "discard": "Discard",
-  "goToReceivedVCTab":  "View Received {{vcLabel}}",
+  "goToReceivedVCTab": "View Received Cards",
   "errors": {
     "savingFailed": {
-      "title": "Failed to save {{vcLabelSingular}}",
-      "message": "Something went wrong while saving {{vcLabelSingular}} to the store."
+      "title": "Failed to save the Card",
+      "message": "Something went wrong while saving Card to the store."
     },
     "diskFullError": {
-      "title": "Failed to save {{vcLabelPlural}}",
-      "message": "No more {{vcLabelPlural}} can be received or saved as App Data is full."
+      "title": "Failed to save the Card",
+      "message": "No more Cards can be received or saved as App Data is full."
     }
   }
 }

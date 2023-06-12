@@ -19,6 +19,14 @@ on:
         options:
           - orange
           - purple
+      registry_edit:
+        description: 'Edit Registry'
+        required: true
+        default: 'true'
+        type: choice
+        options:
+          - false
+          - true
 
 jobs:
   build-android:
@@ -114,7 +122,8 @@ jobs:
           APPLICATION_THEME: ${{ github.event.inputs.theme }} 
           DEBUG_KEYSTORE_ALIAS: androiddebugkey
           DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
-      
+          CREDENTIAL_REGISTRY_EDIT: ${{ github.event.inputs.registry_edit }}
+
       - name: Upload Artifact to Actions
         uses: actions/upload-artifact@v3.1.1
         with:
