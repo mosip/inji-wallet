@@ -285,7 +285,7 @@
     }
   },
   "RequestScreen": {
-    "bluetoothDenied": "Please enable Bluetooth to be able to request {{vcLabel}}",
+    "bluetoothDenied": "Please enable Bluetooth to be able to request Card",
     "bluetoothStateAndroid": "Please turn on bluetooth from quick settings to support local sharing",
     "bluetoothStateIos": "Please turn on bluetooth from control center to support local sharing",
     "showQrCode": "Display this QR code to request resident Card",
