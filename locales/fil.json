@@ -282,9 +282,17 @@
   },
   "RequestScreen": {
     "bluetoothDenied": "Mangyaring paganahin ang Bluetooth upang makahiling ng Card",
+    "bluetoothStateAndroid": "Mangyaring i-on ang bluetooth mula sa mga mabilisang setting upang suportahan ang lokal na pagbabahagi",
+    "bluetoothStateIos": "Mangyaring i-on ang bluetooth mula sa control center upang suportahan ang lokal na pagbabahagi",
     "showQrCode": "Ipakita ang QR code na ito para humiling ng resident Card",
     "incomingVc": "Padating na Card",
     "request": "Hilingin",
+    "errors": {
+      "nearbyDevicesPermissionDenied": {
+        "message": "Kinakailangan ang pahintulot ng Mga Kalapit na Device para makahiling ng Card",
+        "button": "Pahintulutan"
+      }
+    },
     "status": {
       "accepted": {
         "title": "Tagumpay!",
@@ -336,6 +344,10 @@
       "locationDenied": {
         "message": "Kinakailangan ang pahintulot sa lokasyon ng iyong mobile para maaaring makapag-scan",
         "button": "Payagan ng pahintulot sa lokasyon"
+      },
+      "nearbyDevicesPermissionDenied": {
+        "message": "Kinakailangan ang pahintulot ng Mga Kalapit na Device para sa functionality ng pag-scan",
+        "button": "Pahintulutan"
       }
     },
     "status": {

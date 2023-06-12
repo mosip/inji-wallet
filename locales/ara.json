@@ -283,9 +283,17 @@
   },
   "RequestScreen": {
     "bluetoothDenied": "يرجى تمكين البلوتوث لتتمكن من طلب البطاقة",
+    "bluetoothStateAndroid": "يرجى تشغيل البلوتوث من الإعدادات السريعة لدعم المشاركة المحلية",
+    "bluetoothStateIos": "يرجى تشغيل البلوتوث من مركز التحكم لدعم المشاركة المحلية",
     "showQrCode": "اعرض  رمز الاستجابة السريعة هذا لطلب المقيم بطاقة ",
     "incomingVc": "بطاقة واردة",
     "request": "طلب",
+    "errors": {
+      "nearbyDevicesPermissionDenied": {
+        "message": "مطلوب إذن الأجهزة المجاورة لتتمكن من طلب البطاقة",
+        "button": "السماح إذن"
+      }
+    },
     "status": {
       "accepted": {
         "title": "نجاح!",
@@ -313,8 +321,7 @@
       },
       "bleError": {
         "title": "فشل التحويل",
-        "message": "حدث خطأ أثناء نقل بطاقة . حاول مرة اخرى.",
-        "hint": "خطأ: {{code}}"
+        "message": "حدث خطأ أثناء نقل بطاقة. حاول مرة اخرى."
       }
     },
     "online": "متصل",
@@ -337,6 +344,10 @@
       "locationDenied": {
         "message": "إذن الموقع مطلوب لوظيفة المسح",
         "button": "الموقع"
+      },
+      "nearbyDevicesPermissionDenied": {
+        "message": "مطلوب إذن الأجهزة المجاورة لوظيفة المسح",
+        "button": "السماح إذن"
       }
     },
     "status": {

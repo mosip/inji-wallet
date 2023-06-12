@@ -13,7 +13,14 @@ import {
 } from '../../machines/scan';
 import { selectShareableVcs } from '../../machines/vc';
 import { GlobalContext } from '../../shared/GlobalContext';
-import { selectIsBluetoothDenied } from '../../machines/openIdBle/scan';
+import {
+  selectIsBluetoothPermissionDenied,
+  selectIsNearByDevicesPermissionDenied,
+  selectIsBluetoothDenied,
+  selectIsStartPermissionCheck,
+  selectReadyForBluetoothStateCheck,
+} from '../../machines/openIdBle/scan';
+import { ScanEvents as ScanEvent } from '../../machines/openIdBle/scan';
 
 export function useScanScreen() {
   const { t } = useTranslation('ScanScreen');
@@ -25,10 +32,23 @@ export function useScanScreen() {
 
   const isLocationDisabled = useSelector(scanService, selectIsLocationDisabled);
   const isLocationDenied = useSelector(scanService, selectIsLocationDenied);
+  const isReadyForBluetoothStateCheck = useSelector(
+    scanService,
+    selectReadyForBluetoothStateCheck
+  );
+  const isStartPermissionCheck = useSelector(
+    scanService,
+    selectIsStartPermissionCheck
+  );
+  const isNearByDevicesPermissionDenied = useSelector(
+    scanService,
+    selectIsNearByDevicesPermissionDenied
+  );
   const isBluetoothPermissionDenied = useSelector(
     scanService,
-    selectIsBluetoothDenied
+    selectIsBluetoothPermissionDenied
   );
+  const isBluetoothDenied = useSelector(scanService, selectIsBluetoothDenied);
   const locationError = { message: '', button: '' };
 
   if (isLocationDisabled) {
@@ -41,16 +61,22 @@ export function useScanScreen() {
 
   return {
     locationError,
-
     isEmpty: !shareableVcs.length,
     isBluetoothPermissionDenied,
+    isNearByDevicesPermissionDenied,
     isLocationDisabled,
     isLocationDenied,
+    isBluetoothDenied,
+    isStartPermissionCheck,
+    isReadyForBluetoothStateCheck,
     isScanning: useSelector(scanService, selectIsScanning),
     isQrLogin: useSelector(scanService, selectIsShowQrLogin),
     isQrLoginstoring: useSelector(scanService, selectIsQrLoginStoring),
     isQrRef: useSelector(scanService, selectQrLoginRef),
     LOCATION_REQUEST: () => scanService.send(ScanEvents.LOCATION_REQUEST()),
+    GOTO_SETTINGS: () => scanService.send(ScanEvent.GOTO_SETTINGS()),
+    START_PERMISSION_CHECK: () =>
+      scanService.send(ScanEvent.START_PERMISSION_CHECK()),
     SCAN: (qrCode: string) => scanService.send(ScanEvents.SCAN(qrCode)),
   };
 }

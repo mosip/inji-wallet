@@ -3,6 +3,12 @@ import OpenIdBle from 'react-native-openid4vp-ble';
 import uuid from 'react-native-uuid';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import { EmitterSubscription, Linking, Platform } from 'react-native';
+import {
+  checkMultiple,
+  PERMISSIONS,
+  requestMultiple,
+  RESULTS,
+} from 'react-native-permissions';
 import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { DeviceInfo } from '../../components/DeviceInfoList';
@@ -49,6 +55,7 @@ const model = createModel(
       ? 'ONLINE'
       : 'OFFLINE') as SharingProtocol,
     receiveLogType: '' as ActivityLogType,
+    readyForBluetoothStateCheck: false,
   },
   {
     events: {
@@ -67,8 +74,10 @@ const model = createModel(
       EXCHANGE_DONE: (senderInfo: DeviceInfo) => ({ senderInfo }),
       SCREEN_FOCUS: () => ({}),
       SCREEN_BLUR: () => ({}),
-      BLUETOOTH_ENABLED: () => ({}),
-      BLUETOOTH_DISABLED: () => ({}),
+      BLUETOOTH_STATE_ENABLED: () => ({}),
+      BLUETOOTH_STATE_DISABLED: () => ({}),
+      NEARBY_ENABLED: () => ({}),
+      NEARBY_DISABLED: () => ({}),
       STORE_READY: () => ({}),
       STORE_RESPONSE: (response: unknown) => ({ response }),
       STORE_ERROR: (error: Error) => ({ error }),
@@ -77,6 +86,7 @@ const model = createModel(
       VC_RESPONSE: (response: unknown) => ({ response }),
       SWITCH_PROTOCOL: (value: boolean) => ({ value }),
       GOTO_SETTINGS: () => ({}),
+      APP_ACTIVE: () => ({}),
       FACE_VALID: () => ({}),
       FACE_INVALID: () => ({}),
       RETRY_VERIFICATION: () => ({}),
@@ -87,7 +97,7 @@ const model = createModel(
 export const RequestEvents = model.events;
 
 export const requestMachine =
-  /** @xstate-layout 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-TVAYfRqda4a23LS5QDcM-ZwTQQNWwT5dcwlNEbzYNfk1-IiHkKAVqYUYWYYUnMADajmI9XYESw0dKGynKisbZAZOHRCHEEqvTFa9-GRL-U4u6tJFwLYXpS0dYAtS7IbDEbUHYAoFHFEYNc6zGli7fXfHGgQQ-UeRgiG-GucLEBso6F+EhZGd3R6tKXRZoYKhmudLGlm-fNmyAHVJmoa2Skav3ImrEEmhyEocmjLbYQZa2Rqpw-iDGNAjAr6W65W+6i4rYAsQyFoaEk0c2VQAsH3YqZiZiOgiWRg6osAVglTX06wYdXko2UQ60PECQ3wXwIAA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QCcwEcCucAuBiAygMIBKAoqQHID6AQgDICqxA2gAwC6ioADgPawBLbAN4A7LiAAeiACwAmADQgAnogCMADlYyAdBrms5MgGynjAZlYbzAXxtLUmHARLlqAMQDyhBvjackED5BYTEJaQR5JVUEOQBWIx04gE41OVTrAHZtYzsHdCxYPHwAdQBJABVCAAkqAAViTwrvTzp-CWChEXFAiKiVRHjMuJ1WOJkNTONkzMzklLyQR0K8elIqUmJGlg4O-i6w3tlFAdiNGV1MmWG1C9Y1NXN9ReXnMnxSCvbAztCe0D6JxiRiuOjSs1YpmSxketnsSwKOB0AGMABZgZEAawoYAAhsgAEbKOpgZAAWwEsEEYhR6KxAlEUFwFFIAEFiDQAJobCistYAEW+PH2f3C6lYMySJnOGmsyXMCWig2mcil2WsKTkjzGL0RRVpGOxeMJxNJFKp3QN9MZzLZHO5-LK+D5dFIgt2PxF3TFCDiph0sw0xjimi1cmMMmSSti42SejUyTk6TUKWShjiuqc+rRhpx+KJJPJlOpoh0ryKDKZLPZXJ5LrdQqCXsOAPFkvGxhlcoVQMGft0kM010s5hmU0zKytRvzpqLFpp5eENur9qojudAsbv29RwQaglmSlnYm3cVpzkTzUOnMcnOD3lCSsMgnSJz1qgNAANlhsLxeNhUXwUkADcBGRMAp0rXB6AYT5PCaWpKHrd0AmFEId1bPdjEMME-TkWYLFSC5MmjfDrlGNQrkyG9A0hZ94UXSDGS-H8-wAoDkFA8CmKZGC4IQtcnWQrdm3+KR1Gw1UU2MfCplHW5rlI7DdFvaFNHOOI4kyc4X2zOlMUrFiwF-f9AJAsCIMXKC+OaASkM3D00IOMSIgMKZRkjOJzFuVgrhkJTNCSG9vOSWVDGsXTsB4oyTPY8zuKsm0bPgipanXYTHKbdCW3E2IZE00ZzCecMNDwhVSMjQ8tDGfDLFC-DIui79jLYszOIsnQwFEXECU-SBcBE7KXMGfKRlYIr9E7Mq4lIq4r1qtJzAuOJzkhRretY0z+S6gR+oAcSaTwqA+CoKjKCg9r8TLtxyvoivMHRw1vJbzEyRbzAq7QdGHLVZU0YN5ka0RjRoWdzRLbbRF2iBcAO5pjs+M6Lqu1Csucn1KNHa8Hk0YZZjDKNz1vDRRnufCLy8owNEa5E+vxStCDEYHkT+XBCE8CgWUIM6ObXUh8AqRpOQba7RJ9Jb8p0Y9xj9YxsgmWbHm+i8THyh8g0yGm6eQBmmYxVnJCKXFsAg3EADMTeQAAKfl+cFzxuTOgBZUhPAYCoAEpcEY2njV10Rmb+Qb0d3CWRml-LTHljRZosPRJm0GYJeSGZGoAd1xLpGXcXhkEZgP9e6NmOa5ioRdRm7hoQcxpj0AjHn0a5MnDGbTle7zrwjZv7gTDQ1HTzOlygHO871lmi-XdnOdIbng9FUPa8mKYG5BZvg2jGRWAla8ZAeEM-M0ZJGu4VBuHpxkKl4UhJDRXFGTAMpRDN3hcDIQhSDKAA1dZbc-sp36oOdLwc8MK5VmIeZuqQtK7yejID6bd1RJGDBebQr0ZSNTADfVEd8oCVm2lxB+T8X6kAABo1FZBdH+HNSAgNuuoXse45AYKwTgvBYACGP2frgSeJcZ5fFFkNDGmkIHJHkH6NMag5YkQQZGPQXcDD3j7sw2+jI2EcKIToBkdRkC8CgKgKkuBDbYGNqbC2pIrZT1LmUXmztXbuy9oxTBKjcGMnwRZThvBNGiG0bo-RsBaFVweNkKWCZZgjniE8aMr1N5yLCktAw41AYMT1FFJx2DVGuPYe4jRwgyRgF4BgPAhAKHvzaAIkOmEUxaQDKI+I0x7hSKidMOMm8HhLRmLKUKA8s7D1zp-ZE3CnSWL4QEn0+gom3ivLUmYcQt7eRrnCfIWYooZx6SPfpuBP6ECoG-D+38UJ7EEbuFaIw5L3EMJIvu8pSJ+h0PKYKMJxgoNuN0oe6zkReJ8XouAsBDFGxNjoc2lsrb4GqOyc6e0qC2Ldp7b2KSdCrLeX0j5WidHfKpKM3cv0AxaT7kYJ4cst4MISZceQjxpgXFCoshEyyEWD0rO8nQuT8mFLZiU0gZSK5i13ImKJkj5oPAlPMeQYxKI0zvuBT8n4oKYsws3KJszdCUSDONNI8pJjUsYqgUCYA05QVZIQd+dR+FcqOXKvudygwzH3ONZMDDN6sG+hGJuVwipanoksyc2rdp6ptAao1FQqAUP5FQb+xAyjuE5LKsBFrQrTDenMu10Z9COq3o8Ne2kprU2SbS71uqoJkAAFIjPKfPc1UyrUJttakBh+5JHfTgUmBMMJ1WNTzb6pkxSKClOjREbSFb402pvDW6M0IRgzGhLMCYcCEgeppV6rJ+bGQ6GAqSAQZtlCVjKBALqwhsDKFwO4A16xP6sjoGUA5nozW5VuOcb6Vqx3pHSHLaMphLj4VmRKTSYx7htsXR2lda6N1bp3aIPdB6j0APOqe89l6nJltyvMB6K1SrRJ+uNaMKRdBqwWuquBf6dUAdXTrYDjJt27qEAertPbS2gIiLe7DD7kGJkndGKYjq5hb0MGmCUSYmE5oXYRysXjgK4mlRAcjYHKODPwE7J0KNDkVMQ15JIsovJ+WogYeBMRxgPRTlpW8b0ZLQIIz64TDJRPick+B1+nxiDcjDRG-+rIeYUF7YgURyG1Noc0xh04zTHrTGwgqOWd5+OeqRO24TxH12bsZJ-bguAIBiAghZ3gmJLLwqi8umLpGoAJYQGl5Extuj+Hc3ueJ8dxhwP3MvbyyaHiPS8uMai2lZnaVM0uqAgGSNxfy4l0kOjkA6G4J+Y2z9yRliy-+6LQG+sFaKyVsQZXaN0Iq-IKrFxvK+RhPV04pUSbZETNpN6aDNYCcizN5duJkTgW4EPAgzQyAbC2J4HYpqlMRH0AO61iaR2nBTBeAM+gEiiJORKTrAGbt3aHlN5ZlZiAYjAAIVdEB+m-K2Ts-mdQOYfHKwo5D+5vJ70uaVV9+FvohhMPuTeN5NKQ+E9DsA93hOJSgIj8CKPIDo82ds94OOKB47UB9hDrl7iE9VSTzsZPTgJCmfMZukxJFDDnVqq73Wmcs+XWz6+lIh4bIFm99Y-Pcc0NW1XIYqaDtNojPobTiAZKHnyrcGE2hbX04u-qbLGvbvM9h3k5ALioCP2RLwCk8WBmG+eybwXZuRd0cQFoH7Vbh1pGjJjOMKQ5Y1wsDeXyGZPdRW94C33Wvusn2Z11CACOkdc7R5Hp7xvsem-x1pK3K0bcTAvJhrUdyFeGeVyZwvU2hPXdL7DooudKwG8b1j-AAu8fm7GY1uNv3q1p4B52B6o0ImrVp+diLXv1cl5h-1dccn8AKavZ99QlhdARm8jKIcUx0-UUOxYLb0I8+PAZ2P0-MMDooUjpdkv43RQ1tkKg+RyttR78asn9zgX9N871iZHcsg6IC9D8i9j9UAAArfWM-J0C-K-eDBPaufcYwb6UcUqFacaNBdPDQeUR6YqBMeQbCfcbNTAkfMzZdWAXEUCbOTOPqGGc-eTaAi5KWadLUOYTzSJAHTSOMKwAwFILQV6UKDA+dS7UfbrXg-g4eQQ-aI6eGEA-ZcAqFKApfXcbUEYcYSRe4AibCYwdParUYFNZQ8aOYUqRqavWAUPAuFmAg2TUQiwzCVQuuOrRufGdeNuWUEmbCB8VIVrG8RqdJCAaVZiPqUgZAIbGTIg8rGuXQFIB4OBPFTGYYUic4UlG4O4NpZ4RYUQXgHdeAQIRcRTUXRAAAWhrmjHaLSFVGWmJlemDCDAsEagZBu2EFXVaNIK1CvCzwVATFeluGolbhiGVSvEbiHUjHuQ4I0L0lzGNALDNGLFAUrh9AvBJnzwSA70gTgWkWBDgTjAlm0GUPiDHRpn0jzBNELHBktDfAMkZCmLW1vAoMuPiH0BuNehuV3lGGDGyHiBDFxVV3hT+M+MOLnBLDhxWErEBKrlmCvEDAsGUKmHDEcPPASAoLtyfE3mGEMHeMNEMmalijagIRxIxlvEdSTFHCKnynOL9AqkYL7md2oIYK3nUJ9n0gZM2jinam4j+OxOvzaIq1vEegvHuR5KeD5PPCOwDBO3lHwgTAWGHzlPSKlOZI6jZ1ZMsOsBJkUTehWiOzGBuQtXSAVHEWtLojpPfBilag4gIU6m6l6kgEtMwhQUPHqTSDbzxLgVmhiTqQTFqhMCPmHw2hai2h2iDIVNIO8nckonVQIhqzUBuTGCClxTdXaVMCBhBjBmOLEEhmhmDJvUsFVA7GsEsDGFO1JOBCeAUIsCjlEVlDmCRNpV9nPigHzkDhOO5RCIvCvBvBJPSGKOWkVgoLCVuHmSmF3jFPhURQZVznHMLhylON3BfTbjTBGHiBMFa0ohuGPlPlHMvmvmcUIWfgbIiASEPFCnmFSBTEsFMCiUQRrlKjf3GhnS3NpTSVYUyXURfMzLWxTkdSDF7j9EonylHCaWLM3gjBmFCzp2UXSSDzcXAg8U+TRT8VfPFCeDkSQphCuHGH-KxlKlxgWQ-yHMnAgoySgEIufM8WZQKWwHIr3BgTuSKL9HfIBhjgQQYpDA1V7IlleV3OQH6QErQoBytUemkNxgQN-WHx3OzmRRIt8R+QEsmFIjmQDHiDcn5UMwP12JWXpT0sUo+V4sKQErgQQqTyTm2wlELPPDMubkfCMzSCXnFVEElTSKgAEpQsdSGKDGKlxXDCiWuDjFCy8hTksH7F-witgtxKKktUHT+w3xiG8lVDUO8hFQMFWlyGH2LwEFSLAEirmiSAMw1FSHmHiDY07CSAssjC3lqQamquP1yz62s0o0iqUPjkMHdVB1EUJhiFCx1IVF8nSFitlEypEzE1qpGv3QEv7TyrX1TwYU0hGFdPIIVGom8jWqGun24EitsLBCeGeKeFHDmGTS3j7xorBOomwrWs1yHgaqVmEWekKLapWNkEa0fGuByAnU0B+vH1ZxSRr051R3RwaphCasVwVFaquMwyViMCTGUi-y3lYs0O4J9xh3hvh0ZF1wrAjwEovESE3jiVEUB00lfS+lGhrm0ngrenC1sq4K6xPz92EwDyDxDzD2n2RDpqmEz1mDaueprTuId3Zs0k5oYLTB5thvJuXQr24Cr0RuR2RsluyrOLzyapMASGHVnXt0iFCj7y-1aX3GTE1qFp4N-B1lpuNqxWkLBA1RyDTWmA3ltpTntp7m437gGq0MFvuwzJILWzrSvCSobjxOGBmHTywqlE0l7M0DGE7DWtwPwIgAErTBXNFP+isB7kVoQFEQ4yKgUgSOuE8IjtJp0G6lAigBKwvl4GqDD3qs9sqT9EdXTTTGqlQIktWNMHmkTAmEB0hCTM4OLx0IZX0MLr7sQ2ogkPOCkJTjgVkNWLKrBE7Hz0TDfWDDWsXoEIECEM0TqsisSQDChBTHCmuBMCcLes1C8hd16qeDPr4KXsvsgBXVJqUtXvoxdyCl6IYKoJTjHvUHkKQTTGuFSvz15sYm8N8MDhjrRkVMxmipQwsBB20gSuiOQOHFKmZs8uSLvlSIZLAEyKG0ioYKdV41lllCMAjHKMlhVlmS1HyJTHojsCAA */
   model.createMachine(
     {
       predictableActionArguments: true,
@@ -113,10 +123,10 @@ export const requestMachine =
         },
         SCREEN_FOCUS: {
           // eslint-disable-next-line sonarjs/no-duplicate-string
-          target: '.checkingBluetoothService',
+          target: '.checkNearbyDevicesPermission',
         },
         SWITCH_PROTOCOL: {
-          target: '.checkingBluetoothService',
+          target: '.checkNearbyDevicesPermission',
           actions: 'switchProtocol',
         },
         BLE_ERROR: {
@@ -124,13 +134,46 @@ export const requestMachine =
           actions: 'setBleError',
         },
         RESET: {
-          target: '.checkingBluetoothService',
+          target: '.checkNearbyDevicesPermission',
         },
       },
       states: {
         inactive: {
           entry: 'removeLoggers',
         },
+        checkNearbyDevicesPermission: {
+          initial: 'checking',
+          states: {
+            checking: {
+              invoke: {
+                src: 'checkNearByDevicesPermission',
+              },
+              on: {
+                NEARBY_ENABLED: {
+                  actions: 'setReadyForBluetoothStateCheck',
+                  target: '#request.checkingBluetoothService',
+                },
+                NEARBY_DISABLED: {
+                  target: 'requesting',
+                },
+              },
+            },
+            requesting: {
+              invoke: {
+                src: 'requestNearByDevicesPermission',
+              },
+              on: {
+                NEARBY_ENABLED: {
+                  target: '#request.checkingBluetoothService',
+                },
+                NEARBY_DISABLED: {
+                  target: '#request.nearByDevicesPermissionDenied',
+                },
+              },
+            },
+          },
+        },
+
         checkingBluetoothService: {
           initial: 'checking',
           states: {
@@ -139,10 +182,10 @@ export const requestMachine =
                 src: 'checkBluetoothService',
               },
               on: {
-                BLUETOOTH_ENABLED: {
+                BLUETOOTH_STATE_ENABLED: {
                   target: 'enabled',
                 },
-                BLUETOOTH_DISABLED: {
+                BLUETOOTH_STATE_DISABLED: {
                   target: 'requesting',
                 },
               },
@@ -152,10 +195,10 @@ export const requestMachine =
                 src: 'requestBluetooth',
               },
               on: {
-                BLUETOOTH_ENABLED: {
+                BLUETOOTH_STATE_ENABLED: {
                   target: 'enabled',
                 },
-                BLUETOOTH_DISABLED: {
+                BLUETOOTH_STATE_DISABLED: {
                   target: '#request.bluetoothDenied',
                 },
               },
@@ -168,10 +211,12 @@ export const requestMachine =
             },
           },
         },
-        bluetoothDenied: {
+        bluetoothDenied: {},
+        nearByDevicesPermissionDenied: {
           on: {
+            APP_ACTIVE: '#request.checkNearbyDevicesPermission',
             GOTO_SETTINGS: {
-              actions: 'openSettings',
+              actions: 'openAppPermission',
             },
           },
         },
@@ -496,10 +541,8 @@ export const requestMachine =
     },
     {
       actions: {
-        openSettings: () => {
-          Platform.OS === 'android'
-            ? BluetoothStateManager.openSettings().catch()
-            : Linking.openURL('App-Prefs:Bluetooth');
+        openAppPermission: () => {
+          Linking.openSettings();
         },
 
         switchProtocol: assign({
@@ -515,6 +558,10 @@ export const requestMachine =
 
         setReceiverInfo: model.assign({
           receiverInfo: (_context, event) => event.info,
+        }),
+
+        setReadyForBluetoothStateCheck: model.assign({
+          readyForBluetoothStateCheck: () => true,
         }),
 
         generateConnectionParams: assign({
@@ -693,9 +740,9 @@ export const requestMachine =
         checkBluetoothService: () => (callback) => {
           const subscription = BluetoothStateManager.onStateChange((state) => {
             if (state === 'PoweredOn') {
-              callback(model.events.BLUETOOTH_ENABLED());
+              callback(model.events.BLUETOOTH_STATE_ENABLED());
             } else {
-              callback(model.events.BLUETOOTH_DISABLED());
+              callback(model.events.BLUETOOTH_STATE_DISABLED());
             }
           }, true);
           return () => subscription.remove();
@@ -703,10 +750,58 @@ export const requestMachine =
 
         requestBluetooth: () => (callback) => {
           BluetoothStateManager.requestToEnable()
-            .then(() => callback(model.events.BLUETOOTH_ENABLED()))
-            .catch(() => callback(model.events.BLUETOOTH_DISABLED()));
+            .then(() => callback(model.events.BLUETOOTH_STATE_ENABLED()))
+            .catch(() => callback(model.events.BLUETOOTH_STATE_DISABLED()));
         },
 
+        requestNearByDevicesPermission: () => (callback) => {
+          requestMultiple([
+            PERMISSIONS.ANDROID.BLUETOOTH_ADVERTISE,
+            PERMISSIONS.ANDROID.BLUETOOTH_CONNECT,
+          ])
+            .then((response) => {
+              if (
+                response[PERMISSIONS.ANDROID.BLUETOOTH_ADVERTISE] ===
+                  RESULTS.GRANTED &&
+                response[PERMISSIONS.ANDROID.BLUETOOTH_CONNECT] ===
+                  RESULTS.GRANTED
+              ) {
+                callback(model.events.NEARBY_ENABLED());
+              } else {
+                callback(model.events.NEARBY_DISABLED());
+              }
+            })
+            .catch((err) => {
+              callback(model.events.NEARBY_DISABLED());
+            });
+        },
+
+        checkNearByDevicesPermission: () => (callback) => {
+          if (Platform.OS === 'android' && Platform.Version >= 31) {
+            const result = checkMultiple([
+              PERMISSIONS.ANDROID.BLUETOOTH_ADVERTISE,
+              PERMISSIONS.ANDROID.BLUETOOTH_CONNECT,
+              PERMISSIONS.ANDROID.BLUETOOTH_SCAN,
+            ])
+              .then((response) => {
+                if (
+                  response[PERMISSIONS.ANDROID.BLUETOOTH_ADVERTISE] ===
+                    RESULTS.GRANTED &&
+                  response[PERMISSIONS.ANDROID.BLUETOOTH_CONNECT] ===
+                    RESULTS.GRANTED
+                ) {
+                  callback(model.events.NEARBY_ENABLED());
+                } else {
+                  callback(model.events.NEARBY_DISABLED());
+                }
+              })
+              .catch((err) => {
+                callback(model.events.NEARBY_DISABLED());
+              });
+          } else {
+            callback(model.events.NEARBY_ENABLED());
+          }
+        },
         advertiseDevice: (context) => (callback) => {
           if (context.sharingProtocol === 'OFFLINE') {
             Openid4vpBle.createConnection('advertiser', () => {
@@ -897,6 +992,10 @@ export function selectConnectionParams(state: State) {
   return state.context.connectionParams;
 }
 
+export function selectReadyForBluetoothStateCheck(state: State) {
+  return state.context.readyForBluetoothStateCheck;
+}
+
 export function selectIncomingVc(state: State) {
   return state.context.incomingVc;
 }
@@ -967,6 +1066,10 @@ export function selectIsWaitingForConnection(state: State) {
 
 export function selectIsBluetoothDenied(state: State) {
   return state.matches('bluetoothDenied');
+}
+
+export function selectIsNearByDevicesPermissionDenied(state: State) {
+  return state.matches('nearByDevicesPermissionDenied');
 }
 
 export function selectIsCheckingBluetoothService(state: State) {

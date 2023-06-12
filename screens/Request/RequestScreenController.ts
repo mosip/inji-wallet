@@ -17,6 +17,11 @@ import {
   selectIsCancelling,
   selectIsOffline,
 } from '../../machines/request';
+import {
+  selectIsNearByDevicesPermissionDenied,
+  selectReadyForBluetoothStateCheck,
+} from '../../machines/openIdBle/request';
+import { selectVcLabel } from '../../machines/settings';
 import { GlobalContext } from '../../shared/GlobalContext';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import { useTranslation } from 'react-i18next';
@@ -28,9 +33,17 @@ export function useRequestScreen() {
   const requestService = appService.children.get('request');
   const isActive = useSelector(appService, selectIsActive);
   const isFocused = useSelector(appService, selectIsFocused);
+  const isReadyForBluetoothStateCheck = useSelector(
+    requestService,
+    selectReadyForBluetoothStateCheck
+  );
   const isBluetoothDenied = useSelector(
     requestService,
     selectIsBluetoothDenied
+  );
+  const isNearByDevicesPermissionDenied = useSelector(
+    requestService,
+    selectIsNearByDevicesPermissionDenied
   );
   const isWaitingForConnection = useSelector(
     requestService,
@@ -91,6 +104,8 @@ export function useRequestScreen() {
     isStatusCancellable,
     isWaitingForVc,
     isBluetoothDenied,
+    isNearByDevicesPermissionDenied,
+    isReadyForBluetoothStateCheck,
     isCheckingBluetoothService: useSelector(
       requestService,
       selectIsCheckingBluetoothService
