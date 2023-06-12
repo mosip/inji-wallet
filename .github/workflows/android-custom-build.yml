@@ -82,8 +82,8 @@ jobs:
           -keyalg RSA \
           -keysize 2048 \
           -validity 10000 \
-          -storepass $RELEASE_KEYSTORE_PASSWORD \
-          -keypass $RELEASE_KEYSTORE_PASSWORD \
+          -storepass 'android' \
+          -keypass 'android' \
           -alias androidreleasekey \
           -keystore android/app/release.keystore \
           -dname "CN=io.mosip.residentapp,OU=,O=,L=,S=,C=US"
@@ -95,7 +95,7 @@ jobs:
         run: |
           cd android/app
           export RELEASE_KEYSTORE_ALIAS=androidreleasekey
-          export RELEASE_KEYSTORE_PASSWORD=$RELEASE_KEYSTORE_PASSWORD
+          export RELEASE_KEYSTORE_PASSWORD='android'
         env: 
           RELEASE_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_RELEASE_STOREPASS}}'
 
@@ -121,7 +121,7 @@ jobs:
           MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
           APPLICATION_THEME: ${{ github.event.inputs.theme }} 
           RELEASE_KEYSTORE_ALIAS: androidreleasekey
-          RELEASE_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_RELEASE_STOREPASS}}'
+          RELEASE_KEYSTORE_PASSWORD: 'android'
       
 
       # - name: Upload Artifact to Actions
