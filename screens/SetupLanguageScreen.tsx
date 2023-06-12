@@ -1,7 +1,7 @@
 import React from 'react';
-import { SUPPORTED_LANGUAGES } from '../i18n';
-import { Dimensions, I18nManager } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import i18n, { SUPPORTED_LANGUAGES } from '../i18n';
+import { I18nManager, Dimensions } from 'react-native';
+import Storage from '../shared/storage';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
 import RNRestart from 'react-native-restart';
@@ -13,16 +13,16 @@ import { RootRouteProps } from '../routes';
 import { useWelcomeScreen } from './WelcomeScreenController';
 
 export const SetupLanguageScreen: React.FC<RootRouteProps> = (props) => {
-  const { i18n } = useTranslation();
+  const { t } = useTranslation('SetupLanguage');
+  const controller = useWelcomeScreen(props);
   const languages = Object.entries(SUPPORTED_LANGUAGES).map(
     ([value, label]) => ({ label, value })
   );
-  const { t } = useTranslation('SetupLanguage');
-  const controller = useWelcomeScreen(props);
+
   const changeLanguage = async (language: string) => {
     if (language !== i18n.language) {
       await i18n.changeLanguage(language).then(async () => {
-        await AsyncStorage.setItem('language', i18n.language);
+        await Storage.setItem('language', i18n.language);
         const isRTL = i18next.dir(language) === 'rtl' ? true : false;
         if (isRTL !== I18nManager.isRTL) {
           try {
