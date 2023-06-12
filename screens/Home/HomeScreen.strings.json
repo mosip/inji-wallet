@@ -1,5 +1,5 @@
 {
-  "myVcsTab": "My\n{{vcLabel}}",
-  "receivedVcsTab": "Received\n{{vcLabel}}",
+  "myVcsTab": "My\nCards",
+  "receivedVcsTab": "Received\nCards",
   "historyTab": "History"
 }

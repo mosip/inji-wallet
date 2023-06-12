@@ -1,7 +1,7 @@
 {
   "header": "Scan QR Code",
-  "noShareableVcs": "No shareable {{vcLabel}} are available.",
-  "sharingVc": "Sharing {{vcLabel}}",
+  "noShareableVcs": "No shareable Cards are available.",
+  "sharingVc": "Sharing Card",
   "BluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
   "BluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
   "errors": {
@@ -30,15 +30,15 @@
     },
     "accepted": {
       "title": "Success!",
-      "message": "Your {{vcLabel}} has been successfully shared with {{receiver}}"
+      "message": "Your Card has been successfully shared with Verifier"
     },
     "rejected": {
       "title": "Notice",
-      "message": "Your {{vcLabel}} was discarded by {{receiver}}"
+      "message": "Your Card was discarded by Verifier"
     },
     "bleError": {
-      "title": "Failed to transfer!",
-      "message": "Something went wrong while transferring {{vcLabel}}. Please try again."
+      "title": "Failed to transfer",
+      "message": "Something went wrong while transferring Card. Please try again."
     }
   }
 }
