@@ -65,11 +65,11 @@ platform :ios do
     current_build_number = previous_build_number + 1
 
     increment_build_number(
-      xcodeproj: "MOSIPResidentApp.xcodeproj", 
+      xcodeproj: "Inji.xcodeproj", 
       build_number: current_build_number
     )
 
-    version = get_version_number(xcodeproj: "MOSIPResidentApp.xcodeproj")
+    version = get_version_number(xcodeproj: "Inji.xcodeproj")
 
     match(
       type: 'appstore',
@@ -85,8 +85,8 @@ platform :ios do
 
     gym(
       configuration: "Release",
-      workspace: "MOSIPResidentApp.xcworkspace",
-      scheme: "MOSIPResidentApp",
+      workspace: "Inji.xcworkspace",
+      scheme: "Inji",
       export_method: "app-store",
       
       export_options: {
@@ -99,7 +99,7 @@ platform :ios do
     pilot(
        app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
        api_key: api_key,
-       ipa: "./MOSIPResidentApp.ipa",
+       ipa: "./Inji.ipa",
        changelog: "#{TESTFLIGHT_BETA_APP_DESCRIPTION}",
        localized_build_info: {
           "default": {
