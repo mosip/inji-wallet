@@ -26,9 +26,11 @@ export const ScanScreen: React.FC = () => {
     })();
   }, [isBluetoothOn]);
 
+  // TODO(kludge): skip running this hook on every render
   useEffect(() => {
-    if (!controller.isEmpty) controller.START_PERMISSION_CHECK();
-  }, [controller.isEmpty]);
+    if (controller.isStartPermissionCheck && !controller.isEmpty)
+      controller.START_PERMISSION_CHECK();
+  });
 
   const openSettings = () => {
     Linking.openSettings();
