@@ -1,5 +1,5 @@
 {
-  "addVcButton": "Add {{vcLabel}}",
-  "generateVc": "Generate your {{vcLabel}}",
-  "generateVcDescription": "Tap on \"Add {{vcLabel}}\" below to download your {{vcLabel}}"
+  "addVcButton": "Add Card",
+  "generateVc": "Generate your Cards",
+  "generateVcDescription": "Tap on \"Add Card\" below to download your Card"
 }
