@@ -26,6 +26,6 @@ function getActionLabel(activity: ActivityLog, language: string) {
       locale: DateFnsLocale[language],
     }),
   ]
-    .filter((label) => label.trim() !== '')
+    .filter((label) => label?.trim() !== '')
     .join(' · ');
 }
