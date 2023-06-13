@@ -341,15 +341,15 @@
     "enableBluetoothButtonText": "Allow Bluetooth Permissions",
     "errors": {
       "locationDisabled": {
-        "message": "Location services must be enabled for the scanning functionality",
+        "message": "Location services must be enabled to share card",
         "button": "Enable location services"
       },
       "locationDenied": {
-        "message": "Location permission is required for the scanning functionality",
+        "message": "Location permission is required to share card",
         "button": "Allow access to location"
       },
       "nearbyDevicesPermissionDenied": {
-        "message": "Nearby Devices permission is required for the scanning functionality",
+        "message": "Nearby Devices permission is required to be able to share card",
         "button": "Allow Permission"
       }
     },
