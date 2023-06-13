@@ -1,7 +1,5 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import SmartshareReactNative from '@idpass/smartshare-react-native';
-import { ConnectionParams } from '@idpass/smartshare-react-native/lib/typescript/IdpassSmartshare';
-import OpenIdBle from 'react-native-openid4vp-ble';
+import tuvali from 'react-native-tuvali';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import {
   ActorRefFrom,
@@ -9,52 +7,37 @@ import {
   DoneInvokeEvent,
   EventFrom,
   send,
-  sendParent,
   spawn,
-  StateFrom,
 } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { EmitterSubscription, Linking, Platform } from 'react-native';
-import { DeviceInfo } from '../../components/DeviceInfoList';
+import { DeviceInfo } from '../../../components/DeviceInfoList';
 import { getDeviceNameSync } from 'react-native-device-info';
-import { VC, VerifiablePresentation } from '../../types/vc';
-import { AppServices } from '../../shared/GlobalContext';
-import { ActivityLogEvents, ActivityLogType } from '../activityLog';
+import { VC, VerifiablePresentation } from '../../../types/vc';
+import { AppServices } from '../../../shared/GlobalContext';
+import { ActivityLogEvents, ActivityLogType } from '../../activityLog';
 import {
-  GNM_API_KEY,
-  GNM_MESSAGE_LIMIT,
   MY_LOGIN_STORE_KEY,
   VC_ITEM_STORE_KEY,
-} from '../../shared/constants';
-import {
-  onlineSubscribe,
-  offlineSubscribe,
-  offlineSend,
-  onlineSend,
-  ExchangeSenderInfoEvent,
-  PairingEvent,
-  SendVcEvent,
-  SendVcStatus,
-} from '../../shared/openIdBLE/smartshare';
+} from '../../../shared/constants';
+import { subscribe } from '../../../shared/openIdBLE/walletEventHandler';
 import {
   check,
-  PERMISSIONS,
+  checkMultiple,
   PermissionStatus,
+  PERMISSIONS,
+  requestMultiple,
   RESULTS,
 } from 'react-native-permissions';
-import { checkLocation, requestLocation } from '../../shared/location';
+import { checkLocation, requestLocation } from '../../../shared/location';
 import { CameraCapturedPicture } from 'expo-camera';
 import { log } from 'xstate/lib/actions';
-import { BLEError, isBLEEnabled } from '../../lib/smartshare';
-import { createQrLoginMachine, qrLoginMachine } from '../QrLoginMachine';
-import { StoreEvents } from '../store';
+import { createQrLoginMachine, qrLoginMachine } from '../../QrLoginMachine';
+import { StoreEvents } from '../../store';
+import { WalletDataEvent } from 'react-native-tuvali/lib/typescript/types/events';
+import { BLEError } from '../types';
 
-const { GoogleNearbyMessages } = SmartshareReactNative;
-const { Openid4vpBle } = OpenIdBle;
-
-type SharingProtocol = 'OFFLINE' | 'ONLINE';
-
-const SendVcResponseType = 'send-vc:response';
+const { wallet, EventTypes, VerificationStatus } = tuvali;
 
 const model = createModel(
   {
@@ -68,16 +51,14 @@ const model = createModel(
     loggers: [] as EmitterSubscription[],
     vcName: '',
     verificationImage: {} as CameraCapturedPicture,
-    sharingProtocol: 'OFFLINE' as SharingProtocol,
-    scannedQrParams: {} as ConnectionParams,
+    openId4VpUri: '',
     shareLogType: '' as ActivityLogType,
     QrLoginRef: {} as ActorRefFrom<typeof qrLoginMachine>,
     linkCode: '',
+    readyForBluetoothStateCheck: false,
   },
   {
     events: {
-      EXCHANGE_DONE: (receiverInfo: DeviceInfo) => ({ receiverInfo }),
-      RECEIVE_DEVICE_INFO: (info: DeviceInfo) => ({ info }),
       SELECT_VC: (vc: VC) => ({ vc }),
       SCAN: (params: string) => ({ params }),
       ACCEPT_REQUEST: () => ({}),
@@ -93,17 +74,20 @@ const model = createModel(
       CONNECTION_DESTROYED: () => ({}),
       SCREEN_BLUR: () => ({}),
       SCREEN_FOCUS: () => ({}),
-      BLUETOOTH_ALLOWED: () => ({}),
-      BLUETOOTH_DENIED: () => ({}),
-      BLUETOOTH_ENABLED: () => ({}),
-      BLUETOOTH_DISABLED: () => ({}),
+      BLUETOOTH_PERMISSION_ENABLED: () => ({}),
+      BLUETOOTH_PERMISSION_DENIED: () => ({}),
+      BLUETOOTH_STATE_ENABLED: () => ({}),
+      BLUETOOTH_STATE_DISABLED: () => ({}),
+      NEARBY_ENABLED: () => ({}),
+      NEARBY_DISABLED: () => ({}),
       GOTO_SETTINGS: () => ({}),
+      START_PERMISSION_CHECK: () => ({}),
       UPDATE_REASON: (reason: string) => ({ reason }),
       LOCATION_ENABLED: () => ({}),
       LOCATION_DISABLED: () => ({}),
       LOCATION_REQUEST: () => ({}),
       UPDATE_VC_NAME: (vcName: string) => ({ vcName }),
-      STORE_RESPONSE: (response: unknown) => ({ response }),
+      STORE_RESPONSE: (response: any) => ({ response }),
       APP_ACTIVE: () => ({}),
       FACE_VALID: () => ({}),
       FACE_INVALID: () => ({}),
@@ -114,16 +98,15 @@ const model = createModel(
   }
 );
 const QR_LOGIN_REF_ID = 'QrLogin';
-
 export const ScanEvents = model.events;
 
 export const scanMachine =
-  /** @xstate-layout N4IgpgJg5mDOIC5SwMYEMB2BiAygYQCUBRIgOQH0AhAGQFUCBtABgF1FQAHAe1gEsAXXlwzsQAD0QBWAMySAdAHYAHDICcKgCwaAjKskAmADQgAnomkbVc1ZaV3t+6dL0KNAXzfHUmXIRIUAMQB5PFocZjYkEG4+QWFRCQQAWn1VK10mJSZ9fW1ZPO0FYzMEJ205QqVpBVUANm0lVRqZDy90DDkUAAswFABrXgwoSgAbAFcwfi4ufi6cMAAnADdeFDBOnv7BqCwaWiIAFSCgg4AJcjIAQRoiABEI0RiBIREoxKStDTlajVrpPPq2kKtUkxSkMmszV0kiYDSa2laIG8HW6vQGQ1GEymMzmixWaw2aO2uzoh2OZ3ItwAkjhrtQ7g8ok84q9QIl9ExaopJA5fpJVExZEZTFJlN9XFUObDGgoEZ4ke1CVsMeNJtNZvNlqt1gswABHCawQRDEn7I4nc5XG73ViPHjPeJvRBJbRMeQNepKX5u71KYUlKrlVSFSTKDTSWo2Wr6RHIpXo4aq7EavHauS6g1wY07PZki2Uml0hm2pn2lkJKTZOSSP52GoKWoKSR2MEIVxcjT6WpKJvt-T12OK1HKxNY9W4rUEsAYNAAIxGkCwjM4ZZeFeS2g08kknYUsgbEa7DVbdXKOWkSj+nMskdUg8wcnnY5xt2nvEXAHETkFyDhDgcqVID9whLFdYjXJ0EGDBRFB+AwHDSbJqhPBs5ByBROTqVJVH0Gt7xRBc0AWbY8GEDBehZLA8CCUhSCIPAAJoykiBwA4CCCABNYtIjAh1WXERBNyUb5ryvZQDG7IoRQQDkISaLt6xhbslHwzpCOIoZSIwciUEosQjTQfh1jQAAzIyFgACluFi2M48gAIAWSIIJaAOABKLA4xQdSSLIiiXmXaJV0dNlnUvb4NAwrIND9RtZVbWT5Ei-sHH+QpN1UkzBggXztP84RfEuUhAuZCDQuSCEmAbISfllCNCgS2RhObMMXE3EFMuy3KdMo-AioYbQeKC8CQoEmT9C+JgqtdaoQQwrclEa5tqx7L02r5TqMByzS-N0l5CuK-QhtK0bEgjJhIQbVJ+3DDDNwSmtpGsWxpEFBQOT3VSOF1DgiO2A4uC0nqsGIPAiCpAA1IhmIhqkwfIQDghK4L+LOpKNCqzJ+VdH4cIS7sg2jJgbGcOwVFUlBduzKiaLohjuLtEbUcE+o5DrMN6l3HJFuk-5+zZmwBU5ZtBQpqntjkQYAAUFi4KBdVgWAsH0-hDOMszFgs6jaPoxiKEc5zXI8rzxaGSWMBluWFdgZGmfXbQeTkSxpFknRqskUFpNSRpFBvBpiaqHCxbyvazcEABbMAuDGfgqKKsHqFtvj1x7co-RioEuy3D3tASxC0L9rJ1GcLtVLAMRukwKBtlffEwCpDATK4LBqXwWndaT8tIL3DsYR7Pc6nUBxWwsH5viyGo3T0RpJDLiuuirmuwDrhum6wIgAA08FOIqP2h24aKITuyrGr1faUQomsaf5oxHv4uVvN2tAlOU2gfcvK6GJeV8b5uVbVuQplzJa3bgxKkTEDYuXcp5RUH8F5fyGLXbUq8uDH1OlIcoTAMZAgsDWXCF5ZAjyUtYf4e4tBdhyDuOen9q6IOXsg3+cgI5RxjnHUgCc0HM1KHUCoE9QyRlqCCNId9cLPW0FeHsXZgzSFUrqFYYAADuEtYBgAXKHKAEMUBYFoFLW4lwDjQ2IJcHANFOHrhSAKOQxNOyXl3O9GQtRWy7guqQq84iVAWFkfQxRyjVH+SGJoluNJtZ0wOGYyCHxOxWM7D8HQeCcK515kCGCgoZA1hBKGV6s95Rxjke+JRZsVFqOzIEv89IGLkAhngcJ5UUioSFAHFqjZoJOPEfoRQeg8iwkjA7O8OTFR5J8YUvx6jAlQwIFSAIHFyBFVuDMvAYMpYHHIMQAAivsViNSxopBdk7Jsr1Iw9h6SoJxW52lOGbDhHCa0+lvw6IMgpUA5BFP8RorRlwFlECWSsog6ybJbLOq6X2OEYowk7DFLBTjlDtMjIKDJQtqhePkY855IySlaLwPHIgidQLDWTpBTc1h+xOFhMTTmHtVBONSE9Hc9QahCIvjGfpD4Hm+OKdsQJRwPwfnpOQMIRACDkG1n+UgYTcUnS4Ukf4VhQy2Pek2Hcm4pIlAxpYJ2uEmywlerkPQSL8kS3aGsEYIxiT-yMoAjWllMXsOxfZKkTkoHGwGd4lFhrVEmqGACwSQIrAuwvl6Ga1yeYqqqh2d6jQEJ1CwXqoZTyVFbQ5Vo1uISO7ipRvbX47SPY1C7NkBQ+aLBOPqPIfsU0sGCM5DI5l9yXW+ITQErRVT5mLIMTaY66aCWiNcFG9qzhXD9lbAYJwaFozNnSrC7Jdz0y1uGfWt5WAm3EAAFK6wZqWO23dHDVlwr8SMqQMZ42kjyURs1Mj1TSLchULKZ1xunNtN55tLbyzgErM16tgE4B3hMoCdqHVGxgde5Fdb72aMfbLZ9isvVQUmnyfQl5816AvI4o9mM5D1R7N6XQNgY0ovjSBlATDeCR2jrHa1HC00bvKq4EtwYEJ+qmh7QdeaKhAjsK9d6OCcMSzQCgNYHAjIQCCTgByNIQLtso2NTcvrBGuFhOoLIyEj2RS+FkBozYezsYUFxs2uoABWFFFytxEzgMTjN8XlU3IKasuhIqbh0BPYN5hwxPVUP8D2jSqjaaeUsRYvATImG2FSCA05BD8BMFgAIHzoYQ0uNQKkbazNdwsxGJ21QZrvUHluJxWQuRwdrIUAUNQvNyB88RfzgXgsYFC+FyL8NAIxbiwl9d5mxowUaDFeTBgbA1h7FC-mVR-iClkAYbIxXSt+YC0MILIWBDhbI9iqDrphL1BBBeAUQpqiexVTFL4QjcKhlwtBYrKBdSGQ5RwLAEBhDrEGEsLgfR1i5JvZ0U7JSOAIFu1wdALIIhQY9jSmw9KsEOA9v6RAkVWZKuqD2OFk6r01qA2bE7YAzsBIu4sWWCw5AcBGIZJuCxw7POdYjp5yPUcaPe5977AVWB-Z3E7HQfNNwOH7qcuD1ZahuglLKfZcOnsk-NksNAJqIDTaq7NoTxnTPNaS9si88g-QZY1VVF20gnEwnKPmjCeWBS-CrVO1lZtbvC94KLyr1WQaHAINM8Zky4b6PAcVCjLX3iugupzmwkiHZemyFt8Hgjct8NWjyPniocqoCpoZmkUuoM9zQxjZslhwx+lcwlPcF0VDNImoKAroeHzG5F5L0Tf2T1NldHycRcFGpNDQ-muDPJnAOLzyiTYCZqBfbO8ITUdd4zbBwKrfgYwlbUBCA7piVp6RNd4rL94WhNdTX7DWTcLtVutmXzBcMeQ4Nucs-r+Hvehjt+p131MBJhwJn74ZIfWAR+Yr1gWWk1ooN1Pae9C8DnBvKGQyULpXIVDiQy0ikRWrQPygCP07wwG7zTAzENGzABiIBnHnDABv1H3vwnzXWnxPneHzQqDzQmgxg42qGVUEnyGsBhHUDghhGcFfn33P22HAJZCgIJBgKzH+i4AQLnAXBQLv0dwfyLCnzxRn0QClGiQzl90DgjEcwQBBxgh3FJmlQh07Aplb3oI70YNP3WDoKGClkWHDl4EVn2lvzHwoHQIEIlXthrGrGwQmgDwjBqDXwwgfg5GDCmhy05FqGUKJEPzUJeCYM0JUO0N0P0L4AKiMPv1bn4Kg1SBghyAFD3VcGXw0DX2xgqBzmxhcH7E8JHAYN8I0LkHD04MXDCN4LWQ2TFXExd2ENhDZgvCmmjGiiET92kJDBHSFgkgsCqiyLbx8JP0nHWEq3fEE0uClilnmQAihiiNyEhB5EkW7Bin+CkKVXaWLkjAh3qGFi6NUOP0gLyIGKKNQJKN+TKKgxBC5Cah6xikcCqiSOknEQMCdjyBiSIKcE80RAwC4GC3gCiGRESywOdB3Hdz1wBCBGBCaN0AfmUGqFPBlEQ1UkGB40EB81+PQQQBhBSSwUyH3UvDUCaMsHd37XEQQ2BBoK8gCNHDVBxD8ORMlUsBhSBPqmSRBCpVkN6VelVwvBsM2JVGfBTD6NAOpPMUKC+EHgsC0AGybCkJDysVZMFEcA5Ob1AMxApN5J7xYKNG2AFIiTuKsQsAvlJWuncVbAwhgkEUKxsCmg5MvVJK8PJOTAnB72nEKIgE1NqUJNwLrDpWbBDykODHkBdjxIwz1PUFUifGVK6FfAwEGJdLGhwhLSQzdC9GqCqikOozZjyxdkjVwg8JAO8hRw0igCBnyn4nMIJUilSz5C3HDF+BBzXwwwqEigLU7GyBJMVCyjnULL2lGhLOSySk0AMAO3IMigSnETTiQlhRyBkz3zjG+jAF+nzIBg7P4GjPZGElelcMzwzIjD+AeiwUUEzzY2cEilDGDh6g1Jlz+OSHZzgwUzqlwiQikPrxLULgDhLhPNeTAythfWXMEisFlHBLy27SujzksQmmhJfKDhzNNieWYRI2-IQHDHkDmhdllB+D+AmmAoulAs9HAqZSnTgUXjoR-ibjgqegxJwS3FHQIV+BHj5lSxDGyBwkcG7GoXgVoSgCQTWBQQ-Igy+MwJRN5EUDc1hGUAdjUBHi0C5Fc3ouuiYpUhAPwoQXYvoU4sYRgpjhItkDQmBy0DdDdx5CISqjorIRiUoXcBAMNygDgo+GHUV2ulDBV0cBHjJiJVDA121WhGKxeVGRQCsodnaXDA1VyDUCaBuJVQvDTgvEsAbAQ3+GO0wCNQ9UsvPP4q1Sdjggvm9B0F0GZOEgbK13DFNPJnMuezw0TV8s5CsV9I1xsDyCaCcVcwV09HbDk2w2KoF1KobW4utisuWmJlErk0ZzqpQwwjQyaswzSDMoNxKrvUTUI2I3UuSq4S3LZgIID3k1syYxGvQ2aqw0mv3wssAV41nIEzgqBBU3UEFATPsHpUHRdgz2NObE21yCbGKz0wM2dMWvthsLINWMyHzXEUhSPRB1r05yqHqAvWKxnBWCgHJwBlOC4EjlOsJQPQbFulWK0CaOzSekjDHSwjSFLjav1TNnG3Kym3N1mzgovisRBD8ssAOxqFCvB3+weI9z3Dg192O1e3Ozgvc3j03FDBcCvEZvgv5C+AoRkE1T+twv2uewL1NzF2qyssGwqA6LdEbH2xW3VzsGpp0A5C3CwXzVUnD0phDhOs+u7gvDZldByFuhyDyCkJviei3EQ11ulD2rjDlo+r4q4RkBUywSqGqgyXui9l+CsFUxLkkRVy5LAJ6J2L6Kso60UAXybE5hXxkDX05HaWxJyExP1PdqHDJJyN6J7y0KgEv0H14sEIvMiXKC6VyGfgDhxjXwdhcRBBzr9DzujqLrjtVP1FgLYI4KQN8v5CsUrRxqqBnnDGbphFGoMA5A7utvzofFLu7r8NAJ0IJ2CJPm7O2QBGlOcznwnNZ1uIbKsW5h6UwhbOXsLtjrXoKKQK9qrpRMinSFhUkNhCUh3GbtcCdnk1SW9x+C7tvt2LfEgB5pwhHU1T9SFnzWSJrzn37Nunf2yQ8CAA */
+  /** @xstate-layout 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-0LisKKfM8pFikTiXElOcg0Q+jkC7rJUgtjtkDy-NMTQVESyZJ2KlRK2hXruNsBadwJYSxpWcA8tenQwQvBeNCV8BKrq0xtJRdQ9goEQUWIceKloiH00DtYdk819GwsUPCuZJi7zAwqZY-A1ie6fLSLcqslQZhOEIU4Tx0F7pjyguxVYJwOh8WVY8rhQNFmVLwDJMg+L+58viXXOQiwXA6HcbaUwIKIVZEWiHT6XgIWstVc6sJrrGlEGaX3Ek3qwqHG8fsaBTgNrqBZFSZYBySwZGguzW1Qp7WGIRXG9VFiYmtIAFI91TVmdNU1mjaFAhQiu7jGxOinlQgB2l5rzRsMsYwGhY0lKdXWlAr935QB3nvA+R9FBVRqrVHAqIMTVIUjfO+PV+q+gdcE+NFSF1byXZ-XViB+RVHqBAiuKxajSALQ0daeRVj2GAlSadTzz38MUMg1B6DMGkGwbg3lWswpHG3FBPY9FGzcjcAWussxGw6QFZ4f9aAUBgg4OVMSrt3Y4E9mmmDHbXQHP9frI2uxKGUhcEoSFyUjmVBDv+yMAArDyL4SMe1vekewRCkbaHZOoCCrhQGfVAtoysrQdYzMVael+QJAS8EquYaEWoIB3kEPwcwWBQjLJ6HhLEWoMxeso2kKCSgLQMmtmHMtm56ZVHcJWHIArKzMJU9WlVJT1POS0zpvTGADNGZM9g8gWpSDmeoJZoTv1qwmoyC0NKu4hmUgrt4yymWeQ1H-UFzT2mni6f0wIIzbyIMfOg0XMKNp7NGyWnuMlzJTbI28fYXQzG5hTP-SgSMZVFkcBlnLV+itlalOFKpkpg2wDDbCRwBACsuDoENLEJL+hlBQQbDPT0uQQ1UM5sWioyUAJyAG0N8xo3ARbwBIoDgLwyqVTTkg6bVagkv3m4tvhy3VvrbGqwITMhVCgTHph90hY5CbjcLlm0FdDDcn-QrNAXKIDlfC5VzVpHyNtps1Ic12iuLJSNkazxRtaEKC8O4ZYuMUcYCBGj3gGOwsRawMQJqrUqk1K1G83C0i6s-xukWD6TBnDzTcOL7Q6SOv1CqEGuO47UoKrtRcQ6qB278fHLjpLNQzQUVSocnIKx4qfRAjkTanoWjVyylcTAEAuXimfEQAE92ceCaF-g9IjXqzuHUMcBkGUsusmgoKzQUyHOqGKFOxVqP0ce7I0l+oShaik+4j8zm8UoV2E9AxGyACiyt0hP6CWgPhA9nDH6aEOBD78DeHvHE-Or4UFTOmITjLEZfXUJ9ewP6WQQWpI0CCm13Ti5hWr6vTwy-DYr7KKvZ5-S17Kg3rATfREt7HBOdvXvdmei76jfXffnDll3FkY4OsRP0Ira2Ev0IZ+Gkr-KSMMY4CDgRFwIg94nxgDX5EDf18beU4VmFG9Wv8DERCCU3EiUgazgKg5YXaaUEEGUcwRQ+Sxe7Y0+a2s+GAT+fYr+cY0IH+X+j4z4f+ze18rsk4raMMYBN0EB2k6WUusBrMpszgmQBwOsCSkuvmk+i+9+2Bj+8+8o-BTw6EgISCvAu84M6+AurepA1BIB+OdBVghwIEcg7Bv6LQ9Q5Y70xgkKQa7I88GB54D+4weBU+UA4hAIkh0hp0shm+VBO+1mKh4U8060Rs8wLinEuhCuDidQnoDKiwJhpegh5hwh4IGupBL4Dh186yHSnqoBwu8MouDYweaUZOAKjobo2k9EFYLgahtQN+p4d+WB5euBERigYWokWAGEWEyyuEBEW2uMmiywegF+Uy0mbBoytyBwDQuQzQ3oiqohUAZhc+N4kRKEMR-+chrSGyWyLhyR4UwEBu7E80FEzgUyg6iAqB1YgyNQqg3IaevgpwGAXAem8A8Q5wSR3ukgC0NICgmGNgUE9gLIdxByuQT0RwjQlo-Wce94YM6mNxsilQ7m9g7h9gPeDg8Us8+QqgfWUUroIRHYgYUoIYERwJtMDEWQFE2gj6McNkR2OxLEnITg3Egy7EzYfBpRF4gk14vYlhmJX4FkOJ9QdQZJFohJA+jK1YagCgxQ7EuQ80yJzuiE6JExSq-Yb+0ITJDW4uNI+gTCDQhQ7EjGi42Ja0bgVIhQXIvBla9kNJnYaJ9JVed40REAspU0NgRCkmhQxQmpRs3JoyEmnhMU0UWUAkxpwkoklpaQrgloHxCMcgj6Uy8BpsfiH0o6qwzMgKx4fBQ0IM8CYBOytM6glENOeSiO80pqpsS8tgagaWRR9pn0hM56+UJMP8KZzJqwVYzxXENoBwEB8U7EdKyBfycOyUCcjsasjwvpGwFcqe+sToGUxs8UYEdgqBcwcwk8ugXZSc6s68juYAfZrIwZCpBwMwDYcGdYGMUcRQagqUrGc5TsC5qc6cK5mgqwVEJCNk7R0E7itcmQ+sNQ7iWxsEiqAsicJ5jwig94IIUAv2H+qIXAKCF5UESUVI80hwO0bg5yEclQtglsbojWu4FQcCFZTwK588VYdQbmxgUy4ur0wERCk6YeRsboEe6F5Sl6H8u8WF+wWwxO+FaRoCFcVEn0ewFQxw+gcZ+plwz8JSIGaC-AWFFoom3IAeIcqgapOQbFECnF+MPF06K5dxLQDxSpzxFYYZZQ7MWSMwDI0ExwagrQ-6ZSLyKAK5Qac8toRYfiiUjYr0UyRCMwCgFEFc4EA2mAHKTuUAF5AaByegpyBkzWHgBascNGegxYtQLKfmX2M6aqLqK5-qygNkNkZKhhRJCAk83i524J7IBQvFJ6-mjqCVCaNF16dFyhSxgyKV-q6V-IJ+IKDQ247ihlfyi8f0k+s2AGc6wGvAKCwlF5dQmQTlAxNQ2gFQRkx2alRqTIkCZyplpVF6TqIlVV3u96ByMU7E6gxgr6BaEEZotK7I5k9OsVNaJSeGBGRGK5ocLodCRYFEkCapC0VQ7RjIARFonVfF3VPGfGFpa1uygpOJxgzQkmJYGUaGiw2kcw-IYCyiepRVcVv5aA-5gFXAwFoFANC4pOygroBxt0uMBa9Mtg+hjQborQ6GhVM2xVa8xWIWZWbOlWK5+g6hYee4scFcIeCgrQH0hJDK-InGZ1AWlw12I2KlIy6lTxKi3WaphQzgAVdyyUiU21DOTO6OmOEWKl88WQfy1pboxQk8rmbFyM2Q3xdoFEWUGubcSZkAK5DiWwfItEEujYstvuxQnoMe7o5NduDuPlrwYAru92dtLZkZhCTI7tqGuZFQkURYwaNgMwjgWU8eLOolno3alYjQ2MG408jYBun03I0E0yKGIpoxYR4xvYF5ypByDgfWGQuMnRLIn0g5gxugBFQqJdYxFREpIxy+9elxtBSxEKRCyUqgsFXtDduZHEesnaNoJYfiX1t+mBpd5RFhL+A4RBn+3+z4flouu4Ul2Qr5BsQEgqF+x+yUeiHdZdXdDJIx1hthfAakVZYUuMAZOg1sHG+wDEcFZQEE3IAV25et-ql9K9lRURP+-1A93uL9s0CM8uPWX9jomMW5NgFoEK9MVNfEIxndFh1RttWNzJ+4WQVIugeg0E1OmV-Isw-hqDQRsgJx3gQAA */
   model.createMachine(
     {
       predictableActionArguments: true,
       preserveActionOrder: true,
-      tsTypes: {} as import('./scan.typegen').Typegen0,
+      tsTypes: {} as import('./scanMachine.typegen').Typegen0,
       schema: {
         context: model.initialContext,
         events: {} as EventFrom<typeof model>,
@@ -143,7 +126,7 @@ export const scanMachine =
           target: '.inactive',
         },
         SCREEN_FOCUS: {
-          target: '.checkingBluetoothService',
+          target: '.startPermissionCheck',
         },
         BLE_ERROR: {
           target: '.handlingBleError',
@@ -154,7 +137,62 @@ export const scanMachine =
         inactive: {
           entry: 'removeLoggers',
         },
-        checkingBluetoothService: {
+        startPermissionCheck: {
+          on: {
+            START_PERMISSION_CHECK: [
+              {
+                cond: 'uptoAndroid11',
+                target: '#scan.checkBluetoothPermission',
+              },
+              {
+                cond: 'isIOS',
+                target: '#scan.checkBluetoothPermission',
+              },
+              {
+                target: '#scan.checkNearbyDevicesPermission',
+              },
+            ],
+          },
+        },
+
+        checkNearbyDevicesPermission: {
+          initial: 'checking',
+          states: {
+            checking: {
+              invoke: {
+                src: 'checkNearByDevicesPermission',
+              },
+              on: {
+                NEARBY_ENABLED: {
+                  target: 'enabled',
+                },
+                NEARBY_DISABLED: {
+                  target: 'requesting',
+                },
+              },
+            },
+            requesting: {
+              invoke: {
+                src: 'requestNearByDevicesPermission',
+              },
+              on: {
+                NEARBY_ENABLED: {
+                  target: '#scan.checkBluetoothPermission',
+                },
+                NEARBY_DISABLED: {
+                  target: '#scan.nearByDevicesPermissionDenied',
+                },
+              },
+            },
+            enabled: {
+              always: {
+                target: '#scan.checkBluetoothPermission',
+              },
+            },
+          },
+        },
+
+        checkBluetoothPermission: {
           initial: 'checking',
           states: {
             checking: {
@@ -162,12 +200,43 @@ export const scanMachine =
                 src: 'checkBluetoothPermission',
               },
               on: {
-                BLUETOOTH_ALLOWED: {
+                BLUETOOTH_PERMISSION_ENABLED: {
+                  actions: 'setReadyForBluetoothStateCheck',
                   target: 'enabled',
                 },
-                BLUETOOTH_DENIED: {
-                  target: '#scan.bluetoothDenied',
+                BLUETOOTH_PERMISSION_DENIED: {
+                  target: '#scan.bluetoothPermissionDenied',
                 },
+              },
+            },
+            enabled: {
+              always: {
+                target: '#scan.checkBluetoothState',
+              },
+            },
+          },
+        },
+
+        checkBluetoothState: {
+          initial: 'checking',
+          states: {
+            checking: {
+              invoke: {
+                src: 'checkBluetoothState',
+              },
+              on: {
+                BLUETOOTH_STATE_ENABLED: {
+                  target: 'enabled',
+                },
+                BLUETOOTH_STATE_DISABLED: [
+                  {
+                    cond: 'isIOS',
+                    target: '#scan.checkBluetoothPermission',
+                  },
+                  {
+                    target: 'requesting',
+                  },
+                ],
               },
             },
             requesting: {
@@ -175,35 +244,88 @@ export const scanMachine =
                 src: 'requestBluetooth',
               },
               on: {
-                BLUETOOTH_ENABLED: {
+                BLUETOOTH_STATE_ENABLED: {
                   target: 'enabled',
                 },
-                BLUETOOTH_DISABLED: {
+                BLUETOOTH_STATE_DISABLED: {
                   target: '#scan.bluetoothDenied',
                 },
               },
             },
             enabled: {
-              always: {
-                target: '#scan.checkingLocationService',
-              },
+              always: [
+                {
+                  cond: 'uptoAndroid11',
+                  target: '#scan.checkingLocationService',
+                },
+                {
+                  target: '#scan.clearingConnection',
+                },
+              ],
             },
           },
         },
-        bluetoothDenied: {
+
+        recheckBluetoothState: {
+          initial: 'checking',
+          states: {
+            checking: {
+              invoke: {
+                src: 'checkBluetoothState',
+              },
+              on: {
+                BLUETOOTH_STATE_ENABLED: {
+                  target: 'enabled',
+                },
+                BLUETOOTH_STATE_DISABLED: {
+                  target: '#scan.bluetoothDenied',
+                },
+              },
+            },
+            enabled: {
+              always: [
+                {
+                  cond: 'uptoAndroid11',
+                  target: '#scan.checkingLocationService',
+                },
+                {
+                  target: '#scan.clearingConnection',
+                },
+              ],
+            },
+          },
+        },
+
+        bluetoothPermissionDenied: {
           on: {
-            APP_ACTIVE: '#scan.checkingBluetoothService',
+            APP_ACTIVE: '#scan.checkBluetoothState',
             GOTO_SETTINGS: {
               actions: 'openBluetoothSettings',
             },
           },
         },
+
+        bluetoothDenied: {
+          on: {
+            APP_ACTIVE: '#scan.recheckBluetoothState',
+          },
+        },
+
+        nearByDevicesPermissionDenied: {
+          on: {
+            APP_ACTIVE: '#scan.checkNearbyDevicesPermission',
+            GOTO_SETTINGS: {
+              actions: 'openAppPermission',
+            },
+          },
+        },
+
         clearingConnection: {
           invoke: {
             src: 'disconnect',
           },
           on: {
-            CONNECTION_DESTROYED: {
+            DISCONNECT: {
               target: '#scan.findingConnection',
               actions: [],
               internal: false,
@@ -221,20 +343,15 @@ export const scanMachine =
           entry: [
             'removeLoggers',
             'registerLoggers',
-            'clearScannedQrParams',
+            'clearUri',
             'setChildRef',
           ],
           on: {
             SCAN: [
               {
-                target: 'preparingToConnect',
-                cond: 'isQrOffline',
-                actions: 'setConnectionParams',
-              },
-              {
-                target: 'preparingToConnect',
-                cond: 'isQrOnline',
-                actions: 'setScannedQrParams',
+                target: 'connecting',
+                cond: 'isOpenIdQr',
+                actions: 'setUri',
               },
               {
                 target: 'showQrLogin',
@@ -272,18 +389,9 @@ export const scanMachine =
           },
           entry: 'sendScanData',
         },
-        preparingToConnect: {
-          entry: 'requestSenderInfo',
-          on: {
-            RECEIVE_DEVICE_INFO: {
-              target: 'connecting',
-              actions: 'setSenderInfo',
-            },
-          },
-        },
         connecting: {
           invoke: {
-            src: 'discoverDevice',
+            src: 'startConnection',
           },
           initial: 'inProgress',
           states: {
@@ -306,39 +414,8 @@ export const scanMachine =
           },
           on: {
             CONNECTED: {
-              target: 'exchangingDeviceInfo',
-            },
-          },
-        },
-        exchangingDeviceInfo: {
-          invoke: {
-            src: 'exchangeDeviceInfo',
-          },
-          initial: 'inProgress',
-          after: {
-            CONNECTION_TIMEOUT: {
-              target: '#scan.exchangingDeviceInfo.timeout',
-              actions: [],
-              internal: false,
-            },
-          },
-          states: {
-            inProgress: {},
-            timeout: {
-              on: {
-                CANCEL: {
-                  target: '#scan.reviewing.cancelling',
-                },
-              },
-            },
-          },
-          on: {
-            DISCONNECT: {
-              target: 'disconnected',
-            },
-            EXCHANGE_DONE: {
               target: 'reviewing',
-              actions: 'setReceiverInfo',
+              actions: ['setSenderInfo', 'setReceiverInfo'],
             },
           },
         },
@@ -374,9 +451,6 @@ export const scanMachine =
               },
             },
             cancelling: {
-              invoke: {
-                src: 'sendDisconnect',
-              },
               always: {
                 target: '#scan.clearingConnection',
               },
@@ -583,30 +657,34 @@ export const scanMachine =
             : Linking.openURL('App-Prefs:Bluetooth');
         },
 
-        requestSenderInfo: sendParent('REQUEST_DEVICE_INFO'),
-
-        setSenderInfo: model.assign({
-          senderInfo: (_context, event) => event.info,
-        }),
+        openAppPermission: () => {
+          Linking.openSettings();
+        },
 
         requestToEnableLocation: () => requestLocation(),
 
-        setConnectionParams: (_context, event) => {
-          Openid4vpBle.setConnectionParameters(event.params);
-        },
-
-        setScannedQrParams: model.assign({
-          scannedQrParams: (_context, event) =>
-            JSON.parse(event.params) as ConnectionParams,
-          sharingProtocol: 'ONLINE',
+        setUri: model.assign({
+          openId4VpUri: (_context, event) => event.params,
         }),
 
-        clearScannedQrParams: assign({
-          scannedQrParams: {} as ConnectionParams,
+        clearUri: assign({
+          openId4VpUri: '',
         }),
 
-        setReceiverInfo: model.assign({
-          receiverInfo: (_context, event) => event.receiverInfo,
+        setSenderInfo: assign({
+          senderInfo: () => {
+            return { name: 'Wallet', deviceName: 'Wallet', deviceId: '' };
+          },
+        }),
+
+        setReceiverInfo: assign({
+          receiverInfo: () => {
+            return { name: 'Verifier', deviceName: 'Verifier', deviceId: '' };
+          },
+        }),
+
+        setReadyForBluetoothStateCheck: model.assign({
+          readyForBluetoothStateCheck: () => true,
         }),
 
         setReason: model.assign({
@@ -637,25 +715,14 @@ export const scanMachine =
           createdVp: () => null,
         }),
 
-        setBleError: assign({
-          bleError: (_context, event) => event.bleError,
-        }),
-
         registerLoggers: assign({
-          loggers: (context) => {
-            if (context.sharingProtocol === 'OFFLINE' && __DEV__) {
+          loggers: () => {
+            if (__DEV__) {
               return [
-                Openid4vpBle.handleNearbyEvents((event) => {
+                wallet.handleDataEvents((event) => {
                   console.log(
                     getDeviceNameSync(),
                     '<Sender.Event>',
-                    JSON.stringify(event).slice(0, 100)
-                  );
-                }),
-                Openid4vpBle.handleLogEvents((event) => {
-                  console.log(
-                    getDeviceNameSync(),
-                    '<Sender.Log>',
                     JSON.stringify(event).slice(0, 100)
                   );
                 }),
@@ -771,19 +838,30 @@ export const scanMachine =
             }
 
             if (response === RESULTS.GRANTED) {
-              callback(model.events.BLUETOOTH_ALLOWED());
+              callback(model.events.BLUETOOTH_PERMISSION_ENABLED());
             } else {
-              callback(model.events.BLUETOOTH_DENIED());
+              callback(model.events.BLUETOOTH_PERMISSION_DENIED());
             }
           } catch (e) {
             console.error(e);
           }
         },
 
+        checkBluetoothState: () => (callback) => {
+          const subscription = BluetoothStateManager.onStateChange((state) => {
+            if (state === 'PoweredOn') {
+              callback(model.events.BLUETOOTH_STATE_ENABLED());
+            } else {
+              callback(model.events.BLUETOOTH_STATE_DISABLED());
+            }
+          }, true);
+          return () => subscription.remove();
+        },
+
         requestBluetooth: () => (callback) => {
           BluetoothStateManager.requestToEnable()
-            .then(() => callback(model.events.BLUETOOTH_ENABLED()))
-            .catch(() => callback(model.events.BLUETOOTH_DISABLED()));
+            .then(() => callback(model.events.BLUETOOTH_STATE_ENABLED()))
+            .catch(() => callback(model.events.BLUETOOTH_STATE_DISABLED()));
         },
 
         checkLocationPermission: () => async (callback) => {
@@ -794,10 +872,7 @@ export const scanMachine =
             let response: PermissionStatus;
             if (Platform.OS === 'android') {
               response = await check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
-            } else if (Platform.OS === 'ios') {
-              return callback(model.events.LOCATION_ENABLED());
             }
-
             if (response === 'granted') {
               callback(model.events.LOCATION_ENABLED());
             } else {
@@ -808,23 +883,65 @@ export const scanMachine =
           }
         },
 
-        monitorConnection: (context) => (callback) => {
-          if (context.sharingProtocol === 'OFFLINE') {
-            const subscription = Openid4vpBle.handleNearbyEvents((event) => {
-              if (event.type === 'onDisconnected') {
-                callback({ type: 'DISCONNECT' });
-              }
-              if (event.type === 'onError') {
-                callback({
-                  type: 'BLE_ERROR',
-                  bleError: { message: event.message, code: event.code },
-                });
-                console.log(`BLE Exception:${event.code} ${event.message}`);
-              }
-            });
+        monitorConnection: () => (callback) => {
+          const subscription = wallet.handleDataEvents((event) => {
+            if (event.type === EventTypes.onDisconnected) {
+              callback({ type: 'DISCONNECT' });
+            }
+            if (event.type === EventTypes.onError) {
+              callback({
+                type: 'BLE_ERROR',
+                bleError: { message: event.message, code: event.code },
+              });
+              console.log('BLE Exception: ' + event.message);
+            }
+          });
 
-            return () => subscription.remove();
-          }
+          return () => subscription.remove();
+        },
+
+        checkNearByDevicesPermission: () => (callback) => {
+          checkMultiple([
+            PERMISSIONS.ANDROID.BLUETOOTH_CONNECT,
+            PERMISSIONS.ANDROID.BLUETOOTH_SCAN,
+          ])
+            .then((response) => {
+              if (
+                response[PERMISSIONS.ANDROID.BLUETOOTH_ADVERTISE] ===
+                  RESULTS.GRANTED &&
+                response[PERMISSIONS.ANDROID.BLUETOOTH_CONNECT] ===
+                  RESULTS.GRANTED
+              ) {
+                callback(model.events.NEARBY_ENABLED());
+              } else {
+                callback(model.events.NEARBY_DISABLED());
+              }
+            })
+            .catch((err) => {
+              callback(model.events.NEARBY_DISABLED());
+            });
+        },
+
+        requestNearByDevicesPermission: () => (callback) => {
+          requestMultiple([
+            PERMISSIONS.ANDROID.BLUETOOTH_SCAN,
+            PERMISSIONS.ANDROID.BLUETOOTH_CONNECT,
+          ])
+            .then((response) => {
+              if (
+                response[PERMISSIONS.ANDROID.BLUETOOTH_SCAN] ===
+                  RESULTS.GRANTED &&
+                response[PERMISSIONS.ANDROID.BLUETOOTH_CONNECT] ===
+                  RESULTS.GRANTED
+              ) {
+                callback(model.events.NEARBY_ENABLED());
+              } else {
+                callback(model.events.NEARBY_DISABLED());
+              }
+            })
+            .catch((err) => {
+              callback(model.events.NEARBY_DISABLED());
+            });
         },
 
         checkLocationStatus: () => (callback) => {
@@ -834,127 +951,45 @@ export const scanMachine =
           );
         },
 
-        discoverDevice: (context) => (callback) => {
-          if (context.sharingProtocol === 'OFFLINE') {
-            Openid4vpBle.createConnection('discoverer', () => {
+        startConnection: (context) => (callback) => {
+          wallet.startConnection(context.openId4VpUri);
+          const statusCallback = (event: WalletDataEvent) => {
+            if (event.type === EventTypes.onSecureChannelEstablished) {
               callback({ type: 'CONNECTED' });
-            });
-          } else {
-            (async function () {
-              GoogleNearbyMessages.addOnErrorListener((kind, message) =>
-                console.log('\n\n[scan] GNM_ERROR\n\n', kind, message)
-              );
-
-              await GoogleNearbyMessages.connect({
-                apiKey: GNM_API_KEY,
-                discoveryMediums: ['ble'],
-                discoveryModes: ['scan', 'broadcast'],
-              });
-              console.log('[scan] GNM connected!');
-
-              await onlineSubscribe('pairing:response', async (response) => {
-                await GoogleNearbyMessages.unpublish();
-                if (response === 'ok') {
-                  callback({ type: 'CONNECTED' });
-                }
-              });
-
-              const pairingEvent: PairingEvent = {
-                type: 'pairing',
-                data: context.scannedQrParams,
-              };
-
-              await onlineSend(pairingEvent);
-            })();
-          }
-        },
-
-        exchangeDeviceInfo: (context) => (callback) => {
-          const event: ExchangeSenderInfoEvent = {
-            type: 'exchange-sender-info',
-            data: context.senderInfo,
+            }
           };
 
-          if (context.sharingProtocol === 'OFFLINE') {
-            let subscription: EmitterSubscription;
-            offlineSend(event, () => {
-              subscription = offlineSubscribe(
-                'exchange-receiver-info',
-                (receiverInfo) => {
-                  callback({ type: 'EXCHANGE_DONE', receiverInfo });
-                }
-              );
-            });
-            return () => subscription?.remove();
-          } else {
-            (async function () {
-              await onlineSubscribe(
-                'exchange-receiver-info',
-                async (receiverInfo) => {
-                  await GoogleNearbyMessages.unpublish();
-                  callback({ type: 'EXCHANGE_DONE', receiverInfo });
-                }
-              );
-
-              await onlineSend(event);
-            })();
-          }
+          const subscription = subscribe(statusCallback);
+          return () => subscription?.remove();
         },
 
         sendVc: (context) => (callback) => {
-          let subscription: EmitterSubscription;
           const vp = context.createdVp;
           const vc = {
             ...(vp != null ? vp : context.selectedVc),
             tag: '',
           };
 
-          const statusCallback = (status: SendVcStatus) => {
-            if (typeof status === 'number') return;
-            if (status === 'RECEIVED') {
+          const statusCallback = (event: WalletDataEvent) => {
+            if (event.type === EventTypes.onDataSent) {
               callback({ type: 'VC_SENT' });
-            } else {
+            } else if (event.type === EventTypes.onVerificationStatusReceived) {
               callback({
-                type: status === 'ACCEPTED' ? 'VC_ACCEPTED' : 'VC_REJECTED',
+                type:
+                  event.status === VerificationStatus.ACCEPTED
+                    ? 'VC_ACCEPTED'
+                    : 'VC_REJECTED',
               });
             }
           };
-
-          if (context.sharingProtocol === 'OFFLINE') {
-            const event: SendVcEvent = {
-              type: 'send-vc',
-              data: { isChunked: false, vc },
-            };
-            offlineSend(event, () => {
-              subscription = offlineSubscribe(
-                SendVcResponseType,
-                statusCallback
-              );
-            });
-            return () => subscription?.remove();
-          } else {
-            sendVc(vc, statusCallback, () => callback({ type: 'DISCONNECT' }));
-          }
+          wallet.sendData(JSON.stringify(vc));
+          const subscription = subscribe(statusCallback);
+          return () => subscription?.remove();
         },
 
-        sendDisconnect: (context) => () => {
-          if (context.sharingProtocol === 'ONLINE') {
-            onlineSend({
-              type: 'disconnect',
-              data: 'rejected',
-            });
-          }
-        },
-
-        disconnect: (context) => (callback) => {
+        disconnect: () => () => {
           try {
-            if (context.sharingProtocol === 'OFFLINE') {
-              Openid4vpBle.destroyConnection(() => {
-                callback({ type: 'CONNECTION_DESTROYED' });
-              });
-            } else {
-              GoogleNearbyMessages.disconnect();
-            }
+            wallet.disconnect();
           } catch (e) {
             // pass
           }
@@ -981,24 +1016,14 @@ export const scanMachine =
       },
 
       guards: {
-        isQrOffline: (_context, event) => {
+        isOpenIdQr: (_context, event) => {
           // don't scan if QR is offline and Google Nearby is enabled
-          if (Platform.OS === 'ios' && !isBLEEnabled) return false;
-
-          const param: ConnectionParams = Object.create(null);
-          try {
-            Object.assign(param, JSON.parse(event.params));
-            return 'cid' in param && 'pk' in param && param.pk !== '';
-          } catch (e) {
+          if (Platform.OS === 'ios' && !event.params.includes('OPENID4VP://'))
             return false;
-          }
-        },
 
-        isQrOnline: (_context, event) => {
-          const param: ConnectionParams = Object.create(null);
           try {
-            Object.assign(param, JSON.parse(event.params));
-            return 'cid' in param && 'pk' in param && param.pk === '';
+            const pk = event.params.split('OPENID4VP://')[1];
+            return pk != '';
           } catch (e) {
             return false;
           }
@@ -1016,16 +1041,16 @@ export const scanMachine =
             return false;
           }
         },
+
+        uptoAndroid11: () => Platform.OS === 'android' && Platform.Version < 31,
+
+        isIOS: () => Platform.OS === 'ios',
       },
 
       delays: {
         DESTROY_TIMEOUT: 500,
-        CONNECTION_TIMEOUT: (context) => {
-          return (context.sharingProtocol === 'ONLINE' ? 15 : 5) * 1000;
-        },
-        SHARING_TIMEOUT: (context) => {
-          return (context.sharingProtocol === 'ONLINE' ? 45 : 15) * 1000;
-        },
+        CONNECTION_TIMEOUT: 5 * 1000,
+        SHARING_TIMEOUT: 15 * 1000,
       },
     }
   );
@@ -1035,166 +1060,4 @@ export function createScanMachine(serviceRefs: AppServices) {
     ...scanMachine.context,
     serviceRefs,
   });
-}
-
-type State = StateFrom<typeof scanMachine>;
-
-export function selectReceiverInfo(state: State) {
-  return state.context.receiverInfo;
-}
-
-export function selectReason(state: State) {
-  return state.context.reason;
-}
-
-export function selectVcName(state: State) {
-  return state.context.vcName;
-}
-
-export function selectSelectedVc(state: State) {
-  return state.context.selectedVc;
-}
-
-export function selectIsScanning(state: State) {
-  return state.matches('findingConnection');
-}
-
-export function selectIsConnecting(state: State) {
-  return state.matches('connecting.inProgress');
-}
-
-export function selectIsConnectingTimeout(state: State) {
-  return state.matches('connecting.timeout');
-}
-
-export function selectIsExchangingDeviceInfo(state: State) {
-  return state.matches('exchangingDeviceInfo.inProgress');
-}
-
-export function selectIsExchangingDeviceInfoTimeout(state: State) {
-  return state.matches('exchangingDeviceInfo.timeout');
-}
-
-export function selectIsReviewing(state: State) {
-  return state.matches('reviewing');
-}
-
-export function selectIsSelectingVc(state: State) {
-  return state.matches('reviewing.selectingVc');
-}
-
-export function selectIsSendingVc(state: State) {
-  return state.matches('reviewing.sendingVc.inProgress');
-}
-
-export function selectIsSendingVcTimeout(state: State) {
-  return state.matches('reviewing.sendingVc.timeout');
-}
-
-export function selectIsAccepted(state: State) {
-  return state.matches('reviewing.accepted');
-}
-
-export function selectIsRejected(state: State) {
-  return state.matches('reviewing.rejected');
-}
-
-export function selectIsInvalid(state: State) {
-  return state.matches('invalid');
-}
-
-export function selectIsBluetoothDenied(state: State) {
-  return state.matches('bluetoothDenied');
-}
-
-export function selectIsLocationDenied(state: State) {
-  return state.matches('checkingLocationService.denied');
-}
-
-export function selectIsLocationDisabled(state: State) {
-  return state.matches('checkingLocationService.disabled');
-}
-
-export function selectIsDone(state: State) {
-  return state.matches('reviewing.navigatingToHome');
-}
-
-export function selectIsVerifyingIdentity(state: State) {
-  return state.matches('reviewing.verifyingIdentity');
-}
-
-export function selectIsInvalidIdentity(state: State) {
-  return state.matches('reviewing.invalidIdentity');
-}
-
-export function selectIsCancelling(state: State) {
-  return state.matches('reviewing.cancelling');
-}
-
-export function selectIsHandlingBleError(state: State) {
-  return state.matches('handlingBleError');
-}
-
-async function sendVc(
-  vc: VC,
-  callback: (status: SendVcStatus) => void,
-  disconnectCallback: () => void
-) {
-  const rawData = JSON.stringify(vc);
-  const chunks = chunkString(rawData, GNM_MESSAGE_LIMIT);
-  if (chunks.length > 1) {
-    let chunk = 0;
-    const vcChunk = {
-      total: chunks.length,
-      chunk,
-      rawData: chunks[chunk],
-    };
-    const event: SendVcEvent = {
-      type: 'send-vc',
-      data: {
-        isChunked: true,
-        vcChunk,
-      },
-    };
-
-    await onlineSubscribe(
-      SendVcResponseType,
-      async (status) => {
-        if (typeof status === 'number' && chunk < event.data.vcChunk.total) {
-          chunk += 1;
-          await GoogleNearbyMessages.unpublish();
-          await onlineSend({
-            type: 'send-vc',
-            data: {
-              isChunked: true,
-              vcChunk: {
-                total: chunks.length,
-                chunk,
-                rawData: chunks[chunk],
-              },
-            },
-          });
-        } else if (typeof status === 'string') {
-          if (status === 'ACCEPTED' || status === 'REJECTED') {
-            GoogleNearbyMessages.unsubscribe();
-          }
-          callback(status);
-        }
-      },
-      disconnectCallback,
-      { keepAlive: true }
-    );
-    await onlineSend(event);
-  } else {
-    const event: SendVcEvent = {
-      type: 'send-vc',
-      data: { isChunked: false, vc },
-    };
-    await onlineSubscribe(SendVcResponseType, callback);
-    await onlineSend(event);
-  }
-}
-
-function chunkString(str: string, length: number) {
-  return str.match(new RegExp('.{1,' + length + '}', 'g'));
 }

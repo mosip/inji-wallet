@@ -63,7 +63,6 @@
     "react-native-keychain": "^8.0.0",
     "react-native-location-enabler": "^4.1.0",
     "react-native-mmkv-storage": "0.8.0",
-    "react-native-openid4vp-ble": "github:mosip/tuvali#v0.4.0",
     "react-native-permissions": "^3.6.0",
     "react-native-popable": "^0.4.3",
     "react-native-qrcode-svg": "^6.1.1",
@@ -76,6 +75,7 @@
     "react-native-simple-markdown": "^1.1.0",
     "react-native-svg": "12.1.1",
     "react-native-swipe-gestures": "^1.0.5",
+    "react-native-tuvali": "github:mosip/tuvali#v0.4.1",
     "react-native-uuid": "^2.0.1",
     "react-native-vector-icons": "^8.1.0",
     "xstate": "^4.35.0"

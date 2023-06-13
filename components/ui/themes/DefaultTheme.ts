@@ -302,6 +302,10 @@ export const DefaultTheme = {
     placeholder: {
       fontFamily: 'Poppins_400Regular',
     },
+    warningText: {
+      color: Colors.Red,
+      fontSize: 18,
+    },
   }),
   PinInputStyle: StyleSheet.create({
     input: {

@@ -9,14 +9,8 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
-    'xstate.after(CANCEL_TIMEOUT)#request.cancelling': {
-      type: 'xstate.after(CANCEL_TIMEOUT)#request.cancelling';
-    };
-    'xstate.after(CLEAR_DELAY)#request.clearingConnection': {
-      type: 'xstate.after(CLEAR_DELAY)#request.clearingConnection';
-    };
-    'xstate.after(CONNECTION_TIMEOUT)#request.exchangingDeviceInfo.inProgress': {
-      type: 'xstate.after(CONNECTION_TIMEOUT)#request.exchangingDeviceInfo.inProgress';
+    'xstate.after(DESTROY_TIMEOUT)#request.clearingConnection': {
+      type: 'xstate.after(DESTROY_TIMEOUT)#request.clearingConnection';
     };
     'xstate.after(SHARING_TIMEOUT)#request.waitingForVc.inProgress': {
       type: 'xstate.after(SHARING_TIMEOUT)#request.waitingForVc.inProgress';
@@ -27,15 +21,18 @@ export interface Typegen0 {
   'invokeSrcNameMap': {
     advertiseDevice: 'done.invoke.request.waitingForConnection:invocation[0]';
     checkBluetoothService: 'done.invoke.request.checkingBluetoothService.checking:invocation[0]';
-    checkNetwork: 'done.invoke.request.checkingNetwork:invocation[0]';
-    exchangeDeviceInfo: 'done.invoke.request.exchangingDeviceInfo:invocation[0]';
+    checkNearByDevicesPermission: 'done.invoke.request.checkNearbyDevicesPermission.checking:invocation[0]';
+    disconnect:
+      | 'done.invoke.request.clearingConnection:invocation[0]'
+      | 'done.invoke.request.reviewing.navigatingToHome:invocation[0]';
     monitorConnection: 'done.invoke.request:invocation[0]';
     receiveVc: 'done.invoke.request.waitingForVc:invocation[0]';
     requestBluetooth: 'done.invoke.request.checkingBluetoothService.requesting:invocation[0]';
-    sendDisconnect: 'done.invoke.request.cancelling:invocation[0]';
+    requestNearByDevicesPermission: 'done.invoke.request.checkNearbyDevicesPermission.requesting:invocation[0]';
     sendVcResponse:
       | 'done.invoke.request.reviewing.accepted:invocation[0]'
-      | 'done.invoke.request.reviewing.rejected:invocation[0]';
+      | 'done.invoke.request.reviewing.rejected:invocation[0]'
+      | 'done.invoke.request.reviewing.savingFailed:invocation[0]';
     verifyVp: 'done.invoke.request.reviewing.verifyingVp:invocation[0]';
   };
   'missingImplementations': {
@@ -47,101 +44,87 @@ export interface Typegen0 {
   'eventsCausingActions': {
     clearShouldVerifyPresence:
       | 'ACCEPT'
+      | 'BLE_ERROR'
       | 'CANCEL'
       | 'FACE_INVALID'
       | 'FACE_VALID'
       | 'REJECT'
+      | 'RESET'
       | 'SCREEN_BLUR'
       | 'SCREEN_FOCUS'
-      | 'SWITCH_PROTOCOL'
       | 'xstate.stop';
-    disconnect:
-      | ''
+    logReceived: 'CANCEL' | 'REJECT' | 'STORE_ERROR' | 'STORE_RESPONSE';
+    mergeIncomingVc: 'STORE_RESPONSE';
+    openAppPermission: 'GOTO_SETTINGS';
+    prependReceivedVc: 'VC_RESPONSE';
+    registerLoggers:
+      | 'DISCONNECT'
+      | 'DISMISS'
+      | 'xstate.after(DESTROY_TIMEOUT)#request.clearingConnection';
+    removeLoggers:
       | 'DISCONNECT'
       | 'DISMISS'
       | 'SCREEN_BLUR'
-      | 'SCREEN_FOCUS'
-      | 'SWITCH_PROTOCOL'
-      | 'xstate.after(CANCEL_TIMEOUT)#request.cancelling'
-      | 'xstate.stop';
-    generateConnectionParams:
-      | 'DISMISS'
-      | 'xstate.after(CLEAR_DELAY)#request.clearingConnection';
-    logReceived: 'CANCEL' | 'REJECT' | 'STORE_RESPONSE';
-    mergeIncomingVc: 'STORE_RESPONSE';
-    openSettings: 'GOTO_SETTINGS';
-    prependReceivedVc: 'VC_RESPONSE';
-    registerLoggers:
-      | 'DISMISS'
-      | 'xstate.after(CLEAR_DELAY)#request.clearingConnection';
-    removeLoggers:
-      | 'DISMISS'
-      | 'SCREEN_BLUR'
-      | 'xstate.after(CLEAR_DELAY)#request.clearingConnection'
+      | 'xstate.after(DESTROY_TIMEOUT)#request.clearingConnection'
       | 'xstate.init';
     requestExistingVc: 'VC_RESPONSE';
     requestReceivedVcs:
       | 'ACCEPT'
       | 'DISMISS'
       | 'FACE_VALID'
+      | 'VC_RECEIVED'
       | 'done.invoke.request.reviewing.verifyingVp:invocation[0]';
-    requestReceiverInfo: 'CONNECTED';
+    sendVcReceived: 'STORE_RESPONSE';
+    setBleError: 'BLE_ERROR';
     setIncomingVc: 'VC_RECEIVED';
-    setPairId: 'CONNECTED';
-    setReceiveLogTypeDiscarded: 'CANCEL' | 'REJECT';
-    setReceiveLogTypeRegular: 'ACCEPT';
+    setOpenID4VpUri: 'ADV_STARTED';
+    setReadyForBluetoothStateCheck: 'NEARBY_ENABLED';
+    setReceiveLogTypeDiscarded: 'CANCEL' | 'REJECT' | 'STORE_ERROR';
+    setReceiveLogTypeRegular: 'ACCEPT' | 'STORE_RESPONSE';
     setReceiveLogTypeUnverified: 'FACE_INVALID';
     setReceiveLogTypeVerified: 'FACE_VALID';
-    setReceiverInfo: 'RECEIVE_DEVICE_INFO';
-    setSenderInfo: 'EXCHANGE_DONE';
+    setReceiverInfo: 'CONNECTED';
+    setSenderInfo: 'CONNECTED';
+    setStoringError: 'STORE_ERROR';
     storeVc: 'STORE_RESPONSE';
-    switchProtocol: 'SWITCH_PROTOCOL';
-    updateReceivedVcs: 'STORE_RESPONSE';
   };
   'eventsCausingDelays': {
-    CANCEL_TIMEOUT: 'CANCEL';
-    CLEAR_DELAY: '';
-    CONNECTION_TIMEOUT: 'RECEIVE_DEVICE_INFO';
-    SHARING_TIMEOUT: 'EXCHANGE_DONE';
+    DESTROY_TIMEOUT: '' | 'DISMISS';
+    SHARING_TIMEOUT: 'CONNECTED';
   };
   'eventsCausingGuards': {
     hasExistingVc: 'VC_RESPONSE';
-    isModeOnline: 'SCREEN_FOCUS' | 'SWITCH_PROTOCOL';
   };
   'eventsCausingServices': {
     advertiseDevice:
+      | 'DISCONNECT'
       | 'DISMISS'
-      | 'xstate.after(CLEAR_DELAY)#request.clearingConnection';
-    checkBluetoothService:
-      | 'ONLINE'
-      | 'SCREEN_FOCUS'
-      | 'SWITCH_PROTOCOL'
-      | 'xstate.after(CANCEL_TIMEOUT)#request.cancelling';
-    checkNetwork: 'APP_ACTIVE' | 'SCREEN_FOCUS' | 'SWITCH_PROTOCOL';
-    exchangeDeviceInfo: 'RECEIVE_DEVICE_INFO';
+      | 'xstate.after(DESTROY_TIMEOUT)#request.clearingConnection';
+    checkBluetoothService: 'NEARBY_ENABLED';
+    checkNearByDevicesPermission: 'APP_ACTIVE' | 'RESET' | 'SCREEN_FOCUS';
+    disconnect: '' | 'DISMISS' | 'GO_TO_RECEIVED_VC_TAB';
     monitorConnection: 'xstate.init';
-    receiveVc: 'EXCHANGE_DONE';
-    requestBluetooth: 'BLUETOOTH_DISABLED';
-    sendDisconnect: 'CANCEL';
-    sendVcResponse: 'CANCEL' | 'REJECT' | 'STORE_RESPONSE';
+    receiveVc: 'CONNECTED';
+    requestBluetooth: 'BLUETOOTH_STATE_DISABLED';
+    requestNearByDevicesPermission: 'NEARBY_DISABLED';
+    sendVcResponse: 'CANCEL' | 'REJECT' | 'STORE_ERROR' | 'STORE_RESPONSE';
     verifyVp: never;
   };
   'matchesStates':
     | 'bluetoothDenied'
     | 'cancelling'
+    | 'checkNearbyDevicesPermission'
+    | 'checkNearbyDevicesPermission.checking'
+    | 'checkNearbyDevicesPermission.requesting'
     | 'checkingBluetoothService'
     | 'checkingBluetoothService.checking'
     | 'checkingBluetoothService.enabled'
     | 'checkingBluetoothService.requesting'
-    | 'checkingNetwork'
     | 'clearingConnection'
     | 'disconnected'
-    | 'exchangingDeviceInfo'
-    | 'exchangingDeviceInfo.inProgress'
-    | 'exchangingDeviceInfo.timeout'
+    | 'handlingBleError'
     | 'inactive'
-    | 'offline'
-    | 'preparingToExchangeInfo'
+    | 'nearByDevicesPermissionDenied'
     | 'reviewing'
     | 'reviewing.accepted'
     | 'reviewing.accepting'
@@ -154,6 +137,9 @@ export interface Typegen0 {
     | 'reviewing.invalidIdentity'
     | 'reviewing.navigatingToHome'
     | 'reviewing.rejected'
+    | 'reviewing.savingFailed'
+    | 'reviewing.savingFailed.idle'
+    | 'reviewing.savingFailed.viewingVc'
     | 'reviewing.verifyingIdentity'
     | 'reviewing.verifyingVp'
     | 'waitingForConnection'
@@ -161,8 +147,8 @@ export interface Typegen0 {
     | 'waitingForVc.inProgress'
     | 'waitingForVc.timeout'
     | {
+        checkNearbyDevicesPermission?: 'checking' | 'requesting';
         checkingBluetoothService?: 'checking' | 'enabled' | 'requesting';
-        exchangingDeviceInfo?: 'inProgress' | 'timeout';
         reviewing?:
           | 'accepted'
           | 'accepting'
@@ -170,6 +156,7 @@ export interface Typegen0 {
           | 'invalidIdentity'
           | 'navigatingToHome'
           | 'rejected'
+          | 'savingFailed'
           | 'verifyingIdentity'
           | 'verifyingVp'
           | {
@@ -179,6 +166,7 @@ export interface Typegen0 {
                 | 'requestingExistingVc'
                 | 'requestingReceivedVcs'
                 | 'storingVc';
+              savingFailed?: 'idle' | 'viewingVc';
             };
         waitingForVc?: 'inProgress' | 'timeout';
       };
