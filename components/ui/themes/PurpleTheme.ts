@@ -193,9 +193,8 @@ export const PurpleTheme = {
     openDetailsHeader: {
       flex: 1,
       justifyContent: 'space-between',
-      padding: 10,
-      paddingRight: 0,
-      paddingBottom: 0,
+      paddingLeft: 10,
+      paddingTop: 10,
     },
     logo: {
       height: 33,
@@ -204,16 +203,14 @@ export const PurpleTheme = {
     loadingCardDetailsHeader: {
       flex: 1,
       justifyContent: 'space-between',
-      padding: 5,
-      paddingRight: 0,
-      paddingBottom: 0,
+      paddingLeft: 5,
+      paddingTop: 5,
     },
     cardDetailsHeader: {
       flex: 1,
       justifyContent: 'space-between',
-      padding: 10,
-      paddingRight: 0,
-      paddingBottom: 0,
+      paddingLeft: 10,
+      paddingTop: 10,
     },
     mosipLogoContainer: {
       backgroundColor: 'white',
