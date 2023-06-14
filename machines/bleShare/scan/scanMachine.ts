@@ -687,6 +687,10 @@ export const scanMachine =
           readyForBluetoothStateCheck: () => true,
         }),
 
+        setBleError: assign({
+          bleError: (_context, event) => event.bleError,
+        }),
+
         setReason: model.assign({
           reason: (_context, event) => event.reason,
         }),
@@ -1016,18 +1020,7 @@ export const scanMachine =
       },
 
       guards: {
-        isOpenIdQr: (_context, event) => {
-          // don't scan if QR is offline and Google Nearby is enabled
-          if (Platform.OS === 'ios' && !event.params.includes('OPENID4VP://'))
-            return false;
-
-          try {
-            const pk = event.params.split('OPENID4VP://')[1];
-            return pk != '';
-          } catch (e) {
-            return false;
-          }
-        },
+        isOpenIdQr: (_context, event) => event.params.includes('OPENID4VP://'),
 
         isQrLogin: (_context, event) => {
           let linkCode = '';
