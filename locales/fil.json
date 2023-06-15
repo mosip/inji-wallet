@@ -337,15 +337,15 @@
     "sharingVc": "Pagbabahagi ng Card",
     "errors": {
       "locationDisabled": {
-        "message": "Dapat na nakabukas ang Location services ng iyong mobile para maaaring makapag-scan",
+        "message": "Dapat na pinagana ang mga serbisyo ng lokasyon upang makapagbahagi ng card",
         "button": "Buksan ang location services"
       },
       "locationDenied": {
-        "message": "Kinakailangan ang pahintulot sa lokasyon ng iyong mobile para maaaring makapag-scan",
+        "message": "Kailangan ng pahintulot sa lokasyon para makapagbahagi ng card",
         "button": "Payagan ng pahintulot sa lokasyon"
       },
       "nearbyDevicesPermissionDenied": {
-        "message": "Kinakailangan ang pahintulot ng Mga Kalapit na Device para sa functionality ng pag-scan",
+        "message": "Kinakailangan ang pahintulot ng Mga Kalapit na Device upang makapagbahagi ng card",
         "button": "Pahintulutan"
       }
     },
