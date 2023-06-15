@@ -5,6 +5,7 @@ APPLICATION_THEME = ENV["APPLICATION_THEME"]
 RELEASE_KEYSTORE_ALIAS = ENV["RELEASE_KEYSTORE_ALIAS"]
 RELEASE_KEYSTORE_PASSWORD = ENV["RELEASE_KEYSTORE_PASSWORD"]
 PLAY_CONSOLE_RELEASE_DESCRIPTION = ENV["PLAY_CONSOLE_RELEASE_DESCRIPTION"]
+SLACK_URL = ENV["SLACK_URL"]
 
 desc "Verify Build for Android"
 lane :android_build do
@@ -14,7 +15,7 @@ lane :android_build do
 end
 
 desc "Deploy a alpha version to the Google Play"
-lane :android_build_alpha do
+lane :android_build_internal do
   previous_build_number = google_play_track_version_codes(
     package_name: "io.mosip.residentapp",
     track: "internal",
@@ -27,10 +28,25 @@ lane :android_build_alpha do
     gradle_file_path: "app/build.gradle",
     version_code: current_build_number
   )
+  
+  #git_tag = sh('git describe --tags --abbrev=0').strip
+  git_commit = sh('git rev-parse --short HEAD').strip
+  git_branch = sh('git rev-parse --abbrev-ref HEAD').strip
+
+  versionName = "#{git_commit}-#{git_branch}"
+  #add this befor #{git_tag}-
 
   gradle(task: "clean bundleMosipRelease")
   upload_to_play_store(
   track: 'internal',
   release_status: 'completed',
+  version_name: versionName,
   )
+
+  slack(
+      message: "Inji - #{versionName} (#{current_build_number}) is uploaded to Play store. Description : #{PLAY_CONSOLE_RELEASE_DESCRIPTION}.", 
+      success: true,
+      slack_url: "#{SLACK_URL}",
+      default_payloads: [:git_branch, :last_git_commit]
+    )
 end

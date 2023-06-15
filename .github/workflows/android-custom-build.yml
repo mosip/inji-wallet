@@ -22,7 +22,7 @@ on:
       buildDescription:
         description: 'What to test'
         required: true
-        default: 'QA-Triple environment build'
+        default: 'QA-Triple environment'
         type: string
 
 jobs:
@@ -34,6 +34,11 @@ jobs:
         with:
           node-version: '16.x'
       
+      - name: Check for Git Tag
+        run: |
+          cd android/scripts
+          ./git-tag.sh
+          
       - name: Cache local npm repository
         uses: actions/cache@v3.0.11
         with:
@@ -117,6 +122,7 @@ jobs:
           APPLICATION_THEME: ${{ github.event.inputs.theme }} 
           RELEASE_KEYSTORE_ALIAS: androidreleasekey
           RELEASE_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_RELEASE_STOREPASS}}'
+          SLACK_URL: '${{ secrets.SLACK_WEBHOOK_DEVOPS }}'
           PLAY_CONSOLE_RELEASE_DESCRIPTION: ${{ github.event.inputs.buildDescription }}
     
       # - name: Upload Artifact to Actions
