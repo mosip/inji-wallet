@@ -10,6 +10,14 @@ end
 desc "Deploy a alpha version to the Google Play"
 lane :android_build_alpha do
     gradle(task: "clean bundleMosipRelease")
-    upload_to_play_store(track: 'internal')
+    upload_to_play_store(
+    track: 'internal',
+    release_status: 'draft',
+    release_name: 'Inji 0.8',
+    release_notes: {
+      'en-US': 'Test against qatriple',
+    },
+    testers: 'CI-test'
+  )
 end
 
