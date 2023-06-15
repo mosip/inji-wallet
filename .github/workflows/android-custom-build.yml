@@ -34,10 +34,10 @@ jobs:
         with:
           node-version: '16.x'
       
-      - name: Check for Git Tag
-        run: |
-          cd android/scripts
-          ./git-tag.sh
+      # - name: Check for Git Tag
+      #   run: |
+      #     cd android/scripts
+      #     ./git-tag.sh
           
       - name: Cache local npm repository
         uses: actions/cache@v3.0.11
@@ -124,10 +124,3 @@ jobs:
           RELEASE_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_RELEASE_STOREPASS}}'
           SLACK_URL: '${{ secrets.SLACK_WEBHOOK_DEVOPS }}'
           PLAY_CONSOLE_RELEASE_DESCRIPTION: ${{ github.event.inputs.buildDescription }}
-    
-      # - name: Upload Artifact to Actions
-      #   uses: actions/upload-artifact@v3.1.1
-      #   with:
-      #     name: Inji
-      #     path: android/app/build/outputs/apk/newlogic/debug/
-      #     retention-days: 10
