@@ -74,31 +74,16 @@ jobs:
         env:
           FIREBASE_SECRET: ${{ secrets.GPG_SECRET }}
 
-      # - name: Generate keystore
-      #   run: | 
-      #     echo "$ANDROID_KEYSTORE_FILE" > keystore.jks.b64
-      #     base64 -d -i keystore.jks.b64 > android/app/release.keystore
-      #     echo "storeFile=release.keystore" >> keystore.properties
-      #     echo "keyAlias=androidreleasekey" >> keystore.properties
-      #     echo "storePassword=$KEYSTORE_STORE_PASSWORD" >> keystore.properties
-      #     echo "keyPassword=$KEYSTORE_KEY_PASSWORD" >> keystore.properties
-      #   env:
-      #     ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
-      #     KEYSTORE_KEY_PASSWORD: ${{ secrets.INJI_ANDROID_RELEASE_KEYPASS }}
-      #     KEYSTORE_STORE_PASSWORD: ${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}
-
-      - name: Decode Keystore
-        id: decode_keystore
-        uses: timheuer/base64-to-file@v1.2.3
-        with:
-          fileName: 'release.keystore'
-          fileDir: 'android/app'
-          encodedString: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
+      - name: Generate keystore
+        run: | 
+          echo "$ANDROID_KEYSTORE_FILE" > release.keystore.b64
+          base64 -d -i release.keystore.b64 > android/app/release.keystore
+        env:
+          ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
 
       - name: Export variables for keystore
         run: |
           cd android/app
-          ls
           export RELEASE_KEYSTORE_ALIAS=androidreleasekey
           export RELEASE_KEYSTORE_PASSWORD=$RELEASE_KEYSTORE_PASSWORD
         env: 
@@ -127,8 +112,7 @@ jobs:
           APPLICATION_THEME: ${{ github.event.inputs.theme }} 
           RELEASE_KEYSTORE_ALIAS: androidreleasekey
           RELEASE_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_RELEASE_STOREPASS}}'
-      
-
+    
       # - name: Upload Artifact to Actions
       #   uses: actions/upload-artifact@v3.1.1
       #   with:
