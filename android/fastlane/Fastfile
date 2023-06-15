@@ -1,5 +1,11 @@
 default_platform(:android)
 
+MIMOTO_HOST = ENV["MIMOTO_HOST"]
+APPLICATION_THEME = ENV["APPLICATION_THEME"]
+RELEASE_KEYSTORE_ALIAS = ENV["RELEASE_KEYSTORE_ALIAS"]
+RELEASE_KEYSTORE_PASSWORD = ENV["RELEASE_KEYSTORE_PASSWORD"]
+PLAY_CONSOLE_RELEASE_DESCRIPTION = ENV["PLAY_CONSOLE_RELEASE_DESCRIPTION"]
+
 desc "Verify Build for Android"
 lane :android_build do
   gradle(
@@ -15,7 +21,7 @@ lane :android_build_alpha do
     release_status: 'draft',
     release_name: 'Inji 0.8',
     release_notes: {
-      'en-US': 'Test against qatriple',
+      'en-US': "#{PLAY_CONSOLE_RELEASE_DESCRIPTION}",
     },
     testers: 'CI-test'
   )
