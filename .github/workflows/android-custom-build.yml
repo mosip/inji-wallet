@@ -33,11 +33,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '16.x'
-      
-      # - name: Check for Git Tag
-      #   run: |
-      #     cd android/scripts
-      #     ./git-tag.sh
           
       - name: Cache local npm repository
         uses: actions/cache@v3.0.11
@@ -98,12 +93,6 @@ jobs:
           export RELEASE_KEYSTORE_PASSWORD=$RELEASE_KEYSTORE_PASSWORD
         env: 
           RELEASE_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_RELEASE_STOREPASS}}'
-
-      - name: Bump version code
-        uses: chkfung/android-version-actions@v1.2.1
-        with:
-          gradlePath: android/app/build.gradle
-          versionCode: ${{github.run_number}}
 
       - name: Create Google Play Config file
         run : |

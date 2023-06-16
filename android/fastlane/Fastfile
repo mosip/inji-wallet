@@ -14,7 +14,7 @@ lane :android_build do
   )
 end
 
-desc "Deploy a alpha version to the Google Play"
+desc "Deploy an Internal testing version to the Google Play"
 lane :android_build_internal do
   previous_build_number = google_play_track_version_codes(
     package_name: "io.mosip.residentapp",
@@ -29,12 +29,10 @@ lane :android_build_internal do
     version_code: current_build_number
   )
   
-  #git_tag = sh('git describe --tags --abbrev=0').strip
   git_commit = sh('git rev-parse --short HEAD').strip
   git_branch = sh('git rev-parse --abbrev-ref HEAD').strip
 
   versionName = "#{git_commit}-#{git_branch}"
-  #add this befor #{git_tag}-
 
   gradle(task: "clean bundleMosipRelease")
   upload_to_play_store(
