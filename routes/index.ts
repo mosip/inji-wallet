@@ -15,13 +15,6 @@ export const baseRoutes: Screen[] = [
   {
     name: 'Welcome',
     component: WelcomeScreen,
-    options: {
-      headerLeft: () =>
-        React.createElement(Image, {
-          source: require('../assets/idpass-logo.png'),
-          style: { width: 124, height: 27, resizeMode: 'contain' },
-        }),
-    },
   },
   {
     name: 'Auth',
