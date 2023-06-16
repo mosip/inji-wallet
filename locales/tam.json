@@ -45,14 +45,15 @@
     "address": "முகவரி",
     "reasonForSharing": "பகிர்வதற்கான காரணம்",
     "idType": "ஐடி வகை",
-    "id": "Id",
+    "id": "ஐடி",
+    "qrCodeHeader": "க்யு ஆர் குறியீடு",
     "nationalCard": "தேசிய அட்டை್",
     "uin": "UIN",
+    "vid": "VID",
     "enableVerification": "செயல்படுத்த",
     "profileAuthenticated": "ஆன்லைன் உள்நுழைவுக்காக செயல்படுத்தப்பட்டது",
     "offlineAuthDisabledHeader": "ஆன்லைன் உள்நுழைவுக்கான செயல்படுத்தல் நிலுவையில் உள்ளது",
     "offlineAuthDisabledMessage": "இந்த நற்சான்றிதழை ஆன்லைன் உள்நுழைவுக்குப் பயன்படுத்த, கீழே உள்ள பொத்தானைக் கிளிக் செய்யவும்.",
-    "vid": "VID",
     "verificationEnabledSuccess": "ஆன்லைன் உள்நுழைவுக்காக செயல்படுத்தப்பட்டது",
     "goback": "திரும்பி செல்",
     "BindingWarning": "இந்த நற்சான்றிதழுக்கான சரிபார்ப்பை நீங்கள் வேறொரு பணப்பையில் இயக்கியிருந்தால், அது மேலெழுதப்படும். தொடர வேண்டுமா?",
@@ -61,8 +62,31 @@
     "Alert": "எச்சரிக்கை",
     "ok": "சரி"
   },
+  "HomeScreenKebabPopUp": {
+    "title": "மேலும் விருப்பங்கள்",
+    "unPinCard": "கார்டை அன்பின் செய்யவும்",
+    "pinCard": "பின் அட்டை",
+    "offlineAuthenticationDisabled!": "ஆஃப்லைன் அங்கீகாரம் முடக்கப்பட்டுள்ளது!",
+    "offlineAuthDisabledMessage": "இந்த நற்சான்றிதழை ஆஃப்லைன் அங்கீகாரத்திற்காகப் பயன்படுத்த இங்கே கிளிக் செய்யவும்.",
+    "viewActivityLog": "செயல்பாட்டு பதிவைக் காண்க",
+    "removeFromWallet": "பணப்பையிலிருந்து அகற்று",
+    "revokeId": "ஐடியைத் திரும்பப் பெறு",
+    "revokeMessage": "இந்தச் சுயவிவரத்திற்கான விர்ச்சுவல் ஐடியைத் திரும்பப் பெறவும்",
+    "ActivityLog": "செயல்பாட்டுப் பதிவைக் காண்க"
+  },
+  "WalletBinding": {
+    "inProgress": "செயல்பாட்டில் உள்ளது",
+    "profileAuthenticated": "சுயவிவரம் அங்கீகரிக்கப்பட்டது!"
+  },
+  "BindingVcWarningOverlay": {
+    "alert": "தயவுசெய்து உறுதிப்படுத்தவும்",
+    "BindingWarning": "இந்த நற்சான்றிதழுக்கான சரிபார்ப்பை நீங்கள் வேறொரு பணப்பையில் இயக்கியிருந்தால், அது மேலெழுதப்படும். தொடர வேண்டுமா?",
+    "yesConfirm": "ஆம், உறுதி செய்கிறேன்",
+    "no": "இல்லை"
+  },
   "AuthScreen": {
     "header": "பயன்பாட்டைத் திறக்க பயோமெட்ரிக்ஸைப் பயன்படுத்த விரும்புகிறீர்களா?",
+    "Description": "Would you like to use biometrics to unlock the application?",
     "useBiometrics": "பயோமெட்ரிக்ஸைப் பயன்படுத்து",
     "usePasscode": "நான் கடவுக்குறியீட்டைப் பயன்படுத்த விரும்புகிறேன்",
     "errors": {
@@ -75,12 +99,37 @@
   "BiometricScreen": {
     "unlock": "கைரேகை மூலம் திற"
   },
-  "HistoryTab": {
-    "noHistory": "இன்னும் வரலாறு கிடைக்கவில்லை",
-    "downloaded": "பதிவிறக்கம்",
-    "shared": "பகிரப்பட்டது",
-    "received": "பெறப்பட்டது",
-    "deleted": "நீக்கப்பட்டது"
+  "HistoryScreen": {
+    "noHistory": "இதுவரை வரலாறு இல்லை",
+    "downloaded": "கிடைத்தது",
+    "shared": "பகிர்ந்து கொண்டார்",
+    "received": "பெற்றது",
+    "deleted": "அகற்றப்பட்டது"
+  },
+  "SettingScreen": {
+    "header": "அமைப்புகள்",
+    "bioUnlock": "பயோமெட்ரிக்ஸ் மூலம் திறக்கவும்",
+    "language": "மொழி",
+    "aboutInji": "இன்ஜி பற்றி",
+    "injiTourGuide": "இன்ஜி சுற்றுலா வழிகாட்டி",
+    "logout": "வெளியேறு"
+  },
+  "AboutInji": {
+    "aboutInji": "இன்ஜி பற்றி",
+    "header": "இன்ஜி பற்றி",
+    "aboutDetailes": "இன்ஜி என்பது ஒரு மொபைல் பயன்பாடாகும், இது நற்சான்றிதழ்களைச் சேமிக்க டிஜிட்டல் பணப்பையாகப் பயன்படுத்தப்படலாம். எந்த இடத்திலும் நேரத்திலும், ஆஃப்லைன் மற்றும் ஆன்லைன் முறைகள் இரண்டிலும் அடையாளச் சரிபார்ப்பை இது அனுமதிக்கிறது.",
+    "forMoreDetailes": "மேலும் விவரங்களுக்கு",
+    "clickHere": "இங்கே கிளிக் செய்யவும்",
+    "version": "பதிப்பு: 0.4.1",
+    "tuvaliVersion": "துவாலி-பதிப்பு: v0.3.9-b16c5ea"
+  },
+  "HelpScreen": {
+    "header": "உதவி",
+    "whatisIdDetails?": "அடையாள விவரங்கள் என்றால் என்ன?",
+    "howToTurnOnOfflineAuthentication?": "ஆஃப்லைன் அங்கீகாரத்தை எப்படி இயக்குவது?",
+    "whatIsRevokeId?": "திரும்பப்பெறும் ஐடி என்றால் என்ன?",
+    "howToViewActivityLog?": "செயல்பாட்டு பதிவை எவ்வாறு பார்ப்பது?",
+    "detailes": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since."
   },
   "HomeScreen": {
     "myVcsTab": "எனது\n{{vcLabel}}",
@@ -88,6 +137,7 @@
     "historyTab": "வரலாறு"
   },
   "AddVcModal": {
+    "header": "உங்கள் அட்டையை மீட்டெடுக்கவும்",
     "requestingCredential": "நற்சான்றிதழைக் கோருகிறது...",
     "errors": {
       "input": {
@@ -129,42 +179,52 @@
     "backButton": "பேக் ஹோம்"
   },
   "GetIdInputModal": {
-    "header": "உங்கள் UIN ஐப் பெற உங்கள் விண்ணப்ப ID ஐ உள்ளிடவும்",
-    "getUIN": "UIN/VIDஐப் பெறுங்கள்",
-    "applicationId": "விண்ணப்ப ID",
+    "header": "உங்கள் UIN/VID ஐ மீட்டெடுக்கவும்",
+    "applicationIdLabel": "உங்கள் விண்ணப்ப ஐடியை உள்ளிடவும்",
+    "applicationId": "விண்ணப்ப ஐடியை உள்ளிடவும்",
     "requestingOTP": "OTP ஐக் கோருகிறது...",
-    "qstnMarkToolTip": "விண்ணப்ப ID பதிவுசெய்த பிறகு பெறப்பட்ட ஒப்புகையில் கிடைக்கும்."
+    "qstnMarkToolTip": "விண்ணப்ப ஐடி பதிவுசெய்த பிறகு பெறப்பட்ட ஒப்புகையில் கிடைக்கும்.",
+    "getUIN": "UIN/VIDஐப் பெறுங்கள்"
   },
   "IdInputModal": {
-    "header": "உங்கள் {{vcLabel}}ஐப் பதிவிறக்க உங்கள் UIN/VID ஐ உள்ளிடவும்",
-    "generateVc": "எனது {{vcLabel}}ஐ உருவாக்கவும்",
-    "enterId": "உங்கள் {{idType}}ஐ உள்ளிடவும்",
-    "noUIN/VID": "உங்கள் UIN/VID இல்லையா? இங்கே பெறுங்கள்",
+    "title": "உங்கள் ஐடியை மீட்டெடுக்கவும்",
+    "guideLabel": "ஐடி வகையைத் தேர்ந்தெடுத்து, நீங்கள் மீட்டெடுக்க விரும்பும் ஐடியின் MOSIP வழங்கப்பட்ட UIN அல்லது VID ஐ உள்ளிடவும்",
+    "generateVc": "{{vcLabel}} ஐ உருவாக்கு",
+    "downloadID": "ஐடியைப் பதிவிறக்கவும்",
+    "enterId": "{{idType}} ஐ உள்ளிடவும்",
+    "noUIN/VID": "UIN/VID இல்லையா? ",
+    "getItHere": "இப்பொழுதே பெற்றுக்கொள்ளவும்",
     "requestingOTP": "OTP ஐக் கோருகிறது..."
   },
   "OtpVerificationModal": {
-    "enterOtp": "நாங்கள் உங்களுக்கு அனுப்பிய 6 இலக்க சரிபார்ப்புக் குறியீட்டை உள்ளிடவும்",
-    "header": "OTP சரிபார்ப்பு"
+    "title": "OTP சரிபார்ப்பு",
+    "otpSentMessage": "உங்கள் பதிவு செய்யப்பட்ட மொபைல் எண்ணுக்கு 6 இலக்கக் குறியீட்டை அனுப்பியுள்ளோம்!",
+    "resendTheCode": "நீங்கள் குறியீட்டை மீண்டும் அனுப்பலாம் ",
+    "resendCode": "குறியீட்டை மீண்டும் அனுப்பு"
   },
   "MyVcsTab": {
-    "addVcButton": "{{vcLabel}} சேர்",
-    "generateVc": "உங்கள் {{vcLabel}}ஐ உருவாக்கவும்",
-    "generateVcDescription": "உங்கள் \"சேர் {{vcLabel}}\" என்பதைத் தட்டவும் {{vcLabel}}"
+    "downloadID": "கார்டைப் பதிவிறக்கவும்",
+    "bringYourDigitalID": "உங்கள் டிஜிட்டல் ஐடியைக் கொண்டு வாருங்கள்",
+    "generateVcDescription": "உங்கள் {{vcLabel}} ஐப் பதிவிறக்க, கீழே உள்ள பதிவிறக்கு {{vcLabel}} என்பதைத் தட்டவும்",
+    "downloadingYourId": "உங்கள் கார்டைப் பதிவிறக்க, இதற்கு 5 நிமிடங்கள் வரை ஆகலாம்"
   },
   "OnboardingOverlay": {
-    "stepOneTitle": "வரவேற்கிறேன்!",
-    "stepOneText": "உங்கள் டிஜிட்டல் நற்சான்றிதழை எப்போதும் உங்களுடன் வைத்திருக்கவும். தொடங்குவதற்கு, உங்கள் சுயவிவரத்தில் {{vcLabel}}ஐச் சேர்க்கவும்.",
-    "stepTwoTitle": "{{vcLabel}} மேலாண்மை",
-    "stepTwoText": "உருவாக்கப்பட்டவுடன், {{vcLabel}} உங்கள் மொபைலில் பாதுகாப்பாகச் சேமிக்கப்பட்டு, எந்த நேரத்திலும் மறுபெயரிடலாம் அல்லது பகிரலாம்.",
-    "stepThreeTitle": "எளிதான பகிர்வு",
-    "stepThreeText": "QR குறியீடுகளை ஸ்கேன் செய்ய உங்கள் ஃபோன் கேமராவைப் பயன்படுத்தி {{vcLabel}} switflyயைப் பகிரவும் மற்றும் பெறவும்.",
-    "stepThreeButton": "தொடங்கவும் {{vcLabel}}ஐச் சேர்க்கவும்"
+    "stepOneTitle": "பாதுகாப்பான பகிர்வு!",
+    "stepOneText": "QR குறியீடுகளை ஸ்கேன் செய்ய உங்கள் ஃபோன் கேமராவைப் பயன்படுத்தி {{vcLabel}} switflyஐப் பகிரவும் மற்றும் பெறவும்",
+    "stepTwoTitle": "நம்பகமான டிஜிட்டல் வாலட்",
+    "stepTwoText": "உங்கள் டிஜிட்டல் நற்சான்றிதழை எப்போதும் உங்களுடன் வைத்திருக்கவும்",
+    "stepThreeTitle": "விரைவான அணுகல்",
+    "stepThreeText": "உருவாக்கியதும், {{vcLabel}} உங்கள் மொபைலில் பாதுகாப்பாக சேமிக்கப்படும்.",
+    "stepThreeButton": "தொடங்குங்கள்",
+    "skip": "தவிர்க்கவும்",
+    "next": "அடுத்தது"
   },
   "ReceivedVcsTab": {
     "noReceivedVcsTitle": "இன்னும் {{vcLabel}} கிடைக்கவில்லை",
     "noReceivedVcsText": "{{vcLabel}} பெறுவதற்கு கீழே உள்ள கோரிக்கையைத் தட்டவும்"
   },
   "ViewVcModal": {
+    "title": "அடையாள விவரங்கள்",
     "cancel": "ரத்து செய்",
     "lock": "பூட்டு",
     "unlock": "திறத்தல்",
@@ -175,7 +235,6 @@
     "requestingOtp": "ஓடிபியைக் கோருகிறது...",
     "editTag": "திருத்து குறி",
     "redirecting": "வழிமாற்று...",
-    "inProgress": "ஏற்றுகிறது...",
     "success": {
       "unlocked": "{{vcLabel}} வெற்றிகரமாக திறக்கப்பட்டது",
       "locked": "{{vcLabel}} வெற்றிகரமாக பூட்டப்பட்டது",
@@ -189,30 +248,16 @@
     "settings": "செட்டிங்ஸ்"
   },
   "PasscodeScreen": {
-    "header": "உங்கள் விண்ணப்பத்தைப் பாதுகாக்க கடவுக்குறியீட்டை அமைக்கவும்",
-    "confirmPasscode": "உங்கள் கடவுக்குறியீட்டை உறுதிப்படுத்தவும்",
+    "header": "கடவுக்குறியீட்டை அமைக்கவும்",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+    "confirmPasscode": "கடவுக்குறியீட்டை உறுதிப்படுத்தவும்",
     "enterPasscode": "உங்கள் கடவுக்குறியீட்டை உள்ளிடவும்"
   },
   "AppMetaData": {
     "header": "இன்ஜி பற்றி",
     "version": "பதிப்பு",
-    "useBle": "Powered by BLE",
-    "useGoogleNearby": "Powered by GoogleNearby"
-  },
-  "ProfileScreen": {
-    "name": "பெயர்",
-    "vcLabel": "VC லேபிள்",
-    "language": "மொழி",
-    "bioUnlock": "பயோமெட்ரிக்ஸ் மூலம் திறக்கவும்",
-    "authFactorUnlock": "அங்கீகார காரணியைத் திற",
-    "AppMetaData": "இன்ஜி பற்றி",
-    "logout": "வெளியேறு",
-    "revokeLabel": "திரும்பப் பெறு VID",
-    "revokeHeader": "திரும்பப் பெறு VID",
-    "revokingVids": "நீங்கள் ({{count}}) ஐ ரத்து செய்ய உள்ளீர்கள் VIDs.",
-    "revokingVidsAfter": "அதாவது, அந்த VID(s) உடன் இணைக்கப்பட்ட எந்த ஐடியையும் நீங்கள் இனி பயன்படுத்தவோ பார்க்கவோ முடியாது. \nநீங்கள் நிச்சயமாக தொடர விரும்புகிறீர்களா?",
-    "empty": "காலியாக",
-    "revokeSuccessful": "VID வெற்றிகரமாக ரத்து செய்யப்பட்டது"
+    "useBle": "BLE ஆல் இயக்கப்படுகிறது",
+    "useGoogleNearby": "GoogleNearby மூலம் இயக்கப்படுகிறது"
   },
   "QrScreen": {
     "title": "QR உள்நுழைவு",
@@ -232,15 +277,20 @@
     "access": " அணுகலைக் கோருகிறது",
     "status": "நிலை",
     "successMessage": "நீங்கள் வெற்றிகரமாக உள்நுழைந்துள்ளீர்கள் ",
-    "okay": "சரி"
+    "okay": "சரி",
+    "allow": "அனுமதி",
+    "cancel": "ரத்து செய்",
+    "essentialClaims": "அத்தியாவசிய உரிமைகோரல்கள்",
+    "voluntaryClaims": "தன்னார்வ உரிமைகோரல்கள்",
+    "required": "தேவை"
   },
   "ReceiveVcScreen": {
     "header": "{{vcLabel}} விவரங்கள்",
-    "acceptRequest": "கோரிக்கையை ஏற்று {{vcLabel}} ஐப் பெறவும்",
-    "acceptRequestAndVerify": "கோரிக்கையை ஏற்று சரிபார்க்கவும்",
+    "save": "சேமி {{vcLabel}}",
+    "verifyAndSave": "சரிபார்த்து சேமிக்கவும்",
     "reject": "நிராகரிக்கவும்",
     "discard": "நிராகரிக்கவும்",
-    "goToReceivedVCTab": "பெறப்பட்ட {{vcLabel}}களைப் பார்க்கவும் ",
+    "goToReceivedVCTab": "பெறப்பட்ட {{vcLabel}} ஐக் காண்க",
     "errors": {
       "savingFailed": {
         "title": "{{vcLabelSingular}}ஐ சேமிப்பதில் தோல்வி",
@@ -278,6 +328,13 @@
       "connected": {
         "message": "சாதனத்துடன் இணைக்கப்பட்டது. {{vcLabel}}க்காகக் காத்திருக்கிறது...",
         "timeoutHint": "இதுவரை தரவு எதுவும் பெறப்படவில்லை. சாதனத்தை அனுப்புவது இன்னும் இணைக்கப்பட்டுள்ளதா?"
+      },
+      "offline": {
+        "message": "ஆன்லைன் பகிர்வு பயன்முறையை இயக்க இணையத்துடன் இணைக்கவும்"
+      },
+      "bleError": {
+        "title": "இடமாற்றம் செய்ய முடியவில்லை!",
+        "message": "{{vcLabel}} ஐ மாற்றும்போது ஏதோ தவறு ஏற்பட்டது. தயவு செய்து மீண்டும் முயற்சிக்கவும்."
       }
     },
     "online": "நிகழ்நிலை",
@@ -285,13 +342,11 @@
     "gotoSettings": "அமைப்புகளுக்குச் செல்லவும்"
   },
   "ScanScreen": {
-    "header": "QR குறியீட்டை ஸ்கேன் செய்",
+    "header": "QR குறியீட்டை ஸ்கேன் செய்யவும்",
     "noShareableVcs": "பகிரக்கூடிய {{vcLabel}} எதுவும் இல்லை.",
-    "bluetoothStateAndroid": "உள்ளூர் பகிர்வை ஆதரிக்க விரைவான அமைப்புகளிலிருந்து புளூடூத்தை இயக்கவும்",
-    "bluetoothStateIos": "உள்ளூர் பகிர்வை ஆதரிக்க, கட்டுப்பாட்டு மையத்திலிருந்து புளூடூத்தை இயக்கவும்",
-    "enableBluetoothMessage":"உள்ளூர் பகிர்வை ஆதரிக்க புளூடூத் அனுமதிகளை இயக்கவும்",
-    "enableBluetoothButtonText": "புளூடூத் அனுமதிகளை அனுமதிக்கவும்",
-    "sharingVc": "பகிர்தல் {{vcLabel}}",
+    "sharingVc": "பகிர்கிறது {{vcLabel}}",
+    "BluetoothStateIos": "புளூடூத் முடக்கப்பட்டுள்ளது, கட்டுப்பாட்டு மையத்திலிருந்து அதை இயக்கவும்",
+    "bluetoothStateAndroid": "புளூடூத் முடக்கப்பட்டுள்ளது, விரைவு அமைப்புகள் மெனுவிலிருந்து அதை இயக்கவும்",
     "errors": {
       "locationDisabled": {
         "message": "ஸ்கேனிங் செயல்பாட்டிற்கு இருப்பிடச் சேவைகள் இயக்கப்பட வேண்டும்",
@@ -303,11 +358,34 @@
       }
     },
     "status": {
-      "connecting": "இணைக்கிறது...",
+      "inProgress": "செயல்பாட்டில் உள்ளது",
+      "establishingConnection": "இணைப்பை நிறுவுதல்",
+      "sharingInProgress": "பகிர்தல் செயல்பாட்டில் உள்ளது",
       "connectingTimeout": "இணைப்பை ஏற்படுத்த சிறிது நேரம் ஆகும். மற்ற சாதனம் இணைப்புகளுக்குத் திறந்திருக்கிறதா?",
-      "exchangingDeviceInfo": "சாதன தகவல் பரிமாற்றம்...",
+      "exchangingDeviceInfo": "சாதனத் தகவலைப் பரிமாறிக் கொள்கிறது...",
       "exchangingDeviceInfoTimeout": "சாதனத் தகவலைப் பரிமாறிக்கொள்ள சிறிது நேரம் ஆகும். நீங்கள் மீண்டும் இணைக்க வேண்டியிருக்கலாம்.",
-      "invalid": "தவறான QR குறியீடு"
+      "invalid": "தவறான QR குறியீடு",
+      "offline": "ஆன்லைன் பகிர்வு பயன்முறையைப் பயன்படுத்தி QR குறியீடுகளை ஸ்கேன் செய்ய இணையத்துடன் இணைக்கவும்",
+      "sent": "{{ vcLabel }} அனுப்பப்பட்டது...",
+      "sentHint": "ரிசீவர் உங்கள் {{ vcLabel }} ஐ சேமிக்க அல்லது நிராகரிக்க காத்திருக்கிறது",
+      "sharing": {
+        "title": "பகிர்தல்...",
+        "hint": "பெறும் சாதனம் பங்கை ஏற்க அல்லது நிராகரிக்க காத்திருக்கவும்.",
+        "timeoutHint": "பகிர்வதற்கு எதிர்பார்த்ததை விட அதிக நேரம் எடுக்கிறது. இணைப்பில் சிக்கல் இருக்கலாம்."
+      },
+      "accepted": {
+        "title": "ஐடி வெற்றிகரமாகப் பகிரப்பட்டது",
+        "message": "உங்கள் {{vcLabel}} வெற்றிகரமாக {{receiver}} உடன் பகிரப்பட்டது",
+        "gotohome": "வீட்டிற்கு போ"
+      },
+      "rejected": {
+        "title": "கவனிக்கவும்",
+        "message": "உங்கள் {{vcLabel}}, {{receiver}} ஆல் நிராகரிக்கப்பட்டது"
+      },
+      "bleError": {
+        "title": "இடமாற்றம் செய்ய முடியவில்லை!",
+        "message": "{{vcLabel}} ஐ மாற்றும்போது ஏதோ தவறு ஏற்பட்டது. தயவு செய்து மீண்டும் முயற்சிக்கவும்."
+      }
     }
   },
   "SelectVcOverlay": {
@@ -321,6 +399,8 @@
     "acceptRequest": "பகிர்",
     "acceptRequestAndVerify": "செல்ஃபியுடன் பகிரவும்",
     "reject": "நிராகரிக்கவும்",
+    "consentToPhotoVerification": "அங்கீகாரத்திற்காக எனது புகைப்படத்தை எடுக்க நான் ஒப்புதல் அளிக்கிறேன்",
+    "pleaseSelectAnId": "ஐடியைத் தேர்ந்தெடுக்கவும்",
     "status": {
       "sharing": {
         "title": "பகிர்தல்...",
@@ -335,8 +415,7 @@
         "title": "கவனிக்கவும்",
         "message": "உங்கள் {{vcLabel}}, {{receiver}} ஆல் நிராகரிக்கப்பட்டது"
       }
-    },
-    "consentToPhotoVerification": "அங்கீகாரத்திற்காக எனது புகைப்படத்தை எடுக்க நான் ஒப்புதல் அளிக்கிறேன்"
+    }
   },
   "VerifyIdentityOverlay": {
     "status": {
@@ -372,6 +451,11 @@
     "title": "திறந்த மூல அடையாள தீர்வு",
     "getStarted": "தொடங்கு",
     "unlockApp": "பயன்பாட்டைத் திற"
+  },
+  "SetupLanguage": {
+    "header": "மொழியைத் தேர்ந்தெடுக்கவும்",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+    "save": "விருப்பத்தை சேமிக்கவும்"
   },
   "common": {
     "cancel": "ரத்துசெய்",

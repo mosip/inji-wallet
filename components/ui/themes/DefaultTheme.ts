@@ -1,6 +1,7 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 import { Dimensions, StyleSheet, ViewStyle } from 'react-native';
 import { Spacing } from '../styleUtils';
+import { colors } from 'react-native-elements';
 
 const Colors = {
   Black: '#000000',
@@ -9,6 +10,7 @@ const Colors = {
   Grey5: '#E0E0E0',
   Grey6: '#F2F2F2',
   Gray40: '#666666',
+  Gray44: '#707070',
   Gray9: '#171717',
   DimGray: '#737373',
   Orange: '#F2811D',
@@ -49,11 +51,12 @@ export const DefaultTheme = {
     popUp: Colors.Green,
     Icon: Colors.Orange,
     GrayIcon: Colors.Grey,
+    helpText: Colors.Gray44,
     borderBottomColor: Colors.Grey6,
     whiteBackgroundColor: Colors.White,
     lightGreyBackgroundColor: Colors.LightGrey,
     profileLanguageValue: Colors.Grey,
-    profileVersion: Colors.Grey,
+    aboutVersion: Colors.Gray40,
     profileAuthFactorUnlock: Colors.Grey,
     profileLabel: Colors.Black,
     profileValue: Colors.Grey,
@@ -270,7 +273,7 @@ export const DefaultTheme = {
       justifyContent: 'space-between',
     },
     logo: {
-      height: 46,
+      height: 48,
       width: 40,
     },
     homeCloseCardDetailsHeader: {
@@ -328,6 +331,12 @@ export const DefaultTheme = {
       height: 135,
       borderRadius: 5,
     },
+    versionContainer: {
+      backgroundColor: Colors.Grey6,
+      height: 110,
+      margin: 10,
+      borderRadius: 20,
+    },
     scannerContainer: {
       borderRadius: 32,
       alignSelf: 'center',
@@ -375,6 +384,33 @@ export const DefaultTheme = {
       marginTop: 10,
     },
   }),
+  QrCodeStyles: StyleSheet.create({
+    magnifierZoom: {
+      backgroundColor: Colors.White,
+      width: 30,
+      height: 30,
+      alignItems: 'center',
+      padding: 5,
+      borderTopLeftRadius: 11,
+      elevation: 4,
+    },
+    expandedQrCode: {
+      backgroundColor: Colors.White,
+      width: 350,
+      borderRadius: 21,
+    },
+    QrCodeHeader: {
+      backgroundColor: Colors.White,
+      borderTopLeftRadius: 21,
+      borderTopRightRadius: 21,
+      justifyContent: 'space-between',
+      fontFamily: 'Inter_700Bold',
+      paddingBottom: 10,
+      paddingRight: 15,
+      paddingLeft: 130,
+      elevation: 2,
+    },
+  }),
   PinInputStyle: StyleSheet.create({
     input: {
       borderBottomWidth: 3,
@@ -411,6 +447,17 @@ export const DefaultTheme = {
     retrieveIdLabel: {
       color: Colors.ShadeOfGrey,
       fontFamily: 'Inter_600SemiBold',
+      lineHeight: 18,
+    },
+    helpDetailes: {
+      margin: 5,
+      color: Colors.Gray44,
+      fontFamily: 'Inter_600SemiBold',
+    },
+    aboutDetailes: {
+      color: Colors.Black,
+      fontSize: 18,
+      margin: 7,
       lineHeight: 18,
     },
     error: {
@@ -516,7 +563,6 @@ export const DefaultTheme = {
     },
     float: {
       borderRadius: 9,
-      width: '34%',
       alignSelf: 'center',
       fontSize: 10,
       elevation: 5,
@@ -541,6 +587,9 @@ export const DefaultTheme = {
       zIndex: 9,
       padding: 32,
     },
+  }),
+  QRCodeOverlay: StyleSheet.create({
+    header: {},
   }),
   SelectVcOverlayStyles: StyleSheet.create({
     overlay: {
@@ -639,7 +688,7 @@ export const DefaultTheme = {
       marginHorizontal: 4,
     },
     kebabHeaderStyle: {
-      backgroundColor: 'white',
+      backgroundColor: Colors.White,
       borderTopLeftRadius: 24,
       borderTopRightRadius: 24,
       justifyContent: 'space-between',
@@ -869,6 +918,7 @@ export const DefaultTheme = {
   InjiProgressingLogo: require('../../../assets/progressing-logo.png'),
   LockIcon: require('../../../assets/lock-icon.png'),
   InjiHomeLogo: require('../../../assets/inji-home-logo.png'),
+  MagnifierZoom: require('../../../assets/magnifier-zoom.png'),
   HelpIcon: require('../../../assets/help-icon.png'),
   sharingIntro: require('../../../assets/Secure-Sharing.png'),
   walletIntro: require('../../../assets/intro-wallet-binding.png'),

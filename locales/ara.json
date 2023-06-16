@@ -45,14 +45,14 @@
     "address": "عنوان",
     "reasonForSharing": "سبب المشاركة",
     "idType": "نوع الهوية",
-    "id": "Id",
+    "id": "بطاقة تعريف",
     "nationalCard": "البطاقة الوطنية",
     "uin": "UIN",
+    "vid": "VID",
     "enableVerification": "تفعيل",
     "profileAuthenticated": "تم تنشيطه لتسجيل الدخول عبر الإنترنت",
     "offlineAuthDisabledHeader": "التنشيط معلق لتسجيل الدخول عبر الإنترنت",
     "offlineAuthDisabledMessage": "الرجاء النقر فوق الزر أدناه لتفعيل بيانات الاعتماد هذه لاستخدامها في تسجيل الدخول عبر الإنترنت.",
-    "vid": "VID",
     "verificationEnabledSuccess": "تم تنشيطه لتسجيل الدخول عبر الإنترنت",
     "goback": "عُد",
     "BindingWarning": "إذا قمت بتمكين التحقق من بيانات الاعتماد هذه في محفظة أخرى ، فسيتم تجاوزها. هل تريد المتابعة؟",
@@ -61,8 +61,31 @@
     "Alert": "انذار",
     "ok": "تمام"
   },
+  "HomeScreenKebabPopUp": {
+    "title": "المزيد من الخيارات",
+    "unPinCard": "Unpin البطاقة",
+    "pinCard": "البطاقة الشخصية",
+    "offlineAuthenticationDisabled!": "تم تعطيل المصادقة دون اتصال!",
+    "offlineAuthDisabledMessage": "انقر هنا لتمكين بيانات الاعتماد هذه لاستخدامها في المصادقة دون اتصال.",
+    "viewActivityLog": "عرض سجل النشاط",
+    "removeFromWallet": "إزالة من المحفظة",
+    "revokeId": "إبطال الهوية",
+    "revokeMessage": "إبطال المعرف الظاهري لملف التعريف هذا",
+    "ActivityLog": "عرض سجل النشاط"
+  },
+  "WalletBinding": {
+    "inProgress": "في تَقَدم",
+    "profileAuthenticated": "تمت مصادقة الملف الشخصي!"
+  },
+  "BindingVcWarningOverlay": {
+    "alert": "يرجى تأكيد",
+    "BindingWarning": "إذا قمت بتمكين التحقق من بيانات الاعتماد هذه في محفظة أخرى ، فسيتم تجاوزها. هل تريد المتابعة؟",
+    "yesConfirm": "نعم ، أؤكد",
+    "no": "لا"
+  },
   "AuthScreen": {
     "header": "هل ترغب في استخدام المقاييس الحيوية لفتح التطبيق؟",
+    "Description": "هل ترغب في استخدام المقاييس الحيوية لفتح التطبيق؟",
     "useBiometrics": "استخدام القياسات الحيوية",
     "usePasscode": "मأفضل استخدام رمز مرور",
     "errors": {
@@ -75,19 +98,40 @@
   "BiometricScreen": {
     "unlock": "افتح ببصمة الإصبع"
   },
-  "HistoryTab": {
-    "noHistory": "لا يوجد سجل متاح حتى الآن",
-    "downloaded": "تم التنزيل",
-    "shared": "مشتركة",
-    "received": "مستلم",
-    "deleted": "محذوف"
+  "HistoryScreen": {
+    "noHistory": "لا يوجد سجل حتى الان",
+    "downloaded": "يملك",
+    "shared": "مشترك",
+    "received": "تلقى",
+    "deleted": "إزالة"
   },
-  "HomeScreen": {
-    "myVcsTab": "محذوف\n{{vcLabel}}",
-    "receivedVcsTab": "مستلم\n{{vcLabel}}",
-    "historyTab": "تاريخ"
+  "SettingScreen": {
+    "header": "إعدادات",
+    "bioUnlock": "افتح مع القياسات الحيوية",
+    "language": "لغة",
+    "aboutInji": "حول إنجي",
+    "injiTourGuide": "مرشد إنجي السياحي",
+    "logout": "تسجيل خروج"
+  },
+  "AboutInji": {
+    "aboutInji": "حول إنجي",
+    "header": "حول إنجي",
+    "aboutDetailes": "إنجي هو تطبيق جوال يمكن استخدامه كمحفظة رقمية لتخزين بيانات الاعتماد. كما يسمح بالتحقق من الهوية في الوضعين غير المتصلين بالإنترنت وفي أي مكان وزمان.",
+    "forMoreDetailes": "لمزيد من التفاصيل",
+    "clickHere": "انقر هنا",
+    "version": "الإصدار: 0.4.1.1",
+    "tuvaliVersion": "نسخة توفالي: v0.3.9-b16c5ea"
+  },
+  "HelpScreen": {
+    "header": "يساعد",
+    "whatisIdDetails?": "ما هي تفاصيل الهوية؟",
+    "howToTurnOnOfflineAuthentication?": "كيف يتم تشغيل المصادقة دون اتصال؟",
+    "whatIsRevokeId?": "ما هو إبطال الهوية؟",
+    "howToViewActivityLog?": "كيفية عرض سجل النشاط؟",
+    "detailes": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since."
   },
   "AddVcModal": {
+    "header": "استرجع بطاقتك",
     "requestingCredential": "جارٍ طلب بيانات الاعتماد...",
     "errors": {
       "input": {
@@ -129,53 +173,62 @@
     "backButton": "العودة إلى المنزل"
   },
   "GetIdInputModal": {
-    "header": "أدخل معرف التطبيق الخاص بك للحصول على UIN الخاص بك",
-    "getUIN": "احصل على UIN / VID",
-    "applicationId": "رقم الاستمارة",
-    "requestingOTP": "طلب OTP...",
-    "qstnMarkToolTip": "معرف التطبيق متاح في الإقرار الذي تم استلامه بعد التسجيل."
+    "header": "استرجع UIN / VID الخاص بك",
+    "applicationIdLabel": "الرجاء إدخال معرف التطبيق الخاص بك",
+    "applicationId": "أدخل معرف التطبيق",
+    "requestingOTP": "جارٍ طلب OTP ...",
+    "qstnMarkToolTip": "معرف التطبيق متاح في الإقرار الذي تم استلامه بعد التسجيل.",
+    "getUIN": "احصل على UIN / VID"
   },
   "IdInputModal": {
-    "header": "أدخل UIN / VID لتنزيل {{vcLabel}}",
-    "generateVc": "يولد لي {{vcLabel}}",
+    "title": "استرجع هويتك",
+    "guideLabel": "حدد نوع المعرف وأدخل UIN أو VID المقدم من MOSIP للمعرف الذي ترغب في استرداده",
+    "generateVc": "إنشاء {{vcLabel}}",
+    "downloadID": "معرف التنزيل",
     "enterId": "أدخل {{idType}}",
-    "noUIN/VID": "ليس لديك UIN / VID الخاص بك؟ أحضره هنا",
-    "requestingOTP": "طلب OTP..."
+    "noUIN/VID": "ليس لديك UIN / VID؟ ",
+    "getItHere": "احصل عليها الآن",
+    "requestingOTP": "جارٍ طلب OTP ..."
   },
   "OtpVerificationModal": {
-    "enterOtp": "أدخل رمز التحقق المكون من 6 أرقام الذي أرسلناه إليك",
-    "header": "التحقق من OTP"
+    "title": "التحقق من OTP",
+    "otpSentMessage": "لقد أرسلنا الرمز المكون من 6 أرقام إلى رقم هاتفك المحمول المسجل!",
+    "resendTheCode": "يمكنك إعادة إرسال الرمز بتنسيق ",
+    "resendCode": "أعد إرسال الرمز"
   },
   "MyVcsTab": {
-    "addVcButton": "{{vcLabel}} إضافة",
-    "generateVc": "{{vcLabel}}إنشاء",
-    "generateVcDescription": "إضافة {{vcLabel}} أدناه لتنزيل {{vcLabel}}"
+    "downloadID": "تحميل البطاقة",
+    "bringYourDigitalID": "أحضر هويتك الرقمية",
+    "generateVcDescription": "لتنزيل {{vcLabel}} انقر على تنزيل {{vcLabel}} أدناه",
+    "downloadingYourId": "تنزيل بطاقتك ، قد يستغرق هذا ما يصل إلى 5 دقائق"
   },
   "OnboardingOverlay": {
-    "stepOneTitle": "مرحبًا!",
-    "stepOneText": "احتفظ ببيانات الاعتماد الرقمية معك في جميع الأوقات. للبدء ، أضف {{vcLabel}} إلى ملفك الشخصي.",
-    "stepTwoTitle": "{{vcLabel}} إدارة",
-    "stepTwoText": "بمجرد إنشائه ، يتم تخزين  {{vcLabel}}بأمان على هاتفك المحمول ويمكن إعادة تسميته أو مشاركته في أي وقت.",
-    "stepThreeTitle": "مشاركة سهلة",
-    "stepThreeText": "مشاركة واستلام {{vcLabel}} switflyباستخدام كاميرا هاتفك لمسح رموز QR.",
-    "stepThreeButton": "ابدأ وأضف{{vcLabel}} "
+    "stepOneTitle": "مشاركة آمنة!",
+    "stepOneText": "شارك واستقبل {{vcLabel}} switfly باستخدام كاميرا هاتفك لمسح رموز QR",
+    "stepTwoTitle": "المحفظة الرقمية الموثوقة",
+    "stepTwoText": "احتفظ ببيانات اعتمادك الرقمية معك في جميع الأوقات",
+    "stepThreeTitle": "الوصول السريع",
+    "stepThreeText": "بمجرد إنشائه ، يتم تخزين {{vcLabel}} بأمان على هاتفك المحمول.",
+    "stepThreeButton": "البدء",
+    "skip": "يتخطى",
+    "next": "التالي"
   },
   "ReceivedVcsTab": {
     "noReceivedVcsTitle": "لا يوجد {{vcLabel}} متاح حتى الآن",
     "noReceivedVcsText": "اضغط على الطلب أدناه لتلقي{{vcLabel}}"
   },
   "ViewVcModal": {
+    "title": "تفاصيل الهوية",
     "cancel": "يلغي",
     "lock": "قفل",
     "unlock": "الغاء القفل",
     "rename": "إعادة تسمية",
-    "delete": "حذف",
-    "revoke": "إبطال",
+    "delete": "يمسح",
+    "revoke": "سحب او إبطال",
     "revoking": "تحتوي محفظتك على بيانات اعتماد مع VID {{vid}}. سيؤدي إبطال هذا إلى حذفه تلقائيًا من المحفظة. هل انت متأكد انك تريد المتابعة؟",
-    "requestingOtp": "جارٍ طلب OTP...",
-    "editTag": "टتحرير العلامة",
+    "requestingOtp": "جارٍ طلب OTP ...",
+    "editTag": "إعادة تسمية",
     "redirecting": "إعادة توجيه...",
-    "inProgress": "جار التحميل...",
     "success": {
       "unlocked": "تم إلغاء قفل {{vcLabel}} بنجاح",
       "locked": "تم قفل {{vcLabel}} بنجاح",
@@ -189,30 +242,16 @@
     "settings": "إعدادات"
   },
   "PasscodeScreen": {
-    "header": "تعيين رمز مرور لتأمين تطبيقك",
-    "confirmPasscode": "تأكيد رمز المرور الخاص بك",
-    "enterPasscode": "المرور الخاص بك"
+    "header": "Set Passcode",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+    "confirmPasscode": "Confirm passcode",
+    "enterPasscode": "Enter your passcode"
   },
   "AppMetaData": {
     "header": "حول إنجي",
     "version": "الإصدار",
-    "useBle": "Powered by BLE",
-    "useGoogleNearby": "Powered by GoogleNearby"
-  },
-  "ProfileScreen": {
-    "name": "اسم",
-    "vcLabel": "تسمية VC",
-    "language": "اللغة",
-    "bioUnlock": "افتح مع القياسات الحيوية",
-    "authFactorUnlock": "إلغاء تأمين عامل المصادقة",
-    "AppMetaData": "حول إنجي",
-    "logout": "تسجيل خروج",
-    "revokeLabel": "إبطال VID",
-    "revokeHeader": "إبطال VID",
-    "revokingVids": "({{count}}) أنت على وشك إلغاء معرّفات VID.",
-    "revokingVidsAfter": "هذا يعني أنك لن تكون قادرًا على استخدام أو عرض أي من المعرفات المرتبطة بمعرف (معرفات) VID هؤلاء. \nهل انت متأكد انك تريد المتابعة?",
-    "empty": "فارغة",
-    "revokeSuccessful": "تم إبطال VID بنجاح"
+    "useBle": "مدعوم من BLE",
+    "useGoogleNearby": "مدعوم من GoogleNearby"
   },
   "QrScreen": {
     "title": "QR تسجيل الدخول",
@@ -232,15 +271,20 @@
     "access": " يطلب الوصول إلى",
     "status": "حالة",
     "successMessage": "لقد قمت بتسجيل الدخول بنجاح ",
-    "okay": "تمام"
+    "okay": "تمام",
+    "allow": "يسمح",
+    "cancel": "يلغي",
+    "essentialClaims": "الادعاءات الأساسية",
+    "voluntaryClaims": "المطالبات الطوعية",
+    "required": "مطلوب"
   },
   "ReceiveVcScreen": {
     "header": "تفاصيل {{vcLabel}}",
-    "acceptRequest": "قبول الطلب واستلام {{vcLabel}}",
-    "acceptRequestAndVerify": "قبول الطلب والتحقق",
-    "reject": "رفض",
+    "save": "احفظ {{vcLabel}}",
+    "verifyAndSave": "تحقق وحفظ",
+    "reject": "يرفض",
     "discard": "ينبذ",
-    "goToReceivedVCTab": "منظر تلقى {{vcLabel}}",
+    "goToReceivedVCTab": "عرض تم استلامه {{vcLabel}}",
     "errors": {
       "savingFailed": {
         "title": "فشل حفظ {{vcLabel}}",
@@ -278,6 +322,13 @@
       "connected": {
         "message": "متصل بالجهاز. في انتظار {{vcLabel}}...",
         "timeoutHint": "لم ترد بيانات حتى الآن. هل جهاز الإرسال لا يزال متصلاً؟"
+      },
+      "offline": {
+        "message": "يرجى الاتصال بالإنترنت لتمكين وضع المشاركة عبر الإنترنت"
+      },
+      "bleError": {
+        "title": "فشل التحويل!",
+        "message": "حدث خطأ أثناء نقل {{vcLabel}}. حاول مرة اخرى."
       }
     },
     "online": "متصل",
@@ -286,12 +337,10 @@
   },
   "ScanScreen": {
     "header": "مسح رمز الاستجابة السريعة",
-    "noShareableVcs": "لا يمكن مشاركة {{vcLabel}}",
-    "bluetoothStateAndroid": "يرجى تشغيل البلوتوث من الإعدادات السريعة لدعم المشاركة المحلية",
-    "bluetoothStateIos": "يرجى تشغيل البلوتوث من مركز التحكم لدعم المشاركة المحلية",
-    "enableBluetoothMessage": "يرجى تمكين أذونات البلوتوث لدعم المشاركة المحلية",
-    "enableBluetoothButtonText": "السماح لأذونات البلوتوث",
+    "noShareableVcs": "لا تتوفر {{vcLabel}} قابلة للمشاركة.",
     "sharingVc": "مشاركة {{vcLabel}}",
+    "BluetoothStateIos": "تم إيقاف تشغيل البلوتوث ، يرجى تشغيله من مركز التحكم",
+    "bluetoothStateAndroid": "تم إيقاف تشغيل البلوتوث ، يرجى تشغيله من قائمة الإعدادات السريعة",
     "errors": {
       "locationDisabled": {
         "message": "يجب تمكين خدمات الموقع لوظيفة المسح",
@@ -303,11 +352,34 @@
       }
     },
     "status": {
-      "connecting": "ارٍ التوصيل...",
+      "inProgress": "في تَقَدم",
+      "establishingConnection": "اجراء اتصال",
+      "sharingInProgress": "جاري المشاركة",
       "connectingTimeout": "يستغرق إنشاء الاتصال بعض الوقت. هل الجهاز الآخر مفتوح للاتصالات؟",
       "exchangingDeviceInfo": "تبادل معلومات الجهاز ...",
       "exchangingDeviceInfoTimeout": "يستغرق الأمر بعض الوقت لتبادل معلومات الجهاز. قد تضطر إلى إعادة الاتصال.",
-      "invalid": "غير صالح"
+      "invalid": "رمز الاستجابة السريعة غير صالح",
+      "offline": "يرجى الاتصال بالإنترنت لمسح رموز QR ضوئيًا باستخدام وضع المشاركة عبر الإنترنت",
+      "sent": "تم إرسال {{vcLabel}} ...",
+      "sentHint": "في انتظار أن يحفظ المستلم {{vcLabel}} أو يتجاهلها",
+      "sharing": {
+        "title": "مشاركة...",
+        "hint": "الرجاء الانتظار حتى يقبل الجهاز المتلقي المشاركة أو يرفضها.",
+        "timeoutHint": "تستغرق مشاركتها وقتًا أطول من المتوقع. قد تكون هناك مشكلة في الاتصال."
+      },
+      "accepted": {
+        "title": "تم مشاركة المعرف بنجاح",
+        "message": "تمت مشاركة {{vcLabel}} بنجاح مع {{receiver}}",
+        "gotohome": "اذهب الى المنزل"
+      },
+      "rejected": {
+        "title": "يلاحظ",
+        "message": "تم تجاهل {{vcLabel}} بواسطة {{receiver}}"
+      },
+      "bleError": {
+        "title": "فشل التحويل!",
+        "message": "حدث خطأ أثناء نقل {{vcLabel}}. حاول مرة اخرى."
+      }
     }
   },
   "SelectVcOverlay": {
@@ -321,6 +393,8 @@
     "acceptRequest": "يشارك",
     "acceptRequestAndVerify": "شارك مع Selfie",
     "reject": "رفض",
+    "consentToPhotoVerification": "أوافق على التقاط صورتي للمصادقة",
+    "pleaseSelectAnId": "الرجاء تحديد معرف",
     "status": {
       "sharing": {
         "title": "مشاركة...",
@@ -335,8 +409,7 @@
         "title": "تنويه",
         "message": "تم رفض {{vcLabel}} من قِبل {{receiver}}"
       }
-    },
-    "consentToPhotoVerification": "أوافق على التقاط صورتي للمصادقة"
+    }
   },
   "VerifyIdentityOverlay": {
     "status": {

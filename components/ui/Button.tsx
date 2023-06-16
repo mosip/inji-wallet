@@ -86,7 +86,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
           {props.title}
         </Text>
       }
-      buttonStyle={!props.isVcThere ? { height: 45 } : { height: 39 }}
+      buttonStyle={!props.isVcThere ? { height: 45 } : { height: 42 }}
       icon={props.icon}
       onPress={handleOnPress}
       loading={props.loading}

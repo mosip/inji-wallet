@@ -11,6 +11,7 @@ import { TextItem } from './ui/TextItem';
 import { VcItemTags } from './VcItemTags';
 import VerifiedIcon from './VerifiedIcon';
 import { getLocalizedField } from '../i18n';
+import { QrCodeOverlay } from './QrCodeOverlay';
 
 export const VcDetails: React.FC<VcDetailsProps> = (props) => {
   const { t, i18n } = useTranslation('VcDetails');
@@ -39,15 +40,10 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
               }
               style={Theme.Styles.openCardImage}
             />
+
+            <QrCodeOverlay qrCodeDetailes={String(props.vc.credential)} />
             <Column margin="20 0 0 0">
               <Image source={Theme.MosipLogo} style={Theme.Styles.logo} />
-            </Column>
-            <Column margin="20 0 0 0">
-              <QRCode
-                size={90}
-                value={String(props.vc.credential)}
-                backgroundColor={Theme.Colors.QRCodeBackgroundColor}
-              />
             </Column>
           </Column>
           <Column align="space-evenly">
