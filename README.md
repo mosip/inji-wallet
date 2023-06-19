@@ -37,8 +37,8 @@ keytool \
  -keyalg RSA \
  -keysize 2048 \
  -validity 10000 \
- -storepass 'android' \
- -keypass 'android' \
+ -storepass '<USE-YOUR-RELEASE-PASSWORD-HERE>' \
+ -keypass '<USE-YOUR-RELEASE-PASSWORD-HERE>' \
  -alias androidreleasekey \
  -keystore android/app/release.keystore \
  -dname "CN=io.mosip.residentapp,OU=,O=,L=,S=,C=US"
@@ -117,7 +117,7 @@ export DEBUG_KEYSTORE_PASSWORD=android
 
 # Release keystore
 export RELEASE_KEYSTORE_ALIAS=androidreleasekey
-export RELEASE_KEYSTORE_PASSWORD=android
+export RELEASE_KEYSTORE_PASSWORD=<USE-YOUR-RELEASE-PASSWORD-HERE>
 
 # https://hostname/residentmobileapp is the Mimoto service url
 export BACKEND_SERVICE_URL=https://hostname/residentmobileapp
