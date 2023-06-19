@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Image, ImageBackground } from 'react-native';
+import { Image, ImageBackground, View } from 'react-native';
 import { getLocalizedField } from '../i18n';
 import { VerifiableCredential } from '../types/vc';
 import { RotatingIcon } from './RotatingIcon';
@@ -95,7 +95,12 @@ export const VcItemContent: React.FC<VcItemContentProps> = ({
           ? Theme.Styles.vertloadingContainer
           : Theme.Styles.backgroundImageContainer
       }>
-      <Row style={Theme.Styles.homeCloseCardDetailsHeader}>
+      <Row
+        style={
+          !verifiableCredential
+            ? Theme.Styles.loadingCardDetailsHeader
+            : Theme.Styles.cardDetailsHeader
+        }>
         <Column>
           <Text
             color={
@@ -119,16 +124,22 @@ export const VcItemContent: React.FC<VcItemContentProps> = ({
             {t('nationalCard')}
           </Text>
         </Column>
-        <Image
-          source={Theme.MosipLogo}
-          style={Theme.Styles.logo}
-          resizeMethod="auto"
-        />
+        <View style={Theme.Styles.mosipLogoContainer}>
+          <Image
+            source={Theme.MosipLogo}
+            style={Theme.Styles.logo}
+            resizeMethod="auto"
+          />
+        </View>
       </Row>
       <Row
         crossAlign="center"
         margin="5 0 0 0"
-        style={!verifiableCredential ? Theme.Styles.loadingContainer : null}>
+        style={
+          !verifiableCredential
+            ? Theme.Styles.loadingCardDetailsContainer
+            : Theme.Styles.cardDetailsContainer
+        }>
         <Column
           style={
             !verifiableCredential

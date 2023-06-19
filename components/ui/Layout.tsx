@@ -66,6 +66,12 @@ export const Column = createLayout('column');
 
 export const Centered = createLayout('column', 'center', 'center');
 
+export const HorizontallyCentered = createLayout(
+  'column',
+  'flex-start',
+  'center'
+);
+
 interface LayoutProps {
   fill?: boolean;
   align?: FlexStyle['justifyContent'];
