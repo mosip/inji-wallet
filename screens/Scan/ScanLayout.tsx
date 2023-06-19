@@ -21,9 +21,7 @@ export const ScanLayout: React.FC = () => {
             name="SendVcScreen"
             component={SendVcScreen}
             options={{
-              title: t('requester', {
-                vcLabel: controller.vcLabel.singular,
-              }),
+              title: t('sharingVc'),
               headerBackVisible: false,
             }}
           />

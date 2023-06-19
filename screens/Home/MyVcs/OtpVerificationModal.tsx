@@ -103,5 +103,5 @@ export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
 interface OtpVerificationModalProps extends ModalProps {
   onInputDone: (otp: string) => void;
   error?: string;
-  resend: () => void;
+  resend?: () => void;
 }

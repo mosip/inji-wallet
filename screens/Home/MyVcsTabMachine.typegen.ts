@@ -20,12 +20,13 @@ export interface Typegen0 {
     actions: never;
     delays: never;
     guards: never;
-    services: 'AddVcModal' | 'GetVcModal';
+    services: never;
   };
   'eventsCausingActions': {
     completeOnboarding: 'ADD_VC' | 'ONBOARDING_DONE';
     getOnboardingStatus: 'xstate.init';
     sendVcAdded: 'STORE_RESPONSE';
+    setStoreError: 'STORE_ERROR';
     storeVcItem: 'done.invoke.AddVcModal';
     viewVcFromParent: 'VIEW_VC';
   };
@@ -40,6 +41,8 @@ export interface Typegen0 {
   'matchesStates':
     | 'addingVc'
     | 'addingVc.addVcSuccessful'
+    | 'addingVc.savingFailed'
+    | 'addingVc.savingFailed.idle'
     | 'addingVc.storing'
     | 'addingVc.waitingForvcKey'
     | 'checkingOnboardingStatus'
@@ -49,7 +52,12 @@ export interface Typegen0 {
     | 'onboarding'
     | 'viewingVc'
     | {
-        addingVc?: 'addVcSuccessful' | 'storing' | 'waitingForvcKey';
+        addingVc?:
+          | 'addVcSuccessful'
+          | 'savingFailed'
+          | 'storing'
+          | 'waitingForvcKey'
+          | { savingFailed?: 'idle' };
         gettingVc?: 'waitingForvcKey';
       };
   'tags': never;

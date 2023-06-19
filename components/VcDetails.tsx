@@ -1,6 +1,6 @@
 import { formatDistanceToNow } from 'date-fns';
 import React from 'react';
-import * as DateFnsLocale from '../lib/date-fns/locale';
+import * as DateFnsLocale from 'date-fns/locale';
 import { useTranslation } from 'react-i18next';
 import { Image, ImageBackground, View } from 'react-native';
 import { Icon } from 'react-native-elements';
@@ -11,6 +11,7 @@ import { TextItem } from './ui/TextItem';
 import { VcItemTags } from './VcItemTags';
 import VerifiedIcon from './VerifiedIcon';
 import { getLocalizedField } from '../i18n';
+import { CREDENTIAL_REGISTRY_EDIT } from 'react-native-dotenv';
 import { QrCodeOverlay } from './QrCodeOverlay';
 
 export const VcDetails: React.FC<VcDetailsProps> = (props) => {

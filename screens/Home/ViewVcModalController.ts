@@ -26,7 +26,6 @@ import {
 } from '../../machines/vcItem';
 import { selectPasscode } from '../../machines/auth';
 import { biometricsMachine, selectIsSuccess } from '../../machines/biometrics';
-import { selectVcLabel } from '../../machines/settings';
 
 export function useViewVcModal({
   vcItemActor,
@@ -41,11 +40,9 @@ export function useViewVcModal({
   const [error, setError] = useState('');
   const { appService } = useContext(GlobalContext);
   const authService = appService.children.get('auth');
-  const settingsService = appService.children.get('settings');
   const [, bioSend, bioService] = useMachine(biometricsMachine);
 
   const isSuccessBio = useSelector(bioService, selectIsSuccess);
-  const vcLabel = useSelector(settingsService, selectVcLabel);
   const isLockingVc = useSelector(vcItemActor, selectIsLockingVc);
   const isRevokingVc = useSelector(vcItemActor, selectIsRevokingVc);
   const isLoggingRevoke = useSelector(vcItemActor, selectIsLoggingRevoke);
@@ -84,11 +81,7 @@ export function useViewVcModal({
 
   useEffect(() => {
     if (isLockingVc) {
-      showToast(
-        vc.locked
-          ? t('success.locked', { vcLabel: vcLabel.singular })
-          : t('success.unlocked', { vcLabel: vcLabel.singular })
-      );
+      showToast(vc.locked ? t('success.locked') : t('success.unlocked'));
     }
     if (isRevokingVc) {
       showToast(t('success.revoked', { vid: vc.id }));

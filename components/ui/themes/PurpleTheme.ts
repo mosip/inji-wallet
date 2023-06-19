@@ -19,6 +19,12 @@ const Colors = {
   Transparent: 'transparent',
   Warning: '#f0ad4e',
   GrayText: '#6F6F6F',
+  LightOrange: '#FDF1E6',
+  ShadeOfGrey: '#6F6F6F',
+  Gray44: '#707070',
+  Zambezi: '#5F5F5F',
+  resendCodeTimer: '#555555',
+  Gray40: '#666666',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5;
@@ -69,6 +75,12 @@ export const PurpleTheme = {
     WarningIcon: Colors.Warning,
     GrayText: Colors.GrayText,
     gradientBtn: ['#F59B4B', '#E86E04'],
+    Cursor: Colors.Purple,
+    getVidColor: Colors.Zambezi,
+    resendCodeTimer: Colors.resendCodeTimer,
+    RetrieveIdLabel: Colors.ShadeOfGrey,
+    walletbindingContent: Colors.Gray40,
+    ProfileIconBg: Colors.Purple2,
   },
   Styles: StyleSheet.create({
     title: {
@@ -90,6 +102,15 @@ export const PurpleTheme = {
     statusLabel: {
       color: Colors.Black,
     },
+    IconContainer: {
+      padding: 6,
+      width: 36,
+      marginRight: 4,
+      marginLeft: 10,
+      height: 36,
+      borderRadius: 10,
+      backgroundColor: Colors.LightOrange,
+    },
     verifiedIconContainer: {
       marginLeft: 5,
     },
@@ -110,6 +131,31 @@ export const PurpleTheme = {
       flexDirection: 'row',
       backgroundColor: Colors.Grey6,
       borderRadius: 4,
+    },
+    bottomTabIconStyle: {
+      padding: 4,
+      width: 36,
+      height: 36,
+      borderRadius: 6,
+      backgroundColor: Colors.LightOrange,
+    },
+    popUp: {
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      backgroundColor: Colors.Green,
+      height: 39,
+      position: 'relative',
+      paddingHorizontal: 12,
+    },
+    homeScreenContainer: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 10,
+      backgroundColor: '#fff',
+      shadowColor: '#000',
+      shadowOpacity: 0.4,
+      elevation: 5,
+      padding: 10,
     },
     vertloadingContainer: {
       flex: 1,
@@ -205,6 +251,13 @@ export const PurpleTheme = {
       flex: 1,
       padding: 10,
     },
+    profileIconBg: {
+      padding: 8,
+      width: 40,
+      height: 40,
+      borderRadius: 6,
+      backgroundColor: Colors.LightOrange,
+    },
     closeCardImage: {
       width: 105,
       height: 135,
@@ -223,6 +276,13 @@ export const PurpleTheme = {
       height: 300,
       width: 300,
       overflow: 'hidden',
+    },
+    settingsIconBg: {
+      padding: 6,
+      width: 36,
+      marginRight: 4,
+      height: 36,
+      backgroundColor: Colors.Transparent,
     },
     scanner: {
       height: 400,
@@ -261,10 +321,9 @@ export const PurpleTheme = {
       borderBottomWidth: 1,
       marginTop: 10,
     },
-    hrLine: {
-      borderBottomColor: 'black',
-      borderBottomWidth: 1,
-      marginTop: 10,
+    warningText: {
+      color: Colors.Red,
+      fontSize: 18,
     },
   }),
   PinInputStyle: StyleSheet.create({
@@ -283,27 +342,60 @@ export const PurpleTheme = {
     },
   }),
   TextStyles: StyleSheet.create({
-    base: {
+    header: {
+      color: Colors.Black,
+      fontFamily: 'Inter_700Bold',
+      fontSize: 18,
+      lineHeight: 22,
+      paddingTop: 4,
+    },
+    retrieveIdLabel: {
+      color: Colors.ShadeOfGrey,
+      fontFamily: 'Inter_600SemiBold',
+      lineHeight: 18,
+    },
+    helpDetailes: {
+      margin: 5,
+      color: Colors.Gray44,
+      fontFamily: 'Inter_600SemiBold',
+    },
+    aboutDetailes: {
       color: Colors.Black,
       fontSize: 18,
-      lineHeight: 28,
+      margin: 7,
+      lineHeight: 18,
+    },
+    error: {
+      color: Colors.Red,
+      fontFamily: 'Inter_600SemiBold',
+      fontSize: 12,
+    },
+    base: {
+      color: Colors.Black,
+      fontSize: 16,
+      lineHeight: 18,
     },
     regular: {
       fontFamily: 'Inter_400Regular',
+      fontSize: 14,
     },
     semibold: {
       fontFamily: 'Inter_600SemiBold',
+      fontSize: 15,
     },
     bold: {
       fontFamily: 'Inter_700Bold',
     },
     small: {
-      fontSize: 14,
+      fontSize: 13,
       lineHeight: 21,
     },
     smaller: {
-      fontSize: 12,
+      fontSize: 11,
       lineHeight: 18,
+    },
+    large: {
+      fontSize: 18,
     },
   }),
   VcItemStyles: StyleSheet.create({
@@ -374,9 +466,6 @@ export const PurpleTheme = {
     radius: {
       borderRadius: 10,
       backgroundColor: Colors.Purple,
-    },
-    gradient: {
-      borderRadius: 10,
     },
     gradient: {
       borderRadius: 10,
@@ -465,6 +554,21 @@ export const PurpleTheme = {
     modal: {
       width: Dimensions.get('screen').width,
       height: Dimensions.get('screen').height,
+    },
+  }),
+  KebabPopUpStyles: StyleSheet.create({
+    kebabPopUp: {
+      marginHorizontal: 4,
+    },
+    kebabHeaderStyle: {
+      backgroundColor: Colors.White,
+      borderTopLeftRadius: 24,
+      borderTopRightRadius: 24,
+      justifyContent: 'space-between',
+      fontFamily: 'Inter_700Bold',
+      paddingRight: 15,
+      paddingLeft: 130,
+      paddingTop: 18,
     },
   }),
   MessageOverlayStyles: StyleSheet.create({
@@ -668,6 +772,7 @@ export const PurpleTheme = {
   WarningLogo: require('../../../assets/warningLogo.png'),
   OtpLogo: require('../../../purpleAssets/otp-mobile-logo.png'),
   SuccessLogo: require('../../../assets/success-logo.png'),
+  DigitalIdentityLogo: require('../../../assets/digital-identity-icon.png'),
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/
 

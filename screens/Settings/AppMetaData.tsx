@@ -19,7 +19,7 @@ export const AppMetaData: React.FC<AppMetaDataProps> = (props) => {
   Object.keys(dependencies).forEach((dependencyName) => {
     const dependencyData = dependencies[dependencyName];
 
-    if (dependencyName == 'react-native-openid4vp-ble') {
+    if (dependencyName == 'react-native-tuvali') {
       packageVersion = dependencyData.from
         ? dependencyData.from.split('#')[1]
         : 'unknown';

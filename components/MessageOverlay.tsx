@@ -65,6 +65,31 @@ export const MessageOverlay: React.FC<MessageOverlayProps> = (props) => {
   );
 };
 
+export const ErrorMessageOverlay: React.FC<ErrorMessageOverlayProps> = ({
+  isVisible,
+  error,
+  onDismiss,
+  translationPath,
+}) => {
+  const { t } = useTranslation(translationPath);
+
+  return (
+    <MessageOverlay
+      isVisible={isVisible}
+      title={t(error + '.title')}
+      message={t(error + '.message')}
+      onBackdropPress={onDismiss}
+    />
+  );
+};
+
+export interface ErrorMessageOverlayProps {
+  isVisible: boolean;
+  error?: string;
+  onDismiss?: () => void;
+  translationPath: string;
+}
+
 const Progress: React.FC<Pick<MessageOverlayProps, 'progress'>> = (props) => {
   return typeof props.progress === 'boolean' ? (
     props.progress && (

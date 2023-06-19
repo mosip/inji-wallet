@@ -10,7 +10,9 @@ import {
 import {
   selectBiometricUnlockEnabled,
   selectName,
+  selectCredentialRegistryResponse,
   selectVcLabel,
+  selectCredentialRegistry,
   SettingsEvents,
 } from '../../machines/settings';
 
@@ -99,6 +101,11 @@ export function useSettingsScreen({ navigation }: MainRouteProps) {
     backendInfo: useSelector(appService, selectBackendInfo),
     name: useSelector(settingsService, selectName),
     vcLabel: useSelector(settingsService, selectVcLabel),
+    credentialRegistry: useSelector(settingsService, selectCredentialRegistry),
+    credentialRegistryResponse: useSelector(
+      settingsService,
+      selectCredentialRegistryResponse
+    ),
     isBiometricUnlockEnabled: useSelector(
       settingsService,
       selectBiometricUnlockEnabled
@@ -113,6 +120,18 @@ export function useSettingsScreen({ navigation }: MainRouteProps) {
 
     UPDATE_VC_LABEL: (label: string) =>
       settingsService.send(SettingsEvents.UPDATE_VC_LABEL(label)),
+
+    UPDATE_CREDENTIAL_REGISTRY: (credentialRegistry: string) =>
+      settingsService.send(
+        SettingsEvents.UPDATE_CREDENTIAL_REGISTRY(credentialRegistry)
+      ),
+
+    UPDATE_CREDENTIAL_REGISTRY_RESPONSE: (credentialRegistryResponse: string) =>
+      settingsService.send(
+        SettingsEvents.UPDATE_CREDENTIAL_REGISTRY_RESPONSE(
+          credentialRegistryResponse
+        )
+      ),
 
     TOGGLE_BIOMETRIC: (enable: boolean) =>
       settingsService.send(SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(enable)),

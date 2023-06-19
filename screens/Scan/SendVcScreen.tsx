@@ -113,9 +113,7 @@ export const SendVcScreen: React.FC = () => {
         <Column padding="12 0" elevation={2}>
           <Button
             type="gradient"
-            title={t('approveRequest', {
-              vcLabel: controller.vcLabel.singular,
-            })}
+            title={t('approveRequest')}
             disabled={controller.selectedIndex == null}
             onPress={controller.ACCEPT_REQUEST}
           />

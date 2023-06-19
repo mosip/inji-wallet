@@ -1,6 +1,6 @@
 export default {
-  name: 'MOSIP Resident App',
-  slug: 'mosip-resident-app',
+  name: 'Inji',
+  slug: 'inji',
   version: '1.0.0',
   orientation: 'portrait',
   icon: './assets/icon.png',

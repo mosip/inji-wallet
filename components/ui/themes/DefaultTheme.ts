@@ -25,7 +25,6 @@ const Colors = {
   dorColor: '#CBCBCB',
   plainText: '#FFD6A7',
   walletbindingLabel: '#000000',
-  walletbindingContent: '#666666',
   LightOrange: '#FDF1E6',
   GradientColors: ['#F59B4B', '#E86E04'],
   DisabledColors: ['#C7C7C7', '#C7C7C7'],
@@ -98,6 +97,8 @@ export const DefaultTheme = {
     walletbindingLabel: Colors.Black,
     walletbindingContent: Colors.Gray40,
     resendCodeTimer: Colors.resendCodeTimer,
+    statusLabel: Colors.Black,
+    Cursor: Colors.Orange,
   },
   Styles: StyleSheet.create({
     title: {
@@ -191,6 +192,12 @@ export const DefaultTheme = {
       shadowOpacity: 0.4,
       shadowRadius: 3,
       elevation: 4,
+    },
+    selectedBindedVc: {
+      borderRadius: 15,
+      margin: 5,
+      borderWidth: 3,
+      borderColor: Colors.Green,
     },
     selectedVc: {
       borderRadius: 10,
@@ -287,6 +294,13 @@ export const DefaultTheme = {
     openDetailsContainer: {
       flex: 1,
       padding: 10,
+    },
+    profileIconBg: {
+      padding: 8,
+      width: 40,
+      height: 40,
+      borderRadius: 6,
+      backgroundColor: Colors.LightOrange,
     },
     IconContainer: {
       padding: 6,
@@ -409,6 +423,10 @@ export const DefaultTheme = {
       paddingRight: 15,
       paddingLeft: 130,
       elevation: 2,
+    },
+    warningText: {
+      color: Colors.Red,
+      fontSize: 18,
     },
   }),
   PinInputStyle: StyleSheet.create({

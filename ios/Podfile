@@ -9,7 +9,7 @@ platform :ios, '13.0'
 require 'json'
 podfile_properties = JSON.parse(File.read('./Podfile.properties.json')) rescue {}
 
-target 'MOSIPResidentApp' do
+target 'Inji' do
   use_expo_modules!
   post_integrate do |installer|
     begin
