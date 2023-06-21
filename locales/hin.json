@@ -110,6 +110,8 @@
   },
   "SettingScreen": {
     "header": "समायोजन",
+    "injiAsVerifierApp": "सत्यापनकर्ता ऐप के रूप में इंजी",
+    "basicSettings": "मूल सेटिंग्स",
     "bioUnlock": "बायोमेट्रिक्स से अनलॉक करें",
     "language": "भाषा",
     "aboutInji": "इंजी के बारे में",
@@ -222,6 +224,8 @@
     "next": "अगला"
   },
   "ReceivedVcsTab": {
+    "receivedCards": "प्राप्त कार्ड",
+    "header": "प्राप्त कार्ड",
     "noReceivedVcsTitle": "नहीं {{vcLabel}} अभी तक उपलब्ध नहीं है",
     "noReceivedVcsText": "प्राप्त करने के लिए नीचे दिए गए अनुरोध पर टैप करें {{vcLabel}}"
   },
@@ -305,6 +309,7 @@
     }
   },
   "RequestScreen": {
+    "receiveCard": "कार्ड प्राप्त करें",
     "bluetoothDenied": "कृपया ब्लूटूथ को सक्षम करें ताकि वह {{vcLabel}} का अनुरोध कर सके",
     "showQrCode": "निवासी {{vcLabel}} का अनुरोध करने के लिए यह क्यूआर कोड प्रदर्शित करें",
     "incomingVc": "इनकमिंग {{vcLabel}}",
@@ -347,7 +352,7 @@
     "header": "स्कैन क्यू आर कोड",
     "noShareableVcs": "कोई साझा करने योग्य {{vcLabel}} उपलब्ध नहीं है।",
     "sharingVc": "{{vcLabel}} साझा करना",
-    "BluetoothStateIos": "ब्लूटूथ बंद है, कृपया इसे नियंत्रण केंद्र से चालू करें",
+    "bluetoothStateIos": "ब्लूटूथ बंद है, कृपया इसे नियंत्रण केंद्र से चालू करें",
     "bluetoothStateAndroid": "ब्लूटूथ बंद है, कृपया इसे त्वरित सेटिंग मेनू से चालू करें",    
     "errors": {
       "locationDisabled": {

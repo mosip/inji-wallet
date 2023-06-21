@@ -107,6 +107,8 @@
   },
   "SettingScreen": {
     "header": "إعدادات",
+    "injiAsVerifierApp": "  كتطبيق للتحقق إنجي",
+    "basicSettings": "الإعدادات الأساسية",
     "bioUnlock": "افتح مع القياسات الحيوية",
     "language": "لغة",
     "aboutInji": "حول إنجي",
@@ -214,6 +216,8 @@
     "next": "التالي"
   },
   "ReceivedVcsTab": {
+    "receivedCards": "البطاقات المستلمة",
+    "header": "البطاقات المستلمة",
     "noReceivedVcsTitle": "لا يوجد {{vcLabel}} متاح حتى الآن",
     "noReceivedVcsText": "اضغط على الطلب أدناه لتلقي{{vcLabel}}"
   },
@@ -297,6 +301,7 @@
     }
   },
   "RequestScreen": {
+    "receiveCard": "البطاقة المستلمة",
     "bluetoothDenied": "الرجاء تمكين Bluetooth لتتمكن من طلب{{vcLabel}}",
     "showQrCode": "اعرض  رمز الاستجابة السريعة هذا لطلب المقيم {{vcLabel}}",
     "incomingVc": "الوارد {{vcLabel}}",
@@ -339,7 +344,7 @@
     "header": "مسح رمز الاستجابة السريعة",
     "noShareableVcs": "لا تتوفر {{vcLabel}} قابلة للمشاركة.",
     "sharingVc": "مشاركة {{vcLabel}}",
-    "BluetoothStateIos": "تم إيقاف تشغيل البلوتوث ، يرجى تشغيله من مركز التحكم",
+    "bluetoothStateIos": "تم إيقاف تشغيل البلوتوث ، يرجى تشغيله من مركز التحكم",
     "bluetoothStateAndroid": "تم إيقاف تشغيل البلوتوث ، يرجى تشغيله من قائمة الإعدادات السريعة",
     "errors": {
       "locationDisabled": {

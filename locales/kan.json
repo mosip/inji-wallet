@@ -110,6 +110,8 @@
   },
   "SettingScreen": {
     "header": "ಸಂಯೋಜನೆಗಳು",
+    "injiAsVerifierApp": "ವೆರಿಫೈಯರ್ ಆಪ್ ಆಗಿ ಇಂಜಿ",
+    "basicSettings": "ಮೂಲ ಸೆಟ್ಟಿಂಗ್‌ಗಳು",
     "bioUnlock": "ಬಯೋಮೆಟ್ರಿಕ್ಸ್‌ನೊಂದಿಗೆ ಅನ್‌ಲಾಕ್ ಮಾಡಿ",
     "language": "ಭಾಷೆ",
     "aboutInji": "ಇಂಜಿ ಬಗ್ಗೆ",
@@ -222,6 +224,8 @@
     "next": "ಮುಂದೆ"
   },
   "ReceivedVcsTab": {
+    "receivedCards": "ಕಾರ್ಡ್‌ಗಳನ್ನು ಸ್ವೀಕರಿಸಲಾಗಿದೆ",
+    "header": "ಕಾರ್ಡ್‌ಗಳನ್ನು ಸ್ವೀಕರಿಸಲಾಗಿದೆ",
     "noReceivedVcsTitle": "ಇನ್ನೂ ಯಾವುದೇ {{vcLabel}} ಲಭ್ಯವಿಲ್ಲ",
     "noReceivedVcsText": "{{vcLabel}} ಸ್ವೀಕರಿಸಲು ಕೆಳಗಿನ ವಿನಂತಿಯ ಮೇಲೆ ಟ್ಯಾಪ್ ಮಾಡಿ"
   },
@@ -305,6 +309,7 @@
     }
   },
   "RequestScreen": {
+    "receiveCard": "ಕಾರ್ಡ್ ಸ್ವೀಕರಿಸಿ",
     "bluetoothDenied": "ವಿನಂತಿಸಲು ಬ್ಲೂಟೂತ್ ಅನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ{{vcLabel}}",
     "showQrCode": "ನಿವಾಸಿ {{vcLabel}} ಅನ್ನು ವಿನಂತಿಸಲು ಈ QR ಕೋಡ್ ಅನ್ನು ಪ್ರದರ್ಶಿಸಿ",
     "incomingVc": "ಒಳಬರುವ {{vcLabel}}",
@@ -347,7 +352,7 @@
     "header": "QR ಕೋಡ್ ಅನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಿ",
     "noShareableVcs": "ಯಾವುದೇ ಹಂಚಿಕೊಳ್ಳಬಹುದಾದ {{vcLabel}} ಲಭ್ಯವಿಲ್ಲ.",
     "sharingVc": "{{vcLabel}} ಹಂಚಿಕೊಳ್ಳಲಾಗುತ್ತಿದೆ",
-    "BluetoothStateIos": "ಬ್ಲೂಟೂತ್ ಆಫ್ ಆಗಿದೆ, ದಯವಿಟ್ಟು ಅದನ್ನು ನಿಯಂತ್ರಣ ಕೇಂದ್ರದಿಂದ ಆನ್ ಮಾಡಿ",
+    "bluetoothStateIos": "ಬ್ಲೂಟೂತ್ ಆಫ್ ಆಗಿದೆ, ದಯವಿಟ್ಟು ಅದನ್ನು ನಿಯಂತ್ರಣ ಕೇಂದ್ರದಿಂದ ಆನ್ ಮಾಡಿ",
     "bluetoothStateAndroid": "ಬ್ಲೂಟೂತ್ ಆಫ್ ಆಗಿದೆ, ದಯವಿಟ್ಟು ತ್ವರಿತ ಸೆಟ್ಟಿಂಗ್‌ಗಳ ಮೆನುವಿನಿಂದ ಅದನ್ನು ಆನ್ ಮಾಡಿ",
     "errors": {
       "locationDisabled": {

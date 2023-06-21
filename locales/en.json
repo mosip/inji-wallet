@@ -109,6 +109,8 @@
   },
   "SettingScreen": {
     "header": "Settings",
+    "injiAsVerifierApp": "Inji as Verifier App",
+    "basicSettings": "Basic Settings",
     "bioUnlock": "Unlock with Biometrics",
     "language": "Language",
     "injiTourGuide": "Inji Tour Guide",
@@ -197,6 +199,8 @@
     "next": "Next"
   },
   "ReceivedVcsTab": {
+    "receivedCards": "Received Cards",
+    "header": "Received Cards",
     "noReceivedVcsTitle": "No {{vcLabel}} available yet",
     "noReceivedVcsText": "Tap on Request below to receive {{vcLabel}}"
   },
@@ -280,6 +284,7 @@
     }
   },
   "RequestScreen": {
+    "receiveCard": "Receive Card",
     "bluetoothDenied": "Please enable Bluetooth to be able to request {{vcLabel}}",
     "showQrCode": "Display this QR code to request resident {{vcLabel}}",
     "incomingVc": "Incoming {{vcLabel}}",
@@ -322,8 +327,8 @@
     "header": "Scan QR Code",
     "noShareableVcs": "No shareable {{vcLabel}} are available.",
     "sharingVc": "Sharing {{vcLabel}}",
-    "BluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from control center",
-    "BluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
+    "bluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from control center",
+    "bluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
     "errors": {
       "locationDisabled": {
         "message": "Location services must be enabled for the scanning functionality",

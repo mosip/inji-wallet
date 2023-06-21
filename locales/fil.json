@@ -103,6 +103,8 @@
   },
   "SettingScreen": {
     "header": "Mga setting",
+    "injiAsVerifierApp": "Inji bilang Verifier App",
+    "basicSettings": "Mga Pangunahing Setting",
     "bioUnlock": "I-unlock gamit ang Biometrics",
     "language": "Wika",
     "aboutInji": "About Inji",
@@ -210,6 +212,8 @@
     "next": "Susunod"
   },
   "ReceivedVcsTab": {
+    "receivedCards": "Mga Natanggap na Card",
+    "header": "Mga Natanggap na Card",
     "noReceivedVcsTitle": "Wala pang {{vcLabel}}",
     "noReceivedVcsText": "Pindutin ang Humiling sa ibaba para makatanggap ng {{vcLabel}}"
   },
@@ -293,6 +297,7 @@
     }
   },
   "RequestScreen": {
+    "receiveCard": "Tumanggap ng Card",
     "bluetoothDenied": "Mangyaring paganahin ang Bluetooth upang makahiling ng {{vcLabel}}",
     "showQrCode": "Ipakita ang QR code na ito para humiling ng resident {{vcLabel}}",
     "incomingVc": "Padating na {{vcLabel}}",
@@ -335,7 +340,7 @@
     "header": "I-scan ang QR Code",
     "noShareableVcs": "Walang magagamit na maibabahaging {{vcLabel}}..",
     "sharingVc": "Pagbabahagi ng {{vcLabel}}",
-    "BluetoothStateIos": "Naka-OFF ang Bluetooth, paki-ON ito mula sa control center",
+    "bluetoothStateIos": "Naka-OFF ang Bluetooth, paki-ON ito mula sa control center",
     "bluetoothStateAndroid": "Naka-OFF ang Bluetooth, paki-ON ito mula sa control center",
     "errors": {
       "locationDisabled": {

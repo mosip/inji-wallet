@@ -108,6 +108,8 @@
   },
   "SettingScreen": {
     "header": "அமைப்புகள்",
+    "injiAsVerifierApp": "சரிபார்ப்பு பயன்பாடாக இன்ஜி",
+    "basicSettings": "அடிப்படை அமைப்புகள்",
     "bioUnlock": "பயோமெட்ரிக்ஸ் மூலம் திறக்கவும்",
     "language": "மொழி",
     "aboutInji": "இன்ஜி பற்றி",
@@ -220,6 +222,8 @@
     "next": "அடுத்தது"
   },
   "ReceivedVcsTab": {
+    "receivedCards": "பெற்ற அட்டைகள்",
+    "header": "பெற்ற அட்டைகள்",
     "noReceivedVcsTitle": "இன்னும் {{vcLabel}} கிடைக்கவில்லை",
     "noReceivedVcsText": "{{vcLabel}} பெறுவதற்கு கீழே உள்ள கோரிக்கையைத் தட்டவும்"
   },
@@ -303,6 +307,7 @@
     }
   },
   "RequestScreen": {
+    "receiveCard": "பெற்ற அட்டை",
     "bluetoothDenied": "{{vcLabel}}ஐக் கோர புளூடூத்தை இயக்கவும்",
     "showQrCode": "குடியுரிமை {{vcLabel}}ஐக் கோர இந்த QR குறியீட்டைக் காட்டு",
     "incomingVc": "உள்வரும் {{vcLabel}}",
@@ -345,7 +350,7 @@
     "header": "QR குறியீட்டை ஸ்கேன் செய்யவும்",
     "noShareableVcs": "பகிரக்கூடிய {{vcLabel}} எதுவும் இல்லை.",
     "sharingVc": "பகிர்கிறது {{vcLabel}}",
-    "BluetoothStateIos": "புளூடூத் முடக்கப்பட்டுள்ளது, கட்டுப்பாட்டு மையத்திலிருந்து அதை இயக்கவும்",
+    "bluetoothStateIos": "புளூடூத் முடக்கப்பட்டுள்ளது, கட்டுப்பாட்டு மையத்திலிருந்து அதை இயக்கவும்",
     "bluetoothStateAndroid": "புளூடூத் முடக்கப்பட்டுள்ளது, விரைவு அமைப்புகள் மெனுவிலிருந்து அதை இயக்கவும்",
     "errors": {
       "locationDisabled": {
