@@ -43,53 +43,23 @@
     "gender": "Gender",
     "dateOfBirth": "Date of birth",
     "phoneNumber": "Phone number",
-    "email": "E-mail",
+    "email": "Email",
     "address": "Address",
     "reasonForSharing": "Reason for sharing",
     "idType": "ID type",
-    "id": "ID",
-    "qrCodeHeader": "QR Code",
+    "id": "Id",
     "nationalCard": "National Card",
     "uin": "UIN",
     "vid": "VID",
-    "enableVerification": "Activate",
+    "enableVerification": "Enable Verification",
     "profileAuthenticated": "Profile is authenticated!",
-    "offlineAuthDisabledHeader": "Activation pending for online login",
-    "offlineAuthDisabledMessage": "Please click the button below to activate this credential to be used for online login."
-  },
-  "HomeScreenKebabPopUp": {
-    "title": "More Options",
-    "unPinCard": "Unpin Card",
-    "pinCard" : "Pin Card",
-    "offlineAuthenticationDisabled!": "Offline authentication disabled!",
-    "offlineAuthDisabledMessage": "Click here to enable this credential to be used for offline authentication.",
-    "viewActivityLog": "View activity log",
-    "removeFromWallet": "Remove from wallet",
-    "revokeId": "Revoke ID",
-    "revokeMessage": "Revoke the virtual ID for this profile",
-    "ActivityLog":"View Activity Log"
-  },
-  "WalletBinding": {
-    "inProgress" : "In Progress",
-    "profileAuthenticated": "Profile is authenticated!"
-  },
-  "BindingVcWarningOverlay": {
-    "alert": "Please Confirm",
-    "BindingWarning": "If you have enabled verification for this credential on another wallet, it will get overridden. Do you want to proceed?",
-    "yesConfirm": "Yes, I confirm",
-    "no" : "No"
-  },
-  "RemoveVcWarningOverlay":{
-    "alert": "Please Confirm",
-    "BindingWarning": "Do you want to remove this card",
-    "yesConfirm": "Yes, I confirm",
-    "no" : "No"
+    "offlineAuthDisabledHeader": "Offline Authentication disabled!",
+    "offlineAuthDisabledMessage": "Click 'Enable Authentication' to enable this credentials to be used for offline authentication."
   },
   "AuthScreen": {
-    "header": "Select App Unlock Method",
-    "Description": "Would you like to use biometrics to unlock the application?",
-    "useBiometrics": "Use Biometrics",
-    "usePasscode": "Use Passcode",
+    "header": "Would you like to use biometrics to unlock the application?",
+    "useBiometrics": "Use biometrics",
+    "usePasscode": "I'd rather use a passcode",
     "errors": {
       "unavailable": "Device does not support Biometrics",
       "unenrolled": "To use Biometrics, please enroll your biometrics in your device settings",
@@ -107,34 +77,12 @@
     "received": "received",
     "deleted": "deleted"
   },
-  "SettingScreen": {
-    "header": "Settings",
-    "injiAsVerifierApp": "Inji as Verifier App",
-    "basicSettings": "Basic Settings",
-    "bioUnlock": "Unlock with Biometrics",
-    "language": "Language",
-    "injiTourGuide": "Inji Tour Guide",
-    "logout": "Logout"
-  },
-  "AboutInji": {
-    "aboutInji": "About Inji",
-    "header": "ABOUT INJI",
-    "aboutDetailes": "Inji is a mobile app that can be used as a digital wallet to store credentials. It also allows verfication of identity in both offline and online modes, at any place and time.",
-    "forMoreDetailes": "For more detailes",
-    "clickHere": "Click here",
-    "version": "Version: 0.4.1",
-    "tuvaliVersion": "Tuvali-version: v0.3.9-b16c5ea"
-  },
-  "HelpScreen": {
-    "header": "Help",
-    "whatisIdDetails?": "What is ID Details?",
-    "howToTurnOnOfflineAuthentication?": "How to turn on Offline Authentication?",
-    "whatIsRevokeId?": "What is Revoke ID?",
-    "howToViewActivityLog?": "How to view activity log?",
-    "detailes": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since."
+  "HomeScreen": {
+    "myVcsTab": "My\n{{vcLabel}}",
+    "receivedVcsTab": "Received\n{{vcLabel}}",
+    "historyTab": "History"
   },
   "AddVcModal": {
-    "header":"Retrieve your card",
     "requestingCredential": "Requesting credential...",
     "errors": {
       "input": {
@@ -156,21 +104,17 @@
     "backButton": "Back home"
   },
   "GetIdInputModal": {
-    "header": "Retrieve your UIN/VID",
-    "applicationIdLabel": "Please enter your Application ID",
-    "applicationId": "Enter Application ID",
+    "header": "Enter your Application ID to get your UIN",
+    "getUIN": "Get UIN/VID",
+    "applicationId": "Application ID",
     "requestingOTP": "Requesting OTP...",
-    "qstnMarkToolTip": "Application ID is available in the acknowledgement received after enrolment.",
-    "getUIN": "Get UIN/VID"
+    "qstnMarkToolTip": "Application ID is available in the acknowledgement received after enrolment."
   },
   "IdInputModal": {
-    "title": "Retrieve your ID",
-    "guideLabel": "Select ID type and enter the MOSIP provided UIN or VID of the ID you wish to retrieve",
-    "generateVc": "Generate {{vcLabel}}",
-    "downloadID": "Download Card",
-    "enterId": "Enter {{idType}}",
-    "noUIN/VID": "Don't have UIN/VID? ",
-    "getItHere": "Get it now",
+    "header": "Enter your UIN/VID to download your {{vcLabel}}",
+    "generateVc": "Generate My {{vcLabel}}",
+    "enterId": "Enter your {{idType}}",
+    "noUIN/VID": "Don't have your UIN/VID? Get it here",
     "requestingOTP": "Requesting OTP..."
   },
   "OtpVerificationModal": {
@@ -180,32 +124,24 @@
     "resendCode": "Resend Code"
   },
   "MyVcsTab": {
-    "downloadID": "Download Card",
-    "bringYourDigitalID": "Bring Your Digital ID",
-    "generateVcDescription": "To download your {{vcLabel}} tap Download {{vcLabel}} below",
-    "downloadingYourId": "Downloading your card, this can take upto 5 minutes"
+    "addVcButton": "Add {{vcLabel}}",
+    "generateVc": "Generate your {{vcLabel}}",
+    "generateVcDescription": "Tap on \"Add {{vcLabel}}\" below to download your {{vcLabel}}"
   },
   "OnboardingOverlay": {
-    "stepOneTitle":"Protect Privacy",
-    "stepOneText":"Lorem Ipsum is simply a standard text of the printing and typesetting industry",
-    "stepTwoTitle": "Secure Sharing",
-    "stepTwoText": "Share and receive ID switfly using your phone camera to scan QR codes",
-    "stepThreeTitle": "Trusted Digital Wallet",
-    "stepThreeText": "Keep your digital credential with you at all times",
-    "stepFourTitle": "Quick Access",
-    "stepFourText": "Once generated, ID's are safely stored on your mobile.",
-    "stepFourButton": "Get Started",
-    "skip": "Skip",
-    "next": "Next"
+    "stepOneTitle": "Welcome!",
+    "stepOneText": "Keep your digital credential with you at all times. To get started, add {{vcLabel}} to your profile.",
+    "stepTwoTitle": "{{vcLabel}} management",
+    "stepTwoText": "Once generated, {{vcLabel}} are safely stored on your mobile and can be renamed or shared at any time.",
+    "stepThreeTitle": "Easy sharing",
+    "stepThreeText": "Share and receive {{vcLabel}} switfly using your phone camera to scan QR codes.",
+    "stepThreeButton": "Get started and add {{vcLabel}}"
   },
   "ReceivedVcsTab": {
-    "receivedCards": "Received Cards",
-    "header": "Received Cards",
     "noReceivedVcsTitle": "No {{vcLabel}} available yet",
     "noReceivedVcsText": "Tap on Request below to receive {{vcLabel}}"
   },
   "ViewVcModal": {
-    "title": "ID Details",
     "cancel": "Cancel",
     "lock": "Lock",
     "unlock": "Unlock",
@@ -229,41 +165,9 @@
     "settings": "Settings"
   },
   "PasscodeScreen": {
-    "header": "Set Passcode",
-    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
-    "confirmPasscode": "Confirm passcode",
+    "header": "Set a passcode to secure your application",
+    "confirmPasscode": "Confirm your passcode",
     "enterPasscode": "Enter your passcode"
-  },
-  "AppMetaData": {
-    "header": "About Inji",
-    "version": "Version",
-    "useBle": "Powered by BLE",
-    "useGoogleNearby": "Powered by GoogleNearby"
-  },
-  "QrScreen": {
-    "title": "QR Login",
-    "alignQr": "Align the QR code within the frame to scan",
-    "confirmation": "Confirmation",
-    "checkDomain": "Also, check that there is a lock icon on the address bar.",
-    "domainHead": "https://",
-    "selectId": "Select ID",
-    "noBindedVc": "No Binded {{vcLabel}} Available to Verify",
-    "back": "Go Back",
-    "confirm": "Confirm",
-    "verify": "Verify",
-    "faceAuth": "Face Authentication",
-    "consent": "Consent",
-    "loading": "Loading...",
-    "domainWarning": "Please confirm the domain of the website you are scanning the QR code from is as below",
-    "access": " is requesting access to",
-    "status": "Status",
-    "successMessage": "You Have Successfully Logged Into ",
-    "okay": "Okay",
-    "allow": "Allow",
-    "cancel": "Cancel",
-    "essentialClaims": "Essential Claims",
-    "voluntaryClaims": "Voluntary Claims",
-    "required": "Required"
   },
   "ReceiveVcScreen": {
     "header": "{{vcLabel}} details",
@@ -284,7 +188,6 @@
     }
   },
   "RequestScreen": {
-    "receiveCard": "Receive Card",
     "bluetoothDenied": "Please enable Bluetooth to be able to request {{vcLabel}}",
     "showQrCode": "Display this QR code to request resident {{vcLabel}}",
     "incomingVc": "Incoming {{vcLabel}}",
@@ -327,7 +230,7 @@
     "header": "Scan QR Code",
     "noShareableVcs": "No shareable {{vcLabel}} are available.",
     "sharingVc": "Sharing {{vcLabel}}",
-    "bluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from control center",
+    "bluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
     "bluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
     "errors": {
       "locationDisabled": {
@@ -340,9 +243,7 @@
       }
     },
     "status": {
-      "inProgress": "In Progress",
-      "establishingConnection": "Establishing Connection",
-      "sharingInProgress": "Sharing in Progress",
+      "connecting": "Connecting...",
       "connectingTimeout": "It's taking a while to establish the connection. Is the other device open for connections?",
       "exchangingDeviceInfo": "Exchanging device info...",
       "exchangingDeviceInfoTimeout": "It's taking a while to exchange device info. You may have to reconnect.",
@@ -356,9 +257,8 @@
         "timeoutHint": "It's taking longer than expected to share. There could be a problem with the connection."
       },
       "accepted": {
-        "title": "ID shared successfully",
-        "message": "Your {{vcLabel}} has been successfully shared with {{receiver}}",
-        "gotohome": "Go to home"
+        "title": "Success!",
+        "message": "Your {{vcLabel}} has been successfully shared with {{receiver}}"
       },
       "rejected": {
         "title": "Notice",
@@ -377,12 +277,17 @@
     "verifyAndShare": "Verify Identity & Share"
   },
   "SendVcScreen": {
-    "reasonForSharing": "Reason for sharing",
-    "approveRequest": "Approve request and choose {{vcLabel}}",
-    "approveRequestAndVerify": "Approve request and verify",
-    "consentToPhotoVerification": "I give consent to have my photo taken for authentication",
-    "pleaseSelectAnId": "Please select an ID",
-    "reject": "Reject"
+    "reasonForSharing": "Reason for sharing (optional)",
+    "acceptRequest": "Accept request and choose {{vcLabel}}",
+    "acceptRequestAndVerify": "Accept request and verify",
+    "reject": "Reject",
+    "consentToPhotoVerification": "I give consent to have my photo taken for authentication"
+  },
+  "AppMetaData": {
+    "header": "About Inji",
+    "version": "Version",
+    "useBle": "Powered by BLE",
+    "useGoogleNearby": "Powered by GoogleNearby"
   },
   "Credits": {
     "header": "Credits and legal notices",
@@ -404,11 +309,6 @@
     "title": "Open Source Identity Solution",
     "getStarted": "Get started",
     "unlockApp": "Unlock application"
-  },
-  "SetupLanguage": {
-    "header": "Choose Language",
-    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
-    "save": "Save Preference"
   },
   "common": {
     "cancel": "Cancel",
