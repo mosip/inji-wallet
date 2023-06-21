@@ -18,6 +18,7 @@ import {
   selectGetVcModal,
   selectStoreError,
   selectIsSavingFailedInIdle,
+  selectIsMaximumStorageLimitReached,
 } from './MyVcsTabMachine';
 
 export function useMyVcsTab(props: HomeScreenTabProps) {
@@ -37,6 +38,10 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
     isOnboarding: useSelector(service, selectIsOnboarding),
     storeError: useSelector(service, selectStoreError),
     isSavingFailedInIdle: useSelector(service, selectIsSavingFailedInIdle),
+    isMaximumStorageLimitReached: useSelector(
+      service,
+      selectIsMaximumStorageLimitReached
+    ),
 
     DISMISS: () => service.send(MyVcsTabEvents.DISMISS()),
 

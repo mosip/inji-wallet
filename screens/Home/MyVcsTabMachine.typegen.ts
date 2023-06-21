@@ -32,6 +32,7 @@ export interface Typegen0 {
   };
   'eventsCausingDelays': {};
   'eventsCausingGuards': {
+    checkStorage: 'ADD_VC';
     isOnboardingDone: 'STORE_RESPONSE';
   };
   'eventsCausingServices': {
@@ -39,6 +40,8 @@ export interface Typegen0 {
     GetVcModal: 'GET_VC';
   };
   'matchesStates':
+    | 'addVc'
+    | 'addVc.storageLimitReached'
     | 'addingVc'
     | 'addingVc.addVcSuccessful'
     | 'addingVc.savingFailed'
@@ -52,6 +55,7 @@ export interface Typegen0 {
     | 'onboarding'
     | 'viewingVc'
     | {
+        addVc?: 'storageLimitReached';
         addingVc?:
           | 'addVcSuccessful'
           | 'savingFailed'

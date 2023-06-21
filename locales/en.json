@@ -171,6 +171,10 @@
         "title": "Failed to save the Card",
         "message": "Something went wrong while saving Card to the store."
       },
+      "maximumStorageLimitReached": {
+        "title": "Insufficient Appdata",
+        "message": "You cannot add or receive cards since the Appdata is full"
+      },
       "diskFullError": {
         "title": "Failed to save the Card",
         "message": "No more Cards can be received or saved as App Data is full."
@@ -294,6 +298,10 @@
       "nearbyDevicesPermissionDenied": {
         "message": "Nearby Devices permission is required to be able to request Card",
         "button": "Allow Permission"
+      },
+      "maximumStorageLimitReached": {
+        "title": "Insufficient Appdata",
+        "message": "You cannot add or receive cards since the Appdata is full"
       }
     },
     "status": {

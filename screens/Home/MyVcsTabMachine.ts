@@ -17,6 +17,7 @@ import {
 } from '../../shared/constants';
 import { AddVcModalMachine } from './MyVcs/AddVcModalMachine';
 import { GetVcModalMachine } from './MyVcs/GetVcModalMachine';
+import isMaximumStorageLimitReached from '../../utils/isMaximumStorageLimitReached';
 
 const model = createModel(
   {
@@ -34,6 +35,8 @@ const model = createModel(
       STORE_ERROR: (error: Error) => ({ error }),
       ADD_VC: () => ({}),
       GET_VC: () => ({}),
+      STORAGE_AVAILABLE: () => ({}),
+      STORAGE_UNAVAILABLE: () => ({}),
       ONBOARDING_DONE: () => ({}),
     },
   }
@@ -67,20 +70,42 @@ export const MyVcsTabMachine = model.createMachine(
       },
       onboarding: {
         on: {
-          ADD_VC: {
-            target: 'addingVc',
-            actions: ['completeOnboarding'],
-          },
+          ADD_VC: [
+            {
+              target: '#MyVcsTab.addVc.storageLimitReached',
+              cond: 'checkStorage',
+              actions: ['completeOnboarding'],
+            },
+            {
+              target: 'addingVc',
+              actions: ['completeOnboarding'],
+            },
+          ],
           ONBOARDING_DONE: {
             target: 'idle',
             actions: ['completeOnboarding'],
           },
         },
       },
+      addVc: {
+        states: {
+          storageLimitReached: {
+            on: {
+              DISMISS: '#idle',
+            },
+          },
+        },
+      },
       idle: {
         id: 'idle',
         on: {
-          ADD_VC: 'addingVc',
+          ADD_VC: [
+            {
+              target: '#MyVcsTab.addVc.storageLimitReached',
+              cond: 'checkStorage',
+            },
+            { target: 'addingVc' },
+          ],
           VIEW_VC: 'viewingVc',
           GET_VC: 'gettingVc',
         },
@@ -190,6 +215,9 @@ export const MyVcsTabMachine = model.createMachine(
       isOnboardingDone: (_context, event: StoreResponseEvent) => {
         return event.response === true;
       },
+      checkStorage: (_context, _event) => {
+        return isMaximumStorageLimitReached();
+      },
     },
   }
 );
@@ -225,4 +253,9 @@ export function selectStoreError(state: State) {
 
 export function selectIsSavingFailedInIdle(state: State) {
   return state.matches('addingVc.savingFailed.idle');
+}
+
+export function selectIsMaximumStorageLimitReached(state: State) {
+  console.log('State', state);
+  return state.matches('addVc.storageLimitReached');
 }
