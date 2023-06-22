@@ -17,15 +17,7 @@ import { ErrorMessageOverlay } from '../../components/MessageOverlay';
 export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
   const { t } = useTranslation('MyVcsTab');
   const controller = useMyVcsTab(props);
-  let storeErrorTranslationPath = 'errors.savingFailed';
-
-  //ENOSPC - no space left on a device / drive
-  const isDiskFullError =
-    controller.storeError?.message?.match('ENOSPC') != null;
-
-  if (isDiskFullError) {
-    storeErrorTranslationPath = 'errors.diskFullError';
-  }
+  const storeErrorTranslationPath = 'errors.savingFailed';
 
   const getId = () => {
     controller.DISMISS();

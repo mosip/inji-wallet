@@ -26,7 +26,6 @@ export interface Typegen0 {
     completeOnboarding: 'ADD_VC' | 'ONBOARDING_DONE';
     getOnboardingStatus: 'xstate.init';
     sendVcAdded: 'STORE_RESPONSE';
-    setStoreError: 'STORE_ERROR';
     storeVcItem: 'done.invoke.AddVcModal';
     viewVcFromParent: 'VIEW_VC';
   };

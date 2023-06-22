@@ -10,7 +10,6 @@ import {
   selectContext,
   selectTag,
   selectEmptyWalletBindingId,
-  selectStoreError,
   selectIsSavingFailedInIdle,
 } from '../machines/vcItem';
 import { VcItemEvents } from '../machines/vcItem';
@@ -33,17 +32,10 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
   const context = useSelector(service, selectContext);
   const verifiableCredential = useSelector(service, selectVerifiableCredential);
   const emptyWalletBindingId = useSelector(service, selectEmptyWalletBindingId);
-  const storeError = useSelector(service, selectStoreError);
   const isSavingFailedInIdle = useSelector(service, selectIsSavingFailedInIdle);
   const DISMISS = () => service.send(VcItemEvents.DISMISS());
 
-  let storeErrorTranslationPath = 'errors.savingFailed';
-
-  //ENOSPC - no space left on a device / drive
-  const isDiskFullError = storeError?.message?.match('ENOSPC') != null;
-  if (isDiskFullError) {
-    storeErrorTranslationPath = 'errors.diskFullError';
-  }
+  const storeErrorTranslationPath = 'errors.savingFailed';
 
   const generatedOn = useSelector(service, selectGeneratedOn);
   const tag = useSelector(service, selectTag);

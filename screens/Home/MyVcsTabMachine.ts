@@ -22,7 +22,6 @@ import isMaximumStorageLimitReached from '../../utils/isMaximumStorageLimitReach
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
-    storeError: null as Error,
   },
   {
     events: {
@@ -136,7 +135,6 @@ export const MyVcsTabMachine = model.createMachine(
                 actions: ['sendVcAdded'],
               },
               STORE_ERROR: {
-                actions: 'setStoreError',
                 target: '#MyVcsTab.addingVc.savingFailed',
               },
             },
@@ -205,10 +203,6 @@ export const MyVcsTabMachine = model.createMachine(
           to: (context) => context.serviceRefs.vc,
         }
       ),
-
-      setStoreError: model.assign({
-        storeError: (_context, event) => event.error,
-      }),
     },
 
     guards: {
@@ -245,10 +239,6 @@ export function selectIsOnboarding(state: State) {
 
 export function selectIsRequestSuccessful(state: State) {
   return state.matches('addingVc.addVcSuccessful');
-}
-
-export function selectStoreError(state: State) {
-  return state.context.storeError;
 }
 
 export function selectIsSavingFailedInIdle(state: State) {

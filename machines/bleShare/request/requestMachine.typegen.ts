@@ -85,7 +85,6 @@ export interface Typegen0 {
     setReceiveLogTypeVerified: 'FACE_VALID';
     setReceiverInfo: 'CONNECTED';
     setSenderInfo: 'CONNECTED';
-    setStoringError: 'STORE_ERROR';
     storeVc: 'STORE_RESPONSE';
   };
   'eventsCausingDelays': {

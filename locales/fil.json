@@ -69,10 +69,6 @@
       "savingFailed": {
         "title": "Nabigong i-save ang Card",
         "message": "Nagkaproblema habang nagse-save ng Card sa tindahan."
-      },
-      "diskFullError": {
-        "title": "Nabigong i-save ang Card",
-        "message": "Wala nang mga Mga kard na matatanggap o mai-save dahil puno na ang Data ng App."
       }
     }
   },
@@ -174,10 +170,6 @@
       "maximumStorageLimitReached": {
         "title": "Hindi sapat na Appdata",
         "message": "Hindi ka maaaring magdagdag o tumanggap ng mga card dahil puno na ang Appdata"
-      },
-      "diskFullError": {
-        "title": "Nabigong i-save ang Card",
-        "message": "Wala nang mga Mga kard na matatanggap o mai-save dahil puno na ang Data ng App."
       }
     }
   },
@@ -276,10 +268,6 @@
       "savingFailed": {
         "title": "Nabigong i-save ang Card",
         "message": "Nagkaproblema habang nagse-save ng Card sa tindahan."
-      },
-      "diskFullError": {
-        "title": "Nabigong i-save ang Card",
-        "message": "Wala nang mga Mga kard na matatanggap o mai-save dahil puno na ang Data ng App."
       }
     }
   },

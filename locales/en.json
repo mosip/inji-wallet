@@ -69,10 +69,6 @@
       "savingFailed": {
         "title": "Failed to save the Card",
         "message": "Something went wrong while saving Card to the store."
-      },
-      "diskFullError": {
-        "title": "Failed to save the Card",
-        "message": "No more Cards can be received or saved as App Data is full."
       }
     }
   },
@@ -174,10 +170,6 @@
       "maximumStorageLimitReached": {
         "title": "Insufficient Appdata",
         "message": "You cannot add or receive cards since the Appdata is full"
-      },
-      "diskFullError": {
-        "title": "Failed to save the Card",
-        "message": "No more Cards can be received or saved as App Data is full."
       }
     }
   },
@@ -280,10 +272,6 @@
       "savingFailed": {
         "title": "Failed to save the Card",
         "message": "Something went wrong while saving Card to the store."
-      },
-      "diskFullError": {
-        "title": "Failed to save the Card",
-        "message": "No more Cards can be received or saved as App Data is full."
       }
     }
   },
