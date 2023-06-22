@@ -256,6 +256,5 @@ export function selectIsSavingFailedInIdle(state: State) {
 }
 
 export function selectIsMaximumStorageLimitReached(state: State) {
-  console.log('State', state);
   return state.matches('addVc.storageLimitReached');
 }
