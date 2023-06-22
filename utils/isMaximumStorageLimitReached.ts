@@ -10,9 +10,9 @@ export default function isMaximumStorageLimitReached() {
 
   if (Platform.OS === 'android' && Platform.Version < 29) {
     const freeDiskStorageOldInBytes = getFreeDiskStorageOldSync();
-    return freeDiskStorageOldInBytes < storageLimitInBytes;
+    return freeDiskStorageOldInBytes <= storageLimitInBytes;
   }
 
   const freeDiskStorageInBytes = getFreeDiskStorageSync();
-  return freeDiskStorageInBytes < storageLimitInBytes;
+  return freeDiskStorageInBytes <= storageLimitInBytes;
 }
