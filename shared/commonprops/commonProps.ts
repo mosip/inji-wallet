@@ -1,12 +1,14 @@
 import { request } from '../request';
 import Storage from '../storage';
 import { init } from 'mosip-inji-face-sdk';
+import { changeCrendetialRegistry } from '../constants';
 
-const COMMON_PROPS_KEY: string =
+export const COMMON_PROPS_KEY: string =
   'CommonPropsKey-' + '6964d04a-9268-11ed-a1eb-0242ac120002';
 
-export default async function getAllConfigurations() {
+export default async function getAllConfigurations(host = undefined) {
   try {
+    host && changeCrendetialRegistry(host);
     var response = await Storage.getItem(COMMON_PROPS_KEY);
     if (response) {
       return JSON.parse(response);

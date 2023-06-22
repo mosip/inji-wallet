@@ -110,6 +110,13 @@ export const DefaultTheme = {
       backgroundColor: Colors.Grey6,
       borderRadius: 4,
     },
+    loadingCardDetailsContainer: {
+      flex: 1,
+      flexDirection: 'row',
+      backgroundColor: Colors.Grey6,
+      borderRadius: 4,
+    },
+    cardDetailsContainer: {},
     vertloadingContainer: {
       flex: 1,
       backgroundColor: Colors.Grey6,
@@ -217,13 +224,18 @@ export const DefaultTheme = {
       justifyContent: 'space-between',
     },
     logo: {
-      height: 36,
-      width: 30,
+      height: 35,
+      width: 90,
     },
-    homeCloseCardDetailsHeader: {
+    loadingCardDetailsHeader: {
       flex: 1,
       justifyContent: 'space-between',
     },
+    cardDetailsHeader: {
+      flex: 1,
+      justifyContent: 'space-between',
+    },
+    mosipLogoContainer: {},
     details: {
       width: 290,
       marginLeft: 110,
@@ -301,6 +313,10 @@ export const DefaultTheme = {
     },
     placeholder: {
       fontFamily: 'Poppins_400Regular',
+    },
+    warningText: {
+      color: Colors.Red,
+      fontSize: 18,
     },
   }),
   PinInputStyle: StyleSheet.create({

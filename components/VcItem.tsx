@@ -17,7 +17,6 @@ import { VcItemEvents } from '../machines/vcItem';
 import { ErrorMessageOverlay } from '../components/MessageOverlay';
 import { Theme } from './ui/styleUtils';
 import { GlobalContext } from '../shared/GlobalContext';
-import { selectVcLabel } from '../machines/settings';
 import { VcItemContent } from './VcItemContent';
 import { VcItemActivationStatus } from './VcItemActivationStatus';
 
@@ -34,10 +33,8 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
   const context = useSelector(service, selectContext);
   const verifiableCredential = useSelector(service, selectVerifiableCredential);
   const emptyWalletBindingId = useSelector(service, selectEmptyWalletBindingId);
-  const settingsService = appService.children.get('settings');
   const storeError = useSelector(service, selectStoreError);
   const isSavingFailedInIdle = useSelector(service, selectIsSavingFailedInIdle);
-  const vcLabel = useSelector(settingsService, selectVcLabel);
   const DISMISS = () => service.send(VcItemEvents.DISMISS());
 
   let storeErrorTranslationPath = 'errors.savingFailed';
@@ -81,7 +78,6 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
         isVisible={isSavingFailedInIdle}
         error={storeErrorTranslationPath}
         onDismiss={DISMISS}
-        vcLabel={vcLabel}
         translationPath={'VcDetails'}
       />
     </React.Fragment>

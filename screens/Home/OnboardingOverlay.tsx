@@ -1,43 +1,37 @@
-import React, { useRef, useContext } from 'react';
+import React, { useRef } from 'react';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { SafeAreaView, ScrollView, View } from 'react-native';
 import { Icon, Overlay } from 'react-native-elements';
 import { Button, Column, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
-import { useSelector } from '@xstate/react';
-import { GlobalContext } from '../../shared/GlobalContext';
-import { selectVcLabel } from '../../machines/settings';
 import { useTranslation } from 'react-i18next';
 
 export const OnboardingOverlay: React.FC<OnboardingProps> = (props) => {
   const slider = useRef<AppIntroSlider>();
 
   const { t } = useTranslation('OnboardingOverlay');
-  const { appService } = useContext(GlobalContext);
-  const settingsService = appService.children.get('settings');
-  const vcLabel = useSelector(settingsService, selectVcLabel);
 
   const slides = [
     {
       key: 'one',
       title: t('stepOneTitle'),
-      text: t('stepOneText', { vcLabel: vcLabel.plural }),
+      text: t('stepOneText'),
     },
     {
       key: 'two',
-      title: t('stepTwoTitle', { vcLabel: vcLabel.singular }),
-      text: t('stepTwoText', { vcLabel: vcLabel.plural }),
+      title: t('stepTwoTitle'),
+      text: t('stepTwoText'),
     },
     {
       key: 'three',
       title: t('stepThreeTitle'),
-      text: t('stepThreeText', { vcLabel: vcLabel.plural }),
+      text: t('stepThreeText'),
       footer: (
         <Button
           margin="24 0 0 0"
           raised
           type="outline"
-          title={t('stepThreeButton', { vcLabel: vcLabel.singular })}
+          title={t('stepThreeButton')}
           onPress={props.onAddVc}
         />
       ),

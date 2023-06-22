@@ -11,6 +11,7 @@ import { TextItem } from './ui/TextItem';
 import { VcItemTags } from './VcItemTags';
 import VerifiedIcon from './VerifiedIcon';
 import { getLocalizedField } from '../i18n';
+import { CREDENTIAL_REGISTRY_EDIT } from 'react-native-dotenv';
 
 export const VcDetails: React.FC<VcDetailsProps> = (props) => {
   const { t, i18n } = useTranslation('VcDetails');
@@ -41,7 +42,9 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
               {t('nationalCard')}
             </Text>
           </Column>
-          <Image source={Theme.MosipLogo} style={Theme.Styles.logo} />
+          <View style={Theme.Styles.mosipLogoContainer}>
+            <Image source={Theme.MosipLogo} style={Theme.Styles.logo} />
+          </View>
         </Row>
 
         <Row style={Theme.Styles.openDetailsContainer}>
@@ -236,6 +239,22 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                 </Text>
               </Row>
             </Column>
+            {CREDENTIAL_REGISTRY_EDIT === 'true' && (
+              <Column fill style={Theme.Styles.labelPart}>
+                <Text
+                  weight="bold"
+                  size="smaller"
+                  color={Theme.Colors.DetailsLabel}>
+                  {t('credentialRegistry')}
+                </Text>
+                <Text
+                  weight="semibold"
+                  size="smaller"
+                  color={Theme.Colors.Details}>
+                  {props.vc?.credentialRegistry}
+                </Text>
+              </Column>
+            )}
           </Column>
         </Row>
         <VcItemTags tag={props.vc?.tag} />

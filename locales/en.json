@@ -19,7 +19,9 @@
     "requestedBy": "Requested by",
     "sentBy": "Sent by",
     "deviceRefNumber": "Device reference number",
-    "name": "Name"
+    "name": "Name",
+    "Verifier": "Verifier",
+    "Wallet": "Wallet"
   },
   "FaceScanner": {},
   "OIDcAuth": {
@@ -62,14 +64,15 @@
     "no": "No",
     "Alert": "Alert",
     "ok": "Okay",
+    "credentialRegistry": "Credential Registry",
     "errors": {
       "savingFailed": {
-        "title": "Failed to save the {{vcLabelSingular}}",
-        "message": "Something went wrong while saving {{vcLabelSingular}} to the store."
+        "title": "Failed to save the Card",
+        "message": "Something went wrong while saving Card to the store."
       },
       "diskFullError": {
-        "title": "Failed to save the {{vcLabelSingular}}",
-        "message": "No more {{vcLabelPlural}} can be received or saved as App Data is full."
+        "title": "Failed to save the Card",
+        "message": "No more Cards can be received or saved as App Data is full."
       }
     }
   },
@@ -95,8 +98,8 @@
     "deleted": "deleted"
   },
   "HomeScreen": {
-    "myVcsTab": "My\n{{vcLabel}}",
-    "receivedVcsTab": "Received\n{{vcLabel}}",
+    "myVcsTab": "My\nCards",
+    "receivedVcsTab": "Received\nCards",
     "historyTab": "History"
   },
   "AddVcModal": {
@@ -137,8 +140,8 @@
     }
   },
   "DownloadingVcModal": {
-    "header": "Downloading your {{vcLabel}}",
-    "bodyText": "This may take some time, we will notify you when your {{vcLabel}} has been downloaded and is available",
+    "header": "Downloading your Card",
+    "bodyText": "This may take some time, we will notify you when your Card has been downloaded and is available",
     "backButton": "Back home"
   },
   "GetIdInputModal": {
@@ -149,8 +152,8 @@
     "qstnMarkToolTip": "Application ID is available in the acknowledgement received after enrolment."
   },
   "IdInputModal": {
-    "header": "Enter your UIN/VID to download your {{vcLabel}}",
-    "generateVc": "Generate My {{vcLabel}}",
+    "header": "Enter your UIN/VID to download your Card",
+    "generateVc": "Generate My Card",
     "enterId": "Enter your {{idType}}",
     "noUIN/VID": "Don't have your UIN/VID? Get it here",
     "requestingOTP": "Requesting OTP..."
@@ -160,32 +163,32 @@
     "header": "OTP Verification"
   },
   "MyVcsTab": {
-    "addVcButton": "Add {{vcLabel}}",
-    "generateVc": "Generate your {{vcLabel}}",
-    "generateVcDescription": "Tap on \"Add {{vcLabel}}\" below to download your {{vcLabel}}",
+    "addVcButton": "Add Card",
+    "generateVc": "Generate your Cards",
+    "generateVcDescription": "Tap on \"Add Card\" below to download your Card",
     "errors": {
       "savingFailed": {
-        "title": "Failed to save the {{vcLabelSingular}}",
-        "message": "Something went wrong while saving {{vcLabelSingular}} to the store."
+        "title": "Failed to save the Card",
+        "message": "Something went wrong while saving Card to the store."
       },
       "diskFullError": {
-        "title": "Failed to save the {{vcLabelSingular}}",
-        "message": "No more {{vcLabelPlural}} can be received or saved as App Data is full."
+        "title": "Failed to save the Card",
+        "message": "No more Cards can be received or saved as App Data is full."
       }
     }
   },
   "OnboardingOverlay": {
     "stepOneTitle": "Welcome!",
-    "stepOneText": "Keep your digital credential with you at all times. To get started, add {{vcLabel}} to your profile.",
-    "stepTwoTitle": "{{vcLabel}} management",
-    "stepTwoText": "Once generated, {{vcLabel}} are safely stored on your mobile and can be renamed or shared at any time.",
+    "stepOneText": "Keep your digital credential with you at all times. To get started, add Cards to your profile.",
+    "stepTwoTitle": "Card management",
+    "stepTwoText": "Once generated, Cards are safely stored on your mobile and can be renamed or shared at any time.",
     "stepThreeTitle": "Easy sharing",
-    "stepThreeText": "Share and receive {{vcLabel}} switfly using your phone camera to scan QR codes.",
-    "stepThreeButton": "Get started and add {{vcLabel}}"
+    "stepThreeText": "Share and receive Cards switfly using your phone camera to scan QR codes.",
+    "stepThreeButton": "Get started and add Card"
   },
   "ReceivedVcsTab": {
-    "noReceivedVcsTitle": "No {{vcLabel}} available yet",
-    "noReceivedVcsText": "Tap on Request below to receive {{vcLabel}}"
+    "noReceivedVcsTitle": "No Cards available yet",
+    "noReceivedVcsText": "Tap on Request below to receive Card"
   },
   "ViewVcModal": {
     "cancel": "Cancel",
@@ -200,8 +203,8 @@
     "redirecting": "Redirecting...",
     "inProgress": "Loading...",
     "success": {
-      "unlocked": "{{vcLabel}} successfully unlocked",
-      "locked": "{{vcLabel}} successfully locked",
+      "unlocked": "Card successfully unlocked",
+      "locked": "Card successfully locked",
       "revoked": "VID {{vid}} has been revoked. Any credential containing the same will be removed automatically from the wallet"
     }
   },
@@ -219,8 +222,7 @@
   "AppMetaData": {
     "header": "About Inji",
     "version": "Version",
-    "useBle": "Powered by BLE",
-    "useGoogleNearby": "Powered by GoogleNearby"
+    "useBle": "Powered by BLE"
   },
   "ProfileScreen": {
     "name": "Name",
@@ -244,7 +246,7 @@
     "checkDomain": "Also, check that there is a lock icon on the address bar.",
     "domainHead": "https://",
     "selectId": "Select ID",
-    "noBindedVc": "No Binded {{vcLabel}} Available to Verify",
+    "noBindedVc": "No Binded Cards Available to Verify",
     "back": "Go Back",
     "confirm": "Confirm",
     "verify": "Verify",
@@ -263,37 +265,45 @@
     "required": "Required"
   },
   "ReceiveVcScreen": {
-    "header": "{{vcLabel}} details",
-    "save": "Save {{vcLabel}}",
+    "header": "Card details",
+    "save": "Save Card",
     "verifyAndSave": "Verify and save",
     "reject": "Reject",
     "discard": "Discard",
-    "goToReceivedVCTab": "View Received {{vcLabel}}",
+    "goToReceivedVCTab": "View Received Cards",
     "saving": "Saving",
     "errors": {
       "savingFailed": {
-        "title": "Failed to save the {{vcLabelSingular}}",
-        "message": "Something went wrong while saving {{vcLabelSingular}} to the store."
+        "title": "Failed to save the Card",
+        "message": "Something went wrong while saving Card to the store."
       },
       "diskFullError": {
-        "title": "Failed to save the {{vcLabelSingular}}",
-        "message": "No more {{vcLabelPlural}} can be received or saved as App Data is full."
+        "title": "Failed to save the Card",
+        "message": "No more Cards can be received or saved as App Data is full."
       }
     }
   },
   "RequestScreen": {
-    "bluetoothDenied": "Please enable Bluetooth to be able to request {{vcLabel}}",
-    "showQrCode": "Display this QR code to request resident {{vcLabel}}",
-    "incomingVc": "Incoming {{vcLabel}}",
+    "bluetoothDenied": "Please enable Bluetooth to be able to request Card",
+    "bluetoothStateAndroid": "Please turn on bluetooth from quick settings to support local sharing",
+    "bluetoothStateIos": "Please turn on bluetooth from control center to support local sharing",
+    "showQrCode": "Display this QR code to request resident Card",
+    "incomingVc": "Incoming Card",
     "request": "Request",
+    "errors": {
+      "nearbyDevicesPermissionDenied": {
+        "message": "Nearby Devices permission is required to be able to request Card",
+        "button": "Allow Permission"
+      }
+    },
     "status": {
       "accepted": {
         "title": "Success!",
-        "message": "{{vcLabel}} has been successfully received from {{sender}}"
+        "message": "Card has been successfully received from Wallet"
       },
       "rejected": {
         "title": "Notice",
-        "message": "You discarded {{sender}}'s {{vcLabel}}"
+        "message": "You discarded Wallet's Card"
       },
       "disconnected": {
         "title": "Disconnected",
@@ -305,7 +315,7 @@
         "timeoutHint": "It's taking too long to exchange device info..."
       },
       "connected": {
-        "message": "Connected to the device. Waiting for {{vcLabel}}...",
+        "message": "Connected to the device. Waiting for Card...",
         "timeoutHint": "No data received yet. Is sending device still connected?"
       },
       "offline": {
@@ -313,7 +323,7 @@
       },
       "bleError": {
         "title": "Failed to transfer",
-        "message": "Something went wrong while transferring {{vcLabel}}. Please try again.",
+        "message": "Something went wrong while transferring Card. Please try again.",
         "hint": "Error: {{code}}"
       }
     },
@@ -323,20 +333,24 @@
   },
   "ScanScreen": {
     "header": "Scan QR Code",
-    "noShareableVcs": "No shareable {{vcLabel}} are available.",
-    "sharingVc": "Sharing {{vcLabel}}",
+    "noShareableVcs": "No shareable Cards are available.",
+    "sharingVc": "Sharing Card",
     "bluetoothStateAndroid": "Please turn on bluetooth from quick settings to support local sharing",
     "bluetoothStateIos": "Please turn on bluetooth from control center to support local sharing",
     "enableBluetoothMessage": "Please enable bluetooth permissions to support local sharing",
     "enableBluetoothButtonText": "Allow Bluetooth Permissions",
     "errors": {
       "locationDisabled": {
-        "message": "Location services must be enabled for the scanning functionality",
+        "message": "Location services must be enabled to share card",
         "button": "Enable location services"
       },
       "locationDenied": {
-        "message": "Location permission is required for the scanning functionality",
+        "message": "Location permission is required to share card",
         "button": "Allow access to location"
+      },
+      "nearbyDevicesPermissionDenied": {
+        "message": "Nearby Devices permission is required to be able to share card",
+        "button": "Allow Permission"
       }
     },
     "status": {
@@ -346,8 +360,8 @@
       "exchangingDeviceInfoTimeout": "It's taking a while to exchange device info. You may have to reconnect.",
       "invalid": "Invalid QR Code",
       "offline": "Please connect to the internet to scan QR codes using Online sharing mode",
-      "sent": "{{ vcLabel }} has been sent...",
-      "sentHint": "Waiting for receiver to save or discard your {{ vcLabel }}",
+      "sent": "Card has been sent...",
+      "sentHint": "Waiting for receiver to save or discard your Card",
       "sharing": {
         "title": "Sharing...",
         "hint": "Please wait for the receiving device to accept or reject the share.",
@@ -355,22 +369,22 @@
       },
       "accepted": {
         "title": "Success!",
-        "message": "Your {{vcLabel}} has been successfully shared with {{receiver}}"
+        "message": "Your Card has been successfully shared with Verifier"
       },
       "rejected": {
         "title": "Notice",
-        "message": "Your {{vcLabel}} was discarded by {{receiver}}"
+        "message": "Your Card was discarded by Verifier"
       },
       "bleError": {
         "title": "Failed to transfer",
-        "message": "Something went wrong while transferring {{vcLabel}}. Please try again.",
+        "message": "Something went wrong while transferring Card. Please try again.",
         "hint": "Error: {{code}}"
       }
     }
   },
   "SelectVcOverlay": {
-    "header": "Share {{vcLabel}}",
-    "chooseVc": "Choose the {{vcLabel}} you'd like to share with",
+    "header": "Share Card",
+    "chooseVc": "Choose the Card you'd like to share with",
     "share": "Share",
     "verifyAndShare": "Verify Identity & Share"
   },

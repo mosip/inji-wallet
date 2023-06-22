@@ -26,6 +26,12 @@ export const ScanScreen: React.FC = () => {
     })();
   }, [isBluetoothOn]);
 
+  // TODO(kludge): skip running this hook on every render
+  useEffect(() => {
+    if (controller.isStartPermissionCheck && !controller.isEmpty)
+      controller.START_PERMISSION_CHECK();
+  });
+
   const openSettings = () => {
     Linking.openSettings();
   };
@@ -33,7 +39,7 @@ export const ScanScreen: React.FC = () => {
   function noShareableVcText() {
     return (
       <Text align="center" color={Theme.Colors.errorMessage} margin="0 10">
-        {t('noShareableVcs', { vcLabel: controller.vcLabel.plural })}
+        {t('noShareableVcs')}
       </Text>
     );
   }
@@ -64,6 +70,39 @@ export const ScanScreen: React.FC = () => {
     );
   }
 
+  function allowNearbyDevicesPermissionComponent() {
+    return (
+      <Column padding="24" fill align="space-between">
+        <Centered fill>
+          <Text align="center" color={Theme.Colors.errorMessage}>
+            {t('errors.nearbyDevicesPermissionDenied.message')}
+          </Text>
+        </Centered>
+
+        <Button
+          title={t('errors.nearbyDevicesPermissionDenied.button')}
+          onPress={openSettings}></Button>
+      </Column>
+    );
+  }
+
+  function allowLocationComponent() {
+    return (
+      <Column padding="24" fill align="space-between">
+        <Centered fill>
+          <Text align="center" color={Theme.Colors.errorMessage}>
+            {controller.locationError.message}
+          </Text>
+        </Centered>
+
+        <Button
+          title={controller.locationError.button}
+          onPress={controller.LOCATION_REQUEST}
+        />
+      </Column>
+    );
+  }
+
   function qrScannerComponent() {
     return (
       <Column crossAlign="center" margin="0 0 0 -6">
@@ -76,13 +115,21 @@ export const ScanScreen: React.FC = () => {
     if (controller.isEmpty) {
       return noShareableVcText();
     }
+    if (controller.isNearByDevicesPermissionDenied) {
+      return allowNearbyDevicesPermissionComponent();
+    }
+    if (
+      (controller.isBluetoothDenied || !isBluetoothOn) &&
+      controller.isReadyForBluetoothStateCheck
+    ) {
+      return bluetoothIsOffText();
+    }
+    if (controller.isLocationDisabled || controller.isLocationDenied) {
+      return allowLocationComponent();
+    }
 
     if (controller.isBluetoothPermissionDenied) {
       return allowBluetoothPermissionComponent();
-    }
-
-    if (!isBluetoothOn) {
-      return bluetoothIsOffText();
     }
     if (controller.isScanning) {
       return qrScannerComponent();
@@ -99,21 +146,6 @@ export const ScanScreen: React.FC = () => {
         align="space-evenly"
         backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
         <Text align="center">{t('header')}</Text>
-
-        {controller.isLocationDisabled || controller.isLocationDenied ? (
-          <Column padding="24" fill align="space-between">
-            <Centered fill>
-              <Text align="center" color={Theme.Colors.errorMessage}>
-                {controller.locationError.message}
-              </Text>
-            </Centered>
-
-            <Button
-              title={controller.locationError.button}
-              onPress={controller.LOCATION_REQUEST}
-            />
-          </Column>
-        ) : null}
         {loadQRScanner()}
         {controller.isQrLogin && (
           <QrLogin

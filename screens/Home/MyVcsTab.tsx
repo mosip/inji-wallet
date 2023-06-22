@@ -64,9 +64,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                 <Button
                   type="clear"
                   disabled={controller.isRefreshingVcs}
-                  title={t('addVcButton', {
-                    vcLabel: controller.vcLabel.singular,
-                  })}
+                  title={t('addVcButton')}
                   onPress={controller.ADD_VC}
                 />
               </Column>
@@ -76,12 +74,10 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
             <React.Fragment>
               <Centered fill>
                 <Text weight="semibold" margin="0 0 8 0">
-                  {t('generateVc', { vcLabel: controller.vcLabel.plural })}
+                  {t('generateVc')}
                 </Text>
                 <Text color={Theme.Colors.textLabel} align="center">
-                  {t('generateVcDescription', {
-                    vcLabel: controller.vcLabel.singular,
-                  })}
+                  {t('generateVcDescription')}
                 </Text>
                 <Icon
                   name="arrow-downward"
@@ -93,9 +89,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
               <Button
                 type="addId"
                 disabled={controller.isRefreshingVcs}
-                title={t('addVcButton', {
-                  vcLabel: controller.vcLabel.singular,
-                })}
+                title={t('addVcButton')}
                 onPress={controller.ADD_VC}
               />
             </React.Fragment>
@@ -129,7 +123,6 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
         isVisible={controller.isSavingFailedInIdle}
         error={storeErrorTranslationPath}
         onDismiss={controller.DISMISS}
-        vcLabel={controller.vcLabel}
       />
     </React.Fragment>
   );

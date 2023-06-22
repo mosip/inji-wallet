@@ -19,7 +19,9 @@
     "requestedBy": "Hiniling ni",
     "sentBy": "Ipinadala ni",
     "deviceRefNumber": "Reference number ng device",
-    "name": "Pangalan"
+    "name": "Pangalan",
+    "Verifier": "Verifier",
+    "Wallet": "Wallet"
   },
   "PasscodeVerify": {
     "passcodeMismatchError": "Hindi tumugma ang passcode."
@@ -62,14 +64,15 @@
     "no": "Hindi",
     "Alert": "Alerto",
     "ok": "Sige",
+    "credentialRegistry": "Registry ng Mga Kredensyal",
     "errors": {
       "savingFailed": {
-        "title": "Nabigong i-save ang {{vcLabelSingular}}",
-        "message": "Nagkaproblema habang nagse-save ng {{vcLabelSingular}} sa tindahan."
+        "title": "Nabigong i-save ang Card",
+        "message": "Nagkaproblema habang nagse-save ng Card sa tindahan."
       },
       "diskFullError": {
-        "title": "Nabigong i-save ang {{vcLabelSingular}}",
-        "message": "Wala nang mga {{vcLabelPlural}} na matatanggap o mai-save dahil puno na ang Data ng App."
+        "title": "Nabigong i-save ang Card",
+        "message": "Wala nang mga Mga kard na matatanggap o mai-save dahil puno na ang Data ng App."
       }
     }
   },
@@ -95,8 +98,8 @@
     "deleted": "tinanggal"
   },
   "HomeScreen": {
-    "myVcsTab": "Aking\n{{vcLabel}}",
-    "receivedVcsTab": "Nakuhang\n{{vcLabel}}",
+    "myVcsTab": "Aking\nMga kard",
+    "receivedVcsTab": "Nakuhang\nMga kard",
     "historyTab": "Pangyayari"
   },
   "AddVcModal": {
@@ -137,8 +140,8 @@
     }
   },
   "DownloadingVcModal": {
-    "header": "Kinukuha ang iyong {{vcLabel}}",
-    "bodyText": "Maaaring tumagal ito ng ilang oras, ipapaalam namin sayo kung pwede na kunin ang iyong {{vcLabel}}",
+    "header": "Kinukuha ang iyong Card",
+    "bodyText": "Maaaring tumagal ito ng ilang oras, ipapaalam namin sayo kung pwede na kunin ang iyong Card",
     "backButton": "Bumalik"
   },
   "GetIdInputModal": {
@@ -149,8 +152,8 @@
     "qstnMarkToolTip": "Available ang Application ID sa natanggap na acknowledgement pagkatapos ng enrollment."
   },
   "IdInputModal": {
-    "header": "Ilagay ang iyong UIN/VID para i-download ang iyong {{vcLabel}}",
-    "generateVc": "Bumuo ng Aking {{vcLabel}}",
+    "header": "Ilagay ang iyong UIN/VID para i-download ang iyong Card",
+    "generateVc": "Bumuo ng Aking Card",
     "enterId": "Ilagay ang iyong {{idType}}",
     "noUIN/VID": "Wala ka bang UIN/VID? Kuhanin dito",
     "requestingOTP": "Humihiling ng OTP..."
@@ -160,32 +163,32 @@
     "header": "Pag-verify ng OTP"
   },
   "MyVcsTab": {
-    "addVcButton": "Magdagdag ng {{vcLabel}}",
-    "generateVc": "Gumawa ng iyong {{vcLabel}}",
-    "generateVcDescription": "Pindutin ang \"Magdagdag ng {{vcLabel}}\" sa ibaba upang makuha ang iyong {{vcLabel}}",
+    "addVcButton": "Magdagdag ng Card",
+    "generateVc": "Gumawa ng iyong Mga kard",
+    "generateVcDescription": "Pindutin ang \"Magdagdag ng Card\" sa ibaba upang makuha ang iyong Card",
     "errors": {
       "savingFailed": {
-        "title": "Nabigong i-save ang {{vcLabelSingular}}",
-        "message": "Nagkaproblema habang nagse-save ng {{vcLabelSingular}} sa tindahan."
+        "title": "Nabigong i-save ang Card",
+        "message": "Nagkaproblema habang nagse-save ng Card sa tindahan."
       },
       "diskFullError": {
-        "title": "Nabigong i-save ang {{vcLabelSingular}}",
-        "message": "Wala nang mga {{vcLabelPlural}} na matatanggap o mai-save dahil puno na ang Data ng App."
+        "title": "Nabigong i-save ang Card",
+        "message": "Wala nang mga Mga kard na matatanggap o mai-save dahil puno na ang Data ng App."
       }
     }
   },
   "OnboardingOverlay": {
     "stepOneTitle": "Mabuhay!",
-    "stepOneText": "Panatilihing pribado ang iyong digital na kredensyal sa lahat ng pagkakataon. Upang makapagsimula, magdagdag ng {{vcLabel}} sa iyong profile.",
-    "stepTwoTitle": "Pamamahala ng {{vcLabel}}",
-    "stepTwoText": "Kapag nalikha na ang {{vcLabel}}, ito ay ligtas na nakatago sa iyong mobile at maaaring palitan ang pangalan o ibahagi anumang oras.",
+    "stepOneText": "Panatilihing pribado ang iyong digital na kredensyal sa lahat ng pagkakataon. Upang makapagsimula, magdagdag ng Mga kard sa iyong profile.",
+    "stepTwoTitle": "Pamamahala ng Card",
+    "stepTwoText": "Kapag nalikha na ang Mga kard, ito ay ligtas na nakatago sa iyong mobile at maaaring palitan ang pangalan o ibahagi anumang oras.",
     "stepThreeTitle": "Madaling pagbabahagi",
-    "stepThreeText": "Ibahagi at tumanggap ng {{vcLabel}} nang mabilis gamit ang camera ng iyong mobile upang mag-scan ng mga QR code.",
-    "stepThreeButton": "Magsimula at magdagdag ng {{vcLabel}}"
+    "stepThreeText": "Ibahagi at tumanggap ng Mga kard nang mabilis gamit ang camera ng iyong mobile upang mag-scan ng mga QR code.",
+    "stepThreeButton": "Magsimula at magdagdag ng Card"
   },
   "ReceivedVcsTab": {
-    "noReceivedVcsTitle": "Wala pang {{vcLabel}}",
-    "noReceivedVcsText": "Pindutin ang Humiling sa ibaba para makatanggap ng {{vcLabel}}"
+    "noReceivedVcsTitle": "Wala pang Mga kard",
+    "noReceivedVcsText": "Pindutin ang Humiling sa ibaba para makatanggap ng Card"
   },
   "ViewVcModal": {
     "cancel": "Kanselahin",
@@ -200,8 +203,8 @@
     "redirecting": "Redirecting...",
     "inProgress": "Naglo-load...",
     "success": {
-      "unlocked": "Ang {{vcLabel}} ay matagumpay na na-unlock",
-      "locked": "Ang {{vcLabel}} ay matagumpay na na-lock",
+      "unlocked": "Ang Card ay matagumpay na na-unlock",
+      "locked": "Ang Card ay matagumpay na na-lock",
       "revoked": "Ang VID {{vid}} ay nakansela. Ang lahat ng mga detalye na naglalaman ng pareho ay awtomatikong aalisin wallet."
     }
   },
@@ -219,13 +222,13 @@
   "AppMetaData": {
     "header": "Tungkol kay Inji",
     "version": "Bersyon",
-    "useBle": "Powered by BLE",
-    "useGoogleNearby": "Powered by GoogleNearby"
+    "useBle": "Powered by BLE"
   },
   "ProfileScreen": {
     "name": "Pangalan",
     "vcLabel": "Panawag sa VC",
     "language": "Wika",
+    "credentialRegistry": "Registry ng Mga Kredensyal",
     "bioUnlock": "I-unlock gamit ang biometrics",
     "authFactorUnlock": "Pagbukas ng auth factor",
     "AppMetaData": "Tungkol kay Inji",
@@ -244,7 +247,7 @@
     "checkDomain": "Gayundin, tingnan kung mayroong icon ng lock sa address bar.",
     "domainHead": "https://",
     "selectId": "Pumili ng ID",
-    "noBindedVc": "Available sa Verifyct ID ang SeleNo Binded {{vcLabel}}",
+    "noBindedVc": "Available sa Verifyct ID ang SeleNo Binded Mga kard",
     "back": "Bumalik ka",
     "confirm": "Kumpirmahin",
     "verify": "I-verify",
@@ -258,36 +261,45 @@
     "okay": "Sige"
   },
   "ReceiveVcScreen": {
-    "header": "Mga detalye ng {{vcLabel}}",
-    "acceptRequest": "Tanggapin ang kahilingan at tumanggap ng {{vcLabel}}",
+    "header": "Mga detalye ng Card",
+    "save": "I-save ang Card",
+    "acceptRequest": "Tanggapin ang kahilingan at tumanggap ng Card",
     "reject": "Tanggihan",
     "discard": "Itapon",
-    "goToReceivedVCTab": "Tingnan ang mga Natanggap na {{vcLabel}}",
+    "goToReceivedVCTab": "Tingnan ang mga Natanggap na Mga kard",
     "saving": "Nagtitipid",
     "errors": {
       "savingFailed": {
-        "title": "Nabigong i-save ang {{vcLabelSingular}}",
-        "message": "Nagkaproblema habang nagse-save ng {{vcLabelSingular}} sa tindahan."
+        "title": "Nabigong i-save ang Card",
+        "message": "Nagkaproblema habang nagse-save ng Card sa tindahan."
       },
       "diskFullError": {
-        "title": "Nabigong i-save ang {{vcLabelSingular}}",
-        "message": "Wala nang mga {{vcLabelPlural}} na matatanggap o mai-save dahil puno na ang Data ng App."
+        "title": "Nabigong i-save ang Card",
+        "message": "Wala nang mga Mga kard na matatanggap o mai-save dahil puno na ang Data ng App."
       }
     }
   },
   "RequestScreen": {
-    "bluetoothDenied": "Mangyaring paganahin ang Bluetooth upang makahiling ng {{vcLabel}}",
-    "showQrCode": "Ipakita ang QR code na ito para humiling ng resident {{vcLabel}}",
-    "incomingVc": "Padating na {{vcLabel}}",
+    "bluetoothDenied": "Mangyaring paganahin ang Bluetooth upang makahiling ng Card",
+    "bluetoothStateAndroid": "Mangyaring i-on ang bluetooth mula sa mga mabilisang setting upang suportahan ang lokal na pagbabahagi",
+    "bluetoothStateIos": "Mangyaring i-on ang bluetooth mula sa control center upang suportahan ang lokal na pagbabahagi",
+    "showQrCode": "Ipakita ang QR code na ito para humiling ng resident Card",
+    "incomingVc": "Padating na Card",
     "request": "Hilingin",
+    "errors": {
+      "nearbyDevicesPermissionDenied": {
+        "message": "Kinakailangan ang pahintulot ng Mga Kalapit na Device para makahiling ng Card",
+        "button": "Pahintulutan"
+      }
+    },
     "status": {
       "accepted": {
         "title": "Tagumpay!",
-        "message": "Tagumpay na nakuha ang {{vcLabel}} mula kay {{sender}}"
+        "message": "Tagumpay na nakuha ang Card mula kay Wallet"
       },
       "rejected": {
         "title": "Paunawa",
-        "message": "Iwinaksi ang {{vcLabel}} ni {{sender}}"
+        "message": "Iwinaksi ang Card ni Wallet"
       },
       "disconnected": {
         "title": "Nadiskonekta",
@@ -299,7 +311,7 @@
         "timeoutHint": "Masyadong matagal ang pagpapalitan ng impormasyon ng device..."
       },
       "connected": {
-        "message": "Nakakonektang device. Naghihintay para sa {{vcLabel}}...",
+        "message": "Nakakonektang device. Naghihintay para sa Card...",
         "timeoutHint": "Wala pang natanggap na VC. Nakakonekta pa rin ba ang pagpapadala ng device?"
       },
       "offline": {
@@ -307,7 +319,7 @@
       },
       "bleError": {
         "title": "Nabigong ilipat",
-        "message": "Nagkaproblema habang inililipat ang {{vcLabel}}. Pakisubukang muli.",
+        "message": "Nagkaproblema habang inililipat ang Card. Pakisubukang muli.",
         "hint": "Pagkakamali: {{code}}"
       }
     },
@@ -317,20 +329,24 @@
   },
   "ScanScreen": {
     "header": "I-scan ang QR Code",
-    "noShareableVcs": "Walang magagamit na maibabahaging {{vcLabel}}.",
+    "noShareableVcs": "Walang magagamit na maibabahaging Mga kard.",
     "bluetoothStateAndroid": "Mangyaring i-on ang bluetooth mula sa mga mabilisang setting upang suportahan ang lokal na pagbabahagi",
     "bluetoothStateIos": "Mangyaring i-on ang bluetooth mula sa control center upang suportahan ang lokal na pagbabahagi",
     "enableBluetoothMessage": "Mangyaring paganahin ang mga pahintulot ng bluetooth upang suportahan ang lokal na pagbabahagi",
     "enableBluetoothButtonText": "Payagan ang Mga Pahintulot sa Bluetooth",
-    "sharingVc": "Pagbabahagi ng {{vcLabel}}",
+    "sharingVc": "Pagbabahagi ng Card",
     "errors": {
       "locationDisabled": {
-        "message": "Dapat na nakabukas ang Location services ng iyong mobile para maaaring makapag-scan",
+        "message": "Dapat na pinagana ang mga serbisyo ng lokasyon upang makapagbahagi ng card",
         "button": "Buksan ang location services"
       },
       "locationDenied": {
-        "message": "Kinakailangan ang pahintulot sa lokasyon ng iyong mobile para maaaring makapag-scan",
+        "message": "Kailangan ng pahintulot sa lokasyon para makapagbahagi ng card",
         "button": "Payagan ng pahintulot sa lokasyon"
+      },
+      "nearbyDevicesPermissionDenied": {
+        "message": "Kinakailangan ang pahintulot ng Mga Kalapit na Device upang makapagbahagi ng card",
+        "button": "Pahintulutan"
       }
     },
     "status": {
@@ -340,8 +356,8 @@
       "exchangingDeviceInfoTimeout": "Medyo nagtatagal ang paglabas ng impormasyon ng device. Bukas ba ang ibang device para sa mga koneksyon?",
       "invalid": "Di-wasto ang QR Code",
       "offline": "Mangyaring kumonekta sa internet upang makapag-scan ng QR codes na gumagamit ng Online sharing mode",
-      "sent": "Naibahagi na ang {{vcLabel}}...",
-      "sentHint": "Iniintay ang nakatanggap na itabi o iwaksi ang iyong {{vcLabel}}",
+      "sent": "Naibahagi na ang Card...",
+      "sentHint": "Iniintay ang nakatanggap na itabi o iwaksi ang iyong Card",
       "sharing": {
         "title": "Pagbabahagi...",
         "hint": "Pakihintay na tanggapin o tanggihan ng tumatanggap na device ang pagbabahagi.",
@@ -349,22 +365,22 @@
       },
       "accepted": {
         "title": "Tagumpay!",
-        "message": "Ang iyong {{vcLabel}} ay matagumpay na naibahagi sa {{receiver}}"
+        "message": "Ang iyong Card ay matagumpay na naibahagi sa Verifier"
       },
       "rejected": {
         "title": "Pansinin",
-        "message": "Ang iyong {{vcLabel}} ay itinapon ng {{receiver}}"
+        "message": "Ang iyong Card ay itinapon ng Verifier"
       },
       "bleError": {
         "title": "Nabigong ilipat",
-        "message": "Nagkaproblema habang inililipat ang {{vcLabel}}. Pakisubukang muli.",
+        "message": "Nagkaproblema habang inililipat ang Card. Pakisubukang muli.",
         "hint": "Pagkakamali: {{code}}"
       }
     }
   },
   "SelectVcOverlay": {
-    "header": "Ibahagi ang {{vcLabel}}",
-    "chooseVc": "Piliin ang {{vcLabel}} na gusto mong ibahagi",
+    "header": "Ibahagi ang Card",
+    "chooseVc": "Piliin ang Card na gusto mong ibahagi",
     "share": "Ibahagi",
     "verifyAndShare": "I-verify ang Pagkakakilanlan at Ibahagi"
   },
@@ -380,11 +396,11 @@
       },
       "accepted": {
         "title": "Tagumpay!",
-        "message": "Ang iyong {{vcLabel}} ay matagumpay na naibahagi kay {{receiver}}"
+        "message": "Ang iyong Card ay matagumpay na naibahagi kay {{receiver}}"
       },
       "rejected": {
         "title": "Pansinin",
-        "message": "Ang iyong {{vcLabel}} ay tinanggihan ng {{receiver}}"
+        "message": "Ang iyong Card ay tinanggihan ng {{receiver}}"
       }
     },
     "consentToPhotoVerification": "Nagbibigay ako ng pahintulot na kunin ang aking larawan para sa pagpapatunay"
