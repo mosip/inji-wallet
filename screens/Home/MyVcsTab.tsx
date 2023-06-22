@@ -58,7 +58,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
     <React.Fragment>
       <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
         <DownloadingIdPopUp />
-        <Column fill pY={10} pX={18}>
+        <Column fill pY={18} pX={18}>
           {controller.vcKeys.length > 0 && (
             <React.Fragment>
               <Column
@@ -102,7 +102,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                 type="gradient"
                 isVcThere
                 disabled={controller.isRefreshingVcs}
-                title={t('downloadID')}
+                title={t('downloadCard')}
                 onPress={controller.DOWNLOAD_ID}
               />
             </React.Fragment>
@@ -111,7 +111,11 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
             <React.Fragment>
               <Column fill style={Theme.Styles.homeScreenContainer}>
                 <Image source={Theme.DigitalIdentityLogo} />
-                <Text weight="bold" margin="33 0 6 0" lineHeight={1}>
+                <Text
+                  align="center"
+                  weight="bold"
+                  margin="33 0 6 0"
+                  lineHeight={1}>
                   {t('bringYourDigitalID', {
                     vcLabel: controller.vcLabel.plural,
                   })}
@@ -128,7 +132,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                 <Button
                   type="gradient"
                   disabled={controller.isRefreshingVcs}
-                  title={t('downloadID')}
+                  title={t('downloadCard')}
                   onPress={controller.DOWNLOAD_ID}
                 />
               </Column>

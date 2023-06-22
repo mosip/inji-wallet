@@ -50,7 +50,7 @@ export const SetupLanguageScreen: React.FC<RootRouteProps> = (props) => {
         color={Theme.Colors.Icon}
         size={50}
       />
-      <Column crossAlign="center">
+      <Column crossAlign="center" margin="-36 0">
         <Text weight="semibold">{t('header')}</Text>
         <Text
           style={{ paddingHorizontal: 35 }}

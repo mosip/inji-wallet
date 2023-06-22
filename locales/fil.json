@@ -66,8 +66,7 @@
     "viewActivityLog": "Tingnan ang log ng aktibidad",
     "removeFromWallet": "Alisin sa wallet",
     "revokeId": "Bawiin ang ID",
-    "revokeMessage": "Bawiin ang virtual ID para sa profile na ito",
-    "ActivityLog": "Tingnan ang Log ng Aktibidad"
+    "revokeMessage": "Bawiin ang virtual ID para sa profile na ito"
   },
   "WalletBinding": {
     "inProgress": "Isinasagawa",
@@ -129,7 +128,6 @@
     "detailes": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since."
   },
   "AddVcModal": {
-    "header": "Kunin ang iyong card",
     "requestingCredential": "Humihiling ng kredensyal...",
     "errors": {
       "input": {
@@ -179,7 +177,7 @@
     "getUIN": "Kumuha ng UIN/VID"
   },
   "IdInputModal": {
-    "title": "Kunin ang iyong ID",
+    "header": "Kunin ang iyong ID",
     "guideLabel": "Piliin ang uri ng ID at ilagay ang MOSIP na ibinigay na UIN o VID ng ID na nais mong makuha",
     "generateVc": "Bumuo ng {{vcLabel}}",
     "downloadID": "I-download ang ID",
@@ -195,10 +193,10 @@
     "resendCode": "Ipadala muli ang Code"
   },
   "MyVcsTab": {
-    "downloadID": "I-download ang Card",
     "bringYourDigitalID": "Dalhin ang Iyong Digital ID",
     "generateVcDescription": "Upang i-download ang iyong {{vcLabel}} i-tap ang I-download {{vcLabel}} sa ibaba",
-    "downloadingYourId": "Ang pagda-download ng iyong card, maaari itong tumagal nang hanggang 5 minuto"
+    "downloadingYourId": "Ang pagda-download ng iyong card, maaari itong tumagal nang hanggang 5 minuto",
+    "downloadCard": "I-download ang Card"
   },
   "OnboardingOverlay": {
     "stepOneTitle": "Ligtas na Pagbabahagi!",
@@ -279,7 +277,7 @@
     "required": "Kailangan"
   },
   "ReceiveVcScreen": {
-    "header": "{{vcLabel}} mga detalye",
+    "header": "Card mga detalye",
     "save": "I-save ang {{vcLabel}}",
     "verifyAndSave": "I-verify at i-save",
     "reject": "Tanggihan",
@@ -391,7 +389,7 @@
   },
   "SendVcScreen": {
     "reasonForSharing": "Dahilan ng pagbabahagi (opsyonal)",
-    "acceptRequest": "Ibahagi",
+    "acceptRequest": "Tanggapin ang kahilingan at pumili ng card",
     "acceptRequestAndVerify": "Ibahagi sa Selfie",
     "reject": "Tanggihan",
     "consentToPhotoVerification": "Nagbibigay ako ng pahintulot na kunin ang aking larawan para sa pagpapatunay",
@@ -436,6 +434,7 @@
   "common": {
     "cancel": "Kanselahin",
     "save": "I-save",
+    "dismiss": "Dismissed",
     "editLabel": "Palitan ang {{label}}",
     "tryAgain": "Subukan muli",
     "camera": {

@@ -73,8 +73,7 @@
     "viewActivityLog": "गतिविधि लॉग देखें",
     "removeFromWallet": "बटुए से निकालें",
     "revokeId": "आईडी निरस्त करें",
-    "revokeMessage": "इस प्रोफ़ाइल के लिए वर्चुअल आईडी निरस्त करें",
-    "ActivityLog": "गतिविधि लॉग देखें"
+    "revokeMessage": "इस प्रोफ़ाइल के लिए वर्चुअल आईडी निरस्त करें"
   },
   "WalletBinding": {
     "inProgress": "चालू",
@@ -88,7 +87,7 @@
   },
   "AuthScreen": {
     "header": "क्या आप एप्लिकेशन को अनलॉक करने के लिए बायोमेट्रिक्स का उपयोग करना चाहेंगे?",
-    "Description": "Would you like to use biometrics to unlock the application?",
+    "Description": "क्या आप एप्लिकेशन को अनलॉक करने के लिए बायोमेट्रिक्स का उपयोग करना चाहेंगे?",
     "useBiometrics": "बायोमेट्रिक्स का उपयोग करें",
     "usePasscode": "मैं एक पासकोड का उपयोग करना चाहूँगा",
     "errors": {
@@ -136,12 +135,11 @@
     "detailes": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since."
   },
   "HomeScreen": {
-    "myVcsTab": "मेरा\n{{vcLabel}}",
-    "receivedVcsTab": "प्राप्त\n{{vcLabel}}",
+    "myVcsTab": "मेरा\nकार्ड",
+    "receivedVcsTab": "प्राप्त\nकार्ड",
     "historyTab": "इतिहास"
   },
   "AddVcModal": {
-    "header": "अपना कार्ड पुनः प्राप्त करें",
     "requestingCredential": "क्रेडेंशियल का अनुरोध कर रहा है...",
     "errors": {
       "input": {
@@ -178,8 +176,8 @@
     }
   },
   "DownloadingVcModal": {
-    "header": "अपना{{vcLabel}}डाउनलोड कर रहा है",
-    "bodyText": "इसमें कुछ समय लग सकता है, हम आपको सूचित करेंगे जब आपका {{vcLabel}} डाउनलोड हो जाएगा और उपलब्ध होगा",
+    "header": "अपनाकार्डडाउनलोड कर रहा है",
+    "bodyText": "इसमें कुछ समय लग सकता है, हम आपको सूचित करेंगे जब आपका कार्ड डाउनलोड हो जाएगा और उपलब्ध होगा",
     "backButton": "बैक होम"
   },
   "GetIdInputModal": {
@@ -191,9 +189,9 @@
     "getUIN": "यूआईएन/वीआईडी ​​प्राप्त करें"
   },
   "IdInputModal": {
-    "title": "अपनी आईडी पुनर्प्राप्त करें",
+    "header": "अपनी आईडी पुनर्प्राप्त करें",
     "guideLabel": "आईडी प्रकार का चयन करें और एमओएसआईपी प्रदान की गई यूआईएन या उस आईडी का वीआईडी ​​दर्ज करें जिसे आप पुनर्प्राप्त करना चाहते हैं",
-    "generateVc": "{{vcLabel}} जनरेट करें",
+    "generateVc": "कार्ड जनरेट करें",
     "downloadID": "डाउनलोड आईडी",
     "enterId": "{{idType}} दर्ज करें",
     "noUIN/VID": "यूआईएन/वीआईडी ​​नहीं है? ",
@@ -207,18 +205,18 @@
     "resendCode": "पुन: कोड भेजे"
   },
   "MyVcsTab": {
-    "downloadID": "डाउनलोड कार्ड",
+    "downloadCard": "डाउनलोड कार्ड",
     "bringYourDigitalID": "अपनी डिजिटल आईडी लाओ",
-    "generateVcDescription": "अपना {{vcLabel}} डाउनलोड करने के लिए नीचे डाउनलोड {{vcLabel}} टैप करें",
+    "generateVcDescription": "अपना कार्ड डाउनलोड करने के लिए नीचे डाउनलोड कार्ड टैप करें",
     "downloadingYourId": "आपका कार्ड डाउनलोड करने में, इसमें 5 मिनट तक लग सकते हैं"
   },
   "OnboardingOverlay": {
     "stepOneTitle": "सुरक्षित साझाकरण!",
-    "stepOneText": "QR कोड स्कैन करने के लिए अपने फ़ोन कैमरे का उपयोग करके {{vcLabel}} Switfly को साझा करें और प्राप्त करें",
+    "stepOneText": "QR कोड स्कैन करने के लिए अपने फ़ोन कैमरे का उपयोग करके कार्ड Switfly को साझा करें और प्राप्त करें",
     "stepTwoTitle": "विश्वसनीय डिजिटल वॉलेट",
     "stepTwoText": "अपनी डिजिटल साख हमेशा अपने पास रखें",
     "stepThreeTitle": "त्वरित ऐक्सेस",
-    "stepThreeText": "एक बार जेनरेट होने के बाद, {{vcLabel}} आपके मोबाइल में सुरक्षित रूप से स्टोर हो जाते हैं।",
+    "stepThreeText": "एक बार जेनरेट होने के बाद, कार्ड आपके मोबाइल में सुरक्षित रूप से स्टोर हो जाते हैं।",
     "stepThreeButton": "शुरू हो जाओ",
     "skip": "छोडना",
     "next": "अगला"
@@ -226,8 +224,8 @@
   "ReceivedVcsTab": {
     "receivedCards": "प्राप्त कार्ड",
     "header": "प्राप्त कार्ड",
-    "noReceivedVcsTitle": "नहीं {{vcLabel}} अभी तक उपलब्ध नहीं है",
-    "noReceivedVcsText": "प्राप्त करने के लिए नीचे दिए गए अनुरोध पर टैप करें {{vcLabel}}"
+    "noReceivedVcsTitle": "नहीं कार्ड अभी तक उपलब्ध नहीं है",
+    "noReceivedVcsText": "प्राप्त करने के लिए नीचे दिए गए अनुरोध पर टैप करें कार्ड"
   },
   "ViewVcModal": {
     "title": "आईडी विवरण",
@@ -242,8 +240,8 @@
     "editTag": "नाम बदलें",
     "redirecting": "पुन: निर्देशित...",
     "success": {
-      "unlocked": "{{vcLabel}} सफलतापूर्वक अनलॉक किया गया",
-      "locked": "{{vcLabel}} सफलतापूर्वक अनलॉक किया गया",
+      "unlocked": "कार्ड सफलतापूर्वक अनलॉक किया गया",
+      "locked": "कार्ड सफलतापूर्वक अनलॉक किया गया",
       "revoked": "VID {{vid}} निरस्त कर दिया गया है। इसमें शामिल कोई भी क्रेडेंशियल वॉलेट से स्वचालित रूप से हटा दिया जाएगा"
     }
   },
@@ -272,7 +270,7 @@
     "checkDomain": "यह भी जांचें कि एड्रेस बार पर लॉक आइकन है।",
     "domainHead": "https://",
     "selectId": "आईडी चुनें",
-    "noBindedVc": "सत्यापित करने के लिए कोई आबद्ध {{vcLabel}} उपलब्ध नहीं है",
+    "noBindedVc": "सत्यापित करने के लिए कोई आबद्ध कार्ड उपलब्ध नहीं है",
     "back": "वापस जाओ",
     "confirm": "पुष्टि करें",
     "verify": "सत्यापित करना",
@@ -291,12 +289,12 @@
     "required": "आवश्यक"
   },
   "ReceiveVcScreen": {
-    "header": "{{vcLabel}} विवरण",
-    "save": "{{vcLabel}} सहेजें",
+    "header": "कार्ड विवरण",
+    "save": "कार्ड सहेजें",
     "verifyAndSave": "सत्यापित करें और सहेजें",
     "reject": "अस्वीकार करना",
     "discard": "खारिज करना",
-    "goToReceivedVCTab": "प्राप्त {{vcLabel}} देखें",
+    "goToReceivedVCTab": "प्राप्त कार्ड देखें",
     "errors": {
       "savingFailed": {
         "title": "{{vcLabelSingular}} को सहेजने में विफल",
@@ -310,18 +308,18 @@
   },
   "RequestScreen": {
     "receiveCard": "कार्ड प्राप्त करें",
-    "bluetoothDenied": "कृपया ब्लूटूथ को सक्षम करें ताकि वह {{vcLabel}} का अनुरोध कर सके",
-    "showQrCode": "निवासी {{vcLabel}} का अनुरोध करने के लिए यह क्यूआर कोड प्रदर्शित करें",
-    "incomingVc": "इनकमिंग {{vcLabel}}",
+    "bluetoothDenied": "कृपया ब्लूटूथ को सक्षम करें ताकि वह कार्ड का अनुरोध कर सके",
+    "showQrCode": "निवासी कार्ड का अनुरोध करने के लिए यह क्यूआर कोड प्रदर्शित करें",
+    "incomingVc": "इनकमिंग कार्ड",
     "request": "प्रार्थना",
     "status": {
       "accepted": {
         "title": "सफलता!",
-        "message": "{{vcLabel}} {{sender}} से सफलतापूर्वक प्राप्त हो गया है"
+        "message": "कार्ड {{sender}} से सफलतापूर्वक प्राप्त हो गया है"
       },
       "rejected": {
         "title": "सूचना",
-        "message": "आपने {{sender}} के {{vcLabel}} को अस्वीकार कर दिया है"
+        "message": "आपने {{sender}} के कार्ड को अस्वीकार कर दिया है"
       },
       "disconnected": {
         "title": "डिस्कनेक्ट किया गया",
@@ -333,7 +331,7 @@
         "timeoutHint": "डिवाइस की जानकारी का आदान-प्रदान करने में बहुत अधिक समय लग रहा है..."
       },
       "connected": {
-        "message": "डिवाइस से कनेक्ट किया गया। {{vcLabel}} के लिए प्रतीक्षारत...",
+        "message": "डिवाइस से कनेक्ट किया गया। कार्ड के लिए प्रतीक्षारत...",
         "timeoutHint": "अभी तक कोई डेटा प्राप्त नहीं हुआ है. भेजने वाला उपकरण अभी भी जुड़ा हुआ है?"
       },
       "offline": {
@@ -341,7 +339,7 @@
       },
       "bleError": {
         "title": "स्थानांतरित करने में विफल!",
-        "message": "{{vcLabel}} को स्थानांतरित करते समय कुछ गलत हो गया। कृपया पुन: प्रयास करें।"
+        "message": "कार्ड को स्थानांतरित करते समय कुछ गलत हो गया। कृपया पुन: प्रयास करें।"
       }
     },
     "online": "ऑनलाइन",
@@ -350,8 +348,8 @@
   },
   "ScanScreen": {
     "header": "स्कैन क्यू आर कोड",
-    "noShareableVcs": "कोई साझा करने योग्य {{vcLabel}} उपलब्ध नहीं है।",
-    "sharingVc": "{{vcLabel}} साझा करना",
+    "noShareableVcs": "कोई साझा करने योग्य कार्ड उपलब्ध नहीं है।",
+    "sharingVc": "कार्ड साझा करना",
     "bluetoothStateIos": "ब्लूटूथ बंद है, कृपया इसे नियंत्रण केंद्र से चालू करें",
     "bluetoothStateAndroid": "ब्लूटूथ बंद है, कृपया इसे त्वरित सेटिंग मेनू से चालू करें",    
     "errors": {
@@ -373,7 +371,7 @@
       "exchangingDeviceInfoTimeout": "डिवाइस की जानकारी का आदान-प्रदान करने में कुछ समय लग रहा है। आपको फिर से कनेक्ट करना पड़ सकता है।",
       "invalid": "अमान्य क्यूआर कोड",
       "offline": "ऑनलाइन साझाकरण मोड का उपयोग करके क्यूआर कोड स्कैन करने के लिए कृपया इंटरनेट से कनेक्ट करें",
-      "sent": "{{vcLabel}} भेज दिया गया है...",
+      "sent": "कार्ड भेज दिया गया है...",
       "sentHint": "आपके {{vcLabel }} को सहेजने या छोड़ने के लिए रिसीवर की प्रतीक्षा की जा रही है",
       "sharing": {
         "title": "शेयरिंग...",
@@ -382,23 +380,23 @@
       },
       "accepted": {
         "title": "आईडी सफलतापूर्वक साझा किया गया",
-        "message": "आपका {{vcLabel}} सफलतापूर्वक {{रिसीवर}} के साथ साझा किया गया",
+        "message": "आपका कार्ड सफलतापूर्वक {{रिसीवर}} के साथ साझा किया गया",
         "gotohome": "घर जाओ"
       },
       "rejected": {
         "title": "सूचना",
-        "message": "आपका {{vcLabel}} {{रिसीवर}} द्वारा खारिज कर दिया गया था"
+        "message": "आपका कार्ड {{रिसीवर}} द्वारा खारिज कर दिया गया था"
       },
       "bleError": {
         "title": "स्थानांतरित करने में विफल!",
-        "message": "{{vcLabel}} को स्थानांतरित करते समय कुछ गलत हो गया। कृपया पुन: प्रयास करें।"
+        "message": "कार्ड को स्थानांतरित करते समय कुछ गलत हो गया। कृपया पुन: प्रयास करें।"
       }
     }
     
   },
   "SelectVcOverlay": {
-    "header": "शेयर {{vcLabel}}",
-    "chooseVc": "वह {{vcLabel}} चुनें जिसके साथ आप साझा करना चाहते हैं",
+    "header": "शेयर कार्ड",
+    "chooseVc": "वह कार्ड चुनें जिसके साथ आप साझा करना चाहते हैं",
     "share": "बाँट",
     "verifyAndShare": "पहचान सत्यापित करें और साझा करें"
   },
@@ -406,8 +404,8 @@
     "reasonForSharing": "साझा करने का कारण (वैकल्पिक)",
     "acceptRequest": "शेयर करना",
     "acceptRequestAndVerify": "सेल्फी के साथ शेयर करें",
-    "consentToPhotoVerification": "Nagbibigay ako ng pahintulot na kunin ang aking larawan para sa pagpapatunay",
-    "pleaseSelectAnId": "Please select an ID",
+    "consentToPhotoVerification": "मैं सत्यापन के लिए अपना फोटो लेने की अनुमति देता हूं",
+    "pleaseSelectAnId": "कृपया एक आईडी चुनें",
     "reject": "अस्वीकार",
     "status": {
       "sharing": {
@@ -417,11 +415,11 @@
       },
       "accepted": {
         "title": "सफलता!",
-        "message": "आपका {{vcLabel}} को {{रिसीवर}} के साथ सफलतापूर्वक साझा कर दिया गया है"
+        "message": "आपका कार्ड को {{रिसीवर}} के साथ सफलतापूर्वक साझा कर दिया गया है"
       },
       "rejected": {
         "title": "सूचना",
-        "message": "आपके {{vcLabel}} को {{receiver}} ने अस्वीकार कर दिया था"
+        "message": "आपके कार्ड को {{receiver}} ने अस्वीकार कर दिया था"
       }
     }
   },
@@ -439,18 +437,18 @@
   },
   "SendVcModal": {
     "reasonForSharing": "साझा करने का कारण (optional)",
-    "acceptRequest": "अनुरोध स्वीकार करें और चुनें {{vcLabel}}",
+    "acceptRequest": "अनुरोध स्वीकार करें और चुनें कार्ड",
     "reject": "अस्वीकार करे",
     "statusSharing": {
       "title": "साझा किया जा रहा है..."
     },
     "statusAccepted": {
       "title": "सफलता!",
-      "message": "आपका {{vcLabel}} के साथ सफलतापूर्वक साझा कर दिया गया है {{receiver}}"
+      "message": "आपका कार्ड के साथ सफलतापूर्वक साझा कर दिया गया है {{receiver}}"
     },
     "statusRejected": {
       "title": "सूचना",
-      "message": "आपका {{vcLabel}} ने अस्वीकार कर दिया था {{receiver}}"
+      "message": "आपका कार्ड ने अस्वीकार कर दिया था {{receiver}}"
     }
   },
   "WelcomeScreen": {

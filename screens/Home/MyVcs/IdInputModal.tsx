@@ -40,7 +40,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
       onDismiss={dismissInput}
       isVisible={props.isVisible}
       onShow={setIndividualID}
-      headerTitle={props.headerTitle}
+      headerTitle={t('header')}
       headerElevation={2}>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
@@ -97,7 +97,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
           <Column>
             <Button
               type="gradient"
-              title={t('downloadID')}
+              title={t('downloadCard')}
               disabled={!controller.id}
               margin="24 0 0 0"
               onPress={controller.VALIDATE_INPUT}

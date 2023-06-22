@@ -21,14 +21,14 @@
     "deviceRefNumber": "Device reference number",
     "name": "Name"
   },
+  "PasscodeVerify": {
+    "passcodeMismatchError": "Passcode did not match."
+  },
   "FaceScanner": {},
   "OIDcAuth": {
     "title": "OIDC Authentication",
     "text": "To be replaced with the OIDC provider UI",
     "verify": "Verify"
-  },
-  "PasscodeVerify": {
-    "passcodeMismatchError": "Passcode did not match."
   },
   "QrScanner": {
     "missingPermissionText": "This app uses the camera to scan the QR code of another device.",
@@ -56,10 +56,32 @@
     "offlineAuthDisabledHeader": "Offline Authentication disabled!",
     "offlineAuthDisabledMessage": "Click 'Enable Authentication' to enable this credentials to be used for offline authentication."
   },
+  "HomeScreenKebabPopUp": {
+    "title": "More Options",
+    "unPinCard": "Unpin Card",
+    "pinCard": "Pin Card",
+    "offlineAuthenticationDisabled!": "Offline authentication disabled!",
+    "offlineAuthDisabledMessage": "Click here to enable this credentials to be used for offline authentication.",
+    "viewActivityLog": "View Activity Log",
+    "removeFromWallet": "Remove from Wallet",
+    "revokeId": "Revoke ID",
+    "revokeMessage": "Revoke the virtual ID for this profile"
+  },
+  "WalletBinding": {
+    "inProgress": "In progress",
+    "profileAuthenticated": "Profile is authenticated!"
+  },
+  "BindingVcWarningOverlay": {
+    "alert": "Alert",
+    "BindingWarning": "You have already activated online login for this credential on another device. You will no longer be able to use that device for login if you activate it again on this device. Do you want to proceed?",
+    "yesConfirm": "Yes, I Confirm",
+    "no": "No"
+  },
   "AuthScreen": {
-    "header": "Would you like to use biometrics to unlock the application?",
-    "useBiometrics": "Use biometrics",
-    "usePasscode": "I'd rather use a passcode",
+    "header": "Select App Unlock Method",
+    "Description": "Would you like to use biometrics to unlock the application?",
+    "useBiometrics": "Use Biometrics",
+    "usePasscode": "Use Passcode",
     "errors": {
       "unavailable": "Device does not support Biometrics",
       "unenrolled": "To use Biometrics, please enroll your biometrics in your device settings",
@@ -77,10 +99,32 @@
     "received": "received",
     "deleted": "deleted"
   },
-  "HomeScreen": {
-    "myVcsTab": "My\n{{vcLabel}}",
-    "receivedVcsTab": "Received\n{{vcLabel}}",
-    "historyTab": "History"
+  "SettingScreen": {
+    "header": "Settings",
+    "injiAsVerifierApp": "Inji as Verifier App",
+    "basicSettings": "Basic Settings",
+    "bioUnlock": "Unlock with Biometric",
+    "language": "Language",
+    "aboutInji": "About Inji",
+    "injiTourGuide": "Inji Tour Guide",
+    "logout": "Logout"
+  },
+  "AboutInji": {
+    "aboutInji": "About Inji",
+    "header": "ABOUT INJI",
+    "aboutDetailes": "Inji is a mobile app that can be used as a digital wallet to store credentials. It also allows identity verification in both offline and online modes, at any place and time.",
+    "forMoreDetailes": "For more details",
+    "clickHere": "Click here",
+    "version": "Version: 0.4.1",
+    "tuvaliVersion": "Tuvali-version: v0.3.9-b16c5ea"
+  },
+  "HelpScreen": {
+    "header": "Help",
+    "whatisIdDetails?": "What is ID Details?",
+    "howToTurnOnOfflineAuthentication?": "How to turn on Offline Authentication?",
+    "whatIsRevokeId?": "What is Revoke ID?",
+    "howToViewActivityLog?": "How to view activity log?",
+    "detailes": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since."
   },
   "AddVcModal": {
     "requestingCredential": "Requesting credential...",
@@ -91,30 +135,54 @@
       },
       "backend": {
         "invalidOtp": "OTP is invalid",
+        "expiredOtp": "OTP has expired",
         "invalidUin": "UIN invalid",
         "invalidVid": "VID invalid",
         "missingUin": "UIN not available in database",
-        "missingVid": "VID not available in database"
+        "missingVid": "VID not available in database",
+        "noMessageAvailable": "Try after some time",
+        "whileGeneratingOtpErrorIsOccured": "while generating OTP error occurred",
+        "networkRequestFailed": "Network request failed"
+      }
+    }
+  },
+  "GetVcModal": {
+    "errors": {
+      "input": {
+        "empty": "Input cannot be empty",
+        "invalidFormat": "The input format is incorrect"
+      },
+      "backend": {
+        "invalidOtp": "Invalid OTP",
+        "expiredOtp": "OTP has expired",
+        "applicationProcessing": "AID is not ready yet",
+        "noMessageAvailable": "Try after some time",
+        "networkRequestFailed": "Network request failed",
+        "timeout": "Timeout"
       }
     }
   },
   "DownloadingVcModal": {
-    "header": "Downloading your {{vcLabel}}",
-    "bodyText": "This may take some time, we will notify you when your {{vcLabel}} has been downloaded and is available",
+    "header": "Downloading your card",
+    "bodyText": "This may take some time, we will notify you when your card has been downloaded and is available",
     "backButton": "Back home"
   },
   "GetIdInputModal": {
-    "header": "Enter your Application ID to get your UIN",
-    "getUIN": "Get UIN/VID",
-    "applicationId": "Application ID",
+    "header": "Retrieve your UIN/VID",
+    "applicationIdLabel": "Please enter your Application ID",
+    "enterApplicationId": "Enter Application ID",
     "requestingOTP": "Requesting OTP...",
-    "qstnMarkToolTip": "Application ID is available in the acknowledgement received after enrolment."
+    "qstnMarkToolTip": "Application ID is available in the acknowledgement received after enrolment.",
+    "getUIN": "Get UIN/VID"
   },
   "IdInputModal": {
-    "header": "Enter your UIN/VID to download your {{vcLabel}}",
-    "generateVc": "Generate My {{vcLabel}}",
-    "enterId": "Enter your {{idType}}",
-    "noUIN/VID": "Don't have your UIN/VID? Get it here",
+    "header": "Retrieve your ID",
+    "guideLabel": "Select ID type and enter the MOSIP provided UIN or VID of the ID you wish to retrieve",
+    "generateVc": "Generate Card",
+    "downloadCard": "Download ID",
+    "enterId": "Enter ID",
+    "noUIN/VID": "Don’t have UIN/VID? ",
+    "getItHere": "Get it now",
     "requestingOTP": "Requesting OTP..."
   },
   "OtpVerificationModal": {
@@ -124,24 +192,30 @@
     "resendCode": "Resend Code"
   },
   "MyVcsTab": {
-    "addVcButton": "Add {{vcLabel}}",
-    "generateVc": "Generate your {{vcLabel}}",
-    "generateVcDescription": "Tap on \"Add {{vcLabel}}\" below to download your {{vcLabel}}"
+    "bringYourDigitalID": "Bring your digital identity",
+    "generateVcDescription": "Tap on \"Add card\" below to download your card",
+    "downloadCard": "Download Card",
+    "downloadingYourId": "Downloading your ID, this can take upto 5 minutes"
   },
   "OnboardingOverlay": {
     "stepOneTitle": "Welcome!",
-    "stepOneText": "Keep your digital credential with you at all times. To get started, add {{vcLabel}} to your profile.",
-    "stepTwoTitle": "{{vcLabel}} management",
-    "stepTwoText": "Once generated, {{vcLabel}} are safely stored on your mobile and can be renamed or shared at any time.",
+    "stepOneText": "Keep your digital credential with you at all times. To get started, add card to your profile.",
+    "stepTwoTitle": "Card management",
+    "stepTwoText": "Once generated, cards are safely stored on your mobile and can be renamed or shared at any time.",
     "stepThreeTitle": "Easy sharing",
-    "stepThreeText": "Share and receive {{vcLabel}} switfly using your phone camera to scan QR codes.",
-    "stepThreeButton": "Get started and add {{vcLabel}}"
+    "stepThreeText": "Share and receive card switfly using your phone camera to scan QR codes.",
+    "stepThreeButton": "Get Started",
+    "skip": "Skip",
+    "next": "Next"
   },
   "ReceivedVcsTab": {
-    "noReceivedVcsTitle": "No {{vcLabel}} available yet",
-    "noReceivedVcsText": "Tap on Request below to receive {{vcLabel}}"
+    "receivedCards": "Received Cards",
+    "header": "Received Cards",
+    "noReceivedVcsTitle": "No card available yet",
+    "noReceivedVcsText": "Tap on Request below to receive card"
   },
   "ViewVcModal": {
+    "title": "ID Details",
     "cancel": "Cancel",
     "lock": "Lock",
     "unlock": "Unlock",
@@ -153,8 +227,8 @@
     "editTag": "Rename",
     "redirecting": "Redirecting...",
     "success": {
-      "unlocked": "{{vcLabel}} successfully unlocked",
-      "locked": "{{vcLabel}} successfully locked",
+      "unlocked": "Card successfully unlocked",
+      "locked": "Card successfully locked",
       "revoked": "VID {{vid}} has been revoked. Any credential containing the same will be removed automatically from the wallet"
     }
   },
@@ -165,17 +239,49 @@
     "settings": "Settings"
   },
   "PasscodeScreen": {
-    "header": "Set a passcode to secure your application",
-    "confirmPasscode": "Confirm your passcode",
+    "header": "Set Passcode",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+    "confirmPasscode": "Confirm passcode",
     "enterPasscode": "Enter your passcode"
   },
+  "AppMetaData": {
+    "header": "About Inji",
+    "version": "Version",
+    "useBle": "Powered by BLE",
+    "useGoogleNearby": "Powered by GoogleNearby"
+  },
+  "QrScreen": {
+    "title": "QR Login",
+    "alignQr": "Align the QR code within the frame to scan",
+    "confirmation": "Confirmation",
+    "checkDomain": "Also, check for a lock icon in the address bar.",
+    "domainHead": "https://",
+    "selectId": "Select an ID",
+    "noBindedVc": "There is no binded card available to verify",
+    "back": "Come back",
+    "confirm": "Confirm",
+    "verify": "Verify",
+    "faceAuth": "Face Authentication",
+    "consent": "Consent",
+    "loading": "Loading...",
+    "domainWarning": "Please confirm the domain of the website you are scanning the QR code from below",
+    "access": " is requesting access to",
+    "status": "Status",
+    "successMessage": "You are successfully logged in ",
+    "okay": "All right",
+    "allow": "Allow",
+    "cancel": "Cancel",
+    "essentialClaims": "Important Claims",
+    "voluntaryClaims": "Voluntary Claims",
+    "required": "It is necessary"
+  },
   "ReceiveVcScreen": {
-    "header": "{{vcLabel}} details",
-    "save": "Save {{vcLabel}}",
+    "header": "Card details",
+    "save": "Save card",
     "verifyAndSave": "Verify and save",
     "reject": "Reject",
     "discard": "Discard",
-    "goToReceivedVCTab": "View Received {{vcLabel}}",
+    "goToReceivedVCTab": "View Received card",
     "errors": {
       "savingFailed": {
         "title": "Failed to save {{vcLabelSingular}}",
@@ -188,18 +294,19 @@
     }
   },
   "RequestScreen": {
-    "bluetoothDenied": "Please enable Bluetooth to be able to request {{vcLabel}}",
-    "showQrCode": "Display this QR code to request resident {{vcLabel}}",
-    "incomingVc": "Incoming {{vcLabel}}",
+    "receiveCard": "Receive Card",
+    "bluetoothDenied": "Please enable Bluetooth to be able to request card",
+    "showQrCode": "Display this QR code to request resident card",
+    "incomingVc": "Incoming card",
     "request": "Request",
     "status": {
       "accepted": {
         "title": "Success!",
-        "message": "{{vcLabel}} has been successfully received from {{sender}}"
+        "message": "Card has been successfully received from {{sender}}"
       },
       "rejected": {
         "title": "Notice",
-        "message": "You discarded {{sender}}'s {{vcLabel}}"
+        "message": "You discarded {{sender}}'s card"
       },
       "disconnected": {
         "title": "Disconnected",
@@ -211,7 +318,7 @@
         "timeoutHint": "It's taking too long to exchange device info..."
       },
       "connected": {
-        "message": "Connected to the device. Waiting for {{vcLabel}}...",
+        "message": "Connected to the device. Waiting for card...",
         "timeoutHint": "No data received yet. Is sending device still connected?"
       },
       "offline": {
@@ -219,7 +326,7 @@
       },
       "bleError": {
         "title": "Failed to transfer!",
-        "message": "Something went wrong while transferring {{vcLabel}}. Please try again."
+        "message": "Something went wrong while transferring card. Please try again."
       }
     },
     "online": "Online",
@@ -228,8 +335,8 @@
   },
   "ScanScreen": {
     "header": "Scan QR Code",
-    "noShareableVcs": "No shareable {{vcLabel}} are available.",
-    "sharingVc": "Sharing {{vcLabel}}",
+    "noShareableVcs": "No shareable card are available.",
+    "sharingVc": "Sharing card",
     "bluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
     "bluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
     "errors": {
@@ -243,7 +350,9 @@
       }
     },
     "status": {
-      "connecting": "Connecting...",
+      "inProgress": "In progress",
+      "establishingConnection": "Establishing connection",
+      "sharingInProgress": "Sharing in Progress",
       "connectingTimeout": "It's taking a while to establish the connection. Is the other device open for connections?",
       "exchangingDeviceInfo": "Exchanging device info...",
       "exchangingDeviceInfoTimeout": "It's taking a while to exchange device info. You may have to reconnect.",
@@ -258,40 +367,46 @@
       },
       "accepted": {
         "title": "Success!",
-        "message": "Your {{vcLabel}} has been successfully shared with {{receiver}}"
+        "message": "Your card has been successfully shared with {{receiver}}",
+        "gotohome": "Go to Home"
       },
       "rejected": {
         "title": "Notice",
-        "message": "Your {{vcLabel}} was discarded by {{receiver}}"
+        "message": "Your card was discarded by {{receiver}}"
       },
       "bleError": {
         "title": "Failed to transfer!",
-        "message": "Something went wrong while transferring {{vcLabel}}. Please try again."
+        "message": "Something went wrong while transferring card. Please try again."
       }
     }
   },
   "SelectVcOverlay": {
-    "header": "Share {{vcLabel}}",
-    "chooseVc": "Choose the {{vcLabel}} you'd like to share with",
+    "header": "Share card",
+    "chooseVc": "Choose the card you'd like to share with",
     "share": "Share",
     "verifyAndShare": "Verify Identity & Share"
   },
   "SendVcScreen": {
     "reasonForSharing": "Reason for sharing (optional)",
-    "acceptRequest": "Accept request and choose {{vcLabel}}",
+    "acceptRequest": "Accept request and choose card",
     "acceptRequestAndVerify": "Accept request and verify",
     "reject": "Reject",
-    "consentToPhotoVerification": "I give consent to have my photo taken for authentication"
-  },
-  "AppMetaData": {
-    "header": "About Inji",
-    "version": "Version",
-    "useBle": "Powered by BLE",
-    "useGoogleNearby": "Powered by GoogleNearby"
-  },
-  "Credits": {
-    "header": "Credits and legal notices",
-    "back": "Back"
+    "consentToPhotoVerification": "I give consent to have my photo taken for authentication",
+    "pleaseSelectAnId": "Please select an ID",
+    "status": {
+      "sharing": {
+        "title": "Sharing",
+        "timeoutHint": "VC shares take a bit longer. There may be a connection problem."
+      },
+      "accepted": {
+        "title": "Success!",
+        "message": "Your card has been successfully shared with {{receiver}}"
+      },
+      "rejected": {
+        "title": "Pay attention",
+        "message": "Your card has been declined by {{receiver}}"
+      }
+    }
   },
   "VerifyIdentityOverlay": {
     "status": {
@@ -309,6 +424,11 @@
     "title": "Open Source Identity Solution",
     "getStarted": "Get started",
     "unlockApp": "Unlock application"
+  },
+  "SetupLanguage": {
+    "header": "Choose Language",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+    "save": "Save Preference"
   },
   "common": {
     "cancel": "Cancel",

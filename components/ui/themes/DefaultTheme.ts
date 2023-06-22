@@ -565,7 +565,7 @@ export const DefaultTheme = {
     },
     gradient: {
       borderRadius: 9,
-      width: '88%',
+      width: Dimensions.get('window').width * 0.72,
       alignSelf: 'center',
       margin: 4,
     },

@@ -25,7 +25,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
   }
 
   return (
-    <Column>
+    <Column margin="10">
       <ImageBackground
         borderRadius={10}
         style={Theme.Styles.openCardBgContainer}

@@ -19,7 +19,11 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = (props) => {
           <Text align="center" style={Theme.TextStyles.header}>
             {t('header')}
           </Text>
-          <Text align="center" weight="semibold" color={Theme.Colors.GrayText}>
+          <Text
+            align="center"
+            weight="semibold"
+            color={Theme.Colors.GrayText}
+            margin="6 0">
             {t('description')}
           </Text>
         </Column>
@@ -32,7 +36,11 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = (props) => {
           <Text align="center" style={Theme.TextStyles.header}>
             {t('confirmPasscode')}
           </Text>
-          <Text align="center" weight="semibold" color={Theme.Colors.GrayText}>
+          <Text
+            align="center"
+            weight="semibold"
+            color={Theme.Colors.GrayText}
+            margin="6 0">
             {t('description')}
           </Text>
         </Column>
@@ -55,8 +63,14 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = (props) => {
           {passcodeSetup}
         </Column>
       ) : (
-        <Column fill align="space-between" width="100%">
-          <Text align="center">{t('enterPasscode')}</Text>
+        <Column fill align="space-around" width="100%">
+          <Text
+            align="center"
+            weight="semibold"
+            color={Theme.Colors.GrayText}
+            margin="6 0">
+            {t('enterPasscode')}
+          </Text>
           <PasscodeVerify
             onSuccess={controller.LOGIN}
             onError={controller.setError}

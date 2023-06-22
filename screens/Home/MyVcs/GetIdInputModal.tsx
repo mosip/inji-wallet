@@ -17,7 +17,7 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = (props) => {
   const { t } = useTranslation('GetIdInputModal');
   const controller = useGetIdInputModal(props);
 
-  const inputLabel = t('applicationId', {
+  const inputLabel = t('enterApplicationId', {
     vcLabel: controller.vcLabel.singular,
   });
 
@@ -32,7 +32,7 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = (props) => {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <Column fill align="space-between" padding="32 24">
           <Column>
-            <Text margin="10">
+            <Text weight="semibold" color={Theme.Colors.GrayText} margin="10">
               {t('applicationIdLabel', {
                 vcLabel: controller.vcLabel.singular,
               })}

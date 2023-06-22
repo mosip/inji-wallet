@@ -18,7 +18,6 @@ export const AddVcModal: React.FC<AddVcModalProps> = (props) => {
         }
         onDismiss={controller.DISMISS}
         onPress={props.onPress}
-        headerTitle={t('header')}
       />
 
       <OtpVerificationModal
