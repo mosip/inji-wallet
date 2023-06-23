@@ -13,6 +13,11 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
+    'done.invoke.MyVcsTab.addVc:invocation[0]': {
+      type: 'done.invoke.MyVcsTab.addVc:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
     'xstate.init': { type: 'xstate.init' };
   };
   'invokeSrcNameMap': {};
@@ -31,11 +36,12 @@ export interface Typegen0 {
   };
   'eventsCausingDelays': {};
   'eventsCausingGuards': {
-    checkStorage: 'ADD_VC';
     isOnboardingDone: 'STORE_RESPONSE';
   };
   'eventsCausingServices': {
-    AddVcModal: 'ADD_VC' | 'done.invoke.GetVcModal';
+    AddVcModal:
+      | 'done.invoke.GetVcModal'
+      | 'done.invoke.MyVcsTab.addVc:invocation[0]';
     GetVcModal: 'GET_VC';
   };
   'matchesStates':

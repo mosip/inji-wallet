@@ -71,12 +71,7 @@ export const MyVcsTabMachine = model.createMachine(
         on: {
           ADD_VC: [
             {
-              target: '#MyVcsTab.addVc.storageLimitReached',
-              cond: 'checkStorage',
-              actions: ['completeOnboarding'],
-            },
-            {
-              target: 'addingVc',
+              target: 'addVc',
               actions: ['completeOnboarding'],
             },
           ],
@@ -87,6 +82,18 @@ export const MyVcsTabMachine = model.createMachine(
         },
       },
       addVc: {
+        invoke: {
+          src: () => Promise.resolve(isMaximumStorageLimitReached()),
+          onDone: [
+            {
+              cond: (_context, event) => event.data === true,
+              target: '.storageLimitReached',
+            },
+            {
+              target: 'addingVc',
+            },
+          ],
+        },
         states: {
           storageLimitReached: {
             on: {
@@ -98,13 +105,7 @@ export const MyVcsTabMachine = model.createMachine(
       idle: {
         id: 'idle',
         on: {
-          ADD_VC: [
-            {
-              target: '#MyVcsTab.addVc.storageLimitReached',
-              cond: 'checkStorage',
-            },
-            { target: 'addingVc' },
-          ],
+          ADD_VC: 'addVc',
           VIEW_VC: 'viewingVc',
           GET_VC: 'gettingVc',
         },
@@ -208,9 +209,6 @@ export const MyVcsTabMachine = model.createMachine(
     guards: {
       isOnboardingDone: (_context, event: StoreResponseEvent) => {
         return event.response === true;
-      },
-      checkStorage: (_context, _event) => {
-        return isMaximumStorageLimitReached();
       },
     },
   }

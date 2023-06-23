@@ -18,6 +18,4 @@ declare module 'react-native-dotenv' {
    * Flag for Toggling environment url
    */
   export const CREDENTIAL_REGISTRY_EDIT: string;
-
-  export const MAXIMUM_STORAGE_LIMIT_IN_MB: number;
 }

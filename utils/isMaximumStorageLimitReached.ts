@@ -3,10 +3,12 @@ import {
   getFreeDiskStorageOldSync,
   getFreeDiskStorageSync,
 } from 'react-native-device-info';
-import { MAXIMUM_STORAGE_LIMIT_IN_MB } from 'react-native-dotenv';
+import getAllConfigurations from '../shared/commonprops/commonProps';
 
-export default function isMaximumStorageLimitReached() {
-  const storageLimitInBytes = MAXIMUM_STORAGE_LIMIT_IN_MB * 1024 * 1024;
+export default async function isMaximumStorageLimitReached() {
+  const configurations = await getAllConfigurations();
+  const storageLimitInBytes =
+    configurations['maximumStorageLimitInMB'] * 1024 * 1024;
 
   if (Platform.OS === 'android' && Platform.Version < 29) {
     const freeDiskStorageOldInBytes = getFreeDiskStorageOldSync();

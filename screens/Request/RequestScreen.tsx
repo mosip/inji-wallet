@@ -36,11 +36,17 @@ export const RequestScreen: React.FC = () => {
     setShowMaximumStorageLimitReachedError,
   ] = useState(false);
 
-  useFocusEffect(() => {
-    if (isMaximumStorageLimitReached()) {
-      setShowMaximumStorageLimitReachedError(true);
-    }
-  });
+  useFocusEffect(
+    React.useCallback(() => {
+      async function checkStorage() {
+        const isStorageLimitReached = await isMaximumStorageLimitReached();
+        if (isStorageLimitReached) {
+          setShowMaximumStorageLimitReachedError(true);
+        }
+      }
+      checkStorage();
+    }, [])
+  );
 
   useEffect(() => {
     (async () => {
