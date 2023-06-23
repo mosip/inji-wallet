@@ -297,6 +297,8 @@
   "RequestScreen": {
     "receiveCard": "Tumanggap ng Card",
     "bluetoothDenied": "Mangyaring paganahin ang Bluetooth upang makahiling ng {{vcLabel}}",
+    "bluetoothStateIos": "Naka-OFF ang Bluetooth, paki-ON ito mula sa control center",
+    "bluetoothStateAndroid": "Naka-OFF ang Bluetooth, paki-ON ito mula sa control center",
     "showQrCode": "Ipakita ang QR code na ito para humiling ng resident {{vcLabel}}",
     "incomingVc": "Padating na {{vcLabel}}",
     "request": "Hilingin",

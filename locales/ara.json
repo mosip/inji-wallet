@@ -302,6 +302,8 @@
   "RequestScreen": {
     "receiveCard": "البطاقة المستلمة",
     "bluetoothDenied": "الرجاء تمكين Bluetooth لتتمكن من طلببطاقة",
+    "bluetoothStateIos": "تم إيقاف تشغيل البلوتوث ، يرجى تشغيله من مركز التحكم",
+    "bluetoothStateAndroid": "تم إيقاف تشغيل البلوتوث ، يرجى تشغيله من قائمة الإعدادات السريعة",
     "showQrCode": "اعرض  رمز الاستجابة السريعة هذا لطلب المقيم بطاقة",
     "incomingVc": "الوارد بطاقة",
     "request": "طلب",

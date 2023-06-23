@@ -21,14 +21,14 @@
     "deviceRefNumber": "Device reference number",
     "name": "Name"
   },
-  "PasscodeVerify": {
-    "passcodeMismatchError": "Passcode did not match."
-  },
   "FaceScanner": {},
   "OIDcAuth": {
     "title": "OIDC Authentication",
     "text": "To be replaced with the OIDC provider UI",
     "verify": "Verify"
+  },
+  "PasscodeVerify": {
+    "passcodeMismatchError": "Passcode did not match."
   },
   "QrScanner": {
     "missingPermissionText": "This app uses the camera to scan the QR code of another device.",
@@ -285,29 +285,32 @@
     "goToReceivedVCTab": "View Received card",
     "errors": {
       "savingFailed": {
-        "title": "Failed to save {{vcLabelSingular}}",
-        "message": "Something went wrong while saving {{vcLabelSingular}} to the store."
+        "title": "Failed to save the card",
+        "message": "Something went wrong while saving card to the store."
       },
       "diskFullError": {
-        "title": "Failed to save {{vcLabelPlural}}",
-        "message": "No more {{vcLabelPlural}} can be received or saved as App Data is full."
+        "title": "Failed to save the card",
+        "message": "No more cards can be received or saved as App Data is full."
       }
     }
   },
   "RequestScreen": {
     "receiveCard": "Receive Card",
     "bluetoothDenied": "Please enable Bluetooth to be able to request card",
-    "showQrCode": "Display this QR code to request resident card",
-    "incomingVc": "Incoming card",
+    "bluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
+    "bluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
+    "nearbyDevicesPermissionDenied": "Please enable Nearby Devices Permission to be able to request card",
+    "showQrCode": "Display this QR code to request resident Card",
+    "incomingVc": "Incoming Card",
     "request": "Request",
     "status": {
       "accepted": {
         "title": "Success!",
-        "message": "Card has been successfully received from {{sender}}"
+        "message": "Card has been successfully received from Wallet"
       },
       "rejected": {
         "title": "Notice",
-        "message": "You discarded {{sender}}'s card"
+        "message": "You discarded Wallet's Card"
       },
       "disconnected": {
         "title": "Disconnected",
@@ -319,7 +322,7 @@
         "timeoutHint": "It's taking too long to exchange device info..."
       },
       "connected": {
-        "message": "Connected to the device. Waiting for card...",
+        "message": "Connected to the device. Waiting for ard...",
         "timeoutHint": "No data received yet. Is sending device still connected?"
       },
       "offline": {
@@ -368,28 +371,28 @@
       },
       "accepted": {
         "title": "Success!",
-        "message": "Your card has been successfully shared with {{receiver}}",
+        "message": "Your Card has been successfully shared with Verifier",
         "gotohome": "Go to Home"
       },
       "rejected": {
         "title": "Notice",
-        "message": "Your card was discarded by {{receiver}}"
+        "message": "Your Card was discarded by Verifier"
       },
       "bleError": {
         "title": "Failed to transfer!",
-        "message": "Something went wrong while transferring card. Please try again."
+        "message": "Something went wrong while transferring Card. Please try again."
       }
     }
   },
   "SelectVcOverlay": {
-    "header": "Share card",
-    "chooseVc": "Choose the card you'd like to share with",
+    "header": "Share Card",
+    "chooseVc": "Choose the Card you'd like to share with",
     "share": "Share",
     "verifyAndShare": "Verify Identity & Share"
   },
   "SendVcScreen": {
     "reasonForSharing": "Reason for sharing (optional)",
-    "acceptRequest": "Accept request and choose card",
+    "acceptRequest": "Share",
     "acceptRequestAndVerify": "Accept request and verify",
     "reject": "Reject",
     "consentToPhotoVerification": "I give consent to have my photo taken for authentication",
