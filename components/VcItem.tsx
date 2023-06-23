@@ -11,10 +11,12 @@ import {
   selectContext,
   selectTag,
   selectEmptyWalletBindingId,
+  selectStoreError,
+  selectIsSavingFailedInIdle,
   selectKebabPopUp,
-  VcItemEvents,
 } from '../machines/vcItem';
-import { Column, Row, Text } from './ui';
+import { VcItemEvents } from '../machines/vcItem';
+import { ErrorMessageOverlay } from '../components/MessageOverlay';
 import { Theme } from './ui/styleUtils';
 import { GlobalContext } from '../shared/GlobalContext';
 import { useTranslation } from 'react-i18next';
@@ -22,95 +24,12 @@ import { VcItemTags } from './VcItemTags';
 import { KebabPopUp } from './KebabPopUp';
 import VerifiedIcon from './VerifiedIcon';
 import { getLocalizedField } from '../i18n';
-
-const getDetails = (arg1, arg2, verifiableCredential) => {
-  if (arg1 === 'Status') {
-    return (
-      <Column>
-        <Text
-          weight="bold"
-          size="smaller"
-          color={
-            !verifiableCredential
-              ? Theme.Colors.LoadingDetailsLabel
-              : Theme.Colors.DetailsLabel
-          }>
-          {arg1}
-        </Text>
-        <Row>
-          <Text
-            numLines={1}
-            color={Theme.Colors.Details}
-            weight="bold"
-            size="smaller"
-            style={
-              !verifiableCredential
-                ? Theme.Styles.loadingTitle
-                : Theme.Styles.subtitle
-            }>
-            {!verifiableCredential ? '' : arg2}
-          </Text>
-          {!verifiableCredential ? null : <VerifiedIcon />}
-        </Row>
-      </Column>
-    );
-  } else {
-    return (
-      <Column>
-        <Text
-          color={
-            !verifiableCredential
-              ? Theme.Colors.LoadingDetailsLabel
-              : Theme.Colors.DetailsLabel
-          }
-          size="smaller"
-          weight={'bold'}
-          style={Theme.Styles.vcItemLabelHeader}>
-          {arg1}
-        </Text>
-        <Text
-          numLines={4}
-          color={Theme.Colors.Details}
-          weight="bold"
-          size="smaller"
-          style={
-            !verifiableCredential
-              ? Theme.Styles.loadingTitle
-              : Theme.Styles.subtitle
-          }>
-          {!verifiableCredential ? '' : arg2}
-        </Text>
-      </Column>
-    );
-  }
-};
-
-const WalletVerified: React.FC = () => {
-  return (
-    <Icon
-      name="verified-user"
-      color={Theme.Colors.VerifiedIcon}
-      size={28}
-      containerStyle={{ marginStart: 4, bottom: 1 }}
-    />
-  );
-};
-
-const WalletUnverified: React.FC = () => {
-  return (
-    <Icon
-      name="shield-alert"
-      color={Theme.Colors.Icon}
-      size={28}
-      type="material-community"
-      containerStyle={{ marginStart: 4, bottom: 1 }}
-    />
-  );
-};
+import { VcItemContent } from './VcItemContent';
+import { VcItemActivationStatus } from './VcItemActivationStatus';
+import { Column, Row } from './ui';
 
 export const VcItem: React.FC<VcItemProps> = (props) => {
   const { appService } = useContext(GlobalContext);
-  const { t } = useTranslation('VcDetails');
   const machine = useRef(
     createVcItemMachine(
       appService.getSnapshot().context.serviceRefs,
@@ -124,150 +43,46 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
   const emptyWalletBindingId = useSelector(service, selectEmptyWalletBindingId);
   const isKebabPopUp = useSelector(service, selectKebabPopUp);
   const KEBAB_POPUP = () => service.send(VcItemEvents.KEBAB_POPUP());
+  const storeError = useSelector(service, selectStoreError);
+  const isSavingFailedInIdle = useSelector(service, selectIsSavingFailedInIdle);
   const DISMISS = () => service.send(VcItemEvents.DISMISS());
-  //Assigning the UIN and VID from the VC details to display the idtype label
-  const uin = verifiableCredential?.credentialSubject.UIN;
-  const vid = verifiableCredential?.credentialSubject.VID;
+
+  let storeErrorTranslationPath = 'errors.savingFailed';
+
+  //ENOSPC - no space left on a device / drive
+  const isDiskFullError = storeError?.message?.match('ENOSPC') != null;
+  if (isDiskFullError) {
+    storeErrorTranslationPath = 'errors.diskFullError';
+  }
 
   const generatedOn = useSelector(service, selectGeneratedOn);
-  const fullName = !verifiableCredential
-    ? ''
-    : getLocalizedField(verifiableCredential.credentialSubject.fullName);
-  const isvalid = !verifiableCredential ? '' : t('valid');
-  const selectableOrCheck = props.selectable ? (
-    <CheckBox
-      checked={props.selected}
-      checkedIcon={<Icon name="radio-button-checked" />}
-      uncheckedIcon={<Icon name="radio-button-unchecked" />}
-      onPress={() => props.onPress(service)}
-    />
-  ) : null;
-
   const tag = useSelector(service, selectTag);
   return (
-    <Pressable
-      onPress={() => props.onPress(service)}
-      disabled={!verifiableCredential}
-      style={
-        props.selected
-          ? Theme.Styles.selectedVc
-          : Theme.Styles.closeCardBgContainer
-      }>
-      <ImageBackground
-        source={!verifiableCredential ? null : Theme.CloseCard}
-        resizeMode="stretch"
-        borderRadius={4}
+    <React.Fragment>
+      <Pressable
+        onPress={() => props.onPress(service)}
+        disabled={!verifiableCredential}
         style={
-          !verifiableCredential
-            ? Theme.Styles.vertloadingContainer
-            : Theme.Styles.backgroundImageContainer
+          props.selected
+            ? Theme.Styles.selectedBindedVc
+            : Theme.Styles.closeCardBgContainer
         }>
-        <Column>
-          <Row align="space-between">
-            <Row>
-              <ImageBackground
-                source={
-                  !verifiableCredential
-                    ? Theme.ProfileIcon
-                    : { uri: context.credential.biometrics.face }
-                }
-                style={Theme.Styles.closeCardImage}>
-                {props.iconName && (
-                  <Icon
-                    name={props.iconName}
-                    type={props.iconType}
-                    color={Theme.Colors.Icon}
-                    style={{ marginLeft: -80 }}
-                  />
-                )}
-              </ImageBackground>
-              <Column margin="0 0 0 10">
-                {getDetails(t('fullName'), fullName, verifiableCredential)}
-
-                <Column margin="10 0 0 0">
-                  <Text
-                    color={
-                      !verifiableCredential
-                        ? Theme.Colors.LoadingDetailsLabel
-                        : Theme.Colors.DetailsLabel
-                    }
-                    weight="semibold"
-                    size="smaller"
-                    align="left">
-                    {t('idType')}
-                  </Text>
-                  <Text
-                    weight="regular"
-                    color={Theme.Colors.Details}
-                    size="smaller"
-                    style={
-                      !verifiableCredential
-                        ? Theme.Styles.loadingTitle
-                        : Theme.Styles.subtitle
-                    }>
-                    {t('nationalCard')}
-                  </Text>
-                </Column>
-              </Column>
-            </Row>
-
-            <Column>{verifiableCredential ? selectableOrCheck : null}</Column>
-          </Row>
-
-          <Row
-            align="space-between"
-            margin="5 0 0 0"
-            style={
-              !verifiableCredential ? Theme.Styles.loadingContainer : null
-            }>
-            <Column>
-              {uin ? getDetails(t('uin'), uin, verifiableCredential) : null}
-              {vid ? getDetails(t('vid'), vid, verifiableCredential) : null}
-              {!verifiableCredential
-                ? getDetails(t('id'), uin || vid, verifiableCredential)
-                : null}
-              {getDetails(t('generatedOn'), generatedOn, verifiableCredential)}
-            </Column>
-            <Column>
-              {verifiableCredential
-                ? getDetails(t('status'), isvalid, verifiableCredential)
-                : null}
-            </Column>
-            <Column style={{ display: verifiableCredential ? 'flex' : 'none' }}>
-              <Image
-                source={Theme.MosipLogo}
-                style={Theme.Styles.logo}
-                resizeMethod="auto"
+        <VcItemContent
+          context={context}
+          verifiableCredential={verifiableCredential}
+          generatedOn={generatedOn}
+          tag={tag}
+        />
+        <Row crossAlign="center">
+          {props.activeTab !== 'receivedVcsTab' &&
+            props.activeTab != 'sharingVcScreen' && (
+              <VcItemActivationStatus
+                verifiableCredential={verifiableCredential}
+                emptyWalletBindingId={emptyWalletBindingId}
+                onPress={() => props.onPress(service)}
+                showOnlyBindedVc={props.showOnlyBindedVc}
               />
-            </Column>
-          </Row>
-        </Column>
-        <VcItemTags tag={tag} />
-      </ImageBackground>
-      <Row
-        width={Dimensions.get('screen').width * 0.8}
-        align="space-between"
-        crossAlign="center">
-        <Row crossAlign="center" style={{ flex: 1 }}>
-          {verifiableCredential &&
-            (emptyWalletBindingId ? <WalletUnverified /> : <WalletVerified />)}
-          <Text
-            color={Theme.Colors.Details}
-            weight="semibold"
-            size="small"
-            margin="10 33 10 10"
-            style={
-              !verifiableCredential
-                ? Theme.Styles.loadingTitle
-                : Theme.Styles.subtitle
-            }
-            children={
-              emptyWalletBindingId
-                ? t('offlineAuthDisabledHeader')
-                : t('profileAuthenticated')
-            }></Text>
-        </Row>
-        {verifiableCredential && (
+            )}
           <Pressable onPress={KEBAB_POPUP}>
             <KebabPopUp
               vcKey={props.vcKey}
@@ -278,9 +93,15 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
               service={service}
             />
           </Pressable>
-        )}
-      </Row>
-    </Pressable>
+        </Row>
+      </Pressable>
+      <ErrorMessageOverlay
+        isVisible={isSavingFailedInIdle}
+        error={storeErrorTranslationPath}
+        onDismiss={DISMISS}
+        translationPath={'VcDetails'}
+      />
+    </React.Fragment>
   );
 };
 
@@ -294,4 +115,5 @@ interface VcItemProps {
   onShow?: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
   iconName?: string;
   iconType?: string;
+  activeTab?: string;
 }

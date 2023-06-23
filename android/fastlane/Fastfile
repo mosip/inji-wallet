@@ -1,0 +1,15 @@
+default_platform(:android)
+
+desc "Verify Build for Android"
+lane :android_build_verify do
+  gradle(
+    task: "assembleMosipDebug",
+  )
+end
+
+desc "Build for Android"
+lane :android_build do
+  gradle(
+    task: "assembleMosipRelease",
+  )
+end

@@ -1,7 +1,6 @@
 import { useSelector } from '@xstate/react';
 import { useContext, useState } from 'react';
 import { ActorRefFrom } from 'xstate';
-import { selectVcLabel } from '../../machines/settings';
 import {
   selectIsRefreshingReceivedVcs,
   selectReceivedVcs,
@@ -23,7 +22,6 @@ export function useReceivedVcsTab(props: HomeScreenTabProps) {
 
   return {
     isVisible,
-    vcLabel: useSelector(settingsService, selectVcLabel),
     vcKeys: useSelector(vcService, selectReceivedVcs),
 
     isRefreshingVcs: useSelector(vcService, selectIsRefreshingReceivedVcs),

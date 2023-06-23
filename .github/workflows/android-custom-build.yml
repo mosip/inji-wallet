@@ -1,7 +1,7 @@
-name: ID PASS - MOSIP Resident Application Custom build
+name: Android Custom Build
 
 env:
-  backendServiceDefaultUrl: https://api.qa-121.mosip.net
+  backendServiceDefaultUrl: https://api.sandbox.mosip.net
 
 on:
   workflow_dispatch:
@@ -9,7 +9,7 @@ on:
       backendServiceUrl:
         description: 'Backend service URL'
         required: true
-        default: 'https://api.qa-121.mosip.net'
+        default: 'https://api.sandbox.mosip.net'
         type: string
       theme:
         description: 'Application Theme'
@@ -19,6 +19,14 @@ on:
         options:
           - orange
           - purple
+      registry_edit:
+        description: 'Edit Registry'
+        required: true
+        default: 'true'
+        type: choice
+        options:
+          - false
+          - true
 
 jobs:
   build-android:
@@ -28,8 +36,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '16.x'
-
-      # Cache stuff for faster build
+      
       - name: Cache local npm repository
         uses: actions/cache@v3.0.11
         with:
@@ -46,21 +53,70 @@ jobs:
 
       - name: Install npm dependencies
         run: |
-          npm install
+          npm ci
+
       - name: Create .env.local file
         run: |
           echo "${{ secrets.ENV_FILE }}" > .env.local > android/local.properties
-      - name: Build App Newlogic Release
+
+      - name: Setup branch and env
+        run: |
+          # Strip git ref prefix from version
+          echo "BRANCH_NAME=$(echo ${{ github.ref }} | sed -e 's,.*/\(.*\),\1,')" >> $GITHUB_ENV
+          echo "GPG_TTY=$(tty)" >> $GITHUB_ENV   
+
+      - name: Setup branch and GPG public key
+        run: |
+          # Strip git ref prefix from version
+          echo ${{ env.BRANCH_NAME }}
+          echo ${{ env.GPG_TTY }}
+
+          sudo apt-get --yes install gnupg2
+          gpg2 --import ./.github/keys/mosipgpgkey_pub.gpg 
+          gpg2 --quiet --batch --passphrase=${{secrets.gpg_secret}}  --allow-secret-key-import --import ./.github/keys/mosipgpgkey_sec.gpg
+
+      - name: Setup Firebase
         run: |
           cd android
           if [ ! -z "$FIREBASE_SECRET" ] && [ -f app/google-services.json.gpg ];then rm -f app/google-services.json;gpg2 --quiet --batch --passphrase=$FIREBASE_SECRET --pinentry-mode loopback --decrypt --output app/google-services.json app/mosip-google-services.json.gpg;fi
-          ./gradlew :app:assembleNewlogicRelease
+        env:
+          FIREBASE_SECRET: ${{ secrets.GPG_SECRET }}
+
+      - name: Generate keystore
+        run: | 
+          echo "$ANDROID_KEYSTORE_FILE" > release.keystore.b64
+          base64 -d -i release.keystore.b64 > android/app/release.keystore
+        env:
+          ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
+
+      - name: Export variables for keystore
+        run: |
+          cd android/app
+          export RELEASE_KEYSTORE_ALIAS=androidreleasekey
+          export RELEASE_KEYSTORE_PASSWORD=$RELEASE_KEYSTORE_PASSWORD
+        env: 
+          RELEASE_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_RELEASE_STOREPASS}}'
+
+      - name: Bump version code
+        uses: chkfung/android-version-actions@v1.2.1
+        with:
+          gradlePath: android/app/build.gradle
+          versionCode: ${{github.run_number}}
+
+      - name: Run Build
+        run: | 
+          cd android/scripts
+          ./run-fastlane.sh
         env:
           MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
-          FIREBASE_SECRET: ${{ secrets.FIREBASE_SECRET }}
-      - name: Upload Artifact
+          APPLICATION_THEME: ${{ github.event.inputs.theme }} 
+          RELEASE_KEYSTORE_ALIAS: androidreleasekey
+          RELEASE_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_RELEASE_STOREPASS}}'
+          CREDENTIAL_REGISTRY_EDIT: ${{ github.event.inputs.registry_edit }}
+
+      - name: Upload Artifact to Actions
         uses: actions/upload-artifact@v3.1.1
         with:
-          name: apk-output
-          path: android/app/build/outputs/apk/newlogic/release/
-          retention-days: 5
+          name: Inji
+          path: android/app/build/outputs/apk/mosip/release/
+          retention-days: 10

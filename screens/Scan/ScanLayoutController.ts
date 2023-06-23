@@ -3,32 +3,34 @@ import { useSelector } from '@xstate/react';
 import { useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MessageOverlayProps } from '../../components/MessageOverlay';
-import {
-  ScanEvents,
-  selectIsInvalid,
-  selectIsLocationDisabled,
-  selectIsLocationDenied,
-  selectIsConnecting,
-  selectIsExchangingDeviceInfo,
-  selectIsConnectingTimeout,
-  selectIsExchangingDeviceInfoTimeout,
-  selectIsDone,
-  selectIsReviewing,
-  selectIsScanning,
-  selectIsQrLoginDone,
-  selectIsOffline,
-  selectIsSent,
-  selectIsDisconnected,
-  selectIsRejected,
-  selectIsAccepted,
-  selectIsSendingVc,
-  selectIsSendingVcTimeout,
-  selectReceiverInfo,
-} from '../../machines/scan';
-import { selectVcLabel } from '../../machines/settings';
 import { MainBottomTabParamList } from '../../routes/main';
 import { GlobalContext } from '../../shared/GlobalContext';
-import { selectIsHandlingBleError } from '../../machines/openIdBle/scan';
+import {
+  selectIsConnecting,
+  selectIsConnectingTimeout,
+  selectIsInvalid,
+  selectIsLocationDenied,
+  selectIsLocationDisabled,
+  selectIsQrLoginDone,
+  selectIsScanning,
+  selectIsSendingVc,
+  selectIsSendingVcTimeout,
+  selectIsSent,
+  selectReceiverInfo,
+} from '../../machines/bleShare/scan/selectors';
+import {
+  selectIsAccepted,
+  selectIsDisconnected,
+  selectIsDone,
+  selectIsExchangingDeviceInfo,
+  selectIsExchangingDeviceInfoTimeout,
+  selectIsHandlingBleError,
+  selectIsOffline,
+  selectIsRejected,
+  selectIsReviewing,
+  selectBleError,
+} from '../../machines/bleShare/commonSelectors';
+import { ScanEvents } from '../../machines/bleShare/scan/scanMachine';
 
 type ScanStackParamList = {
   ScanScreen: undefined;
@@ -45,12 +47,12 @@ export function useScanLayout() {
   const { t } = useTranslation('ScanScreen');
   const { appService } = useContext(GlobalContext);
   const scanService = appService.children.get('scan');
-  const settingsService = appService.children.get('settings');
   const navigation = useNavigation<ScanLayoutNavigation>();
 
   const isLocationDisabled = useSelector(scanService, selectIsLocationDisabled);
   const isLocationDenied = useSelector(scanService, selectIsLocationDenied);
   const isBleError = useSelector(scanService, selectIsHandlingBleError);
+  const bleError = useSelector(scanService, selectBleError);
 
   const locationError = { message: '', button: '' };
 
@@ -87,8 +89,6 @@ export function useScanLayout() {
   const isOffline = useSelector(scanService, selectIsOffline);
   const isSendingVc = useSelector(scanService, selectIsSendingVc);
   const isSendingVcTimeout = useSelector(scanService, selectIsSendingVcTimeout);
-
-  const vcLabel = useSelector(settingsService, selectVcLabel);
 
   const onCancel = () => scanService.send(ScanEvents.CANCEL());
   let statusOverlay: Pick<
@@ -129,8 +129,8 @@ export function useScanLayout() {
     };
   } else if (isSent) {
     statusOverlay = {
-      message: t('status.sent', { vcLabel: vcLabel.singular }),
-      hint: t('status.sentHint', { vcLabel: vcLabel.singular }),
+      message: t('status.sent'),
+      hint: t('status.sentHint'),
     };
   } else if (isSendingVc) {
     statusOverlay = {
@@ -148,20 +148,13 @@ export function useScanLayout() {
   } else if (isAccepted) {
     statusOverlay = {
       title: t('status.accepted.title'),
-      message: t('status.accepted.message', {
-        vcLabel: vcLabel.singular,
-        receiver: receiverInfo.deviceName,
-      }),
-      onCancel: DISMISS,
+      message: t('status.accepted.message'),
       onBackdropPress: DISMISS,
     };
   } else if (isRejected) {
     statusOverlay = {
       title: t('status.rejected.title'),
-      message: t('status.rejected.message', {
-        vcLabel: vcLabel.singular,
-        receiver: receiverInfo.deviceName,
-      }),
+      message: t('status.rejected.message'),
       onBackdropPress: DISMISS,
     };
   } else if (isInvalid) {
@@ -177,9 +170,12 @@ export function useScanLayout() {
   } else if (isBleError) {
     statusOverlay = {
       title: t('status.bleError.title'),
-      message: t('status.bleError.message', {
-        vcLabel: vcLabel.singular,
-      }),
+      message: t('status.bleError.message'),
+      hint:
+        bleError.code &&
+        t('status.bleError.hint', {
+          code: bleError.code,
+        }),
       onBackdropPress: DISMISS,
     };
   }
@@ -217,8 +213,6 @@ export function useScanLayout() {
   }, [isDone, isReviewing, isScanning, isQrLoginDone, isBleError]);
 
   return {
-    vcLabel,
-
     isInvalid,
     isDone,
     isDisconnected: useSelector(scanService, selectIsDisconnected),

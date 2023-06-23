@@ -46,6 +46,7 @@
     "reasonForSharing": "سبب المشاركة",
     "idType": "نوع الهوية",
     "id": "بطاقة تعريف",
+    "qrCodeHeader": "رمز الاستجابة السريعة",
     "nationalCard": "البطاقة الوطنية",
     "uin": "UIN",
     "vid": "VID",

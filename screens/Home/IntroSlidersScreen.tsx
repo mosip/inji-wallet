@@ -17,7 +17,6 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
   const { t } = useTranslation('OnboardingOverlay');
   const { appService } = useContext(GlobalContext);
   const settingsService = appService.children.get('settings');
-  const vcLabel = useSelector(settingsService, selectVcLabel);
   const controller = useWelcomeScreen(props);
 
   const slides = [
@@ -42,7 +41,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
     {
       key: 'four',
       title: t('stepFourTitle'),
-      text: t('stepFourText', { vcLabel: vcLabel.plural }),
+      text: t('stepFourText'),
       image: Theme.IntroScanner,
     },
   ];

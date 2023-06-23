@@ -9,11 +9,21 @@ import { GetVcModal } from './MyVcs/GetVcModal';
 import { useTranslation } from 'react-i18next';
 import { VcItem } from '../../components/VcItem';
 import { GET_INDIVIDUAL_ID } from '../../shared/constants';
+import { ErrorMessageOverlay } from '../../components/MessageOverlay';
 import { Icon } from 'react-native-elements';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
   const { t } = useTranslation('MyVcsTab');
   const controller = useMyVcsTab(props);
+  let storeErrorTranslationPath = 'errors.savingFailed';
+
+  //ENOSPC - no space left on a device / drive
+  const isDiskFullError =
+    controller.storeError?.message?.match('ENOSPC') != null;
+
+  if (isDiskFullError) {
+    storeErrorTranslationPath = 'errors.diskFullError';
+  }
 
   const getId = () => {
     controller.DISMISS();
@@ -58,7 +68,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
     <React.Fragment>
       <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
         <DownloadingIdPopUp />
-        <Column fill pY={18} pX={18}>
+        <Column fill pY={18} pX={15}>
           {controller.vcKeys.length > 0 && (
             <React.Fragment>
               <Column
@@ -116,18 +126,14 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                   weight="bold"
                   margin="33 0 6 0"
                   lineHeight={1}>
-                  {t('bringYourDigitalID', {
-                    vcLabel: controller.vcLabel.plural,
-                  })}
+                  {t('bringYourDigitalID')}
                 </Text>
                 <Text
                   style={Theme.TextStyles.bold}
                   color={Theme.Colors.textLabel}
                   align="center"
                   margin="0 12 30 12">
-                  {t('generateVcDescription', {
-                    vcLabel: controller.vcLabel.singular,
-                  })}
+                  {t('generateVcDescription')}
                 </Text>
                 <Button
                   type="gradient"

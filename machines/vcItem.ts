@@ -1,6 +1,6 @@
 import { assign, ErrorPlatformEvent, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
-import { MY_VCS_STORE_KEY, VC_ITEM_STORE_KEY } from '../shared/constants';
+import { HOST, MY_VCS_STORE_KEY, VC_ITEM_STORE_KEY } from '../shared/constants';
 import { AppServices } from '../shared/GlobalContext';
 import { CredentialDownloadResponse, request } from '../shared/request';
 import {
@@ -39,6 +39,7 @@ const model = createModel(
     generatedOn: null as Date,
     credential: null as DecodedCredential,
     verifiableCredential: null as VerifiableCredential,
+    storeVerifiableCredential: null as VerifiableCredential,
     requestId: '',
     isVerified: false,
     isPinned: false,
@@ -57,6 +58,7 @@ const model = createModel(
     walletBindingError: '',
     publicKey: '',
     privateKey: '',
+    storeError: null as Error,
   },
   {
     events: {
@@ -79,6 +81,7 @@ const model = createModel(
       ADD_WALLET_BINDING_ID: () => ({}),
       CANCEL: () => ({}),
       CONFIRM: () => ({}),
+      STORE_ERROR: (error: Error) => ({ error }),
       PIN_CARD: () => ({}),
       KEBAB_POPUP: () => ({}),
       SHOW_ACTIVITY: () => ({}),
@@ -191,13 +194,32 @@ export const vcItemMachine =
                   },
                 ],
                 CREDENTIAL_DOWNLOADED: {
+                  actions: ['setStoreVerifiableCredential', 'storeContext'],
+                },
+                STORE_RESPONSE: {
                   actions: [
-                    'setCredential',
-                    'storeContext',
+                    'setVerifiableCredential',
                     'updateVc',
                     'logDownloaded',
                   ],
                   target: '#vc-item.checkingVerificationStatus',
+                },
+                STORE_ERROR: {
+                  target: '#vc-item.checkingServerData.savingFailed',
+                },
+              },
+            },
+            savingFailed: {
+              entry: ['setStoreError', 'removeVcMetaDataFromStorage'],
+              initial: 'idle',
+              states: {
+                idle: {},
+                viewingVc: {},
+              },
+              on: {
+                DISMISS: {
+                  actions: ['removeVcMetaDataFromVcMachine'],
+                  target: '.viewingVc',
                 },
               },
             },
@@ -638,7 +660,10 @@ export const vcItemMachine =
             onDone: [
               {
                 target: 'updatingPrivateKey',
-                actions: ['setWalletBindingId'],
+                actions: [
+                  'setWalletBindingId',
+                  'setThumbprintForWalletBindingId',
+                ],
               },
             ],
             onError: [
@@ -672,6 +697,57 @@ export const vcItemMachine =
     },
     {
       actions: {
+        setVerifiableCredential: assign((context) => {
+          return {
+            ...context,
+            verifiableCredential: {
+              ...context.storeVerifiableCredential,
+            },
+            storeVerifiableCredential: null,
+          };
+        }),
+
+        setStoreVerifiableCredential: model.assign((context, event) => {
+          return {
+            ...context,
+            ...event.vc,
+            storeVerifiableCredential: {
+              ...event.vc.verifiableCredential,
+            },
+            verifiableCredential: null,
+          };
+        }),
+
+        setStoreError: assign({
+          storeError: (_context, event) => event.error,
+        }),
+
+        removeVcMetaDataFromStorage: send(
+          (context) => {
+            const { serviceRefs, ...data } = context;
+            return StoreEvents.REMOVE_VC_METADATA(
+              MY_VCS_STORE_KEY,
+              VC_ITEM_STORE_KEY(context)
+            );
+          },
+          {
+            to: (context) => context.serviceRefs.store,
+          }
+        ),
+
+        removeVcMetaDataFromVcMachine: send(
+          (context, _event) => {
+            const { serviceRefs, ...data } = context;
+            return {
+              type: 'REMOVE_VC_FROM_CONTEXT',
+              vcKey: VC_ITEM_STORE_KEY(context),
+            };
+          },
+          {
+            to: (context) => context.serviceRefs.vc,
+          }
+        ),
+
         setWalletBindingError: assign({
           walletBindingError: (context, event) =>
             i18n.t(`errors.genericError`, {
@@ -724,6 +800,21 @@ export const vcItemMachine =
             to: (context) => context.serviceRefs.vc,
           }
         ),
+        setThumbprintForWalletBindingId: send(
+          (context) => {
+            const { walletBindingResponse } = context;
+            const walletBindingIdKey = getBindingCertificateConstant(
+              walletBindingResponse.walletBindingId
+            );
+            return StoreEvents.SET(
+              walletBindingIdKey,
+              walletBindingResponse.thumbprint
+            );
+          },
+          {
+            to: (context) => context.serviceRefs.store,
+          }
+        ),
 
         removedVc: send(
           () => ({
@@ -754,6 +845,7 @@ export const vcItemMachine =
         storeContext: send(
           (context) => {
             const { serviceRefs, ...data } = context;
+            data.credentialRegistry = HOST;
             return StoreEvents.SET(VC_ITEM_STORE_KEY(context), data);
           },
           {
@@ -798,14 +890,16 @@ export const vcItemMachine =
         }),
 
         logDownloaded: send(
-          (_, event) =>
-            ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VC_ITEM_STORE_KEY(event.vc),
+          (context) => {
+            const { serviceRefs, ...data } = context;
+            return ActivityLogEvents.LOG_ACTIVITY({
+              _vcKey: VC_ITEM_STORE_KEY(data),
               type: 'VC_DOWNLOADED',
               timestamp: Date.now(),
               deviceName: '',
-              vcLabel: event.vc.tag || event.vc.id,
-            }),
+              vcLabel: data.tag || data.id,
+            });
+          },
           {
             to: (context) => context.serviceRefs.activityLog,
           }
@@ -1313,4 +1407,12 @@ export function selectRemoveWalletWarning(state: State) {
 
 export function selectShowActivities(state: State) {
   return state.matches('kebabPopUp.showActivities');
+}
+
+export function selectStoreError(state: State) {
+  return state.context.storeError;
+}
+
+export function selectIsSavingFailedInIdle(state: State) {
+  return state.matches('checkingServerData.savingFailed.idle');
 }

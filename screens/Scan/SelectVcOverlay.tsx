@@ -23,11 +23,10 @@ export const SelectVcOverlay: React.FC<SelectVcOverlayProps> = (props) => {
         width={Dimensions.get('screen').width * 0.9}
         style={{ maxHeight: Dimensions.get('screen').height * 0.9 }}>
         <Text weight="semibold" margin="0 0 16 0">
-          {t('header', { vcLabel: controller.vcLabel.singular })}
+          {t('header')}
         </Text>
         <Text margin="0 0 16 0">
-          {t('chooseVc', { vcLabel: controller.vcLabel.singular })}{' '}
-          <Text weight="semibold">{props.receiverName}</Text>
+          {t('chooseVc')} <Text weight="semibold">{props.receiverName}</Text>
         </Text>
         <Column margin="0 0 32 0" scroll>
           {props.vcKeys.map((vcKey, index) => (

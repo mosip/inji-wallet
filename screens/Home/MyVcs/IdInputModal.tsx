@@ -51,7 +51,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
               align="left"
               size="regular"
               style={Theme.TextStyles.retrieveIdLabel}>
-              {t('guideLabel', { vcLabel: controller.vcLabel.singular })}
+              {t('guideLabel')}
             </Text>
             <Row crossAlign="flex-end" style={{ marginTop: 20 }}>
               <Column

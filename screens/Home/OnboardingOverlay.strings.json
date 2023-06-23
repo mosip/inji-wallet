@@ -1,9 +1,9 @@
 {
   "stepOneTitle": "Welcome!",
-  "stepOneText": "Keep your digital credential with you at all times. To get started, add {{vcLabel}} to your profile.",
-  "stepTwoTitle": "{{vcLabel}} management",
-  "stepTwoText": "Once generated, {{vcLabel}} are safely stored on your mobile and can be renamed or shared at any time.",
+  "stepOneText": "Keep your digital credential with you at all times. To get started, add Cards to your profile.",
+  "stepTwoTitle": "Card management",
+  "stepTwoText": "Once generated, Cards are safely stored on your mobile and can be renamed or shared at any time.",
   "stepThreeTitle": "Easy sharing",
-  "stepThreeText": "Share and receive {{vcLabel}} switfly using your phone camera to scan QR codes.",
-  "stepThreeButton": "Get started and add {{vcLabel}}"
+  "stepThreeText": "Share and receive Cards switfly using your phone camera to scan QR codes.",
+  "stepThreeButton": "Get started and add Card"
 }

@@ -1,79 +1,107 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { TFunction, useTranslation } from 'react-i18next';
-import { Switch } from 'react-native-elements';
-import { I18nManager, Platform } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 
-import { Centered, Button, Row, Column, Text } from '../../components/ui';
+import { Centered, Button, Column, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { useRequestScreen } from './RequestScreenController';
-import { isGoogleNearbyEnabled } from '../../lib/smartshare';
+import BluetoothStateManager from 'react-native-bluetooth-state-manager';
+import { Platform } from 'react-native';
 
 export const RequestScreen: React.FC = () => {
   const { t } = useTranslation('RequestScreen');
   const controller = useRequestScreen();
   const props: RequestScreenProps = { t, controller };
+  const [isBluetoothOn, setIsBluetoothOn] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      await BluetoothStateManager.onStateChange((state) => {
+        if (state === 'PoweredOff') {
+          setIsBluetoothOn(false);
+        } else {
+          setIsBluetoothOn(true);
+        }
+      }, true);
+    })();
+  }, [isBluetoothOn]);
 
   return (
     <Column
       fill
       padding="24"
+      align="space-between"
       backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
-      {controller.isBluetoothDenied && <BluetoothPrompt {...props} />}
+      {loadQRCode()}
+    </Column>
+  );
 
-      {!controller.isCheckingBluetoothService &&
-      !controller.isBluetoothDenied ? (
+  function loadQRCode() {
+    if (controller.isNearByDevicesPermissionDenied) {
+      return <NearByPrompt {...props} />;
+    }
+    if (
+      (controller.isBluetoothDenied || !isBluetoothOn) &&
+      controller.isReadyForBluetoothStateCheck
+    ) {
+      return <BluetoothPrompt {...props} />;
+    }
+    if (
+      !controller.isCheckingBluetoothService &&
+      !controller.isBluetoothDenied
+    ) {
+      return (
         <Column align="flex-end" fill>
           {controller.isWaitingForConnection && <SharingQR {...props} />}
           <StatusMessage {...props} />
         </Column>
-      ) : null}
-    </Column>
+      );
+    }
+  }
+};
+
+const BluetoothPrompt: React.FC<RequestScreenProps> = ({ t }) => {
+  return (
+    <Centered fill>
+      <Text color={Theme.Colors.errorMessage} align="center" margin="0 10">
+        {t(
+          Platform.OS === 'ios' ? 'bluetoothStateIos' : 'bluetoothStateAndroid'
+        )}
+      </Text>
+    </Centered>
   );
 };
 
-const BluetoothPrompt: React.FC<RequestScreenProps> = ({ t, controller }) => {
+const NearByPrompt: React.FC<RequestScreenProps> = ({ t, controller }) => {
   return (
-    <Centered fill>
-      <Text color={Theme.Colors.errorMessage} align="center">
-        {t('bluetoothDenied', { vcLabel: controller.vcLabel.singular })}
-      </Text>
+    <Column fill align="space-between">
+      <Centered fill>
+        <Text color={Theme.Colors.errorMessage} align="center">
+          {t('errors.nearbyDevicesPermissionDenied.message')}
+        </Text>
+      </Centered>
       <Button
-        margin={[32, 0, 0, 0]}
-        title={t('gotoSettings')}
+        title={t('errors.nearbyDevicesPermissionDenied.button')}
         onPress={controller.GOTO_SETTINGS}
       />
-    </Centered>
+    </Column>
   );
 };
 
 const SharingQR: React.FC<RequestScreenProps> = ({ t, controller }) => {
   return (
     <React.Fragment>
-      <Text align="center">
-        {t('showQrCode', { vcLabel: controller.vcLabel.singular })}
-      </Text>
+      <Text align="center">{t('showQrCode')}</Text>
 
       <Centered fill>
-        {controller.connectionParams !== '' ? (
+        {controller.openId4VpUri !== '' ? (
           <QRCode
             size={200}
-            value={controller.connectionParams}
+            value={controller.openId4VpUri}
             backgroundColor={Theme.Colors.QRCodeBackgroundColor}
           />
         ) : null}
       </Centered>
-      {isGoogleNearbyEnabled && (
-        <Row align="center" crossAlign="center" margin={[0, 0, 48, 0]}>
-          <Text margin={[0, 16, 0, 0]}>{t('offline')}</Text>
-          <Switch
-            value={controller.sharingProtocol === 'ONLINE'}
-            onValueChange={controller.SWITCH_PROTOCOL}
-            disabled={Platform.OS === 'ios'}
-          />
-          <Text margin={[0, 0, 0, 16]}>{t('online')}</Text>
-        </Row>
-      )}
     </React.Fragment>
   );
 };

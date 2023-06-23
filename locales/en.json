@@ -48,6 +48,7 @@
     "reasonForSharing": "Reason for sharing",
     "idType": "ID type",
     "id": "Id",
+    "qrCodeHeader": "QR Code",
     "nationalCard": "National Card",
     "uin": "UIN",
     "vid": "VID",

@@ -17,9 +17,7 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = (props) => {
   const { t } = useTranslation('GetIdInputModal');
   const controller = useGetIdInputModal(props);
 
-  const inputLabel = t('enterApplicationId', {
-    vcLabel: controller.vcLabel.singular,
-  });
+  const inputLabel = t('enterApplicationId');
 
   return (
     <Modal
@@ -33,9 +31,7 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = (props) => {
         <Column fill align="space-between" padding="32 24">
           <Column>
             <Text weight="semibold" color={Theme.Colors.GrayText} margin="10">
-              {t('applicationIdLabel', {
-                vcLabel: controller.vcLabel.singular,
-              })}
+              {t('applicationIdLabel')}
             </Text>
             <Row crossAlign="flex-end">
               <Input
@@ -55,13 +51,7 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = (props) => {
                 keyboardType="number-pad"
                 rightIcon={
                   <Tooltip
-                    popover={
-                      <Text>
-                        {t('qstnMarkToolTip', {
-                          vcLabel: controller.vcLabel.singular,
-                        })}
-                      </Text>
-                    }
+                    popover={<Text>{t('qstnMarkToolTip')}</Text>}
                     width={Dimensions.get('screen').width * 0.8}
                     height={Dimensions.get('screen').height * 0.2}
                     backgroundColor={'lightgray'}
@@ -101,7 +91,7 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = (props) => {
           </Column>
           <Column>
             <Button
-              title={t('getUIN', { vcLabel: controller.vcLabel.singular })}
+              title={t('getUIN')}
               margin="24 0 0 0"
               type="gradient"
               disabled={!controller.id}

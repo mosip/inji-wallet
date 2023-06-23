@@ -141,6 +141,13 @@ export const DefaultTheme = {
       backgroundColor: Colors.Grey6,
       borderRadius: 4,
     },
+    loadingCardDetailsContainer: {
+      flex: 1,
+      flexDirection: 'row',
+      backgroundColor: Colors.Grey6,
+      borderRadius: 4,
+    },
+    cardDetailsContainer: {},
     bottomTabIconStyle: {
       padding: 4,
       width: 36,
@@ -274,12 +281,20 @@ export const DefaultTheme = {
       justifyContent: 'space-between',
     },
     logo: {
-      height: 48,
-      width: 40,
+      height: 35,
+      width: 90,
+    },
+    loadingCardDetailsHeader: {
+      flex: 1,
     },
     homeCloseCardDetailsHeader: {
       flex: 1,
     },
+    cardDetailsHeader: {
+      flex: 1,
+      justifyContent: 'space-between',
+    },
+    mosipLogoContainer: {},
     details: {
       width: 290,
       marginLeft: 110,
@@ -417,6 +432,10 @@ export const DefaultTheme = {
       paddingRight: 15,
       paddingLeft: 130,
       elevation: 2,
+    },
+    warningText: {
+      color: Colors.Red,
+      fontSize: 18,
     },
   }),
   PinInputStyle: StyleSheet.create({

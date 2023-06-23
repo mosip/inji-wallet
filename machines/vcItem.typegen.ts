@@ -188,7 +188,7 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.verifyingCredential:invocation[0]'
       | 'error.platform.vc-item.verifyingCredential:invocation[0]';
     incrementDownloadCounter: 'POLL';
-    logDownloaded: 'CREDENTIAL_DOWNLOADED';
+    logDownloaded: 'STORE_RESPONSE';
     logRevoked: 'STORE_RESPONSE';
     logWalletBindingFailure:
       | 'error.platform.vc-item.addKeyPair:invocation[0]'
@@ -200,15 +200,14 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
     markVcValid: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
     removeVcItem: 'CONFIRM';
+    removeVcMetaDataFromStorage: 'STORE_ERROR';
+    removeVcMetaDataFromVcMachine: 'DISMISS';
     removedVc: 'STORE_RESPONSE';
     requestStoredContext: 'GET_VC_RESPONSE' | 'REFRESH';
     requestVcContext: 'DISMISS' | 'xstate.init';
     revokeVID: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
     sendVcUpdated: 'STORE_RESPONSE';
-    setCredential:
-      | 'CREDENTIAL_DOWNLOADED'
-      | 'GET_VC_RESPONSE'
-      | 'STORE_RESPONSE';
+    setCredential: 'GET_VC_RESPONSE' | 'STORE_RESPONSE';
     setDownloadInterval: 'done.invoke.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]';
     setLock: 'done.invoke.vc-item.requestingLock:invocation[0]';
     setMaxDownloadCount: 'done.invoke.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]';
@@ -224,7 +223,10 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.addKeyPair:invocation[0]'
       | 'done.invoke.vc-item.kebabPopUp.addKeyPair:invocation[0]';
     setRevoke: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
+    setStoreError: 'STORE_ERROR';
+    setStoreVerifiableCredential: 'CREDENTIAL_DOWNLOADED';
     setTag: 'SAVE_TAG';
+    setThumbprintForWalletBindingId: 'done.invoke.vc-item.addingWalletBindingId:invocation[0]';
     setTransactionId:
       | 'INPUT_OTP'
       | 'REVOKE_VC'
@@ -232,6 +234,7 @@ export interface Typegen0 {
       | 'error.platform.vc-item.requestingLock:invocation[0]'
       | 'error.platform.vc-item.requestingRevoke:invocation[0]';
     setVcKey: 'REMOVE';
+    setVerifiableCredential: 'STORE_RESPONSE';
     setWalletBindingError:
       | 'error.platform.vc-item.addKeyPair:invocation[0]'
       | 'error.platform.vc-item.addingWalletBindingId:invocation[0]'
@@ -260,7 +263,6 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]'
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
     updateVc:
-      | 'CREDENTIAL_DOWNLOADED'
       | 'STORE_RESPONSE'
       | 'done.invoke.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]'
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]'
@@ -300,6 +302,9 @@ export interface Typegen0 {
     | 'checkingServerData'
     | 'checkingServerData.checkingStatus'
     | 'checkingServerData.downloadingCredential'
+    | 'checkingServerData.savingFailed'
+    | 'checkingServerData.savingFailed.idle'
+    | 'checkingServerData.savingFailed.viewingVc'
     | 'checkingServerData.verifyingDownloadLimitExpiry'
     | 'checkingStore'
     | 'checkingVc'
@@ -338,7 +343,9 @@ export interface Typegen0 {
         checkingServerData?:
           | 'checkingStatus'
           | 'downloadingCredential'
-          | 'verifyingDownloadLimitExpiry';
+          | 'savingFailed'
+          | 'verifyingDownloadLimitExpiry'
+          | { savingFailed?: 'idle' | 'viewingVc' };
         invalid?: 'backend' | 'otp';
         kebabPopUp?:
           | 'acceptingBindingOtp'

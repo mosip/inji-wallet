@@ -26,6 +26,7 @@ const model = createModel(
       STORE_RESPONSE: (response: unknown) => ({ response }),
       STORE_ERROR: (error: Error) => ({ error }),
       VC_ADDED: (vcKey: string) => ({ vcKey }),
+      REMOVE_VC_FROM_CONTEXT: (vcKey: string) => ({ vcKey }),
       VC_UPDATED: (vcKey: string) => ({ vcKey }),
       VC_RECEIVED: (vcKey: string) => ({ vcKey }),
       VC_DOWNLOADED: (vc: VC) => ({ vc }),
@@ -140,6 +141,9 @@ export const vcMachine =
             VC_ADDED: {
               actions: 'prependToMyVcs',
             },
+            REMOVE_VC_FROM_CONTEXT: {
+              actions: 'removeVcFromMyVcs',
+            },
             VC_UPDATED: {
               actions: ['updateMyVcs', 'setUpdateVc'],
             },
@@ -207,6 +211,11 @@ export const vcMachine =
 
         prependToMyVcs: model.assign({
           myVcs: (context, event) => [event.vcKey, ...context.myVcs],
+        }),
+
+        removeVcFromMyVcs: model.assign({
+          myVcs: (context, event) =>
+            context.myVcs.filter((vc: string) => !vc.includes(event.vcKey)),
         }),
 
         updateMyVcs: model.assign({
@@ -279,18 +288,15 @@ export function selectIsRefreshingReceivedVcs(state: State) {
 }
 
 /*
-  This Methods gets the Wallet's Distinct Binded VCs, which got recently added.
+  this methods returns all the binded vc's in the wallet.
  */
 export function selectBindedVcs(state: State) {
-  const distinctBindedVcs = new Set();
   return (state.context.myVcs as Array<string>).filter((key) => {
-    let walletBindingResponse = state.context.vcs[key].walletBindingResponse;
-    let validVC =
+    const walletBindingResponse = state.context.vcs[key]?.walletBindingResponse;
+    return (
       !isEmpty(walletBindingResponse) &&
-      !isEmpty(walletBindingResponse?.walletBindingId) &&
-      !distinctBindedVcs.has(walletBindingResponse.walletBindingId);
-    distinctBindedVcs.add(walletBindingResponse?.walletBindingId);
-    return validVC;
+      !isEmpty(walletBindingResponse?.walletBindingId)
+    );
   });
 }
 function isEmpty(object) {
