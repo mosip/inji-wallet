@@ -10,11 +10,10 @@ export default async function isMaximumStorageLimitReached() {
   const storageLimitInBytes =
     configurations['maximumStorageLimitInMB'] * 1024 * 1024;
 
-  if (Platform.OS === 'android' && Platform.Version < 29) {
-    const freeDiskStorageOldInBytes = getFreeDiskStorageOldSync();
-    return freeDiskStorageOldInBytes <= storageLimitInBytes;
-  }
+  const freeDiskStorageInBytes =
+    Platform.OS === 'android' && Platform.Version < 29
+      ? getFreeDiskStorageOldSync()
+      : getFreeDiskStorageSync();
 
-  const freeDiskStorageInBytes = getFreeDiskStorageSync();
   return freeDiskStorageInBytes <= storageLimitInBytes;
 }
