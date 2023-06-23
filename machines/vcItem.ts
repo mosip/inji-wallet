@@ -1163,6 +1163,7 @@ export const vcItemMachine =
                   lastVerifiedOn: null,
                   locked: context.locked,
                   walletBindingResponse: null,
+                  credentialRegistry: '',
                 })
               );
             }

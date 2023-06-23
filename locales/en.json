@@ -62,17 +62,17 @@
   "HomeScreenKebabPopUp": {
     "title": "More Options",
     "unPinCard": "Unpin Card",
-    "pinCard" : "Pin Card",
+    "pinCard": "Pin Card",
     "offlineAuthenticationDisabled!": "Offline authentication disabled!",
     "offlineAuthDisabledMessage": "Click here to enable this credential to be used for offline authentication.",
     "viewActivityLog": "View activity log",
     "removeFromWallet": "Remove from wallet",
     "revokeId": "Revoke ID",
     "revokeMessage": "Revoke the virtual ID for this profile",
-    "ActivityLog":"View Activity Log"
+    "ActivityLog": "View Activity Log"
   },
   "WalletBinding": {
-    "inProgress" : "In Progress",
+    "inProgress": "In Progress",
     "profileAuthenticated": "Profile is authenticated!"
   },
   "BindingVcWarningOverlay": {
@@ -94,11 +94,11 @@
       }
     }
   },
-  "RemoveVcWarningOverlay":{
+  "RemoveVcWarningOverlay": {
     "alert": "Please Confirm",
     "RemoveWarning": "Do you want to remove this card",
     "confirm": "Yes, I confirm",
-    "no" : "No"
+    "no": "No"
   },
   "AuthScreen": {
     "header": "Select App Unlock Method",
@@ -147,7 +147,7 @@
     "detailes": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since."
   },
   "AddVcModal": {
-    "header":"Retrieve your card",
+    "header": "Retrieve your card",
     "requestingCredential": "Requesting credential...",
     "errors": {
       "input": {
@@ -212,8 +212,7 @@
     "resendCode": "Resend Code"
   },
   "MyVcsTab": {
-    "generateVc": "Generate your Cards",
-    "addVcButton": "Download ID",
+    "generateVc": "Download ID",
     "bringYourDigitalID": "Bring Your Digital ID",
     "generateVcDescription": "To download your {{vcLabel}} tap Download {{vcLabel}} below",
     "downloadingYourId": "Downloading your card, this can take upto 5 minutes",
@@ -235,7 +234,9 @@
     "stepTwoText": "Once generated, Cards are safely stored on your mobile and can be renamed or shared at any time.",
     "stepThreeTitle": "Easy sharing",
     "stepThreeText": "Share and receive Cards switfly using your phone camera to scan QR codes.",
-    "stepThreeButton": "Get started and add Card",
+    "stepFourTitle": "Quick Access",
+    "stepFourText": "Lorem Ipsum is simply a standard text of the printing and typesetting industry",
+    "stepFourButton": "Get Started",
     "skip": "Skip",
     "next": "Next"
   },

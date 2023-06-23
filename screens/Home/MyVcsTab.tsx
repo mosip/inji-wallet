@@ -9,7 +9,6 @@ import { GetVcModal } from './MyVcs/GetVcModal';
 import { useTranslation } from 'react-i18next';
 import { VcItem } from '../../components/VcItem';
 import { GET_INDIVIDUAL_ID } from '../../shared/constants';
-import { ErrorMessageOverlay } from '../../components/MessageOverlay';
 import { Icon } from 'react-native-elements';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
@@ -112,7 +111,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                 type="gradient"
                 isVcThere
                 disabled={controller.isRefreshingVcs}
-                title={t('addVcButton')}
+                title={t('generateVc')}
                 onPress={controller.DOWNLOAD_ID}
               />
             </React.Fragment>
@@ -134,7 +133,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                 <Button
                   type="gradient"
                   disabled={controller.isRefreshingVcs}
-                  title={t('downloadID')}
+                  title={t('generateVc')}
                   onPress={controller.DOWNLOAD_ID}
                 />
               </Column>

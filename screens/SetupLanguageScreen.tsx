@@ -40,7 +40,7 @@ export const SetupLanguageScreen: React.FC<RootRouteProps> = (props) => {
 
   return (
     <Column
-      align="space-between"
+      align="space-around"
       crossAlign="center"
       backgroundColor={Theme.Colors.whiteBackgroundColor}
       height={Dimensions.get('window').height * 0.9}>
@@ -48,10 +48,12 @@ export const SetupLanguageScreen: React.FC<RootRouteProps> = (props) => {
         name="globe"
         type="simple-line-icon"
         color={Theme.Colors.Icon}
-        size={50}
+        size={58}
       />
       <Column crossAlign="center">
-        <Text weight="semibold">{t('header')}</Text>
+        <Text margin="0 0 10 0" weight="semibold">
+          {t('header')}
+        </Text>
         <Text
           style={{ paddingHorizontal: 35 }}
           weight="regular"
@@ -70,7 +72,6 @@ export const SetupLanguageScreen: React.FC<RootRouteProps> = (props) => {
       <Button
         type="gradient"
         title={t('save')}
-        styles={{ margin: '0 0 10 0' }}
         onPress={() => {
           controller.SELECT(), controller.unlockPage;
         }}

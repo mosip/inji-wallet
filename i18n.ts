@@ -13,6 +13,8 @@ import Storage from './shared/storage';
 import { iso6393To1 } from 'iso-639-3';
 import { LocalizedField } from './types/vc';
 
+import { APPLICATION_LANGUAGE } from 'react-native-dotenv';
+
 const resources = { en, fil, ar, hi, kn, ta };
 
 const languageCodeMap = {};
@@ -39,6 +41,10 @@ i18next
     const language = await Storage.getItem('language');
     if (language !== i18next.language) {
       i18next.changeLanguage(language);
+      populateLanguageCodeMap();
+    }
+    if (!Object.keys(SUPPORTED_LANGUAGES).includes(i18next.language)) {
+      i18next.changeLanguage('en');
       populateLanguageCodeMap();
     }
   });
