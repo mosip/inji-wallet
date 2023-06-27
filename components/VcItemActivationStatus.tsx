@@ -1,18 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Dimensions, Pressable } from 'react-native';
+import { Dimensions } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { ActorRefFrom } from 'xstate';
-import {
-  VcItemEvents,
-  selectKebabPopUp,
-  vcItemMachine,
-} from '../machines/vcItem';
+import { vcItemMachine } from '../machines/vcItem';
 import { VerifiableCredential } from '../types/vc';
 import { Row, Text } from './ui';
 import { Theme } from './ui/styleUtils';
-import { KebabPopUp } from './KebabPopUp';
-import { useSelector } from '@xstate/react';
 
 const WalletUnverifiedIcon: React.FC = () => {
   return (
@@ -64,19 +58,6 @@ const WalletUnverifiedActivationDetails: React.FC<
           }
           children={t('offlineAuthDisabledHeader')}></Text>
       </Row>
-
-      {props.verifiableCredential && (
-        <Pressable onPress={() => props.onPress()}>
-          <KebabPopUp
-            vcKey={props.vcKey}
-            iconName="dots-three-horizontal"
-            iconType="entypo"
-            isVisible={props.showPopUp}
-            onDismiss={() => props.onDismiss()}
-            service={props.service}
-          />
-        </Pressable>
-      )}
     </Row>
   );
 };
@@ -108,19 +89,6 @@ const WalletVerifiedActivationDetails: React.FC<WalletVerifiedDetailsProps> = (
           }
           children={t('profileAuthenticated')}></Text>
       </Row>
-
-      {props.verifiableCredential && (
-        <Pressable onPress={() => props.onPress()}>
-          <KebabPopUp
-            vcKey={props.vcKey}
-            iconName="dots-three-horizontal"
-            iconType="entypo"
-            isVisible={props.showPopUp}
-            onDismiss={() => props.onDismiss()}
-            service={props.service}
-          />
-        </Pressable>
-      )}
     </Row>
   );
 };
@@ -128,29 +96,18 @@ const WalletVerifiedActivationDetails: React.FC<WalletVerifiedDetailsProps> = (
 export const VcItemActivationStatus: React.FC<VcItemActivationStatusProps> = (
   props
 ) => {
-  const isKebabPopUp = useSelector(props.service, selectKebabPopUp);
-  const KEBAB_POPUP = () => props.service.send(VcItemEvents.KEBAB_POPUP());
-  const DISMISS = () => props.service.send(VcItemEvents.DISMISS());
   return (
     <Row>
       {props.emptyWalletBindingId ? (
         <WalletUnverifiedActivationDetails
           verifiableCredential={props.verifiableCredential}
-          onPress={KEBAB_POPUP}
-          onDismiss={DISMISS}
-          showPopUp={isKebabPopUp}
-          service={props.service}
-          vcKey={props.vcKey}
+          onPress={props.onPress}
         />
       ) : (
         <WalletVerifiedActivationDetails
           verifiableCredential={props.verifiableCredential}
           showOnlyBindedVc={props.showOnlyBindedVc}
-          onPress={KEBAB_POPUP}
-          onDismiss={DISMISS}
-          showPopUp={isKebabPopUp}
-          service={props.service}
-          vcKey={props.vcKey}
+          onPress={props.onPress}
         />
       )}
     </Row>
@@ -159,28 +116,18 @@ export const VcItemActivationStatus: React.FC<VcItemActivationStatusProps> = (
 
 interface VcItemActivationStatusProps {
   showOnlyBindedVc: boolean;
-  onPress: () => void;
+  onPress: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
   verifiableCredential: VerifiableCredential;
   emptyWalletBindingId: boolean;
-  service: any;
-  vcKey: string;
 }
 
 interface WalletVerifiedDetailsProps {
   showOnlyBindedVc: boolean;
-  onPress: () => void;
-  onDismiss: () => void;
+  onPress: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
   verifiableCredential: VerifiableCredential;
-  showPopUp: boolean;
-  service: any;
-  vcKey: string;
 }
 
 interface WalletUnVerifiedDetailsProps {
-  onPress: () => void;
-  onDismiss: () => void;
+  onPress: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
   verifiableCredential: VerifiableCredential;
-  showPopUp: boolean;
-  service: any;
-  vcKey: string;
 }

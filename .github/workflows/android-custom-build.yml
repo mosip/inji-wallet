@@ -83,29 +83,19 @@ jobs:
           FIREBASE_SECRET: ${{ secrets.GPG_SECRET }}
 
       - name: Generate keystore
-        run: |
-          keytool \
-          -genkey -v \
-          -storetype PKCS12 \
-          -keyalg RSA \
-          -keysize 2048 \
-          -validity 10000 \
-          -storepass $DEBUG_KEYSTORE_PASSWORD \
-          -keypass $DEBUG_KEYSTORE_PASSWORD \
-          -alias androiddebugkey \
-          -keystore android/app/debug.keystore \
-          -dname "CN=io.mosip.residentapp,OU=,O=,L=,S=,C=US"
-        env: 
-          DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
-
+        run: | 
+          echo "$ANDROID_KEYSTORE_FILE" > release.keystore.b64
+          base64 -d -i release.keystore.b64 > android/app/release.keystore
+        env:
+          ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
 
       - name: Export variables for keystore
         run: |
           cd android/app
-          export DEBUG_KEYSTORE_ALIAS=androiddebugkey
-          export DEBUG_KEYSTORE_PASSWORD=$DEBUG_KEYSTORE_PASSWORD
+          export RELEASE_KEYSTORE_ALIAS=androidreleasekey
+          export RELEASE_KEYSTORE_PASSWORD=$RELEASE_KEYSTORE_PASSWORD
         env: 
-          DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
+          RELEASE_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_RELEASE_STOREPASS}}'
 
       - name: Bump version code
         uses: chkfung/android-version-actions@v1.2.1
@@ -120,13 +110,13 @@ jobs:
         env:
           MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
           APPLICATION_THEME: ${{ github.event.inputs.theme }} 
-          DEBUG_KEYSTORE_ALIAS: androiddebugkey
-          DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
+          RELEASE_KEYSTORE_ALIAS: androidreleasekey
+          RELEASE_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_RELEASE_STOREPASS}}'
           CREDENTIAL_REGISTRY_EDIT: ${{ github.event.inputs.registry_edit }}
 
       - name: Upload Artifact to Actions
         uses: actions/upload-artifact@v3.1.1
         with:
           name: Inji
-          path: android/app/build/outputs/apk/newlogic/debug/
+          path: android/app/build/outputs/apk/mosip/release/
           retention-days: 10

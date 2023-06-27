@@ -214,7 +214,7 @@
   "MyVcsTab": {
     "generateVc": "Download ID",
     "bringYourDigitalID": "Bring Your Digital ID",
-    "generateVcDescription": "To download your {{vcLabel}} tap Download {{vcLabel}} below",
+    "generateVcDescription": "To download your card tap Download ID below",
     "downloadingYourId": "Downloading your card, this can take upto 5 minutes",
     "errors": {
       "savingFailed": {

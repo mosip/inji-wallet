@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Image, ImageBackground } from 'react-native';
+import { Image, ImageBackground, View } from 'react-native';
 import { getLocalizedField } from '../i18n';
 import { VerifiableCredential } from '../types/vc';
 import { RotatingIcon } from './RotatingIcon';
@@ -9,8 +9,6 @@ import VerifiedIcon from './VerifiedIcon';
 import { Column, Row, Text } from './ui';
 import { Theme } from './ui/styleUtils';
 import { CheckBox, Icon } from 'react-native-elements';
-import { ActorRefFrom } from 'xstate';
-import { vcItemMachine } from '../machines/vcItem';
 
 const getDetails = (arg1, arg2, verifiableCredential) => {
   if (arg1 === 'Status') {
@@ -188,6 +186,9 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
             />
           </Column>
         </Row>
+        {!props.verifiableCredential && (
+          <RotatingIcon name="sync" color={Theme.Colors.rotatingIcon} />
+        )}
       </Column>
       <VcItemTags tag={props.tag} />
     </ImageBackground>

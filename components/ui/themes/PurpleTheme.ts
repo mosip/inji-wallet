@@ -132,6 +132,18 @@ export const PurpleTheme = {
       backgroundColor: Colors.Grey6,
       borderRadius: 4,
     },
+    loadingCardDetailsContainer: {
+      flex: 1,
+      flexDirection: 'row',
+      backgroundColor: Colors.Grey6,
+      borderRadius: 4,
+      padding: 5,
+      paddingTop: 0,
+    },
+    cardDetailsContainer: {
+      padding: 10,
+      paddingTop: 0,
+    },
     bottomTabIconStyle: {
       padding: 4,
       width: 36,
@@ -161,7 +173,6 @@ export const PurpleTheme = {
       flex: 1,
       backgroundColor: Colors.Grey6,
       borderRadius: 4,
-      padding: 5,
     },
     closeDetailsContainer: {
       flex: 1,
@@ -206,11 +217,9 @@ export const PurpleTheme = {
       shadowOpacity: 0.4,
       shadowRadius: 3,
       elevation: 4,
-      padding: 10,
     },
     backgroundImageContainer: {
       flex: 1,
-      padding: 10,
     },
     successTag: {
       backgroundColor: Colors.Green,
@@ -230,14 +239,35 @@ export const PurpleTheme = {
     openDetailsHeader: {
       flex: 1,
       justifyContent: 'space-between',
+      paddingLeft: 10,
+      paddingTop: 10,
     },
     logo: {
-      height: 46,
-      width: 40,
+      height: 33,
+      width: 90,
     },
-    homeCloseCardDetailsHeader: {
+    loadingCardDetailsHeader: {
       flex: 1,
       justifyContent: 'space-between',
+      paddingLeft: 5,
+      paddingTop: 5,
+    },
+    cardDetailsHeader: {
+      flex: 1,
+      justifyContent: 'space-between',
+      paddingLeft: 10,
+      paddingTop: 10,
+    },
+    mosipLogoContainer: {
+      backgroundColor: 'white',
+      borderBottomLeftRadius: 50,
+      borderTopLeftRadius: 50,
+      padding: 2,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    closecardMosipLogo: {
+      alignSelf: 'flex-end',
     },
     closecardMosipLogo: {
       alignSelf: 'flex-end',
@@ -249,7 +279,15 @@ export const PurpleTheme = {
     },
     openDetailsContainer: {
       flex: 1,
-      padding: 10,
+      padding: 20,
+      paddingTop: 10,
+    },
+    profileIconBg: {
+      padding: 8,
+      width: 40,
+      height: 40,
+      borderRadius: 6,
+      backgroundColor: Colors.LightOrange,
     },
     profileIconBg: {
       padding: 8,
