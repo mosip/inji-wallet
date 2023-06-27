@@ -24,7 +24,7 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = (props) => {
             weight="semibold"
             color={Theme.Colors.GrayText}
             margin="6 0">
-            {t('description')}
+            {t('enterNewPassword')}
           </Text>
         </Column>
 
@@ -41,7 +41,7 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = (props) => {
             weight="semibold"
             color={Theme.Colors.GrayText}
             margin="6 0">
-            {t('description')}
+            {t('reEnterPassword')}
           </Text>
         </Column>
         <PasscodeVerify

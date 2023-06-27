@@ -12,6 +12,8 @@ const Colors = {
   Orange: '#F2811D',
   LightGrey: '#FAF9FF',
   White: '#FFFFFF',
+  ShadeOfGrey: '#6F6F6F',
+  Gray44: '#707070',
   Red: '#EB5757',
   Green: '#219653',
   Purple: '#70308C',
@@ -289,11 +291,6 @@ export const PurpleTheme = {
       borderBottomWidth: 1,
       marginTop: 10,
     },
-    hrLine: {
-      borderBottomColor: 'black',
-      borderBottomWidth: 1,
-      marginTop: 10,
-    },
     warningText: {
       color: Colors.Red,
       fontSize: 18,
@@ -315,6 +312,34 @@ export const PurpleTheme = {
     },
   }),
   TextStyles: StyleSheet.create({
+    header: {
+      color: Colors.Black,
+      fontFamily: 'Inter_700Bold',
+      fontSize: 18,
+      lineHeight: 22,
+      paddingTop: 4,
+    },
+    retrieveIdLabel: {
+      color: Colors.ShadeOfGrey,
+      fontFamily: 'Inter_600SemiBold',
+      lineHeight: 18,
+    },
+    helpDetailes: {
+      margin: 5,
+      color: Colors.Gray44,
+      fontFamily: 'Inter_600SemiBold',
+    },
+    aboutDetailes: {
+      color: Colors.Black,
+      fontSize: 18,
+      margin: 7,
+      lineHeight: 18,
+    },
+    error: {
+      color: Colors.Red,
+      fontFamily: 'Inter_600SemiBold',
+      fontSize: 12,
+    },
     base: {
       color: Colors.Black,
       fontSize: 18,
@@ -406,9 +431,6 @@ export const PurpleTheme = {
     radius: {
       borderRadius: 10,
       backgroundColor: Colors.Purple,
-    },
-    gradient: {
-      borderRadius: 10,
     },
     gradient: {
       borderRadius: 10,

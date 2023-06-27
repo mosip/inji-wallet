@@ -13,8 +13,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Modal } from '../../components/ui/Modal';
 import getAllConfigurations from '../../shared/commonprops/commonProps';
 import { AboutInji } from './AboutInji';
-import { ReceiveCard } from './ReceiveCard';
-import { ReceivedCards } from './ReceivedCards';
 
 const LanguageSetting: React.FC = () => {
   const { t } = useTranslation('SettingScreen');
@@ -71,23 +69,6 @@ export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
         headerElevation={2}
         onDismiss={controller.TOGGLE_SETTINGS}>
         <ScrollView backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
-          <Text weight="semibold" margin="10" color={Theme.Colors.aboutVersion}>
-            {t('injiAsVerifierApp')}
-          </Text>
-          <Row
-            align="space-evenly"
-            backgroundColor={Theme.Colors.whiteBackgroundColor}>
-            <ReceiveCard />
-            <ReceivedCards
-              isVisible={false}
-              service={undefined}
-              vcItemActor={undefined}
-            />
-          </Row>
-
-          <Text weight="semibold" margin="10" color={Theme.Colors.aboutVersion}>
-            {t('basicSettings')}
-          </Text>
           <Column fill>
             <MessageOverlay
               isVisible={controller.alertMsg != ''}

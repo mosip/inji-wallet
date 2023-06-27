@@ -4,7 +4,6 @@ import { Pressable } from 'react-native';
 import { Modal } from './ui/Modal';
 import { ScrollView } from 'react-native-gesture-handler';
 import { MainRouteProps } from '../routes/main';
-import { Icon } from 'react-native-elements';
 import { Column, Text } from './ui';
 import { Theme } from './ui/styleUtils';
 
@@ -33,21 +32,37 @@ export const HelpScreen: React.FC<HelpScreenProps & MainRouteProps> = (
         <ScrollView>
           <Column fill padding="10" align="space-between">
             <Text margin="7" style={Theme.TextStyles.header}>
-              {t('whatisIdDetails?')}
+              {t('whatIsDigitalCredential?')}
             </Text>
-            <Text style={Theme.TextStyles.helpDetailes}>{t('detailes')}</Text>
+            <Text style={Theme.TextStyles.helpDetailes}>{t('detail-1')}</Text>
             <Text margin="7" style={Theme.TextStyles.header}>
-              {t('howToTurnOnOfflineAuthentication?')}
+              {t('whatCanDoWithDigitalCredential?')}
             </Text>
-            <Text style={Theme.TextStyles.helpDetailes}>{t('detailes')}</Text>
+            <Text style={Theme.TextStyles.helpDetailes}>{t('detail-2')}</Text>
             <Text margin="7" style={Theme.TextStyles.header}>
-              {t('whatIsRevokeId?')}
+              {t('howToAddCard?')}
             </Text>
-            <Text style={Theme.TextStyles.helpDetailes}>{t('detailes')}</Text>
+            <Text style={Theme.TextStyles.helpDetailes}>{t('detail-3')}</Text>
             <Text margin="7" style={Theme.TextStyles.header}>
-              {t('howToViewActivityLog?')}
+              {t('howToRemoveCardFromWallet?')}
             </Text>
-            <Text style={Theme.TextStyles.helpDetailes}>{t('detailes')}</Text>
+            <Text style={Theme.TextStyles.helpDetailes}>{t('detail-4')}</Text>
+            <Text margin="7" style={Theme.TextStyles.header}>
+              {t('canWeAddMultipleCards?')}
+            </Text>
+            <Text style={Theme.TextStyles.helpDetailes}>{t('detail-5')}</Text>
+            <Text margin="7" style={Theme.TextStyles.header}>
+              {t('howToShareCard?')}
+            </Text>
+            <Text style={Theme.TextStyles.helpDetailes}>{t('detail-6')}</Text>
+            <Text margin="7" style={Theme.TextStyles.header}>
+              {t('howToActivateCardForOnlineLogin?')}
+            </Text>
+            <Text style={Theme.TextStyles.helpDetailes}>{t('detail-7')}</Text>
+            <Text margin="7" style={Theme.TextStyles.header}>
+              {t('howToViewActivity?')}
+            </Text>
+            <Text style={Theme.TextStyles.helpDetailes}>{t('detail-8')}</Text>
           </Column>
         </ScrollView>
       </Modal>

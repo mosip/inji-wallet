@@ -102,8 +102,6 @@
   },
   "SettingScreen": {
     "header": "Settings",
-    "injiAsVerifierApp": "Inji as Verifier App",
-    "basicSettings": "Basic Settings",
     "bioUnlock": "Unlock with Biometric",
     "language": "Language",
     "aboutInji": "About Inji",
@@ -121,11 +119,22 @@
   },
   "HelpScreen": {
     "header": "Help",
-    "whatisIdDetails?": "What is ID Details?",
-    "howToTurnOnOfflineAuthentication?": "How to turn on Offline Authentication?",
-    "whatIsRevokeId?": "What is Revoke ID?",
-    "howToViewActivityLog?": "How to view activity log?",
-    "detailes": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since."
+    "whatIsDigitalCredential?": "What is a digital credential?",
+    "detail-1": "A digital credential is the digital version of your physical Identity card",
+    "whatCanDoWithDigitalCredential?": "What can we do with digital credentials?",
+    "detail-2": "You can avail various Government and private services using your digital credentials.",
+    "howToAddCard?": "How to add a card?",
+    "detail-3": "To add a card, click on '+' button on the Home page and select the appropriate option.",
+    "howToRemoveCardFromWallet?": "How to share a card?",
+    "detail-4": "Swipe left on the card > click on More > Remove from Wallet",
+    "canWeAddMultipleCards?": "Can we add multiple cards?",
+    "detail-5": "Yes, you can add multiple cards to the wallet by clicking on '+' button on the Home page.",
+    "howToShareCard?": "How to share a card?",
+    "detail-6": "Click on 'Share' button and scan the QR code from the requesting party. Once the connection is established, the card will be shared.",
+    "howToActivateCardForOnlineLogin?": "How to activate a card for online login?",
+    "detail-7": "After successfully adding a card to the wallet, click on 'Activation pending for Online login' on the card. On clicking on 'Activate', the card will be ready to be used for online login.",
+    "howToViewActivity?": "How to view activity logs?",
+    "detail-8": "On the Home page, click on 'History' to view the details of the user's activitie."
   },
   "AddVcModal": {
     "requestingCredential": "Requesting credential...",
@@ -200,12 +209,14 @@
   },
   "OnboardingOverlay": {
     "stepOneTitle": "Welcome!",
-    "stepOneText": "Keep your digital credential with you at all times. To get started, add card to your profile.",
-    "stepTwoTitle": "Card management",
-    "stepTwoText": "Once generated, cards are safely stored on your mobile and can be renamed or shared at any time.",
-    "stepThreeTitle": "Easy sharing",
-    "stepThreeText": "Share and receive card switfly using your phone camera to scan QR codes.",
-    "stepThreeButton": "Get Started",
+    "stepOneText": "Keep your digital credential with you at all times. Inji helps you manage and use them effectively. To get started, add cards to your profile.",
+    "stepTwoTitle": "Trusted Digital Wallet",
+    "stepTwoText": "Store and carry all your important cards in a single trusted wallet.",
+    "stepThreeTitle": "Secure Sharing",
+    "stepThreeText": "Share your cards securely in a hassle free way and avail various services.",
+    "stepFourTitle": "Hassle free authentication",
+    "stepFourText": "Authenticate yourself with ease using the stored digital credential.",
+    "stepFourButton": "Get Started",
     "skip": "Skip",
     "next": "Next"
   },
@@ -236,12 +247,14 @@
   "MainLayout": {
     "home": "Home",
     "scan": "Scan",
+    "history": "History",
     "request": "Request",
     "settings": "Settings"
   },
   "PasscodeScreen": {
     "header": "Set Passcode",
-    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+    "enterNewPassword": "Enter a new passcode",
+    "reEnterPassword": "Re-enter the new passcode",
     "confirmPasscode": "Confirm passcode",
     "enterPasscode": "Enter your passcode"
   },
@@ -295,7 +308,6 @@
     }
   },
   "RequestScreen": {
-    "receiveCard": "Receive Card",
     "bluetoothDenied": "Please enable Bluetooth to be able to request card",
     "bluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
     "bluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
@@ -431,7 +443,7 @@
   },
   "SetupLanguage": {
     "header": "Choose Language",
-    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+    "description": "Select your preferred language",
     "save": "Save Preference"
   },
   "common": {

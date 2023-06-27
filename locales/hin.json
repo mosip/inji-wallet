@@ -128,11 +128,22 @@
   },
   "HelpScreen": {
     "header": "मदद",
-    "whatisIdDetails?": "आईडी विवरण क्या हैं?",
-    "howToTurnOnOfflineAuthentication?": "ऑफलाइन प्रमाणीकरण कैसे चालू करें?",
-    "whatIsRevokeId?": "रिवोक आईडी क्या है?",
-    "howToViewActivityLog?": "गतिविधि लॉग कैसे देखें?",
-    "detailes": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since."
+    "whatIsDigitalCredential?": "डिजिटल क्रेडेंशियल क्या है?",
+    "detail-1": "डिजिटल क्रेडेंशियल आपके भौतिक पहचान पत्र का डिजिटल संस्करण है",
+    "whatCanDoWithDigitalCredential?": "हम डिजिटल क्रेडेंशियल्स के साथ क्या कर सकते हैं?",
+    "detail-2": "आप अपने डिजिटल क्रेडेंशियल्स का उपयोग करके विभिन्न सरकारी और निजी सेवाओं का लाभ उठा सकते हैं।",
+    "howToAddCard?": "कार्ड कैसे जोड़ें?",
+    "detail-3": "कार्ड जोड़ने के लिए होम पेज पर '+' बटन पर क्लिक करें और उचित विकल्प चुनें।",
+    "howToRemoveCardFromWallet?": "कार्ड कैसे साझा करें?",
+    "detail-4": "कार्ड पर बाईं ओर स्वाइप करें > अधिक > वॉलेट से निकालें पर क्लिक करें",
+    "canWeAddMultipleCards?": "क्या हम अनेक कार्ड जोड़ सकते हैं?",
+    "detail-5": "हां, आप होम पेज पर '+' बटन पर क्लिक करके वॉलेट में कई कार्ड जोड़ सकते हैं।",
+    "howToShareCard?": "कार्ड कैसे साझा करें?",
+    "detail-6": "'शेयर' बटन पर क्लिक करें और अनुरोध करने वाले पक्ष से क्यूआर कोड स्कैन करें। एक बार कनेक्शन स्थापित हो जाने पर, कार्ड साझा किया जाएगा।",
+    "howToActivateCardForOnlineLogin?": "ऑनलाइन लॉगिन के लिए कार्ड कैसे सक्रिय करें?",
+    "detail-7": "वॉलेट में सफलतापूर्वक कार्ड जोड़ने के बाद, कार्ड पर 'ऑनलाइन लॉगिन के लिए सक्रियण लंबित' पर क्लिक करें। 'एक्टिवेट' पर क्लिक करने पर, कार्ड ऑनलाइन लॉगिन के लिए उपयोग के लिए तैयार हो जाएगा।",
+    "howToViewActivity?": "गतिविधि लॉग कैसे देखें?",
+    "detail-8": "होम पेज पर, उपयोगकर्ता की गतिविधि का विवरण देखने के लिए 'इतिहास' पर क्लिक करें।"
   },
   "HomeScreen": {
     "myVcsTab": "मेरा\nकार्ड",
@@ -212,12 +223,14 @@
   },
   "OnboardingOverlay": {
     "stepOneTitle": "सुरक्षित साझाकरण!",
-    "stepOneText": "QR कोड स्कैन करने के लिए अपने फ़ोन कैमरे का उपयोग करके कार्ड Switfly को साझा करें और प्राप्त करें",
+    "stepOneText": "अपना डिजिटल क्रेडेंशियल हर समय अपने पास रखें। इंजी आपको उन्हें प्रभावी ढंग से प्रबंधित करने और उपयोग करने में मदद करता है। आरंभ करने के लिए, अपनी प्रोफ़ाइल में कार्ड जोड़ें।",
     "stepTwoTitle": "विश्वसनीय डिजिटल वॉलेट",
-    "stepTwoText": "अपनी डिजिटल साख हमेशा अपने पास रखें",
-    "stepThreeTitle": "त्वरित ऐक्सेस",
-    "stepThreeText": "एक बार जेनरेट होने के बाद, कार्ड आपके मोबाइल में सुरक्षित रूप से स्टोर हो जाते हैं।",
-    "stepThreeButton": "शुरू हो जाओ",
+    "stepTwoText": "अपने सभी महत्वपूर्ण कार्डों को एक ही विश्वसनीय वॉलेट में रखें और रखें।",
+    "stepThreeTitle": "सुरक्षित साझाकरण",
+    "stepThreeText": "परेशानी मुक्त तरीके से अपने कार्ड सुरक्षित रूप से साझा करें और विभिन्न सेवाओं का लाभ उठाएं।",
+    "stepFourTitle": "परेशानी मुक्त प्रमाणीकरण",
+    "stepFourText": "संग्रहीत डिजिटल क्रेडेंशियल का उपयोग करके आसानी से स्वयं को प्रमाणित करें।",
+    "stepFourButton": "शुरू हो जाओ",
     "skip": "छोडना",
     "next": "अगला"
   },
@@ -248,12 +261,14 @@
   "MainLayout": {
     "home": "होम",
     "scan": "स्कैन",
+    "history": "इतिहास",
     "request": "अनुरोध",
     "settings": "सेटिंग्स"
   },
   "PasscodeScreen": {
     "header": "पास कोड सेट करो",
-    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+    "enterNewPassword": "एक नया पासकोड दर्ज करें",
+    "reEnterPassword": "नया पासकोड पुनः दर्ज करें",
     "confirmPasscode": "पासकोड की पुष्टि करें",
     "enterPasscode": "अपना पासकोड प्रविष्ट करें"
   },
@@ -460,7 +475,7 @@
   },
   "SetupLanguage": {
     "header": "भाषा चुनें",
-    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+    "description": "अपनी पसंदीदा भाषा चुनें",
     "save": "वरीयता सहेजें"
   },
   "common": {

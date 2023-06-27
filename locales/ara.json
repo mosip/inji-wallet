@@ -126,11 +126,22 @@
   },
   "HelpScreen": {
     "header": "يساعد",
-    "whatisIdDetails?": "ما هي تفاصيل الهوية؟",
-    "howToTurnOnOfflineAuthentication?": "كيف يتم تشغيل المصادقة دون اتصال؟",
-    "whatIsRevokeId?": "ما هو إبطال الهوية؟",
-    "howToViewActivityLog?": "كيفية عرض سجل النشاط؟",
-    "detailes": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since."
+    "whatIsDigitalCredential?": "ما هو الاعتماد الرقمي؟",
+    "detail-1": "بيانات الاعتماد الرقمية هي النسخة الرقمية لبطاقة الهوية الفعلية الخاصة بك",
+    "whatCanDoWithDigitalCredential?": "ماذا يمكننا أن نفعل ببيانات الاعتماد الرقمية؟",
+    "detail-2": "يمكنك الاستفادة من مختلف الخدمات الحكومية والخاصة باستخدام بيانات الاعتماد الرقمية الخاصة بك.",
+    "howToAddCard?": "كيف تضيف بطاقة؟",
+    "detail-3": "لإضافة بطاقة ، انقر فوق الزر '+' في الصفحة الرئيسية وحدد الخيار المناسب.",
+    "howToRemoveCardFromWallet?": "كيف تشارك البطاقة؟",
+    "detail-4": "اسحب لليسار على البطاقة> انقر فوق المزيد> إزالة من المحفظة",
+    "canWeAddMultipleCards?": "هل يمكننا إضافة عدة بطاقات؟",
+    "detail-5": "نعم ، يمكنك إضافة عدة بطاقات إلى المحفظة بالنقر فوق الزر '+' في الصفحة الرئيسية.",
+    "howToShareCard?": "كيف تشارك البطاقة؟",
+    "detail-6": "انقر فوق الزر 'مشاركة' وقم بمسح رمز الاستجابة السريعة ضوئيًا من الطرف الطالب. بمجرد إنشاء الاتصال ، ستتم مشاركة البطاقة.",
+    "howToActivateCardForOnlineLogin?": "كيف يتم تفعيل البطاقة لتسجيل الدخول عبر الإنترنت؟",
+    "detail-7": "بعد إضافة بطاقة إلى المحفظة بنجاح ، انقر فوق 'تعليق التنشيط لتسجيل الدخول عبر الإنترنت' على البطاقة. عند النقر فوق 'تنشيط' ، ستكون البطاقة جاهزة للاستخدام لتسجيل الدخول عبر الإنترنت.",
+    "howToViewActivity?": "كيفية عرض سجلات النشاط؟",
+    "detail-8": "في الصفحة الرئيسية ، انقر فوق 'المحفوظات' لعرض تفاصيل نشاط المستخدم."
   },
   "AddVcModal": {
     "requestingCredential": "جارٍ طلب بيانات الاعتماد...",
@@ -205,12 +216,14 @@
   },
   "OnboardingOverlay": {
     "stepOneTitle": "مشاركة آمنة!",
-    "stepOneText": "شارك واستقبل بطاقة switfly باستخدام كاميرا هاتفك لمسح رموز QR",
+    "stepOneText": "احتفظ ببيانات الاعتماد الرقمية الخاصة بك معك في جميع الأوقات. يساعدك Inji على إدارتها واستخدامها بشكل فعال. للبدء ، أضف بطاقات إلى ملف التعريف الخاص بك.",
     "stepTwoTitle": "المحفظة الرقمية الموثوقة",
-    "stepTwoText": "احتفظ ببيانات اعتمادك الرقمية معك في جميع الأوقات",
-    "stepThreeTitle": "الوصول السريع",
-    "stepThreeText": "بمجرد إنشائه ، يتم تخزين بطاقة بأمان على هاتفك المحمول.",
-    "stepThreeButton": "البدء",
+    "stepTwoText": "قم بتخزين وحمل جميع بطاقاتك المهمة في محفظة واحدة موثوق بها.",
+    "stepThreeTitle": "مشاركة آمنة",
+    "stepThreeText": "شارك بطاقاتك بأمان وبطريقة خالية من المتاعب واستفد من الخدمات المتنوعة.",
+    "stepFourTitle": "مصادقة خالية من المتاعب",
+    "stepFourText": "قم بمصادقة نفسك بسهولة باستخدام بيانات الاعتماد الرقمية المخزنة.",
+    "stepFourButton": "البدء",    
     "skip": "يتخطى",
     "next": "التالي"
   },
@@ -241,14 +254,16 @@
   "MainLayout": {
     "home": "المنزل",
     "scan": "مسح",
+    "history": "تاريخ",
     "request": "طلب",
     "settings": "إعدادات"
   },
   "PasscodeScreen": {
-    "header": "Set Passcode",
-    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
-    "confirmPasscode": "Confirm passcode",
-    "enterPasscode": "Enter your passcode"
+    "header": "تعيين رمز المرور",
+    "enterNewPassword": "أدخل رمز مرور جديد",
+    "reEnterPassword": "أعد إدخال رمز المرور الجديد",
+    "confirmPasscode": "قم بتأكيد رمز المرور",
+    "enterPasscode": "أدخل رمز المرور الخاص"
   },
   "AppMetaData": {
     "header": "حول إنجي",
@@ -452,7 +467,7 @@
   },
   "SetupLanguage": {
     "header": "حدد اللغة",
-    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+    "description": "اختر لغتك المفضلة",
     "save": "حفظ التفضيل"
   },
   "common": {

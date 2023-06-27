@@ -121,11 +121,22 @@
   },
   "HelpScreen": {
     "header": "Tulong",
-    "whatisIdDetails?": "Ano ang Mga Detalye ng ID?",
-    "howToTurnOnOfflineAuthentication?": "Paano i-on ang Offline Authentication?",
-    "whatIsRevokeId?": "Ano ang Revoke ID?",
-    "howToViewActivityLog?": "Paano tingnan ang log ng aktibidad?",
-    "detailes": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since."
+    "whatIsDigitalCredential?": "Ano ang isang digital na kredensyal?",
+    "detail-1": "Ang digital na kredensyal ay ang digital na bersyon ng iyong pisikal na Identity card",
+    "whatCanDoWithDigitalCredential?": "Ano ang maaari nating gawin sa mga digital na kredensyal?",
+    "detail-2": "Maaari kang makakuha ng iba't ibang serbisyo ng Pamahalaan at pribadong gamit ang iyong mga digital na kredensyal.",
+    "howToAddCard?": "Paano magdagdag ng card?",
+    "detail-3": "Upang magdagdag ng card, mag-click sa '+' na button sa Home page at piliin ang naaangkop na opsyon.",
+    "howToRemoveCardFromWallet?": "Paano magbahagi ng card?",
+    "detail-4": "Mag-swipe pakaliwa sa card > mag-click sa Higit pa > Alisin sa Wallet",
+    "canWeAddMultipleCards?": "Maaari ba tayong magdagdag ng maraming card?",
+    "detail-5": "Oo, maaari kang magdagdag ng maraming card sa wallet sa pamamagitan ng pag-click sa '+' na button sa Home page.",
+    "howToShareCard?": "Paano magbahagi ng card?",
+    "detail-6": "Mag-click sa pindutang 'Ibahagi' at i-scan ang QR code mula sa humihiling na partido. Kapag naitatag na ang koneksyon, ibabahagi ang card.",
+    "howToActivateCardForOnlineLogin?": "Paano i-activate ang isang card para sa online na pag-login?",
+    "detail-7": "Matapos matagumpay na magdagdag ng card sa wallet, mag-click sa 'Activation pending for Online login' sa card. Sa pag-click sa 'I-activate', ang card ay handa nang gamitin para sa online na pag-login.",
+    "howToViewActivity?": "Paano tingnan ang mga log ng aktibidad?",
+    "detail-8": "Sa Home page, mag-click sa 'Kasaysayan' upang tingnan ang mga detalye ng aktibidad ng user."
   },
   "AddVcModal": {
     "requestingCredential": "Humihiling ng kredensyal...",
@@ -200,12 +211,14 @@
   },
   "OnboardingOverlay": {
     "stepOneTitle": "Ligtas na Pagbabahagi!",
-    "stepOneText": "Ibahagi at tumanggap ng {{vcLabel}} nang mabilis gamit ang camera ng iyong telepono upang mag-scan ng mga QR code",
+    "stepOneText": "Panatilihin ang iyong digital na kredensyal sa iyo sa lahat ng oras. Tinutulungan ka ng Inji na pamahalaan at gamitin ang mga ito nang epektibo. Upang makapagsimula, magdagdag ng mga card sa iyong profile.",
     "stepTwoTitle": "Pinagkakatiwalaang Digital Wallet",
-    "stepTwoText": "Panatilihin ang iyong digital na kredensyal sa iyo sa lahat ng oras",
-    "stepThreeTitle": "Mabilis na pagpasok",
-    "stepThreeText": "Kapag nabuo na, ang {{vcLabel}} ay ligtas na iniimbak sa iyong mobile.",
-    "stepThreeButton": "Magsimula",
+    "stepTwoText": "Itabi at dalhin ang lahat ng iyong mahahalagang card sa isang pinagkakatiwalaang wallet.",
+    "stepThreeTitle": "Ligtas na Pagbabahagi",
+    "stepThreeText": "Ibahagi ang iyong mga card nang ligtas sa isang walang problemang paraan at mag-avail ng iba't ibang serbisyo.",
+    "stepFourTitle": "Walang problema sa pagpapatotoo",
+    "stepFourText": "I-authenticate ang iyong sarili nang madali gamit ang nakaimbak na digital na kredensyal.",
+    "stepFourButton": "Magsimula",
     "skip": "Laktawan",
     "next": "Susunod"
   },
@@ -236,12 +249,14 @@
   "MainLayout": {
     "home": "Bahay",
     "scan": "Scan",
+    "history": "Kasaysayan",
     "request": "Hiling",
     "settings": "mga setting"
   },
   "PasscodeScreen": {
     "header": "Itakda ang Passcode",
-    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+    "enterNewPassword": "Maglagay ng bagong passcode",
+    "reEnterPassword": "Ipasok muli ang bagong passcode",
     "confirmPasscode": "Kumpirmahin ang passcode",
     "enterPasscode": "Ilagay ang iyong passcode"
   },
@@ -430,7 +445,7 @@
   },
   "SetupLanguage": {
     "header": "Piliin ang Wika",
-    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+    "description": "Piliin ang iyong gustong wika",
     "save": "I-save ang Kagustuhan"
   },
   "common": {
