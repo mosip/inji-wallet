@@ -13,8 +13,8 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
-    'done.invoke.MyVcsTab.addVc:invocation[0]': {
-      type: 'done.invoke.MyVcsTab.addVc:invocation[0]';
+    'done.invoke.MyVcsTab.addVc.checkStorage:invocation[0]': {
+      type: 'done.invoke.MyVcsTab.addVc.checkStorage:invocation[0]';
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
@@ -41,11 +41,12 @@ export interface Typegen0 {
   'eventsCausingServices': {
     AddVcModal:
       | 'done.invoke.GetVcModal'
-      | 'done.invoke.MyVcsTab.addVc:invocation[0]';
+      | 'done.invoke.MyVcsTab.addVc.checkStorage:invocation[0]';
     GetVcModal: 'GET_VC';
   };
   'matchesStates':
     | 'addVc'
+    | 'addVc.checkStorage'
     | 'addVc.storageLimitReached'
     | 'addingVc'
     | 'addingVc.addVcSuccessful'
@@ -60,7 +61,7 @@ export interface Typegen0 {
     | 'onboarding'
     | 'viewingVc'
     | {
-        addVc?: 'storageLimitReached';
+        addVc?: 'checkStorage' | 'storageLimitReached';
         addingVc?:
           | 'addVcSuccessful'
           | 'savingFailed'
