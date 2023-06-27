@@ -82,19 +82,22 @@ export const MyVcsTabMachine = model.createMachine(
         },
       },
       addVc: {
-        invoke: {
-          src: () => Promise.resolve(isMaximumStorageLimitReached()),
-          onDone: [
-            {
-              cond: (_context, event) => event.data === true,
-              target: '.storageLimitReached',
-            },
-            {
-              target: 'addingVc',
-            },
-          ],
-        },
+        initial: 'checkStorage',
         states: {
+          checkStorage: {
+            invoke: {
+              src: () => Promise.resolve(isMaximumStorageLimitReached()),
+              onDone: [
+                {
+                  cond: (_context, event) => event.data === true,
+                  target: 'storageLimitReached',
+                },
+                {
+                  target: '#MyVcsTab.addingVc',
+                },
+              ],
+            },
+          },
           storageLimitReached: {
             on: {
               DISMISS: '#idle',
