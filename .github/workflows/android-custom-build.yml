@@ -120,3 +120,4 @@ jobs:
           RELEASE_KEYSTORE_ALIAS: androidreleasekey
           RELEASE_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_RELEASE_STOREPASS}}'
           CREDENTIAL_REGISTRY_EDIT: ${{ github.event.inputs.registry_edit }}
+          SLACK_URL: '${{ secrets.SLACK_WEBHOOK_DEVOPS }}'
