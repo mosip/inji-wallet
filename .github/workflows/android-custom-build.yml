@@ -112,10 +112,3 @@ jobs:
           RELEASE_KEYSTORE_ALIAS: androidreleasekey
           RELEASE_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_RELEASE_STOREPASS}}'
           CREDENTIAL_REGISTRY_EDIT: ${{ github.event.inputs.registry_edit }}
-
-      - name: Upload Artifact to Actions
-        uses: actions/upload-artifact@v3.1.1
-        with:
-          name: Inji
-          path: android/app/build/outputs/apk/mosip/release/
-          retention-days: 10
