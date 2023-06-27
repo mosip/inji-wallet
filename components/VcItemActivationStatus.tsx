@@ -58,14 +58,6 @@ const WalletUnverifiedActivationDetails: React.FC<
           }
           children={t('offlineAuthDisabledHeader')}></Text>
       </Row>
-
-      {/* <Pressable>
-        <Icon
-          name="dots-three-horizontal"
-          type="entypo"
-          color={Theme.Colors.GrayIcon}
-        />
-      </Pressable> */}
     </Row>
   );
 };

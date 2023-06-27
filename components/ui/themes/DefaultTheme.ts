@@ -331,8 +331,10 @@ export const DefaultTheme = {
       height: Dimensions.get('window').height * 0.12,
       width: Dimensions.get('window').width * 0.45,
       alignItems: 'center',
+      borderBottomRightRadius: 0,
       padding: 15,
       marginVertical: 18,
+      elevation: 1,
     },
     domainVerifiyIcon: {
       padding: 20,

@@ -9,12 +9,10 @@ import { Theme } from '../../components/ui/styleUtils';
 import { Image } from 'react-native';
 import { Modal } from '../../components/ui/Modal';
 import { useRequestScreen } from '../Request/RequestScreenController';
-import { isGoogleNearbyEnabled } from '../../lib/smartshare';
 
 export const ReceiveCard: React.FC = () => {
   const { t } = useTranslation('RequestScreen');
   const controller = useRequestScreen();
-  const props: RequestScreenProps = { t, controller };
 
   const [showReceiveCard, setShowReceiveCard] = useState(false);
 
