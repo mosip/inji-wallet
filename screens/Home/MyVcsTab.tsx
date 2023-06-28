@@ -112,7 +112,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                 type="gradient"
                 isVcThere
                 disabled={controller.isRefreshingVcs}
-                title={t('generateVc')}
+                title={t('downloadCard')}
                 onPress={controller.DOWNLOAD_ID}
               />
             </React.Fragment>
@@ -138,7 +138,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                 <Button
                   type="gradient"
                   disabled={controller.isRefreshingVcs}
-                  title={t('generateVc')}
+                  title={t('downloadCard')}
                   onPress={controller.DOWNLOAD_ID}
                 />
               </Column>

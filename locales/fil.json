@@ -184,7 +184,7 @@
   "GetIdInputModal": {
     "header": "Kunin ang iyong UIN/VID",
     "applicationIdLabel": "Pakilagay ang iyong Application ID",
-    "applicationId": "Ilagay ang Application ID",
+    "enterApplicationId": "Ilagay ang Application ID",
     "requestingOTP": "Humihiling ng OTP...",
     "qstnMarkToolTip": "Available ang Application ID sa natanggap na acknowledgement pagkatapos ng enrollment.",
     "getUIN": "Kumuha ng UIN/VID"

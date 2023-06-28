@@ -194,7 +194,7 @@
   "GetIdInputModal": {
     "header": "अपना UIN/VID पुनः प्राप्त करें",
     "applicationIdLabel": "कृपया अपना आवेदन आईडी दर्ज करें",
-    "applicationId": "एप्लिकेशन आईडी दर्ज करें",
+    "enterApplicationId": "एप्लिकेशन आईडी दर्ज करें",
     "requestingOTP": "ओटीपी का अनुरोध...",
     "qstnMarkToolTip": "आवेदन आईडी नामांकन के बाद प्राप्त पावती में उपलब्ध है।",
     "getUIN": "यूआईएन/वीआईडी ​​प्राप्त करें"

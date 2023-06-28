@@ -205,7 +205,7 @@
   "GetIdInputModal": {
     "header": "ನಿಮ್ಮ ಕಾರ್ಡ್ ಹಿಂಪಡೆಯಿರಿ",
     "applicationIdLabel": "ದಯವಿಟ್ಟು ನಿಮ್ಮ ಅಪ್ಲಿಕೇಶನ್ ಐಡಿಯನ್ನು ನಮೂದಿಸಿ",
-    "applicationId": "ಅಪ್ಲಿಕೇಶನ್ ID ನಮೂದಿಸಿ",
+    "enterApplicationId": "ಅಪ್ಲಿಕೇಶನ್ ID ನಮೂದಿಸಿ",
     "requestingOTP": "OTP ಯನ್ನು ವಿನಂತಿಸಲಾಗುತ್ತಿದೆ...",
     "qstnMarkToolTip": "ನೋಂದಣಿಯ ನಂತರ ಸ್ವೀಕರಿಸಿದ ಸ್ವೀಕೃತಿಯಲ್ಲಿ ಅಪ್ಲಿಕೇಶನ್ ID ಲಭ್ಯವಿದೆ.",
     "getUIN": "UIN/VID ಪಡೆಯಿರಿ"

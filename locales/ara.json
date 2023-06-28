@@ -204,7 +204,7 @@
   "GetIdInputModal": {
     "header": "استرجع UIN / VID الخاص بك",
     "applicationIdLabel": "الرجاء إدخال معرف التطبيق الخاص بك",
-    "applicationId": "أدخل معرف التطبيق",
+    "enterApplicationId": "أدخل معرف التطبيق",
     "requestingOTP": "جارٍ طلب OTP ...",
     "qstnMarkToolTip": "معرف التطبيق متاح في الإقرار الذي تم استلامه بعد التسجيل.",
     "getUIN": "احصل على UIN / VID"
@@ -225,22 +225,10 @@
     "resendCode": "أعد إرسال الرمز"
   },
   "MyVcsTab": {
-    "addVcButton": "بطاقة إضافة",
-    "generateVc": "البطاقاتإنشاء",
-    "generateVcDescription": "اضغط على \"إضافة بطاقة \" أدناه لتنزيل بطاقتك",
-    "downloadID": "تحميل البطاقة",
     "bringYourDigitalID": "أحضر هويتك الرقمية",
-    "downloadingYourId": "تنزيل بطاقتك ، قد يستغرق هذا ما يصل إلى 5 دقائق",
-    "errors": {
-      "savingFailed": {
-        "title": "فشل حفظ بطاقة",
-        "message": "حدث خطأ أثناء حفظ البطاقة في المتجر."
-      },
-      "diskFullError": {
-        "title": "فشل حفظ بطاقة",
-        "message": "لا يمكن استلام المزيد من بطاقةالبطاقات أو حفظه لأن بيانات التطبيق ممتلئة."
-      }
-    }
+    "generateVcDescription": "اضغط على \"إضافة بطاقة \" أدناه لتنزيل بطاقتك",
+    "downloadCard": "تحميل البطاقة",
+    "downloadingYourId": "تنزيل بطاقتك ، قد يستغرق هذا ما يصل إلى 5 دقائق"
   },
   "OnboardingOverlay": {
     "stepOneTitle": "مشاركة آمنة!",
