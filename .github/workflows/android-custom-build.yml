@@ -121,3 +121,4 @@ jobs:
           RELEASE_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_RELEASE_STOREPASS}}'
           SLACK_URL: '${{ secrets.SLACK_WEBHOOK_DEVOPS }}'
           PLAY_CONSOLE_RELEASE_DESCRIPTION: ${{ github.event.inputs.buildDescription }}
+          CREDENTIAL_REGISTRY_EDIT: ${{ github.event.inputs.registry_edit }}
