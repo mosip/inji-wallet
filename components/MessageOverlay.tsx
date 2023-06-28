@@ -60,6 +60,13 @@ export const MessageOverlay: React.FC<MessageOverlayProps> = (props) => {
             styles={Theme.MessageOverlayStyles.button}
           />
         ) : null}
+        {!props.children && props.onTryAgain ? (
+          <Button
+            title={t('tryAgain')}
+            onPress={props.onTryAgain}
+            styles={Theme.MessageOverlayStyles.button}
+          />
+        ) : null}
       </Column>
     </Overlay>
   );
@@ -110,4 +117,5 @@ export interface MessageOverlayProps {
   onCancel?: () => void;
   onBackdropPress?: () => void;
   onShow?: () => void;
+  onTryAgain?: () => void;
 }

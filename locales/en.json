@@ -510,7 +510,9 @@
   "WelcomeScreen": {
     "title": "Open Source Identity Solution",
     "getStarted": "Get started",
-    "unlockApp": "Unlock application"
+    "unlockApp": "Unlock application",
+    "failedToReadKeys": "Failed to read keys",
+    "retryRead": "Want to retry?"
   },
   "SetupLanguage": {
     "header": "Choose Language",
@@ -519,10 +521,12 @@
   },
   "common": {
     "cancel": "Cancel",
+    "accept": "Accept",
     "save": "Save",
     "dismiss": "Dismiss",
     "editLabel": "Edit {{label}}",
     "tryAgain": "Try again",
+    "ignore": "Ignore",
     "camera": {
       "errors": {
         "missingPermission": "This app uses the camera to scan the QR code of another device."

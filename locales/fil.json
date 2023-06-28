@@ -514,7 +514,9 @@
   "WelcomeScreen": {
     "title": "Open Source Identity Solution",
     "getStarted": "Magsimula",
-    "unlockApp": "Buksan ang aplikasyon"
+    "unlockApp": "Buksan ang aplikasyon",
+    "failedToReadKeys": "Nabigong basahin ang mga susi",
+    "retryRead": "Gustong subukang muli?"
   },
   "SetupLanguage": {
     "header": "Piliin ang Wika",
@@ -523,6 +525,7 @@
   },
   "common": {
     "cancel": "Kanselahin",
+    "accept": "Tanggapin",
     "save": "I-save",
     "dismiss": "Dismissed",
     "editLabel": "Palitan ang {{label}}",
@@ -533,6 +536,7 @@
       },
       "allowAccess": "Payagan ang access sa camera"
     },
+    "ignore": "Huwag pansinin",
     "errors": {
       "genericError": "May mali. Subukang muli mamaya!"
     },

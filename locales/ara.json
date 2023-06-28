@@ -510,7 +510,9 @@
   "WelcomeScreen": {
     "title": "حل هوية مفتوحة المصدر",
     "getStarted": "البدء",
-    "unlockApp": "فتح التطبيق"
+    "unlockApp": "فتح التطبيق",
+    "failedToReadKeys": "فشلت قراءة المفاتيح",
+    "retryRead": "هل تريد إعادة المحاولة؟"
   },
   "SetupLanguage": {
     "header": "حدد اللغة",
@@ -519,10 +521,12 @@
   },
   "common": {
     "cancel": "إلغاء",
+    "accept": "يقبل",
     "save": "حفظ",
     "dismiss": "رفض",
     "editLabel": "يحرر {{label}}",
     "tryAgain": "حاول مجددا",
+    "ignore": "يتجاهل",
     "camera": {
       "errors": {
         "missingPermission": "يستخدم هذا التطبيق الكاميرا لمسح رمز الاستجابة السريعة لجهاز آخر."

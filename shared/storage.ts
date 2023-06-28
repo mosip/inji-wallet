@@ -8,6 +8,7 @@ import {
   unlink,
   writeFile,
   exists,
+  stat,
 } from 'react-native-fs';
 import getAllConfigurations from './commonprops/commonProps';
 import { Platform } from 'react-native';

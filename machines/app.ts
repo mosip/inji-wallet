@@ -32,11 +32,13 @@ const model = createModel(
     info: {} as AppInfo,
     backendInfo: {} as BackendInfo,
     serviceRefs: {} as AppServices,
+    isReadError: false,
   },
   {
     events: {
       ACTIVE: () => ({}),
       INACTIVE: () => ({}),
+      ERROR: () => ({}),
       OFFLINE: () => ({}),
       ONLINE: (networkType: NetInfoStateType) => ({ networkType }),
       REQUEST_DEVICE_INFO: () => ({}),
@@ -66,7 +68,13 @@ export const appMachine = model.createMachine(
           store: {
             entry: ['spawnStoreActor', 'logStoreEvents'],
             on: {
-              READY: 'services',
+              READY: {
+                actions: 'unsetIsReadError',
+                target: 'services',
+              },
+              ERROR: {
+                actions: 'setIsReadError',
+              },
             },
           },
           services: {
@@ -166,7 +174,12 @@ export const appMachine = model.createMachine(
           send({ ...event, type: `APP_${event.type}` }, { to: serviceRef })
         )
       ),
-
+      setIsReadError: assign({
+        isReadError: true,
+      }),
+      unsetIsReadError: assign({
+        isReadError: false,
+      }),
       requestDeviceInfo: respond((context) => ({
         type: 'RECEIVE_DEVICE_INFO',
         info: {
@@ -405,4 +418,8 @@ export function logState(state: AnyState) {
     }
     `
   );
+}
+
+export function selectIsReadError(state: State) {
+  return state.context.isReadError;
 }
