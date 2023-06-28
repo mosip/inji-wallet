@@ -7,13 +7,13 @@ import getAllConfigurations from '../shared/commonprops/commonProps';
 
 export default async function isMaximumStorageLimitReached() {
   const configurations = await getAllConfigurations();
-  const storageLimitInBytes =
-    configurations['maximumStorageLimitInMB'] * 1024 * 1024;
+  const maximumStorageLimitInBytes =
+    configurations['maximumStorageLimitInMB'] * 1000 * 1000;
 
   const freeDiskStorageInBytes =
     Platform.OS === 'android' && Platform.Version < 29
       ? getFreeDiskStorageOldSync()
       : getFreeDiskStorageSync();
 
-  return freeDiskStorageInBytes <= storageLimitInBytes;
+  return freeDiskStorageInBytes <= maximumStorageLimitInBytes;
 }
