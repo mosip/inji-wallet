@@ -112,7 +112,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                 type="gradient"
                 isVcThere
                 disabled={controller.isRefreshingVcs}
-                title={t('downloadCard')}
+                title={t('generateVc')}
                 onPress={controller.DOWNLOAD_ID}
               />
             </React.Fragment>
@@ -138,7 +138,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                 <Button
                   type="gradient"
                   disabled={controller.isRefreshingVcs}
-                  title={t('downloadCard')}
+                  title={t('generateVc')}
                   onPress={controller.DOWNLOAD_ID}
                 />
               </Column>
@@ -154,6 +154,12 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
       {controller.GetVcModalService && (
         <GetVcModal service={controller.GetVcModalService} />
       )}
+      <ErrorMessageOverlay
+        translationPath={'MyVcsTab'}
+        isVisible={controller.isSavingFailedInIdle}
+        error={storeErrorTranslationPath}
+        onDismiss={controller.DISMISS}
+      />
     </React.Fragment>
   );
 };

@@ -1,9 +1,9 @@
 {
   "header": "Scan QR Code",
-  "noShareableVcs": "No shareable {{vcLabel}} are available.",
-  "sharingVc": "Sharing {{vcLabel}}",
-  "bluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
-  "bluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
+  "noShareableVcs": "No shareable Cards are available.",
+  "sharingVc": "Sharing Card",
+  "BluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
+  "BluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
   "errors": {
     "locationDisabled": {
       "message": "Location services must be enabled for the scanning functionality",

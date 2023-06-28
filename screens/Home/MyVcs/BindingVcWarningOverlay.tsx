@@ -45,7 +45,7 @@ export const BindingVcWarningOverlay: React.FC<QrLoginWarningProps> = (
         <Button
           margin={'30 0 0 0'}
           type="gradient"
-          title={t('yesConfirm')}
+          title={t('yes_confirm')}
           onPress={props.onConfirm}
         />
 

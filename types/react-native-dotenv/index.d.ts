@@ -18,4 +18,9 @@ declare module 'react-native-dotenv' {
    * Flag for Toggling environment url
    */
   export const CREDENTIAL_REGISTRY_EDIT: string;
+
+  /**
+   * LANGUAGE for the unsupported device languages
+   */
+  export const APPLICATION_LANGUAGE: string;
 }

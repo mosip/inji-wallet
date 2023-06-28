@@ -97,7 +97,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
           <Column>
             <Button
               type="gradient"
-              title={t('downloadCard')}
+              title={t('generateVc')}
               disabled={!controller.id}
               margin="24 0 0 0"
               onPress={controller.VALIDATE_INPUT}
@@ -115,7 +115,8 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
                   <Text
                     color={Theme.Colors.AddIdBtnBg}
                     weight="semibold"
-                    size="small">
+                    size="small"
+                    margin="0 0 0 5">
                     {t('getItHere')}
                   </Text>
                 </TouchableOpacity>

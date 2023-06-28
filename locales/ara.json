@@ -60,7 +60,18 @@
     "yes_confirm": "نعم ، أنا أؤكد",
     "no": "رقم",
     "Alert": "انذار",
-    "ok": "تمام"
+    "ok": "تمام",
+    "credentialRegistry": "سجل الاعتماد",
+    "errors": {
+      "savingFailed": {
+        "title": "فشل حفظ بطاقة",
+        "message": "حدث خطأ أثناء حفظ البطاقة في المتجر."
+      },
+      "diskFullError": {
+        "title": "فشل حفظ بطاقة",
+        "message": "لا يمكن استلام المزيد من بطاقةالبطاقات أو حفظه لأن بيانات التطبيق ممتلئة."
+      }
+    }
   },
   "HomeScreenKebabPopUp": {
     "title": "المزيد من الخيارات",
@@ -71,7 +82,8 @@
     "viewActivityLog": "عرض سجل النشاط",
     "removeFromWallet": "إزالة من المحفظة",
     "revokeId": "إبطال الهوية",
-    "revokeMessage": "إبطال المعرف الظاهري لملف التعريف هذا"
+    "revokeMessage": "إبطال المعرف الظاهري لملف التعريف هذا",
+    "ActivityLog": "عرض سجل النشاط"
   },
   "WalletBinding": {
     "inProgress": "في تَقَدم",
@@ -123,6 +135,11 @@
     "clickHere": "انقر هنا",
     "version": "الإصدار: 0.4.1.1",
     "tuvaliVersion": "نسخة توفالي: v0.3.9-b16c5ea"
+  },
+  "HomeScreen": {
+    "myVcsTab": "محذوف\nبطاقة",
+    "receivedVcsTab": "مستلم\nبطاقة",
+    "historyTab": "تاريخ"
   },
   "HelpScreen": {
     "header": "يساعد",
@@ -196,7 +213,6 @@
     "header": "استرجع هويتك",
     "guideLabel": "حدد نوع المعرف وأدخل UIN أو VID المقدم من MOSIP للمعرف الذي ترغب في استرداده",
     "generateVc": "إنشاء بطاقة",
-    "downloadID": "معرف التنزيل",
     "enterId": "أدخل {{idType}}",
     "noUIN/VID": "ليس لديك UIN / VID؟ ",
     "getItHere": "احصل عليها الآن",
@@ -209,10 +225,22 @@
     "resendCode": "أعد إرسال الرمز"
   },
   "MyVcsTab": {
-    "downloadCard": "تحميل البطاقة",
+    "addVcButton": "بطاقة إضافة",
+    "generateVc": "البطاقاتإنشاء",
+    "generateVcDescription": "اضغط على \"إضافة بطاقة \" أدناه لتنزيل بطاقتك",
+    "downloadID": "تحميل البطاقة",
     "bringYourDigitalID": "أحضر هويتك الرقمية",
-    "generateVcDescription": "لتنزيل بطاقة انقر على تنزيل بطاقة أدناه",
-    "downloadingYourId": "تنزيل بطاقتك ، قد يستغرق هذا ما يصل إلى 5 دقائق"
+    "downloadingYourId": "تنزيل بطاقتك ، قد يستغرق هذا ما يصل إلى 5 دقائق",
+    "errors": {
+      "savingFailed": {
+        "title": "فشل حفظ بطاقة",
+        "message": "حدث خطأ أثناء حفظ البطاقة في المتجر."
+      },
+      "diskFullError": {
+        "title": "فشل حفظ بطاقة",
+        "message": "لا يمكن استلام المزيد من بطاقةالبطاقات أو حفظه لأن بيانات التطبيق ممتلئة."
+      }
+    }
   },
   "OnboardingOverlay": {
     "stepOneTitle": "مشاركة آمنة!",
@@ -223,7 +251,7 @@
     "stepThreeText": "شارك بطاقاتك بأمان وبطريقة خالية من المتاعب واستفد من الخدمات المتنوعة.",
     "stepFourTitle": "مصادقة خالية من المتاعب",
     "stepFourText": "قم بمصادقة نفسك بسهولة باستخدام بيانات الاعتماد الرقمية المخزنة.",
-    "stepFourButton": "البدء",    
+    "stepFourButton": "البدء",
     "skip": "يتخطى",
     "next": "التالي"
   },
@@ -270,6 +298,22 @@
     "version": "الإصدار",
     "useBle": "مدعوم من BLE",
     "useGoogleNearby": "مدعوم من GoogleNearby"
+  },
+  "ProfileScreen": {
+    "name": "اسم",
+    "vcLabel": "تسمية VC",
+    "language": "اللغة",
+    "credentialRegistry": "سجل الاعتماد",
+    "bioUnlock": "افتح مع القياسات الحيوية",
+    "authFactorUnlock": "إلغاء تأمين عامل المصادقة",
+    "AppMetaData": "حول إنجي",
+    "logout": "تسجيل خروج",
+    "revokeLabel": "إبطال VID",
+    "revokeHeader": "إبطال VID",
+    "revokingVids": "({{count}}) أنت على وشك إلغاء معرّفات VID.",
+    "revokingVidsAfter": "هذا يعني أنك لن تكون قادرًا على استخدام أو عرض أي من المعرفات المرتبطة بمعرف (معرفات) VID هؤلاء. \nهل انت متأكد انك تريد المتابعة?",
+    "empty": "فارغة",
+    "revokeSuccessful": "تم إبطال VID بنجاح"
   },
   "QrScreen": {
     "title": "QR تسجيل الدخول",
@@ -325,11 +369,11 @@
     "status": {
       "accepted": {
         "title": "نجاح!",
-        "message": "تم استلام بطاقةبنجاح من  {{sender}}"
+        "message": "تم استلام بطاقةبنجاح من  محفظة"
       },
       "rejected": {
         "title": " إشعار",
-        "message": "لقد رفضت  {{sender}}  بطاقة"
+        "message": "لقد رفضت  محفظة  بطاقة"
       },
       "disconnected": {
         "title": "ير متصل",
@@ -358,10 +402,12 @@
   },
   "ScanScreen": {
     "header": "مسح رمز الاستجابة السريعة",
-    "noShareableVcs": "لا تتوفر بطاقة قابلة للمشاركة.",
-    "sharingVc": "مشاركة بطاقة",
-    "bluetoothStateIos": "تم إيقاف تشغيل البلوتوث ، يرجى تشغيله من مركز التحكم",
-    "bluetoothStateAndroid": "تم إيقاف تشغيل البلوتوث ، يرجى تشغيله من قائمة الإعدادات السريعة",
+    "noShareableVcs": "لا تتوفر بطاقات قابلة للمشاركة.",
+    "bluetoothStateAndroid": "يرجى تشغيل البلوتوث من الإعدادات السريعة لدعم المشاركة المحلية",
+    "bluetoothStateIos": "يرجى تشغيل البلوتوث من مركز التحكم لدعم المشاركة المحلية",
+    "enableBluetoothMessage": "يرجى تمكين أذونات البلوتوث لدعم المشاركة المحلية",
+    "enableBluetoothButtonText": "السماح لأذونات البلوتوث",
+    "sharingVc": "مشاركة بطاقة ",
     "errors": {
       "locationDisabled": {
         "message": "يجب تمكين خدمات الموقع لوظيفة المسح",
@@ -390,12 +436,12 @@
       },
       "accepted": {
         "title": "تم مشاركة المعرف بنجاح",
-        "message": "تمت مشاركة بطاقة بنجاح مع {{receiver}}",
+        "message": "تمت مشاركة بطاقة بنجاح مع المدقق",
         "gotohome": "اذهب الى المنزل"
       },
       "rejected": {
         "title": "يلاحظ",
-        "message": "تم تجاهل بطاقة بواسطة {{receiver}}"
+        "message": "تم تجاهل بطاقة بواسطة المدقق"
       },
       "bleError": {
         "title": "فشل التحويل!",
@@ -424,11 +470,11 @@
       },
       "accepted": {
         "title": "النجاح!",
-        "message": "تمت مشاركة بطاقة بنجاح مع {{receiver}}"
+        "message": "تمت مشاركة بطاقة بنجاح مع المدقق"
       },
       "rejected": {
         "title": "تنويه",
-        "message": "تم رفض بطاقة من قِبل {{receiver}}"
+        "message": "تم رفض بطاقة من قِبل المدقق"
       }
     }
   },
@@ -453,11 +499,11 @@
     },
     "statusAccepted": {
       "title": "نجاح!",
-      "message": "تمت مشاركة بطاقة بنجاح مع{{receiver}}"
+      "message": "تمت مشاركة بطاقة بنجاح معالمدقق"
     },
     "statusRejected": {
       "title": " إشعار",
-      "message": "تم رفض  بطاقةمن قِبل {{receiver}}"
+      "message": "تم رفض  بطاقةمن قِبل المدقق"
     }
   },
   "WelcomeScreen": {

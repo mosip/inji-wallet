@@ -7,7 +7,11 @@ export const DeviceInfoList: React.FC<DeviceInfoProps> = (props) => {
 
   return (
     <React.Fragment>
-      <Text>{props.deviceInfo.deviceName}</Text>
+      <TextItem
+        divider
+        label={props.of === 'receiver' ? t('requestedBy') : t('sentBy')}
+        text={t(props.deviceInfo.deviceName)}
+      />
     </React.Fragment>
   );
 };

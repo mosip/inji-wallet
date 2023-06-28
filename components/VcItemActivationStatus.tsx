@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Dimensions, Pressable } from 'react-native';
+import { Dimensions } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { ActorRefFrom } from 'xstate';
 import { vcItemMachine } from '../machines/vcItem';

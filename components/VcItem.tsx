@@ -1,7 +1,6 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useRef } from 'react';
 import { useInterpret, useSelector } from '@xstate/react';
-import { Pressable, Image, ImageBackground, Dimensions } from 'react-native';
-import { CheckBox, Icon } from 'react-native-elements';
+import { Pressable } from 'react-native';
 import { ActorRefFrom } from 'xstate';
 import {
   createVcItemMachine,
@@ -19,14 +18,10 @@ import { VcItemEvents } from '../machines/vcItem';
 import { ErrorMessageOverlay } from '../components/MessageOverlay';
 import { Theme } from './ui/styleUtils';
 import { GlobalContext } from '../shared/GlobalContext';
-import { useTranslation } from 'react-i18next';
-import { VcItemTags } from './VcItemTags';
-import { KebabPopUp } from './KebabPopUp';
-import VerifiedIcon from './VerifiedIcon';
-import { getLocalizedField } from '../i18n';
 import { VcItemContent } from './VcItemContent';
 import { VcItemActivationStatus } from './VcItemActivationStatus';
-import { Column, Row } from './ui';
+import { Row } from './ui';
+import { KebabPopUp } from './KebabPopUp';
 
 export const VcItem: React.FC<VcItemProps> = (props) => {
   const { appService } = useContext(GlobalContext);
@@ -42,10 +37,10 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
   const verifiableCredential = useSelector(service, selectVerifiableCredential);
   const emptyWalletBindingId = useSelector(service, selectEmptyWalletBindingId);
   const isKebabPopUp = useSelector(service, selectKebabPopUp);
+  const DISMISS = () => service.send(VcItemEvents.DISMISS());
   const KEBAB_POPUP = () => service.send(VcItemEvents.KEBAB_POPUP());
   const storeError = useSelector(service, selectStoreError);
   const isSavingFailedInIdle = useSelector(service, selectIsSavingFailedInIdle);
-  const DISMISS = () => service.send(VcItemEvents.DISMISS());
 
   let storeErrorTranslationPath = 'errors.savingFailed';
 
@@ -57,6 +52,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
 
   const generatedOn = useSelector(service, selectGeneratedOn);
   const tag = useSelector(service, selectTag);
+
   return (
     <React.Fragment>
       <Pressable
@@ -72,6 +68,12 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
           verifiableCredential={verifiableCredential}
           generatedOn={generatedOn}
           tag={tag}
+          selectable={props.selectable}
+          selected={props.selected}
+          service={service}
+          iconName={props.iconName}
+          iconType={props.iconType}
+          onPress={() => props.onPress(service)}
         />
         <Row crossAlign="center">
           {props.activeTab !== 'receivedVcsTab' &&
@@ -113,7 +115,7 @@ interface VcItemProps {
   showOnlyBindedVc?: boolean;
   onPress?: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
   onShow?: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
+  activeTab?: string;
   iconName?: string;
   iconType?: string;
-  activeTab?: string;
 }

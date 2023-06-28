@@ -374,8 +374,8 @@
       "exchangingDeviceInfoTimeout": "It's taking a while to exchange device info. You may have to reconnect.",
       "invalid": "Invalid QR Code",
       "offline": "Please connect to the internet to scan QR codes using Online sharing mode",
-      "sent": "{{ vcLabel }} has been sent...",
-      "sentHint": "Waiting for receiver to save or discard your {{ vcLabel }}",
+      "sent": "Card has been sent...",
+      "sentHint": "Waiting for receiver to save or discard your Card",
       "sharing": {
         "title": "Sharing...",
         "hint": "Please wait for the receiving device to accept or reject the share.",

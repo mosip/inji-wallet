@@ -38,14 +38,14 @@ export const RemoveVcWarningOverlay: React.FC<RemoveVcWarningOverlayProps> = (
             size="small"
             weight="semibold"
             color={Theme.Colors.GrayText}>
-            {t('BindingWarning')}
+            {t('RemoveWarning')}
           </Text>
         </Column>
 
         <Button
           margin={'30 0 0 0'}
           type="gradient"
-          title={t('yesConfirm')}
+          title={t('confirm')}
           onPress={props.onConfirm}
         />
 

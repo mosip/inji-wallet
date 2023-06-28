@@ -12,6 +12,7 @@ import { KeyboardAvoidingView, Platform } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { MessageOverlay } from '../../../components/MessageOverlay';
 import Tooltip from '../../../lib/react-native-elements/tooltip/Tooltip';
+import { color } from 'react-native-elements/dist/helpers';
 
 export const GetIdInputModal: React.FC<GetIdInputModalProps> = (props) => {
   const { t } = useTranslation('GetIdInputModal');
@@ -30,7 +31,10 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = (props) => {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <Column fill align="space-between" padding="32 24">
           <Column>
-            <Text weight="semibold" color={Theme.Colors.GrayText} margin="10">
+            <Text
+              margin="10"
+              style={{ color: Theme.Colors.GrayText }}
+              weight="regular">
               {t('applicationIdLabel')}
             </Text>
             <Row crossAlign="flex-end">

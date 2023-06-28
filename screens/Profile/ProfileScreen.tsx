@@ -62,6 +62,7 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
           value={controller.name}
           onEdit={controller.UPDATE_NAME}
           Icon="user"
+          credentialRegistryResponse={''}
         />
         {/* Intentionally hidden using {display='none'} - Refer mosip/inji/issue#607 */}
         <EditableListItem
@@ -70,6 +71,7 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
           onEdit={controller.UPDATE_VC_LABEL}
           Icon="star"
           display="none"
+          credentialRegistryResponse={''}
         />
         <LanguageSetting />
         <Revoke label={t('revokeLabel')} Icon="rotate-left" />
