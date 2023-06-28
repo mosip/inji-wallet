@@ -11,17 +11,13 @@
     "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "الواردة. فشل التحقق من التواجد",
     "PRESENCE_VERIFIED_AND_VC_SHARED": "التحقق منها ومشاركتها",
     "PRESENCE_VERIFICATION_FAILED": "فشل التحقق",
-    "QRLOGIN_SUCCESFULL": "QRL تم تسجيل الدخول بنجاح",
-    "WALLET_BINDING_SUCCESSFULL": "تفعيل ناجحة",
-    "WALLET_BINDING_FAILURE": "فشل التفعيل"
+    "QRLOGIN_SUCCESFULL": "QRL تم تسجيل الدخول بنجاح"
   },
   "DeviceInfoList": {
     "requestedBy": "مطلوب بواسطة",
     "sentBy": "مرسل بواسطة",
     "deviceRefNumber": "الرقم المرجعي للجهاز",
-    "name": "اسم",
-    "Verifier": "المدقق",
-    "Wallet": "محفظة"
+    "name": "اسم"
   },
   "FaceScanner": {},
   "OIDcAuth": {
@@ -50,6 +46,7 @@
     "reasonForSharing": "سبب المشاركة",
     "idType": "نوع الهوية",
     "id": "بطاقة تعريف",
+    "qrCodeHeader": "رمز الاستجابة السريعة",
     "nationalCard": "البطاقة الوطنية",
     "uin": "UIN",
     "vid": "VID",
@@ -85,8 +82,7 @@
     "viewActivityLog": "عرض سجل النشاط",
     "removeFromWallet": "إزالة من المحفظة",
     "revokeId": "إبطال الهوية",
-    "revokeMessage": "إبطال المعرف الظاهري لملف التعريف هذا",
-    "ActivityLog": "عرض سجل النشاط"
+    "revokeMessage": "إبطال المعرف الظاهري لملف التعريف هذا"
   },
   "WalletBinding": {
     "inProgress": "في تَقَدم",
@@ -144,6 +140,8 @@
   },
   "SettingScreen": {
     "header": "إعدادات",
+    "injiAsVerifierApp": "  كتطبيق للتحقق إنجي",
+    "basicSettings": "الإعدادات الأساسية",
     "bioUnlock": "افتح مع القياسات الحيوية",
     "language": "لغة",
     "aboutInji": "حول إنجي",
@@ -173,7 +171,6 @@
     "detailes": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since."
   },
   "AddVcModal": {
-    "header": "استرجع بطاقتك",
     "requestingCredential": "جارٍ طلب بيانات الاعتماد...",
     "errors": {
       "input": {
@@ -205,13 +202,12 @@
         "applicationProcessing": "غير جاهز AID",
         "noMessageAvailable": "حاول بعد فترة",
         "networkRequestFailed": "فشل طلب الشبكة",
-        "invalidAid": "AID الذي تم إدخاله غير متوفر. يرجى التحقق من AID الخاص بك قبل الدخول",
         "timeout": "نفذ الوقت"
       }
     }
   },
   "DownloadingVcModal": {
-    "header": "تنزيل بطاقتك",
+    "header": "تنزيل ملفبطاقة",
     "bodyText": "قد يستغرق هذا بعض الوقت ، وسنخبرك عندما يتم تنزيل بطاقة وإتاحته",
     "backButton": "العودة إلى المنزل"
   },
@@ -224,8 +220,9 @@
     "getUIN": "احصل على UIN / VID"
   },
   "IdInputModal": {
-    "header": "أدخل UIN / VID لتنزيل بطاقتك",
-    "generateVc": "يولد لي بطاقة",
+    "header": "استرجع هويتك",
+    "guideLabel": "حدد نوع المعرف وأدخل UIN أو VID المقدم من MOSIP للمعرف الذي ترغب في استرداده",
+    "generateVc": "إنشاء بطاقة",
     "enterId": "أدخل {{idType}}",
     "noUIN/VID": "ليس لديك UIN / VID؟ ",
     "getItHere": "احصل عليها الآن",
@@ -267,8 +264,10 @@
     "next": "التالي"
   },
   "ReceivedVcsTab": {
-    "noReceivedVcsTitle": "لا يوجد البطاقات متاح حتى الآن",
-    "noReceivedVcsText": "اضغط على الطلب أدناه لاستلام البطاقة"
+    "receivedCards": "البطاقات المستلمة",
+    "header": "البطاقات المستلمة",
+    "noReceivedVcsTitle": "لا يوجد بطاقة متاح حتى الآن",
+    "noReceivedVcsText": "اضغط على الطلب أدناه لتلقيبطاقة"
   },
   "ViewVcModal": {
     "title": "تفاصيل الهوية",
@@ -283,8 +282,8 @@
     "editTag": "إعادة تسمية",
     "redirecting": "إعادة توجيه...",
     "success": {
-      "unlocked": "تم إلغاء قفل بطاقة  بنجاح",
-      "locked": "تم قفل بطاقة  بنجاح",
+      "unlocked": "تم إلغاء قفل بطاقة بنجاح",
+      "locked": "تم قفل بطاقة بنجاح",
       "revoked": "تم إبطال VID {{vid}}. ستتم إزالة أي بيانات اعتماد تحتوي على نفس الشيء تلقائيًا من المحفظة"
     }
   },
@@ -303,7 +302,8 @@
   "AppMetaData": {
     "header": "حول إنجي",
     "version": "الإصدار",
-    "useBle": "Powered by BLE"
+    "useBle": "مدعوم من BLE",
+    "useGoogleNearby": "مدعوم من GoogleNearby"
   },
   "ProfileScreen": {
     "name": "اسم",
@@ -328,7 +328,7 @@
     "checkDomain": "تحقق أيضًا من وجود رمز قفل على شريط العناوين.",
     "domainHead": "https://",
     "selectId": "حدد المعرف",
-    "noBindedVc": "لا يوجد البطاقات مرتبط متاح للتحقق",
+    "noBindedVc": "لا يوجد بطاقة مرتبط متاح للتحقق",
     "back": "عُد",
     "confirm": "يتأكد",
     "verify": "تحقق",
@@ -347,46 +347,39 @@
     "required": "مطلوب"
   },
   "ReceiveVcScreen": {
-    "header": "تفاصيل بطاقة ",
-    "save": "احفظ البطاقة",
-    "acceptRequest": "قبول الطلب واختيار البطاقة",
-    "acceptRequestAndVerify": "قبول الطلب والتحقق",
-    "reject": "رفض",
+    "header": "تفاصيل بطاقة",
+    "save": "احفظ بطاقة",
+    "verifyAndSave": "تحقق وحفظ",
+    "reject": "يرفض",
     "discard": "ينبذ",
-    "goToReceivedVCTab": "عرض البطاقات المستلمة",
-    "saving": "إنقاذ",
+    "goToReceivedVCTab": "عرض تم استلامه بطاقة",
     "errors": {
       "savingFailed": {
         "title": "فشل حفظ بطاقة",
-        "message": "حدث خطأ أثناء حفظ البطاقة في المتجر."
+        "message": "شئ ما ذهب خطأ بينما إنقاذ بطاقة ل ال محل."
       },
       "diskFullError": {
         "title": "فشل حفظ بطاقة",
-        "message": "لا يمكن استلام المزيد من بطاقةالبطاقات أو حفظه لأن بيانات التطبيق ممتلئة."
+        "message": "لا يمكن استلام المزيد من {{vcLabelPlural}} أو حفظه لأن بيانات التطبيق ممتلئة."
       }
     }
   },
   "RequestScreen": {
-    "bluetoothDenied": "يرجى تمكين البلوتوث لتتمكن من طلب البطاقة",
-    "bluetoothStateAndroid": "يرجى تشغيل البلوتوث من الإعدادات السريعة لدعم المشاركة المحلية",
-    "bluetoothStateIos": "يرجى تشغيل البلوتوث من مركز التحكم لدعم المشاركة المحلية",
-    "showQrCode": "اعرض  رمز الاستجابة السريعة هذا لطلب المقيم بطاقة ",
-    "incomingVc": "بطاقة واردة",
+    "receiveCard": "البطاقة المستلمة",
+    "bluetoothDenied": "الرجاء تمكين Bluetooth لتتمكن من طلببطاقة",
+    "bluetoothStateIos": "تم إيقاف تشغيل البلوتوث ، يرجى تشغيله من مركز التحكم",
+    "bluetoothStateAndroid": "تم إيقاف تشغيل البلوتوث ، يرجى تشغيله من قائمة الإعدادات السريعة",
+    "showQrCode": "اعرض  رمز الاستجابة السريعة هذا لطلب المقيم بطاقة",
+    "incomingVc": "الوارد بطاقة",
     "request": "طلب",
-    "errors": {
-      "nearbyDevicesPermissionDenied": {
-        "message": "مطلوب إذن الأجهزة المجاورة لتتمكن من طلب البطاقة",
-        "button": "السماح إذن"
-      }
-    },
     "status": {
       "accepted": {
         "title": "نجاح!",
-        "message": "تم استلام بطاقة بنجاح من  محفظة"
+        "message": "تم استلام بطاقةبنجاح من  {{sender}}"
       },
       "rejected": {
         "title": " إشعار",
-        "message": "تم تجاهل بطاقة المحفظة بواسطتك"
+        "message": "لقد رفضت  {{sender}}  بطاقة"
       },
       "disconnected": {
         "title": "ير متصل",
@@ -398,14 +391,14 @@
         "timeoutHint": "يستغرق تبادل معلومات الجهاز وقتًا طويلاً..."
       },
       "connected": {
-        "message": "متصل بالجهاز. في انتظار بطاقة ...",
+        "message": "متصل بالجهاز. في انتظار بطاقة...",
         "timeoutHint": "لم ترد بيانات حتى الآن. هل جهاز الإرسال لا يزال متصلاً؟"
       },
       "offline": {
         "message": "يرجى الاتصال بالإنترنت لتمكين وضع المشاركة عبر الإنترنت"
       },
       "bleError": {
-        "title": "فشل التحويل",
+        "title": "فشل التحويل!",
         "message": "حدث خطأ أثناء نقل بطاقة. حاول مرة اخرى."
       }
     },
@@ -423,16 +416,12 @@
     "sharingVc": "مشاركة بطاقة ",
     "errors": {
       "locationDisabled": {
-        "message": "يجب تمكين خدمات الموقع لمشاركة البطاقة",
+        "message": "يجب تمكين خدمات الموقع لوظيفة المسح",
         "button": "تمكين خدمات الموقع"
       },
       "locationDenied": {
-        "message": "مطلوب إذن الموقع لمشاركة البطاقة",
+        "message": "إذن الموقع مطلوب لوظيفة المسح",
         "button": "الموقع"
-      },
-      "nearbyDevicesPermissionDenied": {
-        "message": "مطلوب إذن \"الأجهزة المجاورة\" لتتمكن من مشاركة البطاقة",
-        "button": "السماح إذن"
       }
     },
     "status": {
@@ -442,40 +431,40 @@
       "connectingTimeout": "يستغرق إنشاء الاتصال بعض الوقت. هل الجهاز الآخر مفتوح للاتصالات؟",
       "exchangingDeviceInfo": "تبادل معلومات الجهاز ...",
       "exchangingDeviceInfoTimeout": "يستغرق الأمر بعض الوقت لتبادل معلومات الجهاز. قد تضطر إلى إعادة الاتصال.",
-      "invalid": "غير صالح",
+      "invalid": "رمز الاستجابة السريعة غير صالح",
       "offline": "يرجى الاتصال بالإنترنت لمسح رموز QR ضوئيًا باستخدام وضع المشاركة عبر الإنترنت",
-      "sent": "تم إرسال البطاقة ...",
-      "sentHint": "في انتظار أن يحفظ المستلم بطاقة  أو يتجاهلها",
+      "sent": "تم إرسال بطاقة ...",
+      "sentHint": "في انتظار أن يحفظ المستلم بطاقة أو يتجاهلها",
       "sharing": {
         "title": "مشاركة...",
         "hint": "الرجاء الانتظار حتى يقبل الجهاز المتلقي المشاركة أو يرفضها.",
         "timeoutHint": "تستغرق مشاركتها وقتًا أطول من المتوقع. قد تكون هناك مشكلة في الاتصال."
       },
       "accepted": {
-        "title": "نجاح!",
-        "message": "تمت مشاركة بطاقة  بنجاح مع المدقق"
+        "title": "تم مشاركة المعرف بنجاح",
+        "message": "تمت مشاركة بطاقة بنجاح مع {{receiver}}",
+        "gotohome": "اذهب الى المنزل"
       },
       "rejected": {
         "title": "يلاحظ",
-        "message": "تم تجاهل بطاقة  بواسطة المدقق"
+        "message": "تم تجاهل بطاقة بواسطة {{receiver}}"
       },
       "bleError": {
-        "title": "فشل التحويل",
-        "message": "حدث خطأ أثناء نقل بطاقة . حاول مرة اخرى.",
-        "hint": "خطأ: {{code}}"
+        "title": "فشل التحويل!",
+        "message": "حدث خطأ أثناء نقل بطاقة. حاول مرة اخرى."
       }
     }
   },
   "SelectVcOverlay": {
-    "header": "يشارك بطاقة ",
-    "chooseVc": "اختر بطاقة  الذي ترغب في المشاركة معه",
+    "header": "يشارك بطاقة",
+    "chooseVc": "اختر بطاقة الذي ترغب في المشاركة معه",
     "share": "شارك",
     "verifyAndShare": "التحقق من الهوية والمشاركة"
   },
   "SendVcScreen": {
     "reasonForSharing": "سبب المشاركة (اختياري)",
     "acceptRequest": "يشارك",
-    "acceptRequestAndVerify": "شارك مع سيلفي",
+    "acceptRequestAndVerify": "شارك مع Selfie",
     "reject": "رفض",
     "consentToPhotoVerification": "أوافق على التقاط صورتي للمصادقة",
     "pleaseSelectAnId": "الرجاء تحديد معرف",
@@ -509,7 +498,7 @@
   },
   "SendVcModal": {
     "reasonForSharing": "سبب المشاركة  (optional)",
-    "acceptRequest": "اقبل الطلب واختر البطاقة",
+    "acceptRequest": "قبول الطلب واختيار بطاقة",
     "reject": "رفض",
     "statusSharing": {
       "title": "مشاركة ..."
@@ -520,13 +509,18 @@
     },
     "statusRejected": {
       "title": " إشعار",
-      "message": "تم رفض بطاقتك من قِبل {{receiver}}"
+      "message": "تم رفض  بطاقةمن قِبل {{receiver}}"
     }
   },
   "WelcomeScreen": {
     "title": "حل هوية مفتوحة المصدر",
     "getStarted": "البدء",
     "unlockApp": "فتح التطبيق"
+  },
+  "SetupLanguage": {
+    "header": "حدد اللغة",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+    "save": "حفظ التفضيل"
   },
   "common": {
     "cancel": "إلغاء",
@@ -539,9 +533,6 @@
         "missingPermission": "يستخدم هذا التطبيق الكاميرا لمسح رمز الاستجابة السريعة لجهاز آخر."
       },
       "allowAccess": "اسمح بالوصول إلى الكاميرا"
-    },
-    "errors": {
-      "genericError": "هناك خطأ ما. من فضلك حاول مرة أخرى بعد بعض من الوقت!"
     }
   }
 }

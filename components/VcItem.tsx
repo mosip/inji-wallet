@@ -36,11 +36,11 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
   const context = useSelector(service, selectContext);
   const verifiableCredential = useSelector(service, selectVerifiableCredential);
   const emptyWalletBindingId = useSelector(service, selectEmptyWalletBindingId);
-  const storeError = useSelector(service, selectStoreError);
-  const isSavingFailedInIdle = useSelector(service, selectIsSavingFailedInIdle);
   const isKebabPopUp = useSelector(service, selectKebabPopUp);
   const DISMISS = () => service.send(VcItemEvents.DISMISS());
   const KEBAB_POPUP = () => service.send(VcItemEvents.KEBAB_POPUP());
+  const storeError = useSelector(service, selectStoreError);
+  const isSavingFailedInIdle = useSelector(service, selectIsSavingFailedInIdle);
 
   let storeErrorTranslationPath = 'errors.savingFailed';
 

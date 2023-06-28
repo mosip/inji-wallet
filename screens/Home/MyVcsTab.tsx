@@ -9,6 +9,7 @@ import { GetVcModal } from './MyVcs/GetVcModal';
 import { useTranslation } from 'react-i18next';
 import { VcItem } from '../../components/VcItem';
 import { GET_INDIVIDUAL_ID } from '../../shared/constants';
+import { ErrorMessageOverlay } from '../../components/MessageOverlay';
 import { Icon } from 'react-native-elements';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
@@ -67,7 +68,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
     <React.Fragment>
       <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
         <DownloadingIdPopUp />
-        <Column fill pY={10} pX={18}>
+        <Column fill pY={18} pX={15}>
           {controller.vcKeys.length > 0 && (
             <React.Fragment>
               <Column
@@ -120,7 +121,11 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
             <React.Fragment>
               <Column fill style={Theme.Styles.homeScreenContainer}>
                 <Image source={Theme.DigitalIdentityLogo} />
-                <Text weight="bold" margin="33 0 6 0" lineHeight={1}>
+                <Text
+                  align="center"
+                  weight="bold"
+                  margin="33 0 6 0"
+                  lineHeight={1}>
                   {t('bringYourDigitalID')}
                 </Text>
                 <Text
@@ -149,6 +154,12 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
       {controller.GetVcModalService && (
         <GetVcModal service={controller.GetVcModalService} />
       )}
+      <ErrorMessageOverlay
+        translationPath={'MyVcsTab'}
+        isVisible={controller.isSavingFailedInIdle}
+        error={storeErrorTranslationPath}
+        onDismiss={controller.DISMISS}
+      />
     </React.Fragment>
   );
 };

@@ -40,7 +40,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
       onDismiss={dismissInput}
       isVisible={props.isVisible}
       onShow={setIndividualID}
-      headerTitle={props.headerTitle}
+      headerTitle={t('header')}
       headerElevation={2}>
       <KeyboardAvoidingView
         style={{ flex: 1 }}

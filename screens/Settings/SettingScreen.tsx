@@ -1,7 +1,7 @@
 import React from 'react';
 import { Linking, Pressable, View } from 'react-native';
 import { Icon, ListItem, Switch } from 'react-native-elements';
-import { Column, Text } from '../../components/ui';
+import { Row, Column, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { MainRouteProps } from '../../routes/main';
 import { MessageOverlay } from '../../components/MessageOverlay';
@@ -13,6 +13,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Modal } from '../../components/ui/Modal';
 import getAllConfigurations from '../../shared/commonprops/commonProps';
 import { AboutInji } from './AboutInji';
+import { ReceiveCard } from './ReceiveCard';
+import { ReceivedCards } from './ReceivedCards';
 
 const LanguageSetting: React.FC = () => {
   const { t } = useTranslation('SettingScreen');
@@ -20,7 +22,7 @@ const LanguageSetting: React.FC = () => {
   return (
     <LanguageSelector
       triggerComponent={
-        <ListItem bottomDivider topDivider>
+        <ListItem>
           <Icon
             name="globe"
             size={22}
@@ -68,8 +70,25 @@ export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
         headerTitle={t('header')}
         headerElevation={2}
         onDismiss={controller.TOGGLE_SETTINGS}>
-        <ScrollView>
-          <Column fill backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
+        <ScrollView backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
+          <Text weight="semibold" margin="10" color={Theme.Colors.aboutVersion}>
+            {t('injiAsVerifierApp')}
+          </Text>
+          <Row
+            align="space-evenly"
+            backgroundColor={Theme.Colors.whiteBackgroundColor}>
+            <ReceiveCard />
+            <ReceivedCards
+              isVisible={false}
+              service={undefined}
+              vcItemActor={undefined}
+            />
+          </Row>
+
+          <Text weight="semibold" margin="10" color={Theme.Colors.aboutVersion}>
+            {t('basicSettings')}
+          </Text>
+          <Column fill>
             <MessageOverlay
               isVisible={controller.alertMsg != ''}
               onBackdropPress={controller.hideAlert}
@@ -78,10 +97,7 @@ export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
 
             <LanguageSetting />
 
-            <ListItem
-              topDivider
-              bottomDivider
-              disabled={!controller.canUseBiometrics}>
+            <ListItem topDivider disabled={!controller.canUseBiometrics}>
               <Image
                 source={require('../../assets/biometric-unlock-icon.png')}
                 style={{ marginLeft: 10, marginRight: 9 }}
@@ -104,6 +120,7 @@ export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
 
             <ListItem
               topDivider
+              bottomDivider
               onPress={() => {
                 Linking.openURL(helpUrl);
               }}>
@@ -120,7 +137,7 @@ export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
               </ListItem.Content>
             </ListItem>
 
-            <ListItem topDivider onPress={controller.LOGOUT}>
+            <ListItem onPress={controller.LOGOUT}>
               <Icon
                 name="logout"
                 type="fontawesome"

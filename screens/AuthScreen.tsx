@@ -24,11 +24,15 @@ export const AuthScreen: React.FC<RootRouteProps> = (props) => {
       />
       <Column>
         <Icon name="fingerprint" size={80} color={Theme.Colors.Icon} />
-        <Column margin="20 0 0 0">
-          <Text weight="semibold" align="center">
+        <Column margin="30 0 0 0">
+          <Text align="center" style={Theme.TextStyles.header}>
             {t('header')}
           </Text>
-          <Text align="center" color={Theme.Colors.GrayText}>
+          <Text
+            align="center"
+            weight="semibold"
+            color={Theme.Colors.GrayText}
+            margin="6 0">
             {t('Description')}
           </Text>
         </Column>
@@ -37,7 +41,7 @@ export const AuthScreen: React.FC<RootRouteProps> = (props) => {
       <Column>
         <Button
           title={t('useBiometrics')}
-          type="radius"
+          type="gradient"
           margin="0 0 8 0"
           disabled={!controller.isBiometricsAvailable}
           onPress={controller.useBiometrics}

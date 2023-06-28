@@ -26,7 +26,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
   }
 
   return (
-    <Column>
+    <Column margin="10">
       <ImageBackground
         borderRadius={10}
         style={Theme.Styles.openCardBgContainer}
@@ -247,6 +247,22 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
               </Text>
             </Row>
           </Column>
+          {CREDENTIAL_REGISTRY_EDIT === 'true' && (
+            <Column fill style={Theme.Styles.labelPart}>
+              <Text
+                weight="bold"
+                size="smaller"
+                color={Theme.Colors.DetailsLabel}>
+                {t('credentialRegistry')}
+              </Text>
+              <Text
+                weight="semibold"
+                size="smaller"
+                color={Theme.Colors.Details}>
+                {props.vc?.credentialRegistry}
+              </Text>
+            </Column>
+          )}
         </Column>
         <VcItemTags tag={props.vc?.tag} />
       </ImageBackground>

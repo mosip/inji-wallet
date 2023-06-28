@@ -186,9 +186,6 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
             />
           </Column>
         </Row>
-        {!props.verifiableCredential && (
-          <RotatingIcon name="sync" color={Theme.Colors.rotatingIcon} />
-        )}
       </Column>
       <VcItemTags tag={props.tag} />
     </ImageBackground>

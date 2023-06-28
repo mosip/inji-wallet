@@ -45,6 +45,7 @@ export const DefaultTheme = {
     AddIdBtnTxt: Colors.Orange,
     DownloadIdBtnTxt: Colors.White,
     Loading: Colors.Orange,
+    Cursor: Colors.Orange,
     noUinText: Colors.Orange,
     IconBg: Colors.Orange,
     popUp: Colors.Green,
@@ -210,7 +211,7 @@ export const DefaultTheme = {
       borderRadius: 10,
       margin: 5,
       borderWidth: 2,
-      borderColor: Colors.Green,
+      borderColor: Colors.Orange,
     },
     labelPartContainer: {
       marginLeft: 16,
@@ -293,6 +294,9 @@ export const DefaultTheme = {
     homeCloseCardDetailsHeader: {
       flex: 1,
     },
+    homeCloseCardDetailsHeader: {
+      flex: 1,
+    },
     cardDetailsHeader: {
       flex: 1,
       justifyContent: 'space-between',
@@ -336,6 +340,15 @@ export const DefaultTheme = {
       height: 36,
       borderRadius: 10,
       backgroundColor: Colors.LightOrange,
+    },
+    receiveCardsContainer: {
+      height: Dimensions.get('window').height * 0.12,
+      width: Dimensions.get('window').width * 0.45,
+      alignItems: 'center',
+      borderBottomRightRadius: 0,
+      padding: 15,
+      marginVertical: 18,
+      elevation: 1,
     },
     domainVerifiyIcon: {
       padding: 20,
@@ -587,7 +600,7 @@ export const DefaultTheme = {
     },
     gradient: {
       borderRadius: 9,
-      width: '88%',
+      width: Dimensions.get('window').width * 0.72,
       alignSelf: 'center',
       margin: 4,
     },
@@ -943,6 +956,8 @@ export const DefaultTheme = {
   WarningLogo: require('../../../assets/warningLogo.png'),
   OtpLogo: require('../../../assets/otp-mobile-logo.png'),
   SuccessLogo: require('../../../assets/success-logo.png'),
+  ReceiveCardIcon: require('../../../assets/receive-card-icon.png'),
+  ReceivedCardsIcon: require('../../../assets/received-cards-icon.png'),
   DigitalIdentityLogo: require('../../../assets/digital-identity-icon.png'),
   InjiLogoWhite: require('../../../assets/inji-logo-white.png'),
   InjiProgressingLogo: require('../../../assets/progressing-logo.png'),

@@ -56,7 +56,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
 
           <HistoryTab
             service={props.service}
-            label={t('ActivityLog')}
+            label={t('viewActivityLog')}
             vcKey={props.vcKey}
           />
 
@@ -65,7 +65,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
               <ListItem.Title>
                 <Pressable onPress={() => controller.REMOVE(props.vcKey)}>
                   <Text size="small" weight="bold">
-                    {t('Remove')}
+                    {t('removeFromWallet')}
                   </Text>
                 </Pressable>
               </ListItem.Title>

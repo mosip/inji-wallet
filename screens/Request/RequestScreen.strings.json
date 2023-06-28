@@ -1,5 +1,7 @@
 {
   "bluetoothDenied": "Please enable Bluetooth to be able to request Card",
+  "bluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
+    "bluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
   "nearbyDevicesPermissionDenied": "Please enable Nearby Devices Permission to be able to request card",
   "showQrCode": "Display this QR code to request resident Card",
   "incomingVc": "Incoming Card",
