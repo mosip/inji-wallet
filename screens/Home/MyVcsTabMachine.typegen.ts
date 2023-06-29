@@ -13,6 +13,11 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
+    'done.invoke.MyVcsTab.addVc.checkStorage:invocation[0]': {
+      type: 'done.invoke.MyVcsTab.addVc.checkStorage:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
     'xstate.init': { type: 'xstate.init' };
   };
   'invokeSrcNameMap': {};
@@ -26,7 +31,6 @@ export interface Typegen0 {
     completeOnboarding: 'ADD_VC' | 'ONBOARDING_DONE';
     getOnboardingStatus: 'xstate.init';
     sendVcAdded: 'STORE_RESPONSE';
-    setStoreError: 'STORE_ERROR';
     storeVcItem: 'done.invoke.AddVcModal';
     viewVcFromParent: 'VIEW_VC';
   };
@@ -35,10 +39,15 @@ export interface Typegen0 {
     isOnboardingDone: 'STORE_RESPONSE';
   };
   'eventsCausingServices': {
-    AddVcModal: 'ADD_VC' | 'done.invoke.GetVcModal';
+    AddVcModal:
+      | 'done.invoke.GetVcModal'
+      | 'done.invoke.MyVcsTab.addVc.checkStorage:invocation[0]';
     GetVcModal: 'GET_VC';
   };
   'matchesStates':
+    | 'addVc'
+    | 'addVc.checkStorage'
+    | 'addVc.storageLimitReached'
     | 'addingVc'
     | 'addingVc.addVcSuccessful'
     | 'addingVc.savingFailed'
@@ -52,6 +61,7 @@ export interface Typegen0 {
     | 'onboarding'
     | 'viewingVc'
     | {
+        addVc?: 'checkStorage' | 'storageLimitReached';
         addingVc?:
           | 'addVcSuccessful'
           | 'savingFailed'

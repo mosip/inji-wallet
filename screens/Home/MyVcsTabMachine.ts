@@ -17,11 +17,11 @@ import {
 } from '../../shared/constants';
 import { AddVcModalMachine } from './MyVcs/AddVcModalMachine';
 import { GetVcModalMachine } from './MyVcs/GetVcModalMachine';
+import isMaximumStorageLimitReached from '../../utils/isMaximumStorageLimitReached';
 
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
-    storeError: null as Error,
   },
   {
     events: {
@@ -34,6 +34,8 @@ const model = createModel(
       STORE_ERROR: (error: Error) => ({ error }),
       ADD_VC: () => ({}),
       GET_VC: () => ({}),
+      STORAGE_AVAILABLE: () => ({}),
+      STORAGE_UNAVAILABLE: () => ({}),
       ONBOARDING_DONE: () => ({}),
     },
   }
@@ -67,20 +69,46 @@ export const MyVcsTabMachine = model.createMachine(
       },
       onboarding: {
         on: {
-          ADD_VC: {
-            target: 'addingVc',
-            actions: ['completeOnboarding'],
-          },
+          ADD_VC: [
+            {
+              target: 'addVc',
+              actions: ['completeOnboarding'],
+            },
+          ],
           ONBOARDING_DONE: {
             target: 'idle',
             actions: ['completeOnboarding'],
           },
         },
       },
+      addVc: {
+        initial: 'checkStorage',
+        states: {
+          checkStorage: {
+            invoke: {
+              src: () => Promise.resolve(isMaximumStorageLimitReached()),
+              onDone: [
+                {
+                  cond: (_context, event) => event.data === true,
+                  target: 'storageLimitReached',
+                },
+                {
+                  target: '#MyVcsTab.addingVc',
+                },
+              ],
+            },
+          },
+          storageLimitReached: {
+            on: {
+              DISMISS: '#idle',
+            },
+          },
+        },
+      },
       idle: {
         id: 'idle',
         on: {
-          ADD_VC: 'addingVc',
+          ADD_VC: 'addVc',
           VIEW_VC: 'viewingVc',
           GET_VC: 'gettingVc',
         },
@@ -111,7 +139,6 @@ export const MyVcsTabMachine = model.createMachine(
                 actions: ['sendVcAdded'],
               },
               STORE_ERROR: {
-                actions: 'setStoreError',
                 target: '#MyVcsTab.addingVc.savingFailed',
               },
             },
@@ -180,10 +207,6 @@ export const MyVcsTabMachine = model.createMachine(
           to: (context) => context.serviceRefs.vc,
         }
       ),
-
-      setStoreError: model.assign({
-        storeError: (_context, event) => event.error,
-      }),
     },
 
     guards: {
@@ -219,10 +242,10 @@ export function selectIsRequestSuccessful(state: State) {
   return state.matches('addingVc.addVcSuccessful');
 }
 
-export function selectStoreError(state: State) {
-  return state.context.storeError;
-}
-
 export function selectIsSavingFailedInIdle(state: State) {
   return state.matches('addingVc.savingFailed.idle');
+}
+
+export function selectIsMaximumStorageLimitReached(state: State) {
+  return state.matches('addVc.storageLimitReached');
 }
