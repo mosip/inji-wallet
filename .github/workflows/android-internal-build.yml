@@ -1,4 +1,4 @@
-name: Android Custom Build
+name: Android Internal Build
 
 env:
   backendServiceDefaultUrl: https://api.sandbox.mosip.net
@@ -113,7 +113,7 @@ jobs:
       - name: Run Build
         run: | 
           cd android/scripts
-          ./run-fastlane.sh
+          ./internal-build.sh
         env:
           MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
           APPLICATION_THEME: ${{ github.event.inputs.theme }} 

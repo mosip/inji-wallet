@@ -107,10 +107,8 @@ jobs:
 
       - name: Run Build using Fastlane
         run: | 
-          cd android
-          yes | sudo gem install bundler
-          yes | sudo fastlane install_plugins
-          bundle exec fastlane android_build_verify
+          cd android/scripts
+          ./verify-build.sh
         env: 
           DEBUG_KEYSTORE_ALIAS: androiddebugkey
           DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
