@@ -155,17 +155,7 @@ export const authMachine = model.createMachine(
 
     services: {
       downloadFaceSdkModel: () => async () => {
-        var injiProp = null;
-        try {
-          var injiProp = await getAllConfigurations();
-          const resp: string =
-            injiProp != null ? injiProp.faceSdkModelUrl : null;
-          if (resp != null) {
-            init(resp, false);
-          }
-        } catch (error) {
-          console.log(error);
-        }
+        downloadModel();
       },
     },
 

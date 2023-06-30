@@ -7,13 +7,13 @@ import { Theme } from '../../components/ui/styleUtils';
 import { MainRouteProps } from '../../routes/main';
 import { EditableListItem } from '../../components/EditableListItem';
 import { MessageOverlay } from '../../components/MessageOverlay';
-import { Revoke } from './Revoke';
+import { Revoke } from '../Settings/Revoke';
 import { useProfileScreen } from './ProfileScreenController';
 import { useTranslation } from 'react-i18next';
 import { LanguageSelector } from '../../components/LanguageSelector';
 import i18next, { SUPPORTED_LANGUAGES } from '../../i18n';
 import { ScrollView } from 'react-native-gesture-handler';
-import { AppMetaData } from './AppMetaData';
+import { AppMetaData } from '../Settings/AppMetaData';
 import { CREDENTIAL_REGISTRY_EDIT } from 'react-native-dotenv';
 
 const LanguageSetting: React.FC = () => {
@@ -61,7 +61,7 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
           label={t('name')}
           value={controller.name}
           onEdit={controller.UPDATE_NAME}
-          Icon="user"
+          Icon=""
           credentialRegistryResponse={''}
         />
         {/* Intentionally hidden using {display='none'} - Refer mosip/inji/issue#607 */}

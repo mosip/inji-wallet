@@ -109,6 +109,7 @@
     "bioUnlock": "I-unlock gamit ang Biometrics",
     "language": "Wika",
     "aboutInji": "About Inji",
+    "credentialRegistry": "Credential Registry",
     "injiTourGuide": "Inji Tour Guide",
     "logout": "Mag-logout"
   },
@@ -317,12 +318,12 @@
     "goToReceivedVCTab": "Natanggap na View Card",
     "errors": {
       "savingFailed": {
-        "title": "Failed to save {{vcLabelSingular}}",
-        "message": "Nagkaproblema habang sine-save ang {{vcLabelSingular}} sa tindahan."
+        "title": "Failed to save card",
+        "message": "Nagkaproblema habang sine-save ang card sa tindahan."
       },
       "diskFullError": {
-        "title": "Nabigong i-save ang {{vcLabelPlural}}",
-        "message": "Wala nang {{vcLabelPlural}} ang matatanggap o mai-save dahil puno na ang Data ng App."
+        "title": "Nabigong i-save ang card",
+        "message": "Wala nang card ang matatanggap o mai-save dahil puno na ang Data ng App."
       }
     }
   },
@@ -375,7 +376,7 @@
     "bluetoothStateIos": "Naka-OFF ang Bluetooth, paki-ON ito mula sa control center",
     "bluetoothStateAndroid": "Naka-OFF ang Bluetooth, paki-ON ito mula sa control center",
     "enableBluetoothMessage": "Mangyaring paganahin ang mga pahintulot ng bluetooth upang suportahan ang lokal na pagbabahagi",
-    "enableBluetoothButtonText": "Payagan ang Mga Pahintulot sa Bluetooth",
+    "enableBluetoothButtonText": "Payagan ang Mga Pahintulot sa bluetooth",
     "sharingVc": "Pagbabahagi ng Card",
     "errors": {
       "locationDisabled": {

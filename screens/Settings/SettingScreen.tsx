@@ -11,8 +11,10 @@ import { useTranslation } from 'react-i18next';
 import { LanguageSelector } from '../../components/LanguageSelector';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Modal } from '../../components/ui/Modal';
+import { CREDENTIAL_REGISTRY_EDIT } from 'react-native-dotenv';
 import getAllConfigurations from '../../shared/commonprops/commonProps';
 import { AboutInji } from './AboutInji';
+import { EditableListItem } from '../../components/EditableListItem';
 
 const LanguageSetting: React.FC = () => {
   const { t } = useTranslation('SettingScreen');
@@ -98,6 +100,18 @@ export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
             </ListItem>
 
             <AboutInji />
+
+            {CREDENTIAL_REGISTRY_EDIT === 'true' && (
+              <EditableListItem
+                label={t('credentialRegistry')}
+                value={controller.credentialRegistry}
+                credentialRegistryResponse={
+                  controller.credentialRegistryResponse
+                }
+                onEdit={controller.UPDATE_CREDENTIAL_REGISTRY}
+                Icon="star"
+              />
+            )}
 
             <ListItem
               topDivider

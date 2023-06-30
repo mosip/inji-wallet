@@ -99,7 +99,6 @@ export const DefaultTheme = {
     walletbindingContent: Colors.Gray40,
     resendCodeTimer: Colors.resendCodeTimer,
     statusLabel: Colors.Black,
-    Cursor: Colors.Orange,
   },
   Styles: StyleSheet.create({
     title: {
@@ -294,9 +293,6 @@ export const DefaultTheme = {
     homeCloseCardDetailsHeader: {
       flex: 1,
     },
-    homeCloseCardDetailsHeader: {
-      flex: 1,
-    },
     cardDetailsHeader: {
       flex: 1,
       justifyContent: 'space-between',
@@ -372,9 +368,8 @@ export const DefaultTheme = {
     },
     versionContainer: {
       backgroundColor: Colors.Grey6,
-      height: 110,
-      margin: 10,
-      borderRadius: 20,
+      margin: 4,
+      borderRadius: 14,
     },
     scannerContainer: {
       borderRadius: 32,
