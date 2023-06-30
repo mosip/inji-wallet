@@ -22,7 +22,7 @@
   "FaceScanner": {},
   "OIDcAuth": {
     "title": "مصادقة OIDC",
-    "text": "ليتم استبداله بموفر OIDC UI",
+    "text": "ليتم استبداله بموفر واجهة مستخدم OIDC",
     "verify": "تحقق"
   },
   "PasscodeVerify": {
