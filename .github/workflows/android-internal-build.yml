@@ -2,7 +2,7 @@ name: Android Internal Build
 
 env:
   backendServiceDefaultUrl: https://api.sandbox.mosip.net
-
+  
 on:
   workflow_dispatch:
     inputs:
@@ -41,7 +41,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '16.x'
-      
+          
       - name: Cache local npm repository
         uses: actions/cache@v3.0.11
         with:
@@ -111,7 +111,7 @@ jobs:
           INJI_ANDROID_PLAY_STORE_CONFIG_JSON: ${{ secrets.INJI_ANDROID_PLAY_STORE_CONFIG_JSON }}
 
       - name: Run Build
-        run: | 
+        run: |
           cd android/scripts
           ./internal-build.sh
         env:
