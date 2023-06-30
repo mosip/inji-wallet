@@ -154,7 +154,7 @@ export const authMachine = model.createMachine(
     },
 
     services: {
-      downloadFaceSdkModel: () => async () => {
+      downloadFaceSdkModel: () => () => {
         downloadModel();
       },
     },
