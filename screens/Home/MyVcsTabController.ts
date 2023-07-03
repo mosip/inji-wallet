@@ -40,7 +40,7 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
 
     DISMISS: () => service.send(MyVcsTabEvents.DISMISS()),
 
-    ADD_VC: () => service.send(MyVcsTabEvents.ADD_VC()),
+    DOWNLOAD_ID: () => service.send(MyVcsTabEvents.ADD_VC()),
 
     GET_VC: () => service.send(MyVcsTabEvents.GET_VC()),
 

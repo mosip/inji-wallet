@@ -14,6 +14,7 @@ export const ActivityLogText: React.FC<{ activity: ActivityLog }> = (props) => {
     <TextItem
       label={getActionLabel(activity, i18n.language)}
       text={`${activity.vcLabel} ${t(activity.type)}`}
+      topDivider
     />
   );
 };
