@@ -11,13 +11,16 @@ import {
   selectTag,
   selectEmptyWalletBindingId,
   selectIsSavingFailedInIdle,
+  selectKebabPopUp,
 } from '../machines/vcItem';
 import { VcItemEvents } from '../machines/vcItem';
-import { ErrorMessageOverlay } from '../components/MessageOverlay';
+import { ErrorMessageOverlay } from './MessageOverlay';
 import { Theme } from './ui/styleUtils';
 import { GlobalContext } from '../shared/GlobalContext';
 import { VcItemContent } from './VcItemContent';
 import { VcItemActivationStatus } from './VcItemActivationStatus';
+import { Row } from './ui';
+import { KebabPopUp } from './KebabPopUp';
 
 export const VcItem: React.FC<VcItemProps> = (props) => {
   const { appService } = useContext(GlobalContext);
@@ -32,8 +35,10 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
   const context = useSelector(service, selectContext);
   const verifiableCredential = useSelector(service, selectVerifiableCredential);
   const emptyWalletBindingId = useSelector(service, selectEmptyWalletBindingId);
-  const isSavingFailedInIdle = useSelector(service, selectIsSavingFailedInIdle);
+  const isKebabPopUp = useSelector(service, selectKebabPopUp);
   const DISMISS = () => service.send(VcItemEvents.DISMISS());
+  const KEBAB_POPUP = () => service.send(VcItemEvents.KEBAB_POPUP());
+  const isSavingFailedInIdle = useSelector(service, selectIsSavingFailedInIdle);
 
   const storeErrorTranslationPath = 'errors.savingFailed';
 
@@ -55,16 +60,34 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
           verifiableCredential={verifiableCredential}
           generatedOn={generatedOn}
           tag={tag}
+          selectable={props.selectable}
+          selected={props.selected}
+          service={service}
+          iconName={props.iconName}
+          iconType={props.iconType}
+          onPress={() => props.onPress(service)}
         />
-        {props.activeTab !== 'receivedVcsTab' &&
-          props.activeTab != 'sharingVcScreen' && (
-            <VcItemActivationStatus
-              verifiableCredential={verifiableCredential}
-              emptyWalletBindingId={emptyWalletBindingId}
-              onPress={() => props.onPress(service)}
-              showOnlyBindedVc={props.showOnlyBindedVc}
+        <Row crossAlign="center">
+          {props.activeTab !== 'receivedVcsTab' &&
+            props.activeTab != 'sharingVcScreen' && (
+              <VcItemActivationStatus
+                verifiableCredential={verifiableCredential}
+                emptyWalletBindingId={emptyWalletBindingId}
+                onPress={() => props.onPress(service)}
+                showOnlyBindedVc={props.showOnlyBindedVc}
+              />
+            )}
+          <Pressable onPress={KEBAB_POPUP}>
+            <KebabPopUp
+              vcKey={props.vcKey}
+              iconName="dots-three-horizontal"
+              iconType="entypo"
+              isVisible={isKebabPopUp}
+              onDismiss={DISMISS}
+              service={service}
             />
-          )}
+          </Pressable>
+        </Row>
       </Pressable>
       <ErrorMessageOverlay
         isVisible={isSavingFailedInIdle}
@@ -85,4 +108,6 @@ interface VcItemProps {
   onPress?: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
   onShow?: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
   activeTab?: string;
+  iconName?: string;
+  iconType?: string;
 }

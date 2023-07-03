@@ -1,0 +1,431 @@
+{
+	"ActivityLogText": {
+		"VC_SHARED": "compartido",
+		"VC_RECEIVED": "recibido",
+		"VC_RECEIVED_NOT_SAVED": "recibido no guardado",
+		"VC_DELETED": "eliminado",
+		"VC_DOWNLOADED": "descargado",
+		"VC_REVOKED": "revocado",
+		"VC_SHARED_WITH_VERIFICATION_CONSENT": "compartido. Se ha dado consentimiento para verificación de presencia",
+		"VC_RECEIVED_WITH_PRESENCE_VERIFIED": "recibido. Presencia verificada",
+		"VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "recibido. Falló la verificación de presencia",
+		"PRESENCE_VERIFIED_AND_VC_SHARED": "verificado y compartido",
+		"PRESENCE_VERIFICATION_FAILED": "falló la verificación",
+		"QRLOGIN_SUCCESFULL": "Inicio de sesión QR exitoso",
+		"WALLET_BINDING_SUCCESSFULL": "Activación exitosa",
+		"WALLET_BINDING_FAILURE": "Activación fallida"
+	},
+	"DeviceInfoList": {
+		"requestedBy": "Solicitado por",
+		"sentBy": "Enviado por",
+		"deviceRefNumber": "Número de referencia del dispositivo",
+		"name": "Nombre",
+		"Verifier": "Verificador",
+		"Wallet": "Billetera"
+	},
+	"FaceScanner": {},
+	"OIDcAuth": {
+		"title": "Autenticación OIDC",
+		"text": "Se reemplazará con la interfaz de usuario del proveedor OIDC",
+		"verify": "Verificar"
+	},
+	"PasscodeVerify": {
+		"passcodeMismatchError": "El código de acceso no coincide."
+	},
+	"QrScanner": {
+		"missingPermissionText": "Esta aplicación utiliza la cámara para escanear el código QR de otro dispositivo.",
+		"allowCameraButton": "Permitir acceso a la cámara"
+	},
+	"VcDetails": {
+		"generatedOn": "Generado el",
+		"status": "Estado",
+		"valid": "Válido",
+		"photo": "Foto",
+		"fullName": "Nombre completo",
+		"gender": "Género",
+		"dateOfBirth": "Fecha de nacimiento",
+		"phoneNumber": "Número de teléfono",
+		"email": "Correo electrónico",
+		"address": "Dirección",
+		"reasonForSharing": "Motivo de compartir",
+		"idType": "Tipo de identificación",
+		"id": "Identificación",
+		"nationalCard": "Tarjeta nacional",
+		"uin": "UIN",
+		"enableVerification": "Activar",
+		"profileAuthenticated": "Activado para inicio de sesión en línea",
+		"offlineAuthDisabledHeader": "Activación pendiente para inicio de sesión en línea",
+		"offlineAuthDisabledMessage": "Por favor, haz clic en el botón de abajo para activar esta credencial para su uso en inicio de sesión en línea.",
+		"vid": "VID",
+		"verificationEnabledSuccess": "Activado para inicio de sesión en línea",
+		"goback": "VOLVER",
+		"BindingWarning": "Si has activado la verificación para esta credencial en otra billetera, se sobrescribirá. ¿Deseas continuar?",
+		"yes_confirm": "Sí, confirmo",
+		"no": "No",
+		"Alert": "Alerta",
+		"ok": "Aceptar",
+		"credentialRegistry": "Registro de credenciales",
+		"errors": {
+			"savingFailed": {
+				"title": "Error al guardar la tarjeta",
+				"message": "Se produjo un error al guardar la tarjeta en el almacenamiento."
+			},
+			"diskFullError": {
+				"title": "Error al guardar la tarjeta",
+				"message": "No se pueden recibir ni guardar más tarjetas, ya que los datos de la aplicación están llenos."
+			}
+		}
+	},
+	"AuthScreen": {
+		"header": "¿Te gustaría usar la biometría para desbloquear la aplicación?",
+		"useBiometrics": "Usar biometría",
+		"usePasscode": "Prefiero usar un código de acceso",
+		"errors": {
+			"unavailable": "El dispositivo no admite la biometría",
+			"unenrolled": "Para usar la biometría, por favor registra tus datos biométricos en la configuración de tu dispositivo",
+			"failed": "No se pudo autenticar con la biometría",
+			"generic": "Parece haber un error en la autenticación biométrica"
+		}
+	},
+	"BiometricScreen": {
+		"unlock": "Desbloquear con biometría"
+	},
+	"HistoryTab": {
+		"noHistory": "Aún no hay historial disponible",
+		"downloaded": "descargado",
+		"shared": "compartido",
+		"received": "recibido",
+		"deleted": "eliminado"
+	},
+	"HomeScreen": {
+		"myVcsTab": "Mis\nTarjetas",
+		"receivedVcsTab": "Tarjetas\nRecibidas",
+		"historyTab": "Historial"
+	},
+	"AddVcModal": {
+		"requestingCredential": "Solicitando credencial...",
+		"errors": {
+			"input": {
+				"empty": "El campo no puede estar vacío",
+				"invalidFormat": "El formato del campo es incorrecto"
+			},
+			"backend": {
+				"invalidOtp": "El OTP es inválido",
+				"expiredOtp": "El OTP ha expirado",
+				"invalidUin": "UIN inválido",
+				"invalidVid": "VID inválido",
+				"missingUin": "UIN no disponible en la base de datos",
+				"missingVid": "VID no disponible en la base de datos",
+				"noMessageAvailable": "Inténtalo de nuevo más tarde",
+				"whileGeneratingOtpErrorIsOccured": "Se produjo un error al generar el OTP",
+				"networkRequestFailed": "Error en la solicitud de red"
+			}
+		}
+	},
+	"GetVcModal": {
+		"errors": {
+			"input": {
+				"empty": "El campo no puede estar vacío",
+				"invalidFormat": "El formato del campo es incorrecto"
+			},
+			"backend": {
+				"invalidOtp": "El OTP es inválido",
+				"expiredOtp": "El OTP ha expirado",
+				"applicationProcessing": "El AID no está listo",
+				"noMessageAvailable": "Inténtalo de nuevo más tarde",
+				"networkRequestFailed": "Error en la solicitud de red",
+				"invalidAid": "El AID ingresado no está disponible. Por favor, verifica tu AID antes de ingresar",
+				"timeOut": "Tiempo de espera agotado"
+			}
+		}
+	},
+	"DownloadingVcModal": {
+		"header": "Descargando tu Tarjeta",
+		"bodyText": "Esto puede llevar algún tiempo. Te notificaremos cuando tu Tarjeta se haya descargado y esté disponible.",
+		"backButton": "Volver a inicio"
+	},
+	"GetIdInputModal": {
+		"header": "Ingresa tu ID de aplicación para obtener tu UIN",
+		"getUIN": "Obtener UIN/VID",
+		"applicationId": "ID de aplicación",
+		"requestingOTP": "Solicitando OTP...",
+		"qstnMarkToolTip": "El ID de aplicación está disponible en el acuse de recibo recibido después de la inscripción."
+	},
+	"IdInputModal": {
+		"header": "Ingresa tu UIN/VID para descargar tu Tarjeta",
+		"generateVc": "Generar mi Tarjeta",
+		"enterId": "Ingresa tu {{idType}}",
+		"noUIN/VID": "¿No tienes tu UIN/VID? Obténlo aquí",
+		"requestingOTP": "Solicitando OTP..."
+	},
+	"OtpVerificationModal": {
+		"enterOtp": "Ingresa el código de verificación de 6 dígitos que te hemos enviado",
+		"header": "Verificación de OTP"
+	},
+	"MyVcsTab": {
+		"addVcButton": "Agregar Tarjeta",
+		"generateVc": "Genera tus Tarjetas",
+		"generateVcDescription": "Toca en \"Agregar Tarjeta\" a continuación para descargar tu Tarjeta",
+		"errors": {
+			"savingFailed": {
+				"title": "Error al guardar la Tarjeta",
+				"message": "Hubo un error al guardar la Tarjeta en el almacenamiento."
+			},
+			"diskFullError": {
+				"title": "Error al guardar la Tarjeta",
+				"message": "No se pueden recibir ni guardar más Tarjetas, ya que los datos de la aplicación están llenos."
+			}
+		}
+	},
+	"OnboardingOverlay": {
+		"stepOneTitle": "¡Bienvenido!",
+		"stepOneText": "Mantén tu credencial digital contigo en todo momento. Para comenzar, agrega Tarjetas a tu perfil.",
+		"stepTwoTitle": "Gestión de Tarjetas",
+		"stepTwoText": "Una vez generadas, las Tarjetas se almacenan de forma segura en tu dispositivo móvil y se pueden cambiar el nombre o compartir en cualquier momento.",
+		"stepThreeTitle": "Compartir fácilmente",
+		"stepThreeText": "Comparte y recibe Tarjetas rápidamente utilizando la cámara de tu teléfono para escanear códigos QR.",
+		"stepThreeButton": "Comienza y agrega una Tarjeta",
+		"ReceivedVcsTab": {
+			"noReceivedVcsTitle": "Aún no hay Tarjetas disponibles",
+			"noReceivedVcsText": "Toca en Solicitar a continuación para recibir una Tarjeta"
+		}
+	},
+	"ViewVcModal": {
+		"cancel": "Cancelar",
+		"lock": "Bloquear",
+		"unlock": "Desbloquear",
+		"rename": "Renombrar",
+		"delete": "Eliminar",
+		"revoke": "Revocar",
+		"revoking": "Tu billetera contiene una credencial con VID {{vid}}. Revocar esto eliminará automáticamente la misma de la billetera. ¿Estás seguro de que deseas continuar?",
+		"requestingOtp": "Solicitando OTP...",
+		"editTag": "Renombrar",
+		"redirecting": "Redirigiendo...",
+		"inProgress": "Cargando...",
+		"success": {
+			"unlocked": "Tarjeta desbloqueada exitosamente",
+			"locked": "Tarjeta bloqueada exitosamente",
+			"revoked": "VID {{vid}} ha sido revocado. Cualquier credencial que contenga el mismo se eliminará automáticamente de la billetera."
+		}
+	},
+	"MainLayout": {
+		"home": "Inicio",
+		"scan": "Escanear",
+		"request": "Solicitar",
+		"settings": "Configuración"
+	},
+	"PasscodeScreen": {
+		"header": "Establece un código de acceso para proteger tu aplicación",
+		"confirmPasscode": "Confirma tu código de acceso",
+		"enterPasscode": "Ingresa tu código de acceso"
+	},
+	"AppMetaData": {
+		"header": "Acerca de Inji",
+		"version": "Versión",
+		"useBle": "Impulsado por BLE"
+	},
+	"ProfileScreen": {
+		"name": "Nombre",
+		"vcLabel": "Etiqueta de VC",
+		"language": "Idioma",
+		"bioUnlock": "Desbloquear con biometría",
+		"authFactorUnlock": "Desbloquear factor de autenticación",
+		"AppMetaData": "Acerca de Inji",
+		"logout": "Cerrar sesión",
+		"revokeLabel": "Revocar VID",
+		"revokeHeader": "REVOCAR VID",
+		"revokingVids": "Estás a punto de revocar ({{count}}) VIDs.",
+		"revokingVidsAfter": "Esto significa que ya no podrás usar ni ver ninguna de las identificaciones vinculadas a esos VID(s).\n¿Estás seguro de que deseas continuar?",
+		"empty": "Vacío",
+		"revokeSuccessful": "VID revocado exitosamente"
+	},
+	"QrScreen": {
+		"title": "Inicio de sesión con código QR",
+		"alignQr": "Alinea el código QR dentro del marco para escanearlo",
+		"confirmation": "Confirmación",
+		"checkDomain": "Además, verifica que haya un icono de candado en la barra de direcciones.",
+		"domainHead": "https://",
+		"selectId": "Seleccionar ID",
+		"noBindedVc": "No hay Tarjetas Vinculadas disponibles para verificar",
+		"back": "Volver",
+		"confirm": "Confirmar",
+		"verify": "Verificar",
+		"faceAuth": "Autenticación Facial",
+		"consent": "Consentimiento",
+		"loading": "Cargando...",
+		"domainWarning": "Por favor, confirma que el dominio del sitio web desde el cual estás escaneando el código QR es el siguiente",
+		"access": "está solicitando acceso a",
+		"status": "Estado",
+		"successMessage": "Has iniciado sesión correctamente en",
+		"okay": "Aceptar",
+		"allow": "Permitir",
+		"cancel": "Cancelar",
+		"essentialClaims": "Reclamos Esenciales",
+		"voluntaryClaims": "Reclamos Voluntarios",
+		"required": "Requerido"
+	},
+	"ReceiveVcScreen": {
+		"header": "Detalles de la tarjeta",
+		"save": "Guardar tarjeta",
+		"verifyAndSave": "Verificar y guardar",
+		"reject": "Rechazar",
+		"discard": "Descartar",
+		"goToReceivedVCTab": "Ver tarjetas recibidas",
+		"saving": "Guardando",
+		"errors": {
+			"savingFailed": {
+				"title": "Error al guardar la tarjeta",
+				"message": "Ocurrió un error al guardar la tarjeta en el almacenamiento."
+			},
+			"diskFullError": {
+				"title": "Error al guardar la tarjeta",
+				"message": "No se pueden recibir ni guardar más tarjetas porque los datos de la aplicación están llenos."
+			}
+		}
+	},
+	"RequestScreen": {
+		"bluetoothDenied": "Por favor, activa el Bluetooth para poder solicitar la tarjeta",
+		"bluetoothStateAndroid": "Por favor, activa el Bluetooth desde la configuración rápida para admitir el intercambio local",
+		"bluetoothStateIos": "Por favor, activa el Bluetooth desde el centro de control para admitir el intercambio local",
+		"showQrCode": "Muestra este código QR para solicitar la tarjeta de residente",
+		"incomingVc": "Tarjeta entrante",
+		"request": "Solicitar",
+		"errors": {
+			"nearbyDevicesPermissionDenied": {
+				"message": "Se requiere el permiso de Dispositivos cercanos para poder solicitar la tarjeta",
+				"button": "Permitir permiso"
+			}
+		},
+		"status": {
+			"accepted": {
+				"title": "¡Éxito!",
+				"message": "La tarjeta se ha recibido correctamente desde la billetera"
+			},
+			"rejected": {
+				"title": "Aviso",
+				"message": "Has descartado la tarjeta de la billetera"
+			},
+			"disconnected": {
+				"title": "Desconectado",
+				"message": "La conexión se interrumpió. Por favor, inténtalo de nuevo."
+			},
+			"waitingConnection": "Esperando conexión...",
+			"exchangingDeviceInfo": {
+				"message": "Intercambiando información del dispositivo...",
+				"timeoutHint": "Está tomando demasiado tiempo intercambiar la información del dispositivo..."
+			},
+			"connected": {
+				"message": "Conectado al dispositivo. Esperando la tarjeta...",
+				"timeoutHint": "Todavía no se ha recibido ningún dato. ¿El dispositivo emisor aún está conectado?"
+			},
+			"offline": {
+				"message": "Por favor, conéctate a internet para habilitar el modo de intercambio en línea"
+			},
+			"bleError": {
+				"title": "Error al transferir",
+				"message": "Ocurrió un error al transferir la tarjeta. Por favor, inténtalo de nuevo.",
+				"hint": "Error: {{code}}"
+			}
+		},
+		"online": "En línea",
+		"offline": "Desconectado",
+		"gotoSettings": "Ir a configuración"
+	},
+	"ScanScreen": {
+		"header": "Escanear código QR",
+		"noShareableVcs": "No hay tarjetas compartibles disponibles.",
+		"sharingVc": "Compartiendo tarjeta",
+		"bluetoothStateAndroid": "Por favor, activa el Bluetooth desde la configuración rápida para admitir el intercambio local",
+		"bluetoothStateIos": "Por favor, activa el Bluetooth desde el centro de control para admitir el intercambio local",
+		"enableBluetoothMessage": "Por favor, habilita los permisos de Bluetooth para admitir el intercambio local",
+		"enableBluetoothButtonText": "Permitir permisos de Bluetooth",
+		"errors": {
+			"locationDisabled": {
+				"message": "Los servicios de ubicación deben estar habilitados para compartir la tarjeta",
+				"button": "Habilitar servicios de ubicación"
+			},
+			"locationDenied": {
+				"message": "Se requiere permiso de ubicación para compartir la tarjeta",
+				"button": "Permitir acceso a la ubicación"
+			},
+			"nearbyDevicesPermissionDenied": {
+				"message": "Se requiere el permiso de Dispositivos cercanos para poder compartir la tarjeta",
+				"button": "Permitir permiso"
+			}
+		},
+		"status": {
+			"connecting": "Conectando...",
+			"connectingTimeout": "Está tomando tiempo establecer la conexión. ¿El otro dispositivo está abierto para conexiones?",
+			"exchangingDeviceInfo": "Intercambiando información del dispositivo...",
+			"exchangingDeviceInfoTimeout": "Está tomando tiempo intercambiar la información del dispositivo. Es posible que tengas que reconectar.",
+			"invalid": "Código QR inválido",
+			"offline": "Por favor, conéctate a internet para escanear códigos QR usando el modo de intercambio en línea",
+			"sent": "La tarjeta ha sido enviada...",
+			"sentHint": "Esperando a que el receptor guarde o descarte tu tarjeta",
+			"sharing": {
+				"title": "Compartiendo...",
+				"hint": "Por favor, espera a que el dispositivo receptor acepte o rechace el intercambio.",
+				"timeoutHint": "Está tomando más tiempo del esperado para compartir. Puede haber un problema con la conexión."
+			},
+			"accepted": {
+				"title": "¡Éxito!",
+				"message": "Tu tarjeta ha sido compartida exitosamente con el Verificador"
+			},
+			"rejected": {
+				"title": "Aviso",
+				"message": "Tu tarjeta ha sido descartada por el Verificador"
+			},
+			"bleError": {
+				"title": "Error al transferir",
+				"message": "Ocurrió un error al transferir la tarjeta. Por favor, inténtalo de nuevo.",
+				"hint": "Error: {{code}}"
+			}
+		}
+	},
+	"SelectVcOverlay": {
+		"header": "Compartir tarjeta",
+		"chooseVc": "Selecciona la tarjeta que deseas compartir",
+		"share": "Compartir",
+		"verifyAndShare": "Verificar identidad y compartir"
+	},
+	"SendVcScreen": {
+		"reasonForSharing": "Motivo de compartir (opcional)",
+		"acceptRequest": "Compartir",
+		"acceptRequestAndVerify": "Compartir con selfie",
+		"reject": "Rechazar",
+		"consentToPhotoVerification": "Doy mi consentimiento para que se tome mi foto para la autenticación"
+	},
+	"VerifyIdentityOverlay": {
+		"status": {
+			"verifyingIdentity": "Verificando identidad..."
+		},
+		"errors": {
+			"invalidIdentity": {
+				"title": "No se puede verificar la identidad",
+				"message": "No se reconoce el rostro. Por favor, inténtalo de nuevo.",
+				"messageNoRetry": "No se reconoce el rostro."
+			}
+		}
+	},
+	"WelcomeScreen": {
+		"title": "Solución de identidad de código abierto",
+		"getStarted": "Empezar",
+		"unlockApp": "Desbloquear aplicación"
+	},
+	"common": {
+		"cancel": "Cancelar",
+		"save": "Guardar",
+		"dismiss": "Cerrar",
+		"editLabel": "Editar {{label}}",
+		"tryAgain": "Intentar de nuevo",
+		"camera": {
+			"errors": {
+				"missingPermission": "Esta aplicación utiliza la cámara para escanear el código QR de otro dispositivo."
+			},
+			"allowAccess": "Permitir acceso a la cámara"
+		},
+		"errors": {
+			"genericError": "Algo salió mal. ¡Por favor, inténtalo de nuevo después de un tiempo!"
+		}
+	}
+}

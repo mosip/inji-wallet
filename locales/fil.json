@@ -50,13 +50,14 @@
     "reasonForSharing": "Dahilan ng pagbabahagi",
     "idType": "Uri ng ID",
     "id": "Id",
+    "qrCodeHeader": "QR Code",
     "nationalCard": "Pambansang Kard",
     "uin": "UIN",
+    "vid": "VID",
     "enableVerification": "I-activate",
     "profileAuthenticated": "Na-activate para sa online na pag-login",
     "offlineAuthDisabledHeader": "Nakabinbin ang pag-activate para sa online na pag-login",
     "offlineAuthDisabledMessage": "Mangyaring i-click ang pindutan sa ibaba upang i-activate ang kredensyal na ito upang magamit para sa online na pag-login.",
-    "vid": "VID",
     "verificationEnabledSuccess": "Na-activate para sa online na pag-login",
     "goback": "BUMALIK KA",
     "BindingWarning": "Kung pinagana mo ang pag-verify para sa kredensyal na ito sa isa pang wallet, ma-override ito. Gusto mo bang magpatuloy?",
@@ -74,6 +75,7 @@
   },
   "AuthScreen": {
     "header": "Gusto mo bang gumamit ng biometrics upang i-unlock ang aplikasyon?",
+    "Description": "Gusto mo bang gumamit ng biometrics upang i-unlock ang application?",
     "useBiometrics": "Gamitin ang biometrics",
     "usePasscode": "Gumamit na lang ng passcode",
     "errors": {
@@ -86,17 +88,51 @@
   "BiometricScreen": {
     "unlock": "I-unlock gamit ang biometrics"
   },
-  "HistoryTab": {
+  "HistoryScreen": {
     "noHistory": "Wala pang kasaysayan",
     "downloaded": "nakuha",
     "shared": "ibinahagi",
     "received": "natanggap",
     "deleted": "tinanggal"
   },
-  "HomeScreen": {
-    "myVcsTab": "Aking\nMga kard",
-    "receivedVcsTab": "Nakuhang\nMga kard",
-    "historyTab": "Pangyayari"
+  "SettingScreen": {
+    "header": "Mga setting",
+    "injiAsVerifierApp": "Inji bilang Verifier App",
+    "basicSettings": "Mga Pangunahing Setting",
+    "bioUnlock": "I-unlock gamit ang Biometrics",
+    "language": "Wika",
+    "aboutInji": "About Inji",
+    "credentialRegistry": "Credential Registry",
+    "injiTourGuide": "Inji Tour Guide",
+    "logout": "Mag-logout"
+  },
+  "AboutInji": {
+    "aboutInji": "Tungkol kay Inji",
+    "header": "TUNGKOL KAY INJI",
+    "aboutDetailes": "Ang Inji ay isang mobile app na maaaring gamitin bilang digital wallet para mag-imbak ng mga kredensyal. Pinapayagan din nito ang pag-verify ng pagkakakilanlan sa parehong offline at online na mga mode, sa anumang lugar at oras.",
+    "forMoreDetailes": "Para sa karagdagang detalye",
+    "clickHere": "Pindutin dito",
+    "version": "Bersyon:",
+    "tuvaliVersion": "Tuvali-bersyon"
+  },
+  "HelpScreen": {
+    "header": "Tulong",
+    "whatIsDigitalCredential?": "Ano ang isang digital na kredensyal?",
+    "detail-1": "Ang digital na kredensyal ay ang digital na bersyon ng iyong pisikal na Identity card",
+    "whatCanDoWithDigitalCredential?": "Ano ang maaari nating gawin sa mga digital na kredensyal?",
+    "detail-2": "Maaari kang makakuha ng iba't ibang serbisyo ng Pamahalaan at pribadong gamit ang iyong mga digital na kredensyal.",
+    "howToAddCard?": "Paano magdagdag ng card?",
+    "detail-3": "Upang magdagdag ng card, mag-click sa '+' na button sa Home page at piliin ang naaangkop na opsyon.",
+    "howToRemoveCardFromWallet?": "Paano magbahagi ng card?",
+    "detail-4": "Mag-swipe pakaliwa sa card > mag-click sa Higit pa > Alisin sa Wallet",
+    "canWeAddMultipleCards?": "Maaari ba tayong magdagdag ng maraming card?",
+    "detail-5": "Oo, maaari kang magdagdag ng maraming card sa wallet sa pamamagitan ng pag-click sa '+' na button sa Home page.",
+    "howToShareCard?": "Paano magbahagi ng card?",
+    "detail-6": "Mag-click sa pindutang 'Ibahagi' at i-scan ang QR code mula sa humihiling na partido. Kapag naitatag na ang koneksyon, ibabahagi ang card.",
+    "howToActivateCardForOnlineLogin?": "Paano i-activate ang isang card para sa online na pag-login?",
+    "detail-7": "Matapos matagumpay na magdagdag ng card sa wallet, mag-click sa 'Activation pending for Online login' sa card. Sa pag-click sa 'I-activate', ang card ay handa nang gamitin para sa online na pag-login.",
+    "howToViewActivity?": "Paano tingnan ang mga log ng aktibidad?",
+    "detail-8": "Sa Home page, mag-click sa 'Kasaysayan' upang tingnan ang mga detalye ng aktibidad ng user."
   },
   "AddVcModal": {
     "requestingCredential": "Humihiling ng kredensyal...",
@@ -141,27 +177,33 @@
     "backButton": "Bumalik"
   },
   "GetIdInputModal": {
-    "header": "Ilagay ang iyong Application ID para makuha ang iyong UIN",
-    "getUIN": "Kumuha ng UIN/VID",
-    "applicationId": "Application ID",
+    "header": "Kunin ang iyong UIN/VID",
+    "applicationIdLabel": "Pakilagay ang iyong Application ID",
+    "enterApplicationId": "Ilagay ang Application ID",
     "requestingOTP": "Humihiling ng OTP...",
-    "qstnMarkToolTip": "Available ang Application ID sa natanggap na acknowledgement pagkatapos ng enrollment."
+    "qstnMarkToolTip": "Available ang Application ID sa natanggap na acknowledgement pagkatapos ng enrollment.",
+    "getUIN": "Kumuha ng UIN/VID"
   },
   "IdInputModal": {
-    "header": "Ilagay ang iyong UIN/VID para i-download ang iyong Card",
-    "generateVc": "Bumuo ng Aking Card",
-    "enterId": "Ilagay ang iyong {{idType}}",
-    "noUIN/VID": "Wala ka bang UIN/VID? Kuhanin dito",
+    "header": "Kunin ang iyong ID",
+    "guideLabel": "Piliin ang uri ng ID at ilagay ang MOSIP na ibinigay na UIN o VID ng ID na nais mong makuha",
+    "generateVc": "Bumuo ng Card",
+    "enterId": "Ipasok ang {{idType}}",
+    "noUIN/VID": "Walang UIN/VID? ",
+    "getItHere": "Kunin mo na",
     "requestingOTP": "Humihiling ng OTP..."
   },
   "OtpVerificationModal": {
-    "enterOtp": "Ilagay ang 6 na numerong verification code na ipinadala namin sayo",
-    "header": "Pag-verify ng OTP"
+    "title": "Pag-verify ng OTP",
+    "otpSentMessage": "Ipinadala namin ang 6 na digit na code sa iyong rehistradong mobile number!",
+    "resendTheCode": "Maaari mong ipadala muli ang code sa ",
+    "resendCode": "Ipadala muli ang Code"
   },
   "MyVcsTab": {
-    "addVcButton": "Magdagdag ng Card",
-    "generateVc": "Gumawa ng iyong Mga kard",
+    "bringYourDigitalID": "Dalhin ang Iyong Digital ID",
     "generateVcDescription": "Pindutin ang \"Magdagdag ng Card\" sa ibaba upang makuha ang iyong Card",
+    "downloadingYourId": "Ang pagda-download ng iyong card, maaari itong tumagal nang hanggang 5 minuto",
+    "downloadCard": "I-download ang Card",
     "errors": {
       "savingFailed": {
         "title": "Nabigong i-save ang Card",
@@ -174,51 +216,60 @@
     }
   },
   "OnboardingOverlay": {
-    "stepOneTitle": "Mabuhay!",
-    "stepOneText": "Panatilihing pribado ang iyong digital na kredensyal sa lahat ng pagkakataon. Upang makapagsimula, magdagdag ng Mga kard sa iyong profile.",
-    "stepTwoTitle": "Pamamahala ng Card",
-    "stepTwoText": "Kapag nalikha na ang Mga kard, ito ay ligtas na nakatago sa iyong mobile at maaaring palitan ang pangalan o ibahagi anumang oras.",
-    "stepThreeTitle": "Madaling pagbabahagi",
-    "stepThreeText": "Ibahagi at tumanggap ng Mga kard nang mabilis gamit ang camera ng iyong mobile upang mag-scan ng mga QR code.",
-    "stepThreeButton": "Magsimula at magdagdag ng Card"
+    "stepOneTitle": "Ligtas na Pagbabahagi!",
+    "stepOneText": "Panatilihin ang iyong digital na kredensyal sa iyo sa lahat ng oras. Tinutulungan ka ng Inji na pamahalaan at gamitin ang mga ito nang epektibo. Upang makapagsimula, magdagdag ng mga card sa iyong profile.",
+    "stepTwoTitle": "Pinagkakatiwalaang Digital Wallet",
+    "stepTwoText": "Itabi at dalhin ang lahat ng iyong mahahalagang card sa isang pinagkakatiwalaang wallet.",
+    "stepThreeTitle": "Ligtas na Pagbabahagi",
+    "stepThreeText": "Ibahagi ang iyong mga card nang ligtas sa isang walang problemang paraan at mag-avail ng iba't ibang serbisyo.",
+    "stepFourTitle": "Walang problema sa pagpapatotoo",
+    "stepFourText": "I-authenticate ang iyong sarili nang madali gamit ang nakaimbak na digital na kredensyal.",
+    "stepFourButton": "Magsimula",
+    "skip": "Laktawan",
+    "next": "Susunod"
   },
   "ReceivedVcsTab": {
-    "noReceivedVcsTitle": "Wala pang Mga kard",
+    "receivedCards": "Mga Natanggap na Card",
+    "header": "Mga Natanggap na Card",
+    "noReceivedVcsTitle": "Wala pang Card",
     "noReceivedVcsText": "Pindutin ang Humiling sa ibaba para makatanggap ng Card"
   },
   "ViewVcModal": {
+    "title": "Mga Detalye ng ID",
     "cancel": "Kanselahin",
-    "lock": "Isara ang paggamit",
-    "unlock": "Buksan ang paggamit",
+    "lock": "Lock",
+    "unlock": "I-unlock",
     "rename": "Palitan ang pangalan",
     "delete": "Tanggalin",
     "revoke": "Bawiin",
-    "revoking": "Ang iyong wallet ay naglalaman ng kredensyal na may VID {{vid}}. Ang pagkansela nito ay awtomatikong mag-aalis ng pareho sa wallet. Sigurado ka bang gusto mong magpatuloy?",
+    "revoking": "Ang iyong wallet ay naglalaman ng kredensyal na may VID {{vid}}. Ang pagbawi nito ay awtomatikong mag-aalis ng pareho sa wallet. Sigurado ka bang gusto mong magpatuloy?",
     "requestingOtp": "Humihiling ng OTP...",
     "editTag": "Palitan ang pangalan",
-    "redirecting": "Redirecting...",
-    "inProgress": "Naglo-load...",
+    "redirecting": "Nire-redirect...",
     "success": {
-      "unlocked": "Ang Card ay matagumpay na na-unlock",
-      "locked": "Ang Card ay matagumpay na na-lock",
-      "revoked": "Ang VID {{vid}} ay nakansela. Ang lahat ng mga detalye na naglalaman ng pareho ay awtomatikong aalisin wallet."
+      "unlocked": "Matagumpay na na-unlock ang Card.",
+      "locked": "Matagumpay na na-lock ang Card.",
+      "revoked": "Ang VID {{vid}} ay binawi. Awtomatikong aalisin sa wallet ang anumang kredensyal na naglalaman ng pareho"
     }
   },
   "MainLayout": {
     "home": "Bahay",
     "scan": "Scan",
-    "request": "Request",
+    "history": "Kasaysayan",
+    "request": "Hiling",
     "settings": "mga setting"
   },
   "PasscodeScreen": {
-    "header": "Magtakda ng passcode upang masigurado ang iyong aplikasyon",
-    "confirmPasscode": "Kumpirmahin ang iyong passcode",
+    "header": "Itakda ang Passcode",
+    "enterNewPassword": "Maglagay ng bagong passcode",
+    "reEnterPassword": "Ipasok muli ang bagong passcode",
+    "confirmPasscode": "Kumpirmahin ang passcode",
     "enterPasscode": "Ilagay ang iyong passcode"
   },
   "AppMetaData": {
     "header": "Tungkol kay Inji",
     "version": "Bersyon",
-    "useBle": "Powered by BLE"
+    "useBle": "Pinapatakbo ng BLE"
   },
   "ProfileScreen": {
     "name": "Pangalan",
@@ -243,7 +294,7 @@
     "checkDomain": "Gayundin, tingnan kung mayroong icon ng lock sa address bar.",
     "domainHead": "https://",
     "selectId": "Pumili ng ID",
-    "noBindedVc": "Available sa Verifyct ID ang SeleNo Binded Mga kard",
+    "noBindedVc": "Available sa Verifyct ID ang SeleNo Binded Card",
     "back": "Bumalik ka",
     "confirm": "Kumpirmahin",
     "verify": "I-verify",
@@ -254,16 +305,20 @@
     "access": " ay humihiling ng access sa",
     "status": "Katayuan",
     "successMessage": "Ikaw ay Matagumpay na Naka-log In ",
-    "okay": "Sige"
+    "okay": "Sige",
+    "allow": "Payagan",
+    "cancel": "Kanselahin",
+    "essentialClaims": "Mahahalagang Claim",
+    "voluntaryClaims": "Mga Kusang-loob na Claim",
+    "required": "Kailangan"
   },
   "ReceiveVcScreen": {
-    "header": "Mga detalye ng Card",
+    "header": "Card mga detalye",
     "save": "I-save ang Card",
     "acceptRequest": "Tanggapin ang kahilingan at tumanggap ng Card",
     "reject": "Tanggihan",
     "discard": "Itapon",
-    "goToReceivedVCTab": "Tingnan ang mga Natanggap na Mga kard",
-    "saving": "Nagtitipid",
+    "goToReceivedVCTab": "Natanggap na View Card",
     "errors": {
       "savingFailed": {
         "title": "Nabigong i-save ang Card",
@@ -272,9 +327,10 @@
     }
   },
   "RequestScreen": {
+    "receiveCard": "Tumanggap ng Card",
     "bluetoothDenied": "Mangyaring paganahin ang Bluetooth upang makahiling ng Card",
-    "bluetoothStateAndroid": "Mangyaring i-on ang bluetooth mula sa mga mabilisang setting upang suportahan ang lokal na pagbabahagi",
-    "bluetoothStateIos": "Mangyaring i-on ang bluetooth mula sa control center upang suportahan ang lokal na pagbabahagi",
+    "bluetoothStateIos": "Naka-OFF ang Bluetooth, paki-ON ito mula sa control center",
+    "bluetoothStateAndroid": "Naka-OFF ang Bluetooth, paki-ON ito mula sa control center",
     "showQrCode": "Ipakita ang QR code na ito para humiling ng resident Card",
     "incomingVc": "Padating na Card",
     "request": "Hilingin",
@@ -291,11 +347,11 @@
     "status": {
       "accepted": {
         "title": "Tagumpay!",
-        "message": "Tagumpay na nakuha ang Card mula kay Wallet"
+        "message": "Tagumpay na nakuha ang Card mula kay {{sender}}"
       },
       "rejected": {
         "title": "Paunawa",
-        "message": "Iwinaksi ang Card ni Wallet"
+        "message": "Iwinaksi ang Card ni {{sender}}"
       },
       "disconnected": {
         "title": "Nadiskonekta",
@@ -325,19 +381,19 @@
   },
   "ScanScreen": {
     "header": "I-scan ang QR Code",
-    "noShareableVcs": "Walang magagamit na maibabahaging Mga kard.",
-    "bluetoothStateAndroid": "Mangyaring i-on ang bluetooth mula sa mga mabilisang setting upang suportahan ang lokal na pagbabahagi",
-    "bluetoothStateIos": "Mangyaring i-on ang bluetooth mula sa control center upang suportahan ang lokal na pagbabahagi",
+    "noShareableVcs": "Walang magagamit na maibabahaging Card..",
+    "bluetoothStateIos": "Naka-OFF ang Bluetooth, paki-ON ito mula sa control center",
+    "bluetoothStateAndroid": "Naka-OFF ang Bluetooth, paki-ON ito mula sa control center",
     "enableBluetoothMessage": "Mangyaring paganahin ang mga pahintulot ng bluetooth upang suportahan ang lokal na pagbabahagi",
-    "enableBluetoothButtonText": "Payagan ang Mga Pahintulot sa Bluetooth",
+    "enableBluetoothButtonText": "Payagan ang Mga Pahintulot sa bluetooth",
     "sharingVc": "Pagbabahagi ng Card",
     "errors": {
       "locationDisabled": {
-        "message": "Dapat na pinagana ang mga serbisyo ng lokasyon upang makapagbahagi ng card",
+        "message": "Dapat na nakabukas ang Location services ng iyong mobile para maaaring makapag-scan",
         "button": "Buksan ang location services"
       },
       "locationDenied": {
-        "message": "Kailangan ng pahintulot sa lokasyon para makapagbahagi ng card",
+        "message": "Kinakailangan ang pahintulot sa lokasyon ng iyong mobile para maaaring makapag-scan",
         "button": "Payagan ng pahintulot sa lokasyon"
       },
       "nearbyDevicesPermissionDenied": {
@@ -346,29 +402,32 @@
       }
     },
     "status": {
-      "connecting": "Kumokonekta...",
-      "connectingTimeout": "Medyo nagtatagal bago magtatag ng koneksyon. Bukas ba ang ibang device para sa mga koneksyon?",
+      "inProgress": "Isinasagawa",
+      "establishingConnection": "Pagtatatag ng Koneksyon",
+      "sharingInProgress": "Isinasagawa ang pagbabahagi",
+      "connectingTimeout": "Ito ay tumatagal ng ilang sandali upang maitaguyod ang koneksyon. Bukas ba ang ibang device para sa mga koneksyon?",
       "exchangingDeviceInfo": "Nagpapalitan ng impormasyon ng device...",
-      "exchangingDeviceInfoTimeout": "Medyo nagtatagal ang paglabas ng impormasyon ng device. Bukas ba ang ibang device para sa mga koneksyon?",
-      "invalid": "Di-wasto ang QR Code",
-      "offline": "Mangyaring kumonekta sa internet upang makapag-scan ng QR codes na gumagamit ng Online sharing mode",
-      "sent": "Naibahagi na ang Card...",
-      "sentHint": "Iniintay ang nakatanggap na itabi o iwaksi ang iyong Card",
+      "exchangingDeviceInfoTimeout": "Medyo nagtatagal ang palitan ng impormasyon ng device. Maaaring kailanganin mong kumonekta muli.",
+      "invalid": "Di-wastong QR Code",
+      "offline": "Mangyaring kumonekta sa internet upang i-scan ang mga QR code gamit ang Online sharing mode",
+      "sent": "Naipadala na ang Card...",
+      "sentHint": "Naghihintay para sa receiver na i-save o itapon ang iyong Card",
       "sharing": {
         "title": "Pagbabahagi...",
         "hint": "Pakihintay na tanggapin o tanggihan ng tumatanggap na device ang pagbabahagi.",
         "timeoutHint": "Mas tumatagal kaysa sa inaasahan ang pagbabahagi. Maaaring may problema sa koneksyon."
       },
       "accepted": {
-        "title": "Tagumpay!",
-        "message": "Ang iyong Card ay matagumpay na naibahagi sa Verifier"
+        "title": "Matagumpay na naibahagi ang ID",
+        "message": "Ang iyong Card ay matagumpay na naibahagi sa Verifier",
+        "gotohome": "Pumunta sa bahay"
       },
       "rejected": {
         "title": "Pansinin",
         "message": "Ang iyong Card ay itinapon ng Verifier"
       },
       "bleError": {
-        "title": "Nabigong ilipat",
+        "title": "Nabigong ilipat!",
         "message": "Nagkaproblema habang inililipat ang Card. Pakisubukang muli.",
         "hint": "Pagkakamali: {{code}}"
       }
@@ -382,9 +441,11 @@
   },
   "SendVcScreen": {
     "reasonForSharing": "Dahilan ng pagbabahagi (opsyonal)",
-    "acceptRequest": "Ibahagi",
+    "acceptRequest": "Tanggapin ang kahilingan at pumili ng card",
     "acceptRequestAndVerify": "Ibahagi sa Selfie",
     "reject": "Tanggihan",
+    "consentToPhotoVerification": "Nagbibigay ako ng pahintulot na kunin ang aking larawan para sa pagpapatunay",
+    "pleaseSelectAnId": "Mangyaring pumili ng ID",
     "status": {
       "sharing": {
         "title": "Pagbabahagi",
@@ -392,14 +453,13 @@
       },
       "accepted": {
         "title": "Tagumpay!",
-        "message": "Ang iyong Card ay matagumpay na naibahagi kay {{receiver}}"
+        "message": "Ang iyong Card ay matagumpay na naibahagi kay Verifier"
       },
       "rejected": {
         "title": "Pansinin",
-        "message": "Ang iyong Card ay tinanggihan ng {{receiver}}"
+        "message": "Ang iyong Card ay tinanggihan ng Verifier"
       }
-    },
-    "consentToPhotoVerification": "Nagbibigay ako ng pahintulot na kunin ang aking larawan para sa pagpapatunay"
+    }
   },
   "VerifyIdentityOverlay": {
     "status": {
@@ -408,7 +468,8 @@
     "errors": {
       "invalidIdentity": {
         "title": "Hindi ma-verify ang pagkakakilanlan",
-        "message": "Hindi nakikilala ang mukha. Pakisubukang muli."
+        "message": "Hindi nakikilala ang mukha. Pakisubukang muli.",
+        "messageNoRetry": "Face not recognised."
       }
     }
   },
@@ -417,11 +478,23 @@
     "getStarted": "Magsimula",
     "unlockApp": "Buksan ang aplikasyon"
   },
+  "SetupLanguage": {
+    "header": "Piliin ang Wika",
+    "description": "Piliin ang iyong gustong wika",
+    "save": "I-save ang Kagustuhan"
+  },
   "common": {
     "cancel": "Kanselahin",
     "save": "I-save",
+    "dismiss": "Dismissed",
     "editLabel": "Palitan ang {{label}}",
     "tryAgain": "Subukan muli",
+    "camera": {
+      "errors": {
+        "missingPermission": "Ginagamit ng app na ito ang camera upang i-scan ang QR code ng isa pang device."
+      },
+      "allowAccess": "Payagan ang access sa camera"
+    },
     "errors": {
       "genericError": "Nagkaproblema. Pakisubukang muli pagkatapos ng ilang oras!"
     }

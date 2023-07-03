@@ -93,16 +93,24 @@ export function useScanLayout() {
   const onCancel = () => scanService.send(ScanEvents.CANCEL());
   let statusOverlay: Pick<
     MessageOverlayProps,
-    'title' | 'message' | 'hint' | 'onCancel' | 'progress' | 'onBackdropPress'
+    | 'title'
+    | 'message'
+    | 'hint'
+    | 'onCancel'
+    | 'progress'
+    | 'onBackdropPress'
+    | 'requester'
   > = null;
   if (isConnecting) {
     statusOverlay = {
-      message: t('status.connecting'),
+      title: t('status.inProgress'),
+      message: t('status.establishingConnection'),
       progress: true,
     };
   } else if (isConnectingTimeout) {
     statusOverlay = {
-      message: t('status.connecting'),
+      title: t('status.sharingInProgress'),
+      requester: t('status.sharingInProgress'),
       hint: t('status.connectingTimeout'),
       onCancel,
       progress: true,
