@@ -1,26 +1,21 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Markdown from 'react-native-simple-markdown';
-import appMetaData from '../../AppMetaData.md';
 
 import { Pressable, TouchableOpacity } from 'react-native';
 import { Modal } from '../../components/ui/Modal';
 import { Column, Row, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { Icon, ListItem } from 'react-native-elements';
-import { Image } from 'react-native';
 import { Linking } from 'react-native';
 import getAllConfigurations from '../../shared/commonprops/commonProps';
 import { getVersion } from 'react-native-device-info';
 
-export const AboutInji: React.FC<AboutInjiProps> = (props) => {
+export const AboutInji: React.FC<AboutInjiProps> = () => {
   const { t } = useTranslation('AboutInji');
   let aboutInjiUrl = '';
-
-  const helpLink = getAllConfigurations().then((response) => {
+  getAllConfigurations().then((response) => {
     aboutInjiUrl = response.aboutInjiUrl;
   });
-
   const [showAboutInji, setShowAboutInji] = useState(false);
 
   const dependencies = require('../../package-lock.json').dependencies;
@@ -46,9 +41,12 @@ export const AboutInji: React.FC<AboutInjiProps> = (props) => {
           setShowAboutInji(!showAboutInji);
         }}>
         <ListItem topDivider bottomDivider>
-          <Image
-            source={require('../../assets/legal-notices-icon.png')}
-            style={{ marginLeft: 10, marginRight: 9 }}
+          <Icon
+            type={'feather'}
+            name={'file'}
+            color={Theme.Colors.Icon}
+            size={25}
+            style={{ marginRight: 15 }}
           />
           <ListItem.Content>
             <ListItem.Title>
@@ -102,7 +100,7 @@ export const AboutInji: React.FC<AboutInjiProps> = (props) => {
                 margin="32 0 5 0"
                 align="center"
                 size="small"
-                color={Theme.Colors.version}>
+                color={Theme.Colors.aboutVersion}>
                 {t('tuvaliVersion')}: {packageVersion + '-' + packageCommitId}
               </Text>
             )}

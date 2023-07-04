@@ -1,11 +1,11 @@
 import React from 'react';
-import { Linking, Pressable, View } from 'react-native';
+import { Linking, Platform, Pressable, View } from 'react-native';
 import { Icon, ListItem, Switch } from 'react-native-elements';
-import { Row, Column, Text } from '../../components/ui';
+import { Column, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { MainRouteProps } from '../../routes/main';
 import { MessageOverlay } from '../../components/MessageOverlay';
-import { Image } from 'react-native';
+
 import { useSettingsScreen } from './SettingScreenController';
 import { useTranslation } from 'react-i18next';
 import { LanguageSelector } from '../../components/LanguageSelector';
@@ -48,11 +48,9 @@ const LanguageSetting: React.FC = () => {
 };
 
 let helpUrl = '';
-
-let helpPage = getAllConfigurations().then((response) => {
+getAllConfigurations().then((response) => {
   helpUrl = response.helpUrl;
 });
-
 export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
   props
 ) => {
@@ -81,9 +79,12 @@ export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
             <LanguageSetting />
 
             <ListItem topDivider disabled={!controller.canUseBiometrics}>
-              <Image
-                source={require('../../assets/biometric-unlock-icon.png')}
-                style={{ marginLeft: 10, marginRight: 9 }}
+              <Icon
+                type={'MaterialCommunityIcons'}
+                name={'fingerprint'}
+                color={Theme.Colors.Icon}
+                size={25}
+                style={{ marginRight: 15 }}
               />
               <ListItem.Content>
                 <ListItem.Title>
@@ -95,7 +96,14 @@ export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
               <Switch
                 value={controller.isBiometricUnlockEnabled}
                 onValueChange={controller.useBiometrics}
-                color={Theme.Colors.profileValue}
+                trackColor={{
+                  false: Theme.Colors.switchTrackFalse,
+                  true:
+                    Platform.OS == 'ios'
+                      ? Theme.Colors.switchHead
+                      : Theme.Colors.switchTrackTrue,
+                }}
+                color={Theme.Colors.switchHead}
               />
             </ListItem>
 
@@ -119,9 +127,12 @@ export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
               onPress={() => {
                 Linking.openURL(helpUrl);
               }}>
-              <Image
-                source={require('../../assets/features-walkaround-icon.png')}
-                style={{ marginLeft: 10, marginRight: 9 }}
+              <Icon
+                type={'antdesign'}
+                name={'book'}
+                color={Theme.Colors.Icon}
+                size={25}
+                style={{ marginRight: 15 }}
               />
               <ListItem.Content>
                 <ListItem.Title>
