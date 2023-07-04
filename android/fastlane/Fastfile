@@ -6,6 +6,7 @@ RELEASE_KEYSTORE_ALIAS = ENV["RELEASE_KEYSTORE_ALIAS"]
 RELEASE_KEYSTORE_PASSWORD = ENV["RELEASE_KEYSTORE_PASSWORD"]
 PLAY_CONSOLE_RELEASE_DESCRIPTION = ENV["PLAY_CONSOLE_RELEASE_DESCRIPTION"]
 SLACK_URL = ENV["SLACK_URL"]
+CREDENTIAL_REGISTRY_EDIT = ENV["CREDENTIAL_REGISTRY_EDIT"]
 
 desc "Verify Build for Android"
 lane :android_build_verify do
@@ -14,11 +15,74 @@ lane :android_build_verify do
   )
 end
 
-desc "Build for Android"
-lane :android_build do
-  gradle(
-    task: "assembleMosipRelease",
+desc "Deploy an Internal testing version to the Google Play"
+lane :android_build_internal do
+  previous_build_number = google_play_track_version_codes(
+    package_name: "io.mosip.residentapp",
+    track: "internal",
+    json_key: "play_config.json",
+  )[0]
+  
+  current_build_number = previous_build_number + 1
+  
+  increment_version_code(
+    gradle_file_path: "app/build.gradle",
+    version_code: current_build_number
   )
+  
+  git_commit = sh('git rev-parse --short HEAD').strip
+  git_branch = sh('git rev-parse --abbrev-ref HEAD').strip
+
+  versionName = "Inji - #{git_commit}-#{git_branch}"
+
+  gradle(task: "clean bundleMosipRelease")
+  upload_to_play_store(
+  track: 'internal',
+  release_status: 'completed',
+  version_name: versionName,
+  )
+
+  slack(
+      message: "Inji - #{versionName} (#{current_build_number}) is uploaded to Play store. Description : #{PLAY_CONSOLE_RELEASE_DESCRIPTION}.", 
+      success: true,
+      slack_url: "#{SLACK_URL}",
+      default_payloads: [:git_branch, :last_git_commit]
+    )
+end
+
+desc "Deploy an Beta version to the Google Play"
+lane :android_build_beta do
+
+  previous_build_number = google_play_track_version_codes(
+    package_name: "io.mosip.residentapp",
+    track: "beta",
+    json_key: "play_config.json",
+  )[0]
+  
+  current_build_number = previous_build_number + 1
+  
+  increment_version_code(
+    gradle_file_path: "app/build.gradle",
+    version_code: current_build_number
+  )
+  
+  git_tag = sh('git describe --abbrev=0 --tags --exact-match HEAD').strip
+
+  versionName = "Inji - #{git_tag}"
+
+  gradle(task: "clean bundleBetaRelease")
+  upload_to_play_store(
+  track: 'beta',
+  release_status: 'completed',
+  version_name: versionName,
+  )
+
+  slack(
+      message: "Inji [Beta]- #{versionName} (#{current_build_number}) is uploaded to Play store. Description : #{PLAY_CONSOLE_RELEASE_DESCRIPTION}.", 
+      success: true,
+      slack_url: "#{SLACK_URL}",
+      default_payloads: [:git_branch, :last_git_commit]
+    )
 end
 
 desc "Deploy an Internal testing version to the Google Play"
