@@ -145,20 +145,6 @@ export const ScanScreen: React.FC = () => {
         fill
         align="space-evenly"
         backgroundColor={Theme.Colors.whiteBackgroundColor}>
-        {controller.isLocationDisabled || controller.isLocationDenied ? (
-          <Column padding="24" fill align="space-between">
-            <Centered fill>
-              <Text align="center" color={Theme.Colors.errorMessage}>
-                {controller.locationError.message}
-              </Text>
-            </Centered>
-
-            <Button
-              title={controller.locationError.button}
-              onPress={controller.LOCATION_REQUEST}
-            />
-          </Column>
-        ) : null}
         {loadQRScanner()}
         {controller.isQrLogin && (
           <QrLogin

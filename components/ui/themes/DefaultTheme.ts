@@ -1,7 +1,6 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 import { Dimensions, StyleSheet, ViewStyle } from 'react-native';
 import { Spacing } from '../styleUtils';
-import { colors } from 'react-native-elements';
 
 const Colors = {
   Black: '#000000',
@@ -743,7 +742,7 @@ export const DefaultTheme = {
       padding: 0,
     },
     popupOverLay: {
-      height: 260,
+      height: 150,
       backgroundColor: Colors.White,
       borderRadius: 15,
       margin: -13.5,

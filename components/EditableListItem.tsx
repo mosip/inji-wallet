@@ -23,7 +23,7 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
         name={props.Icon}
         containerStyle={Theme.Styles.settingsIconBg}
         type={props.IconType}
-        size={22}
+        size={25}
         color={Theme.Colors.Icon}
       />
       <ListItem.Content>
@@ -55,7 +55,7 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
             }}
           />
           {props.credentialRegistryResponse === 'error' && (
-            <Text style={Theme.Styles.warningText}>
+            <Text style={Theme.TextStyles.error}>
               please try again after sometime...
             </Text>
           )}
