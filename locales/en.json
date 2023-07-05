@@ -110,11 +110,12 @@
         "expiredOtp": "OTP has expired",
         "invalidUin": "UIN invalid",
         "invalidVid": "VID invalid",
-        "missingUin": "UIN not available in database",
+        "missingUin": "The entered UIN is deactivated/blocked. Please enter a valid UIN to proceed",
         "missingVid": "VID not available in database",
         "noMessageAvailable": "Try after sometime",
         "whileGeneratingOtpErrorIsOccured": "while generating otp error is occurred",
-        "networkRequestFailed": "Network request failed"
+        "networkRequestFailed": "Network request failed",
+        "deactivatedVid": "The entered VID is deactivated/expired. Please enter a valid VID to proceed"
       }
     }
   },

@@ -111,11 +111,12 @@
           "expiredOtp": "ओटीपी समाप्त हो गया है",
           "invalidUin": "UIN अमान्य",
           "invalidVid": "VID अमान्य",
-          "missingUin": "UIN यूआईएन डेटाबेस में उपलब्ध नहीं है",
+          "missingUin": "दर्ज किया गया UIN निष्क्रिय/अवरुद्ध है। आगे बढ़ने के लिए कृपया एक वैध UIN दर्ज करें",
           "missingVid": "VID वीआईडी ​​डेटाबेस में उपलब्ध नहीं है",
           "noMessageAvailable": "कुछ देर बाद कोशिश करें",
           "whileGeneratingOtpErrorIsOccured": "ओटीपी जनरेट करते समय एरर आ गया",
-          "networkRequestFailed": "नेटवर्क अनुरोध विफल रहा"
+          "networkRequestFailed": "नेटवर्क अनुरोध विफल रहा",
+          "deactivatedVid": "दर्ज किया गया VID ​​निष्क्रिय/समाप्त हो गया है। आगे बढ़ने के लिए कृपया एक वैध VID ​​दर्ज करें"
         }
       }
     },
