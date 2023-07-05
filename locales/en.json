@@ -142,9 +142,7 @@
     "header": "ABOUT INJI",
     "aboutDetailes": "Inji is a mobile app that can be used as a digital wallet to store credentials. It also allows identity verification in both offline and online modes, at any place and time.",
     "forMoreDetailes": "For more details",
-    "clickHere": "Click here",
-    "version": "Version",
-    "tuvaliVersion": "Tuvali-version"
+    "clickHere": "Click here"
   },
   "HelpScreen": {
     "header": "Help",

@@ -90,24 +90,13 @@ export const AboutInji: React.FC<AboutInjiProps> = () => {
 
           <Column
             pY={25}
-            align="space-between"
             crossAlign="center"
             style={Theme.Styles.versionContainer}>
             <Text
               style={Theme.TextStyles.bold}
               color={Theme.Colors.aboutVersion}>
-              {t('version')}: {getVersion()}
+              {getVersion()}
             </Text>
-            {packageVersion != 'unknown' && (
-              <Text
-                weight="semibold"
-                margin="32 0 5 0"
-                align="center"
-                size="small"
-                color={Theme.Colors.aboutVersion}>
-                {t('tuvaliVersion')}: {packageVersion + '-' + packageCommitId}
-              </Text>
-            )}
           </Column>
         </Column>
       </Modal>
