@@ -67,27 +67,29 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
           iconType={props.iconType}
           onPress={() => props.onPress(service)}
         />
-        <Row crossAlign="center">
-          {props.activeTab !== 'receivedVcsTab' &&
-            props.activeTab != 'sharingVcScreen' && (
-              <VcItemActivationStatus
-                verifiableCredential={verifiableCredential}
-                emptyWalletBindingId={emptyWalletBindingId}
-                onPress={() => props.onPress(service)}
-                showOnlyBindedVc={props.showOnlyBindedVc}
+        {props.isSharingVc ? null : (
+          <Row crossAlign="center">
+            {props.activeTab !== 'receivedVcsTab' &&
+              props.activeTab != 'sharingVcScreen' && (
+                <VcItemActivationStatus
+                  verifiableCredential={verifiableCredential}
+                  emptyWalletBindingId={emptyWalletBindingId}
+                  onPress={() => props.onPress(service)}
+                  showOnlyBindedVc={props.showOnlyBindedVc}
+                />
+              )}
+            <Pressable onPress={KEBAB_POPUP}>
+              <KebabPopUp
+                vcKey={props.vcKey}
+                iconName="dots-three-horizontal"
+                iconType="entypo"
+                isVisible={isKebabPopUp}
+                onDismiss={DISMISS}
+                service={service}
               />
-            )}
-          <Pressable onPress={KEBAB_POPUP}>
-            <KebabPopUp
-              vcKey={props.vcKey}
-              iconName="dots-three-horizontal"
-              iconType="entypo"
-              isVisible={isKebabPopUp}
-              onDismiss={DISMISS}
-              service={service}
-            />
-          </Pressable>
-        </Row>
+            </Pressable>
+          </Row>
+        )}
       </Pressable>
       <ErrorMessageOverlay
         isVisible={isSavingFailedInIdle}
@@ -110,4 +112,5 @@ interface VcItemProps {
   activeTab?: string;
   iconName?: string;
   iconType?: string;
+  isSharingVc?: boolean;
 }

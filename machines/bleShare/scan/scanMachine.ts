@@ -480,6 +480,11 @@ export const scanMachine =
                 sent: {
                   description:
                     'VC data has been shared and the receiver should now be viewing it',
+                  on: {
+                    CANCEL: {
+                      target: '#scan.reviewing.cancelling',
+                    },
+                  },
                 },
               },
               on: {
@@ -494,6 +499,9 @@ export const scanMachine =
                 },
                 VC_REJECTED: {
                   target: '#scan.reviewing.rejected',
+                },
+                CANCEL: {
+                  target: '#scan.reviewing.cancelling',
                 },
               },
             },

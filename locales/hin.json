@@ -95,10 +95,10 @@
       "yesConfirm": "हां, मैं पुष्टि करता हूं",
       "no": "नहीं"
     },
-    "RemoveVcWarningOverlay":{
-      "alert": "चेतावनी",
-      "removeWarning": "क्या आप सचमुच कार्ड हटाना चाहते हैं?",
-      "confirm": "पुष्टि करना",
+    "RemoveVcWarningOverlay": {
+      "alert": "कृपया पुष्टि करें",
+      "RemoveWarning": "क्या आप यह कार्ड हटाना चाहते हैं",
+      "confirm": "हां, मैं पुष्टि करता हूं",
       "no": "नहीं"
     },
     "AuthScreen": {

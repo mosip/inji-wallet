@@ -98,10 +98,10 @@
     "yesConfirm": "Yes, I Confirm",
     "no": "No"
   },
-  "RemoveVcWarningOverlay":{
-    "alert": "Alert",
-    "removeWarning": "Do you really want to remove the card?",
-    "confirm": "Confirm",
+  "RemoveVcWarningOverlay": {
+    "alert": "Please Confirm",
+    "RemoveWarning": "Do you want to remove this card",
+    "confirm": "Yes, I confirm",
     "no": "No"
   },
   "AuthScreen": {
@@ -446,7 +446,7 @@
         "message": "Your Card was discarded by Verifier"
       },
       "bleError": {
-        "title": "Failed to transfer!",
+        "title": "Failed to transfer",
         "message": "Something went wrong while transferring Card. Please try again.",
         "hint": "Error: {{code}}"
       }

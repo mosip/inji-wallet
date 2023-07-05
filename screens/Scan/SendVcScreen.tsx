@@ -95,9 +95,6 @@ export const SendVcScreen: React.FC = () => {
               selected={index === controller.selectedIndex}
             />
           ))}
-        </Column>
-
-        <Column padding="12 0" elevation={2}>
           <Button
             type="gradient"
             title={t('acceptRequest')}

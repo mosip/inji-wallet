@@ -94,10 +94,10 @@
     "yesConfirm": "ಹೌದು, ನಾನು ದೃಢೀಕರಿಸುತ್ತೇನೆ",
     "no": "ಸಂ"
   },
-  "RemoveVcWarningOverlay":{
-    "alert": "ಎಚ್ಚರಿಕೆ",
-    "removeWarning": "ನೀವು ನಿಜವಾಗಿಯೂ ಕಾರ್ಡ್ ಅನ್ನು ತೆಗೆದುಹಾಕಲು ಬಯಸುವಿರಾ?",
-    "confirm": "ದೃಢೀಕರಿಸಿ",
+  "RemoveVcWarningOverlay": {
+    "alert": "ದಯವಿಟ್ಟು ದ್ರುಡೀಕರಿಸಿ",
+    "RemoveWarning": "ನೀವು ಈ ಕಾರ್ಡ್ ಅನ್ನು ತೆಗೆದುಹಾಕಲು ಬಯಸುವಿರಾ",
+    "confirm": "ಹೌದು, ನಾನು ದೃಢೀಕರಿಸುತ್ತೇನೆ",
     "no": "ಸಂ"
   },
   "AuthScreen": {
