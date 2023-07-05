@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Pressable, TouchableOpacity } from 'react-native';
@@ -12,11 +12,15 @@ import { getVersion } from 'react-native-device-info';
 
 export const AboutInji: React.FC<AboutInjiProps> = () => {
   const { t } = useTranslation('AboutInji');
-  let aboutInjiUrl = '';
-  getAllConfigurations().then((response) => {
-    aboutInjiUrl = response.aboutInjiUrl;
-  });
+
   const [showAboutInji, setShowAboutInji] = useState(false);
+  const [aboutInjiUrl, setAboutInjiUrl] = useState('');
+
+  useEffect(() => {
+    getAllConfigurations().then((response) => {
+      setAboutInjiUrl(response.aboutInjiUrl);
+    });
+  }, []);
 
   const dependencies = require('../../package-lock.json').dependencies;
   let packageVersion, packageCommitId;
