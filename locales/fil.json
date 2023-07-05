@@ -142,7 +142,9 @@
     "header": "TUNGKOL KAY INJI",
     "aboutDetailes": "Ang Inji ay isang mobile app na maaaring gamitin bilang digital wallet para mag-imbak ng mga kredensyal. Pinapayagan din nito ang pag-verify ng pagkakakilanlan sa parehong offline at online na mga mode, sa anumang lugar at oras.",
     "forMoreDetailes": "Para sa karagdagang detalye",
-    "clickHere": "Pindutin dito"
+    "clickHere": "Pindutin dito",
+    "version": "Bersyon",
+    "tuvaliVersion": "Tuvali-bersyon"
   },
   "HelpScreen": {
     "header": "Tulong",
