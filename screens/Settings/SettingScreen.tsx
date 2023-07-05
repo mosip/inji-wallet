@@ -1,5 +1,5 @@
 import React from 'react';
-import { Linking, Platform, Pressable, View } from 'react-native';
+import { Platform, Pressable, View } from 'react-native';
 import { Icon, ListItem, Switch } from 'react-native-elements';
 import { Column, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
@@ -12,7 +12,6 @@ import { LanguageSelector } from '../../components/LanguageSelector';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Modal } from '../../components/ui/Modal';
 import { CREDENTIAL_REGISTRY_EDIT } from 'react-native-dotenv';
-import getAllConfigurations from '../../shared/commonprops/commonProps';
 import { AboutInji } from './AboutInji';
 import { EditableListItem } from '../../components/EditableListItem';
 
@@ -47,10 +46,6 @@ const LanguageSetting: React.FC = () => {
   );
 };
 
-let helpUrl = '';
-getAllConfigurations().then((response) => {
-  helpUrl = response.helpUrl;
-});
 export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
   props
 ) => {
@@ -121,6 +116,7 @@ export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
               />
             )}
 
+            {/*
             <ListItem
               topDivider
               bottomDivider
@@ -142,6 +138,7 @@ export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
                 </ListItem.Title>
               </ListItem.Content>
             </ListItem>
+            */}
 
             <ListItem onPress={controller.LOGOUT}>
               <Icon
