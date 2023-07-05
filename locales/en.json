@@ -54,7 +54,7 @@
     "nationalCard": "National Card",
     "uin": "UIN",
     "vid": "VID",
-    "enableVerification": "Enable Verification",
+    "enableVerification": "Activate",
     "profileAuthenticated": "Profile is authenticated!",
     "offlineAuthDisabledHeader": "Offline Authentication disabled!",
     "offlineAuthDisabledMessage": "Click 'Enable Authentication' to enable this credentials to be used for offline authentication.",
@@ -98,6 +98,12 @@
     "yesConfirm": "Yes, I Confirm",
     "no": "No"
   },
+  "RemoveVcWarningOverlay":{
+    "alert": "Alert",
+    "removeWarning": "Do you really want to remove the card?",
+    "confirm": "Confirm",
+    "no": "No"
+  },
   "AuthScreen": {
     "header": "Select App Unlock Method",
     "Description": "Would you like to use biometrics to unlock the application?",
@@ -122,6 +128,8 @@
   },
   "SettingScreen": {
     "header": "Settings",
+    "injiAsVerifierApp": "Inji as verifier app",
+    "basicSettings": "Basic settings",
     "bioUnlock": "Unlock with Biometric",
     "language": "Language",
     "aboutInji": "About Inji",
@@ -211,7 +219,7 @@
     "header": "Retrieve your ID",
     "guideLabel": "Select ID type and enter the MOSIP provided UIN or VID of the ID you wish to retrieve",
     "generateVc": "Generate Card",
-    "downloadCard": "Download ID",
+    "downloadID": "Download ID",
     "enterId": "Enter ID",
     "noUIN/VID": "Don’t have UIN/VID? ",
     "getItHere": "Get it now",
@@ -260,6 +268,7 @@
   },
   "ViewVcModal": {
     "title": "ID Details",
+    "inProgress": "In Progress",
     "cancel": "Cancel",
     "lock": "Lock",
     "unlock": "Unlock",
@@ -327,6 +336,7 @@
     "reject": "Reject",
     "discard": "Discard",
     "goToReceivedVCTab": "View Received card",
+    "saving": "Is being saved",
     "errors": {
       "savingFailed": {
         "title": "Failed to save the card",
@@ -335,10 +345,10 @@
     }
   },
   "RequestScreen": {
+    "receiveCard": "REceive Card",
     "bluetoothDenied": "Please enable Bluetooth to be able to request card",
     "bluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
     "bluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
-    "nearbyDevicesPermissionDenied": "Please enable Nearby Devices Permission to be able to request card",
     "showQrCode": "Display this QR code to request resident Card",
     "incomingVc": "Incoming Card",
     "request": "Request",
@@ -393,6 +403,9 @@
     "sharingVc": "Sharing card",
     "bluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
     "bluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
+    "enableBluetoothMessage": "Please enable bluetooth permissions to support local sharing",
+    "enableBluetoothButtonText": "Allow bluetooth permissions",
+    "scanningGuide": "Hold the phone steady and scan the QR code",
     "errors": {
       "locationDisabled": {
         "message": "Location services must be enabled to share card",
@@ -455,6 +468,7 @@
     "status": {
       "sharing": {
         "title": "Sharing",
+        "hint": "Please wait for the receiving device to accept or decline the share.",
         "timeoutHint": "VC shares take a bit longer. There may be a connection problem."
       },
       "accepted": {
@@ -468,6 +482,7 @@
     }
   },
   "VerifyIdentityOverlay": {
+    "faceAuth": "Face Authentication",
     "status": {
       "verifyingIdentity": "Verifying identity..."
     },
@@ -502,7 +517,7 @@
       "allowAccess": "Allow access to the camera"
     },
     "errors": {
-      "genericError": "Something went wrong. Please try again after some time!"
+      "genericError": "Something is wrong. Please try again later!"
     }
   }
 }
