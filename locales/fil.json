@@ -73,6 +73,12 @@
       }
     }
   },
+  "RemoveVcWarningOverlay": {
+    "alert": "Pakikumpirma",
+    "RemoveWarning": "Gusto mo bang alisin ang card na ito",
+    "confirm": "Oo, kinukumpirma ko",
+    "no": "Hindi"
+  },
   "AuthScreen": {
     "header": "Gusto mo bang gumamit ng biometrics upang i-unlock ang aplikasyon?",
     "Description": "Gusto mo bang gumamit ng biometrics upang i-unlock ang application?",

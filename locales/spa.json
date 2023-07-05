@@ -76,6 +76,12 @@
 			}
 		}
 	},
+	"RemoveVcWarningOverlay": {
+		"alert": "Por favor confirmar",
+		"RemoveWarning": "¿Quieres eliminar esta tarjeta?",
+		"confirm": "si, lo confirmo",
+		"no": "No"
+	  },
 	"AuthScreen": {
 		"header": "¿Te gustaría usar la biometría para desbloquear la aplicación?",
 		"useBiometrics": "Usar biometría",
