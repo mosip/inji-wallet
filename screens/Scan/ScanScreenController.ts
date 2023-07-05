@@ -19,7 +19,10 @@ import {
   selectIsBluetoothPermissionDenied,
   selectIsStartPermissionCheck,
 } from '../../machines/bleShare/commonSelectors';
-import { ScanEvents } from '../../machines/bleShare/scan/scanMachine';
+import {
+  ScanEvents,
+  selectIsMaximumStorageLimitReached,
+} from '../../machines/bleShare/scan/scanMachine';
 
 export function useScanScreen() {
   const { t } = useTranslation('ScanScreen');
@@ -49,6 +52,10 @@ export function useScanScreen() {
   );
   const isBluetoothDenied = useSelector(scanService, selectIsBluetoothDenied);
   const locationError = { message: '', button: '' };
+  const isMaximumStorageLimitReached = useSelector(
+    scanService,
+    selectIsMaximumStorageLimitReached
+  );
 
   if (isLocationDisabled) {
     locationError.message = t('errors.locationDisabled.message');
@@ -68,6 +75,7 @@ export function useScanScreen() {
     isBluetoothDenied,
     isStartPermissionCheck,
     isReadyForBluetoothStateCheck,
+    isMaximumStorageLimitReached,
     isScanning: useSelector(scanService, selectIsScanning),
     isQrLogin: useSelector(scanService, selectIsShowQrLogin),
     isQrLoginstoring: useSelector(scanService, selectIsQrLoginStoring),

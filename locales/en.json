@@ -347,6 +347,10 @@
       "nearbyDevicesPermissionDenied": {
         "message": "Nearby Devices permission is required to be able to share card",
         "button": "Allow Permission"
+      },
+      "storageLimitReached": {
+        "title": "Clear History",
+        "message": "You cannot share cards since the Appdata is full. Clear Appdata to proceed."
       }
     },
     "status": {

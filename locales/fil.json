@@ -343,6 +343,10 @@
       "nearbyDevicesPermissionDenied": {
         "message": "Kinakailangan ang pahintulot ng Mga Kalapit na Device upang makapagbahagi ng card",
         "button": "Pahintulutan"
+      },
+      "storageLimitReached": {
+        "title": "Hindi sapat na Appdata",
+        "message": "Hindi ka makakapagbahagi ng mga card dahil puno na ang Appdata. I-clear ang Appdata para magpatuloy."
       }
     },
     "status": {

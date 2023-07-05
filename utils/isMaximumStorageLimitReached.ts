@@ -5,10 +5,9 @@ import {
 } from 'react-native-device-info';
 import getAllConfigurations from '../shared/commonprops/commonProps';
 
-export default async function isMaximumStorageLimitReached() {
+export default async function isMaximumStorageLimitReached(key: string) {
   const configurations = await getAllConfigurations();
-  const maximumStorageLimitInBytes =
-    configurations['maximumStorageLimitInMB'] * 1000 * 1000;
+  const maximumStorageLimitInBytes = configurations[key] * 1000 * 1000;
 
   const freeDiskStorageInBytes =
     Platform.OS === 'android' && Platform.Version < 29

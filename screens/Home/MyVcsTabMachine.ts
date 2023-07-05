@@ -86,7 +86,10 @@ export const MyVcsTabMachine = model.createMachine(
         states: {
           checkStorage: {
             invoke: {
-              src: () => Promise.resolve(isMaximumStorageLimitReached()),
+              src: () =>
+                Promise.resolve(
+                  isMaximumStorageLimitReached('maximumStorageLimitInMB')
+                ),
               onDone: [
                 {
                   cond: (_context, event) => event.data === true,
