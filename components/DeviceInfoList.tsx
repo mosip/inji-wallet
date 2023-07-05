@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Text } from './ui';
+import { TextItem } from './ui/TextItem';
 
 export const DeviceInfoList: React.FC<DeviceInfoProps> = (props) => {
   const { t } = useTranslation('DeviceInfoList');
@@ -18,6 +18,7 @@ export const DeviceInfoList: React.FC<DeviceInfoProps> = (props) => {
 
 interface DeviceInfoProps {
   deviceInfo: DeviceInfo;
+  of?: string;
 }
 
 export interface DeviceInfo {

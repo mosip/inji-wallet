@@ -25,7 +25,7 @@ export interface Typegen0 {
     actions: never;
     delays: never;
     guards: never;
-    services: 'AddVcModal' | 'GetVcModal';
+    services: never;
   };
   'eventsCausingActions': {
     completeOnboarding: 'ADD_VC' | 'ONBOARDING_DONE';

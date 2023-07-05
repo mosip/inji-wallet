@@ -98,6 +98,12 @@
     "yesConfirm": "Yes, I Confirm",
     "no": "No"
   },
+  "RemoveVcWarningOverlay": {
+    "alert": "Please Confirm",
+    "RemoveWarning": "Do you want to remove this card",
+    "confirm": "Yes, I confirm",
+    "no": "No"
+  },
   "AuthScreen": {
     "header": "Select App Unlock Method",
     "Description": "Would you like to use biometrics to unlock the application?",
@@ -389,10 +395,12 @@
   },
   "ScanScreen": {
     "header": "Scan QR Code",
-    "noShareableVcs": "No shareable card are available.",
-    "sharingVc": "Sharing card",
-    "bluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
-    "bluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
+    "noShareableVcs": "No shareable Cards are available.",
+    "sharingVc": "Sharing Card",
+    "bluetoothStateAndroid": "Please turn on bluetooth from quick settings to support local sharing",
+    "bluetoothStateIos": "Please turn on bluetooth from control center to support local sharing",
+    "enableBluetoothMessage": "Please enable bluetooth permissions to support local sharing",
+    "enableBluetoothButtonText": "Allow Bluetooth Permissions",
     "errors": {
       "locationDisabled": {
         "message": "Location services must be enabled to share card",
@@ -433,7 +441,7 @@
         "message": "Your Card was discarded by Verifier"
       },
       "bleError": {
-        "title": "Failed to transfer!",
+        "title": "Failed to transfer",
         "message": "Something went wrong while transferring Card. Please try again.",
         "hint": "Error: {{code}}"
       }

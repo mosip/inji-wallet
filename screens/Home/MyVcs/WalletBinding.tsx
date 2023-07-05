@@ -56,7 +56,7 @@ export const WalletBinding: React.FC<WalletBindingProps> = (props) => {
         onConfirm={controller.CONFIRM}
         onCancel={controller.CANCEL}
       />
-
+      {console.log('isAcceptingOtpInput:-', controller.isAcceptingOtpInput)}
       <OtpVerificationModal
         isVisible={controller.isAcceptingOtpInput}
         onDismiss={controller.DISMISS}

@@ -12,6 +12,7 @@ import { useInterpret } from '@xstate/react';
 import { createVcItemMachine } from '../../machines/vcItem';
 import { GlobalContext } from '../../shared/GlobalContext';
 import { useFocusEffect } from '@react-navigation/native';
+import { SingleVcItem } from '../../components/SingleVcItem';
 
 export const SendVcScreen: React.FC = () => {
   const { t } = useTranslation('SendVcScreen');
@@ -85,19 +86,29 @@ export const SendVcScreen: React.FC = () => {
           </Text>
         </Column>
         <Column scroll>
-          {controller.vcKeys.map((vcKey, index) => (
-            <VcItem
-              key={vcKey}
-              vcKey={vcKey}
+          {controller.vcKeys.length === 1 && (
+            <SingleVcItem
+              key={controller.vcKeys[0]}
+              vcKey={controller.vcKeys[0]}
               margin="0 2 8 2"
-              onPress={controller.SELECT_VC_ITEM(index)}
+              onPress={controller.SELECT_VC_ITEM(0)}
               selectable
-              selected={index === controller.selectedIndex}
+              selected={0 === controller.selectedIndex}
             />
-          ))}
-        </Column>
+          )}
 
-        <Column padding="12 0" elevation={2}>
+          {controller.vcKeys.length > 1 &&
+            controller.vcKeys.map((vcKey, index) => (
+              <VcItem
+                key={vcKey}
+                vcKey={vcKey}
+                margin="0 2 8 2"
+                onPress={controller.SELECT_VC_ITEM(index)}
+                selectable
+                selected={index === controller.selectedIndex}
+                isSharingVc={true}
+              />
+            ))}
           <Button
             type="gradient"
             title={t('approveRequest')}
