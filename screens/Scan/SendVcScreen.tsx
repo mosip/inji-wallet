@@ -97,14 +97,14 @@ export const SendVcScreen: React.FC = () => {
           ))}
           <Button
             type="gradient"
-            title={t('approveRequest')}
+            title={t('acceptRequest')}
             disabled={controller.selectedIndex == null}
             onPress={controller.ACCEPT_REQUEST}
           />
           {!controller.selectedVc.shouldVerifyPresence && (
             <Button
               type="gradient"
-              title={t('approveRequestAndVerify')}
+              title={t('acceptRequestAndVerify')}
               styles={{ marginTop: '12' }}
               disabled={controller.selectedIndex == null}
               onPress={controller.VERIFY_AND_ACCEPT_REQUEST}

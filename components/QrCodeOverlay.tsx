@@ -36,7 +36,7 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = (props) => {
         overlayStyle={{ padding: 1, borderRadius: 21 }}>
         <Column style={Theme.QrCodeStyles.expandedQrCode}>
           <Row pY={20} style={Theme.QrCodeStyles.QrCodeHeader}>
-            <Text style={Theme.TextStyles.header} weight="bold">
+            <Text align="center" style={Theme.TextStyles.header} weight="bold">
               {t('qrCodeHeader')}
             </Text>
             <Icon
