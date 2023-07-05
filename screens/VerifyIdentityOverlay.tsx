@@ -7,10 +7,12 @@ import { Theme } from '../components/ui/styleUtils';
 import { VC } from '../types/vc';
 import { Modal } from '../components/ui/Modal';
 import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 export const VerifyIdentityOverlay: React.FC<VerifyIdentityOverlayProps> = (
   props
 ) => {
+  const { t } = useTranslation('VerifyIdentityOverlay');
   return (
     <Modal
       isVisible={props.isVisible}

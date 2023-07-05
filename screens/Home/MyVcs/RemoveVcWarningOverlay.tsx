@@ -38,7 +38,7 @@ export const RemoveVcWarningOverlay: React.FC<RemoveVcWarningOverlayProps> = (
             size="small"
             weight="semibold"
             color={Theme.Colors.GrayText}>
-            {t('RemoveWarning')}
+            {t('removeWarning')}
           </Text>
         </Column>
 
