@@ -1,6 +1,7 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
+import { HeaderBackButton } from '@react-navigation/elements';
 
 import { RequestScreen } from './RequestScreen';
 import { useRequestLayout } from './RequestLayoutController';
@@ -35,6 +36,13 @@ export const RequestLayout: React.FC = () => {
             component={ReceiveVcScreen}
             options={{
               title: t('incomingVc'),
+              headerLeft: () => (
+                <HeaderBackButton
+                  onPress={() => {
+                    controller.RESET();
+                  }}
+                />
+              ),
             }}
           />
         )}
