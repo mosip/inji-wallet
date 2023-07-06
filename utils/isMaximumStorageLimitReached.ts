@@ -7,6 +7,8 @@ import getAllConfigurations from '../shared/commonprops/commonProps';
 
 export default async function isMaximumStorageLimitReached(key: string) {
   const configurations = await getAllConfigurations();
+  if (!configurations[key]) return false;
+
   const maximumStorageLimitInBytes = configurations[key] * 1000 * 1000;
 
   const freeDiskStorageInBytes =
