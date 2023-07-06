@@ -23,11 +23,13 @@ const model = createModel(
     otpError: '',
     transactionId: '',
     requestId: '',
+    isPinned: false,
   },
   {
     events: {
       INPUT_ID: (id: string) => ({ id }),
       INPUT_OTP: (otp: string) => ({ otp }),
+      RESEND_OTP: () => ({}),
       VALIDATE_INPUT: () => ({}),
       READY: (idInputRef: TextInput) => ({ idInputRef }),
       DISMISS: () => ({}),
@@ -99,7 +101,7 @@ export const AddVcModalMachine =
                   },
                 ],
                 SELECT_ID_TYPE: {
-                  actions: ['setIdType', 'clearId'],
+                  actions: ['clearIdError', 'setIdType', 'clearId'],
                 },
               },
             },
@@ -134,7 +136,7 @@ export const AddVcModalMachine =
                   },
                 ],
                 SELECT_ID_TYPE: {
-                  actions: ['setIdType', 'clearId'],
+                  actions: ['clearIdError', 'setIdType', 'clearId'],
                   target: 'idle',
                 },
               },
@@ -172,6 +174,29 @@ export const AddVcModalMachine =
             DISMISS: {
               actions: 'resetIdInputRef',
               target: 'acceptingIdInput',
+            },
+            RESEND_OTP: {
+              target: '.resendOTP',
+            },
+          },
+          initial: 'idle',
+          states: {
+            idle: {},
+            resendOTP: {
+              invoke: {
+                src: 'requestOtp',
+                onDone: [
+                  {
+                    target: 'idle',
+                  },
+                ],
+                onError: [
+                  {
+                    actions: 'setIdBackendError',
+                    target: '#AddVcModal.acceptingIdInput.invalid.backend',
+                  },
+                ],
+              },
             },
           },
         },

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Dimensions, Pressable } from 'react-native';
+import { Dimensions } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { ActorRefFrom } from 'xstate';
 import { vcItemMachine } from '../machines/vcItem';
@@ -58,15 +58,6 @@ const WalletUnverifiedActivationDetails: React.FC<
           }
           children={t('offlineAuthDisabledHeader')}></Text>
       </Row>
-
-      <Pressable
-        onPress={() => (props.verifiableCredential ? props.onPress() : null)}>
-        <Icon
-          name="dots-three-horizontal"
-          type="entypo"
-          color={Theme.Colors.GrayIcon}
-        />
-      </Pressable>
     </Row>
   );
 };
@@ -98,16 +89,6 @@ const WalletVerifiedActivationDetails: React.FC<WalletVerifiedDetailsProps> = (
           }
           children={t('profileAuthenticated')}></Text>
       </Row>
-
-      {props.showOnlyBindedVc ? null : (
-        <Pressable onPress={() => props.onPress()}>
-          <Icon
-            name="dots-three-horizontal"
-            type="entypo"
-            color={Theme.Colors.GrayIcon}
-          />
-        </Pressable>
-      )}
     </Row>
   );
 };

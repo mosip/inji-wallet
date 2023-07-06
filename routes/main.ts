@@ -3,11 +3,12 @@ import {
   BottomTabNavigationOptions,
   BottomTabScreenProps,
 } from '@react-navigation/bottom-tabs';
+import { Image } from 'react-native';
 import { HomeScreen } from '../screens/Home/HomeScreen';
-import { ProfileScreen } from '../screens/Profile/ProfileScreen';
 import { RootStackParamList } from './index';
 import { RequestLayout } from '../screens/Request/RequestLayout';
 import { ScanLayout } from '../screens/Scan/ScanLayout';
+import { HistoryScreen } from '../screens/History/HistoryScreen';
 import i18n from '../i18n';
 import { Platform } from 'react-native';
 
@@ -16,7 +17,12 @@ const home: TabScreen = {
   component: HomeScreen,
   icon: 'home',
   options: {
-    title: i18n.t('MainLayout:home'),
+    headerTitle: '',
+    headerLeft: () =>
+      React.createElement(Image, {
+        source: require('../assets/inji-home-logo.png'),
+        style: { width: 124, height: 27, resizeMode: 'contain' },
+      }),
   },
 };
 const scan: TabScreen = {
@@ -37,12 +43,13 @@ const request: TabScreen = {
     headerShown: false,
   },
 };
-const settings: TabScreen = {
-  name: 'Settings',
-  component: ProfileScreen,
-  icon: 'settings',
+const history: TabScreen = {
+  name: 'History',
+  component: HistoryScreen,
+  icon: 'history',
   options: {
-    title: i18n.t('MainLayout:Settings'),
+    title: i18n.t('MainLayout:history'),
+    headerRight: null,
   },
 };
 
@@ -54,7 +61,7 @@ if (Platform.OS !== 'ios') {
   mainRoutes.push(request);
 }
 
-mainRoutes.push(settings);
+mainRoutes.push(history);
 
 export type MainBottomTabParamList = {
   Home: {
@@ -62,7 +69,7 @@ export type MainBottomTabParamList = {
   };
   Scan: undefined;
   Request: undefined;
-  Settings: undefined;
+  History: undefined;
 };
 
 export interface TabScreen {
