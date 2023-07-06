@@ -7,7 +7,7 @@ import { Theme } from '../../components/ui/styleUtils';
 import { useRequestScreen } from './RequestScreenController';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import { Platform } from 'react-native';
-import isMaximumStorageLimitReached from '../../utils/isMaximumStorageLimitReached';
+import isStorageLimitReached from '../../utils/isMaximumStorageLimitReached';
 import { ErrorMessageOverlay } from '../../components/MessageOverlay';
 import {
   NavigationProp,
@@ -32,18 +32,18 @@ export const RequestScreen: React.FC = () => {
   const [isBluetoothOn, setIsBluetoothOn] = useState(false);
   const navigation = useNavigation<RequestLayoutNavigation>();
   const [
-    showMaximumStorageLimitReachedError,
-    setShowMaximumStorageLimitReachedError,
+    showMinimumStorageLimitReachedError,
+    setShowMinimumStorageLimitReachedError,
   ] = useState(false);
 
   useFocusEffect(
     React.useCallback(() => {
       async function checkStorage() {
-        const isStorageLimitReached = await isMaximumStorageLimitReached(
+        const isMinimumStorageLimitReached = await isStorageLimitReached(
           'minimumStorageRequiredInMB'
         );
-        if (isStorageLimitReached) {
-          setShowMaximumStorageLimitReachedError(true);
+        if (isMinimumStorageLimitReached) {
+          setShowMinimumStorageLimitReachedError(true);
         }
       }
       checkStorage();
@@ -69,12 +69,12 @@ export const RequestScreen: React.FC = () => {
       align="space-between"
       backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
       {loadQRCode()}
-      {showMaximumStorageLimitReachedError && (
+      {showMinimumStorageLimitReachedError && (
         <ErrorMessageOverlay
-          isVisible={showMaximumStorageLimitReachedError}
-          error="errors.maximumStorageLimitReached"
+          isVisible={showMinimumStorageLimitReachedError}
+          error="errors.storageLimitReached"
           onDismiss={() => {
-            setShowMaximumStorageLimitReachedError(false);
+            setShowMinimumStorageLimitReachedError(false);
             navigation.navigate('Home');
           }}
           translationPath="RequestScreen"
