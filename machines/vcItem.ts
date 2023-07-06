@@ -303,6 +303,7 @@ export const vcItemMachine =
                 onDone: [
                   {
                     target: '#vc-item.kebabPopUp.acceptingBindingOtp',
+                    actions: [log('accceptingOTP')],
                   },
                 ],
                 onError: [

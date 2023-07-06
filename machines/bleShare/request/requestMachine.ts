@@ -34,7 +34,6 @@ const model = createModel(
     senderInfo: {} as DeviceInfo,
     receiverInfo: {} as DeviceInfo,
     incomingVc: {} as VC,
-    storeError: null as Error,
     openId4VpUri: '',
     bleError: {} as BLEError,
     loggers: [] as EmitterSubscription[],
@@ -372,7 +371,6 @@ export const requestMachine =
               },
               on: {
                 STORE_ERROR: {
-                  actions: 'setStoringError',
                   target: '#request.reviewing.savingFailed',
                 },
               },
@@ -391,10 +389,7 @@ export const requestMachine =
               },
               on: {
                 DISMISS: {
-                  target: 'navigatingToHome',
-                },
-                GO_TO_RECEIVED_VC_TAB: {
-                  target: 'navigatingToHome',
+                  target: 'displayingIncomingVC',
                 },
               },
             },
@@ -417,6 +412,14 @@ export const requestMachine =
                 src: 'disconnect',
               },
             },
+            displayingIncomingVC: {
+              on: {
+                GO_TO_RECEIVED_VC_TAB: {
+                  target: 'navigatingToHome',
+                },
+              },
+            },
+
             savingFailed: {
               initial: 'idle',
               entry: ['setReceiveLogTypeDiscarded', 'logReceived'],
@@ -514,10 +517,6 @@ export const requestMachine =
           receiverInfo: () => {
             return { name: 'Verifier', deviceName: 'Verifier', deviceId: '' };
           },
-        }),
-
-        setStoringError: assign({
-          storeError: (_context, event) => event.error,
         }),
 
         setBleError: assign({

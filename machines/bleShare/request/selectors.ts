@@ -54,7 +54,3 @@ export function selectIsSavingFailedInIdle(state: State) {
 export function selectIsSavingFailedInViewingVc(state: State) {
   return state.matches('reviewing.savingFailed.viewingVc');
 }
-
-export function selectStoreError(state: State) {
-  return state.context.storeError;
-}

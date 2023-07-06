@@ -18,7 +18,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = (props) => {
         <ListItem.Title>
           <Text
             size="small"
-            weight="semibold"
+            weight="bold"
             color={Theme.Colors.walletbindingLabel}>
             {props.label}
           </Text>

@@ -19,7 +19,9 @@
     "requestedBy": "Requested by",
     "sentBy": "Sent by",
     "deviceRefNumber": "Device reference number",
-    "name": "Name"
+    "name": "Name",
+    "Verifier": "Verifier",
+    "Wallet": "Wallet"
   },
   "FaceScanner": {},
   "OIDcAuth": {
@@ -52,10 +54,28 @@
     "nationalCard": "National Card",
     "uin": "UIN",
     "vid": "VID",
-    "enableVerification": "Enable Verification",
+    "enableVerification": "Activate",
     "profileAuthenticated": "Profile is authenticated!",
     "offlineAuthDisabledHeader": "Offline Authentication disabled!",
-    "offlineAuthDisabledMessage": "Click 'Enable Authentication' to enable this credentials to be used for offline authentication."
+    "offlineAuthDisabledMessage": "Click 'Enable Authentication' to enable this credentials to be used for offline authentication.",
+    "verificationEnabledSuccess": "Activated for online login",
+    "goback": "GO BACK",
+    "BindingWarning": "If you have enabled verification for this credential on another wallet, it will get overridden. Do you want to proceed?",
+    "yes_confirm": "Yes, I Confirm",
+    "no": "No",
+    "Alert": "Alert",
+    "ok": "Okay",
+    "credentialRegistry": "Credential Registry",
+    "errors": {
+      "savingFailed": {
+        "title": "Failed to save the Card",
+        "message": "Something went wrong while saving Card to the store."
+      },
+      "diskFullError": {
+        "title": "Failed to save the Card",
+        "message": "No more Cards can be received or saved as App Data is full."
+      }
+    }
   },
   "HomeScreenKebabPopUp": {
     "title": "More Options",
@@ -76,6 +96,12 @@
     "alert": "Alert",
     "BindingWarning": "You have already activated online login for this credential on another device. You will no longer be able to use that device for login if you activate it again on this device. Do you want to proceed?",
     "yesConfirm": "Yes, I Confirm",
+    "no": "No"
+  },
+  "RemoveVcWarningOverlay": {
+    "alert": "Please Confirm",
+    "RemoveWarning": "Do you want to remove this card",
+    "confirm": "Yes, I confirm",
     "no": "No"
   },
   "AuthScreen": {
@@ -102,6 +128,8 @@
   },
   "SettingScreen": {
     "header": "Settings",
+    "injiAsVerifierApp": "Inji as verifier app",
+    "basicSettings": "Basic settings",
     "bioUnlock": "Unlock with Biometric",
     "language": "Language",
     "aboutInji": "About Inji",
@@ -151,7 +179,7 @@
         "invalidVid": "VID invalid",
         "missingUin": "UIN not available in database",
         "missingVid": "VID not available in database",
-        "noMessageAvailable": "Try after some time",
+        "noMessageAvailable": "Try after sometime",
         "whileGeneratingOtpErrorIsOccured": "while generating OTP error occurred",
         "networkRequestFailed": "Network request failed"
       }
@@ -167,15 +195,16 @@
         "invalidOtp": "Invalid OTP",
         "expiredOtp": "OTP has expired",
         "applicationProcessing": "AID is not ready yet",
-        "noMessageAvailable": "Try after some time",
+        "noMessageAvailable": "Try after sometime",
         "networkRequestFailed": "Network request failed",
+        "invalidAid": "AID entered is not available. Please check your AID before entering",
         "timeout": "Timeout"
       }
     }
   },
   "DownloadingVcModal": {
     "header": "Downloading your card",
-    "bodyText": "This may take some time, we will notify you when your card has been downloaded and is available",
+    "bodyText": "This may take sometime, we will notify you when your card has been downloaded and is available",
     "backButton": "Back home"
   },
   "GetIdInputModal": {
@@ -190,7 +219,7 @@
     "header": "Retrieve your ID",
     "guideLabel": "Select ID type and enter the MOSIP provided UIN or VID of the ID you wish to retrieve",
     "generateVc": "Generate Card",
-    "downloadCard": "Download ID",
+    "downloadID": "Download ID",
     "enterId": "Enter ID",
     "noUIN/VID": "Don’t have UIN/VID? ",
     "getItHere": "Get it now",
@@ -206,7 +235,17 @@
     "bringYourDigitalID": "Bring your digital identity",
     "generateVcDescription": "Tap on \"Download card\" below to download your card",
     "downloadCard": "Download Card",
-    "downloadingYourId": "Downloading your ID, this can take upto 5 minutes"
+    "downloadingYourId": "Downloading your ID, this can take upto 5 minutes",
+    "errors": {
+      "savingFailed": {
+        "title": "Failed to save the Card",
+        "message": "Something went wrong while saving Card to the store."
+      },
+      "maximumStorageLimitReached": {
+        "title": "Insufficient Appdata",
+        "message": "You cannot add or receive cards since the Appdata is full"
+      }
+    }
   },
   "OnboardingOverlay": {
     "stepOneTitle": "Welcome!",
@@ -229,6 +268,7 @@
   },
   "ViewVcModal": {
     "title": "ID Details",
+    "inProgress": "In Progress",
     "cancel": "Cancel",
     "lock": "Lock",
     "unlock": "Unlock",
@@ -262,8 +302,7 @@
   "AppMetaData": {
     "header": "About Inji",
     "version": "Version",
-    "useBle": "Powered by BLE",
-    "useGoogleNearby": "Powered by GoogleNearby"
+    "useBle": "Powered by BLE"
   },
   "QrScreen": {
     "title": "QR Login",
@@ -297,25 +336,32 @@
     "reject": "Reject",
     "discard": "Discard",
     "goToReceivedVCTab": "View Received card",
+    "saving": "Is being saved",
     "errors": {
       "savingFailed": {
         "title": "Failed to save the card",
         "message": "Something went wrong while saving card to the store."
-      },
-      "diskFullError": {
-        "title": "Failed to save the card",
-        "message": "No more cards can be received or saved as App Data is full."
       }
     }
   },
   "RequestScreen": {
+    "receiveCard": "REceive Card",
     "bluetoothDenied": "Please enable Bluetooth to be able to request card",
     "bluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
     "bluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
-    "nearbyDevicesPermissionDenied": "Please enable Nearby Devices Permission to be able to request card",
     "showQrCode": "Display this QR code to request resident Card",
     "incomingVc": "Incoming Card",
     "request": "Request",
+    "errors": {
+      "nearbyDevicesPermissionDenied": {
+        "message": "Nearby Devices permission is required to be able to request Card",
+        "button": "Allow Permission"
+      },
+      "maximumStorageLimitReached": {
+        "title": "Insufficient Appdata",
+        "message": "You cannot add or receive cards since the Appdata is full"
+      }
+    },
     "status": {
       "accepted": {
         "title": "Success!",
@@ -343,7 +389,8 @@
       },
       "bleError": {
         "title": "Failed to transfer!",
-        "message": "Something went wrong while transferring card. Please try again."
+        "message": "Something went wrong while transferring card. Please try again.",
+        "hint": "Error: {{code}}"
       }
     },
     "online": "Online",
@@ -356,14 +403,21 @@
     "sharingVc": "Sharing card",
     "bluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
     "bluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
+    "enableBluetoothMessage": "Please enable bluetooth permissions to support local sharing",
+    "enableBluetoothButtonText": "Allow bluetooth permissions",
+    "scanningGuide": "Hold the phone steady and scan the QR code",
     "errors": {
       "locationDisabled": {
-        "message": "Location services must be enabled for the scanning functionality",
+        "message": "Location services must be enabled to share card",
         "button": "Enable location services"
       },
       "locationDenied": {
-        "message": "Location permission is required for the scanning functionality",
+        "message": "Location permission is required to share card",
         "button": "Allow access to location"
+      },
+      "nearbyDevicesPermissionDenied": {
+        "message": "Nearby Devices permission is required to be able to share card",
+        "button": "Allow Permission"
       }
     },
     "status": {
@@ -392,8 +446,9 @@
         "message": "Your Card was discarded by Verifier"
       },
       "bleError": {
-        "title": "Failed to transfer!",
-        "message": "Something went wrong while transferring Card. Please try again."
+        "title": "Failed to transfer",
+        "message": "Something went wrong while transferring Card. Please try again.",
+        "hint": "Error: {{code}}"
       }
     }
   },
@@ -406,13 +461,14 @@
   "SendVcScreen": {
     "reasonForSharing": "Reason for sharing (optional)",
     "acceptRequest": "Share",
-    "acceptRequestAndVerify": "Accept request and verify",
+    "acceptRequestAndVerify": "Share with Selfie",
     "reject": "Reject",
     "consentToPhotoVerification": "I give consent to have my photo taken for authentication",
     "pleaseSelectAnId": "Please select an ID",
     "status": {
       "sharing": {
         "title": "Sharing",
+        "hint": "Please wait for the receiving device to accept or decline the share.",
         "timeoutHint": "VC shares take a bit longer. There may be a connection problem."
       },
       "accepted": {
@@ -426,6 +482,7 @@
     }
   },
   "VerifyIdentityOverlay": {
+    "faceAuth": "Face Authentication",
     "status": {
       "verifyingIdentity": "Verifying identity..."
     },
@@ -458,6 +515,9 @@
         "missingPermission": "This app uses the camera to scan the QR code of another device."
       },
       "allowAccess": "Allow access to the camera"
+    },
+    "errors": {
+      "genericError": "Something is wrong. Please try again later!"
     }
   }
 }

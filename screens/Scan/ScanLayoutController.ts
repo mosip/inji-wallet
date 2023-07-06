@@ -124,13 +124,14 @@ export function useScanLayout() {
     statusOverlay = {
       message: t('status.exchangingDeviceInfo'),
       hint: t('status.exchangingDeviceInfoTimeout'),
-      onCancel,
+      onCancel: CANCEL,
       progress: true,
     };
   } else if (isSent) {
     statusOverlay = {
       message: t('status.sent'),
       hint: t('status.sentHint'),
+      onCancel: CANCEL,
     };
   } else if (isSendingVc) {
     statusOverlay = {
@@ -149,7 +150,7 @@ export function useScanLayout() {
     statusOverlay = {
       title: t('status.accepted.title'),
       message: t('status.accepted.message'),
-      onBackdropPress: DISMISS,
+      onCancel: DISMISS,
     };
   } else if (isRejected) {
     statusOverlay = {
@@ -217,7 +218,6 @@ export function useScanLayout() {
     isDone,
     isDisconnected: useSelector(scanService, selectIsDisconnected),
     statusOverlay,
-
     DISMISS,
   };
 }

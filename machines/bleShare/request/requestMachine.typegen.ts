@@ -85,7 +85,6 @@ export interface Typegen0 {
     setReceiveLogTypeVerified: 'FACE_VALID';
     setReceiverInfo: 'CONNECTED';
     setSenderInfo: 'CONNECTED';
-    setStoringError: 'STORE_ERROR';
     storeVc: 'STORE_RESPONSE';
   };
   'eventsCausingDelays': {
@@ -133,6 +132,7 @@ export interface Typegen0 {
     | 'reviewing.accepting.requestingExistingVc'
     | 'reviewing.accepting.requestingReceivedVcs'
     | 'reviewing.accepting.storingVc'
+    | 'reviewing.displayingIncomingVC'
     | 'reviewing.idle'
     | 'reviewing.invalidIdentity'
     | 'reviewing.navigatingToHome'
@@ -152,6 +152,7 @@ export interface Typegen0 {
         reviewing?:
           | 'accepted'
           | 'accepting'
+          | 'displayingIncomingVC'
           | 'idle'
           | 'invalidIdentity'
           | 'navigatingToHome'

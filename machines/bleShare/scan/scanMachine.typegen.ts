@@ -43,7 +43,7 @@ export interface Typegen0 {
     startConnection: 'done.invoke.scan.connecting:invocation[0]';
   };
   'missingImplementations': {
-    actions: 'setBleError';
+    actions: never;
     delays: never;
     guards: never;
     services: never;
