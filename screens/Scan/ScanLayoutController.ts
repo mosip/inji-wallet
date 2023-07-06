@@ -93,16 +93,24 @@ export function useScanLayout() {
   const onCancel = () => scanService.send(ScanEvents.CANCEL());
   let statusOverlay: Pick<
     MessageOverlayProps,
-    'title' | 'message' | 'hint' | 'onCancel' | 'progress' | 'onBackdropPress'
+    | 'title'
+    | 'message'
+    | 'hint'
+    | 'onCancel'
+    | 'progress'
+    | 'onBackdropPress'
+    | 'requester'
   > = null;
   if (isConnecting) {
     statusOverlay = {
-      message: t('status.connecting'),
+      title: t('status.inProgress'),
+      message: t('status.establishingConnection'),
       progress: true,
     };
   } else if (isConnectingTimeout) {
     statusOverlay = {
-      message: t('status.connecting'),
+      title: t('status.sharingInProgress'),
+      requester: t('status.sharingInProgress'),
       hint: t('status.connectingTimeout'),
       onCancel,
       progress: true,
@@ -116,13 +124,14 @@ export function useScanLayout() {
     statusOverlay = {
       message: t('status.exchangingDeviceInfo'),
       hint: t('status.exchangingDeviceInfoTimeout'),
-      onCancel,
+      onCancel: CANCEL,
       progress: true,
     };
   } else if (isSent) {
     statusOverlay = {
       message: t('status.sent'),
       hint: t('status.sentHint'),
+      onCancel: CANCEL,
     };
   } else if (isSendingVc) {
     statusOverlay = {
@@ -141,7 +150,7 @@ export function useScanLayout() {
     statusOverlay = {
       title: t('status.accepted.title'),
       message: t('status.accepted.message'),
-      onBackdropPress: DISMISS,
+      onCancel: DISMISS,
     };
   } else if (isRejected) {
     statusOverlay = {
@@ -209,7 +218,6 @@ export function useScanLayout() {
     isDone,
     isDisconnected: useSelector(scanService, selectIsDisconnected),
     statusOverlay,
-
     DISMISS,
   };
 }

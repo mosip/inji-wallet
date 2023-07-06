@@ -7,13 +7,13 @@ import { Theme } from '../../components/ui/styleUtils';
 import { MainRouteProps } from '../../routes/main';
 import { EditableListItem } from '../../components/EditableListItem';
 import { MessageOverlay } from '../../components/MessageOverlay';
-import { Revoke } from './Revoke';
+import { Revoke } from '../Settings/Revoke';
 import { useProfileScreen } from './ProfileScreenController';
 import { useTranslation } from 'react-i18next';
 import { LanguageSelector } from '../../components/LanguageSelector';
 import i18next, { SUPPORTED_LANGUAGES } from '../../i18n';
 import { ScrollView } from 'react-native-gesture-handler';
-import { AppMetaData } from './AppMetaData';
+import { AppMetaData } from '../Settings/AppMetaData';
 import { CREDENTIAL_REGISTRY_EDIT } from 'react-native-dotenv';
 
 const LanguageSetting: React.FC = () => {
@@ -61,7 +61,8 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
           label={t('name')}
           value={controller.name}
           onEdit={controller.UPDATE_NAME}
-          Icon="user"
+          Icon=""
+          credentialRegistryResponse={''}
         />
         {/* Intentionally hidden using {display='none'} - Refer mosip/inji/issue#607 */}
         <EditableListItem
@@ -70,6 +71,7 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
           onEdit={controller.UPDATE_VC_LABEL}
           Icon="star"
           display="none"
+          credentialRegistryResponse={''}
         />
         <LanguageSetting />
         <Revoke label={t('revokeLabel')} Icon="rotate-left" />
@@ -78,8 +80,8 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
           <Icon
             name="fingerprint"
             type="fontawesome"
-            size={20}
-            style={Theme.Styles.profileIconBg}
+            size={25}
+            style={Theme.Styles.IconContainer}
             color={Theme.Colors.Icon}
           />
           <ListItem.Content>
@@ -106,7 +108,7 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
             name="unlock"
             size={20}
             type="antdesign"
-            style={Theme.Styles.profileIconBg}
+            style={Theme.Styles.IconContainer}
             color={Theme.Colors.Icon}
           />
           <ListItem.Content>
@@ -135,7 +137,7 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
             name="logout"
             type="fontawesome"
             size={20}
-            style={Theme.Styles.profileIconBg}
+            style={Theme.Styles.IconContainer}
             color={Theme.Colors.Icon}
           />
           <ListItem.Content>

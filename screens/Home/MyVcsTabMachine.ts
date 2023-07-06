@@ -249,6 +249,6 @@ export function selectIsSavingFailedInIdle(state: State) {
   return state.matches('addingVc.savingFailed.idle');
 }
 
-export function selectIsMaximumStorageLimitReached(state: State) {
+export function selectIsMinimumStorageLimitReached(state: State) {
   return state.matches('addVc.storageLimitReached');
 }

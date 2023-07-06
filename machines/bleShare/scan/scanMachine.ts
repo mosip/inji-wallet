@@ -502,6 +502,11 @@ export const scanMachine =
                 sent: {
                   description:
                     'VC data has been shared and the receiver should now be viewing it',
+                  on: {
+                    CANCEL: {
+                      target: '#scan.reviewing.cancelling',
+                    },
+                  },
                 },
               },
               on: {
@@ -516,6 +521,9 @@ export const scanMachine =
                 },
                 VC_REJECTED: {
                   target: '#scan.reviewing.rejected',
+                },
+                CANCEL: {
+                  target: '#scan.reviewing.cancelling',
                 },
               },
             },
@@ -721,13 +729,8 @@ export const scanMachine =
 
         setSelectedVc: assign({
           selectedVc: (context, event) => {
-            const reason = [];
-            if (context.reason.trim() !== '') {
-              reason.push({ message: context.reason, timestamp: Date.now() });
-            }
             return {
               ...event.vc,
-              reason,
               shouldVerifyPresence: context.selectedVc.shouldVerifyPresence,
             };
           },
@@ -996,6 +999,11 @@ export const scanMachine =
             tag: '',
           };
 
+          const reason = [];
+          if (context.reason.trim() !== '') {
+            reason.push({ message: context.reason, timestamp: Date.now() });
+          }
+
           const statusCallback = (event: WalletDataEvent) => {
             if (event.type === EventTypes.onDataSent) {
               callback({ type: 'VC_SENT' });
@@ -1008,7 +1016,12 @@ export const scanMachine =
               });
             }
           };
-          wallet.sendData(JSON.stringify(vc));
+          wallet.sendData(
+            JSON.stringify({
+              ...vc,
+              reason,
+            })
+          );
           const subscription = subscribe(statusCallback);
           return () => subscription?.remove();
         },
