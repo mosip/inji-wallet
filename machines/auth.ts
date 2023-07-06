@@ -1,7 +1,9 @@
 import { init } from 'mosip-inji-face-sdk';
-import { ContextFrom, EventFrom, send, StateFrom } from 'xstate';
+import { assign, ContextFrom, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
-import { downloadModel } from '../shared/commonprops/commonProps';
+import getAllConfigurations, {
+  downloadModel,
+} from '../shared/commonprops/commonProps';
 import { AppServices } from '../shared/GlobalContext';
 import { StoreEvents, StoreResponseEvent } from './store';
 
@@ -11,6 +13,7 @@ const model = createModel(
     passcode: '',
     biometrics: '',
     canUseBiometrics: false,
+    selectLanguage: false,
   },
   {
     events: {
@@ -19,6 +22,8 @@ const model = createModel(
       LOGOUT: () => ({}),
       LOGIN: () => ({}),
       STORE_RESPONSE: (response?: unknown) => ({ response }),
+      SELECT: () => ({}),
+      NEXT: () => ({}),
     },
   }
 );
@@ -60,21 +65,36 @@ export const authMachine = model.createMachine(
       },
       checkingAuth: {
         always: [
+          { cond: 'hasLanguageset', target: 'languagesetup' },
           { cond: 'hasPasscodeSet', target: 'unauthorized' },
           { cond: 'hasBiometricSet', target: 'unauthorized' },
           { target: 'settingUp' },
         ],
       },
+      languagesetup: {
+        on: {
+          SELECT: {
+            target: 'introSlider',
+          },
+        },
+      },
+      introSlider: {
+        on: {
+          NEXT: {
+            target: 'settingUp',
+          },
+        },
+      },
       settingUp: {
         on: {
           SETUP_PASSCODE: {
             target: 'authorized',
-            actions: ['setPasscode', 'storeContext'],
+            actions: ['setPasscode', 'setLanguage', 'storeContext'],
           },
           SETUP_BIOMETRICS: {
             // Note! dont authorized yet we need to setup passcode too as discuss
             // target: 'authorized',
-            actions: ['setBiometrics', 'storeContext'],
+            actions: ['setBiometrics', 'setLanguage', 'storeContext'],
           },
         },
       },
@@ -127,6 +147,10 @@ export const authMachine = model.createMachine(
       setBiometrics: model.assign({
         biometrics: (_, event: SetupBiometricsEvent) => event.biometrics,
       }),
+
+      setLanguage: assign({
+        selectLanguage: (context) => !context.selectLanguage,
+      }),
     },
 
     services: {
@@ -143,6 +167,9 @@ export const authMachine = model.createMachine(
       },
       hasBiometricSet: (context) => {
         return context.biometrics !== '' && context.passcode !== '';
+      },
+      hasLanguageset: (context) => {
+        return !context.selectLanguage;
       },
     },
   }
@@ -179,4 +206,11 @@ export function selectUnauthorized(state: State) {
 
 export function selectSettingUp(state: State) {
   return state.matches('settingUp');
+}
+
+export function selectLanguagesetup(state: State) {
+  return state.matches('languagesetup');
+}
+export function selectIntroSlider(state: State) {
+  return state.matches('introSlider');
 }

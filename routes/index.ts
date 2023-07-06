@@ -9,9 +9,21 @@ import { WelcomeScreen } from '../screens/WelcomeScreen';
 import { PasscodeScreen } from '../screens/PasscodeScreen';
 import { MainLayout } from '../screens/MainLayout';
 import { NotificationsScreen } from '../screens/NotificationsScreen';
-import { Image } from 'react-native';
+import { SetupLanguageScreen } from '../screens/SetupLanguageScreen';
+import { IntroSlidersScreen } from '../screens/Home/IntroSlidersScreen';
 
 export const baseRoutes: Screen[] = [
+  {
+    name: 'Language',
+    component: SetupLanguageScreen,
+  },
+  {
+    name: 'IntroSliders',
+    component: IntroSlidersScreen,
+    options: {
+      headerShown: false,
+    },
+  },
   {
     name: 'Welcome',
     component: WelcomeScreen,
@@ -45,6 +57,8 @@ export const authRoutes: Screen[] = [
 ];
 
 export type RootStackParamList = {
+  Language: undefined;
+  IntroSliders: undefined;
   Welcome: undefined;
   Auth: undefined;
   Passcode: {

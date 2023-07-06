@@ -106,7 +106,7 @@ export const ScanScreen: React.FC = () => {
   function qrScannerComponent() {
     return (
       <Column crossAlign="center" margin="0 0 0 -6">
-        <QrScanner onQrFound={controller.SCAN} />
+        <QrScanner onQrFound={controller.SCAN} title={t('scanningGuide')} />
       </Column>
     );
   }
@@ -140,12 +140,11 @@ export const ScanScreen: React.FC = () => {
     <Column
       fill
       padding="24 0"
-      backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
+      backgroundColor={Theme.Colors.whiteBackgroundColor}>
       <Centered
         fill
         align="space-evenly"
-        backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
-        <Text align="center">{t('header')}</Text>
+        backgroundColor={Theme.Colors.whiteBackgroundColor}>
         {loadQRScanner()}
         {controller.isQrLogin && (
           <QrLogin

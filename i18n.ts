@@ -10,9 +10,12 @@ import kn from './locales/kan.json';
 import ta from './locales/tam.json';
 import Storage from './shared/storage';
 
-const resources = { en, fil, ar, hi, kn, ta };
 import { iso6393To1 } from 'iso-639-3';
 import { LocalizedField } from './types/vc';
+
+import { APPLICATION_LANGUAGE } from 'react-native-dotenv';
+
+const resources = { en, fil, ar, hi, kn, ta };
 
 const languageCodeMap = {};
 
@@ -40,11 +43,15 @@ i18next
       i18next.changeLanguage(language);
       populateLanguageCodeMap();
     }
+    if (!Object.keys(SUPPORTED_LANGUAGES).includes(i18next.language)) {
+      i18next.changeLanguage('en');
+      populateLanguageCodeMap();
+    }
   });
 
 export default i18next;
 
-function getLanguageCode(code: string) {
+export function getLanguageCode(code: string) {
   const [language] = code.split('-');
   return language;
 }
