@@ -63,7 +63,14 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
             overlayOpened &&
             closePopup()}
           <Row>
-            <Button fill type="clear" title={t('cancel')} onPress={dismiss} />
+            <Button
+              fill
+              type="clear"
+              title={t('cancel')}
+              onPress={() => {
+                props.onCancel(), dismiss();
+              }}
+            />
             <Button fill title={t('save')} onPress={edit} />
           </Row>
         </Column>
@@ -81,7 +88,6 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
   function dismiss() {
     setNewValue(props.value);
     setIsEditing(false);
-    props.credentialRegistryResponse = '';
   }
 
   function closePopup() {
@@ -98,4 +104,5 @@ interface EditableListItemProps {
   onEdit: (newValue: string) => void;
   display?: 'none' | 'flex';
   credentialRegistryResponse: string;
+  onCancel: () => void;
 }

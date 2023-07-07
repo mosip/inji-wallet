@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef } from 'react';
-import { CheckBox, Input } from 'react-native-elements';
+import { Input } from 'react-native-elements';
 import { useTranslation } from 'react-i18next';
 import { Button, Column, Row, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
@@ -67,13 +67,6 @@ export const SendVcScreen: React.FC = () => {
               onChangeText={controller.UPDATE_REASON}
               containerStyle={{ marginBottom: 6 }}
               inputStyle={{ textAlign: I18nManager.isRTL ? 'right' : 'left' }}
-            />
-
-            <CheckBox
-              containerStyle={Theme.SelectVcOverlayStyles.consentCheckContainer}
-              title={t('consentToPhotoVerification')}
-              checked={controller.selectedVc.shouldVerifyPresence}
-              onPress={controller.TOGGLE_USER_CONSENT}
             />
           </Column>
           <Text

@@ -1,4 +1,4 @@
-import { ContextFrom, EventFrom, send, StateFrom } from 'xstate';
+import { assign, ContextFrom, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { AppServices } from '../shared/GlobalContext';
 import { HOST, SETTINGS_STORE_KEY } from '../shared/constants';
@@ -19,7 +19,7 @@ const model = createModel(
     } as VCLabel,
     isBiometricUnlockEnabled: false,
     credentialRegistry: HOST,
-    credentialRegistryResponse: '',
+    credentialRegistryResponse: '' as string,
   },
   {
     events: {
@@ -36,6 +36,7 @@ const model = createModel(
       ) => ({
         credentialRegistryResponse: credentialRegistryResponse,
       }),
+      CANCEL: () => ({}),
     },
   }
 );
@@ -84,6 +85,9 @@ export const settingsMachine = model.createMachine(
             actions: ['resetCredentialRegistry'],
             target: 'resetInjiProps',
           },
+          CANCEL: {
+            actions: ['resetCredentialRegistry'],
+          },
         },
       },
       resetInjiProps: {
@@ -98,6 +102,12 @@ export const settingsMachine = model.createMachine(
           },
           onError: {
             actions: ['updateCredentialRegistryResponse'],
+            target: 'idle',
+          },
+        },
+        on: {
+          CANCEL: {
+            actions: ['resetCredentialRegistry'],
             target: 'idle',
           },
         },
@@ -136,15 +146,15 @@ export const settingsMachine = model.createMachine(
           plural: event.label + 's',
         }),
       }),
-      updateCredentialRegistry: model.assign({
+      updateCredentialRegistry: assign({
         credentialRegistry: (_context, event) => event.data.warningDomainName,
       }),
 
-      updateCredentialRegistryResponse: model.assign({
+      updateCredentialRegistryResponse: assign({
         credentialRegistryResponse: () => 'error',
       }),
 
-      updateCredentialRegistrySuccess: model.assign({
+      updateCredentialRegistrySuccess: assign({
         credentialRegistryResponse: () => 'success',
       }),
 
@@ -204,4 +214,7 @@ export function selectCredentialRegistryResponse(state: State) {
 
 export function selectBiometricUnlockEnabled(state: State) {
   return state.context.isBiometricUnlockEnabled;
+}
+export function selectIsResetInjiProps(state: State) {
+  return state.matches('resetInjiProps');
 }
