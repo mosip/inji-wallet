@@ -14,6 +14,7 @@ import {
   selectVcLabel,
   selectCredentialRegistry,
   SettingsEvents,
+  selectAppId,
 } from '../../machines/settings';
 
 import {
@@ -98,6 +99,7 @@ export function useSettingsScreen({ navigation }: MainRouteProps) {
     isVisible,
     alertMsg,
     hideAlert,
+    appId: useSelector(settingsService, selectAppId),
     backendInfo: useSelector(appService, selectBackendInfo),
     name: useSelector(settingsService, selectName),
     vcLabel: useSelector(settingsService, selectVcLabel),

@@ -10,7 +10,7 @@ import { Linking } from 'react-native';
 import getAllConfigurations from '../../shared/commonprops/commonProps';
 import { getVersion } from 'react-native-device-info';
 
-export const AboutInji: React.FC<AboutInjiProps> = () => {
+export const AboutInji: React.FC<AboutInjiProps> = ({ appId }) => {
   const { t } = useTranslation('AboutInji');
 
   const [showAboutInji, setShowAboutInji] = useState(false);
@@ -96,6 +96,11 @@ export const AboutInji: React.FC<AboutInjiProps> = () => {
             <Text
               style={Theme.TextStyles.bold}
               color={Theme.Colors.aboutVersion}>
+              App Id: {appId}
+            </Text>
+            <Text
+              style={Theme.TextStyles.bold}
+              color={Theme.Colors.aboutVersion}>
               {t('version')}: {getVersion()}
             </Text>
             {packageVersion != 'unknown' && (
@@ -117,4 +122,5 @@ export const AboutInji: React.FC<AboutInjiProps> = () => {
 
 interface AboutInjiProps {
   isVisible?: boolean;
+  appId?: string;
 }

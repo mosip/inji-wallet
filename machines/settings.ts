@@ -8,6 +8,7 @@ import getAllConfigurations, {
   COMMON_PROPS_KEY,
 } from '../shared/commonprops/commonProps';
 import Storage from '../shared/storage';
+import ShortUniqueId from 'short-unique-id';
 
 const model = createModel(
   {
@@ -19,6 +20,7 @@ const model = createModel(
     } as VCLabel,
     isBiometricUnlockEnabled: false,
     credentialRegistry: HOST,
+    appId: null,
     credentialRegistryResponse: '',
   },
   {
@@ -64,7 +66,7 @@ export const settingsMachine = model.createMachine(
         },
       },
       storingDefaults: {
-        entry: ['storeContext'],
+        entry: ['updateDefaults', 'storeContext'],
         on: {
           STORE_RESPONSE: 'idle',
         },
@@ -108,6 +110,10 @@ export const settingsMachine = model.createMachine(
     actions: {
       requestStoredContext: send(StoreEvents.GET(SETTINGS_STORE_KEY), {
         to: (context) => context.serviceRefs.store,
+      }),
+
+      updateDefaults: model.assign({
+        appId: generateAppId(),
       }),
 
       storeContext: send(
@@ -185,10 +191,18 @@ export function createSettingsMachine(serviceRefs: AppServices) {
   });
 }
 
+function generateAppId() {
+  return new ShortUniqueId({ length: 10 }).randomUUID();
+}
+
 type State = StateFrom<typeof settingsMachine>;
 
 export function selectName(state: State) {
   return state.context.name;
+}
+
+export function selectAppId(state: State) {
+  return state.context.appId;
 }
 
 export function selectVcLabel(state: State) {
