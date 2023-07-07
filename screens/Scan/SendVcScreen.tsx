@@ -93,6 +93,7 @@ export const SendVcScreen: React.FC = () => {
               onPress={controller.SELECT_VC_ITEM(index)}
               selectable
               selected={index === controller.selectedIndex}
+              isSharingVc={true}
             />
           ))}
           <Button

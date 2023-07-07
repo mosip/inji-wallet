@@ -46,11 +46,9 @@ const LanguageSetting: React.FC = () => {
   );
 };
 
-export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
-  props
-) => {
+export const SettingScreen: React.FC<SettingProps> = (props) => {
   const { t } = useTranslation('SettingScreen');
-  const controller = useSettingsScreen(props);
+  const controller = useSettingsScreen();
 
   return (
     <React.Fragment>

@@ -22,11 +22,10 @@ import {
   selectIsSuccess,
   selectUnenrolledNotice,
 } from '../../machines/biometrics';
-import { MainRouteProps } from '../../routes/main';
 import { GlobalContext } from '../../shared/GlobalContext';
 import { useTranslation } from 'react-i18next';
 
-export function useSettingsScreen({ navigation }: MainRouteProps) {
+export function useSettingsScreen() {
   const { appService } = useContext(GlobalContext);
   const authService = appService.children.get('auth');
   const settingsService = appService.children.get('settings');
@@ -138,7 +137,6 @@ export function useSettingsScreen({ navigation }: MainRouteProps) {
 
     LOGOUT: () => {
       authService.send(AuthEvents.LOGOUT());
-      navigation.navigate('Welcome');
     },
   };
 }
