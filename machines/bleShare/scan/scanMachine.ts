@@ -1092,6 +1092,8 @@ export function createScanMachine(serviceRefs: AppServices) {
   });
 }
 
-export function selectIsMaximumStorageLimitReached(state: State) {
+export function selectIsMinimumStorageRequiredForAuditEntryLimitReached(
+  state: State
+) {
   return state.matches('restrictSharingVc');
 }

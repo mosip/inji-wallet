@@ -165,7 +165,9 @@ export const ScanScreen: React.FC = () => {
       </Centered>
       {!controller.isEmpty && (
         <ErrorMessageOverlay
-          isVisible={controller.isMaximumStorageLimitReached}
+          isVisible={
+            controller.isMinimumStorageRequiredForAuditEntryLimitReached
+          }
           translationPath={'ScanScreen'}
           error="errors.storageLimitReached"
           onDismiss={() => navigation.navigate('Home')}
