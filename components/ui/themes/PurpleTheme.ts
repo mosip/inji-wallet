@@ -12,6 +12,7 @@ const Colors = {
   Gray44: '#707070',
   Gray9: '#171717',
   DimGray: '#737373',
+  lightOrange: '#FFF5ED',
   Orange: '#F2811D',
   LightOrange: '#FDF1E6',
   LightGrey: '#FAF9FF',
@@ -371,6 +372,11 @@ export const PurpleTheme = {
       backgroundColor: Colors.Grey6,
       margin: 4,
       borderRadius: 14,
+    },
+    primaryRow: {
+      backgroundColor: Colors.LightPurple,
+      paddingHorizontal: 18,
+      paddingVertical: 9,
     },
     scannerContainer: {
       borderRadius: 32,

@@ -192,7 +192,9 @@ export function createSettingsMachine(serviceRefs: AppServices) {
 }
 
 function generateAppId() {
-  return new ShortUniqueId({ length: 10 }).randomUUID();
+  const shortUUID = new ShortUniqueId({ length: 12 });
+  shortUUID.setDictionary('alphanum_upper');
+  return shortUUID.randomUUID();
 }
 
 type State = StateFrom<typeof settingsMachine>;

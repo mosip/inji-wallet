@@ -69,6 +69,9 @@ export const AboutInji: React.FC<AboutInjiProps> = ({ appId }) => {
         onDismiss={() => {
           setShowAboutInji(!showAboutInji);
         }}>
+        <Row style={Theme.Styles.primaryRow}>
+          <Text style={Theme.TextStyles.semibold}>App ID: {appId}</Text>
+        </Row>
         <Column fill padding="12" align="space-between">
           <Column>
             <Text style={Theme.TextStyles.aboutDetailes}>
@@ -93,11 +96,6 @@ export const AboutInji: React.FC<AboutInjiProps> = ({ appId }) => {
             align="space-between"
             crossAlign="center"
             style={Theme.Styles.versionContainer}>
-            <Text
-              style={Theme.TextStyles.bold}
-              color={Theme.Colors.aboutVersion}>
-              App Id: {appId}
-            </Text>
             <Text
               style={Theme.TextStyles.bold}
               color={Theme.Colors.aboutVersion}>
