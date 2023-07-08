@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Pressable, TouchableOpacity } from 'react-native';
+import { Linking, Pressable, TouchableOpacity } from 'react-native';
 import { Modal } from '../../components/ui/Modal';
 import { Column, Row, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { Icon, ListItem } from 'react-native-elements';
-import { Linking } from 'react-native';
 import getAllConfigurations from '../../shared/commonprops/commonProps';
 import { getVersion } from 'react-native-device-info';
+import { CopyButton } from '../../components/CopyButton';
 
 export const AboutInji: React.FC<AboutInjiProps> = ({ appId }) => {
   const { t } = useTranslation('AboutInji');
@@ -71,6 +71,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({ appId }) => {
         }}>
         <Row style={Theme.Styles.primaryRow}>
           <Text style={Theme.TextStyles.semibold}>App ID: {appId}</Text>
+          <CopyButton content={appId} />
         </Row>
         <Column fill padding="12" align="space-between">
           <Column>

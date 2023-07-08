@@ -518,6 +518,10 @@
     },
     "errors": {
       "genericError": "Something is wrong. Please try again later!"
+    },
+    "clipboard": {
+      "copy": "Copy",
+      "copied": "Copied"
     }
   }
 }
