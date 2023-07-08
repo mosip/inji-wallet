@@ -60,6 +60,11 @@ export const settingsMachine = model.createMachine(
         entry: ['requestStoredContext'],
         on: {
           STORE_RESPONSE: [
+            {
+              cond: 'hasPartialData',
+              target: 'idle',
+              actions: ['setContext', 'updatePartialDefaults', 'storeContext'],
+            },
             { cond: 'hasData', target: 'idle', actions: ['setContext'] },
             { target: 'storingDefaults' },
           ],
@@ -114,6 +119,10 @@ export const settingsMachine = model.createMachine(
 
       updateDefaults: model.assign({
         appId: generateAppId(),
+      }),
+
+      updatePartialDefaults: model.assign({
+        appId: (context) => context.appId || generateAppId(),
       }),
 
       storeContext: send(
@@ -180,6 +189,8 @@ export const settingsMachine = model.createMachine(
 
     guards: {
       hasData: (_, event) => event.response != null,
+      hasPartialData: (_, event) =>
+        event.response != null && event.response.appId == null,
     },
   }
 );
