@@ -116,7 +116,11 @@ export const SettingScreen: React.FC<SettingProps & RootRouteProps> = (
                 Icon="star"
               />
             )}
-
+            <MessageOverlay
+              isVisible={controller.isResetInjiProps}
+              title={t('resetInjiProps')}
+              progress
+            />
             {/*
             <ListItem
               topDivider
