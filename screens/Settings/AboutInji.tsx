@@ -71,7 +71,6 @@ export const AboutInji: React.FC<AboutInjiProps> = ({ appId }) => {
         }}>
         <Row style={Theme.Styles.primaryRow}>
           <Text style={Theme.TextStyles.semibold}>
-            {' '}
             {t('appID')} : {appId}
           </Text>
           <CopyButton content={appId} />

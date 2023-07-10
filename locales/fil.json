@@ -523,6 +523,10 @@
     },
     "errors": {
       "genericError": "May mali. Subukang muli mamaya!"
+    },
+    "clipboard": {
+      "copy": "Kopya",
+      "copied": "Kinopya"
     }
   }
 }
