@@ -70,7 +70,10 @@ export const AboutInji: React.FC<AboutInjiProps> = ({ appId }) => {
           setShowAboutInji(!showAboutInji);
         }}>
         <Row style={Theme.Styles.primaryRow}>
-          <Text style={Theme.TextStyles.semibold}>App ID: {appId}</Text>
+          <Text style={Theme.TextStyles.semibold}>
+            {' '}
+            {t('appID')} : {appId}
+          </Text>
           <CopyButton content={appId} />
         </Row>
         <Column fill padding="12" align="space-between">
