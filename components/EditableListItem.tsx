@@ -63,15 +63,13 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
             overlayOpened &&
             closePopup()}
           <Row>
+            <Button fill type="clear" title={t('cancel')} onPress={dismiss} />
             <Button
               fill
-              type="clear"
-              title={t('cancel')}
-              onPress={() => {
-                props.onCancel(), dismiss();
-              }}
+              title={t('save')}
+              onPress={edit}
+              loading={props.progress}
             />
-            <Button fill title={t('save')} onPress={edit} />
           </Row>
         </Column>
       </Overlay>
@@ -88,6 +86,7 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
   function dismiss() {
     setNewValue(props.value);
     setIsEditing(false);
+    props.onCancel();
   }
 
   function closePopup() {
@@ -105,4 +104,5 @@ interface EditableListItemProps {
   display?: 'none' | 'flex';
   credentialRegistryResponse: string;
   onCancel: () => void;
+  progress?: boolean;
 }

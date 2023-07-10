@@ -159,10 +159,7 @@ export const settingsMachine = model.createMachine(
       }),
 
       resetCredentialRegistry: model.assign({
-        credentialRegistryResponse: () => {
-          console.log('resetCredentialRegistry : called');
-          return '';
-        },
+        credentialRegistryResponse: () => '',
       }),
 
       toggleBiometricUnlock: model.assign({

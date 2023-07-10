@@ -114,13 +114,9 @@ export const SettingScreen: React.FC<SettingProps & RootRouteProps> = (
                 onCancel={controller.CANCEL}
                 onEdit={controller.UPDATE_CREDENTIAL_REGISTRY}
                 Icon="star"
+                progress={controller.isResetInjiProps}
               />
             )}
-            <MessageOverlay
-              isVisible={controller.isResetInjiProps}
-              title={t('resetInjiProps')}
-              progress
-            />
             {/*
             <ListItem
               topDivider

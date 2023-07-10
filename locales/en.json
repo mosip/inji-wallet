@@ -15,14 +15,14 @@
     "WALLET_BINDING_SUCCESSFULL": "Activation successful",
     "WALLET_BINDING_FAILURE": "Activation failed"
   },
-  "DeviceInfoList": {
-    "requestedBy": "Requested by",
-    "sentBy": "Sent by",
-    "deviceRefNumber": "Device reference number",
-    "name": "Name",
-    "Verifier": "Verifier",
-    "Wallet": "Wallet"
-  },
+    "DeviceInfoList": {
+      "requestedBy": "Requested by",
+      "sentBy": "Sent by",
+      "deviceRefNumber": "Device reference number",
+      "name": "Name",
+      "Verifier": "Verifier",
+      "Wallet": "Wallet"
+    },
   "FaceScanner": {},
   "OIDcAuth": {
     "title": "OIDC Authentication",
