@@ -135,7 +135,8 @@
     "aboutInji": "حول إنجي",
     "credentialRegistry": "سجل الاعتماد",
     "injiTourGuide": "مرشد إنجي السياحي",
-    "logout": "تسجيل خروج"
+    "logout": "تسجيل خروج",
+    "resetInjiProps": "إعادة تعيين دعائم إنجي ..."
   },
   "AboutInji": {
     "aboutInji": "حول إنجي",

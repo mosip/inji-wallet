@@ -135,7 +135,8 @@
     "aboutInji": "About Inji",
     "credentialRegistry": "Credential Registry",
     "injiTourGuide": "Inji Tour Guide",
-    "logout": "Mag-logout"
+    "logout": "Mag-logout",
+    "resetInjiProps": "Nire-reset ang Inji Props..."
   },
   "AboutInji": {
     "aboutInji": "Tungkol kay Inji",

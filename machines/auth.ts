@@ -149,7 +149,7 @@ export const authMachine = model.createMachine(
       }),
 
       setLanguage: assign({
-        selectLanguage: (context) => !context.selectLanguage,
+        selectLanguage: (context) => true,
       }),
     },
 

@@ -15,14 +15,14 @@
     "WALLET_BINDING_SUCCESSFULL": "Activation successful",
     "WALLET_BINDING_FAILURE": "Activation failed"
   },
-  "DeviceInfoList": {
-    "requestedBy": "Requested by",
-    "sentBy": "Sent by",
-    "deviceRefNumber": "Device reference number",
-    "name": "Name",
-    "Verifier": "Verifier",
-    "Wallet": "Wallet"
-  },
+    "DeviceInfoList": {
+      "requestedBy": "Requested by",
+      "sentBy": "Sent by",
+      "deviceRefNumber": "Device reference number",
+      "name": "Name",
+      "Verifier": "Verifier",
+      "Wallet": "Wallet"
+    },
   "FaceScanner": {},
   "OIDcAuth": {
     "title": "OIDC Authentication",
@@ -135,7 +135,8 @@
     "aboutInji": "About Inji",
     "credentialRegistry": "Credential Registry",
     "injiTourGuide": "Inji Tour Guide",
-    "logout": "Logout"
+    "logout": "Logout",
+    "resetInjiProps": "Resetting Inji Props..."
   },
   "AboutInji": {
     "aboutInji": "About Inji",

@@ -131,7 +131,8 @@
     "aboutInji": "ಇಂಜಿ ಬಗ್ಗೆ",
     "credentialRegistry": "ರುಜುವಾತು ನೋಂದಣಿ",
     "injiTourGuide": "ಇಂಜಿ ಪ್ರವಾಸ ಮಾರ್ಗದರ್ಶಿ",
-    "logout": "ಲಾಗ್ ಔಟ್"
+    "logout": "ಲಾಗ್ ಔಟ್",
+    "resetInjiProps": "ಇಂಜಿ ಪ್ರಾಪ್ಸ್ ಅನ್ನು ಮರುಹೊಂದಿಸಲಾಗುತ್ತಿದೆ..."
   },
   "AboutInji": {
     "aboutInji": "ಇಂಜಿ ಬಗ್ಗೆ",
@@ -299,22 +300,6 @@
     "header": "ಇಂಜಿ ಬಗ್ಗೆ",
     "version": "ಆವೃತ್ತಿ",
     "useBle": "BLE ನಿಂದ ನಡೆಸಲ್ಪಡುತ್ತಿದೆ"
-  },
-  "ProfileScreen": {
-    "name": "ಹೆಸರು",
-    "vcLabel": "VC ಲೇಬಲ್",
-    "language": "ಭಾಷೆ",
-    "credentialRegistry": "ರುಜುವಾತುಗಳ ನೋಂದಣಿ",
-    "bioUnlock": "ಬಯೋಮೆಟ್ರಿಕ್‌ಗಳೊಂದಿಗೆ ಅನ್‌ಲಾಕ್ ಮಾಡಿ",
-    "authFactorUnlock": "ಅನ್ಲಾಕ್ ದೃಢೀಕರಣ ಅಂಶ",
-    "AppMetaData": "ಇಂಜಿ ಬಗ್ಗೆ",
-    "logout": "ಲಾಗ್ ಔಟ್",
-    "revokeLabel": "ರದ್ದು VID",
-    "revokeHeader": "ರದ್ದು VID",
-    "revokingVids": "ನೀವು ಹಿಂತೆಗೆದುಕೊಳ್ಳಲಿದ್ದೀರಿ ({{count}}) VIDs.",
-    "revokingVidsAfter": "ಇದರರ್ಥ ನೀವು ಇನ್ನು ಮುಂದೆ ಅವುಗಳಿಗೆ ಲಿಂಕ್ ಮಾಡಲಾದ ಯಾವುದೇ ID ಗಳನ್ನು ಬಳಸಲು ಅಥವಾ ವೀಕ್ಷಿಸಲು ಸಾಧ್ಯವಾಗುವುದಿಲ್ಲ VID(s). \nನೀವು ಮುಂದುವರೆಯಲು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ?",
-    "empty": "ಖಾಲಿ",
-    "revokeSuccessful": "VID ಯಶಸ್ವಿಯಾಗಿ ಹಿಂಪಡೆಯಲಾಗಿದೆ"
   },
   "QrScreen": {
     "title": "QR ಲಾಗಿನ್",

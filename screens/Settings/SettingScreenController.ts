@@ -14,6 +14,7 @@ import {
   selectVcLabel,
   selectCredentialRegistry,
   SettingsEvents,
+  selectIsResetInjiProps,
 } from '../../machines/settings';
 
 import {
@@ -22,11 +23,11 @@ import {
   selectIsSuccess,
   selectUnenrolledNotice,
 } from '../../machines/biometrics';
-import { MainRouteProps } from '../../routes/main';
 import { GlobalContext } from '../../shared/GlobalContext';
 import { useTranslation } from 'react-i18next';
+import { RootRouteProps } from '../../routes';
 
-export function useSettingsScreen({ navigation }: MainRouteProps) {
+export function useSettingsScreen(props: RootRouteProps) {
   const { appService } = useContext(GlobalContext);
   const authService = appService.children.get('auth');
   const settingsService = appService.children.get('settings');
@@ -110,6 +111,7 @@ export function useSettingsScreen({ navigation }: MainRouteProps) {
       settingsService,
       selectBiometricUnlockEnabled
     ),
+    isResetInjiProps: useSelector(settingsService, selectIsResetInjiProps),
     canUseBiometrics: useSelector(authService, selectCanUseBiometrics),
     useBiometrics,
 
@@ -138,7 +140,11 @@ export function useSettingsScreen({ navigation }: MainRouteProps) {
 
     LOGOUT: () => {
       authService.send(AuthEvents.LOGOUT());
-      navigation.navigate('Welcome');
+      props.navigation.navigate('Welcome');
+    },
+
+    CANCEL: () => {
+      settingsService.send(SettingsEvents.CANCEL());
     },
   };
 }

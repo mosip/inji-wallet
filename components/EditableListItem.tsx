@@ -64,7 +64,12 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
             closePopup()}
           <Row>
             <Button fill type="clear" title={t('cancel')} onPress={dismiss} />
-            <Button fill title={t('save')} onPress={edit} />
+            <Button
+              fill
+              title={t('save')}
+              onPress={edit}
+              loading={props.progress}
+            />
           </Row>
         </Column>
       </Overlay>
@@ -81,7 +86,7 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
   function dismiss() {
     setNewValue(props.value);
     setIsEditing(false);
-    props.credentialRegistryResponse = '';
+    props.onCancel();
   }
 
   function closePopup() {
@@ -98,4 +103,6 @@ interface EditableListItemProps {
   onEdit: (newValue: string) => void;
   display?: 'none' | 'flex';
   credentialRegistryResponse: string;
+  onCancel: () => void;
+  progress?: boolean;
 }
