@@ -9,6 +9,11 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
+    'done.invoke.scan.checkStorage:invocation[0]': {
+      type: 'done.invoke.scan.checkStorage:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
     'done.invoke.scan.reviewing.creatingVp:invocation[0]': {
       type: 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
       data: unknown;
@@ -34,6 +39,7 @@ export interface Typegen0 {
     checkLocationPermission: 'done.invoke.scan.checkingLocationService.checkingPermission:invocation[0]';
     checkLocationStatus: 'done.invoke.scan.checkingLocationService.checkingStatus:invocation[0]';
     checkNearByDevicesPermission: 'done.invoke.scan.checkNearbyDevicesPermission.checking:invocation[0]';
+    checkStorageAvailability: 'done.invoke.scan.checkStorage:invocation[0]';
     createVp: 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
     disconnect: 'done.invoke.scan.clearingConnection:invocation[0]';
     monitorConnection: 'done.invoke.scan:invocation[0]';
@@ -116,6 +122,7 @@ export interface Typegen0 {
   };
   'eventsCausingGuards': {
     isIOS: 'BLUETOOTH_STATE_DISABLED' | 'START_PERMISSION_CHECK';
+    isMinimumStorageRequiredForAuditEntryReached: 'done.invoke.scan.checkStorage:invocation[0]';
     isOpenIdQr: 'SCAN';
     isQrLogin: 'SCAN';
     uptoAndroid11: '' | 'START_PERMISSION_CHECK';
@@ -131,6 +138,7 @@ export interface Typegen0 {
     checkLocationPermission: 'APP_ACTIVE' | 'LOCATION_ENABLED';
     checkLocationStatus: '';
     checkNearByDevicesPermission: 'APP_ACTIVE' | 'START_PERMISSION_CHECK';
+    checkStorageAvailability: 'SCREEN_FOCUS';
     createVp: never;
     disconnect: '' | 'DISMISS' | 'LOCATION_ENABLED';
     monitorConnection: 'xstate.init';

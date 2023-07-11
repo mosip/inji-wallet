@@ -141,15 +141,10 @@ export const scanMachine =
         },
         checkStorage: {
           invoke: {
-            src: () =>
-              Promise.resolve(
-                Storage.isMinimumLimitReached(
-                  'minimumStorageRequiredForAuditEntryInMB'
-                )
-              ),
+            src: 'checkStorageAvailability',
             onDone: [
               {
-                cond: (_context, event) => event.data === true,
+                cond: 'isMinimumStorageRequiredForAuditEntryReached',
                 target: 'restrictSharingVc',
               },
               {
@@ -1052,6 +1047,14 @@ export const scanMachine =
 
           return Promise.resolve(vc);
         },
+
+        checkStorageAvailability: () => async () => {
+          return Promise.resolve(
+            Storage.isMinimumLimitReached(
+              'minimumStorageRequiredForAuditEntryInMB'
+            )
+          );
+        },
       },
 
       guards: {
@@ -1073,6 +1076,9 @@ export const scanMachine =
         uptoAndroid11: () => Platform.OS === 'android' && Platform.Version < 31,
 
         isIOS: () => Platform.OS === 'ios',
+
+        isMinimumStorageRequiredForAuditEntryReached: (_context, event) =>
+          event.data === true,
       },
 
       delays: {
