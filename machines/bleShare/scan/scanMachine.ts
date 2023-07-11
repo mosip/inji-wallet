@@ -1050,9 +1050,7 @@ export const scanMachine =
 
         checkStorageAvailability: () => async () => {
           return Promise.resolve(
-            Storage.isMinimumLimitReached(
-              'minimumStorageRequiredForAuditEntryInMB'
-            )
+            Storage.isMinimumLimitReached('minimumStorageRequiredForAuditEntry')
           );
         },
       },

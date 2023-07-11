@@ -88,7 +88,7 @@ export const MyVcsTabMachine = model.createMachine(
             invoke: {
               src: () =>
                 Promise.resolve(
-                  Storage.isMinimumLimitReached('minimumStorageRequiredInMB')
+                  Storage.isMinimumLimitReached('minimumStorageRequired')
                 ),
               onDone: [
                 {

@@ -40,7 +40,7 @@ export const RequestScreen: React.FC = () => {
     React.useCallback(() => {
       async function checkStorage() {
         const isMinimumStorageLimitReached =
-          await Storage.isMinimumLimitReached('minimumStorageRequiredInMB');
+          await Storage.isMinimumLimitReached('minimumStorageRequired');
         if (isMinimumStorageLimitReached) {
           setShowMinimumStorageLimitReachedError(true);
         }
