@@ -578,6 +578,52 @@ export const DefaultTheme = {
       fontSize: 12,
     },
   }),
+  HalfButtonStyles: StyleSheet.create({
+    fill: {
+      flex: 1,
+    },
+    solid: {
+      backgroundColor: Colors.Orange,
+    },
+    clear: {
+      backgroundColor: Colors.Transparent,
+    },
+    outline: {
+      backgroundColor: Colors.Transparent,
+      borderColor: Colors.Orange,
+    },
+    container: {
+      height: 45,
+      flexDirection: 'row',
+    },
+    disabled: {
+      backgroundColor: Colors.Grey,
+    },
+    addId: {
+      backgroundColor: Colors.Orange,
+    },
+    gradient: {
+      borderRadius: 9,
+      width: Dimensions.get('window').width * 0.38,
+      alignSelf: 'center',
+      margin: 4,
+    },
+    float: {
+      borderRadius: 9,
+      alignSelf: 'center',
+      fontSize: 10,
+      elevation: 5,
+      position: 'absolute',
+      bottom: 24,
+    },
+    clearAddIdBtnBg: {
+      backgroundColor: Colors.Transparent,
+    },
+    radius: {
+      borderRadius: 10,
+      backgroundColor: Colors.Orange,
+    },
+  }),
   ButtonStyles: StyleSheet.create({
     fill: {
       flex: 1,

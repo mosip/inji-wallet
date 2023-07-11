@@ -1,12 +1,21 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Dimensions } from 'react-native';
-import { Overlay, LinearProgress } from 'react-native-elements';
-import { Button, Column, Text } from './ui';
+import { Dimensions, View } from 'react-native';
+import { Overlay } from 'react-native-elements';
+import { Column, Row, Text } from './ui';
+import { HalfButton } from './ui/Button';
 import { Theme } from './ui/styleUtils';
 
-export const MessageOverlay: React.FC<MessageOverlayProps> = (props) => {
+/**
+ * DualMessageOverlay is like MessageOverlay but with two buttons
+ *
+ * NOTE: This has been added for surfacing bugs and needs to be refactored
+ * before use.
+ */
+export const DualMessageOverlay: React.FC<DualMessageOverlayProps> = (
+  props
+) => {
   const { t } = useTranslation('common');
   return (
     <Overlay
@@ -41,7 +50,6 @@ export const MessageOverlay: React.FC<MessageOverlayProps> = (props) => {
               {props.message}
             </Text>
           )}
-          {props.progress && <Progress progress={props.progress} />}
           {props.hint && (
             <Text
               size="smaller"
@@ -52,62 +60,43 @@ export const MessageOverlay: React.FC<MessageOverlayProps> = (props) => {
           )}
           {props.children}
         </Column>
-        {!props.children && props.onCancel ? (
-          <Button
-            type="gradient"
-            title={t('cancel')}
-            onPress={props.onCancel}
-            styles={Theme.MessageOverlayStyles.button}
-          />
-        ) : null}
+
+        <Row style={{ marginTop: -14 }}>
+          <View>
+            {!props.children && props.onTryAgain ? (
+              <HalfButton
+                title={t('tryAgain')}
+                type="gradient"
+                onPress={props.onTryAgain}
+                styles={Theme.MessageOverlayStyles.button}
+              />
+            ) : null}
+          </View>
+          <View>
+            {!props.children && props.onIgnore ? (
+              <HalfButton
+                type="gradient"
+                title={t('ignore')}
+                onPress={props.onIgnore}
+                styles={Theme.MessageOverlayStyles.button}
+              />
+            ) : null}
+          </View>
+        </Row>
       </Column>
     </Overlay>
   );
 };
 
-export const ErrorMessageOverlay: React.FC<ErrorMessageOverlayProps> = ({
-  isVisible,
-  error,
-  onDismiss,
-  translationPath,
-}) => {
-  const { t } = useTranslation(translationPath);
-
-  return (
-    <MessageOverlay
-      isVisible={isVisible}
-      title={t(error + '.title')}
-      message={t(error + '.message')}
-      onBackdropPress={onDismiss}
-    />
-  );
-};
-
-export interface ErrorMessageOverlayProps {
-  isVisible: boolean;
-  error?: string;
-  onDismiss?: () => void;
-  translationPath: string;
-}
-
-const Progress: React.FC<Pick<MessageOverlayProps, 'progress'>> = (props) => {
-  return typeof props.progress === 'boolean' ? (
-    props.progress && (
-      <LinearProgress variant="indeterminate" color={Theme.Colors.Loading} />
-    )
-  ) : (
-    <LinearProgress variant="determinate" value={props.progress} />
-  );
-};
-
-export interface MessageOverlayProps {
+export interface DualMessageOverlayProps {
   isVisible: boolean;
   title?: string;
   message?: string;
   progress?: boolean | number;
   requester?: boolean;
   hint?: string;
-  onCancel?: () => void;
+  onIgnore?: () => void;
   onBackdropPress?: () => void;
   onShow?: () => void;
+  onTryAgain?: () => void;
 }

@@ -7,7 +7,7 @@ import { GlobalContext } from './shared/GlobalContext';
 import { useSelector } from '@xstate/react';
 import { useTranslation } from 'react-i18next';
 import { selectIsReadError, selectIsReady } from './machines/app';
-import { MessageOverlay } from './components/MessageOverlay';
+import { DualMessageOverlay } from './components/DualMessageOverlay';
 import { useApp } from './screens/AppController';
 
 const AppInitialization: React.FC = () => {
@@ -19,14 +19,14 @@ const AppInitialization: React.FC = () => {
   const { t } = useTranslation('WelcomeScreen');
   if (isReadError) {
     return (
-      <MessageOverlay
+      <DualMessageOverlay
         isVisible={isReadError}
         title={t('failedToReadKeys')}
         message={t('retryRead')}
         onTryAgain={() => {
           controller.TRY_AGAIN();
         }}
-        onCancel={() => {
+        onIgnore={() => {
           controller.IGNORE();
         }}
       />

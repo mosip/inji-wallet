@@ -626,6 +626,52 @@ export const PurpleTheme = {
       backgroundColor: Colors.Purple,
     },
   }),
+  HalfButtonStyles: StyleSheet.create({
+    fill: {
+      flex: 1,
+    },
+    solid: {
+      backgroundColor: Colors.Purple,
+    },
+    clear: {
+      backgroundColor: Colors.Transparent,
+    },
+    outline: {
+      backgroundColor: Colors.Transparent,
+      borderColor: Colors.Purple,
+    },
+    container: {
+      height: 45,
+      flexDirection: 'row',
+    },
+    disabled: {
+      backgroundColor: Colors.Grey,
+    },
+    addId: {
+      backgroundColor: Colors.Purple,
+    },
+    gradient: {
+      borderRadius: 9,
+      width: Dimensions.get('window').width * 0.38,
+      alignSelf: 'center',
+      margin: 4,
+    },
+    float: {
+      borderRadius: 9,
+      alignSelf: 'center',
+      fontSize: 10,
+      elevation: 5,
+      position: 'absolute',
+      bottom: 24,
+    },
+    clearAddIdBtnBg: {
+      backgroundColor: Colors.Transparent,
+    },
+    radius: {
+      borderRadius: 10,
+      backgroundColor: Colors.Purple,
+    },
+  }),
   OIDCAuthStyles: StyleSheet.create({
     viewContainer: {
       backgroundColor: Colors.White,
