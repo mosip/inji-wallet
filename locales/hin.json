@@ -235,7 +235,7 @@
       "downloadCard": "डाउनलोड कार्ड",
       "bringYourDigitalID": "अपनी डिजिटल आईडी लाओ",
       "generateVcDescription": "अपना कार्ड डाउनलोड करने के लिए नीचे डाउनलोड कार्ड टैप करें",
-      "downloadingYourCard": "आपका कार्ड डाउनलोड करने में, इसमें 5 मिनट तक लग सकते हैं",
+      "downloadingYourCard": "आपका कार्ड डाउनलोड करने में 5 मिनट तक का समय लग सकता है",
       "errors": {
         "savingFailed": {
           "title": "कार्ड सहेजने में विफल",

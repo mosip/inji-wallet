@@ -238,7 +238,7 @@
     "bringYourDigitalID": "Bring your digital identity",
     "generateVcDescription": "Tap on \"Download card\" below to download your card",
     "downloadCard": "Download Card",
-    "downloadingYourCard": "Downloading your ID, this can take upto 5 minutes",
+    "downloadingYourCard": "Downloading your card, this can take upto 5 minutes",
     "errors": {
       "savingFailed": {
         "title": "Failed to save the Card",
