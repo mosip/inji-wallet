@@ -180,6 +180,10 @@
 			"diskFullError": {
 				"title": "Error al guardar la Tarjeta",
 				"message": "No se pueden recibir ni guardar más Tarjetas, ya que los datos de la aplicación están llenos."
+			},
+			"storageLimitReached":{
+				"title":"Datos de aplicación insuficientes",
+				"message":"No puede agregar ni recibir tarjetas porque los datos de la aplicación están llenos. Borre Appdata para continuar."
 			}
 		}
 	},
@@ -297,6 +301,10 @@
 			"nearbyDevicesPermissionDenied": {
 				"message": "Se requiere el permiso de Dispositivos cercanos para poder solicitar la tarjeta",
 				"button": "Permitir permiso"
+			},
+			"storageLimitReached":{
+				"title":"Datos de aplicación insuficientes",
+				"message":"No puede agregar ni recibir tarjetas porque los datos de la aplicación están llenos. Borre Appdata para continuar."
 			}
 		},
 		"status": {
@@ -354,6 +362,10 @@
 			"nearbyDevicesPermissionDenied": {
 				"message": "Se requiere el permiso de Dispositivos cercanos para poder compartir la tarjeta",
 				"button": "Permitir permiso"
+			},
+			"storageLimitReached":{
+				"title":"Datos de aplicación insuficientes",
+				"message":"No puede compartir tarjetas porque los datos de la aplicación están llenos. Borre Appdata para continuar."
 			}
 		},
 		"status": {
