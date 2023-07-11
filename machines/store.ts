@@ -410,6 +410,7 @@ export async function removeItem(
     });
 
     await setItem(key, newList, encryptionKey);
+    await Storage.removeItem(value);
   } catch (e) {
     console.error('error removeItem:', e);
     throw e;
