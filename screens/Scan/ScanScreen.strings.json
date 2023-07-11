@@ -12,6 +12,10 @@
     "locationDenied": {
       "message": "Location permission is required for the scanning functionality",
       "button": "Allow access to location"
+    },
+    "storageLimitReached": {
+      "title": "Insufficient Appdata",
+      "message": "You cannot share cards since the Appdata is full. Clear Appdata to proceed."
     }
   },
   "status": {
