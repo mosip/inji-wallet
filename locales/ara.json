@@ -134,6 +134,7 @@
     "language": "لغة",
     "aboutInji": "حول إنجي",
     "credentialRegistry": "سجل الاعتماد",
+    "errorMessage": "تم إدخال عنوان URL غير صحيح. الرجاء إدخال عنوان URL صالح للمتابعة." ,
     "injiTourGuide": "مرشد إنجي السياحي",
     "logout": "تسجيل خروج",
     "resetInjiProps": "إعادة تعيين دعائم إنجي ..."

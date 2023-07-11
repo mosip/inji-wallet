@@ -55,9 +55,7 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
             }}
           />
           {props.credentialRegistryResponse === 'error' && (
-            <Text style={Theme.TextStyles.error}>
-              please try again after sometime...
-            </Text>
+            <Text style={Theme.TextStyles.error}>{props.errorMessage}</Text>
           )}
           {props.credentialRegistryResponse === 'success' &&
             overlayOpened &&
@@ -105,4 +103,5 @@ interface EditableListItemProps {
   credentialRegistryResponse: string;
   onCancel: () => void;
   progress?: boolean;
+  errorMessage?: string;
 }

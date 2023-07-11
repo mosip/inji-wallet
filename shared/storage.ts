@@ -59,7 +59,7 @@ class Storage {
  * eg: "vc:UIN:6732935275:e7426576-112f-466a-961a-1ed9635db628" is changed to "vc_UIN_6732935275_e7426576-112f-466a-961a-1ed9635db628"
  */
 const getFileName = (key: string) => {
-  return key.split(':').join('_');
+  return key.split(':').splice(0, 4).join('_');
 };
 
 /**

@@ -134,6 +134,7 @@
     "language": "Wika",
     "aboutInji": "About Inji",
     "credentialRegistry": "Credential Registry",
+    "errorMessage": "Maling URL ang inilagay. Mangyaring maglagay ng wastong URL upang magpatuloy.",
     "injiTourGuide": "Inji Tour Guide",
     "logout": "Mag-logout",
     "resetInjiProps": "Nire-reset ang Inji Props..."

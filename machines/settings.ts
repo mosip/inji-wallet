@@ -97,6 +97,7 @@ export const settingsMachine = model.createMachine(
             actions: [
               'updateCredentialRegistrySuccess',
               'updateCredentialRegistry',
+              'storeContext',
             ],
             target: 'idle',
           },
