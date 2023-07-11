@@ -245,7 +245,7 @@
       },
       "storageLimitReached": {
         "title": "Insufficient Appdata",
-        "message": "You cannot add or receive cards since the Appdata is full"
+        "message": "You cannot add or receive cards since the Appdata is full. Clear Appdata to proceed."
       }
     }
   },
@@ -361,7 +361,7 @@
       },
       "storageLimitReached": {
         "title": "Insufficient Appdata",
-        "message": "You cannot add or receive cards since the Appdata is full"
+        "message": "You cannot add or receive cards since the Appdata is full. Clear Appdata to proceed."
       }
     },
     "status": {
@@ -422,7 +422,7 @@
         "button": "Allow Permission"
       },
       "storageLimitReached": {
-        "title": "Clear History",
+        "title": "Insufficient Appdata",
         "message": "You cannot share cards since the Appdata is full. Clear Appdata to proceed."
       }
     },
