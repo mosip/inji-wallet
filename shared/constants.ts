@@ -18,7 +18,8 @@ export const VC_ITEM_STORE_KEY = (vc: Partial<VC>) =>
   `vc:${vc.idType}:${vc.id}:${vc.requestId}:${vc.isPinned}`;
 
 //Regex expression to evaluate if the key is for a VC
-export const VC_ITEM_STORE_KEY_REGEX = '^vc:(UIN|VID):[0-9]+:[a-z0-9-]+$';
+export const VC_ITEM_STORE_KEY_REGEX =
+  '^vc:(UIN|VID):[0-9]+:[a-z0-9-]+:[true|false]+$';
 
 export let individualId = '';
 

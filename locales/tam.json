@@ -130,8 +130,10 @@
     "language": "மொழி",
     "aboutInji": "இன்ஜி பற்றி",
     "credentialRegistry": "நற்சான்றிதழ் பதிவு",
+    "errorMessage": "தவறான URL உள்ளிடப்பட்டது. தொடர சரியான URL ஐ உள்ளிடவும்.",
     "injiTourGuide": "இன்ஜி சுற்றுலா வழிகாட்டி",
-    "logout": "வெளியேறு"
+    "logout": "வெளியேறு",
+    "resetInjiProps": "இன்ஜி ப்ராப்ஸை மீட்டமைக்கிறது..."
   },
   "AboutInji": {
     "aboutInji": "இன்ஜி பற்றி",
