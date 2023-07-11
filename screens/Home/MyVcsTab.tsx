@@ -40,7 +40,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
         style={{ display: controller.isRequestSuccessful ? 'flex' : 'none' }}>
         <Row style={Theme.Styles.popUp}>
           <Text color={Theme.Colors.whiteText} weight="semibold" size="smaller">
-            {t('downloadingYourId')}
+            {t('downloadingYourCard')}
           </Text>
           <Icon
             name="close"

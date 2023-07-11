@@ -100,7 +100,7 @@
   },
   "RemoveVcWarningOverlay": {
     "alert": "Please Confirm",
-    "RemoveWarning": "Do you want to remove this card",
+    "removeWarning": "Do you want to remove this card?",
     "confirm": "Yes, I confirm",
     "no": "No"
   },
@@ -188,6 +188,7 @@
     }
   },
   "GetVcModal": {
+    "retrievingId": "Retrieving ID",
     "errors": {
       "input": {
         "empty": "Input cannot be empty",
@@ -237,7 +238,7 @@
     "bringYourDigitalID": "Bring your digital identity",
     "generateVcDescription": "Tap on \"Download card\" below to download your card",
     "downloadCard": "Download Card",
-    "downloadingYourId": "Downloading your ID, this can take upto 5 minutes",
+    "downloadingYourCard": "Downloading your card, this can take upto 5 minutes",
     "errors": {
       "savingFailed": {
         "title": "Failed to save the Card",
