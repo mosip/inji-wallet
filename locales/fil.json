@@ -188,6 +188,7 @@
     }
   },
   "GetVcModal": {
+    "retrievingId": "Kinukuha ang ID",
     "errors": {
       "input": {
         "empty": "Hindi maaaring walang laman ang input",
@@ -237,7 +238,7 @@
     "bringYourDigitalID": "Dalhin ang Iyong Digital ID",
     "generateVcDescription": "Upang i-download ang iyong card i-tap ang I-download card sa ibaba",
     "downloadCard": "I-download ang Card",
-    "downloadingYourId": "Ang pagda-download ng iyong card, maaari itong tumagal nang hanggang 5 minuto",
+    "downloadingYourCard": "Ang pagda-download ng iyong card, maaari itong tumagal nang hanggang 5 minuto",
     "errors": {
       "savingFailed": {
         "title": "Nabigong i-save ang Card",

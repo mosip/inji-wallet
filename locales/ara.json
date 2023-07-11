@@ -188,6 +188,7 @@
     }
   },
   "GetVcModal": {
+    "retrievingId": "استرجاع الهوية",
     "errors": {
       "input": {
         "empty": "لا يمكن أن يكون الإدخال فارغًا",
@@ -237,7 +238,7 @@
     "bringYourDigitalID": "أحضر هويتك الرقمية",
     "generateVcDescription": "اضغط على \"إضافة بطاقة \" أدناه لتنزيل بطاقتك",
     "downloadCard": "تحميل البطاقة",
-    "downloadingYourId": "تنزيل بطاقتك ، قد يستغرق هذا ما يصل إلى 5 دقائق",
+    "downloadingYourCard": "تنزيل بطاقتك ، قد يستغرق هذا ما يصل إلى 5 دقائق",
     "errors": {
       "savingFailed": {
         "title": "فشل حفظ بطاقة",
