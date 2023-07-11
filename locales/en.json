@@ -134,6 +134,7 @@
     "language": "Language",
     "aboutInji": "About Inji",
     "credentialRegistry": "Credential Registry",
+    "errorMessage": "Incorrect URL entered. Please enter a valid URL to proceed.",
     "injiTourGuide": "Inji Tour Guide",
     "logout": "Logout",
     "resetInjiProps": "Resetting Inji Props..."

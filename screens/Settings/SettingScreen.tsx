@@ -114,6 +114,7 @@ export const SettingScreen: React.FC<SettingProps & RootRouteProps> = (
                 onCancel={controller.CANCEL}
                 onEdit={controller.UPDATE_CREDENTIAL_REGISTRY}
                 Icon="star"
+                errorMessage={t('errorMessage')}
                 progress={controller.isResetInjiProps}
               />
             )}
