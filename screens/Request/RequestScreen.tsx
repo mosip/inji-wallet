@@ -7,7 +7,7 @@ import { Theme } from '../../components/ui/styleUtils';
 import { useRequestScreen } from './RequestScreenController';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import { Platform } from 'react-native';
-import isMaximumStorageLimitReached from '../../utils/isMaximumStorageLimitReached';
+import Storage from '../../shared/storage';
 import { ErrorMessageOverlay } from '../../components/MessageOverlay';
 import {
   NavigationProp,
@@ -39,9 +39,8 @@ export const RequestScreen: React.FC = () => {
   useFocusEffect(
     React.useCallback(() => {
       async function checkStorage() {
-        const isMinimumStorageLimitReached = await isMaximumStorageLimitReached(
-          'minimumStorageRequiredInMB'
-        );
+        const isMinimumStorageLimitReached =
+          await Storage.isMinimumLimitReached('minimumStorageRequiredInMB');
         if (isMinimumStorageLimitReached) {
           setShowMinimumStorageLimitReachedError(true);
         }

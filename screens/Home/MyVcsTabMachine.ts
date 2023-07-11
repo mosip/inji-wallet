@@ -17,7 +17,7 @@ import {
 } from '../../shared/constants';
 import { AddVcModalMachine } from './MyVcs/AddVcModalMachine';
 import { GetVcModalMachine } from './MyVcs/GetVcModalMachine';
-import isMaximumStorageLimitReached from '../../utils/isMaximumStorageLimitReached';
+import Storage from '../../shared/storage';
 
 const model = createModel(
   {
@@ -88,7 +88,7 @@ export const MyVcsTabMachine = model.createMachine(
             invoke: {
               src: () =>
                 Promise.resolve(
-                  isMaximumStorageLimitReached('minimumStorageRequiredInMB')
+                  Storage.isMinimumLimitReached('minimumStorageRequiredInMB')
                 ),
               onDone: [
                 {

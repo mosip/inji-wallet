@@ -37,7 +37,7 @@ import { createQrLoginMachine, qrLoginMachine } from '../../QrLoginMachine';
 import { StoreEvents } from '../../store';
 import { WalletDataEvent } from 'react-native-tuvali/lib/typescript/types/events';
 import { BLEError } from '../types';
-import isMaximumStorageLimitReached from '../../../utils/isMaximumStorageLimitReached';
+import Storage from '../../../shared/storage';
 
 const { wallet, EventTypes, VerificationStatus } = tuvali;
 
@@ -143,7 +143,7 @@ export const scanMachine =
           invoke: {
             src: () =>
               Promise.resolve(
-                isMaximumStorageLimitReached(
+                Storage.isMinimumLimitReached(
                   'minimumStorageRequiredForAuditEntryInMB'
                 )
               ),
