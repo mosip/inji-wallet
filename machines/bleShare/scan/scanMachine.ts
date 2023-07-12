@@ -1076,7 +1076,7 @@ export const scanMachine =
         isIOS: () => Platform.OS === 'ios',
 
         isMinimumStorageRequiredForAuditEntryReached: (_context, event) =>
-          event.data === true,
+          Boolean(event.data),
       },
 
       delays: {

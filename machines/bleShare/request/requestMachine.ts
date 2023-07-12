@@ -794,7 +794,7 @@ export const requestMachine =
           return receivedVcs.includes(vcKey);
         },
 
-        isMinimumStorageLimitReached: (_context, event) => event.data === true,
+        isMinimumStorageLimitReached: (_context, event) => Boolean(event.data),
       },
 
       delays: {
