@@ -782,7 +782,7 @@ export const requestMachine =
 
         checkStorageAvailability: () => async () => {
           return Promise.resolve(
-            Storage.isMinimumLimitReached('minimumStorageRequired')
+            Storage.isMinimumLimitReached('minStorageRequired')
           );
         },
       },
