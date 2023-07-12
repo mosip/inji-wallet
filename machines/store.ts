@@ -2,17 +2,26 @@ import * as Keychain from 'react-native-keychain';
 import CryptoJS from 'crypto-js';
 import Storage from '../shared/storage';
 import binaryToBase64 from 'react-native/Libraries/Utilities/binaryToBase64';
-import { EventFrom, Receiver, sendParent, send, sendUpdate } from 'xstate';
+import {
+  EventFrom,
+  Receiver,
+  sendParent,
+  send,
+  sendUpdate,
+  StateFrom,
+} from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { generateSecureRandom } from 'react-native-securerandom';
 import { log } from 'xstate/lib/actions';
-import { VC_ITEM_STORE_KEY } from '../shared/constants';
+import { VC_ITEM_STORE_KEY_REGEX, MY_VCS_STORE_KEY } from '../shared/constants';
 
 const ENCRYPTION_ID = 'c7c22a6c-9759-4605-ac88-46f4041d863d';
+const vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
 
 const model = createModel(
   {
     encryptionKey: '',
+    isTampered: false as boolean,
   },
   {
     events: {
@@ -33,6 +42,8 @@ const model = createModel(
         requester,
       }),
       STORE_ERROR: (error: Error, requester?: string) => ({ error, requester }),
+      TAMPERED_VC: (error: Error, requester?: string) => ({ error, requester }),
+      RESET_IS_TAMPERED: () => ({}),
     },
   }
 );
@@ -153,12 +164,26 @@ export const storeMachine =
                 sendUpdate(),
               ],
             },
+            TAMPERED_VC: {
+              actions: ['setIsTamperedVc'],
+            },
+            RESET_IS_TAMPERED: {
+              actions: ['resetIsTampered'],
+            },
           },
         },
       },
     },
     {
       actions: {
+        setIsTamperedVc: model.assign({
+          isTampered: (_, event) => true,
+        }),
+
+        resetIsTampered: model.assign({
+          isTampered: (_, event) => false,
+        }),
+
         notifyParent: sendParent(model.events.READY()),
 
         forwardStoreRequest: send(
@@ -260,8 +285,12 @@ export const storeMachine =
               }
               callback(model.events.STORE_RESPONSE(response, event.requester));
             } catch (e) {
-              console.error(e);
-              callback(model.events.STORE_ERROR(e, event.requester));
+              if (e.message === 'Data is tampered') {
+                callback(model.events.TAMPERED_VC(e, event.requester));
+              } else {
+                console.error(e);
+                callback(model.events.STORE_ERROR(e, event.requester));
+              }
             }
           });
         },
@@ -312,7 +341,7 @@ export async function setItem(
   try {
     const data = JSON.stringify(value);
     const encryptedData = encryptJson(encryptionKey, data);
-    await Storage.setItem(key, encryptedData);
+    await Storage.setItem(key, encryptedData, encryptionKey);
   } catch (e) {
     console.error('error setItem:', e);
     throw e;
@@ -325,15 +354,24 @@ export async function getItem(
   encryptionKey: string
 ) {
   try {
-    const data = await Storage.getItem(key);
+    const data = await Storage.getItem(key, encryptionKey);
     if (data != null) {
       const decryptedData = decryptJson(encryptionKey, data);
       return JSON.parse(decryptedData);
+    }
+    if (data === null && vcKeyRegExp.exec(key)) {
+      await Storage.removeItem(key);
+      removeVCMetaData(MY_VCS_STORE_KEY, key, encryptionKey);
+      throw new Error('Data is tampered');
     } else {
       return defaultValue;
     }
   } catch (e) {
-    return defaultValue;
+    if (e.message.includes('Data is tampered')) {
+      throw e;
+    } else {
+      return defaultValue;
+    }
   }
 }
 
@@ -398,7 +436,7 @@ export async function removeItem(
   encryptionKey: string
 ) {
   try {
-    const data = await Storage.getItem(key);
+    const data = await Storage.getItem(key, encryptionKey);
     const decryptedData = decryptJson(encryptionKey, data);
     const list = JSON.parse(decryptedData);
     const vcKeyArray = value.split(':');
@@ -423,7 +461,7 @@ export async function removeVCMetaData(
   encryptionKey: string
 ) {
   try {
-    const data = await Storage.getItem(key);
+    const data = await Storage.getItem(key, encryptionKey);
     const decryptedData = decryptJson(encryptionKey, data);
     const list = JSON.parse(decryptedData);
     const newList = list.filter((vc: string) => {
@@ -443,7 +481,7 @@ export async function removeItems(
   encryptionKey: string
 ) {
   try {
-    const data = await Storage.getItem(key);
+    const data = await Storage.getItem(key, encryptionKey);
     const decryptedData = decryptJson(encryptionKey, data);
     const list = JSON.parse(decryptedData);
     const newList = list.filter(function (vc: string) {
@@ -486,4 +524,9 @@ function decryptJson(encryptionKey: string, encryptedData: string): string {
     console.error('error decryptJson:', e);
     throw e;
   }
+}
+type State = StateFrom<typeof storeMachine>;
+
+export function selectIsTampered(state: State) {
+  return state.context.isTampered;
 }

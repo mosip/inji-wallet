@@ -1,5 +1,6 @@
 import { MMKVLoader } from 'react-native-mmkv-storage';
 import { VC_ITEM_STORE_KEY_REGEX } from './constants';
+import CryptoJS from 'crypto-js';
 import {
   DocumentDirectoryPath,
   mkdir,
@@ -14,17 +15,42 @@ const vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
 const vcDirectoryPath = `${DocumentDirectoryPath}/inji/VC`;
 
 class Storage {
-  static getItem = async (key: string) => {
-    if (vcKeyRegExp.exec(key)) {
-      const path = getFilePath(key);
-      return await readFile(path, 'utf8');
-    }
-    return await MMKV.getItem(key);
-  };
-
-  static setItem = async (key: string, data: string) => {
+  static getItem = async (key: string, encryptionKey: string) => {
     try {
       if (vcKeyRegExp.exec(key)) {
+        const path = getFilePath(key);
+        const data = await readFile(path, 'utf8');
+
+        const encryptedHMACofCurrentVC = await MMKV.getItem(key);
+        const HMACofCurrentVC = CryptoJS.AES.decrypt(
+          encryptedHMACofCurrentVC,
+          encryptionKey
+        ).toString();
+        const HMACofVC = CryptoJS.HmacSHA256(encryptionKey, data).toString();
+
+        if (HMACofVC === HMACofCurrentVC) {
+          return data;
+        } else {
+          return null;
+        }
+      }
+      return await MMKV.getItem(key);
+    } catch (error) {
+      console.log('Error Occurred while retriving from Storage.', error);
+      throw error;
+    }
+  };
+
+  static setItem = async (key: string, data: string, encryptionKey: string) => {
+    try {
+      if (vcKeyRegExp.exec(key)) {
+        const HMACofVC = CryptoJS.HmacSHA256(encryptionKey, data).toString();
+        const encryptedHMACofVC = CryptoJS.AES.encrypt(
+          HMACofVC,
+          encryptionKey
+        ).toString();
+        await MMKV.setItem(key, encryptedHMACofVC);
+
         await mkdir(vcDirectoryPath);
         const path = getFilePath(key);
         return await writeFile(path, data, 'utf8');

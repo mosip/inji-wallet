@@ -247,6 +247,10 @@
       "maximumStorageLimitReached": {
         "title": "Hindi sapat na Appdata",
         "message": "Hindi ka maaaring magdagdag o tumanggap ng mga card dahil puno na ang Appdata"
+      },
+      "vcIsTampered":{
+        "title": "Na-tamper ang ilang Data",
+        "message": "Inalis ang na-tamper na data mula sa Storage"
       }
     }
   },

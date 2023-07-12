@@ -180,7 +180,11 @@
 			"diskFullError": {
 				"title": "Error al guardar la Tarjeta",
 				"message": "No se pueden recibir ni guardar más Tarjetas, ya que los datos de la aplicación están llenos."
-			}
+			},
+			"vcIsTampered":{
+				"title": "Algunos datos están manipulados",
+				"message": "Se eliminaron los datos manipulados del almacenamiento."
+			  }
 		}
 	},
 	"OnboardingOverlay": {

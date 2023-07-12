@@ -247,6 +247,10 @@
       "maximumStorageLimitReached": {
         "title": "Insufficient Appdata",
         "message": "You cannot add or receive cards since the Appdata is full"
+      },
+      "vcIsTampered":{
+        "title": "Some Data is Tampered",
+        "message": "Removed the tampered data from the Storage"
       }
     }
   },
@@ -286,6 +290,12 @@
       "unlocked": "Card successfully unlocked",
       "locked": "Card successfully locked",
       "revoked": "VID {{vid}} has been revoked. Any credential containing the same will be removed automatically from the wallet"
+    },
+    "errors": {
+      "vcIsTampered":{
+        "title": "Data is Tampered",
+        "message": "Removing the Data since data is tampered in storage.."
+      }
     }
   },
   "MainLayout": {
