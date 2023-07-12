@@ -141,6 +141,21 @@ export const ScanScreen: React.FC = () => {
     }
   }
 
+  function displayStorageLimitReachedError(): React.ReactNode {
+    return (
+      !controller.isEmpty && (
+        <ErrorMessageOverlay
+          isVisible={
+            controller.isMinimumStorageRequiredForAuditEntryLimitReached
+          }
+          translationPath={'ScanScreen'}
+          error="errors.storageLimitReached"
+          onDismiss={() => navigation.navigate('Home')}
+        />
+      )
+    );
+  }
+
   return (
     <Column
       fill
@@ -163,16 +178,7 @@ export const ScanScreen: React.FC = () => {
           progress
         />
       </Centered>
-      {!controller.isEmpty && (
-        <ErrorMessageOverlay
-          isVisible={
-            controller.isMinimumStorageRequiredForAuditEntryLimitReached
-          }
-          translationPath={'ScanScreen'}
-          error="errors.storageLimitReached"
-          onDismiss={() => navigation.navigate('Home')}
-        />
-      )}
+      {displayStorageLimitReachedError()}
     </Column>
   );
 };
