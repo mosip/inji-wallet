@@ -249,8 +249,8 @@
         "message": "You cannot add or receive cards since the Appdata is full"
       },
       "vcIsTampered":{
-        "title": "Some Data is Tampered",
-        "message": "Removed the tampered data from the Storage"
+        "title": "VC data is tampered",
+        "message": "Affected VCs are removed from the app"
       }
     }
   },

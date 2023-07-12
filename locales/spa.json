@@ -182,8 +182,8 @@
 				"message": "No se pueden recibir ni guardar más Tarjetas, ya que los datos de la aplicación están llenos."
 			},
 			"vcIsTampered":{
-				"title": "Algunos datos están manipulados",
-				"message": "Se eliminaron los datos manipulados del almacenamiento."
+				"title": "Los datos de VC están manipulados",
+				"message": "Los VC afectados se eliminan de la aplicación"
 			  }
 		}
 	},
