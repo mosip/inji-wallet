@@ -31,23 +31,6 @@ export const RequestScreen: React.FC = () => {
   const props: RequestScreenProps = { t, controller };
   const [isBluetoothOn, setIsBluetoothOn] = useState(false);
   const navigation = useNavigation<RequestLayoutNavigation>();
-  const [
-    showMinimumStorageLimitReachedError,
-    setShowMinimumStorageLimitReachedError,
-  ] = useState(false);
-
-  useFocusEffect(
-    React.useCallback(() => {
-      async function checkStorage() {
-        const isMinimumStorageLimitReached =
-          await Storage.isMinimumLimitReached('minimumStorageRequired');
-        if (isMinimumStorageLimitReached) {
-          setShowMinimumStorageLimitReachedError(true);
-        }
-      }
-      checkStorage();
-    }, [])
-  );
 
   useEffect(() => {
     (async () => {
@@ -68,12 +51,11 @@ export const RequestScreen: React.FC = () => {
       align="space-between"
       backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
       {loadQRCode()}
-      {showMinimumStorageLimitReachedError && (
+      {controller.isMinimumStorageLimitReached && (
         <ErrorMessageOverlay
-          isVisible={showMinimumStorageLimitReachedError}
+          isVisible={controller.isMinimumStorageLimitReached}
           error="errors.storageLimitReached"
           onDismiss={() => {
-            setShowMinimumStorageLimitReachedError(false);
             navigation.navigate('Home');
           }}
           translationPath="RequestScreen"

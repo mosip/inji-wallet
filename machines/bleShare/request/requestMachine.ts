@@ -24,6 +24,7 @@ import { subscribe } from '../../../shared/openIdBLE/verifierEventHandler';
 import { log } from 'xstate/lib/actions';
 import { VerifierDataEvent } from 'react-native-tuvali/src/types/events';
 import { BLEError } from '../types';
+import Storage from '../../../shared/storage';
 // import { verifyPresentation } from '../shared/vcjs/verifyPresentation';
 
 const { verifier, EventTypes, VerificationStatus } = tuvali;
@@ -104,7 +105,7 @@ export const requestMachine =
         },
         SCREEN_FOCUS: {
           // eslint-disable-next-line sonarjs/no-duplicate-string
-          target: '.checkNearbyDevicesPermission',
+          target: '.checkStorage',
         },
         BLE_ERROR: {
           target: '.handlingBleError',
@@ -118,6 +119,21 @@ export const requestMachine =
         inactive: {
           entry: 'removeLoggers',
         },
+        checkStorage: {
+          invoke: {
+            src: 'checkStorageAvailability',
+            onDone: [
+              {
+                cond: 'isMinimumStorageLimitReached',
+                target: 'storageLimitReached',
+              },
+              {
+                target: 'checkNearbyDevicesPermission',
+              },
+            ],
+          },
+        },
+        storageLimitReached: {},
         checkNearbyDevicesPermission: {
           initial: 'checking',
           states: {
@@ -763,6 +779,12 @@ export const requestMachine =
 
           return Promise.resolve(vc);
         },
+
+        checkStorageAvailability: () => async () => {
+          return Promise.resolve(
+            Storage.isMinimumLimitReached('minimumStorageRequired')
+          );
+        },
       },
 
       guards: {
@@ -771,6 +793,8 @@ export const requestMachine =
           const vcKey = VC_ITEM_STORE_KEY(context.incomingVc);
           return receivedVcs.includes(vcKey);
         },
+
+        isMinimumStorageLimitReached: (_context, event) => event.data === true,
       },
 
       delays: {
@@ -780,9 +804,15 @@ export const requestMachine =
     }
   );
 
+type State = StateFrom<typeof requestMachine>;
+
 export function createRequestMachine(serviceRefs: AppServices) {
   return requestMachine.withContext({
     ...requestMachine.context,
     serviceRefs,
   });
+}
+
+export function selectIsMinimumStorageLimitReached(state: State) {
+  return state.matches('storageLimitReached');
 }
