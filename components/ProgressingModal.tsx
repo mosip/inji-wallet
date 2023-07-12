@@ -46,7 +46,7 @@ export const ProgressingModal: React.FC<ProgressingModalProps> = (props) => {
                 align="center"
                 color={Theme.Colors.TimoutText}
                 style={Theme.TextStyles.bold}>
-                {t('ScanScreen:status.sharing.timeoutHint')}
+                {props.timeoutHint}
               </Text>
               <Button
                 type="clear"
