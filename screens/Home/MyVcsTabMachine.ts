@@ -86,13 +86,10 @@ export const MyVcsTabMachine = model.createMachine(
         states: {
           checkStorage: {
             invoke: {
-              src: () =>
-                Promise.resolve(
-                  Storage.isMinimumLimitReached('minStorageRequired')
-                ),
+              src: 'checkStorageAvailability',
               onDone: [
                 {
-                  cond: (_context, event) => event.data === true,
+                  cond: 'isMinimumStorageLimitReached',
                   target: 'storageLimitReached',
                 },
                 {
@@ -179,6 +176,14 @@ export const MyVcsTabMachine = model.createMachine(
     },
   },
   {
+    services: {
+      checkStorageAvailability: () => async () => {
+        return Promise.resolve(
+          Storage.isMinimumLimitReached('minStorageRequired')
+        );
+      },
+    },
+
     actions: {
       viewVcFromParent: sendParent((_context, event: ViewVcEvent) =>
         model.events.VIEW_VC(event.vcItemActor)
@@ -216,6 +221,8 @@ export const MyVcsTabMachine = model.createMachine(
       isOnboardingDone: (_context, event: StoreResponseEvent) => {
         return event.response === true;
       },
+
+      isMinimumStorageLimitReached: (_context, event) => Boolean(event.data),
     },
   }
 );
