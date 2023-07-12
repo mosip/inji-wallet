@@ -190,7 +190,7 @@ export interface Typegen0 {
     | 'reviewing.verifyingIdentity'
     | 'showQrLogin'
     | 'showQrLogin.idle'
-    | 'showQrLogin.navigatingToHome'
+    | 'showQrLogin.navigatingToHistory'
     | 'showQrLogin.storing'
     | 'startPermissionCheck'
     | {
@@ -216,7 +216,7 @@ export interface Typegen0 {
           | 'sendingVc'
           | 'verifyingIdentity'
           | { sendingVc?: 'inProgress' | 'sent' | 'timeout' };
-        showQrLogin?: 'idle' | 'navigatingToHome' | 'storing';
+        showQrLogin?: 'idle' | 'navigatingToHistory' | 'storing';
       };
   'tags': never;
 }

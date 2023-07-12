@@ -31,11 +31,13 @@ export const ProgressingModal: React.FC<ProgressingModalProps> = (props) => {
               width={2}
               style={{ marginBottom: 15, marginLeft: -6 }}
             />
-            <PaginationDot
-              activeDotColor={'black'}
-              curPage={curPage}
-              maxPage={3}
-            />
+            {props.progress && (
+              <PaginationDot
+                activeDotColor={'black'}
+                curPage={curPage}
+                maxPage={3}
+              />
+            )}
           </Column>
 
           <Column style={{ display: props.timeoutHint ? 'flex' : 'none' }}>

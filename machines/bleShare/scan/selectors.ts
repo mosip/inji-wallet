@@ -68,7 +68,7 @@ export function selectIsShowQrLogin(state: State) {
 }
 
 export function selectIsQrLoginDone(state: State) {
-  return state.matches('showQrLogin.navigatingToHome');
+  return state.matches('showQrLogin.navigatingToHistory');
 }
 
 export function selectIsQrLoginStoring(state: State) {

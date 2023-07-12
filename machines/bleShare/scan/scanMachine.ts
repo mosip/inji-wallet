@@ -380,12 +380,12 @@ export const scanMachine =
               entry: ['storeLoginItem'],
               on: {
                 STORE_RESPONSE: {
-                  target: 'navigatingToHome',
+                  target: 'navigatingToHistory',
                   actions: ['storingActivityLog'],
                 },
               },
             },
-            navigatingToHome: {},
+            navigatingToHistory: {},
           },
           entry: 'sendScanData',
         },
