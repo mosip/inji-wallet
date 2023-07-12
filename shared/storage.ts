@@ -25,9 +25,9 @@ class Storage {
         const HMACofCurrentVC = CryptoJS.AES.decrypt(
           encryptedHMACofCurrentVC,
           encryptionKey
-        ).toString();
-        const HMACofVC = CryptoJS.HmacSHA256(encryptionKey, data).toString();
+        ).toString(CryptoJS.enc.Utf8);
 
+        const HMACofVC = CryptoJS.HmacSHA256(encryptionKey, data).toString();
         if (HMACofVC === HMACofCurrentVC) {
           return data;
         } else {
