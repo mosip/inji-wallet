@@ -145,7 +145,7 @@ android {
         APP_NAME_MOSIP = "@string/app_name_mosip"
         APP_NAME_BETA = "@string/app_name_beta"
     }
-
+   
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -227,7 +227,8 @@ android {
         }
         beta {
             versionName defaultConfig.versionName
-            versionCode androidGitVersion.code()
+            def versionCodeForBetaTrack = androidGitVersion.code();
+            versionCode versionCodeForBetaTrack
             manifestPlaceholders = [
                     APP_NAME: APP_NAME_BETA
             ]
