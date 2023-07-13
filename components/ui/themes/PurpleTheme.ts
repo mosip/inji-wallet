@@ -12,7 +12,6 @@ const Colors = {
   Gray44: '#707070',
   Gray9: '#171717',
   DimGray: '#737373',
-  lightOrange: '#FFF5ED',
   Orange: '#F2811D',
   LightOrange: '#FDF1E6',
   LightGrey: '#FAF9FF',
