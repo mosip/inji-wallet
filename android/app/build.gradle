@@ -156,7 +156,6 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionName androidGitVersion.name()
-        versionCode 1
 
         Properties properties = new Properties()
         properties.load(project.rootProject.file('local.properties').newDataInputStream())
@@ -220,6 +219,7 @@ android {
     productFlavors {
         mosip {
             versionName defaultConfig.versionName
+            versionCode 1
             manifestPlaceholders = [
                     APP_NAME: APP_NAME_MOSIP
             ]
@@ -227,8 +227,7 @@ android {
         }
         beta {
             versionName defaultConfig.versionName
-            def versionCodeForBetaTrack = androidGitVersion.code();
-            versionCode versionCodeForBetaTrack
+            versionCode androidGitVersion.code()
             manifestPlaceholders = [
                     APP_NAME: APP_NAME_BETA
             ]
@@ -236,6 +235,7 @@ android {
         }
         ph {
             versionName defaultConfig.versionName + "-ph"
+            versionCode 1
             manifestPlaceholders = [
                     APP_NAME: APP_NAME_PH
             ]
