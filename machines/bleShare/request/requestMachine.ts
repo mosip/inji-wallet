@@ -389,7 +389,7 @@ export const requestMachine =
               },
               on: {
                 DISMISS: {
-                  target: 'displayingIncomingVC',
+                  target: 'navigatingToHome',
                 },
               },
             },

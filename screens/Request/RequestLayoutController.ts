@@ -57,7 +57,7 @@ export function useRequestLayout() {
   );
   useEffect(() => {
     if (isDone) {
-      navigation.navigate('Home', { activeTab: 1 });
+      navigation.navigate('History');
     } else if (isReviewing) {
       navigation.navigate('ReceiveVcScreen');
     } else if (isWaitingForConnection) {
