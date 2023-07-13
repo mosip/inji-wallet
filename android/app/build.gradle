@@ -156,7 +156,8 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionName androidGitVersion.name()
-        versionCode androidGitVersion.code()
+        def versionCodeFromTag = androidGitVersion.code()
+        versionCode versionCodeFromTag
         Properties properties = new Properties()
         properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
