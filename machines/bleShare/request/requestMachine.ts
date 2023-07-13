@@ -389,7 +389,7 @@ export const requestMachine =
               },
               on: {
                 DISMISS: {
-                  target: 'navigatingToHome',
+                  target: 'navigatingToHistory',
                 },
               },
             },
@@ -407,7 +407,7 @@ export const requestMachine =
                 },
               },
             },
-            navigatingToHome: {
+            navigatingToHistory: {
               invoke: {
                 src: 'disconnect',
               },
@@ -415,7 +415,7 @@ export const requestMachine =
             displayingIncomingVC: {
               on: {
                 GO_TO_RECEIVED_VC_TAB: {
-                  target: 'navigatingToHome',
+                  target: '',
                 },
               },
             },
@@ -438,7 +438,7 @@ export const requestMachine =
                   target: '.viewingVc',
                 },
                 GO_TO_RECEIVED_VC_TAB: {
-                  target: 'navigatingToHome',
+                  target: '',
                 },
               },
             },
