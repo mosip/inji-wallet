@@ -156,7 +156,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionName androidGitVersion.name()
-        versionCode 1
+        versionCode androidGitVersion.code()
         Properties properties = new Properties()
         properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
@@ -226,17 +226,13 @@ android {
         }
         beta {
             versionName defaultConfig.versionName
-            def appVersionCode = androidGitVersion.code()
             manifestPlaceholders = [
-                    appVersionCode: "${appVersionCode}",
                     APP_NAME: APP_NAME_BETA
             ]
-            resValue "integer", "app_version_code", "${appVersionCode}"
             dimension "inji"
         }
         ph {
             versionName defaultConfig.versionName + "-ph"
-            versionCode 1
             manifestPlaceholders = [
                     APP_NAME: APP_NAME_PH
             ]
