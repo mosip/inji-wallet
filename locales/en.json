@@ -436,7 +436,7 @@
       "sentHint": "Waiting for receiver to save or discard your Card",
       "sharing": {
         "title": "Sharing...",
-        "hint": "Please wait for the receiving device to accept or reject the share.",
+        "hint": "Please wait while we share the chosen card.",
         "timeoutHint": "It's taking longer than expected to share. There could be a problem with the connection."
       },
       "accepted": {

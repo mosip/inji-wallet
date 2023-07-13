@@ -40,19 +40,21 @@ export const ProgressingModal: React.FC<ProgressingModalProps> = (props) => {
             )}
           </Column>
 
-          <Column style={{ display: props.timeoutHint ? 'flex' : 'none' }}>
+          <Column style={{ display: props.hint ? 'flex' : 'none' }}>
             <Column style={Theme.SelectVcOverlayStyles.timeoutHintContainer}>
               <Text
                 align="center"
                 color={Theme.Colors.TimoutText}
                 style={Theme.TextStyles.bold}>
-                {props.timeoutHint}
+                {props.hint}
               </Text>
-              <Button
-                type="clear"
-                title={t('common:cancel')}
-                onPress={props.onCancel}
-              />
+              {props.onCancel && (
+                <Button
+                  type="clear"
+                  title={t('common:cancel')}
+                  onPress={props.onCancel}
+                />
+              )}
             </Column>
           </Column>
         </Centered>
@@ -65,7 +67,7 @@ export interface ProgressingModalProps {
   isVisible: boolean;
   title?: string;
   label?: string;
-  timeoutHint?: string;
+  hint?: string;
   onCancel?: () => void;
   requester?: boolean;
   progress?: boolean | number;
