@@ -131,6 +131,7 @@ export function useScanLayout() {
     statusOverlay = {
       message: t('status.sent'),
       hint: t('status.sentHint'),
+      progress: false,
       onCancel: CANCEL,
     };
   } else if (isSendingVc) {
@@ -209,7 +210,7 @@ export function useScanLayout() {
     } else if (isScanning) {
       navigation.navigate('ScanScreen');
     } else if (isQrLoginDone) {
-      navigation.navigate('Home', { activeTab: 2 });
+      navigation.navigate('History');
     }
   }, [isDone, isReviewing, isScanning, isQrLoginDone, isBleError]);
 

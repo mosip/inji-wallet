@@ -134,8 +134,10 @@
     "language": "Wika",
     "aboutInji": "About Inji",
     "credentialRegistry": "Credential Registry",
+    "errorMessage": "Maling URL ang inilagay. Mangyaring maglagay ng wastong URL upang magpatuloy.",
     "injiTourGuide": "Inji Tour Guide",
-    "logout": "Mag-logout"
+    "logout": "Mag-logout",
+    "resetInjiProps": "Nire-reset ang Inji Props..."
   },
   "AboutInji": {
     "aboutInji": "Tungkol kay Inji",
@@ -187,6 +189,7 @@
     }
   },
   "GetVcModal": {
+    "retrievingId": "Kinukuha ang ID",
     "errors": {
       "input": {
         "empty": "Hindi maaaring walang laman ang input",
@@ -236,7 +239,7 @@
     "bringYourDigitalID": "Dalhin ang Iyong Digital ID",
     "generateVcDescription": "Upang i-download ang iyong card i-tap ang I-download card sa ibaba",
     "downloadCard": "I-download ang Card",
-    "downloadingYourId": "Ang pagda-download ng iyong card, maaari itong tumagal nang hanggang 5 minuto",
+    "downloadingYourCard": "Ang pagda-download ng iyong card, maaari itong tumagal nang hanggang 5 minuto",
     "errors": {
       "savingFailed": {
         "title": "Nabigong i-save ang Card",

@@ -230,21 +230,18 @@
 		"version": "Versión",
 		"useBle": "Impulsado por BLE"
 	},
-	"ProfileScreen": {
-		"name": "Nombre",
-		"vcLabel": "Etiqueta de VC",
-		"language": "Idioma",
-		"bioUnlock": "Desbloquear con biometría",
-		"authFactorUnlock": "Desbloquear factor de autenticación",
-		"AppMetaData": "Acerca de Inji",
-		"logout": "Cerrar sesión",
-		"revokeLabel": "Revocar VID",
-		"revokeHeader": "REVOCAR VID",
-		"revokingVids": "Estás a punto de revocar ({{count}}) VIDs.",
-		"revokingVidsAfter": "Esto significa que ya no podrás usar ni ver ninguna de las identificaciones vinculadas a esos VID(s).\n¿Estás seguro de que deseas continuar?",
-		"empty": "Vacío",
-		"revokeSuccessful": "VID revocado exitosamente"
-	},
+  "SettingScreen": {
+    "header": "Ajustes",
+    "injiAsVerifierApp": "Inji como aplicación verificadora",
+    "basicSettings": "Ajustes básicos",
+    "bioUnlock": "Desbloquear con biométrico",
+    "language": "Idioma",
+    "aboutInji": "Acerca de Inji",
+    "credentialRegistry": "Registro de Credenciales",
+    "injiTourGuide": "Guía turístico Inji",
+    "logout": "Cerrar sesión",
+    "resetInjiProps": "Restableciendo accesorios Inji..."
+  },
 	"QrScreen": {
 		"title": "Inicio de sesión con código QR",
 		"alignQr": "Alinea el código QR dentro del marco para escanearlo",

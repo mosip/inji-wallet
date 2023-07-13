@@ -3,7 +3,6 @@ import { Platform, Pressable, View } from 'react-native';
 import { Icon, ListItem, Switch } from 'react-native-elements';
 import { Column, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
-import { MainRouteProps } from '../../routes/main';
 import { MessageOverlay } from '../../components/MessageOverlay';
 
 import { useSettingsScreen } from './SettingScreenController';
@@ -14,6 +13,7 @@ import { Modal } from '../../components/ui/Modal';
 import { CREDENTIAL_REGISTRY_EDIT } from 'react-native-dotenv';
 import { AboutInji } from './AboutInji';
 import { EditableListItem } from '../../components/EditableListItem';
+import { RootRouteProps } from '../../routes';
 
 const LanguageSetting: React.FC = () => {
   const { t } = useTranslation('SettingScreen');
@@ -46,7 +46,7 @@ const LanguageSetting: React.FC = () => {
   );
 };
 
-export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
+export const SettingScreen: React.FC<SettingProps & RootRouteProps> = (
   props
 ) => {
   const { t } = useTranslation('SettingScreen');
@@ -63,8 +63,8 @@ export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
         headerTitle={t('header')}
         headerElevation={2}
         onDismiss={controller.TOGGLE_SETTINGS}>
-        <ScrollView backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
-          <Column fill>
+        <ScrollView>
+          <Column fill backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
             <MessageOverlay
               isVisible={controller.alertMsg != ''}
               onBackdropPress={controller.hideAlert}
@@ -111,11 +111,13 @@ export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
                 credentialRegistryResponse={
                   controller.credentialRegistryResponse
                 }
+                onCancel={controller.CANCEL}
                 onEdit={controller.UPDATE_CREDENTIAL_REGISTRY}
                 Icon="star"
+                errorMessage={t('errorMessage')}
+                progress={controller.isResetInjiProps}
               />
             )}
-
             {/*
             <ListItem
               topDivider

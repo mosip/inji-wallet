@@ -1,4 +1,4 @@
-import { ContextFrom, EventFrom, send, StateFrom } from 'xstate';
+import { assign, ContextFrom, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { AppServices } from '../shared/GlobalContext';
 import { HOST, SETTINGS_STORE_KEY } from '../shared/constants';
@@ -21,7 +21,7 @@ const model = createModel(
     isBiometricUnlockEnabled: false,
     credentialRegistry: HOST,
     appId: null,
-    credentialRegistryResponse: '',
+    credentialRegistryResponse: '' as string,
   },
   {
     events: {
@@ -38,6 +38,7 @@ const model = createModel(
       ) => ({
         credentialRegistryResponse: credentialRegistryResponse,
       }),
+      CANCEL: () => ({}),
     },
   }
 );
@@ -91,6 +92,9 @@ export const settingsMachine = model.createMachine(
             actions: ['resetCredentialRegistry'],
             target: 'resetInjiProps',
           },
+          CANCEL: {
+            actions: ['resetCredentialRegistry'],
+          },
         },
       },
       resetInjiProps: {
@@ -100,11 +104,18 @@ export const settingsMachine = model.createMachine(
             actions: [
               'updateCredentialRegistrySuccess',
               'updateCredentialRegistry',
+              'storeContext',
             ],
             target: 'idle',
           },
           onError: {
             actions: ['updateCredentialRegistryResponse'],
+            target: 'idle',
+          },
+        },
+        on: {
+          CANCEL: {
+            actions: ['resetCredentialRegistry'],
             target: 'idle',
           },
         },
@@ -151,23 +162,20 @@ export const settingsMachine = model.createMachine(
           plural: event.label + 's',
         }),
       }),
-      updateCredentialRegistry: model.assign({
+      updateCredentialRegistry: assign({
         credentialRegistry: (_context, event) => event.data.warningDomainName,
       }),
 
-      updateCredentialRegistryResponse: model.assign({
+      updateCredentialRegistryResponse: assign({
         credentialRegistryResponse: () => 'error',
       }),
 
-      updateCredentialRegistrySuccess: model.assign({
+      updateCredentialRegistrySuccess: assign({
         credentialRegistryResponse: () => 'success',
       }),
 
       resetCredentialRegistry: model.assign({
-        credentialRegistryResponse: () => {
-          console.log('resetCredentialRegistry : called');
-          return '';
-        },
+        credentialRegistryResponse: () => '',
       }),
 
       toggleBiometricUnlock: model.assign({
@@ -231,4 +239,7 @@ export function selectCredentialRegistryResponse(state: State) {
 
 export function selectBiometricUnlockEnabled(state: State) {
   return state.context.isBiometricUnlockEnabled;
+}
+export function selectIsResetInjiProps(state: State) {
+  return state.matches('resetInjiProps');
 }

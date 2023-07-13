@@ -15,7 +15,7 @@ import { HelpScreen } from '../components/HelpScreen';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
-export const MainLayout: React.FC<RootRouteProps> = () => {
+export const MainLayout: React.FC<RootRouteProps> = (props) => {
   const { t } = useTranslation('MainLayout');
 
   const options: BottomTabNavigationOptions = {
@@ -42,7 +42,7 @@ export const MainLayout: React.FC<RootRouteProps> = () => {
               color={Theme.Colors.Icon}
             />
           }
-          navigation={undefined}
+          navigation={props.navigation}
           route={undefined}
         />
       </Row>

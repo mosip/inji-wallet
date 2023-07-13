@@ -15,14 +15,14 @@
     "WALLET_BINDING_SUCCESSFULL": "Activation successful",
     "WALLET_BINDING_FAILURE": "Activation failed"
   },
-  "DeviceInfoList": {
-    "requestedBy": "Requested by",
-    "sentBy": "Sent by",
-    "deviceRefNumber": "Device reference number",
-    "name": "Name",
-    "Verifier": "Verifier",
-    "Wallet": "Wallet"
-  },
+    "DeviceInfoList": {
+      "requestedBy": "Requested by",
+      "sentBy": "Sent by",
+      "deviceRefNumber": "Device reference number",
+      "name": "Name",
+      "Verifier": "Verifier",
+      "Wallet": "Wallet"
+    },
   "FaceScanner": {},
   "OIDcAuth": {
     "title": "OIDC Authentication",
@@ -100,7 +100,7 @@
   },
   "RemoveVcWarningOverlay": {
     "alert": "Please Confirm",
-    "RemoveWarning": "Do you want to remove this card",
+    "removeWarning": "Do you want to remove this card?",
     "confirm": "Yes, I confirm",
     "no": "No"
   },
@@ -134,8 +134,10 @@
     "language": "Language",
     "aboutInji": "About Inji",
     "credentialRegistry": "Credential Registry",
+    "errorMessage": "Incorrect URL entered. Please enter a valid URL to proceed.",
     "injiTourGuide": "Inji Tour Guide",
-    "logout": "Logout"
+    "logout": "Logout",
+    "resetInjiProps": "Resetting Inji Props..."
   },
   "AboutInji": {
     "aboutInji": "About Inji",
@@ -187,6 +189,7 @@
     }
   },
   "GetVcModal": {
+    "retrievingId": "Retrieving ID",
     "errors": {
       "input": {
         "empty": "Input cannot be empty",
@@ -236,7 +239,7 @@
     "bringYourDigitalID": "Bring your digital identity",
     "generateVcDescription": "Tap on \"Download card\" below to download your card",
     "downloadCard": "Download Card",
-    "downloadingYourId": "Downloading your ID, this can take upto 5 minutes",
+    "downloadingYourCard": "Downloading your card, this can take upto 5 minutes",
     "errors": {
       "savingFailed": {
         "title": "Failed to save the Card",

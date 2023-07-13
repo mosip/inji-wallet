@@ -134,8 +134,10 @@
     "language": "لغة",
     "aboutInji": "حول إنجي",
     "credentialRegistry": "سجل الاعتماد",
+    "errorMessage": "تم إدخال عنوان URL غير صحيح. الرجاء إدخال عنوان URL صالح للمتابعة." ,
     "injiTourGuide": "مرشد إنجي السياحي",
-    "logout": "تسجيل خروج"
+    "logout": "تسجيل خروج",
+    "resetInjiProps": "إعادة تعيين دعائم إنجي ..."
   },
   "AboutInji": {
     "aboutInji": "حول إنجي",
@@ -187,6 +189,7 @@
     }
   },
   "GetVcModal": {
+    "retrievingId": "استرجاع الهوية",
     "errors": {
       "input": {
         "empty": "لا يمكن أن يكون الإدخال فارغًا",
@@ -236,7 +239,7 @@
     "bringYourDigitalID": "أحضر هويتك الرقمية",
     "generateVcDescription": "اضغط على \"إضافة بطاقة \" أدناه لتنزيل بطاقتك",
     "downloadCard": "تحميل البطاقة",
-    "downloadingYourId": "تنزيل بطاقتك ، قد يستغرق هذا ما يصل إلى 5 دقائق",
+    "downloadingYourCard": "تنزيل بطاقتك ، قد يستغرق هذا ما يصل إلى 5 دقائق",
     "errors": {
       "savingFailed": {
         "title": "فشل حفظ بطاقة",
