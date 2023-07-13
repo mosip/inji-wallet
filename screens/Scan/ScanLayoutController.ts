@@ -110,7 +110,6 @@ export function useScanLayout() {
   } else if (isConnectingTimeout) {
     statusOverlay = {
       title: t('status.sharingInProgress'),
-      requester: t('status.sharingInProgress'),
       hint: t('status.connectingTimeout'),
       onCancel,
       progress: true,

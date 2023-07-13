@@ -367,7 +367,7 @@
 			"sentHint": "Esperando a que el receptor guarde o descarte tu tarjeta",
 			"sharing": {
 				"title": "Compartiendo...",
-				"hint": "Por favor, espera a que el dispositivo receptor acepte o rechace el intercambio.",
+				"hint": "Espere mientras compartimos la tarjeta elegida.",
 				"timeoutHint": "Está tomando más tiempo del esperado para compartir. Puede haber un problema con la conexión."
 			},
 			"accepted": {
