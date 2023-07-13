@@ -2,14 +2,7 @@ import * as Keychain from 'react-native-keychain';
 import CryptoJS from 'crypto-js';
 import Storage from '../shared/storage';
 import binaryToBase64 from 'react-native/Libraries/Utilities/binaryToBase64';
-import {
-  EventFrom,
-  Receiver,
-  sendParent,
-  send,
-  sendUpdate,
-  StateFrom,
-} from 'xstate';
+import { EventFrom, Receiver, sendParent, send, sendUpdate } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { generateSecureRandom } from 'react-native-securerandom';
 import { log } from 'xstate/lib/actions';
@@ -101,11 +94,9 @@ export const storeMachine =
         failedReadingKey: {
           on: {
             TRY_AGAIN: {
-              actions: 'unsetIsReadError',
               target: 'gettingEncryptionKey',
             },
             IGNORE: {
-              actions: 'unsetIsReadError',
               target: 'generatingEncryptionKey',
             },
           },

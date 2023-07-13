@@ -23,12 +23,8 @@ const AppInitialization: React.FC = () => {
         isVisible={isReadError}
         title={t('failedToReadKeys')}
         message={t('retryRead')}
-        onTryAgain={() => {
-          controller.TRY_AGAIN();
-        }}
-        onIgnore={() => {
-          controller.IGNORE();
-        }}
+        onTryAgain={controller.TRY_AGAIN}
+        onIgnore={controller.IGNORE}
       />
     );
   }
