@@ -1,4 +1,4 @@
-name: Android Internal Build
+name: Android Custom Build
 
 env:
   backendServiceDefaultUrl: https://api.sandbox.mosip.net
@@ -6,6 +6,21 @@ env:
 on:
   workflow_dispatch:
     inputs:
+      # tag:
+      #   description: 'Tag to be published'
+      #   required: true
+      #   default: 'v1.2.3'
+      #   type: string
+      # body:
+      #   description: 'Release body message'
+      #   required: true
+      #   default: 'Changes in this Release'
+      #   type: string
+      # pre-release:
+      #   description: 'Pre-release? True/False'
+      #   required: true
+      #   default: False
+      #   type: string
       backendServiceUrl:
         description: 'Backend service URL'
         required: true
@@ -41,20 +56,24 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '16.x'
-      
-      - name: Cache local npm repository
-        uses: actions/cache@v3.0.11
-        with:
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          path: ~/.npm
 
-      - name: Cache local gradle repository
-        uses: actions/cache@v3.0.11
-        with:
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
+      # - name: Create Release
+      #   id: create_release
+      #   uses: actions/create-release@v1
+      #   with:
+      #     tag_name: ${{ github.event.inputs.tag }}
+      #     release_name: ${{ github.event.inputs.tag }}
+      #     body: |
+      #       ${{ github.event.inputs.body }}
+      #     draft: false
+      #     prerelease: ${{fromJSON(github.event.inputs.pre-release)}}
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # - name: Check for git tag
+      #   run: |
+      #     cd android/scripts
+      #     ./git-tag.sh
 
       - name: Install npm dependencies
         run: |
@@ -113,10 +132,10 @@ jobs:
       - name: Run Build
         run: | 
           cd android/scripts
-          ./internal-build.sh
+          ./beta-build.sh
         env:
           MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
-          APPLICATION_THEME: ${{ github.event.inputs.theme }} 
+          APPLICATION_THEME: ${{ github.event.inputs.theme }}
           RELEASE_KEYSTORE_ALIAS: androidreleasekey
           RELEASE_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_RELEASE_STOREPASS}}'
           SLACK_URL: '${{ secrets.SLACK_WEBHOOK_DEVOPS }}'
