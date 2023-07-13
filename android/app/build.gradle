@@ -226,11 +226,12 @@ android {
         }
         beta {
             versionName defaultConfig.versionName
-            versionCode 1
+            def appVersionCode = androidGitVersion.code()
             manifestPlaceholders = [
-                    appVersionCode: "${androidGitVersion.code()}",
+                    appVersionCode: "${appVersionCode}",
                     APP_NAME: APP_NAME_BETA
             ]
+            resValue "integer", "app_version_code", "${appVersionCode}"
             dimension "inji"
         }
         ph {

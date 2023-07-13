@@ -1,4 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="io.mosip.residentapp" android:versionCode="@integer/appVersionCode">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="io.mosip.residentapp" android:versionCode="@integer/app_version_code">
   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" android:maxSdkVersion="28" />
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" android:maxSdkVersion="30"/>
   <!-- from Android 12, Location permission isn't required as we aren't using it to determine location -->
