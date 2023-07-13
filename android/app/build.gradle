@@ -226,9 +226,9 @@ android {
         }
         beta {
             versionName defaultConfig.versionName
-            versionCode androidGitVersion.code()
+            versionCode 1
             manifestPlaceholders = [
-                    appVersionCode: "${versionCode}",
+                    appVersionCode: "${androidGitVersion.code()}",
                     APP_NAME: APP_NAME_BETA
             ]
             dimension "inji"
