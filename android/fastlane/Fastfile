@@ -52,7 +52,7 @@ end
 
 desc "Deploy an Beta version to the Google Play"
 lane :android_build_beta do
-  
+
   #git_tag = sh('git describe --abbrev=0 --tags --exact-match HEAD').strip
 
   #versionName = "Inji - #{git_tag}"
@@ -67,7 +67,7 @@ lane :android_build_beta do
   )
 
   slack(
-      message: "Inji [Beta]- #{versionName} (#{current_build_number}) is uploaded to Play store. Description : #{PLAY_CONSOLE_RELEASE_DESCRIPTION}.", 
+      message: "Inji [Beta]- #{versionName} is uploaded to Play store. Description : #{PLAY_CONSOLE_RELEASE_DESCRIPTION}.", 
       success: true,
       slack_url: "#{SLACK_URL}",
       default_payloads: [:git_branch, :last_git_commit]

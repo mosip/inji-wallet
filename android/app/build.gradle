@@ -156,7 +156,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionName androidGitVersion.name()
-
+        versionCode 1
         Properties properties = new Properties()
         properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
@@ -219,7 +219,6 @@ android {
     productFlavors {
         mosip {
             versionName defaultConfig.versionName
-            versionCode 1
             manifestPlaceholders = [
                     APP_NAME: APP_NAME_MOSIP
             ]
@@ -229,6 +228,7 @@ android {
             versionName defaultConfig.versionName
             versionCode androidGitVersion.code()
             manifestPlaceholders = [
+                    appVersionCode: "${versionCode}",
                     APP_NAME: APP_NAME_BETA
             ]
             dimension "inji"
