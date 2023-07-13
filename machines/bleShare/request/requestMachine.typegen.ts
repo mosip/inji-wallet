@@ -101,7 +101,7 @@ export interface Typegen0 {
       | 'xstate.after(DESTROY_TIMEOUT)#request.clearingConnection';
     checkBluetoothService: 'NEARBY_ENABLED';
     checkNearByDevicesPermission: 'APP_ACTIVE' | 'RESET' | 'SCREEN_FOCUS';
-    disconnect: '' | 'DISMISS';
+    disconnect: '' | 'DISMISS' | 'GO_TO_RECEIVED_VC_TAB';
     monitorConnection: 'xstate.init';
     receiveVc: 'CONNECTED';
     requestBluetooth: 'BLUETOOTH_STATE_DISABLED';
