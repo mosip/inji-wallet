@@ -8,6 +8,18 @@ export class BackendResponseError extends Error {
   }
 }
 
+export class AppId {
+  private static value: string;
+
+  public static getValue(): string {
+    return AppId.value;
+  }
+
+  public static setValue(value: string) {
+    this.value = value;
+  }
+}
+
 export async function request(
   method: 'GET' | 'POST' | 'PATCH',
   path: `/${string}`,
@@ -17,6 +29,7 @@ export async function request(
     method,
     headers: {
       'Content-Type': 'application/json',
+      'X-AppId': AppId.getValue(),
     },
     body: JSON.stringify(body),
   });

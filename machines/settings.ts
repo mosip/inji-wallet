@@ -9,6 +9,7 @@ import getAllConfigurations, {
 } from '../shared/commonprops/commonProps';
 import Storage from '../shared/storage';
 import ShortUniqueId from 'short-unique-id';
+import { AppId } from '../shared/request';
 
 const model = createModel(
   {
@@ -129,7 +130,11 @@ export const settingsMachine = model.createMachine(
       }),
 
       updateDefaults: model.assign({
-        appId: generateAppId(),
+        appId: (_context, _event) => {
+          const appId = generateAppId();
+          AppId.setValue(appId);
+          return appId;
+        },
       }),
 
       updatePartialDefaults: model.assign({
@@ -146,6 +151,7 @@ export const settingsMachine = model.createMachine(
 
       setContext: model.assign((context, event) => {
         const newContext = event.response as ContextFrom<typeof model>;
+        AppId.setValue(newContext.appId);
         return {
           ...context,
           ...newContext,
