@@ -559,7 +559,6 @@ function decryptJson(encryptionKey: string, encryptedData: string): string {
     throw e;
   }
 }
-type State = StateFrom<typeof storeMachine>;
 
 export function selectIsTampered(state: State) {
   return state.context.isTampered;
