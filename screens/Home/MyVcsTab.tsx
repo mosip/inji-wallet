@@ -154,8 +154,8 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
       />
       <ErrorMessageOverlay
         translationPath={'MyVcsTab'}
-        isVisible={controller.isMaximumStorageLimitReached}
-        error={'errors.maximumStorageLimitReached'}
+        isVisible={controller.isMinimumStorageLimitReached}
+        error={'errors.storageLimitReached'}
         onDismiss={controller.DISMISS}
       />
     </React.Fragment>

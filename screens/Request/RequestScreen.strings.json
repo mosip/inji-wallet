@@ -11,7 +11,7 @@
       "message": "Nearby Devices permission is required to be able to request Card",
       "button": "Allow Permission"
     },
-    "maximumStorageLimitReached": {
+    "storageLimitReached": {
       "title": "Insufficient Appdata",
       "message": "You cannot add or receive cards since the Appdata is full"
     }

@@ -8,6 +8,7 @@ import {
   EventFrom,
   send,
   spawn,
+  StateFrom,
 } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { EmitterSubscription, Linking, Platform } from 'react-native';
@@ -36,6 +37,7 @@ import { createQrLoginMachine, qrLoginMachine } from '../../QrLoginMachine';
 import { StoreEvents } from '../../store';
 import { WalletDataEvent } from 'react-native-tuvali/lib/typescript/types/events';
 import { BLEError } from '../types';
+import Storage from '../../../shared/storage';
 
 const { wallet, EventTypes, VerificationStatus } = tuvali;
 
@@ -126,7 +128,7 @@ export const scanMachine =
           target: '.inactive',
         },
         SCREEN_FOCUS: {
-          target: '.startPermissionCheck',
+          target: '.checkStorage',
         },
         BLE_ERROR: {
           target: '.handlingBleError',
@@ -137,6 +139,21 @@ export const scanMachine =
         inactive: {
           entry: 'removeLoggers',
         },
+        checkStorage: {
+          invoke: {
+            src: 'checkStorageAvailability',
+            onDone: [
+              {
+                cond: 'isMinimumStorageRequiredForAuditEntryReached',
+                target: 'restrictSharingVc',
+              },
+              {
+                target: 'startPermissionCheck',
+              },
+            ],
+          },
+        },
+        restrictSharingVc: {},
         startPermissionCheck: {
           on: {
             START_PERMISSION_CHECK: [
@@ -1030,6 +1047,12 @@ export const scanMachine =
 
           return Promise.resolve(vc);
         },
+
+        checkStorageAvailability: () => async () => {
+          return Promise.resolve(
+            Storage.isMinimumLimitReached('minStorageRequiredForAuditEntry')
+          );
+        },
       },
 
       guards: {
@@ -1051,6 +1074,9 @@ export const scanMachine =
         uptoAndroid11: () => Platform.OS === 'android' && Platform.Version < 31,
 
         isIOS: () => Platform.OS === 'ios',
+
+        isMinimumStorageRequiredForAuditEntryReached: (_context, event) =>
+          Boolean(event.data),
       },
 
       delays: {
@@ -1061,9 +1087,17 @@ export const scanMachine =
     }
   );
 
+type State = StateFrom<typeof scanMachine>;
+
 export function createScanMachine(serviceRefs: AppServices) {
   return scanMachine.withContext({
     ...scanMachine.context,
     serviceRefs,
   });
+}
+
+export function selectIsMinimumStorageRequiredForAuditEntryLimitReached(
+  state: State
+) {
+  return state.matches('restrictSharingVc');
 }
