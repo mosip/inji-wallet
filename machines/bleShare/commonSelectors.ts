@@ -49,10 +49,6 @@ export function selectIsExchangingDeviceInfoTimeout() {
   return false;
 }
 
-export function selectIsDone(state: State) {
-  return state.matches('reviewing.navigatingToHistory');
-}
-
 export function selectIsOffline() {
   return false;
 }

@@ -17,11 +17,11 @@ import {
   selectIsSendingVcTimeout,
   selectIsSent,
   selectReceiverInfo,
+  selectIsDone,
 } from '../../machines/bleShare/scan/selectors';
 import {
   selectIsAccepted,
   selectIsDisconnected,
-  selectIsDone,
   selectIsExchangingDeviceInfo,
   selectIsExchangingDeviceInfoTimeout,
   selectIsHandlingBleError,

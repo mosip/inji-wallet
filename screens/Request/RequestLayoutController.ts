@@ -8,11 +8,11 @@ import {
   selectIsSavingFailedInViewingVc,
   selectIsWaitingForConnection,
   selectSenderInfo,
+  selectIsDone,
 } from '../../machines/bleShare/request/selectors';
 import {
   selectIsAccepted,
   selectIsDisconnected,
-  selectIsDone,
   selectIsHandlingBleError,
   selectIsRejected,
   selectIsReviewing,
