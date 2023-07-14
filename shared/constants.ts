@@ -37,3 +37,38 @@ export const GNM_API_KEY = GOOGLE_NEARBY_MESSAGES_API_KEY;
 
 // https://developers.google.com/android/reference/com/google/android/gms/nearby/messages/Message#MAX_CONTENT_SIZE_BYTES
 export const GNM_MESSAGE_LIMIT = 102400 - 6400; // allowance for metadata
+
+export const APP_ID_LENGTH = 12;
+
+export const APP_ID_DICTIONARY = [
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+  'A',
+  'B',
+  'C',
+  'D',
+  'E',
+  'F',
+  'G',
+  'H',
+  'J',
+  'K',
+  'L',
+  'M',
+  'N',
+  'P',
+  'Q',
+  'R',
+  'S',
+  'T',
+  'U',
+  'V',
+  'W',
+  'X',
+  'Y',
+];

@@ -1,7 +1,12 @@
 import { assign, ContextFrom, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { AppServices } from '../shared/GlobalContext';
-import { HOST, SETTINGS_STORE_KEY } from '../shared/constants';
+import {
+  APP_ID_DICTIONARY,
+  APP_ID_LENGTH,
+  HOST,
+  SETTINGS_STORE_KEY,
+} from '../shared/constants';
 import { VCLabel } from '../types/vc';
 import { StoreEvents } from './store';
 import getAllConfigurations, {
@@ -217,8 +222,10 @@ export function createSettingsMachine(serviceRefs: AppServices) {
 }
 
 function generateAppId() {
-  const shortUUID = new ShortUniqueId({ length: 12 });
-  shortUUID.setDictionary('alphanum_upper');
+  const shortUUID = new ShortUniqueId({
+    length: APP_ID_LENGTH,
+    dictionary: APP_ID_DICTIONARY,
+  });
   return shortUUID.randomUUID();
 }
 
