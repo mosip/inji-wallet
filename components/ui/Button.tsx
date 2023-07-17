@@ -15,7 +15,6 @@ export const Button: React.FC<ButtonProps> = (props) => {
     Theme.ButtonStyles[type],
     { width: props.width ?? '100%' },
   ];
-  console.log('Button style ', buttonStyle);
   const containerStyle: StyleProp<ViewStyle> = [
     !(type === 'gradient') ? Theme.ButtonStyles.container : null,
     props.disabled ? Theme.ButtonStyles.disabled : null,
@@ -27,7 +26,6 @@ export const Button: React.FC<ButtonProps> = (props) => {
       : null,
     props.styles,
   ];
-  console.log('Button containerStyle ', containerStyle);
   const handleOnPress = (event: GestureResponderEvent) => {
     if (!props.disabled && props.onPress) {
       props.onPress(event);
@@ -71,9 +69,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
           ? Theme.Colors.GradientColors
           : Theme.Colors.DisabledColors,
       }}
-      containerStyle={
-        props.isVcThere ? containerStyle : Theme.ButtonStyles.gradient
-      }
+      containerStyle={containerStyle}
       type={props.type}
       raised={props.raised}
       title={

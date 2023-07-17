@@ -222,15 +222,11 @@ export const storeMachine =
         clear,
         checkStorageInitialisedOrNot: () => async (callback) => {
           const isDirectoryExist = await Storage.isVCStorageInitialised();
-          // if dir exists --> Can have data --> show popUp
-          // else --> clear data
           if (!isDirectoryExist) {
             // clear the storage
             callback(model.events.READY());
           } else {
-            // ideally sendToParent()
-            callback(model.events.ERROR(new Error('show the popup')));
-            // show the popup
+            callback(model.events.ERROR(new Error('show the popup for retry')));
           }
         },
 

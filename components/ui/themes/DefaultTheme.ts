@@ -749,13 +749,16 @@ export const DefaultTheme = {
     overlay: {
       elevation: 5,
       backgroundColor: Colors.White,
-      padding: 0,
+      padding: 5,
+      borderRadius: 10,
+    },
+    buttonContainer: {
+      justifyContent: 'center',
+      marginBottom: 75,
     },
     popupOverLay: {
       height: 150,
       backgroundColor: Colors.White,
-      borderRadius: 15,
-      margin: -13.5,
     },
     button: {
       borderTopLeftRadius: 0,
@@ -764,7 +767,6 @@ export const DefaultTheme = {
     halfButton: {
       borderRadius: 8,
       margin: '0.5%',
-      width: Dimensions.get('screen').width * 0.38,
     },
   }),
   BindingVcWarningOverlay: StyleSheet.create({

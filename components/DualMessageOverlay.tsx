@@ -53,31 +53,40 @@ export const DualMessageOverlay: React.FC<DualMessageOverlayProps> = (
             <Text
               size="smaller"
               color={Theme.Colors.textLabel}
-              margin={[4, 0, 0, 0]}>
+              margin={[2, 0, 0, 0]}>
               {props.hint}
             </Text>
           )}
           {props.children}
         </Column>
-        <Row>
-          {!props.children && props.onTryAgain ? (
-            <Button
-              title={t('tryAgain')}
-              type="solid"
-              onPress={props.onTryAgain}
-              styles={{ ...Theme.MessageOverlayStyles.halfButton }}
-            />
-          ) : null}
-          <View style={{ margin: '1.4%' }} />
-          {!props.children && props.onIgnore ? (
-            <Button
-              type="solid"
-              title={t('ignore')}
-              onPress={props.onIgnore}
-              styles={{ ...Theme.MessageOverlayStyles.halfButton }}
-            />
-          ) : null}
-        </Row>
+        <Column style={{ marginBottom: 10 }}>
+          <Row style={Theme.MessageOverlayStyles.buttonContainer}>
+            {!props.children && props.onTryAgain ? (
+              <Button
+                title={t('tryAgain')}
+                type="gradient"
+                onPress={props.onTryAgain}
+                styles={{
+                  ...Theme.MessageOverlayStyles.halfButton,
+                  ...Theme.ButtonStyles.gradient,
+                  width: Dimensions.get('screen').width * 0.36,
+                }}
+              />
+            ) : null}
+            {!props.children && props.onIgnore ? (
+              <Button
+                type="gradient"
+                title={t('ignore')}
+                onPress={props.onIgnore}
+                styles={{
+                  ...Theme.MessageOverlayStyles.halfButton,
+                  ...Theme.ButtonStyles.gradient,
+                  width: Dimensions.get('screen').width * 0.36,
+                }}
+              />
+            ) : null}
+          </Row>
+        </Column>
       </Column>
     </Overlay>
   );
