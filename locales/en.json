@@ -244,9 +244,9 @@
         "title": "Failed to save the Card",
         "message": "Something went wrong while saving Card to the store."
       },
-      "maximumStorageLimitReached": {
+      "storageLimitReached": {
         "title": "Insufficient Appdata",
-        "message": "You cannot add or receive cards since the Appdata is full"
+        "message": "You cannot add or receive cards since the Appdata is full. Clear Appdata to proceed."
       },
       "vcIsTampered":{
         "title": "VC data is tampered",

@@ -168,7 +168,7 @@ export const storeMachine =
               actions: ['setIsTamperedVc'],
             },
             RESET_IS_TAMPERED: {
-              actions: ['resetIsTampered'],
+              actions: ['setIsTamperedVc'],
             },
           },
         },
@@ -177,11 +177,7 @@ export const storeMachine =
     {
       actions: {
         setIsTamperedVc: model.assign({
-          isTampered: (_, event) => true,
-        }),
-
-        resetIsTampered: model.assign({
-          isTampered: (_, event) => false,
+          isTampered: (context, event) => !context.isTampered,
         }),
 
         notifyParent: sendParent(model.events.READY()),
@@ -360,8 +356,7 @@ export async function getItem(
       return JSON.parse(decryptedData);
     }
     if (data === null && vcKeyRegExp.exec(key)) {
-      await Storage.removeItem(key);
-      removeVCMetaData(MY_VCS_STORE_KEY, key, encryptionKey);
+      await removeItem(key, data, encryptionKey);
       throw new Error('Data is tampered');
     } else {
       return defaultValue;
@@ -369,9 +364,8 @@ export async function getItem(
   } catch (e) {
     if (e.message.includes('Data is tampered')) {
       throw e;
-    } else {
-      return defaultValue;
     }
+    return defaultValue;
   }
 }
 
@@ -436,19 +430,24 @@ export async function removeItem(
   encryptionKey: string
 ) {
   try {
-    const data = await Storage.getItem(key, encryptionKey);
-    const decryptedData = decryptJson(encryptionKey, data);
-    const list = JSON.parse(decryptedData);
-    const vcKeyArray = value.split(':');
-    const finalVcKeyArray = vcKeyArray.pop();
-    const finalVcKey = vcKeyArray.join(':');
-    //console.log('finalVcKeyArray', finalVcKeyArray);
-    const newList = list.filter((vc: string) => {
-      return !vc.includes(finalVcKey);
-    });
+    if (value === null && vcKeyRegExp.exec(key)) {
+      await Storage.removeItem(key);
+      await removeVCMetaData(MY_VCS_STORE_KEY, key, encryptionKey);
+    } else {
+      const data = await Storage.getItem(key, encryptionKey);
+      const decryptedData = decryptJson(encryptionKey, data);
+      const list = JSON.parse(decryptedData);
+      const vcKeyArray = value.split(':');
+      const finalVcKeyArray = vcKeyArray.pop();
+      const finalVcKey = vcKeyArray.join(':');
+      //console.log('finalVcKeyArray', finalVcKeyArray);
+      const newList = list.filter((vc: string) => {
+        return !vc.includes(finalVcKey);
+      });
 
-    await setItem(key, newList, encryptionKey);
-    await Storage.removeItem(value);
+      await setItem(key, newList, encryptionKey);
+      await Storage.removeItem(value);
+    }
   } catch (e) {
     console.error('error removeItem:', e);
     throw e;

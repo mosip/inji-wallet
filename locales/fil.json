@@ -244,9 +244,9 @@
         "title": "Nabigong i-save ang Card",
         "message": "Nagkaproblema habang sine-save ang Card sa tindahan."
       },
-      "maximumStorageLimitReached": {
+      "storageLimitReached": {
         "title": "Hindi sapat na Appdata",
-        "message": "Hindi ka maaaring magdagdag o tumanggap ng mga card dahil puno na ang Appdata"
+        "message": "Hindi ka maaaring magdagdag o tumanggap ng mga card dahil puno na ang Appdata. I-clear ang Appdata para magpatuloy."
       },
       "vcIsTampered":{
         "title": "Pinakialaman ang data ng VC",
