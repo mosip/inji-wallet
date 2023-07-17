@@ -132,6 +132,7 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 def enableHermes = project.ext.react.get("enableHermes", false);
 
 androidGitVersion {
+    baseCode 0
     codeFormat 'MXXNXXPXX'
     format '% tag %%commit_%%branch%'
 }
@@ -156,8 +157,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionName androidGitVersion.name()
-        def versionCodeFromTag = androidGitVersion.code()
-        versionCode versionCodeFromTag
+        versionCode androidGitVersion.code()
         Properties properties = new Properties()
         properties.load(project.rootProject.file('local.properties').newDataInputStream())
 

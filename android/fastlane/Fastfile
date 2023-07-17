@@ -53,7 +53,8 @@ end
 desc "Deploy an Beta version to the Google Play"
 lane :android_build_beta do
 
-  #git_tag = sh('git describe --abbrev=0 --tags --exact-match HEAD').strip
+  # git_tag = sh('git describe --abbrev=0 --tags --exact-match HEAD').strip
+  # UI.message("Git Tag: #{git_tag}")
 
   #versionName = "Inji - #{git_tag}"
 
