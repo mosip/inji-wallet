@@ -9,12 +9,13 @@ import { Theme, Spacing } from './styleUtils';
 
 export const Button: React.FC<ButtonProps> = (props) => {
   const type = props.type || 'solid' || 'radius' || 'gradient';
+  console.log('got button props ', props);
   const buttonStyle: StyleProp<ViewStyle> = [
     props.fill ? Theme.ButtonStyles.fill : null,
     Theme.ButtonStyles[type],
-    { width: '100%' },
+    { width: props.width ?? '100%' },
   ];
-
+  console.log('Button style ', buttonStyle);
   const containerStyle: StyleProp<ViewStyle> = [
     !(type === 'gradient') ? Theme.ButtonStyles.container : null,
     props.disabled ? Theme.ButtonStyles.disabled : null,
@@ -26,7 +27,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
       : null,
     props.styles,
   ];
-
+  console.log('Button containerStyle ', containerStyle);
   const handleOnPress = (event: GestureResponderEvent) => {
     if (!props.disabled && props.onPress) {
       props.onPress(event);
@@ -63,6 +64,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
     />
   ) : (
     <RNEButton
+      buttonStyle={buttonStyle}
       ViewComponent={require('react-native-linear-gradient').default}
       linearGradientProps={{
         colors: !props.disabled
@@ -85,7 +87,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
           {props.title}
         </Text>
       }
-      buttonStyle={!props.isVcThere ? { height: 45 } : { height: 42 }}
+      style={[buttonStyle]}
       icon={props.icon}
       onPress={handleOnPress}
       loading={props.loading}
@@ -106,90 +108,5 @@ interface ButtonProps {
   icon?: RNEButtonProps['icon'];
   styles?: StyleProp<ViewStyle>;
   colors?: (string | number)[];
+  width?: number;
 }
-
-export const HalfButton: React.FC<ButtonProps> = (props) => {
-  const type = props.type || 'solid' || 'radius' || 'gradient';
-  const buttonStyle: StyleProp<ViewStyle> = [
-    props.fill ? Theme.HalfButtonStyles.fill : null,
-    Theme.HalfButtonStyles[type],
-    { width: '100%' },
-  ];
-
-  const containerStyle: StyleProp<ViewStyle> = [
-    !(type === 'gradient') ? Theme.HalfButtonStyles.container : null,
-    props.disabled ? Theme.HalfButtonStyles.disabled : null,
-    props.margin ? Theme.spacing('margin', props.margin) : null,
-    type === 'gradient'
-      ? props.isVcThere
-        ? Theme.HalfButtonStyles.float
-        : Theme.HalfButtonStyles.gradient
-      : null,
-    props.styles,
-  ];
-
-  const handleOnPress = (event: GestureResponderEvent) => {
-    if (!props.disabled && props.onPress) {
-      props.onPress(event);
-    }
-  };
-
-  return !(type === 'gradient') ? (
-    <RNEButton
-      buttonStyle={buttonStyle}
-      containerStyle={[
-        props.fill ? Theme.HalfButtonStyles.fill : null,
-        containerStyle,
-      ]}
-      type={props.type}
-      raised={props.raised}
-      title={
-        <Text
-          weight="semibold"
-          align="center"
-          color={
-            type === 'solid' || type === 'gradient' || type === 'radius'
-              ? Theme.Colors.whiteText
-              : type === 'plain'
-              ? Theme.Colors.plainText
-              : Theme.Colors.AddIdBtnTxt
-          }>
-          {props.title}
-        </Text>
-      }
-      style={[buttonStyle]}
-      icon={props.icon}
-      onPress={handleOnPress}
-      loading={props.loading}
-    />
-  ) : (
-    <RNEButton
-      ViewComponent={require('react-native-linear-gradient').default}
-      linearGradientProps={{
-        colors: !props.disabled
-          ? Theme.Colors.GradientColors
-          : Theme.Colors.DisabledColors,
-      }}
-      containerStyle={
-        props.isVcThere ? containerStyle : Theme.HalfButtonStyles.gradient
-      }
-      type={props.type}
-      raised={props.raised}
-      title={
-        <Text
-          style={Theme.TextStyles.bold}
-          color={
-            type === 'solid' || type === 'gradient' || type === 'radius'
-              ? Theme.Colors.whiteText
-              : Theme.Colors.DownloadIdBtnTxt
-          }>
-          {props.title}
-        </Text>
-      }
-      buttonStyle={!props.isVcThere ? { height: 45 } : { height: 42 }}
-      icon={props.icon}
-      onPress={handleOnPress}
-      loading={props.loading}
-    />
-  );
-};

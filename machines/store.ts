@@ -363,7 +363,6 @@ export const storeMachine =
       guards: {},
     }
   );
-type State = StateFrom<typeof storeMachine>;
 
 export async function setItem(
   key: string,

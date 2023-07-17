@@ -1,10 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
 import { Dimensions, View } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import { Column, Row, Text } from './ui';
-import { HalfButton } from './ui/Button';
+import { Button } from './ui/Button';
 import { Theme } from './ui/styleUtils';
 
 /**
@@ -28,7 +27,7 @@ export const DualMessageOverlay: React.FC<DualMessageOverlayProps> = (
         style={
           !props.progress
             ? Theme.MessageOverlayStyles.popupOverLay
-            : { height: 100 }
+            : { height: 230 }
         }>
         <Column padding="21" crossAlign="center">
           {props.title && (
@@ -45,7 +44,7 @@ export const DualMessageOverlay: React.FC<DualMessageOverlayProps> = (
               align="center"
               weight="semibold"
               size="small"
-              margin="10 0 12 0"
+              margin="10 0 0 0"
               color={Theme.Colors.Details}>
               {props.message}
             </Text>
@@ -60,28 +59,24 @@ export const DualMessageOverlay: React.FC<DualMessageOverlayProps> = (
           )}
           {props.children}
         </Column>
-
-        <Row style={{ marginTop: -14 }}>
-          <View>
-            {!props.children && props.onTryAgain ? (
-              <HalfButton
-                title={t('tryAgain')}
-                type="gradient"
-                onPress={props.onTryAgain}
-                styles={Theme.MessageOverlayStyles.button}
-              />
-            ) : null}
-          </View>
-          <View>
-            {!props.children && props.onIgnore ? (
-              <HalfButton
-                type="gradient"
-                title={t('ignore')}
-                onPress={props.onIgnore}
-                styles={Theme.MessageOverlayStyles.button}
-              />
-            ) : null}
-          </View>
+        <Row>
+          {!props.children && props.onTryAgain ? (
+            <Button
+              title={t('tryAgain')}
+              type="solid"
+              onPress={props.onTryAgain}
+              styles={{ ...Theme.MessageOverlayStyles.halfButton }}
+            />
+          ) : null}
+          <View style={{ margin: '1.4%' }} />
+          {!props.children && props.onIgnore ? (
+            <Button
+              type="solid"
+              title={t('ignore')}
+              onPress={props.onIgnore}
+              styles={{ ...Theme.MessageOverlayStyles.halfButton }}
+            />
+          ) : null}
         </Row>
       </Column>
     </Overlay>
