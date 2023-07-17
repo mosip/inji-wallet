@@ -168,7 +168,7 @@ export const storeMachine =
               actions: ['setIsTamperedVc'],
             },
             RESET_IS_TAMPERED: {
-              actions: ['setIsTamperedVc'],
+              actions: ['resetIsTamperedVc'],
             },
           },
         },
@@ -177,7 +177,11 @@ export const storeMachine =
     {
       actions: {
         setIsTamperedVc: model.assign({
-          isTampered: (context, event) => !context.isTampered,
+          isTampered: (_, event) => true,
+        }),
+
+        resetIsTamperedVc: model.assign({
+          isTampered: (_, event) => false,
         }),
 
         notifyParent: sendParent(model.events.READY()),
