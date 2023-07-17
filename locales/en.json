@@ -250,7 +250,7 @@
       },
       "vcIsTampered":{
         "title": "VC data is tampered",
-        "message": "Affected VCs are removed from the app"
+        "message": "Affected VCs are removed from the app."
       }
     }
   },
@@ -364,9 +364,9 @@
         "message": "Nearby Devices permission is required to be able to request Card",
         "button": "Allow Permission"
       },
-      "maximumStorageLimitReached": {
+      "storageLimitReached": {
         "title": "Insufficient Appdata",
-        "message": "You cannot add or receive cards since the Appdata is full"
+        "message": "You cannot add or receive cards since the Appdata is full. Clear Appdata to proceed."
       }
     },
     "status": {
@@ -425,6 +425,10 @@
       "nearbyDevicesPermissionDenied": {
         "message": "Nearby Devices permission is required to be able to share card",
         "button": "Allow Permission"
+      },
+      "storageLimitReached": {
+        "title": "Insufficient Appdata",
+        "message": "You cannot share cards since the Appdata is full. Clear Appdata to proceed."
       }
     },
     "status": {
@@ -440,7 +444,7 @@
       "sentHint": "Waiting for receiver to save or discard your Card",
       "sharing": {
         "title": "Sharing...",
-        "hint": "Please wait for the receiving device to accept or reject the share.",
+        "hint": "Please wait while we share the chosen card.",
         "timeoutHint": "It's taking longer than expected to share. There could be a problem with the connection."
       },
       "accepted": {

@@ -54,3 +54,7 @@ export function selectIsSavingFailedInIdle(state: State) {
 export function selectIsSavingFailedInViewingVc(state: State) {
   return state.matches('reviewing.savingFailed.viewingVc');
 }
+
+export function selectIsDone(state: State) {
+  return state.matches('reviewing.navigatingToHistory');
+}

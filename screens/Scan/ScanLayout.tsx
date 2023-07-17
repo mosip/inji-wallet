@@ -39,7 +39,7 @@ export const ScanLayout: React.FC = () => {
       <ProgressingModal
         isVisible={controller.statusOverlay != null}
         title={controller.statusOverlay?.title}
-        timeoutHint={controller.statusOverlay?.hint}
+        hint={controller.statusOverlay?.hint}
         label={controller.statusOverlay?.message}
         onCancel={controller.statusOverlay?.onCancel}
         progress={controller.statusOverlay?.progress}

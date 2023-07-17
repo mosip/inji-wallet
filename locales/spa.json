@@ -183,7 +183,7 @@
 			},
 			"vcIsTampered":{
 				"title": "Los datos de VC están manipulados",
-				"message": "Los VC afectados se eliminan de la aplicación"
+				"message": "Los VC afectados se eliminan de la aplicación."
 			},
 			"storageLimitReached":{
 				"title":"Datos de aplicación insuficientes",
@@ -305,6 +305,10 @@
 			"nearbyDevicesPermissionDenied": {
 				"message": "Se requiere el permiso de Dispositivos cercanos para poder solicitar la tarjeta",
 				"button": "Permitir permiso"
+			},
+			"storageLimitReached":{
+				"title":"Datos de aplicación insuficientes",
+				"message":"No puede agregar ni recibir tarjetas porque los datos de la aplicación están llenos. Borre Appdata para continuar."
 			}
 		},
 		"status": {
@@ -362,6 +366,10 @@
 			"nearbyDevicesPermissionDenied": {
 				"message": "Se requiere el permiso de Dispositivos cercanos para poder compartir la tarjeta",
 				"button": "Permitir permiso"
+			},
+			"storageLimitReached":{
+				"title":"Datos de aplicación insuficientes",
+				"message":"No puede compartir tarjetas porque los datos de la aplicación están llenos. Borre Appdata para continuar."
 			}
 		},
 		"status": {
@@ -375,7 +383,7 @@
 			"sentHint": "Esperando a que el receptor guarde o descarte tu tarjeta",
 			"sharing": {
 				"title": "Compartiendo...",
-				"hint": "Por favor, espera a que el dispositivo receptor acepte o rechace el intercambio.",
+				"hint": "Espere mientras compartimos la tarjeta elegida.",
 				"timeoutHint": "Está tomando más tiempo del esperado para compartir. Puede haber un problema con la conexión."
 			},
 			"accepted": {

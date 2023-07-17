@@ -58,7 +58,6 @@ const model = createModel(
     walletBindingError: '',
     publicKey: '',
     privateKey: '',
-    storeError: null as Error,
   },
   {
     events: {
@@ -210,7 +209,7 @@ export const vcItemMachine =
               },
             },
             savingFailed: {
-              entry: ['setStoreError', 'removeVcMetaDataFromStorage'],
+              entry: ['removeVcMetaDataFromStorage'],
               initial: 'idle',
               states: {
                 idle: {},
@@ -717,10 +716,6 @@ export const vcItemMachine =
             },
             verifiableCredential: null,
           };
-        }),
-
-        setStoreError: assign({
-          storeError: (_context, event) => event.error,
         }),
 
         removeVcMetaDataFromStorage: send(
@@ -1409,10 +1404,6 @@ export function selectRemoveWalletWarning(state: State) {
 
 export function selectShowActivities(state: State) {
   return state.matches('kebabPopUp.showActivities');
-}
-
-export function selectStoreError(state: State) {
-  return state.context.storeError;
 }
 
 export function selectIsSavingFailedInIdle(state: State) {

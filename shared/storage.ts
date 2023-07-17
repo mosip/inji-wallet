@@ -9,6 +9,12 @@ import {
   writeFile,
   exists,
 } from 'react-native-fs';
+import getAllConfigurations from './commonprops/commonProps';
+import { Platform } from 'react-native';
+import {
+  getFreeDiskStorageOldSync,
+  getFreeDiskStorageSync,
+} from 'react-native-device-info';
 
 const MMKV = new MMKVLoader().initialize();
 const vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
@@ -78,6 +84,23 @@ class Storage {
     } catch (e) {
       console.log('Error Occurred while Clearing Storage.', e);
     }
+  };
+
+  static isMinimumLimitReached = async (limitInMB: string) => {
+    const configurations = await getAllConfigurations();
+    if (!configurations[limitInMB]) return false;
+
+    const minimumStorageLimitInBytes = configurations[limitInMB] * 1000 * 1000;
+
+    const freeDiskStorageInBytes =
+      Platform.OS === 'android' && Platform.Version < 29
+        ? getFreeDiskStorageOldSync()
+        : getFreeDiskStorageSync();
+
+    console.log('minimumStorageLimitInBytes ', minimumStorageLimitInBytes);
+    console.log('freeDiskStorageInBytes ', freeDiskStorageInBytes);
+
+    return freeDiskStorageInBytes <= minimumStorageLimitInBytes;
   };
 }
 /**
