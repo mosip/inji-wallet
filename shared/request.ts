@@ -25,12 +25,14 @@ export async function request(
   path: `/${string}`,
   body?: Record<string, unknown>
 ) {
+  const headers = {
+    'Content-Type': 'application/json',
+  };
+  if (path.includes('residentmobileapp')) headers['X-AppId'] = AppId.getValue();
+
   const response = await fetch(HOST + path, {
     method,
-    headers: {
-      'Content-Type': 'application/json',
-      'X-AppId': AppId.getValue(),
-    },
+    headers,
     body: JSON.stringify(body),
   });
 
