@@ -179,11 +179,12 @@
         "expiredOtp": "انتهت صلاحية كلمة المرور لمرة واحدة",
         "invalidUin": "UIN غير صالح",
         "invalidVid": "VID غير صالح",
-        "missingUin": "UIN غير متوفر في قاعدة البيانات",
+        "missingUin": "تم إلغاء تنشيط / حظر UIN الذي تم إدخاله. الرجاء إدخال UIN صالح للمتابعة",
         "missingVid": "VID غير متوفر في قاعدة البيانات",
         "noMessageAvailable": "حاول بعد فترةe",
         "whileGeneratingOtpErrorIsOccured": "أثناء إنشاء خطأ OTP",
-        "networkRequestFailed": "فشل طلب الشبكة"
+        "networkRequestFailed": "فشل طلب الشبكة",
+        "deactivatedVid": "تم إلغاء تنشيط / انتهاء صلاحية VID المُدخل. الرجاء إدخال VID صالح للمتابعة"
       }
     }
   },

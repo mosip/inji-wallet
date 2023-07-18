@@ -175,11 +175,12 @@
         "expiredOtp": "OTP காலாவதியானது",
         "invalidUin": "UIN தவறானது",
         "invalidVid": "VID தவறானது",
-        "missingUin": "UIN தரவுத்தளத்தில் இல்லை",
+        "missingUin": "உள்ளிட்ட UIN செயலிழக்கப்பட்டது/தடுக்கப்பட்டது. தொடர சரியான UIN ஐ உள்ளிடவும்",
         "missingVid": "VID தரவுத்தளத்தில் இல்லை",
         "noMessageAvailable": "சிறிது நேரம் கழித்து முயற்சிக்கவும்",
         "whileGeneratingOtpErrorIsOccured": "OTP உருவாக்கும் போது பிழை ஏற்பட்டது",
-        "networkRequestFailed": "நெட்வொர்க் கோரிக்கை தோல்வியடைந்தது"
+        "networkRequestFailed": "நெட்வொர்க் கோரிக்கை தோல்வியடைந்தது",
+        "deactivatedVid": "உள்ளிட்ட VID செயலிழக்கப்பட்டது/காலாவதியானது. தொடர சரியான VID ஐ உள்ளிடவும்"
       }
     }
   },

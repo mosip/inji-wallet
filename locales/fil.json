@@ -179,11 +179,12 @@
         "expiredOtp": "Nag-expire na ang OTP",
         "invalidUin": "Di-wastong UIN",
         "invalidVid": "Di-wastong VID",
-        "missingUin": "Hindi mahanap ang iyong UIN",
+        "missingUin": "Ang ipinasok na UIN ay na-deactivate/na-block. Mangyaring magpasok ng wastong UIN upang magpatuloy",
         "missingVid": "Hindi mahanap ang iyong VID",
         "noMessageAvailable": "Subukan pagkatapos ng ilang oras",
         "whileGeneratingOtpErrorIsOccured": "habang ang pagbuo ng OTP error ay naganap",
-        "networkRequestFailed": "Nabigo ang kahilingan sa network"
+        "networkRequestFailed": "Nabigo ang kahilingan sa network",
+        "deactivatedVid": "Ang ipinasok na VID ay na-deactivate/nag-expire. Mangyaring magpasok ng wastong VID upang magpatuloy"
       }
     }
   },

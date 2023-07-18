@@ -175,11 +175,12 @@
         "expiredOtp": "OTP ಅವಧಿ ಮುಗಿದಿದೆ",
         "invalidUin": "UIN ಅಮಾನ್ಯವಾಗಿದೆ",
         "invalidVid": "VID ಅಮಾನ್ಯವಾಗಿದೆ",
-        "missingUin": "UIN ಡೇಟಾಬೇಸ್‌ನಲ್ಲಿ ಲಭ್ಯವಿಲ್ಲ",
+        "missingUin": "ನಮೂದಿಸಿದ UIN ಅನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ/ನಿರ್ಬಂಧಿಸಲಾಗಿದೆ. ಮುಂದುವರಿಯಲು ದಯವಿಟ್ಟು ಮಾನ್ಯವಾದ UIN ಅನ್ನು ನಮೂದಿಸಿ",
         "missingVid": "VID ಡೇಟಾಬೇಸ್‌ನಲ್ಲಿ ಲಭ್ಯವಿಲ್ಲ",
         "noMessageAvailable": "ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಪ್ರಯತ್ನಿಸಿ",
         "whileGeneratingOtpErrorIsOccured": "OTP ರಚಿಸುವಾಗ ದೋಷ ಸಂಭವಿಸಿದೆ",
-        "networkRequestFailed": "ನೆಟ್‌ವರ್ಕ್ ವಿನಂತಿ ವಿಫಲವಾಗಿದೆ"
+        "networkRequestFailed": "ನೆಟ್‌ವರ್ಕ್ ವಿನಂತಿ ವಿಫಲವಾಗಿದೆ",
+        "deactivatedVid": "ನಮೂದಿಸಿದ VID ನಿಷ್ಕ್ರಿಯಗೊಂಡಿದೆ/ಅವಧಿ ಮೀರಿದೆ. ಮುಂದುವರೆಯಲು ದಯವಿಟ್ಟು ಮಾನ್ಯವಾದ VID ಅನ್ನು ನಮೂದಿಸಿ"
       }
     }
   },
