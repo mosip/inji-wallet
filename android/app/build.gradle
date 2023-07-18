@@ -132,7 +132,8 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 def enableHermes = project.ext.react.get("enableHermes", false);
 
 androidGitVersion {
-    baseCode 1
+    baseCode 0
+    codeFormat 'MXXNXXPXX'
     format '% tag %%commit_%%branch%'
 }
 
@@ -143,7 +144,7 @@ android {
         APP_NAME_RELEASE = "@string/app_name"
         APP_NAME_PH = "@string/app_name_ph"
         APP_NAME_MOSIP = "@string/app_name_mosip"
-        APP_NAME_NEWLOGIC = "@string/app_name_newlogic"
+        APP_NAME_BETA = "@string/app_name_beta"
     }
 
     compileOptions {
@@ -156,7 +157,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionName androidGitVersion.name()
-        versionCode 1
+        versionCode androidGitVersion.code()
 
         Properties properties = new Properties()
         properties.load(project.rootProject.file('local.properties').newDataInputStream())
@@ -219,16 +220,16 @@ android {
 
     productFlavors {
         mosip {
-            versionName defaultConfig.versionName + "-mosip"
+            versionName defaultConfig.versionName
             manifestPlaceholders = [
                     APP_NAME: APP_NAME_MOSIP
             ]
             dimension "inji"
         }
-        newlogic {
-            versionName defaultConfig.versionName + "-newlogic"
+        beta {
+            versionName defaultConfig.versionName
             manifestPlaceholders = [
-                    APP_NAME: APP_NAME_NEWLOGIC
+                    APP_NAME: APP_NAME_BETA
             ]
             dimension "inji"
         }
