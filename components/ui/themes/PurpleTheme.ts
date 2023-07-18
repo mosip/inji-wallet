@@ -372,6 +372,16 @@ export const PurpleTheme = {
       margin: 4,
       borderRadius: 14,
     },
+    primaryRow: {
+      backgroundColor: Colors.LightPurple,
+      paddingHorizontal: 18,
+      paddingVertical: 9,
+      justifyContent: 'space-between',
+    },
+    iconContainer: {
+      flexDirection: 'row',
+      alignItems: 'flex-end',
+    },
     scannerContainer: {
       borderRadius: 32,
       alignSelf: 'center',

@@ -102,7 +102,7 @@ export const SettingScreen: React.FC<SettingProps & RootRouteProps> = (
               />
             </ListItem>
 
-            <AboutInji />
+            <AboutInji appId={controller.appId} />
 
             {CREDENTIAL_REGISTRY_EDIT === 'true' && (
               <EditableListItem

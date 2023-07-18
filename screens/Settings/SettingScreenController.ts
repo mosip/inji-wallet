@@ -14,6 +14,7 @@ import {
   selectVcLabel,
   selectCredentialRegistry,
   SettingsEvents,
+  selectAppId,
   selectIsResetInjiProps,
 } from '../../machines/settings';
 
@@ -99,6 +100,7 @@ export function useSettingsScreen(props: RootRouteProps) {
     isVisible,
     alertMsg,
     hideAlert,
+    appId: useSelector(settingsService, selectAppId),
     backendInfo: useSelector(appService, selectBackendInfo),
     name: useSelector(settingsService, selectName),
     vcLabel: useSelector(settingsService, selectVcLabel),
