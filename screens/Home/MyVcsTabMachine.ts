@@ -37,6 +37,7 @@ const model = createModel(
       STORAGE_AVAILABLE: () => ({}),
       STORAGE_UNAVAILABLE: () => ({}),
       ONBOARDING_DONE: () => ({}),
+      IS_TAMPERED: () => ({}),
     },
   }
 );
@@ -111,6 +112,10 @@ export const MyVcsTabMachine = model.createMachine(
           ADD_VC: 'addVc',
           VIEW_VC: 'viewingVc',
           GET_VC: 'gettingVc',
+          IS_TAMPERED: {
+            target: 'idle',
+            actions: ['resetIsTampered', 'refreshMyVc'],
+          },
         },
       },
       viewingVc: {
@@ -185,6 +190,14 @@ export const MyVcsTabMachine = model.createMachine(
     },
 
     actions: {
+      refreshMyVc: send((_context, event) => VcEvents.REFRESH_MY_VCS(), {
+        to: (context) => context.serviceRefs.vc,
+      }),
+
+      resetIsTampered: send(() => StoreEvents.RESET_IS_TAMPERED(), {
+        to: (context) => context.serviceRefs.store,
+      }),
+
       viewVcFromParent: sendParent((_context, event: ViewVcEvent) =>
         model.events.VIEW_VC(event.vcItemActor)
       ),

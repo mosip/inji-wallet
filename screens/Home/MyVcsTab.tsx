@@ -158,6 +158,12 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
         error={'errors.storageLimitReached'}
         onDismiss={controller.DISMISS}
       />
+      <ErrorMessageOverlay
+        translationPath={'MyVcsTab'}
+        isVisible={controller.isTampered}
+        error={'errors.vcIsTampered'}
+        onDismiss={controller.IS_TAMPERED}
+      />
     </React.Fragment>
   );
 };

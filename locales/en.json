@@ -249,6 +249,10 @@
       "storageLimitReached": {
         "title": "Insufficient Appdata",
         "message": "You cannot add or receive cards since the Appdata is full. Clear Appdata to proceed."
+      },
+      "vcIsTampered":{
+        "title": "VC data is tampered",
+        "message": "Affected VCs are removed from the app."
       }
     }
   },
