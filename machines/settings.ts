@@ -135,7 +135,7 @@ export const settingsMachine = model.createMachine(
       }),
 
       updateDefaults: model.assign({
-        appId: (_context, _event) => {
+        appId: () => {
           const appId = generateAppId();
           AppId.setValue(appId);
           return appId;
