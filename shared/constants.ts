@@ -40,6 +40,7 @@ export const GNM_MESSAGE_LIMIT = 102400 - 6400; // allowance for metadata
 
 export const APP_ID_LENGTH = 12;
 
+// Numbers and Upper case Alphabets without confusing characters like 0, 1, 2, I, O, Z
 export const APP_ID_DICTIONARY = [
   '3',
   '4',
