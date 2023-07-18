@@ -177,11 +177,11 @@ export const storeMachine =
     {
       actions: {
         setIsTamperedVc: model.assign({
-          isTampered: (_, event) => true,
+          isTampered: (_) => true,
         }),
 
         resetIsTamperedVc: model.assign({
-          isTampered: (_, event) => false,
+          isTampered: (_) => false,
         }),
 
         notifyParent: sendParent(model.events.READY()),

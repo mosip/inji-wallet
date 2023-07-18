@@ -34,11 +34,7 @@ class Storage {
         ).toString(CryptoJS.enc.Utf8);
 
         const HMACofVC = CryptoJS.HmacSHA256(encryptionKey, data).toString();
-        if (HMACofVC === HMACofCurrentVC) {
-          return data;
-        } else {
-          return null;
-        }
+        return HMACofVC === HMACofCurrentVC ? data : null;
       }
       return await MMKV.getItem(key);
     } catch (error) {
