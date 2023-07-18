@@ -42,7 +42,7 @@ const model = createModel(
         requester,
       }),
       STORE_ERROR: (error: Error, requester?: string) => ({ error, requester }),
-      TAMPERED_VC: (error: Error, requester?: string) => ({ error, requester }),
+      TAMPERED_VC: () => ({}),
       RESET_IS_TAMPERED: () => ({}),
     },
   }
@@ -286,7 +286,7 @@ export const storeMachine =
               callback(model.events.STORE_RESPONSE(response, event.requester));
             } catch (e) {
               if (e.message === 'Data is tampered') {
-                callback(model.events.TAMPERED_VC(e, event.requester));
+                callback(model.events.TAMPERED_VC());
               } else {
                 console.error(e);
                 callback(model.events.STORE_ERROR(e, event.requester));
@@ -491,7 +491,6 @@ export async function removeItems(
       return !values.find(function (vcKey: string) {
         const vcKeyArray = vcKey.split(':');
         const finalVcKeyArray = vcKeyArray.pop();
-        //console.log('finalVcKeyArray', finalVcKeyArray);
         const finalVcKey = vcKeyArray.join(':');
         return vc.includes(finalVcKey);
       });
