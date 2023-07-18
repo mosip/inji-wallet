@@ -9,10 +9,8 @@ import { useAppLayout } from './AppLayoutController';
 import { StatusBar } from 'react-native';
 
 const { Navigator, Screen } = createNativeStackNavigator();
-
 export const AppLayout: React.FC = () => {
   const controller = useAppLayout();
-
   const options: NativeStackNavigationOptions = {
     title: '',
     headerTitleAlign: 'center',

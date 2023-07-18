@@ -8,6 +8,7 @@ import {
   unlink,
   writeFile,
   exists,
+  stat,
 } from 'react-native-fs';
 import getAllConfigurations from './commonprops/commonProps';
 import { Platform } from 'react-native';
@@ -21,6 +22,15 @@ const vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
 const vcDirectoryPath = `${DocumentDirectoryPath}/inji/VC`;
 
 class Storage {
+  static isVCStorageInitialised = async (): Promise<boolean> => {
+    try {
+      const res = await stat(vcDirectoryPath);
+      return res.isDirectory();
+    } catch (_) {
+      return false;
+    }
+  };
+
   static getItem = async (key: string, encryptionKey: string) => {
     try {
       if (vcKeyRegExp.exec(key)) {
