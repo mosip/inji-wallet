@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MessageOverlay } from '../../components/MessageOverlay';
+import {
+  ErrorMessageOverlay,
+  MessageOverlay,
+} from '../../components/MessageOverlay';
 import { QrScanner } from '../../components/QrScanner';
 import { Button, Centered, Column, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
@@ -8,10 +11,12 @@ import { QrLogin } from '../QrLogin/QrLogin';
 import { useScanScreen } from './ScanScreenController';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import { Linking, Platform } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 export const ScanScreen: React.FC = () => {
   const { t } = useTranslation('ScanScreen');
   const controller = useScanScreen();
+  const navigation = useNavigation();
   const [isBluetoothOn, setIsBluetoothOn] = useState(false);
 
   useEffect(() => {
@@ -106,7 +111,7 @@ export const ScanScreen: React.FC = () => {
   function qrScannerComponent() {
     return (
       <Column crossAlign="center" margin="0 0 0 -6">
-        <QrScanner onQrFound={controller.SCAN} />
+        <QrScanner onQrFound={controller.SCAN} title={t('scanningGuide')} />
       </Column>
     );
   }
@@ -136,16 +141,30 @@ export const ScanScreen: React.FC = () => {
     }
   }
 
+  function displayStorageLimitReachedError(): React.ReactNode {
+    return (
+      !controller.isEmpty && (
+        <ErrorMessageOverlay
+          isVisible={
+            controller.isMinimumStorageRequiredForAuditEntryLimitReached
+          }
+          translationPath={'ScanScreen'}
+          error="errors.storageLimitReached"
+          onDismiss={() => navigation.navigate('Home')}
+        />
+      )
+    );
+  }
+
   return (
     <Column
       fill
       padding="24 0"
-      backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
+      backgroundColor={Theme.Colors.whiteBackgroundColor}>
       <Centered
         fill
         align="space-evenly"
-        backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
-        <Text align="center">{t('header')}</Text>
+        backgroundColor={Theme.Colors.whiteBackgroundColor}>
         {loadQRScanner()}
         {controller.isQrLogin && (
           <QrLogin
@@ -159,6 +178,7 @@ export const ScanScreen: React.FC = () => {
           progress
         />
       </Centered>
+      {displayStorageLimitReachedError()}
     </Column>
   );
 };

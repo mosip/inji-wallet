@@ -8,6 +8,7 @@ import {
   EventFrom,
   send,
   spawn,
+  StateFrom,
 } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { EmitterSubscription, Linking, Platform } from 'react-native';
@@ -36,6 +37,7 @@ import { createQrLoginMachine, qrLoginMachine } from '../../QrLoginMachine';
 import { StoreEvents } from '../../store';
 import { WalletDataEvent } from 'react-native-tuvali/lib/typescript/types/events';
 import { BLEError } from '../types';
+import Storage from '../../../shared/storage';
 
 const { wallet, EventTypes, VerificationStatus } = tuvali;
 
@@ -126,7 +128,7 @@ export const scanMachine =
           target: '.inactive',
         },
         SCREEN_FOCUS: {
-          target: '.startPermissionCheck',
+          target: '.checkStorage',
         },
         BLE_ERROR: {
           target: '.handlingBleError',
@@ -137,6 +139,21 @@ export const scanMachine =
         inactive: {
           entry: 'removeLoggers',
         },
+        checkStorage: {
+          invoke: {
+            src: 'checkStorageAvailability',
+            onDone: [
+              {
+                cond: 'isMinimumStorageRequiredForAuditEntryReached',
+                target: 'restrictSharingVc',
+              },
+              {
+                target: 'startPermissionCheck',
+              },
+            ],
+          },
+        },
+        restrictSharingVc: {},
         startPermissionCheck: {
           on: {
             START_PERMISSION_CHECK: [
@@ -380,12 +397,12 @@ export const scanMachine =
               entry: ['storeLoginItem'],
               on: {
                 STORE_RESPONSE: {
-                  target: 'navigatingToHome',
+                  target: 'navigatingToHistory',
                   actions: ['storingActivityLog'],
                 },
               },
             },
-            navigatingToHome: {},
+            navigatingToHistory: {},
           },
           entry: 'sendScanData',
         },
@@ -480,6 +497,11 @@ export const scanMachine =
                 sent: {
                   description:
                     'VC data has been shared and the receiver should now be viewing it',
+                  on: {
+                    CANCEL: {
+                      target: '#scan.reviewing.cancelling',
+                    },
+                  },
                 },
               },
               on: {
@@ -494,6 +516,9 @@ export const scanMachine =
                 },
                 VC_REJECTED: {
                   target: '#scan.reviewing.rejected',
+                },
+                CANCEL: {
+                  target: '#scan.reviewing.cancelling',
                 },
               },
             },
@@ -699,13 +724,8 @@ export const scanMachine =
 
         setSelectedVc: assign({
           selectedVc: (context, event) => {
-            const reason = [];
-            if (context.reason.trim() !== '') {
-              reason.push({ message: context.reason, timestamp: Date.now() });
-            }
             return {
               ...event.vc,
-              reason,
               shouldVerifyPresence: context.selectedVc.shouldVerifyPresence,
             };
           },
@@ -974,6 +994,11 @@ export const scanMachine =
             tag: '',
           };
 
+          const reason = [];
+          if (context.reason.trim() !== '') {
+            reason.push({ message: context.reason, timestamp: Date.now() });
+          }
+
           const statusCallback = (event: WalletDataEvent) => {
             if (event.type === EventTypes.onDataSent) {
               callback({ type: 'VC_SENT' });
@@ -986,7 +1011,12 @@ export const scanMachine =
               });
             }
           };
-          wallet.sendData(JSON.stringify(vc));
+          wallet.sendData(
+            JSON.stringify({
+              ...vc,
+              reason,
+            })
+          );
           const subscription = subscribe(statusCallback);
           return () => subscription?.remove();
         },
@@ -1017,6 +1047,12 @@ export const scanMachine =
 
           return Promise.resolve(vc);
         },
+
+        checkStorageAvailability: () => async () => {
+          return Promise.resolve(
+            Storage.isMinimumLimitReached('minStorageRequiredForAuditEntry')
+          );
+        },
       },
 
       guards: {
@@ -1038,6 +1074,9 @@ export const scanMachine =
         uptoAndroid11: () => Platform.OS === 'android' && Platform.Version < 31,
 
         isIOS: () => Platform.OS === 'ios',
+
+        isMinimumStorageRequiredForAuditEntryReached: (_context, event) =>
+          Boolean(event.data),
       },
 
       delays: {
@@ -1048,9 +1087,17 @@ export const scanMachine =
     }
   );
 
+type State = StateFrom<typeof scanMachine>;
+
 export function createScanMachine(serviceRefs: AppServices) {
   return scanMachine.withContext({
     ...scanMachine.context,
     serviceRefs,
   });
+}
+
+export function selectIsMinimumStorageRequiredForAuditEntryLimitReached(
+  state: State
+) {
+  return state.matches('restrictSharingVc');
 }

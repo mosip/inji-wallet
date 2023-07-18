@@ -8,6 +8,12 @@ import {
   writeFile,
   exists,
 } from 'react-native-fs';
+import getAllConfigurations from './commonprops/commonProps';
+import { Platform } from 'react-native';
+import {
+  getFreeDiskStorageOldSync,
+  getFreeDiskStorageSync,
+} from 'react-native-device-info';
 
 const MMKV = new MMKVLoader().initialize();
 const vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
@@ -53,13 +59,31 @@ class Storage {
       console.log('Error Occurred while Clearing Storage.', e);
     }
   };
+
+  static isMinimumLimitReached = async (limitInMB: string) => {
+    const configurations = await getAllConfigurations();
+    if (!configurations[limitInMB]) return false;
+
+    const minimumStorageLimitInBytes = configurations[limitInMB] * 1000 * 1000;
+
+    const freeDiskStorageInBytes =
+      Platform.OS === 'android' && Platform.Version < 29
+        ? getFreeDiskStorageOldSync()
+        : getFreeDiskStorageSync();
+
+    console.log('minimumStorageLimitInBytes ', minimumStorageLimitInBytes);
+    console.log('freeDiskStorageInBytes ', freeDiskStorageInBytes);
+
+    return freeDiskStorageInBytes <= minimumStorageLimitInBytes;
+  };
 }
 /**
+ * The VC file name will not have the pinned / unpinned state, we will splice the state as this will change.
  * replace ':' with '_' in the key to get the file name as ':' are not allowed in filenames
  * eg: "vc:UIN:6732935275:e7426576-112f-466a-961a-1ed9635db628" is changed to "vc_UIN_6732935275_e7426576-112f-466a-961a-1ed9635db628"
  */
 const getFileName = (key: string) => {
-  return key.split(':').join('_');
+  return key.split(':').splice(0, 4).join('_');
 };
 
 /**

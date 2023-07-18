@@ -1,15 +1,15 @@
 import {
-  Poppins_400Regular,
-  Poppins_600SemiBold,
-  Poppins_700Bold,
+  Inter_400Regular,
+  Inter_600SemiBold,
+  Inter_700Bold,
   useFonts,
-} from '@expo-google-fonts/poppins';
+} from '@expo-google-fonts/inter';
 
 export function useFont() {
   const [hasFontsLoaded] = useFonts({
-    Poppins_400Regular,
-    Poppins_600SemiBold,
-    Poppins_700Bold,
+    Inter_400Regular,
+    Inter_600SemiBold,
+    Inter_700Bold,
   });
 
   return hasFontsLoaded;

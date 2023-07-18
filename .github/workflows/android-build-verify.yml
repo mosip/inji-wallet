@@ -1,4 +1,4 @@
-name: PR - android build verification
+name: PR - Android build verification
 
 env:
   backendServiceDefaultUrl: https://api.sandbox.mosip.net
@@ -108,7 +108,7 @@ jobs:
       - name: Run Build using Fastlane
         run: | 
           cd android/scripts
-          ./run-fastlane.sh 
+          ./verify-build.sh
         env: 
           DEBUG_KEYSTORE_ALIAS: androiddebugkey
           DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'

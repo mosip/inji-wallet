@@ -20,6 +20,8 @@ export function useAddVcModal({ service }: AddVcModalProps) {
 
     INPUT_OTP: (otp: string) => service.send(AddVcModalEvents.INPUT_OTP(otp)),
 
+    RESEND_OTP: () => service.send(AddVcModalEvents.RESEND_OTP()),
+
     DISMISS: () => service.send(AddVcModalEvents.DISMISS()),
   };
 }

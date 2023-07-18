@@ -17,7 +17,7 @@ import {
 } from '../../shared/constants';
 import { AddVcModalMachine } from './MyVcs/AddVcModalMachine';
 import { GetVcModalMachine } from './MyVcs/GetVcModalMachine';
-import isMaximumStorageLimitReached from '../../utils/isMaximumStorageLimitReached';
+import Storage from '../../shared/storage';
 
 const model = createModel(
   {
@@ -86,10 +86,10 @@ export const MyVcsTabMachine = model.createMachine(
         states: {
           checkStorage: {
             invoke: {
-              src: () => Promise.resolve(isMaximumStorageLimitReached()),
+              src: 'checkStorageAvailability',
               onDone: [
                 {
-                  cond: (_context, event) => event.data === true,
+                  cond: 'isMinimumStorageLimitReached',
                   target: 'storageLimitReached',
                 },
                 {
@@ -176,6 +176,14 @@ export const MyVcsTabMachine = model.createMachine(
     },
   },
   {
+    services: {
+      checkStorageAvailability: () => async () => {
+        return Promise.resolve(
+          Storage.isMinimumLimitReached('minStorageRequired')
+        );
+      },
+    },
+
     actions: {
       viewVcFromParent: sendParent((_context, event: ViewVcEvent) =>
         model.events.VIEW_VC(event.vcItemActor)
@@ -213,6 +221,8 @@ export const MyVcsTabMachine = model.createMachine(
       isOnboardingDone: (_context, event: StoreResponseEvent) => {
         return event.response === true;
       },
+
+      isMinimumStorageLimitReached: (_context, event) => Boolean(event.data),
     },
   }
 );
@@ -246,6 +256,6 @@ export function selectIsSavingFailedInIdle(state: State) {
   return state.matches('addingVc.savingFailed.idle');
 }
 
-export function selectIsMaximumStorageLimitReached(state: State) {
+export function selectIsMinimumStorageLimitReached(state: State) {
   return state.matches('addVc.storageLimitReached');
 }

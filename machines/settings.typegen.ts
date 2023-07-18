@@ -25,7 +25,7 @@ export interface Typegen0 {
   };
   'eventsCausingActions': {
     requestStoredContext: 'xstate.init';
-    resetCredentialRegistry: 'UPDATE_CREDENTIAL_REGISTRY';
+    resetCredentialRegistry: 'CANCEL' | 'UPDATE_CREDENTIAL_REGISTRY';
     setContext: 'STORE_RESPONSE';
     storeContext:
       | 'STORE_RESPONSE'

@@ -17,7 +17,7 @@ import {
   selectIsRequestSuccessful,
   selectGetVcModal,
   selectIsSavingFailedInIdle,
-  selectIsMaximumStorageLimitReached,
+  selectIsMinimumStorageLimitReached,
 } from './MyVcsTabMachine';
 
 export function useMyVcsTab(props: HomeScreenTabProps) {
@@ -36,14 +36,14 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
     isRequestSuccessful: useSelector(service, selectIsRequestSuccessful),
     isOnboarding: useSelector(service, selectIsOnboarding),
     isSavingFailedInIdle: useSelector(service, selectIsSavingFailedInIdle),
-    isMaximumStorageLimitReached: useSelector(
+    isMinimumStorageLimitReached: useSelector(
       service,
-      selectIsMaximumStorageLimitReached
+      selectIsMinimumStorageLimitReached
     ),
 
     DISMISS: () => service.send(MyVcsTabEvents.DISMISS()),
 
-    ADD_VC: () => service.send(MyVcsTabEvents.ADD_VC()),
+    DOWNLOAD_ID: () => service.send(MyVcsTabEvents.ADD_VC()),
 
     GET_VC: () => service.send(MyVcsTabEvents.GET_VC()),
 

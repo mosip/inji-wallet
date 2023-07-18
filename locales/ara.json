@@ -26,7 +26,7 @@
   "FaceScanner": {},
   "OIDcAuth": {
     "title": "مصادقة OIDC",
-    "text": "ليتم استبداله بموفر OIDC UI",
+    "text": "ليتم استبداله بموفر واجهة مستخدم OIDC",
     "verify": "تحقق"
   },
   "PasscodeVerify": {
@@ -49,14 +49,15 @@
     "address": "عنوان",
     "reasonForSharing": "سبب المشاركة",
     "idType": "نوع الهوية",
-    "id": "Id",
+    "id": "بطاقة تعريف",
+    "qrCodeHeader": "رمز الاستجابة السريعة",
     "nationalCard": "البطاقة الوطنية",
     "uin": "UIN",
+    "vid": "VID",
     "enableVerification": "تفعيل",
     "profileAuthenticated": "تم تنشيطه لتسجيل الدخول عبر الإنترنت",
     "offlineAuthDisabledHeader": "التنشيط معلق لتسجيل الدخول عبر الإنترنت",
     "offlineAuthDisabledMessage": "الرجاء النقر فوق الزر أدناه لتفعيل بيانات الاعتماد هذه لاستخدامها في تسجيل الدخول عبر الإنترنت.",
-    "vid": "VID",
     "verificationEnabledSuccess": "تم تنشيطه لتسجيل الدخول عبر الإنترنت",
     "goback": "عُد",
     "BindingWarning": "إذا قمت بتمكين التحقق من بيانات الاعتماد هذه في محفظة أخرى ، فسيتم تجاوزها. هل تريد المتابعة؟",
@@ -69,11 +70,43 @@
       "savingFailed": {
         "title": "فشل حفظ بطاقة",
         "message": "حدث خطأ أثناء حفظ البطاقة في المتجر."
+      },
+      "diskFullError": {
+        "title": "فشل حفظ البطاقة",
+        "message": "لا يمكن استلام المزيد من البطاقات أو حفظها حيث أن بيانات التطبيق ممتلئة."
       }
     }
   },
+  "HomeScreenKebabPopUp": {
+    "title": "المزيد من الخيارات",
+    "unPinCard": "قم بفك البطاقة",
+    "pinCard": "البطاقة الشخصية",
+    "offlineAuthenticationDisabled!": "تم تعطيل المصادقة دون اتصال!",
+    "offlineAuthDisabledMessage": "انقر هنا لتمكين بيانات الاعتماد هذه لاستخدامها في المصادقة دون اتصال.",
+    "viewActivityLog": "عرض سجل النشاط",
+    "removeFromWallet": "إزالة من المحفظة",
+    "revokeId": "إبطال الهوية",
+    "revokeMessage": "إبطال المعرف الظاهري لملف التعريف هذا"
+  },
+  "WalletBinding": {
+    "inProgress": "في تَقَدم",
+    "profileAuthenticated": "تمت مصادقة الملف الشخصي!"
+  },
+  "BindingVcWarningOverlay": {
+    "alert": "يرجى تأكيد",
+    "BindingWarning": "إذا قمت بتمكين التحقق من بيانات الاعتماد هذه في محفظة أخرى ، فسيتم تجاوزها. هل تريد المتابعة؟",
+    "yesConfirm": "نعم ، أؤكد",
+    "no": "لا"
+  },
+  "RemoveVcWarningOverlay":{
+    "alert": "يرجى تأكيد",
+    "removeWarning": "هل تريد حقًا إزالة البطاقة",
+    "confirm": "يتأكد",
+    "no": "لا"
+  },
   "AuthScreen": {
     "header": "هل ترغب في استخدام المقاييس الحيوية لفتح التطبيق؟",
+    "Description": "هل ترغب في استخدام المقاييس الحيوية لفتح التطبيق؟",
     "useBiometrics": "استخدام القياسات الحيوية",
     "usePasscode": "मأفضل استخدام رمز مرور",
     "errors": {
@@ -86,17 +119,53 @@
   "BiometricScreen": {
     "unlock": "افتح ببصمة الإصبع"
   },
-  "HistoryTab": {
-    "noHistory": "لا يوجد سجل متاح حتى الآن",
-    "downloaded": "تم التنزيل",
-    "shared": "مشتركة",
-    "received": "مستلم",
-    "deleted": "محذوف"
+  "HistoryScreen": {
+    "noHistory": "لا يوجد سجل حتى الان",
+    "downloaded": "يملك",
+    "shared": "مشترك",
+    "received": "تلقى",
+    "deleted": "إزالة"
   },
-  "HomeScreen": {
-    "myVcsTab": "لي\nالبطاقات",
-    "receivedVcsTab": "تم استلام \n البطاقات",
-    "historyTab": "تاريخ"
+  "SettingScreen": {
+    "header": "إعدادات",
+    "injiAsVerifierApp": "  كتطبيق للتحقق إنجي",
+    "basicSettings": "الإعدادات الأساسية",
+    "bioUnlock": "افتح مع القياسات الحيوية",
+    "language": "لغة",
+    "aboutInji": "حول إنجي",
+    "credentialRegistry": "سجل الاعتماد",
+    "errorMessage": "تم إدخال عنوان URL غير صحيح. الرجاء إدخال عنوان URL صالح للمتابعة." ,
+    "injiTourGuide": "مرشد إنجي السياحي",
+    "logout": "تسجيل خروج",
+    "resetInjiProps": "إعادة تعيين دعائم إنجي ..."
+  },
+  "AboutInji": {
+    "aboutInji": "حول إنجي",
+    "header": "حول إنجي",
+    "aboutDetailes": "إنجي هو تطبيق جوال يمكن استخدامه كمحفظة رقمية لتخزين بيانات الاعتماد. كما يسمح بالتحقق من الهوية في الوضعين غير المتصلين بالإنترنت وفي أي مكان وزمان.",
+    "forMoreDetailes": "لمزيد من التفاصيل",
+    "clickHere": "انقر هنا",
+    "version": "الإصدار",
+    "tuvaliVersion": "نسخة توفالي"
+  },
+  "HelpScreen": {
+    "header": "يساعد",
+    "whatIsDigitalCredential?": "ما هو الاعتماد الرقمي؟",
+    "detail-1": "بيانات الاعتماد الرقمية هي النسخة الرقمية لبطاقة الهوية الفعلية الخاصة بك",
+    "whatCanDoWithDigitalCredential?": "ماذا يمكننا أن نفعل ببيانات الاعتماد الرقمية؟",
+    "detail-2": "يمكنك الاستفادة من مختلف الخدمات الحكومية والخاصة باستخدام بيانات الاعتماد الرقمية الخاصة بك.",
+    "howToAddCard?": "كيف تضيف بطاقة؟",
+    "detail-3": "لإضافة بطاقة ، انقر فوق الزر '+' في الصفحة الرئيسية وحدد الخيار المناسب.",
+    "howToRemoveCardFromWallet?": "كيف تشارك البطاقة؟",
+    "detail-4": "اسحب لليسار على البطاقة> انقر فوق المزيد> إزالة من المحفظة",
+    "canWeAddMultipleCards?": "هل يمكننا إضافة عدة بطاقات؟",
+    "detail-5": "نعم ، يمكنك إضافة عدة بطاقات إلى المحفظة بالنقر فوق الزر '+' في الصفحة الرئيسية.",
+    "howToShareCard?": "كيف تشارك البطاقة؟",
+    "detail-6": "انقر فوق الزر 'مشاركة' وقم بمسح رمز الاستجابة السريعة ضوئيًا من الطرف الطالب. بمجرد إنشاء الاتصال ، ستتم مشاركة البطاقة.",
+    "howToActivateCardForOnlineLogin?": "كيف يتم تفعيل البطاقة لتسجيل الدخول عبر الإنترنت؟",
+    "detail-7": "بعد إضافة بطاقة إلى المحفظة بنجاح ، انقر فوق 'تعليق التنشيط لتسجيل الدخول عبر الإنترنت' على البطاقة. عند النقر فوق 'تنشيط' ، ستكون البطاقة جاهزة للاستخدام لتسجيل الدخول عبر الإنترنت.",
+    "howToViewActivity?": "كيفية عرض سجلات النشاط؟",
+    "detail-8": "في الصفحة الرئيسية ، انقر فوق 'المحفوظات' لعرض تفاصيل نشاط المستخدم."
   },
   "AddVcModal": {
     "requestingCredential": "جارٍ طلب بيانات الاعتماد...",
@@ -119,6 +188,7 @@
     }
   },
   "GetVcModal": {
+    "retrievingId": "استرجاع الهوية",
     "errors": {
       "input": {
         "empty": "لا يمكن أن يكون الإدخال فارغًا",
@@ -136,105 +206,106 @@
     }
   },
   "DownloadingVcModal": {
-    "header": "تنزيل بطاقتك",
+    "header": "تنزيل ملفبطاقة",
     "bodyText": "قد يستغرق هذا بعض الوقت ، وسنخبرك عندما يتم تنزيل بطاقة وإتاحته",
     "backButton": "العودة إلى المنزل"
   },
   "GetIdInputModal": {
-    "header": "أدخل معرف التطبيق الخاص بك للحصول على UIN الخاص بك",
-    "getUIN": "احصل على UIN / VID",
-    "applicationId": "رقم الاستمارة",
-    "requestingOTP": "طلب OTP...",
-    "qstnMarkToolTip": "معرف التطبيق متاح في الإقرار الذي تم استلامه بعد التسجيل."
+    "header": "استرجع UIN / VID الخاص بك",
+    "applicationIdLabel": "الرجاء إدخال معرف التطبيق الخاص بك",
+    "enterApplicationId": "أدخل معرف التطبيق",
+    "requestingOTP": "جارٍ طلب OTP ...",
+    "qstnMarkToolTip": "معرف التطبيق متاح في الإقرار الذي تم استلامه بعد التسجيل.",
+    "getUIN": "احصل على UIN / VID"
   },
   "IdInputModal": {
-    "header": "أدخل UIN / VID لتنزيل بطاقتك",
-    "generateVc": "يولد لي بطاقة",
+    "header": "استرجع هويتك",
+    "guideLabel": "حدد نوع المعرف وأدخل UIN أو VID المقدم من MOSIP للمعرف الذي ترغب في استرداده",
+    "generateVc": "إنشاء بطاقة",
+    "downloadID": "معرف التنزيل",
     "enterId": "أدخل {{idType}}",
-    "noUIN/VID": "ليس لديك UIN / VID الخاص بك؟ أحضره هنا",
-    "requestingOTP": "طلب OTP..."
+    "noUIN/VID": "ليس لديك UIN / VID؟ ",
+    "getItHere": "احصل عليها الآن",
+    "requestingOTP": "جارٍ طلب OTP ..."
   },
   "OtpVerificationModal": {
-    "enterOtp": "أدخل رمز التحقق المكون من 6 أرقام الذي أرسلناه إليك",
-    "header": "التحقق من OTP"
+    "title": "التحقق من OTP",
+    "otpSentMessage": "لقد أرسلنا الرمز المكون من 6 أرقام إلى رقم هاتفك المحمول المسجل!",
+    "resendTheCode": "يمكنك إعادة إرسال الرمز بتنسيق ",
+    "resendCode": "أعد إرسال الرمز"
   },
   "MyVcsTab": {
-    "addVcButton": "بطاقة إضافة",
-    "generateVc": "البطاقاتإنشاء",
+    "bringYourDigitalID": "أحضر هويتك الرقمية",
     "generateVcDescription": "اضغط على \"إضافة بطاقة \" أدناه لتنزيل بطاقتك",
+    "downloadCard": "تحميل البطاقة",
+    "downloadingYourCard": "تنزيل بطاقتك ، قد يستغرق هذا ما يصل إلى 5 دقائق",
     "errors": {
       "savingFailed": {
         "title": "فشل حفظ بطاقة",
         "message": "حدث خطأ أثناء حفظ البطاقة في المتجر."
       },
-      "maximumStorageLimitReached": {
+      "storageLimitReached": {
         "title": "بيانات التطبيق غير كافية",
-        "message": "لا يمكنك إضافة أو استلام بطاقات لأن بيانات التطبيق ممتلئة"
+        "message":"لا يمكنك إضافة أو استلام بطاقات لأن بيانات التطبيق ممتلئة. امسح بيانات التطبيق للمتابعة."
       }
     }
   },
   "OnboardingOverlay": {
-    "stepOneTitle": "مرحبًا!",
-    "stepOneText": "احتفظ ببيانات الاعتماد الرقمية معك في جميع الأوقات. للبدء ، أضف البطاقات إلى ملفك الشخصي.",
-    "stepTwoTitle": "إدارة البطاقة",
-    "stepTwoText": "بمجرد إنشائه ، يتم تخزين  البطاقاتبأمان على هاتفك المحمول ويمكن إعادة تسميته أو مشاركته في أي وقت.",
-    "stepThreeTitle": "مشاركة سهلة",
-    "stepThreeText": "مشاركة واستلام البطاقات switflyباستخدام كاميرا هاتفك لمسح رموز QR.",
-    "stepThreeButton": "ابدأ وأضف البطاقة"
+    "stepOneTitle": "مشاركة آمنة!",
+    "stepOneText": "احتفظ ببيانات الاعتماد الرقمية الخاصة بك معك في جميع الأوقات. يساعدك Inji على إدارتها واستخدامها بشكل فعال. للبدء ، أضف بطاقات إلى ملف التعريف الخاص بك.",
+    "stepTwoTitle": "المحفظة الرقمية الموثوقة",
+    "stepTwoText": "قم بتخزين وحمل جميع بطاقاتك المهمة في محفظة واحدة موثوق بها.",
+    "stepThreeTitle": "مشاركة آمنة",
+    "stepThreeText": "شارك بطاقاتك بأمان وبطريقة خالية من المتاعب واستفد من الخدمات المتنوعة.",
+    "stepFourTitle": "مصادقة خالية من المتاعب",
+    "stepFourText": "قم بمصادقة نفسك بسهولة باستخدام بيانات الاعتماد الرقمية المخزنة.",
+    "stepFourButton": "البدء",
+    "skip": "يتخطى",
+    "next": "التالي"
   },
   "ReceivedVcsTab": {
-    "noReceivedVcsTitle": "لا يوجد البطاقات متاح حتى الآن",
-    "noReceivedVcsText": "اضغط على الطلب أدناه لاستلام البطاقة"
+    "receivedCards": "البطاقات المستلمة",
+    "header": "البطاقات المستلمة",
+    "noReceivedVcsTitle": "لا يوجد بطاقة متاح حتى الآن",
+    "noReceivedVcsText": "اضغط على الطلب أدناه لتلقيبطاقة"
   },
   "ViewVcModal": {
+    "title": "تفاصيل الهوية",
+    "inProgress": "في تَقَدم",
     "cancel": "يلغي",
     "lock": "قفل",
     "unlock": "الغاء القفل",
     "rename": "إعادة تسمية",
-    "delete": "حذف",
-    "revoke": "إبطال",
+    "delete": "يمسح",
+    "revoke": "سحب او إبطال",
     "revoking": "تحتوي محفظتك على بيانات اعتماد مع VID {{vid}}. سيؤدي إبطال هذا إلى حذفه تلقائيًا من المحفظة. هل انت متأكد انك تريد المتابعة؟",
-    "requestingOtp": "جارٍ طلب OTP...",
-    "editTag": "टتحرير العلامة",
+    "requestingOtp": "جارٍ طلب OTP ...",
+    "editTag": "إعادة تسمية",
     "redirecting": "إعادة توجيه...",
-    "inProgress": "جار التحميل...",
     "success": {
-      "unlocked": "تم إلغاء قفل بطاقة  بنجاح",
-      "locked": "تم قفل بطاقة  بنجاح",
+      "unlocked": "تم إلغاء قفل بطاقة بنجاح",
+      "locked": "تم قفل بطاقة بنجاح",
       "revoked": "تم إبطال VID {{vid}}. ستتم إزالة أي بيانات اعتماد تحتوي على نفس الشيء تلقائيًا من المحفظة"
     }
   },
   "MainLayout": {
     "home": "المنزل",
     "scan": "مسح",
+    "history": "تاريخ",
     "request": "طلب",
     "settings": "إعدادات"
   },
   "PasscodeScreen": {
-    "header": "تعيين رمز مرور لتأمين تطبيقك",
-    "confirmPasscode": "تأكيد رمز المرور الخاص بك",
-    "enterPasscode": "المرور الخاص بك"
+    "header": "تعيين رمز المرور",
+    "enterNewPassword": "أدخل رمز مرور جديد",
+    "reEnterPassword": "أعد إدخال رمز المرور الجديد",
+    "confirmPasscode": "قم بتأكيد رمز المرور",
+    "enterPasscode": "أدخل رمز المرور الخاص"
   },
   "AppMetaData": {
     "header": "حول إنجي",
     "version": "الإصدار",
-    "useBle": "Powered by BLE"
-  },
-  "ProfileScreen": {
-    "name": "اسم",
-    "vcLabel": "تسمية VC",
-    "language": "اللغة",
-    "credentialRegistry": "سجل الاعتماد",
-    "bioUnlock": "افتح مع القياسات الحيوية",
-    "authFactorUnlock": "إلغاء تأمين عامل المصادقة",
-    "AppMetaData": "حول إنجي",
-    "logout": "تسجيل خروج",
-    "revokeLabel": "إبطال VID",
-    "revokeHeader": "إبطال VID",
-    "revokingVids": "({{count}}) أنت على وشك إلغاء معرّفات VID.",
-    "revokingVidsAfter": "هذا يعني أنك لن تكون قادرًا على استخدام أو عرض أي من المعرفات المرتبطة بمعرف (معرفات) VID هؤلاء. \nهل انت متأكد انك تريد المتابعة?",
-    "empty": "فارغة",
-    "revokeSuccessful": "تم إبطال VID بنجاح"
+    "useBle": "مدعوم من BLE"
   },
   "QrScreen": {
     "title": "QR تسجيل الدخول",
@@ -243,7 +314,7 @@
     "checkDomain": "تحقق أيضًا من وجود رمز قفل على شريط العناوين.",
     "domainHead": "https://",
     "selectId": "حدد المعرف",
-    "noBindedVc": "لا يوجد البطاقات مرتبط متاح للتحقق",
+    "noBindedVc": "لا يوجد بطاقة مرتبط متاح للتحقق",
     "back": "عُد",
     "confirm": "يتأكد",
     "verify": "تحقق",
@@ -254,16 +325,20 @@
     "access": " يطلب الوصول إلى",
     "status": "حالة",
     "successMessage": "لقد قمت بتسجيل الدخول بنجاح ",
-    "okay": "تمام"
+    "okay": "تمام",
+    "allow": "يسمح",
+    "cancel": "يلغي",
+    "essentialClaims": "الادعاءات الأساسية",
+    "voluntaryClaims": "المطالبات الطوعية",
+    "required": "مطلوب"
   },
   "ReceiveVcScreen": {
-    "header": "تفاصيل بطاقة ",
-    "save": "احفظ البطاقة",
-    "acceptRequest": "قبول الطلب واختيار البطاقة",
-    "acceptRequestAndVerify": "قبول الطلب والتحقق",
-    "reject": "رفض",
+    "header": "تفاصيل بطاقة",
+    "save": "احفظ بطاقة",
+    "verifyAndSave": "تحقق وحفظ",
+    "reject": "يرفض",
     "discard": "ينبذ",
-    "goToReceivedVCTab": "عرض البطاقات المستلمة",
+    "goToReceivedVCTab": "عرض تم استلامه بطاقة",
     "saving": "إنقاذ",
     "errors": {
       "savingFailed": {
@@ -273,30 +348,31 @@
     }
   },
   "RequestScreen": {
-    "bluetoothDenied": "يرجى تمكين البلوتوث لتتمكن من طلب البطاقة",
-    "bluetoothStateAndroid": "يرجى تشغيل البلوتوث من الإعدادات السريعة لدعم المشاركة المحلية",
-    "bluetoothStateIos": "يرجى تشغيل البلوتوث من مركز التحكم لدعم المشاركة المحلية",
-    "showQrCode": "اعرض  رمز الاستجابة السريعة هذا لطلب المقيم بطاقة ",
-    "incomingVc": "بطاقة واردة",
+    "receiveCard": "البطاقة المستلمة",
+    "bluetoothDenied": "يرجى تمكين بلوتوث لتتمكن من طلب البطاقة",
+    "bluetoothStateIos": "تم إيقاف تشغيل البلوتوث ، يرجى تشغيله من مركز التحكم",
+    "bluetoothStateAndroid": "تم إيقاف تشغيل البلوتوث ، يرجى تشغيله من قائمة الإعدادات السريعة",
+    "showQrCode": "اعرض  رمز الاستجابة السريعة هذا لطلب المقيم بطاقة",
+    "incomingVc": "الوارد بطاقة",
     "request": "طلب",
     "errors": {
       "nearbyDevicesPermissionDenied": {
         "message": "مطلوب إذن الأجهزة المجاورة لتتمكن من طلب البطاقة",
         "button": "السماح إذن"
       },
-      "maximumStorageLimitReached": {
+      "storageLimitReached": {
         "title": "بيانات التطبيق غير كافية",
-        "message": "لا يمكنك إضافة أو استلام بطاقات لأن بيانات التطبيق ممتلئة"
+        "message":"لا يمكنك إضافة أو استلام بطاقات لأن بيانات التطبيق ممتلئة. امسح بيانات التطبيق للمتابعة."
       }
     },
     "status": {
       "accepted": {
         "title": "نجاح!",
-        "message": "تم استلام بطاقة بنجاح من  محفظة"
+        "message": "تم استلام بطاقةبنجاح من  محفظة"
       },
       "rejected": {
         "title": " إشعار",
-        "message": "تم تجاهل بطاقة المحفظة بواسطتك"
+        "message": "لقد رفضت  محفظة  بطاقة"
       },
       "disconnected": {
         "title": "ير متصل",
@@ -308,15 +384,16 @@
         "timeoutHint": "يستغرق تبادل معلومات الجهاز وقتًا طويلاً..."
       },
       "connected": {
-        "message": "متصل بالجهاز. في انتظار بطاقة ...",
+        "message": "متصل بالجهاز. في انتظار بطاقة...",
         "timeoutHint": "لم ترد بيانات حتى الآن. هل جهاز الإرسال لا يزال متصلاً؟"
       },
       "offline": {
         "message": "يرجى الاتصال بالإنترنت لتمكين وضع المشاركة عبر الإنترنت"
       },
       "bleError": {
-        "title": "فشل التحويل",
-        "message": "حدث خطأ أثناء نقل بطاقة. حاول مرة اخرى."
+        "title": "فشل التحويل!",
+        "message": "حدث خطأ أثناء نقل بطاقة. حاول مرة اخرى.",
+        "hint": "خطأ: {{code}}"
       }
     },
     "online": "متصل",
@@ -330,6 +407,7 @@
     "bluetoothStateIos": "يرجى تشغيل البلوتوث من مركز التحكم لدعم المشاركة المحلية",
     "enableBluetoothMessage": "يرجى تمكين أذونات البلوتوث لدعم المشاركة المحلية",
     "enableBluetoothButtonText": "السماح لأذونات البلوتوث",
+    "scanningGuide": "امسك الهاتف بثبات وامسح رمز الاستجابة السريعة ضوئيًا",
     "sharingVc": "مشاركة بطاقة ",
     "errors": {
       "locationDisabled": {
@@ -343,40 +421,47 @@
       "nearbyDevicesPermissionDenied": {
         "message": "مطلوب إذن \"الأجهزة المجاورة\" لتتمكن من مشاركة البطاقة",
         "button": "السماح إذن"
+      },
+      "storageLimitReached": {
+        "title": "بيانات التطبيق غير كافية",
+        "message":"لا يمكنك مشاركة البطاقات لأن بيانات التطبيق ممتلئة. امسح بيانات التطبيق للمتابعة."
       }
     },
     "status": {
-      "connecting": "ارٍ التوصيل...",
+      "inProgress": "في تَقَدم",
+      "establishingConnection": "اجراء اتصال",
+      "sharingInProgress": "جاري المشاركة",
       "connectingTimeout": "يستغرق إنشاء الاتصال بعض الوقت. هل الجهاز الآخر مفتوح للاتصالات؟",
       "exchangingDeviceInfo": "تبادل معلومات الجهاز ...",
       "exchangingDeviceInfoTimeout": "يستغرق الأمر بعض الوقت لتبادل معلومات الجهاز. قد تضطر إلى إعادة الاتصال.",
-      "invalid": "غير صالح",
+      "invalid": "رمز الاستجابة السريعة غير صالح",
       "offline": "يرجى الاتصال بالإنترنت لمسح رموز QR ضوئيًا باستخدام وضع المشاركة عبر الإنترنت",
-      "sent": "تم إرسال البطاقة ...",
-      "sentHint": "في انتظار أن يحفظ المستلم بطاقة  أو يتجاهلها",
+      "sent": "تم إرسال بطاقة ...",
+      "sentHint": "في انتظار أن يحفظ المستلم بطاقة أو يتجاهلها",
       "sharing": {
         "title": "مشاركة...",
-        "hint": "الرجاء الانتظار حتى يقبل الجهاز المتلقي المشاركة أو يرفضها.",
+        "hint": "يرجى الانتظار حتى نشارك البطاقة المختارة.",
         "timeoutHint": "تستغرق مشاركتها وقتًا أطول من المتوقع. قد تكون هناك مشكلة في الاتصال."
       },
       "accepted": {
-        "title": "نجاح!",
-        "message": "تمت مشاركة بطاقة  بنجاح مع المدقق"
+        "title": "تم مشاركة المعرف بنجاح",
+        "message": "تمت مشاركة بطاقة بنجاح مع المدقق",
+        "gotohome": "اذهب الى المنزل"
       },
       "rejected": {
         "title": "يلاحظ",
-        "message": "تم تجاهل بطاقة  بواسطة المدقق"
+        "message": "تم تجاهل بطاقة بواسطة المدقق"
       },
       "bleError": {
-        "title": "فشل التحويل",
+        "title": "فشل التحويل!",
         "message": "حدث خطأ أثناء نقل بطاقة . حاول مرة اخرى.",
         "hint": "خطأ: {{code}}"
       }
     }
   },
   "SelectVcOverlay": {
-    "header": "يشارك بطاقة ",
-    "chooseVc": "اختر بطاقة  الذي ترغب في المشاركة معه",
+    "header": "يشارك بطاقة",
+    "chooseVc": "اختر بطاقة الذي ترغب في المشاركة معه",
     "share": "شارك",
     "verifyAndShare": "التحقق من الهوية والمشاركة"
   },
@@ -385,6 +470,8 @@
     "acceptRequest": "يشارك",
     "acceptRequestAndVerify": "شارك مع سيلفي",
     "reject": "رفض",
+    "consentToPhotoVerification": "أوافق على التقاط صورتي للمصادقة",
+    "pleaseSelectAnId": "الرجاء تحديد معرف",
     "status": {
       "sharing": {
         "title": "مشاركة...",
@@ -393,16 +480,16 @@
       },
       "accepted": {
         "title": "النجاح!",
-        "message": "تمت مشاركة بطاقة بنجاح مع {{receiver}}"
+        "message": "تمت مشاركة بطاقة بنجاح مع المدقق"
       },
       "rejected": {
         "title": "تنويه",
-        "message": "تم رفض بطاقة من قِبل {{receiver}}"
+        "message": "تم رفض بطاقة من قِبل المدقق"
       }
-    },
-    "consentToPhotoVerification": "أوافق على التقاط صورتي للمصادقة"
+    }
   },
   "VerifyIdentityOverlay": {
+    "faceAuth": "مصادقة الوجه",
     "status": {
       "verifyingIdentity": "التحقق من الهوية..."
     },
@@ -414,26 +501,15 @@
       }
     }
   },
-  "SendVcModal": {
-    "reasonForSharing": "سبب المشاركة  (optional)",
-    "acceptRequest": "اقبل الطلب واختر البطاقة",
-    "reject": "رفض",
-    "statusSharing": {
-      "title": "مشاركة ..."
-    },
-    "statusAccepted": {
-      "title": "نجاح!",
-      "message": "تمت مشاركة بطاقة بنجاح مع{{receiver}}"
-    },
-    "statusRejected": {
-      "title": " إشعار",
-      "message": "تم رفض بطاقتك من قِبل {{receiver}}"
-    }
-  },
   "WelcomeScreen": {
     "title": "حل هوية مفتوحة المصدر",
     "getStarted": "البدء",
     "unlockApp": "فتح التطبيق"
+  },
+  "SetupLanguage": {
+    "header": "حدد اللغة",
+    "description": "اختر لغتك المفضلة",
+    "save": "حفظ التفضيل"
   },
   "common": {
     "cancel": "إلغاء",
@@ -448,7 +524,7 @@
       "allowAccess": "اسمح بالوصول إلى الكاميرا"
     },
     "errors": {
-      "genericError": "هناك خطأ ما. من فضلك حاول مرة أخرى بعد بعض من الوقت!"
+      "genericError": "هناك شئ غير صحيح. الرجاء معاودة المحاولة في وقت لاحق!"
     }
   }
 }

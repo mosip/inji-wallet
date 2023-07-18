@@ -18,7 +18,6 @@ import {
 } from './bleShare/request/requestMachine';
 import { createScanMachine, scanMachine } from './bleShare/scan/scanMachine';
 import { createRevokeMachine, revokeVidsMachine } from './revoke';
-
 import { pure, respond } from 'xstate/lib/actions';
 import { AppServices } from '../shared/GlobalContext';
 import { request } from '../shared/request';
