@@ -27,6 +27,7 @@ import {
 import { GlobalContext } from '../../shared/GlobalContext';
 import { useTranslation } from 'react-i18next';
 import { RootRouteProps } from '../../routes';
+import { Platform } from 'react-native';
 
 export function useSettingsScreen(props: RootRouteProps) {
   const { appService } = useContext(GlobalContext);
@@ -141,8 +142,16 @@ export function useSettingsScreen(props: RootRouteProps) {
       settingsService.send(SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(enable)),
 
     LOGOUT: () => {
-      authService.send(AuthEvents.LOGOUT());
-      props.navigation.navigate('Welcome');
+      const navigate = () => {
+        authService.send(AuthEvents.LOGOUT());
+        props.navigation.navigate('Welcome');
+      };
+
+      if (Platform.OS === 'ios') {
+        setTimeout(() => navigate(), 0);
+      } else {
+        navigate();
+      }
     },
 
     CANCEL: () => {
