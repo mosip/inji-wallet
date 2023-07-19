@@ -2,22 +2,33 @@ import * as Keychain from 'react-native-keychain';
 import CryptoJS from 'crypto-js';
 import Storage from '../shared/storage';
 import binaryToBase64 from 'react-native/Libraries/Utilities/binaryToBase64';
-import { EventFrom, Receiver, sendParent, send, sendUpdate } from 'xstate';
+import {
+  EventFrom,
+  Receiver,
+  sendParent,
+  send,
+  sendUpdate,
+  StateFrom,
+} from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { generateSecureRandom } from 'react-native-securerandom';
 import { log } from 'xstate/lib/actions';
-import { VC_ITEM_STORE_KEY } from '../shared/constants';
+import { VC_ITEM_STORE_KEY_REGEX, MY_VCS_STORE_KEY } from '../shared/constants';
 
 const ENCRYPTION_ID = 'c7c22a6c-9759-4605-ac88-46f4041d863d';
+const vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
 
 const model = createModel(
   {
     encryptionKey: '',
+    isTampered: false as boolean,
   },
   {
     events: {
       KEY_RECEIVED: (key: string) => ({ key }),
       READY: () => ({}),
+      TRY_AGAIN: () => ({}),
+      IGNORE: () => ({}),
       GET: (key: string) => ({ key }),
       SET: (key: string, value: unknown) => ({ key, value }),
       APPEND: (key: string, value: unknown) => ({ key, value }),
@@ -33,6 +44,8 @@ const model = createModel(
         requester,
       }),
       STORE_ERROR: (error: Error, requester?: string) => ({ error, requester }),
+      TAMPERED_VC: () => ({}),
+      RESET_IS_TAMPERED: () => ({}),
     },
   }
 );
@@ -44,7 +57,7 @@ export type StoreResponseEvent = EventFrom<typeof model, 'STORE_RESPONSE'>;
 type ForwardedEvent = EventFrom<typeof model> & { requester: string };
 
 export const storeMachine =
-  /** @xstate-layout N4IgpgJg5mDOIC5SwC4HsBOYB0MUoEsA7KAUSIGMMBPAB0LSIGkxqBiJ0gTQH0AlUgGFSASQBqpACKJQtNLAIMiMkAA9EAFgCsADmxatARgBsAJgDMJ04YDspjcYA0Iaoh1bj2DYdM3DJgAZvLRtjAF8w51RMHDxCEnIqOiUWdlI+PgB5PhU5BSUVdQRjHQDsAPNTYzMdO2MNHR1nVwRDSuwTDwCATi1K7WMA0wio9CxcMCIwDABDeLJKGnoCRlSObn4hUQlpJBA8xRXlPaL3G2xjO26dbVMtIMtmxErPc3MbD0aqm26KrRGQNFxjAprN5oklilWGx0lkcnsDgUToh-AE9H5rqUtBpzNdqk9Wj5sKEDDpuuYQu5DN4AUCcFhYGB8MQoABlMYzGBsCCMHDEABuaAA1jg6dgGUz5uzMJywAgBWgKHMjgBtAIAXVy8kOjEKblCHW6tkMHg+3RsjxciBsDi89wCQ3JmJstLG9LgkpZ0tmXOmGEw2FoABs5gAzTAAW2wYolzJI3tl8qIgqVSjVmoR2qRoCKhh65n05h0gx0FIpBhsBL6pnKNncNxsARNoXCkUBbvFYBmEHYAHFSAAVLX5I561p3AvGPHdBxtDTdAl2c5BbrXXzGLSmHT2V0xTvd9iswfDnXHHMoicXaez8zzgn1Mr2Vdkm64m3mXfjLAHtgAQQACv+pAAHK7LIWajsi459FexYzsYc4LlaCAGAWGjzquU6mFU1TDG2MZdj2bD-gIQGgSe2ZqBeMFTnBN53shDieBuDpBA6bS6IYn7uj+AgALKZBIFGQee0GTteCG3khLTvN02DuOxealAE-z4R235EYIAAypC-vC4EjrqUE+DREmIQSpjkuU9qGDoJq1BoeGjHuGmHgO2SkJsrL-pkwFHsJRmiSZcnobUDpkm+vgErY5zaA6OKNI29TaNx+5Eay7kCDwsLZAFZ5UeOFrYEWCFrnmAR+E0yG-Bc9r3N0G4fMYFIRG2RBoBAcAqGKcQshCyRHKkeVjt4BYGFYKm2ah5jRQ6HQblo3SWc1tSmqlILTMqCSLANqysMNUE-AWVRBD82J+NWs1lJ0i3LUWTUumpLkenGbIcjAB2iTchheO4DR5pu1gOFWhghXWZgfOhDg3KlrmfQVPjvB05hmLi3glCjTjIduWjyT49SlgYm6Ldx8NFEWcnjWYk3uH0M3IbYtUOr4oToc1jY6K1YRAA */
+  /** @xstate-layout N4IgpgJg5mDOIC5SwC4HsBOYB0MUoEsA7KAUSIGMMBPAB0LSIGkxqBiJ0gTQH0AlUgGFSASQBqpACIBtAAwBdRKFppYBBkSUgAHogBMADj3YArAYDMAdnMBOQ5csA2AIzOTAGhDVErt9kcmzrKGznqyBgYm5gC+0Z6omDh4hCTkVHQaLOykfHwA8nxyikggKmoaWroIhsZmVrb2Tq4eXog2AaY2ACyWdjbBhgbOsfHoWLhgRGAYAIYpZJQ09ASMWRzc-EKiEjIKWmXqK5olVdYG2G4OoeYmlgb9ep7eCDYmjtgWJnp6zjaWvo49CMQAlxjAprN5mklplWGwcvlCnsSgcKidECYuu8vs4uuYAtZHBYDE9EJETKY3OZZLcTJi9OYgXEQWMcFhYGB8MQoABlMYzGBsCCMHDEABuaAA1jhQWy4Jz5nzMAKwAhxWgKHMjkUivtVIdGJUfLI-thZFjMRYrJaSa0Xu1sHo6V0TQFHHiTMDZdh2QruUrZoLphhMNhaAAbOYAM0wAFtsN7fVySAGVWqiBLNRodcjlPq0aAqt1jOFgrJbI47JYfqSEAZrJ0uq9ukMotYvayfWAZhB2ABxUgAFV1KPzRyNCFCJlk-kcljxLibekcjlrQVkM-M+IXRK6PxXHcSXZ77B5Q5HefK4-Rk6dM5X8-xuLsK9r-S6F2sNKaBmCRkP4xYCebAAIIAApgaQAByuzFJeBrHIWPh3rOj6Li+q52r+5wbu0PzmJEhjlgBcrAWBAiQTBF6lGOho3lO95zguz7Lphzz-M4HxYs4kRuE6jJdCRx69mwAgALJ5BI1GoteSG3tOqHMUur52i4FJEno873L8dw9EJQEieJkmkDwYiCDwYlDiBkggYOIHSbRiE6Mh5icdWPzOI4shOG2taBDYlI2PiNiRDc7SesyibdoZpASRIPAiIOsU8g5V50XJDGKU+ylsYge7mNgNwmDY-R3PO4ROvp0XsIIAAypAgUicE0WlTlVJlD5KRhtaMpYFx2E2ZxDBulhVcBPKDgUJkCDyYF5FBZ6pQhE5TsY87LgyFjdO0tZhB+5hdDxJrlnoeGyI4Y0iRNU08AiBRLQWzm3nO-jFS4tgVs4BG1kM2BNq4YRzncDJNrEzJEGgEBwFosp6q1E4ALS5QgSNCck3LQhkRxZHDy03nua7ro6056IdVineWo2RZ24LTFqqSLFjqysLjj1VFixj1hEXldG8XnBG+bz+GVh0hUM-xMqMR5Joq-IwKzslPXYM5dE2+IbtS-Q2G+-zYJYZhfUVNjOJYJqXc88Fs8heKFYb5UmtYhOyJxTYhdWxuVu6EWxEAA */
   model.createMachine(
     {
       predictableActionArguments: true,
@@ -67,6 +80,30 @@ export const storeMachine =
               target: 'ready',
             },
             ERROR: {
+              target: 'checkStorageInitialisation',
+            },
+          },
+        },
+        checkStorageInitialisation: {
+          invoke: {
+            src: 'checkStorageInitialisedOrNot',
+          },
+          on: {
+            ERROR: {
+              target: 'failedReadingKey',
+              actions: sendParent('ERROR'),
+            },
+            READY: {
+              target: 'generatingEncryptionKey',
+            },
+          },
+        },
+        failedReadingKey: {
+          on: {
+            TRY_AGAIN: {
+              target: 'gettingEncryptionKey',
+            },
+            IGNORE: {
               target: 'generatingEncryptionKey',
             },
           },
@@ -153,12 +190,26 @@ export const storeMachine =
                 sendUpdate(),
               ],
             },
+            TAMPERED_VC: {
+              actions: ['setIsTamperedVc'],
+            },
+            RESET_IS_TAMPERED: {
+              actions: ['resetIsTamperedVc'],
+            },
           },
         },
       },
     },
     {
       actions: {
+        setIsTamperedVc: model.assign({
+          isTampered: () => true,
+        }),
+
+        resetIsTamperedVc: model.assign({
+          isTampered: () => false,
+        }),
+
         notifyParent: sendParent(model.events.READY()),
 
         forwardStoreRequest: send(
@@ -176,6 +227,15 @@ export const storeMachine =
 
       services: {
         clear,
+        checkStorageInitialisedOrNot: () => async (callback) => {
+          const isDirectoryExist = await Storage.isVCStorageInitialised();
+          if (!isDirectoryExist) {
+            // clear the storage
+            callback(model.events.READY());
+          } else {
+            callback(model.events.ERROR(new Error('show the popup for retry')));
+          }
+        },
 
         store: (context) => (callback, onReceive: Receiver<ForwardedEvent>) => {
           onReceive(async (event) => {
@@ -260,18 +320,22 @@ export const storeMachine =
               }
               callback(model.events.STORE_RESPONSE(response, event.requester));
             } catch (e) {
-              console.error(e);
-              callback(model.events.STORE_ERROR(e, event.requester));
+              if (e.message === 'Data is tampered') {
+                callback(model.events.TAMPERED_VC());
+              } else {
+                console.error(e);
+                callback(model.events.STORE_ERROR(e, event.requester));
+              }
             }
           });
         },
-
         getEncryptionKey: () => async (callback) => {
           const existingCredentials = await Keychain.getGenericPassword();
-
           if (existingCredentials) {
+            console.log('Credentials successfully loaded for user');
             callback(model.events.KEY_RECEIVED(existingCredentials.password));
           } else {
+            console.log('Credentials failed to load for user');
             callback(
               model.events.ERROR(
                 new Error('Could not get keychain credentials.')
@@ -279,7 +343,6 @@ export const storeMachine =
             );
           }
         },
-
         generateEncryptionKey: () => async (callback) => {
           const randomBytes = await generateSecureRandom(32);
           const randomBytesString = binaryToBase64(randomBytes);
@@ -312,7 +375,7 @@ export async function setItem(
   try {
     const data = JSON.stringify(value);
     const encryptedData = encryptJson(encryptionKey, data);
-    await Storage.setItem(key, encryptedData);
+    await Storage.setItem(key, encryptedData, encryptionKey);
   } catch (e) {
     console.error('error setItem:', e);
     throw e;
@@ -325,14 +388,21 @@ export async function getItem(
   encryptionKey: string
 ) {
   try {
-    const data = await Storage.getItem(key);
+    const data = await Storage.getItem(key, encryptionKey);
     if (data != null) {
       const decryptedData = decryptJson(encryptionKey, data);
       return JSON.parse(decryptedData);
+    }
+    if (data === null && vcKeyRegExp.exec(key)) {
+      await removeItem(key, data, encryptionKey);
+      throw new Error('Data is tampered');
     } else {
       return defaultValue;
     }
   } catch (e) {
+    if (e.message.includes('Data is tampered')) {
+      throw e;
+    }
     return defaultValue;
   }
 }
@@ -398,18 +468,24 @@ export async function removeItem(
   encryptionKey: string
 ) {
   try {
-    const data = await Storage.getItem(key);
-    const decryptedData = decryptJson(encryptionKey, data);
-    const list = JSON.parse(decryptedData);
-    const vcKeyArray = value.split(':');
-    const finalVcKeyArray = vcKeyArray.pop();
-    const finalVcKey = vcKeyArray.join(':');
-    //console.log('finalVcKeyArray', finalVcKeyArray);
-    const newList = list.filter((vc: string) => {
-      return !vc.includes(finalVcKey);
-    });
+    if (value === null && vcKeyRegExp.exec(key)) {
+      await Storage.removeItem(key);
+      await removeVCMetaData(MY_VCS_STORE_KEY, key, encryptionKey);
+    } else {
+      const data = await Storage.getItem(key, encryptionKey);
+      const decryptedData = decryptJson(encryptionKey, data);
+      const list = JSON.parse(decryptedData);
+      const vcKeyArray = value.split(':');
+      const finalVcKeyArray = vcKeyArray.pop();
+      const finalVcKey = vcKeyArray.join(':');
+      //console.log('finalVcKeyArray', finalVcKeyArray);
+      const newList = list.filter((vc: string) => {
+        return !vc.includes(finalVcKey);
+      });
 
-    await setItem(key, newList, encryptionKey);
+      await setItem(key, newList, encryptionKey);
+      await Storage.removeItem(value);
+    }
   } catch (e) {
     console.error('error removeItem:', e);
     throw e;
@@ -422,7 +498,7 @@ export async function removeVCMetaData(
   encryptionKey: string
 ) {
   try {
-    const data = await Storage.getItem(key);
+    const data = await Storage.getItem(key, encryptionKey);
     const decryptedData = decryptJson(encryptionKey, data);
     const list = JSON.parse(decryptedData);
     const newList = list.filter((vc: string) => {
@@ -442,14 +518,13 @@ export async function removeItems(
   encryptionKey: string
 ) {
   try {
-    const data = await Storage.getItem(key);
+    const data = await Storage.getItem(key, encryptionKey);
     const decryptedData = decryptJson(encryptionKey, data);
     const list = JSON.parse(decryptedData);
     const newList = list.filter(function (vc: string) {
       return !values.find(function (vcKey: string) {
         const vcKeyArray = vcKey.split(':');
         const finalVcKeyArray = vcKeyArray.pop();
-        //console.log('finalVcKeyArray', finalVcKeyArray);
         const finalVcKey = vcKeyArray.join(':');
         return vc.includes(finalVcKey);
       });
@@ -464,7 +539,7 @@ export async function removeItems(
 
 export async function clear() {
   try {
-    console.log('entire storage gets cleared.');
+    console.log('clearing entire storage');
     await Storage.clear();
   } catch (e) {
     console.error('error clear:', e);
@@ -485,4 +560,10 @@ function decryptJson(encryptionKey: string, encryptedData: string): string {
     console.error('error decryptJson:', e);
     throw e;
   }
+}
+
+type State = StateFrom<typeof storeMachine>;
+
+export function selectIsTampered(state: State) {
+  return state.context.isTampered;
 }

@@ -25,23 +25,27 @@ export interface Typegen0 {
   };
   'eventsCausingActions': {
     requestStoredContext: 'xstate.init';
-    resetCredentialRegistry: 'UPDATE_CREDENTIAL_REGISTRY';
+    resetCredentialRegistry: 'CANCEL' | 'UPDATE_CREDENTIAL_REGISTRY';
     setContext: 'STORE_RESPONSE';
     storeContext:
       | 'STORE_RESPONSE'
       | 'TOGGLE_BIOMETRIC_UNLOCK'
       | 'UPDATE_NAME'
-      | 'UPDATE_VC_LABEL';
+      | 'UPDATE_VC_LABEL'
+      | 'done.invoke.settings.resetInjiProps:invocation[0]';
     toggleBiometricUnlock: 'TOGGLE_BIOMETRIC_UNLOCK';
     updateCredentialRegistry: 'done.invoke.settings.resetInjiProps:invocation[0]';
     updateCredentialRegistryResponse: 'error.platform.settings.resetInjiProps:invocation[0]';
     updateCredentialRegistrySuccess: 'done.invoke.settings.resetInjiProps:invocation[0]';
+    updateDefaults: 'STORE_RESPONSE';
     updateName: 'UPDATE_NAME';
+    updatePartialDefaults: 'STORE_RESPONSE';
     updateVcLabel: 'UPDATE_VC_LABEL';
   };
   'eventsCausingDelays': {};
   'eventsCausingGuards': {
     hasData: 'STORE_RESPONSE';
+    hasPartialData: 'STORE_RESPONSE';
   };
   'eventsCausingServices': {
     resetInjiProps: 'UPDATE_CREDENTIAL_REGISTRY';

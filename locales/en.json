@@ -15,14 +15,14 @@
     "WALLET_BINDING_SUCCESSFULL": "Activation successful",
     "WALLET_BINDING_FAILURE": "Activation failed"
   },
-  "DeviceInfoList": {
-    "requestedBy": "Requested by",
-    "sentBy": "Sent by",
-    "deviceRefNumber": "Device reference number",
-    "name": "Name",
-    "Verifier": "Verifier",
-    "Wallet": "Wallet"
-  },
+    "DeviceInfoList": {
+      "requestedBy": "Requested by",
+      "sentBy": "Sent by",
+      "deviceRefNumber": "Device reference number",
+      "name": "Name",
+      "Verifier": "Verifier",
+      "Wallet": "Wallet"
+    },
   "FaceScanner": {},
   "OIDcAuth": {
     "title": "OIDC Authentication",
@@ -100,7 +100,7 @@
   },
   "RemoveVcWarningOverlay": {
     "alert": "Please Confirm",
-    "RemoveWarning": "Do you want to remove this card",
+    "removeWarning": "Do you want to remove this card?",
     "confirm": "Yes, I confirm",
     "no": "No"
   },
@@ -134,12 +134,15 @@
     "language": "Language",
     "aboutInji": "About Inji",
     "credentialRegistry": "Credential Registry",
+    "errorMessage": "Incorrect URL entered. Please enter a valid URL to proceed.",
     "injiTourGuide": "Inji Tour Guide",
-    "logout": "Logout"
+    "logout": "Logout",
+    "resetInjiProps": "Resetting Inji Props..."
   },
   "AboutInji": {
     "aboutInji": "About Inji",
     "header": "ABOUT INJI",
+    "appID": "App ID",
     "aboutDetailes": "Inji is a mobile app that can be used as a digital wallet to store credentials. It also allows identity verification in both offline and online modes, at any place and time.",
     "forMoreDetailes": "For more details",
     "clickHere": "Click here",
@@ -177,15 +180,17 @@
         "expiredOtp": "OTP has expired",
         "invalidUin": "UIN invalid",
         "invalidVid": "VID invalid",
-        "missingUin": "UIN not available in database",
+        "missingUin": "The entered UIN is deactivated/blocked. Please enter a valid UIN to proceed",
         "missingVid": "VID not available in database",
         "noMessageAvailable": "Try after sometime",
-        "whileGeneratingOtpErrorIsOccured": "while generating OTP error occurred",
-        "networkRequestFailed": "Network request failed"
+        "whileGeneratingOtpErrorIsOccured": "while generating otp error is occurred",
+        "networkRequestFailed": "Network request failed",
+        "deactivatedVid": "The entered VID is deactivated/expired. Please enter a valid VID to proceed"
       }
     }
   },
   "GetVcModal": {
+    "retrievingId": "Retrieving ID",
     "errors": {
       "input": {
         "empty": "Input cannot be empty",
@@ -235,15 +240,19 @@
     "bringYourDigitalID": "Bring your digital identity",
     "generateVcDescription": "Tap on \"Download card\" below to download your card",
     "downloadCard": "Download Card",
-    "downloadingYourId": "Downloading your ID, this can take upto 5 minutes",
+    "downloadingYourCard": "Downloading your card, this can take upto 5 minutes",
     "errors": {
       "savingFailed": {
         "title": "Failed to save the Card",
         "message": "Something went wrong while saving Card to the store."
       },
-      "maximumStorageLimitReached": {
+      "storageLimitReached": {
         "title": "Insufficient Appdata",
-        "message": "You cannot add or receive cards since the Appdata is full"
+        "message": "You cannot add or receive cards since the Appdata is full. Clear Appdata to proceed."
+      },
+      "vcIsTampered":{
+        "title": "VC data is tampered",
+        "message": "Affected VCs are removed from the app."
       }
     }
   },
@@ -357,9 +366,9 @@
         "message": "Nearby Devices permission is required to be able to request Card",
         "button": "Allow Permission"
       },
-      "maximumStorageLimitReached": {
+      "storageLimitReached": {
         "title": "Insufficient Appdata",
-        "message": "You cannot add or receive cards since the Appdata is full"
+        "message": "You cannot add or receive cards since the Appdata is full. Clear Appdata to proceed."
       }
     },
     "status": {
@@ -418,6 +427,10 @@
       "nearbyDevicesPermissionDenied": {
         "message": "Nearby Devices permission is required to be able to share card",
         "button": "Allow Permission"
+      },
+      "storageLimitReached": {
+        "title": "Insufficient Appdata",
+        "message": "You cannot share cards since the Appdata is full. Clear Appdata to proceed."
       }
     },
     "status": {
@@ -433,7 +446,7 @@
       "sentHint": "Waiting for receiver to save or discard your Card",
       "sharing": {
         "title": "Sharing...",
-        "hint": "Please wait for the receiving device to accept or reject the share.",
+        "hint": "Please wait while we share the chosen card.",
         "timeoutHint": "It's taking longer than expected to share. There could be a problem with the connection."
       },
       "accepted": {
@@ -497,7 +510,9 @@
   "WelcomeScreen": {
     "title": "Open Source Identity Solution",
     "getStarted": "Get started",
-    "unlockApp": "Unlock application"
+    "unlockApp": "Unlock application",
+    "failedToReadKeys": "Failed to read keys",
+    "retryRead": "Want to retry?"
   },
   "SetupLanguage": {
     "header": "Choose Language",
@@ -506,10 +521,12 @@
   },
   "common": {
     "cancel": "Cancel",
+    "accept": "Accept",
     "save": "Save",
     "dismiss": "Dismiss",
     "editLabel": "Edit {{label}}",
     "tryAgain": "Try again",
+    "ignore": "Ignore",
     "camera": {
       "errors": {
         "missingPermission": "This app uses the camera to scan the QR code of another device."
@@ -518,6 +535,10 @@
     },
     "errors": {
       "genericError": "Something is wrong. Please try again later!"
+    },
+    "clipboard": {
+      "copy": "Copy",
+      "copied": "Copied"
     }
   }
 }

@@ -14,6 +14,8 @@ import {
   selectVcLabel,
   selectCredentialRegistry,
   SettingsEvents,
+  selectAppId,
+  selectIsResetInjiProps,
 } from '../../machines/settings';
 
 import {
@@ -22,11 +24,12 @@ import {
   selectIsSuccess,
   selectUnenrolledNotice,
 } from '../../machines/biometrics';
-import { MainRouteProps } from '../../routes/main';
 import { GlobalContext } from '../../shared/GlobalContext';
 import { useTranslation } from 'react-i18next';
+import { RootRouteProps } from '../../routes';
+import { Platform } from 'react-native';
 
-export function useSettingsScreen({ navigation }: MainRouteProps) {
+export function useSettingsScreen(props: RootRouteProps) {
   const { appService } = useContext(GlobalContext);
   const authService = appService.children.get('auth');
   const settingsService = appService.children.get('settings');
@@ -98,6 +101,7 @@ export function useSettingsScreen({ navigation }: MainRouteProps) {
     isVisible,
     alertMsg,
     hideAlert,
+    appId: useSelector(settingsService, selectAppId),
     backendInfo: useSelector(appService, selectBackendInfo),
     name: useSelector(settingsService, selectName),
     vcLabel: useSelector(settingsService, selectVcLabel),
@@ -110,6 +114,7 @@ export function useSettingsScreen({ navigation }: MainRouteProps) {
       settingsService,
       selectBiometricUnlockEnabled
     ),
+    isResetInjiProps: useSelector(settingsService, selectIsResetInjiProps),
     canUseBiometrics: useSelector(authService, selectCanUseBiometrics),
     useBiometrics,
 
@@ -137,8 +142,21 @@ export function useSettingsScreen({ navigation }: MainRouteProps) {
       settingsService.send(SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(enable)),
 
     LOGOUT: () => {
-      authService.send(AuthEvents.LOGOUT());
-      navigation.navigate('Welcome');
+      setIsVisible(false);
+      const navigate = () => {
+        authService.send(AuthEvents.LOGOUT());
+        props.navigation.navigate('Welcome');
+      };
+
+      if (Platform.OS === 'ios') {
+        setTimeout(() => navigate(), 0);
+      } else {
+        navigate();
+      }
+    },
+
+    CANCEL: () => {
+      settingsService.send(SettingsEvents.CANCEL());
     },
   };
 }

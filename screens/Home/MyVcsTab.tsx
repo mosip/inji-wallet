@@ -40,7 +40,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
         style={{ display: controller.isRequestSuccessful ? 'flex' : 'none' }}>
         <Row style={Theme.Styles.popUp}>
           <Text color={Theme.Colors.whiteText} weight="semibold" size="smaller">
-            {t('downloadingYourId')}
+            {t('downloadingYourCard')}
           </Text>
           <Icon
             name="close"
@@ -154,9 +154,15 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
       />
       <ErrorMessageOverlay
         translationPath={'MyVcsTab'}
-        isVisible={controller.isMaximumStorageLimitReached}
-        error={'errors.maximumStorageLimitReached'}
+        isVisible={controller.isMinimumStorageLimitReached}
+        error={'errors.storageLimitReached'}
         onDismiss={controller.DISMISS}
+      />
+      <ErrorMessageOverlay
+        translationPath={'MyVcsTab'}
+        isVisible={controller.isTampered}
+        error={'errors.vcIsTampered'}
+        onDismiss={controller.IS_TAMPERED}
       />
     </React.Fragment>
   );

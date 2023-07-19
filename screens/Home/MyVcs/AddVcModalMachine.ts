@@ -267,6 +267,7 @@ export const AddVcModalMachine =
               'Network request failed': 'networkRequestFailed',
               'Invalid Input Parameter - individualId':
                 context.idType === 'UIN' ? 'invalidUin' : 'invalidVid',
+              'VID is expired/deactivated': 'deactivatedVid',
             };
             return ID_ERRORS_MAP[message]
               ? i18n.t(`errors.backend.${ID_ERRORS_MAP[message]}`, {

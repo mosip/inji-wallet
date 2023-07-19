@@ -9,7 +9,7 @@ export const COMMON_PROPS_KEY: string =
 export default async function getAllConfigurations(host = undefined) {
   try {
     host && changeCrendetialRegistry(host);
-    var response = await Storage.getItem(COMMON_PROPS_KEY);
+    const response = await Storage.getItem(COMMON_PROPS_KEY);
     if (response) {
       return JSON.parse(response);
     } else {
