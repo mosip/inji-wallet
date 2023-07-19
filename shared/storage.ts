@@ -31,7 +31,7 @@ class Storage {
     }
   };
 
-  static getItem = async (key: string, encryptionKey: string) => {
+  static getItem = async (key: string, encryptionKey?: string) => {
     try {
       if (vcKeyRegExp.exec(key)) {
         const path = getFilePath(key);
@@ -53,7 +53,11 @@ class Storage {
     }
   };
 
-  static setItem = async (key: string, data: string, encryptionKey: string) => {
+  static setItem = async (
+    key: string,
+    data: string,
+    encryptionKey?: string
+  ) => {
     try {
       if (vcKeyRegExp.exec(key)) {
         const HMACofVC = CryptoJS.HmacSHA256(encryptionKey, data).toString();
