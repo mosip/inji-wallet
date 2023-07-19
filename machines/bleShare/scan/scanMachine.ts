@@ -96,6 +96,7 @@ const model = createModel(
       RETRY_VERIFICATION: () => ({}),
       VP_CREATED: (vp: VerifiablePresentation) => ({ vp }),
       TOGGLE_USER_CONSENT: () => ({}),
+      RESET: () => ({}),
     },
   }
 );
@@ -133,6 +134,9 @@ export const scanMachine =
         BLE_ERROR: {
           target: '.handlingBleError',
           actions: 'setBleError',
+        },
+        RESET: {
+          target: '.checkStorage',
         },
       },
       states: {

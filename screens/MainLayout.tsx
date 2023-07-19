@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
@@ -13,10 +13,13 @@ import { Image } from 'react-native';
 import { SettingScreen } from './Settings/SettingScreen';
 import { HelpScreen } from '../components/HelpScreen';
 
+import { GlobalContext } from '../shared/GlobalContext';
 const { Navigator, Screen } = createBottomTabNavigator();
 
 export const MainLayout: React.FC<RootRouteProps> = (props) => {
   const { t } = useTranslation('MainLayout');
+  const { appService } = useContext(GlobalContext);
+  const scanService = appService.children.get('scan');
 
   const options: BottomTabNavigationOptions = {
     headerRight: () => (
@@ -77,6 +80,13 @@ export const MainLayout: React.FC<RootRouteProps> = (props) => {
           key={route.name}
           name={route.name}
           component={route.component}
+          listeners={{
+            tabPress: (e) => {
+              if (route.name == 'Scan') {
+                scanService.send('RESET');
+              }
+            },
+          }}
           options={{
             ...route.options,
             title: t(route.name),
