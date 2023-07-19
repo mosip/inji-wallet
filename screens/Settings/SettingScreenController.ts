@@ -142,6 +142,7 @@ export function useSettingsScreen(props: RootRouteProps) {
       settingsService.send(SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(enable)),
 
     LOGOUT: () => {
+      setIsVisible(false);
       const navigate = () => {
         authService.send(AuthEvents.LOGOUT());
         props.navigation.navigate('Welcome');
