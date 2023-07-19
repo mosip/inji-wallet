@@ -37,7 +37,7 @@ class Storage {
         const path = getFilePath(key);
         const data = await readFile(path, 'utf8');
 
-        const encryptedHMACofCurrentVC = await MMKV.getItem(key);
+        const encryptedHMACofCurrentVC = await MMKV.getItem(getVCKeyName(key));
         const HMACofCurrentVC = CryptoJS.AES.decrypt(
           encryptedHMACofCurrentVC,
           encryptionKey
@@ -61,7 +61,7 @@ class Storage {
           HMACofVC,
           encryptionKey
         ).toString();
-        await MMKV.setItem(key, encryptedHMACofVC);
+        await MMKV.setItem(getVCKeyName(key), encryptedHMACofVC);
 
         await mkdir(vcDirectoryPath);
         const path = getFilePath(key);
@@ -126,6 +126,14 @@ const getFileName = (key: string) => {
 const getFilePath = (key: string) => {
   const fileName = getFileName(key);
   return `${vcDirectoryPath}/${fileName}.txt`;
+};
+
+/**
+ * The VC key will not have the pinned / unpinned state, we will splice the state as this will change.
+ * eg: "vc:UIN:6732935275:e7426576-112f-466a-961a-1ed9635db628:true" is changed to "vc:UIN:6732935275:e7426576-112f-466a-961a-1ed9635db628"
+ */
+const getVCKeyName = (key: string) => {
+  return key.split(':').splice(0, 4).join(':');
 };
 
 export default Storage;
