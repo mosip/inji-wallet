@@ -21,14 +21,17 @@ export interface Typegen0 {
     forwardToServices: 'ACTIVE' | 'INACTIVE' | 'OFFLINE' | 'ONLINE';
     loadCredentialRegistryHostFromStorage: 'READY';
     loadCredentialRegistryInConstants: 'STORE_RESPONSE';
+    logIt: 'ACTIVE' | 'INACTIVE' | 'OFFLINE' | 'ONLINE';
     logServiceEvents: 'READY';
     logStoreEvents: 'xstate.init';
     requestDeviceInfo: 'REQUEST_DEVICE_INFO';
     setAppInfo: 'APP_INFO_RECEIVED';
     setBackendInfo: 'BACKEND_INFO_RECEIVED';
+    setIsDecryptError: 'DECRYPT_ERROR';
     setIsReadError: 'ERROR';
     spawnServiceActors: 'READY';
     spawnStoreActor: 'xstate.init';
+    unsetIsDecryptError: 'READY';
     unsetIsReadError: 'READY';
   };
   'eventsCausingDelays': {};

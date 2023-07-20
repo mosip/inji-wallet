@@ -76,7 +76,7 @@ export const storeMachine =
           },
           on: {
             KEY_RECEIVED: {
-              actions: 'setEncryptionKey',
+              actions: ['setEncryptionKey', 'logKey'],
               target: 'ready',
             },
             ERROR: {
@@ -179,11 +179,22 @@ export const storeMachine =
                     to: (_, event) => event.requester,
                   }
                 ),
+                sendParent('ERROR'),
                 sendUpdate(),
               ],
             },
             STORE_ERROR: {
               actions: [
+                (_, event) => {
+                  console.log('logging lol event', event);
+                  if (
+                    event.error.message.includes('JSON') ||
+                    event.error.message.includes('decrypt')
+                  ) {
+                    console.log('sending decryptError');
+                    sendParent('ERROR');
+                  }
+                },
                 send((_, event) => model.events.STORE_ERROR(event.error), {
                   to: (_, event) => event.requester,
                 }),
@@ -223,6 +234,7 @@ export const storeMachine =
         setEncryptionKey: model.assign({
           encryptionKey: (_, event) => event.key,
         }),
+        logKey: (_, event) => console.log('logging the enc key ', event.key),
       },
 
       services: {
@@ -230,7 +242,6 @@ export const storeMachine =
         checkStorageInitialisedOrNot: () => async (callback) => {
           const isDirectoryExist = await Storage.isVCStorageInitialised();
           if (!isDirectoryExist) {
-            // clear the storage
             callback(model.events.READY());
           } else {
             callback(model.events.ERROR(new Error('show the popup for retry')));
@@ -473,7 +484,7 @@ export async function removeItem(
       await removeVCMetaData(MY_VCS_STORE_KEY, key, encryptionKey);
     } else {
       const data = await Storage.getItem(key, encryptionKey);
-      const decryptedData = decryptJson(encryptionKey, data);
+      const decryptedData = actualdecryptJson(encryptionKey, data);
       const list = JSON.parse(decryptedData);
       const vcKeyArray = value.split(':');
       const finalVcKeyArray = vcKeyArray.pop();
@@ -549,6 +560,22 @@ export async function clear() {
 
 function encryptJson(encryptionKey: string, data: string): string {
   return CryptoJS.AES.encrypt(data, encryptionKey).toString();
+}
+
+function actualdecryptJson(
+  encryptionKey: string,
+  encryptedData: string
+): string {
+  try {
+    return CryptoJS.AES.decrypt(
+      encryptedData.substring(10),
+      encryptionKey.substring(10),
+      CryptoJS.enc.Utf8
+    );
+  } catch (e) {
+    console.error('error decryptJson:', e);
+    throw new Error('decrypt error: ' + e.message);
+  }
 }
 
 function decryptJson(encryptionKey: string, encryptedData: string): string {
