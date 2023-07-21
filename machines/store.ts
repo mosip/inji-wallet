@@ -14,6 +14,8 @@ import { createModel } from 'xstate/lib/model';
 import { generateSecureRandom } from 'react-native-securerandom';
 import { log } from 'xstate/lib/actions';
 import { VC_ITEM_STORE_KEY_REGEX, MY_VCS_STORE_KEY } from '../shared/constants';
+import SecureKeystore from 'react-native-secure-keystore';
+import { Platform } from 'react-native';
 
 const ENCRYPTION_ID = 'c7c22a6c-9759-4605-ac88-46f4041d863d';
 const vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
@@ -68,8 +70,21 @@ export const storeMachine =
         events: {} as EventFrom<typeof model>,
       },
       id: 'store',
-      initial: 'gettingEncryptionKey',
+      initial: isIOS ? 'gettingEncryptionKey' : 'checkEncryptionKey',
       states: {
+        checkEncryptionKey: {
+          invoke: {
+            src: 'hasAndroidEncryptionKey',
+          },
+          on: {
+            READY: {
+              target: 'ready',
+            },
+            ERROR: {
+              target: 'generatingEncryptionKey',
+            },
+          },
+        },
         gettingEncryptionKey: {
           invoke: {
             src: 'getEncryptionKey',
@@ -113,10 +128,18 @@ export const storeMachine =
             src: 'generateEncryptionKey',
           },
           on: {
-            KEY_RECEIVED: {
-              actions: 'setEncryptionKey',
-              target: 'resettingStorage',
-            },
+            KEY_RECEIVED: [
+              {
+                cond: 'isIOS',
+                actions: 'setEncryptionKey',
+                target: 'resettingStorage',
+              },
+              {
+                cond: 'isAndroid',
+                target: 'ready',
+              },
+            ],
+
             ERROR: {
               actions: log('Generating encryption key failed'),
             },
@@ -227,6 +250,18 @@ export const storeMachine =
 
       services: {
         clear,
+        hasAndroidEncryptionKey: () => async (callback) => {
+          const hasSetCredentials = SecureKeystore.hasAlias(ENCRYPTION_ID);
+          if (hasSetCredentials) {
+            callback(model.events.READY());
+          } else {
+            callback(
+              model.events.ERROR(
+                new Error('Could not get the android Key alias')
+              )
+            );
+          }
+        },
         checkStorageInitialisedOrNot: () => async (callback) => {
           const isDirectoryExist = await Storage.isVCStorageInitialised();
           if (!isDirectoryExist) {
@@ -346,24 +381,33 @@ export const storeMachine =
         generateEncryptionKey: () => async (callback) => {
           const randomBytes = await generateSecureRandom(32);
           const randomBytesString = binaryToBase64(randomBytes);
-          const hasSetCredentials = await Keychain.setGenericPassword(
-            ENCRYPTION_ID,
-            randomBytesString
-          );
-
-          if (hasSetCredentials) {
-            callback(model.events.KEY_RECEIVED(randomBytesString));
-          } else {
-            callback(
-              model.events.ERROR(
-                new Error('Could not generate keychain credentials.')
-              )
+          if (isIOS) {
+            const hasSetCredentials = await Keychain.setGenericPassword(
+              ENCRYPTION_ID,
+              randomBytesString
             );
+
+            if (hasSetCredentials) {
+              callback(model.events.KEY_RECEIVED(randomBytesString));
+            } else {
+              callback(
+                model.events.ERROR(
+                  new Error('Could not generate keychain credentials.')
+                )
+              );
+            }
+          } else {
+            SecureKeystore.generateKey(ENCRYPTION_ID);
+            callback(model.events.KEY_RECEIVED(''));
           }
         },
       },
 
-      guards: {},
+      guards: {
+        isAndroid: () => Platform.OS === 'android',
+
+        isIOS: () => Platform.OS === 'ios',
+      },
     }
   );
 
@@ -548,18 +592,28 @@ export async function clear() {
 }
 
 function encryptJson(encryptionKey: string, data: string): string {
-  return CryptoJS.AES.encrypt(data, encryptionKey).toString();
+  if (isIOS) {
+    return CryptoJS.AES.encrypt(data, encryptionKey).toString();
+  }
+  return SecureKeystore.encryptData(ENCRYPTION_ID, data);
 }
 
 function decryptJson(encryptionKey: string, encryptedData: string): string {
   try {
-    return CryptoJS.AES.decrypt(encryptedData, encryptionKey).toString(
-      CryptoJS.enc.Utf8
-    );
+    if (isIOS) {
+      return CryptoJS.AES.decrypt(encryptedData, encryptionKey).toString(
+        CryptoJS.enc.Utf8
+      );
+    }
+    return SecureKeystore.decryptData(ENCRYPTION_ID, encryptedData);
   } catch (e) {
     console.error('error decryptJson:', e);
     throw e;
   }
+}
+
+function isIOS(): boolean {
+  return Platform.OS === 'ios';
 }
 
 type State = StateFrom<typeof storeMachine>;
