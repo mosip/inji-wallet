@@ -480,7 +480,7 @@ export const PurpleTheme = {
       flex: 1,
       fontFamily: 'Inter_700Bold',
       fontSize: 29,
-      height: 40,
+      height: 60,
       margin: 8,
       textAlign: 'center',
     },
