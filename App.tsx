@@ -13,40 +13,58 @@ import {
 } from './machines/app';
 import { DualMessageOverlay } from './components/DualMessageOverlay';
 import { useApp } from './screens/AppController';
-import { Text } from 'react-native-elements';
 import { MessageOverlay } from './components/MessageOverlay';
+
+const AppLayoutWrapper: React.FC = () => {
+  const { appService } = useContext(GlobalContext);
+  const isDecryptError = useSelector(appService, selectIsDecryptError);
+  const { t } = useTranslation('WelcomeScreen');
+  const controller = useApp();
+  return (
+    <>
+      <AppLayout />
+      {isDecryptError ? (
+        <MessageOverlay
+          isVisible={isDecryptError}
+          title={t('decryptError')}
+          message={t('decryptError')}
+          onBackdropPress={controller.ignoreDecrypt}
+        />
+      ) : null}
+    </>
+  );
+};
+
+const AppLoadingWrapper: React.FC = () => {
+  const { appService } = useContext(GlobalContext);
+  const isReadError = useSelector(appService, selectIsReadError);
+  const controller = useApp();
+  const { t } = useTranslation('WelcomeScreen');
+  return (
+    <>
+      <AppLoading />
+      {isReadError ? (
+        <DualMessageOverlay
+          isVisible={isReadError}
+          title={t('failedToReadKeys')}
+          message={t('retryRead')}
+          onTryAgain={controller.TRY_AGAIN}
+          onIgnore={controller.IGNORE}
+        />
+      ) : null}
+    </>
+  );
+};
 
 const AppInitialization: React.FC = () => {
   const { appService } = useContext(GlobalContext);
-  const hasFontsLoaded = useFont();
   const isReady = useSelector(appService, selectIsReady);
-  const isReadError = useSelector(appService, selectIsReadError);
-  const isDecryptError = useSelector(appService, selectIsDecryptError);
-  const controller = useApp();
-  const { t } = useTranslation('WelcomeScreen');
-  if (isReadError) {
-    return (
-      <DualMessageOverlay
-        isVisible={isReadError}
-        title={t('failedToReadKeys')}
-        message={t('retryRead')}
-        onTryAgain={controller.TRY_AGAIN}
-        onIgnore={controller.IGNORE}
-      />
-    );
-  }
-  if (isDecryptError) {
-    console.log('hello world!!');
-    return (
-      <MessageOverlay
-        isVisible={isReadError}
-        title={t('decryptError')}
-        message={t('retryRead')}
-        onBackdropPress={controller.ignoreDecrypt}
-      />
-    );
-  }
-  return isReady && hasFontsLoaded ? <AppLayout /> : <AppLoading />;
+  const hasFontsLoaded = useFont();
+  return isReady && hasFontsLoaded ? (
+    <AppLayoutWrapper />
+  ) : (
+    <AppLoadingWrapper />
+  );
 };
 
 export default function App() {

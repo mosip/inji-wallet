@@ -66,12 +66,7 @@ export const appMachine = model.createMachine(
     initial: 'init',
     on: {
       DECRYPT_ERROR: {
-        actions: [
-          () => {
-            console.log('got decrypt error in app.ts');
-          },
-          'setIsDecryptError',
-        ],
+        actions: ['setIsDecryptError'],
       },
     },
     states: {
@@ -198,7 +193,6 @@ export const appMachine = model.createMachine(
       setIsDecryptError: assign({
         isDecryptError: true,
       }),
-      logDecryptError: () => console.log('decryptError received'),
       unsetIsDecryptError: assign({
         isDecryptError: false,
       }),
