@@ -1,6 +1,11 @@
 import { assign, ErrorPlatformEvent, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
-import { HOST, MY_VCS_STORE_KEY, VC_ITEM_STORE_KEY } from '../shared/constants';
+import {
+  HOST,
+  isIOS,
+  MY_VCS_STORE_KEY,
+  VC_ITEM_STORE_KEY,
+} from '../shared/constants';
 import { AppServices } from '../shared/GlobalContext';
 import { CredentialDownloadResponse, request } from '../shared/request';
 import {
@@ -27,6 +32,8 @@ import getAllConfigurations, {
 } from '../shared/commonprops/commonProps';
 import { VcEvents } from './vc';
 import i18n from '../i18n';
+import { Platform } from 'react-native';
+import SecureKeystore from 'react-native-secure-keystore';
 
 const model = createModel(
   {
@@ -337,10 +344,18 @@ export const vcItemMachine =
             addKeyPair: {
               invoke: {
                 src: 'generateKeyPair',
-                onDone: {
-                  target: '#vc-item.kebabPopUp.addingWalletBindingId',
-                  actions: ['setPublicKey', 'setPrivateKey'],
-                },
+                onDone: [
+                  {
+                    cond: 'isAndroid',
+                    target: '#vc-item.kebabPopUp.addingWalletBindingId',
+                    actions: ['setPublicKey'],
+                  },
+                  {
+                    cond: 'isIOS',
+                    target: '#vc-item.kebabPopUp.addingWalletBindingId',
+                    actions: ['setPublicKey', 'setPrivateKey'],
+                  },
+                ],
                 onError: [
                   {
                     actions: 'setWalletBindingError',
@@ -354,8 +369,20 @@ export const vcItemMachine =
                 src: 'addWalletBindnigId',
                 onDone: [
                   {
+                    cond: 'isIOS',
                     target: '#vc-item.kebabPopUp.updatingPrivateKey',
                     actions: ['setWalletBindingId'],
+                  },
+                  {
+                    cond: 'isAndroid',
+                    target: '#vc-item.kebabPopUp',
+                    actions: [
+                      'setWalletBindingId',
+                      'storeContext',
+                      'updateVc',
+                      'setWalletBindingErrorEmpty',
+                      'logWalletBindingSuccess',
+                    ],
                   },
                 ],
                 onError: [
@@ -642,10 +669,18 @@ export const vcItemMachine =
         addKeyPair: {
           invoke: {
             src: 'generateKeyPair',
-            onDone: {
-              target: 'addingWalletBindingId',
-              actions: ['setPublicKey', 'setPrivateKey'],
-            },
+            onDone: [
+              {
+                cond: 'isAndroid',
+                target: 'addingWalletBindingId',
+                actions: ['setPublicKey'],
+              },
+              {
+                cond: 'isIOS',
+                target: 'addingWalletBindingId',
+                actions: ['setPublicKey', 'setPrivateKey'],
+              },
+            ],
             onError: [
               {
                 actions: ['setWalletBindingError', 'logWalletBindingFailure'],
@@ -659,10 +694,23 @@ export const vcItemMachine =
             src: 'addWalletBindnigId',
             onDone: [
               {
+                cond: 'isIOS',
                 target: 'updatingPrivateKey',
                 actions: [
                   'setWalletBindingId',
                   'setThumbprintForWalletBindingId',
+                ],
+              },
+              {
+                cond: 'isAndroid',
+                target: 'idle',
+                actions: [
+                  'setWalletBindingId',
+                  'setThumbprintForWalletBindingId',
+                  'storeContext',
+                  'updateVc',
+                  'setWalletBindingErrorEmpty',
+                  'logWalletBindingSuccess',
                 ],
               },
             ],
@@ -756,7 +804,12 @@ export const vcItemMachine =
         }),
 
         setPublicKey: assign({
-          publicKey: (context, event) => (event.data as KeyPair).public,
+          publicKey: (context, event) => {
+            if (isIOS()) {
+              return (event.data as KeyPair).public;
+            }
+            return event.data as string;
+          },
         }),
 
         setPrivateKey: assign({
@@ -1081,8 +1134,11 @@ export const vcItemMachine =
         },
 
         generateKeyPair: async (context) => {
-          let keyPair: KeyPair = await generateKeys();
-          return keyPair;
+          if (isIOS()) {
+            let keyPair: KeyPair = await generateKeys();
+            return keyPair;
+          }
+          return SecureKeystore.generateKeyPair(context.id);
         },
 
         requestBindingOtp: async (context) => {
@@ -1246,6 +1302,10 @@ export const vcItemMachine =
         isVcValid: (context) => {
           return context.isVerified;
         },
+
+        isAndroid: () => Platform.OS === 'android',
+
+        isIOS: () => Platform.OS === 'ios',
       },
     }
   );

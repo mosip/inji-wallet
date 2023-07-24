@@ -13,7 +13,11 @@ import {
 import { createModel } from 'xstate/lib/model';
 import { generateSecureRandom } from 'react-native-securerandom';
 import { log } from 'xstate/lib/actions';
-import { VC_ITEM_STORE_KEY_REGEX, MY_VCS_STORE_KEY } from '../shared/constants';
+import {
+  VC_ITEM_STORE_KEY_REGEX,
+  MY_VCS_STORE_KEY,
+  isIOS,
+} from '../shared/constants';
 import SecureKeystore from 'react-native-secure-keystore';
 import { Platform } from 'react-native';
 
@@ -610,10 +614,6 @@ function decryptJson(encryptionKey: string, encryptedData: string): string {
     console.error('error decryptJson:', e);
     throw e;
   }
-}
-
-function isIOS(): boolean {
-  return Platform.OS === 'ios';
 }
 
 type State = StateFrom<typeof storeMachine>;
