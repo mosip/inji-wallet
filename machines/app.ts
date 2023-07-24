@@ -41,6 +41,7 @@ const model = createModel(
       INACTIVE: () => ({}),
       ERROR: () => ({}),
       DECRYPT_ERROR: () => ({}),
+      DECRYPT_ERROR_DISMISS: () => ({}),
       OFFLINE: () => ({}),
       ONLINE: (networkType: NetInfoStateType) => ({ networkType }),
       REQUEST_DEVICE_INFO: () => ({}),
@@ -67,6 +68,9 @@ export const appMachine = model.createMachine(
     on: {
       DECRYPT_ERROR: {
         actions: ['setIsDecryptError'],
+      },
+      DECRYPT_ERROR_DISMISS: {
+        actions: ['unsetIsDecryptError'],
       },
     },
     states: {
@@ -145,10 +149,10 @@ export const appMachine = model.createMachine(
             states: {
               checking: {},
               active: {
-                entry: ['logIt', 'forwardToServices'],
+                entry: ['forwardToServices'],
               },
               inactive: {
-                entry: ['logIt', 'forwardToServices'],
+                entry: ['forwardToServices'],
               },
             },
           },
@@ -164,10 +168,10 @@ export const appMachine = model.createMachine(
             states: {
               checking: {},
               online: {
-                entry: ['logIt', 'forwardToServices'],
+                entry: ['forwardToServices'],
               },
               offline: {
-                entry: ['logIt', 'forwardToServices'],
+                entry: ['forwardToServices'],
               },
             },
           },
@@ -182,11 +186,6 @@ export const appMachine = model.createMachine(
           send({ ...event, type: `APP_${event.type}` }, { to: serviceRef })
         )
       ),
-      logIt: (context, event) => {
-        console.log('forwarded to service');
-        console.log('event context: ', context);
-        console.log('event: ', event);
-      },
       setIsReadError: assign({
         isReadError: true,
       }),

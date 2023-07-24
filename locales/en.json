@@ -513,7 +513,8 @@
     "unlockApp": "Unlock application",
     "failedToReadKeys": "Failed to read keys",
     "retryRead": "Want to retry?",
-    "decryptError": "Failed to decrypt data"
+    "decryptError": "Failed to decrypt data",
+    "ignore": "Ignore"
   },
   "SetupLanguage": {
     "header": "Choose Language",

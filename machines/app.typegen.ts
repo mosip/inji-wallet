@@ -21,7 +21,6 @@ export interface Typegen0 {
     forwardToServices: 'ACTIVE' | 'INACTIVE' | 'OFFLINE' | 'ONLINE';
     loadCredentialRegistryHostFromStorage: 'READY';
     loadCredentialRegistryInConstants: 'STORE_RESPONSE';
-    logIt: 'ACTIVE' | 'INACTIVE' | 'OFFLINE' | 'ONLINE';
     logServiceEvents: 'READY';
     logStoreEvents: 'xstate.init';
     requestDeviceInfo: 'REQUEST_DEVICE_INFO';
@@ -31,7 +30,7 @@ export interface Typegen0 {
     setIsReadError: 'ERROR';
     spawnServiceActors: 'READY';
     spawnStoreActor: 'xstate.init';
-    unsetIsDecryptError: 'READY';
+    unsetIsDecryptError: 'DECRYPT_ERROR_DISMISS' | 'READY';
     unsetIsReadError: 'READY';
   };
   'eventsCausingDelays': {};

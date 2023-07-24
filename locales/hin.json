@@ -509,7 +509,12 @@
   "WelcomeScreen": {
     "title": "ओपन सोर्स आइडेंटिटी सॉल्यूशन",
     "getStarted": "आरंभ करें",
-    "unlockApp": "एप्लिकेशन अनलॉक करें"
+    "unlockApp": "एप्लिकेशन अनलॉक करें",
+    "failedToReadKeys": "कुंजियाँ पढ़ने में विफल",
+    "retryRead": "पुनः प्रयास करना चाहते हैं?",
+    "decryptError": "डेटा डिक्रिप्ट करने में विफल",
+    "ignore": "अनदेखा करना"
+
   },
   "SetupLanguage": {
     "header": "भाषा चुनें",

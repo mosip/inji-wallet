@@ -13,26 +13,33 @@ import {
 } from './machines/app';
 import { DualMessageOverlay } from './components/DualMessageOverlay';
 import { useApp } from './screens/AppController';
-import { MessageOverlay } from './components/MessageOverlay';
+import { Alert } from 'react-native';
+
+// kludge: this is a bad practice but has been done temporarily to surface
+//  an occurance of a bug with minimal residual code changes, this should
+//  be removed once the bug cause is determined & fixed, ref: INJI-222
+const DecryptErrorAlert = (controller, t) => {
+  const heading = t('decryptError');
+  const desc = t('decryptError');
+  const ignoreBtnTxt = t('ignore');
+  Alert.alert(heading, desc, [
+    {
+      text: ignoreBtnTxt,
+      onPress: () => controller.ignoreDecrypt(),
+      style: 'cancel',
+    },
+  ]);
+};
 
 const AppLayoutWrapper: React.FC = () => {
   const { appService } = useContext(GlobalContext);
   const isDecryptError = useSelector(appService, selectIsDecryptError);
-  const { t } = useTranslation('WelcomeScreen');
   const controller = useApp();
-  return (
-    <>
-      <AppLayout />
-      {isDecryptError ? (
-        <MessageOverlay
-          isVisible={isDecryptError}
-          title={t('decryptError')}
-          message={t('decryptError')}
-          onBackdropPress={controller.ignoreDecrypt}
-        />
-      ) : null}
-    </>
-  );
+  const { t } = useTranslation('WelcomeScreen');
+  if (isDecryptError) {
+    DecryptErrorAlert(controller, t);
+  }
+  return <AppLayout />;
 };
 
 const AppLoadingWrapper: React.FC = () => {

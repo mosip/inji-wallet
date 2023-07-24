@@ -30,6 +30,7 @@ const model = createModel(
       TRY_AGAIN: () => ({}),
       IGNORE: () => ({}),
       GET: (key: string) => ({ key }),
+      DECRYPT_ERROR: () => ({}),
       SET: (key: string, value: unknown) => ({ key, value }),
       APPEND: (key: string, value: unknown) => ({ key, value }),
       PREPEND: (key: string, value: unknown) => ({ key, value }),
@@ -179,27 +180,19 @@ export const storeMachine =
                     to: (_, event) => event.requester,
                   }
                 ),
-                sendParent('ERROR'),
                 sendUpdate(),
               ],
             },
             STORE_ERROR: {
               actions: [
-                (_, event) => {
-                  console.log('logging lol event', event);
-                  if (
-                    event.error.message.includes('JSON') ||
-                    event.error.message.includes('decrypt')
-                  ) {
-                    console.log('sending decryptError');
-                    sendParent('ERROR');
-                  }
-                },
                 send((_, event) => model.events.STORE_ERROR(event.error), {
                   to: (_, event) => event.requester,
                 }),
                 sendUpdate(),
               ],
+            },
+            DECRYPT_ERROR: {
+              actions: sendParent('DECRYPT_ERROR'),
             },
             TAMPERED_VC: {
               actions: ['setIsTamperedVc'],
@@ -234,7 +227,6 @@ export const storeMachine =
         setEncryptionKey: model.assign({
           encryptionKey: (_, event) => event.key,
         }),
-        logKey: (_, event) => console.log('logging the enc key ', event.key),
       },
 
       services: {
@@ -244,7 +236,13 @@ export const storeMachine =
           if (!isDirectoryExist) {
             callback(model.events.READY());
           } else {
-            callback(model.events.ERROR(new Error('show the popup for retry')));
+            callback(
+              model.events.ERROR(
+                new Error(
+                  'vc directory exists and decryption key is not available'
+                )
+              )
+            );
           }
         },
 
@@ -333,6 +331,12 @@ export const storeMachine =
             } catch (e) {
               if (e.message === 'Data is tampered') {
                 callback(model.events.TAMPERED_VC());
+              } else if (
+                e.message.includes('JSON') ||
+                e.message.includes('decrypt')
+              ) {
+                callback(model.events.DECRYPT_ERROR());
+                sendUpdate();
               } else {
                 console.error(e);
                 callback(model.events.STORE_ERROR(e, event.requester));
@@ -484,7 +488,7 @@ export async function removeItem(
       await removeVCMetaData(MY_VCS_STORE_KEY, key, encryptionKey);
     } else {
       const data = await Storage.getItem(key, encryptionKey);
-      const decryptedData = actualdecryptJson(encryptionKey, data);
+      const decryptedData = decryptJson(encryptionKey, data);
       const list = JSON.parse(decryptedData);
       const vcKeyArray = value.split(':');
       const finalVcKeyArray = vcKeyArray.pop();
@@ -560,22 +564,6 @@ export async function clear() {
 
 function encryptJson(encryptionKey: string, data: string): string {
   return CryptoJS.AES.encrypt(data, encryptionKey).toString();
-}
-
-function actualdecryptJson(
-  encryptionKey: string,
-  encryptedData: string
-): string {
-  try {
-    return CryptoJS.AES.decrypt(
-      encryptedData.substring(10),
-      encryptionKey.substring(10),
-      CryptoJS.enc.Utf8
-    );
-  } catch (e) {
-    console.error('error decryptJson:', e);
-    throw new Error('decrypt error: ' + e.message);
-  }
 }
 
 function decryptJson(encryptionKey: string, encryptedData: string): string {
