@@ -50,7 +50,7 @@ export const MainLayout: React.FC<RootRouteProps> = (props) => {
     headerTitleStyle: {
       fontFamily: 'Inter_600SemiBold',
       fontSize: 30,
-      margin: 8,
+      margin: 4,
     },
     headerRightContainerStyle: { paddingEnd: 13 },
     headerLeftContainerStyle: { paddingEnd: 13 },
