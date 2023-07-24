@@ -70,7 +70,7 @@ export const storeMachine =
         events: {} as EventFrom<typeof model>,
       },
       id: 'store',
-      initial: isIOS ? 'gettingEncryptionKey' : 'checkEncryptionKey',
+      initial: isIOS() ? 'gettingEncryptionKey' : 'checkEncryptionKey',
       states: {
         checkEncryptionKey: {
           invoke: {
@@ -381,7 +381,7 @@ export const storeMachine =
         generateEncryptionKey: () => async (callback) => {
           const randomBytes = await generateSecureRandom(32);
           const randomBytesString = binaryToBase64(randomBytes);
-          if (isIOS) {
+          if (isIOS()) {
             const hasSetCredentials = await Keychain.setGenericPassword(
               ENCRYPTION_ID,
               randomBytesString
@@ -592,7 +592,7 @@ export async function clear() {
 }
 
 function encryptJson(encryptionKey: string, data: string): string {
-  if (isIOS) {
+  if (isIOS()) {
     return CryptoJS.AES.encrypt(data, encryptionKey).toString();
   }
   return SecureKeystore.encryptData(ENCRYPTION_ID, data);
@@ -600,7 +600,7 @@ function encryptJson(encryptionKey: string, data: string): string {
 
 function decryptJson(encryptionKey: string, encryptedData: string): string {
   try {
-    if (isIOS) {
+    if (isIOS()) {
       return CryptoJS.AES.decrypt(encryptedData, encryptionKey).toString(
         CryptoJS.enc.Utf8
       );
