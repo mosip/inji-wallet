@@ -14,6 +14,7 @@ import { SettingScreen } from './Settings/SettingScreen';
 import { HelpScreen } from '../components/HelpScreen';
 
 import { GlobalContext } from '../shared/GlobalContext';
+import { ScanEvents } from '../machines/bleShare/scan/scanMachine';
 const { Navigator, Screen } = createBottomTabNavigator();
 
 export const MainLayout: React.FC<RootRouteProps> = (props) => {
@@ -83,7 +84,7 @@ export const MainLayout: React.FC<RootRouteProps> = (props) => {
           listeners={{
             tabPress: (e) => {
               if (route.name == 'Scan') {
-                scanService.send('RESET');
+                scanService.send(ScanEvents.RESET());
               }
             },
           }}

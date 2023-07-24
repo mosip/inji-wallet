@@ -126,7 +126,7 @@ export const scanMachine =
       initial: 'inactive',
       on: {
         SCREEN_BLUR: {
-          target: '.inactive',
+          target: '#scan.disconnectDevice',
         },
         SCREEN_FOCUS: {
           target: '.checkStorage',
@@ -142,6 +142,16 @@ export const scanMachine =
       states: {
         inactive: {
           entry: 'removeLoggers',
+        },
+        disconnectDevice: {
+          invoke: {
+            src: 'disconnect',
+          },
+          on: {
+            DISCONNECT: {
+              target: '#scan.inactive',
+            },
+          },
         },
         checkStorage: {
           invoke: {
