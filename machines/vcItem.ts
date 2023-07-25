@@ -1135,9 +1135,9 @@ export const vcItemMachine =
 
         generateKeyPair: async (context) => {
           if (isIOS()) {
-            let keyPair: KeyPair = await generateKeys();
-            return keyPair;
+            return await generateKeys();
           }
+
           return SecureKeystore.generateKeyPair(context.id);
         },
 
