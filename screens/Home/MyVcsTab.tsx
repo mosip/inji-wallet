@@ -9,7 +9,10 @@ import { GetVcModal } from './MyVcs/GetVcModal';
 import { useTranslation } from 'react-i18next';
 import { VcItem } from '../../components/VcItem';
 import { GET_INDIVIDUAL_ID } from '../../shared/constants';
-import { ErrorMessageOverlay } from '../../components/MessageOverlay';
+import {
+  ErrorMessageOverlay,
+  MessageOverlay,
+} from '../../components/MessageOverlay';
 import { Icon } from 'react-native-elements';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
@@ -150,6 +153,13 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
         isVisible={controller.isSavingFailedInIdle}
         error={storeErrorTranslationPath}
         onDismiss={controller.DISMISS}
+      />
+      <MessageOverlay
+        isVisible={controller.isBindingError}
+        title={controller.walletBindingError}
+        onCancel={() => {
+          controller.DISMISS;
+        }}
       />
       <ErrorMessageOverlay
         translationPath={'MyVcsTab'}

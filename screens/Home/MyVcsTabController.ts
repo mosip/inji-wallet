@@ -7,6 +7,10 @@ import {
   selectMyVcs,
   VcEvents,
 } from '../../machines/vc';
+import {
+  selectWalletBindingError,
+  selectShowWalletBindingError,
+} from '../../machines/vcItem';
 import { vcItemMachine } from '../../machines/vcItem';
 import { GlobalContext } from '../../shared/GlobalContext';
 import { HomeScreenTabProps } from './HomeScreen';
@@ -39,6 +43,8 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
     isRequestSuccessful: useSelector(service, selectIsRequestSuccessful),
     isOnboarding: useSelector(service, selectIsOnboarding),
     isSavingFailedInIdle: useSelector(service, selectIsSavingFailedInIdle),
+    walletBindingError: useSelector(service, selectWalletBindingError),
+    isBindingError: useSelector(service, selectShowWalletBindingError),
     isMinimumStorageLimitReached: useSelector(
       service,
       selectIsMinimumStorageLimitReached
