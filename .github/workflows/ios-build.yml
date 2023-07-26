@@ -16,6 +16,14 @@ on:
         options:
           - orange
           - purple
+      registry_edit:
+        description: 'Edit Registry'
+        required: true
+        default: 'true'
+        type: choice
+        options:
+          - false
+          - true
       internal-testers:
         description: 'Internal Testers Group'
         required: true
@@ -74,6 +82,7 @@ jobs:
           SLACK_URL: '${{ secrets.SLACK_WEBHOOK_DEVOPS }}'
           MATCH_PASSWORD: '${{ secrets.INJI_IOS_MATCH_PASSWORD }}'
           APPLICATION_THEME: ${{ github.event.inputs.theme }}
+          CREDENTIAL_REGISTRY_EDIT: ${{ github.event.inputs.registry_edit }}
           MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
           TESTFLIGHT_INTERNAL_TESTERS_GROUP: ${{ github.event.inputs.internal-testers }}
           TESTFLIGHT_BETA_APP_DESCRIPTION: ${{ github.event.inputs.buildDescription }}
