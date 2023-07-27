@@ -27,7 +27,7 @@ function generateHmac(encryptionKey: string, data: string) {
   if (isIOS()) {
     return CryptoJS.HmacSHA256(encryptionKey, data).toString();
   }
-  return SecureKeystore.encryptData(ENCRYPTION_ID, data);
+  return SecureKeystore.generateHmacSha(ENCRYPTION_ID, data);
 }
 
 class Storage {
@@ -37,6 +37,25 @@ class Storage {
       return res.isDirectory();
     } catch (_) {
       return false;
+    }
+  };
+
+  static setItem = async (
+    key: string,
+    data: string,
+    encryptionKey?: string
+  ) => {
+    try {
+      const isSavingVC = vcKeyRegExp.exec(key);
+      if (isSavingVC) {
+        await this.storeVcHmac(encryptionKey, data, key);
+        return await this.storeVC(key, data);
+      }
+
+      await MMKV.setItem(key, data);
+    } catch (error) {
+      console.log('Error Occurred while saving in Storage.', error);
+      throw error;
     }
   };
 
@@ -77,25 +96,6 @@ class Storage {
     const path = getFilePath(key);
     return await readFile(path, 'utf8');
   }
-
-  static setItem = async (
-    key: string,
-    data: string,
-    encryptionKey?: string
-  ) => {
-    try {
-      const isSavingVC = vcKeyRegExp.exec(key);
-      if (isSavingVC) {
-        await this.storeVcHmac(encryptionKey, data, key);
-        return await this.storeVC(key, data);
-      }
-
-      await MMKV.setItem(key, data);
-    } catch (error) {
-      console.log('Error Occurred while saving in Storage.', error);
-      throw error;
-    }
-  };
 
   private static async storeVC(key: string, data: string) {
     await mkdir(vcDirectoryPath);
