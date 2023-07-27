@@ -76,6 +76,7 @@
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.10.1",
     "react-native-secure-key-store": "^2.0.10",
+    "react-native-secure-keystore": "file:.yalc/react-native-secure-keystore",
     "react-native-securerandom": "^1.0.0",
     "react-native-simple-markdown": "^1.1.0",
     "react-native-svg": "12.1.1",

@@ -21,7 +21,7 @@ import {
 import SecureKeystore from 'react-native-secure-keystore';
 import { Platform } from 'react-native';
 
-const ENCRYPTION_ID = 'c7c22a6c-9759-4605-ac88-46f4041d863d';
+export const ENCRYPTION_ID = 'c7c22a6c-9759-4605-ac88-46f4041d863d';
 const vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
 
 const model = createModel(
@@ -595,14 +595,17 @@ export async function clear() {
   }
 }
 
-function encryptJson(encryptionKey: string, data: string): string {
+export function encryptJson(encryptionKey: string, data: string): string {
   if (isIOS()) {
     return CryptoJS.AES.encrypt(data, encryptionKey).toString();
   }
   return SecureKeystore.encryptData(ENCRYPTION_ID, data);
 }
 
-function decryptJson(encryptionKey: string, encryptedData: string): string {
+export function decryptJson(
+  encryptionKey: string,
+  encryptedData: string
+): string {
   try {
     if (isIOS()) {
       return CryptoJS.AES.decrypt(encryptedData, encryptionKey).toString(

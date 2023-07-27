@@ -1,14 +1,14 @@
 import { MMKVLoader } from 'react-native-mmkv-storage';
-import { VC_ITEM_STORE_KEY_REGEX } from './constants';
+import { isIOS, VC_ITEM_STORE_KEY_REGEX } from './constants';
 import CryptoJS from 'crypto-js';
 import {
   DocumentDirectoryPath,
+  exists,
   mkdir,
   readFile,
+  stat,
   unlink,
   writeFile,
-  exists,
-  stat,
 } from 'react-native-fs';
 import getAllConfigurations from './commonprops/commonProps';
 import { Platform } from 'react-native';
@@ -16,10 +16,19 @@ import {
   getFreeDiskStorageOldSync,
   getFreeDiskStorageSync,
 } from 'react-native-device-info';
+import SecureKeystore from 'react-native-secure-keystore';
+import { decryptJson, ENCRYPTION_ID, encryptJson } from '../machines/store';
 
 const MMKV = new MMKVLoader().initialize();
 const vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
 const vcDirectoryPath = `${DocumentDirectoryPath}/inji/VC`;
+
+function generateHmac(encryptionKey: string, data: string) {
+  if (isIOS()) {
+    return CryptoJS.HmacSHA256(encryptionKey, data).toString();
+  }
+  return SecureKeystore.encryptData(ENCRYPTION_ID, data);
+}
 
 class Storage {
   static isVCStorageInitialised = async (): Promise<boolean> => {
@@ -33,19 +42,15 @@ class Storage {
 
   static getItem = async (key: string, encryptionKey?: string) => {
     try {
-      if (vcKeyRegExp.exec(key)) {
-        const path = getFilePath(key);
-        const data = await readFile(path, 'utf8');
+      const isSavingVC = vcKeyRegExp.exec(key);
 
-        const encryptedHMACofCurrentVC = await MMKV.getItem(getVCKeyName(key));
-        const HMACofCurrentVC = CryptoJS.AES.decrypt(
-          encryptedHMACofCurrentVC,
-          encryptionKey
-        ).toString(CryptoJS.enc.Utf8);
+      if (isSavingVC) {
+        const data = await this.readVCFromFile(key);
+        const isCorrupted = await this.isCorruptedVC(key, encryptionKey, data);
 
-        const HMACofVC = CryptoJS.HmacSHA256(encryptionKey, data).toString();
-        return HMACofVC === HMACofCurrentVC ? data : null;
+        return isCorrupted ? null : data;
       }
+
       return await MMKV.getItem(key);
     } catch (error) {
       console.log('Error Occurred while retriving from Storage.', error);
@@ -53,30 +58,60 @@ class Storage {
     }
   };
 
+  private static async isCorruptedVC(
+    key: string,
+    encryptionKey: string,
+    data: string
+  ) {
+    const storedHMACofCurrentVC = await this.readHmacForVC(key, encryptionKey);
+    const HMACofVC = generateHmac(encryptionKey, data);
+    return HMACofVC !== storedHMACofCurrentVC;
+  }
+
+  private static async readHmacForVC(key: string, encryptionKey: string) {
+    const encryptedHMACofCurrentVC = await MMKV.getItem(getVCKeyName(key));
+    return decryptJson(encryptionKey, encryptedHMACofCurrentVC);
+  }
+
+  private static async readVCFromFile(key: string) {
+    const path = getFilePath(key);
+    return await readFile(path, 'utf8');
+  }
+
   static setItem = async (
     key: string,
     data: string,
     encryptionKey?: string
   ) => {
     try {
-      if (vcKeyRegExp.exec(key)) {
-        const HMACofVC = CryptoJS.HmacSHA256(encryptionKey, data).toString();
-        const encryptedHMACofVC = CryptoJS.AES.encrypt(
-          HMACofVC,
-          encryptionKey
-        ).toString();
-        await MMKV.setItem(getVCKeyName(key), encryptedHMACofVC);
-
-        await mkdir(vcDirectoryPath);
-        const path = getFilePath(key);
-        return await writeFile(path, data, 'utf8');
+      const isSavingVC = vcKeyRegExp.exec(key);
+      if (isSavingVC) {
+        await this.storeVcHmac(encryptionKey, data, key);
+        return await this.storeVC(key, data);
       }
+
       await MMKV.setItem(key, data);
     } catch (error) {
       console.log('Error Occurred while saving in Storage.', error);
       throw error;
     }
   };
+
+  private static async storeVC(key: string, data: string) {
+    await mkdir(vcDirectoryPath);
+    const path = getFilePath(key);
+    return await writeFile(path, data, 'utf8');
+  }
+
+  private static async storeVcHmac(
+    encryptionKey: string,
+    data: string,
+    key: string
+  ) {
+    const HMACofVC = generateHmac(encryptionKey, data);
+    const encryptedHMACofVC = encryptJson(encryptionKey, HMACofVC);
+    await MMKV.setItem(getVCKeyName(key), encryptedHMACofVC);
+  }
 
   static removeItem = async (key: string) => {
     if (vcKeyRegExp.exec(key)) {
