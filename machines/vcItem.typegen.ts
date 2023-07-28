@@ -193,6 +193,7 @@ export interface Typegen0 {
     logWalletBindingFailure:
       | 'error.platform.vc-item.addKeyPair:invocation[0]'
       | 'error.platform.vc-item.addingWalletBindingId:invocation[0]'
+      | 'error.platform.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]'
       | 'error.platform.vc-item.requestingBindingOtp:invocation[0]'
       | 'error.platform.vc-item.updatingPrivateKey:invocation[0]';
     logWalletBindingSuccess:

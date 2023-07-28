@@ -466,7 +466,7 @@ export const DefaultTheme = {
       flex: 1,
       fontSize: 33,
       fontFamily: 'Inter_600SemiBold',
-      height: 40,
+      height: 60,
       lineHeight: 28,
       margin: 8,
       textAlign: 'center',
