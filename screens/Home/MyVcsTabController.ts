@@ -20,12 +20,17 @@ import {
   selectIsSavingFailedInIdle,
   selectIsMinimumStorageLimitReached,
 } from './MyVcsTabMachine';
+import {
+  selectShowHardwareKeystoreNotExistsAlert,
+  SettingsEvents,
+} from '../../machines/settings';
 
 export function useMyVcsTab(props: HomeScreenTabProps) {
   const service = props.service as ActorRefFrom<typeof MyVcsTabMachine>;
   const { appService } = useContext(GlobalContext);
   const vcService = appService.children.get('vc');
   const storeService = appService.children.get('store');
+  const settingsService = appService.children.get('settings');
 
   return {
     service,
@@ -43,7 +48,10 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
       service,
       selectIsMinimumStorageLimitReached
     ),
-
+    showHardwareKeystoreNotExistsAlert: useSelector(
+      settingsService,
+      selectShowHardwareKeystoreNotExistsAlert
+    ),
     DISMISS: () => service.send(MyVcsTabEvents.DISMISS()),
 
     DOWNLOAD_ID: () => service.send(MyVcsTabEvents.ADD_VC()),
@@ -59,5 +67,8 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
     ONBOARDING_DONE: () => service.send(MyVcsTabEvents.ONBOARDING_DONE()),
 
     IS_TAMPERED: () => service.send(MyVcsTabEvents.IS_TAMPERED()),
+
+    ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS: () =>
+      settingsService.send(SettingsEvents.ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS()),
   };
 }

@@ -9,7 +9,10 @@ import { GetVcModal } from './MyVcs/GetVcModal';
 import { useTranslation } from 'react-i18next';
 import { VcItem } from '../../components/VcItem';
 import { GET_INDIVIDUAL_ID } from '../../shared/constants';
-import { ErrorMessageOverlay } from '../../components/MessageOverlay';
+import {
+  ErrorMessageOverlay,
+  MessageOverlay,
+} from '../../components/MessageOverlay';
 import { Icon } from 'react-native-elements';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
@@ -146,6 +149,24 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
       {controller.GetVcModalService && (
         <GetVcModal service={controller.GetVcModalService} />
       )}
+
+      <MessageOverlay
+        isVisible={controller.showHardwareKeystoreNotExistsAlert}
+        title={t('Secure Key Storage not found')}
+        message={t(
+          'The key storage on your phone is not secured. Your keys could be leaked if phone is hacked.'
+        )}
+        onBackdropPress={controller.ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS}>
+        <Row style={{ padding: -8 }}>
+          <Button
+            type="clear"
+            title={t("OK, I'll risk it")}
+            onPress={controller.ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS}
+            margin={[0, 8, 0, 0]}
+          />
+        </Row>
+      </MessageOverlay>
+
       <ErrorMessageOverlay
         translationPath={'MyVcsTab'}
         isVisible={controller.isSavingFailedInIdle}

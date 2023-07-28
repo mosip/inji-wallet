@@ -28,22 +28,26 @@ export interface Typegen0 {
     resetCredentialRegistry: 'CANCEL' | 'UPDATE_CREDENTIAL_REGISTRY';
     setContext: 'STORE_RESPONSE';
     storeContext:
+      | 'ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS'
       | 'STORE_RESPONSE'
       | 'TOGGLE_BIOMETRIC_UNLOCK'
       | 'UPDATE_NAME'
       | 'UPDATE_VC_LABEL'
       | 'done.invoke.settings.resetInjiProps:invocation[0]';
     toggleBiometricUnlock: 'TOGGLE_BIOMETRIC_UNLOCK';
+    updateAndroidKeyStoreDefaults: 'STORE_RESPONSE';
     updateCredentialRegistry: 'done.invoke.settings.resetInjiProps:invocation[0]';
     updateCredentialRegistryResponse: 'error.platform.settings.resetInjiProps:invocation[0]';
     updateCredentialRegistrySuccess: 'done.invoke.settings.resetInjiProps:invocation[0]';
     updateDefaults: 'STORE_RESPONSE';
     updateName: 'UPDATE_NAME';
     updatePartialDefaults: 'STORE_RESPONSE';
+    updateUserShownWithHardwareKeystoreNotExists: 'ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS';
     updateVcLabel: 'UPDATE_VC_LABEL';
   };
   'eventsCausingDelays': {};
   'eventsCausingGuards': {
+    hasAndroidKeystoreData: 'STORE_RESPONSE';
     hasData: 'STORE_RESPONSE';
     hasPartialData: 'STORE_RESPONSE';
   };
