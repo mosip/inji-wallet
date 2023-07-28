@@ -4,7 +4,7 @@ import {
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
-import { mainRoutes } from '../routes/main';
+import { mainRoutes, scan } from '../routes/main';
 import { RootRouteProps } from '../routes';
 import { Theme } from '../components/ui/styleUtils';
 import { useTranslation } from 'react-i18next';
@@ -83,7 +83,7 @@ export const MainLayout: React.FC<RootRouteProps> = (props) => {
           component={route.component}
           listeners={{
             tabPress: (e) => {
-              if (route.name == 'Scan') {
+              if (route.name == scan.name) {
                 scanService.send(ScanEvents.RESET());
               }
             },
