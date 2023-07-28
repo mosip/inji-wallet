@@ -157,9 +157,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
       <MessageOverlay
         isVisible={controller.isBindingError}
         title={controller.walletBindingError}
-        onCancel={() => {
-          controller.DISMISS;
-        }}
+        onCancel={controller.DISMISS}
       />
       <ErrorMessageOverlay
         translationPath={'MyVcsTab'}
