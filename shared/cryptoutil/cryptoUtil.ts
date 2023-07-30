@@ -43,24 +43,42 @@ export async function getJwt(
     const payload64 = encodeB64(strPayload);
     const preHash = header64 + '.' + payload64;
 
-    let signature64;
-
-    if (isIOS()) {
-      const key = forge.pki.privateKeyFromPem(privateKey);
-      const md = forge.md.sha256.create();
-      md.update(preHash, 'utf8');
-
-      const signature = key.sign(md);
-      signature64 = encodeB64(signature);
-    } else {
-      signature64 = SecureKeystore.sign(individualId, preHash);
-      signature64 = replaceCharactersInB64(signature64);
-    }
+    const signature64 = await createSignature(
+      privateKey,
+      preHash,
+      individualId
+    );
 
     return header64 + '.' + payload64 + '.' + signature64;
   } catch (e) {
     console.log(e);
     throw e;
+  }
+}
+
+async function createSignature(
+  privateKey: string,
+  preHash: string,
+  individualId: string
+) {
+  let signature64;
+
+  if (isIOS()) {
+    const key = forge.pki.privateKeyFromPem(privateKey);
+    const md = forge.md.sha256.create();
+    md.update(preHash, 'utf8');
+
+    const signature = key.sign(md);
+    return encodeB64(signature);
+  } else {
+    try {
+      signature64 = await SecureKeystore.sign(individualId, preHash);
+    } catch (e) {
+      console.error('Error in creating signature:' + JSON.stringify(e));
+      throw e;
+    }
+
+    return replaceCharactersInB64(signature64);
   }
 }
 
