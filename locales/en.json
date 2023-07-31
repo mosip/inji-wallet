@@ -15,14 +15,14 @@
     "WALLET_BINDING_SUCCESSFULL": "Activation successful",
     "WALLET_BINDING_FAILURE": "Activation failed"
   },
-    "DeviceInfoList": {
-      "requestedBy": "Requested by",
-      "sentBy": "Sent by",
-      "deviceRefNumber": "Device reference number",
-      "name": "Name",
-      "Verifier": "Verifier",
-      "Wallet": "Wallet"
-    },
+  "DeviceInfoList": {
+    "requestedBy": "Requested by",
+    "sentBy": "Sent by",
+    "deviceRefNumber": "Device reference number",
+    "name": "Name",
+    "Verifier": "Verifier",
+    "Wallet": "Wallet"
+  },
   "FaceScanner": {},
   "OIDcAuth": {
     "title": "OIDC Authentication",
@@ -250,9 +250,14 @@
         "title": "Insufficient Appdata",
         "message": "You cannot add or receive cards since the Appdata is full. Clear Appdata to proceed."
       },
-      "vcIsTampered":{
+      "vcIsTampered": {
         "title": "VC data is tampered",
         "message": "Affected VCs are removed from the app."
+      },
+      "keystoreNotExists": {
+        "title": "Secure Key Storage not found",
+        "message": "The key storage on your phone is not secured. Your keys could be leaked if phone is hacked.",
+        "riskOkayText": "OK, I'll risk it"
       }
     }
   },
