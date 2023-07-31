@@ -63,7 +63,7 @@ async function createSignature(
 ) {
   let signature64;
 
-  if (isIOS()) {
+  if (isCustomSecureKeystore()) {
     const key = forge.pki.privateKeyFromPem(privateKey);
     const md = forge.md.sha256.create();
     md.update(preHash, 'utf8');
