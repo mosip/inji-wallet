@@ -16,7 +16,7 @@ import getAllConfigurations, {
 import Storage from '../shared/storage';
 import ShortUniqueId from 'short-unique-id';
 import { AppId } from '../shared/request';
-import SecureKeystore from 'react-native-secure-keystore';
+import { isCustomSecureKeystore } from '../shared/cryptoutil/cryptoUtil';
 
 const model = createModel(
   {
@@ -29,7 +29,7 @@ const model = createModel(
     isBiometricUnlockEnabled: false,
     credentialRegistry: HOST,
     appId: null,
-    hasUserShownWithHardwareKeystoreNotExists: null,
+    hasUserShownWithHardwareKeystoreNotExists: false,
     credentialRegistryResponse: '' as string,
   },
   {
@@ -75,15 +75,6 @@ export const settingsMachine = model.createMachine(
               cond: 'hasPartialData',
               target: 'idle',
               actions: ['setContext', 'updatePartialDefaults', 'storeContext'],
-            },
-            {
-              cond: 'hasAndroidKeystoreData',
-              target: 'idle',
-              actions: [
-                'setContext',
-                'updateAndroidKeyStoreDefaults',
-                'storeContext',
-              ],
             },
             { cond: 'hasData', target: 'idle', actions: ['setContext'] },
             { target: 'storingDefaults' },
@@ -161,19 +152,11 @@ export const settingsMachine = model.createMachine(
           return appId;
         },
 
-        hasUserShownWithHardwareKeystoreNotExists: () => {
-          return false;
-        },
+        hasUserShownWithHardwareKeystoreNotExists: () => false,
       }),
 
       updatePartialDefaults: model.assign({
         appId: (context) => context.appId || generateAppId(),
-      }),
-
-      updateAndroidKeyStoreDefaults: model.assign({
-        hasUserShownWithHardwareKeystoreNotExists: (context) => {
-          context.hasUserShownWithHardwareKeystoreNotExists || false;
-        },
       }),
 
       storeContext: send(
@@ -244,12 +227,6 @@ export const settingsMachine = model.createMachine(
       hasData: (_, event) => event.response != null,
       hasPartialData: (_, event) =>
         event.response != null && event.response.appId == null,
-      hasAndroidKeystoreData: (_, event) => {
-        return (
-          event.response != null &&
-          event.response.hasUserShownWithHardwareKeystoreNotExists == null
-        );
-      },
     },
   }
 );
@@ -269,8 +246,8 @@ function generateAppId() {
   return shortUUID.randomUUID();
 }
 
-export function deviceSupportsHardwareKeystore() {
-  return isIOS() ? true : SecureKeystore.deviceSupportsHardware();
+function deviceSupportsHardwareKeystore() {
+  return isIOS() ? true : isCustomSecureKeystore();
 }
 
 type State = StateFrom<typeof settingsMachine>;

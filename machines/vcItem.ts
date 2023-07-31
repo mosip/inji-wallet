@@ -1,11 +1,6 @@
 import { assign, ErrorPlatformEvent, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
-import {
-  HOST,
-  isIOS,
-  MY_VCS_STORE_KEY,
-  VC_ITEM_STORE_KEY,
-} from '../shared/constants';
+import { HOST, MY_VCS_STORE_KEY, VC_ITEM_STORE_KEY } from '../shared/constants';
 import { AppServices } from '../shared/GlobalContext';
 import { CredentialDownloadResponse, request } from '../shared/request';
 import {
@@ -20,6 +15,7 @@ import { verifyCredential } from '../shared/vcjs/verifyCredential';
 import { log } from 'xstate/lib/actions';
 import {
   generateKeys,
+  isCustomSecureKeystore,
   WalletBindingResponse,
 } from '../shared/cryptoutil/cryptoUtil';
 import { KeyPair } from 'react-native-rsa-native';
@@ -32,7 +28,6 @@ import getAllConfigurations, {
 } from '../shared/commonprops/commonProps';
 import { VcEvents } from './vc';
 import i18n from '../i18n';
-import { Platform } from 'react-native';
 import SecureKeystore from 'react-native-secure-keystore';
 
 const model = createModel(
@@ -346,12 +341,11 @@ export const vcItemMachine =
                 src: 'generateKeyPair',
                 onDone: [
                   {
-                    cond: 'isAndroid',
+                    cond: 'isCustomSecureKeystore',
                     target: '#vc-item.kebabPopUp.addingWalletBindingId',
                     actions: ['setPublicKey'],
                   },
                   {
-                    cond: 'isIOS',
                     target: '#vc-item.kebabPopUp.addingWalletBindingId',
                     actions: ['setPublicKey', 'setPrivateKey'],
                   },
@@ -369,12 +363,7 @@ export const vcItemMachine =
                 src: 'addWalletBindnigId',
                 onDone: [
                   {
-                    cond: 'isIOS',
-                    target: '#vc-item.kebabPopUp.updatingPrivateKey',
-                    actions: ['setWalletBindingId'],
-                  },
-                  {
-                    cond: 'isAndroid',
+                    cond: 'isCustomSecureKeystore',
                     target: '#vc-item.kebabPopUp',
                     actions: [
                       'setWalletBindingId',
@@ -383,6 +372,10 @@ export const vcItemMachine =
                       'setWalletBindingErrorEmpty',
                       'logWalletBindingSuccess',
                     ],
+                  },
+                  {
+                    target: '#vc-item.kebabPopUp.updatingPrivateKey',
+                    actions: ['setWalletBindingId'],
                   },
                 ],
                 onError: [
@@ -671,12 +664,11 @@ export const vcItemMachine =
             src: 'generateKeyPair',
             onDone: [
               {
-                cond: 'isAndroid',
+                cond: 'isCustomSecureKeystore',
                 target: 'addingWalletBindingId',
                 actions: ['setPublicKey'],
               },
               {
-                cond: 'isIOS',
                 target: 'addingWalletBindingId',
                 actions: ['setPublicKey', 'setPrivateKey'],
               },
@@ -694,15 +686,7 @@ export const vcItemMachine =
             src: 'addWalletBindnigId',
             onDone: [
               {
-                cond: 'isIOS',
-                target: 'updatingPrivateKey',
-                actions: [
-                  'setWalletBindingId',
-                  'setThumbprintForWalletBindingId',
-                ],
-              },
-              {
-                cond: 'isAndroid',
+                cond: 'isCustomSecureKeystore',
                 target: 'idle',
                 actions: [
                   'setWalletBindingId',
@@ -711,6 +695,13 @@ export const vcItemMachine =
                   'updateVc',
                   'setWalletBindingErrorEmpty',
                   'logWalletBindingSuccess',
+                ],
+              },
+              {
+                target: 'updatingPrivateKey',
+                actions: [
+                  'setWalletBindingId',
+                  'setThumbprintForWalletBindingId',
                 ],
               },
             ],
@@ -805,7 +796,7 @@ export const vcItemMachine =
 
         setPublicKey: assign({
           publicKey: (context, event) => {
-            if (isIOS()) {
+            if (!isCustomSecureKeystore()) {
               return (event.data as KeyPair).public;
             }
             return event.data as string;
@@ -1134,10 +1125,9 @@ export const vcItemMachine =
         },
 
         generateKeyPair: async (context) => {
-          if (isIOS()) {
+          if (!isCustomSecureKeystore()) {
             return await generateKeys();
           }
-
           return SecureKeystore.generateKeyPair(context.id);
         },
 
@@ -1303,9 +1293,7 @@ export const vcItemMachine =
           return context.isVerified;
         },
 
-        isAndroid: () => Platform.OS === 'android',
-
-        isIOS: () => Platform.OS === 'ios',
+        isCustomSecureKeystore: () => isCustomSecureKeystore(),
       },
     }
   );

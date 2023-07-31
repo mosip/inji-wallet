@@ -18,13 +18,14 @@ import {
 } from 'react-native-device-info';
 import SecureKeystore from 'react-native-secure-keystore';
 import { decryptJson, ENCRYPTION_ID, encryptJson } from '../machines/store';
+import { isCustomSecureKeystore } from './cryptoutil/cryptoUtil';
 
 const MMKV = new MMKVLoader().initialize();
 const vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
 const vcDirectoryPath = `${DocumentDirectoryPath}/inji/VC`;
 
 function generateHmac(encryptionKey: string, data: string) {
-  if (isIOS()) {
+  if (!isCustomSecureKeystore()) {
     return CryptoJS.HmacSHA256(encryptionKey, data).toString();
   }
   return SecureKeystore.generateHmacSha(data);

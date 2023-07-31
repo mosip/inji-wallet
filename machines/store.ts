@@ -19,7 +19,7 @@ import {
   isIOS,
 } from '../shared/constants';
 import SecureKeystore from 'react-native-secure-keystore';
-import { Platform } from 'react-native';
+import { isCustomSecureKeystore } from '../shared/cryptoutil/cryptoUtil';
 
 export const ENCRYPTION_ID = 'c7c22a6c-9759-4605-ac88-46f4041d863d';
 const vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
@@ -74,7 +74,9 @@ export const storeMachine =
         events: {} as EventFrom<typeof model>,
       },
       id: 'store',
-      initial: isIOS() ? 'gettingEncryptionKey' : 'checkEncryptionKey',
+      initial: !isCustomSecureKeystore()
+        ? 'gettingEncryptionKey'
+        : 'checkEncryptionKey',
       states: {
         checkEncryptionKey: {
           invoke: {
@@ -134,13 +136,12 @@ export const storeMachine =
           on: {
             KEY_RECEIVED: [
               {
-                cond: 'isIOS',
-                actions: 'setEncryptionKey',
-                target: 'resettingStorage',
+                cond: 'isCustomSecureKeystore',
+                target: 'ready',
               },
               {
-                cond: 'isAndroid',
-                target: 'ready',
+                actions: 'setEncryptionKey',
+                target: 'resettingStorage',
               },
             ],
 
@@ -255,6 +256,7 @@ export const storeMachine =
       services: {
         clear,
         hasAndroidEncryptionKey: () => async (callback) => {
+          console.log('here--custom hasAndroidEncryptionKey');
           const hasSetCredentials = SecureKeystore.hasAlias(ENCRYPTION_ID);
           if (hasSetCredentials) {
             callback(model.events.READY());
@@ -385,7 +387,7 @@ export const storeMachine =
         generateEncryptionKey: () => async (callback) => {
           const randomBytes = await generateSecureRandom(32);
           const randomBytesString = binaryToBase64(randomBytes);
-          if (isIOS()) {
+          if (!isCustomSecureKeystore()) {
             const hasSetCredentials = await Keychain.setGenericPassword(
               ENCRYPTION_ID,
               randomBytesString
@@ -408,9 +410,7 @@ export const storeMachine =
       },
 
       guards: {
-        isAndroid: () => Platform.OS === 'android',
-
-        isIOS: () => Platform.OS === 'ios',
+        isCustomSecureKeystore: () => isCustomSecureKeystore(),
       },
     }
   );
@@ -596,7 +596,7 @@ export async function clear() {
 }
 
 export function encryptJson(encryptionKey: string, data: string): string {
-  if (isIOS()) {
+  if (!isCustomSecureKeystore()) {
     return CryptoJS.AES.encrypt(data, encryptionKey).toString();
   }
   return SecureKeystore.encryptData(ENCRYPTION_ID, data);
@@ -607,7 +607,7 @@ export function decryptJson(
   encryptedData: string
 ): string {
   try {
-    if (isIOS()) {
+    if (!isCustomSecureKeystore()) {
       return CryptoJS.AES.decrypt(encryptedData, encryptionKey).toString(
         CryptoJS.enc.Utf8
       );

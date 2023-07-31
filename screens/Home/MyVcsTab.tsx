@@ -157,7 +157,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
           'The key storage on your phone is not secured. Your keys could be leaked if phone is hacked.'
         )}
         onBackdropPress={controller.ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS}>
-        <Row style={{ padding: -8 }}>
+        <Row>
           <Button
             type="clear"
             title={t("OK, I'll risk it")}

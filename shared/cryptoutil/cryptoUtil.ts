@@ -1,8 +1,8 @@
 import { KeyPair, RSA } from 'react-native-rsa-native';
 import forge from 'node-forge';
 import getAllConfigurations from '../commonprops/commonProps';
-import { isIOS } from '../constants';
 import SecureKeystore from '../../.yalc/react-native-secure-keystore';
+import { isIOS } from '../constants';
 
 export function generateKeys(): Promise<KeyPair> {
   return Promise.resolve(RSA.generateKeys(4096));
@@ -89,6 +89,10 @@ function replaceCharactersInB64(encodedB64) {
 function encodeB64(str: string) {
   const encodedB64 = forge.util.encode64(str);
   return replaceCharactersInB64(encodedB64);
+}
+
+export function isCustomSecureKeystore() {
+  return !isIOS() ? SecureKeystore.deviceSupportsHardware() : false;
 }
 
 export interface WalletBindingResponse {

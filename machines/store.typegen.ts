@@ -51,8 +51,7 @@ export interface Typegen0 {
   };
   'eventsCausingDelays': {};
   'eventsCausingGuards': {
-    isAndroid: 'KEY_RECEIVED';
-    isIOS: 'KEY_RECEIVED';
+    isCustomSecureKeystore: 'KEY_RECEIVED';
   };
   'eventsCausingServices': {
     checkStorageInitialisedOrNot: 'ERROR';

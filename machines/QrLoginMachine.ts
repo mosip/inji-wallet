@@ -8,11 +8,14 @@ import {
 } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { AppServices } from '../shared/GlobalContext';
-import { isIOS, MY_VCS_STORE_KEY } from '../shared/constants';
+import { MY_VCS_STORE_KEY } from '../shared/constants';
 import { StoreEvents } from './store';
 import { linkTransactionResponse, VC } from '../types/vc';
 import { request } from '../shared/request';
-import { getJwt } from '../shared/cryptoutil/cryptoUtil';
+import {
+  getJwt,
+  isCustomSecureKeystore,
+} from '../shared/cryptoutil/cryptoUtil';
 import {
   getBindingCertificateConstant,
   getPrivateKey,
@@ -354,7 +357,7 @@ export const qrLoginMachine =
         sendAuthenticate: async (context) => {
           let privateKey;
 
-          if (isIOS()) {
+          if (!isCustomSecureKeystore()) {
             privateKey = await getPrivateKey(
               context.selectedVc.walletBindingResponse?.walletBindingId
             );
@@ -390,7 +393,7 @@ export const qrLoginMachine =
 
         sendConsent: async (context) => {
           let privateKey;
-          if (isIOS()) {
+          if (!isCustomSecureKeystore()) {
             privateKey = await getPrivateKey(
               context.selectedVc.walletBindingResponse?.walletBindingId
             );

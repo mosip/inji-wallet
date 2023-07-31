@@ -35,7 +35,6 @@ export interface Typegen0 {
       | 'UPDATE_VC_LABEL'
       | 'done.invoke.settings.resetInjiProps:invocation[0]';
     toggleBiometricUnlock: 'TOGGLE_BIOMETRIC_UNLOCK';
-    updateAndroidKeyStoreDefaults: 'STORE_RESPONSE';
     updateCredentialRegistry: 'done.invoke.settings.resetInjiProps:invocation[0]';
     updateCredentialRegistryResponse: 'error.platform.settings.resetInjiProps:invocation[0]';
     updateCredentialRegistrySuccess: 'done.invoke.settings.resetInjiProps:invocation[0]';
@@ -47,7 +46,6 @@ export interface Typegen0 {
   };
   'eventsCausingDelays': {};
   'eventsCausingGuards': {
-    hasAndroidKeystoreData: 'STORE_RESPONSE';
     hasData: 'STORE_RESPONSE';
     hasPartialData: 'STORE_RESPONSE';
   };
