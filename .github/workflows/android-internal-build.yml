@@ -61,8 +61,10 @@ jobs:
       - name: Check for critical bugs
         run: |
           analysis_report=$(curl -s -u "${SONAR_TOKEN}:" "${SONAR_HOST_URL}/api/issues/search?componentKeys=${{ secrets.ORG_KEY }}&resolved=false")
+          echo "$analysis_report" | jq
 
           critical_bugs_unresolved=$(echo "$analysis_report" | jq '.issues | map(select(.type == "BUG" and .severity == "CRITICAL" and .status == "OPEN")) | length')
+          echo "Number of critical bugs: $critical_bugs_unresolved"
 
           if [ "$critical_bugs_unresolved" -gt 0 ]; then
             echo "Critical bugs found. Stopping the execution."
