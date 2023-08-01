@@ -4,8 +4,8 @@ import {
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
+import { RequestRouteProps, RootRouteProps } from '../routes';
 import { mainRoutes, scan } from '../routes/main';
-import { RootRouteProps } from '../routes';
 import { Theme } from '../components/ui/styleUtils';
 import { useTranslation } from 'react-i18next';
 import { Row } from '../components/ui';
@@ -17,7 +17,9 @@ import { GlobalContext } from '../shared/GlobalContext';
 import { ScanEvents } from '../machines/bleShare/scan/scanMachine';
 const { Navigator, Screen } = createBottomTabNavigator();
 
-export const MainLayout: React.FC<RootRouteProps> = (props) => {
+export const MainLayout: React.FC<RootRouteProps & RequestRouteProps> = (
+  props
+) => {
   const { t } = useTranslation('MainLayout');
   const { appService } = useContext(GlobalContext);
   const scanService = appService.children.get('scan');
