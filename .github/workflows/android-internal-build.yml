@@ -58,22 +58,26 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: https://sonarcloud.io
           SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
+      
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
 
-      # - name: Check for critical bugs in SonarQube
-      #   env:
-      #     SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      #   run: |
-      #     issues=$(curl -s -H "Authorization: Basic $(echo -n $SONAR_TOKEN:)" "${SONAR_HOST_URL}/api/issues/search?componentKeys=mimoto&resolved=false") 
 
-      #     critical_bugs_unresolved=$(echo "$issues" | jq '.issues | map(select(.type == "BUG" and .severity == "CRITICAL" and .status == "OPEN")) | length')
+      - name: Check for critical bugs in SonarQube
+        env:
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          issues=$(curl -s -H "Authorization: Basic $(echo -n $SONAR_TOKEN:)" "${SONAR_HOST_URL}/api/issues/search?componentKeys=mimoto&resolved=false") 
 
-      #     if [ "$critical_bugs_unresolved" -gt 0 ]; then
-      #       echo "Critical bugs in unresolved status found. Failing the pipeline."
-      #       exit 1
-      #     else
-      #       echo "No critical bugs in unresolved status. Pipeline continues."
-      #     fi
+          critical_bugs_unresolved=$(echo "$issues" | jq '.issues | map(select(.type == "BUG" and .severity == "CRITICAL" and .status == "OPEN")) | length')
+
+          if [ "$critical_bugs_unresolved" -gt 0 ]; then
+            echo "Critical bugs in unresolved status found. Failing the pipeline."
+            exit 1
+          else
+            echo "No critical bugs in unresolved status. Pipeline continues."
+          fi
 
       - uses: sonarsource/sonarqube-quality-gate-action@master
         timeout-minutes: 3
