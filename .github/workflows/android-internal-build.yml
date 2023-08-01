@@ -46,9 +46,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install npm dependencies
-        run: |
-          npm ci
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
 
       - uses: sonarsource/sonarqube-scan-action@master
         with:
@@ -58,32 +57,28 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: https://sonarcloud.io
           SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
-      
-      - name: Install jq
-        run: sudo apt-get update && sudo apt-get install -y jq
-
-
-      - name: Check for critical bugs in SonarQube
-        env:
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          
+      - name: Check for critical bugs
         run: |
-          issues=$(curl -s -H "Authorization: Basic $(echo -n $SONAR_TOKEN:)" "${SONAR_HOST_URL}/api/issues/search?componentKeys=mimoto&resolved=false") 
+          analysis_report=$(curl -s -u "${SONAR_TOKEN}:" "${SONAR_HOST_URL}/api/issues/search?componentKeys=${{ secrets.ORG_KEY }}&resolved=false")
 
-          critical_bugs_unresolved=$(echo "$issues" | jq '.issues | map(select(.type == "BUG" and .severity == "CRITICAL" and .status == "OPEN")) | length')
+          critical_bugs_unresolved=$(echo "$analysis_report" | jq '.issues | map(select(.type == "BUG" and .severity == "CRITICAL" and .status == "OPEN")) | length')
 
           if [ "$critical_bugs_unresolved" -gt 0 ]; then
-            echo "Critical bugs in unresolved status found. Failing the pipeline."
-            exit 1
+            echo "Critical bugs found. Stopping the execution."
+            echo "::set-output name=stop_execution::true"
           else
-            echo "No critical bugs in unresolved status. Pipeline continues."
+            echo "No critical bugs. Pipeline continues."
+            echo "::set-output name=stop_execution::false"
           fi
-
-      - uses: sonarsource/sonarqube-quality-gate-action@master
-        timeout-minutes: 3
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
+          SONAR_HOST_URL: https://sonarcloud.io
+          SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
+          
+      - name: Fail the pipeline if critical bugs are found
+        if: steps.check_critical_bugs.outputs.stop_execution == 'true'
+        run: exit 1
 
       # - name: Cache local npm repository
       #   uses: actions/cache@v3.0.11
