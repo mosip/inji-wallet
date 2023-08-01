@@ -8,24 +8,65 @@ import { mainRoutes } from '../routes/main';
 import { RootRouteProps } from '../routes';
 import { Theme } from '../components/ui/styleUtils';
 import { useTranslation } from 'react-i18next';
+import { Row } from '../components/ui';
+import { Image } from 'react-native';
+import { SettingScreen } from './Settings/SettingScreen';
+import { HelpScreen } from '../components/HelpScreen';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
-export const MainLayout: React.FC<RootRouteProps> = () => {
+export const MainLayout: React.FC<RootRouteProps> = (props) => {
   const { t } = useTranslation('MainLayout');
 
   const options: BottomTabNavigationOptions = {
-    headerLeft: () => <Icon name="notifications" color={Theme.Colors.Icon} />,
-    headerLeftContainerStyle: { paddingStart: 16 },
-    headerRightContainerStyle: { paddingEnd: 16 },
-    headerTitleAlign: 'center',
-    tabBarShowLabel: false,
+    headerRight: () => (
+      <Row align="space-between">
+        <HelpScreen
+          triggerComponent={
+            <Image
+              source={require('../assets/help-icon.png')}
+              style={{ width: 36, height: 36 }}
+            />
+          }
+          navigation={undefined}
+          route={undefined}
+        />
+
+        <SettingScreen
+          triggerComponent={
+            <Icon
+              name="settings"
+              type="simple-line-icon"
+              size={21}
+              style={Theme.Styles.IconContainer}
+              color={Theme.Colors.Icon}
+            />
+          }
+          navigation={props.navigation}
+          route={undefined}
+        />
+      </Row>
+    ),
+    headerTitleStyle: {
+      fontFamily: 'Inter_600SemiBold',
+      fontSize: 30,
+      margin: 8,
+    },
+    headerRightContainerStyle: { paddingEnd: 13 },
+    headerLeftContainerStyle: { paddingEnd: 13 },
+    tabBarShowLabel: true,
+    tabBarActiveTintColor: Theme.Colors.IconBg,
+    tabBarLabelStyle: {
+      fontSize: 12,
+      fontFamily: 'Inter_600SemiBold',
+    },
     tabBarStyle: {
-      height: 86,
-      paddingHorizontal: 36,
+      height: 82,
+      paddingHorizontal: 10,
     },
     tabBarItemStyle: {
-      height: 86,
+      height: 83,
+      padding: 11,
     },
   };
 
@@ -38,12 +79,12 @@ export const MainLayout: React.FC<RootRouteProps> = () => {
           component={route.component}
           options={{
             ...route.options,
-            title: t(route.name.toLowerCase()).toUpperCase(),
+            title: t(route.name),
             tabBarIcon: ({ focused }) => (
               <Icon
                 name={route.icon}
-                color={focused ? Theme.Colors.IconBg : Theme.Colors.Icon}
-                reverse={focused}
+                color={focused ? Theme.Colors.Icon : Theme.Colors.GrayIcon}
+                style={focused ? Theme.Styles.bottomTabIconStyle : null}
               />
             ),
           }}

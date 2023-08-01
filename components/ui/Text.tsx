@@ -28,7 +28,7 @@ interface TextProps {
   weight?: 'regular' | 'semibold' | 'bold';
   align?: TextStyle['textAlign'];
   margin?: Spacing;
-  size?: 'small' | 'smaller' | 'regular';
+  size?: 'small' | 'smaller' | 'regular' | 'large';
   lineHeight?: number;
   numLines?: number;
   style?: StyleProp<TextStyle>;

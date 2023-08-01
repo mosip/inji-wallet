@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useRef } from 'react';
-import { CheckBox, Input } from 'react-native-elements';
+import { Input } from 'react-native-elements';
 import { useTranslation } from 'react-i18next';
-import { useFocusEffect } from '@react-navigation/native';
-import { DeviceInfoList } from '../../components/DeviceInfoList';
-import { Button, Column, Row } from '../../components/ui';
+import { Button, Column, Row, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { useSendVcScreen } from './SendVcScreenController';
@@ -13,6 +11,7 @@ import { I18nManager, BackHandler } from 'react-native';
 import { useInterpret } from '@xstate/react';
 import { createVcItemMachine } from '../../machines/vcItem';
 import { GlobalContext } from '../../shared/GlobalContext';
+import { useFocusEffect } from '@react-navigation/native';
 
 export const SendVcScreen: React.FC = () => {
   const { t } = useTranslation('SendVcScreen');
@@ -55,51 +54,52 @@ export const SendVcScreen: React.FC = () => {
   return (
     <React.Fragment>
       <Column fill backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
-        <Column padding="16 0" scroll>
-          <DeviceInfoList of="receiver" deviceInfo={controller.receiverInfo} />
-
-          <Column padding="24">
+        <Column>
+          <Column
+            padding="24 19 14 19"
+            backgroundColor={Theme.Colors.whiteBackgroundColor}
+            style={{ position: 'relative' }}>
             <Input
               value={controller.reason ? controller.reason : ''}
               placeholder={!controller.reason ? reasonLabel : ''}
               label={controller.reason ? reasonLabel : ''}
               labelStyle={{ textAlign: 'left' }}
               onChangeText={controller.UPDATE_REASON}
-              containerStyle={{ marginBottom: 24 }}
+              containerStyle={{ marginBottom: 6 }}
               inputStyle={{ textAlign: I18nManager.isRTL ? 'right' : 'left' }}
-              selectionColor={Theme.Colors.Cursor}
             />
           </Column>
-          <Column>
-            {controller.vcKeys.map((vcKey, index) => (
-              <VcItem
-                key={vcKey}
-                vcKey={vcKey}
-                margin="0 2 8 2"
-                onPress={controller.SELECT_VC_ITEM(index)}
-                selectable
-                selected={index === controller.selectedIndex}
-                activeTab={'sharingVcScreen'}
-              />
-            ))}
-          </Column>
+          <Text
+            margin="15 0 13 24"
+            weight="bold"
+            color={Theme.Colors.textValue}
+            style={{ position: 'relative' }}>
+            {t('pleaseSelectAnId')}
+          </Text>
         </Column>
-        <Column
-          backgroundColor={Theme.Colors.whiteBackgroundColor}
-          padding="16 24"
-          margin="2 0 0 0"
-          elevation={2}>
+        <Column scroll>
+          {controller.vcKeys.map((vcKey, index) => (
+            <VcItem
+              key={vcKey}
+              vcKey={vcKey}
+              margin="0 2 8 2"
+              onPress={controller.SELECT_VC_ITEM(index)}
+              selectable
+              selected={index === controller.selectedIndex}
+              isSharingVc={true}
+            />
+          ))}
           <Button
+            type="gradient"
             title={t('acceptRequest')}
-            margin="12 0 12 0"
             disabled={controller.selectedIndex == null}
             onPress={controller.ACCEPT_REQUEST}
           />
           {!controller.selectedVc.shouldVerifyPresence && (
             <Button
-              type="outline"
+              type="gradient"
               title={t('acceptRequestAndVerify')}
-              margin="12 0 12 0"
+              styles={{ marginTop: 12 }}
               disabled={controller.selectedIndex == null}
               onPress={controller.VERIFY_AND_ACCEPT_REQUEST}
             />

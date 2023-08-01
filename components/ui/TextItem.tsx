@@ -10,10 +10,17 @@ export const TextItem: React.FC<TextItemProps> = (props) => {
       pX={24}
       pY={props.label ? 16 : 12}
       style={{
-        borderBottomColor: Theme.Colors.borderBottomColor,
-        borderBottomWidth: props.divider ? 1 : 0,
+        borderColor: Theme.Colors.borderBottomColor,
+        borderBottomWidth: props.divider ? 2 : 0,
+        borderTopWidth: props.topDivider ? 2 : 0,
         alignItems: 'flex-start',
       }}>
+      <Text
+        color={Theme.Colors.textValue}
+        weight={props.label ? 'semibold' : 'regular'}
+        style={{ textAlign: 'left' }}>
+        {props.text}
+      </Text>
       {props.label && (
         <Text
           size="smaller"
@@ -23,12 +30,6 @@ export const TextItem: React.FC<TextItemProps> = (props) => {
           {props.label}
         </Text>
       )}
-      <Text
-        color={Theme.Colors.textValue}
-        weight={props.label ? 'semibold' : 'regular'}
-        style={{ textAlign: 'left' }}>
-        {props.text}
-      </Text>
     </Column>
   );
 };
@@ -37,5 +38,6 @@ interface TextItemProps {
   text: string;
   label?: string;
   divider?: boolean;
+  topDivider?: boolean;
   margin?: string;
 }

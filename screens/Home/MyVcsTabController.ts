@@ -1,7 +1,7 @@
 import { useSelector } from '@xstate/react';
 import { useContext } from 'react';
 import { ActorRefFrom } from 'xstate';
-import { selectVcLabel } from '../../machines/settings';
+import { selectIsTampered } from '../../machines/store';
 import {
   selectIsRefreshingMyVcs,
   selectMyVcs,
@@ -17,15 +17,15 @@ import {
   selectIsOnboarding,
   selectIsRequestSuccessful,
   selectGetVcModal,
-  selectStoreError,
   selectIsSavingFailedInIdle,
+  selectIsMinimumStorageLimitReached,
 } from './MyVcsTabMachine';
 
 export function useMyVcsTab(props: HomeScreenTabProps) {
   const service = props.service as ActorRefFrom<typeof MyVcsTabMachine>;
   const { appService } = useContext(GlobalContext);
-  const settingsService = appService.children.get('settings');
   const vcService = appService.children.get('vc');
+  const storeService = appService.children.get('store');
 
   return {
     service,
@@ -33,17 +33,20 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
     GetVcModalService: useSelector(service, selectGetVcModal),
 
     vcKeys: useSelector(vcService, selectMyVcs),
-    vcLabel: useSelector(settingsService, selectVcLabel),
+    isTampered: useSelector(storeService, selectIsTampered),
 
     isRefreshingVcs: useSelector(vcService, selectIsRefreshingMyVcs),
     isRequestSuccessful: useSelector(service, selectIsRequestSuccessful),
     isOnboarding: useSelector(service, selectIsOnboarding),
-    storeError: useSelector(service, selectStoreError),
     isSavingFailedInIdle: useSelector(service, selectIsSavingFailedInIdle),
+    isMinimumStorageLimitReached: useSelector(
+      service,
+      selectIsMinimumStorageLimitReached
+    ),
 
     DISMISS: () => service.send(MyVcsTabEvents.DISMISS()),
 
-    ADD_VC: () => service.send(MyVcsTabEvents.ADD_VC()),
+    DOWNLOAD_ID: () => service.send(MyVcsTabEvents.ADD_VC()),
 
     GET_VC: () => service.send(MyVcsTabEvents.GET_VC()),
 
@@ -54,5 +57,7 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
     },
 
     ONBOARDING_DONE: () => service.send(MyVcsTabEvents.ONBOARDING_DONE()),
+
+    IS_TAMPERED: () => service.send(MyVcsTabEvents.IS_TAMPERED()),
   };
 }

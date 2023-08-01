@@ -9,36 +9,43 @@ import { EventFrom, spawn, StateFrom, send, assign, AnyState } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { authMachine, createAuthMachine } from './auth';
 import { createSettingsMachine, settingsMachine } from './settings';
-import { storeMachine } from './store';
+import { StoreEvents, storeMachine } from './store';
 import { createVcMachine, vcMachine } from './vc';
 import { createActivityLogMachine, activityLogMachine } from './activityLog';
-import { createRequestMachine, requestMachine } from './request';
-import * as BLERequest from './openIdBle/request';
-import * as BLEScan from './openIdBle/scan';
-import { createScanMachine, scanMachine } from './scan';
+import {
+  createRequestMachine,
+  requestMachine,
+} from './bleShare/request/requestMachine';
+import { createScanMachine, scanMachine } from './bleShare/scan/scanMachine';
 import { createRevokeMachine, revokeVidsMachine } from './revoke';
-
 import { pure, respond } from 'xstate/lib/actions';
 import { AppServices } from '../shared/GlobalContext';
 import { request } from '../shared/request';
-import { isBLEEnabled } from '../lib/smartshare';
+import {
+  changeCrendetialRegistry,
+  SETTINGS_STORE_KEY,
+} from '../shared/constants';
+import { MIMOTO_HOST } from 'react-native-dotenv';
 
 const model = createModel(
   {
     info: {} as AppInfo,
     backendInfo: {} as BackendInfo,
     serviceRefs: {} as AppServices,
+    isReadError: false,
   },
   {
     events: {
       ACTIVE: () => ({}),
       INACTIVE: () => ({}),
+      ERROR: () => ({}),
       OFFLINE: () => ({}),
       ONLINE: (networkType: NetInfoStateType) => ({ networkType }),
       REQUEST_DEVICE_INFO: () => ({}),
       READY: (data?: unknown) => ({ data }),
       APP_INFO_RECEIVED: (info: AppInfo) => ({ info }),
       BACKEND_INFO_RECEIVED: (info: BackendInfo) => ({ info }),
+      STORE_RESPONSE: (response: unknown) => ({ response }),
     },
   }
 );
@@ -61,13 +68,28 @@ export const appMachine = model.createMachine(
           store: {
             entry: ['spawnStoreActor', 'logStoreEvents'],
             on: {
-              READY: 'services',
+              READY: {
+                actions: 'unsetIsReadError',
+                target: 'services',
+              },
+              ERROR: {
+                actions: 'setIsReadError',
+              },
             },
           },
           services: {
             entry: ['spawnServiceActors', 'logServiceEvents'],
             on: {
-              READY: 'info',
+              READY: 'credentialRegistry',
+            },
+          },
+          credentialRegistry: {
+            entry: ['loadCredentialRegistryHostFromStorage'],
+            on: {
+              STORE_RESPONSE: {
+                actions: ['loadCredentialRegistryInConstants'],
+                target: 'info',
+              },
             },
           },
           info: {
@@ -152,7 +174,12 @@ export const appMachine = model.createMachine(
           send({ ...event, type: `APP_${event.type}` }, { to: serviceRef })
         )
       ),
-
+      setIsReadError: assign({
+        isReadError: true,
+      }),
+      unsetIsReadError: assign({
+        isReadError: false,
+      }),
       requestDeviceInfo: respond((context) => ({
         type: 'RECEIVE_DEVICE_INFO',
         info: {
@@ -197,19 +224,17 @@ export const appMachine = model.createMachine(
             activityLogMachine.id
           );
 
-          serviceRefs.scan = isBLEEnabled
-            ? spawn(
-                BLEScan.createScanMachine(serviceRefs),
-                BLEScan.scanMachine.id
-              )
-            : spawn(createScanMachine(serviceRefs), scanMachine.id);
+          serviceRefs.scan = spawn(
+            createScanMachine(serviceRefs),
+            scanMachine.id
+          );
 
-          serviceRefs.request = isBLEEnabled
-            ? spawn(
-                BLERequest.createRequestMachine(serviceRefs),
-                BLERequest.requestMachine.id
-              )
-            : spawn(createRequestMachine(serviceRefs), requestMachine.id);
+          if (Platform.OS === 'android') {
+            serviceRefs.request = spawn(
+              createRequestMachine(serviceRefs),
+              requestMachine.id
+            );
+          }
 
           serviceRefs.revoke = spawn(
             createRevokeMachine(serviceRefs),
@@ -227,7 +252,11 @@ export const appMachine = model.createMachine(
           context.serviceRefs.settings.subscribe(logState);
           context.serviceRefs.activityLog.subscribe(logState);
           context.serviceRefs.scan.subscribe(logState);
-          context.serviceRefs.request.subscribe(logState);
+
+          if (Platform.OS === 'android') {
+            context.serviceRefs.request.subscribe(logState);
+          }
+
           context.serviceRefs.revoke.subscribe(logState);
         }
       },
@@ -239,6 +268,21 @@ export const appMachine = model.createMachine(
       setBackendInfo: model.assign({
         backendInfo: (_, event) => event.info,
       }),
+
+      loadCredentialRegistryHostFromStorage: send(
+        StoreEvents.GET(SETTINGS_STORE_KEY),
+        {
+          to: (context) => context.serviceRefs.store,
+        }
+      ),
+
+      loadCredentialRegistryInConstants: (_context, event) => {
+        changeCrendetialRegistry(
+          !event.response?.credentialRegistry
+            ? MIMOTO_HOST
+            : event.response?.credentialRegistry
+        );
+      },
     },
 
     services: {
@@ -318,6 +362,7 @@ interface AppInfo {
   deviceId: string;
   deviceName: string;
 }
+
 interface BackendInfo {
   application: {
     name: string;
@@ -373,4 +418,8 @@ export function logState(state: AnyState) {
     }
     `
   );
+}
+
+export function selectIsReadError(state: State) {
+  return state.context.isReadError;
 }

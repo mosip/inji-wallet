@@ -5,7 +5,6 @@ import { Dimensions } from 'react-native';
 import { Overlay, LinearProgress } from 'react-native-elements';
 import { Button, Column, Text } from './ui';
 import { Theme } from './ui/styleUtils';
-import { VCLabel } from '../types/vc';
 
 export const MessageOverlay: React.FC<MessageOverlayProps> = (props) => {
   const { t } = useTranslation('common');
@@ -15,14 +14,33 @@ export const MessageOverlay: React.FC<MessageOverlayProps> = (props) => {
       overlayStyle={Theme.MessageOverlayStyles.overlay}
       onShow={props.onShow}
       onBackdropPress={props.onBackdropPress}>
-      <Column width={Dimensions.get('screen').width * 0.8}>
-        <Column padding="24">
+      <Column
+        width={Dimensions.get('screen').width * 0.8}
+        style={
+          !props.progress
+            ? Theme.MessageOverlayStyles.popupOverLay
+            : { height: 100 }
+        }>
+        <Column padding="21" crossAlign="center">
           {props.title && (
-            <Text weight="semibold" margin="0 0 12 0">
+            <Text
+              align="center"
+              weight="bold"
+              margin="0 0 10 0"
+              color={Theme.Colors.Details}>
               {props.title}
             </Text>
           )}
-          {props.message && <Text margin="0 0 12 0">{props.message}</Text>}
+          {props.message && (
+            <Text
+              align="center"
+              weight="semibold"
+              size="small"
+              margin="10 0 12 0"
+              color={Theme.Colors.Details}>
+              {props.message}
+            </Text>
+          )}
           {props.progress && <Progress progress={props.progress} />}
           {props.hint && (
             <Text
@@ -36,6 +54,7 @@ export const MessageOverlay: React.FC<MessageOverlayProps> = (props) => {
         </Column>
         {!props.children && props.onCancel ? (
           <Button
+            type="gradient"
             title={t('cancel')}
             onPress={props.onCancel}
             styles={Theme.MessageOverlayStyles.button}
@@ -50,7 +69,6 @@ export const ErrorMessageOverlay: React.FC<ErrorMessageOverlayProps> = ({
   isVisible,
   error,
   onDismiss,
-  vcLabel,
   translationPath,
 }) => {
   const { t } = useTranslation(translationPath);
@@ -58,14 +76,8 @@ export const ErrorMessageOverlay: React.FC<ErrorMessageOverlayProps> = ({
   return (
     <MessageOverlay
       isVisible={isVisible}
-      title={t(error + '.title', {
-        vcLabelSingular: vcLabel.singular,
-        vcLabelPlural: vcLabel.plural,
-      })}
-      message={t(error + '.message', {
-        vcLabelSingular: vcLabel.singular,
-        vcLabelPlural: vcLabel.plural,
-      })}
+      title={t(error + '.title')}
+      message={t(error + '.message')}
       onBackdropPress={onDismiss}
     />
   );
@@ -75,7 +87,6 @@ export interface ErrorMessageOverlayProps {
   isVisible: boolean;
   error?: string;
   onDismiss?: () => void;
-  vcLabel: VCLabel;
   translationPath: string;
 }
 
@@ -94,6 +105,7 @@ export interface MessageOverlayProps {
   title?: string;
   message?: string;
   progress?: boolean | number;
+  requester?: boolean;
   hint?: string;
   onCancel?: () => void;
   onBackdropPress?: () => void;

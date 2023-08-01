@@ -4,7 +4,9 @@ import {
   GOOGLE_NEARBY_MESSAGES_API_KEY,
 } from 'react-native-dotenv';
 
-export const HOST = MIMOTO_HOST;
+export let HOST = MIMOTO_HOST;
+
+export const changeCrendetialRegistry = (host) => (HOST = host);
 
 export const MY_VCS_STORE_KEY = 'myVCs';
 
@@ -13,7 +15,11 @@ export const RECEIVED_VCS_STORE_KEY = 'receivedVCs';
 export const MY_LOGIN_STORE_KEY = 'myLogins';
 
 export const VC_ITEM_STORE_KEY = (vc: Partial<VC>) =>
-  `vc:${vc.idType}:${vc.id}:${vc.requestId}`;
+  `vc:${vc.idType}:${vc.id}:${vc.requestId}:${vc.isPinned}`;
+
+//Regex expression to evaluate if the key is for a VC
+export const VC_ITEM_STORE_KEY_REGEX =
+  '^vc:(UIN|VID):[0-9]+:[a-z0-9-]+:[true|false]+$';
 
 //Regex expression to evaluate if the key is for a VC
 export const VC_ITEM_STORE_KEY_REGEX = '^vc:(UIN|VID):[0-9]+:[a-z0-9-]+$';
@@ -34,3 +40,13 @@ export const GNM_API_KEY = GOOGLE_NEARBY_MESSAGES_API_KEY;
 
 // https://developers.google.com/android/reference/com/google/android/gms/nearby/messages/Message#MAX_CONTENT_SIZE_BYTES
 export const GNM_MESSAGE_LIMIT = 102400 - 6400; // allowance for metadata
+
+export const APP_ID_LENGTH = 12;
+
+// Numbers and Upper case Alphabets without confusing characters like 0, 1, 2, I, O, Z
+// prettier-ignore
+export const APP_ID_DICTIONARY = [
+  '3', '4', '5', '6', '7', '8', '9',
+  'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L',
+  'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y',
+];

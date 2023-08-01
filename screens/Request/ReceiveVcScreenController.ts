@@ -1,31 +1,27 @@
 import { useSelector } from '@xstate/react';
 import { useContext } from 'react';
-import {
-  RequestEvents,
-  selectIncomingVc,
-  selectIsIncomingVp,
-  selectIsInvalidIdentity,
-  selectIsReviewingInIdle,
-  selectIsVerifyingIdentity,
-  selectSenderInfo,
-} from '../../machines/request';
-import { selectVcLabel } from '../../machines/settings';
 import { GlobalContext } from '../../shared/GlobalContext';
 import {
+  selectIncomingVc,
   selectIsAccepting,
+  selectIsIncomingVp,
+  selectIsReviewingInIdle,
   selectIsSavingFailedInIdle,
-  selectStoreError,
-} from '../../machines/openIdBle/request';
+  selectSenderInfo,
+} from '../../machines/bleShare/request/selectors';
+import {
+  selectIsInvalidIdentity,
+  selectIsVerifyingIdentity,
+} from '../../machines/bleShare/commonSelectors';
+import { RequestEvents } from '../../machines/bleShare/request/requestMachine';
 
 export function useReceiveVcScreen() {
   const { appService } = useContext(GlobalContext);
   const requestService = appService.children.get('request');
-  const settingsService = appService.children.get('settings');
 
   return {
     senderInfo: useSelector(requestService, selectSenderInfo),
     incomingVc: useSelector(requestService, selectIncomingVc),
-    vcLabel: useSelector(settingsService, selectVcLabel),
 
     isIncomingVp: useSelector(requestService, selectIsIncomingVp),
     isReviewingInIdle: useSelector(requestService, selectIsReviewingInIdle),
@@ -36,8 +32,6 @@ export function useReceiveVcScreen() {
     ),
     isVerifyingIdentity: useSelector(requestService, selectIsVerifyingIdentity),
     isInvalidIdentity: useSelector(requestService, selectIsInvalidIdentity),
-
-    storeError: useSelector(requestService, selectStoreError),
 
     ACCEPT: () => requestService.send(RequestEvents.ACCEPT()),
     ACCEPT_AND_VERIFY: () =>
