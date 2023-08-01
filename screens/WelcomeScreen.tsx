@@ -9,7 +9,6 @@ import { useWelcomeScreen } from './WelcomeScreenController';
 export const WelcomeScreen: React.FC<RootRouteProps> = (props) => {
   const { t } = useTranslation('WelcomeScreen');
   const controller = useWelcomeScreen(props);
-
   return (
     <Column
       fill

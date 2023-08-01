@@ -512,7 +512,11 @@
     "getStarted": "Get started",
     "unlockApp": "Unlock application",
     "failedToReadKeys": "Failed to read keys",
-    "retryRead": "Want to retry?"
+    "retryRead": "Want to retry?",
+    "ignore": "Ignore",
+    "errors": {
+      "decryptionFailed": "Failed to decrypt data",
+    }
   },
   "SetupLanguage": {
     "header": "Choose Language",
