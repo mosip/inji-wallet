@@ -256,7 +256,6 @@ export const storeMachine =
       services: {
         clear,
         hasAndroidEncryptionKey: () => async (callback) => {
-          console.log('here--custom hasAndroidEncryptionKey');
           const hasSetCredentials = SecureKeystore.hasAlias(ENCRYPTION_ID);
           if (hasSetCredentials) {
             callback(model.events.READY());
