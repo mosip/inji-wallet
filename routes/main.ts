@@ -25,7 +25,7 @@ const home: TabScreen = {
       }),
   },
 };
-const scan: TabScreen = {
+export const scan: TabScreen = {
   name: 'Scan',
   component: ScanLayout,
   icon: 'qr-code-scanner',
