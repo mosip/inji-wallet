@@ -517,7 +517,9 @@
     "unlockApp": "Buksan ang aplikasyon",
     "failedToReadKeys": "Nabigong basahin ang mga susi",
     "retryRead": "Gustong subukang muli?",
-    "decryptError": "Nabigong i-decrypt ang data",
+    "error": {
+      "decryptionFailed": "Nabigong i-decrypt ang data"
+    },
     "ignore": "Huwag pansinin"
   },
   "SetupLanguage": {

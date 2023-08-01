@@ -19,8 +19,8 @@ import { Alert } from 'react-native';
 //  an occurance of a bug with minimal residual code changes, this should
 //  be removed once the bug cause is determined & fixed, ref: INJI-222
 const DecryptErrorAlert = (controller, t) => {
-  const heading = t('decryptError');
-  const desc = t('decryptError');
+  const heading = t('errors.decryptionFailed');
+  const desc = t('errors.decryptionFailed');
   const ignoreBtnTxt = t('ignore');
   Alert.alert(heading, desc, [
     {

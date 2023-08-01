@@ -513,7 +513,9 @@
     "unlockApp": "فتح التطبيق",
     "failedToReadKeys": "فشلت قراءة المفاتيح",
     "retryRead": "هل تريد إعادة المحاولة؟",
-    "decryptError": "فشل في فك تشفير البيانات",
+    "errors": {
+      "decryptionFailed": "فشل في فك تشفير البيانات",
+    },
     "ignore": "يتجاهل"
   },
   "SetupLanguage": {
