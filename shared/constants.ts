@@ -21,9 +21,6 @@ export const VC_ITEM_STORE_KEY = (vc: Partial<VC>) =>
 export const VC_ITEM_STORE_KEY_REGEX =
   '^vc:(UIN|VID):[0-9]+:[a-z0-9-]+:[true|false]+$';
 
-//Regex expression to evaluate if the key is for a VC
-export const VC_ITEM_STORE_KEY_REGEX = '^vc:(UIN|VID):[0-9]+:[a-z0-9-]+$';
-
 export let individualId = '';
 
 export const GET_INDIVIDUAL_ID = (ind_Id: string) => {
