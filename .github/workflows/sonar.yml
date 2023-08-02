@@ -33,7 +33,9 @@ jobs:
               SONAR_PROJECT_KEY=mosip_inji
               
               # Fetch issues using the SonarQube API
-              response=$(curl -s -u "${SONAR_TOKEN}:" "${SONAR_HOST_URL}/api/issues/search?componentKeys=${SONAR_PROJECT_KEY}&resolved=false&severities=CRITICAL&facetMode=count")               
+              response=$(curl -s -u "${SONAR_TOKEN}:" "${SONAR_HOST_URL}/api/issues/search?componentKeys=${SONAR_PROJECT_KEY}&resolved=false&severities=CRITICAL&facetMode=count")   
+              echo "$response" 
+              
               # extract the count
               total_critical_bugs=$(echo "$response" | jq '.facets[] | select(.property == "severities") | .values[] | select(.val == "CRITICAL") | .count')
               echo "Number of critical bugs $total_critical_bugs"
