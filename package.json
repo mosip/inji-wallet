@@ -81,7 +81,7 @@
     "react-native-simple-markdown": "^1.1.0",
     "react-native-svg": "12.1.1",
     "react-native-swipe-gestures": "^1.0.5",
-    "react-native-tuvali": "file:.yalc/react-native-tuvali",
+    "react-native-tuvali": "github:mosip/tuvali#v0.4.3",
     "react-native-vector-icons": "^8.1.0",
     "short-unique-id": "^4.4.4",
     "xstate": "^4.35.0"
