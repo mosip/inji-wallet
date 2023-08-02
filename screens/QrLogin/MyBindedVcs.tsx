@@ -68,7 +68,7 @@ export const MyBindedVcs: React.FC<MyBindedVcsProps> = (props) => {
               <React.Fragment>
                 <Centered fill>
                   <Text weight="semibold" margin="0 0 8 0">
-                    {t('noBindedVc', { vcLabel: controller.vcLabel.plural })}
+                    {t('noBindedVc')}
                   </Text>
                 </Centered>
                 <Button

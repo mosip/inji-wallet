@@ -15,6 +15,8 @@ export interface VC {
   reason?: VCSharingReason[];
   shouldVerifyPresence?: boolean;
   walletBindingResponse?: WalletBindingResponse;
+  credentialRegistry: string;
+  isPinned?: boolean;
 }
 
 export interface VCSharingReason {

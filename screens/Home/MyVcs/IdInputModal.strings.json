@@ -1,6 +1,6 @@
 {
-  "header": "Enter your UIN/VID to download your {{vcLabel}}",
-  "generateVc": "Generate My {{vcLabel}}",
+  "header": "Enter your UIN/VID to download your Card",
+  "generateVc": "Generate My Card",
   "enterId": "Enter your {{idType}}",
   "noUIN/VID": "Don't have your UIN/VID? Get it here",
   "requestingOTP": "Requesting OTP..."

@@ -1,6 +1,6 @@
 import { assign, ErrorPlatformEvent, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
-import { MY_VCS_STORE_KEY, VC_ITEM_STORE_KEY } from '../shared/constants';
+import { HOST, MY_VCS_STORE_KEY, VC_ITEM_STORE_KEY } from '../shared/constants';
 import { AppServices } from '../shared/GlobalContext';
 import { CredentialDownloadResponse, request } from '../shared/request';
 import {
@@ -25,6 +25,7 @@ import {
 import getAllConfigurations, {
   DownloadProps,
 } from '../shared/commonprops/commonProps';
+import { VcEvents } from './vc';
 import i18n from '../i18n';
 
 const model = createModel(
@@ -33,12 +34,15 @@ const model = createModel(
     id: '',
     idType: '' as VcIdType,
     tag: '',
+    vcKey: '' as string,
+    myVcs: [] as string[],
     generatedOn: null as Date,
     credential: null as DecodedCredential,
     verifiableCredential: null as VerifiableCredential,
     storeVerifiableCredential: null as VerifiableCredential,
     requestId: '',
     isVerified: false,
+    isPinned: false,
     lastVerifiedOn: null,
     locked: false,
     otp: '',
@@ -54,7 +58,6 @@ const model = createModel(
     walletBindingError: '',
     publicKey: '',
     privateKey: '',
-    storeError: null as Error,
   },
   {
     events: {
@@ -78,6 +81,10 @@ const model = createModel(
       CANCEL: () => ({}),
       CONFIRM: () => ({}),
       STORE_ERROR: (error: Error) => ({ error }),
+      PIN_CARD: () => ({}),
+      KEBAB_POPUP: () => ({}),
+      SHOW_ACTIVITY: () => ({}),
+      REMOVE: (vcKey: string) => ({ vcKey }),
     },
   }
 );
@@ -202,7 +209,7 @@ export const vcItemMachine =
               },
             },
             savingFailed: {
-              entry: ['setStoreError', 'removeVcMetaDataFromStorage'],
+              entry: ['removeVcMetaDataFromStorage'],
               initial: 'idle',
               states: {
                 idle: {},
@@ -234,6 +241,176 @@ export const vcItemMachine =
             },
             ADD_WALLET_BINDING_ID: {
               target: 'showBindingWarning',
+            },
+            PIN_CARD: {
+              target: 'pinCard',
+              actions: 'setPinCard',
+            },
+            KEBAB_POPUP: {
+              target: 'kebabPopUp',
+            },
+            DISMISS: {
+              target: 'checkingVc',
+            },
+          },
+        },
+        pinCard: {
+          entry: 'storeContext',
+          on: {
+            STORE_RESPONSE: {
+              actions: 'sendVcUpdated',
+              target: 'idle',
+            },
+          },
+        },
+        kebabPopUp: {
+          on: {
+            DISMISS: {
+              target: 'idle',
+            },
+            ADD_WALLET_BINDING_ID: {
+              target: '#vc-item.kebabPopUp.showBindingWarning',
+            },
+            PIN_CARD: {
+              target: '#vc-item.pinCard',
+              actions: 'setPinCard',
+            },
+            SHOW_ACTIVITY: {
+              target: '#vc-item.kebabPopUp.showActivities',
+            },
+            REMOVE: {
+              actions: 'setVcKey',
+              target: '#vc-item.kebabPopUp.removeWallet',
+            },
+          },
+          initial: 'idle',
+          states: {
+            idle: {},
+            showBindingWarning: {
+              on: {
+                CONFIRM: {
+                  target: '#vc-item.kebabPopUp.requestingBindingOtp',
+                },
+                CANCEL: {
+                  target: '#vc-item.kebabPopUp',
+                },
+              },
+            },
+            requestingBindingOtp: {
+              invoke: {
+                src: 'requestBindingOtp',
+                onDone: [
+                  {
+                    target: '#vc-item.kebabPopUp.acceptingBindingOtp',
+                    actions: [log('accceptingOTP')],
+                  },
+                ],
+                onError: [
+                  {
+                    actions: 'setWalletBindingError',
+                    target: '#vc-item.kebabPopUp.showingWalletBindingError',
+                  },
+                ],
+              },
+            },
+            showingWalletBindingError: {
+              on: {
+                CANCEL: {
+                  target: '#vc-item.kebabPopUp',
+                  actions: 'setWalletBindingErrorEmpty',
+                },
+              },
+            },
+            acceptingBindingOtp: {
+              entry: ['clearOtp'],
+              on: {
+                INPUT_OTP: {
+                  target: '#vc-item.kebabPopUp.addKeyPair',
+                  actions: ['setOtp'],
+                },
+                DISMISS: {
+                  target: '#vc-item.kebabPopUp',
+                  actions: ['clearOtp', 'clearTransactionId'],
+                },
+              },
+            },
+            addKeyPair: {
+              invoke: {
+                src: 'generateKeyPair',
+                onDone: {
+                  target: '#vc-item.kebabPopUp.addingWalletBindingId',
+                  actions: ['setPublicKey', 'setPrivateKey'],
+                },
+                onError: [
+                  {
+                    actions: 'setWalletBindingError',
+                    target: '#vc-item.kebabPopUp.showingWalletBindingError',
+                  },
+                ],
+              },
+            },
+            addingWalletBindingId: {
+              invoke: {
+                src: 'addWalletBindnigId',
+                onDone: [
+                  {
+                    target: '#vc-item.kebabPopUp.updatingPrivateKey',
+                    actions: ['setWalletBindingId'],
+                  },
+                ],
+                onError: [
+                  {
+                    actions: [
+                      'setWalletBindingError',
+                      'logWalletBindingFailure',
+                    ],
+                    target: '#vc-item.kebabPopUp.showingWalletBindingError',
+                  },
+                ],
+              },
+            },
+            updatingPrivateKey: {
+              invoke: {
+                src: 'updatePrivateKey',
+                onDone: {
+                  actions: [
+                    'storeContext',
+                    'updatePrivateKey',
+                    'updateVc',
+                    'setWalletBindingErrorEmpty',
+                    'logWalletBindingSuccess',
+                  ],
+                  target: '#vc-item.kebabPopUp',
+                },
+                onError: {
+                  actions: 'setWalletBindingError',
+                  target: '#vc-item.kebabPopUp.showingWalletBindingError',
+                },
+              },
+            },
+            showActivities: {
+              on: {
+                DISMISS: '#vc-item.kebabPopUp',
+              },
+            },
+            removeWallet: {
+              on: {
+                CONFIRM: {
+                  target: 'removingVc',
+                },
+                CANCEL: {
+                  target: 'idle',
+                },
+              },
+            },
+            removingVc: {
+              entry: 'removeVcItem',
+              on: {
+                STORE_RESPONSE: {
+                  actions: ['removedVc', log('removing Vc')],
+                  target: '#vc-item',
+                },
+              },
             },
           },
         },
@@ -504,7 +681,6 @@ export const vcItemMachine =
           invoke: {
             src: 'updatePrivateKey',
             onDone: {
-              target: 'idle',
               actions: [
                 'storeContext',
                 'updatePrivateKey',
@@ -512,6 +688,7 @@ export const vcItemMachine =
                 'setWalletBindingErrorEmpty',
                 'logWalletBindingSuccess',
               ],
+              target: 'idle',
             },
             onError: {
               actions: ['setWalletBindingError', 'logWalletBindingFailure'],
@@ -542,10 +719,6 @@ export const vcItemMachine =
             },
             verifiableCredential: null,
           };
-        }),
-
-        setStoreError: assign({
-          storeError: (_context, event) => event.error,
         }),
 
         removeVcMetaDataFromStorage: send(
@@ -602,6 +775,21 @@ export const vcItemMachine =
             event.data as WalletBindingResponse,
         }),
 
+        setPinCard: assign((context) => {
+          return {
+            ...context,
+            isPinned: !context.isPinned,
+          };
+        }),
+
+        sendVcUpdated: send(
+          (_context, event) =>
+            VcEvents.VC_UPDATED(VC_ITEM_STORE_KEY(event.response) as string),
+          {
+            to: (context) => context.serviceRefs.vc,
+          }
+        ),
+
         updateVc: send(
           (context) => {
             const { serviceRefs, ...vc } = context;
@@ -627,6 +815,15 @@ export const vcItemMachine =
           }
         ),
 
+        removedVc: send(
+          () => ({
+            type: 'REFRESH_MY_VCS',
+          }),
+          {
+            to: (context) => context.serviceRefs.vc,
+          }
+        ),
+
         requestVcContext: send(
           (context) => ({
             type: 'GET_VC_ITEM',
@@ -647,6 +844,7 @@ export const vcItemMachine =
         storeContext: send(
           (context) => {
             const { serviceRefs, ...data } = context;
+            data.credentialRegistry = HOST;
             return StoreEvents.SET(VC_ITEM_STORE_KEY(context), data);
           },
           {
@@ -778,6 +976,10 @@ export const vcItemMachine =
           otp: (_, event) => event.otp,
         }),
 
+        setVcKey: model.assign({
+          vcKey: (_, event) => event.vcKey,
+        }),
+
         setOtpError: assign({
           otpError: (_context, event) =>
             (event as ErrorPlatformEvent).data.message,
@@ -797,6 +999,17 @@ export const vcItemMachine =
           (context) => {
             const { serviceRefs, ...data } = context;
             return StoreEvents.SET(VC_ITEM_STORE_KEY(context), data);
+          },
+          { to: (context) => context.serviceRefs.store }
+        ),
+
+        loadMyVcs: send(StoreEvents.GET(MY_VCS_STORE_KEY), {
+          to: (context) => context.serviceRefs.store,
+        }),
+
+        removeVcItem: send(
+          (_context, event) => {
+            return StoreEvents.REMOVE(MY_VCS_STORE_KEY, _context.vcKey);
           },
           { to: (context) => context.serviceRefs.store }
         ),
@@ -832,7 +1045,7 @@ export const vcItemMachine =
                 authFactorType: 'WLA',
                 format: 'jwt',
                 individualId: context.id,
-                transactionId: context.bindingTransactionId,
+                transactionId: context.transactionId,
                 publicKey: context.publicKey,
                 challengeList: [
                   {
@@ -945,9 +1158,11 @@ export const vcItemMachine =
                   tag: '',
                   requestId: context.requestId,
                   isVerified: false,
+                  isPinned: context.isPinned,
                   lastVerifiedOn: null,
                   locked: context.locked,
                   walletBindingResponse: null,
+                  credentialRegistry: '',
                 })
               );
             }
@@ -1098,6 +1313,9 @@ export function selectIsOtpError(state: State) {
 export function selectOtpError(state: State) {
   return state.context.otpError;
 }
+export function selectIsPinned(state: State) {
+  return state.context.isPinned;
+}
 
 export function selectIsLockingVc(state: State) {
   return state.matches('lockingVc');
@@ -1119,23 +1337,19 @@ export function selectIsAcceptingRevokeInput(state: State) {
   return state.matches('acceptingRevokeInput');
 }
 
-export function selectIsRequestBindingOtp(state: State) {
-  return state.matches('requestingBindingOtp');
-}
-
-export function selectWalletBindingId(state: State) {
-  return state.context.walletBindingResponse;
-}
-
 export function selectEmptyWalletBindingId(state: State) {
   var val = state.context.walletBindingResponse
     ? state.context.walletBindingResponse.walletBindingId
     : undefined;
-  return val === undefined || val == null || val.length <= 0 ? true : false;
+  return val == undefined || val == null || val.length <= 0 ? true : false;
 }
 
 export function selectWalletBindingError(state: State) {
   return state.context.walletBindingError;
+}
+
+export function selectRequestBindingOtp(state: State) {
+  return state.matches('requestingBindingOtp');
 }
 
 export function selectAcceptingBindingOtp(state: State) {
@@ -1143,10 +1357,13 @@ export function selectAcceptingBindingOtp(state: State) {
 }
 
 export function selectShowWalletBindingError(state: State) {
-  return state.matches('showingWalletBindingError');
+  return (
+    state.matches('showingWalletBindingError') ||
+    state.matches('kebabPopUp.showingWalletBindingError')
+  );
 }
 
-export function isWalletBindingInProgress(state: State) {
+export function selectWalletBindingInProgress(state: State) {
   return state.matches('requestingBindingOtp') ||
     state.matches('addingWalletBindingId') ||
     state.matches('addKeyPair') ||
@@ -1155,12 +1372,44 @@ export function isWalletBindingInProgress(state: State) {
     : false;
 }
 
-export function isShowingBindingWarning(state: State) {
+export function selectBindingWarning(state: State) {
   return state.matches('showBindingWarning');
 }
+export function selectKebabPopUp(state: State) {
+  return state.matches('kebabPopUp');
+}
 
-export function selectStoreError(state: State) {
-  return state.context.storeError;
+export function selectKebabPopUpRequestBindingOtp(state: State) {
+  return state.matches('kebabPopUp.requestingBindingOtp');
+}
+
+export function selectKebabPopUpAcceptingBindingOtp(state: State) {
+  return state.matches('kebabPopUp.acceptingBindingOtp');
+}
+
+export function selectKebabPopUpShowWalletBindingError(state: State) {
+  return state.matches('kebabPopUp.showingWalletBindingError');
+}
+
+export function selectKebabPopUpWalletBindingInProgress(state: State) {
+  return state.matches('kebabPopUp.requestingBindingOtp') ||
+    state.matches('kebabPopUp.addingWalletBindingId') ||
+    state.matches('kebabPopUp.addKeyPair') ||
+    state.matches('kebabPopUp.updatingPrivateKey')
+    ? true
+    : false;
+}
+
+export function selectKebabPopUpBindingWarning(state: State) {
+  return state.matches('kebabPopUp.showBindingWarning');
+}
+
+export function selectRemoveWalletWarning(state: State) {
+  return state.matches('kebabPopUp.removeWallet');
+}
+
+export function selectShowActivities(state: State) {
+  return state.matches('kebabPopUp.showActivities');
 }
 
 export function selectIsSavingFailedInIdle(state: State) {

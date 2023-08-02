@@ -22,6 +22,7 @@ export const PinInput: React.FC<PinInputProps> = (props) => {
           selectTextOnFocus
           keyboardType="numeric"
           maxLength={1}
+          secureTextEntry
           selectionColor={Theme.Colors.inputSelection}
           style={Theme.PinInputStyle.input}
           key={index}
