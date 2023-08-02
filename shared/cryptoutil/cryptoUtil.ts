@@ -24,18 +24,15 @@ export async function getJwt(
       //'kid': keyId,
       'x5t#S256': thumbprint,
     };
-    var payloadJSON =
-      '{"iss": "' +
-      config.issuer +
-      '", "aud": "' +
-      config.audience +
-      '", "sub": "' +
-      individualId +
-      '", "iat": ' +
-      iat +
-      ', "exp": ' +
-      exp +
-      '}';
+
+    const payloadJSON = JSON.stringify({
+      iss: config.issuer,
+      sub: individualId,
+      aud: config.audience,
+      iat: iat,
+      exp: exp,
+    });
+
     var payload = JSON.parse(payloadJSON);
     const strHeader = JSON.stringify(header);
     const strPayload = JSON.stringify(payload);
