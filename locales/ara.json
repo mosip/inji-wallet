@@ -129,6 +129,7 @@
   "SettingScreen": {
     "header": "إعدادات",
     "injiAsVerifierApp": "  كتطبيق للتحقق إنجي",
+    "receiveCard": "البطاقة المستلمة",
     "basicSettings": "الإعدادات الأساسية",
     "bioUnlock": "افتح مع القياسات الحيوية",
     "language": "لغة",
@@ -514,7 +515,7 @@
     "failedToReadKeys": "فشلت قراءة المفاتيح",
     "retryRead": "هل تريد إعادة المحاولة؟",
     "errors": {
-      "decryptionFailed": "فشل في فك تشفير البيانات",
+      "decryptionFailed": "فشل في فك تشفير البيانات"
     },
     "ignore": "يتجاهل"
   },

@@ -129,6 +129,7 @@
   "SettingScreen": {
     "header": "Mga setting",
     "injiAsVerifierApp": "Inji bilang Verifier App",
+    "receiveCard": "Tumanggap ng Card",
     "basicSettings": "Mga Pangunahing Setting",
     "bioUnlock": "I-unlock gamit ang Biometrics",
     "language": "Wika",

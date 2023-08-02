@@ -126,6 +126,7 @@
   "SettingScreen": {
     "header": "समायोजन",
     "injiAsVerifierApp": "सत्यापनकर्ता ऐप के रूप में इंजी",
+    "receiveCard": "कार्ड प्राप्त करें",
     "basicSettings": "मूल सेटिंग्स",
     "bioUnlock": "बायोमेट्रिक्स से अनलॉक करें",
     "language": "भाषा",
