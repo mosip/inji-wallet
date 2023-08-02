@@ -31,13 +31,12 @@ jobs:
               SONAR_TOKEN=${{ secrets.SONAR_TOKEN }}
               SONAR_HOST_URL=https://sonarcloud.io
               SONAR_PROJECT_KEY=mosip_inji
-              SONAR_QUALIFIER=TRK
               
               # Fetch issues using the SonarQube API
-              response=$(curl -s -u "${SONAR_TOKEN}:" "${SONAR_HOST_URL}/api/issues/search?componentKeys=${SONAR_PROJECT_KEY}&severities=CRITICAL&statuses=OPEN&types=BUG")                
-              # Check if any critical bugs in unresolved status are found
-              total_critical_bugs=$(echo "$response" | jq '.total')
-
+              response=$(curl -s -u "${SONAR_TOKEN}:" "${SONAR_HOST_URL}/api/issues/search?componentKeys=${SONAR_PROJECT_KEY}&resolved=false&severities=CRITICAL&facetMode=count")               
+              # extract the count
+              total_critical_bugs=$(echo "$response" | jq '.facets[] | select(.property == "severities") | .values[] | select(.val == "CRITICAL") | .count')
+              echo "Number of critical bugs $total_critical_bugs"
               if [ "$total_critical_bugs" -gt 0 ]; then
                 echo "Critical bugs in unresolved status found! Failing the pipeline."
                 echo "Bug details:"
