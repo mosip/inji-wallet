@@ -1,0 +1,114 @@
+name: PR - Android build verification
+
+env:
+  backendServiceDefaultUrl: https://api.sandbox.mosip.net
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - demobranch
+      - qa-develop
+      - 0.9
+    tags:
+      - '*'
+  pull_request: 
+    types: [ opened, synchronize ]
+    branches:
+      - develop
+      - 'release-**'
+    tags: 
+      - '*'
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.1.0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+      
+      - name: Cache local npm repository
+        uses: actions/cache@v3.0.11
+        with:
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          path: ~/.npm
+
+      - name: Cache local gradle repository
+        uses: actions/cache@v3.0.11
+        with:
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+      
+      - name: Install npm dependencies
+        run: |
+          npm ci
+
+      - name: Create .env.local file
+        run: |
+          echo "${{ secrets.ENV_FILE }}" > .env.local > android/local.properties
+
+      - name: Setup branch and env
+        run: |
+          # Strip git ref prefix from version
+          echo "BRANCH_NAME=$(echo ${{ github.ref }} | sed -e 's,.*/\(.*\),\1,')" >> $GITHUB_ENV
+          echo "GPG_TTY=$(tty)" >> $GITHUB_ENV   
+
+      - name: Setup branch and GPG public key
+        run: |
+          # Strip git ref prefix from version
+          echo ${{ env.BRANCH_NAME }}
+          echo ${{ env.GPG_TTY }}
+
+          sudo apt-get --yes install gnupg2
+          gpg2 --import ./.github/keys/mosipgpgkey_pub.gpg 
+          gpg2 --quiet --batch --passphrase=${{secrets.gpg_secret}}  --allow-secret-key-import --import ./.github/keys/mosipgpgkey_sec.gpg
+
+      - name: Setup Firebase
+        run: |
+          cd android
+          if [ ! -z "$FIREBASE_SECRET" ] && [ -f app/google-services.json.gpg ];then rm -f app/google-services.json;gpg2 --quiet --batch --passphrase=$FIREBASE_SECRET --pinentry-mode loopback --decrypt --output app/google-services.json app/mosip-google-services.json.gpg;fi
+        env:
+          FIREBASE_SECRET: ${{ secrets.GPG_SECRET }}
+      
+      - name: Generate keystore
+        run: |
+          keytool \
+          -genkey -v \
+          -storetype PKCS12 \
+          -keyalg RSA \
+          -keysize 2048 \
+          -validity 10000 \
+          -storepass $DEBUG_KEYSTORE_PASSWORD \
+          -keypass $DEBUG_KEYSTORE_PASSWORD \
+          -alias androiddebugkey \
+          -keystore android/app/debug.keystore \
+          -dname "CN=io.mosip.residentapp,OU=,O=,L=,S=,C=US"
+        env: 
+          DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
+
+      - name: Export variables for keystore
+        run: |
+          cd android/app
+          export DEBUG_KEYSTORE_ALIAS=androiddebugkey
+          export DEBUG_KEYSTORE_PASSWORD=$DEBUG_KEYSTORE_PASSWORD
+        env: 
+          DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
+
+      - name: Bump version code
+        uses: chkfung/android-version-actions@v1.2.1
+        with:
+          gradlePath: android/app/build.gradle
+          versionCode: ${{github.run_number}}
+
+      - name: Run Build using Fastlane
+        run: | 
+          cd android/scripts
+          ./verify-build.sh
+        env: 
+          DEBUG_KEYSTORE_ALIAS: androiddebugkey
+          DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'

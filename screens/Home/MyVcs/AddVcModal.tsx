@@ -25,6 +25,7 @@ export const AddVcModal: React.FC<AddVcModalProps> = (props) => {
         onDismiss={controller.DISMISS}
         onInputDone={controller.INPUT_OTP}
         error={controller.otpError}
+        resend={controller.RESEND_OTP}
       />
 
       <MessageOverlay

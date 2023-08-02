@@ -19,24 +19,29 @@ export interface Typegen0 {
   };
   'eventsCausingActions': {
     forwardToServices: 'ACTIVE' | 'INACTIVE' | 'OFFLINE' | 'ONLINE';
+    loadCredentialRegistryHostFromStorage: 'READY';
+    loadCredentialRegistryInConstants: 'STORE_RESPONSE';
     logServiceEvents: 'READY';
     logStoreEvents: 'xstate.init';
     requestDeviceInfo: 'REQUEST_DEVICE_INFO';
     setAppInfo: 'APP_INFO_RECEIVED';
     setBackendInfo: 'BACKEND_INFO_RECEIVED';
+    setIsReadError: 'ERROR';
     spawnServiceActors: 'READY';
     spawnStoreActor: 'xstate.init';
+    unsetIsReadError: 'READY';
   };
   'eventsCausingDelays': {};
   'eventsCausingGuards': {};
   'eventsCausingServices': {
     checkFocusState: 'BACKEND_INFO_RECEIVED';
     checkNetworkState: 'BACKEND_INFO_RECEIVED';
-    getAppInfo: 'READY';
+    getAppInfo: 'STORE_RESPONSE';
     getBackendInfo: 'APP_INFO_RECEIVED';
   };
   'matchesStates':
     | 'init'
+    | 'init.credentialRegistry'
     | 'init.devinfo'
     | 'init.info'
     | 'init.services'
@@ -51,7 +56,7 @@ export interface Typegen0 {
     | 'ready.network.offline'
     | 'ready.network.online'
     | {
-        init?: 'devinfo' | 'info' | 'services' | 'store';
+        init?: 'credentialRegistry' | 'devinfo' | 'info' | 'services' | 'store';
         ready?:
           | 'focus'
           | 'network'

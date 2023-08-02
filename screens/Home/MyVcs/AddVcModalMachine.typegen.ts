@@ -17,6 +17,10 @@ export interface Typegen0 {
       type: 'error.platform.AddVcModal.acceptingIdInput.requestingOtp:invocation[0]';
       data: unknown;
     };
+    'error.platform.AddVcModal.acceptingOtpInput.resendOTP:invocation[0]': {
+      type: 'error.platform.AddVcModal.acceptingOtpInput.resendOTP:invocation[0]';
+      data: unknown;
+    };
     'error.platform.AddVcModal.requestingCredential:invocation[0]': {
       type: 'error.platform.AddVcModal.requestingCredential:invocation[0]';
       data: unknown;
@@ -28,7 +32,9 @@ export interface Typegen0 {
   };
   'invokeSrcNameMap': {
     requestCredential: 'done.invoke.AddVcModal.requestingCredential:invocation[0]';
-    requestOtp: 'done.invoke.AddVcModal.acceptingIdInput.requestingOtp:invocation[0]';
+    requestOtp:
+      | 'done.invoke.AddVcModal.acceptingIdInput.requestingOtp:invocation[0]'
+      | 'done.invoke.AddVcModal.acceptingOtpInput.resendOTP:invocation[0]';
   };
   'missingImplementations': {
     actions: never;
@@ -38,10 +44,11 @@ export interface Typegen0 {
   };
   'eventsCausingActions': {
     clearId: 'SELECT_ID_TYPE';
-    clearIdError: 'INPUT_ID' | 'VALIDATE_INPUT';
+    clearIdError: 'INPUT_ID' | 'SELECT_ID_TYPE' | 'VALIDATE_INPUT';
     clearOtp:
       | 'DISMISS'
       | 'done.invoke.AddVcModal.acceptingIdInput.requestingOtp:invocation[0]'
+      | 'error.platform.AddVcModal.acceptingOtpInput.resendOTP:invocation[0]'
       | 'error.platform.AddVcModal.requestingCredential:invocation[0]'
       | 'xstate.init';
     focusInput:
@@ -49,6 +56,7 @@ export interface Typegen0 {
       | 'SELECT_ID_TYPE'
       | 'VALIDATE_INPUT'
       | 'error.platform.AddVcModal.acceptingIdInput.requestingOtp:invocation[0]'
+      | 'error.platform.AddVcModal.acceptingOtpInput.resendOTP:invocation[0]'
       | 'error.platform.AddVcModal.requestingCredential:invocation[0]'
       | 'xstate.after(100)#AddVcModal.acceptingIdInput.focusing';
     forwardToParent: 'DISMISS';
@@ -56,6 +64,7 @@ export interface Typegen0 {
     setId: 'INPUT_ID';
     setIdBackendError:
       | 'error.platform.AddVcModal.acceptingIdInput.requestingOtp:invocation[0]'
+      | 'error.platform.AddVcModal.acceptingOtpInput.resendOTP:invocation[0]'
       | 'error.platform.AddVcModal.requestingCredential:invocation[0]';
     setIdErrorEmpty: 'VALIDATE_INPUT';
     setIdErrorWrongFormat: 'VALIDATE_INPUT';
@@ -66,6 +75,7 @@ export interface Typegen0 {
     setRequestId: 'done.invoke.AddVcModal.requestingCredential:invocation[0]';
     setTransactionId:
       | 'DISMISS'
+      | 'error.platform.AddVcModal.acceptingOtpInput.resendOTP:invocation[0]'
       | 'error.platform.AddVcModal.requestingCredential:invocation[0]'
       | 'xstate.init';
   };
@@ -77,7 +87,7 @@ export interface Typegen0 {
   };
   'eventsCausingServices': {
     requestCredential: 'INPUT_OTP';
-    requestOtp: 'VALIDATE_INPUT';
+    requestOtp: 'RESEND_OTP' | 'VALIDATE_INPUT';
   };
   'matchesStates':
     | 'acceptingIdInput'
@@ -90,6 +100,8 @@ export interface Typegen0 {
     | 'acceptingIdInput.rendering'
     | 'acceptingIdInput.requestingOtp'
     | 'acceptingOtpInput'
+    | 'acceptingOtpInput.idle'
+    | 'acceptingOtpInput.resendOTP'
     | 'done'
     | 'requestingCredential'
     | {
@@ -100,6 +112,7 @@ export interface Typegen0 {
           | 'rendering'
           | 'requestingOtp'
           | { invalid?: 'backend' | 'empty' | 'format' };
+        acceptingOtpInput?: 'idle' | 'resendOTP';
       };
   'tags': never;
 }
