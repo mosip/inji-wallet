@@ -22,6 +22,30 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: https://sonarcloud.io
           SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
+
+      - name: Install jq
+        run: sudo apt-get -y install jq
+      - name: Check for critical bugs
+        run: |
+              # Fetch SonarQube issues using the API
+              SONAR_TOKEN=${{ secrets.SONAR_TOKEN }}
+              SONAR_HOST_URL=https://sonarcloud.io
+              SONAR_PROJECT_KEY=mosip_inji
+              SONAR_QUALIFIER=TRK
+              
+              # Fetch issues using the SonarQube API
+              response=$(curl -s -u "${SONAR_TOKEN}:" "${SONAR_HOST_URL}/api/issues/search?componentKeys=${SONAR_PROJECT_KEY}&severities=CRITICAL&statuses=OPEN&types=BUG")                
+              # Check if any critical bugs in unresolved status are found
+              total_critical_bugs=$(echo "$response" | jq '.total')
+
+              if [ "$total_critical_bugs" -gt 0 ]; then
+                echo "Critical bugs in unresolved status found! Failing the pipeline."
+                echo "Bug details:"
+                echo "$response" | jq '.issues[] | {key: .key, severity: .severity, message: .message}'
+                exit 1
+              else
+                echo "No critical bugs in unresolved status found. Pipeline continues."
+              fi
       # If you wish to fail your job when the Quality Gate is red, uncomment the
       # following lines. This would typically be used to fail a deployment.
       # - uses: sonarsource/sonarqube-quality-gate-action@master
