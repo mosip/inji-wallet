@@ -513,7 +513,11 @@
     "getStarted": "البدء",
     "unlockApp": "فتح التطبيق",
     "failedToReadKeys": "فشلت قراءة المفاتيح",
-    "retryRead": "هل تريد إعادة المحاولة؟"
+    "retryRead": "هل تريد إعادة المحاولة؟",
+    "errors": {
+      "decryptionFailed": "فشل في فك تشفير البيانات"
+    },
+    "ignore": "يتجاهل"
   },
   "SetupLanguage": {
     "header": "حدد اللغة",
