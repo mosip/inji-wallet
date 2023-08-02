@@ -86,7 +86,9 @@ export const AboutInji: React.FC<AboutInjiProps> = ({ appId }) => {
               </Text>
               <TouchableOpacity
                 activeOpacity={1}
-                onPress={() => Linking.openURL(aboutInjiUrl)}>
+                onPress={() => {
+                  aboutInjiUrl && Linking.openURL(aboutInjiUrl);
+                }}>
                 <Text color={Theme.Colors.AddIdBtnBg} weight="bold">
                   {t('clickHere')}
                 </Text>

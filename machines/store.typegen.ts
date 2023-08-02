@@ -25,7 +25,7 @@ export interface Typegen0 {
     store: 'done.invoke._store';
   };
   'missingImplementations': {
-    actions: never;
+    actions: 'logKey';
     delays: never;
     guards: never;
     services: never;
@@ -41,6 +41,7 @@ export interface Typegen0 {
       | 'REMOVE_VC_METADATA'
       | 'SET'
       | 'UPDATE';
+    logKey: 'KEY_RECEIVED';
     notifyParent:
       | 'KEY_RECEIVED'
       | 'READY'

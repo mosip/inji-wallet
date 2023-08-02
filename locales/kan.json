@@ -125,6 +125,7 @@
   "SettingScreen": {
     "header": "ಸಂಯೋಜನೆಗಳು",
     "injiAsVerifierApp": "ವೆರಿಫೈಯರ್ ಆಪ್ ಆಗಿ ಇಂಜಿ",
+    "receiveCard": "ಕಾರ್ಡ್ ಸ್ವೀಕರಿಸಿ",
     "basicSettings": "ಮೂಲ ಸೆಟ್ಟಿಂಗ್‌ಗಳು",
     "bioUnlock": "ಬಯೋಮೆಟ್ರಿಕ್ಸ್‌ನೊಂದಿಗೆ ಅನ್‌ಲಾಕ್ ಮಾಡಿ",
     "language": "ಭಾಷೆ",
@@ -514,7 +515,11 @@
     "getStarted": "ಪ್ರಾರಂಭಿಸಿ",
     "unlockApp": "ಅಪ್ಲಿಕೇಶನ್ ಅನ್ಲಾಕ್ ಮಾಡಿ",
     "failedToReadKeys": "ಕೀಗಳನ್ನು ಓದಲು ವಿಫಲವಾಗಿದೆ",
-    "retryRead": "ಮರುಪ್ರಯತ್ನಿಸಲು ಬಯಸುವಿರಾ?"
+    "retryRead": "ಮರುಪ್ರಯತ್ನಿಸಲು ಬಯಸುವಿರಾ?",
+    "errors": {
+      "decryptionFailed": "ಡೇಟಾವನ್ನು ಡೀಕ್ರಿಪ್ಟ್ ಮಾಡಲು ವಿಫಲವಾಗಿದೆ"
+    },
+    "ignore": "ನಿರ್ಲಕ್ಷಿಸಿ"
   },
   "SetupLanguage": {
     "header": "ಭಾಷೆಯನ್ನು ಆರಿಸಿ",

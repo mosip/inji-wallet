@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { Image, ImageBackground, View } from 'react-native';
 import { getLocalizedField } from '../i18n';
 import { VerifiableCredential } from '../types/vc';
-import { RotatingIcon } from './RotatingIcon';
 import { VcItemTags } from './VcItemTags';
 import VerifiedIcon from './VerifiedIcon';
 import { Column, Row, Text } from './ui';
@@ -135,7 +134,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
                   {t('idType')}
                 </Text>
                 <Text
-                  weight="regular"
+                  weight="semibold"
                   color={Theme.Colors.Details}
                   size="smaller"
                   style={

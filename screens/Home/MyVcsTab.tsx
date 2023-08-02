@@ -105,7 +105,6 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
               </Column>
               <Button
                 type="gradient"
-                isVcThere
                 disabled={controller.isRefreshingVcs}
                 title={t('downloadCard')}
                 onPress={controller.DOWNLOAD_ID}
@@ -170,6 +169,11 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
         isVisible={controller.isSavingFailedInIdle}
         error={storeErrorTranslationPath}
         onDismiss={controller.DISMISS}
+      />
+      <MessageOverlay
+        isVisible={controller.isBindingError}
+        title={controller.walletBindingError}
+        onCancel={controller.DISMISS}
       />
       <ErrorMessageOverlay
         translationPath={'MyVcsTab'}

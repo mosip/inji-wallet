@@ -36,6 +36,7 @@ const model = createModel(
       TRY_AGAIN: () => ({}),
       IGNORE: () => ({}),
       GET: (key: string) => ({ key }),
+      DECRYPT_ERROR: () => ({}),
       SET: (key: string, value: unknown) => ({ key, value }),
       APPEND: (key: string, value: unknown) => ({ key, value }),
       PREPEND: (key: string, value: unknown) => ({ key, value }),
@@ -97,7 +98,7 @@ export const storeMachine =
           },
           on: {
             KEY_RECEIVED: {
-              actions: 'setEncryptionKey',
+              actions: ['setEncryptionKey', 'logKey'],
               target: 'ready',
             },
             ERROR: {
@@ -218,6 +219,9 @@ export const storeMachine =
                 sendUpdate(),
               ],
             },
+            DECRYPT_ERROR: {
+              actions: sendParent('DECRYPT_ERROR'),
+            },
             TAMPERED_VC: {
               actions: ['setIsTamperedVc'],
             },
@@ -270,10 +274,15 @@ export const storeMachine =
         checkStorageInitialisedOrNot: () => async (callback) => {
           const isDirectoryExist = await Storage.isVCStorageInitialised();
           if (!isDirectoryExist) {
-            // clear the storage
             callback(model.events.READY());
           } else {
-            callback(model.events.ERROR(new Error('show the popup for retry')));
+            callback(
+              model.events.ERROR(
+                new Error(
+                  'vc directory exists and decryption key is not available'
+                )
+              )
+            );
           }
         },
 
@@ -362,6 +371,12 @@ export const storeMachine =
             } catch (e) {
               if (e.message === 'Data is tampered') {
                 callback(model.events.TAMPERED_VC());
+              } else if (
+                e.message.includes('JSON') ||
+                e.message.includes('decrypt')
+              ) {
+                callback(model.events.DECRYPT_ERROR());
+                sendUpdate();
               } else {
                 console.error(e);
                 callback(model.events.STORE_ERROR(e, event.requester));

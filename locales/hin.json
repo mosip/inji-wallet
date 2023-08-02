@@ -126,6 +126,7 @@
   "SettingScreen": {
     "header": "समायोजन",
     "injiAsVerifierApp": "सत्यापनकर्ता ऐप के रूप में इंजी",
+    "receiveCard": "कार्ड प्राप्त करें",
     "basicSettings": "मूल सेटिंग्स",
     "bioUnlock": "बायोमेट्रिक्स से अनलॉक करें",
     "language": "भाषा",
@@ -514,7 +515,13 @@
   "WelcomeScreen": {
     "title": "ओपन सोर्स आइडेंटिटी सॉल्यूशन",
     "getStarted": "आरंभ करें",
-    "unlockApp": "एप्लिकेशन अनलॉक करें"
+    "unlockApp": "एप्लिकेशन अनलॉक करें",
+    "failedToReadKeys": "कुंजियाँ पढ़ने में विफल",
+    "retryRead": "पुनः प्रयास करना चाहते हैं?",
+    "errors": {
+      "decryptionFailed": "डेटा डिक्रिप्ट करने में विफल"
+    },
+    "ignore": "अनदेखा करना"
   },
   "SetupLanguage": {
     "header": "भाषा चुनें",

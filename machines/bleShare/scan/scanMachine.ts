@@ -97,6 +97,7 @@ const model = createModel(
       RETRY_VERIFICATION: () => ({}),
       VP_CREATED: (vp: VerifiablePresentation) => ({ vp }),
       TOGGLE_USER_CONSENT: () => ({}),
+      RESET: () => ({}),
     },
   }
 );
@@ -126,7 +127,7 @@ export const scanMachine =
       initial: 'inactive',
       on: {
         SCREEN_BLUR: {
-          target: '.inactive',
+          target: '#scan.disconnectDevice',
         },
         SCREEN_FOCUS: {
           target: '.checkStorage',
@@ -135,10 +136,23 @@ export const scanMachine =
           target: '.handlingBleError',
           actions: 'setBleError',
         },
+        RESET: {
+          target: '.checkStorage',
+        },
       },
       states: {
         inactive: {
           entry: 'removeLoggers',
+        },
+        disconnectDevice: {
+          invoke: {
+            src: 'disconnect',
+          },
+          on: {
+            DISCONNECT: {
+              target: '#scan.inactive',
+            },
+          },
         },
         checkStorage: {
           invoke: {
