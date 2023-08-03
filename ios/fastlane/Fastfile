@@ -89,7 +89,7 @@ platform :ios do
       workspace: "Inji.xcworkspace",
       scheme: "Inji",
       export_method: "app-store",
-      
+      clean: true,
       export_options: {
         provisioningProfiles: { 
             "#{DEVELOPER_APP_ID}" => "#{PROVISIONING_PROFILE_SPECIFIER}"
