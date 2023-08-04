@@ -13,7 +13,8 @@
     "PRESENCE_VERIFICATION_FAILED": "सत्यापन असफल",
     "QRLOGIN_SUCCESFULL": "क्यूआरलॉगिन सफल",
     "WALLET_BINDING_SUCCESSFULL": "सक्रियण सफल",
-    "WALLET_BINDING_FAILURE": "सक्रियकरण असफल"
+    "WALLET_BINDING_FAILURE": "सक्रियकरण असफल",
+    "VC_REMOVED":"बटुए से निकाला गया"
   },
   "DeviceInfoList": {
     "requestedBy": "द्वारा अनुरोध किया गया",
