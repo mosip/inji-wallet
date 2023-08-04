@@ -58,7 +58,7 @@
     "enableVerification": "Activate",
     "profileAuthenticated": "Profile is authenticated!",
     "offlineAuthDisabledHeader": "Offline Authentication disabled!",
-    "offlineAuthDisabledMessage": "Click 'Enable Authentication' to enable this credentials to be used for offline authentication.",
+    "offlineAuthDisabledMessage": "Click on 'Activate' to enable this credentials to be used for offline authentication.",
     "verificationEnabledSuccess": "Activated for online login",
     "goback": "GO BACK",
     "BindingWarning": "If you have enabled verification for this credential on another wallet, it will get overridden. Do you want to proceed?",

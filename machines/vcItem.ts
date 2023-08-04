@@ -407,11 +407,7 @@ export const vcItemMachine =
               entry: 'removeVcItem',
               on: {
                 STORE_RESPONSE: {
-                  actions: [
-                    'removedVc',
-                    log('removing Vc'),
-                    'storingActivityLog',
-                  ],
+                  actions: ['removedVc', 'logVCremoved'],
                   target: '#vc-item',
                 },
               },
@@ -1014,14 +1010,14 @@ export const vcItemMachine =
           { to: (context) => context.serviceRefs.store }
         ),
 
-        storingActivityLog: send(
+        logVCremoved: send(
           (context, _) =>
             ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: '',
+              _vcKey: VC_ITEM_STORE_KEY(context),
               type: 'VC_REMOVED',
               timestamp: Date.now(),
               deviceName: '',
-              vcLabel: String(context.id),
+              vcLabel: context.id,
             }),
           {
             to: (context) => context.serviceRefs.activityLog,
