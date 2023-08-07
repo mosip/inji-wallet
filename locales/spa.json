@@ -295,6 +295,7 @@
 		}
 	},
 	"RequestScreen": {
+		"receiveCard": "Recibir tarjeta",
 		"bluetoothDenied": "Por favor, activa el Bluetooth para poder solicitar la tarjeta",
 		"bluetoothStateAndroid": "Por favor, activa el Bluetooth desde la configuración rápida para admitir el intercambio local",
 		"bluetoothStateIos": "Por favor, activa el Bluetooth desde el centro de control para admitir el intercambio local",
