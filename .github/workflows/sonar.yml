@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - develop
+      - ci-publish
+      - inji-244
 jobs:
   build:
     name: Build
@@ -25,28 +27,28 @@ jobs:
 
       - name: Install jq
         run: sudo apt-get -y install jq
+
       - name: Check for critical bugs
         run: |
               # Fetch SonarQube issues using the API
-              SONAR_TOKEN=${{ secrets.SONAR_TOKEN }}
               SONAR_HOST_URL=https://sonarcloud.io
               SONAR_PROJECT_KEY=mosip_inji
-              
+
               # Fetch issues using the SonarQube API
-              response=$(curl -s -u "${SONAR_TOKEN}:" "${SONAR_HOST_URL}/api/issues/search?componentKeys=${SONAR_PROJECT_KEY}&resolved=false&severities=CRITICAL&facetMode=count")   
-              echo "$response" 
-              
-              # extract the count
-              total_critical_bugs=$(echo "$response" | jq '.facets[] | select(.property == "severities") | .values[] | select(.val == "CRITICAL") | .count')
-              echo "Number of critical bugs $total_critical_bugs"
-              if [ "$total_critical_bugs" -gt 0 ]; then
-                echo "Critical bugs in unresolved status found! Failing the pipeline."
-                echo "Bug details:"
-                echo "$response" | jq '.issues[] | {key: .key, severity: .severity, message: .message}'
-                exit 1
+              response=$(curl -s "${SONAR_HOST_URL}/api/issues/search?componentKeys=${SONAR_PROJECT_KEY}&severities=CRITICAL&statuses=OPEN") 
+              echo "The response is $response" 
+
+              # Extract the value of "issues" field
+              issues_count=$(echo "$response" | jq '.issues | length')
+              echo "The number of issues $issues_count"
+
+              if [ "$issues_count" -eq 0 ]; then
+                echo "No critical issues found."
               else
-                echo "No critical bugs in unresolved status found. Pipeline continues."
+                echo "Critical issues found. Failing the pipeline"
+                exit 1
               fi
+
       # If you wish to fail your job when the Quality Gate is red, uncomment the
       # following lines. This would typically be used to fail a deployment.
       # - uses: sonarsource/sonarqube-quality-gate-action@master
