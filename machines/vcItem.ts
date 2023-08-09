@@ -360,7 +360,10 @@ export const vcItemMachine =
                 ],
                 onError: [
                   {
-                    actions: 'setWalletBindingError',
+                    actions: [
+                      'setWalletBindingError',
+                      'logWalletBindingFailure',
+                    ],
                     target: '#vc-item.kebabPopUp.showingWalletBindingError',
                   },
                 ],
@@ -1354,7 +1357,10 @@ export function selectAcceptingBindingOtp(state: State) {
 }
 
 export function selectShowWalletBindingError(state: State) {
-  return state.matches('showingWalletBindingError');
+  return (
+    state.matches('showingWalletBindingError') ||
+    state.matches('kebabPopUp.showingWalletBindingError')
+  );
 }
 
 export function selectWalletBindingInProgress(state: State) {

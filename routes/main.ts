@@ -6,11 +6,9 @@ import {
 import { Image } from 'react-native';
 import { HomeScreen } from '../screens/Home/HomeScreen';
 import { RootStackParamList } from './index';
-import { RequestLayout } from '../screens/Request/RequestLayout';
 import { ScanLayout } from '../screens/Scan/ScanLayout';
 import { HistoryScreen } from '../screens/History/HistoryScreen';
 import i18n from '../i18n';
-import { Platform } from 'react-native';
 
 const home: TabScreen = {
   name: 'Home',
@@ -25,21 +23,12 @@ const home: TabScreen = {
       }),
   },
 };
-const scan: TabScreen = {
+export const scan: TabScreen = {
   name: 'Scan',
   component: ScanLayout,
   icon: 'qr-code-scanner',
   options: {
     title: i18n.t('MainLayout:scan'),
-    headerShown: false,
-  },
-};
-const request: TabScreen = {
-  name: 'Request',
-  component: RequestLayout,
-  icon: 'file-download',
-  options: {
-    title: i18n.t('MainLayout:request'),
     headerShown: false,
   },
 };
@@ -56,11 +45,6 @@ const history: TabScreen = {
 export const mainRoutes: TabScreen[] = [];
 mainRoutes.push(home);
 mainRoutes.push(scan);
-
-if (Platform.OS !== 'ios') {
-  mainRoutes.push(request);
-}
-
 mainRoutes.push(history);
 
 export type MainBottomTabParamList = {
@@ -68,7 +52,6 @@ export type MainBottomTabParamList = {
     activeTab: number;
   };
   Scan: undefined;
-  Request: undefined;
   History: undefined;
 };
 

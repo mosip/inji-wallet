@@ -129,6 +129,7 @@
   "SettingScreen": {
     "header": "Mga setting",
     "injiAsVerifierApp": "Inji bilang Verifier App",
+    "receiveCard": "Tumanggap ng Card",
     "basicSettings": "Mga Pangunahing Setting",
     "bioUnlock": "I-unlock gamit ang Biometrics",
     "language": "Wika",
@@ -516,7 +517,11 @@
     "getStarted": "Magsimula",
     "unlockApp": "Buksan ang aplikasyon",
     "failedToReadKeys": "Nabigong basahin ang mga susi",
-    "retryRead": "Gustong subukang muli?"
+    "retryRead": "Gustong subukang muli?",
+    "error": {
+      "decryptionFailed": "Nabigong i-decrypt ang data"
+    },
+    "ignore": "Huwag pansinin"
   },
   "SetupLanguage": {
     "header": "Piliin ang Wika",

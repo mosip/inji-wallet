@@ -20,7 +20,8 @@ import {
 } from '../../machines/bleShare/commonSelectors';
 import { RequestEvents } from '../../machines/bleShare/request/requestMachine';
 
-type RequestStackParamList = {
+export type RequestStackParamList = {
+  Request: undefined;
   RequestScreen: undefined;
   ReceiveVcScreen: undefined;
 };
