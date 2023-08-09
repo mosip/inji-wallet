@@ -7,7 +7,10 @@ import {
   selectPasscode,
   selectSettingUp,
 } from '../machines/auth';
-import { selectBiometricUnlockEnabled } from '../machines/settings';
+import {
+  SettingsEvents,
+  selectBiometricUnlockEnabled,
+} from '../machines/settings';
 import { RootRouteProps } from '../routes';
 import { GlobalContext } from '../shared/GlobalContext';
 
@@ -28,12 +31,17 @@ export function useWelcomeScreen(props: RootRouteProps) {
   return {
     isSettingUp,
     isLanguagesetup,
+    passcode,
     NEXT: () => {
       authService.send(AuthEvents.NEXT()), props.navigation.navigate('Auth');
     },
     SELECT: () => {
       authService.send(AuthEvents.SELECT()),
         props.navigation.navigate('IntroSliders');
+    },
+    BACK: () => {
+      settingsService.send(SettingsEvents.BACK()),
+        props.navigation.navigate('Auth');
     },
     unlockPage: () => {
       // prioritize biometrics

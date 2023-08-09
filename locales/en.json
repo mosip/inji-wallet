@@ -266,7 +266,9 @@
     "stepThreeText": "Share your cards securely in a hassle free way and avail various services.",
     "stepFourTitle": "Hassle free authentication",
     "stepFourText": "Authenticate yourself with ease using the stored digital credential.",
-    "stepFourButton": "Get Started",
+    "getStarted": "Get Started",
+    "goBack": "Go Back",
+    "back": "Back",
     "skip": "Skip",
     "next": "Next"
   },
