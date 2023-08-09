@@ -41,7 +41,7 @@ export function useWelcomeScreen(props: RootRouteProps) {
     },
     BACK: () => {
       settingsService.send(SettingsEvents.BACK()),
-        props.navigation.navigate('Auth');
+        props.navigation.navigate('Main');
     },
     unlockPage: () => {
       // prioritize biometrics

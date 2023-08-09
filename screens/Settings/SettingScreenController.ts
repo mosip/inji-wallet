@@ -146,6 +146,7 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
     INJI_TOUR_GUIDE: () => {
       settingsService.send(SettingsEvents.INJI_TOUR_GUIDE()),
         props.navigation.navigate('IntroSliders');
+      setIsVisible(false);
     },
 
     TOGGLE_BIOMETRIC: (enable: boolean) =>
