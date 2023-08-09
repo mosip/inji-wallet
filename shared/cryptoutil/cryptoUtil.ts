@@ -4,6 +4,9 @@ import getAllConfigurations from '../commonprops/commonProps';
 import SecureKeystore from '../../.yalc/react-native-secure-keystore';
 import { isIOS } from '../constants';
 
+// 5min
+export const AUTH_TIMEOUT = 5 * 60;
+
 export function generateKeys(): Promise<KeyPair> {
   return Promise.resolve(RSA.generateKeys(4096));
 }

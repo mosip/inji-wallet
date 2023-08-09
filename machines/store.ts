@@ -20,6 +20,7 @@ import {
 } from '../shared/constants';
 import SecureKeystore from 'react-native-secure-keystore';
 import { isCustomSecureKeystore } from '../shared/cryptoutil/cryptoUtil';
+import { AUTH_TIMEOUT } from '../shared/cryptoutil/cryptoUtil';
 
 export const ENCRYPTION_ID = 'c7c22a6c-9759-4605-ac88-46f4041d863d';
 const vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
@@ -417,7 +418,7 @@ export const storeMachine =
               );
             }
           } else {
-            SecureKeystore.generateKey(ENCRYPTION_ID);
+            await SecureKeystore.generateKey(ENCRYPTION_ID, true, AUTH_TIMEOUT);
             callback(model.events.KEY_RECEIVED(''));
           }
         },
@@ -436,7 +437,7 @@ export async function setItem(
 ) {
   try {
     const data = JSON.stringify(value);
-    const encryptedData = encryptJson(encryptionKey, data);
+    const encryptedData = await encryptJson(encryptionKey, data);
     await Storage.setItem(key, encryptedData, encryptionKey);
   } catch (e) {
     console.error('error setItem:', e);
@@ -451,8 +452,10 @@ export async function getItem(
 ) {
   try {
     const data = await Storage.getItem(key, encryptionKey);
+    console.log('getting item for ' + key);
+    console.log(data);
     if (data != null) {
-      const decryptedData = decryptJson(encryptionKey, data);
+      const decryptedData = await decryptJson(encryptionKey, data);
       return JSON.parse(decryptedData);
     }
     if (data === null && vcKeyRegExp.exec(key)) {
@@ -465,6 +468,7 @@ export async function getItem(
     if (e.message.includes('Data is tampered')) {
       throw e;
     }
+    console.error('Exception in getting item: ' + e);
     return defaultValue;
   }
 }
@@ -535,7 +539,7 @@ export async function removeItem(
       await removeVCMetaData(MY_VCS_STORE_KEY, key, encryptionKey);
     } else {
       const data = await Storage.getItem(key, encryptionKey);
-      const decryptedData = decryptJson(encryptionKey, data);
+      const decryptedData = await decryptJson(encryptionKey, data);
       const list = JSON.parse(decryptedData);
       const vcKeyArray = value.split(':');
       const finalVcKeyArray = vcKeyArray.pop();
@@ -561,7 +565,7 @@ export async function removeVCMetaData(
 ) {
   try {
     const data = await Storage.getItem(key, encryptionKey);
-    const decryptedData = decryptJson(encryptionKey, data);
+    const decryptedData = await decryptJson(encryptionKey, data);
     const list = JSON.parse(decryptedData);
     const newList = list.filter((vc: string) => {
       return !vc.includes(value);
@@ -581,7 +585,7 @@ export async function removeItems(
 ) {
   try {
     const data = await Storage.getItem(key, encryptionKey);
-    const decryptedData = decryptJson(encryptionKey, data);
+    const decryptedData = await decryptJson(encryptionKey, data);
     const list = JSON.parse(decryptedData);
     const newList = list.filter(function (vc: string) {
       return !values.find(function (vcKey: string) {
@@ -609,7 +613,7 @@ export async function clear() {
   }
 }
 
-export function encryptJson(encryptionKey: string, data: string): string {
+export function encryptJson(encryptionKey: string, data: string): Promise<string> {
   if (!isCustomSecureKeystore()) {
     return CryptoJS.AES.encrypt(data, encryptionKey).toString();
   }
@@ -619,7 +623,7 @@ export function encryptJson(encryptionKey: string, data: string): string {
 export function decryptJson(
   encryptionKey: string,
   encryptedData: string
-): string {
+): Promise<string> {
   try {
     if (!isCustomSecureKeystore()) {
       return CryptoJS.AES.decrypt(encryptedData, encryptionKey).toString(

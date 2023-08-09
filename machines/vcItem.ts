@@ -1131,7 +1131,7 @@ export const vcItemMachine =
           if (!isCustomSecureKeystore()) {
             return await generateKeys();
           }
-          return SecureKeystore.generateKeyPair(context.id);
+          return SecureKeystore.generateKeyPair(context.id, true);
         },
 
         requestBindingOtp: async (context) => {

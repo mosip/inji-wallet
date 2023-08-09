@@ -28,7 +28,7 @@ function generateHmac(encryptionKey: string, data: string) {
   if (!isCustomSecureKeystore()) {
     return CryptoJS.HmacSHA256(encryptionKey, data).toString();
   }
-  return SecureKeystore.generateHmacSha(data);
+  return SecureKeystore.generateHmacSha(ENCRYPTION_ID, data);
 }
 
 class Storage {
@@ -110,7 +110,7 @@ class Storage {
     key: string
   ) {
     const HMACofVC = generateHmac(encryptionKey, data);
-    const encryptedHMACofVC = encryptJson(encryptionKey, HMACofVC);
+    const encryptedHMACofVC = await encryptJson(encryptionKey, HMACofVC);
     await MMKV.setItem(getVCKeyName(key), encryptedHMACofVC);
   }
 

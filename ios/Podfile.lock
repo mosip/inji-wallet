@@ -291,6 +291,8 @@ PODS:
   - react-native-secure-key-store (2.0.10):
     - React-Core
   - react-native-tuvali (0.4.3):
+  - react-native-secure-keystore (0.1.0):
+    - React-Core
     - CrcSwift (~> 0.0.3)
     - GzipSwift
     - React-Core
@@ -442,6 +444,7 @@ DEPENDENCIES:
   - react-native-rsa-native (from `../node_modules/react-native-rsa-native`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-secure-key-store (from `../node_modules/react-native-secure-key-store`)
+  - react-native-secure-keystore (from `../node_modules/react-native-secure-keystore`)
   - react-native-tuvali (from `../node_modules/react-native-tuvali`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -577,6 +580,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-secure-key-store:
     :path: "../node_modules/react-native-secure-key-store"
+  react-native-secure-keystore:
+    :path: "../node_modules/react-native-secure-keystore"
   react-native-tuvali:
     :path: "../node_modules/react-native-tuvali"
   React-perflogger:
@@ -657,7 +662,7 @@ SPEC CHECKSUMS:
   EXUpdates: a83e036243b0f6ece53a8c1cb883b6751c88a5f8
   EXUpdatesInterface: a9814f422d3cd6e7cfd260d13c27786148ece20e
   FBLazyVector: fa8275d5086566e22a26ddc385ab5772e7f9b1bd
-  FBReactNativeSpec: 8c984a18702fcebb4b4dd88178aef9dbced89f4a
+  FBReactNativeSpec: 83986f2cb6a4046f24310b93812514ab1ccccb72
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   GoogleInterchangeUtilities: d5bc4d88d5b661ab72f9d70c58d02ca8c27ad1f7
   GoogleNetworkingUtilities: 3edd3a8161347494f2da60ea0deddc8a472d94cb
@@ -690,6 +695,7 @@ SPEC CHECKSUMS:
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   react-native-secure-key-store: 910e6df6bc33cb790aba6ee24bc7818df1fe5898
   react-native-tuvali: cf1b72f6ad8ec7694caab7ceb5e5386815c2fbcf
+  react-native-secure-keystore: 3ba6b598e4c3716de1e95cf90dc5b99eed8f0795
   React-perflogger: 5a890ca0911669421b7611661e9b58f91c805f5c
   React-RCTActionSheet: bd180e0879f8424a73650c5c28fbef4f3b5b27fb
   React-RCTAnimation: 1004d2b4be1f2cedfdc4cb2326adc95b989e6c6b
