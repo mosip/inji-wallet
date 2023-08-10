@@ -13,7 +13,8 @@
     "PRESENCE_VERIFICATION_FAILED": "فشل التحقق",
     "QRLOGIN_SUCCESFULL": "QRL تم تسجيل الدخول بنجاح",
     "WALLET_BINDING_SUCCESSFULL": "تفعيل ناجحة",
-    "WALLET_BINDING_FAILURE": "فشل التفعيل"
+    "WALLET_BINDING_FAILURE": "فشل التفعيل",
+    "VC_REMOVED":"تمت إزالته من المحفظة"
   },
   "DeviceInfoList": {
     "requestedBy": "مطلوب بواسطة",

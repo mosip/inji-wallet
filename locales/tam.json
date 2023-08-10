@@ -13,7 +13,8 @@
     "PRESENCE_VERIFICATION_FAILED": "சரிபார்ப்பு தோல்வியடைந்தது",
     "QRLOGIN_SUCCESFULL": "QRஉள்நுழைவு வெற்றிகரமாக உள்ளது",
     "WALLET_BINDING_SUCCESSFULL": "செயல்படுத்தல் வெற்றி",
-    "WALLET_BINDING_FAILURE": "செயல்படுத்துவதில் தோல்வி"
+    "WALLET_BINDING_FAILURE": "செயல்படுத்துவதில் தோல்வி",
+    "VC_REMOVED": "பணப்பையிலிருந்து அகற்றப்பட்டது"
   },
   "DeviceInfoList": {
     "requestedBy": "கோரியவர்",

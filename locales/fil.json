@@ -13,7 +13,8 @@
     "PRESENCE_VERIFICATION_FAILED": "nabigo ang pag-verify",
     "QRLOGIN_SUCCESFULL": "Matagumpay ang QRLogin",
     "WALLET_BINDING_SUCCESSFULL": "Matagumpay ang pag-activate",
-    "WALLET_BINDING_FAILURE": "Nabigo ang pag-activate"
+    "WALLET_BINDING_FAILURE": "Nabigo ang pag-activate",
+    "VC_REMOVED":"Inalis sa wallet"
   },
   "DeviceInfoList": {
     "requestedBy": "Hiniling ni",
