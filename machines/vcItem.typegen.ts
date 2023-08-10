@@ -226,7 +226,9 @@ export interface Typegen0 {
     setRevoke: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
     setStoreVerifiableCredential: 'CREDENTIAL_DOWNLOADED';
     setTag: 'SAVE_TAG';
-    setThumbprintForWalletBindingId: 'done.invoke.vc-item.addingWalletBindingId:invocation[0]';
+    setThumbprintForWalletBindingId:
+      | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'
+      | 'done.invoke.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]';
     setTransactionId:
       | 'INPUT_OTP'
       | 'REVOKE_VC'
