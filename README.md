@@ -1,6 +1,6 @@
 # inji
 
-MOSIP citizen app.
+MOSIP citizen app
 
 ## Dependencies
 
