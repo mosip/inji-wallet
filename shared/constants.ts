@@ -3,6 +3,7 @@ import {
   MIMOTO_HOST,
   GOOGLE_NEARBY_MESSAGES_API_KEY,
 } from 'react-native-dotenv';
+import { getUniqueId } from 'react-native-device-info';
 
 export let HOST = MIMOTO_HOST;
 
@@ -47,3 +48,5 @@ export const APP_ID_DICTIONARY = [
   'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L',
   'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y',
 ];
+
+export const deviceId = getUniqueId();
