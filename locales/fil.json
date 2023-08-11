@@ -267,7 +267,9 @@
     "stepThreeText": "Kapag nabuo na, ang card ay ligtas na iniimbak sa iyong mobile.",
     "stepFourTitle": "Walang problema sa pagpapatotoo",
     "stepFourText": "I-authenticate ang iyong sarili nang madali gamit ang nakaimbak na digital na kredensyal.",
-    "stepFourButton": "Magsimulas",
+    "getStarted": "Magsimula",
+    "goBack": "bumalik ka",
+    "back": "Bumalik",
     "skip": "Laktawan",
     "next": "Susunod"
   },

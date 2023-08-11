@@ -18,12 +18,18 @@ export interface Typegen0 {
     resetInjiProps: 'done.invoke.settings.resetInjiProps:invocation[0]';
   };
   'missingImplementations': {
-    actions: never;
+    actions: 'injiTourGuide';
     delays: never;
     guards: never;
     services: never;
   };
   'eventsCausingActions': {
+    injiTourGuide:
+      | 'BACK'
+      | 'CANCEL'
+      | 'STORE_RESPONSE'
+      | 'done.invoke.settings.resetInjiProps:invocation[0]'
+      | 'error.platform.settings.resetInjiProps:invocation[0]';
     requestStoredContext: 'xstate.init';
     resetCredentialRegistry: 'CANCEL' | 'UPDATE_CREDENTIAL_REGISTRY';
     setContext: 'STORE_RESPONSE';
@@ -50,6 +56,12 @@ export interface Typegen0 {
   'eventsCausingServices': {
     resetInjiProps: 'UPDATE_CREDENTIAL_REGISTRY';
   };
-  'matchesStates': 'idle' | 'init' | 'resetInjiProps' | 'storingDefaults';
+  'matchesStates':
+    | 'idle'
+    | 'init'
+    | 'injiTourGuide'
+    | 'resetInjiProps'
+    | 'showInjiTourGuide'
+    | 'storingDefaults';
   'tags': never;
 }
