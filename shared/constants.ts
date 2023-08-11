@@ -6,6 +6,7 @@ import {
   GOOGLE_NEARBY_MESSAGES_API_KEY,
 } from 'react-native-dotenv';
 import { Argon2iConfig } from './commonUtil';
+import { getUniqueId } from 'react-native-device-info';
 
 export let MIMOTO_BASE_URL = MIMOTO_HOST;
 export const ESIGNET_BASE_URL = ESIGNET_HOST;
@@ -83,3 +84,5 @@ export const argon2iConfigForUinVid: Argon2iConfig = {
 
 export const argon2iSalt =
   '1234567891011121314151617181920212223242526272829303132333435363';
+
+export const deviceId = getUniqueId();
