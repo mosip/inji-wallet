@@ -129,7 +129,7 @@ export const settingsMachine = model.createMachine(
           },
         },
       },
-      injiToutGuide: {
+      injiTourGuide: {
         on: {
           INJI_TOUR_GUIDE: {
             target: 'showInjiTourGuide',

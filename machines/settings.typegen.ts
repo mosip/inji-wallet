@@ -59,7 +59,7 @@ export interface Typegen0 {
   'matchesStates':
     | 'idle'
     | 'init'
-    | 'injiToutGuide'
+    | 'injiTourGuide'
     | 'resetInjiProps'
     | 'showInjiTourGuide'
     | 'storingDefaults';
