@@ -9,5 +9,7 @@ export function useApp() {
     ignoreDecrypt: () => appService.send('DECRYPT_ERROR_DISMISS'),
     IGNORE: () => storeService.send(StoreEvents.IGNORE()),
     TRY_AGAIN: () => storeService.send(StoreEvents.TRY_AGAIN()),
+    RESET: () =>
+      appService.send(appService.events.RESET_KEY_INVALIDATE_ERROR_DISMISS()),
   };
 }

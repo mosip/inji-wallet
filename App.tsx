@@ -61,7 +61,7 @@ const AppLoadingWrapper: React.FC = () => {
         translationPath={'WelcomeScreen'}
         isVisible={isKeyInvalidateError}
         error={'errors.invalidateKeyError'}
-        onDismiss={controller.IGNORE}
+        onDismiss={controller.RESET}
       />
 
       {isReadError ? (

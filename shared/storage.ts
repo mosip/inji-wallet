@@ -32,7 +32,7 @@ async function generateHmac(
   if (!isCustomSecureKeystore()) {
     return CryptoJS.HmacSHA256(encryptionKey, data).toString();
   }
-  const hmacSHA256 = await SecureKeystore.generateHmacSha(hmacalias, data);
+  const hmacSHA256 = await SecureKeystore.generateHmacSha(HMAC_ALIAS, data);
   return hmacSHA256;
 }
 

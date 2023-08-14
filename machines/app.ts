@@ -51,6 +51,7 @@ const model = createModel(
       APP_INFO_RECEIVED: (info: AppInfo) => ({ info }),
       BACKEND_INFO_RECEIVED: (info: BackendInfo) => ({ info }),
       STORE_RESPONSE: (response: unknown) => ({ response }),
+      RESET_KEY_INVALIDATE_ERROR_DISMISS: () => ({}),
     },
   }
 );
@@ -76,6 +77,9 @@ export const appMachine = model.createMachine(
       },
       KEY_INVALIDATE_ERROR: {
         actions: ['updateKeyInvalidateError'],
+      },
+      RESET_KEY_INVALIDATE_ERROR_DISMISS: {
+        actions: ['resetKeyInvalidateError', 'resetKeyInvalidateErrorDismiss'],
       },
     },
     states: {
@@ -219,6 +223,8 @@ export const appMachine = model.createMachine(
       resetKeyInvalidateError: model.assign({
         isKeyInvalidateError: false,
       }),
+
+      resetKeyInvalidateErrorDismiss: (context) => {},
 
       requestDeviceInfo: respond((context) => ({
         type: 'RECEIVE_DEVICE_INFO',

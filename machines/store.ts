@@ -20,7 +20,8 @@ import { AUTH_TIMEOUT } from '../shared/cryptoutil/cryptoUtil';
 
 export const ENCRYPTION_ID = 'c7c22a6c-9759-4605-ac88-46f4041d863d';
 const vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
-export const keyinvalidatedString = 'User not authenticated';
+export const keyinvalidatedString =
+  'Key Invalidated due to biometric enrollment';
 
 const model = createModel(
   {
@@ -615,6 +616,9 @@ export async function removeItems(
 export async function clear() {
   try {
     console.log('clearing entire storage');
+    if (isCustomSecureKeystore()) {
+      SecureKeystore.clearKeys();
+    }
     await Storage.clear();
   } catch (e) {
     console.error('error clear:', e);
