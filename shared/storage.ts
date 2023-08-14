@@ -1,5 +1,5 @@
 import { MMKVLoader } from 'react-native-mmkv-storage';
-import { isIOS, VC_ITEM_STORE_KEY_REGEX } from './constants';
+import { VC_ITEM_STORE_KEY_REGEX } from './constants';
 import CryptoJS from 'crypto-js';
 import {
   DocumentDirectoryPath,
@@ -23,12 +23,17 @@ import { isCustomSecureKeystore } from './cryptoutil/cryptoUtil';
 const MMKV = new MMKVLoader().initialize();
 const vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
 const vcDirectoryPath = `${DocumentDirectoryPath}/inji/VC`;
+export const HMAC_ALIAS = 'Hmacalias';
 
-function generateHmac(encryptionKey: string, data: string) {
+async function generateHmac(
+  encryptionKey: string,
+  data: string
+): Promise<string> {
   if (!isCustomSecureKeystore()) {
     return CryptoJS.HmacSHA256(encryptionKey, data).toString();
   }
-  return SecureKeystore.generateHmacSha(ENCRYPTION_ID, data);
+  const hmacSHA256 = await SecureKeystore.generateHmacSha(hmacalias, data);
+  return hmacSHA256;
 }
 
 class Storage {
@@ -84,7 +89,7 @@ class Storage {
     data: string
   ) {
     const storedHMACofCurrentVC = await this.readHmacForVC(key, encryptionKey);
-    const HMACofVC = generateHmac(encryptionKey, data);
+    const HMACofVC = await generateHmac(encryptionKey, data);
     return HMACofVC !== storedHMACofCurrentVC;
   }
 
@@ -109,7 +114,7 @@ class Storage {
     data: string,
     key: string
   ) {
-    const HMACofVC = generateHmac(encryptionKey, data);
+    const HMACofVC = await generateHmac(encryptionKey, data);
     const encryptedHMACofVC = await encryptJson(encryptionKey, HMACofVC);
     await MMKV.setItem(getVCKeyName(key), encryptedHMACofVC);
   }

@@ -434,7 +434,13 @@
   "WelcomeScreen": {
     "title": "Solución de identidad de código abierto",
     "getStarted": "Empezar",
-    "unlockApp": "Desbloquear aplicación"
+    "unlockApp": "Desbloquear aplicación",
+    "errors": {
+      "invalidateKeyError": {
+        "title": "Algunas pruebas de identidad se eliminan debido a problemas de seguridad.",
+        "message": "Vuelva a descargar."
+      }
+    }
   },
   "common": {
     "cancel": "Cancelar",

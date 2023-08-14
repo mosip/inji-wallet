@@ -34,6 +34,7 @@ const model = createModel(
     serviceRefs: {} as AppServices,
     isReadError: true,
     isDecryptError: false,
+    isKeyInvalidateError: false,
   },
   {
     events: {
@@ -42,6 +43,7 @@ const model = createModel(
       ERROR: () => ({}),
       DECRYPT_ERROR: () => ({}),
       DECRYPT_ERROR_DISMISS: () => ({}),
+      KEY_INVALIDATE_ERROR: () => ({}),
       OFFLINE: () => ({}),
       ONLINE: (networkType: NetInfoStateType) => ({ networkType }),
       REQUEST_DEVICE_INFO: () => ({}),
@@ -72,6 +74,9 @@ export const appMachine = model.createMachine(
       DECRYPT_ERROR_DISMISS: {
         actions: ['unsetIsDecryptError'],
       },
+      KEY_INVALIDATE_ERROR: {
+        actions: ['updateKeyInvalidateError'],
+      },
     },
     states: {
       init: {
@@ -81,11 +86,15 @@ export const appMachine = model.createMachine(
             entry: ['spawnStoreActor', 'logStoreEvents'],
             on: {
               READY: {
-                actions: ['unsetIsReadError', 'unsetIsDecryptError'],
+                actions: [
+                  'unsetIsReadError',
+                  'unsetIsDecryptError',
+                  'resetKeyInvalidateError',
+                ],
                 target: 'services',
               },
               ERROR: {
-                actions: 'setIsReadError',
+                actions: ['setIsReadError', 'updateKeyInvalidateError'],
               },
             },
           },
@@ -198,6 +207,19 @@ export const appMachine = model.createMachine(
       unsetIsReadError: assign({
         isReadError: false,
       }),
+
+      updateKeyInvalidateError: model.assign({
+        isKeyInvalidateError: (_, event) => {
+          if (event.type === 'KEY_INVALIDATE_ERROR') {
+            return true;
+          }
+        },
+      }),
+
+      resetKeyInvalidateError: model.assign({
+        isKeyInvalidateError: false,
+      }),
+
       requestDeviceInfo: respond((context) => ({
         type: 'RECEIVE_DEVICE_INFO',
         info: {
@@ -444,4 +466,8 @@ export function selectIsReadError(state: State) {
 
 export function selectIsDecryptError(state: State) {
   return state.context.isDecryptError;
+}
+
+export function selectIsKeyInvalidateError(state: State) {
+  return state.context.isKeyInvalidateError;
 }

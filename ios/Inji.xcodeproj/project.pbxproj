@@ -322,7 +322,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.mosip2.asdf.mobileid1221;
+				PRODUCT_BUNDLE_IDENTIFIER = io.mosip.inji.mobileid;
 				PRODUCT_NAME = Inji;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Inji/Inji-Bridging-Header.h";

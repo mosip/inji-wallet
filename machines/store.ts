@@ -1,6 +1,6 @@
 import * as Keychain from 'react-native-keychain';
 import CryptoJS from 'crypto-js';
-import Storage from '../shared/storage';
+import Storage, { HMAC_ALIAS } from '../shared/storage';
 import binaryToBase64 from 'react-native/Libraries/Utilities/binaryToBase64';
 import {
   EventFrom,
@@ -13,17 +13,14 @@ import {
 import { createModel } from 'xstate/lib/model';
 import { generateSecureRandom } from 'react-native-securerandom';
 import { log } from 'xstate/lib/actions';
-import {
-  VC_ITEM_STORE_KEY_REGEX,
-  MY_VCS_STORE_KEY,
-  isIOS,
-} from '../shared/constants';
+import { VC_ITEM_STORE_KEY_REGEX, MY_VCS_STORE_KEY } from '../shared/constants';
 import SecureKeystore from 'react-native-secure-keystore';
 import { isCustomSecureKeystore } from '../shared/cryptoutil/cryptoUtil';
 import { AUTH_TIMEOUT } from '../shared/cryptoutil/cryptoUtil';
 
 export const ENCRYPTION_ID = 'c7c22a6c-9759-4605-ac88-46f4041d863d';
 const vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
+export const keyinvalidatedString = 'User not authenticated';
 
 const model = createModel(
   {
@@ -38,6 +35,7 @@ const model = createModel(
       IGNORE: () => ({}),
       GET: (key: string) => ({ key }),
       DECRYPT_ERROR: () => ({}),
+      KEY_INVALIDATE_ERROR: () => ({}),
       SET: (key: string, value: unknown) => ({ key, value }),
       APPEND: (key: string, value: unknown) => ({ key, value }),
       PREPEND: (key: string, value: unknown) => ({ key, value }),
@@ -139,7 +137,7 @@ export const storeMachine =
             KEY_RECEIVED: [
               {
                 cond: 'isCustomSecureKeystore',
-                target: 'ready',
+                target: ['ready'],
               },
               {
                 actions: 'setEncryptionKey',
@@ -228,6 +226,9 @@ export const storeMachine =
             },
             RESET_IS_TAMPERED: {
               actions: ['resetIsTamperedVc'],
+            },
+            KEY_INVALIDATE_ERROR: {
+              actions: sendParent('KEY_INVALIDATE_ERROR'),
             },
           },
         },
@@ -370,7 +371,11 @@ export const storeMachine =
               }
               callback(model.events.STORE_RESPONSE(response, event.requester));
             } catch (e) {
-              if (e.message === 'Data is tampered') {
+              if (e.message.includes(keyinvalidatedString)) {
+                await clear();
+                callback(model.events.KEY_INVALIDATE_ERROR());
+                sendUpdate();
+              } else if (e.message === 'Data is tampered') {
                 callback(model.events.TAMPERED_VC());
               } else if (
                 e.message.includes('JSON') ||
@@ -419,6 +424,7 @@ export const storeMachine =
             }
           } else {
             await SecureKeystore.generateKey(ENCRYPTION_ID, true, AUTH_TIMEOUT);
+            SecureKeystore.generateHmacshaKey(HMAC_ALIAS);
             callback(model.events.KEY_RECEIVED(''));
           }
         },
@@ -465,7 +471,10 @@ export async function getItem(
       return defaultValue;
     }
   } catch (e) {
-    if (e.message.includes('Data is tampered')) {
+    if (
+      e.message.includes('Data is tampered') ||
+      e.message.includes(keyinvalidatedString)
+    ) {
       throw e;
     }
     console.error('Exception in getting item: ' + e);
@@ -613,7 +622,10 @@ export async function clear() {
   }
 }
 
-export function encryptJson(encryptionKey: string, data: string): Promise<string> {
+export function encryptJson(
+  encryptionKey: string,
+  data: string
+): Promise<string> {
   if (!isCustomSecureKeystore()) {
     return CryptoJS.AES.encrypt(data, encryptionKey).toString();
   }
