@@ -32,6 +32,8 @@ export interface Typegen0 {
   'eventsCausingActions': {
     completeOnboarding: 'ADD_VC' | 'ONBOARDING_DONE';
     getOnboardingStatus: 'xstate.init';
+    refreshMyVc: 'IS_TAMPERED';
+    resetIsTampered: 'IS_TAMPERED';
     sendVcAdded: 'STORE_RESPONSE';
     storeVcItem: 'done.invoke.AddVcModal';
     viewVcFromParent: 'VIEW_VC';

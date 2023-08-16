@@ -13,7 +13,8 @@
     "PRESENCE_VERIFICATION_FAILED": "verification failed",
     "QRLOGIN_SUCCESFULL": "QRLogin successful",
     "WALLET_BINDING_SUCCESSFULL": "Activation successful",
-    "WALLET_BINDING_FAILURE": "Activation failed"
+    "WALLET_BINDING_FAILURE": "Activation failed",
+    "VC_REMOVED":"Removed from wallet"
   },
     "DeviceInfoList": {
       "requestedBy": "Requested by",
@@ -57,7 +58,7 @@
     "enableVerification": "Activate",
     "profileAuthenticated": "Profile is authenticated!",
     "offlineAuthDisabledHeader": "Offline Authentication disabled!",
-    "offlineAuthDisabledMessage": "Click 'Enable Authentication' to enable this credentials to be used for offline authentication.",
+    "offlineAuthDisabledMessage": "Click on 'Activate' to enable this credentials to be used for offline authentication.",
     "verificationEnabledSuccess": "Activated for online login",
     "goback": "GO BACK",
     "BindingWarning": "If you have enabled verification for this credential on another wallet, it will get overridden. Do you want to proceed?",
@@ -129,6 +130,7 @@
   "SettingScreen": {
     "header": "Settings",
     "injiAsVerifierApp": "Inji as verifier app",
+    "receiveCard": "Receive Card",
     "basicSettings": "Basic settings",
     "bioUnlock": "Unlock with Biometric",
     "language": "Language",
@@ -265,7 +267,9 @@
     "stepThreeText": "Share your cards securely in a hassle free way and avail various services.",
     "stepFourTitle": "Hassle free authentication",
     "stepFourText": "Authenticate yourself with ease using the stored digital credential.",
-    "stepFourButton": "Get Started",
+    "getStarted": "Get Started",
+    "goBack": "Go Back",
+    "back": "Back",
     "skip": "Skip",
     "next": "Next"
   },
@@ -354,7 +358,7 @@
     }
   },
   "RequestScreen": {
-    "receiveCard": "REceive Card",
+    "receiveCard": "Receive Card",
     "bluetoothDenied": "Please enable Bluetooth to be able to request card",
     "bluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
     "bluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
@@ -512,7 +516,11 @@
     "getStarted": "Get started",
     "unlockApp": "Unlock application",
     "failedToReadKeys": "Failed to read keys",
-    "retryRead": "Want to retry?"
+    "retryRead": "Want to retry?",
+    "ignore": "Ignore",
+    "errors": {
+      "decryptionFailed": "Failed to decrypt data"
+    }
   },
   "SetupLanguage": {
     "header": "Choose Language",

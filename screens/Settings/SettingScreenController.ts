@@ -26,10 +26,10 @@ import {
 } from '../../machines/biometrics';
 import { GlobalContext } from '../../shared/GlobalContext';
 import { useTranslation } from 'react-i18next';
-import { RootRouteProps } from '../../routes';
 import { Platform } from 'react-native';
+import { RequestRouteProps, RootRouteProps } from '../../routes';
 
-export function useSettingsScreen(props: RootRouteProps) {
+export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
   const { appService } = useContext(GlobalContext);
   const authService = appService.children.get('auth');
   const settingsService = appService.children.get('settings');
@@ -138,6 +138,17 @@ export function useSettingsScreen(props: RootRouteProps) {
         )
       ),
 
+    RECEIVE_CARD: () => {
+      props.navigation.navigate('Request');
+      setIsVisible(false);
+    },
+
+    INJI_TOUR_GUIDE: () => {
+      settingsService.send(SettingsEvents.INJI_TOUR_GUIDE()),
+        props.navigation.navigate('IntroSliders'),
+        setIsVisible(false);
+    },
+
     TOGGLE_BIOMETRIC: (enable: boolean) =>
       settingsService.send(SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(enable)),
 
@@ -145,7 +156,6 @@ export function useSettingsScreen(props: RootRouteProps) {
       setIsVisible(false);
       const navigate = () => {
         authService.send(AuthEvents.LOGOUT());
-        props.navigation.navigate('Welcome');
       };
 
       if (Platform.OS === 'ios') {
