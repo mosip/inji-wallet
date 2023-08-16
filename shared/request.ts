@@ -1,22 +1,11 @@
 import { DecodedCredential, VerifiableCredential } from '../types/vc';
+import { __AppId } from './GlobalVariables';
 import { HOST } from './constants';
 
 export class BackendResponseError extends Error {
   constructor(name: string, message: string) {
     super(message);
     this.name = name;
-  }
-}
-
-export class AppId {
-  private static value: string;
-
-  public static getValue(): string {
-    return AppId.value;
-  }
-
-  public static setValue(value: string) {
-    this.value = value;
   }
 }
 
@@ -28,7 +17,8 @@ export async function request(
   const headers = {
     'Content-Type': 'application/json',
   };
-  if (path.includes('residentmobileapp')) headers['X-AppId'] = AppId.getValue();
+  if (path.includes('residentmobileapp'))
+    headers['X-AppId'] = __AppId.getValue();
 
   const response = await fetch(HOST + path, {
     method,
