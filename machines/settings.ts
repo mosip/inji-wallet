@@ -15,7 +15,7 @@ import getAllConfigurations, {
 } from '../shared/commonprops/commonProps';
 import Storage from '../shared/storage';
 import ShortUniqueId from 'short-unique-id';
-import { AppId } from '../shared/request';
+import { __AppId } from '../shared/GlobalVariables';
 import { isCustomSecureKeystore } from '../shared/cryptoutil/cryptoUtil';
 
 const model = createModel(
@@ -165,7 +165,7 @@ export const settingsMachine = model.createMachine(
       updateDefaults: model.assign({
         appId: () => {
           const appId = generateAppId();
-          AppId.setValue(appId);
+          __AppId.setValue(appId);
           return appId;
         },
 
@@ -186,7 +186,7 @@ export const settingsMachine = model.createMachine(
 
       setContext: model.assign((context, event) => {
         const newContext = event.response as ContextFrom<typeof model>;
-        AppId.setValue(newContext.appId);
+        __AppId.setValue(newContext.appId);
         return {
           ...context,
           ...newContext,
