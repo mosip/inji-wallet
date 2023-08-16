@@ -1131,7 +1131,11 @@ export const vcItemMachine =
           if (!isCustomSecureKeystore()) {
             return await generateKeys();
           }
-          return SecureKeystore.generateKeyPair(context.id, true);
+          const isBiometricsEnabled = SecureKeystore.hasBiometricsEnabled();
+          return SecureKeystore.generateKeyPair(
+            context.id,
+            isBiometricsEnabled
+          );
         },
 
         requestBindingOtp: async (context) => {

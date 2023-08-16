@@ -424,7 +424,12 @@ export const storeMachine =
               );
             }
           } else {
-            await SecureKeystore.generateKey(ENCRYPTION_ID, true, AUTH_TIMEOUT);
+            const isBiometricsEnabled = SecureKeystore.hasBiometricsEnabled();
+            await SecureKeystore.generateKey(
+              ENCRYPTION_ID,
+              isBiometricsEnabled,
+              AUTH_TIMEOUT
+            );
             SecureKeystore.generateHmacshaKey(HMAC_ALIAS);
             callback(model.events.KEY_RECEIVED(''));
           }
