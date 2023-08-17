@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Camera } from 'expo-camera';
 import { BarCodeEvent, BarCodeScanner } from 'expo-barcode-scanner';
-import { Linking, TouchableOpacity, View } from 'react-native';
+import { Linking, TouchableOpacity, View, Image } from 'react-native';
 import { Theme } from './ui/styleUtils';
 import { Column, Button, Text, Centered } from './ui';
 import { GlobalContext } from '../shared/GlobalContext';
@@ -15,7 +15,7 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
   const { appService } = useContext(GlobalContext);
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
-  const [type, setType] = useState(Camera.Constants.Type.back);
+  const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
 
   const isActive = useSelector(appService, selectIsActive);
 
@@ -65,7 +65,7 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
             barcodeTypes: [BarCodeScanner.Constants.BarCodeType.qr],
           }}
           onBarCodeScanned={scanned ? undefined : onBarcodeScanned}
-          type={type}
+          type={cameraType}
         />
       </View>
       {props.title && (
@@ -77,6 +77,18 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
           {props.title}
         </Text>
       )}
+      <Column margin="24 0" crossAlign="center">
+        <TouchableOpacity
+          onPress={() => {
+            setCameraType(
+              cameraType === Camera.Constants.Type.back
+                ? Camera.Constants.Type.front
+                : Camera.Constants.Type.back
+            );
+          }}>
+          <Image source={Theme.CameraFlipIcon} />
+        </TouchableOpacity>
+      </Column>
     </View>
   );
 
