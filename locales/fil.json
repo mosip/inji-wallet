@@ -253,8 +253,8 @@
         "message": "Hindi ka maaaring magdagdag o tumanggap ng mga card dahil puno na ang Appdata. I-clear ang Appdata para magpatuloy."
       },
       "vcIsTampered":{
-        "title": "Pinakialaman ang data ng VC",
-        "message": "Ang mga apektadong VC ay inaalis sa app."
+        "title": "Ang ilang mga patunay ng pagkakakilanlan ay pinakialaman",
+        "message": "Ang mga apektadong file ay tinanggal, mangyaring muling i-download."
       }
     }
   },
