@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import AppLoading from 'expo-app-loading';
 import { AppLayout } from './screens/AppLayout';
 import { useFont } from './shared/hooks/useFont';
@@ -16,6 +16,7 @@ import { DualMessageOverlay } from './components/DualMessageOverlay';
 import { useApp } from './screens/AppController';
 import { Alert } from 'react-native';
 import { ErrorMessageOverlay } from './components/MessageOverlay';
+import SecureKeystore from 'react-native-secure-keystore';
 
 // kludge: this is a bad practice but has been done temporarily to surface
 //  an occurance of a bug with minimal residual code changes, this should
@@ -81,6 +82,15 @@ const AppInitialization: React.FC = () => {
   const { appService } = useContext(GlobalContext);
   const isReady = useSelector(appService, selectIsReady);
   const hasFontsLoaded = useFont();
+  const { t } = useTranslation('common');
+
+  useEffect(() => {
+    SecureKeystore.updatePopup(
+      t('biometricPopup.title'),
+      t('biometricPopup.description')
+    );
+  }, []);
+
   return isReady && hasFontsLoaded ? (
     <AppLayoutWrapper />
   ) : (

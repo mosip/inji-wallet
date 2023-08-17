@@ -555,6 +555,10 @@
     "clipboard": {
       "copy": "Copy",
       "copied": "Copied"
+    },
+    "biometricPopup": {
+      "title": "Unlock App",
+      "description": "Please use fingerprint to unlock the app"
     }
   }
 }
