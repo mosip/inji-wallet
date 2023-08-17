@@ -559,6 +559,10 @@
     "clipboard": {
       "copy": "Kopya",
       "copied": "Kinopya"
+    },
+    "biometricPopup": {
+      "title": "I-unlock ang App",
+      "description": "Mangyaring gumamit ng fingerprint upang i-unlock ang app"
     }
   }
 }

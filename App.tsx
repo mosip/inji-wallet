@@ -17,6 +17,7 @@ import { useApp } from './screens/AppController';
 import { Alert } from 'react-native';
 import { ErrorMessageOverlay } from './components/MessageOverlay';
 import SecureKeystore from 'react-native-secure-keystore';
+import { isCustomSecureKeystore } from './shared/cryptoutil/cryptoUtil';
 
 // kludge: this is a bad practice but has been done temporarily to surface
 //  an occurance of a bug with minimal residual code changes, this should
@@ -85,10 +86,12 @@ const AppInitialization: React.FC = () => {
   const { t } = useTranslation('common');
 
   useEffect(() => {
-    SecureKeystore.updatePopup(
-      t('biometricPopup.title'),
-      t('biometricPopup.description')
-    );
+    if (isCustomSecureKeystore()) {
+      SecureKeystore.updatePopup(
+        t('biometricPopup.title'),
+        t('biometricPopup.description')
+      );
+    }
   }, []);
 
   return isReady && hasFontsLoaded ? (

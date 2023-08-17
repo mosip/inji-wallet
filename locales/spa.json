@@ -456,6 +456,10 @@
     },
     "errors": {
       "genericError": "Algo salió mal. ¡Por favor, inténtalo de nuevo después de un tiempo!"
+    },
+    "biometricPopup": {
+      "title": "Desbloquear aplicación",
+      "description": "Utilice la huella digital para desbloquear la aplicación."
     }
   }
 }

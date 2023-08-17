@@ -555,6 +555,10 @@
     "clipboard": {
       "copy": "ينسخ",
       "copied": "نسخ"
+    },
+    "biometricPopup": {
+      "title": "فتح التطبيق",
+      "description": "يرجى استخدام بصمة الإصبع لفتح التطبيق"
     }
   }
 }
