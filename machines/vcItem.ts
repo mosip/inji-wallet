@@ -360,7 +360,10 @@ export const vcItemMachine =
                 ],
                 onError: [
                   {
-                    actions: 'setWalletBindingError',
+                    actions: [
+                      'setWalletBindingError',
+                      'logWalletBindingFailure',
+                    ],
                     target: '#vc-item.kebabPopUp.showingWalletBindingError',
                   },
                 ],
@@ -404,7 +407,7 @@ export const vcItemMachine =
               entry: 'removeVcItem',
               on: {
                 STORE_RESPONSE: {
-                  actions: ['removedVc', log('removing Vc')],
+                  actions: ['removedVc', 'logVCremoved'],
                   target: '#vc-item',
                 },
               },
@@ -1000,15 +1003,25 @@ export const vcItemMachine =
           { to: (context) => context.serviceRefs.store }
         ),
 
-        loadMyVcs: send(StoreEvents.GET(MY_VCS_STORE_KEY), {
-          to: (context) => context.serviceRefs.store,
-        }),
-
         removeVcItem: send(
           (_context, event) => {
             return StoreEvents.REMOVE(MY_VCS_STORE_KEY, _context.vcKey);
           },
           { to: (context) => context.serviceRefs.store }
+        ),
+
+        logVCremoved: send(
+          (context, _) =>
+            ActivityLogEvents.LOG_ACTIVITY({
+              _vcKey: VC_ITEM_STORE_KEY(context),
+              type: 'VC_REMOVED',
+              timestamp: Date.now(),
+              deviceName: '',
+              vcLabel: context.id,
+            }),
+          {
+            to: (context) => context.serviceRefs.activityLog,
+          }
         ),
       },
 
@@ -1354,7 +1367,10 @@ export function selectAcceptingBindingOtp(state: State) {
 }
 
 export function selectShowWalletBindingError(state: State) {
-  return state.matches('showingWalletBindingError');
+  return (
+    state.matches('showingWalletBindingError') ||
+    state.matches('kebabPopUp.showingWalletBindingError')
+  );
 }
 
 export function selectWalletBindingInProgress(state: State) {

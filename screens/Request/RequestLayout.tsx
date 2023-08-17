@@ -49,7 +49,7 @@ export const RequestLayout: React.FC = () => {
           name="RequestScreen"
           component={RequestScreen}
           options={{
-            title: t('request').toUpperCase(),
+            title: t('receiveCard').toUpperCase(),
           }}
         />
       </RequestStack.Navigator>

@@ -13,7 +13,8 @@
     "PRESENCE_VERIFICATION_FAILED": "nabigo ang pag-verify",
     "QRLOGIN_SUCCESFULL": "Matagumpay ang QRLogin",
     "WALLET_BINDING_SUCCESSFULL": "Matagumpay ang pag-activate",
-    "WALLET_BINDING_FAILURE": "Nabigo ang pag-activate"
+    "WALLET_BINDING_FAILURE": "Nabigo ang pag-activate",
+    "VC_REMOVED":"Inalis sa wallet"
   },
   "DeviceInfoList": {
     "requestedBy": "Hiniling ni",
@@ -129,6 +130,7 @@
   "SettingScreen": {
     "header": "Mga setting",
     "injiAsVerifierApp": "Inji bilang Verifier App",
+    "receiveCard": "Tumanggap ng Card",
     "basicSettings": "Mga Pangunahing Setting",
     "bioUnlock": "I-unlock gamit ang Biometrics",
     "language": "Wika",
@@ -265,7 +267,9 @@
     "stepThreeText": "Kapag nabuo na, ang card ay ligtas na iniimbak sa iyong mobile.",
     "stepFourTitle": "Walang problema sa pagpapatotoo",
     "stepFourText": "I-authenticate ang iyong sarili nang madali gamit ang nakaimbak na digital na kredensyal.",
-    "stepFourButton": "Magsimulas",
+    "getStarted": "Magsimula",
+    "goBack": "bumalik ka",
+    "back": "Bumalik",
     "skip": "Laktawan",
     "next": "Susunod"
   },
@@ -516,7 +520,11 @@
     "getStarted": "Magsimula",
     "unlockApp": "Buksan ang aplikasyon",
     "failedToReadKeys": "Nabigong basahin ang mga susi",
-    "retryRead": "Gustong subukang muli?"
+    "retryRead": "Gustong subukang muli?",
+    "error": {
+      "decryptionFailed": "Nabigong i-decrypt ang data"
+    },
+    "ignore": "Huwag pansinin"
   },
   "SetupLanguage": {
     "header": "Piliin ang Wika",

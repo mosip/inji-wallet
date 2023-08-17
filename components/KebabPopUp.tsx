@@ -1,7 +1,7 @@
 import React from 'react';
-import { BottomSheet, Icon, ListItem } from 'react-native-elements';
+import { Icon, ListItem, Overlay } from 'react-native-elements';
 import { Theme } from '../components/ui/styleUtils';
-import { Centered, Column, Row, Text } from '../components/ui';
+import { Column, Row, Text } from '../components/ui';
 import { WalletBinding } from '../screens/Home/MyVcs/WalletBinding';
 import { Pressable } from 'react-native';
 import { useKebabPopUp } from './KebabPopUpController';
@@ -21,9 +21,10 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
         type={props.iconType}
         color={Theme.Colors.GrayIcon}
       />
-      <BottomSheet
+      <Overlay
         isVisible={props.isVisible}
-        containerStyle={Theme.KebabPopUpStyles.kebabPopUp}>
+        onBackdropPress={props.onDismiss}
+        overlayStyle={Theme.KebabPopUpStyles.kebabPopUp}>
         <Row style={Theme.KebabPopUpStyles.kebabHeaderStyle}>
           <Text weight="bold">{t('title')}</Text>
           <Icon
@@ -78,7 +79,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
             onCancel={controller.CANCEL}
           />
         </Column>
-      </BottomSheet>
+      </Overlay>
     </Column>
   );
 };

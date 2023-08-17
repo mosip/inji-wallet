@@ -13,7 +13,8 @@
     "PRESENCE_VERIFICATION_FAILED": "فشل التحقق",
     "QRLOGIN_SUCCESFULL": "QRL تم تسجيل الدخول بنجاح",
     "WALLET_BINDING_SUCCESSFULL": "تفعيل ناجحة",
-    "WALLET_BINDING_FAILURE": "فشل التفعيل"
+    "WALLET_BINDING_FAILURE": "فشل التفعيل",
+    "VC_REMOVED":"تمت إزالته من المحفظة"
   },
   "DeviceInfoList": {
     "requestedBy": "مطلوب بواسطة",
@@ -98,7 +99,7 @@
     "yesConfirm": "نعم ، أؤكد",
     "no": "لا"
   },
-  "RemoveVcWarningOverlay":{
+  "RemoveVcWarningOverlay": {
     "alert": "يرجى تأكيد",
     "removeWarning": "هل تريد حقًا إزالة البطاقة",
     "confirm": "يتأكد",
@@ -129,12 +130,13 @@
   "SettingScreen": {
     "header": "إعدادات",
     "injiAsVerifierApp": "  كتطبيق للتحقق إنجي",
+    "receiveCard": "البطاقة المستلمة",
     "basicSettings": "الإعدادات الأساسية",
     "bioUnlock": "افتح مع القياسات الحيوية",
     "language": "لغة",
     "aboutInji": "حول إنجي",
     "credentialRegistry": "سجل الاعتماد",
-    "errorMessage": "تم إدخال عنوان URL غير صحيح. الرجاء إدخال عنوان URL صالح للمتابعة." ,
+    "errorMessage": "تم إدخال عنوان URL غير صحيح. الرجاء إدخال عنوان URL صالح للمتابعة.",
     "injiTourGuide": "مرشد إنجي السياحي",
     "logout": "تسجيل خروج",
     "resetInjiProps": "إعادة تعيين دعائم إنجي ..."
@@ -250,7 +252,7 @@
         "title": "بيانات التطبيق غير كافية",
         "message": "لا يمكنك إضافة أو استلام بطاقات لأن بيانات التطبيق ممتلئة. امسح بيانات التطبيق للمتابعة."
       },
-      "vcIsTampered":{
+      "vcIsTampered": {
         "title": "تم العبث ببيانات VC",
         "message": "تتم إزالة VCs المتأثر من التطبيق"
       }
@@ -265,7 +267,9 @@
     "stepThreeText": "شارك بطاقاتك بأمان وبطريقة خالية من المتاعب واستفد من الخدمات المتنوعة.",
     "stepFourTitle": "مصادقة خالية من المتاعب",
     "stepFourText": "قم بمصادقة نفسك بسهولة باستخدام بيانات الاعتماد الرقمية المخزنة.",
-    "stepFourButton": "البدء",
+    "getStarted": "البدء",
+    "goBack": "عُد",
+    "back": "خلف",
     "skip": "يتخطى",
     "next": "التالي"
   },
@@ -368,7 +372,7 @@
       },
       "storageLimitReached": {
         "title": "بيانات التطبيق غير كافية",
-        "message":"لا يمكنك إضافة أو استلام بطاقات لأن بيانات التطبيق ممتلئة. امسح بيانات التطبيق للمتابعة."
+        "message": "لا يمكنك إضافة أو استلام بطاقات لأن بيانات التطبيق ممتلئة. امسح بيانات التطبيق للمتابعة."
       }
     },
     "status": {
@@ -430,7 +434,7 @@
       },
       "storageLimitReached": {
         "title": "بيانات التطبيق غير كافية",
-        "message":"لا يمكنك مشاركة البطاقات لأن بيانات التطبيق ممتلئة. امسح بيانات التطبيق للمتابعة."
+        "message": "لا يمكنك مشاركة البطاقات لأن بيانات التطبيق ممتلئة. امسح بيانات التطبيق للمتابعة."
       }
     },
     "status": {
@@ -512,7 +516,11 @@
     "getStarted": "البدء",
     "unlockApp": "فتح التطبيق",
     "failedToReadKeys": "فشلت قراءة المفاتيح",
-    "retryRead": "هل تريد إعادة المحاولة؟"
+    "retryRead": "هل تريد إعادة المحاولة؟",
+    "errors": {
+      "decryptionFailed": "فشل في فك تشفير البيانات"
+    },
+    "ignore": "يتجاهل"
   },
   "SetupLanguage": {
     "header": "حدد اللغة",

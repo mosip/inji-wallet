@@ -13,7 +13,8 @@
     "PRESENCE_VERIFICATION_FAILED": "ಪರಿಶೀಲನೆ ವಿಫಲವಾಗಿದೆ",
     "QRLOGIN_SUCCESFULL": "QRಲಾಗಿನ್ ಯಶಸ್ವಿಯಾಗಿದೆ",
     "WALLET_BINDING_SUCCESSFULL": "ಸಕ್ರಿಯಗೊಳಿಸುವಿಕೆ ಯಶಸ್ವಿಯಾಗಿದೆ",
-    "WALLET_BINDING_FAILURE": "ಸಕ್ರಿಯಗೊಳಿಸುವಿಕೆ ವಿಫಲವಾಗಿದೆ"
+    "WALLET_BINDING_FAILURE": "ಸಕ್ರಿಯಗೊಳಿಸುವಿಕೆ ವಿಫಲವಾಗಿದೆ",
+    "VC_REMOVED":"ಕೈಚೀಲದಿಂದ ತೆಗೆದುಹಾಕಲಾಗಿದೆ"
   },
   "DeviceInfoList": {
     "requestedBy": "ವಿನಂತಿಸಿದವರು",
@@ -125,6 +126,7 @@
   "SettingScreen": {
     "header": "ಸಂಯೋಜನೆಗಳು",
     "injiAsVerifierApp": "ವೆರಿಫೈಯರ್ ಆಪ್ ಆಗಿ ಇಂಜಿ",
+    "receiveCard": "ಕಾರ್ಡ್ ಸ್ವೀಕರಿಸಿ",
     "basicSettings": "ಮೂಲ ಸೆಟ್ಟಿಂಗ್‌ಗಳು",
     "bioUnlock": "ಬಯೋಮೆಟ್ರಿಕ್ಸ್‌ನೊಂದಿಗೆ ಅನ್‌ಲಾಕ್ ಮಾಡಿ",
     "language": "ಭಾಷೆ",
@@ -261,7 +263,9 @@
     "stepThreeText": "ನಿಮ್ಮ ಕಾರ್ಡ್‌ಗಳನ್ನು ಜಗಳ ಮುಕ್ತ ರೀತಿಯಲ್ಲಿ ಸುರಕ್ಷಿತವಾಗಿ ಹಂಚಿಕೊಳ್ಳಿ ಮತ್ತು ವಿವಿಧ ಸೇವೆಗಳನ್ನು ಪಡೆದುಕೊಳ್ಳಿ.",
     "stepFourTitle": "ಜಗಳ ಮುಕ್ತ ದೃಢೀಕರಣ",
     "stepFourText": "ಸಂಗ್ರಹಿಸಿದ ಡಿಜಿಟಲ್ ರುಜುವಾತುಗಳನ್ನು ಬಳಸಿಕೊಂಡು ಸುಲಭವಾಗಿ ನಿಮ್ಮನ್ನು ದೃಢೀಕರಿಸಿ.",
-    "stepFourButton": "ಪ್ರಾರಂಭಿಸಿ",
+    "getStarted": "ಪ್ರಾರಂಭಿಸಿ",
+    "goBack": "ಹಿಂದೆ ಹೋಗು",
+    "back": "ಹಿಂದೆ",
     "skip": "ಬಿಟ್ಟುಬಿಡಿ",
     "next": "ಮುಂದೆ"
   },
@@ -509,7 +513,11 @@
     "getStarted": "ಪ್ರಾರಂಭಿಸಿ",
     "unlockApp": "ಅಪ್ಲಿಕೇಶನ್ ಅನ್ಲಾಕ್ ಮಾಡಿ",
     "failedToReadKeys": "ಕೀಗಳನ್ನು ಓದಲು ವಿಫಲವಾಗಿದೆ",
-    "retryRead": "ಮರುಪ್ರಯತ್ನಿಸಲು ಬಯಸುವಿರಾ?"
+    "retryRead": "ಮರುಪ್ರಯತ್ನಿಸಲು ಬಯಸುವಿರಾ?",
+    "errors": {
+      "decryptionFailed": "ಡೇಟಾವನ್ನು ಡೀಕ್ರಿಪ್ಟ್ ಮಾಡಲು ವಿಫಲವಾಗಿದೆ"
+    },
+    "ignore": "ನಿರ್ಲಕ್ಷಿಸಿ"
   },
   "SetupLanguage": {
     "header": "ಭಾಷೆಯನ್ನು ಆರಿಸಿ",

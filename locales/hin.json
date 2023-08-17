@@ -13,7 +13,8 @@
     "PRESENCE_VERIFICATION_FAILED": "सत्यापन असफल",
     "QRLOGIN_SUCCESFULL": "क्यूआरलॉगिन सफल",
     "WALLET_BINDING_SUCCESSFULL": "सक्रियण सफल",
-    "WALLET_BINDING_FAILURE": "सक्रियकरण असफल"
+    "WALLET_BINDING_FAILURE": "सक्रियकरण असफल",
+    "VC_REMOVED":"वॉलेट से हटाया गया"
   },
   "DeviceInfoList": {
     "requestedBy": "द्वारा अनुरोध किया गया",
@@ -81,7 +82,7 @@
     "offlineAuthenticationDisabled!": "ऑफ़लाइन प्रमाणीकरण अक्षम!",
     "offlineAuthDisabledMessage": "इस क्रेडेंशियल को ऑफ़लाइन प्रमाणीकरण के लिए उपयोग करने के लिए यहां क्लिक करें।",
     "viewActivityLog": "गतिविधि लॉग देखें",
-    "removeFromWallet": "बटुए से निकालें",
+    "removeFromWallet": "वॉलेट से हटाए",
     "revokeId": "आईडी निरस्त करें",
     "revokeMessage": "इस प्रोफ़ाइल के लिए वर्चुअल आईडी निरस्त करें"
   },
@@ -126,6 +127,7 @@
   "SettingScreen": {
     "header": "समायोजन",
     "injiAsVerifierApp": "सत्यापनकर्ता ऐप के रूप में इंजी",
+    "receiveCard": "कार्ड प्राप्त करें",
     "basicSettings": "मूल सेटिंग्स",
     "bioUnlock": "बायोमेट्रिक्स से अनलॉक करें",
     "language": "भाषा",
@@ -263,7 +265,9 @@
     "stepThreeText": "परेशानी मुक्त तरीके से अपने कार्ड सुरक्षित रूप से साझा करें और विभिन्न सेवाओं का लाभ उठाएं।",
     "stepFourTitle": "परेशानी मुक्त प्रमाणीकरण",
     "stepFourText": "संग्रहीत डिजिटल क्रेडेंशियल का उपयोग करके आसानी से स्वयं को प्रमाणित करें।",
-    "stepFourButton": "शुरू हो जाओ",
+    "getStarted": "शुरू करें",
+    "goBack": "वापस जाओ",
+    "back": "पीछे",
     "skip": "छोडना",
     "next": "अगला"
   },
@@ -282,7 +286,7 @@
     "rename": "नाम बदलें",
     "delete": "मिटाना",
     "revoke": "रद्द करना",
-    "revoking": "आपके वॉलेट में VID {{vid}} के साथ एक क्रेडेंशियल है। इसे रद्द करने से यह अपने आप बटुए से हट जाएगा। क्या आप सुनिश्चित रूप से आगे बढ़ना चाहते हैं?",
+    "revoking": "आपके वॉलेट में VID {{vid}} के साथ एक क्रेडेंशियल है। इसे रद्द करने से यह अपने आप वॉलेट से हट जाएगा। क्या आप सुनिश्चित रूप से आगे बढ़ना चाहते हैं?",
     "requestingOtp": "ओटीपी का अनुरोध...",
     "editTag": "नाम बदलें",
     "redirecting": "पुन: निर्देशित...",
@@ -509,7 +513,13 @@
   "WelcomeScreen": {
     "title": "ओपन सोर्स आइडेंटिटी सॉल्यूशन",
     "getStarted": "आरंभ करें",
-    "unlockApp": "एप्लिकेशन अनलॉक करें"
+    "unlockApp": "एप्लिकेशन अनलॉक करें",
+    "failedToReadKeys": "कुंजियाँ पढ़ने में विफल",
+    "retryRead": "पुनः प्रयास करना चाहते हैं?",
+    "errors": {
+      "decryptionFailed": "डेटा डिक्रिप्ट करने में विफल"
+    },
+    "ignore": "अनदेखा करना"
   },
   "SetupLanguage": {
     "header": "भाषा चुनें",
