@@ -1134,7 +1134,8 @@ export const vcItemMachine =
           const isBiometricsEnabled = SecureKeystore.hasBiometricsEnabled();
           return SecureKeystore.generateKeyPair(
             context.id,
-            isBiometricsEnabled
+            isBiometricsEnabled,
+            0
           );
         },
 
