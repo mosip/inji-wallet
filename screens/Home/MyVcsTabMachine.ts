@@ -18,6 +18,7 @@ import {
 import { AddVcModalMachine } from './MyVcs/AddVcModalMachine';
 import { GetVcModalMachine } from './MyVcs/GetVcModalMachine';
 import Storage from '../../shared/storage';
+import { IssuersMachine } from '../../machines/issuers/issuersMachine';
 
 const model = createModel(
   {
@@ -38,6 +39,8 @@ const model = createModel(
       STORAGE_UNAVAILABLE: () => ({}),
       ONBOARDING_DONE: () => ({}),
       IS_TAMPERED: () => ({}),
+      GOTO_ISSUERS: () => ({}),
+      DOWNLOAD_ID: () => ({}),
     },
   }
 );
@@ -76,10 +79,21 @@ export const MyVcsTabMachine = model.createMachine(
               actions: ['completeOnboarding'],
             },
           ],
+          GOTO_ISSUERS: 'gotoIssuers',
           ONBOARDING_DONE: {
             target: 'idle',
             actions: ['completeOnboarding'],
           },
+        },
+      },
+      gotoIssuers: {
+        invoke: {
+          id: 'issuersMachine',
+          src: IssuersMachine,
+          onDone: 'idle',
+        },
+        on: {
+          DOWNLOAD_ID: 'addingVc',
         },
       },
       addVc: {
@@ -112,6 +126,7 @@ export const MyVcsTabMachine = model.createMachine(
           ADD_VC: 'addVc',
           VIEW_VC: 'viewingVc',
           GET_VC: 'gettingVc',
+          GOTO_ISSUERS: 'gotoIssuers',
           IS_TAMPERED: {
             target: 'idle',
             actions: ['resetIsTampered', 'refreshMyVc'],
@@ -255,6 +270,10 @@ export function selectAddVcModal(state: State) {
 
 export function selectGetVcModal(state: State) {
   return state.children.GetVcModal as ActorRefFrom<typeof GetVcModalMachine>;
+}
+
+export function selectIssuerMachine(state: State) {
+  return state.children.issuersMachine as ActorRefFrom<typeof IssuersMachine>;
 }
 
 export function selectIsOnboarding(state: State) {

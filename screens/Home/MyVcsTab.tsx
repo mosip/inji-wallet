@@ -14,6 +14,8 @@ import {
   MessageOverlay,
 } from '../../components/MessageOverlay';
 import { Icon } from 'react-native-elements';
+import { IssuerListModel } from '../../machines/issuers/issuerModal';
+import LinearGradient from 'react-native-linear-gradient';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
   const { t } = useTranslation('MyVcsTab');
@@ -56,6 +58,32 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
           />
         </Row>
       </View>
+    );
+  };
+
+  const DownloadFABIcon: React.FC = (props) => {
+    const plusIcon = (
+      <Icon
+        name={'plus'}
+        type={'entypo'}
+        size={36}
+        color={Theme.Colors.whiteText}
+      />
+    );
+    return (
+      <LinearGradient
+        colors={Theme.Colors.gradientBtn}
+        style={Theme.Styles.downloadFabIcon}>
+        <Button
+          icon={plusIcon}
+          onPress={() => {
+            controller.GOTO_ISSUERS();
+            //props.navigation.navigate('IssuersListScreen', {service: issuerService});
+          }}
+          type={'clearAddIdBtnBg'}
+          fill
+        />
+      </LinearGradient>
     );
   };
 
@@ -103,43 +131,38 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                   }
                 })}
               </Column>
-              <Button
-                type="gradient"
-                disabled={controller.isRefreshingVcs}
-                title={t('downloadCard')}
-                onPress={controller.DOWNLOAD_ID}
-              />
+              <DownloadFABIcon {...props} />
             </React.Fragment>
           )}
           {controller.vcKeys.length === 0 && (
             <React.Fragment>
               <Column fill style={Theme.Styles.homeScreenContainer}>
-                <Image source={Theme.DigitalIdentityLogo} />
-                <Text
-                  align="center"
-                  weight="bold"
-                  margin="33 0 6 0"
-                  lineHeight={1}>
-                  {t('bringYourDigitalID')}
-                </Text>
-                <Text
-                  style={Theme.TextStyles.bold}
-                  color={Theme.Colors.textLabel}
-                  align="center"
-                  margin="0 12 30 12">
-                  {t('generateVcDescription')}
-                </Text>
-                <Button
-                  type="gradient"
-                  disabled={controller.isRefreshingVcs}
-                  title={t('downloadCard')}
-                  onPress={controller.DOWNLOAD_ID}
-                />
+                <View style={Theme.Styles.homeScreenInnerContainer}>
+                  <Image source={Theme.DigitalIdentityLogo} />
+                  <Text
+                    align="center"
+                    weight="bold"
+                    margin="33 0 6 0"
+                    lineHeight={1}>
+                    {t('bringYourDigitalID')}
+                  </Text>
+                  <Text
+                    style={Theme.TextStyles.bold}
+                    color={Theme.Colors.textLabel}
+                    align="center"
+                    margin="0 12 30 12">
+                    {t('generateVcDescription')}
+                  </Text>
+                </View>
+                <DownloadFABIcon {...props} />
               </Column>
             </React.Fragment>
           )}
         </Column>
       </Column>
+      {controller.selectIssuerMachine && (
+        <IssuerListModel service={controller.selectIssuerMachine} />
+      )}
 
       {controller.AddVcModalService && (
         <AddVcModal service={controller.AddVcModalService} onPress={getId} />

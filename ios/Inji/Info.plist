@@ -23,6 +23,8 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+            <key>CFBundleURLName</key>
+            <string>io.mosip.residentapp</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>io.mosip.residentapp</string>

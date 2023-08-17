@@ -151,6 +151,10 @@
     "version": "Version",
     "tuvaliVersion": "Tuvali-version"
   },
+  "IssuersListScreen": {
+    "title": "Add new card",
+    "header": "Please select a preferred method from below to download a new card",
+  },
   "HelpScreen": {
     "header": "Help",
     "whatIsDigitalCredential?": "What is a digital credential?",

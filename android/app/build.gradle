@@ -1,4 +1,4 @@
-plugins { 
+plugins {
     id 'com.gladed.androidgitversion' version '0.4.14'
 }
 
@@ -164,7 +164,8 @@ android {
 
         manifestPlaceholders = [
             APP_NAME: APP_NAME_RELEASE,
-            GOOGLE_NEARBY_MESSAGES_API_KEY: "${properties.getProperty('GOOGLE_NEARBY_MESSAGES_API_KEY')}"
+            GOOGLE_NEARBY_MESSAGES_API_KEY: "${properties.getProperty('GOOGLE_NEARBY_MESSAGES_API_KEY')}",
+            appAuthRedirectScheme: 'io.mosip.residentapp'
         ]
     }
     splits {
