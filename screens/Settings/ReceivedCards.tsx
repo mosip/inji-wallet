@@ -76,7 +76,9 @@ export const ReceivedCards: React.FC = () => {
             isVisible={controller.isViewingVc}
             onDismiss={controller.DISMISS_MODAL}
             vcItemActor={controller.selectedVc}
-            onRevokeDelete={() => console.log('revoke')}
+            onRevokeDelete={() => {
+              controller.REVOKE();
+            }}
             activeTab={controller.activeTab}
           />
         )}
