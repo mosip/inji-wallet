@@ -32,7 +32,7 @@ const model = createModel(
     info: {} as AppInfo,
     backendInfo: {} as BackendInfo,
     serviceRefs: {} as AppServices,
-    isReadError: true,
+    isReadError: false,
     isDecryptError: false,
     isKeyInvalidateError: false,
   },

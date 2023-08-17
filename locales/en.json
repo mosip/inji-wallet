@@ -13,7 +13,8 @@
     "PRESENCE_VERIFICATION_FAILED": "verification failed",
     "QRLOGIN_SUCCESFULL": "QRLogin successful",
     "WALLET_BINDING_SUCCESSFULL": "Activation successful",
-    "WALLET_BINDING_FAILURE": "Activation failed"
+    "WALLET_BINDING_FAILURE": "Activation failed",
+    "VC_REMOVED":"Removed from wallet"
   },
   "DeviceInfoList": {
     "requestedBy": "Requested by",
@@ -57,7 +58,7 @@
     "enableVerification": "Activate",
     "profileAuthenticated": "Profile is authenticated!",
     "offlineAuthDisabledHeader": "Offline Authentication disabled!",
-    "offlineAuthDisabledMessage": "Click 'Enable Authentication' to enable this credentials to be used for offline authentication.",
+    "offlineAuthDisabledMessage": "Click on 'Activate' to enable this credentials to be used for offline authentication.",
     "verificationEnabledSuccess": "Activated for online login",
     "goback": "GO BACK",
     "BindingWarning": "If you have enabled verification for this credential on another wallet, it will get overridden. Do you want to proceed?",
@@ -273,7 +274,9 @@
     "stepThreeText": "Share your cards securely in a hassle free way and avail various services.",
     "stepFourTitle": "Hassle free authentication",
     "stepFourText": "Authenticate yourself with ease using the stored digital credential.",
-    "stepFourButton": "Get Started",
+    "getStarted": "Get Started",
+    "goBack": "Go Back",
+    "back": "Back",
     "skip": "Skip",
     "next": "Next"
   },

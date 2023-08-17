@@ -27,9 +27,9 @@ import {
 import { GlobalContext } from '../../shared/GlobalContext';
 import { useTranslation } from 'react-i18next';
 import { Platform } from 'react-native';
-import { RequestRouteProps } from '../../routes';
+import { RequestRouteProps, RootRouteProps } from '../../routes';
 
-export function useSettingsScreen(props: RequestRouteProps) {
+export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
   const { appService } = useContext(GlobalContext);
   const authService = appService.children.get('auth');
   const settingsService = appService.children.get('settings');
@@ -141,6 +141,12 @@ export function useSettingsScreen(props: RequestRouteProps) {
     RECEIVE_CARD: () => {
       props.navigation.navigate('Request');
       setIsVisible(false);
+    },
+
+    INJI_TOUR_GUIDE: () => {
+      settingsService.send(SettingsEvents.INJI_TOUR_GUIDE()),
+        props.navigation.navigate('IntroSliders'),
+        setIsVisible(false);
     },
 
     TOGGLE_BIOMETRIC: (enable: boolean) =>

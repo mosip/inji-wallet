@@ -13,7 +13,7 @@ import { Modal } from '../../components/ui/Modal';
 import { CREDENTIAL_REGISTRY_EDIT } from 'react-native-dotenv';
 import { AboutInji } from './AboutInji';
 import { EditableListItem } from '../../components/EditableListItem';
-import { RequestRouteProps } from '../../routes';
+import { RequestRouteProps, RootRouteProps } from '../../routes';
 import { ReceivedCards } from './ReceivedCards';
 
 const LanguageSetting: React.FC = () => {
@@ -47,9 +47,9 @@ const LanguageSetting: React.FC = () => {
   );
 };
 
-export const SettingScreen: React.FC<SettingProps & RequestRouteProps> = (
-  props
-) => {
+export const SettingScreen: React.FC<
+  SettingProps & RootRouteProps & RequestRouteProps
+> = (props) => {
   const { t } = useTranslation('SettingScreen');
   const controller = useSettingsScreen(props);
 
@@ -154,13 +154,11 @@ export const SettingScreen: React.FC<SettingProps & RequestRouteProps> = (
                 progress={controller.isResetInjiProps}
               />
             )}
-            {/*
+
             <ListItem
               topDivider
               bottomDivider
-              onPress={() => {
-                Linking.openURL(helpUrl);
-              }}>
+              onPress={() => controller.INJI_TOUR_GUIDE()}>
               <Icon
                 type={'antdesign'}
                 name={'book'}
@@ -176,7 +174,6 @@ export const SettingScreen: React.FC<SettingProps & RequestRouteProps> = (
                 </ListItem.Title>
               </ListItem.Content>
             </ListItem>
-            */}
 
             <ListItem onPress={controller.LOGOUT}>
               <Icon

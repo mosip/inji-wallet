@@ -47,6 +47,8 @@ const model = createModel(
       ) => ({
         credentialRegistryResponse: credentialRegistryResponse,
       }),
+      INJI_TOUR_GUIDE: () => ({}),
+      BACK: () => ({}),
       CANCEL: () => ({}),
       ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS: () => ({}),
     },
@@ -88,6 +90,7 @@ export const settingsMachine = model.createMachine(
         },
       },
       idle: {
+        entry: ['injiTourGuide'],
         on: {
           TOGGLE_BIOMETRIC_UNLOCK: {
             actions: ['toggleBiometricUnlock', 'storeContext'],
@@ -133,6 +136,20 @@ export const settingsMachine = model.createMachine(
         on: {
           CANCEL: {
             actions: ['resetCredentialRegistry'],
+            target: 'idle',
+          },
+        },
+      },
+      injiTourGuide: {
+        on: {
+          INJI_TOUR_GUIDE: {
+            target: 'showInjiTourGuide',
+          },
+        },
+      },
+      showInjiTourGuide: {
+        on: {
+          BACK: {
             target: 'idle',
           },
         },

@@ -734,12 +734,12 @@ export const PurpleTheme = {
   }),
   KebabPopUpStyles: StyleSheet.create({
     kebabPopUp: {
-      marginHorizontal: 4,
+      borderTopLeftRadius: 15,
+      borderTopRightRadius: 15,
+      width: Dimensions.get('screen').width,
+      marginTop: Dimensions.get('screen').height * 0.55,
     },
     kebabHeaderStyle: {
-      backgroundColor: Colors.White,
-      borderTopLeftRadius: 24,
-      borderTopRightRadius: 24,
       justifyContent: 'space-between',
       fontFamily: 'Inter_700Bold',
       paddingRight: 15,

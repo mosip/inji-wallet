@@ -13,7 +13,8 @@
     "PRESENCE_VERIFICATION_FAILED": "falló la verificación",
     "QRLOGIN_SUCCESFULL": "Inicio de sesión QR exitoso",
     "WALLET_BINDING_SUCCESSFULL": "Activación exitosa",
-    "WALLET_BINDING_FAILURE": "Activación fallida"
+    "WALLET_BINDING_FAILURE": "Activación fallida",
+		"VC_REMOVED":"Eliminado de la billetera"
   },
   "DeviceInfoList": {
     "requestedBy": "Solicitado por",
@@ -300,6 +301,7 @@
     }
   },
   "RequestScreen": {
+    "receiveCard": "Recibir tarjeta",
     "bluetoothDenied": "Por favor, activa el Bluetooth para poder solicitar la tarjeta",
     "bluetoothStateAndroid": "Por favor, activa el Bluetooth desde la configuración rápida para admitir el intercambio local",
     "bluetoothStateIos": "Por favor, activa el Bluetooth desde el centro de control para admitir el intercambio local",
