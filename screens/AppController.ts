@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { GlobalContext } from '../shared/GlobalContext';
 import { StoreEvents } from '../machines/store';
+import { APP_EVENTS } from '../machines/app';
 
 export function useApp() {
   const { appService } = useContext(GlobalContext);
@@ -10,6 +11,6 @@ export function useApp() {
     IGNORE: () => storeService.send(StoreEvents.IGNORE()),
     TRY_AGAIN: () => storeService.send(StoreEvents.TRY_AGAIN()),
     RESET: () =>
-      appService.send(appService.events.RESET_KEY_INVALIDATE_ERROR_DISMISS()),
+      appService.send(APP_EVENTS.RESET_KEY_INVALIDATE_ERROR_DISMISS()),
   };
 }
