@@ -16,7 +16,7 @@
 		"WALLET_BINDING_FAILURE": "Activación fallida",
 		"VC_REMOVED":"Eliminado de la billetera",
 		"VC_PIN":"Fijado en la billetera",
-        "VC_UNPIN":"Sin fijar en la billetera"
+		"VC_UNPIN":"Sin fijar en la billetera"
 	},
 	"DeviceInfoList": {
 		"requestedBy": "Solicitado por",
