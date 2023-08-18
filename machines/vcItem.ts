@@ -258,7 +258,7 @@ export const vcItemMachine =
           entry: 'storeContext',
           on: {
             STORE_RESPONSE: {
-              actions: 'sendVcUpdated',
+              actions: ['sendVcUpdated', 'logVcPinToggle'],
               target: 'idle',
             },
           },
@@ -781,6 +781,20 @@ export const vcItemMachine =
             isPinned: !context.isPinned,
           };
         }),
+
+        logVcPinToggle: send(
+          (context) =>
+            ActivityLogEvents.LOG_ACTIVITY({
+              _vcKey: VC_ITEM_STORE_KEY(context),
+              type: context.isPinned ? 'VC_PIN' : 'VC_UNPIN',
+              timestamp: Date.now(),
+              deviceName: '',
+              vcLabel: context.id,
+            }),
+          {
+            to: (context) => context.serviceRefs.activityLog,
+          }
+        ),
 
         sendVcUpdated: send(
           (_context, event) =>

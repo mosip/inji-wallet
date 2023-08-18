@@ -134,7 +134,9 @@ export type ActivityLogType =
   | 'QRLOGIN_SUCCESFULL'
   | 'WALLET_BINDING_SUCCESSFULL'
   | 'WALLET_BINDING_FAILURE'
-  | 'VC_REMOVED';
+  | 'VC_REMOVED'
+  | 'VC_PIN'
+  | 'VC_UNPIN';
 
 type State = StateFrom<typeof activityLogMachine>;
 

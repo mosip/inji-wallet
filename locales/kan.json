@@ -14,7 +14,9 @@
     "QRLOGIN_SUCCESFULL": "QRಲಾಗಿನ್ ಯಶಸ್ವಿಯಾಗಿದೆ",
     "WALLET_BINDING_SUCCESSFULL": "ಸಕ್ರಿಯಗೊಳಿಸುವಿಕೆ ಯಶಸ್ವಿಯಾಗಿದೆ",
     "WALLET_BINDING_FAILURE": "ಸಕ್ರಿಯಗೊಳಿಸುವಿಕೆ ವಿಫಲವಾಗಿದೆ",
-    "VC_REMOVED":"ಕೈಚೀಲದಿಂದ ತೆಗೆದುಹಾಕಲಾಗಿದೆ"
+    "VC_REMOVED":"ಕೈಚೀಲದಿಂದ ತೆಗೆದುಹಾಕಲಾಗಿದೆ",
+    "VC_PIN":"ಕೈಚೀಲದಲ್ಲಿ ಪಿನ್ ಮಾಡಲಾಗಿದೆ",
+    "VC_UNPIN":"ವ್ಯಾಲೆಟ್‌ನಲ್ಲಿ ಅನ್‌ಪಿನ್ ಮಾಡಲಾಗಿದೆ"
   },
   "DeviceInfoList": {
     "requestedBy": "ವಿನಂತಿಸಿದವರು",

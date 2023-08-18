@@ -14,7 +14,9 @@
     "QRLOGIN_SUCCESFULL": "Matagumpay ang QRLogin",
     "WALLET_BINDING_SUCCESSFULL": "Matagumpay ang pag-activate",
     "WALLET_BINDING_FAILURE": "Nabigo ang pag-activate",
-    "VC_REMOVED":"Inalis sa wallet"
+    "VC_REMOVED":"Inalis sa wallet",
+    "VC_PIN":"Naka-pin sa wallet",
+    "VC_UNPIN":"Na-unpin sa wallet"
   },
   "DeviceInfoList": {
     "requestedBy": "Hiniling ni",
