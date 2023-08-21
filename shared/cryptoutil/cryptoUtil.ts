@@ -1,8 +1,8 @@
 import { KeyPair, RSA } from 'react-native-rsa-native';
 import forge from 'node-forge';
 import getAllConfigurations from '../commonprops/commonProps';
-import SecureKeystore from '../../.yalc/react-native-secure-keystore';
 import { isIOS } from '../constants';
+import SecureKeystore from 'react-native-secure-keystore';
 
 // 5min
 export const AUTH_TIMEOUT = 5 * 60;

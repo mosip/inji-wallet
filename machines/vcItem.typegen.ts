@@ -192,6 +192,7 @@ export interface Typegen0 {
     incrementDownloadCounter: 'POLL';
     logDownloaded: 'STORE_RESPONSE';
     logRevoked: 'STORE_RESPONSE';
+    logVCremoved: 'STORE_RESPONSE';
     logWalletBindingFailure:
       | 'error.platform.vc-item.addKeyPair:invocation[0]'
       | 'error.platform.vc-item.addingWalletBindingId:invocation[0]'
