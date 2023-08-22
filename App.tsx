@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import AppLoading from 'expo-app-loading';
 import { AppLayout } from './screens/AppLayout';
 import { useFont } from './shared/hooks/useFont';
@@ -8,12 +8,17 @@ import { useSelector } from '@xstate/react';
 import { useTranslation } from 'react-i18next';
 import {
   selectIsDecryptError,
+  selectIsKeyInvalidateError,
   selectIsReadError,
   selectIsReady,
 } from './machines/app';
 import { DualMessageOverlay } from './components/DualMessageOverlay';
 import { useApp } from './screens/AppController';
 import { Alert } from 'react-native';
+import { ErrorMessageOverlay } from './components/MessageOverlay';
+import SecureKeystore from 'react-native-secure-keystore';
+import { isCustomSecureKeystore } from './shared/cryptoutil/cryptoUtil';
+import i18n from './i18n';
 
 // kludge: this is a bad practice but has been done temporarily to surface
 //  an occurance of a bug with minimal residual code changes, this should
@@ -45,11 +50,23 @@ const AppLayoutWrapper: React.FC = () => {
 const AppLoadingWrapper: React.FC = () => {
   const { appService } = useContext(GlobalContext);
   const isReadError = useSelector(appService, selectIsReadError);
+  const isKeyInvalidateError = useSelector(
+    appService,
+    selectIsKeyInvalidateError
+  );
   const controller = useApp();
   const { t } = useTranslation('WelcomeScreen');
   return (
     <>
       <AppLoading />
+
+      <ErrorMessageOverlay
+        translationPath={'WelcomeScreen'}
+        isVisible={isKeyInvalidateError}
+        error={'errors.invalidateKeyError'}
+        onDismiss={controller.RESET}
+      />
+
       {isReadError ? (
         <DualMessageOverlay
           isVisible={isReadError}
@@ -67,6 +84,17 @@ const AppInitialization: React.FC = () => {
   const { appService } = useContext(GlobalContext);
   const isReady = useSelector(appService, selectIsReady);
   const hasFontsLoaded = useFont();
+  const { t } = useTranslation('common');
+
+  useEffect(() => {
+    if (isCustomSecureKeystore()) {
+      SecureKeystore.updatePopup(
+        t('biometricPopup.title'),
+        t('biometricPopup.description')
+      );
+    }
+  }, [i18n.language]);
+
   return isReady && hasFontsLoaded ? (
     <AppLayoutWrapper />
   ) : (

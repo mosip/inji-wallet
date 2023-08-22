@@ -34,6 +34,7 @@ export interface Typegen0 {
     resetCredentialRegistry: 'CANCEL' | 'UPDATE_CREDENTIAL_REGISTRY';
     setContext: 'STORE_RESPONSE';
     storeContext:
+      | 'ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS'
       | 'STORE_RESPONSE'
       | 'TOGGLE_BIOMETRIC_UNLOCK'
       | 'UPDATE_NAME'
@@ -46,6 +47,7 @@ export interface Typegen0 {
     updateDefaults: 'STORE_RESPONSE';
     updateName: 'UPDATE_NAME';
     updatePartialDefaults: 'STORE_RESPONSE';
+    updateUserShownWithHardwareKeystoreNotExists: 'ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS';
     updateVcLabel: 'UPDATE_VC_LABEL';
   };
   'eventsCausingDelays': {};

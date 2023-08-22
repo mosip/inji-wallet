@@ -93,3 +93,4 @@ temp/
 .yalc/
 yalc.lock
 
+android/app/debug.keystore
