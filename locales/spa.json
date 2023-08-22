@@ -14,7 +14,7 @@
     "QRLOGIN_SUCCESFULL": "Inicio de sesión QR exitoso",
     "WALLET_BINDING_SUCCESSFULL": "Activación exitosa",
     "WALLET_BINDING_FAILURE": "Activación fallida",
-		"VC_REMOVED":"Eliminado de la billetera"
+    "VC_REMOVED": "Eliminado de la billetera"
   },
   "DeviceInfoList": {
     "requestedBy": "Solicitado por",
@@ -183,8 +183,8 @@
         "message": "No se pueden recibir ni guardar más Tarjetas, ya que los datos de la aplicación están llenos."
       },
       "vcIsTampered": {
-        "title": "Los datos de VC están manipulados",
-        "message": "Los VC afectados se eliminan de la aplicación."
+        "title": "Algunas pruebas de identidad están manipuladas",
+        "message": "Los archivos afectados se eliminan, vuelva a descargarlos."
       },
       "storageLimitReached": {
         "title": "Datos de aplicación insuficientes",

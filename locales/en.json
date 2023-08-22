@@ -255,8 +255,8 @@
         "message": "You cannot add or receive cards since the Appdata is full. Clear Appdata to proceed."
       },
       "vcIsTampered": {
-        "title": "VC data is tampered",
-        "message": "Affected VCs are removed from the app."
+        "title": "Some identity proofs are tampered",
+        "message": "Affected files are removed, please re-download."
       },
       "keystoreNotExists": {
         "title": "Secure Key Storage not found",
