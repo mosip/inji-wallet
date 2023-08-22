@@ -15,6 +15,10 @@ import {
 import { DualMessageOverlay } from './components/DualMessageOverlay';
 import { useApp } from './screens/AppController';
 import { Alert } from 'react-native';
+import {
+  getTelemetryConfigData,
+  initializeTelemetry,
+} from './shared/telemetry/TelemetryUtils';
 import { ErrorMessageOverlay } from './components/MessageOverlay';
 import SecureKeystore from 'react-native-secure-keystore';
 import { isCustomSecureKeystore } from './shared/cryptoutil/cryptoUtil';
@@ -35,6 +39,10 @@ const DecryptErrorAlert = (controller, t) => {
     },
   ]);
 };
+function configureTelemetry() {
+  const config = getTelemetryConfigData();
+  initializeTelemetry(config);
+}
 
 const AppLayoutWrapper: React.FC = () => {
   const { appService } = useContext(GlobalContext);
@@ -44,6 +52,7 @@ const AppLayoutWrapper: React.FC = () => {
   if (isDecryptError) {
     DecryptErrorAlert(controller, t);
   }
+  configureTelemetry();
   return <AppLayout />;
 };
 
