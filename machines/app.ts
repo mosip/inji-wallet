@@ -81,7 +81,7 @@ export const appMachine = model.createMachine(
         actions: ['updateKeyInvalidateError'],
       },
       RESET_KEY_INVALIDATE_ERROR_DISMISS: {
-        actions: ['resetKeyInvalidateError', 'resetKeyInvalidateErrorDismiss'],
+        actions: ['resetKeyInvalidateError'],
       },
     },
     states: {
@@ -225,8 +225,6 @@ export const appMachine = model.createMachine(
       resetKeyInvalidateError: model.assign({
         isKeyInvalidateError: false,
       }),
-
-      resetKeyInvalidateErrorDismiss: () => {},
 
       requestDeviceInfo: respond((context) => ({
         type: 'RECEIVE_DEVICE_INFO',

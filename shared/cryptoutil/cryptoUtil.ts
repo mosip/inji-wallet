@@ -74,7 +74,7 @@ async function createSignature(
     try {
       signature64 = await SecureKeystore.sign(individualId, preHash);
     } catch (e) {
-      console.error('Error in creating signature:' + JSON.stringify(e));
+      console.error('Error in creating signature:', e);
       throw e;
     }
 

@@ -25,7 +25,6 @@ export interface Typegen0 {
     logStoreEvents: 'xstate.init';
     requestDeviceInfo: 'REQUEST_DEVICE_INFO';
     resetKeyInvalidateError: 'READY' | 'RESET_KEY_INVALIDATE_ERROR_DISMISS';
-    resetKeyInvalidateErrorDismiss: 'RESET_KEY_INVALIDATE_ERROR_DISMISS';
     setAppInfo: 'APP_INFO_RECEIVED';
     setBackendInfo: 'BACKEND_INFO_RECEIVED';
     setIsDecryptError: 'DECRYPT_ERROR';
