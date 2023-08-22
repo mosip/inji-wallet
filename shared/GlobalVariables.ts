@@ -1,5 +1,5 @@
 import { getVersion } from 'react-native-device-info';
-
+import { generateSessionId } from './telemetry/TelemetryUtils';
 /* eslint-disable @typescript-eslint/no-var-requires */
 const dependencies = require('../package-lock.json').dependencies;
 
@@ -54,3 +54,16 @@ export class __InjiVersion {
     return __InjiVersion.value;
   }
 }
+export class __SessionId {
+  private static value: string;
+
+  public static getValue(): string {
+    return __SessionId.value;
+  }
+
+  public static setValue(value: string) {
+    this.value = value;
+  }
+}
+
+__SessionId.setValue(generateSessionId());

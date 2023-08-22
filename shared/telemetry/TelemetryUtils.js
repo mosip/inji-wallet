@@ -1,7 +1,13 @@
 import telemetry from '@project-sunbird/telemetry-sdk';
-import { HOST, deviceId } from '../constants';
+import {
+  APP_ID_LENGTH,
+  HOST,
+  SESSION_ID_DICTIONARY,
+  deviceId,
+} from '../constants';
 import { Platform } from 'react-native';
 import { __AppId, __InjiVersion, __TuvaliVersion } from '../GlobalVariables';
+import ShortUniqueId from 'short-unique-id';
 
 export function sendImpressionEvent(data) {
   telemetry.impression(data, {});
@@ -58,4 +64,12 @@ export function getData(type) {
   return {
     type: type,
   };
+}
+
+export function generateSessionId() {
+  const shortUUID = new ShortUniqueId({
+    length: APP_ID_LENGTH,
+    dictionary: SESSION_ID_DICTIONARY,
+  });
+  return shortUUID.randomUUID() + Date.now();
 }
