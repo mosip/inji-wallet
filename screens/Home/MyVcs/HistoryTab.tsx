@@ -8,6 +8,7 @@ import { ActorRefFrom } from 'xstate';
 import { vcItemMachine } from '../../../machines/vcItem';
 import { useKebabPopUp } from '../../../components/KebabPopUpController';
 import { Theme } from '../../../components/ui/styleUtils';
+import { isVcKeyMatch } from '../../../shared/constants';
 
 export const HistoryTab: React.FC<HistoryTabProps> = (props) => {
   const { t } = useTranslation('HistoryTab');
@@ -30,7 +31,8 @@ export const HistoryTab: React.FC<HistoryTabProps> = (props) => {
         onDismiss={controller.DISMISS}>
         <Column fill>
           {controller.activities.map((activity) => {
-            if (activity._vcKey.split(':')[3] == props.vcKey.split(':')[3]) {
+            const vcKeyMatch = isVcKeyMatch(activity._vcKey, props.vcKey);
+            if (vcKeyMatch) {
               return (
                 <ActivityLogText
                   key={`${activity.timestamp}-${activity._vcKey}`}

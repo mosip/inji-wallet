@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import { VC } from '../types/vc';
 import {
   MIMOTO_HOST,
@@ -20,6 +21,11 @@ export const VC_ITEM_STORE_KEY = (vc: Partial<VC>) =>
 //Regex expression to evaluate if the key is for a VC
 export const VC_ITEM_STORE_KEY_REGEX =
   '^vc:(UIN|VID):[0-9]+:[a-z0-9-]+:[true|false]+$';
+
+//To compare the vckey with requestId, when the vc is pinned
+export const isVcKeyMatch = (vckey: string, CompareVckey: string) => {
+  return vckey.split(':')[3] === CompareVckey.split(':')[3];
+};
 
 export let individualId = '';
 
@@ -47,3 +53,7 @@ export const APP_ID_DICTIONARY = [
   'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L',
   'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y',
 ];
+
+export function isIOS(): boolean {
+  return Platform.OS === 'ios';
+}
