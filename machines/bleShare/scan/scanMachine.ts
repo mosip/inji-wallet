@@ -38,6 +38,10 @@ import { StoreEvents } from '../../store';
 import { WalletDataEvent } from 'react-native-tuvali/lib/typescript/types/events';
 import { BLEError } from '../types';
 import Storage from '../../../shared/storage';
+import {
+  getData,
+  sendStartEvent,
+} from '../../../shared/telemetry/TelemetryUtils';
 
 const { wallet, EventTypes, VerificationStatus } = tuvali;
 
@@ -418,7 +422,7 @@ export const scanMachine =
             },
             navigatingToHistory: {},
           },
-          entry: 'sendScanData',
+          entry: ['sendScanData', () => sendStartEvent(getData('START'))],
         },
         connecting: {
           invoke: {
