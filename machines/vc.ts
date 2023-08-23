@@ -10,7 +10,7 @@ import {
   MY_VCS_STORE_KEY,
   RECEIVED_VCS_STORE_KEY,
   VC_ITEM_STORE_KEY,
-  isVcKeyMatch,
+  isSameVC,
 } from '../shared/constants';
 
 const model = createModel(
@@ -201,7 +201,7 @@ export const vcMachine =
 
         setVcUpdate: (context, event) => {
           Object.keys(context.vcs).map((vc) => {
-            if (isVcKeyMatch(vc, VC_ITEM_STORE_KEY(event.vc))) {
+            if (isSameVC(vc, VC_ITEM_STORE_KEY(event.vc))) {
               context.vcs[VC_ITEM_STORE_KEY(event.vc)] = context.vcs[vc];
               delete context.vcs[vc];
               return context.vcs[VC_ITEM_STORE_KEY(event.vc)];

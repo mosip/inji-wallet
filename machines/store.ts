@@ -1,22 +1,26 @@
 import * as Keychain from 'react-native-keychain';
-import CryptoJS from 'crypto-js';
 import Storage, { HMAC_ALIAS } from '../shared/storage';
 import binaryToBase64 from 'react-native/Libraries/Utilities/binaryToBase64';
 import {
   EventFrom,
   Receiver,
-  sendParent,
   send,
+  sendParent,
   sendUpdate,
   StateFrom,
 } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { generateSecureRandom } from 'react-native-securerandom';
 import { log } from 'xstate/lib/actions';
-import { VC_ITEM_STORE_KEY_REGEX, MY_VCS_STORE_KEY } from '../shared/constants';
+import { MY_VCS_STORE_KEY, VC_ITEM_STORE_KEY_REGEX } from '../shared/constants';
 import SecureKeystore from 'react-native-secure-keystore';
-import { isCustomSecureKeystore } from '../shared/cryptoutil/cryptoUtil';
-import { AUTH_TIMEOUT } from '../shared/cryptoutil/cryptoUtil';
+import {
+  AUTH_TIMEOUT,
+  clear,
+  decryptJson,
+  encryptJson,
+  isCustomSecureKeystore,
+} from '../shared/cryptoutil/cryptoUtil';
 
 export const ENCRYPTION_ID = 'c7c22a6c-9759-4605-ac88-46f4041d863d';
 const vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
@@ -479,11 +483,12 @@ export async function getItem(
   } catch (e) {
     if (
       e.message.includes('Data is tampered') ||
-      e.message.includes(keyinvalidatedString)
+      e.message.includes(keyinvalidatedString) ||
+      e.message.includes('Key not found') // this error happens when previous get Item calls failed due to key invalidation and data and keys are deleted
     ) {
       throw e;
     }
-    console.error('Exception in getting item: ' + e);
+    console.error(`Exception in getting item for ${key}: ${e}`);
     return defaultValue;
   }
 }
@@ -614,46 +619,6 @@ export async function removeItems(
     await setItem(key, newList, encryptionKey);
   } catch (e) {
     console.error('error removeItems:', e);
-    throw e;
-  }
-}
-
-export async function clear() {
-  try {
-    console.log('clearing entire storage');
-    if (isCustomSecureKeystore()) {
-      SecureKeystore.clearKeys();
-    }
-    await Storage.clear();
-  } catch (e) {
-    console.error('error clear:', e);
-    throw e;
-  }
-}
-
-export function encryptJson(
-  encryptionKey: string,
-  data: string
-): Promise<string> {
-  if (!isCustomSecureKeystore()) {
-    return CryptoJS.AES.encrypt(data, encryptionKey).toString();
-  }
-  return SecureKeystore.encryptData(ENCRYPTION_ID, data);
-}
-
-export function decryptJson(
-  encryptionKey: string,
-  encryptedData: string
-): Promise<string> {
-  try {
-    if (!isCustomSecureKeystore()) {
-      return CryptoJS.AES.decrypt(encryptedData, encryptionKey).toString(
-        CryptoJS.enc.Utf8
-      );
-    }
-    return SecureKeystore.decryptData(ENCRYPTION_ID, encryptedData);
-  } catch (e) {
-    console.error('error decryptJson:', e);
     throw e;
   }
 }

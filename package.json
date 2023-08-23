@@ -66,7 +66,7 @@
     "react-native-gesture-handler": "~2.1.0",
     "react-native-keychain": "^8.0.0",
     "react-native-linear-gradient": "^2.6.2",
-    "react-native-location-enabler": "^4.1.0",
+    "react-native-location": "^2.5.0",
     "react-native-mmkv-storage": "0.8.0",
     "react-native-permissions": "^3.6.0",
     "react-native-popable": "^0.4.3",
