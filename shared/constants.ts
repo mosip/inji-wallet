@@ -22,6 +22,11 @@ export const VC_ITEM_STORE_KEY = (vc: Partial<VC>) =>
 export const VC_ITEM_STORE_KEY_REGEX =
   '^vc:(UIN|VID):[0-9]+:[a-z0-9-]+:[true|false]+$';
 
+//To compare the vckey with requestId, when the vc is pinned
+export const isVcKeyMatch = (vckey: string, CompareVckey: string) => {
+  return vckey.split(':')[3] === CompareVckey.split(':')[3];
+};
+
 export let individualId = '';
 
 export const GET_INDIVIDUAL_ID = (ind_Id: string) => {
