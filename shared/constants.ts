@@ -53,7 +53,3 @@ export const APP_ID_DICTIONARY = [
   'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L',
   'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y',
 ];
-
-export function isIOS(): boolean {
-  return Platform.OS === 'ios';
-}
