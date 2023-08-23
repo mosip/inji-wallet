@@ -1,6 +1,5 @@
 import telemetry from '@project-sunbird/telemetry-sdk';
 import { Platform } from 'react-native';
-import { __AppId, __InjiVersion, __TuvaliVersion } from '../GlobalVariables';
 import { HOST } from '../constants';
 import { Platform } from 'react-native';
 import {
