@@ -41,7 +41,9 @@ export interface Typegen0 {
     checkNearByDevicesPermission: 'done.invoke.scan.checkNearbyDevicesPermission.checking:invocation[0]';
     checkStorageAvailability: 'done.invoke.scan.checkStorage:invocation[0]';
     createVp: 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
-    disconnect: 'done.invoke.scan.clearingConnection:invocation[0]';
+    disconnect:
+      | 'done.invoke.scan.clearingConnection:invocation[0]'
+      | 'done.invoke.scan.disconnectDevice:invocation[0]';
     monitorConnection: 'done.invoke.scan:invocation[0]';
     requestBluetooth: 'done.invoke.scan.checkBluetoothState.requesting:invocation[0]';
     requestNearByDevicesPermission: 'done.invoke.scan.checkNearbyDevicesPermission.requesting:invocation[0]';
@@ -60,6 +62,7 @@ export interface Typegen0 {
       | 'BLE_ERROR'
       | 'DISCONNECT'
       | 'DISMISS'
+      | 'RESET'
       | 'SCREEN_BLUR'
       | 'SCREEN_FOCUS'
       | 'xstate.stop';
@@ -68,6 +71,7 @@ export interface Typegen0 {
       | 'BLE_ERROR'
       | 'DISCONNECT'
       | 'DISMISS'
+      | 'RESET'
       | 'SCREEN_BLUR'
       | 'SCREEN_FOCUS'
       | 'xstate.stop';
@@ -138,10 +142,10 @@ export interface Typegen0 {
     checkLocationPermission: 'APP_ACTIVE' | 'LOCATION_ENABLED';
     checkLocationStatus: '';
     checkNearByDevicesPermission: 'APP_ACTIVE' | 'START_PERMISSION_CHECK';
-    checkStorageAvailability: 'SCREEN_FOCUS';
+    checkStorageAvailability: 'RESET' | 'SCREEN_FOCUS';
     createVp: never;
-    disconnect: '' | 'DISMISS' | 'LOCATION_ENABLED';
-    monitorConnection: 'xstate.init';
+    disconnect: '' | 'DISMISS' | 'LOCATION_ENABLED' | 'SCREEN_BLUR';
+    monitorConnection: 'SCREEN_BLUR' | 'xstate.init';
     requestBluetooth: 'BLUETOOTH_STATE_DISABLED';
     requestNearByDevicesPermission: 'NEARBY_DISABLED';
     sendVc:
@@ -175,6 +179,7 @@ export interface Typegen0 {
     | 'connecting'
     | 'connecting.inProgress'
     | 'connecting.timeout'
+    | 'disconnectDevice'
     | 'disconnected'
     | 'findingConnection'
     | 'handlingBleError'

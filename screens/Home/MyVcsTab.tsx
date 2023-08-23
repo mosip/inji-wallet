@@ -148,6 +148,22 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
       {controller.GetVcModalService && (
         <GetVcModal service={controller.GetVcModalService} />
       )}
+
+      <MessageOverlay
+        isVisible={controller.showHardwareKeystoreNotExistsAlert}
+        title={t('errors.keystoreNotExists.title')}
+        message={t('errors.keystoreNotExists.message')}
+        onBackdropPress={controller.ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS}>
+        <Row>
+          <Button
+            type="clear"
+            title={t('errors.keystoreNotExists.riskOkayText')}
+            onPress={controller.ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS}
+            margin={[0, 8, 0, 0]}
+          />
+        </Row>
+      </MessageOverlay>
+
       <ErrorMessageOverlay
         translationPath={'MyVcsTab'}
         isVisible={controller.isSavingFailedInIdle}

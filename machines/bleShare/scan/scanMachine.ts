@@ -38,6 +38,7 @@ import { StoreEvents } from '../../store';
 import { WalletDataEvent } from 'react-native-tuvali/lib/typescript/types/events';
 import { BLEError } from '../types';
 import Storage from '../../../shared/storage';
+import { logState } from '../../app';
 
 const { wallet, EventTypes, VerificationStatus } = tuvali;
 
@@ -681,8 +682,14 @@ export const scanMachine =
     {
       actions: {
         setChildRef: assign({
-          QrLoginRef: (context) =>
-            spawn(createQrLoginMachine(context.serviceRefs), QR_LOGIN_REF_ID),
+          QrLoginRef: (context) => {
+            const service = spawn(
+              createQrLoginMachine(context.serviceRefs),
+              QR_LOGIN_REF_ID
+            );
+            service.subscribe(logState);
+            return service;
+          },
         }),
 
         sendScanData: (context) =>

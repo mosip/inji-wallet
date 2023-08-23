@@ -15,6 +15,7 @@ import { verifyCredential } from '../shared/vcjs/verifyCredential';
 import { log } from 'xstate/lib/actions';
 import {
   generateKeys,
+  isCustomSecureKeystore,
   WalletBindingResponse,
 } from '../shared/cryptoutil/cryptoUtil';
 import { KeyPair } from 'react-native-rsa-native';
@@ -27,6 +28,7 @@ import getAllConfigurations, {
 } from '../shared/commonprops/commonProps';
 import { VcEvents } from './vc';
 import i18n from '../i18n';
+import SecureKeystore from 'react-native-secure-keystore';
 
 const model = createModel(
   {
@@ -337,10 +339,17 @@ export const vcItemMachine =
             addKeyPair: {
               invoke: {
                 src: 'generateKeyPair',
-                onDone: {
-                  target: '#vc-item.kebabPopUp.addingWalletBindingId',
-                  actions: ['setPublicKey', 'setPrivateKey'],
-                },
+                onDone: [
+                  {
+                    cond: 'isCustomSecureKeystore',
+                    target: '#vc-item.kebabPopUp.addingWalletBindingId',
+                    actions: ['setPublicKey'],
+                  },
+                  {
+                    target: '#vc-item.kebabPopUp.addingWalletBindingId',
+                    actions: ['setPublicKey', 'setPrivateKey'],
+                  },
+                ],
                 onError: [
                   {
                     actions: 'setWalletBindingError',
@@ -353,6 +362,17 @@ export const vcItemMachine =
               invoke: {
                 src: 'addWalletBindnigId',
                 onDone: [
+                  {
+                    cond: 'isCustomSecureKeystore',
+                    target: '#vc-item.kebabPopUp',
+                    actions: [
+                      'setWalletBindingId',
+                      'storeContext',
+                      'updateVc',
+                      'setWalletBindingErrorEmpty',
+                      'logWalletBindingSuccess',
+                    ],
+                  },
                   {
                     target: '#vc-item.kebabPopUp.updatingPrivateKey',
                     actions: ['setWalletBindingId'],
@@ -645,10 +665,17 @@ export const vcItemMachine =
         addKeyPair: {
           invoke: {
             src: 'generateKeyPair',
-            onDone: {
-              target: 'addingWalletBindingId',
-              actions: ['setPublicKey', 'setPrivateKey'],
-            },
+            onDone: [
+              {
+                cond: 'isCustomSecureKeystore',
+                target: 'addingWalletBindingId',
+                actions: ['setPublicKey'],
+              },
+              {
+                target: 'addingWalletBindingId',
+                actions: ['setPublicKey', 'setPrivateKey'],
+              },
+            ],
             onError: [
               {
                 actions: ['setWalletBindingError', 'logWalletBindingFailure'],
@@ -661,6 +688,18 @@ export const vcItemMachine =
           invoke: {
             src: 'addWalletBindnigId',
             onDone: [
+              {
+                cond: 'isCustomSecureKeystore',
+                target: 'idle',
+                actions: [
+                  'setWalletBindingId',
+                  'setThumbprintForWalletBindingId',
+                  'storeContext',
+                  'updateVc',
+                  'setWalletBindingErrorEmpty',
+                  'logWalletBindingSuccess',
+                ],
+              },
               {
                 target: 'updatingPrivateKey',
                 actions: [
@@ -759,7 +798,12 @@ export const vcItemMachine =
         }),
 
         setPublicKey: assign({
-          publicKey: (context, event) => (event.data as KeyPair).public,
+          publicKey: (context, event) => {
+            if (!isCustomSecureKeystore()) {
+              return (event.data as KeyPair).public;
+            }
+            return event.data as string;
+          },
         }),
 
         setPrivateKey: assign({
@@ -1094,8 +1138,15 @@ export const vcItemMachine =
         },
 
         generateKeyPair: async (context) => {
-          let keyPair: KeyPair = await generateKeys();
-          return keyPair;
+          if (!isCustomSecureKeystore()) {
+            return await generateKeys();
+          }
+          const isBiometricsEnabled = SecureKeystore.hasBiometricsEnabled();
+          return SecureKeystore.generateKeyPair(
+            context.id,
+            isBiometricsEnabled,
+            0
+          );
         },
 
         requestBindingOtp: async (context) => {
@@ -1259,6 +1310,8 @@ export const vcItemMachine =
         isVcValid: (context) => {
           return context.isVerified;
         },
+
+        isCustomSecureKeystore: () => isCustomSecureKeystore(),
       },
     }
   );
@@ -1267,13 +1320,14 @@ export const createVcItemMachine = (
   serviceRefs: AppServices,
   vcKey: string
 ) => {
-  const [, idType, id, requestId] = vcKey.split(':');
+  const [, idType, id, requestId, isPinned] = vcKey.split(':');
   return vcItemMachine.withContext({
     ...vcItemMachine.context,
     serviceRefs,
     id,
     idType: idType as VcIdType,
     requestId,
+    isPinned: isPinned == 'true' ? true : false,
   });
 };
 

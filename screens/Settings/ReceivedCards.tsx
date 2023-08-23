@@ -50,7 +50,7 @@ export const ReceivedCards: React.FC<HomeScreenTabProps> = (props) => {
               vcKey={vcKey}
               margin="0 2 8 2"
               isSharingVc
-              onPress={controller.VIEW_VC}
+              onPress={() => {}}
             />
           ))}
           {controller.vcKeys.length === 0 && (

@@ -100,7 +100,7 @@
     "yesConfirm": "Oo, kinukumpirma ko",
     "no": "Hindi"
   },
-  "RemoveVcWarningOverlay":{
+  "RemoveVcWarningOverlay": {
     "alert": "Alerto",
     "removeWarning": "Gusto mo ba talagang tanggalin ang card?",
     "confirm": "Kumpirmahin",
@@ -169,7 +169,9 @@
     "howToActivateCardForOnlineLogin?": "Paano i-activate ang isang card para sa online na pag-login?",
     "detail-7": "Matapos matagumpay na magdagdag ng card sa wallet, mag-click sa 'Activation pending for Online login' sa card. Sa pag-click sa 'I-activate', ang card ay handa nang gamitin para sa online na pag-login.",
     "howToViewActivity?": "Paano tingnan ang mga log ng aktibidad?",
-    "detail-8": "Sa Home page, mag-click sa 'Kasaysayan' upang tingnan ang mga detalye ng aktibidad ng user."
+    "detail-8": "Sa Home page, mag-click sa 'Kasaysayan' upang tingnan ang mga detalye ng aktibidad ng user.",
+    "whatCanDoBiometricsChanged?": "Ano ang mangyayari kapag binago ang biometric ng Android keystore?",
+    "detail-9": "Ang Android keystore ay nagtataglay ng mahalagang impormasyon tulad ng mga pribadong key para sa mga patunay ng pagkakakilanlan. Kapag binago mo ang iyong biometrics, hindi na ligtas ang mga lumang key. Upang panatilihing secure ang mga bagay, inaalis namin ang mga patunay ng pagkakakilanlan na nilagdaan ng mga lumang key na iyon. Maaari mo lamang i-download muli ang iyong mga patunay ng pagkakakilanlan, at lalagdaan ang mga ito gamit ang pinakabago, mas ligtas na mga susi."
   },
   "AddVcModal": {
     "requestingCredential": "Humihiling ng kredensyal...",
@@ -253,9 +255,14 @@
         "title": "Hindi sapat na Appdata",
         "message": "Hindi ka maaaring magdagdag o tumanggap ng mga card dahil puno na ang Appdata. I-clear ang Appdata para magpatuloy."
       },
-      "vcIsTampered":{
-        "title": "Pinakialaman ang data ng VC",
-        "message": "Ang mga apektadong VC ay inaalis sa app."
+      "vcIsTampered": {
+        "title": "Ang ilang mga patunay ng pagkakakilanlan ay pinakialaman",
+        "message": "Ang mga apektadong file ay tinanggal, mangyaring muling i-download."
+      },
+      "keystoreNotExists": {
+        "title": "Hindi nahanap ang Secure Key Storage",
+        "message": "Hindi secure ang key storage sa iyong telepono. Maaaring ma-leak ang iyong mga susi kung na-hack ang telepono.",
+        "riskOkayText": "OK, ipagsapalaran ko ito"
       }
     }
   },
@@ -522,8 +529,12 @@
     "unlockApp": "Buksan ang aplikasyon",
     "failedToReadKeys": "Nabigong basahin ang mga susi",
     "retryRead": "Gustong subukang muli?",
-    "error": {
-      "decryptionFailed": "Nabigong i-decrypt ang data"
+    "errors": {
+      "decryptionFailed": "Nabigong i-decrypt ang data",
+      "invalidateKeyError": {
+        "title": "Ang ilang (mga) patunay ng Pagkakakilanlan ay tinanggal dahil sa mga alalahanin sa seguridad.",
+        "message": "Mangyaring i-download muli."
+      }
     },
     "ignore": "Huwag pansinin"
   },
@@ -552,6 +563,10 @@
     "clipboard": {
       "copy": "Kopya",
       "copied": "Kinopya"
+    },
+    "biometricPopup": {
+      "title": "I-unlock ang App",
+      "description": "Mangyaring gumamit ng fingerprint upang i-unlock ang app"
     }
   }
 }

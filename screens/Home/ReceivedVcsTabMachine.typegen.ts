@@ -8,16 +8,16 @@ export interface Typegen0 {
   'invokeSrcNameMap': {};
   'missingImplementations': {
     actions: never;
-    services: never;
-    guards: never;
     delays: never;
+    guards: never;
+    services: never;
   };
   'eventsCausingActions': {
     viewVcFromParent: 'VIEW_VC';
   };
-  'eventsCausingServices': {};
-  'eventsCausingGuards': {};
   'eventsCausingDelays': {};
+  'eventsCausingGuards': {};
+  'eventsCausingServices': {};
   'matchesStates': 'idle' | 'viewingVc';
   'tags': never;
 }
