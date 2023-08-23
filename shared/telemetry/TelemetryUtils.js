@@ -6,7 +6,12 @@ import {
   deviceId,
 } from '../constants';
 import { Platform } from 'react-native';
-import { __AppId, __InjiVersion, __TuvaliVersion } from '../GlobalVariables';
+import {
+  __AppId,
+  __InjiVersion,
+  __SessionId,
+  __TuvaliVersion,
+} from '../GlobalVariables';
 import ShortUniqueId from 'short-unique-id';
 
 export function sendImpressionEvent(data) {
@@ -37,7 +42,7 @@ export function getTelemetryConfigData() {
     authtoken: '',
     did: deviceId,
     uid: __AppId.getValue(),
-    sid: 'session-id',
+    sid: __SessionId.getValue(),
     batchsize: 5,
     mode: '',
     host: 'https://dataset-api.obsrv.mosip.net',
