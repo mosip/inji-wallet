@@ -82,6 +82,7 @@ export const appMachine = model.createMachine(
       },
       RESET_KEY_INVALIDATE_ERROR_DISMISS: {
         actions: ['resetKeyInvalidateError'],
+        target: 'init',
       },
     },
     states: {
