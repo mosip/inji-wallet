@@ -1320,13 +1320,14 @@ export const createVcItemMachine = (
   serviceRefs: AppServices,
   vcKey: string
 ) => {
-  const [, idType, id, requestId] = vcKey.split(':');
+  const [, idType, id, requestId, isPinned] = vcKey.split(':');
   return vcItemMachine.withContext({
     ...vcItemMachine.context,
     serviceRefs,
     id,
     idType: idType as VcIdType,
     requestId,
+    isPinned: isPinned == 'true' ? true : false,
   });
 };
 
