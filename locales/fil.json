@@ -34,8 +34,9 @@
     "verify": "I-verify"
   },
   "QrScanner": {
-    "missingPermissionText": "Ginagamit ng app na ito ang camera upang i-scan ang QR code ng isa pang device.",
-    "allowCameraButton": "Payagan gamitin ang camera"
+    "cameraAccessDisabled": "Naka-disable ang access sa camera!",
+    "cameraPermissionGuideLabel": "Pumunta sa mga setting at manual na paganahin ang access ng camera.",
+    "flipCamera": "I-flip ang Camera"
   },
   "VcDetails": {
     "generatedOn": "Nilikha noong",

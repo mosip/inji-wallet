@@ -34,8 +34,9 @@
     "passcodeMismatchError": "Passcode did not match."
   },
   "QrScanner": {
-    "missingPermissionText": "This app uses the camera to scan the QR code of another device.",
-    "allowCameraButton": "Allow access to camera"
+    "cameraAccessDisabled": "Camera access disabled!",
+    "cameraPermissionGuideLabel": "Go to settings and enable the camera access manually.",
+    "flipCamera": "Flip Camera"
   },
   "VcDetails": {
     "generatedOn": "Generated on",

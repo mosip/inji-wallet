@@ -34,8 +34,9 @@
     "verify": "सत्यापित करना"
   },
   "QrScanner": {
-    "missingPermissionText": "यह ऐप दूसरे डिवाइस के क्यूआर कोड को स्कैन करने के लिए कैमरे का इस्तेमाल करता है।",
-    "allowCameraButton": "कैमरे तक पहुंच की अनुमति दें"
+    "cameraAccessDisabled": "कैमरा पहुंच अक्षम!",
+    "cameraPermissionGuideLabel": "सेटिंग्स में जाएं और कैमरा एक्सेस को मैन्युअल रूप से सक्षम करें।",
+    "flipCamera": "कैमरा पलटें"
   },
   "VcDetails": {
     "generatedOn": "पर उत्पन्न हुआ",

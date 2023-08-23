@@ -14,7 +14,7 @@
 		"QRLOGIN_SUCCESFULL": "Inicio de sesión QR exitoso",
 		"WALLET_BINDING_SUCCESSFULL": "Activación exitosa",
 		"WALLET_BINDING_FAILURE": "Activación fallida",
-		"VC_REMOVED":"Eliminado de la billetera"
+		"VC_REMOVED": "Eliminado de la billetera"
 	},
 	"DeviceInfoList": {
 		"requestedBy": "Solicitado por",
@@ -34,8 +34,9 @@
 		"passcodeMismatchError": "El código de acceso no coincide."
 	},
 	"QrScanner": {
-		"missingPermissionText": "Esta aplicación utiliza la cámara para escanear el código QR de otro dispositivo.",
-		"allowCameraButton": "Permitir acceso a la cámara"
+		"cameraAccessDisabled": "¡Acceso a la cámara deshabilitado!",
+		"cameraPermissionGuideLabel": "Vaya a la configuración y habilite el acceso a la cámara manualmente.",
+		"flipCamera": "Voltear cámara"
 	},
 	"VcDetails": {
 		"generatedOn": "Generado el",
@@ -82,7 +83,7 @@
 		"RemoveWarning": "¿Quieres eliminar esta tarjeta?",
 		"confirm": "si, lo confirmo",
 		"no": "No"
-	  },
+	},
 	"AuthScreen": {
 		"header": "¿Te gustaría usar la biometría para desbloquear la aplicación?",
 		"useBiometrics": "Usar biometría",
@@ -182,13 +183,13 @@
 				"title": "Error al guardar la Tarjeta",
 				"message": "No se pueden recibir ni guardar más Tarjetas, ya que los datos de la aplicación están llenos."
 			},
-			"vcIsTampered":{
+			"vcIsTampered": {
 				"title": "Los datos de VC están manipulados",
 				"message": "Los VC afectados se eliminan de la aplicación."
 			},
-			"storageLimitReached":{
-				"title":"Datos de aplicación insuficientes",
-				"message":"No puede agregar ni recibir tarjetas porque los datos de la aplicación están llenos. Borre Appdata para continuar."
+			"storageLimitReached": {
+				"title": "Datos de aplicación insuficientes",
+				"message": "No puede agregar ni recibir tarjetas porque los datos de la aplicación están llenos. Borre Appdata para continuar."
 			}
 		}
 	},
@@ -239,18 +240,18 @@
 		"version": "Versión",
 		"useBle": "Impulsado por BLE"
 	},
-  "SettingScreen": {
-    "header": "Ajustes",
-    "injiAsVerifierApp": "Inji como aplicación verificadora",
-    "basicSettings": "Ajustes básicos",
-    "bioUnlock": "Desbloquear con biométrico",
-    "language": "Idioma",
-    "aboutInji": "Acerca de Inji",
-    "credentialRegistry": "Registro de Credenciales",
-    "injiTourGuide": "Guía turístico Inji",
-    "logout": "Cerrar sesión",
-    "resetInjiProps": "Restableciendo accesorios Inji..."
-  },
+	"SettingScreen": {
+		"header": "Ajustes",
+		"injiAsVerifierApp": "Inji como aplicación verificadora",
+		"basicSettings": "Ajustes básicos",
+		"bioUnlock": "Desbloquear con biométrico",
+		"language": "Idioma",
+		"aboutInji": "Acerca de Inji",
+		"credentialRegistry": "Registro de Credenciales",
+		"injiTourGuide": "Guía turístico Inji",
+		"logout": "Cerrar sesión",
+		"resetInjiProps": "Restableciendo accesorios Inji..."
+	},
 	"QrScreen": {
 		"title": "Inicio de sesión con código QR",
 		"alignQr": "Alinea el código QR dentro del marco para escanearlo",
@@ -308,9 +309,9 @@
 				"message": "Se requiere el permiso de Dispositivos cercanos para poder solicitar la tarjeta",
 				"button": "Permitir permiso"
 			},
-			"storageLimitReached":{
-				"title":"Datos de aplicación insuficientes",
-				"message":"No puede agregar ni recibir tarjetas porque los datos de la aplicación están llenos. Borre Appdata para continuar."
+			"storageLimitReached": {
+				"title": "Datos de aplicación insuficientes",
+				"message": "No puede agregar ni recibir tarjetas porque los datos de la aplicación están llenos. Borre Appdata para continuar."
 			}
 		},
 		"status": {
@@ -369,9 +370,9 @@
 				"message": "Se requiere el permiso de Dispositivos cercanos para poder compartir la tarjeta",
 				"button": "Permitir permiso"
 			},
-			"storageLimitReached":{
-				"title":"Datos de aplicación insuficientes",
-				"message":"No puede compartir tarjetas porque los datos de la aplicación están llenos. Borre Appdata para continuar."
+			"storageLimitReached": {
+				"title": "Datos de aplicación insuficientes",
+				"message": "No puede compartir tarjetas porque los datos de la aplicación están llenos. Borre Appdata para continuar."
 			}
 		},
 		"status": {
