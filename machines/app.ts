@@ -79,6 +79,7 @@ export const appMachine = model.createMachine(
       },
       KEY_INVALIDATE_ERROR: {
         actions: ['updateKeyInvalidateError'],
+        target: 'waiting',
       },
       RESET_KEY_INVALIDATE_ERROR_DISMISS: {
         actions: ['resetKeyInvalidateError'],
@@ -193,6 +194,7 @@ export const appMachine = model.createMachine(
           },
         },
       },
+      waiting: {},
     },
   },
   {

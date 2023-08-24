@@ -4,6 +4,7 @@ import {
   MIMOTO_HOST,
   GOOGLE_NEARBY_MESSAGES_API_KEY,
 } from 'react-native-dotenv';
+import { Argon2iConfig } from './commonUtil';
 
 export let HOST = MIMOTO_HOST;
 
@@ -59,3 +60,12 @@ export const APP_ID_DICTIONARY = [
 export function isIOS(): boolean {
   return Platform.OS === 'ios';
 }
+
+// Configuration for argon2i hashing algorithm
+export const argon2iConfig: Argon2iConfig = {
+  iterations: 5,
+  memory: 16 * 1024,
+  parallelism: 2,
+  hashLength: 20,
+  mode: 'argon2i',
+};

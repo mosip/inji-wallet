@@ -9,10 +9,16 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
+    'done.invoke.auth.introSlider:invocation[0]': {
+      type: 'done.invoke.auth.introSlider:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
     'xstate.init': { type: 'xstate.init' };
   };
   'invokeSrcNameMap': {
     downloadFaceSdkModel: 'done.invoke.auth.authorized:invocation[0]';
+    generatePasscodeSalt: 'done.invoke.auth.introSlider:invocation[0]';
   };
   'missingImplementations': {
     actions: never;
@@ -26,11 +32,13 @@ export interface Typegen0 {
     setContext: 'STORE_RESPONSE';
     setLanguage: 'SETUP_BIOMETRICS' | 'SETUP_PASSCODE';
     setPasscode: 'SETUP_PASSCODE';
+    setPasscodeSalt: 'done.invoke.auth.introSlider:invocation[0]';
     storeContext:
       | 'SETUP_BIOMETRICS'
       | 'SETUP_PASSCODE'
       | 'STORE_RESPONSE'
-      | 'done.invoke.auth.authorized:invocation[0]';
+      | 'done.invoke.auth.authorized:invocation[0]'
+      | 'done.invoke.auth.introSlider:invocation[0]';
   };
   'eventsCausingDelays': {};
   'eventsCausingGuards': {
@@ -41,6 +49,7 @@ export interface Typegen0 {
   };
   'eventsCausingServices': {
     downloadFaceSdkModel: 'LOGIN' | 'SETUP_PASSCODE';
+    generatePasscodeSalt: 'SELECT';
   };
   'matchesStates':
     | 'authorized'
