@@ -16,14 +16,14 @@
     "WALLET_BINDING_FAILURE": "Activation failed",
     "VC_REMOVED":"Removed from wallet"
   },
-    "DeviceInfoList": {
-      "requestedBy": "Requested by",
-      "sentBy": "Sent by",
-      "deviceRefNumber": "Device reference number",
-      "name": "Name",
-      "Verifier": "Verifier",
-      "Wallet": "Wallet"
-    },
+  "DeviceInfoList": {
+    "requestedBy": "Requested by",
+    "sentBy": "Sent by",
+    "deviceRefNumber": "Device reference number",
+    "name": "Name",
+    "Verifier": "Verifier",
+    "Wallet": "Wallet"
+  },
   "FaceScanner": {},
   "OIDcAuth": {
     "title": "OIDC Authentication",
@@ -168,7 +168,9 @@
     "howToActivateCardForOnlineLogin?": "How to activate a card for online login?",
     "detail-7": "After successfully adding a card to the wallet, click on 'Activation pending for Online login' on the card. On clicking on 'Activate', the card will be ready to be used for online login.",
     "howToViewActivity?": "How to view activity logs?",
-    "detail-8": "On the Home page, click on 'History' to view the details of the user's activitie."
+    "detail-8": "On the Home page, click on 'History' to view the details of the user's activitie.",
+    "whatCanDoBiometricsChanged?": "What happens when Android keystore biometric is changed?",
+    "detail-9": "The Android keystore holds important information like private keys for identity proofs. When you change your biometrics, old keys are no longer safe. To keep things secure, we remove identity proofs signed by those old keys. You can simply download your identity proofs again, and they will be signed with the latest, safer keys."
   },
   "AddVcModal": {
     "requestingCredential": "Requesting credential...",
@@ -252,9 +254,14 @@
         "title": "Insufficient Appdata",
         "message": "You cannot add or receive cards since the Appdata is full. Clear Appdata to proceed."
       },
-      "vcIsTampered":{
-        "title": "VC data is tampered",
-        "message": "Affected VCs are removed from the app."
+      "vcIsTampered": {
+        "title": "Some identity proofs are tampered",
+        "message": "Affected files are removed, please re-download."
+      },
+      "keystoreNotExists": {
+        "title": "Secure Key Storage not found",
+        "message": "The key storage on your phone is not secured. Your keys could be leaked if phone is hacked.",
+        "riskOkayText": "OK, I'll risk it"
       }
     }
   },
@@ -519,7 +526,11 @@
     "retryRead": "Want to retry?",
     "ignore": "Ignore",
     "errors": {
-      "decryptionFailed": "Failed to decrypt data"
+      "decryptionFailed": "Failed to decrypt data",
+      "invalidateKeyError": {
+        "title": "Some Card(s) removed due to security concerns.",
+        "message": "Please redownload."
+      }
     }
   },
   "SetupLanguage": {
@@ -547,6 +558,10 @@
     "clipboard": {
       "copy": "Copy",
       "copied": "Copied"
+    },
+    "biometricPopup": {
+      "title": "Unlock App",
+      "description": "Please use fingerprint to unlock the app"
     }
   }
 }

@@ -1,8 +1,10 @@
+import { Platform } from 'react-native';
 import { VC } from '../types/vc';
 import {
   MIMOTO_HOST,
   GOOGLE_NEARBY_MESSAGES_API_KEY,
 } from 'react-native-dotenv';
+import { Argon2iConfig } from './commonUtil';
 
 export let HOST = MIMOTO_HOST;
 
@@ -20,6 +22,13 @@ export const VC_ITEM_STORE_KEY = (vc: Partial<VC>) =>
 //Regex expression to evaluate if the key is for a VC
 export const VC_ITEM_STORE_KEY_REGEX =
   '^vc:(UIN|VID):[0-9]+:[a-z0-9-]+:[true|false]+$';
+
+//To compare the vckey with requestId, when the vc is pinned
+export const isSameVC = (vcKey: string, pinnedVcKey: string) => {
+  const requestId = vcKey.split(':')[3];
+  const pinnedRequestId = pinnedVcKey.split(':')[3];
+  return requestId === pinnedRequestId;
+};
 
 export let individualId = '';
 
@@ -47,3 +56,16 @@ export const APP_ID_DICTIONARY = [
   'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L',
   'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y',
 ];
+
+export function isIOS(): boolean {
+  return Platform.OS === 'ios';
+}
+
+// Configuration for argon2i hashing algorithm
+export const argon2iConfig: Argon2iConfig = {
+  iterations: 5,
+  memory: 16 * 1024,
+  parallelism: 2,
+  hashLength: 20,
+  mode: 'argon2i',
+};

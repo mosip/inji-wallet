@@ -63,6 +63,10 @@ export const HelpScreen: React.FC<HelpScreenProps & MainRouteProps> = (
               {t('howToViewActivity?')}
             </Text>
             <Text style={Theme.TextStyles.helpDetailes}>{t('detail-8')}</Text>
+            <Text margin="7" style={Theme.TextStyles.header}>
+              {t('whatCanDoBiometricsChanged?')}
+            </Text>
+            <Text style={Theme.TextStyles.helpDetailes}>{t('detail-9')}</Text>
           </Column>
         </ScrollView>
       </Modal>

@@ -5,6 +5,7 @@ import {
   APP_ID_DICTIONARY,
   APP_ID_LENGTH,
   HOST,
+  isIOS,
   SETTINGS_STORE_KEY,
 } from '../shared/constants';
 import { VCLabel } from '../types/vc';
@@ -15,6 +16,7 @@ import getAllConfigurations, {
 import Storage from '../shared/storage';
 import ShortUniqueId from 'short-unique-id';
 import { AppId } from '../shared/request';
+import { isCustomSecureKeystore } from '../shared/cryptoutil/cryptoUtil';
 
 const model = createModel(
   {
@@ -27,6 +29,7 @@ const model = createModel(
     isBiometricUnlockEnabled: false,
     credentialRegistry: HOST,
     appId: null,
+    hasUserShownWithHardwareKeystoreNotExists: false,
     credentialRegistryResponse: '' as string,
   },
   {
@@ -47,6 +50,7 @@ const model = createModel(
       INJI_TOUR_GUIDE: () => ({}),
       BACK: () => ({}),
       CANCEL: () => ({}),
+      ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS: () => ({}),
     },
   }
 );
@@ -104,6 +108,13 @@ export const settingsMachine = model.createMachine(
           CANCEL: {
             actions: ['resetCredentialRegistry'],
           },
+          ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS: {
+            actions: [
+              'updateUserShownWithHardwareKeystoreNotExists',
+              'storeContext',
+            ],
+            target: 'idle',
+          },
         },
       },
       resetInjiProps: {
@@ -157,6 +168,8 @@ export const settingsMachine = model.createMachine(
           AppId.setValue(appId);
           return appId;
         },
+
+        hasUserShownWithHardwareKeystoreNotExists: () => false,
       }),
 
       updatePartialDefaults: model.assign({
@@ -206,6 +219,10 @@ export const settingsMachine = model.createMachine(
         credentialRegistryResponse: () => '',
       }),
 
+      updateUserShownWithHardwareKeystoreNotExists: model.assign({
+        hasUserShownWithHardwareKeystoreNotExists: () => true,
+      }),
+
       toggleBiometricUnlock: model.assign({
         isBiometricUnlockEnabled: (_, event) => event.enable,
       }),
@@ -246,6 +263,10 @@ function generateAppId() {
   return shortUUID.randomUUID();
 }
 
+function deviceSupportsHardwareKeystore() {
+  return isIOS() ? true : isCustomSecureKeystore();
+}
+
 type State = StateFrom<typeof settingsMachine>;
 
 export function selectName(state: State) {
@@ -256,6 +277,15 @@ export function selectAppId(state: State) {
   return state.context.appId;
 }
 
+/** Alerting the user when the hardware keystore not supported by device and
+ * not shown to user atlease once */
+
+export function selectShowHardwareKeystoreNotExistsAlert(state: State) {
+  const hasShown = state.context.hasUserShownWithHardwareKeystoreNotExists;
+  const deviceSupports = deviceSupportsHardwareKeystore();
+  return !hasShown && !deviceSupports;
+}
+
 export function selectVcLabel(state: State) {
   return state.context.vcLabel;
 }
@@ -263,6 +293,7 @@ export function selectVcLabel(state: State) {
 export function selectCredentialRegistry(state: State) {
   return state.context.credentialRegistry;
 }
+
 export function selectCredentialRegistryResponse(state: State) {
   return state.context.credentialRegistryResponse;
 }
@@ -270,6 +301,7 @@ export function selectCredentialRegistryResponse(state: State) {
 export function selectBiometricUnlockEnabled(state: State) {
   return state.context.isBiometricUnlockEnabled;
 }
+
 export function selectIsResetInjiProps(state: State) {
   return state.matches('resetInjiProps');
 }

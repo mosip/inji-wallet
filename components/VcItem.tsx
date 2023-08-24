@@ -21,6 +21,7 @@ import { VcItemContent } from './VcItemContent';
 import { VcItemActivationStatus } from './VcItemActivationStatus';
 import { Row } from './ui';
 import { KebabPopUp } from './KebabPopUp';
+import { logState } from '../machines/app';
 
 export const VcItem: React.FC<VcItemProps> = (props) => {
   const { appService } = useContext(GlobalContext);
@@ -32,6 +33,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
   );
 
   const service = useInterpret(machine.current, { devTools: __DEV__ });
+  service.subscribe(logState);
   const context = useSelector(service, selectContext);
   const verifiableCredential = useSelector(service, selectVerifiableCredential);
   const emptyWalletBindingId = useSelector(service, selectEmptyWalletBindingId);

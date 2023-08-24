@@ -36,15 +36,17 @@ export interface Typegen0 {
     checkBluetoothState:
       | 'done.invoke.scan.checkBluetoothState.checking:invocation[0]'
       | 'done.invoke.scan.recheckBluetoothState.checking:invocation[0]';
-    checkLocationPermission: 'done.invoke.scan.checkingLocationService.checkingPermission:invocation[0]';
-    checkLocationStatus: 'done.invoke.scan.checkingLocationService.checkingStatus:invocation[0]';
+    checkLocationPermission: 'done.invoke.scan.checkingLocationService.checkingPermissionStatus:invocation[0]';
     checkNearByDevicesPermission: 'done.invoke.scan.checkNearbyDevicesPermission.checking:invocation[0]';
     checkStorageAvailability: 'done.invoke.scan.checkStorage:invocation[0]';
     createVp: 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
-    disconnect: 'done.invoke.scan.clearingConnection:invocation[0]';
+    disconnect:
+      | 'done.invoke.scan.clearingConnection:invocation[0]'
+      | 'done.invoke.scan.disconnectDevice:invocation[0]';
     monitorConnection: 'done.invoke.scan:invocation[0]';
     requestBluetooth: 'done.invoke.scan.checkBluetoothState.requesting:invocation[0]';
     requestNearByDevicesPermission: 'done.invoke.scan.checkNearbyDevicesPermission.requesting:invocation[0]';
+    requestToEnableLocationPermission: 'done.invoke.scan.checkingLocationService.requestToEnableLocation:invocation[0]';
     sendVc: 'done.invoke.scan.reviewing.sendingVc:invocation[0]';
     startConnection: 'done.invoke.scan.connecting:invocation[0]';
   };
@@ -60,6 +62,7 @@ export interface Typegen0 {
       | 'BLE_ERROR'
       | 'DISCONNECT'
       | 'DISMISS'
+      | 'RESET'
       | 'SCREEN_BLUR'
       | 'SCREEN_FOCUS'
       | 'xstate.stop';
@@ -68,6 +71,7 @@ export interface Typegen0 {
       | 'BLE_ERROR'
       | 'DISCONNECT'
       | 'DISMISS'
+      | 'RESET'
       | 'SCREEN_BLUR'
       | 'SCREEN_FOCUS'
       | 'xstate.stop';
@@ -77,9 +81,8 @@ export interface Typegen0 {
       | 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection';
     logFailedVerification: 'FACE_INVALID';
     logShared: 'VC_ACCEPTED';
-    openAppPermission: 'GOTO_SETTINGS';
+    openAppPermission: 'GOTO_SETTINGS' | 'LOCATION_REQUEST';
     openBluetoothSettings: 'GOTO_SETTINGS';
-    openSettings: 'LOCATION_REQUEST';
     registerLoggers:
       | 'DISCONNECT'
       | 'DISMISS'
@@ -90,7 +93,6 @@ export interface Typegen0 {
       | 'SCREEN_BLUR'
       | 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection'
       | 'xstate.init';
-    requestToEnableLocation: 'LOCATION_DISABLED' | 'LOCATION_REQUEST';
     resetShouldVerifyPresence: 'CANCEL' | 'CONNECTED';
     sendScanData: 'SCAN';
     setBleError: 'BLE_ERROR';
@@ -135,15 +137,15 @@ export interface Typegen0 {
       | 'NEARBY_ENABLED'
       | 'START_PERMISSION_CHECK';
     checkBluetoothState: '' | 'APP_ACTIVE';
-    checkLocationPermission: 'APP_ACTIVE' | 'LOCATION_ENABLED';
-    checkLocationStatus: '';
+    checkLocationPermission: '' | 'APP_ACTIVE';
     checkNearByDevicesPermission: 'APP_ACTIVE' | 'START_PERMISSION_CHECK';
-    checkStorageAvailability: 'SCREEN_FOCUS';
+    checkStorageAvailability: 'RESET' | 'SCREEN_FOCUS';
     createVp: never;
-    disconnect: '' | 'DISMISS' | 'LOCATION_ENABLED';
-    monitorConnection: 'xstate.init';
+    disconnect: '' | 'DISMISS' | 'LOCATION_ENABLED' | 'SCREEN_BLUR';
+    monitorConnection: 'SCREEN_BLUR' | 'xstate.init';
     requestBluetooth: 'BLUETOOTH_STATE_DISABLED';
     requestNearByDevicesPermission: 'NEARBY_DISABLED';
+    requestToEnableLocationPermission: 'LOCATION_DISABLED';
     sendVc:
       | 'ACCEPT_REQUEST'
       | 'FACE_VALID'
@@ -166,15 +168,14 @@ export interface Typegen0 {
     | 'checkNearbyDevicesPermission.requesting'
     | 'checkStorage'
     | 'checkingLocationService'
-    | 'checkingLocationService.checkingPermission'
-    | 'checkingLocationService.checkingStatus'
+    | 'checkingLocationService.checkingPermissionStatus'
     | 'checkingLocationService.denied'
-    | 'checkingLocationService.disabled'
-    | 'checkingLocationService.requestingToEnable'
+    | 'checkingLocationService.requestToEnableLocation'
     | 'clearingConnection'
     | 'connecting'
     | 'connecting.inProgress'
     | 'connecting.timeout'
+    | 'disconnectDevice'
     | 'disconnected'
     | 'findingConnection'
     | 'handlingBleError'
@@ -208,11 +209,9 @@ export interface Typegen0 {
         checkBluetoothState?: 'checking' | 'enabled' | 'requesting';
         checkNearbyDevicesPermission?: 'checking' | 'enabled' | 'requesting';
         checkingLocationService?:
-          | 'checkingPermission'
-          | 'checkingStatus'
+          | 'checkingPermissionStatus'
           | 'denied'
-          | 'disabled'
-          | 'requestingToEnable';
+          | 'requestToEnableLocation';
         connecting?: 'inProgress' | 'timeout';
         recheckBluetoothState?: 'checking' | 'enabled';
         reviewing?:

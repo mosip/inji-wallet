@@ -963,6 +963,7 @@ export const DefaultTheme = {
   ProfileIcon: require('../../../assets/placeholder-photo.png'),
   MosipSplashLogo: require('../../../assets/icon.png'),
   MosipLogo: require('../../../assets/mosip-logo.png'),
+  CameraFlipIcon: require('../../../assets/camera-flip-icon.png'),
   DomainWarningLogo: require('../../../assets/domain-warning.png'),
   WarningLogo: require('../../../assets/warningLogo.png'),
   OtpLogo: require('../../../assets/otp-mobile-logo.png'),
