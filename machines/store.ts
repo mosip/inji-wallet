@@ -28,8 +28,7 @@ import {
 const vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
 export const keyinvalidatedString =
   'Key Invalidated due to biometric enrollment';
-export const tamperedErrorMessageString =
-  'Key Invalidated due to biometric enrollment';
+export const tamperedErrorMessageString = 'Data is tampered';
 
 const model = createModel(
   {
