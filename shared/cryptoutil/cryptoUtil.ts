@@ -4,11 +4,15 @@ import getAllConfigurations from '../commonprops/commonProps';
 import { isIOS } from '../constants';
 import SecureKeystore from 'react-native-secure-keystore';
 import Storage from '../storage';
-import { ENCRYPTION_ID } from '../../machines/store';
 import CryptoJS from 'crypto-js';
 
 // 5min
 export const AUTH_TIMEOUT = 5 * 60;
+export const ENCRYPTION_ID = 'c7c22a6c-9759-4605-ac88-46f4041d863d';
+export const HMAC_ALIAS = '860cc320-4248-11ee-be56-0242ac120002';
+//This key is used to request biometric at app open to reset auth timeout which is used by encryption key
+export const DUMMY_KEY_FOR_BIOMETRIC_ALIAS =
+  '9a6cfc0e-4248-11ee-be56-0242ac120002';
 
 export function generateKeys(): Promise<KeyPair> {
   return Promise.resolve(RSA.generateKeys(4096));
