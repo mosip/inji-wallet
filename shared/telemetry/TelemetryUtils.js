@@ -11,6 +11,7 @@ import {
   __InjiVersion,
   __SessionId,
   __TuvaliVersion,
+  __DeviceId,
 } from '../GlobalVariables';
 import ShortUniqueId from 'short-unique-id';
 
@@ -40,7 +41,7 @@ export function getTelemetryConfigData() {
     env: HOST,
     channel: '',
     authtoken: '',
-    did: deviceId,
+    did: __DeviceId.getValue(),
     uid: __AppId.getValue(),
     sid: __SessionId.getValue(),
     batchsize: 5,
@@ -69,12 +70,4 @@ export function getData(type) {
   return {
     type: type,
   };
-}
-
-export function generateSessionId() {
-  const shortUUID = new ShortUniqueId({
-    length: APP_ID_LENGTH,
-    dictionary: SESSION_ID_DICTIONARY,
-  });
-  return shortUUID.randomUUID() + Date.now();
 }
