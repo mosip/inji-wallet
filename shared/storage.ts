@@ -20,13 +20,13 @@ import SecureKeystore from 'react-native-secure-keystore';
 import {
   decryptJson,
   encryptJson,
+  HMAC_ALIAS,
   isCustomSecureKeystore,
 } from './cryptoutil/cryptoUtil';
 
 const MMKV = new MMKVLoader().initialize();
 const vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
 const vcDirectoryPath = `${DocumentDirectoryPath}/inji/VC`;
-export const HMAC_ALIAS = 'Hmacalias';
 
 async function generateHmac(
   encryptionKey: string,

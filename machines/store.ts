@@ -1,5 +1,5 @@
 import * as Keychain from 'react-native-keychain';
-import Storage, { HMAC_ALIAS } from '../shared/storage';
+import Storage from '../shared/storage';
 import binaryToBase64 from 'react-native/Libraries/Utilities/binaryToBase64';
 import {
   EventFrom,
@@ -18,13 +18,17 @@ import {
   AUTH_TIMEOUT,
   clear,
   decryptJson,
+  DUMMY_KEY_FOR_BIOMETRIC_ALIAS,
+  ENCRYPTION_ID,
   encryptJson,
+  HMAC_ALIAS,
   isCustomSecureKeystore,
 } from '../shared/cryptoutil/cryptoUtil';
 
-export const ENCRYPTION_ID = 'c7c22a6c-9759-4605-ac88-46f4041d863d';
 const vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
 export const keyinvalidatedString =
+  'Key Invalidated due to biometric enrollment';
+export const tamperedErrorMessageString =
   'Key Invalidated due to biometric enrollment';
 
 const model = createModel(
@@ -215,14 +219,6 @@ export const storeMachine =
                 sendUpdate(),
               ],
             },
-            STORE_ERROR: {
-              actions: [
-                send((_, event) => model.events.STORE_ERROR(event.error), {
-                  to: (_, event) => event.requester,
-                }),
-                sendUpdate(),
-              ],
-            },
             DECRYPT_ERROR: {
               actions: sendParent('DECRYPT_ERROR'),
             },
@@ -232,10 +228,20 @@ export const storeMachine =
             RESET_IS_TAMPERED: {
               actions: ['resetIsTamperedVc'],
             },
-            KEY_INVALIDATE_ERROR: {
-              actions: sendParent('KEY_INVALIDATE_ERROR'),
-            },
           },
+        },
+      },
+      on: {
+        STORE_ERROR: {
+          actions: [
+            send((_, event) => model.events.STORE_ERROR(event.error), {
+              to: (_, event) => event.requester,
+            }),
+            sendUpdate(),
+          ],
+        },
+        KEY_INVALIDATE_ERROR: {
+          actions: sendParent('KEY_INVALIDATE_ERROR'),
         },
       },
     },
@@ -269,6 +275,20 @@ export const storeMachine =
         hasAndroidEncryptionKey: () => async (callback) => {
           const hasSetCredentials = SecureKeystore.hasAlias(ENCRYPTION_ID);
           if (hasSetCredentials) {
+            try {
+              await SecureKeystore.encryptData(
+                DUMMY_KEY_FOR_BIOMETRIC_ALIAS,
+                'Dummy'
+              );
+            } catch (e) {
+              if (e.message.includes(keyinvalidatedString)) {
+                await clear();
+                callback(model.events.KEY_INVALIDATE_ERROR());
+                sendUpdate();
+              } else {
+                callback(model.events.STORE_ERROR(e));
+              }
+            }
             callback(model.events.READY());
           } else {
             callback(
@@ -380,7 +400,7 @@ export const storeMachine =
                 await clear();
                 callback(model.events.KEY_INVALIDATE_ERROR());
                 sendUpdate();
-              } else if (e.message === 'Data is tampered') {
+              } else if (e.message === tamperedErrorMessageString) {
                 callback(model.events.TAMPERED_VC());
               } else if (
                 e.message.includes('JSON') ||
@@ -435,6 +455,11 @@ export const storeMachine =
               AUTH_TIMEOUT
             );
             SecureKeystore.generateHmacshaKey(HMAC_ALIAS);
+            SecureKeystore.generateKey(
+              DUMMY_KEY_FOR_BIOMETRIC_ALIAS,
+              isBiometricsEnabled,
+              0
+            );
             callback(model.events.KEY_RECEIVED(''));
           }
         },
@@ -476,13 +501,13 @@ export async function getItem(
     }
     if (data === null && vcKeyRegExp.exec(key)) {
       await removeItem(key, data, encryptionKey);
-      throw new Error('Data is tampered');
+      throw new Error(tamperedErrorMessageString);
     } else {
       return defaultValue;
     }
   } catch (e) {
     if (
-      e.message.includes('Data is tampered') ||
+      e.message.includes(tamperedErrorMessageString) ||
       e.message.includes(keyinvalidatedString) ||
       e.message.includes('Key not found') // this error happens when previous get Item calls failed due to key invalidation and data and keys are deleted
     ) {
@@ -524,6 +549,7 @@ export async function prependItem(
     throw e;
   }
 }
+
 export async function updateItem(
   key: string,
   value: string,
@@ -548,6 +574,7 @@ export async function updateItem(
     throw e;
   }
 }
+
 export async function removeItem(
   key: string,
   value: string,
