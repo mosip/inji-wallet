@@ -430,7 +430,7 @@ export const scanMachine =
             },
             navigatingToHistory: {},
           },
-          entry: ['sendScanData', () => sendStartEvent(getData('START'))],
+          entry: ['sendScanData', () => sendStartEvent(getData('QR login'))],
         },
         connecting: {
           invoke: {
@@ -549,7 +549,7 @@ export const scanMachine =
               },
             },
             accepted: {
-              entry: ['logShared', () => sendEndEvent(getData('END'))],
+              entry: ['logShared', () => sendEndEvent(getData('VC share'))],
               on: {
                 DISMISS: {
                   target: 'navigatingToHome',
@@ -972,7 +972,7 @@ export const scanMachine =
         },
 
         startConnection: (context) => (callback) => {
-          sendStartEvent(getData('START'));
+          sendStartEvent(getData('VC share'));
           wallet.startConnection(context.openId4VpUri);
           const statusCallback = (event: WalletDataEvent) => {
             if (event.type === EventTypes.onSecureChannelEstablished) {
