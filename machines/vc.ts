@@ -200,10 +200,10 @@ export const vcMachine =
         },
 
         setVcUpdate: (context, event) => {
-          Object.keys(context.vcs).map((vc) => {
-            if (isSameVC(vc, VC_ITEM_STORE_KEY(event.vc))) {
-              context.vcs[VC_ITEM_STORE_KEY(event.vc)] = context.vcs[vc];
-              delete context.vcs[vc];
+          Object.keys(context.vcs).map((vcKey) => {
+            if (isSameVC(vcKey, VC_ITEM_STORE_KEY(event.vc))) {
+              context.vcs[VC_ITEM_STORE_KEY(event.vc)] = context.vcs[vcKey];
+              delete context.vcs[vcKey];
               return context.vcs[VC_ITEM_STORE_KEY(event.vc)];
             }
           });
