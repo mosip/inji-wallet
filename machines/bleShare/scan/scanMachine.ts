@@ -988,7 +988,7 @@ export const scanMachine =
         },
 
         startConnection: context => callback => {
-          sendStartEvent(getData('START'));
+          sendStartEvent(getData('VC share'));
           wallet.startConnection(context.openId4VpUri);
           const statusCallback = (event: WalletDataEvent) => {
             if (event.type === EventTypes.onSecureChannelEstablished) {
