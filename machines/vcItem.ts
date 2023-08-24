@@ -27,6 +27,11 @@ import getAllConfigurations, {
 } from '../shared/commonprops/commonProps';
 import { VcEvents } from './vc';
 import i18n from '../i18n';
+import {
+  sendStartEvent,
+  getData,
+  sendEndEvent,
+} from '../shared/telemetry/TelemetryUtils';
 
 const model = createModel(
   {
@@ -289,6 +294,7 @@ export const vcItemMachine =
             showBindingWarning: {
               on: {
                 CONFIRM: {
+                  actions: [() => sendStartEvent(getData('VC activation'))],
                   target: '#vc-item.kebabPopUp.requestingBindingOtp',
                 },
                 CANCEL: {
@@ -379,6 +385,7 @@ export const vcItemMachine =
                     'updateVc',
                     'setWalletBindingErrorEmpty',
                     'logWalletBindingSuccess',
+                    () => sendEndEvent(getData('VC activation')),
                   ],
                   target: '#vc-item.kebabPopUp',
                 },
@@ -598,6 +605,7 @@ export const vcItemMachine =
         showBindingWarning: {
           on: {
             CONFIRM: {
+              actions: () => sendStartEvent(getData('VC activation')),
               target: 'requestingBindingOtp',
             },
             CANCEL: {
@@ -687,6 +695,7 @@ export const vcItemMachine =
                 'updateVc',
                 'setWalletBindingErrorEmpty',
                 'logWalletBindingSuccess',
+                () => sendEndEvent(getData('VC activation')),
               ],
               target: 'idle',
             },
