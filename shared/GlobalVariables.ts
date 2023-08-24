@@ -63,11 +63,16 @@ export class __SessionId {
     return __SessionId.value;
   }
 }
+
 export class __DeviceId {
-  private static value = getUniqueId();
+  private static value: string;
 
   public static getValue(): string {
     return __DeviceId.value;
+  }
+
+  public static setValue(value: string) {
+    this.value = value;
   }
 }
 
@@ -77,3 +82,6 @@ function generateSessionId() {
   });
   return shortUUID.randomUUID() + Date.now();
 }
+
+__SessionId.setValue(generateSessionId());
+__DeviceId.setValue(getUniqueId());
