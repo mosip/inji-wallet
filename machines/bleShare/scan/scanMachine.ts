@@ -430,7 +430,7 @@ export const scanMachine =
             },
             navigatingToHistory: {},
           },
-          entry: ['sendScanData', () => sendStartEvent(getData('START'))],
+          entry: ['sendScanData', () => sendStartEvent(getData('QR login'))],
         },
         connecting: {
           invoke: {
@@ -557,7 +557,7 @@ export const scanMachine =
               },
             },
             accepted: {
-              entry: ['logShared', () => sendEndEvent(getData('END'))],
+            entry: ['logShared', () => sendEndEvent(getData('VC share'))],
               on: {
                 DISMISS: {
                   target: 'navigatingToHome',
