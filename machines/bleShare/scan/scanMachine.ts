@@ -42,6 +42,7 @@ import {logState} from '../../app';
 import {
   getData,
   sendStartEvent,
+  sendEndEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
 
 const {wallet, EventTypes, VerificationStatus} = tuvali;
@@ -556,7 +557,7 @@ export const scanMachine =
               },
             },
             accepted: {
-              entry: 'logShared',
+              entry: ['logShared', () => sendEndEvent(getData('END'))],
               on: {
                 DISMISS: {
                   target: 'navigatingToHome',
@@ -987,6 +988,7 @@ export const scanMachine =
         },
 
         startConnection: context => callback => {
+          sendStartEvent(getData('START'));
           wallet.startConnection(context.openId4VpUri);
           const statusCallback = (event: WalletDataEvent) => {
             if (event.type === EventTypes.onSecureChannelEstablished) {
