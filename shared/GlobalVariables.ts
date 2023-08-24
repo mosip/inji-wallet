@@ -1,5 +1,7 @@
 import { getVersion } from 'react-native-device-info';
-import { generateSessionId } from './telemetry/TelemetryUtils';
+import ShortUniqueId from 'short-unique-id';
+import { APP_ID_LENGTH } from './constants';
+import { getUniqueId } from 'react-native-device-info';
 /* eslint-disable @typescript-eslint/no-var-requires */
 const dependencies = require('../package-lock.json').dependencies;
 
@@ -66,4 +68,24 @@ export class __SessionId {
   }
 }
 
+export class __DeviceId {
+  private static value: string;
+
+  public static getValue(): string {
+    return __DeviceId.value;
+  }
+
+  public static setValue(value: string) {
+    this.value = value;
+  }
+}
+
+function generateSessionId() {
+  const shortUUID = new ShortUniqueId({
+    length: APP_ID_LENGTH,
+  });
+  return shortUUID.randomUUID() + Date.now();
+}
+
 __SessionId.setValue(generateSessionId());
+__DeviceId.setValue(getUniqueId());
