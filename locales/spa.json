@@ -184,12 +184,17 @@
 				"message": "No se pueden recibir ni guardar más Tarjetas, ya que los datos de la aplicación están llenos."
 			},
 			"vcIsTampered": {
-				"title": "Los datos de VC están manipulados",
-				"message": "Los VC afectados se eliminan de la aplicación."
+				"title": "Algunas pruebas de identidad están manipuladas",
+				"message": "Los archivos afectados se eliminan, vuelva a descargarlos."
 			},
 			"storageLimitReached": {
 				"title": "Datos de aplicación insuficientes",
 				"message": "No puede agregar ni recibir tarjetas porque los datos de la aplicación están llenos. Borre Appdata para continuar."
+			},
+			"keystoreNotExists": {
+				"title": "Almacenamiento seguro de claves no encontrado",
+				"message": "El almacenamiento de claves en su teléfono no está protegido. Sus claves podrían filtrarse si el teléfono es pirateado.",
+				"riskOkayText": "Está bien, me arriesgaré."
 			}
 		}
 	},
@@ -432,7 +437,13 @@
 	"WelcomeScreen": {
 		"title": "Solución de identidad de código abierto",
 		"getStarted": "Empezar",
-		"unlockApp": "Desbloquear aplicación"
+		"unlockApp": "Desbloquear aplicación",
+		"errors": {
+			"invalidateKeyError": {
+				"title": "Algunas pruebas de identidad se eliminan debido a problemas de seguridad.",
+				"message": "Vuelva a descargar."
+			}
+		}
 	},
 	"common": {
 		"cancel": "Cancelar",
@@ -448,6 +459,10 @@
 		},
 		"errors": {
 			"genericError": "Algo salió mal. ¡Por favor, inténtalo de nuevo después de un tiempo!"
+		},
+		"biometricPopup": {
+			"title": "Desbloquear aplicación",
+			"description": "Utilice la huella digital para desbloquear la aplicación."
 		}
 	}
 }
