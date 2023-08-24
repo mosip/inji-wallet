@@ -3,6 +3,9 @@ import forge from 'node-forge';
 import getAllConfigurations from '../commonprops/commonProps';
 import { isIOS } from '../constants';
 import SecureKeystore from 'react-native-secure-keystore';
+import Storage from '../storage';
+import { ENCRYPTION_ID } from '../../machines/store';
+import CryptoJS from 'crypto-js';
 
 // 5min
 export const AUTH_TIMEOUT = 5 * 60;
@@ -100,4 +103,44 @@ export interface WalletBindingResponse {
   keyId: string;
   thumbprint: string;
   expireDateTime: string;
+}
+
+export async function clear() {
+  try {
+    console.log('clearing entire storage');
+    if (isCustomSecureKeystore()) {
+      SecureKeystore.clearKeys();
+    }
+    await Storage.clear();
+  } catch (e) {
+    console.error('error clear:', e);
+    throw e;
+  }
+}
+
+export async function encryptJson(
+  encryptionKey: string,
+  data: string
+): Promise<string> {
+  if (!isCustomSecureKeystore()) {
+    return CryptoJS.AES.encrypt(data, encryptionKey).toString();
+  }
+  return await SecureKeystore.encryptData(ENCRYPTION_ID, data);
+}
+
+export async function decryptJson(
+  encryptionKey: string,
+  encryptedData: string
+): Promise<string> {
+  try {
+    if (!isCustomSecureKeystore()) {
+      return CryptoJS.AES.decrypt(encryptedData, encryptionKey).toString(
+        CryptoJS.enc.Utf8
+      );
+    }
+    return await SecureKeystore.decryptData(ENCRYPTION_ID, encryptedData);
+  } catch (e) {
+    console.error('error decryptJson:', e);
+    throw e;
+  }
 }

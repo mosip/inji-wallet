@@ -17,8 +17,11 @@ import {
   getFreeDiskStorageSync,
 } from 'react-native-device-info';
 import SecureKeystore from 'react-native-secure-keystore';
-import { decryptJson, ENCRYPTION_ID, encryptJson } from '../machines/store';
-import { isCustomSecureKeystore } from './cryptoutil/cryptoUtil';
+import {
+  decryptJson,
+  encryptJson,
+  isCustomSecureKeystore,
+} from './cryptoutil/cryptoUtil';
 
 const MMKV = new MMKVLoader().initialize();
 const vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
@@ -32,8 +35,7 @@ async function generateHmac(
   if (!isCustomSecureKeystore()) {
     return CryptoJS.HmacSHA256(encryptionKey, data).toString();
   }
-  const hmacSHA256 = await SecureKeystore.generateHmacSha(HMAC_ALIAS, data);
-  return hmacSHA256;
+  return await SecureKeystore.generateHmacSha(HMAC_ALIAS, data);
 }
 
 class Storage {

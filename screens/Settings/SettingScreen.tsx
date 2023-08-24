@@ -64,8 +64,10 @@ export const SettingScreen: React.FC<
         headerTitle={t('header')}
         headerElevation={2}
         onDismiss={controller.TOGGLE_SETTINGS}>
-        <ScrollView backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
-          <Column style={{ display: Platform.OS !== 'ios' ? 'flex' : 'none' }}>
+        <ScrollView>
+          <Column
+            style={{ display: Platform.OS !== 'ios' ? 'flex' : 'none' }}
+            backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
             <Text
               weight="semibold"
               margin="10"
@@ -86,11 +88,7 @@ export const SettingScreen: React.FC<
                   </Text>
                 </Column>
               </Pressable>
-              <ReceivedCards
-                isVisible={false}
-                service={undefined}
-                vcItemActor={undefined}
-              />
+              <ReceivedCards />
             </Row>
 
             <Text

@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { RefreshControl } from 'react-native';
-import { Pressable, TouchableOpacity } from 'react-native';
-import { Centered, Column, Row, Text } from '../../components/ui';
+import { Pressable } from 'react-native';
+import { Centered, Column, Text } from '../../components/ui';
 import { Icon } from 'react-native-elements';
 import { Theme } from '../../components/ui/styleUtils';
 import { Image } from 'react-native';
 import { Modal } from '../../components/ui/Modal';
-import { HomeScreenTabProps } from '../Home/HomeScreen';
 import { useReceivedVcsTab } from '../Home/ReceivedVcsTabController';
 import { VcItem } from '../../components/VcItem';
+import { ViewVcModal } from '../Home/ViewVcModal';
 
-export const ReceivedCards: React.FC<HomeScreenTabProps> = (props) => {
+export const ReceivedCards: React.FC = () => {
   const { t } = useTranslation('ReceivedVcsTab');
-  const controller = useReceivedVcsTab(props);
+  const controller = useReceivedVcsTab();
 
   return (
     <React.Fragment>
@@ -71,6 +71,17 @@ export const ReceivedCards: React.FC<HomeScreenTabProps> = (props) => {
             </React.Fragment>
           )}
         </Column>
+        {controller.selectedVc && (
+          <ViewVcModal
+            isVisible={controller.isViewingVc}
+            onDismiss={controller.DISMISS_MODAL}
+            vcItemActor={controller.selectedVc}
+            onRevokeDelete={() => {
+              controller.REVOKE();
+            }}
+            activeTab={controller.activeTab}
+          />
+        )}
       </Modal>
     </React.Fragment>
   );
