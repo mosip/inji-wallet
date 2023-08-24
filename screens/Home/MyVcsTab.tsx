@@ -39,8 +39,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
 
   const DownloadingVcPopUp: React.FC = () => {
     return (
-      <View
-        style={{ display: controller.isRequestSuccessful ? 'flex' : 'none' }}>
+      <View>
         <Row style={Theme.Styles.downloadingVcPopUp}>
           <Text color={Theme.Colors.whiteText} weight="semibold" size="smaller">
             {t('downloadingYourCard')}
@@ -62,7 +61,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
   return (
     <React.Fragment>
       <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
-        <DownloadingVcPopUp />
+        {controller.isRequestSuccessful && <DownloadingVcPopUp />}
         <Column fill pY={18} pX={15}>
           {controller.vcKeys.length > 0 && (
             <React.Fragment>

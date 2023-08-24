@@ -45,7 +45,7 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
 
   const CameraDisabledPopUp: React.FC = () => {
     return (
-      <View style={{ display: hasPermission ? 'none' : 'flex' }}>
+      <View>
         <Row style={Theme.Styles.cameraDisabledPopUp}>
           <Column>
             <Text color={Theme.Colors.whiteText} weight="bold">
@@ -70,7 +70,7 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
   };
   return (
     <View>
-      <CameraDisabledPopUp />
+      {hasPermission == false && <CameraDisabledPopUp />}
       <View style={Theme.Styles.scannerContainer}>
         <Camera
           style={Theme.Styles.scanner}
