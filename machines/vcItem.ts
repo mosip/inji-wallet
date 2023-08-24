@@ -260,7 +260,7 @@ export const vcItemMachine =
           entry: 'storeContext',
           on: {
             STORE_RESPONSE: {
-              actions: 'sendVcUpdated',
+              actions: ['sendVcUpdated', 'VcUpdated'],
               target: 'idle',
             },
           },
@@ -843,6 +843,17 @@ export const vcItemMachine =
             to: (context) => context.serviceRefs.vc,
           }
         ),
+
+        VcUpdated: send(
+          (context) => {
+            const { serviceRefs, ...vc } = context;
+            return { type: 'VC_UPDATE', vc };
+          },
+          {
+            to: (context) => context.serviceRefs.vc,
+          }
+        ),
+
         setThumbprintForWalletBindingId: send(
           (context) => {
             const { walletBindingResponse } = context;
