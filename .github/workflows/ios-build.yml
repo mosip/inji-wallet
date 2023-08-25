@@ -76,12 +76,7 @@ jobs:
         run: |
           cd ios
           bundle exec fastlane beta
-
-      - name: 'Notify on failure'
-        if: failure()
-        run: |
-          cat /Users/runner/Library/Logs/gym/Inji-Inji.log
-
+          
         env:
           APP_STORE_CONNECT_TEAM_ID: '${{ secrets.APP_STORE_CONNECT_TEAM_ID }}'
           DEVELOPER_APP_ID: '${{ secrets.IOS_INJI_DEVELOPER_APP_ID }}'
