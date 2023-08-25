@@ -57,26 +57,17 @@ export class __InjiVersion {
   }
 }
 export class __SessionId {
-  private static value: string;
+  private static value = generateSessionId();
 
   public static getValue(): string {
     return __SessionId.value;
   }
-
-  public static setValue(value: string) {
-    this.value = value;
-  }
 }
-
 export class __DeviceId {
-  private static value: string;
+  private static value = getUniqueId();
 
   public static getValue(): string {
     return __DeviceId.value;
-  }
-
-  public static setValue(value: string) {
-    this.value = value;
   }
 }
 
@@ -86,6 +77,3 @@ function generateSessionId() {
   });
   return shortUUID.randomUUID() + Date.now();
 }
-
-__SessionId.setValue(generateSessionId());
-__DeviceId.setValue(getUniqueId());

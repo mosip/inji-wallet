@@ -1,10 +1,5 @@
 import telemetry from '@project-sunbird/telemetry-sdk';
-import {
-  APP_ID_LENGTH,
-  HOST,
-  SESSION_ID_DICTIONARY,
-  deviceId,
-} from '../constants';
+import { HOST } from '../constants';
 import { Platform } from 'react-native';
 import {
   __AppId,
@@ -13,7 +8,7 @@ import {
   __TuvaliVersion,
   __DeviceId,
 } from '../GlobalVariables';
-import ShortUniqueId from 'short-unique-id';
+import DeviceInfo from 'react-native-device-info';
 
 export function sendImpressionEvent(data) {
   telemetry.impression(data, {});
@@ -48,14 +43,18 @@ export function getTelemetryConfigData() {
     mode: '',
     host: 'https://dataset-api.obsrv.mosip.net',
     endpoint: '/obsrv/v1/data/mosip-dataset',
-    tags: [
-      {
-        osName: Platform.OS,
-        osVersion: Platform.Version.toString(),
-        injiVersion: __InjiVersion.getValue(),
-        tuvaliVersion: __TuvaliVersion.getValue(),
-      },
-    ],
+    deviceInformation: {
+      brandName: DeviceInfo.getBrand(),
+      modelName: DeviceInfo.getModel(),
+      osName: DeviceInfo.getSystemName(),
+      osVersion: DeviceInfo.getSystemVersion(),
+      osApiLevel: Platform.Version.toString(),
+    },
+    tags: {
+      buildNumber: DeviceInfo.getBuildNumber(),
+      injiVersion: __InjiVersion.getValue(),
+      tuvaliVersion: __TuvaliVersion.getValue(),
+    },
     cdata: [],
     rollup: {},
     telemetryDebugEnabled: true,
