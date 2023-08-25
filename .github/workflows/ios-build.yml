@@ -44,7 +44,7 @@ on:
 jobs:
   build_ios:
     name: Deploying to Testflight
-    runs-on: macos-13
+    runs-on: macos-latest
     
     steps:
       - uses: actions/checkout@v3.1.0
@@ -54,17 +54,28 @@ jobs:
       
       - name: Install npm dependencies
         run: |
+          npm cache clean --force
           npm install
-        
-      - name: Install Pod
+      
+      - name: Install fastlane dependencies
+        run: |
+          cd ios
+          gem install bundler
+          bundle install
+
+      - name: clear cocoapods cache and install
         run: |
           cd ios
           pod install
+
+      - name: Clear Xcode derived data
+        run: |
+          rm -rf ~/Library/Developer/Xcode/DerivedData
         
       - name: Deploy iOS Beta to TestFlight
         run: |
           cd ios
-          fastlane beta
+          bundle exec fastlane beta
         env:
           APP_STORE_CONNECT_TEAM_ID: '${{ secrets.APP_STORE_CONNECT_TEAM_ID }}'
           DEVELOPER_APP_ID: '${{ secrets.IOS_INJI_DEVELOPER_APP_ID }}'
