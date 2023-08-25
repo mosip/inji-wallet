@@ -44,13 +44,13 @@ on:
 jobs:
   build_ios:
     name: Deploying to Testflight
-    runs-on: macos-13
+    runs-on: self-hosted
     
     steps:
       - uses: actions/checkout@v3.1.0
       - uses: actions/setup-node@v3
         with:
-          node-version: '16.17.0'
+          node-version: '16.20.0'
       
       - name: Install npm dependencies
         run: |
