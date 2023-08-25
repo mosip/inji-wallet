@@ -53,12 +53,22 @@ end
 desc "Deploy an Beta version to the Google Play"
 lane :android_build_beta do
 
-  # git_tag = sh('git describe --abbrev=0 --tags --exact-match HEAD').strip
-  # UI.message("Git Tag: #{git_tag}")
+  git_tag = sh('git describe --abbrev=0 --tags --exact-match HEAD').strip
 
-  #versionName = "Inji - #{git_tag}"
+  def convert_tag_to_code(version)
+    parts = version.split('.')
+    version_code = parts[0].to_i * 1000000 + parts[1].to_i * 1000 + parts[2].to_i
+    return version_code
+  end
 
-  versionName = "Inji - Tag"
+  versionCode = convert_tag_to_code(git_tag)
+
+  increment_version_code(
+    gradle_file_path: "app/build.gradle",
+    version_code: versionCode
+  )
+
+  versionName = "Inji #{git_tag}"
 
   gradle(task: "clean bundleBetaRelease")
   upload_to_play_store(

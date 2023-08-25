@@ -7,12 +7,30 @@ import { Theme } from '../../components/ui/styleUtils';
 import { useRequestScreen } from './RequestScreenController';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import { Platform } from 'react-native';
+import Storage from '../../shared/storage';
+import { ErrorMessageOverlay } from '../../components/MessageOverlay';
+import {
+  NavigationProp,
+  useFocusEffect,
+  useNavigation,
+} from '@react-navigation/native';
+import { MainBottomTabParamList } from '../../routes/main';
+
+type RequestStackParamList = {
+  RequestScreen: undefined;
+  ReceiveVcScreen: undefined;
+};
+
+type RequestLayoutNavigation = NavigationProp<
+  RequestStackParamList & MainBottomTabParamList
+>;
 
 export const RequestScreen: React.FC = () => {
   const { t } = useTranslation('RequestScreen');
   const controller = useRequestScreen();
   const props: RequestScreenProps = { t, controller };
   const [isBluetoothOn, setIsBluetoothOn] = useState(false);
+  const navigation = useNavigation<RequestLayoutNavigation>();
 
   useEffect(() => {
     (async () => {
@@ -33,6 +51,16 @@ export const RequestScreen: React.FC = () => {
       align="space-between"
       backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
       {loadQRCode()}
+      {controller.isMinimumStorageLimitReached && (
+        <ErrorMessageOverlay
+          isVisible={controller.isMinimumStorageLimitReached}
+          error="errors.storageLimitReached"
+          onDismiss={() => {
+            navigation.navigate('Home');
+          }}
+          translationPath="RequestScreen"
+        />
+      )}
     </Column>
   );
 

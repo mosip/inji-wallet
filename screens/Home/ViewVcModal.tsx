@@ -10,7 +10,7 @@ import { OIDcAuthenticationModal } from '../../components/OIDcAuth';
 import { useViewVcModal, ViewVcModalProps } from './ViewVcModalController';
 import { useTranslation } from 'react-i18next';
 import { VcDetails } from '../../components/VcDetails';
-import { OtpVerification } from './MyVcs/OtpVerification';
+import { OtpVerificationModal } from './MyVcs/OtpVerificationModal';
 import { BindingVcWarningOverlay } from './MyVcs/BindingVcWarningOverlay';
 
 export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
@@ -22,12 +22,12 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
       idType: 'VID',
       label: t('revoke'),
       icon: 'close-circle-outline',
-      onPress: () => controller.CONFIRM_REVOKE_VC(),
+      onPress: controller.CONFIRM_REVOKE_VC,
     },
     {
       label: t('editTag'),
       icon: 'pencil',
-      onPress: () => controller.EDIT_TAG(),
+      onPress: controller.EDIT_TAG,
     },
   ];
 
@@ -35,19 +35,8 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
     <Modal
       isVisible={props.isVisible}
       onDismiss={props.onDismiss}
-      headerTitle={
-        controller.vc.verifiableCredential.credentialSubject.UIN
-          ? controller.vc.verifiableCredential.credentialSubject.UIN
-          : controller.vc.verifiableCredential.credentialSubject.VID
-      }
-      headerElevation={2}
-      headerRight={
-        <DropdownIcon
-          icon="dots-vertical"
-          idType={controller.vc.idType}
-          items={DATA}
-        />
-      }>
+      headerTitle={t('title')}
+      headerElevation={2}>
       <Column scroll>
         <Column fill>
           <VcDetails
@@ -56,12 +45,6 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
             isBindingPending={controller.isWalletBindingPending}
             activeTab={props.activeTab}
           />
-
-          {controller.walletBindingError !== '' && (
-            <Text style={{ color: 'red', fontSize: 20 }}>
-              Error Occured : {controller.walletBindingError}
-            </Text>
-          )}
         </Column>
       </Column>
       {controller.isEditingTag && (
@@ -87,7 +70,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
       )}
 
       {controller.isAcceptingOtpInput && (
-        <OtpVerification
+        <OtpVerificationModal
           isVisible={controller.isAcceptingOtpInput}
           onDismiss={controller.DISMISS}
           onInputDone={controller.inputOtp}
@@ -96,7 +79,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
       )}
 
       {controller.isAcceptingBindingOtp && (
-        <OtpVerification
+        <OtpVerificationModal
           isVisible={controller.isAcceptingBindingOtp}
           onDismiss={controller.DISMISS}
           onInputDone={controller.inputOtp}

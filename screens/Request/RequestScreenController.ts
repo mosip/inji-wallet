@@ -23,7 +23,10 @@ import {
   selectIsReviewing,
   selectReadyForBluetoothStateCheck,
 } from '../../machines/bleShare/commonSelectors';
-import { RequestEvents } from '../../machines/bleShare/request/requestMachine';
+import {
+  RequestEvents,
+  selectIsMinimumStorageLimitReached,
+} from '../../machines/bleShare/request/requestMachine';
 
 export function useRequestScreen() {
   const { t } = useTranslation('RequestScreen');
@@ -108,6 +111,10 @@ export function useRequestScreen() {
     isCheckingBluetoothService: useSelector(
       requestService,
       selectIsCheckingBluetoothService
+    ),
+    isMinimumStorageLimitReached: useSelector(
+      requestService,
+      selectIsMinimumStorageLimitReached
     ),
     openId4VpUri: useSelector(requestService, selectOpenId4VpUri),
     senderInfo: useSelector(requestService, selectSenderInfo),

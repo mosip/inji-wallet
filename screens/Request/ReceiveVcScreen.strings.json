@@ -9,10 +9,6 @@
     "savingFailed": {
       "title": "Failed to save the Card",
       "message": "Something went wrong while saving Card to the store."
-    },
-    "diskFullError": {
-      "title": "Failed to save the Card",
-      "message": "No more Cards can be received or saved as App Data is full."
     }
   }
 }

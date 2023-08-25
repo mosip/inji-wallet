@@ -18,7 +18,6 @@ import {
 } from './bleShare/request/requestMachine';
 import { createScanMachine, scanMachine } from './bleShare/scan/scanMachine';
 import { createRevokeMachine, revokeVidsMachine } from './revoke';
-
 import { pure, respond } from 'xstate/lib/actions';
 import { AppServices } from '../shared/GlobalContext';
 import { request } from '../shared/request';
@@ -33,11 +32,16 @@ const model = createModel(
     info: {} as AppInfo,
     backendInfo: {} as BackendInfo,
     serviceRefs: {} as AppServices,
+    isReadError: false,
+    isDecryptError: false,
   },
   {
     events: {
       ACTIVE: () => ({}),
       INACTIVE: () => ({}),
+      ERROR: () => ({}),
+      DECRYPT_ERROR: () => ({}),
+      DECRYPT_ERROR_DISMISS: () => ({}),
       OFFLINE: () => ({}),
       ONLINE: (networkType: NetInfoStateType) => ({ networkType }),
       REQUEST_DEVICE_INFO: () => ({}),
@@ -51,6 +55,7 @@ const model = createModel(
 
 export const appMachine = model.createMachine(
   {
+    /** @xstate-layout N4IgpgJg5mDOIC5QEMAOqB0BLAdlgLhrPgPYBOYAxAEoCiAggCICaA2gAwC6ioqJsBLCRw8QAD0QBmdgE4MMgIwAmSaoDsADmkb2agDQgAnoiUAWJRnNqZayVvYKArDdMBfVwbSZcBIqQqUtNTUAPLUHNxIIHwC+EIiURIICpJypgBsaqaOSjmOqfmmBsbJjuzyaimaMpJq7BqOOe6e6Nh4hLBgZABuWADGcDQMLBGiMYLCokmZ6RiSSro5NQrsjcUm5pZK1rb2Ti7NIF5tvn0UEGA4ccgANtRgUFjEZIaUAMoAKmG0APp0bwAFEIAOTetFGUXGcUmiUQCgU6VMFW0tVkOXY6XWCCUCjkakqBNMMl0ZjcHiOrR8hFwADMSJR6ACAT8AJLAgBiIT+tAAwrQWQA1WiMCG8fgTBKgJIIjJzdRqRGmDQEjRYnF4gkKLLEtSkw7HKkYC69HB0ygAIXoPIA0rRgYxWRyuXQ+YLhaLouLoZLxCZlI55DjTJJ0jV0vlJGrcRh8VqtUSSaYyS1MBRkBBXnQAIoAVVonx+jFoApZfMdnI9UPiUxM9Rj6URGmJMh0Zg0mKMiEc6Q0GA0GmyPd180kyYpqbA6cMGDpfQArrAGTyPm7K17q7Dkroscre+l2KknAoB8qbPrWmmMzOSPPF2yrSuhWvYhupXDt52EDIbBhGnVJN27CyA2SjnhOU4YDgYD4AA7uQADWlAggAMmy4JcGM64wm+W76J+yhEpYaiOKYGL4jI+4hmBGCXtOUGwQhSHsuyqHAuhkRii+2G+rhWIpD2WwNNsuLdjI7jkjgJAXPAUReJhXE+kkAC0tRYkpZgYEBWnaTpajUVS8kSjW2IyFi6SSJYDS2FqjgaPCMi2fp7R+OQYCGd6xn4mqGKWKimimMoTaOLqTm+J0PT9HA7mvjx5gWeYChJmYEbth2JQLLMwZ1P5gUOSF5IGs5ZyQJc1x3A8Tz4C80XcUk1R9koLbpAiDghgoUZpNImgkSsGhmLUoXUqaJA1YpcJJrM4aVCkShaDI5hFJ+6q+bouz4tIqgaINRpgCadKjcZx7pBYDakZoo6OCkjgdSt1ihkmF1UQVF6ThmB2bvCZmqBgIGaPU5FONRtHXre704c4WK6goGCJQOs2rD2Ohic94FXrOC4YH0AAWYB9PBuBQGDPHwtDWoLDUtn1LN35YjUcgYhRiUNhiTbIymNGvdO6OwBgyB9HE3RuZCWFjdipE-YopE1O2f12DujQ-WR0jNUBl2OEDnMgxjuB8wLQucUZm5mOUoaJbIdiZDocufi4v7OA0KxKM1tRbSjHMQfRcFkPBRNJBD+GyBYDjfri4YtRkGse9BXvwZjON4wTvvvnhJQpLI8gBSsx2NAFdiR1ensIRgwg3Lg+uegpxkqBYo66ko9e5MoZh8fXmWaA3CymPiTRu8Dhfe8XNI0qXUFJ9i8xzF3HeN-Xi2pxdvkpOYx31M16Tia4QA */
     predictableActionArguments: true,
     preserveActionOrder: true,
     tsTypes: {} as import('./app.typegen').Typegen0,
@@ -60,6 +65,14 @@ export const appMachine = model.createMachine(
     },
     id: 'app',
     initial: 'init',
+    on: {
+      DECRYPT_ERROR: {
+        actions: ['setIsDecryptError'],
+      },
+      DECRYPT_ERROR_DISMISS: {
+        actions: ['unsetIsDecryptError'],
+      },
+    },
     states: {
       init: {
         initial: 'store',
@@ -67,7 +80,13 @@ export const appMachine = model.createMachine(
           store: {
             entry: ['spawnStoreActor', 'logStoreEvents'],
             on: {
-              READY: 'services',
+              READY: {
+                actions: ['unsetIsReadError', 'unsetIsDecryptError'],
+                target: 'services',
+              },
+              ERROR: {
+                actions: 'setIsReadError',
+              },
             },
           },
           services: {
@@ -167,7 +186,18 @@ export const appMachine = model.createMachine(
           send({ ...event, type: `APP_${event.type}` }, { to: serviceRef })
         )
       ),
-
+      setIsReadError: assign({
+        isReadError: true,
+      }),
+      setIsDecryptError: assign({
+        isDecryptError: true,
+      }),
+      unsetIsDecryptError: assign({
+        isDecryptError: false,
+      }),
+      unsetIsReadError: assign({
+        isReadError: false,
+      }),
       requestDeviceInfo: respond((context) => ({
         type: 'RECEIVE_DEVICE_INFO',
         info: {
@@ -406,4 +436,12 @@ export function logState(state: AnyState) {
     }
     `
   );
+}
+
+export function selectIsReadError(state: State) {
+  return state.context.isReadError;
+}
+
+export function selectIsDecryptError(state: State) {
+  return state.context.isDecryptError;
 }

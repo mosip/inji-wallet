@@ -8,16 +8,31 @@ export class BackendResponseError extends Error {
   }
 }
 
+export class AppId {
+  private static value: string;
+
+  public static getValue(): string {
+    return AppId.value;
+  }
+
+  public static setValue(value: string) {
+    this.value = value;
+  }
+}
+
 export async function request(
   method: 'GET' | 'POST' | 'PATCH',
   path: `/${string}`,
   body?: Record<string, unknown>
 ) {
+  const headers = {
+    'Content-Type': 'application/json',
+  };
+  if (path.includes('residentmobileapp')) headers['X-AppId'] = AppId.getValue();
+
   const response = await fetch(HOST + path, {
     method,
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers,
     body: JSON.stringify(body),
   });
 

@@ -17,11 +17,11 @@ import {
 } from '../../shared/constants';
 import { AddVcModalMachine } from './MyVcs/AddVcModalMachine';
 import { GetVcModalMachine } from './MyVcs/GetVcModalMachine';
+import Storage from '../../shared/storage';
 
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
-    storeError: null as Error,
   },
   {
     events: {
@@ -34,7 +34,10 @@ const model = createModel(
       STORE_ERROR: (error: Error) => ({ error }),
       ADD_VC: () => ({}),
       GET_VC: () => ({}),
+      STORAGE_AVAILABLE: () => ({}),
+      STORAGE_UNAVAILABLE: () => ({}),
       ONBOARDING_DONE: () => ({}),
+      IS_TAMPERED: () => ({}),
     },
   }
 );
@@ -67,22 +70,52 @@ export const MyVcsTabMachine = model.createMachine(
       },
       onboarding: {
         on: {
-          ADD_VC: {
-            target: 'addingVc',
-            actions: ['completeOnboarding'],
-          },
+          ADD_VC: [
+            {
+              target: 'addVc',
+              actions: ['completeOnboarding'],
+            },
+          ],
           ONBOARDING_DONE: {
             target: 'idle',
             actions: ['completeOnboarding'],
           },
         },
       },
+      addVc: {
+        initial: 'checkStorage',
+        states: {
+          checkStorage: {
+            invoke: {
+              src: 'checkStorageAvailability',
+              onDone: [
+                {
+                  cond: 'isMinimumStorageLimitReached',
+                  target: 'storageLimitReached',
+                },
+                {
+                  target: '#MyVcsTab.addingVc',
+                },
+              ],
+            },
+          },
+          storageLimitReached: {
+            on: {
+              DISMISS: '#idle',
+            },
+          },
+        },
+      },
       idle: {
         id: 'idle',
         on: {
-          ADD_VC: 'addingVc',
+          ADD_VC: 'addVc',
           VIEW_VC: 'viewingVc',
           GET_VC: 'gettingVc',
+          IS_TAMPERED: {
+            target: 'idle',
+            actions: ['resetIsTampered', 'refreshMyVc'],
+          },
         },
       },
       viewingVc: {
@@ -111,7 +144,6 @@ export const MyVcsTabMachine = model.createMachine(
                 actions: ['sendVcAdded'],
               },
               STORE_ERROR: {
-                actions: 'setStoreError',
                 target: '#MyVcsTab.addingVc.savingFailed',
               },
             },
@@ -149,7 +181,23 @@ export const MyVcsTabMachine = model.createMachine(
     },
   },
   {
+    services: {
+      checkStorageAvailability: () => async () => {
+        return Promise.resolve(
+          Storage.isMinimumLimitReached('minStorageRequired')
+        );
+      },
+    },
+
     actions: {
+      refreshMyVc: send((_context, event) => VcEvents.REFRESH_MY_VCS(), {
+        to: (context) => context.serviceRefs.vc,
+      }),
+
+      resetIsTampered: send(() => StoreEvents.RESET_IS_TAMPERED(), {
+        to: (context) => context.serviceRefs.store,
+      }),
+
       viewVcFromParent: sendParent((_context, event: ViewVcEvent) =>
         model.events.VIEW_VC(event.vcItemActor)
       ),
@@ -180,16 +228,14 @@ export const MyVcsTabMachine = model.createMachine(
           to: (context) => context.serviceRefs.vc,
         }
       ),
-
-      setStoreError: model.assign({
-        storeError: (_context, event) => event.error,
-      }),
     },
 
     guards: {
       isOnboardingDone: (_context, event: StoreResponseEvent) => {
         return event.response === true;
       },
+
+      isMinimumStorageLimitReached: (_context, event) => Boolean(event.data),
     },
   }
 );
@@ -219,10 +265,10 @@ export function selectIsRequestSuccessful(state: State) {
   return state.matches('addingVc.addVcSuccessful');
 }
 
-export function selectStoreError(state: State) {
-  return state.context.storeError;
-}
-
 export function selectIsSavingFailedInIdle(state: State) {
   return state.matches('addingVc.savingFailed.idle');
+}
+
+export function selectIsMinimumStorageLimitReached(state: State) {
+  return state.matches('addVc.storageLimitReached');
 }

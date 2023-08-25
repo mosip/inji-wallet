@@ -18,24 +18,27 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
   }, [props.credentialRegistryResponse]);
 
   return (
-    <ListItem
-      bottomDivider
-      onPress={() => setIsEditing(true)}
-      style={{ display: props.display }}>
+    <ListItem bottomDivider topDivider onPress={() => setIsEditing(true)}>
       <Icon
         name={props.Icon}
-        type="antdesign"
-        size={20}
-        style={Theme.Styles.profileIconBg}
+        containerStyle={Theme.Styles.settingsIconBg}
+        type={props.IconType}
+        size={25}
         color={Theme.Colors.Icon}
       />
       <ListItem.Content>
         <ListItem.Title>
-          <Text color={Theme.Colors.profileLabel}>{props.label}</Text>
+          <Text weight="semibold" color={Theme.Colors.profileLabel}>
+            {props.label}
+          </Text>
         </ListItem.Title>
         <Text color={Theme.Colors.profileValue}>{props.value}</Text>
       </ListItem.Content>
-
+      <Icon
+        name="chevron-right"
+        size={21}
+        color={Theme.Colors.profileLanguageValue}
+      />
       <Overlay
         overlayStyle={{ padding: 24, elevation: 6 }}
         isVisible={isEditing}
@@ -52,16 +55,19 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
             }}
           />
           {props.credentialRegistryResponse === 'error' && (
-            <Text style={Theme.Styles.warningText}>
-              please try again after sometime...
-            </Text>
+            <Text style={Theme.TextStyles.error}>{props.errorMessage}</Text>
           )}
           {props.credentialRegistryResponse === 'success' &&
             overlayOpened &&
             closePopup()}
           <Row>
             <Button fill type="clear" title={t('cancel')} onPress={dismiss} />
-            <Button fill title={t('save')} onPress={edit} />
+            <Button
+              fill
+              title={t('save')}
+              onPress={edit}
+              loading={props.progress}
+            />
           </Row>
         </Column>
       </Overlay>
@@ -78,7 +84,7 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
   function dismiss() {
     setNewValue(props.value);
     setIsEditing(false);
-    props.credentialRegistryResponse = '';
+    props.onCancel();
   }
 
   function closePopup() {
@@ -91,7 +97,11 @@ interface EditableListItemProps {
   label: string;
   value: string;
   Icon: string;
+  IconType?: string;
   onEdit: (newValue: string) => void;
   display?: 'none' | 'flex';
   credentialRegistryResponse: string;
+  onCancel: () => void;
+  progress?: boolean;
+  errorMessage?: string;
 }

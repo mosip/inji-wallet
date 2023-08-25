@@ -18,34 +18,50 @@ export interface Typegen0 {
     resetInjiProps: 'done.invoke.settings.resetInjiProps:invocation[0]';
   };
   'missingImplementations': {
-    actions: never;
+    actions: 'injiTourGuide';
     delays: never;
     guards: never;
     services: never;
   };
   'eventsCausingActions': {
+    injiTourGuide:
+      | 'BACK'
+      | 'CANCEL'
+      | 'STORE_RESPONSE'
+      | 'done.invoke.settings.resetInjiProps:invocation[0]'
+      | 'error.platform.settings.resetInjiProps:invocation[0]';
     requestStoredContext: 'xstate.init';
-    resetCredentialRegistry: 'UPDATE_CREDENTIAL_REGISTRY';
+    resetCredentialRegistry: 'CANCEL' | 'UPDATE_CREDENTIAL_REGISTRY';
     setContext: 'STORE_RESPONSE';
     storeContext:
       | 'STORE_RESPONSE'
       | 'TOGGLE_BIOMETRIC_UNLOCK'
       | 'UPDATE_NAME'
-      | 'UPDATE_VC_LABEL';
+      | 'UPDATE_VC_LABEL'
+      | 'done.invoke.settings.resetInjiProps:invocation[0]';
     toggleBiometricUnlock: 'TOGGLE_BIOMETRIC_UNLOCK';
     updateCredentialRegistry: 'done.invoke.settings.resetInjiProps:invocation[0]';
     updateCredentialRegistryResponse: 'error.platform.settings.resetInjiProps:invocation[0]';
     updateCredentialRegistrySuccess: 'done.invoke.settings.resetInjiProps:invocation[0]';
+    updateDefaults: 'STORE_RESPONSE';
     updateName: 'UPDATE_NAME';
+    updatePartialDefaults: 'STORE_RESPONSE';
     updateVcLabel: 'UPDATE_VC_LABEL';
   };
   'eventsCausingDelays': {};
   'eventsCausingGuards': {
     hasData: 'STORE_RESPONSE';
+    hasPartialData: 'STORE_RESPONSE';
   };
   'eventsCausingServices': {
     resetInjiProps: 'UPDATE_CREDENTIAL_REGISTRY';
   };
-  'matchesStates': 'idle' | 'init' | 'resetInjiProps' | 'storingDefaults';
+  'matchesStates':
+    | 'idle'
+    | 'init'
+    | 'injiTourGuide'
+    | 'resetInjiProps'
+    | 'showInjiTourGuide'
+    | 'storingDefaults';
   'tags': never;
 }

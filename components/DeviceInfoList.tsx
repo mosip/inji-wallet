@@ -17,8 +17,8 @@ export const DeviceInfoList: React.FC<DeviceInfoProps> = (props) => {
 };
 
 interface DeviceInfoProps {
-  of: 'sender' | 'receiver';
   deviceInfo: DeviceInfo;
+  of?: string;
 }
 
 export interface DeviceInfo {

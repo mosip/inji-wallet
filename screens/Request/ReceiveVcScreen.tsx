@@ -19,15 +19,7 @@ export const ReceiveVcScreen: React.FC = () => {
   const savingOverlayVisible = useOverlayVisibleAfterTimeout(
     controller.isAccepting
   );
-  let storeErrorTranslationPath = 'errors.savingFailed';
-
-  //ENOSPC - no space left on a device / drive
-  const isDiskFullError =
-    controller.storeError?.message?.match('ENOSPC') != null;
-
-  if (isDiskFullError) {
-    storeErrorTranslationPath = 'errors.diskFullError';
-  }
+  const storeErrorTranslationPath = 'errors.savingFailed';
 
   return (
     <React.Fragment>
