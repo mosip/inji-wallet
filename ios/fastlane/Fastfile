@@ -1,4 +1,4 @@
-xcode_select '/Applications/Xcode.app'
+xcode_select '/Applications/Xcode_14.2.app'
 
 default_platform(:ios)
 APP_STORE_CONNECT_TEAM_ID = ENV["APP_STORE_CONNECT_TEAM_ID"]
