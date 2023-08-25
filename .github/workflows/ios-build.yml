@@ -1,6 +1,6 @@
 name: Inji iOS build
 
-on:           
+on:
   workflow_dispatch:
     inputs:
       backendServiceUrl:
@@ -45,18 +45,18 @@ jobs:
   build_ios:
     name: Deploying to Testflight
     runs-on: macos-latest
-    
+
     steps:
       - uses: actions/checkout@v3.1.0
       - uses: actions/setup-node@v3
         with:
           node-version: '16.20.0'
-      
+
       - name: Install npm dependencies
         run: |
           npm cache clean --force
           npm install
-      
+
       - name: Install fastlane dependencies
         run: |
           cd ios
@@ -71,11 +71,17 @@ jobs:
       - name: Clear Xcode derived data
         run: |
           rm -rf ~/Library/Developer/Xcode/DerivedData
-        
+
       - name: Deploy iOS Beta to TestFlight
         run: |
           cd ios
           bundle exec fastlane beta
+
+      - name: 'Notify on failure'
+        if: failure()
+        run: |
+          cat /Users/runner/Library/Logs/gym/Inji-Inji.log
+
         env:
           APP_STORE_CONNECT_TEAM_ID: '${{ secrets.APP_STORE_CONNECT_TEAM_ID }}'
           DEVELOPER_APP_ID: '${{ secrets.IOS_INJI_DEVELOPER_APP_ID }}'
