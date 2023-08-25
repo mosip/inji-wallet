@@ -55,6 +55,6 @@ export function selectIsSavingFailedInViewingVc(state: State) {
   return state.matches('reviewing.savingFailed.viewingVc');
 }
 
-export function selectStoreError(state: State) {
-  return state.context.storeError;
+export function selectIsDone(state: State) {
+  return state.matches('reviewing.navigatingToHistory');
 }

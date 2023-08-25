@@ -132,7 +132,8 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 def enableHermes = project.ext.react.get("enableHermes", false);
 
 androidGitVersion {
-    codeFormat 'MXXNXXP'
+    baseCode 0
+    codeFormat 'MXXNXXPXX'
     format '% tag %%commit_%%branch%'
 }
 

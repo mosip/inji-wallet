@@ -2,21 +2,21 @@ import React from 'react';
 import { RefreshControl } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { useTranslation } from 'react-i18next';
-
 import { Centered, Column, Text } from '../../components/ui';
-import { useHistoryTab } from './HistoryTabController';
-import { HomeScreenTabProps } from './HomeScreen';
+import { useHistoryTab } from './HistoryScreenController';
 import { ActivityLogText } from '../../components/ActivityLogText';
+import { MainRouteProps } from '../../routes/main';
+import { Theme } from '../../components/ui/styleUtils';
 
-export const HistoryTab: React.FC<HomeScreenTabProps> = (props) => {
-  const { t } = useTranslation('HistoryTab');
+export const HistoryScreen: React.FC<MainRouteProps> = () => {
+  const { t } = useTranslation('HistoryScreen');
   const controller = useHistoryTab();
 
   return (
-    <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
+    <Column fill backgroundColor={Theme.Colors.whiteBackgroundColor}>
       <Column
         scroll
-        padding="32 0"
+        padding="7 0"
         refreshControl={
           <RefreshControl
             refreshing={controller.isRefreshing}

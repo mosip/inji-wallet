@@ -12,5 +12,6 @@
   "PRESENCE_VERIFICATION_FAILED": "verification failed",
   "QRLOGIN_SUCCESFULL": "QRLogin successful",
   "WALLET_BINDING_SUCCESSFULL": "Activation successful",
-  "WALLET_BINDING_FAILURE": "Activation failed"
+  "WALLET_BINDING_FAILURE": "Activation failed",
+  "VC_REMOVED":"Removed from wallet"
 }

@@ -1,13 +1,20 @@
-import { ContextFrom, EventFrom, send, StateFrom } from 'xstate';
+import { assign, ContextFrom, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { AppServices } from '../shared/GlobalContext';
-import { HOST, SETTINGS_STORE_KEY } from '../shared/constants';
+import {
+  APP_ID_DICTIONARY,
+  APP_ID_LENGTH,
+  HOST,
+  SETTINGS_STORE_KEY,
+} from '../shared/constants';
 import { VCLabel } from '../types/vc';
 import { StoreEvents } from './store';
 import getAllConfigurations, {
   COMMON_PROPS_KEY,
 } from '../shared/commonprops/commonProps';
 import Storage from '../shared/storage';
+import ShortUniqueId from 'short-unique-id';
+import { AppId } from '../shared/request';
 
 const model = createModel(
   {
@@ -19,7 +26,8 @@ const model = createModel(
     } as VCLabel,
     isBiometricUnlockEnabled: false,
     credentialRegistry: HOST,
-    credentialRegistryResponse: '',
+    appId: null,
+    credentialRegistryResponse: '' as string,
   },
   {
     events: {
@@ -36,6 +44,9 @@ const model = createModel(
       ) => ({
         credentialRegistryResponse: credentialRegistryResponse,
       }),
+      INJI_TOUR_GUIDE: () => ({}),
+      BACK: () => ({}),
+      CANCEL: () => ({}),
     },
   }
 );
@@ -58,18 +69,24 @@ export const settingsMachine = model.createMachine(
         entry: ['requestStoredContext'],
         on: {
           STORE_RESPONSE: [
+            {
+              cond: 'hasPartialData',
+              target: 'idle',
+              actions: ['setContext', 'updatePartialDefaults', 'storeContext'],
+            },
             { cond: 'hasData', target: 'idle', actions: ['setContext'] },
             { target: 'storingDefaults' },
           ],
         },
       },
       storingDefaults: {
-        entry: ['storeContext'],
+        entry: ['updateDefaults', 'storeContext'],
         on: {
           STORE_RESPONSE: 'idle',
         },
       },
       idle: {
+        entry: ['injiTourGuide'],
         on: {
           TOGGLE_BIOMETRIC_UNLOCK: {
             actions: ['toggleBiometricUnlock', 'storeContext'],
@@ -84,6 +101,9 @@ export const settingsMachine = model.createMachine(
             actions: ['resetCredentialRegistry'],
             target: 'resetInjiProps',
           },
+          CANCEL: {
+            actions: ['resetCredentialRegistry'],
+          },
         },
       },
       resetInjiProps: {
@@ -93,11 +113,32 @@ export const settingsMachine = model.createMachine(
             actions: [
               'updateCredentialRegistrySuccess',
               'updateCredentialRegistry',
+              'storeContext',
             ],
             target: 'idle',
           },
           onError: {
             actions: ['updateCredentialRegistryResponse'],
+            target: 'idle',
+          },
+        },
+        on: {
+          CANCEL: {
+            actions: ['resetCredentialRegistry'],
+            target: 'idle',
+          },
+        },
+      },
+      injiTourGuide: {
+        on: {
+          INJI_TOUR_GUIDE: {
+            target: 'showInjiTourGuide',
+          },
+        },
+      },
+      showInjiTourGuide: {
+        on: {
+          BACK: {
             target: 'idle',
           },
         },
@@ -110,6 +151,18 @@ export const settingsMachine = model.createMachine(
         to: (context) => context.serviceRefs.store,
       }),
 
+      updateDefaults: model.assign({
+        appId: () => {
+          const appId = generateAppId();
+          AppId.setValue(appId);
+          return appId;
+        },
+      }),
+
+      updatePartialDefaults: model.assign({
+        appId: (context) => context.appId || generateAppId(),
+      }),
+
       storeContext: send(
         (context) => {
           const { serviceRefs, ...data } = context;
@@ -120,6 +173,7 @@ export const settingsMachine = model.createMachine(
 
       setContext: model.assign((context, event) => {
         const newContext = event.response as ContextFrom<typeof model>;
+        AppId.setValue(newContext.appId);
         return {
           ...context,
           ...newContext,
@@ -136,23 +190,20 @@ export const settingsMachine = model.createMachine(
           plural: event.label + 's',
         }),
       }),
-      updateCredentialRegistry: model.assign({
+      updateCredentialRegistry: assign({
         credentialRegistry: (_context, event) => event.data.warningDomainName,
       }),
 
-      updateCredentialRegistryResponse: model.assign({
+      updateCredentialRegistryResponse: assign({
         credentialRegistryResponse: () => 'error',
       }),
 
-      updateCredentialRegistrySuccess: model.assign({
+      updateCredentialRegistrySuccess: assign({
         credentialRegistryResponse: () => 'success',
       }),
 
       resetCredentialRegistry: model.assign({
-        credentialRegistryResponse: () => {
-          console.log('resetCredentialRegistry : called');
-          return '';
-        },
+        credentialRegistryResponse: () => '',
       }),
 
       toggleBiometricUnlock: model.assign({
@@ -174,6 +225,8 @@ export const settingsMachine = model.createMachine(
 
     guards: {
       hasData: (_, event) => event.response != null,
+      hasPartialData: (_, event) =>
+        event.response != null && event.response.appId == null,
     },
   }
 );
@@ -185,10 +238,22 @@ export function createSettingsMachine(serviceRefs: AppServices) {
   });
 }
 
+function generateAppId() {
+  const shortUUID = new ShortUniqueId({
+    length: APP_ID_LENGTH,
+    dictionary: APP_ID_DICTIONARY,
+  });
+  return shortUUID.randomUUID();
+}
+
 type State = StateFrom<typeof settingsMachine>;
 
 export function selectName(state: State) {
   return state.context.name;
+}
+
+export function selectAppId(state: State) {
+  return state.context.appId;
 }
 
 export function selectVcLabel(state: State) {
@@ -204,4 +269,7 @@ export function selectCredentialRegistryResponse(state: State) {
 
 export function selectBiometricUnlockEnabled(state: State) {
   return state.context.isBiometricUnlockEnabled;
+}
+export function selectIsResetInjiProps(state: State) {
+  return state.matches('resetInjiProps');
 }

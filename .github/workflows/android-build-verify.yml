@@ -1,4 +1,4 @@
-name: PR - android build verification
+name: PR - Android build verification
 
 env:
   backendServiceDefaultUrl: https://api.sandbox.mosip.net

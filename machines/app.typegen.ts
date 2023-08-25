@@ -26,8 +26,12 @@ export interface Typegen0 {
     requestDeviceInfo: 'REQUEST_DEVICE_INFO';
     setAppInfo: 'APP_INFO_RECEIVED';
     setBackendInfo: 'BACKEND_INFO_RECEIVED';
+    setIsDecryptError: 'DECRYPT_ERROR';
+    setIsReadError: 'ERROR';
     spawnServiceActors: 'READY';
     spawnStoreActor: 'xstate.init';
+    unsetIsDecryptError: 'DECRYPT_ERROR_DISMISS' | 'READY';
+    unsetIsReadError: 'READY';
   };
   'eventsCausingDelays': {};
   'eventsCausingGuards': {};

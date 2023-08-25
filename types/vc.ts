@@ -16,6 +16,7 @@ export interface VC {
   shouldVerifyPresence?: boolean;
   walletBindingResponse?: WalletBindingResponse;
   credentialRegistry: string;
+  isPinned?: boolean;
 }
 
 export interface VCSharingReason {

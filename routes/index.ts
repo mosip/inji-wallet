@@ -9,9 +9,23 @@ import { WelcomeScreen } from '../screens/WelcomeScreen';
 import { PasscodeScreen } from '../screens/PasscodeScreen';
 import { MainLayout } from '../screens/MainLayout';
 import { NotificationsScreen } from '../screens/NotificationsScreen';
-import { Image } from 'react-native';
+import { SetupLanguageScreen } from '../screens/SetupLanguageScreen';
+import { IntroSlidersScreen } from '../screens/Home/IntroSlidersScreen';
+import { RequestLayout } from '../screens/Request/RequestLayout';
+import { RequestStackParamList } from '../screens/Request/RequestLayoutController';
 
 export const baseRoutes: Screen[] = [
+  {
+    name: 'Language',
+    component: SetupLanguageScreen,
+  },
+  {
+    name: 'IntroSliders',
+    component: IntroSlidersScreen,
+    options: {
+      headerShown: false,
+    },
+  },
   {
     name: 'Welcome',
     component: WelcomeScreen,
@@ -27,6 +41,13 @@ export const baseRoutes: Screen[] = [
   {
     name: 'Biometric',
     component: BiometricScreen,
+  },
+  {
+    name: 'Request',
+    component: RequestLayout,
+    options: {
+      headerShown: false,
+    },
   },
 ];
 
@@ -45,6 +66,8 @@ export const authRoutes: Screen[] = [
 ];
 
 export type RootStackParamList = {
+  Language: undefined;
+  IntroSliders: undefined;
   Welcome: undefined;
   Auth: undefined;
   Passcode: {
@@ -74,4 +97,9 @@ export type PasscodeRouteProps = NativeStackScreenProps<
 export type BiometricRouteProps = NativeStackScreenProps<
   RootStackParamList,
   'Biometric'
+>;
+
+export type RequestRouteProps = NativeStackScreenProps<
+  RequestStackParamList,
+  'Request'
 >;

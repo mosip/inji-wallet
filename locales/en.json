@@ -13,7 +13,8 @@
     "PRESENCE_VERIFICATION_FAILED": "verification failed",
     "QRLOGIN_SUCCESFULL": "QRLogin successful",
     "WALLET_BINDING_SUCCESSFULL": "Activation successful",
-    "WALLET_BINDING_FAILURE": "Activation failed"
+    "WALLET_BINDING_FAILURE": "Activation failed",
+    "VC_REMOVED": "Removed from wallet"
   },
   "DeviceInfoList": {
     "requestedBy": "Requested by",
@@ -70,7 +71,7 @@
   "BiometricScreen": {
     "unlock": "Unlock with biometrics"
   },
-  "HistoryTab": {
+  "HistoryScreen": {
     "noHistory": "No history available yet",
     "downloaded": "downloaded",
     "shared": "shared",
@@ -118,12 +119,25 @@
     "requestingOTP": "Requesting OTP..."
   },
   "OtpVerificationModal": {
-    "enterOtp": "Enter the 6-digit verification code we sent you"
+    "title": "OTP Verification",
+    "otpSentMessage": "We've sent the 6 digit code to your registered mobile number!",
+    "resendTheCode": "You can resend the code in ",
+    "resendCode": "Resend Code"
   },
   "MyVcsTab": {
     "addVcButton": "Add Card",
     "generateVc": "Generate your Cards",
-    "generateVcDescription": "Tap on \"Add Card\" below to download your Card"
+    "generateVcDescription": "Tap on \"Add Card\" below to download your Card",
+    "errors": {
+      "savingFailed": {
+        "title": "Failed to save the Card",
+        "message": "Something went wrong while saving Card to the store."
+      },
+      "storageLimitReached": {
+        "title": "Insufficient Appdata",
+        "message": "You cannot add or receive cards since the Appdata is full"
+      }
+    }
   },
   "OnboardingOverlay": {
     "stepOneTitle": "Welcome!",
@@ -166,26 +180,6 @@
     "confirmPasscode": "Confirm your passcode",
     "enterPasscode": "Enter your passcode"
   },
-  "AppMetaData": {
-    "header": "About Inji",
-    "version": "Version",
-    "useBle": "Powered by BLE"
-  },
-  "ProfileScreen": {
-    "name": "Name",
-    "vcLabel": "VC Label",
-    "language": "Language",
-    "bioUnlock": "Unlock with biometrics",
-    "authFactorUnlock": "Unlock auth factor",
-    "AppMetaData": "About Inji",
-    "logout": "Log-out",
-    "revokeLabel": "Revoke VID",
-    "revokeHeader": "REVOKE VID",
-    "revokingVids": "You are about to revoke ({{count}}) VIDs.",
-    "revokingVidsAfter": "This means you will no longer be able to use or view any of the IDs linked to those VID(s). \nAre you sure you want to proceed?",
-    "empty": "Empty",
-    "revokeSuccessful": "VID successfully revoked"
-  },
   "ReceiveVcScreen": {
     "header": "Card details",
     "save": "Save Card",
@@ -197,19 +191,27 @@
       "savingFailed": {
         "title": "Failed to save the Card",
         "message": "Something went wrong while saving Card to the store."
-      },
-      "diskFullError": {
-        "title": "Failed to save the Card",
-        "message": "No more Cards can be received or saved as App Data is full."
       }
     }
   },
   "RequestScreen": {
     "bluetoothDenied": "Please enable Bluetooth to be able to request Card",
+    "bluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
+    "bluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
     "nearbyDevicesPermissionDenied": "Please enable Nearby Devices Permission to be able to request card",
     "showQrCode": "Display this QR code to request resident Card",
     "incomingVc": "Incoming Card",
     "request": "Request",
+    "errors": {
+      "nearbyDevicesPermissionDenied": {
+        "message": "Nearby Devices permission is required to be able to request Card",
+        "button": "Allow Permission"
+      },
+      "storageLimitReached": {
+        "title": "Insufficient Appdata",
+        "message": "You cannot add or receive cards since the Appdata is full"
+      }
+    },
     "status": {
       "accepted": {
         "title": "Success!",
@@ -258,6 +260,10 @@
       "locationDenied": {
         "message": "Location permission is required for the scanning functionality",
         "button": "Allow access to location"
+      },
+      "storageLimitReached": {
+        "title": "Insufficient Appdata",
+        "message": "You cannot share cards since the Appdata is full. Clear Appdata to proceed."
       }
     },
     "status": {
@@ -300,6 +306,15 @@
     "acceptRequestAndVerify": "Accept request and verify",
     "reject": "Reject",
     "consentToPhotoVerification": "I give consent to have my photo taken for authentication"
+  },
+  "AppMetaData": {
+    "header": "About Inji",
+    "version": "Version",
+    "useBle": "Powered by BLE"
+  },
+  "Credits": {
+    "header": "Credits and legal notices",
+    "back": "Back"
   },
   "VerifyIdentityOverlay": {
     "status": {
