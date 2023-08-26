@@ -52,6 +52,12 @@ jobs:
         with:
           node-version: '16.20.0'
 
+      - name: Unalias NVM default
+        run: |
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+          nvm unalias default
+
       - uses: actions/checkout@v3
       - uses: ruby/setup-ruby@v1
         with:
@@ -62,7 +68,7 @@ jobs:
         run: |
           npm cache clean --force
           npm install
-
+      
       - name: Install fastlane dependencies
         run: |
           cd ios
