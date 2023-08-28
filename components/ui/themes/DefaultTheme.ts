@@ -154,7 +154,7 @@ export const DefaultTheme = {
       borderRadius: 6,
       backgroundColor: Colors.LightOrange,
     },
-    popUp: {
+    downloadingVcPopUp: {
       alignItems: 'center',
       justifyContent: 'space-between',
       backgroundColor: Colors.Green,
@@ -381,17 +381,25 @@ export const DefaultTheme = {
       alignItems: 'flex-end',
     },
     scannerContainer: {
-      borderRadius: 32,
+      borderRadius: 24,
       alignSelf: 'center',
-      height: 330,
+      height: 350,
       width: 320,
       overflow: 'hidden',
-      marginTop: -65,
     },
     scanner: {
       height: 400,
       width: '100%',
       margin: 'auto',
+    },
+    cameraDisabledPopUp: {
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      backgroundColor: Colors.Red,
+      height: 75,
+      position: 'relative',
+      paddingHorizontal: 15,
+      marginTop: -36,
     },
     photoConsentLabel: {
       backgroundColor: Colors.White,
