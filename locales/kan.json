@@ -55,8 +55,8 @@
     "uin": "UIN",
     "vid": "VID",
     "enableVerification": "ಸಕ್ರಿಯಗೊಳಿಸಿ",
-    "profileAuthenticated": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ",
-    "offlineAuthDisabledHeader": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಸಕ್ರಿಯಗೊಳಿಸುವಿಕೆ ಬಾಕಿ ಉಳಿದಿದೆ",
+    "profileAuthenticated": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ!",
+    "offlineAuthDisabledHeader": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಸಕ್ರಿಯಗೊಳಿಸುವಿಕೆ ಬಾಕಿ ಉಳಿದಿದೆ!",
     "offlineAuthDisabledMessage": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಬಳಸಲು ಈ ರುಜುವಾತುಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಲು ದಯವಿಟ್ಟು ಕೆಳಗಿನ ಬಟನ್ ಅನ್ನು ಕ್ಲಿಕ್ ಮಾಡಿ.",
     "verificationEnabledSuccess": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ",
     "goback": "ಹಿಂದೆ ಹೋಗು",
@@ -77,8 +77,8 @@
     "title": "ಇನ್ನಷ್ಟು ಆಯ್ಕೆಗಳು",
     "unPinCard": "ಅನ್‌ಪಿನ್ ಕಾರ್ಡ್",
     "pinCard": "ಪಿನ್ ಕಾರ್ಡ್",
-    "offlineAuthenticationDisabled!": "ಆಫ್‌ಲೈನ್ ದೃಢೀಕರಣವನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ!",
-    "offlineAuthDisabledMessage": "ಆಫ್‌ಲೈನ್ ದೃಢೀಕರಣಕ್ಕಾಗಿ ಬಳಸಲು ಈ ರುಜುವಾತುಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ.",
+    "offlineAuthenticationDisabled!": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಸಕ್ರಿಯಗೊಳಿಸುವಿಕೆ ಬಾಕಿ ಉಳಿದಿದೆ!",
+    "offlineAuthDisabledMessage": "ಆನ್‌ಲೈನ್ ದೃಢೀಕರಣಕ್ಕಾಗಿ ಬಳಸಲು ಈ ರುಜುವಾತುಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ.",
     "viewActivityLog": "ಚಟುವಟಿಕೆ ಲಾಗ್ ಅನ್ನು ವೀಕ್ಷಿಸಿ",
     "removeFromWallet": "ಕೈಚೀಲದಿಂದ ತೆಗೆದುಹಾಕಿ",
     "revokeId": "ID ಹಿಂತೆಗೆದುಕೊಳ್ಳಿ",
@@ -86,7 +86,7 @@
   },
   "WalletBinding": {
     "inProgress": "ಪ್ರಗತಿಯಲ್ಲಿದೆ",
-    "profileAuthenticated": "ಪ್ರೊಫೈಲ್ ಅನ್ನು ದೃಢೀಕರಿಸಲಾಗಿದೆ!"
+    "profileAuthenticated": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ!"
   },
   "BindingVcWarningOverlay": {
     "alert": "ದಯವಿಟ್ಟು ದ್ರುಡೀಕರಿಸಿ",
@@ -343,6 +343,7 @@
     "reject": "ತಿರಸ್ಕರಿಸಿ",
     "discard": "ತಿರಸ್ಕರಿಸು",
     "goToReceivedVCTab": "ಸ್ವೀಕರಿಸಿದ ಕಾರ್ಡ್ ವೀಕ್ಷಿಸಿ",
+    "saving": "ಕಾರ್ಡ್ ಅನ್ನು ಉಳಿಸಲಾಗುತ್ತಿದೆ",
     "errors": {
       "savingFailed": {
         "title": "ಕಾರ್ಡ್ ಉಳಿಸಲು ವಿಫಲವಾಗಿದೆ",

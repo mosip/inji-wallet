@@ -55,8 +55,8 @@
     "uin": "UIN",
     "vid": "VID",
     "enableVerification": "सक्रिय",
-    "profileAuthenticated": "ऑनलाइन लॉगिन के लिए सक्रिय",
-    "offlineAuthDisabledHeader": "ऑनलाइन लॉगिन के लिए सक्रियता लंबित है",
+    "profileAuthenticated": "ऑनलाइन लॉगिन के लिए सक्रिय!",
+    "offlineAuthDisabledHeader": "ऑनलाइन लॉगिन के लिए सक्रियण लंबित है!",
     "offlineAuthDisabledMessage": "ऑनलाइन लॉगिन के लिए उपयोग किए जाने वाले इस क्रेडेंशियल को सक्रिय करने के लिए कृपया नीचे दिए गए बटन पर क्लिक करें।",
     "verificationEnabledSuccess": "ऑनलाइन लॉगिन के लिए सक्रिय",
     "goback": "वापस जाओ",
@@ -78,8 +78,8 @@
     "title": "अधिक विकल्प",
     "unPinCard": "अनपिन कार्ड",
     "pinCard": "पिन कार्ड",
-    "offlineAuthenticationDisabled!": "ऑफ़लाइन प्रमाणीकरण अक्षम!",
-    "offlineAuthDisabledMessage": "इस क्रेडेंशियल को ऑफ़लाइन प्रमाणीकरण के लिए उपयोग करने के लिए यहां क्लिक करें।",
+    "offlineAuthenticationDisabled!": "ऑनलाइन लॉगिन के लिए सक्रियण लंबित है!",
+    "offlineAuthDisabledMessage": "ऑनलाइन प्रमाणीकरण के लिए इस क्रेडेंशियल का उपयोग सक्षम करने के लिए यहां क्लिक करें।",
     "viewActivityLog": "गतिविधि लॉग देखें",
     "removeFromWallet": "बटुए से निकालें",
     "revokeId": "आईडी निरस्त करें",
@@ -87,7 +87,7 @@
   },
   "WalletBinding": {
     "inProgress": "चालू",
-    "profileAuthenticated": "प्रोफ़ाइल प्रमाणित है!"
+    "profileAuthenticated": "ऑनलाइन लॉगिन के लिए सक्रिय!"
   },
   "BindingVcWarningOverlay": {
     "alert": "कृपया पुष्टि करें",
@@ -345,7 +345,7 @@
     "reject": "अस्वीकार",
     "discard": "खारिज करना",
     "goToReceivedVCTab": "प्राप्त कार्ड्स देखें",
-    "saving": "सहेजा जा रहा है",
+    "saving": "कार्ड सहेजा जा रहा है",
     "errors": {
       "savingFailed": {
         "title": "कार्ड सहेजने में विफल",

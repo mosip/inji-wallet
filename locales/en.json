@@ -55,9 +55,9 @@
     "uin": "UIN",
     "vid": "VID",
     "enableVerification": "Activate",
-    "profileAuthenticated": "Profile is authenticated!",
-    "offlineAuthDisabledHeader": "Offline Authentication disabled!",
-    "offlineAuthDisabledMessage": "Click 'Enable Authentication' to enable this credentials to be used for offline authentication.",
+    "profileAuthenticated": "Activated for online login!",
+    "offlineAuthDisabledHeader": "Activation pending for online login!",
+    "offlineAuthDisabledMessage": "Please click the button below to activate this credential to be used for online login.",
     "verificationEnabledSuccess": "Activated for online login",
     "goback": "GO BACK",
     "BindingWarning": "If you have enabled verification for this credential on another wallet, it will get overridden. Do you want to proceed?",
@@ -81,8 +81,8 @@
     "title": "More Options",
     "unPinCard": "Unpin Card",
     "pinCard": "Pin Card",
-    "offlineAuthenticationDisabled!": "Offline authentication disabled!",
-    "offlineAuthDisabledMessage": "Click here to enable this credentials to be used for offline authentication.",
+    "offlineAuthenticationDisabled!": "Activation pending for online login!",
+    "offlineAuthDisabledMessage": "Click here to enable this credentials to be used for online authentication.",
     "viewActivityLog": "View Activity Log",
     "removeFromWallet": "Remove from Wallet",
     "revokeId": "Revoke ID",
@@ -90,7 +90,7 @@
   },
   "WalletBinding": {
     "inProgress": "In progress",
-    "profileAuthenticated": "Profile is authenticated!"
+    "profileAuthenticated": "Activated for online login!"
   },
   "BindingVcWarningOverlay": {
     "alert": "Alert",
@@ -345,7 +345,7 @@
     "reject": "Reject",
     "discard": "Discard",
     "goToReceivedVCTab": "View Received card",
-    "saving": "Is being saved",
+    "saving": "Card is being saved",
     "errors": {
       "savingFailed": {
         "title": "Failed to save the card",
@@ -354,7 +354,7 @@
     }
   },
   "RequestScreen": {
-    "receiveCard": "REceive Card",
+    "receiveCard": "Receive Card",
     "bluetoothDenied": "Please enable Bluetooth to be able to request card",
     "bluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
     "bluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
