@@ -12,21 +12,29 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 # Available Actions
 
-### test_android_build
+### android_build_verify
 
 ```sh
-[bundle exec] fastlane test_android_build
+[bundle exec] fastlane android_build_verify
 ```
 
 Verify Build for Android
 
-### build_android
+### android_build_internal
 
 ```sh
-[bundle exec] fastlane build_android
+[bundle exec] fastlane android_build_internal
 ```
 
-Build Android and increase version code
+Deploy an Internal testing version to the Google Play
+
+### android_build_beta
+
+```sh
+[bundle exec] fastlane android_build_beta
+```
+
+Deploy an Beta version to the Google Play
 
 ---
 
