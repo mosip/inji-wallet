@@ -4,7 +4,7 @@ import { Camera } from 'expo-camera';
 import { BarCodeEvent, BarCodeScanner } from 'expo-barcode-scanner';
 import { Linking, TouchableOpacity, View, Image } from 'react-native';
 import { Theme } from './ui/styleUtils';
-import { Column, Button, Text, Centered } from './ui';
+import { Column, Button, Text, Centered, Row } from './ui';
 import { GlobalContext } from '../shared/GlobalContext';
 import { useSelector } from '@xstate/react';
 import { selectIsActive } from '../machines/app';
@@ -43,21 +43,34 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
     return <View />;
   }
 
-  if (hasPermission === false) {
+  const CameraDisabledPopUp: React.FC = () => {
     return (
-      <Column padding="24" fill align="space-between">
-        <Centered fill>
-          <Text align="center" color={Theme.Colors.errorMessage}>
-            {t('missingPermissionText')}
-          </Text>
-        </Centered>
-        <Button title={t('allowCameraButton')} onPress={openSettings}></Button>
-      </Column>
+      <View>
+        <Row style={Theme.Styles.cameraDisabledPopUp}>
+          <Column>
+            <Text color={Theme.Colors.whiteText} weight="bold">
+              {t('cameraAccessDisabled')}
+            </Text>
+            <Text
+              color={Theme.Colors.whiteText}
+              weight="semibold"
+              size="smaller">
+              {t('cameraPermissionGuideLabel')}
+            </Text>
+          </Column>
+          <Icon
+            name="close"
+            onPress={openSettings}
+            color={Theme.Colors.whiteText}
+            size={19}
+          />
+        </Row>
+      </View>
     );
-  }
-
+  };
   return (
     <View>
+      {hasPermission == false && <CameraDisabledPopUp />}
       <View style={Theme.Styles.scannerContainer}>
         <Camera
           style={Theme.Styles.scanner}
@@ -77,7 +90,7 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
           {props.title}
         </Text>
       )}
-      <Column margin="24 0" crossAlign="center">
+      <Column margin="18 0" crossAlign="center">
         <TouchableOpacity
           onPress={() => {
             setCameraType(
@@ -88,6 +101,9 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
           }}>
           <Image source={Theme.CameraFlipIcon} />
         </TouchableOpacity>
+        <Text align="center" weight="semibold" margin="9 0">
+          {t('flipCamera')}
+        </Text>
       </Column>
     </View>
   );
