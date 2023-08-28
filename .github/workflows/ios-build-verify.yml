@@ -1,4 +1,4 @@
-name: PR - IOS build verification 
+name: PR - IOS build verification
 
 on:
   push:
@@ -10,34 +10,35 @@ on:
       - 0.9
     tags:
       - '*'
-  pull_request: 
+  pull_request:
     types: [ opened, synchronize ]
     branches:
       - develop
       - 'release-**'
-    tags: 
+      - 'feature-**'
+    tags:
       - '*'
 
 jobs:
   build_ios:
     name: Building the IPA
     runs-on: macos-13
-    
+
     steps:
       - uses: actions/checkout@v3.1.0
       - uses: actions/setup-node@v3
         with:
           node-version: '16.x'
-      
+
       - name: Install npm dependencies
         run: |
           npm install
-        
+
       - name: Install Pod
         run: |
           cd ios
           pod install
-        
+
       - name: Building the IPA
         run: |
           cd ios
