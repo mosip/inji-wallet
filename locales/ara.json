@@ -34,8 +34,9 @@
     "passcodeMismatchError": "رمز المرور غير متطابق."
   },
   "QrScanner": {
-    "missingPermissionText": "يستخدم هذا التطبيق الكاميرا لمسح رمز الاستجابة السريعة لجهاز آخر.",
-    "allowCameraButton": "السماح بالوصول إلى الكاميرا"
+    "cameraAccessDisabled": "تم تعطيل الوصول إلى الكاميرا!",
+    "cameraPermissionGuideLabel": "انتقل إلى الإعدادات وقم بتمكين الوصول إلى الكاميرا يدويًا.",
+    "flipCamera": "فليب الكاميرا"
   },
   "VcDetails": {
     "generatedOn": "تم إنشاؤه في",
