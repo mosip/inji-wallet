@@ -1,11 +1,8 @@
-import React, { useRef, useContext } from 'react';
+import React, { useRef } from 'react';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { Dimensions, Image, StatusBar, View } from 'react-native';
 import { Centered, Column, Row, Text, Button } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
-import { useSelector } from '@xstate/react';
-import { GlobalContext } from '../../shared/GlobalContext';
-import { selectVcLabel } from '../../machines/settings';
 import { useTranslation } from 'react-i18next';
 import { RootRouteProps } from '../../routes';
 import { useWelcomeScreen } from '../WelcomeScreenController';
@@ -15,8 +12,6 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
   const slider = useRef<AppIntroSlider>();
 
   const { t } = useTranslation('OnboardingOverlay');
-  const { appService } = useContext(GlobalContext);
-  const settingsService = appService.children.get('settings');
   const controller = useWelcomeScreen(props);
 
   const slides = [
@@ -95,7 +90,6 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
             <Text margin="0 0 150 0" size="large" color={Theme.Colors.GrayText}>
               {item.text}
             </Text>
-            {item.footer}
           </Column>
         </Centered>
       </LinearGradient>
@@ -137,7 +131,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
     );
   };
   return (
-    <View style={{ flex: 1 }}>
+    <Column style={{ flex: 1 }}>
       <StatusBar translucent={true} backgroundColor="transparent" />
       <AppIntroSlider
         data={slides}
@@ -148,14 +142,14 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
         activeDotStyle={{
           backgroundColor: Theme.Colors.Icon,
           width: 30,
-          marginBottom: 90,
+          marginBottom: 47,
         }}
-        dotStyle={{ backgroundColor: Theme.Colors.dotColor, marginBottom: 90 }}
+        dotStyle={{ backgroundColor: Theme.Colors.dotColor, marginBottom: 47 }}
         renderItem={renderItem}
         onDone={() =>
           controller.isPasscodeSet() ? controller.NEXT() : controller.BACK()
         }
       />
-    </View>
+    </Column>
   );
 };
