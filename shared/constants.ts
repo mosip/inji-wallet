@@ -80,3 +80,6 @@ export const argon2iConfigForUinVid: Argon2iConfig = {
   hashLength: 5,
   mode: 'argon2i',
 };
+
+export const salt =
+  '1234567891011121314151617181920212223242526272829303132333435363';

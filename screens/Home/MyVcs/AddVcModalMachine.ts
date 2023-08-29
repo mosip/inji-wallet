@@ -11,6 +11,7 @@ import { createModel } from 'xstate/lib/model';
 import { BackendResponseError, request } from '../../../shared/request';
 import {
   argon2iConfigForUinVid,
+  salt,
   VC_ITEM_STORE_KEY,
 } from '../../../shared/constants';
 import { VcIdType } from '../../../types/vc';
@@ -370,8 +371,6 @@ export const AddVcModalMachine =
         },
 
         calculateHashedId: async (context) => {
-          const salt =
-            '1234567891011121314151617181920212223242526272829303132333435363';
           const value = context.id;
           const hashedid = await hashData(value, salt, argon2iConfigForUinVid);
           context.hashedId = hashedid;
