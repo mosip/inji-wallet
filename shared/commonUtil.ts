@@ -6,7 +6,6 @@ export const hashData = async (
   config: Argon2iConfig
 ): Promise<string> => {
   const result = await argon2(data, salt, config);
-  console.log('argon--result', result);
   return result.rawHash as string;
 };
 
@@ -15,5 +14,5 @@ export interface Argon2iConfig {
   memory: number;
   parallelism: number;
   hashLength: number;
-  mode: String;
+  mode: string;
 }

@@ -17,11 +17,14 @@ export const RECEIVED_VCS_STORE_KEY = 'receivedVCs';
 export const MY_LOGIN_STORE_KEY = 'myLogins';
 
 export const VC_ITEM_STORE_KEY = (vc: Partial<VC>) =>
-  `vc:${vc.idType}:${vc.id}:${vc.requestId}:${vc.isPinned}`;
+  `vc:${vc.idType}:${vc.hashedId}:${vc.requestId}:${vc.isPinned}:${vc.id}`;
+
+export const VC_ITEM_STORE_KEY_AFTER_DOWNLOAD = (vc: Partial<VC>) =>
+  `vc:${vc.idType}:${vc.hashedId}:${vc.requestId}:${vc.isPinned}`;
 
 //Regex expression to evaluate if the key is for a VC
 export const VC_ITEM_STORE_KEY_REGEX =
-  '^vc:(UIN|VID):[0-9]+:[a-z0-9-]+:[true|false]+$';
+  '^vc:(UIN|VID):[a-z0-9]+:[a-z0-9-]+:[true|false]+(:[0-9-]+)?$';
 
 //To compare the vckey with requestId, when the vc is pinned
 export const isSameVC = (vcKey: string, pinnedVcKey: string) => {
@@ -69,3 +72,14 @@ export const argon2iConfig: Argon2iConfig = {
   hashLength: 20,
   mode: 'argon2i',
 };
+
+export const argon2iConfigForUinVid: Argon2iConfig = {
+  iterations: 5,
+  memory: 16 * 1024,
+  parallelism: 2,
+  hashLength: 5,
+  mode: 'argon2i',
+};
+
+export const argon2iSalt =
+  '1234567891011121314151617181920212223242526272829303132333435363';
