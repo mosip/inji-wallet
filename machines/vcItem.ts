@@ -1,6 +1,11 @@
 import { assign, ErrorPlatformEvent, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
-import { HOST, MY_VCS_STORE_KEY, VC_ITEM_STORE_KEY } from '../shared/constants';
+import {
+  HOST,
+  MY_VCS_STORE_KEY,
+  VC_ITEM_STORE_KEY,
+  VC_ITEM_STORE_KEY_AFTER_DOWNLOAD,
+} from '../shared/constants';
 import { AppServices } from '../shared/GlobalContext';
 import { CredentialDownloadResponse, request } from '../shared/request';
 import {
@@ -60,6 +65,7 @@ const model = createModel(
     walletBindingError: '',
     publicKey: '',
     privateKey: '',
+    hashedId: '',
   },
   {
     events: {
@@ -195,7 +201,11 @@ export const vcItemMachine =
                   },
                 ],
                 CREDENTIAL_DOWNLOADED: {
-                  actions: ['setStoreVerifiableCredential', 'storeContext'],
+                  actions: [
+                    'setStoreVerifiableCredential',
+                    'storeContext',
+                    'editVcKey',
+                  ],
                 },
                 STORE_RESPONSE: {
                   actions: [
@@ -907,6 +917,14 @@ export const vcItemMachine =
           }
         ),
 
+        editVcKey: send((context) => {
+          const { serviceRefs, ...data } = context;
+          return StoreEvents.SET(
+            VC_ITEM_STORE_KEY_AFTER_DOWNLOAD(context),
+            data
+          );
+        }),
+
         setTag: model.assign({
           tag: (_, event) => event.tag,
         }),
@@ -1331,7 +1349,7 @@ export const createVcItemMachine = (
   serviceRefs: AppServices,
   vcKey: string
 ) => {
-  const [, idType, id, requestId, isPinned] = vcKey.split(':');
+  const [, idType, hashedId, requestId, isPinned, id] = vcKey.split(':');
   return vcItemMachine.withContext({
     ...vcItemMachine.context,
     serviceRefs,
@@ -1339,6 +1357,7 @@ export const createVcItemMachine = (
     idType: idType as VcIdType,
     requestId,
     isPinned: isPinned == 'true' ? true : false,
+    hashedId,
   });
 };
 
