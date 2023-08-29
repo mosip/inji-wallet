@@ -9,9 +9,14 @@ import {
 } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { BackendResponseError, request } from '../../../shared/request';
-import { VC_ITEM_STORE_KEY } from '../../../shared/constants';
+import {
+  argon2iConfigForUinVid,
+  argon2iSalt,
+  VC_ITEM_STORE_KEY,
+} from '../../../shared/constants';
 import { VcIdType } from '../../../types/vc';
 import i18n from '../../../i18n';
+import { hashData } from '../../../shared/commonUtil';
 
 const model = createModel(
   {
@@ -24,6 +29,7 @@ const model = createModel(
     transactionId: '',
     requestId: '',
     isPinned: false,
+    hashedId: '',
   },
   {
     events: {
@@ -206,7 +212,7 @@ export const AddVcModalMachine =
             onDone: [
               {
                 actions: 'setRequestId',
-                target: 'done',
+                target: 'calculatingHashedId',
               },
             ],
             onError: [
@@ -220,6 +226,15 @@ export const AddVcModalMachine =
                 target: 'acceptingOtpInput',
               },
             ],
+          },
+        },
+        calculatingHashedId: {
+          invoke: {
+            src: 'calculateHashedId',
+            onDone: {
+              actions: 'setHashedId',
+              target: 'done',
+            },
           },
         },
         done: {
@@ -280,6 +295,11 @@ export const AddVcModalMachine =
         }),
 
         clearId: model.assign({ id: '' }),
+
+        setHashedId: model.assign({
+          hashedId: (_context, event) =>
+            (event as DoneInvokeEvent<string>).data,
+        }),
 
         clearIdError: model.assign({ idError: '' }),
 
@@ -348,6 +368,17 @@ export const AddVcModalMachine =
             }
           );
           return response.response.requestId;
+        },
+
+        calculateHashedId: async (context) => {
+          const value = context.id;
+          const hashedid = await hashData(
+            value,
+            argon2iSalt,
+            argon2iConfigForUinVid
+          );
+          context.hashedId = hashedid;
+          return hashedid;
         },
       },
 
