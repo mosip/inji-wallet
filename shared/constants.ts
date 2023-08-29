@@ -81,5 +81,5 @@ export const argon2iConfigForUinVid: Argon2iConfig = {
   mode: 'argon2i',
 };
 
-export const salt =
+export const argon2iSalt =
   '1234567891011121314151617181920212223242526272829303132333435363';
