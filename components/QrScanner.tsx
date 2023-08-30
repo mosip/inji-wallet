@@ -9,6 +9,7 @@ import { GlobalContext } from '../shared/GlobalContext';
 import { useSelector } from '@xstate/react';
 import { selectIsActive } from '../machines/app';
 import { useTranslation } from 'react-i18next';
+import { useScanLayout } from '../screens/Scan/ScanLayoutController';
 
 export const QrScanner: React.FC<QrScannerProps> = (props) => {
   const { t } = useTranslation('QrScanner');
@@ -16,6 +17,7 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
+  const controller = useScanLayout();
 
   const isActive = useSelector(appService, selectIsActive);
 
@@ -60,7 +62,7 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
           </Column>
           <Icon
             name="close"
-            onPress={openSettings}
+            onPress={controller.DISMISS}
             color={Theme.Colors.whiteText}
             size={19}
           />
