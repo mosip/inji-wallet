@@ -33,13 +33,6 @@ export const isSameVC = (vcKey: string, pinnedVcKey: string) => {
   return requestId === pinnedRequestId;
 };
 
-//To compare the vckey with requestId, when the vc is pinned
-export const isSameVC = (vcKey: string, pinnedVcKey: string) => {
-  const requestId = vcKey.split(':')[3];
-  const pinnedRequestId = pinnedVcKey.split(':')[3];
-  return requestId === pinnedRequestId;
-};
-
 export let individualId = '';
 
 export const GET_INDIVIDUAL_ID = (ind_Id: string) => {
