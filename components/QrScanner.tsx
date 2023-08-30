@@ -2,7 +2,13 @@ import React, { useContext, useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Camera } from 'expo-camera';
 import { BarCodeEvent, BarCodeScanner } from 'expo-barcode-scanner';
-import { Linking, TouchableOpacity, View, Image } from 'react-native';
+import {
+  Linking,
+  TouchableOpacity,
+  View,
+  Image,
+  Pressable,
+} from 'react-native';
 import { Theme } from './ui/styleUtils';
 import { Column, Button, Text, Centered, Row } from './ui';
 import { GlobalContext } from '../shared/GlobalContext';
@@ -60,12 +66,14 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
               {t('cameraPermissionGuideLabel')}
             </Text>
           </Column>
-          <Icon
-            name="close"
-            onPress={controller.DISMISS}
-            color={Theme.Colors.whiteText}
-            size={19}
-          />
+          <Pressable>
+            <Icon
+              name="close"
+              onPress={controller.DISMISS}
+              color={Theme.Colors.whiteText}
+              size={19}
+            />
+          </Pressable>
         </Row>
       </View>
     );
