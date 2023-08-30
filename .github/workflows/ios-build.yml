@@ -48,15 +48,20 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3.1.0
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '16.20.0'
 
-      - name: Unalias NVM default
+      - name: Uninstall previous Node.js version
         run: |
-          export NVM_DIR="$HOME/.nvm"
-          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-          nvm unalias default
+          brew uninstall --ignore-dependencies node
+          brew cleanup -s
+
+      - name: Install Node.js using brew
+        run: |
+          brew install node@16
+
+      - name: Show Node.js and npm versions
+        run: |
+          node -v
+          npm -v
 
       - uses: actions/checkout@v3
       - uses: ruby/setup-ruby@v1
@@ -68,27 +73,23 @@ jobs:
         run: |
           npm cache clean --force
           npm install
-      
+
       - name: Install fastlane dependencies
         run: |
           cd ios
           gem install bundler
           bundle install
 
-      - name: clear cocoapods cache and install
+      - name: Install pod dependencies
         run: |
           cd ios
           pod install
-
-      - name: Clear Xcode derived data
-        run: |
-          rm -rf ~/Library/Developer/Xcode/DerivedData
 
       - name: Deploy iOS Beta to TestFlight
         run: |
           cd ios
           bundle exec fastlane beta
-          
+
         env:
           APP_STORE_CONNECT_TEAM_ID: '${{ secrets.APP_STORE_CONNECT_TEAM_ID }}'
           DEVELOPER_APP_ID: '${{ secrets.IOS_INJI_DEVELOPER_APP_ID }}'
