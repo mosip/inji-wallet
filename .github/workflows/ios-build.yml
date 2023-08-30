@@ -48,15 +48,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3.1.0
-
-      # - name: Uninstall previous Node.js version
-      #   run: |
-      #     brew uninstall --ignore-dependencies node
-      #     brew cleanup -s
-
-      - name: Install Node.js using brew
-        run: |
-          brew reinstall node@16
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
 
       - name: Show Node.js and npm versions
         run: |
@@ -112,10 +106,11 @@ jobs:
           MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
           TESTFLIGHT_INTERNAL_TESTERS_GROUP: ${{ github.event.inputs.internal-testers }}
           TESTFLIGHT_BETA_APP_DESCRIPTION: ${{ github.event.inputs.buildDescription }}
-      
+
       - name: Upload Runner Log on Failure
-        if: failure()  # Only run this step if the previous steps failed
-        uses: actions/upload-artifact@v2
+        if: failure() # Only run this step if the previous steps failed
+        uses: actions/upload-artifact@v3.1.1
         with:
-         name: runner-log
-         path: /Users/runner/Library/Logs/gym/Inji-Inji.log
+          name: runner-log
+          path: /Users/runner/Library/Logs/gym/
+          retention-days: 1
