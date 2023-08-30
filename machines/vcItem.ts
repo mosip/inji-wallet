@@ -385,7 +385,10 @@ export const vcItemMachine =
                   },
                   {
                     target: '#vc-item.kebabPopUp.updatingPrivateKey',
-                    actions: ['setWalletBindingId'],
+                    actions: [
+                      'setWalletBindingId',
+                      'setThumbprintForWalletBindingId',
+                    ],
                   },
                 ],
                 onError: [
