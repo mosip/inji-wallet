@@ -57,10 +57,10 @@
     "uin": "UIN",
     "vid": "VID",
     "enableVerification": "تفعيل",
-    "profileAuthenticated": "تم تنشيطه لتسجيل الدخول عبر الإنترنت",
-    "offlineAuthDisabledHeader": "التنشيط معلق لتسجيل الدخول عبر الإنترنت",
-    "offlineAuthDisabledMessage": "الرجاء النقر فوق الزر أدناه لتفعيل بيانات الاعتماد هذه لاستخدامها في تسجيل الدخول عبر الإنترنت.",
-    "verificationEnabledSuccess": "تم تنشيطه لتسجيل الدخول عبر الإنترنت",
+    "profileAuthenticated": "تم التنشيط لتسجيل الدخول عبر الإنترنت!",
+    "offlineAuthDisabledHeader": "التنشيط معلق لتسجيل الدخول عبر الإنترنت!",
+    "offlineAuthDisabledMessage": "الرجاء النقر فوق الزر أدناه لتنشيط بيانات الاعتماد هذه لاستخدامها في تسجيل الدخول عبر الإنترنت.",
+    "verificationEnabledSuccess": "تم التنشيط لتسجيل الدخول عبر الإنترنت",
     "goback": "عُد",
     "BindingWarning": "إذا قمت بتمكين التحقق من بيانات الاعتماد هذه في محفظة أخرى ، فسيتم تجاوزها. هل تريد المتابعة؟",
     "yes_confirm": "نعم ، أنا أؤكد",
@@ -83,8 +83,8 @@
     "title": "المزيد من الخيارات",
     "unPinCard": "قم بفك البطاقة",
     "pinCard": "البطاقة الشخصية",
-    "offlineAuthenticationDisabled!": "تم تعطيل المصادقة دون اتصال!",
-    "offlineAuthDisabledMessage": "انقر هنا لتمكين بيانات الاعتماد هذه لاستخدامها في المصادقة دون اتصال.",
+    "offlineAuthenticationDisabled!": "التنشيط معلق لتسجيل الدخول عبر الإنترنت!",
+    "offlineAuthDisabledMessage": "انقر هنا لتمكين استخدام بيانات الاعتماد هذه للمصادقة عبر الإنترنت.",
     "viewActivityLog": "عرض سجل النشاط",
     "removeFromWallet": "إزالة من المحفظة",
     "revokeId": "إبطال الهوية",
@@ -92,7 +92,7 @@
   },
   "WalletBinding": {
     "inProgress": "في تَقَدم",
-    "profileAuthenticated": "تمت مصادقة الملف الشخصي!"
+    "profileAuthenticated": "تم التنشيط لتسجيل الدخول عبر الإنترنت!"
   },
   "BindingVcWarningOverlay": {
     "alert": "يرجى تأكيد",
@@ -357,7 +357,7 @@
     "reject": "يرفض",
     "discard": "ينبذ",
     "goToReceivedVCTab": "عرض تم استلامه بطاقة",
-    "saving": "إنقاذ",
+    "saving": "جارٍ حفظ البطاقة",
     "errors": {
       "savingFailed": {
         "title": "فشل حفظ بطاقة",
