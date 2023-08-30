@@ -49,10 +49,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3.1.0
 
-      - name: Uninstall previous Node.js version
-        run: |
-          brew uninstall --ignore-dependencies node
-          brew cleanup -s
+      # - name: Uninstall previous Node.js version
+      #   run: |
+      #     brew uninstall --ignore-dependencies node
+      #     brew cleanup -s
 
       - name: Install Node.js using brew
         run: |
