@@ -12,7 +12,10 @@ import { MY_VCS_STORE_KEY } from '../shared/constants';
 import { StoreEvents } from './store';
 import { linkTransactionResponse, VC } from '../types/vc';
 import { request } from '../shared/request';
-import { getJwt } from '../shared/cryptoutil/cryptoUtil';
+import {
+  getJwt,
+  isCustomSecureKeystore,
+} from '../shared/cryptoutil/cryptoUtil';
 import {
   getBindingCertificateConstant,
   getPrivateKey,
@@ -352,9 +355,14 @@ export const qrLoginMachine =
         },
 
         sendAuthenticate: async (context) => {
-          var privateKey = await getPrivateKey(
-            context.selectedVc.walletBindingResponse?.walletBindingId
-          );
+          let privateKey;
+
+          if (!isCustomSecureKeystore()) {
+            privateKey = await getPrivateKey(
+              context.selectedVc.walletBindingResponse?.walletBindingId
+            );
+          }
+
           var walletBindingResponse = context.selectedVc.walletBindingResponse;
           var jwt = await getJwt(
             privateKey,
@@ -384,11 +392,14 @@ export const qrLoginMachine =
         },
 
         sendConsent: async (context) => {
-          var privateKey = await getPrivateKey(
-            context.selectedVc.walletBindingResponse?.walletBindingId
-          );
-          var walletBindingResponse = context.selectedVc.walletBindingResponse;
-          var jwt = await getJwt(
+          let privateKey;
+          if (!isCustomSecureKeystore()) {
+            privateKey = await getPrivateKey(
+              context.selectedVc.walletBindingResponse?.walletBindingId
+            );
+          }
+
+          const jwt = await getJwt(
             privateKey,
             context.selectedVc.id,
             context.thumbprint

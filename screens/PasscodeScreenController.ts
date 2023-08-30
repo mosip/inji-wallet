@@ -1,6 +1,11 @@
 import { useSelector } from '@xstate/react';
 import { useContext, useEffect, useState } from 'react';
-import { AuthEvents, selectAuthorized, selectPasscode } from '../machines/auth';
+import {
+  AuthEvents,
+  selectAuthorized,
+  selectPasscode,
+  selectPasscodeSalt,
+} from '../machines/auth';
 import { PasscodeRouteProps } from '../routes';
 import { GlobalContext } from '../shared/GlobalContext';
 
@@ -37,5 +42,7 @@ export function usePasscodeScreen(props: PasscodeRouteProps) {
     SETUP_PASSCODE: () => {
       authService.send(AuthEvents.SETUP_PASSCODE(passcode));
     },
+
+    storedSalt: useSelector(authService, selectPasscodeSalt),
   };
 }

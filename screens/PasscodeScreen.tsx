@@ -7,10 +7,17 @@ import { Column, Text } from '../components/ui';
 import { Theme } from '../components/ui/styleUtils';
 import { PasscodeRouteProps } from '../routes';
 import { usePasscodeScreen } from './PasscodeScreenController';
+import { hashData } from '../shared/commonUtil';
+import { argon2iConfig } from '../shared/constants';
 
 export const PasscodeScreen: React.FC<PasscodeRouteProps> = (props) => {
   const { t } = useTranslation('PasscodeScreen');
   const controller = usePasscodeScreen(props);
+
+  const setPasscode = async (passcode: string) => {
+    const data = await hashData(passcode, controller.storedSalt, argon2iConfig);
+    controller.setPasscode(data);
+  };
 
   const passcodeSetup =
     controller.passcode === '' ? (
@@ -28,7 +35,7 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = (props) => {
           </Text>
         </Column>
 
-        <PinInput length={MAX_PIN} onDone={controller.setPasscode} />
+        <PinInput length={MAX_PIN} onDone={setPasscode} />
       </React.Fragment>
     ) : (
       <React.Fragment>
@@ -48,6 +55,7 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = (props) => {
           onSuccess={controller.SETUP_PASSCODE}
           onError={controller.setError}
           passcode={controller.passcode}
+          salt={controller.storedSalt}
         />
       </React.Fragment>
     );
@@ -75,6 +83,7 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = (props) => {
             onSuccess={controller.LOGIN}
             onError={controller.setError}
             passcode={controller.storedPasscode}
+            salt={controller.storedSalt}
           />
         </Column>
       )}

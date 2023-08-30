@@ -20,7 +20,9 @@
     "requestedBy": "Requested by",
     "sentBy": "Sent by",
     "deviceRefNumber": "Device reference number",
-    "name": "Name"
+    "name": "Name",
+    "Verifier": "Verifier",
+    "Wallet": "Wallet"
   },
   "FaceScanner": {},
   "OIDcAuth": {
@@ -81,7 +83,9 @@
   "HomeScreen": {
     "myVcsTab": "My\nCards",
     "receivedVcsTab": "Received\nCards",
-    "historyTab": "History"
+    "historyTab": "History",
+    "whatCanDoBiometricsChanged?": "What happens when Android keystore biometric is changed?",
+    "detail-9": "The Android keystore holds important information like private keys for identity proofs. When you change your biometrics, old keys are no longer safe. To keep things secure, we remove identity proofs signed by those old keys. You can simply download your identity proofs again, and they will be signed with the latest, safer keys."
   },
   "AddVcModal": {
     "requestingCredential": "Requesting credential...",
@@ -135,7 +139,11 @@
       },
       "storageLimitReached": {
         "title": "Insufficient Appdata",
-        "message": "You cannot add or receive cards since the Appdata is full"
+        "message": "You cannot add or receive cards since the Appdata is full. Clear Appdata to proceed."
+      },
+      "vcIsTampered":{
+        "title": "VC data is tampered",
+        "message": "Affected VCs are removed from the app."
       }
     }
   },
@@ -331,7 +339,18 @@
   "WelcomeScreen": {
     "title": "Open Source Identity Solution",
     "getStarted": "Get started",
-    "unlockApp": "Unlock application"
+    "unlockApp": "Unlock application",
+    "failedToReadKeys": "Failed to read keys",
+    "retryRead": "Want to retry?",
+    "ignore": "Ignore",
+    "errors": {
+      "decryptionFailed": "Failed to decrypt data"
+    }
+  },
+  "SetupLanguage": {
+    "header": "Choose Language",
+    "description": "Select your preferred language",
+    "save": "Save Preference"
   },
   "common": {
     "cancel": "Cancel",
@@ -344,6 +363,13 @@
         "missingPermission": "This app uses the camera to scan the QR code of another device."
       },
       "allowAccess": "Allow access to the camera"
+    },
+    "errors": {
+      "genericError": "Something is wrong. Please try again later!"
+    },
+    "clipboard": {
+      "copy": "Copy",
+      "copied": "Copied"
     }
   }
 }
