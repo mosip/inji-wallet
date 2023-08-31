@@ -1,21 +1,27 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { useSelector } from '@xstate/react';
 import { useContext, useEffect } from 'react';
-import {
-  RequestEvents,
-  selectIsAccepted,
-  selectIsDisconnected,
-  selectIsDone,
-  selectIsRejected,
-  selectIsReviewing,
-  selectIsWaitingForConnection,
-  selectSenderInfo,
-} from '../../machines/request';
-import { selectVcLabel } from '../../machines/settings';
+
 import { MainBottomTabParamList } from '../../routes/main';
 import { GlobalContext } from '../../shared/GlobalContext';
+import {
+  selectIsSavingFailedInViewingVc,
+  selectIsWaitingForConnection,
+  selectSenderInfo,
+  selectIsDone,
+} from '../../machines/bleShare/request/selectors';
+import {
+  selectIsAccepted,
+  selectIsDisconnected,
+  selectIsHandlingBleError,
+  selectIsRejected,
+  selectIsReviewing,
+  selectBleError,
+} from '../../machines/bleShare/commonSelectors';
+import { RequestEvents } from '../../machines/bleShare/request/requestMachine';
 
-type RequestStackParamList = {
+export type RequestStackParamList = {
+  Request: undefined;
   RequestScreen: undefined;
   ReceiveVcScreen: undefined;
 };
@@ -26,7 +32,6 @@ type RequestLayoutNavigation = NavigationProp<
 
 export function useRequestLayout() {
   const { appService } = useContext(GlobalContext);
-  const settingsService = appService.children.get('settings');
   const requestService = appService.children.get('request');
   const navigation = useNavigation<RequestLayoutNavigation>();
 
@@ -53,24 +58,31 @@ export function useRequestLayout() {
   );
   useEffect(() => {
     if (isDone) {
-      navigation.navigate('Home', { activeTab: 1 });
+      navigation.navigate('History');
     } else if (isReviewing) {
       navigation.navigate('ReceiveVcScreen');
     } else if (isWaitingForConnection) {
       navigation.navigate('RequestScreen');
     }
-  }, [isDone, isReviewing]);
+  }, [isDone, isReviewing, isWaitingForConnection]);
 
   return {
-    vcLabel: useSelector(settingsService, selectVcLabel),
     senderInfo: useSelector(requestService, selectSenderInfo),
 
     isAccepted: useSelector(requestService, selectIsAccepted),
     isRejected: useSelector(requestService, selectIsRejected),
     isDisconnected: useSelector(requestService, selectIsDisconnected),
+    isBleError: useSelector(requestService, selectIsHandlingBleError),
+    bleError: useSelector(requestService, selectBleError),
+
+    IsSavingFailedInViewingVc: useSelector(
+      requestService,
+      selectIsSavingFailedInViewingVc
+    ),
     isReviewing,
     isDone,
 
     DISMISS: () => requestService.send(RequestEvents.DISMISS()),
+    RESET: () => requestService.send(RequestEvents.RESET()),
   };
 }

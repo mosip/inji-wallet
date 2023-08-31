@@ -9,9 +9,14 @@ import {
 } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { BackendResponseError, request } from '../../../shared/request';
-import { VC_ITEM_STORE_KEY } from '../../../shared/constants';
+import {
+  argon2iConfigForUinVid,
+  argon2iSalt,
+  VC_ITEM_STORE_KEY,
+} from '../../../shared/constants';
 import { VcIdType } from '../../../types/vc';
 import i18n from '../../../i18n';
+import { hashData } from '../../../shared/commonUtil';
 
 const model = createModel(
   {
@@ -23,11 +28,14 @@ const model = createModel(
     otpError: '',
     transactionId: '',
     requestId: '',
+    isPinned: false,
+    hashedId: '',
   },
   {
     events: {
       INPUT_ID: (id: string) => ({ id }),
       INPUT_OTP: (otp: string) => ({ otp }),
+      RESEND_OTP: () => ({}),
       VALIDATE_INPUT: () => ({}),
       READY: (idInputRef: TextInput) => ({ idInputRef }),
       DISMISS: () => ({}),
@@ -99,7 +107,7 @@ export const AddVcModalMachine =
                   },
                 ],
                 SELECT_ID_TYPE: {
-                  actions: ['setIdType', 'clearId'],
+                  actions: ['clearIdError', 'setIdType', 'clearId'],
                 },
               },
             },
@@ -134,7 +142,7 @@ export const AddVcModalMachine =
                   },
                 ],
                 SELECT_ID_TYPE: {
-                  actions: ['setIdType', 'clearId'],
+                  actions: ['clearIdError', 'setIdType', 'clearId'],
                   target: 'idle',
                 },
               },
@@ -173,6 +181,29 @@ export const AddVcModalMachine =
               actions: 'resetIdInputRef',
               target: 'acceptingIdInput',
             },
+            RESEND_OTP: {
+              target: '.resendOTP',
+            },
+          },
+          initial: 'idle',
+          states: {
+            idle: {},
+            resendOTP: {
+              invoke: {
+                src: 'requestOtp',
+                onDone: [
+                  {
+                    target: 'idle',
+                  },
+                ],
+                onError: [
+                  {
+                    actions: 'setIdBackendError',
+                    target: '#AddVcModal.acceptingIdInput.invalid.backend',
+                  },
+                ],
+              },
+            },
           },
         },
         requestingCredential: {
@@ -181,7 +212,7 @@ export const AddVcModalMachine =
             onDone: [
               {
                 actions: 'setRequestId',
-                target: 'done',
+                target: 'calculatingHashedId',
               },
             ],
             onError: [
@@ -195,6 +226,15 @@ export const AddVcModalMachine =
                 target: 'acceptingOtpInput',
               },
             ],
+          },
+        },
+        calculatingHashedId: {
+          invoke: {
+            src: 'calculateHashedId',
+            onDone: {
+              actions: 'setHashedId',
+              target: 'done',
+            },
           },
         },
         done: {
@@ -236,18 +276,30 @@ export const AddVcModalMachine =
               'VID invalid': 'invalidVid',
               'UIN not available in database': 'missingUin',
               'VID not available in database': 'missingVid',
+              'No message available': 'noMessageAvailable',
+              'while generating otp error is occured':
+                'whileGeneratingOtpErrorIsOccured',
+              'Network request failed': 'networkRequestFailed',
               'Invalid Input Parameter - individualId':
                 context.idType === 'UIN' ? 'invalidUin' : 'invalidVid',
+              'VID is expired/deactivated': 'deactivatedVid',
             };
             return ID_ERRORS_MAP[message]
               ? i18n.t(`errors.backend.${ID_ERRORS_MAP[message]}`, {
                   ns: 'AddVcModal',
                 })
-              : message;
+              : i18n.t(`errors.genericError`, {
+                  ns: 'common',
+                });
           },
         }),
 
         clearId: model.assign({ id: '' }),
+
+        setHashedId: model.assign({
+          hashedId: (_context, event) =>
+            (event as DoneInvokeEvent<string>).data,
+        }),
 
         clearIdError: model.assign({ idError: '' }),
 
@@ -265,6 +317,7 @@ export const AddVcModalMachine =
             const message = (event as ErrorPlatformEvent).data.message;
             const OTP_ERRORS_MAP = {
               'OTP is invalid': 'invalidOtp',
+              'OTP has expired': 'expiredOtp',
             };
             return OTP_ERRORS_MAP[message]
               ? i18n.t(`errors.backend.${OTP_ERRORS_MAP[message]}`, {
@@ -315,6 +368,17 @@ export const AddVcModalMachine =
             }
           );
           return response.response.requestId;
+        },
+
+        calculateHashedId: async (context) => {
+          const value = context.id;
+          const hashedid = await hashData(
+            value,
+            argon2iSalt,
+            argon2iConfigForUinVid
+          );
+          context.hashedId = hashedid;
+          return hashedid;
         },
       },
 

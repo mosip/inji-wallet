@@ -34,7 +34,7 @@ export interface Typegen0 {
     actions: never;
     delays: never;
     guards: never;
-    services: 'AddVcModal';
+    services: never;
   };
   'eventsCausingActions': {
     clearIdError: 'INPUT_ID';
@@ -44,13 +44,13 @@ export interface Typegen0 {
       | 'error.platform.GetVcModal.requestingUinVid:invocation[0]'
       | 'xstate.init';
     focusInput:
-      | 'DISMISS'
       | 'INPUT_ID'
       | 'VALIDATE_INPUT'
       | 'error.platform.GetVcModal.acceptingIdInput.requestingOtp:invocation[0]'
       | 'error.platform.GetVcModal.requestingUinVid:invocation[0]'
       | 'xstate.after(100)#GetVcModal.acceptingIdInput.focusing';
     forwardToParent: 'DISMISS';
+    resetIdInputRef: 'DISMISS';
     setIconColorActivate: 'ACTIVATE_ICON_COLOR';
     setIconColorDeactivate: 'DEACTIVATE_ICON_COLOR';
     setId: 'INPUT_ID';
@@ -76,7 +76,6 @@ export interface Typegen0 {
   };
   'eventsCausingServices': {
     AddVcModal:
-      | 'DISMISS'
       | 'INPUT_ID'
       | 'xstate.after(100)#GetVcModal.acceptingIdInput.focusing';
     requestOtp: 'VALIDATE_INPUT';

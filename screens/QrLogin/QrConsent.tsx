@@ -58,7 +58,9 @@ export const QrConsent: React.FC<QrConsentProps> = (props) => {
                 <Text
                   color={Theme.Colors.profileLabel}
                   style={Theme.TextStyles.base}>
-                  {t(claim[0].toUpperCase() + claim.slice(1))}
+                  {t(claim[0].toUpperCase() + claim.slice(1))
+                    .split('_')
+                    .join(' ')}
                 </Text>
                 <Text
                   color={Theme.Colors.GrayIcon}
@@ -89,7 +91,9 @@ export const QrConsent: React.FC<QrConsentProps> = (props) => {
                 <ListItem.Content>
                   <ListItem.Title>
                     <Text color={Theme.Colors.profileLabel}>
-                      {t(claim[0].toUpperCase() + claim.slice(1))}
+                      {t(claim[0].toUpperCase() + claim.slice(1))
+                        .split('_')
+                        .join(' ')}
                     </Text>
                   </ListItem.Title>
                 </ListItem.Content>

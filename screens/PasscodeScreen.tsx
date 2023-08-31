@@ -1,30 +1,61 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Icon } from 'react-native-elements';
+import { Image } from 'react-native';
 import { MAX_PIN, PasscodeVerify } from '../components/PasscodeVerify';
 import { PinInput } from '../components/PinInput';
 import { Column, Text } from '../components/ui';
 import { Theme } from '../components/ui/styleUtils';
 import { PasscodeRouteProps } from '../routes';
 import { usePasscodeScreen } from './PasscodeScreenController';
+import { hashData } from '../shared/commonUtil';
+import { argon2iConfig } from '../shared/constants';
 
 export const PasscodeScreen: React.FC<PasscodeRouteProps> = (props) => {
   const { t } = useTranslation('PasscodeScreen');
   const controller = usePasscodeScreen(props);
 
+  const setPasscode = async (passcode: string) => {
+    const data = await hashData(passcode, controller.storedSalt, argon2iConfig);
+    controller.setPasscode(data);
+  };
+
   const passcodeSetup =
     controller.passcode === '' ? (
       <React.Fragment>
-        <Text align="center">{t('header')}</Text>
-        <PinInput length={MAX_PIN} onDone={controller.setPasscode} />
+        <Column>
+          <Text align="center" style={Theme.TextStyles.header}>
+            {t('header')}
+          </Text>
+          <Text
+            align="center"
+            weight="semibold"
+            color={Theme.Colors.GrayText}
+            margin="6 0">
+            {t('enterNewPassword')}
+          </Text>
+        </Column>
+
+        <PinInput length={MAX_PIN} onDone={setPasscode} />
       </React.Fragment>
     ) : (
       <React.Fragment>
-        <Text align="center">{t('confirmPasscode')}</Text>
+        <Column>
+          <Text align="center" style={Theme.TextStyles.header}>
+            {t('confirmPasscode')}
+          </Text>
+          <Text
+            align="center"
+            weight="semibold"
+            color={Theme.Colors.GrayText}
+            margin="6 0">
+            {t('reEnterPassword')}
+          </Text>
+        </Column>
         <PasscodeVerify
           onSuccess={controller.SETUP_PASSCODE}
           onError={controller.setError}
           passcode={controller.passcode}
+          salt={controller.storedSalt}
         />
       </React.Fragment>
     );
@@ -34,18 +65,25 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = (props) => {
       fill
       padding="32"
       backgroundColor={Theme.Colors.whiteBackgroundColor}>
-      <Icon name="lock" color={Theme.Colors.Icon} size={60} />
+      <Image source={Theme.LockIcon} style={{ alignSelf: 'center' }} />
       {props.route.params?.setup ? (
-        <Column fill align="space-between" width="100%">
+        <Column fill align="space-around" width="100%">
           {passcodeSetup}
         </Column>
       ) : (
-        <Column fill align="space-between" width="100%">
-          <Text align="center">{t('enterPasscode')}</Text>
+        <Column fill align="space-around" width="100%">
+          <Text
+            align="center"
+            weight="semibold"
+            color={Theme.Colors.GrayText}
+            margin="6 0">
+            {t('enterPasscode')}
+          </Text>
           <PasscodeVerify
             onSuccess={controller.LOGIN}
             onError={controller.setError}
             passcode={controller.storedPasscode}
+            salt={controller.storedSalt}
           />
         </Column>
       )}

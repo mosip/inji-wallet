@@ -1,16 +1,29 @@
 {
-  "bluetoothDenied": "Please enable Bluetooth to be able to request {{vcLabel}}",
-  "showQrCode": "Show this QR code to request {{vcLabel}}",
-  "incomingVc": "Incoming {{vcLabel}}",
+  "bluetoothDenied": "Please enable Bluetooth to be able to request Card",
+  "bluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
+    "bluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
+  "nearbyDevicesPermissionDenied": "Please enable Nearby Devices Permission to be able to request card",
+  "showQrCode": "Display this QR code to request resident Card",
+  "incomingVc": "Incoming Card",
   "request": "Request",
+  "errors": {
+    "nearbyDevicesPermissionDenied": {
+      "message": "Nearby Devices permission is required to be able to request Card",
+      "button": "Allow Permission"
+    },
+    "storageLimitReached": {
+      "title": "Insufficient Appdata",
+      "message": "You cannot add or receive cards since the Appdata is full"
+    }
+  },
   "status": {
     "accepted": {
       "title": "Success!",
-      "message": "{{vcLabel}} has been successfully received from {{sender}}"
+      "message": "Card has been successfully received from Wallet"
     },
     "rejected": {
       "title": "Notice",
-      "message": "You discarded {{sender}}'s {{vcLabel}}"
+      "message": "You discarded Wallet's Card"
     },
     "disconnected": {
       "title": "Disconnected",
@@ -22,11 +35,15 @@
       "timeoutHint": "It's taking too long to exchange device info..."
     },
     "connected": {
-      "message": "Connected to the device. Waiting for {{vcLabel}}...",
+      "message": "Connected to the device. Waiting for Card...",
       "timeoutHint": "No data received yet. Is sending device still connected?"
     },
     "offline": {
       "message": "Please connect to the internet to enable Online sharing mode"
+    },
+    "bleError": {
+      "title": "Failed to transfer",
+      "message": "Something went wrong while transferring Card. Please try again."
     }
   },
   "online": "Online",

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { Platform, View } from 'react-native';
 import { getVersion } from 'react-native-device-info';
 import { Icon, ListItem, Switch } from 'react-native-elements';
 import { Column, Text } from '../../components/ui';
@@ -7,21 +7,27 @@ import { Theme } from '../../components/ui/styleUtils';
 import { MainRouteProps } from '../../routes/main';
 import { EditableListItem } from '../../components/EditableListItem';
 import { MessageOverlay } from '../../components/MessageOverlay';
-import { Credits } from './Credits';
-import { Revoke } from './Revoke';
+import { Revoke } from '../Settings/Revoke';
 import { useProfileScreen } from './ProfileScreenController';
 import { useTranslation } from 'react-i18next';
 import { LanguageSelector } from '../../components/LanguageSelector';
 import i18next, { SUPPORTED_LANGUAGES } from '../../i18n';
 import { ScrollView } from 'react-native-gesture-handler';
+import { AppMetaData } from '../Settings/AppMetaData';
+import { CREDENTIAL_REGISTRY_EDIT } from 'react-native-dotenv';
 
 const LanguageSetting: React.FC = () => {
   const { t } = useTranslation('ProfileScreen');
-
   return (
     <LanguageSelector
       triggerComponent={
         <ListItem bottomDivider>
+          <Icon
+            name="language"
+            size={20}
+            color={Theme.Colors.Icon}
+            style={Theme.Styles.profileIconBg}
+          />
           <ListItem.Content>
             <ListItem.Title>
               <Text>{t('language')}</Text>
@@ -38,6 +44,7 @@ const LanguageSetting: React.FC = () => {
 
 export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
   const { t } = useTranslation('ProfileScreen');
+
   const controller = useProfileScreen(props);
   return (
     <ScrollView>
@@ -54,13 +61,17 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
           label={t('name')}
           value={controller.name}
           onEdit={controller.UPDATE_NAME}
-          Icon="user"
+          Icon=""
+          credentialRegistryResponse={''}
         />
+        {/* Intentionally hidden using {display='none'} - Refer mosip/inji/issue#607 */}
         <EditableListItem
           label={t('vcLabel')}
           value={controller.vcLabel.singular}
           onEdit={controller.UPDATE_VC_LABEL}
           Icon="star"
+          display="none"
+          credentialRegistryResponse={''}
         />
         <LanguageSetting />
         <Revoke label={t('revokeLabel')} Icon="rotate-left" />
@@ -70,7 +81,7 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
             name="fingerprint"
             type="fontawesome"
             size={25}
-            style={Theme.Styles.profileIconBg}
+            style={Theme.Styles.IconContainer}
             color={Theme.Colors.Icon}
           />
           <ListItem.Content>
@@ -81,15 +92,23 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
           <Switch
             value={controller.isBiometricUnlockEnabled}
             onValueChange={controller.useBiometrics}
-            color={Theme.Colors.profileValue}
+            trackColor={{
+              false: Theme.Colors.switchTrackFalse,
+              true:
+                Platform.OS == 'ios'
+                  ? Theme.Colors.switchHead
+                  : Theme.Colors.switchTrackTrue,
+            }}
+            color={Theme.Colors.switchHead}
           />
         </ListItem>
-        <ListItem bottomDivider disabled>
+        {/* Intentionally hidden using {display:'none'} - Refer mosip/inji/issue#607 */}
+        <ListItem bottomDivider disabled style={{ display: 'none' }}>
           <Icon
             name="unlock"
             size={20}
             type="antdesign"
-            style={Theme.Styles.profileIconBg}
+            style={Theme.Styles.IconContainer}
             color={Theme.Colors.Icon}
           />
           <ListItem.Content>
@@ -100,13 +119,25 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
             </ListItem.Title>
           </ListItem.Content>
         </ListItem>
-        <Credits label={t('credits')} color={Theme.Colors.profileLabel} />
+        <AppMetaData
+          label={t('AppMetaData')}
+          color={Theme.Colors.profileLabel}
+        />
+        {CREDENTIAL_REGISTRY_EDIT === 'true' && (
+          <EditableListItem
+            label={t('credentialRegistry')}
+            value={controller.credentialRegistry}
+            credentialRegistryResponse={controller.credentialRegistryResponse}
+            onEdit={controller.UPDATE_CREDENTIAL_REGISTRY}
+            Icon="star"
+          />
+        )}
         <ListItem bottomDivider onPress={controller.LOGOUT}>
           <Icon
             name="logout"
             type="fontawesome"
             size={20}
-            style={Theme.Styles.profileIconBg}
+            style={Theme.Styles.IconContainer}
             color={Theme.Colors.Icon}
           />
           <ListItem.Content>
@@ -115,14 +146,6 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
             </ListItem.Title>
           </ListItem.Content>
         </ListItem>
-        <Text
-          weight="semibold"
-          margin="32 0 0 0"
-          align="center"
-          size="smaller"
-          color={Theme.Colors.profileVersion}>
-          {t('version')}: {getVersion()}
-        </Text>
         {controller.backendInfo.application.name !== '' ? (
           <View>
             <Text

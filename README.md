@@ -15,6 +15,7 @@ Be sure to have the following build tools installed before proceeding:
 ## Generate keystore for APK signing
 
 ```shell
+ # Generate and use Debug keystore for development and testing purposes
 keytool \
  -genkey -v \
  -storetype PKCS12 \
@@ -23,6 +24,21 @@ keytool \
  -validity 10000 \
  -storepass 'android' \
  -keypass 'android' \
+ -alias androiddebugkey \
+ -keystore android/app/debug.keystore \
+ -dname "CN=io.mosip.residentapp,OU=,O=,L=,S=,C=US"
+```
+
+```shell
+ # Generate and use Release keystore for Publishing to Play store
+ keytool \
+ -genkey -v \
+ -storetype PKCS12 \
+ -keyalg RSA \
+ -keysize 2048 \
+ -validity 10000 \
+ -storepass '<USE-YOUR-RELEASE-PASSWORD-HERE>' \
+ -keypass '<USE-YOUR-RELEASE-PASSWORD-HERE>' \
  -alias androidreleasekey \
  -keystore android/app/release.keystore \
  -dname "CN=io.mosip.residentapp,OU=,O=,L=,S=,C=US"
@@ -93,14 +109,18 @@ You need Android SDK CLI to build APK.
 # 1. Install dependencies
 npm install
 
-# Setup the environment variable for keystore
-export RELEASE_KEYSTORE=release.keystore
+# 2. Setup the environment variables for the keystore
+
+# Debug keystore
+export DEBUG_KEYSTORE_ALIAS=androiddebugkey
+export DEBUG_KEYSTORE_PASSWORD=android
+
+# Release keystore
 export RELEASE_KEYSTORE_ALIAS=androidreleasekey
-export RELEASE_KEYSTORE_PASSWORD=android
+export RELEASE_KEYSTORE_PASSWORD=<USE-YOUR-RELEASE-PASSWORD-HERE>
+
 # https://hostname/residentmobileapp is the Mimoto service url
 export BACKEND_SERVICE_URL=https://hostname/residentmobileapp
-
-# Use DEBUG_KEYSTORE, DEBUG_KEYSTORE_ALIAS, DEBUG_KEYSTORE_PASSWORD for debug build
 
 # Use one of following command to build the flavor you need.
 # Build for Mosip Philippines test
@@ -142,6 +162,14 @@ More info here:
 
 - [React Native - Publishing to the App Store](https://reactnative.dev/docs/publishing-to-app-store)
 - [Apple Developer - Distributing Your App for Beta Testing and Releases](https://developer.apple.com/documentation/xcode/distributing-your-app-for-beta-testing-and-releases)
+
+## View the complete DB :
+
+1. Connect your phone to the laptop and open Android Studio.
+2. On the bottom right vertical tab you will find a `Device File Explorer` button. Click on it and select you phone.
+3. Navigate to `data -> data -> io.mosip.residentapp ->databases`. You will find a file named `RKStorage` in it. Download it.
+4. Download [DB Browser for SQLite](https://sqlitebrowser.org/dl/) .
+5. Open the file in this application. Click on `Browse Data` button and select `catalystLocalStorage` table. Now you should be able to view the entire DB of Inji.
 
 ## Credits
 

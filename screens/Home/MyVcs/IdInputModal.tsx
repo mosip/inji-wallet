@@ -39,20 +39,26 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
     <Modal
       onDismiss={dismissInput}
       isVisible={props.isVisible}
-      onShow={setIndividualID}>
+      onShow={setIndividualID}
+      headerTitle={t('header')}
+      headerElevation={2}>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <Column fill align="space-between" pY={32} pX={24}>
-          <Text align="center">
-            {t('header', { vcLabel: controller.vcLabel.singular })}
-          </Text>
           <Column>
-            <Row crossAlign="flex-end">
+            <Text
+              align="left"
+              size="regular"
+              style={Theme.TextStyles.retrieveIdLabel}>
+              {t('guideLabel')}
+            </Text>
+            <Row crossAlign="flex-end" style={{ marginTop: 20 }}>
               <Column
                 width="33%"
                 style={{
                   borderBottomWidth: 1,
+                  marginBottom: 2,
                   borderColor:
                     Platform.OS === 'ios'
                       ? 'transparent'
@@ -69,48 +75,52 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
               </Column>
               <Column fill>
                 <Input
+                  inputContainerStyle={
+                    controller.id ? Theme.Styles.VidInputBottom : null
+                  }
                   placeholder={!controller.id ? inputLabel : ''}
-                  label={controller.id ? inputLabel : ''}
-                  labelStyle={{
-                    color: controller.isInvalid
-                      ? Theme.Colors.errorMessage
-                      : Theme.Colors.textValue,
-                    textAlign: 'left',
-                  }}
                   inputStyle={{
                     textAlign: I18nManager.isRTL ? 'right' : 'left',
+                    fontWeight: '700',
                   }}
+                  selectionColor={Theme.Colors.Cursor}
                   value={controller.id}
                   keyboardType="number-pad"
-                  rightIcon={
-                    controller.isInvalid ? (
-                      <Icon
-                        name="error"
-                        size={18}
-                        color={Theme.Colors.errorMessage}
-                      />
-                    ) : null
-                  }
-                  errorStyle={{ color: Theme.Colors.errorMessage }}
+                  errorStyle={Theme.TextStyles.error}
                   errorMessage={controller.idError}
                   onChangeText={controller.INPUT_ID}
                   ref={setIdInputRef}
                 />
               </Column>
             </Row>
+          </Column>
+          <Column>
             <Button
-              title={t('generateVc', { vcLabel: controller.vcLabel.singular })}
+              type="gradient"
+              title={t('generateVc')}
+              disabled={!controller.id}
               margin="24 0 0 0"
               onPress={controller.VALIDATE_INPUT}
               loading={controller.isRequestingOtp}
             />
             {!controller.id && (
-              <TouchableOpacity
-                activeOpacity={1}
-                onPress={props.onPress}
-                style={Theme.Styles.getId}>
-                <Text color={Theme.Colors.AddIdBtnBg}>{t('noUIN/VID')}</Text>
-              </TouchableOpacity>
+              <Row style={Theme.Styles.getId}>
+                <Text
+                  color={Theme.Colors.getVidColor}
+                  weight="semibold"
+                  size="small">
+                  {t('noUIN/VID')}
+                </Text>
+                <TouchableOpacity activeOpacity={1} onPress={props.onPress}>
+                  <Text
+                    color={Theme.Colors.AddIdBtnBg}
+                    weight="semibold"
+                    size="small"
+                    margin="0 0 0 5">
+                    {t('getItHere')}
+                  </Text>
+                </TouchableOpacity>
+              </Row>
             )}
           </Column>
         </Column>

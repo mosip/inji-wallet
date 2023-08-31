@@ -3,13 +3,12 @@ import { ActorRefFrom, InterpreterFrom } from 'xstate';
 import { activityLogMachine } from '../machines/activityLog';
 import { appMachine } from '../machines/app';
 import { authMachine } from '../machines/auth';
-import { requestMachine } from '../machines/request';
-import { scanMachine } from '../machines/scan';
+import { requestMachine } from '../machines/bleShare/request/requestMachine';
+import { scanMachine } from '../machines/bleShare/scan/scanMachine';
 import { settingsMachine } from '../machines/settings';
 import { storeMachine } from '../machines/store';
 import { vcMachine } from '../machines/vc';
 import { revokeVidsMachine } from '../machines/revoke';
-import { qrLoginMachine } from '../machines/QrLoginMachine';
 
 export const GlobalContext = createContext({} as GlobalServices);
 

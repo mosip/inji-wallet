@@ -1,5 +1,9 @@
 PODS:
   - boost-for-react-native (1.63.0)
+  - BVLinearGradient (2.6.2):
+    - React-Core
+  - CatCrypto (0.3.2)
+  - CrcSwift (0.0.3)
   - DoubleConversion (1.1.6)
   - EXApplication (4.0.2):
     - ExpoModulesCore
@@ -11,8 +15,6 @@ PODS:
   - EXCamera (12.1.2):
     - ExpoModulesCore
   - EXConstants (13.0.2):
-    - ExpoModulesCore
-  - EXErrorRecovery (3.0.5):
     - ExpoModulesCore
   - EXFileSystem (13.1.4):
     - ExpoModulesCore
@@ -62,7 +64,11 @@ PODS:
   - GoogleSymbolUtilities (1.1.2)
   - GoogleUtilitiesLegacy (1.3.2):
     - GoogleSymbolUtilities (~> 1.1)
-  - mosip-inji-face-sdk (0.1.7):
+  - GzipSwift (5.1.1)
+  - MMKV (1.2.13):
+    - MMKVCore (~> 1.2.13)
+  - MMKVCore (1.2.16)
+  - mosip-inji-face-sdk (0.1.12):
     - React-Core
   - NearbyMessages (1.1.1):
     - GoogleInterchangeUtilities (~> 1.2)
@@ -270,11 +276,26 @@ PODS:
     - React-jsi (= 0.64.4)
     - React-perflogger (= 0.64.4)
   - React-jsinspector (0.64.4)
+  - react-native-location (2.5.0):
+    - React
+  - react-native-mmkv-storage (0.8.0):
+    - MMKV (= 1.2.13)
+    - React-Core
   - react-native-netinfo (7.1.3):
     - React-Core
   - react-native-restart (0.0.24):
     - React-Core
+  - react-native-rsa-native (2.0.5):
+    - React
   - react-native-safe-area-context (3.3.2):
+    - React-Core
+  - react-native-secure-key-store (2.0.10):
+    - React-Core
+  - react-native-secure-keystore (0.1.0):
+    - React-Core
+  - react-native-tuvali (0.4.3):
+    - CrcSwift (~> 0.0.3)
+    - GzipSwift
     - React-Core
   - React-perflogger (0.64.4)
   - React-RCTActionSheet (0.64.4):
@@ -340,9 +361,12 @@ PODS:
     - React-cxxreact (= 0.64.4)
     - React-jsi (= 0.64.4)
     - React-perflogger (= 0.64.4)
+  - RNArgon2 (2.0.1):
+    - CatCrypto
+    - React-Core
   - RNBluetoothStateManager (1.3.4):
     - React-Core
-  - RNCAsyncStorage (1.15.17):
+  - RNCClipboard (1.11.2):
     - React-Core
   - RNCPicker (2.2.1):
     - React-Core
@@ -376,12 +400,12 @@ PODS:
     - ZXingObjC/Core
 
 DEPENDENCIES:
+  - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - EXApplication (from `../node_modules/expo-application/ios`)
   - EXBarCodeScanner (from `../node_modules/expo-barcode-scanner/ios`)
   - EXCamera (from `../node_modules/expo-camera/ios`)
   - EXConstants (from `../node_modules/expo-constants/ios`)
-  - EXErrorRecovery (from `../node_modules/expo-error-recovery/ios`)
   - EXFileSystem (from `../node_modules/expo-file-system/ios`)
   - EXFont (from `../node_modules/expo-font/ios`)
   - EXImageLoader (from `../node_modules/expo-image-loader/ios`)
@@ -417,9 +441,15 @@ DEPENDENCIES:
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
+  - react-native-location (from `../node_modules/react-native-location`)
+  - react-native-mmkv-storage (from `../node_modules/react-native-mmkv-storage`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-restart (from `../node_modules/react-native-restart`)
+  - react-native-rsa-native (from `../node_modules/react-native-rsa-native`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - react-native-secure-key-store (from `../node_modules/react-native-secure-key-store`)
+  - react-native-secure-keystore (from `../node_modules/react-native-secure-keystore`)
+  - react-native-tuvali (from `../node_modules/react-native-tuvali`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -432,8 +462,9 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - RNArgon2 (from `../node_modules/react-native-argon2`)
   - RNBluetoothStateManager (from `../node_modules/react-native-bluetooth-state-manager`)
-  - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
+  - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
   - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNFS (from `../node_modules/react-native-fs`)
@@ -450,14 +481,21 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - boost-for-react-native
+    - CatCrypto
+    - CrcSwift
     - GoogleInterchangeUtilities
     - GoogleNetworkingUtilities
     - GoogleSymbolUtilities
     - GoogleUtilitiesLegacy
+    - GzipSwift
+    - MMKV
+    - MMKVCore
     - NearbyMessages
     - ZXingObjC
 
 EXTERNAL SOURCES:
+  BVLinearGradient:
+    :path: "../node_modules/react-native-linear-gradient"
   DoubleConversion:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   EXApplication:
@@ -468,8 +506,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-camera/ios"
   EXConstants:
     :path: "../node_modules/expo-constants/ios"
-  EXErrorRecovery:
-    :path: "../node_modules/expo-error-recovery/ios"
   EXFileSystem:
     :path: "../node_modules/expo-file-system/ios"
   EXFont:
@@ -536,12 +572,24 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsiexecutor"
   React-jsinspector:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
+  react-native-location:
+    :path: "../node_modules/react-native-location"
+  react-native-mmkv-storage:
+    :path: "../node_modules/react-native-mmkv-storage"
   react-native-netinfo:
     :path: "../node_modules/@react-native-community/netinfo"
   react-native-restart:
     :path: "../node_modules/react-native-restart"
+  react-native-rsa-native:
+    :path: "../node_modules/react-native-rsa-native"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-secure-key-store:
+    :path: "../node_modules/react-native-secure-key-store"
+  react-native-secure-keystore:
+    :path: "../node_modules/react-native-secure-keystore"
+  react-native-tuvali:
+    :path: "../node_modules/react-native-tuvali"
   React-perflogger:
     :path: "../node_modules/react-native/ReactCommon/reactperflogger"
   React-RCTActionSheet:
@@ -566,10 +614,12 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/runtimeexecutor"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  RNArgon2:
+    :path: "../node_modules/react-native-argon2"
   RNBluetoothStateManager:
     :path: "../node_modules/react-native-bluetooth-state-manager"
-  RNCAsyncStorage:
-    :path: "../node_modules/@react-native-async-storage/async-storage"
+  RNCClipboard:
+    :path: "../node_modules/@react-native-clipboard/clipboard"
   RNCPicker:
     :path: "../node_modules/@react-native-picker/picker"
   RNDeviceInfo:
@@ -597,12 +647,14 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
+  BVLinearGradient: 34a999fda29036898a09c6a6b728b0b4189e1a44
+  CatCrypto: a477899b6be4954e75be4897e732da098cc0a5a8
+  CrcSwift: f85dea6b41dddb5f98bb3743fd777ce58b77bc2e
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   EXApplication: 54fe5bd6268d697771645e8f1aef8b806a65247a
   EXBarCodeScanner: e5ca0062d8ad1c4c1d2e386d6a308d5a32213020
   EXCamera: 4a0d00d6d1e4703c31a75514d8bc804a2eab27bd
   EXConstants: 88bf79622fbd9b476c96d8ec57fe97ca44fe8e3c
-  EXErrorRecovery: b0d7582714a2cc896e94a2308a356f94dbf14ef7
   EXFileSystem: 08a3033ac372b6346becf07839e1ccef26fb1058
   EXFont: 2597c10ac85a69d348d44d7873eccf5a7576ef5e
   EXImageLoader: 347b72c2ec2df65120ccec40ea65a4c4f24317ff
@@ -618,13 +670,16 @@ SPEC CHECKSUMS:
   EXUpdates: a83e036243b0f6ece53a8c1cb883b6751c88a5f8
   EXUpdatesInterface: a9814f422d3cd6e7cfd260d13c27786148ece20e
   FBLazyVector: fa8275d5086566e22a26ddc385ab5772e7f9b1bd
-  FBReactNativeSpec: c3dafd68550f3c95f009beee5c20ab07949ec4e4
+  FBReactNativeSpec: c74a4bea62abb8c7b5a2c27314a28bcf35d7cf9e
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   GoogleInterchangeUtilities: d5bc4d88d5b661ab72f9d70c58d02ca8c27ad1f7
   GoogleNetworkingUtilities: 3edd3a8161347494f2da60ea0deddc8a472d94cb
   GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
   GoogleUtilitiesLegacy: 5501bedec1646bd284286eb5fc9453f7e23a12f4
-  mosip-inji-face-sdk: a1355473a393f2cdd6d927c51af4363be6d97d9f
+  GzipSwift: 893f3e48e597a1a4f62fafcb6514220fcf8287fa
+  MMKV: aac95d817a100479445633f2b3ed8961b4ac5043
+  MMKVCore: 9cfef4c48c6c46f66226fc2e4634d78490206a48
+  mosip-inji-face-sdk: d5bc0fb66721c25450f92d3297efcb2cf0117271
   NearbyMessages: bd9e88f2df7fbab78be58fed58580d5d5bd62cbf
   Permission-BluetoothPeripheral: 67708853584bb9208c76d36d0e0ea4eafb97ea5b
   Permission-Camera: bf6791b17c7f614b6826019fcfdcc286d3a107f6
@@ -641,9 +696,15 @@ SPEC CHECKSUMS:
   React-jsi: 64f80675a66899bf0f4a58b8e3908966fa516234
   React-jsiexecutor: 8c077bef1c64430b6034f27df1000d194551e2eb
   React-jsinspector: d4f6973dd474357dbaaf6f52f31ffc713bf3e766
+  react-native-location: 5a40ec1cc6abf2f6d94df979f98ec76c3a415681
+  react-native-mmkv-storage: 8ba3c0216a6df283ece11205b442a3e435aec4e5
   react-native-netinfo: 42c0965fca99069b92e3f7360ab2d425985e5104
   react-native-restart: 45c8dca02491980f2958595333cbccd6877cb57e
+  react-native-rsa-native: 12132eb627797529fdb1f0d22fd0f8f9678df64a
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
+  react-native-secure-key-store: 910e6df6bc33cb790aba6ee24bc7818df1fe5898
+  react-native-secure-keystore: 3ba6b598e4c3716de1e95cf90dc5b99eed8f0795
+  react-native-tuvali: cf1b72f6ad8ec7694caab7ceb5e5386815c2fbcf
   React-perflogger: 5a890ca0911669421b7611661e9b58f91c805f5c
   React-RCTActionSheet: bd180e0879f8424a73650c5c28fbef4f3b5b27fb
   React-RCTAnimation: 1004d2b4be1f2cedfdc4cb2326adc95b989e6c6b
@@ -656,8 +717,9 @@ SPEC CHECKSUMS:
   React-RCTVibration: 761849eea2a1abc99d5e4171bae17ab3da3143ac
   React-runtimeexecutor: 5b441857030bb6c3abaa7517f333cb01875ae499
   ReactCommon: b4a65d2d6e9eeffd4b32dde1245962b3f43907d0
+  RNArgon2: 1481820722fd4af1575c09f7fc9ad67c00ee8a42
   RNBluetoothStateManager: ae6a26260cbdf1827b58bd3bcc563527d61e6488
-  RNCAsyncStorage: 6bd5a7ba3dde1c3facba418aa273f449bdc5437a
+  RNCClipboard: 3f0451a8100393908bea5c5c5b16f96d45f30bfc
   RNCPicker: cb57c823d5ce8d2d0b5dfb45ad97b737260dc59e
   RNDeviceInfo: aad3c663b25752a52bf8fce93f2354001dd185aa
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
@@ -672,6 +734,6 @@ SPEC CHECKSUMS:
   Yoga: d1fc3575b8b68891ff5ef3c276daa855e841eb32
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: aca728a65db3db54edf138095b290280c97a5389
+PODFILE CHECKSUM: e8bdbcbb2053c9b2971c35e1aafa6988c4dadeab
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.1

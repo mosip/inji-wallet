@@ -29,9 +29,7 @@ public class MainActivity extends ReactActivity {
     Manifest.permission.BLUETOOTH_ADMIN,
     Manifest.permission.ACCESS_WIFI_STATE,
     Manifest.permission.CHANGE_WIFI_STATE,
-    Manifest.permission.CHANGE_WIFI_MULTICAST_STATE,
-    Manifest.permission.ACCESS_COARSE_LOCATION,
-    Manifest.permission.ACCESS_FINE_LOCATION,
+    Manifest.permission.CHANGE_WIFI_MULTICAST_STATE
   };
 
   private static final int REQUEST_CODE_REQUIRED_PERMISSIONS = 1;

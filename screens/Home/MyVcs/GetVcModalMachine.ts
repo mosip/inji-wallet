@@ -174,7 +174,8 @@ export const GetVcModalMachine =
               target: 'requestingUinVid',
             },
             DISMISS: {
-              target: '#GetVcModal.acceptingIdInput.idle',
+              actions: ['resetIdInputRef'],
+              target: '#GetVcModal.acceptingIdInput',
             },
           },
         },
@@ -233,6 +234,9 @@ export const GetVcModalMachine =
             const message = (event as ErrorPlatformEvent).data.message;
             const ID_ERRORS_MAP = {
               'AID is not ready': 'applicationProcessing',
+              'No message available': 'noMessageAvailable',
+              'Network request failed': 'networkRequestFailed',
+              'Invalid Input Parameter- individualId': 'invalidAid',
             };
             return ID_ERRORS_MAP[message]
               ? i18n.t(`errors.backend.${ID_ERRORS_MAP[message]}`, {
@@ -258,6 +262,7 @@ export const GetVcModalMachine =
             const message = (event as ErrorPlatformEvent).data.message;
             const OTP_ERRORS_MAP = {
               'OTP is invalid': 'invalidOtp',
+              'OTP has expired': 'expiredOtp',
             };
             return OTP_ERRORS_MAP[message]
               ? i18n.t(`errors.backend.${OTP_ERRORS_MAP[message]}`, {
@@ -269,6 +274,12 @@ export const GetVcModalMachine =
 
         setIdInputRef: model.assign({
           idInputRef: (_context, event) => event.idInputRef,
+        }),
+
+        resetIdInputRef: model.assign({
+          idInputRef: () => {
+            return null;
+          },
         }),
 
         clearOtp: assign({ otp: '' }),

@@ -4,8 +4,8 @@ buildscript {
     ext {
         buildToolsVersion = "29.0.3"
         minSdkVersion = 23
-        compileSdkVersion = 30
-        targetSdkVersion = 30
+        compileSdkVersion = 31
+        targetSdkVersion = 31
     }
     repositories {
         google()
@@ -33,6 +33,11 @@ allprojects {
         maven {
             // Android JSC is installed from npm
             url(new File(["node", "--print", "require.resolve('jsc-android/package.json')"].execute(null, rootDir).text.trim(), "../dist"))
+        }
+        configurations.all {
+            resolutionStrategy {
+                force "com.facebook.soloader:soloader:0.10.1"
+            }
         }
 
         google()

@@ -3,7 +3,6 @@ import { Tab } from 'react-native-elements';
 import { Column, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { HomeRouteProps } from '../../routes/main';
-import { HistoryTab } from './HistoryTab';
 import { MyVcsTab } from './MyVcsTab';
 import { ReceivedVcsTab } from './ReceivedVcsTab';
 import { ViewVcModal } from './ViewVcModal';
@@ -20,14 +19,6 @@ export const HomeScreen: React.FC<HomeRouteProps> = (props) => {
   return (
     <React.Fragment>
       <Column fill backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
-        <Tab
-          value={controller.activeTab}
-          onChange={controller.SELECT_TAB}
-          indicatorStyle={Theme.Styles.tabIndicator}>
-          {TabItem(t('myVcsTab', { vcLabel: controller.vcLabel.plural }))}
-          {TabItem(t('receivedVcsTab', { vcLabel: controller.vcLabel.plural }))}
-          {TabItem(t('historyTab'))}
-        </Tab>
         {controller.haveTabsLoaded && (
           <Column fill>
             <MyVcsTab
@@ -40,11 +31,6 @@ export const HomeScreen: React.FC<HomeRouteProps> = (props) => {
               service={controller.tabRefs.receivedVcs}
               vcItemActor={controller.selectedVc}
             />
-            <HistoryTab
-              isVisible={controller.activeTab === 2}
-              vcItemActor={controller.selectedVc}
-              service={controller.tabRefs.history}
-            />
           </Column>
         )}
       </Column>
@@ -56,6 +42,7 @@ export const HomeScreen: React.FC<HomeRouteProps> = (props) => {
           onRevokeDelete={() => {
             controller.REVOKE();
           }}
+          activeTab={controller.activeTab}
         />
       )}
     </React.Fragment>

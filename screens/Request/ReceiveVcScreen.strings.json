@@ -1,6 +1,14 @@
 {
-  "header": "{{vcLabel}} details",
-  "save": "Save {{vcLabel}}",
+  "header": "Card details",
+  "save": "Save Card",
   "verifyAndSave": "Verify and save",
-  "discard": "Discard"
+  "reject": "Reject",
+  "discard": "Discard",
+  "goToReceivedVCTab": "View Received Cards",
+  "errors": {
+    "savingFailed": {
+      "title": "Failed to save the Card",
+      "message": "Something went wrong while saving Card to the store."
+    }
+  }
 }

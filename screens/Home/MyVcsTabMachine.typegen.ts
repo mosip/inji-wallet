@@ -13,30 +13,51 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
+    'done.invoke.MyVcsTab.addVc.checkStorage:invocation[0]': {
+      type: 'done.invoke.MyVcsTab.addVc.checkStorage:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
     'xstate.init': { type: 'xstate.init' };
   };
-  'invokeSrcNameMap': {};
+  'invokeSrcNameMap': {
+    checkStorageAvailability: 'done.invoke.MyVcsTab.addVc.checkStorage:invocation[0]';
+  };
   'missingImplementations': {
     actions: never;
-    services: never;
-    guards: never;
     delays: never;
+    guards: never;
+    services: never;
   };
   'eventsCausingActions': {
     completeOnboarding: 'ADD_VC' | 'ONBOARDING_DONE';
     getOnboardingStatus: 'xstate.init';
+    refreshMyVc: 'IS_TAMPERED';
+    resetIsTampered: 'IS_TAMPERED';
     sendVcAdded: 'STORE_RESPONSE';
     storeVcItem: 'done.invoke.AddVcModal';
     viewVcFromParent: 'VIEW_VC';
   };
-  'eventsCausingServices': {};
+  'eventsCausingDelays': {};
   'eventsCausingGuards': {
+    isMinimumStorageLimitReached: 'done.invoke.MyVcsTab.addVc.checkStorage:invocation[0]';
     isOnboardingDone: 'STORE_RESPONSE';
   };
-  'eventsCausingDelays': {};
+  'eventsCausingServices': {
+    AddVcModal:
+      | 'done.invoke.GetVcModal'
+      | 'done.invoke.MyVcsTab.addVc.checkStorage:invocation[0]';
+    GetVcModal: 'GET_VC';
+    checkStorageAvailability: 'ADD_VC';
+  };
   'matchesStates':
+    | 'addVc'
+    | 'addVc.checkStorage'
+    | 'addVc.storageLimitReached'
     | 'addingVc'
     | 'addingVc.addVcSuccessful'
+    | 'addingVc.savingFailed'
+    | 'addingVc.savingFailed.idle'
     | 'addingVc.storing'
     | 'addingVc.waitingForvcKey'
     | 'checkingOnboardingStatus'
@@ -46,7 +67,13 @@ export interface Typegen0 {
     | 'onboarding'
     | 'viewingVc'
     | {
-        addingVc?: 'addVcSuccessful' | 'storing' | 'waitingForvcKey';
+        addVc?: 'checkStorage' | 'storageLimitReached';
+        addingVc?:
+          | 'addVcSuccessful'
+          | 'savingFailed'
+          | 'storing'
+          | 'waitingForvcKey'
+          | { savingFailed?: 'idle' };
         gettingVc?: 'waitingForvcKey';
       };
   'tags': never;

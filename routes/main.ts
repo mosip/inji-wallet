@@ -3,57 +3,56 @@ import {
   BottomTabNavigationOptions,
   BottomTabScreenProps,
 } from '@react-navigation/bottom-tabs';
+import { Image } from 'react-native';
 import { HomeScreen } from '../screens/Home/HomeScreen';
-import { ProfileScreen } from '../screens/Profile/ProfileScreen';
 import { RootStackParamList } from './index';
-import { RequestLayout } from '../screens/Request/RequestLayout';
 import { ScanLayout } from '../screens/Scan/ScanLayout';
+import { HistoryScreen } from '../screens/History/HistoryScreen';
 import i18n from '../i18n';
 
-export const mainRoutes: TabScreen[] = [
-  {
-    name: 'Home',
-    component: HomeScreen,
-    icon: 'home',
-    options: {
-      title: i18n.t('MainLayout:home'),
-    },
+const home: TabScreen = {
+  name: 'home',
+  component: HomeScreen,
+  icon: 'home',
+  options: {
+    headerTitle: '',
+    headerLeft: () =>
+      React.createElement(Image, {
+        source: require('../assets/inji-home-logo.png'),
+        style: { width: 124, height: 27, resizeMode: 'contain' },
+      }),
   },
-  {
-    name: 'Scan',
-    component: ScanLayout,
-    icon: 'qr-code-scanner',
-    options: {
-      title: i18n.t('MainLayout:scan'),
-      headerShown: false,
-    },
+};
+export const scan: TabScreen = {
+  name: 'scan',
+  component: ScanLayout,
+  icon: 'qr-code-scanner',
+  options: {
+    title: i18n.t('MainLayout:scan'),
+    headerShown: false,
   },
-  {
-    name: 'Request',
-    component: RequestLayout,
-    icon: 'file-download',
-    options: {
-      title: i18n.t('MainLayout:request'),
-      headerShown: false,
-    },
+};
+const history: TabScreen = {
+  name: 'history',
+  component: HistoryScreen,
+  icon: 'history',
+  options: {
+    title: i18n.t('MainLayout:history'),
+    headerRight: null,
   },
-  {
-    name: 'Profile',
-    component: ProfileScreen,
-    icon: 'person',
-    options: {
-      title: i18n.t('MainLayout:profile'),
-    },
-  },
-];
+};
+
+export const mainRoutes: TabScreen[] = [];
+mainRoutes.push(home);
+mainRoutes.push(scan);
+mainRoutes.push(history);
 
 export type MainBottomTabParamList = {
-  Home: {
+  home: {
     activeTab: number;
   };
   Scan: undefined;
-  Request: undefined;
-  Profile: undefined;
+  History: undefined;
 };
 
 export interface TabScreen {
@@ -69,5 +68,5 @@ export type MainRouteProps = BottomTabScreenProps<
 
 export type HomeRouteProps = BottomTabScreenProps<
   MainBottomTabParamList & RootStackParamList,
-  'Home'
+  'home'
 >;

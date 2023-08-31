@@ -23,6 +23,7 @@ export const Passcode: React.FC<PasscodeProps> = (props) => {
             onSuccess={props.onSuccess}
             onError={props.onError}
             passcode={props.storedPasscode}
+            salt={props.salt}
           />
         </Column>
         <Column fill>
@@ -39,6 +40,7 @@ interface PasscodeProps {
   message?: string;
   error: string;
   storedPasscode: string;
+  salt: string;
   onSuccess: () => void;
   onError: (value: string) => void;
   onDismiss: () => void;

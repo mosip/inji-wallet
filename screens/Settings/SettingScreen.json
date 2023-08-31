@@ -1,0 +1,15 @@
+{
+  "name": "Name",
+  "vcLabel": "VC Label",
+  "language": "Language",
+  "bioUnlock": "Unlock with biometrics",
+  "authFactorUnlock": "Unlock auth factor",
+  "AppMetaData": "About Inji",
+  "logout": "Log-out",
+  "revokeLabel": "Revoke VID",
+  "revokeHeader": "REVOKE VID",
+  "revokingVids": "You are about to revoke ({{count}}) VIDs.",
+  "revokingVidsAfter": "This means you will no longer be able to use or view any of the IDs linked to those VID(s). \nAre you sure you want to proceed?",
+  "empty": "Empty",
+  "revokeSuccessful": "VID successfully revoked"
+}

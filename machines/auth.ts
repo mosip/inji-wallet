@@ -1,16 +1,22 @@
 import { init } from 'mosip-inji-face-sdk';
-import { ContextFrom, EventFrom, send, StateFrom } from 'xstate';
+import { assign, ContextFrom, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
-import getAllConfigurations from '../shared/commonprops/commonProps';
+import getAllConfigurations, {
+  downloadModel,
+} from '../shared/commonprops/commonProps';
 import { AppServices } from '../shared/GlobalContext';
 import { StoreEvents, StoreResponseEvent } from './store';
+import { generateSecureRandom } from 'react-native-securerandom';
+import binaryToBase64 from 'react-native/Libraries/Utilities/binaryToBase64';
 
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
     passcode: '',
+    passcodeSalt: '',
     biometrics: '',
     canUseBiometrics: false,
+    selectLanguage: false,
   },
   {
     events: {
@@ -19,6 +25,8 @@ const model = createModel(
       LOGOUT: () => ({}),
       LOGIN: () => ({}),
       STORE_RESPONSE: (response?: unknown) => ({ response }),
+      SELECT: () => ({}),
+      NEXT: () => ({}),
     },
   }
 );
@@ -60,21 +68,42 @@ export const authMachine = model.createMachine(
       },
       checkingAuth: {
         always: [
+          { cond: 'hasLanguageset', target: 'languagesetup' },
           { cond: 'hasPasscodeSet', target: 'unauthorized' },
           { cond: 'hasBiometricSet', target: 'unauthorized' },
           { target: 'settingUp' },
         ],
       },
+      languagesetup: {
+        on: {
+          SELECT: {
+            target: 'introSlider',
+          },
+        },
+      },
+      introSlider: {
+        invoke: {
+          src: 'generatePasscodeSalt',
+          onDone: {
+            actions: ['setPasscodeSalt', 'storeContext'],
+          },
+        },
+        on: {
+          NEXT: {
+            target: 'settingUp',
+          },
+        },
+      },
       settingUp: {
         on: {
           SETUP_PASSCODE: {
             target: 'authorized',
-            actions: ['setPasscode', 'storeContext'],
+            actions: ['setPasscode', 'setLanguage', 'storeContext'],
           },
           SETUP_BIOMETRICS: {
             // Note! dont authorized yet we need to setup passcode too as discuss
             // target: 'authorized',
-            actions: ['setBiometrics', 'storeContext'],
+            actions: ['setBiometrics', 'setLanguage', 'storeContext'],
           },
         },
       },
@@ -127,21 +156,25 @@ export const authMachine = model.createMachine(
       setBiometrics: model.assign({
         biometrics: (_, event: SetupBiometricsEvent) => event.biometrics,
       }),
+
+      setLanguage: assign({
+        selectLanguage: (context) => true,
+      }),
+
+      setPasscodeSalt: assign({
+        passcodeSalt: (context, event) => {
+          return event.data as string;
+        },
+      }),
     },
 
     services: {
-      downloadFaceSdkModel: () => async () => {
-        var injiProp = null;
-        try {
-          var injiProp = await getAllConfigurations();
-          const resp: string =
-            injiProp != null ? injiProp.faceSdkModelUrl : null;
-          if (resp != null) {
-            init(resp, false);
-          }
-        } catch (error) {
-          console.log(error);
-        }
+      downloadFaceSdkModel: () => () => {
+        downloadModel();
+      },
+      generatePasscodeSalt: () => async (context) => {
+        const randomBytes = await generateSecureRandom(16);
+        return binaryToBase64(randomBytes) as string;
       },
     },
 
@@ -153,6 +186,9 @@ export const authMachine = model.createMachine(
       },
       hasBiometricSet: (context) => {
         return context.biometrics !== '' && context.passcode !== '';
+      },
+      hasLanguageset: (context) => {
+        return !context.selectLanguage;
       },
     },
   }
@@ -169,6 +205,10 @@ type State = StateFrom<typeof authMachine>;
 
 export function selectPasscode(state: State) {
   return state.context.passcode;
+}
+
+export function selectPasscodeSalt(state: State) {
+  return state.context.passcodeSalt;
 }
 
 export function selectBiometrics(state: State) {
@@ -189,4 +229,11 @@ export function selectUnauthorized(state: State) {
 
 export function selectSettingUp(state: State) {
   return state.matches('settingUp');
+}
+
+export function selectLanguagesetup(state: State) {
+  return state.matches('languagesetup');
+}
+export function selectIntroSlider(state: State) {
+  return state.matches('introSlider');
 }

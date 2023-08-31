@@ -7,11 +7,19 @@ import { Theme } from '../../components/ui/styleUtils';
 import { VcDetails } from '../../components/VcDetails';
 import { useReceiveVcScreen } from './ReceiveVcScreenController';
 import { VerifyIdentityOverlay } from '../VerifyIdentityOverlay';
-import { MessageOverlay } from '../../components/MessageOverlay';
+import {
+  MessageOverlay,
+  ErrorMessageOverlay,
+} from '../../components/MessageOverlay';
+import { useOverlayVisibleAfterTimeout } from '../../shared/hooks/useOverlayVisibleAfterTimeout';
 
 export const ReceiveVcScreen: React.FC = () => {
   const { t } = useTranslation('ReceiveVcScreen');
   const controller = useReceiveVcScreen();
+  const savingOverlayVisible = useOverlayVisibleAfterTimeout(
+    controller.isAccepting
+  );
+  const storeErrorTranslationPath = 'errors.savingFailed';
 
   return (
     <React.Fragment>
@@ -22,32 +30,19 @@ export const ReceiveVcScreen: React.FC = () => {
         <Column>
           <DeviceInfoList of="sender" deviceInfo={controller.senderInfo} />
           <Text weight="semibold" margin="24 24 0 24">
-            {t('header', { vcLabel: controller.vcLabel.singular })}
+            {t('header')}
           </Text>
-          <VcDetails vc={controller.incomingVc} isBindingPending={false} />
+          <VcDetails
+            vc={controller.incomingVc}
+            isBindingPending={false}
+            activeTab={1}
+          />
         </Column>
         <Column padding="0 24" margin="32 0 0 0">
-          {controller.incomingVc.shouldVerifyPresence ? (
-            <Button
-              type="outline"
-              title={t('verifyAndSave')}
-              margin="12 0 12 0"
-              onPress={controller.ACCEPT_AND_VERIFY}
-            />
-          ) : (
-            <Button
-              title={t('save', {
-                vcLabel: controller.vcLabel.singular,
-              })}
-              margin="12 0 12 0"
-              onPress={controller.ACCEPT}
-            />
-          )}
           <Button
-            type="clear"
-            title={t('discard')}
+            title={t('goToReceivedVCTab')}
             margin="0 0 12 0"
-            onPress={controller.REJECT}
+            onPress={controller.GO_TO_RECEIVED_VC_TAB}
           />
         </Column>
       </Column>
@@ -82,6 +77,18 @@ export const ReceiveVcScreen: React.FC = () => {
           />
         </Row>
       </MessageOverlay>
+
+      <MessageOverlay
+        isVisible={savingOverlayVisible}
+        message={t('saving')}
+        progress={true}
+      />
+      <ErrorMessageOverlay
+        isVisible={controller.IsSavingFailedInIdle}
+        error={storeErrorTranslationPath}
+        translationPath={'ReceiveVcScreen'}
+        onDismiss={controller.DISMISS}
+      />
     </React.Fragment>
   );
 };

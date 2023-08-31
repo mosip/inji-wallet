@@ -60,8 +60,6 @@ yarn-error.log
 # BUCK
 buck-out/
 \.buckd/
-*.keystore
-!debug.keystore
 
 # Bundle artifacts
 *.jsbundle
@@ -91,3 +89,8 @@ dist/
 temp/
 .eslintcache
 .env.local
+
+.yalc/
+yalc.lock
+
+android/app/debug.keystore

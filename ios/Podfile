@@ -9,7 +9,7 @@ platform :ios, '13.0'
 require 'json'
 podfile_properties = JSON.parse(File.read('./Podfile.properties.json')) rescue {}
 
-target 'MOSIPResidentApp' do
+target 'Inji' do
   use_expo_modules!
   post_integrate do |installer|
     begin
@@ -55,9 +55,28 @@ target 'MOSIPResidentApp' do
         end
       end
       target.build_configurations.each do |config|
-        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '10.0'
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
       end
     end
+    # get team-id from project's first target
+    dev_team = ""
+    project = installer.aggregate_targets[0].user_project
+    project.targets.each do |target|
+        target.build_configurations.each do |config|
+            if dev_team.empty? and !config.build_settings['DEVELOPMENT_TEAM'].nil?
+                dev_team = config.build_settings['DEVELOPMENT_TEAM']
+                break
+            end
+        end
+    end
+
+    # Apply team-id
+    installer.pods_project.targets.each do |target|
+        target.build_configurations.each do |config|
+            config.build_settings["DEVELOPMENT_TEAM"] = dev_team
+        end
+    end
+
   end
 
   permissions_path = '../node_modules/react-native-permissions/ios'

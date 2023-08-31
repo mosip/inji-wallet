@@ -8,27 +8,59 @@ export class BackendResponseError extends Error {
   }
 }
 
+export class AppId {
+  private static value: string;
+
+  public static getValue(): string {
+    return AppId.value;
+  }
+
+  public static setValue(value: string) {
+    this.value = value;
+  }
+}
+
 export async function request(
   method: 'GET' | 'POST' | 'PATCH',
   path: `/${string}`,
   body?: Record<string, unknown>
 ) {
+  const headers = {
+    'Content-Type': 'application/json',
+  };
+  if (path.includes('residentmobileapp')) headers['X-AppId'] = AppId.getValue();
+
   const response = await fetch(HOST + path, {
     method,
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers,
     body: JSON.stringify(body),
   });
 
   const jsonResponse = await response.json();
 
   if (response.status >= 400) {
-    throw new Error(jsonResponse.message || jsonResponse.error);
+    let backendUrl = HOST + path;
+    let errorMessage = jsonResponse.message || jsonResponse.error;
+    console.error(
+      'The backend API ' +
+        backendUrl +
+        ' returned error code 400 with message --> ' +
+        errorMessage
+    );
+    throw new Error(errorMessage);
   }
 
   if (jsonResponse.errors && jsonResponse.errors.length) {
+    let backendUrl = HOST + path;
     const { errorCode, errorMessage } = jsonResponse.errors.shift();
+    console.error(
+      'The backend API ' +
+        backendUrl +
+        ' returned error response --> error code is : ' +
+        errorCode +
+        ' error message is : ' +
+        errorMessage
+    );
     throw new BackendResponseError(errorCode, errorMessage);
   }
 

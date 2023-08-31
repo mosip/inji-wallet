@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions, I18nManager } from 'react-native';
 import { Icon, ListItem, Overlay, Input } from 'react-native-elements';
 import { Text, Column, Row, Button } from './ui';
@@ -9,22 +9,36 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
   const { t } = useTranslation('common');
   const [isEditing, setIsEditing] = useState(false);
   const [newValue, setNewValue] = useState(props.value);
+  const [overlayOpened, setOverlayOpened] = useState(true);
+
+  useEffect(() => {
+    if (props.credentialRegistryResponse === 'success') {
+      closePopup();
+    }
+  }, [props.credentialRegistryResponse]);
 
   return (
-    <ListItem bottomDivider onPress={() => setIsEditing(true)}>
+    <ListItem bottomDivider topDivider onPress={() => setIsEditing(true)}>
       <Icon
         name={props.Icon}
-        type="antdesign"
-        size={20}
-        style={Theme.Styles.profileIconBg}
+        containerStyle={Theme.Styles.settingsIconBg}
+        type={props.IconType}
+        size={25}
         color={Theme.Colors.Icon}
       />
       <ListItem.Content>
         <ListItem.Title>
-          <Text color={Theme.Colors.profileLabel}>{props.label}</Text>
+          <Text weight="semibold" color={Theme.Colors.profileLabel}>
+            {props.label}
+          </Text>
         </ListItem.Title>
+        <Text color={Theme.Colors.profileValue}>{props.value}</Text>
       </ListItem.Content>
-      <Text color={Theme.Colors.profileValue}>{props.value}</Text>
+      <Icon
+        name="chevron-right"
+        size={21}
+        color={Theme.Colors.profileLanguageValue}
+      />
       <Overlay
         overlayStyle={{ padding: 24, elevation: 6 }}
         isVisible={isEditing}
@@ -35,13 +49,25 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
             autoFocus
             value={newValue}
             onChangeText={setNewValue}
+            selectionColor={Theme.Colors.Cursor}
             inputStyle={{
               textAlign: I18nManager.isRTL ? 'right' : 'left',
             }}
           />
+          {props.credentialRegistryResponse === 'error' && (
+            <Text style={Theme.TextStyles.error}>{props.errorMessage}</Text>
+          )}
+          {props.credentialRegistryResponse === 'success' &&
+            overlayOpened &&
+            closePopup()}
           <Row>
             <Button fill type="clear" title={t('cancel')} onPress={dismiss} />
-            <Button fill title={t('save')} onPress={edit} />
+            <Button
+              fill
+              title={t('save')}
+              onPress={edit}
+              loading={props.progress}
+            />
           </Row>
         </Column>
       </Overlay>
@@ -50,12 +76,20 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
 
   function edit() {
     props.onEdit(newValue);
-    setIsEditing(false);
+    if (props.credentialRegistryResponse === undefined) {
+      setIsEditing(false);
+    }
   }
 
   function dismiss() {
     setNewValue(props.value);
     setIsEditing(false);
+    props.onCancel();
+  }
+
+  function closePopup() {
+    setIsEditing(false);
+    setOverlayOpened(false);
   }
 };
 
@@ -63,5 +97,11 @@ interface EditableListItemProps {
   label: string;
   value: string;
   Icon: string;
+  IconType?: string;
   onEdit: (newValue: string) => void;
+  display?: 'none' | 'flex';
+  credentialRegistryResponse: string;
+  onCancel: () => void;
+  progress?: boolean;
+  errorMessage?: string;
 }

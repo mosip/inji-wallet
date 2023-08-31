@@ -9,39 +9,58 @@ import { EventFrom, spawn, StateFrom, send, assign, AnyState } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { authMachine, createAuthMachine } from './auth';
 import { createSettingsMachine, settingsMachine } from './settings';
-import { storeMachine } from './store';
+import { StoreEvents, storeMachine } from './store';
 import { createVcMachine, vcMachine } from './vc';
 import { createActivityLogMachine, activityLogMachine } from './activityLog';
-import { createRequestMachine, requestMachine } from './request';
-import { createScanMachine, scanMachine } from './scan';
+import {
+  createRequestMachine,
+  requestMachine,
+} from './bleShare/request/requestMachine';
+import { createScanMachine, scanMachine } from './bleShare/scan/scanMachine';
 import { createRevokeMachine, revokeVidsMachine } from './revoke';
-
 import { pure, respond } from 'xstate/lib/actions';
 import { AppServices } from '../shared/GlobalContext';
 import { request } from '../shared/request';
+import {
+  changeCrendetialRegistry,
+  SETTINGS_STORE_KEY,
+} from '../shared/constants';
+import { MIMOTO_HOST } from 'react-native-dotenv';
 
 const model = createModel(
   {
     info: {} as AppInfo,
     backendInfo: {} as BackendInfo,
     serviceRefs: {} as AppServices,
+    isReadError: false,
+    isDecryptError: false,
+    isKeyInvalidateError: false,
   },
   {
     events: {
       ACTIVE: () => ({}),
       INACTIVE: () => ({}),
+      ERROR: () => ({}),
+      DECRYPT_ERROR: () => ({}),
+      DECRYPT_ERROR_DISMISS: () => ({}),
+      KEY_INVALIDATE_ERROR: () => ({}),
       OFFLINE: () => ({}),
       ONLINE: (networkType: NetInfoStateType) => ({ networkType }),
       REQUEST_DEVICE_INFO: () => ({}),
       READY: (data?: unknown) => ({ data }),
       APP_INFO_RECEIVED: (info: AppInfo) => ({ info }),
       BACKEND_INFO_RECEIVED: (info: BackendInfo) => ({ info }),
+      STORE_RESPONSE: (response: unknown) => ({ response }),
+      RESET_KEY_INVALIDATE_ERROR_DISMISS: () => ({}),
     },
   }
 );
 
+export const APP_EVENTS = model.events;
+
 export const appMachine = model.createMachine(
   {
+    /** @xstate-layout N4IgpgJg5mDOIC5QEMAOqB0BLAdlgLhrPgPYBOYAxAEoCiAggCICaA2gAwC6ioqJsBLCRw8QAD0QBmdgE4MMgIwAmSaoDsADmkb2agDQgAnoiUAWJRnNqZayVvYKArDdMBfVwbSZcBIqQqUtNTUAPLUHNxIIHwC+EIiURIICpJypgBsaqaOSjmOqfmmBsbJjuzyaimaMpJq7BqOOe6e6Nh4hLBgZABuWADGcDQMLBGiMYLCokmZ6RiSSro5NQrsjcUm5pZK1rb2Ti7NIF5tvn0UEGA4ccgANtRgUFjEZIaUAMoAKmG0APp0bwAFEIAOTetFGUXGcUmiUQCgU6VMFW0tVkOXY6XWCCUCjkakqBNMMl0ZjcHiOrR8hFwADMSJR6ACAT8AJLAgBiIT+tAAwrQWQA1WiMCG8fgTBKgJIIjJzdRqRGmDQEjRYnF4gkKLLEtSkw7HKkYC69HB0ygAIXoPIA0rRgYxWRyuXQ+YLhaLouLoZLxCZlI55DjTJJ0jV0vlJGrcRh8VqtUSSaYyS1MBRkBBXnQAIoAVVonx+jFoApZfMdnI9UPiUxM9Rj6URGmJMh0Zg0mKMiEc6Q0GA0GmyPd180kyYpqbA6cMGDpfQArrAGTyPm7K17q7Dkroscre+l2KknAoB8qbPrWmmMzOSPPF2yrSuhWvYhupXDt52EDIbBhGnVJN27CyA2SjnhOU4YDgYD4AA7uQADWlAggAMmy4JcGM64wm+W76J+yhEpYaiOKYGL4jI+4hmBGCXtOUGwQhSHsuyqHAuhkRii+2G+rhWIpD2WwNNsuLdjI7jkjgJAXPAUReJhXE+kkAC0tRYkpZgYEBWnaTpajUVS8kSjW2IyFi6SSJYDS2FqjgaPCMi2fp7R+OQYCGd6xn4mqGKWKimimMoTaOLqTm+J0PT9HA7mvjx5gWeYChJmYEbth2JQLLMwZ1P5gUOSF5IGs5ZyQJc1x3A8Tz4C80XcUk1R9koLbpAiDghgoUZpNImgkSsGhmLUoXUqaJA1YpcJJrM4aVCkShaDI5hFJ+6q+bouz4tIqgaINRpgCadKjcZx7pBYDakZoo6OCkjgdSt1ihkmF1UQVF6ThmB2bvCZmqBgIGaPU5FONRtHXre704c4WK6goGCJQOs2rD2Ohic94FXrOC4YH0AAWYB9PBuBQGDPHwtDWoLDUtn1LN35YjUcgYhRiUNhiTbIymNGvdO6OwBgyB9HE3RuZCWFjdipE-YopE1O2f12DujQ-WR0jNUBl2OEDnMgxjuB8wLQucUZm5mOUoaJbIdiZDocufi4v7OA0KxKM1tRbSjHMQfRcFkPBRNJBD+GyBYDjfri4YtRkGse9BXvwZjON4wTvvvnhJQpLI8gBSsx2NAFdiR1ensIRgwg3Lg+uegpxkqBYo66ko9e5MoZh8fXmWaA3CymPiTRu8Dhfe8XNI0qXUFJ9i8xzF3HeN-Xi2pxdvkpOYx31M16Tia4QA */
     predictableActionArguments: true,
     preserveActionOrder: true,
     tsTypes: {} as import('./app.typegen').Typegen0,
@@ -51,6 +70,22 @@ export const appMachine = model.createMachine(
     },
     id: 'app',
     initial: 'init',
+    on: {
+      DECRYPT_ERROR: {
+        actions: ['setIsDecryptError'],
+      },
+      DECRYPT_ERROR_DISMISS: {
+        actions: ['unsetIsDecryptError'],
+      },
+      KEY_INVALIDATE_ERROR: {
+        actions: ['updateKeyInvalidateError'],
+        target: 'waiting',
+      },
+      RESET_KEY_INVALIDATE_ERROR_DISMISS: {
+        actions: ['resetKeyInvalidateError'],
+        target: 'init',
+      },
+    },
     states: {
       init: {
         initial: 'store',
@@ -58,13 +93,32 @@ export const appMachine = model.createMachine(
           store: {
             entry: ['spawnStoreActor', 'logStoreEvents'],
             on: {
-              READY: 'services',
+              READY: {
+                actions: [
+                  'unsetIsReadError',
+                  'unsetIsDecryptError',
+                  'resetKeyInvalidateError',
+                ],
+                target: 'services',
+              },
+              ERROR: {
+                actions: ['setIsReadError', 'updateKeyInvalidateError'],
+              },
             },
           },
           services: {
             entry: ['spawnServiceActors', 'logServiceEvents'],
             on: {
-              READY: 'info',
+              READY: 'credentialRegistry',
+            },
+          },
+          credentialRegistry: {
+            entry: ['loadCredentialRegistryHostFromStorage'],
+            on: {
+              STORE_RESPONSE: {
+                actions: ['loadCredentialRegistryInConstants'],
+                target: 'info',
+              },
             },
           },
           info: {
@@ -140,6 +194,7 @@ export const appMachine = model.createMachine(
           },
         },
       },
+      waiting: {},
     },
   },
   {
@@ -149,6 +204,30 @@ export const appMachine = model.createMachine(
           send({ ...event, type: `APP_${event.type}` }, { to: serviceRef })
         )
       ),
+      setIsReadError: assign({
+        isReadError: true,
+      }),
+      setIsDecryptError: assign({
+        isDecryptError: true,
+      }),
+      unsetIsDecryptError: assign({
+        isDecryptError: false,
+      }),
+      unsetIsReadError: assign({
+        isReadError: false,
+      }),
+
+      updateKeyInvalidateError: model.assign({
+        isKeyInvalidateError: (_, event) => {
+          if (event.type === 'KEY_INVALIDATE_ERROR') {
+            return true;
+          }
+        },
+      }),
+
+      resetKeyInvalidateError: model.assign({
+        isKeyInvalidateError: false,
+      }),
 
       requestDeviceInfo: respond((context) => ({
         type: 'RECEIVE_DEVICE_INFO',
@@ -199,10 +278,12 @@ export const appMachine = model.createMachine(
             scanMachine.id
           );
 
-          serviceRefs.request = spawn(
-            createRequestMachine(serviceRefs),
-            requestMachine.id
-          );
+          if (Platform.OS === 'android') {
+            serviceRefs.request = spawn(
+              createRequestMachine(serviceRefs),
+              requestMachine.id
+            );
+          }
 
           serviceRefs.revoke = spawn(
             createRevokeMachine(serviceRefs),
@@ -220,7 +301,11 @@ export const appMachine = model.createMachine(
           context.serviceRefs.settings.subscribe(logState);
           context.serviceRefs.activityLog.subscribe(logState);
           context.serviceRefs.scan.subscribe(logState);
-          context.serviceRefs.request.subscribe(logState);
+
+          if (Platform.OS === 'android') {
+            context.serviceRefs.request.subscribe(logState);
+          }
+
           context.serviceRefs.revoke.subscribe(logState);
         }
       },
@@ -232,6 +317,21 @@ export const appMachine = model.createMachine(
       setBackendInfo: model.assign({
         backendInfo: (_, event) => event.info,
       }),
+
+      loadCredentialRegistryHostFromStorage: send(
+        StoreEvents.GET(SETTINGS_STORE_KEY),
+        {
+          to: (context) => context.serviceRefs.store,
+        }
+      ),
+
+      loadCredentialRegistryInConstants: (_context, event) => {
+        changeCrendetialRegistry(
+          !event.response?.credentialRegistry
+            ? MIMOTO_HOST
+            : event.response?.credentialRegistry
+        );
+      },
     },
 
     services: {
@@ -311,6 +411,7 @@ interface AppInfo {
   deviceId: string;
   deviceName: string;
 }
+
 interface BackendInfo {
   application: {
     name: string;
@@ -366,4 +467,16 @@ export function logState(state: AnyState) {
     }
     `
   );
+}
+
+export function selectIsReadError(state: State) {
+  return state.context.isReadError;
+}
+
+export function selectIsDecryptError(state: State) {
+  return state.context.isDecryptError;
+}
+
+export function selectIsKeyInvalidateError(state: State) {
+  return state.context.isKeyInvalidateError;
 }

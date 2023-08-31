@@ -1,11 +1,10 @@
 import {
   ActorRefFrom,
   assign,
-  ErrorPlatformEvent,
   EventFrom,
   send,
-  StateFrom,
   sendParent,
+  StateFrom,
 } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { AppServices } from '../shared/GlobalContext';
@@ -13,8 +12,15 @@ import { MY_VCS_STORE_KEY } from '../shared/constants';
 import { StoreEvents } from './store';
 import { linkTransactionResponse, VC } from '../types/vc';
 import { request } from '../shared/request';
-import { getJwt } from '../shared/cryptoutil/cryptoUtil';
-import { getPrivateKey } from '../shared/keystore/SecureKeystore';
+import {
+  getJwt,
+  isCustomSecureKeystore,
+} from '../shared/cryptoutil/cryptoUtil';
+import {
+  getBindingCertificateConstant,
+  getPrivateKey,
+} from '../shared/keystore/SecureKeystore';
+import i18n from '../i18n';
 
 const model = createModel(
   {
@@ -22,6 +28,7 @@ const model = createModel(
     selectedVc: {} as VC,
     linkCode: '',
     myVcs: [] as string[],
+    thumbprint: '',
     linkTransactionResponse: {} as linkTransactionResponse,
     authFactors: [],
     authorizeScopes: null,
@@ -144,7 +151,7 @@ export const qrLoginMachine =
         faceAuth: {
           on: {
             FACE_VALID: {
-              target: 'sendingAuthenticate',
+              target: 'requestConsent',
             },
             FACE_INVALID: {
               target: 'invalidIdentity',
@@ -182,7 +189,7 @@ export const qrLoginMachine =
         requestConsent: {
           on: {
             CONFIRM: {
-              target: 'sendingConsent',
+              target: 'loadingThumbprint',
             },
             TOGGLE_CONSENT_CLAIM: {
               actions: 'setConsentClaims',
@@ -191,6 +198,15 @@ export const qrLoginMachine =
             DISMISS: {
               actions: 'forwardToParent',
               target: 'waitingForData',
+            },
+          },
+        },
+        loadingThumbprint: {
+          entry: 'loadThumbprint',
+          on: {
+            STORE_RESPONSE: {
+              actions: 'setThumbprint',
+              target: 'sendingConsent',
             },
           },
         },
@@ -237,6 +253,20 @@ export const qrLoginMachine =
           myVcs: (_context, event) => (event.response || []) as string[],
         }),
 
+        loadThumbprint: send(
+          (context) =>
+            StoreEvents.GET(
+              getBindingCertificateConstant(
+                context.selectedVc.walletBindingResponse?.walletBindingId
+              )
+            ),
+          { to: (context) => context.serviceRefs.store }
+        ),
+        setThumbprint: assign({
+          thumbprint: (_context, event) => {
+            return (event.response || '') as string;
+          },
+        }),
         resetLinkTransactionId: model.assign({
           linkTransactionId: () => '',
         }),
@@ -286,7 +316,9 @@ export const qrLoginMachine =
 
         SetErrorMessage: assign({
           errorMessage: (context, event) =>
-            (event as ErrorPlatformEvent).data.message,
+            i18n.t(`errors.genericError`, {
+              ns: 'common',
+            }),
         }),
 
         setConsentClaims: assign({
@@ -311,7 +343,7 @@ export const qrLoginMachine =
         linkTransaction: async (context) => {
           const response = await request(
             'POST',
-            '/v1/idp/linked-authorization/link-transaction',
+            '/v1/esignet/linked-authorization/link-transaction',
             {
               requestTime: String(new Date().toISOString()),
               request: {
@@ -323,20 +355,24 @@ export const qrLoginMachine =
         },
 
         sendAuthenticate: async (context) => {
-          var privateKey = await getPrivateKey(
-            context.selectedVc.walletBindingResponse?.walletBindingId
-          );
+          let privateKey;
+
+          if (!isCustomSecureKeystore()) {
+            privateKey = await getPrivateKey(
+              context.selectedVc.walletBindingResponse?.walletBindingId
+            );
+          }
+
           var walletBindingResponse = context.selectedVc.walletBindingResponse;
           var jwt = await getJwt(
             privateKey,
             context.selectedVc.id,
-            walletBindingResponse?.keyId,
-            walletBindingResponse?.thumbprint
+            context.thumbprint
           );
 
           const response = await request(
             'POST',
-            '/v1/idp/linked-authorization/authenticate',
+            '/v1/esignet/linked-authorization/authenticate',
             {
               requestTime: String(new Date().toISOString()),
               request: {
@@ -356,13 +392,46 @@ export const qrLoginMachine =
         },
 
         sendConsent: async (context) => {
+          let privateKey;
+          if (!isCustomSecureKeystore()) {
+            privateKey = await getPrivateKey(
+              context.selectedVc.walletBindingResponse?.walletBindingId
+            );
+          }
+
+          const jwt = await getJwt(
+            privateKey,
+            context.selectedVc.id,
+            context.thumbprint
+          );
+
           const response = await request(
             'POST',
-            '/v1/idp/linked-authorization/consent',
+            '/v1/esignet/linked-authorization/authenticate',
             {
               requestTime: String(new Date().toISOString()),
               request: {
-                linkedTransactionId: context.linkedTransactionId,
+                linkedTransactionId: context.linkTransactionId,
+                individualId: context.selectedVc.id,
+                challengeList: [
+                  {
+                    authFactorType: 'WLA',
+                    challenge: jwt,
+                    format: 'jwt',
+                  },
+                ],
+              },
+            }
+          );
+          var linkedTrnId = response.response.linkedTransactionId;
+
+          const resp = await request(
+            'POST',
+            '/v1/esignet/linked-authorization/consent',
+            {
+              requestTime: String(new Date().toISOString()),
+              request: {
+                linkedTransactionId: linkedTrnId,
                 acceptedClaims: context.essentialClaims.concat(
                   context.selectedVoluntaryClaims
                 ),
@@ -370,7 +439,7 @@ export const qrLoginMachine =
               },
             }
           );
-          console.log(response.response.linkedTransactionId);
+          console.log(resp.response.linkedTransactionId);
         },
       },
     }
