@@ -50,7 +50,7 @@ jobs:
       - name: Uninstall node
         run: |
           which openssl
-          brew uninstall openssl
+          brew uninstall --ignore-dependencies openssl
           brew install libressl
           export OPENSSL_CONF="/usr/local/etc/libressl/openssl.cnf"
           export NODE_OPTIONS=--openssl-legacy-provider
