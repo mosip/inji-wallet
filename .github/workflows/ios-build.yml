@@ -50,9 +50,10 @@ jobs:
       - name: Uninstall node
         run: |
           which node
+          sudo npm uninstall npm -g | yes
+          which node
           node -v
           npm -v
-          brew uninstall node
 
       - uses: actions/checkout@v3.1.0
       - uses: actions/setup-node@v3
