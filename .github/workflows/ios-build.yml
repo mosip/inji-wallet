@@ -49,6 +49,7 @@ jobs:
     steps:
       - name: Uninstall node
         run: |
+          nvm alias default 16.20.2
           nvm uninstall v18.17.1
 
       - uses: actions/checkout@v3.1.0
