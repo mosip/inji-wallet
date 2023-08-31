@@ -50,11 +50,14 @@ jobs:
       - name: Uninstall node
         run: |
           which openssl
-          brew uninstall --ignore-dependencies openssl
-          rm -rf /usr/local/etc/openssl@1.1
-          brew install libressl
-          export OPENSSL_CONF="/usr/local/etc/libressl/openssl.cnf"
           export NODE_OPTIONS=--openssl-legacy-provider
+
+      - name: Install NVM
+        run: |
+          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+          nvm uninstall node
 
       - uses: actions/checkout@v3.1.0
       - uses: actions/setup-node@v3
@@ -71,7 +74,6 @@ jobs:
         run: |
           npm cache clean --force
           npm install
-
 
       - name: Install pod dependencies
         run: |
