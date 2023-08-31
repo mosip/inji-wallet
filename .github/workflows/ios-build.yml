@@ -47,6 +47,10 @@ jobs:
     runs-on: macos-13
 
     steps:
+      - name: Uninstall node
+        run: |
+          nvm uninstall v18.17.1
+
       - uses: actions/checkout@v3.1.0
       - uses: actions/setup-node@v3
         with:
