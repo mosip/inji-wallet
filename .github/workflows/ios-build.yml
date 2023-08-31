@@ -49,6 +49,10 @@ jobs:
     steps:
       - name: Uninstall node
         run: |
+          which openssl
+          brew uninstall openssl
+          brew install libressl
+          export OPENSSL_CONF="/usr/local/etc/libressl/openssl.cnf"
           export NODE_OPTIONS=--openssl-legacy-provider
 
       - uses: actions/checkout@v3.1.0
