@@ -97,21 +97,21 @@ platform :ios do
       }
     )
 
-    pilot(
-       app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
-       api_key: api_key,
-       ipa: "./Inji.ipa",
-       changelog: "#{TESTFLIGHT_BETA_APP_DESCRIPTION}",
-       localized_build_info: {
-          "default": {
-            whats_new: "#{TESTFLIGHT_BETA_APP_DESCRIPTION}", 
-          }
-      },
-       skip_waiting_for_build_processing: false,
-       distribute_external: true,
-       submit_beta_review: false,  
-       groups: ["#{TESTFLIGHT_INTERNAL_TESTERS_GROUP}"],
-    )
+    # pilot(
+    #    app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
+    #    api_key: api_key,
+    #    ipa: "./Inji.ipa",
+    #    changelog: "#{TESTFLIGHT_BETA_APP_DESCRIPTION}",
+    #    localized_build_info: {
+    #       "default": {
+    #         whats_new: "#{TESTFLIGHT_BETA_APP_DESCRIPTION}", 
+    #       }
+    #   },
+    #    skip_waiting_for_build_processing: false,
+    #    distribute_external: true,
+    #    submit_beta_review: false,  
+    #    groups: ["#{TESTFLIGHT_INTERNAL_TESTERS_GROUP}"],
+    # )
 
     delete_temp_keychain(keychain_name)
 
