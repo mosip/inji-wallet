@@ -96,7 +96,8 @@ jobs:
         run: |
           # Strip git ref prefix from version
           echo "BRANCH_NAME=$(echo ${{ github.ref }} | sed -e 's,.*/\(.*\),\1,')" >> $GITHUB_ENV
-          echo "GPG_TTY=$(tty)" >> $GITHUB_ENV   
+          echo "GPG_TTY=$(tty)" >> $GITHUB_ENV
+          echo "DUMMY_INJI_ANDROID_DEBUG_STOREPASS=$(DUMMY_INJI_ANDROID_DEBUG_STOREPASS)" >> $GITHUB_ENV 
 
       - name: Setup branch and GPG public key
         run: |
@@ -136,7 +137,7 @@ jobs:
           -keystore android/app/debug.keystore \
           -dname "CN=io.mosip.residentapp,OU=,O=,L=,S=,C=US"
         env:
-          DEBUG_KEYSTORE_PASSWORD: ${{secrets.INJI_ANDROID_DEBUG_STOREPASS || DUMMY_INJI_ANDROID_DEBUG_STOREPASS }}
+          DEBUG_KEYSTORE_PASSWORD: ${{secrets.INJI_ANDROID_DEBUG_STOREPASS || env.DUMMY_INJI_ANDROID_DEBUG_STOREPASS }}
 
       - name: Export variables for keystore
         run: |
@@ -144,7 +145,7 @@ jobs:
           export DEBUG_KEYSTORE_ALIAS=androiddebugkey
           export DEBUG_KEYSTORE_PASSWORD=$DEBUG_KEYSTORE_PASSWORD
         env:
-          DEBUG_KEYSTORE_PASSWORD: ${{secrets.INJI_ANDROID_DEBUG_STOREPASS || DUMMY_INJI_ANDROID_DEBUG_STOREPASS }}
+          DEBUG_KEYSTORE_PASSWORD: ${{secrets.INJI_ANDROID_DEBUG_STOREPASS || env.DUMMY_INJI_ANDROID_DEBUG_STOREPASS }}
 
       - name: Bump version code
         uses: chkfung/android-version-actions@v1.2.1
@@ -158,4 +159,4 @@ jobs:
           ./verify-build.sh
         env:
           DEBUG_KEYSTORE_ALIAS: androiddebugkey
-          DEBUG_KEYSTORE_PASSWORD: ${{secrets.INJI_ANDROID_DEBUG_STOREPASS || DUMMY_INJI_ANDROID_DEBUG_STOREPASS }}
+          DEBUG_KEYSTORE_PASSWORD: ${{secrets.INJI_ANDROID_DEBUG_STOREPASS || env.DUMMY_INJI_ANDROID_DEBUG_STOREPASS }}
