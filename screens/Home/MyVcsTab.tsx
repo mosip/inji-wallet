@@ -39,12 +39,13 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
 
   const DownloadingVcPopUp: React.FC = () => {
     return (
-      <View>
+      <View testID="downloadingVcPopup">
         <Row style={Theme.Styles.downloadingVcPopUp}>
           <Text color={Theme.Colors.whiteText} weight="semibold" size="smaller">
             {t('downloadingYourCard')}
           </Text>
           <Icon
+            testID="close"
             name="close"
             onPress={() => {
               controller.DISMISS();
@@ -103,6 +104,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                 })}
               </Column>
               <Button
+                testId="downloadCard"
                 type="gradient"
                 disabled={controller.isRefreshingVcs}
                 title={t('downloadCard')}
