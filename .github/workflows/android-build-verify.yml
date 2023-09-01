@@ -2,6 +2,45 @@ name: PR - Android build verification
 
 env:
   backendServiceDefaultUrl: https://api.sandbox.mosip.net
+  DUMMY_GOOGLE_SERVICE_JSON: '{
+  "project_info": {
+    "project_number": "259470317171",
+    "project_id": "mosip-resident-app",
+    "storage_bucket": "mosip-resident-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "",
+        "android_client_info": {
+          "package_name": "io.mosip.residentapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": ""
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}'
 
 on:
   push:
@@ -13,12 +52,12 @@ on:
       - 0.9
     tags:
       - '*'
-  pull_request: 
+  pull_request:
     types: [ opened, synchronize ]
     branches:
       - develop
       - 'release-**'
-    tags: 
+    tags:
       - '*'
 
 jobs:
@@ -29,7 +68,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '16.x'
-      
+
       - name: Cache local npm repository
         uses: actions/cache@v3.0.11
         with:
@@ -43,7 +82,7 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-      
+
       - name: Install npm dependencies
         run: |
           npm ci
@@ -74,7 +113,7 @@ jobs:
           if [ ! -z "$FIREBASE_SECRET" ] && [ -f app/google-services.json.gpg ];then rm -f app/google-services.json;gpg2 --quiet --batch --passphrase=$FIREBASE_SECRET --pinentry-mode loopback --decrypt --output app/google-services.json app/mosip-google-services.json.gpg;fi
         env:
           FIREBASE_SECRET: ${{ secrets.GPG_SECRET }}
-      
+
       - name: Generate keystore
         run: |
           keytool \
@@ -88,16 +127,24 @@ jobs:
           -alias androiddebugkey \
           -keystore android/app/debug.keystore \
           -dname "CN=io.mosip.residentapp,OU=,O=,L=,S=,C=US"
-        env: 
-          DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
+        env:
+          DEBUG_KEYSTORE_PASSWORD: ${{secrets.INJI_ANDROID_DEBUG_STOREPASS || 'password' }}
+
+      - name: Create Google Play Config file
+        run : |
+          cd android
+          echo "$INJI_ANDROID_PLAY_STORE_CONFIG_JSON" > play_config.json.b64
+          base64 -d -i play_config.json.b64 > play_config.json
+        env:
+          INJI_ANDROID_PLAY_STORE_CONFIG_JSON: ${{ secrets.INJI_ANDROID_PLAY_STORE_CONFIG_JSON || $DUMMY_GOOGLE_SERVICE_JSON }}
 
       - name: Export variables for keystore
         run: |
           cd android/app
           export DEBUG_KEYSTORE_ALIAS=androiddebugkey
           export DEBUG_KEYSTORE_PASSWORD=$DEBUG_KEYSTORE_PASSWORD
-        env: 
-          DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
+        env:
+          DEBUG_KEYSTORE_PASSWORD: ${{secrets.INJI_ANDROID_DEBUG_STOREPASS || 'password' }}
 
       - name: Bump version code
         uses: chkfung/android-version-actions@v1.2.1
@@ -109,6 +156,6 @@ jobs:
         run: | 
           cd android/scripts
           ./verify-build.sh
-        env: 
+        env:
           DEBUG_KEYSTORE_ALIAS: androiddebugkey
-          DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
+          DEBUG_KEYSTORE_PASSWORD: ${{secrets.INJI_ANDROID_DEBUG_STOREPASS || 'password' }}
