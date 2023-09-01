@@ -751,9 +751,7 @@ export const PurpleTheme = {
     kebabHeaderStyle: {
       justifyContent: 'space-between',
       fontFamily: 'Inter_700Bold',
-      paddingRight: 15,
-      paddingLeft: 130,
-      paddingTop: 18,
+      paddingTop: 15,
     },
   }),
   MessageOverlayStyles: StyleSheet.create({
