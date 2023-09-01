@@ -111,7 +111,16 @@ jobs:
       - name: Setup Firebase
         run: |
           cd android
-          echo "$DUMMY_GOOGLE_SERVICE_JSON" > app/google-services.json
+          
+          if [ ! -z "$FIREBASE_SECRET" ] && [ -f app/google-services.json.gpg ];
+          then 
+            rm -f app/google-services.json;gpg2 --quiet --batch --passphrase=$FIREBASE_SECRET --pinentry-mode loopback --decrypt --output app/google-services.json app/mosip-google-services.json.gpg;
+          else 
+            echo "Using Dummy Google Service JSON for firebase"
+            echo "$DUMMY_GOOGLE_SERVICE_JSON" > app/google-services.json
+          fi
+        env:
+          FIREBASE_SECRET: ${{ secrets.GPG_SECRET }}
 
       - name: Generate keystore
         run: |
@@ -127,7 +136,7 @@ jobs:
           -keystore android/app/debug.keystore \
           -dname "CN=io.mosip.residentapp,OU=,O=,L=,S=,C=US"
         env:
-          DEBUG_KEYSTORE_PASSWORD: ${{secrets.INJI_ANDROID_DEBUG_STOREPASS || DUMMY_INJI_ANDROID_DEBUG_STOREPASS' }}
+          DEBUG_KEYSTORE_PASSWORD: ${{secrets.INJI_ANDROID_DEBUG_STOREPASS || DUMMY_INJI_ANDROID_DEBUG_STOREPASS }}
 
       - name: Export variables for keystore
         run: |
@@ -135,7 +144,7 @@ jobs:
           export DEBUG_KEYSTORE_ALIAS=androiddebugkey
           export DEBUG_KEYSTORE_PASSWORD=$DEBUG_KEYSTORE_PASSWORD
         env:
-          DEBUG_KEYSTORE_PASSWORD: ${{secrets.INJI_ANDROID_DEBUG_STOREPASS || DUMMY_INJI_ANDROID_DEBUG_STOREPASS' }}
+          DEBUG_KEYSTORE_PASSWORD: ${{secrets.INJI_ANDROID_DEBUG_STOREPASS || DUMMY_INJI_ANDROID_DEBUG_STOREPASS }}
 
       - name: Bump version code
         uses: chkfung/android-version-actions@v1.2.1
@@ -149,4 +158,4 @@ jobs:
           ./verify-build.sh
         env:
           DEBUG_KEYSTORE_ALIAS: androiddebugkey
-          DEBUG_KEYSTORE_PASSWORD: ${{secrets.INJI_ANDROID_DEBUG_STOREPASS || DUMMY_INJI_ANDROID_DEBUG_STOREPASS' }}
+          DEBUG_KEYSTORE_PASSWORD: ${{secrets.INJI_ANDROID_DEBUG_STOREPASS || DUMMY_INJI_ANDROID_DEBUG_STOREPASS }}
