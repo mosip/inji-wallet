@@ -28,4 +28,5 @@ export default {
   },
   platforms: ['android', 'ios'],
   privacy: 'hidden',
+  plugins: ['expo-localization'],
 };
