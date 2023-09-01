@@ -498,8 +498,9 @@ export const PurpleTheme = {
       color: Colors.Black,
       fontFamily: 'Inter_700Bold',
       fontSize: 18,
-      lineHeight: 22,
+      lineHeight: 19,
       paddingTop: 4,
+      marginLeft: -30,
     },
     retrieveIdLabel: {
       color: Colors.ShadeOfGrey,
