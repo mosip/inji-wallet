@@ -55,7 +55,6 @@ jobs:
 
       - name: Install npm dependencies
         run: |
-          npm cache clean --force
           npm install
 
       - name: Install pod dependencies
