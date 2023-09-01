@@ -2,8 +2,6 @@ name: PR - Android build verification
 
 env:
   backendServiceDefaultUrl: https://api.sandbox.mosip.net
-  DUMMY_INJI_ANDROID_DEBUG_STOREPASS: 'password'
-  DUMMY_GOOGLE_SERVICE_JSON: ''
 
 on:
   push:
