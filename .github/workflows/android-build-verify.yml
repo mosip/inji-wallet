@@ -46,6 +46,15 @@ jobs:
             ~/.gradle/caches
             ~/.gradle/wrapper
 
+      - name: Setup branch and env
+        run: |
+          # Strip git ref prefix from version
+          echo "BRANCH_NAME=$(echo ${{ github.ref }} | sed -e 's,.*/\(.*\),\1,')" >> $GITHUB_ENV
+          echo "GPG_TTY=$(tty)" >> $GITHUB_ENV
+          echo "DUMMY_INJI_ANDROID_DEBUG_STOREPASS=$DUMMY_INJI_ANDROID_DEBUG_STOREPASS" >> $GITHUB_ENV
+          dummyGoogleServicesJson=`cat ${{ github.action_path }}/dummy-google-services.json`
+          echo "DUMMY_GOOGLE_SERVICE_JSON=$(dummyGoogleServicesJson)" >> $GITHUB_ENV
+
       - name: Install npm dependencies
         run: |
           npm ci
@@ -53,15 +62,6 @@ jobs:
       - name: Create .env.local file
         run: |
           echo "${{ secrets.ENV_FILE }}" > .env.local > android/local.properties
-
-      - name: Setup branch and env
-        run: |
-          # Strip git ref prefix from version
-          echo "BRANCH_NAME=$(echo ${{ github.ref }} | sed -e 's,.*/\(.*\),\1,')" >> $GITHUB_ENV
-          echo "GPG_TTY=$(tty)" >> $GITHUB_ENV
-          echo "DUMMY_INJI_ANDROID_DEBUG_STOREPASS=$DUMMY_INJI_ANDROID_DEBUG_STOREPASS" >> $GITHUB_ENV
-          dummyGoogleServicesJson=`cat ./dummy-google-services.json`
-          echo "DUMMY_GOOGLE_SERVICE_JSON=$(dummyGoogleServicesJson)" >> $GITHUB_ENV
 
       - name: Setup branch and GPG public key
         run: |
