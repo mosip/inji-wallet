@@ -2,6 +2,7 @@ name: PR - Android build verification
 
 env:
   backendServiceDefaultUrl: https://api.sandbox.mosip.net
+  DUMMY_INJI_ANDROID_DEBUG_STOREPASS: 'password'
   DUMMY_GOOGLE_SERVICE_JSON: '{
 	  "project_info": {
 		"project_number": "mockproject-1234",
@@ -126,7 +127,7 @@ jobs:
           -keystore android/app/debug.keystore \
           -dname "CN=io.mosip.residentapp,OU=,O=,L=,S=,C=US"
         env:
-          DEBUG_KEYSTORE_PASSWORD: ${{secrets.INJI_ANDROID_DEBUG_STOREPASS || 'password' }}
+          DEBUG_KEYSTORE_PASSWORD: ${{secrets.INJI_ANDROID_DEBUG_STOREPASS || DUMMY_INJI_ANDROID_DEBUG_STOREPASS' }}
 
       - name: Export variables for keystore
         run: |
@@ -134,7 +135,7 @@ jobs:
           export DEBUG_KEYSTORE_ALIAS=androiddebugkey
           export DEBUG_KEYSTORE_PASSWORD=$DEBUG_KEYSTORE_PASSWORD
         env:
-          DEBUG_KEYSTORE_PASSWORD: ${{secrets.INJI_ANDROID_DEBUG_STOREPASS || 'password' }}
+          DEBUG_KEYSTORE_PASSWORD: ${{secrets.INJI_ANDROID_DEBUG_STOREPASS || DUMMY_INJI_ANDROID_DEBUG_STOREPASS' }}
 
       - name: Bump version code
         uses: chkfung/android-version-actions@v1.2.1
@@ -148,4 +149,4 @@ jobs:
           ./verify-build.sh
         env:
           DEBUG_KEYSTORE_ALIAS: androiddebugkey
-          DEBUG_KEYSTORE_PASSWORD: ${{secrets.INJI_ANDROID_DEBUG_STOREPASS || 'password' }}
+          DEBUG_KEYSTORE_PASSWORD: ${{secrets.INJI_ANDROID_DEBUG_STOREPASS || DUMMY_INJI_ANDROID_DEBUG_STOREPASS' }}
