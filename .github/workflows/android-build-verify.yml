@@ -3,44 +3,44 @@ name: PR - Android build verification
 env:
   backendServiceDefaultUrl: https://api.sandbox.mosip.net
   DUMMY_GOOGLE_SERVICE_JSON: '{
-  "project_info": {
-    "project_number": "259470317171",
-    "project_id": "mosip-resident-app",
-    "storage_bucket": "mosip-resident-app.appspot.com"
-  },
-  "client": [
-    {
-      "client_info": {
-        "mobilesdk_app_id": "",
-        "android_client_info": {
-          "package_name": "io.mosip.residentapp"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": ""
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    }
-  ],
-  "configuration_version": "1"
-}'
+	  "project_info": {
+		"project_number": "mockproject-1234",
+		"project_id": "123456789000",
+		"storage_bucket": "mock-project.appspot.com"
+	  },
+	  "client": [
+		{
+		  "client_info": {
+			"mobilesdk_app_id": "1:123456789000:android:f1bf012572b04063",
+			"android_client_info": {
+			  "package_name": "io.mosip.residentapp"
+			}
+		  },
+		  "oauth_client": [
+			{
+			  "client_id": "123456789000-hjugbg6ud799v4c49dim8ce2usclthar.apps.googleusercontent.com",
+			  "client_type": 3
+			}
+		  ],
+		  "api_key": [
+			{
+			  "current_key": "AIzbSzCn1N6LWIe6wthYyrgUUSAlUsdqMb-wvTo"
+			}
+		  ],
+		  "services": {
+			"appinvite_service": {
+			  "other_platform_oauth_client": [
+				{
+				  "client_id": "123456789000-e4uksm38sne0bqrj6uvkbo4oiu4hvigl.apps.googleusercontent.com",
+				  "client_type": 3
+				}
+			  ]
+			}
+		  }
+		}
+	  ],
+	  "configuration_version": "1"
+	}'
 
 on:
   push:
@@ -143,7 +143,7 @@ jobs:
           versionCode: ${{github.run_number}}
 
       - name: Run Build using Fastlane
-        run: | 
+        run: |
           cd android/scripts
           ./verify-build.sh
         env:
