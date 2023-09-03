@@ -66,7 +66,6 @@ export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
             {props.error}
           </Text>
           <PinInput testID="pinInput" length={6} onDone={props.onInputDone} />
-
           <Text
             margin="36 0 0 0"
             color={Theme.Colors.resendCodeTimer}
