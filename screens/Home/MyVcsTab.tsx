@@ -104,7 +104,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                 })}
               </Column>
               <Button
-                testId="downloadCard"
+                testID="downloadCard"
                 type="gradient"
                 disabled={controller.isRefreshingVcs}
                 title={t('downloadCard')}

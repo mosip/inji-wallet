@@ -65,7 +65,7 @@ export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
             margin="16 0 0 0">
             {props.error}
           </Text>
-          <PinInput testId="pinInput" length={6} onDone={props.onInputDone} />
+          <PinInput testID="pinInput" length={6} onDone={props.onInputDone} />
 
           <Text
             margin="36 0 0 0"
