@@ -6,6 +6,11 @@ env:
 on:
   workflow_dispatch:
     inputs:
+      appname:
+        description: 'Inji_develop/Collab_build/Inji_release-0.9.x'
+        required: true
+        default: 'Inji_develop'
+        type: string
       backendServiceUrl:
         description: 'Backend service URL'
         required: true
@@ -122,3 +127,10 @@ jobs:
           SLACK_URL: '${{ secrets.SLACK_WEBHOOK_DEVOPS }}'
           PLAY_CONSOLE_RELEASE_DESCRIPTION: ${{ github.event.inputs.buildDescription }}
           CREDENTIAL_REGISTRY_EDIT: ${{ github.event.inputs.registry_edit }}
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3.1.1
+        with:
+          name: ${{ github.event.inputs.appname }}
+          path: android/app/build/outputs/apk/mosip/release/
+          retention-days: 10
