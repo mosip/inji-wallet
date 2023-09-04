@@ -142,6 +142,9 @@ export const scanMachine =
         RESET: {
           target: '.checkStorage',
         },
+        DISMISS: {
+          target: '#scan.reviewing.navigatingToHome',
+        },
       },
       states: {
         inactive: {

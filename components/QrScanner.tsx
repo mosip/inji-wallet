@@ -2,13 +2,20 @@ import React, { useContext, useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Camera } from 'expo-camera';
 import { BarCodeEvent, BarCodeScanner } from 'expo-barcode-scanner';
-import { Linking, TouchableOpacity, View, Image } from 'react-native';
+import {
+  Linking,
+  TouchableOpacity,
+  View,
+  Image,
+  Pressable,
+} from 'react-native';
 import { Theme } from './ui/styleUtils';
 import { Column, Button, Text, Centered, Row } from './ui';
 import { GlobalContext } from '../shared/GlobalContext';
 import { useSelector } from '@xstate/react';
 import { selectIsActive } from '../machines/app';
 import { useTranslation } from 'react-i18next';
+import { useScanLayout } from '../screens/Scan/ScanLayoutController';
 
 export const QrScanner: React.FC<QrScannerProps> = (props) => {
   const { t } = useTranslation('QrScanner');
@@ -16,6 +23,7 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
+  const controller = useScanLayout();
 
   const isActive = useSelector(appService, selectIsActive);
 
@@ -58,12 +66,14 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
               {t('cameraPermissionGuideLabel')}
             </Text>
           </Column>
-          <Icon
-            name="close"
-            onPress={openSettings}
-            color={Theme.Colors.whiteText}
-            size={19}
-          />
+          <Pressable>
+            <Icon
+              name="close"
+              onPress={controller.DISMISS}
+              color={Theme.Colors.whiteText}
+              size={19}
+            />
+          </Pressable>
         </Row>
       </View>
     );

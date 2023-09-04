@@ -91,6 +91,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
 };
 
 interface ButtonProps {
+  testID?: string;
   title: string;
   disabled?: boolean;
   margin?: Spacing;

@@ -23,6 +23,7 @@ export const Text: React.FC<TextProps> = (props: TextProps) => {
 };
 
 interface TextProps {
+  testID?: string;
   children: React.ReactNode;
   color?: string;
   weight?: 'regular' | 'semibold' | 'bold';
