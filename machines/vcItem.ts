@@ -377,6 +377,7 @@ export const vcItemMachine =
                     target: '#vc-item.kebabPopUp',
                     actions: [
                       'setWalletBindingId',
+                      'setThumbprintForWalletBindingId',
                       'storeContext',
                       'updateVc',
                       'setWalletBindingErrorEmpty',

@@ -93,7 +93,7 @@ export interface Typegen0 {
       | 'SCREEN_BLUR'
       | 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection'
       | 'xstate.init';
-    resetShouldVerifyPresence: 'CANCEL' | 'CONNECTED';
+    resetShouldVerifyPresence: 'CANCEL' | 'CONNECTED' | 'DISMISS';
     sendScanData: 'SCAN';
     setBleError: 'BLE_ERROR';
     setChildRef:
@@ -142,7 +142,7 @@ export interface Typegen0 {
     checkStorageAvailability: 'RESET' | 'SCREEN_FOCUS';
     createVp: never;
     disconnect: '' | 'DISMISS' | 'LOCATION_ENABLED' | 'SCREEN_BLUR';
-    monitorConnection: 'SCREEN_BLUR' | 'xstate.init';
+    monitorConnection: 'DISMISS' | 'SCREEN_BLUR' | 'xstate.init';
     requestBluetooth: 'BLUETOOTH_STATE_DISABLED';
     requestNearByDevicesPermission: 'NEARBY_DISABLED';
     requestToEnableLocationPermission: 'LOCATION_DISABLED';

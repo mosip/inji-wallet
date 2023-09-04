@@ -203,7 +203,7 @@ export function useScanLayout() {
 
   useEffect(() => {
     if (isDone) {
-      navigation.navigate('Home', { activeTab: 0 });
+      navigation.navigate('home', { activeTab: 0 });
     } else if (isReviewing) {
       navigation.navigate('SendVcScreen');
     } else if (isScanning) {

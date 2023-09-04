@@ -50,7 +50,7 @@ export const ReceivedCards: React.FC = () => {
               vcKey={vcKey}
               margin="0 2 8 2"
               isSharingVc
-              onPress={() => {}}
+              onPress={controller.VIEW_VC}
             />
           ))}
           {controller.vcKeys.length === 0 && (
