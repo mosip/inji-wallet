@@ -41,7 +41,7 @@ export const PinInput: React.FC<PinInputProps> = (props) => {
 };
 
 interface PinInputProps {
-  testId?: string;
+  testID?: string;
   length: number;
   onDone?: (value: string) => void;
 }

@@ -98,7 +98,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
           </Column>
           <Column>
             <Button
-              testId="generateVc"
+              testID="generateVc"
               type="gradient"
               title={t('generateVc')}
               disabled={!controller.id}
