@@ -33,7 +33,7 @@ lane :android_build_internal do
   git_commit = sh('git rev-parse --short HEAD').strip
   git_branch = sh('git rev-parse --abbrev-ref HEAD').strip
 
-  versionName = "#{git_commit}-#{git_branch}"
+  versionName = "Inji - #{git_commit}-#{git_branch}"
 
   gradle(task: "clean bundleMosipRelease")
   upload_to_play_store(
