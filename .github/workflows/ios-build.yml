@@ -58,6 +58,10 @@ jobs:
           export NVM_DIR="$HOME/.nvm"
           [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
           nvm uninstall node
+          node -v
+          which node
+          npm -v
+          nvm uninstall node
 
       - uses: actions/checkout@v3.1.0
       - uses: actions/setup-node@v3
