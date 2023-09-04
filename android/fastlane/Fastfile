@@ -29,6 +29,8 @@ lane :android_build_internal do
     gradle_file_path: "app/build.gradle",
     version_code: current_build_number
   )
+
+  gradle(task: "assembleMosipRelease")
   
   git_commit = sh('git rev-parse --short HEAD').strip
   git_branch = sh('git rev-parse --abbrev-ref HEAD').strip
