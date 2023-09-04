@@ -88,7 +88,7 @@ android {
         APP_NAME_BETA = "@string/app_name_beta"
     }
 
-    namespace "io.mosip.residentapp"
+    namespace 'io.mosip.residentapp'
 
     defaultConfig {
         applicationId 'io.mosip.residentapp'
