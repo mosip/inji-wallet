@@ -16,8 +16,6 @@ import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactNativeHost;
 import com.facebook.soloader.SoLoader;
 
-import expo.modules.ApplicationLifecycleDispatcher;
-import expo.modules.ReactNativeHostWrapper;
 import timber.log.Timber;
 
 import com.facebook.react.bridge.JSIModulePackage;
@@ -28,8 +26,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
-  private final ReactNativeHost mReactNativeHost = new ReactNativeHostWrapper(
-    this,
+  private final ReactNativeHost mReactNativeHost =
     new DefaultReactNativeHost(this) {
     @Override
     public boolean getUseDeveloperSupport() {
@@ -57,7 +54,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected Boolean isHermesEnabled() {
       return BuildConfig.IS_HERMES_ENABLED;
     }    
-  });
+  };
 
   @Override
   public ReactNativeHost getReactNativeHost() {
@@ -74,8 +71,6 @@ public class MainApplication extends Application implements ReactApplication {
       DefaultNewArchitectureEntryPoint.load();
     }
     ReactNativeFlipper.initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
-    
-    ApplicationLifecycleDispatcher.onApplicationCreate(this);
 
     if (BuildConfig.DEBUG) {
       Timber.plant(new Timber.DebugTree());
@@ -85,11 +80,6 @@ public class MainApplication extends Application implements ReactApplication {
     Timber.plant(new CrashReportingTree());
   }
 
-  @Override
-  public void onConfigurationChanged(@NonNull Configuration newConfig) {
-    super.onConfigurationChanged(newConfig);
-    ApplicationLifecycleDispatcher.onConfigurationChanged(this, newConfig);
-  }
 
   /**
    * A tree which logs important information for crash reporting.

@@ -2,16 +2,13 @@
   "scripts": {
     "prepare": "husky install",
     "start": "react-native start",
-    "android:mosip": "react-native run-android --variant=mosipDebug",
-    "android:newlogic": "react-native run-android --variant=newlogicDebug",
-    "android:ph": "react-native run-android --variant=phDebug",
+    "android:mosip": "react-native run-android --mode=mosipDebug",
     "ios": "react-native run-ios",
     "build:android:mosip": "cd android && ./gradlew :app:assembleMosipRelease && cd ..",
-    "build:android:newlogic": "cd android && ./gradlew :app:assembleNewlogicRelease && cd ..",
-    "build:android:ph": "cd android && ./gradlew :app:assemblePhRelease && cd ..",
     "i18n:compile-strings": "node scripts/compile-strings.js",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
-    "test": "jest"
+    "test": "jest",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@digitalbazaar/ed25519-signature-2018": "digitalbazaar/ed25519-signature-2018",
@@ -68,7 +65,7 @@
     "react-native-keychain": "^8.0.0",
     "react-native-linear-gradient": "^2.8.0",
     "react-native-location": "^2.5.0",
-    "react-native-mmkv-storage": "0.8.0",
+    "react-native-mmkv-storage": "0.9.1",
     "react-native-permissions": "^3.8.0",
     "react-native-popable": "^0.4.3",
     "react-native-qrcode-svg": "^6.2.0",

@@ -84,7 +84,6 @@ android {
 
     ext {
         APP_NAME_RELEASE = "@string/app_name"
-        APP_NAME_PH = "@string/app_name_ph"
         APP_NAME_MOSIP = "@string/app_name_mosip"
         APP_NAME_BETA = "@string/app_name_beta"
     }
@@ -165,13 +164,6 @@ android {
             ]
             dimension "inji"
         }
-        ph {
-            versionName defaultConfig.versionName + "-ph"
-            manifestPlaceholders = [
-                    APP_NAME: APP_NAME_PH
-            ]
-            dimension "inji"
-        }
     }
 }
 
@@ -183,7 +175,7 @@ dependencies {
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
         exclude group:'com.squareup.okhttp3', module:'okhttp'
     }
-    
+
     implementation 'com.facebook.soloader:soloader:0.10.1+'
 
     def isGifEnabled = (findProperty('expo.gif.enabled') ?: "") == "true";
