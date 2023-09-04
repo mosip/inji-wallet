@@ -27,7 +27,11 @@
   "PasscodeVerify": {
     "passcodeMismatchError": "ಪಾಸ್ಕೋಡ್ ಹೊಂದಿಕೆಯಾಗಲಿಲ್ಲ."
   },
-  "FaceScanner": {},
+  "FaceScanner": {
+    "imageCaptureGuide": "ಫೋನ್ ಅನ್ನು ಸ್ಥಿರವಾಗಿ ಹಿಡಿದುಕೊಳ್ಳಿ ಮತ್ತು ನಿಮ್ಮ ಮುಖವನ್ನು ಮಧ್ಯದಲ್ಲಿ ಕೇಂದ್ರೀಕರಿಸಿ",
+    "capture": "ಸೆರೆಹಿಡಿಯಿರಿ",
+    "flipCamera": "ಫ್ಲಿಪ್ ಕ್ಯಾಮೆರಾ"
+  },
   "OIDcAuth": {
     "title": "OIDC ದೃಢೀಕರಣ",
     "text": "OIDC ಪೂರೈಕೆದಾರ UI ನೊಂದಿಗೆ ಬದಲಾಯಿಸಲು",

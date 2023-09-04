@@ -1,7 +1,13 @@
 import React, { useCallback, useContext, useEffect, useRef } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Camera } from 'expo-camera';
-import { Platform, StyleSheet } from 'react-native';
+import {
+  Platform,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  Image,
+} from 'react-native';
 import { Button, Centered, Column, Row, Text } from './ui';
 import { useInterpret, useSelector } from '@xstate/react';
 import { useTranslation } from 'react-i18next';
@@ -80,34 +86,53 @@ export const FaceScanner: React.FC<FaceScannerProps> = (props) => {
   }
 
   return (
-    <Column crossAlign="center">
-      <Column style={[styles.scannerContainer]}>
+    <View>
+      <View style={Theme.Styles.scannerContainer}>
         <Camera
-          ratio="4:3"
-          style={styles.scanner}
+          style={Theme.Styles.scanner}
           type={whichCamera}
           ref={setCameraRef}
         />
-      </Column>
+      </View>
+      <Text
+        align="center"
+        weight="semibold"
+        style={Theme.TextStyles.base}
+        margin="50 57 0 57">
+        {t('imageCaptureGuide')}
+      </Text>
       <Centered margin="24 0">
         {isCapturing || isVerifying ? (
           <RotatingIcon name="sync" size={64} />
         ) : (
-          <Row crossAlign="center">
-            <Icon
-              name="flip-camera-ios"
-              color={Theme.Colors.flipCameraIcon}
-              size={64}
-              onPress={() => service.send(FaceScannerEvents.FLIP_CAMERA())}
-              style={{ margin: 8, marginEnd: 32 }}
-            />
-            <Icon
-              name="photo-camera"
-              color={Theme.Colors.flipCameraIcon}
-              size={64}
-              onPress={() => service.send(FaceScannerEvents.CAPTURE())}
-              style={{ margin: 8, marginTop: 12, marginStart: 32 }}
-            />
+          <Row
+            crossAlign="center"
+            align="space-evenly"
+            style={{ marginTop: 45 }}>
+            <Column crossAlign="center" margin="0 0 0 100">
+              <Centered style={Theme.Styles.faceCaptureOuter}>
+                <Button
+                  title={''}
+                  onPress={() => service.send(FaceScannerEvents.FLIP_CAMERA())}
+                  styles={Theme.Styles.faceCaptureInner}></Button>
+              </Centered>
+              <Text size="small" weight="semibold" margin="8">
+                {t('capture')}
+              </Text>
+            </Column>
+
+            <Centered>
+              <TouchableOpacity
+                onPress={() => service.send(FaceScannerEvents.CAPTURE())}>
+                <Image
+                  source={Theme.CameraFlipIcon}
+                  style={Theme.Styles.cameraFlipIcon}
+                />
+              </TouchableOpacity>
+              <Text size="small" weight="semibold" margin="8">
+                {t('flipCamera')}
+              </Text>
+            </Centered>
           </Row>
         )}
         {/* TODO: remove warning when iOS SDK is ready */}
@@ -117,7 +142,7 @@ export const FaceScanner: React.FC<FaceScannerProps> = (props) => {
           </Text>
         )}
       </Centered>
-    </Column>
+    </View>
   );
 };
 
@@ -126,21 +151,3 @@ interface FaceScannerProps {
   onValid: () => void;
   onInvalid: () => void;
 }
-
-const styles = StyleSheet.create({
-  scannerContainer: {
-    borderWidth: 4,
-    borderColor: Theme.Colors.textValue,
-    borderRadius: 32,
-    justifyContent: 'center',
-    height: 400,
-    width: 300,
-    overflow: 'hidden',
-  },
-
-  scanner: {
-    height: '100%',
-    width: '100%',
-    margin: 'auto',
-  },
-});

@@ -27,6 +27,7 @@ const Colors = {
   walletbindingLabel: '#000000',
   GradientColors: ['#373086', '#70308C'],
   DisabledColors: ['#C7C7C7', '#C7C7C7'],
+  captureIconBorder: '#F59B4B',
   Purple: '#70308C',
   LightPurple: '#AEA7FF',
   TimeoutHintBoxColor: '#FFF7E5',
@@ -323,6 +324,23 @@ export const PurpleTheme = {
       height: 36,
       borderRadius: 10,
       backgroundColor: Colors.LightPurple,
+    },
+    cameraFlipIcon: {
+      height: 42,
+      width: 42,
+    },
+    faceCaptureOuter: {
+      width: 69,
+      height: 69,
+      borderRadius: 42,
+      borderColor: Colors.captureIconBorder,
+      borderWidth: 3,
+    },
+    faceCaptureInner: {
+      width: 60,
+      height: 60,
+      borderRadius: 42,
+      alignSelf: 'center',
     },
     settingsIconBg: {
       padding: 6,

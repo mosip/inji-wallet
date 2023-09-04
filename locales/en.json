@@ -24,7 +24,11 @@
     "Verifier": "Verifier",
     "Wallet": "Wallet"
   },
-  "FaceScanner": {},
+  "FaceScanner": {
+    "imageCaptureGuide": "Hold the phone steady and keep your face focused in the centre",
+    "capture": "Capture",
+    "flipCamera": "Flip Camera"
+  },
   "OIDcAuth": {
     "title": "OIDC Authentication",
     "text": "To be replaced with the OIDC provider UI",

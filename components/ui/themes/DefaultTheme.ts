@@ -27,6 +27,7 @@ const Colors = {
   LightOrange: '#FDF1E6',
   GradientColors: ['#F59B4B', '#E86E04'],
   DisabledColors: ['#C7C7C7', '#C7C7C7'],
+  captureIconBorder: '#F59B4B',
   TimeoutHintBoxColor: '#FFF7E5',
   TimoutText: '#8B6105',
   resendCodeTimer: '#555555',
@@ -321,6 +322,23 @@ export const DefaultTheme = {
       height: 36,
       borderRadius: 10,
       backgroundColor: Colors.LightOrange,
+    },
+    cameraFlipIcon: {
+      height: 42,
+      width: 42,
+    },
+    faceCaptureOuter: {
+      width: 69,
+      height: 69,
+      borderRadius: 42,
+      borderColor: Colors.captureIconBorder,
+      borderWidth: 3,
+    },
+    faceCaptureInner: {
+      width: 60,
+      height: 60,
+      borderRadius: 42,
+      alignSelf: 'center',
     },
     settingsIconBg: {
       padding: 6,

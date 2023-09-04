@@ -99,9 +99,12 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
                 : Camera.Constants.Type.back
             );
           }}>
-          <Image source={Theme.CameraFlipIcon} />
+          <Image
+            source={Theme.CameraFlipIcon}
+            style={Theme.Styles.cameraFlipIcon}
+          />
         </TouchableOpacity>
-        <Text align="center" weight="semibold" margin="9 0">
+        <Text size="small" weight="semibold" margin="8">
           {t('flipCamera')}
         </Text>
       </Column>

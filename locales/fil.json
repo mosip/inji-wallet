@@ -27,7 +27,11 @@
   "PasscodeVerify": {
     "passcodeMismatchError": "Hindi tumugma ang passcode."
   },
-  "FaceScanner": {},
+  "FaceScanner": {
+    "imageCaptureGuide": "Hawakan nang matatag ang telepono at panatilihing nakatutok ang iyong mukha sa gitna",
+    "capture": "Kunin",
+    "flipCamera": "I-flip ang Camera"
+  },
   "OIDcAuth": {
     "title": "OIDC Authentication",
     "text": "Papalitan ng OIDC service provider UI",
