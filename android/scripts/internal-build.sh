@@ -7,7 +7,5 @@ yes | sudo gem install bundler
 
 yes | sudo fastlane install_plugins
 
-bundle exec fastlane android_build_upload
-
 bundle exec fastlane android_build_internal
 
