@@ -740,6 +740,7 @@ export const DefaultTheme = {
   }),
   KebabPopUpStyles: StyleSheet.create({
     kebabPopUp: {
+      flex: 1,
       borderTopLeftRadius: 15,
       borderTopRightRadius: 15,
       width: Dimensions.get('screen').width,
