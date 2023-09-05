@@ -111,7 +111,9 @@ jobs:
       - name: Run Build for upload
         run: | 
           cd android
-          ./gradlew :app:assembleMosipRelease
+          yes | sudo gem install bundler
+          yes | sudo fastlane install_plugins 
+          bundle exec fastlane android_build_upload
         env:
           MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
           APPLICATION_THEME: ${{ github.event.inputs.theme }} 
