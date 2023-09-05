@@ -327,18 +327,9 @@ export const DefaultTheme = {
       height: 42,
       width: 42,
     },
-    faceCaptureOuter: {
-      width: 69,
-      height: 69,
-      borderRadius: 42,
-      borderColor: Colors.captureIconBorder,
-      borderWidth: 3,
-    },
-    faceCaptureInner: {
-      width: 60,
-      height: 60,
-      borderRadius: 42,
-      alignSelf: 'center',
+    imageCaptureButton: {
+      marginLeft: 130,
+      marginRight: 50,
     },
     settingsIconBg: {
       padding: 6,
@@ -990,6 +981,7 @@ export const DefaultTheme = {
   MosipSplashLogo: require('../../../assets/icon.png'),
   MosipLogo: require('../../../assets/mosip-logo.png'),
   CameraFlipIcon: require('../../../assets/camera-flip-icon.png'),
+  ImageCaptureButton: require('../../../assets/capture-button.png'),
   DomainWarningLogo: require('../../../assets/domain-warning.png'),
   WarningLogo: require('../../../assets/warningLogo.png'),
   OtpLogo: require('../../../assets/otp-mobile-logo.png'),

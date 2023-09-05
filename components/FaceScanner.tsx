@@ -1,5 +1,4 @@
 import React, { useCallback, useContext, useEffect, useRef } from 'react';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Camera } from 'expo-camera';
 import {
   Platform,
@@ -105,31 +104,26 @@ export const FaceScanner: React.FC<FaceScannerProps> = (props) => {
         {isCapturing || isVerifying ? (
           <RotatingIcon name="sync" size={64} />
         ) : (
-          <Row
-            crossAlign="center"
-            align="space-evenly"
-            style={{ marginTop: 45 }}>
-            <Column crossAlign="center" margin="0 0 0 100">
-              <Centered style={Theme.Styles.faceCaptureOuter}>
-                <Button
-                  title={''}
-                  onPress={() => service.send(FaceScannerEvents.FLIP_CAMERA())}
-                  styles={Theme.Styles.faceCaptureInner}></Button>
-              </Centered>
+          <Row align="center" style={{ marginTop: 42 }}>
+            <Centered style={Theme.Styles.imageCaptureButton}>
+              <TouchableOpacity
+                onPress={() => service.send(FaceScannerEvents.CAPTURE())}>
+                <Image source={Theme.ImageCaptureButton} />
+              </TouchableOpacity>
               <Text size="small" weight="semibold" margin="8">
                 {t('capture')}
               </Text>
-            </Column>
+            </Centered>
 
             <Centered>
               <TouchableOpacity
-                onPress={() => service.send(FaceScannerEvents.CAPTURE())}>
+                onPress={() => service.send(FaceScannerEvents.FLIP_CAMERA())}>
                 <Image
                   source={Theme.CameraFlipIcon}
                   style={Theme.Styles.cameraFlipIcon}
                 />
               </TouchableOpacity>
-              <Text size="small" weight="semibold" margin="8">
+              <Text size="smaller" weight="semibold" margin="8">
                 {t('flipCamera')}
               </Text>
             </Centered>
