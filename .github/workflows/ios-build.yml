@@ -1,8 +1,14 @@
 name: Inji iOS build
+run-name: ${{ github.event.inputs.buildname }} 
 
 on:
   workflow_dispatch:
     inputs:
+      buildname:
+        description: 'Build App For'
+        required: true
+        default: 'Sprint-x/Collab/release-x.x.x'
+        type: string
       backendServiceUrl:
         description: 'Backend service URL'
         required: true

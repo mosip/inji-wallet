@@ -1,4 +1,5 @@
 name: Android Internal Build
+run-name: ${{ github.event.inputs.buildname }} 
 
 env:
   backendServiceDefaultUrl: https://api.sandbox.mosip.net
@@ -6,10 +7,10 @@ env:
 on:
   workflow_dispatch:
     inputs:
-      appname:
-        description: 'Inji_develop/Collab_build/Inji_release-0.9.x'
+      buildname:
+        description: 'Build App For'
         required: true
-        default: 'Inji_develop'
+        default: 'Sprint-x/Collab/release-x.x.x'
         type: string
       backendServiceUrl:
         description: 'Backend service URL'
@@ -131,6 +132,6 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v3.1.1
         with:
-          name: ${{ github.event.inputs.appname }}
+          name: ${{ github.event.inputs.buildname }}
           path: android/app/build/outputs/apk/mosip/release/
           retention-days: 10

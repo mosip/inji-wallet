@@ -15,6 +15,29 @@ lane :android_build_verify do
   )
 end
 
+desc "Upload the build to github Actions"
+lane :android_build_upload do
+
+  previous_build_number = google_play_track_version_codes(
+    package_name: "io.mosip.residentapp",
+    track: "internal",
+    json_key: "play_config.json",
+  )[0]
+  
+  current_build_number = previous_build_number + 1
+  
+  increment_version_code(
+    gradle_file_path: "app/build.gradle",
+    version_code: current_build_number
+  )
+  
+  ENV["BUILD_NUMBER"] = current_build_number.to_s
+
+  gradle(
+    task: "assembleMosipRelease",
+  )
+end
+
 desc "Deploy an Internal testing version to the Google Play"
 lane :android_build_internal do
   previous_build_number = google_play_track_version_codes(
@@ -29,8 +52,6 @@ lane :android_build_internal do
     gradle_file_path: "app/build.gradle",
     version_code: current_build_number
   )
-
-  gradle(task: "assembleMosipRelease")
   
   git_commit = sh('git rev-parse --short HEAD').strip
   git_branch = sh('git rev-parse --abbrev-ref HEAD').strip
