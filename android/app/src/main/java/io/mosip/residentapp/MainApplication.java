@@ -1,4 +1,6 @@
 package io.mosip.residentapp;
+import expo.modules.ApplicationLifecycleDispatcher;
+import expo.modules.ReactNativeHostWrapper;
 
 import android.app.Application;
 import android.content.Context;
@@ -27,7 +29,7 @@ import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
   private final ReactNativeHost mReactNativeHost =
-    new DefaultReactNativeHost(this) {
+    new ReactNativeHostWrapper(this, new DefaultReactNativeHost(this) {
     @Override
     public boolean getUseDeveloperSupport() {
       return BuildConfig.DEBUG;
@@ -44,7 +46,7 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     protected String getJSMainModuleName() {
-      return "index";
+      return ".expo/.virtual-metro-entry";
     }
    @Override
     protected boolean isNewArchEnabled() {
@@ -54,7 +56,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected Boolean isHermesEnabled() {
       return BuildConfig.IS_HERMES_ENABLED;
     }    
-  };
+  });
 
   @Override
   public ReactNativeHost getReactNativeHost() {
@@ -78,6 +80,7 @@ public class MainApplication extends Application implements ReactApplication {
     // Setup Firebase
     FirebaseAnalytics.getInstance(this);
     Timber.plant(new CrashReportingTree());
+    ApplicationLifecycleDispatcher.onApplicationCreate(this);
   }
 
 
@@ -102,5 +105,11 @@ public class MainApplication extends Application implements ReactApplication {
         }
       }
     }
+  }
+
+  @Override
+  public void onConfigurationChanged(Configuration newConfig) {
+    super.onConfigurationChanged(newConfig);
+    ApplicationLifecycleDispatcher.onConfigurationChanged(this, newConfig);
   }
 }

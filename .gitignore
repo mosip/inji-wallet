@@ -117,3 +117,8 @@ temp/
 yalc.lock
 
 android/app/debug.keystore
+
+# Expo
+.expo
+dist/
+web-build/

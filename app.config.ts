@@ -14,7 +14,7 @@ export default {
   },
   assetBundlePatterns: ['**/*'],
   ios: {
-    bundleIdentifier: 'io.mosip.residentapp',
+    bundleIdentifier: 'io.mosip.inji.mobileid',
     buildNumber: '1.0.0',
     supportsTablet: true,
   },
