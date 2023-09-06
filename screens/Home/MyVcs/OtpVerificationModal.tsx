@@ -5,6 +5,7 @@ import { Column, Text } from '../../../components/ui';
 import { ModalProps, Modal } from '../../../components/ui/Modal';
 import { Theme } from '../../../components/ui/styleUtils';
 import { Image, TouchableOpacity } from 'react-native';
+import testID from '../../../shared/commonUtil';
 
 export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
   props
@@ -84,7 +85,7 @@ export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
                   }
             }>
             <Text
-              testID="resendCode"
+              {...testID('resendCode')}
               color={
                 timer > 0 ? Theme.Colors.GrayText : Theme.Colors.AddIdBtnBg
               }
