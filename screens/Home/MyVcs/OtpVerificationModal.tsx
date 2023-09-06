@@ -85,7 +85,7 @@ export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
                   }
             }>
             <Text
-              {...testID('resendCode')}
+              testID="resendCode"
               color={
                 timer > 0 ? Theme.Colors.GrayText : Theme.Colors.AddIdBtnBg
               }
