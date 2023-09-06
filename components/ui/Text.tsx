@@ -17,7 +17,10 @@ export const Text: React.FC<TextProps> = (props: TextProps) => {
   ];
 
   return (
-    <RNText style={textStyles} {...testID(props.testID)}>
+    <RNText
+      style={textStyles}
+      numberOfLines={props.numLines}
+      {...testID(props.testID)}>
       {props.children}
     </RNText>
   );
