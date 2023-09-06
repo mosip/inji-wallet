@@ -6,6 +6,7 @@ import {
 import { GestureResponderEvent, StyleProp, ViewStyle } from 'react-native';
 import { Text } from './Text';
 import { Theme, Spacing } from './styleUtils';
+import testID from '../../shared/commonUtil';
 
 export const Button: React.FC<ButtonProps> = (props) => {
   const type = props.type || 'solid' || 'radius' || 'gradient';
@@ -58,6 +59,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
       icon={props.icon}
       onPress={handleOnPress}
       loading={props.loading}
+      {...testID(props.testID)}
     />
   ) : (
     <RNEButton
@@ -86,6 +88,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
       icon={props.icon}
       onPress={handleOnPress}
       loading={props.loading}
+      {...testID(props.testID)}
     />
   );
 };

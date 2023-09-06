@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleProp, TextStyle, Text as RNText } from 'react-native';
 import { Theme, Spacing } from './styleUtils';
+import testID from '../../shared/commonUtil';
 
 export const Text: React.FC<TextProps> = (props: TextProps) => {
   const weight = props.weight || 'regular';
@@ -16,7 +17,7 @@ export const Text: React.FC<TextProps> = (props: TextProps) => {
   ];
 
   return (
-    <RNText style={textStyles} numberOfLines={props.numLines}>
+    <RNText style={textStyles} {...testID(props.testID)}>
       {props.children}
     </RNText>
   );
