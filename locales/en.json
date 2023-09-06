@@ -540,6 +540,7 @@
     "save": "Save Preference"
   },
   "common": {
+    "retry" : "Retry",
     "cancel": "Cancel",
     "accept": "Accept",
     "save": "Save",

@@ -28,7 +28,7 @@ const Colors = {
   GradientColors: ['#F59B4B', '#E86E04'],
   DisabledColors: ['#C7C7C7', '#C7C7C7'],
   TimeoutHintBoxColor: '#FFF7E5',
-  TimoutText: '#8B6105',
+  TimoutHintText: '#8B6105',
   resendCodeTimer: '#555555',
 };
 
@@ -93,7 +93,7 @@ export const DefaultTheme = {
     DisabledColors: Colors.DisabledColors,
     getVidColor: Colors.Zambezi,
     TimeoutHintBoxColor: Colors.TimeoutHintBoxColor,
-    TimoutText: Colors.TimoutText,
+    TimoutHintText: Colors.TimoutHintText,
     walletbindingLabel: Colors.Black,
     walletbindingContent: Colors.Gray40,
     resendCodeTimer: Colors.resendCodeTimer,
