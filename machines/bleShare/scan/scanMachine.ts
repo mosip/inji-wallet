@@ -1091,7 +1091,7 @@ export const scanMachine =
 
       delays: {
         DESTROY_TIMEOUT: 500,
-        CONNECTION_TIMEOUT: 8 * 1000,
+        CONNECTION_TIMEOUT: 5 * 1000,
         SHARING_TIMEOUT: 15 * 1000,
       },
     }

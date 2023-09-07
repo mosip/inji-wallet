@@ -59,7 +59,7 @@ export const ProgressingModal: React.FC<ProgressingModalProps> = (props) => {
               {props.onRetry && (
                 <Button
                   type="clear"
-                  title={t('common:retry')}
+                  title={t('status.retry')}
                   onPress={props.onRetry}
                 />
               )}

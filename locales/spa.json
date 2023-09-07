@@ -383,6 +383,8 @@
 		"status": {
 			"connecting": "Conectando...",
 			"connectingTimeout": "Está tomando tiempo establecer la conexión. ¿El otro dispositivo está abierto para conexiones?",
+			"stayOnTheScreen": "Quédate en la pantalla",
+			"retry": "Rever",
 			"exchangingDeviceInfo": "Intercambiando información del dispositivo...",
 			"exchangingDeviceInfoTimeout": "Está tomando tiempo intercambiar la información del dispositivo. Es posible que tengas que reconectar.",
 			"invalid": "Código QR inválido",
