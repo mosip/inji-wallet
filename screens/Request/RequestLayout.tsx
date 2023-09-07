@@ -7,12 +7,14 @@ import { useRequestLayout } from './RequestLayoutController';
 import { Message } from '../../components/Message';
 import { ReceiveVcScreen } from './ReceiveVcScreen';
 import { MessageOverlay } from '../../components/MessageOverlay';
-
+import { ReceivedCardsModal } from '../Settings/ReceivedCardsModal';
+import { useReceivedVcsTab } from '../Home/ReceivedVcsTabController';
 const RequestStack = createNativeStackNavigator();
 
 export const RequestLayout: React.FC = () => {
   const { t } = useTranslation('RequestScreen');
   const controller = useRequestLayout();
+  const receivedCardsController = useReceivedVcsTab();
 
   return (
     <React.Fragment>
@@ -54,6 +56,11 @@ export const RequestLayout: React.FC = () => {
         />
       </RequestStack.Navigator>
 
+      <ReceivedCardsModal
+        isVisible={controller.isNavigatingToReceivedCards}
+        controller={receivedCardsController}
+        onDismiss={controller.DISMISS}
+      />
       {controller.isAccepted && (
         <Message
           title={t('status.accepted.title')}

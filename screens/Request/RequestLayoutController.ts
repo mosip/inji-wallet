@@ -9,6 +9,8 @@ import {
   selectIsWaitingForConnection,
   selectSenderInfo,
   selectIsDone,
+  selectIsNavigatingToReceivedCards,
+  selectIsNavigatingToHome,
 } from '../../machines/bleShare/request/selectors';
 import {
   selectIsAccepted,
@@ -56,15 +58,23 @@ export function useRequestLayout() {
     requestService,
     selectIsWaitingForConnection
   );
+  const isNavigatingToReceivedCards = useSelector(
+    requestService,
+    selectIsNavigatingToReceivedCards
+  );
+  const isNavigationToHome = useSelector(
+    requestService,
+    selectIsNavigatingToHome
+  );
   useEffect(() => {
-    if (isDone) {
-      navigation.navigate('history');
+    if (isNavigationToHome) {
+      navigation.navigate('home');
     } else if (isReviewing) {
       navigation.navigate('ReceiveVcScreen');
     } else if (isWaitingForConnection) {
       navigation.navigate('RequestScreen');
     }
-  }, [isDone, isReviewing, isWaitingForConnection]);
+  }, [isNavigationToHome, isReviewing, isWaitingForConnection]);
 
   return {
     senderInfo: useSelector(requestService, selectSenderInfo),
@@ -74,14 +84,13 @@ export function useRequestLayout() {
     isDisconnected: useSelector(requestService, selectIsDisconnected),
     isBleError: useSelector(requestService, selectIsHandlingBleError),
     bleError: useSelector(requestService, selectBleError),
-
     IsSavingFailedInViewingVc: useSelector(
       requestService,
       selectIsSavingFailedInViewingVc
     ),
     isReviewing,
     isDone,
-
+    isNavigatingToReceivedCards,
     DISMISS: () => requestService.send(RequestEvents.DISMISS()),
     RESET: () => requestService.send(RequestEvents.RESET()),
   };
