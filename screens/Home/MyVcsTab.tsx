@@ -14,7 +14,6 @@ import {
   MessageOverlay,
 } from '../../components/MessageOverlay';
 import { Icon } from 'react-native-elements';
-import testID from '../../shared/commonUtil';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
   const { t } = useTranslation('MyVcsTab');

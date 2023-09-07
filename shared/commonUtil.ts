@@ -18,7 +18,7 @@ export interface Argon2iConfig {
   mode: string;
 }
 
-export default function testID(id) {
+export default function testIDProps(id) {
   return Platform.OS === 'android'
     ? { accessible: true, accessibilityLabel: id }
     : { testID: id };

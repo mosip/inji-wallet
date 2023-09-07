@@ -6,7 +6,7 @@ import {
 import { GestureResponderEvent, StyleProp, ViewStyle } from 'react-native';
 import { Text } from './Text';
 import { Theme, Spacing } from './styleUtils';
-import testID from '../../shared/commonUtil';
+import testIDProps from '../../shared/commonUtil';
 
 export const Button: React.FC<ButtonProps> = (props) => {
   const type = props.type || 'solid' || 'radius' || 'gradient';
@@ -34,6 +34,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
 
   return !(type === 'gradient') ? (
     <RNEButton
+      {...testIDProps(props.testID)}
       buttonStyle={buttonStyle}
       containerStyle={[
         props.fill ? Theme.ButtonStyles.fill : null,
@@ -59,10 +60,10 @@ export const Button: React.FC<ButtonProps> = (props) => {
       icon={props.icon}
       onPress={handleOnPress}
       loading={props.loading}
-      {...testID(props.testID)}
     />
   ) : (
     <RNEButton
+      {...testIDProps(props.testID)}
       buttonStyle={buttonStyle}
       ViewComponent={require('react-native-linear-gradient').default}
       linearGradientProps={{
@@ -88,7 +89,6 @@ export const Button: React.FC<ButtonProps> = (props) => {
       icon={props.icon}
       onPress={handleOnPress}
       loading={props.loading}
-      {...testID(props.testID)}
     />
   );
 };
