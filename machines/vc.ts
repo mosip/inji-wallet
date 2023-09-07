@@ -6,12 +6,8 @@ import { VC } from '../types/vc';
 import { AppServices } from '../shared/GlobalContext';
 import { log, respond } from 'xstate/lib/actions';
 import { VcItemEvents } from './vcItem';
-import {
-  MY_VCS_STORE_KEY,
-  RECEIVED_VCS_STORE_KEY,
-  VC_ITEM_STORE_KEY,
-  isSameVC,
-} from '../shared/constants';
+import { MY_VCS_STORE_KEY, RECEIVED_VCS_STORE_KEY } from '../shared/constants';
+import { VCKey } from '../shared/VCKey';
 
 const model = createModel(
   {
@@ -196,15 +192,21 @@ export const vcMachine =
         }),
 
         setDownloadedVc: (context, event) => {
-          context.vcs[VC_ITEM_STORE_KEY(event.vc)] = event.vc;
+          const vcKey = VCKey.fromVC(event.vc, true).toString();
+          context.vcs[vcKey] = event.vc;
         },
 
         setVcUpdate: (context, event) => {
-          Object.keys(context.vcs).map((vcKey) => {
-            if (isSameVC(vcKey, VC_ITEM_STORE_KEY(event.vc))) {
-              context.vcs[VC_ITEM_STORE_KEY(event.vc)] = context.vcs[vcKey];
-              delete context.vcs[vcKey];
-              return context.vcs[VC_ITEM_STORE_KEY(event.vc)];
+          Object.keys(context.vcs).map((vcKeyStr) => {
+            const eventVCKey = VCKey.fromVC(event.vc, true);
+            const vcKey = VCKey.fromVCKey(vcKeyStr);
+
+            if (vcKey.equals(eventVCKey)) {
+              const vcKeyString = vcKey.toString();
+              const eventVcKeyString = eventVCKey.toString();
+              context.vcs[eventVcKeyString] = context.vcs[vcKeyString];
+              delete context.vcs[vcKeyString];
+              return context.vcs[eventVcKeyString];
             }
           });
         },

@@ -12,7 +12,7 @@ import {
 import { createModel } from 'xstate/lib/model';
 import { generateSecureRandom } from 'react-native-securerandom';
 import { log } from 'xstate/lib/actions';
-import { MY_VCS_STORE_KEY, VC_ITEM_STORE_KEY_REGEX } from '../shared/constants';
+import { MY_VCS_STORE_KEY } from '../shared/constants';
 import SecureKeystore from 'react-native-secure-keystore';
 import {
   AUTH_TIMEOUT,
@@ -24,8 +24,8 @@ import {
   HMAC_ALIAS,
   isCustomSecureKeystore,
 } from '../shared/cryptoutil/cryptoUtil';
+import { VCKey } from '../shared/VCKey';
 
-const vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
 export const keyinvalidatedString =
   'Key Invalidated due to biometric enrollment';
 export const tamperedErrorMessageString = 'Data is tampered';
@@ -498,7 +498,7 @@ export async function getItem(
       const decryptedData = await decryptJson(encryptionKey, data);
       return JSON.parse(decryptedData);
     }
-    if (data === null && vcKeyRegExp.exec(key)) {
+    if (data === null && VCKey.isValid(key)) {
       await removeItem(key, data, encryptionKey);
       throw new Error(tamperedErrorMessageString);
     } else {
@@ -580,7 +580,7 @@ export async function removeItem(
   encryptionKey: string
 ) {
   try {
-    if (value === null && vcKeyRegExp.exec(key)) {
+    if (value === null && VCKey.isValid(key)) {
       await Storage.removeItem(key);
       await removeVCMetaData(MY_VCS_STORE_KEY, key, encryptionKey);
     } else {

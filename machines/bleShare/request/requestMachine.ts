@@ -14,10 +14,7 @@ import { getDeviceNameSync } from 'react-native-device-info';
 import { StoreEvents } from '../../store';
 import { VC } from '../../../types/vc';
 import { AppServices } from '../../../shared/GlobalContext';
-import {
-  RECEIVED_VCS_STORE_KEY,
-  VC_ITEM_STORE_KEY,
-} from '../../../shared/constants';
+import { RECEIVED_VCS_STORE_KEY } from '../../../shared/constants';
 import { ActivityLogEvents, ActivityLogType } from '../../activityLog';
 import { VcEvents } from '../../vc';
 import { subscribe } from '../../../shared/openIdBLE/verifierEventHandler';
@@ -25,6 +22,7 @@ import { log } from 'xstate/lib/actions';
 import { VerifierDataEvent } from 'react-native-tuvali/src/types/events';
 import { BLEError } from '../types';
 import Storage from '../../../shared/storage';
+import { VCKey } from '../../../shared/VCKey';
 // import { verifyPresentation } from '../shared/vcjs/verifyPresentation';
 
 const { verifier, EventTypes, VerificationStatus } = tuvali;
@@ -568,13 +566,14 @@ export const requestMachine =
           (context) =>
             StoreEvents.PREPEND(
               RECEIVED_VCS_STORE_KEY,
-              VC_ITEM_STORE_KEY(context.incomingVc)
+              VCKey.fromVC(context.incomingVc, true).toString()
             ),
           { to: (context) => context.serviceRefs.store }
         ),
 
         requestExistingVc: send(
-          (context) => StoreEvents.GET(VC_ITEM_STORE_KEY(context.incomingVc)),
+          (context) =>
+            StoreEvents.GET(VCKey.fromVC(context.incomingVc, true).toString()),
           { to: (context) => context.serviceRefs.store }
         ),
 
@@ -585,7 +584,10 @@ export const requestMachine =
               ...existing,
               reason: existing.reason.concat(context.incomingVc.reason),
             };
-            return StoreEvents.SET(VC_ITEM_STORE_KEY(updated), updated);
+            return StoreEvents.SET(
+              VCKey.fromVC(updated, true).toString(),
+              updated
+            );
           },
           { to: (context) => context.serviceRefs.store }
         ),
@@ -593,7 +595,7 @@ export const requestMachine =
         storeVc: send(
           (context) =>
             StoreEvents.SET(
-              VC_ITEM_STORE_KEY(context.incomingVc),
+              VCKey.fromVC(context.incomingVc, true).toString(),
               context.incomingVc
             ),
           { to: (context) => context.serviceRefs.store }
@@ -618,7 +620,7 @@ export const requestMachine =
         logReceived: send(
           (context) =>
             ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VC_ITEM_STORE_KEY(context.incomingVc),
+              _vcKey: VCKey.fromVC(context.incomingVc, true).toString(),
               type: context.receiveLogType,
               timestamp: Date.now(),
               deviceName:
@@ -630,7 +632,9 @@ export const requestMachine =
 
         sendVcReceived: send(
           (context) => {
-            return VcEvents.VC_RECEIVED(VC_ITEM_STORE_KEY(context.incomingVc));
+            return VcEvents.VC_RECEIVED(
+              VCKey.fromVC(context.incomingVc, true).toString()
+            );
           },
           { to: (context) => context.serviceRefs.vc }
         ),
@@ -790,7 +794,7 @@ export const requestMachine =
       guards: {
         hasExistingVc: (context, event) => {
           const receivedVcs = event.response as string[];
-          const vcKey = VC_ITEM_STORE_KEY(context.incomingVc);
+          const vcKey = VCKey.fromVC(context.incomingVc, true).toString();
           return receivedVcs.includes(vcKey);
         },
 

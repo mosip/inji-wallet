@@ -1,11 +1,6 @@
 import { assign, ErrorPlatformEvent, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
-import {
-  HOST,
-  MY_VCS_STORE_KEY,
-  VC_ITEM_STORE_KEY,
-  VC_ITEM_STORE_KEY_AFTER_DOWNLOAD,
-} from '../shared/constants';
+import { HOST, MY_VCS_STORE_KEY } from '../shared/constants';
 import { AppServices } from '../shared/GlobalContext';
 import { CredentialDownloadResponse, request } from '../shared/request';
 import {
@@ -34,6 +29,7 @@ import getAllConfigurations, {
 import { VcEvents } from './vc';
 import i18n from '../i18n';
 import SecureKeystore from 'react-native-secure-keystore';
+import { VCKey } from '../shared/VCKey';
 
 const model = createModel(
   {
@@ -779,7 +775,7 @@ export const vcItemMachine =
             const { serviceRefs, ...data } = context;
             return StoreEvents.REMOVE_VC_METADATA(
               MY_VCS_STORE_KEY,
-              VC_ITEM_STORE_KEY(context)
+              VCKey.fromVC(context, true).toString()
             );
           },
           {
@@ -792,7 +788,7 @@ export const vcItemMachine =
             const { serviceRefs, ...data } = context;
             return {
               type: 'REMOVE_VC_FROM_CONTEXT',
-              vcKey: VC_ITEM_STORE_KEY(context),
+              vcKey: VCKey.fromVC(context, true).toString(),
             };
           },
           {
@@ -842,7 +838,7 @@ export const vcItemMachine =
 
         sendVcUpdated: send(
           (_context, event) =>
-            VcEvents.VC_UPDATED(VC_ITEM_STORE_KEY(event.response) as string),
+            VcEvents.VC_UPDATED(VCKey.fromVC(event.response, true).toString()),
           {
             to: (context) => context.serviceRefs.vc,
           }
@@ -896,7 +892,7 @@ export const vcItemMachine =
         requestVcContext: send(
           (context) => ({
             type: 'GET_VC_ITEM',
-            vcKey: VC_ITEM_STORE_KEY(context),
+            vcKey: VCKey.fromVC(context, true).toString(),
           }),
           {
             to: (context) => context.serviceRefs.vc,
@@ -904,7 +900,7 @@ export const vcItemMachine =
         ),
 
         requestStoredContext: send(
-          (context) => StoreEvents.GET(VC_ITEM_STORE_KEY(context)),
+          (context) => StoreEvents.GET(VCKey.fromVC(context, true).toString()),
           {
             to: (context) => context.serviceRefs.store,
           }
@@ -914,7 +910,10 @@ export const vcItemMachine =
           (context) => {
             const { serviceRefs, ...data } = context;
             data.credentialRegistry = HOST;
-            return StoreEvents.SET(VC_ITEM_STORE_KEY(context), data);
+            return StoreEvents.SET(
+              VCKey.fromVC(context, true).toString(),
+              data
+            );
           },
           {
             to: (context) => context.serviceRefs.store,
@@ -923,10 +922,7 @@ export const vcItemMachine =
 
         editVcKey: send((context) => {
           const { serviceRefs, ...data } = context;
-          return StoreEvents.SET(
-            VC_ITEM_STORE_KEY_AFTER_DOWNLOAD(context),
-            data
-          );
+          return StoreEvents.SET(VCKey.fromVC(context, false).toString(), data);
         }),
 
         setTag: model.assign({
@@ -950,7 +946,10 @@ export const vcItemMachine =
         storeTag: send(
           (context) => {
             const { serviceRefs, ...data } = context;
-            return StoreEvents.SET(VC_ITEM_STORE_KEY(context), data);
+            return StoreEvents.SET(
+              VCKey.fromVC(context, true).toString(),
+              data
+            );
           },
           { to: (context) => context.serviceRefs.store }
         ),
@@ -969,7 +968,7 @@ export const vcItemMachine =
           (context) => {
             const { serviceRefs, ...data } = context;
             return ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VC_ITEM_STORE_KEY(data),
+              _vcKey: VCKey.fromVC(data, true).toString(),
               type: 'VC_DOWNLOADED',
               timestamp: Date.now(),
               deviceName: '',
@@ -984,7 +983,7 @@ export const vcItemMachine =
         logWalletBindingSuccess: send(
           (context, event) =>
             ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VC_ITEM_STORE_KEY(context),
+              _vcKey: VCKey.fromVC(context, true).toString(),
               type: 'WALLET_BINDING_SUCCESSFULL',
               timestamp: Date.now(),
               deviceName: '',
@@ -998,7 +997,7 @@ export const vcItemMachine =
         logWalletBindingFailure: send(
           (context, event) =>
             ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VC_ITEM_STORE_KEY(context),
+              _vcKey: VCKey.fromVC(context, true).toString(),
               type: 'WALLET_BINDING_FAILURE',
               timestamp: Date.now(),
               deviceName: '',
@@ -1012,7 +1011,7 @@ export const vcItemMachine =
         logRevoked: send(
           (context) =>
             ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VC_ITEM_STORE_KEY(context),
+              _vcKey: VCKey.fromVC(context, true).toString(),
               type: 'VC_REVOKED',
               timestamp: Date.now(),
               deviceName: '',
@@ -1027,7 +1026,7 @@ export const vcItemMachine =
           (context) => {
             return StoreEvents.REMOVE(
               MY_VCS_STORE_KEY,
-              VC_ITEM_STORE_KEY(context)
+              VCKey.fromVC(context, true).toString()
             );
           },
           {
@@ -1075,7 +1074,10 @@ export const vcItemMachine =
         storeLock: send(
           (context) => {
             const { serviceRefs, ...data } = context;
-            return StoreEvents.SET(VC_ITEM_STORE_KEY(context), data);
+            return StoreEvents.SET(
+              VCKey.fromVC(context, true).toString(),
+              data
+            );
           },
           { to: (context) => context.serviceRefs.store }
         ),
@@ -1090,7 +1092,7 @@ export const vcItemMachine =
         logVCremoved: send(
           (context, _) =>
             ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VC_ITEM_STORE_KEY(context),
+              _vcKey: VCKey.fromVC(context, true).toString(),
               type: 'VC_REMOVED',
               timestamp: Date.now(),
               deviceName: '',

@@ -9,14 +9,11 @@ import {
 } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { BackendResponseError, request } from '../../../shared/request';
-import {
-  argon2iConfigForUinVid,
-  argon2iSalt,
-  VC_ITEM_STORE_KEY,
-} from '../../../shared/constants';
+import { argon2iConfigForUinVid, argon2iSalt } from '../../../shared/constants';
 import { VcIdType } from '../../../types/vc';
 import i18n from '../../../i18n';
 import { hashData } from '../../../shared/commonUtil';
+import { VCKey } from '../../../shared/VCKey';
 
 const model = createModel(
   {
@@ -239,7 +236,7 @@ export const AddVcModalMachine =
         },
         done: {
           type: 'final',
-          data: (context) => VC_ITEM_STORE_KEY(context),
+          data: (context) => VCKey.fromVC(context, true).toString(),
         },
       },
     },

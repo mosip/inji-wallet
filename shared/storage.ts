@@ -1,5 +1,4 @@
 import { MMKVLoader } from 'react-native-mmkv-storage';
-import { VC_ITEM_STORE_KEY_REGEX } from './constants';
 import CryptoJS from 'crypto-js';
 import {
   DocumentDirectoryPath,
@@ -23,9 +22,9 @@ import {
   HMAC_ALIAS,
   isCustomSecureKeystore,
 } from './cryptoutil/cryptoUtil';
+import { VCKey } from './VCKey';
 
 const MMKV = new MMKVLoader().initialize();
-const vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
 const vcDirectoryPath = `${DocumentDirectoryPath}/inji/VC`;
 
 async function generateHmac(
@@ -54,7 +53,7 @@ class Storage {
     encryptionKey?: string
   ) => {
     try {
-      const isSavingVC = vcKeyRegExp.exec(key);
+      const isSavingVC = VCKey.isValid(key);
       if (isSavingVC) {
         await this.storeVcHmac(encryptionKey, data, key);
         return await this.storeVC(key, data);
@@ -69,7 +68,7 @@ class Storage {
 
   static getItem = async (key: string, encryptionKey?: string) => {
     try {
-      const isSavingVC = vcKeyRegExp.exec(key);
+      const isSavingVC = VCKey.isValid(key);
 
       if (isSavingVC) {
         const data = await this.readVCFromFile(key);
@@ -122,7 +121,7 @@ class Storage {
   }
 
   static removeItem = async (key: string) => {
-    if (vcKeyRegExp.exec(key)) {
+    if (VCKey.isValid(key)) {
       const path = getFilePath(key);
       return await unlink(path);
     }
