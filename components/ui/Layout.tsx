@@ -10,6 +10,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import { Theme, ElevationLevel, Spacing } from './styleUtils';
+import testIDProps from '../../shared/commonUtil';
 
 function createLayout(
   direction: FlexStyle['flexDirection'],
@@ -48,12 +49,15 @@ function createLayout(
 
     return props.scroll ? (
       <ScrollView
+        {...testIDProps(props.testID)}
         contentContainerStyle={styles}
         refreshControl={props.refreshControl}>
         {props.children}
       </ScrollView>
     ) : (
-      <ViewType style={styles}>{props.children}</ViewType>
+      <ViewType {...testIDProps(props.testID)} style={styles}>
+        {props.children}
+      </ViewType>
     );
   };
 
@@ -73,6 +77,7 @@ export const HorizontallyCentered = createLayout(
 );
 
 interface LayoutProps {
+  testID?: string;
   fill?: boolean;
   align?: FlexStyle['justifyContent'];
   crossAlign?: FlexStyle['alignItems'];
