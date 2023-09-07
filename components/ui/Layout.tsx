@@ -10,7 +10,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import { Theme, ElevationLevel, Spacing } from './styleUtils';
-import testID from '../../shared/commonUtil';
+import testIDProps from '../../shared/commonUtil';
 
 function createLayout(
   direction: FlexStyle['flexDirection'],
@@ -49,13 +49,13 @@ function createLayout(
 
     return props.scroll ? (
       <ScrollView
+        {...testIDProps(props.testID)}
         contentContainerStyle={styles}
-        refreshControl={props.refreshControl}
-        {...testID(props.testID)}>
+        refreshControl={props.refreshControl}>
         {props.children}
       </ScrollView>
     ) : (
-      <ViewType style={styles} {...testID(props.testID)}>
+      <ViewType {...testIDProps(props.testID)} style={styles}>
         {props.children}
       </ViewType>
     );

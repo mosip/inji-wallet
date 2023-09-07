@@ -5,7 +5,6 @@ import { Column, Text } from '../../../components/ui';
 import { ModalProps, Modal } from '../../../components/ui/Modal';
 import { Theme } from '../../../components/ui/styleUtils';
 import { Image, TouchableOpacity } from 'react-native';
-import testID from '../../../shared/commonUtil';
 
 export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
   props
