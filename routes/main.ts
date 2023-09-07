@@ -52,7 +52,7 @@ export type MainBottomTabParamList = {
     activeTab: number;
   };
   Scan: undefined;
-  History: undefined;
+  history: undefined;
 };
 
 export interface TabScreen {

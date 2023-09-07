@@ -58,7 +58,7 @@ export function useRequestLayout() {
   );
   useEffect(() => {
     if (isDone) {
-      navigation.navigate('History');
+      navigation.navigate('history');
     } else if (isReviewing) {
       navigation.navigate('ReceiveVcScreen');
     } else if (isWaitingForConnection) {
