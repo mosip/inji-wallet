@@ -131,6 +131,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                   {t('generateVcDescription')}
                 </Text>
                 <Button
+                  testID="downloadCard"
                   type="gradient"
                   disabled={controller.isRefreshingVcs}
                   title={t('downloadCard')}
