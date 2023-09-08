@@ -274,18 +274,18 @@ export function createVcMachine(serviceRefs: AppServices) {
 
 type State = StateFrom<typeof vcMachine>;
 
-export function selectMyVcs(state: State) {
-  return state.context.myVcs;
+export function selectMyVcs(state: State): VCKey[] {
+  return state.context.myVcs?.map((vcKey) => VCKey.fromVCKey(vcKey));
 }
 
-export function selectShareableVcs(state: State) {
-  return state.context.myVcs.filter(
-    (vcKey) => state.context.vcs[vcKey]?.credential != null
-  );
+export function selectShareableVcs(state: State): VCKey[] {
+  return state.context.myVcs
+    .filter((vcKey) => state.context.vcs[vcKey]?.credential != null)
+    .map((vcKey) => VCKey.fromVCKey(vcKey));
 }
 
-export function selectReceivedVcs(state: State) {
-  return state.context.receivedVcs;
+export function selectReceivedVcs(state: State): VCKey[] {
+  return state.context.receivedVcs.map((vcKey) => VCKey.fromVCKey(vcKey));
 }
 
 export function selectIsRefreshingMyVcs(state: State) {
@@ -299,14 +299,17 @@ export function selectIsRefreshingReceivedVcs(state: State) {
 /*
   this methods returns all the binded vc's in the wallet.
  */
-export function selectBindedVcs(state: State) {
-  return (state.context.myVcs as Array<string>).filter((key) => {
-    const walletBindingResponse = state.context.vcs[key]?.walletBindingResponse;
-    return (
-      !isEmpty(walletBindingResponse) &&
-      !isEmpty(walletBindingResponse?.walletBindingId)
-    );
-  });
+export function selectBindedVcs(state: State): VCKey[] {
+  return (state.context.myVcs as Array<string>)
+    .filter((key) => {
+      const walletBindingResponse =
+        state.context.vcs[key]?.walletBindingResponse;
+      return (
+        !isEmpty(walletBindingResponse) &&
+        !isEmpty(walletBindingResponse?.walletBindingId)
+      );
+    })
+    .map((vcKey) => VCKey.fromVCKey(vcKey));
 }
 function isEmpty(object) {
   return object == null || object == '' || object == undefined;

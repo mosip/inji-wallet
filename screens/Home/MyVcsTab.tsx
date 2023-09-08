@@ -77,7 +77,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                   />
                 }>
                 {controller.vcKeys.map((vcKey, index) => {
-                  if (vcKey.split(':')[4] === 'true') {
+                  if (vcKey.isPinned) {
                     return (
                       <VcItem
                         key={`${vcKey}-${index}`}
@@ -91,7 +91,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                   }
                 })}
                 {controller.vcKeys.map((vcKey, index) => {
-                  if (vcKey.split(':')[4] === 'false') {
+                  if (!vcKey.isPinned) {
                     return (
                       <VcItem
                         key={`${vcKey}-${index}`}

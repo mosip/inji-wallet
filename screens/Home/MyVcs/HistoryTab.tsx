@@ -13,7 +13,7 @@ import { VCKey } from '../../../shared/VCKey';
 export const HistoryTab: React.FC<HistoryTabProps> = (props) => {
   const { t } = useTranslation('HistoryTab');
   const controller = useKebabPopUp(props);
-  const vcKey = VCKey.fromVCKey(props.vcKey);
+
   return (
     <ListItem bottomDivider onPress={controller.SHOW_ACTIVITY}>
       <ListItem.Content>
@@ -27,13 +27,14 @@ export const HistoryTab: React.FC<HistoryTabProps> = (props) => {
         </ListItem.Title>
       </ListItem.Content>
       <Modal
-        headerLabel={props.vcKey.split(':')[2]}
+        // TODO: is Uin needed here?
+        headerLabel={props.vcKey.hashedId}
         isVisible={controller.isShowActivities}
         onDismiss={controller.DISMISS}>
         <Column fill>
           {controller.activities
             .filter((activity) =>
-              VCKey.fromVCKey(activity._vcKey).equals(vcKey)
+              VCKey.fromVCKey(activity._vcKey).equals(props.vcKey)
             )
             .map((activity) => (
               <ActivityLogText
@@ -61,6 +62,6 @@ export const HistoryTab: React.FC<HistoryTabProps> = (props) => {
 
 export interface HistoryTabProps {
   label: string;
-  vcKey: string;
+  vcKey: VCKey;
   service: ActorRefFrom<typeof vcItemMachine>;
 }

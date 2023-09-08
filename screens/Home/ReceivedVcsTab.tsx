@@ -10,7 +10,7 @@ import { VcItem } from '../../components/VcItem';
 
 export const ReceivedVcsTab: React.FC<HomeScreenTabProps> = (props) => {
   const { t } = useTranslation('ReceivedVcsTab');
-  const controller = useReceivedVcsTab(props);
+  const controller = useReceivedVcsTab();
 
   return (
     <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
@@ -25,7 +25,7 @@ export const ReceivedVcsTab: React.FC<HomeScreenTabProps> = (props) => {
         }>
         {controller.vcKeys.map((vcKey) => (
           <VcItem
-            key={vcKey}
+            key={vcKey.toString()}
             vcKey={vcKey}
             margin="0 2 8 2"
             onPress={controller.VIEW_VC}

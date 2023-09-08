@@ -1351,19 +1351,15 @@ export const vcItemMachine =
     }
   );
 
-export const createVcItemMachine = (
-  serviceRefs: AppServices,
-  vcKey: string
-) => {
-  const [, idType, hashedId, requestId, isPinned, id] = vcKey.split(':');
+export const createVcItemMachine = (serviceRefs: AppServices, vcKey: VCKey) => {
   return vcItemMachine.withContext({
     ...vcItemMachine.context,
     serviceRefs,
-    id,
-    idType: idType as VcIdType,
-    requestId,
-    isPinned: isPinned == 'true' ? true : false,
-    hashedId,
+    id: vcKey.id,
+    idType: vcKey.idType as VcIdType,
+    requestId: vcKey.requestId,
+    isPinned: vcKey.isPinned,
+    hashedId: vcKey.hashedId,
   });
 };
 

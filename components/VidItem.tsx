@@ -16,6 +16,7 @@ import { Theme } from './ui/styleUtils';
 import { RotatingIcon } from './RotatingIcon';
 import { GlobalContext } from '../shared/GlobalContext';
 import { getLocalizedField } from '../i18n';
+import { VCKey } from '../shared/VCKey';
 
 export const VidItem: React.FC<VcItemProps> = (props) => {
   const { appService } = useContext(GlobalContext);
@@ -99,7 +100,7 @@ export const VidItem: React.FC<VcItemProps> = (props) => {
 };
 
 interface VcItemProps {
-  vcKey: string;
+  vcKey: VCKey;
   margin?: string;
   selectable?: boolean;
   selected?: boolean;

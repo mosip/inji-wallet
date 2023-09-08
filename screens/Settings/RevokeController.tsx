@@ -40,10 +40,7 @@ export function useRevoke() {
   const [selectedIndex, setSelectedIndex] = useState<number>(null);
   const [selectedVidKeys, setSelectedVidKeys] = useState<string[]>([]);
 
-  const vidKeys = vcKeys.filter((vc) => {
-    const vcKey = vc.split(':');
-    return vcKey[1] === 'VID';
-  });
+  const vidKeys = vcKeys.filter((vcKey) => vcKey.idType === 'VID');
 
   const selectVcItem = (index: number, vcKey: string) => {
     return () => {

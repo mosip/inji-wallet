@@ -34,7 +34,7 @@ export const MyBindedVcs: React.FC<MyBindedVcsProps> = (props) => {
                       {controller.vcKeys.length > 0 &&
                         controller.vcKeys.map((vcKey, index) => (
                           <VcItem
-                            key={vcKey}
+                            key={vcKey.toString()}
                             vcKey={vcKey}
                             margin="0 2 8 2"
                             onPress={controller.SELECT_VC_ITEM(index)}

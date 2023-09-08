@@ -22,6 +22,7 @@ import { VcItemActivationStatus } from './VcItemActivationStatus';
 import { Row } from './ui';
 import { KebabPopUp } from './KebabPopUp';
 import { logState } from '../machines/app';
+import { VCKey } from '../shared/VCKey';
 
 export const VcItem: React.FC<VcItemProps> = (props) => {
   const { appService } = useContext(GlobalContext);
@@ -104,7 +105,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
 };
 
 interface VcItemProps {
-  vcKey: string;
+  vcKey: VCKey;
   margin?: string;
   selectable?: boolean;
   selected?: boolean;

@@ -80,7 +80,7 @@ export const SendVcScreen: React.FC = () => {
         <Column scroll>
           {controller.vcKeys.map((vcKey, index) => (
             <VcItem
-              key={vcKey}
+              key={vcKey.toString()}
               vcKey={vcKey}
               margin="0 2 8 2"
               onPress={controller.SELECT_VC_ITEM(index)}

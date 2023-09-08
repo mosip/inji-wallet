@@ -1,11 +1,11 @@
 //Regex expression to evaluate if the key is for a VC
-import { VC } from '../types/vc';
+import { VC, VcIdType } from '../types/vc';
 
 const VC_ITEM_STORE_KEY_REGEX =
   '^vc:(UIN|VID):[a-z0-9]+:[a-z0-9-]+:[true|false]+(:[0-9-]+)?$';
 
 export class VCKey {
-  idType = '';
+  idType: VcIdType | string = '';
   hashedId = '';
   requestId = '';
   isPinned = false;
@@ -46,7 +46,7 @@ export class VCKey {
         idType: idType,
         hashedId: hashedId,
         requestId: requestId,
-        isPinned: isPinned,
+        isPinned: isPinned === 'true',
         id: id ? id : null,
       });
     } catch (e) {

@@ -14,6 +14,7 @@ import { ToastItem } from '../../components/ui/ToastItem';
 import { OIDcAuthenticationOverlay } from '../../components/OIDcAuthModal';
 import { useTranslation } from 'react-i18next';
 import { useRevoke } from './RevokeController';
+import { VCKey } from '../../shared/VCKey';
 
 // Intentionally hidden using {display:'none'} - Refer mosip/inji/issue#607
 export const Revoke: React.FC<RevokeScreenProps> = (props) => {
@@ -75,16 +76,21 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
                         onRefresh={controller.REFRESH}
                       />
                     }>
-                    {controller.vidKeys.map((vcKey, index) => (
-                      <VidItem
-                        key={`${vcKey}-${index}`}
-                        vcKey={vcKey}
-                        margin="0 2 8 2"
-                        onPress={controller.selectVcItem(index, vcKey)}
-                        selectable
-                        selected={controller.selectedVidKeys.includes(vcKey)}
-                      />
-                    ))}
+                    {controller.vidKeys.map((vcKey, index) => {
+                      const vcKeyString = vcKey.toString();
+                      return (
+                        <VidItem
+                          key={`${vcKeyString}-${index}`}
+                          vcKey={vcKey}
+                          margin="0 2 8 2"
+                          onPress={controller.selectVcItem(index, vcKeyString)}
+                          selectable
+                          selected={controller.selectedVidKeys.includes(
+                            vcKeyString
+                          )}
+                        />
+                      );
+                    })}
                   </Column>
                 )}
                 {controller.vidKeys.length === 0 && (
@@ -127,7 +133,8 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
                       {'\u2022'}
                     </Text>
                     <Text margin="0 0 0 0" weight="bold">
-                      {vcKey.split(':')[2]}
+                      {/*TODO: Change this to UIN?*/}
+                      {VCKey.fromVCKey(vcKey).hashedId}
                     </Text>
                   </View>
                 ))}
