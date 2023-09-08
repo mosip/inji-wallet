@@ -112,6 +112,21 @@ target 'Inji' do
             config.build_settings["DEVELOPMENT_TEAM"] = dev_team
         end
     end
+
+  # https://github.com/CocoaPods/CocoaPods/issues/8122#issuecomment-428677119
+  # Workaround for removing the multiple Assets added to the project due to react native auto-linkage  
+    project_path = './Inji.xcodeproj'
+    project = Xcodeproj::Project.open(project_path)
+    project.targets.each do |target|
+      puts target
+        if target.name == "Inji"
+          phase = target.shell_script_build_phases.find { |bp| bp.name == '[CP] Copy Pods Resources' }
+          if !phase.nil?
+            phase.output_paths.delete('${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Assets.car')
+          end
+        end
+    end
+    project.save(project_path)
   end
 
   post_integrate do |installer|
