@@ -8,7 +8,7 @@ import {
 } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { AppServices } from '../shared/GlobalContext';
-import { MY_VCS_STORE_KEY } from '../shared/constants';
+import { MY_VCS_STORE_KEY, ESIGNET_BASE_URL } from '../shared/constants';
 import { StoreEvents } from './store';
 import { linkTransactionResponse, VC } from '../types/vc';
 import { request } from '../shared/request';
@@ -349,7 +349,8 @@ export const qrLoginMachine =
               request: {
                 linkCode: context.linkCode,
               },
-            }
+            },
+            ESIGNET_BASE_URL
           );
           return response.response;
         },
@@ -386,7 +387,8 @@ export const qrLoginMachine =
                   },
                 ],
               },
-            }
+            },
+            ESIGNET_BASE_URL
           );
           return response.response.linkedTransactionId;
         },
@@ -421,7 +423,8 @@ export const qrLoginMachine =
                   },
                 ],
               },
-            }
+            },
+            ESIGNET_BASE_URL
           );
           var linkedTrnId = response.response.linkedTransactionId;
 
@@ -437,7 +440,8 @@ export const qrLoginMachine =
                 ),
                 permittedAuthorizeScopes: context.authorizeScopes,
               },
-            }
+            },
+            ESIGNET_BASE_URL
           );
           console.log(resp.response.linkedTransactionId);
         },
