@@ -1,6 +1,6 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import { Dimensions, StyleSheet, ViewStyle } from 'react-native';
-import { Spacing } from '../styleUtils';
+import {Dimensions, StyleSheet, ViewStyle} from 'react-native';
+import {Spacing} from '../styleUtils';
 
 const Colors = {
   Black: '#000000',
@@ -194,7 +194,7 @@ export const DefaultTheme = {
       margin: 8,
       backgroundColor: '#fff',
       shadowColor: '#000',
-      shadowOffset: { width: -1, height: 1 },
+      shadowOffset: {width: -1, height: 1},
       shadowOpacity: 0.4,
       shadowRadius: 3,
       elevation: 4,
@@ -256,7 +256,7 @@ export const DefaultTheme = {
       margin: 8,
       backgroundColor: '#fff',
       shadowColor: '#000',
-      shadowOffset: { width: -1, height: 1 },
+      shadowOffset: {width: -1, height: 1},
       shadowOpacity: 0.4,
       shadowRadius: 3,
       elevation: 4,
@@ -496,8 +496,9 @@ export const DefaultTheme = {
       color: Colors.Black,
       fontFamily: 'Inter_700Bold',
       fontSize: 18,
-      lineHeight: 22,
+      lineHeight: 19,
       paddingTop: 4,
+      marginLeft: -30,
     },
     retrieveIdLabel: {
       color: Colors.ShadeOfGrey,
@@ -740,6 +741,7 @@ export const DefaultTheme = {
   }),
   KebabPopUpStyles: StyleSheet.create({
     kebabPopUp: {
+      flex: 1,
       borderTopLeftRadius: 15,
       borderTopRightRadius: 15,
       width: Dimensions.get('screen').width,
@@ -748,9 +750,7 @@ export const DefaultTheme = {
     kebabHeaderStyle: {
       justifyContent: 'space-between',
       fontFamily: 'Inter_700Bold',
-      paddingRight: 15,
-      paddingLeft: 130,
-      paddingTop: 18,
+      paddingTop: 15,
     },
   }),
   MessageOverlayStyles: StyleSheet.create({
@@ -799,9 +799,9 @@ export const DefaultTheme = {
       flex: 1,
       width: Dimensions.get('screen').width,
     },
-    revokeView: { padding: 20 },
-    flexRow: { flexDirection: 'row', margin: 0, padding: 0 },
-    rowStyle: { flexDirection: 'column', justifyContent: 'space-between' },
+    revokeView: {padding: 20},
+    flexRow: {flexDirection: 'row', margin: 0, padding: 0},
+    rowStyle: {flexDirection: 'column', justifyContent: 'space-between'},
     viewContainer: {
       backgroundColor: 'rgba(0,0,0,.6)',
       width: Dimensions.get('screen').width,

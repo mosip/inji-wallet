@@ -1,19 +1,20 @@
 import React from 'react';
-import { Icon, ListItem, Overlay } from 'react-native-elements';
-import { Theme } from '../components/ui/styleUtils';
-import { Column, Row, Text } from '../components/ui';
-import { WalletBinding } from '../screens/Home/MyVcs/WalletBinding';
-import { Pressable } from 'react-native';
-import { useKebabPopUp } from './KebabPopUpController';
-import { ActorRefFrom } from 'xstate';
-import { vcItemMachine } from '../machines/vcItem';
-import { useTranslation } from 'react-i18next';
-import { HistoryTab } from '../screens/Home/MyVcs/HistoryTab';
-import { RemoveVcWarningOverlay } from '../screens/Home/MyVcs/RemoveVcWarningOverlay';
+import {Icon, ListItem, Overlay} from 'react-native-elements';
+import {Theme} from '../components/ui/styleUtils';
+import {Column, Row, Text} from '../components/ui';
+import {WalletBinding} from '../screens/Home/MyVcs/WalletBinding';
+import {Pressable, View} from 'react-native';
+import {useKebabPopUp} from './KebabPopUpController';
+import {ActorRefFrom} from 'xstate';
+import {vcItemMachine} from '../machines/vcItem';
+import {useTranslation} from 'react-i18next';
+import {HistoryTab} from '../screens/Home/MyVcs/HistoryTab';
+import {RemoveVcWarningOverlay} from '../screens/Home/MyVcs/RemoveVcWarningOverlay';
+import {ScrollView} from 'react-native-gesture-handler';
 
-export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
+export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
   const controller = useKebabPopUp(props);
-  const { t } = useTranslation('HomeScreenKebabPopUp');
+  const {t} = useTranslation('HomeScreenKebabPopUp');
   return (
     <Column>
       <Icon
@@ -26,6 +27,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
         onBackdropPress={props.onDismiss}
         overlayStyle={Theme.KebabPopUpStyles.kebabPopUp}>
         <Row style={Theme.KebabPopUpStyles.kebabHeaderStyle}>
+          <View></View>
           <Text weight="bold">{t('title')}</Text>
           <Icon
             name="close"
@@ -34,7 +36,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
             size={25}
           />
         </Row>
-        <Column>
+        <ScrollView>
           <ListItem bottomDivider>
             <ListItem.Content>
               <ListItem.Title>
@@ -78,7 +80,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
             onConfirm={controller.CONFIRM}
             onCancel={controller.CANCEL}
           />
-        </Column>
+        </ScrollView>
       </Overlay>
     </Column>
   );
