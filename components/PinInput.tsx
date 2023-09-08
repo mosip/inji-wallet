@@ -3,6 +3,7 @@ import { TextInput } from 'react-native';
 import { usePinInput } from '../machines/pinInput';
 import { Row } from './ui';
 import { Theme } from './ui/styleUtils';
+import testID from '../shared/commonUtil';
 
 export const PinInput: React.FC<PinInputProps> = (props) => {
   const { state, send, events } = usePinInput(props.length);
@@ -16,7 +17,7 @@ export const PinInput: React.FC<PinInputProps> = (props) => {
   }, [state]);
 
   return (
-    <Row width="100%">
+    <Row width="100%" testID={props.testID}>
       {inputRefs.map((input, index) => (
         <TextInput
           selectTextOnFocus
@@ -41,6 +42,7 @@ export const PinInput: React.FC<PinInputProps> = (props) => {
 };
 
 interface PinInputProps {
+  testID?: string;
   length: number;
   onDone?: (value: string) => void;
 }

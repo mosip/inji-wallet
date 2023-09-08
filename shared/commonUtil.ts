@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import argon2 from 'react-native-argon2';
 
 export const hashData = async (
@@ -15,4 +16,10 @@ export interface Argon2iConfig {
   parallelism: number;
   hashLength: number;
   mode: string;
+}
+
+export default function testIDProps(id) {
+  return Platform.OS === 'android'
+    ? { accessible: true, accessibilityLabel: id }
+    : { testID: id };
 }

@@ -498,8 +498,9 @@ export const PurpleTheme = {
       color: Colors.Black,
       fontFamily: 'Inter_700Bold',
       fontSize: 18,
-      lineHeight: 22,
+      lineHeight: 19,
       paddingTop: 4,
+      marginLeft: -30,
     },
     retrieveIdLabel: {
       color: Colors.ShadeOfGrey,
@@ -742,6 +743,7 @@ export const PurpleTheme = {
   }),
   KebabPopUpStyles: StyleSheet.create({
     kebabPopUp: {
+      flex: 1,
       borderTopLeftRadius: 15,
       borderTopRightRadius: 15,
       width: Dimensions.get('screen').width,
@@ -750,9 +752,7 @@ export const PurpleTheme = {
     kebabHeaderStyle: {
       justifyContent: 'space-between',
       fontFamily: 'Inter_700Bold',
-      paddingRight: 15,
-      paddingLeft: 130,
-      paddingTop: 18,
+      paddingTop: 15,
     },
   }),
   MessageOverlayStyles: StyleSheet.create({
