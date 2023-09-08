@@ -6,6 +6,7 @@ import { useScanLayout } from './ScanLayoutController';
 import { ScanScreen } from './ScanScreen';
 import { ProgressingModal } from '../../components/ProgressingModal';
 import { MessageOverlay } from '../../components/MessageOverlay';
+import { SCAN_ROUTES } from '../../routes/routesConstants';
 
 const ScanStack = createNativeStackNavigator();
 
@@ -18,7 +19,7 @@ export const ScanLayout: React.FC = () => {
       <ScanStack.Navigator initialRouteName="ScanScreen">
         {!controller.isDone && (
           <ScanStack.Screen
-            name="SendVcScreen"
+            name={SCAN_ROUTES.SendVcScreen}
             component={SendVcScreen}
             options={{
               title: t('sharingVc'),
@@ -27,7 +28,7 @@ export const ScanLayout: React.FC = () => {
           />
         )}
         <ScanStack.Screen
-          name="ScanScreen"
+          name={SCAN_ROUTES.ScanScreen}
           component={ScanScreen}
           options={{
             headerTitleStyle: { fontSize: 30, fontFamily: 'Inter_600SemiBold' },

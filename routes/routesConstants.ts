@@ -1,0 +1,32 @@
+import { MainBottomTabParamList } from './main';
+
+export const BOTTOM_TAB_ROUTES = {
+  home: (activeTab: number) => ({
+    name: 'home' as keyof MainBottomTabParamList,
+    params: { activeTab },
+  }),
+  scan: 'scan' as keyof MainBottomTabParamList,
+  history: 'history' as keyof MainBottomTabParamList,
+};
+
+export const SCAN_ROUTES = {
+  ScanScreen: 'ScanScreen' as keyof ScanStackParamList,
+  SendVcScreen: 'SendVcScreen' as keyof ScanStackParamList,
+};
+
+export const REQUEST_ROUTES = {
+  Request: 'Request' as keyof RequestStackParamList,
+  RequestScreen: 'RequestScreen' as keyof RequestStackParamList,
+  ReceiveVcScreen: 'ReceiveVcScreen' as keyof RequestStackParamList,
+};
+
+export type ScanStackParamList = {
+  ScanScreen: undefined;
+  SendVcScreen: undefined;
+};
+
+export type RequestStackParamList = {
+  Request: undefined;
+  RequestScreen: undefined;
+  ReceiveVcScreen: undefined;
+};

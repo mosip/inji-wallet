@@ -9,6 +9,7 @@ import { ReceiveVcScreen } from './ReceiveVcScreen';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { ReceivedCardsModal } from '../Settings/ReceivedCardsModal';
 import { useReceivedVcsTab } from '../Home/ReceivedVcsTabController';
+import { REQUEST_ROUTES } from '../../routes/routesConstants';
 const RequestStack = createNativeStackNavigator();
 
 export const RequestLayout: React.FC = () => {
@@ -33,7 +34,7 @@ export const RequestLayout: React.FC = () => {
         }}>
         {!controller.isDone && (
           <RequestStack.Screen
-            name="ReceiveVcScreen"
+            name={REQUEST_ROUTES.ReceiveVcScreen}
             component={ReceiveVcScreen}
             options={{
               title: t('incomingVc'),
@@ -48,7 +49,7 @@ export const RequestLayout: React.FC = () => {
           />
         )}
         <RequestStack.Screen
-          name="RequestScreen"
+          name={REQUEST_ROUTES.RequestScreen}
           component={RequestScreen}
           options={{
             title: t('receiveCard').toUpperCase(),

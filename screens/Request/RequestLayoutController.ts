@@ -21,12 +21,11 @@ import {
   selectBleError,
 } from '../../machines/bleShare/commonSelectors';
 import { RequestEvents } from '../../machines/bleShare/request/requestMachine';
-
-export type RequestStackParamList = {
-  Request: undefined;
-  RequestScreen: undefined;
-  ReceiveVcScreen: undefined;
-};
+import {
+  BOTTOM_TAB_ROUTES,
+  REQUEST_ROUTES,
+  RequestStackParamList,
+} from '../../routes/routesConstants';
 
 type RequestLayoutNavigation = NavigationProp<
   RequestStackParamList & MainBottomTabParamList
@@ -68,11 +67,11 @@ export function useRequestLayout() {
   );
   useEffect(() => {
     if (isNavigationToHome) {
-      navigation.navigate('home');
+      navigation.navigate(BOTTOM_TAB_ROUTES.home(0).name);
     } else if (isReviewing) {
-      navigation.navigate('ReceiveVcScreen');
+      navigation.navigate(REQUEST_ROUTES.ReceiveVcScreen);
     } else if (isWaitingForConnection) {
-      navigation.navigate('RequestScreen');
+      navigation.navigate(REQUEST_ROUTES.RequestScreen);
     }
   }, [isNavigationToHome, isReviewing, isWaitingForConnection]);
 

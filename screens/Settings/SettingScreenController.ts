@@ -28,6 +28,7 @@ import { GlobalContext } from '../../shared/GlobalContext';
 import { useTranslation } from 'react-i18next';
 import { Platform } from 'react-native';
 import { RequestRouteProps, RootRouteProps } from '../../routes';
+import { REQUEST_ROUTES } from '../../routes/routesConstants';
 
 export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
   const { appService } = useContext(GlobalContext);
@@ -139,7 +140,7 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
       ),
 
     RECEIVE_CARD: () => {
-      props.navigation.navigate('Request');
+      props.navigation.navigate(REQUEST_ROUTES.Request);
       setIsVisible(false);
     },
 
