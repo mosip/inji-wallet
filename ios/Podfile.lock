@@ -480,8 +480,6 @@ PODS:
     - React
   - RNSVG (13.4.0):
     - React-Core
-  - RNVectorIcons (10.0.0):
-    - React-Core
   - smartshare-react-native (0.2.3-beta.2):
     - NearbyMessages
     - React-Core
@@ -574,7 +572,6 @@ DEPENDENCIES:
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSecureRandom (from `../node_modules/react-native-securerandom`)
   - RNSVG (from `../node_modules/react-native-svg`)
-  - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - "smartshare-react-native (from `../node_modules/@idpass/smartshare-react-native`)"
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -754,8 +751,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-securerandom"
   RNSVG:
     :path: "../node_modules/react-native-svg"
-  RNVectorIcons:
-    :path: "../node_modules/react-native-vector-icons"
   smartshare-react-native:
     :path: "../node_modules/@idpass/smartshare-react-native"
   Yoga:
@@ -854,11 +849,10 @@ SPEC CHECKSUMS:
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
   RNSecureRandom: 07efbdf2cd99efe13497433668e54acd7df49fef
   RNSVG: 07dbd870b0dcdecc99b3a202fa37c8ca163caec2
-  RNVectorIcons: 8b5bb0fa61d54cd2020af4f24a51841ce365c7e9
   smartshare-react-native: 133dca4c48dea0908649c680701f0948317378c5
   Yoga: 065f0b74dba4832d6e328238de46eb72c5de9556
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: 057f49ba2a3c9de2f8bb347536d19bde985ec296
+PODFILE CHECKSUM: 356757d87610dbe4a3a0a48696fbe7fb5b469a9c
 
 COCOAPODS: 1.12.1
