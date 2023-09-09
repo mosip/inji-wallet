@@ -29,6 +29,7 @@ export const SetupPicker: Picker = (props: PickerProps<unknown>) => {
 
   return (
     <Column
+      testID={props.testID}
       width={Dimensions.get('window').width * 0.8}
       backgroundColor={Theme.Colors.whiteBackgroundColor}>
       {props.items.map((item, index) => (
@@ -58,6 +59,7 @@ export const SetupPicker: Picker = (props: PickerProps<unknown>) => {
 };
 
 interface PickerProps<T> {
+  testID?: string;
   items: PickerItem<T>[];
   selectedValue: T;
   onValueChange: (value: T, index: number) => void;

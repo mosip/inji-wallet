@@ -65,12 +65,14 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
               }}>
               {controller.isPasscodeSet() ? (
                 <Button
+                  testID="skip"
                   type="plain"
                   title={t('skip')}
                   onPress={controller.NEXT}
                 />
               ) : (
                 <Button
+                  testID="back"
                   type="plain"
                   title={t('back')}
                   onPress={controller.BACK}
@@ -80,14 +82,19 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
           </Row>
           <Image source={item.image} />
           <Column
+            testID="introSlideColumn"
             style={Theme.OnboardingOverlayStyles.bottomContainer}
             crossAlign="center"
             backgroundColor={Theme.Colors.whiteText}
             width={Dimensions.get('screen').width}>
-            <Text weight="semibold" margin="0 0 18 0">
+            <Text testID="introTitle" weight="semibold" margin="0 0 18 0">
               {item.title}
             </Text>
-            <Text margin="0 0 150 0" size="large" color={Theme.Colors.GrayText}>
+            <Text
+              testID="introText"
+              margin="0 0 150 0"
+              size="large"
+              color={Theme.Colors.GrayText}>
               {item.text}
             </Text>
           </Column>
@@ -103,6 +110,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
           colors={Theme.Colors.gradientBtn}
           style={{ borderRadius: 10, height: 50, marginTop: -10 }}>
           <Text
+            testID="next"
             weight="semibold"
             align="center"
             color="#FFFFFF"
@@ -120,6 +128,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
           colors={Theme.Colors.gradientBtn}
           style={{ borderRadius: 10, height: 50, marginTop: -10 }}>
           <Text
+            testID="getStarted"
             weight="semibold"
             align="center"
             color="#FFFFFF"
