@@ -1,7 +1,7 @@
 import { assign, ErrorPlatformEvent, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import {
-  HOST,
+  MIMOTO_BASE_URL,
   MY_VCS_STORE_KEY,
   VC_ITEM_STORE_KEY,
   VC_ITEM_STORE_KEY_AFTER_DOWNLOAD,
@@ -913,7 +913,7 @@ export const vcItemMachine =
         storeContext: send(
           (context) => {
             const { serviceRefs, ...data } = context;
-            data.credentialRegistry = HOST;
+            data.credentialRegistry = MIMOTO_BASE_URL;
             return StoreEvents.SET(VC_ITEM_STORE_KEY(context), data);
           },
           {
