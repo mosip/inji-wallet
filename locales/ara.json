@@ -24,7 +24,11 @@
     "Verifier": "المدقق",
     "Wallet": "محفظة"
   },
-  "FaceScanner": {},
+  "FaceScanner": {
+    "imageCaptureGuide": "أمسك الهاتف بثبات وحافظ على تركيز وجهك في المنتصف",
+    "capture": "يأسر",
+    "flipCamera": "فليب الكاميرا"
+  },
   "OIDcAuth": {
     "title": "مصادقة OIDC",
     "text": "ليتم استبداله بموفر واجهة مستخدم OIDC",

@@ -27,6 +27,7 @@ const Colors = {
   LightOrange: '#FDF1E6',
   GradientColors: ['#F59B4B', '#E86E04'],
   DisabledColors: ['#C7C7C7', '#C7C7C7'],
+  captureIconBorder: '#F59B4B',
   TimeoutHintBoxColor: '#FFF7E5',
   TimoutHintText: '#8B6105',
   resendCodeTimer: '#555555',
@@ -321,6 +322,14 @@ export const DefaultTheme = {
       height: 36,
       borderRadius: 10,
       backgroundColor: Colors.LightOrange,
+    },
+    cameraFlipIcon: {
+      height: 42,
+      width: 42,
+    },
+    imageCaptureButton: {
+      marginLeft: 130,
+      marginRight: 50,
     },
     settingsIconBg: {
       padding: 6,
@@ -972,6 +981,7 @@ export const DefaultTheme = {
   MosipSplashLogo: require('../../../assets/icon.png'),
   MosipLogo: require('../../../assets/mosip-logo.png'),
   CameraFlipIcon: require('../../../assets/camera-flip-icon.png'),
+  ImageCaptureButton: require('../../../assets/capture-button.png'),
   DomainWarningLogo: require('../../../assets/domain-warning.png'),
   WarningLogo: require('../../../assets/warningLogo.png'),
   OtpLogo: require('../../../assets/otp-mobile-logo.png'),
