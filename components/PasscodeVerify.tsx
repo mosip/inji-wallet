@@ -16,7 +16,9 @@ export const PasscodeVerify: React.FC<PasscodeVerifyProps> = (props) => {
     }
   }, [isVerified]);
 
-  return <PinInput length={MAX_PIN} onDone={verify} />;
+  return (
+    <PinInput testID="confirmPasscodePin" length={MAX_PIN} onDone={verify} />
+  );
 
   async function verify(value: string) {
     const hashedPasscode = await hashData(value, props.salt, argon2iConfig);
