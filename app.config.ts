@@ -5,8 +5,8 @@ export default {
   orientation: 'portrait',
   icon: './assets/icon.png',
   splash: {
-    image: './android/app/src/main/res/drawable/splashscreen.xml',
-    resizeMode: 'cover',
+    image: './assets/splash.png',
+    resizeMode: 'contain',
     backgroundColor: '#ffffff',
   },
   updates: {
