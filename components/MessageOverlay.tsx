@@ -108,6 +108,8 @@ export interface MessageOverlayProps {
   requester?: boolean;
   hint?: string;
   onCancel?: () => void;
+  onStayInProgress?: () => void;
+  onRetry?: () => void;
   onBackdropPress?: () => void;
   onShow?: () => void;
 }

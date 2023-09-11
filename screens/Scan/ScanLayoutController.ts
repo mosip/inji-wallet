@@ -18,6 +18,7 @@ import {
   selectIsSent,
   selectReceiverInfo,
   selectIsDone,
+  selectStayInProgress,
 } from '../../machines/bleShare/scan/selectors';
 import {
   selectIsAccepted,
@@ -91,12 +92,17 @@ export function useScanLayout() {
   const isSendingVcTimeout = useSelector(scanService, selectIsSendingVcTimeout);
 
   const onCancel = () => scanService.send(ScanEvents.CANCEL());
+  const onStayInProgress = () =>
+    scanService.send(ScanEvents.STAY_IN_PROGRESS());
+  const onRetry = () => scanService.send(ScanEvents.RETRY());
   let statusOverlay: Pick<
     MessageOverlayProps,
     | 'title'
     | 'message'
     | 'hint'
     | 'onCancel'
+    | 'onStayInProgress'
+    | 'onRetry'
     | 'progress'
     | 'onBackdropPress'
     | 'requester'
@@ -112,6 +118,8 @@ export function useScanLayout() {
       title: t('status.sharingInProgress'),
       hint: t('status.connectingTimeout'),
       onCancel,
+      onStayInProgress,
+      onRetry,
       progress: true,
     };
   } else if (isExchangingDeviceInfo) {
@@ -218,6 +226,7 @@ export function useScanLayout() {
     isDone,
     isDisconnected: useSelector(scanService, selectIsDisconnected),
     statusOverlay,
+    isStayInProgress: useSelector(scanService, selectStayInProgress),
     DISMISS,
   };
 }
