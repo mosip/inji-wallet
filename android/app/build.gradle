@@ -136,7 +136,7 @@ def enableHermes = project.ext.react.get("enableHermes", false);
 androidGitVersion {
     baseCode 0
     codeFormat 'MXXNXXPXX'
-    format '% tag %%commit_%%branch%'
+    format '%commit_%%branch%'
 }
 
 android {
@@ -246,7 +246,8 @@ android {
         variant.outputs.all { output ->
             def datetime = new Date().format('yyyyMMdd_HHmm')
             def architecture = output.getFilter(com.android.build.OutputFile.ABI) ?: "universal"
-            outputFileName = "${defaultConfig.applicationId}-${variant.versionName}_${datetime}_${architecture}.apk"
+            def buildNumber = System.getenv("BUILD_NUMBER")
+            outputFileName = "Inji_${buildNumber}_${variant.versionName}_${architecture}.apk"
         }
     }
 }

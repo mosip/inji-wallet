@@ -110,10 +110,8 @@ jobs:
 
       - name: Run Build for upload
         run: | 
-          cd android
-          yes | sudo gem install bundler
-          yes | sudo fastlane install_plugins 
-          bundle exec fastlane android_build_upload
+          cd android/scripts
+          ./build-apk.sh
         env:
           MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
           APPLICATION_THEME: ${{ github.event.inputs.theme }} 
