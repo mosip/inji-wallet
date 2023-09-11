@@ -450,6 +450,8 @@
       "establishingConnection": "اجراء اتصال",
       "sharingInProgress": "جاري المشاركة",
       "connectingTimeout": "يستغرق إنشاء الاتصال بعض الوقت. هل الجهاز الآخر مفتوح للاتصالات؟",
+      "stayOnTheScreen": "البقاء على الشاشة",
+      "retry": "أعد المحاولة",
       "exchangingDeviceInfo": "تبادل معلومات الجهاز ...",
       "exchangingDeviceInfoTimeout": "يستغرق الأمر بعض الوقت لتبادل معلومات الجهاز. قد تضطر إلى إعادة الاتصال.",
       "invalid": "رمز الاستجابة السريعة غير صالح",

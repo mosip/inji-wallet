@@ -450,6 +450,8 @@
       "establishingConnection": "Establishing connection",
       "sharingInProgress": "Sharing in Progress",
       "connectingTimeout": "It's taking a while to establish the connection. Is the other device open for connections?",
+      "stayOnTheScreen": "Stay on the screen",
+      "retry": "Retry",
       "exchangingDeviceInfo": "Exchanging device info...",
       "exchangingDeviceInfoTimeout": "It's taking a while to exchange device info. You may have to reconnect.",
       "invalid": "Invalid QR Code",
