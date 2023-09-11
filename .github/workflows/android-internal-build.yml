@@ -110,7 +110,7 @@ jobs:
 
       - name: Run Build for upload
         run: |
-          npm jetify
+          npx jetify
           cd android
           ./gradlew :app:assembleMosipRelease
         env:
