@@ -60,7 +60,8 @@ jobs:
         run: |
           cd ios
           pod install
-
+          pod install
+          
       - name: Deploy iOS Beta to TestFlight
         run: |
           cd ios
