@@ -27,7 +27,11 @@
   "PasscodeVerify": {
     "passcodeMismatchError": "கடவுக்குறியீடு பொருந்தவில்லை."
   },
-  "FaceScanner": {},
+  "FaceScanner": {
+    "imageCaptureGuide": "மொபைலை நிலையாகப் பிடித்து, உங்கள் முகத்தை மையமாக வைத்துக்கொள்ளவும்",
+    "capture": "பிடிப்பு",
+    "flipCamera": "ஃபிளிப் கேமரா"
+  },
   "OIDcAuth": {
     "title": "OIDC அங்கீகாரம்",
     "text": "OIDC வழங்குநர் UI உடன் மாற்றப்பட வேண்டும்",
