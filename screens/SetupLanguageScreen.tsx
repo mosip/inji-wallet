@@ -51,7 +51,7 @@ export const SetupLanguageScreen: React.FC<RootRouteProps> = (props) => {
         size={58}
       />
       <Column crossAlign="center">
-        <Text margin="0 0 10 0" weight="semibold">
+        <Text testID="chooseLanguage" margin="0 0 10 0" weight="semibold">
           {t('header')}
         </Text>
         <Text
@@ -64,12 +64,14 @@ export const SetupLanguageScreen: React.FC<RootRouteProps> = (props) => {
       </Column>
 
       <SetupPicker
+        testID="languagePicker"
         items={languages}
         selectedValue={i18n.language}
         onValueChange={changeLanguage}
       />
 
       <Button
+        testID="savePreference"
         type="gradient"
         title={t('save')}
         onPress={() => {
