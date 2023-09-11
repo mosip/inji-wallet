@@ -14,6 +14,7 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
     return (
       <Column>
         <Text
+          testID="status"
           weight="bold"
           size="smaller"
           color={
@@ -167,16 +168,52 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
             !props.verifiableCredential ? Theme.Styles.loadingContainer : null
           }>
           <Column>
-            {uin ? getDetails(t('uin'), uin, props.verifiableCredential) : null}
-            {vid ? getDetails(t('vid'), vid, props.verifiableCredential) : null}
+            {uin ? (
+              <Column margin="0 0 20 0">
+                <Text
+                  testID="uin"
+                  weight="bold"
+                  size="smaller"
+                  color={Theme.Colors.DetailsLabel}>
+                  {t('uin')}
+                </Text>
+                <Text
+                  weight="semibold"
+                  size="smaller"
+                  color={Theme.Colors.Details}>
+                  {uin}
+                </Text>
+              </Column>
+            ) : null}
+
+            {vid ? (
+              <Column>
+                <Text
+                  testID="vid"
+                  weight="bold"
+                  size="smaller"
+                  color={Theme.Colors.DetailsLabel}>
+                  {t('vid')}
+                </Text>
+                <Text
+                  weight="semibold"
+                  size="smaller"
+                  color={Theme.Colors.Details}>
+                  {vid}
+                </Text>
+              </Column>
+            ) : null}
             {!props.verifiableCredential
               ? getDetails(t('id'), uin || vid, props.verifiableCredential)
               : null}
-            {getDetails(
-              t('generatedOn'),
-              props.generatedOn,
-              props.verifiableCredential
-            )}
+
+            <Text testID="generatedOn">
+              {getDetails(
+                t('generatedOn'),
+                props.generatedOn,
+                props.verifiableCredential
+              )}
+            </Text>
           </Column>
           <Column>
             {props.verifiableCredential

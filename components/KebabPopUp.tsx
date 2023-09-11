@@ -16,7 +16,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
   const controller = useKebabPopUp(props);
   const { t } = useTranslation('HomeScreenKebabPopUp');
   return (
-    <Column>
+    <Column testID={props.testID}>
       <Icon
         name={props.iconName}
         type={props.iconType}
@@ -87,6 +87,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
 };
 
 export interface KebabPopUpProps {
+  testID?: string;
   iconName: string;
   iconType?: string;
   vcKey: string;
