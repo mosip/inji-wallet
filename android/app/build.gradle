@@ -246,8 +246,7 @@ android {
         variant.outputs.all { output ->
             def datetime = new Date().format('yyyyMMdd_HHmm')
             def architecture = output.getFilter(com.android.build.OutputFile.ABI) ?: "universal"
-            def buildNumber = System.getenv("BUILD_NUMBER")
-            outputFileName = "Inji_${buildNumber}_${variant.versionName}_${architecture}.apk"
+            outputFileName = "Inji_${variant.versionName}_${architecture}.apk"
         }
     }
 }

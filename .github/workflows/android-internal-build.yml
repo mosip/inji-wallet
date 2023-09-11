@@ -109,9 +109,10 @@ jobs:
           INJI_ANDROID_PLAY_STORE_CONFIG_JSON: ${{ secrets.INJI_ANDROID_PLAY_STORE_CONFIG_JSON }}
 
       - name: Run Build for upload
-        run: | 
-          cd android/scripts
-          ./build-apk.sh
+        run: |
+          npm jetify
+          cd android
+          ./gradlew :app:assembleMosipRelease
         env:
           MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
           APPLICATION_THEME: ${{ github.event.inputs.theme }} 
