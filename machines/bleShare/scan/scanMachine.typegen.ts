@@ -93,13 +93,14 @@ export interface Typegen0 {
       | 'SCREEN_BLUR'
       | 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection'
       | 'xstate.init';
-    resetShouldVerifyPresence: 'CANCEL' | 'CONNECTED' | 'DISMISS';
+    resetShouldVerifyPresence: 'CANCEL' | 'CONNECTED' | 'DISMISS' | 'RETRY';
     sendScanData: 'SCAN';
     setBleError: 'BLE_ERROR';
     setChildRef:
       | 'DISCONNECT'
       | 'DISMISS'
       | 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection';
+    setCloseTimeoutHint: 'CANCEL' | 'RETRY';
     setCreatedVp: 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
     setLinkCode: 'SCAN';
     setReadyForBluetoothStateCheck: 'BLUETOOTH_PERMISSION_ENABLED';
@@ -109,6 +110,9 @@ export interface Typegen0 {
     setSenderInfo: 'CONNECTED';
     setShareLogTypeUnverified: 'ACCEPT_REQUEST';
     setShareLogTypeVerified: 'FACE_VALID';
+    setStayInProgress:
+      | 'STAY_IN_PROGRESS'
+      | 'xstate.after(CONNECTION_TIMEOUT)#scan.connecting.inProgress';
     setUri: 'SCAN';
     storeLoginItem: 'done.invoke.QrLogin';
     storingActivityLog: 'STORE_RESPONSE';
