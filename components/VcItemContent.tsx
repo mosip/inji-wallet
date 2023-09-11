@@ -118,11 +118,18 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
                 />
               )}
             </ImageBackground>
-            <Column margin="0 0 0 10">
-              {getDetails(t('fullName'), fullName, props.verifiableCredential)}
+            <Column margin="6 0 0 10">
+              <Text testID="fullName">
+                {getDetails(
+                  t('fullName'),
+                  fullName,
+                  props.verifiableCredential
+                )}
+              </Text>
 
               <Column margin="10 0 0 0">
                 <Text
+                  testID="idType"
                   color={
                     !props.verifiableCredential
                       ? Theme.Colors.LoadingDetailsLabel
