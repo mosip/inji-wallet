@@ -10,14 +10,17 @@ import { Modal } from '../../components/ui/Modal';
 import { useReceivedVcsTab } from '../Home/ReceivedVcsTabController';
 import { VcItem } from '../../components/VcItem';
 import { ViewVcModal } from '../Home/ViewVcModal';
+import testIDProps from '../../shared/commonUtil';
 
-export const ReceivedCards: React.FC = () => {
+export const ReceivedCards: React.FC<ReceivedCardsProps> = (props) => {
   const { t } = useTranslation('ReceivedVcsTab');
   const controller = useReceivedVcsTab();
 
   return (
     <React.Fragment>
-      <Pressable onPress={controller.TOGGLE_RECEIVED_CARDS}>
+      <Pressable
+        onPress={controller.TOGGLE_RECEIVED_CARDS}
+        {...testIDProps(props.testID)}>
         <Column style={Theme.Styles.receiveCardsContainer}>
           <Image
             source={Theme.ReceivedCardsIcon}
@@ -86,3 +89,7 @@ export const ReceivedCards: React.FC = () => {
     </React.Fragment>
   );
 };
+
+interface ReceivedCardsProps {
+  testID?: string;
+}

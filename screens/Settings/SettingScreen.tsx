@@ -30,7 +30,7 @@ const LanguageSetting: React.FC = () => {
             color={Theme.Colors.Icon}
             containerStyle={Theme.Styles.settingsIconBg}
           />
-          <ListItem.Content>
+          <ListItem.Content testID="language">
             <ListItem.Title>
               <Text weight="semibold">{t('language')}</Text>
             </ListItem.Title>
@@ -59,8 +59,9 @@ export const SettingScreen: React.FC<
         {props.triggerComponent}
       </Pressable>
       <Modal
+        testID="SettingsHeader"
         isVisible={controller.isVisible}
-        arrowLeft={<Icon name={''} />}
+        arrowLeft={<Icon name={''} testID="closeSettings" />}
         headerTitle={t('header')}
         headerElevation={2}
         onDismiss={controller.TOGGLE_SETTINGS}>
@@ -69,6 +70,7 @@ export const SettingScreen: React.FC<
             style={{ display: Platform.OS !== 'ios' ? 'flex' : 'none' }}
             backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
             <Text
+              testID="injiAsVerifierApp"
               weight="semibold"
               margin="10"
               color={Theme.Colors.aboutVersion}>
@@ -83,12 +85,12 @@ export const SettingScreen: React.FC<
                     source={Theme.ReceiveCardIcon}
                     style={{ alignSelf: 'center' }}
                   />
-                  <Text margin="6" weight="semibold">
+                  <Text testID="receiveCard" margin="6" weight="semibold">
                     {t('receiveCard')}
                   </Text>
                 </Column>
               </Pressable>
-              <ReceivedCards />
+              <ReceivedCards testID="ReceivedCards" />
             </Row>
 
             <Text
@@ -115,7 +117,7 @@ export const SettingScreen: React.FC<
                 size={25}
                 style={{ marginRight: 15 }}
               />
-              <ListItem.Content>
+              <ListItem.Content testID="bioUnlock">
                 <ListItem.Title>
                   <Text weight="semibold" color={Theme.Colors.profileLabel}>
                     {t('bioUnlock')}
@@ -164,7 +166,7 @@ export const SettingScreen: React.FC<
                 size={25}
                 style={{ marginRight: 15 }}
               />
-              <ListItem.Content>
+              <ListItem.Content testID="injiTourGuide">
                 <ListItem.Title>
                   <Text weight="semibold" color={Theme.Colors.profileLabel}>
                     {t('injiTourGuide')}
@@ -181,7 +183,7 @@ export const SettingScreen: React.FC<
                 color={Theme.Colors.Icon}
                 containerStyle={Theme.Styles.settingsIconBg}
               />
-              <ListItem.Content>
+              <ListItem.Content testID="logout">
                 <ListItem.Title>
                   <Text weight="semibold" color={Theme.Colors.profileLabel}>
                     {t('logout')}
@@ -217,4 +219,5 @@ export const SettingScreen: React.FC<
 
 interface SettingProps {
   triggerComponent: React.ReactElement;
+  testID?: string;
 }

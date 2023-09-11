@@ -117,6 +117,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
               <Column fill style={Theme.Styles.homeScreenContainer}>
                 <Image source={Theme.DigitalIdentityLogo} />
                 <Text
+                  testID="bringYourDigitalID"
                   align="center"
                   weight="bold"
                   margin="33 0 6 0"

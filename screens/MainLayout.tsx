@@ -30,6 +30,7 @@ export const MainLayout: React.FC<RootRouteProps & RequestRouteProps> = (
         <HelpScreen
           triggerComponent={
             <Image
+              testID="help"
               source={require('../assets/help-icon.png')}
               style={{ width: 36, height: 36 }}
             />
@@ -41,6 +42,7 @@ export const MainLayout: React.FC<RootRouteProps & RequestRouteProps> = (
         <SettingScreen
           triggerComponent={
             <Icon
+              testID="settings"
               name="settings"
               type="simple-line-icon"
               size={21}
@@ -95,6 +97,7 @@ export const MainLayout: React.FC<RootRouteProps & RequestRouteProps> = (
             title: t(route.name),
             tabBarIcon: ({ focused }) => (
               <Icon
+                testID={route.name}
                 name={route.icon}
                 color={focused ? Theme.Colors.Icon : Theme.Colors.GrayIcon}
                 style={focused ? Theme.Styles.bottomTabIconStyle : null}

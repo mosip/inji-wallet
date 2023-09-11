@@ -52,7 +52,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({ appId }) => {
             size={25}
             style={{ marginRight: 15 }}
           />
-          <ListItem.Content>
+          <ListItem.Content testID="aboutInji">
             <ListItem.Title>
               <Text weight="semibold" color={Theme.Colors.profileLabel}>
                 {t('aboutInji')}

@@ -23,6 +23,7 @@ export const HelpScreen: React.FC<HelpScreenProps & MainRouteProps> = (
         {props.triggerComponent}
       </Pressable>
       <Modal
+        testID={props.testID}
         isVisible={showHelpPage}
         headerTitle={t('header')}
         headerElevation={2}
@@ -76,4 +77,5 @@ export const HelpScreen: React.FC<HelpScreenProps & MainRouteProps> = (
 
 interface HelpScreenProps {
   triggerComponent: React.ReactElement;
+  testID?: string;
 }
