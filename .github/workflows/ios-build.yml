@@ -1,6 +1,6 @@
 name: Inji iOS build
 
-on:           
+on:
   workflow_dispatch:
     inputs:
       backendServiceUrl:
@@ -45,17 +45,17 @@ jobs:
   build_ios:
     name: Deploying to Testflight
     runs-on: macos-13
-    
+
     steps:
       - uses: actions/checkout@v3.1.0
       - uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
-      
+          node-version: '18.x'
+
       - name: Install npm dependencies
         run: |
           npm install
-        
+
       - name: Install Pod
         run: |
           cd ios
