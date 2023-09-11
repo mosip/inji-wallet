@@ -34,6 +34,7 @@ export const SetupPicker: Picker = (props: PickerProps<unknown>) => {
       backgroundColor={Theme.Colors.whiteBackgroundColor}>
       {props.items.map((item, index) => (
         <ListItem
+          testID={item.value}
           bottomDivider
           topDivider={index !== 0}
           onPress={() => selectItem(index)}

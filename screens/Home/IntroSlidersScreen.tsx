@@ -82,7 +82,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
           </Row>
           <Image source={item.image} />
           <Column
-            testID="introSlideColumn"
+            testID="introSlide"
             style={Theme.OnboardingOverlayStyles.bottomContainer}
             crossAlign="center"
             backgroundColor={Theme.Colors.whiteText}
