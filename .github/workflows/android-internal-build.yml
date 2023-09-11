@@ -64,7 +64,7 @@ jobs:
 
       - name: Install npm dependencies
         run: |
-          npm ci
+          npm i
 
       - name: Create .env.local file
         run: |
