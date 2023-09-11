@@ -67,7 +67,7 @@ export function useRequestLayout() {
   );
   useEffect(() => {
     if (isNavigationToHome) {
-      navigation.navigate(BOTTOM_TAB_ROUTES.home(0).name);
+      navigation.navigate(BOTTOM_TAB_ROUTES.home);
     } else if (isReviewing) {
       navigation.navigate(REQUEST_ROUTES.ReceiveVcScreen);
     } else if (isWaitingForConnection) {

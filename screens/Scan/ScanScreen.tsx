@@ -154,7 +154,7 @@ export const ScanScreen: React.FC = () => {
           }
           translationPath={'ScanScreen'}
           error="errors.storageLimitReached"
-          onDismiss={() => navigation.navigate(BOTTOM_TAB_ROUTES.home(0).name)}
+          onDismiss={() => navigation.navigate(BOTTOM_TAB_ROUTES.home)}
         />
       )
     );

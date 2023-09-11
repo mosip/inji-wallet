@@ -12,7 +12,7 @@ import i18n from '../i18n';
 import { BOTTOM_TAB_ROUTES } from './routesConstants';
 
 const home: TabScreen = {
-  name: BOTTOM_TAB_ROUTES.home.name,
+  name: BOTTOM_TAB_ROUTES.home,
   component: HomeScreen,
   icon: 'home',
   options: {
@@ -50,9 +50,7 @@ mainRoutes.push(scan);
 mainRoutes.push(history);
 
 export type MainBottomTabParamList = {
-  home: {
-    activeTab: number;
-  };
+  home: undefined;
   scan: undefined;
   history: undefined;
 };

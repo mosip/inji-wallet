@@ -57,7 +57,7 @@ export const RequestScreen: React.FC = () => {
           isVisible={controller.isMinimumStorageLimitReached}
           error="errors.storageLimitReached"
           onDismiss={() => {
-            navigation.navigate(BOTTOM_TAB_ROUTES.home(0).name);
+            navigation.navigate(BOTTOM_TAB_ROUTES.home);
           }}
           translationPath="RequestScreen"
         />

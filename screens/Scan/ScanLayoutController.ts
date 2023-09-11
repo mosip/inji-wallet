@@ -200,7 +200,7 @@ export function useScanLayout() {
 
   useEffect(() => {
     if (isDone) {
-      navigation.navigate(BOTTOM_TAB_ROUTES.home(0).name);
+      navigation.navigate(BOTTOM_TAB_ROUTES.home);
     } else if (isReviewing) {
       navigation.navigate(SCAN_ROUTES.SendVcScreen);
     } else if (isScanning) {
