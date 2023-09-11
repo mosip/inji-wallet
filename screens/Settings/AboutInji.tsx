@@ -9,6 +9,7 @@ import { Icon, ListItem } from 'react-native-elements';
 import getAllConfigurations from '../../shared/commonprops/commonProps';
 import { getVersion } from 'react-native-device-info';
 import { CopyButton } from '../../components/CopyButton';
+import testIDProps from '../../shared/commonUtil';
 
 export const AboutInji: React.FC<AboutInjiProps> = ({ appId }) => {
   const { t } = useTranslation('AboutInji');
@@ -41,6 +42,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({ appId }) => {
   return (
     <React.Fragment>
       <Pressable
+        {...testIDProps('aboutInji')}
         onPress={() => {
           setShowAboutInji(!showAboutInji);
         }}>
@@ -52,7 +54,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({ appId }) => {
             size={25}
             style={{ marginRight: 15 }}
           />
-          <ListItem.Content testID="aboutInji">
+          <ListItem.Content>
             <ListItem.Title>
               <Text weight="semibold" color={Theme.Colors.profileLabel}>
                 {t('aboutInji')}

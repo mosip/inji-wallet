@@ -15,6 +15,7 @@ import { AboutInji } from './AboutInji';
 import { EditableListItem } from '../../components/EditableListItem';
 import { RequestRouteProps, RootRouteProps } from '../../routes';
 import { ReceivedCards } from './ReceivedCards';
+import testIDProps from '../../shared/commonUtil';
 
 const LanguageSetting: React.FC = () => {
   const { t } = useTranslation('SettingScreen');
@@ -30,7 +31,7 @@ const LanguageSetting: React.FC = () => {
             color={Theme.Colors.Icon}
             containerStyle={Theme.Styles.settingsIconBg}
           />
-          <ListItem.Content testID="language">
+          <ListItem.Content>
             <ListItem.Title>
               <Text weight="semibold">{t('language')}</Text>
             </ListItem.Title>
@@ -59,9 +60,10 @@ export const SettingScreen: React.FC<
         {props.triggerComponent}
       </Pressable>
       <Modal
-        testID="SettingsHeader"
+        testID="settingsScreen"
+        headerID="settingsHeader"
         isVisible={controller.isVisible}
-        arrowLeft={<Icon name={''} testID="closeSettings" />}
+        arrowLeft={<Icon name={''} />}
         headerTitle={t('header')}
         headerElevation={2}
         onDismiss={controller.TOGGLE_SETTINGS}>
@@ -79,18 +81,21 @@ export const SettingScreen: React.FC<
             <Row
               align="space-evenly"
               backgroundColor={Theme.Colors.whiteBackgroundColor}>
-              <Pressable onPress={controller.RECEIVE_CARD}>
+              <Pressable
+                {...testIDProps('receiveCard')}
+                onPress={controller.RECEIVE_CARD}>
                 <Column style={Theme.Styles.receiveCardsContainer}>
                   <Image
                     source={Theme.ReceiveCardIcon}
                     style={{ alignSelf: 'center' }}
                   />
-                  <Text testID="receiveCard" margin="6" weight="semibold">
+                  <Text margin="6" weight="semibold">
                     {t('receiveCard')}
                   </Text>
                 </Column>
               </Pressable>
-              <ReceivedCards testID="ReceivedCards" />
+
+              <ReceivedCards />
             </Row>
 
             <Text
@@ -109,7 +114,10 @@ export const SettingScreen: React.FC<
 
             <LanguageSetting />
 
-            <ListItem topDivider disabled={!controller.canUseBiometrics}>
+            <ListItem
+              {...testIDProps('bioUnlock')}
+              topDivider
+              disabled={!controller.canUseBiometrics}>
               <Icon
                 type={'MaterialCommunityIcons'}
                 name={'fingerprint'}
@@ -117,7 +125,7 @@ export const SettingScreen: React.FC<
                 size={25}
                 style={{ marginRight: 15 }}
               />
-              <ListItem.Content testID="bioUnlock">
+              <ListItem.Content>
                 <ListItem.Title>
                   <Text weight="semibold" color={Theme.Colors.profileLabel}>
                     {t('bioUnlock')}
@@ -156,6 +164,7 @@ export const SettingScreen: React.FC<
             )}
 
             <ListItem
+              {...testIDProps('injiTourGuide')}
               topDivider
               bottomDivider
               onPress={() => controller.INJI_TOUR_GUIDE()}>
@@ -166,7 +175,7 @@ export const SettingScreen: React.FC<
                 size={25}
                 style={{ marginRight: 15 }}
               />
-              <ListItem.Content testID="injiTourGuide">
+              <ListItem.Content>
                 <ListItem.Title>
                   <Text weight="semibold" color={Theme.Colors.profileLabel}>
                     {t('injiTourGuide')}
@@ -175,7 +184,7 @@ export const SettingScreen: React.FC<
               </ListItem.Content>
             </ListItem>
 
-            <ListItem onPress={controller.LOGOUT}>
+            <ListItem {...testIDProps('logout')} onPress={controller.LOGOUT}>
               <Icon
                 name="logout"
                 type="fontawesome"
@@ -183,7 +192,7 @@ export const SettingScreen: React.FC<
                 color={Theme.Colors.Icon}
                 containerStyle={Theme.Styles.settingsIconBg}
               />
-              <ListItem.Content testID="logout">
+              <ListItem.Content>
                 <ListItem.Title>
                   <Text weight="semibold" color={Theme.Colors.profileLabel}>
                     {t('logout')}
@@ -191,6 +200,7 @@ export const SettingScreen: React.FC<
                 </ListItem.Title>
               </ListItem.Content>
             </ListItem>
+
             {controller.backendInfo.application.name !== '' ? (
               <View>
                 <Text
@@ -218,6 +228,6 @@ export const SettingScreen: React.FC<
 };
 
 interface SettingProps {
-  triggerComponent: React.ReactElement;
   testID?: string;
+  triggerComponent: React.ReactElement;
 }

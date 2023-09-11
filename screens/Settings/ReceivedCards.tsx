@@ -12,15 +12,15 @@ import { VcItem } from '../../components/VcItem';
 import { ViewVcModal } from '../Home/ViewVcModal';
 import testIDProps from '../../shared/commonUtil';
 
-export const ReceivedCards: React.FC<ReceivedCardsProps> = (props) => {
+export const ReceivedCards: React.FC = () => {
   const { t } = useTranslation('ReceivedVcsTab');
   const controller = useReceivedVcsTab();
 
   return (
     <React.Fragment>
       <Pressable
-        onPress={controller.TOGGLE_RECEIVED_CARDS}
-        {...testIDProps(props.testID)}>
+        {...testIDProps('receivedCards')}
+        onPress={controller.TOGGLE_RECEIVED_CARDS}>
         <Column style={Theme.Styles.receiveCardsContainer}>
           <Image
             source={Theme.ReceivedCardsIcon}
@@ -64,10 +64,17 @@ export const ReceivedCards: React.FC<ReceivedCardsProps> = (props) => {
                   size={40}
                   name="sentiment-dissatisfied"
                 />
-                <Text align="center" weight="semibold" margin="0 0 4 0">
+                <Text
+                  testID="noCardAvailable"
+                  align="center"
+                  weight="semibold"
+                  margin="0 0 4 0">
                   {t('noReceivedVcsTitle')}
                 </Text>
-                <Text align="center" color={Theme.Colors.textLabel}>
+                <Text
+                  testID="requestBelowToReceiveCard"
+                  align="center"
+                  color={Theme.Colors.textLabel}>
                   {t('noReceivedVcsText')}
                 </Text>
               </Centered>
@@ -89,7 +96,3 @@ export const ReceivedCards: React.FC<ReceivedCardsProps> = (props) => {
     </React.Fragment>
   );
 };
-
-interface ReceivedCardsProps {
-  testID?: string;
-}
