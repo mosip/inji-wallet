@@ -1,4 +1,5 @@
 name: Android Internal Build
+run-name: ${{ github.event.inputs.buildname }} 
 
 env:
   backendServiceDefaultUrl: https://api.sandbox.mosip.net
@@ -6,10 +7,10 @@ env:
 on:
   workflow_dispatch:
     inputs:
-      appname:
-        description: 'Inji_develop/Collab_build/Inji_release-0.9.x'
+      buildname:
+        description: 'Build App For'
         required: true
-        default: 'Inji_develop'
+        default: 'Sprint-x/Collab/release-x.x.x'
         type: string
       backendServiceUrl:
         description: 'Backend service URL'
@@ -63,7 +64,7 @@ jobs:
 
       - name: Install npm dependencies
         run: |
-          npm ci
+          npm i
 
       - name: Create .env.local file
         run: |
@@ -99,14 +100,6 @@ jobs:
         env:
           ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
 
-      - name: Export variables for keystore
-        run: |
-          cd android/app
-          export RELEASE_KEYSTORE_ALIAS=androidreleasekey
-          export RELEASE_KEYSTORE_PASSWORD=$RELEASE_KEYSTORE_PASSWORD
-        env: 
-          RELEASE_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_RELEASE_STOREPASS}}'
-
       - name: Create Google Play Config file
         run : |
           cd android
@@ -115,7 +108,26 @@ jobs:
         env:
           INJI_ANDROID_PLAY_STORE_CONFIG_JSON: ${{ secrets.INJI_ANDROID_PLAY_STORE_CONFIG_JSON }}
 
-      - name: Run Build
+      - name: Run Build for upload
+        run: |
+          npx jetify
+          cd android
+          ./gradlew :app:assembleMosipRelease
+        env:
+          MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
+          APPLICATION_THEME: ${{ github.event.inputs.theme }} 
+          RELEASE_KEYSTORE_ALIAS: androidreleasekey
+          RELEASE_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_RELEASE_STOREPASS}}'
+          CREDENTIAL_REGISTRY_EDIT: ${{ github.event.inputs.registry_edit }}
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3.1.1
+        with:
+          name: ${{ github.event.inputs.buildname }}
+          path: android/app/build/outputs/apk/mosip/release/
+          retention-days: 10
+
+      - name: Run Build for play console
         run: | 
           cd android/scripts
           ./internal-build.sh
@@ -128,9 +140,4 @@ jobs:
           PLAY_CONSOLE_RELEASE_DESCRIPTION: ${{ github.event.inputs.buildDescription }}
           CREDENTIAL_REGISTRY_EDIT: ${{ github.event.inputs.registry_edit }}
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3.1.1
-        with:
-          name: ${{ github.event.inputs.appname }}
-          path: android/app/build/outputs/apk/mosip/release/
-          retention-days: 10
+      
