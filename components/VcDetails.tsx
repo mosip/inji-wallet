@@ -50,6 +50,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
           <Column align="space-evenly">
             <Column>
               <Text
+                testID="fullName"
                 weight="bold"
                 size="smaller"
                 color={Theme.Colors.DetailsLabel}>
@@ -68,6 +69,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
               <Column>
                 <Column>
                   <Text
+                    testID="idType"
                     weight="bold"
                     size="smaller"
                     color={Theme.Colors.DetailsLabel}>
@@ -83,6 +85,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                 {uin ? (
                   <Column margin="20 0 0 0">
                     <Text
+                      testID="uin"
                       weight="bold"
                       size="smaller"
                       color={Theme.Colors.DetailsLabel}>
@@ -100,6 +103,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                 {vid ? (
                   <Column margin="20 0 0 0">
                     <Text
+                      testID="vid"
                       weight="bold"
                       size="smaller"
                       color={Theme.Colors.DetailsLabel}>
@@ -115,6 +119,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                 ) : null}
                 <Column margin="20 0 0 0">
                   <Text
+                    testID="dateOfBirth"
                     weight="bold"
                     size="smaller"
                     color={Theme.Colors.DetailsLabel}>
@@ -136,6 +141,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
               <Column margin="0 0 0 40">
                 <Column>
                   <Text
+                    testID="gender"
                     weight="bold"
                     size="smaller"
                     color={Theme.Colors.DetailsLabel}>
@@ -152,6 +158,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                 </Column>
                 <Column margin="20 0 0 0">
                   <Text
+                    testID="generatedOn"
                     weight="bold"
                     size="smaller"
                     color={Theme.Colors.DetailsLabel}>
@@ -166,6 +173,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                 </Column>
                 <Column margin="20 0 0 0">
                   <Text
+                    testID="status"
                     weight="bold"
                     size="smaller"
                     color={Theme.Colors.DetailsLabel}>
@@ -183,6 +191,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                 </Column>
                 <Column margin="20 0 0 0">
                   <Text
+                    testID="phoneNumber"
                     weight="bold"
                     size="smaller"
                     color={Theme.Colors.DetailsLabel}>
@@ -205,6 +214,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
         <Column>
           <Column fill style={Theme.Styles.labelPart}>
             <Text
+              testID="email"
               weight="bold"
               size="smaller"
               color={Theme.Colors.DetailsLabel}>
@@ -230,6 +240,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
 
           <Column style={Theme.Styles.labelPart}>
             <Text
+              testID="address"
               weight="bold"
               size="smaller"
               color={Theme.Colors.DetailsLabel}>
@@ -250,6 +261,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
           {CREDENTIAL_REGISTRY_EDIT === 'true' && (
             <Column fill style={Theme.Styles.labelPart}>
               <Text
+                testID="credentialRegistry"
                 weight="bold"
                 size="smaller"
                 color={Theme.Colors.DetailsLabel}>
@@ -268,7 +280,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
       </ImageBackground>
 
       {props.vc?.reason?.length > 0 && (
-        <Text margin="24 24 16 24" weight="semibold">
+        <Text testID="reasonForSharing" margin="24 24 16 24" weight="semibold">
           {t('reasonForSharing')}
         </Text>
       )}
@@ -296,6 +308,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                 type="material-community"
               />
               <Text
+                testID="offlineAuthDisabledHeader"
                 style={{ flex: 1 }}
                 weight="semibold"
                 size="small"
@@ -305,6 +318,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
               </Text>
             </Row>
             <Text
+              testID="offlineAuthDisabledMessage"
               style={{ flex: 1 }}
               weight="regular"
               size="small"
@@ -314,6 +328,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
             </Text>
 
             <Button
+              testID="enableVerification"
               title={t('enableVerification')}
               onPress={props.onBinding}
               type="radius"
@@ -329,6 +344,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                 containerStyle={{ marginStart: 4, bottom: 1 }}
               />
               <Text
+                testID="profileAuthenticated"
                 numLines={1}
                 color={Theme.Colors.statusLabel}
                 weight="bold"
