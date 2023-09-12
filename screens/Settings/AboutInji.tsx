@@ -42,11 +42,10 @@ export const AboutInji: React.FC<AboutInjiProps> = ({ appId }) => {
   return (
     <React.Fragment>
       <Pressable
-        {...testIDProps('aboutInji')}
         onPress={() => {
           setShowAboutInji(!showAboutInji);
         }}>
-        <ListItem topDivider bottomDivider>
+        <ListItem testID="aboutInji" topDivider bottomDivider>
           <Icon
             type={'feather'}
             name={'file'}

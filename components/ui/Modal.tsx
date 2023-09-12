@@ -76,7 +76,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
             </Row>
             {props.headerRight || props.arrowLeft || (
               <Icon
-                {...testIDProps(props.testID + ' close')}
+                {...testIDProps('close')}
                 name="close"
                 onPress={props.onDismiss}
                 color={Theme.Colors.Details}

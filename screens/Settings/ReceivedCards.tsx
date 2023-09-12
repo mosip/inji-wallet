@@ -18,10 +18,10 @@ export const ReceivedCards: React.FC = () => {
 
   return (
     <React.Fragment>
-      <Pressable
-        {...testIDProps('receivedCards')}
-        onPress={controller.TOGGLE_RECEIVED_CARDS}>
-        <Column style={Theme.Styles.receiveCardsContainer}>
+      <Pressable onPress={controller.TOGGLE_RECEIVED_CARDS}>
+        <Column
+          testID="receivedCards"
+          style={Theme.Styles.receiveCardsContainer}>
           <Image
             source={Theme.ReceivedCardsIcon}
             style={{ marginLeft: 10, marginRight: 9 }}

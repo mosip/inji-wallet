@@ -81,10 +81,10 @@ export const SettingScreen: React.FC<
             <Row
               align="space-evenly"
               backgroundColor={Theme.Colors.whiteBackgroundColor}>
-              <Pressable
-                {...testIDProps('receiveCard')}
-                onPress={controller.RECEIVE_CARD}>
-                <Column style={Theme.Styles.receiveCardsContainer}>
+              <Pressable onPress={controller.RECEIVE_CARD}>
+                <Column
+                  testID="receiveCard"
+                  style={Theme.Styles.receiveCardsContainer}>
                   <Image
                     source={Theme.ReceiveCardIcon}
                     style={{ alignSelf: 'center' }}
