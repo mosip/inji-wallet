@@ -30,6 +30,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
             }}>
             {props.headerRight ? (
               <Icon
+                {...testIDProps('closeModal')}
                 name={I18nManager.isRTL ? 'chevron-right' : 'chevron-left'}
                 onPress={props.onDismiss}
                 color={Theme.Colors.Icon}
