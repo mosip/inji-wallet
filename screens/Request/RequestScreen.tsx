@@ -15,6 +15,7 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 import { MainBottomTabParamList } from '../../routes/main';
+import { BOTTOM_TAB_ROUTES } from '../../routes/routesConstants';
 
 type RequestStackParamList = {
   RequestScreen: undefined;
@@ -56,7 +57,7 @@ export const RequestScreen: React.FC = () => {
           isVisible={controller.isMinimumStorageLimitReached}
           error="errors.storageLimitReached"
           onDismiss={() => {
-            navigation.navigate('Home');
+            navigation.navigate(BOTTOM_TAB_ROUTES.home);
           }}
           translationPath="RequestScreen"
         />

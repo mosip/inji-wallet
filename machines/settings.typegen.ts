@@ -25,6 +25,7 @@ export interface Typegen0 {
   };
   'eventsCausingActions': {
     injiTourGuide:
+      | 'ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS'
       | 'BACK'
       | 'CANCEL'
       | 'STORE_RESPONSE'

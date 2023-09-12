@@ -9,9 +9,10 @@ import { RootStackParamList } from './index';
 import { ScanLayout } from '../screens/Scan/ScanLayout';
 import { HistoryScreen } from '../screens/History/HistoryScreen';
 import i18n from '../i18n';
+import { BOTTOM_TAB_ROUTES } from './routesConstants';
 
 const home: TabScreen = {
-  name: 'home',
+  name: BOTTOM_TAB_ROUTES.home,
   component: HomeScreen,
   icon: 'home',
   options: {
@@ -24,7 +25,7 @@ const home: TabScreen = {
   },
 };
 export const scan: TabScreen = {
-  name: 'scan',
+  name: BOTTOM_TAB_ROUTES.scan,
   component: ScanLayout,
   icon: 'qr-code-scanner',
   options: {
@@ -32,8 +33,9 @@ export const scan: TabScreen = {
     headerShown: false,
   },
 };
+
 const history: TabScreen = {
-  name: 'history',
+  name: BOTTOM_TAB_ROUTES.history,
   component: HistoryScreen,
   icon: 'history',
   options: {
@@ -48,11 +50,9 @@ mainRoutes.push(scan);
 mainRoutes.push(history);
 
 export type MainBottomTabParamList = {
-  home: {
-    activeTab: number;
-  };
-  Scan: undefined;
-  History: undefined;
+  home: undefined;
+  scan: undefined;
+  history: undefined;
 };
 
 export interface TabScreen {
