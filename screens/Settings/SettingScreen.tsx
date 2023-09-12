@@ -61,7 +61,6 @@ export const SettingScreen: React.FC<
       </Pressable>
       <Modal
         testID="settingsScreen"
-        headerID="settingsHeader"
         isVisible={controller.isVisible}
         arrowLeft={<Icon name={''} />}
         headerTitle={t('header')}
