@@ -10,7 +10,6 @@ import { Modal } from '../../components/ui/Modal';
 import { useReceivedVcsTab } from '../Home/ReceivedVcsTabController';
 import { VcItem } from '../../components/VcItem';
 import { ViewVcModal } from '../Home/ViewVcModal';
-import testIDProps from '../../shared/commonUtil';
 
 export const ReceivedCards: React.FC = () => {
   const { t } = useTranslation('ReceivedVcsTab');
@@ -65,14 +64,14 @@ export const ReceivedCards: React.FC = () => {
                   name="sentiment-dissatisfied"
                 />
                 <Text
-                  testID="noCardAvailable"
+                  testID="noReceivedVcsTitle"
                   align="center"
                   weight="semibold"
                   margin="0 0 4 0">
                   {t('noReceivedVcsTitle')}
                 </Text>
                 <Text
-                  testID="requestBelowToReceiveCard"
+                  testID="noReceivedVcsText"
                   align="center"
                   color={Theme.Colors.textLabel}>
                   {t('noReceivedVcsText')}

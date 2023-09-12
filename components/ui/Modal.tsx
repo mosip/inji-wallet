@@ -37,7 +37,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
             ) : null}
             {props.arrowLeft ? (
               <Icon
-                {...testIDProps(props.testID + ' arrow-left')}
+                {...testIDProps('arrowLeft')}
                 name="arrow-left"
                 type="material-community"
                 onPress={props.onDismiss}
@@ -50,7 +50,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
               align={props.headerLeft ? 'flex-start' : 'center'}
               margin={'16 0 0 0'}>
               <Column>
-                <Text testID={props.headerID} style={Theme.TextStyles.header}>
+                <Text testID={props.testID} style={Theme.TextStyles.header}>
                   {props.headerTitle || props.headerLeft}
                 </Text>
                 {!props.requester ? (
@@ -93,7 +93,6 @@ export const Modal: React.FC<ModalProps> = (props) => {
 
 export interface ModalProps {
   testID?: string;
-  headerID?: string;
   isVisible: boolean;
   requester?: boolean;
   onDismiss?: () => void;
