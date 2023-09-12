@@ -44,7 +44,7 @@ on:
 jobs:
   build_ios:
     name: Deploying to Testflight
-    runs-on: self-hosted
+    runs-on: macos-13
 
     steps:
       - uses: actions/checkout@v3.1.0
