@@ -16,7 +16,7 @@ export const PinInput: React.FC<PinInputProps> = (props) => {
   }, [state]);
 
   return (
-    <Row width="100%">
+    <Row width="100%" testID={props.testID}>
       {inputRefs.map((input, index) => (
         <TextInput
           selectTextOnFocus

@@ -27,10 +27,11 @@ const Colors = {
   walletbindingLabel: '#000000',
   GradientColors: ['#373086', '#70308C'],
   DisabledColors: ['#C7C7C7', '#C7C7C7'],
+  captureIconBorder: '#F59B4B',
   Purple: '#70308C',
   LightPurple: '#AEA7FF',
   TimeoutHintBoxColor: '#FFF7E5',
-  TimoutText: '#8B6105',
+  TimoutHintText: '#8B6105',
   resendCodeTimer: '#555555',
 };
 
@@ -95,7 +96,7 @@ export const PurpleTheme = {
     DisabledColors: Colors.DisabledColors,
     getVidColor: Colors.Zambezi,
     TimeoutHintBoxColor: Colors.TimeoutHintBoxColor,
-    TimoutText: Colors.TimoutText,
+    TimoutHintText: Colors.TimoutHintText,
     walletbindingLabel: Colors.Black,
     walletbindingContent: Colors.Gray40,
     resendCodeTimer: Colors.resendCodeTimer,
@@ -323,6 +324,14 @@ export const PurpleTheme = {
       height: 36,
       borderRadius: 10,
       backgroundColor: Colors.LightPurple,
+    },
+    cameraFlipIcon: {
+      height: 42,
+      width: 42,
+    },
+    imageCaptureButton: {
+      marginLeft: 130,
+      marginRight: 50,
     },
     settingsIconBg: {
       padding: 6,
@@ -974,6 +983,7 @@ export const PurpleTheme = {
   MosipSplashLogo: require('../../../assets/icon.png'),
   MosipLogo: require('../../../assets/mosip-logo.png'),
   CameraFlipIcon: require('../../../assets/camera-flip-icon.png'),
+  ImageCaptureButton: require('../../../assets/capture-button.png'),
   DomainWarningLogo: require('../../../assets/domain-warning.png'),
   WarningLogo: require('../../../assets/warningLogo.png'),
   OtpLogo: require('../../../purpleAssets/otp-mobile-logo.png'),

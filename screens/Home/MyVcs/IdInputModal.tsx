@@ -16,6 +16,7 @@ import { TouchableOpacity } from 'react-native';
 import { individualId } from '../../../shared/constants';
 import { GET_INDIVIDUAL_ID } from '../../../shared/constants';
 import { MessageOverlay } from '../../../components/MessageOverlay';
+import testIDProps from '../../../shared/commonUtil';
 
 export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
   const { t } = useTranslation('IdInputModal');
@@ -76,7 +77,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
               </Column>
               <Column fill>
                 <Input
-                  testID="inputId"
+                  {...testIDProps('idInput')}
                   inputContainerStyle={
                     controller.id ? Theme.Styles.VidInputBottom : null
                   }

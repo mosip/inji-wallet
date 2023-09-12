@@ -24,7 +24,11 @@
     "Verifier": "المدقق",
     "Wallet": "محفظة"
   },
-  "FaceScanner": {},
+  "FaceScanner": {
+    "imageCaptureGuide": "أمسك الهاتف بثبات وحافظ على تركيز وجهك في المنتصف",
+    "capture": "يأسر",
+    "flipCamera": "فليب الكاميرا"
+  },
   "OIDcAuth": {
     "title": "مصادقة OIDC",
     "text": "ليتم استبداله بموفر واجهة مستخدم OIDC",
@@ -450,6 +454,8 @@
       "establishingConnection": "اجراء اتصال",
       "sharingInProgress": "جاري المشاركة",
       "connectingTimeout": "يستغرق إنشاء الاتصال بعض الوقت. هل الجهاز الآخر مفتوح للاتصالات؟",
+      "stayOnTheScreen": "البقاء على الشاشة",
+      "retry": "أعد المحاولة",
       "exchangingDeviceInfo": "تبادل معلومات الجهاز ...",
       "exchangingDeviceInfoTimeout": "يستغرق الأمر بعض الوقت لتبادل معلومات الجهاز. قد تضطر إلى إعادة الاتصال.",
       "invalid": "رمز الاستجابة السريعة غير صالح",

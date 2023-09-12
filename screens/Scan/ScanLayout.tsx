@@ -43,8 +43,10 @@ export const ScanLayout: React.FC = () => {
         hint={controller.statusOverlay?.hint}
         label={controller.statusOverlay?.message}
         onCancel={controller.statusOverlay?.onCancel}
+        onStayInProgress={controller.statusOverlay?.onStayInProgress}
+        isHintVisible={controller.isStayInProgress}
+        onRetry={controller.statusOverlay?.onRetry}
         progress={controller.statusOverlay?.progress}
-        onBackdropPress={controller.statusOverlay?.onBackdropPress}
         requester={controller.statusOverlay?.requester}
       />
 

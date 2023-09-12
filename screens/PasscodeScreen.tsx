@@ -23,7 +23,10 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = (props) => {
     controller.passcode === '' ? (
       <React.Fragment>
         <Column>
-          <Text align="center" style={Theme.TextStyles.header}>
+          <Text
+            testID="setPasscode"
+            align="center"
+            style={Theme.TextStyles.header}>
             {t('header')}
           </Text>
           <Text
@@ -35,12 +38,19 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = (props) => {
           </Text>
         </Column>
 
-        <PinInput length={MAX_PIN} onDone={setPasscode} />
+        <PinInput
+          testID="setPasscodePin"
+          length={MAX_PIN}
+          onDone={setPasscode}
+        />
       </React.Fragment>
     ) : (
       <React.Fragment>
         <Column>
-          <Text align="center" style={Theme.TextStyles.header}>
+          <Text
+            testID="confirmPasscode"
+            align="center"
+            style={Theme.TextStyles.header}>
             {t('confirmPasscode')}
           </Text>
           <Text
@@ -73,6 +83,7 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = (props) => {
       ) : (
         <Column fill align="space-around" width="100%">
           <Text
+            testID="enterPasscode"
             align="center"
             weight="semibold"
             color={Theme.Colors.GrayText}

@@ -23,6 +23,10 @@ export function selectQrLoginRef(state: State) {
   return state.context.QrLoginRef;
 }
 
+export function selectStayInProgress(state: State) {
+  return state.context.stayInProgress;
+}
+
 export function selectIsScanning(state: State) {
   return state.matches('findingConnection');
 }
