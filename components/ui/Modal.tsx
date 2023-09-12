@@ -5,12 +5,14 @@ import { Column, Row, Text } from '.';
 import { useSendVcScreen } from '../../screens/Scan/SendVcScreenController';
 import { DeviceInfoList } from '../DeviceInfoList';
 import { ElevationLevel, Theme } from './styleUtils';
+import testIDProps from '../../shared/commonUtil';
 
 export const Modal: React.FC<ModalProps> = (props) => {
   const controller = useSendVcScreen();
 
   return (
     <RNModal
+      {...testIDProps(props.testID)}
       animationType="slide"
       style={Theme.ModalStyles.modal}
       visible={props.isVisible}
@@ -35,6 +37,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
             ) : null}
             {props.arrowLeft ? (
               <Icon
+                {...testIDProps('arrowLeft')}
                 name="arrow-left"
                 type="material-community"
                 onPress={props.onDismiss}
@@ -47,7 +50,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
               align={props.headerLeft ? 'flex-start' : 'center'}
               margin={'16 0 0 0'}>
               <Column>
-                <Text style={Theme.TextStyles.header}>
+                <Text testID={props.testID} style={Theme.TextStyles.header}>
                   {props.headerTitle || props.headerLeft}
                 </Text>
                 {!props.requester ? (
@@ -73,6 +76,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
             </Row>
             {props.headerRight || props.arrowLeft || (
               <Icon
+                {...testIDProps('close')}
                 name="close"
                 onPress={props.onDismiss}
                 color={Theme.Colors.Details}
@@ -88,6 +92,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
 };
 
 export interface ModalProps {
+  testID?: string;
   isVisible: boolean;
   requester?: boolean;
   onDismiss?: () => void;
