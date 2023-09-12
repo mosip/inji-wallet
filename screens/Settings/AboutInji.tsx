@@ -44,7 +44,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({ appId }) => {
         onPress={() => {
           setShowAboutInji(!showAboutInji);
         }}>
-        <ListItem topDivider bottomDivider>
+        <ListItem testID="aboutInji" topDivider bottomDivider>
           <Icon
             type={'feather'}
             name={'file'}

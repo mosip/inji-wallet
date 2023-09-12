@@ -18,7 +18,9 @@ export const ReceivedCards: React.FC = () => {
   return (
     <React.Fragment>
       <Pressable onPress={controller.TOGGLE_RECEIVED_CARDS}>
-        <Column style={Theme.Styles.receiveCardsContainer}>
+        <Column
+          testID="receivedCards"
+          style={Theme.Styles.receiveCardsContainer}>
           <Image
             source={Theme.ReceivedCardsIcon}
             style={{ marginLeft: 10, marginRight: 9 }}
@@ -61,10 +63,17 @@ export const ReceivedCards: React.FC = () => {
                   size={40}
                   name="sentiment-dissatisfied"
                 />
-                <Text align="center" weight="semibold" margin="0 0 4 0">
+                <Text
+                  testID="noReceivedVcsTitle"
+                  align="center"
+                  weight="semibold"
+                  margin="0 0 4 0">
                   {t('noReceivedVcsTitle')}
                 </Text>
-                <Text align="center" color={Theme.Colors.textLabel}>
+                <Text
+                  testID="noReceivedVcsText"
+                  align="center"
+                  color={Theme.Colors.textLabel}>
                   {t('noReceivedVcsText')}
                 </Text>
               </Centered>
