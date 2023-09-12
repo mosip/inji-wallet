@@ -126,6 +126,11 @@ jobs:
           npx jetify
           cd android
           ./gradlew :app:assembleMosipRelease
+        uses: actions/upload-artifact@v3.1.1
+        with:
+          name: ${{ github.event.inputs.buildname }}
+          path: android/app/build/outputs/apk/mosip/release/
+          retention-days: 10
         env:
           MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
           APPLICATION_THEME: ${{ github.event.inputs.theme }} 
@@ -133,10 +138,10 @@ jobs:
           RELEASE_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_RELEASE_STOREPASS}}'
           CREDENTIAL_REGISTRY_EDIT: ${{ github.event.inputs.registry_edit }}
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3.1.1
-        with:
-          name: ${{ github.event.inputs.buildname }}
-          path: android/app/build/outputs/apk/mosip/release/
-          retention-days: 10
+      # - name: Upload Artifact
+      #   uses: actions/upload-artifact@v3.1.1
+      #   with:
+      #     name: ${{ github.event.inputs.buildname }}
+      #     path: android/app/build/outputs/apk/mosip/release/
+      #     retention-days: 10
       
