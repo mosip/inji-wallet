@@ -121,6 +121,8 @@ jobs:
           PLAY_CONSOLE_RELEASE_DESCRIPTION: ${{ github.event.inputs.buildDescription }}
           CREDENTIAL_REGISTRY_EDIT: ${{ github.event.inputs.registry_edit }}
 
+  upload-to-actions:
+    needs: build-android
       - name: Run Build for upload
         run: |
           npx jetify
