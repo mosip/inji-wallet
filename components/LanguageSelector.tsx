@@ -35,6 +35,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = (props) => {
   return (
     <View>
       <Picker
+        testID="language"
         items={languages}
         selectedValue={i18n.language}
         onValueChange={changeLanguage}
