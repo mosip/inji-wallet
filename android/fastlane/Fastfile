@@ -37,14 +37,11 @@ lane :android_build_internal do
 
   versionName = "#{git_commit}-#{git_branch}"
 
-  aab_path = "/home/runner/work/inji/inji/android/app/build/outputs/bundle/mosipRelease/app-mosip-release.aab"
-
   gradle(task: "clean bundleMosipRelease")
   upload_to_play_store(
   track: 'internal',
   release_status: 'completed',
   version_name: versionName,
-  aab: aab_path
   )
 
   slack(
