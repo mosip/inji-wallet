@@ -24,7 +24,7 @@ import {
   HMAC_ALIAS,
   isCustomSecureKeystore,
 } from '../shared/cryptoutil/cryptoUtil';
-import { VCKey } from '../shared/VCKey';
+import { VCMetadata } from '../shared/VCMetadata';
 
 export const keyinvalidatedString =
   'Key Invalidated due to biometric enrollment';
@@ -492,13 +492,11 @@ export async function getItem(
 ) {
   try {
     const data = await Storage.getItem(key, encryptionKey);
-    console.log('getting item for ' + key);
-    console.log(data);
     if (data != null) {
       const decryptedData = await decryptJson(encryptionKey, data);
       return JSON.parse(decryptedData);
     }
-    if (data === null && VCKey.isValid(key)) {
+    if (data === null && VCMetadata.isValid(key)) {
       await removeItem(key, data, encryptionKey);
       throw new Error(tamperedErrorMessageString);
     } else {
@@ -580,7 +578,7 @@ export async function removeItem(
   encryptionKey: string
 ) {
   try {
-    if (value === null && VCKey.isValid(key)) {
+    if (value === null && VCMetadata.isValid(key)) {
       await Storage.removeItem(key);
       await removeVCMetaData(MY_VCS_STORE_KEY, key, encryptionKey);
     } else {

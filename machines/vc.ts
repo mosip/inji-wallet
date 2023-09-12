@@ -1,5 +1,4 @@
-import { EventFrom, StateFrom } from 'xstate';
-import { send, sendParent } from 'xstate';
+import { EventFrom, send, sendParent, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { StoreEvents } from './store';
 import { VC } from '../types/vc';
@@ -7,25 +6,25 @@ import { AppServices } from '../shared/GlobalContext';
 import { log, respond } from 'xstate/lib/actions';
 import { VcItemEvents } from './vcItem';
 import { MY_VCS_STORE_KEY, RECEIVED_VCS_STORE_KEY } from '../shared/constants';
-import { VCKey } from '../shared/VCKey';
+import { VCMetadata } from '../shared/VCMetadata';
 
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
-    myVcs: [] as string[],
-    receivedVcs: [] as string[],
+    myVcs: [] as VCMetadata[],
+    receivedVcs: [] as VCMetadata[],
     vcs: {} as Record<string, VC>,
   },
   {
     events: {
       VIEW_VC: (vc: VC) => ({ vc }),
-      GET_VC_ITEM: (vcKey: string) => ({ vcKey }),
+      GET_VC_ITEM: (vcMetadata: VCMetadata) => ({ vcMetadata }),
       STORE_RESPONSE: (response: unknown) => ({ response }),
       STORE_ERROR: (error: Error) => ({ error }),
-      VC_ADDED: (vcKey: string) => ({ vcKey }),
-      REMOVE_VC_FROM_CONTEXT: (vcKey: string) => ({ vcKey }),
-      VC_UPDATED: (vcKey: string) => ({ vcKey }),
-      VC_RECEIVED: (vcKey: string) => ({ vcKey }),
+      VC_ADDED: (vcMetadata: VCMetadata) => ({ vcMetadata }),
+      REMOVE_VC_FROM_CONTEXT: (vcMetadata: VCMetadata) => ({ vcMetadata }),
+      VC_UPDATED: (vcMetadata: VCMetadata) => ({ vcMetadata }),
+      VC_RECEIVED: (vcMetadata: VCMetadata) => ({ vcMetadata }),
       VC_DOWNLOADED: (vc: VC) => ({ vc }),
       VC_UPDATE: (vc: VC) => ({ vc }),
       REFRESH_MY_VCS: () => ({}),
@@ -171,7 +170,7 @@ export const vcMachine =
         })),
 
         getVcItemResponse: respond((context, event) => {
-          const vc = context.vcs[event.vcKey];
+          const vc = context.vcs[event.vcMetadata?.uniqueId()];
           return VcItemEvents.GET_VC_RESPONSE(vc);
         }),
 
@@ -184,58 +183,70 @@ export const vcMachine =
         }),
 
         setMyVcs: model.assign({
-          myVcs: (_context, event) => (event.response || []) as string[],
+          myVcs: (_context, event) => {
+            const myVcsMetadataString = (event.response || []) as string[];
+            return myVcsMetadataString.map((keyString) =>
+              VCMetadata.fromVCKey(keyString)
+            );
+          },
         }),
 
         setReceivedVcs: model.assign({
-          receivedVcs: (_context, event) => (event.response || []) as string[],
+          receivedVcs: (_context, event) => {
+            const myReceivedVcs = (event.response || []) as string[];
+            return myReceivedVcs.map((keyString) =>
+              VCMetadata.fromVCKey(keyString)
+            );
+          },
         }),
 
         setDownloadedVc: (context, event) => {
-          const vcKey = VCKey.fromVC(event.vc, true).toString();
-          context.vcs[vcKey] = event.vc;
+          const vcUniqueId = VCMetadata.fromVC(event.vc, true).uniqueId();
+          context.vcs[vcUniqueId] = event.vc;
         },
 
         setVcUpdate: (context, event) => {
           Object.keys(context.vcs).map((vcKeyStr) => {
-            const eventVCKey = VCKey.fromVC(event.vc, true);
-            const vcKey = VCKey.fromVCKey(vcKeyStr);
+            const eventVCMetadata = VCMetadata.fromVC(event.vc, true);
+            const vcMetadata = VCMetadata.fromVCKey(vcKeyStr);
 
-            if (vcKey.equals(eventVCKey)) {
-              const vcKeyString = vcKey.toString();
-              const eventVcKeyString = eventVCKey.toString();
-              context.vcs[eventVcKeyString] = context.vcs[vcKeyString];
-              delete context.vcs[vcKeyString];
-              return context.vcs[eventVcKeyString];
+            if (vcMetadata.equals(eventVCMetadata)) {
+              context.vcs[eventVCMetadata.uniqueId()] =
+                context.vcs[vcMetadata.uniqueId()];
+              delete context.vcs[vcMetadata.uniqueId()];
+              return context.vcs[eventVCMetadata.uniqueId()];
             }
           });
         },
 
         setUpdateVc: send(
           (_context, event) => {
-            return StoreEvents.UPDATE(MY_VCS_STORE_KEY, event.vcKey);
+            return StoreEvents.UPDATE(
+              MY_VCS_STORE_KEY,
+              event.vcMetadata.toString()
+            );
           },
           { to: (context) => context.serviceRefs.store }
         ),
 
         prependToMyVcs: model.assign({
-          myVcs: (context, event) => [event.vcKey, ...context.myVcs],
+          myVcs: (context, event) => [event.vcMetadata, ...context.myVcs],
         }),
 
         removeVcFromMyVcs: model.assign({
           myVcs: (context, event) =>
-            context.myVcs.filter((vc: string) => !vc.includes(event.vcKey)),
+            context.myVcs.filter(
+              (vc: VCMetadata) => !vc.equals(event.vcMetadata)
+            ),
         }),
 
         updateMyVcs: model.assign({
           myVcs: (context, event) =>
             [
-              event.vcKey,
+              event.vcMetadata,
               ...context.myVcs.map((value) => {
-                const vc = value.split(':');
-                if (vc[3] !== event.vcKey.split(':')[3]) {
-                  vc[4] = 'false';
-                  return vc.join(':');
+                if (!value.equals(event.vcMetadata)) {
+                  return value;
                 }
               }),
             ].filter((value) => value != undefined),
@@ -243,7 +254,7 @@ export const vcMachine =
 
         prependToReceivedVcs: model.assign({
           receivedVcs: (context, event) => [
-            event.vcKey,
+            event.vcMetadata,
             ...context.receivedVcs,
           ],
         }),
@@ -251,8 +262,10 @@ export const vcMachine =
         moveExistingVcToTop: model.assign({
           receivedVcs: (context, event) => {
             return [
-              event.vcKey,
-              ...context.receivedVcs.filter((value) => value !== event.vcKey),
+              event.vcMetadata,
+              ...context.receivedVcs.filter((value) =>
+                value.equals(event.vcMetadata)
+              ),
             ];
           },
         }),
@@ -260,7 +273,9 @@ export const vcMachine =
 
       guards: {
         hasExistingReceivedVc: (context, event) =>
-          context.receivedVcs.includes(event.vcKey),
+          context.receivedVcs.find((vcMetadata) =>
+            vcMetadata.equals(event.vcMetadata)
+          ) != null,
       },
     }
   );
@@ -274,18 +289,18 @@ export function createVcMachine(serviceRefs: AppServices) {
 
 type State = StateFrom<typeof vcMachine>;
 
-export function selectMyVcs(state: State): VCKey[] {
-  return state.context.myVcs?.map((vcKey) => VCKey.fromVCKey(vcKey));
+export function selectMyVcsMetadata(state: State): VCMetadata[] {
+  return state.context.myVcs;
 }
 
-export function selectShareableVcs(state: State): VCKey[] {
-  return state.context.myVcs
-    .filter((vcKey) => state.context.vcs[vcKey]?.credential != null)
-    .map((vcKey) => VCKey.fromVCKey(vcKey));
+export function selectShareableVcsMetadata(state: State): VCMetadata[] {
+  return state.context.myVcs.filter(
+    (vcMetadata) => state.context.vcs[vcMetadata.uniqueId()]?.credential != null
+  );
 }
 
-export function selectReceivedVcs(state: State): VCKey[] {
-  return state.context.receivedVcs.map((vcKey) => VCKey.fromVCKey(vcKey));
+export function selectReceivedVcsMetadata(state: State): VCMetadata[] {
+  return state.context.receivedVcs;
 }
 
 export function selectIsRefreshingMyVcs(state: State) {
@@ -299,18 +314,17 @@ export function selectIsRefreshingReceivedVcs(state: State) {
 /*
   this methods returns all the binded vc's in the wallet.
  */
-export function selectBindedVcs(state: State): VCKey[] {
-  return (state.context.myVcs as Array<string>)
-    .filter((key) => {
-      const walletBindingResponse =
-        state.context.vcs[key]?.walletBindingResponse;
-      return (
-        !isEmpty(walletBindingResponse) &&
-        !isEmpty(walletBindingResponse?.walletBindingId)
-      );
-    })
-    .map((vcKey) => VCKey.fromVCKey(vcKey));
+export function selectBindedVcsMetadata(state: State): VCMetadata[] {
+  return state.context.myVcs.filter((vcMetadata) => {
+    const walletBindingResponse =
+      state.context.vcs[vcMetadata.uniqueId()]?.walletBindingResponse;
+    return (
+      !isEmpty(walletBindingResponse) &&
+      !isEmpty(walletBindingResponse?.walletBindingId)
+    );
+  });
 }
+
 function isEmpty(object) {
   return object == null || object == '' || object == undefined;
 }

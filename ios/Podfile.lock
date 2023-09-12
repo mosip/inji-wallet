@@ -16,6 +16,8 @@ PODS:
     - ExpoModulesCore
   - EXConstants (13.0.2):
     - ExpoModulesCore
+  - EXErrorRecovery (3.0.5):
+    - ExpoModulesCore
   - EXFileSystem (13.1.4):
     - ExpoModulesCore
   - EXFont (10.0.5):
@@ -291,9 +293,9 @@ PODS:
     - React-Core
   - react-native-secure-key-store (2.0.10):
     - React-Core
-  - react-native-secure-keystore (0.1.0):
+  - react-native-secure-keystore (0.1.1):
     - React-Core
-  - react-native-tuvali (0.4.3):
+  - react-native-tuvali (0.4.4):
     - CrcSwift (~> 0.0.3)
     - GzipSwift
     - React-Core
@@ -374,7 +376,7 @@ PODS:
     - React-Core
   - RNFS (2.20.0):
     - React-Core
-  - RNGestureHandler (2.1.3):
+  - RNGestureHandler (2.5.0):
     - React-Core
   - RNKeychain (8.0.0):
     - React-Core
@@ -406,6 +408,7 @@ DEPENDENCIES:
   - EXBarCodeScanner (from `../node_modules/expo-barcode-scanner/ios`)
   - EXCamera (from `../node_modules/expo-camera/ios`)
   - EXConstants (from `../node_modules/expo-constants/ios`)
+  - EXErrorRecovery (from `../node_modules/expo-error-recovery/ios`)
   - EXFileSystem (from `../node_modules/expo-file-system/ios`)
   - EXFont (from `../node_modules/expo-font/ios`)
   - EXImageLoader (from `../node_modules/expo-image-loader/ios`)
@@ -506,6 +509,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-camera/ios"
   EXConstants:
     :path: "../node_modules/expo-constants/ios"
+  EXErrorRecovery:
+    :path: "../node_modules/expo-error-recovery/ios"
   EXFileSystem:
     :path: "../node_modules/expo-file-system/ios"
   EXFont:
@@ -655,6 +660,7 @@ SPEC CHECKSUMS:
   EXBarCodeScanner: e5ca0062d8ad1c4c1d2e386d6a308d5a32213020
   EXCamera: 4a0d00d6d1e4703c31a75514d8bc804a2eab27bd
   EXConstants: 88bf79622fbd9b476c96d8ec57fe97ca44fe8e3c
+  EXErrorRecovery: b0d7582714a2cc896e94a2308a356f94dbf14ef7
   EXFileSystem: 08a3033ac372b6346becf07839e1ccef26fb1058
   EXFont: 2597c10ac85a69d348d44d7873eccf5a7576ef5e
   EXImageLoader: 347b72c2ec2df65120ccec40ea65a4c4f24317ff
@@ -670,7 +676,7 @@ SPEC CHECKSUMS:
   EXUpdates: a83e036243b0f6ece53a8c1cb883b6751c88a5f8
   EXUpdatesInterface: a9814f422d3cd6e7cfd260d13c27786148ece20e
   FBLazyVector: fa8275d5086566e22a26ddc385ab5772e7f9b1bd
-  FBReactNativeSpec: c74a4bea62abb8c7b5a2c27314a28bcf35d7cf9e
+  FBReactNativeSpec: c257357b5c489132d39462acd75a0d46e9c55f18
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   GoogleInterchangeUtilities: d5bc4d88d5b661ab72f9d70c58d02ca8c27ad1f7
   GoogleNetworkingUtilities: 3edd3a8161347494f2da60ea0deddc8a472d94cb
@@ -703,8 +709,8 @@ SPEC CHECKSUMS:
   react-native-rsa-native: 12132eb627797529fdb1f0d22fd0f8f9678df64a
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   react-native-secure-key-store: 910e6df6bc33cb790aba6ee24bc7818df1fe5898
-  react-native-secure-keystore: 3ba6b598e4c3716de1e95cf90dc5b99eed8f0795
-  react-native-tuvali: cf1b72f6ad8ec7694caab7ceb5e5386815c2fbcf
+  react-native-secure-keystore: d9e791a495d23c33db7711732f3a761533b882db
+  react-native-tuvali: 6c4660b1d72c8d049ea8f6470cc67aa22c89b40d
   React-perflogger: 5a890ca0911669421b7611661e9b58f91c805f5c
   React-RCTActionSheet: bd180e0879f8424a73650c5c28fbef4f3b5b27fb
   React-RCTAnimation: 1004d2b4be1f2cedfdc4cb2326adc95b989e6c6b
@@ -723,7 +729,7 @@ SPEC CHECKSUMS:
   RNCPicker: cb57c823d5ce8d2d0b5dfb45ad97b737260dc59e
   RNDeviceInfo: aad3c663b25752a52bf8fce93f2354001dd185aa
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
-  RNGestureHandler: e1099204721a17a89c81fcd1cc2e92143dc040fb
+  RNGestureHandler: bad495418bcbd3ab47017a38d93d290ebd406f50
   RNKeychain: 4f63aada75ebafd26f4bc2c670199461eab85d94
   RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
   RNScreens: d6da2b9e29cf523832c2542f47bf1287318b1868
@@ -736,4 +742,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: e8bdbcbb2053c9b2971c35e1aafa6988c4dadeab
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.11.3

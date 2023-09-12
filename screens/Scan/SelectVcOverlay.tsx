@@ -29,10 +29,10 @@ export const SelectVcOverlay: React.FC<SelectVcOverlayProps> = (props) => {
           {t('chooseVc')} <Text weight="semibold">{props.receiverName}</Text>
         </Text>
         <Column margin="0 0 32 0" scroll>
-          {props.vcKeys.map((vcKey, index) => (
+          {props.vcsMetadata.map((vcMetadata, index) => (
             <VcItem
-              key={`${vcKey}-${index}`}
-              vcKey={vcKey}
+              key={`${vcMetadata.uniqueId()}-${index}`}
+              vcMetadata={vcMetadata}
               margin="0 2 8 2"
               onPress={controller.selectVcItem(index)}
               selectable

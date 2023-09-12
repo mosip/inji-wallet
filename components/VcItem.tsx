@@ -22,14 +22,14 @@ import { VcItemActivationStatus } from './VcItemActivationStatus';
 import { Row } from './ui';
 import { KebabPopUp } from './KebabPopUp';
 import { logState } from '../machines/app';
-import { VCKey } from '../shared/VCKey';
+import { VCMetadata } from '../shared/VCMetadata';
 
 export const VcItem: React.FC<VcItemProps> = (props) => {
   const { appService } = useContext(GlobalContext);
   const machine = useRef(
     createVcItemMachine(
       appService.getSnapshot().context.serviceRefs,
-      props.vcKey
+      props.vcMetadata
     )
   );
 
@@ -83,7 +83,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
               )}
             <Pressable onPress={KEBAB_POPUP}>
               <KebabPopUp
-                vcKey={props.vcKey}
+                vcMetadata={props.vcMetadata}
                 iconName="dots-three-horizontal"
                 iconType="entypo"
                 isVisible={isKebabPopUp}
@@ -105,7 +105,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
 };
 
 interface VcItemProps {
-  vcKey: VCKey;
+  vcMetadata: VCMetadata;
   margin?: string;
   selectable?: boolean;
   selected?: boolean;

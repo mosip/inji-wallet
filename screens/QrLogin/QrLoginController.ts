@@ -24,7 +24,7 @@ import {
   selectIsSendingAuthenticate,
   selectEssentialClaims,
 } from '../../machines/QrLoginMachine';
-import { selectBindedVcs } from '../../machines/vc';
+import { selectBindedVcsMetadata } from '../../machines/vc';
 import { vcItemMachine } from '../../machines/vcItem';
 import { GlobalContext } from '../../shared/GlobalContext';
 import { VC } from '../../types/vc';
@@ -51,7 +51,7 @@ export function useQrLogin({ service }: QrLoginProps) {
         SELECT_VC(vcData);
       },
 
-    vcKeys: useSelector(vcService, selectBindedVcs),
+    shareableVcsMetadata: useSelector(vcService, selectBindedVcsMetadata),
     selectedVc: useSelector(service, selectSelectedVc),
     linkTransactionResponse: useSelector(
       service,

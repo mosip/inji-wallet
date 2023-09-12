@@ -16,14 +16,14 @@ import { Theme } from './ui/styleUtils';
 import { RotatingIcon } from './RotatingIcon';
 import { GlobalContext } from '../shared/GlobalContext';
 import { getLocalizedField } from '../i18n';
-import { VCKey } from '../shared/VCKey';
+import { VCMetadata } from '../shared/VCMetadata';
 
 export const VidItem: React.FC<VcItemProps> = (props) => {
   const { appService } = useContext(GlobalContext);
   const machine = useRef(
     createVcItemMachine(
       appService.getSnapshot().context.serviceRefs,
-      props.vcKey
+      props.vcMetadata
     )
   );
   const service = useInterpret(machine.current);
@@ -100,7 +100,7 @@ export const VidItem: React.FC<VcItemProps> = (props) => {
 };
 
 interface VcItemProps {
-  vcKey: VCKey;
+  vcMetadata: VCMetadata;
   margin?: string;
   selectable?: boolean;
   selected?: boolean;

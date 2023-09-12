@@ -39,7 +39,7 @@ import { WalletDataEvent } from 'react-native-tuvali/lib/typescript/types/events
 import { BLEError } from '../types';
 import Storage from '../../../shared/storage';
 import { logState } from '../../app';
-import { VCKey } from '../../../shared/VCKey';
+import { VCMetadata } from '../../../shared/VCMetadata';
 
 const { wallet, EventTypes, VerificationStatus } = tuvali;
 
@@ -778,7 +778,7 @@ export const scanMachine =
         logShared: send(
           (context) =>
             ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VCKey.fromVC(context.selectedVc, true).toString(),
+              _vcKey: VCMetadata.fromVC(context.selectedVc, true).toString(),
               type: context.selectedVc.shouldVerifyPresence
                 ? 'VC_SHARED_WITH_VERIFICATION_CONSENT'
                 : context.shareLogType,
@@ -793,7 +793,7 @@ export const scanMachine =
         logFailedVerification: send(
           (context) =>
             ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VCKey.fromVC(context.selectedVc, true).toString(),
+              _vcKey: VCMetadata.fromVC(context.selectedVc, true).toString(),
               type: 'PRESENCE_VERIFICATION_FAILED',
               timestamp: Date.now(),
               deviceName:

@@ -13,7 +13,7 @@ import { argon2iConfigForUinVid, argon2iSalt } from '../../../shared/constants';
 import { VcIdType } from '../../../types/vc';
 import i18n from '../../../i18n';
 import { hashData } from '../../../shared/commonUtil';
-import { VCKey } from '../../../shared/VCKey';
+import { VCMetadata } from '../../../shared/VCMetadata';
 
 const model = createModel(
   {
@@ -236,7 +236,7 @@ export const AddVcModalMachine =
         },
         done: {
           type: 'final',
-          data: (context) => VCKey.fromVC(context, true).toString(),
+          data: (context) => VCMetadata.fromVC(context, true).toString(),
         },
       },
     },

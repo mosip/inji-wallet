@@ -22,7 +22,7 @@ import { log } from 'xstate/lib/actions';
 import { VerifierDataEvent } from 'react-native-tuvali/src/types/events';
 import { BLEError } from '../types';
 import Storage from '../../../shared/storage';
-import { VCKey } from '../../../shared/VCKey';
+import { VCMetadata } from '../../../shared/VCMetadata';
 // import { verifyPresentation } from '../shared/vcjs/verifyPresentation';
 
 const { verifier, EventTypes, VerificationStatus } = tuvali;
@@ -566,14 +566,16 @@ export const requestMachine =
           (context) =>
             StoreEvents.PREPEND(
               RECEIVED_VCS_STORE_KEY,
-              VCKey.fromVC(context.incomingVc, true).toString()
+              VCMetadata.fromVC(context.incomingVc, true).toString()
             ),
           { to: (context) => context.serviceRefs.store }
         ),
 
         requestExistingVc: send(
           (context) =>
-            StoreEvents.GET(VCKey.fromVC(context.incomingVc, true).toString()),
+            StoreEvents.GET(
+              VCMetadata.fromVC(context.incomingVc, true).toString()
+            ),
           { to: (context) => context.serviceRefs.store }
         ),
 
@@ -585,7 +587,7 @@ export const requestMachine =
               reason: existing.reason.concat(context.incomingVc.reason),
             };
             return StoreEvents.SET(
-              VCKey.fromVC(updated, true).toString(),
+              VCMetadata.fromVC(updated, true).toString(),
               updated
             );
           },
@@ -595,7 +597,7 @@ export const requestMachine =
         storeVc: send(
           (context) =>
             StoreEvents.SET(
-              VCKey.fromVC(context.incomingVc, true).toString(),
+              VCMetadata.fromVC(context.incomingVc, true).toString(),
               context.incomingVc
             ),
           { to: (context) => context.serviceRefs.store }
@@ -620,7 +622,7 @@ export const requestMachine =
         logReceived: send(
           (context) =>
             ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VCKey.fromVC(context.incomingVc, true).toString(),
+              _vcKey: VCMetadata.fromVC(context.incomingVc, true).toString(),
               type: context.receiveLogType,
               timestamp: Date.now(),
               deviceName:
@@ -633,7 +635,7 @@ export const requestMachine =
         sendVcReceived: send(
           (context) => {
             return VcEvents.VC_RECEIVED(
-              VCKey.fromVC(context.incomingVc, true).toString()
+              VCMetadata.fromVC(context.incomingVc, true).toString()
             );
           },
           { to: (context) => context.serviceRefs.vc }
@@ -794,8 +796,11 @@ export const requestMachine =
       guards: {
         hasExistingVc: (context, event) => {
           const receivedVcs = event.response as string[];
-          const vcKey = VCKey.fromVC(context.incomingVc, true).toString();
-          return receivedVcs.includes(vcKey);
+          const vcMetadata = VCMetadata.fromVC(
+            context.incomingVc,
+            true
+          ).toString();
+          return receivedVcs.includes(vcMetadata);
         },
 
         isMinimumStorageLimitReached: (_context, event) => Boolean(event.data),

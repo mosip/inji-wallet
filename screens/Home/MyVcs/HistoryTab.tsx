@@ -8,7 +8,7 @@ import { ActorRefFrom } from 'xstate';
 import { vcItemMachine } from '../../../machines/vcItem';
 import { useKebabPopUp } from '../../../components/KebabPopUpController';
 import { Theme } from '../../../components/ui/styleUtils';
-import { VCKey } from '../../../shared/VCKey';
+import { VCMetadata } from '../../../shared/VCMetadata';
 
 export const HistoryTab: React.FC<HistoryTabProps> = (props) => {
   const { t } = useTranslation('HistoryTab');
@@ -28,13 +28,13 @@ export const HistoryTab: React.FC<HistoryTabProps> = (props) => {
       </ListItem.Content>
       <Modal
         // TODO: is Uin needed here?
-        headerLabel={props.vcKey.hashedId}
+        headerLabel={props.vcMetadata.hashedId}
         isVisible={controller.isShowActivities}
         onDismiss={controller.DISMISS}>
         <Column fill>
           {controller.activities
             .filter((activity) =>
-              VCKey.fromVCKey(activity._vcKey).equals(props.vcKey)
+              VCMetadata.fromVCKey(activity._vcKey).equals(props.vcMetadata)
             )
             .map((activity) => (
               <ActivityLogText
@@ -62,6 +62,6 @@ export const HistoryTab: React.FC<HistoryTabProps> = (props) => {
 
 export interface HistoryTabProps {
   label: string;
-  vcKey: VCKey;
+  vcMetadata: VCMetadata;
   service: ActorRefFrom<typeof vcItemMachine>;
 }

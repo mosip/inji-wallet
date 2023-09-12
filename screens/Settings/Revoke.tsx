@@ -14,7 +14,6 @@ import { ToastItem } from '../../components/ui/ToastItem';
 import { OIDcAuthenticationOverlay } from '../../components/OIDcAuthModal';
 import { useTranslation } from 'react-i18next';
 import { useRevoke } from './RevokeController';
-import { VCKey } from '../../shared/VCKey';
 
 // Intentionally hidden using {display:'none'} - Refer mosip/inji/issue#607
 export const Revoke: React.FC<RevokeScreenProps> = (props) => {
@@ -67,7 +66,7 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
             <Divider />
             <Row style={Theme.RevokeStyles.rowStyle} fill>
               <View style={Theme.RevokeStyles.revokeView}>
-                {controller.vidKeys.length > 0 && (
+                {controller.uniqueVidsMetadata.length > 0 && (
                   <Column
                     scroll
                     refreshControl={
@@ -76,24 +75,26 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
                         onRefresh={controller.REFRESH}
                       />
                     }>
-                    {controller.vidKeys.map((vcKey, index) => {
-                      const vcKeyString = vcKey.toString();
+                    {controller.uniqueVidsMetadata.map((vcMetadata, index) => {
                       return (
                         <VidItem
-                          key={`${vcKeyString}-${index}`}
-                          vcKey={vcKey}
+                          key={`${vcMetadata.uniqueId()}-${index}`}
+                          vcMetadata={vcMetadata}
                           margin="0 2 8 2"
-                          onPress={controller.selectVcItem(index, vcKeyString)}
+                          onPress={controller.selectVcItem(
+                            index,
+                            vcMetadata.uniqueId()
+                          )}
                           selectable
-                          selected={controller.selectedVidKeys.includes(
-                            vcKeyString
+                          selected={controller.selectedVidUniqueIds.includes(
+                            vcMetadata.uniqueId()
                           )}
                         />
                       );
                     })}
                   </Column>
                 )}
-                {controller.vidKeys.length === 0 && (
+                {controller.uniqueVidsMetadata.length === 0 && (
                   <React.Fragment>
                     <Centered fill>
                       <Text weight="semibold" margin="0 0 8 0">
@@ -105,7 +106,7 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
               </View>
               <Column margin="0 20">
                 <Button
-                  disabled={controller.selectedVidKeys.length === 0}
+                  disabled={controller.selectedVidUniqueIds.length === 0}
                   title={t('revokeHeader')}
                   onPress={controller.CONFIRM_REVOKE_VC}
                 />
@@ -124,17 +125,19 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
                 </Text>
                 <Text margin="0 0 12 0">
                   {t('revokingVids', {
-                    count: controller.selectedVidKeys.length,
+                    count: controller.selectedVidUniqueIds.length,
                   })}
                 </Text>
-                {controller.selectedVidKeys.map((vcKey, index) => (
+                {controller.selectedVidUniqueIds.map((uniqueId, index) => (
                   <View style={Theme.RevokeStyles.flexRow} key={index}>
                     <Text margin="0 8" weight="bold">
                       {'\u2022'}
                     </Text>
                     <Text margin="0 0 0 0" weight="bold">
-                      {/*TODO: Change this to UIN?*/}
-                      {VCKey.fromVCKey(vcKey).hashedId}
+                      {/*TODO: Change this to UIN? and Optimize*/}
+                      {controller.uniqueVidsMetadata.find(
+                        (metadata) => metadata.uniqueId() === uniqueId
+                      ) ?? 'N/A'}
                     </Text>
                   </View>
                 ))}

@@ -23,16 +23,16 @@ export const ReceivedVcsTab: React.FC<HomeScreenTabProps> = (props) => {
             onRefresh={controller.REFRESH}
           />
         }>
-        {controller.vcKeys.map((vcKey) => (
+        {controller.receivedVcsMetadata.map((vcMetadata) => (
           <VcItem
-            key={vcKey.toString()}
-            vcKey={vcKey}
+            key={vcMetadata.toString()}
+            vcMetadata={vcMetadata}
             margin="0 2 8 2"
             onPress={controller.VIEW_VC}
             activeTab={props.service.id}
           />
         ))}
-        {controller.vcKeys.length === 0 && (
+        {controller.receivedVcsMetadata.length === 0 && (
           <React.Fragment>
             <Centered fill>
               <Icon

@@ -26,7 +26,8 @@ export function useKebabPopUp(props) {
   const ADD_WALLET_BINDING_ID = () =>
     service.send(VcItemEvents.ADD_WALLET_BINDING_ID());
   const CONFIRM = () => service.send(VcItemEvents.CONFIRM());
-  const REMOVE = (vcKey: string) => service.send(VcItemEvents.REMOVE(vcKey));
+  const REMOVE = (vcMetadata: string) =>
+    service.send(VcItemEvents.REMOVE(vcMetadata));
   const DISMISS = () => service.send(VcItemEvents.DISMISS());
   const CANCEL = () => service.send(VcItemEvents.CANCEL());
   const SHOW_ACTIVITY = () => service.send(VcItemEvents.SHOW_ACTIVITY());

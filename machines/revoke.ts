@@ -29,7 +29,7 @@ const model = createModel(
       READY: (idInputRef: TextInput) => ({ idInputRef }),
       DISMISS: () => ({}),
       SELECT_ID_TYPE: (idType: VcIdType) => ({ idType }),
-      REVOKE_VCS: (vcKeys: string[]) => ({ vcKeys }),
+      REVOKE_VCS: (vcMetadatas: string[]) => ({ vcMetadatas }),
       STORE_RESPONSE: (response: string[]) => ({ response }),
       ERROR: (data: Error) => ({ data }),
       SUCCESS: () => ({}),
@@ -165,7 +165,7 @@ export const revokeVidsMachine =
         }),
 
         setVIDs: model.assign({
-          VIDs: (_context, event) => event.vcKeys,
+          VIDs: (_context, event) => event.vcMetadatas,
         }),
 
         setIdBackendError: assign({

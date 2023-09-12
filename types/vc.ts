@@ -17,7 +17,7 @@ export interface VC {
   walletBindingResponse?: WalletBindingResponse;
   credentialRegistry: string;
   isPinned?: boolean;
-  hashedId: string;
+  hashedId?: string;
 }
 
 export interface VCSharingReason {

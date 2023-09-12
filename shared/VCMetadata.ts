@@ -4,7 +4,7 @@ import { VC, VcIdType } from '../types/vc';
 const VC_ITEM_STORE_KEY_REGEX =
   '^vc:(UIN|VID):[a-z0-9]+:[a-z0-9-]+:[true|false]+(:[0-9-]+)?$';
 
-export class VCKey {
+export class VCMetadata {
   idType: VcIdType | string = '';
   hashedId = '';
   requestId = '';
@@ -27,7 +27,7 @@ export class VCKey {
   }
 
   static fromVC(vc: Partial<VC>, includeId: boolean) {
-    return new VCKey({
+    return new VCMetadata({
       idType: vc.idType,
       hashedId: vc.hashedId,
       requestId: vc.requestId,
@@ -42,7 +42,7 @@ export class VCKey {
       const [prefix, idType, hashedId, requestId, isPinned, id] =
         vcKey.split(':');
 
-      return new VCKey({
+      return new VCMetadata({
         idType: idType,
         hashedId: hashedId,
         requestId: requestId,
@@ -51,12 +51,12 @@ export class VCKey {
       });
     } catch (e) {
       console.error('Invalid VC Key provided');
-      return new VCKey();
+      return new VCMetadata();
     }
   }
 
   static isValid(key): boolean {
-    return VCKey.vcKeyRegExp.exec(key) != null;
+    return VCMetadata.vcKeyRegExp.exec(key) != null;
   }
 
   // returns `vc:${vc.idType}:${vc.hashedId}:${vc.requestId}:${vc.isPinned}:${vc.id}`;
@@ -75,7 +75,11 @@ export class VCKey {
     return validComponents.join(':');
   }
 
-  equals(other: VCKey): boolean {
-    return this.requestId === other.requestId;
+  uniqueId(): string {
+    return this.requestId;
+  }
+
+  equals(other: VCMetadata): boolean {
+    return this.uniqueId() === other.uniqueId();
   }
 }

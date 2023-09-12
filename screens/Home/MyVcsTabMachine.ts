@@ -18,6 +18,7 @@ import {
 import { AddVcModalMachine } from './MyVcs/AddVcModalMachine';
 import { GetVcModalMachine } from './MyVcs/GetVcModalMachine';
 import Storage from '../../shared/storage';
+import { VCMetadata } from '../../shared/VCMetadata';
 
 const model = createModel(
   {
@@ -190,7 +191,7 @@ export const MyVcsTabMachine = model.createMachine(
     },
 
     actions: {
-      refreshMyVc: send((_context, event) => VcEvents.REFRESH_MY_VCS(), {
+      refreshMyVc: send((_context) => VcEvents.REFRESH_MY_VCS(), {
         to: (context) => context.serviceRefs.vc,
       }),
 
@@ -223,7 +224,8 @@ export const MyVcsTabMachine = model.createMachine(
       ),
 
       sendVcAdded: send(
-        (_context, event) => VcEvents.VC_ADDED(event.response as string),
+        (_context, event) =>
+          VcEvents.VC_ADDED(VCMetadata.fromVCKey(event.response)),
         {
           to: (context) => context.serviceRefs.vc,
         }

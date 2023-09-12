@@ -22,7 +22,7 @@ import {
   HMAC_ALIAS,
   isCustomSecureKeystore,
 } from './cryptoutil/cryptoUtil';
-import { VCKey } from './VCKey';
+import { VCMetadata } from './VCMetadata';
 
 const MMKV = new MMKVLoader().initialize();
 const vcDirectoryPath = `${DocumentDirectoryPath}/inji/VC`;
@@ -53,7 +53,7 @@ class Storage {
     encryptionKey?: string
   ) => {
     try {
-      const isSavingVC = VCKey.isValid(key);
+      const isSavingVC = VCMetadata.isValid(key);
       if (isSavingVC) {
         await this.storeVcHmac(encryptionKey, data, key);
         return await this.storeVC(key, data);
@@ -68,7 +68,7 @@ class Storage {
 
   static getItem = async (key: string, encryptionKey?: string) => {
     try {
-      const isSavingVC = VCKey.isValid(key);
+      const isSavingVC = VCMetadata.isValid(key);
 
       if (isSavingVC) {
         const data = await this.readVCFromFile(key);
@@ -121,7 +121,7 @@ class Storage {
   }
 
   static removeItem = async (key: string) => {
-    if (VCKey.isValid(key)) {
+    if (VCMetadata.isValid(key)) {
       const path = getFilePath(key);
       return await unlink(path);
     }

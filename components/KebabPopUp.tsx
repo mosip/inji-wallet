@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { HistoryTab } from '../screens/Home/MyVcs/HistoryTab';
 import { RemoveVcWarningOverlay } from '../screens/Home/MyVcs/RemoveVcWarningOverlay';
 import { ScrollView } from 'react-native-gesture-handler';
-import { VCKey } from '../shared/VCKey';
+import { VCMetadata } from '../shared/VCMetadata';
 
 export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
   const controller = useKebabPopUp(props);
@@ -43,7 +43,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
               <ListItem.Title>
                 <Pressable onPress={controller.PIN_CARD}>
                   <Text size="small" weight="bold">
-                    {props.vcKey.isPinned ? t('unPinCard') : t('pinCard')}
+                    {props.vcMetadata.isPinned ? t('unPinCard') : t('pinCard')}
                   </Text>
                 </Pressable>
               </ListItem.Title>
@@ -59,14 +59,16 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
           <HistoryTab
             service={props.service}
             label={t('viewActivityLog')}
-            vcKey={props.vcKey}
+            vcMetadata={props.vcMetadata}
           />
 
           <ListItem bottomDivider>
             <ListItem.Content>
               <ListItem.Title>
                 <Pressable
-                  onPress={() => controller.REMOVE(props.vcKey.toString())}>
+                  onPress={() =>
+                    controller.REMOVE(props.vcMetadata.toString())
+                  }>
                   <Text size="small" weight="bold">
                     {t('removeFromWallet')}
                   </Text>
@@ -89,7 +91,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
 export interface KebabPopUpProps {
   iconName: string;
   iconType?: string;
-  vcKey: VCKey;
+  vcMetadata: VCMetadata;
   isVisible: boolean;
   onDismiss: () => void;
   service: ActorRefFrom<typeof vcItemMachine>;
