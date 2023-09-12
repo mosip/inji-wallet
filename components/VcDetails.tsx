@@ -50,14 +50,14 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
           <Column align="space-evenly">
             <Column>
               <Text
-                testID="fullName"
+                testID="fullNameTitle"
                 weight="bold"
                 size="smaller"
                 color={Theme.Colors.DetailsLabel}>
                 {t('fullName')}
               </Text>
               <Text
-                testID="name"
+                testID="fullNameValue"
                 weight="semibold"
                 size="smaller"
                 color={Theme.Colors.Details}>
@@ -130,7 +130,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                     {t('dateOfBirth')}
                   </Text>
                   <Text
-                    testID="birthDate"
+                    testID="dateOfBirthValue"
                     weight="semibold"
                     size="smaller"
                     color={Theme.Colors.Details}>
@@ -153,7 +153,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                     {t('gender')}
                   </Text>
                   <Text
-                    testID="gender"
+                    testID="genderValue"
                     weight="semibold"
                     size="smaller"
                     color={Theme.Colors.Details}>
@@ -164,14 +164,14 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                 </Column>
                 <Column margin="20 0 0 0">
                   <Text
-                    testID="generatedOn"
+                    testID="generatedOnTitle"
                     weight="bold"
                     size="smaller"
                     color={Theme.Colors.DetailsLabel}>
                     {t('generatedOn')}
                   </Text>
                   <Text
-                    testID="generatedDate"
+                    testID="generatedOnValue"
                     weight="semibold"
                     size="smaller"
                     color={Theme.Colors.Details}>
@@ -206,7 +206,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                     {t('phoneNumber')}
                   </Text>
                   <Text
-                    testID="mobileNumber"
+                    testID="phoneNumberValue"
                     weight="semibold"
                     size="smaller"
                     color={Theme.Colors.Details}>
@@ -223,7 +223,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
         <Column>
           <Column fill style={Theme.Styles.labelPart}>
             <Text
-              testID="email"
+              testID="emailId"
               weight="bold"
               size="smaller"
               color={Theme.Colors.DetailsLabel}>
@@ -231,7 +231,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
             </Text>
             <Row>
               <Text
-                testID="emailID"
+                testID="emailIdValue"
                 style={
                   props.vc?.verifiableCredential.credentialSubject.email
                     .length > 25
@@ -258,7 +258,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
             </Text>
             <Row>
               <Text
-                testID="personAddress"
+                testID="addressValue"
                 style={{ flex: 1 }}
                 weight="semibold"
                 size="smaller"
@@ -279,7 +279,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                 {t('credentialRegistry')}
               </Text>
               <Text
-                testID="credentialRegistry"
+                testID="credentialRegistryValue"
                 weight="semibold"
                 size="smaller"
                 color={Theme.Colors.Details}>
@@ -292,7 +292,10 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
       </ImageBackground>
 
       {props.vc?.reason?.length > 0 && (
-        <Text testID="reasonForSharing" margin="24 24 16 24" weight="semibold">
+        <Text
+          testID="reasonForSharingTitle"
+          margin="24 24 16 24"
+          weight="semibold">
           {t('reasonForSharing')}
         </Text>
       )}
