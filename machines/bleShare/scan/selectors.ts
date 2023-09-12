@@ -1,5 +1,5 @@
-import { StateFrom } from 'xstate';
-import { scanMachine } from './scanMachine';
+import {StateFrom} from 'xstate';
+import {scanMachine} from './scanMachine';
 
 type State = StateFrom<typeof scanMachine>;
 
@@ -21,6 +21,10 @@ export function selectSelectedVc(state: State) {
 
 export function selectQrLoginRef(state: State) {
   return state.context.QrLoginRef;
+}
+
+export function selectStayInProgress(state: State) {
+  return state.context.stayInProgress;
 }
 
 export function selectIsScanning(state: State) {

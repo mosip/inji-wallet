@@ -14,7 +14,7 @@
     "QRLOGIN_SUCCESFULL": "क्यूआरलॉगिन सफल",
     "WALLET_BINDING_SUCCESSFULL": "सक्रियण सफल",
     "WALLET_BINDING_FAILURE": "सक्रियकरण असफल",
-    "VC_REMOVED":"वॉलेट से हटाया गया"
+    "VC_REMOVED": "वॉलेट से हटाया गया"
   },
   "DeviceInfoList": {
     "requestedBy": "द्वारा अनुरोध किया गया",
@@ -27,7 +27,11 @@
   "PasscodeVerify": {
     "passcodeMismatchError": "पासकोड का मिलान नहीं हुआ।"
   },
-  "FaceScanner": {},
+  "FaceScanner": {
+    "imageCaptureGuide": "फ़ोन को स्थिर रखें और अपना चेहरा केंद्र में केंद्रित रखें",
+    "capture": "कब्जा",
+    "flipCamera": "कैमरा पलटें"
+  },
   "OIDcAuth": {
     "title": "OIDC प्रमाणीकरण",
     "text": "OIDC प्रदाता UI के साथ प्रतिस्थापित करने के लिए",
@@ -443,12 +447,15 @@
       "storageLimitReached": {
         "title": "अपर्याप्त ऐपडाटा",
         "message": "ऐपडेटा भरा होने के कारण आप कार्ड साझा नहीं कर सकते। आगे बढ़ने के लिए ऐपडेटा साफ़ करें।"
-      },
+      }
+    },
       "status": {
         "inProgress": "चालू",
         "establishingConnection": "संपर्क स्थापित करना",
         "sharingInProgress": "साझाकरण प्रगति पर है",
         "connectingTimeout": "कनेक्शन स्थापित करने में कुछ समय लग रहा है। क्या अन्य डिवाइस कनेक्शन के लिए खुला है?",
+        "stayOnTheScreen": "स्क्रीन पर बने रहें",
+        "retry": "पुन: प्रयास करें",
         "exchangingDeviceInfo": "डिवाइस की जानकारी का आदान-प्रदान करना...",
         "exchangingDeviceInfoTimeout": "डिवाइस की जानकारी का आदान-प्रदान करने में कुछ समय लग रहा है। आपको फिर से कनेक्ट करना पड़ सकता है।",
         "invalid": "अमान्य क्यूआर कोड",
@@ -474,7 +481,6 @@
           "message": "कार्ड को स्थानांतरित करते समय कुछ गलत हो गया। कृपया पुन: प्रयास करें।"
         }
       }
-    }
   },
   "SelectVcOverlay": {
     "header": "शेयर कार्ड",

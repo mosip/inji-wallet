@@ -1,18 +1,21 @@
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useTranslation } from 'react-i18next';
-import { HeaderBackButton } from '@react-navigation/elements';
-import { RequestScreen } from './RequestScreen';
-import { useRequestLayout } from './RequestLayoutController';
-import { Message } from '../../components/Message';
-import { ReceiveVcScreen } from './ReceiveVcScreen';
-import { MessageOverlay } from '../../components/MessageOverlay';
-
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {useTranslation} from 'react-i18next';
+import {HeaderBackButton} from '@react-navigation/elements';
+import {RequestScreen} from './RequestScreen';
+import {useRequestLayout} from './RequestLayoutController';
+import {Message} from '../../components/Message';
+import {ReceiveVcScreen} from './ReceiveVcScreen';
+import {MessageOverlay} from '../../components/MessageOverlay';
+import {ReceivedCardsModal} from '../Settings/ReceivedCardsModal';
+import {useReceivedVcsTab} from '../Home/ReceivedVcsTabController';
+import {REQUEST_ROUTES} from '../../routes/routesConstants';
 const RequestStack = createNativeStackNavigator();
 
 export const RequestLayout: React.FC = () => {
-  const { t } = useTranslation('RequestScreen');
+  const {t} = useTranslation('RequestScreen');
   const controller = useRequestLayout();
+  const receivedCardsController = useReceivedVcsTab();
 
   return (
     <React.Fragment>
@@ -31,7 +34,7 @@ export const RequestLayout: React.FC = () => {
         }}>
         {!controller.isDone && (
           <RequestStack.Screen
-            name="ReceiveVcScreen"
+            name={REQUEST_ROUTES.ReceiveVcScreen}
             component={ReceiveVcScreen}
             options={{
               title: t('incomingVc'),
@@ -46,7 +49,7 @@ export const RequestLayout: React.FC = () => {
           />
         )}
         <RequestStack.Screen
-          name="RequestScreen"
+          name={REQUEST_ROUTES.RequestScreen}
           component={RequestScreen}
           options={{
             title: t('receiveCard').toUpperCase(),
@@ -54,6 +57,11 @@ export const RequestLayout: React.FC = () => {
         />
       </RequestStack.Navigator>
 
+      <ReceivedCardsModal
+        isVisible={controller.isNavigatingToReceivedCards}
+        controller={receivedCardsController}
+        onDismiss={controller.DISMISS}
+      />
       {controller.isAccepted && (
         <Message
           title={t('status.accepted.title')}

@@ -3,15 +3,16 @@ import {
   BottomTabNavigationOptions,
   BottomTabScreenProps,
 } from '@react-navigation/bottom-tabs';
-import { Image } from 'react-native';
-import { HomeScreen } from '../screens/Home/HomeScreen';
-import { RootStackParamList } from './index';
-import { ScanLayout } from '../screens/Scan/ScanLayout';
-import { HistoryScreen } from '../screens/History/HistoryScreen';
+import {Image} from 'react-native';
+import {HomeScreen} from '../screens/Home/HomeScreen';
+import {RootStackParamList} from './index';
+import {ScanLayout} from '../screens/Scan/ScanLayout';
+import {HistoryScreen} from '../screens/History/HistoryScreen';
 import i18n from '../i18n';
+import {BOTTOM_TAB_ROUTES} from './routesConstants';
 
 const home: TabScreen = {
-  name: 'home',
+  name: BOTTOM_TAB_ROUTES.home,
   component: HomeScreen,
   icon: 'home',
   options: {
@@ -19,12 +20,12 @@ const home: TabScreen = {
     headerLeft: () =>
       React.createElement(Image, {
         source: require('../assets/inji-home-logo.png'),
-        style: { width: 124, height: 27, resizeMode: 'contain' },
+        style: {width: 124, height: 27, resizeMode: 'contain'},
       }),
   },
 };
 export const scan: TabScreen = {
-  name: 'scan',
+  name: BOTTOM_TAB_ROUTES.scan,
   component: ScanLayout,
   icon: 'qr-code-scanner',
   options: {
@@ -32,8 +33,9 @@ export const scan: TabScreen = {
     headerShown: false,
   },
 };
+
 const history: TabScreen = {
-  name: 'history',
+  name: BOTTOM_TAB_ROUTES.history,
   component: HistoryScreen,
   icon: 'history',
   options: {
@@ -48,11 +50,9 @@ mainRoutes.push(scan);
 mainRoutes.push(history);
 
 export type MainBottomTabParamList = {
-  home: {
-    activeTab: number;
-  };
-  Scan: undefined;
-  History: undefined;
+  home: undefined;
+  scan: undefined;
+  history: undefined;
 };
 
 export interface TabScreen {
