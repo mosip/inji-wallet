@@ -82,6 +82,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
               )}
             <Pressable onPress={KEBAB_POPUP}>
               <KebabPopUp
+                testID="ellipsis"
                 vcKey={props.vcKey}
                 iconName="dots-three-horizontal"
                 iconType="entypo"

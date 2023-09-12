@@ -10,6 +10,7 @@ import { useKebabPopUp } from '../../../components/KebabPopUpController';
 import { Dimensions } from 'react-native';
 import { ActorRefFrom } from 'xstate';
 import { vcItemMachine } from '../../../machines/vcItem';
+import testIDProps from '../../../shared/commonUtil';
 
 export const WalletBinding: React.FC<WalletBindingProps> = (props) => {
   const controller = useKebabPopUp(props);
@@ -38,12 +39,13 @@ export const WalletBinding: React.FC<WalletBindingProps> = (props) => {
         />
       )}
       <ListItem.Content>
-        <ListItem.Title>
+        <ListItem.Title {...testIDProps('pendingActivationOrActivated')}>
           <Text weight="bold" size="small">
             {props.label}
           </Text>
         </ListItem.Title>
         <Text
+          testID="content"
           weight="semibold"
           color={Theme.Colors.walletbindingContent}
           size="smaller">
@@ -77,6 +79,7 @@ export const WalletBinding: React.FC<WalletBindingProps> = (props) => {
   ) : (
     <ListItem bottomDivider>
       <Row
+        testID="profileAuthenticated"
         width={Dimensions.get('screen').width * 0.8}
         align="space-between"
         crossAlign="center">
@@ -95,6 +98,7 @@ export const WalletBinding: React.FC<WalletBindingProps> = (props) => {
 };
 
 interface WalletBindingProps {
+  testID?: string;
   label: string;
   content?: string;
   Icon?: string;

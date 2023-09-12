@@ -14,6 +14,7 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
     return (
       <Column>
         <Text
+          testID="status"
           weight="bold"
           size="smaller"
           color={
@@ -25,6 +26,7 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
         </Text>
         <Row>
           <Text
+            testID="valid"
             numLines={1}
             color={Theme.Colors.Details}
             weight="bold"
@@ -118,11 +120,35 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
                 />
               )}
             </ImageBackground>
-            <Column margin="0 0 0 10">
-              {getDetails(t('fullName'), fullName, props.verifiableCredential)}
+            <Column margin="6 0 0 10">
+              <Column>
+                <Text
+                  testID="fullNameTitle"
+                  weight="bold"
+                  size="smaller"
+                  color={
+                    !props.verifiableCredential
+                      ? Theme.Colors.LoadingDetailsLabel
+                      : Theme.Colors.DetailsLabel
+                  }>
+                  {t('fullName')}
+                </Text>
+                <Text
+                  testID="fullNameValue"
+                  weight="semibold"
+                  size="smaller"
+                  style={
+                    !props.verifiableCredential
+                      ? Theme.Styles.loadingTitle
+                      : Theme.Styles.subtitle
+                  }>
+                  {fullName}
+                </Text>
+              </Column>
 
               <Column margin="10 0 0 0">
                 <Text
+                  testID="idType"
                   color={
                     !props.verifiableCredential
                       ? Theme.Colors.LoadingDetailsLabel
@@ -134,6 +160,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
                   {t('idType')}
                 </Text>
                 <Text
+                  testID="nationalCard"
                   weight="semibold"
                   color={Theme.Colors.Details}
                   size="smaller"
@@ -160,16 +187,71 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
             !props.verifiableCredential ? Theme.Styles.loadingContainer : null
           }>
           <Column>
-            {uin ? getDetails(t('uin'), uin, props.verifiableCredential) : null}
-            {vid ? getDetails(t('vid'), vid, props.verifiableCredential) : null}
+            {uin ? (
+              <Column margin="0 0 9 0">
+                <Text
+                  testID="uin"
+                  weight="bold"
+                  size="smaller"
+                  color={Theme.Colors.DetailsLabel}>
+                  {t('uin')}
+                </Text>
+                <Text
+                  testID="uinNumber"
+                  weight="semibold"
+                  size="smaller"
+                  color={Theme.Colors.Details}>
+                  {uin}
+                </Text>
+              </Column>
+            ) : null}
+
+            {vid ? (
+              <Column margin="0 0 9 0">
+                <Text
+                  testID="vid"
+                  weight="bold"
+                  size="smaller"
+                  color={Theme.Colors.DetailsLabel}>
+                  {t('vid')}
+                </Text>
+                <Text
+                  testID="vidNumber"
+                  weight="semibold"
+                  size="smaller"
+                  color={Theme.Colors.Details}>
+                  {vid}
+                </Text>
+              </Column>
+            ) : null}
             {!props.verifiableCredential
               ? getDetails(t('id'), uin || vid, props.verifiableCredential)
               : null}
-            {getDetails(
-              t('generatedOn'),
-              props.generatedOn,
-              props.verifiableCredential
-            )}
+
+            <Column>
+              <Text
+                testID="generatedOnTitle"
+                weight="bold"
+                size="smaller"
+                color={
+                  !props.verifiableCredential
+                    ? Theme.Colors.LoadingDetailsLabel
+                    : Theme.Colors.DetailsLabel
+                }>
+                {t('generatedOn')}
+              </Text>
+              <Text
+                testID="generatedOnValue"
+                weight="semibold"
+                size="smaller"
+                style={
+                  !props.verifiableCredential
+                    ? Theme.Styles.loadingTitle
+                    : Theme.Styles.subtitle
+                }>
+                {props.generatedOn}
+              </Text>
+            </Column>
           </Column>
           <Column>
             {props.verifiableCredential
@@ -177,6 +259,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
               : null}
           </Column>
           <Column
+            testID="logo"
             style={{ display: props.verifiableCredential ? 'flex' : 'none' }}>
             <Image
               source={Theme.MosipLogo}
