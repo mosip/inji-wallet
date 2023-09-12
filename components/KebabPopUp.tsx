@@ -30,7 +30,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
         overlayStyle={Theme.KebabPopUpStyles.kebabPopUp}>
         <Row style={Theme.KebabPopUpStyles.kebabHeaderStyle}>
           <View></View>
-          <Text testID="KebabTitle" weight="bold">
+          <Text testID="kebabTitle" weight="bold">
             {t('title')}
           </Text>
           <Icon
