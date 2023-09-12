@@ -126,14 +126,22 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
                   testID="fullNameTitle"
                   weight="bold"
                   size="smaller"
-                  color={Theme.Colors.DetailsLabel}>
+                  color={
+                    !props.verifiableCredential
+                      ? Theme.Colors.LoadingDetailsLabel
+                      : Theme.Colors.DetailsLabel
+                  }>
                   {t('fullName')}
                 </Text>
                 <Text
                   testID="fullNameValue"
                   weight="semibold"
                   size="smaller"
-                  color={Theme.Colors.Details}>
+                  style={
+                    !props.verifiableCredential
+                      ? Theme.Styles.loadingTitle
+                      : Theme.Styles.subtitle
+                  }>
                   {fullName}
                 </Text>
               </Column>
@@ -180,7 +188,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
           }>
           <Column>
             {uin ? (
-              <Column margin="0 0 20 0">
+              <Column margin="0 0 9 0">
                 <Text
                   testID="uin"
                   weight="bold"
@@ -199,7 +207,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
             ) : null}
 
             {vid ? (
-              <Column>
+              <Column margin="0 0 9 0">
                 <Text
                   testID="vid"
                   weight="bold"
@@ -220,19 +228,27 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
               ? getDetails(t('id'), uin || vid, props.verifiableCredential)
               : null}
 
-            <Column margin="20 0 0 0">
+            <Column>
               <Text
                 testID="generatedOnTitle"
                 weight="bold"
                 size="smaller"
-                color={Theme.Colors.DetailsLabel}>
+                color={
+                  !props.verifiableCredential
+                    ? Theme.Colors.LoadingDetailsLabel
+                    : Theme.Colors.DetailsLabel
+                }>
                 {t('generatedOn')}
               </Text>
               <Text
                 testID="generatedOnValue"
                 weight="semibold"
                 size="smaller"
-                color={Theme.Colors.Details}>
+                style={
+                  !props.verifiableCredential
+                    ? Theme.Styles.loadingTitle
+                    : Theme.Styles.subtitle
+                }>
                 {props.generatedOn}
               </Text>
             </Column>

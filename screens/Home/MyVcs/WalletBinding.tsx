@@ -39,7 +39,7 @@ export const WalletBinding: React.FC<WalletBindingProps> = (props) => {
         />
       )}
       <ListItem.Content>
-        <ListItem.Title {...testIDProps('label')}>
+        <ListItem.Title {...testIDProps('pendingActivationOrActivated')}>
           <Text weight="bold" size="small">
             {props.label}
           </Text>
