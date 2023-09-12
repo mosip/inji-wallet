@@ -57,6 +57,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                 {t('fullName')}
               </Text>
               <Text
+                testID="name"
                 weight="semibold"
                 size="smaller"
                 color={Theme.Colors.Details}>
@@ -76,6 +77,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                     {t('idType')}
                   </Text>
                   <Text
+                    testID="nationalCard"
                     weight="bold"
                     size="smaller"
                     color={Theme.Colors.Details}>
@@ -92,6 +94,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                       {t('uin')}
                     </Text>
                     <Text
+                      testID="uinNumber"
                       weight="semibold"
                       size="smaller"
                       color={Theme.Colors.Details}>
@@ -110,6 +113,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                       {t('vid')}
                     </Text>
                     <Text
+                      testID="vidNumber"
                       weight="semibold"
                       size="smaller"
                       color={Theme.Colors.Details}>
@@ -126,6 +130,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                     {t('dateOfBirth')}
                   </Text>
                   <Text
+                    testID="birthDate"
                     weight="semibold"
                     size="smaller"
                     color={Theme.Colors.Details}>
@@ -148,6 +153,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                     {t('gender')}
                   </Text>
                   <Text
+                    testID="gender"
                     weight="semibold"
                     size="smaller"
                     color={Theme.Colors.Details}>
@@ -165,6 +171,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                     {t('generatedOn')}
                   </Text>
                   <Text
+                    testID="generatedDate"
                     weight="semibold"
                     size="smaller"
                     color={Theme.Colors.Details}>
@@ -181,6 +188,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                   </Text>
                   <Row>
                     <Text
+                      testID="valid"
                       weight="semibold"
                       size="smaller"
                       color={Theme.Colors.Details}>
@@ -198,6 +206,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                     {t('phoneNumber')}
                   </Text>
                   <Text
+                    testID="mobileNumber"
                     weight="semibold"
                     size="smaller"
                     color={Theme.Colors.Details}>
@@ -222,6 +231,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
             </Text>
             <Row>
               <Text
+                testID="emailID"
                 style={
                   props.vc?.verifiableCredential.credentialSubject.email
                     .length > 25
@@ -248,6 +258,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
             </Text>
             <Row>
               <Text
+                testID="personAddress"
                 style={{ flex: 1 }}
                 weight="semibold"
                 size="smaller"
@@ -268,6 +279,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                 {t('credentialRegistry')}
               </Text>
               <Text
+                testID="credentialRegistry"
                 weight="semibold"
                 size="smaller"
                 color={Theme.Colors.Details}>
@@ -287,6 +299,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
 
       {props.vc?.reason?.map((reason, index) => (
         <TextItem
+          testID="reason"
           key={index}
           divider
           label={formatDistanceToNow(reason.timestamp, {
