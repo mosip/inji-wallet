@@ -26,6 +26,7 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
         </Text>
         <Row>
           <Text
+            testID="valid"
             numLines={1}
             color={Theme.Colors.Details}
             weight="bold"
@@ -120,13 +121,22 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
               )}
             </ImageBackground>
             <Column margin="6 0 0 10">
-              <Text testID="fullName">
-                {getDetails(
-                  t('fullName'),
-                  fullName,
-                  props.verifiableCredential
-                )}
-              </Text>
+              <Column>
+                <Text
+                  testID="fullNameTitle"
+                  weight="bold"
+                  size="smaller"
+                  color={Theme.Colors.DetailsLabel}>
+                  {t('fullName')}
+                </Text>
+                <Text
+                  testID="fullNameValue"
+                  weight="semibold"
+                  size="smaller"
+                  color={Theme.Colors.Details}>
+                  {fullName}
+                </Text>
+              </Column>
 
               <Column margin="10 0 0 0">
                 <Text
@@ -142,6 +152,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
                   {t('idType')}
                 </Text>
                 <Text
+                  testID="nationalCard"
                   weight="semibold"
                   color={Theme.Colors.Details}
                   size="smaller"
@@ -178,6 +189,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
                   {t('uin')}
                 </Text>
                 <Text
+                  testID="uinNumber"
                   weight="semibold"
                   size="smaller"
                   color={Theme.Colors.Details}>
@@ -196,6 +208,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
                   {t('vid')}
                 </Text>
                 <Text
+                  testID="vidNumber"
                   weight="semibold"
                   size="smaller"
                   color={Theme.Colors.Details}>
@@ -207,13 +220,22 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
               ? getDetails(t('id'), uin || vid, props.verifiableCredential)
               : null}
 
-            <Text testID="generatedOn">
-              {getDetails(
-                t('generatedOn'),
-                props.generatedOn,
-                props.verifiableCredential
-              )}
-            </Text>
+            <Column margin="20 0 0 0">
+              <Text
+                testID="generatedOnTitle"
+                weight="bold"
+                size="smaller"
+                color={Theme.Colors.DetailsLabel}>
+                {t('generatedOn')}
+              </Text>
+              <Text
+                testID="generatedOnValue"
+                weight="semibold"
+                size="smaller"
+                color={Theme.Colors.Details}>
+                {props.generatedOn}
+              </Text>
+            </Column>
           </Column>
           <Column>
             {props.verifiableCredential
@@ -221,6 +243,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
               : null}
           </Column>
           <Column
+            testID="logo"
             style={{ display: props.verifiableCredential ? 'flex' : 'none' }}>
             <Image
               source={Theme.MosipLogo}
