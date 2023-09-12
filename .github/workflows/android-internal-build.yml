@@ -108,6 +108,20 @@ jobs:
         env:
           INJI_ANDROID_PLAY_STORE_CONFIG_JSON: ${{ secrets.INJI_ANDROID_PLAY_STORE_CONFIG_JSON }}
 
+      - name: Run Build for play console
+        run: | 
+          cd android/scripts
+          ./internal-build.sh
+        env:
+          MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
+          APPLICATION_THEME: ${{ github.event.inputs.theme }} 
+          RELEASE_KEYSTORE_ALIAS: androidreleasekey
+          RELEASE_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_RELEASE_STOREPASS}}'
+          SLACK_URL: '${{ secrets.SLACK_WEBHOOK_DEVOPS }}'
+          PLAY_CONSOLE_RELEASE_DESCRIPTION: ${{ github.event.inputs.buildDescription }}
+          CREDENTIAL_REGISTRY_EDIT: ${{ github.event.inputs.registry_edit }}
+
+
       - name: Run Build for upload
         run: |
           npx jetify
@@ -126,18 +140,4 @@ jobs:
           name: ${{ github.event.inputs.buildname }}
           path: android/app/build/outputs/apk/mosip/release/
           retention-days: 10
-
-      - name: Run Build for play console
-        run: | 
-          cd android/scripts
-          ./internal-build.sh
-        env:
-          MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
-          APPLICATION_THEME: ${{ github.event.inputs.theme }} 
-          RELEASE_KEYSTORE_ALIAS: androidreleasekey
-          RELEASE_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_RELEASE_STOREPASS}}'
-          SLACK_URL: '${{ secrets.SLACK_WEBHOOK_DEVOPS }}'
-          PLAY_CONSOLE_RELEASE_DESCRIPTION: ${{ github.event.inputs.buildDescription }}
-          CREDENTIAL_REGISTRY_EDIT: ${{ github.event.inputs.registry_edit }}
-
       
