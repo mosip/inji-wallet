@@ -13,7 +13,8 @@
     "PRESENCE_VERIFICATION_FAILED": "verification failed",
     "QRLOGIN_SUCCESFULL": "QRLogin successful",
     "WALLET_BINDING_SUCCESSFULL": "Activation successful",
-    "WALLET_BINDING_FAILURE": "Activation failed"
+    "WALLET_BINDING_FAILURE": "Activation failed",
+    "VC_REMOVED":"Removed from wallet"
   },
   "DeviceInfoList": {
     "requestedBy": "Requested by",
@@ -33,8 +34,9 @@
     "passcodeMismatchError": "Passcode did not match."
   },
   "QrScanner": {
-    "missingPermissionText": "This app uses the camera to scan the QR code of another device.",
-    "allowCameraButton": "Allow access to camera"
+    "cameraAccessDisabled": "Camera access disabled!",
+    "cameraPermissionGuideLabel": "Go to settings and enable the camera access manually.",
+    "flipCamera": "Flip Camera"
   },
   "VcDetails": {
     "generatedOn": "Generated on",
@@ -55,9 +57,9 @@
     "uin": "UIN",
     "vid": "VID",
     "enableVerification": "Activate",
-    "profileAuthenticated": "Profile is authenticated!",
-    "offlineAuthDisabledHeader": "Offline Authentication disabled!",
-    "offlineAuthDisabledMessage": "Click 'Enable Authentication' to enable this credentials to be used for offline authentication.",
+    "profileAuthenticated": "Activated for online login!",
+    "offlineAuthDisabledHeader": "Activation pending for online login!",
+    "offlineAuthDisabledMessage": "Please click the button below to activate this credential to be used for online login.",
     "verificationEnabledSuccess": "Activated for online login",
     "goback": "GO BACK",
     "BindingWarning": "If you have enabled verification for this credential on another wallet, it will get overridden. Do you want to proceed?",
@@ -81,8 +83,8 @@
     "title": "More Options",
     "unPinCard": "Unpin Card",
     "pinCard": "Pin Card",
-    "offlineAuthenticationDisabled!": "Offline authentication disabled!",
-    "offlineAuthDisabledMessage": "Click here to enable this credentials to be used for offline authentication.",
+    "offlineAuthenticationDisabled!": "Activation pending for online login!",
+    "offlineAuthDisabledMessage": "Click here to enable this credentials to be used for online authentication.",
     "viewActivityLog": "View Activity Log",
     "removeFromWallet": "Remove from Wallet",
     "revokeId": "Revoke ID",
@@ -90,7 +92,7 @@
   },
   "WalletBinding": {
     "inProgress": "In progress",
-    "profileAuthenticated": "Profile is authenticated!"
+    "profileAuthenticated": "Activated for online login!"
   },
   "BindingVcWarningOverlay": {
     "alert": "Alert",
@@ -100,7 +102,7 @@
   },
   "RemoveVcWarningOverlay": {
     "alert": "Please Confirm",
-    "RemoveWarning": "Do you want to remove this card",
+    "removeWarning": "Do you want to remove this card?",
     "confirm": "Yes, I confirm",
     "no": "No"
   },
@@ -129,17 +131,21 @@
   "SettingScreen": {
     "header": "Settings",
     "injiAsVerifierApp": "Inji as verifier app",
+    "receiveCard": "Receive Card",
     "basicSettings": "Basic settings",
     "bioUnlock": "Unlock with Biometric",
     "language": "Language",
     "aboutInji": "About Inji",
     "credentialRegistry": "Credential Registry",
+    "errorMessage": "Incorrect URL entered. Please enter a valid URL to proceed.",
     "injiTourGuide": "Inji Tour Guide",
-    "logout": "Logout"
+    "logout": "Logout",
+    "resetInjiProps": "Resetting Inji Props..."
   },
   "AboutInji": {
     "aboutInji": "About Inji",
     "header": "ABOUT INJI",
+    "appID": "App ID",
     "aboutDetailes": "Inji is a mobile app that can be used as a digital wallet to store credentials. It also allows identity verification in both offline and online modes, at any place and time.",
     "forMoreDetailes": "For more details",
     "clickHere": "Click here",
@@ -163,7 +169,9 @@
     "howToActivateCardForOnlineLogin?": "How to activate a card for online login?",
     "detail-7": "After successfully adding a card to the wallet, click on 'Activation pending for Online login' on the card. On clicking on 'Activate', the card will be ready to be used for online login.",
     "howToViewActivity?": "How to view activity logs?",
-    "detail-8": "On the Home page, click on 'History' to view the details of the user's activitie."
+    "detail-8": "On the Home page, click on 'History' to view the details of the user's activitie.",
+    "whatCanDoBiometricsChanged?": "What happens when Android keystore biometric is changed?",
+    "detail-9": "The Android keystore holds important information like private keys for identity proofs. When you change your biometrics, old keys are no longer safe. To keep things secure, we remove identity proofs signed by those old keys. You can simply download your identity proofs again, and they will be signed with the latest, safer keys."
   },
   "AddVcModal": {
     "requestingCredential": "Requesting credential...",
@@ -177,15 +185,17 @@
         "expiredOtp": "OTP has expired",
         "invalidUin": "UIN invalid",
         "invalidVid": "VID invalid",
-        "missingUin": "UIN not available in database",
+        "missingUin": "The entered UIN is deactivated/blocked. Please enter a valid UIN to proceed",
         "missingVid": "VID not available in database",
         "noMessageAvailable": "Try after sometime",
-        "whileGeneratingOtpErrorIsOccured": "while generating OTP error occurred",
-        "networkRequestFailed": "Network request failed"
+        "whileGeneratingOtpErrorIsOccured": "while generating otp error is occurred",
+        "networkRequestFailed": "Network request failed",
+        "deactivatedVid": "The entered VID is deactivated/expired. Please enter a valid VID to proceed"
       }
     }
   },
   "GetVcModal": {
+    "retrievingId": "Retrieving ID",
     "errors": {
       "input": {
         "empty": "Input cannot be empty",
@@ -235,15 +245,24 @@
     "bringYourDigitalID": "Bring your digital identity",
     "generateVcDescription": "Tap on \"Download card\" below to download your card",
     "downloadCard": "Download Card",
-    "downloadingYourId": "Downloading your ID, this can take upto 5 minutes",
+    "downloadingYourCard": "Downloading your card, this can take upto 5 minutes",
     "errors": {
       "savingFailed": {
         "title": "Failed to save the Card",
         "message": "Something went wrong while saving Card to the store."
       },
-      "maximumStorageLimitReached": {
+      "storageLimitReached": {
         "title": "Insufficient Appdata",
-        "message": "You cannot add or receive cards since the Appdata is full"
+        "message": "You cannot add or receive cards since the Appdata is full. Clear Appdata to proceed."
+      },
+      "vcIsTampered": {
+        "title": "Some identity proofs are tampered",
+        "message": "Affected files are removed, please re-download."
+      },
+      "keystoreNotExists": {
+        "title": "Secure Key Storage not found",
+        "message": "The key storage on your phone is not secured. Your keys could be leaked if phone is hacked.",
+        "riskOkayText": "OK, I'll risk it"
       }
     }
   },
@@ -256,7 +275,9 @@
     "stepThreeText": "Share your cards securely in a hassle free way and avail various services.",
     "stepFourTitle": "Hassle free authentication",
     "stepFourText": "Authenticate yourself with ease using the stored digital credential.",
-    "stepFourButton": "Get Started",
+    "getStarted": "Get Started",
+    "goBack": "Go Back",
+    "back": "Back",
     "skip": "Skip",
     "next": "Next"
   },
@@ -336,7 +357,7 @@
     "reject": "Reject",
     "discard": "Discard",
     "goToReceivedVCTab": "View Received card",
-    "saving": "Is being saved",
+    "saving": "Card is being saved",
     "errors": {
       "savingFailed": {
         "title": "Failed to save the card",
@@ -345,7 +366,7 @@
     }
   },
   "RequestScreen": {
-    "receiveCard": "REceive Card",
+    "receiveCard": "Receive Card",
     "bluetoothDenied": "Please enable Bluetooth to be able to request card",
     "bluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
     "bluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
@@ -357,9 +378,9 @@
         "message": "Nearby Devices permission is required to be able to request Card",
         "button": "Allow Permission"
       },
-      "maximumStorageLimitReached": {
+      "storageLimitReached": {
         "title": "Insufficient Appdata",
-        "message": "You cannot add or receive cards since the Appdata is full"
+        "message": "You cannot add or receive cards since the Appdata is full. Clear Appdata to proceed."
       }
     },
     "status": {
@@ -418,6 +439,10 @@
       "nearbyDevicesPermissionDenied": {
         "message": "Nearby Devices permission is required to be able to share card",
         "button": "Allow Permission"
+      },
+      "storageLimitReached": {
+        "title": "Insufficient Appdata",
+        "message": "You cannot share cards since the Appdata is full. Clear Appdata to proceed."
       }
     },
     "status": {
@@ -433,7 +458,7 @@
       "sentHint": "Waiting for receiver to save or discard your Card",
       "sharing": {
         "title": "Sharing...",
-        "hint": "Please wait for the receiving device to accept or reject the share.",
+        "hint": "Please wait while we share the chosen card.",
         "timeoutHint": "It's taking longer than expected to share. There could be a problem with the connection."
       },
       "accepted": {
@@ -497,7 +522,17 @@
   "WelcomeScreen": {
     "title": "Open Source Identity Solution",
     "getStarted": "Get started",
-    "unlockApp": "Unlock application"
+    "unlockApp": "Unlock application",
+    "failedToReadKeys": "Failed to read keys",
+    "retryRead": "Want to retry?",
+    "ignore": "Ignore",
+    "errors": {
+      "decryptionFailed": "Failed to decrypt data",
+      "invalidateKeyError": {
+        "title": "Some Card(s) removed due to security concerns.",
+        "message": "Please redownload."
+      }
+    }
   },
   "SetupLanguage": {
     "header": "Choose Language",
@@ -506,10 +541,12 @@
   },
   "common": {
     "cancel": "Cancel",
+    "accept": "Accept",
     "save": "Save",
     "dismiss": "Dismiss",
     "editLabel": "Edit {{label}}",
     "tryAgain": "Try again",
+    "ignore": "Ignore",
     "camera": {
       "errors": {
         "missingPermission": "This app uses the camera to scan the QR code of another device."
@@ -518,6 +555,14 @@
     },
     "errors": {
       "genericError": "Something is wrong. Please try again later!"
+    },
+    "clipboard": {
+      "copy": "Copy",
+      "copied": "Copied"
+    },
+    "biometricPopup": {
+      "title": "Unlock App",
+      "description": "Please use fingerprint to unlock the app"
     }
   }
 }

@@ -1,9 +1,8 @@
 import React from 'react';
-import { Platform, Pressable, View } from 'react-native';
+import { Platform, Pressable, View, Image } from 'react-native';
 import { Icon, ListItem, Switch } from 'react-native-elements';
-import { Column, Text } from '../../components/ui';
+import { Column, Row, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
-import { MainRouteProps } from '../../routes/main';
 import { MessageOverlay } from '../../components/MessageOverlay';
 
 import { useSettingsScreen } from './SettingScreenController';
@@ -14,6 +13,8 @@ import { Modal } from '../../components/ui/Modal';
 import { CREDENTIAL_REGISTRY_EDIT } from 'react-native-dotenv';
 import { AboutInji } from './AboutInji';
 import { EditableListItem } from '../../components/EditableListItem';
+import { RequestRouteProps, RootRouteProps } from '../../routes';
+import { ReceivedCards } from './ReceivedCards';
 
 const LanguageSetting: React.FC = () => {
   const { t } = useTranslation('SettingScreen');
@@ -46,9 +47,9 @@ const LanguageSetting: React.FC = () => {
   );
 };
 
-export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
-  props
-) => {
+export const SettingScreen: React.FC<
+  SettingProps & RootRouteProps & RequestRouteProps
+> = (props) => {
   const { t } = useTranslation('SettingScreen');
   const controller = useSettingsScreen(props);
 
@@ -63,7 +64,40 @@ export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
         headerTitle={t('header')}
         headerElevation={2}
         onDismiss={controller.TOGGLE_SETTINGS}>
-        <ScrollView backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
+        <ScrollView>
+          <Column
+            style={{ display: Platform.OS !== 'ios' ? 'flex' : 'none' }}
+            backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
+            <Text
+              weight="semibold"
+              margin="10"
+              color={Theme.Colors.aboutVersion}>
+              {t('injiAsVerifierApp')}
+            </Text>
+            <Row
+              align="space-evenly"
+              backgroundColor={Theme.Colors.whiteBackgroundColor}>
+              <Pressable onPress={controller.RECEIVE_CARD}>
+                <Column style={Theme.Styles.receiveCardsContainer}>
+                  <Image
+                    source={Theme.ReceiveCardIcon}
+                    style={{ alignSelf: 'center' }}
+                  />
+                  <Text margin="6" weight="semibold">
+                    {t('receiveCard')}
+                  </Text>
+                </Column>
+              </Pressable>
+              <ReceivedCards />
+            </Row>
+
+            <Text
+              weight="semibold"
+              margin="10"
+              color={Theme.Colors.aboutVersion}>
+              {t('basicSettings')}
+            </Text>
+          </Column>
           <Column fill>
             <MessageOverlay
               isVisible={controller.alertMsg != ''}
@@ -102,7 +136,7 @@ export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
               />
             </ListItem>
 
-            <AboutInji />
+            <AboutInji appId={controller.appId} />
 
             {CREDENTIAL_REGISTRY_EDIT === 'true' && (
               <EditableListItem
@@ -111,18 +145,18 @@ export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
                 credentialRegistryResponse={
                   controller.credentialRegistryResponse
                 }
+                onCancel={controller.CANCEL}
                 onEdit={controller.UPDATE_CREDENTIAL_REGISTRY}
                 Icon="star"
+                errorMessage={t('errorMessage')}
+                progress={controller.isResetInjiProps}
               />
             )}
 
-            {/*
             <ListItem
               topDivider
               bottomDivider
-              onPress={() => {
-                Linking.openURL(helpUrl);
-              }}>
+              onPress={() => controller.INJI_TOUR_GUIDE()}>
               <Icon
                 type={'antdesign'}
                 name={'book'}
@@ -138,7 +172,6 @@ export const SettingScreen: React.FC<SettingProps & MainRouteProps> = (
                 </ListItem.Title>
               </ListItem.Content>
             </ListItem>
-            */}
 
             <ListItem onPress={controller.LOGOUT}>
               <Icon

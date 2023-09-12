@@ -13,7 +13,8 @@
     "PRESENCE_VERIFICATION_FAILED": "nabigo ang pag-verify",
     "QRLOGIN_SUCCESFULL": "Matagumpay ang QRLogin",
     "WALLET_BINDING_SUCCESSFULL": "Matagumpay ang pag-activate",
-    "WALLET_BINDING_FAILURE": "Nabigo ang pag-activate"
+    "WALLET_BINDING_FAILURE": "Nabigo ang pag-activate",
+    "VC_REMOVED":"Inalis sa wallet"
   },
   "DeviceInfoList": {
     "requestedBy": "Hiniling ni",
@@ -33,8 +34,9 @@
     "verify": "I-verify"
   },
   "QrScanner": {
-    "missingPermissionText": "Ginagamit ng app na ito ang camera upang i-scan ang QR code ng isa pang device.",
-    "allowCameraButton": "Payagan gamitin ang camera"
+    "cameraAccessDisabled": "Naka-disable ang access sa camera!",
+    "cameraPermissionGuideLabel": "Pumunta sa mga setting at manual na paganahin ang access ng camera.",
+    "flipCamera": "I-flip ang Camera"
   },
   "VcDetails": {
     "generatedOn": "Nilikha noong",
@@ -55,8 +57,8 @@
     "uin": "UIN",
     "vid": "VID",
     "enableVerification": "I-activate",
-    "profileAuthenticated": "Na-activate para sa online na pag-login",
-    "offlineAuthDisabledHeader": "Nakabinbin ang pag-activate para sa online na pag-login",
+    "profileAuthenticated": "Na-activate para sa online na pag-login!",
+    "offlineAuthDisabledHeader": "Nakabinbin ang pag-activate para sa online na pag-login!",
     "offlineAuthDisabledMessage": "Mangyaring i-click ang pindutan sa ibaba upang i-activate ang kredensyal na ito upang magamit para sa online na pag-login.",
     "verificationEnabledSuccess": "Na-activate para sa online na pag-login",
     "goback": "BUMALIK KA",
@@ -81,8 +83,8 @@
     "title": "Higit pang mga Opsyon",
     "unPinCard": "I-unpin ang Card",
     "pinCard": "Pin Card",
-    "offlineAuthenticationDisabled!": "Na-disable ang offline na pagpapatotoo!",
-    "offlineAuthDisabledMessage": "Mag-click dito upang paganahin ang kredensyal na ito na magamit para sa offline na pagpapatotoo.",
+    "offlineAuthenticationDisabled!": "Nakabinbin ang pag-activate para sa online na pag-login!",
+    "offlineAuthDisabledMessage": "Mag-click dito upang paganahin ang mga kredensyal na ito na magamit para sa online na pagpapatotoo.",
     "viewActivityLog": "Tingnan ang log ng aktibidad",
     "removeFromWallet": "Alisin sa wallet",
     "revokeId": "Bawiin ang ID",
@@ -90,7 +92,7 @@
   },
   "WalletBinding": {
     "inProgress": "Isinasagawa",
-    "profileAuthenticated": "Na-authenticate ang profile!"
+    "profileAuthenticated": "Na-activate para sa online na pag-login!"
   },
   "BindingVcWarningOverlay": {
     "alert": "Pakikumpirma",
@@ -98,7 +100,7 @@
     "yesConfirm": "Oo, kinukumpirma ko",
     "no": "Hindi"
   },
-  "RemoveVcWarningOverlay":{
+  "RemoveVcWarningOverlay": {
     "alert": "Alerto",
     "removeWarning": "Gusto mo ba talagang tanggalin ang card?",
     "confirm": "Kumpirmahin",
@@ -129,17 +131,21 @@
   "SettingScreen": {
     "header": "Mga setting",
     "injiAsVerifierApp": "Inji bilang Verifier App",
+    "receiveCard": "Tumanggap ng Card",
     "basicSettings": "Mga Pangunahing Setting",
     "bioUnlock": "I-unlock gamit ang Biometrics",
     "language": "Wika",
     "aboutInji": "About Inji",
     "credentialRegistry": "Credential Registry",
+    "errorMessage": "Maling URL ang inilagay. Mangyaring maglagay ng wastong URL upang magpatuloy.",
     "injiTourGuide": "Inji Tour Guide",
-    "logout": "Mag-logout"
+    "logout": "Mag-logout",
+    "resetInjiProps": "Nire-reset ang Inji Props..."
   },
   "AboutInji": {
     "aboutInji": "Tungkol kay Inji",
     "header": "TUNGKOL KAY INJI",
+    "appID": "App ID",
     "aboutDetailes": "Ang Inji ay isang mobile app na maaaring gamitin bilang digital wallet para mag-imbak ng mga kredensyal. Pinapayagan din nito ang pag-verify ng pagkakakilanlan sa parehong offline at online na mga mode, sa anumang lugar at oras.",
     "forMoreDetailes": "Para sa karagdagang detalye",
     "clickHere": "Pindutin dito",
@@ -163,7 +169,9 @@
     "howToActivateCardForOnlineLogin?": "Paano i-activate ang isang card para sa online na pag-login?",
     "detail-7": "Matapos matagumpay na magdagdag ng card sa wallet, mag-click sa 'Activation pending for Online login' sa card. Sa pag-click sa 'I-activate', ang card ay handa nang gamitin para sa online na pag-login.",
     "howToViewActivity?": "Paano tingnan ang mga log ng aktibidad?",
-    "detail-8": "Sa Home page, mag-click sa 'Kasaysayan' upang tingnan ang mga detalye ng aktibidad ng user."
+    "detail-8": "Sa Home page, mag-click sa 'Kasaysayan' upang tingnan ang mga detalye ng aktibidad ng user.",
+    "whatCanDoBiometricsChanged?": "Ano ang mangyayari kapag binago ang biometric ng Android keystore?",
+    "detail-9": "Ang Android keystore ay nagtataglay ng mahalagang impormasyon tulad ng mga pribadong key para sa mga patunay ng pagkakakilanlan. Kapag binago mo ang iyong biometrics, hindi na ligtas ang mga lumang key. Upang panatilihing secure ang mga bagay, inaalis namin ang mga patunay ng pagkakakilanlan na nilagdaan ng mga lumang key na iyon. Maaari mo lamang i-download muli ang iyong mga patunay ng pagkakakilanlan, at lalagdaan ang mga ito gamit ang pinakabago, mas ligtas na mga susi."
   },
   "AddVcModal": {
     "requestingCredential": "Humihiling ng kredensyal...",
@@ -177,15 +185,17 @@
         "expiredOtp": "Nag-expire na ang OTP",
         "invalidUin": "Di-wastong UIN",
         "invalidVid": "Di-wastong VID",
-        "missingUin": "Hindi mahanap ang iyong UIN",
+        "missingUin": "Ang ipinasok na UIN ay na-deactivate/na-block. Mangyaring magpasok ng wastong UIN upang magpatuloy",
         "missingVid": "Hindi mahanap ang iyong VID",
         "noMessageAvailable": "Subukan pagkatapos ng ilang oras",
         "whileGeneratingOtpErrorIsOccured": "habang ang pagbuo ng OTP error ay naganap",
-        "networkRequestFailed": "Nabigo ang kahilingan sa network"
+        "networkRequestFailed": "Nabigo ang kahilingan sa network",
+        "deactivatedVid": "Ang ipinasok na VID ay na-deactivate/nag-expire. Mangyaring magpasok ng wastong VID upang magpatuloy"
       }
     }
   },
   "GetVcModal": {
+    "retrievingId": "Kinukuha ang ID",
     "errors": {
       "input": {
         "empty": "Hindi maaaring walang laman ang input",
@@ -235,15 +245,24 @@
     "bringYourDigitalID": "Dalhin ang Iyong Digital ID",
     "generateVcDescription": "Upang i-download ang iyong card i-tap ang I-download card sa ibaba",
     "downloadCard": "I-download ang Card",
-    "downloadingYourId": "Ang pagda-download ng iyong card, maaari itong tumagal nang hanggang 5 minuto",
+    "downloadingYourCard": "Ang pagda-download ng iyong card, maaari itong tumagal nang hanggang 5 minuto",
     "errors": {
       "savingFailed": {
         "title": "Nabigong i-save ang Card",
         "message": "Nagkaproblema habang sine-save ang Card sa tindahan."
       },
-      "maximumStorageLimitReached": {
+      "storageLimitReached": {
         "title": "Hindi sapat na Appdata",
-        "message": "Hindi ka maaaring magdagdag o tumanggap ng mga card dahil puno na ang Appdata"
+        "message": "Hindi ka maaaring magdagdag o tumanggap ng mga card dahil puno na ang Appdata. I-clear ang Appdata para magpatuloy."
+      },
+      "vcIsTampered": {
+        "title": "Ang ilang mga patunay ng pagkakakilanlan ay pinakialaman",
+        "message": "Ang mga apektadong file ay tinanggal, mangyaring muling i-download."
+      },
+      "keystoreNotExists": {
+        "title": "Hindi nahanap ang Secure Key Storage",
+        "message": "Hindi secure ang key storage sa iyong telepono. Maaaring ma-leak ang iyong mga susi kung na-hack ang telepono.",
+        "riskOkayText": "OK, ipagsapalaran ko ito"
       }
     }
   },
@@ -256,7 +275,9 @@
     "stepThreeText": "Kapag nabuo na, ang card ay ligtas na iniimbak sa iyong mobile.",
     "stepFourTitle": "Walang problema sa pagpapatotoo",
     "stepFourText": "I-authenticate ang iyong sarili nang madali gamit ang nakaimbak na digital na kredensyal.",
-    "stepFourButton": "Magsimulas",
+    "getStarted": "Magsimula",
+    "goBack": "bumalik ka",
+    "back": "Bumalik",
     "skip": "Laktawan",
     "next": "Susunod"
   },
@@ -335,8 +356,8 @@
     "verifyAndSave": "I-verify at i-save",
     "reject": "Tanggihan",
     "discard": "Itapon",
-    "saving": "ay iniligtas",
     "goToReceivedVCTab": "Natanggap na View card",
+    "saving": "Sine-save ang card",
     "errors": {
       "savingFailed": {
         "title": "Failed to save card",
@@ -361,9 +382,9 @@
         "message": "Kinakailangan ang pahintulot ng Mga Kalapit na Device para makahiling ng Card",
         "button": "Pahintulutan"
       },
-      "maximumStorageLimitReached": {
+      "storageLimitReached": {
         "title": "Hindi sapat na Appdata",
-        "message": "Hindi ka maaaring magdagdag o tumanggap ng mga card dahil puno na ang Appdata"
+        "message": "Hindi ka maaaring magdagdag o tumanggap ng mga card dahil puno na ang Appdata. I-clear ang Appdata para magpatuloy."
       }
     },
     "status": {
@@ -422,6 +443,10 @@
       "nearbyDevicesPermissionDenied": {
         "message": "Kinakailangan ang pahintulot ng Mga Kalapit na Device upang makapagbahagi ng card",
         "button": "Pahintulutan"
+      },
+      "storageLimitReached": {
+        "title": "Hindi sapat na Appdata",
+        "message": "Hindi ka makakapagbahagi ng mga card dahil puno na ang Appdata. I-clear ang Appdata para magpatuloy."
       }
     },
     "status": {
@@ -437,7 +462,7 @@
       "sentHint": "Naghihintay para sa receiver na i-save o itapon ang iyong card",
       "sharing": {
         "title": "Pagbabahagi...",
-        "hint": "Pakihintay na tanggapin o tanggihan ng tumatanggap na device ang pagbabahagi.",
+        "hint": "Mangyaring maghintay habang ibinabahagi namin ang napiling card.",
         "timeoutHint": "Mas tumatagal kaysa sa inaasahan ang pagbabahagi. Maaaring may problema sa koneksyon."
       },
       "accepted": {
@@ -501,7 +526,17 @@
   "WelcomeScreen": {
     "title": "Open Source Identity Solution",
     "getStarted": "Magsimula",
-    "unlockApp": "Buksan ang aplikasyon"
+    "unlockApp": "Buksan ang aplikasyon",
+    "failedToReadKeys": "Nabigong basahin ang mga susi",
+    "retryRead": "Gustong subukang muli?",
+    "errors": {
+      "decryptionFailed": "Nabigong i-decrypt ang data",
+      "invalidateKeyError": {
+        "title": "Ang ilang (mga) patunay ng Pagkakakilanlan ay tinanggal dahil sa mga alalahanin sa seguridad.",
+        "message": "Mangyaring i-download muli."
+      }
+    },
+    "ignore": "Huwag pansinin"
   },
   "SetupLanguage": {
     "header": "Piliin ang Wika",
@@ -510,6 +545,7 @@
   },
   "common": {
     "cancel": "Kanselahin",
+    "accept": "Tanggapin",
     "save": "I-save",
     "dismiss": "Dismissed",
     "editLabel": "Palitan ang {{label}}",
@@ -520,8 +556,17 @@
       },
       "allowAccess": "Payagan ang access sa camera"
     },
+    "ignore": "Huwag pansinin",
     "errors": {
       "genericError": "May mali. Subukang muli mamaya!"
+    },
+    "clipboard": {
+      "copy": "Kopya",
+      "copied": "Kinopya"
+    },
+    "biometricPopup": {
+      "title": "I-unlock ang App",
+      "description": "Mangyaring gumamit ng fingerprint upang i-unlock ang app"
     }
   }
 }

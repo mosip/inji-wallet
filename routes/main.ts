@@ -6,14 +6,12 @@ import {
 import { Image } from 'react-native';
 import { HomeScreen } from '../screens/Home/HomeScreen';
 import { RootStackParamList } from './index';
-import { RequestLayout } from '../screens/Request/RequestLayout';
 import { ScanLayout } from '../screens/Scan/ScanLayout';
 import { HistoryScreen } from '../screens/History/HistoryScreen';
 import i18n from '../i18n';
-import { Platform } from 'react-native';
 
 const home: TabScreen = {
-  name: 'Home',
+  name: 'home',
   component: HomeScreen,
   icon: 'home',
   options: {
@@ -25,8 +23,8 @@ const home: TabScreen = {
       }),
   },
 };
-const scan: TabScreen = {
-  name: 'Scan',
+export const scan: TabScreen = {
+  name: 'scan',
   component: ScanLayout,
   icon: 'qr-code-scanner',
   options: {
@@ -34,17 +32,8 @@ const scan: TabScreen = {
     headerShown: false,
   },
 };
-const request: TabScreen = {
-  name: 'Request',
-  component: RequestLayout,
-  icon: 'file-download',
-  options: {
-    title: i18n.t('MainLayout:request'),
-    headerShown: false,
-  },
-};
 const history: TabScreen = {
-  name: 'History',
+  name: 'history',
   component: HistoryScreen,
   icon: 'history',
   options: {
@@ -56,19 +45,13 @@ const history: TabScreen = {
 export const mainRoutes: TabScreen[] = [];
 mainRoutes.push(home);
 mainRoutes.push(scan);
-
-if (Platform.OS !== 'ios') {
-  mainRoutes.push(request);
-}
-
 mainRoutes.push(history);
 
 export type MainBottomTabParamList = {
-  Home: {
+  home: {
     activeTab: number;
   };
   Scan: undefined;
-  Request: undefined;
   History: undefined;
 };
 
@@ -85,5 +68,5 @@ export type MainRouteProps = BottomTabScreenProps<
 
 export type HomeRouteProps = BottomTabScreenProps<
   MainBottomTabParamList & RootStackParamList,
-  'Home'
+  'home'
 >;

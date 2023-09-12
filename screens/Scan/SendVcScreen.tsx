@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef } from 'react';
-import { CheckBox, Input } from 'react-native-elements';
+import { Input } from 'react-native-elements';
 import { useTranslation } from 'react-i18next';
 import { Button, Column, Row, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
@@ -68,13 +68,6 @@ export const SendVcScreen: React.FC = () => {
               containerStyle={{ marginBottom: 6 }}
               inputStyle={{ textAlign: I18nManager.isRTL ? 'right' : 'left' }}
             />
-
-            <CheckBox
-              containerStyle={Theme.SelectVcOverlayStyles.consentCheckContainer}
-              title={t('consentToPhotoVerification')}
-              checked={controller.selectedVc.shouldVerifyPresence}
-              onPress={controller.TOGGLE_USER_CONSENT}
-            />
           </Column>
           <Text
             margin="15 0 13 24"
@@ -93,6 +86,7 @@ export const SendVcScreen: React.FC = () => {
               onPress={controller.SELECT_VC_ITEM(index)}
               selectable
               selected={index === controller.selectedIndex}
+              isSharingVc={true}
             />
           ))}
           <Button
@@ -105,7 +99,7 @@ export const SendVcScreen: React.FC = () => {
             <Button
               type="gradient"
               title={t('acceptRequestAndVerify')}
-              styles={{ marginTop: '12' }}
+              styles={{ marginTop: 12 }}
               disabled={controller.selectedIndex == null}
               onPress={controller.VERIFY_AND_ACCEPT_REQUEST}
             />

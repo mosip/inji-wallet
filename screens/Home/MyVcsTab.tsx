@@ -9,7 +9,10 @@ import { GetVcModal } from './MyVcs/GetVcModal';
 import { useTranslation } from 'react-i18next';
 import { VcItem } from '../../components/VcItem';
 import { GET_INDIVIDUAL_ID } from '../../shared/constants';
-import { ErrorMessageOverlay } from '../../components/MessageOverlay';
+import {
+  ErrorMessageOverlay,
+  MessageOverlay,
+} from '../../components/MessageOverlay';
 import { Icon } from 'react-native-elements';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
@@ -34,15 +37,15 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
       : null;
   }
 
-  const DownloadingIdPopUp: React.FC = () => {
+  const DownloadingVcPopUp: React.FC = () => {
     return (
-      <View
-        style={{ display: controller.isRequestSuccessful ? 'flex' : 'none' }}>
-        <Row style={Theme.Styles.popUp}>
+      <View testID="downloadingVcPopup">
+        <Row style={Theme.Styles.downloadingVcPopUp}>
           <Text color={Theme.Colors.whiteText} weight="semibold" size="smaller">
-            {t('downloadingYourId')}
+            {t('downloadingYourCard')}
           </Text>
           <Icon
+            testID="close"
             name="close"
             onPress={() => {
               controller.DISMISS();
@@ -59,7 +62,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
   return (
     <React.Fragment>
       <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
-        <DownloadingIdPopUp />
+        {controller.isRequestSuccessful && <DownloadingVcPopUp />}
         <Column fill pY={18} pX={15}>
           {controller.vcKeys.length > 0 && (
             <React.Fragment>
@@ -101,8 +104,8 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                 })}
               </Column>
               <Button
+                testID="downloadCard"
                 type="gradient"
-                isVcThere
                 disabled={controller.isRefreshingVcs}
                 title={t('downloadCard')}
                 onPress={controller.DOWNLOAD_ID}
@@ -146,17 +149,44 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
       {controller.GetVcModalService && (
         <GetVcModal service={controller.GetVcModalService} />
       )}
+
+      <MessageOverlay
+        isVisible={controller.showHardwareKeystoreNotExistsAlert}
+        title={t('errors.keystoreNotExists.title')}
+        message={t('errors.keystoreNotExists.message')}
+        onBackdropPress={controller.ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS}>
+        <Row>
+          <Button
+            type="clear"
+            title={t('errors.keystoreNotExists.riskOkayText')}
+            onPress={controller.ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS}
+            margin={[0, 8, 0, 0]}
+          />
+        </Row>
+      </MessageOverlay>
+
       <ErrorMessageOverlay
         translationPath={'MyVcsTab'}
         isVisible={controller.isSavingFailedInIdle}
         error={storeErrorTranslationPath}
         onDismiss={controller.DISMISS}
       />
+      <MessageOverlay
+        isVisible={controller.isBindingError}
+        title={controller.walletBindingError}
+        onCancel={controller.DISMISS}
+      />
       <ErrorMessageOverlay
         translationPath={'MyVcsTab'}
-        isVisible={controller.isMaximumStorageLimitReached}
-        error={'errors.maximumStorageLimitReached'}
+        isVisible={controller.isMinimumStorageLimitReached}
+        error={'errors.storageLimitReached'}
         onDismiss={controller.DISMISS}
+      />
+      <ErrorMessageOverlay
+        translationPath={'MyVcsTab'}
+        isVisible={controller.isTampered}
+        error={'errors.vcIsTampered'}
+        onDismiss={controller.IS_TAMPERED}
       />
     </React.Fragment>
   );

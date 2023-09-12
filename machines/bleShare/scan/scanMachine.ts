@@ -8,6 +8,7 @@ import {
   EventFrom,
   send,
   spawn,
+  StateFrom,
 } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { EmitterSubscription, Linking, Platform } from 'react-native';
@@ -29,13 +30,18 @@ import {
   requestMultiple,
   RESULTS,
 } from 'react-native-permissions';
-import { checkLocation, requestLocation } from '../../../shared/location';
+import {
+  checkLocationPermissionStatus,
+  requestLocationPermission,
+} from '../../../shared/location';
 import { CameraCapturedPicture } from 'expo-camera';
 import { log } from 'xstate/lib/actions';
 import { createQrLoginMachine, qrLoginMachine } from '../../QrLoginMachine';
 import { StoreEvents } from '../../store';
 import { WalletDataEvent } from 'react-native-tuvali/lib/typescript/types/events';
 import { BLEError } from '../types';
+import Storage from '../../../shared/storage';
+import { logState } from '../../app';
 
 const { wallet, EventTypes, VerificationStatus } = tuvali;
 
@@ -94,6 +100,7 @@ const model = createModel(
       RETRY_VERIFICATION: () => ({}),
       VP_CREATED: (vp: VerifiablePresentation) => ({ vp }),
       TOGGLE_USER_CONSENT: () => ({}),
+      RESET: () => ({}),
     },
   }
 );
@@ -101,7 +108,7 @@ const QR_LOGIN_REF_ID = 'QrLogin';
 export const ScanEvents = model.events;
 
 export const scanMachine =
-  /** @xstate-layout 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-0LisKKfM8pFikTiXElOcg0Q+jkC7rJUgtjtkDy-NMTQVESyZJ2KlRK2hXruNsBadwJYSxpWcA8tenQwQvBeNCV8BKrq0xtJRdQ9goEQUWIceKloiH00DtYdk819GwsUPCuZJi7zAwqZY-A1ie6fLSLcqslQZhOEIU4Tx0F7pjyguxVYJwOh8WVY8rhQNFmVLwDJMg+L+58viXXOQiwXA6HcbaUwIKIVZEWiHT6XgIWstVc6sJrrGlEGaX3Ek3qwqHG8fsaBTgNrqBZFSZYBySwZGguzW1Qp7WGIRXG9VFiYmtIAFI91TVmdNU1mjaFAhQiu7jGxOinlQgB2l5rzRsMsYwGhY0lKdXWlAr935QB3nvA+R9FBVRqrVHAqIMTVIUjfO+PV+q+gdcE+NFSF1byXZ-XViB+RVHqBAiuKxajSALQ0daeRVj2GAlSadTzz38MUMg1B6DMGkGwbg3lWswpHG3FBPY9FGzcjcAWussxGw6QFZ4f9aAUBgg4OVMSrt3Y4E9mmmDHbXQHP9frI2uxKGUhcEoSFyUjmVBDv+yMAArDyL4SMe1vekewRCkbaHZOoCCrhQGfVAtoysrQdYzMVael+QJAS8EquYaEWoIB3kEPwcwWBQjLJ6HhLEWoMxeso2kKCSgLQMmtmHMtm56ZVHcJWHIArKzMJU9WlVJT1POS0zpvTGADNGZM9g8gWpSDmeoJZoTv1qwmoyC0NKu4hmUgrt4yymWeQ1H-UFzT2mni6f0wIIzbyIMfOg0XMKNp7NGyWnuMlzJTbI28fYXQzG5hTP-SgSMZVFkcBlnLV+itlalOFKpkpg2wDDbCRwBACsuDoENLEJL+hlBQQbDPT0uQQ1UM5sWioyUAJyAG0N8xo3ARbwBIoDgLwyqVTTkg6bVagkv3m4tvhy3VvrbGqwITMhVCgTHph90hY5CbjcLlm0FdDDcn-QrNAXKIDlfC5VzVpHyNtps1Ic12iuLJSNkazxRtaEKC8O4ZYuMUcYCBGj3gGOwsRawMQJqrUqk1K1G83C0i6s-xukWD6TBnDzTcOL7Q6SOv1CqEGuO47UoKrtRcQ6qB278fHLjpLNQzQUVSocnIKx4qfRAjkTanoWjVyylcTAEAuXimfEQAE92ceCaF-g9IjXqzuHUMcBkGUsusmgoKzQUyHOqGKFOxVqP0ce7I0l+oShaik+4j8zm8UoV2E9AxGyACiyt0hP6CWgPhA9nDH6aEOBD78DeHvHE-Or4UFTOmITjLEZfXUJ9ewP6WQQWpI0CCm13Ti5hWr6vTwy-DYr7KKvZ5-S17Kg3rATfREt7HBOdvXvdmei76jfXffnDll3FkY4OsRP0Ira2Ev0IZ+Gkr-KSMMY4CDgRFwIg94nxgDX5EDf18beU4VmFG9Wv8DERCCU3EiUgazgKg5YXaaUEEGUcwRQ+Sxe7Y0+a2s+GAT+fYr+cY0IH+X+j4z4f+ze18rsk4raMMYBN0EB2k6WUusBrMpszgmQBwOsCSkuvmk+i+9+2Bj+8+8o-BTw6EgISCvAu84M6+AurepA1BIB+OdBVghwIEcg7Bv6LQ9Q5Y70xgkKQa7I88GB54D+4weBU+UA4hAIkh0hp0shm+VBO+1mKh4U8060Rs8wLinEuhCuDidQnoDKiwJhpegh5hwh4IGupBL4Dh186yHSnqoBwu8MouDYweaUZOAKjobo2k9EFYLgahtQN+p4d+WB5euBERigYWokWAGEWEyyuEBEW2uMmiywegF+Uy0mbBoytyBwDQuQzQ3oiqohUAZhc+N4kRKEMR-+chrSGyWyLhyR4UwEBu7E80FEzgUyg6iAqB1YgyNQqg3IaevgpwGAXAem8A8Q5wSR3ukgC0NICgmGNgUE9gLIdxByuQT0RwjQlo-Wce94YM6mNxsilQ7m9g7h9gPeDg8Us8+QqgfWUUroIRHYgYUoIYERwJtMDEWQFE2gj6McNkR2OxLEnITg3Egy7EzYfBpRF4gk14vYlhmJX4FkOJ9QdQZJFohJA+jK1YagCgxQ7EuQ80yJzuiE6JExSq-Yb+0ITJDW4uNI+gTCDQhQ7EjGi42Ja0bgVIhQXIvBla9kNJnYaJ9JVed40REAspU0NgRCkmhQxQmpRs3JoyEmnhMU0UWUAkxpwkoklpaQrgloHxCMcgj6Uy8BpsfiH0o6qwzMgKx4fBQ0IM8CYBOytM6glENOeSiO80pqpsS8tgagaWRR9pn0hM56+UJMP8KZzJqwVYzxXENoBwEB8U7EdKyBfycOyUCcjsasjwvpGwFcqe+sToGUxs8UYEdgqBcwcwk8ugXZSc6s68juYAfZrIwZCpBwMwDYcGdYGMUcRQagqUrGc5TsC5qc6cK5mgqwVEJCNk7R0E7itcmQ+sNQ7iWxsEiqAsicJ5jwig94IIUAv2H+qIXAKCF5UESUVI80hwO0bg5yEclQtglsbojWu4FQcCFZTwK588VYdQbmxgUy4ur0wERCk6YeRsboEe6F5Sl6H8u8WF+wWwxO+FaRoCFcVEn0ewFQxw+gcZ+plwz8JSIGaC-AWFFoom3IAeIcqgapOQbFECnF+MPF06K5dxLQDxSpzxFYYZZQ7MWSMwDI0ExwagrQ-6ZSLyKAK5Qac8toRYfiiUjYr0UyRCMwCgFEFc4EA2mAHKTuUAF5AaByegpyBkzWHgBascNGegxYtQLKfmX2M6aqLqK5-qygNkNkZKhhRJCAk83i524J7IBQvFJ6-mjqCVCaNF16dFyhSxgyKV-q6V-IJ+IKDQ247ihlfyi8f0k+s2AGc6wGvAKCwlF5dQmQTlAxNQ2gFQRkx2alRqTIkCZyplpVF6TqIlVV3u96ByMU7E6gxgr6BaEEZotK7I5k9OsVNaJSeGBGRGK5ocLodCRYFEkCapC0VQ7RjIARFonVfF3VPGfGFpa1uygpOJxgzQkmJYGUaGiw2kcw-IYCyiepRVcVv5aA-5gFXAwFoFANC4pOygroBxt0uMBa9Mtg+hjQborQ6GhVM2xVa8xWIWZWbOlWK5+g6hYee4scFcIeCgrQH0hJDK-InGZ1AWlw12I2KlIy6lTxKi3WaphQzgAVdyyUiU21DOTO6OmOEWKl88WQfy1pboxQk8rmbFyM2Q3xdoFEWUGubcSZkAK5DiWwfItEEujYstvuxQnoMe7o5NduDuPlrwYAru92dtLZkZhCTI7tqGuZFQkURYwaNgMwjgWU8eLOolno3alYjQ2MG408jYBun03I0E0yKGIpoxYR4xvYF5ypByDgfWGQuMnRLIn0g5gxugBFQqJdYxFREpIxy+9elxtBSxEKRCyUqgsFXtDduZHEesnaNoJYfiX1t+mBpd5RFhL+A4RBn+3+z4flouu4Ul2Qr5BsQEgqF+x+yUeiHdZdXdDJIx1hthfAakVZYUuMAZOg1sHG+wDEcFZQEE3IAV25et-ql9K9lRURP+-1A93uL9s0CM8uPWX9jomMW5NgFoEK9MVNfEIxndFh1RttWNzJ+4WQVIugeg0E1OmV-Isw-hqDQRsgJx3gQAA */
+  /** @xstate-layout N4IgpgJg5mDOIC5SwMYEMB2BiAygYQCUBRIgOQH0AhAGQFUCBtABgF1FQAHAe1gEsAXXlwzsQAD0QAWAEwAaEAE9EARgCsygHSSAnLu1N1ypkwBs06QF8L81JlyESFAGIB5PLRzM2SENz6DhUQkEGXklBFVVJg0zQ20TJn0AdmlVKxt0bBoiciICAhdGVlE-ASERH2CADjlFRCqTJI1lVJbzYyYUqvSQWwwNFAALMBQAaxx+LgAnNBgsCGEwDV4MADcuUaW+geGxienZsAQV9fQAjC8vEp4ywMrEKJMNJKYqgGYTN+k3qKrtWvCqhMTzeSSiYMkb0kyn+SR62yGI3GkxmcwWGCWJw2W0yOyR+1RRyxZ3Kl2U3k4N3OQQepmerw+Xx+r3+YVpTSqSR0qiSMOUkhMaWsvVxsH4aCm-AACmApgBbXiwPjCPC7Ua4AAqAEECBryFK8gBZACSOBwxpcFDwAAkiHgANJXHylan3BBGeIaJjQpJgzoyVImNkhfkaPS6N5GaTGQUmeGi8WSmXyxXKjCqpGanV6g0EE1mi1W20Ohjk67+co091GJ7e5S+8EBoHBgWqLR6Ixg741OHC7ZiiXS2UKpXlDNjLO6-VG03my3kG12x3SCm+KmVt0tbSSL1mBJffTaA-B9RtvQ1KqSJjSMFVbp93GIsakMASgBGCgAImBVrwUHBkxHNM8TGFYoCwUgiB1SgAE1clILVsk-J1KQrO5QGCaEQVUaFtBaNRpB0RoT0kGpmkkHkrxaAxtHjTAQNGF93y-H8-wA4dU3KBiwIgqCCFg8hP1NRDqCIZDimddd0PEKRlGw3D8NUQj4iSEjjHI1R3m0TTVChe8Mnop9GNfKYP2-X9-1gQDOOEDQpjAABHABXOBBAwcDIOguCyBEsSULXNCKgwxBdDbKprzUMFlDeH5BRPRkND+HkkjMUwjGUOj+iMpjTJYiz2JTUdbPs5zXJ4zz+LgoScF88TVxdDdgoQULEoinl1BioFVBI0M3m0pJtySPrlH0kVDLVHKzNYyzrKK-owAwNA3wAG0gLB-Ia6Tgha8LpEijrYu6uoIlIt4Ygogb9F01R-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-jLTLQ8QK5-BK41h7KRhq7VpKRnTXivBRCw5Z5+7bCgEz544QYh4k45p5py6wHbIIH4YHKcjVrZ684GCpCnQqQCaT7l5i6EGS4k4274qkAP6pbIYhCMKozxD8wzLMLhq-p0joFmAwhlaIKH5gGV4EFkah54Cx5EDx6cz8EabViJzPBlrFqYH-CGqwyNBoHRjAgdyaSxAKH4ELQqFcFqHEAABScuWhdG7eOWbYvInIhh14xhd2Hw9BMh+gPYUIth7BDhgOwOoOCumuPhzCic-h5gKBKQXo0Y7wQWPInIrOERxu9hRB+2M2cAsA82XaSwS2soA6OA1oOoxoRK5AG2U6s686rBge+RHBteRRh2JR9OukXG3m4I4IrmtB-MzwLwOEHwZh14OBbRR+HRDhX2vAP2f2AOi+y+cRkQ+hvh-GyRJhqQMCSkiQck4UzCYIeRShBRnBs+GAaxMRK+2hnh9Y3hBhuxRSKR+6Zgga0YXYRgciwBBu8xleaAKA-4HAPsOsjms4duAozwscmkrw58bwOGQ06RuyVhDQCsIBbBE29kAAVu2mtFCWaOQfAbslQcgb+kEUcSEXIbMfRHgZ9qsLKLwD2goGBMaBAAtIIPwAoFgE4B8jkN8lqNQMaM1rojoZfHdroEjgYKcTFAKA0oCYoRoMyS2myRyVybcQIHyQKSDuQPUcKaKeKfrAIZ3hnj3tnkeK7t-onCWnuOFGYD2MFpgu0ZXmqayeye5JydyTqdEUvrEY-m6Oad3lnn3jaSoMep7oFrFHtPyBPgyTiZXigPZN7CHhwLJhiPJusJsFXnMSqSma+GbhwMcApiSMIJcEGeQkfPupbBMjCAiVljeBcQMKmcWVgLKNNlMBoBwMtN7D2tMHKHmYmW6a2UWemaWacGmRWawPTqyv1tIrIfENuMiW7uoLWHzvzHDOhgmf0IyRNicGgNARAD6dqbydLjgE5lWTDKzhEqkMYH1KVgYKud-gkK3KehSjUoci2YeceaeTyXycQBqAQHBGHhHsaEDl8nTteXzKjDEPeSVlvrpFzhVolC0KlP8OPkUndNeqgLtkSaaFeY8X6uYB7jdFeF+QcvELQWoOMQYF8Q+TUPSf0IMJgBANAe5A9GAEQFMF2ReURR4X6leDuMCDxkiSxvzMGHxolDhLeZgXIueqPL+bwJCYRdCTBShqRCWtCNuhWvhNWqCAjHtAojeMjp-jfKBO5JJuWRgDgLKPlOXM6qXE5KUdQG4EvGDD-O4S1gIVCBRLzv1OfNIflggIZW2DWq0JUpEAmlVtPFZVwDZXZVMA5X7FAE5Y-C5VgG5ZBWDFkiQhpf6ryIlEFmWgYFyLEBUhKs8I0HGSNKzl8C6aldZdObZfZWxJgqVK-O5BqFwEQItPwlle5VBRQF5SaY3FWN2OdkYEgTFOfJiRvqFbpGdNLPWHspeN8BZaMGBM1ecElQ5c-GVN1b1f1atINTlfOHld5RKe3redEFeFQvUq2LyJVVQpYgYDGtCFCHYiNnFVADteUHte1VqZilgJqjyjqiloJRNduLWDGDhJyMnD+qMtCNEOoCkK8OjENDYT9akvFYlW1f+BoMDWtNlR5fOInsnnwVDVvN8G2Map0IXk6QtVCEAojFECzdItruesKBgFwFyfAD4H0NTU1AALRI2IAi1njhjS26CRJ3QrAgmCDMnC03mHqfA4SJCfB1Vwxc6s6bodCmAURfqJy3Q417AoiHAq18yESJRCypCXI5zvAMpNCxDRSRCGBKQxW4GuQtqZo4CsUtqcFW0qAXwmo1BFI57ox87i0RCCiSzMI1VfA56l79iJhDiFRpjjijDB0IBoxGLGGWlyLWxPCcgyp-qtCVYcJIiTRKozSqrSTjVbwx17znaRKJx4yciKWxXV0mRTT5QqoZ1cSpU500HHS6R4RMqs5vnaSbU12Op12D3FRYKHVQA50yGSyJxBZiLTXRTxS+hMJyxmDFop2PgTS9210FRAQawnWQA51dBhi0pXiaSs4vBf4PCkQ+YURyzqDxCJCbVqLkzOo50jQ-AdZmy76QrWwNCnxHixymX-0ooUyL0qJbXuTAN3hnQgrgMWyQNj0jQIwtDs0NlfC6QIO3L13zQ30QA52tDRAdCO5DQRg3iYwBK7zoxMXq2NWLLqI8Ij0x0yABI4yJxfCfB8ZkOJLcJtLD0+WSmghpw3hGLlrQhZHMVjwtIYIHVdWr0yPt7hR9xSqvZJ1mEtgywiUXTlozJHjiNLJtIrLAMNUxBSxchfrXiXZpyQinz+aaSgJxLNISOtI+x8MVLAgmrir-B1UNmQi+PcNJJlzSPXVr5yNhLMKmqXhAi97WHROoL+MaJUNr1kTCHAjejnz1h3gVJghTVf2RhHi2IAk2o3L+POrqo0OoyaBwE0Q3R3itjiyYOyUywyzywukNPFzNM6Nr7+YyXSyJC+HM0Kla76AM0Mh1PbB2oOrTSX02QuoLSYrAP4QxBY3RXfATELVSqYPaQLMWogMsGGSLpQYfYN25LPqfW87GLvH8Y1mjLoyaAdy8gLMZGvAumkY3qwYPMbIMa8gmrLn4PRTIy0Epy7jmA3gZamNd2CZhZ2aqY506VM46Y4z6YSHhCEQKLGaRj1W6BdOqOha2YqYrDLDsVgBYtEuOPWEY3fBHg4Y22fBfpcgtyO13RUvhaqZV5RZoNjNVimwcgC4YH74x2FYRImblpfMyz8s2aCu0uLS-hQBplHXWiKgojhAJPisYZhgywVqRBHjbiGYmrRTG0UTRiNojYfaiuGtuhYSt2+jwzRXvC020FbGh1FIyGZGNVOuV4rBTbFFKiMv1j7O+j7z1U+u-p-AxCyIBYDKkOOtjZ7bfa-b-ZYsfrPD-CDw55MV3ZJuPZ3h7wfDpvKkV530x2o7RBGACOyFXYn0jlAmz7B5B1ituhKRtjTNHhAJggevKB56JDzNQiERfnvAtkQH44cXaMuvkIuMXZ3h7KYWJwoHmBom0KnE6CV35l2GdHE450-BnSFOiG6DiE4YT03hDsvYnGXgtnKGFFhsHZHZYtCFwGXsdw6AEsFZlJ0WQg4RFOAHPtXFdHZurHAPGCaAyyIotzcgDSjHeHv5SygeqP7mXHHsoA3H8A539HaaEOdDDHny0GXiym4bfrwwxQtkglgkQn2M8iJRRQos1AKKjufFRBonq320-DNnYmjn4mEnUM9vLvEuipf0jR0rNhUkF4WF7ShHAYulYe2poCavatQA9XWhcA-bAO9wxDAjCOQg6AvkFZmHBEpy3ixAqdJmqkskanelakAUwcKMWMhHFLMNu5DSQt7gsjwzhQyCzttnpnANeff5RB0OweQgHHxB9Q-lrBHkqX-k6lhcLVlrLXr7HFAh1Jtv9C4WjYrq31ic3k0RaCmAgfoH6BmewyH2UfoU+jhGNKsUQYLtcU8Vdk0NFLtjhhAJt0jRSWGJSxyXXgKXy2JfHlYtySaD3kpBxkpBQL7rSyOORjTNGcH5m2oN-UJUtWA3-g0Ps7NDFNPYpxmz-uhWRjeHs3DSNCMOoun243bf43JXtWpXpXewuUHeehNtmAdyncJDnfoeIzywPlZadCbXbU7e7UE1LCaM4I9V9VawMsld8w3RnS2IY1BY3hBaVX+XMhAiiGTvXMoOQ-PcOXE2idLv6L8jLW7JBWHOA-GJvUgdcjRQChWBWBAA */
   model.createMachine(
     {
       predictableActionArguments: true,
@@ -123,20 +130,51 @@ export const scanMachine =
       initial: 'inactive',
       on: {
         SCREEN_BLUR: {
-          target: '.inactive',
+          target: '#scan.disconnectDevice',
         },
         SCREEN_FOCUS: {
-          target: '.startPermissionCheck',
+          target: '.checkStorage',
         },
         BLE_ERROR: {
           target: '.handlingBleError',
           actions: 'setBleError',
+        },
+        RESET: {
+          target: '.checkStorage',
+        },
+        DISMISS: {
+          target: '#scan.reviewing.navigatingToHome',
         },
       },
       states: {
         inactive: {
           entry: 'removeLoggers',
         },
+        disconnectDevice: {
+          invoke: {
+            src: 'disconnect',
+          },
+          on: {
+            DISCONNECT: {
+              target: '#scan.inactive',
+            },
+          },
+        },
+        checkStorage: {
+          invoke: {
+            src: 'checkStorageAvailability',
+            onDone: [
+              {
+                cond: 'isMinimumStorageRequiredForAuditEntryReached',
+                target: 'restrictSharingVc',
+              },
+              {
+                target: 'startPermissionCheck',
+              },
+            ],
+          },
+        },
+        restrictSharingVc: {},
         startPermissionCheck: {
           on: {
             START_PERMISSION_CHECK: [
@@ -380,12 +418,12 @@ export const scanMachine =
               entry: ['storeLoginItem'],
               on: {
                 STORE_RESPONSE: {
-                  target: 'navigatingToHome',
+                  target: 'navigatingToHistory',
                   actions: ['storingActivityLog'],
                 },
               },
             },
-            navigatingToHome: {},
+            navigatingToHistory: {},
           },
           entry: 'sendScanData',
         },
@@ -587,35 +625,24 @@ export const scanMachine =
           },
         },
         checkingLocationService: {
-          initial: 'checkingStatus',
+          initial: 'checkingPermissionStatus',
           states: {
-            checkingStatus: {
-              invoke: {
-                src: 'checkLocationStatus',
-              },
-              on: {
-                LOCATION_ENABLED: {
-                  target: 'checkingPermission',
-                },
-                LOCATION_DISABLED: {
-                  target: 'requestingToEnable',
-                },
-              },
-            },
-            requestingToEnable: {
-              entry: 'requestToEnableLocation',
-              on: {
-                LOCATION_ENABLED: {
-                  target: 'checkingPermission',
-                },
-                LOCATION_DISABLED: {
-                  target: 'disabled',
-                },
-              },
-            },
-            checkingPermission: {
+            checkingPermissionStatus: {
               invoke: {
                 src: 'checkLocationPermission',
+              },
+              on: {
+                LOCATION_ENABLED: {
+                  target: '#scan.clearingConnection',
+                },
+                LOCATION_DISABLED: {
+                  target: 'requestToEnableLocation',
+                },
+              },
+            },
+            requestToEnableLocation: {
+              invoke: {
+                src: 'requestToEnableLocationPermission',
               },
               on: {
                 LOCATION_ENABLED: {
@@ -626,20 +653,13 @@ export const scanMachine =
                 },
               },
             },
-            disabled: {
-              on: {
-                LOCATION_REQUEST: {
-                  target: 'requestingToEnable',
-                },
-              },
-            },
             denied: {
               on: {
                 APP_ACTIVE: {
-                  target: 'checkingPermission',
+                  target: 'checkingPermissionStatus',
                 },
                 LOCATION_REQUEST: {
-                  actions: 'openSettings',
+                  actions: 'openAppPermission',
                 },
               },
             },
@@ -650,8 +670,14 @@ export const scanMachine =
     {
       actions: {
         setChildRef: assign({
-          QrLoginRef: (context) =>
-            spawn(createQrLoginMachine(context.serviceRefs), QR_LOGIN_REF_ID),
+          QrLoginRef: (context) => {
+            const service = spawn(
+              createQrLoginMachine(context.serviceRefs),
+              QR_LOGIN_REF_ID
+            );
+            service.subscribe(logState);
+            return service;
+          },
         }),
 
         sendScanData: (context) =>
@@ -665,11 +691,7 @@ export const scanMachine =
             : Linking.openURL('App-Prefs:Bluetooth');
         },
 
-        openAppPermission: () => {
-          Linking.openSettings();
-        },
-
-        requestToEnableLocation: () => requestLocation(),
+        openAppPermission: () => Linking.openSettings(),
 
         setUri: model.assign({
           openId4VpUri: (_context, event) => event.params,
@@ -783,8 +805,6 @@ export const scanMachine =
           { to: (context) => context.serviceRefs.activityLog }
         ),
 
-        openSettings: () => Linking.openSettings(),
-
         toggleShouldVerifyPresence: assign({
           selectedVc: (context) => ({
             ...context.selectedVc,
@@ -871,23 +891,11 @@ export const scanMachine =
             .catch(() => callback(model.events.BLUETOOTH_STATE_DISABLED()));
         },
 
-        checkLocationPermission: () => async (callback) => {
-          try {
-            // wait a bit for animation to finish when app becomes active
-            await new Promise((resolve) => setTimeout(resolve, 250));
-
-            let response: PermissionStatus;
-            if (Platform.OS === 'android') {
-              response = await check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
-            }
-            if (response === 'granted') {
-              callback(model.events.LOCATION_ENABLED());
-            } else {
-              callback(model.events.LOCATION_DISABLED());
-            }
-          } catch (e) {
-            console.error(e);
-          }
+        requestToEnableLocationPermission: () => (callback) => {
+          requestLocationPermission(
+            () => callback(model.events.LOCATION_ENABLED()),
+            () => callback(model.events.LOCATION_DISABLED())
+          );
         },
 
         monitorConnection: () => (callback) => {
@@ -951,8 +959,8 @@ export const scanMachine =
             });
         },
 
-        checkLocationStatus: () => (callback) => {
-          checkLocation(
+        checkLocationPermission: () => (callback) => {
+          checkLocationPermissionStatus(
             () => callback(model.events.LOCATION_ENABLED()),
             () => callback(model.events.LOCATION_DISABLED())
           );
@@ -1030,6 +1038,12 @@ export const scanMachine =
 
           return Promise.resolve(vc);
         },
+
+        checkStorageAvailability: () => async () => {
+          return Promise.resolve(
+            Storage.isMinimumLimitReached('minStorageRequiredForAuditEntry')
+          );
+        },
       },
 
       guards: {
@@ -1051,6 +1065,9 @@ export const scanMachine =
         uptoAndroid11: () => Platform.OS === 'android' && Platform.Version < 31,
 
         isIOS: () => Platform.OS === 'ios',
+
+        isMinimumStorageRequiredForAuditEntryReached: (_context, event) =>
+          Boolean(event.data),
       },
 
       delays: {
@@ -1061,9 +1078,17 @@ export const scanMachine =
     }
   );
 
+type State = StateFrom<typeof scanMachine>;
+
 export function createScanMachine(serviceRefs: AppServices) {
   return scanMachine.withContext({
     ...scanMachine.context,
     serviceRefs,
   });
+}
+
+export function selectIsMinimumStorageRequiredForAuditEntryLimitReached(
+  state: State
+) {
+  return state.matches('restrictSharingVc');
 }

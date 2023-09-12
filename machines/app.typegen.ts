@@ -24,10 +24,16 @@ export interface Typegen0 {
     logServiceEvents: 'READY';
     logStoreEvents: 'xstate.init';
     requestDeviceInfo: 'REQUEST_DEVICE_INFO';
+    resetKeyInvalidateError: 'READY' | 'RESET_KEY_INVALIDATE_ERROR_DISMISS';
     setAppInfo: 'APP_INFO_RECEIVED';
     setBackendInfo: 'BACKEND_INFO_RECEIVED';
+    setIsDecryptError: 'DECRYPT_ERROR';
+    setIsReadError: 'ERROR';
     spawnServiceActors: 'READY';
     spawnStoreActor: 'xstate.init';
+    unsetIsDecryptError: 'DECRYPT_ERROR_DISMISS' | 'READY';
+    unsetIsReadError: 'READY';
+    updateKeyInvalidateError: 'ERROR' | 'KEY_INVALIDATE_ERROR';
   };
   'eventsCausingDelays': {};
   'eventsCausingGuards': {};

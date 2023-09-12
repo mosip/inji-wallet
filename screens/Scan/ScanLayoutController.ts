@@ -17,11 +17,11 @@ import {
   selectIsSendingVcTimeout,
   selectIsSent,
   selectReceiverInfo,
+  selectIsDone,
 } from '../../machines/bleShare/scan/selectors';
 import {
   selectIsAccepted,
   selectIsDisconnected,
-  selectIsDone,
   selectIsExchangingDeviceInfo,
   selectIsExchangingDeviceInfoTimeout,
   selectIsHandlingBleError,
@@ -110,7 +110,6 @@ export function useScanLayout() {
   } else if (isConnectingTimeout) {
     statusOverlay = {
       title: t('status.sharingInProgress'),
-      requester: t('status.sharingInProgress'),
       hint: t('status.connectingTimeout'),
       onCancel,
       progress: true,
@@ -131,6 +130,7 @@ export function useScanLayout() {
     statusOverlay = {
       message: t('status.sent'),
       hint: t('status.sentHint'),
+      progress: false,
       onCancel: CANCEL,
     };
   } else if (isSendingVc) {
@@ -203,13 +203,13 @@ export function useScanLayout() {
 
   useEffect(() => {
     if (isDone) {
-      navigation.navigate('Home', { activeTab: 0 });
+      navigation.navigate('home', { activeTab: 0 });
     } else if (isReviewing) {
       navigation.navigate('SendVcScreen');
     } else if (isScanning) {
       navigation.navigate('ScanScreen');
     } else if (isQrLoginDone) {
-      navigation.navigate('Home', { activeTab: 2 });
+      navigation.navigate('History');
     }
   }, [isDone, isReviewing, isScanning, isQrLoginDone, isBleError]);
 

@@ -12,9 +12,8 @@ export const Button: React.FC<ButtonProps> = (props) => {
   const buttonStyle: StyleProp<ViewStyle> = [
     props.fill ? Theme.ButtonStyles.fill : null,
     Theme.ButtonStyles[type],
-    { width: '100%' },
+    { width: props.width ?? '100%' },
   ];
-
   const containerStyle: StyleProp<ViewStyle> = [
     !(type === 'gradient') ? Theme.ButtonStyles.container : null,
     props.disabled ? Theme.ButtonStyles.disabled : null,
@@ -26,7 +25,6 @@ export const Button: React.FC<ButtonProps> = (props) => {
       : null,
     props.styles,
   ];
-
   const handleOnPress = (event: GestureResponderEvent) => {
     if (!props.disabled && props.onPress) {
       props.onPress(event);
@@ -63,15 +61,14 @@ export const Button: React.FC<ButtonProps> = (props) => {
     />
   ) : (
     <RNEButton
+      buttonStyle={buttonStyle}
       ViewComponent={require('react-native-linear-gradient').default}
       linearGradientProps={{
         colors: !props.disabled
           ? Theme.Colors.GradientColors
           : Theme.Colors.DisabledColors,
       }}
-      containerStyle={
-        props.isVcThere ? containerStyle : Theme.ButtonStyles.gradient
-      }
+      containerStyle={containerStyle}
       type={props.type}
       raised={props.raised}
       title={
@@ -85,7 +82,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
           {props.title}
         </Text>
       }
-      buttonStyle={!props.isVcThere ? { height: 45 } : { height: 42 }}
+      style={[buttonStyle]}
       icon={props.icon}
       onPress={handleOnPress}
       loading={props.loading}
@@ -94,10 +91,11 @@ export const Button: React.FC<ButtonProps> = (props) => {
 };
 
 interface ButtonProps {
+  testID?: string;
   title: string;
   disabled?: boolean;
   margin?: Spacing;
-  type?: RNEButtonProps['type'];
+  type?: RNEButtonProps['type'] | 'gradient';
   isVcThere?: boolean;
   onPress?: RNEButtonProps['onPress'];
   fill?: boolean;
@@ -106,4 +104,5 @@ interface ButtonProps {
   icon?: RNEButtonProps['icon'];
   styles?: StyleProp<ViewStyle>;
   colors?: (string | number)[];
+  width?: number;
 }

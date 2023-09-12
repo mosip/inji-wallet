@@ -13,7 +13,8 @@
 		"PRESENCE_VERIFICATION_FAILED": "falló la verificación",
 		"QRLOGIN_SUCCESFULL": "Inicio de sesión QR exitoso",
 		"WALLET_BINDING_SUCCESSFULL": "Activación exitosa",
-		"WALLET_BINDING_FAILURE": "Activación fallida"
+		"WALLET_BINDING_FAILURE": "Activación fallida",
+		"VC_REMOVED": "Eliminado de la billetera"
 	},
 	"DeviceInfoList": {
 		"requestedBy": "Solicitado por",
@@ -33,8 +34,9 @@
 		"passcodeMismatchError": "El código de acceso no coincide."
 	},
 	"QrScanner": {
-		"missingPermissionText": "Esta aplicación utiliza la cámara para escanear el código QR de otro dispositivo.",
-		"allowCameraButton": "Permitir acceso a la cámara"
+		"cameraAccessDisabled": "¡Acceso a la cámara deshabilitado!",
+		"cameraPermissionGuideLabel": "Vaya a la configuración y habilite el acceso a la cámara manualmente.",
+		"flipCamera": "Voltear cámara"
 	},
 	"VcDetails": {
 		"generatedOn": "Generado el",
@@ -81,7 +83,7 @@
 		"RemoveWarning": "¿Quieres eliminar esta tarjeta?",
 		"confirm": "si, lo confirmo",
 		"no": "No"
-	  },
+	},
 	"AuthScreen": {
 		"header": "¿Te gustaría usar la biometría para desbloquear la aplicación?",
 		"useBiometrics": "Usar biometría",
@@ -180,6 +182,19 @@
 			"diskFullError": {
 				"title": "Error al guardar la Tarjeta",
 				"message": "No se pueden recibir ni guardar más Tarjetas, ya que los datos de la aplicación están llenos."
+			},
+			"vcIsTampered": {
+				"title": "Algunas pruebas de identidad están manipuladas",
+				"message": "Los archivos afectados se eliminan, vuelva a descargarlos."
+			},
+			"storageLimitReached": {
+				"title": "Datos de aplicación insuficientes",
+				"message": "No puede agregar ni recibir tarjetas porque los datos de la aplicación están llenos. Borre Appdata para continuar."
+			},
+			"keystoreNotExists": {
+				"title": "Almacenamiento seguro de claves no encontrado",
+				"message": "El almacenamiento de claves en su teléfono no está protegido. Sus claves podrían filtrarse si el teléfono es pirateado.",
+				"riskOkayText": "Está bien, me arriesgaré."
 			}
 		}
 	},
@@ -230,20 +245,17 @@
 		"version": "Versión",
 		"useBle": "Impulsado por BLE"
 	},
-	"ProfileScreen": {
-		"name": "Nombre",
-		"vcLabel": "Etiqueta de VC",
+	"SettingScreen": {
+		"header": "Ajustes",
+		"injiAsVerifierApp": "Inji como aplicación verificadora",
+		"basicSettings": "Ajustes básicos",
+		"bioUnlock": "Desbloquear con biométrico",
 		"language": "Idioma",
-		"bioUnlock": "Desbloquear con biometría",
-		"authFactorUnlock": "Desbloquear factor de autenticación",
-		"AppMetaData": "Acerca de Inji",
+		"aboutInji": "Acerca de Inji",
+		"credentialRegistry": "Registro de Credenciales",
+		"injiTourGuide": "Guía turístico Inji",
 		"logout": "Cerrar sesión",
-		"revokeLabel": "Revocar VID",
-		"revokeHeader": "REVOCAR VID",
-		"revokingVids": "Estás a punto de revocar ({{count}}) VIDs.",
-		"revokingVidsAfter": "Esto significa que ya no podrás usar ni ver ninguna de las identificaciones vinculadas a esos VID(s).\n¿Estás seguro de que deseas continuar?",
-		"empty": "Vacío",
-		"revokeSuccessful": "VID revocado exitosamente"
+		"resetInjiProps": "Restableciendo accesorios Inji..."
 	},
 	"QrScreen": {
 		"title": "Inicio de sesión con código QR",
@@ -290,6 +302,7 @@
 		}
 	},
 	"RequestScreen": {
+		"receiveCard": "Recibir tarjeta",
 		"bluetoothDenied": "Por favor, activa el Bluetooth para poder solicitar la tarjeta",
 		"bluetoothStateAndroid": "Por favor, activa el Bluetooth desde la configuración rápida para admitir el intercambio local",
 		"bluetoothStateIos": "Por favor, activa el Bluetooth desde el centro de control para admitir el intercambio local",
@@ -300,6 +313,10 @@
 			"nearbyDevicesPermissionDenied": {
 				"message": "Se requiere el permiso de Dispositivos cercanos para poder solicitar la tarjeta",
 				"button": "Permitir permiso"
+			},
+			"storageLimitReached": {
+				"title": "Datos de aplicación insuficientes",
+				"message": "No puede agregar ni recibir tarjetas porque los datos de la aplicación están llenos. Borre Appdata para continuar."
 			}
 		},
 		"status": {
@@ -357,6 +374,10 @@
 			"nearbyDevicesPermissionDenied": {
 				"message": "Se requiere el permiso de Dispositivos cercanos para poder compartir la tarjeta",
 				"button": "Permitir permiso"
+			},
+			"storageLimitReached": {
+				"title": "Datos de aplicación insuficientes",
+				"message": "No puede compartir tarjetas porque los datos de la aplicación están llenos. Borre Appdata para continuar."
 			}
 		},
 		"status": {
@@ -370,7 +391,7 @@
 			"sentHint": "Esperando a que el receptor guarde o descarte tu tarjeta",
 			"sharing": {
 				"title": "Compartiendo...",
-				"hint": "Por favor, espera a que el dispositivo receptor acepte o rechace el intercambio.",
+				"hint": "Espere mientras compartimos la tarjeta elegida.",
 				"timeoutHint": "Está tomando más tiempo del esperado para compartir. Puede haber un problema con la conexión."
 			},
 			"accepted": {
@@ -416,7 +437,13 @@
 	"WelcomeScreen": {
 		"title": "Solución de identidad de código abierto",
 		"getStarted": "Empezar",
-		"unlockApp": "Desbloquear aplicación"
+		"unlockApp": "Desbloquear aplicación",
+		"errors": {
+			"invalidateKeyError": {
+				"title": "Algunas pruebas de identidad se eliminan debido a problemas de seguridad.",
+				"message": "Vuelva a descargar."
+			}
+		}
 	},
 	"common": {
 		"cancel": "Cancelar",
@@ -432,6 +459,10 @@
 		},
 		"errors": {
 			"genericError": "Algo salió mal. ¡Por favor, inténtalo de nuevo después de un tiempo!"
+		},
+		"biometricPopup": {
+			"title": "Desbloquear aplicación",
+			"description": "Utilice la huella digital para desbloquear la aplicación."
 		}
 	}
 }

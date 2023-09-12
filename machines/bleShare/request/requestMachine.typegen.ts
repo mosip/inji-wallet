@@ -4,6 +4,11 @@ export interface Typegen0 {
   '@@xstate/typegen': true;
   'internalEvents': {
     '': { type: '' };
+    'done.invoke.request.checkStorage:invocation[0]': {
+      type: 'done.invoke.request.checkStorage:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
     'done.invoke.request.reviewing.verifyingVp:invocation[0]': {
       type: 'done.invoke.request.reviewing.verifyingVp:invocation[0]';
       data: unknown;
@@ -22,9 +27,10 @@ export interface Typegen0 {
     advertiseDevice: 'done.invoke.request.waitingForConnection:invocation[0]';
     checkBluetoothService: 'done.invoke.request.checkingBluetoothService.checking:invocation[0]';
     checkNearByDevicesPermission: 'done.invoke.request.checkNearbyDevicesPermission.checking:invocation[0]';
+    checkStorageAvailability: 'done.invoke.request.checkStorage:invocation[0]';
     disconnect:
       | 'done.invoke.request.clearingConnection:invocation[0]'
-      | 'done.invoke.request.reviewing.navigatingToHome:invocation[0]';
+      | 'done.invoke.request.reviewing.navigatingToHistory:invocation[0]';
     monitorConnection: 'done.invoke.request:invocation[0]';
     receiveVc: 'done.invoke.request.waitingForVc:invocation[0]';
     requestBluetooth: 'done.invoke.request.checkingBluetoothService.requesting:invocation[0]';
@@ -93,6 +99,7 @@ export interface Typegen0 {
   };
   'eventsCausingGuards': {
     hasExistingVc: 'VC_RESPONSE';
+    isMinimumStorageLimitReached: 'done.invoke.request.checkStorage:invocation[0]';
   };
   'eventsCausingServices': {
     advertiseDevice:
@@ -100,7 +107,11 @@ export interface Typegen0 {
       | 'DISMISS'
       | 'xstate.after(DESTROY_TIMEOUT)#request.clearingConnection';
     checkBluetoothService: 'NEARBY_ENABLED';
-    checkNearByDevicesPermission: 'APP_ACTIVE' | 'RESET' | 'SCREEN_FOCUS';
+    checkNearByDevicesPermission:
+      | 'APP_ACTIVE'
+      | 'RESET'
+      | 'done.invoke.request.checkStorage:invocation[0]';
+    checkStorageAvailability: 'SCREEN_FOCUS';
     disconnect: '' | 'DISMISS' | 'GO_TO_RECEIVED_VC_TAB';
     monitorConnection: 'xstate.init';
     receiveVc: 'CONNECTED';
@@ -115,6 +126,7 @@ export interface Typegen0 {
     | 'checkNearbyDevicesPermission'
     | 'checkNearbyDevicesPermission.checking'
     | 'checkNearbyDevicesPermission.requesting'
+    | 'checkStorage'
     | 'checkingBluetoothService'
     | 'checkingBluetoothService.checking'
     | 'checkingBluetoothService.enabled'
@@ -135,13 +147,14 @@ export interface Typegen0 {
     | 'reviewing.displayingIncomingVC'
     | 'reviewing.idle'
     | 'reviewing.invalidIdentity'
-    | 'reviewing.navigatingToHome'
+    | 'reviewing.navigatingToHistory'
     | 'reviewing.rejected'
     | 'reviewing.savingFailed'
     | 'reviewing.savingFailed.idle'
     | 'reviewing.savingFailed.viewingVc'
     | 'reviewing.verifyingIdentity'
     | 'reviewing.verifyingVp'
+    | 'storageLimitReached'
     | 'waitingForConnection'
     | 'waitingForVc'
     | 'waitingForVc.inProgress'
@@ -155,7 +168,7 @@ export interface Typegen0 {
           | 'displayingIncomingVC'
           | 'idle'
           | 'invalidIdentity'
-          | 'navigatingToHome'
+          | 'navigatingToHistory'
           | 'rejected'
           | 'savingFailed'
           | 'verifyingIdentity'

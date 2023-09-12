@@ -1,6 +1,11 @@
 import { assign, ErrorPlatformEvent, EventFrom, send, StateFrom } from 'xstate';
 import { createModel } from 'xstate/lib/model';
-import { HOST, MY_VCS_STORE_KEY, VC_ITEM_STORE_KEY } from '../shared/constants';
+import {
+  HOST,
+  MY_VCS_STORE_KEY,
+  VC_ITEM_STORE_KEY,
+  VC_ITEM_STORE_KEY_AFTER_DOWNLOAD,
+} from '../shared/constants';
 import { AppServices } from '../shared/GlobalContext';
 import { CredentialDownloadResponse, request } from '../shared/request';
 import {
@@ -15,6 +20,7 @@ import { verifyCredential } from '../shared/vcjs/verifyCredential';
 import { log } from 'xstate/lib/actions';
 import {
   generateKeys,
+  isCustomSecureKeystore,
   WalletBindingResponse,
 } from '../shared/cryptoutil/cryptoUtil';
 import { KeyPair } from 'react-native-rsa-native';
@@ -27,6 +33,7 @@ import getAllConfigurations, {
 } from '../shared/commonprops/commonProps';
 import { VcEvents } from './vc';
 import i18n from '../i18n';
+import SecureKeystore from 'react-native-secure-keystore';
 
 const model = createModel(
   {
@@ -58,7 +65,7 @@ const model = createModel(
     walletBindingError: '',
     publicKey: '',
     privateKey: '',
-    storeError: null as Error,
+    hashedId: '',
   },
   {
     events: {
@@ -194,7 +201,11 @@ export const vcItemMachine =
                   },
                 ],
                 CREDENTIAL_DOWNLOADED: {
-                  actions: ['setStoreVerifiableCredential', 'storeContext'],
+                  actions: [
+                    'setStoreVerifiableCredential',
+                    'storeContext',
+                    'editVcKey',
+                  ],
                 },
                 STORE_RESPONSE: {
                   actions: [
@@ -210,7 +221,7 @@ export const vcItemMachine =
               },
             },
             savingFailed: {
-              entry: ['setStoreError', 'removeVcMetaDataFromStorage'],
+              entry: ['removeVcMetaDataFromStorage'],
               initial: 'idle',
               states: {
                 idle: {},
@@ -259,7 +270,7 @@ export const vcItemMachine =
           entry: 'storeContext',
           on: {
             STORE_RESPONSE: {
-              actions: 'sendVcUpdated',
+              actions: ['sendVcUpdated', 'VcUpdated'],
               target: 'idle',
             },
           },
@@ -338,10 +349,17 @@ export const vcItemMachine =
             addKeyPair: {
               invoke: {
                 src: 'generateKeyPair',
-                onDone: {
-                  target: '#vc-item.kebabPopUp.addingWalletBindingId',
-                  actions: ['setPublicKey', 'setPrivateKey'],
-                },
+                onDone: [
+                  {
+                    cond: 'isCustomSecureKeystore',
+                    target: '#vc-item.kebabPopUp.addingWalletBindingId',
+                    actions: ['setPublicKey'],
+                  },
+                  {
+                    target: '#vc-item.kebabPopUp.addingWalletBindingId',
+                    actions: ['setPublicKey', 'setPrivateKey'],
+                  },
+                ],
                 onError: [
                   {
                     actions: 'setWalletBindingError',
@@ -355,13 +373,31 @@ export const vcItemMachine =
                 src: 'addWalletBindnigId',
                 onDone: [
                   {
+                    cond: 'isCustomSecureKeystore',
+                    target: '#vc-item.kebabPopUp',
+                    actions: [
+                      'setWalletBindingId',
+                      'setThumbprintForWalletBindingId',
+                      'storeContext',
+                      'updateVc',
+                      'setWalletBindingErrorEmpty',
+                      'logWalletBindingSuccess',
+                    ],
+                  },
+                  {
                     target: '#vc-item.kebabPopUp.updatingPrivateKey',
-                    actions: ['setWalletBindingId'],
+                    actions: [
+                      'setWalletBindingId',
+                      'setThumbprintForWalletBindingId',
+                    ],
                   },
                 ],
                 onError: [
                   {
-                    actions: 'setWalletBindingError',
+                    actions: [
+                      'setWalletBindingError',
+                      'logWalletBindingFailure',
+                    ],
                     target: '#vc-item.kebabPopUp.showingWalletBindingError',
                   },
                 ],
@@ -405,7 +441,7 @@ export const vcItemMachine =
               entry: 'removeVcItem',
               on: {
                 STORE_RESPONSE: {
-                  actions: ['removedVc', log('removing Vc')],
+                  actions: ['removedVc', 'logVCremoved'],
                   target: '#vc-item',
                 },
               },
@@ -643,10 +679,17 @@ export const vcItemMachine =
         addKeyPair: {
           invoke: {
             src: 'generateKeyPair',
-            onDone: {
-              target: 'addingWalletBindingId',
-              actions: ['setPublicKey', 'setPrivateKey'],
-            },
+            onDone: [
+              {
+                cond: 'isCustomSecureKeystore',
+                target: 'addingWalletBindingId',
+                actions: ['setPublicKey'],
+              },
+              {
+                target: 'addingWalletBindingId',
+                actions: ['setPublicKey', 'setPrivateKey'],
+              },
+            ],
             onError: [
               {
                 actions: ['setWalletBindingError', 'logWalletBindingFailure'],
@@ -659,6 +702,18 @@ export const vcItemMachine =
           invoke: {
             src: 'addWalletBindnigId',
             onDone: [
+              {
+                cond: 'isCustomSecureKeystore',
+                target: 'idle',
+                actions: [
+                  'setWalletBindingId',
+                  'setThumbprintForWalletBindingId',
+                  'storeContext',
+                  'updateVc',
+                  'setWalletBindingErrorEmpty',
+                  'logWalletBindingSuccess',
+                ],
+              },
               {
                 target: 'updatingPrivateKey',
                 actions: [
@@ -719,10 +774,6 @@ export const vcItemMachine =
           };
         }),
 
-        setStoreError: assign({
-          storeError: (_context, event) => event.error,
-        }),
-
         removeVcMetaDataFromStorage: send(
           (context) => {
             const { serviceRefs, ...data } = context;
@@ -761,7 +812,12 @@ export const vcItemMachine =
         }),
 
         setPublicKey: assign({
-          publicKey: (context, event) => (event.data as KeyPair).public,
+          publicKey: (context, event) => {
+            if (!isCustomSecureKeystore()) {
+              return (event.data as KeyPair).public;
+            }
+            return event.data as string;
+          },
         }),
 
         setPrivateKey: assign({
@@ -801,6 +857,17 @@ export const vcItemMachine =
             to: (context) => context.serviceRefs.vc,
           }
         ),
+
+        VcUpdated: send(
+          (context) => {
+            const { serviceRefs, ...vc } = context;
+            return { type: 'VC_UPDATE', vc };
+          },
+          {
+            to: (context) => context.serviceRefs.vc,
+          }
+        ),
+
         setThumbprintForWalletBindingId: send(
           (context) => {
             const { walletBindingResponse } = context;
@@ -853,6 +920,14 @@ export const vcItemMachine =
             to: (context) => context.serviceRefs.store,
           }
         ),
+
+        editVcKey: send((context) => {
+          const { serviceRefs, ...data } = context;
+          return StoreEvents.SET(
+            VC_ITEM_STORE_KEY_AFTER_DOWNLOAD(context),
+            data
+          );
+        }),
 
         setTag: model.assign({
           tag: (_, event) => event.tag,
@@ -1005,15 +1080,25 @@ export const vcItemMachine =
           { to: (context) => context.serviceRefs.store }
         ),
 
-        loadMyVcs: send(StoreEvents.GET(MY_VCS_STORE_KEY), {
-          to: (context) => context.serviceRefs.store,
-        }),
-
         removeVcItem: send(
           (_context, event) => {
             return StoreEvents.REMOVE(MY_VCS_STORE_KEY, _context.vcKey);
           },
           { to: (context) => context.serviceRefs.store }
+        ),
+
+        logVCremoved: send(
+          (context, _) =>
+            ActivityLogEvents.LOG_ACTIVITY({
+              _vcKey: VC_ITEM_STORE_KEY(context),
+              type: 'VC_REMOVED',
+              timestamp: Date.now(),
+              deviceName: '',
+              vcLabel: context.id,
+            }),
+          {
+            to: (context) => context.serviceRefs.activityLog,
+          }
         ),
       },
 
@@ -1086,8 +1171,15 @@ export const vcItemMachine =
         },
 
         generateKeyPair: async (context) => {
-          let keyPair: KeyPair = await generateKeys();
-          return keyPair;
+          if (!isCustomSecureKeystore()) {
+            return await generateKeys();
+          }
+          const isBiometricsEnabled = SecureKeystore.hasBiometricsEnabled();
+          return SecureKeystore.generateKeyPair(
+            context.id,
+            isBiometricsEnabled,
+            0
+          );
         },
 
         requestBindingOtp: async (context) => {
@@ -1251,6 +1343,8 @@ export const vcItemMachine =
         isVcValid: (context) => {
           return context.isVerified;
         },
+
+        isCustomSecureKeystore: () => isCustomSecureKeystore(),
       },
     }
   );
@@ -1259,13 +1353,15 @@ export const createVcItemMachine = (
   serviceRefs: AppServices,
   vcKey: string
 ) => {
-  const [, idType, id, requestId] = vcKey.split(':');
+  const [, idType, hashedId, requestId, isPinned, id] = vcKey.split(':');
   return vcItemMachine.withContext({
     ...vcItemMachine.context,
     serviceRefs,
     id,
     idType: idType as VcIdType,
     requestId,
+    isPinned: isPinned == 'true' ? true : false,
+    hashedId,
   });
 };
 
@@ -1359,7 +1455,10 @@ export function selectAcceptingBindingOtp(state: State) {
 }
 
 export function selectShowWalletBindingError(state: State) {
-  return state.matches('showingWalletBindingError');
+  return (
+    state.matches('showingWalletBindingError') ||
+    state.matches('kebabPopUp.showingWalletBindingError')
+  );
 }
 
 export function selectWalletBindingInProgress(state: State) {
@@ -1409,10 +1508,6 @@ export function selectRemoveWalletWarning(state: State) {
 
 export function selectShowActivities(state: State) {
   return state.matches('kebabPopUp.showActivities');
-}
-
-export function selectStoreError(state: State) {
-  return state.context.storeError;
 }
 
 export function selectIsSavingFailedInIdle(state: State) {

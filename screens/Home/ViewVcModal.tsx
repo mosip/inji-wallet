@@ -45,12 +45,6 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
             isBindingPending={controller.isWalletBindingPending}
             activeTab={props.activeTab}
           />
-
-          {controller.walletBindingError !== '' && (
-            <Text style={{ color: 'red', fontSize: 20 }}>
-              Error Occured : {controller.walletBindingError}
-            </Text>
-          )}
         </Column>
       </Column>
       {controller.isEditingTag && (

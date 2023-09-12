@@ -1,19 +1,45 @@
-import LocationEnabler from 'react-native-location-enabler';
+import RNLocation from 'react-native-location';
 
-const LOCATION_CONFIG = {
-  priority: LocationEnabler.PRIORITIES.BALANCED_POWER_ACCURACY,
-  alwaysShow: false,
-  needBle: true,
-};
+// Initialize RNLocation
+RNLocation.configure({
+  distanceFilter: 5.0, // Example configuration, adjust as needed
+});
 
-export function checkLocation(onEnabled: () => void, onDisabled: () => void) {
-  const subscription = LocationEnabler.addListener(({ locationEnabled }) => {
-    locationEnabled ? onEnabled() : onDisabled();
-  });
-  LocationEnabler.checkSettings(LOCATION_CONFIG);
-  return subscription;
+export function checkLocationPermissionStatus(
+  onEnabled: () => void,
+  onDisabled: () => void
+) {
+  RNLocation.checkPermission({
+    android: {
+      detail: 'fine',
+    },
+  })
+    .then((granted) => {
+      if (granted) {
+        return onEnabled();
+      } else {
+        return onDisabled();
+      }
+    })
+    .catch((err) => console.log('Error getting location:', err));
 }
 
-export function requestLocation() {
-  return LocationEnabler.requestResolutionSettings(LOCATION_CONFIG);
+export async function requestLocationPermission(
+  onEnabled: () => void,
+  onDisabled: () => void
+) {
+  try {
+    const granted = await RNLocation.requestPermission({
+      android: {
+        detail: 'fine',
+      },
+    });
+    if (granted) {
+      return onEnabled();
+    } else {
+      return onDisabled();
+    }
+  } catch (error) {
+    console.log(error);
+  }
 }

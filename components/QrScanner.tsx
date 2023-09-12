@@ -2,20 +2,28 @@ import React, { useContext, useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Camera } from 'expo-camera';
 import { BarCodeEvent, BarCodeScanner } from 'expo-barcode-scanner';
-import { Linking, TouchableOpacity, View } from 'react-native';
+import {
+  Linking,
+  TouchableOpacity,
+  View,
+  Image,
+  Pressable,
+} from 'react-native';
 import { Theme } from './ui/styleUtils';
-import { Column, Button, Text, Centered } from './ui';
+import { Column, Button, Text, Centered, Row } from './ui';
 import { GlobalContext } from '../shared/GlobalContext';
 import { useSelector } from '@xstate/react';
 import { selectIsActive } from '../machines/app';
 import { useTranslation } from 'react-i18next';
+import { useScanLayout } from '../screens/Scan/ScanLayoutController';
 
 export const QrScanner: React.FC<QrScannerProps> = (props) => {
   const { t } = useTranslation('QrScanner');
   const { appService } = useContext(GlobalContext);
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
-  const [type, setType] = useState(Camera.Constants.Type.back);
+  const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
+  const controller = useScanLayout();
 
   const isActive = useSelector(appService, selectIsActive);
 
@@ -43,21 +51,36 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
     return <View />;
   }
 
-  if (hasPermission === false) {
+  const CameraDisabledPopUp: React.FC = () => {
     return (
-      <Column padding="24" fill align="space-between">
-        <Centered fill>
-          <Text align="center" color={Theme.Colors.errorMessage}>
-            {t('missingPermissionText')}
-          </Text>
-        </Centered>
-        <Button title={t('allowCameraButton')} onPress={openSettings}></Button>
-      </Column>
+      <View>
+        <Row style={Theme.Styles.cameraDisabledPopUp}>
+          <Column>
+            <Text color={Theme.Colors.whiteText} weight="bold">
+              {t('cameraAccessDisabled')}
+            </Text>
+            <Text
+              color={Theme.Colors.whiteText}
+              weight="semibold"
+              size="smaller">
+              {t('cameraPermissionGuideLabel')}
+            </Text>
+          </Column>
+          <Pressable>
+            <Icon
+              name="close"
+              onPress={controller.DISMISS}
+              color={Theme.Colors.whiteText}
+              size={19}
+            />
+          </Pressable>
+        </Row>
+      </View>
     );
-  }
-
+  };
   return (
     <View>
+      {hasPermission == false && <CameraDisabledPopUp />}
       <View style={Theme.Styles.scannerContainer}>
         <Camera
           style={Theme.Styles.scanner}
@@ -65,7 +88,7 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
             barcodeTypes: [BarCodeScanner.Constants.BarCodeType.qr],
           }}
           onBarCodeScanned={scanned ? undefined : onBarcodeScanned}
-          type={type}
+          type={cameraType}
         />
       </View>
       {props.title && (
@@ -77,6 +100,21 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
           {props.title}
         </Text>
       )}
+      <Column margin="18 0" crossAlign="center">
+        <TouchableOpacity
+          onPress={() => {
+            setCameraType(
+              cameraType === Camera.Constants.Type.back
+                ? Camera.Constants.Type.front
+                : Camera.Constants.Type.back
+            );
+          }}>
+          <Image source={Theme.CameraFlipIcon} />
+        </TouchableOpacity>
+        <Text align="center" weight="semibold" margin="9 0">
+          {t('flipCamera')}
+        </Text>
+      </Column>
     </View>
   );
 

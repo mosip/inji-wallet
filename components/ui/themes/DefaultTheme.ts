@@ -154,7 +154,7 @@ export const DefaultTheme = {
       borderRadius: 6,
       backgroundColor: Colors.LightOrange,
     },
-    popUp: {
+    downloadingVcPopUp: {
       alignItems: 'center',
       justifyContent: 'space-between',
       backgroundColor: Colors.Green,
@@ -370,18 +370,36 @@ export const DefaultTheme = {
       margin: 4,
       borderRadius: 14,
     },
+    primaryRow: {
+      backgroundColor: Colors.LightOrange,
+      paddingHorizontal: 18,
+      paddingVertical: 9,
+      justifyContent: 'space-between',
+    },
+    iconContainer: {
+      flexDirection: 'row',
+      alignItems: 'flex-end',
+    },
     scannerContainer: {
-      borderRadius: 32,
+      borderRadius: 24,
       alignSelf: 'center',
-      height: 330,
+      height: 350,
       width: 320,
       overflow: 'hidden',
-      marginTop: -65,
     },
     scanner: {
       height: 400,
       width: '100%',
       margin: 'auto',
+    },
+    cameraDisabledPopUp: {
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      backgroundColor: Colors.Red,
+      height: 75,
+      position: 'relative',
+      paddingHorizontal: 15,
+      marginTop: -36,
     },
     photoConsentLabel: {
       backgroundColor: Colors.White,
@@ -456,7 +474,7 @@ export const DefaultTheme = {
       flex: 1,
       fontSize: 33,
       fontFamily: 'Inter_600SemiBold',
-      height: 40,
+      height: 60,
       lineHeight: 28,
       margin: 8,
       textAlign: 'center',
@@ -722,12 +740,12 @@ export const DefaultTheme = {
   }),
   KebabPopUpStyles: StyleSheet.create({
     kebabPopUp: {
-      marginHorizontal: 4,
+      borderTopLeftRadius: 15,
+      borderTopRightRadius: 15,
+      width: Dimensions.get('screen').width,
+      marginTop: Dimensions.get('screen').height * 0.55,
     },
     kebabHeaderStyle: {
-      backgroundColor: Colors.White,
-      borderTopLeftRadius: 24,
-      borderTopRightRadius: 24,
       justifyContent: 'space-between',
       fontFamily: 'Inter_700Bold',
       paddingRight: 15,
@@ -739,17 +757,24 @@ export const DefaultTheme = {
     overlay: {
       elevation: 5,
       backgroundColor: Colors.White,
-      padding: 0,
+      padding: 5,
+      borderRadius: 10,
+    },
+    buttonContainer: {
+      justifyContent: 'center',
+      marginBottom: 75,
     },
     popupOverLay: {
       height: 150,
       backgroundColor: Colors.White,
-      borderRadius: 15,
-      margin: -13.5,
     },
     button: {
       borderTopLeftRadius: 0,
       borderTopRightRadius: 0,
+    },
+    halfButton: {
+      borderRadius: 8,
+      margin: '0.5%',
     },
   }),
   BindingVcWarningOverlay: StyleSheet.create({
@@ -946,6 +971,7 @@ export const DefaultTheme = {
   ProfileIcon: require('../../../assets/placeholder-photo.png'),
   MosipSplashLogo: require('../../../assets/icon.png'),
   MosipLogo: require('../../../assets/mosip-logo.png'),
+  CameraFlipIcon: require('../../../assets/camera-flip-icon.png'),
   DomainWarningLogo: require('../../../assets/domain-warning.png'),
   WarningLogo: require('../../../assets/warningLogo.png'),
   OtpLogo: require('../../../assets/otp-mobile-logo.png'),

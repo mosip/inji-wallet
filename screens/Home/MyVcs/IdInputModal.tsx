@@ -67,6 +67,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
                   height: Platform.OS === 'ios' ? 100 : 'auto',
                 }}>
                 <Picker
+                  testID="selectIdType"
                   selectedValue={controller.idType}
                   onValueChange={controller.SELECT_ID_TYPE}>
                   <Picker.Item label="UIN" value="UIN" />
@@ -75,6 +76,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
               </Column>
               <Column fill>
                 <Input
+                  testID="inputId"
                   inputContainerStyle={
                     controller.id ? Theme.Styles.VidInputBottom : null
                   }
@@ -96,6 +98,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
           </Column>
           <Column>
             <Button
+              testID="generateVc"
               type="gradient"
               title={t('generateVc')}
               disabled={!controller.id}
@@ -113,6 +116,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
                 </Text>
                 <TouchableOpacity activeOpacity={1} onPress={props.onPress}>
                   <Text
+                    testID="getItHere"
                     color={Theme.Colors.AddIdBtnBg}
                     weight="semibold"
                     size="small"

@@ -29,6 +29,8 @@ lane :android_build_internal do
     gradle_file_path: "app/build.gradle",
     version_code: current_build_number
   )
+
+  gradle(task: "assembleMosipRelease")
   
   git_commit = sh('git rev-parse --short HEAD').strip
   git_branch = sh('git rev-parse --abbrev-ref HEAD').strip
@@ -54,6 +56,19 @@ desc "Deploy an Beta version to the Google Play"
 lane :android_build_beta do
 
   git_tag = sh('git describe --abbrev=0 --tags --exact-match HEAD').strip
+
+  def convert_tag_to_code(version)
+    parts = version.split('.')
+    version_code = parts[0].to_i * 1000000 + parts[1].to_i * 1000 + parts[2].to_i
+    return version_code
+  end
+
+  versionCode = convert_tag_to_code(git_tag)
+
+  increment_version_code(
+    gradle_file_path: "app/build.gradle",
+    version_code: versionCode
+  )
 
   versionName = "Inji #{git_tag}"
 

@@ -20,7 +20,9 @@ export interface Typegen0 {
     };
     'xstate.init': { type: 'xstate.init' };
   };
-  'invokeSrcNameMap': {};
+  'invokeSrcNameMap': {
+    checkStorageAvailability: 'done.invoke.MyVcsTab.addVc.checkStorage:invocation[0]';
+  };
   'missingImplementations': {
     actions: never;
     delays: never;
@@ -30,12 +32,15 @@ export interface Typegen0 {
   'eventsCausingActions': {
     completeOnboarding: 'ADD_VC' | 'ONBOARDING_DONE';
     getOnboardingStatus: 'xstate.init';
+    refreshMyVc: 'IS_TAMPERED';
+    resetIsTampered: 'IS_TAMPERED';
     sendVcAdded: 'STORE_RESPONSE';
     storeVcItem: 'done.invoke.AddVcModal';
     viewVcFromParent: 'VIEW_VC';
   };
   'eventsCausingDelays': {};
   'eventsCausingGuards': {
+    isMinimumStorageLimitReached: 'done.invoke.MyVcsTab.addVc.checkStorage:invocation[0]';
     isOnboardingDone: 'STORE_RESPONSE';
   };
   'eventsCausingServices': {
@@ -43,6 +48,7 @@ export interface Typegen0 {
       | 'done.invoke.GetVcModal'
       | 'done.invoke.MyVcsTab.addVc.checkStorage:invocation[0]';
     GetVcModal: 'GET_VC';
+    checkStorageAvailability: 'ADD_VC';
   };
   'matchesStates':
     | 'addVc'

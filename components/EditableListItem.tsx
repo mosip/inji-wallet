@@ -55,16 +55,19 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
             }}
           />
           {props.credentialRegistryResponse === 'error' && (
-            <Text style={Theme.TextStyles.error}>
-              please try again after sometime...
-            </Text>
+            <Text style={Theme.TextStyles.error}>{props.errorMessage}</Text>
           )}
           {props.credentialRegistryResponse === 'success' &&
             overlayOpened &&
             closePopup()}
           <Row>
             <Button fill type="clear" title={t('cancel')} onPress={dismiss} />
-            <Button fill title={t('save')} onPress={edit} />
+            <Button
+              fill
+              title={t('save')}
+              onPress={edit}
+              loading={props.progress}
+            />
           </Row>
         </Column>
       </Overlay>
@@ -81,7 +84,7 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
   function dismiss() {
     setNewValue(props.value);
     setIsEditing(false);
-    props.credentialRegistryResponse = '';
+    props.onCancel();
   }
 
   function closePopup() {
@@ -98,4 +101,7 @@ interface EditableListItemProps {
   onEdit: (newValue: string) => void;
   display?: 'none' | 'flex';
   credentialRegistryResponse: string;
+  onCancel: () => void;
+  progress?: boolean;
+  errorMessage?: string;
 }

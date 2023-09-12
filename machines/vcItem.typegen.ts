@@ -165,12 +165,14 @@ export interface Typegen0 {
     services: never;
   };
   'eventsCausingActions': {
+    VcUpdated: 'STORE_RESPONSE';
     clearOtp:
       | ''
       | 'CANCEL'
       | 'DISMISS'
       | 'REVOKE_VC'
       | 'STORE_RESPONSE'
+      | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item.kebabPopUp.requestingBindingOtp:invocation[0]'
       | 'done.invoke.vc-item.requestingBindingOtp:invocation[0]'
       | 'done.invoke.vc-item.requestingOtp:invocation[0]'
@@ -184,18 +186,24 @@ export interface Typegen0 {
       | 'CANCEL'
       | 'DISMISS'
       | 'STORE_RESPONSE'
+      | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]'
       | 'done.invoke.vc-item.verifyingCredential:invocation[0]'
       | 'error.platform.vc-item.verifyingCredential:invocation[0]';
+    editVcKey: 'CREDENTIAL_DOWNLOADED';
     incrementDownloadCounter: 'POLL';
     logDownloaded: 'STORE_RESPONSE';
     logRevoked: 'STORE_RESPONSE';
+    logVCremoved: 'STORE_RESPONSE';
     logWalletBindingFailure:
       | 'error.platform.vc-item.addKeyPair:invocation[0]'
       | 'error.platform.vc-item.addingWalletBindingId:invocation[0]'
+      | 'error.platform.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]'
       | 'error.platform.vc-item.requestingBindingOtp:invocation[0]'
       | 'error.platform.vc-item.updatingPrivateKey:invocation[0]';
     logWalletBindingSuccess:
+      | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'
+      | 'done.invoke.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]'
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
     markVcValid: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
@@ -223,10 +231,11 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.addKeyPair:invocation[0]'
       | 'done.invoke.vc-item.kebabPopUp.addKeyPair:invocation[0]';
     setRevoke: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
-    setStoreError: 'STORE_ERROR';
     setStoreVerifiableCredential: 'CREDENTIAL_DOWNLOADED';
     setTag: 'SAVE_TAG';
-    setThumbprintForWalletBindingId: 'done.invoke.vc-item.addingWalletBindingId:invocation[0]';
+    setThumbprintForWalletBindingId:
+      | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'
+      | 'done.invoke.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]';
     setTransactionId:
       | 'INPUT_OTP'
       | 'REVOKE_VC'
@@ -246,6 +255,8 @@ export interface Typegen0 {
       | 'error.platform.vc-item.updatingPrivateKey:invocation[0]';
     setWalletBindingErrorEmpty:
       | 'CANCEL'
+      | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'
+      | 'done.invoke.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]'
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
     setWalletBindingId:
@@ -254,6 +265,8 @@ export interface Typegen0 {
     storeContext:
       | 'CREDENTIAL_DOWNLOADED'
       | 'PIN_CARD'
+      | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'
+      | 'done.invoke.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]'
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]'
       | 'done.invoke.vc-item.verifyingCredential:invocation[0]';
@@ -264,6 +277,8 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
     updateVc:
       | 'STORE_RESPONSE'
+      | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'
+      | 'done.invoke.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]'
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]'
       | 'done.invoke.vc-item.verifyingCredential:invocation[0]';
@@ -271,6 +286,11 @@ export interface Typegen0 {
   'eventsCausingDelays': {};
   'eventsCausingGuards': {
     hasCredential: 'GET_VC_RESPONSE' | 'STORE_RESPONSE';
+    isCustomSecureKeystore:
+      | 'done.invoke.vc-item.addKeyPair:invocation[0]'
+      | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'
+      | 'done.invoke.vc-item.kebabPopUp.addKeyPair:invocation[0]'
+      | 'done.invoke.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]';
     isDownloadAllowed: 'POLL';
     isVcValid: '';
   };

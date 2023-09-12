@@ -6,11 +6,14 @@ import getAllConfigurations, {
 } from '../shared/commonprops/commonProps';
 import { AppServices } from '../shared/GlobalContext';
 import { StoreEvents, StoreResponseEvent } from './store';
+import { generateSecureRandom } from 'react-native-securerandom';
+import binaryToBase64 from 'react-native/Libraries/Utilities/binaryToBase64';
 
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
     passcode: '',
+    passcodeSalt: '',
     biometrics: '',
     canUseBiometrics: false,
     selectLanguage: false,
@@ -79,6 +82,12 @@ export const authMachine = model.createMachine(
         },
       },
       introSlider: {
+        invoke: {
+          src: 'generatePasscodeSalt',
+          onDone: {
+            actions: ['setPasscodeSalt', 'storeContext'],
+          },
+        },
         on: {
           NEXT: {
             target: 'settingUp',
@@ -149,13 +158,23 @@ export const authMachine = model.createMachine(
       }),
 
       setLanguage: assign({
-        selectLanguage: (context) => !context.selectLanguage,
+        selectLanguage: (context) => true,
+      }),
+
+      setPasscodeSalt: assign({
+        passcodeSalt: (context, event) => {
+          return event.data as string;
+        },
       }),
     },
 
     services: {
       downloadFaceSdkModel: () => () => {
         downloadModel();
+      },
+      generatePasscodeSalt: () => async (context) => {
+        const randomBytes = await generateSecureRandom(16);
+        return binaryToBase64(randomBytes) as string;
       },
     },
 
@@ -186,6 +205,10 @@ type State = StateFrom<typeof authMachine>;
 
 export function selectPasscode(state: State) {
   return state.context.passcode;
+}
+
+export function selectPasscodeSalt(state: State) {
+  return state.context.passcodeSalt;
 }
 
 export function selectBiometrics(state: State) {
