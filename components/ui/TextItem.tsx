@@ -1,10 +1,12 @@
 import React from 'react';
 import { Column, Text } from '.';
 import { Theme } from './styleUtils';
+import testIDProps from '../../shared/commonUtil';
 
 export const TextItem: React.FC<TextItemProps> = (props) => {
   return (
     <Column
+      {...testIDProps(props.testID)}
       backgroundColor={Theme.Colors.whiteBackgroundColor}
       margin={props.margin}
       pX={24}
@@ -35,6 +37,7 @@ export const TextItem: React.FC<TextItemProps> = (props) => {
 };
 
 interface TextItemProps {
+  testID?: string;
   text: string;
   label?: string;
   divider?: boolean;
