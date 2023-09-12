@@ -48,6 +48,7 @@ const WalletUnverifiedActivationDetails: React.FC<
         {props.verifiableCredential && <WalletUnverifiedIcon />}
         <Text
           color={Theme.Colors.Details}
+          testID="activationPending"
           weight="semibold"
           size="small"
           margin="10 33 10 10"
@@ -79,6 +80,7 @@ const WalletVerifiedActivationDetails: React.FC<WalletVerifiedDetailsProps> = (
         <WalletVerifiedIcon />
         <Text
           color={Theme.Colors.statusLabel}
+          testID="activated"
           weight="semibold"
           size="smaller"
           margin="10 10 10 10"

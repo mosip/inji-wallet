@@ -9,6 +9,7 @@ import { vcItemMachine } from '../../../machines/vcItem';
 import { useKebabPopUp } from '../../../components/KebabPopUpController';
 import { Theme } from '../../../components/ui/styleUtils';
 import { isSameVC } from '../../../shared/constants';
+import testIDProps from '../../../shared/commonUtil';
 
 export const HistoryTab: React.FC<HistoryTabProps> = (props) => {
   const { t } = useTranslation('HistoryTab');
@@ -16,7 +17,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = (props) => {
   return (
     <ListItem bottomDivider onPress={controller.SHOW_ACTIVITY}>
       <ListItem.Content>
-        <ListItem.Title>
+        <ListItem.Title {...testIDProps(props.testID)}>
           <Text
             size="small"
             weight="bold"
@@ -44,11 +45,16 @@ export const HistoryTab: React.FC<HistoryTabProps> = (props) => {
           {controller.activities.length === 0 && (
             <Centered fill>
               <Icon
+                testID="sentiment-dissatisfied"
                 style={{ marginBottom: 20 }}
                 size={40}
                 name="sentiment-dissatisfied"
               />
-              <Text align="center" weight="semibold" margin="0 0 4 0">
+              <Text
+                testID="noHistory"
+                align="center"
+                weight="semibold"
+                margin="0 0 4 0">
                 {t('noHistory')}
               </Text>
             </Centered>
@@ -60,6 +66,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = (props) => {
 };
 
 export interface HistoryTabProps {
+  testID?: string;
   label: string;
   vcKey: string;
   service: ActorRefFrom<typeof vcItemMachine>;
