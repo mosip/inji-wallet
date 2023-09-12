@@ -47,10 +47,17 @@ export const ReceivedCardsModal: React.FC<ReceivedCardsProps> = ({
                 size={40}
                 name="sentiment-dissatisfied"
               />
-              <Text align="center" weight="semibold" margin="0 0 4 0">
+              <Text
+                testID="noReceivedVcsTitle"
+                align="center"
+                weight="semibold"
+                margin="0 0 4 0">
                 {t('noReceivedVcsTitle')}
               </Text>
-              <Text align="center" color={Theme.Colors.textLabel}>
+              <Text
+                testID="noReceivedVcsText"
+                align="center"
+                color={Theme.Colors.textLabel}>
                 {t('noReceivedVcsText')}
               </Text>
             </Centered>
