@@ -58,3 +58,11 @@ export function selectIsSavingFailedInViewingVc(state: State) {
 export function selectIsDone(state: State) {
   return state.matches('reviewing.navigatingToHistory');
 }
+
+export function selectIsNavigatingToReceivedCards(state: State) {
+  return state.matches('reviewing.navigatingToReceivedCards');
+}
+
+export function selectIsNavigatingToHome(state: State) {
+  return state.matches('reviewing.navigatingToHome');
+}

@@ -30,8 +30,6 @@ export interface Typegen0 {
     services: never;
   };
   'eventsCausingActions': {
-    completeOnboarding: 'ADD_VC' | 'ONBOARDING_DONE';
-    getOnboardingStatus: 'xstate.init';
     refreshMyVc: 'IS_TAMPERED';
     resetIsTampered: 'IS_TAMPERED';
     sendVcAdded: 'STORE_RESPONSE';
@@ -41,7 +39,6 @@ export interface Typegen0 {
   'eventsCausingDelays': {};
   'eventsCausingGuards': {
     isMinimumStorageLimitReached: 'done.invoke.MyVcsTab.addVc.checkStorage:invocation[0]';
-    isOnboardingDone: 'STORE_RESPONSE';
   };
   'eventsCausingServices': {
     AddVcModal:
@@ -60,11 +57,9 @@ export interface Typegen0 {
     | 'addingVc.savingFailed.idle'
     | 'addingVc.storing'
     | 'addingVc.waitingForvcKey'
-    | 'checkingOnboardingStatus'
     | 'gettingVc'
     | 'gettingVc.waitingForvcKey'
     | 'idle'
-    | 'onboarding'
     | 'viewingVc'
     | {
         addVc?: 'checkStorage' | 'storageLimitReached';

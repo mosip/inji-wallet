@@ -32,11 +32,8 @@ import {
   selectBleError,
 } from '../../machines/bleShare/commonSelectors';
 import { ScanEvents } from '../../machines/bleShare/scan/scanMachine';
-
-type ScanStackParamList = {
-  ScanScreen: undefined;
-  SendVcScreen: undefined;
-};
+import { BOTTOM_TAB_ROUTES, SCAN_ROUTES } from '../../routes/routesConstants';
+import { ScanStackParamList } from '../../routes/routesConstants';
 
 type ScanLayoutNavigation = NavigationProp<
   ScanStackParamList & MainBottomTabParamList
@@ -211,13 +208,13 @@ export function useScanLayout() {
 
   useEffect(() => {
     if (isDone) {
-      navigation.navigate('home', { activeTab: 0 });
+      navigation.navigate(BOTTOM_TAB_ROUTES.home);
     } else if (isReviewing) {
-      navigation.navigate('SendVcScreen');
+      navigation.navigate(SCAN_ROUTES.SendVcScreen);
     } else if (isScanning) {
-      navigation.navigate('ScanScreen');
+      navigation.navigate(SCAN_ROUTES.ScanScreen);
     } else if (isQrLoginDone) {
-      navigation.navigate('History');
+      navigation.navigate(BOTTOM_TAB_ROUTES.history);
     }
   }, [isDone, isReviewing, isScanning, isQrLoginDone, isBleError]);
 
