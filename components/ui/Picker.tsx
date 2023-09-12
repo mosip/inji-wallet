@@ -33,9 +33,12 @@ export const Picker: Picker = (props: PickerProps<unknown>) => {
         isVisible={isContentVisible}
         onBackdropPress={toggleContent}
         overlayStyle={{ padding: 1 }}>
-        <Column width={Dimensions.get('window').width * 0.8}>
+        <Column
+          testID={props.testID}
+          width={Dimensions.get('window').width * 0.8}>
           {props.items.map((item, index) => (
             <ListItem
+              testID={item.value}
               topDivider={index !== 0}
               onPress={() => selectItem(index)}
               key={index}>
@@ -54,6 +57,7 @@ export const Picker: Picker = (props: PickerProps<unknown>) => {
 };
 
 interface PickerProps<T> {
+  testID?: string;
   items: PickerItem<T>[];
   selectedValue: T;
   triggerComponent: React.ReactElement;
