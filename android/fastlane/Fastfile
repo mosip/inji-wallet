@@ -32,8 +32,6 @@ lane :android_build_internal do
   
   git_commit = sh('git rev-parse --short HEAD').strip
   git_branch = sh('git rev-parse --abbrev-ref HEAD').strip
-
-  aab_path = "android/app/build/outputs/bundle/mosipRelease/app-mosip-release.aab"
   
   versionName = "#{git_commit}-#{git_branch}"
 
@@ -42,7 +40,6 @@ lane :android_build_internal do
   track: 'internal',
   release_status: 'completed',
   version_name: versionName,
-  aab: aab_path,
   )
 
   slack(
