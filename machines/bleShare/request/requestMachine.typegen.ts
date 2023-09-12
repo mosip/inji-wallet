@@ -30,7 +30,8 @@ export interface Typegen0 {
     checkStorageAvailability: 'done.invoke.request.checkStorage:invocation[0]';
     disconnect:
       | 'done.invoke.request.clearingConnection:invocation[0]'
-      | 'done.invoke.request.reviewing.navigatingToHistory:invocation[0]';
+      | 'done.invoke.request.reviewing.navigatingToHistory:invocation[0]'
+      | 'done.invoke.request.reviewing.navigatingToHome:invocation[0]';
     monitorConnection: 'done.invoke.request:invocation[0]';
     receiveVc: 'done.invoke.request.waitingForVc:invocation[0]';
     requestBluetooth: 'done.invoke.request.checkingBluetoothService.requesting:invocation[0]';
@@ -148,6 +149,8 @@ export interface Typegen0 {
     | 'reviewing.idle'
     | 'reviewing.invalidIdentity'
     | 'reviewing.navigatingToHistory'
+    | 'reviewing.navigatingToHome'
+    | 'reviewing.navigatingToReceivedCards'
     | 'reviewing.rejected'
     | 'reviewing.savingFailed'
     | 'reviewing.savingFailed.idle'
@@ -169,6 +172,8 @@ export interface Typegen0 {
           | 'idle'
           | 'invalidIdentity'
           | 'navigatingToHistory'
+          | 'navigatingToHome'
+          | 'navigatingToReceivedCards'
           | 'rejected'
           | 'savingFailed'
           | 'verifyingIdentity'

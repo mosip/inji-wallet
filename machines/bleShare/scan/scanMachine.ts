@@ -52,6 +52,7 @@ const model = createModel(
     receiverInfo: {} as DeviceInfo,
     selectedVc: {} as VC,
     bleError: {} as BLEError,
+    stayInProgress: false,
     createdVp: null as VC,
     reason: '',
     loggers: [] as EmitterSubscription[],
@@ -73,6 +74,8 @@ const model = createModel(
       VC_REJECTED: () => ({}),
       VC_SENT: () => ({}),
       CANCEL: () => ({}),
+      STAY_IN_PROGRESS: () => ({}),
+      RETRY: () => ({}),
       DISMISS: () => ({}),
       CONNECTED: () => ({}),
       DISCONNECT: () => ({}),
@@ -437,15 +440,23 @@ export const scanMachine =
               after: {
                 CONNECTION_TIMEOUT: {
                   target: '#scan.connecting.timeout',
-                  actions: [],
+                  actions: 'setStayInProgress',
                   internal: false,
                 },
               },
             },
             timeout: {
               on: {
+                STAY_IN_PROGRESS: {
+                  actions: 'setStayInProgress',
+                },
                 CANCEL: {
                   target: '#scan.reviewing.cancelling',
+                  actions: 'setCloseTimeoutHint',
+                },
+                RETRY: {
+                  target: '#scan.reviewing.cancelling',
+                  actions: 'setCloseTimeoutHint',
                 },
               },
             },
@@ -818,6 +829,14 @@ export const scanMachine =
               event.params.indexOf('linkCode=') + 9,
               event.params.indexOf('&')
             ),
+        }),
+
+        setStayInProgress: assign({
+          stayInProgress: (context) => !context.stayInProgress,
+        }),
+
+        setCloseTimeoutHint: assign({
+          stayInProgress: (context) => (context.stayInProgress = false),
         }),
 
         resetShouldVerifyPresence: assign({

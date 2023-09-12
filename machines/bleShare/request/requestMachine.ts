@@ -405,7 +405,7 @@ export const requestMachine =
               },
               on: {
                 DISMISS: {
-                  target: 'navigatingToHistory',
+                  target: 'displayingIncomingVC',
                 },
               },
             },
@@ -431,11 +431,27 @@ export const requestMachine =
             displayingIncomingVC: {
               on: {
                 GO_TO_RECEIVED_VC_TAB: {
-                  target: 'navigatingToHistory',
+                  target: 'navigatingToReceivedCards',
                 },
               },
             },
-
+            navigatingToReceivedCards: {
+              on: {
+                DISMISS: {
+                  target: 'navigatingToHome',
+                },
+              },
+            },
+            navigatingToHome: {
+              invoke: {
+                src: 'disconnect',
+              },
+              on: {
+                DISCONNECT: {
+                  target: '#request.inactive',
+                },
+              },
+            },
             savingFailed: {
               initial: 'idle',
               entry: ['setReceiveLogTypeDiscarded', 'logReceived'],

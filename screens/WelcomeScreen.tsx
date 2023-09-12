@@ -18,6 +18,7 @@ export const WelcomeScreen: React.FC<RootRouteProps> = (props) => {
         <Logo height={182} />
       </HorizontallyCentered>
       <Button
+        testID="getStarted"
         margin="0 0 32"
         title={controller.isSettingUp ? t('getStarted') : t('unlockApp')}
         onPress={controller.unlockPage}

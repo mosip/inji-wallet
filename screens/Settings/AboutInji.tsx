@@ -9,6 +9,7 @@ import { Icon, ListItem } from 'react-native-elements';
 import getAllConfigurations from '../../shared/commonprops/commonProps';
 import { getVersion } from 'react-native-device-info';
 import { CopyButton } from '../../components/CopyButton';
+import testIDProps from '../../shared/commonUtil';
 
 export const AboutInji: React.FC<AboutInjiProps> = ({ appId }) => {
   const { t } = useTranslation('AboutInji');
@@ -44,7 +45,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({ appId }) => {
         onPress={() => {
           setShowAboutInji(!showAboutInji);
         }}>
-        <ListItem topDivider bottomDivider>
+        <ListItem testID="aboutInji" topDivider bottomDivider>
           <Icon
             type={'feather'}
             name={'file'}
@@ -62,14 +63,15 @@ export const AboutInji: React.FC<AboutInjiProps> = ({ appId }) => {
         </ListItem>
       </Pressable>
       <Modal
+        testID="aboutInji"
         isVisible={showAboutInji}
         headerTitle={t('header')}
         headerElevation={2}
-        headerRight={<Icon name={''} />}
+        headerRight={<Icon {...testIDProps('closeAboutInji')} name={''} />}
         onDismiss={() => {
           setShowAboutInji(!showAboutInji);
         }}>
-        <Row style={Theme.Styles.primaryRow}>
+        <Row testID="appID" style={Theme.Styles.primaryRow}>
           <Text style={Theme.TextStyles.semibold}>
             {t('appID')} : {appId}
           </Text>
@@ -77,7 +79,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({ appId }) => {
         </Row>
         <Column fill padding="12" align="space-between">
           <Column>
-            <Text style={Theme.TextStyles.aboutDetailes}>
+            <Text testID="aboutDetails" style={Theme.TextStyles.aboutDetailes}>
               {t('aboutDetailes')}
             </Text>
             <Row crossAlign="center">
