@@ -4,7 +4,7 @@ import { AppServices } from '../shared/GlobalContext';
 import {
   APP_ID_DICTIONARY,
   APP_ID_LENGTH,
-  HOST,
+  MIMOTO_BASE_URL,
   isIOS,
   SETTINGS_STORE_KEY,
 } from '../shared/constants';
@@ -27,7 +27,7 @@ const model = createModel(
       plural: 'Cards',
     } as VCLabel,
     isBiometricUnlockEnabled: false,
-    credentialRegistry: HOST,
+    credentialRegistry: MIMOTO_BASE_URL,
     appId: null,
     hasUserShownWithHardwareKeystoreNotExists: false,
     credentialRegistryResponse: '' as string,
