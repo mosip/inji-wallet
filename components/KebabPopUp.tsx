@@ -19,7 +19,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
   return (
     <Column>
       <Icon
-        testID={props.testID}
+        {...testIDProps('ellipsis')}
         name={props.iconName}
         type={props.iconType}
         color={Theme.Colors.GrayIcon}
@@ -92,7 +92,6 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
 };
 
 export interface KebabPopUpProps {
-  testID?: string;
   iconName: string;
   iconType?: string;
   vcKey: string;
