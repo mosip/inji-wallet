@@ -14,6 +14,7 @@ import testIDProps from '../../../shared/commonUtil';
 export const HistoryTab: React.FC<HistoryTabProps> = props => {
   const {t} = useTranslation('HistoryTab');
   const controller = useKebabPopUp(props);
+
   return (
     <ListItem bottomDivider onPress={controller.SHOW_ACTIVITY}>
       <ListItem.Content>
@@ -27,7 +28,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = props => {
         </ListItem.Title>
       </ListItem.Content>
       <Modal
-        headerLabel={props.vcKey.split(':')[2]}
+        headerLabel={props.vcKey.split(':')[5]}
         isVisible={controller.isShowActivities}
         onDismiss={controller.DISMISS}>
         <Column fill>
