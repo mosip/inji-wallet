@@ -3,8 +3,13 @@ name: Inji iOS build
 on:           
   workflow_dispatch:
     inputs:
-      backendServiceUrl:
-        description: 'Backend service URL'
+      mimotoBackendServiceUrl:
+        description: 'Mimoto backend service URL'
+        required: true
+        default: 'https://api.sandbox.mosip.net'
+        type: string
+      esignetBackendServiceUrl:
+        description: 'Esignet backend service URL'
         required: true
         default: 'https://api.sandbox.mosip.net'
         type: string
@@ -82,7 +87,5 @@ jobs:
           SLACK_URL: '${{ secrets.SLACK_WEBHOOK_DEVOPS }}'
           MATCH_PASSWORD: '${{ secrets.INJI_IOS_MATCH_PASSWORD }}'
           APPLICATION_THEME: ${{ github.event.inputs.theme }}
-          CREDENTIAL_REGISTRY_EDIT: ${{ github.event.inputs.registry_edit }}
-          MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
           TESTFLIGHT_INTERNAL_TESTERS_GROUP: ${{ github.event.inputs.internal-testers }}
           TESTFLIGHT_BETA_APP_DESCRIPTION: ${{ github.event.inputs.buildDescription }}

@@ -24,8 +24,8 @@ import { request } from '../shared/request';
 import {
   changeCrendetialRegistry,
   SETTINGS_STORE_KEY,
+  MIMOTO_BASE_URL
 } from '../shared/constants';
-import { MIMOTO_HOST } from 'react-native-dotenv';
 
 const model = createModel(
   {
@@ -328,7 +328,7 @@ export const appMachine = model.createMachine(
       loadCredentialRegistryInConstants: (_context, event) => {
         changeCrendetialRegistry(
           !event.response?.credentialRegistry
-            ? MIMOTO_HOST
+            ? MIMOTO_BASE_URL
             : event.response?.credentialRegistry
         );
       },
