@@ -6,14 +6,14 @@ import {
   sendParent,
   StateFrom,
 } from 'xstate';
-import { createModel } from 'xstate/lib/model';
-import { StoreEvents, StoreResponseEvent } from '../../machines/store';
-import { VcEvents } from '../../machines/vc';
-import { vcItemMachine } from '../../machines/vcItem';
-import { AppServices } from '../../shared/GlobalContext';
-import { MY_VCS_STORE_KEY } from '../../shared/constants';
-import { AddVcModalMachine } from './MyVcs/AddVcModalMachine';
-import { GetVcModalMachine } from './MyVcs/GetVcModalMachine';
+import {createModel} from 'xstate/lib/model';
+import {StoreEvents, StoreResponseEvent} from '../../machines/store';
+import {VcEvents} from '../../machines/vc';
+import {vcItemMachine} from '../../machines/vcItem';
+import {AppServices} from '../../shared/GlobalContext';
+import {MY_VCS_STORE_KEY} from '../../shared/constants';
+import {AddVcModalMachine} from './MyVcs/AddVcModalMachine';
+import {GetVcModalMachine} from './MyVcs/GetVcModalMachine';
 import Storage from '../../shared/storage';
 
 const model = createModel(
@@ -27,15 +27,15 @@ const model = createModel(
         vcItemActor,
       }),
       DISMISS: () => ({}),
-      STORE_RESPONSE: (response?: unknown) => ({ response }),
-      STORE_ERROR: (error: Error) => ({ error }),
+      STORE_RESPONSE: (response?: unknown) => ({response}),
+      STORE_ERROR: (error: Error) => ({error}),
       ADD_VC: () => ({}),
       GET_VC: () => ({}),
       STORAGE_AVAILABLE: () => ({}),
       STORAGE_UNAVAILABLE: () => ({}),
       IS_TAMPERED: () => ({}),
     },
-  }
+  },
 );
 
 export const MyVcsTabEvents = model.events;
@@ -157,46 +157,46 @@ export const MyVcsTabMachine = model.createMachine(
     services: {
       checkStorageAvailability: () => async () => {
         return Promise.resolve(
-          Storage.isMinimumLimitReached('minStorageRequired')
+          Storage.isMinimumLimitReached('minStorageRequired'),
         );
       },
     },
 
     actions: {
       refreshMyVc: send((_context, event) => VcEvents.REFRESH_MY_VCS(), {
-        to: (context) => context.serviceRefs.vc,
+        to: context => context.serviceRefs.vc,
       }),
 
       resetIsTampered: send(() => StoreEvents.RESET_IS_TAMPERED(), {
-        to: (context) => context.serviceRefs.store,
+        to: context => context.serviceRefs.store,
       }),
 
       viewVcFromParent: sendParent((_context, event: ViewVcEvent) =>
-        model.events.VIEW_VC(event.vcItemActor)
+        model.events.VIEW_VC(event.vcItemActor),
       ),
 
       storeVcItem: send(
         (_context, event) => {
           return StoreEvents.PREPEND(
             MY_VCS_STORE_KEY,
-            (event as DoneInvokeEvent<string>).data
+            (event as DoneInvokeEvent<string>).data,
           );
         },
-        { to: (context) => context.serviceRefs.store }
+        {to: context => context.serviceRefs.store},
       ),
 
       sendVcAdded: send(
         (_context, event) => VcEvents.VC_ADDED(event.response as string),
         {
-          to: (context) => context.serviceRefs.vc,
-        }
+          to: context => context.serviceRefs.vc,
+        },
       ),
     },
 
     guards: {
       isMinimumStorageLimitReached: (_context, event) => Boolean(event.data),
     },
-  }
+  },
 );
 
 export function createMyVcsTabMachine(serviceRefs: AppServices) {

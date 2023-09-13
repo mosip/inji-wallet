@@ -1,22 +1,22 @@
 import React from 'react';
-import i18n, { SUPPORTED_LANGUAGES } from '../i18n';
-import { I18nManager, Dimensions } from 'react-native';
+import i18n, {SUPPORTED_LANGUAGES} from '../i18n';
+import {I18nManager, Dimensions} from 'react-native';
 import Storage from '../shared/storage';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import i18next from 'i18next';
 import RNRestart from 'react-native-restart';
-import { SetupPicker } from '../components/ui/SetupPicker';
-import { Button, Column, Text } from '../components/ui';
-import { Theme } from '../components/ui/styleUtils';
-import { Icon } from 'react-native-elements';
-import { RootRouteProps } from '../routes';
-import { useWelcomeScreen } from './WelcomeScreenController';
+import {SetupPicker} from '../components/ui/SetupPicker';
+import {Button, Column, Text} from '../components/ui';
+import {Theme} from '../components/ui/styleUtils';
+import {Icon} from 'react-native-elements';
+import {RootRouteProps} from '../routes';
+import {useWelcomeScreen} from './WelcomeScreenController';
 
-export const SetupLanguageScreen: React.FC<RootRouteProps> = (props) => {
-  const { t } = useTranslation('SetupLanguage');
+export const SetupLanguageScreen: React.FC<RootRouteProps> = props => {
+  const {t} = useTranslation('SetupLanguage');
   const controller = useWelcomeScreen(props);
   const languages = Object.entries(SUPPORTED_LANGUAGES).map(
-    ([value, label]) => ({ label, value })
+    ([value, label]) => ({label, value}),
   );
 
   const changeLanguage = async (language: string) => {
@@ -55,7 +55,7 @@ export const SetupLanguageScreen: React.FC<RootRouteProps> = (props) => {
           {t('header')}
         </Text>
         <Text
-          style={{ paddingVertical: 18 }}
+          style={{paddingVertical: 18}}
           weight="semibold"
           align="center"
           color={Theme.Colors.GrayText}>

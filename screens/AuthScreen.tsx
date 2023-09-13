@@ -1,14 +1,14 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Icon } from 'react-native-elements';
-import { MessageOverlay } from '../components/MessageOverlay';
-import { Button, Column, Text } from '../components/ui';
-import { Theme } from '../components/ui/styleUtils';
-import { RootRouteProps } from '../routes';
-import { useAuthScreen } from './AuthScreenController';
+import {useTranslation} from 'react-i18next';
+import {Icon} from 'react-native-elements';
+import {MessageOverlay} from '../components/MessageOverlay';
+import {Button, Column, Text} from '../components/ui';
+import {Theme} from '../components/ui/styleUtils';
+import {RootRouteProps} from '../routes';
+import {useAuthScreen} from './AuthScreenController';
 
-export const AuthScreen: React.FC<RootRouteProps> = (props) => {
-  const { t } = useTranslation('AuthScreen');
+export const AuthScreen: React.FC<RootRouteProps> = props => {
+  const {t} = useTranslation('AuthScreen');
   const controller = useAuthScreen(props);
 
   return (

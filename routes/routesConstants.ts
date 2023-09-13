@@ -1,4 +1,4 @@
-import { MainBottomTabParamList } from './main';
+import {MainBottomTabParamList} from './main';
 
 export const BOTTOM_TAB_ROUTES = {
   home: 'home' as keyof MainBottomTabParamList,

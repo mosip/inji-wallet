@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Button, Centered, Column, Text } from './ui';
-import { Modal } from './ui/Modal';
-import { Image } from 'react-native';
-import { Theme } from './ui/styleUtils';
+import React, {useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {Button, Centered, Column, Text} from './ui';
+import {Modal} from './ui/Modal';
+import {Image} from 'react-native';
+import {Theme} from './ui/styleUtils';
 import PaginationDot from 'react-native-animated-pagination-dot';
 
-export const ProgressingModal: React.FC<ProgressingModalProps> = (props) => {
-  const { t } = useTranslation('ScanScreen');
+export const ProgressingModal: React.FC<ProgressingModalProps> = props => {
+  const {t} = useTranslation('ScanScreen');
 
   let n = 0;
   const [curPage, setCurPage] = useState(n);
@@ -29,7 +29,7 @@ export const ProgressingModal: React.FC<ProgressingModalProps> = (props) => {
               source={Theme.InjiProgressingLogo}
               height={2}
               width={2}
-              style={{ marginBottom: 15, marginLeft: -6 }}
+              style={{marginBottom: 15, marginLeft: -6}}
             />
             {props.progress && (
               <PaginationDot

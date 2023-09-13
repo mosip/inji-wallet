@@ -1,5 +1,5 @@
-import { StateFrom } from 'xstate';
-import { scanMachine } from './scanMachine';
+import {StateFrom} from 'xstate';
+import {scanMachine} from './scanMachine';
 
 type State = StateFrom<typeof scanMachine>;
 

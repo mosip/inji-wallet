@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import { locale } from 'expo-localization';
+import * as Localization from 'expo-localization';
 import { initReactI18next } from 'react-i18next';
 
 import en from './locales/en.json';
@@ -16,7 +16,7 @@ import { LocalizedField } from './types/vc';
 import { APPLICATION_LANGUAGE } from 'react-native-dotenv';
 
 const resources = { en, fil, ar, hi, kn, ta };
-
+const locale = Localization.locale;
 const languageCodeMap = {};
 
 export const SUPPORTED_LANGUAGES = {

@@ -1,9 +1,9 @@
 import React from 'react';
-import { Column, Text } from '.';
-import { Theme } from './styleUtils';
+import {Column, Text} from '.';
+import {Theme} from './styleUtils';
 import testIDProps from '../../shared/commonUtil';
 
-export const TextItem: React.FC<TextItemProps> = (props) => {
+export const TextItem: React.FC<TextItemProps> = props => {
   return (
     <Column
       {...testIDProps(props.testID)}
@@ -20,7 +20,7 @@ export const TextItem: React.FC<TextItemProps> = (props) => {
       <Text
         color={Theme.Colors.textValue}
         weight={props.label ? 'semibold' : 'regular'}
-        style={{ textAlign: 'left' }}>
+        style={{textAlign: 'left'}}>
         {props.text}
       </Text>
       {props.label && (
@@ -28,7 +28,7 @@ export const TextItem: React.FC<TextItemProps> = (props) => {
           size="smaller"
           color={Theme.Colors.textLabel}
           weight="semibold"
-          style={{ textAlign: 'left' }}>
+          style={{textAlign: 'left'}}>
           {props.label}
         </Text>
       )}

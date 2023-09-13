@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 
-import { Linking, Pressable, TouchableOpacity } from 'react-native';
-import { Modal } from '../../components/ui/Modal';
-import { Column, Row, Text } from '../../components/ui';
-import { Theme } from '../../components/ui/styleUtils';
-import { Icon, ListItem } from 'react-native-elements';
+import {Linking, Pressable, TouchableOpacity} from 'react-native';
+import {Modal} from '../../components/ui/Modal';
+import {Column, Row, Text} from '../../components/ui';
+import {Theme} from '../../components/ui/styleUtils';
+import {Icon, ListItem} from 'react-native-elements';
 import getAllConfigurations from '../../shared/commonprops/commonProps';
-import { getVersion } from 'react-native-device-info';
-import { CopyButton } from '../../components/CopyButton';
+import {getVersion} from 'react-native-device-info';
+import {CopyButton} from '../../components/CopyButton';
 import testIDProps from '../../shared/commonUtil';
 
-export const AboutInji: React.FC<AboutInjiProps> = ({ appId }) => {
-  const { t } = useTranslation('AboutInji');
+export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
+  const {t} = useTranslation('AboutInji');
 
   const [showAboutInji, setShowAboutInji] = useState(false);
   const [aboutInjiUrl, setAboutInjiUrl] = useState('');
 
   useEffect(() => {
-    getAllConfigurations().then((response) => {
+    getAllConfigurations().then(response => {
       setAboutInjiUrl(response.aboutInjiUrl);
     });
   }, []);
@@ -26,7 +26,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({ appId }) => {
   const dependencies = require('../../package-lock.json').dependencies;
   let packageVersion, packageCommitId;
 
-  Object.keys(dependencies).forEach((dependencyName) => {
+  Object.keys(dependencies).forEach(dependencyName => {
     const dependencyData = dependencies[dependencyName];
 
     if (dependencyName == 'react-native-tuvali') {
@@ -51,7 +51,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({ appId }) => {
             name={'file'}
             color={Theme.Colors.Icon}
             size={25}
-            style={{ marginRight: 15 }}
+            style={{marginRight: 15}}
           />
           <ListItem.Content>
             <ListItem.Title>

@@ -1,18 +1,18 @@
 import React from 'react';
-import { Icon, ListItem } from 'react-native-elements';
-import { useTranslation } from 'react-i18next';
-import { Modal } from '../../../components/ui/Modal';
-import { Centered, Column, Text } from '../../../components/ui';
-import { ActivityLogText } from '../../../components/ActivityLogText';
-import { ActorRefFrom } from 'xstate';
-import { vcItemMachine } from '../../../machines/vcItem';
-import { useKebabPopUp } from '../../../components/KebabPopUpController';
-import { Theme } from '../../../components/ui/styleUtils';
-import { isSameVC } from '../../../shared/constants';
+import {Icon, ListItem} from 'react-native-elements';
+import {useTranslation} from 'react-i18next';
+import {Modal} from '../../../components/ui/Modal';
+import {Centered, Column, Text} from '../../../components/ui';
+import {ActivityLogText} from '../../../components/ActivityLogText';
+import {ActorRefFrom} from 'xstate';
+import {vcItemMachine} from '../../../machines/vcItem';
+import {useKebabPopUp} from '../../../components/KebabPopUpController';
+import {Theme} from '../../../components/ui/styleUtils';
+import {isSameVC} from '../../../shared/constants';
 import testIDProps from '../../../shared/commonUtil';
 
-export const HistoryTab: React.FC<HistoryTabProps> = (props) => {
-  const { t } = useTranslation('HistoryTab');
+export const HistoryTab: React.FC<HistoryTabProps> = props => {
+  const {t} = useTranslation('HistoryTab');
   const controller = useKebabPopUp(props);
   return (
     <ListItem bottomDivider onPress={controller.SHOW_ACTIVITY}>
@@ -31,7 +31,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = (props) => {
         isVisible={controller.isShowActivities}
         onDismiss={controller.DISMISS}>
         <Column fill>
-          {controller.activities.map((activity) => {
+          {controller.activities.map(activity => {
             const vcKeyMatch = isSameVC(activity._vcKey, props.vcKey);
             if (vcKeyMatch) {
               return (
@@ -46,7 +46,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = (props) => {
             <Centered fill>
               <Icon
                 testID="sentiment-dissatisfied"
-                style={{ marginBottom: 20 }}
+                style={{marginBottom: 20}}
                 size={40}
                 name="sentiment-dissatisfied"
               />

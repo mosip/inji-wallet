@@ -10,18 +10,15 @@ import {
   spawn,
   StateFrom,
 } from 'xstate';
-import { createModel } from 'xstate/lib/model';
-import { EmitterSubscription, Linking, Platform } from 'react-native';
-import { DeviceInfo } from '../../../components/DeviceInfoList';
-import { getDeviceNameSync } from 'react-native-device-info';
-import { VC, VerifiablePresentation } from '../../../types/vc';
-import { AppServices } from '../../../shared/GlobalContext';
-import { ActivityLogEvents, ActivityLogType } from '../../activityLog';
-import {
-  MY_LOGIN_STORE_KEY,
-  VC_ITEM_STORE_KEY,
-} from '../../../shared/constants';
-import { subscribe } from '../../../shared/openIdBLE/walletEventHandler';
+import {createModel} from 'xstate/lib/model';
+import {EmitterSubscription, Linking, Platform} from 'react-native';
+import {DeviceInfo} from '../../../components/DeviceInfoList';
+import {getDeviceNameSync} from 'react-native-device-info';
+import {VC, VerifiablePresentation} from '../../../types/vc';
+import {AppServices} from '../../../shared/GlobalContext';
+import {ActivityLogEvents, ActivityLogType} from '../../activityLog';
+import {MY_LOGIN_STORE_KEY, VC_ITEM_STORE_KEY} from '../../../shared/constants';
+import {subscribe} from '../../../shared/openIdBLE/walletEventHandler';
 import {
   check,
   checkMultiple,
@@ -34,16 +31,16 @@ import {
   checkLocationPermissionStatus,
   requestLocationPermission,
 } from '../../../shared/location';
-import { CameraCapturedPicture } from 'expo-camera';
-import { log } from 'xstate/lib/actions';
-import { createQrLoginMachine, qrLoginMachine } from '../../QrLoginMachine';
-import { StoreEvents } from '../../store';
-import { WalletDataEvent } from 'react-native-tuvali/lib/typescript/types/events';
-import { BLEError } from '../types';
+import {CameraCapturedPicture} from 'expo-camera';
+import {log} from 'xstate/lib/actions';
+import {createQrLoginMachine, qrLoginMachine} from '../../QrLoginMachine';
+import {StoreEvents} from '../../store';
+import {WalletDataEvent} from 'react-native-tuvali/lib/typescript/types/events';
+import {BLEError} from '../types';
 import Storage from '../../../shared/storage';
-import { logState } from '../../app';
+import {logState} from '../../app';
 
-const { wallet, EventTypes, VerificationStatus } = tuvali;
+const {wallet, EventTypes, VerificationStatus} = tuvali;
 
 const model = createModel(
   {
@@ -66,8 +63,8 @@ const model = createModel(
   },
   {
     events: {
-      SELECT_VC: (vc: VC) => ({ vc }),
-      SCAN: (params: string) => ({ params }),
+      SELECT_VC: (vc: VC) => ({vc}),
+      SCAN: (params: string) => ({params}),
       ACCEPT_REQUEST: () => ({}),
       VERIFY_AND_ACCEPT_REQUEST: () => ({}),
       VC_ACCEPTED: () => ({}),
@@ -79,7 +76,7 @@ const model = createModel(
       DISMISS: () => ({}),
       CONNECTED: () => ({}),
       DISCONNECT: () => ({}),
-      BLE_ERROR: (bleError: BLEError) => ({ bleError }),
+      BLE_ERROR: (bleError: BLEError) => ({bleError}),
       CONNECTION_DESTROYED: () => ({}),
       SCREEN_BLUR: () => ({}),
       SCREEN_FOCUS: () => ({}),
@@ -91,21 +88,21 @@ const model = createModel(
       NEARBY_DISABLED: () => ({}),
       GOTO_SETTINGS: () => ({}),
       START_PERMISSION_CHECK: () => ({}),
-      UPDATE_REASON: (reason: string) => ({ reason }),
+      UPDATE_REASON: (reason: string) => ({reason}),
       LOCATION_ENABLED: () => ({}),
       LOCATION_DISABLED: () => ({}),
       LOCATION_REQUEST: () => ({}),
-      UPDATE_VC_NAME: (vcName: string) => ({ vcName }),
-      STORE_RESPONSE: (response: any) => ({ response }),
+      UPDATE_VC_NAME: (vcName: string) => ({vcName}),
+      STORE_RESPONSE: (response: any) => ({response}),
       APP_ACTIVE: () => ({}),
       FACE_VALID: () => ({}),
       FACE_INVALID: () => ({}),
       RETRY_VERIFICATION: () => ({}),
-      VP_CREATED: (vp: VerifiablePresentation) => ({ vp }),
+      VP_CREATED: (vp: VerifiablePresentation) => ({vp}),
       TOGGLE_USER_CONSENT: () => ({}),
       RESET: () => ({}),
     },
-  }
+  },
 );
 const QR_LOGIN_REF_ID = 'QrLogin';
 export const ScanEvents = model.events;
@@ -681,17 +678,17 @@ export const scanMachine =
     {
       actions: {
         setChildRef: assign({
-          QrLoginRef: (context) => {
+          QrLoginRef: context => {
             const service = spawn(
               createQrLoginMachine(context.serviceRefs),
-              QR_LOGIN_REF_ID
+              QR_LOGIN_REF_ID,
             );
             service.subscribe(logState);
             return service;
           },
         }),
 
-        sendScanData: (context) =>
+        sendScanData: context =>
           context.QrLoginRef.send({
             type: 'GET',
             value: context.linkCode,
@@ -714,13 +711,13 @@ export const scanMachine =
 
         setSenderInfo: assign({
           senderInfo: () => {
-            return { name: 'Wallet', deviceName: 'Wallet', deviceId: '' };
+            return {name: 'Wallet', deviceName: 'Wallet', deviceId: ''};
           },
         }),
 
         setReceiverInfo: assign({
           receiverInfo: () => {
-            return { name: 'Verifier', deviceName: 'Verifier', deviceId: '' };
+            return {name: 'Verifier', deviceName: 'Verifier', deviceId: ''};
           },
         }),
 
@@ -736,7 +733,7 @@ export const scanMachine =
           reason: (_context, event) => event.reason,
         }),
 
-        clearReason: assign({ reason: '' }),
+        clearReason: assign({reason: ''}),
 
         setSelectedVc: assign({
           selectedVc: (context, event) => {
@@ -759,11 +756,11 @@ export const scanMachine =
           loggers: () => {
             if (__DEV__) {
               return [
-                wallet.handleDataEvents((event) => {
+                wallet.handleDataEvents(event => {
                   console.log(
                     getDeviceNameSync(),
                     '<Sender.Event>',
-                    JSON.stringify(event).slice(0, 100)
+                    JSON.stringify(event).slice(0, 100),
                   );
                 }),
               ];
@@ -774,8 +771,8 @@ export const scanMachine =
         }),
 
         removeLoggers: assign({
-          loggers: ({ loggers }) => {
-            loggers?.forEach((logger) => logger.remove());
+          loggers: ({loggers}) => {
+            loggers?.forEach(logger => logger.remove());
             return [];
           },
         }),
@@ -789,7 +786,7 @@ export const scanMachine =
         }),
 
         logShared: send(
-          (context) =>
+          context =>
             ActivityLogEvents.LOG_ACTIVITY({
               _vcKey: VC_ITEM_STORE_KEY(context.selectedVc),
               type: context.selectedVc.shouldVerifyPresence
@@ -800,11 +797,11 @@ export const scanMachine =
                 context.receiverInfo.name || context.receiverInfo.deviceName,
               vcLabel: context.selectedVc.tag || context.selectedVc.id,
             }),
-          { to: (context) => context.serviceRefs.activityLog }
+          {to: context => context.serviceRefs.activityLog},
         ),
 
         logFailedVerification: send(
-          (context) =>
+          context =>
             ActivityLogEvents.LOG_ACTIVITY({
               _vcKey: VC_ITEM_STORE_KEY(context.selectedVc),
               type: 'PRESENCE_VERIFICATION_FAILED',
@@ -813,11 +810,11 @@ export const scanMachine =
                 context.receiverInfo.name || context.receiverInfo.deviceName,
               vcLabel: context.selectedVc.tag || context.selectedVc.id,
             }),
-          { to: (context) => context.serviceRefs.activityLog }
+          {to: context => context.serviceRefs.activityLog},
         ),
 
         toggleShouldVerifyPresence: assign({
-          selectedVc: (context) => ({
+          selectedVc: context => ({
             ...context.selectedVc,
             shouldVerifyPresence: !context.selectedVc.shouldVerifyPresence,
           }),
@@ -827,20 +824,20 @@ export const scanMachine =
           linkCode: (_context, event) =>
             event.params.substring(
               event.params.indexOf('linkCode=') + 9,
-              event.params.indexOf('&')
+              event.params.indexOf('&'),
             ),
         }),
 
         setStayInProgress: assign({
-          stayInProgress: (context) => !context.stayInProgress,
+          stayInProgress: context => !context.stayInProgress,
         }),
 
         setCloseTimeoutHint: assign({
-          stayInProgress: (context) => (context.stayInProgress = false),
+          stayInProgress: context => (context.stayInProgress = false),
         }),
 
         resetShouldVerifyPresence: assign({
-          selectedVc: (context) => ({
+          selectedVc: context => ({
             ...context.selectedVc,
             shouldVerifyPresence: false,
           }),
@@ -850,10 +847,10 @@ export const scanMachine =
           (_context, event) => {
             return StoreEvents.PREPEND(
               MY_LOGIN_STORE_KEY,
-              (event as DoneInvokeEvent<string>).data
+              (event as DoneInvokeEvent<string>).data,
             );
           },
-          { to: (context) => context.serviceRefs.store }
+          {to: context => context.serviceRefs.store},
         ),
 
         storingActivityLog: send(
@@ -866,15 +863,15 @@ export const scanMachine =
               vcLabel: String(event.response.selectedVc.id),
             }),
           {
-            to: (context) => context.serviceRefs.activityLog,
-          }
+            to: context => context.serviceRefs.activityLog,
+          },
         ),
       },
 
       services: {
-        checkBluetoothPermission: () => async (callback) => {
+        checkBluetoothPermission: () => async callback => {
           // wait a bit for animation to finish when app becomes active
-          await new Promise((resolve) => setTimeout(resolve, 250));
+          await new Promise(resolve => setTimeout(resolve, 250));
           try {
             // Passing Granted for android since permission status is always granted even if its denied.
             let response: PermissionStatus = RESULTS.GRANTED;
@@ -893,8 +890,8 @@ export const scanMachine =
           }
         },
 
-        checkBluetoothState: () => (callback) => {
-          const subscription = BluetoothStateManager.onStateChange((state) => {
+        checkBluetoothState: () => callback => {
+          const subscription = BluetoothStateManager.onStateChange(state => {
             if (state === 'PoweredOn') {
               callback(model.events.BLUETOOTH_STATE_ENABLED());
             } else {
@@ -904,28 +901,28 @@ export const scanMachine =
           return () => subscription.remove();
         },
 
-        requestBluetooth: () => (callback) => {
+        requestBluetooth: () => callback => {
           BluetoothStateManager.requestToEnable()
             .then(() => callback(model.events.BLUETOOTH_STATE_ENABLED()))
             .catch(() => callback(model.events.BLUETOOTH_STATE_DISABLED()));
         },
 
-        requestToEnableLocationPermission: () => (callback) => {
+        requestToEnableLocationPermission: () => callback => {
           requestLocationPermission(
             () => callback(model.events.LOCATION_ENABLED()),
-            () => callback(model.events.LOCATION_DISABLED())
+            () => callback(model.events.LOCATION_DISABLED()),
           );
         },
 
-        monitorConnection: () => (callback) => {
-          const subscription = wallet.handleDataEvents((event) => {
+        monitorConnection: () => callback => {
+          const subscription = wallet.handleDataEvents(event => {
             if (event.type === EventTypes.onDisconnected) {
-              callback({ type: 'DISCONNECT' });
+              callback({type: 'DISCONNECT'});
             }
             if (event.type === EventTypes.onError) {
               callback({
                 type: 'BLE_ERROR',
-                bleError: { message: event.message, code: event.code },
+                bleError: {message: event.message, code: event.code},
               });
               console.log('BLE Exception: ' + event.message);
             }
@@ -934,12 +931,12 @@ export const scanMachine =
           return () => subscription.remove();
         },
 
-        checkNearByDevicesPermission: () => (callback) => {
+        checkNearByDevicesPermission: () => callback => {
           checkMultiple([
             PERMISSIONS.ANDROID.BLUETOOTH_CONNECT,
             PERMISSIONS.ANDROID.BLUETOOTH_SCAN,
           ])
-            .then((response) => {
+            .then(response => {
               if (
                 response[PERMISSIONS.ANDROID.BLUETOOTH_ADVERTISE] ===
                   RESULTS.GRANTED &&
@@ -951,17 +948,17 @@ export const scanMachine =
                 callback(model.events.NEARBY_DISABLED());
               }
             })
-            .catch((err) => {
+            .catch(err => {
               callback(model.events.NEARBY_DISABLED());
             });
         },
 
-        requestNearByDevicesPermission: () => (callback) => {
+        requestNearByDevicesPermission: () => callback => {
           requestMultiple([
             PERMISSIONS.ANDROID.BLUETOOTH_SCAN,
             PERMISSIONS.ANDROID.BLUETOOTH_CONNECT,
           ])
-            .then((response) => {
+            .then(response => {
               if (
                 response[PERMISSIONS.ANDROID.BLUETOOTH_SCAN] ===
                   RESULTS.GRANTED &&
@@ -973,23 +970,23 @@ export const scanMachine =
                 callback(model.events.NEARBY_DISABLED());
               }
             })
-            .catch((err) => {
+            .catch(err => {
               callback(model.events.NEARBY_DISABLED());
             });
         },
 
-        checkLocationPermission: () => (callback) => {
+        checkLocationPermission: () => callback => {
           checkLocationPermissionStatus(
             () => callback(model.events.LOCATION_ENABLED()),
-            () => callback(model.events.LOCATION_DISABLED())
+            () => callback(model.events.LOCATION_DISABLED()),
           );
         },
 
-        startConnection: (context) => (callback) => {
+        startConnection: context => callback => {
           wallet.startConnection(context.openId4VpUri);
           const statusCallback = (event: WalletDataEvent) => {
             if (event.type === EventTypes.onSecureChannelEstablished) {
-              callback({ type: 'CONNECTED' });
+              callback({type: 'CONNECTED'});
             }
           };
 
@@ -997,7 +994,7 @@ export const scanMachine =
           return () => subscription?.remove();
         },
 
-        sendVc: (context) => (callback) => {
+        sendVc: context => callback => {
           const vp = context.createdVp;
           const vc = {
             ...(vp != null ? vp : context.selectedVc),
@@ -1006,12 +1003,12 @@ export const scanMachine =
 
           const reason = [];
           if (context.reason.trim() !== '') {
-            reason.push({ message: context.reason, timestamp: Date.now() });
+            reason.push({message: context.reason, timestamp: Date.now()});
           }
 
           const statusCallback = (event: WalletDataEvent) => {
             if (event.type === EventTypes.onDataSent) {
-              callback({ type: 'VC_SENT' });
+              callback({type: 'VC_SENT'});
             } else if (event.type === EventTypes.onVerificationStatusReceived) {
               callback({
                 type:
@@ -1025,7 +1022,7 @@ export const scanMachine =
             JSON.stringify({
               ...vc,
               reason,
-            })
+            }),
           );
           const subscription = subscribe(statusCallback);
           return () => subscription?.remove();
@@ -1039,14 +1036,14 @@ export const scanMachine =
           }
         },
 
-        createVp: (context) => async () => {
+        createVp: context => async () => {
           // const verifiablePresentation = await createVerifiablePresentation(...);
 
           const verifiablePresentation: VerifiablePresentation = {
             '@context': [''],
-            'proof': null,
-            'type': 'VerifiablePresentation',
-            'verifiableCredential': [context.selectedVc.verifiableCredential],
+            proof: null,
+            type: 'VerifiablePresentation',
+            verifiableCredential: [context.selectedVc.verifiableCredential],
           };
 
           const vc: VC = {
@@ -1060,7 +1057,7 @@ export const scanMachine =
 
         checkStorageAvailability: () => async () => {
           return Promise.resolve(
-            Storage.isMinimumLimitReached('minStorageRequiredForAuditEntry')
+            Storage.isMinimumLimitReached('minStorageRequiredForAuditEntry'),
           );
         },
       },
@@ -1073,7 +1070,7 @@ export const scanMachine =
           try {
             linkCode = event.params.substring(
               event.params.indexOf('linkCode=') + 9,
-              event.params.indexOf('&')
+              event.params.indexOf('&'),
             );
             return linkCode !== null;
           } catch (e) {
@@ -1094,7 +1091,7 @@ export const scanMachine =
         CONNECTION_TIMEOUT: 5 * 1000,
         SHARING_TIMEOUT: 15 * 1000,
       },
-    }
+    },
   );
 
 type State = StateFrom<typeof scanMachine>;
@@ -1107,7 +1104,7 @@ export function createScanMachine(serviceRefs: AppServices) {
 }
 
 export function selectIsMinimumStorageRequiredForAuditEntryLimitReached(
-  state: State
+  state: State,
 ) {
   return state.matches('restrictSharingVc');
 }

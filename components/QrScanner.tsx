@@ -1,25 +1,19 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Camera } from 'expo-camera';
-import { BarCodeEvent, BarCodeScanner } from 'expo-barcode-scanner';
-import {
-  Linking,
-  TouchableOpacity,
-  View,
-  Image,
-  Pressable,
-} from 'react-native';
-import { Theme } from './ui/styleUtils';
-import { Column, Button, Text, Centered, Row } from './ui';
-import { GlobalContext } from '../shared/GlobalContext';
-import { useSelector } from '@xstate/react';
-import { selectIsActive } from '../machines/app';
-import { useTranslation } from 'react-i18next';
-import { useScanLayout } from '../screens/Scan/ScanLayoutController';
+import {Camera} from 'expo-camera';
+import {BarCodeEvent, BarCodeScanner} from 'expo-barcode-scanner';
+import {Linking, TouchableOpacity, View, Image, Pressable} from 'react-native';
+import {Theme} from './ui/styleUtils';
+import {Column, Button, Text, Centered, Row} from './ui';
+import {GlobalContext} from '../shared/GlobalContext';
+import {useSelector} from '@xstate/react';
+import {selectIsActive} from '../machines/app';
+import {useTranslation} from 'react-i18next';
+import {useScanLayout} from '../screens/Scan/ScanLayoutController';
 
-export const QrScanner: React.FC<QrScannerProps> = (props) => {
-  const { t } = useTranslation('QrScanner');
-  const { appService } = useContext(GlobalContext);
+export const QrScanner: React.FC<QrScannerProps> = props => {
+  const {t} = useTranslation('QrScanner');
+  const {appService} = useContext(GlobalContext);
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
@@ -106,7 +100,7 @@ export const QrScanner: React.FC<QrScannerProps> = (props) => {
             setCameraType(
               cameraType === Camera.Constants.Type.back
                 ? Camera.Constants.Type.front
-                : Camera.Constants.Type.back
+                : Camera.Constants.Type.back,
             );
           }}>
           <Image
