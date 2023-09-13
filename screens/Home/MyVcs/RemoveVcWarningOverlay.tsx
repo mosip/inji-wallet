@@ -1,14 +1,14 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Dimensions, Image } from 'react-native';
-import { Overlay } from 'react-native-elements';
-import { Button, Column, Text, Row } from '../../../components/ui';
-import { Theme } from '../../../components/ui/styleUtils';
+import {useTranslation} from 'react-i18next';
+import {Dimensions, Image} from 'react-native';
+import {Overlay} from 'react-native-elements';
+import {Button, Column, Text, Row} from '../../../components/ui';
+import {Theme} from '../../../components/ui/styleUtils';
 
-export const RemoveVcWarningOverlay: React.FC<RemoveVcWarningOverlayProps> = (
-  props
-) => {
-  const { t } = useTranslation('RemoveVcWarningOverlay');
+export const RemoveVcWarningOverlay: React.FC<
+  RemoveVcWarningOverlayProps
+> = props => {
+  const {t} = useTranslation('RemoveVcWarningOverlay');
 
   return (
     <Overlay
@@ -31,9 +31,12 @@ export const RemoveVcWarningOverlay: React.FC<RemoveVcWarningOverlayProps> = (
         </Row>
 
         <Column crossAlign="center" margin="0 0 30 0">
-          <Text weight="semibold">{t('alert')}</Text>
+          <Text testID="alert" weight="semibold">
+            {t('alert')}
+          </Text>
 
           <Text
+            testID="removeWarning"
             align="center"
             size="small"
             weight="semibold"
@@ -43,6 +46,7 @@ export const RemoveVcWarningOverlay: React.FC<RemoveVcWarningOverlayProps> = (
         </Column>
 
         <Button
+          testID="yesConfirm"
           margin={'30 0 0 0'}
           type="gradient"
           title={t('confirm')}
@@ -50,6 +54,7 @@ export const RemoveVcWarningOverlay: React.FC<RemoveVcWarningOverlayProps> = (
         />
 
         <Button
+          testID="no"
           margin={'10 0 0 0'}
           type="clear"
           title={t('no')}

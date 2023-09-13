@@ -1,14 +1,12 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Dimensions, Image } from 'react-native';
-import { Overlay } from 'react-native-elements';
-import { Button, Column, Text, Row } from '../../../components/ui';
-import { Theme } from '../../../components/ui/styleUtils';
+import {useTranslation} from 'react-i18next';
+import {Dimensions, Image} from 'react-native';
+import {Overlay} from 'react-native-elements';
+import {Button, Column, Text, Row} from '../../../components/ui';
+import {Theme} from '../../../components/ui/styleUtils';
 
-export const BindingVcWarningOverlay: React.FC<QrLoginWarningProps> = (
-  props
-) => {
-  const { t } = useTranslation('BindingVcWarningOverlay');
+export const BindingVcWarningOverlay: React.FC<QrLoginWarningProps> = props => {
+  const {t} = useTranslation('BindingVcWarningOverlay');
 
   return (
     <Overlay
@@ -31,9 +29,12 @@ export const BindingVcWarningOverlay: React.FC<QrLoginWarningProps> = (
         </Row>
 
         <Column crossAlign="center" margin="0 0 30 0">
-          <Text weight="semibold">{t('alert')}</Text>
+          <Text testID="alert" weight="semibold">
+            {t('alert')}
+          </Text>
 
           <Text
+            testID="bindingWarning"
             align="center"
             size="small"
             weight="semibold"
@@ -43,6 +44,7 @@ export const BindingVcWarningOverlay: React.FC<QrLoginWarningProps> = (
         </Column>
 
         <Button
+          testID="yesConfirm"
           margin={'30 0 0 0'}
           type="gradient"
           title={t('yesConfirm')}
@@ -50,6 +52,7 @@ export const BindingVcWarningOverlay: React.FC<QrLoginWarningProps> = (
         />
 
         <Button
+          testID="no"
           margin={'10 0 0 0'}
           type="clear"
           title={t('no')}
