@@ -8,6 +8,7 @@ import VerifiedIcon from './VerifiedIcon';
 import {Column, Row, Text} from './ui';
 import {Theme} from './ui/styleUtils';
 import {CheckBox, Icon} from 'react-native-elements';
+import testIDProps from '../shared/commonUtil';
 
 const getDetails = (arg1, arg2, verifiableCredential) => {
   if (arg1 === 'Status') {
@@ -113,6 +114,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = props => {
               style={Theme.Styles.closeCardImage}>
               {props.iconName && (
                 <Icon
+                  {...testIDProps('pinIcon')}
                   name={props.iconName}
                   type={props.iconType}
                   color={Theme.Colors.Icon}
