@@ -1,21 +1,21 @@
 import React from 'react';
-import { Icon, ListItem, Overlay } from 'react-native-elements';
-import { Theme } from '../components/ui/styleUtils';
-import { Column, Row, Text } from '../components/ui';
-import { WalletBinding } from '../screens/Home/MyVcs/WalletBinding';
-import { Pressable, View } from 'react-native';
-import { useKebabPopUp } from './KebabPopUpController';
-import { ActorRefFrom } from 'xstate';
-import { vcItemMachine } from '../machines/vcItem';
-import { useTranslation } from 'react-i18next';
-import { HistoryTab } from '../screens/Home/MyVcs/HistoryTab';
-import { RemoveVcWarningOverlay } from '../screens/Home/MyVcs/RemoveVcWarningOverlay';
-import { ScrollView } from 'react-native-gesture-handler';
+import {Icon, ListItem, Overlay} from 'react-native-elements';
+import {Theme} from '../components/ui/styleUtils';
+import {Column, Row, Text} from '../components/ui';
+import {WalletBinding} from '../screens/Home/MyVcs/WalletBinding';
+import {Pressable, View} from 'react-native';
+import {useKebabPopUp} from './KebabPopUpController';
+import {ActorRefFrom} from 'xstate';
+import {vcItemMachine} from '../machines/vcItem';
+import {useTranslation} from 'react-i18next';
+import {HistoryTab} from '../screens/Home/MyVcs/HistoryTab';
+import {RemoveVcWarningOverlay} from '../screens/Home/MyVcs/RemoveVcWarningOverlay';
+import {ScrollView} from 'react-native-gesture-handler';
 import testIDProps from '../shared/commonUtil';
 
-export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
+export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
   const controller = useKebabPopUp(props);
-  const { t } = useTranslation('HomeScreenKebabPopUp');
+  const {t} = useTranslation('HomeScreenKebabPopUp');
   return (
     <Column>
       <Icon

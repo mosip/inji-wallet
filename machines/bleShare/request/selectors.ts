@@ -1,5 +1,5 @@
-import { StateFrom } from 'xstate';
-import { requestMachine } from './requestMachine';
+import {StateFrom} from 'xstate';
+import {requestMachine} from './requestMachine';
 
 type State = StateFrom<typeof requestMachine>;
 

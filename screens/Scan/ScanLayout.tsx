@@ -1,17 +1,17 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { SendVcScreen } from './SendVcScreen';
-import { useScanLayout } from './ScanLayoutController';
-import { ScanScreen } from './ScanScreen';
-import { ProgressingModal } from '../../components/ProgressingModal';
-import { MessageOverlay } from '../../components/MessageOverlay';
-import { SCAN_ROUTES } from '../../routes/routesConstants';
+import {useTranslation} from 'react-i18next';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {SendVcScreen} from './SendVcScreen';
+import {useScanLayout} from './ScanLayoutController';
+import {ScanScreen} from './ScanScreen';
+import {ProgressingModal} from '../../components/ProgressingModal';
+import {MessageOverlay} from '../../components/MessageOverlay';
+import {SCAN_ROUTES} from '../../routes/routesConstants';
 
 const ScanStack = createNativeStackNavigator();
 
 export const ScanLayout: React.FC = () => {
-  const { t } = useTranslation('ScanScreen');
+  const {t} = useTranslation('ScanScreen');
   const controller = useScanLayout();
 
   return (
@@ -31,7 +31,7 @@ export const ScanLayout: React.FC = () => {
           name={SCAN_ROUTES.ScanScreen}
           component={ScanScreen}
           options={{
-            headerTitleStyle: { fontSize: 30, fontFamily: 'Inter_600SemiBold' },
+            headerTitleStyle: {fontSize: 30, fontFamily: 'Inter_600SemiBold'},
             title: t('MainLayout:scan'),
           }}
         />

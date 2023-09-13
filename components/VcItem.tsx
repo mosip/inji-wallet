@@ -1,7 +1,7 @@
-import React, { useContext, useRef } from 'react';
-import { useInterpret, useSelector } from '@xstate/react';
-import { Pressable } from 'react-native';
-import { ActorRefFrom } from 'xstate';
+import React, {useContext, useRef} from 'react';
+import {useInterpret, useSelector} from '@xstate/react';
+import {Pressable} from 'react-native';
+import {ActorRefFrom} from 'xstate';
 import {
   createVcItemMachine,
   selectVerifiableCredential,
@@ -13,26 +13,26 @@ import {
   selectIsSavingFailedInIdle,
   selectKebabPopUp,
 } from '../machines/vcItem';
-import { VcItemEvents } from '../machines/vcItem';
-import { ErrorMessageOverlay } from './MessageOverlay';
-import { Theme } from './ui/styleUtils';
-import { GlobalContext } from '../shared/GlobalContext';
-import { VcItemContent } from './VcItemContent';
-import { VcItemActivationStatus } from './VcItemActivationStatus';
-import { Row } from './ui';
-import { KebabPopUp } from './KebabPopUp';
-import { logState } from '../machines/app';
+import {VcItemEvents} from '../machines/vcItem';
+import {ErrorMessageOverlay} from './MessageOverlay';
+import {Theme} from './ui/styleUtils';
+import {GlobalContext} from '../shared/GlobalContext';
+import {VcItemContent} from './VcItemContent';
+import {VcItemActivationStatus} from './VcItemActivationStatus';
+import {Row} from './ui';
+import {KebabPopUp} from './KebabPopUp';
+import {logState} from '../machines/app';
 
-export const VcItem: React.FC<VcItemProps> = (props) => {
-  const { appService } = useContext(GlobalContext);
+export const VcItem: React.FC<VcItemProps> = props => {
+  const {appService} = useContext(GlobalContext);
   const machine = useRef(
     createVcItemMachine(
       appService.getSnapshot().context.serviceRefs,
-      props.vcKey
-    )
+      props.vcKey,
+    ),
   );
 
-  const service = useInterpret(machine.current, { devTools: __DEV__ });
+  const service = useInterpret(machine.current, {devTools: __DEV__});
   service.subscribe(logState);
   const context = useSelector(service, selectContext);
   const verifiableCredential = useSelector(service, selectVerifiableCredential);
