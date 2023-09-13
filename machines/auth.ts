@@ -8,6 +8,7 @@ import { AppServices } from '../shared/GlobalContext';
 import { StoreEvents, StoreResponseEvent } from './store';
 import { generateSecureRandom } from 'react-native-securerandom';
 import binaryToBase64 from 'react-native/Libraries/Utilities/binaryToBase64';
+import { logMMKVData } from '../shared/storage';
 
 const model = createModel(
   {
@@ -182,6 +183,8 @@ export const authMachine = model.createMachine(
       hasData: (_, event: StoreResponseEvent) => event.response != null,
 
       hasPasscodeSet: (context) => {
+        logMMKVData();
+
         return context.passcode !== '';
       },
       hasBiometricSet: (context) => {

@@ -778,7 +778,7 @@ export const scanMachine =
         logShared: send(
           (context) =>
             ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VCMetadata.fromVC(context.selectedVc, true).toString(),
+              _vcKey: VCMetadata.fromVC(context.selectedVc, true).getVcKey(),
               type: context.selectedVc.shouldVerifyPresence
                 ? 'VC_SHARED_WITH_VERIFICATION_CONSENT'
                 : context.shareLogType,
@@ -793,7 +793,7 @@ export const scanMachine =
         logFailedVerification: send(
           (context) =>
             ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VCMetadata.fromVC(context.selectedVc, true).toString(),
+              _vcKey: VCMetadata.fromVC(context.selectedVc, true).getVcKey(),
               type: 'PRESENCE_VERIFICATION_FAILED',
               timestamp: Date.now(),
               deviceName:

@@ -236,7 +236,7 @@ export const AddVcModalMachine =
         },
         done: {
           type: 'final',
-          data: (context) => VCMetadata.fromVC(context, true).toString(),
+          data: (context) => VCMetadata.fromVC(context, true),
         },
       },
     },

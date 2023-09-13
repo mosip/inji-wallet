@@ -10,6 +10,7 @@ import { createModel } from 'xstate/lib/model';
 import { request } from '../shared/request';
 import { VcIdType } from '../types/vc';
 import { MY_VCS_STORE_KEY } from '../shared/constants';
+import { VCMetadata } from '../shared/VCMetadata';
 
 const model = createModel(
   {
@@ -20,7 +21,7 @@ const model = createModel(
     otpError: '',
     transactionId: '',
     requestId: '',
-    VIDs: [] as string[],
+    VIDsMetadata: [] as VCMetadata[],
   },
   {
     events: {
@@ -29,7 +30,7 @@ const model = createModel(
       READY: (idInputRef: TextInput) => ({ idInputRef }),
       DISMISS: () => ({}),
       SELECT_ID_TYPE: (idType: VcIdType) => ({ idType }),
-      REVOKE_VCS: (vcMetadatas: string[]) => ({ vcMetadatas }),
+      REVOKE_VCS: (vcMetadatas: VCMetadata[]) => ({ vcMetadatas }),
       STORE_RESPONSE: (response: string[]) => ({ response }),
       ERROR: (data: Error) => ({ data }),
       SUCCESS: () => ({}),
@@ -165,7 +166,7 @@ export const revokeVidsMachine =
         }),
 
         setVIDs: model.assign({
-          VIDs: (_context, event) => event.vcMetadatas,
+          VIDsMetadata: (_context, event) => event.vcMetadatas,
         }),
 
         setIdBackendError: assign({
@@ -206,12 +207,12 @@ export const revokeVidsMachine =
         logRevoked: send(
           (context) =>
             ActivityLogEvents.LOG_ACTIVITY(
-              context.VIDs.map((vc) => ({
-                _vcKey: vc,
+              context.VIDsMetadata.map((metadata) => ({
+                _vcKey: metadata.getVcKey(),
                 type: 'VC_REVOKED',
                 timestamp: Date.now(),
                 deviceName: '',
-                vcLabel: vc.split(':')[2],
+                vcLabel: metadata.id,
               }))
             ),
           {
@@ -221,7 +222,10 @@ export const revokeVidsMachine =
 
         revokeVID: send(
           (context) => {
-            return StoreEvents.REMOVE_ITEMS(MY_VCS_STORE_KEY, context.VIDs);
+            return StoreEvents.REMOVE_ITEMS(
+              MY_VCS_STORE_KEY,
+              context.VIDsMetadata.map((m) => m.uniqueId())
+            );
           },
           {
             to: (context) => context.serviceRefs.store,
@@ -233,7 +237,7 @@ export const revokeVidsMachine =
         requestOtp: async (context) => {
           const transactionId = String(new Date().valueOf()).substring(3, 13);
           return request('POST', '/residentmobileapp/req/otp', {
-            individualId: context.VIDs[0].split(':')[2],
+            individualId: context.VIDsMetadata[0].id,
             individualIdType: 'VID',
             otpChannel: ['EMAIL', 'PHONE'],
             transactionID: transactionId,
@@ -242,20 +246,23 @@ export const revokeVidsMachine =
 
         requestRevoke: (context) => async (callback) => {
           await Promise.all(
-            context.VIDs.map((vid: string) => {
+            context.VIDsMetadata.map((metadata: VCMetadata) => {
               try {
-                const vidID = vid.split(':')[2];
                 const transactionId = String(new Date().valueOf()).substring(
                   3,
                   13
                 );
-                return request('PATCH', `/residentmobileapp/vid/${vidID}`, {
-                  transactionID: transactionId,
-                  vidStatus: 'REVOKED',
-                  individualId: vidID,
-                  individualIdType: 'VID',
-                  otp: context.otp,
-                });
+                return request(
+                  'PATCH',
+                  `/residentmobileapp/vid/${metadata.id}`,
+                  {
+                    transactionID: transactionId,
+                    vidStatus: 'REVOKED',
+                    individualId: metadata.id,
+                    individualIdType: 'VID',
+                    otp: context.otp,
+                  }
+                );
               } catch (error) {
                 console.log('error.message', error.message);
                 return error;

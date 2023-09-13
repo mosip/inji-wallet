@@ -496,7 +496,7 @@ export async function getItem(
       const decryptedData = await decryptJson(encryptionKey, data);
       return JSON.parse(decryptedData);
     }
-    if (data === null && VCMetadata.isValid(key)) {
+    if (data === null && VCMetadata.isVCKey(key)) {
       await removeItem(key, data, encryptionKey);
       throw new Error(tamperedErrorMessageString);
     } else {
@@ -552,15 +552,18 @@ export async function updateItem(
   value: string,
   encryptionKey: string
 ) {
+  // Used for updating VC metadata in the list. Prepends the passed vcmetadata in value and sets ispinned of other vc metadata to false
   try {
     const list = await getItem(key, [], encryptionKey);
+    const updatedMetaData = JSON.parse(value);
     const newList = [
       value,
-      ...list.map((item) => {
-        const vc = item.split(':');
-        if (vc[3] !== value.split(':')[3]) {
-          vc[4] = 'false';
-          return vc.join(':');
+      ...list.map((metadataStr) => {
+        const metaData = JSON.parse(metadataStr);
+        if (metaData.uniqueId() !== updatedMetaData.uniqueId()) {
+          // Setting other VC's pinned status to false. TODO: Need to refactor this
+          metaData.isPinned = false;
+          return JSON.stringify(metaData);
         }
       }),
     ].filter((value) => value != undefined && value !== null);
@@ -578,19 +581,15 @@ export async function removeItem(
   encryptionKey: string
 ) {
   try {
-    if (value === null && VCMetadata.isValid(key)) {
+    if (value === null && VCMetadata.isVCKey(key)) {
       await Storage.removeItem(key);
       await removeVCMetaData(MY_VCS_STORE_KEY, key, encryptionKey);
-    } else {
+    } else if (key === MY_VCS_STORE_KEY) {
       const data = await Storage.getItem(key, encryptionKey);
       const decryptedData = await decryptJson(encryptionKey, data);
-      const list = JSON.parse(decryptedData);
-      const vcKeyArray = value.split(':');
-      const finalVcKeyArray = vcKeyArray.pop();
-      const finalVcKey = vcKeyArray.join(':');
-      //console.log('finalVcKeyArray', finalVcKeyArray);
-      const newList = list.filter((vc: string) => {
-        return !vc.includes(finalVcKey);
+      const list = JSON.parse(decryptedData) as VCMetadata[];
+      const newList = list.filter((vc: VCMetadata) => {
+        return vc.uniqueId() !== value;
       });
 
       await setItem(key, newList, encryptionKey);
@@ -604,15 +603,15 @@ export async function removeItem(
 
 export async function removeVCMetaData(
   key: string,
-  value: string,
+  vcKey: string,
   encryptionKey: string
 ) {
   try {
     const data = await Storage.getItem(key, encryptionKey);
     const decryptedData = await decryptJson(encryptionKey, data);
-    const list = JSON.parse(decryptedData);
-    const newList = list.filter((vc: string) => {
-      return !vc.includes(value);
+    const list = JSON.parse(decryptedData) as VCMetadata[];
+    const newList = list.filter((metadata: VCMetadata) => {
+      return metadata.getVcKey() !== vcKey;
     });
 
     await setItem(key, newList, encryptionKey);
@@ -630,14 +629,9 @@ export async function removeItems(
   try {
     const data = await Storage.getItem(key, encryptionKey);
     const decryptedData = await decryptJson(encryptionKey, data);
-    const list = JSON.parse(decryptedData);
-    const newList = list.filter(function (vc: string) {
-      return !values.find(function (vcKey: string) {
-        const vcKeyArray = vcKey.split(':');
-        const finalVcKeyArray = vcKeyArray.pop();
-        const finalVcKey = vcKeyArray.join(':');
-        return vc.includes(finalVcKey);
-      });
+    const list = JSON.parse(decryptedData) as VCMetadata[];
+    const newList = list.filter(function (vc: VCMetadata) {
+      return !values.includes(vc.uniqueId());
     });
 
     await setItem(key, newList, encryptionKey);

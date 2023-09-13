@@ -80,7 +80,7 @@ export const SendVcScreen: React.FC = () => {
         <Column scroll>
           {controller.shareableVcsMetadata.map((vcMetadata, index) => (
             <VcItem
-              key={vcMetadata.toString()}
+              key={vcMetadata.uniqueId()}
               vcMetadata={vcMetadata}
               margin="0 2 8 2"
               onPress={controller.SELECT_VC_ITEM(index)}

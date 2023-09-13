@@ -18,6 +18,7 @@ import {
 import { selectActivities } from '../machines/activityLog';
 import { GlobalContext } from '../shared/GlobalContext';
 import { useContext } from 'react';
+import { VCMetadata } from '../shared/VCMetadata';
 
 export function useKebabPopUp(props) {
   const service = props.service as ActorRefFrom<typeof vcItemMachine>;
@@ -26,7 +27,7 @@ export function useKebabPopUp(props) {
   const ADD_WALLET_BINDING_ID = () =>
     service.send(VcItemEvents.ADD_WALLET_BINDING_ID());
   const CONFIRM = () => service.send(VcItemEvents.CONFIRM());
-  const REMOVE = (vcMetadata: string) =>
+  const REMOVE = (vcMetadata: VCMetadata) =>
     service.send(VcItemEvents.REMOVE(vcMetadata));
   const DISMISS = () => service.send(VcItemEvents.DISMISS());
   const CANCEL = () => service.send(VcItemEvents.CANCEL());

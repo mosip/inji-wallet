@@ -141,7 +141,7 @@ export const vcMachine =
               actions: 'removeVcFromMyVcs',
             },
             VC_UPDATED: {
-              actions: ['updateMyVcs', 'setUpdateVc'],
+              actions: ['updateMyVcs', 'setUpdatedVcMetadatas'],
             },
             VC_DOWNLOADED: {
               actions: 'setDownloadedVc',
@@ -184,19 +184,13 @@ export const vcMachine =
 
         setMyVcs: model.assign({
           myVcs: (_context, event) => {
-            const myVcsMetadataString = (event.response || []) as string[];
-            return myVcsMetadataString.map((keyString) =>
-              VCMetadata.fromVCKey(keyString)
-            );
+            return parseMetadata((event.response || []) as string[]);
           },
         }),
 
         setReceivedVcs: model.assign({
           receivedVcs: (_context, event) => {
-            const myReceivedVcs = (event.response || []) as string[];
-            return myReceivedVcs.map((keyString) =>
-              VCMetadata.fromVCKey(keyString)
-            );
+            return parseMetadata((event.response || []) as string[]);
           },
         }),
 
@@ -206,24 +200,22 @@ export const vcMachine =
         },
 
         setVcUpdate: (context, event) => {
-          Object.keys(context.vcs).map((vcKeyStr) => {
+          Object.keys(context.vcs).map((vcUniqueId) => {
             const eventVCMetadata = VCMetadata.fromVC(event.vc, true);
-            const vcMetadata = VCMetadata.fromVCKey(vcKeyStr);
 
-            if (vcMetadata.equals(eventVCMetadata)) {
-              context.vcs[eventVCMetadata.uniqueId()] =
-                context.vcs[vcMetadata.uniqueId()];
-              delete context.vcs[vcMetadata.uniqueId()];
+            if (vcUniqueId === eventVCMetadata.uniqueId()) {
+              context.vcs[eventVCMetadata.uniqueId()] = context.vcs[vcUniqueId];
+              delete context.vcs[vcUniqueId];
               return context.vcs[eventVCMetadata.uniqueId()];
             }
           });
         },
 
-        setUpdateVc: send(
+        setUpdatedVcMetadatas: send(
           (_context, event) => {
             return StoreEvents.UPDATE(
               MY_VCS_STORE_KEY,
-              event.vcMetadata.toString()
+              JSON.stringify(event.vcMetadata)
             );
           },
           { to: (context) => context.serviceRefs.store }
@@ -327,4 +319,13 @@ export function selectBindedVcsMetadata(state: State): VCMetadata[] {
 
 function isEmpty(object) {
   return object == null || object == '' || object == undefined;
+}
+
+function parseMetadata(metadataStrings: string[]) {
+  try {
+    return metadataStrings.map((s) => JSON.parse(s) as VCMetadata);
+  } catch (e) {
+    console.error('Failed to parse VC Metadata', e);
+    return [];
+  }
 }

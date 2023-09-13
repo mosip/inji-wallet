@@ -217,7 +217,7 @@ export const MyVcsTabMachine = model.createMachine(
         (_context, event) => {
           return StoreEvents.PREPEND(
             MY_VCS_STORE_KEY,
-            (event as DoneInvokeEvent<string>).data
+            JSON.stringify((event as DoneInvokeEvent<VCMetadata>).data)
           );
         },
         { to: (context) => context.serviceRefs.store }

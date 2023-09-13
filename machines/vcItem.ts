@@ -37,7 +37,7 @@ const model = createModel(
     id: '',
     idType: '' as VcIdType,
     tag: '',
-    vcMetadata: '' as string,
+    vcMetadata: {} as VCMetadata,
     myVcs: [] as string[],
     generatedOn: null as Date,
     credential: null as DecodedCredential,
@@ -88,7 +88,7 @@ const model = createModel(
       PIN_CARD: () => ({}),
       KEBAB_POPUP: () => ({}),
       SHOW_ACTIVITY: () => ({}),
-      REMOVE: (vcKey: string) => ({ vcKey }),
+      REMOVE: (vcMetadata: VCMetadata) => ({ vcMetadata }),
     },
   }
 );
@@ -774,7 +774,7 @@ export const vcItemMachine =
           (context) => {
             return StoreEvents.REMOVE_VC_METADATA(
               MY_VCS_STORE_KEY,
-              VCMetadata.fromVC(context, true).toString()
+              VCMetadata.fromVC(context, true).getVcKey()
             );
           },
           {
@@ -786,7 +786,7 @@ export const vcItemMachine =
           (context) => {
             return {
               type: 'REMOVE_VC_FROM_CONTEXT',
-              vcKey: VCMetadata.fromVC(context, true).toString(),
+              vcMetadata: VCMetadata.fromVC(context, true),
             };
           },
           {
@@ -899,7 +899,7 @@ export const vcItemMachine =
 
         requestStoredContext: send(
           (context) =>
-            StoreEvents.GET(VCMetadata.fromVC(context, true).toString()),
+            StoreEvents.GET(VCMetadata.fromVC(context, true).getVcKey()),
           {
             to: (context) => context.serviceRefs.store,
           }
@@ -910,7 +910,7 @@ export const vcItemMachine =
             const { serviceRefs, ...data } = context;
             data.credentialRegistry = HOST;
             return StoreEvents.SET(
-              VCMetadata.fromVC(context, true).toString(),
+              VCMetadata.fromVC(context, true).getVcKey(),
               data
             );
           },
@@ -922,7 +922,7 @@ export const vcItemMachine =
         editVcKey: send((context) => {
           const { serviceRefs, ...data } = context;
           return StoreEvents.SET(
-            VCMetadata.fromVC(context, false).toString(),
+            VCMetadata.fromVC(context, false).getVcKey(),
             data
           );
         }),
@@ -949,7 +949,7 @@ export const vcItemMachine =
           (context) => {
             const { serviceRefs, ...data } = context;
             return StoreEvents.SET(
-              VCMetadata.fromVC(context, true).toString(),
+              VCMetadata.fromVC(context, true).getVcKey(),
               data
             );
           },
@@ -970,7 +970,7 @@ export const vcItemMachine =
           (context) => {
             const { serviceRefs, ...data } = context;
             return ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VCMetadata.fromVC(data, true).toString(),
+              _vcKey: VCMetadata.fromVC(data, true).getVcKey(),
               type: 'VC_DOWNLOADED',
               timestamp: Date.now(),
               deviceName: '',
@@ -985,7 +985,7 @@ export const vcItemMachine =
         logWalletBindingSuccess: send(
           (context) =>
             ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VCMetadata.fromVC(context, true).toString(),
+              _vcKey: VCMetadata.fromVC(context, true).getVcKey(),
               type: 'WALLET_BINDING_SUCCESSFULL',
               timestamp: Date.now(),
               deviceName: '',
@@ -999,7 +999,7 @@ export const vcItemMachine =
         logWalletBindingFailure: send(
           (context) =>
             ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VCMetadata.fromVC(context, true).toString(),
+              _vcKey: VCMetadata.fromVC(context, true).getVcKey(),
               type: 'WALLET_BINDING_FAILURE',
               timestamp: Date.now(),
               deviceName: '',
@@ -1013,7 +1013,7 @@ export const vcItemMachine =
         logRevoked: send(
           (context) =>
             ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VCMetadata.fromVC(context, true).toString(),
+              _vcKey: VCMetadata.fromVC(context, true).getVcKey(),
               type: 'VC_REVOKED',
               timestamp: Date.now(),
               deviceName: '',
@@ -1028,7 +1028,7 @@ export const vcItemMachine =
           (context) => {
             return StoreEvents.REMOVE(
               MY_VCS_STORE_KEY,
-              VCMetadata.fromVC(context, true).toString()
+              VCMetadata.fromVC(context, true).uniqueId()
             );
           },
           {
@@ -1055,7 +1055,7 @@ export const vcItemMachine =
         }),
 
         setVcKey: model.assign({
-          vcKey: (_, event) => event.vcKey,
+          vcMetadata: (_, event) => event.vcMetadata,
         }),
 
         setOtpError: assign({
@@ -1077,7 +1077,7 @@ export const vcItemMachine =
           (context) => {
             const { serviceRefs, ...data } = context;
             return StoreEvents.SET(
-              VCMetadata.fromVC(context, true).toString(),
+              VCMetadata.fromVC(context, true).getVcKey(),
               data
             );
           },
@@ -1086,7 +1086,10 @@ export const vcItemMachine =
 
         removeVcItem: send(
           (_context) => {
-            return StoreEvents.REMOVE(MY_VCS_STORE_KEY, _context.vcMetadata);
+            return StoreEvents.REMOVE(
+              MY_VCS_STORE_KEY,
+              _context.vcMetadata.uniqueId()
+            );
           },
           { to: (context) => context.serviceRefs.store }
         ),
@@ -1094,7 +1097,7 @@ export const vcItemMachine =
         logVCremoved: send(
           (context, _) =>
             ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VCMetadata.fromVC(context, true).toString(),
+              _vcKey: VCMetadata.fromVC(context, true).getVcKey(),
               type: 'VC_REMOVED',
               timestamp: Date.now(),
               deviceName: '',

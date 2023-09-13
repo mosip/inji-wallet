@@ -65,10 +65,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
           <ListItem bottomDivider>
             <ListItem.Content>
               <ListItem.Title>
-                <Pressable
-                  onPress={() =>
-                    controller.REMOVE(props.vcMetadata.toString())
-                  }>
+                <Pressable onPress={() => controller.REMOVE(props.vcMetadata)}>
                   <Text size="small" weight="bold">
                     {t('removeFromWallet')}
                   </Text>

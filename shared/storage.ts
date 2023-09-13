@@ -53,7 +53,7 @@ class Storage {
     encryptionKey?: string
   ) => {
     try {
-      const isSavingVC = VCMetadata.isValid(key);
+      const isSavingVC = VCMetadata.isVCKey(key);
       if (isSavingVC) {
         await this.storeVcHmac(encryptionKey, data, key);
         return await this.storeVC(key, data);
@@ -68,9 +68,9 @@ class Storage {
 
   static getItem = async (key: string, encryptionKey?: string) => {
     try {
-      const isSavingVC = VCMetadata.isValid(key);
+      const isVCKey = VCMetadata.isVCKey(key);
 
-      if (isSavingVC) {
+      if (isVCKey) {
         const data = await this.readVCFromFile(key);
         const isCorrupted = await this.isCorruptedVC(key, encryptionKey, data);
 
@@ -121,7 +121,7 @@ class Storage {
   }
 
   static removeItem = async (key: string) => {
-    if (VCMetadata.isValid(key)) {
+    if (VCMetadata.isVCKey(key)) {
       const path = getFilePath(key);
       return await unlink(path);
     }
@@ -155,6 +155,7 @@ class Storage {
     return freeDiskStorageInBytes <= minimumStorageLimitInBytes;
   };
 }
+
 /**
  * The VC file name will not have the pinned / unpinned state, we will splice the state as this will change.
  * replace ':' with '_' in the key to get the file name as ':' are not allowed in filenames
@@ -170,8 +171,7 @@ const getFileName = (key: string) => {
  * These paths are coming from DocumentDirectoryPath in react-native-fs.
  */
 const getFilePath = (key: string) => {
-  const fileName = getFileName(key);
-  return `${vcDirectoryPath}/${fileName}.txt`;
+  return `${key}.txt`;
 };
 
 /**
@@ -179,12 +179,30 @@ const getFilePath = (key: string) => {
  * eg: "vc:UIN:6732935275:e7426576-112f-466a-961a-1ed9635db628:true" is changed to "vc:UIN:6732935275:e7426576-112f-466a-961a-1ed9635db628"
  */
 const getVCKeyName = (key: string) => {
-  return key.split(':').splice(0, 4).join(':');
+  return key;
+};
+
+export const logMMKVData = async () => {
+  const keys = await getMMKVData();
+  const database = {};
+
+  console.log('MMKV STORE LOG');
+  for (const k of keys) {
+    const item = await MMKV.getItem(k);
+    try {
+      if (item) {
+        database[k] = await decryptJson('', item);
+      }
+    } catch (e) {
+      database[k] = 'failed to decrypt';
+    }
+  }
+  console.log(JSON.stringify(database, null, 4));
 };
 
 // To print the MMKV data cal this function in getItem
 const getMMKVData = async () => {
-  const mmkvData = await MMKV.indexer.getKeys();
+  return await MMKV.indexer.getKeys();
 };
 
 export default Storage;

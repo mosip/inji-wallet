@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RefreshControl } from 'react-native';
 import { Icon } from 'react-native-elements';
@@ -7,10 +7,15 @@ import { Theme } from '../../components/ui/styleUtils';
 import { HomeScreenTabProps } from './HomeScreen';
 import { useReceivedVcsTab } from './ReceivedVcsTabController';
 import { VcItem } from '../../components/VcItem';
+import { logMMKVData } from '../../shared/storage';
 
 export const ReceivedVcsTab: React.FC<HomeScreenTabProps> = (props) => {
   const { t } = useTranslation('ReceivedVcsTab');
   const controller = useReceivedVcsTab();
+
+  useEffect(() => {
+    logMMKVData();
+  }, [props.isVisible]);
 
   return (
     <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
@@ -25,7 +30,7 @@ export const ReceivedVcsTab: React.FC<HomeScreenTabProps> = (props) => {
         }>
         {controller.receivedVcsMetadata.map((vcMetadata) => (
           <VcItem
-            key={vcMetadata.toString()}
+            key={vcMetadata.uniqueId()}
             vcMetadata={vcMetadata}
             margin="0 2 8 2"
             onPress={controller.VIEW_VC}

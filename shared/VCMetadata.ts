@@ -55,26 +55,16 @@ export class VCMetadata {
     }
   }
 
-  static isValid(key): boolean {
+  static isVCKey(key): boolean {
     return VCMetadata.vcKeyRegExp.exec(key) != null;
   }
 
-  // returns `vc:${vc.idType}:${vc.hashedId}:${vc.requestId}:${vc.isPinned}:${vc.id}`;
-  toString() {
-    const keyComponents = [
-      'vc',
-      this.idType,
-      this.hashedId,
-      this.requestId,
-      this.isPinned,
-      this.id,
-    ];
-
-    const validComponents = keyComponents.filter((c) => c !== null);
-
-    return validComponents.join(':');
+  // Used for mmkv storage purposes
+  getVcKey(): string {
+    return 'VC_' + this.uniqueId();
   }
 
+  // used as key to vc list map and other components
   uniqueId(): string {
     return this.requestId;
   }

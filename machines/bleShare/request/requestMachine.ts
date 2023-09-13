@@ -65,7 +65,7 @@ const model = createModel(
       STORE_ERROR: (error: Error) => ({ error }),
       RECEIVE_DEVICE_INFO: (info: DeviceInfo) => ({ info }),
       RECEIVED_VCS_UPDATED: () => ({}),
-      VC_RESPONSE: (response: unknown) => ({ response }),
+      VC_RESPONSE: (vcMetadatas: VCMetadata[]) => ({ vcMetadatas }),
       GOTO_SETTINGS: () => ({}),
       APP_ACTIVE: () => ({}),
       FACE_VALID: () => ({}),
@@ -566,7 +566,7 @@ export const requestMachine =
           (context) =>
             StoreEvents.PREPEND(
               RECEIVED_VCS_STORE_KEY,
-              VCMetadata.fromVC(context.incomingVc, true).toString()
+              JSON.stringify(VCMetadata.fromVC(context.incomingVc, true))
             ),
           { to: (context) => context.serviceRefs.store }
         ),
@@ -574,7 +574,7 @@ export const requestMachine =
         requestExistingVc: send(
           (context) =>
             StoreEvents.GET(
-              VCMetadata.fromVC(context.incomingVc, true).toString()
+              VCMetadata.fromVC(context.incomingVc, true).getVcKey()
             ),
           { to: (context) => context.serviceRefs.store }
         ),
@@ -587,7 +587,7 @@ export const requestMachine =
               reason: existing.reason.concat(context.incomingVc.reason),
             };
             return StoreEvents.SET(
-              VCMetadata.fromVC(updated, true).toString(),
+              VCMetadata.fromVC(updated, true).getVcKey(),
               updated
             );
           },
@@ -597,7 +597,7 @@ export const requestMachine =
         storeVc: send(
           (context) =>
             StoreEvents.SET(
-              VCMetadata.fromVC(context.incomingVc, true).toString(),
+              VCMetadata.fromVC(context.incomingVc, true).getVcKey(),
               context.incomingVc
             ),
           { to: (context) => context.serviceRefs.store }
@@ -622,7 +622,7 @@ export const requestMachine =
         logReceived: send(
           (context) =>
             ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VCMetadata.fromVC(context.incomingVc, true).toString(),
+              _vcKey: VCMetadata.fromVC(context.incomingVc, true).getVcKey(),
               type: context.receiveLogType,
               timestamp: Date.now(),
               deviceName:
@@ -635,7 +635,7 @@ export const requestMachine =
         sendVcReceived: send(
           (context) => {
             return VcEvents.VC_RECEIVED(
-              VCMetadata.fromVC(context.incomingVc, true).toString()
+              VCMetadata.fromVC(context.incomingVc, true)
             );
           },
           { to: (context) => context.serviceRefs.vc }
@@ -795,12 +795,15 @@ export const requestMachine =
 
       guards: {
         hasExistingVc: (context, event) => {
-          const receivedVcs = event.response as string[];
-          const vcMetadata = VCMetadata.fromVC(
+          const receivedVcs = event.vcMetadatas;
+          const incomingVcMetadata = VCMetadata.fromVC(
             context.incomingVc,
             true
-          ).toString();
-          return receivedVcs.includes(vcMetadata);
+          );
+          return receivedVcs.some(
+            (vcMetadata) =>
+              vcMetadata.uniqueId() == incomingVcMetadata.uniqueId()
+          );
         },
 
         isMinimumStorageLimitReached: (_context, event) => Boolean(event.data),
