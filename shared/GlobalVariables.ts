@@ -71,6 +71,18 @@ export class __DeviceId {
   }
 }
 
+export class __SelectedLanguage {
+  private static language: string;
+
+  public static getValue(): string {
+    return __SelectedLanguage.language;
+  }
+
+  public static setValue(currentLangauge: string) {
+    this.language = currentLangauge;
+  }
+}
+
 function generateSessionId() {
   const shortUUID = new ShortUniqueId({
     length: APP_ID_LENGTH,
