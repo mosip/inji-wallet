@@ -34,7 +34,7 @@ export const BindingVcWarningOverlay: React.FC<QrLoginWarningProps> = props => {
           </Text>
 
           <Text
-            testID="bindingWarning"
+            testID="warningForBindingVc"
             align="center"
             size="small"
             weight="semibold"

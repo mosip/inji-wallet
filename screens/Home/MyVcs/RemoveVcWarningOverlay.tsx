@@ -36,7 +36,7 @@ export const RemoveVcWarningOverlay: React.FC<
           </Text>
 
           <Text
-            testID="removeWarning"
+            testID="warningForRemoveVc"
             align="center"
             size="small"
             weight="semibold"
