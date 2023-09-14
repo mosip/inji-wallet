@@ -1,7 +1,6 @@
 import { getVersion } from 'react-native-device-info';
 import ShortUniqueId from 'short-unique-id';
 import { APP_ID_LENGTH } from './constants';
-import { getUniqueId } from 'react-native-device-info';
 /* eslint-disable @typescript-eslint/no-var-requires */
 const dependencies = require('../package-lock.json').dependencies;
 
@@ -63,16 +62,9 @@ export class __SessionId {
     return __SessionId.value;
   }
 }
-export class __DeviceId {
-  private static value = getUniqueId();
-
-  public static getValue(): string {
-    return __DeviceId.value;
-  }
-}
 
 export class __SelectedLanguage {
-  private static language: string;
+  private static language = '';
 
   public static getValue(): string {
     return __SelectedLanguage.language;
