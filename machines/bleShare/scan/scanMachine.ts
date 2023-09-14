@@ -41,6 +41,7 @@ import Storage from '../../../shared/storage';
 import {logState} from '../../app';
 import {
   getData,
+  getEndData,
   sendStartEvent,
   sendEndEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
@@ -557,7 +558,7 @@ export const scanMachine =
               },
             },
             accepted: {
-            entry: ['logShared', () => sendEndEvent(getData('VC share'))],
+              entry: ['logShared', () => sendEndEvent(getEndData('VC share'))],
               on: {
                 DISMISS: {
                   target: 'navigatingToHome',

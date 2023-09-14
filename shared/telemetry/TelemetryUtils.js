@@ -52,6 +52,13 @@ export function getData(type) {
   };
 }
 
+export function getEndData(type) {
+  return {
+    type: type,
+    status: 'SUCCESS',
+  };
+}
+
 export function getAppInfoData() {
   return {
     env: HOST,
