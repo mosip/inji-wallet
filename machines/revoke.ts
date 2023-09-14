@@ -224,7 +224,7 @@ export const revokeVidsMachine =
           (context) => {
             return StoreEvents.REMOVE_ITEMS(
               MY_VCS_STORE_KEY,
-              context.VIDsMetadata.map((m) => m.uniqueId())
+              context.VIDsMetadata.map((m) => m.getVcKey())
             );
           },
           {

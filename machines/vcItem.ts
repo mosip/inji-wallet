@@ -1028,7 +1028,7 @@ export const vcItemMachine =
           (context) => {
             return StoreEvents.REMOVE(
               MY_VCS_STORE_KEY,
-              VCMetadata.fromVC(context, true).uniqueId()
+              VCMetadata.fromVC(context, true).getVcKey()
             );
           },
           {
@@ -1088,7 +1088,7 @@ export const vcItemMachine =
           (_context) => {
             return StoreEvents.REMOVE(
               MY_VCS_STORE_KEY,
-              _context.vcMetadata.uniqueId()
+              _context.vcMetadata.getVcKey()
             );
           },
           { to: (context) => context.serviceRefs.store }

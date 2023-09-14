@@ -21,13 +21,14 @@ import {
   getPrivateKey,
 } from '../shared/keystore/SecureKeystore';
 import i18n from '../i18n';
+import { parseMetadatas, VCMetadata } from '../shared/VCMetadata';
 
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
     selectedVc: {} as VC,
     linkCode: '',
-    myVcs: [] as string[],
+    myVcs: [] as VCMetadata[],
     thumbprint: '',
     linkTransactionResponse: {} as linkTransactionResponse,
     authFactors: [],
@@ -245,12 +246,14 @@ export const qrLoginMachine =
           linkCode: (context, event) => event.value,
         }),
 
+        // TODO: loaded VCMetadatas are not used anywhere. remove?
         loadMyVcs: send(StoreEvents.GET(MY_VCS_STORE_KEY), {
           to: (context) => context.serviceRefs.store,
         }),
 
         setMyVcs: model.assign({
-          myVcs: (_context, event) => (event.response || []) as string[],
+          myVcs: (_context, event) =>
+            parseMetadatas((event.response || []) as string[]),
         }),
 
         loadThumbprint: send(

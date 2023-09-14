@@ -171,7 +171,7 @@ const getFileName = (key: string) => {
  * These paths are coming from DocumentDirectoryPath in react-native-fs.
  */
 const getFilePath = (key: string) => {
-  return `${key}.txt`;
+  return `${vcDirectoryPath}/${key}.txt`;
 };
 
 /**
@@ -187,7 +187,7 @@ export const logMMKVData = async () => {
   const database = {};
 
   console.log('MMKV STORE LOG');
-  for (const k of keys) {
+  for (const k of ['myVCs']) {
     const item = await MMKV.getItem(k);
     try {
       if (item) {

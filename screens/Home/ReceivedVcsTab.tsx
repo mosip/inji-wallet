@@ -30,7 +30,7 @@ export const ReceivedVcsTab: React.FC<HomeScreenTabProps> = (props) => {
         }>
         {controller.receivedVcsMetadata.map((vcMetadata) => (
           <VcItem
-            key={vcMetadata.uniqueId()}
+            key={vcMetadata.getVcKey()}
             vcMetadata={vcMetadata}
             margin="0 2 8 2"
             onPress={controller.VIEW_VC}

@@ -78,16 +78,16 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
                     {controller.uniqueVidsMetadata.map((vcMetadata, index) => {
                       return (
                         <VidItem
-                          key={`${vcMetadata.uniqueId()}-${index}`}
+                          key={`${vcMetadata.getVcKey()}-${index}`}
                           vcMetadata={vcMetadata}
                           margin="0 2 8 2"
                           onPress={controller.selectVcItem(
                             index,
-                            vcMetadata.uniqueId()
+                            vcMetadata.getVcKey()
                           )}
                           selectable
                           selected={controller.selectedVidUniqueIds.includes(
-                            vcMetadata.uniqueId()
+                            vcMetadata.getVcKey()
                           )}
                         />
                       );
@@ -136,7 +136,7 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
                     <Text margin="0 0 0 0" weight="bold">
                       {/*TODO: Change this to UIN? and Optimize*/}
                       {controller.uniqueVidsMetadata.find(
-                        (metadata) => metadata.uniqueId() === uniqueId
+                        (metadata) => metadata.getVcKey() === uniqueId
                       ) ?? 'N/A'}
                     </Text>
                   </View>

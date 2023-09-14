@@ -23,7 +23,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
   const controller = useMyVcsTab(props);
   const storeErrorTranslationPath = 'errors.savingFailed';
   const [pinned, unpinned] = groupBy(
-    controller.vcsMetadata,
+    controller.vcMetadatas,
     (vcMetadata) => vcMetadata.isPinned
   );
   const vcMetadataOrderedByPinStatus = pinned.concat(unpinned);
@@ -106,7 +106,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
               />
             </React.Fragment>
           )}
-          {controller.vcsMetadata.length === 0 && (
+          {controller.vcMetadatas.length === 0 && (
             <React.Fragment>
               <Column fill style={Theme.Styles.homeScreenContainer}>
                 <Image source={Theme.DigitalIdentityLogo} />

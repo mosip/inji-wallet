@@ -225,7 +225,9 @@ export const MyVcsTabMachine = model.createMachine(
 
       sendVcAdded: send(
         (_context, event) =>
-          VcEvents.VC_ADDED(VCMetadata.fromVCKey(event.response)),
+          VcEvents.VC_ADDED(
+            VCMetadata.fromVcMetadataString(event.response as string)
+          ),
         {
           to: (context) => context.serviceRefs.vc,
         }

@@ -1,8 +1,7 @@
-//Regex expression to evaluate if the key is for a VC
 import { VC, VcIdType } from '../types/vc';
 
-const VC_ITEM_STORE_KEY_REGEX =
-  '^vc:(UIN|VID):[a-z0-9]+:[a-z0-9-]+:[true|false]+(:[0-9-]+)?$';
+const VC_KEY_PREFIX = 'VC';
+const VC_ITEM_STORE_KEY_REGEX = '^VC_[a-z0-9-]+$';
 
 export class VCMetadata {
   idType: VcIdType | string = '';
@@ -36,21 +35,11 @@ export class VCMetadata {
     });
   }
 
-  static fromVCKey(vcKey) {
+  static fromVcMetadataString(vcMetadataStr: string) {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const [prefix, idType, hashedId, requestId, isPinned, id] =
-        vcKey.split(':');
-
-      return new VCMetadata({
-        idType: idType,
-        hashedId: hashedId,
-        requestId: requestId,
-        isPinned: isPinned === 'true',
-        id: id ? id : null,
-      });
+      return new VCMetadata(JSON.parse(vcMetadataStr));
     } catch (e) {
-      console.error('Invalid VC Key provided');
+      console.error('Failed to parse VC Metadata', e);
       return new VCMetadata();
     }
   }
@@ -59,17 +48,17 @@ export class VCMetadata {
     return VCMetadata.vcKeyRegExp.exec(key) != null;
   }
 
-  // Used for mmkv storage purposes
+  // Used for mmkv storage purposes and as a key for components and vc maps
+  // Update VC_ITEM_STORE_KEY_REGEX in case of changes in vckey
   getVcKey(): string {
-    return 'VC_' + this.uniqueId();
-  }
-
-  // used as key to vc list map and other components
-  uniqueId(): string {
-    return this.requestId;
+    return `${VC_KEY_PREFIX}_${this.requestId}`;
   }
 
   equals(other: VCMetadata): boolean {
-    return this.uniqueId() === other.uniqueId();
+    return this.getVcKey() === other.getVcKey();
   }
+}
+
+export function parseMetadatas(metadataStrings: string[]) {
+  return metadataStrings.map((s) => VCMetadata.fromVcMetadataString(s));
 }

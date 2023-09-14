@@ -6,7 +6,7 @@ import { AppServices } from '../shared/GlobalContext';
 import { log, respond } from 'xstate/lib/actions';
 import { VcItemEvents } from './vcItem';
 import { MY_VCS_STORE_KEY, RECEIVED_VCS_STORE_KEY } from '../shared/constants';
-import { VCMetadata } from '../shared/VCMetadata';
+import { parseMetadatas, VCMetadata } from '../shared/VCMetadata';
 
 const model = createModel(
   {
@@ -170,7 +170,7 @@ export const vcMachine =
         })),
 
         getVcItemResponse: respond((context, event) => {
-          const vc = context.vcs[event.vcMetadata?.uniqueId()];
+          const vc = context.vcs[event.vcMetadata?.getVcKey()];
           return VcItemEvents.GET_VC_RESPONSE(vc);
         }),
 
@@ -184,18 +184,18 @@ export const vcMachine =
 
         setMyVcs: model.assign({
           myVcs: (_context, event) => {
-            return parseMetadata((event.response || []) as string[]);
+            return parseMetadatas((event.response || []) as string[]);
           },
         }),
 
         setReceivedVcs: model.assign({
           receivedVcs: (_context, event) => {
-            return parseMetadata((event.response || []) as string[]);
+            return parseMetadatas((event.response || []) as string[]);
           },
         }),
 
         setDownloadedVc: (context, event) => {
-          const vcUniqueId = VCMetadata.fromVC(event.vc, true).uniqueId();
+          const vcUniqueId = VCMetadata.fromVC(event.vc, true).getVcKey();
           context.vcs[vcUniqueId] = event.vc;
         },
 
@@ -203,10 +203,10 @@ export const vcMachine =
           Object.keys(context.vcs).map((vcUniqueId) => {
             const eventVCMetadata = VCMetadata.fromVC(event.vc, true);
 
-            if (vcUniqueId === eventVCMetadata.uniqueId()) {
-              context.vcs[eventVCMetadata.uniqueId()] = context.vcs[vcUniqueId];
+            if (vcUniqueId === eventVCMetadata.getVcKey()) {
+              context.vcs[eventVCMetadata.getVcKey()] = context.vcs[vcUniqueId];
               delete context.vcs[vcUniqueId];
-              return context.vcs[eventVCMetadata.uniqueId()];
+              return context.vcs[eventVCMetadata.getVcKey()];
             }
           });
         },
@@ -287,7 +287,7 @@ export function selectMyVcsMetadata(state: State): VCMetadata[] {
 
 export function selectShareableVcsMetadata(state: State): VCMetadata[] {
   return state.context.myVcs.filter(
-    (vcMetadata) => state.context.vcs[vcMetadata.uniqueId()]?.credential != null
+    (vcMetadata) => state.context.vcs[vcMetadata.getVcKey()]?.credential != null
   );
 }
 
@@ -309,7 +309,7 @@ export function selectIsRefreshingReceivedVcs(state: State) {
 export function selectBindedVcsMetadata(state: State): VCMetadata[] {
   return state.context.myVcs.filter((vcMetadata) => {
     const walletBindingResponse =
-      state.context.vcs[vcMetadata.uniqueId()]?.walletBindingResponse;
+      state.context.vcs[vcMetadata.getVcKey()]?.walletBindingResponse;
     return (
       !isEmpty(walletBindingResponse) &&
       !isEmpty(walletBindingResponse?.walletBindingId)
@@ -319,13 +319,4 @@ export function selectBindedVcsMetadata(state: State): VCMetadata[] {
 
 function isEmpty(object) {
   return object == null || object == '' || object == undefined;
-}
-
-function parseMetadata(metadataStrings: string[]) {
-  try {
-    return metadataStrings.map((s) => JSON.parse(s) as VCMetadata);
-  } catch (e) {
-    console.error('Failed to parse VC Metadata', e);
-    return [];
-  }
 }

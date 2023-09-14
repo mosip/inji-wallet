@@ -41,7 +41,7 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
     AddVcModalService: useSelector(service, selectAddVcModal),
     GetVcModalService: useSelector(service, selectGetVcModal),
 
-    vcsMetadata: useSelector(vcService, selectMyVcsMetadata),
+    vcMetadatas: useSelector(vcService, selectMyVcsMetadata),
     isTampered: useSelector(storeService, selectIsTampered),
 
     isRefreshingVcs: useSelector(vcService, selectIsRefreshingMyVcs),

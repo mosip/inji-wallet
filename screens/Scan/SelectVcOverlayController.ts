@@ -35,7 +35,7 @@ export function useSelectVcOverlay(props: SelectVcOverlayProps) {
 export interface SelectVcOverlayProps {
   isVisible: boolean;
   receiverName: string;
-  vcsMetadata: VCMetadata[];
+  vcMetadatas: VCMetadata[];
   onSelect: (vc: VC) => void;
   onVerifyAndSelect: (vc: VC) => void;
   onCancel: () => void;

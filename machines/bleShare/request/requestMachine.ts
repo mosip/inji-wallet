@@ -802,7 +802,7 @@ export const requestMachine =
           );
           return receivedVcs.some(
             (vcMetadata) =>
-              vcMetadata.uniqueId() == incomingVcMetadata.uniqueId()
+              vcMetadata.getVcKey() == incomingVcMetadata.getVcKey()
           );
         },
 
