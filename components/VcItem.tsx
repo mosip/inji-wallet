@@ -1,6 +1,6 @@
 import React, { useContext, useRef } from 'react';
 import { useInterpret, useSelector } from '@xstate/react';
-import { Pressable } from 'react-native';
+import { Pressable, View, ImageBackground } from 'react-native';
 import { ActorRefFrom } from 'xstate';
 import {
   createVcItemMachine,
@@ -57,18 +57,24 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
             ? Theme.Styles.selectedBindedVc
             : Theme.Styles.closeCardBgContainer
         }>
-        <VcItemContent
-          context={context}
-          verifiableCredential={verifiableCredential}
-          generatedOn={generatedOn}
-          tag={tag}
-          selectable={props.selectable}
-          selected={props.selected}
-          service={service}
-          iconName={props.iconName}
-          iconType={props.iconType}
-          onPress={() => props.onPress(service)}
-        />
+        <ImageBackground
+          source={Theme.CardBackground}
+          style={Theme.Styles.openCardBgContainer}>
+          <VcItemContent
+            context={context}
+            verifiableCredential={verifiableCredential}
+            generatedOn={generatedOn}
+            tag={tag}
+            selectable={props.selectable}
+            selected={props.selected}
+            service={service}
+            iconName={props.iconName}
+            iconType={props.iconType}
+            onPress={() => props.onPress(service)}
+          />
+        </ImageBackground>
+        <View style={Theme.Styles.horizontalLine} />
+
         {props.isSharingVc ? null : (
           <Row crossAlign="center">
             {props.activeTab !== 'receivedVcsTab' &&
@@ -80,6 +86,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
                   showOnlyBindedVc={props.showOnlyBindedVc}
                 />
               )}
+            <View style={Theme.Styles.verticalLine} />
             <Pressable onPress={KEBAB_POPUP}>
               <KebabPopUp
                 vcKey={props.vcKey}

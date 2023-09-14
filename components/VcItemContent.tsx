@@ -112,12 +112,15 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
               }
               style={Theme.Styles.closeCardImage}>
               {props.iconName && (
-                <Icon
-                  name={props.iconName}
-                  type={props.iconType}
-                  color={Theme.Colors.Icon}
-                  style={{ marginLeft: -80 }}
-                />
+                <View style={{ backgroundColor: 'white', borderRadius: 50 }}>
+                  <Icon
+                    name={props.iconName}
+                    type={props.iconType}
+                    color={Theme.Colors.Icon}
+                    size={16}
+                    style={{ marginRight: 65 }}
+                  />
+                </View>
               )}
             </ImageBackground>
             <Column margin="6 0 0 10">

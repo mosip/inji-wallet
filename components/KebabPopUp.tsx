@@ -23,6 +23,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
         name={props.iconName}
         type={props.iconType}
         color={Theme.Colors.GrayIcon}
+        size={20}
       />
       <Overlay
         isVisible={props.isVisible}

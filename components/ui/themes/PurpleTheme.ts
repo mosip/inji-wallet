@@ -149,6 +149,18 @@ export const PurpleTheme = {
       backgroundColor: Colors.Grey6,
       borderRadius: 4,
     },
+    horizontalLine: {
+      height: 1,
+      backgroundColor: Colors.Grey,
+    },
+    verticalLine: {
+      width: 1,
+      height: 30,
+      backgroundColor: Colors.Grey,
+      marginVertical: 8,
+      marginLeft: -40,
+      marginRight: 22,
+    },
     cardDetailsContainer: {},
     bottomTabIconStyle: {
       padding: 4,
@@ -289,6 +301,7 @@ export const PurpleTheme = {
       justifyContent: 'space-between',
     },
     logo: {
+      marginTop: 115,
       height: 35,
       width: 90,
     },
@@ -367,14 +380,14 @@ export const PurpleTheme = {
       backgroundColor: Colors.LightPurple,
     },
     closeCardImage: {
-      width: 105,
-      height: 135,
-      borderRadius: 5,
+      width: 10,
+      height: 15,
+      borderRadius: 100,
     },
     openCardImage: {
-      width: 105,
-      height: 135,
-      borderRadius: 5,
+      width: 15,
+      height: 15,
+      borderRadius: 1,
     },
     versionContainer: {
       backgroundColor: Colors.Grey6,
@@ -979,6 +992,7 @@ export const PurpleTheme = {
   }),
   OpenCard: '',
   CloseCard: '',
+  CardBackground: require('../../../assets/card_bg.png'),
   ProfileIcon: require('../../../purpleAssets/profile_icon.png'),
   MosipSplashLogo: require('../../../assets/icon.png'),
   MosipLogo: require('../../../assets/mosip-logo.png'),
