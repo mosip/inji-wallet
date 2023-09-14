@@ -37,6 +37,7 @@ import SecureKeystore from 'react-native-secure-keystore';
 import {
   sendStartEvent,
   getData,
+  getEndData,
   sendEndEvent,
 } from '../shared/telemetry/TelemetryUtils';
 
@@ -419,7 +420,7 @@ export const vcItemMachine =
                     'updateVc',
                     'setWalletBindingErrorEmpty',
                     'logWalletBindingSuccess',
-                    () => sendEndEvent(getData('VC activation')),
+                    () => sendEndEvent(getEndData('VC activation')),
                   ],
                   target: '#vc-item.kebabPopUp',
                 },
@@ -748,7 +749,7 @@ export const vcItemMachine =
                 'updateVc',
                 'setWalletBindingErrorEmpty',
                 'logWalletBindingSuccess',
-                () => sendEndEvent(getData('VC activation')),
+                () => sendEndEvent(getEndData('VC activation')),
               ],
               target: 'idle',
             },

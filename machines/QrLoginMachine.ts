@@ -21,7 +21,7 @@ import {
   getPrivateKey,
 } from '../shared/keystore/SecureKeystore';
 import i18n from '../i18n';
-import { getData, sendEndEvent } from '../shared/telemetry/TelemetryUtils';
+import { getEndData, sendEndEvent } from '../shared/telemetry/TelemetryUtils';
 
 const model = createModel(
   {
@@ -226,7 +226,7 @@ export const qrLoginMachine =
           },
         },
         success: {
-          entry: [() => sendEndEvent(getData('QR login'))],
+          entry: [() => sendEndEvent(getEndData('QR login'))],
           on: {
             CONFIRM: {
               target: 'done',
