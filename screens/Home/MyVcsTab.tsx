@@ -89,7 +89,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                   return (
                     <VcItem
                       {...iconProps}
-                      key={`${vcMetadata}-${index}`}
+                      key={`${vcMetadata.getVcKey()}-${index}`}
                       vcMetadata={vcMetadata}
                       margin="0 2 8 2"
                       onPress={controller.VIEW_VC}
