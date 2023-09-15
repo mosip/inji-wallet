@@ -1012,8 +1012,6 @@ export const DefaultTheme = {
   CardBackground: require('../../../assets/card_bg.png'),
   ProfileIcon: require('../../../assets/placeholder-photo.png'),
   MosipSplashLogo: require('../../../assets/icon.png'),
-  MosipLogo: require('../../../assets/mosip-logo.png'),
-  MosipText: require('../../../assets/mosip_text.png'),
   CameraFlipIcon: require('../../../assets/camera-flip-icon.png'),
   ImageCaptureButton: require('../../../assets/capture-button.png'),
   DomainWarningLogo: require('../../../assets/domain-warning.png'),
