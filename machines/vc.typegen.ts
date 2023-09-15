@@ -2,17 +2,17 @@
 
 export interface Typegen0 {
   '@@xstate/typegen': true;
-  'internalEvents': {
-    'xstate.init': { type: 'xstate.init' };
+  internalEvents: {
+    'xstate.init': {type: 'xstate.init'};
   };
-  'invokeSrcNameMap': {};
-  'missingImplementations': {
+  invokeSrcNameMap: {};
+  missingImplementations: {
     actions: never;
     delays: never;
     guards: never;
     services: never;
   };
-  'eventsCausingActions': {
+  eventsCausingActions: {
     getReceivedVcsResponse: 'GET_RECEIVED_VCS';
     getVcItemResponse: 'GET_VC_ITEM';
     loadMyVcs: 'REFRESH_MY_VCS' | 'xstate.init';
@@ -21,19 +21,21 @@ export interface Typegen0 {
     prependToMyVcs: 'VC_ADDED';
     prependToReceivedVcs: 'VC_RECEIVED';
     removeVcFromMyVcs: 'REMOVE_VC_FROM_CONTEXT';
+    resetIsVcLoaded: 'RESET_VC_LOADED';
     setDownloadedVc: 'VC_DOWNLOADED';
+    setIsVcLoaded: 'VC_LOADED';
     setMyVcs: 'STORE_RESPONSE';
     setReceivedVcs: 'STORE_RESPONSE';
     setUpdateVc: 'VC_UPDATED';
     setVcUpdate: 'VC_UPDATE';
     updateMyVcs: 'VC_UPDATED';
   };
-  'eventsCausingDelays': {};
-  'eventsCausingGuards': {
+  eventsCausingDelays: {};
+  eventsCausingGuards: {
     hasExistingReceivedVc: 'VC_RECEIVED';
   };
-  'eventsCausingServices': {};
-  'matchesStates':
+  eventsCausingServices: {};
+  matchesStates:
     | 'init'
     | 'init.myVcs'
     | 'init.receivedVcs'
@@ -54,5 +56,5 @@ export interface Typegen0 {
               receivedVcs?: 'idle' | 'refreshing';
             };
       };
-  'tags': never;
+  tags: never;
 }

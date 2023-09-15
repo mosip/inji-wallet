@@ -2,8 +2,8 @@
 
 export interface Typegen0 {
   '@@xstate/typegen': true;
-  'internalEvents': {
-    '': { type: '' };
+  internalEvents: {
+    '': {type: ''};
     'done.invoke.checkStatus': {
       type: 'done.invoke.checkStatus';
       data: unknown;
@@ -135,9 +135,9 @@ export interface Typegen0 {
       type: 'error.platform.vc-item.verifyingCredential:invocation[0]';
       data: unknown;
     };
-    'xstate.init': { type: 'xstate.init' };
+    'xstate.init': {type: 'xstate.init'};
   };
-  'invokeSrcNameMap': {
+  invokeSrcNameMap: {
     addWalletBindnigId:
       | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]';
@@ -158,13 +158,13 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
     verifyCredential: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
   };
-  'missingImplementations': {
+  missingImplementations: {
     actions: never;
     delays: never;
     guards: never;
     services: never;
   };
-  'eventsCausingActions': {
+  eventsCausingActions: {
     VcUpdated: 'STORE_RESPONSE';
     clearOtp:
       | ''
@@ -282,9 +282,10 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]'
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]'
       | 'done.invoke.vc-item.verifyingCredential:invocation[0]';
+    vcLoaded: 'STORE_RESPONSE';
   };
-  'eventsCausingDelays': {};
-  'eventsCausingGuards': {
+  eventsCausingDelays: {};
+  eventsCausingGuards: {
     hasCredential: 'GET_VC_RESPONSE' | 'STORE_RESPONSE';
     isCustomSecureKeystore:
       | 'done.invoke.vc-item.addKeyPair:invocation[0]'
@@ -294,7 +295,7 @@ export interface Typegen0 {
     isDownloadAllowed: 'POLL';
     isVcValid: '';
   };
-  'eventsCausingServices': {
+  eventsCausingServices: {
     addWalletBindnigId:
       | 'done.invoke.vc-item.addKeyPair:invocation[0]'
       | 'done.invoke.vc-item.kebabPopUp.addKeyPair:invocation[0]';
@@ -313,7 +314,7 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]';
     verifyCredential: '' | 'VERIFY';
   };
-  'matchesStates':
+  matchesStates:
     | 'acceptingBindingOtp'
     | 'acceptingOtpInput'
     | 'acceptingRevokeInput'
@@ -365,7 +366,7 @@ export interface Typegen0 {
           | 'downloadingCredential'
           | 'savingFailed'
           | 'verifyingDownloadLimitExpiry'
-          | { savingFailed?: 'idle' | 'viewingVc' };
+          | {savingFailed?: 'idle' | 'viewingVc'};
         invalid?: 'backend' | 'otp';
         kebabPopUp?:
           | 'acceptingBindingOtp'
@@ -380,5 +381,5 @@ export interface Typegen0 {
           | 'showingWalletBindingError'
           | 'updatingPrivateKey';
       };
-  'tags': never;
+  tags: never;
 }

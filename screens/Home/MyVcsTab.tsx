@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Button, Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {RefreshControl, Image, View} from 'react-native';
@@ -29,13 +29,12 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
     GET_INDIVIDUAL_ID('');
   };
 
-  {
-    controller.isRequestSuccessful
-      ? setTimeout(() => {
-          controller.DISMISS();
-        }, 6000)
-      : null;
-  }
+  useEffect(() => {
+    if (controller.isVcLoaded) {
+      controller.RESET_VC_LOADED();
+      controller.DISMISS();
+    }
+  }, [controller.isVcLoaded]);
 
   const DownloadingVcPopUp: React.FC = () => {
     return (

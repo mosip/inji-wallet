@@ -3,6 +3,7 @@ import {useContext} from 'react';
 import {ActorRefFrom} from 'xstate';
 import {selectIsTampered} from '../../machines/store';
 import {
+  selectIsVcLoaded,
   selectIsRefreshingMyVcs,
   selectMyVcs,
   VcEvents,
@@ -56,6 +57,10 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
       settingsService,
       selectShowHardwareKeystoreNotExistsAlert,
     ),
+    isVcLoaded: useSelector(vcService, selectIsVcLoaded),
+
+    RESET_VC_LOADED: () => vcService.send(VcEvents.RESET_VC_LOADED()),
+
     DISMISS: () => service.send(MyVcsTabEvents.DISMISS()),
 
     DOWNLOAD_ID: () => service.send(MyVcsTabEvents.ADD_VC()),
