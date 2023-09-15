@@ -21,13 +21,11 @@ export const Modal: React.FC<ModalProps> = props => {
       <Column fill safe align="center">
         <Row elevation={props.headerElevation}>
           <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginHorizontal: 18,
-              marginVertical: 8,
-            }}>
+            style={
+              props.progressModalStyle
+                ? Theme.ModalStyles.progressingModal
+                : Theme.ModalStyles.defaultModal
+            }>
             {props.headerRight ? (
               <Icon
                 {...testIDProps('closeModal')}
@@ -96,6 +94,7 @@ export interface ModalProps {
   testID?: string;
   isVisible: boolean;
   requester?: boolean;
+  progressModalStyle?: boolean;
   onDismiss?: () => void;
   headerTitle?: string;
   headerElevation?: ElevationLevel;

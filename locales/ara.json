@@ -453,7 +453,7 @@
       "inProgress": "في تَقَدم",
       "establishingConnection": "اجراء اتصال",
       "sharingInProgress": "جاري المشاركة",
-      "connectingTimeout": "يستغرق إنشاء الاتصال بعض الوقت. هل الجهاز الآخر مفتوح للاتصالات؟",
+      "connectingTimeout": "تأخرت المشاركة، ربما بسبب مشكلة في الاتصال.",
       "stayOnTheScreen": "البقاء على الشاشة",
       "retry": "أعد المحاولة",
       "exchangingDeviceInfo": "تبادل معلومات الجهاز ...",

@@ -13,10 +13,10 @@ export const ProgressingModal: React.FC<ProgressingModalProps> = props => {
     <React.Fragment>
       <Modal
         isVisible={props.isVisible}
-        headerLeft={t(props.title)}
+        headerTitle={t(props.title)}
         onDismiss={props.onCancel}
-        headerLabel={props.label}
         headerElevation={3}
+        progressModalStyle
         requester={props.requester}>
         <Centered crossAlign="center" fill>
           <Column margin="24 0" align="space-around">
@@ -71,7 +71,6 @@ export interface ProgressingModalProps {
   isVisible: boolean;
   isHintVisible: boolean;
   title?: string;
-  label?: string;
   hint?: string;
   onCancel?: () => void;
   onStayInProgress?: () => void;

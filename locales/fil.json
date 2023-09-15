@@ -14,7 +14,7 @@
     "QRLOGIN_SUCCESFULL": "Matagumpay ang QRLogin",
     "WALLET_BINDING_SUCCESSFULL": "Matagumpay ang pag-activate",
     "WALLET_BINDING_FAILURE": "Nabigo ang pag-activate",
-    "VC_REMOVED":"Inalis sa wallet"
+    "VC_REMOVED": "Inalis sa wallet"
   },
   "DeviceInfoList": {
     "requestedBy": "Hiniling ni",
@@ -457,7 +457,7 @@
       "inProgress": "Isinasagawa",
       "establishingConnection": "Pagtatatag ng Koneksyon",
       "sharingInProgress": "Isinasagawa ang pagbabahagi",
-      "connectingTimeout": "Ito ay tumatagal ng ilang sandali upang maitaguyod ang koneksyon. Bukas ba ang ibang device para sa mga koneksyon?",
+      "connectingTimeout": "Naantala ang pagbabahagi, posibleng dahil sa isang isyu sa koneksyon.",
       "stayOnTheScreen": "Manatili sa screen",
       "retry": "Subukan muli",
       "exchangingDeviceInfo": "Nagpapalitan ng impormasyon ng device...",

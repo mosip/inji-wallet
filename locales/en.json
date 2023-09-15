@@ -452,8 +452,8 @@
     "status": {
       "inProgress": "In progress",
       "establishingConnection": "Establishing connection",
-      "sharingInProgress": "Sharing in Progress",
-      "connectingTimeout": "It's taking a while to establish the connection. Is the other device open for connections?",
+      "sharingInProgress": "Sharing in progress",
+      "connectingTimeout": "Sharing is delayed, possibly due to a connection issue.",
       "stayOnTheScreen": "Stay on the screen",
       "retry": "Retry",
       "exchangingDeviceInfo": "Exchanging device info...",

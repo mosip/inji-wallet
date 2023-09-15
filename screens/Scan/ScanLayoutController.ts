@@ -107,7 +107,6 @@ export function useScanLayout() {
   if (isConnecting) {
     statusOverlay = {
       title: t('status.inProgress'),
-      message: t('status.establishingConnection'),
       progress: true,
     };
   } else if (isConnectingTimeout) {
