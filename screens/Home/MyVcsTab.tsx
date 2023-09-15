@@ -1,30 +1,30 @@
 import React from 'react';
-import { Button, Column, Row, Text } from '../../components/ui';
-import { Theme } from '../../components/ui/styleUtils';
-import { Image, RefreshControl, View } from 'react-native';
-import { useMyVcsTab } from './MyVcsTabController';
-import { HomeScreenTabProps } from './HomeScreen';
-import { AddVcModal } from './MyVcs/AddVcModal';
-import { GetVcModal } from './MyVcs/GetVcModal';
-import { useTranslation } from 'react-i18next';
-import { VcItem } from '../../components/VcItem';
-import { GET_INDIVIDUAL_ID } from '../../shared/constants';
+import {Button, Column, Row, Text} from '../../components/ui';
+import {Theme} from '../../components/ui/styleUtils';
+import {Image, RefreshControl, View} from 'react-native';
+import {useMyVcsTab} from './MyVcsTabController';
+import {HomeScreenTabProps} from './HomeScreen';
+import {AddVcModal} from './MyVcs/AddVcModal';
+import {GetVcModal} from './MyVcs/GetVcModal';
+import {useTranslation} from 'react-i18next';
+import {VcItem} from '../../components/VcItem';
+import {GET_INDIVIDUAL_ID} from '../../shared/constants';
 import {
   ErrorMessageOverlay,
   MessageOverlay,
 } from '../../components/MessageOverlay';
-import { Icon } from 'react-native-elements';
-import { groupBy } from '../../shared/javascript';
+import {Icon} from 'react-native-elements';
+import {groupBy} from '../../shared/javascript';
 
-const pinIconProps = { iconName: 'pushpin', iconType: 'antdesign' };
+const pinIconProps = {iconName: 'pushpin', iconType: 'antdesign'};
 
-export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
-  const { t } = useTranslation('MyVcsTab');
+export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
+  const {t} = useTranslation('MyVcsTab');
   const controller = useMyVcsTab(props);
   const storeErrorTranslationPath = 'errors.savingFailed';
   const [pinned, unpinned] = groupBy(
     controller.vcMetadatas,
-    (vcMetadata) => vcMetadata.isPinned
+    vcMetadata => vcMetadata.isPinned,
   );
   const vcMetadataOrderedByPinStatus = pinned.concat(unpinned);
 
@@ -69,7 +69,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
 
   return (
     <React.Fragment>
-      <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
+      <Column fill style={{display: props.isVisible ? 'flex' : 'none'}}>
         {controller.isRequestSuccessful && <DownloadingVcPopUp />}
         <Column fill pY={18} pX={15}>
           {vcMetadataOrderedByPinStatus.length > 0 && (
@@ -111,6 +111,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
               <Column fill style={Theme.Styles.homeScreenContainer}>
                 <Image source={Theme.DigitalIdentityLogo} />
                 <Text
+                  testID="bringYourDigitalID"
                   align="center"
                   weight="bold"
                   margin="33 0 6 0"
@@ -125,6 +126,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
                   {t('generateVcDescription')}
                 </Text>
                 <Button
+                  testID="downloadCard"
                   type="gradient"
                   disabled={controller.isRefreshingVcs}
                   title={t('downloadCard')}

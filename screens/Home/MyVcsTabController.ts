@@ -1,7 +1,7 @@
-import { useSelector } from '@xstate/react';
-import { useContext } from 'react';
-import { ActorRefFrom } from 'xstate';
-import { selectIsTampered } from '../../machines/store';
+import {useSelector} from '@xstate/react';
+import {useContext} from 'react';
+import {ActorRefFrom} from 'xstate';
+import {selectIsTampered} from '../../machines/store';
 import {
   selectIsRefreshingMyVcs,
   selectMyVcsMetadata,
@@ -11,14 +11,13 @@ import {
   selectWalletBindingError,
   selectShowWalletBindingError,
 } from '../../machines/vcItem';
-import { vcItemMachine } from '../../machines/vcItem';
-import { GlobalContext } from '../../shared/GlobalContext';
-import { HomeScreenTabProps } from './HomeScreen';
+import {vcItemMachine} from '../../machines/vcItem';
+import {GlobalContext} from '../../shared/GlobalContext';
+import {HomeScreenTabProps} from './HomeScreen';
 import {
   MyVcsTabEvents,
   MyVcsTabMachine,
   selectAddVcModal,
-  selectIsOnboarding,
   selectIsRequestSuccessful,
   selectGetVcModal,
   selectIsSavingFailedInIdle,
@@ -31,7 +30,7 @@ import {
 
 export function useMyVcsTab(props: HomeScreenTabProps) {
   const service = props.service as ActorRefFrom<typeof MyVcsTabMachine>;
-  const { appService } = useContext(GlobalContext);
+  const {appService} = useContext(GlobalContext);
   const vcService = appService.children.get('vc');
   const storeService = appService.children.get('store');
   const settingsService = appService.children.get('settings');
@@ -46,17 +45,16 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
 
     isRefreshingVcs: useSelector(vcService, selectIsRefreshingMyVcs),
     isRequestSuccessful: useSelector(service, selectIsRequestSuccessful),
-    isOnboarding: useSelector(service, selectIsOnboarding),
     isSavingFailedInIdle: useSelector(service, selectIsSavingFailedInIdle),
     walletBindingError: useSelector(service, selectWalletBindingError),
     isBindingError: useSelector(service, selectShowWalletBindingError),
     isMinimumStorageLimitReached: useSelector(
       service,
-      selectIsMinimumStorageLimitReached
+      selectIsMinimumStorageLimitReached,
     ),
     showHardwareKeystoreNotExistsAlert: useSelector(
       settingsService,
-      selectShowHardwareKeystoreNotExistsAlert
+      selectShowHardwareKeystoreNotExistsAlert,
     ),
     DISMISS: () => service.send(MyVcsTabEvents.DISMISS()),
 
@@ -69,8 +67,6 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
     VIEW_VC: (vcRef: ActorRefFrom<typeof vcItemMachine>) => {
       return service.send(MyVcsTabEvents.VIEW_VC(vcRef));
     },
-
-    ONBOARDING_DONE: () => service.send(MyVcsTabEvents.ONBOARDING_DONE()),
 
     IS_TAMPERED: () => service.send(MyVcsTabEvents.IS_TAMPERED()),
 

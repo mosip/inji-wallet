@@ -1,7 +1,8 @@
 name: Android Beta Build
 
 env:
-  backendServiceDefaultUrl: https://api.sandbox.mosip.net
+  mimotoBackendServiceDefaultUrl: https://api.sandbox.mosip.net
+  esignetBackendServiceDefaultUrl: https://api.sandbox.mosip.net
 
 on:
   workflow_dispatch:
@@ -21,8 +22,13 @@ on:
         required: true
         default: False
         type: string
-      backendServiceUrl:
-        description: 'Backend service URL'
+      mimotoBackendServiceUrl:
+        description: 'Mimoto backend service URL'
+        required: true
+        default: 'https://api.sandbox.mosip.net'
+        type: string
+      esignetBackendServiceUrl:
+        description: 'Esignet backend service URL'
         required: true
         default: 'https://api.sandbox.mosip.net'
         type: string
@@ -133,7 +139,8 @@ jobs:
           cd android/scripts
           ./beta-build.sh
         env:
-          MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
+          MIMOTO_HOST: ${{ github.event.inputs.mimotoBackendServiceUrl }}
+          ESIGNET_HOST: ${{ github.event.inputs.esignetBackendServiceUrl }}
           APPLICATION_THEME: ${{ github.event.inputs.theme }}
           RELEASE_KEYSTORE_ALIAS: androidreleasekey
           RELEASE_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_RELEASE_STOREPASS}}'

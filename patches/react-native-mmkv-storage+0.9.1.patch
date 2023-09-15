@@ -1,8 +1,8 @@
 diff --git a/node_modules/react-native-mmkv-storage/ios/SecureStorage.m b/node_modules/react-native-mmkv-storage/ios/SecureStorage.m
-index dbea26b..1b465af 100644
+index dbea26b..623d894 100644
 --- a/node_modules/react-native-mmkv-storage/ios/SecureStorage.m
 +++ b/node_modules/react-native-mmkv-storage/ios/SecureStorage.m
-@@ -224,7 +224,7 @@ NSString *serviceName = nil;
+@@ -224,7 +224,7 @@ - (void) setServiceName:(NSString *)_serviceName
      serviceName = _serviceName;
  }
  

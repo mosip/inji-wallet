@@ -1,7 +1,7 @@
-import { useMachine, useSelector } from '@xstate/react';
-import { useContext, useEffect, useState } from 'react';
+import {useMachine, useSelector} from '@xstate/react';
+import {useContext, useEffect, useState} from 'react';
 import * as LocalAuthentication from 'expo-local-authentication';
-import { selectBackendInfo } from '../../machines/app';
+import {selectBackendInfo} from '../../machines/app';
 import {
   AuthEvents,
   selectBiometrics,
@@ -24,13 +24,14 @@ import {
   selectIsSuccess,
   selectUnenrolledNotice,
 } from '../../machines/biometrics';
-import { GlobalContext } from '../../shared/GlobalContext';
-import { useTranslation } from 'react-i18next';
-import { Platform } from 'react-native';
-import { RequestRouteProps, RootRouteProps } from '../../routes';
+import {GlobalContext} from '../../shared/GlobalContext';
+import {useTranslation} from 'react-i18next';
+import {Platform} from 'react-native';
+import {RequestRouteProps, RootRouteProps} from '../../routes';
+import {REQUEST_ROUTES} from '../../routes/routesConstants';
 
 export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
-  const { appService } = useContext(GlobalContext);
+  const {appService} = useContext(GlobalContext);
   const authService = appService.children.get('auth');
   const settingsService = appService.children.get('settings');
 
@@ -45,9 +46,9 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
   const errorMsgBio: string = useSelector(bioService, selectError);
   const unEnrolledNoticeBio: string = useSelector(
     bioService,
-    selectUnenrolledNotice
+    selectUnenrolledNotice,
   );
-  const { t } = useTranslation('AuthScreen');
+  const {t} = useTranslation('AuthScreen');
 
   useEffect(() => {
     setTimeout(async () => {
@@ -80,12 +81,12 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
         settingsService.send(SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(true));
 
         // but if device does not have any enrolled biometrics
-      } else if (biometricState.matches({ failure: 'unenrolled' })) {
-        biometricSend({ type: 'RETRY_AUTHENTICATE' });
+      } else if (biometricState.matches({failure: 'unenrolled'})) {
+        biometricSend({type: 'RETRY_AUTHENTICATE'});
 
         // otherwise lets do a biometric auth
       } else {
-        biometricSend({ type: 'AUTHENTICATE' });
+        biometricSend({type: 'AUTHENTICATE'});
       }
     } else {
       authService.send(AuthEvents.SETUP_BIOMETRICS(''));
@@ -108,11 +109,11 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
     credentialRegistry: useSelector(settingsService, selectCredentialRegistry),
     credentialRegistryResponse: useSelector(
       settingsService,
-      selectCredentialRegistryResponse
+      selectCredentialRegistryResponse,
     ),
     isBiometricUnlockEnabled: useSelector(
       settingsService,
-      selectBiometricUnlockEnabled
+      selectBiometricUnlockEnabled,
     ),
     isResetInjiProps: useSelector(settingsService, selectIsResetInjiProps),
     canUseBiometrics: useSelector(authService, selectCanUseBiometrics),
@@ -128,18 +129,18 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
 
     UPDATE_CREDENTIAL_REGISTRY: (credentialRegistry: string) =>
       settingsService.send(
-        SettingsEvents.UPDATE_CREDENTIAL_REGISTRY(credentialRegistry)
+        SettingsEvents.UPDATE_CREDENTIAL_REGISTRY(credentialRegistry),
       ),
 
     UPDATE_CREDENTIAL_REGISTRY_RESPONSE: (credentialRegistryResponse: string) =>
       settingsService.send(
         SettingsEvents.UPDATE_CREDENTIAL_REGISTRY_RESPONSE(
-          credentialRegistryResponse
-        )
+          credentialRegistryResponse,
+        ),
       ),
 
     RECEIVE_CARD: () => {
-      props.navigation.navigate('Request');
+      props.navigation.navigate(REQUEST_ROUTES.Request);
       setIsVisible(false);
     },
 

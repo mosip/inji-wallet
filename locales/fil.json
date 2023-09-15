@@ -27,7 +27,11 @@
   "PasscodeVerify": {
     "passcodeMismatchError": "Hindi tumugma ang passcode."
   },
-  "FaceScanner": {},
+  "FaceScanner": {
+    "imageCaptureGuide": "Hawakan nang matatag ang telepono at panatilihing nakatutok ang iyong mukha sa gitna",
+    "capture": "Kunin",
+    "flipCamera": "I-flip ang Camera"
+  },
   "OIDcAuth": {
     "title": "OIDC Authentication",
     "text": "Papalitan ng OIDC service provider UI",
@@ -454,6 +458,8 @@
       "establishingConnection": "Pagtatatag ng Koneksyon",
       "sharingInProgress": "Isinasagawa ang pagbabahagi",
       "connectingTimeout": "Ito ay tumatagal ng ilang sandali upang maitaguyod ang koneksyon. Bukas ba ang ibang device para sa mga koneksyon?",
+      "stayOnTheScreen": "Manatili sa screen",
+      "retry": "Subukan muli",
       "exchangingDeviceInfo": "Nagpapalitan ng impormasyon ng device...",
       "exchangingDeviceInfoTimeout": "Medyo nagtatagal ang palitan ng impormasyon ng device. Maaaring kailanganin mong kumonekta muli.",
       "invalid": "Di-wastong QR Code",
