@@ -87,7 +87,7 @@ const WalletVerifiedActivationDetails: React.FC<WalletVerifiedDetailsProps> = (
           style={
             !props.verifiableCredential
               ? Theme.Styles.loadingTitle
-              : Theme.Styles.subtitle
+              : Theme.Styles.statusLabel
           }
           children={t('profileAuthenticated')}></Text>
       </Row>

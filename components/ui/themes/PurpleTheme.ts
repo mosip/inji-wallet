@@ -8,6 +8,7 @@ const Colors = {
   Grey: '#B0B0B0',
   Grey5: '#E0E0E0',
   Grey6: '#F2F2F2',
+  Gray30: '#444444',
   Gray40: '#666666',
   Gray44: '#707070',
   Gray9: '#171717',
@@ -40,9 +41,9 @@ export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 export const PurpleTheme = {
   Colors: {
     TabItemText: Colors.Purple,
-    Details: Colors.Black,
-    DetailsLabel: Colors.Purple,
-    LoadingDetailsLabel: Colors.Purple,
+    Details: Colors.Grey,
+    DetailsLabel: Colors.Gray40,
+    LoadingDetailsLabel: Colors.Gray40,
     AddIdBtnBg: Colors.Purple,
     AddIdBtnTxt: Colors.Purple,
     DownloadIdBtnTxt: Colors.White,
@@ -52,7 +53,7 @@ export const PurpleTheme = {
     IconBg: Colors.Purple,
     popUp: Colors.Green,
     Icon: Colors.Purple,
-    GrayIcon: Colors.Grey,
+    GrayIcon: Colors.Grey5,
     helpText: Colors.Gray44,
     borderBottomColor: Colors.Grey6,
     whiteBackgroundColor: Colors.White,
@@ -112,6 +113,9 @@ export const PurpleTheme = {
       backgroundColor: Colors.Grey,
       borderRadius: 4,
     },
+    detailsValue: {
+      color: Colors.Black,
+    },
     subtitle: {
       backgroundColor: Colors.Transparent,
     },
@@ -120,7 +124,7 @@ export const PurpleTheme = {
       borderRadius: 4,
     },
     statusLabel: {
-      color: Colors.Black,
+      color: Colors.Gray30,
     },
     verifiedIconContainer: {
       marginLeft: 5,
@@ -151,7 +155,7 @@ export const PurpleTheme = {
     },
     horizontalLine: {
       height: 1,
-      backgroundColor: Colors.Grey,
+      backgroundColor: Colors.Black,
     },
     verticalLine: {
       width: 1,
@@ -302,8 +306,8 @@ export const PurpleTheme = {
     },
     logo: {
       marginTop: 115,
-      height: 35,
-      width: 90,
+      height: 30,
+      width: 10,
     },
     homeCloseCardDetailsHeader: {
       flex: 1,
@@ -991,11 +995,13 @@ export const PurpleTheme = {
     },
   }),
   OpenCard: '',
-  CloseCard: '',
+  PinIcon: require('../../../assets/pin_icon.png'),
+  CloseCard: require('../../../assets/card_bg.png'),
   CardBackground: require('../../../assets/card_bg.png'),
   ProfileIcon: require('../../../purpleAssets/profile_icon.png'),
   MosipSplashLogo: require('../../../assets/icon.png'),
   MosipLogo: require('../../../assets/mosip-logo.png'),
+  MosipText: require('../../../assets/mosip_text.png'),
   CameraFlipIcon: require('../../../assets/camera-flip-icon.png'),
   ImageCaptureButton: require('../../../assets/capture-button.png'),
   DomainWarningLogo: require('../../../assets/domain-warning.png'),

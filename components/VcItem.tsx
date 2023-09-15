@@ -19,7 +19,7 @@ import { Theme } from './ui/styleUtils';
 import { GlobalContext } from '../shared/GlobalContext';
 import { VcItemContent } from './VcItemContent';
 import { VcItemActivationStatus } from './VcItemActivationStatus';
-import { Row } from './ui';
+import { Column, Row } from './ui';
 import { KebabPopUp } from './KebabPopUp';
 import { logState } from '../machines/app';
 
@@ -57,22 +57,18 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
             ? Theme.Styles.selectedBindedVc
             : Theme.Styles.closeCardBgContainer
         }>
-        <ImageBackground
-          source={Theme.CardBackground}
-          style={Theme.Styles.openCardBgContainer}>
-          <VcItemContent
-            context={context}
-            verifiableCredential={verifiableCredential}
-            generatedOn={generatedOn}
-            tag={tag}
-            selectable={props.selectable}
-            selected={props.selected}
-            service={service}
-            iconName={props.iconName}
-            iconType={props.iconType}
-            onPress={() => props.onPress(service)}
-          />
-        </ImageBackground>
+        <VcItemContent
+          context={context}
+          verifiableCredential={verifiableCredential}
+          generatedOn={generatedOn}
+          tag={tag}
+          selectable={props.selectable}
+          selected={props.selected}
+          service={service}
+          iconName={props.iconName}
+          iconType={props.iconType}
+          onPress={() => props.onPress(service)}
+        />
         <View style={Theme.Styles.horizontalLine} />
 
         {props.isSharingVc ? null : (
@@ -86,17 +82,25 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
                   showOnlyBindedVc={props.showOnlyBindedVc}
                 />
               )}
-            <View style={Theme.Styles.verticalLine} />
-            <Pressable onPress={KEBAB_POPUP}>
-              <KebabPopUp
-                vcKey={props.vcKey}
-                iconName="dots-three-horizontal"
-                iconType="entypo"
-                isVisible={isKebabPopUp}
-                onDismiss={DISMISS}
-                service={service}
-              />
-            </Pressable>
+            <Row
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                flex: 1,
+                marginLeft: -12,
+              }}>
+              <View style={Theme.Styles.verticalLine} />
+              <Pressable onPress={KEBAB_POPUP}>
+                <KebabPopUp
+                  vcKey={props.vcKey}
+                  iconName="dots-three-horizontal"
+                  iconType="entypo"
+                  isVisible={isKebabPopUp}
+                  onDismiss={DISMISS}
+                  service={service}
+                />
+              </Pressable>
+            </Row>
           </Row>
         )}
       </Pressable>

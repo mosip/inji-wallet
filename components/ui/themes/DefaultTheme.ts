@@ -5,12 +5,15 @@ import { Spacing } from '../styleUtils';
 const Colors = {
   Black: '#000000',
   Zambezi: '#5F5F5F',
+  Grey0: '#d9d9d9',
   Grey: '#C7C7C7',
   Grey1: '#a6a6a6',
   Grey5: '#E0E0E0',
   Grey6: '#F2F2F2',
   Gray40: '#666666',
+  Gray30: '#444444',
   Gray44: '#707070',
+  Gray50: '#999999',
   Gray9: '#171717',
   DimGray: '#737373',
   Orange: '#F2811D',
@@ -39,9 +42,9 @@ export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 export const DefaultTheme = {
   Colors: {
     TabItemText: Colors.Orange,
-    Details: Colors.Black,
-    DetailsLabel: Colors.Orange,
-    LoadingDetailsLabel: Colors.Orange,
+    Details: Colors.Gray30,
+    DetailsLabel: Colors.Gray40,
+    LoadingDetailsLabel: Colors.Gray40,
     AddIdBtnBg: Colors.Orange,
     AddIdBtnTxt: Colors.Orange,
     DownloadIdBtnTxt: Colors.White,
@@ -51,7 +54,7 @@ export const DefaultTheme = {
     IconBg: Colors.Orange,
     popUp: Colors.Green,
     Icon: Colors.Orange,
-    GrayIcon: Colors.Grey1,
+    GrayIcon: Colors.Gray50,
     helpText: Colors.Gray44,
     borderBottomColor: Colors.Grey6,
     whiteBackgroundColor: Colors.White,
@@ -111,6 +114,9 @@ export const DefaultTheme = {
       backgroundColor: Colors.Grey,
       borderRadius: 4,
     },
+    detailsValue: {
+      color: Colors.Black,
+    },
     subtitle: {
       backgroundColor: Colors.Transparent,
     },
@@ -119,7 +125,7 @@ export const DefaultTheme = {
       borderRadius: 4,
     },
     statusLabel: {
-      color: Colors.Black,
+      color: Colors.Gray30,
     },
     verifiedIconContainer: {
       marginLeft: 5,
@@ -193,12 +199,12 @@ export const DefaultTheme = {
     },
     horizontalLine: {
       height: 1,
-      backgroundColor: Colors.Grey,
+      backgroundColor: Colors.Grey0,
     },
     verticalLine: {
       width: 1,
       height: 30,
-      backgroundColor: Colors.Grey,
+      backgroundColor: Colors.Grey0,
       marginVertical: 8,
       marginLeft: -40,
       marginRight: 22,
@@ -265,6 +271,9 @@ export const DefaultTheme = {
       marginTop: 10,
       alignItems: 'flex-start',
     },
+    closedCardBgContainer: {
+      height: '100%',
+    },
     openCardBgContainer: {
       borderRadius: 10,
       margin: 8,
@@ -301,7 +310,16 @@ export const DefaultTheme = {
     },
     logo: {
       height: 35,
-      width: 90,
+      width: 35,
+      marginTop: 55,
+      marginRight: 5,
+    },
+    logoText: {
+      height: 13,
+      width: 40,
+      marginTop: 5,
+      marginBottom: 3,
+      marginRight: 5,
     },
     homeCloseCardDetailsHeader: {
       flex: 1,
@@ -380,7 +398,7 @@ export const DefaultTheme = {
     closeCardImage: {
       width: 80,
       height: 80,
-      borderRadius: 5,
+      borderRadius: 100,
     },
     openCardImage: {
       width: 105,
@@ -989,11 +1007,13 @@ export const DefaultTheme = {
     },
   }),
   OpenCard: '',
-  CloseCard: '',
+  CloseCard: require('../../../assets/card_bg.png'),
+  PinIcon: require('../../../assets/pin_icon.png'),
   CardBackground: require('../../../assets/card_bg.png'),
   ProfileIcon: require('../../../assets/placeholder-photo.png'),
   MosipSplashLogo: require('../../../assets/icon.png'),
   MosipLogo: require('../../../assets/mosip-logo.png'),
+  MosipText: require('../../../assets/mosip_text.png'),
   CameraFlipIcon: require('../../../assets/camera-flip-icon.png'),
   ImageCaptureButton: require('../../../assets/capture-button.png'),
   DomainWarningLogo: require('../../../assets/domain-warning.png'),
