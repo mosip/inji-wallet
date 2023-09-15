@@ -137,6 +137,7 @@
     "language": "Language",
     "aboutInji": "About Inji",
     "credentialRegistry": "Credential Registry",
+    "esignethosturl": "Esignet Host",
     "errorMessage": "Incorrect URL entered. Please enter a valid URL to proceed.",
     "injiTourGuide": "Inji Tour Guide",
     "logout": "Logout",

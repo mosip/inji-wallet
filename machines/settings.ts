@@ -7,6 +7,7 @@ import {
   MIMOTO_BASE_URL,
   isIOS,
   SETTINGS_STORE_KEY,
+  ESIGNET_BASE_URL,
 } from '../shared/constants';
 import { VCLabel } from '../types/vc';
 import { StoreEvents } from './store';
@@ -28,6 +29,7 @@ const model = createModel(
     } as VCLabel,
     isBiometricUnlockEnabled: false,
     credentialRegistry: MIMOTO_BASE_URL,
+    esignetHostUrl: ESIGNET_BASE_URL,
     appId: null,
     hasUserShownWithHardwareKeystoreNotExists: false,
     credentialRegistryResponse: '' as string,
@@ -39,9 +41,10 @@ const model = createModel(
       TOGGLE_BIOMETRIC_UNLOCK: (enable: boolean) => ({ enable }),
       STORE_RESPONSE: (response: unknown) => ({ response }),
       CHANGE_LANGUAGE: (language: string) => ({ language }),
-      UPDATE_CREDENTIAL_REGISTRY: (credentialRegistry: string) => ({
+      UPDATE_MIMOTO_HOST: (credentialRegistry: string) => ({
         credentialRegistry,
       }),
+      UPDATE_ESIGNET_HOST: (esignetHostUrl: string) => ({ esignetHostUrl }),
       UPDATE_CREDENTIAL_REGISTRY_RESPONSE: (
         credentialRegistryResponse: string
       ) => ({
@@ -101,9 +104,12 @@ export const settingsMachine = model.createMachine(
           UPDATE_VC_LABEL: {
             actions: ['updateVcLabel', 'storeContext'],
           },
-          UPDATE_CREDENTIAL_REGISTRY: {
+          UPDATE_MIMOTO_HOST: {
             actions: ['resetCredentialRegistry'],
             target: 'resetInjiProps',
+          },
+          UPDATE_ESIGNET_HOST: {
+            actions: ['updateEsignetHostUrl', 'storeContext'],
           },
           CANCEL: {
             actions: ['resetCredentialRegistry'],
@@ -195,6 +201,10 @@ export const settingsMachine = model.createMachine(
 
       updateName: model.assign({
         name: (_, event) => event.name,
+      }),
+
+      updateEsignetHostUrl: model.assign({
+        esignetHostUrl: (_, event) => event.esignetHostUrl,
       }),
 
       updateVcLabel: model.assign({
@@ -292,6 +302,10 @@ export function selectVcLabel(state: State) {
 
 export function selectCredentialRegistry(state: State) {
   return state.context.credentialRegistry;
+}
+
+export function selectEsignetHostUrl(state: State) {
+  return state.context.esignetHostUrl;
 }
 
 export function selectCredentialRegistryResponse(state: State) {
