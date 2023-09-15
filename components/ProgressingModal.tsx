@@ -4,15 +4,10 @@ import {Button, Centered, Column, Text} from './ui';
 import {Modal} from './ui/Modal';
 import {Image} from 'react-native';
 import {Theme} from './ui/styleUtils';
-import PaginationDot from 'react-native-animated-pagination-dot';
+import Spinner from 'react-native-spinkit';
 
 export const ProgressingModal: React.FC<ProgressingModalProps> = props => {
   const {t} = useTranslation('ScanScreen');
-
-  let n = 0;
-  const [curPage, setCurPage] = useState(n);
-
-  const highLightDot = () => setCurPage(n + 1);
 
   return (
     <React.Fragment>
@@ -32,10 +27,10 @@ export const ProgressingModal: React.FC<ProgressingModalProps> = props => {
               style={{marginBottom: 15, marginLeft: -6}}
             />
             {props.progress && (
-              <PaginationDot
-                activeDotColor={Theme.Colors.LoadingDetailsLabel}
-                curPage={curPage}
-                maxPage={3}
+              <Spinner
+                type="ThreeBounce"
+                color={Theme.Colors.Loading}
+                style={{marginLeft: 6}}
               />
             )}
           </Column>
@@ -56,6 +51,7 @@ export const ProgressingModal: React.FC<ProgressingModalProps> = props => {
                   onPress={props.onStayInProgress}
                 />
               )}
+
               {props.onRetry && (
                 <Button
                   type="clear"
