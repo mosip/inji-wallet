@@ -1,16 +1,16 @@
 import React from 'react';
-import { SUPPORTED_LANGUAGES } from '../i18n';
-import { I18nManager, View } from 'react-native';
-import { Picker } from './ui/Picker';
+import {SUPPORTED_LANGUAGES} from '../i18n';
+import {I18nManager, View} from 'react-native';
+import {Picker} from './ui/Picker';
 import Storage from '../shared/storage';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import i18next from 'i18next';
 import RNRestart from 'react-native-restart';
 
-export const LanguageSelector: React.FC<LanguageSelectorProps> = (props) => {
-  const { i18n } = useTranslation();
+export const LanguageSelector: React.FC<LanguageSelectorProps> = props => {
+  const {i18n} = useTranslation();
   const languages = Object.entries(SUPPORTED_LANGUAGES).map(
-    ([value, label]) => ({ label, value })
+    ([value, label]) => ({label, value}),
   );
 
   const changeLanguage = async (language: string) => {
@@ -35,6 +35,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = (props) => {
   return (
     <View>
       <Picker
+        testID="language"
         items={languages}
         selectedValue={i18n.language}
         onValueChange={changeLanguage}

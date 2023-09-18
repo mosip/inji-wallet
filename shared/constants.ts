@@ -46,8 +46,6 @@ export const ACTIVITY_LOG_STORE_KEY = 'activityLog';
 
 export const SETTINGS_STORE_KEY = 'settings';
 
-export const ONBOARDING_STATUS_STORE_KEY = 'isOnboardingDone';
-
 export const GNM_API_KEY = GOOGLE_NEARBY_MESSAGES_API_KEY;
 
 // https://developers.google.com/android/reference/com/google/android/gms/nearby/messages/Message#MAX_CONTENT_SIZE_BYTES

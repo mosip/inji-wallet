@@ -1,16 +1,17 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { SendVcScreen } from './SendVcScreen';
-import { useScanLayout } from './ScanLayoutController';
-import { ScanScreen } from './ScanScreen';
-import { ProgressingModal } from '../../components/ProgressingModal';
-import { MessageOverlay } from '../../components/MessageOverlay';
+import {useTranslation} from 'react-i18next';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {SendVcScreen} from './SendVcScreen';
+import {useScanLayout} from './ScanLayoutController';
+import {ScanScreen} from './ScanScreen';
+import {ProgressingModal} from '../../components/ProgressingModal';
+import {MessageOverlay} from '../../components/MessageOverlay';
+import {SCAN_ROUTES} from '../../routes/routesConstants';
 
 const ScanStack = createNativeStackNavigator();
 
 export const ScanLayout: React.FC = () => {
-  const { t } = useTranslation('ScanScreen');
+  const {t} = useTranslation('ScanScreen');
   const controller = useScanLayout();
 
   return (
@@ -18,7 +19,7 @@ export const ScanLayout: React.FC = () => {
       <ScanStack.Navigator initialRouteName="ScanScreen">
         {!controller.isDone && (
           <ScanStack.Screen
-            name="SendVcScreen"
+            name={SCAN_ROUTES.SendVcScreen}
             component={SendVcScreen}
             options={{
               title: t('sharingVc'),
@@ -27,10 +28,10 @@ export const ScanLayout: React.FC = () => {
           />
         )}
         <ScanStack.Screen
-          name="ScanScreen"
+          name={SCAN_ROUTES.ScanScreen}
           component={ScanScreen}
           options={{
-            headerTitleStyle: { fontSize: 30, fontFamily: 'Inter_600SemiBold' },
+            headerTitleStyle: {fontSize: 30, fontFamily: 'Inter_600SemiBold'},
             title: t('MainLayout:scan'),
           }}
         />
@@ -42,8 +43,10 @@ export const ScanLayout: React.FC = () => {
         hint={controller.statusOverlay?.hint}
         label={controller.statusOverlay?.message}
         onCancel={controller.statusOverlay?.onCancel}
+        onStayInProgress={controller.statusOverlay?.onStayInProgress}
+        isHintVisible={controller.isStayInProgress}
+        onRetry={controller.statusOverlay?.onRetry}
         progress={controller.statusOverlay?.progress}
-        onBackdropPress={controller.statusOverlay?.onBackdropPress}
         requester={controller.statusOverlay?.requester}
       />
 

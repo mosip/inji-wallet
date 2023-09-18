@@ -1,23 +1,25 @@
 import React from 'react';
-import { Icon, ListItem, Overlay } from 'react-native-elements';
-import { Theme } from '../components/ui/styleUtils';
-import { Column, Row, Text } from '../components/ui';
-import { WalletBinding } from '../screens/Home/MyVcs/WalletBinding';
-import { Pressable, View } from 'react-native';
-import { useKebabPopUp } from './KebabPopUpController';
-import { ActorRefFrom } from 'xstate';
-import { vcItemMachine } from '../machines/vcItem';
-import { useTranslation } from 'react-i18next';
-import { HistoryTab } from '../screens/Home/MyVcs/HistoryTab';
-import { RemoveVcWarningOverlay } from '../screens/Home/MyVcs/RemoveVcWarningOverlay';
-import { ScrollView } from 'react-native-gesture-handler';
+import {Icon, ListItem, Overlay} from 'react-native-elements';
+import {Theme} from '../components/ui/styleUtils';
+import {Column, Row, Text} from '../components/ui';
+import {WalletBinding} from '../screens/Home/MyVcs/WalletBinding';
+import {Pressable, View} from 'react-native';
+import {useKebabPopUp} from './KebabPopUpController';
+import {ActorRefFrom} from 'xstate';
+import {vcItemMachine} from '../machines/vcItem';
+import {useTranslation} from 'react-i18next';
+import {HistoryTab} from '../screens/Home/MyVcs/HistoryTab';
+import {RemoveVcWarningOverlay} from '../screens/Home/MyVcs/RemoveVcWarningOverlay';
+import {ScrollView} from 'react-native-gesture-handler';
+import testIDProps from '../shared/commonUtil';
 
-export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
+export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
   const controller = useKebabPopUp(props);
-  const { t } = useTranslation('HomeScreenKebabPopUp');
+  const {t} = useTranslation('HomeScreenKebabPopUp');
   return (
     <Column>
       <Icon
+        {...testIDProps('ellipsis')}
         name={props.iconName}
         type={props.iconType}
         color={Theme.Colors.GrayIcon}
@@ -28,7 +30,9 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
         overlayStyle={Theme.KebabPopUpStyles.kebabPopUp}>
         <Row style={Theme.KebabPopUpStyles.kebabHeaderStyle}>
           <View></View>
-          <Text weight="bold">{t('title')}</Text>
+          <Text testID="kebabTitle" weight="bold">
+            {t('title')}
+          </Text>
           <Icon
             name="close"
             onPress={props.onDismiss}
@@ -38,7 +42,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
         </Row>
         <ScrollView>
           <ListItem bottomDivider>
-            <ListItem.Content>
+            <ListItem.Content {...testIDProps('pinOrUnPinCard')}>
               <ListItem.Title>
                 <Pressable onPress={controller.PIN_CARD}>
                   <Text size="small" weight="bold">
@@ -58,12 +62,13 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = (props) => {
           />
 
           <HistoryTab
+            testID="viewActivityLog"
             service={props.service}
             label={t('viewActivityLog')}
             vcKey={props.vcKey}
           />
 
-          <ListItem bottomDivider>
+          <ListItem testID="removeFromWallet" bottomDivider>
             <ListItem.Content>
               <ListItem.Title>
                 <Pressable onPress={() => controller.REMOVE(props.vcKey)}>

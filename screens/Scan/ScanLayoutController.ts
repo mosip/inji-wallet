@@ -1,10 +1,10 @@
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { useSelector } from '@xstate/react';
-import { useContext, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { MessageOverlayProps } from '../../components/MessageOverlay';
-import { MainBottomTabParamList } from '../../routes/main';
-import { GlobalContext } from '../../shared/GlobalContext';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {useSelector} from '@xstate/react';
+import {useContext, useEffect} from 'react';
+import {useTranslation} from 'react-i18next';
+import {MessageOverlayProps} from '../../components/MessageOverlay';
+import {MainBottomTabParamList} from '../../routes/main';
+import {GlobalContext} from '../../shared/GlobalContext';
 import {
   selectIsConnecting,
   selectIsConnectingTimeout,
@@ -18,6 +18,7 @@ import {
   selectIsSent,
   selectReceiverInfo,
   selectIsDone,
+  selectStayInProgress,
 } from '../../machines/bleShare/scan/selectors';
 import {
   selectIsAccepted,
@@ -30,12 +31,9 @@ import {
   selectIsReviewing,
   selectBleError,
 } from '../../machines/bleShare/commonSelectors';
-import { ScanEvents } from '../../machines/bleShare/scan/scanMachine';
-
-type ScanStackParamList = {
-  ScanScreen: undefined;
-  SendVcScreen: undefined;
-};
+import {ScanEvents} from '../../machines/bleShare/scan/scanMachine';
+import {BOTTOM_TAB_ROUTES, SCAN_ROUTES} from '../../routes/routesConstants';
+import {ScanStackParamList} from '../../routes/routesConstants';
 
 type ScanLayoutNavigation = NavigationProp<
   ScanStackParamList & MainBottomTabParamList
@@ -44,8 +42,8 @@ type ScanLayoutNavigation = NavigationProp<
 // TODO: refactor
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export function useScanLayout() {
-  const { t } = useTranslation('ScanScreen');
-  const { appService } = useContext(GlobalContext);
+  const {t} = useTranslation('ScanScreen');
+  const {appService} = useContext(GlobalContext);
   const scanService = appService.children.get('scan');
   const navigation = useNavigation<ScanLayoutNavigation>();
 
@@ -54,7 +52,7 @@ export function useScanLayout() {
   const isBleError = useSelector(scanService, selectIsHandlingBleError);
   const bleError = useSelector(scanService, selectBleError);
 
-  const locationError = { message: '', button: '' };
+  const locationError = {message: '', button: ''};
 
   if (isLocationDisabled) {
     locationError.message = t('errors.locationDisabled.message');
@@ -73,15 +71,15 @@ export function useScanLayout() {
   const isConnecting = useSelector(scanService, selectIsConnecting);
   const isConnectingTimeout = useSelector(
     scanService,
-    selectIsConnectingTimeout
+    selectIsConnectingTimeout,
   );
   const isExchangingDeviceInfo = useSelector(
     scanService,
-    selectIsExchangingDeviceInfo
+    selectIsExchangingDeviceInfo,
   );
   const isExchangingDeviceInfoTimeout = useSelector(
     scanService,
-    selectIsExchangingDeviceInfoTimeout
+    selectIsExchangingDeviceInfoTimeout,
   );
   const isAccepted = useSelector(scanService, selectIsAccepted);
   const isRejected = useSelector(scanService, selectIsRejected);
@@ -91,12 +89,17 @@ export function useScanLayout() {
   const isSendingVcTimeout = useSelector(scanService, selectIsSendingVcTimeout);
 
   const onCancel = () => scanService.send(ScanEvents.CANCEL());
+  const onStayInProgress = () =>
+    scanService.send(ScanEvents.STAY_IN_PROGRESS());
+  const onRetry = () => scanService.send(ScanEvents.RETRY());
   let statusOverlay: Pick<
     MessageOverlayProps,
     | 'title'
     | 'message'
     | 'hint'
     | 'onCancel'
+    | 'onStayInProgress'
+    | 'onRetry'
     | 'progress'
     | 'onBackdropPress'
     | 'requester'
@@ -112,6 +115,8 @@ export function useScanLayout() {
       title: t('status.sharingInProgress'),
       hint: t('status.connectingTimeout'),
       onCancel,
+      onStayInProgress,
+      onRetry,
       progress: true,
     };
   } else if (isExchangingDeviceInfo) {
@@ -184,15 +189,15 @@ export function useScanLayout() {
   useEffect(() => {
     const subscriptions = [
       navigation.addListener('focus', () =>
-        scanService.send(ScanEvents.SCREEN_FOCUS())
+        scanService.send(ScanEvents.SCREEN_FOCUS()),
       ),
       navigation.addListener('blur', () =>
-        scanService.send(ScanEvents.SCREEN_BLUR())
+        scanService.send(ScanEvents.SCREEN_BLUR()),
       ),
     ];
 
     return () => {
-      subscriptions.forEach((unsubscribe) => unsubscribe());
+      subscriptions.forEach(unsubscribe => unsubscribe());
     };
   }, []);
 
@@ -203,13 +208,13 @@ export function useScanLayout() {
 
   useEffect(() => {
     if (isDone) {
-      navigation.navigate('home', { activeTab: 0 });
+      navigation.navigate(BOTTOM_TAB_ROUTES.home);
     } else if (isReviewing) {
-      navigation.navigate('SendVcScreen');
+      navigation.navigate(SCAN_ROUTES.SendVcScreen);
     } else if (isScanning) {
-      navigation.navigate('ScanScreen');
+      navigation.navigate(SCAN_ROUTES.ScanScreen);
     } else if (isQrLoginDone) {
-      navigation.navigate('History');
+      navigation.navigate(BOTTOM_TAB_ROUTES.history);
     }
   }, [isDone, isReviewing, isScanning, isQrLoginDone, isBleError]);
 
@@ -218,6 +223,7 @@ export function useScanLayout() {
     isDone,
     isDisconnected: useSelector(scanService, selectIsDisconnected),
     statusOverlay,
+    isStayInProgress: useSelector(scanService, selectStayInProgress),
     DISMISS,
   };
 }

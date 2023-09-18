@@ -24,7 +24,11 @@
     "Verifier": "Verifier",
     "Wallet": "Wallet"
   },
-  "FaceScanner": {},
+  "FaceScanner": {
+    "imageCaptureGuide": "Hold the phone steady and keep your face focused in the centre",
+    "capture": "Capture",
+    "flipCamera": "Flip Camera"
+  },
   "OIDcAuth": {
     "title": "OIDC Authentication",
     "text": "To be replaced with the OIDC provider UI",
@@ -451,6 +455,8 @@
       "establishingConnection": "Establishing connection",
       "sharingInProgress": "Sharing in Progress",
       "connectingTimeout": "It's taking a while to establish the connection. Is the other device open for connections?",
+      "stayOnTheScreen": "Stay on the screen",
+      "retry": "Retry",
       "exchangingDeviceInfo": "Exchanging device info...",
       "exchangingDeviceInfoTimeout": "It's taking a while to exchange device info. You may have to reconnect.",
       "invalid": "Invalid QR Code",

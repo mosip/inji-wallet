@@ -1,12 +1,12 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Dimensions } from 'react-native';
-import { Icon } from 'react-native-elements';
-import { ActorRefFrom } from 'xstate';
-import { vcItemMachine } from '../machines/vcItem';
-import { VerifiableCredential } from '../types/vc';
-import { Row, Text } from './ui';
-import { Theme } from './ui/styleUtils';
+import {useTranslation} from 'react-i18next';
+import {Dimensions} from 'react-native';
+import {Icon} from 'react-native-elements';
+import {ActorRefFrom} from 'xstate';
+import {vcItemMachine} from '../machines/vcItem';
+import {VerifiableCredential} from '../types/vc';
+import {Row, Text} from './ui';
+import {Theme} from './ui/styleUtils';
 
 const WalletUnverifiedIcon: React.FC = () => {
   return (
@@ -15,7 +15,7 @@ const WalletUnverifiedIcon: React.FC = () => {
       color={Theme.Colors.Icon}
       size={28}
       type="material-community"
-      containerStyle={{ marginStart: 4, bottom: 1 }}
+      containerStyle={{marginStart: 4, bottom: 1}}
     />
   );
 };
@@ -26,15 +26,15 @@ const WalletVerifiedIcon: React.FC = () => {
       name="verified-user"
       color={Theme.Colors.VerifiedIcon}
       size={28}
-      containerStyle={{ marginStart: 4, bottom: 1 }}
+      containerStyle={{marginStart: 4, bottom: 1}}
     />
   );
 };
 
 const WalletUnverifiedActivationDetails: React.FC<
   WalletUnVerifiedDetailsProps
-> = (props) => {
-  const { t } = useTranslation('VcDetails');
+> = props => {
+  const {t} = useTranslation('VcDetails');
   return (
     <Row
       width={Dimensions.get('screen').width * 0.8}
@@ -48,6 +48,7 @@ const WalletUnverifiedActivationDetails: React.FC<
         {props.verifiableCredential && <WalletUnverifiedIcon />}
         <Text
           color={Theme.Colors.Details}
+          testID="activationPending"
           weight="semibold"
           size="small"
           margin="10 33 10 10"
@@ -62,10 +63,10 @@ const WalletUnverifiedActivationDetails: React.FC<
   );
 };
 
-const WalletVerifiedActivationDetails: React.FC<WalletVerifiedDetailsProps> = (
-  props
-) => {
-  const { t } = useTranslation('VcDetails');
+const WalletVerifiedActivationDetails: React.FC<
+  WalletVerifiedDetailsProps
+> = props => {
+  const {t} = useTranslation('VcDetails');
   return (
     <Row
       width={Dimensions.get('screen').width * 0.8}
@@ -79,6 +80,7 @@ const WalletVerifiedActivationDetails: React.FC<WalletVerifiedDetailsProps> = (
         <WalletVerifiedIcon />
         <Text
           color={Theme.Colors.statusLabel}
+          testID="activated"
           weight="semibold"
           size="smaller"
           margin="10 10 10 10"
@@ -93,9 +95,9 @@ const WalletVerifiedActivationDetails: React.FC<WalletVerifiedDetailsProps> = (
   );
 };
 
-export const VcItemActivationStatus: React.FC<VcItemActivationStatusProps> = (
-  props
-) => {
+export const VcItemActivationStatus: React.FC<
+  VcItemActivationStatusProps
+> = props => {
   return (
     <Row>
       {props.emptyWalletBindingId ? (

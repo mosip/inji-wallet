@@ -1,28 +1,29 @@
 import React from 'react';
-import { Platform, Pressable, View, Image } from 'react-native';
-import { Icon, ListItem, Switch } from 'react-native-elements';
-import { Column, Row, Text } from '../../components/ui';
-import { Theme } from '../../components/ui/styleUtils';
-import { MessageOverlay } from '../../components/MessageOverlay';
+import {Platform, Pressable, View, Image} from 'react-native';
+import {Icon, ListItem, Switch} from 'react-native-elements';
+import {Column, Row, Text} from '../../components/ui';
+import {Theme} from '../../components/ui/styleUtils';
+import {MessageOverlay} from '../../components/MessageOverlay';
 
-import { useSettingsScreen } from './SettingScreenController';
-import { useTranslation } from 'react-i18next';
-import { LanguageSelector } from '../../components/LanguageSelector';
-import { ScrollView } from 'react-native-gesture-handler';
-import { Modal } from '../../components/ui/Modal';
-import { CREDENTIAL_REGISTRY_EDIT } from 'react-native-dotenv';
-import { AboutInji } from './AboutInji';
-import { EditableListItem } from '../../components/EditableListItem';
-import { RequestRouteProps, RootRouteProps } from '../../routes';
-import { ReceivedCards } from './ReceivedCards';
+import {useSettingsScreen} from './SettingScreenController';
+import {useTranslation} from 'react-i18next';
+import {LanguageSelector} from '../../components/LanguageSelector';
+import {ScrollView} from 'react-native-gesture-handler';
+import {Modal} from '../../components/ui/Modal';
+import {CREDENTIAL_REGISTRY_EDIT} from 'react-native-dotenv';
+import {AboutInji} from './AboutInji';
+import {EditableListItem} from '../../components/EditableListItem';
+import {RequestRouteProps, RootRouteProps} from '../../routes';
+import {ReceivedCards} from './ReceivedCards';
+import testIDProps from '../../shared/commonUtil';
 
 const LanguageSetting: React.FC = () => {
-  const { t } = useTranslation('SettingScreen');
+  const {t} = useTranslation('SettingScreen');
 
   return (
     <LanguageSelector
       triggerComponent={
-        <ListItem>
+        <ListItem testID="language">
           <Icon
             name="globe"
             size={22}
@@ -39,7 +40,7 @@ const LanguageSetting: React.FC = () => {
             name="chevron-right"
             size={21}
             color={Theme.Colors.profileLanguageValue}
-            style={{ marginRight: 15 }}
+            style={{marginRight: 15}}
           />
         </ListItem>
       }
@@ -49,8 +50,8 @@ const LanguageSetting: React.FC = () => {
 
 export const SettingScreen: React.FC<
   SettingProps & RootRouteProps & RequestRouteProps
-> = (props) => {
-  const { t } = useTranslation('SettingScreen');
+> = props => {
+  const {t} = useTranslation('SettingScreen');
   const controller = useSettingsScreen(props);
 
   const updateRegistry = (items) => {
@@ -63,6 +64,7 @@ export const SettingScreen: React.FC<
         {props.triggerComponent}
       </Pressable>
       <Modal
+        testID="settingsScreen"
         isVisible={controller.isVisible}
         arrowLeft={<Icon name={''} />}
         headerTitle={t('header')}
@@ -70,9 +72,10 @@ export const SettingScreen: React.FC<
         onDismiss={controller.TOGGLE_SETTINGS}>
         <ScrollView>
           <Column
-            style={{ display: Platform.OS !== 'ios' ? 'flex' : 'none' }}
+            style={{display: Platform.OS !== 'ios' ? 'flex' : 'none'}}
             backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
             <Text
+              testID="injiAsVerifierApp"
               weight="semibold"
               margin="10"
               color={Theme.Colors.aboutVersion}>
@@ -82,16 +85,19 @@ export const SettingScreen: React.FC<
               align="space-evenly"
               backgroundColor={Theme.Colors.whiteBackgroundColor}>
               <Pressable onPress={controller.RECEIVE_CARD}>
-                <Column style={Theme.Styles.receiveCardsContainer}>
+                <Column
+                  testID="receiveCard"
+                  style={Theme.Styles.receiveCardsContainer}>
                   <Image
                     source={Theme.ReceiveCardIcon}
-                    style={{ alignSelf: 'center' }}
+                    style={{alignSelf: 'center'}}
                   />
                   <Text margin="6" weight="semibold">
                     {t('receiveCard')}
                   </Text>
                 </Column>
               </Pressable>
+
               <ReceivedCards />
             </Row>
 
@@ -111,13 +117,16 @@ export const SettingScreen: React.FC<
 
             <LanguageSetting />
 
-            <ListItem topDivider disabled={!controller.canUseBiometrics}>
+            <ListItem
+              {...testIDProps('bioUnlock')}
+              topDivider
+              disabled={!controller.canUseBiometrics}>
               <Icon
                 type={'MaterialCommunityIcons'}
                 name={'fingerprint'}
                 color={Theme.Colors.Icon}
                 size={25}
-                style={{ marginRight: 15 }}
+                style={{marginRight: 15}}
               />
               <ListItem.Content>
                 <ListItem.Title>
@@ -166,6 +175,7 @@ export const SettingScreen: React.FC<
             )}
 
             <ListItem
+              {...testIDProps('injiTourGuide')}
               topDivider
               bottomDivider
               onPress={() => controller.INJI_TOUR_GUIDE()}>
@@ -174,7 +184,7 @@ export const SettingScreen: React.FC<
                 name={'book'}
                 color={Theme.Colors.Icon}
                 size={25}
-                style={{ marginRight: 15 }}
+                style={{marginRight: 15}}
               />
               <ListItem.Content>
                 <ListItem.Title>
@@ -185,7 +195,7 @@ export const SettingScreen: React.FC<
               </ListItem.Content>
             </ListItem>
 
-            <ListItem onPress={controller.LOGOUT}>
+            <ListItem {...testIDProps('logout')} onPress={controller.LOGOUT}>
               <Icon
                 name="logout"
                 type="fontawesome"
@@ -201,6 +211,7 @@ export const SettingScreen: React.FC<
                 </ListItem.Title>
               </ListItem.Content>
             </ListItem>
+
             {controller.backendInfo.application.name !== '' ? (
               <View>
                 <Text
@@ -228,5 +239,6 @@ export const SettingScreen: React.FC<
 };
 
 interface SettingProps {
+  testID?: string;
   triggerComponent: React.ReactElement;
 }

@@ -1,13 +1,13 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 
-import { Dimensions } from 'react-native';
-import { Overlay, LinearProgress } from 'react-native-elements';
-import { Button, Column, Text } from './ui';
-import { Theme } from './ui/styleUtils';
+import {Dimensions} from 'react-native';
+import {Overlay, LinearProgress} from 'react-native-elements';
+import {Button, Column, Text} from './ui';
+import {Theme} from './ui/styleUtils';
 
-export const MessageOverlay: React.FC<MessageOverlayProps> = (props) => {
-  const { t } = useTranslation('common');
+export const MessageOverlay: React.FC<MessageOverlayProps> = props => {
+  const {t} = useTranslation('common');
   return (
     <Overlay
       isVisible={props.isVisible}
@@ -19,7 +19,7 @@ export const MessageOverlay: React.FC<MessageOverlayProps> = (props) => {
         style={
           !props.progress
             ? Theme.MessageOverlayStyles.popupOverLay
-            : { height: 100 }
+            : {height: 100}
         }>
         <Column padding="21" crossAlign="center">
           {props.title && (
@@ -71,7 +71,7 @@ export const ErrorMessageOverlay: React.FC<ErrorMessageOverlayProps> = ({
   onDismiss,
   translationPath,
 }) => {
-  const { t } = useTranslation(translationPath);
+  const {t} = useTranslation(translationPath);
 
   return (
     <MessageOverlay
@@ -90,7 +90,7 @@ export interface ErrorMessageOverlayProps {
   translationPath: string;
 }
 
-const Progress: React.FC<Pick<MessageOverlayProps, 'progress'>> = (props) => {
+const Progress: React.FC<Pick<MessageOverlayProps, 'progress'>> = props => {
   return typeof props.progress === 'boolean' ? (
     props.progress && (
       <LinearProgress variant="indeterminate" color={Theme.Colors.Loading} />
@@ -108,6 +108,8 @@ export interface MessageOverlayProps {
   requester?: boolean;
   hint?: string;
   onCancel?: () => void;
+  onStayInProgress?: () => void;
+  onRetry?: () => void;
   onBackdropPress?: () => void;
   onShow?: () => void;
 }
