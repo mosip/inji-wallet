@@ -39,6 +39,12 @@ import {WalletDataEvent} from 'react-native-tuvali/lib/typescript/types/events';
 import {BLEError} from '../types';
 import Storage from '../../../shared/storage';
 import {logState} from '../../app';
+import {
+  getData,
+  getEndData,
+  sendStartEvent,
+  sendEndEvent,
+} from '../../../shared/telemetry/TelemetryUtils';
 
 const {wallet, EventTypes, VerificationStatus} = tuvali;
 
@@ -425,7 +431,7 @@ export const scanMachine =
             },
             navigatingToHistory: {},
           },
-          entry: 'sendScanData',
+          entry: ['sendScanData', () => sendStartEvent(getData('QR login'))],
         },
         connecting: {
           invoke: {
@@ -560,7 +566,7 @@ export const scanMachine =
               },
             },
             accepted: {
-              entry: 'logShared',
+              entry: ['logShared', () => sendEndEvent(getEndData('VC share'))],
               on: {
                 DISMISS: {
                   target: 'navigatingToHome',
@@ -994,6 +1000,7 @@ export const scanMachine =
         },
 
         startConnection: context => callback => {
+          sendStartEvent(getData('VC share'));
           wallet.startConnection(context.openId4VpUri);
           const statusCallback = (event: WalletDataEvent) => {
             if (event.type === EventTypes.onSecureChannelEstablished) {
