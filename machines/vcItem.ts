@@ -34,6 +34,12 @@ import getAllConfigurations, {
 import { VcEvents } from './vc';
 import i18n from '../i18n';
 import SecureKeystore from 'react-native-secure-keystore';
+import {
+  sendStartEvent,
+  getData,
+  getEndData,
+  sendEndEvent,
+} from '../shared/telemetry/TelemetryUtils';
 
 const model = createModel(
   {
@@ -301,6 +307,7 @@ export const vcItemMachine =
             showBindingWarning: {
               on: {
                 CONFIRM: {
+                  actions: [() => sendStartEvent(getData('VC activation'))],
                   target: '#vc-item.kebabPopUp.requestingBindingOtp',
                 },
                 CANCEL: {
@@ -413,6 +420,7 @@ export const vcItemMachine =
                     'updateVc',
                     'setWalletBindingErrorEmpty',
                     'logWalletBindingSuccess',
+                    () => sendEndEvent(getEndData('VC activation')),
                   ],
                   target: '#vc-item.kebabPopUp',
                 },
@@ -632,6 +640,7 @@ export const vcItemMachine =
         showBindingWarning: {
           on: {
             CONFIRM: {
+              actions: () => sendStartEvent(getData('VC activation')),
               target: 'requestingBindingOtp',
             },
             CANCEL: {
@@ -740,6 +749,7 @@ export const vcItemMachine =
                 'updateVc',
                 'setWalletBindingErrorEmpty',
                 'logWalletBindingSuccess',
+                () => sendEndEvent(getEndData('VC activation')),
               ],
               target: 'idle',
             },
