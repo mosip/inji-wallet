@@ -42,7 +42,7 @@ export function getTelemetryConfigData() {
     host: OBSRV_HOST,
     endpoint: '/obsrv/v1/data/mosip-dataset',
     telemetryDebugEnabled: true,
-    enableValidation: false,
+    enableValidation: true,
     schemaBaseUrl: 'http://mosip.io/telemetry/',
   };
 }
