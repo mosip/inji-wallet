@@ -8,14 +8,24 @@ import { useTranslation } from 'react-i18next';
 export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
   const { t } = useTranslation('common');
   const [isEditing, setIsEditing] = useState(false);
-  const [newValue, setNewValue] = useState(props.value);
+  const [items, setItems] = useState(props.items);
   const [overlayOpened, setOverlayOpened] = useState(true);
 
   useEffect(() => {
-    if (props.credentialRegistryResponse === 'success') {
+    if (props.response === 'success') {
       closePopup();
     }
-  }, [props.credentialRegistryResponse]);
+  }, [props.response]);
+
+  function updateItems(label: string, value: string) {
+    const updatedItems = items.map((item) => {
+      if (item.label === label) {
+        return { ...item, value: value };
+      }
+      return item;
+    });
+    setItems(updatedItems);
+  }
 
   return (
     <ListItem bottomDivider topDivider onPress={() => setIsEditing(true)}>
@@ -29,10 +39,10 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
       <ListItem.Content>
         <ListItem.Title>
           <Text weight="semibold" color={Theme.Colors.profileLabel}>
-            {props.label}
+            {props.title}
           </Text>
         </ListItem.Title>
-        <Text color={Theme.Colors.profileValue}>{props.value}</Text>
+        <Text color={Theme.Colors.profileValue}>{props.content}</Text>
       </ListItem.Content>
       <Icon
         name="chevron-right"
@@ -44,22 +54,28 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
         isVisible={isEditing}
         onBackdropPress={dismiss}>
         <Column width={Dimensions.get('screen').width * 0.8}>
-          <Text>{t('editLabel', { label: props.label })}</Text>
-          <Input
-            autoFocus
-            value={newValue}
-            onChangeText={setNewValue}
-            selectionColor={Theme.Colors.Cursor}
-            inputStyle={{
-              textAlign: I18nManager.isRTL ? 'right' : 'left',
-            }}
-          />
-          {props.credentialRegistryResponse === 'error' && (
-            <Text style={Theme.TextStyles.error}>{props.errorMessage}</Text>
-          )}
-          {props.credentialRegistryResponse === 'success' &&
-            overlayOpened &&
-            closePopup()}
+          {props.items.map((item: ListItemProps, index) => {
+            return (
+              <React.Fragment key={index}>
+                <Text>{t('editLabel', { label: item.label })}</Text>
+                <Input
+                  autoFocus
+                  value={items[index].value}
+                  onChangeText={(value) => updateItems(item.label, value)}
+                  selectionColor={Theme.Colors.Cursor}
+                  inputStyle={{
+                    textAlign: I18nManager.isRTL ? 'right' : 'left',
+                  }}
+                />
+                {index === 0 && props.response === 'error' && (
+                  <Text style={Theme.TextStyles.error}>
+                    {props.errorMessage}
+                  </Text>
+                )}
+              </React.Fragment>
+            );
+          })}
+          {props.response === 'success' && overlayOpened && closePopup()}
           <Row>
             <Button fill type="clear" title={t('cancel')} onPress={dismiss} />
             <Button
@@ -75,14 +91,13 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
   );
 
   function edit() {
-    props.onEdit(newValue);
-    if (props.credentialRegistryResponse === undefined) {
+    props.onEdit(items);
+    if (props.response === undefined) {
       setIsEditing(false);
     }
   }
 
   function dismiss() {
-    setNewValue(props.value);
     setIsEditing(false);
     props.onCancel();
   }
@@ -94,14 +109,20 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
 };
 
 interface EditableListItemProps {
-  label: string;
-  value: string;
+  title: string;
+  content: string;
+  items: ListItemProps[];
   Icon: string;
   IconType?: string;
-  onEdit: (newValue: string) => void;
+  onEdit: (values: ListItemProps[]) => void;
   display?: 'none' | 'flex';
-  credentialRegistryResponse: string;
+  response?: string;
   onCancel: () => void;
   progress?: boolean;
   errorMessage?: string;
+}
+
+interface ListItemProps {
+  label: string;
+  value: string;
 }
