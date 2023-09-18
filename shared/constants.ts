@@ -1,11 +1,11 @@
-import {Platform} from 'react-native';
-import {VC} from '../types/vc';
+import { Platform } from 'react-native';
+import { VC } from '../types/vc';
 import {
   MIMOTO_HOST,
   ESIGNET_HOST,
   GOOGLE_NEARBY_MESSAGES_API_KEY,
 } from 'react-native-dotenv';
-import {Argon2iConfig} from './commonUtil';
+import { Argon2iConfig } from './commonUtil';
 
 export let MIMOTO_BASE_URL = MIMOTO_HOST;
 export const ESIGNET_BASE_URL = ESIGNET_HOST;
