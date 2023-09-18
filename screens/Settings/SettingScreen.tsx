@@ -54,6 +54,10 @@ export const SettingScreen: React.FC<
   const {t} = useTranslation('SettingScreen');
   const controller = useSettingsScreen(props);
 
+  const updateRegistry = (items) => {
+    controller.UPDATE_CREDENTIAL_REGISTRY(items[0].value, items[1].value);
+  };
+
   return (
     <React.Fragment>
       <Pressable onPress={controller.TOGGLE_SETTINGS}>
@@ -149,13 +153,21 @@ export const SettingScreen: React.FC<
 
             {CREDENTIAL_REGISTRY_EDIT === 'true' && (
               <EditableListItem
-                label={t('credentialRegistry')}
-                value={controller.credentialRegistry}
-                credentialRegistryResponse={
-                  controller.credentialRegistryResponse
-                }
+                title={t('credentialRegistry')}
+                content={controller.credentialRegistry}
+                items={[
+                  {
+                    label: t('credentialRegistry'),
+                    value: controller.credentialRegistry,
+                  },
+                  {
+                    label: t('esignethosturl'),
+                    value: controller.esignetHostUrl,
+                  },
+                ]}
+                response={controller.credentialRegistryResponse}
                 onCancel={controller.CANCEL}
-                onEdit={controller.UPDATE_CREDENTIAL_REGISTRY}
+                onEdit={updateRegistry}
                 Icon="star"
                 errorMessage={t('errorMessage')}
                 progress={controller.isResetInjiProps}
