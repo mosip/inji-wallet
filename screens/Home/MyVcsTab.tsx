@@ -63,7 +63,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = (props) => {
     <React.Fragment>
       <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
         {controller.isRequestSuccessful && <DownloadingVcPopUp />}
-        <Column fill pY={18} pX={15}>
+        <Column fill pY={13} pX={8}>
           {controller.vcKeys.length > 0 && (
             <React.Fragment>
               <Column

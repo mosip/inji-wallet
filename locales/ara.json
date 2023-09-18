@@ -61,8 +61,8 @@
     "uin": "UIN",
     "vid": "VID",
     "enableVerification": "تفعيل",
-    "profileAuthenticated": "تم التنشيط لتسجيل الدخول عبر الإنترنت!",
-    "offlineAuthDisabledHeader": "التنشيط معلق لتسجيل الدخول عبر الإنترنت!",
+    "profileAuthenticated": "تم التنشيط لتسجيل الدخول عبر الإنترنت",
+    "offlineAuthDisabledHeader": "التنشيط معلق لتسجيل الدخول عبر الإنترنت",
     "offlineAuthDisabledMessage": "الرجاء النقر فوق الزر أدناه لتنشيط بيانات الاعتماد هذه لاستخدامها في تسجيل الدخول عبر الإنترنت.",
     "verificationEnabledSuccess": "تم التنشيط لتسجيل الدخول عبر الإنترنت",
     "goback": "عُد",
@@ -87,7 +87,7 @@
     "title": "المزيد من الخيارات",
     "unPinCard": "قم بفك البطاقة",
     "pinCard": "البطاقة الشخصية",
-    "offlineAuthenticationDisabled!": "التنشيط معلق لتسجيل الدخول عبر الإنترنت!",
+    "offlineAuthenticationDisabled!": "التنشيط معلق لتسجيل الدخول عبر الإنترنت",
     "offlineAuthDisabledMessage": "انقر هنا لتمكين استخدام بيانات الاعتماد هذه للمصادقة عبر الإنترنت.",
     "viewActivityLog": "عرض سجل النشاط",
     "removeFromWallet": "إزالة من المحفظة",
@@ -96,7 +96,7 @@
   },
   "WalletBinding": {
     "inProgress": "في تَقَدم",
-    "profileAuthenticated": "تم التنشيط لتسجيل الدخول عبر الإنترنت!"
+    "profileAuthenticated": "تم التنشيط لتسجيل الدخول عبر الإنترنت"
   },
   "BindingVcWarningOverlay": {
     "alert": "يرجى تأكيد",

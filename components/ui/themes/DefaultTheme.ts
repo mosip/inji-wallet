@@ -17,7 +17,7 @@ const Colors = {
   Gray9: '#171717',
   DimGray: '#737373',
   Orange: '#F2811D',
-  LightGrey: '#F5F5F5',
+  LightGrey: '#F7F7F7',
   ShadeOfGrey: '#6F6F6F',
   White: '#FFFFFF',
   Red: '#D52929',
@@ -116,16 +116,30 @@ export const DefaultTheme = {
     },
     detailsValue: {
       color: Colors.Black,
+      fontSize: 12,
     },
     subtitle: {
       backgroundColor: Colors.Transparent,
+      fontSize: 12,
     },
     loadingSubtitle: {
       backgroundColor: Colors.Grey,
       borderRadius: 4,
     },
+    activationTab: {
+      justifyContent: 'space-evenly',
+      alignItems: 'center',
+      marginRight: 20,
+      marginLeft: 10,
+    },
+    kebabIcon: {
+      justifyContent: 'space-evenly',
+      alignItems: 'center',
+      flex: 1,
+    },
     statusLabel: {
       color: Colors.Gray30,
+      fontSize: 12,
     },
     verifiedIconContainer: {
       marginLeft: 5,
@@ -133,9 +147,11 @@ export const DefaultTheme = {
     verifiedIconInner: {
       backgroundColor: 'white',
       borderRadius: 10,
+      marginRight: 2,
+      marginLeft: 3,
     },
     vcItemLabelHeader: {
-      color: Colors.Orange,
+      color: Colors.Gray40,
     },
     closeDetails: {
       flex: 1,
@@ -206,7 +222,7 @@ export const DefaultTheme = {
       height: 30,
       backgroundColor: Colors.Grey0,
       marginVertical: 8,
-      marginLeft: -40,
+      marginLeft: -45,
       marginRight: 22,
     },
     closeCardBgContainer: {
@@ -217,7 +233,7 @@ export const DefaultTheme = {
       shadowOffset: { width: -1, height: 1 },
       shadowOpacity: 0.4,
       shadowRadius: 3,
-      elevation: 4,
+      elevation: 7,
     },
     selectedBindedVc: {
       borderRadius: 15,
@@ -296,6 +312,12 @@ export const DefaultTheme = {
       alignItems: 'center',
       paddingLeft: 6,
     },
+    titleTextSize: {
+      fontSize: 11,
+    },
+    valueTextSize: {
+      fontSize: 12,
+    },
     closeDetailsHeader: {
       flex: 1,
       flexDirection: 'row',
@@ -309,17 +331,8 @@ export const DefaultTheme = {
       justifyContent: 'space-between',
     },
     logo: {
-      height: 35,
-      width: 35,
-      marginTop: 55,
-      marginRight: 5,
-    },
-    logoText: {
-      height: 13,
+      height: 40,
       width: 40,
-      marginTop: 5,
-      marginBottom: 3,
-      marginRight: 5,
     },
     homeCloseCardDetailsHeader: {
       flex: 1,
@@ -395,9 +408,20 @@ export const DefaultTheme = {
       borderColor: Colors.White,
       backgroundColor: Colors.LightOrange,
     },
+    pinIcon: {
+      height: 39,
+      width: 39,
+      marginLeft: -13,
+      marginTop: -9,
+    },
+    faceImage: {
+      borderRadius: 10,
+      height: 96,
+      width: 88,
+    },
     closeCardImage: {
       width: 80,
-      height: 80,
+      height: 82,
       borderRadius: 100,
     },
     openCardImage: {

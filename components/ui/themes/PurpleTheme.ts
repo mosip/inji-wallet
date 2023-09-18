@@ -15,7 +15,7 @@ const Colors = {
   DimGray: '#737373',
   Orange: '#F2811D',
   LightOrange: '#FDF1E6',
-  LightGrey: '#FAF9FF',
+  LightGrey: '#F7F7F7',
   ShadeOfGrey: '#6F6F6F',
   White: '#FFFFFF',
   Red: '#EB5757',
@@ -115,9 +115,11 @@ export const PurpleTheme = {
     },
     detailsValue: {
       color: Colors.Black,
+      fontSize: 12,
     },
     subtitle: {
       backgroundColor: Colors.Transparent,
+      fontSize: 12,
     },
     loadingSubtitle: {
       backgroundColor: Colors.Grey,
@@ -125,6 +127,18 @@ export const PurpleTheme = {
     },
     statusLabel: {
       color: Colors.Gray30,
+      fontSize: 12,
+    },
+    activationTab: {
+      justifyContent: 'space-evenly',
+      alignItems: 'center',
+      marginRight: 20,
+      marginLeft: 10,
+    },
+    kebabIcon: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      flex: 1,
     },
     verifiedIconContainer: {
       marginLeft: 5,
@@ -132,9 +146,11 @@ export const PurpleTheme = {
     verifiedIconInner: {
       backgroundColor: 'white',
       borderRadius: 10,
+      marginRight: 2,
+      marginLeft: 3,
     },
     vcItemLabelHeader: {
-      color: Colors.Purple,
+      color: Colors.Gray40,
     },
     closeDetails: {
       flex: 1,
@@ -162,7 +178,7 @@ export const PurpleTheme = {
       height: 30,
       backgroundColor: Colors.Grey,
       marginVertical: 8,
-      marginLeft: -40,
+      marginLeft: -45,
       marginRight: 22,
     },
     cardDetailsContainer: {},
@@ -216,7 +232,7 @@ export const PurpleTheme = {
       shadowOffset: { width: -1, height: 1 },
       shadowOpacity: 0.4,
       shadowRadius: 3,
-      elevation: 4,
+      elevation: 7,
     },
     selectedBindedVc: {
       borderRadius: 15,
@@ -300,14 +316,19 @@ export const PurpleTheme = {
       paddingLeft: 18,
       margin: 6,
     },
+    titleTextSize: {
+      fontSize: 11,
+    },
+    valueTextSize: {
+      fontSize: 12,
+    },
     openDetailsHeader: {
       flex: 1,
       justifyContent: 'space-between',
     },
     logo: {
-      marginTop: 115,
-      height: 30,
-      width: 10,
+      height: 40,
+      width: 40,
     },
     homeCloseCardDetailsHeader: {
       flex: 1,
@@ -383,9 +404,20 @@ export const PurpleTheme = {
       borderColor: Colors.White,
       backgroundColor: Colors.LightPurple,
     },
+    pinIcon: {
+      height: 39,
+      width: 39,
+      marginLeft: -13,
+      marginTop: -9,
+    },
+    faceImage: {
+      borderRadius: 10,
+      height: 96,
+      width: 88,
+    },
     closeCardImage: {
-      width: 10,
-      height: 15,
+      width: 80,
+      height: 82,
       borderRadius: 100,
     },
     openCardImage: {

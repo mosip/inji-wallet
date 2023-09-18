@@ -22,6 +22,7 @@ import { VcItemActivationStatus } from './VcItemActivationStatus';
 import { Column, Row } from './ui';
 import { KebabPopUp } from './KebabPopUp';
 import { logState } from '../machines/app';
+import { format } from 'date-fns';
 
 export const VcItem: React.FC<VcItemProps> = (props) => {
   const { appService } = useContext(GlobalContext);
@@ -45,6 +46,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
   const storeErrorTranslationPath = 'errors.savingFailed';
 
   const generatedOn = useSelector(service, selectGeneratedOn);
+  const formattedDate = format(new Date(generatedOn), 'MM/dd/yyyy');
   const tag = useSelector(service, selectTag);
 
   return (
@@ -60,7 +62,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
         <VcItemContent
           context={context}
           verifiableCredential={verifiableCredential}
-          generatedOn={generatedOn}
+          generatedOn={formattedDate}
           tag={tag}
           selectable={props.selectable}
           selected={props.selected}
@@ -72,7 +74,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
         <View style={Theme.Styles.horizontalLine} />
 
         {props.isSharingVc ? null : (
-          <Row crossAlign="center">
+          <Row style={Theme.Styles.activationTab}>
             {props.activeTab !== 'receivedVcsTab' &&
               props.activeTab != 'sharingVcScreen' && (
                 <VcItemActivationStatus
@@ -82,13 +84,8 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
                   showOnlyBindedVc={props.showOnlyBindedVc}
                 />
               )}
-            <Row
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                flex: 1,
-                marginLeft: -12,
-              }}>
+
+            <Row style={Theme.Styles.kebabIcon}>
               <View style={Theme.Styles.verticalLine} />
               <Pressable onPress={KEBAB_POPUP}>
                 <KebabPopUp

@@ -21,7 +21,7 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
         <Text
           testID="status"
           weight="regular"
-          size="smaller"
+          style={Theme.Styles.titleTextSize}
           color={
             !verifiableCredential
               ? Theme.Colors.LoadingDetailsLabel
@@ -57,7 +57,7 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
               : Theme.Colors.DetailsLabel
           }
           size="smaller"
-          weight={'bold'}
+          weight="regular"
           style={Theme.Styles.vcItemLabelHeader}>
           {arg1}
         </Text>
@@ -107,8 +107,9 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
       }>
       <Column>
         <Row align="space-between">
-          <Row>
+          <Row margin="5 0 0 5">
             <ImageBackground
+              imageStyle={Theme.Styles.faceImage}
               source={
                 !props.verifiableCredential
                   ? Theme.ProfileIcon
@@ -118,21 +119,16 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
               {props.iconName && (
                 <Image
                   source={Theme.PinIcon}
-                  style={{
-                    height: 30,
-                    width: 30,
-                    marginLeft: -11,
-                    marginTop: -8,
-                  }}></Image>
+                  style={Theme.Styles.pinIcon}></Image>
               )}
             </ImageBackground>
 
-            <Column margin="0 0 13 12">
+            <Column margin="0 0 10 20" align="space-between">
               <Column>
                 <Text
                   testID="fullNameTitle"
                   weight="regular"
-                  size="smaller"
+                  style={Theme.Styles.titleTextSize}
                   color={
                     !props.verifiableCredential
                       ? Theme.Colors.LoadingDetailsLabel
@@ -143,7 +139,6 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
                 <Text
                   testID="fullNameValue"
                   weight="semibold"
-                  size="smaller"
                   style={
                     !props.verifiableCredential
                       ? Theme.Styles.loadingTitle
@@ -153,7 +148,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
                 </Text>
               </Column>
 
-              <Column margin="6 0 0 0">
+              <Column margin="25 0 0 0">
                 <Text
                   testID="idType"
                   color={
@@ -162,7 +157,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
                       : Theme.Colors.DetailsLabel
                   }
                   weight="regular"
-                  size="smaller"
+                  style={Theme.Styles.titleTextSize}
                   align="left">
                   {t('idType')}
                 </Text>
@@ -170,7 +165,6 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
                   testID="nationalCard"
                   weight="semibold"
                   color={Theme.Colors.Details}
-                  size="smaller"
                   style={
                     !props.verifiableCredential
                       ? Theme.Styles.loadingTitle
@@ -189,7 +183,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
 
         <Row
           align="space-between"
-          margin="5 0 0 0"
+          margin="9 10 0 7"
           style={
             !props.verifiableCredential ? Theme.Styles.loadingContainer : null
           }>
@@ -199,14 +193,14 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
                 <Text
                   testID="uin"
                   weight="regular"
-                  size="smaller"
+                  style={Theme.Styles.titleTextSize}
                   color={Theme.Colors.DetailsLabel}>
                   {t('uin')}
                 </Text>
                 <Text
                   testID="uinNumber"
                   weight="semibold"
-                  size="smaller"
+                  style={Theme.Styles.valueTextSize}
                   color={Theme.Colors.statusLabel}>
                   {'*'.repeat(uin.length - 4) + uin.slice(-4)}
                 </Text>
@@ -218,14 +212,14 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
                 <Text
                   testID="vid"
                   weight="regular"
-                  size="smaller"
+                  style={Theme.Styles.titleTextSize}
                   color={Theme.Colors.DetailsLabel}>
                   {t('vid')}
                 </Text>
                 <Text
                   testID="vidNumber"
                   weight="semibold"
-                  size="smaller"
+                  style={Theme.Styles.valueTextSize}
                   color={Theme.Colors.Details}>
                   {'*'.repeat(vid.length - 4) + vid.slice(-4)}
                 </Text>
@@ -234,33 +228,37 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
             {!props.verifiableCredential
               ? getDetails(t('id'), uin || vid, props.verifiableCredential)
               : null}
-
-            <Column margin="9 0 0 0">
-              <Text
-                testID="generatedOnTitle"
-                weight="regular"
-                size="smaller"
-                color={
-                  !props.verifiableCredential
-                    ? Theme.Colors.LoadingDetailsLabel
-                    : Theme.Colors.DetailsLabel
-                }>
-                {t('generatedOn')}
-              </Text>
-              <Text
-                testID="generatedOnValue"
-                weight="semibold"
-                size="smaller"
-                style={
-                  !props.verifiableCredential
-                    ? Theme.Styles.loadingTitle
-                    : Theme.Styles.subtitle
-                }>
-                {props.generatedOn}
-              </Text>
-            </Column>
           </Column>
-          <Column margin="48 0 0 -50">
+        </Row>
+
+        <Row
+          style={{ flexDirection: 'row', flex: 1 }}
+          align="space-between"
+          margin="0 8 5 8">
+          <Column margin="9 0 0 0">
+            <Text
+              testID="generatedOnTitle"
+              weight="regular"
+              style={Theme.Styles.titleTextSize}
+              color={
+                !props.verifiableCredential
+                  ? Theme.Colors.LoadingDetailsLabel
+                  : Theme.Colors.DetailsLabel
+              }>
+              {t('generatedOn')}
+            </Text>
+            <Text
+              testID="generatedOnValue"
+              weight="semibold"
+              style={
+                !props.verifiableCredential
+                  ? Theme.Styles.loadingTitle
+                  : Theme.Styles.subtitle
+              }>
+              {props.generatedOn}
+            </Text>
+          </Column>
+          <Column margin="0 35 0 0">
             {props.verifiableCredential
               ? getDetails(t('status'), isvalid, props.verifiableCredential)
               : null}
@@ -269,7 +267,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
             testID="logo"
             style={{
               display: props.verifiableCredential ? 'flex' : 'none',
-              justifyContent: 'space-between',
+              justifyContent: 'center',
               alignItems: 'center',
             }}>
             <Image

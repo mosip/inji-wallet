@@ -50,7 +50,6 @@ const WalletUnverifiedActivationDetails: React.FC<
           color={Theme.Colors.Details}
           testID="activationPending"
           weight="regular"
-          size="smaller"
           margin="8 10 10 5"
           style={
             !props.verifiableCredential
@@ -99,7 +98,7 @@ export const VcItemActivationStatus: React.FC<VcItemActivationStatusProps> = (
   props
 ) => {
   return (
-    <Row>
+    <Row margin="0 0 0 -6">
       {props.emptyWalletBindingId ? (
         <WalletUnverifiedActivationDetails
           verifiableCredential={props.verifiableCredential}
