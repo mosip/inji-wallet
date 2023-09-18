@@ -1,6 +1,6 @@
 import telemetry from '@project-sunbird/telemetry-sdk';
-import { Platform } from 'react-native';
-import { HOST } from '../constants';
+import {Platform} from 'react-native';
+import {HOST} from '../constants';
 import {
   __AppId,
   __InjiVersion,
@@ -8,8 +8,9 @@ import {
   __SessionId,
   __TuvaliVersion,
 } from '../GlobalVariables';
+import {OBSRV_HOST} from 'react-native-dotenv';
 import DeviceInfo from 'react-native-device-info';
-import { isCustomSecureKeystore } from '../cryptoutil/cryptoUtil';
+import {isCustomSecureKeystore} from '../cryptoutil/cryptoUtil';
 import * as RNLocalize from 'react-native-localize';
 
 export function sendImpressionEvent(data) {
@@ -38,10 +39,10 @@ export function getTelemetryConfigData() {
     appid: __AppId.getValue(),
     sid: __SessionId.getValue(),
     batchsize: 5,
-    host: 'https://dataset-api.obsrv.mosip.net',
+    host: OBSRV_HOST,
     endpoint: '/obsrv/v1/data/mosip-dataset',
     telemetryDebugEnabled: true,
-    enableValidation: true,
+    enableValidation: false,
     schemaBaseUrl: 'http://mosip.io/telemetry/',
   };
 }
