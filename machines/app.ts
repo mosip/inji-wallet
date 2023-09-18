@@ -24,7 +24,9 @@ import { request } from '../shared/request';
 import {
   changeCrendetialRegistry,
   SETTINGS_STORE_KEY,
-  MIMOTO_BASE_URL
+  MIMOTO_BASE_URL,
+  ESIGNET_BASE_URL,
+  changeEsignetUrl,
 } from '../shared/constants';
 
 const model = createModel(
@@ -113,10 +115,16 @@ export const appMachine = model.createMachine(
             },
           },
           credentialRegistry: {
-            entry: ['loadCredentialRegistryHostFromStorage'],
+            entry: [
+              'loadCredentialRegistryHostFromStorage',
+              'loadEsignetHostFromStorage',
+            ],
             on: {
               STORE_RESPONSE: {
-                actions: ['loadCredentialRegistryInConstants'],
+                actions: [
+                  'loadCredentialRegistryInConstants',
+                  'loadEsignetHostFromConstants',
+                ],
                 target: 'info',
               },
             },
@@ -325,11 +333,23 @@ export const appMachine = model.createMachine(
         }
       ),
 
+      loadEsignetHostFromStorage: send(StoreEvents.GET(SETTINGS_STORE_KEY), {
+        to: (context) => context.serviceRefs.store,
+      }),
+
       loadCredentialRegistryInConstants: (_context, event) => {
         changeCrendetialRegistry(
           !event.response?.credentialRegistry
             ? MIMOTO_BASE_URL
             : event.response?.credentialRegistry
+        );
+      },
+
+      loadEsignetHostFromConstants: (_context, event) => {
+        changeEsignetUrl(
+          !event.response?.esignetHostUrl
+            ? ESIGNET_BASE_URL
+            : event.response?.esignetHostUrl
         );
       },
     },
