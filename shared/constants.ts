@@ -6,7 +6,6 @@ import {
   GOOGLE_NEARBY_MESSAGES_API_KEY,
 } from 'react-native-dotenv';
 import {Argon2iConfig} from './commonUtil';
-import {__SessionId} from './GlobalVariables';
 
 export let MIMOTO_BASE_URL = MIMOTO_HOST;
 export const ESIGNET_BASE_URL = ESIGNET_HOST;
