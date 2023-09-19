@@ -1,6 +1,5 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-
 import {DeviceInfoList} from '../../components/DeviceInfoList';
 import {Button, Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
@@ -58,9 +57,7 @@ export const ReceiveVcScreen: React.FC = () => {
       <MessageOverlay
         isVisible={controller.isInvalidIdentity}
         title={t('VerifyIdentityOverlay:errors.invalidIdentity.title')}
-        message={t(
-          'VerifyIdentityOverlay:errors.invalidIdentity.messageNoRetry',
-        )}
+        message={t('VerifyIdentityOverlay:errors.invalidIdentity.message')}
         onBackdropPress={controller.DISMISS}>
         <Row>
           <Button
