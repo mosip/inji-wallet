@@ -1,24 +1,19 @@
-import React, { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { RefreshControl } from 'react-native';
-import { Icon } from 'react-native-elements';
-import { Centered, Column, Text } from '../../components/ui';
-import { Theme } from '../../components/ui/styleUtils';
-import { HomeScreenTabProps } from './HomeScreen';
-import { useReceivedVcsTab } from './ReceivedVcsTabController';
-import { VcItem } from '../../components/VcItem';
-import { logMMKVData } from '../../shared/storage';
+import React, {useEffect} from 'react';
+import {useTranslation} from 'react-i18next';
+import {RefreshControl} from 'react-native';
+import {Icon} from 'react-native-elements';
+import {Centered, Column, Text} from '../../components/ui';
+import {Theme} from '../../components/ui/styleUtils';
+import {HomeScreenTabProps} from './HomeScreen';
+import {useReceivedVcsTab} from './ReceivedVcsTabController';
+import {VcItem} from '../../components/VcItem';
 
-export const ReceivedVcsTab: React.FC<HomeScreenTabProps> = (props) => {
-  const { t } = useTranslation('ReceivedVcsTab');
+export const ReceivedVcsTab: React.FC<HomeScreenTabProps> = props => {
+  const {t} = useTranslation('ReceivedVcsTab');
   const controller = useReceivedVcsTab();
 
-  useEffect(() => {
-    logMMKVData();
-  }, [props.isVisible]);
-
   return (
-    <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
+    <Column fill style={{display: props.isVisible ? 'flex' : 'none'}}>
       <Column
         scroll
         padding="32 24"
@@ -28,7 +23,7 @@ export const ReceivedVcsTab: React.FC<HomeScreenTabProps> = (props) => {
             onRefresh={controller.REFRESH}
           />
         }>
-        {controller.receivedVcsMetadata.map((vcMetadata) => (
+        {controller.receivedVcsMetadata.map(vcMetadata => (
           <VcItem
             key={vcMetadata.getVcKey()}
             vcMetadata={vcMetadata}
@@ -41,7 +36,7 @@ export const ReceivedVcsTab: React.FC<HomeScreenTabProps> = (props) => {
           <React.Fragment>
             <Centered fill>
               <Icon
-                style={{ marginBottom: 20 }}
+                style={{marginBottom: 20}}
                 size={40}
                 name="sentiment-dissatisfied"
               />

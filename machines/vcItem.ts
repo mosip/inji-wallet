@@ -263,12 +263,9 @@ export const vcItemMachine =
           },
         },
         pinCard: {
-          entry: 'storeContext',
-          on: {
-            STORE_RESPONSE: {
-              actions: ['sendVcUpdated', 'VcUpdated'],
-              target: 'idle',
-            },
+          entry: 'sendVcUpdated',
+          always: {
+            target: 'idle',
           },
         },
         kebabPopUp: {
@@ -835,8 +832,7 @@ export const vcItemMachine =
         }),
 
         sendVcUpdated: send(
-          (_context, event) =>
-            VcEvents.VC_UPDATED(VCMetadata.fromVC(event.response, true)),
+          context => VcEvents.VC_UPDATED(VCMetadata.fromVC(context, true)),
           {
             to: context => context.serviceRefs.vc,
           },
