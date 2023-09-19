@@ -10,6 +10,11 @@ declare module 'react-native-dotenv' {
   export const ESIGNET_HOST: string;
 
   /**
+   * URL for the obsrv server for telemetry
+   */
+  export const OBSRV_HOST: string;
+
+  /**
    * API key to use Google Nearby Messages API
    */
   export const GOOGLE_NEARBY_MESSAGES_API_KEY: string;

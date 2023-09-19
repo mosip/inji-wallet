@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Dimensions } from 'react-native';
-import { Icon, ListItem } from 'react-native-elements';
-import { Column } from './Layout';
-import { Text } from './Text';
-import { Theme } from './styleUtils';
+import React, {useEffect, useState} from 'react';
+import {Dimensions} from 'react-native';
+import {Icon, ListItem} from 'react-native-elements';
+import {Column} from './Layout';
+import {Text} from './Text';
+import {Theme} from './styleUtils';
 
 interface Picker extends React.VFC<PickerProps<unknown>> {
   <T>(props: PickerProps<T>): ReturnType<React.FC>;
@@ -15,7 +15,7 @@ export const SetupPicker: Picker = (props: PickerProps<unknown>) => {
 
   useEffect(() => {
     setSelectedIndex(
-      props.items.findIndex(({ value }) => value === props.selectedValue)
+      props.items.findIndex(({value}) => value === props.selectedValue),
     );
   }, [props.selectedValue]);
 

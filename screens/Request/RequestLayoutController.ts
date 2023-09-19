@@ -1,9 +1,9 @@
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { useSelector } from '@xstate/react';
-import { useContext, useEffect } from 'react';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {useSelector} from '@xstate/react';
+import {useContext, useEffect} from 'react';
 
-import { MainBottomTabParamList } from '../../routes/main';
-import { GlobalContext } from '../../shared/GlobalContext';
+import {MainBottomTabParamList} from '../../routes/main';
+import {GlobalContext} from '../../shared/GlobalContext';
 import {
   selectIsSavingFailedInViewingVc,
   selectIsWaitingForConnection,
@@ -20,7 +20,7 @@ import {
   selectIsReviewing,
   selectBleError,
 } from '../../machines/bleShare/commonSelectors';
-import { RequestEvents } from '../../machines/bleShare/request/requestMachine';
+import {RequestEvents} from '../../machines/bleShare/request/requestMachine';
 import {
   BOTTOM_TAB_ROUTES,
   REQUEST_ROUTES,
@@ -32,22 +32,22 @@ type RequestLayoutNavigation = NavigationProp<
 >;
 
 export function useRequestLayout() {
-  const { appService } = useContext(GlobalContext);
+  const {appService} = useContext(GlobalContext);
   const requestService = appService.children.get('request');
   const navigation = useNavigation<RequestLayoutNavigation>();
 
   useEffect(() => {
     const subscriptions = [
       navigation.addListener('focus', () =>
-        requestService.send(RequestEvents.SCREEN_FOCUS())
+        requestService.send(RequestEvents.SCREEN_FOCUS()),
       ),
       navigation.addListener('blur', () =>
-        requestService.send(RequestEvents.SCREEN_BLUR())
+        requestService.send(RequestEvents.SCREEN_BLUR()),
       ),
     ];
 
     return () => {
-      subscriptions.forEach((unsubscribe) => unsubscribe());
+      subscriptions.forEach(unsubscribe => unsubscribe());
     };
   }, []);
 
@@ -55,15 +55,15 @@ export function useRequestLayout() {
   const isDone = useSelector(requestService, selectIsDone);
   const isWaitingForConnection = useSelector(
     requestService,
-    selectIsWaitingForConnection
+    selectIsWaitingForConnection,
   );
   const isNavigatingToReceivedCards = useSelector(
     requestService,
-    selectIsNavigatingToReceivedCards
+    selectIsNavigatingToReceivedCards,
   );
   const isNavigationToHome = useSelector(
     requestService,
-    selectIsNavigatingToHome
+    selectIsNavigatingToHome,
   );
   useEffect(() => {
     if (isNavigationToHome) {
@@ -85,7 +85,7 @@ export function useRequestLayout() {
     bleError: useSelector(requestService, selectBleError),
     IsSavingFailedInViewingVc: useSelector(
       requestService,
-      selectIsSavingFailedInViewingVc
+      selectIsSavingFailedInViewingVc,
     ),
     isReviewing,
     isDone,

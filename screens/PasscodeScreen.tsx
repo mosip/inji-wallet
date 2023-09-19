@@ -1,17 +1,17 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Image } from 'react-native';
-import { MAX_PIN, PasscodeVerify } from '../components/PasscodeVerify';
-import { PinInput } from '../components/PinInput';
-import { Column, Text } from '../components/ui';
-import { Theme } from '../components/ui/styleUtils';
-import { PasscodeRouteProps } from '../routes';
-import { usePasscodeScreen } from './PasscodeScreenController';
-import { hashData } from '../shared/commonUtil';
-import { argon2iConfig } from '../shared/constants';
+import {useTranslation} from 'react-i18next';
+import {Image} from 'react-native';
+import {MAX_PIN, PasscodeVerify} from '../components/PasscodeVerify';
+import {PinInput} from '../components/PinInput';
+import {Column, Text} from '../components/ui';
+import {Theme} from '../components/ui/styleUtils';
+import {PasscodeRouteProps} from '../routes';
+import {usePasscodeScreen} from './PasscodeScreenController';
+import {hashData} from '../shared/commonUtil';
+import {argon2iConfig} from '../shared/constants';
 
-export const PasscodeScreen: React.FC<PasscodeRouteProps> = (props) => {
-  const { t } = useTranslation('PasscodeScreen');
+export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
+  const {t} = useTranslation('PasscodeScreen');
   const controller = usePasscodeScreen(props);
 
   const setPasscode = async (passcode: string) => {
@@ -75,7 +75,7 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = (props) => {
       fill
       padding="32"
       backgroundColor={Theme.Colors.whiteBackgroundColor}>
-      <Image source={Theme.LockIcon} style={{ alignSelf: 'center' }} />
+      <Image source={Theme.LockIcon} style={{alignSelf: 'center'}} />
       {props.route.params?.setup ? (
         <Column fill align="space-around" width="100%">
           {passcodeSetup}

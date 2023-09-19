@@ -58,20 +58,32 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
           title={controller.alertMsg}
         />
         <EditableListItem
-          label={t('name')}
-          value={controller.name}
+          title={t('name')}
+          content={controller.name}
+          items={[
+            {
+              label: t('name'),
+              value: controller.name,
+            },
+          ]}
           onEdit={controller.UPDATE_NAME}
           Icon=""
-          credentialRegistryResponse={''}
+          onCancel={() => {}}
         />
         {/* Intentionally hidden using {display='none'} - Refer mosip/inji/issue#607 */}
         <EditableListItem
-          label={t('vcLabel')}
-          value={controller.vcLabel.singular}
+          title={t('vcLabel')}
+          content={controller.vcLabel.singular}
+          items={[
+            {
+              label: t('vcLabel'),
+              value: controller.vcLabel.singular,
+            },
+          ]}
           onEdit={controller.UPDATE_VC_LABEL}
           Icon="star"
           display="none"
-          credentialRegistryResponse={''}
+          onCancel={() => {}}
         />
         <LanguageSetting />
         <Revoke label={t('revokeLabel')} Icon="rotate-left" />
@@ -125,11 +137,18 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
         />
         {CREDENTIAL_REGISTRY_EDIT === 'true' && (
           <EditableListItem
-            label={t('credentialRegistry')}
-            value={controller.credentialRegistry}
-            credentialRegistryResponse={controller.credentialRegistryResponse}
+            title={t('credentialRegistry')}
+            content={controller.credentialRegistry}
+            items={[
+              {
+                label: t('credentialRegistry'),
+                value: controller.credentialRegistry,
+              },
+            ]}
+            response={controller.credentialRegistryResponse}
             onEdit={controller.UPDATE_CREDENTIAL_REGISTRY}
             Icon="star"
+            onCancel={() => {}}
           />
         )}
         <ListItem bottomDivider onPress={controller.LOGOUT}>

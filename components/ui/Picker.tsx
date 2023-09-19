@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { Dimensions, Pressable } from 'react-native';
-import { Icon, ListItem, Overlay } from 'react-native-elements';
-import { Column } from './Layout';
-import { Text } from './Text';
+import React, {useEffect, useState} from 'react';
+import {Dimensions, Pressable} from 'react-native';
+import {Icon, ListItem, Overlay} from 'react-native-elements';
+import {Column} from './Layout';
+import {Text} from './Text';
 
 interface Picker extends React.VFC<PickerProps<unknown>> {
   <T>(props: PickerProps<T>): ReturnType<React.FC>;
@@ -14,7 +14,7 @@ export const Picker: Picker = (props: PickerProps<unknown>) => {
 
   useEffect(() => {
     setSelectedIndex(
-      props.items.findIndex(({ value }) => value === props.selectedValue)
+      props.items.findIndex(({value}) => value === props.selectedValue),
     );
   }, [props.selectedValue]);
 
@@ -32,7 +32,7 @@ export const Picker: Picker = (props: PickerProps<unknown>) => {
       <Overlay
         isVisible={isContentVisible}
         onBackdropPress={toggleContent}
-        overlayStyle={{ padding: 1 }}>
+        overlayStyle={{padding: 1}}>
         <Column
           testID={props.testID}
           width={Dimensions.get('window').width * 0.8}>

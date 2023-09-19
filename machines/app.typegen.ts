@@ -22,7 +22,10 @@ export interface Typegen0 {
     loadCredentialRegistryHostFromStorage: 'READY';
     loadCredentialRegistryInConstants: 'STORE_RESPONSE';
     logServiceEvents: 'READY';
-    logStoreEvents: 'xstate.init';
+    logStoreEvents:
+      | 'KEY_INVALIDATE_ERROR'
+      | 'RESET_KEY_INVALIDATE_ERROR_DISMISS'
+      | 'xstate.init';
     requestDeviceInfo: 'REQUEST_DEVICE_INFO';
     resetKeyInvalidateError: 'READY' | 'RESET_KEY_INVALIDATE_ERROR_DISMISS';
     setAppInfo: 'APP_INFO_RECEIVED';
@@ -30,7 +33,10 @@ export interface Typegen0 {
     setIsDecryptError: 'DECRYPT_ERROR';
     setIsReadError: 'ERROR';
     spawnServiceActors: 'READY';
-    spawnStoreActor: 'xstate.init';
+    spawnStoreActor:
+      | 'KEY_INVALIDATE_ERROR'
+      | 'RESET_KEY_INVALIDATE_ERROR_DISMISS'
+      | 'xstate.init';
     unsetIsDecryptError: 'DECRYPT_ERROR_DISMISS' | 'READY';
     unsetIsReadError: 'READY';
     updateKeyInvalidateError: 'ERROR' | 'KEY_INVALIDATE_ERROR';
@@ -59,6 +65,7 @@ export interface Typegen0 {
     | 'ready.network.checking'
     | 'ready.network.offline'
     | 'ready.network.online'
+    | 'waiting'
     | {
         init?: 'credentialRegistry' | 'devinfo' | 'info' | 'services' | 'store';
         ready?:

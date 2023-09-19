@@ -110,16 +110,14 @@ export function useProfileScreen({ navigation }: MainRouteProps) {
     canUseBiometrics: useSelector(authService, selectCanUseBiometrics),
     useBiometrics,
 
-    UPDATE_NAME: (name: string) =>
-      settingsService.send(SettingsEvents.UPDATE_NAME(name)),
+    UPDATE_NAME: (names) =>
+      settingsService.send(SettingsEvents.UPDATE_NAME(names[0].value)),
 
-    UPDATE_VC_LABEL: (label: string) =>
-      settingsService.send(SettingsEvents.UPDATE_VC_LABEL(label)),
+    UPDATE_VC_LABEL: (labels) =>
+      settingsService.send(SettingsEvents.UPDATE_VC_LABEL(labels[0].value)),
 
-    UPDATE_CREDENTIAL_REGISTRY: (credentialRegistry: string) =>
-      settingsService.send(
-        SettingsEvents.UPDATE_CREDENTIAL_REGISTRY(credentialRegistry)
-      ),
+    UPDATE_CREDENTIAL_REGISTRY: (items) =>
+      settingsService.send(SettingsEvents.UPDATE_MIMOTO_HOST(items[0].value)),
 
     UPDATE_CREDENTIAL_REGISTRY_RESPONSE: (credentialRegistryResponse: string) =>
       settingsService.send(

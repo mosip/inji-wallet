@@ -1,19 +1,19 @@
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useTranslation } from 'react-i18next';
-import { HeaderBackButton } from '@react-navigation/elements';
-import { RequestScreen } from './RequestScreen';
-import { useRequestLayout } from './RequestLayoutController';
-import { Message } from '../../components/Message';
-import { ReceiveVcScreen } from './ReceiveVcScreen';
-import { MessageOverlay } from '../../components/MessageOverlay';
-import { ReceivedCardsModal } from '../Settings/ReceivedCardsModal';
-import { useReceivedVcsTab } from '../Home/ReceivedVcsTabController';
-import { REQUEST_ROUTES } from '../../routes/routesConstants';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {useTranslation} from 'react-i18next';
+import {HeaderBackButton} from '@react-navigation/elements';
+import {RequestScreen} from './RequestScreen';
+import {useRequestLayout} from './RequestLayoutController';
+import {Message} from '../../components/Message';
+import {ReceiveVcScreen} from './ReceiveVcScreen';
+import {MessageOverlay} from '../../components/MessageOverlay';
+import {ReceivedCardsModal} from '../Settings/ReceivedCardsModal';
+import {useReceivedVcsTab} from '../Home/ReceivedVcsTabController';
+import {REQUEST_ROUTES} from '../../routes/routesConstants';
 const RequestStack = createNativeStackNavigator();
 
 export const RequestLayout: React.FC = () => {
-  const { t } = useTranslation('RequestScreen');
+  const {t} = useTranslation('RequestScreen');
   const controller = useRequestLayout();
   const receivedCardsController = useReceivedVcsTab();
 

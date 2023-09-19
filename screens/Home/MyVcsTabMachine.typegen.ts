@@ -2,7 +2,7 @@
 
 export interface Typegen0 {
   '@@xstate/typegen': true;
-  'internalEvents': {
+  internalEvents: {
     'done.invoke.AddVcModal': {
       type: 'done.invoke.AddVcModal';
       data: unknown;
@@ -18,36 +18,36 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
-    'xstate.init': { type: 'xstate.init' };
+    'xstate.init': {type: 'xstate.init'};
   };
-  'invokeSrcNameMap': {
+  invokeSrcNameMap: {
     checkStorageAvailability: 'done.invoke.MyVcsTab.addVc.checkStorage:invocation[0]';
   };
-  'missingImplementations': {
+  missingImplementations: {
     actions: never;
     delays: never;
     guards: never;
     services: never;
   };
-  'eventsCausingActions': {
+  eventsCausingActions: {
     refreshMyVc: 'IS_TAMPERED';
     resetIsTampered: 'IS_TAMPERED';
     sendVcAdded: 'STORE_RESPONSE';
     storeVcItem: 'done.invoke.AddVcModal';
     viewVcFromParent: 'VIEW_VC';
   };
-  'eventsCausingDelays': {};
-  'eventsCausingGuards': {
+  eventsCausingDelays: {};
+  eventsCausingGuards: {
     isMinimumStorageLimitReached: 'done.invoke.MyVcsTab.addVc.checkStorage:invocation[0]';
   };
-  'eventsCausingServices': {
+  eventsCausingServices: {
     AddVcModal:
       | 'done.invoke.GetVcModal'
       | 'done.invoke.MyVcsTab.addVc.checkStorage:invocation[0]';
     GetVcModal: 'GET_VC';
     checkStorageAvailability: 'ADD_VC';
   };
-  'matchesStates':
+  matchesStates:
     | 'addVc'
     | 'addVc.checkStorage'
     | 'addVc.storageLimitReached'
@@ -68,8 +68,8 @@ export interface Typegen0 {
           | 'savingFailed'
           | 'storing'
           | 'waitingForvcKey'
-          | { savingFailed?: 'idle' };
+          | {savingFailed?: 'idle'};
         gettingVc?: 'waitingForvcKey';
       };
-  'tags': never;
+  tags: never;
 }

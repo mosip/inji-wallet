@@ -1,5 +1,5 @@
-import React, { useCallback, useContext, useEffect, useRef } from 'react';
-import { Camera } from 'expo-camera';
+import React, {useCallback, useContext, useEffect, useRef} from 'react';
+import {Camera} from 'expo-camera';
 import {
   Platform,
   StyleSheet,
@@ -7,9 +7,9 @@ import {
   View,
   Image,
 } from 'react-native';
-import { Button, Centered, Column, Row, Text } from './ui';
-import { useInterpret, useSelector } from '@xstate/react';
-import { useTranslation } from 'react-i18next';
+import {Button, Centered, Column, Row, Text} from './ui';
+import {useInterpret, useSelector} from '@xstate/react';
+import {useTranslation} from 'react-i18next';
 import {
   FaceScannerEvents,
   selectIsCheckingPermission,
@@ -22,14 +22,14 @@ import {
   selectIsCapturing,
   selectIsVerifying,
 } from '../machines/faceScanner';
-import { GlobalContext } from '../shared/GlobalContext';
-import { selectIsActive } from '../machines/app';
-import { RotatingIcon } from './RotatingIcon';
-import { Theme } from './ui/styleUtils';
+import {GlobalContext} from '../shared/GlobalContext';
+import {selectIsActive} from '../machines/app';
+import {RotatingIcon} from './RotatingIcon';
+import {Theme} from './ui/styleUtils';
 
-export const FaceScanner: React.FC<FaceScannerProps> = (props) => {
-  const { t } = useTranslation('FaceScanner');
-  const { appService } = useContext(GlobalContext);
+export const FaceScanner: React.FC<FaceScannerProps> = props => {
+  const {t} = useTranslation('FaceScanner');
+  const {appService} = useContext(GlobalContext);
   const isActive = useSelector(appService, selectIsActive);
 
   const machine = useRef(createFaceScannerMachine(props.vcImage));
@@ -51,7 +51,7 @@ export const FaceScanner: React.FC<FaceScannerProps> = (props) => {
         service.send(FaceScannerEvents.READY(node));
       }
     },
-    [isScanning]
+    [isScanning],
   );
 
   useEffect(() => {
@@ -104,7 +104,7 @@ export const FaceScanner: React.FC<FaceScannerProps> = (props) => {
         {isCapturing || isVerifying ? (
           <RotatingIcon name="sync" size={64} />
         ) : (
-          <Row align="center" style={{ marginTop: 42 }}>
+          <Row align="center" style={{marginTop: 42}}>
             <Centered style={Theme.Styles.imageCaptureButton}>
               <TouchableOpacity
                 onPress={() => service.send(FaceScannerEvents.CAPTURE())}>

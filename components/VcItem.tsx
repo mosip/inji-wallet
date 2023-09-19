@@ -23,18 +23,17 @@ import { Column, Row } from './ui';
 import { KebabPopUp } from './KebabPopUp';
 import { logState } from '../machines/app';
 import { format } from 'date-fns';
-import { enUS, es } from 'date-fns/locale';
 
-export const VcItem: React.FC<VcItemProps> = (props) => {
-  const { appService } = useContext(GlobalContext);
+export const VcItem: React.FC<VcItemProps> = props => {
+  const {appService} = useContext(GlobalContext);
   const machine = useRef(
     createVcItemMachine(
       appService.getSnapshot().context.serviceRefs,
-      props.vcKey
-    )
+      props.vcKey,
+    ),
   );
 
-  const service = useInterpret(machine.current, { devTools: __DEV__ });
+  const service = useInterpret(machine.current, {devTools: __DEV__});
   service.subscribe(logState);
   const context = useSelector(service, selectContext);
   const verifiableCredential = useSelector(service, selectVerifiableCredential);

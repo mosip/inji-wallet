@@ -1,6 +1,6 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import { Dimensions, StyleSheet, ViewStyle } from 'react-native';
-import { Spacing } from '../styleUtils';
+import {Dimensions, StyleSheet, ViewStyle} from 'react-native';
+import {Spacing} from '../styleUtils';
 
 const Colors = {
   Black: '#000000',
@@ -230,7 +230,7 @@ export const DefaultTheme = {
       margin: 8,
       backgroundColor: '#fff',
       shadowColor: '#000',
-      shadowOffset: { width: -1, height: 1 },
+      shadowOffset: {width: -1, height: 1},
       shadowOpacity: 0.4,
       shadowRadius: 3,
       elevation: 7,
@@ -297,7 +297,7 @@ export const DefaultTheme = {
       margin: 8,
       backgroundColor: '#fff',
       shadowColor: '#000',
-      shadowOffset: { width: -1, height: 1 },
+      shadowOffset: {width: -1, height: 1},
       shadowOpacity: 0.4,
       shadowRadius: 3,
       elevation: 4,
@@ -866,9 +866,9 @@ export const DefaultTheme = {
       flex: 1,
       width: Dimensions.get('screen').width,
     },
-    revokeView: { padding: 20 },
-    flexRow: { flexDirection: 'row', margin: 0, padding: 0 },
-    rowStyle: { flexDirection: 'column', justifyContent: 'space-between' },
+    revokeView: {padding: 20},
+    flexRow: {flexDirection: 'row', margin: 0, padding: 0},
+    rowStyle: {flexDirection: 'column', justifyContent: 'space-between'},
     viewContainer: {
       backgroundColor: 'rgba(0,0,0,.6)',
       width: Dimensions.get('screen').width,

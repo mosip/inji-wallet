@@ -3,13 +3,13 @@ import {
   BottomTabNavigationOptions,
   BottomTabScreenProps,
 } from '@react-navigation/bottom-tabs';
-import { Image } from 'react-native';
-import { HomeScreen } from '../screens/Home/HomeScreen';
-import { RootStackParamList } from './index';
-import { ScanLayout } from '../screens/Scan/ScanLayout';
-import { HistoryScreen } from '../screens/History/HistoryScreen';
+import {Image} from 'react-native';
+import {HomeScreen} from '../screens/Home/HomeScreen';
+import {RootStackParamList} from './index';
+import {ScanLayout} from '../screens/Scan/ScanLayout';
+import {HistoryScreen} from '../screens/History/HistoryScreen';
 import i18n from '../i18n';
-import { BOTTOM_TAB_ROUTES } from './routesConstants';
+import {BOTTOM_TAB_ROUTES} from './routesConstants';
 
 const home: TabScreen = {
   name: BOTTOM_TAB_ROUTES.home,
@@ -20,7 +20,7 @@ const home: TabScreen = {
     headerLeft: () =>
       React.createElement(Image, {
         source: require('../assets/inji-home-logo.png'),
-        style: { width: 124, height: 27, resizeMode: 'contain' },
+        style: {width: 124, height: 27, resizeMode: 'contain'},
       }),
   },
 };
