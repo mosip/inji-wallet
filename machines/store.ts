@@ -561,10 +561,6 @@ export async function updateItem(
       ...list.map(metadataStr => {
         const metaData = VCMetadata.fromVcMetadataString(metadataStr);
         if (metaData.getVcKey() !== updatedMetaData.getVcKey()) {
-          // Setting other VC's pinned status to false. TODO: Need to refactor this
-          if (updatedMetaData.isPinned) {
-            metaData.isPinned = false;
-          }
           return JSON.stringify(metaData);
         }
       }),

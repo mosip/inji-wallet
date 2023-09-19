@@ -250,7 +250,7 @@ export const qrLoginMachine =
 
         setMyVcs: model.assign({
           myVcs: (_context, event) =>
-            parseMetadatas((event.response || []) as string[]),
+            parseMetadatas((event.response || []) as object[]),
         }),
 
         loadThumbprint: send(

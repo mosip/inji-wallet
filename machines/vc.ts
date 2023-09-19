@@ -23,7 +23,7 @@ const model = createModel(
       STORE_ERROR: (error: Error) => ({error}),
       VC_ADDED: (vcMetadata: VCMetadata) => ({vcMetadata}),
       REMOVE_VC_FROM_CONTEXT: (vcMetadata: VCMetadata) => ({vcMetadata}),
-      VC_UPDATED: (vcMetadata: VCMetadata) => ({vcMetadata}),
+      VC_METADATA_UPDATED: (vcMetadata: VCMetadata) => ({vcMetadata}),
       VC_RECEIVED: (vcMetadata: VCMetadata) => ({vcMetadata}),
       VC_DOWNLOADED: (vc: VC) => ({vc}),
       VC_UPDATE: (vc: VC) => ({vc}),
@@ -140,7 +140,7 @@ export const vcMachine =
             REMOVE_VC_FROM_CONTEXT: {
               actions: 'removeVcFromMyVcs',
             },
-            VC_UPDATED: {
+            VC_METADATA_UPDATED: {
               actions: ['updateMyVcs', 'setUpdatedVcMetadatas'],
             },
             VC_DOWNLOADED: {
@@ -184,24 +184,24 @@ export const vcMachine =
 
         setMyVcs: model.assign({
           myVcs: (_context, event) => {
-            return parseMetadatas((event.response || []) as string[]);
+            return parseMetadatas((event.response || []) as object[]);
           },
         }),
 
         setReceivedVcs: model.assign({
           receivedVcs: (_context, event) => {
-            return parseMetadatas((event.response || []) as string[]);
+            return parseMetadatas((event.response || []) as object[]);
           },
         }),
 
         setDownloadedVc: (context, event) => {
-          const vcUniqueId = VCMetadata.fromVC(event.vc, true).getVcKey();
+          const vcUniqueId = VCMetadata.fromVC(event.vc).getVcKey();
           context.vcs[vcUniqueId] = event.vc;
         },
 
         setVcUpdate: (context, event) => {
           Object.keys(context.vcs).map(vcUniqueId => {
-            const eventVCMetadata = VCMetadata.fromVC(event.vc, true);
+            const eventVCMetadata = VCMetadata.fromVC(event.vc);
 
             if (vcUniqueId === eventVCMetadata.getVcKey()) {
               context.vcs[eventVCMetadata.getVcKey()] = context.vcs[vcUniqueId];
@@ -212,11 +212,8 @@ export const vcMachine =
         },
 
         setUpdatedVcMetadatas: send(
-          (_context, event) => {
-            return StoreEvents.UPDATE(
-              MY_VCS_STORE_KEY,
-              JSON.stringify(event.vcMetadata),
-            );
+          _context => {
+            return StoreEvents.SET(MY_VCS_STORE_KEY, _context.myVcs);
           },
           {to: context => context.serviceRefs.store},
         ),
@@ -233,16 +230,9 @@ export const vcMachine =
         }),
 
         updateMyVcs: model.assign({
-          myVcs: (context, event) =>
-            [
-              ...context.myVcs.map(value => {
-                if (value.equals(event.vcMetadata)) {
-                  return event.vcMetadata;
-                } else {
-                  return value;
-                }
-              }),
-            ].filter(value => value != undefined),
+          myVcs: (context, event) => [
+            ...getUpdatedVCMetadatas(context.myVcs, event.vcMetadata),
+          ],
         }),
 
         prependToReceivedVcs: model.assign({
@@ -315,6 +305,23 @@ export function selectBindedVcsMetadata(state: State): VCMetadata[] {
       !isEmpty(walletBindingResponse) &&
       !isEmpty(walletBindingResponse?.walletBindingId)
     );
+  });
+}
+
+function getUpdatedVCMetadatas(
+  existingVCMetadatas: VCMetadata[],
+  updatedVcMetadata: VCMetadata,
+) {
+  const isPinStatusUpdated = updatedVcMetadata.isPinned;
+
+  return existingVCMetadatas.map(value => {
+    if (value.equals(updatedVcMetadata)) {
+      return updatedVcMetadata;
+    } else if (isPinStatusUpdated) {
+      return new VCMetadata({...value, isPinned: false});
+    } else {
+      return value;
+    }
   });
 }
 

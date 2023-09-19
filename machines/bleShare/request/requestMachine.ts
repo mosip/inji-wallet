@@ -582,16 +582,14 @@ export const requestMachine =
           context =>
             StoreEvents.PREPEND(
               RECEIVED_VCS_STORE_KEY,
-              JSON.stringify(VCMetadata.fromVC(context.incomingVc, true)),
+              JSON.stringify(VCMetadata.fromVC(context.incomingVc)),
             ),
           {to: context => context.serviceRefs.store},
         ),
 
         requestExistingVc: send(
           context =>
-            StoreEvents.GET(
-              VCMetadata.fromVC(context.incomingVc, true).getVcKey(),
-            ),
+            StoreEvents.GET(VCMetadata.fromVC(context.incomingVc).getVcKey()),
           {to: context => context.serviceRefs.store},
         ),
 
@@ -603,7 +601,7 @@ export const requestMachine =
               reason: existing.reason.concat(context.incomingVc.reason),
             };
             return StoreEvents.SET(
-              VCMetadata.fromVC(updated, true).getVcKey(),
+              VCMetadata.fromVC(updated).getVcKey(),
               updated,
             );
           },
@@ -613,7 +611,7 @@ export const requestMachine =
         storeVc: send(
           context =>
             StoreEvents.SET(
-              VCMetadata.fromVC(context.incomingVc, true).getVcKey(),
+              VCMetadata.fromVC(context.incomingVc).getVcKey(),
               context.incomingVc,
             ),
           {to: context => context.serviceRefs.store},
@@ -638,7 +636,7 @@ export const requestMachine =
         logReceived: send(
           context =>
             ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VCMetadata.fromVC(context.incomingVc, true).getVcKey(),
+              _vcKey: VCMetadata.fromVC(context.incomingVc).getVcKey(),
               type: context.receiveLogType,
               timestamp: Date.now(),
               deviceName:
@@ -650,9 +648,7 @@ export const requestMachine =
 
         sendVcReceived: send(
           context => {
-            return VcEvents.VC_RECEIVED(
-              VCMetadata.fromVC(context.incomingVc, true),
-            );
+            return VcEvents.VC_RECEIVED(VCMetadata.fromVC(context.incomingVc));
           },
           {to: context => context.serviceRefs.vc},
         ),
@@ -812,10 +808,7 @@ export const requestMachine =
       guards: {
         hasExistingVc: (context, event) => {
           const receivedVcs = event.vcMetadatas;
-          const incomingVcMetadata = VCMetadata.fromVC(
-            context.incomingVc,
-            true,
-          );
+          const incomingVcMetadata = VCMetadata.fromVC(context.incomingVc);
           return receivedVcs.some(
             vcMetadata =>
               vcMetadata.getVcKey() == incomingVcMetadata.getVcKey(),

@@ -8,7 +8,7 @@ export class VCMetadata {
   hashedId = '';
   requestId = '';
   isPinned = false;
-  id = '';
+  id: string = '';
   static vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
 
   constructor({
@@ -16,7 +16,7 @@ export class VCMetadata {
     hashedId = '',
     requestId = '',
     isPinned = false,
-    id = null,
+    id = '',
   } = {}) {
     this.idType = idType;
     this.hashedId = hashedId;
@@ -25,13 +25,13 @@ export class VCMetadata {
     this.id = id;
   }
 
-  static fromVC(vc: Partial<VC>, includeId: boolean) {
+  static fromVC(vc: Partial<VC>) {
     return new VCMetadata({
       idType: vc.idType,
       hashedId: vc.hashedId,
       requestId: vc.requestId,
       isPinned: vc.isPinned,
-      id: includeId ? vc.id : null,
+      id: vc.id,
     });
   }
 
@@ -59,6 +59,6 @@ export class VCMetadata {
   }
 }
 
-export function parseMetadatas(metadataStrings: string[]) {
-  return metadataStrings.map(s => VCMetadata.fromVcMetadataString(s));
+export function parseMetadatas(metadataStrings: object[]) {
+  return metadataStrings.map(o => new VCMetadata(o));
 }

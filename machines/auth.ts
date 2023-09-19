@@ -1,14 +1,13 @@
-import { init } from 'mosip-inji-face-sdk';
-import { assign, ContextFrom, EventFrom, send, StateFrom } from 'xstate';
-import { createModel } from 'xstate/lib/model';
+import {init} from 'mosip-inji-face-sdk';
+import {assign, ContextFrom, EventFrom, send, StateFrom} from 'xstate';
+import {createModel} from 'xstate/lib/model';
 import getAllConfigurations, {
   downloadModel,
 } from '../shared/commonprops/commonProps';
-import { AppServices } from '../shared/GlobalContext';
-import { StoreEvents, StoreResponseEvent } from './store';
-import { generateSecureRandom } from 'react-native-securerandom';
+import {AppServices} from '../shared/GlobalContext';
+import {StoreEvents, StoreResponseEvent} from './store';
+import {generateSecureRandom} from 'react-native-securerandom';
 import binaryToBase64 from 'react-native/Libraries/Utilities/binaryToBase64';
-import { logMMKVData } from '../shared/storage';
 
 const model = createModel(
   {
@@ -21,15 +20,15 @@ const model = createModel(
   },
   {
     events: {
-      SETUP_PASSCODE: (passcode: string) => ({ passcode }),
-      SETUP_BIOMETRICS: (biometrics: string) => ({ biometrics }),
+      SETUP_PASSCODE: (passcode: string) => ({passcode}),
+      SETUP_BIOMETRICS: (biometrics: string) => ({biometrics}),
       LOGOUT: () => ({}),
       LOGIN: () => ({}),
-      STORE_RESPONSE: (response?: unknown) => ({ response }),
+      STORE_RESPONSE: (response?: unknown) => ({response}),
       SELECT: () => ({}),
       NEXT: () => ({}),
     },
-  }
+  },
 );
 
 export const AuthEvents = model.events;
@@ -57,7 +56,7 @@ export const authMachine = model.createMachine(
               target: 'checkingAuth',
               actions: ['setContext'],
             },
-            { target: 'savingDefaults' },
+            {target: 'savingDefaults'},
           ],
         },
       },
@@ -69,10 +68,10 @@ export const authMachine = model.createMachine(
       },
       checkingAuth: {
         always: [
-          { cond: 'hasLanguageset', target: 'languagesetup' },
-          { cond: 'hasPasscodeSet', target: 'unauthorized' },
-          { cond: 'hasBiometricSet', target: 'unauthorized' },
-          { target: 'settingUp' },
+          {cond: 'hasLanguageset', target: 'languagesetup'},
+          {cond: 'hasPasscodeSet', target: 'unauthorized'},
+          {cond: 'hasBiometricSet', target: 'unauthorized'},
+          {target: 'settingUp'},
         ],
       },
       languagesetup: {
@@ -132,19 +131,19 @@ export const authMachine = model.createMachine(
   {
     actions: {
       requestStoredContext: send(StoreEvents.GET('auth'), {
-        to: (context) => context.serviceRefs.store,
+        to: context => context.serviceRefs.store,
       }),
 
       storeContext: send(
-        (context) => {
-          const { serviceRefs, ...data } = context;
+        context => {
+          const {serviceRefs, ...data} = context;
           return StoreEvents.SET('auth', data);
         },
-        { to: (context) => context.serviceRefs.store }
+        {to: context => context.serviceRefs.store},
       ),
 
       setContext: model.assign((_, event) => {
-        const { serviceRefs, ...data } = event.response as ContextFrom<
+        const {serviceRefs, ...data} = event.response as ContextFrom<
           typeof model
         >;
         return data;
@@ -159,7 +158,7 @@ export const authMachine = model.createMachine(
       }),
 
       setLanguage: assign({
-        selectLanguage: (context) => true,
+        selectLanguage: context => true,
       }),
 
       setPasscodeSalt: assign({
@@ -173,7 +172,7 @@ export const authMachine = model.createMachine(
       downloadFaceSdkModel: () => () => {
         downloadModel();
       },
-      generatePasscodeSalt: () => async (context) => {
+      generatePasscodeSalt: () => async context => {
         const randomBytes = await generateSecureRandom(16);
         return binaryToBase64(randomBytes) as string;
       },
@@ -182,19 +181,17 @@ export const authMachine = model.createMachine(
     guards: {
       hasData: (_, event: StoreResponseEvent) => event.response != null,
 
-      hasPasscodeSet: (context) => {
-        logMMKVData();
-
+      hasPasscodeSet: context => {
         return context.passcode !== '';
       },
-      hasBiometricSet: (context) => {
+      hasBiometricSet: context => {
         return context.biometrics !== '' && context.passcode !== '';
       },
-      hasLanguageset: (context) => {
+      hasLanguageset: context => {
         return !context.selectLanguage;
       },
     },
-  }
+  },
 );
 
 export function createAuthMachine(serviceRefs: AppServices) {
