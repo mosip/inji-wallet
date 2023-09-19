@@ -188,17 +188,17 @@
 				"message": "No se pueden recibir ni guardar más Tarjetas, ya que los datos de la aplicación están llenos."
 			},
 			"vcIsTampered": {
-				"title": "Algunas pruebas de identidad están manipuladas",
-				"message": "Los archivos afectados se eliminan, vuelva a descargarlos."
+				"title": "Tarjetas eliminadas debido a actividad maliciosa",
+				"message": "Tarjetas manipuladas detectadas y eliminadas por motivos de seguridad. Por favor descargue nuevamente."
 			},
 			"storageLimitReached": {
 				"title": "Datos de aplicación insuficientes",
 				"message": "No puede agregar ni recibir tarjetas porque los datos de la aplicación están llenos. Borre Appdata para continuar."
 			},
 			"keystoreNotExists": {
-				"title": "Almacenamiento seguro de claves no encontrado",
-				"message": "El almacenamiento de claves en su teléfono no está protegido. Sus claves podrían filtrarse si el teléfono es pirateado.",
-				"riskOkayText": "Está bien, me arriesgaré."
+				"title": "Algunas funciones de seguridad no estarán disponibles",
+				"message": "Su dispositivo actual no admite todas las funciones de seguridad.",
+				"riskOkayText": "De acuerdo"
 			}
 		}
 	},
@@ -434,8 +434,8 @@
 		},
 		"errors": {
 			"invalidIdentity": {
-				"title": "No se puede verificar la identidad",
-				"message": "No se reconoce el rostro. Por favor, inténtalo de nuevo.",
+				"title": "Error en el reconocimiento facial",
+				"message": "La cara escaneada no coincide con la foto de la tarjeta. Inténtalo de nuevo.",
 				"messageNoRetry": "No se reconoce el rostro."
 			}
 		}
@@ -446,8 +446,8 @@
 		"unlockApp": "Desbloquear aplicación",
 		"errors": {
 			"invalidateKeyError": {
-				"title": "Algunas pruebas de identidad se eliminan debido a problemas de seguridad.",
-				"message": "Vuelva a descargar."
+				"title": "La aplicación se restableció",
+				"message": "Debido a la actualización de reconocimiento facial/huella digital, la seguridad de la aplicación se vio afectada y se eliminaron las tarjetas descargadas. Por favor descargue nuevamente."
 			}
 		}
 	},
