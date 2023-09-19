@@ -226,7 +226,7 @@ export const DefaultTheme = {
       marginRight: 22,
     },
     closeCardBgContainer: {
-      borderRadius: 10,
+      borderRadius: 20,
       margin: 8,
       backgroundColor: '#fff',
       shadowColor: '#000',
@@ -304,6 +304,7 @@ export const DefaultTheme = {
     backgroundImageContainer: {
       flex: 1,
       padding: 10,
+      overflow: 'hidden',
     },
     successTag: {
       backgroundColor: Colors.Green,

@@ -123,7 +123,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
               )}
             </ImageBackground>
 
-            <Column margin="0 0 10 20" align="space-between">
+            <Column margin="0 0 10 20" height={96} align="space-between">
               <Column>
                 <Text
                   testID="fullNameTitle"
@@ -148,7 +148,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
                 </Text>
               </Column>
 
-              <Column margin="25 0 0 0">
+              <Column>
                 <Text
                   testID="idType"
                   color={

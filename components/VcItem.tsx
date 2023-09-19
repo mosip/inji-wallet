@@ -23,6 +23,7 @@ import { Column, Row } from './ui';
 import { KebabPopUp } from './KebabPopUp';
 import { logState } from '../machines/app';
 import { format } from 'date-fns';
+import { enUS, es } from 'date-fns/locale';
 
 export const VcItem: React.FC<VcItemProps> = (props) => {
   const { appService } = useContext(GlobalContext);
@@ -46,7 +47,9 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
   const storeErrorTranslationPath = 'errors.savingFailed';
 
   const generatedOn = useSelector(service, selectGeneratedOn);
-  const formattedDate = format(new Date(generatedOn), 'MM/dd/yyyy');
+  const formattedDate = format(new Date(generatedOn), 'MM/dd/yyyy', {
+    locale: enUS,
+  });
   const tag = useSelector(service, selectTag);
 
   return (

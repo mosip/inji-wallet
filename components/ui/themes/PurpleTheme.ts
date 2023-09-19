@@ -225,7 +225,7 @@ export const PurpleTheme = {
       marginLeft: 300,
     },
     closeCardBgContainer: {
-      borderRadius: 10,
+      borderRadius: 20,
       margin: 8,
       backgroundColor: '#fff',
       shadowColor: '#000',
@@ -300,6 +300,7 @@ export const PurpleTheme = {
     backgroundImageContainer: {
       flex: 1,
       padding: 10,
+      overflow: 'hidden',
     },
     successTag: {
       backgroundColor: Colors.Green,
