@@ -29,7 +29,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = props => {
       </ListItem.Content>
       <Modal
         // TODO: is Uin needed here?
-        headerLabel={props.vcMetadata.hashedId}
+        headerLabel={props.vcMetadata.id}
         isVisible={controller.isShowActivities}
         onDismiss={controller.DISMISS}>
         <Column fill>

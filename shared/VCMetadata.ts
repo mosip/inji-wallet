@@ -5,21 +5,13 @@ const VC_ITEM_STORE_KEY_REGEX = '^VC_[a-z0-9-]+$';
 
 export class VCMetadata {
   idType: VcIdType | string = '';
-  hashedId = '';
   requestId = '';
   isPinned = false;
   id: string = '';
   static vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
 
-  constructor({
-    idType = '',
-    hashedId = '',
-    requestId = '',
-    isPinned = false,
-    id = '',
-  } = {}) {
+  constructor({idType = '', requestId = '', isPinned = false, id = ''} = {}) {
     this.idType = idType;
-    this.hashedId = hashedId;
     this.requestId = requestId;
     this.isPinned = isPinned;
     this.id = id;
@@ -28,7 +20,6 @@ export class VCMetadata {
   static fromVC(vc: Partial<VC>) {
     return new VCMetadata({
       idType: vc.idType,
-      hashedId: vc.hashedId,
       requestId: vc.requestId,
       isPinned: vc.isPinned,
       id: vc.id,

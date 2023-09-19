@@ -61,7 +61,6 @@ const model = createModel(
     walletBindingError: '',
     publicKey: '',
     privateKey: '',
-    hashedId: '',
   },
   {
     events: {
@@ -197,11 +196,7 @@ export const vcItemMachine =
                   },
                 ],
                 CREDENTIAL_DOWNLOADED: {
-                  actions: [
-                    'setStoreVerifiableCredential',
-                    'storeContext',
-                    'editVcKey',
-                  ],
+                  actions: ['setStoreVerifiableCredential', 'storeContext'],
                 },
                 STORE_RESPONSE: {
                   actions: [
@@ -771,7 +766,7 @@ export const vcItemMachine =
           context => {
             return StoreEvents.REMOVE_VC_METADATA(
               MY_VCS_STORE_KEY,
-              VCMetadata.fromVC(context).getVcKey(),
+              new VCMetadata(context).getVcKey(),
             );
           },
           {
@@ -783,7 +778,7 @@ export const vcItemMachine =
           context => {
             return {
               type: 'REMOVE_VC_FROM_CONTEXT',
-              vcMetadata: VCMetadata.fromVC(context),
+              vcMetadata: new VCMetadata(context),
             };
           },
           {
@@ -832,7 +827,7 @@ export const vcItemMachine =
         }),
 
         sendVcUpdated: send(
-          context => VcEvents.VC_METADATA_UPDATED(VCMetadata.fromVC(context)),
+          context => VcEvents.VC_METADATA_UPDATED(new VCMetadata(context)),
           {
             to: context => context.serviceRefs.vc,
           },
@@ -886,7 +881,7 @@ export const vcItemMachine =
         requestVcContext: send(
           context => ({
             type: 'GET_VC_ITEM',
-            vcMetadata: VCMetadata.fromVC(context),
+            vcMetadata: new VCMetadata(context),
           }),
           {
             to: context => context.serviceRefs.vc,
@@ -894,7 +889,7 @@ export const vcItemMachine =
         ),
 
         requestStoredContext: send(
-          context => StoreEvents.GET(VCMetadata.fromVC(context).getVcKey()),
+          context => StoreEvents.GET(new VCMetadata(context).getVcKey()),
           {
             to: context => context.serviceRefs.store,
           },
@@ -904,17 +899,12 @@ export const vcItemMachine =
           context => {
             const {serviceRefs, ...data} = context;
             data.credentialRegistry = MIMOTO_BASE_URL;
-            return StoreEvents.SET(VCMetadata.fromVC(context).getVcKey(), data);
+            return StoreEvents.SET(new VCMetadata(context).getVcKey(), data);
           },
           {
             to: context => context.serviceRefs.store,
           },
         ),
-
-        editVcKey: send(context => {
-          const {serviceRefs, ...data} = context;
-          return StoreEvents.SET(VCMetadata.fromVC(context).getVcKey(), data);
-        }),
 
         setTag: model.assign({
           tag: (_, event) => event.tag,
@@ -937,7 +927,7 @@ export const vcItemMachine =
         storeTag: send(
           context => {
             const {serviceRefs, ...data} = context;
-            return StoreEvents.SET(VCMetadata.fromVC(context).getVcKey(), data);
+            return StoreEvents.SET(new VCMetadata(context).getVcKey(), data);
           },
           {to: context => context.serviceRefs.store},
         ),
@@ -971,7 +961,7 @@ export const vcItemMachine =
         logWalletBindingSuccess: send(
           context =>
             ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VCMetadata.fromVC(context).getVcKey(),
+              _vcKey: new VCMetadata(context).getVcKey(),
               type: 'WALLET_BINDING_SUCCESSFULL',
               timestamp: Date.now(),
               deviceName: '',
@@ -985,7 +975,7 @@ export const vcItemMachine =
         logWalletBindingFailure: send(
           context =>
             ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VCMetadata.fromVC(context).getVcKey(),
+              _vcKey: new VCMetadata(context).getVcKey(),
               type: 'WALLET_BINDING_FAILURE',
               timestamp: Date.now(),
               deviceName: '',
@@ -999,7 +989,7 @@ export const vcItemMachine =
         logRevoked: send(
           context =>
             ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VCMetadata.fromVC(context).getVcKey(),
+              _vcKey: new VCMetadata(context).getVcKey(),
               type: 'VC_REVOKED',
               timestamp: Date.now(),
               deviceName: '',
@@ -1014,7 +1004,7 @@ export const vcItemMachine =
           context => {
             return StoreEvents.REMOVE(
               MY_VCS_STORE_KEY,
-              VCMetadata.fromVC(context).getVcKey(),
+              new VCMetadata(context).getVcKey(),
             );
           },
           {
@@ -1062,7 +1052,7 @@ export const vcItemMachine =
         storeLock: send(
           context => {
             const {serviceRefs, ...data} = context;
-            return StoreEvents.SET(VCMetadata.fromVC(context).getVcKey(), data);
+            return StoreEvents.SET(new VCMetadata(context).getVcKey(), data);
           },
           {to: context => context.serviceRefs.store},
         ),
@@ -1080,7 +1070,7 @@ export const vcItemMachine =
         logVCremoved: send(
           (context, _) =>
             ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VCMetadata.fromVC(context).getVcKey(),
+              _vcKey: new VCMetadata(context).getVcKey(),
               type: 'VC_REMOVED',
               timestamp: Date.now(),
               deviceName: '',
@@ -1350,7 +1340,6 @@ export const createVcItemMachine = (
     idType: vcMetadata.idType as VcIdType,
     requestId: vcMetadata.requestId,
     isPinned: vcMetadata.isPinned,
-    hashedId: vcMetadata.hashedId,
   });
 };
 
