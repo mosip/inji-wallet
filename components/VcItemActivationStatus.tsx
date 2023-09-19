@@ -15,7 +15,7 @@ const WalletUnverifiedIcon: React.FC = () => {
       color={Theme.Colors.Icon}
       size={22}
       type="material-community"
-      containerStyle={{ marginStart: 4, bottom: 1, marginLeft: 10 }}
+      containerStyle={{ marginStart: 10, bottom: 1, marginLeft: 10 }}
     />
   );
 };
@@ -26,7 +26,7 @@ const WalletVerifiedIcon: React.FC = () => {
       name="verified-user"
       color={Theme.Colors.VerifiedIcon}
       size={22}
-      containerStyle={{ marginStart: 4, bottom: 1, marginLeft: 10 }}
+      containerStyle={{ marginStart: 10, bottom: 1, marginLeft: 10 }}
     />
   );
 };

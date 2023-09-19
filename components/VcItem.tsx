@@ -62,7 +62,7 @@ export const VcItem: React.FC<VcItemProps> = props => {
         <VcItemContent
           context={context}
           verifiableCredential={verifiableCredential}
-          generatedOn={Platform.OS === 'ios' ? generatedOn : formattedDate}
+          generatedOn={formattedDate}
           tag={tag}
           selectable={props.selectable}
           selected={props.selected}

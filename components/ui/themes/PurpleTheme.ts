@@ -133,7 +133,7 @@ export const PurpleTheme = {
       justifyContent: 'space-evenly',
       alignItems: 'center',
       marginRight: 20,
-      marginLeft: 10,
+      marginStart: 10,
     },
     kebabIcon: {
       justifyContent: 'center',
@@ -229,11 +229,10 @@ export const PurpleTheme = {
       margin: 8,
       backgroundColor: '#fff',
       shadowColor: '#000',
-      shadowOffset: {width: -1, height: 1},
-      shadowOpacity: 0.4,
-      shadowRadius: 3,
+      shadowOffset: { width: -1, height: 2 },
+      shadowOpacity: 0.3,
+      shadowRadius: 4,
       elevation: 7,
-      overflow: 'hidden',
     },
     selectedBindedVc: {
       borderRadius: 15,
