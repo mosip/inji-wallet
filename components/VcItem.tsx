@@ -87,9 +87,8 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
                   showOnlyBindedVc={props.showOnlyBindedVc}
                 />
               )}
-
+            <View style={Theme.Styles.verticalLine} />
             <Row style={Theme.Styles.kebabIcon}>
-              <View style={Theme.Styles.verticalLine} />
               <Pressable onPress={KEBAB_POPUP}>
                 <KebabPopUp
                   vcKey={props.vcKey}

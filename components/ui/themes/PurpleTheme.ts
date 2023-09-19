@@ -233,12 +233,14 @@ export const PurpleTheme = {
       shadowOpacity: 0.4,
       shadowRadius: 3,
       elevation: 7,
+      overflow: 'hidden',
     },
     selectedBindedVc: {
       borderRadius: 15,
       margin: 5,
       borderWidth: 3,
       borderColor: Colors.Green,
+      overflow: 'hidden',
     },
     selectedVc: {
       borderRadius: 10,
@@ -559,7 +561,6 @@ export const PurpleTheme = {
       fontSize: 18,
       lineHeight: 19,
       paddingTop: 4,
-      marginLeft: -30,
     },
     retrieveIdLabel: {
       color: Colors.ShadeOfGrey,

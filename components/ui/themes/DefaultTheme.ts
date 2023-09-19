@@ -222,8 +222,6 @@ export const DefaultTheme = {
       height: 30,
       backgroundColor: Colors.Grey0,
       marginVertical: 8,
-      marginLeft: -45,
-      marginRight: 22,
     },
     closeCardBgContainer: {
       borderRadius: 20,
@@ -234,12 +232,14 @@ export const DefaultTheme = {
       shadowOpacity: 0.4,
       shadowRadius: 3,
       elevation: 7,
+      overflow: 'hidden',
     },
     selectedBindedVc: {
       borderRadius: 15,
       margin: 5,
       borderWidth: 3,
       borderColor: Colors.Green,
+      overflow: 'hidden',
     },
     selectedVc: {
       borderRadius: 10,
@@ -563,7 +563,6 @@ export const DefaultTheme = {
       fontSize: 18,
       lineHeight: 19,
       paddingTop: 4,
-      marginLeft: -30,
     },
     retrieveIdLabel: {
       color: Colors.ShadeOfGrey,
