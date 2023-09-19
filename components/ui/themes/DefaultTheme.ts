@@ -222,9 +222,11 @@ export const DefaultTheme = {
       height: 30,
       backgroundColor: Colors.Grey0,
       marginVertical: 8,
+      marginRight: 22,
+      marginLeft: -45,
     },
     closeCardBgContainer: {
-      borderRadius: 20,
+      borderRadius: 10,
       margin: 8,
       backgroundColor: '#fff',
       shadowColor: '#000',
@@ -334,6 +336,7 @@ export const DefaultTheme = {
     logo: {
       height: 40,
       width: 40,
+      marginRight: 4,
     },
     homeCloseCardDetailsHeader: {
       flex: 1,

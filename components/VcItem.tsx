@@ -1,6 +1,6 @@
 import React, { useContext, useRef } from 'react';
 import { useInterpret, useSelector } from '@xstate/react';
-import { Pressable, View, ImageBackground } from 'react-native';
+import { Pressable, View, Platform } from 'react-native';
 import { ActorRefFrom } from 'xstate';
 import {
   createVcItemMachine,
@@ -47,9 +47,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
   const storeErrorTranslationPath = 'errors.savingFailed';
 
   const generatedOn = useSelector(service, selectGeneratedOn);
-  const formattedDate = format(new Date(generatedOn), 'MM/dd/yyyy', {
-    locale: enUS,
-  });
+  const formattedDate = format(new Date(generatedOn), 'MM/dd/yyyy');
   const tag = useSelector(service, selectTag);
 
   return (
@@ -65,7 +63,7 @@ export const VcItem: React.FC<VcItemProps> = (props) => {
         <VcItemContent
           context={context}
           verifiableCredential={verifiableCredential}
-          generatedOn={formattedDate}
+          generatedOn={Platform.OS === 'ios' ? generatedOn : formattedDate}
           tag={tag}
           selectable={props.selectable}
           selected={props.selected}
