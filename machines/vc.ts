@@ -1,11 +1,11 @@
-import {EventFrom, StateFrom} from 'xstate';
-import {send, sendParent} from 'xstate';
-import {createModel} from 'xstate/lib/model';
-import {StoreEvents} from './store';
-import {VC} from '../types/vc';
-import {AppServices} from '../shared/GlobalContext';
-import {log, respond} from 'xstate/lib/actions';
-import {VcItemEvents} from './vcItem';
+import { EventFrom, StateFrom } from 'xstate';
+import { send, sendParent } from 'xstate';
+import { createModel } from 'xstate/lib/model';
+import { StoreEvents } from './store';
+import { VC } from '../types/vc';
+import { AppServices } from '../shared/GlobalContext';
+import { log, respond } from 'xstate/lib/actions';
+import { VcItemEvents } from './vcItem';
 import {
   MY_VCS_STORE_KEY,
   RECEIVED_VCS_STORE_KEY,
@@ -23,24 +23,24 @@ const model = createModel(
   },
   {
     events: {
-      VIEW_VC: (vc: VC) => ({vc}),
-      GET_VC_ITEM: (vcKey: string) => ({vcKey}),
-      STORE_RESPONSE: (response: unknown) => ({response}),
-      STORE_ERROR: (error: Error) => ({error}),
-      VC_ADDED: (vcKey: string) => ({vcKey}),
-      REMOVE_VC_FROM_CONTEXT: (vcKey: string) => ({vcKey}),
-      VC_UPDATED: (vcKey: string) => ({vcKey}),
-      VC_RECEIVED: (vcKey: string) => ({vcKey}),
-      VC_DOWNLOADED: (vc: VC) => ({vc}),
-      VC_UPDATE: (vc: VC) => ({vc}),
+      VIEW_VC: (vc: VC) => ({ vc }),
+      GET_VC_ITEM: (vcKey: string) => ({ vcKey }),
+      STORE_RESPONSE: (response: unknown) => ({ response }),
+      STORE_ERROR: (error: Error) => ({ error }),
+      VC_ADDED: (vcKey: string) => ({ vcKey }),
+      REMOVE_VC_FROM_CONTEXT: (vcKey: string) => ({ vcKey }),
+      VC_UPDATED: (vcKey: string) => ({ vcKey }),
+      VC_RECEIVED: (vcKey: string) => ({ vcKey }),
+      VC_DOWNLOADED: (vc: VC) => ({ vc }),
+      VC_UPDATE: (vc: VC) => ({ vc }),
       REFRESH_MY_VCS: () => ({}),
-      REFRESH_MY_VCS_TWO: (vc: VC) => ({vc}),
+      REFRESH_MY_VCS_TWO: (vc: VC) => ({ vc }),
       REFRESH_RECEIVED_VCS: () => ({}),
       GET_RECEIVED_VCS: () => ({}),
       VC_LOADED: () => ({}),
       RESET_VC_LOADED: () => ({}),
     },
-  },
+  }
 );
 
 export const VcEvents = model.events;
@@ -178,7 +178,7 @@ export const vcMachine =
     },
     {
       actions: {
-        getReceivedVcsResponse: respond(context => ({
+        getReceivedVcsResponse: respond((context) => ({
           type: 'VC_RESPONSE',
           response: context.receivedVcs,
         })),
@@ -189,11 +189,11 @@ export const vcMachine =
         }),
 
         loadMyVcs: send(StoreEvents.GET(MY_VCS_STORE_KEY), {
-          to: context => context.serviceRefs.store,
+          to: (context) => context.serviceRefs.store,
         }),
 
         loadReceivedVcs: send(StoreEvents.GET(RECEIVED_VCS_STORE_KEY), {
-          to: context => context.serviceRefs.store,
+          to: (context) => context.serviceRefs.store,
         }),
 
         setMyVcs: model.assign({
@@ -217,7 +217,7 @@ export const vcMachine =
         }),
 
         setVcUpdate: (context, event) => {
-          Object.keys(context.vcs).map(vcKey => {
+          Object.keys(context.vcs).map((vcKey) => {
             if (isSameVC(vcKey, VC_ITEM_STORE_KEY(event.vc))) {
               context.vcs[VC_ITEM_STORE_KEY(event.vc)] = context.vcs[vcKey];
               delete context.vcs[vcKey];
@@ -230,7 +230,7 @@ export const vcMachine =
           (_context, event) => {
             return StoreEvents.UPDATE(MY_VCS_STORE_KEY, event.vcKey);
           },
-          {to: context => context.serviceRefs.store},
+          { to: (context) => context.serviceRefs.store }
         ),
 
         prependToMyVcs: model.assign({
@@ -246,14 +246,14 @@ export const vcMachine =
           myVcs: (context, event) =>
             [
               event.vcKey,
-              ...context.myVcs.map(value => {
+              ...context.myVcs.map((value) => {
                 const vc = value.split(':');
                 if (vc[3] !== event.vcKey.split(':')[3]) {
                   vc[4] = 'false';
                   return vc.join(':');
                 }
               }),
-            ].filter(value => value != undefined),
+            ].filter((value) => value != undefined),
         }),
 
         prependToReceivedVcs: model.assign({
@@ -267,7 +267,7 @@ export const vcMachine =
           receivedVcs: (context, event) => {
             return [
               event.vcKey,
-              ...context.receivedVcs.filter(value => value !== event.vcKey),
+              ...context.receivedVcs.filter((value) => value !== event.vcKey),
             ];
           },
         }),
@@ -277,7 +277,7 @@ export const vcMachine =
         hasExistingReceivedVc: (context, event) =>
           context.receivedVcs.includes(event.vcKey),
       },
-    },
+    }
   );
 
 export function createVcMachine(serviceRefs: AppServices) {
@@ -295,7 +295,7 @@ export function selectMyVcs(state: State) {
 
 export function selectShareableVcs(state: State) {
   return state.context.myVcs.filter(
-    vcKey => state.context.vcs[vcKey]?.credential != null,
+    (vcKey) => state.context.vcs[vcKey]?.credential != null
   );
 }
 
@@ -315,7 +315,7 @@ export function selectIsRefreshingReceivedVcs(state: State) {
   this methods returns all the binded vc's in the wallet.
  */
 export function selectBindedVcs(state: State) {
-  return (state.context.myVcs as Array<string>).filter(key => {
+  return (state.context.myVcs as Array<string>).filter((key) => {
     const walletBindingResponse = state.context.vcs[key]?.walletBindingResponse;
     return (
       !isEmpty(walletBindingResponse) &&
