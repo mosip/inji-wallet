@@ -177,11 +177,11 @@
     "errors": {
       "noInternetConnection": {
         "title": "No internet connection",
-        "message": "Please connect with internet and retry."
+        "message": "Please check your connection and retry"
       },
       "generic": {
         "title": "Something went wrong!",
-        "message": "Our experts are working hard to make things working again."
+        "message": "We are having some trouble with your request. Please try again."
       }
     }
   },

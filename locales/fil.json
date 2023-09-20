@@ -156,6 +156,28 @@
     "version": "Bersyon",
     "tuvaliVersion": "Tuvali-bersyon"
   },
+  "IssuersScreen": {
+    "title": "Magdagdag ng bagong card",
+    "header": "Mangyaring pumili ng gustong paraan mula sa ibaba upang magdagdag ng bagong card",
+    "loaders": {
+      "loading": "Naglo-load...",
+      "subTitle": {
+        "displayIssuers": "Fetching Issuers",
+        "settingUp": "Setting up",
+        "downloadingCredentials": "Downloading Credentials",
+      }
+    },
+    "errors": {
+      "noInternetConnection": {
+        "title": "Pakisuri ang iyong koneksyon at subukang muli",
+        "message": "Mangyaring kumonekta sa internet at subukang muli."
+      },
+      "generic": {
+        "title": "may nangyaring mali!",
+        "message": "Nagkakaproblema kami sa iyong kahilingan. Pakisubukang muli."
+      }
+    }
+  },
   "HelpScreen": {
     "header": "Tulong",
     "whatIsDigitalCredential?": "Ano ang isang digital na kredensyal?",

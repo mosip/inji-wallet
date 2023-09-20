@@ -156,6 +156,28 @@
     "version": "الإصدار",
     "tuvaliVersion": "نسخة توفالي"
   },
+  "IssuersScreen": {
+    "title": "أضف بطاقة جديدة",
+    "header": "يرجى تحديد الطريقة المفضلة من الأسفل لإضافة بطاقة جديدة",
+    "loaders": {
+      "loading": "جار التحميل...",
+      "subTitle": {
+        "displayIssuers": "Fetching Issuers",
+        "settingUp": "Setting up",
+        "downloadingCredentials": "Downloading Credentials",
+      }
+    },
+    "errors":{
+      "noInternetConnection": {
+        "title": "لا يوجد اتصال بالإنترنت",
+        "message": "الرجاء التحقق من اتصالك وإعادة المحاولة"
+      },
+      "generic": {
+        "title": "هناك خطأ ما!",
+        "message":"نواجه بعض المشاكل مع طلبك. حاول مرة اخرى."
+      }
+    }
+  },
   "HelpScreen": {
     "header": "يساعد",
     "whatIsDigitalCredential?": "ما هو الاعتماد الرقمي؟",

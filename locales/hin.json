@@ -153,6 +153,29 @@
     "version": "संस्करण",
     "tuvaliVersion": "तुवाली-संस्करण"
   },
+  "IssuersScreen": {
+    "title": "नया कार्ड जोड़ें",
+    "header": "नया कार्ड जोड़ने के लिए कृपया नीचे से कोई पसंदीदा विधि चुनें",
+
+    "loaders": {
+      "loading": "लोड हो रहा है...",
+      "subTitle": {
+        "displayIssuers": "जारीकर्ताओं को लाना",
+        "settingUp": "की स्थापना",
+        "downloadingCredentials": "क्रेडेंशियल डाउनलोड करना"
+      }
+    },
+    "errors": {
+      "noInternetConnection": {
+        "title": "कोई इंटरनेट कनेक्शन नहीं",
+        "message": "कृपया अपना कनेक्शन जांचें और पुनः प्रयास करें"
+      },
+      "generic": {
+        "title": "कुछ गलत हो गया!",
+        "message": "आपके अनुरोध से हमें कुछ परेशानी हो रही है. कृपया पुन: प्रयास करें।"
+      }
+    }
+  },
   "HelpScreen": {
     "header": "मदद",
     "whatIsDigitalCredential?": "डिजिटल क्रेडेंशियल क्या है?",
