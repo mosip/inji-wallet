@@ -87,3 +87,11 @@ jobs:
           MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
           TESTFLIGHT_INTERNAL_TESTERS_GROUP: ${{ github.event.inputs.internal-testers }}
           TESTFLIGHT_BETA_APP_DESCRIPTION: ${{ github.event.inputs.buildDescription }}
+
+      - name: Upload Runner Log on Failure
+        if: failure() # Only run this step if the previous steps failed
+        uses: actions/upload-artifact@v3.1.1
+        with:
+          name: runner-log
+          path: /Users/runner/Library/Logs/gym/
+          retention-days: 1
