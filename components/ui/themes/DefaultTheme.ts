@@ -39,7 +39,7 @@ export const DefaultTheme = {
   Colors: {
     TabItemText: Colors.Orange,
     Details: Colors.Black,
-    DetailsLabel: Colors.Orange,
+    DetailsLabel: Colors.Gray40,
     LoadingDetailsLabel: Colors.Orange,
     AddIdBtnBg: Colors.Orange,
     AddIdBtnTxt: Colors.Orange,
@@ -99,6 +99,7 @@ export const DefaultTheme = {
     walletbindingContent: Colors.Gray40,
     resendCodeTimer: Colors.resendCodeTimer,
     statusLabel: Colors.Black,
+    statusMessage: Colors.Gray40,
   },
   Styles: StyleSheet.create({
     title: {
@@ -121,7 +122,8 @@ export const DefaultTheme = {
       color: Colors.Black,
     },
     verifiedIconContainer: {
-      marginLeft: 5,
+      marginTop: 3,
+      marginRight: 3,
     },
     verifiedIconInner: {
       backgroundColor: 'white',
@@ -261,7 +263,6 @@ export const DefaultTheme = {
       shadowOpacity: 0.4,
       shadowRadius: 3,
       elevation: 4,
-      padding: 10,
     },
     backgroundImageContainer: {
       flex: 1,
@@ -370,9 +371,10 @@ export const DefaultTheme = {
       borderRadius: 5,
     },
     openCardImage: {
-      width: 105,
-      height: 135,
+      width: 100,
+      height: 106,
       borderRadius: 5,
+      marginTop: 10,
     },
     versionContainer: {
       backgroundColor: Colors.Grey6,
@@ -439,9 +441,11 @@ export const DefaultTheme = {
       fontFamily: 'Inter_600SemiBold',
     },
     hrLine: {
-      borderBottomColor: 'black',
-      borderBottomWidth: 1,
+      borderBottomColor: Colors.Gray44,
+      borderBottomWidth: 0.3,
       marginTop: 10,
+      marginLeft: 10,
+      marginRight: 10,
     },
   }),
   QrCodeStyles: StyleSheet.create({
@@ -452,7 +456,6 @@ export const DefaultTheme = {
       alignItems: 'center',
       padding: 5,
       borderTopLeftRadius: 11,
-      elevation: 4,
     },
     expandedQrCode: {
       backgroundColor: Colors.White,
@@ -473,6 +476,17 @@ export const DefaultTheme = {
     warningText: {
       color: Colors.Red,
       fontSize: 18,
+    },
+    QrView: {
+      padding: 6,
+      backgroundColor: 'white',
+      marginTop: 20,
+      borderRadius: 10,
+      elevation: 6,
+      shadowColor: '#000',
+      shadowOffset: {width: -1, height: 1},
+      shadowOpacity: 0.4,
+      shadowRadius: 3,
     },
   }),
   PinInputStyle: StyleSheet.create({
@@ -990,7 +1004,8 @@ export const DefaultTheme = {
       backgroundColor: Colors.Transparent,
     },
   }),
-  OpenCard: '',
+  OpenCard: require('../../../assets/card_bg.png'),
+  activationPending: require('../../../assets/pending_activation.png'),
   CloseCard: '',
   ProfileIcon: require('../../../assets/placeholder-photo.png'),
   MosipSplashLogo: require('../../../assets/icon.png'),

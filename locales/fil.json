@@ -96,7 +96,7 @@
   },
   "WalletBinding": {
     "inProgress": "Isinasagawa",
-    "profileAuthenticated": "Na-activate para sa online na pag-login!"
+    "profileAuthenticated": "Na-activate para sa online na pag-login"
   },
   "BindingVcWarningOverlay": {
     "alert": "Pakikumpirma",
