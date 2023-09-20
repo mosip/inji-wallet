@@ -1,4 +1,4 @@
-import { MMKVLoader } from 'react-native-mmkv-storage';
+import {MMKVLoader} from 'react-native-mmkv-storage';
 import CryptoJS from 'crypto-js';
 import {
   DocumentDirectoryPath,
@@ -10,7 +10,7 @@ import {
   writeFile,
 } from 'react-native-fs';
 import getAllConfigurations from './commonprops/commonProps';
-import { Platform } from 'react-native';
+import {Platform} from 'react-native';
 import {
   getFreeDiskStorageOldSync,
   getFreeDiskStorageSync,
@@ -22,14 +22,14 @@ import {
   HMAC_ALIAS,
   isCustomSecureKeystore,
 } from './cryptoutil/cryptoUtil';
-import { VCMetadata } from './VCMetadata';
+import {VCMetadata} from './VCMetadata';
 
 const MMKV = new MMKVLoader().initialize();
 const vcDirectoryPath = `${DocumentDirectoryPath}/inji/VC`;
 
 async function generateHmac(
   encryptionKey: string,
-  data: string
+  data: string,
 ): Promise<string> {
   if (!isCustomSecureKeystore()) {
     return CryptoJS.HmacSHA256(encryptionKey, data).toString();
@@ -50,7 +50,7 @@ class Storage {
   static setItem = async (
     key: string,
     data: string,
-    encryptionKey?: string
+    encryptionKey?: string,
   ) => {
     try {
       const isSavingVC = VCMetadata.isVCKey(key);
@@ -87,7 +87,7 @@ class Storage {
   private static async isCorruptedVC(
     key: string,
     encryptionKey: string,
-    data: string
+    data: string,
   ) {
     const storedHMACofCurrentVC = await this.readHmacForVC(key, encryptionKey);
     const HMACofVC = await generateHmac(encryptionKey, data);
@@ -113,7 +113,7 @@ class Storage {
   private static async storeVcHmac(
     encryptionKey: string,
     data: string,
-    key: string
+    key: string,
   ) {
     const HMACofVC = await generateHmac(encryptionKey, data);
     const encryptedHMACofVC = await encryptJson(encryptionKey, HMACofVC);
@@ -180,24 +180,6 @@ const getFilePath = (key: string) => {
  */
 const getVCKeyName = (key: string) => {
   return key;
-};
-
-export const logMMKVData = async () => {
-  const keys = await getMMKVData();
-  const database = {};
-
-  console.log('MMKV STORE LOG');
-  for (const k of ['myVCs']) {
-    const item = await MMKV.getItem(k);
-    try {
-      if (item) {
-        database[k] = await decryptJson('', item);
-      }
-    } catch (e) {
-      database[k] = 'failed to decrypt';
-    }
-  }
-  console.log(JSON.stringify(database, null, 4));
 };
 
 // To print the MMKV data cal this function in getItem
