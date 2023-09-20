@@ -484,7 +484,7 @@ export const PurpleTheme = {
       backgroundColor: 'white',
       marginTop: 20,
       borderRadius: 10,
-      elevation: 10,
+      elevation: 6,
       shadowColor: '#000',
       shadowOffset: {width: -1, height: 1},
       shadowOpacity: 0.4,

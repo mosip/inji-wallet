@@ -17,7 +17,7 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
     <React.Fragment>
       <Pressable onPress={toggleQrOverlay}>
         <View style={Theme.QrCodeStyles.QrView}>
-          <Row margin="0 0 0 0" style={{}}>
+          <Row>
             <QRCode
               size={90}
               value={props.qrCodeDetailes}
