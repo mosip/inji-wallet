@@ -14,10 +14,7 @@ import {getDeviceNameSync} from 'react-native-device-info';
 import {StoreEvents} from '../../store';
 import {VC} from '../../../types/vc';
 import {AppServices} from '../../../shared/GlobalContext';
-import {
-  RECEIVED_VCS_STORE_KEY,
-  VC_ITEM_STORE_KEY,
-} from '../../../shared/constants';
+import {RECEIVED_VCS_STORE_KEY} from '../../../shared/constants';
 import {ActivityLogEvents, ActivityLogType} from '../../activityLog';
 import {VcEvents} from '../../vc';
 import {subscribe} from '../../../shared/openIdBLE/verifierEventHandler';
@@ -25,6 +22,7 @@ import {log} from 'xstate/lib/actions';
 import {VerifierDataEvent} from 'react-native-tuvali/src/types/events';
 import {BLEError} from '../types';
 import Storage from '../../../shared/storage';
+import {VCMetadata} from '../../../shared/VCMetadata';
 // import { verifyPresentation } from '../shared/vcjs/verifyPresentation';
 
 const {verifier, EventTypes, VerificationStatus} = tuvali;
@@ -67,7 +65,7 @@ const model = createModel(
       STORE_ERROR: (error: Error) => ({error}),
       RECEIVE_DEVICE_INFO: (info: DeviceInfo) => ({info}),
       RECEIVED_VCS_UPDATED: () => ({}),
-      VC_RESPONSE: (response: unknown) => ({response}),
+      VC_RESPONSE: (vcMetadatas: VCMetadata[]) => ({vcMetadatas}),
       GOTO_SETTINGS: () => ({}),
       APP_ACTIVE: () => ({}),
       FACE_VALID: () => ({}),
@@ -584,13 +582,14 @@ export const requestMachine =
           context =>
             StoreEvents.PREPEND(
               RECEIVED_VCS_STORE_KEY,
-              VC_ITEM_STORE_KEY(context.incomingVc),
+              VCMetadata.fromVC(context.incomingVc),
             ),
           {to: context => context.serviceRefs.store},
         ),
 
         requestExistingVc: send(
-          context => StoreEvents.GET(VC_ITEM_STORE_KEY(context.incomingVc)),
+          context =>
+            StoreEvents.GET(VCMetadata.fromVC(context.incomingVc).getVcKey()),
           {to: context => context.serviceRefs.store},
         ),
 
@@ -601,7 +600,10 @@ export const requestMachine =
               ...existing,
               reason: existing.reason.concat(context.incomingVc.reason),
             };
-            return StoreEvents.SET(VC_ITEM_STORE_KEY(updated), updated);
+            return StoreEvents.SET(
+              VCMetadata.fromVC(updated).getVcKey(),
+              updated,
+            );
           },
           {to: context => context.serviceRefs.store},
         ),
@@ -609,7 +611,7 @@ export const requestMachine =
         storeVc: send(
           context =>
             StoreEvents.SET(
-              VC_ITEM_STORE_KEY(context.incomingVc),
+              VCMetadata.fromVC(context.incomingVc).getVcKey(),
               context.incomingVc,
             ),
           {to: context => context.serviceRefs.store},
@@ -634,7 +636,7 @@ export const requestMachine =
         logReceived: send(
           context =>
             ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VC_ITEM_STORE_KEY(context.incomingVc),
+              _vcKey: VCMetadata.fromVC(context.incomingVc).getVcKey(),
               type: context.receiveLogType,
               timestamp: Date.now(),
               deviceName:
@@ -646,7 +648,7 @@ export const requestMachine =
 
         sendVcReceived: send(
           context => {
-            return VcEvents.VC_RECEIVED(VC_ITEM_STORE_KEY(context.incomingVc));
+            return VcEvents.VC_RECEIVED(VCMetadata.fromVC(context.incomingVc));
           },
           {to: context => context.serviceRefs.vc},
         ),
@@ -805,9 +807,12 @@ export const requestMachine =
 
       guards: {
         hasExistingVc: (context, event) => {
-          const receivedVcs = event.response as string[];
-          const vcKey = VC_ITEM_STORE_KEY(context.incomingVc);
-          return receivedVcs.includes(vcKey);
+          const receivedVcs = event.vcMetadatas;
+          const incomingVcMetadata = VCMetadata.fromVC(context.incomingVc);
+          return receivedVcs?.some(
+            vcMetadata =>
+              vcMetadata.getVcKey() == incomingVcMetadata.getVcKey(),
+          );
         },
 
         isMinimumStorageLimitReached: (_context, event) => Boolean(event.data),

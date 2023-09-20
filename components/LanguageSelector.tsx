@@ -6,7 +6,7 @@ import Storage from '../shared/storage';
 import {useTranslation} from 'react-i18next';
 import i18next from 'i18next';
 import RNRestart from 'react-native-restart';
-import { __SelectedLanguage } from '../shared/GlobalVariables';
+import {__SelectedLanguage} from '../shared/GlobalVariables';
 
 export const LanguageSelector: React.FC<LanguageSelectorProps> = props => {
   const {i18n} = useTranslation();

@@ -1,6 +1,6 @@
-import { DecodedCredential, VerifiableCredential } from '../types/vc';
-import { __AppId } from './GlobalVariables';
-import { HOST, MIMOTO_BASE_URL } from './constants';
+import {DecodedCredential, VerifiableCredential} from '../types/vc';
+import {__AppId} from './GlobalVariables';
+import {HOST, MIMOTO_BASE_URL} from './constants';
 
 export class BackendResponseError extends Error {
   constructor(name: string, message: string) {
@@ -13,7 +13,7 @@ export async function request(
   method: 'GET' | 'POST' | 'PATCH',
   path: `/${string}`,
   body?: Record<string, unknown>,
-  host= MIMOTO_BASE_URL
+  host = MIMOTO_BASE_URL,
 ) {
   const headers = {
     'Content-Type': 'application/json',
@@ -36,21 +36,21 @@ export async function request(
       'The backend API ' +
         backendUrl +
         ' returned error code 400 with message --> ' +
-        errorMessage
+        errorMessage,
     );
     throw new Error(errorMessage);
   }
 
   if (jsonResponse.errors && jsonResponse.errors.length) {
     let backendUrl = host + path;
-    const { errorCode, errorMessage } = jsonResponse.errors.shift();
+    const {errorCode, errorMessage} = jsonResponse.errors.shift();
     console.error(
       'The backend API ' +
         backendUrl +
         ' returned error response --> error code is : ' +
         errorCode +
         ' error message is : ' +
-        errorMessage
+        errorMessage,
     );
     throw new BackendResponseError(errorCode, errorMessage);
   }
