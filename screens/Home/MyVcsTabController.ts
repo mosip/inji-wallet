@@ -4,7 +4,7 @@ import {ActorRefFrom} from 'xstate';
 import {selectIsTampered} from '../../machines/store';
 import {
   selectIsRefreshingMyVcs,
-  selectMyVcs,
+  selectMyVcsMetadata,
   VcEvents,
 } from '../../machines/vc';
 import {
@@ -40,7 +40,7 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
     AddVcModalService: useSelector(service, selectAddVcModal),
     GetVcModalService: useSelector(service, selectGetVcModal),
 
-    vcKeys: useSelector(vcService, selectMyVcs),
+    vcMetadatas: useSelector(vcService, selectMyVcsMetadata),
     isTampered: useSelector(storeService, selectIsTampered),
 
     isRefreshingVcs: useSelector(vcService, selectIsRefreshingMyVcs),

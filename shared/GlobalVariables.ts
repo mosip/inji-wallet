@@ -1,13 +1,13 @@
-import { getVersion } from 'react-native-device-info';
+import {getVersion} from 'react-native-device-info';
 import ShortUniqueId from 'short-unique-id';
-import { APP_ID_LENGTH } from './constants';
+import {APP_ID_LENGTH} from './constants';
 /* eslint-disable @typescript-eslint/no-var-requires */
 const dependencies = require('../package-lock.json').dependencies;
 
 function getTuvaliPackageDetails() {
   let packageVersion, packageCommitId;
 
-  Object.keys(dependencies).forEach((dependencyName) => {
+  Object.keys(dependencies).forEach(dependencyName => {
     const dependencyData = dependencies[dependencyName];
 
     if (dependencyName == 'react-native-tuvali') {
@@ -20,7 +20,7 @@ function getTuvaliPackageDetails() {
       }
     }
   });
-  return { packageVersion, packageCommitId };
+  return {packageVersion, packageCommitId};
 }
 export class __AppId {
   private static value: string;

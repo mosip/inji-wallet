@@ -54,7 +54,7 @@ export const SettingScreen: React.FC<
   const {t} = useTranslation('SettingScreen');
   const controller = useSettingsScreen(props);
 
-  const updateRegistry = (items) => {
+  const updateRegistry = items => {
     controller.UPDATE_CREDENTIAL_REGISTRY(items[0].value, items[1].value);
   };
 

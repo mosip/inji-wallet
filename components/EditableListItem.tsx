@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Dimensions, I18nManager } from 'react-native';
-import { Icon, ListItem, Overlay, Input } from 'react-native-elements';
-import { Text, Column, Row, Button } from './ui';
-import { Theme } from './ui/styleUtils';
-import { useTranslation } from 'react-i18next';
+import React, {useEffect, useState} from 'react';
+import {Dimensions, I18nManager} from 'react-native';
+import {Icon, ListItem, Overlay, Input} from 'react-native-elements';
+import {Text, Column, Row, Button} from './ui';
+import {Theme} from './ui/styleUtils';
+import {useTranslation} from 'react-i18next';
 
-export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
-  const { t } = useTranslation('common');
+export const EditableListItem: React.FC<EditableListItemProps> = props => {
+  const {t} = useTranslation('common');
   const [isEditing, setIsEditing] = useState(false);
   const [items, setItems] = useState(props.items);
   const [overlayOpened, setOverlayOpened] = useState(true);
@@ -18,9 +18,9 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
   }, [props.response]);
 
   function updateItems(label: string, value: string) {
-    const updatedItems = items.map((item) => {
+    const updatedItems = items.map(item => {
       if (item.label === label) {
-        return { ...item, value: value };
+        return {...item, value: value};
       }
       return item;
     });
@@ -50,18 +50,18 @@ export const EditableListItem: React.FC<EditableListItemProps> = (props) => {
         color={Theme.Colors.profileLanguageValue}
       />
       <Overlay
-        overlayStyle={{ padding: 24, elevation: 6 }}
+        overlayStyle={{padding: 24, elevation: 6}}
         isVisible={isEditing}
         onBackdropPress={dismiss}>
         <Column width={Dimensions.get('screen').width * 0.8}>
           {props.items.map((item: ListItemProps, index) => {
             return (
               <React.Fragment key={index}>
-                <Text>{t('editLabel', { label: item.label })}</Text>
+                <Text>{t('editLabel', {label: item.label})}</Text>
                 <Input
                   autoFocus
                   value={items[index].value}
-                  onChangeText={(value) => updateItems(item.label, value)}
+                  onChangeText={value => updateItems(item.label, value)}
                   selectionColor={Theme.Colors.Cursor}
                   inputStyle={{
                     textAlign: I18nManager.isRTL ? 'right' : 'left',

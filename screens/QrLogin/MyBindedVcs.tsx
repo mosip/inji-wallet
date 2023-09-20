@@ -24,25 +24,27 @@ export const MyBindedVcs: React.FC<MyBindedVcsProps> = (props) => {
       <React.Fragment>
         <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
           <Column fill>
-            {controller.vcKeys.length > 0 && (
+            {controller.shareableVcsMetadata.length > 0 && (
               <>
                 <Column
                   fill
                   backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
                   <Column padding="16 0" scroll>
                     <Column pX={14}>
-                      {controller.vcKeys.length > 0 &&
-                        controller.vcKeys.map((vcKey, index) => (
-                          <VcItem
-                            key={vcKey}
-                            vcKey={vcKey}
-                            margin="0 2 8 2"
-                            onPress={controller.SELECT_VC_ITEM(index)}
-                            showOnlyBindedVc
-                            selectable
-                            selected={index === controller.selectedIndex}
-                          />
-                        ))}
+                      {controller.shareableVcsMetadata.length > 0 &&
+                        controller.shareableVcsMetadata.map(
+                          (vcMetadata, index) => (
+                            <VcItem
+                              key={vcMetadata.getVcKey()}
+                              vcMetadata={vcMetadata}
+                              margin="0 2 8 2"
+                              onPress={controller.SELECT_VC_ITEM(index)}
+                              showOnlyBindedVc
+                              selectable
+                              selected={index === controller.selectedIndex}
+                            />
+                          )
+                        )}
                     </Column>
                   </Column>
                 </Column>
@@ -64,7 +66,7 @@ export const MyBindedVcs: React.FC<MyBindedVcsProps> = (props) => {
                 </Column>
               </>
             )}
-            {controller.vcKeys.length === 0 && (
+            {controller.shareableVcsMetadata.length === 0 && (
               <React.Fragment>
                 <Centered fill>
                   <Text weight="semibold" margin="0 0 8 0">
