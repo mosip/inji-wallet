@@ -1,4 +1,4 @@
-import telemetry from '@project-sunbird/telemetry-sdk';
+import telemetry from 'telemetry-sdk';
 import {Platform} from 'react-native';
 import {HOST} from '../constants';
 import {
