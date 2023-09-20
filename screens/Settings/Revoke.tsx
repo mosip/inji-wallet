@@ -6,25 +6,25 @@ import {
   SafeAreaView,
   View,
 } from 'react-native';
-import { Divider, Icon, ListItem, Overlay } from 'react-native-elements';
-import { Button, Column, Centered, Row, Text } from '../../components/ui';
-import { VidItem } from '../../components/VidItem';
-import { Theme } from '../../components/ui/styleUtils';
-import { ToastItem } from '../../components/ui/ToastItem';
-import { OIDcAuthenticationOverlay } from '../../components/OIDcAuthModal';
-import { useTranslation } from 'react-i18next';
-import { useRevoke } from './RevokeController';
+import {Divider, Icon, ListItem, Overlay} from 'react-native-elements';
+import {Button, Column, Centered, Row, Text} from '../../components/ui';
+import {VidItem} from '../../components/VidItem';
+import {Theme} from '../../components/ui/styleUtils';
+import {ToastItem} from '../../components/ui/ToastItem';
+import {OIDcAuthenticationOverlay} from '../../components/OIDcAuthModal';
+import {useTranslation} from 'react-i18next';
+import {useRevoke} from './RevokeController';
 
 // Intentionally hidden using {display:'none'} - Refer mosip/inji/issue#607
-export const Revoke: React.FC<RevokeScreenProps> = (props) => {
+export const Revoke: React.FC<RevokeScreenProps> = props => {
   const controller = useRevoke();
-  const { t } = useTranslation('ProfileScreen');
+  const {t} = useTranslation('ProfileScreen');
 
   return (
     <ListItem
       bottomDivider
       onPress={() => controller.setAuthenticating(true)}
-      style={{ display: 'none' }}>
+      style={{display: 'none'}}>
       <Icon
         name={props.Icon}
         type="font-awesome"
@@ -37,7 +37,7 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
         </ListItem.Title>
       </ListItem.Content>
       <Overlay
-        overlayStyle={{ padding: 0 }}
+        overlayStyle={{padding: 0}}
         isVisible={controller.isViewing}
         onBackdropPress={() => controller.setIsViewing(false)}>
         <SafeAreaView>
@@ -83,11 +83,11 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
                           margin="0 2 8 2"
                           onPress={controller.selectVcItem(
                             index,
-                            vcMetadata.getVcKey()
+                            vcMetadata.getVcKey(),
                           )}
                           selectable
                           selected={controller.selectedVidUniqueIds.includes(
-                            vcMetadata.getVcKey()
+                            vcMetadata.getVcKey(),
                           )}
                         />
                       );
@@ -135,9 +135,11 @@ export const Revoke: React.FC<RevokeScreenProps> = (props) => {
                     </Text>
                     <Text margin="0 0 0 0" weight="bold">
                       {/*TODO: Change this to UIN? and Optimize*/}
-                      {controller.uniqueVidsMetadata.find(
-                        (metadata) => metadata.getVcKey() === uniqueId
-                      ) ?? 'N/A'}
+                      {
+                        controller.uniqueVidsMetadata.find(
+                          metadata => metadata.getVcKey() === uniqueId,
+                        )?.id
+                      }
                     </Text>
                   </View>
                 ))}
