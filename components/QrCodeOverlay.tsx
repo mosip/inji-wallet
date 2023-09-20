@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Dimensions, Pressable} from 'react-native';
+import {Dimensions, Pressable, View} from 'react-native';
 import {Icon, Overlay} from 'react-native-elements';
 import {Centered, Column, Row, Text} from './ui';
 import QRCode from 'react-native-qrcode-svg';
@@ -16,16 +16,18 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
   return (
     <React.Fragment>
       <Pressable onPress={toggleQrOverlay}>
-        <Row margin="20 0 0 0">
-          <QRCode
-            size={90}
-            value={props.qrCodeDetailes}
-            backgroundColor={Theme.Colors.QRCodeBackgroundColor}
-          />
-        </Row>
+        <View style={Theme.QrCodeStyles.QrView}>
+          <Row margin="0 0 0 0" style={{}}>
+            <QRCode
+              size={90}
+              value={props.qrCodeDetailes}
+              backgroundColor={Theme.Colors.QRCodeBackgroundColor}
+            />
+          </Row>
+        </View>
         <Row
           align="flex-end"
-          margin="-30 0 0 60"
+          margin="-35 0 0 67"
           style={Theme.QrCodeStyles.magnifierZoom}>
           <Image source={Theme.MagnifierZoom} />
         </Row>
