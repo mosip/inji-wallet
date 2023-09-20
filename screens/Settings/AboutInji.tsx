@@ -10,6 +10,7 @@ import getAllConfigurations from '../../shared/commonprops/commonProps';
 import {getVersion} from 'react-native-device-info';
 import {CopyButton} from '../../components/CopyButton';
 import testIDProps from '../../shared/commonUtil';
+import {__InjiVersion, __TuvaliVersion} from '../../shared/GlobalVariables';
 
 export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
   const {t} = useTranslation('AboutInji');
@@ -22,22 +23,6 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
       setAboutInjiUrl(response.aboutInjiUrl);
     });
   }, []);
-
-  const dependencies = require('../../package-lock.json').dependencies;
-  let packageVersion, packageCommitId;
-
-  Object.keys(dependencies).forEach(dependencyName => {
-    const dependencyData = dependencies[dependencyName];
-
-    if (dependencyName == 'react-native-tuvali') {
-      packageVersion = dependencyData.from
-        ? dependencyData.from.split('#')[1]
-        : 'unknown';
-      if (packageVersion != 'unknown') {
-        packageCommitId = dependencyData.version.split('#')[1].substring(0, 7);
-      }
-    }
-  });
 
   return (
     <React.Fragment>
@@ -106,16 +91,16 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
             <Text
               style={Theme.TextStyles.bold}
               color={Theme.Colors.aboutVersion}>
-              {t('version')}: {getVersion()}
+              {t('version')}: {__InjiVersion.getValue()}
             </Text>
-            {packageVersion != 'unknown' && (
+            {__TuvaliVersion.getpackageVersion() != 'unknown' && (
               <Text
                 weight="semibold"
                 margin="32 0 5 0"
                 align="center"
                 size="small"
                 color={Theme.Colors.aboutVersion}>
-                {t('tuvaliVersion')}: {packageVersion + '-' + packageCommitId}
+                {t('tuvaliVersion')}: {__TuvaliVersion.getValue()}
               </Text>
             )}
           </Column>

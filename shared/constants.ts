@@ -7,9 +7,10 @@ import {
 import {Argon2iConfig} from './commonUtil';
 
 export let MIMOTO_BASE_URL = MIMOTO_HOST;
-export const ESIGNET_BASE_URL = ESIGNET_HOST;
+export let ESIGNET_BASE_URL = ESIGNET_HOST;
 
 export const changeCrendetialRegistry = host => (MIMOTO_BASE_URL = host);
+export const changeEsignetUrl = host => (ESIGNET_BASE_URL = host);
 
 export const MY_VCS_STORE_KEY = 'myVCs';
 
