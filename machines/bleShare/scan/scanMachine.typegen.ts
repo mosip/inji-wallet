@@ -112,7 +112,8 @@ export interface Typegen0 {
     setShareLogTypeVerified: 'FACE_VALID';
     setStayInProgress:
       | 'STAY_IN_PROGRESS'
-      | 'xstate.after(CONNECTION_TIMEOUT)#scan.connecting.inProgress';
+      | 'xstate.after(CONNECTION_TIMEOUT)#scan.connecting.inProgress'
+      | 'xstate.after(SHARING_TIMEOUT)#scan.reviewing.sendingVc.inProgress';
     setUri: 'SCAN';
     storeLoginItem: 'done.invoke.QrLogin';
     storingActivityLog: 'STORE_RESPONSE';

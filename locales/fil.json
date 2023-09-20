@@ -456,8 +456,8 @@
     "status": {
       "inProgress": "Isinasagawa",
       "establishingConnection": "Pagtatatag ng Koneksyon",
-      "sharingInProgress": "Isinasagawa ang pagbabahagi",
-      "connectingTimeout": "Naantala ang pagbabahagi, posibleng dahil sa isang isyu sa koneksyon.",
+      "connectionInProgress": "Isinasagawa ang koneksyon",
+      "connectingTimeout": "Ito ay tumatagal ng ilang sandali upang maitaguyod ang koneksyon. Bukas ba ang ibang device para sa mga koneksyon?",
       "stayOnTheScreen": "Manatili sa screen",
       "retry": "Subukan muli",
       "exchangingDeviceInfo": "Nagpapalitan ng impormasyon ng device...",
@@ -467,9 +467,9 @@
       "sent": "Naipadala na ang card...",
       "sentHint": "Naghihintay para sa receiver na i-save o itapon ang iyong card",
       "sharing": {
-        "title": "Pagbabahagi...",
-        "hint": "Mangyaring maghintay habang ibinabahagi namin ang napiling card.",
-        "timeoutHint": "Mas tumatagal kaysa sa inaasahan ang pagbabahagi. Maaaring may problema sa koneksyon."
+        "title": "Isinasagawa ang pagbabahagi",
+        "timeoutHint": "Naantala ang pagbabahagi, posibleng dahil sa isang isyu sa koneksyon.",
+        "hint": "Mangyaring maghintay habang ibinabahagi namin ang napiling card."
       },
       "accepted": {
         "title": "Matagumpay na naibahagi ang ID",

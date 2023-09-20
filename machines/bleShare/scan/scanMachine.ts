@@ -511,15 +511,23 @@ export const scanMachine =
                   after: {
                     SHARING_TIMEOUT: {
                       target: '#scan.reviewing.sendingVc.timeout',
-                      actions: [],
+                      actions: 'setStayInProgress',
                       internal: false,
                     },
                   },
                 },
                 timeout: {
                   on: {
+                    STAY_IN_PROGRESS: {
+                      actions: 'setStayInProgress',
+                    },
                     CANCEL: {
                       target: '#scan.reviewing.cancelling',
+                      actions: 'setCloseTimeoutHint',
+                    },
+                    RETRY: {
+                      target: '#scan.reviewing.cancelling',
+                      actions: 'setCloseTimeoutHint',
                     },
                   },
                 },

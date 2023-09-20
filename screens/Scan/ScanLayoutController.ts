@@ -111,7 +111,7 @@ export function useScanLayout() {
     };
   } else if (isConnectingTimeout) {
     statusOverlay = {
-      title: t('status.sharingInProgress'),
+      title: t('status.connectionInProgress'),
       hint: t('status.connectingTimeout'),
       onCancel,
       onStayInProgress,
@@ -148,6 +148,8 @@ export function useScanLayout() {
       title: t('status.sharing.title'),
       hint: t('status.sharing.timeoutHint'),
       onCancel: CANCEL,
+      onStayInProgress,
+      onRetry,
       progress: true,
     };
   } else if (isAccepted) {

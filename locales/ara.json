@@ -14,7 +14,7 @@
     "QRLOGIN_SUCCESFULL": "QRL تم تسجيل الدخول بنجاح",
     "WALLET_BINDING_SUCCESSFULL": "تفعيل ناجحة",
     "WALLET_BINDING_FAILURE": "فشل التفعيل",
-    "VC_REMOVED":"تمت إزالته من المحفظة"
+    "VC_REMOVED": "تمت إزالته من المحفظة"
   },
   "DeviceInfoList": {
     "requestedBy": "مطلوب بواسطة",
@@ -452,8 +452,8 @@
     "status": {
       "inProgress": "في تَقَدم",
       "establishingConnection": "اجراء اتصال",
-      "sharingInProgress": "جاري المشاركة",
-      "connectingTimeout": "تأخرت المشاركة، ربما بسبب مشكلة في الاتصال.",
+      "connectionInProgress": "الاتصال قيد التقدم",
+      "connectingTimeout": "يستغرق الأمر بعض الوقت لتأسيس الاتصال. هل الجهاز الآخر مفتوح للاتصالات؟",
       "stayOnTheScreen": "البقاء على الشاشة",
       "retry": "أعد المحاولة",
       "exchangingDeviceInfo": "تبادل معلومات الجهاز ...",
@@ -463,9 +463,9 @@
       "sent": "تم إرسال بطاقة ...",
       "sentHint": "في انتظار أن يحفظ المستلم بطاقة أو يتجاهلها",
       "sharing": {
-        "title": "مشاركة...",
-        "hint": "يرجى الانتظار حتى نشارك البطاقة المختارة.",
-        "timeoutHint": "تستغرق مشاركتها وقتًا أطول من المتوقع. قد تكون هناك مشكلة في الاتصال."
+        "title": "جاري المشاركة",
+        "timeoutHint": "تأخرت المشاركة، ربما بسبب مشكلة في الاتصال.",
+        "hint": "يرجى الانتظار حتى نشارك البطاقة المختارة."
       },
       "accepted": {
         "title": "تم مشاركة المعرف بنجاح",
