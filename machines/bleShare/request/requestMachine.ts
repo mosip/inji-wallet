@@ -582,7 +582,7 @@ export const requestMachine =
           context =>
             StoreEvents.PREPEND(
               RECEIVED_VCS_STORE_KEY,
-              JSON.stringify(VCMetadata.fromVC(context.incomingVc)),
+              VCMetadata.fromVC(context.incomingVc),
             ),
           {to: context => context.serviceRefs.store},
         ),
@@ -809,7 +809,7 @@ export const requestMachine =
         hasExistingVc: (context, event) => {
           const receivedVcs = event.vcMetadatas;
           const incomingVcMetadata = VCMetadata.fromVC(context.incomingVc);
-          return receivedVcs.some(
+          return receivedVcs?.some(
             vcMetadata =>
               vcMetadata.getVcKey() == incomingVcMetadata.getVcKey(),
           );

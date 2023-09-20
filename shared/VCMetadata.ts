@@ -21,7 +21,7 @@ export class VCMetadata {
     return new VCMetadata({
       idType: vc.idType,
       requestId: vc.requestId,
-      isPinned: vc.isPinned,
+      isPinned: vc.isPinned || false,
       id: vc.id,
     });
   }

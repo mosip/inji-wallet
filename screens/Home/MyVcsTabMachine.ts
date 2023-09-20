@@ -180,17 +180,14 @@ export const MyVcsTabMachine = model.createMachine(
         (_context, event) => {
           return StoreEvents.PREPEND(
             MY_VCS_STORE_KEY,
-            JSON.stringify((event as DoneInvokeEvent<VCMetadata>).data),
+            (event as DoneInvokeEvent<VCMetadata>).data,
           );
         },
         {to: context => context.serviceRefs.store},
       ),
 
       sendVcAdded: send(
-        (_context, event) =>
-          VcEvents.VC_ADDED(
-            VCMetadata.fromVcMetadataString(event.response as string),
-          ),
+        (_context, event) => VcEvents.VC_ADDED(event.response as VCMetadata),
         {
           to: context => context.serviceRefs.vc,
         },

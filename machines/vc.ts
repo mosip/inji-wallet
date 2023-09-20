@@ -166,7 +166,7 @@ export const vcMachine =
       actions: {
         getReceivedVcsResponse: respond(context => ({
           type: 'VC_RESPONSE',
-          response: context.receivedVcs,
+          response: context.receivedVcs || [],
         })),
 
         getVcItemResponse: respond((context, event) => {
