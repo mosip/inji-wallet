@@ -4,7 +4,7 @@ import NetInfo from '@react-native-community/netinfo';
 import { GlobalContext } from '../../shared/GlobalContext';
 import {
   selectIsRefreshingMyVcs,
-  selectMyVcs,
+  selectMyVcsMetadata,
   VcEvents,
 } from '../../machines/vc';
 import { vcItemMachine } from '../../machines/vcItem';
@@ -24,7 +24,7 @@ export function useRevoke() {
   const { appService } = useContext(GlobalContext);
   const vcService = appService.children.get('vc');
   const revokeService = appService.children.get('RevokeVids');
-  const vcKeys = useSelector(vcService, selectMyVcs);
+  const vcsMetadata = useSelector(vcService, selectMyVcsMetadata);
   const isRevokingVc = useSelector(revokeService, selectIsRevokingVc);
   const isLoggingRevoke = useSelector(revokeService, selectIsLoggingRevoke);
   const isAcceptingOtpInput = useSelector(
@@ -38,20 +38,23 @@ export function useRevoke() {
   const [toastVisible, setToastVisible] = useState(false);
   const [message, setMessage] = useState('');
   const [selectedIndex, setSelectedIndex] = useState<number>(null);
-  const [selectedVidKeys, setSelectedVidKeys] = useState<string[]>([]);
+  const [selectedVidUniqueIds, setSelectedVidUniqueIds] = useState<string[]>(
+    []
+  );
 
-  const vidKeys = vcKeys.filter((vc) => {
-    const vcKey = vc.split(':');
-    return vcKey[1] === 'VID';
-  });
+  const vidsMetadata = vcsMetadata.filter(
+    (vcMetadata) => vcMetadata.idType === 'VID'
+  );
 
-  const selectVcItem = (index: number, vcKey: string) => {
+  const selectVcItem = (index: number, vcUniqueId: string) => {
     return () => {
       setSelectedIndex(index);
-      if (selectedVidKeys.includes(vcKey)) {
-        setSelectedVidKeys(selectedVidKeys.filter((item) => item !== vcKey));
+      if (selectedVidUniqueIds.includes(vcUniqueId)) {
+        setSelectedVidUniqueIds(
+          selectedVidUniqueIds.filter((item) => item !== vcUniqueId)
+        );
       } else {
-        setSelectedVidKeys((prevArray) => [...prevArray, vcKey]);
+        setSelectedVidUniqueIds((prevArray) => [...prevArray, vcUniqueId]);
       }
     };
   };
@@ -67,7 +70,7 @@ export function useRevoke() {
 
   useEffect(() => {
     if (isRevokingVc) {
-      setSelectedVidKeys([]);
+      setSelectedVidUniqueIds([]);
       showToast(t('revokeSuccessful'));
     }
     if (isLoggingRevoke) {
@@ -85,10 +88,10 @@ export function useRevoke() {
     isViewing,
     message,
     selectedIndex,
-    selectedVidKeys,
+    selectedVidUniqueIds,
     toastVisible,
-    vidKeys: vidKeys.filter(
-      (vcKey, index, vid) => vid.indexOf(vcKey) === index
+    uniqueVidsMetadata: vidsMetadata.filter(
+      (vcMetadata, index, vid) => vid.indexOf(vcMetadata) === index
     ),
 
     CONFIRM_REVOKE_VC: () => {
@@ -101,7 +104,7 @@ export function useRevoke() {
       revokeService.send(RevokeVidsEvents.INPUT_OTP(otp)),
     REFRESH: () => vcService.send(VcEvents.REFRESH_MY_VCS()),
     REVOKE_VC: () => {
-      revokeService.send(RevokeVidsEvents.REVOKE_VCS(selectedVidKeys));
+      revokeService.send(RevokeVidsEvents.REVOKE_VCS(selectedVidUniqueIds));
       setRevoking(false);
       //since nested modals/overlays don't work in ios, we need to toggle revoke screen
       setIsViewing(false);

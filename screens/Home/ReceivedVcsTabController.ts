@@ -4,7 +4,7 @@ import { ActorRefFrom } from 'xstate';
 import {
   VcEvents,
   selectIsRefreshingReceivedVcs,
-  selectReceivedVcs,
+  selectReceivedVcsMetadata,
 } from '../../machines/vc';
 import { vcItemMachine } from '../../machines/vcItem';
 import { GlobalContext } from '../../shared/GlobalContext';
@@ -48,7 +48,7 @@ export function useReceivedVcsTab() {
 
   return {
     isVisible,
-    vcKeys: useSelector(vcService, selectReceivedVcs),
+    receivedVcsMetadata: useSelector(vcService, selectReceivedVcsMetadata),
 
     isRefreshingVcs: useSelector(vcService, selectIsRefreshingReceivedVcs),
 

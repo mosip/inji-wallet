@@ -1,7 +1,7 @@
 import { useSelector } from '@xstate/react';
 import { useContext, useState } from 'react';
 import { ActorRefFrom } from 'xstate';
-import { selectShareableVcs } from '../../machines/vc';
+import { selectShareableVcsMetadata } from '../../machines/vc';
 import { vcItemMachine } from '../../machines/vcItem';
 import { GlobalContext } from '../../shared/GlobalContext';
 import {
@@ -41,7 +41,7 @@ export function useSendVcScreen() {
     receiverInfo: useSelector(scanService, selectReceiverInfo),
     reason: useSelector(scanService, selectReason),
     vcName: useSelector(scanService, selectVcName),
-    vcKeys: useSelector(vcService, selectShareableVcs),
+    shareableVcsMetadata: useSelector(vcService, selectShareableVcsMetadata),
     selectedVc: useSelector(scanService, selectSelectedVc),
 
     isSelectingVc: useSelector(scanService, selectIsSelectingVc),

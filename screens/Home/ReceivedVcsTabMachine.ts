@@ -18,7 +18,7 @@ const model = createModel(
       STORE_RESPONSE: (response?: unknown) => ({ response }),
       STORE_ERROR: (error: Error) => ({ error }),
       ERROR: (error: Error) => ({ error }),
-      GET_RECEIVED_VCS_RESPONSE: (vcKeys: string[]) => ({ vcKeys }),
+      GET_RECEIVED_VCS_RESPONSE: (vcMetadatas: string[]) => ({ vcMetadatas }),
     },
   }
 );

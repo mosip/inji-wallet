@@ -17,7 +17,7 @@ import {getDeviceNameSync} from 'react-native-device-info';
 import {VC, VerifiablePresentation} from '../../../types/vc';
 import {AppServices} from '../../../shared/GlobalContext';
 import {ActivityLogEvents, ActivityLogType} from '../../activityLog';
-import {MY_LOGIN_STORE_KEY, VC_ITEM_STORE_KEY} from '../../../shared/constants';
+import {MY_LOGIN_STORE_KEY} from '../../../shared/constants';
 import {subscribe} from '../../../shared/openIdBLE/walletEventHandler';
 import {
   check,
@@ -39,6 +39,7 @@ import {WalletDataEvent} from 'react-native-tuvali/lib/typescript/types/events';
 import {BLEError} from '../types';
 import Storage from '../../../shared/storage';
 import {logState} from '../../app';
+import {VCMetadata} from '../../../shared/VCMetadata';
 import {
   getData,
   getEndData,
@@ -805,7 +806,7 @@ export const scanMachine =
         logShared: send(
           context =>
             ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VC_ITEM_STORE_KEY(context.selectedVc),
+              _vcKey: VCMetadata.fromVC(context.selectedVc).getVcKey(),
               type: context.selectedVc.shouldVerifyPresence
                 ? 'VC_SHARED_WITH_VERIFICATION_CONSENT'
                 : context.shareLogType,
@@ -820,7 +821,7 @@ export const scanMachine =
         logFailedVerification: send(
           context =>
             ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VC_ITEM_STORE_KEY(context.selectedVc),
+              _vcKey: VCMetadata.fromVC(context.selectedVc).getVcKey(),
               type: 'PRESENCE_VERIFICATION_FAILED',
               timestamp: Date.now(),
               deviceName:
