@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useRef} from 'react';
 import {useInterpret, useSelector} from '@xstate/react';
-import {Pressable} from 'react-native';
+import {View, Pressable} from 'react-native';
 import {ActorRefFrom} from 'xstate';
 import {
   createVcItemMachine,
@@ -92,7 +92,7 @@ export const VcItem: React.FC<VcItemProps> = props => {
             <Row style={Theme.Styles.kebabIcon}>
               <Pressable onPress={KEBAB_POPUP}>
                 <KebabPopUp
-                  vcKey={props.vcKey}
+                  vcMetadata={props.vcMetadata}
                   iconName="dots-three-horizontal"
                   iconType="entypo"
                   isVisible={isKebabPopUp}

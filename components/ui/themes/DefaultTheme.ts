@@ -11,6 +11,7 @@ const Colors = {
   Gray30: '#444444',
   Gray40: '#666666',
   Gray44: '#707070',
+  Gray50: '#999999',
   Gray9: '#171717',
   DimGray: '#737373',
   Orange: '#F2811D',
@@ -39,7 +40,7 @@ export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 export const DefaultTheme = {
   Colors: {
     TabItemText: Colors.Orange,
-    Details: Colors.Grey,
+    Details: Colors.Black,
     DetailsLabel: Colors.Gray40,
     LoadingDetailsLabel: Colors.Gray40,
     AddIdBtnBg: Colors.Orange,
@@ -51,7 +52,7 @@ export const DefaultTheme = {
     IconBg: Colors.Orange,
     popUp: Colors.Green,
     Icon: Colors.Orange,
-    GrayIcon: Colors.Grey5,
+    GrayIcon: Colors.Gray50,
     helpText: Colors.Gray44,
     borderBottomColor: Colors.Grey6,
     whiteBackgroundColor: Colors.White,
@@ -146,8 +147,7 @@ export const DefaultTheme = {
     verifiedIconInner: {
       backgroundColor: 'white',
       borderRadius: 10,
-      marginRight: 2,
-      marginLeft: 3,
+      marginLeft: 9,
     },
     vcItemLabelHeader: {
       color: Colors.Gray40,
@@ -214,7 +214,7 @@ export const DefaultTheme = {
     },
     horizontalLine: {
       height: 1,
-      backgroundColor: Colors.Black,
+      backgroundColor: Colors.Grey,
     },
     verticalLine: {
       width: 1,

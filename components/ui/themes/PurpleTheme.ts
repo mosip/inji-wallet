@@ -9,7 +9,9 @@ const Colors = {
   Grey5: '#E0E0E0',
   Grey6: '#F2F2F2',
   Gray40: '#666666',
+  Gray30: '#444444',
   Gray44: '#707070',
+  Gray50: '#999999',
   Gray9: '#171717',
   DimGray: '#737373',
   Orange: '#F2811D',
@@ -40,7 +42,7 @@ export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 export const PurpleTheme = {
   Colors: {
     TabItemText: Colors.Purple,
-    Details: Colors.Grey,
+    Details: Colors.Black,
     LoadingDetailsLabel: Colors.Gray40,
     AddIdBtnBg: Colors.Purple,
     AddIdBtnTxt: Colors.Purple,
@@ -51,7 +53,7 @@ export const PurpleTheme = {
     IconBg: Colors.Purple,
     popUp: Colors.Green,
     Icon: Colors.Purple,
-    GrayIcon: Colors.Grey5,
+    GrayIcon: Colors.Gray50,
     helpText: Colors.Gray44,
     borderBottomColor: Colors.Grey6,
     whiteBackgroundColor: Colors.White,
@@ -214,7 +216,7 @@ export const PurpleTheme = {
     },
     horizontalLine: {
       height: 1,
-      backgroundColor: Colors.Black,
+      backgroundColor: Colors.Grey,
     },
     verticalLine: {
       width: 1,
