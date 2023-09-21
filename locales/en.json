@@ -389,6 +389,10 @@
       }
     },
     "status": {
+      "sharing": {
+        "title": "Sharing in progress",
+        "timeoutHint": "Sharing is delayed, possibly due to a connection issue."
+      },
       "accepted": {
         "title": "Success!",
         "message": "Card has been successfully received from Wallet"

@@ -324,6 +324,10 @@
       }
     },
     "status": {
+      "sharing": {
+        "title": "Compartiendo en progreso",
+        "timeoutHint": "El intercambio se retrasa, posiblemente debido a un problema de conexión."
+      },
       "accepted": {
         "title": "¡Éxito!",
         "message": "La tarjeta se ha recibido correctamente desde la billetera"
@@ -396,9 +400,9 @@
       "sent": "La tarjeta ha sido enviada...",
       "sentHint": "Esperando a que el receptor guarde o descarte tu tarjeta",
       "sharing": {
-        "title": "Compartiendo...",
+        "title": "Compartiendo en progreso",
         "hint": "Espere mientras compartimos la tarjeta elegida.",
-        "timeoutHint": "Está tomando más tiempo del esperado para compartir. Puede haber un problema con la conexión."
+        "timeoutHint": "El intercambio se retrasa, posiblemente debido a un problema de conexión."
       },
       "accepted": {
         "title": "¡Éxito!",

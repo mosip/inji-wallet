@@ -1,9 +1,9 @@
-import { useSelector } from '@xstate/react';
-import { useContext, useEffect } from 'react';
-import { selectIsActive, selectIsFocused } from '../../machines/app';
-import { GlobalContext } from '../../shared/GlobalContext';
+import {useSelector} from '@xstate/react';
+import {useContext, useEffect} from 'react';
+import {selectIsActive, selectIsFocused} from '../../machines/app';
+import {GlobalContext} from '../../shared/GlobalContext';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import {
   selectIsCheckingBluetoothService,
   selectIsWaitingForConnection,
@@ -16,10 +16,7 @@ import {
 import {
   selectIsBluetoothDenied,
   selectIsCancelling,
-  selectIsExchangingDeviceInfo,
-  selectIsExchangingDeviceInfoTimeout,
   selectIsNearByDevicesPermissionDenied,
-  selectIsOffline,
   selectIsReviewing,
   selectReadyForBluetoothStateCheck,
 } from '../../machines/bleShare/commonSelectors';
@@ -29,66 +26,51 @@ import {
 } from '../../machines/bleShare/request/requestMachine';
 
 export function useRequestScreen() {
-  const { t } = useTranslation('RequestScreen');
-  const { appService } = useContext(GlobalContext);
+  const {t} = useTranslation('RequestScreen');
+  const {appService} = useContext(GlobalContext);
 
   const requestService = appService.children.get('request');
   const isActive = useSelector(appService, selectIsActive);
   const isFocused = useSelector(appService, selectIsFocused);
   const isReadyForBluetoothStateCheck = useSelector(
     requestService,
-    selectReadyForBluetoothStateCheck
+    selectReadyForBluetoothStateCheck,
   );
   const isBluetoothDenied = useSelector(
     requestService,
-    selectIsBluetoothDenied
+    selectIsBluetoothDenied,
   );
   const isNearByDevicesPermissionDenied = useSelector(
     requestService,
-    selectIsNearByDevicesPermissionDenied
+    selectIsNearByDevicesPermissionDenied,
   );
   const isWaitingForConnection = useSelector(
     requestService,
-    selectIsWaitingForConnection
+    selectIsWaitingForConnection,
   );
-  const isExchangingDeviceInfo = useSelector(
-    requestService,
-    selectIsExchangingDeviceInfo
-  );
-  const isExchangingDeviceInfoTimeout = useSelector(
-    requestService,
-    selectIsExchangingDeviceInfoTimeout
-  );
+
   const isWaitingForVc = useSelector(requestService, selectIsWaitingForVc);
   const isWaitingForVcTimeout = useSelector(
     requestService,
-    selectIsWaitingForVcTimeout
+    selectIsWaitingForVcTimeout,
   );
-  const isOffline = useSelector(requestService, selectIsOffline);
 
+  let statusTitle = '';
   let statusMessage = '';
   let statusHint = '';
-  let isStatusCancellable = false;
   if (isWaitingForConnection) {
     statusMessage = t('status.waitingConnection');
-  } else if (isExchangingDeviceInfo) {
-    statusMessage = t('status.exchangingDeviceInfo.message');
-  } else if (isOffline) {
-    statusMessage = t('status.offline.message');
-  } else if (isExchangingDeviceInfoTimeout) {
-    statusMessage = t('status.exchangingDeviceInfo.message');
-    statusHint = t('status.exchangingDeviceInfo.timeoutHint');
-    isStatusCancellable = true;
   } else if (isWaitingForVc) {
+    statusTitle = t('status.sharing.title');
     statusMessage = t('status.connected.message');
   } else if (isWaitingForVcTimeout) {
+    statusTitle = t('status.sharing.title');
     statusMessage = t('status.connected.message');
     statusHint = t('status.connected.timeoutHint');
-    isStatusCancellable = true;
   }
 
   useEffect(() => {
-    BluetoothStateManager.getState().then((bluetoothState) => {
+    BluetoothStateManager.getState().then(bluetoothState => {
       if (bluetoothState === 'PoweredOn' && isBluetoothDenied) {
         requestService.send(RequestEvents.SCREEN_FOCUS());
       }
@@ -96,25 +78,24 @@ export function useRequestScreen() {
   }, [isFocused, isActive]);
 
   return {
+    statusTitle,
     statusMessage,
     statusHint,
     sharingProtocol: useSelector(requestService, selectSharingProtocol),
 
     isWaitingForConnection,
-    isExchangingDeviceInfo,
-
-    isStatusCancellable,
     isWaitingForVc,
+    isWaitingForVcTimeout,
     isBluetoothDenied,
     isNearByDevicesPermissionDenied,
     isReadyForBluetoothStateCheck,
     isCheckingBluetoothService: useSelector(
       requestService,
-      selectIsCheckingBluetoothService
+      selectIsCheckingBluetoothService,
     ),
     isMinimumStorageLimitReached: useSelector(
       requestService,
-      selectIsMinimumStorageLimitReached
+      selectIsMinimumStorageLimitReached,
     ),
     openId4VpUri: useSelector(requestService, selectOpenId4VpUri),
     senderInfo: useSelector(requestService, selectSenderInfo),

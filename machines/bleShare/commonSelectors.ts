@@ -1,6 +1,6 @@
-import { StateFrom } from 'xstate';
-import { scanMachine } from './scan/scanMachine';
-import { requestMachine } from './request/requestMachine';
+import {StateFrom} from 'xstate';
+import {scanMachine} from './scan/scanMachine';
+import {requestMachine} from './request/requestMachine';
 
 type State = StateFrom<typeof scanMachine & typeof requestMachine>;
 
@@ -38,19 +38,6 @@ export function selectIsBluetoothDenied(state: State) {
 
 export function selectBleError(state: State) {
   return state.context.bleError;
-}
-
-// TODO: Remove these selectors and respective UI code once discussed with team
-export function selectIsExchangingDeviceInfo() {
-  return false;
-}
-
-export function selectIsExchangingDeviceInfoTimeout() {
-  return false;
-}
-
-export function selectIsOffline() {
-  return false;
 }
 
 export function selectIsHandlingBleError(state: State) {

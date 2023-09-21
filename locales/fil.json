@@ -392,6 +392,10 @@
       }
     },
     "status": {
+      "sharing": {
+        "title": "Isinasagawa ang pagbabahagi",
+        "timeoutHint": "Naantala ang pagbabahagi, posibleng dahil sa isang isyu sa koneksyon."
+      },
       "accepted": {
         "title": "Tagumpay!",
         "message": "Tagumpay na nakuha ang card mula kay wallet"
