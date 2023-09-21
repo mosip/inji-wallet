@@ -22,7 +22,7 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
         <Text
           testID="status"
           weight="regular"
-          style={Theme.Styles.titleTextSize}
+          size="smaller"
           color={
             !verifiableCredential
               ? Theme.Colors.LoadingDetailsLabel
@@ -127,9 +127,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = props => {
               }
               style={Theme.Styles.closeCardImage}>
               {props.iconName && (
-                <Image
-                  source={Theme.PinIcon}
-                  style={Theme.Styles.pinIcon}></Image>
+                <Image source={Theme.PinIcon} style={Theme.Styles.pinIcon} />
               )}
             </ImageBackground>
 
@@ -138,7 +136,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = props => {
                 <Text
                   testID="fullNameTitle"
                   weight="regular"
-                  style={Theme.Styles.titleTextSize}
+                  size="smaller"
                   color={
                     !props.verifiableCredential
                       ? Theme.Colors.LoadingDetailsLabel
@@ -167,7 +165,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = props => {
                       : Theme.Colors.DetailsLabel
                   }
                   weight="regular"
-                  style={Theme.Styles.titleTextSize}
+                  size="smaller"
                   align="left">
                   {t('idType')}
                 </Text>
@@ -203,14 +201,14 @@ export const VcItemContent: React.FC<VcItemContentProps> = props => {
                 <Text
                   testID="uin"
                   weight="regular"
-                  style={Theme.Styles.titleTextSize}
+                  size="smaller"
                   color={Theme.Colors.DetailsLabel}>
                   {t('uin')}
                 </Text>
                 <Text
                   testID="uinNumber"
                   weight="semibold"
-                  style={Theme.Styles.valueTextSize}
+                  style={Theme.TextStyles.smaller2}
                   color={Theme.Colors.statusLabel}>
                   {getIdNumber(uin)}
                 </Text>
@@ -222,14 +220,14 @@ export const VcItemContent: React.FC<VcItemContentProps> = props => {
                 <Text
                   testID="vid"
                   weight="regular"
-                  style={Theme.Styles.titleTextSize}
+                  size="smaller"
                   color={Theme.Colors.DetailsLabel}>
                   {t('vid')}
                 </Text>
                 <Text
                   testID="vidNumber"
                   weight="semibold"
-                  style={Theme.Styles.valueTextSize}
+                  style={Theme.TextStyles.smaller2}
                   color={Theme.Colors.Details}>
                   {getIdNumber(vid)}
                 </Text>
@@ -249,7 +247,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = props => {
             <Text
               testID="generatedOnTitle"
               weight="regular"
-              style={Theme.Styles.titleTextSize}
+              size="smaller"
               color={
                 !props.verifiableCredential
                   ? Theme.Colors.LoadingDetailsLabel

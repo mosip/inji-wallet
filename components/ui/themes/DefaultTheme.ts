@@ -315,12 +315,6 @@ export const DefaultTheme = {
       paddingLeft: 18,
       margin: 6,
     },
-    titleTextSize: {
-      fontSize: 11,
-    },
-    valueTextSize: {
-      fontSize: 12,
-    },
     openDetailsHeader: {
       flex: 1,
       justifyContent: 'space-between',
@@ -620,6 +614,9 @@ export const DefaultTheme = {
     smaller: {
       fontSize: 11,
       lineHeight: 18,
+    },
+    smaller2: {
+      fontSize: 12,
     },
     large: {
       fontSize: 18,

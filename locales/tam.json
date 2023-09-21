@@ -62,7 +62,6 @@
     "vid": "VID",
     "enableVerification": "செயல்படுத்த",
     "profileAuthenticated": "ஆன்லைன் அங்கீகாரத்திற்காக நற்சான்றிதழ்கள் இயக்கப்பட்டுள்ளன.",
-    "closedCardProfileAuthenticated": "ஆன்லைன் உள்நுழைவுக்காக செயல்படுத்தப்பட்டது",
     "offlineAuthDisabledHeader": "ஆன்லைன் உள்நுழைவுக்கான செயல்படுத்தல் நிலுவையில் உள்ளது",
     "offlineAuthDisabledMessage": "இந்த நற்சான்றிதழை ஆன்லைன் உள்நுழைவுக்குப் பயன்படுத்த, கீழே உள்ள பொத்தானைக் கிளிக் செய்யவும்.",
     "verificationEnabledSuccess": "ஆன்லைன் உள்நுழைவுக்காக செயல்படுத்தப்பட்டது",

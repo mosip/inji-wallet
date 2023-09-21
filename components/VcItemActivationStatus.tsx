@@ -65,7 +65,7 @@ const WalletUnverifiedActivationDetails: React.FC<
 const WalletVerifiedActivationDetails: React.FC<
   WalletVerifiedDetailsProps
 > = props => {
-  const {t} = useTranslation('VcDetails');
+  const {t} = useTranslation('WalletBinding');
   return (
     <Row
       width={Dimensions.get('screen').width * 0.8}
@@ -88,7 +88,7 @@ const WalletVerifiedActivationDetails: React.FC<
               ? Theme.Styles.loadingTitle
               : Theme.Styles.statusLabel
           }
-          children={t('closedCardProfileAuthenticated')}></Text>
+          children={t('profileAuthenticated')}></Text>
       </Row>
     </Row>
   );
