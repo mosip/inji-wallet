@@ -225,6 +225,7 @@
 		"revoking": "Tu billetera contiene una credencial con VID {{vid}}. Revocar esto eliminará automáticamente la misma de la billetera. ¿Estás seguro de que deseas continuar?",
 		"requestingOtp": "Solicitando OTP...",
 		"editTag": "Renombrar",
+		"activated": "Las credenciales están habilitadas para la autenticación en línea.",
 		"redirecting": "Redirigiendo...",
 		"inProgress": "Cargando...",
 		"success": {
