@@ -24,6 +24,7 @@ export class VCMetadata {
     this.idType = idType;
     this.requestId = requestId;
     this.isPinned = isPinned;
+
     this.id = id;
 
     this.protocol = protocol;
@@ -46,6 +47,8 @@ export class VCMetadata {
 
   static fromVcMetadataString(vcMetadataStr: string) {
     try {
+      if (typeof vcMetadataStr === 'object')
+        return new VCMetadata(vcMetadataStr);
       return new VCMetadata(JSON.parse(vcMetadataStr));
     } catch (e) {
       console.error('Failed to parse VC Metadata', e);
@@ -58,8 +61,7 @@ export class VCMetadata {
     const [issuer, protocol, id] = key.split(':');
 
     return (
-      new VCMetadata({issuer, protocol, id}).getVcKey() === key ||
-      VCMetadata.vcKeyRegExp.exec(key) != null
+      key.startsWith('ESignet') || VCMetadata.vcKeyRegExp.exec(key) != null
     );
   }
 
