@@ -75,7 +75,7 @@
     "react-native-safe-area-context": "4.5.0",
     "react-native-screens": "~3.20.0",
     "react-native-secure-key-store": "^2.0.10",
-    "telemetry-sdk": "git://github.com/mosip/sunbird-telemetry-sdk.git#8f168d8dce0d28d6b251193a464c735f960de8f5",
+    "telemetry-sdk": "git://github.com/mosip/sunbird-telemetry-sdk.git#7ff643a81acd54ddb2ad8ad588314004513a3749",
     "react-native-secure-keystore": "github:mosip/secure-keystore#v0.1.1",
     "react-native-securerandom": "^1.0.1",
     "react-native-simple-markdown": "^1.1.0",
