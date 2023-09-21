@@ -108,7 +108,7 @@ export const VcItem: React.FC<VcItemProps> = props => {
   );
 };
 
-interface VcItemProps {
+export interface VcItemProps {
   vcMetadata: VCMetadata;
   margin?: string;
   selectable?: boolean;

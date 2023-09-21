@@ -27,6 +27,7 @@ import {
   selectShowHardwareKeystoreNotExistsAlert,
   SettingsEvents,
 } from '../../machines/settings';
+import {EsignetMosipVCItemMachine} from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 
 export function useMyVcsTab(props: HomeScreenTabProps) {
   const service = props.service as ActorRefFrom<typeof MyVcsTabMachine>;
@@ -64,7 +65,11 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
 
     REFRESH: () => vcService.send(VcEvents.REFRESH_MY_VCS()),
 
-    VIEW_VC: (vcRef: ActorRefFrom<typeof vcItemMachine>) => {
+    VIEW_VC: (
+      vcRef:
+        | ActorRefFrom<typeof vcItemMachine>
+        | ActorRefFrom<typeof EsignetMosipVCItemMachine>,
+    ) => {
       return service.send(MyVcsTabEvents.VIEW_VC(vcRef));
     },
 

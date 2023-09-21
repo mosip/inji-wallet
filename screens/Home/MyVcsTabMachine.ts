@@ -16,6 +16,7 @@ import {AddVcModalMachine} from './MyVcs/AddVcModalMachine';
 import {GetVcModalMachine} from './MyVcs/GetVcModalMachine';
 import Storage from '../../shared/storage';
 import {VCMetadata} from '../../shared/VCMetadata';
+import {EsignetMosipVCItemMachine} from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 
 const model = createModel(
   {
@@ -24,7 +25,11 @@ const model = createModel(
   {
     events: {
       REFRESH: () => ({}),
-      VIEW_VC: (vcItemActor: ActorRefFrom<typeof vcItemMachine>) => ({
+      VIEW_VC: (
+        vcItemActor:
+          | ActorRefFrom<typeof vcItemMachine>
+          | ActorRefFrom<typeof EsignetMosipVCItemMachine>,
+      ) => ({
         vcItemActor,
       }),
       DISMISS: () => ({}),
@@ -35,6 +40,7 @@ const model = createModel(
       STORAGE_AVAILABLE: () => ({}),
       STORAGE_UNAVAILABLE: () => ({}),
       IS_TAMPERED: () => ({}),
+      DOWNLOAD_VIA_ID: () => ({}),
     },
   },
 );

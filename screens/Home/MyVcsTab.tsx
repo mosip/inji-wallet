@@ -15,6 +15,8 @@ import {
 } from '../../components/MessageOverlay';
 import {Icon} from 'react-native-elements';
 import {groupBy} from '../../shared/javascript';
+import {isOpenId4VCIEnabled} from '../../shared/openId4VCI/Utils';
+import {VcItemContainer} from '../../components/VC/VcItemContainer';
 
 const pinIconProps = {iconName: 'pushpin', iconType: 'antdesign'};
 
@@ -87,7 +89,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                 {vcMetadataOrderedByPinStatus.map((vcMetadata, index) => {
                   const iconProps = vcMetadata.isPinned ? pinIconProps : {};
                   return (
-                    <VcItem
+                    <VcItemContainer
                       {...iconProps}
                       key={`${vcMetadata.getVcKey()}-${index}`}
                       vcMetadata={vcMetadata}
@@ -97,13 +99,15 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                   );
                 })}
               </Column>
-              <Button
-                testID="downloadCard"
-                type="gradient"
-                disabled={controller.isRefreshingVcs}
-                title={t('downloadCard')}
-                onPress={controller.DOWNLOAD_ID}
-              />
+              {!isOpenId4VCIEnabled() && (
+                <Button
+                  testID="downloadCard"
+                  type="gradient"
+                  disabled={controller.isRefreshingVcs}
+                  title={t('downloadCard')}
+                  onPress={controller.DOWNLOAD_ID}
+                />
+              )}
             </React.Fragment>
           )}
           {controller.vcMetadatas.length === 0 && (
@@ -125,13 +129,15 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                   margin="0 12 30 12">
                   {t('generateVcDescription')}
                 </Text>
-                <Button
-                  testID="downloadCard"
-                  type="gradient"
-                  disabled={controller.isRefreshingVcs}
-                  title={t('downloadCard')}
-                  onPress={controller.DOWNLOAD_ID}
-                />
+                {!isOpenId4VCIEnabled() && (
+                  <Button
+                    testID="downloadCard"
+                    type="gradient"
+                    disabled={controller.isRefreshingVcs}
+                    title={t('downloadCard')}
+                    onPress={controller.DOWNLOAD_ID}
+                  />
+                )}
               </Column>
             </React.Fragment>
           )}
