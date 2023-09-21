@@ -208,7 +208,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = props => {
                 <Text
                   testID="uinNumber"
                   weight="semibold"
-                  style={Theme.TextStyles.smaller2}
+                  size="extrasmall"
                   color={Theme.Colors.statusLabel}>
                   {getIdNumber(uin)}
                 </Text>
@@ -227,7 +227,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = props => {
                 <Text
                   testID="vidNumber"
                   weight="semibold"
-                  style={Theme.TextStyles.smaller2}
+                  size="extrasmall"
                   color={Theme.Colors.Details}>
                   {getIdNumber(vid)}
                 </Text>

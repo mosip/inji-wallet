@@ -611,12 +611,12 @@ export const DefaultTheme = {
       fontSize: 13,
       lineHeight: 21,
     },
+    extrasmall: {
+      fontSize: 12,
+    },
     smaller: {
       fontSize: 11,
       lineHeight: 18,
-    },
-    smaller2: {
-      fontSize: 12,
     },
     large: {
       fontSize: 18,
