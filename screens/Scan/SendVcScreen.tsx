@@ -19,11 +19,11 @@ export const SendVcScreen: React.FC = () => {
   const controller = useSendVcScreen();
   let service;
 
-  if (controller.vcKeys?.length > 0) {
+  if (controller.shareableVcsMetadata?.length > 0) {
     const firstVCMachine = useRef(
       createVcItemMachine(
         appService.getSnapshot().context.serviceRefs,
-        controller.vcKeys[0]
+        controller.shareableVcsMetadata[0]
       )
     );
 
@@ -78,10 +78,10 @@ export const SendVcScreen: React.FC = () => {
           </Text>
         </Column>
         <Column scroll>
-          {controller.vcKeys.map((vcKey, index) => (
+          {controller.shareableVcsMetadata.map((vcMetadata, index) => (
             <VcItem
-              key={vcKey}
-              vcKey={vcKey}
+              key={vcMetadata.getVcKey()}
+              vcMetadata={vcMetadata}
               margin="0 2 8 2"
               onPress={controller.SELECT_VC_ITEM(index)}
               selectable

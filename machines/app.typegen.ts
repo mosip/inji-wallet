@@ -2,22 +2,22 @@
 
 export interface Typegen0 {
   '@@xstate/typegen': true;
-  'internalEvents': {
-    'xstate.init': { type: 'xstate.init' };
+  internalEvents: {
+    'xstate.init': {type: 'xstate.init'};
   };
-  'invokeSrcNameMap': {
+  invokeSrcNameMap: {
     checkFocusState: 'done.invoke.app.ready.focus:invocation[0]';
     checkNetworkState: 'done.invoke.app.ready.network:invocation[0]';
     getAppInfo: 'done.invoke.app.init.info:invocation[0]';
     getBackendInfo: 'done.invoke.app.init.devinfo:invocation[0]';
   };
-  'missingImplementations': {
+  missingImplementations: {
     actions: never;
     delays: never;
     guards: never;
     services: never;
   };
-  'eventsCausingActions': {
+  eventsCausingActions: {
     forwardToServices: 'ACTIVE' | 'INACTIVE' | 'OFFLINE' | 'ONLINE';
     loadCredentialRegistryHostFromStorage: 'READY';
     loadCredentialRegistryInConstants: 'STORE_RESPONSE';
@@ -41,15 +41,15 @@ export interface Typegen0 {
     unsetIsReadError: 'READY';
     updateKeyInvalidateError: 'ERROR' | 'KEY_INVALIDATE_ERROR';
   };
-  'eventsCausingDelays': {};
-  'eventsCausingGuards': {};
-  'eventsCausingServices': {
+  eventsCausingDelays: {};
+  eventsCausingGuards: {};
+  eventsCausingServices: {
     checkFocusState: 'BACKEND_INFO_RECEIVED';
     checkNetworkState: 'BACKEND_INFO_RECEIVED';
     getAppInfo: 'STORE_RESPONSE';
     getBackendInfo: 'APP_INFO_RECEIVED';
   };
-  'matchesStates':
+  matchesStates:
     | 'init'
     | 'init.credentialRegistry'
     | 'init.devinfo'
@@ -76,5 +76,5 @@ export interface Typegen0 {
               network?: 'checking' | 'offline' | 'online';
             };
       };
-  'tags': never;
+  tags: never;
 }

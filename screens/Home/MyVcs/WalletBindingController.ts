@@ -1,7 +1,7 @@
 import { useSelector, useInterpret } from '@xstate/react';
 import { useContext, useRef, useState } from 'react';
 import { GlobalContext } from '../../../shared/GlobalContext';
-import { selectMyVcs, VcEvents } from '../../../machines/vc';
+import { selectMyVcsMetadata, VcEvents } from '../../../machines/vc';
 import {
   createVcItemMachine,
   isShowingBindingWarning,
@@ -24,7 +24,7 @@ export function useWalletBinding(props) {
   const machine = useRef(
     createVcItemMachine(
       appService.getSnapshot().context.serviceRefs,
-      props.vcKey
+      props.vcMetadata
     )
   );
 
@@ -32,7 +32,7 @@ export function useWalletBinding(props) {
 
   const vcService = appService.children.get('vc');
 
-  const vcKeys = useSelector(vcService, selectMyVcs);
+  const vcsMetadata = useSelector(vcService, selectMyVcsMetadata);
 
   const otpError = useSelector(bindingService, selectOtpError);
   const [isRevoking, setRevoking] = useState(false);

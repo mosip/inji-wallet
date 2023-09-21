@@ -1,5 +1,4 @@
-import { MMKVLoader } from 'react-native-mmkv-storage';
-import { VC_ITEM_STORE_KEY_REGEX } from './constants';
+import {MMKVLoader} from 'react-native-mmkv-storage';
 import CryptoJS from 'crypto-js';
 import {
   DocumentDirectoryPath,
@@ -11,7 +10,7 @@ import {
   writeFile,
 } from 'react-native-fs';
 import getAllConfigurations from './commonprops/commonProps';
-import { Platform } from 'react-native';
+import {Platform} from 'react-native';
 import {
   getFreeDiskStorageOldSync,
   getFreeDiskStorageSync,
@@ -23,14 +22,14 @@ import {
   HMAC_ALIAS,
   isCustomSecureKeystore,
 } from './cryptoutil/cryptoUtil';
+import {VCMetadata} from './VCMetadata';
 
 const MMKV = new MMKVLoader().initialize();
-const vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
 const vcDirectoryPath = `${DocumentDirectoryPath}/inji/VC`;
 
 async function generateHmac(
   encryptionKey: string,
-  data: string
+  data: string,
 ): Promise<string> {
   if (!isCustomSecureKeystore()) {
     return CryptoJS.HmacSHA256(encryptionKey, data).toString();
@@ -51,10 +50,10 @@ class Storage {
   static setItem = async (
     key: string,
     data: string,
-    encryptionKey?: string
+    encryptionKey?: string,
   ) => {
     try {
-      const isSavingVC = vcKeyRegExp.exec(key);
+      const isSavingVC = VCMetadata.isVCKey(key);
       if (isSavingVC) {
         await this.storeVcHmac(encryptionKey, data, key);
         return await this.storeVC(key, data);
@@ -69,9 +68,9 @@ class Storage {
 
   static getItem = async (key: string, encryptionKey?: string) => {
     try {
-      const isSavingVC = vcKeyRegExp.exec(key);
+      const isVCKey = VCMetadata.isVCKey(key);
 
-      if (isSavingVC) {
+      if (isVCKey) {
         const data = await this.readVCFromFile(key);
         const isCorrupted = await this.isCorruptedVC(key, encryptionKey, data);
 
@@ -88,7 +87,7 @@ class Storage {
   private static async isCorruptedVC(
     key: string,
     encryptionKey: string,
-    data: string
+    data: string,
   ) {
     const storedHMACofCurrentVC = await this.readHmacForVC(key, encryptionKey);
     const HMACofVC = await generateHmac(encryptionKey, data);
@@ -114,7 +113,7 @@ class Storage {
   private static async storeVcHmac(
     encryptionKey: string,
     data: string,
-    key: string
+    key: string,
   ) {
     const HMACofVC = await generateHmac(encryptionKey, data);
     const encryptedHMACofVC = await encryptJson(encryptionKey, HMACofVC);
@@ -122,7 +121,7 @@ class Storage {
   }
 
   static removeItem = async (key: string) => {
-    if (vcKeyRegExp.exec(key)) {
+    if (VCMetadata.isVCKey(key)) {
       const path = getFilePath(key);
       return await unlink(path);
     }
@@ -156,6 +155,7 @@ class Storage {
     return freeDiskStorageInBytes <= minimumStorageLimitInBytes;
   };
 }
+
 /**
  * The VC file name will not have the pinned / unpinned state, we will splice the state as this will change.
  * replace ':' with '_' in the key to get the file name as ':' are not allowed in filenames
@@ -171,8 +171,7 @@ const getFileName = (key: string) => {
  * These paths are coming from DocumentDirectoryPath in react-native-fs.
  */
 const getFilePath = (key: string) => {
-  const fileName = getFileName(key);
-  return `${vcDirectoryPath}/${fileName}.txt`;
+  return `${vcDirectoryPath}/${key}.txt`;
 };
 
 /**
@@ -180,12 +179,12 @@ const getFilePath = (key: string) => {
  * eg: "vc:UIN:6732935275:e7426576-112f-466a-961a-1ed9635db628:true" is changed to "vc:UIN:6732935275:e7426576-112f-466a-961a-1ed9635db628"
  */
 const getVCKeyName = (key: string) => {
-  return key.split(':').splice(0, 4).join(':');
+  return key;
 };
 
 // To print the MMKV data cal this function in getItem
 const getMMKVData = async () => {
-  const mmkvData = await MMKV.indexer.getKeys();
+  return await MMKV.indexer.getKeys();
 };
 
 export default Storage;

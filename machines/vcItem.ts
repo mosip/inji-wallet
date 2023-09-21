@@ -1,29 +1,24 @@
-import { assign, ErrorPlatformEvent, EventFrom, send, StateFrom } from 'xstate';
-import { createModel } from 'xstate/lib/model';
-import {
-  MIMOTO_BASE_URL,
-  MY_VCS_STORE_KEY,
-  VC_ITEM_STORE_KEY,
-  VC_ITEM_STORE_KEY_AFTER_DOWNLOAD,
-} from '../shared/constants';
-import { AppServices } from '../shared/GlobalContext';
-import { CredentialDownloadResponse, request } from '../shared/request';
+import {assign, ErrorPlatformEvent, EventFrom, send, StateFrom} from 'xstate';
+import {createModel} from 'xstate/lib/model';
+import {HOST, MIMOTO_BASE_URL, MY_VCS_STORE_KEY} from '../shared/constants';
+import {AppServices} from '../shared/GlobalContext';
+import {CredentialDownloadResponse, request} from '../shared/request';
 import {
   VC,
   VerifiableCredential,
   VcIdType,
   DecodedCredential,
 } from '../types/vc';
-import { StoreEvents } from './store';
-import { ActivityLogEvents } from './activityLog';
-import { verifyCredential } from '../shared/vcjs/verifyCredential';
-import { log } from 'xstate/lib/actions';
+import {StoreEvents} from './store';
+import {ActivityLogEvents} from './activityLog';
+import {verifyCredential} from '../shared/vcjs/verifyCredential';
+import {log} from 'xstate/lib/actions';
 import {
   generateKeys,
   isCustomSecureKeystore,
   WalletBindingResponse,
 } from '../shared/cryptoutil/cryptoUtil';
-import { KeyPair } from 'react-native-rsa-native';
+import {KeyPair} from 'react-native-rsa-native';
 import {
   getBindingCertificateConstant,
   savePrivateKey,
@@ -31,9 +26,16 @@ import {
 import getAllConfigurations, {
   DownloadProps,
 } from '../shared/commonprops/commonProps';
-import { VcEvents } from './vc';
+import {VcEvents} from './vc';
 import i18n from '../i18n';
 import SecureKeystore from 'react-native-secure-keystore';
+import {VCMetadata} from '../shared/VCMetadata';
+import {
+  sendStartEvent,
+  getData,
+  getEndData,
+  sendEndEvent,
+} from '../shared/telemetry/TelemetryUtils';
 
 const model = createModel(
   {
@@ -41,7 +43,7 @@ const model = createModel(
     id: '',
     idType: '' as VcIdType,
     tag: '',
-    vcKey: '' as string,
+    vcMetadata: {} as VCMetadata,
     myVcs: [] as string[],
     generatedOn: null as Date,
     credential: null as DecodedCredential,
@@ -65,36 +67,35 @@ const model = createModel(
     walletBindingError: '',
     publicKey: '',
     privateKey: '',
-    hashedId: '',
   },
   {
     events: {
-      KEY_RECEIVED: (key: string) => ({ key }),
-      KEY_ERROR: (error: Error) => ({ error }),
+      KEY_RECEIVED: (key: string) => ({key}),
+      KEY_ERROR: (error: Error) => ({error}),
       EDIT_TAG: () => ({}),
-      SAVE_TAG: (tag: string) => ({ tag }),
+      SAVE_TAG: (tag: string) => ({tag}),
       STORE_READY: () => ({}),
       DISMISS: () => ({}),
-      CREDENTIAL_DOWNLOADED: (vc: VC) => ({ vc }),
-      STORE_RESPONSE: (response: VC) => ({ response }),
+      CREDENTIAL_DOWNLOADED: (vc: VC) => ({vc}),
+      STORE_RESPONSE: (response: VC) => ({response}),
       POLL: () => ({}),
       DOWNLOAD_READY: () => ({}),
-      GET_VC_RESPONSE: (vc: VC) => ({ vc }),
+      GET_VC_RESPONSE: (vc: VC) => ({vc}),
       VERIFY: () => ({}),
       LOCK_VC: () => ({}),
-      INPUT_OTP: (otp: string) => ({ otp }),
+      INPUT_OTP: (otp: string) => ({otp}),
       REFRESH: () => ({}),
       REVOKE_VC: () => ({}),
       ADD_WALLET_BINDING_ID: () => ({}),
       CANCEL: () => ({}),
       CONFIRM: () => ({}),
-      STORE_ERROR: (error: Error) => ({ error }),
+      STORE_ERROR: (error: Error) => ({error}),
       PIN_CARD: () => ({}),
       KEBAB_POPUP: () => ({}),
       SHOW_ACTIVITY: () => ({}),
-      REMOVE: (vcKey: string) => ({ vcKey }),
+      REMOVE: (vcMetadata: VCMetadata) => ({vcMetadata}),
     },
-  }
+  },
 );
 
 export const VcItemEvents = model.events;
@@ -178,7 +179,7 @@ export const vcItemMachine =
               on: {
                 POLL: {
                   cond: 'isDownloadAllowed',
-                  actions: send('POLL_STATUS', { to: 'checkStatus' }),
+                  actions: send('POLL_STATUS', {to: 'checkStatus'}),
                 },
                 DOWNLOAD_READY: {
                   target: 'downloadingCredential',
@@ -195,17 +196,13 @@ export const vcItemMachine =
                   {
                     cond: 'isDownloadAllowed',
                     actions: [
-                      send('POLL_DOWNLOAD', { to: 'downloadCredential' }),
+                      send('POLL_DOWNLOAD', {to: 'downloadCredential'}),
                       'incrementDownloadCounter',
                     ],
                   },
                 ],
                 CREDENTIAL_DOWNLOADED: {
-                  actions: [
-                    'setStoreVerifiableCredential',
-                    'storeContext',
-                    'editVcKey',
-                  ],
+                  actions: ['setStoreVerifiableCredential', 'storeContext'],
                 },
                 STORE_RESPONSE: {
                   actions: [
@@ -267,12 +264,9 @@ export const vcItemMachine =
           },
         },
         pinCard: {
-          entry: 'storeContext',
-          on: {
-            STORE_RESPONSE: {
-              actions: ['sendVcUpdated', 'VcUpdated'],
-              target: 'idle',
-            },
+          entry: 'sendVcUpdated',
+          always: {
+            target: 'idle',
           },
         },
         kebabPopUp: {
@@ -301,6 +295,7 @@ export const vcItemMachine =
             showBindingWarning: {
               on: {
                 CONFIRM: {
+                  actions: [() => sendStartEvent(getData('VC activation'))],
                   target: '#vc-item.kebabPopUp.requestingBindingOtp',
                 },
                 CANCEL: {
@@ -413,6 +408,7 @@ export const vcItemMachine =
                     'updateVc',
                     'setWalletBindingErrorEmpty',
                     'logWalletBindingSuccess',
+                    () => sendEndEvent(getEndData('VC activation')),
                   ],
                   target: '#vc-item.kebabPopUp',
                 },
@@ -632,6 +628,7 @@ export const vcItemMachine =
         showBindingWarning: {
           on: {
             CONFIRM: {
+              actions: () => sendStartEvent(getData('VC activation')),
               target: 'requestingBindingOtp',
             },
             CANCEL: {
@@ -740,6 +737,7 @@ export const vcItemMachine =
                 'updateVc',
                 'setWalletBindingErrorEmpty',
                 'logWalletBindingSuccess',
+                () => sendEndEvent(getEndData('VC activation')),
               ],
               target: 'idle',
             },
@@ -753,7 +751,7 @@ export const vcItemMachine =
     },
     {
       actions: {
-        setVerifiableCredential: assign((context) => {
+        setVerifiableCredential: assign(context => {
           return {
             ...context,
             verifiableCredential: {
@@ -775,33 +773,31 @@ export const vcItemMachine =
         }),
 
         removeVcMetaDataFromStorage: send(
-          (context) => {
-            const { serviceRefs, ...data } = context;
+          context => {
             return StoreEvents.REMOVE_VC_METADATA(
               MY_VCS_STORE_KEY,
-              VC_ITEM_STORE_KEY(context)
+              new VCMetadata(context).getVcKey(),
             );
           },
           {
-            to: (context) => context.serviceRefs.store,
-          }
+            to: context => context.serviceRefs.store,
+          },
         ),
 
         removeVcMetaDataFromVcMachine: send(
-          (context, _event) => {
-            const { serviceRefs, ...data } = context;
+          context => {
             return {
               type: 'REMOVE_VC_FROM_CONTEXT',
-              vcKey: VC_ITEM_STORE_KEY(context),
+              vcMetadata: new VCMetadata(context),
             };
           },
           {
-            to: (context) => context.serviceRefs.vc,
-          }
+            to: context => context.serviceRefs.vc,
+          },
         ),
 
         setWalletBindingError: assign({
-          walletBindingError: (context, event) =>
+          walletBindingError: () =>
             i18n.t(`errors.genericError`, {
               ns: 'common',
             }),
@@ -833,7 +829,7 @@ export const vcItemMachine =
             event.data as WalletBindingResponse,
         }),
 
-        setPinCard: assign((context) => {
+        setPinCard: assign(context => {
           return {
             ...context,
             isPinned: !context.isPinned,
@@ -841,47 +837,46 @@ export const vcItemMachine =
         }),
 
         sendVcUpdated: send(
-          (_context, event) =>
-            VcEvents.VC_UPDATED(VC_ITEM_STORE_KEY(event.response) as string),
+          context => VcEvents.VC_METADATA_UPDATED(new VCMetadata(context)),
           {
-            to: (context) => context.serviceRefs.vc,
-          }
+            to: context => context.serviceRefs.vc,
+          },
         ),
 
         updateVc: send(
-          (context) => {
-            const { serviceRefs, ...vc } = context;
-            return { type: 'VC_DOWNLOADED', vc };
+          context => {
+            const {serviceRefs, ...vc} = context;
+            return {type: 'VC_DOWNLOADED', vc};
           },
           {
-            to: (context) => context.serviceRefs.vc,
-          }
+            to: context => context.serviceRefs.vc,
+          },
         ),
 
         VcUpdated: send(
-          (context) => {
-            const { serviceRefs, ...vc } = context;
-            return { type: 'VC_UPDATE', vc };
+          context => {
+            const {serviceRefs, ...vc} = context;
+            return {type: 'VC_UPDATE', vc};
           },
           {
-            to: (context) => context.serviceRefs.vc,
-          }
+            to: context => context.serviceRefs.vc,
+          },
         ),
 
         setThumbprintForWalletBindingId: send(
-          (context) => {
-            const { walletBindingResponse } = context;
+          context => {
+            const {walletBindingResponse} = context;
             const walletBindingIdKey = getBindingCertificateConstant(
-              walletBindingResponse.walletBindingId
+              walletBindingResponse.walletBindingId,
             );
             return StoreEvents.SET(
               walletBindingIdKey,
-              walletBindingResponse.thumbprint
+              walletBindingResponse.thumbprint,
             );
           },
           {
-            to: (context) => context.serviceRefs.store,
-          }
+            to: context => context.serviceRefs.store,
+          },
         ),
 
         removedVc: send(
@@ -889,52 +884,44 @@ export const vcItemMachine =
             type: 'REFRESH_MY_VCS',
           }),
           {
-            to: (context) => context.serviceRefs.vc,
-          }
+            to: context => context.serviceRefs.vc,
+          },
         ),
 
         requestVcContext: send(
-          (context) => ({
+          context => ({
             type: 'GET_VC_ITEM',
-            vcKey: VC_ITEM_STORE_KEY(context),
+            vcMetadata: new VCMetadata(context),
           }),
           {
-            to: (context) => context.serviceRefs.vc,
-          }
+            to: context => context.serviceRefs.vc,
+          },
         ),
 
         requestStoredContext: send(
-          (context) => StoreEvents.GET(VC_ITEM_STORE_KEY(context)),
+          context => StoreEvents.GET(new VCMetadata(context).getVcKey()),
           {
-            to: (context) => context.serviceRefs.store,
-          }
+            to: context => context.serviceRefs.store,
+          },
         ),
 
         storeContext: send(
-          (context) => {
-            const { serviceRefs, ...data } = context;
+          context => {
+            const {serviceRefs, ...data} = context;
             data.credentialRegistry = MIMOTO_BASE_URL;
-            return StoreEvents.SET(VC_ITEM_STORE_KEY(context), data);
+            return StoreEvents.SET(new VCMetadata(context).getVcKey(), data);
           },
           {
-            to: (context) => context.serviceRefs.store,
-          }
+            to: context => context.serviceRefs.store,
+          },
         ),
-
-        editVcKey: send((context) => {
-          const { serviceRefs, ...data } = context;
-          return StoreEvents.SET(
-            VC_ITEM_STORE_KEY_AFTER_DOWNLOAD(context),
-            data
-          );
-        }),
 
         setTag: model.assign({
           tag: (_, event) => event.tag,
         }),
 
         incrementDownloadCounter: model.assign({
-          downloadCounter: ({ downloadCounter }) => downloadCounter + 1,
+          downloadCounter: ({downloadCounter}) => downloadCounter + 1,
         }),
 
         setMaxDownloadCount: model.assign({
@@ -948,28 +935,28 @@ export const vcItemMachine =
         }),
 
         storeTag: send(
-          (context) => {
-            const { serviceRefs, ...data } = context;
-            return StoreEvents.SET(VC_ITEM_STORE_KEY(context), data);
+          context => {
+            const {serviceRefs, ...data} = context;
+            return StoreEvents.SET(new VCMetadata(context).getVcKey(), data);
           },
-          { to: (context) => context.serviceRefs.store }
+          {to: context => context.serviceRefs.store},
         ),
 
         setCredential: model.assign((context, event) => {
           switch (event.type) {
             case 'STORE_RESPONSE':
-              return { ...context, ...event.response };
+              return {...context, ...event.response};
             case 'GET_VC_RESPONSE':
             case 'CREDENTIAL_DOWNLOADED':
-              return { ...context, ...event.vc };
+              return {...context, ...event.vc};
           }
         }),
 
         logDownloaded: send(
-          (context) => {
-            const { serviceRefs, ...data } = context;
+          context => {
+            const {serviceRefs, ...data} = context;
             return ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VC_ITEM_STORE_KEY(data),
+              _vcKey: VCMetadata.fromVC(data).getVcKey(),
               type: 'VC_DOWNLOADED',
               timestamp: Date.now(),
               deviceName: '',
@@ -977,65 +964,65 @@ export const vcItemMachine =
             });
           },
           {
-            to: (context) => context.serviceRefs.activityLog,
-          }
+            to: context => context.serviceRefs.activityLog,
+          },
         ),
 
         logWalletBindingSuccess: send(
-          (context, event) =>
+          context =>
             ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VC_ITEM_STORE_KEY(context),
+              _vcKey: new VCMetadata(context).getVcKey(),
               type: 'WALLET_BINDING_SUCCESSFULL',
               timestamp: Date.now(),
               deviceName: '',
               vcLabel: context.tag || context.id,
             }),
           {
-            to: (context) => context.serviceRefs.activityLog,
-          }
+            to: context => context.serviceRefs.activityLog,
+          },
         ),
 
         logWalletBindingFailure: send(
-          (context, event) =>
+          context =>
             ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VC_ITEM_STORE_KEY(context),
+              _vcKey: new VCMetadata(context).getVcKey(),
               type: 'WALLET_BINDING_FAILURE',
               timestamp: Date.now(),
               deviceName: '',
               vcLabel: context.tag || context.id,
             }),
           {
-            to: (context) => context.serviceRefs.activityLog,
-          }
+            to: context => context.serviceRefs.activityLog,
+          },
         ),
 
         logRevoked: send(
-          (context) =>
+          context =>
             ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VC_ITEM_STORE_KEY(context),
+              _vcKey: new VCMetadata(context).getVcKey(),
               type: 'VC_REVOKED',
               timestamp: Date.now(),
               deviceName: '',
               vcLabel: context.tag || context.id,
             }),
           {
-            to: (context) => context.serviceRefs.activityLog,
-          }
+            to: context => context.serviceRefs.activityLog,
+          },
         ),
 
         revokeVID: send(
-          (context) => {
+          context => {
             return StoreEvents.REMOVE(
               MY_VCS_STORE_KEY,
-              VC_ITEM_STORE_KEY(context)
+              new VCMetadata(context).getVcKey(),
             );
           },
           {
-            to: (context) => context.serviceRefs.store,
-          }
+            to: context => context.serviceRefs.store,
+          },
         ),
 
-        markVcValid: assign((context) => {
+        markVcValid: assign(context => {
           return {
             ...context,
             isVerified: true,
@@ -1047,14 +1034,14 @@ export const vcItemMachine =
           transactionId: () => String(new Date().valueOf()).substring(3, 13),
         }),
 
-        clearTransactionId: assign({ transactionId: '' }),
+        clearTransactionId: assign({transactionId: ''}),
 
         setOtp: model.assign({
           otp: (_, event) => event.otp,
         }),
 
         setVcKey: model.assign({
-          vcKey: (_, event) => event.vcKey,
+          vcMetadata: (_, event) => event.vcMetadata,
         }),
 
         setOtpError: assign({
@@ -1062,10 +1049,10 @@ export const vcItemMachine =
             (event as ErrorPlatformEvent).data.message,
         }),
 
-        clearOtp: assign({ otp: '' }),
+        clearOtp: assign({otp: ''}),
 
         setLock: assign({
-          locked: (context) => !context.locked,
+          locked: context => !context.locked,
         }),
 
         setRevoke: assign({
@@ -1073,44 +1060,47 @@ export const vcItemMachine =
         }),
 
         storeLock: send(
-          (context) => {
-            const { serviceRefs, ...data } = context;
-            return StoreEvents.SET(VC_ITEM_STORE_KEY(context), data);
+          context => {
+            const {serviceRefs, ...data} = context;
+            return StoreEvents.SET(new VCMetadata(context).getVcKey(), data);
           },
-          { to: (context) => context.serviceRefs.store }
+          {to: context => context.serviceRefs.store},
         ),
 
         removeVcItem: send(
-          (_context, event) => {
-            return StoreEvents.REMOVE(MY_VCS_STORE_KEY, _context.vcKey);
+          _context => {
+            return StoreEvents.REMOVE(
+              MY_VCS_STORE_KEY,
+              _context.vcMetadata.getVcKey(),
+            );
           },
-          { to: (context) => context.serviceRefs.store }
+          {to: context => context.serviceRefs.store},
         ),
 
         logVCremoved: send(
           (context, _) =>
             ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VC_ITEM_STORE_KEY(context),
+              _vcKey: new VCMetadata(context).getVcKey(),
               type: 'VC_REMOVED',
               timestamp: Date.now(),
               deviceName: '',
               vcLabel: context.id,
             }),
           {
-            to: (context) => context.serviceRefs.activityLog,
-          }
+            to: context => context.serviceRefs.activityLog,
+          },
         ),
       },
 
       services: {
-        checkDownloadExpiryLimit: async (context) => {
+        checkDownloadExpiryLimit: async context => {
           var resp = await getAllConfigurations();
           const maxLimit: number = resp.vcDownloadMaxRetry;
           const vcDownloadPoolInterval: number = resp.vcDownloadPoolInterval;
           console.log(maxLimit);
           if (maxLimit <= context.downloadCounter) {
             throw new Error(
-              'Download limit expired for request id: ' + context.requestId
+              'Download limit expired for request id: ' + context.requestId,
             );
           }
 
@@ -1122,7 +1112,7 @@ export const vcItemMachine =
           return downloadProps;
         },
 
-        addWalletBindnigId: async (context) => {
+        addWalletBindnigId: async context => {
           const response = await request(
             'POST',
             '/residentmobileapp/wallet-binding',
@@ -1142,12 +1132,12 @@ export const vcItemMachine =
                   },
                 ],
               },
-            }
+            },
           );
           const certificate = response.response.certificate;
           await savePrivateKey(
             getBindingCertificateConstant(context.id),
-            certificate
+            certificate,
           );
 
           const walletResponse: WalletBindingResponse = {
@@ -1159,10 +1149,10 @@ export const vcItemMachine =
           return walletResponse;
         },
 
-        updatePrivateKey: async (context) => {
+        updatePrivateKey: async context => {
           const hasSetPrivateKey: boolean = await savePrivateKey(
             context.walletBindingResponse.walletBindingId,
-            context.privateKey
+            context.privateKey,
           );
           if (!hasSetPrivateKey) {
             throw new Error('Could not store private key in keystore.');
@@ -1170,7 +1160,7 @@ export const vcItemMachine =
           return '';
         },
 
-        generateKeyPair: async (context) => {
+        generateKeyPair: async context => {
           if (!isCustomSecureKeystore()) {
             return await generateKeys();
           }
@@ -1178,11 +1168,11 @@ export const vcItemMachine =
           return SecureKeystore.generateKeyPair(
             context.id,
             isBiometricsEnabled,
-            0
+            0,
           );
         },
 
-        requestBindingOtp: async (context) => {
+        requestBindingOtp: async context => {
           const response = await request(
             'POST',
             '/residentmobileapp/binding-otp',
@@ -1192,24 +1182,24 @@ export const vcItemMachine =
                 individualId: context.id,
                 otpChannels: ['EMAIL', 'PHONE'],
               },
-            }
+            },
           );
           if (response.response == null) {
             throw new Error('Could not process request');
           }
         },
 
-        checkStatus: (context) => (callback, onReceive) => {
+        checkStatus: context => (callback, onReceive) => {
           const pollInterval = setInterval(
             () => callback(model.events.POLL()),
-            context.downloadInterval
+            context.downloadInterval,
           );
 
-          onReceive(async (event) => {
+          onReceive(async event => {
             if (event.type === 'POLL_STATUS') {
               const response = await request(
                 'GET',
-                `/residentmobileapp/credentialshare/request/status/${context.requestId}`
+                `/residentmobileapp/credentialshare/request/status/${context.requestId}`,
               );
               switch (response.response?.statusCode) {
                 case 'NEW':
@@ -1225,13 +1215,13 @@ export const vcItemMachine =
           return () => clearInterval(pollInterval);
         },
 
-        downloadCredential: (context) => (callback, onReceive) => {
+        downloadCredential: context => (callback, onReceive) => {
           const pollInterval = setInterval(
             () => callback(model.events.POLL()),
-            context.downloadInterval
+            context.downloadInterval,
           );
 
-          onReceive(async (event) => {
+          onReceive(async event => {
             if (event.type === 'POLL_DOWNLOAD') {
               const response: CredentialDownloadResponse = await request(
                 'POST',
@@ -1239,7 +1229,7 @@ export const vcItemMachine =
                 {
                   individualId: context.id,
                   requestId: context.requestId,
-                }
+                },
               );
 
               callback(
@@ -1257,7 +1247,7 @@ export const vcItemMachine =
                   locked: context.locked,
                   walletBindingResponse: null,
                   credentialRegistry: '',
-                })
+                }),
               );
             }
           });
@@ -1265,11 +1255,11 @@ export const vcItemMachine =
           return () => clearInterval(pollInterval);
         },
 
-        verifyCredential: async (context) => {
+        verifyCredential: async context => {
           return verifyCredential(context.verifiableCredential);
         },
 
-        requestOtp: async (context) => {
+        requestOtp: async context => {
           try {
             return request('POST', '/residentmobileapp/req/otp', {
               individualId: context.id,
@@ -1282,7 +1272,7 @@ export const vcItemMachine =
           }
         },
 
-        requestLock: async (context) => {
+        requestLock: async context => {
           let response = null;
           if (context.locked) {
             response = await request(
@@ -1295,7 +1285,7 @@ export const vcItemMachine =
                 transactionID: context.transactionId,
                 authType: ['bio'],
                 unlockForSeconds: '120',
-              }
+              },
             );
           } else {
             response = await request(
@@ -1307,13 +1297,13 @@ export const vcItemMachine =
                 otp: context.otp,
                 transactionID: context.transactionId,
                 authType: ['bio'],
-              }
+              },
             );
           }
           return response.response;
         },
 
-        requestRevoke: async (context) => {
+        requestRevoke: async context => {
           try {
             return request('PATCH', `/residentmobileapp/vid/${context.id}`, {
               transactionID: context.transactionId,
@@ -1336,39 +1326,37 @@ export const vcItemMachine =
           return vc?.credential != null && vc?.verifiableCredential != null;
         },
 
-        isDownloadAllowed: (_context, event) => {
+        isDownloadAllowed: _context => {
           return _context.downloadCounter <= _context.maxDownloadCount;
         },
 
-        isVcValid: (context) => {
+        isVcValid: context => {
           return context.isVerified;
         },
 
         isCustomSecureKeystore: () => isCustomSecureKeystore(),
       },
-    }
+    },
   );
 
 export const createVcItemMachine = (
   serviceRefs: AppServices,
-  vcKey: string
+  vcMetadata: VCMetadata,
 ) => {
-  const [, idType, hashedId, requestId, isPinned, id] = vcKey.split(':');
   return vcItemMachine.withContext({
     ...vcItemMachine.context,
     serviceRefs,
-    id,
-    idType: idType as VcIdType,
-    requestId,
-    isPinned: isPinned == 'true' ? true : false,
-    hashedId,
+    id: vcMetadata.id,
+    idType: vcMetadata.idType as VcIdType,
+    requestId: vcMetadata.requestId,
+    isPinned: vcMetadata.isPinned,
   });
 };
 
 type State = StateFrom<typeof vcItemMachine>;
 
 export function selectVc(state: State) {
-  const { serviceRefs, ...data } = state.context;
+  const {serviceRefs, ...data} = state.context;
   return data;
 }
 

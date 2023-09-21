@@ -16,6 +16,7 @@ import {
   SettingsEvents,
   selectAppId,
   selectIsResetInjiProps,
+  selectEsignetHostUrl,
 } from '../../machines/settings';
 
 import {
@@ -107,6 +108,7 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
     name: useSelector(settingsService, selectName),
     vcLabel: useSelector(settingsService, selectVcLabel),
     credentialRegistry: useSelector(settingsService, selectCredentialRegistry),
+    esignetHostUrl: useSelector(settingsService, selectEsignetHostUrl),
     credentialRegistryResponse: useSelector(
       settingsService,
       selectCredentialRegistryResponse,
@@ -127,10 +129,15 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
     UPDATE_VC_LABEL: (label: string) =>
       settingsService.send(SettingsEvents.UPDATE_VC_LABEL(label)),
 
-    UPDATE_CREDENTIAL_REGISTRY: (credentialRegistry: string) =>
-      settingsService.send(
-        SettingsEvents.UPDATE_CREDENTIAL_REGISTRY(credentialRegistry),
-      ),
+    UPDATE_CREDENTIAL_REGISTRY: (
+      credentialRegistry: string,
+      esignetHostUrl: string,
+    ) => {
+      settingsService.send(SettingsEvents.UPDATE_ESIGNET_HOST(esignetHostUrl)),
+        settingsService.send(
+          SettingsEvents.UPDATE_MIMOTO_HOST(credentialRegistry),
+        );
+    },
 
     UPDATE_CREDENTIAL_REGISTRY_RESPONSE: (credentialRegistryResponse: string) =>
       settingsService.send(

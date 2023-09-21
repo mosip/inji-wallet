@@ -2,7 +2,7 @@ import { useSelector } from '@xstate/react';
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { selectShareableVcs } from '../../machines/vc';
+import { selectShareableVcsMetadata } from '../../machines/vc';
 import { GlobalContext } from '../../shared/GlobalContext';
 import {
   selectIsLocationDenied,
@@ -30,7 +30,10 @@ export function useScanScreen() {
   const scanService = appService.children.get('scan');
   const vcService = appService.children.get('vc');
 
-  const shareableVcs = useSelector(vcService, selectShareableVcs);
+  const shareableVcsMetadata = useSelector(
+    vcService,
+    selectShareableVcsMetadata
+  );
 
   const isLocationDisabled = useSelector(scanService, selectIsLocationDisabled);
   const isLocationDenied = useSelector(scanService, selectIsLocationDenied);
@@ -67,7 +70,7 @@ export function useScanScreen() {
 
   return {
     locationError,
-    isEmpty: !shareableVcs.length,
+    isEmpty: !shareableVcsMetadata.length,
     isBluetoothPermissionDenied,
     isNearByDevicesPermissionDenied,
     isLocationDisabled,

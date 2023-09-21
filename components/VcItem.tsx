@@ -1,4 +1,4 @@
-import React, {useContext, useRef} from 'react';
+import React, {useContext, useEffect, useRef} from 'react';
 import {useInterpret, useSelector} from '@xstate/react';
 import {Pressable} from 'react-native';
 import {ActorRefFrom} from 'xstate';
@@ -22,18 +22,23 @@ import {VcItemActivationStatus} from './VcItemActivationStatus';
 import {Row} from './ui';
 import {KebabPopUp} from './KebabPopUp';
 import {logState} from '../machines/app';
+import {VCMetadata} from '../shared/VCMetadata';
 
 export const VcItem: React.FC<VcItemProps> = props => {
   const {appService} = useContext(GlobalContext);
   const machine = useRef(
     createVcItemMachine(
       appService.getSnapshot().context.serviceRefs,
-      props.vcKey,
+      props.vcMetadata,
     ),
   );
 
   const service = useInterpret(machine.current, {devTools: __DEV__});
-  service.subscribe(logState);
+
+  useEffect(() => {
+    service.subscribe(logState);
+  }, [service]);
+
   const context = useSelector(service, selectContext);
   const verifiableCredential = useSelector(service, selectVerifiableCredential);
   const emptyWalletBindingId = useSelector(service, selectEmptyWalletBindingId);
@@ -82,7 +87,7 @@ export const VcItem: React.FC<VcItemProps> = props => {
               )}
             <Pressable onPress={KEBAB_POPUP}>
               <KebabPopUp
-                vcKey={props.vcKey}
+                vcMetadata={props.vcMetadata}
                 iconName="dots-three-horizontal"
                 iconType="entypo"
                 isVisible={isKebabPopUp}
@@ -104,7 +109,7 @@ export const VcItem: React.FC<VcItemProps> = props => {
 };
 
 interface VcItemProps {
-  vcKey: string;
+  vcMetadata: VCMetadata;
   margin?: string;
   selectable?: boolean;
   selected?: boolean;
