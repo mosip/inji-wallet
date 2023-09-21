@@ -30,7 +30,12 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
           }>
           {arg1}
         </Text>
-        <Row style={{justifyContent: 'space-between', alignItems: 'center'}}>
+        <Row
+          style={{
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginLeft: 9,
+          }}>
           {!verifiableCredential ? null : <VerifiedIcon />}
           <Text
             testID="valid"

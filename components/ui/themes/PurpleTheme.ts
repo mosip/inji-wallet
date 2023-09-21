@@ -142,14 +142,11 @@ export const PurpleTheme = {
       flex: 1,
     },
     verifiedIconContainer: {
-      marginTop: 3,
       marginRight: 3,
     },
     verifiedIconInner: {
       backgroundColor: 'white',
       borderRadius: 10,
-      marginRight: 2,
-      marginLeft: 3,
     },
     vcItemLabelHeader: {
       color: Colors.Gray40,
@@ -333,6 +330,10 @@ export const PurpleTheme = {
       height: 40,
       width: 40,
       marginRight: 4,
+    },
+    vcDetailsLogo: {
+      height: 35,
+      width: 90,
     },
     homeCloseCardDetailsHeader: {
       flex: 1,

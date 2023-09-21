@@ -141,13 +141,11 @@ export const DefaultTheme = {
       flex: 1,
     },
     verifiedIconContainer: {
-      marginTop: 3,
       marginRight: 3,
     },
     verifiedIconInner: {
       backgroundColor: 'white',
       borderRadius: 10,
-      marginLeft: 9,
     },
     vcItemLabelHeader: {
       color: Colors.Gray40,
@@ -331,6 +329,10 @@ export const DefaultTheme = {
       height: 40,
       width: 40,
       marginRight: 4,
+    },
+    vcDetailsLogo: {
+      height: 35,
+      width: 90,
     },
     homeCloseCardDetailsHeader: {
       flex: 1,
