@@ -11,7 +11,7 @@ import {Theme} from '../components/ui/styleUtils';
 import {Icon} from 'react-native-elements';
 import {RootRouteProps} from '../routes';
 import {useWelcomeScreen} from './WelcomeScreenController';
-import { __SelectedLanguage } from '../shared/GlobalVariables';
+import {__SelectedLanguage} from '../shared/GlobalVariables';
 
 export const SetupLanguageScreen: React.FC<RootRouteProps> = props => {
   const {t} = useTranslation('SetupLanguage');

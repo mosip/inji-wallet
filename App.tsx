@@ -1,29 +1,29 @@
-import React, { useContext, useEffect } from 'react';
+import React, {useContext, useEffect} from 'react';
 import AppLoading from 'expo-app-loading';
-import { AppLayout } from './screens/AppLayout';
-import { useFont } from './shared/hooks/useFont';
-import { GlobalContextProvider } from './components/GlobalContextProvider';
-import { GlobalContext } from './shared/GlobalContext';
-import { useSelector } from '@xstate/react';
-import { useTranslation } from 'react-i18next';
+import {AppLayout} from './screens/AppLayout';
+import {useFont} from './shared/hooks/useFont';
+import {GlobalContextProvider} from './components/GlobalContextProvider';
+import {GlobalContext} from './shared/GlobalContext';
+import {useSelector} from '@xstate/react';
+import {useTranslation} from 'react-i18next';
 import {
   selectIsDecryptError,
   selectIsKeyInvalidateError,
   selectIsReadError,
   selectIsReady,
 } from './machines/app';
-import { DualMessageOverlay } from './components/DualMessageOverlay';
-import { useApp } from './screens/AppController';
-import { Alert } from 'react-native';
+import {DualMessageOverlay} from './components/DualMessageOverlay';
+import {useApp} from './screens/AppController';
+import {Alert} from 'react-native';
 import {
   getAppInfoData,
   getTelemetryConfigData,
   initializeTelemetry,
   sendAppInfoEvent,
 } from './shared/telemetry/TelemetryUtils';
-import { ErrorMessageOverlay } from './components/MessageOverlay';
+import {ErrorMessageOverlay} from './components/MessageOverlay';
 import SecureKeystore from 'react-native-secure-keystore';
-import { isCustomSecureKeystore } from './shared/cryptoutil/cryptoUtil';
+import {isCustomSecureKeystore} from './shared/cryptoutil/cryptoUtil';
 import i18n from './i18n';
 
 // kludge: this is a bad practice but has been done temporarily to surface
@@ -48,10 +48,10 @@ function configureTelemetry() {
 }
 
 const AppLayoutWrapper: React.FC = () => {
-  const { appService } = useContext(GlobalContext);
+  const {appService} = useContext(GlobalContext);
   const isDecryptError = useSelector(appService, selectIsDecryptError);
   const controller = useApp();
-  const { t } = useTranslation('WelcomeScreen');
+  const {t} = useTranslation('WelcomeScreen');
   if (isDecryptError) {
     DecryptErrorAlert(controller, t);
   }
@@ -60,14 +60,14 @@ const AppLayoutWrapper: React.FC = () => {
 };
 
 const AppLoadingWrapper: React.FC = () => {
-  const { appService } = useContext(GlobalContext);
+  const {appService} = useContext(GlobalContext);
   const isReadError = useSelector(appService, selectIsReadError);
   const isKeyInvalidateError = useSelector(
     appService,
-    selectIsKeyInvalidateError
+    selectIsKeyInvalidateError,
   );
   const controller = useApp();
-  const { t } = useTranslation('WelcomeScreen');
+  const {t} = useTranslation('WelcomeScreen');
   return (
     <>
       <AppLoading />
@@ -93,16 +93,16 @@ const AppLoadingWrapper: React.FC = () => {
 };
 
 const AppInitialization: React.FC = () => {
-  const { appService } = useContext(GlobalContext);
+  const {appService} = useContext(GlobalContext);
   const isReady = useSelector(appService, selectIsReady);
   const hasFontsLoaded = useFont();
-  const { t } = useTranslation('common');
+  const {t} = useTranslation('common');
 
   useEffect(() => {
     if (isCustomSecureKeystore()) {
       SecureKeystore.updatePopup(
         t('biometricPopup.title'),
-        t('biometricPopup.description')
+        t('biometricPopup.description'),
       );
     }
   }, [i18n.language]);

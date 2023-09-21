@@ -10,8 +10,7 @@ import getAllConfigurations from '../../shared/commonprops/commonProps';
 import {getVersion} from 'react-native-device-info';
 import {CopyButton} from '../../components/CopyButton';
 import testIDProps from '../../shared/commonUtil';
-import { __InjiVersion, __TuvaliVersion } from '../../shared/GlobalVariables';
-
+import {__InjiVersion, __TuvaliVersion} from '../../shared/GlobalVariables';
 
 export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
   const {t} = useTranslation('AboutInji');

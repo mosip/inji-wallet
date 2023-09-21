@@ -43,14 +43,14 @@
     "flipCamera": "Flip Camera"
   },
   "VcDetails": {
-    "generatedOn": "Generated on",
+    "generatedOn": "Generated On",
     "status": "Status",
     "valid": "Valid",
     "photo": "Photo",
     "fullName": "Full Name",
     "gender": "Gender",
-    "dateOfBirth": "Date of birth",
-    "phoneNumber": "Phone number",
+    "dateOfBirth": "Date of Birth",
+    "phoneNumber": "Phone Number",
     "email": "Email",
     "address": "Address",
     "reasonForSharing": "Reason for sharing",

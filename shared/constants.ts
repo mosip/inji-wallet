@@ -1,40 +1,22 @@
-import { Platform } from 'react-native';
-import { VC } from '../types/vc';
+import {Platform} from 'react-native';
 import {
   MIMOTO_HOST,
   ESIGNET_HOST,
   GOOGLE_NEARBY_MESSAGES_API_KEY,
 } from 'react-native-dotenv';
-import { Argon2iConfig } from './commonUtil';
+import {Argon2iConfig} from './commonUtil';
 
 export let MIMOTO_BASE_URL = MIMOTO_HOST;
 export let ESIGNET_BASE_URL = ESIGNET_HOST;
 
-export const changeCrendetialRegistry = (host) => (MIMOTO_BASE_URL = host);
-export const changeEsignetUrl = (host) => (ESIGNET_BASE_URL = host);
+export const changeCrendetialRegistry = host => (MIMOTO_BASE_URL = host);
+export const changeEsignetUrl = host => (ESIGNET_BASE_URL = host);
 
 export const MY_VCS_STORE_KEY = 'myVCs';
 
 export const RECEIVED_VCS_STORE_KEY = 'receivedVCs';
 
 export const MY_LOGIN_STORE_KEY = 'myLogins';
-
-export const VC_ITEM_STORE_KEY = (vc: Partial<VC>) =>
-  `vc:${vc.idType}:${vc.hashedId}:${vc.requestId}:${vc.isPinned}:${vc.id}`;
-
-export const VC_ITEM_STORE_KEY_AFTER_DOWNLOAD = (vc: Partial<VC>) =>
-  `vc:${vc.idType}:${vc.hashedId}:${vc.requestId}:${vc.isPinned}`;
-
-//Regex expression to evaluate if the key is for a VC
-export const VC_ITEM_STORE_KEY_REGEX =
-  '^vc:(UIN|VID):[a-z0-9]+:[a-z0-9-]+:[true|false]+(:[0-9-]+)?$';
-
-//To compare the vckey with requestId, when the vc is pinned
-export const isSameVC = (vcKey: string, pinnedVcKey: string) => {
-  const requestId = vcKey.split(':')[3];
-  const pinnedRequestId = pinnedVcKey.split(':')[3];
-  return requestId === pinnedRequestId;
-};
 
 export let individualId = '';
 

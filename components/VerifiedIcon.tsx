@@ -1,7 +1,7 @@
 import React from 'react';
-import { View } from 'react-native';
-import { Icon } from 'react-native-elements';
-import { Theme } from './ui/styleUtils';
+import {View} from 'react-native';
+import {Icon} from 'react-native-elements';
+import {Theme} from './ui/styleUtils';
 
 const VerifiedIcon: React.FC = () => {
   return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
-import {RefreshControl, Image, View} from 'react-native';
+import {Image, RefreshControl, View} from 'react-native';
 import {useMyVcsTab} from './MyVcsTabController';
 import {HomeScreenTabProps} from './HomeScreen';
 import {AddVcModal} from './MyVcs/AddVcModal';
@@ -14,11 +14,19 @@ import {
   MessageOverlay,
 } from '../../components/MessageOverlay';
 import {Icon} from 'react-native-elements';
+import {groupBy} from '../../shared/javascript';
+
+const pinIconProps = {iconName: 'pushpin', iconType: 'antdesign'};
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   const {t} = useTranslation('MyVcsTab');
   const controller = useMyVcsTab(props);
   const storeErrorTranslationPath = 'errors.savingFailed';
+  const [pinned, unpinned] = groupBy(
+    controller.vcMetadatas,
+    vcMetadata => vcMetadata.isPinned,
+  );
+  const vcMetadataOrderedByPinStatus = pinned.concat(unpinned);
 
   const getId = () => {
     controller.DISMISS();
@@ -76,31 +84,17 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                     onRefresh={controller.REFRESH}
                   />
                 }>
-                {controller.vcKeys.map((vcKey, index) => {
-                  if (vcKey.split(':')[4] === 'true') {
-                    return (
-                      <VcItem
-                        key={`${vcKey}-${index}`}
-                        vcKey={vcKey}
-                        margin="0 2 8 2"
-                        onPress={controller.VIEW_VC}
-                        iconName="pushpin"
-                        iconType="antdesign"
-                      />
-                    );
-                  }
-                })}
-                {controller.vcKeys.map((vcKey, index) => {
-                  if (vcKey.split(':')[4] === 'false') {
-                    return (
-                      <VcItem
-                        key={`${vcKey}-${index}`}
-                        vcKey={vcKey}
-                        margin="0 2 8 2"
-                        onPress={controller.VIEW_VC}
-                      />
-                    );
-                  }
+                {vcMetadataOrderedByPinStatus.map((vcMetadata, index) => {
+                  const iconProps = vcMetadata.isPinned ? pinIconProps : {};
+                  return (
+                    <VcItem
+                      {...iconProps}
+                      key={`${vcMetadata.getVcKey()}-${index}`}
+                      vcMetadata={vcMetadata}
+                      margin="0 2 8 2"
+                      onPress={controller.VIEW_VC}
+                    />
+                  );
                 })}
               </Column>
               <Button
@@ -112,7 +106,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
               />
             </React.Fragment>
           )}
-          {controller.vcKeys.length === 0 && (
+          {controller.vcMetadatas.length === 0 && (
             <React.Fragment>
               <Column fill style={Theme.Styles.homeScreenContainer}>
                 <Image source={Theme.DigitalIdentityLogo} />

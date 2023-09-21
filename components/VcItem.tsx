@@ -29,12 +29,16 @@ export const VcItem: React.FC<VcItemProps> = props => {
   const machine = useRef(
     createVcItemMachine(
       appService.getSnapshot().context.serviceRefs,
-      props.vcKey,
+      props.vcMetadata,
     ),
   );
 
   const service = useInterpret(machine.current, {devTools: __DEV__});
-  service.subscribe(logState);
+
+  useEffect(() => {
+    service.subscribe(logState);
+  }, [service]);
+
   const context = useSelector(service, selectContext);
   const verifiableCredential = useSelector(service, selectVerifiableCredential);
   const emptyWalletBindingId = useSelector(service, selectEmptyWalletBindingId);
@@ -111,7 +115,7 @@ export const VcItem: React.FC<VcItemProps> = props => {
 };
 
 interface VcItemProps {
-  vcKey: string;
+  vcMetadata: VCMetadata;
   margin?: string;
   selectable?: boolean;
   selected?: boolean;

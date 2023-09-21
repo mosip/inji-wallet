@@ -1,6 +1,6 @@
-import { assign, ContextFrom, EventFrom, send, StateFrom } from 'xstate';
-import { createModel } from 'xstate/lib/model';
-import { AppServices } from '../shared/GlobalContext';
+import {assign, ContextFrom, EventFrom, send, StateFrom} from 'xstate';
+import {createModel} from 'xstate/lib/model';
+import {AppServices} from '../shared/GlobalContext';
 import {
   APP_ID_DICTIONARY,
   APP_ID_LENGTH,
@@ -9,15 +9,15 @@ import {
   SETTINGS_STORE_KEY,
   ESIGNET_BASE_URL,
 } from '../shared/constants';
-import { VCLabel } from '../types/vc';
-import { StoreEvents } from './store';
+import {VCLabel} from '../types/vc';
+import {StoreEvents} from './store';
 import getAllConfigurations, {
   COMMON_PROPS_KEY,
 } from '../shared/commonprops/commonProps';
 import Storage from '../shared/storage';
 import ShortUniqueId from 'short-unique-id';
-import { __AppId } from '../shared/GlobalVariables';
-import { isCustomSecureKeystore } from '../shared/cryptoutil/cryptoUtil';
+import {__AppId} from '../shared/GlobalVariables';
+import {isCustomSecureKeystore} from '../shared/cryptoutil/cryptoUtil';
 
 const model = createModel(
   {
@@ -36,17 +36,17 @@ const model = createModel(
   },
   {
     events: {
-      UPDATE_NAME: (name: string) => ({ name }),
-      UPDATE_VC_LABEL: (label: string) => ({ label }),
-      TOGGLE_BIOMETRIC_UNLOCK: (enable: boolean) => ({ enable }),
-      STORE_RESPONSE: (response: unknown) => ({ response }),
-      CHANGE_LANGUAGE: (language: string) => ({ language }),
+      UPDATE_NAME: (name: string) => ({name}),
+      UPDATE_VC_LABEL: (label: string) => ({label}),
+      TOGGLE_BIOMETRIC_UNLOCK: (enable: boolean) => ({enable}),
+      STORE_RESPONSE: (response: unknown) => ({response}),
+      CHANGE_LANGUAGE: (language: string) => ({language}),
       UPDATE_MIMOTO_HOST: (credentialRegistry: string) => ({
         credentialRegistry,
       }),
-      UPDATE_ESIGNET_HOST: (esignetHostUrl: string) => ({ esignetHostUrl }),
+      UPDATE_ESIGNET_HOST: (esignetHostUrl: string) => ({esignetHostUrl}),
       UPDATE_CREDENTIAL_REGISTRY_RESPONSE: (
-        credentialRegistryResponse: string
+        credentialRegistryResponse: string,
       ) => ({
         credentialRegistryResponse: credentialRegistryResponse,
       }),
@@ -55,7 +55,7 @@ const model = createModel(
       CANCEL: () => ({}),
       ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS: () => ({}),
     },
-  }
+  },
 );
 
 export const SettingsEvents = model.events;
@@ -81,8 +81,8 @@ export const settingsMachine = model.createMachine(
               target: 'idle',
               actions: ['setContext', 'updatePartialDefaults', 'storeContext'],
             },
-            { cond: 'hasData', target: 'idle', actions: ['setContext'] },
-            { target: 'storingDefaults' },
+            {cond: 'hasData', target: 'idle', actions: ['setContext']},
+            {target: 'storingDefaults'},
           ],
         },
       },
@@ -165,7 +165,7 @@ export const settingsMachine = model.createMachine(
   {
     actions: {
       requestStoredContext: send(StoreEvents.GET(SETTINGS_STORE_KEY), {
-        to: (context) => context.serviceRefs.store,
+        to: context => context.serviceRefs.store,
       }),
 
       updateDefaults: model.assign({
@@ -179,15 +179,15 @@ export const settingsMachine = model.createMachine(
       }),
 
       updatePartialDefaults: model.assign({
-        appId: (context) => context.appId || generateAppId(),
+        appId: context => context.appId || generateAppId(),
       }),
 
       storeContext: send(
-        (context) => {
-          const { serviceRefs, ...data } = context;
+        context => {
+          const {serviceRefs, ...data} = context;
           return StoreEvents.SET(SETTINGS_STORE_KEY, data);
         },
-        { to: (context) => context.serviceRefs.store }
+        {to: context => context.serviceRefs.store},
       ),
 
       setContext: model.assign((context, event) => {
@@ -255,7 +255,7 @@ export const settingsMachine = model.createMachine(
       hasPartialData: (_, event) =>
         event.response != null && event.response.appId == null,
     },
-  }
+  },
 );
 
 export function createSettingsMachine(serviceRefs: AppServices) {
