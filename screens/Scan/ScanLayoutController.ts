@@ -177,13 +177,10 @@ export function useScanLayout() {
   } else if (isBleError) {
     statusOverlay = {
       title: t('status.bleError.title'),
-      message: t('status.bleError.message'),
-      hint:
-        bleError.code &&
-        t('status.bleError.hint', {
-          code: bleError.code,
-        }),
-      onBackdropPress: DISMISS,
+      hint: t('status.bleError.hint'),
+      onCancel: DISMISS,
+      onRetry,
+      progress: true,
     };
   }
 
@@ -225,6 +222,7 @@ export function useScanLayout() {
     isDisconnected: useSelector(scanService, selectIsDisconnected),
     statusOverlay,
     isStayInProgress: useSelector(scanService, selectStayInProgress),
+    isBleError,
     DISMISS,
   };
 }

@@ -411,7 +411,7 @@
       "bleError": {
         "title": "Error al transferir",
         "message": "Ocurrió un error al transferir la tarjeta. Por favor, inténtalo de nuevo.",
-        "hint": "Error: {{code}}"
+        "hint": "La conexión fue interrumpida. Inténtalo de nuevo."
       }
     }
   },

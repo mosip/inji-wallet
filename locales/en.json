@@ -480,7 +480,7 @@
       "bleError": {
         "title": "Failed to transfer",
         "message": "Something went wrong while transferring Card. Please try again.",
-        "hint": "Error: {{code}}"
+        "hint": " The connection was interrupted. Please try again."
       }
     }
   },

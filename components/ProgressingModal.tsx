@@ -34,7 +34,7 @@ export const ProgressingModal: React.FC<ProgressingModalProps> = props => {
               />
             )}
           </Column>
-          {props.isHintVisible && (
+          {(props.isHintVisible || props.isBleErrorVisible) && (
             <Column style={Theme.SelectVcOverlayStyles.timeoutHintContainer}>
               <Text
                 align="center"
@@ -70,6 +70,7 @@ export const ProgressingModal: React.FC<ProgressingModalProps> = props => {
 export interface ProgressingModalProps {
   isVisible: boolean;
   isHintVisible: boolean;
+  isBleErrorVisible: boolean;
   title?: string;
   hint?: string;
   onCancel?: () => void;

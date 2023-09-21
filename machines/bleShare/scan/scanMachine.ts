@@ -449,11 +449,11 @@ export const scanMachine =
                 },
                 CANCEL: {
                   target: '#scan.reviewing.cancelling',
-                  actions: 'setCloseTimeoutHint',
+                  actions: 'setPromptHint',
                 },
                 RETRY: {
                   target: '#scan.reviewing.cancelling',
-                  actions: 'setCloseTimeoutHint',
+                  actions: 'setPromptHint',
                 },
               },
             },
@@ -523,11 +523,11 @@ export const scanMachine =
                     },
                     CANCEL: {
                       target: '#scan.reviewing.cancelling',
-                      actions: 'setCloseTimeoutHint',
+                      actions: 'setPromptHint',
                     },
                     RETRY: {
                       target: '#scan.reviewing.cancelling',
-                      actions: 'setCloseTimeoutHint',
+                      actions: 'setPromptHint',
                     },
                   },
                 },
@@ -628,6 +628,9 @@ export const scanMachine =
         },
         handlingBleError: {
           on: {
+            RETRY: {
+              target: '#scan.reviewing.cancelling',
+            },
             DISMISS: {
               target: '#scan.clearingConnection',
             },
@@ -840,7 +843,7 @@ export const scanMachine =
           stayInProgress: context => !context.stayInProgress,
         }),
 
-        setCloseTimeoutHint: assign({
+        setPromptHint: assign({
           stayInProgress: context => (context.stayInProgress = false),
         }),
 

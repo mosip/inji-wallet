@@ -483,7 +483,7 @@
       "bleError": {
         "title": "Nabigong ilipat!",
         "message": "Nagkaproblema habang inililipat ang card. Pakisubukang muli.",
-        "hint": "Error: {{code}}"
+        "hint": "Naputol ang koneksyon. Pakisubukang muli."
       }
     }
   },
