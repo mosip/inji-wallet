@@ -55,13 +55,14 @@
     "address": "Address",
     "reasonForSharing": "Reason for sharing",
     "idType": "ID Type",
-    "id": "Id",
+    "id": "ID",
     "qrCodeHeader": "QR Code",
     "nationalCard": "National Card",
     "uin": "UIN",
     "vid": "VID",
     "enableVerification": "Activate",
     "profileAuthenticated": "Credentials are enabled for online authentication.",
+    "closedCardProfileAuthenticated": "Activated for online login",
     "offlineAuthDisabledHeader": "Activation pending for online login",
     "offlineAuthDisabledMessage": "Please click the button below to activate this credential to be used for online login.",
     "verificationEnabledSuccess": "Activated for online login",
@@ -87,7 +88,7 @@
     "title": "More Options",
     "unPinCard": "Unpin Card",
     "pinCard": "Pin Card",
-    "offlineAuthenticationDisabled!": "Activation pending for online login!",
+    "offlineAuthenticationDisabled!": "Activation pending for online login",
     "offlineAuthDisabledMessage": "Click here to enable this credentials to be used for online authentication.",
     "viewActivityLog": "View Activity Log",
     "removeFromWallet": "Remove from Wallet",
@@ -96,7 +97,7 @@
   },
   "WalletBinding": {
     "inProgress": "In progress",
-    "profileAuthenticated": "Activated for online login!"
+    "profileAuthenticated": "Activated for online login"
   },
   "BindingVcWarningOverlay": {
     "alert": "Alert",

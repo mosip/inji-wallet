@@ -13,9 +13,9 @@ const WalletUnverifiedIcon: React.FC = () => {
     <Icon
       name="shield-alert"
       color={Theme.Colors.Icon}
-      size={28}
+      size={22}
       type="material-community"
-      containerStyle={{marginStart: 4, bottom: 1}}
+      containerStyle={{marginStart: 10, bottom: 1, marginLeft: 10}}
     />
   );
 };
@@ -25,8 +25,8 @@ const WalletVerifiedIcon: React.FC = () => {
     <Icon
       name="verified-user"
       color={Theme.Colors.VerifiedIcon}
-      size={28}
-      containerStyle={{marginStart: 4, bottom: 1}}
+      size={22}
+      containerStyle={{marginStart: 10, bottom: 1, marginLeft: 10}}
     />
   );
 };
@@ -49,9 +49,8 @@ const WalletUnverifiedActivationDetails: React.FC<
         <Text
           color={Theme.Colors.Details}
           testID="activationPending"
-          weight="semibold"
-          size="small"
-          margin="10 33 10 10"
+          weight="regular"
+          margin="8 10 10 5"
           style={
             !props.verifiableCredential
               ? Theme.Styles.loadingTitle
@@ -81,15 +80,15 @@ const WalletVerifiedActivationDetails: React.FC<
         <Text
           color={Theme.Colors.statusLabel}
           testID="activated"
-          weight="semibold"
+          weight="regular"
           size="smaller"
-          margin="10 10 10 10"
+          margin="8 10 10 5"
           style={
             !props.verifiableCredential
               ? Theme.Styles.loadingTitle
-              : Theme.Styles.subtitle
+              : Theme.Styles.statusLabel
           }
-          children={t('profileAuthenticated')}></Text>
+          children={t('closedCardProfileAuthenticated')}></Text>
       </Row>
     </Row>
   );
@@ -99,7 +98,7 @@ export const VcItemActivationStatus: React.FC<
   VcItemActivationStatusProps
 > = props => {
   return (
-    <Row>
+    <Row margin="0 0 0 -6">
       {props.emptyWalletBindingId ? (
         <WalletUnverifiedActivationDetails
           verifiableCredential={props.verifiableCredential}
