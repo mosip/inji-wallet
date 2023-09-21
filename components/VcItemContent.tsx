@@ -13,10 +13,15 @@ import testIDProps from '../shared/commonUtil';
 const getDetails = (arg1, arg2, verifiableCredential) => {
   if (arg1 === 'Status') {
     return (
-      <Column>
+      <Column
+        style={{
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginTop: 7,
+        }}>
         <Text
           testID="status"
-          weight="bold"
+          weight="regular"
           size="smaller"
           color={
             !verifiableCredential
@@ -25,21 +30,26 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
           }>
           {arg1}
         </Text>
-        <Row>
+        <Row
+          style={{
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginLeft: 9,
+          }}>
+          {!verifiableCredential ? null : <VerifiedIcon />}
           <Text
             testID="valid"
             numLines={1}
             color={Theme.Colors.Details}
-            weight="bold"
+            weight="semibold"
             size="smaller"
             style={
               !verifiableCredential
                 ? Theme.Styles.loadingTitle
-                : Theme.Styles.subtitle
+                : Theme.Styles.detailsValue
             }>
             {!verifiableCredential ? '' : arg2}
           </Text>
-          {!verifiableCredential ? null : <VerifiedIcon />}
         </Row>
       </Column>
     );
@@ -53,7 +63,7 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
               : Theme.Colors.DetailsLabel
           }
           size="smaller"
-          weight={'bold'}
+          weight="regular"
           style={Theme.Styles.vcItemLabelHeader}>
           {arg1}
         </Text>
@@ -73,6 +83,10 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
     );
   }
 };
+
+function getIdNumber(id: string) {
+  return '*'.repeat(id.length - 4) + id.slice(-4);
+}
 
 export const VcItemContent: React.FC<VcItemContentProps> = props => {
   //Assigning the UIN and VID from the VC details to display the idtype label
@@ -96,7 +110,6 @@ export const VcItemContent: React.FC<VcItemContentProps> = props => {
     <ImageBackground
       source={!props.verifiableCredential ? null : Theme.CloseCard}
       resizeMode="stretch"
-      borderRadius={4}
       style={
         !props.verifiableCredential
           ? Theme.Styles.vertloadingContainer
@@ -104,8 +117,9 @@ export const VcItemContent: React.FC<VcItemContentProps> = props => {
       }>
       <Column>
         <Row align="space-between">
-          <Row>
+          <Row margin="5 0 0 5">
             <ImageBackground
+              imageStyle={Theme.Styles.faceImage}
               source={
                 !props.verifiableCredential
                   ? Theme.ProfileIcon
@@ -113,20 +127,15 @@ export const VcItemContent: React.FC<VcItemContentProps> = props => {
               }
               style={Theme.Styles.closeCardImage}>
               {props.iconName && (
-                <Icon
-                  {...testIDProps('pinIcon')}
-                  name={props.iconName}
-                  type={props.iconType}
-                  color={Theme.Colors.Icon}
-                  style={{marginLeft: -80}}
-                />
+                <Image source={Theme.PinIcon} style={Theme.Styles.pinIcon} />
               )}
             </ImageBackground>
-            <Column margin="6 0 0 10">
+
+            <Column margin="0 0 10 20" height={96} align="space-between">
               <Column>
                 <Text
                   testID="fullNameTitle"
-                  weight="bold"
+                  weight="regular"
                   size="smaller"
                   color={
                     !props.verifiableCredential
@@ -138,17 +147,16 @@ export const VcItemContent: React.FC<VcItemContentProps> = props => {
                 <Text
                   testID="fullNameValue"
                   weight="semibold"
-                  size="smaller"
                   style={
                     !props.verifiableCredential
                       ? Theme.Styles.loadingTitle
-                      : Theme.Styles.subtitle
+                      : Theme.Styles.detailsValue
                   }>
                   {fullName}
                 </Text>
               </Column>
 
-              <Column margin="10 0 0 0">
+              <Column>
                 <Text
                   testID="idType"
                   color={
@@ -156,7 +164,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = props => {
                       ? Theme.Colors.LoadingDetailsLabel
                       : Theme.Colors.DetailsLabel
                   }
-                  weight="semibold"
+                  weight="regular"
                   size="smaller"
                   align="left">
                   {t('idType')}
@@ -165,11 +173,10 @@ export const VcItemContent: React.FC<VcItemContentProps> = props => {
                   testID="nationalCard"
                   weight="semibold"
                   color={Theme.Colors.Details}
-                  size="smaller"
                   style={
                     !props.verifiableCredential
                       ? Theme.Styles.loadingTitle
-                      : Theme.Styles.subtitle
+                      : Theme.Styles.detailsValue
                   }>
                   {t('nationalCard')}
                 </Text>
@@ -184,7 +191,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = props => {
 
         <Row
           align="space-between"
-          margin="5 0 0 0"
+          margin="9 10 0 7"
           style={
             !props.verifiableCredential ? Theme.Styles.loadingContainer : null
           }>
@@ -193,7 +200,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = props => {
               <Column margin="0 0 9 0">
                 <Text
                   testID="uin"
-                  weight="bold"
+                  weight="regular"
                   size="smaller"
                   color={Theme.Colors.DetailsLabel}>
                   {t('uin')}
@@ -201,9 +208,9 @@ export const VcItemContent: React.FC<VcItemContentProps> = props => {
                 <Text
                   testID="uinNumber"
                   weight="semibold"
-                  size="smaller"
-                  color={Theme.Colors.Details}>
-                  {uin}
+                  size="extraSmall"
+                  color={Theme.Colors.statusLabel}>
+                  {getIdNumber(uin)}
                 </Text>
               </Column>
             ) : null}
@@ -212,7 +219,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = props => {
               <Column margin="0 0 9 0">
                 <Text
                   testID="vid"
-                  weight="bold"
+                  weight="regular"
                   size="smaller"
                   color={Theme.Colors.DetailsLabel}>
                   {t('vid')}
@@ -220,57 +227,67 @@ export const VcItemContent: React.FC<VcItemContentProps> = props => {
                 <Text
                   testID="vidNumber"
                   weight="semibold"
-                  size="smaller"
+                  size="extraSmall"
                   color={Theme.Colors.Details}>
-                  {vid}
+                  {getIdNumber(vid)}
                 </Text>
               </Column>
             ) : null}
             {!props.verifiableCredential
               ? getDetails(t('id'), uin || vid, props.verifiableCredential)
               : null}
-
-            <Column>
-              <Text
-                testID="generatedOnTitle"
-                weight="bold"
-                size="smaller"
-                color={
-                  !props.verifiableCredential
-                    ? Theme.Colors.LoadingDetailsLabel
-                    : Theme.Colors.DetailsLabel
-                }>
-                {t('generatedOn')}
-              </Text>
-              <Text
-                testID="generatedOnValue"
-                weight="semibold"
-                size="smaller"
-                style={
-                  !props.verifiableCredential
-                    ? Theme.Styles.loadingTitle
-                    : Theme.Styles.subtitle
-                }>
-                {props.generatedOn}
-              </Text>
-            </Column>
           </Column>
-          <Column>
+        </Row>
+
+        <Row
+          style={{flexDirection: 'row', flex: 1}}
+          align="space-between"
+          margin="0 8 5 8">
+          <Column margin="9 0 0 0">
+            <Text
+              testID="generatedOnTitle"
+              weight="regular"
+              size="smaller"
+              color={
+                !props.verifiableCredential
+                  ? Theme.Colors.LoadingDetailsLabel
+                  : Theme.Colors.DetailsLabel
+              }>
+              {t('generatedOn')}
+            </Text>
+            <Text
+              testID="generatedOnValue"
+              weight="semibold"
+              style={
+                !props.verifiableCredential
+                  ? Theme.Styles.loadingTitle
+                  : Theme.Styles.subtitle
+              }>
+              {props.generatedOn}
+            </Text>
+          </Column>
+          <Column margin="0 35 0 0">
             {props.verifiableCredential
               ? getDetails(t('status'), isvalid, props.verifiableCredential)
               : null}
           </Column>
           <Column
             testID="logo"
-            style={{display: props.verifiableCredential ? 'flex' : 'none'}}>
+            style={{
+              display: props.verifiableCredential ? 'flex' : 'none',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
             <Image
-              source={Theme.MosipLogo}
+              source={Theme.MosipSplashLogo}
               style={Theme.Styles.logo}
-              resizeMethod="auto"
+              resizeMethod="scale"
+              resizeMode="contain"
             />
           </Column>
         </Row>
       </Column>
+
       <VcItemTags tag={props.tag} />
     </ImageBackground>
   );

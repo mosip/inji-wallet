@@ -46,7 +46,10 @@ export const VcDetails: React.FC<VcDetailsProps> = props => {
 
             <QrCodeOverlay qrCodeDetailes={String(props.vc.credential)} />
             <Column margin="20 0 0 0">
-              <Image source={Theme.MosipLogo} style={Theme.Styles.logo} />
+              <Image
+                source={Theme.MosipLogo}
+                style={Theme.Styles.vcDetailsLogo}
+              />
             </Column>
           </Column>
           <Column align="space-evenly" padding="10">
@@ -188,7 +191,11 @@ export const VcDetails: React.FC<VcDetailsProps> = props => {
                     color={Theme.Colors.DetailsLabel}>
                     {t('status')}
                   </Text>
-                  <Row>
+                  <Row
+                    style={{
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                    }}>
                     {props.vc?.isVerified && <VerifiedIcon />}
                     <Text
                       testID="valid"

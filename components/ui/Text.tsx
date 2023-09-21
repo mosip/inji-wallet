@@ -33,7 +33,7 @@ interface TextProps {
   weight?: 'regular' | 'semibold' | 'bold';
   align?: TextStyle['textAlign'];
   margin?: Spacing;
-  size?: 'small' | 'smaller' | 'regular' | 'large';
+  size?: 'small' | 'extraSmall' | 'smaller' | 'regular' | 'large';
   lineHeight?: number;
   numLines?: number;
   style?: StyleProp<TextStyle>;

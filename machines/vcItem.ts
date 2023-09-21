@@ -1361,7 +1361,7 @@ export function selectVc(state: State) {
 }
 
 export function selectGeneratedOn(state: State) {
-  return new Date(state.context.generatedOn).toLocaleDateString();
+  return new Date(state.context.generatedOn);
 }
 
 export function selectId(state: State) {
