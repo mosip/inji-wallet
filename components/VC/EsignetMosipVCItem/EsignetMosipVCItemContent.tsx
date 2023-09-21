@@ -7,6 +7,7 @@ import {Theme} from '../../ui/styleUtils';
 import VerifiedIcon from '../../VerifiedIcon';
 import {getLocalizedField} from '../../../i18n';
 import {Credential, VerifiableCredential} from './vc';
+import testIDProps from '../../../shared/commonUtil';
 
 const getDetails = (arg1: string, arg2: string, credential: Credential) => {
   if (arg1 === 'Status') {

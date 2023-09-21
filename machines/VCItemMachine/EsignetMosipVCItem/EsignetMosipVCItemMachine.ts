@@ -522,14 +522,15 @@ export const EsignetMosipVCItemMachine = model.createMachine(
       ),
 
       sendVcUpdated: send(
-        (_context, event) =>
-          VcEvents.VC_UPDATED(
-            VCMetadata.fromVC(context, true).getVcKey() as string,
+        context =>
+          VcEvents.VC_METADATA_UPDATED(
+            new VCMetadata({...context.vcMetadata, isPinned: context.isPinned}),
           ),
         {
           to: context => context.serviceRefs.vc,
         },
       ),
+
       setWalletBindingError: assign({
         walletBindingError: (context, event) =>
           i18n.t(`errors.genericError`, {
