@@ -69,6 +69,7 @@ const model = createModel(
     downloadInterval: 5000,
     walletBindingResponse: null as WalletBindingResponse,
     walletBindingError: '',
+    walletBindingSuccess: false,
     publicKey: '',
     privateKey: '',
   },
@@ -383,6 +384,7 @@ export const ExistingMosipVCItemMachine =
                       'storeContext',
                       'updateVc',
                       'setWalletBindingErrorEmpty',
+                      'setWalletBindingSuccess',
                       'logWalletBindingSuccess',
                     ],
                   },
@@ -414,6 +416,7 @@ export const ExistingMosipVCItemMachine =
                     'updatePrivateKey',
                     'updateVc',
                     'setWalletBindingErrorEmpty',
+                    'setWalletBindingSuccess',
                     'logWalletBindingSuccess',
                     () => sendEndEvent(getEndData('VC activation')),
                   ],
@@ -732,6 +735,7 @@ export const ExistingMosipVCItemMachine =
                   'storeContext',
                   'updateVc',
                   'setWalletBindingErrorEmpty',
+                  'setWalletBindingSuccess',
                   'logWalletBindingSuccess',
                 ],
               },
@@ -760,6 +764,7 @@ export const ExistingMosipVCItemMachine =
                 'updatePrivateKey',
                 'updateVc',
                 'setWalletBindingErrorEmpty',
+                'setWalletBindingSuccess',
                 'logWalletBindingSuccess',
                 () => sendEndEvent(getEndData('VC activation')),
               ],
@@ -1495,6 +1500,10 @@ export function selectShowWalletBindingError(state: State) {
     state.matches('showingWalletBindingError') ||
     state.matches('kebabPopUp.showingWalletBindingError')
   );
+}
+
+export function setWalletBindingSuccess(state: State) {
+  return state.context.walletBindingSuccess;
 }
 
 export function selectWalletBindingInProgress(state: State) {
