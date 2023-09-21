@@ -13,7 +13,7 @@ const WalletUnverifiedIcon: React.FC = () => {
     <Icon
       name="shield-alert"
       color={Theme.Colors.Icon}
-      size={22}
+      size={Theme.ICON_MID_SIZE}
       type="material-community"
       containerStyle={{marginStart: 10, bottom: 1, marginLeft: 10}}
     />
@@ -25,7 +25,7 @@ const WalletVerifiedIcon: React.FC = () => {
     <Icon
       name="verified-user"
       color={Theme.Colors.VerifiedIcon}
-      size={22}
+      size={Theme.ICON_MID_SIZE}
       containerStyle={{marginStart: 10, bottom: 1, marginLeft: 10}}
     />
   );

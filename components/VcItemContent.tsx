@@ -84,6 +84,10 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
   }
 };
 
+function getIdNumber(id: string) {
+  return '*'.repeat(id.length - 4) + id.slice(-4);
+}
+
 export const VcItemContent: React.FC<VcItemContentProps> = props => {
   //Assigning the UIN and VID from the VC details to display the idtype label
   const uin = props.verifiableCredential?.credentialSubject.UIN;
@@ -208,7 +212,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = props => {
                   weight="semibold"
                   style={Theme.Styles.valueTextSize}
                   color={Theme.Colors.statusLabel}>
-                  {'*'.repeat(uin.length - 4) + uin.slice(-4)}
+                  {getIdNumber(uin)}
                 </Text>
               </Column>
             ) : null}
@@ -227,7 +231,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = props => {
                   weight="semibold"
                   style={Theme.Styles.valueTextSize}
                   color={Theme.Colors.Details}>
-                  {'*'.repeat(vid.length - 4) + vid.slice(-4)}
+                  {getIdNumber(vid)}
                 </Text>
               </Column>
             ) : null}

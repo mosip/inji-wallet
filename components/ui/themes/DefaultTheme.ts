@@ -1042,6 +1042,9 @@ export const DefaultTheme = {
       backgroundColor: Colors.Transparent,
     },
   }),
+
+  ICON_SMALL_SIZE: 16,
+  ICON_MID_SIZE: 22,
   PinIcon: require('../../../assets/pin_icon.png'),
   CloseCard: require('../../../assets/card_bg.png'),
   CardBackground: require('../../../assets/card_bg.png'),
