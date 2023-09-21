@@ -611,7 +611,7 @@ export const DefaultTheme = {
       fontSize: 13,
       lineHeight: 21,
     },
-    extrasmall: {
+    extraSmall: {
       fontSize: 12,
     },
     smaller: {
