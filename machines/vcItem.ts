@@ -147,6 +147,7 @@ export const vcItemMachine =
                 target: 'checkingVerificationStatus',
               },
               {
+                actions: 'addVcToInProgressDownloads',
                 target: 'checkingServerData',
               },
             ],
@@ -212,7 +213,7 @@ export const vcItemMachine =
                     'setVerifiableCredential',
                     'updateVc',
                     'logDownloaded',
-                    'vcLoaded',
+                    'removeVcFromInProgressDownloads',
                   ],
                   target: '#vc-item.checkingVerificationStatus',
                 },
@@ -859,9 +860,24 @@ export const vcItemMachine =
           }
         ),
 
-        vcLoaded: send(
-          _context => {
-            return { type: 'VC_LOADED' };
+        removeVcFromInProgressDownloads: send(
+          (_context, event) => {
+            return {
+              type: 'REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS',
+              requestId: event.response.requestId,
+            };
+          },
+          {
+            to: (context) => context.serviceRefs.vc,
+          }
+        ),
+
+        addVcToInProgressDownloads: send(
+          (context) => {
+            return {
+              type: 'ADD_VC_TO_IN_PROGRESS_DOWNLOADS',
+              requestId: context.requestId,
+            };
           },
           {
             to: (context) => context.serviceRefs.vc,

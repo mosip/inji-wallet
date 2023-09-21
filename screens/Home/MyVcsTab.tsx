@@ -30,11 +30,14 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   };
 
   useEffect(() => {
-    if (controller.isVcLoaded) {
-      controller.RESET_VC_LOADED();
-      controller.DISMISS();
+    if (controller.areAllVcsLoaded) {
+      controller.RESET_STORE_VC_ITEM_STATUS();
+      controller.RESET_ARE_ALL_VCS_DOWNLOADED();
     }
-  }, [controller.isVcLoaded]);
+    if (controller.inProgressVcDownloadsCount > 0) {
+      controller.SET_STORE_VC_ITEM_STATUS();
+    }
+  }, [controller.areAllVcsLoaded, controller.inProgressVcDownloadsCount]);
 
   const DownloadingVcPopUp: React.FC = () => {
     return (
@@ -47,7 +50,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
             testID="close"
             name="close"
             onPress={() => {
-              controller.DISMISS();
+              controller.RESET_STORE_VC_ITEM_STATUS();
               clearIndividualId();
             }}
             color={Theme.Colors.whiteText}

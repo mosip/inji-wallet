@@ -19,7 +19,8 @@ const model = createModel(
     myVcs: [] as string[],
     receivedVcs: [] as string[],
     vcs: {} as Record<string, VC>,
-    isVcLoaded: false as boolean,
+    inProgressVcDownloads: new Set<string>(),
+    areAllVcsDownloaded: false as boolean,
   },
   {
     events: {
@@ -37,8 +38,11 @@ const model = createModel(
       REFRESH_MY_VCS_TWO: (vc: VC) => ({ vc }),
       REFRESH_RECEIVED_VCS: () => ({}),
       GET_RECEIVED_VCS: () => ({}),
-      VC_LOADED: () => ({}),
-      RESET_VC_LOADED: () => ({}),
+      ADD_VC_TO_IN_PROGRESS_DOWNLOADS: (requestId: string) => ({ requestId }),
+      REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS: (requestId: string) => ({
+        requestId,
+      }),
+      RESET_ARE_ALL_VCS_DOWNLOADED: () => ({}),
     },
   }
 );
@@ -154,11 +158,14 @@ export const vcMachine =
             VC_DOWNLOADED: {
               actions: 'setDownloadedVc',
             },
-            VC_LOADED: {
-              actions: 'setIsVcLoaded',
+            ADD_VC_TO_IN_PROGRESS_DOWNLOADS: {
+              actions: 'addVcToInProgressDownloads',
             },
-            RESET_VC_LOADED: {
-              actions: 'resetIsVcLoaded',
+            REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS: {
+              actions: 'removeVcFromInProgressDownlods',
+            },
+            RESET_ARE_ALL_VCS_DOWNLOADED: {
+              actions: 'resetAreAllVcsDownloaded',
             },
             VC_UPDATE: {
               actions: 'setVcUpdate',
@@ -208,12 +215,35 @@ export const vcMachine =
           context.vcs[VC_ITEM_STORE_KEY(event.vc)] = event.vc;
         },
 
-        setIsVcLoaded: model.assign({
-          isVcLoaded: () => true,
+        addVcToInProgressDownloads: model.assign({
+          inProgressVcDownloads: (context, event) => {
+            let paresedInProgressList: Set<string> =
+              context.inProgressVcDownloads;
+            const newVcRequestID = event.requestId;
+            const newInProgressList = paresedInProgressList.add(newVcRequestID);
+            return newInProgressList;
+          },
         }),
 
-        resetIsVcLoaded: model.assign({
-          isVcLoaded: () => false,
+        removeVcFromInProgressDownlods: model.assign({
+          inProgressVcDownloads: (context, event) => {
+            let paresedInProgressList: Set<string> =
+              context.inProgressVcDownloads;
+            const removeVcRequestID = event.requestId;
+            paresedInProgressList.delete(removeVcRequestID);
+            return paresedInProgressList;
+          },
+          areAllVcsDownloaded: (context) => {
+            if (context.inProgressVcDownloads.size == 0) {
+              return true;
+            }
+            return false;
+          },
+        }),
+
+        resetAreAllVcsDownloaded: model.assign({
+          areAllVcsDownloaded: () => false,
+          inProgressVcDownloads: new Set<string>(),
         }),
 
         setVcUpdate: (context, event) => {
@@ -324,8 +354,12 @@ export function selectBindedVcs(state: State) {
   });
 }
 
-export function selectIsVcLoaded(state: State) {
-  return state.context.isVcLoaded;
+export function selectAreAllVcsDownloaded(state: State) {
+  return state.context.areAllVcsDownloaded;
+}
+
+export function selectInProgressVcDownloadsCount(state: State) {
+  return state.context.inProgressVcDownloads.size;
 }
 
 function isEmpty(object) {

@@ -1,5 +1,6 @@
 import {
   ActorRefFrom,
+  assign,
   DoneInvokeEvent,
   EventFrom,
   send,
@@ -19,6 +20,7 @@ import Storage from '../../shared/storage';
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
+    isVcItemStoredSuccessfully: false,
   },
   {
     events: {
@@ -34,6 +36,8 @@ const model = createModel(
       STORAGE_AVAILABLE: () => ({}),
       STORAGE_UNAVAILABLE: () => ({}),
       IS_TAMPERED: () => ({}),
+      SET_STORE_VC_ITEM_STATUS: () => ({}),
+      RESET_STORE_VC_ITEM_STATUS: () => ({}),
     },
   },
 );
@@ -89,6 +93,14 @@ export const MyVcsTabMachine = model.createMachine(
             target: 'idle',
             actions: ['resetIsTampered', 'refreshMyVc'],
           },
+          SET_STORE_VC_ITEM_STATUS: {
+            target: 'idle',
+            actions: 'setStoringVcItemStatus',
+          },
+          RESET_STORE_VC_ITEM_STATUS: {
+            target: 'idle',
+            actions: 'resetStoringVcItemStatus',
+          },
         },
       },
       viewingVc: {
@@ -113,8 +125,8 @@ export const MyVcsTabMachine = model.createMachine(
             entry: ['storeVcItem'],
             on: {
               STORE_RESPONSE: {
-                target: 'addVcSuccessful',
-                actions: ['sendVcAdded'],
+                target: '#idle',
+                actions: ['setStoringVcItemStatus', 'sendVcAdded'],
               },
               STORE_ERROR: {
                 target: '#MyVcsTab.addingVc.savingFailed',
@@ -126,11 +138,6 @@ export const MyVcsTabMachine = model.createMachine(
             states: {
               idle: {},
             },
-            on: {
-              DISMISS: '#idle',
-            },
-          },
-          addVcSuccessful: {
             on: {
               DISMISS: '#idle',
             },
@@ -185,6 +192,14 @@ export const MyVcsTabMachine = model.createMachine(
         {to: context => context.serviceRefs.store},
       ),
 
+      setStoringVcItemStatus: assign({
+        isVcItemStoredSuccessfully: () => true,
+      }),
+
+      resetStoringVcItemStatus: assign({
+        isVcItemStoredSuccessfully: () => false,
+      }),
+
       sendVcAdded: send(
         (_context, event) => VcEvents.VC_ADDED(event.response as string),
         {
@@ -217,7 +232,7 @@ export function selectGetVcModal(state: State) {
 }
 
 export function selectIsRequestSuccessful(state: State) {
-  return state.matches('addingVc.addVcSuccessful');
+  return state.context.isVcItemStoredSuccessfully;
 }
 
 export function selectIsSavingFailedInIdle(state: State) {

@@ -13,6 +13,7 @@ export interface Typegen0 {
     services: never;
   };
   eventsCausingActions: {
+    addVcToInProgressDownloads: 'ADD_VC_TO_IN_PROGRESS_DOWNLOADS';
     getReceivedVcsResponse: 'GET_RECEIVED_VCS';
     getVcItemResponse: 'GET_VC_ITEM';
     loadMyVcs: 'REFRESH_MY_VCS' | 'xstate.init';
@@ -20,10 +21,10 @@ export interface Typegen0 {
     moveExistingVcToTop: 'VC_RECEIVED';
     prependToMyVcs: 'VC_ADDED';
     prependToReceivedVcs: 'VC_RECEIVED';
+    removeVcFromInProgressDownlods: 'REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS';
     removeVcFromMyVcs: 'REMOVE_VC_FROM_CONTEXT';
-    resetIsVcLoaded: 'RESET_VC_LOADED';
+    resetAreAllVcsDownloaded: 'RESET_ARE_ALL_VCS_DOWNLOADED';
     setDownloadedVc: 'VC_DOWNLOADED';
-    setIsVcLoaded: 'VC_LOADED';
     setMyVcs: 'STORE_RESPONSE';
     setReceivedVcs: 'STORE_RESPONSE';
     setUpdateVc: 'VC_UPDATED';

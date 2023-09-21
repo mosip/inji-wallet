@@ -3,10 +3,11 @@ import {useContext} from 'react';
 import {ActorRefFrom} from 'xstate';
 import {selectIsTampered} from '../../machines/store';
 import {
-  selectIsVcLoaded,
   selectIsRefreshingMyVcs,
   selectMyVcs,
   VcEvents,
+  selectAreAllVcsDownloaded,
+  selectInProgressVcDownloadsCount,
 } from '../../machines/vc';
 import {
   selectWalletBindingError,
@@ -57,9 +58,20 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
       settingsService,
       selectShowHardwareKeystoreNotExistsAlert,
     ),
-    isVcLoaded: useSelector(vcService, selectIsVcLoaded),
+    areAllVcsLoaded: useSelector(vcService, selectAreAllVcsDownloaded),
+    inProgressVcDownloadsCount: useSelector(
+      vcService,
+      selectInProgressVcDownloadsCount,
+    ),
 
-    RESET_VC_LOADED: () => vcService.send(VcEvents.RESET_VC_LOADED()),
+    SET_STORE_VC_ITEM_STATUS: () =>
+      service.send(MyVcsTabEvents.SET_STORE_VC_ITEM_STATUS()),
+
+    RESET_STORE_VC_ITEM_STATUS: () =>
+      service.send(MyVcsTabEvents.RESET_STORE_VC_ITEM_STATUS()),
+
+    RESET_ARE_ALL_VCS_DOWNLOADED: () =>
+      vcService.send(VcEvents.RESET_ARE_ALL_VCS_DOWNLOADED()),
 
     DISMISS: () => service.send(MyVcsTabEvents.DISMISS()),
 
