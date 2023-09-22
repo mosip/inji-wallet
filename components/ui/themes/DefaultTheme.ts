@@ -585,14 +585,12 @@ export const DefaultTheme = {
       fontSize: 18,
       lineHeight: 19,
       paddingTop: 4,
-      marginLeft: -30,
     },
     subHeader: {
       fontFamily: 'Inter_600SemiBold',
       lineHeight: 19,
       fontSize: 15,
       paddingTop: 10,
-      marginLeft: -30,
     },
     semiBoldHeader: {
       color: Colors.Black,
