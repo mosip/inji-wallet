@@ -11,29 +11,40 @@ import {
   selectOtpError,
   selectShowWalletBindingError,
   selectWalletBindingError,
-  VcItemEvents,
-  vcItemMachine,
+  ExistingMosipVCItemEvents,
+  ExistingMosipVCItemMachine,
   selectShowActivities,
-} from '../machines/vcItem';
+} from '../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {selectActivities} from '../machines/activityLog';
 import {GlobalContext} from '../shared/GlobalContext';
 import {useContext} from 'react';
 import {VCMetadata} from '../shared/VCMetadata';
+import {
+  EsignetMosipVCItemEvents,
+  EsignetMosipVCItemMachine,
+} from '../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
+import {isVCFromOpenId4VCI} from '../shared/openId4VCI/Utils';
 
 export function useKebabPopUp(props) {
-  const service = props.service as ActorRefFrom<typeof vcItemMachine>;
-  const PIN_CARD = () => service.send(VcItemEvents.PIN_CARD());
-  const KEBAB_POPUP = () => service.send(VcItemEvents.KEBAB_POPUP());
+  const service = props.service as
+    | ActorRefFrom<typeof ExistingMosipVCItemMachine>
+    | ActorRefFrom<typeof EsignetMosipVCItemMachine>;
+  const vcEvents =
+    props.vcKey !== undefined && isVCFromOpenId4VCI(props.vcMetadata)
+      ? EsignetMosipVCItemEvents
+      : ExistingMosipVCItemEvents;
+  const PIN_CARD = () => service.send(vcEvents.PIN_CARD());
+  const KEBAB_POPUP = () => service.send(vcEvents.KEBAB_POPUP());
   const ADD_WALLET_BINDING_ID = () =>
-    service.send(VcItemEvents.ADD_WALLET_BINDING_ID());
-  const CONFIRM = () => service.send(VcItemEvents.CONFIRM());
+    service.send(vcEvents.ADD_WALLET_BINDING_ID());
+  const CONFIRM = () => service.send(vcEvents.CONFIRM());
   const REMOVE = (vcMetadata: VCMetadata) =>
-    service.send(VcItemEvents.REMOVE(vcMetadata));
-  const DISMISS = () => service.send(VcItemEvents.DISMISS());
-  const CANCEL = () => service.send(VcItemEvents.CANCEL());
-  const SHOW_ACTIVITY = () => service.send(VcItemEvents.SHOW_ACTIVITY());
-  const INPUT_OTP = (otp: string) => service.send(VcItemEvents.INPUT_OTP(otp));
-  const RESEND_OTP = () => service.send(VcItemEvents.RESEND_OTP());
+    service.send(vcEvents.REMOVE(vcMetadata));
+  const DISMISS = () => service.send(vcEvents.DISMISS());
+  const CANCEL = () => service.send(vcEvents.CANCEL());
+  const SHOW_ACTIVITY = () => service.send(vcEvents.SHOW_ACTIVITY());
+  const INPUT_OTP = (otp: string) => service.send(vcEvents.INPUT_OTP(otp));
+  const RESEND_OTP = () => service.send(vcEvents.RESEND_OTP());
   const isPinned = useSelector(service, selectIsPinned);
   const isBindingWarning = useSelector(service, selectKebabPopUpBindingWarning);
   const isRemoveWalletWarning = useSelector(service, selectRemoveWalletWarning);

@@ -6,7 +6,7 @@ import {Centered, Column, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {HomeScreenTabProps} from './HomeScreen';
 import {useReceivedVcsTab} from './ReceivedVcsTabController';
-import {VcItem} from '../../components/VcItem';
+import {ExistingMosipVCItem} from '../../components/VC/ExistingMosipVCItem/ExistingMosipVCItem';
 
 export const ReceivedVcsTab: React.FC<HomeScreenTabProps> = props => {
   const {t} = useTranslation('ReceivedVcsTab');
@@ -24,7 +24,7 @@ export const ReceivedVcsTab: React.FC<HomeScreenTabProps> = props => {
           />
         }>
         {controller.receivedVcsMetadata.map(vcMetadata => (
-          <VcItem
+          <ExistingMosipVCItem
             key={vcMetadata.getVcKey()}
             vcMetadata={vcMetadata}
             margin="0 2 8 2"
