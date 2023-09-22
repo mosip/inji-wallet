@@ -772,7 +772,7 @@ SPEC CHECKSUMS:
   BVLinearGradient: 916632041121a658c704df89d99f04acb038de0f
   CatCrypto: a477899b6be4954e75be4897e732da098cc0a5a8
   CrcSwift: f85dea6b41dddb5f98bb3743fd777ce58b77bc2e
-  DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
+  DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   EASClient: 950674e1098ebc09c4c2cf064a61e42e84d9d4c6
   EXApplication: d8f53a7eee90a870a75656280e8d4b85726ea903
   EXBarCodeScanner: 8e23fae8d267dbef9f04817833a494200f1fce35
@@ -795,7 +795,7 @@ SPEC CHECKSUMS:
   FBLazyVector: f637f31eacba90d4fdeff3fa41608b8f361c173b
   FBReactNativeSpec: 0d9a4f4de7ab614c49e98c00aedfd3bfbda33d59
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
-  glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
+  glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   GoogleInterchangeUtilities: d5bc4d88d5b661ab72f9d70c58d02ca8c27ad1f7
   GoogleNetworkingUtilities: 3edd3a8161347494f2da60ea0deddc8a472d94cb
   GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
@@ -867,4 +867,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 01f58b130fa221dabb14b2d82d981ef24dcaba53
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.11.3
