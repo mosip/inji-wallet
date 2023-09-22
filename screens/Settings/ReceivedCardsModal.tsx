@@ -30,16 +30,16 @@ export const ReceivedCardsModal: React.FC<ReceivedCardsProps> = ({
             onRefresh={controller.REFRESH}
           />
         }>
-        {controller.vcKeys.map(vcKey => (
+        {controller.receivedVcsMetadata.map(vcMetadata => (
           <VcItem
-            key={vcKey}
-            vcKey={vcKey}
+            key={vcMetadata.getVcKey()}
+            vcMetadata={vcMetadata}
             margin="0 2 8 2"
             isSharingVc
             onPress={controller.VIEW_VC}
           />
         ))}
-        {controller.vcKeys.length === 0 && (
+        {controller.receivedVcsMetadata.length === 0 && (
           <React.Fragment>
             <Centered fill>
               <Icon

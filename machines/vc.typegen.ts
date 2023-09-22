@@ -27,9 +27,9 @@ export interface Typegen0 {
     setDownloadedVc: 'VC_DOWNLOADED';
     setMyVcs: 'STORE_RESPONSE';
     setReceivedVcs: 'STORE_RESPONSE';
-    setUpdateVc: 'VC_UPDATED';
+    setUpdatedVcMetadatas: 'VC_METADATA_UPDATED';
     setVcUpdate: 'VC_UPDATE';
-    updateMyVcs: 'VC_UPDATED';
+    updateMyVcs: 'VC_METADATA_UPDATED';
   };
   eventsCausingDelays: {};
   eventsCausingGuards: {

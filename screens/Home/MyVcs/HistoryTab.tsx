@@ -8,7 +8,7 @@ import {ActorRefFrom} from 'xstate';
 import {vcItemMachine} from '../../../machines/vcItem';
 import {useKebabPopUp} from '../../../components/KebabPopUpController';
 import {Theme} from '../../../components/ui/styleUtils';
-import {isSameVC} from '../../../shared/constants';
+import {VCMetadata} from '../../../shared/VCMetadata';
 import testIDProps from '../../../shared/commonUtil';
 
 export const HistoryTab: React.FC<HistoryTabProps> = props => {
@@ -28,21 +28,18 @@ export const HistoryTab: React.FC<HistoryTabProps> = props => {
         </ListItem.Title>
       </ListItem.Content>
       <Modal
-        headerLabel={props.vcKey.split(':')[5]}
+        headerLabel={props.vcMetadata.id}
         isVisible={controller.isShowActivities}
         onDismiss={controller.DISMISS}>
         <Column fill>
-          {controller.activities.map(activity => {
-            const vcKeyMatch = isSameVC(activity._vcKey, props.vcKey);
-            if (vcKeyMatch) {
-              return (
-                <ActivityLogText
-                  key={`${activity.timestamp}-${activity._vcKey}`}
-                  activity={activity}
-                />
-              );
-            }
-          })}
+          {controller.activities
+            .filter(activity => activity._vcKey === props.vcMetadata.getVcKey())
+            .map(activity => (
+              <ActivityLogText
+                key={`${activity.timestamp}-${activity._vcKey}`}
+                activity={activity}
+              />
+            ))}
           {controller.activities.length === 0 && (
             <Centered fill>
               <Icon
@@ -69,6 +66,6 @@ export const HistoryTab: React.FC<HistoryTabProps> = props => {
 export interface HistoryTabProps {
   testID?: string;
   label: string;
-  vcKey: string;
+  vcMetadata: VCMetadata;
   service: ActorRefFrom<typeof vcItemMachine>;
 }

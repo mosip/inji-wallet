@@ -1,9 +1,9 @@
-import React, { useContext, useRef } from 'react';
-import { useInterpret, useSelector } from '@xstate/react';
-import { Pressable } from 'react-native';
-import { CheckBox } from 'react-native-elements';
+import React, {useContext, useRef} from 'react';
+import {useInterpret, useSelector} from '@xstate/react';
+import {Pressable} from 'react-native';
+import {CheckBox} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { ActorRefFrom } from 'xstate';
+import {ActorRefFrom} from 'xstate';
 import {
   createVcItemMachine,
   selectVerifiableCredential,
@@ -11,19 +11,20 @@ import {
   selectId,
   vcItemMachine,
 } from '../machines/vcItem';
-import { Column, Row, Text } from './ui';
-import { Theme } from './ui/styleUtils';
-import { RotatingIcon } from './RotatingIcon';
-import { GlobalContext } from '../shared/GlobalContext';
-import { getLocalizedField } from '../i18n';
+import {Column, Row, Text} from './ui';
+import {Theme} from './ui/styleUtils';
+import {RotatingIcon} from './RotatingIcon';
+import {GlobalContext} from '../shared/GlobalContext';
+import {getLocalizedField} from '../i18n';
+import {VCMetadata} from '../shared/VCMetadata';
 
-export const VidItem: React.FC<VcItemProps> = (props) => {
-  const { appService } = useContext(GlobalContext);
+export const VidItem: React.FC<VcItemProps> = props => {
+  const {appService} = useContext(GlobalContext);
   const machine = useRef(
     createVcItemMachine(
       appService.getSnapshot().context.serviceRefs,
-      props.vcKey
-    )
+      props.vcMetadata,
+    ),
   );
   const service = useInterpret(machine.current);
   const uin = useSelector(service, selectId);
@@ -82,7 +83,7 @@ export const VidItem: React.FC<VcItemProps> = (props) => {
             {!verifiableCredential
               ? ''
               : getLocalizedField(
-                  verifiableCredential.credentialSubject.fullName
+                  verifiableCredential.credentialSubject.fullName,
                 ) +
                 ' · ' +
                 generatedOn}
@@ -99,7 +100,7 @@ export const VidItem: React.FC<VcItemProps> = (props) => {
 };
 
 interface VcItemProps {
-  vcKey: string;
+  vcMetadata: VCMetadata;
   margin?: string;
   selectable?: boolean;
   selected?: boolean;

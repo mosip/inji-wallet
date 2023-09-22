@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import { ActorRefFrom } from 'xstate';
-import { vcItemMachine } from '../../machines/vcItem';
-import { VC } from '../../types/vc';
+import {useState} from 'react';
+import {ActorRefFrom} from 'xstate';
+import {vcItemMachine} from '../../machines/vcItem';
+import {VC} from '../../types/vc';
+import {VCMetadata} from '../../shared/VCMetadata';
 
 export function useSelectVcOverlay(props: SelectVcOverlayProps) {
   const [selectedIndex, setSelectedIndex] = useState<number>(null);
@@ -13,12 +14,12 @@ export function useSelectVcOverlay(props: SelectVcOverlayProps) {
     selectedIndex,
 
     onSelect: () => {
-      const { serviceRefs, ...vc } = selectedVcRef.getSnapshot().context;
+      const {serviceRefs, ...vc} = selectedVcRef.getSnapshot().context;
       props.onSelect(vc);
     },
 
     onVerifyAndSelect: () => {
-      const { serviceRefs, ...vc } = selectedVcRef.getSnapshot().context;
+      const {serviceRefs, ...vc} = selectedVcRef.getSnapshot().context;
       props.onVerifyAndSelect(vc);
     },
   };
@@ -34,7 +35,7 @@ export function useSelectVcOverlay(props: SelectVcOverlayProps) {
 export interface SelectVcOverlayProps {
   isVisible: boolean;
   receiverName: string;
-  vcKeys: string[];
+  vcMetadatas: VCMetadata[];
   onSelect: (vc: VC) => void;
   onVerifyAndSelect: (vc: VC) => void;
   onCancel: () => void;
