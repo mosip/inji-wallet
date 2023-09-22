@@ -9,7 +9,7 @@ import {Theme} from '../../components/ui/styleUtils';
 import {RootRouteProps} from '../../routes';
 import {HomeRouteProps} from '../../routes/main';
 import {useIssuerScreenController} from './IssuerScreenController';
-import {Loader} from './Loader';
+import {Loader} from '../../components/ui/Loader';
 import testIDProps from '../../shared/commonUtil';
 
 export const IssuersScreen: React.FC<
