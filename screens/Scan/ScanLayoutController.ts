@@ -177,7 +177,7 @@ export function useScanLayout() {
   } else if (isBleError) {
     statusOverlay = {
       title: t('status.bleError.title'),
-      hint: t('status.bleError.hint'),
+      hint: t('status.bleError.message'),
       onCancel: DISMISS,
       onRetry,
       progress: true,

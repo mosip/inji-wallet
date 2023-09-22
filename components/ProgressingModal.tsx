@@ -70,7 +70,7 @@ export const ProgressingModal: React.FC<ProgressingModalProps> = props => {
 export interface ProgressingModalProps {
   isVisible: boolean;
   isHintVisible: boolean;
-  isBleErrorVisible: boolean;
+  isBleErrorVisible?: boolean;
   title?: string;
   hint?: string;
   onCancel?: () => void;

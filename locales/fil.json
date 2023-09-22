@@ -421,7 +421,7 @@
         "message": "Mangyaring kumonekta sa internet upang paganahin ang Online sharing mode"
       },
       "bleError": {
-        "title": "Nabigong ilipat!",
+        "title": "Nabigong ilipat",
         "message": "Nagkaproblema habang inililipat ang card. Pakisubukang muli.",
         "hint": "Error: {{code}}"
       }
@@ -487,7 +487,7 @@
       "bleError": {
         "title": "Nabigong ilipat!",
         "message": "Nagkaproblema habang inililipat ang card. Pakisubukang muli.",
-        "hint": "Naputol ang koneksyon. Pakisubukang muli."
+        "hint": "Error: {{code}}"
       }
     }
   },

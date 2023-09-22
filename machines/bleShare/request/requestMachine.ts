@@ -498,6 +498,9 @@ export const requestMachine =
         },
         handlingBleError: {
           on: {
+            RESET: {
+              target: 'checkNearbyDevicesPermission',
+            },
             DISMISS: {
               target: '#request.clearingConnection',
             },

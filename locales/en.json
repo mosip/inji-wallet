@@ -418,7 +418,7 @@
         "message": "Please connect to the internet to enable Online sharing mode"
       },
       "bleError": {
-        "title": "Failed to transfer!",
+        "title": "Failed to transfer",
         "message": "Something went wrong while transferring card. Please try again.",
         "hint": "Error: {{code}}"
       }
@@ -484,7 +484,7 @@
       "bleError": {
         "title": "Failed to transfer",
         "message": "Something went wrong while transferring Card. Please try again.",
-        "hint": " The connection was interrupted. Please try again."
+        "hint": "Error: {{code}}"
       }
     }
   },
