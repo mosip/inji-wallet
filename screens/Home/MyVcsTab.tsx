@@ -156,10 +156,11 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         isVisible={controller.showHardwareKeystoreNotExistsAlert}
         title={t('errors.keystoreNotExists.title')}
         message={t('errors.keystoreNotExists.message')}
-        onBackdropPress={controller.ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS}>
+        onCustomAction={controller.ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS}
+        onCustomBtnTxt={t('errors.keystoreNotExists.riskOkayText')}>
         <Row>
           <Button
-            type="clear"
+            type="gradient"
             title={t('errors.keystoreNotExists.riskOkayText')}
             onPress={controller.ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS}
             margin={[0, 8, 0, 0]}
@@ -184,11 +185,12 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         error={'errors.storageLimitReached'}
         onDismiss={controller.DISMISS}
       />
-      <ErrorMessageOverlay
-        translationPath={'MyVcsTab'}
+      <MessageOverlay
         isVisible={controller.isTampered}
-        error={'errors.vcIsTampered'}
-        onDismiss={controller.IS_TAMPERED}
+        title={t('errors.vcIsTampered.title')}
+        message={t('errors.vcIsTampered.message')}
+        onCustomAction={controller.IS_TAMPERED}
+        onCustomBtnTxt={t('common:ok')}
       />
     </React.Fragment>
   );
