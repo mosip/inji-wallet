@@ -157,7 +157,8 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         title={t('errors.keystoreNotExists.title')}
         message={t('errors.keystoreNotExists.message')}
         onCustomAction={controller.ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS}
-        onCustomBtnTxt={t('errors.keystoreNotExists.riskOkayText')}>
+        onCustomBtnTxt={t('errors.keystoreNotExists.riskOkayText')}
+        customHeight={'auto'}>
         <Row>
           <Button
             type="gradient"
@@ -191,6 +192,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         message={t('errors.vcIsTampered.message')}
         onCustomAction={controller.IS_TAMPERED}
         onCustomBtnTxt={t('common:ok')}
+        customHeight={'auto'}
       />
     </React.Fragment>
   );

@@ -1,13 +1,22 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {Dimensions} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 import {Overlay, LinearProgress} from 'react-native-elements';
 import {Button, Column, Text} from './ui';
 import {Theme} from './ui/styleUtils';
 
 export const MessageOverlay: React.FC<MessageOverlayProps> = props => {
   const {t} = useTranslation('common');
+  const style = StyleSheet.create({
+    customHeight: {
+      height: props.customHeight
+        ? props.customHeight
+        : props.progress
+        ? 100
+        : 150,
+    },
+  });
   return (
     <Overlay
       isVisible={props.isVisible}
@@ -16,11 +25,7 @@ export const MessageOverlay: React.FC<MessageOverlayProps> = props => {
       onBackdropPress={props.onBackdropPress}>
       <Column
         width={Dimensions.get('screen').width * 0.8}
-        style={
-          !props.progress
-            ? Theme.MessageOverlayStyles.popupOverLay
-            : {height: 100}
-        }>
+        style={[Theme.MessageOverlayStyles.popupOverLay, style.customHeight]}>
         <Column padding="21" crossAlign="center">
           {props.title && (
             <Text
@@ -122,4 +127,5 @@ export interface MessageOverlayProps {
   onRetry?: () => void;
   onBackdropPress?: () => void;
   onShow?: () => void;
+  customHeight?: number | string | undefined;
 }
