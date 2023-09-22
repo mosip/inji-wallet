@@ -75,7 +75,7 @@ export interface Typegen0 {
       type: 'error.platform.vc-item-openid4vci.updatingPrivateKey:invocation[0]';
       data: unknown;
     };
-    'xstate.init': { type: 'xstate.init' };
+    'xstate.init': {type: 'xstate.init'};
   };
   invokeSrcNameMap: {
     addWalletBindnigId:

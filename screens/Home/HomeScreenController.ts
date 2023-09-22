@@ -1,7 +1,7 @@
-import { useInterpret, useSelector } from '@xstate/react';
-import { useContext, useEffect, useRef } from 'react';
-import { HomeRouteProps } from '../../routes/main';
-import { GlobalContext } from '../../shared/GlobalContext';
+import {useInterpret, useSelector} from '@xstate/react';
+import {useContext, useEffect, useRef} from 'react';
+import {HomeRouteProps} from '../../routes/main';
+import {GlobalContext} from '../../shared/GlobalContext';
 import {
   HomeScreenEvents,
   HomeScreenMachine,
@@ -12,15 +12,15 @@ import {
   selectViewingVc,
   selectIssuersMachine,
 } from './HomeScreenMachine';
-import { VcEvents } from '../../machines/vc';
+import {VcEvents} from '../../machines/vc';
 
 export function useHomeScreen(props: HomeRouteProps) {
-  const { appService } = useContext(GlobalContext);
+  const {appService} = useContext(GlobalContext);
   const machine = useRef(
     HomeScreenMachine.withContext({
       ...HomeScreenMachine.context,
       serviceRefs: appService.getSnapshot().context.serviceRefs,
-    })
+    }),
   );
   const service = useInterpret(machine.current);
   const vcService = appService.children.get('vc');

@@ -41,7 +41,7 @@ export interface Typegen0 {
       type: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
       data: unknown;
     };
-    'xstate.init': { type: 'xstate.init' };
+    'xstate.init': {type: 'xstate.init'};
   };
   invokeSrcNameMap: {
     downloadCredential: 'done.invoke.issuersMachine.downloadCredentials:invocation[0]';

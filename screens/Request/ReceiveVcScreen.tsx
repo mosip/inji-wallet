@@ -1,23 +1,23 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 
-import { DeviceInfoList } from '../../components/DeviceInfoList';
-import { Button, Column, Row, Text } from '../../components/ui';
-import { Theme } from '../../components/ui/styleUtils';
-import { ExistingMosipVCItemDetails } from '../../components/VC/ExistingMosipVCItem/ExistingMosipVCItemDetails';
-import { useReceiveVcScreen } from './ReceiveVcScreenController';
-import { VerifyIdentityOverlay } from '../VerifyIdentityOverlay';
+import {DeviceInfoList} from '../../components/DeviceInfoList';
+import {Button, Column, Row, Text} from '../../components/ui';
+import {Theme} from '../../components/ui/styleUtils';
+import {ExistingMosipVCItemDetails} from '../../components/VC/ExistingMosipVCItem/ExistingMosipVCItemDetails';
+import {useReceiveVcScreen} from './ReceiveVcScreenController';
+import {VerifyIdentityOverlay} from '../VerifyIdentityOverlay';
 import {
   MessageOverlay,
   ErrorMessageOverlay,
 } from '../../components/MessageOverlay';
-import { useOverlayVisibleAfterTimeout } from '../../shared/hooks/useOverlayVisibleAfterTimeout';
+import {useOverlayVisibleAfterTimeout} from '../../shared/hooks/useOverlayVisibleAfterTimeout';
 
 export const ReceiveVcScreen: React.FC = () => {
-  const { t } = useTranslation('ReceiveVcScreen');
+  const {t} = useTranslation('ReceiveVcScreen');
   const controller = useReceiveVcScreen();
   const savingOverlayVisible = useOverlayVisibleAfterTimeout(
-    controller.isAccepting
+    controller.isAccepting,
   );
   const storeErrorTranslationPath = 'errors.savingFailed';
 
@@ -59,7 +59,7 @@ export const ReceiveVcScreen: React.FC = () => {
         isVisible={controller.isInvalidIdentity}
         title={t('VerifyIdentityOverlay:errors.invalidIdentity.title')}
         message={t(
-          'VerifyIdentityOverlay:errors.invalidIdentity.messageNoRetry'
+          'VerifyIdentityOverlay:errors.invalidIdentity.messageNoRetry',
         )}
         onBackdropPress={controller.DISMISS}>
         <Row>

@@ -1,23 +1,23 @@
-import { authorize, AuthorizeResult } from 'react-native-app-auth';
-import { assign, EventFrom, send, sendParent, StateFrom } from 'xstate';
-import { createModel } from 'xstate/lib/model';
-import { Theme } from '../components/ui/styleUtils';
-import { MY_VCS_STORE_KEY } from '../shared/constants';
-import { request } from '../shared/request';
-import { StoreEvents } from './store';
-import { AppServices } from '../shared/GlobalContext';
+import {authorize, AuthorizeResult} from 'react-native-app-auth';
+import {assign, EventFrom, send, sendParent, StateFrom} from 'xstate';
+import {createModel} from 'xstate/lib/model';
+import {Theme} from '../components/ui/styleUtils';
+import {MY_VCS_STORE_KEY} from '../shared/constants';
+import {request} from '../shared/request';
+import {StoreEvents} from './store';
+import {AppServices} from '../shared/GlobalContext';
 import {
   generateKeys,
   isCustomSecureKeystore,
 } from '../shared/cryptoutil/cryptoUtil';
 import SecureKeystore from 'react-native-secure-keystore';
-import { KeyPair } from 'react-native-rsa-native';
-import { ActivityLogEvents } from './activityLog';
-import { log } from 'xstate/lib/actions';
-import { verifyCredential } from '../shared/vcjs/verifyCredential';
-import { getBody, getIdentifier } from '../shared/openId4VCI/Utils';
-import { VCMetadata } from '../shared/VCMetadata';
-import { VerifiableCredential } from '../components/VC/EsignetMosipVCItem/vc';
+import {KeyPair} from 'react-native-rsa-native';
+import {ActivityLogEvents} from './activityLog';
+import {log} from 'xstate/lib/actions';
+import {verifyCredential} from '../shared/vcjs/verifyCredential';
+import {getBody, getIdentifier} from '../shared/openId4VCI/Utils';
+import {VCMetadata} from '../shared/VCMetadata';
+import {VerifiableCredential} from '../components/VC/EsignetMosipVCItem/vc';
 
 const model = createModel(
   {
@@ -35,7 +35,7 @@ const model = createModel(
   {
     events: {
       DISMISS: () => ({}),
-      SELECTED_ISSUER: (id: string) => ({ id }),
+      SELECTED_ISSUER: (id: string) => ({id}),
       DOWNLOAD_ID: () => ({}),
       COMPLETED: () => ({}),
       TRY_AGAIN: () => ({}),
@@ -43,7 +43,7 @@ const model = createModel(
       CHECK_KEY_PAIR: () => ({}),
       CANCEL: () => ({}),
     },
-  }
+  },
 );
 
 export const IssuerScreenTabEvents = model.events;
@@ -130,10 +130,10 @@ export const IssuersMachine = model.createMachine(
       checkKeyPair: {
         description: 'checks whether key pair is generated',
         entry: [
-          (context) =>
+          context =>
             log(
               'Reached CheckKeyPair context -> ',
-              JSON.stringify(context, null, 4)
+              JSON.stringify(context, null, 4),
             ),
           send('CHECK_KEY_PAIR'),
         ],
@@ -257,7 +257,7 @@ export const IssuersMachine = model.createMachine(
           event.privateKey ? event.privateKey : context.privateKey,
       }),
       getKeyPairFromStore: send(StoreEvents.GET(Issuers_Key_Ref), {
-        to: (context) => context.serviceRefs.store,
+        to: context => context.serviceRefs.store,
       }),
       storeKeyPair: send(
         (_, event) => {
@@ -267,12 +267,12 @@ export const IssuersMachine = model.createMachine(
           });
         },
         {
-          to: (context) => context.serviceRefs.store,
-        }
+          to: context => context.serviceRefs.store,
+        },
       ),
 
       storeVerifiableCredentialMeta: send(
-        (context) => {
+        context => {
           const [issuer, protocol, id] =
             context.verifiableCredential?.identifier.split(':');
           return StoreEvents.PREPEND(
@@ -281,16 +281,16 @@ export const IssuersMachine = model.createMachine(
               id: id ? id : null,
               issuer: issuer,
               protocol: protocol,
-            })
+            }),
           );
         },
         {
-          to: (context) => context.serviceRefs.store,
-        }
+          to: context => context.serviceRefs.store,
+        },
       ),
 
       storeVerifiableCredentialData: send(
-        (context) => {
+        context => {
           const [issuer, protocol, id] =
             context.verifiableCredential?.identifier.split(':');
           return StoreEvents.SET(
@@ -299,16 +299,16 @@ export const IssuersMachine = model.createMachine(
               issuer: issuer,
               protocol: protocol,
             }).getVcKey(),
-            context.verifiableCredential
+            context.verifiableCredential,
           );
         },
         {
-          to: (context) => context.serviceRefs.store,
-        }
+          to: context => context.serviceRefs.store,
+        },
       ),
 
       storeVcMetaContext: send(
-        (context) => {
+        context => {
           const [issuer, protocol, id] =
             context.verifiableCredential?.identifier.split(':');
 
@@ -322,12 +322,12 @@ export const IssuersMachine = model.createMachine(
           };
         },
         {
-          to: (context) => context.serviceRefs.vc,
-        }
+          to: context => context.serviceRefs.vc,
+        },
       ),
 
       storeVcsContext: send(
-        (context) => {
+        context => {
           const [issuer, protocol, id] =
             context.verifiableCredential?.identifier.split(':');
           return {
@@ -341,8 +341,8 @@ export const IssuersMachine = model.createMachine(
           };
         },
         {
-          to: (context) => context.serviceRefs.vc,
-        }
+          to: context => context.serviceRefs.vc,
+        },
       ),
 
       setSelectedIssuers: model.assign({
@@ -372,7 +372,7 @@ export const IssuersMachine = model.createMachine(
       }),
 
       logDownloaded: send(
-        (context) => {
+        context => {
           const [issuer, protocol, id] =
             context.verifiableCredential?.identifier.split(':');
 
@@ -385,8 +385,8 @@ export const IssuersMachine = model.createMachine(
           });
         },
         {
-          to: (context) => context.serviceRefs.activityLog,
-        }
+          to: context => context.serviceRefs.activityLog,
+        },
       ),
     },
     services: {
@@ -403,11 +403,11 @@ export const IssuersMachine = model.createMachine(
       downloadIssuerConfig: async (_, event) => {
         const response = await request(
           'GET',
-          `/residentmobileapp/issuers/${event.id}`
+          `/residentmobileapp/issuers/${event.id}`,
         );
         return response.response;
       },
-      downloadCredential: async (context) => {
+      downloadCredential: async context => {
         const body = await getBody(context);
         const response = await fetch(
           'https://api-internal.dev1.mosip.net/v1/esignet/vci/credential',
@@ -418,17 +418,17 @@ export const IssuersMachine = model.createMachine(
               Authorization: 'Bearer ' + context.tokenResponse?.accessToken,
             },
             body: JSON.stringify(body),
-          }
+          },
         );
         let credential = await response.json();
         credential = updateCredentialInformation(context, credential);
         return credential;
       },
-      invokeAuthorization: async (context) => {
+      invokeAuthorization: async context => {
         const response = await authorize(context.selectedIssuer);
         return response;
       },
-      generateKeyPair: async (context) => {
+      generateKeyPair: async context => {
         if (!isCustomSecureKeystore()) {
           return await generateKeys();
         }
@@ -436,21 +436,21 @@ export const IssuersMachine = model.createMachine(
         return SecureKeystore.generateKeyPair(
           Issuers_Key_Ref,
           isBiometricsEnabled,
-          0
+          0,
         );
         return context;
       },
-      verifyCredential: async (context) => {
+      verifyCredential: async context => {
         return verifyCredential(context.verifiableCredential?.credential);
       },
     },
     guards: {
-      hasKeyPair: (context) => {
+      hasKeyPair: context => {
         return context.publicKey != null;
       },
       isCustomSecureKeystore: () => isCustomSecureKeystore(),
     },
-  }
+  },
 );
 
 type State = StateFrom<typeof IssuersMachine>;
@@ -495,7 +495,7 @@ const updateCredentialInformation = (context, credential) => {
   credential.issuerLogo = context.selectedIssuer.logoUrl;
   console.log(
     'Response from downloadCredential',
-    JSON.stringify(credential, null, 4)
+    JSON.stringify(credential, null, 4),
   );
   return credential;
 };

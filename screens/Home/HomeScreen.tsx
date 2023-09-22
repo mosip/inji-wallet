@@ -1,22 +1,22 @@
-import React, { useEffect } from 'react';
-import { Icon, Tab } from 'react-native-elements';
-import { Button, Column, Text } from '../../components/ui';
-import { Theme } from '../../components/ui/styleUtils';
-import { HomeRouteProps } from '../../routes/main';
-import { MyVcsTab } from './MyVcsTab';
-import { ReceivedVcsTab } from './ReceivedVcsTab';
-import { ViewVcModal } from './ViewVcModal';
-import { useHomeScreen } from './HomeScreenController';
-import { TabRef } from './HomeScreenMachine';
-import { useTranslation } from 'react-i18next';
-import { ActorRefFrom } from 'xstate';
-import { ExistingMosipVCItemMachine } from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
-import { isOpenId4VCIEnabled } from '../../shared/openId4VCI/Utils';
+import React, {useEffect} from 'react';
+import {Icon, Tab} from 'react-native-elements';
+import {Button, Column, Text} from '../../components/ui';
+import {Theme} from '../../components/ui/styleUtils';
+import {HomeRouteProps} from '../../routes/main';
+import {MyVcsTab} from './MyVcsTab';
+import {ReceivedVcsTab} from './ReceivedVcsTab';
+import {ViewVcModal} from './ViewVcModal';
+import {useHomeScreen} from './HomeScreenController';
+import {TabRef} from './HomeScreenMachine';
+import {useTranslation} from 'react-i18next';
+import {ActorRefFrom} from 'xstate';
+import {ExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
+import {isOpenId4VCIEnabled} from '../../shared/openId4VCI/Utils';
 import LinearGradient from 'react-native-linear-gradient';
-import { EsignetMosipVCItemMachine } from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
+import {EsignetMosipVCItemMachine} from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 
-export const HomeScreen: React.FC<HomeRouteProps> = (props) => {
-  const { t } = useTranslation('HomeScreen');
+export const HomeScreen: React.FC<HomeRouteProps> = props => {
+  const {t} = useTranslation('HomeScreen');
   const controller = useHomeScreen(props);
 
   useEffect(() => {

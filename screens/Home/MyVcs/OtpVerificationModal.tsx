@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { PinInput } from '../../../components/PinInput';
-import { Column, Text } from '../../../components/ui';
-import { ModalProps, Modal } from '../../../components/ui/Modal';
-import { Theme } from '../../../components/ui/styleUtils';
-import { Image, TouchableOpacity } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {PinInput} from '../../../components/PinInput';
+import {Column, Text} from '../../../components/ui';
+import {ModalProps, Modal} from '../../../components/ui/Modal';
+import {Theme} from '../../../components/ui/styleUtils';
+import {Image, TouchableOpacity} from 'react-native';
 
-export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
-  props
-) => {
-  const { t } = useTranslation('OtpVerificationModal');
+export const OtpVerificationModal: React.FC<
+  OtpVerificationModalProps
+> = props => {
+  const {t} = useTranslation('OtpVerificationModal');
 
   const [timer, setTimer] = useState(180); // 30 seconds
 
@@ -23,7 +23,7 @@ export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
     return () => clearInterval(intervalId);
   }, [timer]);
 
-  const formatTime = (seconds) => {
+  const formatTime = seconds => {
     const minutes = Math.floor(seconds / 60);
     const Seconds = seconds % 60;
     return `${minutes < 10 ? '0' + minutes : minutes}:${

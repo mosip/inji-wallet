@@ -1,7 +1,7 @@
-import { useSelector } from '@xstate/react';
-import { useContext } from 'react';
-import { ActorRefFrom } from 'xstate';
-import { selectIsTampered } from '../../machines/store';
+import {useSelector} from '@xstate/react';
+import {useContext} from 'react';
+import {ActorRefFrom} from 'xstate';
+import {selectIsTampered} from '../../machines/store';
 import {
   selectIsRefreshingMyVcs,
   selectMyVcsMetadata,
@@ -13,9 +13,9 @@ import {
   selectWalletBindingError,
   selectShowWalletBindingError,
 } from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
-import { ExistingMosipVCItemMachine } from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
-import { GlobalContext } from '../../shared/GlobalContext';
-import { HomeScreenTabProps } from './HomeScreen';
+import {ExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
+import {GlobalContext} from '../../shared/GlobalContext';
+import {HomeScreenTabProps} from './HomeScreen';
 import {
   MyVcsTabEvents,
   MyVcsTabMachine,
@@ -29,11 +29,11 @@ import {
   selectShowHardwareKeystoreNotExistsAlert,
   SettingsEvents,
 } from '../../machines/settings';
-import { EsignetMosipVCItemMachine } from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
+import {EsignetMosipVCItemMachine} from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 
 export function useMyVcsTab(props: HomeScreenTabProps) {
   const service = props.service as ActorRefFrom<typeof MyVcsTabMachine>;
-  const { appService } = useContext(GlobalContext);
+  const {appService} = useContext(GlobalContext);
   const vcService = appService.children.get('vc');
   const storeService = appService.children.get('store');
   const settingsService = appService.children.get('settings');
@@ -53,16 +53,16 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
     isBindingError: useSelector(service, selectShowWalletBindingError),
     isMinimumStorageLimitReached: useSelector(
       service,
-      selectIsMinimumStorageLimitReached
+      selectIsMinimumStorageLimitReached,
     ),
     showHardwareKeystoreNotExistsAlert: useSelector(
       settingsService,
-      selectShowHardwareKeystoreNotExistsAlert
+      selectShowHardwareKeystoreNotExistsAlert,
     ),
     areAllVcsLoaded: useSelector(vcService, selectAreAllVcsDownloaded),
     inProgressVcDownloadsCount: useSelector(
       vcService,
-      selectInProgressVcDownloadsCount
+      selectInProgressVcDownloadsCount,
     ),
 
     SET_STORE_VC_ITEM_STATUS: () =>
@@ -85,7 +85,7 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
     VIEW_VC: (
       vcRef:
         | ActorRefFrom<typeof ExistingMosipVCItemMachine>
-        | ActorRefFrom<typeof EsignetMosipVCItemMachine>
+        | ActorRefFrom<typeof EsignetMosipVCItemMachine>,
     ) => {
       return service.send(MyVcsTabEvents.VIEW_VC(vcRef));
     },

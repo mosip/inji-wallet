@@ -1,17 +1,17 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Button, Column, Row, Text } from '../../ui';
-import { Image, ImageBackground, View } from 'react-native';
-import { Theme } from '../../ui/styleUtils';
-import { QrCodeOverlay } from '../../QrCodeOverlay';
-import { getLocalizedField } from '../../../i18n';
+import {useTranslation} from 'react-i18next';
+import {Button, Column, Row, Text} from '../../ui';
+import {Image, ImageBackground, View} from 'react-native';
+import {Theme} from '../../ui/styleUtils';
+import {QrCodeOverlay} from '../../QrCodeOverlay';
+import {getLocalizedField} from '../../../i18n';
 import VerifiedIcon from '../../VerifiedIcon';
-import { CREDENTIAL_REGISTRY_EDIT } from 'react-native-dotenv';
-import { TextItem } from '../../ui/TextItem';
-import { format, formatDistanceToNow, parse } from 'date-fns';
+import {CREDENTIAL_REGISTRY_EDIT} from 'react-native-dotenv';
+import {TextItem} from '../../ui/TextItem';
+import {format, formatDistanceToNow, parse} from 'date-fns';
 import DateFnsLocale from 'date-fns/locale';
-import { Icon } from 'react-native-elements';
-import { WalletBindingResponse } from '../../../shared/cryptoutil/cryptoUtil';
+import {Icon} from 'react-native-elements';
+import {WalletBindingResponse} from '../../../shared/cryptoutil/cryptoUtil';
 import {
   CredentialSubject,
   VCSharingReason,
@@ -22,8 +22,8 @@ import {
 
 export const EsignetMosipVCItemDetails: React.FC<
   EsignetMosipVCItemDetailsProps
-> = (props) => {
-  const { t, i18n } = useTranslation('VcDetails');
+> = props => {
+  const {t, i18n} = useTranslation('VcDetails');
 
   if (props.vc?.verifiableCredential == null) {
     return <Text align="center">Loading details...</Text>;
@@ -74,7 +74,7 @@ export const EsignetMosipVCItemDetails: React.FC<
                 color={Theme.Colors.Details}>
                 {getLocalizedField(
                   props.vc?.verifiableCredential.credential.credentialSubject
-                    .fullName
+                    .fullName,
                 )}
               </Text>
             </Column>
@@ -129,12 +129,12 @@ export const EsignetMosipVCItemDetails: React.FC<
                       parse(
                         getLocalizedField(
                           props.vc?.verifiableCredential.credential
-                            .credentialSubject.dateOfBirth
+                            .credentialSubject.dateOfBirth,
                         ),
                         'yyyy/MM/dd',
-                        new Date()
+                        new Date(),
                       ),
-                      'yyy/MM/dd'
+                      'yyy/MM/dd',
                     )}
                   </Text>
                 </Column>
@@ -153,7 +153,7 @@ export const EsignetMosipVCItemDetails: React.FC<
                     color={Theme.Colors.Details}>
                     {getLocalizedField(
                       props.vc?.verifiableCredential.credential
-                        .credentialSubject.gender
+                        .credentialSubject.gender,
                     )}
                   </Text>
                 </Column>
@@ -201,7 +201,7 @@ export const EsignetMosipVCItemDetails: React.FC<
                     color={Theme.Colors.Details}>
                     {getLocalizedField(
                       props.vc?.verifiableCredential.credential
-                        .credentialSubject.phone
+                        .credentialSubject.phone,
                     )}
                   </Text>
                 </Column>
@@ -223,15 +223,15 @@ export const EsignetMosipVCItemDetails: React.FC<
                 style={
                   props.vc?.verifiableCredential.credential.credentialSubject
                     .email.length > 25
-                    ? { flex: 1 }
-                    : { flex: 0 }
+                    ? {flex: 1}
+                    : {flex: 0}
                 }
                 weight="semibold"
                 size="smaller"
                 color={Theme.Colors.Details}>
                 {getLocalizedField(
                   props.vc?.verifiableCredential.credential.credentialSubject
-                    .email
+                    .email,
                 )}
               </Text>
             </Row>
@@ -246,12 +246,12 @@ export const EsignetMosipVCItemDetails: React.FC<
             </Text>
             <Row>
               <Text
-                style={{ flex: 1 }}
+                style={{flex: 1}}
                 weight="semibold"
                 size="smaller"
                 color={Theme.Colors.Details}>
                 {getFullAddress(
-                  props.vc?.verifiableCredential.credential.credentialSubject
+                  props.vc?.verifiableCredential.credential.credentialSubject,
                 )}
               </Text>
             </Row>
@@ -304,7 +304,7 @@ export const EsignetMosipVCItemDetails: React.FC<
                 type="material-community"
               />
               <Text
-                style={{ flex: 1 }}
+                style={{flex: 1}}
                 weight="semibold"
                 size="small"
                 margin={'0 0 5 0'}
@@ -313,7 +313,7 @@ export const EsignetMosipVCItemDetails: React.FC<
               </Text>
             </Row>
             <Text
-              style={{ flex: 1 }}
+              style={{flex: 1}}
               weight="regular"
               size="small"
               margin={'0 0 5 0'}
@@ -334,7 +334,7 @@ export const EsignetMosipVCItemDetails: React.FC<
                 name="verified-user"
                 color={Theme.Colors.VerifiedIcon}
                 size={28}
-                containerStyle={{ marginStart: 4, bottom: 1 }}
+                containerStyle={{marginStart: 4, bottom: 1}}
               />
               <Text
                 numLines={1}
@@ -394,7 +394,7 @@ function getFullAddress(credential: CredentialSubject) {
   ];
 
   return fields
-    .map((field) => getLocalizedField(credential[field]))
+    .map(field => getLocalizedField(credential[field]))
     .concat(credential.postalCode)
     .filter(Boolean)
     .join(', ');

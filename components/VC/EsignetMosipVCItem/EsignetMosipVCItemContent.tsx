@@ -1,12 +1,12 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Image, ImageBackground } from 'react-native';
-import { CheckBox, Icon } from 'react-native-elements';
-import { Column, Row, Text } from '../../ui';
-import { Theme } from '../../ui/styleUtils';
+import {useTranslation} from 'react-i18next';
+import {Image, ImageBackground} from 'react-native';
+import {CheckBox, Icon} from 'react-native-elements';
+import {Column, Row, Text} from '../../ui';
+import {Theme} from '../../ui/styleUtils';
 import VerifiedIcon from '../../VerifiedIcon';
-import { getLocalizedField } from '../../../i18n';
-import { Credential, VerifiableCredential } from './vc';
+import {getLocalizedField} from '../../../i18n';
+import {Credential, VerifiableCredential} from './vc';
 import testIDProps from '../../../shared/commonUtil';
 
 const getDetails = (arg1: string, arg2: string, credential: Credential) => {
@@ -71,13 +71,13 @@ const getDetails = (arg1: string, arg2: string, credential: Credential) => {
 
 export const EsignetMosipVCItemContent: React.FC<
   EsignetMosipVCItemContentProps
-> = (props) => {
+> = props => {
   const fullName = !props.credential
     ? ''
     : getLocalizedField(
-        props.credential?.credential.credentialSubject?.fullName
+        props.credential?.credential.credentialSubject?.fullName,
       );
-  const { t } = useTranslation('VcDetails');
+  const {t} = useTranslation('VcDetails');
   const isvalid = !props.credential ? '' : t('valid');
   const selectableOrCheck = props.selectable ? (
     <CheckBox
@@ -105,7 +105,7 @@ export const EsignetMosipVCItemContent: React.FC<
               source={
                 !props.credential
                   ? Theme.ProfileIcon
-                  : { uri: props.credential?.credential.credentialSubject.face }
+                  : {uri: props.credential?.credential.credentialSubject.face}
               }
               style={Theme.Styles.closeCardImage}>
               {props.iconName && (
@@ -114,7 +114,7 @@ export const EsignetMosipVCItemContent: React.FC<
                   name={props.iconName}
                   type={props.iconType}
                   color={Theme.Colors.Icon}
-                  style={{ marginLeft: -80 }}
+                  style={{marginLeft: -80}}
                 />
               )}
             </ImageBackground>
@@ -122,7 +122,7 @@ export const EsignetMosipVCItemContent: React.FC<
               {getDetails(
                 t('fullName'),
                 fullName,
-                props.credential?.credential
+                props.credential?.credential,
               )}
 
               <Column margin="10 0 0 0">
@@ -166,7 +166,7 @@ export const EsignetMosipVCItemContent: React.FC<
             {getDetails(
               t('generatedOn'),
               props.generatedOn,
-              props.credential?.credential
+              props.credential?.credential,
             )}
           </Column>
           <Column>
@@ -175,7 +175,7 @@ export const EsignetMosipVCItemContent: React.FC<
               : null}
           </Column>
           <Column
-            style={{ display: props.credential?.credential ? 'flex' : 'none' }}>
+            style={{display: props.credential?.credential ? 'flex' : 'none'}}>
             <Image
               src={props.credential?.issuerLogo}
               style={Theme.Styles.issuerLogo}

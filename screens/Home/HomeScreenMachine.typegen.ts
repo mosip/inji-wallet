@@ -6,7 +6,7 @@ export interface Typegen0 {
     'xstate.after(100)#HomeScreen.tabs.init': {
       type: 'xstate.after(100)#HomeScreen.tabs.init';
     };
-    'xstate.init': { type: 'xstate.init' };
+    'xstate.init': {type: 'xstate.init'};
   };
   invokeSrcNameMap: {};
   missingImplementations: {

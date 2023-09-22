@@ -1,6 +1,6 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import { Dimensions, Platform, StyleSheet, ViewStyle } from 'react-native';
-import { Spacing } from '../styleUtils';
+import {Dimensions, Platform, StyleSheet, ViewStyle} from 'react-native';
+import {Spacing} from '../styleUtils';
 
 const Colors = {
   Black: '#231F20',
@@ -230,7 +230,7 @@ export const PurpleTheme = {
       margin: 8,
       backgroundColor: '#fff',
       shadowColor: '#000',
-      shadowOffset: { width: -1, height: 2 },
+      shadowOffset: {width: -1, height: 2},
       shadowOpacity: 0.3,
       shadowRadius: 4,
       elevation: 7,
@@ -293,7 +293,7 @@ export const PurpleTheme = {
       margin: 8,
       backgroundColor: '#fff',
       shadowColor: '#000',
-      shadowOffset: { width: -1, height: 1 },
+      shadowOffset: {width: -1, height: 1},
       shadowOpacity: 0.4,
       shadowRadius: 3,
       elevation: 4,
@@ -554,7 +554,7 @@ export const PurpleTheme = {
       borderRadius: 10,
       elevation: 6,
       shadowColor: '#000',
-      shadowOffset: { width: -1, height: 1 },
+      shadowOffset: {width: -1, height: 1},
       shadowOpacity: 0.4,
       shadowRadius: 3,
     },
@@ -926,9 +926,9 @@ export const PurpleTheme = {
       flex: 1,
       width: Dimensions.get('screen').width,
     },
-    revokeView: { padding: 20 },
-    flexRow: { flexDirection: 'row', margin: 0, padding: 0 },
-    rowStyle: { flexDirection: 'column', justifyContent: 'space-between' },
+    revokeView: {padding: 20},
+    flexRow: {flexDirection: 'row', margin: 0, padding: 0},
+    rowStyle: {flexDirection: 'column', justifyContent: 'space-between'},
     viewContainer: {
       backgroundColor: 'rgba(0,0,0,.6)',
       width: Dimensions.get('screen').width,
@@ -1099,7 +1099,7 @@ export const PurpleTheme = {
       flex: 1,
       backgroundColor: Colors.White,
     },
-    issuersContainer: { marginHorizontal: 3 },
+    issuersContainer: {marginHorizontal: 3},
     issuerBoxContainer: {
       margin: 5,
       flex: 1,
@@ -1148,7 +1148,7 @@ export const PurpleTheme = {
     },
   }),
   ErrorStyles: StyleSheet.create({
-    image: { marginTop: -60, paddingBottom: 26 },
+    image: {marginTop: -60, paddingBottom: 26},
     title: {
       color: Colors.Black,
       fontFamily: 'Inter_600SemiBold',
@@ -1249,7 +1249,7 @@ function generateBoxShadowStyle() {
   if (Platform.OS === 'ios') {
     return {
       shadowColor: '#000',
-      shadowOffset: { width: 1, height: 1.2 },
+      shadowOffset: {width: 1, height: 1.2},
       shadowOpacity: 0.3,
       shadowRadius: 2.5,
     };

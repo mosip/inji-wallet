@@ -1,4 +1,4 @@
-import { VC, VcIdType } from '../types/vc';
+import {VC, VcIdType} from '../types/vc';
 
 const VC_KEY_PREFIX = 'VC';
 const VC_ITEM_STORE_KEY_REGEX = '^VC_[a-z0-9-]+$';
@@ -84,5 +84,5 @@ export class VCMetadata {
 }
 
 export function parseMetadatas(metadataStrings: object[]) {
-  return metadataStrings.map((o) => new VCMetadata(o));
+  return metadataStrings.map(o => new VCMetadata(o));
 }

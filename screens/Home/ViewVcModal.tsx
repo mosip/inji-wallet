@@ -1,20 +1,20 @@
 import React from 'react';
-import { DropdownIcon } from '../../components/DropdownIcon';
-import { TextEditOverlay } from '../../components/TextEditOverlay';
-import { Column, Text } from '../../components/ui';
-import { Modal } from '../../components/ui/Modal';
-import { MessageOverlay } from '../../components/MessageOverlay';
-import { ToastItem } from '../../components/ui/ToastItem';
-import { RevokeConfirmModal } from '../../components/RevokeConfirm';
-import { OIDcAuthenticationModal } from '../../components/OIDcAuth';
-import { useViewVcModal, ViewVcModalProps } from './ViewVcModalController';
-import { useTranslation } from 'react-i18next';
-import { OtpVerificationModal } from './MyVcs/OtpVerificationModal';
-import { BindingVcWarningOverlay } from './MyVcs/BindingVcWarningOverlay';
-import { VcDetailsContainer } from '../../components/VC/VcDetailsContainer';
+import {DropdownIcon} from '../../components/DropdownIcon';
+import {TextEditOverlay} from '../../components/TextEditOverlay';
+import {Column, Text} from '../../components/ui';
+import {Modal} from '../../components/ui/Modal';
+import {MessageOverlay} from '../../components/MessageOverlay';
+import {ToastItem} from '../../components/ui/ToastItem';
+import {RevokeConfirmModal} from '../../components/RevokeConfirm';
+import {OIDcAuthenticationModal} from '../../components/OIDcAuth';
+import {useViewVcModal, ViewVcModalProps} from './ViewVcModalController';
+import {useTranslation} from 'react-i18next';
+import {OtpVerificationModal} from './MyVcs/OtpVerificationModal';
+import {BindingVcWarningOverlay} from './MyVcs/BindingVcWarningOverlay';
+import {VcDetailsContainer} from '../../components/VC/VcDetailsContainer';
 
-export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
-  const { t } = useTranslation('ViewVcModal');
+export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
+  const {t} = useTranslation('ViewVcModal');
   const controller = useViewVcModal(props);
 
   const DATA = [

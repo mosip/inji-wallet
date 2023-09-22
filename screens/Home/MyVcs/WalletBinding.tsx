@@ -1,18 +1,18 @@
 import React from 'react';
-import { Icon, ListItem } from 'react-native-elements';
-import { Row, Text } from '../../../components/ui';
-import { Theme } from '../../../components/ui/styleUtils';
-import { useTranslation } from 'react-i18next';
-import { BindingVcWarningOverlay } from './BindingVcWarningOverlay';
-import { OtpVerificationModal } from './OtpVerificationModal';
-import { MessageOverlay } from '../../../components/MessageOverlay';
-import { useKebabPopUp } from '../../../components/KebabPopUpController';
-import { Dimensions } from 'react-native';
-import { ActorRefFrom } from 'xstate';
-import { ExistingMosipVCItemMachine } from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
+import {Icon, ListItem} from 'react-native-elements';
+import {Row, Text} from '../../../components/ui';
+import {Theme} from '../../../components/ui/styleUtils';
+import {useTranslation} from 'react-i18next';
+import {BindingVcWarningOverlay} from './BindingVcWarningOverlay';
+import {OtpVerificationModal} from './OtpVerificationModal';
+import {MessageOverlay} from '../../../components/MessageOverlay';
+import {useKebabPopUp} from '../../../components/KebabPopUpController';
+import {Dimensions} from 'react-native';
+import {ActorRefFrom} from 'xstate';
+import {ExistingMosipVCItemMachine} from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import testIDProps from '../../../shared/commonUtil';
 
-export const WalletBinding: React.FC<WalletBindingProps> = (props) => {
+export const WalletBinding: React.FC<WalletBindingProps> = props => {
   const controller = useKebabPopUp(props);
 
   const WalletVerified: React.FC = () => {
@@ -21,11 +21,11 @@ export const WalletBinding: React.FC<WalletBindingProps> = (props) => {
         name="verified-user"
         color={Theme.Colors.VerifiedIcon}
         size={28}
-        containerStyle={{ marginStart: 4, bottom: 1 }}
+        containerStyle={{marginStart: 4, bottom: 1}}
       />
     );
   };
-  const { t } = useTranslation('WalletBinding');
+  const {t} = useTranslation('WalletBinding');
 
   return controller.emptyWalletBindingId ? (
     <ListItem bottomDivider onPress={controller.ADD_WALLET_BINDING_ID}>
@@ -84,7 +84,7 @@ export const WalletBinding: React.FC<WalletBindingProps> = (props) => {
         width={Dimensions.get('screen').width * 0.8}
         align="space-between"
         crossAlign="center">
-        <Row crossAlign="center" style={{ flex: 1 }}>
+        <Row crossAlign="center" style={{flex: 1}}>
           <WalletVerified />
           <Text
             color={Theme.Colors.Details}

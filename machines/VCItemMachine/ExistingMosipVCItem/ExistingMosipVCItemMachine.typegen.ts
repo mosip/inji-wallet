@@ -3,7 +3,7 @@
 export interface Typegen0 {
   '@@xstate/typegen': true;
   internalEvents: {
-    '': { type: '' };
+    '': {type: ''};
     'done.invoke.checkStatus': {
       type: 'done.invoke.checkStatus';
       data: unknown;
@@ -135,7 +135,7 @@ export interface Typegen0 {
       type: 'error.platform.vc-item.verifyingCredential:invocation[0]';
       data: unknown;
     };
-    'xstate.init': { type: 'xstate.init' };
+    'xstate.init': {type: 'xstate.init'};
   };
   invokeSrcNameMap: {
     addWalletBindnigId:
@@ -369,7 +369,7 @@ export interface Typegen0 {
           | 'downloadingCredential'
           | 'savingFailed'
           | 'verifyingDownloadLimitExpiry'
-          | { savingFailed?: 'idle' | 'viewingVc' };
+          | {savingFailed?: 'idle' | 'viewingVc'};
         invalid?: 'backend' | 'otp';
         kebabPopUp?:
           | 'acceptingBindingOtp'

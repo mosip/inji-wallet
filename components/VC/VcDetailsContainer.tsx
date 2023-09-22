@@ -3,7 +3,7 @@ import {
   EsignetMosipVCItemDetails,
   EsignetMosipVCItemDetailsProps,
 } from './EsignetMosipVCItem/EsignetMosipVCItemDetails';
-import { VCMetadata } from '../../shared/VCMetadata';
+import {VCMetadata} from '../../shared/VCMetadata';
 import {
   ExistingMosipVCItemDetails,
   ExistingMosipVCItemDetailsProps,
@@ -11,7 +11,7 @@ import {
 
 export const VcDetailsContainer: React.FC<
   EsignetMosipVCItemDetailsProps | ExistingMosipVCItemDetailsProps
-> = (props) => {
+> = props => {
   if (VCMetadata.fromVC(props.vc.vcMetadata).isFromOpenId4VCI()) {
     return <EsignetMosipVCItemDetails {...props} />;
   }

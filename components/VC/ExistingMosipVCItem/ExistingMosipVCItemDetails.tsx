@@ -1,23 +1,23 @@
-import { formatDistanceToNow } from 'date-fns';
+import {formatDistanceToNow} from 'date-fns';
 import React from 'react';
 import * as DateFnsLocale from 'date-fns/locale';
-import { useTranslation } from 'react-i18next';
-import { Image, ImageBackground, View } from 'react-native';
-import { Icon } from 'react-native-elements';
-import { VC, CredentialSubject } from '../../../types/vc';
-import { Button, Column, Row, Text } from '../../ui';
-import { Theme } from '../../ui/styleUtils';
-import { TextItem } from '../../ui/TextItem';
-import { VcItemTags } from '../../VcItemTags';
+import {useTranslation} from 'react-i18next';
+import {Image, ImageBackground, View} from 'react-native';
+import {Icon} from 'react-native-elements';
+import {VC, CredentialSubject} from '../../../types/vc';
+import {Button, Column, Row, Text} from '../../ui';
+import {Theme} from '../../ui/styleUtils';
+import {TextItem} from '../../ui/TextItem';
+import {VcItemTags} from '../../VcItemTags';
 import VerifiedIcon from '../../VerifiedIcon';
-import { getLocalizedField } from '../../../i18n';
-import { CREDENTIAL_REGISTRY_EDIT } from 'react-native-dotenv';
-import { QrCodeOverlay } from '../../QrCodeOverlay';
+import {getLocalizedField} from '../../../i18n';
+import {CREDENTIAL_REGISTRY_EDIT} from 'react-native-dotenv';
+import {QrCodeOverlay} from '../../QrCodeOverlay';
 
 export const ExistingMosipVCItemDetails: React.FC<
   ExistingMosipVCItemDetailsProps
-> = (props) => {
-  const { t, i18n } = useTranslation('VcDetails');
+> = props => {
+  const {t, i18n} = useTranslation('VcDetails');
 
   //Assigning the UIN and VID from the VC details to display the idtype label
   const uin = props.vc?.verifiableCredential.credentialSubject.UIN;
@@ -30,7 +30,7 @@ export const ExistingMosipVCItemDetails: React.FC<
   return (
     <Column margin="10">
       <ImageBackground
-        imageStyle={{ width: '100%' }}
+        imageStyle={{width: '100%'}}
         resizeMethod="scale"
         resizeMode="stretch"
         style={Theme.Styles.openCardBgContainer}
@@ -40,7 +40,7 @@ export const ExistingMosipVCItemDetails: React.FC<
             <Image
               source={
                 props.vc?.credential.biometrics?.face
-                  ? { uri: props.vc?.credential.biometrics.face }
+                  ? {uri: props.vc?.credential.biometrics.face}
                   : Theme.ProfileIcon
               }
               style={Theme.Styles.openCardImage}
@@ -69,7 +69,7 @@ export const ExistingMosipVCItemDetails: React.FC<
                 size="smaller"
                 color={Theme.Colors.Details}>
                 {getLocalizedField(
-                  props.vc?.verifiableCredential.credentialSubject.fullName
+                  props.vc?.verifiableCredential.credentialSubject.fullName,
                 )}
               </Text>
             </Column>
@@ -89,7 +89,7 @@ export const ExistingMosipVCItemDetails: React.FC<
                     size="smaller"
                     color={Theme.Colors.Details}>
                     {getLocalizedField(
-                      props.vc?.verifiableCredential.credentialSubject.gender
+                      props.vc?.verifiableCredential.credentialSubject.gender,
                     )}
                   </Text>
                 </Column>
@@ -180,8 +180,8 @@ export const ExistingMosipVCItemDetails: React.FC<
                     {new Date(
                       getLocalizedField(
                         props.vc?.verifiableCredential.credentialSubject
-                          .dateOfBirth
-                      )
+                          .dateOfBirth,
+                      ),
                     ).toLocaleDateString()}
                   </Text>
                 </Column>
@@ -222,7 +222,7 @@ export const ExistingMosipVCItemDetails: React.FC<
                     size="smaller"
                     color={Theme.Colors.Details}>
                     {getLocalizedField(
-                      props.vc?.verifiableCredential.credentialSubject.phone
+                      props.vc?.verifiableCredential.credentialSubject.phone,
                     )}
                   </Text>
                 </Column>
@@ -246,14 +246,14 @@ export const ExistingMosipVCItemDetails: React.FC<
                 style={
                   props.vc?.verifiableCredential.credentialSubject.email
                     .length > 25
-                    ? { flex: 1 }
-                    : { flex: 0 }
+                    ? {flex: 1}
+                    : {flex: 0}
                 }
                 weight="semibold"
                 size="smaller"
                 color={Theme.Colors.Details}>
                 {getLocalizedField(
-                  props.vc?.verifiableCredential.credentialSubject.email
+                  props.vc?.verifiableCredential.credentialSubject.email,
                 )}
               </Text>
             </Row>
@@ -270,12 +270,12 @@ export const ExistingMosipVCItemDetails: React.FC<
             <Row>
               <Text
                 testID="addressValue"
-                style={{ flex: 1 }}
+                style={{flex: 1}}
                 weight="semibold"
                 size="smaller"
                 color={Theme.Colors.Details}>
                 {getFullAddress(
-                  props.vc?.verifiableCredential.credentialSubject
+                  props.vc?.verifiableCredential.credentialSubject,
                 )}
               </Text>
             </Row>
@@ -331,7 +331,7 @@ export const ExistingMosipVCItemDetails: React.FC<
               <Image source={Theme.activationPending}></Image>
               <Text
                 testID="offlineAuthDisabledHeader"
-                style={{ flex: 1 }}
+                style={{flex: 1}}
                 weight="semibold"
                 size="small"
                 margin={'5 0 0 0'}
@@ -341,7 +341,7 @@ export const ExistingMosipVCItemDetails: React.FC<
             </Column>
             <Text
               testID="offlineAuthDisabledMessage"
-              style={{ flex: 1, lineHeight: 17 }}
+              style={{flex: 1, lineHeight: 17}}
               weight="regular"
               size="small"
               margin={'3 0 0 0'}
@@ -354,7 +354,7 @@ export const ExistingMosipVCItemDetails: React.FC<
               title={t('enableVerification')}
               onPress={props.onBinding}
               type="gradient"
-              styles={{ width: '100%' }}
+              styles={{width: '100%'}}
             />
           </Column>
         ) : (
@@ -364,7 +364,7 @@ export const ExistingMosipVCItemDetails: React.FC<
                 name="verified-user"
                 color={Theme.Colors.VerifiedIcon}
                 size={28}
-                containerStyle={{ marginStart: 4, bottom: 1 }}
+                containerStyle={{marginStart: 4, bottom: 1}}
               />
               <Text
                 testID="profileAuthenticated"
@@ -406,7 +406,7 @@ function getFullAddress(credential: CredentialSubject) {
   ];
 
   return fields
-    .map((field) => getLocalizedField(credential[field]))
+    .map(field => getLocalizedField(credential[field]))
     .concat(credential.postalCode)
     .filter(Boolean)
     .join(', ');

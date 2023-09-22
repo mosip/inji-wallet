@@ -1,7 +1,7 @@
-import { ActorRefFrom, EventFrom, sendParent } from 'xstate';
-import { createModel } from 'xstate/lib/model';
-import { ExistingMosipVCItemMachine } from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
-import { AppServices } from '../../shared/GlobalContext';
+import {ActorRefFrom, EventFrom, sendParent} from 'xstate';
+import {createModel} from 'xstate/lib/model';
+import {ExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
+import {AppServices} from '../../shared/GlobalContext';
 
 const model = createModel(
   {
@@ -11,18 +11,18 @@ const model = createModel(
   {
     events: {
       VIEW_VC: (
-        vcItemActor: ActorRefFrom<typeof ExistingMosipVCItemMachine>
+        vcItemActor: ActorRefFrom<typeof ExistingMosipVCItemMachine>,
       ) => ({
         vcItemActor,
       }),
       REFRESH: () => ({}),
       DISMISS: () => ({}),
-      STORE_RESPONSE: (response?: unknown) => ({ response }),
-      STORE_ERROR: (error: Error) => ({ error }),
-      ERROR: (error: Error) => ({ error }),
-      GET_RECEIVED_VCS_RESPONSE: (vcMetadatas: string[]) => ({ vcMetadatas }),
+      STORE_RESPONSE: (response?: unknown) => ({response}),
+      STORE_ERROR: (error: Error) => ({error}),
+      ERROR: (error: Error) => ({error}),
+      GET_RECEIVED_VCS_RESPONSE: (vcMetadatas: string[]) => ({vcMetadatas}),
     },
-  }
+  },
 );
 
 export const ReceivedVcsTabEvents = model.events;
@@ -55,10 +55,10 @@ export const ReceivedVcsTabMachine = model.createMachine(
   {
     actions: {
       viewVcFromParent: sendParent((_context, event) =>
-        model.events.VIEW_VC(event.vcItemActor)
+        model.events.VIEW_VC(event.vcItemActor),
       ),
     },
-  }
+  },
 );
 
 export function createReceivedVcsTabMachine(serviceRefs: AppServices) {

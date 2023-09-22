@@ -1,12 +1,12 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Dimensions } from 'react-native';
-import { Icon } from 'react-native-elements';
-import { ActorRefFrom } from 'xstate';
-import { ExistingMosipVCItemMachine } from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
-import { VerifiableCredential } from '../../../types/vc';
-import { Row, Text } from '../../ui';
-import { Theme } from '../../ui/styleUtils';
+import {useTranslation} from 'react-i18next';
+import {Dimensions} from 'react-native';
+import {Icon} from 'react-native-elements';
+import {ActorRefFrom} from 'xstate';
+import {ExistingMosipVCItemMachine} from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
+import {VerifiableCredential} from '../../../types/vc';
+import {Row, Text} from '../../ui';
+import {Theme} from '../../ui/styleUtils';
 
 const WalletUnverifiedIcon: React.FC = () => {
   return (
@@ -15,7 +15,7 @@ const WalletUnverifiedIcon: React.FC = () => {
       color={Theme.Colors.Icon}
       size={Theme.ICON_MID_SIZE}
       type="material-community"
-      containerStyle={{ marginStart: 10, bottom: 1, marginLeft: 10 }}
+      containerStyle={{marginStart: 10, bottom: 1, marginLeft: 10}}
     />
   );
 };
@@ -26,15 +26,15 @@ const WalletVerifiedIcon: React.FC = () => {
       name="verified-user"
       color={Theme.Colors.VerifiedIcon}
       size={Theme.ICON_MID_SIZE}
-      containerStyle={{ marginStart: 10, bottom: 1, marginLeft: 10 }}
+      containerStyle={{marginStart: 10, bottom: 1, marginLeft: 10}}
     />
   );
 };
 
 const WalletUnverifiedActivationDetails: React.FC<
   WalletUnVerifiedDetailsProps
-> = (props) => {
-  const { t } = useTranslation('VcDetails');
+> = props => {
+  const {t} = useTranslation('VcDetails');
   return (
     <Row
       width={Dimensions.get('screen').width * 0.8}
@@ -62,10 +62,10 @@ const WalletUnverifiedActivationDetails: React.FC<
   );
 };
 
-const WalletVerifiedActivationDetails: React.FC<WalletVerifiedDetailsProps> = (
-  props
-) => {
-  const { t } = useTranslation('WalletBinding');
+const WalletVerifiedActivationDetails: React.FC<
+  WalletVerifiedDetailsProps
+> = props => {
+  const {t} = useTranslation('WalletBinding');
   return (
     <Row
       width={Dimensions.get('screen').width * 0.8}
@@ -96,7 +96,7 @@ const WalletVerifiedActivationDetails: React.FC<WalletVerifiedDetailsProps> = (
 
 export const ExistingMosipVCItemActivationStatus: React.FC<
   ExistingMosipVCItemActivationStatusProps
-> = (props) => {
+> = props => {
   return (
     <Row margin="0 0 0 -6">
       {props.emptyWalletBindingId ? (

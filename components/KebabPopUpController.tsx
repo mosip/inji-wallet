@@ -1,5 +1,5 @@
-import { useSelector } from '@xstate/react';
-import { ActorRefFrom } from 'xstate';
+import {useSelector} from '@xstate/react';
+import {ActorRefFrom} from 'xstate';
 import {
   selectKebabPopUpWalletBindingInProgress,
   selectKebabPopUp,
@@ -15,15 +15,15 @@ import {
   ExistingMosipVCItemMachine,
   selectShowActivities,
 } from '../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
-import { selectActivities } from '../machines/activityLog';
-import { GlobalContext } from '../shared/GlobalContext';
-import { useContext } from 'react';
-import { VCMetadata } from '../shared/VCMetadata';
+import {selectActivities} from '../machines/activityLog';
+import {GlobalContext} from '../shared/GlobalContext';
+import {useContext} from 'react';
+import {VCMetadata} from '../shared/VCMetadata';
 import {
   EsignetMosipVCItemEvents,
   EsignetMosipVCItemMachine,
 } from '../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
-import { isVCFromOpenId4VCI } from '../shared/openId4VCI/Utils';
+import {isVCFromOpenId4VCI} from '../shared/openId4VCI/Utils';
 
 export function useKebabPopUp(props) {
   const service = props.service as
@@ -50,22 +50,22 @@ export function useKebabPopUp(props) {
   const isRemoveWalletWarning = useSelector(service, selectRemoveWalletWarning);
   const isAcceptingOtpInput = useSelector(
     service,
-    selectKebabPopUpAcceptingBindingOtp
+    selectKebabPopUpAcceptingBindingOtp,
   );
   const isWalletBindingError = useSelector(
     service,
-    selectShowWalletBindingError
+    selectShowWalletBindingError,
   );
   const otpError = useSelector(service, selectOtpError);
   const walletBindingError = useSelector(service, selectWalletBindingError);
   const WalletBindingInProgress = useSelector(
     service,
-    selectKebabPopUpWalletBindingInProgress
+    selectKebabPopUpWalletBindingInProgress,
   );
   const emptyWalletBindingId = useSelector(service, selectEmptyWalletBindingId);
   const isKebabPopUp = useSelector(service, selectKebabPopUp);
   const isShowActivities = useSelector(service, selectShowActivities);
-  const { appService } = useContext(GlobalContext);
+  const {appService} = useContext(GlobalContext);
   const activityLogService = appService.children.get('activityLog');
 
   return {

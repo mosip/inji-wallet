@@ -1,11 +1,11 @@
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
-import { Icon } from 'react-native-elements';
-import { Column, Row } from './Layout';
-import { Theme } from './styleUtils';
+import {Text, TouchableOpacity, View} from 'react-native';
+import {Icon} from 'react-native-elements';
+import {Column, Row} from './Layout';
+import {Theme} from './styleUtils';
 import testIDProps from '../../shared/commonUtil';
 
-export const Header: React.FC<HeaderProps> = ({ goBack, title, testID }) => {
+export const Header: React.FC<HeaderProps> = ({goBack, title, testID}) => {
   return (
     <Column safe align="center" testID={testID}>
       <Row elevation={2}>
@@ -32,7 +32,7 @@ export const Header: React.FC<HeaderProps> = ({ goBack, title, testID }) => {
           </TouchableOpacity>
           <Row fill align={'center'}>
             <Column>
-              <View style={{ alignItems: 'center', marginLeft: -40 }}>
+              <View style={{alignItems: 'center', marginLeft: -40}}>
                 <Text
                   style={Theme.TextStyles.semiBoldHeader}
                   {...testIDProps('title')}>

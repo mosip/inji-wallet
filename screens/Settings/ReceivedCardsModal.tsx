@@ -1,19 +1,19 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { RefreshControl } from 'react-native';
-import { Centered, Column, Text } from '../../components/ui';
-import { Icon } from 'react-native-elements';
-import { Theme } from '../../components/ui/styleUtils';
-import { Modal } from '../../components/ui/Modal';
-import { ExistingMosipVCItem } from '../../components/VC/ExistingMosipVCItem/ExistingMosipVCItem';
-import { ViewVcModal } from '../Home/ViewVcModal';
+import {useTranslation} from 'react-i18next';
+import {RefreshControl} from 'react-native';
+import {Centered, Column, Text} from '../../components/ui';
+import {Icon} from 'react-native-elements';
+import {Theme} from '../../components/ui/styleUtils';
+import {Modal} from '../../components/ui/Modal';
+import {ExistingMosipVCItem} from '../../components/VC/ExistingMosipVCItem/ExistingMosipVCItem';
+import {ViewVcModal} from '../Home/ViewVcModal';
 
 export const ReceivedCardsModal: React.FC<ReceivedCardsProps> = ({
   isVisible,
   controller,
   onDismiss,
 }) => {
-  const { t } = useTranslation('ReceivedVcsTab');
+  const {t} = useTranslation('ReceivedVcsTab');
   return (
     <Modal
       isVisible={isVisible}
@@ -30,7 +30,7 @@ export const ReceivedCardsModal: React.FC<ReceivedCardsProps> = ({
             onRefresh={controller.REFRESH}
           />
         }>
-        {controller.receivedVcsMetadata.map((vcMetadata) => (
+        {controller.receivedVcsMetadata.map(vcMetadata => (
           <ExistingMosipVCItem
             key={vcMetadata.getVcKey()}
             vcMetadata={vcMetadata}
@@ -43,7 +43,7 @@ export const ReceivedCardsModal: React.FC<ReceivedCardsProps> = ({
           <React.Fragment>
             <Centered fill>
               <Icon
-                style={{ marginBottom: 20 }}
+                style={{marginBottom: 20}}
                 size={40}
                 name="sentiment-dissatisfied"
               />

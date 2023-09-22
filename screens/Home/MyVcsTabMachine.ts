@@ -7,17 +7,17 @@ import {
   sendParent,
   StateFrom,
 } from 'xstate';
-import { createModel } from 'xstate/lib/model';
-import { StoreEvents, StoreResponseEvent } from '../../machines/store';
-import { VcEvents } from '../../machines/vc';
-import { ExistingMosipVCItemMachine } from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
-import { AppServices } from '../../shared/GlobalContext';
-import { MY_VCS_STORE_KEY } from '../../shared/constants';
-import { AddVcModalMachine } from './MyVcs/AddVcModalMachine';
-import { GetVcModalMachine } from './MyVcs/GetVcModalMachine';
+import {createModel} from 'xstate/lib/model';
+import {StoreEvents, StoreResponseEvent} from '../../machines/store';
+import {VcEvents} from '../../machines/vc';
+import {ExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
+import {AppServices} from '../../shared/GlobalContext';
+import {MY_VCS_STORE_KEY} from '../../shared/constants';
+import {AddVcModalMachine} from './MyVcs/AddVcModalMachine';
+import {GetVcModalMachine} from './MyVcs/GetVcModalMachine';
 import Storage from '../../shared/storage';
-import { VCMetadata } from '../../shared/VCMetadata';
-import { EsignetMosipVCItemMachine } from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
+import {VCMetadata} from '../../shared/VCMetadata';
+import {EsignetMosipVCItemMachine} from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 
 const model = createModel(
   {
@@ -30,13 +30,13 @@ const model = createModel(
       VIEW_VC: (
         vcItemActor:
           | ActorRefFrom<typeof ExistingMosipVCItemMachine>
-          | ActorRefFrom<typeof EsignetMosipVCItemMachine>
+          | ActorRefFrom<typeof EsignetMosipVCItemMachine>,
       ) => ({
         vcItemActor,
       }),
       DISMISS: () => ({}),
-      STORE_RESPONSE: (response?: unknown) => ({ response }),
-      STORE_ERROR: (error: Error) => ({ error }),
+      STORE_RESPONSE: (response?: unknown) => ({response}),
+      STORE_ERROR: (error: Error) => ({error}),
       ADD_VC: () => ({}),
       GET_VC: () => ({}),
       STORAGE_AVAILABLE: () => ({}),
@@ -46,7 +46,7 @@ const model = createModel(
       RESET_STORE_VC_ITEM_STATUS: () => ({}),
       DOWNLOAD_VIA_ID: () => ({}),
     },
-  }
+  },
 );
 
 export const MyVcsTabEvents = model.events;
@@ -171,32 +171,32 @@ export const MyVcsTabMachine = model.createMachine(
     services: {
       checkStorageAvailability: () => async () => {
         return Promise.resolve(
-          Storage.isMinimumLimitReached('minStorageRequired')
+          Storage.isMinimumLimitReached('minStorageRequired'),
         );
       },
     },
 
     actions: {
-      refreshMyVc: send((_context) => VcEvents.REFRESH_MY_VCS(), {
-        to: (context) => context.serviceRefs.vc,
+      refreshMyVc: send(_context => VcEvents.REFRESH_MY_VCS(), {
+        to: context => context.serviceRefs.vc,
       }),
 
       resetIsTampered: send(() => StoreEvents.RESET_IS_TAMPERED(), {
-        to: (context) => context.serviceRefs.store,
+        to: context => context.serviceRefs.store,
       }),
 
       viewVcFromParent: sendParent((_context, event: ViewVcEvent) =>
-        model.events.VIEW_VC(event.vcItemActor)
+        model.events.VIEW_VC(event.vcItemActor),
       ),
 
       storeVcItem: send(
         (_context, event) => {
           return StoreEvents.PREPEND(
             MY_VCS_STORE_KEY,
-            (event as DoneInvokeEvent<VCMetadata>).data
+            (event as DoneInvokeEvent<VCMetadata>).data,
           );
         },
-        { to: (context) => context.serviceRefs.store }
+        {to: context => context.serviceRefs.store},
       ),
 
       setStoringVcItemStatus: assign({
@@ -210,15 +210,15 @@ export const MyVcsTabMachine = model.createMachine(
       sendVcAdded: send(
         (_context, event) => VcEvents.VC_ADDED(event.response as VCMetadata),
         {
-          to: (context) => context.serviceRefs.vc,
-        }
+          to: context => context.serviceRefs.vc,
+        },
       ),
     },
 
     guards: {
       isMinimumStorageLimitReached: (_context, event) => Boolean(event.data),
     },
-  }
+  },
 );
 
 export function createMyVcsTabMachine(serviceRefs: AppServices) {

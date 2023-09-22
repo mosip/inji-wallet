@@ -1,14 +1,14 @@
-import { EventFrom, send, sendParent, StateFrom } from 'xstate';
-import { createModel } from 'xstate/lib/model';
-import { StoreEvents } from './store';
-import { VC } from '../types/vc';
-import { AppServices } from '../shared/GlobalContext';
-import { log, respond } from 'xstate/lib/actions';
-import { ExistingMosipVCItemEvents } from './VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
-import { MY_VCS_STORE_KEY, RECEIVED_VCS_STORE_KEY } from '../shared/constants';
-import { parseMetadatas, VCMetadata } from '../shared/VCMetadata';
-import { OpenId4VCIProtocol } from '../shared/openId4VCI/Utils';
-import { EsignetMosipVCItemEvents } from './VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
+import {EventFrom, send, sendParent, StateFrom} from 'xstate';
+import {createModel} from 'xstate/lib/model';
+import {StoreEvents} from './store';
+import {VC} from '../types/vc';
+import {AppServices} from '../shared/GlobalContext';
+import {log, respond} from 'xstate/lib/actions';
+import {ExistingMosipVCItemEvents} from './VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
+import {MY_VCS_STORE_KEY, RECEIVED_VCS_STORE_KEY} from '../shared/constants';
+import {parseMetadatas, VCMetadata} from '../shared/VCMetadata';
+import {OpenId4VCIProtocol} from '../shared/openId4VCI/Utils';
+import {EsignetMosipVCItemEvents} from './VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 
 const model = createModel(
   {
@@ -21,31 +21,31 @@ const model = createModel(
   },
   {
     events: {
-      VIEW_VC: (vc: VC) => ({ vc }),
-      GET_VC_ITEM: (vcMetadata: VCMetadata) => ({ vcMetadata }),
-      STORE_RESPONSE: (response: unknown) => ({ response }),
-      STORE_ERROR: (error: Error) => ({ error }),
-      VC_ADDED: (vcMetadata: VCMetadata) => ({ vcMetadata }),
-      REMOVE_VC_FROM_CONTEXT: (vcMetadata: VCMetadata) => ({ vcMetadata }),
-      VC_METADATA_UPDATED: (vcMetadata: VCMetadata) => ({ vcMetadata }),
-      VC_RECEIVED: (vcMetadata: VCMetadata) => ({ vcMetadata }),
-      VC_DOWNLOADED: (vc: VC) => ({ vc }),
+      VIEW_VC: (vc: VC) => ({vc}),
+      GET_VC_ITEM: (vcMetadata: VCMetadata) => ({vcMetadata}),
+      STORE_RESPONSE: (response: unknown) => ({response}),
+      STORE_ERROR: (error: Error) => ({error}),
+      VC_ADDED: (vcMetadata: VCMetadata) => ({vcMetadata}),
+      REMOVE_VC_FROM_CONTEXT: (vcMetadata: VCMetadata) => ({vcMetadata}),
+      VC_METADATA_UPDATED: (vcMetadata: VCMetadata) => ({vcMetadata}),
+      VC_RECEIVED: (vcMetadata: VCMetadata) => ({vcMetadata}),
+      VC_DOWNLOADED: (vc: VC) => ({vc}),
       VC_DOWNLOADED_FROM_OPENID4VCI: (vc: VC, vcMetadata: VCMetadata) => ({
         vc,
         vcMetadata,
       }),
-      VC_UPDATE: (vc: VC) => ({ vc }),
+      VC_UPDATE: (vc: VC) => ({vc}),
       REFRESH_MY_VCS: () => ({}),
-      REFRESH_MY_VCS_TWO: (vc: VC) => ({ vc }),
+      REFRESH_MY_VCS_TWO: (vc: VC) => ({vc}),
       REFRESH_RECEIVED_VCS: () => ({}),
       GET_RECEIVED_VCS: () => ({}),
-      ADD_VC_TO_IN_PROGRESS_DOWNLOADS: (requestId: string) => ({ requestId }),
+      ADD_VC_TO_IN_PROGRESS_DOWNLOADS: (requestId: string) => ({requestId}),
       REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS: (requestId: string) => ({
         requestId,
       }),
       RESET_ARE_ALL_VCS_DOWNLOADED: () => ({}),
     },
-  }
+  },
 );
 
 export const VcEvents = model.events;
@@ -189,7 +189,7 @@ export const vcMachine =
     },
     {
       actions: {
-        getReceivedVcsResponse: respond((context) => ({
+        getReceivedVcsResponse: respond(context => ({
           type: 'VC_RESPONSE',
           response: context.receivedVcs || [],
         })),
@@ -203,11 +203,11 @@ export const vcMachine =
         }),
 
         loadMyVcs: send(StoreEvents.GET(MY_VCS_STORE_KEY), {
-          to: (context) => context.serviceRefs.store,
+          to: context => context.serviceRefs.store,
         }),
 
         loadReceivedVcs: send(StoreEvents.GET(RECEIVED_VCS_STORE_KEY), {
-          to: (context) => context.serviceRefs.store,
+          to: context => context.serviceRefs.store,
         }),
 
         setMyVcs: model.assign({
@@ -245,7 +245,7 @@ export const vcMachine =
             paresedInProgressList.delete(removeVcRequestID);
             return paresedInProgressList;
           },
-          areAllVcsDownloaded: (context) => {
+          areAllVcsDownloaded: context => {
             if (context.inProgressVcDownloads.size == 0) {
               return true;
             }
@@ -262,7 +262,7 @@ export const vcMachine =
         },
 
         setVcUpdate: (context, event) => {
-          Object.keys(context.vcs).map((vcUniqueId) => {
+          Object.keys(context.vcs).map(vcUniqueId => {
             const eventVCMetadata = VCMetadata.fromVC(event.vc);
 
             if (vcUniqueId === eventVCMetadata.getVcKey()) {
@@ -274,10 +274,10 @@ export const vcMachine =
         },
 
         setUpdatedVcMetadatas: send(
-          (_context) => {
+          _context => {
             return StoreEvents.SET(MY_VCS_STORE_KEY, _context.myVcs);
           },
-          { to: (context) => context.serviceRefs.store }
+          {to: context => context.serviceRefs.store},
         ),
 
         prependToMyVcs: model.assign({
@@ -287,7 +287,7 @@ export const vcMachine =
         removeVcFromMyVcs: model.assign({
           myVcs: (context, event) =>
             context.myVcs.filter(
-              (vc: VCMetadata) => !vc.equals(event.vcMetadata)
+              (vc: VCMetadata) => !vc.equals(event.vcMetadata),
             ),
         }),
 
@@ -308,8 +308,8 @@ export const vcMachine =
           receivedVcs: (context, event) => {
             return [
               event.vcMetadata,
-              ...context.receivedVcs.filter((value) =>
-                value.equals(event.vcMetadata)
+              ...context.receivedVcs.filter(value =>
+                value.equals(event.vcMetadata),
               ),
             ];
           },
@@ -318,11 +318,11 @@ export const vcMachine =
 
       guards: {
         hasExistingReceivedVc: (context, event) =>
-          context.receivedVcs.find((vcMetadata) =>
-            vcMetadata.equals(event.vcMetadata)
+          context.receivedVcs.find(vcMetadata =>
+            vcMetadata.equals(event.vcMetadata),
           ) != null,
       },
-    }
+    },
   );
 
 export function createVcMachine(serviceRefs: AppServices) {
@@ -340,7 +340,7 @@ export function selectMyVcsMetadata(state: State): VCMetadata[] {
 
 export function selectShareableVcsMetadata(state: State): VCMetadata[] {
   return state.context.myVcs.filter(
-    (vcMetadata) => state.context.vcs[vcMetadata.getVcKey()]?.credential != null
+    vcMetadata => state.context.vcs[vcMetadata.getVcKey()]?.credential != null,
   );
 }
 
@@ -360,7 +360,7 @@ export function selectIsRefreshingReceivedVcs(state: State) {
   this methods returns all the binded vc's in the wallet.
  */
 export function selectBindedVcsMetadata(state: State): VCMetadata[] {
-  return state.context.myVcs.filter((vcMetadata) => {
+  return state.context.myVcs.filter(vcMetadata => {
     const walletBindingResponse =
       state.context.vcs[vcMetadata.getVcKey()]?.walletBindingResponse;
     return (
@@ -380,15 +380,15 @@ export function selectInProgressVcDownloadsCount(state: State) {
 
 function getUpdatedVCMetadatas(
   existingVCMetadatas: VCMetadata[],
-  updatedVcMetadata: VCMetadata
+  updatedVcMetadata: VCMetadata,
 ) {
   const isPinStatusUpdated = updatedVcMetadata.isPinned;
 
-  return existingVCMetadatas.map((value) => {
+  return existingVCMetadatas.map(value => {
     if (value.equals(updatedVcMetadata)) {
       return updatedVcMetadata;
     } else if (isPinStatusUpdated) {
-      return new VCMetadata({ ...value, isPinned: false });
+      return new VCMetadata({...value, isPinned: false});
     } else {
       return value;
     }

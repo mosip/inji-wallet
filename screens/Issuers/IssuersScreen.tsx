@@ -1,22 +1,22 @@
-import React, { useLayoutEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { FlatList, Image, Text, View } from 'react-native';
-import { Issuer } from '../../components/openId4VCI/Issuer';
-import { Error } from '../../components/ui/Error';
-import { Header } from '../../components/ui/Header';
-import { Column } from '../../components/ui/Layout';
-import { Theme } from '../../components/ui/styleUtils';
-import { RootRouteProps } from '../../routes';
-import { HomeRouteProps } from '../../routes/main';
-import { useIssuerScreenController } from './IssuerScreenController';
-import { Loader } from '../../components/ui/Loader';
+import React, {useLayoutEffect} from 'react';
+import {useTranslation} from 'react-i18next';
+import {FlatList, Image, Text, View} from 'react-native';
+import {Issuer} from '../../components/openId4VCI/Issuer';
+import {Error} from '../../components/ui/Error';
+import {Header} from '../../components/ui/Header';
+import {Column} from '../../components/ui/Layout';
+import {Theme} from '../../components/ui/styleUtils';
+import {RootRouteProps} from '../../routes';
+import {HomeRouteProps} from '../../routes/main';
+import {useIssuerScreenController} from './IssuerScreenController';
+import {Loader} from '../../components/ui/Loader';
 import testIDProps from '../../shared/commonUtil';
 
-export const IssuersScreen: React.FC<HomeRouteProps | RootRouteProps> = (
-  props
-) => {
+export const IssuersScreen: React.FC<
+  HomeRouteProps | RootRouteProps
+> = props => {
   const controller = useIssuerScreenController(props);
-  const { t } = useTranslation('IssuersScreen');
+  const {t} = useTranslation('IssuersScreen');
 
   useLayoutEffect(() => {
     if (controller.loadingReason || controller.errorMessage) {
@@ -26,7 +26,7 @@ export const IssuersScreen: React.FC<HomeRouteProps | RootRouteProps> = (
     } else {
       props.navigation.setOptions({
         headerShown: true,
-        header: (props) => (
+        header: props => (
           <Header
             goBack={props.navigation.goBack}
             title={t('title')}
@@ -65,7 +65,7 @@ export const IssuersScreen: React.FC<HomeRouteProps | RootRouteProps> = (
       return (
         <Image
           source={Theme.SomethingWentWrong}
-          style={{ width: 370, height: 150 }}
+          style={{width: 370, height: 150}}
           {...testIDProps('somethingWentWrongImage')}
         />
       );
@@ -107,7 +107,7 @@ export const IssuersScreen: React.FC<HomeRouteProps | RootRouteProps> = (
               <FlatList
                 data={controller.issuers}
                 scrollEnabled={false}
-                renderItem={({ item }) => (
+                renderItem={({item}) => (
                   <Issuer
                     testID={`issuer-${item.id}`}
                     key={item.id}
@@ -119,7 +119,7 @@ export const IssuersScreen: React.FC<HomeRouteProps | RootRouteProps> = (
                   />
                 )}
                 numColumns={2}
-                keyExtractor={(item) => item.id}
+                keyExtractor={item => item.id}
               />
             )}
           </View>

@@ -1,8 +1,8 @@
-import { ENABLE_OPENID_FOR_VC } from 'react-native-dotenv';
-import { createSignature, encodeB64 } from '../cryptoutil/cryptoUtil';
+import {ENABLE_OPENID_FOR_VC} from 'react-native-dotenv';
+import {createSignature, encodeB64} from '../cryptoutil/cryptoUtil';
 import jwtDecode from 'jwt-decode';
 import jose from 'node-jose';
-import { VCMetadata } from '../VCMetadata';
+import {VCMetadata} from '../VCMetadata';
 
 export const OpenId4VCIProtocol = 'OpenId4VCI';
 export const isVCFromOpenId4VCI = (vcMetadata: VCMetadata) => {
@@ -24,7 +24,7 @@ export const getIdentifier = (context, credential) => {
   );
 };
 
-export const getBody = async (context) => {
+export const getBody = async context => {
   const proofJWT = await getJWT(context);
   return {
     format: 'ldp_vc',
@@ -39,7 +39,7 @@ export const getBody = async (context) => {
   };
 };
 
-export const getJWK = async (publicKey) => {
+export const getJWK = async publicKey => {
   try {
     const publicKeyJWKString = await jose.JWK.asKey(publicKey, 'pem');
     const publicKeyJWK = publicKeyJWKString.toJSON();
@@ -53,18 +53,18 @@ export const getJWK = async (publicKey) => {
       'Exception occured while constructing JWK from PEM : ' +
         publicKey +
         '  Exception is ',
-      e
+      e,
     );
   }
 };
-export const getJWT = async (context) => {
+export const getJWT = async context => {
   try {
     const header64 = encodeB64(
       JSON.stringify({
         alg: 'RS256',
         jwk: await getJWK(context.publicKey),
         typ: 'openid4vci-proof+jwt',
-      })
+      }),
     );
     const decodedToken = jwtDecode(context.tokenResponse.accessToken);
     const payload64 = encodeB64(
@@ -74,7 +74,7 @@ export const getJWT = async (context) => {
         aud: 'https://esignet.dev1.mosip.net/v1/esignet',
         iat: Math.floor(new Date().getTime() / 1000),
         exp: Math.floor(new Date().getTime() / 1000) + 18000,
-      })
+      }),
     );
     const preHash = header64 + '.' + payload64;
     const signature64 = await createSignature(context.privateKey, preHash, '');

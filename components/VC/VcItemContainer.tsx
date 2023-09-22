@@ -10,7 +10,7 @@ import {
 
 export const VcItemContainer: React.FC<
   ExistingMosipVCItemProps | EsignetMosipVCItemProps
-> = (props) => {
+> = props => {
   if (props.vcMetadata.isFromOpenId4VCI()) {
     return <EsignetMosipVCItem {...props} />;
   }

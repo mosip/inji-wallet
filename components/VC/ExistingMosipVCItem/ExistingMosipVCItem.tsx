@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useRef } from 'react';
-import { useInterpret, useSelector } from '@xstate/react';
-import { View, Pressable } from 'react-native';
-import { ActorRefFrom } from 'xstate';
+import React, {useContext, useEffect, useRef} from 'react';
+import {useInterpret, useSelector} from '@xstate/react';
+import {View, Pressable} from 'react-native';
+import {ActorRefFrom} from 'xstate';
 import {
   createExistingMosipVCItemMachine,
   selectVerifiableCredential,
@@ -13,30 +13,30 @@ import {
   selectIsSavingFailedInIdle,
   selectKebabPopUp,
 } from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
-import { ExistingMosipVCItemEvents } from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
-import { ErrorMessageOverlay } from '../../MessageOverlay';
-import { Theme } from '../../ui/styleUtils';
-import { GlobalContext } from '../../../shared/GlobalContext';
-import { ExistingMosipVCItemContent } from './ExistingMosipVCItemContent';
-import { ExistingMosipVCItemActivationStatus } from './ExistingMosipVCItemActivationStatus';
-import { Row } from '../../ui';
-import { KebabPopUp } from '../../KebabPopUp';
-import { logState } from '../../../machines/app';
-import { VCMetadata } from '../../../shared/VCMetadata';
-import { format } from 'date-fns';
+import {ExistingMosipVCItemEvents} from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
+import {ErrorMessageOverlay} from '../../MessageOverlay';
+import {Theme} from '../../ui/styleUtils';
+import {GlobalContext} from '../../../shared/GlobalContext';
+import {ExistingMosipVCItemContent} from './ExistingMosipVCItemContent';
+import {ExistingMosipVCItemActivationStatus} from './ExistingMosipVCItemActivationStatus';
+import {Row} from '../../ui';
+import {KebabPopUp} from '../../KebabPopUp';
+import {logState} from '../../../machines/app';
+import {VCMetadata} from '../../../shared/VCMetadata';
+import {format} from 'date-fns';
 
-export const ExistingMosipVCItem: React.FC<ExistingMosipVCItemProps> = (
-  props
-) => {
-  const { appService } = useContext(GlobalContext);
+export const ExistingMosipVCItem: React.FC<
+  ExistingMosipVCItemProps
+> = props => {
+  const {appService} = useContext(GlobalContext);
   const machine = useRef(
     createExistingMosipVCItemMachine(
       appService.getSnapshot().context.serviceRefs,
-      props.vcMetadata
-    )
+      props.vcMetadata,
+    ),
   );
 
-  const service = useInterpret(machine.current, { devTools: __DEV__ });
+  const service = useInterpret(machine.current, {devTools: __DEV__});
 
   useEffect(() => {
     service.subscribe(logState);

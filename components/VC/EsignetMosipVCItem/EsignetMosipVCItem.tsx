@@ -1,15 +1,15 @@
-import React, { useContext, useRef } from 'react';
-import { useInterpret, useSelector } from '@xstate/react';
-import { Pressable } from 'react-native';
-import { ActorRefFrom } from 'xstate';
-import { GlobalContext } from '../../../shared/GlobalContext';
-import { logState } from '../../../machines/app';
-import { Theme } from '../../ui/styleUtils';
-import { Row } from '../../ui';
-import { KebabPopUp } from '../../KebabPopUp';
-import { VCMetadata } from '../../../shared/VCMetadata';
-import { EsignetMosipVCItemContent } from './EsignetMosipVCItemContent';
-import { EsignetMosipVCActivationStatus } from './EsignetMosipVCItemActivationStatus';
+import React, {useContext, useRef} from 'react';
+import {useInterpret, useSelector} from '@xstate/react';
+import {Pressable} from 'react-native';
+import {ActorRefFrom} from 'xstate';
+import {GlobalContext} from '../../../shared/GlobalContext';
+import {logState} from '../../../machines/app';
+import {Theme} from '../../ui/styleUtils';
+import {Row} from '../../ui';
+import {KebabPopUp} from '../../KebabPopUp';
+import {VCMetadata} from '../../../shared/VCMetadata';
+import {EsignetMosipVCItemContent} from './EsignetMosipVCItemContent';
+import {EsignetMosipVCActivationStatus} from './EsignetMosipVCItemActivationStatus';
 import {
   EsignetMosipVCItemEvents,
   EsignetMosipVCItemMachine,
@@ -20,18 +20,16 @@ import {
   selectVerifiableCredentials,
 } from '../../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 
-export const EsignetMosipVCItem: React.FC<EsignetMosipVCItemProps> = (
-  props
-) => {
-  const { appService } = useContext(GlobalContext);
+export const EsignetMosipVCItem: React.FC<EsignetMosipVCItemProps> = props => {
+  const {appService} = useContext(GlobalContext);
   const machine = useRef(
     createEsignetMosipVCItemMachine(
       appService.getSnapshot().context.serviceRefs,
-      props.vcMetadata
-    )
+      props.vcMetadata,
+    ),
   );
 
-  const service = useInterpret(machine.current, { devTools: __DEV__ });
+  const service = useInterpret(machine.current, {devTools: __DEV__});
   service.subscribe(logState);
   const context = useSelector(service, selectContext);
 

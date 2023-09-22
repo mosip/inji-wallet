@@ -1,14 +1,14 @@
-import { useFocusEffect } from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { BackHandler, Dimensions, View } from 'react-native';
-import { Button, Column, Row, Text } from '.';
-import { Header } from './Header';
-import { Theme } from './styleUtils';
+import {useTranslation} from 'react-i18next';
+import {BackHandler, Dimensions, View} from 'react-native';
+import {Button, Column, Row, Text} from '.';
+import {Header} from './Header';
+import {Theme} from './styleUtils';
 import testIDProps from '../../shared/commonUtil';
 
-export const Error: React.FC<ErrorProps> = (props) => {
-  const { t } = useTranslation('common');
+export const Error: React.FC<ErrorProps> = props => {
+  const {t} = useTranslation('common');
 
   useFocusEffect(
     React.useCallback(() => {
@@ -19,11 +19,11 @@ export const Error: React.FC<ErrorProps> = (props) => {
 
       const disableBackHandler = BackHandler.addEventListener(
         'hardwareBackPress',
-        onBackPress
+        onBackPress,
       );
 
       return () => disableBackHandler.remove();
-    }, [])
+    }, []),
   );
 
   return (
@@ -36,7 +36,7 @@ export const Error: React.FC<ErrorProps> = (props) => {
       <Column fill safe>
         {props.goBack && <Header testID="errorHeader" goBack={props.goBack} />}
         <Column fill safe align="space-evenly">
-          <View style={{ alignItems: 'center' }}>
+          <View style={{alignItems: 'center'}}>
             <View>
               <Row align="center" style={Theme.ErrorStyles.image}>
                 {props.image}
