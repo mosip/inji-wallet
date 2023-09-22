@@ -1,41 +1,45 @@
 import {assign, ErrorPlatformEvent, EventFrom, send, StateFrom} from 'xstate';
 import {createModel} from 'xstate/lib/model';
-import {HOST, MIMOTO_BASE_URL, MY_VCS_STORE_KEY} from '../shared/constants';
-import {AppServices} from '../shared/GlobalContext';
-import {CredentialDownloadResponse, request} from '../shared/request';
+import {
+  HOST,
+  MIMOTO_BASE_URL,
+  MY_VCS_STORE_KEY,
+} from '../../../shared/constants';
+import {AppServices} from '../../../shared/GlobalContext';
+import {CredentialDownloadResponse, request} from '../../../shared/request';
 import {
   VC,
   VerifiableCredential,
   VcIdType,
   DecodedCredential,
-} from '../types/vc';
-import {StoreEvents} from './store';
-import {ActivityLogEvents} from './activityLog';
-import {verifyCredential} from '../shared/vcjs/verifyCredential';
+} from '../../../types/vc';
+import {StoreEvents} from '../../store';
+import {ActivityLogEvents} from '../../activityLog';
+import {verifyCredential} from '../../../shared/vcjs/verifyCredential';
 import {log} from 'xstate/lib/actions';
 import {
   generateKeys,
   isCustomSecureKeystore,
   WalletBindingResponse,
-} from '../shared/cryptoutil/cryptoUtil';
+} from '../../../shared/cryptoutil/cryptoUtil';
 import {KeyPair} from 'react-native-rsa-native';
 import {
   getBindingCertificateConstant,
   savePrivateKey,
-} from '../shared/keystore/SecureKeystore';
+} from '../../../shared/keystore/SecureKeystore';
 import getAllConfigurations, {
   DownloadProps,
-} from '../shared/commonprops/commonProps';
-import {VcEvents} from './vc';
-import i18n from '../i18n';
+} from '../../../shared/commonprops/commonProps';
+import {VcEvents} from '../../vc';
+import i18n from '../../../i18n';
 import SecureKeystore from 'react-native-secure-keystore';
-import {VCMetadata} from '../shared/VCMetadata';
+import {VCMetadata} from '../../../shared/VCMetadata';
 import {
   sendStartEvent,
   getData,
   getEndData,
   sendEndEvent,
-} from '../shared/telemetry/TelemetryUtils';
+} from '../../../shared/telemetry/TelemetryUtils';
 
 const model = createModel(
   {
@@ -98,15 +102,15 @@ const model = createModel(
   },
 );
 
-export const VcItemEvents = model.events;
+export const ExistingMosipVCItemEvents = model.events;
 
-export const vcItemMachine =
+export const ExistingMosipVCItemMachine =
   /** @xstate-layout N4IgpgJg5mDOIC5QDcDGBaAlgFzAWwGIAlAUQDFSBlACQG0AGAXUVAAcB7WHTdgOxZAAPRABYATABoQAT0QBGABwBWAHT0FAZjEB2bSKUBOA9rliAvmalosuPCtQALMKgDWmXlABqqAgHESACoA+p4AwkFUAAoA8gBylCQMzEggHFzYPPwpwggKBiIqcvqaAGwGSvT0SnJSsgjicio69Np5GvTFSiIWVhg4+PZOru5ePv7BYREklDHxiXLJbJzcfAI5eQVFSqXlldW1iO2qmlpKhtpnGkbdliDW-XaOzm4elNjsAE5gBJQB0aRTGZxBJJARpFZZUA5OSmA4IMRyDQFDRKDQmMRiDRyAwKG69GwDJ7DV7vL4-P4AqLA+aLVLLDKrbLyJRiBRNAxybT0MRnQwKBSSGTyXFNERGPIwhFo-k9O59WyDZ4jShgD7IVUAEQAhtgtYriVA3jqAK6wAgxAAyFtBKXBDMhQkQPO0TTORQMJRZ2hKyjhihEbLkHRaXVRcmqCll9wVRJehtV6o+2t1+rjRuwpoIGuiAHVYhbogBBDVTYsATRtS3SmTWokMhWD9HyJRKRUxfuMYjUJQRBnaii6VSj8sJQzTCc1Or1EHYAHdeAAbdhaiAjUJfCBgXgZLUL83RK2VunVxlQxAKIMqETiCVo6pnBR+hQlDSFBTaMQlEQdL8dPFyglHjHZUJyTKcVBneclxXNcNy3Hc91CUgNRIWIAgASULC0gmzPMC2LEgNSPO0ayZBAg3yQoURMGjLg9DsxAKD88gxERsQDVph0AlRMAgBdvkI9DggCQtfGI+lSLPeERBdNiShMIMtDFb8lDhT9ORUNERDKZ9rw-JQuIeHi+O+TwSCIdCyArJgwQk09HXhT8ShUd8ujyFkMUMEo1LEFoVBZbl6BhBQQzRQyFV4-iCALUIAGkQlCcSTwdHIdA0V8kW01k5BKegexaNTvUad9r206of3MW5owGSLvlITxolikgEqSiFa1yQU6lZEKXL0JRPS5AMXwMqqRzsWqCGLEscywi1AiCAAhdDYg1ZbfCCdCiJs207JS+ROv28KBkgbgPACLUoCzdDKAAWWuyhWvtdrMVknKFPoJT8iqNT0voQp9By79TB7AwjrsE6MjOi6fkLMyghEsTtqrNqyMY175JhD7GK+1ShWk6pChbREBQMDpPzBlRYFJEZzsu35-maqk5keySHP645yhbDolMUbQ1IBwnWw0EmyZKCnE0wAAzaRYMgeDMF3AgZ14MAeN4ZB2BcVXqrsCXpdlzdtwVhcEHcDXUB1TIkhZ+zUqc3q3PKDEeXovHfNbFQvwqSoUSbF9xdVKWZY8dc5aNxXVQ+T4VFYBcdUlz5dbGlQ9eDqBQ8NhDTfV9gLfta2kePFGpM85zXIDJ3PNdupsR9T3n3KFFlDYnKKdjEZPEDyXMDzzJ00zG29vI5QDBc5QuSMfqPUUJ8KjfMogp5apurb4CPE7j4pZ7y2+H7s1aAWWzkvagdR-5JQJ856fHzdxRR69gMZP5FptAps3d14ghlsiABVYJogCJEQe7UtAujyjyHQRR5JiD7HCEQVxVBP2MHlPq-tRrcXfguT+q1br3WAWRUB3YIEmG0h+WBeNhZflFMYVsYoSGVXxEZL4ABHY0cBIZQGiNgVgSs+CqzNprbWycWFsKpiMLhrBs7mx3rwAutISK23kDCV8MDfLpX6pUD6cCuTOT7NoShbEL75ApiI9h4juEEEjtHWO8dE4p2EWAVhZiPASKkbnGRcij7FwcjCRE7I1Eolyj7OBQsVDGFJp6fQMCigUy1KgVAYBWAcIkehXgrBjTYC-rEX+-9AH4KkmUVQ4C3S4lKTiOBzQVDMQFEDC+SJYnxMSck7hqT0mZJwXdSgD1C4KKHqYJs9cQrtHKHoRicINAY38iTTQ1waIaAaQkpJIwiBgA1lrVpGSsk5KCAAoBPTdonzeoUIov1tBfRgbjGuiJjjpS0O0TQLIRqMIVHExZHCVlrLABs9p11OndPkQcsiRhGimH0GKAUXIsZwjIVebYPIfSIkfq-dBTDHGiI4RaXOLheEqzVp8+x3FTFiI8Ji1wbje58E8TtY+ZEfRFJ7CUx+eQb51CuM+KpXJzj3MUGLFFCoiUYqxZYj4UcPgxzjtgBOHwk6ErRc4qApKXDko8UwfJDlClEMZWUllog2L3w+n2KUDyhx8oGEuA03hyQM0BLMEE+yaVSV8SogwASNHBLxt+PyRgPTvhyuoF1Ji5XEqgB8wROL+E5y1gS1FTjg2hq1sq-Oqr7XeNSqTJo6g0TekxBeE54yfaC17PJF86hA2xveassNVixU2MlXYnWKgBXLMrQmgRFLZHJoBQ6hyhDimQNITAjQcCYSqACmKPKTt0qBrWR3Hw9NKTTFtYkFNT1aVnJcuUAUFQrifj0PmtEntGKtmbPJb8vLnlmvYFAKAzbPlXVwV0tV0IX5Xh9N6xEaJWQHQQO0A9PZtLsRbHoPKZb0UjAWu4VcLiLHKwjfihtTaPAQd4FBzh3DE1W07V41dUlf1hMgQ8oMRjv3A1UEGM9T8ijiCeQBGNYGkOQfMTw6t4rbHSujfyoNHDkOodcW2lVjAn2HA+vhkwhGqhnO-RURogVi1C36vAimsAHBzhICKz4BBQiFliKEEg1oV2sxyJ6ZypgKjPm9HkPKOqEAeWod6eBjFFJyAWU08DjHoM8O-n-HZeSDOKIQBcWSrQZk5UoeGP0S8qnRPDF+i4wsXNLIYyhpj96-lCYCxfK8wWrihefOFvGF8ux6G9byZ0sSIAQFimAaQkQtSYA+OGvFgiOMDBXJV6rtX6sYcpVh6lqalHyWOfA9oZzvwXIiyKLkJM2ItBkvo8r7Wat1Yayx2tUqZVGTa1VpbXX+NJsE35vpRyYTDZaOc8ofoya9TFIDdK4TkUXrsG1kYOZdz8WwDxkY6EICNYEVGhtz2PCvYXO9z7HhvvdY7Qdrt-Wf0aT7SQ6B5DWWFc0noeS6V9H9Xqaap7FWXtvbAB99zUBvvCtFaxut7GAf46B4T4nyXwcQEh1S5GOGe1+QR1AshQ6KFYk2IxVEAomwohow240rAICWw8JETeyAdRgG279yNQjuIS6lxw2XmB5e4G2yz3rbPDOIFaGRlETKZKYhfOMupmlyiDkChcEDuOVDq+l1ALXOvFfVfJ9YiV62Wt2Fd5ruXCu9d7cw9D7DRuAvKCom5JFlveesv0CZj6ehwxIlMA92jCplNzjB4aXUGYzRLRWmtHCcRl0w-Z9CXy99n7DIvuIEQ4yewyZJhMowPIQojVuLwdgm54ApB1lH-z6AJlwnQP0tQmjTBIgFFnhhOfRxKnXqgUfQ9bPexyuUD0YpDDjNj8V5sQUX4nFXqvwvnwwAb5PgiAomi-YIlZMUfmzlj-FFaF+zEF+DQqjVJOLqLfmRCdn6GUM5LlN+M+O0PJE7o9qmCBAAWBCmO3CSCaEPobv5jlCRvkKPOAr5OoKUoYGLsnKgfGEgcmNOHOIuMuKhhnPLLuMAQUnXEiFmnUqiLoDgVQlsMLPkK0L4uesvuNCZEwQ5NjA-pKKiEYPoroIVDyNdkNPkCOq3M7hDDTBdKIc+t+p+AMmKMYFiO+B6KDM7lTJ8OoVAJoYcLHuEkFMLJ+FiC6t5G7PoH9O5DoB6J+M+BiAHJvPrCHHBOHAuJYfCNyEVtiBiKwb5J+GpIDLbl0F+kYBMkvg2mQRvFvO2nvMEYiINufDRB+BZloDEcLC5KYHXopNsLiG-OrB-BAMEWxFeO+pUDApUB+nAkiH9MUHlNiPoiFMkcnJgrxCoOwNwsEXkA0cCk0aTLYUnrqjoGEtsFnl7MVlUfLlghACoAAEZxJawobBEupwJDSwpnJ8FVD8jZ4IZcZMbBGshUK5QsgTJBQXgi4hIDJTYIjchGB3EJbNKsDfKjHrpfhCzwJ5b6EVKaBhKhYuq6R0IkHcSvKuYeDxpfJpIZLBGBZZb8g5Yvh5aXJKKVBxE95iY3aRjO6IYKpYp1EfiFA8iIichcgnbfrwLlAZq5q+SYxBQUzmpxjeD-F-ThIyQfQwh6B5DjI4gFDeqFLcgfgwiCEXHlq3qCLBHyTDqmBRYN475jbTqayzp1EcgEl6IBjVC8z5pFCHr6BohJF5QdCclXo3qIkto359Y17njrriBiYupOxVC4k-otFmn9S6C4ifioigbyoF4SJ1EkaMR-RTZojTynHGImEqazhqairBFej+QtGFJ7675wi2Yf6-gCjySwmbaNKJZQBhkjFOnR4shsgnCmDKCVAmDlJ4ymZ-S3LNDBiwHGHwFbYdbLZ7FIiaRC6fh0Kfj7EtnZQQmejKDhjigmo9m05QDA6g4k7fZpl8weoQLzEL55TaTzLO5B4jAe6h7VZpn6ANh6ruHwIyTelNyvgnBVAejqBfgknwF56zgF6ZFVlYEFpQKKQchvStDW44hqDTaGl5AWAWBAA */
   model.createMachine(
     {
       predictableActionArguments: true,
       preserveActionOrder: true,
-      tsTypes: {} as import('./vcItem.typegen').Typegen0,
+      tsTypes: {} as import('./ExistingMosipVCItemMachine.typegen').Typegen0,
       schema: {
         context: model.initialContext,
         events: {} as EventFrom<typeof model>,
@@ -1339,12 +1343,12 @@ export const vcItemMachine =
     },
   );
 
-export const createVcItemMachine = (
+export const createExistingMosipVCItemMachine = (
   serviceRefs: AppServices,
   vcMetadata: VCMetadata,
 ) => {
-  return vcItemMachine.withContext({
-    ...vcItemMachine.context,
+  return ExistingMosipVCItemMachine.withContext({
+    ...ExistingMosipVCItemMachine.context,
     serviceRefs,
     id: vcMetadata.id,
     idType: vcMetadata.idType as VcIdType,
@@ -1353,7 +1357,7 @@ export const createVcItemMachine = (
   });
 };
 
-type State = StateFrom<typeof vcItemMachine>;
+type State = StateFrom<typeof ExistingMosipVCItemMachine>;
 
 export function selectVc(state: State) {
   const {serviceRefs, ...data} = state.context;

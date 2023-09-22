@@ -9,13 +9,14 @@ import {
 import {createModel} from 'xstate/lib/model';
 import {StoreEvents, StoreResponseEvent} from '../../machines/store';
 import {VcEvents} from '../../machines/vc';
-import {vcItemMachine} from '../../machines/vcItem';
+import {ExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {AppServices} from '../../shared/GlobalContext';
 import {MY_VCS_STORE_KEY} from '../../shared/constants';
 import {AddVcModalMachine} from './MyVcs/AddVcModalMachine';
 import {GetVcModalMachine} from './MyVcs/GetVcModalMachine';
 import Storage from '../../shared/storage';
 import {VCMetadata} from '../../shared/VCMetadata';
+import {EsignetMosipVCItemMachine} from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 
 const model = createModel(
   {
@@ -24,7 +25,11 @@ const model = createModel(
   {
     events: {
       REFRESH: () => ({}),
-      VIEW_VC: (vcItemActor: ActorRefFrom<typeof vcItemMachine>) => ({
+      VIEW_VC: (
+        vcItemActor:
+          | ActorRefFrom<typeof ExistingMosipVCItemMachine>
+          | ActorRefFrom<typeof EsignetMosipVCItemMachine>,
+      ) => ({
         vcItemActor,
       }),
       DISMISS: () => ({}),
@@ -35,6 +40,7 @@ const model = createModel(
       STORAGE_AVAILABLE: () => ({}),
       STORAGE_UNAVAILABLE: () => ({}),
       IS_TAMPERED: () => ({}),
+      DOWNLOAD_VIA_ID: () => ({}),
     },
   },
 );
