@@ -3,13 +3,16 @@ import {
   EsignetMosipVCItemProps,
 } from './EsignetMosipVCItem/EsignetMosipVCItem';
 import React from 'react';
-import {VcItem, VcItemProps} from '../VcItem';
+import {
+  ExistingMosipVCItem,
+  ExistingMosipVCItemProps,
+} from './ExistingMosipVCItem/ExistingMosipVCItem';
 
 export const VcItemContainer: React.FC<
-  VcItemProps | EsignetMosipVCItemProps
+  ExistingMosipVCItemProps | EsignetMosipVCItemProps
 > = props => {
   if (props.vcMetadata.isFromOpenId4VCI()) {
     return <EsignetMosipVCItem {...props} />;
   }
-  return <VcItem {...props} />;
+  return <ExistingMosipVCItem {...props} />;
 };

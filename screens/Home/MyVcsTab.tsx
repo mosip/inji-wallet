@@ -7,7 +7,7 @@ import {HomeScreenTabProps} from './HomeScreen';
 import {AddVcModal} from './MyVcs/AddVcModal';
 import {GetVcModal} from './MyVcs/GetVcModal';
 import {useTranslation} from 'react-i18next';
-import {VcItem} from '../../components/VcItem';
+import {ExistingMosipVCItem} from '../../components/VC/ExistingMosipVCItem/ExistingMosipVCItem';
 import {GET_INDIVIDUAL_ID} from '../../shared/constants';
 import {
   ErrorMessageOverlay,

@@ -1,7 +1,7 @@
 import React from 'react';
 import {EsignetMosipVCItemDetails} from './EsignetMosipVCItem/EsignetMosipVCItemDetails';
 import {VCMetadata} from '../../shared/VCMetadata';
-import {VcDetails} from '../VcDetails';
+import {ExistingMosipVCItemDetails} from './ExistingMosipVCItem/ExistingMosipVCItemDetails';
 
 export const VcDetailsContainer: React.FC = props => {
   if (VCMetadata.fromVC(props.vc.vcMetadata).isFromOpenId4VCI()) {
@@ -13,5 +13,5 @@ export const VcDetailsContainer: React.FC = props => {
       />
     );
   }
-  return <VcDetails isBindingPending={false} {...props} />;
+  return <ExistingMosipVCItemDetails isBindingPending={false} {...props} />;
 };

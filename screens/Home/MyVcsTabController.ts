@@ -10,8 +10,8 @@ import {
 import {
   selectWalletBindingError,
   selectShowWalletBindingError,
-} from '../../machines/vcItem';
-import {vcItemMachine} from '../../machines/vcItem';
+} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
+import {ExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {HomeScreenTabProps} from './HomeScreen';
 import {
@@ -67,7 +67,7 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
 
     VIEW_VC: (
       vcRef:
-        | ActorRefFrom<typeof vcItemMachine>
+        | ActorRefFrom<typeof ExistingMosipVCItemMachine>
         | ActorRefFrom<typeof EsignetMosipVCItemMachine>,
     ) => {
       return service.send(MyVcsTabEvents.VIEW_VC(vcRef));

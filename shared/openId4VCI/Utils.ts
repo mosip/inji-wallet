@@ -10,8 +10,7 @@ export const isVCFromOpenId4VCI = (vcMetadata: VCMetadata) => {
 };
 
 export const isOpenId4VCIEnabled = () => {
-  //return ENABLE_OPENID_FOR_VC === 'true';
-  return true;
+  return ENABLE_OPENID_FOR_VC === 'true';
 };
 
 export const getIdentifier = (context, credential) => {

@@ -4,7 +4,7 @@ import {StoreEvents} from './store';
 import {VC} from '../types/vc';
 import {AppServices} from '../shared/GlobalContext';
 import {log, respond} from 'xstate/lib/actions';
-import {VcItemEvents} from './vcItem';
+import {ExistingMosipVCItemEvents} from './VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {MY_VCS_STORE_KEY, RECEIVED_VCS_STORE_KEY} from '../shared/constants';
 import {parseMetadatas, VCMetadata} from '../shared/VCMetadata';
 import {OpenId4VCIProtocol} from '../shared/openId4VCI/Utils';
@@ -183,7 +183,7 @@ export const vcMachine =
           if (event.protocol === OpenId4VCIProtocol) {
             return EsignetMosipVCItemEvents.GET_VC_RESPONSE(vc);
           }
-          return VcItemEvents.GET_VC_RESPONSE(vc);
+          return ExistingMosipVCItemEvents.GET_VC_RESPONSE(vc);
         }),
 
         loadMyVcs: send(StoreEvents.GET(MY_VCS_STORE_KEY), {

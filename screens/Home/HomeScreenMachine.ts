@@ -1,6 +1,6 @@
 import {ActorRefFrom, assign, EventFrom, send, spawn, StateFrom} from 'xstate';
 import {createModel} from 'xstate/lib/model';
-import {vcItemMachine} from '../../machines/vcItem';
+import {ExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {AppServices} from '../../shared/GlobalContext';
 import {createMyVcsTabMachine, MyVcsTabMachine} from './MyVcsTabMachine';
 import {
@@ -18,7 +18,7 @@ const model = createModel(
       receivedVcs: {} as ActorRefFrom<typeof ReceivedVcsTabMachine>,
     },
     selectedVc: null as
-      | ActorRefFrom<typeof vcItemMachine>
+      | ActorRefFrom<typeof ExistingMosipVCItemMachine>
       | ActorRefFrom<typeof EsignetMosipVCItemMachine>,
     activeTab: 0,
   },
@@ -29,7 +29,7 @@ const model = createModel(
       SELECT_HISTORY: () => ({}),
       VIEW_VC: (
         vcItemActor:
-          | ActorRefFrom<typeof vcItemMachine>
+          | ActorRefFrom<typeof ExistingMosipVCItemMachine>
           | ActorRefFrom<typeof EsignetMosipVCItemMachine>,
       ) => ({
         vcItemActor,

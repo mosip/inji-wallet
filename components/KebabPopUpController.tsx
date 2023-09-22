@@ -11,10 +11,10 @@ import {
   selectOtpError,
   selectShowWalletBindingError,
   selectWalletBindingError,
-  VcItemEvents,
-  vcItemMachine,
+  ExistingMosipVCItemEvents,
+  ExistingMosipVCItemMachine,
   selectShowActivities,
-} from '../machines/vcItem';
+} from '../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {selectActivities} from '../machines/activityLog';
 import {GlobalContext} from '../shared/GlobalContext';
 import {useContext} from 'react';
@@ -27,12 +27,12 @@ import {isVCFromOpenId4VCI} from '../shared/openId4VCI/Utils';
 
 export function useKebabPopUp(props) {
   const service = props.service as
-    | ActorRefFrom<typeof vcItemMachine>
+    | ActorRefFrom<typeof ExistingMosipVCItemMachine>
     | ActorRefFrom<typeof EsignetMosipVCItemMachine>;
   const vcEvents =
     props.vcKey !== undefined && isVCFromOpenId4VCI(props.vcMetadata)
       ? EsignetMosipVCItemEvents
-      : VcItemEvents;
+      : ExistingMosipVCItemEvents;
   const PIN_CARD = () => service.send(vcEvents.PIN_CARD());
   const KEBAB_POPUP = () => service.send(vcEvents.KEBAB_POPUP());
   const ADD_WALLET_BINDING_ID = () =>
