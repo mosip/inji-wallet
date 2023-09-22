@@ -420,13 +420,8 @@ export const IssuersMachine = model.createMachine(
             body: JSON.stringify(body),
           },
         );
-        const credential = await response.json();
-        credential.identifier = getIdentifier(context, credential);
-        credential.generatedOn = new Date();
-        console.log(
-          'Response from downloadCredential',
-          JSON.stringify(credential, null, 4),
-        );
+        let credential = await response.json();
+        credential = updateCredentialInformation(context, credential);
         return credential;
       },
       invokeAuthorization: async context => {
@@ -493,3 +488,14 @@ interface issuerType {
   displayName: string;
   logoUrl: string;
 }
+
+const updateCredentialInformation = (context, credential) => {
+  credential.identifier = getIdentifier(context, credential);
+  credential.generatedOn = new Date();
+  credential.issuerLogo = context.selectedIssuer.logoUrl;
+  console.log(
+    'Response from downloadCredential',
+    JSON.stringify(credential, null, 4),
+  );
+  return credential;
+};

@@ -72,6 +72,7 @@ export interface VerifiableCredential {
   credential: Credential;
   identifier: string;
   generatedOn: Date;
+  issuerLogo: string;
 }
 
 export interface VerifiablePresentation {

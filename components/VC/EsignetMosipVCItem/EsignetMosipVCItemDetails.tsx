@@ -54,7 +54,10 @@ export const EsignetMosipVCItemDetails: React.FC<
               qrCodeDetailes={String(props.vc.verifiableCredential)}
             />
             <Column margin="20 0 0 0">
-              <Image source={Theme.MosipLogo} style={Theme.Styles.logo} />
+              <Image
+                src={props.vc.verifiableCredential.issuerLogo}
+                style={Theme.Styles.issuerLogo}
+              />
             </Column>
           </Column>
           <Column align="space-evenly">
@@ -91,19 +94,23 @@ export const EsignetMosipVCItemDetails: React.FC<
                     {t('nationalCard')}
                   </Text>
                 </Column>
-                {props.vc?.verifiableCredential.credential.id ? (
+                {props.vc?.verifiableCredential.credential.credentialSubject
+                  .VID ? (
                   <Column margin="20 0 0 0">
                     <Text
                       weight="bold"
                       size="smaller"
                       color={Theme.Colors.DetailsLabel}>
-                      {t('uin')}
+                      {t('vid')}
                     </Text>
                     <Text
                       weight="semibold"
                       size="smaller"
                       color={Theme.Colors.Details}>
-                      {props.vc?.verifiableCredential.credential.id}
+                      {
+                        props.vc?.verifiableCredential.credential
+                          .credentialSubject.VID
+                      }
                     </Text>
                   </Column>
                 ) : null}

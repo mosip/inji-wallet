@@ -177,8 +177,8 @@ export const EsignetMosipVCItemContent: React.FC<
           <Column
             style={{display: props.credential?.credential ? 'flex' : 'none'}}>
             <Image
-              source={Theme.MosipLogo}
-              style={Theme.Styles.logo}
+              src={props.credential?.issuerLogo}
+              style={Theme.Styles.issuerLogo}
               resizeMethod="auto"
             />
           </Column>

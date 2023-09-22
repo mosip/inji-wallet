@@ -326,6 +326,11 @@ export const DefaultTheme = {
       width: 40,
       marginRight: 4,
     },
+    issuerLogo: {
+      resizeMode: 'contain',
+      aspectRatio: 1,
+      height: 60,
+    },
     vcDetailsLogo: {
       height: 35,
       width: 90,
