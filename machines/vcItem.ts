@@ -84,6 +84,7 @@ const model = createModel(
       VERIFY: () => ({}),
       LOCK_VC: () => ({}),
       INPUT_OTP: (otp: string) => ({otp}),
+      RESEND_OTP: () => ({}),
       REFRESH: () => ({}),
       REVOKE_VC: () => ({}),
       ADD_WALLET_BINDING_ID: () => ({}),
@@ -542,6 +543,23 @@ export const vcItemMachine =
             DISMISS: {
               actions: ['clearOtp', 'clearTransactionId'],
               target: 'idle',
+            },
+            RESEND_OTP: {
+              target: '.resendOTP',
+            },
+          },
+          initial: 'idle',
+          states: {
+            idle: {},
+            resendOTP: {
+              invoke: {
+                src: 'requestOtp',
+                onDone: [
+                  {
+                    target: 'idle',
+                  },
+                ],
+              },
             },
           },
         },

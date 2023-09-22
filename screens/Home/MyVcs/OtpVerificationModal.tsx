@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { PinInput } from '../../../components/PinInput';
-import { Column, Text } from '../../../components/ui';
-import { ModalProps, Modal } from '../../../components/ui/Modal';
-import { Theme } from '../../../components/ui/styleUtils';
-import { Image, TouchableOpacity } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {PinInput} from '../../../components/PinInput';
+import {Column, Text} from '../../../components/ui';
+import {ModalProps, Modal} from '../../../components/ui/Modal';
+import {Theme} from '../../../components/ui/styleUtils';
+import {Image, TouchableOpacity} from 'react-native';
 
-export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
-  props
-) => {
-  const { t } = useTranslation('OtpVerificationModal');
+export const OtpVerificationModal: React.FC<
+  OtpVerificationModalProps
+> = props => {
+  const {t} = useTranslation('OtpVerificationModal');
 
-  const [timer, setTimer] = useState(180); // 30 seconds
+  const [timer, setTimer] = useState(10); // 30 seconds
 
   useEffect(() => {
     if (timer === 0) return;
@@ -23,7 +23,7 @@ export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
     return () => clearInterval(intervalId);
   }, [timer]);
 
-  const formatTime = (seconds) => {
+  const formatTime = seconds => {
     const minutes = Math.floor(seconds / 60);
     const Seconds = seconds % 60;
     return `${minutes < 10 ? '0' + minutes : minutes}:${
@@ -35,12 +35,12 @@ export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
     <Modal
       isVisible={props.isVisible}
       onDismiss={props.onDismiss}
-      onShow={() => setTimer(180)}>
+      onShow={() => setTimer(10)}>
       <Column
         fill
         padding="32"
         backgroundColor={Theme.Colors.whiteBackgroundColor}>
-        <Column fill align="space-between" crossAlign="center">
+        <Column fill crossAlign="center">
           <Column crossAlign="center">
             <Image source={Theme.OtpLogo} resizeMethod="auto" />
             <Text
@@ -80,7 +80,7 @@ export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
                 ? null
                 : () => {
                     props.resend();
-                    setTimer(180);
+                    setTimer(10);
                   }
             }>
             <Text
@@ -94,7 +94,6 @@ export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
             </Text>
           </TouchableOpacity>
         </Column>
-        <Column fill></Column>
       </Column>
     </Modal>
   );
