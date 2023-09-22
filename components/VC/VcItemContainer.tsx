@@ -11,6 +11,5 @@ export const VcItemContainer: React.FC<
   if (props.vcMetadata.isFromOpenId4VCI()) {
     return <EsignetMosipVCItem {...props} />;
   }
-  console.log('vcitm');
   return <VcItem {...props} />;
 };

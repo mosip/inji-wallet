@@ -17,7 +17,7 @@ import {log} from 'xstate/lib/actions';
 import {verifyCredential} from '../shared/vcjs/verifyCredential';
 import {getBody, getIdentifier} from '../shared/openId4VCI/Utils';
 import {VCMetadata} from '../shared/VCMetadata';
-import {VerifiableCredential} from '../components/VC copy/EsignetMosipVCItem/vc';
+import {VerifiableCredential} from '../components/VC/EsignetMosipVCItem/vc';
 
 const model = createModel(
   {
@@ -188,7 +188,6 @@ export const IssuersMachine = model.createMachine(
       verifyingCredential: {
         description:
           'once the credential is downloaded, it is verified before saving',
-        entry: () => console.log('in state verifyingCredential'),
         invoke: {
           src: 'verifyCredential',
           onDone: [
@@ -216,7 +215,6 @@ export const IssuersMachine = model.createMachine(
         ],
       },
       idle: {
-        entry: () => console.log('entered idle state'),
         on: {
           COMPLETED: {
             target: 'done',
@@ -311,7 +309,6 @@ export const IssuersMachine = model.createMachine(
 
       storeVcMetaContext: send(
         context => {
-          console.log('storeVcMetaContext');
           const [issuer, protocol, id] =
             context.verifiableCredential?.identifier.split(':');
 
@@ -331,7 +328,6 @@ export const IssuersMachine = model.createMachine(
 
       storeVcsContext: send(
         context => {
-          console.log('storeVcsContext');
           const [issuer, protocol, id] =
             context.verifiableCredential?.identifier.split(':');
           return {
@@ -358,7 +354,6 @@ export const IssuersMachine = model.createMachine(
       }),
       setVerifiableCredential: model.assign({
         verifiableCredential: (_, event) => {
-          console.log('event on verifiableCredential', event);
           return event.data;
         },
       }),
@@ -378,14 +373,11 @@ export const IssuersMachine = model.createMachine(
 
       logDownloaded: send(
         context => {
-          const {
-            verifiableCredential: {credential},
-          } = context;
+          const [issuer, protocol, id] =
+            context.verifiableCredential?.identifier.split(':');
+
           return ActivityLogEvents.LOG_ACTIVITY({
-            _vcKey: VCMetadata.fromVC(
-              context.verifiableCredential,
-              true,
-            ).getVcKey(),
+            _vcKey: id,
             type: 'VC_DOWNLOADED',
             timestamp: Date.now(),
             deviceName: '',
@@ -454,9 +446,7 @@ export const IssuersMachine = model.createMachine(
         return context;
       },
       verifyCredential: async context => {
-        console.log('verified verifyCredential');
-        return true;
-        // return verifyCredential(context.verifiableCredential.credential);
+        return verifyCredential(context.verifiableCredential?.credential);
       },
     },
     guards: {
