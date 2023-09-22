@@ -1,18 +1,18 @@
-import {useSelector, useInterpret} from '@xstate/react';
-import {useContext, useRef, useState} from 'react';
-import {ActorRefFrom} from 'xstate';
+import { useSelector, useInterpret } from '@xstate/react';
+import { useContext, useRef, useState } from 'react';
+import { ActorRefFrom } from 'xstate';
 import {
   VcEvents,
   selectIsRefreshingReceivedVcs,
   selectReceivedVcsMetadata,
 } from '../../machines/vc';
-import {vcItemMachine} from '../../machines/vcItem';
-import {GlobalContext} from '../../shared/GlobalContext';
+import { vcItemMachine } from '../../machines/vcItem';
+import { GlobalContext } from '../../shared/GlobalContext';
 import {
   ReceivedVcsTabEvents,
   ReceivedVcsTabMachine,
 } from './ReceivedVcsTabMachine';
-import {MyVcsTabEvents, MyVcsTabMachine} from './MyVcsTabMachine';
+import { MyVcsTabEvents, MyVcsTabMachine } from './MyVcsTabMachine';
 import {
   HomeScreenEvents,
   HomeScreenMachine,
@@ -24,12 +24,12 @@ import {
 export function useReceivedVcsTab() {
   const [isVisible, setIsVisible] = useState(false);
 
-  const {appService} = useContext(GlobalContext);
+  const { appService } = useContext(GlobalContext);
   const machine = useRef(
     HomeScreenMachine.withContext({
       ...HomeScreenMachine.context,
       serviceRefs: appService.getSnapshot().context.serviceRefs,
-    }),
+    })
   );
   const service = useInterpret(machine.current);
 

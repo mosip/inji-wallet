@@ -1,6 +1,6 @@
-import {useSelector} from '@xstate/react';
-import {useContext, useState} from 'react';
-import {ActorRefFrom} from 'xstate';
+import { useSelector } from '@xstate/react';
+import { useContext, useState } from 'react';
+import { ActorRefFrom } from 'xstate';
 import {
   QrLoginEvents,
   selectClientName,
@@ -24,14 +24,14 @@ import {
   selectIsSendingAuthenticate,
   selectEssentialClaims,
 } from '../../machines/QrLoginMachine';
-import {selectBindedVcsMetadata} from '../../machines/vc';
-import {vcItemMachine} from '../../machines/vcItem';
-import {GlobalContext} from '../../shared/GlobalContext';
-import {VC} from '../../types/vc';
-import {QrLoginProps} from './QrLogin';
+import { selectBindedVcsMetadata } from '../../machines/vc';
+import { vcItemMachine } from '../../machines/vcItem';
+import { GlobalContext } from '../../shared/GlobalContext';
+import { VC } from '../../types/vc';
+import { QrLoginProps } from './QrLogin';
 
-export function useQrLogin({service}: QrLoginProps) {
-  const {appService} = useContext(GlobalContext);
+export function useQrLogin({ service }: QrLoginProps) {
+  const { appService } = useContext(GlobalContext);
 
   const vcService = appService.children.get('vc');
   const [selectedIndex, setSelectedIndex] = useState<number>(null);
@@ -55,7 +55,7 @@ export function useQrLogin({service}: QrLoginProps) {
     selectedVc: useSelector(service, selectSelectedVc),
     linkTransactionResponse: useSelector(
       service,
-      selectLinkTransactionResponse,
+      selectLinkTransactionResponse
     ),
     domainName: useSelector(service, selectDomainName),
     logoUrl: useSelector(service, selectLogoUrl),

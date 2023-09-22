@@ -3,7 +3,7 @@
 export interface Typegen0 {
   '@@xstate/typegen': true;
   internalEvents: {
-    '': {type: ''};
+    '': { type: '' };
     'done.invoke.checkStatus': {
       type: 'done.invoke.checkStatus';
       data: unknown;
@@ -135,7 +135,7 @@ export interface Typegen0 {
       type: 'error.platform.vc-item.verifyingCredential:invocation[0]';
       data: unknown;
     };
-    'xstate.init': {type: 'xstate.init'};
+    'xstate.init': { type: 'xstate.init' };
   };
   invokeSrcNameMap: {
     addWalletBindnigId:
@@ -165,7 +165,6 @@ export interface Typegen0 {
     services: never;
   };
   eventsCausingActions: {
-    VcUpdated: 'STORE_RESPONSE';
     addVcToInProgressDownloads: 'STORE_RESPONSE';
     clearOtp:
       | ''
@@ -191,7 +190,6 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]'
       | 'done.invoke.vc-item.verifyingCredential:invocation[0]'
       | 'error.platform.vc-item.verifyingCredential:invocation[0]';
-    editVcKey: 'CREDENTIAL_DOWNLOADED';
     incrementDownloadCounter: 'POLL';
     logDownloaded: 'STORE_RESPONSE';
     logRevoked: 'STORE_RESPONSE';
@@ -216,7 +214,7 @@ export interface Typegen0 {
     requestStoredContext: 'GET_VC_RESPONSE' | 'REFRESH';
     requestVcContext: 'DISMISS' | 'xstate.init';
     revokeVID: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
-    sendVcUpdated: 'STORE_RESPONSE';
+    sendVcUpdated: 'PIN_CARD';
     setCredential: 'GET_VC_RESPONSE' | 'STORE_RESPONSE';
     setDownloadInterval: 'done.invoke.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]';
     setLock: 'done.invoke.vc-item.requestingLock:invocation[0]';
@@ -266,7 +264,6 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]';
     storeContext:
       | 'CREDENTIAL_DOWNLOADED'
-      | 'PIN_CARD'
       | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]'
@@ -367,7 +364,7 @@ export interface Typegen0 {
           | 'downloadingCredential'
           | 'savingFailed'
           | 'verifyingDownloadLimitExpiry'
-          | {savingFailed?: 'idle' | 'viewingVc'};
+          | { savingFailed?: 'idle' | 'viewingVc' };
         invalid?: 'backend' | 'otp';
         kebabPopUp?:
           | 'acceptingBindingOtp'

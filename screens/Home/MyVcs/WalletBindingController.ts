@@ -1,7 +1,7 @@
-import {useSelector, useInterpret} from '@xstate/react';
-import {useContext, useRef, useState} from 'react';
-import {GlobalContext} from '../../../shared/GlobalContext';
-import {selectMyVcsMetadata, VcEvents} from '../../../machines/vc';
+import { useSelector, useInterpret } from '@xstate/react';
+import { useContext, useRef, useState } from 'react';
+import { GlobalContext } from '../../../shared/GlobalContext';
+import { selectMyVcsMetadata, VcEvents } from '../../../machines/vc';
 import {
   createVcItemMachine,
   isShowingBindingWarning,
@@ -13,22 +13,22 @@ import {
   selectShowWalletBindingError,
   selectWalletBindingError,
 } from '../../../machines/vcItem';
-import {useTranslation} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
-import {ActorRefFrom} from 'xstate';
+import { ActorRefFrom } from 'xstate';
 
 export function useWalletBinding(props) {
-  const {t} = useTranslation('ProfileScreen');
-  const {appService} = useContext(GlobalContext);
+  const { t } = useTranslation('ProfileScreen');
+  const { appService } = useContext(GlobalContext);
 
   const machine = useRef(
     createVcItemMachine(
       appService.getSnapshot().context.serviceRefs,
-      props.vcMetadata,
-    ),
+      props.vcMetadata
+    )
   );
 
-  const bindingService = useInterpret(machine.current, {devTools: __DEV__});
+  const bindingService = useInterpret(machine.current, { devTools: __DEV__ });
 
   const vcService = appService.children.get('vc');
 
@@ -52,7 +52,7 @@ export function useWalletBinding(props) {
 
   const WalletBindingInProgress = useSelector(
     bindingService,
-    isWalletBindingInProgress,
+    isWalletBindingInProgress
   );
 
   return {
@@ -66,7 +66,7 @@ export function useWalletBinding(props) {
     isAcceptingOtpInput: useSelector(bindingService, selectIsAcceptingOtpInput),
     isAcceptingBindingOtp: useSelector(
       bindingService,
-      selectAcceptingBindingOtp,
+      selectAcceptingBindingOtp
     ),
     isBindingError: useSelector(bindingService, selectShowWalletBindingError),
     walletBindingError: useSelector(bindingService, selectWalletBindingError),
