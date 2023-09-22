@@ -69,6 +69,8 @@ export function useWalletBinding(props) {
     ),
     isBindingError: useSelector(bindingService, selectShowWalletBindingError),
     walletBindingError: useSelector(bindingService, selectWalletBindingError),
+    RESEND_OTP: () =>
+      bindingService.send(ExistingMosipVCItemEvents.RESEND_OTP()),
 
     DISMISS: () => bindingService.send(ExistingMosipVCItemEvents.DISMISS()),
 
