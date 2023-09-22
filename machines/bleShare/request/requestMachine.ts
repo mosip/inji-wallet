@@ -502,7 +502,7 @@ export const requestMachine =
               target: 'checkNearbyDevicesPermission',
             },
             DISMISS: {
-              target: '#request.clearingConnection',
+              target: '#request.reviewing.navigatingToHome',
             },
           },
         },
