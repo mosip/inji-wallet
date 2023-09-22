@@ -57,6 +57,7 @@ export const VcItem: React.FC<VcItemProps> = props => {
   return (
     <React.Fragment>
       <Pressable
+        accessible={false}
         onPress={() => props.onPress(service)}
         disabled={!verifiableCredential}
         style={
@@ -90,7 +91,7 @@ export const VcItem: React.FC<VcItemProps> = props => {
               )}
             <View style={Theme.Styles.verticalLine} />
             <Row style={Theme.Styles.kebabIcon}>
-              <Pressable onPress={KEBAB_POPUP}>
+              <Pressable onPress={KEBAB_POPUP} accessible={false}>
                 <KebabPopUp
                   vcMetadata={props.vcMetadata}
                   iconName="dots-three-horizontal"
