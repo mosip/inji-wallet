@@ -61,7 +61,7 @@
     "uin": "UIN",
     "vid": "VID",
     "enableVerification": "ಸಕ್ರಿಯಗೊಳಿಸಿ",
-    "profileAuthenticated": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ!",
+    "profileAuthenticated": "ಆನ್‌ಲೈನ್ ದೃಢೀಕರಣಕ್ಕಾಗಿ ರುಜುವಾತುಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ.",
     "offlineAuthDisabledHeader": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಸಕ್ರಿಯಗೊಳಿಸುವಿಕೆ ಬಾಕಿ ಉಳಿದಿದೆ!",
     "offlineAuthDisabledMessage": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಬಳಸಲು ಈ ರುಜುವಾತುಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಲು ದಯವಿಟ್ಟು ಕೆಳಗಿನ ಬಟನ್ ಅನ್ನು ಕ್ಲಿಕ್ ಮಾಡಿ.",
     "verificationEnabledSuccess": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ",
@@ -83,7 +83,7 @@
     "title": "ಇನ್ನಷ್ಟು ಆಯ್ಕೆಗಳು",
     "unPinCard": "ಅನ್‌ಪಿನ್ ಕಾರ್ಡ್",
     "pinCard": "ಪಿನ್ ಕಾರ್ಡ್",
-    "offlineAuthenticationDisabled!": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಸಕ್ರಿಯಗೊಳಿಸುವಿಕೆ ಬಾಕಿ ಉಳಿದಿದೆ!",
+    "offlineAuthenticationDisabled!": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಸಕ್ರಿಯಗೊಳಿಸುವಿಕೆ ಬಾಕಿ ಉಳಿದಿದೆ",
     "offlineAuthDisabledMessage": "ಆನ್‌ಲೈನ್ ದೃಢೀಕರಣಕ್ಕಾಗಿ ಬಳಸಲು ಈ ರುಜುವಾತುಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ.",
     "viewActivityLog": "ಚಟುವಟಿಕೆ ಲಾಗ್ ಅನ್ನು ವೀಕ್ಷಿಸಿ",
     "removeFromWallet": "ಕೈಚೀಲದಿಂದ ತೆಗೆದುಹಾಕಿ",
@@ -92,7 +92,7 @@
   },
   "WalletBinding": {
     "inProgress": "ಪ್ರಗತಿಯಲ್ಲಿದೆ",
-    "profileAuthenticated": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ!"
+    "profileAuthenticated": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ"
   },
   "BindingVcWarningOverlay": {
     "alert": "ದಯವಿಟ್ಟು ದ್ರುಡೀಕರಿಸಿ",
