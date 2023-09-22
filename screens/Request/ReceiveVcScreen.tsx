@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { DeviceInfoList } from '../../components/DeviceInfoList';
 import { Button, Column, Row, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
-import { VcDetails } from '../../components/VcDetails';
+import { ExistingMosipVCItemDetails } from '../../components/VC/ExistingMosipVCItem/ExistingMosipVCItemDetails';
 import { useReceiveVcScreen } from './ReceiveVcScreenController';
 import { VerifyIdentityOverlay } from '../VerifyIdentityOverlay';
 import {
@@ -32,7 +32,7 @@ export const ReceiveVcScreen: React.FC = () => {
           <Text weight="semibold" margin="24 24 0 24">
             {t('header')}
           </Text>
-          <VcDetails
+          <ExistingMosipVCItemDetails
             vc={controller.incomingVc}
             isBindingPending={false}
             activeTab={1}

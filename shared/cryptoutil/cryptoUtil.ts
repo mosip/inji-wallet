@@ -30,7 +30,7 @@ export async function getJwt(
     var config = await getAllConfigurations();
 
     const header = {
-      'alg': 'RS256',
+      alg: 'RS256',
       //'kid': keyId,
       'x5t#S256': thumbprint,
     };
@@ -63,7 +63,7 @@ export async function getJwt(
   }
 }
 
-async function createSignature(
+export async function createSignature(
   privateKey: string,
   preHash: string,
   individualId: string
@@ -93,7 +93,7 @@ function replaceCharactersInB64(encodedB64) {
   return encodedB64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
 
-function encodeB64(str: string) {
+export function encodeB64(str: string) {
   const encodedB64 = forge.util.encode64(str);
   return replaceCharactersInB64(encodedB64);
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Column, Text, Centered } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { useTranslation } from 'react-i18next';
-import { VcItem } from '../../components/VcItem';
+import { ExistingMosipVCItem } from '../../components/VC/ExistingMosipVCItem/ExistingMosipVCItem';
 import { useQrLogin } from './QrLoginController';
 import { QrLoginRef } from '../../machines/QrLoginMachine';
 import { Icon } from 'react-native-elements';
@@ -34,7 +34,7 @@ export const MyBindedVcs: React.FC<MyBindedVcsProps> = (props) => {
                       {controller.shareableVcsMetadata.length > 0 &&
                         controller.shareableVcsMetadata.map(
                           (vcMetadata, index) => (
-                            <VcItem
+                            <ExistingMosipVCItem
                               key={vcMetadata.getVcKey()}
                               vcMetadata={vcMetadata}
                               margin="0 2 8 2"

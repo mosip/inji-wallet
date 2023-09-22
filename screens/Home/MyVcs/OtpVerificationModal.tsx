@@ -40,7 +40,7 @@ export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
         fill
         padding="32"
         backgroundColor={Theme.Colors.whiteBackgroundColor}>
-        <Column fill align="space-between" crossAlign="center">
+        <Column fill crossAlign="center">
           <Column crossAlign="center">
             <Image source={Theme.OtpLogo} resizeMethod="auto" />
             <Text
@@ -94,7 +94,6 @@ export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
             </Text>
           </TouchableOpacity>
         </Column>
-        <Column fill></Column>
       </Column>
     </Modal>
   );

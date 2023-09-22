@@ -1,14 +1,14 @@
 import React from 'react';
-import {useTranslation} from 'react-i18next';
-import {Image, ImageBackground, View} from 'react-native';
-import {getLocalizedField} from '../i18n';
-import {VerifiableCredential} from '../types/vc';
-import {VcItemTags} from './VcItemTags';
-import VerifiedIcon from './VerifiedIcon';
-import {Column, Row, Text} from './ui';
-import {Theme} from './ui/styleUtils';
-import {CheckBox, Icon} from 'react-native-elements';
-import testIDProps from '../shared/commonUtil';
+import { useTranslation } from 'react-i18next';
+import { Image, ImageBackground, View } from 'react-native';
+import { getLocalizedField } from '../../../i18n';
+import { VerifiableCredential } from '../../../types/vc';
+import { VcItemTags } from '../../VcItemTags';
+import VerifiedIcon from '../../VerifiedIcon';
+import { Column, Row, Text } from '../../ui';
+import { Theme } from '../../ui/styleUtils';
+import { CheckBox, Icon } from 'react-native-elements';
+import testIDProps from '../../../shared/commonUtil';
 
 const getDetails = (arg1, arg2, verifiableCredential) => {
   if (arg1 === 'Status') {
@@ -88,14 +88,16 @@ function getIdNumber(id: string) {
   return '*'.repeat(id.length - 4) + id.slice(-4);
 }
 
-export const VcItemContent: React.FC<VcItemContentProps> = props => {
+export const ExistingMosipVCItemContent: React.FC<
+  ExistingMosipVCItemContentProps
+> = (props) => {
   //Assigning the UIN and VID from the VC details to display the idtype label
   const uin = props.verifiableCredential?.credentialSubject.UIN;
   const vid = props.verifiableCredential?.credentialSubject.VID;
   const fullName = !props.verifiableCredential
     ? ''
     : getLocalizedField(props.verifiableCredential.credentialSubject.fullName);
-  const {t} = useTranslation('VcDetails');
+  const { t } = useTranslation('VcDetails');
   const isvalid = !props.verifiableCredential ? '' : t('valid');
   const selectableOrCheck = props.selectable ? (
     <CheckBox
@@ -123,7 +125,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = props => {
               source={
                 !props.verifiableCredential
                   ? Theme.ProfileIcon
-                  : {uri: props.context.credential.biometrics.face}
+                  : { uri: props.context.credential.biometrics.face }
               }
               style={Theme.Styles.closeCardImage}>
               {props.iconName && (
@@ -240,7 +242,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = props => {
         </Row>
 
         <Row
-          style={{flexDirection: 'row', flex: 1}}
+          style={{ flexDirection: 'row', flex: 1 }}
           align="space-between"
           margin="0 8 5 8">
           <Column margin="9 0 0 0">
@@ -293,7 +295,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = props => {
   );
 };
 
-interface VcItemContentProps {
+interface ExistingMosipVCItemContentProps {
   context: any;
   verifiableCredential: VerifiableCredential;
   generatedOn: string;

@@ -7,7 +7,7 @@ import {
   selectMyVcsMetadata,
   VcEvents,
 } from '../../machines/vc';
-import { vcItemMachine } from '../../machines/vcItem';
+import { ExistingMosipVCItemMachine } from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -127,5 +127,5 @@ export function useRevoke() {
 }
 
 export interface RevokeProps {
-  service: ActorRefFrom<typeof vcItemMachine>;
+  service: ActorRefFrom<typeof ExistingMosipVCItemMachine>;
 }

@@ -6,10 +6,10 @@ import { Theme } from '../../components/ui/styleUtils';
 import { MessageOverlay } from '../../components/MessageOverlay';
 import { useSendVcScreen } from './SendVcScreenController';
 import { VerifyIdentityOverlay } from '../VerifyIdentityOverlay';
-import { VcItem } from '../../components/VcItem';
+import { ExistingMosipVCItem } from '../../components/VC/ExistingMosipVCItem/ExistingMosipVCItem';
 import { I18nManager, BackHandler } from 'react-native';
 import { useInterpret } from '@xstate/react';
-import { createVcItemMachine } from '../../machines/vcItem';
+import { createExistingMosipVCItemMachine } from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import { GlobalContext } from '../../shared/GlobalContext';
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -21,7 +21,7 @@ export const SendVcScreen: React.FC = () => {
 
   if (controller.shareableVcsMetadata?.length > 0) {
     const firstVCMachine = useRef(
-      createVcItemMachine(
+      createExistingMosipVCItemMachine(
         appService.getSnapshot().context.serviceRefs,
         controller.shareableVcsMetadata[0]
       )
@@ -79,7 +79,7 @@ export const SendVcScreen: React.FC = () => {
         </Column>
         <Column scroll>
           {controller.shareableVcsMetadata.map((vcMetadata, index) => (
-            <VcItem
+            <ExistingMosipVCItem
               key={vcMetadata.getVcKey()}
               vcMetadata={vcMetadata}
               margin="0 2 8 2"

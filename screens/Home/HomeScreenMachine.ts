@@ -7,13 +7,15 @@ import {
   StateFrom,
 } from 'xstate';
 import { createModel } from 'xstate/lib/model';
-import { vcItemMachine } from '../../machines/vcItem';
+import { ExistingMosipVCItemMachine } from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import { AppServices } from '../../shared/GlobalContext';
 import { createMyVcsTabMachine, MyVcsTabMachine } from './MyVcsTabMachine';
 import {
   createReceivedVcsTabMachine,
   ReceivedVcsTabMachine,
 } from './ReceivedVcsTabMachine';
+import { EsignetMosipVCItemMachine } from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
+import { IssuersMachine } from '../../machines/issuersMachine';
 
 const model = createModel(
   {
@@ -22,7 +24,9 @@ const model = createModel(
       myVcs: {} as ActorRefFrom<typeof MyVcsTabMachine>,
       receivedVcs: {} as ActorRefFrom<typeof ReceivedVcsTabMachine>,
     },
-    selectedVc: null as ActorRefFrom<typeof vcItemMachine>,
+    selectedVc: null as
+      | ActorRefFrom<typeof ExistingMosipVCItemMachine>
+      | ActorRefFrom<typeof EsignetMosipVCItemMachine>,
     activeTab: 0,
   },
   {
@@ -30,10 +34,16 @@ const model = createModel(
       SELECT_MY_VCS: () => ({}),
       SELECT_RECEIVED_VCS: () => ({}),
       SELECT_HISTORY: () => ({}),
-      VIEW_VC: (vcItemActor: ActorRefFrom<typeof vcItemMachine>) => ({
+      VIEW_VC: (
+        vcItemActor:
+          | ActorRefFrom<typeof ExistingMosipVCItemMachine>
+          | ActorRefFrom<typeof EsignetMosipVCItemMachine>
+      ) => ({
         vcItemActor,
       }),
       DISMISS_MODAL: () => ({}),
+      GOTO_ISSUERS: () => ({}),
+      DOWNLOAD_ID: () => ({}),
     },
   }
 );
@@ -66,6 +76,7 @@ export const HomeScreenMachine = model.createMachine(
           SELECT_MY_VCS: '.myVcs',
           SELECT_RECEIVED_VCS: '.receivedVcs',
           SELECT_HISTORY: '.history',
+          GOTO_ISSUERS: '.gotoIssuers',
         },
         states: {
           init: {
@@ -100,6 +111,29 @@ export const HomeScreenMachine = model.createMachine(
           },
           history: {
             entry: [setActiveTab(2)],
+          },
+          gotoIssuers: {
+            invoke: {
+              id: 'issuersMachine',
+              src: IssuersMachine,
+              data: (context) => ({
+                ...IssuersMachine.context,
+                serviceRefs: context.serviceRefs, // the value you want to pass to child machine
+              }),
+              onDone: 'idle',
+            },
+            on: {
+              DOWNLOAD_ID: {
+                actions: 'sendAddEvent',
+                target: 'idle',
+              },
+              GOTO_ISSUERS: 'gotoIssuers',
+            },
+          },
+          idle: {
+            on: {
+              GOTO_ISSUERS: 'gotoIssuers',
+            },
           },
         },
       },
@@ -139,6 +173,10 @@ export const HomeScreenMachine = model.createMachine(
         }),
       }),
 
+      sendAddEvent: send('ADD_VC', {
+        to: (context) => context.tabRefs.myVcs,
+      }),
+
       setSelectedVc: model.assign({
         selectedVc: (_, event) => event.vcItemActor,
       }),
@@ -155,6 +193,10 @@ function setActiveTab(activeTab: number) {
 }
 
 type State = StateFrom<typeof HomeScreenMachine>;
+
+export function selectIssuersMachine(state: State) {
+  return state.children.issuersMachine as ActorRefFrom<typeof IssuersMachine>;
+}
 
 export function selectTabRefs(state: State) {
   return state.context.tabRefs;

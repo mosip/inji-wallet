@@ -6,7 +6,7 @@ import {
   selectIsRefreshingReceivedVcs,
   selectReceivedVcsMetadata,
 } from '../../machines/vc';
-import { vcItemMachine } from '../../machines/vcItem';
+import { ExistingMosipVCItemMachine } from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import { GlobalContext } from '../../shared/GlobalContext';
 import {
   ReceivedVcsTabEvents,
@@ -54,7 +54,7 @@ export function useReceivedVcsTab() {
 
     TOGGLE_RECEIVED_CARDS: () => setIsVisible(!isVisible),
 
-    VIEW_VC: (vcRef: ActorRefFrom<typeof vcItemMachine>) => {
+    VIEW_VC: (vcRef: ActorRefFrom<typeof ExistingMosipVCItemMachine>) => {
       return myVcservice.send(MyVcsTabEvents.VIEW_VC(vcRef));
     },
     isViewingVc,

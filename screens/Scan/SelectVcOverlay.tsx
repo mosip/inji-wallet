@@ -4,7 +4,7 @@ import { Dimensions } from 'react-native';
 import { Overlay } from 'react-native-elements/dist/overlay/Overlay';
 import { Button, Column, Text } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
-import { VcItem } from '../../components/VcItem';
+import { ExistingMosipVCItem } from '../../components/VC/ExistingMosipVCItem/ExistingMosipVCItem';
 import {
   SelectVcOverlayProps,
   useSelectVcOverlay,
@@ -30,7 +30,7 @@ export const SelectVcOverlay: React.FC<SelectVcOverlayProps> = (props) => {
         </Text>
         <Column margin="0 0 32 0" scroll>
           {props.vcMetadatas.map((vcMetadata, index) => (
-            <VcItem
+            <ExistingMosipVCItem
               key={`${vcMetadata.getVcKey()}-${index}`}
               vcMetadata={vcMetadata}
               margin="0 2 8 2"

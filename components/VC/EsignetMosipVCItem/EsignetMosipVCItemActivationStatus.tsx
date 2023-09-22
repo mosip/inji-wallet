@@ -1,21 +1,19 @@
 import React from 'react';
-import {useTranslation} from 'react-i18next';
-import {Dimensions} from 'react-native';
-import {Icon} from 'react-native-elements';
-import {ActorRefFrom} from 'xstate';
-import {vcItemMachine} from '../machines/vcItem';
-import {VerifiableCredential} from '../types/vc';
-import {Row, Text} from './ui';
-import {Theme} from './ui/styleUtils';
+import { useTranslation } from 'react-i18next';
+import { Dimensions } from 'react-native';
+import { Icon } from 'react-native-elements';
+import { Theme } from '../../ui/styleUtils';
+import { Row, Text } from '../../ui';
+import { VerifiableCredential } from './vc';
 
 const WalletUnverifiedIcon: React.FC = () => {
   return (
     <Icon
       name="shield-alert"
       color={Theme.Colors.Icon}
-      size={Theme.ICON_MID_SIZE}
+      size={28}
       type="material-community"
-      containerStyle={{marginStart: 10, bottom: 1, marginLeft: 10}}
+      containerStyle={{ marginStart: 4, bottom: 1 }}
     />
   );
 };
@@ -25,16 +23,16 @@ const WalletVerifiedIcon: React.FC = () => {
     <Icon
       name="verified-user"
       color={Theme.Colors.VerifiedIcon}
-      size={Theme.ICON_MID_SIZE}
-      containerStyle={{marginStart: 10, bottom: 1, marginLeft: 10}}
+      size={28}
+      containerStyle={{ marginStart: 4, bottom: 1 }}
     />
   );
 };
 
 const WalletUnverifiedActivationDetails: React.FC<
   WalletUnVerifiedDetailsProps
-> = props => {
-  const {t} = useTranslation('VcDetails');
+> = (props) => {
+  const { t } = useTranslation('VcDetails');
   return (
     <Row
       width={Dimensions.get('screen').width * 0.8}
@@ -49,23 +47,25 @@ const WalletUnverifiedActivationDetails: React.FC<
         <Text
           color={Theme.Colors.Details}
           testID="activationPending"
-          weight="regular"
-          margin="8 10 10 5"
+          weight="semibold"
+          size="small"
+          margin="10 33 10 10"
           style={
             !props.verifiableCredential
               ? Theme.Styles.loadingTitle
               : Theme.Styles.statusLabel
-          }
-          children={t('offlineAuthDisabledHeader')}></Text>
+          }>
+          {t('profileAuthenticated')}
+        </Text>
       </Row>
     </Row>
   );
 };
 
-const WalletVerifiedActivationDetails: React.FC<
-  WalletVerifiedDetailsProps
-> = props => {
-  const {t} = useTranslation('WalletBinding');
+const WalletVerifiedActivationDetails: React.FC<WalletVerifiedDetailsProps> = (
+  props
+) => {
+  const { t } = useTranslation('VcDetails');
   return (
     <Row
       width={Dimensions.get('screen').width * 0.8}
@@ -80,55 +80,51 @@ const WalletVerifiedActivationDetails: React.FC<
         <Text
           color={Theme.Colors.statusLabel}
           testID="activated"
-          weight="regular"
+          weight="semibold"
           size="smaller"
-          margin="8 10 10 5"
+          margin="10 10 10 10"
           style={
             !props.verifiableCredential
               ? Theme.Styles.loadingTitle
-              : Theme.Styles.statusLabel
-          }
-          children={t('profileAuthenticated')}></Text>
+              : Theme.Styles.subtitle
+          }>
+          {t('profileAuthenticated')}
+        </Text>
       </Row>
     </Row>
   );
 };
 
-export const VcItemActivationStatus: React.FC<
-  VcItemActivationStatusProps
-> = props => {
+export const EsignetMosipVCActivationStatus: React.FC<
+  EsignetMosipVCActivationStatusProps
+> = (props) => {
   return (
-    <Row margin="0 0 0 -6">
+    <Row>
       {props.emptyWalletBindingId ? (
         <WalletUnverifiedActivationDetails
           verifiableCredential={props.verifiableCredential}
-          onPress={props.onPress}
         />
       ) : (
         <WalletVerifiedActivationDetails
           verifiableCredential={props.verifiableCredential}
           showOnlyBindedVc={props.showOnlyBindedVc}
-          onPress={props.onPress}
         />
       )}
     </Row>
   );
 };
 
-interface VcItemActivationStatusProps {
+export interface EsignetMosipVCActivationStatusProps {
   showOnlyBindedVc: boolean;
-  onPress: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
   verifiableCredential: VerifiableCredential;
   emptyWalletBindingId: boolean;
 }
 
 interface WalletVerifiedDetailsProps {
   showOnlyBindedVc: boolean;
-  onPress: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
   verifiableCredential: VerifiableCredential;
 }
 
 interface WalletUnVerifiedDetailsProps {
-  onPress: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
   verifiableCredential: VerifiableCredential;
 }

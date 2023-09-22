@@ -24,6 +24,7 @@ export interface Typegen0 {
     removeVcFromInProgressDownlods: 'REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS';
     removeVcFromMyVcs: 'REMOVE_VC_FROM_CONTEXT';
     resetAreAllVcsDownloaded: 'RESET_ARE_ALL_VCS_DOWNLOADED';
+    setDownloadedVCFromOpenId4VCI: 'VC_DOWNLOADED_FROM_OPENID4VCI';
     setDownloadedVc: 'VC_DOWNLOADED';
     setMyVcs: 'STORE_RESPONSE';
     setReceivedVcs: 'STORE_RESPONSE';

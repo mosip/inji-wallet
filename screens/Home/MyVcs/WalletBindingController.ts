@@ -3,16 +3,15 @@ import { useContext, useRef, useState } from 'react';
 import { GlobalContext } from '../../../shared/GlobalContext';
 import { selectMyVcsMetadata, VcEvents } from '../../../machines/vc';
 import {
-  createVcItemMachine,
+  createExistingMosipVCItemMachine,
   isShowingBindingWarning,
   selectAcceptingBindingOtp,
-  isWalletBindingInProgress,
-  VcItemEvents,
+  ExistingMosipVCItemEvents,
   selectIsAcceptingOtpInput,
   selectOtpError,
   selectShowWalletBindingError,
   selectWalletBindingError,
-} from '../../../machines/vcItem';
+} from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import { useTranslation } from 'react-i18next';
 
 import { ActorRefFrom } from 'xstate';
@@ -22,7 +21,7 @@ export function useWalletBinding(props) {
   const { appService } = useContext(GlobalContext);
 
   const machine = useRef(
-    createVcItemMachine(
+    createExistingMosipVCItemMachine(
       appService.getSnapshot().context.serviceRefs,
       props.vcMetadata
     )
@@ -70,12 +69,14 @@ export function useWalletBinding(props) {
     ),
     isBindingError: useSelector(bindingService, selectShowWalletBindingError),
     walletBindingError: useSelector(bindingService, selectWalletBindingError),
+    RESEND_OTP: () =>
+      bindingService.send(ExistingMosipVCItemEvents.RESEND_OTP()),
 
-    DISMISS: () => bindingService.send(VcItemEvents.DISMISS()),
+    DISMISS: () => bindingService.send(ExistingMosipVCItemEvents.DISMISS()),
 
-    CONFIRM: () => bindingService.send(VcItemEvents.CONFIRM()),
+    CONFIRM: () => bindingService.send(ExistingMosipVCItemEvents.CONFIRM()),
 
-    CANCEL: () => bindingService.send(VcItemEvents.CANCEL()),
+    CANCEL: () => bindingService.send(ExistingMosipVCItemEvents.CANCEL()),
 
     REFRESH: () => vcService.send(VcEvents.REFRESH_MY_VCS()),
     setAuthenticating,

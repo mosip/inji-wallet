@@ -2,7 +2,7 @@ import { useSelector } from '@xstate/react';
 import { useContext, useState } from 'react';
 import { ActorRefFrom } from 'xstate';
 import { selectShareableVcsMetadata } from '../../machines/vc';
-import { vcItemMachine } from '../../machines/vcItem';
+import { ExistingMosipVCItemMachine } from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import { GlobalContext } from '../../shared/GlobalContext';
 import {
   selectIsSelectingVc,
@@ -32,7 +32,8 @@ export function useSendVcScreen() {
     TOGGLE_USER_CONSENT: () =>
       scanService.send(ScanEvents.TOGGLE_USER_CONSENT()),
     SELECT_VC_ITEM:
-      (index: number) => (vcRef: ActorRefFrom<typeof vcItemMachine>) => {
+      (index: number) =>
+      (vcRef: ActorRefFrom<typeof ExistingMosipVCItemMachine>) => {
         setSelectedIndex(index);
         const { serviceRefs, ...vcData } = vcRef.getSnapshot().context;
         scanService.send(ScanEvents.SELECT_VC(vcData));

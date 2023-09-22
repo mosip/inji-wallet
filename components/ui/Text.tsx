@@ -1,6 +1,6 @@
 import React from 'react';
-import {StyleProp, TextStyle, Text as RNText} from 'react-native';
-import {Theme, Spacing} from './styleUtils';
+import { StyleProp, TextStyle, Text as RNText } from 'react-native';
+import { Theme, Spacing } from './styleUtils';
 import testIDProps from '../../shared/commonUtil';
 
 export const Text: React.FC<TextProps> = (props: TextProps) => {
@@ -9,8 +9,8 @@ export const Text: React.FC<TextProps> = (props: TextProps) => {
   const textStyles: StyleProp<TextStyle> = [
     Theme.TextStyles.base,
     Theme.TextStyles[weight],
-    props.color ? {color: props.color} : null,
-    props.align ? {textAlign: props.align} : {textAlign: 'left'},
+    props.color ? { color: props.color } : null,
+    props.align ? { textAlign: props.align } : { textAlign: 'left' },
     props.margin ? Theme.spacing('margin', props.margin) : null,
     props.size ? Theme.TextStyles[props.size] : null,
     props.style ? props.style : null,
@@ -20,7 +20,8 @@ export const Text: React.FC<TextProps> = (props: TextProps) => {
     <RNText
       {...testIDProps(props.testID)}
       style={textStyles}
-      numberOfLines={props.numLines}>
+      numberOfLines={props.numLines}
+      accessible={props.accessible}>
       {props.children}
     </RNText>
   );
@@ -37,4 +38,5 @@ interface TextProps {
   lineHeight?: number;
   numLines?: number;
   style?: StyleProp<TextStyle>;
+  accessible?: boolean | true;
 }

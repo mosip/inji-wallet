@@ -1,6 +1,6 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import {Dimensions, StyleSheet, ViewStyle} from 'react-native';
-import {Spacing} from '../styleUtils';
+import { Dimensions, Platform, StyleSheet, ViewStyle } from 'react-native';
+import { Spacing } from '../styleUtils';
 
 const Colors = {
   Black: '#231F20',
@@ -18,6 +18,7 @@ const Colors = {
   LightOrange: '#FDF1E6',
   LightGrey: '#FAF9FF',
   ShadeOfGrey: '#6F6F6F',
+  mediumDarkGrey: '#7B7B7B',
   White: '#FFFFFF',
   Red: '#EB5757',
   Green: '#219653',
@@ -58,6 +59,7 @@ export const PurpleTheme = {
     borderBottomColor: Colors.Grey6,
     whiteBackgroundColor: Colors.White,
     lightGreyBackgroundColor: Colors.LightGrey,
+    errorGrayText: Colors.mediumDarkGrey,
     profileLanguageValue: Colors.Grey,
     aboutVersion: Colors.Gray40,
     profileAuthFactorUnlock: Colors.Grey,
@@ -228,7 +230,7 @@ export const PurpleTheme = {
       margin: 8,
       backgroundColor: '#fff',
       shadowColor: '#000',
-      shadowOffset: {width: -1, height: 2},
+      shadowOffset: { width: -1, height: 2 },
       shadowOpacity: 0.3,
       shadowRadius: 4,
       elevation: 7,
@@ -291,7 +293,7 @@ export const PurpleTheme = {
       margin: 8,
       backgroundColor: '#fff',
       shadowColor: '#000',
-      shadowOffset: {width: -1, height: 1},
+      shadowOffset: { width: -1, height: 1 },
       shadowOpacity: 0.4,
       shadowRadius: 3,
       elevation: 4,
@@ -324,6 +326,11 @@ export const PurpleTheme = {
       height: 40,
       width: 40,
       marginRight: 4,
+    },
+    issuerLogo: {
+      resizeMode: 'contain',
+      aspectRatio: 1,
+      height: 60,
     },
     vcDetailsLogo: {
       height: 35,
@@ -496,6 +503,20 @@ export const PurpleTheme = {
       marginLeft: 10,
       marginRight: 10,
     },
+    downloadFabIcon: {
+      height: 70,
+      width: 70,
+      borderRadius: 200,
+      padding: 10,
+      backgroundColor: Colors.Purple,
+      shadowColor: '#000',
+      shadowOpacity: 0.4,
+      elevation: 5,
+      position: 'absolute',
+      bottom: Dimensions.get('window').width * 0.1,
+      right: Dimensions.get('window').width * 0.1,
+    },
+    boxShadow: generateBoxShadowStyle(),
   }),
   QrCodeStyles: StyleSheet.create({
     magnifierZoom: {
@@ -533,7 +554,7 @@ export const PurpleTheme = {
       borderRadius: 10,
       elevation: 6,
       shadowColor: '#000',
-      shadowOffset: {width: -1, height: 1},
+      shadowOffset: { width: -1, height: 1 },
       shadowOpacity: 0.4,
       shadowRadius: 3,
     },
@@ -571,6 +592,19 @@ export const PurpleTheme = {
       lineHeight: 19,
       paddingTop: 4,
     },
+    subHeader: {
+      fontFamily: 'Inter_600SemiBold',
+      lineHeight: 19,
+      fontSize: 15,
+      paddingTop: 10,
+    },
+    semiBoldHeader: {
+      color: Colors.Black,
+      fontFamily: 'Inter_600SemiBold',
+      fontSize: 18,
+      lineHeight: 21,
+      paddingTop: 4,
+    },
     retrieveIdLabel: {
       color: Colors.ShadeOfGrey,
       fontFamily: 'Inter_600SemiBold',
@@ -600,6 +634,12 @@ export const PurpleTheme = {
     regular: {
       fontFamily: 'Inter_400Regular',
       fontSize: 14,
+    },
+    regularGrey: {
+      fontFamily: 'Inter_400Regular',
+      fontSize: 15,
+      lineHeight: 19,
+      color: Colors.ShadeOfGrey,
     },
     semibold: {
       fontFamily: 'Inter_600SemiBold',
@@ -659,6 +699,12 @@ export const PurpleTheme = {
     },
     messageContainer: {
       fontSize: 12,
+    },
+  }),
+  LoaderStyles: StyleSheet.create({
+    titleContainer: {
+      marginLeft: Dimensions.get('screen').width * 0.08,
+      marginVertical: Dimensions.get('screen').height * 0.025,
     },
   }),
   ButtonStyles: StyleSheet.create({
@@ -779,6 +825,13 @@ export const PurpleTheme = {
       width: Dimensions.get('screen').width,
       height: Dimensions.get('screen').height,
     },
+    header: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'flex-start',
+      marginHorizontal: 18,
+      marginVertical: 8,
+    },
   }),
   UpdateModalStyles: StyleSheet.create({
     modal: {
@@ -873,9 +926,9 @@ export const PurpleTheme = {
       flex: 1,
       width: Dimensions.get('screen').width,
     },
-    revokeView: {padding: 20},
-    flexRow: {flexDirection: 'row', margin: 0, padding: 0},
-    rowStyle: {flexDirection: 'column', justifyContent: 'space-between'},
+    revokeView: { padding: 20 },
+    flexRow: { flexDirection: 'row', margin: 0, padding: 0 },
+    rowStyle: { flexDirection: 'column', justifyContent: 'space-between' },
     viewContainer: {
       backgroundColor: 'rgba(0,0,0,.6)',
       width: Dimensions.get('screen').width,
@@ -1040,6 +1093,81 @@ export const PurpleTheme = {
       backgroundColor: Colors.Transparent,
     },
   }),
+  issuersScreenStyles: StyleSheet.create({
+    issuerListOuterContainer: {
+      padding: 10,
+      flex: 1,
+      backgroundColor: Colors.White,
+    },
+    issuersContainer: { marginHorizontal: 3 },
+    issuerBoxContainer: {
+      margin: 5,
+      flex: 1,
+      padding: 10,
+      borderRadius: 6,
+      alignItems: 'flex-start',
+      justifyContent: 'space-evenly',
+      flexDirection: 'column',
+      paddingHorizontal: 6,
+      paddingVertical: 8,
+      backgroundColor: Colors.White,
+    },
+    issuerBoxContainerPressed: {
+      margin: 5,
+      flex: 1,
+      padding: 10,
+      borderRadius: 6,
+      alignItems: 'flex-start',
+      justifyContent: 'space-evenly',
+      flexDirection: 'column',
+      paddingHorizontal: 6,
+      paddingVertical: 8,
+      backgroundColor: Colors.Grey,
+    },
+    issuerHeading: {
+      fontFamily: 'Inter_600SemiBold',
+      fontSize: 14,
+      lineHeight: 17,
+    },
+    issuerDescription: {
+      fontSize: 11,
+      lineHeight: 14,
+      color: Colors.ShadeOfGrey,
+    },
+    issuerIcon: {
+      resizeMode: 'contain',
+      height: 33,
+      width: 32,
+      marginBottom: 9,
+      marginTop: 8,
+      marginLeft: 2.5,
+    },
+    loaderHeadingText: {
+      flex: 1,
+      flexDirection: 'column',
+    },
+  }),
+  ErrorStyles: StyleSheet.create({
+    image: { marginTop: -60, paddingBottom: 26 },
+    title: {
+      color: Colors.Black,
+      fontFamily: 'Inter_600SemiBold',
+      fontSize: 18,
+      lineHeight: 21,
+      paddingTop: 4,
+      textAlign: 'center',
+    },
+    message: {
+      textAlign: 'center',
+      fontFamily: 'Inter_400Regular',
+      fontSize: 14,
+      lineHeight: 20,
+      marginTop: 6,
+      marginBottom: 25,
+      marginHorizontal: 40,
+      color: Colors.mediumDarkGrey,
+    },
+  }),
   ICON_SMALL_SIZE: 16,
   ICON_MID_SIZE: 22,
   PinIcon: require('../../../assets/pin_icon.png'),
@@ -1070,6 +1198,9 @@ export const PurpleTheme = {
   IntroScanner: require('../../../assets/intro-scanner.png'),
   injiSmallLogo: require('../../../assets/inji_small_logo.png'),
   protectPrivacy: require('../../../assets/phone_mockup_1.png'),
+  NoInternetConnection: require('../../../assets/no-internet-connection.png'),
+  SomethingWentWrong: require('../../../assets/something-went-wrong.png'),
+  DigitIcon: require('../../../assets/digit-icon.png'),
 
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/
@@ -1113,3 +1244,19 @@ export const PurpleTheme = {
     };
   },
 };
+
+function generateBoxShadowStyle() {
+  if (Platform.OS === 'ios') {
+    return {
+      shadowColor: '#000',
+      shadowOffset: { width: 1, height: 1.2 },
+      shadowOpacity: 0.3,
+      shadowRadius: 2.5,
+    };
+  } else if (Platform.OS === 'android') {
+    return {
+      elevation: 4,
+      shadowColor: '#000',
+    };
+  }
+}

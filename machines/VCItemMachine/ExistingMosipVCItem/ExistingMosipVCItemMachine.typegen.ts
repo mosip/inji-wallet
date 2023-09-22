@@ -151,7 +151,9 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.kebabPopUp.requestingBindingOtp:invocation[0]'
       | 'done.invoke.vc-item.requestingBindingOtp:invocation[0]';
     requestLock: 'done.invoke.vc-item.requestingLock:invocation[0]';
-    requestOtp: 'done.invoke.vc-item.requestingOtp:invocation[0]';
+    requestOtp:
+      | 'done.invoke.vc-item.acceptingOtpInput.resendOTP:invocation[0]'
+      | 'done.invoke.vc-item.requestingOtp:invocation[0]';
     requestRevoke: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
     updatePrivateKey:
       | 'done.invoke.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]'
@@ -305,7 +307,7 @@ export interface Typegen0 {
     generateKeyPair: 'INPUT_OTP';
     requestBindingOtp: 'CONFIRM';
     requestLock: 'INPUT_OTP';
-    requestOtp: 'LOCK_VC';
+    requestOtp: 'LOCK_VC' | 'RESEND_OTP';
     requestRevoke: 'INPUT_OTP';
     updatePrivateKey:
       | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'
@@ -315,6 +317,8 @@ export interface Typegen0 {
   matchesStates:
     | 'acceptingBindingOtp'
     | 'acceptingOtpInput'
+    | 'acceptingOtpInput.idle'
+    | 'acceptingOtpInput.resendOTP'
     | 'acceptingRevokeInput'
     | 'addKeyPair'
     | 'addingWalletBindingId'
@@ -359,6 +363,7 @@ export interface Typegen0 {
     | 'updatingPrivateKey'
     | 'verifyingCredential'
     | {
+        acceptingOtpInput?: 'idle' | 'resendOTP';
         checkingServerData?:
           | 'checkingStatus'
           | 'downloadingCredential'
