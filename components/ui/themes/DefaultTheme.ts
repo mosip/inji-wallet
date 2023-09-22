@@ -1,5 +1,5 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import {Dimensions, StyleSheet, ViewStyle} from 'react-native';
+import {Dimensions, Platform, StyleSheet, ViewStyle} from 'react-native';
 import {Spacing} from '../styleUtils';
 
 const Colors = {
@@ -8,13 +8,16 @@ const Colors = {
   Grey: '#C7C7C7',
   Grey5: '#E0E0E0',
   Grey6: '#F2F2F2',
+  Gray30: '#444444',
   Gray40: '#666666',
   Gray44: '#707070',
+  Gray50: '#999999',
   Gray9: '#171717',
   DimGray: '#737373',
   Orange: '#F2811D',
-  LightGrey: '#F5F5F5',
+  LightGrey: '#F7F7F7',
   ShadeOfGrey: '#6F6F6F',
+  mediumDarkGrey: '#7B7B7B',
   White: '#FFFFFF',
   Red: '#D52929',
   Green: '#4B9D20',
@@ -40,7 +43,7 @@ export const DefaultTheme = {
     TabItemText: Colors.Orange,
     Details: Colors.Black,
     DetailsLabel: Colors.Gray40,
-    LoadingDetailsLabel: Colors.Orange,
+    LoadingDetailsLabel: Colors.Gray40,
     AddIdBtnBg: Colors.Orange,
     AddIdBtnTxt: Colors.Orange,
     DownloadIdBtnTxt: Colors.White,
@@ -50,7 +53,7 @@ export const DefaultTheme = {
     IconBg: Colors.Orange,
     popUp: Colors.Green,
     Icon: Colors.Orange,
-    GrayIcon: Colors.Grey,
+    GrayIcon: Colors.Gray50,
     helpText: Colors.Gray44,
     borderBottomColor: Colors.Grey6,
     whiteBackgroundColor: Colors.White,
@@ -86,6 +89,7 @@ export const DefaultTheme = {
     DefaultToggle: Colors.LightOrange,
     ProfileIconBg: Colors.LightOrange,
     GrayText: Colors.GrayText,
+    errorGrayText: Colors.mediumDarkGrey,
     gradientBtn: ['#F59B4B', '#E86E04'],
     dotColor: Colors.dorColor,
     plainText: Colors.plainText,
@@ -113,16 +117,32 @@ export const DefaultTheme = {
     },
     subtitle: {
       backgroundColor: Colors.Transparent,
+      fontSize: 12,
     },
     loadingSubtitle: {
       backgroundColor: Colors.Grey,
       borderRadius: 4,
     },
-    statusLabel: {
+    detailsValue: {
       color: Colors.Black,
+      fontSize: 12,
+    },
+    statusLabel: {
+      color: Colors.Gray30,
+      fontSize: 12,
+    },
+    activationTab: {
+      justifyContent: 'space-evenly',
+      alignItems: 'center',
+      marginRight: 20,
+      marginStart: 10,
+    },
+    kebabIcon: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      flex: 1,
     },
     verifiedIconContainer: {
-      marginTop: 3,
       marginRight: 3,
     },
     verifiedIconInner: {
@@ -130,7 +150,7 @@ export const DefaultTheme = {
       borderRadius: 10,
     },
     vcItemLabelHeader: {
-      color: Colors.Orange,
+      color: Colors.Gray40,
     },
     closeDetails: {
       flex: 1,
@@ -192,21 +212,34 @@ export const DefaultTheme = {
       alignSelf: 'flex-end',
       marginLeft: 300,
     },
+    horizontalLine: {
+      height: 1,
+      backgroundColor: Colors.Grey,
+    },
+    verticalLine: {
+      width: 1,
+      height: 30,
+      backgroundColor: Colors.Grey,
+      marginVertical: 8,
+      marginLeft: -45,
+      marginRight: 22,
+    },
     closeCardBgContainer: {
       borderRadius: 10,
       margin: 8,
       backgroundColor: '#fff',
       shadowColor: '#000',
-      shadowOffset: {width: -1, height: 1},
-      shadowOpacity: 0.4,
-      shadowRadius: 3,
-      elevation: 4,
+      shadowOffset: {width: -1, height: 2},
+      shadowOpacity: 0.3,
+      shadowRadius: 4,
+      elevation: 7,
     },
     selectedBindedVc: {
       borderRadius: 15,
       margin: 5,
       borderWidth: 3,
       borderColor: Colors.Green,
+      overflow: 'hidden',
     },
     selectedVc: {
       borderRadius: 10,
@@ -267,6 +300,7 @@ export const DefaultTheme = {
     backgroundImageContainer: {
       flex: 1,
       padding: 10,
+      overflow: 'hidden',
     },
     successTag: {
       backgroundColor: Colors.Green,
@@ -288,6 +322,16 @@ export const DefaultTheme = {
       justifyContent: 'space-between',
     },
     logo: {
+      height: 40,
+      width: 40,
+      marginRight: 4,
+    },
+    issuerLogo: {
+      resizeMode: 'contain',
+      aspectRatio: 1,
+      height: 60,
+    },
+    vcDetailsLogo: {
       height: 35,
       width: 90,
     },
@@ -365,10 +409,21 @@ export const DefaultTheme = {
       borderColor: Colors.White,
       backgroundColor: Colors.LightOrange,
     },
+    pinIcon: {
+      height: 39,
+      width: 39,
+      marginLeft: -13,
+      marginTop: -9,
+    },
+    faceImage: {
+      borderRadius: 10,
+      height: 96,
+      width: 88,
+    },
     closeCardImage: {
-      width: 105,
-      height: 135,
-      borderRadius: 5,
+      width: 80,
+      height: 82,
+      borderRadius: 100,
     },
     openCardImage: {
       width: 100,
@@ -447,6 +502,20 @@ export const DefaultTheme = {
       marginLeft: 10,
       marginRight: 10,
     },
+    downloadFabIcon: {
+      height: 70,
+      width: 70,
+      borderRadius: 200,
+      padding: 10,
+      backgroundColor: Colors.Orange,
+      shadowColor: '#000',
+      shadowOpacity: 0.4,
+      elevation: 5,
+      position: 'absolute',
+      bottom: Dimensions.get('window').width * 0.1,
+      right: Dimensions.get('window').width * 0.1,
+    },
+    boxShadow: generateBoxShadowStyle(),
   }),
   QrCodeStyles: StyleSheet.create({
     magnifierZoom: {
@@ -521,7 +590,19 @@ export const DefaultTheme = {
       fontSize: 18,
       lineHeight: 19,
       paddingTop: 4,
-      marginLeft: -30,
+    },
+    subHeader: {
+      fontFamily: 'Inter_600SemiBold',
+      lineHeight: 19,
+      fontSize: 15,
+      paddingTop: 10,
+    },
+    semiBoldHeader: {
+      color: Colors.Black,
+      fontFamily: 'Inter_600SemiBold',
+      fontSize: 18,
+      lineHeight: 21,
+      paddingTop: 4,
     },
     retrieveIdLabel: {
       color: Colors.ShadeOfGrey,
@@ -553,6 +634,12 @@ export const DefaultTheme = {
       fontFamily: 'Inter_400Regular',
       fontSize: 14,
     },
+    regularGrey: {
+      fontFamily: 'Inter_400Regular',
+      fontSize: 15,
+      lineHeight: 19,
+      color: Colors.ShadeOfGrey,
+    },
     semibold: {
       fontFamily: 'Inter_600SemiBold',
       fontSize: 15,
@@ -563,6 +650,9 @@ export const DefaultTheme = {
     small: {
       fontSize: 13,
       lineHeight: 21,
+    },
+    extraSmall: {
+      fontSize: 12,
     },
     smaller: {
       fontSize: 11,
@@ -608,6 +698,12 @@ export const DefaultTheme = {
     },
     messageContainer: {
       fontSize: 12,
+    },
+  }),
+  LoaderStyles: StyleSheet.create({
+    titleContainer: {
+      marginLeft: Dimensions.get('screen').width * 0.08,
+      marginVertical: Dimensions.get('screen').height * 0.025,
     },
   }),
   ButtonStyles: StyleSheet.create({
@@ -727,6 +823,13 @@ export const DefaultTheme = {
     modal: {
       width: Dimensions.get('screen').width,
       height: Dimensions.get('screen').height,
+    },
+    header: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'flex-start',
+      marginHorizontal: 18,
+      marginVertical: 8,
     },
   }),
   UpdateModalStyles: StyleSheet.create({
@@ -989,9 +1092,93 @@ export const DefaultTheme = {
       backgroundColor: Colors.Transparent,
     },
   }),
+  issuersScreenStyles: StyleSheet.create({
+    issuerListOuterContainer: {
+      padding: 10,
+      flex: 1,
+      backgroundColor: Colors.White,
+    },
+    issuersContainer: {marginHorizontal: 3},
+    issuerBoxContainer: {
+      margin: 5,
+      flex: 1,
+      padding: 10,
+      borderRadius: 6,
+      alignItems: 'flex-start',
+      justifyContent: 'space-evenly',
+      flexDirection: 'column',
+      paddingHorizontal: 6,
+      paddingVertical: 8,
+      backgroundColor: Colors.White,
+    },
+    issuerBoxContainerPressed: {
+      margin: 5,
+      flex: 1,
+      padding: 10,
+      borderRadius: 6,
+      alignItems: 'flex-start',
+      justifyContent: 'space-evenly',
+      flexDirection: 'column',
+      paddingHorizontal: 6,
+      paddingVertical: 8,
+      backgroundColor: Colors.Grey,
+    },
+    issuerHeading: {
+      fontFamily: 'Inter_600SemiBold',
+      fontSize: 14,
+      lineHeight: 17,
+      paddingHorizontal: 3,
+      paddingBottom: 4,
+    },
+    issuerDescription: {
+      fontSize: 11,
+      lineHeight: 14,
+      color: Colors.ShadeOfGrey,
+      paddingVertical: 5,
+      paddingHorizontal: 3,
+    },
+    issuerIcon: {
+      resizeMode: 'contain',
+      height: 33,
+      width: 32,
+      marginBottom: 9,
+      marginTop: 8,
+      marginLeft: 2.5,
+    },
+    loaderHeadingText: {
+      flex: 1,
+      flexDirection: 'column',
+    },
+  }),
+  ErrorStyles: StyleSheet.create({
+    image: {marginTop: -60, paddingBottom: 26},
+    title: {
+      color: Colors.Black,
+      fontFamily: 'Inter_600SemiBold',
+      fontSize: 18,
+      lineHeight: 21,
+      paddingTop: 4,
+      textAlign: 'center',
+    },
+    message: {
+      textAlign: 'center',
+      fontFamily: 'Inter_400Regular',
+      fontSize: 14,
+      lineHeight: 20,
+      marginTop: 6,
+      marginBottom: 25,
+      marginHorizontal: 40,
+      color: Colors.mediumDarkGrey,
+    },
+  }),
+
+  ICON_SMALL_SIZE: 16,
+  ICON_MID_SIZE: 22,
+  PinIcon: require('../../../assets/pin_icon.png'),
+  CloseCard: require('../../../assets/card_bg.png'),
+  CardBackground: require('../../../assets/card_bg.png'),
   OpenCard: require('../../../assets/card_bg.png'),
   activationPending: require('../../../assets/pending_activation.png'),
-  CloseCard: '',
   ProfileIcon: require('../../../assets/placeholder-photo.png'),
   MosipSplashLogo: require('../../../assets/icon.png'),
   MosipLogo: require('../../../assets/mosip-logo.png'),
@@ -1015,6 +1202,9 @@ export const DefaultTheme = {
   IntroScanner: require('../../../assets/intro-scanner.png'),
   injiSmallLogo: require('../../../assets/inji_small_logo.png'),
   protectPrivacy: require('../../../assets/phone_mockup_1.png'),
+  NoInternetConnection: require('../../../assets/no-internet-connection.png'),
+  SomethingWentWrong: require('../../../assets/something-went-wrong.png'),
+  DigitIcon: require('../../../assets/digit-icon.png'),
 
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/
@@ -1058,3 +1248,19 @@ export const DefaultTheme = {
     };
   },
 };
+
+function generateBoxShadowStyle() {
+  if (Platform.OS === 'ios') {
+    return {
+      shadowColor: '#000',
+      shadowOffset: {width: 1, height: 1.2},
+      shadowOpacity: 0.3,
+      shadowRadius: 2.5,
+    };
+  } else if (Platform.OS === 'android') {
+    return {
+      elevation: 4,
+      shadowColor: '#000',
+    };
+  }
+}

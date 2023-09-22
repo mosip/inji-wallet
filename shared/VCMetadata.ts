@@ -8,26 +8,47 @@ export class VCMetadata {
   requestId = '';
   isPinned = false;
   id: string = '';
+
+  issuer?: string = '';
+  protocol?: string = '';
   static vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
 
-  constructor({idType = '', requestId = '', isPinned = false, id = ''} = {}) {
+  constructor({
+    idType = '',
+    requestId = '',
+    isPinned = false,
+    id = '',
+    issuer = '',
+    protocol = '',
+  } = {}) {
     this.idType = idType;
     this.requestId = requestId;
     this.isPinned = isPinned;
+
     this.id = id;
+
+    this.protocol = protocol;
+    this.issuer = issuer;
   }
 
-  static fromVC(vc: Partial<VC>) {
+  //TODO: Remove any typing and use appropriate typing
+  static fromVC(vc: Partial<VC> | VCMetadata | any) {
     return new VCMetadata({
       idType: vc.idType,
       requestId: vc.requestId,
       isPinned: vc.isPinned || false,
+
       id: vc.id,
+
+      protocol: vc.protocol,
+      issuer: vc.issuer,
     });
   }
 
   static fromVcMetadataString(vcMetadataStr: string) {
     try {
+      if (typeof vcMetadataStr === 'object')
+        return new VCMetadata(vcMetadataStr);
       return new VCMetadata(JSON.parse(vcMetadataStr));
     } catch (e) {
       console.error('Failed to parse VC Metadata', e);
@@ -36,12 +57,24 @@ export class VCMetadata {
   }
 
   static isVCKey(key: string): boolean {
-    return VCMetadata.vcKeyRegExp.exec(key) != null;
+    //TODO: Check for VC downloaded via esignet as well
+    const [issuer, protocol, id] = key.split(':');
+
+    return (
+      key.startsWith('ESignet') || VCMetadata.vcKeyRegExp.exec(key) != null
+    );
+  }
+
+  isFromOpenId4VCI() {
+    return this.protocol !== '' && this.issuer !== '';
   }
 
   // Used for mmkv storage purposes and as a key for components and vc maps
   // Update VC_ITEM_STORE_KEY_REGEX in case of changes in vckey
   getVcKey(): string {
+    // openid for vc -> issuer:protocol:vcID
+    //TODO: Separators for VC key to be maintained consistently
+    if (this.protocol) return `${this.issuer}:${this.protocol}:${this.id}`;
     return `${VC_KEY_PREFIX}_${this.requestId}`;
   }
 

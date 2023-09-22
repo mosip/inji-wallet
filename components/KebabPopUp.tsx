@@ -5,7 +5,7 @@ import {WalletBinding} from '../screens/Home/MyVcs/WalletBinding';
 import {Pressable, View} from 'react-native';
 import {useKebabPopUp} from './KebabPopUpController';
 import {ActorRefFrom} from 'xstate';
-import {vcItemMachine} from '../machines/vcItem';
+import {ExistingMosipVCItemMachine} from '../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {useTranslation} from 'react-i18next';
 import {HistoryTab} from '../screens/Home/MyVcs/HistoryTab';
 import {RemoveVcWarningOverlay} from '../screens/Home/MyVcs/RemoveVcWarningOverlay';
@@ -23,6 +23,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
         name={props.iconName}
         type={props.iconType}
         color={Theme.Colors.GrayIcon}
+        size={Theme.ICON_SMALL_SIZE}
       />
       <Overlay
         isVisible={props.isVisible}
@@ -95,5 +96,5 @@ export interface KebabPopUpProps {
   vcMetadata: VCMetadata;
   isVisible: boolean;
   onDismiss: () => void;
-  service: ActorRefFrom<typeof vcItemMachine>;
+  service: ActorRefFrom<typeof ExistingMosipVCItemMachine>;
 }

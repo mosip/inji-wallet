@@ -1,14 +1,14 @@
-import { useSelector } from '@xstate/react';
-import { useContext, useEffect, useState } from 'react';
+import {useSelector} from '@xstate/react';
+import {useContext, useEffect, useState} from 'react';
 import NetInfo from '@react-native-community/netinfo';
-import { GlobalContext } from '../../shared/GlobalContext';
+import {GlobalContext} from '../../shared/GlobalContext';
 import {
   selectIsRefreshingMyVcs,
   selectMyVcsMetadata,
   VcEvents,
 } from '../../machines/vc';
-import { vcItemMachine } from '../../machines/vcItem';
-import { useTranslation } from 'react-i18next';
+import {ExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
+import {useTranslation} from 'react-i18next';
 
 import {
   RevokeVidsEvents,
@@ -17,11 +17,11 @@ import {
   selectIsLoggingRevoke,
 } from '../../machines/revoke';
 
-import { ActorRefFrom } from 'xstate';
+import {ActorRefFrom} from 'xstate';
 
 export function useRevoke() {
-  const { t } = useTranslation('ProfileScreen');
-  const { appService } = useContext(GlobalContext);
+  const {t} = useTranslation('ProfileScreen');
+  const {appService} = useContext(GlobalContext);
   const vcService = appService.children.get('vc');
   const revokeService = appService.children.get('RevokeVids');
   const vcsMetadata = useSelector(vcService, selectMyVcsMetadata);
@@ -29,7 +29,7 @@ export function useRevoke() {
   const isLoggingRevoke = useSelector(revokeService, selectIsLoggingRevoke);
   const isAcceptingOtpInput = useSelector(
     revokeService,
-    selectIsAcceptingOtpInput
+    selectIsAcceptingOtpInput,
   );
 
   const [isRevoking, setRevoking] = useState(false);
@@ -39,11 +39,11 @@ export function useRevoke() {
   const [message, setMessage] = useState('');
   const [selectedIndex, setSelectedIndex] = useState<number>(null);
   const [selectedVidUniqueIds, setSelectedVidUniqueIds] = useState<string[]>(
-    []
+    [],
   );
 
   const vidsMetadata = vcsMetadata.filter(
-    (vcMetadata) => vcMetadata.idType === 'VID'
+    vcMetadata => vcMetadata.idType === 'VID',
   );
 
   const selectVcItem = (index: number, vcUniqueId: string) => {
@@ -51,10 +51,10 @@ export function useRevoke() {
       setSelectedIndex(index);
       if (selectedVidUniqueIds.includes(vcUniqueId)) {
         setSelectedVidUniqueIds(
-          selectedVidUniqueIds.filter((item) => item !== vcUniqueId)
+          selectedVidUniqueIds.filter(item => item !== vcUniqueId),
         );
       } else {
-        setSelectedVidUniqueIds((prevArray) => [...prevArray, vcUniqueId]);
+        setSelectedVidUniqueIds(prevArray => [...prevArray, vcUniqueId]);
       }
     };
   };
@@ -91,7 +91,7 @@ export function useRevoke() {
     selectedVidUniqueIds,
     toastVisible,
     uniqueVidsMetadata: vidsMetadata.filter(
-      (vcMetadata, index, vid) => vid.indexOf(vcMetadata) === index
+      (vcMetadata, index, vid) => vid.indexOf(vcMetadata) === index,
     ),
 
     CONFIRM_REVOKE_VC: () => {
@@ -110,7 +110,7 @@ export function useRevoke() {
       setIsViewing(false);
     },
     revokeVc: (otp: string) => {
-      NetInfo.fetch().then((state) => {
+      NetInfo.fetch().then(state => {
         if (state.isConnected) {
           revokeService.send(RevokeVidsEvents.INPUT_OTP(otp));
         } else {
@@ -127,5 +127,5 @@ export function useRevoke() {
 }
 
 export interface RevokeProps {
-  service: ActorRefFrom<typeof vcItemMachine>;
+  service: ActorRefFrom<typeof ExistingMosipVCItemMachine>;
 }

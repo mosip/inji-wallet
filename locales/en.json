@@ -55,7 +55,7 @@
     "address": "Address",
     "reasonForSharing": "Reason for sharing",
     "idType": "ID Type",
-    "id": "Id",
+    "id": "ID",
     "qrCodeHeader": "QR Code",
     "nationalCard": "National Card",
     "uin": "UIN",
@@ -87,7 +87,7 @@
     "title": "More Options",
     "unPinCard": "Unpin Card",
     "pinCard": "Pin Card",
-    "offlineAuthenticationDisabled!": "Activation pending for online login!",
+    "offlineAuthenticationDisabled!": "Activation pending for online login",
     "offlineAuthDisabledMessage": "Click here to enable this credentials to be used for online authentication.",
     "viewActivityLog": "View Activity Log",
     "removeFromWallet": "Remove from Wallet",
@@ -96,7 +96,7 @@
   },
   "WalletBinding": {
     "inProgress": "In progress",
-    "profileAuthenticated": "Activated for online login!"
+    "profileAuthenticated": "Activated for online login"
   },
   "BindingVcWarningOverlay": {
     "alert": "Alert",
@@ -156,6 +156,34 @@
     "clickHere": "Click here",
     "version": "Version",
     "tuvaliVersion": "Tuvali-version"
+  },
+  "IssuersScreen": {
+    "title": "Add new card",
+    "header": "Please select a preferred method from below to add a new card",
+    "itemHeading":"Download via {{issuer}}",
+    "itemSubHeading": "Enter the mentioned ID and get your card",
+    "modal": {
+      "title": "In Progress",
+      "hint": "downloading your credential from issuer"
+    },
+    "loaders": {
+      "loading": "Loading...",
+      "subTitle": {
+        "displayIssuers": "Fetching Issuers",
+        "settingUp": "Setting up",
+        "downloadingCredentials": "Downloading Credentials"
+      }
+    },
+    "errors": {
+      "noInternetConnection": {
+        "title": "No internet connection",
+        "message": "Please connect with internet and retry."
+      },
+      "generic": {
+        "title": "Something went wrong!",
+        "message": "Our experts are working hard to make things working again."
+      }
+    }
   },
   "HelpScreen": {
     "header": "Help",
