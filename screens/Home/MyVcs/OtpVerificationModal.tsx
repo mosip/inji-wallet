@@ -11,7 +11,7 @@ export const OtpVerificationModal: React.FC<
 > = props => {
   const {t} = useTranslation('OtpVerificationModal');
 
-  const [timer, setTimer] = useState(10); // 30 seconds
+  const [timer, setTimer] = useState(180); // 30 seconds
 
   useEffect(() => {
     if (timer === 0) return;
@@ -35,7 +35,7 @@ export const OtpVerificationModal: React.FC<
     <Modal
       isVisible={props.isVisible}
       onDismiss={props.onDismiss}
-      onShow={() => setTimer(10)}>
+      onShow={() => setTimer(180)}>
       <Column
         fill
         padding="32"
@@ -80,7 +80,7 @@ export const OtpVerificationModal: React.FC<
                 ? null
                 : () => {
                     props.resend();
-                    setTimer(10);
+                    setTimer(180);
                   }
             }>
             <Text
