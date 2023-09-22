@@ -1,7 +1,7 @@
-import { KeyPair, RSA } from 'react-native-rsa-native';
+import {KeyPair, RSA} from 'react-native-rsa-native';
 import forge from 'node-forge';
 import getAllConfigurations from '../commonprops/commonProps';
-import { isIOS } from '../constants';
+import {isIOS} from '../constants';
 import SecureKeystore from 'react-native-secure-keystore';
 import Storage from '../storage';
 import CryptoJS from 'crypto-js';
@@ -21,7 +21,7 @@ export function generateKeys(): Promise<KeyPair> {
 export async function getJwt(
   privateKey: string,
   individualId: string,
-  thumbprint: string
+  thumbprint: string,
 ) {
   try {
     var iat = Math.floor(new Date().getTime() / 1000);
@@ -30,7 +30,7 @@ export async function getJwt(
     var config = await getAllConfigurations();
 
     const header = {
-      'alg': 'RS256',
+      alg: 'RS256',
       //'kid': keyId,
       'x5t#S256': thumbprint,
     };
@@ -53,7 +53,7 @@ export async function getJwt(
     const signature64 = await createSignature(
       privateKey,
       preHash,
-      individualId
+      individualId,
     );
 
     return header64 + '.' + payload64 + '.' + signature64;
@@ -63,10 +63,10 @@ export async function getJwt(
   }
 }
 
-async function createSignature(
+export async function createSignature(
   privateKey: string,
   preHash: string,
-  individualId: string
+  individualId: string,
 ) {
   let signature64;
 
@@ -93,7 +93,7 @@ function replaceCharactersInB64(encodedB64) {
   return encodedB64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
 
-function encodeB64(str: string) {
+export function encodeB64(str: string) {
   const encodedB64 = forge.util.encode64(str);
   return replaceCharactersInB64(encodedB64);
 }
@@ -124,7 +124,7 @@ export async function clear() {
 
 export async function encryptJson(
   encryptionKey: string,
-  data: string
+  data: string,
 ): Promise<string> {
   if (!isCustomSecureKeystore()) {
     return CryptoJS.AES.encrypt(data, encryptionKey).toString();
@@ -134,12 +134,12 @@ export async function encryptJson(
 
 export async function decryptJson(
   encryptionKey: string,
-  encryptedData: string
+  encryptedData: string,
 ): Promise<string> {
   try {
     if (!isCustomSecureKeystore()) {
       return CryptoJS.AES.decrypt(encryptedData, encryptionKey).toString(
-        CryptoJS.enc.Utf8
+        CryptoJS.enc.Utf8,
       );
     }
     return await SecureKeystore.decryptData(ENCRYPTION_ID, encryptedData);
