@@ -384,7 +384,7 @@ export const ExistingMosipVCItemDetails: React.FC<
   );
 };
 
-interface ExistingMosipVCItemDetailsProps {
+export interface ExistingMosipVCItemDetailsProps {
   vc: VC;
   isBindingPending: boolean;
   onBinding?: () => void;
