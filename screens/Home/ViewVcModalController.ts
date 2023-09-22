@@ -169,6 +169,7 @@ export function useViewVcModal({
     LOCK_VC: () => vcItemActor.send(ExistingMosipVCItemEvents.LOCK_VC()),
     INPUT_OTP: (otp: string) =>
       vcItemActor.send(ExistingMosipVCItemEvents.INPUT_OTP(otp)),
+    RESEND_OTP: () => vcItemActor.send(ExistingMosipVCItemEvents.RESEND_OTP()),
     CANCEL: () => vcItemActor.send(ExistingMosipVCItemEvents.CANCEL()),
     CONFIRM: () => vcItemActor.send(ExistingMosipVCItemEvents.CONFIRM()),
   };

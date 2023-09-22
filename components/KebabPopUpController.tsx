@@ -44,6 +44,7 @@ export function useKebabPopUp(props) {
   const CANCEL = () => service.send(vcEvents.CANCEL());
   const SHOW_ACTIVITY = () => service.send(vcEvents.SHOW_ACTIVITY());
   const INPUT_OTP = (otp: string) => service.send(vcEvents.INPUT_OTP(otp));
+  const RESEND_OTP = () => service.send(vcEvents.RESEND_OTP());
   const isPinned = useSelector(service, selectIsPinned);
   const isBindingWarning = useSelector(service, selectKebabPopUpBindingWarning);
   const isRemoveWalletWarning = useSelector(service, selectRemoveWalletWarning);
@@ -77,6 +78,7 @@ export function useKebabPopUp(props) {
     REMOVE,
     CANCEL,
     INPUT_OTP,
+    RESEND_OTP,
     SHOW_ACTIVITY,
     isBindingWarning,
     isAcceptingOtpInput,

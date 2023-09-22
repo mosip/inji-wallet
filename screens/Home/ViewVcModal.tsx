@@ -75,6 +75,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
           onDismiss={controller.DISMISS}
           onInputDone={controller.inputOtp}
           error={controller.otpError}
+          resend={controller.RESEND_OTP}
         />
       )}
 
@@ -84,6 +85,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
           onDismiss={controller.DISMISS}
           onInputDone={controller.inputOtp}
           error={controller.otpError}
+          resend={controller.RESEND_OTP}
         />
       )}
 

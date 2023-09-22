@@ -64,6 +64,7 @@ export const WalletBinding: React.FC<WalletBindingProps> = props => {
         onDismiss={controller.DISMISS}
         onInputDone={controller.INPUT_OTP}
         error={controller.otpError}
+        resend={controller.RESEND_OTP}
       />
       <MessageOverlay
         isVisible={controller.isWalletBindingError}
