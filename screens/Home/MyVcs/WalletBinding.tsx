@@ -9,7 +9,7 @@ import {MessageOverlay} from '../../../components/MessageOverlay';
 import {useKebabPopUp} from '../../../components/KebabPopUpController';
 import {Dimensions} from 'react-native';
 import {ActorRefFrom} from 'xstate';
-import {vcItemMachine} from '../../../machines/vcItem';
+import {ExistingMosipVCItemMachine} from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import testIDProps from '../../../shared/commonUtil';
 
 export const WalletBinding: React.FC<WalletBindingProps> = props => {
@@ -102,5 +102,5 @@ interface WalletBindingProps {
   label: string;
   content?: string;
   Icon?: string;
-  service: ActorRefFrom<typeof vcItemMachine>;
+  service: ActorRefFrom<typeof ExistingMosipVCItemMachine>;
 }

@@ -3,32 +3,34 @@ import {useInterpret, useSelector} from '@xstate/react';
 import {View, Pressable} from 'react-native';
 import {ActorRefFrom} from 'xstate';
 import {
-  createVcItemMachine,
+  createExistingMosipVCItemMachine,
   selectVerifiableCredential,
   selectGeneratedOn,
-  vcItemMachine,
+  ExistingMosipVCItemMachine,
   selectContext,
   selectTag,
   selectEmptyWalletBindingId,
   selectIsSavingFailedInIdle,
   selectKebabPopUp,
-} from '../machines/vcItem';
-import {VcItemEvents} from '../machines/vcItem';
-import {ErrorMessageOverlay} from './MessageOverlay';
-import {Theme} from './ui/styleUtils';
-import {GlobalContext} from '../shared/GlobalContext';
-import {VcItemContent} from './VcItemContent';
-import {VcItemActivationStatus} from './VcItemActivationStatus';
-import {Row} from './ui';
-import {KebabPopUp} from './KebabPopUp';
-import {logState} from '../machines/app';
-import {VCMetadata} from '../shared/VCMetadata';
+} from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
+import {ExistingMosipVCItemEvents} from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
+import {ErrorMessageOverlay} from '../../MessageOverlay';
+import {Theme} from '../../ui/styleUtils';
+import {GlobalContext} from '../../../shared/GlobalContext';
+import {ExistingMosipVCItemContent} from './ExistingMosipVCItemContent';
+import {ExistingMosipVCItemActivationStatus} from './ExistingMosipVCItemActivationStatus';
+import {Row} from '../../ui';
+import {KebabPopUp} from '../../KebabPopUp';
+import {logState} from '../../../machines/app';
+import {VCMetadata} from '../../../shared/VCMetadata';
 import {format} from 'date-fns';
 
-export const VcItem: React.FC<VcItemProps> = props => {
+export const ExistingMosipVCItem: React.FC<
+  ExistingMosipVCItemProps
+> = props => {
   const {appService} = useContext(GlobalContext);
   const machine = useRef(
-    createVcItemMachine(
+    createExistingMosipVCItemMachine(
       appService.getSnapshot().context.serviceRefs,
       props.vcMetadata,
     ),
@@ -44,8 +46,9 @@ export const VcItem: React.FC<VcItemProps> = props => {
   const verifiableCredential = useSelector(service, selectVerifiableCredential);
   const emptyWalletBindingId = useSelector(service, selectEmptyWalletBindingId);
   const isKebabPopUp = useSelector(service, selectKebabPopUp);
-  const DISMISS = () => service.send(VcItemEvents.DISMISS());
-  const KEBAB_POPUP = () => service.send(VcItemEvents.KEBAB_POPUP());
+  const DISMISS = () => service.send(ExistingMosipVCItemEvents.DISMISS());
+  const KEBAB_POPUP = () =>
+    service.send(ExistingMosipVCItemEvents.KEBAB_POPUP());
   const isSavingFailedInIdle = useSelector(service, selectIsSavingFailedInIdle);
 
   const storeErrorTranslationPath = 'errors.savingFailed';
@@ -64,7 +67,7 @@ export const VcItem: React.FC<VcItemProps> = props => {
             ? Theme.Styles.selectedBindedVc
             : Theme.Styles.closeCardBgContainer
         }>
-        <VcItemContent
+        <ExistingMosipVCItemContent
           context={context}
           verifiableCredential={verifiableCredential}
           generatedOn={formattedDate}
@@ -81,7 +84,7 @@ export const VcItem: React.FC<VcItemProps> = props => {
           <Row style={Theme.Styles.activationTab}>
             {props.activeTab !== 'receivedVcsTab' &&
               props.activeTab != 'sharingVcScreen' && (
-                <VcItemActivationStatus
+                <ExistingMosipVCItemActivationStatus
                   verifiableCredential={verifiableCredential}
                   emptyWalletBindingId={emptyWalletBindingId}
                   onPress={() => props.onPress(service)}
@@ -114,14 +117,14 @@ export const VcItem: React.FC<VcItemProps> = props => {
   );
 };
 
-interface VcItemProps {
+export interface ExistingMosipVCItemProps {
   vcMetadata: VCMetadata;
   margin?: string;
   selectable?: boolean;
   selected?: boolean;
   showOnlyBindedVc?: boolean;
-  onPress?: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
-  onShow?: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
+  onPress?: (vcRef?: ActorRefFrom<typeof ExistingMosipVCItemMachine>) => void;
+  onShow?: (vcRef?: ActorRefFrom<typeof ExistingMosipVCItemMachine>) => void;
   activeTab?: string;
   iconName?: string;
   iconType?: string;
