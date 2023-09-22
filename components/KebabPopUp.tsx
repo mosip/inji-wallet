@@ -20,6 +20,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
     <Column>
       <Icon
         {...testIDProps('ellipsis')}
+        accessible={true}
         name={props.iconName}
         type={props.iconType}
         color={Theme.Colors.GrayIcon}
@@ -43,13 +44,13 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
         </Row>
         <ScrollView>
           <ListItem bottomDivider>
-            <ListItem.Content {...testIDProps('pinOrUnPinCard')}>
-              <ListItem.Title>
-                <Pressable onPress={controller.PIN_CARD}>
-                  <Text size="small" weight="bold">
-                    {props.vcMetadata.isPinned ? t('unPinCard') : t('pinCard')}
-                  </Text>
-                </Pressable>
+            <ListItem.Content>
+              <ListItem.Title
+                onPress={controller.PIN_CARD}
+                {...testIDProps('pinOrUnPinCard')}>
+                <Text size="small" weight="bold">
+                  {props.vcMetadata.isPinned ? t('unPinCard') : t('pinCard')}
+                </Text>
               </ListItem.Title>
             </ListItem.Content>
           </ListItem>
@@ -67,14 +68,14 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
             vcMetadata={props.vcMetadata}
           />
 
-          <ListItem testID="removeFromWallet" bottomDivider>
+          <ListItem bottomDivider>
             <ListItem.Content>
-              <ListItem.Title>
-                <Pressable onPress={() => controller.REMOVE(props.vcMetadata)}>
-                  <Text size="small" weight="bold">
-                    {t('removeFromWallet')}
-                  </Text>
-                </Pressable>
+              <ListItem.Title
+                onPress={() => controller.REMOVE(props.vcMetadata)}
+                {...testIDProps('removeFromWallet')}>
+                <Text size="small" weight="bold">
+                  {t('removeFromWallet')}
+                </Text>
               </ListItem.Title>
             </ListItem.Content>
           </ListItem>
