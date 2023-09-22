@@ -20,7 +20,8 @@ export const Text: React.FC<TextProps> = (props: TextProps) => {
     <RNText
       {...testIDProps(props.testID)}
       style={textStyles}
-      numberOfLines={props.numLines}>
+      numberOfLines={props.numLines}
+      accessible={props.accessible}>
       {props.children}
     </RNText>
   );
@@ -37,4 +38,5 @@ interface TextProps {
   lineHeight?: number;
   numLines?: number;
   style?: StyleProp<TextStyle>;
+  accessible?: boolean | true;
 }
