@@ -102,11 +102,11 @@ jobs:
           TESTFLIGHT_INTERNAL_TESTERS_GROUP: ${{ github.event.inputs.internal-testers }}
           TESTFLIGHT_BETA_APP_DESCRIPTION: ${{ github.event.inputs.buildDescription }}
 
-      - name: Build iOS for simulator
+      - name: Build iOS for automation on simulator
         if: ${{ github.event.inputs.app_file_upload == 'Upload to Actions' || github.event.inputs.app_file_upload == 'Push and Upload'}}
         run: |
           cd ios
-          fastlane build_app_for_simulator
+          fastlane build_app_for_automation_on_simulator
 
       - name: Upload Inji.app artifact 
         if: ${{ github.event.inputs.app_file_upload == 'Upload to Actions' || github.event.inputs.app_file_upload == 'Push and Upload'}}
