@@ -70,7 +70,7 @@ export const OtpVerificationModal: React.FC<
             margin="36 0 0 0"
             color={Theme.Colors.resendCodeTimer}
             weight="regular">
-            {` ${t('resendTheCode')} :  ${formatTime(timer)}`}
+            {timer > 0 ? `${t('resendTheCode')} : ${formatTime(timer)}` : ''}
           </Text>
 
           <TouchableOpacity
