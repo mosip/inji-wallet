@@ -68,15 +68,17 @@ export const Modal: React.FC<ModalProps> = props => {
                 )}
               </Column>
             </Row>
-            {props.headerRight || props.arrowLeft || (
-              <Icon
-                {...testIDProps('close')}
-                name="close"
-                onPress={props.onDismiss}
-                color={Theme.Colors.Details}
-                size={27}
-              />
-            )}
+            {props.headerRight ||
+              props.arrowLeft ||
+              (props.showClose && (
+                <Icon
+                  {...testIDProps('close')}
+                  name="close"
+                  onPress={props.onDismiss}
+                  color={Theme.Colors.Details}
+                  size={27}
+                />
+              ))}
           </View>
         </Row>
         {props.children}
@@ -87,12 +89,14 @@ export const Modal: React.FC<ModalProps> = props => {
 
 Modal.defaultProps = {
   modalStyle: Theme.ModalStyles.defaultModal,
+  showClose: true,
 };
 
 export interface ModalProps {
   testID?: string;
   isVisible: boolean;
   requester?: boolean;
+  showClose?: boolean;
   modalStyle?: Object;
   onDismiss?: () => void;
   headerTitle?: string;

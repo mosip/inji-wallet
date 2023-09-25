@@ -407,8 +407,9 @@
         "timeoutHint": "El intercambio se retrasa, posiblemente debido a un problema de conexión."
       },
 			"accepted": {
-				"title": "¡Éxito!",
-				"message": "Tu tarjeta ha sido compartida exitosamente con el Verificador"
+				"title": "ID compartido correctamente",
+				"message": "Su identificación se ha compartido correctamente con",
+				"gotohome": "Ir a casa"
 			},
 			"rejected": {
 				"title": "Aviso",
