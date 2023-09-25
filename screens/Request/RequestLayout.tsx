@@ -10,6 +10,7 @@ import {MessageOverlay} from '../../components/MessageOverlay';
 import {ReceivedCardsModal} from '../Settings/ReceivedCardsModal';
 import {useReceivedVcsTab} from '../Home/ReceivedVcsTabController';
 import {REQUEST_ROUTES} from '../../routes/routesConstants';
+import {ProgressingModal} from '../../components/ProgressingModal';
 const RequestStack = createNativeStackNavigator();
 
 export const RequestLayout: React.FC = () => {
@@ -78,28 +79,25 @@ export const RequestLayout: React.FC = () => {
         />
       )}
 
-      {controller.isDisconnected && (
-        <Message
-          title={t('status.disconnected.title')}
-          message={t('status.disconnected.message')}
-          onBackdropPress={controller.DISMISS}
-        />
-      )}
+      <ProgressingModal
+        title={t('status.disconnected.title')}
+        hint={t('status.disconnected.message')}
+        isVisible={controller.isDisconnected}
+        isHintVisible={true}
+        progress={true}
+        onCancel={controller.DISMISS}
+        onRetry={controller.RESET}
+      />
 
-      {controller.isBleError && (
-        <MessageOverlay
-          isVisible={controller.isBleError}
-          title={t('status.bleError.title')}
-          message={t('status.bleError.message')}
-          hint={
-            controller.bleError.code &&
-            t('status.bleError.hint', {
-              code: controller.bleError.code,
-            })
-          }
-          onBackdropPress={controller.DISMISS}
-        />
-      )}
+      <ProgressingModal
+        title={t('status.bleError.title')}
+        hint={t('status.bleError.message')}
+        isVisible={controller.isBleError}
+        isHintVisible={true}
+        progress={true}
+        onCancel={controller.DISMISS}
+        onRetry={controller.RESET}
+      />
     </React.Fragment>
   );
 };

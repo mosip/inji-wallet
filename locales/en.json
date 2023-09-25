@@ -14,7 +14,7 @@
     "QRLOGIN_SUCCESFULL": "QRLogin successful",
     "WALLET_BINDING_SUCCESSFULL": "Activation successful",
     "WALLET_BINDING_FAILURE": "Activation failed",
-    "VC_REMOVED":"Removed from wallet"
+    "VC_REMOVED": "Removed from wallet"
   },
   "DeviceInfoList": {
     "requestedBy": "Requested by",
@@ -417,6 +417,10 @@
       }
     },
     "status": {
+      "sharing": {
+        "title": "Sharing in progress",
+        "timeoutHint": "Sharing is delayed, possibly due to a connection issue."
+      },
       "accepted": {
         "title": "Success!",
         "message": "Card has been successfully received from Wallet"
@@ -426,7 +430,7 @@
         "message": "You discarded Wallet's Card"
       },
       "disconnected": {
-        "title": "Disconnected",
+        "title": "Connection failed",
         "message": "The connection was interrupted. Please try again."
       },
       "waitingConnection": "Waiting for connection...",
@@ -442,7 +446,7 @@
         "message": "Please connect to the internet to enable Online sharing mode"
       },
       "bleError": {
-        "title": "Failed to transfer!",
+        "title": "Failed to transfer",
         "message": "Something went wrong while transferring card. Please try again.",
         "hint": "Error: {{code}}"
       }
@@ -481,7 +485,7 @@
     "status": {
       "inProgress": "In progress",
       "establishingConnection": "Establishing connection",
-      "sharingInProgress": "Sharing in Progress",
+      "connectionInProgress": "Connection in progress",
       "connectingTimeout": "It's taking a while to establish the connection. Is the other device open for connections?",
       "stayOnTheScreen": "Stay on the screen",
       "retry": "Retry",
@@ -492,9 +496,9 @@
       "sent": "Card has been sent...",
       "sentHint": "Waiting for receiver to save or discard your Card",
       "sharing": {
-        "title": "Sharing...",
+        "title": "Sharing in progress",
         "hint": "Please wait while we share the chosen card.",
-        "timeoutHint": "It's taking longer than expected to share. There could be a problem with the connection."
+        "timeoutHint": "Sharing is delayed, possibly due to a connection issue."
       },
       "accepted": {
         "title": "Success!",

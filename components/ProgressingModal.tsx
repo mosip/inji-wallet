@@ -4,24 +4,19 @@ import {Button, Centered, Column, Text} from './ui';
 import {Modal} from './ui/Modal';
 import {Image} from 'react-native';
 import {Theme} from './ui/styleUtils';
-import PaginationDot from 'react-native-animated-pagination-dot';
+import Spinner from 'react-native-spinkit';
 
 export const ProgressingModal: React.FC<ProgressingModalProps> = props => {
   const {t} = useTranslation('ScanScreen');
-
-  let n = 0;
-  const [curPage, setCurPage] = useState(n);
-
-  const highLightDot = () => setCurPage(n + 1);
 
   return (
     <React.Fragment>
       <Modal
         isVisible={props.isVisible}
-        headerLeft={t(props.title)}
+        headerTitle={t(props.title)}
         onDismiss={props.onCancel}
-        headerLabel={props.label}
         headerElevation={3}
+        modalStyle={Theme.ModalStyles.progressingModal}
         requester={props.requester}>
         <Centered crossAlign="center" fill>
           <Column margin="24 0" align="space-around">
@@ -32,14 +27,14 @@ export const ProgressingModal: React.FC<ProgressingModalProps> = props => {
               style={{marginBottom: 15, marginLeft: -6}}
             />
             {props.progress && (
-              <PaginationDot
-                activeDotColor={Theme.Colors.LoadingDetailsLabel}
-                curPage={curPage}
-                maxPage={3}
+              <Spinner
+                type="ThreeBounce"
+                color={Theme.Colors.Loading}
+                style={{marginLeft: 6}}
               />
             )}
           </Column>
-          {props.isHintVisible && (
+          {(props.isHintVisible || props.isBleErrorVisible) && (
             <Column style={Theme.SelectVcOverlayStyles.timeoutHintContainer}>
               <Text
                 align="center"
@@ -56,6 +51,7 @@ export const ProgressingModal: React.FC<ProgressingModalProps> = props => {
                   onPress={props.onStayInProgress}
                 />
               )}
+
               {props.onRetry && (
                 <Button
                   type="clear"
@@ -74,8 +70,8 @@ export const ProgressingModal: React.FC<ProgressingModalProps> = props => {
 export interface ProgressingModalProps {
   isVisible: boolean;
   isHintVisible: boolean;
+  isBleErrorVisible?: boolean;
   title?: string;
-  label?: string;
   hint?: string;
   onCancel?: () => void;
   onStayInProgress?: () => void;
