@@ -337,7 +337,7 @@
         "message": "Has descartado la tarjeta de la billetera"
       },
       "disconnected": {
-        "title": "Desconectado",
+        "title": "La conexión falló",
         "message": "La conexión se interrumpió. Por favor, inténtalo de nuevo."
       },
       "waitingConnection": "Esperando conexión...",

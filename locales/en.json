@@ -430,7 +430,7 @@
         "message": "You discarded Wallet's Card"
       },
       "disconnected": {
-        "title": "Disconnected",
+        "title": "Connection failed",
         "message": "The connection was interrupted. Please try again."
       },
       "waitingConnection": "Waiting for connection...",

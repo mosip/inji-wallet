@@ -628,8 +628,11 @@ export const scanMachine =
         },
         disconnected: {
           on: {
+            RETRY: {
+              target: '#scan.reviewing.cancelling',
+            },
             DISMISS: {
-              target: '#scan.clearingConnection',
+              target: '#scan.reviewing.navigatingToHome',
             },
           },
         },

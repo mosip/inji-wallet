@@ -405,7 +405,7 @@
         "message": "Iwinaksi ang card ni wallet"
       },
       "disconnected": {
-        "title": "Nadiskonekta",
+        "title": "Nabigo ang koneksyon",
         "message": "Naputol ang koneksyon. Pakiulit."
       },
       "waitingConnection": "Naghihintay ng koneksyon...",
