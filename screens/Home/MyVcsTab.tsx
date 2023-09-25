@@ -49,33 +49,18 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
       controller.SET_STORE_VC_ITEM_STATUS();
     }
   }, [controller.areAllVcsLoaded, controller.inProgressVcDownloadsCount]);
-
-  const DownloadingVcPopUp: React.FC = () => {
-    return (
-      <View testID="downloadingVcPopup">
-        <Row style={Theme.Styles.downloadingVcPopUp}>
-          <Text color={Theme.Colors.whiteText} weight="semibold" size="smaller">
-            {t('downloadingYourCard')}
-          </Text>
-          <Icon
-            testID="close"
-            name="close"
-            onPress={() => {
-              controller.RESET_STORE_VC_ITEM_STATUS();
-              clearIndividualId();
-            }}
-            color={Theme.Colors.whiteText}
-            size={19}
-          />
-        </Row>
-      </View>
-    );
-  };
-
   return (
     <React.Fragment>
       <Column fill style={{display: props.isVisible ? 'flex' : 'none'}}>
-        {controller.isRequestSuccessful && <DownloadingVcPopUp />}
+        {controller.isRequestSuccessful && (
+          <BannerNotification
+            message={t('downloadingYourCard')}
+            onClosePress={() => {
+              controller.RESET_STORE_VC_ITEM_STATUS();
+              clearIndividualId();
+            }}
+          />
+        )}
         {controller.isBindingSuccess && (
           <BannerNotification
             message={t('activated')}
