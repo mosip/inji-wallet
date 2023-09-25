@@ -79,13 +79,15 @@ export const RequestLayout: React.FC = () => {
         />
       )}
 
-      {controller.isDisconnected && (
-        <Message
-          title={t('status.disconnected.title')}
-          message={t('status.disconnected.message')}
-          onBackdropPress={controller.DISMISS}
-        />
-      )}
+      <ProgressingModal
+        title={t('status.disconnected.title')}
+        hint={t('status.disconnected.message')}
+        isVisible={controller.isDisconnected}
+        isHintVisible={true}
+        progress={true}
+        onCancel={controller.DISMISS}
+        onRetry={controller.RESET}
+      />
 
       <ProgressingModal
         title={t('status.bleError.title')}

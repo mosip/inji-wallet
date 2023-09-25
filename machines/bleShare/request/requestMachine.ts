@@ -491,8 +491,11 @@ export const requestMachine =
         },
         disconnected: {
           on: {
-            DISMISS: {
+            RESET: {
               target: 'waitingForConnection',
+            },
+            DISMISS: {
+              target: '#request.reviewing.navigatingToHome',
             },
           },
         },
