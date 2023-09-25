@@ -3,10 +3,10 @@ import {useTranslation} from 'react-i18next';
 import {Dimensions} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {ActorRefFrom} from 'xstate';
-import {vcItemMachine} from '../machines/vcItem';
-import {VerifiableCredential} from '../types/vc';
-import {Row, Text} from './ui';
-import {Theme} from './ui/styleUtils';
+import {ExistingMosipVCItemMachine} from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
+import {VerifiableCredential} from '../../../types/vc';
+import {Row, Text} from '../../ui';
+import {Theme} from '../../ui/styleUtils';
 
 const WalletUnverifiedIcon: React.FC = () => {
   return (
@@ -94,8 +94,8 @@ const WalletVerifiedActivationDetails: React.FC<
   );
 };
 
-export const VcItemActivationStatus: React.FC<
-  VcItemActivationStatusProps
+export const ExistingMosipVCItemActivationStatus: React.FC<
+  ExistingMosipVCItemActivationStatusProps
 > = props => {
   return (
     <Row margin="0 0 0 -6">
@@ -115,20 +115,20 @@ export const VcItemActivationStatus: React.FC<
   );
 };
 
-interface VcItemActivationStatusProps {
+interface ExistingMosipVCItemActivationStatusProps {
   showOnlyBindedVc: boolean;
-  onPress: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
+  onPress: (vcRef?: ActorRefFrom<typeof ExistingMosipVCItemMachine>) => void;
   verifiableCredential: VerifiableCredential;
   emptyWalletBindingId: boolean;
 }
 
 interface WalletVerifiedDetailsProps {
   showOnlyBindedVc: boolean;
-  onPress: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
+  onPress: (vcRef?: ActorRefFrom<typeof ExistingMosipVCItemMachine>) => void;
   verifiableCredential: VerifiableCredential;
 }
 
 interface WalletUnVerifiedDetailsProps {
-  onPress: (vcRef?: ActorRefFrom<typeof vcItemMachine>) => void;
+  onPress: (vcRef?: ActorRefFrom<typeof ExistingMosipVCItemMachine>) => void;
   verifiableCredential: VerifiableCredential;
 }

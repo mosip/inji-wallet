@@ -6,12 +6,14 @@ import {
   selectIsRefreshingMyVcs,
   selectMyVcsMetadata,
   VcEvents,
+  selectAreAllVcsDownloaded,
+  selectInProgressVcDownloadsCount,
 } from '../../machines/vc';
 import {
   selectWalletBindingError,
   selectShowWalletBindingError,
-} from '../../machines/vcItem';
-import {vcItemMachine} from '../../machines/vcItem';
+} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
+import {ExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {HomeScreenTabProps} from './HomeScreen';
 import {
@@ -27,6 +29,7 @@ import {
   selectShowHardwareKeystoreNotExistsAlert,
   SettingsEvents,
 } from '../../machines/settings';
+import {EsignetMosipVCItemMachine} from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 
 export function useMyVcsTab(props: HomeScreenTabProps) {
   const service = props.service as ActorRefFrom<typeof MyVcsTabMachine>;
@@ -56,6 +59,21 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
       settingsService,
       selectShowHardwareKeystoreNotExistsAlert,
     ),
+    areAllVcsLoaded: useSelector(vcService, selectAreAllVcsDownloaded),
+    inProgressVcDownloadsCount: useSelector(
+      vcService,
+      selectInProgressVcDownloadsCount,
+    ),
+
+    SET_STORE_VC_ITEM_STATUS: () =>
+      service.send(MyVcsTabEvents.SET_STORE_VC_ITEM_STATUS()),
+
+    RESET_STORE_VC_ITEM_STATUS: () =>
+      service.send(MyVcsTabEvents.RESET_STORE_VC_ITEM_STATUS()),
+
+    RESET_ARE_ALL_VCS_DOWNLOADED: () =>
+      vcService.send(VcEvents.RESET_ARE_ALL_VCS_DOWNLOADED()),
+
     DISMISS: () => service.send(MyVcsTabEvents.DISMISS()),
 
     DOWNLOAD_ID: () => service.send(MyVcsTabEvents.ADD_VC()),
@@ -64,7 +82,11 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
 
     REFRESH: () => vcService.send(VcEvents.REFRESH_MY_VCS()),
 
-    VIEW_VC: (vcRef: ActorRefFrom<typeof vcItemMachine>) => {
+    VIEW_VC: (
+      vcRef:
+        | ActorRefFrom<typeof ExistingMosipVCItemMachine>
+        | ActorRefFrom<typeof EsignetMosipVCItemMachine>,
+    ) => {
       return service.send(MyVcsTabEvents.VIEW_VC(vcRef));
     },
 

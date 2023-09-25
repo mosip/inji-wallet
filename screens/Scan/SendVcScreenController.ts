@@ -1,9 +1,9 @@
-import { useSelector } from '@xstate/react';
-import { useContext, useState } from 'react';
-import { ActorRefFrom } from 'xstate';
-import { selectShareableVcsMetadata } from '../../machines/vc';
-import { vcItemMachine } from '../../machines/vcItem';
-import { GlobalContext } from '../../shared/GlobalContext';
+import {useSelector} from '@xstate/react';
+import {useContext, useState} from 'react';
+import {ActorRefFrom} from 'xstate';
+import {selectShareableVcsMetadata} from '../../machines/vc';
+import {ExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
+import {GlobalContext} from '../../shared/GlobalContext';
 import {
   selectIsSelectingVc,
   selectReason,
@@ -16,10 +16,10 @@ import {
   selectIsInvalidIdentity,
   selectIsVerifyingIdentity,
 } from '../../machines/bleShare/commonSelectors';
-import { ScanEvents } from '../../machines/bleShare/scan/scanMachine';
+import {ScanEvents} from '../../machines/bleShare/scan/scanMachine';
 
 export function useSendVcScreen() {
-  const { appService } = useContext(GlobalContext);
+  const {appService} = useContext(GlobalContext);
   const scanService = appService.children.get('scan');
   const vcService = appService.children.get('vc');
 
@@ -32,9 +32,10 @@ export function useSendVcScreen() {
     TOGGLE_USER_CONSENT: () =>
       scanService.send(ScanEvents.TOGGLE_USER_CONSENT()),
     SELECT_VC_ITEM:
-      (index: number) => (vcRef: ActorRefFrom<typeof vcItemMachine>) => {
+      (index: number) =>
+      (vcRef: ActorRefFrom<typeof ExistingMosipVCItemMachine>) => {
         setSelectedIndex(index);
-        const { serviceRefs, ...vcData } = vcRef.getSnapshot().context;
+        const {serviceRefs, ...vcData} = vcRef.getSnapshot().context;
         scanService.send(ScanEvents.SELECT_VC(vcData));
       },
 

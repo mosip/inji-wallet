@@ -32,7 +32,9 @@ export interface Typegen0 {
   eventsCausingActions: {
     refreshMyVc: 'IS_TAMPERED';
     resetIsTampered: 'IS_TAMPERED';
+    resetStoringVcItemStatus: 'RESET_STORE_VC_ITEM_STATUS';
     sendVcAdded: 'STORE_RESPONSE';
+    setStoringVcItemStatus: 'SET_STORE_VC_ITEM_STATUS' | 'STORE_RESPONSE';
     storeVcItem: 'done.invoke.AddVcModal';
     viewVcFromParent: 'VIEW_VC';
   };
@@ -52,7 +54,6 @@ export interface Typegen0 {
     | 'addVc.checkStorage'
     | 'addVc.storageLimitReached'
     | 'addingVc'
-    | 'addingVc.addVcSuccessful'
     | 'addingVc.savingFailed'
     | 'addingVc.savingFailed.idle'
     | 'addingVc.storing'
@@ -64,7 +65,6 @@ export interface Typegen0 {
     | {
         addVc?: 'checkStorage' | 'storageLimitReached';
         addingVc?:
-          | 'addVcSuccessful'
           | 'savingFailed'
           | 'storing'
           | 'waitingForvcKey'
