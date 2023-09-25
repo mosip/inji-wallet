@@ -14,8 +14,8 @@ import {Icon} from 'react-native-elements';
 import {WalletBindingResponse} from '../../../shared/cryptoutil/cryptoUtil';
 import {
   CredentialSubject,
-  VCSharingReason,
   VcIdType,
+  VCSharingReason,
   VerifiableCredential,
   VerifiablePresentation,
 } from './vc';
@@ -25,6 +25,7 @@ export const EsignetMosipVCItemDetails: React.FC<
 > = props => {
   const {t, i18n} = useTranslation('VcDetails');
 
+  const vid = props.vc?.verifiableCredential.credential.credentialSubject.VID;
   if (props.vc?.verifiableCredential == null) {
     return <Text align="center">Loading details...</Text>;
   }
@@ -32,10 +33,12 @@ export const EsignetMosipVCItemDetails: React.FC<
   return (
     <Column margin="10">
       <ImageBackground
-        borderRadius={10}
+        imageStyle={{width: '100%'}}
+        resizeMethod="scale"
+        resizeMode="stretch"
         style={Theme.Styles.openCardBgContainer}
         source={Theme.OpenCard}>
-        <Row align="space-between">
+        <Row align="space-between" padding="10" margin="0 10 0 10">
           <Column align="space-evenly" crossAlign="center">
             <Image
               source={
@@ -60,15 +63,17 @@ export const EsignetMosipVCItemDetails: React.FC<
               />
             </Column>
           </Column>
-          <Column align="space-evenly">
+          <Column align="space-evenly" padding="10">
             <Column>
               <Text
-                weight="bold"
+                testID="fullNameTitle"
+                weight="regular"
                 size="smaller"
                 color={Theme.Colors.DetailsLabel}>
                 {t('fullName')}
               </Text>
               <Text
+                testID="fullNameValue"
                 weight="semibold"
                 size="smaller"
                 color={Theme.Colors.Details}>
@@ -82,13 +87,13 @@ export const EsignetMosipVCItemDetails: React.FC<
               <Column>
                 <Column>
                   <Text
-                    weight="bold"
+                    weight="regular"
                     size="smaller"
                     color={Theme.Colors.DetailsLabel}>
                     {t('idType')}
                   </Text>
                   <Text
-                    weight="bold"
+                    weight="semibold"
                     size="smaller"
                     color={Theme.Colors.Details}>
                     {t('nationalCard')}
@@ -98,7 +103,7 @@ export const EsignetMosipVCItemDetails: React.FC<
                   .VID ? (
                   <Column margin="20 0 0 0">
                     <Text
-                      weight="bold"
+                      weight="regular"
                       size="smaller"
                       color={Theme.Colors.DetailsLabel}>
                       {t('vid')}
@@ -107,16 +112,13 @@ export const EsignetMosipVCItemDetails: React.FC<
                       weight="semibold"
                       size="smaller"
                       color={Theme.Colors.Details}>
-                      {
-                        props.vc?.verifiableCredential.credential
-                          .credentialSubject.VID
-                      }
+                      {vid}
                     </Text>
                   </Column>
                 ) : null}
                 <Column margin="20 0 0 0">
                   <Text
-                    weight="bold"
+                    weight="regular"
                     size="smaller"
                     color={Theme.Colors.DetailsLabel}>
                     {t('dateOfBirth')}
@@ -142,7 +144,7 @@ export const EsignetMosipVCItemDetails: React.FC<
               <Column margin="0 0 0 40">
                 <Column>
                   <Text
-                    weight="bold"
+                    weight="regular"
                     size="smaller"
                     color={Theme.Colors.DetailsLabel}>
                     {t('gender')}
@@ -159,7 +161,7 @@ export const EsignetMosipVCItemDetails: React.FC<
                 </Column>
                 <Column margin="20 0 0 0">
                   <Text
-                    weight="bold"
+                    weight="regular"
                     size="smaller"
                     color={Theme.Colors.DetailsLabel}>
                     {t('generatedOn')}
@@ -173,24 +175,29 @@ export const EsignetMosipVCItemDetails: React.FC<
                 </Column>
                 <Column margin="20 0 0 0">
                   <Text
-                    weight="bold"
+                    testID="status"
+                    weight="regular"
                     size="smaller"
                     color={Theme.Colors.DetailsLabel}>
                     {t('status')}
                   </Text>
-                  <Row>
+                  <Row
+                    style={{
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                    }}>
+                    <VerifiedIcon />
                     <Text
                       weight="semibold"
                       size="smaller"
                       color={Theme.Colors.Details}>
                       {t('valid')}
                     </Text>
-                    {props.vc?.isVerified && <VerifiedIcon />}
                   </Row>
                 </Column>
                 <Column margin="20 0 0 0">
                   <Text
-                    weight="bold"
+                    weight="regular"
                     size="smaller"
                     color={Theme.Colors.DetailsLabel}>
                     {t('phoneNumber')}
@@ -210,16 +217,18 @@ export const EsignetMosipVCItemDetails: React.FC<
           </Column>
         </Row>
         <View style={Theme.Styles.hrLine}></View>
-        <Column>
+        <Column padding="10">
           <Column fill style={Theme.Styles.labelPart}>
             <Text
-              weight="bold"
+              testID="emailId"
+              weight="regular"
               size="smaller"
               color={Theme.Colors.DetailsLabel}>
               {t('email')}
             </Text>
             <Row>
               <Text
+                testID="emailIdValue"
                 style={
                   props.vc?.verifiableCredential.credential.credentialSubject
                     .email.length > 25
@@ -239,7 +248,7 @@ export const EsignetMosipVCItemDetails: React.FC<
 
           <Column style={Theme.Styles.labelPart}>
             <Text
-              weight="bold"
+              weight="semibold"
               size="smaller"
               color={Theme.Colors.DetailsLabel}>
               {t('address')}
@@ -259,7 +268,7 @@ export const EsignetMosipVCItemDetails: React.FC<
           {CREDENTIAL_REGISTRY_EDIT === 'true' && (
             <Column fill style={Theme.Styles.labelPart}>
               <Text
-                weight="bold"
+                weight="semibold"
                 size="smaller"
                 color={Theme.Colors.DetailsLabel}>
                 {t('credentialRegistry')}
@@ -276,13 +285,17 @@ export const EsignetMosipVCItemDetails: React.FC<
       </ImageBackground>
 
       {props.vc?.reason?.length > 0 && (
-        <Text margin="24 24 16 24" weight="semibold">
+        <Text
+          testID="reasonForSharingTitle"
+          margin="24 24 16 24"
+          weight="semibold">
           {t('reasonForSharing')}
         </Text>
       )}
 
       {props.vc?.reason?.map((reason, index) => (
         <TextItem
+          testID="reason"
           key={index}
           divider
           label={formatDistanceToNow(reason.timestamp, {
@@ -295,40 +308,39 @@ export const EsignetMosipVCItemDetails: React.FC<
 
       {props.activeTab !== 1 ? (
         props.isBindingPending ? (
-          <Column style={Theme.Styles.openCardBgContainer}>
-            <Row margin={'0 0 5 0'} crossAlign={'center'}>
-              <Icon
-                name="shield-alert"
-                color={Theme.Colors.Icon}
-                size={30}
-                type="material-community"
-              />
+          <Column style={Theme.Styles.openCardBgContainer} padding="10">
+            <Column margin={'0 0 4 0'} crossAlign={'flex-start'}>
+              <Image source={Theme.activationPending}></Image>
               <Text
+                testID="offlineAuthDisabledHeader"
                 style={{flex: 1}}
                 weight="semibold"
                 size="small"
-                margin={'0 0 5 0'}
+                margin={'5 0 0 0'}
                 color={Theme.Colors.statusLabel}>
                 {t('offlineAuthDisabledHeader')}
               </Text>
-            </Row>
+            </Column>
             <Text
-              style={{flex: 1}}
+              testID="offlineAuthDisabledMessage"
+              style={{flex: 1, lineHeight: 17}}
               weight="regular"
               size="small"
-              margin={'0 0 5 0'}
-              color={Theme.Colors.statusLabel}>
+              margin={'3 0 0 0'}
+              color={Theme.Colors.statusMessage}>
               {t('offlineAuthDisabledMessage')}
             </Text>
 
             <Button
+              testID="enableVerification"
               title={t('enableVerification')}
               onPress={props.onBinding}
-              type="radius"
+              type="gradient"
+              styles={{width: '100%'}}
             />
           </Column>
         ) : (
-          <Column style={Theme.Styles.openCardBgContainer}>
+          <Column style={Theme.Styles.openCardBgContainer} padding="10">
             <Row crossAlign="center">
               <Icon
                 name="verified-user"
@@ -337,9 +349,10 @@ export const EsignetMosipVCItemDetails: React.FC<
                 containerStyle={{marginStart: 4, bottom: 1}}
               />
               <Text
+                testID="profileAuthenticated"
                 numLines={1}
                 color={Theme.Colors.statusLabel}
-                weight="bold"
+                weight="semibold"
                 size="smaller"
                 margin="10 10 10 10"
                 children={t('profileAuthenticated')}></Text>

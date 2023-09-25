@@ -4,14 +4,14 @@ import {useTranslation} from 'react-i18next';
 import {DeviceInfoList} from '../../components/DeviceInfoList';
 import {Button, Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
-import {ExistingMosipVCItemDetails} from '../../components/VC/ExistingMosipVCItem/ExistingMosipVCItemDetails';
 import {useReceiveVcScreen} from './ReceiveVcScreenController';
 import {VerifyIdentityOverlay} from '../VerifyIdentityOverlay';
 import {
-  MessageOverlay,
   ErrorMessageOverlay,
+  MessageOverlay,
 } from '../../components/MessageOverlay';
 import {useOverlayVisibleAfterTimeout} from '../../shared/hooks/useOverlayVisibleAfterTimeout';
+import {VcDetailsContainer} from '../../components/VC/VcDetailsContainer';
 
 export const ReceiveVcScreen: React.FC = () => {
   const {t} = useTranslation('ReceiveVcScreen');
@@ -32,7 +32,7 @@ export const ReceiveVcScreen: React.FC = () => {
           <Text weight="semibold" margin="24 24 0 24">
             {t('header')}
           </Text>
-          <ExistingMosipVCItemDetails
+          <VcDetailsContainer
             vc={controller.incomingVc}
             isBindingPending={false}
             activeTab={1}

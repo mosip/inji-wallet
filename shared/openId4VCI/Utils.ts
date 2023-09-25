@@ -1,16 +1,10 @@
-import {ENABLE_OPENID_FOR_VC} from 'react-native-dotenv';
 import {createSignature, encodeB64} from '../cryptoutil/cryptoUtil';
 import jwtDecode from 'jwt-decode';
 import jose from 'node-jose';
-import {VCMetadata} from '../VCMetadata';
-
-export const OpenId4VCIProtocol = 'OpenId4VCI';
-export const isVCFromOpenId4VCI = (vcMetadata: VCMetadata) => {
-  return vcMetadata.isFromOpenId4VCI();
-};
 
 export const isOpenId4VCIEnabled = () => {
-  return ENABLE_OPENID_FOR_VC === 'true';
+  // return ENABLE_OPENID_FOR_VC === 'true';
+  return true;
 };
 
 export const getIdentifier = (context, credential) => {

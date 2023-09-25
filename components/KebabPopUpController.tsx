@@ -1,19 +1,19 @@
 import {useSelector} from '@xstate/react';
 import {ActorRefFrom} from 'xstate';
 import {
-  selectKebabPopUpWalletBindingInProgress,
+  ExistingMosipVCItemEvents,
+  ExistingMosipVCItemMachine,
+  selectEmptyWalletBindingId,
+  selectIsPinned,
   selectKebabPopUp,
   selectKebabPopUpAcceptingBindingOtp,
   selectKebabPopUpBindingWarning,
-  selectRemoveWalletWarning,
-  selectEmptyWalletBindingId,
-  selectIsPinned,
+  selectKebabPopUpWalletBindingInProgress,
   selectOtpError,
+  selectRemoveWalletWarning,
+  selectShowActivities,
   selectShowWalletBindingError,
   selectWalletBindingError,
-  ExistingMosipVCItemEvents,
-  ExistingMosipVCItemMachine,
-  selectShowActivities,
 } from '../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {selectActivities} from '../machines/activityLog';
 import {GlobalContext} from '../shared/GlobalContext';
@@ -23,14 +23,13 @@ import {
   EsignetMosipVCItemEvents,
   EsignetMosipVCItemMachine,
 } from '../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
-import {isVCFromOpenId4VCI} from '../shared/openId4VCI/Utils';
 
 export function useKebabPopUp(props) {
   const service = props.service as
     | ActorRefFrom<typeof ExistingMosipVCItemMachine>
     | ActorRefFrom<typeof EsignetMosipVCItemMachine>;
   const vcEvents =
-    props.vcKey !== undefined && isVCFromOpenId4VCI(props.vcMetadata)
+    props.vcKey !== undefined && props.vcMetadata.isFromOpenId4VCI()
       ? EsignetMosipVCItemEvents
       : ExistingMosipVCItemEvents;
   const PIN_CARD = () => service.send(vcEvents.PIN_CARD());

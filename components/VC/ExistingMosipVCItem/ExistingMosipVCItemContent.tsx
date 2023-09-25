@@ -129,7 +129,11 @@ export const ExistingMosipVCItemContent: React.FC<
               }
               style={Theme.Styles.closeCardImage}>
               {props.iconName && (
-                <Image source={Theme.PinIcon} style={Theme.Styles.pinIcon} />
+                <Image
+                  source={Theme.PinIcon}
+                  style={Theme.Styles.pinIcon}
+                  {...testIDProps('pinIcon')}
+                />
               )}
             </ImageBackground>
 

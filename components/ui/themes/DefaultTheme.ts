@@ -594,8 +594,8 @@ export const DefaultTheme = {
     subHeader: {
       fontFamily: 'Inter_600SemiBold',
       lineHeight: 19,
-      fontSize: 15,
-      paddingTop: 10,
+      fontSize: 13,
+      paddingTop: 3,
     },
     semiBoldHeader: {
       color: Colors.Black,
@@ -702,7 +702,7 @@ export const DefaultTheme = {
   }),
   LoaderStyles: StyleSheet.create({
     titleContainer: {
-      marginLeft: Dimensions.get('screen').width * 0.08,
+      marginLeft: Dimensions.get('screen').width * 0.001,
       marginVertical: Dimensions.get('screen').height * 0.025,
     },
   }),
