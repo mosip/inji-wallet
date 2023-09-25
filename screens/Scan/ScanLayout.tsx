@@ -41,23 +41,24 @@ export const ScanLayout: React.FC = () => {
         isVisible={controller.statusOverlay != null}
         title={controller.statusOverlay?.title}
         hint={controller.statusOverlay?.hint}
-        label={controller.statusOverlay?.message}
         onCancel={controller.statusOverlay?.onButtonPress}
         onStayInProgress={controller.statusOverlay?.onStayInProgress}
         isHintVisible={controller.isStayInProgress}
+        isBleErrorVisible={controller.isBleError}
         onRetry={controller.statusOverlay?.onRetry}
         progress={controller.statusOverlay?.progress}
         requester={controller.statusOverlay?.requester}
       />
 
-      {controller.isDisconnected && (
-        <MessageOverlay
-          isVisible={controller.isDisconnected}
-          title={t('RequestScreen:status.disconnected.title')}
-          message={t('RequestScreen:status.disconnected.message')}
-          onBackdropPress={controller.DISMISS}
-        />
-      )}
+      <ProgressingModal
+        isVisible={controller.isDisconnected}
+        title={t('RequestScreen:status.disconnected.title')}
+        isHintVisible={true}
+        hint={t('RequestScreen:status.disconnected.message')}
+        onCancel={controller.DISMISS}
+        onRetry={controller.onRetry}
+        progress
+      />
     </React.Fragment>
   );
 };

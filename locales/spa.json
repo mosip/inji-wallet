@@ -324,6 +324,10 @@
 			}
 		},
 		"status": {
+       "sharing": {
+        "title": "Compartiendo en progreso",
+        "timeoutHint": "El intercambio se retrasa, posiblemente debido a un problema de conexión."
+      },
 			"accepted": {
 				"title": "¡Éxito!",
 				"message": "La tarjeta se ha recibido correctamente desde la billetera"
@@ -333,9 +337,9 @@
 				"message": "Has descartado la tarjeta de la billetera"
 			},
 			"disconnected": {
-				"title": "Desconectado",
-				"message": "La conexión se interrumpió. Por favor, inténtalo de nuevo."
-			},
+        "title": "La conexión falló",
+        "message": "La conexión se interrumpió. Por favor, inténtalo de nuevo."
+      },
 			"waitingConnection": "Esperando conexión...",
 			"exchangingDeviceInfo": {
 				"message": "Intercambiando información del dispositivo...",
@@ -396,10 +400,10 @@
 			"sent": "La tarjeta ha sido enviada...",
 			"sentHint": "Esperando a que el receptor guarde o descarte tu tarjeta",
 			"sharing": {
-				"title": "Compartiendo...",
-				"hint": "Espere mientras compartimos la tarjeta elegida.",
-				"timeoutHint": "Está tomando más tiempo del esperado para compartir. Puede haber un problema con la conexión."
-			},
+        "title": "Compartiendo en progreso",
+        "hint": "Espere mientras compartimos la tarjeta elegida.",
+        "timeoutHint": "El intercambio se retrasa, posiblemente debido a un problema de conexión."
+      },
 			"accepted": {
 				"title": "¡Éxito!",
 				"message": "Tu tarjeta ha sido compartida exitosamente con el Verificador"
@@ -409,10 +413,10 @@
 				"message": "Tu tarjeta ha sido descartada por el Verificador"
 			},
 			"bleError": {
-				"title": "Error al transferir",
-				"message": "Ocurrió un error al transferir la tarjeta. Por favor, inténtalo de nuevo.",
-				"hint": "Error: {{code}}"
-			}
+        "title": "Error al transferir",
+        "message": "Ocurrió un error al transferir la tarjeta. Por favor, inténtalo de nuevo.",
+        "hint": "Error: {{code}}"
+      }
 		}
 	},
 	"SelectVcOverlay": {

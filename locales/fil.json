@@ -14,7 +14,7 @@
     "QRLOGIN_SUCCESFULL": "Matagumpay ang QRLogin",
     "WALLET_BINDING_SUCCESSFULL": "Matagumpay ang pag-activate",
     "WALLET_BINDING_FAILURE": "Nabigo ang pag-activate",
-    "VC_REMOVED":"Inalis sa wallet"
+    "VC_REMOVED": "Inalis sa wallet"
   },
   "DeviceInfoList": {
     "requestedBy": "Hiniling ni",
@@ -414,6 +414,10 @@
       }
     },
     "status": {
+      "sharing": {
+        "title": "Isinasagawa ang pagbabahagi",
+        "timeoutHint": "Naantala ang pagbabahagi, posibleng dahil sa isang isyu sa koneksyon."
+      },
       "accepted": {
         "title": "Tagumpay!",
         "message": "Tagumpay na nakuha ang card mula kay wallet"
@@ -423,7 +427,7 @@
         "message": "Iwinaksi ang card ni wallet"
       },
       "disconnected": {
-        "title": "Nadiskonekta",
+        "title": "Nabigo ang koneksyon",
         "message": "Naputol ang koneksyon. Pakiulit."
       },
       "waitingConnection": "Naghihintay ng koneksyon...",
@@ -439,7 +443,7 @@
         "message": "Mangyaring kumonekta sa internet upang paganahin ang Online sharing mode"
       },
       "bleError": {
-        "title": "Nabigong ilipat!",
+        "title": "Nabigong ilipat",
         "message": "Nagkaproblema habang inililipat ang card. Pakisubukang muli.",
         "hint": "Error: {{code}}"
       }
@@ -478,7 +482,7 @@
     "status": {
       "inProgress": "Isinasagawa",
       "establishingConnection": "Pagtatatag ng Koneksyon",
-      "sharingInProgress": "Isinasagawa ang pagbabahagi",
+      "connectionInProgress": "Isinasagawa ang koneksyon",
       "connectingTimeout": "Ito ay tumatagal ng ilang sandali upang maitaguyod ang koneksyon. Bukas ba ang ibang device para sa mga koneksyon?",
       "stayOnTheScreen": "Manatili sa screen",
       "retry": "Subukan muli",
@@ -489,9 +493,9 @@
       "sent": "Naipadala na ang card...",
       "sentHint": "Naghihintay para sa receiver na i-save o itapon ang iyong card",
       "sharing": {
-        "title": "Pagbabahagi...",
-        "hint": "Mangyaring maghintay habang ibinabahagi namin ang napiling card.",
-        "timeoutHint": "Mas tumatagal kaysa sa inaasahan ang pagbabahagi. Maaaring may problema sa koneksyon."
+        "title": "Isinasagawa ang pagbabahagi",
+        "timeoutHint": "Naantala ang pagbabahagi, posibleng dahil sa isang isyu sa koneksyon.",
+        "hint": "Mangyaring maghintay habang ibinabahagi namin ang napiling card."
       },
       "accepted": {
         "title": "Matagumpay na naibahagi ang ID",

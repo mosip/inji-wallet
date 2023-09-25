@@ -456,11 +456,11 @@ export const scanMachine =
                 },
                 CANCEL: {
                   target: '#scan.reviewing.cancelling',
-                  actions: 'setCloseTimeoutHint',
+                  actions: 'setPromptHint',
                 },
                 RETRY: {
                   target: '#scan.reviewing.cancelling',
-                  actions: 'setCloseTimeoutHint',
+                  actions: 'setPromptHint',
                 },
               },
             },
@@ -518,15 +518,23 @@ export const scanMachine =
                   after: {
                     SHARING_TIMEOUT: {
                       target: '#scan.reviewing.sendingVc.timeout',
-                      actions: [],
+                      actions: 'setStayInProgress',
                       internal: false,
                     },
                   },
                 },
                 timeout: {
                   on: {
+                    STAY_IN_PROGRESS: {
+                      actions: 'setStayInProgress',
+                    },
                     CANCEL: {
                       target: '#scan.reviewing.cancelling',
+                      actions: 'setPromptHint',
+                    },
+                    RETRY: {
+                      target: '#scan.reviewing.cancelling',
+                      actions: 'setPromptHint',
                     },
                   },
                 },
@@ -620,13 +628,19 @@ export const scanMachine =
         },
         disconnected: {
           on: {
+            RETRY: {
+              target: '#scan.reviewing.cancelling',
+            },
             DISMISS: {
-              target: '#scan.clearingConnection',
+              target: '#scan.reviewing.navigatingToHome',
             },
           },
         },
         handlingBleError: {
           on: {
+            RETRY: {
+              target: '#scan.reviewing.cancelling',
+            },
             DISMISS: {
               target: '#scan.clearingConnection',
             },
@@ -839,7 +853,7 @@ export const scanMachine =
           stayInProgress: context => !context.stayInProgress,
         }),
 
-        setCloseTimeoutHint: assign({
+        setPromptHint: assign({
           stayInProgress: context => (context.stayInProgress = false),
         }),
 

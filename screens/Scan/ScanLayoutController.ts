@@ -109,12 +109,11 @@ export function useScanLayout() {
   if (isConnecting) {
     statusOverlay = {
       title: t('status.inProgress'),
-      message: t('status.establishingConnection'),
       progress: true,
     };
   } else if (isConnectingTimeout) {
     statusOverlay = {
-      title: t('status.sharingInProgress'),
+      title: t('status.connectionInProgress'),
       hint: t('status.connectingTimeout'),
       onButtonPress: onCancel,
       onStayInProgress,
@@ -151,6 +150,8 @@ export function useScanLayout() {
       title: t('status.sharing.title'),
       hint: t('status.sharing.timeoutHint'),
       onButtonPress: CANCEL,
+      onStayInProgress,
+      onRetry,
       progress: true,
     };
   } else if (isAccepted) {
@@ -178,13 +179,10 @@ export function useScanLayout() {
   } else if (isBleError) {
     statusOverlay = {
       title: t('status.bleError.title'),
-      message: t('status.bleError.message'),
-      hint:
-        bleError.code &&
-        t('status.bleError.hint', {
-          code: bleError.code,
-        }),
-      onBackdropPress: DISMISS,
+      hint: t('status.bleError.message'),
+      onButtonPress: DISMISS,
+      onRetry,
+      progress: true,
     };
   }
 
@@ -226,6 +224,8 @@ export function useScanLayout() {
     isDisconnected: useSelector(scanService, selectIsDisconnected),
     statusOverlay,
     isStayInProgress: useSelector(scanService, selectStayInProgress),
+    isBleError,
     DISMISS,
+    onRetry,
   };
 }
