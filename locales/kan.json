@@ -27,7 +27,11 @@
   "PasscodeVerify": {
     "passcodeMismatchError": "ಪಾಸ್ಕೋಡ್ ಹೊಂದಿಕೆಯಾಗಲಿಲ್ಲ."
   },
-  "FaceScanner": {},
+  "FaceScanner": {
+    "imageCaptureGuide": "ಫೋನ್ ಅನ್ನು ಸ್ಥಿರವಾಗಿ ಹಿಡಿದುಕೊಳ್ಳಿ ಮತ್ತು ನಿಮ್ಮ ಮುಖವನ್ನು ಮಧ್ಯದಲ್ಲಿ ಕೇಂದ್ರೀಕರಿಸಿ",
+    "capture": "ಸೆರೆಹಿಡಿಯಿರಿ",
+    "flipCamera": "ಫ್ಲಿಪ್ ಕ್ಯಾಮೆರಾ"
+  },
   "OIDcAuth": {
     "title": "OIDC ದೃಢೀಕರಣ",
     "text": "OIDC ಪೂರೈಕೆದಾರ UI ನೊಂದಿಗೆ ಬದಲಾಯಿಸಲು",
@@ -57,7 +61,7 @@
     "uin": "UIN",
     "vid": "VID",
     "enableVerification": "ಸಕ್ರಿಯಗೊಳಿಸಿ",
-    "profileAuthenticated": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ!",
+    "profileAuthenticated": "ಆನ್‌ಲೈನ್ ದೃಢೀಕರಣಕ್ಕಾಗಿ ರುಜುವಾತುಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ.",
     "offlineAuthDisabledHeader": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಸಕ್ರಿಯಗೊಳಿಸುವಿಕೆ ಬಾಕಿ ಉಳಿದಿದೆ!",
     "offlineAuthDisabledMessage": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಬಳಸಲು ಈ ರುಜುವಾತುಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಲು ದಯವಿಟ್ಟು ಕೆಳಗಿನ ಬಟನ್ ಅನ್ನು ಕ್ಲಿಕ್ ಮಾಡಿ.",
     "verificationEnabledSuccess": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ",
@@ -79,7 +83,7 @@
     "title": "ಇನ್ನಷ್ಟು ಆಯ್ಕೆಗಳು",
     "unPinCard": "ಅನ್‌ಪಿನ್ ಕಾರ್ಡ್",
     "pinCard": "ಪಿನ್ ಕಾರ್ಡ್",
-    "offlineAuthenticationDisabled!": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಸಕ್ರಿಯಗೊಳಿಸುವಿಕೆ ಬಾಕಿ ಉಳಿದಿದೆ!",
+    "offlineAuthenticationDisabled!": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಸಕ್ರಿಯಗೊಳಿಸುವಿಕೆ ಬಾಕಿ ಉಳಿದಿದೆ",
     "offlineAuthDisabledMessage": "ಆನ್‌ಲೈನ್ ದೃಢೀಕರಣಕ್ಕಾಗಿ ಬಳಸಲು ಈ ರುಜುವಾತುಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ.",
     "viewActivityLog": "ಚಟುವಟಿಕೆ ಲಾಗ್ ಅನ್ನು ವೀಕ್ಷಿಸಿ",
     "removeFromWallet": "ಕೈಚೀಲದಿಂದ ತೆಗೆದುಹಾಕಿ",
@@ -88,7 +92,7 @@
   },
   "WalletBinding": {
     "inProgress": "ಪ್ರಗತಿಯಲ್ಲಿದೆ",
-    "profileAuthenticated": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ!"
+    "profileAuthenticated": "ಆನ್‌ಲೈನ್ ಲಾಗಿನ್‌ಗಾಗಿ ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ"
   },
   "BindingVcWarningOverlay": {
     "alert": "ದಯವಿಟ್ಟು ದ್ರುಡೀಕರಿಸಿ",
@@ -448,6 +452,8 @@
       "establishingConnection": "ಸಂಪರ್ಕವನ್ನು ಸ್ಥಾಪಿಸುವುದು",
       "sharingInProgress": "ಹಂಚಿಕೆ ಪ್ರಗತಿಯಲ್ಲಿದೆ",
       "connectingTimeout": "ಸಂಪರ್ಕವನ್ನು ಸ್ಥಾಪಿಸಲು ಸ್ವಲ್ಪ ಸಮಯ ತೆಗೆದುಕೊಳ್ಳುತ್ತದೆ. ಇತರ ಸಾಧನವು ಸಂಪರ್ಕಗಳಿಗಾಗಿ ತೆರೆದಿದೆಯೇ?",
+      "stayOnTheScreen": "ಪರದೆಯ ಮೇಲೆ ಇರಿ",
+      "retry": "ಮರುಪ್ರಯತ್ನಿಸಿ",
       "exchangingDeviceInfo": "ಸಾಧನದ ಮಾಹಿತಿಯನ್ನು ವಿನಿಮಯ ಮಾಡಿಕೊಳ್ಳಲಾಗುತ್ತಿದೆ...",
       "exchangingDeviceInfoTimeout": "ಸಾಧನದ ಮಾಹಿತಿಯನ್ನು ವಿನಿಮಯ ಮಾಡಿಕೊಳ್ಳಲು ಸ್ವಲ್ಪ ಸಮಯ ತೆಗೆದುಕೊಳ್ಳುತ್ತಿದೆ. ನೀವು ಮರುಸಂಪರ್ಕಿಸಬೇಕಾಗಬಹುದು.",
       "invalid": "ಅಮಾನ್ಯವಾದ QR ಕೋಡ್",

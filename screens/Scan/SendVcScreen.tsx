@@ -1,30 +1,30 @@
-import React, { useContext, useEffect, useRef } from 'react';
-import { Input } from 'react-native-elements';
-import { useTranslation } from 'react-i18next';
-import { Button, Column, Row, Text } from '../../components/ui';
-import { Theme } from '../../components/ui/styleUtils';
-import { MessageOverlay } from '../../components/MessageOverlay';
-import { useSendVcScreen } from './SendVcScreenController';
-import { VerifyIdentityOverlay } from '../VerifyIdentityOverlay';
-import { VcItem } from '../../components/VcItem';
-import { I18nManager, BackHandler } from 'react-native';
-import { useInterpret } from '@xstate/react';
-import { createVcItemMachine } from '../../machines/vcItem';
-import { GlobalContext } from '../../shared/GlobalContext';
-import { useFocusEffect } from '@react-navigation/native';
+import React, {useContext, useEffect, useRef} from 'react';
+import {Input} from 'react-native-elements';
+import {useTranslation} from 'react-i18next';
+import {Button, Column, Row, Text} from '../../components/ui';
+import {Theme} from '../../components/ui/styleUtils';
+import {MessageOverlay} from '../../components/MessageOverlay';
+import {useSendVcScreen} from './SendVcScreenController';
+import {VerifyIdentityOverlay} from '../VerifyIdentityOverlay';
+import {ExistingMosipVCItem} from '../../components/VC/ExistingMosipVCItem/ExistingMosipVCItem';
+import {I18nManager, BackHandler} from 'react-native';
+import {useInterpret} from '@xstate/react';
+import {createExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
+import {GlobalContext} from '../../shared/GlobalContext';
+import {useFocusEffect} from '@react-navigation/native';
 
 export const SendVcScreen: React.FC = () => {
-  const { t } = useTranslation('SendVcScreen');
-  const { appService } = useContext(GlobalContext);
+  const {t} = useTranslation('SendVcScreen');
+  const {appService} = useContext(GlobalContext);
   const controller = useSendVcScreen();
   let service;
 
-  if (controller.vcKeys?.length > 0) {
+  if (controller.shareableVcsMetadata?.length > 0) {
     const firstVCMachine = useRef(
-      createVcItemMachine(
+      createExistingMosipVCItemMachine(
         appService.getSnapshot().context.serviceRefs,
-        controller.vcKeys[0]
-      )
+        controller.shareableVcsMetadata[0],
+      ),
     );
 
     service = useInterpret(firstVCMachine.current);
@@ -42,11 +42,11 @@ export const SendVcScreen: React.FC = () => {
 
       const disableBackHandler = BackHandler.addEventListener(
         'hardwareBackPress',
-        onBackPress
+        onBackPress,
       );
 
       return () => disableBackHandler.remove();
-    }, [])
+    }, []),
   );
 
   const reasonLabel = t('reasonForSharing');
@@ -58,30 +58,30 @@ export const SendVcScreen: React.FC = () => {
           <Column
             padding="24 19 14 19"
             backgroundColor={Theme.Colors.whiteBackgroundColor}
-            style={{ position: 'relative' }}>
+            style={{position: 'relative'}}>
             <Input
               value={controller.reason ? controller.reason : ''}
               placeholder={!controller.reason ? reasonLabel : ''}
               label={controller.reason ? reasonLabel : ''}
-              labelStyle={{ textAlign: 'left' }}
+              labelStyle={{textAlign: 'left'}}
               onChangeText={controller.UPDATE_REASON}
-              containerStyle={{ marginBottom: 6 }}
-              inputStyle={{ textAlign: I18nManager.isRTL ? 'right' : 'left' }}
+              containerStyle={{marginBottom: 6}}
+              inputStyle={{textAlign: I18nManager.isRTL ? 'right' : 'left'}}
             />
           </Column>
           <Text
             margin="15 0 13 24"
             weight="bold"
             color={Theme.Colors.textValue}
-            style={{ position: 'relative' }}>
+            style={{position: 'relative'}}>
             {t('pleaseSelectAnId')}
           </Text>
         </Column>
         <Column scroll>
-          {controller.vcKeys.map((vcKey, index) => (
-            <VcItem
-              key={vcKey}
-              vcKey={vcKey}
+          {controller.shareableVcsMetadata.map((vcMetadata, index) => (
+            <ExistingMosipVCItem
+              key={vcMetadata.getVcKey()}
+              vcMetadata={vcMetadata}
               margin="0 2 8 2"
               onPress={controller.SELECT_VC_ITEM(index)}
               selectable
@@ -99,7 +99,7 @@ export const SendVcScreen: React.FC = () => {
             <Button
               type="gradient"
               title={t('acceptRequestAndVerify')}
-              styles={{ marginTop: 12 }}
+              styles={{marginTop: 12}}
               disabled={controller.selectedIndex == null}
               onPress={controller.VERIFY_AND_ACCEPT_REQUEST}
             />

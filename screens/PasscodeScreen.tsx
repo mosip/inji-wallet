@@ -1,17 +1,17 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Image } from 'react-native';
-import { MAX_PIN, PasscodeVerify } from '../components/PasscodeVerify';
-import { PinInput } from '../components/PinInput';
-import { Column, Text } from '../components/ui';
-import { Theme } from '../components/ui/styleUtils';
-import { PasscodeRouteProps } from '../routes';
-import { usePasscodeScreen } from './PasscodeScreenController';
-import { hashData } from '../shared/commonUtil';
-import { argon2iConfig } from '../shared/constants';
+import {useTranslation} from 'react-i18next';
+import {Image} from 'react-native';
+import {MAX_PIN, PasscodeVerify} from '../components/PasscodeVerify';
+import {PinInput} from '../components/PinInput';
+import {Column, Text} from '../components/ui';
+import {Theme} from '../components/ui/styleUtils';
+import {PasscodeRouteProps} from '../routes';
+import {usePasscodeScreen} from './PasscodeScreenController';
+import {hashData} from '../shared/commonUtil';
+import {argon2iConfig} from '../shared/constants';
 
-export const PasscodeScreen: React.FC<PasscodeRouteProps> = (props) => {
-  const { t } = useTranslation('PasscodeScreen');
+export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
+  const {t} = useTranslation('PasscodeScreen');
   const controller = usePasscodeScreen(props);
 
   const setPasscode = async (passcode: string) => {
@@ -23,7 +23,10 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = (props) => {
     controller.passcode === '' ? (
       <React.Fragment>
         <Column>
-          <Text align="center" style={Theme.TextStyles.header}>
+          <Text
+            testID="setPasscode"
+            align="center"
+            style={Theme.TextStyles.header}>
             {t('header')}
           </Text>
           <Text
@@ -35,12 +38,19 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = (props) => {
           </Text>
         </Column>
 
-        <PinInput length={MAX_PIN} onDone={setPasscode} />
+        <PinInput
+          testID="setPasscodePin"
+          length={MAX_PIN}
+          onDone={setPasscode}
+        />
       </React.Fragment>
     ) : (
       <React.Fragment>
         <Column>
-          <Text align="center" style={Theme.TextStyles.header}>
+          <Text
+            testID="confirmPasscode"
+            align="center"
+            style={Theme.TextStyles.header}>
             {t('confirmPasscode')}
           </Text>
           <Text
@@ -65,7 +75,7 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = (props) => {
       fill
       padding="32"
       backgroundColor={Theme.Colors.whiteBackgroundColor}>
-      <Image source={Theme.LockIcon} style={{ alignSelf: 'center' }} />
+      <Image source={Theme.LockIcon} style={{alignSelf: 'center'}} />
       {props.route.params?.setup ? (
         <Column fill align="space-around" width="100%">
           {passcodeSetup}
@@ -73,6 +83,7 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = (props) => {
       ) : (
         <Column fill align="space-around" width="100%">
           <Text
+            testID="enterPasscode"
             align="center"
             weight="semibold"
             color={Theme.Colors.GrayText}

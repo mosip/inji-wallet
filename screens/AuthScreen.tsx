@@ -1,14 +1,14 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Icon } from 'react-native-elements';
-import { MessageOverlay } from '../components/MessageOverlay';
-import { Button, Column, Text } from '../components/ui';
-import { Theme } from '../components/ui/styleUtils';
-import { RootRouteProps } from '../routes';
-import { useAuthScreen } from './AuthScreenController';
+import {useTranslation} from 'react-i18next';
+import {Icon} from 'react-native-elements';
+import {MessageOverlay} from '../components/MessageOverlay';
+import {Button, Column, Text} from '../components/ui';
+import {Theme} from '../components/ui/styleUtils';
+import {RootRouteProps} from '../routes';
+import {useAuthScreen} from './AuthScreenController';
 
-export const AuthScreen: React.FC<RootRouteProps> = (props) => {
-  const { t } = useTranslation('AuthScreen');
+export const AuthScreen: React.FC<RootRouteProps> = props => {
+  const {t} = useTranslation('AuthScreen');
   const controller = useAuthScreen(props);
 
   return (
@@ -25,7 +25,10 @@ export const AuthScreen: React.FC<RootRouteProps> = (props) => {
       <Column>
         <Icon name="fingerprint" size={80} color={Theme.Colors.Icon} />
         <Column margin="30 0 0 0">
-          <Text align="center" style={Theme.TextStyles.header}>
+          <Text
+            testID="selectAppUnlockMethod"
+            align="center"
+            style={Theme.TextStyles.header}>
             {t('header')}
           </Text>
           <Text
@@ -40,6 +43,7 @@ export const AuthScreen: React.FC<RootRouteProps> = (props) => {
 
       <Column>
         <Button
+          testID="useBiometrics"
           title={t('useBiometrics')}
           type="gradient"
           margin="0 0 8 0"
@@ -47,6 +51,7 @@ export const AuthScreen: React.FC<RootRouteProps> = (props) => {
           onPress={controller.useBiometrics}
         />
         <Button
+          testID="usePasscode"
           type="clear"
           title={t('usePasscode')}
           onPress={controller.usePasscode}
