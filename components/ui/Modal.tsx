@@ -14,18 +14,13 @@ export const Modal: React.FC<ModalProps> = props => {
     <RNModal
       {...testIDProps(props.testID)}
       animationType="slide"
-      style={Theme.ModalStyles.modal}
+      style={props.modalStyle}
       visible={props.isVisible}
       onShow={props.onShow}
       onRequestClose={props.onDismiss}>
       <Column fill safe align="center">
         <Row elevation={props.headerElevation}>
-          <View
-            style={
-              props.progressModalStyle
-                ? Theme.ModalStyles.progressingModal
-                : Theme.ModalStyles.defaultModal
-            }>
+          <View style={props.modalStyle}>
             {props.headerRight ? (
               <Icon
                 {...testIDProps('closeModal')}
@@ -90,11 +85,15 @@ export const Modal: React.FC<ModalProps> = props => {
   );
 };
 
+Modal.defaultProps = {
+  modalStyle: Theme.ModalStyles.defaultModal,
+};
+
 export interface ModalProps {
   testID?: string;
   isVisible: boolean;
   requester?: boolean;
-  progressModalStyle?: boolean;
+  modalStyle?: Object;
   onDismiss?: () => void;
   headerTitle?: string;
   headerElevation?: ElevationLevel;

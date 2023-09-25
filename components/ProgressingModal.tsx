@@ -16,7 +16,7 @@ export const ProgressingModal: React.FC<ProgressingModalProps> = props => {
         headerTitle={t(props.title)}
         onDismiss={props.onCancel}
         headerElevation={3}
-        progressModalStyle
+        modalStyle={Theme.ModalStyles.progressingModal}
         requester={props.requester}>
         <Centered crossAlign="center" fill>
           <Column margin="24 0" align="space-around">
