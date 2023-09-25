@@ -14,6 +14,7 @@ const Colors = {
   Gray50: '#999999',
   Gray9: '#171717',
   DimGray: '#737373',
+  platinumGrey: '#EDEDED',
   Orange: '#F2811D',
   LightGrey: '#F7F7F7',
   ShadeOfGrey: '#6F6F6F',
@@ -24,6 +25,7 @@ const Colors = {
   Transparent: 'transparent',
   Warning: '#f0ad4e',
   GrayText: '#6F6F6F',
+  mediumLightGrayText: '#A7A7A7',
   dorColor: '#CBCBCB',
   plainText: '#FFD6A7',
   walletbindingLabel: '#000000',
@@ -502,6 +504,10 @@ export const DefaultTheme = {
       marginLeft: 10,
       marginRight: 10,
     },
+    hrLineFill: {
+      borderBottomColor: Colors.platinumGrey,
+      borderBottomWidth: 1.3,
+    },
     downloadFabIcon: {
       height: 70,
       width: 70,
@@ -592,6 +598,7 @@ export const DefaultTheme = {
       paddingTop: 4,
     },
     subHeader: {
+      color: Colors.mediumLightGrayText,
       fontFamily: 'Inter_600SemiBold',
       lineHeight: 19,
       fontSize: 13,
@@ -703,7 +710,8 @@ export const DefaultTheme = {
   LoaderStyles: StyleSheet.create({
     titleContainer: {
       marginLeft: Dimensions.get('screen').width * 0.001,
-      marginVertical: Dimensions.get('screen').height * 0.025,
+      marginBottom: 17,
+      marginTop: 22,
     },
   }),
   ButtonStyles: StyleSheet.create({
@@ -829,7 +837,7 @@ export const DefaultTheme = {
       flexDirection: 'row',
       alignItems: 'flex-start',
       marginHorizontal: 18,
-      marginVertical: 8,
+      marginVertical: 6,
     },
   }),
   UpdateModalStyles: StyleSheet.create({

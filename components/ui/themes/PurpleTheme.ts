@@ -14,6 +14,7 @@ const Colors = {
   Gray50: '#999999',
   Gray9: '#171717',
   DimGray: '#737373',
+  platinumGrey: '#EDEDED',
   Orange: '#F2811D',
   LightOrange: '#FDF1E6',
   LightGrey: '#FAF9FF',
@@ -25,6 +26,7 @@ const Colors = {
   Transparent: 'transparent',
   Warning: '#f0ad4e',
   GrayText: '#6F6F6F',
+  mediumLightGrayText: '#A7A7A7',
   dorColor: '#CBCBCB',
   plainText: '#FFD6A7',
   walletbindingLabel: '#000000',
@@ -504,6 +506,10 @@ export const PurpleTheme = {
       marginLeft: 10,
       marginRight: 10,
     },
+    hrLineFill: {
+      borderBottomColor: Colors.platinumGrey,
+      borderBottomWidth: 1.3,
+    },
     downloadFabIcon: {
       height: 70,
       width: 70,
@@ -594,6 +600,7 @@ export const PurpleTheme = {
       paddingTop: 4,
     },
     subHeader: {
+      color: Colors.mediumLightGrayText,
       fontFamily: 'Inter_600SemiBold',
       lineHeight: 19,
       fontSize: 13,
@@ -705,7 +712,8 @@ export const PurpleTheme = {
   LoaderStyles: StyleSheet.create({
     titleContainer: {
       marginLeft: Dimensions.get('screen').width * 0.001,
-      marginVertical: Dimensions.get('screen').height * 0.025,
+      marginBottom: 17,
+      marginTop: 22,
     },
   }),
   ButtonStyles: StyleSheet.create({
@@ -831,7 +839,7 @@ export const PurpleTheme = {
       flexDirection: 'row',
       alignItems: 'flex-start',
       marginHorizontal: 18,
-      marginVertical: 8,
+      marginVertical: 6,
     },
   }),
   UpdateModalStyles: StyleSheet.create({
