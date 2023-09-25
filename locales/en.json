@@ -279,6 +279,7 @@
     "generateVcDescription": "Tap on \"Download card\" below to download your card",
     "downloadCard": "Download Card",
     "downloadingYourCard": "Downloading your card, this can take upto 5 minutes",
+    "activated": "Credentials are enabled for online authentication.",
     "errors": {
       "savingFailed": {
         "title": "Failed to save the Card",

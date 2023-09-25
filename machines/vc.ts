@@ -18,6 +18,7 @@ const model = createModel(
     vcs: {} as Record<string, VC>,
     inProgressVcDownloads: new Set<string>(),
     areAllVcsDownloaded: false as boolean,
+    walletBindingSuccess: false,
   },
   {
     events: {
@@ -39,6 +40,8 @@ const model = createModel(
       REFRESH_MY_VCS_TWO: (vc: VC) => ({vc}),
       REFRESH_RECEIVED_VCS: () => ({}),
       GET_RECEIVED_VCS: () => ({}),
+      WALLET_BINDING_SUCCESS: () => ({}),
+      RESET_WALLET_BINDING_SUCCESS: () => ({}),
       ADD_VC_TO_IN_PROGRESS_DOWNLOADS: (requestId: string) => ({requestId}),
       REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS: (requestId: string) => ({
         requestId,
@@ -104,6 +107,9 @@ export const vcMachine =
                     REFRESH_MY_VCS: {
                       actions: [log('REFRESH_MY_VCS:myVcs---')],
                       target: 'refreshing',
+                    },
+                    WALLET_BINDING_SUCCESS: {
+                      actions: 'setWalletBindingSuccess',
                     },
                   },
                 },
@@ -173,6 +179,9 @@ export const vcMachine =
             },
             VC_UPDATE: {
               actions: 'setVcUpdate',
+            },
+            RESET_WALLET_BINDING_SUCCESS: {
+              actions: 'resetWalletBindingSuccess',
             },
             VC_RECEIVED: [
               {
@@ -297,6 +306,13 @@ export const vcMachine =
           ],
         }),
 
+        setWalletBindingSuccess: model.assign({
+          walletBindingSuccess: true,
+        }),
+        resetWalletBindingSuccess: model.assign({
+          walletBindingSuccess: false,
+        }),
+
         prependToReceivedVcs: model.assign({
           receivedVcs: (context, event) => [
             event.vcMetadata,
@@ -397,4 +413,9 @@ function getUpdatedVCMetadatas(
 
 function isEmpty(object) {
   return object == null || object == '' || object == undefined;
+}
+
+export function selectWalletBindingSuccess(state: State) {
+  console.log(state.context);
+  return state.context.walletBindingSuccess;
 }

@@ -17,6 +17,7 @@ import {Icon} from 'react-native-elements';
 import {groupBy} from '../../shared/javascript';
 import {isOpenId4VCIEnabled} from '../../shared/openId4VCI/Utils';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
+import {BannerNotification} from '../../components/BannerNotification';
 
 const pinIconProps = {iconName: 'pushpin', iconType: 'antdesign'};
 
@@ -75,6 +76,12 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
     <React.Fragment>
       <Column fill style={{display: props.isVisible ? 'flex' : 'none'}}>
         {controller.isRequestSuccessful && <DownloadingVcPopUp />}
+        {controller.isBindingSuccess && (
+          <BannerNotification
+            message={t('activated')}
+            onClosePress={controller.DISMISS_WALLET_BINDING_NOTIFICATION_BANNER}
+          />
+        )}
         <Column fill pY={11} pX={8}>
           {vcMetadataOrderedByPinStatus.length > 0 && (
             <React.Fragment>

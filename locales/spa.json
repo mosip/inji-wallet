@@ -178,6 +178,7 @@
 		"addVcButton": "Agregar Tarjeta",
 		"generateVc": "Genera tus Tarjetas",
 		"generateVcDescription": "Toca en \"Agregar Tarjeta\" a continuación para descargar tu Tarjeta",
+		"activated": "Las credenciales están habilitadas para la autenticación en línea.",
 		"errors": {
 			"savingFailed": {
 				"title": "Error al guardar la Tarjeta",

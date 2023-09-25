@@ -7,9 +7,7 @@ import {RevokeConfirmModal} from '../../components/RevokeConfirm';
 import {OIDcAuthenticationModal} from '../../components/OIDcAuth';
 import {useViewVcModal, ViewVcModalProps} from './ViewVcModalController';
 import {useTranslation} from 'react-i18next';
-import {View} from 'react-native';
-import {Theme} from '../../components/ui/styleUtils';
-import {Icon} from 'react-native-elements';
+import {BannerNotification} from '../../components/BannerNotification';
 import {DropdownIcon} from '../../components/DropdownIcon';
 import {TextEditOverlay} from '../../components/TextEditOverlay';
 import {OtpVerificationModal} from './MyVcs/OtpVerificationModal';
@@ -34,33 +32,18 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
     },
   ];
 
-  const ActivatedPopUp: React.FC = () => {
-    return (
-      <View testID="activatedPopUp">
-        <Row style={Theme.Styles.downloadingVcPopUp}>
-          <Text color={Theme.Colors.whiteText} weight="semibold" size="smaller">
-            {t('activated')}
-          </Text>
-          <Icon
-            testID="close"
-            name="close"
-            onPress={() => {
-              controller.DISMISS();
-            }}
-            color={Theme.Colors.whiteText}
-            size={19}
-          />
-        </Row>
-      </View>
-    );
-  };
   return (
     <Modal
       isVisible={props.isVisible}
       onDismiss={props.onDismiss}
       headerTitle={t('title')}
       headerElevation={2}>
-      {controller.isBindingSuccess && <ActivatedPopUp />}
+      {controller.isBindingSuccess && (
+        <BannerNotification
+          message={t('activated')}
+          onClosePress={controller.DISMISS}
+        />
+      )}
       <Column scroll>
         <Column fill>
           <VcDetailsContainer

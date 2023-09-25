@@ -385,6 +385,7 @@ export const ExistingMosipVCItemMachine =
                       'updateVc',
                       'setWalletBindingErrorEmpty',
                       'setWalletBindingSuccess',
+                      'sendWalletBindingSuccess',
                       'logWalletBindingSuccess',
                     ],
                   },
@@ -417,6 +418,7 @@ export const ExistingMosipVCItemMachine =
                     'updateVc',
                     'setWalletBindingErrorEmpty',
                     'setWalletBindingSuccess',
+                    'sendWalletBindingSuccess',
                     'logWalletBindingSuccess',
                     () => sendEndEvent(getEndData('VC activation')),
                   ],
@@ -736,6 +738,7 @@ export const ExistingMosipVCItemMachine =
                   'updateVc',
                   'setWalletBindingErrorEmpty',
                   'setWalletBindingSuccess',
+                  'sendWalletBindingSuccess',
                   'logWalletBindingSuccess',
                 ],
               },
@@ -765,6 +768,7 @@ export const ExistingMosipVCItemMachine =
                 'updateVc',
                 'setWalletBindingErrorEmpty',
                 'setWalletBindingSuccess',
+                'sendWalletBindingSuccess',
                 'logWalletBindingSuccess',
                 () => sendEndEvent(getEndData('VC activation')),
               ],
@@ -836,6 +840,20 @@ export const ExistingMosipVCItemMachine =
           walletBindingError: () => '',
         }),
 
+        setWalletBindingSuccess: assign({
+          walletBindingSuccess: true,
+        }),
+
+        sendWalletBindingSuccess: send(
+          context => {
+            return {
+              type: 'WALLET_BINDING_SUCCESS',
+            };
+          },
+          {
+            to: context => context.serviceRefs.vc,
+          },
+        ),
         setPublicKey: assign({
           publicKey: (context, event) => {
             if (!isCustomSecureKeystore()) {
@@ -1502,7 +1520,7 @@ export function selectShowWalletBindingError(state: State) {
   );
 }
 
-export function setWalletBindingSuccess(state: State) {
+export function selectWalletBindingSuccess(state: State) {
   return state.context.walletBindingSuccess;
 }
 
