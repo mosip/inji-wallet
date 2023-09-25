@@ -85,71 +85,16 @@ export const EsignetMosipVCItemDetails: React.FC<
             </Column>
             <Row>
               <Column>
-                <Column>
-                  <Text
-                    weight="regular"
-                    size="smaller"
-                    color={Theme.Colors.DetailsLabel}>
-                    {t('idType')}
-                  </Text>
-                  <Text
-                    weight="semibold"
-                    size="smaller"
-                    color={Theme.Colors.Details}>
-                    {t('nationalCard')}
-                  </Text>
-                </Column>
-                {props.vc?.verifiableCredential.credential.credentialSubject
-                  .VID ? (
-                  <Column margin="20 0 0 0">
-                    <Text
-                      weight="regular"
-                      size="smaller"
-                      color={Theme.Colors.DetailsLabel}>
-                      {t('vid')}
-                    </Text>
-                    <Text
-                      weight="semibold"
-                      size="smaller"
-                      color={Theme.Colors.Details}>
-                      {vid}
-                    </Text>
-                  </Column>
-                ) : null}
                 <Column margin="20 0 0 0">
                   <Text
-                    weight="regular"
-                    size="smaller"
-                    color={Theme.Colors.DetailsLabel}>
-                    {t('dateOfBirth')}
-                  </Text>
-                  <Text
-                    weight="semibold"
-                    size="smaller"
-                    color={Theme.Colors.Details}>
-                    {format(
-                      parse(
-                        getLocalizedField(
-                          props.vc?.verifiableCredential.credential
-                            .credentialSubject.dateOfBirth,
-                        ),
-                        'yyyy/MM/dd',
-                        new Date(),
-                      ),
-                      'yyy/MM/dd',
-                    )}
-                  </Text>
-                </Column>
-              </Column>
-              <Column margin="0 0 0 40">
-                <Column>
-                  <Text
+                    testID="gender"
                     weight="regular"
                     size="smaller"
                     color={Theme.Colors.DetailsLabel}>
                     {t('gender')}
                   </Text>
                   <Text
+                    testID="genderValue"
                     weight="semibold"
                     size="smaller"
                     color={Theme.Colors.Details}>
@@ -159,21 +104,75 @@ export const EsignetMosipVCItemDetails: React.FC<
                     )}
                   </Text>
                 </Column>
-                <Column margin="20 0 0 0">
+                <Column margin="25 0 0 0">
                   <Text
+                    testID="idType"
+                    weight="regular"
+                    size="smaller"
+                    color={Theme.Colors.DetailsLabel}>
+                    {t('idType')}
+                  </Text>
+                  <Text
+                    testID="nationalCard"
+                    weight="bold"
+                    size="smaller"
+                    color={Theme.Colors.Details}>
+                    {t('nationalCard')}
+                  </Text>
+                </Column>
+                {vid ? (
+                  <Column margin="25 0 0 0">
+                    <Text
+                      testID="vid"
+                      weight="regular"
+                      size="smaller"
+                      color={Theme.Colors.DetailsLabel}>
+                      {t('vid')}
+                    </Text>
+                    <Text
+                      testID="vidNumber"
+                      weight="semibold"
+                      size="smaller"
+                      color={Theme.Colors.Details}>
+                      {vid}
+                    </Text>
+                  </Column>
+                ) : null}
+                <Column margin="30 0 0 0">
+                  <Text
+                    testID="generatedOnTitle"
                     weight="regular"
                     size="smaller"
                     color={Theme.Colors.DetailsLabel}>
                     {t('generatedOn')}
                   </Text>
                   <Text
+                    testID="generatedOnValue"
                     weight="semibold"
                     size="smaller"
                     color={Theme.Colors.Details}>
                     {new Date(props.vc?.generatedOn).toLocaleDateString()}
                   </Text>
                 </Column>
+              </Column>
+              <Column margin="0 0 0 40">
                 <Column margin="20 0 0 0">
+                  <Text
+                    testID="dateOfBirth"
+                    weight="regular"
+                    size="smaller"
+                    color={Theme.Colors.DetailsLabel}>
+                    {t('dateOfBirth')}
+                  </Text>
+                  <Text
+                    testID="dateOfBirthValue"
+                    weight="semibold"
+                    size="smaller"
+                    color={Theme.Colors.Details}>
+                    {getFormattedDateOfBirth()}
+                  </Text>
+                </Column>
+                <Column margin="25 0 0 0">
                   <Text
                     testID="status"
                     weight="regular"
@@ -188,6 +187,7 @@ export const EsignetMosipVCItemDetails: React.FC<
                     }}>
                     <VerifiedIcon />
                     <Text
+                      testID="valid"
                       weight="semibold"
                       size="smaller"
                       color={Theme.Colors.Details}>
@@ -195,14 +195,16 @@ export const EsignetMosipVCItemDetails: React.FC<
                     </Text>
                   </Row>
                 </Column>
-                <Column margin="20 0 0 0">
+                <Column margin="92 0 0 0">
                   <Text
+                    testID="phoneNumber"
                     weight="regular"
                     size="smaller"
                     color={Theme.Colors.DetailsLabel}>
                     {t('phoneNumber')}
                   </Text>
                   <Text
+                    testID="phoneNumberValue"
                     weight="semibold"
                     size="smaller"
                     color={Theme.Colors.Details}>
@@ -248,13 +250,15 @@ export const EsignetMosipVCItemDetails: React.FC<
 
           <Column style={Theme.Styles.labelPart}>
             <Text
-              weight="semibold"
+              testID="address"
+              weight="regular"
               size="smaller"
               color={Theme.Colors.DetailsLabel}>
               {t('address')}
             </Text>
             <Row>
               <Text
+                testID="addressValue"
                 style={{flex: 1}}
                 weight="semibold"
                 size="smaller"
@@ -352,7 +356,7 @@ export const EsignetMosipVCItemDetails: React.FC<
                 testID="profileAuthenticated"
                 numLines={1}
                 color={Theme.Colors.statusLabel}
-                weight="semibold"
+                weight="bold"
                 size="smaller"
                 margin="10 10 10 10"
                 children={t('profileAuthenticated')}></Text>
@@ -364,6 +368,20 @@ export const EsignetMosipVCItemDetails: React.FC<
       )}
     </Column>
   );
+
+  function getFormattedDateOfBirth(): React.ReactNode {
+    return format(
+      parse(
+        getLocalizedField(
+          props.vc?.verifiableCredential.credential.credentialSubject
+            .dateOfBirth,
+        ),
+        'yyyy/MM/dd',
+        new Date(),
+      ),
+      'MM/dd/yyyy',
+    );
+  }
 };
 
 export interface EsignetMosipVCItemDetailsProps {
