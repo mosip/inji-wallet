@@ -167,6 +167,7 @@ export interface Typegen0 {
     services: never;
   };
   eventsCausingActions: {
+    addVcToInProgressDownloads: 'STORE_RESPONSE';
     clearOtp:
       | ''
       | 'CANCEL'
@@ -207,6 +208,7 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]'
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
     markVcValid: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
+    removeVcFromInProgressDownloads: 'STORE_RESPONSE';
     removeVcItem: 'CONFIRM';
     removeVcMetaDataFromStorage: 'STORE_ERROR';
     removeVcMetaDataFromVcMachine: 'DISMISS';

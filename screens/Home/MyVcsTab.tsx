@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Button, Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {Image, RefreshControl, View} from 'react-native';
@@ -39,13 +39,15 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
     GET_INDIVIDUAL_ID('');
   };
 
-  {
-    controller.isRequestSuccessful
-      ? setTimeout(() => {
-          controller.DISMISS();
-        }, 6000)
-      : null;
-  }
+  useEffect(() => {
+    if (controller.areAllVcsLoaded) {
+      controller.RESET_STORE_VC_ITEM_STATUS();
+      controller.RESET_ARE_ALL_VCS_DOWNLOADED();
+    }
+    if (controller.inProgressVcDownloadsCount > 0) {
+      controller.SET_STORE_VC_ITEM_STATUS();
+    }
+  }, [controller.areAllVcsLoaded, controller.inProgressVcDownloadsCount]);
 
   const DownloadingVcPopUp: React.FC = () => {
     return (
@@ -58,7 +60,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
             testID="close"
             name="close"
             onPress={() => {
-              controller.DISMISS();
+              controller.RESET_STORE_VC_ITEM_STATUS();
               clearIndividualId();
             }}
             color={Theme.Colors.whiteText}

@@ -6,6 +6,8 @@ import {
   selectIsRefreshingMyVcs,
   selectMyVcsMetadata,
   VcEvents,
+  selectAreAllVcsDownloaded,
+  selectInProgressVcDownloadsCount,
 } from '../../machines/vc';
 import {
   selectWalletBindingError,
@@ -57,6 +59,21 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
       settingsService,
       selectShowHardwareKeystoreNotExistsAlert,
     ),
+    areAllVcsLoaded: useSelector(vcService, selectAreAllVcsDownloaded),
+    inProgressVcDownloadsCount: useSelector(
+      vcService,
+      selectInProgressVcDownloadsCount,
+    ),
+
+    SET_STORE_VC_ITEM_STATUS: () =>
+      service.send(MyVcsTabEvents.SET_STORE_VC_ITEM_STATUS()),
+
+    RESET_STORE_VC_ITEM_STATUS: () =>
+      service.send(MyVcsTabEvents.RESET_STORE_VC_ITEM_STATUS()),
+
+    RESET_ARE_ALL_VCS_DOWNLOADED: () =>
+      vcService.send(VcEvents.RESET_ARE_ALL_VCS_DOWNLOADED()),
+
     DISMISS: () => service.send(MyVcsTabEvents.DISMISS()),
 
     DOWNLOAD_ID: () => service.send(MyVcsTabEvents.ADD_VC()),

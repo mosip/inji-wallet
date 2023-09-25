@@ -16,6 +16,8 @@ const model = createModel(
     myVcs: [] as VCMetadata[],
     receivedVcs: [] as VCMetadata[],
     vcs: {} as Record<string, VC>,
+    inProgressVcDownloads: new Set<string>(),
+    areAllVcsDownloaded: false as boolean,
   },
   {
     events: {
@@ -37,6 +39,11 @@ const model = createModel(
       REFRESH_MY_VCS_TWO: (vc: VC) => ({vc}),
       REFRESH_RECEIVED_VCS: () => ({}),
       GET_RECEIVED_VCS: () => ({}),
+      ADD_VC_TO_IN_PROGRESS_DOWNLOADS: (requestId: string) => ({requestId}),
+      REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS: (requestId: string) => ({
+        requestId,
+      }),
+      RESET_ARE_ALL_VCS_DOWNLOADED: () => ({}),
     },
   },
 );
@@ -152,6 +159,15 @@ export const vcMachine =
             VC_DOWNLOADED: {
               actions: 'setDownloadedVc',
             },
+            ADD_VC_TO_IN_PROGRESS_DOWNLOADS: {
+              actions: 'addVcToInProgressDownloads',
+            },
+            REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS: {
+              actions: 'removeVcFromInProgressDownlods',
+            },
+            RESET_ARE_ALL_VCS_DOWNLOADED: {
+              actions: 'resetAreAllVcsDownloaded',
+            },
             VC_DOWNLOADED_FROM_OPENID4VCI: {
               actions: 'setDownloadedVCFromOpenId4VCI',
             },
@@ -211,6 +227,36 @@ export const vcMachine =
           context.vcs[vcUniqueId] = event.vc;
         },
 
+        addVcToInProgressDownloads: model.assign({
+          inProgressVcDownloads: (context, event) => {
+            let paresedInProgressList: Set<string> =
+              context.inProgressVcDownloads;
+            const newVcRequestID = event.requestId;
+            const newInProgressList = paresedInProgressList.add(newVcRequestID);
+            return newInProgressList;
+          },
+        }),
+
+        removeVcFromInProgressDownlods: model.assign({
+          inProgressVcDownloads: (context, event) => {
+            let paresedInProgressList: Set<string> =
+              context.inProgressVcDownloads;
+            const removeVcRequestID = event.requestId;
+            paresedInProgressList.delete(removeVcRequestID);
+            return paresedInProgressList;
+          },
+          areAllVcsDownloaded: context => {
+            if (context.inProgressVcDownloads.size == 0) {
+              return true;
+            }
+            return false;
+          },
+        }),
+
+        resetAreAllVcsDownloaded: model.assign({
+          areAllVcsDownloaded: () => false,
+          inProgressVcDownloads: new Set<string>(),
+        }),
         setDownloadedVCFromOpenId4VCI: (context, event) => {
           if (event.vc) context.vcs[event.vcMetadata.getVcKey()] = event.vc;
         },
@@ -322,6 +368,14 @@ export function selectBindedVcsMetadata(state: State): VCMetadata[] {
       !isEmpty(walletBindingResponse?.walletBindingId)
     );
   });
+}
+
+export function selectAreAllVcsDownloaded(state: State) {
+  return state.context.areAllVcsDownloaded;
+}
+
+export function selectInProgressVcDownloadsCount(state: State) {
+  return state.context.inProgressVcDownloads.size;
 }
 
 function getUpdatedVCMetadatas(
