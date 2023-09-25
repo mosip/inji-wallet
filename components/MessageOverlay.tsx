@@ -60,7 +60,7 @@ export const MessageOverlay: React.FC<MessageOverlayProps> = props => {
         {!props.children && props.onButtonPress ? (
           <Button
             type="gradient"
-            title={props.customBtnTxt ? t(props.customBtnTxt) : t('cancel')}
+            title={props.buttonText ? t(props.buttonText) : t('cancel')}
             onPress={props.onButtonPress}
             styles={Theme.MessageOverlayStyles.button}
           />
@@ -108,7 +108,7 @@ const Progress: React.FC<Pick<MessageOverlayProps, 'progress'>> = props => {
 export interface MessageOverlayProps {
   isVisible: boolean;
   title?: string;
-  customBtnTxt?: string;
+  buttonText?: string;
   message?: string;
   progress?: boolean | number;
   requester?: boolean;

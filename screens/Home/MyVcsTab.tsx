@@ -157,7 +157,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         title={t('errors.keystoreNotExists.title')}
         message={t('errors.keystoreNotExists.message')}
         onButtonPress={controller.ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS}
-        customBtnTxt={t('errors.keystoreNotExists.riskOkayText')}
+        buttonText={t('errors.keystoreNotExists.riskOkayText')}
         customHeight={'auto'}>
         <Row>
           <Button
@@ -191,7 +191,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         title={t('errors.vcIsTampered.title')}
         message={t('errors.vcIsTampered.message')}
         onButtonPress={controller.IS_TAMPERED}
-        customBtnTxt={t('common:ok')}
+        buttonText={t('common:ok')}
         customHeight={'auto'}
       />
     </React.Fragment>

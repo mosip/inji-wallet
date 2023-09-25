@@ -76,7 +76,7 @@ const AppLoadingWrapper: React.FC = () => {
         title={t('errors.invalidateKeyError.title')}
         message={t('errors.invalidateKeyError.message')}
         onButtonPress={controller.RESET}
-        customBtnTxt={t('common:ok')}
+        buttonText={t('common:ok')}
         customHeight={'auto'}
       />
 
