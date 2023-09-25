@@ -1,42 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 
-import { Linking, Pressable, TouchableOpacity } from 'react-native';
-import { Modal } from '../../components/ui/Modal';
-import { Column, Row, Text } from '../../components/ui';
-import { Theme } from '../../components/ui/styleUtils';
-import { Icon, ListItem } from 'react-native-elements';
+import {Linking, Pressable, TouchableOpacity} from 'react-native';
+import {Modal} from '../../components/ui/Modal';
+import {Column, Row, Text} from '../../components/ui';
+import {Theme} from '../../components/ui/styleUtils';
+import {Icon, ListItem} from 'react-native-elements';
 import getAllConfigurations from '../../shared/commonprops/commonProps';
-import { getVersion } from 'react-native-device-info';
-import { CopyButton } from '../../components/CopyButton';
+import {getVersion} from 'react-native-device-info';
+import {CopyButton} from '../../components/CopyButton';
+import testIDProps from '../../shared/commonUtil';
+import {__InjiVersion, __TuvaliVersion} from '../../shared/GlobalVariables';
 
-export const AboutInji: React.FC<AboutInjiProps> = ({ appId }) => {
-  const { t } = useTranslation('AboutInji');
+export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
+  const {t} = useTranslation('AboutInji');
 
   const [showAboutInji, setShowAboutInji] = useState(false);
   const [aboutInjiUrl, setAboutInjiUrl] = useState('');
 
   useEffect(() => {
-    getAllConfigurations().then((response) => {
+    getAllConfigurations().then(response => {
       setAboutInjiUrl(response.aboutInjiUrl);
     });
   }, []);
-
-  const dependencies = require('../../package-lock.json').dependencies;
-  let packageVersion, packageCommitId;
-
-  Object.keys(dependencies).forEach((dependencyName) => {
-    const dependencyData = dependencies[dependencyName];
-
-    if (dependencyName == 'react-native-tuvali') {
-      packageVersion = dependencyData.from
-        ? dependencyData.from.split('#')[1]
-        : 'unknown';
-      if (packageVersion != 'unknown') {
-        packageCommitId = dependencyData.version.split('#')[1].substring(0, 7);
-      }
-    }
-  });
 
   return (
     <React.Fragment>
@@ -44,13 +30,13 @@ export const AboutInji: React.FC<AboutInjiProps> = ({ appId }) => {
         onPress={() => {
           setShowAboutInji(!showAboutInji);
         }}>
-        <ListItem topDivider bottomDivider>
+        <ListItem testID="aboutInji" topDivider bottomDivider>
           <Icon
             type={'feather'}
             name={'file'}
             color={Theme.Colors.Icon}
             size={25}
-            style={{ marginRight: 15 }}
+            style={{marginRight: 15}}
           />
           <ListItem.Content>
             <ListItem.Title>
@@ -62,14 +48,15 @@ export const AboutInji: React.FC<AboutInjiProps> = ({ appId }) => {
         </ListItem>
       </Pressable>
       <Modal
+        testID="aboutInji"
         isVisible={showAboutInji}
         headerTitle={t('header')}
         headerElevation={2}
-        headerRight={<Icon name={''} />}
+        headerRight={<Icon {...testIDProps('closeAboutInji')} name={''} />}
         onDismiss={() => {
           setShowAboutInji(!showAboutInji);
         }}>
-        <Row style={Theme.Styles.primaryRow}>
+        <Row testID="appID" style={Theme.Styles.primaryRow}>
           <Text style={Theme.TextStyles.semibold}>
             {t('appID')} : {appId}
           </Text>
@@ -77,7 +64,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({ appId }) => {
         </Row>
         <Column fill padding="12" align="space-between">
           <Column>
-            <Text style={Theme.TextStyles.aboutDetailes}>
+            <Text testID="aboutDetails" style={Theme.TextStyles.aboutDetailes}>
               {t('aboutDetailes')}
             </Text>
             <Row crossAlign="center">
@@ -104,16 +91,16 @@ export const AboutInji: React.FC<AboutInjiProps> = ({ appId }) => {
             <Text
               style={Theme.TextStyles.bold}
               color={Theme.Colors.aboutVersion}>
-              {t('version')}: {getVersion()}
+              {t('version')}: {__InjiVersion.getValue()}
             </Text>
-            {packageVersion != 'unknown' && (
+            {__TuvaliVersion.getpackageVersion() != 'unknown' && (
               <Text
                 weight="semibold"
                 margin="32 0 5 0"
                 align="center"
                 size="small"
                 color={Theme.Colors.aboutVersion}>
-                {t('tuvaliVersion')}: {packageVersion + '-' + packageCommitId}
+                {t('tuvaliVersion')}: {__TuvaliVersion.getValue()}
               </Text>
             )}
           </Column>

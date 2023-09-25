@@ -24,7 +24,11 @@
 		"Verifier": "Verificador",
 		"Wallet": "Billetera"
 	},
-	"FaceScanner": {},
+	"FaceScanner": {
+		"imageCaptureGuide": "Sostén el teléfono con firmeza y mantén tu rostro enfocado en el centro.",
+		"capture": "Captura",
+		"flipCamera": "Voltear cámara"
+	  },
 	"OIDcAuth": {
 		"title": "Autenticación OIDC",
 		"text": "Se reemplazará con la interfaz de usuario del proveedor OIDC",
@@ -383,6 +387,8 @@
 		"status": {
 			"connecting": "Conectando...",
 			"connectingTimeout": "Está tomando tiempo establecer la conexión. ¿El otro dispositivo está abierto para conexiones?",
+			"stayOnTheScreen": "Quédate en la pantalla",
+			"retry": "Rever",
 			"exchangingDeviceInfo": "Intercambiando información del dispositivo...",
 			"exchangingDeviceInfoTimeout": "Está tomando tiempo intercambiar la información del dispositivo. Es posible que tengas que reconectar.",
 			"invalid": "Código QR inválido",

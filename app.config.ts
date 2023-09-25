@@ -6,7 +6,7 @@ export default {
   icon: './assets/icon.png',
   splash: {
     image: './assets/splash.png',
-    resizeMode: 'cover',
+    resizeMode: 'contain',
     backgroundColor: '#ffffff',
   },
   updates: {
@@ -14,7 +14,7 @@ export default {
   },
   assetBundlePatterns: ['**/*'],
   ios: {
-    bundleIdentifier: 'io.mosip.residentapp',
+    bundleIdentifier: 'io.mosip.inji.mobileid',
     buildNumber: '1.0.0',
     supportsTablet: true,
   },
@@ -28,4 +28,5 @@ export default {
   },
   platforms: ['android', 'ios'],
   privacy: 'hidden',
+  plugins: ['expo-localization'],
 };

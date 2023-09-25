@@ -1,27 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {
   ErrorMessageOverlay,
   MessageOverlay,
 } from '../../components/MessageOverlay';
-import { QrScanner } from '../../components/QrScanner';
-import { Button, Centered, Column, Text } from '../../components/ui';
-import { Theme } from '../../components/ui/styleUtils';
-import { QrLogin } from '../QrLogin/QrLogin';
-import { useScanScreen } from './ScanScreenController';
+import {QrScanner} from '../../components/QrScanner';
+import {Button, Centered, Column, Text} from '../../components/ui';
+import {Theme} from '../../components/ui/styleUtils';
+import {QrLogin} from '../QrLogin/QrLogin';
+import {useScanScreen} from './ScanScreenController';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
-import { Linking, Platform } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import {Linking, Platform} from 'react-native';
+import {useNavigation, NavigationProp} from '@react-navigation/native';
+import {MainBottomTabParamList} from '../../routes/main';
+import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
 
 export const ScanScreen: React.FC = () => {
-  const { t } = useTranslation('ScanScreen');
+  type ScanScreenNavigation = NavigationProp<MainBottomTabParamList>;
+
+  const {t} = useTranslation('ScanScreen');
   const controller = useScanScreen();
-  const navigation = useNavigation();
+  const navigation = useNavigation<ScanScreenNavigation>();
   const [isBluetoothOn, setIsBluetoothOn] = useState(false);
 
   useEffect(() => {
     (async () => {
-      await BluetoothStateManager.onStateChange((state) => {
+      await BluetoothStateManager.onStateChange(state => {
         if (state === 'PoweredOff') {
           setIsBluetoothOn(false);
         } else {
@@ -53,7 +57,7 @@ export const ScanScreen: React.FC = () => {
     return (
       <Text align="center" color={Theme.Colors.errorMessage} margin="0 10">
         {t(
-          Platform.OS === 'ios' ? 'bluetoothStateIos' : 'bluetoothStateAndroid'
+          Platform.OS === 'ios' ? 'bluetoothStateIos' : 'bluetoothStateAndroid',
         )}
       </Text>
     );
@@ -150,7 +154,7 @@ export const ScanScreen: React.FC = () => {
           }
           translationPath={'ScanScreen'}
           error="errors.storageLimitReached"
-          onDismiss={() => navigation.navigate('Home')}
+          onDismiss={() => navigation.navigate(BOTTOM_TAB_ROUTES.home)}
         />
       )
     );

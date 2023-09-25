@@ -27,7 +27,11 @@
   "PasscodeVerify": {
     "passcodeMismatchError": "கடவுக்குறியீடு பொருந்தவில்லை."
   },
-  "FaceScanner": {},
+  "FaceScanner": {
+    "imageCaptureGuide": "மொபைலை நிலையாகப் பிடித்து, உங்கள் முகத்தை மையமாக வைத்துக்கொள்ளவும்",
+    "capture": "பிடிப்பு",
+    "flipCamera": "ஃபிளிப் கேமரா"
+  },
   "OIDcAuth": {
     "title": "OIDC அங்கீகாரம்",
     "text": "OIDC வழங்குநர் UI உடன் மாற்றப்பட வேண்டும்",
@@ -57,7 +61,7 @@
     "uin": "UIN",
     "vid": "VID",
     "enableVerification": "செயல்படுத்த",
-    "profileAuthenticated": "ஆன்லைன் உள்நுழைவுக்காக செயல்படுத்தப்பட்டது",
+    "profileAuthenticated": "ஆன்லைன் அங்கீகாரத்திற்காக நற்சான்றிதழ்கள் இயக்கப்பட்டுள்ளன.",
     "offlineAuthDisabledHeader": "ஆன்லைன் உள்நுழைவுக்கான செயல்படுத்தல் நிலுவையில் உள்ளது",
     "offlineAuthDisabledMessage": "இந்த நற்சான்றிதழை ஆன்லைன் உள்நுழைவுக்குப் பயன்படுத்த, கீழே உள்ள பொத்தானைக் கிளிக் செய்யவும்.",
     "verificationEnabledSuccess": "ஆன்லைன் உள்நுழைவுக்காக செயல்படுத்தப்பட்டது",
@@ -88,7 +92,7 @@
   },
   "WalletBinding": {
     "inProgress": "செயல்பாட்டில் உள்ளது",
-    "profileAuthenticated": "சுயவிவரம் அங்கீகரிக்கப்பட்டது!"
+    "profileAuthenticated": "சுயவிவரம் அங்கீகரிக்கப்பட்டது"
   },
   "BindingVcWarningOverlay": {
     "alert": "தயவுசெய்து உறுதிப்படுத்தவும்",
@@ -448,6 +452,8 @@
       "establishingConnection": "இணைப்பை நிறுவுதல்",
       "sharingInProgress": "பகிர்தல் செயல்பாட்டில் உள்ளது",
       "connectingTimeout": "இணைப்பை ஏற்படுத்த சிறிது நேரம் ஆகும். மற்ற சாதனம் இணைப்புகளுக்குத் திறந்திருக்கிறதா?",
+      "stayOnTheScreen": "திரையில் இருங்கள்",
+      "retry": "மீண்டும் முயற்சிக்கவும்",
       "exchangingDeviceInfo": "சாதனத் தகவலைப் பரிமாறிக் கொள்கிறது...",
       "exchangingDeviceInfoTimeout": "சாதனத் தகவலைப் பரிமாறிக்கொள்ள சிறிது நேரம் ஆகும். நீங்கள் மீண்டும் இணைக்க வேண்டியிருக்கலாம்.",
       "invalid": "தவறான QR குறியீடு",

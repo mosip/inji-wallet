@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { TFunction, useTranslation } from 'react-i18next';
+import React, {useEffect, useState} from 'react';
+import {TFunction, useTranslation} from 'react-i18next';
 import QRCode from 'react-native-qrcode-svg';
 
-import { Centered, Button, Column, Text } from '../../components/ui';
-import { Theme } from '../../components/ui/styleUtils';
-import { useRequestScreen } from './RequestScreenController';
+import {Centered, Button, Column, Text} from '../../components/ui';
+import {Theme} from '../../components/ui/styleUtils';
+import {useRequestScreen} from './RequestScreenController';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
-import { Platform } from 'react-native';
+import {Platform} from 'react-native';
 import Storage from '../../shared/storage';
-import { ErrorMessageOverlay } from '../../components/MessageOverlay';
+import {ErrorMessageOverlay} from '../../components/MessageOverlay';
 import {
   NavigationProp,
   useFocusEffect,
   useNavigation,
 } from '@react-navigation/native';
-import { MainBottomTabParamList } from '../../routes/main';
+import {MainBottomTabParamList} from '../../routes/main';
+import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
 
 type RequestStackParamList = {
   RequestScreen: undefined;
@@ -26,15 +27,15 @@ type RequestLayoutNavigation = NavigationProp<
 >;
 
 export const RequestScreen: React.FC = () => {
-  const { t } = useTranslation('RequestScreen');
+  const {t} = useTranslation('RequestScreen');
   const controller = useRequestScreen();
-  const props: RequestScreenProps = { t, controller };
+  const props: RequestScreenProps = {t, controller};
   const [isBluetoothOn, setIsBluetoothOn] = useState(false);
   const navigation = useNavigation<RequestLayoutNavigation>();
 
   useEffect(() => {
     (async () => {
-      await BluetoothStateManager.onStateChange((state) => {
+      await BluetoothStateManager.onStateChange(state => {
         if (state === 'PoweredOff') {
           setIsBluetoothOn(false);
         } else {
@@ -56,7 +57,7 @@ export const RequestScreen: React.FC = () => {
           isVisible={controller.isMinimumStorageLimitReached}
           error="errors.storageLimitReached"
           onDismiss={() => {
-            navigation.navigate('Home');
+            navigation.navigate(BOTTOM_TAB_ROUTES.home);
           }}
           translationPath="RequestScreen"
         />
@@ -88,19 +89,19 @@ export const RequestScreen: React.FC = () => {
   }
 };
 
-const BluetoothPrompt: React.FC<RequestScreenProps> = ({ t }) => {
+const BluetoothPrompt: React.FC<RequestScreenProps> = ({t}) => {
   return (
     <Centered fill>
       <Text color={Theme.Colors.errorMessage} align="center" margin="0 10">
         {t(
-          Platform.OS === 'ios' ? 'bluetoothStateIos' : 'bluetoothStateAndroid'
+          Platform.OS === 'ios' ? 'bluetoothStateIos' : 'bluetoothStateAndroid',
         )}
       </Text>
     </Centered>
   );
 };
 
-const NearByPrompt: React.FC<RequestScreenProps> = ({ t, controller }) => {
+const NearByPrompt: React.FC<RequestScreenProps> = ({t, controller}) => {
   return (
     <Column fill align="space-between">
       <Centered fill>
@@ -116,7 +117,7 @@ const NearByPrompt: React.FC<RequestScreenProps> = ({ t, controller }) => {
   );
 };
 
-const SharingQR: React.FC<RequestScreenProps> = ({ t, controller }) => {
+const SharingQR: React.FC<RequestScreenProps> = ({t, controller}) => {
   return (
     <React.Fragment>
       <Text align="center">{t('showQrCode')}</Text>
@@ -134,7 +135,7 @@ const SharingQR: React.FC<RequestScreenProps> = ({ t, controller }) => {
   );
 };
 
-const StatusMessage: React.FC<RequestScreenProps> = ({ t, controller }) => {
+const StatusMessage: React.FC<RequestScreenProps> = ({t, controller}) => {
   return (
     controller.statusMessage !== '' && (
       <Column elevation={1} padding="16 24">
@@ -147,7 +148,7 @@ const StatusMessage: React.FC<RequestScreenProps> = ({ t, controller }) => {
         {controller.isStatusCancellable && (
           <Button
             margin={[8, 0, 0, 0]}
-            title={t('cancel', { ns: 'common' })}
+            title={t('cancel', {ns: 'common'})}
             loading={controller.isCancelling}
             onPress={controller.CANCEL}
           />

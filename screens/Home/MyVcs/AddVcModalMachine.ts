@@ -1,4 +1,4 @@
-import { TextInput } from 'react-native';
+import {TextInput} from 'react-native';
 import {
   assign,
   DoneInvokeEvent,
@@ -7,16 +7,11 @@ import {
   sendParent,
   StateFrom,
 } from 'xstate';
-import { createModel } from 'xstate/lib/model';
-import { BackendResponseError, request } from '../../../shared/request';
-import {
-  argon2iConfigForUinVid,
-  argon2iSalt,
-  VC_ITEM_STORE_KEY,
-} from '../../../shared/constants';
-import { VcIdType } from '../../../types/vc';
+import {createModel} from 'xstate/lib/model';
+import {BackendResponseError, request} from '../../../shared/request';
+import {VcIdType} from '../../../types/vc';
 import i18n from '../../../i18n';
-import { hashData } from '../../../shared/commonUtil';
+import {VCMetadata} from '../../../shared/VCMetadata';
 
 const model = createModel(
   {
@@ -33,15 +28,15 @@ const model = createModel(
   },
   {
     events: {
-      INPUT_ID: (id: string) => ({ id }),
-      INPUT_OTP: (otp: string) => ({ otp }),
+      INPUT_ID: (id: string) => ({id}),
+      INPUT_OTP: (otp: string) => ({otp}),
       RESEND_OTP: () => ({}),
       VALIDATE_INPUT: () => ({}),
-      READY: (idInputRef: TextInput) => ({ idInputRef }),
+      READY: (idInputRef: TextInput) => ({idInputRef}),
       DISMISS: () => ({}),
-      SELECT_ID_TYPE: (idType: VcIdType) => ({ idType }),
+      SELECT_ID_TYPE: (idType: VcIdType) => ({idType}),
     },
-  }
+  },
 );
 
 export const AddVcModalEvents = model.events;
@@ -239,7 +234,7 @@ export const AddVcModalMachine =
         },
         done: {
           type: 'final',
-          data: (context) => VC_ITEM_STORE_KEY(context),
+          data: context => new VCMetadata(context),
         },
       },
     },
@@ -294,22 +289,17 @@ export const AddVcModalMachine =
           },
         }),
 
-        clearId: model.assign({ id: '' }),
+        clearId: model.assign({id: ''}),
 
-        setHashedId: model.assign({
-          hashedId: (_context, event) =>
-            (event as DoneInvokeEvent<string>).data,
-        }),
-
-        clearIdError: model.assign({ idError: '' }),
+        clearIdError: model.assign({idError: ''}),
 
         setIdErrorEmpty: model.assign({
-          idError: () => i18n.t('errors.input.empty', { ns: 'AddVcModal' }),
+          idError: () => i18n.t('errors.input.empty', {ns: 'AddVcModal'}),
         }),
 
         setIdErrorWrongFormat: model.assign({
           idError: () =>
-            i18n.t('errors.input.invalidFormat', { ns: 'AddVcModal' }),
+            i18n.t('errors.input.invalidFormat', {ns: 'AddVcModal'}),
         }),
 
         setOtpError: assign({
@@ -335,13 +325,13 @@ export const AddVcModalMachine =
           idInputRef: null,
         }),
 
-        clearOtp: assign({ otp: '' }),
+        clearOtp: assign({otp: ''}),
 
-        focusInput: (context) => context.idInputRef.focus(),
+        focusInput: context => context.idInputRef.focus(),
       },
 
       services: {
-        requestOtp: async (context) => {
+        requestOtp: async context => {
           return request('POST', '/residentmobileapp/req/otp', {
             id: 'mosip.identity.otp.internal',
             individualId: context.id,
@@ -353,9 +343,9 @@ export const AddVcModalMachine =
           });
         },
 
-        requestCredential: async (context) => {
+        requestCredential: async context => {
           // force wait to fix issue with hanging overlay
-          await new Promise((resolve) => setTimeout(resolve, 1000));
+          await new Promise(resolve => setTimeout(resolve, 1000));
 
           const response = await request(
             'POST',
@@ -365,17 +355,17 @@ export const AddVcModalMachine =
               individualIdType: context.idType,
               otp: context.otp,
               transactionID: context.transactionId,
-            }
+            },
           );
           return response.response.requestId;
         },
 
-        calculateHashedId: async (context) => {
+        calculateHashedId: async context => {
           const value = context.id;
           const hashedid = await hashData(
             value,
             argon2iSalt,
-            argon2iConfigForUinVid
+            argon2iConfigForUinVid,
           );
           context.hashedId = hashedid;
           return hashedid;
@@ -383,9 +373,9 @@ export const AddVcModalMachine =
       },
 
       guards: {
-        isEmptyId: ({ id }) => !id || !id.length,
+        isEmptyId: ({id}) => !id || !id.length,
 
-        isWrongIdFormat: ({ idType, id }) => {
+        isWrongIdFormat: ({idType, id}) => {
           const validIdType =
             idType === 'UIN' ? id.length === 10 : id.length === 16;
           return !(/^\d{10,16}$/.test(id) && validIdType);
@@ -393,10 +383,10 @@ export const AddVcModalMachine =
 
         isIdInvalid: (_context, event: unknown) =>
           ['IDA-MLC-009', 'RES-SER-29', 'IDA-MLC-018'].includes(
-            (event as BackendResponseError).name
+            (event as BackendResponseError).name,
           ),
       },
-    }
+    },
   );
 
 type State = StateFrom<typeof AddVcModalMachine>;
