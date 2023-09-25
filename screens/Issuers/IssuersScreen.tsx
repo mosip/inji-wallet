@@ -10,7 +10,7 @@ import {RootRouteProps} from '../../routes';
 import {HomeRouteProps} from '../../routes/main';
 import {useIssuerScreenController} from './IssuerScreenController';
 import {Loader} from '../../components/ui/Loader';
-import testIDProps from '../../shared/commonUtil';
+import testIDProps, {removeWhiteSpace} from '../../shared/commonUtil';
 
 export const IssuersScreen: React.FC<
   HomeRouteProps | RootRouteProps
@@ -109,7 +109,7 @@ export const IssuersScreen: React.FC<
                 scrollEnabled={false}
                 renderItem={({item}) => (
                   <Issuer
-                    testID={`issuer-${item.id}`}
+                    testID={removeWhiteSpace(item.id)}
                     key={item.id}
                     id={item.id}
                     displayName={item.displayName}

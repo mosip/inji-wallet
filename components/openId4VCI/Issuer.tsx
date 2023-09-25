@@ -15,8 +15,7 @@ export const Issuer: React.FC<IssuerProps> = (props: IssuerProps) => {
 
   return (
     <Pressable
-      accessible={false}
-      {...testIDProps(props.testID)}
+      {...testIDProps(`issuer-${props.testID}`)}
       onPress={props.onPress}
       style={({pressed}) =>
         pressed
@@ -30,20 +29,17 @@ export const Issuer: React.FC<IssuerProps> = (props: IssuerProps) => {
             ]
       }>
       <Image
-        accessible={true}
-        {...testIDProps('issuerIcon')}
+        {...testIDProps(`issuerIcon-${props.testID}`)}
         style={Theme.issuersScreenStyles.issuerIcon}
         source={getLogoImageSource()}
       />
       <Text
-        accessible={false}
-        testID="heading"
+        testID={`issuerHeading-${props.testID}`}
         style={Theme.issuersScreenStyles.issuerHeading}>
         {t('itemHeading', {issuer: props.displayName})}
       </Text>
       <Text
-        accessible={false}
-        testID="description"
+        testID={`issuerDescription-${props.testID}`}
         style={Theme.issuersScreenStyles.issuerDescription}>
         {t('itemSubHeading')}
       </Text>
