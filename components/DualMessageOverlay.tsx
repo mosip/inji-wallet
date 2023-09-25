@@ -1,10 +1,10 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Dimensions, View } from 'react-native';
-import { Overlay } from 'react-native-elements';
-import { Column, Row, Text } from './ui';
-import { Button } from './ui/Button';
-import { Theme } from './ui/styleUtils';
+import {useTranslation} from 'react-i18next';
+import {Dimensions, StyleSheet} from 'react-native';
+import {Overlay} from 'react-native-elements';
+import {Column, Row, Text} from './ui';
+import {Button} from './ui/Button';
+import {Theme} from './ui/styleUtils';
 
 /**
  * DualMessageOverlay is like MessageOverlay but with two buttons
@@ -12,10 +12,18 @@ import { Theme } from './ui/styleUtils';
  * NOTE: This has been added for surfacing bugs and needs to be refactored
  * before use.
  */
-export const DualMessageOverlay: React.FC<DualMessageOverlayProps> = (
-  props
-) => {
-  const { t } = useTranslation('common');
+export const DualMessageOverlay: React.FC<DualMessageOverlayProps> = props => {
+  const {t} = useTranslation('common');
+  const style = StyleSheet.create({
+    customHeight: {
+      height: props.customHeight
+        ? props.customHeight
+        : props.progress
+        ? 100
+        : 150,
+    },
+  });
+
   return (
     <Overlay
       isVisible={props.isVisible}
@@ -24,11 +32,7 @@ export const DualMessageOverlay: React.FC<DualMessageOverlayProps> = (
       onBackdropPress={props.onBackdropPress}>
       <Column
         width={Dimensions.get('screen').width * 0.8}
-        style={
-          !props.progress
-            ? Theme.MessageOverlayStyles.popupOverLay
-            : { height: 230 }
-        }>
+        style={[Theme.MessageOverlayStyles.popupOverLay, style.customHeight]}>
         <Column padding="21" crossAlign="center">
           {props.title && (
             <Text
@@ -59,7 +63,7 @@ export const DualMessageOverlay: React.FC<DualMessageOverlayProps> = (
           )}
           {props.children}
         </Column>
-        <Column style={{ marginBottom: 10 }}>
+        <Column style={{marginBottom: 10}}>
           <Row style={Theme.MessageOverlayStyles.buttonContainer}>
             {!props.children && props.onTryAgain ? (
               <Button
@@ -103,4 +107,5 @@ export interface DualMessageOverlayProps {
   onBackdropPress?: () => void;
   onShow?: () => void;
   onTryAgain?: () => void;
+  customHeight?: number | string | undefined;
 }

@@ -97,7 +97,9 @@ export function useScanLayout() {
     | 'title'
     | 'message'
     | 'hint'
-    | 'onCancel'
+    | 'onButtonPress'
+    | 'customHeight'
+    | 'buttonText'
     | 'onStayInProgress'
     | 'onRetry'
     | 'progress'
@@ -113,7 +115,7 @@ export function useScanLayout() {
     statusOverlay = {
       title: t('status.connectionInProgress'),
       hint: t('status.connectingTimeout'),
-      onCancel,
+      onButtonPress: onCancel,
       onStayInProgress,
       onRetry,
       progress: true,
@@ -127,7 +129,7 @@ export function useScanLayout() {
     statusOverlay = {
       message: t('status.exchangingDeviceInfo'),
       hint: t('status.exchangingDeviceInfoTimeout'),
-      onCancel: CANCEL,
+      onButtonPress: CANCEL,
       progress: true,
     };
   } else if (isSent) {
@@ -135,7 +137,7 @@ export function useScanLayout() {
       message: t('status.sent'),
       hint: t('status.sentHint'),
       progress: false,
-      onCancel: CANCEL,
+      onButtonPress: CANCEL,
     };
   } else if (isSendingVc) {
     statusOverlay = {
@@ -147,7 +149,7 @@ export function useScanLayout() {
     statusOverlay = {
       title: t('status.sharing.title'),
       hint: t('status.sharing.timeoutHint'),
-      onCancel: CANCEL,
+      onButtonPress: CANCEL,
       onStayInProgress,
       onRetry,
       progress: true,
@@ -156,7 +158,7 @@ export function useScanLayout() {
     statusOverlay = {
       title: t('status.accepted.title'),
       message: t('status.accepted.message'),
-      onCancel: DISMISS,
+      onButtonPress: DISMISS,
     };
   } else if (isRejected) {
     statusOverlay = {
@@ -178,7 +180,7 @@ export function useScanLayout() {
     statusOverlay = {
       title: t('status.bleError.title'),
       hint: t('status.bleError.message'),
-      onCancel: DISMISS,
+      onButtonPress: DISMISS,
       onRetry,
       progress: true,
     };
