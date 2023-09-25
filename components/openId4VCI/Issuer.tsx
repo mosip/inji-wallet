@@ -29,26 +29,24 @@ export const Issuer: React.FC<IssuerProps> = (props: IssuerProps) => {
               Theme.Styles.boxShadow,
             ]
       }>
-      <Pressable accessible={false} {...testIDProps(props.testID)}>
-        <Image
-          accessible={true}
-          {...testIDProps('issuerIcon')}
-          style={Theme.issuersScreenStyles.issuerIcon}
-          source={getLogoImageSource()}
-        />
-        <Text
-          accessible={false}
-          testID="heading"
-          style={Theme.issuersScreenStyles.issuerHeading}>
-          {t('itemHeading', {issuer: props.displayName})}
-        </Text>
-        <Text
-          accessible={false}
-          testID="description"
-          style={Theme.issuersScreenStyles.issuerDescription}>
-          {t('itemSubHeading')}
-        </Text>
-      </Pressable>
+      <Image
+        accessible={true}
+        {...testIDProps('issuerIcon')}
+        style={Theme.issuersScreenStyles.issuerIcon}
+        source={getLogoImageSource()}
+      />
+      <Text
+        accessible={false}
+        testID="heading"
+        style={Theme.issuersScreenStyles.issuerHeading}>
+        {t('itemHeading', {issuer: props.displayName})}
+      </Text>
+      <Text
+        accessible={false}
+        testID="description"
+        style={Theme.issuersScreenStyles.issuerDescription}>
+        {t('itemSubHeading')}
+      </Text>
     </Pressable>
   );
 };
