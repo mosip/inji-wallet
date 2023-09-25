@@ -156,8 +156,8 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         isVisible={controller.showHardwareKeystoreNotExistsAlert}
         title={t('errors.keystoreNotExists.title')}
         message={t('errors.keystoreNotExists.message')}
-        onCustomAction={controller.ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS}
-        onCustomBtnTxt={t('errors.keystoreNotExists.riskOkayText')}
+        onButtonPress={controller.ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS}
+        customBtnTxt={t('errors.keystoreNotExists.riskOkayText')}
         customHeight={'auto'}>
         <Row>
           <Button
@@ -178,7 +178,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
       <MessageOverlay
         isVisible={controller.isBindingError}
         title={controller.walletBindingError}
-        onCancel={controller.DISMISS}
+        onButtonPress={controller.DISMISS}
       />
       <ErrorMessageOverlay
         translationPath={'MyVcsTab'}
@@ -190,8 +190,8 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         isVisible={controller.isTampered}
         title={t('errors.vcIsTampered.title')}
         message={t('errors.vcIsTampered.message')}
-        onCustomAction={controller.IS_TAMPERED}
-        onCustomBtnTxt={t('common:ok')}
+        onButtonPress={controller.IS_TAMPERED}
+        customBtnTxt={t('common:ok')}
         customHeight={'auto'}
       />
     </React.Fragment>

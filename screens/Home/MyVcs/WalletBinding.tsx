@@ -68,7 +68,7 @@ export const WalletBinding: React.FC<WalletBindingProps> = props => {
       <MessageOverlay
         isVisible={controller.isWalletBindingError}
         title={controller.walletBindingError}
-        onCancel={controller.CANCEL}
+        onButtonPress={controller.CANCEL}
       />
       <MessageOverlay
         isVisible={controller.WalletBindingInProgress}
