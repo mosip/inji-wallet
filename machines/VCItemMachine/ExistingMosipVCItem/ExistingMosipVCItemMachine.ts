@@ -153,6 +153,7 @@ export const ExistingMosipVCItemMachine =
                 target: 'checkingVerificationStatus',
               },
               {
+                actions: 'addVcToInProgressDownloads',
                 target: 'checkingServerData',
               },
             ],
@@ -214,6 +215,7 @@ export const ExistingMosipVCItemMachine =
                     'setVerifiableCredential',
                     'updateVc',
                     'logDownloaded',
+                    'removeVcFromInProgressDownloads',
                   ],
                   target: '#vc-item.checkingVerificationStatus',
                 },
@@ -869,6 +871,30 @@ export const ExistingMosipVCItemMachine =
           context => {
             const {serviceRefs, ...vc} = context;
             return {type: 'VC_DOWNLOADED', vc};
+          },
+          {
+            to: context => context.serviceRefs.vc,
+          },
+        ),
+
+        removeVcFromInProgressDownloads: send(
+          (_context, event) => {
+            return {
+              type: 'REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS',
+              requestId: event.response.requestId,
+            };
+          },
+          {
+            to: context => context.serviceRefs.vc,
+          },
+        ),
+
+        addVcToInProgressDownloads: send(
+          context => {
+            return {
+              type: 'ADD_VC_TO_IN_PROGRESS_DOWNLOADS',
+              requestId: context.requestId,
+            };
           },
           {
             to: context => context.serviceRefs.vc,
