@@ -17,7 +17,7 @@ import {log} from 'xstate/lib/actions';
 import {verifyCredential} from '../shared/vcjs/verifyCredential';
 import {getBody, getIdentifier} from '../shared/openId4VCI/Utils';
 import {VCMetadata} from '../shared/VCMetadata';
-import {VerifiableCredential} from '../components/VC/EsignetMosipVCItem/vc';
+import {VerifiableCredential} from '../types/VC/EsignetMosipVC/vc';
 
 const model = createModel(
   {

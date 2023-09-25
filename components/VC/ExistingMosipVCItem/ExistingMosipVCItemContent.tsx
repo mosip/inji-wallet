@@ -2,7 +2,7 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Image, ImageBackground, View} from 'react-native';
 import {getLocalizedField} from '../../../i18n';
-import {VerifiableCredential} from '../../../types/vc';
+import {VerifiableCredential} from '../../../types/VC/ExistingMosipVC/vc';
 import {VcItemTags} from '../../VcItemTags';
 import VerifiedIcon from '../../VerifiedIcon';
 import {Column, Row, Text} from '../../ui';

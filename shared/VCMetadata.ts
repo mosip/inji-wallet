@@ -1,4 +1,4 @@
-import {VC, VcIdType} from '../types/vc';
+import {VC, VcIdType} from '../types/VC/ExistingMosipVC/vc';
 
 const VC_KEY_PREFIX = 'VC';
 const VC_ITEM_STORE_KEY_REGEX = '^VC_[a-z0-9-]+$';

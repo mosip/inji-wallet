@@ -4,7 +4,7 @@ import * as DateFnsLocale from 'date-fns/locale';
 import {useTranslation} from 'react-i18next';
 import {Image, ImageBackground, View} from 'react-native';
 import {Icon} from 'react-native-elements';
-import {VC, CredentialSubject} from '../../../types/vc';
+import {VC, CredentialSubject} from '../../../types/VC/ExistingMosipVC/vc';
 import {Button, Column, Row, Text} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import {TextItem} from '../../ui/TextItem';

@@ -18,7 +18,7 @@ import {
   VCSharingReason,
   VerifiableCredential,
   VerifiablePresentation,
-} from './vc';
+} from '../../../types/VC/EsignetMosipVC/vc';
 
 export const EsignetMosipVCItemDetails: React.FC<
   EsignetMosipVCItemDetailsProps

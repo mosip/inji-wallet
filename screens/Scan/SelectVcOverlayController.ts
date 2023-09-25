@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {ActorRefFrom} from 'xstate';
 import {ExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
-import {VC} from '../../types/vc';
+import {VC} from '../../types/VC/ExistingMosipVC/vc';
 import {VCMetadata} from '../../shared/VCMetadata';
 
 export function useSelectVcOverlay(props: SelectVcOverlayProps) {

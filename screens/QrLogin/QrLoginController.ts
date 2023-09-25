@@ -27,7 +27,7 @@ import {
 import {selectBindedVcsMetadata} from '../../machines/vc';
 import {ExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {GlobalContext} from '../../shared/GlobalContext';
-import {VC} from '../../types/vc';
+import {VC} from '../../types/VC/ExistingMosipVC/vc';
 import {QrLoginProps} from './QrLogin';
 
 export function useQrLogin({service}: QrLoginProps) {

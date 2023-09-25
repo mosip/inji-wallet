@@ -2,7 +2,7 @@ import {assign, ErrorPlatformEvent, EventFrom, send, StateFrom} from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../../../shared/GlobalContext';
 import {VCMetadata} from '../../../shared/VCMetadata';
-import {VC} from '../../../types/vc';
+import {VC} from '../../../types/VC/ExistingMosipVC/vc';
 import {
   generateKeys,
   isCustomSecureKeystore,
