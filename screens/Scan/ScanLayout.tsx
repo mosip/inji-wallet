@@ -51,7 +51,7 @@ export const ScanLayout: React.FC = () => {
         requester={controller.statusOverlay?.requester}
       />
 
-      <SharingSuccessModal isVisible={controller.isDone} />
+      <SharingSuccessModal isVisible={controller.isAccepted} />
 
       <ProgressingModal
         isVisible={controller.isDisconnected}
