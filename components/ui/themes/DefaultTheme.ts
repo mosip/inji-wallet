@@ -891,7 +891,6 @@ export const DefaultTheme = {
       marginBottom: 75,
     },
     popupOverLay: {
-      height: 150,
       backgroundColor: Colors.White,
     },
     button: {

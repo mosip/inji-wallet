@@ -21,6 +21,8 @@ export interface Typegen0 {
     forwardToServices: 'ACTIVE' | 'INACTIVE' | 'OFFLINE' | 'ONLINE';
     loadCredentialRegistryHostFromStorage: 'READY';
     loadCredentialRegistryInConstants: 'STORE_RESPONSE';
+    loadEsignetHostFromConstants: 'STORE_RESPONSE';
+    loadEsignetHostFromStorage: 'READY';
     logServiceEvents: 'READY';
     logStoreEvents:
       | 'KEY_INVALIDATE_ERROR'
