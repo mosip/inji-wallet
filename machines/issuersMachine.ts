@@ -394,7 +394,6 @@ export const IssuersMachine = model.createMachine(
         const defaultIssuer = {
           id: 'UIN, VID, AID',
           displayName: 'UIN, VID, AID',
-          logoUrl: Theme.DigitIcon,
         };
 
         const response = await request('GET', '/residentmobileapp/issuers');
