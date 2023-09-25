@@ -42,7 +42,7 @@ export const ScanLayout: React.FC = () => {
         title={controller.statusOverlay?.title}
         hint={controller.statusOverlay?.hint}
         label={controller.statusOverlay?.message}
-        onCancel={controller.statusOverlay?.onCancel}
+        onCancel={controller.statusOverlay?.onButtonPress}
         onStayInProgress={controller.statusOverlay?.onStayInProgress}
         isHintVisible={controller.isStayInProgress}
         onRetry={controller.statusOverlay?.onRetry}
