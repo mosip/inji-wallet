@@ -403,7 +403,7 @@ export const IssuersMachine = model.createMachine(
       downloadCredential: async context => {
         const body = await getBody(context);
         const response = await fetch(
-          'https://api-internal.dev1.mosip.net/v1/esignet/vci/credential',
+          context.selectedIssuer.serviceConfiguration.credentialEndpoint,
           {
             method: 'POST',
             headers: {

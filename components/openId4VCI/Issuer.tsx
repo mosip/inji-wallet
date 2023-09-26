@@ -3,7 +3,7 @@ import {Image, Pressable} from 'react-native';
 import {Theme} from '../ui/styleUtils';
 import {useTranslation} from 'react-i18next';
 import testIDProps from '../../shared/commonUtil';
-import {Text} from '../ui/Text';
+import {Text} from '../ui';
 
 export const Issuer: React.FC<IssuerProps> = (props: IssuerProps) => {
   const {t} = useTranslation('IssuersScreen');

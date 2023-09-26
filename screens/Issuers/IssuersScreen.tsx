@@ -4,7 +4,7 @@ import {FlatList, Image, Text, View} from 'react-native';
 import {Issuer} from '../../components/openId4VCI/Issuer';
 import {Error} from '../../components/ui/Error';
 import {Header} from '../../components/ui/Header';
-import {Column} from '../../components/ui/Layout';
+import {Column} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {RootRouteProps} from '../../routes';
 import {HomeRouteProps} from '../../routes/main';

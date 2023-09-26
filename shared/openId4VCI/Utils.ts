@@ -74,7 +74,7 @@ export const getJWT = async context => {
       JSON.stringify({
         iss: context.selectedIssuer.clientId,
         nonce: decodedToken.c_nonce,
-        aud: 'https://esignet.dev1.mosip.net/v1/esignet',
+        aud: context.selectedIssuer.serviceConfiguration.credentialAudience,
         iat: Math.floor(new Date().getTime() / 1000),
         exp: Math.floor(new Date().getTime() / 1000) + 18000,
       }),
