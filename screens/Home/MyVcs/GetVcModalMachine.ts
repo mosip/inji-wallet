@@ -1,4 +1,4 @@
-import {TextInput} from 'react-native';
+import { TextInput } from 'react-native';
 import {
   assign,
   ErrorPlatformEvent,
@@ -7,11 +7,11 @@ import {
   sendParent,
   StateFrom,
 } from 'xstate';
-import {createModel} from 'xstate/lib/model';
-import {BackendResponseError, request} from '../../../shared/request';
+import { createModel } from 'xstate/lib/model';
+import { BackendResponseError, request } from '../../../shared/request';
 import i18n from '../../../i18n';
-import {AddVcModalMachine} from './AddVcModalMachine';
-import {GET_INDIVIDUAL_ID, IndividualId} from '../../../shared/constants';
+import { AddVcModalMachine } from './AddVcModalMachine';
+import { GET_INDIVIDUAL_ID, IndividualId } from '../../../shared/constants';
 
 const model = createModel(
   {
@@ -26,14 +26,14 @@ const model = createModel(
   },
   {
     events: {
-      INPUT_ID: (id: string) => ({id}),
-      INPUT_OTP: (otp: string) => ({otp}),
+      INPUT_ID: (id: string) => ({ id }),
+      INPUT_OTP: (otp: string) => ({ otp }),
       VALIDATE_INPUT: () => ({}),
       ACTIVATE_ICON_COLOR: () => ({}),
       DEACTIVATE_ICON_COLOR: () => ({}),
-      READY: (idInputRef: TextInput) => ({idInputRef}),
+      READY: (idInputRef: TextInput) => ({ idInputRef }),
       DISMISS: () => ({}),
-      GOT_ID: (id: string) => ({id}),
+      GOT_ID: (id: string) => ({ id }),
     },
   },
 );
@@ -229,7 +229,7 @@ export const GetVcModalMachine =
         setIdBackendError: assign({
           idError: (context, event) => {
             if ((event as ErrorPlatformEvent).data == 'IDA-MLC-001') {
-              return i18n.t('errors.backend.timeOut', {ns: 'GetVcModal'});
+              return i18n.t('errors.backend.timeOut', { ns: 'GetVcModal' });
             }
 
             const message = (event as ErrorPlatformEvent).data.message;
@@ -247,15 +247,15 @@ export const GetVcModalMachine =
           },
         }),
 
-        clearIdError: model.assign({idError: ''}),
+        clearIdError: model.assign({ idError: '' }),
 
         setIdErrorEmpty: model.assign({
-          idError: () => i18n.t('errors.input.empty', {ns: 'GetVcModal'}),
+          idError: () => i18n.t('errors.input.empty', { ns: 'GetVcModal' }),
         }),
 
         setIdErrorWrongFormat: model.assign({
           idError: () =>
-            i18n.t('errors.input.invalidFormat', {ns: 'GetVcModal'}),
+            i18n.t('errors.input.invalidFormat', { ns: 'GetVcModal' }),
         }),
 
         setOtpError: assign({
@@ -283,17 +283,17 @@ export const GetVcModalMachine =
           },
         }),
 
-        clearOtp: assign({otp: ''}),
+        clearOtp: assign({ otp: '' }),
 
-        setIconColorActivate: assign({iconColor: true}),
+        setIconColorActivate: assign({ iconColor: true }),
 
-        setIconColorDeactivate: assign({iconColor: false}),
+        setIconColorDeactivate: assign({ iconColor: false }),
 
-        focusInput: context => context.idInputRef.focus(),
+        focusInput: (context) => context.idInputRef.focus(),
       },
 
       services: {
-        requestOtp: async context => {
+        requestOtp: async (context) => {
           return await request(
             'POST',
             '/residentmobileapp/req/individualId/otp',
@@ -309,7 +309,7 @@ export const GetVcModalMachine =
           );
         },
 
-        requestingUinVid: async context => {
+        requestingUinVid: async (context) => {
           const response = await request(
             'POST',
             '/residentmobileapp/aid/get-individual-id',
@@ -317,7 +317,7 @@ export const GetVcModalMachine =
               aid: context.id,
               otp: context.otp,
               transactionID: context.transactionId,
-            },
+            }
           );
           return {
             id: response.response.individualId,
@@ -327,16 +327,16 @@ export const GetVcModalMachine =
       },
 
       guards: {
-        isEmptyId: ({id}) => !id || !id.length,
+        isEmptyId: ({ id }) => !id || !id.length,
 
-        isWrongIdFormat: ({id}) => !/^\d{14,29}$/.test(id),
+        isWrongIdFormat: ({ id }) => !/^\d{14,29}$/.test(id),
 
         isIdInvalid: (_context, event: unknown) =>
           ['RES-SER-449', 'IDA-MLC-001'].includes(
-            (event as BackendResponseError).name,
+            (event as BackendResponseError).name
           ),
       },
-    },
+    }
   );
 
 type State = StateFrom<typeof GetVcModalMachine>;
