@@ -268,6 +268,7 @@ export const ExistingMosipVCItemMachine =
             },
             DISMISS: {
               target: 'checkingVc',
+              actions: 'resetWalletBindingSuccess',
             },
           },
         },
@@ -836,6 +837,10 @@ export const ExistingMosipVCItemMachine =
 
         setWalletBindingSuccess: assign({
           walletBindingSuccess: true,
+        }),
+
+        resetWalletBindingSuccess: assign({
+          walletBindingSuccess: false,
         }),
 
         sendWalletBindingSuccess: send(
