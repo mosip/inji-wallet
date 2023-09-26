@@ -89,6 +89,7 @@ export const EsignetMosipVCItemContent: React.FC<
   EsignetMosipVCItemContentProps
 > = props => {
   //Assigning the UIN and VID from the VC details to display the idtype label
+  const uin = props.credential?.credential?.credentialSubject.UIN;
   const vid = props.credential?.credential?.credentialSubject.VID;
   const fullName = !props.credential?.credential
     ? ''
@@ -200,24 +201,45 @@ export const EsignetMosipVCItemContent: React.FC<
             !props.credential?.credential ? Theme.Styles.loadingContainer : null
           }>
           <Column>
-            <Column margin="0 0 9 0">
-              <Text
-                testID="vid"
-                weight="regular"
-                size="smaller"
-                color={Theme.Colors.DetailsLabel}>
-                {t('vid')}
-              </Text>
-              <Text
-                testID="vidNumber"
-                weight="semibold"
-                size="extraSmall"
-                color={Theme.Colors.Details}>
-                {getIdNumber(vid)}
-              </Text>
-            </Column>
+            {uin ? (
+              <Column margin="0 0 9 0">
+                <Text
+                  testID="uin"
+                  weight="regular"
+                  size="smaller"
+                  color={Theme.Colors.DetailsLabel}>
+                  {t('uin')}
+                </Text>
+                <Text
+                  testID="uinNumber"
+                  weight="semibold"
+                  size="extraSmall"
+                  color={Theme.Colors.statusLabel}>
+                  {getIdNumber(uin)}
+                </Text>
+              </Column>
+            ) : null}
+
+            {vid ? (
+              <Column margin="0 0 9 0">
+                <Text
+                  testID="vid"
+                  weight="regular"
+                  size="smaller"
+                  color={Theme.Colors.DetailsLabel}>
+                  {t('vid')}
+                </Text>
+                <Text
+                  testID="vidNumber"
+                  weight="semibold"
+                  size="extraSmall"
+                  color={Theme.Colors.Details}>
+                  {getIdNumber(vid)}
+                </Text>
+              </Column>
+            ) : null}
             {!props.credential?.credential
-              ? getDetails(t('id'), vid, props.credential?.credential)
+              ? getDetails(t('id'), uin | vid, props.credential?.credential)
               : null}
           </Column>
         </Row>

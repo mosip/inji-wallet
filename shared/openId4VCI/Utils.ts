@@ -4,10 +4,10 @@ import jose from 'node-jose';
 import {isIOS} from '../constants';
 import pem2jwk from 'simple-pem2jwk';
 import {Issuers_Key_Ref} from '../../machines/issuersMachine';
+import {ENABLE_OPENID_FOR_VC} from 'react-native-dotenv';
 
 export const isOpenId4VCIEnabled = () => {
-  // return ENABLE_OPENID_FOR_VC === 'true';
-  return true;
+  return ENABLE_OPENID_FOR_VC === 'true';
 };
 
 export const getIdentifier = (context, credential) => {
@@ -85,7 +85,6 @@ export const getJWT = async context => {
       preHash,
       Issuers_Key_Ref,
     );
-    console.log('Signature is fetched 3');
     return header64 + '.' + payload64 + '.' + signature64;
   } catch (e) {
     console.log(e);

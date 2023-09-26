@@ -25,6 +25,7 @@ export const EsignetMosipVCItemDetails: React.FC<
 > = props => {
   const {t, i18n} = useTranslation('VcDetails');
 
+  const uin = props.vc?.verifiableCredential.credential.credentialSubject.UIN;
   const vid = props.vc?.verifiableCredential.credential.credentialSubject.VID;
   if (props.vc?.verifiableCredential == null) {
     return <Text align="center">Loading details...</Text>;
@@ -120,6 +121,25 @@ export const EsignetMosipVCItemDetails: React.FC<
                     {t('nationalCard')}
                   </Text>
                 </Column>
+                {uin ? (
+                  <Column margin="25 0 0 0">
+                    <Text
+                      testID="uin"
+                      weight="regular"
+                      size="smaller"
+                      color={Theme.Colors.DetailsLabel}>
+                      {t('uin')}
+                    </Text>
+                    <Text
+                      testID="uinNumber"
+                      weight="semibold"
+                      size="smaller"
+                      color={Theme.Colors.Details}>
+                      {uin}
+                    </Text>
+                  </Column>
+                ) : null}
+
                 {vid ? (
                   <Column margin="25 0 0 0">
                     <Text

@@ -683,8 +683,10 @@ export const EsignetMosipVCItemMachine = model.createMachine(
             request: {
               authFactorType: 'WLA',
               format: 'jwt',
-              individualId:
-                context.verifiableCredential.credential.credentialSubject.VID,
+              individualId: context.verifiableCredential.credential
+                .credentialSubject.VID
+                ? context.verifiableCredential.credential.credentialSubject.VID
+                : context.verifiableCredential.credential.credentialSubject.UIN,
               transactionId: context.transactionId,
               publicKey: context.publicKey,
               challengeList: [
@@ -729,8 +731,10 @@ export const EsignetMosipVCItemMachine = model.createMachine(
           {
             requestTime: String(new Date().toISOString()),
             request: {
-              individualId:
-                context.verifiableCredential.credential.credentialSubject.VID,
+              individualId: context.verifiableCredential.credential
+                .credentialSubject.VID
+                ? context.verifiableCredential.credential.credentialSubject.VID
+                : context.verifiableCredential.credential.credentialSubject.UIN,
               otpChannels: ['EMAIL', 'PHONE'],
             },
           },
