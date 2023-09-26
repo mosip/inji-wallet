@@ -69,6 +69,7 @@ const model = createModel(
     downloadInterval: 5000,
     walletBindingResponse: null as WalletBindingResponse,
     walletBindingError: '',
+    walletBindingSuccess: false,
     publicKey: '',
     privateKey: '',
   },
@@ -267,6 +268,7 @@ export const ExistingMosipVCItemMachine =
             },
             DISMISS: {
               target: 'checkingVc',
+              actions: 'resetWalletBindingSuccess',
             },
           },
         },
@@ -414,6 +416,7 @@ export const ExistingMosipVCItemMachine =
                     'updatePrivateKey',
                     'updateVc',
                     'setWalletBindingErrorEmpty',
+                    'sendWalletBindingSuccess',
                     'logWalletBindingSuccess',
                     () => sendEndEvent(getEndData('VC activation')),
                   ],
@@ -760,6 +763,7 @@ export const ExistingMosipVCItemMachine =
                 'updatePrivateKey',
                 'updateVc',
                 'setWalletBindingErrorEmpty',
+                'setWalletBindingSuccess',
                 'logWalletBindingSuccess',
                 () => sendEndEvent(getEndData('VC activation')),
               ],
@@ -831,6 +835,24 @@ export const ExistingMosipVCItemMachine =
           walletBindingError: () => '',
         }),
 
+        setWalletBindingSuccess: assign({
+          walletBindingSuccess: true,
+        }),
+
+        resetWalletBindingSuccess: assign({
+          walletBindingSuccess: false,
+        }),
+
+        sendWalletBindingSuccess: send(
+          context => {
+            return {
+              type: 'WALLET_BINDING_SUCCESS',
+            };
+          },
+          {
+            to: context => context.serviceRefs.vc,
+          },
+        ),
         setPublicKey: assign({
           publicKey: (context, event) => {
             if (!isCustomSecureKeystore()) {
@@ -1495,6 +1517,10 @@ export function selectShowWalletBindingError(state: State) {
     state.matches('showingWalletBindingError') ||
     state.matches('kebabPopUp.showingWalletBindingError')
   );
+}
+
+export function selectWalletBindingSuccess(state: State) {
+  return state.context.walletBindingSuccess;
 }
 
 export function selectWalletBindingInProgress(state: State) {

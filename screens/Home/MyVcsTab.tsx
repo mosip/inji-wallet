@@ -1,22 +1,21 @@
 import React, {useEffect} from 'react';
 import {Button, Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
-import {Image, RefreshControl, View} from 'react-native';
+import {Image, RefreshControl} from 'react-native';
 import {useMyVcsTab} from './MyVcsTabController';
 import {HomeScreenTabProps} from './HomeScreen';
 import {AddVcModal} from './MyVcs/AddVcModal';
 import {GetVcModal} from './MyVcs/GetVcModal';
 import {useTranslation} from 'react-i18next';
-import {ExistingMosipVCItem} from '../../components/VC/ExistingMosipVCItem/ExistingMosipVCItem';
 import {GET_INDIVIDUAL_ID} from '../../shared/constants';
 import {
   ErrorMessageOverlay,
   MessageOverlay,
 } from '../../components/MessageOverlay';
-import {Icon} from 'react-native-elements';
 import {groupBy} from '../../shared/javascript';
 import {isOpenId4VCIEnabled} from '../../shared/openId4VCI/Utils';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
+import {BannerNotification} from '../../components/BannerNotification';
 
 const pinIconProps = {iconName: 'pushpin', iconType: 'antdesign'};
 
@@ -48,33 +47,26 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
       controller.SET_STORE_VC_ITEM_STATUS();
     }
   }, [controller.areAllVcsLoaded, controller.inProgressVcDownloadsCount]);
-
-  const DownloadingVcPopUp: React.FC = () => {
-    return (
-      <View testID="downloadingVcPopup">
-        <Row style={Theme.Styles.downloadingVcPopUp}>
-          <Text color={Theme.Colors.whiteText} weight="semibold" size="smaller">
-            {t('downloadingYourCard')}
-          </Text>
-          <Icon
-            testID="close"
-            name="close"
-            onPress={() => {
-              controller.RESET_STORE_VC_ITEM_STATUS();
-              clearIndividualId();
-            }}
-            color={Theme.Colors.whiteText}
-            size={19}
-          />
-        </Row>
-      </View>
-    );
-  };
-
   return (
     <React.Fragment>
       <Column fill style={{display: props.isVisible ? 'flex' : 'none'}}>
-        {controller.isRequestSuccessful && <DownloadingVcPopUp />}
+        {controller.isRequestSuccessful && (
+          <BannerNotification
+            message={t('downloadingYourCard')}
+            onClosePress={() => {
+              controller.RESET_STORE_VC_ITEM_STATUS();
+              clearIndividualId();
+            }}
+            testId={'downloadingVcPopup'}
+          />
+        )}
+        {controller.isBindingSuccess && (
+          <BannerNotification
+            message={t('activated')}
+            onClosePress={controller.DISMISS_WALLET_BINDING_NOTIFICATION_BANNER}
+            testId={'activatedVcPopup'}
+          />
+        )}
         <Column fill pY={11} pX={8}>
           {vcMetadataOrderedByPinStatus.length > 0 && (
             <React.Fragment>

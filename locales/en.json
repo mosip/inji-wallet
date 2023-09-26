@@ -279,6 +279,7 @@
     "generateVcDescription": "Tap on \"Download card\" below to download your card",
     "downloadCard": "Download Card",
     "downloadingYourCard": "Downloading your card, this can take upto 5 minutes",
+    "activated": "Credentials are enabled for online authentication.",
     "errors": {
       "savingFailed": {
         "title": "Failed to save the Card",
@@ -332,6 +333,7 @@
     "revoking": "Your wallet contains a credential with VID {{vid}}. Revoking this will automatically remove the same from the wallet. Are you sure you want to proceed?",
     "requestingOtp": "Requesting OTP...",
     "editTag": "Rename",
+    "activated": "Credentials are enabled for online authentication.",
     "redirecting": "Redirecting...",
     "success": {
       "unlocked": "Card successfully unlocked",
@@ -501,8 +503,8 @@
         "timeoutHint": "Sharing is delayed, possibly due to a connection issue."
       },
       "accepted": {
-        "title": "Success!",
-        "message": "Your Card has been successfully shared with Verifier",
+        "title": "ID shared successfully",
+        "message": "Your ID has been successfully shared with",
         "gotohome": "Go to Home"
       },
       "rejected": {

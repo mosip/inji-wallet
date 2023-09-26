@@ -178,6 +178,7 @@
 		"addVcButton": "Agregar Tarjeta",
 		"generateVc": "Genera tus Tarjetas",
 		"generateVcDescription": "Toca en \"Agregar Tarjeta\" a continuación para descargar tu Tarjeta",
+		"activated": "Las credenciales están habilitadas para la autenticación en línea.",
 		"errors": {
 			"savingFailed": {
 				"title": "Error al guardar la Tarjeta",
@@ -225,6 +226,7 @@
 		"revoking": "Tu billetera contiene una credencial con VID {{vid}}. Revocar esto eliminará automáticamente la misma de la billetera. ¿Estás seguro de que deseas continuar?",
 		"requestingOtp": "Solicitando OTP...",
 		"editTag": "Renombrar",
+		"activated": "Las credenciales están habilitadas para la autenticación en línea.",
 		"redirecting": "Redirigiendo...",
 		"inProgress": "Cargando...",
 		"success": {
@@ -405,8 +407,9 @@
         "timeoutHint": "El intercambio se retrasa, posiblemente debido a un problema de conexión."
       },
 			"accepted": {
-				"title": "¡Éxito!",
-				"message": "Tu tarjeta ha sido compartida exitosamente con el Verificador"
+				"title": "ID compartido correctamente",
+				"message": "Su identificación se ha compartido correctamente con",
+				"gotohome": "Ir a casa"
 			},
 			"rejected": {
 				"title": "Aviso",

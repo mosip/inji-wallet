@@ -5,6 +5,7 @@ import {selectIsTampered} from '../../machines/store';
 import {
   selectIsRefreshingMyVcs,
   selectMyVcsMetadata,
+  selectWalletBindingSuccess,
   VcEvents,
   selectAreAllVcsDownloaded,
   selectInProgressVcDownloadsCount,
@@ -51,6 +52,7 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
     isSavingFailedInIdle: useSelector(service, selectIsSavingFailedInIdle),
     walletBindingError: useSelector(service, selectWalletBindingError),
     isBindingError: useSelector(service, selectShowWalletBindingError),
+    isBindingSuccess: useSelector(vcService, selectWalletBindingSuccess),
     isMinimumStorageLimitReached: useSelector(
       service,
       selectIsMinimumStorageLimitReached,
@@ -91,6 +93,9 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
     },
 
     IS_TAMPERED: () => service.send(MyVcsTabEvents.IS_TAMPERED()),
+
+    DISMISS_WALLET_BINDING_NOTIFICATION_BANNER: () =>
+      vcService?.send(VcEvents.RESET_WALLET_BINDING_SUCCESS()),
 
     ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS: () =>
       settingsService.send(SettingsEvents.ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS()),
