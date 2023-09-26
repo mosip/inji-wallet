@@ -4,7 +4,9 @@ import {Centered, Column} from './Layout';
 import {Theme} from './styleUtils';
 import {Text} from './Text';
 
-export const SquircleIconPopUpModal: React.FC<IconPopUpModalProps> = props => {
+export const SquircleIconPopUpModal: React.FC<
+  SquircleIconPopUpModalProps
+> = props => {
   return (
     <View
       style={Theme.MessageStyles.viewContainer}
@@ -33,7 +35,7 @@ export const SquircleIconPopUpModal: React.FC<IconPopUpModalProps> = props => {
   );
 };
 
-export interface IconPopUpModalProps {
+export interface SquircleIconPopUpModalProps {
   message: string;
   iconName: any;
   onBackdropPress?: () => void;
