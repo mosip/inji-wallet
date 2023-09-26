@@ -1033,6 +1033,12 @@ export const DefaultTheme = {
       elevation: 6,
       borderRadius: 4,
     },
+    squircleContainer: {
+      backgroundColor: Colors.White,
+      padding: 24,
+      elevation: 6,
+      borderRadius: 16,
+    },
   }),
   VidItemStyles: StyleSheet.create({
     title: {

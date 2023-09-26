@@ -43,6 +43,7 @@ const model = createModel(
     bindingTransactionId: '',
     walletBindingResponse: null as WalletBindingResponse,
     walletBindingError: '',
+    walletBindingSuccess: false,
   },
   {
     events: {
@@ -228,6 +229,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
               'updatePrivateKey',
               'updateVc',
               'setWalletBindingErrorEmpty',
+              'setWalletBindingSuccess',
               'logWalletBindingSuccess',
             ],
             target: 'idle',
@@ -242,6 +244,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         on: {
           DISMISS: {
             target: 'checkingVc',
+            actions: 'resetWalletBindingSuccess',
           },
           KEBAB_POPUP: {
             target: 'kebabPopUp',
@@ -403,6 +406,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
                   'updatePrivateKey',
                   'updateVc',
                   'setWalletBindingErrorEmpty',
+                  'sendWalletBindingSuccess',
                   'logWalletBindingSuccess',
                 ],
                 target: '#vc-item-openid4vci.kebabPopUp',
@@ -537,9 +541,29 @@ export const EsignetMosipVCItemMachine = model.createMachine(
             ns: 'common',
           }),
       }),
+
       setWalletBindingErrorEmpty: assign({
         walletBindingError: () => '',
       }),
+
+      setWalletBindingSuccess: assign({
+        walletBindingSuccess: true,
+      }),
+
+      resetWalletBindingSuccess: assign({
+        walletBindingSuccess: false,
+      }),
+
+      sendWalletBindingSuccess: send(
+        context => {
+          return {
+            type: 'WALLET_BINDING_SUCCESS',
+          };
+        },
+        {
+          to: context => context.serviceRefs.vc,
+        },
+      ),
       setPublicKey: assign({
         publicKey: (context, event) => {
           if (!isCustomSecureKeystore()) {
@@ -783,4 +807,8 @@ export function selectContext(state: State) {
 
 export function selectGeneratedOn(state: State) {
   return new Date(state.context.generatedOn).toLocaleDateString();
+}
+
+export function selectWalletBindingSuccess(state: State) {
+  return state.context.walletBindingSuccess;
 }

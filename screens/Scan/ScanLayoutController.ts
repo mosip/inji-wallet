@@ -226,6 +226,7 @@ export function useScanLayout() {
     isStayInProgress: useSelector(scanService, selectStayInProgress),
     isBleError,
     DISMISS,
+    isAccepted,
     onRetry,
   };
 }

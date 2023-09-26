@@ -22,6 +22,7 @@ import {
   selectEmptyWalletBindingId,
   selectWalletBindingInProgress,
   selectShowWalletBindingError,
+  selectWalletBindingSuccess,
   selectBindingWarning,
 } from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {selectPasscode} from '../../machines/auth';
@@ -135,6 +136,7 @@ export function useViewVcModal({
       selectWalletBindingInProgress,
     ),
     isBindingError: useSelector(vcItemActor, selectShowWalletBindingError),
+    isBindingSuccess: useSelector(vcItemActor, selectWalletBindingSuccess),
     isBindingWarning: useSelector(vcItemActor, selectBindingWarning),
 
     CONFIRM_REVOKE_VC: () => {

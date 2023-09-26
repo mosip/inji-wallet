@@ -7,6 +7,7 @@ import {ScanScreen} from './ScanScreen';
 import {ProgressingModal} from '../../components/ProgressingModal';
 import {MessageOverlay} from '../../components/MessageOverlay';
 import {SCAN_ROUTES} from '../../routes/routesConstants';
+import {SharingSuccessModal} from './SuccessfullySharedModal';
 
 const ScanStack = createNativeStackNavigator();
 
@@ -48,6 +49,11 @@ export const ScanLayout: React.FC = () => {
         onRetry={controller.statusOverlay?.onRetry}
         progress={controller.statusOverlay?.progress}
         requester={controller.statusOverlay?.requester}
+      />
+
+      <SharingSuccessModal
+        isVisible={controller.isAccepted}
+        testId={'sharingSuccessModal'}
       />
 
       <ProgressingModal

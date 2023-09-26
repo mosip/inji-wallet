@@ -10,6 +10,8 @@ import {MessageOverlay} from '../../components/MessageOverlay';
 import {ReceivedCardsModal} from '../Settings/ReceivedCardsModal';
 import {useReceivedVcsTab} from '../Home/ReceivedVcsTabController';
 import {REQUEST_ROUTES} from '../../routes/routesConstants';
+import {SquircleIconPopUpModal} from '../../components/ui/SquircleIconPopUpModal';
+import {Theme} from '../../components/ui/styleUtils';
 import {ProgressingModal} from '../../components/ProgressingModal';
 const RequestStack = createNativeStackNavigator();
 
@@ -64,10 +66,11 @@ export const RequestLayout: React.FC = () => {
         onDismiss={controller.DISMISS}
       />
       {controller.isAccepted && (
-        <Message
-          title={t('status.accepted.title')}
+        <SquircleIconPopUpModal
           message={t('status.accepted.message')}
           onBackdropPress={controller.DISMISS}
+          iconName={Theme.SuccessLogo}
+          testId={'vcAcceptedPopUp'}
         />
       )}
 

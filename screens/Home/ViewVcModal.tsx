@@ -1,7 +1,5 @@
 import React from 'react';
-import {DropdownIcon} from '../../components/DropdownIcon';
-import {TextEditOverlay} from '../../components/TextEditOverlay';
-import {Column, Text} from '../../components/ui';
+import {Column} from '../../components/ui';
 import {Modal} from '../../components/ui/Modal';
 import {MessageOverlay} from '../../components/MessageOverlay';
 import {ToastItem} from '../../components/ui/ToastItem';
@@ -9,6 +7,8 @@ import {RevokeConfirmModal} from '../../components/RevokeConfirm';
 import {OIDcAuthenticationModal} from '../../components/OIDcAuth';
 import {useViewVcModal, ViewVcModalProps} from './ViewVcModalController';
 import {useTranslation} from 'react-i18next';
+import {BannerNotification} from '../../components/BannerNotification';
+import {TextEditOverlay} from '../../components/TextEditOverlay';
 import {OtpVerificationModal} from './MyVcs/OtpVerificationModal';
 import {BindingVcWarningOverlay} from './MyVcs/BindingVcWarningOverlay';
 import {VcDetailsContainer} from '../../components/VC/VcDetailsContainer';
@@ -37,6 +37,13 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       onDismiss={props.onDismiss}
       headerTitle={t('title')}
       headerElevation={2}>
+      {controller.isBindingSuccess && (
+        <BannerNotification
+          message={t('activated')}
+          onClosePress={controller.DISMISS}
+          testId={'activatedVcPopup'}
+        />
+      )}
       <Column scroll>
         <Column fill>
           <VcDetailsContainer
