@@ -7,6 +7,7 @@ import {Column, Text} from '../../components/ui';
 import {Button} from '../../components/ui';
 import {useScanLayout} from './ScanLayoutController';
 import {useSendVcScreen} from './SendVcScreenController';
+import testIDProps from '../../shared/commonUtil';
 
 export const SharingSuccessModal: React.FC<
   SharingSuccessModalProps
@@ -17,7 +18,10 @@ export const SharingSuccessModal: React.FC<
 
   return (
     <React.Fragment>
-      <Modal isVisible={props.isVisible} showClose={false}>
+      <Modal
+        isVisible={props.isVisible}
+        showClose={false}
+        {...testIDProps(props.testId)}>
         <Column
           margin="64 0"
           crossAlign="center"
@@ -50,4 +54,5 @@ export const SharingSuccessModal: React.FC<
 
 interface SharingSuccessModalProps {
   isVisible: boolean;
+  testId: string;
 }
