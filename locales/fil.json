@@ -14,7 +14,7 @@
     "QRLOGIN_SUCCESFULL": "Matagumpay ang QRLogin",
     "WALLET_BINDING_SUCCESSFULL": "Matagumpay ang pag-activate",
     "WALLET_BINDING_FAILURE": "Nabigo ang pag-activate",
-    "VC_REMOVED":"Inalis sa wallet"
+    "VC_REMOVED": "Inalis sa wallet"
   },
   "DeviceInfoList": {
     "requestedBy": "Hiniling ni",
@@ -156,6 +156,28 @@
     "version": "Bersyon",
     "tuvaliVersion": "Tuvali-bersyon"
   },
+  "IssuersScreen": {
+    "title": "Magdagdag ng bagong card",
+    "header": "Mangyaring pumili ng gustong paraan mula sa ibaba upang magdagdag ng bagong card",
+    "loaders": {
+      "loading": "Naglo-load...",
+      "subTitle": {
+        "displayIssuers": "Fetching Issuers",
+        "settingUp": "Setting up",
+        "downloadingCredentials": "Downloading Credentials",
+      }
+    },
+    "errors": {
+      "noInternetConnection": {
+        "title": "Pakisuri ang iyong koneksyon at subukang muli",
+        "message": "Mangyaring kumonekta sa internet at subukang muli."
+      },
+      "generic": {
+        "title": "may nangyaring mali!",
+        "message": "Nagkakaproblema kami sa iyong kahilingan. Pakisubukang muli."
+      }
+    }
+  },
   "HelpScreen": {
     "header": "Tulong",
     "whatIsDigitalCredential?": "Ano ang isang digital na kredensyal?",
@@ -260,13 +282,13 @@
         "message": "Hindi ka maaaring magdagdag o tumanggap ng mga card dahil puno na ang Appdata. I-clear ang Appdata para magpatuloy."
       },
       "vcIsTampered": {
-        "title": "Ang ilang mga patunay ng pagkakakilanlan ay pinakialaman",
-        "message": "Ang mga apektadong file ay tinanggal, mangyaring muling i-download."
+        "title": "Inalis ang mga card dahil sa malisyosong aktibidad",
+        "message": "Natukoy at inalis ang mga tampered card para sa mga kadahilanang pangseguridad. Mangyaring i-download muli."
       },
       "keystoreNotExists": {
-        "title": "Hindi nahanap ang Secure Key Storage",
-        "message": "Hindi secure ang key storage sa iyong telepono. Maaaring ma-leak ang iyong mga susi kung na-hack ang telepono.",
-        "riskOkayText": "OK, ipagsapalaran ko ito"
+        "title": "Ang ilang mga tampok sa seguridad ay hindi magagamit",
+        "message": "Hindi sinusuportahan ng iyong kasalukuyang device ang lahat ng feature ng seguridad.",
+        "riskOkayText": "Ok"
       }
     }
   },
@@ -392,6 +414,10 @@
       }
     },
     "status": {
+      "sharing": {
+        "title": "Isinasagawa ang pagbabahagi",
+        "timeoutHint": "Naantala ang pagbabahagi, posibleng dahil sa isang isyu sa koneksyon."
+      },
       "accepted": {
         "title": "Tagumpay!",
         "message": "Tagumpay na nakuha ang card mula kay wallet"
@@ -401,7 +427,7 @@
         "message": "Iwinaksi ang card ni wallet"
       },
       "disconnected": {
-        "title": "Nadiskonekta",
+        "title": "Nabigo ang koneksyon",
         "message": "Naputol ang koneksyon. Pakiulit."
       },
       "waitingConnection": "Naghihintay ng koneksyon...",
@@ -417,7 +443,7 @@
         "message": "Mangyaring kumonekta sa internet upang paganahin ang Online sharing mode"
       },
       "bleError": {
-        "title": "Nabigong ilipat!",
+        "title": "Nabigong ilipat",
         "message": "Nagkaproblema habang inililipat ang card. Pakisubukang muli.",
         "hint": "Error: {{code}}"
       }
@@ -456,7 +482,7 @@
     "status": {
       "inProgress": "Isinasagawa",
       "establishingConnection": "Pagtatatag ng Koneksyon",
-      "sharingInProgress": "Isinasagawa ang pagbabahagi",
+      "connectionInProgress": "Isinasagawa ang koneksyon",
       "connectingTimeout": "Ito ay tumatagal ng ilang sandali upang maitaguyod ang koneksyon. Bukas ba ang ibang device para sa mga koneksyon?",
       "stayOnTheScreen": "Manatili sa screen",
       "retry": "Subukan muli",
@@ -467,9 +493,9 @@
       "sent": "Naipadala na ang card...",
       "sentHint": "Naghihintay para sa receiver na i-save o itapon ang iyong card",
       "sharing": {
-        "title": "Pagbabahagi...",
-        "hint": "Mangyaring maghintay habang ibinabahagi namin ang napiling card.",
-        "timeoutHint": "Mas tumatagal kaysa sa inaasahan ang pagbabahagi. Maaaring may problema sa koneksyon."
+        "title": "Isinasagawa ang pagbabahagi",
+        "timeoutHint": "Naantala ang pagbabahagi, posibleng dahil sa isang isyu sa koneksyon.",
+        "hint": "Mangyaring maghintay habang ibinabahagi namin ang napiling card."
       },
       "accepted": {
         "title": "Matagumpay na naibahagi ang ID",
@@ -523,8 +549,8 @@
     },
     "errors": {
       "invalidIdentity": {
-        "title": "Hindi ma-verify ang pagkakakilanlan",
-        "message": "Hindi nakikilala ang mukha. Pakisubukang muli.",
+        "title": "Nabigo ang pagkilala sa mukha",
+        "message": "Ang na-scan na mukha ay hindi tumutugma sa larawan sa card. Pakisubukang muli.",
         "messageNoRetry": "Face not recognised."
       }
     }
@@ -538,8 +564,8 @@
     "errors": {
       "decryptionFailed": "Nabigong i-decrypt ang data",
       "invalidateKeyError": {
-        "title": "Ang ilang (mga) patunay ng Pagkakakilanlan ay tinanggal dahil sa mga alalahanin sa seguridad.",
-        "message": "Mangyaring i-download muli."
+        "title": "Na-reset ang app",
+        "message": "Dahil sa update sa fingerprint / facial recognition, naapektuhan ang seguridad ng app, at inalis ang mga na-download na card. Mangyaring i-download muli."
       }
     },
     "ignore": "Huwag pansinin"

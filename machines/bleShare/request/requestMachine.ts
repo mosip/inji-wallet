@@ -491,15 +491,21 @@ export const requestMachine =
         },
         disconnected: {
           on: {
-            DISMISS: {
+            RESET: {
               target: 'waitingForConnection',
+            },
+            DISMISS: {
+              target: '#request.reviewing.navigatingToHome',
             },
           },
         },
         handlingBleError: {
           on: {
+            RESET: {
+              target: 'checkNearbyDevicesPermission',
+            },
             DISMISS: {
-              target: '#request.clearingConnection',
+              target: '#request.reviewing.navigatingToHome',
             },
           },
         },

@@ -53,7 +53,6 @@
     "react": "18.2.0",
     "react-i18next": "^11.16.6",
     "react-native": "0.71.8",
-    "react-native-animated-pagination-dot": "^0.4.0",
     "react-native-app-auth": "^7.0.0",
     "react-native-app-intro-slider": "^4.0.4",
     "react-native-argon2": "^2.0.1",

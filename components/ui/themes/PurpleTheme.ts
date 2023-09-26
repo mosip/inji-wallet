@@ -48,6 +48,7 @@ export const PurpleTheme = {
     Details: Colors.Black,
     DetailsLabel: Colors.Gray40,
     LoadingDetailsLabel: Colors.Gray40,
+    DetailsLabel: Colors.Gray40,
     AddIdBtnBg: Colors.Purple,
     AddIdBtnTxt: Colors.Purple,
     DownloadIdBtnTxt: Colors.White,
@@ -834,6 +835,21 @@ export const PurpleTheme = {
       width: Dimensions.get('screen').width,
       height: Dimensions.get('screen').height,
     },
+    defaultModal: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginHorizontal: 18,
+      marginVertical: 8,
+    },
+    progressingModal: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginLeft: 36,
+      marginVertical: 8,
+      marginHorizontal: 18,
+    },
     header: {
       flex: 1,
       flexDirection: 'row',
@@ -901,7 +917,6 @@ export const PurpleTheme = {
       marginBottom: 75,
     },
     popupOverLay: {
-      height: 150,
       backgroundColor: Colors.White,
     },
     button: {

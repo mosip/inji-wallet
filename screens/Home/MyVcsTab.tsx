@@ -158,10 +158,12 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         isVisible={controller.showHardwareKeystoreNotExistsAlert}
         title={t('errors.keystoreNotExists.title')}
         message={t('errors.keystoreNotExists.message')}
-        onBackdropPress={controller.ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS}>
+        onButtonPress={controller.ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS}
+        buttonText={t('errors.keystoreNotExists.riskOkayText')}
+        customHeight={'auto'}>
         <Row>
           <Button
-            type="clear"
+            type="gradient"
             title={t('errors.keystoreNotExists.riskOkayText')}
             onPress={controller.ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS}
             margin={[0, 8, 0, 0]}
@@ -178,7 +180,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
       <MessageOverlay
         isVisible={controller.isBindingError}
         title={controller.walletBindingError}
-        onCancel={controller.DISMISS}
+        onButtonPress={controller.DISMISS}
       />
       <ErrorMessageOverlay
         translationPath={'MyVcsTab'}
@@ -186,11 +188,13 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         error={'errors.storageLimitReached'}
         onDismiss={controller.DISMISS}
       />
-      <ErrorMessageOverlay
-        translationPath={'MyVcsTab'}
+      <MessageOverlay
         isVisible={controller.isTampered}
-        error={'errors.vcIsTampered'}
-        onDismiss={controller.IS_TAMPERED}
+        title={t('errors.vcIsTampered.title')}
+        message={t('errors.vcIsTampered.message')}
+        onButtonPress={controller.IS_TAMPERED}
+        buttonText={t('common:ok')}
+        customHeight={'auto'}
       />
     </React.Fragment>
   );

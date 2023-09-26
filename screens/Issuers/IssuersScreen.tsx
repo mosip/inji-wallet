@@ -132,7 +132,7 @@ export const IssuersScreen: React.FC<
           title={t(`errors.${controller.errorMessage}.title`)}
           message={t(`errors.${controller.errorMessage}.message`)}
           goBack={goBack}
-          tryAgain={isGenericError() ? null : controller.TRY_AGAIN}
+          tryAgain={controller.TRY_AGAIN}
           image={getImage()}
         />
       )}
