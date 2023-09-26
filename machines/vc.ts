@@ -416,6 +416,5 @@ function isEmpty(object) {
 }
 
 export function selectWalletBindingSuccess(state: State) {
-  console.log(state.context);
   return state.context.walletBindingSuccess;
 }
