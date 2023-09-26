@@ -57,6 +57,9 @@ export const AddVcModalMachine =
         INPUT_ID: {
           actions: 'setId',
         },
+        SELECT_ID_TYPE: {
+          actions: ['clearIdError', 'setIdType'],
+        },
       },
       states: {
         acceptingIdInput: {
