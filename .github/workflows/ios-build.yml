@@ -113,7 +113,7 @@ jobs:
         uses: actions/upload-artifact@v3.1.1
         with:
           name: Inji
-          path: ios/fastlane/Inji_app_file/Inji/Inji.app
+          path: ios/fastlane/Inji_app_file/Products/Applications/
           retention-days: 10
 
       - name: Upload Runner Log on Failure
