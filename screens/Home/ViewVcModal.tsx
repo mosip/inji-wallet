@@ -1,5 +1,5 @@
 import React from 'react';
-import {Column, Row, Text} from '../../components/ui';
+import {Column} from '../../components/ui';
 import {Modal} from '../../components/ui/Modal';
 import {MessageOverlay} from '../../components/MessageOverlay';
 import {ToastItem} from '../../components/ui/ToastItem';
@@ -8,7 +8,6 @@ import {OIDcAuthenticationModal} from '../../components/OIDcAuth';
 import {useViewVcModal, ViewVcModalProps} from './ViewVcModalController';
 import {useTranslation} from 'react-i18next';
 import {BannerNotification} from '../../components/BannerNotification';
-import {DropdownIcon} from '../../components/DropdownIcon';
 import {TextEditOverlay} from '../../components/TextEditOverlay';
 import {OtpVerificationModal} from './MyVcs/OtpVerificationModal';
 import {BindingVcWarningOverlay} from './MyVcs/BindingVcWarningOverlay';
