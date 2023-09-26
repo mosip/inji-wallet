@@ -12,7 +12,7 @@ import {
   VerifiableCredential,
   VcIdType,
   DecodedCredential,
-} from '../../../types/vc';
+} from '../../../types/VC/ExistingMosipVC/vc';
 import {StoreEvents} from '../../store';
 import {ActivityLogEvents} from '../../activityLog';
 import {verifyCredential} from '../../../shared/vcjs/verifyCredential';

@@ -4,7 +4,7 @@ import {Dimensions} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {ActorRefFrom} from 'xstate';
 import {ExistingMosipVCItemMachine} from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
-import {VerifiableCredential} from '../../../types/vc';
+import {VerifiableCredential} from '../../../types/VC/ExistingMosipVC/vc';
 import {Row, Text} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 

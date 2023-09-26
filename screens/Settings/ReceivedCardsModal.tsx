@@ -5,8 +5,8 @@ import {Centered, Column, Text} from '../../components/ui';
 import {Icon} from 'react-native-elements';
 import {Theme} from '../../components/ui/styleUtils';
 import {Modal} from '../../components/ui/Modal';
-import {ExistingMosipVCItem} from '../../components/VC/ExistingMosipVCItem/ExistingMosipVCItem';
 import {ViewVcModal} from '../Home/ViewVcModal';
+import {VcItemContainer} from '../../components/VC/VcItemContainer';
 
 export const ReceivedCardsModal: React.FC<ReceivedCardsProps> = ({
   isVisible,
@@ -31,7 +31,7 @@ export const ReceivedCardsModal: React.FC<ReceivedCardsProps> = ({
           />
         }>
         {controller.receivedVcsMetadata.map(vcMetadata => (
-          <ExistingMosipVCItem
+          <VcItemContainer
             key={vcMetadata.getVcKey()}
             vcMetadata={vcMetadata}
             margin="0 2 8 2"

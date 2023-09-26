@@ -2,7 +2,7 @@ import {assign, ErrorPlatformEvent, EventFrom, send, StateFrom} from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../../../shared/GlobalContext';
 import {VCMetadata} from '../../../shared/VCMetadata';
-import {VC} from '../../../types/vc';
+import {VC} from '../../../types/VC/ExistingMosipVC/vc';
 import {
   generateKeys,
   isCustomSecureKeystore,
@@ -683,8 +683,10 @@ export const EsignetMosipVCItemMachine = model.createMachine(
             request: {
               authFactorType: 'WLA',
               format: 'jwt',
-              individualId:
-                context.verifiableCredential.credential.credentialSubject.VID,
+              individualId: context.verifiableCredential.credential
+                .credentialSubject.VID
+                ? context.verifiableCredential.credential.credentialSubject.VID
+                : context.verifiableCredential.credential.credentialSubject.UIN,
               transactionId: context.transactionId,
               publicKey: context.publicKey,
               challengeList: [
@@ -729,8 +731,10 @@ export const EsignetMosipVCItemMachine = model.createMachine(
           {
             requestTime: String(new Date().toISOString()),
             request: {
-              individualId:
-                context.verifiableCredential.credential.credentialSubject.VID,
+              individualId: context.verifiableCredential.credential
+                .credentialSubject.VID
+                ? context.verifiableCredential.credential.credentialSubject.VID
+                : context.verifiableCredential.credential.credentialSubject.UIN,
               otpChannels: ['EMAIL', 'PHONE'],
             },
           },

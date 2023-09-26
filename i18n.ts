@@ -11,7 +11,7 @@ import ta from './locales/tam.json';
 import Storage from './shared/storage';
 
 import {iso6393To1} from 'iso-639-3';
-import {LocalizedField} from './types/vc';
+import {LocalizedField} from './types/VC/ExistingMosipVC/vc';
 
 import {APPLICATION_LANGUAGE} from 'react-native-dotenv';
 

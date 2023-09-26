@@ -17,7 +17,7 @@ import {log} from 'xstate/lib/actions';
 import {verifyCredential} from '../shared/vcjs/verifyCredential';
 import {getBody, getIdentifier} from '../shared/openId4VCI/Utils';
 import {VCMetadata} from '../shared/VCMetadata';
-import {VerifiableCredential} from '../components/VC/EsignetMosipVCItem/vc';
+import {VerifiableCredential} from '../types/VC/EsignetMosipVC/vc';
 
 const model = createModel(
   {
@@ -129,14 +129,7 @@ export const IssuersMachine = model.createMachine(
       },
       checkKeyPair: {
         description: 'checks whether key pair is generated',
-        entry: [
-          context =>
-            log(
-              'Reached CheckKeyPair context -> ',
-              JSON.stringify(context, null, 4),
-            ),
-          send('CHECK_KEY_PAIR'),
-        ],
+        entry: [send('CHECK_KEY_PAIR')],
         on: {
           CHECK_KEY_PAIR: [
             {
@@ -176,7 +169,8 @@ export const IssuersMachine = model.createMachine(
             target: 'verifyingCredential',
           },
           onError: {
-            actions: () => console.log('in error of downloadCredential'),
+            actions: event =>
+              console.log(' error occured in downloadCredential', event),
           },
         },
         on: {
@@ -394,7 +388,6 @@ export const IssuersMachine = model.createMachine(
         const defaultIssuer = {
           id: 'UIN, VID, AID',
           displayName: 'UIN, VID, AID',
-          logoUrl: Theme.DigitIcon,
         };
 
         const response = await request('GET', '/residentmobileapp/issuers');
@@ -410,7 +403,7 @@ export const IssuersMachine = model.createMachine(
       downloadCredential: async context => {
         const body = await getBody(context);
         const response = await fetch(
-          'https://api-internal.dev1.mosip.net/v1/esignet/vci/credential',
+          context.selectedIssuer.serviceConfiguration.credentialEndpoint,
           {
             method: 'POST',
             headers: {
@@ -438,7 +431,6 @@ export const IssuersMachine = model.createMachine(
           isBiometricsEnabled,
           0,
         );
-        return context;
       },
       verifyCredential: async context => {
         return verifyCredential(context.verifiableCredential?.credential);

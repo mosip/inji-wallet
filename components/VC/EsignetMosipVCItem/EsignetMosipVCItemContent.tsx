@@ -6,7 +6,10 @@ import {Column, Row, Text} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import VerifiedIcon from '../../VerifiedIcon';
 import {getLocalizedField} from '../../../i18n';
-import {Credential, VerifiableCredential} from './vc';
+import {
+  Credential,
+  VerifiableCredential,
+} from '../../../types/VC/EsignetMosipVC/vc';
 import testIDProps from '../../../shared/commonUtil';
 
 const getDetails = (arg1: string, arg2: string, credential: Credential) => {
@@ -24,19 +27,26 @@ const getDetails = (arg1: string, arg2: string, credential: Credential) => {
           }>
           {arg1}
         </Text>
-        <Row>
+        <Row
+          style={{
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginLeft: 9,
+          }}>
+          {!credential ? null : <VerifiedIcon />}
           <Text
             testID="valid"
             numLines={1}
             color={Theme.Colors.Details}
-            weight="bold"
+            weight="semibold"
             size="smaller"
             style={
-              !credential ? Theme.Styles.loadingTitle : Theme.Styles.subtitle
+              !credential
+                ? Theme.Styles.loadingTitle
+                : Theme.Styles.detailsValue
             }>
             {!credential ? '' : arg2}
           </Text>
-          {!credential ? null : <VerifiedIcon />}
         </Row>
       </Column>
     );
@@ -50,7 +60,7 @@ const getDetails = (arg1: string, arg2: string, credential: Credential) => {
               : Theme.Colors.DetailsLabel
           }
           size="smaller"
-          weight={'bold'}
+          weight="regular"
           style={Theme.Styles.vcItemLabelHeader}>
           {arg1}
         </Text>
@@ -69,16 +79,25 @@ const getDetails = (arg1: string, arg2: string, credential: Credential) => {
   }
 };
 
+function getIdNumber(id: string) {
+  if (id) {
+    return '*'.repeat(id.length - 4) + id.slice(-4);
+  }
+}
+
 export const EsignetMosipVCItemContent: React.FC<
   EsignetMosipVCItemContentProps
 > = props => {
-  const fullName = !props.credential
+  //Assigning the UIN and VID from the VC details to display the idtype label
+  const uin = props.credential?.credential?.credentialSubject.UIN;
+  const vid = props.credential?.credential?.credentialSubject.VID;
+  const fullName = !props.credential?.credential
     ? ''
     : getLocalizedField(
-        props.credential?.credential.credentialSubject?.fullName,
+        props.credential?.credential.credentialSubject.fullName,
       );
   const {t} = useTranslation('VcDetails');
-  const isvalid = !props.credential ? '' : t('valid');
+  const isvalid = !props.credential?.credential ? '' : t('valid');
   const selectableOrCheck = props.selectable ? (
     <CheckBox
       checked={props.selected}
@@ -90,61 +109,79 @@ export const EsignetMosipVCItemContent: React.FC<
 
   return (
     <ImageBackground
-      source={!props.credential ? null : Theme.CloseCard}
+      source={!props.credential?.credential ? null : Theme.CloseCard}
       resizeMode="stretch"
-      borderRadius={4}
       style={
-        !props.credential
+        !props.credential?.credential
           ? Theme.Styles.vertloadingContainer
           : Theme.Styles.backgroundImageContainer
       }>
       <Column>
         <Row align="space-between">
-          <Row>
+          <Row margin="5 0 0 5">
             <ImageBackground
+              imageStyle={Theme.Styles.faceImage}
               source={
-                !props.credential
+                !props.credential?.credential
                   ? Theme.ProfileIcon
-                  : {uri: props.credential?.credential.credentialSubject.face}
+                  : {uri: props.credential.credential.credentialSubject.face}
               }
               style={Theme.Styles.closeCardImage}>
               {props.iconName && (
-                <Icon
+                <Image
+                  source={Theme.PinIcon}
+                  style={Theme.Styles.pinIcon}
                   {...testIDProps('pinIcon')}
-                  name={props.iconName}
-                  type={props.iconType}
-                  color={Theme.Colors.Icon}
-                  style={{marginLeft: -80}}
                 />
               )}
             </ImageBackground>
-            <Column margin="0 0 0 10">
-              {getDetails(
-                t('fullName'),
-                fullName,
-                props.credential?.credential,
-              )}
 
-              <Column margin="10 0 0 0">
+            <Column margin="0 0 10 20" height={96} align="space-between">
+              <Column>
                 <Text
+                  testID="fullNameTitle"
+                  weight="regular"
+                  size="smaller"
                   color={
-                    !props.credential
+                    !props.credential?.credential
+                      ? Theme.Colors.LoadingDetailsLabel
+                      : Theme.Colors.DetailsLabel
+                  }>
+                  {t('fullName')}
+                </Text>
+                <Text
+                  testID="fullNameValue"
+                  weight="semibold"
+                  style={
+                    !props.credential?.credential
+                      ? Theme.Styles.loadingTitle
+                      : Theme.Styles.detailsValue
+                  }>
+                  {fullName}
+                </Text>
+              </Column>
+
+              <Column>
+                <Text
+                  testID="idType"
+                  color={
+                    !props.credential?.credential
                       ? Theme.Colors.LoadingDetailsLabel
                       : Theme.Colors.DetailsLabel
                   }
-                  weight="semibold"
+                  weight="regular"
                   size="smaller"
                   align="left">
                   {t('idType')}
                 </Text>
                 <Text
+                  testID="nationalCard"
                   weight="semibold"
                   color={Theme.Colors.Details}
-                  size="smaller"
                   style={
-                    !props.credential
+                    !props.credential?.credential
                       ? Theme.Styles.loadingTitle
-                      : Theme.Styles.subtitle
+                      : Theme.Styles.detailsValue
                   }>
                   {t('nationalCard')}
                 </Text>
@@ -152,34 +189,105 @@ export const EsignetMosipVCItemContent: React.FC<
             </Column>
           </Row>
 
-          <Column>{props.credential ? selectableOrCheck : null}</Column>
+          <Column>
+            {props.credential?.credential ? selectableOrCheck : null}
+          </Column>
         </Row>
 
         <Row
           align="space-between"
-          margin="5 0 0 0"
-          style={!props.credential ? Theme.Styles.loadingContainer : null}>
+          margin="9 10 0 7"
+          style={
+            !props.credential?.credential ? Theme.Styles.loadingContainer : null
+          }>
           <Column>
-            {!props.credential
-              ? getDetails(t('id'), 'newid', props.credential?.credential)
+            {uin ? (
+              <Column margin="0 0 9 0">
+                <Text
+                  testID="uin"
+                  weight="regular"
+                  size="smaller"
+                  color={Theme.Colors.DetailsLabel}>
+                  {t('uin')}
+                </Text>
+                <Text
+                  testID="uinNumber"
+                  weight="semibold"
+                  size="extraSmall"
+                  color={Theme.Colors.statusLabel}>
+                  {getIdNumber(uin)}
+                </Text>
+              </Column>
+            ) : null}
+
+            {vid ? (
+              <Column margin="0 0 9 0">
+                <Text
+                  testID="vid"
+                  weight="regular"
+                  size="smaller"
+                  color={Theme.Colors.DetailsLabel}>
+                  {t('vid')}
+                </Text>
+                <Text
+                  testID="vidNumber"
+                  weight="semibold"
+                  size="extraSmall"
+                  color={Theme.Colors.Details}>
+                  {getIdNumber(vid)}
+                </Text>
+              </Column>
+            ) : null}
+            {!props.credential?.credential
+              ? getDetails(t('id'), uin | vid, props.credential?.credential)
               : null}
-            {getDetails(
-              t('generatedOn'),
-              props.generatedOn,
-              props.credential?.credential,
-            )}
           </Column>
-          <Column>
-            {props.credential
+        </Row>
+
+        <Row
+          style={{flexDirection: 'row', flex: 1}}
+          align="space-between"
+          margin="0 8 5 8">
+          <Column margin="9 0 0 0">
+            <Text
+              testID="generatedOnTitle"
+              weight="regular"
+              size="smaller"
+              color={
+                !props.credential?.credential
+                  ? Theme.Colors.LoadingDetailsLabel
+                  : Theme.Colors.DetailsLabel
+              }>
+              {t('generatedOn')}
+            </Text>
+            <Text
+              testID="generatedOnValue"
+              weight="semibold"
+              style={
+                !props.credential?.credential
+                  ? Theme.Styles.loadingTitle
+                  : Theme.Styles.subtitle
+              }>
+              {props.generatedOn}
+            </Text>
+          </Column>
+          <Column margin="0 35 0 0">
+            {props.credential?.credential
               ? getDetails(t('status'), isvalid, props.credential?.credential)
               : null}
           </Column>
           <Column
-            style={{display: props.credential?.credential ? 'flex' : 'none'}}>
+            testID="logo"
+            style={{
+              display: props.credential?.credential ? 'flex' : 'none',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
             <Image
               src={props.credential?.issuerLogo}
               style={Theme.Styles.issuerLogo}
-              resizeMethod="auto"
+              resizeMethod="scale"
+              resizeMode="contain"
             />
           </Column>
         </Row>
