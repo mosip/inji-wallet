@@ -8,7 +8,7 @@ import {Text} from '../ui';
 export const Issuer: React.FC<IssuerProps> = (props: IssuerProps) => {
   const {t} = useTranslation('IssuersScreen');
 
-  function getLogoImageSource() {
+  function getIssuerLogo() {
     if (props.logoUrl) return {uri: props.logoUrl};
     return Theme.DigitIcon;
   }
@@ -31,7 +31,7 @@ export const Issuer: React.FC<IssuerProps> = (props: IssuerProps) => {
       <Image
         {...testIDProps(`issuerIcon-${props.testID}`)}
         style={Theme.issuersScreenStyles.issuerIcon}
-        source={getLogoImageSource()}
+        source={getIssuerLogo()}
       />
       <Text
         testID={`issuerHeading-${props.testID}`}
