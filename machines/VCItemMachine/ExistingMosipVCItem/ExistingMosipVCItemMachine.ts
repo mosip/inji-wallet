@@ -734,7 +734,6 @@ export const ExistingMosipVCItemMachine =
                   'storeContext',
                   'updateVc',
                   'setWalletBindingErrorEmpty',
-                  'setWalletBindingSuccess',
                   'logWalletBindingSuccess',
                 ],
               },
