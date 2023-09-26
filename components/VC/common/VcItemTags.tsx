@@ -1,9 +1,9 @@
 import React from 'react';
-import { Chip } from 'react-native-elements';
-import { Row, Text } from './ui';
-import { Theme } from './ui/styleUtils';
+import {Chip} from 'react-native-elements';
+import {Row, Text} from '../../ui';
+import {Theme} from '../../ui/styleUtils';
 
-export const VcItemTags: React.FC<{ tag: string }> = (props) => {
+export const VcItemTags: React.FC<{tag: string}> = props => {
   return (
     props.tag !== '' && (
       <Row align="flex-end" margin={[8, 0, 0, 0]}>

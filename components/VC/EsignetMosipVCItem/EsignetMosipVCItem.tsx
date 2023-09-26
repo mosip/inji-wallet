@@ -1,6 +1,6 @@
 import React, {useContext, useRef} from 'react';
 import {useInterpret, useSelector} from '@xstate/react';
-import {Pressable} from 'react-native';
+import {Pressable, View} from 'react-native';
 import {ActorRefFrom} from 'xstate';
 import {GlobalContext} from '../../../shared/GlobalContext';
 import {logState} from '../../../machines/app';
@@ -11,9 +11,9 @@ import {VCMetadata} from '../../../shared/VCMetadata';
 import {EsignetMosipVCItemContent} from './EsignetMosipVCItemContent';
 import {EsignetMosipVCActivationStatus} from './EsignetMosipVCItemActivationStatus';
 import {
+  createEsignetMosipVCItemMachine,
   EsignetMosipVCItemEvents,
   EsignetMosipVCItemMachine,
-  createEsignetMosipVCItemMachine,
   selectContext,
   selectGeneratedOn,
   selectKebabPopUp,
@@ -44,6 +44,7 @@ export const EsignetMosipVCItem: React.FC<EsignetMosipVCItemProps> = props => {
   return (
     <React.Fragment>
       <Pressable
+        accessible={false}
         onPress={() => props.onPress(service)}
         disabled={!credentials}
         style={
@@ -62,8 +63,9 @@ export const EsignetMosipVCItem: React.FC<EsignetMosipVCItemProps> = props => {
           iconType={props.iconType}
           onPress={() => props.onPress(service)}
         />
+        <View style={Theme.Styles.horizontalLine} />
         {props.isSharingVc ? null : (
-          <Row crossAlign="center">
+          <Row style={Theme.Styles.activationTab}>
             {props.activeTab !== 'receivedVcsTab' &&
               props.activeTab != 'sharingVcScreen' && (
                 <EsignetMosipVCActivationStatus
@@ -72,17 +74,20 @@ export const EsignetMosipVCItem: React.FC<EsignetMosipVCItemProps> = props => {
                   emptyWalletBindingId
                 />
               )}
-            <Pressable onPress={KEBAB_POPUP}>
-              <KebabPopUp
-                testID="ellipsis"
-                vcMetadata={props.vcMetadata}
-                iconName="dots-three-horizontal"
-                iconType="entypo"
-                isVisible={isKebabPopUp}
-                onDismiss={DISMISS}
-                service={service}
-              />
-            </Pressable>
+            <View style={Theme.Styles.verticalLine} />
+            <Row style={Theme.Styles.kebabIcon}>
+              <Pressable onPress={KEBAB_POPUP} accessible={false}>
+                <KebabPopUp
+                  testID="ellipsis"
+                  vcMetadata={props.vcMetadata}
+                  iconName="dots-three-horizontal"
+                  iconType="entypo"
+                  isVisible={isKebabPopUp}
+                  onDismiss={DISMISS}
+                  service={service}
+                />
+              </Pressable>
+            </Row>
           </Row>
         )}
       </Pressable>

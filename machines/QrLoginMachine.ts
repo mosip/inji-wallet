@@ -10,7 +10,7 @@ import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../shared/GlobalContext';
 import {MY_VCS_STORE_KEY, ESIGNET_BASE_URL} from '../shared/constants';
 import {StoreEvents} from './store';
-import {linkTransactionResponse, VC} from '../types/vc';
+import {linkTransactionResponse, VC} from '../types/VC/ExistingMosipVC/vc';
 import {request} from '../shared/request';
 import {getJwt, isCustomSecureKeystore} from '../shared/cryptoutil/cryptoUtil';
 import {

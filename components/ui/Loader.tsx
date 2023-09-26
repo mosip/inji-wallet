@@ -11,14 +11,16 @@ export const Loader: React.FC<LoaderProps> = props => {
 
   return (
     <Fragment>
-      <Row elevation={3}>
+      <Row style={{backgroundColor: Theme.Colors.whiteBackgroundColor}}>
         <SafeAreaView style={Theme.ModalStyles.header}>
           <Row
             fill
             align={'flex-start'}
             style={Theme.LoaderStyles.titleContainer}>
             <View style={Theme.issuersScreenStyles.loaderHeadingText}>
-              <Text style={Theme.TextStyles.header} testID="loaderTitle">
+              <Text
+                style={Theme.TextStyles.semiBoldHeader}
+                testID="loaderTitle">
                 {props.title}
               </Text>
               {props.subTitle && (
@@ -33,7 +35,11 @@ export const Loader: React.FC<LoaderProps> = props => {
           </Row>
         </SafeAreaView>
       </Row>
-      <Centered crossAlign="center" fill>
+      <View style={Theme.Styles.hrLineFill}></View>
+      <Centered
+        style={{backgroundColor: Theme.Colors.whiteBackgroundColor}}
+        crossAlign="center"
+        fill>
         <Column margin="24 0" align="space-around">
           <Image
             source={Theme.InjiProgressingLogo}

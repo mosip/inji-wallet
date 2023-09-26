@@ -1,12 +1,12 @@
 import React from 'react';
-import {Button, Column, Text, Centered} from '../../components/ui';
+import {Button, Centered, Column, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {useTranslation} from 'react-i18next';
-import {ExistingMosipVCItem} from '../../components/VC/ExistingMosipVCItem/ExistingMosipVCItem';
 import {useQrLogin} from './QrLoginController';
 import {QrLoginRef} from '../../machines/QrLoginMachine';
 import {Icon} from 'react-native-elements';
 import {Modal} from '../../components/ui/Modal';
+import {VcItemContainer} from '../../components/VC/VcItemContainer';
 
 export const MyBindedVcs: React.FC<MyBindedVcsProps> = props => {
   const controller = useQrLogin(props);
@@ -34,7 +34,7 @@ export const MyBindedVcs: React.FC<MyBindedVcsProps> = props => {
                       {controller.shareableVcsMetadata.length > 0 &&
                         controller.shareableVcsMetadata.map(
                           (vcMetadata, index) => (
-                            <ExistingMosipVCItem
+                            <VcItemContainer
                               key={vcMetadata.getVcKey()}
                               vcMetadata={vcMetadata}
                               margin="0 2 8 2"

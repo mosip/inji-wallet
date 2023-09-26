@@ -4,13 +4,13 @@ import {FlatList, Image, Text, View} from 'react-native';
 import {Issuer} from '../../components/openId4VCI/Issuer';
 import {Error} from '../../components/ui/Error';
 import {Header} from '../../components/ui/Header';
-import {Column} from '../../components/ui/Layout';
+import {Column} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {RootRouteProps} from '../../routes';
 import {HomeRouteProps} from '../../routes/main';
 import {useIssuerScreenController} from './IssuerScreenController';
 import {Loader} from '../../components/ui/Loader';
-import testIDProps from '../../shared/commonUtil';
+import testIDProps, {removeWhiteSpace} from '../../shared/commonUtil';
 
 export const IssuersScreen: React.FC<
   HomeRouteProps | RootRouteProps
@@ -109,7 +109,7 @@ export const IssuersScreen: React.FC<
                 scrollEnabled={false}
                 renderItem={({item}) => (
                   <Issuer
-                    testID={`issuer-${item.id}`}
+                    testID={removeWhiteSpace(item.id)}
                     key={item.id}
                     id={item.id}
                     displayName={item.displayName}

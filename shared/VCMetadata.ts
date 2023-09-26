@@ -1,4 +1,4 @@
-import {VC, VcIdType} from '../types/vc';
+import {VC, VcIdType} from '../types/VC/ExistingMosipVC/vc';
 
 const VC_KEY_PREFIX = 'VC';
 const VC_ITEM_STORE_KEY_REGEX = '^VC_[a-z0-9-]+$';
@@ -74,7 +74,7 @@ export class VCMetadata {
   getVcKey(): string {
     // openid for vc -> issuer:protocol:vcID
     //TODO: Separators for VC key to be maintained consistently
-    if (this.protocol) return `${this.issuer}:${this.protocol}:${this.id}`;
+    if (this.protocol) return `${this.issuer}_${this.protocol}_${this.id}`;
     return `${VC_KEY_PREFIX}_${this.requestId}`;
   }
 

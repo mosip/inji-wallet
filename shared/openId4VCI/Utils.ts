@@ -1,13 +1,10 @@
-import {ENABLE_OPENID_FOR_VC} from 'react-native-dotenv';
 import {createSignature, encodeB64} from '../cryptoutil/cryptoUtil';
 import jwtDecode from 'jwt-decode';
 import jose from 'node-jose';
-import {VCMetadata} from '../VCMetadata';
-
-export const OpenId4VCIProtocol = 'OpenId4VCI';
-export const isVCFromOpenId4VCI = (vcMetadata: VCMetadata) => {
-  return vcMetadata.isFromOpenId4VCI();
-};
+import {isIOS} from '../constants';
+import pem2jwk from 'simple-pem2jwk';
+import {Issuers_Key_Ref} from '../../machines/issuersMachine';
+import {ENABLE_OPENID_FOR_VC} from 'react-native-dotenv';
 
 export const isOpenId4VCIEnabled = () => {
   return ENABLE_OPENID_FOR_VC === 'true';
@@ -41,8 +38,14 @@ export const getBody = async context => {
 
 export const getJWK = async publicKey => {
   try {
-    const publicKeyJWKString = await jose.JWK.asKey(publicKey, 'pem');
-    const publicKeyJWK = publicKeyJWKString.toJSON();
+    let publicKeyJWKString;
+    let publicKeyJWK;
+    if (isIOS()) {
+      publicKeyJWKString = await jose.JWK.asKey(publicKey, 'pem');
+      publicKeyJWK = publicKeyJWKString.toJSON();
+    } else {
+      publicKeyJWK = await pem2jwk(publicKey);
+    }
     return {
       ...publicKeyJWK,
       alg: 'RS256',
@@ -71,13 +74,17 @@ export const getJWT = async context => {
       JSON.stringify({
         iss: context.selectedIssuer.clientId,
         nonce: decodedToken.c_nonce,
-        aud: 'https://esignet.dev1.mosip.net/v1/esignet',
+        aud: context.selectedIssuer.serviceConfiguration.credentialAudience,
         iat: Math.floor(new Date().getTime() / 1000),
         exp: Math.floor(new Date().getTime() / 1000) + 18000,
       }),
     );
     const preHash = header64 + '.' + payload64;
-    const signature64 = await createSignature(context.privateKey, preHash, '');
+    const signature64 = await createSignature(
+      context.privateKey,
+      preHash,
+      Issuers_Key_Ref,
+    );
     return header64 + '.' + payload64 + '.' + signature64;
   } catch (e) {
     console.log(e);
