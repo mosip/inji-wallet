@@ -109,7 +109,7 @@ jobs:
           path: /Users/runner/Library/Logs/gym/
           retention-days: 1
 
-  build_ios:
+  build_app:
     if: ${{ github.event.inputs.app_file_upload == 'Upload to Actions' || github.event.inputs.app_file_upload == 'Push and Upload'}}
     name: Uploading to Actions
     runs-on: macos-13
