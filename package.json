@@ -88,6 +88,7 @@
     "react-native-tuvali": "github:mosip/tuvali#v0.4.4",
     "react-native-vector-icons": "^10.0.0",
     "short-unique-id": "^4.4.4",
+    "simple-pem2jwk": "^0.2.4",
     "xstate": "^4.35.0"
   },
   "devDependencies": {

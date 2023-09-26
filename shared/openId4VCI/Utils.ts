@@ -1,6 +1,9 @@
 import {createSignature, encodeB64} from '../cryptoutil/cryptoUtil';
 import jwtDecode from 'jwt-decode';
 import jose from 'node-jose';
+import {isIOS} from '../constants';
+import pem2jwk from 'simple-pem2jwk';
+import {Issuers_Key_Ref} from '../../machines/issuersMachine';
 
 export const isOpenId4VCIEnabled = () => {
   // return ENABLE_OPENID_FOR_VC === 'true';
@@ -35,8 +38,14 @@ export const getBody = async context => {
 
 export const getJWK = async publicKey => {
   try {
-    const publicKeyJWKString = await jose.JWK.asKey(publicKey, 'pem');
-    const publicKeyJWK = publicKeyJWKString.toJSON();
+    let publicKeyJWKString;
+    let publicKeyJWK;
+    if (isIOS()) {
+      publicKeyJWKString = await jose.JWK.asKey(publicKey, 'pem');
+      publicKeyJWK = publicKeyJWKString.toJSON();
+    } else {
+      publicKeyJWK = await pem2jwk(publicKey);
+    }
     return {
       ...publicKeyJWK,
       alg: 'RS256',
@@ -71,7 +80,12 @@ export const getJWT = async context => {
       }),
     );
     const preHash = header64 + '.' + payload64;
-    const signature64 = await createSignature(context.privateKey, preHash, '');
+    const signature64 = await createSignature(
+      context.privateKey,
+      preHash,
+      Issuers_Key_Ref,
+    );
+    console.log('Signature is fetched 3');
     return header64 + '.' + payload64 + '.' + signature64;
   } catch (e) {
     console.log(e);

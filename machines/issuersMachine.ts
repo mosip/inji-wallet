@@ -129,14 +129,7 @@ export const IssuersMachine = model.createMachine(
       },
       checkKeyPair: {
         description: 'checks whether key pair is generated',
-        entry: [
-          context =>
-            log(
-              'Reached CheckKeyPair context -> ',
-              JSON.stringify(context, null, 4),
-            ),
-          send('CHECK_KEY_PAIR'),
-        ],
+        entry: [send('CHECK_KEY_PAIR')],
         on: {
           CHECK_KEY_PAIR: [
             {
@@ -176,7 +169,8 @@ export const IssuersMachine = model.createMachine(
             target: 'verifyingCredential',
           },
           onError: {
-            actions: () => console.log('in error of downloadCredential'),
+            actions: event =>
+              console.log(' error occured in downloadCredential', event),
           },
         },
         on: {
@@ -437,7 +431,6 @@ export const IssuersMachine = model.createMachine(
           isBiometricsEnabled,
           0,
         );
-        return context;
       },
       verifyCredential: async context => {
         return verifyCredential(context.verifiableCredential?.credential);
