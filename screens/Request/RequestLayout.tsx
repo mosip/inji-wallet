@@ -70,6 +70,7 @@ export const RequestLayout: React.FC = () => {
           message={t('status.accepted.message')}
           onBackdropPress={controller.DISMISS}
           iconName={Theme.SuccessLogo}
+          testId={'vcAcceptedPopUp'}
         />
       )}
 

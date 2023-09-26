@@ -3,12 +3,14 @@ import {Dimensions, Image, View} from 'react-native';
 import {Centered, Column} from './Layout';
 import {Theme} from './styleUtils';
 import {Text} from './Text';
+import testIDProps from '../../shared/commonUtil';
 
 export const SquircleIconPopUpModal: React.FC<
   SquircleIconPopUpModalProps
 > = props => {
   return (
     <View
+      {...testIDProps(props.testId)}
       style={Theme.MessageStyles.viewContainer}
       onTouchStart={props.onBackdropPress}>
       <Centered fill>
@@ -38,5 +40,6 @@ export const SquircleIconPopUpModal: React.FC<
 export interface SquircleIconPopUpModalProps {
   message: string;
   iconName: any;
+  testId: string;
   onBackdropPress?: () => void;
 }
