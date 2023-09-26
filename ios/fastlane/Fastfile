@@ -170,8 +170,8 @@ platform :ios do
     build_path: "./build",
     )
 
-    find_command = "find '../build/' -type d -name 'Applications'"
+    find_command = "find '../build/' -type d -name 'Products'"
     app_path = sh(find_command, log: false).strip
-    sh("cp -R '#{app_path}' '#{custom_output_directory}/Inji'")
+    sh("cp -R '#{app_path}' '#{custom_output_directory}'")
    end 
 end
