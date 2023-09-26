@@ -113,7 +113,7 @@ jobs:
         with:
           name: Inji
           path: ios/fastlane/Inji_app_file/Products/Applications/
-          retention-days: 10
+          retention-days: 1
 
       - name: Upload Runner Log on Failure
         if: failure() # Only run this step if the previous steps failed
