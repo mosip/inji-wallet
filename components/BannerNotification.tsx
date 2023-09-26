@@ -3,10 +3,11 @@ import {View} from 'react-native';
 import {Row, Text} from './ui';
 import {Theme} from './ui/styleUtils';
 import {Icon} from 'react-native-elements';
+import testIDProps from '../shared/commonUtil';
 
 export const BannerNotification: React.FC<BannerNotificationProps> = props => {
   return (
-    <View testID="activatedPopUp">
+    <View {...testIDProps(props.testId)}>
       <Row style={Theme.Styles.downloadingVcPopUp}>
         <Text color={Theme.Colors.whiteText} weight="semibold" size="smaller">
           {props.message}
@@ -26,4 +27,5 @@ export const BannerNotification: React.FC<BannerNotificationProps> = props => {
 export interface BannerNotificationProps {
   message: string;
   onClosePress: () => void;
+  testId: string;
 }

@@ -59,12 +59,14 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
               controller.RESET_STORE_VC_ITEM_STATUS();
               clearIndividualId();
             }}
+            testId={'downloadingVcPopup'}
           />
         )}
         {controller.isBindingSuccess && (
           <BannerNotification
             message={t('activated')}
             onClosePress={controller.DISMISS_WALLET_BINDING_NOTIFICATION_BANNER}
+            testId={'activatedVcPopup'}
           />
         )}
         <Column fill pY={11} pX={8}>

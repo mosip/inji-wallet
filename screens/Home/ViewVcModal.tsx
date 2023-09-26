@@ -42,6 +42,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
         <BannerNotification
           message={t('activated')}
           onClosePress={controller.DISMISS}
+          testId={'activatedVcPopup'}
         />
       )}
       <Column scroll>
