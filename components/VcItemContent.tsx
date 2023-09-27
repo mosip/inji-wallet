@@ -129,13 +129,13 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
                       ? Theme.Colors.LoadingDetailsLabel
                       : Theme.Colors.DetailsLabel
                   }
-                  weight="semibold"
+                  weight="bold"
                   size="smaller"
                   align="left">
                   {t('idType')}
                 </Text>
                 <Text
-                  weight="regular"
+                  weight="bold"
                   color={Theme.Colors.Details}
                   size="smaller"
                   style={

@@ -74,7 +74,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
                     {t('idType')}
                   </Text>
                   <Text
-                    weight="bold"
+                    weight="semibold"
                     size="smaller"
                     color={Theme.Colors.Details}>
                     {t('nationalCard')}
