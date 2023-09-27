@@ -20,7 +20,8 @@ export const Text: React.FC<TextProps> = (props: TextProps) => {
     <RNText
       {...testIDProps(props.testID)}
       style={textStyles}
-      numberOfLines={props.numLines}>
+      numberOfLines={props.numLines}
+      accessible={props.accessible}>
       {props.children}
     </RNText>
   );
@@ -33,8 +34,9 @@ interface TextProps {
   weight?: 'regular' | 'semibold' | 'bold';
   align?: TextStyle['textAlign'];
   margin?: Spacing;
-  size?: 'small' | 'smaller' | 'regular' | 'large';
+  size?: 'small' | 'extraSmall' | 'smaller' | 'regular' | 'large';
   lineHeight?: number;
   numLines?: number;
   style?: StyleProp<TextStyle>;
+  accessible?: boolean | true;
 }

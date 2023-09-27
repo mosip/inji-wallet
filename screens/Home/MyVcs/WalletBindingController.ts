@@ -1,34 +1,33 @@
-import { useSelector, useInterpret } from '@xstate/react';
-import { useContext, useRef, useState } from 'react';
-import { GlobalContext } from '../../../shared/GlobalContext';
-import { selectMyVcsMetadata, VcEvents } from '../../../machines/vc';
+import {useSelector, useInterpret} from '@xstate/react';
+import {useContext, useRef, useState} from 'react';
+import {GlobalContext} from '../../../shared/GlobalContext';
+import {selectMyVcsMetadata, VcEvents} from '../../../machines/vc';
 import {
-  createVcItemMachine,
+  createExistingMosipVCItemMachine,
   isShowingBindingWarning,
   selectAcceptingBindingOtp,
-  isWalletBindingInProgress,
-  VcItemEvents,
+  ExistingMosipVCItemEvents,
   selectIsAcceptingOtpInput,
   selectOtpError,
   selectShowWalletBindingError,
   selectWalletBindingError,
-} from '../../../machines/vcItem';
-import { useTranslation } from 'react-i18next';
+} from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
+import {useTranslation} from 'react-i18next';
 
-import { ActorRefFrom } from 'xstate';
+import {ActorRefFrom} from 'xstate';
 
 export function useWalletBinding(props) {
-  const { t } = useTranslation('ProfileScreen');
-  const { appService } = useContext(GlobalContext);
+  const {t} = useTranslation('ProfileScreen');
+  const {appService} = useContext(GlobalContext);
 
   const machine = useRef(
-    createVcItemMachine(
+    createExistingMosipVCItemMachine(
       appService.getSnapshot().context.serviceRefs,
-      props.vcMetadata
-    )
+      props.vcMetadata,
+    ),
   );
 
-  const bindingService = useInterpret(machine.current, { devTools: __DEV__ });
+  const bindingService = useInterpret(machine.current, {devTools: __DEV__});
 
   const vcService = appService.children.get('vc');
 
@@ -52,7 +51,7 @@ export function useWalletBinding(props) {
 
   const WalletBindingInProgress = useSelector(
     bindingService,
-    isWalletBindingInProgress
+    isWalletBindingInProgress,
   );
 
   return {
@@ -66,16 +65,18 @@ export function useWalletBinding(props) {
     isAcceptingOtpInput: useSelector(bindingService, selectIsAcceptingOtpInput),
     isAcceptingBindingOtp: useSelector(
       bindingService,
-      selectAcceptingBindingOtp
+      selectAcceptingBindingOtp,
     ),
     isBindingError: useSelector(bindingService, selectShowWalletBindingError),
     walletBindingError: useSelector(bindingService, selectWalletBindingError),
+    RESEND_OTP: () =>
+      bindingService.send(ExistingMosipVCItemEvents.RESEND_OTP()),
 
-    DISMISS: () => bindingService.send(VcItemEvents.DISMISS()),
+    DISMISS: () => bindingService.send(ExistingMosipVCItemEvents.DISMISS()),
 
-    CONFIRM: () => bindingService.send(VcItemEvents.CONFIRM()),
+    CONFIRM: () => bindingService.send(ExistingMosipVCItemEvents.CONFIRM()),
 
-    CANCEL: () => bindingService.send(VcItemEvents.CANCEL()),
+    CANCEL: () => bindingService.send(ExistingMosipVCItemEvents.CANCEL()),
 
     REFRESH: () => vcService.send(VcEvents.REFRESH_MY_VCS()),
     setAuthenticating,

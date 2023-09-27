@@ -1,4 +1,7 @@
-import {DecodedCredential, VerifiableCredential} from '../types/vc';
+import {
+  DecodedCredential,
+  VerifiableCredential,
+} from '../types/VC/ExistingMosipVC/vc';
 import {__AppId} from './GlobalVariables';
 import {HOST, MIMOTO_BASE_URL} from './constants';
 

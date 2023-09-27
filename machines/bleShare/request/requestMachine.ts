@@ -12,7 +12,7 @@ import {createModel} from 'xstate/lib/model';
 import {DeviceInfo} from '../../../components/DeviceInfoList';
 import {getDeviceNameSync} from 'react-native-device-info';
 import {StoreEvents} from '../../store';
-import {VC} from '../../../types/vc';
+import {VC} from '../../../types/VC/ExistingMosipVC/vc';
 import {AppServices} from '../../../shared/GlobalContext';
 import {RECEIVED_VCS_STORE_KEY} from '../../../shared/constants';
 import {ActivityLogEvents, ActivityLogType} from '../../activityLog';
@@ -491,15 +491,21 @@ export const requestMachine =
         },
         disconnected: {
           on: {
-            DISMISS: {
+            RESET: {
               target: 'waitingForConnection',
+            },
+            DISMISS: {
+              target: '#request.reviewing.navigatingToHome',
             },
           },
         },
         handlingBleError: {
           on: {
+            RESET: {
+              target: 'checkNearbyDevicesPermission',
+            },
             DISMISS: {
-              target: '#request.clearingConnection',
+              target: '#request.reviewing.navigatingToHome',
             },
           },
         },

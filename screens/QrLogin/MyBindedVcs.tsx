@@ -1,16 +1,16 @@
 import React from 'react';
-import { Button, Column, Text, Centered } from '../../components/ui';
-import { Theme } from '../../components/ui/styleUtils';
-import { useTranslation } from 'react-i18next';
-import { VcItem } from '../../components/VcItem';
-import { useQrLogin } from './QrLoginController';
-import { QrLoginRef } from '../../machines/QrLoginMachine';
-import { Icon } from 'react-native-elements';
-import { Modal } from '../../components/ui/Modal';
+import {Button, Centered, Column, Text} from '../../components/ui';
+import {Theme} from '../../components/ui/styleUtils';
+import {useTranslation} from 'react-i18next';
+import {useQrLogin} from './QrLoginController';
+import {QrLoginRef} from '../../machines/QrLoginMachine';
+import {Icon} from 'react-native-elements';
+import {Modal} from '../../components/ui/Modal';
+import {VcItemContainer} from '../../components/VC/VcItemContainer';
 
-export const MyBindedVcs: React.FC<MyBindedVcsProps> = (props) => {
+export const MyBindedVcs: React.FC<MyBindedVcsProps> = props => {
   const controller = useQrLogin(props);
-  const { t } = useTranslation('QrScreen');
+  const {t} = useTranslation('QrScreen');
 
   return (
     <Modal
@@ -22,7 +22,7 @@ export const MyBindedVcs: React.FC<MyBindedVcsProps> = (props) => {
         controller.DISMISS();
       }}>
       <React.Fragment>
-        <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
+        <Column fill style={{display: props.isVisible ? 'flex' : 'none'}}>
           <Column fill>
             {controller.shareableVcsMetadata.length > 0 && (
               <>
@@ -34,7 +34,7 @@ export const MyBindedVcs: React.FC<MyBindedVcsProps> = (props) => {
                       {controller.shareableVcsMetadata.length > 0 &&
                         controller.shareableVcsMetadata.map(
                           (vcMetadata, index) => (
-                            <VcItem
+                            <VcItemContainer
                               key={vcMetadata.getVcKey()}
                               vcMetadata={vcMetadata}
                               margin="0 2 8 2"
@@ -43,7 +43,7 @@ export const MyBindedVcs: React.FC<MyBindedVcsProps> = (props) => {
                               selectable
                               selected={index === controller.selectedIndex}
                             />
-                          )
+                          ),
                         )}
                     </Column>
                   </Column>
