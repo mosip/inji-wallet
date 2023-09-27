@@ -26,8 +26,8 @@ const Colors = {
   GradientColors: ['#D0AF72', '#B1915D'],
   DisabledColors: ['#C7C7C7', '#C7C7C7'],
   captureIconBorder: '#F59B4B',
-  Purple: '#936C2D',
-  LightPurple: '#ce911e26',
+  Gold: '#936C2D',
+  LightGold: '#ce911e26',
   TimeoutHintBoxColor: '#FFF7E5',
   TimoutText: '#8B6105',
   resendCodeTimer: '#555555',
@@ -37,19 +37,19 @@ export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 export const EldoriaTheme = {
   Colors: {
-    TabItemText: Colors.Purple,
+    TabItemText: Colors.Gold,
     Details: Colors.Black,
-    DetailsLabel: Colors.Purple,
-    LoadingDetailsLabel: Colors.Purple,
-    AddIdBtnBg: Colors.Purple,
-    AddIdBtnTxt: Colors.Purple,
+    DetailsLabel: Colors.Gold,
+    LoadingDetailsLabel: Colors.Gold,
+    AddIdBtnBg: Colors.Gold,
+    AddIdBtnTxt: Colors.Gold,
     DownloadIdBtnTxt: Colors.White,
-    Loading: Colors.Purple,
-    Cursor: Colors.Purple,
-    noUinText: Colors.Purple,
-    IconBg: Colors.Purple,
+    Loading: Colors.Gold,
+    Cursor: Colors.Gold,
+    noUinText: Colors.Gold,
+    IconBg: Colors.Gold,
     popUp: Colors.Green,
-    Icon: Colors.Purple,
+    Icon: Colors.Gold,
     GrayIcon: Colors.Grey,
     helpText: Colors.Gray44,
     borderBottomColor: Colors.Grey6,
@@ -60,8 +60,8 @@ export const EldoriaTheme = {
     profileAuthFactorUnlock: Colors.Grey,
     profileLabel: Colors.Black,
     profileValue: Colors.Grey,
-    switchHead: Colors.Purple,
-    switchTrackTrue: Colors.LightPurple,
+    switchHead: Colors.Gold,
+    switchTrackTrue: Colors.LightGold,
     switchTrackFalse: Colors.Grey,
     overlayBackgroundColor: Colors.White,
     rotatingIcon: Colors.Grey5,
@@ -78,18 +78,18 @@ export const EldoriaTheme = {
     flipCameraIcon: Colors.Black,
     IdInputModalBorder: Colors.Grey,
     RetrieveIdLabel: Colors.ShadeOfGrey,
-    inputSelection: Colors.Purple,
+    inputSelection: Colors.Gold,
     checkCircleIcon: Colors.White,
     OnboardingCircleIcon: Colors.White,
     OnboardingCloseIcon: Colors.White,
     WarningIcon: Colors.Warning,
-    DefaultToggle: Colors.LightPurple,
-    ProfileIconBg: Colors.LightPurple,
+    DefaultToggle: Colors.LightGold,
+    ProfileIconBg: Colors.LightGold,
     GrayText: Colors.GrayText,
     gradientBtn: Colors.GradientColors,
     dotColor: Colors.dorColor,
     plainText: Colors.plainText,
-    IconBackground: Colors.LightPurple,
+    IconBackground: Colors.LightGold,
     GradientColors: Colors.GradientColors,
     DisabledColors: Colors.DisabledColors,
     getVidColor: Colors.Zambezi,
@@ -134,7 +134,7 @@ export const EldoriaTheme = {
       borderRadius: 10,
     },
     vcItemLabelHeader: {
-      color: Colors.Purple,
+      color: Colors.Gold,
     },
     closeDetails: {
       flex: 1,
@@ -159,7 +159,7 @@ export const EldoriaTheme = {
       width: 36,
       height: 36,
       borderRadius: 6,
-      backgroundColor: Colors.LightPurple,
+      backgroundColor: Colors.LightGold,
     },
     popUp: {
       alignItems: 'center',
@@ -216,7 +216,7 @@ export const EldoriaTheme = {
       borderRadius: 10,
       margin: 5,
       borderWidth: 2,
-      borderColor: Colors.Purple,
+      borderColor: Colors.Gold,
     },
     labelPartContainer: {
       marginLeft: 16,
@@ -293,8 +293,8 @@ export const EldoriaTheme = {
       justifyContent: 'space-between',
     },
     logo: {
-      height: 35,
-      width: 90,
+      height: 47,
+      width: 48,
     },
     homeCloseCardDetailsHeader: {
       flex: 1,
@@ -318,7 +318,7 @@ export const EldoriaTheme = {
       width: 40,
       height: 40,
       borderRadius: 6,
-      backgroundColor: Colors.LightPurple,
+      backgroundColor: Colors.LightGold,
     },
     IconContainer: {
       padding: 6,
@@ -327,7 +327,7 @@ export const EldoriaTheme = {
       marginLeft: 10,
       height: 36,
       borderRadius: 10,
-      backgroundColor: Colors.LightPurple,
+      backgroundColor: Colors.LightGold,
     },
     settingsIconBg: {
       padding: 6,
@@ -341,7 +341,7 @@ export const EldoriaTheme = {
       width: 36,
       height: 36,
       borderRadius: 10,
-      backgroundColor: Colors.LightPurple,
+      backgroundColor: Colors.LightGold,
     },
     receiveCardsContainer: {
       height: Dimensions.get('window').height * 0.12,
@@ -360,7 +360,7 @@ export const EldoriaTheme = {
       borderRadius: 60,
       borderWidth: 10,
       borderColor: Colors.White,
-      backgroundColor: Colors.LightPurple,
+      backgroundColor: Colors.LightGold,
     },
     closeCardImage: {
       width: 105,
@@ -378,7 +378,7 @@ export const EldoriaTheme = {
       borderRadius: 14,
     },
     primaryRow: {
-      backgroundColor: Colors.LightPurple,
+      backgroundColor: Colors.LightGold,
       paddingHorizontal: 18,
       paddingVertical: 9,
       justifyContent: 'space-between',
@@ -406,7 +406,7 @@ export const EldoriaTheme = {
       borderWidth: 0,
     },
     tabIndicator: {
-      backgroundColor: Colors.Purple,
+      backgroundColor: Colors.Gold,
     },
     tabContainer: {
       backgroundColor: Colors.Transparent,
@@ -480,7 +480,7 @@ export const EldoriaTheme = {
     },
     onEnteringPin: {
       borderBottomWidth: 3,
-      borderColor: Colors.Purple,
+      borderColor: Colors.Gold,
       color: Colors.Black,
       flex: 1,
       fontFamily: 'Inter_700Bold',
@@ -575,7 +575,7 @@ export const EldoriaTheme = {
   }),
   ToastItemStyles: StyleSheet.create({
     toastContainer: {
-      backgroundColor: Colors.Purple,
+      backgroundColor: Colors.Gold,
       position: 'absolute',
       alignSelf: 'center',
       top: 80,
@@ -590,14 +590,14 @@ export const EldoriaTheme = {
       flex: 1,
     },
     solid: {
-      backgroundColor: Colors.Purple,
+      backgroundColor: Colors.Gold,
     },
     clear: {
       backgroundColor: Colors.Transparent,
     },
     outline: {
       backgroundColor: Colors.Transparent,
-      borderColor: Colors.Purple,
+      borderColor: Colors.Gold,
     },
     container: {
       height: 45,
@@ -607,7 +607,7 @@ export const EldoriaTheme = {
       backgroundColor: Colors.Grey,
     },
     addId: {
-      backgroundColor: Colors.Purple,
+      backgroundColor: Colors.Gold,
     },
     gradient: {
       borderRadius: 9,
@@ -628,7 +628,7 @@ export const EldoriaTheme = {
     },
     radius: {
       borderRadius: 10,
-      backgroundColor: Colors.Purple,
+      backgroundColor: Colors.Gold,
     },
   }),
   OIDCAuthStyles: StyleSheet.create({
@@ -857,7 +857,7 @@ export const EldoriaTheme = {
       position: 'absolute',
       top: 32,
       right: 0,
-      color: Colors.Purple,
+      color: Colors.Gold,
     },
   }),
   MessageStyles: StyleSheet.create({
@@ -922,7 +922,7 @@ export const EldoriaTheme = {
       padding: 20,
     },
     slider: {
-      backgroundColor: Colors.Purple,
+      backgroundColor: Colors.Gold,
       minHeight: 300,
       width: '100%',
       margin: 0,
@@ -967,26 +967,23 @@ export const EldoriaTheme = {
   }),
   OpenCard: '',
   CloseCard: '',
-  ProfileIcon: require('../../../purpleAssets/profile_icon.png'),
-  MosipSplashLogo: require('../../../eldoriaAssets/eldoria-home-logo.png'),
-  MosipLogo: require('../../../eldoriaAssets/eldoria-home-logo.png'),
+  ProfileIcon: require('../../../eldoriaAssets/profile-icon.png'),
+  MosipSplashLogo: require('../../../eldoriaAssets/eldoria-home-logo.png'), // change with splash
+  MosipLogo: require('../../../eldoriaAssets/main-logo.png'),
   DomainWarningLogo: require('../../../assets/domain-warning.png'),
   WarningLogo: require('../../../assets/warningLogo.png'),
   OtpLogo: require('../../../eldoriaAssets/otp-mobile-logo.png'),
   SuccessLogo: require('../../../assets/success-logo.png'),
-  ReceiveCardIcon: require('../../../assets/receive-card-icon.png'),
-  ReceivedCardsIcon: require('../../../assets/received-cards-icon.png'),
   DigitalIdentityLogo: require('../../../eldoriaAssets/digital-identity-icon.png'),
-  InjiLogoWhite: require('../../../assets/inji-logo-white.png'),
-  InjiProgressingLogo: require('../../../assets/progressing-logo.png'),
-  LockIcon: require('../../../assets/lock-icon.png'),
+  InjiProgressingLogo: require('../../../eldoriaAssets/main-logo.png'),
+  LockIcon: require('../../../eldoriaAssets/lock-icon.png'),
   InjiHomeLogo: require('../../../eldoriaAssets/eldoria-home-logo.png'),
   MagnifierZoom: require('../../../assets/magnifier-zoom.png'),
   HelpIcon: require('../../../eldoriaAssets/help-icon.png'),
+  injiSmallLogo: require('../../../eldoriaAssets/main-logo.png'),
   sharingIntro: require('../../../assets/Secure-Sharing.png'),
   walletIntro: require('../../../assets/intro-wallet-binding.png'),
   IntroScanner: require('../../../assets/intro-scanner.png'),
-  injiSmallLogo: require('../../../assets/inji_small_logo.png'),
   protectPrivacy: require('../../../assets/phone_mockup_1.png'),
 
   elevation(level: ElevationLevel): ViewStyle {
