@@ -33,7 +33,7 @@ export const ProgressingModal: React.FC<ProgressingModalProps> = (props) => {
             />
             {props.progress && (
               <PaginationDot
-                activeDotColor={'black'}
+                activeDotColor={Theme.Colors.dotColor}
                 curPage={curPage}
                 maxPage={3}
               />

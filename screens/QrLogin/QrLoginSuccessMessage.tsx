@@ -7,10 +7,17 @@ import { Centered, Button, Text, Column } from '../../components/ui';
 import { Theme } from '../../components/ui/styleUtils';
 import { useQrLogin } from './QrLoginController';
 import { QrLoginRef } from '../../machines/QrLoginMachine';
+import { APPLICATION_THEME } from 'react-native-dotenv';
 
 export const QrLoginSuccess: React.FC<QrLoginSuccessProps> = (props) => {
   const { t } = useTranslation('QrScreen');
   const controller = useQrLogin(props);
+  const clientName: Map<string, any> = new Map<string, any>([
+    ['purple', controller.clientName],
+    ['default', controller.clientName],
+    ['eldoria', 'Elidoria Authentication Platform'],
+    ['veridonia', 'Veridonia Authentication Platform'],
+  ]);
 
   return (
     <Modal
@@ -34,7 +41,7 @@ export const QrLoginSuccess: React.FC<QrLoginSuccessProps> = (props) => {
             margin="20 0 0 0"
             align="center">
             {t('successMessage')}
-            {controller.clientName}
+            {clientName.get(APPLICATION_THEME.toLocaleLowerCase())}
           </Text>
         </Centered>
         <Column
@@ -43,6 +50,7 @@ export const QrLoginSuccess: React.FC<QrLoginSuccessProps> = (props) => {
           margin="2 0 0 0"
           elevation={2}>
           <Button
+            type="gradient"
             title={t('okay')}
             margin="0 0 12 0"
             styles={Theme.ButtonStyles.radius}
