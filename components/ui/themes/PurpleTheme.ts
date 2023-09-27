@@ -111,6 +111,12 @@ export const PurpleTheme = {
       backgroundColor: Colors.Grey,
       borderRadius: 4,
     },
+    homeLogoStyle: {
+      width: 124,
+      height: 27,
+      resizeMode: 'contain',
+      marginLeft: 18,
+    },
     subtitle: {
       backgroundColor: Colors.Transparent,
     },

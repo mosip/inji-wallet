@@ -104,6 +104,12 @@ export const DefaultTheme = {
       color: Colors.Black,
       backgroundColor: Colors.Transparent,
     },
+    homeLogoStyle: {
+      width: 124,
+      height: 27,
+      resizeMode: 'contain',
+      marginLeft: 18,
+    },
     loadingTitle: {
       color: Colors.Transparent,
       backgroundColor: Colors.Grey,
