@@ -157,4 +157,20 @@ platform :ios do
     delete_temp_keychain(keychain_name)
 
   end
+  lane :build_app_for_automation_on_simulator do
+
+    custom_output_directory = "./Inji_app_file"
+    sh("mkdir -p '#{custom_output_directory}'")
+
+    archive_path = gym(
+    skip_package_ipa: true,
+    destination: "generic/platform=iOS Simulator",
+    configuration: "Release",
+    build_path: "./build",
+    )
+
+    find_command = "find '../build/' -type d -name 'Products'"
+    app_path = sh(find_command, log: false).strip
+    sh("cp -R '#{app_path}' '#{custom_output_directory}'")
+   end
 end
