@@ -48,6 +48,7 @@ on:
 
 jobs:
   build_ios:
+    if: ${{ github.event.inputs.app_file_upload == 'Push to TestFlight' || github.event.inputs.app_file_upload == 'Push and Upload'}}
     name: Deploying to Testflight
     runs-on: macos-13
 
