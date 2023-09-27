@@ -5,7 +5,7 @@ import { APPLICATION_THEME } from 'react-native-dotenv';
 
 // To change the theme, CSS theme file has to import and assign it to Theme in line no 6
 
-const ThemeMap: Map<string, any> = new Map([
+const ThemeMap: Map<string, any> = new Map<string, any>([
   ['orange', DefaultTheme],
   ['purple', PurpleTheme],
   ['eldoria', EldoriaTheme],
