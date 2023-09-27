@@ -157,6 +157,7 @@ platform :ios do
     delete_temp_keychain(keychain_name)
 
   end
+  
   lane :build_app_for_automation_on_simulator do
 
     custom_output_directory = "./Inji_app_file"
