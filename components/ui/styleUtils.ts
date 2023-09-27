@@ -1,10 +1,19 @@
 import { DefaultTheme } from './themes/DefaultTheme';
 import { PurpleTheme } from './themes/PurpleTheme';
+import { EldoriaTheme } from './themes/EldoriaTheme';
 import { APPLICATION_THEME } from 'react-native-dotenv';
 
 // To change the theme, CSS theme file has to import and assign it to Theme in line no 6
-export const Theme =
-  APPLICATION_THEME.toLowerCase() === 'purple' ? PurpleTheme : DefaultTheme;
+
+const ThemeMap: Map<string, any> = new Map([
+  ['orange', DefaultTheme],
+  ['purple', PurpleTheme],
+  ['eldoria', EldoriaTheme],
+]);
+
+export const Theme = ThemeMap.has(APPLICATION_THEME.toLowerCase())
+  ? ThemeMap.get(APPLICATION_THEME.toLowerCase())
+  : DefaultTheme;
 
 type SpacingXY = [number, number];
 type SpacingFull = [number, number, number, number];
