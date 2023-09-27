@@ -968,7 +968,7 @@ export const EldoriaTheme = {
   OpenCard: '',
   CloseCard: '',
   ProfileIcon: require('../../../eldoriaAssets/profile-icon.png'),
-  MosipSplashLogo: require('../../../eldoriaAssets/eldoria-home-logo.png'), // change with splash
+  MosipSplashLogo: require('../../../eldoriaAssets/eldoria-splash-logo.png'),
   MosipLogo: require('../../../eldoriaAssets/main-logo.png'),
   DomainWarningLogo: require('../../../assets/domain-warning.png'),
   WarningLogo: require('../../../assets/warningLogo.png'),
@@ -980,7 +980,7 @@ export const EldoriaTheme = {
   InjiHomeLogo: require('../../../eldoriaAssets/eldoria-home-logo.png'),
   MagnifierZoom: require('../../../assets/magnifier-zoom.png'),
   HelpIcon: require('../../../eldoriaAssets/help-icon.png'),
-  injiSmallLogo: require('../../../eldoriaAssets/main-logo.png'),
+  injiSmallLogo: require('../../../eldoriaAssets/white-logo.png'),
   sharingIntro: require('../../../assets/Secure-Sharing.png'),
   walletIntro: require('../../../assets/intro-wallet-binding.png'),
   IntroScanner: require('../../../assets/intro-scanner.png'),

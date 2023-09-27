@@ -164,7 +164,10 @@ android {
 
         manifestPlaceholders = [
             APP_NAME: APP_NAME_RELEASE,
-            GOOGLE_NEARBY_MESSAGES_API_KEY: "${properties.getProperty('GOOGLE_NEARBY_MESSAGES_API_KEY')}"
+            GOOGLE_NEARBY_MESSAGES_API_KEY: "${properties.getProperty('GOOGLE_NEARBY_MESSAGES_API_KEY')}",
+            app_name_eldoria: "Eldoria",
+            app_name_inji: "Inji",
+            app_name_veridonia: "Veridonia",
         ]
     }
     splits {

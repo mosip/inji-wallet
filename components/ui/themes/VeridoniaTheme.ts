@@ -969,7 +969,7 @@ export const VeridoniaTheme = {
   OpenCard: '',
   CloseCard: '',
   ProfileIcon: require('../../../veridoniaAssets/profile-icon.png'),
-  MosipSplashLogo: require('../../../assets/icon.png'),
+  MosipSplashLogo: require('../../../veridoniaAssets/veridonia-splash-logo.png'),
   MosipLogo: require('../../../assets/mosip-logo.png'),
   DomainWarningLogo: require('../../../assets/domain-warning.png'),
   WarningLogo: require('../../../assets/warningLogo.png'),
