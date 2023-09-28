@@ -336,7 +336,7 @@
     "cancel": "Cancel",
     "essentialClaims": "Important Claims",
     "voluntaryClaims": "Voluntary Claims",
-    "required": "It is necessary"
+    "required": "Required"
   },
   "ReceiveVcScreen": {
     "header": "Card details",

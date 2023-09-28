@@ -8,6 +8,7 @@ import { Icon, ListItem, Switch } from 'react-native-elements';
 import { Modal } from '../../components/ui/Modal';
 import { QrLoginRef } from '../../machines/QrLoginMachine';
 import { ScrollView } from 'react-native';
+import { Platform } from 'react-native';
 
 export const QrConsent: React.FC<QrConsentProps> = (props) => {
   const { t } = useTranslation('QrScreen');
@@ -54,7 +55,7 @@ export const QrConsent: React.FC<QrConsentProps> = (props) => {
             }
 
             {controller.essentialClaims.map((claim, index) => (
-              <Row key={index} align={'space-between'} margin={'10 0 0 20'}>
+              <Row key={index} align={'space-between'} margin={'20 0 20 20'}>
                 <Text
                   color={Theme.Colors.profileLabel}
                   style={Theme.TextStyles.base}>
@@ -63,10 +64,9 @@ export const QrConsent: React.FC<QrConsentProps> = (props) => {
                     .join(' ')}
                 </Text>
                 <Text
-                  color={Theme.Colors.GrayIcon}
+                  color={Theme.Colors.helpText}
                   style={Theme.TextStyles.small}
-                  weight="bold"
-                  margin={'10 0 10 6'}>
+                  weight="bold">
                   {t('required')}
                 </Text>
               </Row>
@@ -103,7 +103,14 @@ export const QrConsent: React.FC<QrConsentProps> = (props) => {
                   onValueChange={() =>
                     controller.SELECT_CONSENT(controller.isShare[claim], claim)
                   }
-                  color={Theme.Colors.Icon}
+                  trackColor={{
+                    false: Theme.Colors.switchTrackFalse,
+                    true:
+                      Platform.OS == 'ios'
+                        ? Theme.Colors.switchHead
+                        : Theme.Colors.switchTrackTrue,
+                  }}
+                  color={Theme.Colors.switchHead}
                 />
               </ListItem>
             ))}
@@ -114,7 +121,7 @@ export const QrConsent: React.FC<QrConsentProps> = (props) => {
           style={Theme.Styles.bottomButtonsContainer}
           elevation={5}>
           <Button
-            margin={'6 10 0 10'}
+            type="gradient"
             styles={Theme.ButtonStyles.radius}
             title={t('allow')}
             onPress={props.onConfirm}
