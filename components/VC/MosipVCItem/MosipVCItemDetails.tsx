@@ -8,7 +8,6 @@ import {VC, CredentialSubject} from '../../../types/VC/ExistingMosipVC/vc';
 import {Button, Column, Row, Text} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import {TextItem} from '../../ui/TextItem';
-import {VcItemTags} from '../common/VcItemTags';
 import VerifiedIcon from '../../VerifiedIcon';
 import {getLocalizedField} from '../../../i18n';
 import {CREDENTIAL_REGISTRY_EDIT} from 'react-native-dotenv';
@@ -331,7 +330,6 @@ export const MosipVCItemDetails: React.FC<
             </Column>
           )}
         </Column>
-        <VcItemTags tag={props.vc?.tag} />
       </ImageBackground>
 
       {props.vc?.reason?.length > 0 && (
@@ -433,7 +431,6 @@ export interface EsignetMosipVCItemDetailsProps {
 export interface EsignetVC {
   id: string;
   idType: VcIdType;
-  tag: string;
   verifiableCredential: VerifiableCredential;
   verifiablePresentation?: VerifiablePresentation;
   generatedOn: Date;

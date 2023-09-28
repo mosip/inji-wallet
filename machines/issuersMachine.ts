@@ -454,10 +454,6 @@ const updateCredentialInformation = (context, credential) => {
   credential.identifier = getIdentifier(context, credential);
   credential.generatedOn = new Date();
   credential.issuerLogo = context.selectedIssuer.logoUrl;
-  console.log(
-    'Response from downloadCredential',
-    JSON.stringify(credential, null, 4),
-  );
   return credential;
 };
 

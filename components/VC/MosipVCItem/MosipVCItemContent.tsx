@@ -3,7 +3,6 @@ import {useTranslation} from 'react-i18next';
 import {Image, ImageBackground, View} from 'react-native';
 import {getLocalizedField} from '../../../i18n';
 import {VerifiableCredential} from '../../../types/VC/ExistingMosipVC/vc';
-import {VcItemTags} from '../common/VcItemTags';
 import VerifiedIcon from '../../VerifiedIcon';
 import {Column, Row, Text} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
@@ -316,8 +315,6 @@ export const MosipVCItemContent: React.FC<
           </Column>
         </Row>
       </Column>
-
-      <VcItemTags tag={props.tag} />
     </ImageBackground>
   );
 };
@@ -326,7 +323,6 @@ interface ExistingMosipVCItemContentProps {
   context: any;
   verifiableCredential: VerifiableCredential;
   generatedOn: string;
-  tag: string;
   selectable: boolean;
   selected: boolean;
   iconName?: string;

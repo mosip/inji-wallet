@@ -8,7 +8,6 @@ import {
   selectGeneratedOn,
   ExistingMosipVCItemMachine,
   selectContext,
-  selectTag,
   selectEmptyWalletBindingId,
   selectIsSavingFailedInIdle,
   selectKebabPopUp,
@@ -64,11 +63,8 @@ export const MosipVCItem: React.FC<
   let DISMISS = () => service.send(ExistingMosipVCItemEvents.DISMISS());
   let KEBAB_POPUP = () => service.send(ExistingMosipVCItemEvents.KEBAB_POPUP());
   const isSavingFailedInIdle = useSelector(service, selectIsSavingFailedInIdle);
-
   const storeErrorTranslationPath = 'errors.savingFailed';
-
   let generatedOn = useSelector(service, selectGeneratedOn);
-  const tag = useSelector(service, selectTag);
   if (props.vcMetadata.isFromOpenId4VCI()) {
     context = useSelector(service, esignetSelectContext);
     isKebabPopUp = useSelector(service, esignetSelectKebabPopUp);
@@ -101,7 +97,6 @@ export const MosipVCItem: React.FC<
           context={context}
           verifiableCredential={verifiableCredential}
           generatedOn={formattedDate}
-          tag={tag}
           selectable={props.selectable}
           selected={props.selected}
           service={service}
