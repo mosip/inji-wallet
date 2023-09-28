@@ -69,6 +69,7 @@ const model = createModel(
       KEBAB_POPUP: () => ({}),
       SHOW_ACTIVITY: () => ({}),
       REMOVE: (vcMetadata: VCMetadata) => ({vcMetadata}),
+      UPDATE_VC_METADATA: (vcMetadata: VCMetadata) => ({vcMetadata}),
     },
   },
 );
@@ -87,6 +88,9 @@ export const EsignetMosipVCItemMachine = model.createMachine(
     on: {
       REFRESH: {
         target: '.checkingStore',
+      },
+      UPDATE_VC_METADATA: {
+        actions: 'setVcMetadata',
       },
     },
     description: 'VC',
@@ -448,6 +452,10 @@ export const EsignetMosipVCItemMachine = model.createMachine(
   },
   {
     actions: {
+      setVcMetadata: assign({
+        vcMetadata: (_, event) => event.vcMetadata,
+      }),
+
       requestVcContext: send(
         context => ({
           type: 'GET_VC_ITEM',
