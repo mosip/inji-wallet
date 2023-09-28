@@ -227,7 +227,6 @@ export function useScanLayout() {
     isBleError,
     DISMISS,
     isAccepted,
-    isSent,
     onRetry,
   };
 }
