@@ -316,7 +316,7 @@ export const VcDetails: React.FC<VcDetailsProps> = (props) => {
             <Button
               title={t('enableVerification')}
               onPress={props.onBinding}
-              type="radius"
+              type="gradient"
             />
           </Column>
         ) : (

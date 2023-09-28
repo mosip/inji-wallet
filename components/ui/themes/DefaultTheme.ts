@@ -104,6 +104,10 @@ export const DefaultTheme = {
       color: Colors.Black,
       backgroundColor: Colors.Transparent,
     },
+    progressingLogo: {
+      marginBottom: 15,
+      marginLeft: -6,
+    },
     homeLogoStyle: {
       width: 124,
       height: 27,

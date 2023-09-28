@@ -106,6 +106,10 @@ export const PurpleTheme = {
       color: Colors.Black,
       backgroundColor: Colors.Transparent,
     },
+    progressingLogo: {
+      marginBottom: 15,
+      marginLeft: -6,
+    },
     loadingTitle: {
       color: Colors.Transparent,
       backgroundColor: Colors.Grey,

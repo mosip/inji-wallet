@@ -24,7 +24,7 @@ const Colors = {
   plainText: '#FFD6A7',
   walletbindingLabel: '#000000',
   GradientColors: ['#D0AF72', '#B1915D'],
-  DisabledColors: ['#C7C7C7', '#C7C7C7'],
+  DisabledColors: ['#b0b0b0', '#b0b0b0'],
   captureIconBorder: '#F59B4B',
   Gold: '#936C2D',
   LightGold: '#ce911e26',
@@ -105,6 +105,12 @@ export const EldoriaTheme = {
     title: {
       color: Colors.Black,
       backgroundColor: Colors.Transparent,
+    },
+    progressingLogo: {
+      marginBottom: 15,
+      height: 63,
+      width: 100,
+      resizeMode: 'contain',
     },
     homeLogoStyle: {
       width: 124,
@@ -616,6 +622,8 @@ export const EldoriaTheme = {
       width: Dimensions.get('window').width * 0.72,
       alignSelf: 'center',
       margin: 4,
+      height: 50,
+      justifyContent: 'center',
     },
     float: {
       borderRadius: 9,

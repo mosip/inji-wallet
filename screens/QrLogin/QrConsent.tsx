@@ -55,7 +55,7 @@ export const QrConsent: React.FC<QrConsentProps> = (props) => {
             }
 
             {controller.essentialClaims.map((claim, index) => (
-              <Row key={index} align={'space-between'} margin={'10 0 0 20'}>
+              <Row key={index} align={'space-between'} margin={'20 0 20 20'}>
                 <Text
                   color={Theme.Colors.profileLabel}
                   style={Theme.TextStyles.base}>
@@ -66,8 +66,7 @@ export const QrConsent: React.FC<QrConsentProps> = (props) => {
                 <Text
                   color={Theme.Colors.helpText}
                   style={Theme.TextStyles.small}
-                  weight="bold"
-                  margin={'10 0 10 6'}>
+                  weight="bold">
                   {t('required')}
                 </Text>
               </Row>
