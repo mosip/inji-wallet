@@ -88,6 +88,9 @@ export const EsignetMosipVCItemMachine = model.createMachine(
       REFRESH: {
         target: '.checkingStore',
       },
+      UPDATE_VC_METADATA: {
+        actions: 'setVcMetadata',
+      },
     },
     description: 'VC',
     id: 'vc-item-openid4vci',
@@ -448,6 +451,10 @@ export const EsignetMosipVCItemMachine = model.createMachine(
   },
   {
     actions: {
+      setVcMetadata: assign({
+        vcMetadata: (_, event) => event.vcMetadata,
+      }),
+
       requestVcContext: send(
         context => ({
           type: 'GET_VC_ITEM',
