@@ -3,7 +3,6 @@ import {useInterpret, useSelector} from '@xstate/react';
 import {Pressable, View} from 'react-native';
 import {ActorRefFrom} from 'xstate';
 import {GlobalContext} from '../../../shared/GlobalContext';
-import {logState} from '../../../machines/app';
 import {Theme} from '../../ui/styleUtils';
 import {Row} from '../../ui';
 import {KebabPopUp} from '../../KebabPopUp';
@@ -19,7 +18,6 @@ import {
   selectKebabPopUp,
   selectVerifiableCredentials,
 } from '../../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
-import {ExistingMosipVCItemEvents} from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 
 export const EsignetMosipVCItem: React.FC<EsignetMosipVCItemProps> = props => {
   const {appService} = useContext(GlobalContext);
@@ -33,9 +31,7 @@ export const EsignetMosipVCItem: React.FC<EsignetMosipVCItemProps> = props => {
   const service = useInterpret(machine.current, {devTools: __DEV__});
 
   useEffect(() => {
-    service.send(
-      ExistingMosipVCItemEvents.UPDATE_VC_METADATA(props.vcMetadata),
-    );
+    service.send(EsignetMosipVCItemEvents.UPDATE_VC_METADATA(props.vcMetadata));
   }, [props.vcMetadata]);
 
   const context = useSelector(service, selectContext);
