@@ -23,6 +23,7 @@ import {
   isCustomSecureKeystore,
 } from './cryptoutil/cryptoUtil';
 import {VCMetadata} from './VCMetadata';
+import {ENOENT} from '../machines/store';
 
 const MMKV = new MMKVLoader().initialize();
 const vcDirectoryPath = `${DocumentDirectoryPath}/inji/VC`;
@@ -79,10 +80,33 @@ class Storage {
 
       return await MMKV.getItem(key);
     } catch (error) {
+      const isVCKey = VCMetadata.isVCKey(key);
+
+      if (isVCKey) {
+        const isDownloaded = await this.isVCAlreadyDownloaded(
+          key,
+          encryptionKey,
+        );
+
+        if (isDownloaded && error.message.includes(ENOENT)) {
+          throw new Error(ENOENT);
+        }
+        console.log('Error Occurred while retriving from Storage.', error);
+        throw error;
+      }
+
       console.log('Error Occurred while retriving from Storage.', error);
       throw error;
     }
   };
+
+  private static async isVCAlreadyDownloaded(
+    key: string,
+    encryptionKey: string,
+  ) {
+    const storedHMACofCurrentVC = await this.readHmacForVC(key, encryptionKey);
+    return storedHMACofCurrentVC !== null;
+  }
 
   private static async isCorruptedVC(
     key: string,
@@ -123,7 +147,12 @@ class Storage {
   static removeItem = async (key: string) => {
     if (VCMetadata.isVCKey(key)) {
       const path = getFilePath(key);
-      return await unlink(path);
+      const isFileExists = await exists(path);
+      if (isFileExists) {
+        return await unlink(path);
+      } else {
+        console.log('file not exist`s');
+      }
     }
     MMKV.removeItem(key);
   };

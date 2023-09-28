@@ -12,9 +12,10 @@ import {
   selectEmptyWalletBindingId,
   selectIsSavingFailedInIdle,
   selectKebabPopUp,
+  selectIsTampered,
 } from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {ExistingMosipVCItemEvents} from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
-import {ErrorMessageOverlay} from '../../MessageOverlay';
+import {ErrorMessageOverlay, MessageOverlay} from '../../MessageOverlay';
 import {Theme} from '../../ui/styleUtils';
 import {GlobalContext} from '../../../shared/GlobalContext';
 import {ExistingMosipVCItemContent} from './ExistingMosipVCItemContent';
@@ -23,6 +24,7 @@ import {Row} from '../../ui';
 import {KebabPopUp} from '../../KebabPopUp';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {format} from 'date-fns';
+import {useTranslation} from 'react-i18next';
 
 export const ExistingMosipVCItem: React.FC<
   ExistingMosipVCItemProps
@@ -57,6 +59,11 @@ export const ExistingMosipVCItem: React.FC<
   const generatedOn = useSelector(service, selectGeneratedOn);
   const formattedDate = format(new Date(generatedOn), 'MM/dd/yyyy');
   const tag = useSelector(service, selectTag);
+
+  const isTampered = useSelector(service, selectIsTampered);
+  const CLEAR_TAMPERED = () =>
+    service.send(ExistingMosipVCItemEvents.DISMISS());
+  const {t} = useTranslation('MyVcsTab');
 
   return (
     <React.Fragment>
@@ -114,6 +121,15 @@ export const ExistingMosipVCItem: React.FC<
         error={storeErrorTranslationPath}
         onDismiss={DISMISS}
         translationPath={'VcDetails'}
+      />
+
+      <MessageOverlay
+        isVisible={isTampered}
+        title={t('errors.vcIsTampered.title')}
+        message={t('errors.vcIsTampered.message')}
+        onButtonPress={CLEAR_TAMPERED}
+        buttonText={t('common:ok')}
+        customHeight={'auto'}
       />
     </React.Fragment>
   );

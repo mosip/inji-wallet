@@ -71,6 +71,7 @@ const model = createModel(
     walletBindingSuccess: false,
     publicKey: '',
     privateKey: '',
+    vcKey: '',
   },
   {
     events: {
@@ -100,6 +101,7 @@ const model = createModel(
       SHOW_ACTIVITY: () => ({}),
       REMOVE: (vcMetadata: VCMetadata) => ({vcMetadata}),
       UPDATE_VC_METADATA: (vcMetadata: VCMetadata) => ({vcMetadata}),
+      TAMPERED_VC: (key: string) => ({key}),
     },
   },
 );
@@ -161,6 +163,10 @@ export const ExistingMosipVCItemMachine =
                 target: 'checkingServerData',
               },
             ],
+            TAMPERED_VC: {
+              actions: 'setVckey',
+              target: 'tamperedVC',
+            },
           },
         },
         checkingServerData: {
@@ -450,7 +456,7 @@ export const ExistingMosipVCItemMachine =
               entry: 'removeVcItem',
               on: {
                 STORE_RESPONSE: {
-                  actions: ['removedVc', 'logVCremoved'],
+                  actions: ['refreshMyVcs', 'logVCremoved'],
                   target: '#vc-item',
                 },
               },
@@ -778,6 +784,22 @@ export const ExistingMosipVCItemMachine =
             },
           },
         },
+        tamperedVC: {
+          on: {
+            DISMISS: {
+              target: 'removingVc',
+            },
+          },
+        },
+        removingVc: {
+          entry: 'removeTamperedVcItem',
+          on: {
+            STORE_RESPONSE: {
+              actions: ['refreshMyVcs', 'logTamperedVCremoved', 'resetVckey'],
+              target: '#vc-item',
+            },
+          },
+        },
       },
     },
     {
@@ -803,6 +825,14 @@ export const ExistingMosipVCItemMachine =
             verifiableCredential: null,
             vcMetadata: context.vcMetadata,
           };
+        }),
+
+        setVckey: assign({
+          vcKey: (context, event) => event.key,
+        }),
+
+        resetVckey: assign({
+          vcKey: (context, event) => '',
         }),
 
         removeVcMetaDataFromStorage: send(
@@ -933,16 +963,6 @@ export const ExistingMosipVCItemMachine =
           },
         ),
 
-        VcUpdated: send(
-          context => {
-            const {serviceRefs, ...vc} = context;
-            return {type: 'VC_UPDATE', vc};
-          },
-          {
-            to: context => context.serviceRefs.vc,
-          },
-        ),
-
         setThumbprintForWalletBindingId: send(
           context => {
             const {walletBindingResponse} = context;
@@ -959,7 +979,7 @@ export const ExistingMosipVCItemMachine =
           },
         ),
 
-        removedVc: send(
+        refreshMyVcs: send(
           () => ({
             type: 'REFRESH_MY_VCS',
           }),
@@ -1161,11 +1181,31 @@ export const ExistingMosipVCItemMachine =
           {to: context => context.serviceRefs.store},
         ),
 
+        removeTamperedVcItem: send(
+          _context => {
+            return StoreEvents.REMOVE(MY_VCS_STORE_KEY, _context.vcKey);
+          },
+          {to: context => context.serviceRefs.store},
+        ),
+
         logVCremoved: send(
           (context, _) =>
             ActivityLogEvents.LOG_ACTIVITY({
               _vcKey: context.vcMetadata.getVcKey(),
               type: 'VC_REMOVED',
+              timestamp: Date.now(),
+              deviceName: '',
+              vcLabel: context.vcMetadata.id,
+            }),
+          {
+            to: context => context.serviceRefs.activityLog,
+          },
+        ),
+        logTamperedVCremoved: send(
+          (context, _) =>
+            ActivityLogEvents.LOG_ACTIVITY({
+              _vcKey: new VCMetadata(context).getVcKey(),
+              type: 'TAMPERED_VC_REMOVED',
               timestamp: Date.now(),
               deviceName: '',
               vcLabel: context.vcMetadata.id,
@@ -1589,4 +1629,8 @@ export function selectShowActivities(state: State) {
 
 export function selectIsSavingFailedInIdle(state: State) {
   return state.matches('checkingServerData.savingFailed.idle');
+}
+
+export function selectIsTampered(state: State) {
+  return state.matches('tamperedVC');
 }

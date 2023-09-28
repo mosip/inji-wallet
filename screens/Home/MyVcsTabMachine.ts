@@ -8,7 +8,7 @@ import {
   StateFrom,
 } from 'xstate';
 import {createModel} from 'xstate/lib/model';
-import {StoreEvents, StoreResponseEvent} from '../../machines/store';
+import {StoreEvents} from '../../machines/store';
 import {VcEvents} from '../../machines/vc';
 import {ExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {AppServices} from '../../shared/GlobalContext';
@@ -26,7 +26,6 @@ const model = createModel(
   },
   {
     events: {
-      REFRESH: () => ({}),
       VIEW_VC: (
         vcItemActor:
           | ActorRefFrom<typeof ExistingMosipVCItemMachine>
@@ -41,7 +40,6 @@ const model = createModel(
       GET_VC: () => ({}),
       STORAGE_AVAILABLE: () => ({}),
       STORAGE_UNAVAILABLE: () => ({}),
-      IS_TAMPERED: () => ({}),
       SET_STORE_VC_ITEM_STATUS: () => ({}),
       RESET_STORE_VC_ITEM_STATUS: () => ({}),
       DOWNLOAD_VIA_ID: () => ({}),
@@ -96,10 +94,6 @@ export const MyVcsTabMachine = model.createMachine(
           ADD_VC: 'addVc',
           VIEW_VC: 'viewingVc',
           GET_VC: 'gettingVc',
-          IS_TAMPERED: {
-            target: 'idle',
-            actions: ['resetIsTampered', 'refreshMyVc'],
-          },
           SET_STORE_VC_ITEM_STATUS: {
             target: 'idle',
             actions: 'setStoringVcItemStatus',
@@ -177,14 +171,6 @@ export const MyVcsTabMachine = model.createMachine(
     },
 
     actions: {
-      refreshMyVc: send(_context => VcEvents.REFRESH_MY_VCS(), {
-        to: context => context.serviceRefs.vc,
-      }),
-
-      resetIsTampered: send(() => StoreEvents.RESET_IS_TAMPERED(), {
-        to: context => context.serviceRefs.store,
-      }),
-
       viewVcFromParent: sendParent((_context, event: ViewVcEvent) =>
         model.events.VIEW_VC(event.vcItemActor),
       ),

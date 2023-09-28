@@ -14,7 +14,8 @@
     "QRLOGIN_SUCCESFULL": "QRLogin successful",
     "WALLET_BINDING_SUCCESSFULL": "Activation successful",
     "WALLET_BINDING_FAILURE": "Activation failed",
-    "VC_REMOVED": "Removed from wallet"
+    "VC_REMOVED": "Removed from wallet",
+    "TAMPERED_VC_REMOVED": "Some cards removed due to malicious activity"
   },
   "DeviceInfoList": {
     "requestedBy": "Requested by",
@@ -160,7 +161,7 @@
   "IssuersScreen": {
     "title": "Add new card",
     "header": "Please select a preferred method from below to add a new card",
-    "itemHeading":"Download via {{issuer}}",
+    "itemHeading": "Download via {{issuer}}",
     "itemSubHeading": "Enter the mentioned ID and get your card",
     "modal": {
       "title": "In Progress",

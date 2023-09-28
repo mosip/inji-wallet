@@ -29,11 +29,11 @@ import {VCMetadata} from '../shared/VCMetadata';
 export const keyinvalidatedString =
   'Key Invalidated due to biometric enrollment';
 export const tamperedErrorMessageString = 'Data is tampered';
+export const ENOENT = 'No such file or directory';
 
 const model = createModel(
   {
     encryptionKey: '',
-    isTampered: false as boolean,
   },
   {
     events: {
@@ -58,8 +58,7 @@ const model = createModel(
         requester,
       }),
       STORE_ERROR: (error: Error, requester?: string) => ({error, requester}),
-      TAMPERED_VC: () => ({}),
-      RESET_IS_TAMPERED: () => ({}),
+      TAMPERED_VC: (key: string, requester?: string) => ({key, requester}),
     },
   },
 );
@@ -222,10 +221,11 @@ export const storeMachine =
               actions: sendParent('DECRYPT_ERROR'),
             },
             TAMPERED_VC: {
-              actions: ['setIsTamperedVc'],
-            },
-            RESET_IS_TAMPERED: {
-              actions: ['resetIsTamperedVc'],
+              actions: [
+                send((_, event) => model.events.TAMPERED_VC(event.key), {
+                  to: (_, event) => event.requester,
+                }),
+              ],
             },
           },
         },
@@ -246,14 +246,6 @@ export const storeMachine =
     },
     {
       actions: {
-        setIsTamperedVc: model.assign({
-          isTampered: () => true,
-        }),
-
-        resetIsTamperedVc: model.assign({
-          isTampered: () => false,
-        }),
-
         notifyParent: sendParent(model.events.READY()),
 
         forwardStoreRequest: send(
@@ -400,7 +392,11 @@ export const storeMachine =
                 callback(model.events.KEY_INVALIDATE_ERROR());
                 sendUpdate();
               } else if (e.message === tamperedErrorMessageString) {
-                callback(model.events.TAMPERED_VC());
+                callback(model.events.TAMPERED_VC(event.key, event.requester));
+                sendUpdate();
+              } else if (e.message === ENOENT) {
+                callback(model.events.TAMPERED_VC(event.key, event.requester));
+                sendUpdate();
               } else if (
                 e.message.includes('JSON') ||
                 e.message.includes('decrypt')
@@ -506,6 +502,7 @@ export async function getItem(
     if (
       e.message.includes(tamperedErrorMessageString) ||
       e.message.includes(keyinvalidatedString) ||
+      e.message.includes(ENOENT) ||
       e.message.includes('Key not found') // this error happens when previous get Item calls failed due to key invalidation and data and keys are deleted
     ) {
       throw e;
@@ -641,7 +638,3 @@ export async function removeItems(
 }
 
 type State = StateFrom<typeof storeMachine>;
-
-export function selectIsTampered(state: State) {
-  return state.context.isTampered;
-}
