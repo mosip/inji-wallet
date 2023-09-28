@@ -17,23 +17,38 @@ import {ExistingMosipVCItemEvents} from '../../../machines/VCItemMachine/Existin
 import {ErrorMessageOverlay} from '../../MessageOverlay';
 import {Theme} from '../../ui/styleUtils';
 import {GlobalContext} from '../../../shared/GlobalContext';
-import {ExistingMosipVCItemContent} from './ExistingMosipVCItemContent';
-import {ExistingMosipVCItemActivationStatus} from './ExistingMosipVCItemActivationStatus';
+import {MosipVCItemContent} from './MosipVCItemContent';
+import {MosipVCItemActivationStatus} from './MosipVCItemActivationStatus';
 import {Row} from '../../ui';
 import {KebabPopUp} from '../../KebabPopUp';
 import {logState} from '../../../machines/app';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {format} from 'date-fns';
+import {
+  createEsignetMosipVCItemMachine,
+  EsignetMosipVCItemEvents,
+  EsignetMosipVCItemMachine,
+  selectContext as esignetSelectContext,
+  selectEmptyWalletBindingId as esignetSelectEmptyWalletBindingId,
+  selectGeneratedOn as esignetSelectGeneratedOn,
+  selectKebabPopUp as esignetSelectKebabPopUp,
+  selectVerifiableCredentials as esignetSelectVerifiableCredentials,
+} from '../../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 
-export const ExistingMosipVCItem: React.FC<
-  ExistingMosipVCItemProps
+export const MosipVCItem: React.FC<
+  ExistingMosipVCItemProps | EsignetMosipVCItemProps
 > = props => {
   const {appService} = useContext(GlobalContext);
   const machine = useRef(
-    createExistingMosipVCItemMachine(
-      appService.getSnapshot().context.serviceRefs,
-      props.vcMetadata,
-    ),
+    !props.vcMetadata.isFromOpenId4VCI()
+      ? createExistingMosipVCItemMachine(
+          appService.getSnapshot().context.serviceRefs,
+          props.vcMetadata,
+        )
+      : createEsignetMosipVCItemMachine(
+          appService.getSnapshot().context.serviceRefs,
+          props.vcMetadata,
+        ),
   );
 
   const service = useInterpret(machine.current, {devTools: __DEV__});
@@ -42,21 +57,34 @@ export const ExistingMosipVCItem: React.FC<
     service.subscribe(logState);
   }, [service]);
 
-  const context = useSelector(service, selectContext);
-  const verifiableCredential = useSelector(service, selectVerifiableCredential);
-  const emptyWalletBindingId = useSelector(service, selectEmptyWalletBindingId);
-  const isKebabPopUp = useSelector(service, selectKebabPopUp);
-  const DISMISS = () => service.send(ExistingMosipVCItemEvents.DISMISS());
-  const KEBAB_POPUP = () =>
-    service.send(ExistingMosipVCItemEvents.KEBAB_POPUP());
+  let context = useSelector(service, selectContext);
+  let verifiableCredential = useSelector(service, selectVerifiableCredential);
+  let emptyWalletBindingId = useSelector(service, selectEmptyWalletBindingId);
+  let isKebabPopUp = useSelector(service, selectKebabPopUp);
+  let DISMISS = () => service.send(ExistingMosipVCItemEvents.DISMISS());
+  let KEBAB_POPUP = () => service.send(ExistingMosipVCItemEvents.KEBAB_POPUP());
   const isSavingFailedInIdle = useSelector(service, selectIsSavingFailedInIdle);
 
   const storeErrorTranslationPath = 'errors.savingFailed';
 
-  const generatedOn = useSelector(service, selectGeneratedOn);
-  const formattedDate = format(new Date(generatedOn), 'MM/dd/yyyy');
+  let generatedOn = useSelector(service, selectGeneratedOn);
   const tag = useSelector(service, selectTag);
-
+  if (props.vcMetadata.isFromOpenId4VCI()) {
+    context = useSelector(service, esignetSelectContext);
+    isKebabPopUp = useSelector(service, esignetSelectKebabPopUp);
+    generatedOn = useSelector(service, esignetSelectGeneratedOn);
+    emptyWalletBindingId = useSelector(
+      service,
+      esignetSelectEmptyWalletBindingId,
+    );
+    DISMISS = () => service.send(EsignetMosipVCItemEvents.DISMISS());
+    KEBAB_POPUP = () => service.send(EsignetMosipVCItemEvents.KEBAB_POPUP());
+    verifiableCredential = useSelector(
+      service,
+      esignetSelectVerifiableCredentials,
+    );
+  }
+  let formattedDate = generatedOn;
   return (
     <React.Fragment>
       <Pressable
@@ -68,7 +96,8 @@ export const ExistingMosipVCItem: React.FC<
             ? Theme.Styles.selectedBindedVc
             : Theme.Styles.closeCardBgContainer
         }>
-        <ExistingMosipVCItemContent
+        <MosipVCItemContent
+          vcMetadata={props.vcMetadata}
           context={context}
           verifiableCredential={verifiableCredential}
           generatedOn={formattedDate}
@@ -85,7 +114,8 @@ export const ExistingMosipVCItem: React.FC<
           <Row style={Theme.Styles.activationTab}>
             {props.activeTab !== 'receivedVcsTab' &&
               props.activeTab != 'sharingVcScreen' && (
-                <ExistingMosipVCItemActivationStatus
+                <MosipVCItemActivationStatus
+                  vcMetadata={props.vcMetadata}
                   verifiableCredential={verifiableCredential}
                   emptyWalletBindingId={emptyWalletBindingId}
                   onPress={() => props.onPress(service)}
@@ -126,6 +156,20 @@ export interface ExistingMosipVCItemProps {
   showOnlyBindedVc?: boolean;
   onPress?: (vcRef?: ActorRefFrom<typeof ExistingMosipVCItemMachine>) => void;
   onShow?: (vcRef?: ActorRefFrom<typeof ExistingMosipVCItemMachine>) => void;
+  activeTab?: string;
+  iconName?: string;
+  iconType?: string;
+  isSharingVc?: boolean;
+}
+
+export interface EsignetMosipVCItemProps {
+  vcMetadata: VCMetadata;
+  margin?: string;
+  selectable?: boolean;
+  selected?: boolean;
+  showOnlyBindedVc?: boolean;
+  onPress?: (vcRef?: ActorRefFrom<typeof EsignetMosipVCItemMachine>) => void;
+  onShow?: (vcRef?: ActorRefFrom<typeof EsignetMosipVCItemMachine>) => void;
   activeTab?: string;
   iconName?: string;
   iconType?: string;

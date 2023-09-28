@@ -1,7 +1,7 @@
 import {VC, VcIdType} from '../types/VC/ExistingMosipVC/vc';
 
 const VC_KEY_PREFIX = 'VC';
-const VC_ITEM_STORE_KEY_REGEX = '^VC_[a-z0-9-]+$';
+const VC_ITEM_STORE_KEY_REGEX = '^VC_[a-zA-Z0-9_-]+$';
 
 export class VCMetadata {
   idType: VcIdType | string = '';
@@ -57,12 +57,7 @@ export class VCMetadata {
   }
 
   static isVCKey(key: string): boolean {
-    //TODO: Check for VC downloaded via esignet as well
-    const [issuer, protocol, id] = key.split(':');
-
-    return (
-      key.startsWith('ESignet') || VCMetadata.vcKeyRegExp.exec(key) != null
-    );
+    return VCMetadata.vcKeyRegExp.exec(key) != null;
   }
 
   isFromOpenId4VCI() {
@@ -74,7 +69,8 @@ export class VCMetadata {
   getVcKey(): string {
     // openid for vc -> issuer:protocol:vcID
     //TODO: Separators for VC key to be maintained consistently
-    if (this.protocol) return `${this.issuer}_${this.protocol}_${this.id}`;
+    if (this.protocol)
+      return `${VC_KEY_PREFIX}_${this.issuer}_${this.protocol}_${this.id}`;
     return `${VC_KEY_PREFIX}_${this.requestId}`;
   }
 

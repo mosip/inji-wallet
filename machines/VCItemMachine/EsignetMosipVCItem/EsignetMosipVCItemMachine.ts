@@ -500,10 +500,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         context => {
           const {serviceRefs, ...data} = context;
           data.credentialRegistry = MIMOTO_BASE_URL;
-          return StoreEvents.SET(
-            VCMetadata.fromVC(context, true).getVcKey(),
-            data,
-          );
+          return StoreEvents.SET(VCMetadata.fromVC(context).getVcKey(), data);
         },
         {
           to: context => context.serviceRefs.store,
@@ -608,29 +605,14 @@ export const EsignetMosipVCItemMachine = model.createMachine(
           to: context => context.serviceRefs.vc,
         },
       ),
-      logDownloaded: send(
-        context => {
-          const {serviceRefs, ...data} = context;
-          return ActivityLogEvents.LOG_ACTIVITY({
-            _vcKey: VCMetadata.fromVC(data, true).getVcKey(),
-            type: 'VC_DOWNLOADED',
-            timestamp: Date.now(),
-            deviceName: '',
-            vcLabel: data.id,
-          });
-        },
-        {
-          to: context => context.serviceRefs.activityLog,
-        },
-      ),
       logWalletBindingSuccess: send(
         context =>
           ActivityLogEvents.LOG_ACTIVITY({
-            _vcKey: VCMetadata.fromVC(context, true).getVcKey(),
+            _vcKey: VCMetadata.fromVC(context).getVcKey(),
             type: 'WALLET_BINDING_SUCCESSFULL',
             timestamp: Date.now(),
             deviceName: '',
-            vcLabel: context.id,
+            vcLabel: VCMetadata.fromVC(context.vcMetadata).id,
           }),
         {
           to: context => context.serviceRefs.activityLog,
@@ -644,7 +626,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
             type: 'WALLET_BINDING_FAILURE',
             timestamp: Date.now(),
             deviceName: '',
-            vcLabel: context.id,
+            vcLabel: VCMetadata.fromVC(context.vcMetadata).id,
           }),
         {
           to: context => context.serviceRefs.activityLog,
@@ -811,4 +793,15 @@ export function selectGeneratedOn(state: State) {
 
 export function selectWalletBindingSuccess(state: State) {
   return state.context.walletBindingSuccess;
+}
+
+export function selectEmptyWalletBindingId(state: State) {
+  var val = state.context.walletBindingResponse
+    ? state.context.walletBindingResponse.walletBindingId
+    : undefined;
+  return val == undefined || val == null || val.length <= 0 ? true : false;
+}
+
+export function selectWalletBindingError(state: State) {
+  return state.context.walletBindingError;
 }

@@ -1,7 +1,6 @@
 import {authorize, AuthorizeResult} from 'react-native-app-auth';
 import {assign, EventFrom, send, sendParent, StateFrom} from 'xstate';
 import {createModel} from 'xstate/lib/model';
-import {Theme} from '../components/ui/styleUtils';
 import {MY_VCS_STORE_KEY} from '../shared/constants';
 import {request} from '../shared/request';
 import {StoreEvents} from './store';
@@ -266,36 +265,19 @@ export const IssuersMachine = model.createMachine(
       ),
 
       storeVerifiableCredentialMeta: send(
-        context => {
-          const [issuer, protocol, id] =
-            context.verifiableCredential?.identifier.split(':');
-          return StoreEvents.PREPEND(
-            MY_VCS_STORE_KEY,
-            VCMetadata.fromVC({
-              id: id ? id : null,
-              issuer: issuer,
-              protocol: protocol,
-            }),
-          );
-        },
+        context =>
+          StoreEvents.PREPEND(MY_VCS_STORE_KEY, getVCMetadata(context)),
         {
           to: context => context.serviceRefs.store,
         },
       ),
 
       storeVerifiableCredentialData: send(
-        context => {
-          const [issuer, protocol, id] =
-            context.verifiableCredential?.identifier.split(':');
-          return StoreEvents.SET(
-            VCMetadata.fromVC({
-              id: id ? id : null,
-              issuer: issuer,
-              protocol: protocol,
-            }).getVcKey(),
+        context =>
+          StoreEvents.SET(
+            getVCMetadata(context).getVcKey(),
             context.verifiableCredential,
-          );
-        },
+          ),
         {
           to: context => context.serviceRefs.store,
         },
@@ -303,16 +285,9 @@ export const IssuersMachine = model.createMachine(
 
       storeVcMetaContext: send(
         context => {
-          const [issuer, protocol, id] =
-            context.verifiableCredential?.identifier.split(':');
-
           return {
             type: 'VC_ADDED',
-            vcMetadata: VCMetadata.fromVC({
-              id: id ? id : null,
-              issuer: issuer,
-              protocol: protocol,
-            }),
+            vcMetadata: getVCMetadata(context),
           };
         },
         {
@@ -322,15 +297,9 @@ export const IssuersMachine = model.createMachine(
 
       storeVcsContext: send(
         context => {
-          const [issuer, protocol, id] =
-            context.verifiableCredential?.identifier.split(':');
           return {
             type: 'VC_DOWNLOADED_FROM_OPENID4VCI',
-            vcMetadata: VCMetadata.fromVC({
-              id: id ? id : null,
-              issuer: issuer,
-              protocol: protocol,
-            }),
+            vcMetadata: getVCMetadata(context),
             vc: context.verifiableCredential,
           };
         },
@@ -371,11 +340,11 @@ export const IssuersMachine = model.createMachine(
             context.verifiableCredential?.identifier.split(':');
 
           return ActivityLogEvents.LOG_ACTIVITY({
-            _vcKey: id,
+            _vcKey: getVCMetadata(context).getVcKey(),
             type: 'VC_DOWNLOADED',
             timestamp: Date.now(),
             deviceName: '',
-            vcLabel: '',
+            vcLabel: id,
           });
         },
         {
@@ -490,4 +459,14 @@ const updateCredentialInformation = (context, credential) => {
     JSON.stringify(credential, null, 4),
   );
   return credential;
+};
+
+const getVCMetadata = context => {
+  const [issuer, protocol, id] =
+    context.verifiableCredential?.identifier.split(':');
+  return VCMetadata.fromVC({
+    id: id ? id : null,
+    issuer: issuer,
+    protocol: protocol,
+  });
 };
