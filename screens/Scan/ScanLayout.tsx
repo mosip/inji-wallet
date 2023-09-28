@@ -39,7 +39,7 @@ export const ScanLayout: React.FC = () => {
       </ScanStack.Navigator>
 
       <ProgressingModal
-        isVisible={controller.statusOverlay != null}
+        isVisible={controller.statusOverlay != null && !controller.isSent}
         title={controller.statusOverlay?.title}
         hint={controller.statusOverlay?.hint}
         onCancel={controller.statusOverlay?.onButtonPress}
@@ -52,7 +52,11 @@ export const ScanLayout: React.FC = () => {
       />
 
       <SharingSuccessModal
-        isVisible={controller.isAccepted}
+        isVisible={
+          controller.isAccepted &&
+          controller.isSent &&
+          controller.statusOverlay == null
+        }
         testId={'sharingSuccessModal'}
       />
 
