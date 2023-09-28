@@ -19,6 +19,8 @@ on:
         options:
           - orange
           - purple
+          - eldoria
+          - veridonia
       buildDescription:
         description: 'What to test'
         required: true
