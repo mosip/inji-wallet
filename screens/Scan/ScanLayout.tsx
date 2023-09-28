@@ -39,7 +39,7 @@ export const ScanLayout: React.FC = () => {
       </ScanStack.Navigator>
 
       <ProgressingModal
-        isVisible={controller.statusOverlay != null}
+        isVisible={controller.statusOverlay != null && !controller.isAccepted}
         title={controller.statusOverlay?.title}
         hint={controller.statusOverlay?.hint}
         onCancel={controller.statusOverlay?.onButtonPress}
