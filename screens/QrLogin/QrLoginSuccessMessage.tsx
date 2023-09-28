@@ -15,7 +15,7 @@ export const QrLoginSuccess: React.FC<QrLoginSuccessProps> = (props) => {
   const clientName: Map<string, any> = new Map<string, any>([
     ['purple', controller.clientName],
     ['default', controller.clientName],
-    ['eldoria', 'Elidoria Authentication Platform'],
+    ['eldoria', 'Eldoria Authentication Platform'],
     ['veridonia', 'Veridonia Authentication Platform'],
   ]);
 
