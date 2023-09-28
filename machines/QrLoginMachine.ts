@@ -291,7 +291,7 @@ export const qrLoginMachine =
 
           clientName: (context) =>
             context.linkTransactionResponse.clientName ||
-            'Eldoria Authentication Platform',
+            'Veridonia Authentication Platform',
 
           configs: (context) => context.linkTransactionResponse.configs,
 
