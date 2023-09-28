@@ -289,7 +289,9 @@ export const qrLoginMachine =
           authorizeScopes: (context) =>
             context.linkTransactionResponse.authorizeScopes,
 
-          clientName: (context) => context.linkTransactionResponse.clientName,
+          clientName: (context) =>
+            context.linkTransactionResponse.clientName ||
+            'Eldoria Authentication Platform',
 
           configs: (context) => context.linkTransactionResponse.configs,
 

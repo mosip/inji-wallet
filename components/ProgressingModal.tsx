@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Centered, Column, Text } from './ui';
 import { Modal } from './ui/Modal';
-import { Image } from 'react-native';
+import { Image, View } from 'react-native';
 import { Theme } from './ui/styleUtils';
 import PaginationDot from 'react-native-animated-pagination-dot';
 
@@ -29,14 +29,16 @@ export const ProgressingModal: React.FC<ProgressingModalProps> = (props) => {
               source={Theme.InjiProgressingLogo}
               height={2}
               width={2}
-              style={{ marginBottom: 15, marginLeft: -6 }}
+              style={Theme.Styles.progressingLogo}
             />
             {props.progress && (
-              <PaginationDot
-                activeDotColor={'black'}
-                curPage={curPage}
-                maxPage={3}
-              />
+              <View style={{ alignItems: 'center' }}>
+                <PaginationDot
+                  activeDotColor={Theme.Colors.dotColor}
+                  curPage={curPage}
+                  maxPage={3}
+                />
+              </View>
             )}
           </Column>
 

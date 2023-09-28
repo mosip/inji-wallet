@@ -27,10 +27,7 @@ export const MainLayout: React.FC<RootRouteProps> = (props) => {
       <Row align="space-between">
         <HelpScreen
           triggerComponent={
-            <Image
-              source={require('../assets/help-icon.png')}
-              style={{ width: 36, height: 36 }}
-            />
+            <Image source={Theme.HelpIcon} style={{ width: 36, height: 36 }} />
           }
           navigation={undefined}
           route={undefined}

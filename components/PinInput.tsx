@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TextInput } from 'react-native';
 import { usePinInput } from '../machines/pinInput';
 import { Row } from './ui';
@@ -8,6 +8,7 @@ export const PinInput: React.FC<PinInputProps> = (props) => {
   const { state, send, events } = usePinInput(props.length);
   const { inputRefs, values } = state.context;
   const { UPDATE_INPUT, FOCUS_INPUT, KEY_PRESS } = events;
+  const [focusedIndex, setFocusedIndex] = useState(0);
 
   useEffect(() => {
     if (props.onDone && values.filter(Boolean).length === inputRefs.length) {
@@ -24,7 +25,11 @@ export const PinInput: React.FC<PinInputProps> = (props) => {
           maxLength={1}
           secureTextEntry
           selectionColor={Theme.Colors.inputSelection}
-          style={Theme.PinInputStyle.input}
+          style={
+            index > focusedIndex
+              ? Theme.PinInputStyle.input
+              : Theme.PinInputStyle.onEnteringPin
+          }
           key={index}
           ref={input}
           value={values[index]}
@@ -33,7 +38,10 @@ export const PinInput: React.FC<PinInputProps> = (props) => {
           onChangeText={(value: string) =>
             send(UPDATE_INPUT(value.replace(/\D/g, ''), index))
           }
-          onFocus={() => send(FOCUS_INPUT(index))}
+          onFocus={() => {
+            setFocusedIndex(index);
+            send(FOCUS_INPUT(index));
+          }}
         />
       ))}
     </Row>

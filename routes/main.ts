@@ -11,6 +11,7 @@ import { ScanLayout } from '../screens/Scan/ScanLayout';
 import { HistoryScreen } from '../screens/History/HistoryScreen';
 import i18n from '../i18n';
 import { Platform } from 'react-native';
+import { Theme } from '../components/ui/styleUtils';
 
 const home: TabScreen = {
   name: 'Home',
@@ -20,8 +21,8 @@ const home: TabScreen = {
     headerTitle: '',
     headerLeft: () =>
       React.createElement(Image, {
-        source: require('../assets/inji-home-logo.png'),
-        style: { width: 124, height: 27, resizeMode: 'contain' },
+        source: Theme.InjiHomeLogo,
+        style: Theme.Styles.homeLogoStyle,
       }),
   },
 };
