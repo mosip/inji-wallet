@@ -1,20 +1,20 @@
 import React from 'react';
-import { Button, Column, Row } from '../../components/ui';
-import { useTranslation } from 'react-i18next';
-import { useQrLogin } from './QrLoginController';
-import { Modal } from '../../components/ui/Modal';
-import { VerifyIdentityOverlay } from '../VerifyIdentityOverlay';
-import { MessageOverlay } from '../../components/MessageOverlay';
-import { MyBindedVcs } from './MyBindedVcs';
-import { QrLoginSuccess } from './QrLoginSuccessMessage';
-import { QrConsent } from './QrConsent';
-import { QrLoginRef } from '../../machines/QrLoginMachine';
-import { Icon } from 'react-native-elements';
-import { View } from 'react-native';
+import {Button, Column, Row} from '../../components/ui';
+import {useTranslation} from 'react-i18next';
+import {useQrLogin} from './QrLoginController';
+import {Modal} from '../../components/ui/Modal';
+import {VerifyIdentityOverlay} from '../VerifyIdentityOverlay';
+import {MessageOverlay} from '../../components/MessageOverlay';
+import {MyBindedVcs} from './MyBindedVcs';
+import {QrLoginSuccess} from './QrLoginSuccessMessage';
+import {QrConsent} from './QrConsent';
+import {QrLoginRef} from '../../machines/QrLoginMachine';
+import {Icon} from 'react-native-elements';
+import {View} from 'react-native';
 
-export const QrLogin: React.FC<QrLoginProps> = (props) => {
+export const QrLogin: React.FC<QrLoginProps> = props => {
   const controller = useQrLogin(props);
-  const { t } = useTranslation('QrScreen');
+  const {t} = useTranslation('QrScreen');
 
   return (
     <View
@@ -43,7 +43,7 @@ export const QrLogin: React.FC<QrLoginProps> = (props) => {
         <MessageOverlay
           isVisible={controller.isShowingError}
           title={controller.error}
-          onCancel={controller.DISMISS}
+          onButtonPress={controller.DISMISS}
         />
 
         <VerifyIdentityOverlay

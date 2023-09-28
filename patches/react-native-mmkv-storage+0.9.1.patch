@@ -1,0 +1,13 @@
+diff --git a/node_modules/react-native-mmkv-storage/ios/SecureStorage.m b/node_modules/react-native-mmkv-storage/ios/SecureStorage.m
+index dbea26b..623d894 100644
+--- a/node_modules/react-native-mmkv-storage/ios/SecureStorage.m
++++ b/node_modules/react-native-mmkv-storage/ios/SecureStorage.m
+@@ -224,7 +224,7 @@ - (void) setServiceName:(NSString *)_serviceName
+     serviceName = _serviceName;
+ }
+ 
+-NSError * secureKeyStoreError(NSString *errMsg)
++NSError * secureKeyStoreErrorHandler(NSString *errMsg)
+ {
+     NSError *error = [NSError errorWithDomain:serviceName code:200 userInfo:@{@"reason": errMsg}];
+     return error;

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite" parallel="tests" thread-count="2">
+    <listeners>
+        <listener class-name="listeners.Listeners"/>
+    </listeners>
+    <test verbose="2" preserve-order="true" name="android">
+        <parameter name="platformName" value="ANDROID"/>
+        <classes>
+            <class name="com.test.VcDownloadAndVerifyUsingUinTest">
+                <methods>
+                    <include name="downloadAndVerifyVcUsingUin"/>
+                </methods>
+            </class>
+            <class name="com.test.VerifyWelcomePagesTest">
+                <methods>
+                    <include name="verifyWelcomePagesContent"/>
+                </methods>
+            </class>
+            <class name="com.test.VcDownloadAndVerifyUsingVidTest">
+                <methods>
+                    <include name="downloadAndVerifyVcUsingVid"/>
+                </methods>
+            </class>
+            <class name="com.test.UnlockWithPasscodeTest">
+                <methods>
+                    <include name="logoutAndLoginWithPasscode"/>
+                </methods>
+            </class>
+            <class name="com.test.VerifyHelpPageTest">
+                <methods>
+                    <include name="verifyHelpPage"/>
+                </methods>
+            </class>
+            <class name="com.test.DeletingVcTest">
+                <methods>
+                    <include name="deleteVc"/>
+                </methods>
+            </class>
+            <class name="com.test.VerifyHistoryTest">
+                <methods>
+                    <include name="generateAndVerifyHistory"/>
+                </methods>
+            </class>
+            <class name="com.test.GenerateUinOrVidTest">
+                <methods>
+                    <include name="generateUinOrVidUsingAid"/>
+                </methods>
+            </class>
+            <class name="com.test.ActivateVcTest">
+                <methods>
+                    <include name="activateVc"/>
+                </methods>
+            </class>
+            <class name="com.test.PinVcTest">
+                <methods>
+                    <include name="pinVc"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

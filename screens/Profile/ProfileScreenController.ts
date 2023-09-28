@@ -1,7 +1,7 @@
-import { useMachine, useSelector } from '@xstate/react';
-import { useContext, useEffect, useState } from 'react';
+import {useMachine, useSelector} from '@xstate/react';
+import {useContext, useEffect, useState} from 'react';
 import * as LocalAuthentication from 'expo-local-authentication';
-import { selectBackendInfo } from '../../machines/app';
+import {selectBackendInfo} from '../../machines/app';
 import {
   AuthEvents,
   selectBiometrics,
@@ -22,12 +22,12 @@ import {
   selectIsSuccess,
   selectUnenrolledNotice,
 } from '../../machines/biometrics';
-import { MainRouteProps } from '../../routes/main';
-import { GlobalContext } from '../../shared/GlobalContext';
-import { useTranslation } from 'react-i18next';
+import {MainRouteProps} from '../../routes/main';
+import {GlobalContext} from '../../shared/GlobalContext';
+import {useTranslation} from 'react-i18next';
 
-export function useProfileScreen({ navigation }: MainRouteProps) {
-  const { appService } = useContext(GlobalContext);
+export function useProfileScreen({navigation}: MainRouteProps) {
+  const {appService} = useContext(GlobalContext);
   const authService = appService.children.get('auth');
   const settingsService = appService.children.get('settings');
 
@@ -40,9 +40,9 @@ export function useProfileScreen({ navigation }: MainRouteProps) {
   const errorMsgBio: string = useSelector(bioService, selectError);
   const unEnrolledNoticeBio: string = useSelector(
     bioService,
-    selectUnenrolledNotice
+    selectUnenrolledNotice,
   );
-  const { t } = useTranslation('AuthScreen');
+  const {t} = useTranslation('AuthScreen');
 
   useEffect(() => {
     setTimeout(async () => {
@@ -75,12 +75,12 @@ export function useProfileScreen({ navigation }: MainRouteProps) {
         settingsService.send(SettingsEvents.TOGGLE_BIOMETRIC_UNLOCK(true));
 
         // but if device does not have any enrolled biometrics
-      } else if (biometricState.matches({ failure: 'unenrolled' })) {
-        biometricSend({ type: 'RETRY_AUTHENTICATE' });
+      } else if (biometricState.matches({failure: 'unenrolled'})) {
+        biometricSend({type: 'RETRY_AUTHENTICATE'});
 
         // otherwise lets do a biometric auth
       } else {
-        biometricSend({ type: 'AUTHENTICATE' });
+        biometricSend({type: 'AUTHENTICATE'});
       }
     } else {
       authService.send(AuthEvents.SETUP_BIOMETRICS(''));
@@ -101,31 +101,29 @@ export function useProfileScreen({ navigation }: MainRouteProps) {
     credentialRegistry: useSelector(settingsService, selectCredentialRegistry),
     credentialRegistryResponse: useSelector(
       settingsService,
-      selectCredentialRegistryResponse
+      selectCredentialRegistryResponse,
     ),
     isBiometricUnlockEnabled: useSelector(
       settingsService,
-      selectBiometricUnlockEnabled
+      selectBiometricUnlockEnabled,
     ),
     canUseBiometrics: useSelector(authService, selectCanUseBiometrics),
     useBiometrics,
 
-    UPDATE_NAME: (name: string) =>
-      settingsService.send(SettingsEvents.UPDATE_NAME(name)),
+    UPDATE_NAME: names =>
+      settingsService.send(SettingsEvents.UPDATE_NAME(names[0].value)),
 
-    UPDATE_VC_LABEL: (label: string) =>
-      settingsService.send(SettingsEvents.UPDATE_VC_LABEL(label)),
+    UPDATE_VC_LABEL: labels =>
+      settingsService.send(SettingsEvents.UPDATE_VC_LABEL(labels[0].value)),
 
-    UPDATE_CREDENTIAL_REGISTRY: (credentialRegistry: string) =>
-      settingsService.send(
-        SettingsEvents.UPDATE_CREDENTIAL_REGISTRY(credentialRegistry)
-      ),
+    UPDATE_CREDENTIAL_REGISTRY: items =>
+      settingsService.send(SettingsEvents.UPDATE_MIMOTO_HOST(items[0].value)),
 
     UPDATE_CREDENTIAL_REGISTRY_RESPONSE: (credentialRegistryResponse: string) =>
       settingsService.send(
         SettingsEvents.UPDATE_CREDENTIAL_REGISTRY_RESPONSE(
-          credentialRegistryResponse
-        )
+          credentialRegistryResponse,
+        ),
       ),
 
     TOGGLE_BIOMETRIC: (enable: boolean) =>

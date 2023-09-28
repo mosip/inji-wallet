@@ -2,7 +2,7 @@
 
 export interface Typegen0 {
   '@@xstate/typegen': true;
-  'internalEvents': {
+  internalEvents: {
     'done.invoke.settings.resetInjiProps:invocation[0]': {
       type: 'done.invoke.settings.resetInjiProps:invocation[0]';
       data: unknown;
@@ -12,19 +12,20 @@ export interface Typegen0 {
       type: 'error.platform.settings.resetInjiProps:invocation[0]';
       data: unknown;
     };
-    'xstate.init': { type: 'xstate.init' };
+    'xstate.init': {type: 'xstate.init'};
   };
-  'invokeSrcNameMap': {
+  invokeSrcNameMap: {
     resetInjiProps: 'done.invoke.settings.resetInjiProps:invocation[0]';
   };
-  'missingImplementations': {
+  missingImplementations: {
     actions: 'injiTourGuide';
     delays: never;
     guards: never;
     services: never;
   };
-  'eventsCausingActions': {
+  eventsCausingActions: {
     injiTourGuide:
+      | 'ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS'
       | 'BACK'
       | 'CANCEL'
       | 'STORE_RESPONSE'
@@ -50,20 +51,20 @@ export interface Typegen0 {
     updateUserShownWithHardwareKeystoreNotExists: 'ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS';
     updateVcLabel: 'UPDATE_VC_LABEL';
   };
-  'eventsCausingDelays': {};
-  'eventsCausingGuards': {
+  eventsCausingDelays: {};
+  eventsCausingGuards: {
     hasData: 'STORE_RESPONSE';
     hasPartialData: 'STORE_RESPONSE';
   };
-  'eventsCausingServices': {
+  eventsCausingServices: {
     resetInjiProps: 'UPDATE_CREDENTIAL_REGISTRY';
   };
-  'matchesStates':
+  matchesStates:
     | 'idle'
     | 'init'
     | 'injiTourGuide'
     | 'resetInjiProps'
     | 'showInjiTourGuide'
     | 'storingDefaults';
-  'tags': never;
+  tags: never;
 }

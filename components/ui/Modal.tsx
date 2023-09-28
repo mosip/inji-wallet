@@ -1,33 +1,29 @@
 import React from 'react';
-import { I18nManager, Modal as RNModal, View } from 'react-native';
-import { Icon } from 'react-native-elements';
-import { Column, Row, Text } from '.';
-import { useSendVcScreen } from '../../screens/Scan/SendVcScreenController';
-import { DeviceInfoList } from '../DeviceInfoList';
-import { ElevationLevel, Theme } from './styleUtils';
+import {I18nManager, Modal as RNModal, View} from 'react-native';
+import {Icon} from 'react-native-elements';
+import {Column, Row, Text} from '.';
+import {useSendVcScreen} from '../../screens/Scan/SendVcScreenController';
+import {DeviceInfoList} from '../DeviceInfoList';
+import {ElevationLevel, Theme} from './styleUtils';
+import testIDProps from '../../shared/commonUtil';
 
-export const Modal: React.FC<ModalProps> = (props) => {
+export const Modal: React.FC<ModalProps> = props => {
   const controller = useSendVcScreen();
 
   return (
     <RNModal
+      {...testIDProps(props.testID)}
       animationType="slide"
-      style={Theme.ModalStyles.modal}
+      style={props.modalStyle}
       visible={props.isVisible}
       onShow={props.onShow}
       onRequestClose={props.onDismiss}>
       <Column fill safe align="center">
         <Row elevation={props.headerElevation}>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginHorizontal: 18,
-              marginVertical: 8,
-            }}>
+          <View style={props.modalStyle}>
             {props.headerRight ? (
               <Icon
+                {...testIDProps('closeModal')}
                 name={I18nManager.isRTL ? 'chevron-right' : 'chevron-left'}
                 onPress={props.onDismiss}
                 color={Theme.Colors.Icon}
@@ -35,6 +31,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
             ) : null}
             {props.arrowLeft ? (
               <Icon
+                {...testIDProps('arrowLeft')}
                 name="arrow-left"
                 type="material-community"
                 onPress={props.onDismiss}
@@ -47,7 +44,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
               align={props.headerLeft ? 'flex-start' : 'center'}
               margin={'16 0 0 0'}>
               <Column>
-                <Text style={Theme.TextStyles.header}>
+                <Text testID={props.testID} style={Theme.TextStyles.header}>
                   {props.headerTitle || props.headerLeft}
                 </Text>
                 {!props.requester ? (
@@ -71,14 +68,17 @@ export const Modal: React.FC<ModalProps> = (props) => {
                 )}
               </Column>
             </Row>
-            {props.headerRight || props.arrowLeft || (
-              <Icon
-                name="close"
-                onPress={props.onDismiss}
-                color={Theme.Colors.Details}
-                size={27}
-              />
-            )}
+            {props.headerRight ||
+              props.arrowLeft ||
+              (props.showClose && (
+                <Icon
+                  {...testIDProps('close')}
+                  name="close"
+                  onPress={props.onDismiss}
+                  color={Theme.Colors.Details}
+                  size={27}
+                />
+              ))}
           </View>
         </Row>
         {props.children}
@@ -87,9 +87,17 @@ export const Modal: React.FC<ModalProps> = (props) => {
   );
 };
 
+Modal.defaultProps = {
+  modalStyle: Theme.ModalStyles.defaultModal,
+  showClose: true,
+};
+
 export interface ModalProps {
+  testID?: string;
   isVisible: boolean;
   requester?: boolean;
+  showClose?: boolean;
+  modalStyle?: Object;
   onDismiss?: () => void;
   headerTitle?: string;
   headerElevation?: ElevationLevel;

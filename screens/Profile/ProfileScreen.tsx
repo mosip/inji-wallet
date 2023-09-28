@@ -1,23 +1,23 @@
 import React from 'react';
-import { Platform, View } from 'react-native';
-import { getVersion } from 'react-native-device-info';
-import { Icon, ListItem, Switch } from 'react-native-elements';
-import { Column, Text } from '../../components/ui';
-import { Theme } from '../../components/ui/styleUtils';
-import { MainRouteProps } from '../../routes/main';
-import { EditableListItem } from '../../components/EditableListItem';
-import { MessageOverlay } from '../../components/MessageOverlay';
-import { Revoke } from '../Settings/Revoke';
-import { useProfileScreen } from './ProfileScreenController';
-import { useTranslation } from 'react-i18next';
-import { LanguageSelector } from '../../components/LanguageSelector';
-import i18next, { SUPPORTED_LANGUAGES } from '../../i18n';
-import { ScrollView } from 'react-native-gesture-handler';
-import { AppMetaData } from '../Settings/AppMetaData';
-import { CREDENTIAL_REGISTRY_EDIT } from 'react-native-dotenv';
+import {Platform, View} from 'react-native';
+import {getVersion} from 'react-native-device-info';
+import {Icon, ListItem, Switch} from 'react-native-elements';
+import {Column, Text} from '../../components/ui';
+import {Theme} from '../../components/ui/styleUtils';
+import {MainRouteProps} from '../../routes/main';
+import {EditableListItem} from '../../components/EditableListItem';
+import {MessageOverlay} from '../../components/MessageOverlay';
+import {Revoke} from '../Settings/Revoke';
+import {useProfileScreen} from './ProfileScreenController';
+import {useTranslation} from 'react-i18next';
+import {LanguageSelector} from '../../components/LanguageSelector';
+import i18next, {SUPPORTED_LANGUAGES} from '../../i18n';
+import {ScrollView} from 'react-native-gesture-handler';
+import {AppMetaData} from '../Settings/AppMetaData';
+import {CREDENTIAL_REGISTRY_EDIT} from 'react-native-dotenv';
 
 const LanguageSetting: React.FC = () => {
-  const { t } = useTranslation('ProfileScreen');
+  const {t} = useTranslation('ProfileScreen');
   return (
     <LanguageSelector
       triggerComponent={
@@ -42,8 +42,8 @@ const LanguageSetting: React.FC = () => {
   );
 };
 
-export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
-  const { t } = useTranslation('ProfileScreen');
+export const ProfileScreen: React.FC<MainRouteProps> = props => {
+  const {t} = useTranslation('ProfileScreen');
 
   const controller = useProfileScreen(props);
   return (
@@ -58,20 +58,32 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
           title={controller.alertMsg}
         />
         <EditableListItem
-          label={t('name')}
-          value={controller.name}
+          title={t('name')}
+          content={controller.name}
+          items={[
+            {
+              label: t('name'),
+              value: controller.name,
+            },
+          ]}
           onEdit={controller.UPDATE_NAME}
           Icon=""
-          credentialRegistryResponse={''}
+          onCancel={() => {}}
         />
         {/* Intentionally hidden using {display='none'} - Refer mosip/inji/issue#607 */}
         <EditableListItem
-          label={t('vcLabel')}
-          value={controller.vcLabel.singular}
+          title={t('vcLabel')}
+          content={controller.vcLabel.singular}
+          items={[
+            {
+              label: t('vcLabel'),
+              value: controller.vcLabel.singular,
+            },
+          ]}
           onEdit={controller.UPDATE_VC_LABEL}
           Icon="star"
           display="none"
-          credentialRegistryResponse={''}
+          onCancel={() => {}}
         />
         <LanguageSetting />
         <Revoke label={t('revokeLabel')} Icon="rotate-left" />
@@ -103,7 +115,7 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
           />
         </ListItem>
         {/* Intentionally hidden using {display:'none'} - Refer mosip/inji/issue#607 */}
-        <ListItem bottomDivider disabled style={{ display: 'none' }}>
+        <ListItem bottomDivider disabled style={{display: 'none'}}>
           <Icon
             name="unlock"
             size={20}
@@ -125,11 +137,18 @@ export const ProfileScreen: React.FC<MainRouteProps> = (props) => {
         />
         {CREDENTIAL_REGISTRY_EDIT === 'true' && (
           <EditableListItem
-            label={t('credentialRegistry')}
-            value={controller.credentialRegistry}
-            credentialRegistryResponse={controller.credentialRegistryResponse}
+            title={t('credentialRegistry')}
+            content={controller.credentialRegistry}
+            items={[
+              {
+                label: t('credentialRegistry'),
+                value: controller.credentialRegistry,
+              },
+            ]}
+            response={controller.credentialRegistryResponse}
             onEdit={controller.UPDATE_CREDENTIAL_REGISTRY}
             Icon="star"
+            onCancel={() => {}}
           />
         )}
         <ListItem bottomDivider onPress={controller.LOGOUT}>

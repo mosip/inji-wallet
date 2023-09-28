@@ -1,27 +1,22 @@
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Button, Centered, Column, Text } from './ui';
-import { Modal } from './ui/Modal';
-import { Image } from 'react-native';
-import { Theme } from './ui/styleUtils';
-import PaginationDot from 'react-native-animated-pagination-dot';
+import React, {useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {Button, Centered, Column, Text} from './ui';
+import {Modal} from './ui/Modal';
+import {Image} from 'react-native';
+import {Theme} from './ui/styleUtils';
+import Spinner from 'react-native-spinkit';
 
-export const ProgressingModal: React.FC<ProgressingModalProps> = (props) => {
-  const { t } = useTranslation('ScanScreen');
-
-  let n = 0;
-  const [curPage, setCurPage] = useState(n);
-
-  const highLightDot = () => setCurPage(n + 1);
+export const ProgressingModal: React.FC<ProgressingModalProps> = props => {
+  const {t} = useTranslation('ScanScreen');
 
   return (
     <React.Fragment>
       <Modal
         isVisible={props.isVisible}
-        headerLeft={t(props.title)}
+        headerTitle={t(props.title)}
         onDismiss={props.onCancel}
-        headerLabel={props.label}
         headerElevation={3}
+        modalStyle={Theme.ModalStyles.progressingModal}
         requester={props.requester}>
         <Centered crossAlign="center" fill>
           <Column margin="24 0" align="space-around">
@@ -29,34 +24,43 @@ export const ProgressingModal: React.FC<ProgressingModalProps> = (props) => {
               source={Theme.InjiProgressingLogo}
               height={2}
               width={2}
-              style={{ marginBottom: 15, marginLeft: -6 }}
+              style={{marginBottom: 15, marginLeft: -6}}
             />
             {props.progress && (
-              <PaginationDot
-                activeDotColor={'black'}
-                curPage={curPage}
-                maxPage={3}
+              <Spinner
+                type="ThreeBounce"
+                color={Theme.Colors.Loading}
+                style={{marginLeft: 6}}
               />
             )}
           </Column>
-
-          <Column style={{ display: props.hint ? 'flex' : 'none' }}>
+          {(props.isHintVisible || props.isBleErrorVisible) && (
             <Column style={Theme.SelectVcOverlayStyles.timeoutHintContainer}>
               <Text
                 align="center"
-                color={Theme.Colors.TimoutText}
+                margin="10"
+                color={Theme.Colors.TimoutHintText}
+                size="small"
                 style={Theme.TextStyles.bold}>
                 {props.hint}
               </Text>
-              {props.onCancel && (
+              {props.onStayInProgress && (
                 <Button
                   type="clear"
-                  title={t('common:cancel')}
-                  onPress={props.onCancel}
+                  title={t('status.stayOnTheScreen')}
+                  onPress={props.onStayInProgress}
+                />
+              )}
+
+              {props.onRetry && (
+                <Button
+                  type="clear"
+                  title={t('status.retry')}
+                  onPress={props.onRetry}
                 />
               )}
             </Column>
-          </Column>
+          )}
         </Centered>
       </Modal>
     </React.Fragment>
@@ -65,11 +69,13 @@ export const ProgressingModal: React.FC<ProgressingModalProps> = (props) => {
 
 export interface ProgressingModalProps {
   isVisible: boolean;
+  isHintVisible: boolean;
+  isBleErrorVisible?: boolean;
   title?: string;
-  label?: string;
   hint?: string;
   onCancel?: () => void;
+  onStayInProgress?: () => void;
+  onRetry?: () => void;
   requester?: boolean;
   progress?: boolean | number;
-  onBackdropPress?: () => void;
 }

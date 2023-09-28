@@ -1,24 +1,25 @@
 import React from 'react';
-import { Icon, Input } from 'react-native-elements';
-import { Picker } from '@react-native-picker/picker';
-import { Button, Column, Row, Text } from '../../../components/ui';
-import { Modal } from '../../../components/ui/Modal';
-import { Theme } from '../../../components/ui/styleUtils';
-import { IdInputModalProps, useIdInputModal } from './IdInputModalController';
-import { useTranslation } from 'react-i18next';
+import {Icon, Input} from 'react-native-elements';
+import {Picker} from '@react-native-picker/picker';
+import {Button, Column, Row, Text} from '../../../components/ui';
+import {Modal} from '../../../components/ui/Modal';
+import {Theme} from '../../../components/ui/styleUtils';
+import {IdInputModalProps, useIdInputModal} from './IdInputModalController';
+import {useTranslation} from 'react-i18next';
 import {
   I18nManager,
   KeyboardAvoidingView,
   Platform,
   TextInput,
 } from 'react-native';
-import { TouchableOpacity } from 'react-native';
-import { individualId } from '../../../shared/constants';
-import { GET_INDIVIDUAL_ID } from '../../../shared/constants';
-import { MessageOverlay } from '../../../components/MessageOverlay';
+import {TouchableOpacity} from 'react-native';
+import {individualId} from '../../../shared/constants';
+import {GET_INDIVIDUAL_ID} from '../../../shared/constants';
+import {MessageOverlay} from '../../../components/MessageOverlay';
+import testIDProps from '../../../shared/commonUtil';
 
-export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
-  const { t } = useTranslation('IdInputModal');
+export const IdInputModal: React.FC<IdInputModalProps> = props => {
+  const {t} = useTranslation('IdInputModal');
   const controller = useIdInputModal(props);
 
   const setIndividualID = () => {
@@ -30,7 +31,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
     GET_INDIVIDUAL_ID('');
   };
 
-  const inputLabel = t('enterId', { idType: controller.idType });
+  const inputLabel = t('enterId', {idType: controller.idType});
 
   const setIdInputRef = (node: TextInput) =>
     !controller.idInputRef && controller.READY(node);
@@ -43,7 +44,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
       headerTitle={t('header')}
       headerElevation={2}>
       <KeyboardAvoidingView
-        style={{ flex: 1 }}
+        style={{flex: 1}}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <Column fill align="space-between" pY={32} pX={24}>
           <Column>
@@ -53,7 +54,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
               style={Theme.TextStyles.retrieveIdLabel}>
               {t('guideLabel')}
             </Text>
-            <Row crossAlign="flex-end" style={{ marginTop: 20 }}>
+            <Row crossAlign="flex-end" style={{marginTop: 20}}>
               <Column
                 width="33%"
                 style={{
@@ -67,6 +68,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
                   height: Platform.OS === 'ios' ? 100 : 'auto',
                 }}>
                 <Picker
+                  testID="selectIdType"
                   selectedValue={controller.idType}
                   onValueChange={controller.SELECT_ID_TYPE}>
                   <Picker.Item label="UIN" value="UIN" />
@@ -75,6 +77,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
               </Column>
               <Column fill>
                 <Input
+                  {...testIDProps('idInput')}
                   inputContainerStyle={
                     controller.id ? Theme.Styles.VidInputBottom : null
                   }
@@ -96,6 +99,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
           </Column>
           <Column>
             <Button
+              testID="generateVc"
               type="gradient"
               title={t('generateVc')}
               disabled={!controller.id}
@@ -113,6 +117,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = (props) => {
                 </Text>
                 <TouchableOpacity activeOpacity={1} onPress={props.onPress}>
                   <Text
+                    testID="getItHere"
                     color={Theme.Colors.AddIdBtnBg}
                     weight="semibold"
                     size="small"

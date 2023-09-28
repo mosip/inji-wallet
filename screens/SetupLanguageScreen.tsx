@@ -1,27 +1,29 @@
 import React from 'react';
-import i18n, { SUPPORTED_LANGUAGES } from '../i18n';
-import { I18nManager, Dimensions } from 'react-native';
+import i18n, {SUPPORTED_LANGUAGES} from '../i18n';
+import {I18nManager, Dimensions} from 'react-native';
 import Storage from '../shared/storage';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import i18next from 'i18next';
 import RNRestart from 'react-native-restart';
-import { SetupPicker } from '../components/ui/SetupPicker';
-import { Button, Column, Text } from '../components/ui';
-import { Theme } from '../components/ui/styleUtils';
-import { Icon } from 'react-native-elements';
-import { RootRouteProps } from '../routes';
-import { useWelcomeScreen } from './WelcomeScreenController';
+import {SetupPicker} from '../components/ui/SetupPicker';
+import {Button, Column, Text} from '../components/ui';
+import {Theme} from '../components/ui/styleUtils';
+import {Icon} from 'react-native-elements';
+import {RootRouteProps} from '../routes';
+import {useWelcomeScreen} from './WelcomeScreenController';
+import {__SelectedLanguage} from '../shared/GlobalVariables';
 
-export const SetupLanguageScreen: React.FC<RootRouteProps> = (props) => {
-  const { t } = useTranslation('SetupLanguage');
+export const SetupLanguageScreen: React.FC<RootRouteProps> = props => {
+  const {t} = useTranslation('SetupLanguage');
   const controller = useWelcomeScreen(props);
   const languages = Object.entries(SUPPORTED_LANGUAGES).map(
-    ([value, label]) => ({ label, value })
+    ([value, label]) => ({label, value}),
   );
 
   const changeLanguage = async (language: string) => {
     if (language !== i18n.language) {
       await i18n.changeLanguage(language).then(async () => {
+        __SelectedLanguage.setValue(language);
         await Storage.setItem('language', i18n.language);
         const isRTL = i18next.dir(language) === 'rtl' ? true : false;
         if (isRTL !== I18nManager.isRTL) {
@@ -51,11 +53,11 @@ export const SetupLanguageScreen: React.FC<RootRouteProps> = (props) => {
         size={58}
       />
       <Column crossAlign="center">
-        <Text margin="0 0 10 0" weight="semibold">
+        <Text testID="chooseLanguage" margin="0 0 10 0" weight="semibold">
           {t('header')}
         </Text>
         <Text
-          style={{ paddingVertical: 18 }}
+          style={{paddingVertical: 18}}
           weight="semibold"
           align="center"
           color={Theme.Colors.GrayText}>
@@ -64,12 +66,14 @@ export const SetupLanguageScreen: React.FC<RootRouteProps> = (props) => {
       </Column>
 
       <SetupPicker
+        testID="languagePicker"
         items={languages}
         selectedValue={i18n.language}
         onValueChange={changeLanguage}
       />
 
       <Button
+        testID="savePreference"
         type="gradient"
         title={t('save')}
         onPress={() => {
