@@ -18,6 +18,7 @@ export async function request(
   method: HTTP_METHOD,
   path: `/${string}`,
   body?: Record<string, unknown>,
+  timeout?: undefined | number,
   host = MIMOTO_BASE_URL,
 ) {
   const headers = {
@@ -25,12 +26,20 @@ export async function request(
   };
   if (path.includes('residentmobileapp'))
     headers['X-AppId'] = __AppId.getValue();
-
-  const response = await fetch(host + path, {
-    method,
-    headers,
-    body: JSON.stringify(body),
-  });
+  let response;
+  if (timeout === undefined) {
+    response = await fetch(host + path, {
+      method,
+      headers,
+      body: JSON.stringify(body),
+    });
+  } else {
+    response = Promise.race([
+      fetch(host + path, {method, headers, body: JSON.stringify(body)}),
+      (_: any, reject: (arg0: Error) => void) =>
+        setTimeout(() => reject(new Error('request timeout')), timeout * 1000),
+    ]);
+  }
 
   const jsonResponse = await response.json();
 
@@ -38,10 +47,7 @@ export async function request(
     let backendUrl = host + path;
     let errorMessage = jsonResponse.message || jsonResponse.error;
     console.error(
-      'The backend API ' +
-        backendUrl +
-        ' returned error code 400 with message --> ' +
-        errorMessage,
+      `The backend API ${backendUrl} returned error code ${response.status} with message --> ${errorMessage}`,
     );
     throw new Error(errorMessage);
   }
