@@ -22,10 +22,12 @@ import {
 } from '../types/VC/EsignetMosipVC/vc';
 import {CACHED_API} from '../shared/api';
 
+const TIMEOUT_SEC = 10;
+
 const model = createModel(
   {
     issuers: [] as issuerType[],
-    selectedIssuer: [] as issuerType[],
+    selectedIssuer: {} as issuerType,
     tokenResponse: {} as AuthorizeResult,
     errorMessage: '' as string,
     loadingReason: 'displayIssuers' as string,
@@ -56,7 +58,7 @@ export const Issuer_Tab_Ref_Id = 'issuersMachine';
 export const Issuers_Key_Ref = 'OpenId4VCI';
 export const IssuersMachine = model.createMachine(
   {
-    /** @xstate-layout N4IgpgJg5mDOIC5QEtawK5gE6wLIEMBjAC2QDswA6AG1QBcBJNTHAYggHsLLY786qqDNjxFS3WrybCcAbQAMAXUSgADh1jI6yLipAAPRAEYA7PMomj8gJwAWeSYAcTgMy2TJgDQgAnsZPWlLYArC5GAEzWEfKRtka2AL4J3kIsoiTkVLBg1GCE2mRQ0iysACIA8gDqAHIAMuUAgqUA+gBqDA3NDKUKykgg6prauv2GCMHuFo7W8sET8i4x1uHefgimJpTWoRHWJrYuc9YAbEkpzCIEGdzZufnkRRdYrADKAKK1bwDCACpvLQwXi8AKpvABKvT0gy0OjIejGE02Thmc3si0iK18iEcRiC1nxJxR22OjhcZxAqUuYkyPByeQKjxkZUBuEBL0h-Whwzho0QiKmKPm6OWq0Q4X2QXkx3C0uCOKM0pcJnJlJwV3EWTp+WK2HYXCyfAElFV6Q1tLujCeHLUGhhI1AY2mx0oRmCxyMjgcJMi8VF6xM4Uo4QWRjc2xMcqVp2SFKepppqmwADMOFgALYNdB0Yip5AAL34sNYDWBPwAEuUwQwAFr-a0DW3c+HGBaOILHeSOWwkj3hYIKv34rYmY4TUeOZzSxzR84yePcRNYFPpzPZ3MF7msMHfN4MVr-Zo-coAaTe1XrXNhzfW4VvlEW3YVMRcexlfo2Wx2kX2h2C20SMYmuqNIwHQXxYJAYBkNo+DUAAYlgHBpjqzycDchqCHGwHcKB4GQdByCwQhSEoRejZXry6zuG2yy9scSq0bY75WEGMpytM+wONsZLkmQHAQHAehAdSFBQuR9oGIgAC0xx+jJKpYSJghkFoYlDBRDqIMctiUB2EyOPpMzhM4mJrH2gTLHs8jxI44T2K6ClzthVCSJac5qXaPKaQgtimWK1lBJExwzF24QuMGtgAbOaTOea9IPChHlNpRLi2ZQ-Zur5o7PlEslYggwa4r5JwBFlLijvsjkxUpcXak8SUaZJCARi4Lq2F28izGEna2e+dgugExwmKl7hmFKVVUtcVCLsuGZZjmWD5oWEmXhJYxWCxtkxGiRjLJYjh+oVgUlXYMrlcElWAYpU2ULhEECQRRGIch9WcuJXlNfECqBR6MTOHYZgHflwZtkNVkxGdrbhBNao1cgEC5A1a2IC1bUdV1VgTn5BV7JQWOksENhyk4RhJEkQA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QEtawK5gE6wLIEMBjAC2QDswA6CVABwBt8BPASTUxwGIIB7Cy8gDceAayqoM2PEVL8asBszaScCIT0L4ALsj4BtAAwBdQ0cShaPWMh19zIAB6IAjAA4ALAE5KAZgCsBs4A7D4ATABs7j4GngA0IEyI4X6hlO7hQUFemc5+Pp4+AL6F8RIc0iTkVPKKrOxSnNhYPFiUiloAZi0AtgL1OASVcnSMdSqwamTCmrZkpqb2ltaz9k4Ibl6+AcFhkdFxCS5B4ZQp4c4GBqF+fkGhQX7hxaX9FbJUTS2cACoASgCaAH0AIIAcWBLAAcgskCAljZdGRVi4CkE0s4oqFLqFPM5nJ5QvFEghXM5KG4Qu4Hp4YkFckFniAylJBu9KJ8sJxfgBRADK3O+gO5v1+AHlfjCLFYEXZYWtrhjKOEaUFXJ4aa5Qu5CYcEJ4TuEfD4qRc-ASDAFXIzmQMZFV2VhmlhQj8ASDwVDJXDpSs5YgfOFLpQDNF3K5Ih5woGgkTEK5XD5KAmPAZ3AYstF49bXqz7RyXTz+YLhWKJcZFj7EciEAGgyHU+Gw+lo7GEKrXGl1UFAncjddPNnxrn+ByfK6gWCIdDy7D4b7QGtawZg6HG5GW7rnBE-Kdcp4zXTqe5B+Vhx9HS0x4WBUKReKvXOq36a4Hl-WwxHm+nW3ju+Sco8IQ0pEDIlEyOZ2vwsBgPQYCEDoZBQMoHCcAAIqKADqkIADKisCqGAiwqEPpWsoLogoShMESZGg8uShGqOKtrciY+EENKUTijyPE8YE2m89rQbB8HkEh-ScPy2HcgAwt83IESwvK8gAqsKJHLE+5EIAq7hKiqaoalqOrEh4unuFuPgeH4+LnJkJ4spB1Q8AA7mQ9A8PgEDIdg0l8B0yBQNwfDiFMojiBBQxOa57med5WC+WQ-lQJM0zaIi8wzlKGlkY4-rpmiW7sYayoGOcPg-lcHYBKqKSXPuzgZPZtqRdQLluR5Xn9AlSWNBerTtF0WC9PxZ6tdFHVxd1AUpRoaX6MY6kykiz7RJk5L3PqAbAc45W6q4IaUJkBSUVtkSBE1An8LQ2CDd0wLoFoxAtMgABec1kEF-DqGIfRDo5bQ3T092Pc9b2zDNMzpQtmXetly1aUuK4Np+Ubfpu7h5OSx36uEVlmn4F2jddWC3cDT1YK9729U6bSMJ0PS-ae-3E6TD3k5T4PqJD80mDDj45YugZkmxpWeO4GM0jcP61kmfhUuEET6hZhP-SQcEiAA0mATAAAr4MgnLSQAEjJGuAhr3JAjrEJlmYs6kfDuU1lRlBGYGyQBOmmo-luZK+5ZxXWftVp8RFbJq4Qmva3rBucMbpvm5bgLWywErOHbWVLdWYRkm7pU3JcqrGXG+Q0fuVFRuxYYDqHf0tTAFBYNoYBa7r+ucrwX2hT9I3-Q32DN63MdYBD70ZRnsNZ8+FzRK7YtagU1n6qVrY0rp8bhnLxzKikKv12AjeD9H7efSFwg92H9r903Wgt8fBuj7M8zpxWcPVjPy44tqXj+DZK+6jVJMCtcYEnFgqGuLw65sl4ONTy0ksCQAPjofA9BYCnwEN3cKUD7QwPanAhBEAkHIBQRMLmY9oYT35o7NYGxvD+B7LsKIMRWxZHXqVBibEzSeAeKBSBTMWq4JihAeBiCyDINQdTFotNtC3UZg5ARbUhEiMIWI4hqDH5Q15pQh278PB0O2CECITCDjEjxK4HcGNcb3GVLiFIoQ97QMUR1ZRRCSFx2BJCaS3JsKLXnE7WhWwGFGP2K2BMBUMb5W7DifODj7SCGwMgDoTBRIuNUSg9B30sH8LZPEimSSUkENcfQDRPNfGaSdjpPSXt1QGE1NqVsfZyTmTYriHGtTjSxP4LkxJyTEKpPEZI-qdNZG9xat0-JfTClpOKWQp+FDX5Ty0pUkqqoal1OLggJeh06RRjTKVCMvDwLYK+hAWCcdRS4B1lJOSxE+Y6OfFEM0lB9JhFTDEcW0tUieE3sqMI2osQhz4fItkyBTlgHcZ47xZSBb+m7CcFI6QLgRHDJkVsVilRf2+eqSyxoa5gTIDwQh8BYSjPeAsvxawAC04RWzUs6dUEYShXjkvKTQrwZJzFRm+SA5UO0fyPF8ArK4PgMTBFxI1Wu2S8x9RZTC7SGJlx5EsvudiW4-DhlXmidIYDK4ivec4elDonShFldQ-0YREw2JnnsTUERQkHTxJceM3z8QXGPJK4F0qnQ+FNdnC1elcQhhtZRGlm4NiHVcEeEVGJKIEw9c1NkQk4IITEioX1z4K47kuOLdMe4MxopCIdYI+1AjBBxBAo5Uq5BONil1PyAV01LLuLnTUPKrjJHtTuG4+obg3EiNcQ5pL7QsyBmzUG71G1O2VcuEIRUqK5CjEaVepVTiGiNMkQ04t1SGojlHNuBtJ1rHqZuXN2yTpajyMcayhrr5H33VgQ9SQwinEjamfIOI3UbJLc8lFBJuxUkeBWod1bYHCKmeI4lmcKUuCbK7TUx14wWjhaEvEzyzSBGuOW3Ghrxm9KgP0tRj7tLvPWniNMuQRUat1NG12YR1R2ItDiLIhrYBaGeohIj9wXYMWRcvbcrZQil32gxO4ctIz6nsfGy64gwVEfyHLckuNjhhmxNw6WiZKLpmNGmHhjzDWdzAERjGuQkwPGVJG8ytT3AVQ7Guna3zalnDlsUYoQA */
     predictableActionArguments: true,
     preserveActionOrder: true,
     id: Issuer_Tab_Ref_Id,
@@ -95,6 +97,32 @@ export const IssuersMachine = model.createMachine(
           },
         },
       },
+      error2: {
+        description: 'reaches here when issuer config is not available',
+        on: {
+          TRY_AGAIN: {
+            actions: 'resetError',
+            target: 'downloadCredentials',
+          },
+          RESET_ERROR: {
+            actions: 'resetError',
+            target: 'idle',
+          },
+        },
+      },
+      error3: {
+        description: 'reaches here when auth callback fails',
+        on: {
+          TRY_AGAIN: {
+            actions: 'resetError',
+            target: 'downloadCredentials',
+          },
+          RESET_ERROR: {
+            actions: 'resetError',
+            target: 'idle',
+          },
+        },
+      },
       selectingIssuer: {
         description: 'waits for the user to select any issuer',
         on: {
@@ -114,6 +142,10 @@ export const IssuersMachine = model.createMachine(
             actions: 'setSelectedIssuers',
             target: 'performAuthorization',
           },
+          onError: {
+            actions: 'setError',
+            target: 'error2',
+          },
         },
       },
       performAuthorization: {
@@ -125,10 +157,21 @@ export const IssuersMachine = model.createMachine(
             actions: ['setTokenResponse', 'getKeyPairFromStore', 'loadKeyPair'],
             target: 'checkKeyPair',
           },
-          onError: {
-            actions: [() => console.log('error in invokeAuth - ', event.data)],
-            target: 'downloadCredentials',
-          },
+          onError: [
+            {
+              cond: (_, event) => event.data.error !== 'User cancelled flow',
+              actions: [
+                (_, event) => console.log('error in invokeAuth - ', event.data),
+                'setError',
+              ],
+              target: 'error3',
+            },
+            {
+              cond: (_, event) =>
+                event.data.error !== 'Invalid token specified',
+              target: 'downloadCredentials',
+            },
+          ],
         },
       },
       checkKeyPair: {
@@ -173,8 +216,8 @@ export const IssuersMachine = model.createMachine(
             target: 'verifyingCredential',
           },
           onError: {
-            actions: event =>
-              console.log(' error occured in downloadCredential', event),
+            actions: 'setError',
+            target: 'error3',
           },
         },
         on: {
@@ -238,6 +281,10 @@ export const IssuersMachine = model.createMachine(
       setError: model.assign({
         errorMessage: (_, event) => {
           console.log('Error while fetching issuers ', event.data.message);
+          if (event.data.message === 'User cancelled flow') {
+            // not an error if user has pressed back button or closes the tab
+            return '';
+          }
           return event.data.message === 'Network request failed'
             ? 'noInternetConnection'
             : 'generic';
@@ -386,6 +433,7 @@ export const IssuersMachine = model.createMachine(
         return credential;
       },
       invokeAuthorization: async context => {
+        console.log('ISSUER: ', context.selectedIssuer);
         const response = await authorize(context.selectedIssuer);
         return response;
       },
