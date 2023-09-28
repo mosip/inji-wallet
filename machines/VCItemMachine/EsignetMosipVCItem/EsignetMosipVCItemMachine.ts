@@ -69,6 +69,7 @@ const model = createModel(
       KEBAB_POPUP: () => ({}),
       SHOW_ACTIVITY: () => ({}),
       REMOVE: (vcMetadata: VCMetadata) => ({vcMetadata}),
+      UPDATE_VC_METADATA: (vcMetadata: VCMetadata) => ({vcMetadata}),
     },
   },
 );
