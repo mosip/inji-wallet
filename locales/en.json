@@ -14,7 +14,7 @@
     "QRLOGIN_SUCCESFULL": "QRLogin successful",
     "WALLET_BINDING_SUCCESSFULL": "Activation successful",
     "WALLET_BINDING_FAILURE": "Activation failed",
-    "VC_REMOVED":"Removed from wallet"
+    "VC_REMOVED": "Removed from wallet"
   },
   "DeviceInfoList": {
     "requestedBy": "Requested by",
@@ -24,7 +24,11 @@
     "Verifier": "Verifier",
     "Wallet": "Wallet"
   },
-  "FaceScanner": {},
+  "FaceScanner": {
+    "imageCaptureGuide": "Hold the phone steady and keep your face focused in the centre",
+    "capture": "Capture",
+    "flipCamera": "Flip Camera"
+  },
   "OIDcAuth": {
     "title": "OIDC Authentication",
     "text": "To be replaced with the OIDC provider UI",
@@ -39,26 +43,26 @@
     "flipCamera": "Flip Camera"
   },
   "VcDetails": {
-    "generatedOn": "Generated on",
+    "generatedOn": "Generated On",
     "status": "Status",
     "valid": "Valid",
     "photo": "Photo",
-    "fullName": "Full name",
+    "fullName": "Full Name",
     "gender": "Gender",
-    "dateOfBirth": "Date of birth",
-    "phoneNumber": "Phone number",
+    "dateOfBirth": "Date of Birth",
+    "phoneNumber": "Phone Number",
     "email": "Email",
     "address": "Address",
     "reasonForSharing": "Reason for sharing",
-    "idType": "ID type",
-    "id": "Id",
+    "idType": "ID Type",
+    "id": "ID",
     "qrCodeHeader": "QR Code",
     "nationalCard": "National Card",
     "uin": "UIN",
     "vid": "VID",
     "enableVerification": "Activate",
-    "profileAuthenticated": "Activated for online login!",
-    "offlineAuthDisabledHeader": "Activation pending for online login!",
+    "profileAuthenticated": "Credentials are enabled for online authentication.",
+    "offlineAuthDisabledHeader": "Activation pending for online login",
     "offlineAuthDisabledMessage": "Please click the button below to activate this credential to be used for online login.",
     "verificationEnabledSuccess": "Activated for online login",
     "goback": "GO BACK",
@@ -83,7 +87,7 @@
     "title": "More Options",
     "unPinCard": "Unpin Card",
     "pinCard": "Pin Card",
-    "offlineAuthenticationDisabled!": "Activation pending for online login!",
+    "offlineAuthenticationDisabled!": "Activation pending for online login",
     "offlineAuthDisabledMessage": "Click here to enable this credentials to be used for online authentication.",
     "viewActivityLog": "View Activity Log",
     "removeFromWallet": "Remove from Wallet",
@@ -92,7 +96,7 @@
   },
   "WalletBinding": {
     "inProgress": "In progress",
-    "profileAuthenticated": "Activated for online login!"
+    "profileAuthenticated": "Activated for online login"
   },
   "BindingVcWarningOverlay": {
     "alert": "Alert",
@@ -137,6 +141,7 @@
     "language": "Language",
     "aboutInji": "About Inji",
     "credentialRegistry": "Credential Registry",
+    "esignethosturl": "Esignet Host",
     "errorMessage": "Incorrect URL entered. Please enter a valid URL to proceed.",
     "injiTourGuide": "Inji Tour Guide",
     "logout": "Logout",
@@ -151,6 +156,34 @@
     "clickHere": "Click here",
     "version": "Version",
     "tuvaliVersion": "Tuvali-version"
+  },
+  "IssuersScreen": {
+    "title": "Add new card",
+    "header": "Please select a preferred method from below to add a new card",
+    "itemHeading":"Download via {{issuer}}",
+    "itemSubHeading": "Enter the mentioned ID and get your card",
+    "modal": {
+      "title": "In Progress",
+      "hint": "downloading your credential from issuer"
+    },
+    "loaders": {
+      "loading": "Loading...",
+      "subTitle": {
+        "displayIssuers": "Fetching Issuers",
+        "settingUp": "Setting up",
+        "downloadingCredentials": "Downloading Credentials"
+      }
+    },
+    "errors": {
+      "noInternetConnection": {
+        "title": "No internet connection",
+        "message": "Please check your connection and retry"
+      },
+      "generic": {
+        "title": "Something went wrong!",
+        "message": "We are having some trouble with your request. Please try again."
+      }
+    }
   },
   "HelpScreen": {
     "header": "Help",
@@ -246,6 +279,7 @@
     "generateVcDescription": "Tap on \"Download card\" below to download your card",
     "downloadCard": "Download Card",
     "downloadingYourCard": "Downloading your card, this can take upto 5 minutes",
+    "activated": "Credentials are enabled for online authentication.",
     "errors": {
       "savingFailed": {
         "title": "Failed to save the Card",
@@ -256,13 +290,13 @@
         "message": "You cannot add or receive cards since the Appdata is full. Clear Appdata to proceed."
       },
       "vcIsTampered": {
-        "title": "Some identity proofs are tampered",
-        "message": "Affected files are removed, please re-download."
+        "title": "Cards removed due to malicious activity",
+        "message": "Tampered cards detected and removed for security reasons. Please download again."
       },
       "keystoreNotExists": {
-        "title": "Secure Key Storage not found",
-        "message": "The key storage on your phone is not secured. Your keys could be leaked if phone is hacked.",
-        "riskOkayText": "OK, I'll risk it"
+        "title": "Some security features will be unavailable",
+        "message": "Your current device does not support all the security features.",
+        "riskOkayText": "Ok"
       }
     }
   },
@@ -299,6 +333,7 @@
     "revoking": "Your wallet contains a credential with VID {{vid}}. Revoking this will automatically remove the same from the wallet. Are you sure you want to proceed?",
     "requestingOtp": "Requesting OTP...",
     "editTag": "Rename",
+    "activated": "Credentials are enabled for online authentication.",
     "redirecting": "Redirecting...",
     "success": {
       "unlocked": "Card successfully unlocked",
@@ -384,6 +419,10 @@
       }
     },
     "status": {
+      "sharing": {
+        "title": "Sharing in progress",
+        "timeoutHint": "Sharing is delayed, possibly due to a connection issue."
+      },
       "accepted": {
         "title": "Success!",
         "message": "Card has been successfully received from Wallet"
@@ -393,7 +432,7 @@
         "message": "You discarded Wallet's Card"
       },
       "disconnected": {
-        "title": "Disconnected",
+        "title": "Connection failed",
         "message": "The connection was interrupted. Please try again."
       },
       "waitingConnection": "Waiting for connection...",
@@ -409,7 +448,7 @@
         "message": "Please connect to the internet to enable Online sharing mode"
       },
       "bleError": {
-        "title": "Failed to transfer!",
+        "title": "Failed to transfer",
         "message": "Something went wrong while transferring card. Please try again.",
         "hint": "Error: {{code}}"
       }
@@ -448,8 +487,10 @@
     "status": {
       "inProgress": "In progress",
       "establishingConnection": "Establishing connection",
-      "sharingInProgress": "Sharing in Progress",
+      "connectionInProgress": "Connection in progress",
       "connectingTimeout": "It's taking a while to establish the connection. Is the other device open for connections?",
+      "stayOnTheScreen": "Stay on the screen",
+      "retry": "Retry",
       "exchangingDeviceInfo": "Exchanging device info...",
       "exchangingDeviceInfoTimeout": "It's taking a while to exchange device info. You may have to reconnect.",
       "invalid": "Invalid QR Code",
@@ -457,13 +498,13 @@
       "sent": "Card has been sent...",
       "sentHint": "Waiting for receiver to save or discard your Card",
       "sharing": {
-        "title": "Sharing...",
+        "title": "Sharing in progress",
         "hint": "Please wait while we share the chosen card.",
-        "timeoutHint": "It's taking longer than expected to share. There could be a problem with the connection."
+        "timeoutHint": "Sharing is delayed, possibly due to a connection issue."
       },
       "accepted": {
-        "title": "Success!",
-        "message": "Your Card has been successfully shared with Verifier",
+        "title": "ID shared successfully",
+        "message": "Your ID has been successfully shared with",
         "gotohome": "Go to Home"
       },
       "rejected": {
@@ -513,8 +554,8 @@
     },
     "errors": {
       "invalidIdentity": {
-        "title": "Unable to verify identity",
-        "message": "Face not recognised. Please try again.",
+        "title": "Face recognition failed",
+        "message": "The scanned face does not match with the photo on the card. Please try again.",
         "messageNoRetry": "Face not recognised."
       }
     }
@@ -529,8 +570,8 @@
     "errors": {
       "decryptionFailed": "Failed to decrypt data",
       "invalidateKeyError": {
-        "title": "Some Card(s) removed due to security concerns.",
-        "message": "Please redownload."
+        "title": "App was Reset",
+        "message": "Due to the fingerprint / facial recognition update, app security was impacted, and downloaded cards were removed. Please download again."
       }
     }
   },
@@ -543,6 +584,7 @@
     "cancel": "Cancel",
     "accept": "Accept",
     "save": "Save",
+    "ok": "Ok",
     "dismiss": "Dismiss",
     "editLabel": "Edit {{label}}",
     "tryAgain": "Try again",

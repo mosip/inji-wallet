@@ -1,18 +1,18 @@
-import { useSelector, useInterpret } from '@xstate/react';
-import { useContext, useRef, useState } from 'react';
-import { ActorRefFrom } from 'xstate';
+import {useSelector, useInterpret} from '@xstate/react';
+import {useContext, useRef, useState} from 'react';
+import {ActorRefFrom} from 'xstate';
 import {
   VcEvents,
   selectIsRefreshingReceivedVcs,
-  selectReceivedVcs,
+  selectReceivedVcsMetadata,
 } from '../../machines/vc';
-import { vcItemMachine } from '../../machines/vcItem';
-import { GlobalContext } from '../../shared/GlobalContext';
+import {ExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
+import {GlobalContext} from '../../shared/GlobalContext';
 import {
   ReceivedVcsTabEvents,
   ReceivedVcsTabMachine,
 } from './ReceivedVcsTabMachine';
-import { MyVcsTabEvents, MyVcsTabMachine } from './MyVcsTabMachine';
+import {MyVcsTabEvents, MyVcsTabMachine} from './MyVcsTabMachine';
 import {
   HomeScreenEvents,
   HomeScreenMachine,
@@ -24,12 +24,12 @@ import {
 export function useReceivedVcsTab() {
   const [isVisible, setIsVisible] = useState(false);
 
-  const { appService } = useContext(GlobalContext);
+  const {appService} = useContext(GlobalContext);
   const machine = useRef(
     HomeScreenMachine.withContext({
       ...HomeScreenMachine.context,
       serviceRefs: appService.getSnapshot().context.serviceRefs,
-    })
+    }),
   );
   const service = useInterpret(machine.current);
 
@@ -48,13 +48,13 @@ export function useReceivedVcsTab() {
 
   return {
     isVisible,
-    vcKeys: useSelector(vcService, selectReceivedVcs),
+    receivedVcsMetadata: useSelector(vcService, selectReceivedVcsMetadata),
 
     isRefreshingVcs: useSelector(vcService, selectIsRefreshingReceivedVcs),
 
     TOGGLE_RECEIVED_CARDS: () => setIsVisible(!isVisible),
 
-    VIEW_VC: (vcRef: ActorRefFrom<typeof vcItemMachine>) => {
+    VIEW_VC: (vcRef: ActorRefFrom<typeof ExistingMosipVCItemMachine>) => {
       return myVcservice.send(MyVcsTabEvents.VIEW_VC(vcRef));
     },
     isViewingVc,

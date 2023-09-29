@@ -1,23 +1,22 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-
-import { DeviceInfoList } from '../../components/DeviceInfoList';
-import { Button, Column, Row, Text } from '../../components/ui';
-import { Theme } from '../../components/ui/styleUtils';
-import { VcDetails } from '../../components/VcDetails';
-import { useReceiveVcScreen } from './ReceiveVcScreenController';
-import { VerifyIdentityOverlay } from '../VerifyIdentityOverlay';
+import {useTranslation} from 'react-i18next';
+import {DeviceInfoList} from '../../components/DeviceInfoList';
+import {Button, Column, Row, Text} from '../../components/ui';
+import {Theme} from '../../components/ui/styleUtils';
+import {useReceiveVcScreen} from './ReceiveVcScreenController';
+import {VerifyIdentityOverlay} from '../VerifyIdentityOverlay';
 import {
-  MessageOverlay,
   ErrorMessageOverlay,
+  MessageOverlay,
 } from '../../components/MessageOverlay';
-import { useOverlayVisibleAfterTimeout } from '../../shared/hooks/useOverlayVisibleAfterTimeout';
+import {useOverlayVisibleAfterTimeout} from '../../shared/hooks/useOverlayVisibleAfterTimeout';
+import {VcDetailsContainer} from '../../components/VC/VcDetailsContainer';
 
 export const ReceiveVcScreen: React.FC = () => {
-  const { t } = useTranslation('ReceiveVcScreen');
+  const {t} = useTranslation('ReceiveVcScreen');
   const controller = useReceiveVcScreen();
   const savingOverlayVisible = useOverlayVisibleAfterTimeout(
-    controller.isAccepting
+    controller.isAccepting,
   );
   const storeErrorTranslationPath = 'errors.savingFailed';
 
@@ -32,7 +31,7 @@ export const ReceiveVcScreen: React.FC = () => {
           <Text weight="semibold" margin="24 24 0 24">
             {t('header')}
           </Text>
-          <VcDetails
+          <VcDetailsContainer
             vc={controller.incomingVc}
             isBindingPending={false}
             activeTab={1}
@@ -58,9 +57,9 @@ export const ReceiveVcScreen: React.FC = () => {
       <MessageOverlay
         isVisible={controller.isInvalidIdentity}
         title={t('VerifyIdentityOverlay:errors.invalidIdentity.title')}
-        message={t(
-          'VerifyIdentityOverlay:errors.invalidIdentity.messageNoRetry'
-        )}
+        message={t('VerifyIdentityOverlay:errors.invalidIdentity.message')}
+        customHeight={'auto'}
+        // DOUBT^: when does the above message show up in verifier device if it's never communicated explicitly?
         onBackdropPress={controller.DISMISS}>
         <Row>
           <Button

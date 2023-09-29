@@ -1,5 +1,9 @@
-import { DecodedCredential, VerifiableCredential } from '../types/vc';
-import { HOST } from './constants';
+import {
+  DecodedCredential,
+  VerifiableCredential,
+} from '../types/VC/ExistingMosipVC/vc';
+import {__AppId} from './GlobalVariables';
+import {HOST, MIMOTO_BASE_URL} from './constants';
 
 export class BackendResponseError extends Error {
   constructor(name: string, message: string) {
@@ -8,29 +12,19 @@ export class BackendResponseError extends Error {
   }
 }
 
-export class AppId {
-  private static value: string;
-
-  public static getValue(): string {
-    return AppId.value;
-  }
-
-  public static setValue(value: string) {
-    this.value = value;
-  }
-}
-
 export async function request(
   method: 'GET' | 'POST' | 'PATCH',
   path: `/${string}`,
-  body?: Record<string, unknown>
+  body?: Record<string, unknown>,
+  host = MIMOTO_BASE_URL,
 ) {
   const headers = {
     'Content-Type': 'application/json',
   };
-  if (path.includes('residentmobileapp')) headers['X-AppId'] = AppId.getValue();
+  if (path.includes('residentmobileapp'))
+    headers['X-AppId'] = __AppId.getValue();
 
-  const response = await fetch(HOST + path, {
+  const response = await fetch(host + path, {
     method,
     headers,
     body: JSON.stringify(body),
@@ -39,27 +33,27 @@ export async function request(
   const jsonResponse = await response.json();
 
   if (response.status >= 400) {
-    let backendUrl = HOST + path;
+    let backendUrl = host + path;
     let errorMessage = jsonResponse.message || jsonResponse.error;
     console.error(
       'The backend API ' +
         backendUrl +
         ' returned error code 400 with message --> ' +
-        errorMessage
+        errorMessage,
     );
     throw new Error(errorMessage);
   }
 
   if (jsonResponse.errors && jsonResponse.errors.length) {
-    let backendUrl = HOST + path;
-    const { errorCode, errorMessage } = jsonResponse.errors.shift();
+    let backendUrl = host + path;
+    const {errorCode, errorMessage} = jsonResponse.errors.shift();
     console.error(
       'The backend API ' +
         backendUrl +
         ' returned error response --> error code is : ' +
         errorCode +
         ' error message is : ' +
-        errorMessage
+        errorMessage,
     );
     throw new BackendResponseError(errorCode, errorMessage);
   }

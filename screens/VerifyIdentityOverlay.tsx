@@ -1,18 +1,18 @@
 import React from 'react';
-import { Icon, Overlay } from 'react-native-elements';
+import {Icon, Overlay} from 'react-native-elements';
 
-import { FaceScanner } from '../components/FaceScanner';
-import { Column, Row } from '../components/ui';
-import { Theme } from '../components/ui/styleUtils';
-import { VC } from '../types/vc';
-import { Modal } from '../components/ui/Modal';
-import { t } from 'i18next';
-import { useTranslation } from 'react-i18next';
+import {FaceScanner} from '../components/FaceScanner';
+import {Column, Row} from '../components/ui';
+import {Theme} from '../components/ui/styleUtils';
+import {VC} from '../types/VC/ExistingMosipVC/vc';
+import {Modal} from '../components/ui/Modal';
+import {t} from 'i18next';
+import {useTranslation} from 'react-i18next';
 
-export const VerifyIdentityOverlay: React.FC<VerifyIdentityOverlayProps> = (
-  props
-) => {
-  const { t } = useTranslation('VerifyIdentityOverlay');
+export const VerifyIdentityOverlay: React.FC<
+  VerifyIdentityOverlayProps
+> = props => {
+  const {t} = useTranslation('VerifyIdentityOverlay');
   return (
     <Modal
       isVisible={props.isVisible}

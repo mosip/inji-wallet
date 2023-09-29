@@ -2,7 +2,7 @@
 
 export interface Typegen0 {
   '@@xstate/typegen': true;
-  'internalEvents': {
+  internalEvents: {
     'done.invoke.faceScanner.capturing:invocation[0]': {
       type: 'done.invoke.faceScanner.capturing:invocation[0]';
       data: unknown;
@@ -17,39 +17,39 @@ export interface Typegen0 {
       type: 'error.platform.faceScanner.capturing:invocation[0]';
       data: unknown;
     };
-    'xstate.init': { type: 'xstate.init' };
+    'xstate.init': {type: 'xstate.init'};
   };
-  'invokeSrcNameMap': {
+  invokeSrcNameMap: {
     captureImage: 'done.invoke.faceScanner.capturing:invocation[0]';
     checkPermission: 'done.invoke.faceScanner.init.checkingPermission:invocation[0]';
     requestPermission: 'done.invoke.faceScanner.init.requestingPermission:invocation[0]';
     verifyImage: 'done.invoke.faceScanner.verifying:invocation[0]';
   };
-  'missingImplementations': {
+  missingImplementations: {
     actions: never;
-    services: never;
-    guards: never;
     delays: never;
+    guards: never;
+    services: never;
   };
-  'eventsCausingActions': {
+  eventsCausingActions: {
     flipWhichCamera: 'FLIP_CAMERA';
     openSettings: 'OPEN_SETTINGS';
     setCameraRef: 'READY';
     setCaptureError: 'error.platform.faceScanner.capturing:invocation[0]';
     setCapturedImage: 'done.invoke.faceScanner.capturing:invocation[0]';
   };
-  'eventsCausingServices': {
+  eventsCausingDelays: {};
+  eventsCausingGuards: {
+    canRequestPermission: 'DENIED';
+    doesFaceMatch: 'done.invoke.faceScanner.verifying:invocation[0]';
+  };
+  eventsCausingServices: {
     captureImage: 'CAPTURE';
     checkPermission: 'APP_FOCUSED' | 'xstate.init';
     requestPermission: 'DENIED';
     verifyImage: 'done.invoke.faceScanner.capturing:invocation[0]';
   };
-  'eventsCausingGuards': {
-    canRequestPermission: 'DENIED';
-    doesFaceMatch: 'done.invoke.faceScanner.verifying:invocation[0]';
-  };
-  'eventsCausingDelays': {};
-  'matchesStates':
+  matchesStates:
     | 'capturing'
     | 'init'
     | 'init.checkingPermission'
@@ -67,5 +67,5 @@ export interface Typegen0 {
           | 'permissionGranted'
           | 'requestingPermission';
       };
-  'tags': never;
+  tags: never;
 }

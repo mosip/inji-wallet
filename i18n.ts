@@ -1,6 +1,6 @@
 import i18next from 'i18next';
-import { locale } from 'expo-localization';
-import { initReactI18next } from 'react-i18next';
+import * as Localization from 'expo-localization';
+import {initReactI18next} from 'react-i18next';
 
 import en from './locales/en.json';
 import fil from './locales/fil.json';
@@ -10,13 +10,13 @@ import kn from './locales/kan.json';
 import ta from './locales/tam.json';
 import Storage from './shared/storage';
 
-import { iso6393To1 } from 'iso-639-3';
-import { LocalizedField } from './types/vc';
+import {iso6393To1} from 'iso-639-3';
+import {LocalizedField} from './types/VC/ExistingMosipVC/vc';
 
-import { APPLICATION_LANGUAGE } from 'react-native-dotenv';
+import {APPLICATION_LANGUAGE} from 'react-native-dotenv';
 
-const resources = { en, fil, ar, hi, kn, ta };
-
+const resources = {en, fil, ar, hi, kn, ta};
+const locale = Localization.locale;
 const languageCodeMap = {};
 
 export const SUPPORTED_LANGUAGES = {
@@ -59,7 +59,7 @@ export function getLanguageCode(code: string) {
 export function getVCDetailsForCurrentLanguage(locales) {
   const currentLanguage = i18next.language;
   const vcDetailsForCurrentLanguage = locales.filter(
-    (obj) => obj.language === languageCodeMap[currentLanguage]
+    obj => obj.language === languageCodeMap[currentLanguage],
   );
   return vcDetailsForCurrentLanguage[0]?.value
     ? vcDetailsForCurrentLanguage[0].value
@@ -70,13 +70,13 @@ export function getVCDetailsForCurrentLanguage(locales) {
 // The response received from the server is three letter language code and the value in the inji code base is two letter language code. Hence the conversion is done.
 function getThreeLetterLanguageCode(twoLetterLanguageCode) {
   return Object.keys(iso6393To1).find(
-    (key) => iso6393To1[key] === twoLetterLanguageCode
+    key => iso6393To1[key] === twoLetterLanguageCode,
   );
 }
 
 function populateLanguageCodeMap() {
   const supportedLanguages = Object.keys(SUPPORTED_LANGUAGES);
-  supportedLanguages.forEach((languageCode) => {
+  supportedLanguages.forEach(languageCode => {
     let threeLetterLanguageCode = languageCode;
 
     if (isTwoLetterLanguageCode(languageCode)) {

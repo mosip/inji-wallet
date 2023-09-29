@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Pressable } from 'react-native';
-import { Modal } from './ui/Modal';
-import { ScrollView } from 'react-native-gesture-handler';
-import { MainRouteProps } from '../routes/main';
-import { Column, Text } from './ui';
-import { Theme } from './ui/styleUtils';
+import React, {useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {Pressable} from 'react-native';
+import {Modal} from './ui/Modal';
+import {ScrollView} from 'react-native-gesture-handler';
+import {MainRouteProps} from '../routes/main';
+import {Column, Text} from './ui';
+import {Theme} from './ui/styleUtils';
 
-export const HelpScreen: React.FC<HelpScreenProps & MainRouteProps> = (
-  props
-) => {
-  const { t } = useTranslation('HelpScreen');
+export const HelpScreen: React.FC<HelpScreenProps & MainRouteProps> = props => {
+  const {t} = useTranslation('HelpScreen');
 
   const [showHelpPage, setShowHelpPage] = useState(false);
 
@@ -23,6 +21,7 @@ export const HelpScreen: React.FC<HelpScreenProps & MainRouteProps> = (
         {props.triggerComponent}
       </Pressable>
       <Modal
+        testID="helpScreen"
         isVisible={showHelpPage}
         headerTitle={t('header')}
         headerElevation={2}
@@ -75,5 +74,6 @@ export const HelpScreen: React.FC<HelpScreenProps & MainRouteProps> = (
 };
 
 interface HelpScreenProps {
+  testID?: string;
   triggerComponent: React.ReactElement;
 }

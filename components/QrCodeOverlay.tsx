@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { Dimensions, Pressable } from 'react-native';
-import { Icon, Overlay } from 'react-native-elements';
-import { Centered, Column, Row, Text } from './ui';
+import React, {useEffect, useState} from 'react';
+import {Dimensions, Pressable, View} from 'react-native';
+import {Icon, Overlay} from 'react-native-elements';
+import {Centered, Column, Row, Text} from './ui';
 import QRCode from 'react-native-qrcode-svg';
-import { Theme } from './ui/styleUtils';
-import { Image } from 'react-native';
-import { useTranslation } from 'react-i18next';
+import {Theme} from './ui/styleUtils';
+import {Image} from 'react-native';
+import {useTranslation} from 'react-i18next';
 
-export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = (props) => {
-  const { t } = useTranslation('VcDetails');
+export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
+  const {t} = useTranslation('VcDetails');
 
   const [isQrOverlayVisible, setIsQrOverlayVisible] = useState(false);
 
@@ -16,16 +16,18 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = (props) => {
   return (
     <React.Fragment>
       <Pressable onPress={toggleQrOverlay}>
-        <Row margin="20 0 0 0">
-          <QRCode
-            size={90}
-            value={props.qrCodeDetailes}
-            backgroundColor={Theme.Colors.QRCodeBackgroundColor}
-          />
-        </Row>
+        <View style={Theme.QrCodeStyles.QrView}>
+          <Row>
+            <QRCode
+              size={90}
+              value={props.qrCodeDetailes}
+              backgroundColor={Theme.Colors.QRCodeBackgroundColor}
+            />
+          </Row>
+        </View>
         <Row
           align="flex-end"
-          margin="-30 0 0 60"
+          margin="-35 0 0 67"
           style={Theme.QrCodeStyles.magnifierZoom}>
           <Image source={Theme.MagnifierZoom} />
         </Row>
@@ -33,10 +35,14 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = (props) => {
       <Overlay
         isVisible={isQrOverlayVisible}
         onBackdropPress={toggleQrOverlay}
-        overlayStyle={{ padding: 1, borderRadius: 21 }}>
+        overlayStyle={{padding: 1, borderRadius: 21}}>
         <Column style={Theme.QrCodeStyles.expandedQrCode}>
           <Row pY={20} style={Theme.QrCodeStyles.QrCodeHeader}>
-            <Text align="center" style={Theme.TextStyles.header} weight="bold">
+            <Text
+              testID="qrCodeHeader"
+              align="center"
+              style={Theme.TextStyles.header}
+              weight="bold">
               {t('qrCodeHeader')}
             </Text>
             <Icon
@@ -46,7 +52,7 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = (props) => {
               size={32}
             />
           </Row>
-          <Centered pY={30}>
+          <Centered testID="qrCodeDetailes" pY={30}>
             <QRCode
               size={300}
               value={props.qrCodeDetailes}
