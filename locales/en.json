@@ -330,7 +330,7 @@
     "domainWarning": "Please confirm the domain of the website you are scanning the QR code from below",
     "access": " is requesting access to",
     "status": "Status",
-    "successMessage": "You are successfully logged in ",
+    "successMessage": "You are successfully logged in to ",
     "okay": "All right",
     "allow": "Allow",
     "cancel": "Cancel",
