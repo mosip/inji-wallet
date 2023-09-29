@@ -478,7 +478,8 @@ export const EsignetMosipVCItemMachine = model.createMachine(
           const {verifiableCredential} = context;
           return {
             type: 'VC_DOWNLOADED_FROM_OPENID4VCI',
-            verifiableCredential,
+            vc: verifiableCredential,
+            vcMetadata: context.vcMetadata,
           };
         },
         {
