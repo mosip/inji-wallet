@@ -1,7 +1,8 @@
-import { request } from '../request';
+import {request} from '../request';
 import Storage from '../storage';
-import { init } from 'mosip-inji-face-sdk';
-import { changeCrendetialRegistry } from '../constants';
+import {init} from 'mosip-inji-face-sdk';
+import {changeCrendetialRegistry} from '../constants';
+import {INITIAL_CONFIG} from '../InitialConfig';
 
 export const COMMON_PROPS_KEY: string =
   'CommonPropsKey-' + '6964d04a-9268-11ed-a1eb-0242ac120002';
@@ -20,8 +21,10 @@ export default async function getAllConfigurations(host = undefined) {
       return injiProps;
     }
   } catch (error) {
+    console.warn('Failed to load all properties due to network issue');
     console.log(error);
-    throw error;
+
+    return INITIAL_CONFIG.allProperties;
   }
 }
 
