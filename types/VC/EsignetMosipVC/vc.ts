@@ -70,6 +70,10 @@ export interface Credential {
 export interface VerifiableCredential {
   format: string;
   credential: Credential;
+}
+
+export interface CredentialWrapper {
+  verifiableCredential: VerifiableCredential;
   identifier: string;
   generatedOn: Date;
   issuerLogo: string;

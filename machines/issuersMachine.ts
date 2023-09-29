@@ -16,7 +16,10 @@ import {log} from 'xstate/lib/actions';
 import {verifyCredential} from '../shared/vcjs/verifyCredential';
 import {getBody, getIdentifier} from '../shared/openId4VCI/Utils';
 import {VCMetadata} from '../shared/VCMetadata';
-import {VerifiableCredential} from '../types/VC/EsignetMosipVC/vc';
+import {
+  CredentialWrapper,
+  VerifiableCredential,
+} from '../types/VC/EsignetMosipVC/vc';
 
 const model = createModel(
   {
@@ -26,6 +29,7 @@ const model = createModel(
     errorMessage: '' as string,
     loadingReason: 'displayIssuers' as string,
     verifiableCredential: null as VerifiableCredential | null,
+    credentialWrapper: {} as CredentialWrapper,
     serviceRefs: {} as AppServices,
 
     publicKey: ``,
@@ -164,7 +168,7 @@ export const IssuersMachine = model.createMachine(
         invoke: {
           src: 'downloadCredential',
           onDone: {
-            actions: 'setVerifiableCredential',
+            actions: ['setVerifiableCredential', 'setCredentialWrapper'],
             target: 'verifyingCredential',
           },
           onError: {
@@ -276,7 +280,7 @@ export const IssuersMachine = model.createMachine(
         context =>
           StoreEvents.SET(
             getVCMetadata(context).getVcKey(),
-            context.verifiableCredential,
+            context.credentialWrapper,
           ),
         {
           to: context => context.serviceRefs.store,
@@ -300,7 +304,7 @@ export const IssuersMachine = model.createMachine(
           return {
             type: 'VC_DOWNLOADED_FROM_OPENID4VCI',
             vcMetadata: getVCMetadata(context),
-            vc: context.verifiableCredential,
+            vc: context.credentialWrapper,
           };
         },
         {
@@ -317,6 +321,11 @@ export const IssuersMachine = model.createMachine(
       }),
       setVerifiableCredential: model.assign({
         verifiableCredential: (_, event) => {
+          return event.data.verifiableCredential;
+        },
+      }),
+      setCredentialWrapper: model.assign({
+        credentialWrapper: (_, event) => {
           return event.data;
         },
       }),
@@ -336,15 +345,12 @@ export const IssuersMachine = model.createMachine(
 
       logDownloaded: send(
         context => {
-          const [issuer, protocol, id] =
-            context.verifiableCredential?.identifier.split(':');
-
           return ActivityLogEvents.LOG_ACTIVITY({
             _vcKey: getVCMetadata(context).getVcKey(),
             type: 'VC_DOWNLOADED',
             timestamp: Date.now(),
             deviceName: '',
-            vcLabel: id,
+            vcLabel: getVCMetadata(context).id,
           });
         },
         {
@@ -451,18 +457,23 @@ interface issuerType {
 }
 
 const updateCredentialInformation = (context, credential) => {
-  credential.identifier = getIdentifier(context, credential);
-  credential.generatedOn = new Date();
-  credential.issuerLogo = context.selectedIssuer.logoUrl;
-  return credential;
+  let credentialWrapper: CredentialWrapper = {};
+  credentialWrapper.verifiableCredential = credential;
+  credentialWrapper.identifier = getIdentifier(context, credential);
+  credentialWrapper.generatedOn = new Date();
+  credentialWrapper.issuerLogo = context.selectedIssuer.logoUrl;
+  return credentialWrapper;
 };
 
 const getVCMetadata = context => {
-  const [issuer, protocol, id] =
-    context.verifiableCredential?.identifier.split(':');
+  const [issuer, protocol, requestId] =
+    context.credentialWrapper?.identifier.split(':');
   return VCMetadata.fromVC({
-    id: id ? id : null,
+    requestId: requestId ? requestId : null,
     issuer: issuer,
     protocol: protocol,
+    id: context.verifiableCredential?.credential.credentialSubject.UIN
+      ? context.verifiableCredential?.credential.credentialSubject.UIN
+      : context.verifiableCredential?.credential.credentialSubject.VID,
   });
 };

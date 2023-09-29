@@ -35,7 +35,7 @@ const model = createModel(
 
     publicKey: '',
     privateKey: '',
-    myVcs: [] as string[],
+
     otp: '',
     otpError: '',
     idError: '',
@@ -114,7 +114,12 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         description: 'Check if VC data is in secured local storage.',
         on: {
           STORE_RESPONSE: {
-            actions: ['setVerifiableCredential', 'setGeneratedOn', 'updateVc'],
+            actions: [
+              'setVerifiableCredential',
+              'setContext',
+              'setGeneratedOn',
+              'updateVc',
+            ],
             target: 'idle',
           },
         },
@@ -484,10 +489,18 @@ export const EsignetMosipVCItemMachine = model.createMachine(
       setVerifiableCredential: model.assign({
         verifiableCredential: (_, event) => {
           if (event.type === 'GET_VC_RESPONSE') {
-            return event.vc;
+            return event.vc.verifiableCredential;
           }
-          return event.response;
+          return event.response.verifiableCredential;
         },
+      }),
+
+      setContext: model.assign((context, event) => {
+        if (event.type === 'STORE_RESPONSE') {
+          const {verifiableCredential, ...data} = event.response;
+          return {...context, ...data};
+        }
+        return context;
       }),
 
       setGeneratedOn: model.assign({
@@ -500,7 +513,10 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         context => {
           const {serviceRefs, ...data} = context;
           data.credentialRegistry = MIMOTO_BASE_URL;
-          return StoreEvents.SET(VCMetadata.fromVC(context).getVcKey(), data);
+          return StoreEvents.SET(
+            VCMetadata.fromVC(context.vcMetadata).getVcKey(),
+            data,
+          );
         },
         {
           to: context => context.serviceRefs.store,
@@ -608,7 +624,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
       logWalletBindingSuccess: send(
         context =>
           ActivityLogEvents.LOG_ACTIVITY({
-            _vcKey: VCMetadata.fromVC(context).getVcKey(),
+            _vcKey: VCMetadata.fromVC(context.vcMetadata).getVcKey(),
             type: 'WALLET_BINDING_SUCCESSFULL',
             timestamp: Date.now(),
             deviceName: '',
@@ -622,7 +638,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
       logWalletBindingFailure: send(
         context =>
           ActivityLogEvents.LOG_ACTIVITY({
-            _vcKey: VCMetadata.fromVC(context, true).getVcKey(),
+            _vcKey: VCMetadata.fromVC(context.vcMetadata).getVcKey(),
             type: 'WALLET_BINDING_FAILURE',
             timestamp: Date.now(),
             deviceName: '',
@@ -657,7 +673,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
       logVCremoved: send(
         (context, _) =>
           ActivityLogEvents.LOG_ACTIVITY({
-            _vcKey: VCMetadata.fromVC(context).getVcKey(),
+            _vcKey: VCMetadata.fromVC(context.vcMetadata).getVcKey(),
             type: 'VC_REMOVED',
             timestamp: Date.now(),
             deviceName: '',

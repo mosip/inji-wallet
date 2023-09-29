@@ -24,9 +24,7 @@ export class VCMetadata {
     this.idType = idType;
     this.requestId = requestId;
     this.isPinned = isPinned;
-
     this.id = id;
-
     this.protocol = protocol;
     this.issuer = issuer;
   }
@@ -37,9 +35,7 @@ export class VCMetadata {
       idType: vc.idType,
       requestId: vc.requestId,
       isPinned: vc.isPinned || false,
-
       id: vc.id,
-
       protocol: vc.protocol,
       issuer: vc.issuer,
     });
@@ -67,10 +63,6 @@ export class VCMetadata {
   // Used for mmkv storage purposes and as a key for components and vc maps
   // Update VC_ITEM_STORE_KEY_REGEX in case of changes in vckey
   getVcKey(): string {
-    // openid for vc -> issuer:protocol:vcID
-    //TODO: Separators for VC key to be maintained consistently
-    if (this.protocol)
-      return `${VC_KEY_PREFIX}_${this.issuer}_${this.protocol}_${this.id}`;
     return `${VC_KEY_PREFIX}_${this.requestId}`;
   }
 

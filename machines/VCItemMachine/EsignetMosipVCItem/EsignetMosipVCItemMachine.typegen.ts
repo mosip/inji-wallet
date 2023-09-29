@@ -120,7 +120,10 @@ export interface Typegen0 {
     removedVc: 'STORE_RESPONSE';
     requestStoredContext: 'GET_VC_RESPONSE' | 'REFRESH';
     requestVcContext: 'DISMISS' | 'xstate.init';
+    resetWalletBindingSuccess: 'DISMISS';
     sendVcUpdated: 'STORE_RESPONSE';
+    sendWalletBindingSuccess: 'done.invoke.vc-item-openid4vci.kebabPopUp.updatingPrivateKey:invocation[0]';
+    setContext: 'STORE_RESPONSE';
     setGeneratedOn: 'GET_VC_RESPONSE' | 'STORE_RESPONSE';
     setOtp: 'INPUT_OTP';
     setPinCard: 'PIN_CARD';
@@ -153,6 +156,7 @@ export interface Typegen0 {
     setWalletBindingId:
       | 'done.invoke.vc-item-openid4vci.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item-openid4vci.kebabPopUp.addingWalletBindingId:invocation[0]';
+    setWalletBindingSuccess: 'done.invoke.vc-item-openid4vci.updatingPrivateKey:invocation[0]';
     storeContext:
       | 'PIN_CARD'
       | 'done.invoke.vc-item-openid4vci.addingWalletBindingId:invocation[0]'

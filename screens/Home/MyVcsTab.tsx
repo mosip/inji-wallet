@@ -116,21 +116,33 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                   lineHeight={1}>
                   {t('bringYourDigitalID')}
                 </Text>
-                <Text
-                  style={Theme.TextStyles.bold}
-                  color={Theme.Colors.textLabel}
-                  align="center"
-                  margin="0 12 30 12">
-                  {t('generateVcDescription')}
-                </Text>
+
+                {isOpenId4VCIEnabled() && (
+                  <Text
+                    style={Theme.TextStyles.bold}
+                    color={Theme.Colors.textLabel}
+                    align="center"
+                    margin="0 12 30 12">
+                    {t('generateVcFABDescription')}
+                  </Text>
+                )}
                 {!isOpenId4VCIEnabled() && (
-                  <Button
-                    testID="downloadCard"
-                    type="gradient"
-                    disabled={controller.isRefreshingVcs}
-                    title={t('downloadCard')}
-                    onPress={controller.DOWNLOAD_ID}
-                  />
+                  <React.Fragment>
+                    <Text
+                      style={Theme.TextStyles.bold}
+                      color={Theme.Colors.textLabel}
+                      align="center"
+                      margin="0 12 30 12">
+                      {t('generateVcDescription')}
+                    </Text>
+                    <Button
+                      testID="downloadCard"
+                      type="gradient"
+                      disabled={controller.isRefreshingVcs}
+                      title={t('downloadCard')}
+                      onPress={controller.DOWNLOAD_ID}
+                    />
+                  </React.Fragment>
                 )}
               </Column>
             </React.Fragment>
