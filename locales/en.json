@@ -331,7 +331,7 @@
     "access": " is requesting access to",
     "status": "Status",
     "successMessage": "You are successfully logged in to ",
-    "okay": "All right",
+    "okay": "OK",
     "allow": "Allow",
     "cancel": "Cancel",
     "essentialClaims": "Important Claims",
@@ -408,7 +408,7 @@
   },
   "ScanScreen": {
     "header": "Scan QR Code",
-    "noShareableVcs": "No shareable card are available.",
+    "noShareableVcs": "No shareable cards are available.",
     "sharingVc": "Sharing card",
     "bluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
     "bluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
@@ -509,8 +509,8 @@
   },
   "WelcomeScreen": {
     "title": "Open Source Identity Solution",
-    "getStarted": "Get started",
-    "unlockApp": "Unlock application",
+    "getStarted": "Get Started",
+    "unlockApp": "Unlock Application",
     "failedToReadKeys": "Failed to read keys",
     "retryRead": "Want to retry?"
   },
