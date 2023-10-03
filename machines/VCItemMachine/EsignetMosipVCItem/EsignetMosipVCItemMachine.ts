@@ -775,7 +775,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         }
         const isBiometricsEnabled = SecureKeystore.hasBiometricsEnabled();
         return SecureKeystore.generateKeyPair(
-          context.id,
+          context.verifiableCredential.credential.credentialSubject.UIN,
           isBiometricsEnabled,
           0,
         );
