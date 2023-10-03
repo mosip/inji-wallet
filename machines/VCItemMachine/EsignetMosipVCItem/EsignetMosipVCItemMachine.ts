@@ -58,6 +58,7 @@ const model = createModel(
       GET_VC_RESPONSE: (vc: VC) => ({vc}),
       VERIFY: () => ({}),
       LOCK_VC: () => ({}),
+      RESEND_OTP: () => ({}),
       INPUT_OTP: (otp: string) => ({otp}),
       REFRESH: () => ({}),
       REVOKE_VC: () => ({}),
@@ -163,6 +164,23 @@ export const EsignetMosipVCItemMachine = model.createMachine(
           DISMISS: {
             target: 'idle',
             actions: ['clearOtp', 'clearTransactionId'],
+          },
+          RESEND_OTP: {
+            target: '.resendOTP',
+          },
+        },
+        initial: 'idle',
+        states: {
+          idle: {},
+          resendOTP: {
+            invoke: {
+              src: 'requestOtp',
+              onDone: [
+                {
+                  target: 'idle',
+                },
+              ],
+            },
           },
         },
       },
@@ -336,6 +354,23 @@ export const EsignetMosipVCItemMachine = model.createMachine(
               DISMISS: {
                 target: '#vc-item-openid4vci.kebabPopUp',
                 actions: ['clearOtp', 'clearTransactionId'],
+              },
+              RESEND_OTP: {
+                target: '.resendOTP',
+              },
+            },
+            initial: 'idle',
+            states: {
+              idle: {},
+              resendOTP: {
+                invoke: {
+                  src: 'requestOtp',
+                  onDone: [
+                    {
+                      target: 'idle',
+                    },
+                  ],
+                },
               },
             },
           },
@@ -819,4 +854,52 @@ export function selectEmptyWalletBindingId(state: State) {
 
 export function selectWalletBindingError(state: State) {
   return state.context.walletBindingError;
+}
+
+export function selectKebabPopUpAcceptingBindingOtp(state: State) {
+  return state.matches('kebabPopUp.acceptingBindingOtp');
+}
+
+export function selectKebabPopUpShowWalletBindingError(state: State) {
+  return state.matches('kebabPopUp.showingWalletBindingError');
+}
+
+export function selectKebabPopUpWalletBindingInProgress(state: State) {
+  return state.matches('kebabPopUp.requestingBindingOtp') ||
+    state.matches('kebabPopUp.addingWalletBindingId') ||
+    state.matches('kebabPopUp.addKeyPair') ||
+    state.matches('kebabPopUp.updatingPrivateKey')
+    ? true
+    : false;
+}
+
+export function selectKebabPopUpBindingWarning(state: State) {
+  return state.matches('kebabPopUp.showBindingWarning');
+}
+
+export function selectRemoveWalletWarning(state: State) {
+  return state.matches('kebabPopUp.removeWallet');
+}
+
+export function selectIsPinned(state: State) {
+  return state.context.isPinned;
+}
+
+export function selectOtpError(state: State) {
+  return state.context.otpError;
+}
+
+export function selectShowActivities(state: State) {
+  return state.matches('kebabPopUp.showActivities');
+}
+
+export function selectShowWalletBindingError(state: State) {
+  return (
+    state.matches('showingWalletBindingError') ||
+    state.matches('kebabPopUp.showingWalletBindingError')
+  );
+}
+
+export function selectLogoUrl(state: State) {
+  return state.context.logoUrl;
 }
