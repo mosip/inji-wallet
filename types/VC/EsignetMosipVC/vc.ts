@@ -68,6 +68,7 @@ export interface Credential {
 }
 
 export interface VerifiableCredential {
+  issuerLogo: string;
   format: string;
   credential: Credential;
 }

@@ -459,6 +459,8 @@ interface issuerType {
 const updateCredentialInformation = (context, credential) => {
   let credentialWrapper: CredentialWrapper = {};
   credentialWrapper.verifiableCredential = credential;
+  credentialWrapper.verifiableCredential.issuerLogo =
+    context.selectedIssuer.logoUrl;
   credentialWrapper.identifier = getIdentifier(context, credential);
   credentialWrapper.generatedOn = new Date();
   credentialWrapper.issuerLogo = context.selectedIssuer.logoUrl;
