@@ -114,12 +114,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         description: 'Check if VC data is in secured local storage.',
         on: {
           STORE_RESPONSE: {
-            actions: [
-              'setVerifiableCredential',
-              'setContext',
-              'setGeneratedOn',
-              'updateVc',
-            ],
+            actions: ['setVerifiableCredential', 'setContext', 'updateVc'],
             target: 'idle',
           },
         },
@@ -505,8 +500,11 @@ export const EsignetMosipVCItemMachine = model.createMachine(
       }),
 
       setGeneratedOn: model.assign({
-        generatedOn: (context, _event) => {
-          return context.verifiableCredential.generatedOn;
+        generatedOn: (_context, event) => {
+          if (event.type === 'GET_VC_RESPONSE') {
+            return event.vc.generatedOn;
+          }
+          return event.response.generatedOn;
         },
       }),
 
@@ -805,7 +803,7 @@ export function selectContext(state: State) {
 }
 
 export function selectGeneratedOn(state: State) {
-  return new Date(state.context.generatedOn).toLocaleDateString();
+  return state.context.generatedOn;
 }
 
 export function selectWalletBindingSuccess(state: State) {

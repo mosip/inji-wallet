@@ -80,7 +80,8 @@ export const MosipVCItem: React.FC<
       esignetSelectVerifiableCredentials,
     );
   }
-  let formattedDate = generatedOn;
+  let formattedDate =
+    generatedOn && format(new Date(generatedOn), 'MM/dd/yyyy');
   return (
     <React.Fragment>
       <Pressable
