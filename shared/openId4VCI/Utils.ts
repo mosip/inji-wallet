@@ -8,7 +8,7 @@ import {ENABLE_OPENID_FOR_VC} from 'react-native-dotenv';
 
 export const OpenId4VCIProtocol = 'OpenId4VCIProtocol';
 export const isOpenId4VCIEnabled = () => {
-  return ENABLE_OPENID_FOR_VC;
+  return ENABLE_OPENID_FOR_VC === 'true';
 };
 
 export const getIdentifier = (context, credential) => {
