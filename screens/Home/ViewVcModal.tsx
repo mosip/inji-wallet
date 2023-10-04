@@ -24,11 +24,6 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       icon: 'close-circle-outline',
       onPress: controller.CONFIRM_REVOKE_VC,
     },
-    {
-      label: t('editTag'),
-      icon: 'pencil',
-      onPress: controller.EDIT_TAG,
-    },
   ];
 
   return (
@@ -54,16 +49,6 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
           />
         </Column>
       </Column>
-      {controller.isEditingTag && (
-        <TextEditOverlay
-          isVisible={controller.isEditingTag}
-          label={t('editTag')}
-          value={controller.vc.tag}
-          maxLength={12}
-          onDismiss={controller.DISMISS}
-          onSave={controller.SAVE_TAG}
-        />
-      )}
 
       {controller.isAcceptingRevokeInput && (
         <OIDcAuthenticationModal
