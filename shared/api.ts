@@ -120,7 +120,10 @@ async function generateCacheAPIFunctionWithCachePreference(
       return response;
     }
   } catch (error) {
-    console.warn('Failed to load due to network issue');
+    console.warn(`Failed to load due to network issue in cache preferred api call.
+     cache key:${cacheKey} and has onErrorHardCodedValue:${
+      onErrorHardCodedValue != undefined
+    }`);
     console.log(error);
 
     if (onErrorHardCodedValue != undefined) {
@@ -143,7 +146,11 @@ async function generateCacheAPIFunctionWithAPIPreference(
     );
     return response;
   } catch (error) {
-    console.warn('Failed to load due to network issue');
+    console.warn(`Failed to load due to network issue in API preferred api call.
+     cache key:${cacheKey} and has onErrorHardCodedValue:${
+      onErrorHardCodedValue != undefined
+    }`);
+
     console.log(error);
 
     const response = (await Storage.getItem(cacheKey)) as string;
