@@ -816,7 +816,7 @@ export const scanMachine =
               timestamp: Date.now(),
               deviceName:
                 context.receiverInfo.name || context.receiverInfo.deviceName,
-              vcLabel: context.selectedVc.tag || context.selectedVc.id,
+              vcLabel: context.selectedVc.id,
             }),
           {to: context => context.serviceRefs.activityLog},
         ),
@@ -829,7 +829,7 @@ export const scanMachine =
               timestamp: Date.now(),
               deviceName:
                 context.receiverInfo.name || context.receiverInfo.deviceName,
-              vcLabel: context.selectedVc.tag || context.selectedVc.id,
+              vcLabel: context.selectedVc.id,
             }),
           {to: context => context.serviceRefs.activityLog},
         ),
@@ -1020,7 +1020,6 @@ export const scanMachine =
           const vp = context.createdVp;
           const vc = {
             ...(vp != null ? vp : context.selectedVc),
-            tag: '',
           };
 
           const reason = [];

@@ -1,27 +1,29 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {Image, ImageBackground} from 'react-native';
-import {CheckBox, Icon} from 'react-native-elements';
+import {Image, ImageBackground, View} from 'react-native';
+import {getLocalizedField} from '../../../i18n';
+import {VerifiableCredential} from '../../../types/VC/ExistingMosipVC/vc';
+import VerifiedIcon from '../../VerifiedIcon';
 import {Column, Row, Text} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
-import VerifiedIcon from '../../VerifiedIcon';
-import {getLocalizedField} from '../../../i18n';
-import {
-  Credential,
-  VerifiableCredential,
-} from '../../../types/VC/EsignetMosipVC/vc';
+import {CheckBox, Icon} from 'react-native-elements';
 import testIDProps from '../../../shared/commonUtil';
 
-const getDetails = (arg1: string, arg2: string, credential: Credential) => {
+const getDetails = (arg1, arg2, verifiableCredential) => {
   if (arg1 === 'Status') {
     return (
-      <Column>
+      <Column
+        style={{
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginTop: 7,
+        }}>
         <Text
           testID="status"
-          weight="bold"
+          weight="regular"
           size="smaller"
           color={
-            !credential
+            !verifiableCredential
               ? Theme.Colors.LoadingDetailsLabel
               : Theme.Colors.DetailsLabel
           }>
@@ -33,7 +35,7 @@ const getDetails = (arg1: string, arg2: string, credential: Credential) => {
             alignItems: 'center',
             marginLeft: 9,
           }}>
-          {!credential ? null : <VerifiedIcon />}
+          {!verifiableCredential ? null : <VerifiedIcon />}
           <Text
             testID="valid"
             numLines={1}
@@ -41,11 +43,11 @@ const getDetails = (arg1: string, arg2: string, credential: Credential) => {
             weight="semibold"
             size="smaller"
             style={
-              !credential
+              !verifiableCredential
                 ? Theme.Styles.loadingTitle
                 : Theme.Styles.detailsValue
             }>
-            {!credential ? '' : arg2}
+            {!verifiableCredential ? '' : arg2}
           </Text>
         </Row>
       </Column>
@@ -55,7 +57,7 @@ const getDetails = (arg1: string, arg2: string, credential: Credential) => {
       <Column>
         <Text
           color={
-            !credential
+            !verifiableCredential
               ? Theme.Colors.LoadingDetailsLabel
               : Theme.Colors.DetailsLabel
           }
@@ -70,9 +72,11 @@ const getDetails = (arg1: string, arg2: string, credential: Credential) => {
           weight="bold"
           size="smaller"
           style={
-            !credential ? Theme.Styles.loadingTitle : Theme.Styles.subtitle
+            !verifiableCredential
+              ? Theme.Styles.loadingTitle
+              : Theme.Styles.subtitle
           }>
-          {!credential ? '' : arg2}
+          {!verifiableCredential ? '' : arg2}
         </Text>
       </Column>
     );
@@ -80,24 +84,45 @@ const getDetails = (arg1: string, arg2: string, credential: Credential) => {
 };
 
 function getIdNumber(id: string) {
-  if (id) {
-    return '*'.repeat(id.length - 4) + id.slice(-4);
-  }
+  return '*'.repeat(id.length - 4) + id.slice(-4);
 }
 
-export const EsignetMosipVCItemContent: React.FC<
-  EsignetMosipVCItemContentProps
+const getIssuerLogo = (isOpenId4VCI: boolean, issuerLogo: string) => {
+  if (isOpenId4VCI) {
+    return (
+      <Image
+        src={issuerLogo}
+        style={Theme.Styles.issuerLogo}
+        resizeMethod="scale"
+        resizeMode="contain"
+      />
+    );
+  }
+  return (
+    <Image
+      source={Theme.MosipSplashLogo}
+      style={Theme.Styles.logo}
+      resizeMethod="scale"
+      resizeMode="contain"
+    />
+  );
+};
+
+export const MosipVCItemContent: React.FC<
+  ExistingMosipVCItemContentProps | EsignetMosipVCItemContentProps
 > = props => {
+  const verifiableCredential = props.vcMetadata.isFromOpenId4VCI()
+    ? props.verifiableCredential?.credential
+    : props.verifiableCredential;
+
   //Assigning the UIN and VID from the VC details to display the idtype label
-  const uin = props.credential?.credential?.credentialSubject.UIN;
-  const vid = props.credential?.credential?.credentialSubject.VID;
-  const fullName = !props.credential?.credential
+  const uin = verifiableCredential?.credentialSubject.UIN;
+  const vid = verifiableCredential?.credentialSubject.VID;
+  const fullName = !verifiableCredential
     ? ''
-    : getLocalizedField(
-        props.credential?.credential.credentialSubject.fullName,
-      );
+    : getLocalizedField(verifiableCredential?.credentialSubject.fullName);
   const {t} = useTranslation('VcDetails');
-  const isvalid = !props.credential?.credential ? '' : t('valid');
+  const isvalid = !verifiableCredential ? '' : t('valid');
   const selectableOrCheck = props.selectable ? (
     <CheckBox
       checked={props.selected}
@@ -109,10 +134,10 @@ export const EsignetMosipVCItemContent: React.FC<
 
   return (
     <ImageBackground
-      source={!props.credential?.credential ? null : Theme.CloseCard}
+      source={!verifiableCredential ? null : Theme.CloseCard}
       resizeMode="stretch"
       style={
-        !props.credential?.credential
+        !verifiableCredential
           ? Theme.Styles.vertloadingContainer
           : Theme.Styles.backgroundImageContainer
       }>
@@ -121,11 +146,7 @@ export const EsignetMosipVCItemContent: React.FC<
           <Row margin="5 0 0 5">
             <ImageBackground
               imageStyle={Theme.Styles.faceImage}
-              source={
-                !props.credential?.credential
-                  ? Theme.ProfileIcon
-                  : {uri: props.credential.credential.credentialSubject.face}
-              }
+              source={faceImageSource()}
               style={Theme.Styles.closeCardImage}>
               {props.iconName && (
                 <Image
@@ -143,7 +164,7 @@ export const EsignetMosipVCItemContent: React.FC<
                   weight="regular"
                   size="smaller"
                   color={
-                    !props.credential?.credential
+                    !verifiableCredential
                       ? Theme.Colors.LoadingDetailsLabel
                       : Theme.Colors.DetailsLabel
                   }>
@@ -153,7 +174,7 @@ export const EsignetMosipVCItemContent: React.FC<
                   testID="fullNameValue"
                   weight="semibold"
                   style={
-                    !props.credential?.credential
+                    !verifiableCredential
                       ? Theme.Styles.loadingTitle
                       : Theme.Styles.detailsValue
                   }>
@@ -165,7 +186,7 @@ export const EsignetMosipVCItemContent: React.FC<
                 <Text
                   testID="idType"
                   color={
-                    !props.credential?.credential
+                    !verifiableCredential
                       ? Theme.Colors.LoadingDetailsLabel
                       : Theme.Colors.DetailsLabel
                   }
@@ -179,7 +200,7 @@ export const EsignetMosipVCItemContent: React.FC<
                   weight="semibold"
                   color={Theme.Colors.Details}
                   style={
-                    !props.credential?.credential
+                    !verifiableCredential
                       ? Theme.Styles.loadingTitle
                       : Theme.Styles.detailsValue
                   }>
@@ -189,17 +210,13 @@ export const EsignetMosipVCItemContent: React.FC<
             </Column>
           </Row>
 
-          <Column>
-            {props.credential?.credential ? selectableOrCheck : null}
-          </Column>
+          <Column>{verifiableCredential ? selectableOrCheck : null}</Column>
         </Row>
 
         <Row
           align="space-between"
           margin="9 10 0 7"
-          style={
-            !props.credential?.credential ? Theme.Styles.loadingContainer : null
-          }>
+          style={!verifiableCredential ? Theme.Styles.loadingContainer : null}>
           <Column>
             {uin ? (
               <Column margin="0 0 9 0">
@@ -238,8 +255,8 @@ export const EsignetMosipVCItemContent: React.FC<
                 </Text>
               </Column>
             ) : null}
-            {!props.credential?.credential
-              ? getDetails(t('id'), uin | vid, props.credential?.credential)
+            {!verifiableCredential
+              ? getDetails(t('id'), uin || vid, verifiableCredential)
               : null}
           </Column>
         </Row>
@@ -254,7 +271,7 @@ export const EsignetMosipVCItemContent: React.FC<
               weight="regular"
               size="smaller"
               color={
-                !props.credential?.credential
+                !verifiableCredential
                   ? Theme.Colors.LoadingDetailsLabel
                   : Theme.Colors.DetailsLabel
               }>
@@ -264,7 +281,7 @@ export const EsignetMosipVCItemContent: React.FC<
               testID="generatedOnValue"
               weight="semibold"
               style={
-                !props.credential?.credential
+                !verifiableCredential
                   ? Theme.Styles.loadingTitle
                   : Theme.Styles.subtitle
               }>
@@ -272,31 +289,51 @@ export const EsignetMosipVCItemContent: React.FC<
             </Text>
           </Column>
           <Column margin="0 35 0 0">
-            {props.credential?.credential
-              ? getDetails(t('status'), isvalid, props.credential?.credential)
+            {verifiableCredential
+              ? getDetails(t('status'), isvalid, verifiableCredential)
               : null}
           </Column>
           <Column
             testID="logo"
             style={{
-              display: props.credential?.credential ? 'flex' : 'none',
+              display: verifiableCredential ? 'flex' : 'none',
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Image
-              src={props.credential?.issuerLogo}
-              style={Theme.Styles.issuerLogo}
-              resizeMethod="scale"
-              resizeMode="contain"
-            />
+            {getIssuerLogo(
+              props.vcMetadata.isFromOpenId4VCI(),
+              props.verifiableCredential?.issuerLogo,
+            )}
           </Column>
         </Row>
       </Column>
     </ImageBackground>
   );
+
+  function faceImageSource() {
+    return !verifiableCredential
+      ? Theme.ProfileIcon
+      : {
+          uri: props.vcMetadata.isFromOpenId4VCI()
+            ? verifiableCredential?.credentialSubject.face
+            : props.context.credential.biometrics.face,
+        };
+  }
 };
 
-interface EsignetMosipVCItemContentProps {
+interface ExistingMosipVCItemContentProps {
+  context: any;
+  verifiableCredential: VerifiableCredential;
+  generatedOn: string;
+  selectable: boolean;
+  selected: boolean;
+  iconName?: string;
+  iconType?: string;
+  service: any;
+  onPress?: () => void;
+}
+
+export interface EsignetMosipVCItemContentProps {
   context: any;
   credential: VerifiableCredential;
   generatedOn: string;

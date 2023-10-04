@@ -9,7 +9,6 @@ import {
   selectOtpError,
   selectIsAcceptingOtpInput,
   selectIsAcceptingRevokeInput,
-  selectIsEditingTag,
   selectIsLockingVc,
   selectIsRevokingVc,
   selectIsLoggingRevoke,
@@ -116,7 +115,6 @@ export function useViewVcModal({
     reAuthenticating,
     isRevoking,
 
-    isEditingTag: useSelector(vcItemActor, selectIsEditingTag),
     isLockingVc,
     isAcceptingOtpInput: useSelector(vcItemActor, selectIsAcceptingOtpInput),
     isAcceptingRevokeInput: useSelector(
@@ -164,9 +162,6 @@ export function useViewVcModal({
     ADD_WALLET: () =>
       vcItemActor.send(ExistingMosipVCItemEvents.ADD_WALLET_BINDING_ID()),
     onSuccess,
-    EDIT_TAG: () => vcItemActor.send(ExistingMosipVCItemEvents.EDIT_TAG()),
-    SAVE_TAG: (tag: string) =>
-      vcItemActor.send(ExistingMosipVCItemEvents.SAVE_TAG(tag)),
     DISMISS: () => vcItemActor.send(ExistingMosipVCItemEvents.DISMISS()),
     LOCK_VC: () => vcItemActor.send(ExistingMosipVCItemEvents.LOCK_VC()),
     INPUT_OTP: (otp: string) =>

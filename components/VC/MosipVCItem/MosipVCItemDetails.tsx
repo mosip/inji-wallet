@@ -1,4 +1,4 @@
-import {formatDistanceToNow} from 'date-fns';
+import {format, formatDistanceToNow, parse} from 'date-fns';
 import React from 'react';
 import * as DateFnsLocale from 'date-fns/locale';
 import {useTranslation} from 'react-i18next';
@@ -8,22 +8,62 @@ import {VC, CredentialSubject} from '../../../types/VC/ExistingMosipVC/vc';
 import {Button, Column, Row, Text} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import {TextItem} from '../../ui/TextItem';
-import {VcItemTags} from '../common/VcItemTags';
 import VerifiedIcon from '../../VerifiedIcon';
 import {getLocalizedField} from '../../../i18n';
 import {CREDENTIAL_REGISTRY_EDIT} from 'react-native-dotenv';
 import {QrCodeOverlay} from '../../QrCodeOverlay';
+import {VCMetadata} from '../../../shared/VCMetadata';
+import {
+  VcIdType,
+  VCSharingReason,
+  VerifiableCredential,
+  VerifiablePresentation,
+} from '../../../types/VC/EsignetMosipVC/vc';
+import {WalletBindingResponse} from '../../../shared/cryptoutil/cryptoUtil';
 
-export const ExistingMosipVCItemDetails: React.FC<
-  ExistingMosipVCItemDetailsProps
+const getIssuerLogo = (isOpenId4VCI: boolean, issuerLogo: string) => {
+  if (isOpenId4VCI) {
+    return <Image src={issuerLogo} style={Theme.Styles.issuerLogo} />;
+  }
+  return <Image source={Theme.MosipLogo} style={Theme.Styles.vcDetailsLogo} />;
+};
+
+const getProfileImage = (
+  props: ExistingMosipVCItemDetailsProps | EsignetMosipVCItemDetailsProps,
+  verifiableCredential,
+  isOpenId4VCI,
+) => {
+  if (isOpenId4VCI) {
+    if (verifiableCredential?.credentialSubject.face) {
+      return {uri: verifiableCredential?.credentialSubject.face};
+    }
+  } else {
+    if (props.vc?.credential?.biometrics?.face) {
+      return {uri: props.vc?.credential.biometrics.face};
+    }
+  }
+  return Theme.ProfileIcon;
+};
+
+export const MosipVCItemDetails: React.FC<
+  ExistingMosipVCItemDetailsProps | EsignetMosipVCItemDetailsProps
 > = props => {
   const {t, i18n} = useTranslation('VcDetails');
 
-  //Assigning the UIN and VID from the VC details to display the idtype label
-  const uin = props.vc?.verifiableCredential.credentialSubject.UIN;
-  const vid = props.vc?.verifiableCredential.credentialSubject.VID;
+  let isOpenId4VCI = VCMetadata.fromVC(props.vc.vcMetadata).isFromOpenId4VCI();
+  const issuerLogo = getIssuerLogo(
+    isOpenId4VCI,
+    props.vc?.verifiableCredential?.issuerLogo,
+  );
+  const verifiableCredential = isOpenId4VCI
+    ? props.vc?.verifiableCredential.credential
+    : props.vc?.verifiableCredential;
 
-  if (props.vc?.verifiableCredential == null) {
+  //Assigning the UIN and VID from the VC details to display the idtype label
+  const uin = verifiableCredential?.credentialSubject.UIN;
+  const vid = verifiableCredential?.credentialSubject.VID;
+
+  if (verifiableCredential == null) {
     return <Text align="center">Loading details...</Text>;
   }
 
@@ -38,21 +78,16 @@ export const ExistingMosipVCItemDetails: React.FC<
         <Row align="space-between" padding="10" margin="0 10 0 10">
           <Column align="space-evenly" crossAlign="center">
             <Image
-              source={
-                props.vc?.credential.biometrics?.face
-                  ? {uri: props.vc?.credential.biometrics.face}
-                  : Theme.ProfileIcon
-              }
+              source={getProfileImage(
+                props,
+                verifiableCredential,
+                isOpenId4VCI,
+              )}
               style={Theme.Styles.openCardImage}
             />
 
-            <QrCodeOverlay qrCodeDetailes={String(props.vc.credential)} />
-            <Column margin="20 0 0 0">
-              <Image
-                source={Theme.MosipLogo}
-                style={Theme.Styles.vcDetailsLogo}
-              />
-            </Column>
+            <QrCodeOverlay qrCodeDetailes={String(verifiableCredential)} />
+            <Column margin="20 0 0 0">{issuerLogo}</Column>
           </Column>
           <Column align="space-evenly" padding="10">
             <Column>
@@ -69,7 +104,7 @@ export const ExistingMosipVCItemDetails: React.FC<
                 size="smaller"
                 color={Theme.Colors.Details}>
                 {getLocalizedField(
-                  props.vc?.verifiableCredential.credentialSubject.fullName,
+                  verifiableCredential?.credentialSubject.fullName,
                 )}
               </Text>
             </Column>
@@ -89,7 +124,7 @@ export const ExistingMosipVCItemDetails: React.FC<
                     size="smaller"
                     color={Theme.Colors.Details}>
                     {getLocalizedField(
-                      props.vc?.verifiableCredential.credentialSubject.gender,
+                      verifiableCredential?.credentialSubject.gender,
                     )}
                   </Text>
                 </Column>
@@ -177,12 +212,7 @@ export const ExistingMosipVCItemDetails: React.FC<
                     weight="semibold"
                     size="smaller"
                     color={Theme.Colors.Details}>
-                    {new Date(
-                      getLocalizedField(
-                        props.vc?.verifiableCredential.credentialSubject
-                          .dateOfBirth,
-                      ),
-                    ).toLocaleDateString()}
+                    {formattedDateOfBirth()}
                   </Text>
                 </Column>
                 <Column margin="25 0 0 0">
@@ -222,7 +252,7 @@ export const ExistingMosipVCItemDetails: React.FC<
                     size="smaller"
                     color={Theme.Colors.Details}>
                     {getLocalizedField(
-                      props.vc?.verifiableCredential.credentialSubject.phone,
+                      verifiableCredential?.credentialSubject.phone,
                     )}
                   </Text>
                 </Column>
@@ -244,8 +274,7 @@ export const ExistingMosipVCItemDetails: React.FC<
               <Text
                 testID="emailIdValue"
                 style={
-                  props.vc?.verifiableCredential.credentialSubject.email
-                    .length > 25
+                  verifiableCredential?.credentialSubject.email.length > 25
                     ? {flex: 1}
                     : {flex: 0}
                 }
@@ -253,7 +282,7 @@ export const ExistingMosipVCItemDetails: React.FC<
                 size="smaller"
                 color={Theme.Colors.Details}>
                 {getLocalizedField(
-                  props.vc?.verifiableCredential.credentialSubject.email,
+                  verifiableCredential?.credentialSubject.email,
                 )}
               </Text>
             </Row>
@@ -274,9 +303,7 @@ export const ExistingMosipVCItemDetails: React.FC<
                 weight="semibold"
                 size="smaller"
                 color={Theme.Colors.Details}>
-                {getFullAddress(
-                  props.vc?.verifiableCredential.credentialSubject,
-                )}
+                {getFullAddress(verifiableCredential?.credentialSubject)}
               </Text>
             </Row>
           </Column>
@@ -299,7 +326,6 @@ export const ExistingMosipVCItemDetails: React.FC<
             </Column>
           )}
         </Column>
-        <VcItemTags tag={props.vc?.tag} />
       </ImageBackground>
 
       {props.vc?.reason?.length > 0 && (
@@ -382,6 +408,16 @@ export const ExistingMosipVCItemDetails: React.FC<
       )}
     </Column>
   );
+
+  function formattedDateOfBirth() {
+    const dateOfBirth = verifiableCredential?.credentialSubject.dateOfBirth;
+    const formatString =
+      dateOfBirth.split('/').length === 1 ? 'yyyy' : 'yyyy/MM/dd';
+
+    const parsedDate = parse(dateOfBirth, formatString, new Date());
+
+    return format(parsedDate, 'MM/dd/yyyy');
+  }
 };
 
 export interface ExistingMosipVCItemDetailsProps {
@@ -389,6 +425,31 @@ export interface ExistingMosipVCItemDetailsProps {
   isBindingPending: boolean;
   onBinding?: () => void;
   activeTab?: Number;
+}
+
+export interface EsignetMosipVCItemDetailsProps {
+  vc: EsignetVC;
+  isBindingPending: boolean;
+  onBinding?: () => void;
+  activeTab?: number;
+}
+
+export interface EsignetVC {
+  id: string;
+  idType: VcIdType;
+  verifiableCredential: VerifiableCredential;
+  verifiablePresentation?: VerifiablePresentation;
+  generatedOn: Date;
+  requestId: string;
+  isVerified: boolean;
+  lastVerifiedOn: number;
+  locked: boolean;
+  reason?: VCSharingReason[];
+  shouldVerifyPresence?: boolean;
+  walletBindingResponse?: WalletBindingResponse;
+  credentialRegistry: string;
+  isPinned?: boolean;
+  hashedId: string;
 }
 
 function getFullAddress(credential: CredentialSubject) {

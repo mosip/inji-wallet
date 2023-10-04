@@ -94,7 +94,7 @@ const WalletVerifiedActivationDetails: React.FC<
   );
 };
 
-export const ExistingMosipVCItemActivationStatus: React.FC<
+export const MosipVCItemActivationStatus: React.FC<
   ExistingMosipVCItemActivationStatusProps
 > = props => {
   return (
