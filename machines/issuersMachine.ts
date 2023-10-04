@@ -20,6 +20,7 @@ import {
   CredentialWrapper,
   VerifiableCredential,
 } from '../types/VC/EsignetMosipVC/vc';
+import {CACHED_API} from '../shared/api';
 
 const model = createModel(
   {
@@ -360,21 +361,13 @@ export const IssuersMachine = model.createMachine(
     },
     services: {
       downloadIssuersList: async () => {
-        const defaultIssuer = {
-          id: 'UIN, VID, AID',
-          displayName: 'UIN, VID, AID',
-        };
+        return await CACHED_API.fetchIssuers();
+      },
 
-        const response = await request('GET', '/residentmobileapp/issuers');
-        return [defaultIssuer, ...response.response.issuers];
-      },
       downloadIssuerConfig: async (_, event) => {
-        const response = await request(
-          'GET',
-          `/residentmobileapp/issuers/${event.id}`,
-        );
-        return response.response;
+        return await CACHED_API.fetchIssuerConfig(event.id);
       },
+
       downloadCredential: async context => {
         const body = await getBody(context);
         const response = await fetch(
