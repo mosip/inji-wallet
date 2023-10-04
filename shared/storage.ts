@@ -24,7 +24,7 @@ import {
 } from './cryptoutil/cryptoUtil';
 import {VCMetadata} from './VCMetadata';
 
-const MMKV = new MMKVLoader().initialize();
+export const MMKV = new MMKVLoader().initialize();
 const vcDirectoryPath = `${DocumentDirectoryPath}/inji/VC`;
 
 export const API_CACHED_STORAGE_KEYS = {
