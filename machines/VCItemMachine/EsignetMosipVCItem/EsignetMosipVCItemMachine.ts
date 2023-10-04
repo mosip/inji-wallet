@@ -711,7 +711,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
             type: 'VC_REMOVED',
             timestamp: Date.now(),
             deviceName: '',
-            vcLabel: context.id,
+            vcLabel: VCMetadata.fromVC(context.vcMetadata).id,
           }),
         {
           to: context => context.serviceRefs.activityLog,
@@ -757,7 +757,9 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         );
         const certificate = response.response.certificate;
         await savePrivateKey(
-          getBindingCertificateConstant(context.id),
+          getBindingCertificateConstant(
+            VCMetadata.fromVC(context.vcMetadata).id,
+          ),
           certificate,
         );
 
@@ -775,7 +777,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         }
         const isBiometricsEnabled = SecureKeystore.hasBiometricsEnabled();
         return SecureKeystore.generateKeyPair(
-          context.verifiableCredential.credential.credentialSubject.UIN,
+          VCMetadata.fromVC(context.vcMetadata).id,
           isBiometricsEnabled,
           0,
         );
