@@ -146,15 +146,7 @@ export const MosipVCItemContent: React.FC<
           <Row margin="5 0 0 5">
             <ImageBackground
               imageStyle={Theme.Styles.faceImage}
-              source={
-                !verifiableCredential
-                  ? Theme.ProfileIcon
-                  : {
-                      uri: props.vcMetadata.isFromOpenId4VCI()
-                        ? verifiableCredential?.credentialSubject.face
-                        : props.context.credential.biometrics.face,
-                    }
-              }
+              source={faceImageSource()}
               style={Theme.Styles.closeCardImage}>
               {props.iconName && (
                 <Image
@@ -317,6 +309,16 @@ export const MosipVCItemContent: React.FC<
       </Column>
     </ImageBackground>
   );
+
+  function faceImageSource() {
+    return !verifiableCredential
+      ? Theme.ProfileIcon
+      : {
+          uri: props.vcMetadata.isFromOpenId4VCI()
+            ? verifiableCredential?.credentialSubject.face
+            : props.context.credential.biometrics.face,
+        };
+  }
 };
 
 interface ExistingMosipVCItemContentProps {
