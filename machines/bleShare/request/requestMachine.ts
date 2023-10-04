@@ -647,7 +647,7 @@ export const requestMachine =
               timestamp: Date.now(),
               deviceName:
                 context.senderInfo.name || context.senderInfo.deviceName,
-              vcLabel: context.incomingVc.tag || context.incomingVc.id,
+              vcLabel: context.incomingVc.id,
             }),
           {to: context => context.serviceRefs.activityLog},
         ),

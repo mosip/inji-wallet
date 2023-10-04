@@ -24,8 +24,14 @@ import {
 } from './cryptoutil/cryptoUtil';
 import {VCMetadata} from './VCMetadata';
 
-const MMKV = new MMKVLoader().initialize();
+export const MMKV = new MMKVLoader().initialize();
 const vcDirectoryPath = `${DocumentDirectoryPath}/inji/VC`;
+
+export const API_CACHED_STORAGE_KEYS = {
+  fetchIssuers: 'CACHE_FETCH_ISSUERS',
+  fetchIssuerConfig: (issuerId: string) =>
+    `CACHE_FETCH_ISSUER_CONFIG_${issuerId}`,
+};
 
 async function generateHmac(
   encryptionKey: string,

@@ -62,6 +62,7 @@ export interface Typegen0 {
     loadKeyPair: 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
     logDownloaded: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
     resetError: 'RESET_ERROR' | 'TRY_AGAIN';
+    setCredentialWrapper: 'done.invoke.issuersMachine.downloadCredentials:invocation[0]';
     setError: 'error.platform.issuersMachine.displayIssuers:invocation[0]';
     setIssuers: 'done.invoke.issuersMachine.displayIssuers:invocation[0]';
     setPrivateKey: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';

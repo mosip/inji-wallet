@@ -24,12 +24,14 @@ export interface Typegen0 {
     removeVcFromInProgressDownlods: 'REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS';
     removeVcFromMyVcs: 'REMOVE_VC_FROM_CONTEXT';
     resetAreAllVcsDownloaded: 'RESET_ARE_ALL_VCS_DOWNLOADED';
+    resetWalletBindingSuccess: 'RESET_WALLET_BINDING_SUCCESS';
     setDownloadedVCFromOpenId4VCI: 'VC_DOWNLOADED_FROM_OPENID4VCI';
     setDownloadedVc: 'VC_DOWNLOADED';
     setMyVcs: 'STORE_RESPONSE';
     setReceivedVcs: 'STORE_RESPONSE';
     setUpdatedVcMetadatas: 'VC_METADATA_UPDATED';
     setVcUpdate: 'VC_UPDATE';
+    setWalletBindingSuccess: 'WALLET_BINDING_SUCCESS';
     updateMyVcs: 'VC_METADATA_UPDATED';
   };
   eventsCausingDelays: {};
