@@ -10,7 +10,6 @@ import android.util.Log;
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.core.content.ContextCompat;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
@@ -83,7 +82,7 @@ public class MainActivity extends ReactActivity {
    */
   private static boolean hasPermissions(Context context, String... permissions) {
     for (String permission : permissions) {
-      if (ContextCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+      if (context.checkCallingOrSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
         return false;
       }
     }
