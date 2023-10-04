@@ -267,7 +267,9 @@ export const vcMachine =
           inProgressVcDownloads: new Set<string>(),
         }),
         setDownloadedVCFromOpenId4VCI: (context, event) => {
-          if (event.vc) context.vcs[event.vcMetadata.getVcKey()] = event.vc;
+          if (event.vc)
+            context.vcs[VCMetadata.fromVC(event.vcMetadata).getVcKey()] =
+              event.vc;
         },
 
         setVcUpdate: (context, event) => {

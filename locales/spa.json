@@ -225,7 +225,6 @@
 		"revoke": "Revocar",
 		"revoking": "Tu billetera contiene una credencial con VID {{vid}}. Revocar esto eliminará automáticamente la misma de la billetera. ¿Estás seguro de que deseas continuar?",
 		"requestingOtp": "Solicitando OTP...",
-		"editTag": "Renombrar",
 		"activated": "Las credenciales están habilitadas para la autenticación en línea.",
 		"redirecting": "Redirigiendo...",
 		"inProgress": "Cargando...",
@@ -658,6 +657,7 @@
     "addVcButton": "Agregar Tarjeta",
     "generateVc": "Genera tus Tarjetas",
     "generateVcDescription": "Toca en \"Agregar Tarjeta\" a continuación para descargar tu Tarjeta",
+	"generateVcFABDescription": "Toca en \"+\" a continuación para descargar tu Tarjeta",
     "errors": {
       "savingFailed": {
         "title": "Error al guardar la Tarjeta",
@@ -704,7 +704,6 @@
     "revoke": "Revocar",
     "revoking": "Tu billetera contiene una credencial con VID {{vid}}. Revocar esto eliminará automáticamente la misma de la billetera. ¿Estás seguro de que deseas continuar?",
     "requestingOtp": "Solicitando OTP...",
-    "editTag": "Renombrar",
     "redirecting": "Redirigiendo...",
     "inProgress": "Cargando...",
     "success": {

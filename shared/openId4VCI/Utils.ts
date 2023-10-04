@@ -6,6 +6,7 @@ import pem2jwk from 'simple-pem2jwk';
 import {Issuers_Key_Ref} from '../../machines/issuersMachine';
 import {ENABLE_OPENID_FOR_VC} from 'react-native-dotenv';
 
+export const OpenId4VCIProtocol = 'OpenId4VCIProtocol';
 export const isOpenId4VCIEnabled = () => {
   return ENABLE_OPENID_FOR_VC === 'true';
 };
