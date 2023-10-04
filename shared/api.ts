@@ -52,19 +52,19 @@ export const API = {
 
 export const CACHED_API = {
   fetchIssuers: () =>
-    catchAPIMethod({
+    generateCacheAPIFunction({
       cacheKey: API_CACHED_STORAGE_KEYS.fetchIssuers,
       fetchCall: API.fetchIssuers,
     }),
 
   fetchIssuerConfig: (issuerId: string) =>
-    catchAPIMethod({
+    generateCacheAPIFunction({
       cacheKey: API_CACHED_STORAGE_KEYS.fetchIssuerConfig(issuerId),
       fetchCall: API.fetchIssuerConfig.bind(null, issuerId),
     }),
 
   getAllProperties: () =>
-    catchAPIMethod({
+    generateCacheAPIFunction({
       isCachePreferred: true,
       cacheKey: COMMON_PROPS_KEY,
       fetchCall: API.fetchAllProperties,
@@ -72,27 +72,27 @@ export const CACHED_API = {
     }),
 };
 
-interface cacheAPIMethodProps {
+interface GenerateCacheAPIFunctionProps {
   isCachePreferred?: boolean;
   cacheKey: string;
   fetchCall: (...props: any) => Promise<any>;
   onErrorHardCodedValue?: any;
 }
 
-async function catchAPIMethod({
+async function generateCacheAPIFunction({
   isCachePreferred = false,
   cacheKey = '',
   fetchCall = () => Promise.resolve(),
   onErrorHardCodedValue = undefined,
-}: cacheAPIMethodProps) {
+}: GenerateCacheAPIFunctionProps) {
   if (isCachePreferred) {
-    return await cacheAPIMethodWithCachePreference(
+    return await generateCacheAPIFunctionWithCachePreference(
       cacheKey,
       fetchCall,
       onErrorHardCodedValue,
     );
   } else {
-    return await cacheAPIMethodWithAPIPreference(
+    return await generateCacheAPIFunctionWithAPIPreference(
       cacheKey,
       fetchCall,
       onErrorHardCodedValue,
@@ -100,7 +100,7 @@ async function catchAPIMethod({
   }
 }
 
-async function cacheAPIMethodWithCachePreference(
+async function generateCacheAPIFunctionWithCachePreference(
   cacheKey: string,
   fetchCall: (...props: any[]) => any,
   onErrorHardCodedValue?: any,
@@ -131,7 +131,7 @@ async function cacheAPIMethodWithCachePreference(
   }
 }
 
-async function cacheAPIMethodWithAPIPreference(
+async function generateCacheAPIFunctionWithAPIPreference(
   cacheKey: string,
   fetchCall: (...props: any[]) => any,
   onErrorHardCodedValue?: any,
