@@ -2,6 +2,7 @@
 // Note: Need to keep this config in sync with actual mimoto response.
 
 export const INITIAL_CONFIG = {
+  // These properties are stored in mosip-config github repo / inji-default.properties
   allProperties: {
     modelDownloadMaxRetry: '10',
     audience: 'ida-binding',
@@ -15,6 +16,6 @@ export const INITIAL_CONFIG = {
     allowedEkycAuthType: 'demo,otp,bio-Finger,bio-Iris,bio-Face',
     warningDomainName: 'https://api.qa-inji.mosip.net',
     aboutInjiUrl: 'https://docs.mosip.io/inji',
-    faceSdkModelUrl: 'https://api.qa-inji.mosip.net/inji',
+    faceSdkModelUrl: '',
   },
 };
