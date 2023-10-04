@@ -416,6 +416,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
                     'storeContext',
                     'updateVc',
                     'setWalletBindingErrorEmpty',
+                    'sendWalletBindingSuccess',
                     'logWalletBindingSuccess',
                   ],
                 },

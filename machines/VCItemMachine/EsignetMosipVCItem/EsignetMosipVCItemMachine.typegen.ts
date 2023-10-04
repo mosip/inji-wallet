@@ -125,7 +125,9 @@ export interface Typegen0 {
     requestVcContext: 'DISMISS' | 'xstate.init';
     resetWalletBindingSuccess: 'DISMISS';
     sendVcUpdated: 'STORE_RESPONSE';
-    sendWalletBindingSuccess: 'done.invoke.vc-item-openid4vci.kebabPopUp.updatingPrivateKey:invocation[0]';
+    sendWalletBindingSuccess:
+      | 'done.invoke.vc-item-openid4vci.kebabPopUp.addingWalletBindingId:invocation[0]'
+      | 'done.invoke.vc-item-openid4vci.kebabPopUp.updatingPrivateKey:invocation[0]';
     setContext: 'STORE_RESPONSE';
     setGeneratedOn: 'GET_VC_RESPONSE';
     setOtp: 'INPUT_OTP';
@@ -140,6 +142,7 @@ export interface Typegen0 {
       | 'done.invoke.vc-item-openid4vci.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item-openid4vci.kebabPopUp.addingWalletBindingId:invocation[0]';
     setVcKey: 'REMOVE';
+    setVcMetadata: 'UPDATE_VC_METADATA';
     setVerifiableCredential: 'GET_VC_RESPONSE' | 'STORE_RESPONSE';
     setWalletBindingError:
       | 'error.platform.vc-item-openid4vci.addKeyPair:invocation[0]'
