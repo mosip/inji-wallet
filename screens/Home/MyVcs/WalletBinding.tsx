@@ -11,6 +11,7 @@ import {Dimensions} from 'react-native';
 import {ActorRefFrom} from 'xstate';
 import {ExistingMosipVCItemMachine} from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import testIDProps from '../../../shared/commonUtil';
+import {VCMetadata} from '../../../shared/VCMetadata';
 
 export const WalletBinding: React.FC<WalletBindingProps> = props => {
   const controller = useKebabPopUp(props);
@@ -104,4 +105,5 @@ interface WalletBindingProps {
   content?: string;
   Icon?: string;
   service: ActorRefFrom<typeof ExistingMosipVCItemMachine>;
+  vcMetadata: VCMetadata;
 }

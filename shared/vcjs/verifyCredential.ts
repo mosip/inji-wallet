@@ -5,7 +5,7 @@ import {Ed25519Signature2018} from '../../lib/jsonld-signatures/suites/ed2551920
 import {AssertionProofPurpose} from '../../lib/jsonld-signatures/purposes/AssertionProofPurpose';
 import {PublicKeyProofPurpose} from '../../lib/jsonld-signatures/purposes/PublicKeyProofPurpose';
 import {VerifiableCredential} from '../../types/VC/ExistingMosipVC/vc';
-import {Credential} from '../../components/VC copy/EsignetMosipVCItem/vc';
+import {Credential} from '../../types/VC/EsignetMosipVC/vc';
 
 // FIXME: Ed25519Signature2018 not fully supported yet.
 const ProofType = {
