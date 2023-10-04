@@ -80,12 +80,12 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                     onRefresh={controller.REFRESH}
                   />
                 }>
-                {vcMetadataOrderedByPinStatus.map((vcMetadata, index) => {
+                {vcMetadataOrderedByPinStatus.map(vcMetadata => {
                   const iconProps = vcMetadata.isPinned ? pinIconProps : {};
                   return (
                     <VcItemContainer
                       {...iconProps}
-                      key={`${vcMetadata.getVcKey()}-${index}`}
+                      key={vcMetadata.getVcKey()}
                       vcMetadata={vcMetadata}
                       margin="0 2 8 2"
                       onPress={controller.VIEW_VC}

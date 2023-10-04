@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef} from 'react';
+import React, {useContext, useEffect, useMemo, useRef} from 'react';
 import {useInterpret, useSelector} from '@xstate/react';
 import {View, Pressable} from 'react-native';
 import {ActorRefFrom} from 'xstate';
@@ -20,7 +20,6 @@ import {MosipVCItemContent} from './MosipVCItemContent';
 import {MosipVCItemActivationStatus} from './MosipVCItemActivationStatus';
 import {Row} from '../../ui';
 import {KebabPopUp} from '../../KebabPopUp';
-import {logState} from '../../../machines/app';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {format} from 'date-fns';
 import {
@@ -53,8 +52,10 @@ export const MosipVCItem: React.FC<
   const service = useInterpret(machine.current, {devTools: __DEV__});
 
   useEffect(() => {
-    service.subscribe(logState);
-  }, [service]);
+    service.send(
+      ExistingMosipVCItemEvents.UPDATE_VC_METADATA(props.vcMetadata),
+    );
+  }, [props.vcMetadata]);
 
   let context = useSelector(service, selectContext);
   let verifiableCredential = useSelector(service, selectVerifiableCredential);
