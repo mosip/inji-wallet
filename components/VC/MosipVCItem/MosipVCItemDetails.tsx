@@ -1,4 +1,4 @@
-import {formatDistanceToNow} from 'date-fns';
+import {format, formatDistanceToNow, parse} from 'date-fns';
 import React from 'react';
 import * as DateFnsLocale from 'date-fns/locale';
 import {useTranslation} from 'react-i18next';
@@ -212,11 +212,7 @@ export const MosipVCItemDetails: React.FC<
                     weight="semibold"
                     size="smaller"
                     color={Theme.Colors.Details}>
-                    {new Date(
-                      getLocalizedField(
-                        verifiableCredential?.credentialSubject.dateOfBirth,
-                      ),
-                    ).toLocaleDateString()}
+                    {formattedDateOfBirth()}
                   </Text>
                 </Column>
                 <Column margin="25 0 0 0">
@@ -412,6 +408,16 @@ export const MosipVCItemDetails: React.FC<
       )}
     </Column>
   );
+
+  function formattedDateOfBirth() {
+    const dateOfBirth = verifiableCredential?.credentialSubject.dateOfBirth;
+    const formatString =
+      dateOfBirth.split('/').length === 1 ? 'yyyy' : 'yyyy/MM/dd';
+
+    const parsedDate = parse(dateOfBirth, formatString, new Date());
+
+    return format(parsedDate, 'MM/dd/yyyy');
+  }
 };
 
 export interface ExistingMosipVCItemDetailsProps {
