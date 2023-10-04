@@ -25,7 +25,15 @@ import {MessageOverlay} from './components/MessageOverlay';
 import SecureKeystore from 'react-native-secure-keystore';
 import {isCustomSecureKeystore} from './shared/cryptoutil/cryptoUtil';
 import i18n from './i18n';
+import mmkvFlipper from 'rn-mmkv-storage-flipper';
+import {MMKV} from './shared/storage';
+import {inspect} from 'react-native-flipper-xstate';
 
+// add this line inside your App.tsx
+if (__DEV__) {
+  mmkvFlipper(MMKV);
+  inspect();
+}
 // kludge: this is a bad practice but has been done temporarily to surface
 //  an occurance of a bug with minimal residual code changes, this should
 //  be removed once the bug cause is determined & fixed, ref: INJI-222

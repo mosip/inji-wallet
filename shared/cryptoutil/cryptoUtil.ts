@@ -1,7 +1,7 @@
 import {KeyPair, RSA} from 'react-native-rsa-native';
 import forge from 'node-forge';
 import getAllConfigurations from '../commonprops/commonProps';
-import {isIOS} from '../constants';
+import {DEBUG_MODE_ENABLED, isIOS} from '../constants';
 import SecureKeystore from 'react-native-secure-keystore';
 import Storage from '../storage';
 import CryptoJS from 'crypto-js';
@@ -89,7 +89,7 @@ export async function createSignature(
   }
 }
 
-function replaceCharactersInB64(encodedB64) {
+function replaceCharactersInB64(encodedB64: string) {
   return encodedB64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
 
@@ -126,6 +126,11 @@ export async function encryptJson(
   encryptionKey: string,
   data: string,
 ): Promise<string> {
+  // Disable Encryption in debug mode
+  if (DEBUG_MODE_ENABLED && __DEV__) {
+    return JSON.stringify(data);
+  }
+
   if (!isCustomSecureKeystore()) {
     return CryptoJS.AES.encrypt(data, encryptionKey).toString();
   }
@@ -137,6 +142,11 @@ export async function decryptJson(
   encryptedData: string,
 ): Promise<string> {
   try {
+    // Disable Encryption in debug mode
+    if (DEBUG_MODE_ENABLED && __DEV__) {
+      return JSON.parse(encryptedData);
+    }
+
     if (!isCustomSecureKeystore()) {
       return CryptoJS.AES.decrypt(encryptedData, encryptionKey).toString(
         CryptoJS.enc.Utf8,
