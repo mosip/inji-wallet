@@ -14,7 +14,7 @@ export const INITIAL_CONFIG = {
     issuer: 'residentapp',
     allowedAuthType: 'demo,otp,bio-Finger,bio-Iris,bio-Face',
     allowedEkycAuthType: 'demo,otp,bio-Finger,bio-Iris,bio-Face',
-    warningDomainName: 'https://api.qa-inji.mosip.net',
+    warningDomainName: '',
     aboutInjiUrl: 'https://docs.mosip.io/inji',
     faceSdkModelUrl: '',
   },
