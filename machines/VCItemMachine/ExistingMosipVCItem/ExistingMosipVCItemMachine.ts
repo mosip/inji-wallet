@@ -157,8 +157,7 @@ export const ExistingMosipVCItemMachine =
               },
             ],
             TAMPERED_VC: {
-              actions: 'setVckey',
-              target: 'tamperedVC',
+              actions: ['sendTamperedVc', 'removeTamperedVcItem'],
             },
           },
         },
@@ -755,22 +754,6 @@ export const ExistingMosipVCItemMachine =
             },
           },
         },
-        tamperedVC: {
-          on: {
-            DISMISS: {
-              target: 'removingVc',
-            },
-          },
-        },
-        removingVc: {
-          entry: 'removeTamperedVcItem',
-          on: {
-            STORE_RESPONSE: {
-              actions: ['refreshMyVcs', 'logTamperedVCremoved', 'resetVckey'],
-              target: '#vc-item',
-            },
-          },
-        },
       },
     },
     {
@@ -796,14 +779,6 @@ export const ExistingMosipVCItemMachine =
             verifiableCredential: null,
             vcMetadata: context.vcMetadata,
           };
-        }),
-
-        setVckey: assign({
-          vcKey: (context, event) => event.key,
-        }),
-
-        resetVckey: assign({
-          vcKey: (context, event) => '',
         }),
 
         removeVcMetaDataFromStorage: send(
@@ -895,6 +870,13 @@ export const ExistingMosipVCItemMachine =
 
         sendVcUpdated: send(
           context => VcEvents.VC_METADATA_UPDATED(context.vcMetadata),
+          {
+            to: context => context.serviceRefs.vc,
+          },
+        ),
+
+        sendTamperedVc: send(
+          context => VcEvents.TAMPERED_VC(context.vcMetadata),
           {
             to: context => context.serviceRefs.vc,
           },
@@ -1150,7 +1132,10 @@ export const ExistingMosipVCItemMachine =
 
         removeTamperedVcItem: send(
           _context => {
-            return StoreEvents.REMOVE(MY_VCS_STORE_KEY, _context.vcKey);
+            return StoreEvents.REMOVE(
+              MY_VCS_STORE_KEY,
+              _context.vcMetadata.getVcKey(),
+            );
           },
           {to: context => context.serviceRefs.store},
         ),
@@ -1160,19 +1145,6 @@ export const ExistingMosipVCItemMachine =
             ActivityLogEvents.LOG_ACTIVITY({
               _vcKey: context.vcMetadata.getVcKey(),
               type: 'VC_REMOVED',
-              timestamp: Date.now(),
-              deviceName: '',
-              vcLabel: context.vcMetadata.id,
-            }),
-          {
-            to: context => context.serviceRefs.activityLog,
-          },
-        ),
-        logTamperedVCremoved: send(
-          (context, _) =>
-            ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: new VCMetadata(context).getVcKey(),
-              type: 'TAMPERED_VC_REMOVED',
               timestamp: Date.now(),
               deviceName: '',
               vcLabel: context.vcMetadata.id,
@@ -1587,8 +1559,4 @@ export function selectShowActivities(state: State) {
 
 export function selectIsSavingFailedInIdle(state: State) {
   return state.matches('checkingServerData.savingFailed.idle');
-}
-
-export function selectIsTampered(state: State) {
-  return state.matches('tamperedVC');
 }

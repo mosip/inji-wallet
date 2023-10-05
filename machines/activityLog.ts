@@ -3,6 +3,7 @@ import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../shared/GlobalContext';
 import {ACTIVITY_LOG_STORE_KEY} from '../shared/constants';
 import {StoreEvents} from './store';
+import {ActivityLog} from '../components/ActivityLogEvent';
 
 const model = createModel(
   {
@@ -108,14 +109,6 @@ export function createActivityLogMachine(serviceRefs: AppServices) {
     ...activityLogMachine.context,
     serviceRefs,
   });
-}
-
-export interface ActivityLog {
-  _vcKey: string;
-  timestamp: number;
-  deviceName: string;
-  vcLabel: string;
-  type: ActivityLogType;
 }
 
 export type ActivityLogType =

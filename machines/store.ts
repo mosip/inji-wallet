@@ -391,10 +391,10 @@ export const storeMachine =
                 await clear();
                 callback(model.events.KEY_INVALIDATE_ERROR());
                 sendUpdate();
-              } else if (e.message === tamperedErrorMessageString) {
-                callback(model.events.TAMPERED_VC(event.key, event.requester));
-                sendUpdate();
-              } else if (e.message === ENOENT) {
+              } else if (
+                e.message === tamperedErrorMessageString ||
+                e.message === ENOENT
+              ) {
                 callback(model.events.TAMPERED_VC(event.key, event.requester));
                 sendUpdate();
               } else if (

@@ -97,8 +97,6 @@ class Storage {
         if (isDownloaded && error.message.includes(ENOENT)) {
           throw new Error(ENOENT);
         }
-        console.log('Error Occurred while retriving from Storage.', error);
-        throw error;
       }
 
       console.log('Error Occurred while retriving from Storage.', error);

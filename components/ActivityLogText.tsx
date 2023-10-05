@@ -3,8 +3,8 @@ import {formatDistanceToNow} from 'date-fns';
 import {useTranslation} from 'react-i18next';
 
 import * as DateFnsLocale from 'date-fns/locale';
-import {ActivityLog} from '../machines/activityLog';
 import {TextItem} from './ui/TextItem';
+import {ActivityLog, getActionText} from './ActivityLogEvent';
 
 export const ActivityLogText: React.FC<{activity: ActivityLog}> = props => {
   const {t, i18n} = useTranslation('ActivityLogText');
@@ -13,11 +13,7 @@ export const ActivityLogText: React.FC<{activity: ActivityLog}> = props => {
   return (
     <TextItem
       label={getActionLabel(activity, i18n.language)}
-      text={
-        activity.vcLabel
-          ? `${activity.vcLabel} ${t(activity.type)}`
-          : `${t(activity.type)}`
-      }
+      text={getActionText(activity, t)}
       topDivider
     />
   );
