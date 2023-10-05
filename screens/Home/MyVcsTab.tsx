@@ -196,7 +196,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         isVisible={controller.isTampered}
         title={t('errors.vcIsTampered.title')}
         message={t('errors.vcIsTampered.message')}
-        onButtonPress={controller.IS_TAMPERED}
+        onButtonPress={controller.REMOVE_TAMPERED_VCS}
         buttonText={t('common:ok')}
         customHeight={'auto'}
       />

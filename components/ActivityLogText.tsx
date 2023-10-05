@@ -1,19 +1,19 @@
 import React from 'react';
-import { formatDistanceToNow } from 'date-fns';
-import { useTranslation } from 'react-i18next';
+import {formatDistanceToNow} from 'date-fns';
+import {useTranslation} from 'react-i18next';
 
 import * as DateFnsLocale from 'date-fns/locale';
-import { ActivityLog } from '../machines/activityLog';
-import { TextItem } from './ui/TextItem';
+import {TextItem} from './ui/TextItem';
+import {ActivityLog, getActionText} from './ActivityLogEvent';
 
-export const ActivityLogText: React.FC<{ activity: ActivityLog }> = (props) => {
-  const { t, i18n } = useTranslation('ActivityLogText');
-  const { activity } = props;
+export const ActivityLogText: React.FC<{activity: ActivityLog}> = props => {
+  const {t, i18n} = useTranslation('ActivityLogText');
+  const {activity} = props;
 
   return (
     <TextItem
       label={getActionLabel(activity, i18n.language)}
-      text={`${activity.vcLabel} ${t(activity.type)}`}
+      text={getActionText(activity, t)}
       topDivider
     />
   );
@@ -27,6 +27,6 @@ function getActionLabel(activity: ActivityLog, language: string) {
       locale: DateFnsLocale[language],
     }),
   ]
-    .filter((label) => label?.trim() !== '')
+    .filter(label => label?.trim() !== '')
     .join(' · ');
 }
