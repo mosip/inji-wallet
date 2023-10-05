@@ -1,0 +1,105 @@
+name: Internal Builds [Android,iOS]
+run-name: ${{ github.event.inputs.buildname }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      buildname:
+        description: 'Build App For'
+        required: true
+        default: 'Sprint-x/Collab/release-x.x.x'
+        type: string
+      mimotoBackendServiceUrl:
+        description: 'Mimoto backend service URL'
+        required: true
+        default: 'https://api.sandbox.mosip.net'
+        type: string
+      esignetBackendServiceUrl:
+        description: 'Esignet backend service URL'
+        required: true
+        default: 'https://api.sandbox.mosip.net'
+        type: string
+      internal-testers:
+        description: 'Internal Testers Group'
+        required: true
+        default: 'QA-Triple'
+        type: choice
+        options:
+          - Dev-testing
+          - MEC
+          - QA
+          - MOSIP-Collab
+          - MOSIP-Dev-testing
+      theme:
+        description: 'Application Theme'
+        required: true
+        default: 'orange'
+        type: choice
+        options:
+          - orange
+          - purple
+      buildDescription:
+        description: 'What to test'
+        required: true
+        default: 'QA-Triple environment'
+        type: string
+      registry_edit:
+        description: 'Edit Registry'
+        required: true
+        default: 'true'
+        type: choice
+        options:
+          - false
+          - true
+
+jobs:
+  build-android:
+    uses: mosip/kattu/.github/workflows/android-internal-build.yml@master
+    with:
+      MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
+      ESIGNET_HOST: ${{ inputs.esignetBackendServiceUrl }}
+      APPLICATION_THEME: ${{ inputs.theme }}
+      PLAY_CONSOLE_RELEASE_DESCRIPTION: ${{ inputs.buildDescription }}
+      CREDENTIAL_REGISTRY_EDIT: ${{ inputs.registry_edit }}
+    secrets:
+      FIREBASE_SECRET: ${{ secrets.GPG_SECRET }}
+      ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
+      RELEASE_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}'
+      INJI_ANDROID_PLAY_STORE_CONFIG_JSON: ${{ secrets.INJI_ANDROID_PLAY_STORE_CONFIG_JSON }}
+      SLACK_URL: '${{ secrets.SLACK_WEBHOOK_DEVOPS }}'
+
+  build_ios:
+    uses: mosip/kattu/.github/workflows/ios-build.yml@master
+    with:
+      MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
+      ESIGNET_HOST: ${{ inputs.esignetBackendServiceUrl }}
+      APPLICATION_THEME: ${{ inputs.theme }}
+      TESTFLIGHT_BETA_APP_DESCRIPTION: ${{ inputs.buildDescription }}
+      CREDENTIAL_REGISTRY_EDIT: ${{ inputs.registry_edit }}
+      TESTFLIGHT_INTERNAL_TESTERS_GROUP: ${{ inputs.internal-testers }}
+    secrets:
+      APP_STORE_CONNECT_TEAM_ID: '${{ secrets.APP_STORE_CONNECT_TEAM_ID }}'
+      DEVELOPER_APP_ID: '${{ secrets.IOS_INJI_DEVELOPER_APP_ID }}'
+      INJI_IOS_DEVELOPER_APP_IDENTIFIER: '${{ secrets.INJI_IOS_DEVELOPER_APP_IDENTIFIER }}'
+      INJI_IOS_DEVELOPER_PORTAL_TEAM_ID: '${{ secrets.INJI_IOS_DEVELOPER_PORTAL_TEAM_ID }}'
+      INJI_IOS_FASTLANE_APPLE_ID: '${{ secrets.INJI_IOS_FASTLANE_APPLE_ID }}'
+      INJI_IOS_FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: '${{ secrets.INJI_IOS_FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}'
+      GIT_AUTHORIZATION: '${{ secrets.GIT_AUTHORIZATION }}'
+      INJI_IOS_PROVISIONING_PROFILE_SPECIFIER: '${{ secrets.INJI_IOS_PROVISIONING_PROFILE_SPECIFIER }}'
+      INJI_IOS_TEMP_KEYCHAIN_PASSWORD: '${{ secrets.INJI_IOS_TEMP_KEYCHAIN_PASSWORD }}'
+      INJI_IOS_TEMP_KEYCHAIN_USER: '${{ secrets.INJI_IOS_TEMP_KEYCHAIN_USER }}'
+      APPLE_KEY_ID: '${{ secrets.APPLE_KEY_ID }}'
+      APPLE_ISSUER_ID: '${{ secrets.APPLE_ISSUER_ID }}'
+      APPLE_KEY_CONTENT: '${{ secrets.APPLE_KEY_CONTENT }}'
+      SLACK_URL: '${{ secrets.SLACK_WEBHOOK_DEVOPS }}'
+      MATCH_PASSWORD: '${{ secrets.INJI_IOS_MATCH_PASSWORD }}'
+
+  sonar-check:
+    if: "${{ contains(github.ref, 'develop') || contains(github.ref, 'qa-develop') }}"
+    uses: mosip/kattu/.github/workflows/sonar.yml@master
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      SONAR_HOST_URL: https://sonarcloud.io
+      SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
+      
+
