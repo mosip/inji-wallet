@@ -66,7 +66,6 @@ const model = createModel(
     walletBindingSuccess: false,
     publicKey: '',
     privateKey: '',
-    vcKey: '',
   },
   {
     events: {
