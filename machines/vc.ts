@@ -325,7 +325,9 @@ export const vcMachine =
 
         removeTamperedVcs: model.assign({
           myVcs: (context, event) =>
-            context.myVcs.filter(vc => !context.tamperedVcs.includes(vc)),
+            context.myVcs.filter(
+              value => !context.tamperedVcs.some(item => item?.equals(value)),
+            ),
         }),
 
         logTamperedVCsremoved: send(
