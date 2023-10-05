@@ -94,6 +94,14 @@ jobs:
       SLACK_URL: '${{ secrets.SLACK_WEBHOOK_DEVOPS }}'
       MATCH_PASSWORD: '${{ secrets.INJI_IOS_MATCH_PASSWORD }}'
 
+  build_ios_automation:
+    uses: mosip/kattu/.github/workflows/ios-automation-build.yml@master
+    with:
+      MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
+      ESIGNET_HOST: ${{ inputs.esignetBackendServiceUrl }}
+      APPLICATION_THEME: ${{ inputs.theme }}
+      CREDENTIAL_REGISTRY_EDIT: ${{ inputs.registry_edit }}
+
   sonar-check:
     if: "${{ contains(github.ref, 'develop') || contains(github.ref, 'qa-develop') }}"
     uses: mosip/kattu/.github/workflows/sonar.yml@master
