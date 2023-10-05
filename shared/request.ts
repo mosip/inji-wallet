@@ -18,8 +18,8 @@ export async function request(
   method: HTTP_METHOD,
   path: `/${string}`,
   body?: Record<string, unknown>,
-  timeout?: undefined | number,
   host = MIMOTO_BASE_URL,
+  timeout?: undefined | number,
 ) {
   const headers = {
     'Content-Type': 'application/json',

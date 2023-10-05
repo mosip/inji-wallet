@@ -2,7 +2,6 @@ import {authorize, AuthorizeResult} from 'react-native-app-auth';
 import {assign, EventFrom, send, sendParent, StateFrom} from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {MY_VCS_STORE_KEY} from '../shared/constants';
-import {request} from '../shared/request';
 import {StoreEvents} from './store';
 import {AppServices} from '../shared/GlobalContext';
 import {
@@ -24,9 +23,18 @@ import {CACHED_API} from '../shared/api';
 
 const TIMEOUT_SEC = 10;
 
+// OIDCErrors is a collection of external errors from the OpenID library or the issuer
+enum OIDCErrors {
+  OIDC_FLOW_CANCELLED_ANDROID = 'User cancelled flow',
+  OIDC_FLOW_CANCELLED_IOS = 'org.openid.appauth.general error -3',
+
+  INVALID_TOKEN_SPECIFIED = 'Invalid token specified',
+}
+
 const model = createModel(
   {
     issuers: [] as issuerType[],
+    tempSelectedIssuer: '' as string,
     selectedIssuer: {} as issuerType,
     tokenResponse: {} as AuthorizeResult,
     errorMessage: '' as string,
@@ -58,7 +66,7 @@ export const Issuer_Tab_Ref_Id = 'issuersMachine';
 export const Issuers_Key_Ref = 'OpenId4VCI';
 export const IssuersMachine = model.createMachine(
   {
-    /** @xstate-layout N4IgpgJg5mDOIC5QEtawK5gE6wLIEMBjAC2QDswA6CVABwBt8BPASTUxwGIIB7Cy8gDceAayqoM2PEVL8asBszaScCIT0L4ALsj4BtAAwBdQ0cShaPWMh19zIAB6IAjAA4ALAE5KAZgCsBs4A7D4ATABs7j4GngA0IEyI4X6hlO7hQUFemc5+Pp4+AL6F8RIc0iTkVPKKrOxSnNhYPFiUiloAZi0AtgL1OASVcnSMdSqwamTCmrZkpqb2ltaz9k4Ibl6+AcFhkdFxCS5B4ZQp4c4GBqF+fkGhQX7hxaX9FbJUTS2cACoASgCaAH0AIIAcWBLAAcgskCAljZdGRVi4CkE0s4oqFLqFPM5nJ5QvFEghXM5KG4Qu4Hp4YkFckFniAylJBu9KJ8sJxfgBRADK3O+gO5v1+AHlfjCLFYEXZYWtrhjKOEaUFXJ4aa5Qu5CYcEJ4TuEfD4qRc-ASDAFXIzmQMZFV2VhmlhQj8ASDwVDJXDpSs5YgfOFLpQDNF3K5Ih5woGgkTEK5XD5KAmPAZ3AYstF49bXqz7RyXTz+YLhWKJcZFj7EciEAGgyHU+Gw+lo7GEKrXGl1UFAncjddPNnxrn+ByfK6gWCIdDy7D4b7QGtawZg6HG5GW7rnBE-Kdcp4zXTqe5B+Vhx9HS0x4WBUKReKvXOq36a4Hl-WwxHm+nW3ju+Sco8IQ0pEDIlEyOZ2vwsBgPQYCEDoZBQMoHCcAAIqKADqkIADKisCqGAiwqEPpWsoLogoShMESZGg8uShGqOKtrciY+EENKUTijyPE8YE2m89rQbB8HkEh-ScPy2HcgAwt83IESwvK8gAqsKJHLE+5EIAq7hKiqaoalqOrEh4unuFuPgeH4+LnJkJ4spB1Q8AA7mQ9A8PgEDIdg0l8B0yBQNwfDiFMojiBBQxOa57med5WC+WQ-lQJM0zaIi8wzlKGlkY4-rpmiW7sYayoGOcPg-lcHYBKqKSXPuzgZPZtqRdQLluR5Xn9AlSWNBerTtF0WC9PxZ6tdFHVxd1AUpRoaX6MY6kykiz7RJk5L3PqAbAc45W6q4IaUJkBSUVtkSBE1An8LQ2CDd0wLoFoxAtMgABec1kEF-DqGIfRDo5bQ3T092Pc9b2zDNMzpQtmXetly1aUuK4Np+Ubfpu7h5OSx36uEVlmn4F2jddWC3cDT1YK9729U6bSMJ0PS-ae-3E6TD3k5T4PqJD80mDDj45YugZkmxpWeO4GM0jcP61kmfhUuEET6hZhP-SQcEiAA0mATAAAr4MgnLSQAEjJGuAhr3JAjrEJlmYs6kfDuU1lRlBGYGyQBOmmo-luZK+5ZxXWftVp8RFbJq4Qmva3rBucMbpvm5bgLWywErOHbWVLdWYRkm7pU3JcqrGXG+Q0fuVFRuxYYDqHf0tTAFBYNoYBa7r+ucrwX2hT9I3-Q32DN63MdYBD70ZRnsNZ8+FzRK7YtagU1n6qVrY0rp8bhnLxzKikKv12AjeD9H7efSFwg92H9r903Wgt8fBuj7M8zpxWcPVjPy44tqXj+DZK+6jVJMCtcYEnFgqGuLw65sl4ONTy0ksCQAPjofA9BYCnwEN3cKUD7QwPanAhBEAkHIBQRMLmY9oYT35o7NYGxvD+B7LsKIMRWxZHXqVBibEzSeAeKBSBTMWq4JihAeBiCyDINQdTFotNtC3UZg5ARbUhEiMIWI4hqDH5Q15pQh278PB0O2CECITCDjEjxK4HcGNcb3GVLiFIoQ97QMUR1ZRRCSFx2BJCaS3JsKLXnE7WhWwGFGP2K2BMBUMb5W7DifODj7SCGwMgDoTBRIuNUSg9B30sH8LZPEimSSUkENcfQDRPNfGaSdjpPSXt1QGE1NqVsfZyTmTYriHGtTjSxP4LkxJyTEKpPEZI-qdNZG9xat0-JfTClpOKWQp+FDX5Ty0pUkqqoal1OLggJeh06RRjTKVCMvDwLYK+hAWCcdRS4B1lJOSxE+Y6OfFEM0lB9JhFTDEcW0tUieE3sqMI2osQhz4fItkyBTlgHcZ47xZSBb+m7CcFI6QLgRHDJkVsVilRf2+eqSyxoa5gTIDwQh8BYSjPeAsvxawAC04RWzUs6dUEYShXjkvKTQrwZJzFRm+SA5UO0fyPF8ArK4PgMTBFxI1Wu2S8x9RZTC7SGJlx5EsvudiW4-DhlXmidIYDK4ivec4elDonShFldQ-0YREw2JnnsTUERQkHTxJceM3z8QXGPJK4F0qnQ+FNdnC1elcQhhtZRGlm4NiHVcEeEVGJKIEw9c1NkQk4IITEioX1z4K47kuOLdMe4MxopCIdYI+1AjBBxBAo5Uq5BONil1PyAV01LLuLnTUPKrjJHtTuG4+obg3EiNcQ5pL7QsyBmzUG71G1O2VcuEIRUqK5CjEaVepVTiGiNMkQ04t1SGojlHNuBtJ1rHqZuXN2yTpajyMcayhrr5H33VgQ9SQwinEjamfIOI3UbJLc8lFBJuxUkeBWod1bYHCKmeI4lmcKUuCbK7TUx14wWjhaEvEzyzSBGuOW3Ghrxm9KgP0tRj7tLvPWniNMuQRUat1NG12YR1R2ItDiLIhrYBaGeohIj9wXYMWRcvbcrZQil32gxO4ctIz6nsfGy64gwVEfyHLckuNjhhmxNw6WiZKLpmNGmHhjzDWdzAERjGuQkwPGVJG8ytT3AVQ7Guna3zalnDlsUYoQA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QEtawK5gE6wLIEMBjAC2QDswA6CVABwBt8BPASTUxwGIIB7Cy8gDceAayqoM2PEVL8asBszaScCIT0L4ALsj4BtAAwBdQ0cShaPWMh19zIAB6IATAHYAHAFZK7gGwBmd2cARgBOdwNgvwAaECZEV18DSmdfdw8ogBZQ-wN-TwBfAtiJDmkScip5RVZ2KU5sLB4sSkUtADNmgFsBOpwCCrk6RlqVWDUyYU1bMlNTe0trGfsnBDcvHwCgsIio31j4tf9fFINI4MTPfMzXT2cikr7y2SpG5s4AFQAlAE0AfQAggBxAEsABy8yQIEWNl0ZBWiEywX8rkomXyvlCOQ8Bn2cUQnnSKSRbixnkyvl8zn8DxApSkAxelDeWE+v0BIPBemCZihMOWUNWmQM6MoVIMflCd2CAX8B0QoVcwRSnkxrnRkUyd1CtPp-RklWZWCarK+AFEAMpmj5-M1fL4AeS+kIsVlhdkFiKSyRue1cEvSvlc8oQnlcqMS6OOziCaT8uqejMNLOcbP+wNBEOMCzdAtAq3JJxlioizk8oWCyMyIeCnjOaPcwQloQM-tcbl8CbGSf4Kc45qtNrtjud2b5ubhCNDFMoxZxZYrVZrrnylHCOOyEVCAWCXbKPaosDA9DAhB0ZCgyg4nAAIg6AOpggAyDoBN7+LBvLuhE49+cQ-jBJkmSUP4NxgU2-iBEGnghiuPpNr4haeGEZJ7gyBr8EeJ5nuQl59JwVpPmaADCHxmu+LAWhaACqdrfvyk6eggYFIqcwGZGW2pas4IY3MkzitukNzUli-g6sUdKJphVQ8AA7mQ9A8PgEBXtgJF8O0yBQNwfDiJMojiNJgyyQpSkqWpWAaWQWlQBMUzaHCcxjq6SxMf+LHAcqgkcVxzihDxIYoqikoomckFUhJjzdjJ1DyYpymqX01m2Q0xrNK0jAdN0vQxSZcVmYllkpdp9kaI5+jGAxv7wsxwqiuKkrSrKfG5GiEqtiu6rkjchSSXqzyGrQ2CdFgXQAugWjEM0yAAF4VWQun8OoYi5fusXDVgo3jZN01YHNC1ldMTlVS5P5uX+jgEjOc6luWlZgTW1yUIkjbpChvgXGW6H6vlm3bRNU0zfNMxpSamXaNta0YX9I3dIDe0HTMR0Lc5vKue6tUeYWs5qndi6PfiCCNrO6SpEkfh1k2mQ-YN-D-fDu3AwtYMZW0UMDQerRw2NCPM8j6jHZVJg8jmF1Y1d05FnjBgLg91ZEzKVIvWW-HerWbi01zJCniIADSYBMAACvgyCsiRAASpF638etmv8RugqO6PnZjU7BKkzgvaqzicb7qrCu4NZXP4oESpS+QBWkdxa7FOuEPrhsm2bnCW9btv238jssM6ovjuL7ue97VJ+1qviB09WqUHW4ZKhcSpR7H+UwBQWDaGABvG6brK8MtBmrZzsUt9g7ed8nWAozMaNi27zFhEqPhCRSqTZLioRPRclCtlSlwijsnb9cZTLD23Wgd0n3dLfpwgD0fhon6PF9m5PJ0iy7jGXas8-KhEHjL+XLZMQ1h2FvOsvVKSKjrDSQ+eUmS8EKipEiWBIBgDIDofA9BYBXwEP3IysDDTwISog5BEBUHoMwS-YW1UC7MXWN4PwgQQjhEiDERW2pZyCVlhKP+Xgm5wPiuZCASCUFoOQBgrBLIIbZTGtDX6-CEFCJIWQsRFDBao1Ou-GqU46GbEYTsFheJDiVlrGuVIKJjiBClJSPhBCBGJWEaQ0R4jU4AjBCRM0T5qGzw8johh2xmF7BDF4L2SR2yU0imBPq0V1r5UENgZA7QmB4QccojB2CVp4JiUyOJ+1EnJKUU4+glDZgaJnnmSWrFvIimAn5AKdwnpJDXGBMsSskLAVcDY-gOSElJIvCkwprMWjsxyoPWJ8S8l9IKeQ4p0987eIqV5diNTPDcXqWwzI7hq7lyRMcaOgkolSXwctCAJ5U4OlwEbYi5EvxnQ-hLIUfhkj+GcL7SktwzhQWDkGdqgQKRBCCHkdwnTxAnLAC4txHivHlKFOXL2dxjhbnaZ9WCisgKbMrHcAwoRqT7PcEC2kZAeCkPgFCUZLwynuUlgAWkMYgKl3gsSMqZcy6B0SYZwOGEoJ4FLP4uE4pssKCL-L7zlETJUXsogRD+S0pINMYFZOTOlLAPL7mImeSBICIp3BYm1eWYMRMwybPLHcIIFZnn3HleyxVJpnAqvdiuUCZY-DpA9h7QIy5qRb3EqkN6r05VsrkYabCp5zz4RUHa5iuQKzVwuFiIMlZIiE0OO4Nq6oAobK1OWMxwKCpEKSioEqUAI0eQRRGW4n1OLNLxfqw4JIXrATOBsps7YPY5oZrzJm+0QaUruVOTiwc-CgXbJ9FNFJhQHwDXTKg8dE5dzNsWyWipQ4oWjK9KkEcaxjq9divFKJGxQJzQ-M+Y9u4Lq-mGDVZxPrhhyJ9EUT1cRihWWcKU-pdgdMtYGuQdjiEiPISSjG0K+VlhetuJIHtSTAU3UEFI2qYyEnJBBKKhyFVdPGb0qA-TyFnoAlwsUYFEhlhCBuYOlY0QrICimoClIZQ5tgFoGaF4cMsTSGW1UQFqT8vSDWH11dX3UkxJ9NwFrJ1c2QKC5jNxEgvRRJBUsxYvmoi2HkXIHZy4ftE7FXuYBmNUxOP5WWjZK2KhrYgWsooDBQNyAw-yH6ihAA */
     predictableActionArguments: true,
     preserveActionOrder: true,
     id: Issuer_Tab_Ref_Id,
@@ -75,7 +83,7 @@ export const IssuersMachine = model.createMachine(
         invoke: {
           src: 'downloadIssuersList',
           onDone: {
-            actions: ['setIssuers'],
+            actions: ['setIssuers', 'unsetLoadingReason'],
             target: 'selectingIssuer',
           },
           onError: {
@@ -87,36 +95,17 @@ export const IssuersMachine = model.createMachine(
       error: {
         description: 'reaches here when any error happens',
         on: {
-          TRY_AGAIN: {
-            actions: 'resetError',
-            target: 'displayIssuers',
-          },
-          RESET_ERROR: {
-            actions: 'resetError',
-            target: 'idle',
-          },
-        },
-      },
-      error2: {
-        description: 'reaches here when issuer config is not available',
-        on: {
-          TRY_AGAIN: {
-            actions: 'resetError',
-            target: 'downloadCredentials',
-          },
-          RESET_ERROR: {
-            actions: 'resetError',
-            target: 'idle',
-          },
-        },
-      },
-      error3: {
-        description: 'reaches here when auth callback fails',
-        on: {
-          TRY_AGAIN: {
-            actions: 'resetError',
-            target: 'downloadCredentials',
-          },
+          TRY_AGAIN: [
+            {
+              cond: 'shouldFetchIssuerAgain',
+              actions: ['setLoadingIssuer', 'resetError'],
+              target: 'displayIssuers',
+            },
+            {
+              actions: 'resetError',
+              target: 'checkKeyPair',
+            },
+          ],
           RESET_ERROR: {
             actions: 'resetError',
             target: 'idle',
@@ -130,6 +119,8 @@ export const IssuersMachine = model.createMachine(
             actions: sendParent('DOWNLOAD_ID'),
           },
           SELECTED_ISSUER: {
+            // set the issuer obj from the issuerStore
+            actions: 'updateTmpSelectedIssuer',
             target: 'downloadIssuerConfig',
           },
         },
@@ -144,7 +135,7 @@ export const IssuersMachine = model.createMachine(
           },
           onError: {
             actions: 'setError',
-            target: 'error2',
+            target: 'error',
           },
         },
       },
@@ -159,17 +150,16 @@ export const IssuersMachine = model.createMachine(
           },
           onError: [
             {
-              cond: (_, event) => event.data.error !== 'User cancelled flow',
-              actions: [
-                (_, event) => console.log('error in invokeAuth - ', event.data),
-                'setError',
-              ],
-              target: 'error3',
+              cond: 'isOIDCflowCancelled',
+              actions: 'resetError',
+              target: 'selectingIssuer',
             },
             {
-              cond: (_, event) =>
-                event.data.error !== 'Invalid token specified',
-              target: 'downloadCredentials',
+              actions: [
+                'setError',
+                (_, event) => console.log('error in invokeAuth - ', event.data),
+              ],
+              target: 'error',
             },
           ],
         },
@@ -217,7 +207,7 @@ export const IssuersMachine = model.createMachine(
           },
           onError: {
             actions: 'setError',
-            target: 'error3',
+            target: 'error',
           },
         },
         on: {
@@ -277,21 +267,18 @@ export const IssuersMachine = model.createMachine(
         issuers: (_, event) => event.data,
         loadingReason: null,
       }),
-
+      unsetLoadingReason: model.assign({
+        loadingReason: null,
+      }),
       setError: model.assign({
         errorMessage: (_, event) => {
           console.log('Error while fetching issuers ', event.data.message);
-          if (event.data.message === 'User cancelled flow') {
-            // not an error if user has pressed back button or closes the tab
-            return '';
-          }
           return event.data.message === 'Network request failed'
             ? 'noInternetConnection'
             : 'generic';
         },
         loadingReason: null,
       }),
-
       resetError: model.assign({
         errorMessage: '',
       }),
@@ -315,7 +302,9 @@ export const IssuersMachine = model.createMachine(
           to: context => context.serviceRefs.store,
         },
       ),
-
+      setLoadingIssuer: model.assign({
+        loadingReason: 'displayIssuers',
+      }),
       storeVerifiableCredentialMeta: send(
         context =>
           StoreEvents.PREPEND(MY_VCS_STORE_KEY, getVCMetadata(context)),
@@ -362,6 +351,9 @@ export const IssuersMachine = model.createMachine(
 
       setSelectedIssuers: model.assign({
         selectedIssuer: (_, event) => event.data,
+      }),
+      updateTmpSelectedIssuer: model.assign({
+        tempSelectedIssuer: (_, event) => event.id,
       }),
       setTokenResponse: model.assign({
         tokenResponse: (_, event) => event.data,
@@ -410,11 +402,9 @@ export const IssuersMachine = model.createMachine(
       downloadIssuersList: async () => {
         return await CACHED_API.fetchIssuers();
       },
-
-      downloadIssuerConfig: async (_, event) => {
-        return await CACHED_API.fetchIssuerConfig(event.id);
+      downloadIssuerConfig: async (context, _) => {
+        return await CACHED_API.fetchIssuerConfig(context.tempSelectedIssuer);
       },
-
       downloadCredential: async context => {
         const body = await getBody(context);
         const response = await fetch(
@@ -433,7 +423,6 @@ export const IssuersMachine = model.createMachine(
         return credential;
       },
       invokeAuthorization: async context => {
-        console.log('ISSUER: ', context.selectedIssuer);
         const response = await authorize(context.selectedIssuer);
         return response;
       },
@@ -456,6 +445,21 @@ export const IssuersMachine = model.createMachine(
       hasKeyPair: context => {
         return context.publicKey != null;
       },
+      isOIDCflowCancelled: (_, event) => {
+        // iOS & Android have different error strings for user cancelled flow
+        const err = [
+          OIDCErrors.OIDC_FLOW_CANCELLED_ANDROID,
+          OIDCErrors.OIDC_FLOW_CANCELLED_IOS,
+        ];
+        return (
+          !!event.data &&
+          typeof event.data.toString === 'function' &&
+          err.some(e => event.data.toString().includes(e))
+        );
+      },
+      shouldFetchIssuerAgain: context => context.selectedIssuer !== null,
+      invalidTokenSpecified: (_, event) =>
+        event.data.error !== OIDCErrors.INVALID_TOKEN_SPECIFIED,
       isCustomSecureKeystore: () => isCustomSecureKeystore(),
     },
   },
