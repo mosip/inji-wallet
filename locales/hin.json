@@ -14,7 +14,8 @@
     "QRLOGIN_SUCCESFULL": "क्यूआरलॉगिन सफल",
     "WALLET_BINDING_SUCCESSFULL": "सक्रियण सफल",
     "WALLET_BINDING_FAILURE": "सक्रियकरण असफल",
-    "VC_REMOVED": "वॉलेट से हटाया गया"
+    "VC_REMOVED": "वॉलेट से हटाया गया",
+    "TAMPERED_VC_REMOVED": "दुर्भावनापूर्ण गतिविधि के कारण कुछ कार्ड हटा दिए गए"
   },
   "DeviceInfoList": {
     "requestedBy": "द्वारा अनुरोध किया गया",

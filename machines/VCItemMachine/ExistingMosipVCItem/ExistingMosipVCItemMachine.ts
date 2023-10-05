@@ -93,6 +93,7 @@ const model = createModel(
       SHOW_ACTIVITY: () => ({}),
       REMOVE: (vcMetadata: VCMetadata) => ({vcMetadata}),
       UPDATE_VC_METADATA: (vcMetadata: VCMetadata) => ({vcMetadata}),
+      TAMPERED_VC: (key: string) => ({key}),
     },
   },
 );
@@ -154,6 +155,9 @@ export const ExistingMosipVCItemMachine =
                 target: 'checkingServerData',
               },
             ],
+            TAMPERED_VC: {
+              actions: ['sendTamperedVc', 'removeTamperedVcItem'],
+            },
           },
         },
         checkingServerData: {
@@ -441,7 +445,7 @@ export const ExistingMosipVCItemMachine =
               entry: 'removeVcItem',
               on: {
                 STORE_RESPONSE: {
-                  actions: ['removedVc', 'logVCremoved'],
+                  actions: ['refreshMyVcs', 'logVCremoved'],
                   target: '#vc-item',
                 },
               },
@@ -870,6 +874,13 @@ export const ExistingMosipVCItemMachine =
           },
         ),
 
+        sendTamperedVc: send(
+          context => VcEvents.TAMPERED_VC(context.vcMetadata),
+          {
+            to: context => context.serviceRefs.vc,
+          },
+        ),
+
         updateVc: send(
           context => {
             const {serviceRefs, ...vc} = context;
@@ -904,16 +915,6 @@ export const ExistingMosipVCItemMachine =
           },
         ),
 
-        VcUpdated: send(
-          context => {
-            const {serviceRefs, ...vc} = context;
-            return {type: 'VC_UPDATE', vc};
-          },
-          {
-            to: context => context.serviceRefs.vc,
-          },
-        ),
-
         setThumbprintForWalletBindingId: send(
           context => {
             const {walletBindingResponse} = context;
@@ -930,7 +931,7 @@ export const ExistingMosipVCItemMachine =
           },
         ),
 
-        removedVc: send(
+        refreshMyVcs: send(
           () => ({
             type: 'REFRESH_MY_VCS',
           }),
@@ -1119,6 +1120,16 @@ export const ExistingMosipVCItemMachine =
         ),
 
         removeVcItem: send(
+          _context => {
+            return StoreEvents.REMOVE(
+              MY_VCS_STORE_KEY,
+              _context.vcMetadata.getVcKey(),
+            );
+          },
+          {to: context => context.serviceRefs.store},
+        ),
+
+        removeTamperedVcItem: send(
           _context => {
             return StoreEvents.REMOVE(
               MY_VCS_STORE_KEY,

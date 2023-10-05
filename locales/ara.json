@@ -14,7 +14,8 @@
     "QRLOGIN_SUCCESFULL": "QRL تم تسجيل الدخول بنجاح",
     "WALLET_BINDING_SUCCESSFULL": "تفعيل ناجحة",
     "WALLET_BINDING_FAILURE": "فشل التفعيل",
-    "VC_REMOVED": "تمت إزالته من المحفظة"
+    "VC_REMOVED": "تمت إزالته من المحفظة",
+    "TAMPERED_VC_REMOVED": "تمت إزالة بعض البطاقات بسبب نشاط ضار"
   },
   "DeviceInfoList": {
     "requestedBy": "مطلوب بواسطة",

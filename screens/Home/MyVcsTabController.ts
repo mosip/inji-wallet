@@ -1,7 +1,6 @@
 import {useSelector} from '@xstate/react';
 import {useContext} from 'react';
 import {ActorRefFrom} from 'xstate';
-import {selectIsTampered} from '../../machines/store';
 import {
   selectIsRefreshingMyVcs,
   selectMyVcsMetadata,
@@ -9,6 +8,7 @@ import {
   VcEvents,
   selectAreAllVcsDownloaded,
   selectInProgressVcDownloadsCount,
+  selectIsTampered,
 } from '../../machines/vc';
 import {
   selectWalletBindingError,
@@ -36,7 +36,6 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
   const service = props.service as ActorRefFrom<typeof MyVcsTabMachine>;
   const {appService} = useContext(GlobalContext);
   const vcService = appService.children.get('vc');
-  const storeService = appService.children.get('store');
   const settingsService = appService.children.get('settings');
 
   return {
@@ -45,7 +44,6 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
     GetVcModalService: useSelector(service, selectGetVcModal),
 
     vcMetadatas: useSelector(vcService, selectMyVcsMetadata),
-    isTampered: useSelector(storeService, selectIsTampered),
 
     isRefreshingVcs: useSelector(vcService, selectIsRefreshingMyVcs),
     isRequestSuccessful: useSelector(service, selectIsRequestSuccessful),
@@ -66,6 +64,8 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
       vcService,
       selectInProgressVcDownloadsCount,
     ),
+
+    isTampered: useSelector(vcService, selectIsTampered),
 
     SET_STORE_VC_ITEM_STATUS: () =>
       service.send(MyVcsTabEvents.SET_STORE_VC_ITEM_STATUS()),
@@ -92,12 +92,12 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
       return service.send(MyVcsTabEvents.VIEW_VC(vcRef));
     },
 
-    IS_TAMPERED: () => service.send(MyVcsTabEvents.IS_TAMPERED()),
-
     DISMISS_WALLET_BINDING_NOTIFICATION_BANNER: () =>
       vcService?.send(VcEvents.RESET_WALLET_BINDING_SUCCESS()),
 
     ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS: () =>
       settingsService.send(SettingsEvents.ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS()),
+
+    REMOVE_TAMPERED_VCS: () => vcService?.send(VcEvents.REMOVE_TAMPERED_VCS()),
   };
 }
