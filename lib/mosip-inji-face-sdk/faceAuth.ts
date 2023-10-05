@@ -1,3 +1,3 @@
-import { faceAuth } from 'mosip-inji-face-sdk';
+// import { faceAuth } from 'mosip-inji-face-sdk';
 
-export default faceAuth;
+// export default faceAuth;

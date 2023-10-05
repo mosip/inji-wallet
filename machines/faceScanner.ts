@@ -4,7 +4,7 @@ import {Linking} from 'react-native';
 import {assign, EventFrom, StateFrom} from 'xstate';
 import {createModel} from 'xstate/lib/model';
 
-import faceAuth from '../lib/mosip-inji-face-sdk/faceAuth';
+import {faceAuth} from 'mosip-inji-face-sdk';
 
 const model = createModel(
   {
