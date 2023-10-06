@@ -41,7 +41,9 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
       );
       sendEndEvent(getEndData('App Login', 'FAILURE'));
     }
-    sendImpressionEvent(getImpressionData(prevRoute.name));
+    if (routes.length >= 2) {
+      sendImpressionEvent(getImpressionData(prevRoute.name));
+    }
     return false;
   };
 

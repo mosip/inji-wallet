@@ -63,6 +63,10 @@ export function useWelcomeScreen(props: RootRouteProps) {
     unlockPage: () => {
       // prioritize biometrics
       if (!isSettingUp && isBiometricUnlockEnabled && biometrics !== '') {
+        sendStartEvent(getData('App login'));
+        sendInteractEvent(
+          getInteractData('TOUCH', 'Unlock with biometrics button'),
+        );
         props.navigation.navigate('Biometric', { setup: isSettingUp });
       } else if (!isSettingUp && passcode !== '') {
         sendStartEvent(getData('App Login'));

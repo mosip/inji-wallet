@@ -81,10 +81,14 @@ export function useBiometricScreen(props: RootRouteProps) {
     }
 
     if (isUnavailable || isUnenrolled) {
+      sendEndEvent(getEndData('App login', 'FAILURE'));
       props.navigation.reset({
         index: 0,
         routes: [{ name: 'Passcode' }],
       });
+      sendStartEvent(getData('App Login'));
+      sendInteractEvent(getInteractData('TOUCH', 'Unlock application button'));
+      sendImpressionEvent(getImpressionData('Passcode'));
     }
   }, [
     isAuthorized,
