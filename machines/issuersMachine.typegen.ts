@@ -53,7 +53,7 @@
 "storeVcsContext": "done.invoke.issuersMachine.verifyingCredential:invocation[0]";
 "storeVerifiableCredentialData": "done.invoke.issuersMachine.verifyingCredential:invocation[0]";
 "storeVerifiableCredentialMeta": "done.invoke.issuersMachine.verifyingCredential:invocation[0]";
-"unsetLoadingReason": "done.invoke.issuersMachine.displayIssuers:invocation[0]";
+"unsetLoadingReason": "done.invoke.checkInternet" | "done.invoke.issuersMachine.displayIssuers:invocation[0]" | "error.platform.issuersMachine.performAuthorization:invocation[0]";
 "updateTmpSelectedIssuer": "SELECTED_ISSUER";
         };
         eventsCausingDelays: {
@@ -64,18 +64,18 @@
 "isCustomSecureKeystore": "done.invoke.issuersMachine.generateKeyPair:invocation[0]";
 "isInternetConnected": "done.invoke.checkInternet";
 "isOIDCflowCancelled": "error.platform.issuersMachine.performAuthorization:invocation[0]";
-"shouldFetchIssuerConfigAgain": "TRY_AGAIN";
+"shouldFetchIssuersAgain": "TRY_AGAIN";
         };
         eventsCausingServices: {
-          "checkInternet": "done.invoke.checkInternet" | "done.invoke.issuersMachine.downloadIssuerConfig:invocation[0]";
+          "checkInternet": "done.invoke.issuersMachine.downloadIssuerConfig:invocation[0]";
 "downloadCredential": "CHECK_KEY_PAIR" | "done.invoke.issuersMachine.generateKeyPair:invocation[0]";
-"downloadIssuerConfig": "SELECTED_ISSUER";
+"downloadIssuerConfig": "SELECTED_ISSUER" | "TRY_AGAIN";
 "downloadIssuersList": "TRY_AGAIN" | "xstate.init";
 "generateKeyPair": "CHECK_KEY_PAIR";
 "invokeAuthorization": "done.invoke.checkInternet";
 "verifyCredential": "done.invoke.issuersMachine.downloadCredentials:invocation[0]";
         };
-        matchesStates: "checkInternet" | "checkInternet.error2" | "checkKeyPair" | "displayIssuers" | "done" | "downloadCredentials" | "downloadIssuerConfig" | "error" | "generateKeyPair" | "idle" | "performAuthorization" | "selectingIssuer" | "storing" | "verifyingCredential" | { "checkInternet"?: "error2"; };
+        matchesStates: "checkInternet" | "checkKeyPair" | "displayIssuers" | "done" | "downloadCredentials" | "downloadIssuerConfig" | "error" | "generateKeyPair" | "idle" | "performAuthorization" | "selectingIssuer" | "storing" | "verifyingCredential";
         tags: never;
       }
   

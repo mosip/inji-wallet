@@ -98,17 +98,15 @@ export const IssuersMachine = model.createMachine(
         on: {
           TRY_AGAIN: [
             {
-              // come from displayIssuers
               description: 'not fetched issuers config yet',
-              cond: 'shouldFetchIssuerConfigAgain',
-              // check if issuers' has 0 length
+              cond: 'shouldFetchIssuersAgain',
               actions: ['setLoadingIssuer', 'resetError'],
               target: 'displayIssuers',
             },
             {
-              // check if selectedIssuers is empty object
-              actions: 'resetError',
-              target: 'checkKeyPair',
+              description: 'not fetched issuers config yet',
+              actions: ['setLoadingIssuer', 'resetError'],
+              target: 'downloadIssuerConfig',
             },
           ],
           RESET_ERROR: {
@@ -156,23 +154,13 @@ export const IssuersMachine = model.createMachine(
               target: 'performAuthorization',
             },
             {
-              actions: 'setNoInternet',
-              target: '#issuersMachine.checkInternet.error2',
+              actions: ['setNoInternet', 'unsetLoadingReason'],
+              target: 'error',
             },
           ],
           onError: {
             actions: () => console.log('checkInternet error caught'),
-            target: '.error2',
-          },
-        },
-        states: {
-          error2: {
-            entry: () => console.log('child error state entered'),
-            on: {
-              TRY_AGAIN: {
-                target: '#issuersMachine.checkInternet',
-              },
-            },
+            target: 'error',
           },
         },
       },
@@ -188,7 +176,7 @@ export const IssuersMachine = model.createMachine(
           onError: [
             {
               cond: 'isOIDCflowCancelled',
-              actions: 'resetError',
+              actions: ['resetError', 'unsetLoadingReason'],
               target: 'selectingIssuer',
             },
             {
@@ -464,8 +452,7 @@ export const IssuersMachine = model.createMachine(
         return credential;
       },
       invokeAuthorization: async context => {
-        const response = await authorize(context.selectedIssuer);
-        return response;
+        return await authorize(context.selectedIssuer);
       },
       generateKeyPair: async context => {
         if (!isCustomSecureKeystore()) {
@@ -487,8 +474,6 @@ export const IssuersMachine = model.createMachine(
         return context.publicKey != null;
       },
       isInternetConnected: (_, event) => !!event.data.isConnected,
-      returnTrue: () => true,
-      returnFalse: () => false,
       isOIDCflowCancelled: (_, event) => {
         // iOS & Android have different error strings for user cancelled flow
         const err = [
@@ -501,11 +486,7 @@ export const IssuersMachine = model.createMachine(
           err.some(e => event.data.toString().includes(e))
         );
       },
-      // failed to download all issuer from mimoto
       shouldFetchIssuersAgain: context => context.issuers.length === 0,
-      // failed to download the selected issuer config from mimoto
-      shouldFetchIssuerConfigAgain: context =>
-        Object.keys(context.selectedIssuer).length === 0,
       invalidTokenSpecified: (_, event) =>
         event.data.error !== OIDCErrors.INVALID_TOKEN_SPECIFIED,
       isCustomSecureKeystore: () => isCustomSecureKeystore(),
