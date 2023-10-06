@@ -585,11 +585,16 @@ export const requestMachine =
         }),
 
         prependReceivedVc: send(
-          context =>
-            StoreEvents.PREPEND(
+          context => {
+            return StoreEvents.PREPEND(
               RECEIVED_VCS_STORE_KEY,
-              VCMetadata.fromVC(context.incomingVc),
-            ),
+              VCMetadata.fromVC(
+                context.incomingVc?.vcMetadata
+                  ? context.incomingVc.vcMetadata
+                  : context.incomingVc,
+              ),
+            );
+          },
           {to: context => context.serviceRefs.store},
         ),
 
@@ -617,7 +622,11 @@ export const requestMachine =
         storeVc: send(
           context =>
             StoreEvents.SET(
-              VCMetadata.fromVC(context.incomingVc).getVcKey(),
+              VCMetadata.fromVC(
+                context.incomingVc?.vcMetadata
+                  ? context.incomingVc.vcMetadata
+                  : context.incomingVc,
+              ).getVcKey(),
               context.incomingVc,
             ),
           {to: context => context.serviceRefs.store},
@@ -640,21 +649,33 @@ export const requestMachine =
         }),
 
         logReceived: send(
-          context =>
-            ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VCMetadata.fromVC(context.incomingVc).getVcKey(),
+          context => {
+            const vcMetadata = VCMetadata.fromVC(
+              context.incomingVc?.vcMetadata
+                ? context.incomingVc.vcMetadata
+                : context.incomingVc,
+            );
+            return ActivityLogEvents.LOG_ACTIVITY({
+              _vcKey: vcMetadata.getVcKey(),
               type: context.receiveLogType,
               timestamp: Date.now(),
               deviceName:
                 context.senderInfo.name || context.senderInfo.deviceName,
-              vcLabel: context.incomingVc.id,
-            }),
+              vcLabel: vcMetadata.id,
+            });
+          },
           {to: context => context.serviceRefs.activityLog},
         ),
 
         sendVcReceived: send(
           context => {
-            return VcEvents.VC_RECEIVED(VCMetadata.fromVC(context.incomingVc));
+            return VcEvents.VC_RECEIVED(
+              VCMetadata.fromVC(
+                context.incomingVc?.vcMetadata
+                  ? context.incomingVc.vcMetadata
+                  : context.incomingVc,
+              ),
+            );
           },
           {to: context => context.serviceRefs.vc},
         ),

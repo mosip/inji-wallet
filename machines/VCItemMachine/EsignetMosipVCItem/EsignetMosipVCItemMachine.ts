@@ -529,7 +529,9 @@ export const EsignetMosipVCItemMachine = model.createMachine(
       setVerifiableCredential: model.assign({
         verifiableCredential: (_, event) => {
           if (event.type === 'GET_VC_RESPONSE') {
-            return event.vc.verifiableCredential;
+            return event.vc.verifiableCredential
+              ? event.vc.verifiableCredential
+              : event.vc;
           }
           return event.response.verifiableCredential;
         },
