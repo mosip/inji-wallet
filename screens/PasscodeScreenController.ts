@@ -8,6 +8,12 @@ import {
 } from '../machines/auth';
 import { PasscodeRouteProps } from '../routes';
 import { GlobalContext } from '../shared/GlobalContext';
+import {
+  getEndData,
+  getImpressionData,
+  sendEndEvent,
+  sendImpressionEvent,
+} from '../shared/telemetry/TelemetryUtils';
 
 export function usePasscodeScreen(props: PasscodeRouteProps) {
   const { appService } = useContext(GlobalContext);
@@ -20,10 +26,16 @@ export function usePasscodeScreen(props: PasscodeRouteProps) {
 
   useEffect(() => {
     if (isAuthorized) {
+      if (props.route.params?.setup) {
+        sendEndEvent(getEndData('App Onboarding', 'SUCCESS'));
+      } else {
+        sendEndEvent(getEndData('App login', 'SUCCESS'));
+      }
       props.navigation.reset({
         index: 0,
         routes: [{ name: 'Main' }],
       });
+      sendImpressionEvent(getImpressionData('Main'));
     }
   }, [isAuthorized]);
 

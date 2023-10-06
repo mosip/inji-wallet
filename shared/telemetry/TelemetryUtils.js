@@ -1,6 +1,6 @@
 import telemetry from 'telemetry-sdk';
-import {Platform} from 'react-native';
-import {HOST} from '../constants';
+import { Platform } from 'react-native';
+import { HOST } from '../constants';
 import {
   __AppId,
   __InjiVersion,
@@ -8,9 +8,9 @@ import {
   __SessionId,
   __TuvaliVersion,
 } from '../GlobalVariables';
-import {OBSRV_HOST} from 'react-native-dotenv';
+import { OBSRV_HOST } from 'react-native-dotenv';
 import DeviceInfo from 'react-native-device-info';
-import {isCustomSecureKeystore} from '../cryptoutil/cryptoUtil';
+import { isCustomSecureKeystore } from '../cryptoutil/cryptoUtil';
 import * as RNLocalize from 'react-native-localize';
 
 export function sendImpressionEvent(data) {
@@ -33,6 +33,14 @@ export function sendAppInfoEvent(data) {
   telemetry.appinfo(data);
 }
 
+export function sendInteractEvent(data) {
+  telemetry.interact(data, {});
+}
+
+export function sendErrorEvent(data) {
+  telemetry.error(data, {});
+}
+
 export function getTelemetryConfigData() {
   return {
     authtoken: '',
@@ -53,10 +61,56 @@ export function getData(type) {
   };
 }
 
-export function getEndData(type) {
+export function getEndData(type, status, additionalParameters = {}) {
   return {
     type: type,
-    status: 'SUCCESS',
+    status: status,
+    additionalParameters: additionalParameters,
+  };
+}
+
+export function getInteractData(type, subtype, additionParameters = {}) {
+  return {
+    type,
+    subtype,
+    additionParameters: additionParameters,
+  };
+}
+
+export function getImpressionData(type, additionalParameters = {}) {
+  return {
+    type,
+    additionalParameters: additionalParameters,
+  };
+}
+
+export function getErrorData(
+  type,
+  errorId,
+  errorMessage,
+  stacktrace = {},
+  additionalParameters = {},
+) {
+  return {
+    type: type,
+    env: HOST,
+    brandName: DeviceInfo.getBrand(),
+    modelName: DeviceInfo.getModel(),
+    osName: DeviceInfo.getSystemName(),
+    osVersion: DeviceInfo.getSystemVersion(),
+    osApiLevel: Platform.Version.toString(),
+    isHardwareKeystoreSupported: isCustomSecureKeystore(),
+    buildNumber: DeviceInfo.getBuildNumber(),
+    injiVersion: __InjiVersion.getValue(),
+    tuvaliVersion: __TuvaliVersion.getValue(),
+    dateTime: new Date().getTime(),
+    zone: RNLocalize.getTimeZone(),
+    offset: new Date().getTimezoneOffset() * 60 * 1000,
+    preferredLanguage: __SelectedLanguage.getValue(),
+    errorId: errorId,
+    errorMessage: errorMessage,
+    stacktrace: stacktrace,
+    additionalParameters: additionalParameters,
   };
 }
 

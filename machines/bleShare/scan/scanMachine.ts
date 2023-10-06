@@ -10,15 +10,18 @@ import {
   spawn,
   StateFrom,
 } from 'xstate';
-import {createModel} from 'xstate/lib/model';
-import {EmitterSubscription, Linking, Platform} from 'react-native';
-import {DeviceInfo} from '../../../components/DeviceInfoList';
-import {getDeviceNameSync} from 'react-native-device-info';
-import {VC, VerifiablePresentation} from '../../../types/VC/ExistingMosipVC/vc';
-import {AppServices} from '../../../shared/GlobalContext';
-import {ActivityLogEvents, ActivityLogType} from '../../activityLog';
-import {MY_LOGIN_STORE_KEY} from '../../../shared/constants';
-import {subscribe} from '../../../shared/openIdBLE/walletEventHandler';
+import { createModel } from 'xstate/lib/model';
+import { EmitterSubscription, Linking, Platform } from 'react-native';
+import { DeviceInfo } from '../../../components/DeviceInfoList';
+import { getDeviceNameSync } from 'react-native-device-info';
+import {
+  VC,
+  VerifiablePresentation,
+} from '../../../types/VC/ExistingMosipVC/vc';
+import { AppServices } from '../../../shared/GlobalContext';
+import { ActivityLogEvents, ActivityLogType } from '../../activityLog';
+import { MY_LOGIN_STORE_KEY } from '../../../shared/constants';
+import { subscribe } from '../../../shared/openIdBLE/walletEventHandler';
 import {
   check,
   checkMultiple,
@@ -31,15 +34,15 @@ import {
   checkLocationPermissionStatus,
   requestLocationPermission,
 } from '../../../shared/location';
-import {CameraCapturedPicture} from 'expo-camera';
-import {log} from 'xstate/lib/actions';
-import {createQrLoginMachine, qrLoginMachine} from '../../QrLoginMachine';
-import {StoreEvents} from '../../store';
-import {WalletDataEvent} from 'react-native-tuvali/lib/typescript/types/events';
-import {BLEError} from '../types';
+import { CameraCapturedPicture } from 'expo-camera';
+import { log } from 'xstate/lib/actions';
+import { createQrLoginMachine, qrLoginMachine } from '../../QrLoginMachine';
+import { StoreEvents } from '../../store';
+import { WalletDataEvent } from 'react-native-tuvali/lib/typescript/types/events';
+import { BLEError } from '../types';
 import Storage from '../../../shared/storage';
-import {logState} from '../../app';
-import {VCMetadata} from '../../../shared/VCMetadata';
+import { logState } from '../../app';
+import { VCMetadata } from '../../../shared/VCMetadata';
 import {
   getData,
   getEndData,
@@ -47,7 +50,7 @@ import {
   sendEndEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
 
-const {wallet, EventTypes, VerificationStatus} = tuvali;
+const { wallet, EventTypes, VerificationStatus } = tuvali;
 
 const model = createModel(
   {
@@ -70,8 +73,8 @@ const model = createModel(
   },
   {
     events: {
-      SELECT_VC: (vc: VC) => ({vc}),
-      SCAN: (params: string) => ({params}),
+      SELECT_VC: (vc: VC) => ({ vc }),
+      SCAN: (params: string) => ({ params }),
       ACCEPT_REQUEST: () => ({}),
       VERIFY_AND_ACCEPT_REQUEST: () => ({}),
       VC_ACCEPTED: () => ({}),
@@ -83,7 +86,7 @@ const model = createModel(
       DISMISS: () => ({}),
       CONNECTED: () => ({}),
       DISCONNECT: () => ({}),
-      BLE_ERROR: (bleError: BLEError) => ({bleError}),
+      BLE_ERROR: (bleError: BLEError) => ({ bleError }),
       CONNECTION_DESTROYED: () => ({}),
       SCREEN_BLUR: () => ({}),
       SCREEN_FOCUS: () => ({}),
@@ -95,17 +98,17 @@ const model = createModel(
       NEARBY_DISABLED: () => ({}),
       GOTO_SETTINGS: () => ({}),
       START_PERMISSION_CHECK: () => ({}),
-      UPDATE_REASON: (reason: string) => ({reason}),
+      UPDATE_REASON: (reason: string) => ({ reason }),
       LOCATION_ENABLED: () => ({}),
       LOCATION_DISABLED: () => ({}),
       LOCATION_REQUEST: () => ({}),
-      UPDATE_VC_NAME: (vcName: string) => ({vcName}),
-      STORE_RESPONSE: (response: any) => ({response}),
+      UPDATE_VC_NAME: (vcName: string) => ({ vcName }),
+      STORE_RESPONSE: (response: any) => ({ response }),
       APP_ACTIVE: () => ({}),
       FACE_VALID: () => ({}),
       FACE_INVALID: () => ({}),
       RETRY_VERIFICATION: () => ({}),
-      VP_CREATED: (vp: VerifiablePresentation) => ({vp}),
+      VP_CREATED: (vp: VerifiablePresentation) => ({ vp }),
       TOGGLE_USER_CONSENT: () => ({}),
       RESET: () => ({}),
     },
@@ -567,7 +570,10 @@ export const scanMachine =
               },
             },
             accepted: {
-              entry: ['logShared', () => sendEndEvent(getEndData('VC share'))],
+              entry: [
+                'logShared',
+                () => sendEndEvent(getEndData('VC share', 'SUCCESS')),
+              ],
               on: {
                 DISMISS: {
                   target: 'navigatingToHome',
@@ -732,13 +738,13 @@ export const scanMachine =
 
         setSenderInfo: assign({
           senderInfo: () => {
-            return {name: 'Wallet', deviceName: 'Wallet', deviceId: ''};
+            return { name: 'Wallet', deviceName: 'Wallet', deviceId: '' };
           },
         }),
 
         setReceiverInfo: assign({
           receiverInfo: () => {
-            return {name: 'Verifier', deviceName: 'Verifier', deviceId: ''};
+            return { name: 'Verifier', deviceName: 'Verifier', deviceId: '' };
           },
         }),
 
@@ -754,7 +760,7 @@ export const scanMachine =
           reason: (_context, event) => event.reason,
         }),
 
-        clearReason: assign({reason: ''}),
+        clearReason: assign({ reason: '' }),
 
         setSelectedVc: assign({
           selectedVc: (context, event) => {
@@ -792,7 +798,7 @@ export const scanMachine =
         }),
 
         removeLoggers: assign({
-          loggers: ({loggers}) => {
+          loggers: ({ loggers }) => {
             loggers?.forEach(logger => logger.remove());
             return [];
           },
@@ -818,7 +824,7 @@ export const scanMachine =
                 context.receiverInfo.name || context.receiverInfo.deviceName,
               vcLabel: context.selectedVc.tag || context.selectedVc.id,
             }),
-          {to: context => context.serviceRefs.activityLog},
+          { to: context => context.serviceRefs.activityLog },
         ),
 
         logFailedVerification: send(
@@ -831,7 +837,7 @@ export const scanMachine =
                 context.receiverInfo.name || context.receiverInfo.deviceName,
               vcLabel: context.selectedVc.tag || context.selectedVc.id,
             }),
-          {to: context => context.serviceRefs.activityLog},
+          { to: context => context.serviceRefs.activityLog },
         ),
 
         toggleShouldVerifyPresence: assign({
@@ -871,7 +877,7 @@ export const scanMachine =
               (event as DoneInvokeEvent<string>).data,
             );
           },
-          {to: context => context.serviceRefs.store},
+          { to: context => context.serviceRefs.store },
         ),
 
         storingActivityLog: send(
@@ -938,12 +944,12 @@ export const scanMachine =
         monitorConnection: () => callback => {
           const subscription = wallet.handleDataEvents(event => {
             if (event.type === EventTypes.onDisconnected) {
-              callback({type: 'DISCONNECT'});
+              callback({ type: 'DISCONNECT' });
             }
             if (event.type === EventTypes.onError) {
               callback({
                 type: 'BLE_ERROR',
-                bleError: {message: event.message, code: event.code},
+                bleError: { message: event.message, code: event.code },
               });
               console.log('BLE Exception: ' + event.message);
             }
@@ -1008,7 +1014,7 @@ export const scanMachine =
           wallet.startConnection(context.openId4VpUri);
           const statusCallback = (event: WalletDataEvent) => {
             if (event.type === EventTypes.onSecureChannelEstablished) {
-              callback({type: 'CONNECTED'});
+              callback({ type: 'CONNECTED' });
             }
           };
 
@@ -1025,12 +1031,12 @@ export const scanMachine =
 
           const reason = [];
           if (context.reason.trim() !== '') {
-            reason.push({message: context.reason, timestamp: Date.now()});
+            reason.push({ message: context.reason, timestamp: Date.now() });
           }
 
           const statusCallback = (event: WalletDataEvent) => {
             if (event.type === EventTypes.onDataSent) {
-              callback({type: 'VC_SENT'});
+              callback({ type: 'VC_SENT' });
             } else if (event.type === EventTypes.onVerificationStatusReceived) {
               callback({
                 type:

@@ -13,6 +13,14 @@ import {
 } from '../machines/settings';
 import { RootRouteProps } from '../routes';
 import { GlobalContext } from '../shared/GlobalContext';
+import {
+  getData,
+  getImpressionData,
+  getInteractData,
+  sendImpressionEvent,
+  sendInteractEvent,
+  sendStartEvent,
+} from '../shared/telemetry/TelemetryUtils';
 
 export function useWelcomeScreen(props: RootRouteProps) {
   const { appService } = useContext(GlobalContext);
@@ -34,7 +42,7 @@ export function useWelcomeScreen(props: RootRouteProps) {
   const isLanguagesetup = useSelector(authService, selectLanguagesetup);
   const isBiometricUnlockEnabled = useSelector(
     settingsService,
-    selectBiometricUnlockEnabled
+    selectBiometricUnlockEnabled,
   );
 
   return {
@@ -57,6 +65,11 @@ export function useWelcomeScreen(props: RootRouteProps) {
       if (!isSettingUp && isBiometricUnlockEnabled && biometrics !== '') {
         props.navigation.navigate('Biometric', { setup: isSettingUp });
       } else if (!isSettingUp && passcode !== '') {
+        sendStartEvent(getData('App Login'));
+        sendInteractEvent(
+          getInteractData('TOUCH', 'Unlock application button'),
+        );
+        sendImpressionEvent(getImpressionData('Passcode'));
         props.navigation.navigate('Passcode', { setup: isSettingUp });
       } else {
         props.navigation.navigate('Auth');

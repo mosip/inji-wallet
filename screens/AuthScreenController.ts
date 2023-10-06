@@ -16,9 +16,22 @@ import {
   selectIsSuccess,
   selectIsUnvailable,
   selectUnenrolledNotice,
+  selectErrorResponse,
 } from '../machines/biometrics';
 import { SettingsEvents } from '../machines/settings';
 import { useTranslation } from 'react-i18next';
+import {
+  sendStartEvent,
+  sendImpressionEvent,
+  sendInteractEvent,
+  getData,
+  getInteractData,
+  getImpressionData,
+  getEndData,
+  sendEndEvent,
+  sendErrorEvent,
+  getErrorData,
+} from '../shared/telemetry/TelemetryUtils';
 
 export function useAuthScreen(props: RootRouteProps) {
   const { appService } = useContext(GlobalContext);
@@ -38,9 +51,11 @@ export function useAuthScreen(props: RootRouteProps) {
   const isSuccessBio = useSelector(bioService, selectIsSuccess);
   const errorMsgBio = useSelector(bioService, selectError);
   const unEnrolledNoticeBio = useSelector(bioService, selectUnenrolledNotice);
+  const errorResponse = useSelector(bioService, selectErrorResponse);
 
   const usePasscode = () => {
     props.navigation.navigate('Passcode', { setup: isSettingUp });
+    sendImpressionEvent(getImpressionData('Passcode'));
   };
 
   const { t } = useTranslation('AuthScreen');
@@ -53,10 +68,12 @@ export function useAuthScreen(props: RootRouteProps) {
 
   useEffect(() => {
     if (isAuthorized) {
+      sendEndEvent(getEndData('App Onboarding', 'SUCCESS'));
       props.navigation.reset({
         index: 0,
         routes: [{ name: 'Main' }],
       });
+      sendImpressionEvent(getImpressionData('Main'));
       return;
     }
 
@@ -69,6 +86,15 @@ export function useAuthScreen(props: RootRouteProps) {
 
       // handle biometric failure unknown error
     } else if (errorMsgBio) {
+      sendErrorEvent(
+        getErrorData(
+          'App Onboarding',
+          errorResponse.res.error,
+          errorResponse.res.warning,
+          errorResponse.stacktrace,
+        ),
+      );
+      sendEndEvent(getEndData('App Onboarding', 'FAILURE'));
       // show alert message whenever biometric state gets failure
       setHasAlertMsg(t(errorMsgBio));
 
@@ -78,6 +104,7 @@ export function useAuthScreen(props: RootRouteProps) {
 
       // we dont need to see this page to user once biometric is unavailable on its device
     } else if (isUnavailableBio) {
+      sendStartEvent(getData('App Login'));
       usePasscode();
     }
   }, [isSuccessBio, isUnavailableBio, errorMsgBio, unEnrolledNoticeBio]);
@@ -85,6 +112,9 @@ export function useAuthScreen(props: RootRouteProps) {
   const useBiometrics = async () => {
     const isBiometricsEnrolled = await LocalAuthentication.isEnrolledAsync();
     if (isBiometricsEnrolled) {
+      sendStartEvent(getData('App Onboarding'));
+      sendInteractEvent(getInteractData('TOUCH', 'Use Biometrics Button'));
+
       if (biometricState.matches({ failure: 'unenrolled' })) {
         biometricSend({ type: 'RETRY_AUTHENTICATE' });
         return;

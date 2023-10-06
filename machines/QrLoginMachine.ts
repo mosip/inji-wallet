@@ -6,20 +6,23 @@ import {
   sendParent,
   StateFrom,
 } from 'xstate';
-import {createModel} from 'xstate/lib/model';
-import {AppServices} from '../shared/GlobalContext';
-import {MY_VCS_STORE_KEY, ESIGNET_BASE_URL} from '../shared/constants';
-import {StoreEvents} from './store';
-import {linkTransactionResponse, VC} from '../types/VC/ExistingMosipVC/vc';
-import {request} from '../shared/request';
-import {getJwt, isCustomSecureKeystore} from '../shared/cryptoutil/cryptoUtil';
+import { createModel } from 'xstate/lib/model';
+import { AppServices } from '../shared/GlobalContext';
+import { MY_VCS_STORE_KEY, ESIGNET_BASE_URL } from '../shared/constants';
+import { StoreEvents } from './store';
+import { linkTransactionResponse, VC } from '../types/VC/ExistingMosipVC/vc';
+import { request } from '../shared/request';
+import {
+  getJwt,
+  isCustomSecureKeystore,
+} from '../shared/cryptoutil/cryptoUtil';
 import {
   getBindingCertificateConstant,
   getPrivateKey,
 } from '../shared/keystore/SecureKeystore';
 import i18n from '../i18n';
-import {parseMetadatas, VCMetadata} from '../shared/VCMetadata';
-import {getEndData, sendEndEvent} from '../shared/telemetry/TelemetryUtils';
+import { parseMetadatas, VCMetadata } from '../shared/VCMetadata';
+import { getEndData, sendEndEvent } from '../shared/telemetry/TelemetryUtils';
 
 const model = createModel(
   {
@@ -46,17 +49,17 @@ const model = createModel(
   },
   {
     events: {
-      SELECT_VC: (vc: VC) => ({vc}),
-      SCANNING_DONE: (params: string) => ({params}),
-      STORE_RESPONSE: (response: unknown) => ({response}),
-      STORE_ERROR: (error: Error) => ({error}),
+      SELECT_VC: (vc: VC) => ({ vc }),
+      SCANNING_DONE: (params: string) => ({ params }),
+      STORE_RESPONSE: (response: unknown) => ({ response }),
+      STORE_ERROR: (error: Error) => ({ error }),
       TOGGLE_CONSENT_CLAIM: (enable: boolean, claim: string) => ({
         enable,
         claim,
       }),
       DISMISS: () => ({}),
       CONFIRM: () => ({}),
-      GET: (value: string) => ({value}),
+      GET: (value: string) => ({ value }),
       VERIFY: () => ({}),
       CANCEL: () => ({}),
       FACE_VALID: () => ({}),
@@ -224,7 +227,7 @@ export const qrLoginMachine =
           },
         },
         success: {
-          entry: [() => sendEndEvent(getEndData('QR login'))],
+          entry: [() => sendEndEvent(getEndData('QR login', 'SUCCESS'))],
           on: {
             CONFIRM: {
               target: 'done',
@@ -262,7 +265,7 @@ export const qrLoginMachine =
                 context.selectedVc.walletBindingResponse?.walletBindingId,
               ),
             ),
-          {to: context => context.serviceRefs.store},
+          { to: context => context.serviceRefs.store },
         ),
         setThumbprint: assign({
           thumbprint: (_context, event) => {
@@ -279,7 +282,7 @@ export const qrLoginMachine =
 
         setSelectedVc: assign({
           selectedVc: (context, event) => {
-            return {...event.vc};
+            return { ...event.vc };
           },
         }),
 
@@ -334,7 +337,7 @@ export const qrLoginMachine =
                   eachClaim => eachClaim !== event.claim,
                 );
             }
-            return {...context.isSharing};
+            return { ...context.isSharing };
           },
         }),
         setLinkedTransactionId: assign({

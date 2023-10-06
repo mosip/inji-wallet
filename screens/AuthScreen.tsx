@@ -1,16 +1,27 @@
 import React from 'react';
-import {useTranslation} from 'react-i18next';
-import {Icon} from 'react-native-elements';
-import {MessageOverlay} from '../components/MessageOverlay';
-import {Button, Column, Text} from '../components/ui';
-import {Theme} from '../components/ui/styleUtils';
-import {RootRouteProps} from '../routes';
-import {useAuthScreen} from './AuthScreenController';
+import { useTranslation } from 'react-i18next';
+import { Icon } from 'react-native-elements';
+import { MessageOverlay } from '../components/MessageOverlay';
+import { Button, Column, Text } from '../components/ui';
+import { Theme } from '../components/ui/styleUtils';
+import { RootRouteProps } from '../routes';
+import { useAuthScreen } from './AuthScreenController';
+import {
+  getData,
+  getInteractData,
+  sendInteractEvent,
+  sendStartEvent,
+} from '../shared/telemetry/TelemetryUtils';
 
 export const AuthScreen: React.FC<RootRouteProps> = props => {
-  const {t} = useTranslation('AuthScreen');
+  const { t } = useTranslation('AuthScreen');
   const controller = useAuthScreen(props);
 
+  const handleUsePasscodeButtonPress = () => {
+    sendStartEvent(getData('App Onboarding'));
+    sendInteractEvent(getInteractData('TOUCH', 'Use Passcode Button'));
+    controller.usePasscode();
+  };
   return (
     <Column
       fill
@@ -54,7 +65,7 @@ export const AuthScreen: React.FC<RootRouteProps> = props => {
           testID="usePasscode"
           type="clear"
           title={t('usePasscode')}
-          onPress={controller.usePasscode}
+          onPress={handleUsePasscodeButtonPress}
         />
       </Column>
     </Column>

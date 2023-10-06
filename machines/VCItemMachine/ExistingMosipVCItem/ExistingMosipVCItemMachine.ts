@@ -1,28 +1,28 @@
-import {assign, ErrorPlatformEvent, EventFrom, send, StateFrom} from 'xstate';
-import {createModel} from 'xstate/lib/model';
+import { assign, ErrorPlatformEvent, EventFrom, send, StateFrom } from 'xstate';
+import { createModel } from 'xstate/lib/model';
 import {
   HOST,
   MIMOTO_BASE_URL,
   MY_VCS_STORE_KEY,
 } from '../../../shared/constants';
-import {AppServices} from '../../../shared/GlobalContext';
-import {CredentialDownloadResponse, request} from '../../../shared/request';
+import { AppServices } from '../../../shared/GlobalContext';
+import { CredentialDownloadResponse, request } from '../../../shared/request';
 import {
   VC,
   VerifiableCredential,
   VcIdType,
   DecodedCredential,
 } from '../../../types/VC/ExistingMosipVC/vc';
-import {StoreEvents} from '../../store';
-import {ActivityLogEvents} from '../../activityLog';
-import {verifyCredential} from '../../../shared/vcjs/verifyCredential';
-import {log} from 'xstate/lib/actions';
+import { StoreEvents } from '../../store';
+import { ActivityLogEvents } from '../../activityLog';
+import { verifyCredential } from '../../../shared/vcjs/verifyCredential';
+import { log } from 'xstate/lib/actions';
 import {
   generateKeys,
   isCustomSecureKeystore,
   WalletBindingResponse,
 } from '../../../shared/cryptoutil/cryptoUtil';
-import {KeyPair} from 'react-native-rsa-native';
+import { KeyPair } from 'react-native-rsa-native';
 import {
   getBindingCertificateConstant,
   savePrivateKey,
@@ -30,10 +30,10 @@ import {
 import getAllConfigurations, {
   DownloadProps,
 } from '../../../shared/commonprops/commonProps';
-import {VcEvents} from '../../vc';
+import { VcEvents } from '../../vc';
 import i18n from '../../../i18n';
 import SecureKeystore from 'react-native-secure-keystore';
-import {VCMetadata} from '../../../shared/VCMetadata';
+import { VCMetadata } from '../../../shared/VCMetadata';
 import {
   sendStartEvent,
   getData,
@@ -74,32 +74,32 @@ const model = createModel(
   },
   {
     events: {
-      KEY_RECEIVED: (key: string) => ({key}),
-      KEY_ERROR: (error: Error) => ({error}),
+      KEY_RECEIVED: (key: string) => ({ key }),
+      KEY_ERROR: (error: Error) => ({ error }),
       EDIT_TAG: () => ({}),
-      SAVE_TAG: (tag: string) => ({tag}),
+      SAVE_TAG: (tag: string) => ({ tag }),
       STORE_READY: () => ({}),
       DISMISS: () => ({}),
-      CREDENTIAL_DOWNLOADED: (vc: VC) => ({vc}),
-      STORE_RESPONSE: (response: VC) => ({response}),
+      CREDENTIAL_DOWNLOADED: (vc: VC) => ({ vc }),
+      STORE_RESPONSE: (response: VC) => ({ response }),
       POLL: () => ({}),
       DOWNLOAD_READY: () => ({}),
-      GET_VC_RESPONSE: (vc: VC) => ({vc}),
+      GET_VC_RESPONSE: (vc: VC) => ({ vc }),
       VERIFY: () => ({}),
       LOCK_VC: () => ({}),
-      INPUT_OTP: (otp: string) => ({otp}),
+      INPUT_OTP: (otp: string) => ({ otp }),
       RESEND_OTP: () => ({}),
       REFRESH: () => ({}),
       REVOKE_VC: () => ({}),
       ADD_WALLET_BINDING_ID: () => ({}),
       CANCEL: () => ({}),
       CONFIRM: () => ({}),
-      STORE_ERROR: (error: Error) => ({error}),
+      STORE_ERROR: (error: Error) => ({ error }),
       PIN_CARD: () => ({}),
       KEBAB_POPUP: () => ({}),
       SHOW_ACTIVITY: () => ({}),
-      REMOVE: (vcMetadata: VCMetadata) => ({vcMetadata}),
-      UPDATE_VC_METADATA: (vcMetadata: VCMetadata) => ({vcMetadata}),
+      REMOVE: (vcMetadata: VCMetadata) => ({ vcMetadata }),
+      UPDATE_VC_METADATA: (vcMetadata: VCMetadata) => ({ vcMetadata }),
     },
   },
 );
@@ -189,7 +189,7 @@ export const ExistingMosipVCItemMachine =
               on: {
                 POLL: {
                   cond: 'isDownloadAllowed',
-                  actions: send('POLL_STATUS', {to: 'checkStatus'}),
+                  actions: send('POLL_STATUS', { to: 'checkStatus' }),
                 },
                 DOWNLOAD_READY: {
                   target: 'downloadingCredential',
@@ -206,7 +206,7 @@ export const ExistingMosipVCItemMachine =
                   {
                     cond: 'isDownloadAllowed',
                     actions: [
-                      send('POLL_DOWNLOAD', {to: 'downloadCredential'}),
+                      send('POLL_DOWNLOAD', { to: 'downloadCredential' }),
                       'incrementDownloadCounter',
                     ],
                   },
@@ -421,7 +421,7 @@ export const ExistingMosipVCItemMachine =
                     'setWalletBindingErrorEmpty',
                     'sendWalletBindingSuccess',
                     'logWalletBindingSuccess',
-                    () => sendEndEvent(getEndData('VC activation')),
+                    () => sendEndEvent(getEndData('VC activation', 'SUCCESS')),
                   ],
                   target: '#vc-item.kebabPopUp',
                 },
@@ -768,7 +768,7 @@ export const ExistingMosipVCItemMachine =
                 'setWalletBindingErrorEmpty',
                 'setWalletBindingSuccess',
                 'logWalletBindingSuccess',
-                () => sendEndEvent(getEndData('VC activation')),
+                () => sendEndEvent(getEndData('VC activation', 'SUCCESS')),
               ],
               target: 'idle',
             },
@@ -901,8 +901,8 @@ export const ExistingMosipVCItemMachine =
 
         updateVc: send(
           context => {
-            const {serviceRefs, ...vc} = context;
-            return {type: 'VC_DOWNLOADED', vc};
+            const { serviceRefs, ...vc } = context;
+            return { type: 'VC_DOWNLOADED', vc };
           },
           {
             to: context => context.serviceRefs.vc,
@@ -935,8 +935,8 @@ export const ExistingMosipVCItemMachine =
 
         VcUpdated: send(
           context => {
-            const {serviceRefs, ...vc} = context;
-            return {type: 'VC_UPDATE', vc};
+            const { serviceRefs, ...vc } = context;
+            return { type: 'VC_UPDATE', vc };
           },
           {
             to: context => context.serviceRefs.vc,
@@ -945,7 +945,7 @@ export const ExistingMosipVCItemMachine =
 
         setThumbprintForWalletBindingId: send(
           context => {
-            const {walletBindingResponse} = context;
+            const { walletBindingResponse } = context;
             const walletBindingIdKey = getBindingCertificateConstant(
               walletBindingResponse.walletBindingId,
             );
@@ -987,7 +987,7 @@ export const ExistingMosipVCItemMachine =
 
         storeContext: send(
           context => {
-            const {serviceRefs, ...data} = context;
+            const { serviceRefs, ...data } = context;
             data.credentialRegistry = MIMOTO_BASE_URL;
             return StoreEvents.SET(context.vcMetadata.getVcKey(), data);
           },
@@ -1001,7 +1001,7 @@ export const ExistingMosipVCItemMachine =
         }),
 
         incrementDownloadCounter: model.assign({
-          downloadCounter: ({downloadCounter}) => downloadCounter + 1,
+          downloadCounter: ({ downloadCounter }) => downloadCounter + 1,
         }),
 
         setMaxDownloadCount: model.assign({
@@ -1016,10 +1016,10 @@ export const ExistingMosipVCItemMachine =
 
         storeTag: send(
           context => {
-            const {serviceRefs, ...data} = context;
+            const { serviceRefs, ...data } = context;
             return StoreEvents.SET(context.vcMetadata.getVcKey(), data);
           },
-          {to: context => context.serviceRefs.store},
+          { to: context => context.serviceRefs.store },
         ),
 
         setCredential: model.assign((context, event) => {
@@ -1032,13 +1032,17 @@ export const ExistingMosipVCItemMachine =
               };
             case 'GET_VC_RESPONSE':
             case 'CREDENTIAL_DOWNLOADED':
-              return {...context, ...event.vc, vcMetadata: context.vcMetadata};
+              return {
+                ...context,
+                ...event.vc,
+                vcMetadata: context.vcMetadata,
+              };
           }
         }),
 
         logDownloaded: send(
           context => {
-            const {serviceRefs, ...data} = context;
+            const { serviceRefs, ...data } = context;
             return ActivityLogEvents.LOG_ACTIVITY({
               _vcKey: context.vcMetadata.getVcKey(),
               type: 'VC_DOWNLOADED',
@@ -1118,7 +1122,7 @@ export const ExistingMosipVCItemMachine =
           transactionId: () => String(new Date().valueOf()).substring(3, 13),
         }),
 
-        clearTransactionId: assign({transactionId: ''}),
+        clearTransactionId: assign({ transactionId: '' }),
 
         setOtp: model.assign({
           otp: (_, event) => event.otp,
@@ -1133,7 +1137,7 @@ export const ExistingMosipVCItemMachine =
             (event as ErrorPlatformEvent).data.message,
         }),
 
-        clearOtp: assign({otp: ''}),
+        clearOtp: assign({ otp: '' }),
 
         setLock: assign({
           locked: context => !context.locked,
@@ -1145,10 +1149,10 @@ export const ExistingMosipVCItemMachine =
 
         storeLock: send(
           context => {
-            const {serviceRefs, ...data} = context;
+            const { serviceRefs, ...data } = context;
             return StoreEvents.SET(context.vcMetadata.getVcKey(), data);
           },
-          {to: context => context.serviceRefs.store},
+          { to: context => context.serviceRefs.store },
         ),
 
         removeVcItem: send(
@@ -1158,7 +1162,7 @@ export const ExistingMosipVCItemMachine =
               _context.vcMetadata.getVcKey(),
             );
           },
-          {to: context => context.serviceRefs.store},
+          { to: context => context.serviceRefs.store },
         ),
 
         logVCremoved: send(
@@ -1441,7 +1445,7 @@ export const createExistingMosipVCItemMachine = (
 type State = StateFrom<typeof ExistingMosipVCItemMachine>;
 
 export function selectVc(state: State) {
-  const {serviceRefs, ...data} = state.context;
+  const { serviceRefs, ...data } = state.context;
   return data;
 }
 
