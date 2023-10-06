@@ -4,6 +4,7 @@ import {createModel} from 'xstate/lib/model';
 import {MY_VCS_STORE_KEY} from '../shared/constants';
 import {StoreEvents} from './store';
 import {AppServices} from '../shared/GlobalContext';
+import NetInfo from '@react-native-community/netinfo';
 import {
   generateKeys,
   isCustomSecureKeystore,
@@ -66,7 +67,7 @@ export const Issuer_Tab_Ref_Id = 'issuersMachine';
 export const Issuers_Key_Ref = 'OpenId4VCI';
 export const IssuersMachine = model.createMachine(
   {
-    /** @xstate-layout N4IgpgJg5mDOIC5QEtawK5gE6wLIEMBjAC2QDswA6CVABwBt8BPASTUxwGIIB7Cy8gDceAayqoM2PEVL8asBszaScCIT0L4ALsj4BtAAwBdQ0cShaPWMh19zIAB6IATAHYAHAFZK7gGwBmd2cARgBOdwNgvwAaECZEV18DSmdfdw8ogBZQ-wN-TwBfAtiJDmkScip5RVZ2KU5sLB4sSkUtADNmgFsBOpwCCrk6RlqVWDUyYU1bMlNTe0trGfsnBDcvHwCgsIio31j4tf9fFINI4MTPfMzXT2cikr7y2SpG5s4AFQAlAE0AfQAggBxAEsABy8yQIEWNl0ZBWiEywX8rkomXyvlCOQ8Bn2cUQnnSKSRbixnkyvl8zn8DxApSkAxelDeWE+v0BIPBemCZihMOWUNWmQM6MoVIMflCd2CAX8B0QoVcwRSnkxrnRkUyd1CtPp-RklWZWCarK+AFEAMpmj5-M1fL4AeS+kIsVlhdkFiKSyRue1cEvSvlc8oQnlcqMS6OOziCaT8uqejMNLOcbP+wNBEOMCzdAtAq3JJxlioizk8oWCyMyIeCnjOaPcwQloQM-tcbl8CbGSf4Kc45qtNrtjud2b5ubhCNDFMoxZxZYrVZrrnylHCOOyEVCAWCXbKPaosDA9DAhB0ZCgyg4nAAIg6AOpggAyDoBN7+LBvLuhE49+cQ-jBJkmSUP4NxgU2-iBEGnghiuPpNr4haeGEZJ7gyBr8EeJ5nuQl59JwVpPmaADCHxmu+LAWhaACqdrfvyk6eggYFIqcwGZGW2pas4IY3MkzitukNzUli-g6sUdKJphVQ8AA7mQ9A8PgEBXtgJF8O0yBQNwfDiJMojiNJgyyQpSkqWpWAaWQWlQBMUzaHCcxjq6SxMf+LHAcqgkcVxzihDxIYoqikoomckFUhJjzdjJ1DyYpymqX01m2Q0xrNK0jAdN0vQxSZcVmYllkpdp9kaI5+jGAxv7wsxwqiuKkrSrKfG5GiEqtiu6rkjchSSXqzyGrQ2CdFgXQAugWjEM0yAAF4VWQun8OoYi5fusXDVgo3jZN01YHNC1ldMTlVS5P5uX+jgEjOc6luWlZgTW1yUIkjbpChvgXGW6H6vlm3bRNU0zfNMxpSamXaNta0YX9I3dIDe0HTMR0Lc5vKue6tUeYWs5qndi6PfiCCNrO6SpEkfh1k2mQ-YN-D-fDu3AwtYMZW0UMDQerRw2NCPM8j6jHZVJg8jmF1Y1d05FnjBgLg91ZEzKVIvWW-HerWbi01zJCniIADSYBMAACvgyCsiRAASpF638etmv8RugqO6PnZjU7BKkzgvaqzicb7qrCu4NZXP4oESpS+QBWkdxa7FOuEPrhsm2bnCW9btv238jssM6ovjuL7ue97VJ+1qviB09WqUHW4ZKhcSpR7H+UwBQWDaGABvG6brK8MtBmrZzsUt9g7ed8nWAozMaNi27zFhEqPhCRSqTZLioRPRclCtlSlwijsnb9cZTLD23Wgd0n3dLfpwgD0fhon6PF9m5PJ0iy7jGXas8-KhEHjL+XLZMQ1h2FvOsvVKSKjrDSQ+eUmS8EKipEiWBIBgDIDofA9BYBXwEP3IysDDTwISog5BEBUHoMwS-YW1UC7MXWN4PwgQQjhEiDERW2pZyCVlhKP+Xgm5wPiuZCASCUFoOQBgrBLIIbZTGtDX6-CEFCJIWQsRFDBao1Ou-GqU46GbEYTsFheJDiVlrGuVIKJjiBClJSPhBCBGJWEaQ0R4jU4AjBCRM0T5qGzw8johh2xmF7BDF4L2SR2yU0imBPq0V1r5UENgZA7QmB4QccojB2CVp4JiUyOJ+1EnJKUU4+glDZgaJnnmSWrFvIimAn5AKdwnpJDXGBMsSskLAVcDY-gOSElJIvCkwprMWjsxyoPWJ8S8l9IKeQ4p0987eIqV5diNTPDcXqWwzI7hq7lyRMcaOgkolSXwctCAJ5U4OlwEbYi5EvxnQ-hLIUfhkj+GcL7SktwzhQWDkGdqgQKRBCCHkdwnTxAnLAC4txHivHlKFOXL2dxjhbnaZ9WCisgKbMrHcAwoRqT7PcEC2kZAeCkPgFCUZLwynuUlgAWkMYgKl3gsSMqZcy6B0SYZwOGEoJ4FLP4uE4pssKCL-L7zlETJUXsogRD+S0pINMYFZOTOlLAPL7mImeSBICIp3BYm1eWYMRMwybPLHcIIFZnn3HleyxVJpnAqvdiuUCZY-DpA9h7QIy5qRb3EqkN6r05VsrkYabCp5zz4RUHa5iuQKzVwuFiIMlZIiE0OO4Nq6oAobK1OWMxwKCpEKSioEqUAI0eQRRGW4n1OLNLxfqw4JIXrATOBsps7YPY5oZrzJm+0QaUruVOTiwc-CgXbJ9FNFJhQHwDXTKg8dE5dzNsWyWipQ4oWjK9KkEcaxjq9divFKJGxQJzQ-M+Y9u4Lq-mGDVZxPrhhyJ9EUT1cRihWWcKU-pdgdMtYGuQdjiEiPISSjG0K+VlhetuJIHtSTAU3UEFI2qYyEnJBBKKhyFVdPGb0qA-TyFnoAlwsUYFEhlhCBuYOlY0QrICimoClIZQ5tgFoGaF4cMsTSGW1UQFqT8vSDWH11dX3UkxJ9NwFrJ1c2QKC5jNxEgvRRJBUsxYvmoi2HkXIHZy4ftE7FXuYBmNUxOP5WWjZK2KhrYgWsooDBQNyAw-yH6ihAA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QEtawK5gE6wLIEMBjAC2QDswA6CVABwBt8BPASTUxwGIIB7Cy8gDceAayqoM2PEVL8asBszaScCIT0L4ALsj4BtAAwBdQ0cShaPWMh19zIAB6IALAEYAnJWfuAzM4BsAKwAHN7BwQDsfgA0IEyIAEw+Ea6UBgkRwT7uEekGrhHOAL5FsRIc0iTkVPKKrOxSnNhYPFiUiloAZq0AtgINOARVcnSM9SqwamTCmrZkpqb2ltZz9k4Izgme3n5Boe7hUc6x8QgJ3gZpgT6BgRH+yYWBJWUDlbJUza2cACoASgBNAD6AEEAOIglgAOUWSBAyxsujIaxcWy8vgCITCkRicUSIQSlGyCQMETu7n84QKLxA5SkQw+lC+WF+gNBEOhelcZjhCNWcPWrgSJ0QQppdMGMmqTKwLRZ-2B4MhMISPIsVkRdgFooMvjS-jc9wezl1ARFZwiCUClFcN3czmcKWuPnFbwZ0uZnD+AFEAMren5A71-P4AeT+sPVKyRKIQrgMwX8lASCWCgVcgW8lt15oyEU8CSCloz6WcN38rom7v4sDA9DAhB0ZCgyg4nAAIqGAOpQgAyoZB7aBLHbkfhGv5oHWPgMBmclEigQM-lTVpyc9z+R8yfzriyPhTS4zlYq1aotfrjfILYGnH9ve9AGEft6hyxfb6AKrBsd8mPahBAmFPEEB8VwhS8XVkgKA5dXcE96SlOQeAAdzIegeHwCBW2wR8+E6ZAoG4PhxGmURxDdJCalQ9DMOwgY8LIAioCmGZtCRBZjCWCd-ynUVgNOMVSlpSjhmotCMKwnCsEY5imllVp2kYLpen6KsqOoGjJPolRZMI1iNHY-RjF-HitT4jYUwXZwgMpFMfHCGcIlze15zuFdghyA5UweBDJTEygSAbEQWDILRsAoLRiP4dQxEC4hgtC8KsEi0zo3MxxRVuQlLUCdxdUzbIhX8c14w8Iky1ucI1zTYI-PeaUgsIEKwoisAot4GKyLipqWuS1LuW49LkQA4I0SFdxwOXO1-HSUrbUuLZSX8XwMn8Vwy3qs94sS1qUva+S5SU7RuiwPpeqStqtDSzURos4IIMpB5i1moCHPNSbgi8QIDXcPLcltDIto0i69simU5QSVlFQ5GEuN5My7syuNkiTfJJvyDwiyCUrZ2tPwbimoDMhuYGAtobBTp6EF0C0YhWmQAAvIyyGi0jhDiiUGv4CmsCpmm6YZ5m5gM2YOJM+Go1u2NbJtFbJoyN7U3cc0V2tbxXH8FdHSPe0ycZXn+dp+msCZlnDsUjoqbU08NMN3oBZNs2RfUMXjJMSXx2GmXNbl9wFbJJJlfNB6bUiLYbiW-KIgifXpXts7HaF83mWOlSzptxDycph3jeTl2yLd+YTMGhHvYA64k01-2hUDg9PNK5J52CAwZ3TQpwNj4Sue23qAGkwCYAAFfBkBZR8AAknz7oE++9YEh8hCNPb-DLBTnKuPD+h15cKc0qptDaMcibxnm70TGX7weR7HzhJ+n2f56BReWAjUupcnZH4x8Tf-czAJ-Z7xAskS4YFiQeXOJ5F0591IBRgBQLA2gwAD2HqPFknV2bkUzv5Rk8DsBIJQTfLAosWacTVF7aWAECjZEoPlTy6Z1o5HOOaPwqRqoOQyGNTMKY478DwYg8KhC0FswEN1CisDcFgAQQQ6+aCSFzAWO-Chn9BRRE8HQv6msPCWmOCBFMhI0xBH8DHMkOQyS8PErRLCj4sCQCkTofA9BYAiNiuI22AVeASTojYuxYVkCOMmK7UhEtyGryRusGyER9SWgpIVCkYFAi5j3EmG4CZW4OSbsUGB7jGSeKsRAHxEB7H+KcRbNoVtVI9w0nk7ShTikBPkeLD2oTEaxkidErYQQyzxIzLmThlBKSrQzJsKkFjNJeOsbYopfiAl3xBFCR83pew3RUS4R0HTYndIeL0kCe4ogVSyB4ByMcNpjMENgZAnQmDXjqTM+gLixHYO5lQc5psrk3KmfU+gjT3YrN4l-eMnguF3HOAkDMDlEl6ITFXYxDosjnCONA14EjpSvMudc5styHH3NThUjOVSApoveZiz5dyfnF2aUNShFkppAqtCCzY4K0x9IMNafMDCDgPBJAeMZyAID1jvqGXAQ8HwvlHCvVpVC1ZeG5VsVMUQ9l9JNAM5wY0W6pnjJEXl-KwBzIWUsv5a9RTSs2K3OVOJFV6NtKkG4eVUytx+jymkZAeBFPgHCAlHwqWrIQAAWh-uaX1ZIw6WnuJVKIK0EhjNqGMaS7qP7-PWJaXMP0okmhTPmGOFJ4wVmyVnRkzJvWJsQC3IFOQNqJkKPmG4uZMiXF1JSTYhZ0i7DGReBsTYbwqCLUauMu4iRUh+pmIUG0km2gGQURMqNNibTzTg6UNS6LST0lAHt4TEDGJcoWWhI6xreACGSXNyKcmNQSs1S6+0tBrtjGGgZU6XqsqSMEc0ZJtwFRNAUHeGYz7Hvzae3a-V2oQ1aAka9VCwVROhS3PKfhlwFA+mNZMjxcgORskkI9IkUU8xzonPOpthb-LCW0gSoofB+C8GNFaLd4zLhjmMq+qCx5gYsoehcMcbi7g2imVW5H0yqrGjcPwlo6pzueZQfhMjGNYGY1-PwhISQFGeoJlILCwJeHWhmBVFahK-vnchCZBTSXYvjco4tCAch9LU7Va48ZHSUjORc4lUAsUlJk+sQZyYqrrgNFrZ9VrKR3uMR5TWZGf5tq0AzZsbnSO+0NNkNwbhHKQsEv7bcar8pgW8FsUI2r6zRZRhmNIMdVy5Dyuqyz84AhPXsqqlI0aSL5ZgjawdXSR26NOCmX2WxHS6k-Xxs+JQgA */
     predictableActionArguments: true,
     preserveActionOrder: true,
     id: Issuer_Tab_Ref_Id,
@@ -97,11 +98,15 @@ export const IssuersMachine = model.createMachine(
         on: {
           TRY_AGAIN: [
             {
-              cond: 'shouldFetchIssuerAgain',
+              // come from displayIssuers
+              description: 'not fetched issuers config yet',
+              cond: 'shouldFetchIssuerConfigAgain',
+              // check if issuers' has 0 length
               actions: ['setLoadingIssuer', 'resetError'],
               target: 'displayIssuers',
             },
             {
+              // check if selectedIssuers is empty object
               actions: 'resetError',
               target: 'checkKeyPair',
             },
@@ -131,11 +136,43 @@ export const IssuersMachine = model.createMachine(
           src: 'downloadIssuerConfig',
           onDone: {
             actions: 'setSelectedIssuers',
-            target: 'performAuthorization',
+            // TODO: move checkInternet before downloadIssuerConfig
+            target: 'checkInternet',
           },
           onError: {
             actions: 'setError',
             target: 'error',
+          },
+        },
+      },
+      checkInternet: {
+        description: 'checks internet before opening the web view',
+        invoke: {
+          src: 'checkInternet',
+          id: 'checkInternet',
+          onDone: [
+            {
+              cond: 'isInternetConnected',
+              target: 'performAuthorization',
+            },
+            {
+              actions: 'setNoInternet',
+              target: '#issuersMachine.checkInternet.error2',
+            },
+          ],
+          onError: {
+            actions: () => console.log('checkInternet error caught'),
+            target: '.error2',
+          },
+        },
+        states: {
+          error2: {
+            entry: () => console.log('child error state entered'),
+            on: {
+              TRY_AGAIN: {
+                target: '#issuersMachine.checkInternet',
+              },
+            },
           },
         },
       },
@@ -266,6 +303,9 @@ export const IssuersMachine = model.createMachine(
       setIssuers: model.assign({
         issuers: (_, event) => event.data,
         loadingReason: null,
+      }),
+      setNoInternet: model.assign({
+        errorMessage: 'noInternetConnection',
       }),
       unsetLoadingReason: model.assign({
         loadingReason: null,
@@ -402,6 +442,7 @@ export const IssuersMachine = model.createMachine(
       downloadIssuersList: async () => {
         return await CACHED_API.fetchIssuers();
       },
+      checkInternet: async () => await NetInfo.fetch(),
       downloadIssuerConfig: async (context, _) => {
         return await CACHED_API.fetchIssuerConfig(context.tempSelectedIssuer);
       },
@@ -445,6 +486,9 @@ export const IssuersMachine = model.createMachine(
       hasKeyPair: context => {
         return context.publicKey != null;
       },
+      isInternetConnected: (_, event) => !!event.data.isConnected,
+      returnTrue: () => true,
+      returnFalse: () => false,
       isOIDCflowCancelled: (_, event) => {
         // iOS & Android have different error strings for user cancelled flow
         const err = [
@@ -457,7 +501,11 @@ export const IssuersMachine = model.createMachine(
           err.some(e => event.data.toString().includes(e))
         );
       },
-      shouldFetchIssuerAgain: context => context.selectedIssuer !== null,
+      // failed to download all issuer from mimoto
+      shouldFetchIssuersAgain: context => context.issuers.length === 0,
+      // failed to download the selected issuer config from mimoto
+      shouldFetchIssuerConfigAgain: context =>
+        Object.keys(context.selectedIssuer).length === 0,
       invalidTokenSpecified: (_, event) =>
         event.data.error !== OIDCErrors.INVALID_TOKEN_SPECIFIED,
       isCustomSecureKeystore: () => isCustomSecureKeystore(),

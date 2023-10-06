@@ -4,12 +4,14 @@
   export interface Typegen0 {
         '@@xstate/typegen': true;
         internalEvents: {
-          "done.invoke.issuersMachine.displayIssuers:invocation[0]": { type: "done.invoke.issuersMachine.displayIssuers:invocation[0]"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
+          "done.invoke.checkInternet": { type: "done.invoke.checkInternet"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
+"done.invoke.issuersMachine.displayIssuers:invocation[0]": { type: "done.invoke.issuersMachine.displayIssuers:invocation[0]"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
 "done.invoke.issuersMachine.downloadCredentials:invocation[0]": { type: "done.invoke.issuersMachine.downloadCredentials:invocation[0]"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
 "done.invoke.issuersMachine.downloadIssuerConfig:invocation[0]": { type: "done.invoke.issuersMachine.downloadIssuerConfig:invocation[0]"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
 "done.invoke.issuersMachine.generateKeyPair:invocation[0]": { type: "done.invoke.issuersMachine.generateKeyPair:invocation[0]"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
 "done.invoke.issuersMachine.performAuthorization:invocation[0]": { type: "done.invoke.issuersMachine.performAuthorization:invocation[0]"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
 "done.invoke.issuersMachine.verifyingCredential:invocation[0]": { type: "done.invoke.issuersMachine.verifyingCredential:invocation[0]"; data: unknown; __tip: "See the XState TS docs to learn how to strongly type this." };
+"error.platform.checkInternet": { type: "error.platform.checkInternet"; data: unknown };
 "error.platform.issuersMachine.displayIssuers:invocation[0]": { type: "error.platform.issuersMachine.displayIssuers:invocation[0]"; data: unknown };
 "error.platform.issuersMachine.downloadCredentials:invocation[0]": { type: "error.platform.issuersMachine.downloadCredentials:invocation[0]"; data: unknown };
 "error.platform.issuersMachine.downloadIssuerConfig:invocation[0]": { type: "error.platform.issuersMachine.downloadIssuerConfig:invocation[0]"; data: unknown };
@@ -17,7 +19,8 @@
 "xstate.init": { type: "xstate.init" };
         };
         invokeSrcNameMap: {
-          "downloadCredential": "done.invoke.issuersMachine.downloadCredentials:invocation[0]";
+          "checkInternet": "done.invoke.checkInternet";
+"downloadCredential": "done.invoke.issuersMachine.downloadCredentials:invocation[0]";
 "downloadIssuerConfig": "done.invoke.issuersMachine.downloadIssuerConfig:invocation[0]";
 "downloadIssuersList": "done.invoke.issuersMachine.displayIssuers:invocation[0]";
 "generateKeyPair": "done.invoke.issuersMachine.generateKeyPair:invocation[0]";
@@ -39,6 +42,7 @@
 "setError": "error.platform.issuersMachine.displayIssuers:invocation[0]" | "error.platform.issuersMachine.downloadCredentials:invocation[0]" | "error.platform.issuersMachine.downloadIssuerConfig:invocation[0]" | "error.platform.issuersMachine.performAuthorization:invocation[0]";
 "setIssuers": "done.invoke.issuersMachine.displayIssuers:invocation[0]";
 "setLoadingIssuer": "TRY_AGAIN";
+"setNoInternet": "done.invoke.checkInternet";
 "setPrivateKey": "done.invoke.issuersMachine.generateKeyPair:invocation[0]";
 "setPublicKey": "done.invoke.issuersMachine.generateKeyPair:invocation[0]";
 "setSelectedIssuers": "done.invoke.issuersMachine.downloadIssuerConfig:invocation[0]";
@@ -58,18 +62,20 @@
         eventsCausingGuards: {
           "hasKeyPair": "CHECK_KEY_PAIR";
 "isCustomSecureKeystore": "done.invoke.issuersMachine.generateKeyPair:invocation[0]";
+"isInternetConnected": "done.invoke.checkInternet";
 "isOIDCflowCancelled": "error.platform.issuersMachine.performAuthorization:invocation[0]";
-"shouldFetchIssuerAgain": "TRY_AGAIN";
+"shouldFetchIssuerConfigAgain": "TRY_AGAIN";
         };
         eventsCausingServices: {
-          "downloadCredential": "CHECK_KEY_PAIR" | "done.invoke.issuersMachine.generateKeyPair:invocation[0]";
+          "checkInternet": "done.invoke.checkInternet" | "done.invoke.issuersMachine.downloadIssuerConfig:invocation[0]";
+"downloadCredential": "CHECK_KEY_PAIR" | "done.invoke.issuersMachine.generateKeyPair:invocation[0]";
 "downloadIssuerConfig": "SELECTED_ISSUER";
 "downloadIssuersList": "TRY_AGAIN" | "xstate.init";
 "generateKeyPair": "CHECK_KEY_PAIR";
-"invokeAuthorization": "done.invoke.issuersMachine.downloadIssuerConfig:invocation[0]";
+"invokeAuthorization": "done.invoke.checkInternet";
 "verifyCredential": "done.invoke.issuersMachine.downloadCredentials:invocation[0]";
         };
-        matchesStates: "checkKeyPair" | "displayIssuers" | "done" | "downloadCredentials" | "downloadIssuerConfig" | "error" | "generateKeyPair" | "idle" | "performAuthorization" | "selectingIssuer" | "storing" | "verifyingCredential";
+        matchesStates: "checkInternet" | "checkInternet.error2" | "checkKeyPair" | "displayIssuers" | "done" | "downloadCredentials" | "downloadIssuerConfig" | "error" | "generateKeyPair" | "idle" | "performAuthorization" | "selectingIssuer" | "storing" | "verifyingCredential" | { "checkInternet"?: "error2"; };
         tags: never;
       }
   
