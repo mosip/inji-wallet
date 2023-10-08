@@ -23,3 +23,7 @@ export default function testIDProps(id) {
     ? {accessible: true, accessibilityLabel: id}
     : {testID: id};
 }
+
+export const removeWhiteSpace = (str: string) => {
+  return str.replace(/\s/g, '');
+};

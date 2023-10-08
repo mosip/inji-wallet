@@ -14,7 +14,7 @@ import {createModel} from 'xstate/lib/model';
 import {EmitterSubscription, Linking, Platform} from 'react-native';
 import {DeviceInfo} from '../../../components/DeviceInfoList';
 import {getDeviceNameSync} from 'react-native-device-info';
-import {VC, VerifiablePresentation} from '../../../types/vc';
+import {VC, VerifiablePresentation} from '../../../types/VC/ExistingMosipVC/vc';
 import {AppServices} from '../../../shared/GlobalContext';
 import {ActivityLogEvents, ActivityLogType} from '../../activityLog';
 import {MY_LOGIN_STORE_KEY} from '../../../shared/constants';
@@ -456,11 +456,11 @@ export const scanMachine =
                 },
                 CANCEL: {
                   target: '#scan.reviewing.cancelling',
-                  actions: 'setCloseTimeoutHint',
+                  actions: 'setPromptHint',
                 },
                 RETRY: {
                   target: '#scan.reviewing.cancelling',
-                  actions: 'setCloseTimeoutHint',
+                  actions: 'setPromptHint',
                 },
               },
             },
@@ -518,15 +518,23 @@ export const scanMachine =
                   after: {
                     SHARING_TIMEOUT: {
                       target: '#scan.reviewing.sendingVc.timeout',
-                      actions: [],
+                      actions: 'setStayInProgress',
                       internal: false,
                     },
                   },
                 },
                 timeout: {
                   on: {
+                    STAY_IN_PROGRESS: {
+                      actions: 'setStayInProgress',
+                    },
                     CANCEL: {
                       target: '#scan.reviewing.cancelling',
+                      actions: 'setPromptHint',
+                    },
+                    RETRY: {
+                      target: '#scan.reviewing.cancelling',
+                      actions: 'setPromptHint',
                     },
                   },
                 },
@@ -620,13 +628,19 @@ export const scanMachine =
         },
         disconnected: {
           on: {
+            RETRY: {
+              target: '#scan.reviewing.cancelling',
+            },
             DISMISS: {
-              target: '#scan.clearingConnection',
+              target: '#scan.reviewing.navigatingToHome',
             },
           },
         },
         handlingBleError: {
           on: {
+            RETRY: {
+              target: '#scan.reviewing.cancelling',
+            },
             DISMISS: {
               target: '#scan.clearingConnection',
             },
@@ -802,7 +816,7 @@ export const scanMachine =
               timestamp: Date.now(),
               deviceName:
                 context.receiverInfo.name || context.receiverInfo.deviceName,
-              vcLabel: context.selectedVc.tag || context.selectedVc.id,
+              vcLabel: context.selectedVc.id,
             }),
           {to: context => context.serviceRefs.activityLog},
         ),
@@ -815,7 +829,7 @@ export const scanMachine =
               timestamp: Date.now(),
               deviceName:
                 context.receiverInfo.name || context.receiverInfo.deviceName,
-              vcLabel: context.selectedVc.tag || context.selectedVc.id,
+              vcLabel: context.selectedVc.id,
             }),
           {to: context => context.serviceRefs.activityLog},
         ),
@@ -839,7 +853,7 @@ export const scanMachine =
           stayInProgress: context => !context.stayInProgress,
         }),
 
-        setCloseTimeoutHint: assign({
+        setPromptHint: assign({
           stayInProgress: context => (context.stayInProgress = false),
         }),
 
@@ -1006,7 +1020,6 @@ export const scanMachine =
           const vp = context.createdVp;
           const vc = {
             ...(vp != null ? vp : context.selectedVc),
-            tag: '',
           };
 
           const reason = [];

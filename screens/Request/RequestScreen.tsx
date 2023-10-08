@@ -16,6 +16,7 @@ import {
 } from '@react-navigation/native';
 import {MainBottomTabParamList} from '../../routes/main';
 import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
+import {ProgressingModal} from '../../components/ProgressingModal';
 
 type RequestStackParamList = {
   RequestScreen: undefined;
@@ -80,10 +81,22 @@ export const RequestScreen: React.FC = () => {
       !controller.isBluetoothDenied
     ) {
       return (
-        <Column align="flex-end" fill>
-          {controller.isWaitingForConnection && <SharingQR {...props} />}
-          <StatusMessage {...props} />
-        </Column>
+        <React.Fragment>
+          <Column align="flex-end" fill>
+            {controller.isWaitingForConnection && <SharingQR {...props} />}
+            <StatusMessage {...props} />
+          </Column>
+          <ProgressingModal
+            title={controller.statusTitle}
+            isVisible={
+              controller.isWaitingForVc || controller.isWaitingForVcTimeout
+            }
+            isHintVisible={false}
+            isBleErrorVisible={false}
+            progress={true}
+            onCancel={controller.CANCEL}
+          />
+        </React.Fragment>
       );
     }
   }
@@ -144,14 +157,6 @@ const StatusMessage: React.FC<RequestScreenProps> = ({t, controller}) => {
           <Text size="small" color={Theme.Colors.textLabel}>
             {controller.statusHint}
           </Text>
-        )}
-        {controller.isStatusCancellable && (
-          <Button
-            margin={[8, 0, 0, 0]}
-            title={t('cancel', {ns: 'common'})}
-            loading={controller.isCancelling}
-            onPress={controller.CANCEL}
-          />
         )}
       </Column>
     )

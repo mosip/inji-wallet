@@ -100,9 +100,9 @@ export interface Typegen0 {
       | 'DISCONNECT'
       | 'DISMISS'
       | 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection';
-    setCloseTimeoutHint: 'CANCEL' | 'RETRY';
     setCreatedVp: 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
     setLinkCode: 'SCAN';
+    setPromptHint: 'CANCEL' | 'RETRY';
     setReadyForBluetoothStateCheck: 'BLUETOOTH_PERMISSION_ENABLED';
     setReason: 'UPDATE_REASON';
     setReceiverInfo: 'CONNECTED';
@@ -112,7 +112,8 @@ export interface Typegen0 {
     setShareLogTypeVerified: 'FACE_VALID';
     setStayInProgress:
       | 'STAY_IN_PROGRESS'
-      | 'xstate.after(CONNECTION_TIMEOUT)#scan.connecting.inProgress';
+      | 'xstate.after(CONNECTION_TIMEOUT)#scan.connecting.inProgress'
+      | 'xstate.after(SHARING_TIMEOUT)#scan.reviewing.sendingVc.inProgress';
     setUri: 'SCAN';
     storeLoginItem: 'done.invoke.QrLogin';
     storingActivityLog: 'STORE_RESPONSE';

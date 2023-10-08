@@ -8,7 +8,11 @@
   "status": "Valid",
   "generatedOn": "9/5/2023",
   "aid": "10001100660000620230714065538",
+<<<<<<< HEAD
   "setExcludedGroups":"AVT,PVT",
+=======
+  "setExcludedGroups":"AVT",
+>>>>>>> upstream/develop
   "androidAppPath":"D:/GITINJI/inji/injitest/apps/android/Inji_latest.apk",
   "androidDevice": "Pixel_6a_API_30"
 }

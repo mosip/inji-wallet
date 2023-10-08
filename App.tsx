@@ -21,10 +21,11 @@ import {
   initializeTelemetry,
   sendAppInfoEvent,
 } from './shared/telemetry/TelemetryUtils';
-import {ErrorMessageOverlay} from './components/MessageOverlay';
+import {MessageOverlay} from './components/MessageOverlay';
 import SecureKeystore from 'react-native-secure-keystore';
 import {isCustomSecureKeystore} from './shared/cryptoutil/cryptoUtil';
 import i18n from './i18n';
+import './shared/flipperConfig';
 
 // kludge: this is a bad practice but has been done temporarily to surface
 //  an occurance of a bug with minimal residual code changes, this should
@@ -71,12 +72,13 @@ const AppLoadingWrapper: React.FC = () => {
   return (
     <>
       <AppLoading />
-
-      <ErrorMessageOverlay
-        translationPath={'WelcomeScreen'}
+      <MessageOverlay
         isVisible={isKeyInvalidateError}
-        error={'errors.invalidateKeyError'}
-        onDismiss={controller.RESET}
+        title={t('errors.invalidateKeyError.title')}
+        message={t('errors.invalidateKeyError.message')}
+        onButtonPress={controller.RESET}
+        buttonText={t('common:ok')}
+        customHeight={'auto'}
       />
 
       {isReadError ? (

@@ -1,17 +1,17 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Dimensions } from 'react-native';
-import { Overlay } from 'react-native-elements/dist/overlay/Overlay';
-import { Button, Column, Text } from '../../components/ui';
-import { Theme } from '../../components/ui/styleUtils';
-import { VcItem } from '../../components/VcItem';
+import {useTranslation} from 'react-i18next';
+import {Dimensions} from 'react-native';
+import {Overlay} from 'react-native-elements/dist/overlay/Overlay';
+import {Button, Column, Text} from '../../components/ui';
+import {Theme} from '../../components/ui/styleUtils';
 import {
   SelectVcOverlayProps,
   useSelectVcOverlay,
 } from './SelectVcOverlayController';
+import {VcItemContainer} from '../../components/VC/VcItemContainer';
 
-export const SelectVcOverlay: React.FC<SelectVcOverlayProps> = (props) => {
-  const { t } = useTranslation('SelectVcOverlay');
+export const SelectVcOverlay: React.FC<SelectVcOverlayProps> = props => {
+  const {t} = useTranslation('SelectVcOverlay');
   const controller = useSelectVcOverlay(props);
 
   return (
@@ -21,7 +21,7 @@ export const SelectVcOverlay: React.FC<SelectVcOverlayProps> = (props) => {
       <Column
         padding="24"
         width={Dimensions.get('screen').width * 0.9}
-        style={{ maxHeight: Dimensions.get('screen').height * 0.9 }}>
+        style={{maxHeight: Dimensions.get('screen').height * 0.9}}>
         <Text weight="semibold" margin="0 0 16 0">
           {t('header')}
         </Text>
@@ -30,7 +30,7 @@ export const SelectVcOverlay: React.FC<SelectVcOverlayProps> = (props) => {
         </Text>
         <Column margin="0 0 32 0" scroll>
           {props.vcMetadatas.map((vcMetadata, index) => (
-            <VcItem
+            <VcItemContainer
               key={`${vcMetadata.getVcKey()}-${index}`}
               vcMetadata={vcMetadata}
               margin="0 2 8 2"

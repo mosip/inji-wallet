@@ -9,8 +9,9 @@ import {MessageOverlay} from '../../../components/MessageOverlay';
 import {useKebabPopUp} from '../../../components/KebabPopUpController';
 import {Dimensions} from 'react-native';
 import {ActorRefFrom} from 'xstate';
-import {vcItemMachine} from '../../../machines/vcItem';
+import {ExistingMosipVCItemMachine} from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import testIDProps from '../../../shared/commonUtil';
+import {VCMetadata} from '../../../shared/VCMetadata';
 
 export const WalletBinding: React.FC<WalletBindingProps> = props => {
   const controller = useKebabPopUp(props);
@@ -64,11 +65,12 @@ export const WalletBinding: React.FC<WalletBindingProps> = props => {
         onDismiss={controller.DISMISS}
         onInputDone={controller.INPUT_OTP}
         error={controller.otpError}
+        resend={controller.RESEND_OTP}
       />
       <MessageOverlay
         isVisible={controller.isWalletBindingError}
         title={controller.walletBindingError}
-        onCancel={controller.CANCEL}
+        onButtonPress={controller.CANCEL}
       />
       <MessageOverlay
         isVisible={controller.WalletBindingInProgress}
@@ -102,5 +104,6 @@ interface WalletBindingProps {
   label: string;
   content?: string;
   Icon?: string;
-  service: ActorRefFrom<typeof vcItemMachine>;
+  service: ActorRefFrom<typeof ExistingMosipVCItemMachine>;
+  vcMetadata: VCMetadata;
 }

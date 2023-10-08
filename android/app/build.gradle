@@ -121,7 +121,8 @@ android {
 
         manifestPlaceholders = [
             APP_NAME: APP_NAME_RELEASE,
-            GOOGLE_NEARBY_MESSAGES_API_KEY: "${properties.getProperty('GOOGLE_NEARBY_MESSAGES_API_KEY')}"
+            GOOGLE_NEARBY_MESSAGES_API_KEY: "${properties.getProperty('GOOGLE_NEARBY_MESSAGES_API_KEY')}",
+            appAuthRedirectScheme: 'io.mosip.residentapp.inji'
         ]
     }
     splits {

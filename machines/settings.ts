@@ -9,7 +9,7 @@ import {
   SETTINGS_STORE_KEY,
   ESIGNET_BASE_URL,
 } from '../shared/constants';
-import {VCLabel} from '../types/vc';
+import {VCLabel} from '../types/VC/ExistingMosipVC/vc';
 import {StoreEvents} from './store';
 import getAllConfigurations, {
   COMMON_PROPS_KEY,

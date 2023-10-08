@@ -5,7 +5,7 @@ import {WalletBinding} from '../screens/Home/MyVcs/WalletBinding';
 import {Pressable, View} from 'react-native';
 import {useKebabPopUp} from './KebabPopUpController';
 import {ActorRefFrom} from 'xstate';
-import {vcItemMachine} from '../machines/vcItem';
+import {ExistingMosipVCItemMachine} from '../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {useTranslation} from 'react-i18next';
 import {HistoryTab} from '../screens/Home/MyVcs/HistoryTab';
 import {RemoveVcWarningOverlay} from '../screens/Home/MyVcs/RemoveVcWarningOverlay';
@@ -20,9 +20,11 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
     <Column>
       <Icon
         {...testIDProps('ellipsis')}
+        accessible={true}
         name={props.iconName}
         type={props.iconType}
         color={Theme.Colors.GrayIcon}
+        size={Theme.ICON_SMALL_SIZE}
       />
       <Overlay
         isVisible={props.isVisible}
@@ -42,13 +44,13 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
         </Row>
         <ScrollView>
           <ListItem bottomDivider>
-            <ListItem.Content {...testIDProps('pinOrUnPinCard')}>
-              <ListItem.Title>
-                <Pressable onPress={controller.PIN_CARD}>
-                  <Text size="small" weight="bold">
-                    {props.vcMetadata.isPinned ? t('unPinCard') : t('pinCard')}
-                  </Text>
-                </Pressable>
+            <ListItem.Content>
+              <ListItem.Title
+                onPress={controller.PIN_CARD}
+                {...testIDProps('pinOrUnPinCard')}>
+                <Text size="small" weight="bold">
+                  {props.vcMetadata.isPinned ? t('unPinCard') : t('pinCard')}
+                </Text>
               </ListItem.Title>
             </ListItem.Content>
           </ListItem>
@@ -57,6 +59,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
             label={t('offlineAuthenticationDisabled!')}
             content={t('offlineAuthDisabledMessage')}
             service={props.service}
+            vcMetadata={props.vcMetadata}
           />
 
           <HistoryTab
@@ -66,14 +69,14 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
             vcMetadata={props.vcMetadata}
           />
 
-          <ListItem testID="removeFromWallet" bottomDivider>
+          <ListItem bottomDivider>
             <ListItem.Content>
-              <ListItem.Title>
-                <Pressable onPress={() => controller.REMOVE(props.vcMetadata)}>
-                  <Text size="small" weight="bold">
-                    {t('removeFromWallet')}
-                  </Text>
-                </Pressable>
+              <ListItem.Title
+                onPress={() => controller.REMOVE(props.vcMetadata)}
+                {...testIDProps('removeFromWallet')}>
+                <Text size="small" weight="bold">
+                  {t('removeFromWallet')}
+                </Text>
               </ListItem.Title>
             </ListItem.Content>
           </ListItem>
@@ -95,5 +98,5 @@ export interface KebabPopUpProps {
   vcMetadata: VCMetadata;
   isVisible: boolean;
   onDismiss: () => void;
-  service: ActorRefFrom<typeof vcItemMachine>;
+  service: ActorRefFrom<typeof ExistingMosipVCItemMachine>;
 }

@@ -1,6 +1,11 @@
-import {DecodedCredential, VerifiableCredential} from '../types/vc';
+import {
+  DecodedCredential,
+  VerifiableCredential,
+} from '../types/VC/ExistingMosipVC/vc';
 import {__AppId} from './GlobalVariables';
 import {HOST, MIMOTO_BASE_URL} from './constants';
+
+export type HTTP_METHOD = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
 
 export class BackendResponseError extends Error {
   constructor(name: string, message: string) {
@@ -10,7 +15,7 @@ export class BackendResponseError extends Error {
 }
 
 export async function request(
-  method: 'GET' | 'POST' | 'PATCH',
+  method: HTTP_METHOD,
   path: `/${string}`,
   body?: Record<string, unknown>,
   host = MIMOTO_BASE_URL,

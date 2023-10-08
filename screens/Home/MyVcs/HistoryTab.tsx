@@ -5,7 +5,7 @@ import {Modal} from '../../../components/ui/Modal';
 import {Centered, Column, Text} from '../../../components/ui';
 import {ActivityLogText} from '../../../components/ActivityLogText';
 import {ActorRefFrom} from 'xstate';
-import {vcItemMachine} from '../../../machines/vcItem';
+import {ExistingMosipVCItemMachine} from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {useKebabPopUp} from '../../../components/KebabPopUpController';
 import {Theme} from '../../../components/ui/styleUtils';
 import {VCMetadata} from '../../../shared/VCMetadata';
@@ -67,5 +67,5 @@ export interface HistoryTabProps {
   testID?: string;
   label: string;
   vcMetadata: VCMetadata;
-  service: ActorRefFrom<typeof vcItemMachine>;
+  service: ActorRefFrom<typeof ExistingMosipVCItemMachine>;
 }

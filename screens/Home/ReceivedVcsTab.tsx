@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {RefreshControl} from 'react-native';
 import {Icon} from 'react-native-elements';
@@ -6,7 +6,7 @@ import {Centered, Column, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {HomeScreenTabProps} from './HomeScreen';
 import {useReceivedVcsTab} from './ReceivedVcsTabController';
-import {VcItem} from '../../components/VcItem';
+import {VcItemContainer} from '../../components/VC/VcItemContainer';
 
 export const ReceivedVcsTab: React.FC<HomeScreenTabProps> = props => {
   const {t} = useTranslation('ReceivedVcsTab');
@@ -24,7 +24,7 @@ export const ReceivedVcsTab: React.FC<HomeScreenTabProps> = props => {
           />
         }>
         {controller.receivedVcsMetadata.map(vcMetadata => (
-          <VcItem
+          <VcItemContainer
             key={vcMetadata.getVcKey()}
             vcMetadata={vcMetadata}
             margin="0 2 8 2"

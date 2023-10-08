@@ -54,4 +54,3 @@ public class TestRunner {
 		runner.setOutputDirectory("testng-report");
 		runner.run();
 	}}
-

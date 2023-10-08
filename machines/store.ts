@@ -29,11 +29,11 @@ import {VCMetadata} from '../shared/VCMetadata';
 export const keyinvalidatedString =
   'Key Invalidated due to biometric enrollment';
 export const tamperedErrorMessageString = 'Data is tampered';
+export const ENOENT = 'No such file or directory';
 
 const model = createModel(
   {
     encryptionKey: '',
-    isTampered: false as boolean,
   },
   {
     events: {
@@ -58,8 +58,7 @@ const model = createModel(
         requester,
       }),
       STORE_ERROR: (error: Error, requester?: string) => ({error, requester}),
-      TAMPERED_VC: () => ({}),
-      RESET_IS_TAMPERED: () => ({}),
+      TAMPERED_VC: (key: string, requester?: string) => ({key, requester}),
     },
   },
 );
@@ -222,10 +221,11 @@ export const storeMachine =
               actions: sendParent('DECRYPT_ERROR'),
             },
             TAMPERED_VC: {
-              actions: ['setIsTamperedVc'],
-            },
-            RESET_IS_TAMPERED: {
-              actions: ['resetIsTamperedVc'],
+              actions: [
+                send((_, event) => model.events.TAMPERED_VC(event.key), {
+                  to: (_, event) => event.requester,
+                }),
+              ],
             },
           },
         },
@@ -246,14 +246,6 @@ export const storeMachine =
     },
     {
       actions: {
-        setIsTamperedVc: model.assign({
-          isTampered: () => true,
-        }),
-
-        resetIsTamperedVc: model.assign({
-          isTampered: () => false,
-        }),
-
         notifyParent: sendParent(model.events.READY()),
 
         forwardStoreRequest: send(
@@ -399,8 +391,12 @@ export const storeMachine =
                 await clear();
                 callback(model.events.KEY_INVALIDATE_ERROR());
                 sendUpdate();
-              } else if (e.message === tamperedErrorMessageString) {
-                callback(model.events.TAMPERED_VC());
+              } else if (
+                e.message === tamperedErrorMessageString ||
+                e.message === ENOENT
+              ) {
+                callback(model.events.TAMPERED_VC(event.key, event.requester));
+                sendUpdate();
               } else if (
                 e.message.includes('JSON') ||
                 e.message.includes('decrypt')
@@ -506,6 +502,7 @@ export async function getItem(
     if (
       e.message.includes(tamperedErrorMessageString) ||
       e.message.includes(keyinvalidatedString) ||
+      e.message.includes(ENOENT) ||
       e.message.includes('Key not found') // this error happens when previous get Item calls failed due to key invalidation and data and keys are deleted
     ) {
       throw e;
@@ -552,14 +549,14 @@ export async function updateItem(
   value: string,
   encryptionKey: string,
 ) {
-  // Used for updating VC metadata in the list. Prepends the passed vcmetadata in value and sets ispinned of other vc metadata to false
+  // Used for updating VC metadata in the list. Prepends the passed vcmetadata in value
   try {
-    const list = await getItem(key, [], encryptionKey);
+    const list = (await getItem(key, [], encryptionKey)) as Object[];
     const updatedMetaData = VCMetadata.fromVcMetadataString(value);
     const newList = [
       value,
-      ...list.map(metadataStr => {
-        const metaData = VCMetadata.fromVcMetadataString(metadataStr);
+      ...list.map(metadataObj => {
+        const metaData = new VCMetadata(metadataObj);
         if (metaData.getVcKey() !== updatedMetaData.getVcKey()) {
           return JSON.stringify(metaData);
         }
@@ -585,9 +582,9 @@ export async function removeItem(
     } else if (key === MY_VCS_STORE_KEY) {
       const data = await Storage.getItem(key, encryptionKey);
       const decryptedData = await decryptJson(encryptionKey, data);
-      const list = JSON.parse(decryptedData) as string[];
-      const newList = list.filter((str: string) => {
-        return VCMetadata.fromVcMetadataString(str).getVcKey() !== value;
+      const list = JSON.parse(decryptedData) as Object[];
+      const newList = list.filter((vcMetadataObject: Object) => {
+        return new VCMetadata(vcMetadataObject).getVcKey() !== value;
       });
 
       await setItem(key, newList, encryptionKey);
@@ -607,9 +604,9 @@ export async function removeVCMetaData(
   try {
     const data = await Storage.getItem(key, encryptionKey);
     const decryptedData = await decryptJson(encryptionKey, data);
-    const list = JSON.parse(decryptedData) as string[];
-    const newList = list.filter((str: string) => {
-      return VCMetadata.fromVcMetadataString(str).getVcKey() !== vcKey;
+    const list = JSON.parse(decryptedData) as Object[];
+    const newList = list.filter((vcMetadataObject: Object) => {
+      return new VCMetadata(vcMetadataObject).getVcKey() !== vcKey;
     });
 
     await setItem(key, newList, encryptionKey);
@@ -627,10 +624,10 @@ export async function removeItems(
   try {
     const data = await Storage.getItem(key, encryptionKey);
     const decryptedData = await decryptJson(encryptionKey, data);
-    const list = JSON.parse(decryptedData) as string[];
+    const list = JSON.parse(decryptedData) as Object[];
     const newList = list.filter(
-      (str: string) =>
-        !values.includes(VCMetadata.fromVcMetadataString(str).getVcKey()),
+      (vcMetadataObject: Object) =>
+        !values.includes(new VCMetadata(vcMetadataObject).getVcKey()),
     );
 
     await setItem(key, newList, encryptionKey);
@@ -641,7 +638,3 @@ export async function removeItems(
 }
 
 type State = StateFrom<typeof storeMachine>;
-
-export function selectIsTampered(state: State) {
-  return state.context.isTampered;
-}
