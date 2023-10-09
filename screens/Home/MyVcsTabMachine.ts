@@ -18,7 +18,10 @@ import {GetVcModalMachine} from './MyVcs/GetVcModalMachine';
 import Storage from '../../shared/storage';
 import {VCMetadata} from '../../shared/VCMetadata';
 import {EsignetMosipVCItemMachine} from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
-
+import {
+  sendInteractEvent,
+  sendStartEvent,
+} from '../../shared/telemetry/TelemetryUtils';
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
@@ -78,6 +81,7 @@ export const MyVcsTabMachine = model.createMachine(
                   target: 'storageLimitReached',
                 },
                 {
+                  actions: ['registerEvent'],
                   target: '#MyVcsTab.addingVc',
                 },
               ],
@@ -180,6 +184,14 @@ export const MyVcsTabMachine = model.createMachine(
       refreshMyVc: send(_context => VcEvents.REFRESH_MY_VCS(), {
         to: context => context.serviceRefs.vc,
       }),
+
+      registerEvent: () => {
+        sendStartEvent({
+          type: 'VC Download',
+          additionalParameters: {id: 'UIN, VID, AID'},
+        });
+        sendInteractEvent({type: 'CLICK', subtype: 'Download VC button'});
+      },
 
       resetIsTampered: send(() => StoreEvents.RESET_IS_TAMPERED(), {
         to: context => context.serviceRefs.store,

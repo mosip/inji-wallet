@@ -17,6 +17,10 @@ export function sendImpressionEvent(data) {
   telemetry.impression(data, {});
 }
 
+export function sendInteractEvent(data) {
+  telemetry.interact(data, {});
+}
+
 export function sendEndEvent(data) {
   telemetry.end(data, {});
 }

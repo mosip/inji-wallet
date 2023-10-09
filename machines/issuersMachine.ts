@@ -18,6 +18,12 @@ import {verifyCredential} from '../shared/vcjs/verifyCredential';
 import {getBody, getIdentifier} from '../shared/openId4VCI/Utils';
 import {VCMetadata} from '../shared/VCMetadata';
 import {VerifiableCredential} from '../types/VC/EsignetMosipVC/vc';
+import {
+  sendEndEvent,
+  sendImpressionEvent,
+  sendInteractEvent,
+  sendStartEvent,
+} from '../shared/telemetry/TelemetryUtils';
 
 const model = createModel(
   {
@@ -186,12 +192,16 @@ export const IssuersMachine = model.createMachine(
           src: 'verifyCredential',
           onDone: [
             {
+              actions: ['sendSuccessEndEvent'],
               target: 'storing',
             },
           ],
           onError: [
             {
-              actions: log((_, event) => (event.data as Error).message),
+              actions: [
+                log((_, event) => (event.data as Error).message),
+                'sendErrorEndEvent',
+              ],
               //TODO: Move to state according to the required flow when verification of VC fails
               target: 'idle',
             },
@@ -382,6 +392,18 @@ export const IssuersMachine = model.createMachine(
           to: context => context.serviceRefs.activityLog,
         },
       ),
+      sendSuccessEndEvent: () => {
+        sendEndEvent({
+          type: 'VC Download',
+          status: 'SUCCESS',
+        });
+      },
+      sendErrorEndEvent: () => {
+        sendEndEvent({
+          type: 'VC Download',
+          status: 'FAILURE',
+        });
+      },
     },
     services: {
       downloadIssuersList: async () => {
@@ -394,6 +416,11 @@ export const IssuersMachine = model.createMachine(
         return [defaultIssuer, ...response.response.issuers];
       },
       downloadIssuerConfig: async (_, event) => {
+        sendStartEvent({
+          type: 'VC Download',
+          additionalParameters: {id: event.id},
+        });
+        sendInteractEvent({type: 'CLICK', subtype: 'Issuer Type'});
         const response = await request(
           'GET',
           `/residentmobileapp/issuers/${event.id}`,
@@ -418,6 +445,9 @@ export const IssuersMachine = model.createMachine(
         return credential;
       },
       invokeAuthorization: async context => {
+        sendImpressionEvent({
+          type: context.selectedIssuer.id + ' Web View Page',
+        });
         const response = await authorize(context.selectedIssuer);
         return response;
       },
