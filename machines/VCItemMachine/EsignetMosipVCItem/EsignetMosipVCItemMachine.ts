@@ -104,7 +104,11 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         on: {
           GET_VC_RESPONSE: [
             {
-              actions: ['setVerifiableCredential', 'setGeneratedOn'],
+              actions: [
+                'setVerifiableCredential',
+                'setContext',
+                'setGeneratedOn',
+              ],
               cond: 'hasCredential',
               target: 'idle',
             },
@@ -514,7 +518,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
       ),
       updateVc: send(
         context => {
-          const {verifiableCredential} = context;
+          const {serviceRefs, ...verifiableCredential} = context;
           return {
             type: 'VC_DOWNLOADED_FROM_OPENID4VCI',
             vc: verifiableCredential,
@@ -540,6 +544,10 @@ export const EsignetMosipVCItemMachine = model.createMachine(
       setContext: model.assign((context, event) => {
         if (event.type === 'STORE_RESPONSE') {
           const {verifiableCredential, ...data} = event.response;
+          return {...context, ...data};
+        }
+        if (event.type === 'GET_VC_RESPONSE') {
+          const {verifiableCredential, ...data} = event.vc;
           return {...context, ...data};
         }
         return context;
@@ -750,10 +758,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
             request: {
               authFactorType: 'WLA',
               format: 'jwt',
-              individualId: context.verifiableCredential.credential
-                .credentialSubject.VID
-                ? context.verifiableCredential.credential.credentialSubject.VID
-                : context.verifiableCredential.credential.credentialSubject.UIN,
+              individualId: VCMetadata.fromVC(context.vcMetadata).id,
               transactionId: context.transactionId,
               publicKey: context.publicKey,
               challengeList: [

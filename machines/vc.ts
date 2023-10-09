@@ -394,7 +394,9 @@ export function selectMyVcsMetadata(state: State): VCMetadata[] {
 
 export function selectShareableVcsMetadata(state: State): VCMetadata[] {
   return state.context.myVcs.filter(
-    vcMetadata => state.context.vcs[vcMetadata.getVcKey()]?.credential != null,
+    vcMetadata =>
+      state.context.vcs[vcMetadata.getVcKey()]?.credential != null ||
+      state.context.vcs[vcMetadata.getVcKey()]?.verifiableCredential != null,
   );
 }
 
@@ -417,6 +419,7 @@ export function selectBindedVcsMetadata(state: State): VCMetadata[] {
   return state.context.myVcs.filter(vcMetadata => {
     const walletBindingResponse =
       state.context.vcs[vcMetadata.getVcKey()]?.walletBindingResponse;
+    console.log('selectBindedVcsMetadata => ', walletBindingResponse);
     return (
       !isEmpty(walletBindingResponse) &&
       !isEmpty(walletBindingResponse?.walletBindingId)
