@@ -35,7 +35,7 @@ enum OIDCErrors {
 const model = createModel(
   {
     issuers: [] as issuerType[],
-    tempSelectedIssuer: '' as string,
+    selectedIssuerId: '' as string,
     selectedIssuer: {} as issuerType,
     tokenResponse: {} as AuthorizeResult,
     errorMessage: '' as string,
@@ -122,8 +122,7 @@ export const IssuersMachine = model.createMachine(
             actions: sendParent('DOWNLOAD_ID'),
           },
           SELECTED_ISSUER: {
-            // set the issuer obj from the issuerStore
-            actions: 'updateTmpSelectedIssuer',
+            actions: 'updateSelectedIssuerId',
             target: 'downloadIssuerConfig',
           },
         },
@@ -134,7 +133,6 @@ export const IssuersMachine = model.createMachine(
           src: 'downloadIssuerConfig',
           onDone: {
             actions: 'setSelectedIssuers',
-            // TODO: move checkInternet before downloadIssuerConfig
             target: 'checkInternet',
           },
           onError: {
@@ -300,7 +298,7 @@ export const IssuersMachine = model.createMachine(
       }),
       setError: model.assign({
         errorMessage: (_, event) => {
-          console.log('Error while fetching issuers ', event.data.message);
+          console.log('Error occured ', event.data.message);
           return event.data.message === 'Network request failed'
             ? 'noInternetConnection'
             : 'generic';
@@ -380,8 +378,8 @@ export const IssuersMachine = model.createMachine(
       setSelectedIssuers: model.assign({
         selectedIssuer: (_, event) => event.data,
       }),
-      updateTmpSelectedIssuer: model.assign({
-        tempSelectedIssuer: (_, event) => event.id,
+      updateSelectedIssuerId: model.assign({
+        selectedIssuerId: (_, event) => event.id,
       }),
       setTokenResponse: model.assign({
         tokenResponse: (_, event) => event.data,
@@ -432,7 +430,7 @@ export const IssuersMachine = model.createMachine(
       },
       checkInternet: async () => await NetInfo.fetch(),
       downloadIssuerConfig: async (context, _) => {
-        return await CACHED_API.fetchIssuerConfig(context.tempSelectedIssuer);
+        return await CACHED_API.fetchIssuerConfig(context.selectedIssuerId);
       },
       downloadCredential: async context => {
         const body = await getBody(context);
