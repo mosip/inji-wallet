@@ -93,6 +93,7 @@ export interface Typegen0 {
     setLoadingIssuer: 'TRY_AGAIN';
     setNoInternet: 'done.invoke.checkInternet';
     setOIDCConfigRawError: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
+    setOIDCRawError: 'error.platform.issuersMachine.downloadCredentials:invocation[0]';
     setPrivateKey: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
     setPublicKey: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
     setSelectedIssuers: 'done.invoke.issuersMachine.downloadIssuerConfig:invocation[0]';
@@ -117,6 +118,8 @@ export interface Typegen0 {
     isOIDCConfigError: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     isOIDCflowCancelled: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     isRawErrorOIDCConfigError: 'TRY_AGAIN';
+    isRawErrorTimeoutError: 'TRY_AGAIN';
+    isVCdownloadTimeout: 'error.platform.issuersMachine.downloadCredentials:invocation[0]';
     shouldFetchIssuersAgain: 'TRY_AGAIN';
   };
   eventsCausingServices: {

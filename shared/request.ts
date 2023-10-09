@@ -19,11 +19,11 @@ export async function request(
   path: `/${string}`,
   body?: Record<string, unknown>,
   host = MIMOTO_BASE_URL,
+  headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+  },
   timeout?: undefined | number,
 ) {
-  const headers = {
-    'Content-Type': 'application/json',
-  };
   if (path.includes('residentmobileapp'))
     headers['X-AppId'] = __AppId.getValue();
   let response;
@@ -31,19 +31,30 @@ export async function request(
     response = await fetch(host + path, {
       method,
       headers,
-      body: JSON.stringify(body),
+      body: body ? JSON.stringify(body) : undefined,
     });
   } else {
+    console.log(`making a web request to ${host + path}`);
     let controller = new AbortController();
     setTimeout(() => {
       controller.abort();
     }, timeout * 1000);
-    response = await fetch(host + path, {
-      method,
-      headers,
-      body: JSON.stringify(body),
-      signal: controller.signal,
-    });
+    try {
+      response = await fetch(host + path, {
+        method,
+        headers,
+        body: body ? JSON.stringify(body) : undefined,
+        signal: controller.signal,
+      });
+    } catch (error) {
+      console.log(
+        `Error occurred while making request: ${host + path}: ${error}`,
+      );
+      if (error.name === 'AbortError') {
+        throw new Error('request timedout');
+      }
+      throw error;
+    }
   }
 
   const jsonResponse = await response.json();

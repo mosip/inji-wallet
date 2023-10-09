@@ -21,8 +21,9 @@ import {
   VerifiableCredential,
 } from '../types/VC/EsignetMosipVC/vc';
 import {CACHED_API} from '../shared/api';
+import {request} from '../shared/request';
 
-const TIMEOUT_SEC = 10;
+const VC_DOWNLOAD_TIMEOUT = 30;
 
 // OIDCErrors is a collection of external errors from the OpenID library or the issuer
 enum OIDCErrors {
@@ -32,6 +33,8 @@ enum OIDCErrors {
   INVALID_TOKEN_SPECIFIED = 'Invalid token specified',
   OIDC_CONFIG_ERROR_PREFIX = 'Config error',
 }
+
+const REQUEST_TIMEDOUT = 'request timedout';
 
 const model = createModel(
   {
@@ -108,6 +111,11 @@ export const IssuersMachine = model.createMachine(
             {
               cond: 'isRawErrorOIDCConfigError',
               actions: 'resetError',
+              target: 'selectingIssuer',
+            },
+            {
+              cond: 'isRawErrorTimeoutError',
+              actions: ['resetError'],
               target: 'selectingIssuer',
             },
             {
@@ -240,10 +248,17 @@ export const IssuersMachine = model.createMachine(
             actions: ['setVerifiableCredential', 'setCredentialWrapper'],
             target: 'verifyingCredential',
           },
-          onError: {
-            actions: 'setError',
-            target: 'error',
-          },
+          onError: [
+            {
+              cond: 'isVCdownloadTimeout',
+              actions: ['setOIDCRawError', 'setError'],
+              target: 'error',
+            },
+            {
+              actions: 'setError',
+              target: 'error',
+            },
+          ],
         },
         on: {
           CANCEL: {
@@ -322,6 +337,12 @@ export const IssuersMachine = model.createMachine(
           typeof event.data.toString === 'function'
             ? event.data.toString()
             : '',
+      }),
+      setOIDCRawError: model.assign({
+        rawError: (_, event) => event.data.message,
+      }),
+      setRawError: model.assign({
+        rawError: (_, event) => event.data,
       }),
       resetError: model.assign({
         errorMessage: '',
@@ -453,16 +474,16 @@ export const IssuersMachine = model.createMachine(
       },
       downloadCredential: async context => {
         const body = await getBody(context);
-        const response = await fetch(
+        const response = await request(
+          'POST',
           context.selectedIssuer.serviceConfiguration.credentialEndpoint,
+          body,
+          '',
           {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: 'Bearer ' + context.tokenResponse?.accessToken,
-            },
-            body: JSON.stringify(body),
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + context.tokenResponse?.accessToken,
           },
+          VC_DOWNLOAD_TIMEOUT,
         );
         let credential = await response.json();
         credential = updateCredentialInformation(context, credential);
@@ -510,8 +531,12 @@ export const IssuersMachine = model.createMachine(
           event.data.toString().includes(OIDCErrors.OIDC_CONFIG_ERROR_PREFIX)
         );
       },
+      isVCdownloadTimeout: (_, event) =>
+        event.data.message === 'request timedout',
       isRawErrorOIDCConfigError: (context, _) =>
         context.rawError.includes(OIDCErrors.OIDC_CONFIG_ERROR_PREFIX),
+      isRawErrorTimeoutError: (context, _) =>
+        context.rawError.includes(REQUEST_TIMEDOUT),
       shouldFetchIssuersAgain: context => context.issuers.length === 0,
       isCustomSecureKeystore: () => isCustomSecureKeystore(),
     },
