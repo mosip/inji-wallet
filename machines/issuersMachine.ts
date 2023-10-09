@@ -30,6 +30,7 @@ enum OIDCErrors {
   OIDC_FLOW_CANCELLED_IOS = 'org.openid.appauth.general error -3',
 
   INVALID_TOKEN_SPECIFIED = 'Invalid token specified',
+  OIDC_CONFIG_ERROR_PREFIX = 'Config error',
 }
 
 const model = createModel(
@@ -39,6 +40,7 @@ const model = createModel(
     selectedIssuer: {} as issuerType,
     tokenResponse: {} as AuthorizeResult,
     errorMessage: '' as string,
+    rawError: '' as string,
     loadingReason: 'displayIssuers' as string,
     verifiableCredential: null as VerifiableCredential | null,
     credentialWrapper: {} as CredentialWrapper,
@@ -102,6 +104,11 @@ export const IssuersMachine = model.createMachine(
               cond: 'shouldFetchIssuersAgain',
               actions: ['setLoadingIssuer', 'resetError'],
               target: 'displayIssuers',
+            },
+            {
+              cond: 'isRawErrorOIDCConfigError',
+              actions: 'resetError',
+              target: 'selectingIssuer',
             },
             {
               description: 'not fetched issuers config yet',
@@ -176,6 +183,11 @@ export const IssuersMachine = model.createMachine(
               cond: 'isOIDCflowCancelled',
               actions: ['resetError', 'unsetLoadingReason'],
               target: 'selectingIssuer',
+            },
+            {
+              cond: 'isOIDCConfigError',
+              actions: ['setError', 'setOIDCConfigRawError'],
+              target: 'error',
             },
             {
               actions: [
@@ -305,8 +317,15 @@ export const IssuersMachine = model.createMachine(
         },
         loadingReason: null,
       }),
+      setOIDCConfigRawError: model.assign({
+        rawError: (_, event) =>
+          typeof event.data.toString === 'function'
+            ? event.data.toString()
+            : '',
+      }),
       resetError: model.assign({
         errorMessage: '',
+        rawError: '',
       }),
 
       loadKeyPair: assign({
@@ -484,9 +503,16 @@ export const IssuersMachine = model.createMachine(
           err.some(e => event.data.toString().includes(e))
         );
       },
+      isOIDCConfigError: (_, event) => {
+        return (
+          !!event.data &&
+          typeof event.data.toString === 'function' &&
+          event.data.toString().includes(OIDCErrors.OIDC_CONFIG_ERROR_PREFIX)
+        );
+      },
+      isRawErrorOIDCConfigError: (context, _) =>
+        context.rawError.includes(OIDCErrors.OIDC_CONFIG_ERROR_PREFIX),
       shouldFetchIssuersAgain: context => context.issuers.length === 0,
-      invalidTokenSpecified: (_, event) =>
-        event.data.error !== OIDCErrors.INVALID_TOKEN_SPECIFIED,
       isCustomSecureKeystore: () => isCustomSecureKeystore(),
     },
   },
