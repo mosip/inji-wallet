@@ -16,6 +16,7 @@ import {groupBy} from '../../shared/javascript';
 import {isOpenId4VCIEnabled} from '../../shared/openId4VCI/Utils';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
 import {BannerNotification} from '../../components/BannerNotification';
+import {Error} from '../../components/ui/Error';
 
 const pinIconProps = {iconName: 'pushpin', iconType: 'antdesign'};
 
@@ -200,6 +201,17 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         buttonText={t('common:ok')}
         customHeight={'auto'}
       />
+      {controller.isNetworkOff && (
+        <Error
+          testID={`networkOffError`}
+          isVisible={controller.isNetworkOff}
+          title={t('errors.noInternetConnection.title')}
+          message={t('errors.noInternetConnection.message')}
+          goBack={controller.DISMISS}
+          tryAgain={controller.TRY_AGAIN}
+          image={<Image source={Theme.NoInternetConnection} />}
+        />
+      )}
     </React.Fragment>
   );
 };

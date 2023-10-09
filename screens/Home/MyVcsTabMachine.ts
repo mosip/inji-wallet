@@ -18,6 +18,7 @@ import {GetVcModalMachine} from './MyVcs/GetVcModalMachine';
 import Storage from '../../shared/storage';
 import {VCMetadata} from '../../shared/VCMetadata';
 import {EsignetMosipVCItemMachine} from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
+import NetInfo from '@react-native-community/netinfo';
 
 const model = createModel(
   {
@@ -34,6 +35,7 @@ const model = createModel(
         vcItemActor,
       }),
       DISMISS: () => ({}),
+      TRY_AGAIN: () => ({}),
       STORE_RESPONSE: (response?: unknown) => ({response}),
       STORE_ERROR: (error: Error) => ({error}),
       ADD_VC: () => ({}),
@@ -65,8 +67,23 @@ export const MyVcsTabMachine = model.createMachine(
     initial: 'idle',
     states: {
       addVc: {
-        initial: 'checkStorage',
+        initial: 'checkNetwork',
         states: {
+          checkNetwork: {
+            invoke: {
+              src: 'checkNetworkStatus',
+              onDone: [
+                {
+                  cond: 'isNetworkOn',
+                  target: 'checkStorage',
+                },
+                {
+                  target: 'NetworkOff',
+                },
+              ],
+            },
+          },
+
           checkStorage: {
             invoke: {
               src: 'checkStorageAvailability',
@@ -84,6 +101,12 @@ export const MyVcsTabMachine = model.createMachine(
           storageLimitReached: {
             on: {
               DISMISS: '#idle',
+            },
+          },
+          NetworkOff: {
+            on: {
+              DISMISS: '#idle',
+              TRY_AGAIN: 'checkNetwork',
             },
           },
         },
@@ -168,6 +191,16 @@ export const MyVcsTabMachine = model.createMachine(
           Storage.isMinimumLimitReached('minStorageRequired'),
         );
       },
+      checkNetworkStatus: async () => {
+        const state = await NetInfo.fetch();
+        if (state.isConnected) {
+          console.log('>>>>>>>>>>>>>>>>>>>> Internet is connected');
+          return true;
+        } else {
+          console.log('>>>>>>>>>>>>>>>>>>>> Internet is Not connected');
+          return false;
+        }
+      },
     },
 
     actions: {
@@ -203,6 +236,7 @@ export const MyVcsTabMachine = model.createMachine(
 
     guards: {
       isMinimumStorageLimitReached: (_context, event) => Boolean(event.data),
+      isNetworkOn: (_context, event) => Boolean(event.data),
     },
   },
 );
@@ -234,4 +268,7 @@ export function selectIsSavingFailedInIdle(state: State) {
 
 export function selectIsMinimumStorageLimitReached(state: State) {
   return state.matches('addVc.storageLimitReached');
+}
+export function selectIsNetworkOff(state: State) {
+  return state.matches('addVc.NetworkOff');
 }

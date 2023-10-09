@@ -25,6 +25,7 @@ import {
   selectGetVcModal,
   selectIsSavingFailedInIdle,
   selectIsMinimumStorageLimitReached,
+  selectIsNetworkOff,
 } from './MyVcsTabMachine';
 import {
   selectShowHardwareKeystoreNotExistsAlert,
@@ -55,6 +56,7 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
       service,
       selectIsMinimumStorageLimitReached,
     ),
+    isNetworkOff: useSelector(service, selectIsNetworkOff),
     showHardwareKeystoreNotExistsAlert: useSelector(
       settingsService,
       selectShowHardwareKeystoreNotExistsAlert,
@@ -77,6 +79,8 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
       vcService.send(VcEvents.RESET_ARE_ALL_VCS_DOWNLOADED()),
 
     DISMISS: () => service.send(MyVcsTabEvents.DISMISS()),
+
+    TRY_AGAIN: () => service.send(MyVcsTabEvents.TRY_AGAIN()),
 
     DOWNLOAD_ID: () => service.send(MyVcsTabEvents.ADD_VC()),
 
