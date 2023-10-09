@@ -3,7 +3,7 @@ import {
   VerifiableCredential,
 } from '../types/VC/ExistingMosipVC/vc';
 import {__AppId} from './GlobalVariables';
-import {HOST, MIMOTO_BASE_URL} from './constants';
+import {MIMOTO_BASE_URL} from './constants';
 
 export type HTTP_METHOD = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
 
@@ -34,11 +34,16 @@ export async function request(
       body: JSON.stringify(body),
     });
   } else {
-    response = Promise.race([
-      fetch(host + path, {method, headers, body: JSON.stringify(body)}),
-      (_: any, reject: (arg0: Error) => void) =>
-        setTimeout(() => reject(new Error('request timeout')), timeout * 1000),
-    ]);
+    let controller = new AbortController();
+    setTimeout(() => {
+      controller.abort();
+    }, timeout * 1000);
+    response = await fetch(host + path, {
+      method,
+      headers,
+      body: JSON.stringify(body),
+      signal: controller.signal,
+    });
   }
 
   const jsonResponse = await response.json();
