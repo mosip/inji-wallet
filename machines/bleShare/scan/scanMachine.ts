@@ -885,7 +885,11 @@ export const scanMachine =
               type: 'QRLOGIN_SUCCESFULL',
               timestamp: Date.now(),
               deviceName: '',
-              vcLabel: String(event.response.selectedVc.id),
+              vcLabel: String(
+                event.response.selectedVc.id
+                  ? event.response.selectedVc.id
+                  : event.response.selectedVc.vcMetadata.id,
+              ),
             }),
           {
             to: context => context.serviceRefs.activityLog,
