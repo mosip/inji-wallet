@@ -18,6 +18,10 @@ export function sendStartEvent(data) {
   telemetry.start({}, '', '', data, {});
 }
 
+export function sendInteractEvent(data) {
+  telemetry.interact(data, {});
+}
+
 export function sendEndEvent(data) {
   telemetry.end(data, {});
 }

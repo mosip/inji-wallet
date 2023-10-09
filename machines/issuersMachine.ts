@@ -23,21 +23,13 @@ import {
 } from '../shared/openId4VCI/Utils';
 import {NETWORK_REQUEST_FAILED, REQUEST_TIMEOUT} from '../shared/constants';
 import {VCMetadata} from '../shared/VCMetadata';
+import {VerifiableCredential} from '../types/VC/EsignetMosipVC/vc';
 import {
-  getImpressionEventData,
-  getInteractEventData,
-  getStartEventData,
   sendEndEvent,
   sendImpressionEvent,
   sendInteractEvent,
   sendStartEvent,
 } from '../shared/telemetry/TelemetryUtils';
-import {
-  CredentialWrapper,
-  VerifiableCredential,
-} from '../types/VC/EsignetMosipVC/vc';
-import {CACHED_API} from '../shared/api';
-import {request} from '../shared/request';
 
 const model = createModel(
   {
@@ -490,13 +482,15 @@ export const IssuersMachine = model.createMachine(
       downloadIssuersList: async () => {
         return await CACHED_API.fetchIssuers();
       },
-      checkInternet: async () => await NetInfo.fetch(),
-      downloadIssuerConfig: async (context, _) => {
-        sendStartEvent(
-          getStartEventData('VC Download', {id: context.selectedIssuerId}),
-        );
-        sendInteractEvent(
-          getInteractEventData('VC Download', 'CLICK', 'Issuer Type'),
+      downloadIssuerConfig: async (_, event) => {
+        sendStartEvent({
+          type: 'VC Download',
+          additionalParameters: {id: event.id},
+        });
+        sendInteractEvent({type: 'CLICK', subtype: 'Issuer Type'});
+        const response = await request(
+          'GET',
+          `/residentmobileapp/issuers/${event.id}`,
         );
         return await CACHED_API.fetchIssuerConfig(context.selectedIssuerId);
       },
@@ -521,13 +515,11 @@ export const IssuersMachine = model.createMachine(
         return credential;
       },
       invokeAuthorization: async context => {
-        sendImpressionEvent(
-          getImpressionEventData(
-            'VC Download',
-            context.selectedIssuer.id + ' Web View Page',
-          ),
-        );
-        return await authorize(context.selectedIssuer);
+        sendImpressionEvent({
+          type: context.selectedIssuer.id + ' Web View Page',
+        });
+        const response = await authorize(context.selectedIssuer);
+        return response;
       },
       generateKeyPair: async context => {
         if (!isCustomSecureKeystore()) {
