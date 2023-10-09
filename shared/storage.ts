@@ -23,7 +23,8 @@ import {
   isCustomSecureKeystore,
 } from './cryptoutil/cryptoUtil';
 import {VCMetadata} from './VCMetadata';
-import {ENOENT} from '../machines/store';
+import {ENOENT, getItem} from '../machines/store';
+import {MY_VCS_STORE_KEY} from './constants';
 
 export const MMKV = new MMKVLoader().initialize();
 const vcDirectoryPath = `${DocumentDirectoryPath}/inji/VC`;
@@ -80,6 +81,15 @@ class Storage {
       if (isVCKey) {
         const data = await this.readVCFromFile(key);
         const isCorrupted = await this.isCorruptedVC(key, encryptionKey, data);
+
+        if (isCorrupted) {
+          console.debug('VC is corrupted and will be deleted from storage');
+          console.debug('VC key: ', key);
+          console.debug('is Data null', data === null);
+          getItem(MY_VCS_STORE_KEY, [], encryptionKey).then(res => {
+            console.debug('vcKeys are ', res);
+          });
+        }
 
         return isCorrupted ? null : data;
       }
