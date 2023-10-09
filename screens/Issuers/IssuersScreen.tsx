@@ -19,7 +19,7 @@ export const IssuersScreen: React.FC<
   const {t} = useTranslation('IssuersScreen');
 
   useLayoutEffect(() => {
-    if (controller.loadingReason || controller.errorMessage) {
+    if (controller.loadingReason || controller.errorMessageType) {
       props.navigation.setOptions({
         headerShown: false,
       });
@@ -39,7 +39,11 @@ export const IssuersScreen: React.FC<
     if (controller.isStoring) {
       props.navigation.goBack();
     }
-  }, [controller.loadingReason, controller.errorMessage, controller.isStoring]);
+  }, [
+    controller.loadingReason,
+    controller.errorMessageType,
+    controller.isStoring,
+  ]);
 
   const onPressHandler = (id: string) => {
     if (id !== 'UIN, VID, AID') {
@@ -50,7 +54,7 @@ export const IssuersScreen: React.FC<
   };
 
   const isGenericError = () => {
-    return controller.errorMessage === 'generic';
+    return controller.errorMessageType === 'generic';
   };
 
   const goBack = () => {
@@ -125,12 +129,12 @@ export const IssuersScreen: React.FC<
           </View>
         </Column>
       )}
-      {controller.errorMessage && (
+      {controller.errorMessageType && (
         <Error
-          testID={`${controller.errorMessage}Error`}
-          isVisible={controller.errorMessage !== ''}
-          title={t(`errors.${controller.errorMessage}.title`)}
-          message={t(`errors.${controller.errorMessage}.message`)}
+          testID={`${controller.errorMessageType}Error`}
+          isVisible={controller.errorMessageType !== ''}
+          title={t(`errors.${controller.errorMessageType}.title`)}
+          message={t(`errors.${controller.errorMessageType}.message`)}
           goBack={goBack}
           tryAgain={controller.TRY_AGAIN}
           image={getImage()}

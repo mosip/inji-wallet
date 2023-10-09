@@ -92,8 +92,7 @@ export interface Typegen0 {
     setIssuers: 'done.invoke.issuersMachine.displayIssuers:invocation[0]';
     setLoadingIssuer: 'TRY_AGAIN';
     setNoInternet: 'done.invoke.checkInternet';
-    setOIDCConfigRawError: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
-    setOIDCRawError: 'error.platform.issuersMachine.downloadCredentials:invocation[0]';
+    setOIDCConfigError: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     setPrivateKey: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
     setPublicKey: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
     setSelectedIssuers: 'done.invoke.issuersMachine.downloadIssuerConfig:invocation[0]';
@@ -112,13 +111,12 @@ export interface Typegen0 {
   };
   eventsCausingDelays: {};
   eventsCausingGuards: {
+    canSelectIssuerAgain: 'TRY_AGAIN';
     hasKeyPair: 'CHECK_KEY_PAIR';
     isCustomSecureKeystore: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
     isInternetConnected: 'done.invoke.checkInternet';
     isOIDCConfigError: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     isOIDCflowCancelled: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
-    isRawErrorOIDCConfigError: 'TRY_AGAIN';
-    isRawErrorTimeoutError: 'TRY_AGAIN';
     isVCdownloadTimeout: 'error.platform.issuersMachine.downloadCredentials:invocation[0]';
     shouldFetchIssuersAgain: 'TRY_AGAIN';
   };

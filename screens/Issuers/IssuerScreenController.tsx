@@ -2,7 +2,7 @@ import {useSelector} from '@xstate/react';
 import {
   IssuerScreenTabEvents,
   IssuersMachine,
-  selectErrorMessage,
+  selectErrorMessageType,
   selectIsDone,
   selectIsDownloadCredentials,
   selectIsIdle,
@@ -18,7 +18,7 @@ export function useIssuerScreenController({route, navigation}) {
 
   return {
     issuers: useSelector(service, selectIssuers),
-    errorMessage: useSelector(service, selectErrorMessage),
+    errorMessageType: useSelector(service, selectErrorMessageType),
     isDownloadingCredentials: useSelector(service, selectIsDownloadCredentials),
     isDone: useSelector(service, selectIsDone),
     isIdle: useSelector(service, selectIsIdle),

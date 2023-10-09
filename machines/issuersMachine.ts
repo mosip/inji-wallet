@@ -34,7 +34,7 @@ enum OIDCErrors {
   OIDC_CONFIG_ERROR_PREFIX = 'Config error',
 }
 
-const REQUEST_TIMEDOUT = 'request timedout';
+const REQUEST_TIMEDOUT = 'requestTimedOut';
 
 const model = createModel(
   {
@@ -43,7 +43,6 @@ const model = createModel(
     selectedIssuer: {} as issuerType,
     tokenResponse: {} as AuthorizeResult,
     errorMessage: '' as string,
-    rawError: '' as string,
     loadingReason: 'displayIssuers' as string,
     verifiableCredential: null as VerifiableCredential | null,
     credentialWrapper: {} as CredentialWrapper,
@@ -109,13 +108,8 @@ export const IssuersMachine = model.createMachine(
               target: 'displayIssuers',
             },
             {
-              cond: 'isRawErrorOIDCConfigError',
+              cond: 'canSelectIssuerAgain',
               actions: 'resetError',
-              target: 'selectingIssuer',
-            },
-            {
-              cond: 'isRawErrorTimeoutError',
-              actions: ['resetError'],
               target: 'selectingIssuer',
             },
             {
@@ -194,7 +188,7 @@ export const IssuersMachine = model.createMachine(
             },
             {
               cond: 'isOIDCConfigError',
-              actions: ['setError', 'setOIDCConfigRawError'],
+              actions: ['setOIDCConfigError'],
               target: 'error',
             },
             {
@@ -251,7 +245,7 @@ export const IssuersMachine = model.createMachine(
           onError: [
             {
               cond: 'isVCdownloadTimeout',
-              actions: ['setOIDCRawError', 'setError'],
+              actions: ['setError'],
               target: 'error',
             },
             {
@@ -326,27 +320,23 @@ export const IssuersMachine = model.createMachine(
       setError: model.assign({
         errorMessage: (_, event) => {
           console.log('Error occured ', event.data.message);
-          return event.data.message === 'Network request failed'
-            ? 'noInternetConnection'
-            : 'generic';
+          const error = event.data.message;
+          switch (error) {
+            case 'Network request failed':
+              return 'noInternetConnection';
+            case 'request timedout':
+              return REQUEST_TIMEDOUT;
+            default:
+              return 'generic';
+          }
         },
         loadingReason: null,
       }),
-      setOIDCConfigRawError: model.assign({
-        rawError: (_, event) =>
-          typeof event.data.toString === 'function'
-            ? event.data.toString()
-            : '',
-      }),
-      setOIDCRawError: model.assign({
-        rawError: (_, event) => event.data.message,
-      }),
-      setRawError: model.assign({
-        rawError: (_, event) => event.data,
+      setOIDCConfigError: model.assign({
+        errorMessage: (_, event) => event.data.toString(),
       }),
       resetError: model.assign({
         errorMessage: '',
-        rawError: '',
       }),
 
       loadKeyPair: assign({
@@ -533,10 +523,12 @@ export const IssuersMachine = model.createMachine(
       },
       isVCdownloadTimeout: (_, event) =>
         event.data.message === 'request timedout',
-      isRawErrorOIDCConfigError: (context, _) =>
-        context.rawError.includes(OIDCErrors.OIDC_CONFIG_ERROR_PREFIX),
-      isRawErrorTimeoutError: (context, _) =>
-        context.rawError.includes(REQUEST_TIMEDOUT),
+      canSelectIssuerAgain: (context, _) => {
+        return (
+          context.errorMessage.includes(OIDCErrors.OIDC_CONFIG_ERROR_PREFIX) ||
+          context.errorMessage.includes(REQUEST_TIMEDOUT)
+        );
+      },
       shouldFetchIssuersAgain: context => context.issuers.length === 0,
       isCustomSecureKeystore: () => isCustomSecureKeystore(),
     },
@@ -549,8 +541,11 @@ export function selectIssuers(state: State) {
   return state.context.issuers;
 }
 
-export function selectErrorMessage(state: State) {
-  return state.context.errorMessage;
+export function selectErrorMessageType(state: State) {
+  return state.context.errorMessage === '' ||
+    state.context.errorMessage === 'noInternetConnection'
+    ? state.context.errorMessage
+    : 'generic';
 }
 
 export function selectLoadingReason(state: State) {
