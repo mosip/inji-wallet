@@ -84,6 +84,7 @@ export interface Typegen0 {
       | 'TRY_AGAIN'
       | 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     setCredentialWrapper: 'done.invoke.issuersMachine.downloadCredentials:invocation[0]';
+    setDownloadingCreds: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
     setError:
       | 'error.platform.issuersMachine.displayIssuers:invocation[0]'
       | 'error.platform.issuersMachine.downloadCredentials:invocation[0]'
@@ -96,6 +97,7 @@ export interface Typegen0 {
     setPrivateKey: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
     setPublicKey: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
     setSelectedIssuers: 'done.invoke.issuersMachine.downloadIssuerConfig:invocation[0]';
+    setTokenLoadingReason: 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
     setTokenResponse: 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
     setVerifiableCredential: 'done.invoke.issuersMachine.downloadCredentials:invocation[0]';
     storeKeyPair: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
@@ -106,6 +108,9 @@ export interface Typegen0 {
     unsetLoadingReason:
       | 'done.invoke.checkInternet'
       | 'done.invoke.issuersMachine.displayIssuers:invocation[0]'
+      | 'error.platform.issuersMachine.displayIssuers:invocation[0]'
+      | 'error.platform.issuersMachine.downloadCredentials:invocation[0]'
+      | 'error.platform.issuersMachine.downloadIssuerConfig:invocation[0]'
       | 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     updateSelectedIssuerId: 'SELECTED_ISSUER';
   };
@@ -117,7 +122,6 @@ export interface Typegen0 {
     isInternetConnected: 'done.invoke.checkInternet';
     isOIDCConfigError: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     isOIDCflowCancelled: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
-    isVCdownloadTimeout: 'error.platform.issuersMachine.downloadCredentials:invocation[0]';
     shouldFetchIssuersAgain: 'TRY_AGAIN';
   };
   eventsCausingServices: {

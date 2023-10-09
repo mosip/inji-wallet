@@ -92,7 +92,7 @@ export const IssuersMachine = model.createMachine(
             target: 'selectingIssuer',
           },
           onError: {
-            actions: ['setError'],
+            actions: ['setError', 'unsetLoadingReason'],
             target: 'error',
           },
         },
@@ -145,7 +145,7 @@ export const IssuersMachine = model.createMachine(
             target: 'checkInternet',
           },
           onError: {
-            actions: 'setError',
+            actions: ['setError', 'unsetLoadingReason'],
             target: 'error',
           },
         },
@@ -177,7 +177,12 @@ export const IssuersMachine = model.createMachine(
         invoke: {
           src: 'invokeAuthorization',
           onDone: {
-            actions: ['setTokenResponse', 'getKeyPairFromStore', 'loadKeyPair'],
+            actions: [
+              'setTokenResponse',
+              'setTokenLoadingReason',
+              'getKeyPairFromStore',
+              'loadKeyPair',
+            ],
             target: 'checkKeyPair',
           },
           onError: [
@@ -194,6 +199,7 @@ export const IssuersMachine = model.createMachine(
             {
               actions: [
                 'setError',
+                'unsetLoadingReason',
                 (_, event) => console.log('error in invokeAuth - ', event.data),
               ],
               target: 'error',
@@ -223,11 +229,16 @@ export const IssuersMachine = model.createMachine(
           src: 'generateKeyPair',
           onDone: [
             {
-              actions: ['setPublicKey', 'setPrivateKey', 'storeKeyPair'],
+              actions: [
+                'setPublicKey',
+                'setDownloadingCreds',
+                'setPrivateKey',
+                'storeKeyPair',
+              ],
               target: 'downloadCredentials',
             },
             {
-              actions: ['setPublicKey', 'storeKeyPair'],
+              actions: ['setPublicKey', 'setDownloadingCreds', 'storeKeyPair'],
               cond: 'isCustomSecureKeystore',
               target: 'downloadCredentials',
             },
@@ -244,12 +255,7 @@ export const IssuersMachine = model.createMachine(
           },
           onError: [
             {
-              cond: 'isVCdownloadTimeout',
-              actions: ['setError'],
-              target: 'error',
-            },
-            {
-              actions: 'setError',
+              actions: ['setError', 'unsetLoadingReason'],
               target: 'error',
             },
           ],
@@ -309,10 +315,15 @@ export const IssuersMachine = model.createMachine(
     actions: {
       setIssuers: model.assign({
         issuers: (_, event) => event.data,
-        loadingReason: null,
       }),
       setNoInternet: model.assign({
         errorMessage: 'noInternetConnection',
+      }),
+      setDownloadingCreds: model.assign({
+        loadingReason: 'downloadingCredentials',
+      }),
+      setTokenLoadingReason: model.assign({
+        loadingReason: 'settingUp',
       }),
       unsetLoadingReason: model.assign({
         loadingReason: null,
@@ -330,7 +341,6 @@ export const IssuersMachine = model.createMachine(
               return 'generic';
           }
         },
-        loadingReason: null,
       }),
       setOIDCConfigError: model.assign({
         errorMessage: (_, event) => event.data.toString(),
@@ -413,7 +423,6 @@ export const IssuersMachine = model.createMachine(
       }),
       setTokenResponse: model.assign({
         tokenResponse: (_, event) => event.data,
-        loadingReason: 'settingUp',
       }),
       setVerifiableCredential: model.assign({
         verifiableCredential: (_, event) => {
@@ -432,11 +441,10 @@ export const IssuersMachine = model.createMachine(
           }
           return event.data as string;
         },
-        loadingReason: 'downloadingCredentials',
       }),
 
       setPrivateKey: assign({
-        privateKey: (context, event) => (event.data as KeyPair).private,
+        privateKey: (_, event) => (event.data as KeyPair).private,
       }),
 
       logDownloaded: send(
@@ -521,8 +529,6 @@ export const IssuersMachine = model.createMachine(
           event.data.toString().includes(OIDCErrors.OIDC_CONFIG_ERROR_PREFIX)
         );
       },
-      isVCdownloadTimeout: (_, event) =>
-        event.data.message === 'request timedout',
       canSelectIssuerAgain: (context, _) => {
         return (
           context.errorMessage.includes(OIDCErrors.OIDC_CONFIG_ERROR_PREFIX) ||
