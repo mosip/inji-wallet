@@ -1,22 +1,17 @@
-import React, { useRef, useContext } from 'react';
+import React, {useRef} from 'react';
 import AppIntroSlider from 'react-native-app-intro-slider';
-import { Dimensions, Image, StatusBar, View } from 'react-native';
-import { Centered, Column, Row, Text, Button } from '../../components/ui';
-import { Theme } from '../../components/ui/styleUtils';
-import { useSelector } from '@xstate/react';
-import { GlobalContext } from '../../shared/GlobalContext';
-import { selectVcLabel } from '../../machines/settings';
-import { useTranslation } from 'react-i18next';
-import { RootRouteProps } from '../../routes';
-import { useWelcomeScreen } from '../WelcomeScreenController';
+import {Dimensions, Image, StatusBar, View} from 'react-native';
+import {Centered, Column, Row, Text, Button} from '../../components/ui';
+import {Theme} from '../../components/ui/styleUtils';
+import {useTranslation} from 'react-i18next';
+import {RootRouteProps} from '../../routes';
+import {useWelcomeScreen} from '../WelcomeScreenController';
 import LinearGradient from 'react-native-linear-gradient';
 
-export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
+export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
   const slider = useRef<AppIntroSlider>();
 
-  const { t } = useTranslation('OnboardingOverlay');
-  const { appService } = useContext(GlobalContext);
-  const settingsService = appService.children.get('settings');
+  const {t} = useTranslation('OnboardingOverlay');
   const controller = useWelcomeScreen(props);
 
   const slides = [
@@ -46,7 +41,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
     },
   ];
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({item}) => {
     return (
       <LinearGradient colors={Theme.Colors.gradientBtn}>
         <Centered>
@@ -58,7 +53,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
                 marginRight: 75,
               }}>
               <Image
-                style={{ marginTop: 50, marginBottom: 30 }}
+                style={{marginTop: 50, marginBottom: 30}}
                 source={Theme.injiSmallLogo}
               />
             </Column>
@@ -70,12 +65,14 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
               }}>
               {controller.isPasscodeSet() ? (
                 <Button
+                  testID="skip"
                   type="plain"
                   title={t('skip')}
                   onPress={controller.NEXT}
                 />
               ) : (
                 <Button
+                  testID="back"
                   type="plain"
                   title={t('back')}
                   onPress={controller.BACK}
@@ -85,17 +82,21 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
           </Row>
           <Image source={item.image} />
           <Column
+            testID="introSlide"
             style={Theme.OnboardingOverlayStyles.bottomContainer}
             crossAlign="center"
             backgroundColor={Theme.Colors.whiteText}
             width={Dimensions.get('screen').width}>
-            <Text weight="semibold" margin="0 0 18 0">
+            <Text testID="introTitle" weight="semibold" margin="0 0 18 0">
               {item.title}
             </Text>
-            <Text margin="0 0 150 0" size="large" color={Theme.Colors.GrayText}>
+            <Text
+              testID="introText"
+              margin="0 0 150 0"
+              size="large"
+              color={Theme.Colors.GrayText}>
               {item.text}
             </Text>
-            {item.footer}
           </Column>
         </Centered>
       </LinearGradient>
@@ -107,8 +108,9 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
       <View>
         <LinearGradient
           colors={Theme.Colors.gradientBtn}
-          style={{ borderRadius: 10, height: 50, marginTop: -10 }}>
+          style={{borderRadius: 10, height: 50, marginTop: -10}}>
           <Text
+            testID="next"
             weight="semibold"
             align="center"
             color="#FFFFFF"
@@ -124,8 +126,9 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
       <View>
         <LinearGradient
           colors={Theme.Colors.gradientBtn}
-          style={{ borderRadius: 10, height: 50, marginTop: -10 }}>
+          style={{borderRadius: 10, height: 50, marginTop: -10}}>
           <Text
+            testID="getStarted"
             weight="semibold"
             align="center"
             color="#FFFFFF"
@@ -137,7 +140,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
     );
   };
   return (
-    <View style={{ flex: 1 }}>
+    <Column style={{flex: 1}}>
       <StatusBar translucent={true} backgroundColor="transparent" />
       <AppIntroSlider
         data={slides}
@@ -148,14 +151,14 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = (props) => {
         activeDotStyle={{
           backgroundColor: Theme.Colors.Icon,
           width: 30,
-          marginBottom: 90,
+          marginBottom: 47,
         }}
-        dotStyle={{ backgroundColor: Theme.Colors.dotColor, marginBottom: 90 }}
+        dotStyle={{backgroundColor: Theme.Colors.dotColor, marginBottom: 47}}
         renderItem={renderItem}
         onDone={() =>
           controller.isPasscodeSet() ? controller.NEXT() : controller.BACK()
         }
       />
-    </View>
+    </Column>
   );
 };

@@ -1,34 +1,24 @@
-import { Platform } from 'react-native';
-import { VC } from '../types/vc';
+import {Platform} from 'react-native';
 import {
   MIMOTO_HOST,
+  ESIGNET_HOST,
   GOOGLE_NEARBY_MESSAGES_API_KEY,
+  DEBUG_MODE,
 } from 'react-native-dotenv';
-import { Argon2iConfig } from './commonUtil';
+import {Argon2iConfig} from './commonUtil';
 
-export let HOST = MIMOTO_HOST;
+export let MIMOTO_BASE_URL = MIMOTO_HOST;
+export let ESIGNET_BASE_URL = ESIGNET_HOST;
+export let DEBUG_MODE_ENABLED = DEBUG_MODE === 'true';
 
-export const changeCrendetialRegistry = (host) => (HOST = host);
+export const changeCrendetialRegistry = host => (MIMOTO_BASE_URL = host);
+export const changeEsignetUrl = host => (ESIGNET_BASE_URL = host);
 
 export const MY_VCS_STORE_KEY = 'myVCs';
 
 export const RECEIVED_VCS_STORE_KEY = 'receivedVCs';
 
 export const MY_LOGIN_STORE_KEY = 'myLogins';
-
-export const VC_ITEM_STORE_KEY = (vc: Partial<VC>) =>
-  `vc:${vc.idType}:${vc.id}:${vc.requestId}:${vc.isPinned}`;
-
-//Regex expression to evaluate if the key is for a VC
-export const VC_ITEM_STORE_KEY_REGEX =
-  '^vc:(UIN|VID):[0-9]+:[a-z0-9-]+:[true|false]+$';
-
-//To compare the vckey with requestId, when the vc is pinned
-export const isSameVC = (vcKey: string, pinnedVcKey: string) => {
-  const requestId = vcKey.split(':')[3];
-  const pinnedRequestId = pinnedVcKey.split(':')[3];
-  return requestId === pinnedRequestId;
-};
 
 export let individualId = '';
 
@@ -39,8 +29,6 @@ export const GET_INDIVIDUAL_ID = (ind_Id: string) => {
 export const ACTIVITY_LOG_STORE_KEY = 'activityLog';
 
 export const SETTINGS_STORE_KEY = 'settings';
-
-export const ONBOARDING_STATUS_STORE_KEY = 'isOnboardingDone';
 
 export const GNM_API_KEY = GOOGLE_NEARBY_MESSAGES_API_KEY;
 
@@ -69,3 +57,14 @@ export const argon2iConfig: Argon2iConfig = {
   hashLength: 20,
   mode: 'argon2i',
 };
+
+export const argon2iConfigForUinVid: Argon2iConfig = {
+  iterations: 5,
+  memory: 16 * 1024,
+  parallelism: 2,
+  hashLength: 5,
+  mode: 'argon2i',
+};
+
+export const argon2iSalt =
+  '1234567891011121314151617181920212223242526272829303132333435363';

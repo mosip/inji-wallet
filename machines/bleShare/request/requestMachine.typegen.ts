@@ -2,8 +2,8 @@
 
 export interface Typegen0 {
   '@@xstate/typegen': true;
-  'internalEvents': {
-    '': { type: '' };
+  internalEvents: {
+    '': {type: ''};
     'done.invoke.request.checkStorage:invocation[0]': {
       type: 'done.invoke.request.checkStorage:invocation[0]';
       data: unknown;
@@ -20,17 +20,18 @@ export interface Typegen0 {
     'xstate.after(SHARING_TIMEOUT)#request.waitingForVc.inProgress': {
       type: 'xstate.after(SHARING_TIMEOUT)#request.waitingForVc.inProgress';
     };
-    'xstate.init': { type: 'xstate.init' };
-    'xstate.stop': { type: 'xstate.stop' };
+    'xstate.init': {type: 'xstate.init'};
+    'xstate.stop': {type: 'xstate.stop'};
   };
-  'invokeSrcNameMap': {
+  invokeSrcNameMap: {
     advertiseDevice: 'done.invoke.request.waitingForConnection:invocation[0]';
     checkBluetoothService: 'done.invoke.request.checkingBluetoothService.checking:invocation[0]';
     checkNearByDevicesPermission: 'done.invoke.request.checkNearbyDevicesPermission.checking:invocation[0]';
     checkStorageAvailability: 'done.invoke.request.checkStorage:invocation[0]';
     disconnect:
       | 'done.invoke.request.clearingConnection:invocation[0]'
-      | 'done.invoke.request.reviewing.navigatingToHistory:invocation[0]';
+      | 'done.invoke.request.reviewing.navigatingToHistory:invocation[0]'
+      | 'done.invoke.request.reviewing.navigatingToHome:invocation[0]';
     monitorConnection: 'done.invoke.request:invocation[0]';
     receiveVc: 'done.invoke.request.waitingForVc:invocation[0]';
     requestBluetooth: 'done.invoke.request.checkingBluetoothService.requesting:invocation[0]';
@@ -41,13 +42,13 @@ export interface Typegen0 {
       | 'done.invoke.request.reviewing.savingFailed:invocation[0]';
     verifyVp: 'done.invoke.request.reviewing.verifyingVp:invocation[0]';
   };
-  'missingImplementations': {
+  missingImplementations: {
     actions: never;
     delays: never;
     guards: never;
     services: never;
   };
-  'eventsCausingActions': {
+  eventsCausingActions: {
     clearShouldVerifyPresence:
       | 'ACCEPT'
       | 'BLE_ERROR'
@@ -93,15 +94,15 @@ export interface Typegen0 {
     setSenderInfo: 'CONNECTED';
     storeVc: 'STORE_RESPONSE';
   };
-  'eventsCausingDelays': {
+  eventsCausingDelays: {
     DESTROY_TIMEOUT: '' | 'DISMISS';
     SHARING_TIMEOUT: 'CONNECTED';
   };
-  'eventsCausingGuards': {
+  eventsCausingGuards: {
     hasExistingVc: 'VC_RESPONSE';
     isMinimumStorageLimitReached: 'done.invoke.request.checkStorage:invocation[0]';
   };
-  'eventsCausingServices': {
+  eventsCausingServices: {
     advertiseDevice:
       | 'DISCONNECT'
       | 'DISMISS'
@@ -120,7 +121,7 @@ export interface Typegen0 {
     sendVcResponse: 'CANCEL' | 'REJECT' | 'STORE_ERROR' | 'STORE_RESPONSE';
     verifyVp: never;
   };
-  'matchesStates':
+  matchesStates:
     | 'bluetoothDenied'
     | 'cancelling'
     | 'checkNearbyDevicesPermission'
@@ -148,6 +149,8 @@ export interface Typegen0 {
     | 'reviewing.idle'
     | 'reviewing.invalidIdentity'
     | 'reviewing.navigatingToHistory'
+    | 'reviewing.navigatingToHome'
+    | 'reviewing.navigatingToReceivedCards'
     | 'reviewing.rejected'
     | 'reviewing.savingFailed'
     | 'reviewing.savingFailed.idle'
@@ -169,6 +172,8 @@ export interface Typegen0 {
           | 'idle'
           | 'invalidIdentity'
           | 'navigatingToHistory'
+          | 'navigatingToHome'
+          | 'navigatingToReceivedCards'
           | 'rejected'
           | 'savingFailed'
           | 'verifyingIdentity'
@@ -184,5 +189,5 @@ export interface Typegen0 {
             };
         waitingForVc?: 'inProgress' | 'timeout';
       };
-  'tags': never;
+  tags: never;
 }

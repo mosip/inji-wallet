@@ -1,20 +1,20 @@
 import React from 'react';
-import { DropdownIcon } from '../../components/DropdownIcon';
-import { TextEditOverlay } from '../../components/TextEditOverlay';
-import { Column, Text } from '../../components/ui';
-import { Modal } from '../../components/ui/Modal';
-import { MessageOverlay } from '../../components/MessageOverlay';
-import { ToastItem } from '../../components/ui/ToastItem';
-import { RevokeConfirmModal } from '../../components/RevokeConfirm';
-import { OIDcAuthenticationModal } from '../../components/OIDcAuth';
-import { useViewVcModal, ViewVcModalProps } from './ViewVcModalController';
-import { useTranslation } from 'react-i18next';
-import { VcDetails } from '../../components/VcDetails';
-import { OtpVerificationModal } from './MyVcs/OtpVerificationModal';
-import { BindingVcWarningOverlay } from './MyVcs/BindingVcWarningOverlay';
+import {Column} from '../../components/ui';
+import {Modal} from '../../components/ui/Modal';
+import {MessageOverlay} from '../../components/MessageOverlay';
+import {ToastItem} from '../../components/ui/ToastItem';
+import {RevokeConfirmModal} from '../../components/RevokeConfirm';
+import {OIDcAuthenticationModal} from '../../components/OIDcAuth';
+import {useViewVcModal, ViewVcModalProps} from './ViewVcModalController';
+import {useTranslation} from 'react-i18next';
+import {BannerNotification} from '../../components/BannerNotification';
+import {TextEditOverlay} from '../../components/TextEditOverlay';
+import {OtpVerificationModal} from './MyVcs/OtpVerificationModal';
+import {BindingVcWarningOverlay} from './MyVcs/BindingVcWarningOverlay';
+import {VcDetailsContainer} from '../../components/VC/VcDetailsContainer';
 
-export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
-  const { t } = useTranslation('ViewVcModal');
+export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
+  const {t} = useTranslation('ViewVcModal');
   const controller = useViewVcModal(props);
 
   const DATA = [
@@ -24,11 +24,6 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
       icon: 'close-circle-outline',
       onPress: controller.CONFIRM_REVOKE_VC,
     },
-    {
-      label: t('editTag'),
-      icon: 'pencil',
-      onPress: controller.EDIT_TAG,
-    },
   ];
 
   return (
@@ -37,9 +32,16 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
       onDismiss={props.onDismiss}
       headerTitle={t('title')}
       headerElevation={2}>
+      {controller.isBindingSuccess && (
+        <BannerNotification
+          message={t('activated')}
+          onClosePress={controller.DISMISS}
+          testId={'activatedVcPopup'}
+        />
+      )}
       <Column scroll>
         <Column fill>
-          <VcDetails
+          <VcDetailsContainer
             vc={controller.vc}
             onBinding={controller.addtoWallet}
             isBindingPending={controller.isWalletBindingPending}
@@ -47,16 +49,6 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
           />
         </Column>
       </Column>
-      {controller.isEditingTag && (
-        <TextEditOverlay
-          isVisible={controller.isEditingTag}
-          label={t('editTag')}
-          value={controller.vc.tag}
-          maxLength={12}
-          onDismiss={controller.DISMISS}
-          onSave={controller.SAVE_TAG}
-        />
-      )}
 
       {controller.isAcceptingRevokeInput && (
         <OIDcAuthenticationModal
@@ -75,6 +67,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
           onDismiss={controller.DISMISS}
           onInputDone={controller.inputOtp}
           error={controller.otpError}
+          resend={controller.RESEND_OTP}
         />
       )}
 
@@ -84,6 +77,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
           onDismiss={controller.DISMISS}
           onInputDone={controller.inputOtp}
           error={controller.otpError}
+          resend={controller.RESEND_OTP}
         />
       )}
 
@@ -96,7 +90,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = (props) => {
       <MessageOverlay
         isVisible={controller.isBindingError}
         title={controller.walletBindingError}
-        onCancel={() => {
+        onButtonPress={() => {
           controller.CANCEL();
         }}
       />

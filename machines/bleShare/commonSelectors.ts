@@ -1,6 +1,6 @@
-import { StateFrom } from 'xstate';
-import { scanMachine } from './scan/scanMachine';
-import { requestMachine } from './request/requestMachine';
+import {StateFrom} from 'xstate';
+import {scanMachine} from './scan/scanMachine';
+import {requestMachine} from './request/requestMachine';
 
 type State = StateFrom<typeof scanMachine & typeof requestMachine>;
 

@@ -1,33 +1,17 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Markdown from 'react-native-simple-markdown';
-import { useTranslation } from 'react-i18next';
-import { I18nManager, SafeAreaView, View } from 'react-native';
-import { Divider, Icon, ListItem, Overlay } from 'react-native-elements';
+import {useTranslation} from 'react-i18next';
+import {I18nManager, SafeAreaView, View} from 'react-native';
+import {Divider, Icon, ListItem, Overlay} from 'react-native-elements';
 
-import { Button, Text, Row } from '../../components/ui';
-import { Theme } from '../../components/ui/styleUtils';
+import {Button, Text, Row} from '../../components/ui';
+import {Theme} from '../../components/ui/styleUtils';
 import appMetaData from '../../AppMetaData.md';
-import { getVersion } from 'react-native-device-info';
+import {__InjiVersion, __TuvaliVersion} from '../../shared/GlobalVariables';
 
-export const AppMetaData: React.FC<AppMetaDataProps> = (props) => {
-  const { t } = useTranslation('AppMetaData');
+export const AppMetaData: React.FC<AppMetaDataProps> = props => {
+  const {t} = useTranslation('AppMetaData');
   const [isViewing, setIsViewing] = useState(false);
-
-  const dependencies = require('../../package-lock.json').dependencies;
-  let packageVersion, packageCommitId;
-
-  Object.keys(dependencies).forEach((dependencyName) => {
-    const dependencyData = dependencies[dependencyName];
-
-    if (dependencyName == 'react-native-tuvali') {
-      packageVersion = dependencyData.from
-        ? dependencyData.from.split('#')[1]
-        : 'unknown';
-      if (packageVersion != 'unknown') {
-        packageCommitId = dependencyData.version.split('#')[1].substring(0, 7);
-      }
-    }
-  });
 
   const markdownStyles = {
     text: {
@@ -53,7 +37,7 @@ export const AppMetaData: React.FC<AppMetaDataProps> = (props) => {
         </ListItem.Title>
       </ListItem.Content>
       <Overlay
-        overlayStyle={{ padding: 24 }}
+        overlayStyle={{padding: 24}}
         isVisible={isViewing}
         onBackdropPress={() => setIsViewing(false)}>
         <SafeAreaView>
@@ -88,17 +72,16 @@ export const AppMetaData: React.FC<AppMetaDataProps> = (props) => {
                   align="center"
                   size="small"
                   color={Theme.Colors.version}>
-                  {t('version')}: {getVersion()}
+                  {t('version')}: {__InjiVersion.getValue()}
                 </Text>
-                {packageVersion != 'unknown' && (
+                {__TuvaliVersion.getpackageVersion() != 'unknown' && (
                   <Text
                     weight="semibold"
                     margin="32 0 5 0"
                     align="center"
                     size="small"
                     color={Theme.Colors.version}>
-                    {t('Tuvali-version')}:{' '}
-                    {packageVersion + '-' + packageCommitId}
+                    {t('Tuvali-version')}: {__TuvaliVersion.getValue()}
                   </Text>
                 )}
               </View>

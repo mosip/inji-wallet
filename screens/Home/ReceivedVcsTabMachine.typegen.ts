@@ -2,22 +2,22 @@
 
 export interface Typegen0 {
   '@@xstate/typegen': true;
-  'internalEvents': {
-    'xstate.init': { type: 'xstate.init' };
+  internalEvents: {
+    'xstate.init': {type: 'xstate.init'};
   };
-  'invokeSrcNameMap': {};
-  'missingImplementations': {
+  invokeSrcNameMap: {};
+  missingImplementations: {
     actions: never;
     delays: never;
     guards: never;
     services: never;
   };
-  'eventsCausingActions': {
+  eventsCausingActions: {
     viewVcFromParent: 'VIEW_VC';
   };
-  'eventsCausingDelays': {};
-  'eventsCausingGuards': {};
-  'eventsCausingServices': {};
-  'matchesStates': 'idle' | 'viewingVc';
-  'tags': never;
+  eventsCausingDelays: {};
+  eventsCausingGuards: {};
+  eventsCausingServices: {};
+  matchesStates: 'idle' | 'viewingVc';
+  tags: never;
 }
