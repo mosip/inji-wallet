@@ -548,9 +548,9 @@ export function selectIssuers(state: State) {
 
 export function selectErrorMessageType(state: State) {
   return state.context.errorMessage === '' ||
-    state.context.errorMessage === 'noInternetConnection'
+    state.context.errorMessage === ErrorMessage.NO_INTERNET
     ? state.context.errorMessage
-    : 'generic';
+    : ErrorMessage.GENERIC;
 }
 
 export function selectLoadingReason(state: State) {

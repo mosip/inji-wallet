@@ -11,6 +11,7 @@ import {HomeRouteProps} from '../../routes/main';
 import {useIssuerScreenController} from './IssuerScreenController';
 import {Loader} from '../../components/ui/Loader';
 import testIDProps, {removeWhiteSpace} from '../../shared/commonUtil';
+import {ErrorMessage} from '../../shared/openId4VCI/Utils';
 
 export const IssuersScreen: React.FC<
   HomeRouteProps | RootRouteProps
@@ -54,7 +55,7 @@ export const IssuersScreen: React.FC<
   };
 
   const isGenericError = () => {
-    return controller.errorMessageType === 'generic';
+    return controller.errorMessageType === ErrorMessage.GENERIC;
   };
 
   const goBack = () => {
