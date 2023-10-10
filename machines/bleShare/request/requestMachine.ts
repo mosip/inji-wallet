@@ -588,11 +588,7 @@ export const requestMachine =
           context => {
             return StoreEvents.PREPEND(
               RECEIVED_VCS_STORE_KEY,
-              VCMetadata.fromVC(
-                context.incomingVc?.vcMetadata
-                  ? context.incomingVc.vcMetadata
-                  : context.incomingVc,
-              ),
+              VCMetadata.fromVC(context.incomingVc?.vcMetadata),
             );
           },
           {to: context => context.serviceRefs.store},
@@ -622,11 +618,7 @@ export const requestMachine =
         storeVc: send(
           context =>
             StoreEvents.SET(
-              VCMetadata.fromVC(
-                context.incomingVc?.vcMetadata
-                  ? context.incomingVc.vcMetadata
-                  : context.incomingVc,
-              ).getVcKey(),
+              VCMetadata.fromVC(context.incomingVc?.vcMetadata).getVcKey(),
               context.incomingVc,
             ),
           {to: context => context.serviceRefs.store},
@@ -651,9 +643,7 @@ export const requestMachine =
         logReceived: send(
           context => {
             const vcMetadata = VCMetadata.fromVC(
-              context.incomingVc?.vcMetadata
-                ? context.incomingVc.vcMetadata
-                : context.incomingVc,
+              context.incomingVc?.vcMetadata,
             );
             return ActivityLogEvents.LOG_ACTIVITY({
               _vcKey: vcMetadata.getVcKey(),
@@ -670,11 +660,7 @@ export const requestMachine =
         sendVcReceived: send(
           context => {
             return VcEvents.VC_RECEIVED(
-              VCMetadata.fromVC(
-                context.incomingVc?.vcMetadata
-                  ? context.incomingVc.vcMetadata
-                  : context.incomingVc,
-              ),
+              VCMetadata.fromVC(context.incomingVc?.vcMetadata),
             );
           },
           {to: context => context.serviceRefs.vc},

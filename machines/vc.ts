@@ -419,7 +419,6 @@ export function selectBindedVcsMetadata(state: State): VCMetadata[] {
   return state.context.myVcs.filter(vcMetadata => {
     const walletBindingResponse =
       state.context.vcs[vcMetadata.getVcKey()]?.walletBindingResponse;
-    console.log('selectBindedVcsMetadata => ', walletBindingResponse);
     return (
       !isEmpty(walletBindingResponse) &&
       !isEmpty(walletBindingResponse?.walletBindingId)

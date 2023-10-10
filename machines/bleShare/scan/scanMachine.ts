@@ -758,6 +758,10 @@ export const scanMachine =
 
         setSelectedVc: assign({
           selectedVc: (context, event) => {
+            console.log(
+              'setSelectedVc inside scanMachine =>',
+              JSON.stringify(context.selectedVc, null, 4),
+            );
             return {
               ...event.vc,
               shouldVerifyPresence: context.selectedVc.shouldVerifyPresence,
@@ -808,9 +812,7 @@ export const scanMachine =
 
         logShared: send(
           context => {
-            const vcMetadata = context.selectedVc?.vcMetadata
-              ? context.selectedVc?.vcMetadata
-              : context.selectedVc;
+            const vcMetadata = context.selectedVc?.vcMetadata;
             return ActivityLogEvents.LOG_ACTIVITY({
               _vcKey: VCMetadata.fromVC(vcMetadata).getVcKey(),
               type: context.selectedVc.shouldVerifyPresence
@@ -885,11 +887,7 @@ export const scanMachine =
               type: 'QRLOGIN_SUCCESFULL',
               timestamp: Date.now(),
               deviceName: '',
-              vcLabel: String(
-                event.response.selectedVc.id
-                  ? event.response.selectedVc.id
-                  : event.response.selectedVc.vcMetadata.id,
-              ),
+              vcLabel: String(event.response.selectedVc.vcMetadata.id),
             }),
           {
             to: context => context.serviceRefs.activityLog,
