@@ -24,7 +24,7 @@ import {
 } from './cryptoutil/cryptoUtil';
 import {VCMetadata} from './VCMetadata';
 import {ENOENT, getItem} from '../machines/store';
-import {MY_VCS_STORE_KEY} from './constants';
+import {MY_VCS_STORE_KEY, RECEIVED_VCS_STORE_KEY} from './constants';
 
 export const MMKV = new MMKVLoader().initialize();
 const vcDirectoryPath = `${DocumentDirectoryPath}/inji/VC`;
@@ -87,7 +87,10 @@ class Storage {
           console.debug('VC key: ', key);
           console.debug('is Data null', data === null);
           getItem(MY_VCS_STORE_KEY, [], encryptionKey).then(res => {
-            console.debug('vcKeys are ', res);
+            console.debug('vcKeys are ', JSON.stringify(res));
+          });
+          getItem(RECEIVED_VCS_STORE_KEY, null, encryptionKey).then(res => {
+            console.debug('received vcKeys is ', JSON.stringify(res));
           });
         }
 
