@@ -83,6 +83,13 @@ export interface Typegen0 {
       | 'RESET_ERROR'
       | 'TRY_AGAIN'
       | 'error.platform.issuersMachine.performAuthorization:invocation[0]';
+    resetLoadingReason:
+      | 'done.invoke.checkInternet'
+      | 'done.invoke.issuersMachine.displayIssuers:invocation[0]'
+      | 'error.platform.issuersMachine.displayIssuers:invocation[0]'
+      | 'error.platform.issuersMachine.downloadCredentials:invocation[0]'
+      | 'error.platform.issuersMachine.downloadIssuerConfig:invocation[0]'
+      | 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     setCredentialWrapper: 'done.invoke.issuersMachine.downloadCredentials:invocation[0]';
     setDownloadingCreds: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
     setError:
@@ -96,6 +103,7 @@ export interface Typegen0 {
     setOIDCConfigError: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     setPrivateKey: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
     setPublicKey: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
+    setSelectedIssuerId: 'SELECTED_ISSUER';
     setSelectedIssuers: 'done.invoke.issuersMachine.downloadIssuerConfig:invocation[0]';
     setTokenLoadingReason: 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
     setTokenResponse: 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
@@ -105,14 +113,6 @@ export interface Typegen0 {
     storeVcsContext: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
     storeVerifiableCredentialData: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
     storeVerifiableCredentialMeta: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
-    unsetLoadingReason:
-      | 'done.invoke.checkInternet'
-      | 'done.invoke.issuersMachine.displayIssuers:invocation[0]'
-      | 'error.platform.issuersMachine.displayIssuers:invocation[0]'
-      | 'error.platform.issuersMachine.downloadCredentials:invocation[0]'
-      | 'error.platform.issuersMachine.downloadIssuerConfig:invocation[0]'
-      | 'error.platform.issuersMachine.performAuthorization:invocation[0]';
-    updateSelectedIssuerId: 'SELECTED_ISSUER';
   };
   eventsCausingDelays: {};
   eventsCausingGuards: {

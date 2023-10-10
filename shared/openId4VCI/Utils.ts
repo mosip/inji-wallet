@@ -92,3 +92,20 @@ export const getJWT = async context => {
     throw e;
   }
 };
+export const VC_DOWNLOAD_TIMEOUT = 30;
+// OIDCErrors is a collection of external errors from the OpenID library or the issuer
+export enum OIDCErrors {
+  OIDC_FLOW_CANCELLED_ANDROID = 'User cancelled flow',
+  OIDC_FLOW_CANCELLED_IOS = 'org.openid.appauth.general error -3',
+
+  INVALID_TOKEN_SPECIFIED = 'Invalid token specified',
+  OIDC_CONFIG_ERROR_PREFIX = 'Config error',
+}
+// ErrorMessage is the type of error message shown in the UI
+export enum ErrorMessage {
+  NO_INTERNET = 'noInternetConnection',
+  GENERIC = 'generic',
+  REQUEST_TIMEDOUT = 'requestTimedOut',
+}
+export const NETWORK_REQUEST_FAILED = 'Network request failed';
+export const REQUEST_TIMEOUT = 'request timedout';

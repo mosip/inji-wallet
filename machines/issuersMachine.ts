@@ -14,7 +14,15 @@ import {KeyPair} from 'react-native-rsa-native';
 import {ActivityLogEvents} from './activityLog';
 import {log} from 'xstate/lib/actions';
 import {verifyCredential} from '../shared/vcjs/verifyCredential';
-import {getBody, getIdentifier} from '../shared/openId4VCI/Utils';
+import {
+  getBody,
+  getIdentifier,
+  ErrorMessage,
+  NETWORK_REQUEST_FAILED,
+  REQUEST_TIMEOUT,
+  VC_DOWNLOAD_TIMEOUT,
+  OIDCErrors,
+} from '../shared/openId4VCI/Utils';
 import {VCMetadata} from '../shared/VCMetadata';
 import {
   CredentialWrapper,
@@ -22,19 +30,6 @@ import {
 } from '../types/VC/EsignetMosipVC/vc';
 import {CACHED_API} from '../shared/api';
 import {request} from '../shared/request';
-
-const VC_DOWNLOAD_TIMEOUT = 30;
-
-// OIDCErrors is a collection of external errors from the OpenID library or the issuer
-enum OIDCErrors {
-  OIDC_FLOW_CANCELLED_ANDROID = 'User cancelled flow',
-  OIDC_FLOW_CANCELLED_IOS = 'org.openid.appauth.general error -3',
-
-  INVALID_TOKEN_SPECIFIED = 'Invalid token specified',
-  OIDC_CONFIG_ERROR_PREFIX = 'Config error',
-}
-
-const REQUEST_TIMEDOUT = 'requestTimedOut';
 
 const model = createModel(
   {
@@ -88,11 +83,11 @@ export const IssuersMachine = model.createMachine(
         invoke: {
           src: 'downloadIssuersList',
           onDone: {
-            actions: ['setIssuers', 'unsetLoadingReason'],
+            actions: ['setIssuers', 'resetLoadingReason'],
             target: 'selectingIssuer',
           },
           onError: {
-            actions: ['setError', 'unsetLoadingReason'],
+            actions: ['setError', 'resetLoadingReason'],
             target: 'error',
           },
         },
@@ -131,7 +126,7 @@ export const IssuersMachine = model.createMachine(
             actions: sendParent('DOWNLOAD_ID'),
           },
           SELECTED_ISSUER: {
-            actions: 'updateSelectedIssuerId',
+            actions: 'setSelectedIssuerId',
             target: 'downloadIssuerConfig',
           },
         },
@@ -145,7 +140,7 @@ export const IssuersMachine = model.createMachine(
             target: 'checkInternet',
           },
           onError: {
-            actions: ['setError', 'unsetLoadingReason'],
+            actions: ['setError', 'resetLoadingReason'],
             target: 'error',
           },
         },
@@ -161,7 +156,7 @@ export const IssuersMachine = model.createMachine(
               target: 'performAuthorization',
             },
             {
-              actions: ['setNoInternet', 'unsetLoadingReason'],
+              actions: ['setNoInternet', 'resetLoadingReason'],
               target: 'error',
             },
           ],
@@ -188,7 +183,7 @@ export const IssuersMachine = model.createMachine(
           onError: [
             {
               cond: 'isOIDCflowCancelled',
-              actions: ['resetError', 'unsetLoadingReason'],
+              actions: ['resetError', 'resetLoadingReason'],
               target: 'selectingIssuer',
             },
             {
@@ -199,7 +194,7 @@ export const IssuersMachine = model.createMachine(
             {
               actions: [
                 'setError',
-                'unsetLoadingReason',
+                'resetLoadingReason',
                 (_, event) => console.log('error in invokeAuth - ', event.data),
               ],
               target: 'error',
@@ -255,7 +250,7 @@ export const IssuersMachine = model.createMachine(
           },
           onError: [
             {
-              actions: ['setError', 'unsetLoadingReason'],
+              actions: ['setError', 'resetLoadingReason'],
               target: 'error',
             },
           ],
@@ -317,7 +312,7 @@ export const IssuersMachine = model.createMachine(
         issuers: (_, event) => event.data,
       }),
       setNoInternet: model.assign({
-        errorMessage: 'noInternetConnection',
+        errorMessage: ErrorMessage.NO_INTERNET,
       }),
       setDownloadingCreds: model.assign({
         loadingReason: 'downloadingCredentials',
@@ -325,7 +320,7 @@ export const IssuersMachine = model.createMachine(
       setTokenLoadingReason: model.assign({
         loadingReason: 'settingUp',
       }),
-      unsetLoadingReason: model.assign({
+      resetLoadingReason: model.assign({
         loadingReason: null,
       }),
       setError: model.assign({
@@ -333,12 +328,12 @@ export const IssuersMachine = model.createMachine(
           console.log('Error occured ', event.data.message);
           const error = event.data.message;
           switch (error) {
-            case 'Network request failed':
-              return 'noInternetConnection';
-            case 'request timedout':
-              return REQUEST_TIMEDOUT;
+            case NETWORK_REQUEST_FAILED:
+              return ErrorMessage.NO_INTERNET;
+            case REQUEST_TIMEOUT:
+              return ErrorMessage.REQUEST_TIMEDOUT;
             default:
-              return 'generic';
+              return ErrorMessage.GENERIC;
           }
         },
       }),
@@ -418,7 +413,7 @@ export const IssuersMachine = model.createMachine(
       setSelectedIssuers: model.assign({
         selectedIssuer: (_, event) => event.data,
       }),
-      updateSelectedIssuerId: model.assign({
+      setSelectedIssuerId: model.assign({
         selectedIssuerId: (_, event) => event.id,
       }),
       setTokenResponse: model.assign({
