@@ -18,7 +18,7 @@ export const Modal: React.FC<ModalProps> = props => {
       visible={props.isVisible}
       onShow={props.onShow}
       onRequestClose={props.onDismiss}>
-      <Column fill safe align="center">
+      <Column fill safe>
         <Row elevation={props.headerElevation}>
           <View style={props.modalStyle}>
             {props.headerRight ? (
@@ -42,7 +42,7 @@ export const Modal: React.FC<ModalProps> = props => {
             <Row
               fill
               align={props.headerLeft ? 'flex-start' : 'center'}
-              margin={'16 0 0 0'}>
+              margin={'16 0 0 -21'}>
               <Column>
                 <Text testID={props.testID} style={Theme.TextStyles.header}>
                   {props.headerTitle || props.headerLeft}
