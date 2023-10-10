@@ -91,21 +91,21 @@ export interface Typegen0 {
       | 'error.platform.issuersMachine.downloadIssuerConfig:invocation[0]'
       | 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     setCredentialWrapper: 'done.invoke.issuersMachine.downloadCredentials:invocation[0]';
-    setDownloadingCreds: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
     setError:
       | 'error.platform.issuersMachine.displayIssuers:invocation[0]'
       | 'error.platform.issuersMachine.downloadCredentials:invocation[0]'
       | 'error.platform.issuersMachine.downloadIssuerConfig:invocation[0]'
       | 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     setIssuers: 'done.invoke.issuersMachine.displayIssuers:invocation[0]';
-    setLoadingIssuer: 'TRY_AGAIN';
+    setLoadingReasonAsDisplayIssuers: 'TRY_AGAIN';
+    setLoadingReasonAsDownloadingCreds: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
+    setLoadingReasonAsSettingUp: 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
     setNoInternet: 'done.invoke.checkInternet';
     setOIDCConfigError: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     setPrivateKey: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
     setPublicKey: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
     setSelectedIssuerId: 'SELECTED_ISSUER';
     setSelectedIssuers: 'done.invoke.issuersMachine.downloadIssuerConfig:invocation[0]';
-    setTokenLoadingReason: 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
     setTokenResponse: 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
     setVerifiableCredential: 'done.invoke.issuersMachine.downloadCredentials:invocation[0]';
     storeKeyPair: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';

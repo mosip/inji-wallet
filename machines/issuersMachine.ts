@@ -98,7 +98,7 @@ export const IssuersMachine = model.createMachine(
             {
               description: 'not fetched issuers config yet',
               cond: 'shouldFetchIssuersAgain',
-              actions: ['setLoadingIssuer', 'resetError'],
+              actions: ['setLoadingReasonAsDisplayIssuers', 'resetError'],
               target: 'displayIssuers',
             },
             {
@@ -108,7 +108,7 @@ export const IssuersMachine = model.createMachine(
             },
             {
               description: 'not fetched issuers config yet',
-              actions: ['setLoadingIssuer', 'resetError'],
+              actions: ['setLoadingReasonAsDisplayIssuers', 'resetError'],
               target: 'downloadIssuerConfig',
             },
           ],
@@ -173,7 +173,7 @@ export const IssuersMachine = model.createMachine(
           onDone: {
             actions: [
               'setTokenResponse',
-              'setTokenLoadingReason',
+              'setLoadingReasonAsSettingUp',
               'getKeyPairFromStore',
               'loadKeyPair',
             ],
@@ -225,14 +225,18 @@ export const IssuersMachine = model.createMachine(
             {
               actions: [
                 'setPublicKey',
-                'setDownloadingCreds',
+                'setLoadingReasonAsDownloadingCreds',
                 'setPrivateKey',
                 'storeKeyPair',
               ],
               target: 'downloadCredentials',
             },
             {
-              actions: ['setPublicKey', 'setDownloadingCreds', 'storeKeyPair'],
+              actions: [
+                'setPublicKey',
+                'setLoadingReasonAsDownloadingCreds',
+                'storeKeyPair',
+              ],
               cond: 'isCustomSecureKeystore',
               target: 'downloadCredentials',
             },
@@ -313,10 +317,13 @@ export const IssuersMachine = model.createMachine(
       setNoInternet: model.assign({
         errorMessage: () => ErrorMessage.NO_INTERNET,
       }),
-      setDownloadingCreds: model.assign({
+      setLoadingReasonAsDisplayIssuers: model.assign({
+        loadingReason: 'displayIssuers',
+      }),
+      setLoadingReasonAsDownloadingCreds: model.assign({
         loadingReason: 'downloadingCredentials',
       }),
-      setTokenLoadingReason: model.assign({
+      setLoadingReasonAsSettingUp: model.assign({
         loadingReason: 'settingUp',
       }),
       resetLoadingReason: model.assign({
@@ -362,9 +369,6 @@ export const IssuersMachine = model.createMachine(
           to: context => context.serviceRefs.store,
         },
       ),
-      setLoadingIssuer: model.assign({
-        loadingReason: 'displayIssuers',
-      }),
       storeVerifiableCredentialMeta: send(
         context =>
           StoreEvents.PREPEND(MY_VCS_STORE_KEY, getVCMetadata(context)),
