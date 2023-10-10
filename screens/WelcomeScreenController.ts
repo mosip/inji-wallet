@@ -1,5 +1,5 @@
-import { useSelector } from '@xstate/react';
-import { useContext } from 'react';
+import {useSelector} from '@xstate/react';
+import {useContext} from 'react';
 import {
   AuthEvents,
   selectBiometrics,
@@ -11,8 +11,8 @@ import {
   SettingsEvents,
   selectBiometricUnlockEnabled,
 } from '../machines/settings';
-import { RootRouteProps } from '../routes';
-import { GlobalContext } from '../shared/GlobalContext';
+import {RootRouteProps} from '../routes';
+import {GlobalContext} from '../shared/GlobalContext';
 import {
   getData,
   getImpressionData,
@@ -23,7 +23,7 @@ import {
 } from '../shared/telemetry/TelemetryUtils';
 
 export function useWelcomeScreen(props: RootRouteProps) {
-  const { appService } = useContext(GlobalContext);
+  const {appService} = useContext(GlobalContext);
   const authService = appService.children.get('auth');
   const settingsService = appService.children.get('settings');
 
@@ -63,18 +63,14 @@ export function useWelcomeScreen(props: RootRouteProps) {
     unlockPage: () => {
       // prioritize biometrics
       if (!isSettingUp && isBiometricUnlockEnabled && biometrics !== '') {
-        sendStartEvent(getData('App login'));
-        sendInteractEvent(
-          getInteractData('TOUCH', 'Unlock with biometrics button'),
-        );
-        props.navigation.navigate('Biometric', { setup: isSettingUp });
+        props.navigation.navigate('Biometric', {setup: isSettingUp});
       } else if (!isSettingUp && passcode !== '') {
         sendStartEvent(getData('App Login'));
         sendInteractEvent(
           getInteractData('TOUCH', 'Unlock application button'),
         );
         sendImpressionEvent(getImpressionData('Passcode'));
-        props.navigation.navigate('Passcode', { setup: isSettingUp });
+        props.navigation.navigate('Passcode', {setup: isSettingUp});
       } else {
         props.navigation.navigate('Auth');
       }

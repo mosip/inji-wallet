@@ -1,8 +1,8 @@
-import { useMachine, useSelector } from '@xstate/react';
-import { useContext, useEffect, useState } from 'react';
-import { Platform } from 'react-native';
+import {useMachine, useSelector} from '@xstate/react';
+import {useContext, useEffect, useState} from 'react';
+import {Platform} from 'react-native';
 import RNFingerprintChange from 'react-native-biometrics-changed';
-import { AuthEvents, selectAuthorized, selectPasscode } from '../machines/auth';
+import {AuthEvents, selectAuthorized, selectPasscode} from '../machines/auth';
 import {
   biometricsMachine,
   selectError,
@@ -12,8 +12,8 @@ import {
   selectIsUnenrolled,
   selectIsUnvailable,
 } from '../machines/biometrics';
-import { RootRouteProps } from '../routes';
-import { GlobalContext } from '../shared/GlobalContext';
+import {RootRouteProps} from '../routes';
+import {GlobalContext} from '../shared/GlobalContext';
 import {
   getData,
   getEndData,
@@ -28,7 +28,7 @@ import {
 } from '../shared/telemetry/TelemetryUtils';
 
 export function useBiometricScreen(props: RootRouteProps) {
-  const { appService } = useContext(GlobalContext);
+  const {appService} = useContext(GlobalContext);
   const authService = appService.children.get('auth');
 
   const [error, setError] = useState('');
@@ -45,11 +45,20 @@ export function useBiometricScreen(props: RootRouteProps) {
   const errorResponse = useSelector(bioService, selectErrorResponse);
 
   useEffect(() => {
+    if (isAvailable) {
+      sendStartEvent(getData('App login'));
+      sendInteractEvent(
+        getInteractData('TOUCH', 'Unlock with Biometrics button'),
+      );
+    }
+  }, [isAvailable]);
+
+  useEffect(() => {
     if (isAuthorized) {
       sendEndEvent(getEndData('App Login', 'SUCCESS'));
       props.navigation.reset({
         index: 0,
-        routes: [{ name: 'Main' }],
+        routes: [{name: 'Main'}],
       });
       sendImpressionEvent(getImpressionData('Main'));
       return;
@@ -84,7 +93,7 @@ export function useBiometricScreen(props: RootRouteProps) {
       sendEndEvent(getEndData('App login', 'FAILURE'));
       props.navigation.reset({
         index: 0,
-        routes: [{ name: 'Passcode' }],
+        routes: [{name: 'Passcode'}],
       });
       sendStartEvent(getData('App Login'));
       sendInteractEvent(getInteractData('TOUCH', 'Unlock application button'));
@@ -107,7 +116,7 @@ export function useBiometricScreen(props: RootRouteProps) {
           if (biometricsHasChanged) {
             setReEnabling(true);
           } else {
-            bioSend({ type: 'AUTHENTICATE' });
+            bioSend({type: 'AUTHENTICATE'});
           }
         },
       );
@@ -121,11 +130,11 @@ export function useBiometricScreen(props: RootRouteProps) {
     sendInteractEvent(
       getInteractData('TOUCH', 'Unlock with biometrics button'),
     );
-    bioSend({ type: 'AUTHENTICATE' });
+    bioSend({type: 'AUTHENTICATE'});
   };
 
   const onSuccess = () => {
-    bioSend({ type: 'AUTHENTICATE' });
+    bioSend({type: 'AUTHENTICATE'});
   };
 
   const onError = (value: string) => {
