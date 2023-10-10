@@ -42,7 +42,7 @@ export const Modal: React.FC<ModalProps> = props => {
             <Row
               fill
               align={props.headerLeft ? 'flex-start' : 'center'}
-              margin={'16 0 0 -21'}>
+              margin={'16 0 0 -20'}>
               <Column>
                 <Text testID={props.testID} style={Theme.TextStyles.header}>
                   {props.headerTitle || props.headerLeft}
