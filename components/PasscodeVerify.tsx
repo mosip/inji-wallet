@@ -25,7 +25,9 @@ export const PasscodeVerify: React.FC<PasscodeVerifyProps> = props => {
     if (props.passcode === hashedPasscode) {
       setIsVerified(true);
     } else {
-      props.onError(t('passcodeMismatchError'));
+      if (props.onError) {
+        props.onError(t('passcodeMismatchError'));
+      }
     }
   }
 };
