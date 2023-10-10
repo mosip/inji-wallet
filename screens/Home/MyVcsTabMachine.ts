@@ -8,7 +8,7 @@ import {
   StateFrom,
 } from 'xstate';
 import {createModel} from 'xstate/lib/model';
-import {StoreEvents, StoreResponseEvent} from '../../machines/store';
+import {StoreEvents} from '../../machines/store';
 import {VcEvents} from '../../machines/vc';
 import {ExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {AppServices} from '../../shared/GlobalContext';
@@ -22,6 +22,8 @@ import {
   sendInteractEvent,
   sendStartEvent,
 } from '../../shared/telemetry/TelemetryUtils';
+import NetInfo from '@react-native-community/netinfo';
+
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
@@ -29,7 +31,6 @@ const model = createModel(
   },
   {
     events: {
-      REFRESH: () => ({}),
       VIEW_VC: (
         vcItemActor:
           | ActorRefFrom<typeof ExistingMosipVCItemMachine>
@@ -38,13 +39,13 @@ const model = createModel(
         vcItemActor,
       }),
       DISMISS: () => ({}),
+      TRY_AGAIN: () => ({}),
       STORE_RESPONSE: (response?: unknown) => ({response}),
       STORE_ERROR: (error: Error) => ({error}),
       ADD_VC: () => ({}),
       GET_VC: () => ({}),
       STORAGE_AVAILABLE: () => ({}),
       STORAGE_UNAVAILABLE: () => ({}),
-      IS_TAMPERED: () => ({}),
       SET_STORE_VC_ITEM_STATUS: () => ({}),
       RESET_STORE_VC_ITEM_STATUS: () => ({}),
       DOWNLOAD_VIA_ID: () => ({}),
@@ -70,8 +71,23 @@ export const MyVcsTabMachine = model.createMachine(
     initial: 'idle',
     states: {
       addVc: {
-        initial: 'checkStorage',
+        initial: 'checkNetwork',
         states: {
+          checkNetwork: {
+            invoke: {
+              src: 'checkNetworkStatus',
+              onDone: [
+                {
+                  cond: 'isNetworkOn',
+                  target: 'checkStorage',
+                },
+                {
+                  target: 'networkOff',
+                },
+              ],
+            },
+          },
+
           checkStorage: {
             invoke: {
               src: 'checkStorageAvailability',
@@ -92,6 +108,12 @@ export const MyVcsTabMachine = model.createMachine(
               DISMISS: '#idle',
             },
           },
+          networkOff: {
+            on: {
+              DISMISS: '#idle',
+              TRY_AGAIN: 'checkNetwork',
+            },
+          },
         },
       },
       idle: {
@@ -100,10 +122,6 @@ export const MyVcsTabMachine = model.createMachine(
           ADD_VC: 'addVc',
           VIEW_VC: 'viewingVc',
           GET_VC: 'gettingVc',
-          IS_TAMPERED: {
-            target: 'idle',
-            actions: ['resetIsTampered', 'refreshMyVc'],
-          },
           SET_STORE_VC_ITEM_STATUS: {
             target: 'idle',
             actions: 'setStoringVcItemStatus',
@@ -118,6 +136,8 @@ export const MyVcsTabMachine = model.createMachine(
         entry: ['viewVcFromParent'],
         on: {
           DISMISS: 'idle',
+          VIEW_VC: 'viewingVc',
+          ADD_VC: 'addVc',
         },
       },
       addingVc: {
@@ -178,6 +198,10 @@ export const MyVcsTabMachine = model.createMachine(
           Storage.isMinimumLimitReached('minStorageRequired'),
         );
       },
+      checkNetworkStatus: async () => {
+        const state = await NetInfo.fetch();
+        return state.isConnected;
+      },
     },
 
     actions: {
@@ -196,7 +220,6 @@ export const MyVcsTabMachine = model.createMachine(
       resetIsTampered: send(() => StoreEvents.RESET_IS_TAMPERED(), {
         to: context => context.serviceRefs.store,
       }),
-
       viewVcFromParent: sendParent((_context, event: ViewVcEvent) =>
         model.events.VIEW_VC(event.vcItemActor),
       ),
@@ -229,6 +252,7 @@ export const MyVcsTabMachine = model.createMachine(
 
     guards: {
       isMinimumStorageLimitReached: (_context, event) => Boolean(event.data),
+      isNetworkOn: (_context, event) => Boolean(event.data),
     },
   },
 );
@@ -260,4 +284,7 @@ export function selectIsSavingFailedInIdle(state: State) {
 
 export function selectIsMinimumStorageLimitReached(state: State) {
   return state.matches('addVc.storageLimitReached');
+}
+export function selectIsNetworkOff(state: State) {
+  return state.matches('addVc.networkOff');
 }

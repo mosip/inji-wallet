@@ -32,12 +32,13 @@ export interface Typegen0 {
       | 'done.invoke.settings.resetInjiProps:invocation[0]'
       | 'error.platform.settings.resetInjiProps:invocation[0]';
     requestStoredContext: 'xstate.init';
-    resetCredentialRegistry: 'CANCEL' | 'UPDATE_CREDENTIAL_REGISTRY';
+    resetCredentialRegistry: 'CANCEL' | 'UPDATE_MIMOTO_HOST';
     setContext: 'STORE_RESPONSE';
     storeContext:
       | 'ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS'
       | 'STORE_RESPONSE'
       | 'TOGGLE_BIOMETRIC_UNLOCK'
+      | 'UPDATE_ESIGNET_HOST'
       | 'UPDATE_NAME'
       | 'UPDATE_VC_LABEL'
       | 'done.invoke.settings.resetInjiProps:invocation[0]';
@@ -46,6 +47,7 @@ export interface Typegen0 {
     updateCredentialRegistryResponse: 'error.platform.settings.resetInjiProps:invocation[0]';
     updateCredentialRegistrySuccess: 'done.invoke.settings.resetInjiProps:invocation[0]';
     updateDefaults: 'STORE_RESPONSE';
+    updateEsignetHostUrl: 'UPDATE_ESIGNET_HOST';
     updateName: 'UPDATE_NAME';
     updatePartialDefaults: 'STORE_RESPONSE';
     updateUserShownWithHardwareKeystoreNotExists: 'ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS';
@@ -57,7 +59,7 @@ export interface Typegen0 {
     hasPartialData: 'STORE_RESPONSE';
   };
   eventsCausingServices: {
-    resetInjiProps: 'UPDATE_CREDENTIAL_REGISTRY';
+    resetInjiProps: 'UPDATE_MIMOTO_HOST';
   };
   matchesStates:
     | 'idle'

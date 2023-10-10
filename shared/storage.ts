@@ -23,9 +23,17 @@ import {
   isCustomSecureKeystore,
 } from './cryptoutil/cryptoUtil';
 import {VCMetadata} from './VCMetadata';
+import {ENOENT, getItem} from '../machines/store';
+import {MY_VCS_STORE_KEY, RECEIVED_VCS_STORE_KEY} from './constants';
 
-const MMKV = new MMKVLoader().initialize();
+export const MMKV = new MMKVLoader().initialize();
 const vcDirectoryPath = `${DocumentDirectoryPath}/inji/VC`;
+
+export const API_CACHED_STORAGE_KEYS = {
+  fetchIssuers: 'CACHE_FETCH_ISSUERS',
+  fetchIssuerConfig: (issuerId: string) =>
+    `CACHE_FETCH_ISSUER_CONFIG_${issuerId}`,
+};
 
 async function generateHmac(
   encryptionKey: string,
@@ -74,15 +82,53 @@ class Storage {
         const data = await this.readVCFromFile(key);
         const isCorrupted = await this.isCorruptedVC(key, encryptionKey, data);
 
+        if (isCorrupted) {
+          console.debug(
+            '[Inji-406]: VC is corrupted and will be deleted from storage',
+          );
+          console.debug('[Inji-406]: VC key: ', key);
+          console.debug('[Inji-406]: is Data null', data === null);
+          getItem(MY_VCS_STORE_KEY, [], encryptionKey).then(res => {
+            console.debug('[Inji-406]: vcKeys are ', JSON.stringify(res));
+          });
+          getItem(RECEIVED_VCS_STORE_KEY, null, encryptionKey).then(res => {
+            console.debug(
+              '[Inji-406]: received vcKeys is ',
+              JSON.stringify(res),
+            );
+          });
+        }
+
         return isCorrupted ? null : data;
       }
 
       return await MMKV.getItem(key);
     } catch (error) {
+      const isVCKey = VCMetadata.isVCKey(key);
+
+      if (isVCKey) {
+        const isDownloaded = await this.isVCAlreadyDownloaded(
+          key,
+          encryptionKey,
+        );
+
+        if (isDownloaded && error.message.includes(ENOENT)) {
+          throw new Error(ENOENT);
+        }
+      }
+
       console.log('Error Occurred while retriving from Storage.', error);
       throw error;
     }
   };
+
+  private static async isVCAlreadyDownloaded(
+    key: string,
+    encryptionKey: string,
+  ) {
+    const storedHMACofCurrentVC = await this.readHmacForVC(key, encryptionKey);
+    return storedHMACofCurrentVC !== null;
+  }
 
   private static async isCorruptedVC(
     key: string,
@@ -123,7 +169,12 @@ class Storage {
   static removeItem = async (key: string) => {
     if (VCMetadata.isVCKey(key)) {
       const path = getFilePath(key);
-      return await unlink(path);
+      const isFileExists = await exists(path);
+      if (isFileExists) {
+        return await unlink(path);
+      } else {
+        console.log('file not exist`s');
+      }
     }
     MMKV.removeItem(key);
   };

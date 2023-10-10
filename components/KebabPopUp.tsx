@@ -59,6 +59,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
             label={t('offlineAuthenticationDisabled!')}
             content={t('offlineAuthDisabledMessage')}
             service={props.service}
+            vcMetadata={props.vcMetadata}
           />
 
           <HistoryTab

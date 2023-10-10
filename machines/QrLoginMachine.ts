@@ -359,7 +359,7 @@ export const qrLoginMachine =
 
         sendAuthenticate: async context => {
           let privateKey;
-
+          const individualId = context.selectedVc.vcMetadata.id;
           if (!isCustomSecureKeystore()) {
             privateKey = await getPrivateKey(
               context.selectedVc.walletBindingResponse?.walletBindingId,
@@ -367,11 +367,7 @@ export const qrLoginMachine =
           }
 
           var walletBindingResponse = context.selectedVc.walletBindingResponse;
-          var jwt = await getJwt(
-            privateKey,
-            context.selectedVc.id,
-            context.thumbprint,
-          );
+          var jwt = await getJwt(privateKey, individualId, context.thumbprint);
 
           const response = await request(
             'POST',
@@ -380,7 +376,7 @@ export const qrLoginMachine =
               requestTime: String(new Date().toISOString()),
               request: {
                 linkedTransactionId: context.linkTransactionId,
-                individualId: context.selectedVc.id,
+                individualId: individualId,
                 challengeList: [
                   {
                     authFactorType: 'WLA',
@@ -397,6 +393,7 @@ export const qrLoginMachine =
 
         sendConsent: async context => {
           let privateKey;
+          const individualId = context.selectedVc.vcMetadata.id;
           if (!isCustomSecureKeystore()) {
             privateKey = await getPrivateKey(
               context.selectedVc.walletBindingResponse?.walletBindingId,
@@ -405,7 +402,7 @@ export const qrLoginMachine =
 
           const jwt = await getJwt(
             privateKey,
-            context.selectedVc.id,
+            individualId,
             context.thumbprint,
           );
 
@@ -416,7 +413,7 @@ export const qrLoginMachine =
               requestTime: String(new Date().toISOString()),
               request: {
                 linkedTransactionId: context.linkTransactionId,
-                individualId: context.selectedVc.id,
+                individualId: individualId,
                 challengeList: [
                   {
                     authFactorType: 'WLA',

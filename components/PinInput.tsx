@@ -16,9 +16,10 @@ export const PinInput: React.FC<PinInputProps> = props => {
   }, [state]);
 
   return (
-    <Row width="100%" testID={props.testID}>
+    <Row width="100%" testID={props.testID} removeClippedSubviews={true}>
       {inputRefs.map((input, index) => (
         <TextInput
+          contextMenuHidden={true}
           selectTextOnFocus
           keyboardType="numeric"
           maxLength={1}

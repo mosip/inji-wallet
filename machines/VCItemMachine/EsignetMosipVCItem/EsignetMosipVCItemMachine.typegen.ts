@@ -87,6 +87,9 @@ export interface Typegen0 {
     requestBindingOtp:
       | 'done.invoke.vc-item-openid4vci.kebabPopUp.requestingBindingOtp:invocation[0]'
       | 'done.invoke.vc-item-openid4vci.requestingBindingOtp:invocation[0]';
+    requestOtp:
+      | 'done.invoke.vc-item-openid4vci.acceptingBindingOtp.resendOTP:invocation[0]'
+      | 'done.invoke.vc-item-openid4vci.kebabPopUp.acceptingBindingOtp.resendOTP:invocation[0]';
     updatePrivateKey:
       | 'done.invoke.vc-item-openid4vci.kebabPopUp.updatingPrivateKey:invocation[0]'
       | 'done.invoke.vc-item-openid4vci.updatingPrivateKey:invocation[0]';
@@ -95,7 +98,7 @@ export interface Typegen0 {
     actions: 'clearTransactionId';
     delays: never;
     guards: never;
-    services: never;
+    services: 'requestOtp';
   };
   eventsCausingActions: {
     VcUpdated: 'STORE_RESPONSE';
@@ -120,8 +123,13 @@ export interface Typegen0 {
     removedVc: 'STORE_RESPONSE';
     requestStoredContext: 'GET_VC_RESPONSE' | 'REFRESH';
     requestVcContext: 'DISMISS' | 'xstate.init';
+    resetWalletBindingSuccess: 'DISMISS';
     sendVcUpdated: 'STORE_RESPONSE';
-    setGeneratedOn: 'GET_VC_RESPONSE' | 'STORE_RESPONSE';
+    sendWalletBindingSuccess:
+      | 'done.invoke.vc-item-openid4vci.kebabPopUp.addingWalletBindingId:invocation[0]'
+      | 'done.invoke.vc-item-openid4vci.kebabPopUp.updatingPrivateKey:invocation[0]';
+    setContext: 'STORE_RESPONSE';
+    setGeneratedOn: 'GET_VC_RESPONSE';
     setOtp: 'INPUT_OTP';
     setPinCard: 'PIN_CARD';
     setPrivateKey:
@@ -134,6 +142,7 @@ export interface Typegen0 {
       | 'done.invoke.vc-item-openid4vci.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item-openid4vci.kebabPopUp.addingWalletBindingId:invocation[0]';
     setVcKey: 'REMOVE';
+    setVcMetadata: 'UPDATE_VC_METADATA';
     setVerifiableCredential: 'GET_VC_RESPONSE' | 'STORE_RESPONSE';
     setWalletBindingError:
       | 'error.platform.vc-item-openid4vci.addKeyPair:invocation[0]'
@@ -153,6 +162,7 @@ export interface Typegen0 {
     setWalletBindingId:
       | 'done.invoke.vc-item-openid4vci.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item-openid4vci.kebabPopUp.addingWalletBindingId:invocation[0]';
+    setWalletBindingSuccess: 'done.invoke.vc-item-openid4vci.updatingPrivateKey:invocation[0]';
     storeContext:
       | 'PIN_CARD'
       | 'done.invoke.vc-item-openid4vci.addingWalletBindingId:invocation[0]'
@@ -184,12 +194,15 @@ export interface Typegen0 {
       | 'done.invoke.vc-item-openid4vci.kebabPopUp.addKeyPair:invocation[0]';
     generateKeyPair: 'INPUT_OTP';
     requestBindingOtp: 'CONFIRM';
+    requestOtp: 'RESEND_OTP';
     updatePrivateKey:
       | 'done.invoke.vc-item-openid4vci.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item-openid4vci.kebabPopUp.addingWalletBindingId:invocation[0]';
   };
   matchesStates:
     | 'acceptingBindingOtp'
+    | 'acceptingBindingOtp.idle'
+    | 'acceptingBindingOtp.resendOTP'
     | 'addKeyPair'
     | 'addingWalletBindingId'
     | 'checkingStore'
@@ -197,6 +210,8 @@ export interface Typegen0 {
     | 'idle'
     | 'kebabPopUp'
     | 'kebabPopUp.acceptingBindingOtp'
+    | 'kebabPopUp.acceptingBindingOtp.idle'
+    | 'kebabPopUp.acceptingBindingOtp.resendOTP'
     | 'kebabPopUp.addKeyPair'
     | 'kebabPopUp.addingWalletBindingId'
     | 'kebabPopUp.idle'
@@ -213,6 +228,7 @@ export interface Typegen0 {
     | 'showingWalletBindingError'
     | 'updatingPrivateKey'
     | {
+        acceptingBindingOtp?: 'idle' | 'resendOTP';
         kebabPopUp?:
           | 'acceptingBindingOtp'
           | 'addKeyPair'
@@ -224,7 +240,8 @@ export interface Typegen0 {
           | 'showActivities'
           | 'showBindingWarning'
           | 'showingWalletBindingError'
-          | 'updatingPrivateKey';
+          | 'updatingPrivateKey'
+          | {acceptingBindingOtp?: 'idle' | 'resendOTP'};
       };
   tags: never;
 }
