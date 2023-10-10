@@ -758,10 +758,6 @@ export const scanMachine =
 
         setSelectedVc: assign({
           selectedVc: (context, event) => {
-            console.log(
-              'setSelectedVc inside scanMachine =>',
-              JSON.stringify(context.selectedVc, null, 4),
-            );
             return {
               ...event.vc,
               shouldVerifyPresence: context.selectedVc.shouldVerifyPresence,
