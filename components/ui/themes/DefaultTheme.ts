@@ -223,8 +223,8 @@ export const DefaultTheme = {
       height: 30,
       backgroundColor: Colors.Grey,
       marginVertical: 8,
-      marginLeft: -35,
-      marginRight: 18,
+      marginLeft: -45,
+      marginRight: 22,
     },
     closeCardBgContainer: {
       borderRadius: 10,
