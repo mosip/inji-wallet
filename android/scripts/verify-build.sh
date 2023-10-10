@@ -7,4 +7,4 @@ yes | sudo gem install bundler
 
 yes | sudo fastlane install_plugins
 
-bundle exec fastlane build_app_for_automation_on_simulator
+bundle exec fastlane android_build_verify
