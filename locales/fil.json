@@ -291,6 +291,10 @@
         "title": "Ang ilang mga tampok sa seguridad ay hindi magagamit",
         "message": "Hindi sinusuportahan ng iyong kasalukuyang device ang lahat ng feature ng seguridad.",
         "riskOkayText": "Ok"
+      },
+      "noInternetConnection": {
+        "title": "Pakisuri ang iyong koneksyon at subukang muli",
+        "message": "Mangyaring kumonekta sa internet at subukang muli."
       }
     }
   },
