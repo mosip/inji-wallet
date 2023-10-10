@@ -5,6 +5,7 @@ import {isIOS} from '../constants';
 import pem2jwk from 'simple-pem2jwk';
 import {Issuers_Key_Ref} from '../../machines/issuersMachine';
 import {ENABLE_OPENID_FOR_VC} from 'react-native-dotenv';
+import getAllConfigurations from '../commonprops/commonProps';
 
 export const OpenId4VCIProtocol = 'OpenId4VCIProtocol';
 export const isOpenId4VCIEnabled = () => {
@@ -92,3 +93,24 @@ export const getJWT = async context => {
     throw e;
   }
 };
+
+export const vcDownloadTimeout = async (): Promise<number> => {
+  const response = await getAllConfigurations();
+
+  return Number(response['openId4VCIDownloadVCTimeout']) || 30000;
+};
+
+// OIDCErrors is a collection of external errors from the OpenID library or the issuer
+export enum OIDCErrors {
+  OIDC_FLOW_CANCELLED_ANDROID = 'User cancelled flow',
+  OIDC_FLOW_CANCELLED_IOS = 'org.openid.appauth.general error -3',
+
+  INVALID_TOKEN_SPECIFIED = 'Invalid token specified',
+  OIDC_CONFIG_ERROR_PREFIX = 'Config error',
+}
+// ErrorMessage is the type of error message shown in the UI
+export enum ErrorMessage {
+  NO_INTERNET = 'noInternetConnection',
+  GENERIC = 'generic',
+  REQUEST_TIMEDOUT = 'requestTimedOut',
+}
