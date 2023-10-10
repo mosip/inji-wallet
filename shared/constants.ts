@@ -68,3 +68,6 @@ export const argon2iConfigForUinVid: Argon2iConfig = {
 
 export const argon2iSalt =
   '1234567891011121314151617181920212223242526272829303132333435363';
+
+export const NETWORK_REQUEST_FAILED = 'Network request failed';
+export const REQUEST_TIMEOUT = 'request timedout';

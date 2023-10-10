@@ -3,7 +3,7 @@ import {
   VerifiableCredential,
 } from '../types/VC/ExistingMosipVC/vc';
 import {__AppId} from './GlobalVariables';
-import {MIMOTO_BASE_URL} from './constants';
+import {MIMOTO_BASE_URL, REQUEST_TIMEOUT} from './constants';
 
 export type HTTP_METHOD = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
 
@@ -51,7 +51,7 @@ export async function request(
         `Error occurred while making request: ${host + path}: ${error}`,
       );
       if (error.name === 'AbortError') {
-        throw new Error('request timedout');
+        throw new Error(REQUEST_TIMEOUT);
       }
       throw error;
     }

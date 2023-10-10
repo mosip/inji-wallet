@@ -107,5 +107,3 @@ export enum ErrorMessage {
   GENERIC = 'generic',
   REQUEST_TIMEDOUT = 'requestTimedOut',
 }
-export const NETWORK_REQUEST_FAILED = 'Network request failed';
-export const REQUEST_TIMEOUT = 'request timedout';

@@ -17,12 +17,11 @@ import {verifyCredential} from '../shared/vcjs/verifyCredential';
 import {
   getBody,
   getIdentifier,
-  NETWORK_REQUEST_FAILED,
-  REQUEST_TIMEOUT,
   VC_DOWNLOAD_TIMEOUT,
   OIDCErrors,
   ErrorMessage,
 } from '../shared/openId4VCI/Utils';
+import {NETWORK_REQUEST_FAILED, REQUEST_TIMEOUT} from '../shared/constants';
 import {VCMetadata} from '../shared/VCMetadata';
 import {
   CredentialWrapper,
@@ -430,7 +429,7 @@ export const IssuersMachine = model.createMachine(
         },
       }),
       setPublicKey: assign({
-        publicKey: (context, event) => {
+        publicKey: (_, event) => {
           if (!isCustomSecureKeystore()) {
             return (event.data as KeyPair).public;
           }
