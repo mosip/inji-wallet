@@ -299,6 +299,10 @@
         "title": "Some security features will be unavailable",
         "message": "Your current device does not support all the security features.",
         "riskOkayText": "Ok"
+      },
+      "noInternetConnection": {
+        "title": "No internet connection",
+        "message": "Please check your connection and retry"
       }
     }
   },

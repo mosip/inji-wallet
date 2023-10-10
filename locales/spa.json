@@ -201,7 +201,11 @@
 				"title": "Algunas funciones de seguridad no estarán disponibles",
 				"message": "Su dispositivo actual no admite todas las funciones de seguridad.",
 				"riskOkayText": "De acuerdo"
-			}
+			},
+      "noInternetConnection": {
+        "title": "Sin conexión a Internet",
+        "message": "Por favor verifique su conexión y vuelva a intentarlo"
+      },
 		}
 	},
 	"OnboardingOverlay": {
