@@ -17,7 +17,7 @@ import {verifyCredential} from '../shared/vcjs/verifyCredential';
 import {
   getBody,
   getIdentifier,
-  VC_DOWNLOAD_TIMEOUT,
+  vcDownloadTimeout,
   OIDCErrors,
   ErrorMessage,
 } from '../shared/openId4VCI/Utils';
@@ -226,7 +226,7 @@ export const IssuersMachine = model.createMachine(
             {
               actions: [
                 'setPublicKey',
-                'setLoadingReasonAsDownloadingCreds',
+                'setLoadingReasonAsDownloadingCredentials',
                 'setPrivateKey',
                 'storeKeyPair',
               ],
@@ -235,7 +235,7 @@ export const IssuersMachine = model.createMachine(
             {
               actions: [
                 'setPublicKey',
-                'setLoadingReasonAsDownloadingCreds',
+                'setLoadingReasonAsDownloadingCredentials',
                 'storeKeyPair',
               ],
               cond: 'isCustomSecureKeystore',
@@ -321,7 +321,7 @@ export const IssuersMachine = model.createMachine(
       setLoadingReasonAsDisplayIssuers: model.assign({
         loadingReason: 'displayIssuers',
       }),
-      setLoadingReasonAsDownloadingCreds: model.assign({
+      setLoadingReasonAsDownloadingCredentials: model.assign({
         loadingReason: 'downloadingCredentials',
       }),
       setLoadingReasonAsSettingUp: model.assign({
@@ -471,6 +471,7 @@ export const IssuersMachine = model.createMachine(
       },
       downloadCredential: async context => {
         const body = await getBody(context);
+        const downloadTimeout = await vcDownloadTimeout();
         const response = await request(
           'POST',
           context.selectedIssuer.serviceConfiguration.credentialEndpoint,
@@ -480,7 +481,7 @@ export const IssuersMachine = model.createMachine(
             'Content-Type': 'application/json',
             Authorization: 'Bearer ' + context.tokenResponse?.accessToken,
           },
-          VC_DOWNLOAD_TIMEOUT,
+          downloadTimeout,
         );
         let credential = await response.json();
         credential = updateCredentialInformation(context, credential);

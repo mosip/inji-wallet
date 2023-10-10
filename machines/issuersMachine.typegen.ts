@@ -97,7 +97,7 @@ export interface Typegen0 {
       | 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     setIssuers: 'done.invoke.issuersMachine.displayIssuers:invocation[0]';
     setLoadingReasonAsDisplayIssuers: 'TRY_AGAIN';
-    setLoadingReasonAsDownloadingCreds: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
+    setLoadingReasonAsDownloadingCredentials: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
     setLoadingReasonAsSettingUp: 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
     setNoInternet: 'done.invoke.checkInternet';
     setOIDCConfigError: 'error.platform.issuersMachine.performAuthorization:invocation[0]';

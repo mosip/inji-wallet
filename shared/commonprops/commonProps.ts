@@ -10,14 +10,6 @@ export default async function getAllConfigurations(host = undefined) {
   return await CACHED_API.getAllProperties();
 }
 
-export function getConfig(key: string): string {
-  let value: string = '';
-  getAllConfigurations()
-    .then(resp => (value = resp[key]))
-    .catch(() => (value = ''));
-  return value;
-}
-
 export async function downloadModel() {
   try {
     var injiProp = await getAllConfigurations();
