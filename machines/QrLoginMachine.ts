@@ -359,7 +359,7 @@ export const qrLoginMachine =
 
         sendAuthenticate: async context => {
           let privateKey;
-          let individualId = context.selectedVc.vcMetadata.id;
+          const individualId = context.selectedVc.vcMetadata.id;
           if (!isCustomSecureKeystore()) {
             privateKey = await getPrivateKey(
               context.selectedVc.walletBindingResponse?.walletBindingId,
@@ -393,9 +393,7 @@ export const qrLoginMachine =
 
         sendConsent: async context => {
           let privateKey;
-          let individualId = context.selectedVc.id
-            ? context.selectedVc.id
-            : context.selectedVc.vcMetadata.id;
+          const individualId = context.selectedVc.vcMetadata.id;
           if (!isCustomSecureKeystore()) {
             privateKey = await getPrivateKey(
               context.selectedVc.walletBindingResponse?.walletBindingId,
