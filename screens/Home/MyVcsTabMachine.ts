@@ -78,7 +78,7 @@ export const MyVcsTabMachine = model.createMachine(
                   target: 'checkStorage',
                 },
                 {
-                  target: 'NetworkOff',
+                  target: 'networkOff',
                 },
               ],
             },
@@ -103,7 +103,7 @@ export const MyVcsTabMachine = model.createMachine(
               DISMISS: '#idle',
             },
           },
-          NetworkOff: {
+          networkOff: {
             on: {
               DISMISS: '#idle',
               TRY_AGAIN: 'checkNetwork',
@@ -193,13 +193,7 @@ export const MyVcsTabMachine = model.createMachine(
       },
       checkNetworkStatus: async () => {
         const state = await NetInfo.fetch();
-        if (state.isConnected) {
-          console.log('>>>>>>>>>>>>>>>>>>>> Internet is connected');
-          return true;
-        } else {
-          console.log('>>>>>>>>>>>>>>>>>>>> Internet is Not connected');
-          return false;
-        }
+        return state.isConnected;
       },
     },
 
@@ -270,5 +264,5 @@ export function selectIsMinimumStorageLimitReached(state: State) {
   return state.matches('addVc.storageLimitReached');
 }
 export function selectIsNetworkOff(state: State) {
-  return state.matches('addVc.NetworkOff');
+  return state.matches('addVc.networkOff');
 }

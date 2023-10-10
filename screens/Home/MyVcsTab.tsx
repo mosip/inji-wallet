@@ -205,9 +205,10 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         <Error
           testID={`networkOffError`}
           isVisible={controller.isNetworkOff}
+          isModal={true}
           title={t('errors.noInternetConnection.title')}
           message={t('errors.noInternetConnection.message')}
-          goBack={controller.DISMISS}
+          onDismiss={controller.DISMISS}
           tryAgain={controller.TRY_AGAIN}
           image={<Image source={Theme.NoInternetConnection} />}
         />
