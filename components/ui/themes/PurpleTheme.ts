@@ -226,8 +226,8 @@ export const PurpleTheme = {
       height: 30,
       backgroundColor: Colors.Grey,
       marginVertical: 8,
-      marginLeft: -45,
-      marginRight: 22,
+      marginLeft: -35,
+      marginRight: 18,
     },
     closeCardBgContainer: {
       borderRadius: 10,
