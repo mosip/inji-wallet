@@ -22,12 +22,12 @@ export async function request(
   headers: Record<string, string> = {
     'Content-Type': 'application/json',
   },
-  timeout?: undefined | number,
+  timeoutMillis?: undefined | number,
 ) {
   if (path.includes('residentmobileapp'))
     headers['X-AppId'] = __AppId.getValue();
   let response;
-  if (timeout === undefined) {
+  if (timeoutMillis === undefined) {
     response = await fetch(host + path, {
       method,
       headers,
@@ -38,7 +38,7 @@ export async function request(
     let controller = new AbortController();
     setTimeout(() => {
       controller.abort();
-    }, timeout * 1000);
+    }, timeoutMillis);
     try {
       response = await fetch(host + path, {
         method,

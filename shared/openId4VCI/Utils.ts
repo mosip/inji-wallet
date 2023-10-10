@@ -5,6 +5,7 @@ import {isIOS} from '../constants';
 import pem2jwk from 'simple-pem2jwk';
 import {Issuers_Key_Ref} from '../../machines/issuersMachine';
 import {ENABLE_OPENID_FOR_VC} from 'react-native-dotenv';
+import {getConfig} from '../commonprops/commonProps';
 
 export const OpenId4VCIProtocol = 'OpenId4VCIProtocol';
 export const isOpenId4VCIEnabled = () => {
@@ -92,7 +93,8 @@ export const getJWT = async context => {
     throw e;
   }
 };
-export const VC_DOWNLOAD_TIMEOUT = 30;
+export const VC_DOWNLOAD_TIMEOUT =
+  Number(getConfig('openId4VCIDownloadVCTimeout')) || 30000;
 // OIDCErrors is a collection of external errors from the OpenID library or the issuer
 export enum OIDCErrors {
   OIDC_FLOW_CANCELLED_ANDROID = 'User cancelled flow',

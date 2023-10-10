@@ -17,5 +17,6 @@ export const INITIAL_CONFIG = {
     warningDomainName: '',
     aboutInjiUrl: 'https://docs.mosip.io/inji',
     faceSdkModelUrl: '',
+    openId4VCIDownloadVCTimeout: '30000',
   },
 };
