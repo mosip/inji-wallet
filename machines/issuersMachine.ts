@@ -17,11 +17,11 @@ import {verifyCredential} from '../shared/vcjs/verifyCredential';
 import {
   getBody,
   getIdentifier,
-  ErrorMessage,
   NETWORK_REQUEST_FAILED,
   REQUEST_TIMEOUT,
   VC_DOWNLOAD_TIMEOUT,
   OIDCErrors,
+  ErrorMessage,
 } from '../shared/openId4VCI/Utils';
 import {VCMetadata} from '../shared/VCMetadata';
 import {
@@ -312,7 +312,7 @@ export const IssuersMachine = model.createMachine(
         issuers: (_, event) => event.data,
       }),
       setNoInternet: model.assign({
-        errorMessage: ErrorMessage.NO_INTERNET,
+        errorMessage: () => ErrorMessage.NO_INTERNET,
       }),
       setDownloadingCreds: model.assign({
         loadingReason: 'downloadingCredentials',
@@ -527,7 +527,7 @@ export const IssuersMachine = model.createMachine(
       canSelectIssuerAgain: (context, _) => {
         return (
           context.errorMessage.includes(OIDCErrors.OIDC_CONFIG_ERROR_PREFIX) ||
-          context.errorMessage.includes(REQUEST_TIMEDOUT)
+          context.errorMessage.includes(ErrorMessage.REQUEST_TIMEDOUT)
         );
       },
       shouldFetchIssuersAgain: context => context.issuers.length === 0,
