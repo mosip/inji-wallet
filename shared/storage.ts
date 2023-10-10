@@ -83,14 +83,19 @@ class Storage {
         const isCorrupted = await this.isCorruptedVC(key, encryptionKey, data);
 
         if (isCorrupted) {
-          console.debug('VC is corrupted and will be deleted from storage');
-          console.debug('VC key: ', key);
-          console.debug('is Data null', data === null);
+          console.debug(
+            '[Inji-406]: VC is corrupted and will be deleted from storage',
+          );
+          console.debug('[Inji-406]: VC key: ', key);
+          console.debug('[Inji-406]: is Data null', data === null);
           getItem(MY_VCS_STORE_KEY, [], encryptionKey).then(res => {
-            console.debug('vcKeys are ', JSON.stringify(res));
+            console.debug('[Inji-406]: vcKeys are ', JSON.stringify(res));
           });
           getItem(RECEIVED_VCS_STORE_KEY, null, encryptionKey).then(res => {
-            console.debug('received vcKeys is ', JSON.stringify(res));
+            console.debug(
+              '[Inji-406]: received vcKeys is ',
+              JSON.stringify(res),
+            );
           });
         }
 
