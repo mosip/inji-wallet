@@ -108,6 +108,8 @@ export const MyVcsTabMachine = model.createMachine(
         entry: ['viewVcFromParent'],
         on: {
           DISMISS: 'idle',
+          VIEW_VC: 'viewingVc',
+          ADD_VC: 'addVc',
         },
       },
       addingVc: {

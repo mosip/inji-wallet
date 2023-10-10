@@ -807,17 +807,19 @@ export const scanMachine =
         }),
 
         logShared: send(
-          context =>
-            ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VCMetadata.fromVC(context.selectedVc).getVcKey(),
+          context => {
+            const vcMetadata = context.selectedVc?.vcMetadata;
+            return ActivityLogEvents.LOG_ACTIVITY({
+              _vcKey: VCMetadata.fromVC(vcMetadata).getVcKey(),
               type: context.selectedVc.shouldVerifyPresence
                 ? 'VC_SHARED_WITH_VERIFICATION_CONSENT'
                 : context.shareLogType,
               timestamp: Date.now(),
               deviceName:
                 context.receiverInfo.name || context.receiverInfo.deviceName,
-              vcLabel: context.selectedVc.id,
-            }),
+              vcLabel: vcMetadata.id,
+            });
+          },
           {to: context => context.serviceRefs.activityLog},
         ),
 
@@ -881,7 +883,7 @@ export const scanMachine =
               type: 'QRLOGIN_SUCCESFULL',
               timestamp: Date.now(),
               deviceName: '',
-              vcLabel: String(event.response.selectedVc.id),
+              vcLabel: String(event.response.selectedVc.vcMetadata.id),
             }),
           {
             to: context => context.serviceRefs.activityLog,

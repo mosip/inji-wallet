@@ -125,6 +125,10 @@ export const HomeScreenMachine = model.createMachine(
           },
           idle: {
             on: {
+              DOWNLOAD_ID: {
+                actions: 'sendAddEvent',
+                target: 'idle',
+              },
               GOTO_ISSUERS: 'gotoIssuers',
             },
           },
