@@ -86,7 +86,8 @@ export const IssuersMachine = model.createMachine(
             target: 'selectingIssuer',
           },
           onError: {
-            actions: ['setError', 'resetLoadingReason'],
+            //loadingReason is not reset here so that we go to previous(Home) screen on back button press of error screen
+            actions: ['setError'],
             target: 'error',
           },
         },
@@ -114,7 +115,7 @@ export const IssuersMachine = model.createMachine(
           ],
           RESET_ERROR: {
             actions: 'resetError',
-            target: 'idle',
+            target: 'selectingIssuer',
           },
         },
       },

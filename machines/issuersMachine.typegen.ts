@@ -86,7 +86,6 @@ export interface Typegen0 {
     resetLoadingReason:
       | 'done.invoke.checkInternet'
       | 'done.invoke.issuersMachine.displayIssuers:invocation[0]'
-      | 'error.platform.issuersMachine.displayIssuers:invocation[0]'
       | 'error.platform.issuersMachine.downloadCredentials:invocation[0]'
       | 'error.platform.issuersMachine.downloadIssuerConfig:invocation[0]'
       | 'error.platform.issuersMachine.performAuthorization:invocation[0]';

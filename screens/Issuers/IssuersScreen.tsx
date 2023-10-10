@@ -58,10 +58,14 @@ export const IssuersScreen: React.FC<
   };
 
   const goBack = () => {
-    controller.RESET_ERROR();
-    setTimeout(() => {
+    if (
+      controller.errorMessageType &&
+      controller.loadingReason === 'displayIssuers'
+    ) {
       props.navigation.goBack();
-    }, 0);
+    } else {
+      controller.RESET_ERROR();
+    }
   };
 
   const getImage = () => {
@@ -81,6 +85,20 @@ export const IssuersScreen: React.FC<
       />
     );
   };
+
+  if (controller.errorMessageType) {
+    return (
+      <Error
+        testID={`${controller.errorMessageType}Error`}
+        isVisible={controller.errorMessageType !== ''}
+        title={t(`errors.${controller.errorMessageType}.title`)}
+        message={t(`errors.${controller.errorMessageType}.message`)}
+        goBack={goBack}
+        tryAgain={controller.TRY_AGAIN}
+        image={getImage()}
+      />
+    );
+  }
 
   if (controller.loadingReason) {
     return (
@@ -128,17 +146,6 @@ export const IssuersScreen: React.FC<
             )}
           </View>
         </Column>
-      )}
-      {controller.errorMessageType && (
-        <Error
-          testID={`${controller.errorMessageType}Error`}
-          isVisible={controller.errorMessageType !== ''}
-          title={t(`errors.${controller.errorMessageType}.title`)}
-          message={t(`errors.${controller.errorMessageType}.message`)}
-          goBack={goBack}
-          tryAgain={controller.TRY_AGAIN}
-          image={getImage()}
-        />
       )}
     </React.Fragment>
   );
