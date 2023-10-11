@@ -1,10 +1,5 @@
 import {Platform} from 'react-native';
-import {
-  MIMOTO_HOST,
-  ESIGNET_HOST,
-  GOOGLE_NEARBY_MESSAGES_API_KEY,
-  DEBUG_MODE,
-} from 'react-native-dotenv';
+import {MIMOTO_HOST, ESIGNET_HOST, DEBUG_MODE} from 'react-native-dotenv';
 import {Argon2iConfig} from './commonUtil';
 
 export let MIMOTO_BASE_URL = MIMOTO_HOST;
@@ -29,11 +24,6 @@ export const GET_INDIVIDUAL_ID = (ind_Id: string) => {
 export const ACTIVITY_LOG_STORE_KEY = 'activityLog';
 
 export const SETTINGS_STORE_KEY = 'settings';
-
-export const GNM_API_KEY = GOOGLE_NEARBY_MESSAGES_API_KEY;
-
-// https://developers.google.com/android/reference/com/google/android/gms/nearby/messages/Message#MAX_CONTENT_SIZE_BYTES
-export const GNM_MESSAGE_LIMIT = 102400 - 6400; // allowance for metadata
 
 export const APP_ID_LENGTH = 12;
 
