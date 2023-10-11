@@ -1,6 +1,7 @@
 import telemetry from 'telemetry-sdk';
 import {Platform} from 'react-native';
-import {HOST} from '../constants';
+import {MIMOTO_BASE_URL} from '../constants';
+import i18next from 'i18next';
 import {
   __AppId,
   __InjiVersion,
@@ -66,7 +67,7 @@ export function getEndData(type) {
 
 export function getAppInfoData() {
   return {
-    env: HOST,
+    env: MIMOTO_BASE_URL,
     brandName: DeviceInfo.getBrand(),
     modelName: DeviceInfo.getModel(),
     osName: DeviceInfo.getSystemName(),
@@ -76,9 +77,24 @@ export function getAppInfoData() {
     dateTime: new Date().getTime(),
     zone: RNLocalize.getTimeZone(),
     offset: new Date().getTimezoneOffset() * 60 * 1000,
-    preferredLanguage: __SelectedLanguage.getValue(),
+    preferredLanguage: languageCodeMap[i18next.language],
     buildNumber: DeviceInfo.getBuildNumber(),
     injiVersion: __InjiVersion.getValue(),
     tuvaliVersion: __TuvaliVersion.getValue(),
   };
 }
+
+export function configureTelemetry() {
+  const config = getTelemetryConfigData();
+  initializeTelemetry(config);
+  sendAppInfoEvent(getAppInfoData());
+}
+
+const languageCodeMap = {
+  en: 'English',
+  fil: 'Filipino',
+  ar: 'Arabic',
+  hi: 'Hindi',
+  kn: 'Kannada',
+  ta: 'Tamil',
+};

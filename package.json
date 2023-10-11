@@ -86,7 +86,7 @@
     "react-native-vector-icons": "^10.0.0",
     "short-unique-id": "^4.4.4",
     "simple-pem2jwk": "^0.2.4",
-    "telemetry-sdk": "git://github.com/mosip/sunbird-telemetry-sdk.git#develop",
+    "telemetry-sdk": "git://github.com/tw-mosip/telemetry-sdk.git#develop",  
     "xstate": "^4.35.0"
   },
   "devDependencies": {
