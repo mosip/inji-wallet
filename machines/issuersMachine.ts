@@ -483,6 +483,9 @@ export const IssuersMachine = model.createMachine(
           },
           downloadTimeout,
         );
+        console.info(
+          `VC download via ${context.selectedIssuerId} is succesfull`,
+        );
         credential = updateCredentialInformation(context, credential);
         return credential;
       },
