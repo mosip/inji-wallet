@@ -178,8 +178,8 @@ export const PurpleTheme = {
     cardDetailsContainer: {},
     bottomTabIconStyle: {
       padding: 4,
-      width: 36,
-      height: 36,
+      width: Dimensions.get('window').width * 0.12,
+      height: Dimensions.get('window').height * 0.045,
       borderRadius: 6,
       backgroundColor: Colors.LightPurple,
     },
@@ -227,8 +227,8 @@ export const PurpleTheme = {
       height: 30,
       backgroundColor: Colors.Grey,
       marginVertical: 8,
-      marginLeft: -45,
-      marginRight: 22,
+      marginLeft: -35,
+      marginRight: 15,
     },
     closeCardBgContainer: {
       borderRadius: 10,
@@ -492,6 +492,14 @@ export const PurpleTheme = {
       fontWeight: 'bold',
       fontSize: 15,
       fontFamily: 'Inter_700Bold',
+    },
+    idInputPicker: {
+      width: Dimensions.get('window').width * 0.32,
+      borderBottomWidth: 1,
+      marginBottom: 2,
+      borderColor: Platform.OS === 'ios' ? 'transparent' : Colors.Grey,
+      bottom: Platform.OS === 'ios' ? 50 : 24,
+      height: Platform.OS === 'ios' ? 100 : 'auto',
     },
     getId: {
       justifyContent: 'center',

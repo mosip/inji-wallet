@@ -7,6 +7,7 @@ import {Theme} from '../../../components/ui/styleUtils';
 import {IdInputModalProps, useIdInputModal} from './IdInputModalController';
 import {useTranslation} from 'react-i18next';
 import {
+  Dimensions,
   I18nManager,
   KeyboardAvoidingView,
   Platform,
@@ -55,18 +56,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = props => {
               {t('guideLabel')}
             </Text>
             <Row crossAlign="flex-end" style={{marginTop: 20}}>
-              <Column
-                width="33%"
-                style={{
-                  borderBottomWidth: 1,
-                  marginBottom: 2,
-                  borderColor:
-                    Platform.OS === 'ios'
-                      ? 'transparent'
-                      : Theme.Colors.IdInputModalBorder,
-                  bottom: Platform.OS === 'ios' ? 50 : 24,
-                  height: Platform.OS === 'ios' ? 100 : 'auto',
-                }}>
+              <Column style={Theme.Styles.idInputPicker}>
                 <Picker
                   testID="selectIdType"
                   selectedValue={controller.idType}
