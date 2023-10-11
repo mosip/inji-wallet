@@ -91,13 +91,7 @@ export function getImpressionData(type, subtype, additionalParameters = {}) {
   };
 }
 
-export function getErrorData(
-  type,
-  errorId,
-  errorMessage,
-  stacktrace = {},
-  additionalParameters = {},
-) {
+export function getErrorData(type, errorId, errorMessage, stacktrace = {}) {
   return {
     type: type,
     env: HOST,
@@ -117,7 +111,6 @@ export function getErrorData(
     errorId: errorId,
     errorMessage: errorMessage,
     stacktrace: stacktrace,
-    additionalParameters: additionalParameters,
   };
 }
 
