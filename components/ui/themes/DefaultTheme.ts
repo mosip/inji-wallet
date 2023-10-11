@@ -394,7 +394,7 @@ export const DefaultTheme = {
     },
     receiveCardsContainer: {
       height: Dimensions.get('window').height * 0.12,
-      width: Dimensions.get('window').width * 0.45,
+      width: Dimensions.get('window').width * 0.47,
       alignItems: 'center',
       borderBottomRightRadius: 0,
       padding: 15,
