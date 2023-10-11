@@ -88,12 +88,6 @@ export const SendVcScreen: React.FC = () => {
             />
           ))}
         </Column>
-        <Button
-          type="gradient"
-          title={t('acceptRequest')}
-          disabled={controller.selectedIndex == null}
-          onPress={controller.ACCEPT_REQUEST}
-        />
         {!controller.selectedVc.shouldVerifyPresence && (
           <Button
             type="gradient"
@@ -103,6 +97,14 @@ export const SendVcScreen: React.FC = () => {
             onPress={controller.VERIFY_AND_ACCEPT_REQUEST}
           />
         )}
+
+        <Button
+          type="gradient"
+          title={t('acceptRequest')}
+          disabled={controller.selectedIndex == null}
+          onPress={controller.ACCEPT_REQUEST}
+        />
+
         <Button
           type="clear"
           loading={controller.isCancelling}

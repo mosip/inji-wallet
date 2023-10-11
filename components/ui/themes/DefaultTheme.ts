@@ -36,6 +36,7 @@ const Colors = {
   TimeoutHintBoxColor: '#FFF7E5',
   TimoutHintText: '#8B6105',
   resendCodeTimer: '#555555',
+  uncheckedIcon: '#DBDBDB',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -107,6 +108,7 @@ export const DefaultTheme = {
     statusLabel: Colors.Black,
     statusMessage: Colors.Gray40,
     blackIcon: Colors.Black,
+    uncheckedIcon: Colors.uncheckedIcon,
   },
   Styles: StyleSheet.create({
     title: {
@@ -654,6 +656,7 @@ export const DefaultTheme = {
     },
     bold: {
       fontFamily: 'Inter_700Bold',
+      fontSize: 15,
     },
     small: {
       fontSize: 13,
@@ -743,7 +746,8 @@ export const DefaultTheme = {
       borderRadius: 9,
       width: Dimensions.get('window').width * 0.72,
       alignSelf: 'center',
-      margin: 4,
+      margin: 3,
+      height: 54,
     },
     float: {
       borderRadius: 9,

@@ -38,6 +38,7 @@ const Colors = {
   TimeoutHintBoxColor: '#FFF7E5',
   TimoutHintText: '#8B6105',
   resendCodeTimer: '#555555',
+  uncheckedIcon: '#DBDBDB',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -48,7 +49,6 @@ export const PurpleTheme = {
     Details: Colors.Black,
     DetailsLabel: Colors.Gray40,
     LoadingDetailsLabel: Colors.Gray40,
-    DetailsLabel: Colors.Gray40,
     AddIdBtnBg: Colors.Purple,
     AddIdBtnTxt: Colors.Purple,
     DownloadIdBtnTxt: Colors.White,
@@ -110,6 +110,7 @@ export const PurpleTheme = {
     statusLabel: Colors.Black,
     statusMessage: Colors.Gray40,
     blackIcon: Colors.Black,
+    uncheckedIcon: Colors.uncheckedIcon,
   },
   Styles: StyleSheet.create({
     title: {
@@ -657,6 +658,7 @@ export const PurpleTheme = {
     },
     bold: {
       fontFamily: 'Inter_700Bold',
+      fontSize: 15,
     },
     small: {
       fontSize: 13,
@@ -746,7 +748,8 @@ export const PurpleTheme = {
       borderRadius: 9,
       width: Dimensions.get('window').width * 0.72,
       alignSelf: 'center',
-      margin: 4,
+      margin: 3,
+      height: 54,
     },
     float: {
       borderRadius: 9,
