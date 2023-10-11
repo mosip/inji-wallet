@@ -47,7 +47,7 @@ export const Modal: React.FC<ModalProps> = props => {
                 <Text
                   testID={props.testID}
                   style={Theme.TextStyles.header}
-                  margin="0 0 0 -15">
+                  margin="0 0 0 -10">
                   {props.headerTitle || props.headerLeft}
                 </Text>
                 {!props.requester ? (
@@ -79,7 +79,7 @@ export const Modal: React.FC<ModalProps> = props => {
                   name="close"
                   onPress={props.onDismiss}
                   color={Theme.Colors.Details}
-                  size={27}
+                  size={25}
                 />
               ))}
           </View>

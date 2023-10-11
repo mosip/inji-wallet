@@ -216,6 +216,7 @@
 		"stepThreeTitle": "Compartir fácilmente",
 		"stepThreeText": "Comparte y recibe Tarjetas rápidamente utilizando la cámara de tu teléfono para escanear códigos QR.",
 		"stepThreeButton": "Comienza y agrega una Tarjeta",
+    "getStarted": "Empezar",
 		"ReceivedVcsTab": {
 			"noReceivedVcsTitle": "Aún no hay Tarjetas disponibles",
 			"noReceivedVcsText": "Toca en Solicitar a continuación para recibir una Tarjeta"
@@ -370,7 +371,7 @@
 	},
 	"ScanScreen": {
 		"header": "Escanear código QR",
-		"noShareableVcs": "No hay tarjetas compartibles disponibles.",
+		"noShareableVcs": "No hay tarjetas para compartir disponibles.",
 		"sharingVc": "Compartiendo tarjeta",
 		"bluetoothStateAndroid": "Por favor, activa el Bluetooth desde la configuración rápida para admitir el intercambio local",
 		"bluetoothStateIos": "Por favor, activa el Bluetooth desde el centro de control para admitir el intercambio local",
@@ -757,7 +758,7 @@
       }
     }
   },
-  "QrScreen": {
+  "QrLogin": {
     "title": "Inicio de sesión con código QR",
     "alignQr": "Alinea el código QR dentro del marco para escanearlo",
     "confirmation": "Confirmación",
@@ -774,8 +775,8 @@
     "domainWarning": "Por favor, confirma que el dominio del sitio web desde el cual estás escaneando el código QR es el siguiente",
     "access": "está solicitando acceso a",
     "status": "Estado",
-    "successMessage": "Has iniciado sesión correctamente en",
-    "okay": "Aceptar",
+    "successMessage": "Has iniciado sesión correctamente en ",
+    "okay": "bueno",
     "allow": "Permitir",
     "cancel": "Cancelar",
     "essentialClaims": "Reclamos Esenciales",
@@ -933,17 +934,6 @@
         "title": "No se puede verificar la identidad",
         "message": "No se reconoce el rostro. Por favor, inténtalo de nuevo.",
         "messageNoRetry": "No se reconoce el rostro."
-      }
-    }
-  },
-  "WelcomeScreen": {
-    "title": "Solución de identidad de código abierto",
-    "getStarted": "Empezar",
-    "unlockApp": "Desbloquear aplicación",
-    "errors": {
-      "invalidateKeyError": {
-        "title": "Algunas pruebas de identidad se eliminan debido a problemas de seguridad.",
-        "message": "Vuelva a descargar."
       }
     }
   },

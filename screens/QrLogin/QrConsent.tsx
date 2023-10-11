@@ -1,16 +1,16 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Button, Column, Row, Text } from '../../components/ui';
-import { Theme } from '../../components/ui/styleUtils';
-import { useQrLogin } from './QrLoginController';
-import { Image, View } from 'react-native';
-import { Icon, ListItem, Switch } from 'react-native-elements';
-import { Modal } from '../../components/ui/Modal';
-import { QrLoginRef } from '../../machines/QrLoginMachine';
-import { ScrollView } from 'react-native';
+import {useTranslation} from 'react-i18next';
+import {Button, Column, Row, Text} from '../../components/ui';
+import {Theme} from '../../components/ui/styleUtils';
+import {useQrLogin} from './QrLoginController';
+import {Image, View} from 'react-native';
+import {Icon, ListItem, Switch} from 'react-native-elements';
+import {Modal} from '../../components/ui/Modal';
+import {QrLoginRef} from '../../machines/QrLoginMachine';
+import {ScrollView} from 'react-native';
 
-export const QrConsent: React.FC<QrConsentProps> = (props) => {
-  const { t } = useTranslation('QrScreen');
+export const QrConsent: React.FC<QrConsentProps> = props => {
+  const {t} = useTranslation('QrLogin');
   const controller = useQrLogin(props);
 
   return (
@@ -24,14 +24,14 @@ export const QrConsent: React.FC<QrConsentProps> = (props) => {
         fill
         align="space-between"
         padding="24 24 0 24"
-        style={{ display: props.isVisible ? 'flex' : 'none' }}
+        style={{display: props.isVisible ? 'flex' : 'none'}}
         backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
         <Column>
           {controller.linkTransactionResponse && (
             <Row margin={'0 0 0 9'} crossAlign="center" align="center">
               <Image
-                source={controller.logoUrl ? { uri: controller.logoUrl } : null}
-                style={{ width: 65, height: 65 }}
+                source={controller.logoUrl ? {uri: controller.logoUrl} : null}
+                style={{width: 65, height: 65}}
               />
             </Row>
           )}
