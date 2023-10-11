@@ -5,9 +5,10 @@ import {SendVcScreen} from './SendVcScreen';
 import {useScanLayout} from './ScanLayoutController';
 import {ScanScreen} from './ScanScreen';
 import {ProgressingModal} from '../../components/ProgressingModal';
-import {MessageOverlay} from '../../components/MessageOverlay';
 import {SCAN_ROUTES} from '../../routes/routesConstants';
 import {SharingSuccessModal} from './SuccessfullySharedModal';
+import {Theme} from '../../components/ui/styleUtils';
+import {Icon} from 'react-native-elements';
 
 const ScanStack = createNativeStackNavigator();
 
@@ -25,6 +26,13 @@ export const ScanLayout: React.FC = () => {
             options={{
               title: t('sharingVc'),
               headerBackVisible: false,
+              headerRight: () => (
+                <Icon
+                  name="close"
+                  color={Theme.Colors.blackIcon}
+                  onPress={controller.CANCEL}
+                />
+              ),
             }}
           />
         )}

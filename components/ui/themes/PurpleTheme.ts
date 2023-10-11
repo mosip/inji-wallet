@@ -109,6 +109,7 @@ export const PurpleTheme = {
     resendCodeTimer: Colors.resendCodeTimer,
     statusLabel: Colors.Black,
     statusMessage: Colors.Gray40,
+    blackIcon: Colors.Black,
   },
   Styles: StyleSheet.create({
     title: {
@@ -243,7 +244,7 @@ export const PurpleTheme = {
       borderRadius: 15,
       margin: 5,
       borderWidth: 3,
-      borderColor: Colors.Green,
+      borderColor: Colors.Purple,
       overflow: 'hidden',
     },
     selectedVc: {

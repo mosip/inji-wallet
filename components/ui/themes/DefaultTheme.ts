@@ -106,6 +106,7 @@ export const DefaultTheme = {
     resendCodeTimer: Colors.resendCodeTimer,
     statusLabel: Colors.Black,
     statusMessage: Colors.Gray40,
+    blackIcon: Colors.Black,
   },
   Styles: StyleSheet.create({
     title: {
@@ -240,7 +241,7 @@ export const DefaultTheme = {
       borderRadius: 15,
       margin: 5,
       borderWidth: 3,
-      borderColor: Colors.Green,
+      borderColor: Colors.Orange,
       overflow: 'hidden',
     },
     selectedVc: {
