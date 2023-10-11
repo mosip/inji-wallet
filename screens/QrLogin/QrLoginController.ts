@@ -29,6 +29,7 @@ import {ExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingM
 import {GlobalContext} from '../../shared/GlobalContext';
 import {VC} from '../../types/VC/ExistingMosipVC/vc';
 import {QrLoginProps} from './QrLogin';
+import {EsignetMosipVCItemMachine} from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 
 export function useQrLogin({service}: QrLoginProps) {
   const {appService} = useContext(GlobalContext);
@@ -46,7 +47,11 @@ export function useQrLogin({service}: QrLoginProps) {
   return {
     SELECT_VC_ITEM:
       (index: number) =>
-      (vcRef: ActorRefFrom<typeof ExistingMosipVCItemMachine>) => {
+      (
+        vcRef: ActorRefFrom<
+          typeof EsignetMosipVCItemMachine | typeof EsignetMosipVCItemMachine
+        >,
+      ) => {
         setSelectedIndex(index);
         const vcData = vcRef.getSnapshot().context;
         SELECT_VC(vcData);

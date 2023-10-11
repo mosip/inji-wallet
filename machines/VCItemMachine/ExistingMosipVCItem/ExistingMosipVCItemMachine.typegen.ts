@@ -208,15 +208,21 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]'
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
     markVcValid: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
+    refreshMyVcs: 'STORE_RESPONSE';
+    removeTamperedVcItem: 'TAMPERED_VC';
     removeVcFromInProgressDownloads: 'STORE_RESPONSE';
     removeVcItem: 'CONFIRM';
     removeVcMetaDataFromStorage: 'STORE_ERROR';
     removeVcMetaDataFromVcMachine: 'DISMISS';
-    removedVc: 'STORE_RESPONSE';
     requestStoredContext: 'GET_VC_RESPONSE' | 'REFRESH';
     requestVcContext: 'DISMISS' | 'xstate.init';
+    resetWalletBindingSuccess: 'DISMISS';
     revokeVID: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
+    sendTamperedVc: 'TAMPERED_VC';
     sendVcUpdated: 'PIN_CARD';
+    sendWalletBindingSuccess:
+      | 'done.invoke.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]'
+      | 'done.invoke.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]';
     setCredential: 'GET_VC_RESPONSE' | 'STORE_RESPONSE';
     setDownloadInterval: 'done.invoke.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]';
     setLock: 'done.invoke.vc-item.requestingLock:invocation[0]';
@@ -234,7 +240,6 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.kebabPopUp.addKeyPair:invocation[0]';
     setRevoke: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
     setStoreVerifiableCredential: 'CREDENTIAL_DOWNLOADED';
-    setTag: 'SAVE_TAG';
     setThumbprintForWalletBindingId:
       | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]';
@@ -245,6 +250,7 @@ export interface Typegen0 {
       | 'error.platform.vc-item.requestingLock:invocation[0]'
       | 'error.platform.vc-item.requestingRevoke:invocation[0]';
     setVcKey: 'REMOVE';
+    setVcMetadata: 'UPDATE_VC_METADATA';
     setVerifiableCredential: 'STORE_RESPONSE';
     setWalletBindingError:
       | 'error.platform.vc-item.addKeyPair:invocation[0]'
@@ -264,6 +270,7 @@ export interface Typegen0 {
     setWalletBindingId:
       | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]';
+    setWalletBindingSuccess: 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
     storeContext:
       | 'CREDENTIAL_DOWNLOADED'
       | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'
@@ -272,7 +279,6 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]'
       | 'done.invoke.vc-item.verifyingCredential:invocation[0]';
     storeLock: 'done.invoke.vc-item.requestingLock:invocation[0]';
-    storeTag: 'SAVE_TAG';
     updatePrivateKey:
       | 'done.invoke.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]'
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
@@ -332,7 +338,6 @@ export interface Typegen0 {
     | 'checkingStore'
     | 'checkingVc'
     | 'checkingVerificationStatus'
-    | 'editingTag'
     | 'idle'
     | 'invalid'
     | 'invalid.backend'
@@ -359,7 +364,6 @@ export interface Typegen0 {
     | 'revokingVc'
     | 'showBindingWarning'
     | 'showingWalletBindingError'
-    | 'storingTag'
     | 'updatingPrivateKey'
     | 'verifyingCredential'
     | {

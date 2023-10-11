@@ -12,6 +12,8 @@ import {createExistingMosipVCItemMachine} from '../../machines/VCItemMachine/Exi
 import {GlobalContext} from '../../shared/GlobalContext';
 import {useFocusEffect} from '@react-navigation/native';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
+import {VCMetadata} from '../../shared/VCMetadata';
+import {createEsignetMosipVCItemMachine} from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 
 export const SendVcScreen: React.FC = () => {
   const {t} = useTranslation('SendVcScreen');
@@ -20,11 +22,17 @@ export const SendVcScreen: React.FC = () => {
   let service;
 
   if (controller.shareableVcsMetadata?.length > 0) {
+    const vcMetadata = controller.shareableVcsMetadata[0];
     const firstVCMachine = useRef(
-      createExistingMosipVCItemMachine(
-        appService.getSnapshot().context.serviceRefs,
-        controller.shareableVcsMetadata[0],
-      ),
+      VCMetadata.fromVC(vcMetadata).isFromOpenId4VCI()
+        ? createEsignetMosipVCItemMachine(
+            appService.getSnapshot().context.serviceRefs,
+            vcMetadata,
+          )
+        : createExistingMosipVCItemMachine(
+            appService.getSnapshot().context.serviceRefs,
+            vcMetadata,
+          ),
     );
 
     service = useInterpret(firstVCMachine.current);

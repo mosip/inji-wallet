@@ -14,7 +14,8 @@
     "QRLOGIN_SUCCESFULL": "QRL تم تسجيل الدخول بنجاح",
     "WALLET_BINDING_SUCCESSFULL": "تفعيل ناجحة",
     "WALLET_BINDING_FAILURE": "فشل التفعيل",
-    "VC_REMOVED": "تمت إزالته من المحفظة"
+    "VC_REMOVED": "تمت إزالته من المحفظة",
+    "TAMPERED_VC_REMOVED": "تمت إزالة بعض البطاقات بسبب نشاط ضار"
   },
   "DeviceInfoList": {
     "requestedBy": "مطلوب بواسطة",
@@ -270,6 +271,7 @@
   "MyVcsTab": {
     "bringYourDigitalID": "أحضر هويتك الرقمية",
     "generateVcDescription": "اضغط على \"إضافة بطاقة \" أدناه لتنزيل بطاقتك",
+    "generateVcFABDescription": "اضغط على \"+\" أدناه لتنزيل بطاقتك",
     "downloadCard": "تحميل البطاقة",
     "downloadingYourCard": "تنزيل بطاقتك ، قد يستغرق هذا ما يصل إلى 5 دقائق",
     "activated": "يتم تمكين بيانات الاعتماد للمصادقة عبر الإنترنت.",
@@ -290,7 +292,11 @@
         "title": "بعض ميزات الأمان لن تكون متاحة",
         "message": "جهازك الحالي لا يدعم جميع ميزات الأمان.",
         "riskOkayText": "نعم"
-      }
+      },
+      "noInternetConnection": {
+        "title": "لا يوجد اتصال بالإنترنت",
+        "message": "الرجاء التحقق من اتصالك وإعادة المحاولة"
+      },
     }
   },
   "OnboardingOverlay": {
@@ -325,7 +331,6 @@
     "revoke": "سحب او إبطال",
     "revoking": "تحتوي محفظتك على بيانات اعتماد مع VID {{vid}}. سيؤدي إبطال هذا إلى حذفه تلقائيًا من المحفظة. هل انت متأكد انك تريد المتابعة؟",
     "requestingOtp": "جارٍ طلب OTP ...",
-    "editTag": "إعادة تسمية",
     "activated": "يتم تمكين بيانات الاعتماد للمصادقة عبر الإنترنت.",
     "redirecting": "إعادة توجيه...",
     "success": {
