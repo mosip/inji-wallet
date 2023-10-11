@@ -81,7 +81,6 @@ export const DefaultTheme = {
     VerifiedIcon: Colors.Green,
     whiteText: Colors.White,
     flipCameraIcon: Colors.Black,
-    IdInputModalBorder: Colors.Grey,
     RetrieveIdLabel: Colors.ShadeOfGrey,
     inputSelection: Colors.Orange,
     checkCircleIcon: Colors.White,
