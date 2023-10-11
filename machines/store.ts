@@ -502,7 +502,7 @@ export async function getItem(
     if (
       e.message.includes(tamperedErrorMessageString) ||
       e.message.includes(keyinvalidatedString) ||
-      e.message.includes(ENOENT) ||
+      e.message === ENOENT ||
       e.message.includes('Key not found') // this error happens when previous get Item calls failed due to key invalidation and data and keys are deleted
     ) {
       throw e;
