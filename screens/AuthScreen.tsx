@@ -19,7 +19,9 @@ export const AuthScreen: React.FC<RootRouteProps> = props => {
 
   const handleUsePasscodeButtonPress = () => {
     sendStartEvent(getData('App Onboarding'));
-    sendInteractEvent(getInteractData('TOUCH', 'Use Passcode Button'));
+    sendInteractEvent(
+      getInteractData('App Onboarding', 'TOUCH', 'Use Passcode Button'),
+    );
     controller.usePasscode();
   };
   return (

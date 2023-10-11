@@ -67,9 +67,9 @@ export function useWelcomeScreen(props: RootRouteProps) {
       } else if (!isSettingUp && passcode !== '') {
         sendStartEvent(getData('App Login'));
         sendInteractEvent(
-          getInteractData('TOUCH', 'Unlock application button'),
+          getInteractData('App Login', 'TOUCH', 'Unlock application button'),
         );
-        sendImpressionEvent(getImpressionData('Passcode'));
+        sendImpressionEvent(getImpressionData('App Login', 'Passcode'));
         props.navigation.navigate('Passcode', {setup: isSettingUp});
       } else {
         props.navigation.navigate('Auth');

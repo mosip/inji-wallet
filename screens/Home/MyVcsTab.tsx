@@ -1,32 +1,30 @@
-import React, { useEffect } from 'react';
-import { Button, Column, Row, Text } from '../../components/ui';
-import { Theme } from '../../components/ui/styleUtils';
-import { Image, RefreshControl } from 'react-native';
-import { useMyVcsTab } from './MyVcsTabController';
-import { HomeScreenTabProps } from './HomeScreen';
-import { AddVcModal } from './MyVcs/AddVcModal';
-import { GetVcModal } from './MyVcs/GetVcModal';
-import { useTranslation } from 'react-i18next';
-import { GET_INDIVIDUAL_ID } from '../../shared/constants';
+import React, {useEffect} from 'react';
+import {Button, Column, Row, Text} from '../../components/ui';
+import {Theme} from '../../components/ui/styleUtils';
+import {Image, RefreshControl} from 'react-native';
+import {useMyVcsTab} from './MyVcsTabController';
+import {HomeScreenTabProps} from './HomeScreen';
+import {AddVcModal} from './MyVcs/AddVcModal';
+import {GetVcModal} from './MyVcs/GetVcModal';
+import {useTranslation} from 'react-i18next';
+import {GET_INDIVIDUAL_ID} from '../../shared/constants';
 import {
   ErrorMessageOverlay,
   MessageOverlay,
 } from '../../components/MessageOverlay';
-import { groupBy } from '../../shared/javascript';
-import { isOpenId4VCIEnabled } from '../../shared/openId4VCI/Utils';
-import { VcItemContainer } from '../../components/VC/VcItemContainer';
-import { BannerNotification } from '../../components/BannerNotification';
+import {groupBy} from '../../shared/javascript';
+import {isOpenId4VCIEnabled} from '../../shared/openId4VCI/Utils';
+import {VcItemContainer} from '../../components/VC/VcItemContainer';
+import {BannerNotification} from '../../components/BannerNotification';
 import {
   getErrorData,
-  getInteractData,
   sendErrorEvent,
-  sendInteractEvent,
 } from '../../shared/telemetry/TelemetryUtils';
 
-const pinIconProps = { iconName: 'pushpin', iconType: 'antdesign' };
+const pinIconProps = {iconName: 'pushpin', iconType: 'antdesign'};
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
-  const { t } = useTranslation('MyVcsTab');
+  const {t} = useTranslation('MyVcsTab');
   const controller = useMyVcsTab(props);
   const storeErrorTranslationPath = 'errors.savingFailed';
   const [pinned, unpinned] = groupBy(
@@ -42,16 +40,6 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
 
   const clearIndividualId = () => {
     GET_INDIVIDUAL_ID('');
-  };
-
-  const handleRiskOkayButtonPress = () => {
-    sendInteractEvent(
-      getInteractData(
-        'TOUCH',
-        'Ok button of hardware key store not supported message overlay',
-      ),
-    );
-    controller.ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS();
   };
 
   useEffect(() => {
@@ -75,7 +63,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   }, [controller.areAllVcsLoaded, controller.inProgressVcDownloadsCount]);
   return (
     <React.Fragment>
-      <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
+      <Column fill style={{display: props.isVisible ? 'flex' : 'none'}}>
         {controller.isRequestSuccessful && (
           <BannerNotification
             message={t('downloadingYourCard')}
@@ -183,7 +171,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
           <Button
             type="gradient"
             title={t('errors.keystoreNotExists.riskOkayText')}
-            onPress={handleRiskOkayButtonPress}
+            onPress={controller.ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS}
             margin={[0, 8, 0, 0]}
           />
         </Row>

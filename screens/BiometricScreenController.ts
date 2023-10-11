@@ -54,7 +54,7 @@ export function useBiometricScreen(props: RootRouteProps) {
     if (isAvailable) {
       sendStartEvent(getData('App login'));
       sendInteractEvent(
-        getInteractData('TOUCH', 'Unlock with Biometrics button'),
+        getInteractData('App login', 'TOUCH', 'Unlock with Biometrics button'),
       );
     }
   }, [isAvailable]);
@@ -66,7 +66,7 @@ export function useBiometricScreen(props: RootRouteProps) {
         index: 0,
         routes: [{name: 'Main'}],
       });
-      sendImpressionEvent(getImpressionData('Main'));
+      sendImpressionEvent(getImpressionData('App Login', 'Main'));
       return;
     }
 
@@ -96,14 +96,15 @@ export function useBiometricScreen(props: RootRouteProps) {
     }
 
     if (isUnavailable || isUnenrolled) {
-      sendEndEvent(getEndData('App login', 'FAILURE'));
       props.navigation.reset({
         index: 0,
         routes: [{name: 'Passcode'}],
       });
       sendStartEvent(getData('App Login'));
-      sendInteractEvent(getInteractData('TOUCH', 'Unlock application button'));
-      sendImpressionEvent(getImpressionData('Passcode'));
+      sendInteractEvent(
+        getInteractData('App Login', 'TOUCH', 'Unlock application button'),
+      );
+      sendImpressionEvent(getImpressionData('App Login', 'Passcode'));
     }
   }, [
     isAuthorized,
@@ -134,7 +135,7 @@ export function useBiometricScreen(props: RootRouteProps) {
   const useBiometrics = () => {
     sendStartEvent(getData('App login'));
     sendInteractEvent(
-      getInteractData('TOUCH', 'Unlock with biometrics button'),
+      getInteractData('App Login', 'TOUCH', 'Unlock with biometrics button'),
     );
     bioSend({type: 'AUTHENTICATE'});
   };
@@ -152,7 +153,7 @@ export function useBiometricScreen(props: RootRouteProps) {
       getErrorData('App Login', 'user_cancel', 'Authentication canceled'),
     );
     sendEndEvent(getEndData('App Login', 'FAILURE'));
-    sendImpressionEvent(getImpressionData('BiometricScreen'));
+    sendImpressionEvent(getImpressionData('App Login', 'BiometricScreen'));
     setReEnabling(false);
   };
 

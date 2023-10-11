@@ -69,7 +69,13 @@ export function getEndData(type, status, additionalParameters = {}) {
   };
 }
 
-export function getInteractData(type, subtype, additionParameters = {}) {
+export function getInteractData(
+  type,
+  ineteractionType,
+  interactingOn,
+  additionParameters = {},
+) {
+  const subtype = getInteractDataSubtype(ineteractionType, interactingOn);
   return {
     type,
     subtype,
@@ -77,9 +83,10 @@ export function getInteractData(type, subtype, additionParameters = {}) {
   };
 }
 
-export function getImpressionData(type, additionalParameters = {}) {
+export function getImpressionData(type, subtype, additionalParameters = {}) {
   return {
     type,
+    subtype,
     additionalParameters: additionalParameters,
   };
 }
@@ -143,14 +150,18 @@ export const incrementPasscodeRetryCount = isSettingUp => {
       ? sendErrorEvent(
           getErrorData(
             'App Onboarding',
-            'not_match',
+            'mismatch',
             'Passcode did not match',
             {},
           ),
         )
       : sendErrorEvent(
-          getErrorData('App Login', 'not_match', 'Passcode did not match', {}),
+          getErrorData('App Login', 'mismatch', 'Passcode did not match', {}),
         );
     passcodeRetryCount = 1;
   }
+};
+
+export const getInteractDataSubtype = (ineteractionType, interactingOn) => {
+  return ineteractionType + '_' + interactingOn;
 };

@@ -1,14 +1,10 @@
-import { useMachine, useSelector } from '@xstate/react';
-import { useContext, useEffect, useState } from 'react';
+import {useMachine, useSelector} from '@xstate/react';
+import {useContext, useEffect, useState} from 'react';
 import * as LocalAuthentication from 'expo-local-authentication';
 
-import {
-  AuthEvents,
-  selectSettingUp,
-  selectAuthorized,
-} from '../machines/auth';
-import { RootRouteProps } from '../routes';
-import { GlobalContext } from '../shared/GlobalContext';
+import {AuthEvents, selectSettingUp, selectAuthorized} from '../machines/auth';
+import {RootRouteProps} from '../routes';
+import {GlobalContext} from '../shared/GlobalContext';
 import {
   biometricsMachine,
   selectError,
@@ -18,8 +14,8 @@ import {
   selectUnenrolledNotice,
   selectErrorResponse,
 } from '../machines/biometrics';
-import { SettingsEvents } from '../machines/settings';
-import { useTranslation } from 'react-i18next';
+import {SettingsEvents} from '../machines/settings';
+import {useTranslation} from 'react-i18next';
 import {
   sendStartEvent,
   sendImpressionEvent,
@@ -34,7 +30,7 @@ import {
 } from '../shared/telemetry/TelemetryUtils';
 
 export function useAuthScreen(props: RootRouteProps) {
-  const { appService } = useContext(GlobalContext);
+  const {appService} = useContext(GlobalContext);
   const authService = appService.children.get('auth');
   const settingsService = appService.children.get('settings');
 
@@ -54,11 +50,13 @@ export function useAuthScreen(props: RootRouteProps) {
   const errorResponse = useSelector(bioService, selectErrorResponse);
 
   const usePasscode = () => {
-    props.navigation.navigate('Passcode', { setup: isSettingUp });
-    sendImpressionEvent(getImpressionData('Passcode'));
+    props.navigation.navigate('Passcode', {setup: isSettingUp});
+    isSettingUp
+      ? sendImpressionEvent(getImpressionData('App Onboarding', 'Passcode'))
+      : sendImpressionEvent(getImpressionData('App Login', 'Passcode'));
   };
 
-  const { t } = useTranslation('AuthScreen');
+  const {t} = useTranslation('AuthScreen');
 
   const fetchIsAvailable = async () => {
     const result = await LocalAuthentication.hasHardwareAsync();
@@ -71,9 +69,9 @@ export function useAuthScreen(props: RootRouteProps) {
       sendEndEvent(getEndData('App Onboarding', 'SUCCESS'));
       props.navigation.reset({
         index: 0,
-        routes: [{ name: 'Main' }],
+        routes: [{name: 'Main'}],
       });
-      sendImpressionEvent(getImpressionData('Main'));
+      sendImpressionEvent(getImpressionData('App Onboarding', 'Main'));
       return;
     }
 
@@ -113,14 +111,16 @@ export function useAuthScreen(props: RootRouteProps) {
     const isBiometricsEnrolled = await LocalAuthentication.isEnrolledAsync();
     if (isBiometricsEnrolled) {
       sendStartEvent(getData('App Onboarding'));
-      sendInteractEvent(getInteractData('TOUCH', 'Use Biometrics Button'));
+      sendInteractEvent(
+        getInteractData('App Onboarding', 'TOUCH', 'Use Biometrics Button'),
+      );
 
-      if (biometricState.matches({ failure: 'unenrolled' })) {
-        biometricSend({ type: 'RETRY_AUTHENTICATE' });
+      if (biometricState.matches({failure: 'unenrolled'})) {
+        biometricSend({type: 'RETRY_AUTHENTICATE'});
         return;
       }
 
-      biometricSend({ type: 'AUTHENTICATE' });
+      biometricSend({type: 'AUTHENTICATE'});
     } else {
       setHasAlertMsg(t('errors.unenrolled'));
     }

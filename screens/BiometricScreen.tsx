@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {TouchableOpacity} from 'react-native';
 import {Icon} from 'react-native-elements';
@@ -17,9 +17,11 @@ export const BiometricScreen: React.FC<RootRouteProps> = props => {
   const {t} = useTranslation('BiometricScreen');
   const controller = useBiometricScreen(props);
 
-  if (controller.isReEnabling) {
-    sendImpressionEvent(getImpressionData('Passcode'));
-  }
+  useEffect(() => {
+    if (controller.isReEnabling) {
+      sendImpressionEvent(getImpressionData('App Login', 'Passcode'));
+    }
+  }, [controller.isReEnabling]);
 
   const handlePasscodeMismatch = (error: string) => {
     incrementPasscodeRetryCount(props.route.params?.setup);

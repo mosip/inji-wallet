@@ -23,11 +23,12 @@ import {incrementPasscodeRetryCount} from '../shared/telemetry/TelemetryUtils';
 export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
   const {t} = useTranslation('PasscodeScreen');
   const controller = usePasscodeScreen(props);
+  const isSettingUp = props.route.params?.setup;
 
   const handleBackButtonPress = () => {
     const routes = props.navigation.getState()?.routes;
     const prevRoute = routes[routes.length - 2];
-    props.route.params?.setup
+    isSettingUp
       ? (sendErrorEvent(
           getErrorData(
             'App Onboarding',
@@ -41,7 +42,11 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
         ),
         sendEndEvent(getEndData('App Login', 'FAILURE')));
     if (routes.length >= 2) {
-      sendImpressionEvent(getImpressionData(prevRoute.name));
+      isSettingUp
+        ? sendImpressionEvent(
+            getImpressionData('App Onboarding', prevRoute.name),
+          )
+        : sendImpressionEvent(getImpressionData('App Login', prevRoute.name));
     }
     return false;
   };
