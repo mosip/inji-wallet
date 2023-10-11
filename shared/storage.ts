@@ -24,7 +24,7 @@ import {
 } from './cryptoutil/cryptoUtil';
 import {VCMetadata} from './VCMetadata';
 import {ENOENT, getItem} from '../machines/store';
-import {MY_VCS_STORE_KEY} from './constants';
+import {MY_VCS_STORE_KEY, RECEIVED_VCS_STORE_KEY} from './constants';
 
 export const MMKV = new MMKVLoader().initialize();
 const vcDirectoryPath = `${DocumentDirectoryPath}/inji/VC`;
@@ -83,11 +83,19 @@ class Storage {
         const isCorrupted = await this.isCorruptedVC(key, encryptionKey, data);
 
         if (isCorrupted) {
-          console.debug('VC is corrupted and will be deleted from storage');
-          console.debug('VC key: ', key);
-          console.debug('is Data null', data === null);
+          console.debug(
+            '[Inji-406]: VC is corrupted and will be deleted from storage',
+          );
+          console.debug('[Inji-406]: VC key: ', key);
+          console.debug('[Inji-406]: is Data null', data === null);
           getItem(MY_VCS_STORE_KEY, [], encryptionKey).then(res => {
-            console.debug('vcKeys are ', res);
+            console.debug('[Inji-406]: vcKeys are ', JSON.stringify(res));
+          });
+          getItem(RECEIVED_VCS_STORE_KEY, null, encryptionKey).then(res => {
+            console.debug(
+              '[Inji-406]: received vcKeys is ',
+              JSON.stringify(res),
+            );
           });
         }
 
@@ -134,7 +142,10 @@ class Storage {
 
   private static async readHmacForVC(key: string, encryptionKey: string) {
     const encryptedHMACofCurrentVC = await MMKV.getItem(getVCKeyName(key));
-    return decryptJson(encryptionKey, encryptedHMACofCurrentVC);
+    if (encryptedHMACofCurrentVC) {
+      return decryptJson(encryptionKey, encryptedHMACofCurrentVC);
+    }
+    return null;
   }
 
   private static async readVCFromFile(key: string) {
