@@ -126,8 +126,15 @@ export const MosipVCItemContent: React.FC<
   const selectableOrCheck = props.selectable ? (
     <CheckBox
       checked={props.selected}
-      checkedIcon={<Icon name="radio-button-checked" />}
-      uncheckedIcon={<Icon name="radio-button-unchecked" />}
+      checkedIcon={
+        <Icon name="check-circle" type="material" color={Theme.Colors.Icon} />
+      }
+      uncheckedIcon={
+        <Icon
+          name="radio-button-unchecked"
+          color={Theme.Colors.uncheckedIcon}
+        />
+      }
       onPress={() => props.onPress()}
     />
   ) : null;
