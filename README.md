@@ -54,7 +54,7 @@ Create a `.env.local` file using `.env` as your template:
 MIMOTO_HOST=
 ```
 
-And `android/local.properties`:
+And `android/local.properties`.
 
 ### Android
 
