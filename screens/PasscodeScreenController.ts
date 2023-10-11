@@ -25,29 +25,7 @@ export function usePasscodeScreen(props: PasscodeRouteProps) {
 
   const [passcode, setPasscode] = useState('');
   const [error, setError] = useState('');
-  const [PasscodeRetryCount, setPasscodeRetryCount] = useState(1);
 
-  const incrementPasscodeRetryCount = () => {
-    if (PasscodeRetryCount < 5) {
-      setPasscodeRetryCount(PasscodeRetryCount + 1);
-    } else {
-      if (props.route.params?.setup) {
-        sendErrorEvent(
-          getErrorData(
-            'App Onboarding',
-            'not_match',
-            'Passcode did not match',
-            {},
-          ),
-        );
-      } else {
-        sendErrorEvent(
-          getErrorData('App Login', 'not_match', 'Passcode did not match', {}),
-        );
-      }
-      setPasscodeRetryCount(1);
-    }
-  };
   useEffect(() => {
     if (isAuthorized) {
       if (props.route.params?.setup) {
@@ -68,7 +46,6 @@ export function usePasscodeScreen(props: PasscodeRouteProps) {
     setPasscode,
     error,
     setError,
-    incrementPasscodeRetryCount,
 
     storedPasscode: useSelector(authService, selectPasscode),
 

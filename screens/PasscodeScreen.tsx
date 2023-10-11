@@ -18,6 +18,7 @@ import {
   sendImpressionEvent,
 } from '../shared/telemetry/TelemetryUtils';
 import {BackHandler} from 'react-native';
+import {incrementPasscodeRetryCount} from '../shared/telemetry/TelemetryUtils';
 
 export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
   const {t} = useTranslation('PasscodeScreen');
@@ -26,21 +27,19 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
   const handleBackButtonPress = () => {
     const routes = props.navigation.getState()?.routes;
     const prevRoute = routes[routes.length - 2];
-    if (props.route.params?.setup) {
-      sendErrorEvent(
-        getErrorData(
-          'App Onboarding',
-          'user_cancel',
-          'Authentication canceled',
+    props.route.params?.setup
+      ? (sendErrorEvent(
+          getErrorData(
+            'App Onboarding',
+            'user_cancel',
+            'Authentication canceled',
+          ),
         ),
-      );
-      sendEndEvent(getEndData('App Onboarding', 'FAILURE'));
-    } else {
-      sendErrorEvent(
-        getErrorData('App Login', 'user_cancel', 'Authentication canceled'),
-      );
-      sendEndEvent(getEndData('App Login', 'FAILURE'));
-    }
+        sendEndEvent(getEndData('App Onboarding', 'FAILURE')))
+      : (sendErrorEvent(
+          getErrorData('App Login', 'user_cancel', 'Authentication canceled'),
+        ),
+        sendEndEvent(getEndData('App Login', 'FAILURE')));
     if (routes.length >= 2) {
       sendImpressionEvent(getImpressionData(prevRoute.name));
     }
@@ -64,7 +63,7 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
   };
 
   const handlePasscodeMismatch = (error: string) => {
-    controller.incrementPasscodeRetryCount();
+    incrementPasscodeRetryCount(props.route.params?.setup);
     controller.setError(error);
   };
 

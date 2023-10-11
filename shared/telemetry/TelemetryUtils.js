@@ -1,6 +1,6 @@
 import telemetry from 'telemetry-sdk';
-import { Platform } from 'react-native';
-import { HOST } from '../constants';
+import {Platform} from 'react-native';
+import {HOST} from '../constants';
 import {
   __AppId,
   __InjiVersion,
@@ -8,9 +8,9 @@ import {
   __SessionId,
   __TuvaliVersion,
 } from '../GlobalVariables';
-import { OBSRV_HOST } from 'react-native-dotenv';
+import {OBSRV_HOST} from 'react-native-dotenv';
 import DeviceInfo from 'react-native-device-info';
-import { isCustomSecureKeystore } from '../cryptoutil/cryptoUtil';
+import {isCustomSecureKeystore} from '../cryptoutil/cryptoUtil';
 import * as RNLocalize from 'react-native-localize';
 
 export function sendImpressionEvent(data) {
@@ -132,3 +132,25 @@ export function getAppInfoData() {
     tuvaliVersion: __TuvaliVersion.getValue(),
   };
 }
+
+let passcodeRetryCount = 1;
+
+export const incrementPasscodeRetryCount = isSettingUp => {
+  if (passcodeRetryCount < 5) {
+    passcodeRetryCount += 1;
+  } else {
+    isSettingUp
+      ? sendErrorEvent(
+          getErrorData(
+            'App Onboarding',
+            'not_match',
+            'Passcode did not match',
+            {},
+          ),
+        )
+      : sendErrorEvent(
+          getErrorData('App Login', 'not_match', 'Passcode did not match', {}),
+        );
+    passcodeRetryCount = 1;
+  }
+};

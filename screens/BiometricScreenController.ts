@@ -2,7 +2,12 @@ import {useMachine, useSelector} from '@xstate/react';
 import {useContext, useEffect, useState} from 'react';
 import {Platform} from 'react-native';
 import RNFingerprintChange from 'react-native-biometrics-changed';
-import {AuthEvents, selectAuthorized, selectPasscode} from '../machines/auth';
+import {
+  AuthEvents,
+  selectAuthorized,
+  selectPasscode,
+  selectPasscodeSalt,
+} from '../machines/auth';
 import {
   biometricsMachine,
   selectError,
@@ -43,6 +48,7 @@ export function useBiometricScreen(props: RootRouteProps) {
   const isUnenrolled = useSelector(bioService, selectIsUnenrolled);
   const errorMsgBio = useSelector(bioService, selectError);
   const errorResponse = useSelector(bioService, selectErrorResponse);
+  const passcodeSalt = useSelector(authService, selectPasscodeSalt);
 
   useEffect(() => {
     if (isAvailable) {
@@ -142,6 +148,11 @@ export function useBiometricScreen(props: RootRouteProps) {
   };
 
   const onDismiss = () => {
+    sendErrorEvent(
+      getErrorData('App Login', 'user_cancel', 'Authentication canceled'),
+    );
+    sendEndEvent(getEndData('App Login', 'FAILURE'));
+    sendImpressionEvent(getImpressionData('BiometricScreen'));
     setReEnabling(false);
   };
 
@@ -149,6 +160,7 @@ export function useBiometricScreen(props: RootRouteProps) {
     error,
     isReEnabling,
     isSuccessBio,
+    passcodeSalt,
     storedPasscode: useSelector(authService, selectPasscode),
     useBiometrics,
 
