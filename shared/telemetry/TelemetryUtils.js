@@ -2,6 +2,8 @@ import telemetry from 'telemetry-sdk';
 import {Platform} from 'react-native';
 import {MIMOTO_BASE_URL} from '../constants';
 import i18next from 'i18next';
+import {MIMOTO_BASE_URL} from '../constants';
+import i18next from 'i18next';
 import {
   __AppId,
   __InjiVersion,
@@ -132,34 +134,17 @@ export function getAppInfoEventData() {
     dateTime: new Date().getTime(),
     zone: RNLocalize.getTimeZone(),
     offset: new Date().getTimezoneOffset() * 60 * 1000,
-    preferredLanguage: languageCodeMap[i18next.language] ?? i18next.language,
+    preferredLanguage: languageCodeMap[i18next.language],
     buildNumber: DeviceInfo.getBuildNumber(),
     injiVersion: __InjiVersion.getValue(),
     tuvaliVersion: __TuvaliVersion.getValue(),
   };
 }
 
-let passcodeRetryCount = 1;
-
-export const incrementPasscodeRetryCount = eventType => {
-  if (passcodeRetryCount < 5) {
-    passcodeRetryCount += 1;
-  } else {
-    sendErrorEvent(
-      getErrorEventData(eventType, 'mismatch', 'Passcode did not match'),
-    );
-    passcodeRetryCount = 1;
-  }
-};
-
 export function configureTelemetry() {
   const config = getTelemetryConfigData();
   initializeTelemetry(config);
-  sendAppInfoEvent(getAppInfoEventData());
-}
-
-export function getEventType(isSettingUp) {
-  return isSettingUp ? 'App Onboarding' : 'App Login';
+  sendAppInfoEvent(getAppInfoData());
 }
 
 const languageCodeMap = {
