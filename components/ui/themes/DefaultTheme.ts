@@ -36,7 +36,6 @@ const Colors = {
   TimeoutHintBoxColor: '#FFF7E5',
   TimoutHintText: '#8B6105',
   resendCodeTimer: '#555555',
-  uncheckedIcon: '#DBDBDB',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -82,6 +81,7 @@ export const DefaultTheme = {
     VerifiedIcon: Colors.Green,
     whiteText: Colors.White,
     flipCameraIcon: Colors.Black,
+    IdInputModalBorder: Colors.Grey,
     RetrieveIdLabel: Colors.ShadeOfGrey,
     inputSelection: Colors.Orange,
     checkCircleIcon: Colors.White,
@@ -106,8 +106,6 @@ export const DefaultTheme = {
     resendCodeTimer: Colors.resendCodeTimer,
     statusLabel: Colors.Black,
     statusMessage: Colors.Gray40,
-    blackIcon: Colors.Black,
-    uncheckedIcon: Colors.uncheckedIcon,
   },
   Styles: StyleSheet.create({
     title: {
@@ -242,7 +240,7 @@ export const DefaultTheme = {
       borderRadius: 15,
       margin: 5,
       borderWidth: 3,
-      borderColor: Colors.Orange,
+      borderColor: Colors.Green,
       overflow: 'hidden',
     },
     selectedVc: {
@@ -396,7 +394,7 @@ export const DefaultTheme = {
     },
     receiveCardsContainer: {
       height: Dimensions.get('window').height * 0.12,
-      width: Dimensions.get('window').width * 0.47,
+      width: Dimensions.get('window').width * 0.45,
       alignItems: 'center',
       borderBottomRightRadius: 0,
       padding: 15,
@@ -655,7 +653,6 @@ export const DefaultTheme = {
     },
     bold: {
       fontFamily: 'Inter_700Bold',
-      fontSize: 15,
     },
     small: {
       fontSize: 13,
@@ -745,8 +742,7 @@ export const DefaultTheme = {
       borderRadius: 9,
       width: Dimensions.get('window').width * 0.72,
       alignSelf: 'center',
-      margin: 3,
-      height: 54,
+      margin: 4,
     },
     float: {
       borderRadius: 9,
