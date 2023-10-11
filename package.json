@@ -1,6 +1,7 @@
 {
   "scripts": {
     "prepare": "husky install",
+    "jetify": "jetify",
     "start": "react-native start",
     "android:mosip": "react-native run-android --variant=mosipDebug",
     "ios": "react-native run-ios",
@@ -8,7 +9,7 @@
     "i18n:compile-strings": "node scripts/compile-strings.js",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "test": "jest",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package && yarn jetify && sh tools/talisman/talisman-precommit.sh"
   },
   "dependencies": {
     "@digitalbazaar/ed25519-signature-2018": "digitalbazaar/ed25519-signature-2018",
