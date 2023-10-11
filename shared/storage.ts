@@ -142,7 +142,10 @@ class Storage {
 
   private static async readHmacForVC(key: string, encryptionKey: string) {
     const encryptedHMACofCurrentVC = await MMKV.getItem(getVCKeyName(key));
-    return decryptJson(encryptionKey, encryptedHMACofCurrentVC);
+    if (encryptedHMACofCurrentVC) {
+      return decryptJson(encryptionKey, encryptedHMACofCurrentVC);
+    }
+    return null;
   }
 
   private static async readVCFromFile(key: string) {

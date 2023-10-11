@@ -3,7 +3,7 @@ import {
   VerifiableCredential,
 } from '../types/VC/ExistingMosipVC/vc';
 import {__AppId} from './GlobalVariables';
-import {HOST, MIMOTO_BASE_URL} from './constants';
+import {MIMOTO_BASE_URL, REQUEST_TIMEOUT} from './constants';
 
 export type HTTP_METHOD = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
 
@@ -19,18 +19,43 @@ export async function request(
   path: `/${string}`,
   body?: Record<string, unknown>,
   host = MIMOTO_BASE_URL,
-) {
-  const headers = {
+  headers: Record<string, string> = {
     'Content-Type': 'application/json',
-  };
+  },
+  timeoutMillis?: undefined | number,
+) {
   if (path.includes('residentmobileapp'))
     headers['X-AppId'] = __AppId.getValue();
-
-  const response = await fetch(host + path, {
-    method,
-    headers,
-    body: JSON.stringify(body),
-  });
+  let response;
+  if (timeoutMillis === undefined) {
+    response = await fetch(host + path, {
+      method,
+      headers,
+      body: body ? JSON.stringify(body) : undefined,
+    });
+  } else {
+    console.log(`making a web request to ${host + path}`);
+    let controller = new AbortController();
+    setTimeout(() => {
+      controller.abort();
+    }, timeoutMillis);
+    try {
+      response = await fetch(host + path, {
+        method,
+        headers,
+        body: body ? JSON.stringify(body) : undefined,
+        signal: controller.signal,
+      });
+    } catch (error) {
+      console.log(
+        `Error occurred while making request: ${host + path}: ${error}`,
+      );
+      if (error.name === 'AbortError') {
+        throw new Error(REQUEST_TIMEOUT);
+      }
+      throw error;
+    }
+  }
 
   const jsonResponse = await response.json();
 
@@ -38,10 +63,7 @@ export async function request(
     let backendUrl = host + path;
     let errorMessage = jsonResponse.message || jsonResponse.error;
     console.error(
-      'The backend API ' +
-        backendUrl +
-        ' returned error code 400 with message --> ' +
-        errorMessage,
+      `The backend API ${backendUrl} returned error code ${response.status} with message --> ${errorMessage}`,
     );
     throw new Error(errorMessage);
   }

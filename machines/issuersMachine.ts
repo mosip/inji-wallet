@@ -2,9 +2,9 @@ import {authorize, AuthorizeResult} from 'react-native-app-auth';
 import {assign, EventFrom, send, sendParent, StateFrom} from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {MY_VCS_STORE_KEY} from '../shared/constants';
-import {request} from '../shared/request';
 import {StoreEvents} from './store';
 import {AppServices} from '../shared/GlobalContext';
+import NetInfo from '@react-native-community/netinfo';
 import {
   generateKeys,
   isCustomSecureKeystore,
@@ -14,18 +14,27 @@ import {KeyPair} from 'react-native-rsa-native';
 import {ActivityLogEvents} from './activityLog';
 import {log} from 'xstate/lib/actions';
 import {verifyCredential} from '../shared/vcjs/verifyCredential';
-import {getBody, getIdentifier} from '../shared/openId4VCI/Utils';
+import {
+  getBody,
+  getIdentifier,
+  vcDownloadTimeout,
+  OIDCErrors,
+  ErrorMessage,
+} from '../shared/openId4VCI/Utils';
+import {NETWORK_REQUEST_FAILED, REQUEST_TIMEOUT} from '../shared/constants';
 import {VCMetadata} from '../shared/VCMetadata';
 import {
   CredentialWrapper,
   VerifiableCredential,
 } from '../types/VC/EsignetMosipVC/vc';
 import {CACHED_API} from '../shared/api';
+import {request} from '../shared/request';
 
 const model = createModel(
   {
     issuers: [] as issuerType[],
-    selectedIssuer: [] as issuerType[],
+    selectedIssuerId: '' as string,
+    selectedIssuer: {} as issuerType,
     tokenResponse: {} as AuthorizeResult,
     errorMessage: '' as string,
     loadingReason: 'displayIssuers' as string,
@@ -56,7 +65,7 @@ export const Issuer_Tab_Ref_Id = 'issuersMachine';
 export const Issuers_Key_Ref = 'OpenId4VCI';
 export const IssuersMachine = model.createMachine(
   {
-    /** @xstate-layout N4IgpgJg5mDOIC5QEtawK5gE6wLIEMBjAC2QDswA6AG1QBcBJNTHAYggHsLLY786qqDNjxFS3WrybCcAbQAMAXUSgADh1jI6yLipAAPRAEYA7PMomj8gJwAWeSYAcTgMy2TJgDQgAnsZPWlLYArC5GAEzWEfKRtka2AL4J3kIsoiTkVLBg1GCE2mRQ0iysACIA8gDqAHIAMuUAgqUA+gBqDA3NDKUKykgg6prauv2GCMHuFo7W8sET8i4x1uHefgimJpTWoRHWJrYuc9YAbEkpzCIEGdzZufnkRRdYrADKAKK1bwDCACpvLQwXi8AKpvABKvT0gy0OjIejGE02Thmc3si0iK18iEcRiC1nxJxR22OjhcZxAqUuYkyPByeQKjxkZUBuEBL0h-Whwzho0QiKmKPm6OWq0Q4X2QXkx3C0uCOKM0pcJnJlJwV3EWTp+WK2HYXCyfAElFV6Q1tLujCeHLUGhhI1AY2mx0oRmCxyMjgcJMi8VF6xM4Uo4QWRjc2xMcqVp2SFKepppqmwADMOFgALYNdB0Yip5AAL34sNYDWBPwAEuUwQwAFr-a0DW3c+HGBaOILHeSOWwkj3hYIKv34rYmY4TUeOZzSxzR84yePcRNYFPpzPZ3MF7msMHfN4MVr-Zo-coAaTe1XrXNhzfW4VvlEW3YVMRcexlfo2Wx2kX2h2C20SMYmuqNIwHQXxYJAYBkNo+DUAAYlgHBpjqzycDchqCHGwHcKB4GQdByCwQhSEoRejZXry6zuG2yy9scSq0bY75WEGMpytM+wONsZLkmQHAQHAehAdSFBQuR9oGIgAC0xx+jJKpYSJghkFoYlDBRDqIMctiUB2EyOPpMzhM4mJrH2gTLHs8jxI44T2K6ClzthVCSJac5qXaPKaQgtimWK1lBJExwzF24QuMGtgAbOaTOea9IPChHlNpRLi2ZQ-Zur5o7PlEslYggwa4r5JwBFlLijvsjkxUpcXak8SUaZJCARi4Lq2F28izGEna2e+dgugExwmKl7hmFKVVUtcVCLsuGZZjmWD5oWEmXhJYxWCxtkxGiRjLJYjh+oVgUlXYMrlcElWAYpU2ULhEECQRRGIch9WcuJXlNfECqBR6MTOHYZgHflwZtkNVkxGdrbhBNao1cgEC5A1a2IC1bUdV1VgTn5BV7JQWOksENhyk4RhJEkQA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QEtawK5gE6wLIEMBjAC2QDswA6CVABwBt8BPASTUxwGIIB7Cy8gDceAayqoM2PEVL8asBszaScCIT0L4ALsj4BtAAwBdQ0cShaPWMh19zIAB6IALAEYAnJWfuAzM4BsAKwAHN7BwQDsfgA0IEyIAEw+Ea6UBgkRwT7uEekGrhHOAL5FsRIc0iTkVPKKrOxSnNhYPFiUiloAZq0AtgINOARVcnSM9SqwamTCmrZkpqb2ltZz9k4Izgme3n5Boe7hUc6x8QgJ3gZpgT6BgRH+yYWBJWUDlbJUza2cACoASgBNAD6AEEAOIglgAOUWSBAyxsujIaxcWy8vgCITCkRicUSIQSlGyCQMETu7n84QKLxA5SkQw+lC+WF+gNBEOhelcZjhCNWcPWrgSJ0QQppdMGMmqTKwLRZ-2B4MhMISPIsVkRdgFooMvjS-jc9wezl1ARFZwiCUClFcN3czmcKWuPnFbwZ0uZnD+AFEAMren5A71-P4AeT+sPVKyRKIQrgMwX8lASCWCgVcgW8lt15oyEU8CSCloz6WcN38rom7v4sDA9DAhB0ZCgyg4nAAIqGAOpQgAyoZB7aBLHbkfhGv5oHWPgMBmclEigQM-lTVpyc9z+R8yfzriyPhTS4zlYq1aotfrjfILYGnH9ve9AGEft6hyxfb6AKrBsd8mPahBAmFPEEB8VwhS8XVkgKA5dXcE96SlOQeAAdzIegeHwCBW2wR8+E6ZAoG4PhxGmURxDdJCalQ9DMOwgY8LIAioCmGZtCRBZjCWCd-ynUVgNOMVSlpSjhmotCMKwnCsEY5imllVp2kYLpen6KsqOoGjJPolRZMI1iNHY-RjF-HitT4jYUwXZwgMpFMfHCGcIlze15zuFdghyA5UweBDJTEygSAbEQWDILRsAoLRiP4dQxEC4hgtC8KsEi0zo3MxxRVuQlLUCdxdUzbIhX8c14w8Iky1ucI1zTYI-PeaUgsIEKwoisAot4GKyLipqWuS1LuW49LkQA4I0SFdxwOXO1-HSUrbUuLZSX8XwMn8Vwy3qs94sS1qUva+S5SU7RuiwPpeqStqtDSzURos4IIMpB5i1moCHPNSbgi8QIDXcPLcltDIto0i69simU5QSVlFQ5GEuN5My7syuNkiTfJJvyDwiyCUrZ2tPwbimoDMhuYGAtobBTp6EF0C0YhWmQAAvIyyGi0jhDiiUGv4CmsCpmm6YZ5m5gM2YOJM+Go1u2NbJtFbJoyN7U3cc0V2tbxXH8FdHSPe0ycZXn+dp+msCZlnDsUjoqbU08NMN3oBZNs2RfUMXjJMSXx2GmXNbl9wFbJJJlfNB6bUiLYbiW-KIgifXpXts7HaF83mWOlSzptxDycph3jeTl2yLd+YTMGhHvYA64k01-2hUDg9PNK5J52CAwZ3TQpwNj4Sue23qAGkwCYAAFfBkBZR8AAknz7oE++9YEh8hCNPb-DLBTnKuPD+h15cKc0qptDaMcibxnm70TGX7weR7HzhJ+n2f56BReWAjUupcnZH4x8Tf-czAJ-Z7xAskS4YFiQeXOJ5F0591IBRgBQLA2gwAD2HqPFknV2bkUzv5Rk8DsBIJQTfLAosWacTVF7aWAECjZEoPlTy6Z1o5HOOaPwqRqoOQyGNTMKY478DwYg8KhC0FswEN1CisDcFgAQQQ6+aCSFzAWO-Chn9BRRE8HQv6msPCWmOCBFMhI0xBH8DHMkOQyS8PErRLCj4sCQCkTofA9BYAiNiuI22AVeASTojYuxYVkCOMmK7UhEtyGryRusGyER9SWgpIVCkYFAi5j3EmG4CZW4OSbsUGB7jGSeKsRAHxEB7H+KcRbNoVtVI9w0nk7ShTikBPkeLD2oTEaxkidErYQQyzxIzLmThlBKSrQzJsKkFjNJeOsbYopfiAl3xBFCR83pew3RUS4R0HTYndIeL0kCe4ogVSyB4ByMcNpjMENgZAnQmDXjqTM+gLixHYO5lQc5psrk3KmfU+gjT3YrN4l-eMnguF3HOAkDMDlEl6ITFXYxDosjnCONA14EjpSvMudc5styHH3NThUjOVSApoveZiz5dyfnF2aUNShFkppAqtCCzY4K0x9IMNafMDCDgPBJAeMZyAID1jvqGXAQ8HwvlHCvVpVC1ZeG5VsVMUQ9l9JNAM5wY0W6pnjJEXl-KwBzIWUsv5a9RTSs2K3OVOJFV6NtKkG4eVUytx+jymkZAeBFPgHCAlHwqWrIQAAWh-uaX1ZIw6WnuJVKIK0EhjNqGMaS7qP7-PWJaXMP0okmhTPmGOFJ4wVmyVnRkzJvWJsQC3IFOQNqJkKPmG4uZMiXF1JSTYhZ0i7DGReBsTYbwqCLUauMu4iRUh+pmIUG0km2gGQURMqNNibTzTg6UNS6LST0lAHt4TEDGJcoWWhI6xreACGSXNyKcmNQSs1S6+0tBrtjGGgZU6XqsqSMEc0ZJtwFRNAUHeGYz7Hvzae3a-V2oQ1aAka9VCwVROhS3PKfhlwFA+mNZMjxcgORskkI9IkUU8xzonPOpthb-LCW0gSoofB+C8GNFaLd4zLhjmMq+qCx5gYsoehcMcbi7g2imVW5H0yqrGjcPwlo6pzueZQfhMjGNYGY1-PwhISQFGeoJlILCwJeHWhmBVFahK-vnchCZBTSXYvjco4tCAch9LU7Va48ZHSUjORc4lUAsUlJk+sQZyYqrrgNFrZ9VrKR3uMR5TWZGf5tq0AzZsbnSO+0NNkNwbhHKQsEv7bcar8pgW8FsUI2r6zRZRhmNIMdVy5Dyuqyz84AhPXsqqlI0aSL5ZgjawdXSR26NOCmX2WxHS6k-Xxs+JQgA */
     predictableActionArguments: true,
     preserveActionOrder: true,
     id: Issuer_Tab_Ref_Id,
@@ -73,10 +82,11 @@ export const IssuersMachine = model.createMachine(
         invoke: {
           src: 'downloadIssuersList',
           onDone: {
-            actions: ['setIssuers'],
+            actions: ['setIssuers', 'resetLoadingReason'],
             target: 'selectingIssuer',
           },
           onError: {
+            //loadingReason is not reset here so that we go to previous(Home) screen on back button press of error screen
             actions: ['setError'],
             target: 'error',
           },
@@ -85,13 +95,27 @@ export const IssuersMachine = model.createMachine(
       error: {
         description: 'reaches here when any error happens',
         on: {
-          TRY_AGAIN: {
-            actions: 'resetError',
-            target: 'displayIssuers',
-          },
+          TRY_AGAIN: [
+            {
+              description: 'not fetched issuers config yet',
+              cond: 'shouldFetchIssuersAgain',
+              actions: ['setLoadingReasonAsDisplayIssuers', 'resetError'],
+              target: 'displayIssuers',
+            },
+            {
+              cond: 'canSelectIssuerAgain',
+              actions: 'resetError',
+              target: 'selectingIssuer',
+            },
+            {
+              description: 'not fetched issuers config yet',
+              actions: ['setLoadingReasonAsDisplayIssuers', 'resetError'],
+              target: 'downloadIssuerConfig',
+            },
+          ],
           RESET_ERROR: {
             actions: 'resetError',
-            target: 'idle',
+            target: 'selectingIssuer',
           },
         },
       },
@@ -102,6 +126,7 @@ export const IssuersMachine = model.createMachine(
             actions: sendParent('DOWNLOAD_ID'),
           },
           SELECTED_ISSUER: {
+            actions: 'setSelectedIssuerId',
             target: 'downloadIssuerConfig',
           },
         },
@@ -112,7 +137,32 @@ export const IssuersMachine = model.createMachine(
           src: 'downloadIssuerConfig',
           onDone: {
             actions: 'setSelectedIssuers',
-            target: 'performAuthorization',
+            target: 'checkInternet',
+          },
+          onError: {
+            actions: ['setError', 'resetLoadingReason'],
+            target: 'error',
+          },
+        },
+      },
+      checkInternet: {
+        description: 'checks internet before opening the web view',
+        invoke: {
+          src: 'checkInternet',
+          id: 'checkInternet',
+          onDone: [
+            {
+              cond: 'isInternetConnected',
+              target: 'performAuthorization',
+            },
+            {
+              actions: ['setNoInternet', 'resetLoadingReason'],
+              target: 'error',
+            },
+          ],
+          onError: {
+            actions: () => console.log('checkInternet error caught'),
+            target: 'error',
           },
         },
       },
@@ -122,13 +172,34 @@ export const IssuersMachine = model.createMachine(
         invoke: {
           src: 'invokeAuthorization',
           onDone: {
-            actions: ['setTokenResponse', 'getKeyPairFromStore', 'loadKeyPair'],
+            actions: [
+              'setTokenResponse',
+              'setLoadingReasonAsSettingUp',
+              'getKeyPairFromStore',
+              'loadKeyPair',
+            ],
             target: 'checkKeyPair',
           },
-          onError: {
-            actions: [() => console.log('error in invokeAuth - ', event.data)],
-            target: 'downloadCredentials',
-          },
+          onError: [
+            {
+              cond: 'isOIDCflowCancelled',
+              actions: ['resetError', 'resetLoadingReason'],
+              target: 'selectingIssuer',
+            },
+            {
+              cond: 'isOIDCConfigError',
+              actions: ['setOIDCConfigError'],
+              target: 'error',
+            },
+            {
+              actions: [
+                'setError',
+                'resetLoadingReason',
+                (_, event) => console.log('error in invokeAuth - ', event.data),
+              ],
+              target: 'error',
+            },
+          ],
         },
       },
       checkKeyPair: {
@@ -153,11 +224,20 @@ export const IssuersMachine = model.createMachine(
           src: 'generateKeyPair',
           onDone: [
             {
-              actions: ['setPublicKey', 'setPrivateKey', 'storeKeyPair'],
+              actions: [
+                'setPublicKey',
+                'setLoadingReasonAsDownloadingCredentials',
+                'setPrivateKey',
+                'storeKeyPair',
+              ],
               target: 'downloadCredentials',
             },
             {
-              actions: ['setPublicKey', 'storeKeyPair'],
+              actions: [
+                'setPublicKey',
+                'setLoadingReasonAsDownloadingCredentials',
+                'storeKeyPair',
+              ],
               cond: 'isCustomSecureKeystore',
               target: 'downloadCredentials',
             },
@@ -172,10 +252,12 @@ export const IssuersMachine = model.createMachine(
             actions: ['setVerifiableCredential', 'setCredentialWrapper'],
             target: 'verifyingCredential',
           },
-          onError: {
-            actions: event =>
-              console.log(' error occured in downloadCredential', event),
-          },
+          onError: [
+            {
+              actions: ['setError', 'resetLoadingReason'],
+              target: 'error',
+            },
+          ],
         },
         on: {
           CANCEL: {
@@ -232,19 +314,39 @@ export const IssuersMachine = model.createMachine(
     actions: {
       setIssuers: model.assign({
         issuers: (_, event) => event.data,
+      }),
+      setNoInternet: model.assign({
+        errorMessage: () => ErrorMessage.NO_INTERNET,
+      }),
+      setLoadingReasonAsDisplayIssuers: model.assign({
+        loadingReason: 'displayIssuers',
+      }),
+      setLoadingReasonAsDownloadingCredentials: model.assign({
+        loadingReason: 'downloadingCredentials',
+      }),
+      setLoadingReasonAsSettingUp: model.assign({
+        loadingReason: 'settingUp',
+      }),
+      resetLoadingReason: model.assign({
         loadingReason: null,
       }),
-
       setError: model.assign({
         errorMessage: (_, event) => {
-          console.log('Error while fetching issuers ', event.data.message);
-          return event.data.message === 'Network request failed'
-            ? 'noInternetConnection'
-            : 'generic';
+          console.log('Error occured ', event.data.message);
+          const error = event.data.message;
+          switch (error) {
+            case NETWORK_REQUEST_FAILED:
+              return ErrorMessage.NO_INTERNET;
+            case REQUEST_TIMEOUT:
+              return ErrorMessage.REQUEST_TIMEDOUT;
+            default:
+              return ErrorMessage.GENERIC;
+          }
         },
-        loadingReason: null,
       }),
-
+      setOIDCConfigError: model.assign({
+        errorMessage: (_, event) => event.data.toString(),
+      }),
       resetError: model.assign({
         errorMessage: '',
       }),
@@ -268,7 +370,6 @@ export const IssuersMachine = model.createMachine(
           to: context => context.serviceRefs.store,
         },
       ),
-
       storeVerifiableCredentialMeta: send(
         context =>
           StoreEvents.PREPEND(MY_VCS_STORE_KEY, getVCMetadata(context)),
@@ -316,9 +417,11 @@ export const IssuersMachine = model.createMachine(
       setSelectedIssuers: model.assign({
         selectedIssuer: (_, event) => event.data,
       }),
+      setSelectedIssuerId: model.assign({
+        selectedIssuerId: (_, event) => event.id,
+      }),
       setTokenResponse: model.assign({
         tokenResponse: (_, event) => event.data,
-        loadingReason: 'settingUp',
       }),
       setVerifiableCredential: model.assign({
         verifiableCredential: (_, event) => {
@@ -331,17 +434,16 @@ export const IssuersMachine = model.createMachine(
         },
       }),
       setPublicKey: assign({
-        publicKey: (context, event) => {
+        publicKey: (_, event) => {
           if (!isCustomSecureKeystore()) {
             return (event.data as KeyPair).public;
           }
           return event.data as string;
         },
-        loadingReason: 'downloadingCredentials',
       }),
 
       setPrivateKey: assign({
-        privateKey: (context, event) => (event.data as KeyPair).private,
+        privateKey: (_, event) => (event.data as KeyPair).private,
       }),
 
       logDownloaded: send(
@@ -363,31 +465,30 @@ export const IssuersMachine = model.createMachine(
       downloadIssuersList: async () => {
         return await CACHED_API.fetchIssuers();
       },
-
-      downloadIssuerConfig: async (_, event) => {
-        return await CACHED_API.fetchIssuerConfig(event.id);
+      checkInternet: async () => await NetInfo.fetch(),
+      downloadIssuerConfig: async (context, _) => {
+        return await CACHED_API.fetchIssuerConfig(context.selectedIssuerId);
       },
-
       downloadCredential: async context => {
         const body = await getBody(context);
-        const response = await fetch(
+        const downloadTimeout = await vcDownloadTimeout();
+        const response = await request(
+          'POST',
           context.selectedIssuer.serviceConfiguration.credentialEndpoint,
+          body,
+          '',
           {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: 'Bearer ' + context.tokenResponse?.accessToken,
-            },
-            body: JSON.stringify(body),
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + context.tokenResponse?.accessToken,
           },
+          downloadTimeout,
         );
         let credential = await response.json();
         credential = updateCredentialInformation(context, credential);
         return credential;
       },
       invokeAuthorization: async context => {
-        const response = await authorize(context.selectedIssuer);
-        return response;
+        return await authorize(context.selectedIssuer);
       },
       generateKeyPair: async context => {
         if (!isCustomSecureKeystore()) {
@@ -408,6 +509,33 @@ export const IssuersMachine = model.createMachine(
       hasKeyPair: context => {
         return context.publicKey != null;
       },
+      isInternetConnected: (_, event) => !!event.data.isConnected,
+      isOIDCflowCancelled: (_, event) => {
+        // iOS & Android have different error strings for user cancelled flow
+        const err = [
+          OIDCErrors.OIDC_FLOW_CANCELLED_ANDROID,
+          OIDCErrors.OIDC_FLOW_CANCELLED_IOS,
+        ];
+        return (
+          !!event.data &&
+          typeof event.data.toString === 'function' &&
+          err.some(e => event.data.toString().includes(e))
+        );
+      },
+      isOIDCConfigError: (_, event) => {
+        return (
+          !!event.data &&
+          typeof event.data.toString === 'function' &&
+          event.data.toString().includes(OIDCErrors.OIDC_CONFIG_ERROR_PREFIX)
+        );
+      },
+      canSelectIssuerAgain: (context, _) => {
+        return (
+          context.errorMessage.includes(OIDCErrors.OIDC_CONFIG_ERROR_PREFIX) ||
+          context.errorMessage.includes(ErrorMessage.REQUEST_TIMEDOUT)
+        );
+      },
+      shouldFetchIssuersAgain: context => context.issuers.length === 0,
       isCustomSecureKeystore: () => isCustomSecureKeystore(),
     },
   },
@@ -419,8 +547,11 @@ export function selectIssuers(state: State) {
   return state.context.issuers;
 }
 
-export function selectErrorMessage(state: State) {
-  return state.context.errorMessage;
+export function selectErrorMessageType(state: State) {
+  return state.context.errorMessage === '' ||
+    state.context.errorMessage === ErrorMessage.NO_INTERNET
+    ? state.context.errorMessage
+    : ErrorMessage.GENERIC;
 }
 
 export function selectLoadingReason(state: State) {
