@@ -472,7 +472,7 @@ export const IssuersMachine = model.createMachine(
       downloadCredential: async context => {
         const body = await getBody(context);
         const downloadTimeout = await vcDownloadTimeout();
-        const response = await request(
+        let credential = await request(
           'POST',
           context.selectedIssuer.serviceConfiguration.credentialEndpoint,
           body,
@@ -483,7 +483,9 @@ export const IssuersMachine = model.createMachine(
           },
           downloadTimeout,
         );
-        let credential = await response.json();
+        console.info(
+          `VC download via ${context.selectedIssuerId} is succesfull`,
+        );
         credential = updateCredentialInformation(context, credential);
         return credential;
       },
