@@ -35,7 +35,7 @@ const model = createModel(
 
     publicKey: '',
     privateKey: '',
-    myVcs: [] as string[],
+
     otp: '',
     otpError: '',
     idError: '',
@@ -58,6 +58,7 @@ const model = createModel(
       GET_VC_RESPONSE: (vc: VC) => ({vc}),
       VERIFY: () => ({}),
       LOCK_VC: () => ({}),
+      RESEND_OTP: () => ({}),
       INPUT_OTP: (otp: string) => ({otp}),
       REFRESH: () => ({}),
       REVOKE_VC: () => ({}),
@@ -103,7 +104,11 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         on: {
           GET_VC_RESPONSE: [
             {
-              actions: ['setVerifiableCredential', 'setGeneratedOn'],
+              actions: [
+                'setVerifiableCredential',
+                'setContext',
+                'setGeneratedOn',
+              ],
               cond: 'hasCredential',
               target: 'idle',
             },
@@ -118,7 +123,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         description: 'Check if VC data is in secured local storage.',
         on: {
           STORE_RESPONSE: {
-            actions: ['setVerifiableCredential', 'setGeneratedOn', 'updateVc'],
+            actions: ['setVerifiableCredential', 'setContext', 'updateVc'],
             target: 'idle',
           },
         },
@@ -167,6 +172,23 @@ export const EsignetMosipVCItemMachine = model.createMachine(
           DISMISS: {
             target: 'idle',
             actions: ['clearOtp', 'clearTransactionId'],
+          },
+          RESEND_OTP: {
+            target: '.resendOTP',
+          },
+        },
+        initial: 'idle',
+        states: {
+          idle: {},
+          resendOTP: {
+            invoke: {
+              src: 'requestOtp',
+              onDone: [
+                {
+                  target: 'idle',
+                },
+              ],
+            },
           },
         },
       },
@@ -341,6 +363,23 @@ export const EsignetMosipVCItemMachine = model.createMachine(
                 target: '#vc-item-openid4vci.kebabPopUp',
                 actions: ['clearOtp', 'clearTransactionId'],
               },
+              RESEND_OTP: {
+                target: '.resendOTP',
+              },
+            },
+            initial: 'idle',
+            states: {
+              idle: {},
+              resendOTP: {
+                invoke: {
+                  src: 'requestOtp',
+                  onDone: [
+                    {
+                      target: 'idle',
+                    },
+                  ],
+                },
+              },
             },
           },
           addKeyPair: {
@@ -381,6 +420,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
                     'storeContext',
                     'updateVc',
                     'setWalletBindingErrorEmpty',
+                    'sendWalletBindingSuccess',
                     'logWalletBindingSuccess',
                   ],
                 },
@@ -478,10 +518,11 @@ export const EsignetMosipVCItemMachine = model.createMachine(
       ),
       updateVc: send(
         context => {
-          const {verifiableCredential} = context;
+          const {serviceRefs, ...verifiableCredential} = context;
           return {
             type: 'VC_DOWNLOADED_FROM_OPENID4VCI',
-            verifiableCredential,
+            vc: verifiableCredential,
+            vcMetadata: context.vcMetadata,
           };
         },
         {
@@ -492,15 +533,32 @@ export const EsignetMosipVCItemMachine = model.createMachine(
       setVerifiableCredential: model.assign({
         verifiableCredential: (_, event) => {
           if (event.type === 'GET_VC_RESPONSE') {
-            return event.vc;
+            return event.vc.verifiableCredential
+              ? event.vc.verifiableCredential
+              : event.vc;
           }
-          return event.response;
+          return event.response.verifiableCredential;
         },
       }),
 
+      setContext: model.assign((context, event) => {
+        if (event.type === 'STORE_RESPONSE') {
+          const {verifiableCredential, ...data} = event.response;
+          return {...context, ...data};
+        }
+        if (event.type === 'GET_VC_RESPONSE') {
+          const {verifiableCredential, ...data} = event.vc;
+          return {...context, ...data};
+        }
+        return context;
+      }),
+
       setGeneratedOn: model.assign({
-        generatedOn: (context, _event) => {
-          return context.verifiableCredential.generatedOn;
+        generatedOn: (_context, event) => {
+          if (event.type === 'GET_VC_RESPONSE') {
+            return event.vc.generatedOn;
+          }
+          return event.response.generatedOn;
         },
       }),
 
@@ -509,7 +567,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
           const {serviceRefs, ...data} = context;
           data.credentialRegistry = MIMOTO_BASE_URL;
           return StoreEvents.SET(
-            VCMetadata.fromVC(context, true).getVcKey(),
+            VCMetadata.fromVC(context.vcMetadata).getVcKey(),
             data,
           );
         },
@@ -616,29 +674,14 @@ export const EsignetMosipVCItemMachine = model.createMachine(
           to: context => context.serviceRefs.vc,
         },
       ),
-      logDownloaded: send(
-        context => {
-          const {serviceRefs, ...data} = context;
-          return ActivityLogEvents.LOG_ACTIVITY({
-            _vcKey: VCMetadata.fromVC(data, true).getVcKey(),
-            type: 'VC_DOWNLOADED',
-            timestamp: Date.now(),
-            deviceName: '',
-            vcLabel: data.id,
-          });
-        },
-        {
-          to: context => context.serviceRefs.activityLog,
-        },
-      ),
       logWalletBindingSuccess: send(
         context =>
           ActivityLogEvents.LOG_ACTIVITY({
-            _vcKey: VCMetadata.fromVC(context, true).getVcKey(),
+            _vcKey: VCMetadata.fromVC(context.vcMetadata).getVcKey(),
             type: 'WALLET_BINDING_SUCCESSFULL',
             timestamp: Date.now(),
             deviceName: '',
-            vcLabel: context.id,
+            vcLabel: VCMetadata.fromVC(context.vcMetadata).id,
           }),
         {
           to: context => context.serviceRefs.activityLog,
@@ -648,11 +691,11 @@ export const EsignetMosipVCItemMachine = model.createMachine(
       logWalletBindingFailure: send(
         context =>
           ActivityLogEvents.LOG_ACTIVITY({
-            _vcKey: VCMetadata.fromVC(context, true).getVcKey(),
+            _vcKey: VCMetadata.fromVC(context.vcMetadata).getVcKey(),
             type: 'WALLET_BINDING_FAILURE',
             timestamp: Date.now(),
             deviceName: '',
-            vcLabel: context.id,
+            vcLabel: VCMetadata.fromVC(context.vcMetadata).id,
           }),
         {
           to: context => context.serviceRefs.activityLog,
@@ -683,11 +726,11 @@ export const EsignetMosipVCItemMachine = model.createMachine(
       logVCremoved: send(
         (context, _) =>
           ActivityLogEvents.LOG_ACTIVITY({
-            _vcKey: VCMetadata.fromVC(context).getVcKey(),
+            _vcKey: VCMetadata.fromVC(context.vcMetadata).getVcKey(),
             type: 'VC_REMOVED',
             timestamp: Date.now(),
             deviceName: '',
-            vcLabel: context.id,
+            vcLabel: VCMetadata.fromVC(context.vcMetadata).id,
           }),
         {
           to: context => context.serviceRefs.activityLog,
@@ -715,10 +758,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
             request: {
               authFactorType: 'WLA',
               format: 'jwt',
-              individualId: context.verifiableCredential.credential
-                .credentialSubject.VID
-                ? context.verifiableCredential.credential.credentialSubject.VID
-                : context.verifiableCredential.credential.credentialSubject.UIN,
+              individualId: VCMetadata.fromVC(context.vcMetadata).id,
               transactionId: context.transactionId,
               publicKey: context.publicKey,
               challengeList: [
@@ -733,7 +773,9 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         );
         const certificate = response.response.certificate;
         await savePrivateKey(
-          getBindingCertificateConstant(context.id),
+          getBindingCertificateConstant(
+            VCMetadata.fromVC(context.vcMetadata).id,
+          ),
           certificate,
         );
 
@@ -751,7 +793,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         }
         const isBiometricsEnabled = SecureKeystore.hasBiometricsEnabled();
         return SecureKeystore.generateKeyPair(
-          context.id,
+          VCMetadata.fromVC(context.vcMetadata).id,
           isBiometricsEnabled,
           0,
         );
@@ -814,9 +856,68 @@ export function selectContext(state: State) {
 }
 
 export function selectGeneratedOn(state: State) {
-  return new Date(state.context.generatedOn).toLocaleDateString();
+  return state.context.generatedOn;
 }
 
 export function selectWalletBindingSuccess(state: State) {
   return state.context.walletBindingSuccess;
+}
+
+export function selectEmptyWalletBindingId(state: State) {
+  var val = state.context.walletBindingResponse
+    ? state.context.walletBindingResponse.walletBindingId
+    : undefined;
+  return val == undefined || val == null || val.length <= 0 ? true : false;
+}
+
+export function selectWalletBindingError(state: State) {
+  return state.context.walletBindingError;
+}
+
+export function selectKebabPopUpAcceptingBindingOtp(state: State) {
+  return state.matches('kebabPopUp.acceptingBindingOtp');
+}
+
+export function selectKebabPopUpShowWalletBindingError(state: State) {
+  return state.matches('kebabPopUp.showingWalletBindingError');
+}
+
+export function selectKebabPopUpWalletBindingInProgress(state: State) {
+  return state.matches('kebabPopUp.requestingBindingOtp') ||
+    state.matches('kebabPopUp.addingWalletBindingId') ||
+    state.matches('kebabPopUp.addKeyPair') ||
+    state.matches('kebabPopUp.updatingPrivateKey')
+    ? true
+    : false;
+}
+
+export function selectKebabPopUpBindingWarning(state: State) {
+  return state.matches('kebabPopUp.showBindingWarning');
+}
+
+export function selectRemoveWalletWarning(state: State) {
+  return state.matches('kebabPopUp.removeWallet');
+}
+
+export function selectIsPinned(state: State) {
+  return state.context.isPinned;
+}
+
+export function selectOtpError(state: State) {
+  return state.context.otpError;
+}
+
+export function selectShowActivities(state: State) {
+  return state.matches('kebabPopUp.showActivities');
+}
+
+export function selectShowWalletBindingError(state: State) {
+  return (
+    state.matches('showingWalletBindingError') ||
+    state.matches('kebabPopUp.showingWalletBindingError')
+  );
+}
+
+export function selectLogoUrl(state: State) {
+  return state.context.logoUrl;
 }
