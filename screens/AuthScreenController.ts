@@ -92,7 +92,9 @@ export function useAuthScreen(props: RootRouteProps) {
         }),
       );
       // show alert message whenever biometric state gets failure
-      setHasAlertMsg(t(errorMsgBio));
+      if (errorResponse.res.error !== 'user_cancel') {
+        setHasAlertMsg(t(errorMsgBio));
+      }
 
       // handle any unenrolled notice
     } else if (unEnrolledNoticeBio) {
