@@ -24,6 +24,9 @@ import {
 import {NETWORK_REQUEST_FAILED, REQUEST_TIMEOUT} from '../shared/constants';
 import {VCMetadata} from '../shared/VCMetadata';
 import {
+  getImpressionEventData,
+  getInteractEventData,
+  getStartEventData,
   sendEndEvent,
   sendImpressionEvent,
   sendInteractEvent,
@@ -489,13 +492,11 @@ export const IssuersMachine = model.createMachine(
       },
       checkInternet: async () => await NetInfo.fetch(),
       downloadIssuerConfig: async (context, _) => {
-        sendStartEvent({
-          type: 'VC Download',
-          additionalParameters: {id: event.id},
-        });
-        sendInteractEvent({type: 'CLICK', subtype: 'Issuer Type'});
+        sendStartEvent(getStartEventData('VC Download', {id: event.id}));
+        sendInteractEvent(
+          getInteractEventData('VC Download', 'CLICK', 'Issuer Type'),
+        );
         return await CACHED_API.fetchIssuerConfig(context.selectedIssuerId);
-
       },
       downloadCredential: async context => {
         const body = await getBody(context);
@@ -516,10 +517,12 @@ export const IssuersMachine = model.createMachine(
         return credential;
       },
       invokeAuthorization: async context => {
-        sendImpressionEvent({
-          type: context.selectedIssuer.id + ' Web View Page',
-        });
-       
+        sendImpressionEvent(
+          getImpressionEventData(
+            'VC Download',
+            context.selectedIssuer.id + ' Web View Page',
+          ),
+        );
         return await authorize(context.selectedIssuer);
       },
       generateKeyPair: async context => {

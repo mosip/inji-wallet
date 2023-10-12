@@ -14,6 +14,14 @@ import DeviceInfo from 'react-native-device-info';
 import {isCustomSecureKeystore} from '../cryptoutil/cryptoUtil';
 import * as RNLocalize from 'react-native-localize';
 
+export function sendStartEvent(data) {
+  telemetry.start({}, '', '', data, {});
+}
+
+export function sendEndEvent(data) {
+  telemetry.end(data, {});
+}
+
 export function sendImpressionEvent(data) {
   telemetry.impression(data, {});
 }
@@ -22,20 +30,16 @@ export function sendInteractEvent(data) {
   telemetry.interact(data, {});
 }
 
-export function sendEndEvent(data) {
-  telemetry.end(data, {});
+export function sendAppInfoEvent(data) {
+  telemetry.appinfo(data);
+}
+
+export function sendErrorEvent(data) {
+  telemetry.error(data, {});
 }
 
 export function initializeTelemetry(config) {
   telemetry.initialize(config);
-}
-
-export function sendStartEvent(data) {
-  telemetry.start({}, '', '', data, {});
-}
-
-export function sendAppInfoEvent(data) {
-  telemetry.appinfo(data);
 }
 
 export function getTelemetryConfigData() {
@@ -52,20 +56,67 @@ export function getTelemetryConfigData() {
   };
 }
 
-export function getData(type) {
+export function getStartEventData(type, additionalParameters = {}) {
   return {
     type: type,
+    additionalParameters: additionalParameters,
   };
 }
 
-export function getEndData(type) {
+export function getEndEventData(type, status, additionalParameters = {}) {
   return {
     type: type,
-    status: 'SUCCESS',
+    status: status,
+    additionalParameters: additionalParameters,
   };
 }
 
-export function getAppInfoData() {
+export function getInteractEventData(
+  type,
+  ineteractionType,
+  interactingOn,
+  additionParameters = {},
+) {
+  const subtype = getInteractDataSubtype(ineteractionType, interactingOn);
+  return {
+    type,
+    subtype,
+    additionParameters: additionParameters,
+  };
+}
+
+export const getInteractDataSubtype = (ineteractionType, interactingOn) => {
+  return ineteractionType + '_' + interactingOn;
+};
+
+export function getImpressionEventData(
+  type,
+  subtype,
+  additionalParameters = {},
+) {
+  return {
+    type,
+    subtype,
+    additionalParameters: additionalParameters,
+  };
+}
+
+export function getErrorEventData(
+  type,
+  errorId,
+  errorMessage,
+  stacktrace = {},
+) {
+  return {
+    type: type,
+    errorId: errorId,
+    errorMessage: errorMessage,
+    stacktrace: stacktrace,
+    ...getAppInfoEventData(),
+  };
+}
+
+export function getAppInfoEventData() {
   return {
     env: MIMOTO_BASE_URL,
     brandName: DeviceInfo.getBrand(),
@@ -87,7 +138,7 @@ export function getAppInfoData() {
 export function configureTelemetry() {
   const config = getTelemetryConfigData();
   initializeTelemetry(config);
-  sendAppInfoEvent(getAppInfoData());
+  sendAppInfoEvent(getAppInfoEventData());
 }
 
 const languageCodeMap = {
