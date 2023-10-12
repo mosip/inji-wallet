@@ -32,7 +32,7 @@ import SecureKeystore from 'react-native-secure-keystore';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {
   sendStartEvent,
-  getData,
+  getStartEventData,
   getEndData,
   sendEndEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
@@ -301,7 +301,9 @@ export const ExistingMosipVCItemMachine =
             showBindingWarning: {
               on: {
                 CONFIRM: {
-                  actions: [() => sendStartEvent(getData('VC activation'))],
+                  actions: [
+                    () => sendStartEvent(getStartEventData('VC activation')),
+                  ],
                   target: '#vc-item.kebabPopUp.requestingBindingOtp',
                 },
                 CANCEL: {
@@ -633,7 +635,7 @@ export const ExistingMosipVCItemMachine =
         showBindingWarning: {
           on: {
             CONFIRM: {
-              actions: () => sendStartEvent(getData('VC activation')),
+              actions: () => sendStartEvent(getStartEventData('VC activation')),
               target: 'requestingBindingOtp',
             },
             CANCEL: {

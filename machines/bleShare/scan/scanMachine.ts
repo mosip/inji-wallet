@@ -41,7 +41,7 @@ import Storage from '../../../shared/storage';
 import {logState} from '../../app';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {
-  getData,
+  getStartEventData,
   getEndData,
   sendStartEvent,
   sendEndEvent,
@@ -432,7 +432,10 @@ export const scanMachine =
             },
             navigatingToHistory: {},
           },
-          entry: ['sendScanData', () => sendStartEvent(getData('QR login'))],
+          entry: [
+            'sendScanData',
+            () => sendStartEvent(getStartEventData('QR login')),
+          ],
         },
         connecting: {
           invoke: {
@@ -1009,7 +1012,7 @@ export const scanMachine =
         },
 
         startConnection: context => callback => {
-          sendStartEvent(getData('VC share'));
+          sendStartEvent(getStartEventData('VC share'));
           wallet.startConnection(context.openId4VpUri);
           const statusCallback = (event: WalletDataEvent) => {
             if (event.type === EventTypes.onSecureChannelEstablished) {

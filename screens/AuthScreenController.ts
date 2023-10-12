@@ -20,7 +20,7 @@ import {
   sendStartEvent,
   sendImpressionEvent,
   sendInteractEvent,
-  getData,
+  getStartEventData,
   getInteractData,
   getImpressionData,
   getEndData,
@@ -100,7 +100,7 @@ export function useAuthScreen(props: RootRouteProps) {
 
       // we dont need to see this page to user once biometric is unavailable on its device
     } else if (isUnavailableBio) {
-      sendStartEvent(getData('App Onboarding'));
+      sendStartEvent(getStartEventData('App Onboarding'));
       usePasscode();
     }
   }, [isSuccessBio, isUnavailableBio, errorMsgBio, unEnrolledNoticeBio]);
@@ -108,7 +108,7 @@ export function useAuthScreen(props: RootRouteProps) {
   const useBiometrics = async () => {
     const isBiometricsEnrolled = await LocalAuthentication.isEnrolledAsync();
     if (isBiometricsEnrolled) {
-      sendStartEvent(getData('App Onboarding'));
+      sendStartEvent(getStartEventData('App Onboarding'));
       sendInteractEvent(
         getInteractData('App Onboarding', 'TOUCH', 'Use Biometrics Button'),
       );

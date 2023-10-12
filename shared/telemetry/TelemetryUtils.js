@@ -55,9 +55,10 @@ export function getTelemetryConfigData() {
   };
 }
 
-export function getData(type) {
+export function getStartEventData(type, additionalParameters = {}) {
   return {
     type: type,
+    additionalParameters: additionalParameters,
   };
 }
 

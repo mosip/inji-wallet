@@ -20,13 +20,11 @@ import {
 import {RootRouteProps} from '../routes';
 import {GlobalContext} from '../shared/GlobalContext';
 import {
-  getData,
+  getStartEventData,
   getEndData,
-  getErrorData,
   getImpressionData,
   getInteractData,
   sendEndEvent,
-  sendErrorEvent,
   sendImpressionEvent,
   sendInteractEvent,
   sendStartEvent,
@@ -52,7 +50,7 @@ export function useBiometricScreen(props: RootRouteProps) {
 
   useEffect(() => {
     if (isAvailable) {
-      sendStartEvent(getData('App login'));
+      sendStartEvent(getStartEventData('App login'));
       sendInteractEvent(
         getInteractData('App login', 'TOUCH', 'Unlock with Biometrics button'),
       );
@@ -97,7 +95,7 @@ export function useBiometricScreen(props: RootRouteProps) {
         index: 0,
         routes: [{name: 'Passcode'}],
       });
-      sendStartEvent(getData('App Login'));
+      sendStartEvent(getStartEventData('App Login'));
       sendInteractEvent(
         getInteractData('App Login', 'TOUCH', 'Unlock application button'),
       );
@@ -130,7 +128,7 @@ export function useBiometricScreen(props: RootRouteProps) {
   };
 
   const useBiometrics = () => {
-    sendStartEvent(getData('App login'));
+    sendStartEvent(getStartEventData('App login'));
     sendInteractEvent(
       getInteractData('App Login', 'TOUCH', 'Unlock with biometrics button'),
     );

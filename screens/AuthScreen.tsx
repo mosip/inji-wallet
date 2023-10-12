@@ -7,7 +7,7 @@ import {Theme} from '../components/ui/styleUtils';
 import {RootRouteProps} from '../routes';
 import {useAuthScreen} from './AuthScreenController';
 import {
-  getData,
+  getStartEventData,
   getInteractData,
   sendInteractEvent,
   sendStartEvent,
@@ -18,7 +18,7 @@ export const AuthScreen: React.FC<RootRouteProps> = props => {
   const controller = useAuthScreen(props);
 
   const handleUsePasscodeButtonPress = () => {
-    sendStartEvent(getData('App Onboarding'));
+    sendStartEvent(getStartEventData('App Onboarding'));
     sendInteractEvent(
       getInteractData('App Onboarding', 'TOUCH', 'Use Passcode Button'),
     );
