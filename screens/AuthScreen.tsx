@@ -8,7 +8,7 @@ import {RootRouteProps} from '../routes';
 import {useAuthScreen} from './AuthScreenController';
 import {
   getStartEventData,
-  getInteractData,
+  getInteractEventData,
   sendInteractEvent,
   sendStartEvent,
 } from '../shared/telemetry/TelemetryUtils';
@@ -20,7 +20,7 @@ export const AuthScreen: React.FC<RootRouteProps> = props => {
   const handleUsePasscodeButtonPress = () => {
     sendStartEvent(getStartEventData('App Onboarding'));
     sendInteractEvent(
-      getInteractData('App Onboarding', 'TOUCH', 'Use Passcode Button'),
+      getInteractEventData('App Onboarding', 'TOUCH', 'Use Passcode Button'),
     );
     controller.usePasscode();
   };

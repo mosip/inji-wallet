@@ -8,7 +8,7 @@ import {RootRouteProps} from '../routes';
 import {useBiometricScreen} from './BiometricScreenController';
 import {Passcode} from '../components/Passcode';
 import {
-  getImpressionData,
+  getImpressionEventData,
   incrementPasscodeRetryCount,
   sendImpressionEvent,
 } from '../shared/telemetry/TelemetryUtils';
@@ -19,7 +19,7 @@ export const BiometricScreen: React.FC<RootRouteProps> = props => {
 
   useEffect(() => {
     if (controller.isReEnabling) {
-      sendImpressionEvent(getImpressionData('App Login', 'Passcode'));
+      sendImpressionEvent(getImpressionEventData('App Login', 'Passcode'));
     }
   }, [controller.isReEnabling]);
 

@@ -1,6 +1,7 @@
 import telemetry from 'telemetry-sdk';
 import {Platform} from 'react-native';
-import {HOST} from '../constants';
+import {MIMOTO_BASE_URL} from '../constants';
+import i18next from 'i18next';
 import {
   __AppId,
   __InjiVersion,
@@ -62,7 +63,7 @@ export function getStartEventData(type, additionalParameters = {}) {
   };
 }
 
-export function getEndData(type, status, additionalParameters = {}) {
+export function getEndEventData(type, status, additionalParameters = {}) {
   return {
     type: type,
     status: status,
@@ -70,7 +71,7 @@ export function getEndData(type, status, additionalParameters = {}) {
   };
 }
 
-export function getInteractData(
+export function getInteractEventData(
   type,
   ineteractionType,
   interactingOn,
@@ -84,7 +85,11 @@ export function getInteractData(
   };
 }
 
-export function getImpressionData(type, subtype, additionalParameters = {}) {
+export function getImpressionEventData(
+  type,
+  subtype,
+  additionalParameters = {},
+) {
   return {
     type,
     subtype,
@@ -92,32 +97,24 @@ export function getImpressionData(type, subtype, additionalParameters = {}) {
   };
 }
 
-export function getErrorData(type, errorId, errorMessage, stacktrace = {}) {
+export function getErrorEventData(
+  type,
+  errorId,
+  errorMessage,
+  stacktrace = {},
+) {
   return {
     type: type,
-    env: HOST,
-    brandName: DeviceInfo.getBrand(),
-    modelName: DeviceInfo.getModel(),
-    osName: DeviceInfo.getSystemName(),
-    osVersion: DeviceInfo.getSystemVersion(),
-    osApiLevel: Platform.Version.toString(),
-    isHardwareKeystoreSupported: isCustomSecureKeystore(),
-    buildNumber: DeviceInfo.getBuildNumber(),
-    injiVersion: __InjiVersion.getValue(),
-    tuvaliVersion: __TuvaliVersion.getValue(),
-    dateTime: new Date().getTime(),
-    zone: RNLocalize.getTimeZone(),
-    offset: new Date().getTimezoneOffset() * 60 * 1000,
-    preferredLanguage: __SelectedLanguage.getValue(),
     errorId: errorId,
     errorMessage: errorMessage,
     stacktrace: stacktrace,
+    ...getAppInfoEventData(),
   };
 }
 
-export function getAppInfoData() {
+export function getAppInfoEventData() {
   return {
-    env: HOST,
+    env: MIMOTO_BASE_URL,
     brandName: DeviceInfo.getBrand(),
     modelName: DeviceInfo.getModel(),
     osName: DeviceInfo.getSystemName(),
@@ -127,7 +124,7 @@ export function getAppInfoData() {
     dateTime: new Date().getTime(),
     zone: RNLocalize.getTimeZone(),
     offset: new Date().getTimezoneOffset() * 60 * 1000,
-    preferredLanguage: __SelectedLanguage.getValue(),
+    preferredLanguage: languageCodeMap[i18next.language],
     buildNumber: DeviceInfo.getBuildNumber(),
     injiVersion: __InjiVersion.getValue(),
     tuvaliVersion: __TuvaliVersion.getValue(),
@@ -142,7 +139,7 @@ export const incrementPasscodeRetryCount = isSettingUp => {
   } else {
     isSettingUp
       ? sendErrorEvent(
-          getErrorData(
+          getErrorEventData(
             'App Onboarding',
             'mismatch',
             'Passcode did not match',
@@ -150,7 +147,12 @@ export const incrementPasscodeRetryCount = isSettingUp => {
           ),
         )
       : sendErrorEvent(
-          getErrorData('App Login', 'mismatch', 'Passcode did not match', {}),
+          getErrorEventData(
+            'App Login',
+            'mismatch',
+            'Passcode did not match',
+            {},
+          ),
         );
     passcodeRetryCount = 1;
   }
@@ -158,4 +160,13 @@ export const incrementPasscodeRetryCount = isSettingUp => {
 
 export const getInteractDataSubtype = (ineteractionType, interactingOn) => {
   return ineteractionType + '_' + interactingOn;
+};
+
+const languageCodeMap = {
+  en: 'English',
+  fil: 'Filipino',
+  ar: 'Arabic',
+  hi: 'Hindi',
+  kn: 'Kannada',
+  ta: 'Tamil',
 };

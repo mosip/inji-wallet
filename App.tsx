@@ -16,7 +16,7 @@ import {DualMessageOverlay} from './components/DualMessageOverlay';
 import {useApp} from './screens/AppController';
 import {Alert} from 'react-native';
 import {
-  getAppInfoData,
+  getAppInfoEventData,
   getTelemetryConfigData,
   initializeTelemetry,
   sendAppInfoEvent,
@@ -45,7 +45,7 @@ const DecryptErrorAlert = (controller, t) => {
 function configureTelemetry() {
   const config = getTelemetryConfigData();
   initializeTelemetry(config);
-  sendAppInfoEvent(getAppInfoData());
+  sendAppInfoEvent(getAppInfoEventData());
 }
 
 const AppLayoutWrapper: React.FC = () => {

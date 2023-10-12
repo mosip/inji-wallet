@@ -9,10 +9,8 @@ import {
 import {PasscodeRouteProps} from '../routes';
 import {GlobalContext} from '../shared/GlobalContext';
 import {
-  getEndData,
-  getImpressionData,
+  getEndEventData,
   sendEndEvent,
-  sendImpressionEvent,
 } from '../shared/telemetry/TelemetryUtils';
 
 export function usePasscodeScreen(props: PasscodeRouteProps) {
@@ -28,8 +26,8 @@ export function usePasscodeScreen(props: PasscodeRouteProps) {
   useEffect(() => {
     if (isAuthorized) {
       isSettingUp
-        ? sendEndEvent(getEndData('App Onboarding', 'SUCCESS'))
-        : sendEndEvent(getEndData('App login', 'SUCCESS'));
+        ? sendEndEvent(getEndEventData('App Onboarding', 'SUCCESS'))
+        : sendEndEvent(getEndEventData('App login', 'SUCCESS'));
       props.navigation.reset({
         index: 0,
         routes: [{name: 'Main'}],

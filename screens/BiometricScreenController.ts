@@ -21,9 +21,9 @@ import {RootRouteProps} from '../routes';
 import {GlobalContext} from '../shared/GlobalContext';
 import {
   getStartEventData,
-  getEndData,
-  getImpressionData,
-  getInteractData,
+  getEndEventData,
+  getImpressionEventData,
+  getInteractEventData,
   sendEndEvent,
   sendImpressionEvent,
   sendInteractEvent,
@@ -52,14 +52,18 @@ export function useBiometricScreen(props: RootRouteProps) {
     if (isAvailable) {
       sendStartEvent(getStartEventData('App login'));
       sendInteractEvent(
-        getInteractData('App login', 'TOUCH', 'Unlock with Biometrics button'),
+        getInteractEventData(
+          'App login',
+          'TOUCH',
+          'Unlock with Biometrics button',
+        ),
       );
     }
   }, [isAvailable]);
 
   useEffect(() => {
     if (isAuthorized) {
-      sendEndEvent(getEndData('App Login', 'SUCCESS'));
+      sendEndEvent(getEndEventData('App Login', 'SUCCESS'));
       props.navigation.reset({
         index: 0,
         routes: [{name: 'Main'}],
@@ -82,7 +86,7 @@ export function useBiometricScreen(props: RootRouteProps) {
 
     if (errorMsgBio && !isReEnabling) {
       sendEndEvent(
-        getEndData('App Login', 'FAILURE', {
+        getEndEventData('App Login', 'FAILURE', {
           errorId: errorResponse.res.error,
           errorMessage: errorResponse.res.warning,
           stackTrace: errorResponse.stacktrace,
@@ -97,9 +101,9 @@ export function useBiometricScreen(props: RootRouteProps) {
       });
       sendStartEvent(getStartEventData('App Login'));
       sendInteractEvent(
-        getInteractData('App Login', 'TOUCH', 'Unlock application button'),
+        getInteractEventData('App Login', 'TOUCH', 'Unlock application button'),
       );
-      sendImpressionEvent(getImpressionData('App Login', 'Passcode'));
+      sendImpressionEvent(getImpressionEventData('App Login', 'Passcode'));
     }
   }, [
     isAuthorized,
@@ -130,7 +134,11 @@ export function useBiometricScreen(props: RootRouteProps) {
   const useBiometrics = () => {
     sendStartEvent(getStartEventData('App login'));
     sendInteractEvent(
-      getInteractData('App Login', 'TOUCH', 'Unlock with biometrics button'),
+      getInteractEventData(
+        'App Login',
+        'TOUCH',
+        'Unlock with biometrics button',
+      ),
     );
     bioSend({type: 'AUTHENTICATE'});
   };
@@ -146,7 +154,7 @@ export function useBiometricScreen(props: RootRouteProps) {
 
   const onDismiss = () => {
     sendEndEvent(
-      getEndData('App Login', 'FAILURE', {
+      getEndEventData('App Login', 'FAILURE', {
         errorId: 'user_cancel',
         errorMessage: 'Authentication canceled',
       }),

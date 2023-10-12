@@ -21,12 +21,10 @@ import {
   sendImpressionEvent,
   sendInteractEvent,
   getStartEventData,
-  getInteractData,
-  getImpressionData,
-  getEndData,
+  getInteractEventData,
+  getImpressionEventData,
+  getEndEventData,
   sendEndEvent,
-  sendErrorEvent,
-  getErrorData,
 } from '../shared/telemetry/TelemetryUtils';
 
 export function useAuthScreen(props: RootRouteProps) {
@@ -52,8 +50,10 @@ export function useAuthScreen(props: RootRouteProps) {
   const usePasscode = () => {
     props.navigation.navigate('Passcode', {setup: isSettingUp});
     isSettingUp
-      ? sendImpressionEvent(getImpressionData('App Onboarding', 'Passcode'))
-      : sendImpressionEvent(getImpressionData('App Login', 'Passcode'));
+      ? sendImpressionEvent(
+          getImpressionEventData('App Onboarding', 'Passcode'),
+        )
+      : sendImpressionEvent(getImpressionEventData('App Login', 'Passcode'));
   };
 
   const {t} = useTranslation('AuthScreen');
@@ -66,12 +66,12 @@ export function useAuthScreen(props: RootRouteProps) {
 
   useEffect(() => {
     if (isAuthorized) {
-      sendEndEvent(getEndData('App Onboarding', 'SUCCESS'));
+      sendEndEvent(getEndEventData('App Onboarding', 'SUCCESS'));
       props.navigation.reset({
         index: 0,
         routes: [{name: 'Main'}],
       });
-      sendImpressionEvent(getImpressionData('App Onboarding', 'Main'));
+      sendImpressionEvent(getImpressionEventData('App Onboarding', 'Main'));
       return;
     }
 
@@ -85,7 +85,7 @@ export function useAuthScreen(props: RootRouteProps) {
       // handle biometric failure unknown error
     } else if (errorMsgBio) {
       sendEndEvent(
-        getEndData('App Login', 'FAILURE', {
+        getEndEventData('App Login', 'FAILURE', {
           errorId: errorResponse.res.error,
           errorMessage: errorResponse.res.warning,
           stackTrace: errorResponse.stacktrace,
@@ -112,7 +112,11 @@ export function useAuthScreen(props: RootRouteProps) {
     if (isBiometricsEnrolled) {
       sendStartEvent(getStartEventData('App Onboarding'));
       sendInteractEvent(
-        getInteractData('App Onboarding', 'TOUCH', 'Use Biometrics Button'),
+        getInteractEventData(
+          'App Onboarding',
+          'TOUCH',
+          'Use Biometrics Button',
+        ),
       );
 
       if (biometricState.matches({failure: 'unenrolled'})) {

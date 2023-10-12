@@ -15,8 +15,8 @@ import {RootRouteProps} from '../routes';
 import {GlobalContext} from '../shared/GlobalContext';
 import {
   getStartEventData,
-  getImpressionData,
-  getInteractData,
+  getImpressionEventData,
+  getInteractEventData,
   sendImpressionEvent,
   sendInteractEvent,
   sendStartEvent,
@@ -67,9 +67,13 @@ export function useWelcomeScreen(props: RootRouteProps) {
       } else if (!isSettingUp && passcode !== '') {
         sendStartEvent(getStartEventData('App Login'));
         sendInteractEvent(
-          getInteractData('App Login', 'TOUCH', 'Unlock application button'),
+          getInteractEventData(
+            'App Login',
+            'TOUCH',
+            'Unlock application button',
+          ),
         );
-        sendImpressionEvent(getImpressionData('App Login', 'Passcode'));
+        sendImpressionEvent(getImpressionEventData('App Login', 'Passcode'));
         props.navigation.navigate('Passcode', {setup: isSettingUp});
       } else {
         props.navigation.navigate('Auth');

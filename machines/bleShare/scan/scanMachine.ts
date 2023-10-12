@@ -42,7 +42,7 @@ import {logState} from '../../app';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {
   getStartEventData,
-  getEndData,
+  getEndEventData,
   sendStartEvent,
   sendEndEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
@@ -572,7 +572,7 @@ export const scanMachine =
             accepted: {
               entry: [
                 'logShared',
-                () => sendEndEvent(getEndData('VC share', 'SUCCESS')),
+                () => sendEndEvent(getEndEventData('VC share', 'SUCCESS')),
               ],
               on: {
                 DISMISS: {

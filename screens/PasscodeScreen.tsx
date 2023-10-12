@@ -9,7 +9,10 @@ import {PasscodeRouteProps} from '../routes';
 import {usePasscodeScreen} from './PasscodeScreenController';
 import {hashData} from '../shared/commonUtil';
 import {argon2iConfig} from '../shared/constants';
-import {getEndData, sendEndEvent} from '../shared/telemetry/TelemetryUtils';
+import {
+  getEndEventData,
+  sendEndEvent,
+} from '../shared/telemetry/TelemetryUtils';
 import {BackHandler} from 'react-native';
 import {incrementPasscodeRetryCount} from '../shared/telemetry/TelemetryUtils';
 
@@ -21,13 +24,13 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
   const handleBackButtonPress = () => {
     isSettingUp
       ? sendEndEvent(
-          getEndData('App Onboarding', 'FAILURE', {
+          getEndEventData('App Onboarding', 'FAILURE', {
             errorId: 'user_cancel',
             errorMessage: 'Authentication canceled',
           }),
         )
       : sendEndEvent(
-          getEndData('App Login', 'FAILURE', {
+          getEndEventData('App Login', 'FAILURE', {
             errorId: 'user_cancel',
             errorMessage: 'Authentication canceled',
           }),
