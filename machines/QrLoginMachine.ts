@@ -23,6 +23,10 @@ import {
   getEndEventData,
   sendEndEvent,
 } from '../shared/telemetry/TelemetryUtils';
+import {
+  getEndEventData,
+  sendEndEvent,
+} from '../shared/telemetry/TelemetryUtils';
 
 const model = createModel(
   {
@@ -227,7 +231,7 @@ export const qrLoginMachine =
           },
         },
         success: {
-          entry: [() => sendEndEvent(getEndEventData('QR login', 'SUCCESS'))],
+          entry: [() => sendEndEvent(getEndEventData('QR login'))],
           on: {
             CONFIRM: {
               target: 'done',

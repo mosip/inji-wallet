@@ -32,7 +32,7 @@
           actions: never;
           delays: never;
           guards: never;
-          services: "checkInternet";
+          services: never;
         };
         eventsCausingActions: {
           "getKeyPairFromStore": "done.invoke.issuersMachine.performAuthorization:invocation[0]";

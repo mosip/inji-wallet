@@ -34,6 +34,8 @@ import {
   sendStartEvent,
   getStartEventData,
   getEndEventData,
+  getStartEventData,
+  getEndEventData,
   sendEndEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
 
@@ -419,8 +421,7 @@ export const ExistingMosipVCItemMachine =
                     'setWalletBindingErrorEmpty',
                     'sendWalletBindingSuccess',
                     'logWalletBindingSuccess',
-                    () =>
-                      sendEndEvent(getEndEventData('VC activation', 'SUCCESS')),
+                    () => sendEndEvent(getEndEventData('VC activation')),
                   ],
                   target: '#vc-item.kebabPopUp',
                 },
@@ -747,7 +748,7 @@ export const ExistingMosipVCItemMachine =
                 'setWalletBindingErrorEmpty',
                 'setWalletBindingSuccess',
                 'logWalletBindingSuccess',
-                () => sendEndEvent(getEndEventData('VC activation', 'SUCCESS')),
+                () => sendEndEvent(getEndEventData('VC activation')),
               ],
               target: 'idle',
             },

@@ -572,7 +572,7 @@ export const scanMachine =
             accepted: {
               entry: [
                 'logShared',
-                () => sendEndEvent(getEndEventData('VC share', 'SUCCESS')),
+                () => sendEndEvent(getEndEventData('VC share')),
               ],
               on: {
                 DISMISS: {

@@ -20,16 +20,16 @@ export function sendStartEvent(data) {
   telemetry.start({}, '', '', data, {});
 }
 
-export function sendInteractEvent(data) {
-  telemetry.interact(data, {});
-}
-
 export function sendEndEvent(data) {
   telemetry.end(data, {});
 }
 
-export function sendImpressionEvent(data) {
-  telemetry.impression(data, {});
+export function sendStartEvent(data) {
+  telemetry.start({}, '', '', data, {});
+}
+
+export function sendEndEvent(data) {
+  telemetry.end(data, {});
 }
 
 export function sendInteractEvent(data) {
@@ -44,8 +44,8 @@ export function sendErrorEvent(data) {
   telemetry.error(data, {});
 }
 
-export function initializeTelemetry(config) {
-  telemetry.initialize(config);
+export function sendImpressionEvent(data) {
+  telemetry.impression(data, {});
 }
 
 export function getTelemetryConfigData() {
@@ -144,7 +144,7 @@ export function getAppInfoEventData() {
 export function configureTelemetry() {
   const config = getTelemetryConfigData();
   initializeTelemetry(config);
-  sendAppInfoEvent(getAppInfoData());
+  sendAppInfoEvent(getAppInfoEventData());
 }
 
 const languageCodeMap = {
