@@ -31,7 +31,7 @@ const model = createModel(
     linkTransactionResponse: {} as linkTransactionResponse,
     authFactors: [],
     authorizeScopes: null,
-    clientName: '',
+    clientName: {},
     configs: {},
     essentialClaims: [],
     linkTransactionId: '',
@@ -345,7 +345,7 @@ export const qrLoginMachine =
         linkTransaction: async context => {
           const response = await request(
             'POST',
-            '/v1/esignet/linked-authorization/link-transaction',
+            '/v1/esignet/linked-authorization/v2/link-transaction',
             {
               requestTime: String(new Date().toISOString()),
               request: {

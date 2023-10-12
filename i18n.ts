@@ -56,14 +56,14 @@ export function getLanguageCode(code: string) {
   return language;
 }
 
-export function getVCDetailsForCurrentLanguage(locales) {
+export function getValueForCurrentLanguage(localizedData) {
   const currentLanguage = i18next.language;
-  const vcDetailsForCurrentLanguage = locales.filter(
+  const valueForCurrentLanguage = localizedData.filter(
     obj => obj.language === languageCodeMap[currentLanguage],
   );
-  return vcDetailsForCurrentLanguage[0]?.value
-    ? vcDetailsForCurrentLanguage[0].value
-    : locales[0]?.value;
+  return valueForCurrentLanguage[0]?.value
+    ? valueForCurrentLanguage[0].value
+    : localizedData[0]?.value;
 }
 
 // This method gets the value from iso-639-3 package, which contains key value pairs of three letter language codes[key] and two letter langugae code[value]. These values are according to iso standards.
@@ -91,9 +91,30 @@ export function getLocalizedField(rawField: string | LocalizedField[]) {
     return rawField;
   }
   try {
-    const locales: LocalizedField[] = JSON.parse(JSON.stringify(rawField));
-    if (locales.length == 1) return locales[0]?.value;
-    return getVCDetailsForCurrentLanguage(locales);
+    const localizedData: LocalizedField[] = JSON.parse(
+      JSON.stringify(rawField),
+    );
+    if (localizedData.length == 1) return localizedData[0]?.value;
+    return getValueForCurrentLanguage(localizedData);
+  } catch (e) {
+    return '';
+  }
+}
+
+export function getLocalizedValue(rawField: string | Object) {
+  if (typeof rawField === 'string') {
+    return rawField;
+  }
+  try {
+    if (Object.keys(rawField).length === 1) {
+      return Object.values(rawField)[0];
+    }
+
+    const defaultLanguage = '@none';
+    const currentLanguage = i18next.language;
+    return rawField.hasOwnProperty(currentLanguage)
+      ? rawField[currentLanguage]
+      : rawField[defaultLanguage];
   } catch (e) {
     return '';
   }
