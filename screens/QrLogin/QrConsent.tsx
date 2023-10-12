@@ -8,7 +8,7 @@ import {Icon, ListItem, Switch} from 'react-native-elements';
 import {Modal} from '../../components/ui/Modal';
 import {QrLoginRef} from '../../machines/QrLoginMachine';
 import {ScrollView} from 'react-native';
-import {getLocalizedValue} from '../../i18n';
+import {getLocalizedField} from '../../i18n';
 
 export const QrConsent: React.FC<QrConsentProps> = props => {
   const {t} = useTranslation('QrScreen');
@@ -40,7 +40,7 @@ export const QrConsent: React.FC<QrConsentProps> = props => {
             style={Theme.TextStyles.small}
             weight="bold"
             margin={'10 0 0 0'}>
-            {getLocalizedValue(controller.clientName)} {t('access')}
+            {getLocalizedField(controller.clientName)} {t('access')}
           </Text>
         </Column>
         <ScrollView>

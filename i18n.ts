@@ -86,35 +86,34 @@ function populateLanguageCodeMap() {
   });
 }
 
-export function getLocalizedField(rawField: string | LocalizedField[]) {
+export function getLocalizedField(
+  rawField: string | LocalizedField[] | Object,
+) {
   if (typeof rawField === 'string') {
     return rawField;
   }
+  if (typeof rawField === 'object') {
+    try {
+      if (Object.keys(rawField).length === 1) {
+        return Object.values(rawField)[0];
+      }
+
+      const defaultLanguage: string = '@none';
+      const currentLanguage: string = i18next.language;
+      return rawField.hasOwnProperty(currentLanguage)
+        ? rawField[currentLanguage]
+        : rawField[defaultLanguage];
+    } catch (e) {
+      return '';
+    }
+  }
+
   try {
     const localizedData: LocalizedField[] = JSON.parse(
       JSON.stringify(rawField),
     );
     if (localizedData.length == 1) return localizedData[0]?.value;
     return getValueForCurrentLanguage(localizedData);
-  } catch (e) {
-    return '';
-  }
-}
-
-export function getLocalizedValue(rawField: string | Object) {
-  if (typeof rawField === 'string') {
-    return rawField;
-  }
-  try {
-    if (Object.keys(rawField).length === 1) {
-      return Object.values(rawField)[0];
-    }
-
-    const defaultLanguage = '@none';
-    const currentLanguage = i18next.language;
-    return rawField.hasOwnProperty(currentLanguage)
-      ? rawField[currentLanguage]
-      : rawField[defaultLanguage];
   } catch (e) {
     return '';
   }
