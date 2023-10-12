@@ -44,10 +44,11 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
       controller.RESET_STORE_VC_ITEM_STATUS();
       controller.RESET_ARE_ALL_VCS_DOWNLOADED();
     }
-    if (controller.inProgressVcDownloadsCount > 0) {
+    if (controller.inProgressVcDownloads?.size > 0) {
       controller.SET_STORE_VC_ITEM_STATUS();
     }
-  }, [controller.areAllVcsLoaded, controller.inProgressVcDownloadsCount]);
+  }, [controller.areAllVcsLoaded, controller.inProgressVcDownloads]);
+
   return (
     <React.Fragment>
       <Column fill style={{display: props.isVisible ? 'flex' : 'none'}}>
@@ -90,6 +91,9 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                       vcMetadata={vcMetadata}
                       margin="0 2 8 2"
                       onPress={controller.VIEW_VC}
+                      isDownloading={controller.inProgressVcDownloads?.has(
+                        vcMetadata.getVcKey(),
+                      )}
                     />
                   );
                 })}

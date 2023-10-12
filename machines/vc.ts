@@ -430,8 +430,8 @@ export function selectAreAllVcsDownloaded(state: State) {
   return state.context.areAllVcsDownloaded;
 }
 
-export function selectInProgressVcDownloadsCount(state: State) {
-  return state.context.inProgressVcDownloads.size;
+export function selectInProgressVcDownloads(state: State) {
+  return state.context.inProgressVcDownloads;
 }
 
 function getUpdatedVCMetadatas(
