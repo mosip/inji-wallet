@@ -487,7 +487,9 @@ export const IssuersMachine = model.createMachine(
       },
       checkInternet: async () => await NetInfo.fetch(),
       downloadIssuerConfig: async (context, _) => {
-        sendStartEvent(getStartEventData('VC Download', {id: event.id}));
+        sendStartEvent(
+          getStartEventData('VC Download', {id: context.selectedIssuerId}),
+        );
         sendInteractEvent(
           getInteractEventData('VC Download', 'CLICK', 'Issuer Type'),
         );
