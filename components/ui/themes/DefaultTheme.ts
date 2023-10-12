@@ -491,6 +491,10 @@ export const DefaultTheme = {
       fontSize: 15,
       fontFamily: 'Inter_700Bold',
     },
+    idInputContainer: {
+      marginTop: 20,
+      marginRight: Dimensions.get('window').width * 0.26,
+    },
     idInputPicker: {
       width: Dimensions.get('window').width * 0.32,
       borderBottomWidth: 1,
@@ -498,6 +502,10 @@ export const DefaultTheme = {
       borderColor: Platform.OS === 'ios' ? 'transparent' : Colors.Grey,
       bottom: Platform.OS === 'ios' ? 50 : 24,
       height: Platform.OS === 'ios' ? 100 : 'auto',
+    },
+    idInputBottom: {
+      borderBottomColor: Colors.Orange,
+      borderBottomWidth: 1,
     },
     getId: {
       justifyContent: 'center',

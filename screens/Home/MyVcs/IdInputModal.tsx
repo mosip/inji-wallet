@@ -55,7 +55,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = props => {
               style={Theme.TextStyles.retrieveIdLabel}>
               {t('guideLabel')}
             </Text>
-            <Row crossAlign="flex-end" style={{marginTop: 20}}>
+            <Row crossAlign="flex-end" style={Theme.Styles.idInputContainer}>
               <Column style={Theme.Styles.idInputPicker}>
                 <Picker
                   testID="selectIdType"
@@ -65,26 +65,24 @@ export const IdInputModal: React.FC<IdInputModalProps> = props => {
                   <Picker.Item label="VID" value="VID" />
                 </Picker>
               </Column>
-              <Column fill>
-                <Input
-                  {...testIDProps('idInput')}
-                  inputContainerStyle={
-                    controller.id ? Theme.Styles.VidInputBottom : null
-                  }
-                  placeholder={!controller.id ? inputLabel : ''}
-                  inputStyle={{
-                    textAlign: I18nManager.isRTL ? 'right' : 'left',
-                    fontWeight: '700',
-                  }}
-                  selectionColor={Theme.Colors.Cursor}
-                  value={controller.id}
-                  keyboardType="number-pad"
-                  errorStyle={Theme.TextStyles.error}
-                  errorMessage={controller.idError}
-                  onChangeText={controller.INPUT_ID}
-                  ref={setIdInputRef}
-                />
-              </Column>
+              <Input
+                {...testIDProps('idInput')}
+                placeholder={!controller.id ? inputLabel : ''}
+                inputContainerStyle={
+                  controller.id ? Theme.Styles.idInputBottom : null
+                }
+                inputStyle={{
+                  textAlign: I18nManager.isRTL ? 'right' : 'left',
+                  fontWeight: '700',
+                }}
+                selectionColor={Theme.Colors.Cursor}
+                value={controller.id}
+                keyboardType="number-pad"
+                errorStyle={Theme.TextStyles.error}
+                errorMessage={controller.idError}
+                onChangeText={controller.INPUT_ID}
+                ref={setIdInputRef}
+              />
             </Row>
           </Column>
           <Column>
