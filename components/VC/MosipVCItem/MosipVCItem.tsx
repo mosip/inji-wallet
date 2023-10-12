@@ -69,16 +69,13 @@ export const MosipVCItem: React.FC<
         <View style={Theme.Styles.horizontalLine} />
         {props.isSharingVc ? null : (
           <Row style={Theme.Styles.activationTab}>
-            {props.activeTab !== 'receivedVcsTab' &&
-              props.activeTab != 'sharingVcScreen' && (
-                <MosipVCItemActivationStatus
-                  vcMetadata={props.vcMetadata}
-                  verifiableCredential={verifiableCredential}
-                  emptyWalletBindingId={emptyWalletBindingId}
-                  onPress={() => props.onPress(service)}
-                  showOnlyBindedVc={props.showOnlyBindedVc}
-                />
-              )}
+            <MosipVCItemActivationStatus
+              vcMetadata={props.vcMetadata}
+              verifiableCredential={verifiableCredential}
+              emptyWalletBindingId={emptyWalletBindingId}
+              onPress={() => props.onPress(service)}
+              showOnlyBindedVc={props.showOnlyBindedVc}
+            />
             <View style={Theme.Styles.verticalLine} />
             <Row style={Theme.Styles.kebabIcon}>
               <Pressable onPress={KEBAB_POPUP} accessible={false}>
@@ -113,7 +110,6 @@ export interface ExistingMosipVCItemProps {
   showOnlyBindedVc?: boolean;
   onPress?: (vcRef?: ActorRefFrom<typeof ExistingMosipVCItemMachine>) => void;
   onShow?: (vcRef?: ActorRefFrom<typeof ExistingMosipVCItemMachine>) => void;
-  activeTab?: string;
   iconName?: string;
   iconType?: string;
   isSharingVc?: boolean;
@@ -128,7 +124,6 @@ export interface EsignetMosipVCItemProps {
   showOnlyBindedVc?: boolean;
   onPress?: (vcRef?: ActorRefFrom<typeof EsignetMosipVCItemMachine>) => void;
   onShow?: (vcRef?: ActorRefFrom<typeof EsignetMosipVCItemMachine>) => void;
-  activeTab?: string;
   iconName?: string;
   iconType?: string;
   isSharingVc?: boolean;
