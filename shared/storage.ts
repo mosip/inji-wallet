@@ -63,8 +63,8 @@ class Storage {
     try {
       const isSavingVC = VCMetadata.isVCKey(key);
       if (isSavingVC) {
-        await this.storeVcHmac(encryptionKey, data, key);
-        return await this.storeVC(key, data);
+        await this.storeVC(key, data);
+        return await this.storeVcHmac(encryptionKey, data, key);
       }
 
       await MMKV.setItem(key, data);
@@ -137,6 +137,13 @@ class Storage {
   ) {
     const storedHMACofCurrentVC = await this.readHmacForVC(key, encryptionKey);
     const HMACofVC = await generateHmac(encryptionKey, data);
+
+    if (HMACofVC !== storedHMACofCurrentVC) {
+      console.debug(
+        `[Inji-406]: storedHmacOfCurrentVC: ${storedHMACofCurrentVC}, HMACofVC: ${HMACofVC}`,
+      );
+    }
+
     return HMACofVC !== storedHMACofCurrentVC;
   }
 
@@ -165,6 +172,7 @@ class Storage {
     key: string,
   ) {
     const HMACofVC = await generateHmac(encryptionKey, data);
+    console.log('[Inji-406]: Updating hmac of the vc: ', HMACofVC);
     const encryptedHMACofVC = await encryptJson(encryptionKey, HMACofVC);
     await MMKV.setItem(getVCKeyName(key), encryptedHMACofVC);
   }
