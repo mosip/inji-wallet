@@ -1,10 +1,6 @@
 import {assign, ErrorPlatformEvent, EventFrom, send, StateFrom} from 'xstate';
 import {createModel} from 'xstate/lib/model';
-import {
-  HOST,
-  MIMOTO_BASE_URL,
-  MY_VCS_STORE_KEY,
-} from '../../../shared/constants';
+import {MIMOTO_BASE_URL, MY_VCS_STORE_KEY} from '../../../shared/constants';
 import {AppServices} from '../../../shared/GlobalContext';
 import {CredentialDownloadResponse, request} from '../../../shared/request';
 import {
@@ -46,7 +42,6 @@ const model = createModel(
     serviceRefs: {} as AppServices,
     id: '',
     idType: '' as VcIdType,
-    tag: '',
     vcMetadata: {} as VCMetadata,
     myVcs: [] as string[],
     generatedOn: null as Date,
@@ -76,8 +71,6 @@ const model = createModel(
     events: {
       KEY_RECEIVED: (key: string) => ({key}),
       KEY_ERROR: (error: Error) => ({error}),
-      EDIT_TAG: () => ({}),
-      SAVE_TAG: (tag: string) => ({tag}),
       STORE_READY: () => ({}),
       DISMISS: () => ({}),
       CREDENTIAL_DOWNLOADED: (vc: VC) => ({vc}),
@@ -100,6 +93,7 @@ const model = createModel(
       SHOW_ACTIVITY: () => ({}),
       REMOVE: (vcMetadata: VCMetadata) => ({vcMetadata}),
       UPDATE_VC_METADATA: (vcMetadata: VCMetadata) => ({vcMetadata}),
+      TAMPERED_VC: (key: string) => ({key}),
     },
   },
 );
@@ -161,6 +155,9 @@ export const ExistingMosipVCItemMachine =
                 target: 'checkingServerData',
               },
             ],
+            TAMPERED_VC: {
+              actions: ['sendTamperedVc', 'removeTamperedVcItem'],
+            },
           },
         },
         checkingServerData: {
@@ -247,9 +244,6 @@ export const ExistingMosipVCItemMachine =
         idle: {
           entry: ['clearTransactionId', 'clearOtp'],
           on: {
-            EDIT_TAG: {
-              target: 'editingTag',
-            },
             VERIFY: {
               target: 'verifyingCredential',
             },
@@ -388,6 +382,7 @@ export const ExistingMosipVCItemMachine =
                       'storeContext',
                       'updateVc',
                       'setWalletBindingErrorEmpty',
+                      'sendWalletBindingSuccess',
                       'logWalletBindingSuccess',
                     ],
                   },
@@ -450,30 +445,10 @@ export const ExistingMosipVCItemMachine =
               entry: 'removeVcItem',
               on: {
                 STORE_RESPONSE: {
-                  actions: ['removedVc', 'logVCremoved'],
+                  actions: ['refreshMyVcs', 'logVCremoved'],
                   target: '#vc-item',
                 },
               },
-            },
-          },
-        },
-        editingTag: {
-          on: {
-            DISMISS: {
-              target: 'idle',
-            },
-            SAVE_TAG: {
-              actions: 'setTag',
-              target: 'storingTag',
-            },
-          },
-        },
-        storingTag: {
-          entry: 'storeTag',
-          on: {
-            STORE_RESPONSE: {
-              actions: 'updateVc',
-              target: 'idle',
             },
           },
         },
@@ -899,6 +874,13 @@ export const ExistingMosipVCItemMachine =
           },
         ),
 
+        sendTamperedVc: send(
+          context => VcEvents.TAMPERED_VC(context.vcMetadata),
+          {
+            to: context => context.serviceRefs.vc,
+          },
+        ),
+
         updateVc: send(
           context => {
             const {serviceRefs, ...vc} = context;
@@ -933,16 +915,6 @@ export const ExistingMosipVCItemMachine =
           },
         ),
 
-        VcUpdated: send(
-          context => {
-            const {serviceRefs, ...vc} = context;
-            return {type: 'VC_UPDATE', vc};
-          },
-          {
-            to: context => context.serviceRefs.vc,
-          },
-        ),
-
         setThumbprintForWalletBindingId: send(
           context => {
             const {walletBindingResponse} = context;
@@ -959,7 +931,7 @@ export const ExistingMosipVCItemMachine =
           },
         ),
 
-        removedVc: send(
+        refreshMyVcs: send(
           () => ({
             type: 'REFRESH_MY_VCS',
           }),
@@ -995,10 +967,6 @@ export const ExistingMosipVCItemMachine =
             to: context => context.serviceRefs.store,
           },
         ),
-
-        setTag: model.assign({
-          tag: (_, event) => event.tag,
-        }),
 
         incrementDownloadCounter: model.assign({
           downloadCounter: ({downloadCounter}) => downloadCounter + 1,
@@ -1044,7 +1012,7 @@ export const ExistingMosipVCItemMachine =
               type: 'VC_DOWNLOADED',
               timestamp: Date.now(),
               deviceName: '',
-              vcLabel: data.tag || data.id,
+              vcLabel: data.id,
             });
           },
           {
@@ -1059,7 +1027,7 @@ export const ExistingMosipVCItemMachine =
               type: 'WALLET_BINDING_SUCCESSFULL',
               timestamp: Date.now(),
               deviceName: '',
-              vcLabel: context.tag || context.vcMetadata.id,
+              vcLabel: context.vcMetadata.id,
             }),
           {
             to: context => context.serviceRefs.activityLog,
@@ -1073,7 +1041,7 @@ export const ExistingMosipVCItemMachine =
               type: 'WALLET_BINDING_FAILURE',
               timestamp: Date.now(),
               deviceName: '',
-              vcLabel: context.tag || context.vcMetadata.id,
+              vcLabel: context.vcMetadata.id,
             }),
           {
             to: context => context.serviceRefs.activityLog,
@@ -1087,7 +1055,7 @@ export const ExistingMosipVCItemMachine =
               type: 'VC_REVOKED',
               timestamp: Date.now(),
               deviceName: '',
-              vcLabel: context.tag || context.vcMetadata.id,
+              vcLabel: context.vcMetadata.id,
             }),
           {
             to: context => context.serviceRefs.activityLog,
@@ -1152,6 +1120,16 @@ export const ExistingMosipVCItemMachine =
         ),
 
         removeVcItem: send(
+          _context => {
+            return StoreEvents.REMOVE(
+              MY_VCS_STORE_KEY,
+              _context.vcMetadata.getVcKey(),
+            );
+          },
+          {to: context => context.serviceRefs.store},
+        ),
+
+        removeTamperedVcItem: send(
           _context => {
             return StoreEvents.REMOVE(
               MY_VCS_STORE_KEY,
@@ -1324,7 +1302,6 @@ export const ExistingMosipVCItemMachine =
                   generatedOn: new Date(),
                   id: context.vcMetadata.id,
                   idType: context.vcMetadata.idType,
-                  tag: '',
                   requestId: context.vcMetadata.requestId,
                   isVerified: false,
                   lastVerifiedOn: null,
@@ -1457,10 +1434,6 @@ export function selectIdType(state: State) {
   return state.context.vcMetadata.idType;
 }
 
-export function selectTag(state: State) {
-  return state.context.tag;
-}
-
 export function selectCredential(state: State) {
   return state.context.credential;
 }
@@ -1471,10 +1444,6 @@ export function selectVerifiableCredential(state: State) {
 
 export function selectContext(state: State) {
   return state.context;
-}
-
-export function selectIsEditingTag(state: State) {
-  return state.matches('editingTag');
 }
 
 export function selectIsOtpError(state: State) {

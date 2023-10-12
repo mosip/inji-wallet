@@ -9,6 +9,7 @@ import {
 } from './ReceivedVcsTabMachine';
 import {EsignetMosipVCItemMachine} from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 import {IssuersMachine} from '../../machines/issuersMachine';
+import Storage from '../../shared/storage';
 
 const model = createModel(
   {
@@ -37,6 +38,7 @@ const model = createModel(
       DISMISS_MODAL: () => ({}),
       GOTO_ISSUERS: () => ({}),
       DOWNLOAD_ID: () => ({}),
+      DISMISS: () => ({}),
     },
   },
 );
@@ -69,7 +71,7 @@ export const HomeScreenMachine = model.createMachine(
           SELECT_MY_VCS: '.myVcs',
           SELECT_RECEIVED_VCS: '.receivedVcs',
           SELECT_HISTORY: '.history',
-          GOTO_ISSUERS: '.gotoIssuers',
+          GOTO_ISSUERS: '.checkStorage',
         },
         states: {
           init: {
@@ -105,6 +107,25 @@ export const HomeScreenMachine = model.createMachine(
           history: {
             entry: [setActiveTab(2)],
           },
+          checkStorage: {
+            invoke: {
+              src: 'checkStorageAvailability',
+              onDone: [
+                {
+                  cond: 'isMinimumStorageLimitReached',
+                  target: 'storageLimitReached',
+                },
+                {
+                  target: 'gotoIssuers',
+                },
+              ],
+            },
+          },
+          storageLimitReached: {
+            on: {
+              DISMISS: 'idle',
+            },
+          },
           gotoIssuers: {
             invoke: {
               id: 'issuersMachine',
@@ -120,12 +141,16 @@ export const HomeScreenMachine = model.createMachine(
                 actions: 'sendAddEvent',
                 target: 'idle',
               },
-              GOTO_ISSUERS: 'gotoIssuers',
+              GOTO_ISSUERS: 'checkStorage',
             },
           },
           idle: {
             on: {
-              GOTO_ISSUERS: 'gotoIssuers',
+              DOWNLOAD_ID: {
+                actions: 'sendAddEvent',
+                target: 'idle',
+              },
+              GOTO_ISSUERS: 'checkStorage',
             },
           },
         },
@@ -152,6 +177,13 @@ export const HomeScreenMachine = model.createMachine(
     },
   },
   {
+    services: {
+      checkStorageAvailability: () => async () => {
+        return Promise.resolve(
+          Storage.isMinimumLimitReached('minStorageRequired'),
+        );
+      },
+    },
     actions: {
       spawnTabActors: assign({
         tabRefs: context => ({
@@ -177,6 +209,9 @@ export const HomeScreenMachine = model.createMachine(
       resetSelectedVc: model.assign({
         selectedVc: null,
       }),
+    },
+    guards: {
+      isMinimumStorageLimitReached: (_context, event) => Boolean(event.data),
     },
   },
 );
@@ -209,4 +244,8 @@ export function selectViewingVc(state: State) {
 
 export function selectTabsLoaded(state: State) {
   return !state.matches('tabs.init');
+}
+
+export function selectIsMinimumStorageLimitReached(state: State) {
+  return state.matches('tabs.storageLimitReached');
 }

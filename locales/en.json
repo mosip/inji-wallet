@@ -14,7 +14,8 @@
     "QRLOGIN_SUCCESFULL": "QRLogin successful",
     "WALLET_BINDING_SUCCESSFULL": "Activation successful",
     "WALLET_BINDING_FAILURE": "Activation failed",
-    "VC_REMOVED": "Removed from wallet"
+    "VC_REMOVED": "Removed from wallet",
+    "TAMPERED_VC_REMOVED": "Some cards removed due to malicious activity"
   },
   "DeviceInfoList": {
     "requestedBy": "Requested by",
@@ -160,7 +161,7 @@
   "IssuersScreen": {
     "title": "Add new card",
     "header": "Please select a preferred method from below to add a new card",
-    "itemHeading":"Download via {{issuer}}",
+    "itemHeading": "Download via {{issuer}}",
     "itemSubHeading": "Enter the mentioned ID and get your card",
     "modal": {
       "title": "In Progress",
@@ -277,6 +278,7 @@
   "MyVcsTab": {
     "bringYourDigitalID": "Bring your digital identity",
     "generateVcDescription": "Tap on \"Download card\" below to download your card",
+    "generateVcFABDescription": "Tap on  \"+\" below to download your card",
     "downloadCard": "Download Card",
     "downloadingYourCard": "Downloading your card, this can take upto 5 minutes",
     "activated": "Credentials are enabled for online authentication.",
@@ -297,6 +299,10 @@
         "title": "Some security features will be unavailable",
         "message": "Your current device does not support all the security features.",
         "riskOkayText": "Ok"
+      },
+      "noInternetConnection": {
+        "title": "No internet connection",
+        "message": "Please check your connection and retry"
       }
     }
   },
@@ -332,7 +338,6 @@
     "revoke": "Revoke",
     "revoking": "Your wallet contains a credential with VID {{vid}}. Revoking this will automatically remove the same from the wallet. Are you sure you want to proceed?",
     "requestingOtp": "Requesting OTP...",
-    "editTag": "Rename",
     "activated": "Credentials are enabled for online authentication.",
     "redirecting": "Redirecting...",
     "success": {

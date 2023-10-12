@@ -365,7 +365,7 @@ PODS:
     - React-Core
   - react-native-spinkit (1.4.1):
     - React
-  - react-native-tuvali (0.4.5):
+  - react-native-tuvali (0.4.6):
     - CrcSwift (~> 0.0.3)
     - GzipSwift
     - React-Core
@@ -821,7 +821,7 @@ SPEC CHECKSUMS:
   react-native-secure-key-store: 910e6df6bc33cb790aba6ee24bc7818df1fe5898
   react-native-secure-keystore: d9e791a495d23c33db7711732f3a761533b882db
   react-native-spinkit: da294fd828216ad211fe36a5c14c1e09f09e62db
-  react-native-tuvali: 22b5708e1511f84ace165605778ad94cf9a8f635
+  react-native-tuvali: bd369208d58ff9e1528c2a76dce126f60d7fd35d
   React-perflogger: d21f182895de9d1b077f8a3cd00011095c8c9100
   React-RCTActionSheet: 0151f83ef92d2a7139bba7dfdbc8066632a6d47b
   React-RCTAnimation: 5ec9c0705bb2297549c120fe6473aa3e4a01e215

@@ -11,6 +11,7 @@ import {HomeRouteProps} from '../../routes/main';
 import {useIssuerScreenController} from './IssuerScreenController';
 import {Loader} from '../../components/ui/Loader';
 import testIDProps, {removeWhiteSpace} from '../../shared/commonUtil';
+import {ErrorMessage} from '../../shared/openId4VCI/Utils';
 
 export const IssuersScreen: React.FC<
   HomeRouteProps | RootRouteProps
@@ -19,7 +20,7 @@ export const IssuersScreen: React.FC<
   const {t} = useTranslation('IssuersScreen');
 
   useLayoutEffect(() => {
-    if (controller.loadingReason || controller.errorMessage) {
+    if (controller.loadingReason || controller.errorMessageType) {
       props.navigation.setOptions({
         headerShown: false,
       });
@@ -39,7 +40,11 @@ export const IssuersScreen: React.FC<
     if (controller.isStoring) {
       props.navigation.goBack();
     }
-  }, [controller.loadingReason, controller.errorMessage, controller.isStoring]);
+  }, [
+    controller.loadingReason,
+    controller.errorMessageType,
+    controller.isStoring,
+  ]);
 
   const onPressHandler = (id: string) => {
     if (id !== 'UIN, VID, AID') {
@@ -50,14 +55,18 @@ export const IssuersScreen: React.FC<
   };
 
   const isGenericError = () => {
-    return controller.errorMessage === 'generic';
+    return controller.errorMessageType === ErrorMessage.GENERIC;
   };
 
   const goBack = () => {
-    controller.RESET_ERROR();
-    setTimeout(() => {
+    if (
+      controller.errorMessageType &&
+      controller.loadingReason === 'displayIssuers'
+    ) {
       props.navigation.goBack();
-    }, 0);
+    } else {
+      controller.RESET_ERROR();
+    }
   };
 
   const getImage = () => {
@@ -77,6 +86,20 @@ export const IssuersScreen: React.FC<
       />
     );
   };
+
+  if (controller.errorMessageType) {
+    return (
+      <Error
+        testID={`${controller.errorMessageType}Error`}
+        isVisible={controller.errorMessageType !== ''}
+        title={t(`errors.${controller.errorMessageType}.title`)}
+        message={t(`errors.${controller.errorMessageType}.message`)}
+        goBack={goBack}
+        tryAgain={controller.TRY_AGAIN}
+        image={getImage()}
+      />
+    );
+  }
 
   if (controller.loadingReason) {
     return (
@@ -124,17 +147,6 @@ export const IssuersScreen: React.FC<
             )}
           </View>
         </Column>
-      )}
-      {controller.errorMessage && (
-        <Error
-          testID={`${controller.errorMessage}Error`}
-          isVisible={controller.errorMessage !== ''}
-          title={t(`errors.${controller.errorMessage}.title`)}
-          message={t(`errors.${controller.errorMessage}.message`)}
-          goBack={goBack}
-          tryAgain={controller.TRY_AGAIN}
-          image={getImage()}
-        />
       )}
     </React.Fragment>
   );
