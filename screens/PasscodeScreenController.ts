@@ -34,9 +34,6 @@ export function usePasscodeScreen(props: PasscodeRouteProps) {
         index: 0,
         routes: [{name: 'Main'}],
       });
-      isSettingUp
-        ? sendImpressionEvent(getImpressionData('App Onboarding', 'Main'))
-        : sendImpressionEvent(getImpressionData('App Login', 'Main'));
     }
   }, [isAuthorized]);
 

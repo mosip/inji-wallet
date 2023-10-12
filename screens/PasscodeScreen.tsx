@@ -9,14 +9,7 @@ import {PasscodeRouteProps} from '../routes';
 import {usePasscodeScreen} from './PasscodeScreenController';
 import {hashData} from '../shared/commonUtil';
 import {argon2iConfig} from '../shared/constants';
-import {
-  getEndData,
-  getErrorData,
-  getImpressionData,
-  sendEndEvent,
-  sendErrorEvent,
-  sendImpressionEvent,
-} from '../shared/telemetry/TelemetryUtils';
+import {getEndData, sendEndEvent} from '../shared/telemetry/TelemetryUtils';
 import {BackHandler} from 'react-native';
 import {incrementPasscodeRetryCount} from '../shared/telemetry/TelemetryUtils';
 
@@ -26,28 +19,19 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
   const isSettingUp = props.route.params?.setup;
 
   const handleBackButtonPress = () => {
-    const routes = props.navigation.getState()?.routes;
-    const prevRoute = routes[routes.length - 2];
     isSettingUp
-      ? (sendErrorEvent(
-          getErrorData(
-            'App Onboarding',
-            'user_cancel',
-            'Authentication canceled',
-          ),
-        ),
-        sendEndEvent(getEndData('App Onboarding', 'FAILURE')))
-      : (sendErrorEvent(
-          getErrorData('App Login', 'user_cancel', 'Authentication canceled'),
-        ),
-        sendEndEvent(getEndData('App Login', 'FAILURE')));
-    if (routes.length >= 2) {
-      isSettingUp
-        ? sendImpressionEvent(
-            getImpressionData('App Onboarding', prevRoute.name),
-          )
-        : sendImpressionEvent(getImpressionData('App Login', prevRoute.name));
-    }
+      ? sendEndEvent(
+          getEndData('App Onboarding', 'FAILURE', {
+            errorId: 'user_cancel',
+            errorMessage: 'Authentication canceled',
+          }),
+        )
+      : sendEndEvent(
+          getEndData('App Login', 'FAILURE', {
+            errorId: 'user_cancel',
+            errorMessage: 'Authentication canceled',
+          }),
+        );
     return false;
   };
 

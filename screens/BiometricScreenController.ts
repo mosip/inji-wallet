@@ -66,7 +66,6 @@ export function useBiometricScreen(props: RootRouteProps) {
         index: 0,
         routes: [{name: 'Main'}],
       });
-      sendImpressionEvent(getImpressionData('App Login', 'Main'));
       return;
     }
 
@@ -83,16 +82,14 @@ export function useBiometricScreen(props: RootRouteProps) {
       return;
     }
 
-    if (errorMsgBio) {
-      sendErrorEvent(
-        getErrorData(
-          'App Login',
-          errorResponse.res.error,
-          errorResponse.res.warning,
-          errorResponse.stacktrace,
-        ),
+    if (errorMsgBio && !isReEnabling) {
+      sendEndEvent(
+        getEndData('App Login', 'FAILURE', {
+          errorId: errorResponse.res.error,
+          errorMessage: errorResponse.res.warning,
+          stackTrace: errorResponse.stacktrace,
+        }),
       );
-      sendEndEvent(getEndData('App Login', 'FAILURE'));
     }
 
     if (isUnavailable || isUnenrolled) {
@@ -142,6 +139,7 @@ export function useBiometricScreen(props: RootRouteProps) {
 
   const onSuccess = () => {
     bioSend({type: 'AUTHENTICATE'});
+    setError('');
   };
 
   const onError = (value: string) => {
@@ -149,11 +147,12 @@ export function useBiometricScreen(props: RootRouteProps) {
   };
 
   const onDismiss = () => {
-    sendErrorEvent(
-      getErrorData('App Login', 'user_cancel', 'Authentication canceled'),
+    sendEndEvent(
+      getEndData('App Login', 'FAILURE', {
+        errorId: 'user_cancel',
+        errorMessage: 'Authentication canceled',
+      }),
     );
-    sendEndEvent(getEndData('App Login', 'FAILURE'));
-    sendImpressionEvent(getImpressionData('App Login', 'BiometricScreen'));
     setReEnabling(false);
   };
 

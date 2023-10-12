@@ -84,15 +84,13 @@ export function useAuthScreen(props: RootRouteProps) {
 
       // handle biometric failure unknown error
     } else if (errorMsgBio) {
-      sendErrorEvent(
-        getErrorData(
-          'App Onboarding',
-          errorResponse.res.error,
-          errorResponse.res.warning,
-          errorResponse.stacktrace,
-        ),
+      sendEndEvent(
+        getEndData('App Login', 'FAILURE', {
+          errorId: errorResponse.res.error,
+          errorMessage: errorResponse.res.warning,
+          stackTrace: errorResponse.stacktrace,
+        }),
       );
-      sendEndEvent(getEndData('App Onboarding', 'FAILURE'));
       // show alert message whenever biometric state gets failure
       setHasAlertMsg(t(errorMsgBio));
 
@@ -102,7 +100,7 @@ export function useAuthScreen(props: RootRouteProps) {
 
       // we dont need to see this page to user once biometric is unavailable on its device
     } else if (isUnavailableBio) {
-      sendStartEvent(getData('App Login'));
+      sendStartEvent(getData('App Onboarding'));
       usePasscode();
     }
   }, [isSuccessBio, isUnavailableBio, errorMsgBio, unEnrolledNoticeBio]);

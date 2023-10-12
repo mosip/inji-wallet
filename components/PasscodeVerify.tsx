@@ -13,6 +13,7 @@ export const PasscodeVerify: React.FC<PasscodeVerifyProps> = props => {
   useEffect(() => {
     if (isVerified) {
       props.onSuccess();
+      setIsVerified(false);
     }
   }, [isVerified]);
 
