@@ -205,20 +205,12 @@ export const MyVcsTabMachine = model.createMachine(
     },
 
     actions: {
-      refreshMyVc: send(_context => VcEvents.REFRESH_MY_VCS(), {
-        to: context => context.serviceRefs.vc,
-      }),
-
       registerEvent: () => {
         sendStartEvent(getStartEventData('VC Download', {id: 'UIN, VID, AID'}));
         sendInteractEvent(
           getInteractEventData('VC Download', 'CLICK', 'Download VC button'),
         );
       },
-
-      resetIsTampered: send(() => StoreEvents.RESET_IS_TAMPERED(), {
-        to: context => context.serviceRefs.store,
-      }),
 
       viewVcFromParent: sendParent((_context, event: ViewVcEvent) =>
         model.events.VIEW_VC(event.vcItemActor),
