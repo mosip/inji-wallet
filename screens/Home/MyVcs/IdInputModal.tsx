@@ -23,12 +23,13 @@ export const IdInputModal: React.FC<IdInputModalProps> = props => {
   const controller = useIdInputModal(props);
 
   const setIndividualID = () => {
-    controller.INPUT_ID(individualId);
+    controller.INPUT_ID(individualId.id);
+    controller.SELECT_ID_TYPE(individualId.idType);
   };
 
   const dismissInput = () => {
     props.onDismiss();
-    GET_INDIVIDUAL_ID('');
+    GET_INDIVIDUAL_ID({id: '', idType: 'UIN'});
   };
 
   const inputLabel = t('enterId', {idType: controller.idType});
