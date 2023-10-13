@@ -73,7 +73,6 @@ export function useWelcomeScreen(props: RootRouteProps) {
             'Unlock application button',
           ),
         );
-        sendImpressionEvent(getImpressionEventData('App Login', 'Passcode'));
         props.navigation.navigate('Passcode', {setup: isSettingUp});
       } else {
         props.navigation.navigate('Auth');

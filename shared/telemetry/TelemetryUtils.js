@@ -137,27 +137,13 @@ export function getAppInfoEventData() {
 
 let passcodeRetryCount = 1;
 
-export const incrementPasscodeRetryCount = isSettingUp => {
+export const incrementPasscodeRetryCount = eventType => {
   if (passcodeRetryCount < 5) {
     passcodeRetryCount += 1;
   } else {
-    isSettingUp
-      ? sendErrorEvent(
-          getErrorEventData(
-            'App Onboarding',
-            'mismatch',
-            'Passcode did not match',
-            {},
-          ),
-        )
-      : sendErrorEvent(
-          getErrorEventData(
-            'App Login',
-            'mismatch',
-            'Passcode did not match',
-            {},
-          ),
-        );
+    sendErrorEvent(
+      getErrorEventData(eventType, 'mismatch', 'Passcode did not match'),
+    );
     passcodeRetryCount = 1;
   }
 };
@@ -166,6 +152,10 @@ export function configureTelemetry() {
   const config = getTelemetryConfigData();
   initializeTelemetry(config);
   sendAppInfoEvent(getAppInfoEventData());
+}
+
+export function getEventType(isSettingUp) {
+  return isSettingUp ? 'App Onboarding' : 'App Login';
 }
 
 const languageCodeMap = {

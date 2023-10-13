@@ -11,7 +11,10 @@ import {hashData} from '../shared/commonUtil';
 import {argon2iConfig} from '../shared/constants';
 import {
   getEndEventData,
+  getEventType,
+  getImpressionEventData,
   sendEndEvent,
+  sendImpressionEvent,
 } from '../shared/telemetry/TelemetryUtils';
 import {BackHandler} from 'react-native';
 import {incrementPasscodeRetryCount} from '../shared/telemetry/TelemetryUtils';
@@ -21,20 +24,19 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
   const controller = usePasscodeScreen(props);
   const isSettingUp = props.route.params?.setup;
 
+  useEffect(() => {
+    sendImpressionEvent(
+      getImpressionEventData(getEventType(isSettingUp), 'Passcode'),
+    );
+  }, [isSettingUp]);
+
   const handleBackButtonPress = () => {
-    isSettingUp
-      ? sendEndEvent(
-          getEndEventData('App Onboarding', 'FAILURE', {
-            errorId: 'user_cancel',
-            errorMessage: 'Authentication canceled',
-          }),
-        )
-      : sendEndEvent(
-          getEndEventData('App Login', 'FAILURE', {
-            errorId: 'user_cancel',
-            errorMessage: 'Authentication canceled',
-          }),
-        );
+    sendEndEvent(
+      getEndEventData(getEventType(isSettingUp), 'FAILURE', {
+        errorId: 'user_cancel',
+        errorMessage: 'Authentication canceled',
+      }),
+    );
     return false;
   };
 
@@ -55,7 +57,7 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
   };
 
   const handlePasscodeMismatch = (error: string) => {
-    incrementPasscodeRetryCount(props.route.params?.setup);
+    incrementPasscodeRetryCount(getEventType(isSettingUp));
     controller.setError(error);
   };
 
@@ -116,7 +118,7 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
       padding="32"
       backgroundColor={Theme.Colors.whiteBackgroundColor}>
       <Image source={Theme.LockIcon} style={{alignSelf: 'center'}} />
-      {props.route.params?.setup ? (
+      {isSettingUp ? (
         <Column fill align="space-around" width="100%">
           {passcodeSetup}
         </Column>

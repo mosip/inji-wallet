@@ -8,23 +8,16 @@ import {RootRouteProps} from '../routes';
 import {useBiometricScreen} from './BiometricScreenController';
 import {Passcode} from '../components/Passcode';
 import {
-  getImpressionEventData,
+  getEventType,
   incrementPasscodeRetryCount,
-  sendImpressionEvent,
 } from '../shared/telemetry/TelemetryUtils';
 
 export const BiometricScreen: React.FC<RootRouteProps> = props => {
   const {t} = useTranslation('BiometricScreen');
   const controller = useBiometricScreen(props);
 
-  useEffect(() => {
-    if (controller.isReEnabling) {
-      sendImpressionEvent(getImpressionEventData('App Login', 'Passcode'));
-    }
-  }, [controller.isReEnabling]);
-
   const handlePasscodeMismatch = (error: string) => {
-    incrementPasscodeRetryCount(props.route.params?.setup);
+    incrementPasscodeRetryCount(getEventType(props.route.params?.setup));
     controller.onError(error);
   };
 

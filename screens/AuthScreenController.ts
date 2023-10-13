@@ -49,11 +49,6 @@ export function useAuthScreen(props: RootRouteProps) {
 
   const usePasscode = () => {
     props.navigation.navigate('Passcode', {setup: isSettingUp});
-    isSettingUp
-      ? sendImpressionEvent(
-          getImpressionEventData('App Onboarding', 'Passcode'),
-        )
-      : sendImpressionEvent(getImpressionEventData('App Login', 'Passcode'));
   };
 
   const {t} = useTranslation('AuthScreen');
@@ -71,7 +66,7 @@ export function useAuthScreen(props: RootRouteProps) {
         index: 0,
         routes: [{name: 'Main'}],
       });
-      sendImpressionEvent(getImpressionEventData('App Onboarding', 'Main'));
+      sendImpressionEvent(getImpressionEventData('App Onboarding', 'Home'));
       return;
     }
 
@@ -85,7 +80,7 @@ export function useAuthScreen(props: RootRouteProps) {
       // handle biometric failure unknown error
     } else if (errorMsgBio) {
       sendEndEvent(
-        getEndEventData('App Login', 'FAILURE', {
+        getEndEventData('App Onboarding', 'FAILURE', {
           errorId: errorResponse.res.error,
           errorMessage: errorResponse.res.warning,
           stackTrace: errorResponse.stacktrace,

@@ -55,9 +55,9 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
     if (controller.showHardwareKeystoreNotExistsAlert) {
       sendErrorEvent(
         getErrorEventData(
-          'Availability of hardware key store',
+          'App Onboarding',
           'does_not_exist',
-          'Some security features will be unavailable',
+          'Some security features will be unavailable as hardware key store is not available',
         ),
       );
     }

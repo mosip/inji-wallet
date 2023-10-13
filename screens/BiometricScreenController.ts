@@ -103,7 +103,6 @@ export function useBiometricScreen(props: RootRouteProps) {
       sendInteractEvent(
         getInteractEventData('App Login', 'TOUCH', 'Unlock application button'),
       );
-      sendImpressionEvent(getImpressionEventData('App Login', 'Passcode'));
     }
   }, [
     isAuthorized,
