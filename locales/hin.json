@@ -561,8 +561,7 @@
   },
   "WelcomeScreen": {
     "title": "ओपन सोर्स आइडेंटिटी सॉल्यूशन",
-    "getStarted": "शुरू हो जाओ",
-    "unlockApp": "एप्लिकेशन अनलॉक करें",
+    "unlockApplication": "एप्लिकेशन अनलॉक करें",
     "failedToReadKeys": "कुंजियाँ पढ़ने में विफल",
     "retryRead": "पुनः प्रयास करना चाहते हैं?",
     "errors": {

@@ -567,18 +567,17 @@
   },
   "WelcomeScreen": {
     "title": "Open Source Identity Solution",
-    "getStarted": "Get started",
-    "unlockApp": "Unlock Application",
+    "unlockApplication": "Unlock Application",
     "failedToReadKeys": "Failed to read keys",
     "retryRead": "Want to retry?",
-    "ignore": "Ignore",
     "errors": {
       "decryptionFailed": "Failed to decrypt data",
       "invalidateKeyError": {
         "title": "App was Reset",
         "message": "Due to the fingerprint / facial recognition update, app security was impacted, and downloaded cards were removed. Please download again."
       }
-    }
+    },
+    "ignore": "Ignore"
   },
   "SetupLanguage": {
     "header": "Choose Language",

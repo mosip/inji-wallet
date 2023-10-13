@@ -563,8 +563,7 @@
   },
   "WelcomeScreen": {
     "title": "Open Source Identity Solution",
-    "getStarted": "Magsimula",
-    "unlockApp": "I-unlock ang Application",
+    "unlockApplication": "I-unlock ang Application",
     "failedToReadKeys": "Nabigong basahin ang mga susi",
     "retryRead": "Gustong subukang muli?",
     "errors": {

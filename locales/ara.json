@@ -560,8 +560,7 @@
   },
   "WelcomeScreen": {
     "title": "حل هوية مفتوحة المصدر",
-    "getStarted": "البدء",
-    "unlockApp": "فتح التطبيق",
+    "unlockApplication": "فتح التطبيق",
     "failedToReadKeys": "فشلت قراءة المفاتيح",
     "retryRead": "هل تريد إعادة المحاولة؟",
     "errors": {

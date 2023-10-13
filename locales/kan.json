@@ -558,8 +558,7 @@
   },
   "WelcomeScreen": {
     "title": "ಓಪನ್ ಸೋರ್ಸ್ ಐಡೆಂಟಿಟಿ ಸೊಲ್ಯೂಷನ್",
-    "getStarted": "ಪ್ರಾರಂಭಿಸಿ",
-    "unlockApp": "ಅಪ್ಲಿಕೇಶನ್ ಅನ್ಲಾಕ್ ಮಾಡಿ",
+    "unlockApplication": "ಅಪ್ಲಿಕೇಶನ್ ಅನ್ಲಾಕ್ ಮಾಡಿ",
     "failedToReadKeys": "ಕೀಗಳನ್ನು ಓದಲು ವಿಫಲವಾಗಿದೆ",
     "retryRead": "ಮರುಪ್ರಯತ್ನಿಸಲು ಬಯಸುವಿರಾ?",
     "errors": {
