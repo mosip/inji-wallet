@@ -24,6 +24,15 @@ import {
 import {NETWORK_REQUEST_FAILED, REQUEST_TIMEOUT} from '../shared/constants';
 import {VCMetadata} from '../shared/VCMetadata';
 import {
+  getImpressionEventData,
+  getInteractEventData,
+  getStartEventData,
+  sendEndEvent,
+  sendImpressionEvent,
+  sendInteractEvent,
+  sendStartEvent,
+} from '../shared/telemetry/TelemetryUtils';
+import {
   CredentialWrapper,
   VerifiableCredential,
 } from '../types/VC/EsignetMosipVC/vc';
@@ -272,12 +281,16 @@ export const IssuersMachine = model.createMachine(
           src: 'verifyCredential',
           onDone: [
             {
+              actions: ['sendSuccessEndEvent'],
               target: 'storing',
             },
           ],
           onError: [
             {
-              actions: log((_, event) => (event.data as Error).message),
+              actions: [
+                log((_, event) => (event.data as Error).message),
+                'sendErrorEndEvent',
+              ],
               //TODO: Move to state according to the required flow when verification of VC fails
               target: 'idle',
             },
@@ -460,6 +473,18 @@ export const IssuersMachine = model.createMachine(
           to: context => context.serviceRefs.activityLog,
         },
       ),
+      sendSuccessEndEvent: () => {
+        sendEndEvent({
+          type: 'VC Download',
+          status: 'SUCCESS',
+        });
+      },
+      sendErrorEndEvent: () => {
+        sendEndEvent({
+          type: 'VC Download',
+          status: 'FAILURE',
+        });
+      },
     },
     services: {
       downloadIssuersList: async () => {
@@ -467,6 +492,12 @@ export const IssuersMachine = model.createMachine(
       },
       checkInternet: async () => await NetInfo.fetch(),
       downloadIssuerConfig: async (context, _) => {
+        sendStartEvent(
+          getStartEventData('VC Download', {id: context.selectedIssuerId}),
+        );
+        sendInteractEvent(
+          getInteractEventData('VC Download', 'CLICK', 'Issuer Type'),
+        );
         return await CACHED_API.fetchIssuerConfig(context.selectedIssuerId);
       },
       downloadCredential: async context => {
@@ -490,6 +521,12 @@ export const IssuersMachine = model.createMachine(
         return credential;
       },
       invokeAuthorization: async context => {
+        sendImpressionEvent(
+          getImpressionEventData(
+            'VC Download',
+            context.selectedIssuer.id + ' Web View Page',
+          ),
+        );
         return await authorize(context.selectedIssuer);
       },
       generateKeyPair: async context => {
