@@ -205,6 +205,17 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         buttonText={t('common:ok')}
         customHeight={'auto'}
       />
+
+      <MessageOverlay
+        isVisible={controller.isDownloadLimitExpires}
+        title={t('errors.downloadLimitExpires.title')}
+        message={t('errors.downloadLimitExpires.message')}
+        onButtonPress={controller.DELETE_VC}
+        buttonText={t('common:ok')}
+        customHeight={'auto'}
+        failedVcs={controller.downloadFailedVcs}
+      />
+
       {controller.isNetworkOff && (
         <Error
           testID={`networkOffError`}

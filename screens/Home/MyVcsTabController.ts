@@ -9,6 +9,8 @@ import {
   selectAreAllVcsDownloaded,
   selectInProgressVcDownloads,
   selectIsTampered,
+  selectIsDownloadLimitExpired,
+  selectDownloadingFailedVcs,
 } from '../../machines/vc';
 import {
   selectWalletBindingError,
@@ -66,6 +68,13 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
 
     isTampered: useSelector(vcService, selectIsTampered),
 
+    isDownloadLimitExpires: useSelector(
+      vcService,
+      selectIsDownloadLimitExpired,
+    ),
+
+    downloadFailedVcs: useSelector(vcService, selectDownloadingFailedVcs),
+
     SET_STORE_VC_ITEM_STATUS: () =>
       service.send(MyVcsTabEvents.SET_STORE_VC_ITEM_STATUS()),
 
@@ -100,5 +109,6 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
       settingsService.send(SettingsEvents.ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS()),
 
     REMOVE_TAMPERED_VCS: () => vcService?.send(VcEvents.REMOVE_TAMPERED_VCS()),
+    DELETE_VC: () => vcService?.send(VcEvents.DELETE_VC()),
   };
 }

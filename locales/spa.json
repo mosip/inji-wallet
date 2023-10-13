@@ -206,6 +206,10 @@
         "title": "Sin conexión a Internet",
         "message": "Por favor verifique su conexión y vuelva a intentarlo"
       },
+      "downloadLimitExpires":{
+        "title": "Error de descarga",
+        "message": "Hubo un problema al descargar las siguientes tarjetas. Inténtalo de nuevo"
+      }
 		}
 	},
 	"OnboardingOverlay": {

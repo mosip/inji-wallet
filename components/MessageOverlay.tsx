@@ -5,6 +5,7 @@ import {Dimensions, StyleSheet} from 'react-native';
 import {Overlay, LinearProgress} from 'react-native-elements';
 import {Button, Column, Text} from './ui';
 import {Theme} from './ui/styleUtils';
+import {VCMetadata} from '../shared/VCMetadata';
 
 export const MessageOverlay: React.FC<MessageOverlayProps> = props => {
   const {t} = useTranslation('common');
@@ -46,6 +47,18 @@ export const MessageOverlay: React.FC<MessageOverlayProps> = props => {
               {props.message}
             </Text>
           )}
+          {props.failedVcs &&
+            props.failedVcs.map(vc => (
+              <Text
+                key={vc.getVcKey()}
+                align="center"
+                weight="semibold"
+                size="small"
+                margin="10 0 12 0"
+                color={Theme.Colors.Details}>
+                {`${t(`VcDetails:${vc.idType}`)}:${vc.id}`}
+              </Text>
+            ))}
           {props.progress && <Progress progress={props.progress} />}
           {props.hint && (
             <Text
@@ -119,4 +132,5 @@ export interface MessageOverlayProps {
   onBackdropPress?: () => void;
   onShow?: () => void;
   customHeight?: number | string | undefined;
+  failedVcs?: VCMetadata[];
 }
