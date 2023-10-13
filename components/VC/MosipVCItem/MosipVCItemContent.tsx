@@ -111,7 +111,9 @@ const getIssuerLogo = (isOpenId4VCI: boolean, issuerLogo: string) => {
 export const MosipVCItemContent: React.FC<
   ExistingMosipVCItemContentProps | EsignetMosipVCItemContentProps
 > = props => {
-  const verifiableCredential = props.vcMetadata.isFromOpenId4VCI()
+  const verifiableCredential = props.isDownloading
+    ? null
+    : props.vcMetadata.isFromOpenId4VCI()
     ? props.verifiableCredential?.credential
     : props.verifiableCredential;
 
@@ -126,8 +128,15 @@ export const MosipVCItemContent: React.FC<
   const selectableOrCheck = props.selectable ? (
     <CheckBox
       checked={props.selected}
-      checkedIcon={<Icon name="radio-button-checked" />}
-      uncheckedIcon={<Icon name="radio-button-unchecked" />}
+      checkedIcon={
+        <Icon name="check-circle" type="material" color={Theme.Colors.Icon} />
+      }
+      uncheckedIcon={
+        <Icon
+          name="radio-button-unchecked"
+          color={Theme.Colors.uncheckedIcon}
+        />
+      }
       onPress={() => props.onPress()}
     />
   ) : null;
@@ -331,6 +340,7 @@ interface ExistingMosipVCItemContentProps {
   iconType?: string;
   service: any;
   onPress?: () => void;
+  isDownloading?: boolean;
 }
 
 export interface EsignetMosipVCItemContentProps {
@@ -343,4 +353,5 @@ export interface EsignetMosipVCItemContentProps {
   iconType?: string;
   service: any;
   onPress?: () => void;
+  isDownloading?: boolean;
 }

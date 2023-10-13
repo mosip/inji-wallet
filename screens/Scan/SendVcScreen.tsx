@@ -66,17 +66,7 @@ export const SendVcScreen: React.FC = () => {
           <Column
             padding="24 19 14 19"
             backgroundColor={Theme.Colors.whiteBackgroundColor}
-            style={{position: 'relative'}}>
-            <Input
-              value={controller.reason ? controller.reason : ''}
-              placeholder={!controller.reason ? reasonLabel : ''}
-              label={controller.reason ? reasonLabel : ''}
-              labelStyle={{textAlign: 'left'}}
-              onChangeText={controller.UPDATE_REASON}
-              containerStyle={{marginBottom: 6}}
-              inputStyle={{textAlign: I18nManager.isRTL ? 'right' : 'left'}}
-            />
-          </Column>
+            style={{position: 'relative'}}></Column>
           <Text
             margin="15 0 13 24"
             weight="bold"
@@ -94,31 +84,33 @@ export const SendVcScreen: React.FC = () => {
               onPress={controller.SELECT_VC_ITEM(index)}
               selectable
               selected={index === controller.selectedIndex}
-              isSharingVc={true}
+              isSharingVc
             />
           ))}
+        </Column>
+        {!controller.selectedVc.shouldVerifyPresence && (
           <Button
             type="gradient"
-            title={t('acceptRequest')}
+            title={t('acceptRequestAndVerify')}
+            styles={{marginTop: 12}}
             disabled={controller.selectedIndex == null}
-            onPress={controller.ACCEPT_REQUEST}
+            onPress={controller.VERIFY_AND_ACCEPT_REQUEST}
           />
-          {!controller.selectedVc.shouldVerifyPresence && (
-            <Button
-              type="gradient"
-              title={t('acceptRequestAndVerify')}
-              styles={{marginTop: 12}}
-              disabled={controller.selectedIndex == null}
-              onPress={controller.VERIFY_AND_ACCEPT_REQUEST}
-            />
-          )}
-          <Button
-            type="clear"
-            loading={controller.isCancelling}
-            title={t('reject')}
-            onPress={controller.CANCEL}
-          />
-        </Column>
+        )}
+
+        <Button
+          type="gradient"
+          title={t('acceptRequest')}
+          disabled={controller.selectedIndex == null}
+          onPress={controller.ACCEPT_REQUEST}
+        />
+
+        <Button
+          type="clear"
+          loading={controller.isCancelling}
+          title={t('reject')}
+          onPress={controller.CANCEL}
+        />
       </Column>
 
       <VerifyIdentityOverlay

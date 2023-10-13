@@ -216,6 +216,7 @@ export const ExistingMosipVCItemMachine =
                     'setVerifiableCredential',
                     'updateVc',
                     'logDownloaded',
+                    'sendTelemetryEvents',
                     'removeVcFromInProgressDownloads',
                   ],
                   target: '#vc-item.checkingVerificationStatus',
@@ -1026,6 +1027,9 @@ export const ExistingMosipVCItemMachine =
             to: context => context.serviceRefs.activityLog,
           },
         ),
+        sendTelemetryEvents: () => {
+          sendEndEvent({type: 'VC Download', status: 'SUCCESS'});
+        },
 
         logWalletBindingSuccess: send(
           context =>

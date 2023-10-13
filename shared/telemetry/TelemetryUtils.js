@@ -14,32 +14,28 @@ import DeviceInfo from 'react-native-device-info';
 import {isCustomSecureKeystore} from '../cryptoutil/cryptoUtil';
 import * as RNLocalize from 'react-native-localize';
 
-export function sendImpressionEvent(data) {
-  telemetry.impression(data, {});
+export function sendStartEvent(data) {
+  telemetry.start({}, '', '', data, {});
 }
 
 export function sendEndEvent(data) {
   telemetry.end(data, {});
 }
 
-export function initializeTelemetry(config) {
-  telemetry.initialize(config);
-}
-
-export function sendStartEvent(data) {
-  telemetry.start({}, '', '', data, {});
+export function sendImpressionEvent(data) {
+  telemetry.impression(data, {});
 }
 
 export function sendAppInfoEvent(data) {
   telemetry.appinfo(data);
 }
 
-export function sendInteractEvent(data) {
-  telemetry.interact(data, {});
-}
-
 export function sendErrorEvent(data) {
   telemetry.error(data, {});
+}
+
+export function initializeTelemetry(config) {
+  telemetry.initialize(config);
 }
 
 export function getTelemetryConfigData() {
@@ -85,6 +81,10 @@ export function getInteractEventData(
   };
 }
 
+export const getInteractDataSubtype = (ineteractionType, interactingOn) => {
+  return ineteractionType + '_' + interactingOn;
+};
+
 export function getImpressionEventData(
   type,
   subtype,
@@ -124,7 +124,7 @@ export function getAppInfoEventData() {
     dateTime: new Date().getTime(),
     zone: RNLocalize.getTimeZone(),
     offset: new Date().getTimezoneOffset() * 60 * 1000,
-    preferredLanguage: languageCodeMap[i18next.language],
+    preferredLanguage: languageCodeMap[i18next.language] ?? i18next.language,
     buildNumber: DeviceInfo.getBuildNumber(),
     injiVersion: __InjiVersion.getValue(),
     tuvaliVersion: __TuvaliVersion.getValue(),
@@ -156,10 +156,6 @@ export const incrementPasscodeRetryCount = isSettingUp => {
         );
     passcodeRetryCount = 1;
   }
-};
-
-export const getInteractDataSubtype = (ineteractionType, interactingOn) => {
-  return ineteractionType + '_' + interactingOn;
 };
 
 const languageCodeMap = {

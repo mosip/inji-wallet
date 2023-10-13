@@ -7,7 +7,7 @@ import {
   selectWalletBindingSuccess,
   VcEvents,
   selectAreAllVcsDownloaded,
-  selectInProgressVcDownloadsCount,
+  selectInProgressVcDownloads,
   selectIsTampered,
 } from '../../machines/vc';
 import {
@@ -62,10 +62,7 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
       selectShowHardwareKeystoreNotExistsAlert,
     ),
     areAllVcsLoaded: useSelector(vcService, selectAreAllVcsDownloaded),
-    inProgressVcDownloadsCount: useSelector(
-      vcService,
-      selectInProgressVcDownloadsCount,
-    ),
+    inProgressVcDownloads: useSelector(vcService, selectInProgressVcDownloads),
 
     isTampered: useSelector(vcService, selectIsTampered),
 

@@ -228,5 +228,6 @@ export function useScanLayout() {
     DISMISS,
     isAccepted,
     onRetry,
+    CANCEL,
   };
 }
