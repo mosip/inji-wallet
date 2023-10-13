@@ -46,7 +46,7 @@ export interface Typegen0 {
     expandLinkTransResp: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
     forwardToParent: 'DISMISS';
     loadMyVcs: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
-    loadThumbprint: 'CONFIRM';
+    loadThumbprint: 'CONFIRM' | 'FACE_VALID';
     resetLinkTransactionId: 'GET';
     resetSelectedVoluntaryClaims: 'GET';
     setClaims: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
@@ -59,25 +59,34 @@ export interface Typegen0 {
     setlinkTransactionResponse: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
   };
   eventsCausingDelays: {};
-  eventsCausingGuards: {};
+  eventsCausingGuards: {
+    shouldCaptureConsent: 'done.invoke.QrLogin.sendingAuthenticate:invocation[0]';
+  };
   eventsCausingServices: {
     linkTransaction: 'GET';
-    sendAuthenticate: never;
+    sendAuthenticate: 'STORE_RESPONSE';
     sendConsent: 'STORE_RESPONSE';
   };
   matchesStates:
     | 'ShowError'
     | 'done'
     | 'faceAuth'
+    | 'faceAuth.idle'
+    | 'faceAuth.loadingThumbprint'
     | 'invalidIdentity'
     | 'linkTransaction'
     | 'loadMyVcs'
-    | 'loadingThumbprint'
     | 'requestConsent'
+    | 'requestConsent.idle'
+    | 'requestConsent.loadingThumbprint'
     | 'sendingAuthenticate'
     | 'sendingConsent'
     | 'showvcList'
     | 'success'
-    | 'waitingForData';
+    | 'waitingForData'
+    | {
+        faceAuth?: 'idle' | 'loadingThumbprint';
+        requestConsent?: 'idle' | 'loadingThumbprint';
+      };
   tags: never;
 }

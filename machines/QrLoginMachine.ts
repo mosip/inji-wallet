@@ -153,13 +153,26 @@ export const qrLoginMachine =
         faceAuth: {
           on: {
             FACE_VALID: {
-              target: 'requestConsent',
+              target: '.loadingThumbprint',
             },
             FACE_INVALID: {
               target: 'invalidIdentity',
             },
             CANCEL: {
               target: 'showvcList',
+            },
+          },
+          initial: 'idle',
+          states: {
+            idle: {},
+            loadingThumbprint: {
+              entry: 'loadThumbprint',
+              on: {
+                STORE_RESPONSE: {
+                  actions: 'setThumbprint',
+                  target: '#QrLogin.sendingAuthenticate',
+                },
+              },
             },
           },
         },
@@ -176,10 +189,14 @@ export const qrLoginMachine =
         sendingAuthenticate: {
           invoke: {
             src: 'sendAuthenticate',
-            onDone: {
-              target: 'requestConsent',
-              actions: 'setLinkedTransactionId',
-            },
+            onDone: [
+              {
+                cond: 'shouldCaptureConsent',
+                target: 'requestConsent',
+                actions: 'setLinkedTransactionId',
+              },
+              {target: 'success'},
+            ],
             onError: [
               {
                 actions: 'SetErrorMessage',
@@ -191,7 +208,7 @@ export const qrLoginMachine =
         requestConsent: {
           on: {
             CONFIRM: {
-              target: 'loadingThumbprint',
+              target: '.loadingThumbprint',
             },
             TOGGLE_CONSENT_CLAIM: {
               actions: 'setConsentClaims',
@@ -202,13 +219,17 @@ export const qrLoginMachine =
               target: 'waitingForData',
             },
           },
-        },
-        loadingThumbprint: {
-          entry: 'loadThumbprint',
-          on: {
-            STORE_RESPONSE: {
-              actions: 'setThumbprint',
-              target: 'sendingConsent',
+          initial: 'idle',
+          states: {
+            idle: {},
+            loadingThumbprint: {
+              entry: 'loadThumbprint',
+              on: {
+                STORE_RESPONSE: {
+                  actions: 'setThumbprint',
+                  target: '#QrLogin.sendingConsent',
+                },
+              },
             },
           },
         },
@@ -341,7 +362,8 @@ export const qrLoginMachine =
           },
         }),
         setLinkedTransactionId: assign({
-          linkedTransactionId: (context, event) => event.data as string,
+          linkedTransactionId: (_, event) =>
+            event.data.linkedTransactionId as string,
         }),
       },
       services: {
@@ -374,7 +396,7 @@ export const qrLoginMachine =
 
           const response = await request(
             'POST',
-            '/v1/esignet/linked-authorization/authenticate',
+            '/v1/esignet/linked-authorization/v2/authenticate',
             {
               requestTime: String(new Date().toISOString()),
               request: {
@@ -409,34 +431,13 @@ export const qrLoginMachine =
             context.thumbprint,
           );
 
-          const response = await request(
-            'POST',
-            '/v1/esignet/linked-authorization/authenticate',
-            {
-              requestTime: String(new Date().toISOString()),
-              request: {
-                linkedTransactionId: context.linkTransactionId,
-                individualId: individualId,
-                challengeList: [
-                  {
-                    authFactorType: 'WLA',
-                    challenge: jwt,
-                    format: 'jwt',
-                  },
-                ],
-              },
-            },
-            ESIGNET_BASE_URL,
-          );
-          var linkedTrnId = response.response.linkedTransactionId;
-
           const resp = await request(
             'POST',
             '/v1/esignet/linked-authorization/consent',
             {
               requestTime: String(new Date().toISOString()),
               request: {
-                linkedTransactionId: linkedTrnId,
+                linkedTransactionId: context.linkTransactionId,
                 acceptedClaims: context.essentialClaims.concat(
                   context.selectedVoluntaryClaims,
                 ),
@@ -446,6 +447,13 @@ export const qrLoginMachine =
             ESIGNET_BASE_URL,
           );
           console.log(resp.response.linkedTransactionId);
+        },
+      },
+      guards: {
+        shouldCaptureConsent: (_, event) => {
+          return (
+            event.data.consentAction && event.data.consentAction === 'CAPTURE'
+          );
         },
       },
     },
