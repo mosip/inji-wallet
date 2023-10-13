@@ -26,6 +26,10 @@ export function sendImpressionEvent(data) {
   telemetry.impression(data, {});
 }
 
+export function sendInteractEvent(data) {
+  telemetry.interact(data, {});
+}
+
 export function sendAppInfoEvent(data) {
   telemetry.appinfo(data);
 }
@@ -157,6 +161,12 @@ export const incrementPasscodeRetryCount = isSettingUp => {
     passcodeRetryCount = 1;
   }
 };
+
+export function configureTelemetry() {
+  const config = getTelemetryConfigData();
+  initializeTelemetry(config);
+  sendAppInfoEvent(getAppInfoEventData());
+}
 
 const languageCodeMap = {
   en: 'English',
