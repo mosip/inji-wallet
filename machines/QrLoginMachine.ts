@@ -227,7 +227,7 @@ export const qrLoginMachine =
           },
         },
         success: {
-          entry: [() => sendEndEvent(getEndEventData('QR login'))],
+          entry: [() => sendEndEvent(getEndEventData('QR login', 'SUCCESS'))],
           on: {
             CONFIRM: {
               target: 'done',

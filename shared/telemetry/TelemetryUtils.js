@@ -135,10 +135,27 @@ export function getAppInfoEventData() {
   };
 }
 
+let passcodeRetryCount = 1;
+
+export const incrementPasscodeRetryCount = eventType => {
+  if (passcodeRetryCount < 5) {
+    passcodeRetryCount += 1;
+  } else {
+    sendErrorEvent(
+      getErrorEventData(eventType, 'mismatch', 'Passcode did not match'),
+    );
+    passcodeRetryCount = 1;
+  }
+};
+
 export function configureTelemetry() {
   const config = getTelemetryConfigData();
   initializeTelemetry(config);
   sendAppInfoEvent(getAppInfoEventData());
+}
+
+export function getEventType(isSettingUp) {
+  return isSettingUp ? 'App Onboarding' : 'App Login';
 }
 
 const languageCodeMap = {
