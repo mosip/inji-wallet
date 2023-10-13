@@ -68,7 +68,7 @@ export function getValueForCurrentLanguage(localizedData) {
 
 // This method gets the value from iso-639-3 package, which contains key value pairs of three letter language codes[key] and two letter langugae code[value]. These values are according to iso standards.
 // The response received from the server is three letter language code and the value in the inji code base is two letter language code. Hence the conversion is done.
-function getThreeLetterLanguageCode(twoLetterLanguageCode) {
+function getThreeLetterLanguageCode(twoLetterLanguageCode: string) {
   return Object.keys(iso6393To1).find(
     key => iso6393To1[key] === twoLetterLanguageCode,
   );
@@ -99,10 +99,13 @@ export function getLocalizedField(
       }
 
       const defaultLanguage: string = '@none';
-      const currentLanguage: string = i18next.language;
-      return rawField.hasOwnProperty(currentLanguage)
-        ? rawField[currentLanguage]
-        : rawField[defaultLanguage];
+      const currentLanguage =
+        getThreeLetterLanguageCode(i18next.language) || defaultLanguage;
+      const rawFieldObject = rawField as {[key: string]: string};
+
+      return rawFieldObject.hasOwnProperty(currentLanguage)
+        ? rawFieldObject[currentLanguage]
+        : rawFieldObject[defaultLanguage];
     } catch (e) {
       return '';
     }
