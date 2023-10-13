@@ -11,7 +11,7 @@
     "VC_RECEIVED_BUT_PRESENCE_VERIFICATION_FAILED": "الواردة. فشل التحقق من التواجد",
     "PRESENCE_VERIFIED_AND_VC_SHARED": "التحقق منها ومشاركتها",
     "PRESENCE_VERIFICATION_FAILED": "فشل التحقق",
-    "QRLOGIN_SUCCESFULL": "QRL تم تسجيل الدخول بنجاح",
+    "QRLOGIN_SUCCESFULL": "QR تم تسجيل الدخول بنجاح",
     "WALLET_BINDING_SUCCESSFULL": "تفعيل ناجحة",
     "WALLET_BINDING_FAILURE": "فشل التفعيل",
     "VC_REMOVED": "تمت إزالته من المحفظة",
@@ -358,7 +358,7 @@
     "version": "الإصدار",
     "useBle": "مدعوم من BLE"
   },
-  "QrScreen": {
+  "QrLogin": {
     "title": "QR تسجيل الدخول",
     "alignQr": "قم بمحاذاة رمز الاستجابة السريعة داخل الإطار للمسح الضوئي",
     "confirmation": "تأكيد",
@@ -375,8 +375,8 @@
     "domainWarning": "يرجى تأكيد مجال موقع الويب الذي تقوم بمسح رمز الاستجابة السريعة منه على النحو التالي",
     "access": " يطلب الوصول إلى",
     "status": "حالة",
-    "successMessage": "لقد قمت بتسجيل الدخول بنجاح ",
-    "okay": "تمام",
+    "successMessage": "لقد تم تسجيل دخولك بنجاح ",
+    "ok": "نعم",
     "allow": "يسمح",
     "cancel": "يلغي",
     "essentialClaims": "الادعاءات الأساسية",
@@ -457,7 +457,7 @@
   },
   "ScanScreen": {
     "header": "مسح رمز الاستجابة السريعة",
-    "noShareableVcs": "لا تتوفر بطاقات قابلة للمشاركة.",
+    "noShareableVcs": "لا تتوفر بطاقات قابلة للمشاركة",
     "bluetoothStateAndroid": "يرجى تشغيل البلوتوث من الإعدادات السريعة لدعم المشاركة المحلية",
     "bluetoothStateIos": "يرجى تشغيل البلوتوث من مركز التحكم لدعم المشاركة المحلية",
     "enableBluetoothMessage": "يرجى تمكين أذونات البلوتوث لدعم المشاركة المحلية",
@@ -560,8 +560,7 @@
   },
   "WelcomeScreen": {
     "title": "حل هوية مفتوحة المصدر",
-    "getStarted": "البدء",
-    "unlockApp": "فتح التطبيق",
+    "unlockApplication": "فتح التطبيق",
     "failedToReadKeys": "فشلت قراءة المفاتيح",
     "retryRead": "هل تريد إعادة المحاولة؟",
     "errors": {

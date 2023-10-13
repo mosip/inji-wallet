@@ -1,16 +1,16 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Button, Column, Row } from '../../components/ui';
-import { Theme } from '../../components/ui/styleUtils';
-import { Text } from '../../components/ui';
-import { Icon } from 'react-native-elements';
-import { useQrLogin } from './QrLoginController';
-import { Modal } from '../../components/ui/Modal';
-import { Dimensions, Image } from 'react-native';
-import { QrLoginRef } from '../../machines/QrLoginMachine';
+import {useTranslation} from 'react-i18next';
+import {Button, Column, Row} from '../../components/ui';
+import {Theme} from '../../components/ui/styleUtils';
+import {Text} from '../../components/ui';
+import {Icon} from 'react-native-elements';
+import {useQrLogin} from './QrLoginController';
+import {Modal} from '../../components/ui/Modal';
+import {Dimensions, Image} from 'react-native';
+import {QrLoginRef} from '../../machines/QrLoginMachine';
 
-export const QrLoginWarning: React.FC<QrLoginWarningProps> = (props) => {
-  const { t } = useTranslation('QrScreen');
+export const QrLoginWarning: React.FC<QrLoginWarningProps> = props => {
+  const {t} = useTranslation('QrLogin');
   const controller = useQrLogin(props);
 
   return (
@@ -24,7 +24,7 @@ export const QrLoginWarning: React.FC<QrLoginWarningProps> = (props) => {
         fill
         align="space-between"
         padding={'21 0 0 0'}
-        style={{ display: props.isVisible ? 'flex' : 'none' }}
+        style={{display: props.isVisible ? 'flex' : 'none'}}
         backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
         <Column align="space-evenly" crossAlign="center" padding={'16 15 0 15'}>
           <Image source={Theme.DomainWarningLogo} resizeMethod="auto" />
