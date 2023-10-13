@@ -11,7 +11,7 @@ import {ScrollView} from 'react-native';
 import {getLocalizedField} from '../../i18n';
 
 export const QrConsent: React.FC<QrConsentProps> = props => {
-  const {t} = useTranslation('QrScreen');
+  const {t} = useTranslation('QrLogin');
   const controller = useQrLogin(props);
 
   return (

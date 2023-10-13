@@ -10,7 +10,7 @@ import {QrLoginRef} from '../../machines/QrLoginMachine';
 import {getLocalizedField} from '../../i18n';
 
 export const QrLoginSuccess: React.FC<QrLoginSuccessProps> = props => {
-  const {t} = useTranslation('QrScreen');
+  const {t} = useTranslation('QrLogin');
   const controller = useQrLogin(props);
 
   return (

@@ -82,7 +82,6 @@ export const DefaultTheme = {
     VerifiedIcon: Colors.Green,
     whiteText: Colors.White,
     flipCameraIcon: Colors.Black,
-    IdInputModalBorder: Colors.Grey,
     RetrieveIdLabel: Colors.ShadeOfGrey,
     inputSelection: Colors.Orange,
     checkCircleIcon: Colors.White,
@@ -177,8 +176,8 @@ export const DefaultTheme = {
     cardDetailsContainer: {},
     bottomTabIconStyle: {
       padding: 4,
-      width: 36,
-      height: 36,
+      width: Dimensions.get('window').width * 0.12,
+      height: Dimensions.get('window').height * 0.045,
       borderRadius: 6,
       backgroundColor: Colors.LightOrange,
     },
@@ -226,8 +225,8 @@ export const DefaultTheme = {
       height: 30,
       backgroundColor: Colors.Grey,
       marginVertical: 8,
-      marginLeft: -45,
-      marginRight: 22,
+      marginLeft: -35,
+      marginRight: 15,
     },
     closeCardBgContainer: {
       borderRadius: 10,
@@ -491,6 +490,22 @@ export const DefaultTheme = {
       fontWeight: 'bold',
       fontSize: 15,
       fontFamily: 'Inter_700Bold',
+    },
+    idInputContainer: {
+      marginTop: 20,
+      marginRight: Dimensions.get('window').width * 0.26,
+    },
+    idInputPicker: {
+      width: Dimensions.get('window').width * 0.32,
+      borderBottomWidth: 1,
+      marginBottom: 2,
+      borderColor: Platform.OS === 'ios' ? 'transparent' : Colors.Grey,
+      bottom: Platform.OS === 'ios' ? 50 : 24,
+      height: Platform.OS === 'ios' ? 100 : 'auto',
+    },
+    idInputBottom: {
+      borderBottomColor: Colors.Orange,
+      borderBottomWidth: 1,
     },
     getId: {
       justifyContent: 'center',

@@ -41,8 +41,8 @@ import Storage from '../../../shared/storage';
 import {logState} from '../../app';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {
-  getData,
-  getEndData,
+  getStartEventData,
+  getEndEventData,
   sendStartEvent,
   sendEndEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
@@ -432,7 +432,10 @@ export const scanMachine =
             },
             navigatingToHistory: {},
           },
-          entry: ['sendScanData', () => sendStartEvent(getData('QR login'))],
+          entry: [
+            'sendScanData',
+            () => sendStartEvent(getStartEventData('QR login')),
+          ],
         },
         connecting: {
           invoke: {
@@ -567,7 +570,10 @@ export const scanMachine =
               },
             },
             accepted: {
-              entry: ['logShared', () => sendEndEvent(getEndData('VC share'))],
+              entry: [
+                'logShared',
+                () => sendEndEvent(getEndEventData('VC share')),
+              ],
               on: {
                 DISMISS: {
                   target: 'navigatingToHome',
@@ -1006,7 +1012,7 @@ export const scanMachine =
         },
 
         startConnection: context => callback => {
-          sendStartEvent(getData('VC share'));
+          sendStartEvent(getStartEventData('VC share'));
           wallet.startConnection(context.openId4VpUri);
           const statusCallback = (event: WalletDataEvent) => {
             if (event.type === EventTypes.onSecureChannelEstablished) {
