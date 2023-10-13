@@ -25,6 +25,7 @@ import {
   isCustomSecureKeystore,
 } from '../shared/cryptoutil/cryptoUtil';
 import {VCMetadata} from '../shared/VCMetadata';
+import FileStorage, {getFilePath} from '../shared/fileStorage';
 
 export const keyinvalidatedString =
   'Key Invalidated due to biometric enrollment';
@@ -173,7 +174,7 @@ export const storeMachine =
           },
         },
         ready: {
-          entry: 'notifyParent',
+          entry: ['notifyParent', 'cacheVCFilesData'],
           invoke: {
             src: 'store',
             id: '_store',
@@ -259,6 +260,18 @@ export const storeMachine =
         setEncryptionKey: model.assign({
           encryptionKey: (_, event) => event.key,
         }),
+
+        cacheVCFilesData: context => {
+          getItem(MY_VCS_STORE_KEY, [], context.encryptionKey).then(vcList => {
+            if (vcList) {
+              vcList?.forEach((vcMetadataStr: string) => {
+                const vcKey =
+                  VCMetadata.fromVcMetadataString(vcMetadataStr).getVcKey();
+                FileStorage.readAndCacheFile(getFilePath(vcKey));
+              });
+            }
+          });
+        },
       },
 
       services: {
@@ -289,6 +302,7 @@ export const storeMachine =
             );
           }
         },
+
         checkStorageInitialisedOrNot: () => async callback => {
           const isDirectoryExist = await Storage.isVCStorageInitialised();
           if (!isDirectoryExist) {
