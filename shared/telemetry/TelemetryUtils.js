@@ -128,7 +128,7 @@ export function getAppInfoEventData() {
     dateTime: new Date().getTime(),
     zone: RNLocalize.getTimeZone(),
     offset: new Date().getTimezoneOffset() * 60 * 1000,
-    preferredLanguage: languageCodeMap[i18next.language],
+    preferredLanguage: languageCodeMap[i18next.language] ?? i18next.language,
     buildNumber: DeviceInfo.getBuildNumber(),
     injiVersion: __InjiVersion.getValue(),
     tuvaliVersion: __TuvaliVersion.getValue(),
