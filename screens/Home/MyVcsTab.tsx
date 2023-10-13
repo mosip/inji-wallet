@@ -36,7 +36,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   };
 
   const clearIndividualId = () => {
-    GET_INDIVIDUAL_ID('');
+    GET_INDIVIDUAL_ID({id: '', idType: 'UIN'});
   };
 
   useEffect(() => {
