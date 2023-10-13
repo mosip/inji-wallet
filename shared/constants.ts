@@ -3,12 +3,14 @@ import {
   MIMOTO_HOST,
   ESIGNET_HOST,
   GOOGLE_NEARBY_MESSAGES_API_KEY,
+  DEBUG_MODE,
 } from 'react-native-dotenv';
 import {Argon2iConfig} from './commonUtil';
 import {VcIdType} from '../types/vc';
 
 export let MIMOTO_BASE_URL = MIMOTO_HOST;
 export let ESIGNET_BASE_URL = ESIGNET_HOST;
+export let DEBUG_MODE_ENABLED = DEBUG_MODE === 'true';
 
 export const changeCrendetialRegistry = host => (MIMOTO_BASE_URL = host);
 export const changeEsignetUrl = host => (ESIGNET_BASE_URL = host);
@@ -72,3 +74,5 @@ export type IndividualId = {
   id: string;
   idType: VcIdType;
 };
+export const NETWORK_REQUEST_FAILED = 'Network request failed';
+export const REQUEST_TIMEOUT = 'request timedout';

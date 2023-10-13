@@ -16,6 +16,7 @@ import {groupBy} from '../../shared/javascript';
 import {isOpenId4VCIEnabled} from '../../shared/openId4VCI/Utils';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
 import {BannerNotification} from '../../components/BannerNotification';
+import {Error} from '../../components/ui/Error';
 
 const pinIconProps = {iconName: 'pushpin', iconType: 'antdesign'};
 
@@ -43,10 +44,11 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
       controller.RESET_STORE_VC_ITEM_STATUS();
       controller.RESET_ARE_ALL_VCS_DOWNLOADED();
     }
-    if (controller.inProgressVcDownloadsCount > 0) {
+    if (controller.inProgressVcDownloads?.size > 0) {
       controller.SET_STORE_VC_ITEM_STATUS();
     }
-  }, [controller.areAllVcsLoaded, controller.inProgressVcDownloadsCount]);
+  }, [controller.areAllVcsLoaded, controller.inProgressVcDownloads]);
+
   return (
     <React.Fragment>
       <Column fill style={{display: props.isVisible ? 'flex' : 'none'}}>
@@ -80,15 +82,18 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                     onRefresh={controller.REFRESH}
                   />
                 }>
-                {vcMetadataOrderedByPinStatus.map((vcMetadata, index) => {
+                {vcMetadataOrderedByPinStatus.map(vcMetadata => {
                   const iconProps = vcMetadata.isPinned ? pinIconProps : {};
                   return (
                     <VcItemContainer
                       {...iconProps}
-                      key={`${vcMetadata.getVcKey()}-${index}`}
+                      key={vcMetadata.getVcKey()}
                       vcMetadata={vcMetadata}
                       margin="0 2 8 2"
                       onPress={controller.VIEW_VC}
+                      isDownloading={controller.inProgressVcDownloads?.has(
+                        vcMetadata.getVcKey(),
+                      )}
                     />
                   );
                 })}
@@ -116,21 +121,33 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                   lineHeight={1}>
                   {t('bringYourDigitalID')}
                 </Text>
-                <Text
-                  style={Theme.TextStyles.bold}
-                  color={Theme.Colors.textLabel}
-                  align="center"
-                  margin="0 12 30 12">
-                  {t('generateVcDescription')}
-                </Text>
+
+                {isOpenId4VCIEnabled() && (
+                  <Text
+                    style={Theme.TextStyles.bold}
+                    color={Theme.Colors.textLabel}
+                    align="center"
+                    margin="0 12 30 12">
+                    {t('generateVcFABDescription')}
+                  </Text>
+                )}
                 {!isOpenId4VCIEnabled() && (
-                  <Button
-                    testID="downloadCard"
-                    type="gradient"
-                    disabled={controller.isRefreshingVcs}
-                    title={t('downloadCard')}
-                    onPress={controller.DOWNLOAD_ID}
-                  />
+                  <React.Fragment>
+                    <Text
+                      style={Theme.TextStyles.bold}
+                      color={Theme.Colors.textLabel}
+                      align="center"
+                      margin="0 12 30 12">
+                      {t('generateVcDescription')}
+                    </Text>
+                    <Button
+                      testID="downloadCard"
+                      type="gradient"
+                      disabled={controller.isRefreshingVcs}
+                      title={t('downloadCard')}
+                      onPress={controller.DOWNLOAD_ID}
+                    />
+                  </React.Fragment>
                 )}
               </Column>
             </React.Fragment>
@@ -184,10 +201,22 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         isVisible={controller.isTampered}
         title={t('errors.vcIsTampered.title')}
         message={t('errors.vcIsTampered.message')}
-        onButtonPress={controller.IS_TAMPERED}
+        onButtonPress={controller.REMOVE_TAMPERED_VCS}
         buttonText={t('common:ok')}
         customHeight={'auto'}
       />
+      {controller.isNetworkOff && (
+        <Error
+          testID={`networkOffError`}
+          isVisible={controller.isNetworkOff}
+          isModal={true}
+          title={t('errors.noInternetConnection.title')}
+          message={t('errors.noInternetConnection.message')}
+          onDismiss={controller.DISMISS}
+          tryAgain={controller.TRY_AGAIN}
+          image={<Image source={Theme.NoInternetConnection} />}
+        />
+      )}
     </React.Fragment>
   );
 };

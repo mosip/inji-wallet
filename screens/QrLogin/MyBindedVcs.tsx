@@ -42,6 +42,7 @@ export const MyBindedVcs: React.FC<MyBindedVcsProps> = props => {
                               showOnlyBindedVc
                               selectable
                               selected={index === controller.selectedIndex}
+                              isSharingVc
                             />
                           ),
                         )}

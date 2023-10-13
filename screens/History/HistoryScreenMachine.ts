@@ -1,6 +1,6 @@
-import { createModel } from 'xstate/lib/model';
-import { ActivityLog } from '../../machines/activityLog';
-import { AppServices } from '../../shared/GlobalContext';
+import {createModel} from 'xstate/lib/model';
+import {AppServices} from '../../shared/GlobalContext';
+import {ActivityLog} from '../../components/ActivityLogEvent';
 
 const model = createModel(
   {
@@ -9,7 +9,7 @@ const model = createModel(
   },
   {
     events: {},
-  }
+  },
 );
 
 export const HistoryTabEvents = model.events;
@@ -27,7 +27,7 @@ export const HistoryTabMachine = model.createMachine(
   },
   {
     actions: {},
-  }
+  },
 );
 
 export function createHistoryTabMachine(serviceRefs: AppServices) {

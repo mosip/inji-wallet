@@ -23,9 +23,17 @@ import {
   isCustomSecureKeystore,
 } from './cryptoutil/cryptoUtil';
 import {VCMetadata} from './VCMetadata';
+import {ENOENT, getItem} from '../machines/store';
+import {MY_VCS_STORE_KEY, RECEIVED_VCS_STORE_KEY} from './constants';
 
-const MMKV = new MMKVLoader().initialize();
+export const MMKV = new MMKVLoader().initialize();
 const vcDirectoryPath = `${DocumentDirectoryPath}/inji/VC`;
+
+export const API_CACHED_STORAGE_KEYS = {
+  fetchIssuers: 'CACHE_FETCH_ISSUERS',
+  fetchIssuerConfig: (issuerId: string) =>
+    `CACHE_FETCH_ISSUER_CONFIG_${issuerId}`,
+};
 
 async function generateHmac(
   encryptionKey: string,
@@ -55,8 +63,8 @@ class Storage {
     try {
       const isSavingVC = VCMetadata.isVCKey(key);
       if (isSavingVC) {
-        await this.storeVcHmac(encryptionKey, data, key);
-        return await this.storeVC(key, data);
+        await this.storeVC(key, data);
+        return await this.storeVcHmac(encryptionKey, data, key);
       }
 
       await MMKV.setItem(key, data);
@@ -74,15 +82,53 @@ class Storage {
         const data = await this.readVCFromFile(key);
         const isCorrupted = await this.isCorruptedVC(key, encryptionKey, data);
 
+        if (isCorrupted) {
+          console.debug(
+            '[Inji-406]: VC is corrupted and will be deleted from storage',
+          );
+          console.debug('[Inji-406]: VC key: ', key);
+          console.debug('[Inji-406]: is Data null', data === null);
+          getItem(MY_VCS_STORE_KEY, [], encryptionKey).then(res => {
+            console.debug('[Inji-406]: vcKeys are ', JSON.stringify(res));
+          });
+          getItem(RECEIVED_VCS_STORE_KEY, null, encryptionKey).then(res => {
+            console.debug(
+              '[Inji-406]: received vcKeys is ',
+              JSON.stringify(res),
+            );
+          });
+        }
+
         return isCorrupted ? null : data;
       }
 
       return await MMKV.getItem(key);
     } catch (error) {
+      const isVCKey = VCMetadata.isVCKey(key);
+
+      if (isVCKey) {
+        const isDownloaded = await this.isVCAlreadyDownloaded(
+          key,
+          encryptionKey,
+        );
+
+        if (isDownloaded && error.message.includes(ENOENT)) {
+          throw new Error(ENOENT);
+        }
+      }
+
       console.log('Error Occurred while retriving from Storage.', error);
       throw error;
     }
   };
+
+  private static async isVCAlreadyDownloaded(
+    key: string,
+    encryptionKey: string,
+  ) {
+    const storedHMACofCurrentVC = await this.readHmacForVC(key, encryptionKey);
+    return storedHMACofCurrentVC !== null;
+  }
 
   private static async isCorruptedVC(
     key: string,
@@ -91,12 +137,22 @@ class Storage {
   ) {
     const storedHMACofCurrentVC = await this.readHmacForVC(key, encryptionKey);
     const HMACofVC = await generateHmac(encryptionKey, data);
+
+    if (HMACofVC !== storedHMACofCurrentVC) {
+      console.debug(
+        `[Inji-406]: storedHmacOfCurrentVC: ${storedHMACofCurrentVC}, HMACofVC: ${HMACofVC}`,
+      );
+    }
+
     return HMACofVC !== storedHMACofCurrentVC;
   }
 
   private static async readHmacForVC(key: string, encryptionKey: string) {
     const encryptedHMACofCurrentVC = await MMKV.getItem(getVCKeyName(key));
-    return decryptJson(encryptionKey, encryptedHMACofCurrentVC);
+    if (encryptedHMACofCurrentVC) {
+      return decryptJson(encryptionKey, encryptedHMACofCurrentVC);
+    }
+    return null;
   }
 
   private static async readVCFromFile(key: string) {
@@ -116,6 +172,7 @@ class Storage {
     key: string,
   ) {
     const HMACofVC = await generateHmac(encryptionKey, data);
+    console.log('[Inji-406]: Updating hmac of the vc: ', HMACofVC);
     const encryptedHMACofVC = await encryptJson(encryptionKey, HMACofVC);
     await MMKV.setItem(getVCKeyName(key), encryptedHMACofVC);
   }
@@ -123,7 +180,12 @@ class Storage {
   static removeItem = async (key: string) => {
     if (VCMetadata.isVCKey(key)) {
       const path = getFilePath(key);
-      return await unlink(path);
+      const isFileExists = await exists(path);
+      if (isFileExists) {
+        return await unlink(path);
+      } else {
+        console.log('file not exist`s');
+      }
     }
     MMKV.removeItem(key);
   };

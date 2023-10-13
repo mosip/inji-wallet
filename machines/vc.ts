@@ -9,6 +9,8 @@ import {MY_VCS_STORE_KEY, RECEIVED_VCS_STORE_KEY} from '../shared/constants';
 import {parseMetadatas, VCMetadata} from '../shared/VCMetadata';
 import {OpenId4VCIProtocol} from '../shared/openId4VCI/Utils';
 import {EsignetMosipVCItemEvents} from './VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
+import {ActivityLogEvents} from './activityLog';
+import {ActivityLog} from '../components/ActivityLogEvent';
 
 const model = createModel(
   {
@@ -19,6 +21,7 @@ const model = createModel(
     inProgressVcDownloads: new Set<string>(),
     areAllVcsDownloaded: false as boolean,
     walletBindingSuccess: false,
+    tamperedVcs: [] as VCMetadata[],
   },
   {
     events: {
@@ -47,6 +50,8 @@ const model = createModel(
         requestId,
       }),
       RESET_ARE_ALL_VCS_DOWNLOADED: () => ({}),
+      TAMPERED_VC: (VC: VCMetadata) => ({VC}),
+      REMOVE_TAMPERED_VCS: () => ({}),
     },
   },
 );
@@ -192,6 +197,18 @@ export const vcMachine =
                 actions: 'prependToReceivedVcs',
               },
             ],
+            TAMPERED_VC: {
+              actions: 'setTamperedVcs',
+              target: 'tamperedVCs',
+            },
+          },
+        },
+        tamperedVCs: {
+          on: {
+            REMOVE_TAMPERED_VCS: {
+              actions: ['removeTamperedVcs', 'logTamperedVCsremoved'],
+              target: '#vc.ready.myVcs.refreshing',
+            },
           },
         },
       },
@@ -231,6 +248,10 @@ export const vcMachine =
           },
         }),
 
+        setTamperedVcs: model.assign({
+          tamperedVcs: (context, event) => [event.VC, ...context.tamperedVcs],
+        }),
+
         setDownloadedVc: (context, event) => {
           const vcUniqueId = VCMetadata.fromVC(event.vc).getVcKey();
           context.vcs[vcUniqueId] = event.vc;
@@ -267,7 +288,9 @@ export const vcMachine =
           inProgressVcDownloads: new Set<string>(),
         }),
         setDownloadedVCFromOpenId4VCI: (context, event) => {
-          if (event.vc) context.vcs[event.vcMetadata.getVcKey()] = event.vc;
+          if (event.vc)
+            context.vcs[VCMetadata.fromVC(event.vcMetadata).getVcKey()] =
+              event.vc;
         },
 
         setVcUpdate: (context, event) => {
@@ -299,6 +322,21 @@ export const vcMachine =
               (vc: VCMetadata) => !vc.equals(event.vcMetadata),
             ),
         }),
+
+        removeTamperedVcs: model.assign({
+          myVcs: (context, event) =>
+            context.myVcs.filter(
+              value => !context.tamperedVcs.some(item => item?.equals(value)),
+            ),
+        }),
+
+        logTamperedVCsremoved: send(
+          context =>
+            ActivityLogEvents.LOG_ACTIVITY(ActivityLog.logTamperedVCs()),
+          {
+            to: context => context.serviceRefs.activityLog,
+          },
+        ),
 
         updateMyVcs: model.assign({
           myVcs: (context, event) => [
@@ -356,7 +394,9 @@ export function selectMyVcsMetadata(state: State): VCMetadata[] {
 
 export function selectShareableVcsMetadata(state: State): VCMetadata[] {
   return state.context.myVcs.filter(
-    vcMetadata => state.context.vcs[vcMetadata.getVcKey()]?.credential != null,
+    vcMetadata =>
+      state.context.vcs[vcMetadata.getVcKey()]?.credential != null ||
+      state.context.vcs[vcMetadata.getVcKey()]?.verifiableCredential != null,
   );
 }
 
@@ -390,8 +430,8 @@ export function selectAreAllVcsDownloaded(state: State) {
   return state.context.areAllVcsDownloaded;
 }
 
-export function selectInProgressVcDownloadsCount(state: State) {
-  return state.context.inProgressVcDownloads.size;
+export function selectInProgressVcDownloads(state: State) {
+  return state.context.inProgressVcDownloads;
 }
 
 function getUpdatedVCMetadatas(
@@ -417,4 +457,8 @@ function isEmpty(object) {
 
 export function selectWalletBindingSuccess(state: State) {
   return state.context.walletBindingSuccess;
+}
+
+export function selectIsTampered(state: State) {
+  return state.matches('tamperedVCs');
 }

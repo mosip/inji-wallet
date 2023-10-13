@@ -11,7 +11,6 @@ import {Theme} from '../components/ui/styleUtils';
 import {Icon} from 'react-native-elements';
 import {RootRouteProps} from '../routes';
 import {useWelcomeScreen} from './WelcomeScreenController';
-import {__SelectedLanguage} from '../shared/GlobalVariables';
 
 export const SetupLanguageScreen: React.FC<RootRouteProps> = props => {
   const {t} = useTranslation('SetupLanguage');
@@ -23,7 +22,6 @@ export const SetupLanguageScreen: React.FC<RootRouteProps> = props => {
   const changeLanguage = async (language: string) => {
     if (language !== i18n.language) {
       await i18n.changeLanguage(language).then(async () => {
-        __SelectedLanguage.setValue(language);
         await Storage.setItem('language', i18n.language);
         const isRTL = i18next.dir(language) === 'rtl' ? true : false;
         if (isRTL !== I18nManager.isRTL) {

@@ -38,4 +38,9 @@ declare module 'react-native-dotenv' {
    * LANGUAGE for the unsupported device languages
    */
   export const APPLICATION_LANGUAGE: string;
+
+  /**
+   * Flag for Toggling debug mode
+   */
+  export const DEBUG_MODE: string;
 }

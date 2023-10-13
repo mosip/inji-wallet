@@ -319,7 +319,6 @@ export const GetVcModalMachine =
               transactionID: context.transactionId,
             },
           );
-          console.log('resp@@@:', response.response);
           return {
             id: response.response.individualId,
             idType: response.response.individualIdType || 'UIN',

@@ -1,10 +1,6 @@
 import {assign, ErrorPlatformEvent, EventFrom, send, StateFrom} from 'xstate';
 import {createModel} from 'xstate/lib/model';
-import {
-  HOST,
-  MIMOTO_BASE_URL,
-  MY_VCS_STORE_KEY,
-} from '../../../shared/constants';
+import {MIMOTO_BASE_URL, MY_VCS_STORE_KEY} from '../../../shared/constants';
 import {AppServices} from '../../../shared/GlobalContext';
 import {CredentialDownloadResponse, request} from '../../../shared/request';
 import {
@@ -36,8 +32,8 @@ import SecureKeystore from 'react-native-secure-keystore';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {
   sendStartEvent,
-  getData,
-  getEndData,
+  getStartEventData,
+  getEndEventData,
   sendEndEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
 
@@ -46,7 +42,6 @@ const model = createModel(
     serviceRefs: {} as AppServices,
     id: '',
     idType: '' as VcIdType,
-    tag: '',
     vcMetadata: {} as VCMetadata,
     myVcs: [] as string[],
     generatedOn: null as Date,
@@ -55,7 +50,6 @@ const model = createModel(
     storeVerifiableCredential: null as VerifiableCredential,
     requestId: '',
     isVerified: false,
-    isPinned: false,
     lastVerifiedOn: null,
     locked: false,
     otp: '',
@@ -77,8 +71,6 @@ const model = createModel(
     events: {
       KEY_RECEIVED: (key: string) => ({key}),
       KEY_ERROR: (error: Error) => ({error}),
-      EDIT_TAG: () => ({}),
-      SAVE_TAG: (tag: string) => ({tag}),
       STORE_READY: () => ({}),
       DISMISS: () => ({}),
       CREDENTIAL_DOWNLOADED: (vc: VC) => ({vc}),
@@ -100,6 +92,8 @@ const model = createModel(
       KEBAB_POPUP: () => ({}),
       SHOW_ACTIVITY: () => ({}),
       REMOVE: (vcMetadata: VCMetadata) => ({vcMetadata}),
+      UPDATE_VC_METADATA: (vcMetadata: VCMetadata) => ({vcMetadata}),
+      TAMPERED_VC: (key: string) => ({key}),
     },
   },
 );
@@ -120,6 +114,9 @@ export const ExistingMosipVCItemMachine =
       on: {
         REFRESH: {
           target: '.checkingStore',
+        },
+        UPDATE_VC_METADATA: {
+          actions: 'setVcMetadata',
         },
       },
       description: 'VC',
@@ -158,6 +155,9 @@ export const ExistingMosipVCItemMachine =
                 target: 'checkingServerData',
               },
             ],
+            TAMPERED_VC: {
+              actions: ['sendTamperedVc', 'removeTamperedVcItem'],
+            },
           },
         },
         checkingServerData: {
@@ -216,6 +216,7 @@ export const ExistingMosipVCItemMachine =
                     'setVerifiableCredential',
                     'updateVc',
                     'logDownloaded',
+                    'sendTelemetryEvents',
                     'removeVcFromInProgressDownloads',
                   ],
                   target: '#vc-item.checkingVerificationStatus',
@@ -244,9 +245,6 @@ export const ExistingMosipVCItemMachine =
         idle: {
           entry: ['clearTransactionId', 'clearOtp'],
           on: {
-            EDIT_TAG: {
-              target: 'editingTag',
-            },
             VERIFY: {
               target: 'verifyingCredential',
             },
@@ -304,7 +302,9 @@ export const ExistingMosipVCItemMachine =
             showBindingWarning: {
               on: {
                 CONFIRM: {
-                  actions: [() => sendStartEvent(getData('VC activation'))],
+                  actions: [
+                    () => sendStartEvent(getStartEventData('VC activation')),
+                  ],
                   target: '#vc-item.kebabPopUp.requestingBindingOtp',
                 },
                 CANCEL: {
@@ -385,6 +385,7 @@ export const ExistingMosipVCItemMachine =
                       'storeContext',
                       'updateVc',
                       'setWalletBindingErrorEmpty',
+                      'sendWalletBindingSuccess',
                       'logWalletBindingSuccess',
                     ],
                   },
@@ -418,7 +419,7 @@ export const ExistingMosipVCItemMachine =
                     'setWalletBindingErrorEmpty',
                     'sendWalletBindingSuccess',
                     'logWalletBindingSuccess',
-                    () => sendEndEvent(getEndData('VC activation')),
+                    () => sendEndEvent(getEndEventData('VC activation')),
                   ],
                   target: '#vc-item.kebabPopUp',
                 },
@@ -447,30 +448,10 @@ export const ExistingMosipVCItemMachine =
               entry: 'removeVcItem',
               on: {
                 STORE_RESPONSE: {
-                  actions: ['removedVc', 'logVCremoved'],
+                  actions: ['refreshMyVcs', 'logVCremoved'],
                   target: '#vc-item',
                 },
               },
-            },
-          },
-        },
-        editingTag: {
-          on: {
-            DISMISS: {
-              target: 'idle',
-            },
-            SAVE_TAG: {
-              actions: 'setTag',
-              target: 'storingTag',
-            },
-          },
-        },
-        storingTag: {
-          entry: 'storeTag',
-          on: {
-            STORE_RESPONSE: {
-              actions: 'updateVc',
-              target: 'idle',
             },
           },
         },
@@ -655,7 +636,7 @@ export const ExistingMosipVCItemMachine =
         showBindingWarning: {
           on: {
             CONFIRM: {
-              actions: () => sendStartEvent(getData('VC activation')),
+              actions: () => sendStartEvent(getStartEventData('VC activation')),
               target: 'requestingBindingOtp',
             },
             CANCEL: {
@@ -765,7 +746,7 @@ export const ExistingMosipVCItemMachine =
                 'setWalletBindingErrorEmpty',
                 'setWalletBindingSuccess',
                 'logWalletBindingSuccess',
-                () => sendEndEvent(getEndData('VC activation')),
+                () => sendEndEvent(getEndEventData('VC activation')),
               ],
               target: 'idle',
             },
@@ -786,6 +767,7 @@ export const ExistingMosipVCItemMachine =
               ...context.storeVerifiableCredential,
             },
             storeVerifiableCredential: null,
+            vcMetadata: context.vcMetadata,
           };
         }),
 
@@ -797,6 +779,7 @@ export const ExistingMosipVCItemMachine =
               ...event.vc.verifiableCredential,
             },
             verifiableCredential: null,
+            vcMetadata: context.vcMetadata,
           };
         }),
 
@@ -804,7 +787,7 @@ export const ExistingMosipVCItemMachine =
           context => {
             return StoreEvents.REMOVE_VC_METADATA(
               MY_VCS_STORE_KEY,
-              new VCMetadata(context).getVcKey(),
+              context.vcMetadata.getVcKey(),
             );
           },
           {
@@ -816,7 +799,7 @@ export const ExistingMosipVCItemMachine =
           context => {
             return {
               type: 'REMOVE_VC_FROM_CONTEXT',
-              vcMetadata: new VCMetadata(context),
+              vcMetadata: context.vcMetadata,
             };
           },
           {
@@ -875,15 +858,27 @@ export const ExistingMosipVCItemMachine =
             event.data as WalletBindingResponse,
         }),
 
-        setPinCard: assign(context => {
-          return {
-            ...context,
-            isPinned: !context.isPinned,
-          };
+        setPinCard: assign({
+          vcMetadata: context =>
+            new VCMetadata({
+              ...context.vcMetadata,
+              isPinned: !context.vcMetadata.isPinned,
+            }),
+        }),
+
+        setVcMetadata: assign({
+          vcMetadata: (_, event) => event.vcMetadata,
         }),
 
         sendVcUpdated: send(
-          context => VcEvents.VC_METADATA_UPDATED(new VCMetadata(context)),
+          context => VcEvents.VC_METADATA_UPDATED(context.vcMetadata),
+          {
+            to: context => context.serviceRefs.vc,
+          },
+        ),
+
+        sendTamperedVc: send(
+          context => VcEvents.TAMPERED_VC(context.vcMetadata),
           {
             to: context => context.serviceRefs.vc,
           },
@@ -915,18 +910,8 @@ export const ExistingMosipVCItemMachine =
           context => {
             return {
               type: 'ADD_VC_TO_IN_PROGRESS_DOWNLOADS',
-              requestId: context.requestId,
+              requestId: context.vcMetadata.requestId,
             };
-          },
-          {
-            to: context => context.serviceRefs.vc,
-          },
-        ),
-
-        VcUpdated: send(
-          context => {
-            const {serviceRefs, ...vc} = context;
-            return {type: 'VC_UPDATE', vc};
           },
           {
             to: context => context.serviceRefs.vc,
@@ -949,7 +934,7 @@ export const ExistingMosipVCItemMachine =
           },
         ),
 
-        removedVc: send(
+        refreshMyVcs: send(
           () => ({
             type: 'REFRESH_MY_VCS',
           }),
@@ -961,7 +946,7 @@ export const ExistingMosipVCItemMachine =
         requestVcContext: send(
           context => ({
             type: 'GET_VC_ITEM',
-            vcMetadata: new VCMetadata(context),
+            vcMetadata: context.vcMetadata,
           }),
           {
             to: context => context.serviceRefs.vc,
@@ -969,7 +954,7 @@ export const ExistingMosipVCItemMachine =
         ),
 
         requestStoredContext: send(
-          context => StoreEvents.GET(new VCMetadata(context).getVcKey()),
+          context => StoreEvents.GET(context.vcMetadata.getVcKey()),
           {
             to: context => context.serviceRefs.store,
           },
@@ -979,16 +964,12 @@ export const ExistingMosipVCItemMachine =
           context => {
             const {serviceRefs, ...data} = context;
             data.credentialRegistry = MIMOTO_BASE_URL;
-            return StoreEvents.SET(new VCMetadata(context).getVcKey(), data);
+            return StoreEvents.SET(context.vcMetadata.getVcKey(), data);
           },
           {
             to: context => context.serviceRefs.store,
           },
         ),
-
-        setTag: model.assign({
-          tag: (_, event) => event.tag,
-        }),
 
         incrementDownloadCounter: model.assign({
           downloadCounter: ({downloadCounter}) => downloadCounter + 1,
@@ -1007,7 +988,7 @@ export const ExistingMosipVCItemMachine =
         storeTag: send(
           context => {
             const {serviceRefs, ...data} = context;
-            return StoreEvents.SET(new VCMetadata(context).getVcKey(), data);
+            return StoreEvents.SET(context.vcMetadata.getVcKey(), data);
           },
           {to: context => context.serviceRefs.store},
         ),
@@ -1015,10 +996,14 @@ export const ExistingMosipVCItemMachine =
         setCredential: model.assign((context, event) => {
           switch (event.type) {
             case 'STORE_RESPONSE':
-              return {...context, ...event.response};
+              return {
+                ...context,
+                ...event.response,
+                vcMetadata: context.vcMetadata,
+              };
             case 'GET_VC_RESPONSE':
             case 'CREDENTIAL_DOWNLOADED':
-              return {...context, ...event.vc};
+              return {...context, ...event.vc, vcMetadata: context.vcMetadata};
           }
         }),
 
@@ -1026,26 +1011,29 @@ export const ExistingMosipVCItemMachine =
           context => {
             const {serviceRefs, ...data} = context;
             return ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VCMetadata.fromVC(data).getVcKey(),
+              _vcKey: context.vcMetadata.getVcKey(),
               type: 'VC_DOWNLOADED',
               timestamp: Date.now(),
               deviceName: '',
-              vcLabel: data.tag || data.id,
+              vcLabel: data.id,
             });
           },
           {
             to: context => context.serviceRefs.activityLog,
           },
         ),
+        sendTelemetryEvents: () => {
+          sendEndEvent({type: 'VC Download', status: 'SUCCESS'});
+        },
 
         logWalletBindingSuccess: send(
           context =>
             ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: new VCMetadata(context).getVcKey(),
+              _vcKey: context.vcMetadata.getVcKey(),
               type: 'WALLET_BINDING_SUCCESSFULL',
               timestamp: Date.now(),
               deviceName: '',
-              vcLabel: context.tag || context.id,
+              vcLabel: context.vcMetadata.id,
             }),
           {
             to: context => context.serviceRefs.activityLog,
@@ -1055,11 +1043,11 @@ export const ExistingMosipVCItemMachine =
         logWalletBindingFailure: send(
           context =>
             ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: new VCMetadata(context).getVcKey(),
+              _vcKey: context.vcMetadata.getVcKey(),
               type: 'WALLET_BINDING_FAILURE',
               timestamp: Date.now(),
               deviceName: '',
-              vcLabel: context.tag || context.id,
+              vcLabel: context.vcMetadata.id,
             }),
           {
             to: context => context.serviceRefs.activityLog,
@@ -1069,11 +1057,11 @@ export const ExistingMosipVCItemMachine =
         logRevoked: send(
           context =>
             ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: new VCMetadata(context).getVcKey(),
+              _vcKey: context.vcMetadata.getVcKey(),
               type: 'VC_REVOKED',
               timestamp: Date.now(),
               deviceName: '',
-              vcLabel: context.tag || context.id,
+              vcLabel: context.vcMetadata.id,
             }),
           {
             to: context => context.serviceRefs.activityLog,
@@ -1084,7 +1072,7 @@ export const ExistingMosipVCItemMachine =
           context => {
             return StoreEvents.REMOVE(
               MY_VCS_STORE_KEY,
-              new VCMetadata(context).getVcKey(),
+              context.vcMetadata.getVcKey(),
             );
           },
           {
@@ -1132,7 +1120,7 @@ export const ExistingMosipVCItemMachine =
         storeLock: send(
           context => {
             const {serviceRefs, ...data} = context;
-            return StoreEvents.SET(new VCMetadata(context).getVcKey(), data);
+            return StoreEvents.SET(context.vcMetadata.getVcKey(), data);
           },
           {to: context => context.serviceRefs.store},
         ),
@@ -1147,14 +1135,24 @@ export const ExistingMosipVCItemMachine =
           {to: context => context.serviceRefs.store},
         ),
 
+        removeTamperedVcItem: send(
+          _context => {
+            return StoreEvents.REMOVE(
+              MY_VCS_STORE_KEY,
+              _context.vcMetadata.getVcKey(),
+            );
+          },
+          {to: context => context.serviceRefs.store},
+        ),
+
         logVCremoved: send(
           (context, _) =>
             ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: new VCMetadata(context).getVcKey(),
+              _vcKey: context.vcMetadata.getVcKey(),
               type: 'VC_REMOVED',
               timestamp: Date.now(),
               deviceName: '',
-              vcLabel: context.id,
+              vcLabel: context.vcMetadata.id,
             }),
           {
             to: context => context.serviceRefs.activityLog,
@@ -1170,7 +1168,8 @@ export const ExistingMosipVCItemMachine =
           console.log(maxLimit);
           if (maxLimit <= context.downloadCounter) {
             throw new Error(
-              'Download limit expired for request id: ' + context.requestId,
+              'Download limit expired for request id: ' +
+                context.vcMetadata.requestId,
             );
           }
 
@@ -1191,7 +1190,7 @@ export const ExistingMosipVCItemMachine =
               request: {
                 authFactorType: 'WLA',
                 format: 'jwt',
-                individualId: context.id,
+                individualId: context.vcMetadata.id,
                 transactionId: context.transactionId,
                 publicKey: context.publicKey,
                 challengeList: [
@@ -1206,7 +1205,7 @@ export const ExistingMosipVCItemMachine =
           );
           const certificate = response.response.certificate;
           await savePrivateKey(
-            getBindingCertificateConstant(context.id),
+            getBindingCertificateConstant(context.vcMetadata.id),
             certificate,
           );
 
@@ -1236,7 +1235,7 @@ export const ExistingMosipVCItemMachine =
           }
           const isBiometricsEnabled = SecureKeystore.hasBiometricsEnabled();
           return SecureKeystore.generateKeyPair(
-            context.id,
+            context.vcMetadata.id,
             isBiometricsEnabled,
             0,
           );
@@ -1249,7 +1248,7 @@ export const ExistingMosipVCItemMachine =
             {
               requestTime: String(new Date().toISOString()),
               request: {
-                individualId: context.id,
+                individualId: context.vcMetadata.id,
                 otpChannels: ['EMAIL', 'PHONE'],
               },
             },
@@ -1269,7 +1268,7 @@ export const ExistingMosipVCItemMachine =
             if (event.type === 'POLL_STATUS') {
               const response = await request(
                 'GET',
-                `/residentmobileapp/credentialshare/request/status/${context.requestId}`,
+                `/residentmobileapp/credentialshare/request/status/${context.vcMetadata.requestId}`,
               );
               switch (response.response?.statusCode) {
                 case 'NEW':
@@ -1297,8 +1296,8 @@ export const ExistingMosipVCItemMachine =
                 'POST',
                 '/residentmobileapp/credentialshare/download',
                 {
-                  individualId: context.id,
-                  requestId: context.requestId,
+                  individualId: context.vcMetadata.id,
+                  requestId: context.vcMetadata.requestId,
                 },
               );
 
@@ -1307,12 +1306,10 @@ export const ExistingMosipVCItemMachine =
                   credential: response.credential,
                   verifiableCredential: response.verifiableCredential,
                   generatedOn: new Date(),
-                  id: context.id,
-                  idType: context.idType,
-                  tag: '',
-                  requestId: context.requestId,
+                  id: context.vcMetadata.id,
+                  idType: context.vcMetadata.idType,
+                  requestId: context.vcMetadata.requestId,
                   isVerified: false,
-                  isPinned: context.isPinned,
                   lastVerifiedOn: null,
                   locked: context.locked,
                   walletBindingResponse: null,
@@ -1332,8 +1329,8 @@ export const ExistingMosipVCItemMachine =
         requestOtp: async context => {
           try {
             return request('POST', '/residentmobileapp/req/otp', {
-              individualId: context.id,
-              individualIdType: context.idType,
+              individualId: context.vcMetadata.id,
+              individualIdType: context.vcMetadata.idType,
               otpChannel: ['EMAIL', 'PHONE'],
               transactionID: context.transactionId,
             });
@@ -1349,8 +1346,8 @@ export const ExistingMosipVCItemMachine =
               'POST',
               '/residentmobileapp/req/auth/unlock',
               {
-                individualId: context.id,
-                individualIdType: context.idType,
+                individualId: context.vcMetadata.id,
+                individualIdType: context.vcMetadata.idType,
                 otp: context.otp,
                 transactionID: context.transactionId,
                 authType: ['bio'],
@@ -1362,8 +1359,8 @@ export const ExistingMosipVCItemMachine =
               'POST',
               '/residentmobileapp/req/auth/lock',
               {
-                individualId: context.id,
-                individualIdType: context.idType,
+                individualId: context.vcMetadata.id,
+                individualIdType: context.vcMetadata.idType,
                 otp: context.otp,
                 transactionID: context.transactionId,
                 authType: ['bio'],
@@ -1375,13 +1372,17 @@ export const ExistingMosipVCItemMachine =
 
         requestRevoke: async context => {
           try {
-            return request('PATCH', `/residentmobileapp/vid/${context.id}`, {
-              transactionID: context.transactionId,
-              vidStatus: 'REVOKED',
-              individualId: context.id,
-              individualIdType: 'VID',
-              otp: context.otp,
-            });
+            return request(
+              'PATCH',
+              `/residentmobileapp/vid/${context.vcMetadata.id}`,
+              {
+                transactionID: context.transactionId,
+                vidStatus: 'REVOKED',
+                individualId: context.vcMetadata.id,
+                individualIdType: 'VID',
+                otp: context.otp,
+              },
+            );
           } catch (error) {
             console.error(error);
           }
@@ -1416,10 +1417,7 @@ export const createExistingMosipVCItemMachine = (
   return ExistingMosipVCItemMachine.withContext({
     ...ExistingMosipVCItemMachine.context,
     serviceRefs,
-    id: vcMetadata.id,
-    idType: vcMetadata.idType as VcIdType,
-    requestId: vcMetadata.requestId,
-    isPinned: vcMetadata.isPinned,
+    vcMetadata,
   });
 };
 
@@ -1435,15 +1433,11 @@ export function selectGeneratedOn(state: State) {
 }
 
 export function selectId(state: State) {
-  return state.context.id;
+  return state.context.vcMetadata.id;
 }
 
 export function selectIdType(state: State) {
-  return state.context.idType;
-}
-
-export function selectTag(state: State) {
-  return state.context.tag;
+  return state.context.vcMetadata.idType;
 }
 
 export function selectCredential(state: State) {
@@ -1458,10 +1452,6 @@ export function selectContext(state: State) {
   return state.context;
 }
 
-export function selectIsEditingTag(state: State) {
-  return state.matches('editingTag');
-}
-
 export function selectIsOtpError(state: State) {
   return state.context.otpError;
 }
@@ -1470,7 +1460,7 @@ export function selectOtpError(state: State) {
   return state.context.otpError;
 }
 export function selectIsPinned(state: State) {
-  return state.context.isPinned;
+  return state.context.vcMetadata.isPinned;
 }
 
 export function selectIsLockingVc(state: State) {

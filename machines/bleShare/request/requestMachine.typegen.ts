@@ -66,11 +66,11 @@ export interface Typegen0 {
     prependReceivedVc: 'VC_RESPONSE';
     registerLoggers:
       | 'DISCONNECT'
-      | 'DISMISS'
+      | 'RESET'
       | 'xstate.after(DESTROY_TIMEOUT)#request.clearingConnection';
     removeLoggers:
       | 'DISCONNECT'
-      | 'DISMISS'
+      | 'RESET'
       | 'SCREEN_BLUR'
       | 'xstate.after(DESTROY_TIMEOUT)#request.clearingConnection'
       | 'xstate.init';
@@ -105,7 +105,7 @@ export interface Typegen0 {
   eventsCausingServices: {
     advertiseDevice:
       | 'DISCONNECT'
-      | 'DISMISS'
+      | 'RESET'
       | 'xstate.after(DESTROY_TIMEOUT)#request.clearingConnection';
     checkBluetoothService: 'NEARBY_ENABLED';
     checkNearByDevicesPermission:
