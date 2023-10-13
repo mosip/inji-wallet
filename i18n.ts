@@ -13,11 +13,9 @@ import Storage from './shared/storage';
 import {iso6393To1} from 'iso-639-3';
 import {LocalizedField} from './types/VC/ExistingMosipVC/vc';
 
-import {APPLICATION_LANGUAGE} from 'react-native-dotenv';
-
 const resources = {en, fil, ar, hi, kn, ta};
 const locale = Localization.locale;
-const languageCodeMap = {};
+const languageCodeMap = {} as {[key: string]: string};
 
 export const SUPPORTED_LANGUAGES = {
   en: 'English',
@@ -56,14 +54,27 @@ export function getLanguageCode(code: string) {
   return language;
 }
 
-export function getValueForCurrentLanguage(localizedData) {
+export function getValueForCurrentLanguage(
+  localizedData: LocalizedField[] | Object,
+  defaultLanguage = '@none',
+) {
   const currentLanguage = i18next.language;
-  const valueForCurrentLanguage = localizedData.filter(
-    obj => obj.language === languageCodeMap[currentLanguage],
-  );
-  return valueForCurrentLanguage[0]?.value
-    ? valueForCurrentLanguage[0].value
-    : localizedData[0]?.value;
+  const currentLanguageCode = languageCodeMap[currentLanguage];
+  if (Array.isArray(localizedData)) {
+    const valueForCurrentLanguage = localizedData.filter(
+      obj => obj.language === currentLanguageCode,
+    );
+
+    return valueForCurrentLanguage[0]?.value
+      ? valueForCurrentLanguage[0].value
+      : localizedData[0]?.value;
+  } else {
+    const localizedDataObject = localizedData as {[key: string]: string};
+
+    return localizedDataObject.hasOwnProperty(currentLanguageCode)
+      ? localizedDataObject[currentLanguageCode]
+      : localizedDataObject[defaultLanguage];
+  }
 }
 
 // This method gets the value from iso-639-3 package, which contains key value pairs of three letter language codes[key] and two letter langugae code[value]. These values are according to iso standards.
@@ -92,36 +103,27 @@ export function getLocalizedField(
   if (typeof rawField === 'string') {
     return rawField;
   }
-  if (typeof rawField === 'object') {
+
+  if (Array.isArray(rawField)) {
     try {
-      if (Object.keys(rawField).length === 1) {
-        return Object.values(rawField)[0];
-      }
-
-      const defaultLanguage: string = '@none';
-      const currentLanguage =
-        getThreeLetterLanguageCode(i18next.language) || defaultLanguage;
-      const rawFieldObject = rawField as {[key: string]: string};
-
-      return rawFieldObject.hasOwnProperty(currentLanguage)
-        ? rawFieldObject[currentLanguage]
-        : rawFieldObject[defaultLanguage];
+      if (rawField.length == 1) return rawField[0]?.value;
+      return getValueForCurrentLanguage(rawField);
     } catch (e) {
       return '';
     }
   }
 
   try {
-    const localizedData: LocalizedField[] = JSON.parse(
-      JSON.stringify(rawField),
-    );
-    if (localizedData.length == 1) return localizedData[0]?.value;
-    return getValueForCurrentLanguage(localizedData);
+    if (Object.keys(rawField).length === 1) {
+      return Object.values(rawField)[0];
+    }
+
+    return getValueForCurrentLanguage(rawField);
   } catch (e) {
     return '';
   }
 }
 
-function isTwoLetterLanguageCode(languageCode) {
+function isTwoLetterLanguageCode(languageCode: string) {
   return languageCode.length == 2;
 }
