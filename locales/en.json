@@ -383,7 +383,7 @@
     "access": " is requesting access to",
     "status": "Status",
     "successMessage": "You are successfully logged in to ",
-    "okay": "Ok",
+    "ok": "OK",
     "allow": "Allow",
     "cancel": "Cancel",
     "essentialClaims": "Important Claims",
@@ -568,7 +568,7 @@
   "WelcomeScreen": {
     "title": "Open Source Identity Solution",
     "getStarted": "Get started",
-    "unlockApp": "Unlock application",
+    "unlockApp": "Unlock Application",
     "failedToReadKeys": "Failed to read keys",
     "retryRead": "Want to retry?",
     "ignore": "Ignore",

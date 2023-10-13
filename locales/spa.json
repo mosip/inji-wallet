@@ -285,7 +285,7 @@
 		"access": "está solicitando acceso a",
 		"status": "Estado",
 		"successMessage": "Has iniciado sesión correctamente en",
-		"okay": "Aceptar",
+		"ok": "Aceptar",
 		"allow": "Permitir",
 		"cancel": "Cancelar",
 		"essentialClaims": "Reclamos Esenciales",
