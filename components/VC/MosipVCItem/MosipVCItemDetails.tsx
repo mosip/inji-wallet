@@ -68,14 +68,14 @@ export const MosipVCItemDetails: React.FC<
   }
 
   return (
-    <Column margin="10">
+    <Column margin="10 0 10 0">
       <ImageBackground
         imageStyle={{width: '100%'}}
         resizeMethod="scale"
         resizeMode="stretch"
         style={Theme.Styles.openCardBgContainer}
         source={Theme.OpenCard}>
-        <Row align="space-between" padding="10" margin="0 10 0 10">
+        <Row align="space-between" padding="10" margin="0 10 0 8">
           <Column align="space-evenly" crossAlign="center">
             <Image
               source={getProfileImage(
@@ -198,7 +198,7 @@ export const MosipVCItemDetails: React.FC<
                   </Text>
                 </Column>
               </Column>
-              <Column margin="0 0 0 40">
+              <Column margin="0 0 0 38">
                 <Column margin="20 0 0 0">
                   <Text
                     testID="dateOfBirth"

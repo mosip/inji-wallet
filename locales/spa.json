@@ -271,7 +271,7 @@
 		"logout": "Cerrar sesión",
 		"resetInjiProps": "Restableciendo accesorios Inji..."
 	},
-	"QrScreen": {
+	"QrLogin": {
 		"title": "Inicio de sesión con código QR",
 		"alignQr": "Alinea el código QR dentro del marco para escanearlo",
 		"confirmation": "Confirmación",
@@ -289,7 +289,7 @@
 		"access": "está solicitando acceso a",
 		"status": "Estado",
 		"successMessage": "Has iniciado sesión correctamente en",
-		"okay": "Aceptar",
+		"ok": "Aceptar",
 		"allow": "Permitir",
 		"cancel": "Cancelar",
 		"essentialClaims": "Reclamos Esenciales",
@@ -457,14 +457,16 @@
 	},
 	"WelcomeScreen": {
 		"title": "Solución de identidad de código abierto",
-		"getStarted": "Empezar",
-		"unlockApp": "Desbloquear aplicación",
+		"unlockApplication": "Desbloquear aplicación",
+    "failedToReadKeys": "No se pudieron leer las claves",
+    "retryRead": "¿Quieres volver a intentarlo?",
 		"errors": {
 			"invalidateKeyError": {
 				"title": "La aplicación se restableció",
 				"message": "Debido a la actualización de reconocimiento facial/huella digital, la seguridad de la aplicación se vio afectada y se eliminaron las tarjetas descargadas. Por favor descargue nuevamente."
 			}
-		}
+		},
+    "ignore": "Ignorar"
 	},
 	"common": {
 		"cancel": "Cancelar",
@@ -761,7 +763,7 @@
       }
     }
   },
-  "QrScreen": {
+  "QrLogin": {
     "title": "Inicio de sesión con código QR",
     "alignQr": "Alinea el código QR dentro del marco para escanearlo",
     "confirmation": "Confirmación",
@@ -778,8 +780,8 @@
     "domainWarning": "Por favor, confirma que el dominio del sitio web desde el cual estás escaneando el código QR es el siguiente",
     "access": "está solicitando acceso a",
     "status": "Estado",
-    "successMessage": "Has iniciado sesión correctamente en",
-    "okay": "Aceptar",
+    "successMessage": "Has iniciado sesión correctamente en ",
+    "okay": "De acuerdo",
     "allow": "Permitir",
     "cancel": "Cancelar",
     "essentialClaims": "Reclamos Esenciales",
@@ -937,17 +939,6 @@
         "title": "No se puede verificar la identidad",
         "message": "No se reconoce el rostro. Por favor, inténtalo de nuevo.",
         "messageNoRetry": "No se reconoce el rostro."
-      }
-    }
-  },
-  "WelcomeScreen": {
-    "title": "Solución de identidad de código abierto",
-    "getStarted": "Empezar",
-    "unlockApp": "Desbloquear aplicación",
-    "errors": {
-      "invalidateKeyError": {
-        "title": "Algunas pruebas de identidad se eliminan debido a problemas de seguridad.",
-        "message": "Vuelva a descargar."
       }
     }
   },

@@ -16,6 +16,10 @@ import {groupBy} from '../../shared/javascript';
 import {isOpenId4VCIEnabled} from '../../shared/openId4VCI/Utils';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
 import {BannerNotification} from '../../components/BannerNotification';
+import {
+  getErrorEventData,
+  sendErrorEvent,
+} from '../../shared/telemetry/TelemetryUtils';
 import {Error} from '../../components/ui/Error';
 
 const pinIconProps = {iconName: 'pushpin', iconType: 'antdesign'};
@@ -46,6 +50,16 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
     }
     if (controller.inProgressVcDownloads?.size > 0) {
       controller.SET_STORE_VC_ITEM_STATUS();
+    }
+
+    if (controller.showHardwareKeystoreNotExistsAlert) {
+      sendErrorEvent(
+        getErrorEventData(
+          'App Onboarding',
+          'does_not_exist',
+          'Some security features will be unavailable as hardware key store is not available',
+        ),
+      );
     }
   }, [controller.areAllVcsLoaded, controller.inProgressVcDownloads]);
 

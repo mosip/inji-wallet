@@ -7,6 +7,7 @@ import {Theme} from '../../../components/ui/styleUtils';
 import {IdInputModalProps, useIdInputModal} from './IdInputModalController';
 import {useTranslation} from 'react-i18next';
 import {
+  Dimensions,
   I18nManager,
   KeyboardAvoidingView,
   Platform,
@@ -55,19 +56,8 @@ export const IdInputModal: React.FC<IdInputModalProps> = props => {
               style={Theme.TextStyles.retrieveIdLabel}>
               {t('guideLabel')}
             </Text>
-            <Row crossAlign="flex-end" style={{marginTop: 20}}>
-              <Column
-                width="33%"
-                style={{
-                  borderBottomWidth: 1,
-                  marginBottom: 2,
-                  borderColor:
-                    Platform.OS === 'ios'
-                      ? 'transparent'
-                      : Theme.Colors.IdInputModalBorder,
-                  bottom: Platform.OS === 'ios' ? 50 : 24,
-                  height: Platform.OS === 'ios' ? 100 : 'auto',
-                }}>
+            <Row crossAlign="flex-end" style={Theme.Styles.idInputContainer}>
+              <Column style={Theme.Styles.idInputPicker}>
                 <Picker
                   testID="selectIdType"
                   selectedValue={controller.idType}
@@ -76,26 +66,24 @@ export const IdInputModal: React.FC<IdInputModalProps> = props => {
                   <Picker.Item label="VID" value="VID" />
                 </Picker>
               </Column>
-              <Column fill>
-                <Input
-                  {...testIDProps('idInput')}
-                  inputContainerStyle={
-                    controller.id ? Theme.Styles.VidInputBottom : null
-                  }
-                  placeholder={!controller.id ? inputLabel : ''}
-                  inputStyle={{
-                    textAlign: I18nManager.isRTL ? 'right' : 'left',
-                    fontWeight: '700',
-                  }}
-                  selectionColor={Theme.Colors.Cursor}
-                  value={controller.id}
-                  keyboardType="number-pad"
-                  errorStyle={Theme.TextStyles.error}
-                  errorMessage={controller.idError}
-                  onChangeText={controller.INPUT_ID}
-                  ref={setIdInputRef}
-                />
-              </Column>
+              <Input
+                {...testIDProps('idInput')}
+                placeholder={!controller.id ? inputLabel : ''}
+                inputContainerStyle={
+                  controller.id ? Theme.Styles.idInputBottom : null
+                }
+                inputStyle={{
+                  textAlign: I18nManager.isRTL ? 'right' : 'left',
+                  fontWeight: '700',
+                }}
+                selectionColor={Theme.Colors.Cursor}
+                value={controller.id}
+                keyboardType="number-pad"
+                errorStyle={Theme.TextStyles.error}
+                errorMessage={controller.idError}
+                onChangeText={controller.INPUT_ID}
+                ref={setIdInputRef}
+              />
             </Row>
           </Column>
           <Column>
