@@ -17,6 +17,12 @@ import {isOpenId4VCIEnabled} from '../../shared/openId4VCI/Utils';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
 import {BannerNotification} from '../../components/BannerNotification';
 import {Error} from '../../components/ui/Error';
+import {
+  getInteractEventData,
+  getStartEventData,
+  sendInteractEvent,
+  sendStartEvent,
+} from '../../shared/telemetry/TelemetryUtils';
 
 const pinIconProps = {iconName: 'pushpin', iconType: 'antdesign'};
 
@@ -37,6 +43,14 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
 
   const clearIndividualId = () => {
     GET_INDIVIDUAL_ID('');
+  };
+
+  const onPressHandler = () => {
+    sendStartEvent(getStartEventData('VC Download', {id: 'UIN, VID, AID'}));
+    sendInteractEvent(
+      getInteractEventData('VC Download', 'CLICK', `Download VC Button`),
+    );
+    controller.DOWNLOAD_ID();
   };
 
   useEffect(() => {
@@ -104,7 +118,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                   type="gradient"
                   disabled={controller.isRefreshingVcs}
                   title={t('downloadCard')}
-                  onPress={controller.DOWNLOAD_ID}
+                  onPress={onPressHandler}
                 />
               )}
             </React.Fragment>
@@ -145,7 +159,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                       type="gradient"
                       disabled={controller.isRefreshingVcs}
                       title={t('downloadCard')}
-                      onPress={controller.DOWNLOAD_ID}
+                      onPress={onPressHandler()}
                     />
                   </React.Fragment>
                 )}

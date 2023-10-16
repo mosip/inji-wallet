@@ -26,12 +26,8 @@ import {VCMetadata} from '../shared/VCMetadata';
 import {
   getEndEventData,
   getImpressionEventData,
-  getInteractEventData,
-  getStartEventData,
   sendEndEvent,
   sendImpressionEvent,
-  sendInteractEvent,
-  sendStartEvent,
 } from '../shared/telemetry/TelemetryUtils';
 import {
   CredentialWrapper,
@@ -496,12 +492,6 @@ export const IssuersMachine = model.createMachine(
       },
       checkInternet: async () => await NetInfo.fetch(),
       downloadIssuerConfig: async (context, _) => {
-        sendStartEvent(
-          getStartEventData('VC Download', {id: context.selectedIssuerId}),
-        );
-        sendInteractEvent(
-          getInteractEventData('VC Download', 'CLICK', 'Issuer Type'),
-        );
         return await CACHED_API.fetchIssuerConfig(context.selectedIssuerId);
       },
       downloadCredential: async context => {
