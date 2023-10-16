@@ -19,7 +19,10 @@ import {
 } from '../shared/keystore/SecureKeystore';
 import i18n from '../i18n';
 import {parseMetadatas, VCMetadata} from '../shared/VCMetadata';
-import {getEndData, sendEndEvent} from '../shared/telemetry/TelemetryUtils';
+import {
+  getEndEventData,
+  sendEndEvent,
+} from '../shared/telemetry/TelemetryUtils';
 
 const model = createModel(
   {
@@ -31,7 +34,7 @@ const model = createModel(
     linkTransactionResponse: {} as linkTransactionResponse,
     authFactors: [],
     authorizeScopes: null,
-    clientName: '',
+    clientName: {},
     configs: {},
     essentialClaims: [],
     linkTransactionId: '',
@@ -224,7 +227,7 @@ export const qrLoginMachine =
           },
         },
         success: {
-          entry: [() => sendEndEvent(getEndData('QR login'))],
+          entry: [() => sendEndEvent(getEndEventData('QR login', 'SUCCESS'))],
           on: {
             CONFIRM: {
               target: 'done',
@@ -345,7 +348,7 @@ export const qrLoginMachine =
         linkTransaction: async context => {
           const response = await request(
             'POST',
-            '/v1/esignet/linked-authorization/link-transaction',
+            '/v1/esignet/linked-authorization/v2/link-transaction',
             {
               requestTime: String(new Date().toISOString()),
               request: {

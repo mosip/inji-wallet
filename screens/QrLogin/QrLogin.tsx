@@ -14,7 +14,7 @@ import {View} from 'react-native';
 
 export const QrLogin: React.FC<QrLoginProps> = props => {
   const controller = useQrLogin(props);
-  const {t} = useTranslation('QrScreen');
+  const {t} = useTranslation('QrLogin');
 
   return (
     <View

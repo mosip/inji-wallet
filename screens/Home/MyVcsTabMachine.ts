@@ -18,6 +18,12 @@ import {GetVcModalMachine} from './MyVcs/GetVcModalMachine';
 import Storage from '../../shared/storage';
 import {VCMetadata} from '../../shared/VCMetadata';
 import {EsignetMosipVCItemMachine} from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
+import {
+  getInteractEventData,
+  getStartEventData,
+  sendInteractEvent,
+  sendStartEvent,
+} from '../../shared/telemetry/TelemetryUtils';
 import NetInfo from '@react-native-community/netinfo';
 
 const model = createModel(
@@ -93,6 +99,7 @@ export const MyVcsTabMachine = model.createMachine(
                   target: 'storageLimitReached',
                 },
                 {
+                  actions: ['registerEvent'],
                   target: '#MyVcsTab.addingVc',
                 },
               ],
@@ -200,6 +207,13 @@ export const MyVcsTabMachine = model.createMachine(
     },
 
     actions: {
+      registerEvent: () => {
+        sendStartEvent(getStartEventData('VC Download', {id: 'UIN, VID, AID'}));
+        sendInteractEvent(
+          getInteractEventData('VC Download', 'CLICK', 'Download VC button'),
+        );
+      },
+
       viewVcFromParent: sendParent((_context, event: ViewVcEvent) =>
         model.events.VIEW_VC(event.vcItemActor),
       ),
