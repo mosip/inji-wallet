@@ -220,7 +220,7 @@ export const createFaceScannerMachine = (vcImage: string) =>
           const rxDataURI =
             /data:(?<mime>[\w/\-.]+);(?<encoding>\w+),(?<data>.*)/;
           const matches = rxDataURI.exec(vcImage).groups;
-          return FaceAuth(context.capturedImage.base64, matches.data);
+          return faceAuth(context.capturedImage.base64, matches.data);
         },
       },
 

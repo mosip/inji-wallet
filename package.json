@@ -44,7 +44,7 @@
     "i18next": "^21.6.16",
     "iso-639-3": "^3.0.1",
     "jwt-decode": "^3.1.2",
-    "mosip-inji-face-sdk": "github:biometric-technologies/mosip-mobileid-sdk#IriScanLivenessDev",
+    "mosip-inji-face-sdk": "github:mosip/mosip-mobileid-sdk#IrisScan",
     "node-forge": "^1.3.1",
     "node-jose": "^2.2.0",
     "patch-package": "^6.5.1",
