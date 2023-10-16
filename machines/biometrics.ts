@@ -11,6 +11,7 @@ const model = createModel(
     isEnrolled: false,
     status: null,
     retry: false,
+    error: {},
   },
   {
     events: {
@@ -22,7 +23,7 @@ const model = createModel(
       AUTHENTICATE: () => ({}),
       RETRY_AUTHENTICATE: () => ({}),
     },
-  }
+  },
 );
 // ----------------------------------------------------------------------------
 
@@ -108,9 +109,20 @@ export const biometricsMachine = model.createMachine(
               // disableDeviceFallback: true,
               // fallbackLabel: 'Invalid fingerprint attempts, Please try again.'
             });
+
+            if (res.error) {
+              throw new Error(JSON.stringify(res));
+            }
+
             return res.success;
           },
-          onError: 'failure',
+          onError: [
+            {
+              target: 'failure',
+              actions: ['sendFailedEndEvent'],
+            },
+          ],
+
           onDone: {
             target: 'authentication',
             actions: ['setStatus'],
@@ -192,6 +204,7 @@ export const biometricsMachine = model.createMachine(
             meta: {
               message: 'errors.generic',
             },
+            exit: 'resetError',
           },
         },
         on: {
@@ -222,15 +235,26 @@ export const biometricsMachine = model.createMachine(
       setRetry: model.assign({
         retry: () => true,
       }),
+
+      sendFailedEndEvent: model.assign({
+        error: (_context, event) => {
+          const res = JSON.parse((event.data as Error).message);
+          return { res: res, stacktrace: event };
+        },
+      }),
+
+      resetError: model.assign({
+        error: () => null,
+      }),
     },
     guards: {
-      isStatusSuccess: (ctx) => ctx.status,
-      isStatusFail: (ctx) => !ctx.status,
-      checkIfAvailable: (ctx) => ctx.isAvailable && ctx.isEnrolled,
-      checkIfUnavailable: (ctx) => !ctx.isAvailable,
-      checkIfUnenrolled: (ctx) => !ctx.isEnrolled,
+      isStatusSuccess: ctx => ctx.status,
+      isStatusFail: ctx => !ctx.status,
+      checkIfAvailable: ctx => ctx.isAvailable && ctx.isEnrolled,
+      checkIfUnavailable: ctx => !ctx.isAvailable,
+      checkIfUnenrolled: ctx => !ctx.isEnrolled,
     },
-  }
+  },
 );
 
 // ----------------------------------------------------------------------------
@@ -280,4 +304,8 @@ export function selectUnenrolledNotice(state: State) {
   return state.matches({ failure: 'unenrolled' }) && state.context.retry
     ? selectFailMessage(state)
     : null;
+}
+
+export function selectErrorResponse(state: State) {
+  return state.context.error;
 }

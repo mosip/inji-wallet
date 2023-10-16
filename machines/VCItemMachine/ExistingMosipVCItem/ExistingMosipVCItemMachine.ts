@@ -419,7 +419,8 @@ export const ExistingMosipVCItemMachine =
                     'setWalletBindingErrorEmpty',
                     'sendWalletBindingSuccess',
                     'logWalletBindingSuccess',
-                    () => sendEndEvent(getEndEventData('VC activation')),
+                    () =>
+                      sendEndEvent(getEndEventData('VC activation', 'SUCCESS')),
                   ],
                   target: '#vc-item.kebabPopUp',
                 },
@@ -746,7 +747,7 @@ export const ExistingMosipVCItemMachine =
                 'setWalletBindingErrorEmpty',
                 'setWalletBindingSuccess',
                 'logWalletBindingSuccess',
-                () => sendEndEvent(getEndEventData('VC activation')),
+                () => sendEndEvent(getEndEventData('VC activation', 'SUCCESS')),
               ],
               target: 'idle',
             },
@@ -1003,7 +1004,11 @@ export const ExistingMosipVCItemMachine =
               };
             case 'GET_VC_RESPONSE':
             case 'CREDENTIAL_DOWNLOADED':
-              return {...context, ...event.vc, vcMetadata: context.vcMetadata};
+              return {
+                ...context,
+                ...event.vc,
+                vcMetadata: context.vcMetadata,
+              };
           }
         }),
 
