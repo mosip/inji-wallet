@@ -1,6 +1,7 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 import {Dimensions, Platform, StyleSheet, ViewStyle} from 'react-native';
 import {Spacing} from '../styleUtils';
+import {isIOS} from '../../../shared/constants';
 
 const Colors = {
   Black: '#231F20',
@@ -1295,14 +1296,14 @@ export const PurpleTheme = {
 };
 
 function generateBoxShadowStyle() {
-  if (Platform.OS === 'ios') {
+  if (isIOS()) {
     return {
       shadowColor: '#000',
       shadowOffset: {width: 1, height: 1.2},
       shadowOpacity: 0.3,
       shadowRadius: 2.5,
     };
-  } else if (Platform.OS === 'android') {
+  } else {
     return {
       elevation: 4,
       shadowColor: '#000',
