@@ -281,7 +281,7 @@ export const AddVcModalMachine =
                 context.idType === 'UIN' ? 'invalidUin' : 'invalidVid',
               'VID is expired/deactivated': 'deactivatedVid',
             };
-            let backendError = ID_ERRORS_MAP[message]
+            const backendError = ID_ERRORS_MAP[message]
               ? i18n.t(`errors.backend.${ID_ERRORS_MAP[message]}`, {
                   ns: 'AddVcModal',
                 })
