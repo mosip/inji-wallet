@@ -24,9 +24,12 @@ import {
 import {NETWORK_REQUEST_FAILED, REQUEST_TIMEOUT} from '../shared/constants';
 import {VCMetadata} from '../shared/VCMetadata';
 import {
+  EndEventStatus,
+  FlowType,
   getImpressionEventData,
   getInteractEventData,
   getStartEventData,
+  InteractEventSubtype,
   sendEndEvent,
   sendImpressionEvent,
   sendInteractEvent,
@@ -475,14 +478,14 @@ export const IssuersMachine = model.createMachine(
       ),
       sendSuccessEndEvent: () => {
         sendEndEvent({
-          type: 'VC Download',
-          status: 'SUCCESS',
+          type: FlowType.vcDownload,
+          status: EndEventStatus.success,
         });
       },
       sendErrorEndEvent: () => {
         sendEndEvent({
-          type: 'VC Download',
-          status: 'FAILURE',
+          type: FlowType.vcDownload,
+          status: EndEventStatus.failure,
         });
       },
     },
@@ -493,10 +496,16 @@ export const IssuersMachine = model.createMachine(
       checkInternet: async () => await NetInfo.fetch(),
       downloadIssuerConfig: async (context, _) => {
         sendStartEvent(
-          getStartEventData('VC Download', {id: context.selectedIssuerId}),
+          getStartEventData(FlowType.vcDownload, {
+            id: context.selectedIssuerId,
+          }),
         );
         sendInteractEvent(
-          getInteractEventData('VC Download', 'CLICK', 'Issuer Type'),
+          getInteractEventData(
+            FlowType.vcDownload,
+            InteractEventSubtype.click,
+            'Issuer Type',
+          ),
         );
         return await CACHED_API.fetchIssuerConfig(context.selectedIssuerId);
       },
@@ -523,7 +532,7 @@ export const IssuersMachine = model.createMachine(
       invokeAuthorization: async context => {
         sendImpressionEvent(
           getImpressionEventData(
-            'VC Download',
+            FlowType.vcDownload,
             context.selectedIssuer.id + ' Web View Page',
           ),
         );

@@ -19,8 +19,10 @@ import Storage from '../../shared/storage';
 import {VCMetadata} from '../../shared/VCMetadata';
 import {EsignetMosipVCItemMachine} from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 import {
+  FlowType,
   getInteractEventData,
   getStartEventData,
+  InteractEventSubtype,
   sendInteractEvent,
   sendStartEvent,
 } from '../../shared/telemetry/TelemetryUtils';
@@ -208,9 +210,15 @@ export const MyVcsTabMachine = model.createMachine(
 
     actions: {
       registerEvent: () => {
-        sendStartEvent(getStartEventData('VC Download', {id: 'UIN, VID, AID'}));
+        sendStartEvent(
+          getStartEventData(FlowType.vcDownload, {id: 'UIN, VID, AID'}),
+        );
         sendInteractEvent(
-          getInteractEventData('VC Download', 'CLICK', 'Download VC button'),
+          getInteractEventData(
+            FlowType.vcDownload,
+            InteractEventSubtype.click,
+            'Download VC button',
+          ),
         );
       },
 

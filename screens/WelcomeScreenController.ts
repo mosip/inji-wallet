@@ -15,11 +15,11 @@ import {RootRouteProps} from '../routes';
 import {GlobalContext} from '../shared/GlobalContext';
 import {
   getStartEventData,
-  getImpressionEventData,
   getInteractEventData,
-  sendImpressionEvent,
   sendInteractEvent,
   sendStartEvent,
+  FlowType,
+  InteractEventSubtype,
 } from '../shared/telemetry/TelemetryUtils';
 
 export function useWelcomeScreen(props: RootRouteProps) {
@@ -65,11 +65,11 @@ export function useWelcomeScreen(props: RootRouteProps) {
       if (!isSettingUp && isBiometricUnlockEnabled && biometrics !== '') {
         props.navigation.navigate('Biometric', {setup: isSettingUp});
       } else if (!isSettingUp && passcode !== '') {
-        sendStartEvent(getStartEventData('App Login'));
+        sendStartEvent(getStartEventData(FlowType.appLogin));
         sendInteractEvent(
           getInteractEventData(
-            'App Login',
-            'TOUCH',
+            FlowType.appLogin,
+            InteractEventSubtype.click,
             'Unlock application button',
           ),
         );

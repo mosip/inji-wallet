@@ -45,6 +45,8 @@ import {
   getEndEventData,
   sendStartEvent,
   sendEndEvent,
+  FlowType,
+  EndEventStatus,
 } from '../../../shared/telemetry/TelemetryUtils';
 
 const {wallet, EventTypes, VerificationStatus} = tuvali;
@@ -434,7 +436,7 @@ export const scanMachine =
           },
           entry: [
             'sendScanData',
-            () => sendStartEvent(getStartEventData('QR login')),
+            () => sendStartEvent(getStartEventData(FlowType.qrLogin)),
           ],
         },
         connecting: {
@@ -572,7 +574,10 @@ export const scanMachine =
             accepted: {
               entry: [
                 'logShared',
-                () => sendEndEvent(getEndEventData('VC share', 'SUCCESS')),
+                () =>
+                  sendEndEvent(
+                    getEndEventData(FlowType.vcShare, EndEventStatus.success),
+                  ),
               ],
               on: {
                 DISMISS: {
@@ -1012,7 +1017,7 @@ export const scanMachine =
         },
 
         startConnection: context => callback => {
-          sendStartEvent(getStartEventData('VC share'));
+          sendStartEvent(getStartEventData(FlowType.vcShare));
           wallet.startConnection(context.openId4VpUri);
           const statusCallback = (event: WalletDataEvent) => {
             if (event.type === EventTypes.onSecureChannelEstablished) {

@@ -10,6 +10,7 @@ import {usePasscodeScreen} from './PasscodeScreenController';
 import {hashData} from '../shared/commonUtil';
 import {argon2iConfig} from '../shared/constants';
 import {
+  EndEventStatus,
   getEndEventData,
   getEventType,
   getImpressionEventData,
@@ -32,7 +33,7 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
 
   const handleBackButtonPress = () => {
     sendEndEvent(
-      getEndEventData(getEventType(isSettingUp), 'FAILURE', {
+      getEndEventData(getEventType(isSettingUp), EndEventStatus.failure, {
         errorId: 'user_cancel',
         errorMessage: 'Authentication canceled',
       }),

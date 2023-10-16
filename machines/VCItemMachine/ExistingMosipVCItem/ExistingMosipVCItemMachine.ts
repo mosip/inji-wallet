@@ -35,6 +35,8 @@ import {
   getStartEventData,
   getEndEventData,
   sendEndEvent,
+  FlowType,
+  EndEventStatus,
 } from '../../../shared/telemetry/TelemetryUtils';
 
 const model = createModel(
@@ -303,7 +305,8 @@ export const ExistingMosipVCItemMachine =
               on: {
                 CONFIRM: {
                   actions: [
-                    () => sendStartEvent(getStartEventData('VC activation')),
+                    () =>
+                      sendStartEvent(getStartEventData(FlowType.vcActivation)),
                   ],
                   target: '#vc-item.kebabPopUp.requestingBindingOtp',
                 },
@@ -420,7 +423,12 @@ export const ExistingMosipVCItemMachine =
                     'sendWalletBindingSuccess',
                     'logWalletBindingSuccess',
                     () =>
-                      sendEndEvent(getEndEventData('VC activation', 'SUCCESS')),
+                      sendEndEvent(
+                        getEndEventData(
+                          FlowType.vcActivation,
+                          EndEventStatus.success,
+                        ),
+                      ),
                   ],
                   target: '#vc-item.kebabPopUp',
                 },
@@ -637,7 +645,8 @@ export const ExistingMosipVCItemMachine =
         showBindingWarning: {
           on: {
             CONFIRM: {
-              actions: () => sendStartEvent(getStartEventData('VC activation')),
+              actions: () =>
+                sendStartEvent(getStartEventData(FlowType.vcActivation)),
               target: 'requestingBindingOtp',
             },
             CANCEL: {
@@ -747,7 +756,13 @@ export const ExistingMosipVCItemMachine =
                 'setWalletBindingErrorEmpty',
                 'setWalletBindingSuccess',
                 'logWalletBindingSuccess',
-                () => sendEndEvent(getEndEventData('VC activation', 'SUCCESS')),
+                () =>
+                  sendEndEvent(
+                    getEndEventData(
+                      FlowType.vcActivation,
+                      EndEventStatus.success,
+                    ),
+                  ),
               ],
               target: 'idle',
             },
@@ -1028,7 +1043,10 @@ export const ExistingMosipVCItemMachine =
           },
         ),
         sendTelemetryEvents: () => {
-          sendEndEvent({type: 'VC Download', status: 'SUCCESS'});
+          sendEndEvent({
+            type: FlowType.vcDownload,
+            status: EndEventStatus.success,
+          });
         },
 
         logWalletBindingSuccess: send(

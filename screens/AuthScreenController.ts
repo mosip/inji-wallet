@@ -25,6 +25,9 @@ import {
   getImpressionEventData,
   getEndEventData,
   sendEndEvent,
+  FlowType,
+  EndEventStatus,
+  InteractEventSubtype,
 } from '../shared/telemetry/TelemetryUtils';
 
 export function useAuthScreen(props: RootRouteProps) {
@@ -61,12 +64,16 @@ export function useAuthScreen(props: RootRouteProps) {
 
   useEffect(() => {
     if (isAuthorized) {
-      sendEndEvent(getEndEventData('App Onboarding', 'SUCCESS'));
+      sendEndEvent(
+        getEndEventData(FlowType.appOnboarding, EndEventStatus.success),
+      );
       props.navigation.reset({
         index: 0,
         routes: [{name: 'Main'}],
       });
-      sendImpressionEvent(getImpressionEventData('App Onboarding', 'Home'));
+      sendImpressionEvent(
+        getImpressionEventData(FlowType.appOnboarding, 'Home'),
+      );
       return;
     }
 
@@ -80,7 +87,7 @@ export function useAuthScreen(props: RootRouteProps) {
       // handle biometric failure unknown error
     } else if (errorMsgBio) {
       sendEndEvent(
-        getEndEventData('App Onboarding', 'FAILURE', {
+        getEndEventData(FlowType.appOnboarding, EndEventStatus.failure, {
           errorId: errorResponse.res.error,
           errorMessage: errorResponse.res.warning,
           stackTrace: errorResponse.stacktrace,
@@ -97,7 +104,7 @@ export function useAuthScreen(props: RootRouteProps) {
 
       // we dont need to see this page to user once biometric is unavailable on its device
     } else if (isUnavailableBio) {
-      sendStartEvent(getStartEventData('App Onboarding'));
+      sendStartEvent(getStartEventData(FlowType.appOnboarding));
       usePasscode();
     }
   }, [isSuccessBio, isUnavailableBio, errorMsgBio, unEnrolledNoticeBio]);
@@ -105,11 +112,11 @@ export function useAuthScreen(props: RootRouteProps) {
   const useBiometrics = async () => {
     const isBiometricsEnrolled = await LocalAuthentication.isEnrolledAsync();
     if (isBiometricsEnrolled) {
-      sendStartEvent(getStartEventData('App Onboarding'));
+      sendStartEvent(getStartEventData(FlowType.appOnboarding));
       sendInteractEvent(
         getInteractEventData(
-          'App Onboarding',
-          'TOUCH',
+          FlowType.appOnboarding,
+          InteractEventSubtype.click,
           'Use Biometrics Button',
         ),
       );

@@ -22,12 +22,13 @@ import {GlobalContext} from '../shared/GlobalContext';
 import {
   getStartEventData,
   getEndEventData,
-  getImpressionEventData,
   getInteractEventData,
   sendEndEvent,
-  sendImpressionEvent,
   sendInteractEvent,
   sendStartEvent,
+  FlowType,
+  EndEventStatus,
+  InteractEventSubtype,
 } from '../shared/telemetry/TelemetryUtils';
 
 export function useBiometricScreen(props: RootRouteProps) {
@@ -50,11 +51,11 @@ export function useBiometricScreen(props: RootRouteProps) {
 
   useEffect(() => {
     if (isAvailable) {
-      sendStartEvent(getStartEventData('App login'));
+      sendStartEvent(getStartEventData(FlowType.appLogin));
       sendInteractEvent(
         getInteractEventData(
-          'App login',
-          'TOUCH',
+          FlowType.appLogin,
+          InteractEventSubtype.click,
           'Unlock with Biometrics button',
         ),
       );
@@ -63,7 +64,7 @@ export function useBiometricScreen(props: RootRouteProps) {
 
   useEffect(() => {
     if (isAuthorized) {
-      sendEndEvent(getEndEventData('App Login', 'SUCCESS'));
+      sendEndEvent(getEndEventData(FlowType.appLogin, EndEventStatus.success));
       props.navigation.reset({
         index: 0,
         routes: [{name: 'Main'}],
@@ -86,7 +87,7 @@ export function useBiometricScreen(props: RootRouteProps) {
 
     if (errorMsgBio && !isReEnabling) {
       sendEndEvent(
-        getEndEventData('App Login', 'FAILURE', {
+        getEndEventData(FlowType.appLogin, EndEventStatus.failure, {
           errorId: errorResponse.res.error,
           errorMessage: errorResponse.res.warning,
           stackTrace: errorResponse.stacktrace,
@@ -99,9 +100,13 @@ export function useBiometricScreen(props: RootRouteProps) {
         index: 0,
         routes: [{name: 'Passcode'}],
       });
-      sendStartEvent(getStartEventData('App Login'));
+      sendStartEvent(getStartEventData(FlowType.appLogin));
       sendInteractEvent(
-        getInteractEventData('App Login', 'TOUCH', 'Unlock application button'),
+        getInteractEventData(
+          FlowType.appLogin,
+          InteractEventSubtype.click,
+          'Unlock application button',
+        ),
       );
     }
   }, [
@@ -131,11 +136,11 @@ export function useBiometricScreen(props: RootRouteProps) {
   };
 
   const useBiometrics = () => {
-    sendStartEvent(getStartEventData('App login'));
+    sendStartEvent(getStartEventData(FlowType.appLogin));
     sendInteractEvent(
       getInteractEventData(
-        'App Login',
-        'TOUCH',
+        FlowType.appLogin,
+        InteractEventSubtype.click,
         'Unlock with biometrics button',
       ),
     );
@@ -153,7 +158,7 @@ export function useBiometricScreen(props: RootRouteProps) {
 
   const onDismiss = () => {
     sendEndEvent(
-      getEndEventData('App Login', 'FAILURE', {
+      getEndEventData(FlowType.appLogin, EndEventStatus.failure, {
         errorId: 'user_cancel',
         errorMessage: 'Authentication canceled',
       }),

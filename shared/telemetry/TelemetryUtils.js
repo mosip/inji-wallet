@@ -155,7 +155,7 @@ export function configureTelemetry() {
 }
 
 export function getEventType(isSettingUp) {
-  return isSettingUp ? 'App Onboarding' : 'App Login';
+  return isSettingUp ? FlowType.AppOnboarding : FlowType.AppLogin;
 }
 
 const languageCodeMap = {
@@ -166,3 +166,21 @@ const languageCodeMap = {
   kn: 'Kannada',
   ta: 'Tamil',
 };
+
+export const FlowType = Object.freeze({
+  vcDownload: 'VC Download',
+  qrLogin: 'QR Login',
+  vcShare: 'VC Share',
+  vcActivation: 'VC Activation',
+  appOnboarding: 'App Onboarding',
+  appLogin: 'App Login',
+});
+
+export const EndEventStatus = Object.freeze({
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+});
+
+export const InteractEventSubtype = Object.freeze({
+  click: 'CLICK',
+});
