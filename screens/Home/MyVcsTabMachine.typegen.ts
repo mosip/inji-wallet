@@ -21,8 +21,7 @@
           services: never;
         };
         eventsCausingActions: {
-          "registerEvent": "done.invoke.MyVcsTab.addVc.checkStorage:invocation[0]";
-"resetStoringVcItemStatus": "RESET_STORE_VC_ITEM_STATUS";
+          "resetStoringVcItemStatus": "RESET_STORE_VC_ITEM_STATUS";
 "sendVcAdded": "STORE_RESPONSE";
 "setStoringVcItemStatus": "SET_STORE_VC_ITEM_STATUS" | "STORE_RESPONSE";
 "storeVcItem": "done.invoke.AddVcModal";
