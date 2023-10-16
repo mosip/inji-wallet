@@ -25,6 +25,7 @@ import {NETWORK_REQUEST_FAILED, REQUEST_TIMEOUT} from '../shared/constants';
 import {VCMetadata} from '../shared/VCMetadata';
 import {VerifiableCredential} from '../types/VC/EsignetMosipVC/vc';
 import {
+  getEndEventData,
   getImpressionEventData,
   getInteractEventData,
   getStartEventData,
@@ -86,7 +87,11 @@ export const IssuersMachine = model.createMachine(
         invoke: {
           src: 'downloadIssuersList',
           onDone: {
-            actions: ['setIssuers', 'resetLoadingReason'],
+            actions: [
+              'sendImpressionEvent',
+              'setIssuers',
+              'resetLoadingReason',
+            ],
             target: 'selectingIssuer',
           },
           onError: {
@@ -469,16 +474,15 @@ export const IssuersMachine = model.createMachine(
         },
       ),
       sendSuccessEndEvent: () => {
-        sendEndEvent({
-          type: 'VC Download',
-          status: 'SUCCESS',
-        });
+        sendEndEvent(getEndEventData('VC Download', 'SUCCESS'));
       },
       sendErrorEndEvent: () => {
-        sendEndEvent({
-          type: 'VC Download',
-          status: 'FAILURE',
-        });
+        sendEndEvent(getEndEventData('VC Download', 'FAILURE'));
+      },
+      sendImpressionEvent: () => {
+        sendImpressionEvent(
+          getImpressionEventData('VC Download', 'Issuer List'),
+        );
       },
     },
     services: {
