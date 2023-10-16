@@ -1,9 +1,17 @@
-name: Internal Builds [Android,iOS]
-run-name: ${{ github.event.inputs.buildname }}
+name: Internal Build [Android & IOS]
+run-name: ${{ inputs.buildname }}
 
 on:
   workflow_dispatch:
     inputs:
+      beta-release:
+        description: 'Beta release?'
+        required: true
+        default: 'No'
+        type: choice
+        options:
+          - Yes
+          - No
       buildname:
         description: 'Build App For'
         required: true
@@ -43,8 +51,8 @@ on:
         required: true
         default: 'QA-Triple environment'
         type: string
-      registry_edit:
-        description: 'Edit Registry'
+      allow_env_edit:
+        description: 'Edit ENV'
         required: true
         default: 'true'
         type: choice
@@ -54,28 +62,52 @@ on:
 
 jobs:
   build-android:
-    uses: mosip/kattu/.github/workflows/android-internal-build.yml@master
+    uses: mosip/kattu/.github/workflows/android-publish.yml@master
     with:
+      NODE_VERSION: '16.x'
+      RELEASE_KEYSTORE_ALIAS: androidreleasekey
       MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
       ESIGNET_HOST: ${{ inputs.esignetBackendServiceUrl }}
       APPLICATION_THEME: ${{ inputs.theme }}
-      PLAY_CONSOLE_RELEASE_DESCRIPTION: ${{ inputs.buildDescription }}
-      CREDENTIAL_REGISTRY_EDIT: ${{ inputs.registry_edit }}
+      BUILD_DESCRIPTION: ${{ inputs.buildDescription }}
+      ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
+      BUILD_NAME: ${{ inputs.buildname }}
     secrets:
-      FIREBASE_SECRET: ${{ secrets.GPG_SECRET }}
       ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
       RELEASE_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}'
       INJI_ANDROID_PLAY_STORE_CONFIG_JSON: ${{ secrets.INJI_ANDROID_PLAY_STORE_CONFIG_JSON }}
-      SLACK_URL: '${{ secrets.SLACK_WEBHOOK_DEVOPS }}'
+      ENV_FILE: ${{ secrets.ENV_FILE }}
+      SLACK_URL: '${{ secrets.SLACK_WEBHOOK }}'
 
-  build_ios:
-    uses: mosip/kattu/.github/workflows/ios-build.yml@master
+  build-android-beta:
+    if: ${{ inputs.beta-release == 'Yes' }}
+    uses: mosip/kattu/.github/workflows/android-publish.yml@master
     with:
+      BETA_RELEASE: ${{ inputs.beta-release }}
+      NODE_VERSION: '16.x'
+      RELEASE_KEYSTORE_ALIAS: androidreleasekey
+      MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
+      ESIGNET_HOST: ${{ inputs.esignetBackendServiceUrl }}
+      APPLICATION_THEME: ${{ inputs.theme }}
+      BUILD_DESCRIPTION: ${{ inputs.buildDescription }}
+      ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
+      BUILD_NAME: ${{ inputs.buildname }}
+    secrets:
+      ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
+      RELEASE_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}'
+      INJI_ANDROID_PLAY_STORE_CONFIG_JSON: ${{ secrets.INJI_ANDROID_PLAY_STORE_CONFIG_JSON }}
+      ENV_FILE: ${{ secrets.ENV_FILE }}
+      SLACK_URL: '${{ secrets.SLACK_WEBHOOK }}'
+
+  build-ios:
+    uses: mosip/kattu/.github/workflows/ios-publish.yml@master
+    with:
+      NODE_VERSION: '18.x'
       MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
       ESIGNET_HOST: ${{ inputs.esignetBackendServiceUrl }}
       APPLICATION_THEME: ${{ inputs.theme }}
       TESTFLIGHT_BETA_APP_DESCRIPTION: ${{ inputs.buildDescription }}
-      CREDENTIAL_REGISTRY_EDIT: ${{ inputs.registry_edit }}
+      ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
       TESTFLIGHT_INTERNAL_TESTERS_GROUP: ${{ inputs.internal-testers }}
     secrets:
       APP_STORE_CONNECT_TEAM_ID: '${{ secrets.APP_STORE_CONNECT_TEAM_ID }}'
@@ -91,23 +123,13 @@ jobs:
       APPLE_KEY_ID: '${{ secrets.APPLE_KEY_ID }}'
       APPLE_ISSUER_ID: '${{ secrets.APPLE_ISSUER_ID }}'
       APPLE_KEY_CONTENT: '${{ secrets.APPLE_KEY_CONTENT }}'
-      SLACK_URL: '${{ secrets.SLACK_WEBHOOK_DEVOPS }}'
       MATCH_PASSWORD: '${{ secrets.INJI_IOS_MATCH_PASSWORD }}'
-
-  build_ios_automation:
-    uses: mosip/kattu/.github/workflows/ios-automation-build.yml@master
-    with:
-      MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
-      ESIGNET_HOST: ${{ inputs.esignetBackendServiceUrl }}
-      APPLICATION_THEME: ${{ inputs.theme }}
-      CREDENTIAL_REGISTRY_EDIT: ${{ inputs.registry_edit }}
-
+      SLACK_URL: '${{ secrets.SLACK_WEBHOOK }}'
+  
   sonar-check:
-    if: "${{ contains(github.ref, 'develop') || contains(github.ref, 'qa-develop') }}"
     uses: mosip/kattu/.github/workflows/sonar.yml@master
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       SONAR_HOST_URL: https://sonarcloud.io
       SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
-      
-
+  
