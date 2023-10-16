@@ -25,13 +25,13 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
       key: 'two',
       title: t('stepTwoTitle'),
       text: t('stepTwoText'),
-      image: Theme.sharingIntro,
+      image: Theme.walletIntro,
     },
     {
       key: 'three',
       title: t('stepThreeTitle'),
       text: t('stepThreeText'),
-      image: Theme.walletIntro,
+      image: Theme.sharingIntro,
     },
     {
       key: 'four',
