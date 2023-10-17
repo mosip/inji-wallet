@@ -1,6 +1,7 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 import {Dimensions, Platform, StyleSheet, ViewStyle} from 'react-native';
 import {Spacing} from '../styleUtils';
+import {isIOS} from '../../../shared/constants';
 
 const Colors = {
   Black: '#000000',
@@ -499,9 +500,9 @@ export const DefaultTheme = {
       width: Dimensions.get('window').width * 0.32,
       borderBottomWidth: 1,
       marginBottom: 2,
-      borderColor: Platform.OS === 'ios' ? 'transparent' : Colors.Grey,
-      bottom: Platform.OS === 'ios' ? 50 : 24,
-      height: Platform.OS === 'ios' ? 100 : 'auto',
+      borderColor: isIOS() ? 'transparent' : Colors.Grey,
+      bottom: isIOS() ? 50 : 24,
+      height: isIOS() ? 100 : 'auto',
     },
     idInputBottom: {
       borderBottomColor: Colors.Orange,
@@ -1298,17 +1299,16 @@ export const DefaultTheme = {
 };
 
 function generateBoxShadowStyle() {
-  if (Platform.OS === 'ios') {
+  if (isIOS()) {
     return {
       shadowColor: '#000',
       shadowOffset: {width: 1, height: 1.2},
       shadowOpacity: 0.3,
       shadowRadius: 2.5,
     };
-  } else if (Platform.OS === 'android') {
-    return {
-      elevation: 4,
-      shadowColor: '#000',
-    };
   }
+  return {
+    elevation: 4,
+    shadowColor: '#000',
+  };
 }

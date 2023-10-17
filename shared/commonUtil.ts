@@ -2,6 +2,7 @@ import {Platform} from 'react-native';
 import argon2 from 'react-native-argon2';
 import {AnyState} from 'xstate';
 import {getDeviceNameSync} from 'react-native-device-info';
+import {isAndroid} from './constants';
 
 export const hashData = async (
   data: string,
@@ -21,7 +22,7 @@ export interface Argon2iConfig {
 }
 
 export default function testIDProps(id) {
-  return Platform.OS === 'android'
+  return isAndroid()
     ? {accessible: true, accessibilityLabel: id}
     : {testID: id};
 }

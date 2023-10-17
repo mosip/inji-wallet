@@ -20,6 +20,7 @@ import {
   changeCrendetialRegistry,
   changeEsignetUrl,
   ESIGNET_BASE_URL,
+  isAndroid,
   MIMOTO_BASE_URL,
   SETTINGS_STORE_KEY,
 } from '../shared/constants';
@@ -269,7 +270,7 @@ export const appMachine = model.createMachine(
             scanMachine.id,
           );
 
-          if (Platform.OS === 'android') {
+          if (isAndroid()) {
             serviceRefs.request = spawn(
               createRequestMachine(serviceRefs),
               requestMachine.id,
@@ -293,7 +294,7 @@ export const appMachine = model.createMachine(
           context.serviceRefs.activityLog.subscribe(logState);
           context.serviceRefs.scan.subscribe(logState);
 
-          if (Platform.OS === 'android') {
+          if (isAndroid()) {
             context.serviceRefs.request.subscribe(logState);
           }
 
@@ -360,8 +361,7 @@ export const appMachine = model.createMachine(
 
         AppState.addEventListener('change', changeHandler);
 
-        // android only
-        if (Platform.OS === 'android') {
+        if (isAndroid()) {
           AppState.addEventListener('blur', blurHandler);
           AppState.addEventListener('focus', focusHandler);
         }
@@ -369,7 +369,7 @@ export const appMachine = model.createMachine(
         return () => {
           AppState.removeEventListener('change', changeHandler);
 
-          if (Platform.OS === 'android') {
+          if (isAndroid()) {
             AppState.removeEventListener('blur', blurHandler);
             AppState.removeEventListener('focus', focusHandler);
           }

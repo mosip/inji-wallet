@@ -29,6 +29,7 @@ import {useTranslation} from 'react-i18next';
 import {Platform} from 'react-native';
 import {RequestRouteProps, RootRouteProps} from '../../routes';
 import {REQUEST_ROUTES} from '../../routes/routesConstants';
+import {isIOS} from '../../shared/constants';
 
 export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
   const {appService} = useContext(GlobalContext);
@@ -164,7 +165,7 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
         authService.send(AuthEvents.LOGOUT());
       };
 
-      if (Platform.OS === 'ios') {
+      if (isIOS()) {
         setTimeout(() => navigate(), 0);
       } else {
         navigate();
