@@ -5,10 +5,7 @@ import {MY_VCS_STORE_KEY} from '../shared/constants';
 import {StoreEvents} from './store';
 import {AppServices} from '../shared/GlobalContext';
 import NetInfo from '@react-native-community/netinfo';
-import {
-  generateKeys,
-  isCustomSecureKeystore,
-} from '../shared/cryptoutil/cryptoUtil';
+import {generateKeys, isCustomKeystore} from '../shared/cryptoutil/cryptoUtil';
 import SecureKeystore from 'react-native-secure-keystore';
 import {KeyPair} from 'react-native-rsa-native';
 import {ActivityLogEvents} from './activityLog';
@@ -457,7 +454,7 @@ export const IssuersMachine = model.createMachine(
       }),
       setPublicKey: assign({
         publicKey: (_, event) => {
-          if (!isCustomSecureKeystore()) {
+          if (!isCustomKeystore) {
             return (event.data as KeyPair).public;
           }
           return event.data as string;
@@ -534,7 +531,7 @@ export const IssuersMachine = model.createMachine(
         );
       },
       generateKeyPair: async context => {
-        if (!isCustomSecureKeystore()) {
+        if (!isCustomKeystore) {
           return await generateKeys();
         }
         const isBiometricsEnabled = SecureKeystore.hasBiometricsEnabled();
@@ -579,7 +576,7 @@ export const IssuersMachine = model.createMachine(
         );
       },
       shouldFetchIssuersAgain: context => context.issuers.length === 0,
-      isCustomSecureKeystore: () => isCustomSecureKeystore(),
+      isCustomSecureKeystore: () => isCustomKeystore,
     },
   },
 );

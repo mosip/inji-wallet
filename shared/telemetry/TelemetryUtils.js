@@ -11,7 +11,7 @@ import {
 } from '../GlobalVariables';
 import {OBSRV_HOST} from 'react-native-dotenv';
 import DeviceInfo from 'react-native-device-info';
-import {isCustomSecureKeystore} from '../cryptoutil/cryptoUtil';
+import {isCustomKeystore} from '../cryptoutil/cryptoUtil';
 import * as RNLocalize from 'react-native-localize';
 
 export function sendStartEvent(data) {
@@ -124,7 +124,7 @@ export function getAppInfoEventData() {
     osName: DeviceInfo.getSystemName(),
     osVersion: DeviceInfo.getSystemVersion(),
     osApiLevel: Platform.Version.toString(),
-    isHardwareKeystoreSupported: isCustomSecureKeystore(),
+    isHardwareKeystoreSupported: isCustomKeystore,
     dateTime: new Date().getTime(),
     zone: RNLocalize.getTimeZone(),
     offset: new Date().getTimezoneOffset() * 60 * 1000,

@@ -25,6 +25,12 @@ fileignoreconfig:
   checksum: 18af825821bc95e1056050623b804a5a8e7435b9e3383916a5d63024eeba9553
 - filename: screens/WelcomeScreenController.ts
   checksum: d8fe74404c80bf435459f4d20427a661fb622f0ee9f754345616abd346b98d14
+- filename: machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine.ts
+  checksum: b02bd62a768257e835d035cab0b01480f35035a0dfa0ffd18bcadf282f1fab84
+- filename: machines/store.ts
+  checksum: 71a3e3972b176c7c3f3a6b4c59b92f0d1856241ac884b9e27ff5ab81b0a71bcd
+- filename: shared/cryptoutil/cryptoUtil.ts
+  checksum: 439e238178fbd6a8c113127f408a5fae3b6075a84ba13c3c37a72a653d5733f5
 - filename: shared/telemetry/TelemetryUtils.js
   checksum: 9a61cd59a3718adf1f14faf3024fec66a3295ef373878a878a28e5cb1287afaa
 - filename: machines/store.ts
@@ -33,3 +39,9 @@ fileignoreconfig:
   checksum: 07cb337dc1d5b0f0eef56270ac4f4f589260ee5e490183c024cf98a2aeafb139
 - filename: shared/storage.ts
   checksum: c8d874aa373bdf526bf59192139822f56915e702ef673bac4e0d7549b0fea3d0
+  checksum: f9711b617b986af9bb733a31373e49494667ef07b74988fbf09688cb50ca73bd
+- filename: machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine.ts
+  checksum: 3ac59db154914fec7770e14b0451f21f98a0fe8bb0b0243e800ae3aac8a2941d
+- filename: machines/issuersMachine.ts
+  checksum: ae05c4d0d2a65e480156014b324a454269e00dba47414c00c757f81b4fc27cef
+version: ""

@@ -22,7 +22,7 @@ import {
   ENCRYPTION_ID,
   encryptJson,
   HMAC_ALIAS,
-  isCustomSecureKeystore,
+  isCustomKeystore,
 } from '../shared/cryptoutil/cryptoUtil';
 import {VCMetadata} from '../shared/VCMetadata';
 import FileStorage, {getFilePath} from '../shared/fileStorage';
@@ -82,7 +82,7 @@ export const storeMachine =
         events: {} as EventFrom<typeof model>,
       },
       id: 'store',
-      initial: !isCustomSecureKeystore()
+      initial: !isCustomKeystore
         ? 'gettingEncryptionKey'
         : 'checkEncryptionKey',
       states: {
@@ -441,7 +441,7 @@ export const storeMachine =
         generateEncryptionKey: () => async callback => {
           const randomBytes = await generateSecureRandom(32);
           const randomBytesString = binaryToBase64(randomBytes);
-          if (!isCustomSecureKeystore()) {
+          if (!isCustomKeystore) {
             const hasSetCredentials = await Keychain.setGenericPassword(
               ENCRYPTION_ID,
               randomBytesString,
@@ -475,7 +475,7 @@ export const storeMachine =
       },
 
       guards: {
-        isCustomSecureKeystore: () => isCustomSecureKeystore(),
+        isCustomSecureKeystore: () => isCustomKeystore,
       },
     },
   );

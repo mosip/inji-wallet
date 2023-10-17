@@ -17,7 +17,7 @@ import getAllConfigurations, {
 import Storage from '../shared/storage';
 import ShortUniqueId from 'short-unique-id';
 import {__AppId} from '../shared/GlobalVariables';
-import {isCustomSecureKeystore} from '../shared/cryptoutil/cryptoUtil';
+import {isCustomKeystore} from '../shared/cryptoutil/cryptoUtil';
 
 const model = createModel(
   {
@@ -274,7 +274,7 @@ function generateAppId() {
 }
 
 function deviceSupportsHardwareKeystore() {
-  return isIOS() ? true : isCustomSecureKeystore();
+  return isIOS() ? true : isCustomKeystore;
 }
 
 type State = StateFrom<typeof settingsMachine>;
