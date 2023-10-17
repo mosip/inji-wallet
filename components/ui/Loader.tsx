@@ -17,7 +17,7 @@ export const Loader: React.FC<LoaderProps> = props => {
             fill
             align={'flex-start'}
             style={Theme.LoaderStyles.titleContainer}>
-            <View style={Theme.issuersScreenStyles.loaderHeadingText}>
+            <View style={Theme.LoaderStyles.heading}>
               <Text
                 style={Theme.TextStyles.semiBoldHeader}
                 testID="loaderTitle">
@@ -81,7 +81,7 @@ export const Loader: React.FC<LoaderProps> = props => {
 
 export interface LoaderProps {
   isVisible: boolean;
-  title?: string;
+  title: string;
   subTitle?: string;
   label?: string;
   hint?: string;

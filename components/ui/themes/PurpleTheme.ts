@@ -734,6 +734,10 @@ export const PurpleTheme = {
       marginBottom: 17,
       marginTop: 22,
     },
+    heading: {
+      flex: 1,
+      flexDirection: 'column',
+    },
   }),
   ButtonStyles: StyleSheet.create({
     fill: {
@@ -1190,10 +1194,6 @@ export const PurpleTheme = {
       marginBottom: 9,
       marginTop: 8,
       marginLeft: 2.5,
-    },
-    loaderHeadingText: {
-      flex: 1,
-      flexDirection: 'column',
     },
   }),
   ErrorStyles: StyleSheet.create({
