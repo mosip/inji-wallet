@@ -18,7 +18,7 @@ export async function downloadModel() {
     const resp: string = injiProp != null ? injiProp.faceSdkModelUrl : null;
     if (resp != null) {
       for (let counter = 0; counter < maxRetry; counter++) {
-        var result = await init(resp, false);
+        var result = await init(resp + '/model.tflite', false);
         console.log('model download result is = ' + result);
         if (result) {
           break;
