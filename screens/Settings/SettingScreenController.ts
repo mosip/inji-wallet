@@ -1,7 +1,6 @@
 import {useMachine, useSelector} from '@xstate/react';
 import {useContext, useEffect, useState} from 'react';
 import * as LocalAuthentication from 'expo-local-authentication';
-import {selectBackendInfo} from '../../machines/app';
 import {
   AuthEvents,
   selectBiometrics,
@@ -104,7 +103,6 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
     alertMsg,
     hideAlert,
     appId: useSelector(settingsService, selectAppId),
-    backendInfo: useSelector(appService, selectBackendInfo),
     name: useSelector(settingsService, selectName),
     vcLabel: useSelector(settingsService, selectVcLabel),
     credentialRegistry: useSelector(settingsService, selectCredentialRegistry),

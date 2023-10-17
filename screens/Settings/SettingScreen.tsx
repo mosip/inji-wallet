@@ -211,26 +211,6 @@ export const SettingScreen: React.FC<
                 </ListItem.Title>
               </ListItem.Content>
             </ListItem>
-
-            {controller.backendInfo.application.name !== '' ? (
-              <View>
-                <Text
-                  weight="semibold"
-                  align="center"
-                  size="smaller"
-                  color={Theme.Colors.profileValue}>
-                  {controller.backendInfo.application.name}:{' '}
-                  {controller.backendInfo.application.version}
-                </Text>
-                <Text
-                  weight="semibold"
-                  align="center"
-                  size="smaller"
-                  color={Theme.Colors.profileValue}>
-                  MOSIP: {controller.backendInfo.config['mosip.host']}
-                </Text>
-              </View>
-            ) : null}
           </Column>
         </ScrollView>
       </Modal>

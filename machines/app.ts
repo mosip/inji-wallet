@@ -32,7 +32,6 @@ import {
 const model = createModel(
   {
     info: {} as AppInfo,
-    backendInfo: {} as BackendInfo,
     serviceRefs: {} as AppServices,
     isReadError: false,
     isDecryptError: false,
@@ -51,7 +50,6 @@ const model = createModel(
       REQUEST_DEVICE_INFO: () => ({}),
       READY: (data?: unknown) => ({data}),
       APP_INFO_RECEIVED: (info: AppInfo) => ({info}),
-      BACKEND_INFO_RECEIVED: (info: BackendInfo) => ({info}),
       STORE_RESPONSE: (response: unknown) => ({response}),
       RESET_KEY_INVALIDATE_ERROR_DISMISS: () => ({}),
     },
@@ -135,19 +133,8 @@ export const appMachine = model.createMachine(
             },
             on: {
               APP_INFO_RECEIVED: {
-                target: 'devinfo',
-                actions: ['setAppInfo'],
-              },
-            },
-          },
-          devinfo: {
-            invoke: {
-              src: 'getBackendInfo',
-            },
-            on: {
-              BACKEND_INFO_RECEIVED: {
                 target: '#ready',
-                actions: ['setBackendInfo'],
+                actions: ['setAppInfo'],
               },
             },
           },
@@ -322,10 +309,6 @@ export const appMachine = model.createMachine(
         info: (_, event) => event.info,
       }),
 
-      setBackendInfo: model.assign({
-        backendInfo: (_, event) => event.info,
-      }),
-
       loadCredentialRegistryHostFromStorage: send(
         StoreEvents.GET(SETTINGS_STORE_KEY),
         {
@@ -361,23 +344,6 @@ export const appMachine = model.createMachine(
           deviceName: await getDeviceName(),
         };
         callback(model.events.APP_INFO_RECEIVED(appInfo));
-      },
-
-      getBackendInfo: () => async callback => {
-        let backendInfo = {
-          application: {
-            name: '',
-            version: '',
-          },
-          build: {},
-          config: {},
-        };
-        try {
-          backendInfo = await request('GET', '/residentmobileapp/info');
-          callback(model.events.BACKEND_INFO_RECEIVED(backendInfo));
-        } catch {
-          callback(model.events.BACKEND_INFO_RECEIVED(backendInfo));
-        }
       },
 
       checkFocusState: () => callback => {
@@ -432,25 +398,11 @@ interface AppInfo {
   deviceName: string;
 }
 
-interface BackendInfo {
-  application: {
-    name: string;
-    version: string;
-  };
-  build: object;
-  config: object;
-}
-
 type State = StateFrom<typeof appMachine>;
 
 export function selectAppInfo(state: State) {
   return state.context.info;
 }
-
-export function selectBackendInfo(state: State) {
-  return state.context.backendInfo;
-}
-
 export function selectIsReady(state: State) {
   return state.matches('ready');
 }
