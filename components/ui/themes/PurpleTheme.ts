@@ -1217,6 +1217,16 @@ export const PurpleTheme = {
       color: Colors.mediumDarkGrey,
     },
   }),
+  SetupLanguageScreenStyle: StyleSheet.create({
+    columnStyle: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'space-around',
+      backgroundColor: Colors.White,
+      maxHeight: Dimensions.get('window').height,
+    },
+  }),
+
   ICON_SMALL_SIZE: 16,
   ICON_MID_SIZE: 22,
   PinIcon: require('../../../assets/pin_icon.png'),
