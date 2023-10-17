@@ -219,7 +219,7 @@ export const IssuersMachine = model.createMachine(
       },
       checkKeyPair: {
         description: 'checks whether key pair is generated',
-        entry: [send('CHECK_KEY_PAIR')],
+        entry: [send('CHECK_KEY_PAIR'), 'setLoadingReasonAsSettingUp'],
         on: {
           CHECK_KEY_PAIR: [
             {
