@@ -93,7 +93,6 @@ export const settingsMachine = model.createMachine(
         },
       },
       idle: {
-        entry: ['injiTourGuide'],
         on: {
           TOGGLE_BIOMETRIC_UNLOCK: {
             actions: ['toggleBiometricUnlock', 'storeContext'],
@@ -113,6 +112,9 @@ export const settingsMachine = model.createMachine(
           },
           CANCEL: {
             actions: ['resetCredentialRegistry'],
+          },
+          INJI_TOUR_GUIDE: {
+            target: 'showInjiTourGuide',
           },
           ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS: {
             actions: [
@@ -143,13 +145,6 @@ export const settingsMachine = model.createMachine(
           CANCEL: {
             actions: ['resetCredentialRegistry'],
             target: 'idle',
-          },
-        },
-      },
-      injiTourGuide: {
-        on: {
-          INJI_TOUR_GUIDE: {
-            target: 'showInjiTourGuide',
           },
         },
       },
