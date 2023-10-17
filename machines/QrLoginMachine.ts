@@ -413,7 +413,7 @@ export const qrLoginMachine =
             },
             ESIGNET_BASE_URL,
           );
-          return response.response.linkedTransactionId;
+          return response.response;
         },
 
         sendConsent: async context => {
