@@ -105,7 +105,7 @@ export const storeMachine =
           },
           on: {
             KEY_RECEIVED: {
-              actions: ['setEncryptionKey', 'logKey'],
+              actions: ['setEncryptionKey'],
               target: 'ready',
             },
             ERROR: {
