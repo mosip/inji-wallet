@@ -24,6 +24,8 @@ fileignoreconfig:
 - filename: screens/AuthScreenController.ts
   checksum: 18af825821bc95e1056050623b804a5a8e7435b9e3383916a5d63024eeba9553
 - filename: screens/WelcomeScreenController.ts
-  checksum: d8fe74404c80bf435459f4d20427a661fb622f0ee9f754345616abd346b98d14
+  checksum: 71917c8c543a4a5b7ab61df259b785d233a80718123b0c8edf6ec81e1b3a81e0
 - filename: shared/telemetry/TelemetryUtils.js
   checksum: 9a61cd59a3718adf1f14faf3024fec66a3295ef373878a878a28e5cb1287afaa
+- filename: screens/Home/IntroSlidersScreen.tsx
+  checksum: 72ef913857448ef05763e52e32356faa2d1f3de8130a1c638d1897f44823031f

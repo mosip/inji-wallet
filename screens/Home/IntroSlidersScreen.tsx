@@ -65,17 +65,17 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
               }}>
               {controller.isPasscodeSet() ? (
                 <Button
-                  testID="skip"
-                  type="plain"
-                  title={t('skip')}
-                  onPress={controller.NEXT}
-                />
-              ) : (
-                <Button
                   testID="back"
                   type="plain"
                   title={t('back')}
                   onPress={controller.BACK}
+                />
+              ) : (
+                <Button
+                  testID="skip"
+                  type="plain"
+                  title={t('skip')}
+                  onPress={controller.NEXT}
                 />
               )}
             </Column>
@@ -133,7 +133,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
             align="center"
             color="#FFFFFF"
             margin="15 0 0 0">
-            {controller.isPasscodeSet() ? t('getStarted') : t('goBack')}
+            {controller.isPasscodeSet() ? t('goBack') : t('getStarted')}
           </Text>
         </LinearGradient>
       </View>
@@ -156,7 +156,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
         dotStyle={{backgroundColor: Theme.Colors.dotColor, marginBottom: 47}}
         renderItem={renderItem}
         onDone={() =>
-          controller.isPasscodeSet() ? controller.NEXT() : controller.BACK()
+          controller.isPasscodeSet() ? controller.BACK() : controller.NEXT()
         }
       />
     </Column>
