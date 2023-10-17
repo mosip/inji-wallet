@@ -49,13 +49,14 @@ const WalletUnverifiedActivationDetails: React.FC<
         crossAlign="center"
         style={{
           flex: 1,
+          maxWidth: 255,
         }}>
         {props.verifiableCredential && <WalletUnverifiedIcon />}
         <Text
           color={Theme.Colors.Details}
           testID="activationPending"
           weight="regular"
-          margin="8 10 10 5"
+          margin="8"
           style={
             !props.verifiableCredential
               ? Theme.Styles.loadingTitle
