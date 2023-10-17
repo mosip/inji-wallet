@@ -1,4 +1,4 @@
-import {init} from 'mosip-inji-face-sdk';
+import {init} from 'mosip-mobileid-sdk';
 import {changeCrendetialRegistry} from '../constants';
 import {CACHED_API} from '../api';
 

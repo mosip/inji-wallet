@@ -2,7 +2,7 @@ fileignoreconfig:
 - filename: package.json
   checksum: 30e3a548809705ba38385a1c286b312629ac5dd7dea0d6e26ffb9daf8def312d
 - filename: package-lock.json
-  checksum: a4c1fe2521067e1a279610f079446c600e8b7d5cf1553934dc419c3c476b4844
+  checksum: 5e45f86a47c0a4c6cc7be7618f2f088729ef474e27c67cff6376607e2a49fa23
 - filename: components/PasscodeVerify.tsx
   checksum: 14654c0f038979fcd0d260170a45894a072f81e0767ca9a0e66935d33b5cc703
 - filename: i18n.ts
@@ -27,3 +27,5 @@ fileignoreconfig:
   checksum: d8fe74404c80bf435459f4d20427a661fb622f0ee9f754345616abd346b98d14
 - filename: shared/telemetry/TelemetryUtils.js
   checksum: 9a61cd59a3718adf1f14faf3024fec66a3295ef373878a878a28e5cb1287afaa
+- filename: ios/Podfile.lock
+  checksum: cc123c3e1f04d41b394ceb16843b15c08bac3ba619ae853ff322717739761a85

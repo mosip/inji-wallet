@@ -219,6 +219,7 @@ dependencies {
     if (isGifEnabled || isWebpEnabled) {
         implementation 'com.facebook.fresco:fresco:2.0.0'
         implementation 'com.facebook.fresco:imagepipeline-okhttp3:2.0.0'
+        implementation 'com.squareup.okhttp3:okhttp-urlconnection:4.4.1'
     }
 
     if (isGifEnabled) {
