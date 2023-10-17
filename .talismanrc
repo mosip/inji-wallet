@@ -29,3 +29,5 @@ fileignoreconfig:
   checksum: 9a61cd59a3718adf1f14faf3024fec66a3295ef373878a878a28e5cb1287afaa
 - filename: screens/Home/IntroSlidersScreen.tsx
   checksum: 72ef913857448ef05763e52e32356faa2d1f3de8130a1c638d1897f44823031f
+- filename: shared/commonUtil.ts
+  checksum: 01c3fdcd2f1c1757eae0c6a27fe04eb70c2aaf8660c604f3301997484592b66c

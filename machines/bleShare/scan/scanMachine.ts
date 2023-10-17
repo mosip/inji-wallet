@@ -38,7 +38,6 @@ import {StoreEvents} from '../../store';
 import {WalletDataEvent} from 'react-native-tuvali/lib/typescript/types/events';
 import {BLEError} from '../types';
 import Storage from '../../../shared/storage';
-import {logState} from '../../app';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {
   getStartEventData,
@@ -46,6 +45,7 @@ import {
   sendStartEvent,
   sendEndEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
+import {logState} from '../../../shared/commonUtil';
 
 const {wallet, EventTypes, VerificationStatus} = tuvali;
 

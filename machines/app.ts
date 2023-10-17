@@ -1,17 +1,13 @@
 import NetInfo, {NetInfoStateType} from '@react-native-community/netinfo';
 import {AppState, AppStateStatus, Platform} from 'react-native';
-import {
-  getDeviceId,
-  getDeviceName,
-  getDeviceNameSync,
-} from 'react-native-device-info';
-import {EventFrom, spawn, StateFrom, send, assign, AnyState} from 'xstate';
+import {getDeviceId, getDeviceName} from 'react-native-device-info';
+import {assign, EventFrom, send, spawn, StateFrom} from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {authMachine, createAuthMachine} from './auth';
 import {createSettingsMachine, settingsMachine} from './settings';
 import {StoreEvents, storeMachine} from './store';
 import {createVcMachine, vcMachine} from './vc';
-import {createActivityLogMachine, activityLogMachine} from './activityLog';
+import {activityLogMachine, createActivityLogMachine} from './activityLog';
 import {
   createRequestMachine,
   requestMachine,
@@ -20,14 +16,14 @@ import {createScanMachine, scanMachine} from './bleShare/scan/scanMachine';
 import {createRevokeMachine, revokeVidsMachine} from './revoke';
 import {pure, respond} from 'xstate/lib/actions';
 import {AppServices} from '../shared/GlobalContext';
-import {request} from '../shared/request';
 import {
   changeCrendetialRegistry,
-  SETTINGS_STORE_KEY,
-  MIMOTO_BASE_URL,
-  ESIGNET_BASE_URL,
   changeEsignetUrl,
+  ESIGNET_BASE_URL,
+  MIMOTO_BASE_URL,
+  SETTINGS_STORE_KEY,
 } from '../shared/constants';
+import {logState} from '../shared/commonUtil';
 
 const model = createModel(
   {
@@ -417,28 +413,6 @@ export function selectIsActive(state: State) {
 
 export function selectIsFocused(state: State) {
   return state.matches('ready.focus');
-}
-
-export function logState(state: AnyState) {
-  const data = JSON.stringify(
-    state.event,
-    (key, value) => {
-      if (key === 'type') return undefined;
-      if (typeof value === 'string' && value.length >= 100) {
-        return value.slice(0, 100) + '...';
-      }
-      return value;
-    },
-    2,
-  );
-  console.log(
-    `[${getDeviceNameSync()}] ${state.machine.id}: ${
-      state.event.type
-    } -> ${state.toStrings().pop()}\n${
-      data.length > 300 ? data.slice(0, 300) + '...' : data
-    }
-    `,
-  );
 }
 
 export function selectIsReadError(state: State) {
