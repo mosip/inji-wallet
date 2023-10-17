@@ -1,5 +1,5 @@
-import { useSelector } from '@xstate/react';
-import { useContext } from 'react';
+import {useSelector} from '@xstate/react';
+import {useContext} from 'react';
 import {
   AuthEvents,
   selectBiometrics,
@@ -11,11 +11,19 @@ import {
   SettingsEvents,
   selectBiometricUnlockEnabled,
 } from '../machines/settings';
-import { RootRouteProps } from '../routes';
-import { GlobalContext } from '../shared/GlobalContext';
+import {RootRouteProps} from '../routes';
+import {GlobalContext} from '../shared/GlobalContext';
+import {
+  getStartEventData,
+  getImpressionEventData,
+  getInteractEventData,
+  sendImpressionEvent,
+  sendInteractEvent,
+  sendStartEvent,
+} from '../shared/telemetry/TelemetryUtils';
 
 export function useWelcomeScreen(props: RootRouteProps) {
-  const { appService } = useContext(GlobalContext);
+  const {appService} = useContext(GlobalContext);
   const authService = appService.children.get('auth');
   const settingsService = appService.children.get('settings');
 
@@ -34,7 +42,7 @@ export function useWelcomeScreen(props: RootRouteProps) {
   const isLanguagesetup = useSelector(authService, selectLanguagesetup);
   const isBiometricUnlockEnabled = useSelector(
     settingsService,
-    selectBiometricUnlockEnabled
+    selectBiometricUnlockEnabled,
   );
 
   return {
@@ -55,9 +63,17 @@ export function useWelcomeScreen(props: RootRouteProps) {
     unlockPage: () => {
       // prioritize biometrics
       if (!isSettingUp && isBiometricUnlockEnabled && biometrics !== '') {
-        props.navigation.navigate('Biometric', { setup: isSettingUp });
+        props.navigation.navigate('Biometric', {setup: isSettingUp});
       } else if (!isSettingUp && passcode !== '') {
-        props.navigation.navigate('Passcode', { setup: isSettingUp });
+        sendStartEvent(getStartEventData('App Login'));
+        sendInteractEvent(
+          getInteractEventData(
+            'App Login',
+            'TOUCH',
+            'Unlock application button',
+          ),
+        );
+        props.navigation.navigate('Passcode', {setup: isSettingUp});
       } else {
         props.navigation.navigate('Auth');
       }

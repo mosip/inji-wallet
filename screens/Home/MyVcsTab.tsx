@@ -16,7 +16,17 @@ import {groupBy} from '../../shared/javascript';
 import {isOpenId4VCIEnabled} from '../../shared/openId4VCI/Utils';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
 import {BannerNotification} from '../../components/BannerNotification';
+import {
+  getErrorEventData,
+  sendErrorEvent,
+} from '../../shared/telemetry/TelemetryUtils';
 import {Error} from '../../components/ui/Error';
+import {
+  getInteractEventData,
+  getStartEventData,
+  sendInteractEvent,
+  sendStartEvent,
+} from '../../shared/telemetry/TelemetryUtils';
 
 const pinIconProps = {iconName: 'pushpin', iconType: 'antdesign'};
 
@@ -36,7 +46,15 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   };
 
   const clearIndividualId = () => {
-    GET_INDIVIDUAL_ID('');
+    GET_INDIVIDUAL_ID({id: '', idType: 'UIN'});
+  };
+
+  const onPressHandler = () => {
+    sendStartEvent(getStartEventData('VC Download', {id: 'UIN, VID, AID'}));
+    sendInteractEvent(
+      getInteractEventData('VC Download', 'CLICK', `Download VC Button`),
+    );
+    controller.DOWNLOAD_ID();
   };
 
   useEffect(() => {
@@ -44,10 +62,21 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
       controller.RESET_STORE_VC_ITEM_STATUS();
       controller.RESET_ARE_ALL_VCS_DOWNLOADED();
     }
-    if (controller.inProgressVcDownloadsCount > 0) {
+    if (controller.inProgressVcDownloads?.size > 0) {
       controller.SET_STORE_VC_ITEM_STATUS();
     }
-  }, [controller.areAllVcsLoaded, controller.inProgressVcDownloadsCount]);
+
+    if (controller.showHardwareKeystoreNotExistsAlert) {
+      sendErrorEvent(
+        getErrorEventData(
+          'App Onboarding',
+          'does_not_exist',
+          'Some security features will be unavailable as hardware key store is not available',
+        ),
+      );
+    }
+  }, [controller.areAllVcsLoaded, controller.inProgressVcDownloads]);
+
   return (
     <React.Fragment>
       <Column fill style={{display: props.isVisible ? 'flex' : 'none'}}>
@@ -90,6 +119,9 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                       vcMetadata={vcMetadata}
                       margin="0 2 8 2"
                       onPress={controller.VIEW_VC}
+                      isDownloading={controller.inProgressVcDownloads?.has(
+                        vcMetadata.getVcKey(),
+                      )}
                     />
                   );
                 })}
@@ -100,7 +132,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                   type="gradient"
                   disabled={controller.isRefreshingVcs}
                   title={t('downloadCard')}
-                  onPress={controller.DOWNLOAD_ID}
+                  onPress={onPressHandler}
                 />
               )}
             </React.Fragment>
@@ -141,7 +173,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                       type="gradient"
                       disabled={controller.isRefreshingVcs}
                       title={t('downloadCard')}
-                      onPress={controller.DOWNLOAD_ID}
+                      onPress={onPressHandler()}
                     />
                   </React.Fragment>
                 )}

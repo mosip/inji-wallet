@@ -24,6 +24,12 @@ import {
 import {NETWORK_REQUEST_FAILED, REQUEST_TIMEOUT} from '../shared/constants';
 import {VCMetadata} from '../shared/VCMetadata';
 import {
+  getEndEventData,
+  getImpressionEventData,
+  sendEndEvent,
+  sendImpressionEvent,
+} from '../shared/telemetry/TelemetryUtils';
+import {
   CredentialWrapper,
   VerifiableCredential,
 } from '../types/VC/EsignetMosipVC/vc';
@@ -82,7 +88,11 @@ export const IssuersMachine = model.createMachine(
         invoke: {
           src: 'downloadIssuersList',
           onDone: {
-            actions: ['setIssuers', 'resetLoadingReason'],
+            actions: [
+              'sendImpressionEvent',
+              'setIssuers',
+              'resetLoadingReason',
+            ],
             target: 'selectingIssuer',
           },
           onError: {
@@ -272,12 +282,16 @@ export const IssuersMachine = model.createMachine(
           src: 'verifyCredential',
           onDone: [
             {
+              actions: ['sendSuccessEndEvent'],
               target: 'storing',
             },
           ],
           onError: [
             {
-              actions: log((_, event) => (event.data as Error).message),
+              actions: [
+                log((_, event) => (event.data as Error).message),
+                'sendErrorEndEvent',
+              ],
               //TODO: Move to state according to the required flow when verification of VC fails
               target: 'idle',
             },
@@ -460,6 +474,17 @@ export const IssuersMachine = model.createMachine(
           to: context => context.serviceRefs.activityLog,
         },
       ),
+      sendSuccessEndEvent: () => {
+        sendEndEvent(getEndEventData('VC Download', 'SUCCESS'));
+      },
+      sendErrorEndEvent: () => {
+        sendEndEvent(getEndEventData('VC Download', 'FAILURE'));
+      },
+      sendImpressionEvent: () => {
+        sendImpressionEvent(
+          getImpressionEventData('VC Download', 'Issuer List'),
+        );
+      },
     },
     services: {
       downloadIssuersList: async () => {
@@ -490,6 +515,12 @@ export const IssuersMachine = model.createMachine(
         return credential;
       },
       invokeAuthorization: async context => {
+        sendImpressionEvent(
+          getImpressionEventData(
+            'VC Download',
+            context.selectedIssuer.id + ' Web View Page',
+          ),
+        );
         return await authorize(context.selectedIssuer);
       },
       generateKeyPair: async context => {

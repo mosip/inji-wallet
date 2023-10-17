@@ -16,9 +16,10 @@ const WalletUnverifiedIcon: React.FC = () => {
       size={Theme.ICON_MID_SIZE}
       type="material-community"
       containerStyle={{
-        marginStart: 10,
+        marginStart: 1,
+        marginEnd: 1,
         bottom: 1,
-        marginLeft: 10,
+        marginRight: -2,
       }}
     />
   );

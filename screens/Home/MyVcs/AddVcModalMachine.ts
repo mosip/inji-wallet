@@ -12,6 +12,14 @@ import {BackendResponseError, request} from '../../../shared/request';
 import {VcIdType} from '../../../types/VC/ExistingMosipVC/vc';
 import i18n from '../../../i18n';
 import {VCMetadata} from '../../../shared/VCMetadata';
+import {
+  getErrorEventData,
+  getImpressionEventData,
+  getInteractEventData,
+  sendErrorEvent,
+  sendImpressionEvent,
+  sendInteractEvent,
+} from '../../../shared/telemetry/TelemetryUtils';
 
 const model = createModel(
   {
@@ -56,6 +64,9 @@ export const AddVcModalMachine =
       on: {
         INPUT_ID: {
           actions: 'setId',
+        },
+        SELECT_ID_TYPE: {
+          actions: ['clearIdError', 'setIdType'],
         },
       },
       states: {
@@ -146,6 +157,7 @@ export const AddVcModalMachine =
                 src: 'requestOtp',
                 onDone: [
                   {
+                    actions: 'sendImpressionEvent',
                     target: '#AddVcModal.acceptingOtpInput',
                   },
                 ],
@@ -269,13 +281,17 @@ export const AddVcModalMachine =
                 context.idType === 'UIN' ? 'invalidUin' : 'invalidVid',
               'VID is expired/deactivated': 'deactivatedVid',
             };
-            return ID_ERRORS_MAP[message]
+            const backendError = ID_ERRORS_MAP[message]
               ? i18n.t(`errors.backend.${ID_ERRORS_MAP[message]}`, {
                   ns: 'AddVcModal',
                 })
               : i18n.t(`errors.genericError`, {
                   ns: 'common',
                 });
+            sendErrorEvent(
+              getErrorEventData('VC Download', message, backendError),
+            );
+            return backendError;
           },
         }),
 
@@ -318,10 +334,19 @@ export const AddVcModalMachine =
         clearOtp: assign({otp: ''}),
 
         focusInput: context => context.idInputRef.focus(),
+
+        sendImpressionEvent: () => {
+          sendImpressionEvent(
+            getImpressionEventData('VC Download', 'OTP Verification'),
+          );
+        },
       },
 
       services: {
         requestOtp: async context => {
+          sendInteractEvent(
+            getInteractEventData('VC Download', 'CLICK', 'Requesting OTP'),
+          );
           return request('POST', '/residentmobileapp/req/otp', {
             id: 'mosip.identity.otp.internal',
             individualId: context.id,

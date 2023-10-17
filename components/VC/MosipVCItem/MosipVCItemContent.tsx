@@ -111,7 +111,9 @@ const getIssuerLogo = (isOpenId4VCI: boolean, issuerLogo: string) => {
 export const MosipVCItemContent: React.FC<
   ExistingMosipVCItemContentProps | EsignetMosipVCItemContentProps
 > = props => {
-  const verifiableCredential = props.vcMetadata.isFromOpenId4VCI()
+  const verifiableCredential = props.isDownloading
+    ? null
+    : props.vcMetadata.isFromOpenId4VCI()
     ? props.verifiableCredential?.credential
     : props.verifiableCredential;
 
@@ -338,6 +340,7 @@ interface ExistingMosipVCItemContentProps {
   iconType?: string;
   service: any;
   onPress?: () => void;
+  isDownloading?: boolean;
 }
 
 export interface EsignetMosipVCItemContentProps {
@@ -350,4 +353,5 @@ export interface EsignetMosipVCItemContentProps {
   iconType?: string;
   service: any;
   onPress?: () => void;
+  isDownloading?: boolean;
 }
