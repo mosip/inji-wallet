@@ -13,7 +13,6 @@ import {
   MessageOverlay,
 } from '../../components/MessageOverlay';
 import {groupBy} from '../../shared/javascript';
-import {isOpenId4VCIEnabled} from '../../shared/openId4VCI/Utils';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
 import {BannerNotification} from '../../components/BannerNotification';
 import {
@@ -47,14 +46,6 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
 
   const clearIndividualId = () => {
     GET_INDIVIDUAL_ID({id: '', idType: 'UIN'});
-  };
-
-  const onPressHandler = () => {
-    sendStartEvent(getStartEventData('VC Download', {id: 'UIN, VID, AID'}));
-    sendInteractEvent(
-      getInteractEventData('VC Download', 'CLICK', `Download VC Button`),
-    );
-    controller.DOWNLOAD_ID();
   };
 
   useEffect(() => {
@@ -126,15 +117,6 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                   );
                 })}
               </Column>
-              {!isOpenId4VCIEnabled() && (
-                <Button
-                  testID="downloadCard"
-                  type="gradient"
-                  disabled={controller.isRefreshingVcs}
-                  title={t('downloadCard')}
-                  onPress={onPressHandler}
-                />
-              )}
             </React.Fragment>
           )}
           {controller.vcMetadatas.length === 0 && (
@@ -149,34 +131,13 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                   lineHeight={1}>
                   {t('bringYourDigitalID')}
                 </Text>
-
-                {isOpenId4VCIEnabled() && (
-                  <Text
-                    style={Theme.TextStyles.bold}
-                    color={Theme.Colors.textLabel}
-                    align="center"
-                    margin="0 12 30 12">
-                    {t('generateVcFABDescription')}
-                  </Text>
-                )}
-                {!isOpenId4VCIEnabled() && (
-                  <React.Fragment>
-                    <Text
-                      style={Theme.TextStyles.bold}
-                      color={Theme.Colors.textLabel}
-                      align="center"
-                      margin="0 12 30 12">
-                      {t('generateVcDescription')}
-                    </Text>
-                    <Button
-                      testID="downloadCard"
-                      type="gradient"
-                      disabled={controller.isRefreshingVcs}
-                      title={t('downloadCard')}
-                      onPress={onPressHandler()}
-                    />
-                  </React.Fragment>
-                )}
+                <Text
+                  style={Theme.TextStyles.bold}
+                  color={Theme.Colors.textLabel}
+                  align="center"
+                  margin="0 12 30 12">
+                  {t('generateVcFABDescription')}
+                </Text>
               </Column>
             </React.Fragment>
           )}

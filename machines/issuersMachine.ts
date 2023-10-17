@@ -20,6 +20,9 @@ import {
   vcDownloadTimeout,
   OIDCErrors,
   ErrorMessage,
+  updateCredentialInformation,
+  constructAuthorizationConfiguration,
+  getVCMetadata,
 } from '../shared/openId4VCI/Utils';
 import {NETWORK_REQUEST_FAILED, REQUEST_TIMEOUT} from '../shared/constants';
 import {VCMetadata} from '../shared/VCMetadata';
@@ -171,7 +174,8 @@ export const IssuersMachine = model.createMachine(
             },
           ],
           onError: {
-            actions: () => console.log('checkInternet error caught'),
+            actions: () =>
+              console.log('Error Occurred while checking Internet'),
             target: 'error',
           },
         },
@@ -205,7 +209,11 @@ export const IssuersMachine = model.createMachine(
               actions: [
                 'setError',
                 'resetLoadingReason',
-                (_, event) => console.log('error in invokeAuth - ', event.data),
+                (_, event) =>
+                  console.log(
+                    'Error Occurred while invoking Auth - ',
+                    event.data,
+                  ),
               ],
               target: 'error',
             },
@@ -499,7 +507,7 @@ export const IssuersMachine = model.createMachine(
         const downloadTimeout = await vcDownloadTimeout();
         let credential = await request(
           'POST',
-          context.selectedIssuer.serviceConfiguration.credentialEndpoint,
+          context.selectedIssuer.credential_endpoint,
           body,
           '',
           {
@@ -518,10 +526,12 @@ export const IssuersMachine = model.createMachine(
         sendImpressionEvent(
           getImpressionEventData(
             'VC Download',
-            context.selectedIssuer.id + ' Web View Page',
+            context.selectedIssuer.credential_issuer + ' Web View Page',
           ),
         );
-        return await authorize(context.selectedIssuer);
+        return await authorize(
+          constructAuthorizationConfiguration(context.selectedIssuer),
+        );
       },
       generateKeyPair: async context => {
         if (!isCustomSecureKeystore()) {
@@ -607,32 +617,27 @@ export function selectStoring(state: State) {
   return state.matches('storing');
 }
 
-interface issuerType {
-  id: string;
-  displayName: string;
-  logoUrl: string;
+export interface logoType {
+  url: string;
+  alt_text: string;
 }
 
-const updateCredentialInformation = (context, credential) => {
-  let credentialWrapper: CredentialWrapper = {};
-  credentialWrapper.verifiableCredential = credential;
-  credentialWrapper.verifiableCredential.issuerLogo =
-    context.selectedIssuer.logoUrl;
-  credentialWrapper.identifier = getIdentifier(context, credential);
-  credentialWrapper.generatedOn = new Date();
-  credentialWrapper.issuerLogo = context.selectedIssuer.logoUrl;
-  return credentialWrapper;
-};
-
-const getVCMetadata = context => {
-  const [issuer, protocol, requestId] =
-    context.credentialWrapper?.identifier.split(':');
-  return VCMetadata.fromVC({
-    requestId: requestId ? requestId : null,
-    issuer: issuer,
-    protocol: protocol,
-    id: context.verifiableCredential?.credential.credentialSubject.UIN
-      ? context.verifiableCredential?.credential.credentialSubject.UIN
-      : context.verifiableCredential?.credential.credentialSubject.VID,
-  });
-};
+export interface displayType {
+  name: string;
+  logo: logoType;
+  language: string;
+}
+export interface issuerType {
+  credential_issuer: string;
+  protocol: string;
+  client_id: string;
+  '.well-known': string;
+  redirect_uri: string;
+  scopes_supported: [string];
+  additional_headers: object;
+  authorization_endpoint: string;
+  token_endpoint: string;
+  credential_endpoint: string;
+  credential_audience: string;
+  display: [displayType];
+}
