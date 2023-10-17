@@ -155,7 +155,7 @@ export function configureTelemetry() {
 }
 
 export function getEventType(isSettingUp) {
-  return isSettingUp ? FlowType.AppOnboarding : FlowType.AppLogin;
+  return isSettingUp ? FlowType.appOnboarding : FlowType.appLogin;
 }
 
 const languageCodeMap = {
