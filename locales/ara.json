@@ -159,13 +159,15 @@
   },
   "IssuersScreen": {
     "title": "أضف بطاقة جديدة",
-    "header": "يرجى تحديد الطريقة المفضلة من الأسفل لإضافة بطاقة جديدة",
+    "header": "يرجى اختيار جهة الإصدار المفضلة لديك من الخيارات أدناه لإضافة بطاقة جديدة.",
+    "itemHeading": "التنزيل عبر {{issuer}}",
+    "itemSubHeading": "أدخل رقم الهوية الوطنية الخاص بك لتنزيل بطاقتك.",
     "loaders": {
       "loading": "جار التحميل...",
       "subTitle": {
-        "displayIssuers": "Fetching Issuers",
-        "settingUp": "Setting up",
-        "downloadingCredentials": "Downloading Credentials",
+        "displayIssuers": "جلب جهات الإصدار",
+        "settingUp": "اعداد",
+        "downloadingCredentials": "تنزيل بيانات الاعتماد"
       }
     },
     "errors":{

@@ -155,13 +155,15 @@
   },
   "IssuersScreen": {
     "title": "ಹೊಸ ಕಾರ್ಡ್ ಸೇರಿಸಿ",
-    "header": "ದಯವಿಟ್ಟು ಹೊಸ ಕಾರ್ಡ್ ಸೇರಿಸಲು ಕೆಳಗಿನಿಂದ ಆದ್ಯತೆಯ ವಿಧಾನವನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+    "header": "ದಯವಿಟ್ಟು ಹೊಸ ಕಾರ್ಡ್ ಸೇರಿಸಲು ಕೆಳಗಿನ ಆಯ್ಕೆಗಳಿಂದ ನಿಮ್ಮ ಆದ್ಯತೆ ನೀಡುವವರನ್ನು ಆಯ್ಕೆಮಾಡಿ.",
+    "itemHeading": "{{issuer}} ಮೂಲಕ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ",
+    "itemSubHeading": "ನಿಮ್ಮ ಕಾರ್ಡ್ ಅನ್ನು ಡೌನ್‌ಲೋಡ್ ಮಾಡಲು ನಿಮ್ಮ ರಾಷ್ಟ್ರೀಯ ID ಅನ್ನು ನಮೂದಿಸಿ.",
     "loaders": {
       "loading": "ಲೋಡ್ ಆಗುತ್ತಿದೆ...",
       "subTitle": {
-        "displayIssuers": "Fetching Issuers",
-        "settingUp": "Setting up",
-        "downloadingCredentials": "Downloading Credentials"
+        "displayIssuers": "ವಿತರಕರನ್ನು ಪಡೆಯಲಾಗುತ್ತಿದೆ",
+        "settingUp": "ಸ್ಥಾಪನೆಗೆ",
+        "downloadingCredentials": "ರುಜುವಾತುಗಳನ್ನು ಡೌನ್‌ಲೋಡ್ ಮಾಡಲಾಗುತ್ತಿದೆ"
       }
     },
     "errors": {

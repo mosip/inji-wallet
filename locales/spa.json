@@ -271,6 +271,30 @@
 		"logout": "Cerrar sesión",
 		"resetInjiProps": "Restableciendo accesorios Inji..."
 	},
+  "IssuersScreen": {
+		"title": "Agregar nueva tarjeta",
+		"header": "Elija su emisor preferido entre las opciones siguientes para agregar una nueva tarjeta.",
+		"itemHeading": "Descargar vía {{issuer}}",
+    "itemSubHeading": "Introduce tu DNI para descargar tu tarjeta.",
+    "loaders": {
+      "loading": "Cargando...",
+      "subTitle": {
+        "displayIssuers": "Obteniendo emisores",
+        "settingUp": "Configurando",
+        "downloadingCredentials": "Descarga de credenciales"
+      }
+    },
+    "errors": {
+      "noInternetConnection": {
+        "title": "Sin conexión a Internet",
+        "message": "Por favor verifique su conexión y vuelva a intentarlo"
+      },
+      "generic": {
+        "title": "¡Algo salió mal!",
+        "message": "Estamos teniendo algunos problemas con su solicitud. Inténtalo de nuevo."
+      }
+    }
+	},
 	"QrLogin": {
 		"title": "Inicio de sesión con código QR",
 		"alignQr": "Alinea el código QR dentro del marco para escanearlo",
