@@ -175,7 +175,7 @@ export const ExistingMosipVCItemMachine =
                 onError: {
                   actions: [
                     log((_, event) => (event.data as Error).message),
-                    'sendDownloadLimitExpireToVcMachine',
+                    'sendDownloadLimitExpire',
                   ],
                   target: 'checkingStatus',
                 },
@@ -811,7 +811,7 @@ export const ExistingMosipVCItemMachine =
           },
         ),
 
-        sendDownloadLimitExpireToVcMachine: send(
+        sendDownloadLimitExpire: send(
           (_context, event) => {
             return {
               type: 'DOWNLOAD_LIMIT_EXPIRED',
