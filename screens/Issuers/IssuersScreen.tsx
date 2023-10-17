@@ -12,6 +12,12 @@ import {useIssuerScreenController} from './IssuerScreenController';
 import {Loader} from '../../components/ui/Loader';
 import testIDProps, {removeWhiteSpace} from '../../shared/commonUtil';
 import {ErrorMessage} from '../../shared/openId4VCI/Utils';
+import {
+  getInteractEventData,
+  getStartEventData,
+  sendInteractEvent,
+  sendStartEvent,
+} from '../../shared/telemetry/TelemetryUtils';
 
 export const IssuersScreen: React.FC<
   HomeRouteProps | RootRouteProps
@@ -47,6 +53,10 @@ export const IssuersScreen: React.FC<
   ]);
 
   const onPressHandler = (id: string) => {
+    sendStartEvent(getStartEventData('VC Download', {id: id}));
+    sendInteractEvent(
+      getInteractEventData('VC Download', 'CLICK', `IssuerType: ${id}`),
+    );
     if (id !== 'UIN, VID, AID') {
       controller.SELECTED_ISSUER(id);
     } else {

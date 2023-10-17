@@ -24,13 +24,10 @@ import {
 import {NETWORK_REQUEST_FAILED, REQUEST_TIMEOUT} from '../shared/constants';
 import {VCMetadata} from '../shared/VCMetadata';
 import {
+  getEndEventData,
   getImpressionEventData,
-  getInteractEventData,
-  getStartEventData,
   sendEndEvent,
   sendImpressionEvent,
-  sendInteractEvent,
-  sendStartEvent,
 } from '../shared/telemetry/TelemetryUtils';
 import {
   CredentialWrapper,
@@ -91,7 +88,11 @@ export const IssuersMachine = model.createMachine(
         invoke: {
           src: 'downloadIssuersList',
           onDone: {
-            actions: ['setIssuers', 'resetLoadingReason'],
+            actions: [
+              'sendImpressionEvent',
+              'setIssuers',
+              'resetLoadingReason',
+            ],
             target: 'selectingIssuer',
           },
           onError: {
@@ -474,16 +475,15 @@ export const IssuersMachine = model.createMachine(
         },
       ),
       sendSuccessEndEvent: () => {
-        sendEndEvent({
-          type: 'VC Download',
-          status: 'SUCCESS',
-        });
+        sendEndEvent(getEndEventData('VC Download', 'SUCCESS'));
       },
       sendErrorEndEvent: () => {
-        sendEndEvent({
-          type: 'VC Download',
-          status: 'FAILURE',
-        });
+        sendEndEvent(getEndEventData('VC Download', 'FAILURE'));
+      },
+      sendImpressionEvent: () => {
+        sendImpressionEvent(
+          getImpressionEventData('VC Download', 'Issuer List'),
+        );
       },
     },
     services: {
@@ -492,12 +492,6 @@ export const IssuersMachine = model.createMachine(
       },
       checkInternet: async () => await NetInfo.fetch(),
       downloadIssuerConfig: async (context, _) => {
-        sendStartEvent(
-          getStartEventData('VC Download', {id: context.selectedIssuerId}),
-        );
-        sendInteractEvent(
-          getInteractEventData('VC Download', 'CLICK', 'Issuer Type'),
-        );
         return await CACHED_API.fetchIssuerConfig(context.selectedIssuerId);
       },
       downloadCredential: async context => {
