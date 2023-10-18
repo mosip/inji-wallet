@@ -7,7 +7,7 @@ import {log, respond} from 'xstate/lib/actions';
 import {ExistingMosipVCItemEvents} from './VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {MY_VCS_STORE_KEY, RECEIVED_VCS_STORE_KEY} from '../shared/constants';
 import {parseMetadatas, VCMetadata} from '../shared/VCMetadata';
-import {OpenId4VCIProtocol} from '../shared/openId4VCI/Utils';
+import {Protocols} from '../shared/openId4VCI/Utils';
 import {EsignetMosipVCItemEvents} from './VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 import {ActivityLogEvents} from './activityLog';
 import {ActivityLog} from '../components/ActivityLogEvent';
@@ -222,7 +222,7 @@ export const vcMachine =
 
         getVcItemResponse: respond((context, event) => {
           const vc = context.vcs[event.vcMetadata?.getVcKey()];
-          if (event.protocol === OpenId4VCIProtocol) {
+          if (event.protocol === Protocols.OpenId4VCI) {
             return EsignetMosipVCItemEvents.GET_VC_RESPONSE(vc);
           }
           return ExistingMosipVCItemEvents.GET_VC_RESPONSE(vc);

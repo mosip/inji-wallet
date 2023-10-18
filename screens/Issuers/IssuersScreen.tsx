@@ -14,6 +14,7 @@ import testIDProps, {removeWhiteSpace} from '../../shared/commonUtil';
 import {
   ErrorMessage,
   getDisplayObjectForCurrentLanguage,
+  Protocols,
 } from '../../shared/openId4VCI/Utils';
 import {
   getInteractEventData,
@@ -60,9 +61,9 @@ export const IssuersScreen: React.FC<
     sendInteractEvent(
       getInteractEventData('VC Download', 'CLICK', `IssuerType: ${id}`),
     );
-    protocol !== 'OTP'
-      ? controller.SELECTED_ISSUER(id)
-      : controller.DOWNLOAD_ID();
+    protocol === Protocols.OTP
+      ? controller.DOWNLOAD_ID()
+      : controller.SELECTED_ISSUER(id);
   };
 
   const isGenericError = () => {

@@ -13,7 +13,10 @@ import {CredentialWrapper} from '../../types/VC/EsignetMosipVC/vc';
 import {VCMetadata} from '../VCMetadata';
 import i18next from 'i18next';
 
-export const OpenId4VCIProtocol = 'OpenId4VCIProtocol';
+export const Protocols = {
+  OpenId4VCI: 'OpenId4VCI',
+  OTP: 'OTP',
+};
 
 export const getIdentifier = (context, credential) => {
   const credId = credential.credential.id.split('/');
