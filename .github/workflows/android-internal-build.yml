@@ -1,13 +1,25 @@
 name: Android Internal Build
+run-name: ${{ github.event.inputs.buildname }}
 
 env:
-  backendServiceDefaultUrl: https://api.sandbox.mosip.net
+  mimotoBackendServiceDefaultUrl: https://api.sandbox.mosip.net
+  esignetBackendServiceDefaultUrl: https://api.sandbox.mosip.net
 
 on:
   workflow_dispatch:
     inputs:
-      backendServiceUrl:
-        description: 'Backend service URL'
+      buildname:
+        description: 'Build App For'
+        required: true
+        default: 'Sprint-x/Collab/release-x.x.x'
+        type: string
+      mimotoBackendServiceUrl:
+        description: 'Mimoto backend service URL'
+        required: true
+        default: 'https://api.sandbox.mosip.net'
+        type: string
+      esignetBackendServiceUrl:
+        description: 'Esignet backend service URL'
         required: true
         default: 'https://api.sandbox.mosip.net'
         type: string
@@ -41,7 +53,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '16.x'
-      
+
       - name: Cache local npm repository
         uses: actions/cache@v3.0.11
         with:
@@ -58,7 +70,7 @@ jobs:
 
       - name: Install npm dependencies
         run: |
-          npm ci
+          npm i
 
       - name: Create .env.local file
         run: |
@@ -68,7 +80,7 @@ jobs:
         run: |
           # Strip git ref prefix from version
           echo "BRANCH_NAME=$(echo ${{ github.ref }} | sed -e 's,.*/\(.*\),\1,')" >> $GITHUB_ENV
-          echo "GPG_TTY=$(tty)" >> $GITHUB_ENV   
+          echo "GPG_TTY=$(tty)" >> $GITHUB_ENV
 
       - name: Setup branch and GPG public key
         run: |
@@ -99,11 +111,11 @@ jobs:
           cd android/app
           export RELEASE_KEYSTORE_ALIAS=androidreleasekey
           export RELEASE_KEYSTORE_PASSWORD=$RELEASE_KEYSTORE_PASSWORD
-        env: 
+        env:
           RELEASE_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_RELEASE_STOREPASS}}'
 
       - name: Create Google Play Config file
-        run : |
+        run: |
           cd android
           echo "$INJI_ANDROID_PLAY_STORE_CONFIG_JSON" > play_config.json.b64
           base64 -d -i play_config.json.b64 > play_config.json
@@ -111,14 +123,103 @@ jobs:
           INJI_ANDROID_PLAY_STORE_CONFIG_JSON: ${{ secrets.INJI_ANDROID_PLAY_STORE_CONFIG_JSON }}
 
       - name: Run Build
-        run: | 
+        run: |
           cd android/scripts
           ./internal-build.sh
         env:
-          MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
-          APPLICATION_THEME: ${{ github.event.inputs.theme }} 
+          MIMOTO_HOST: ${{ github.event.inputs.mimotoBackendServiceUrl }}
+          ESIGNET_HOST: ${{ github.event.inputs.esignetBackendServiceUrl }}
+          APPLICATION_THEME: ${{ github.event.inputs.theme }}
           RELEASE_KEYSTORE_ALIAS: androidreleasekey
           RELEASE_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_RELEASE_STOREPASS}}'
           SLACK_URL: '${{ secrets.SLACK_WEBHOOK_DEVOPS }}'
           PLAY_CONSOLE_RELEASE_DESCRIPTION: ${{ github.event.inputs.buildDescription }}
           CREDENTIAL_REGISTRY_EDIT: ${{ github.event.inputs.registry_edit }}
+
+  upload-to-actions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.1.0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+
+      - name: Cache local npm repository
+        uses: actions/cache@v3.0.11
+        with:
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          path: ~/.npm
+
+      - name: Cache local gradle repository
+        uses: actions/cache@v3.0.11
+        with:
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+
+      - name: Install npm dependencies
+        run: |
+          npm i
+
+      - name: Create .env.local file
+        run: |
+          echo "${{ secrets.ENV_FILE }}" > .env.local > android/local.properties
+
+      - name: Setup branch and env
+        run: |
+          # Strip git ref prefix from version
+          echo "BRANCH_NAME=$(echo ${{ github.ref }} | sed -e 's,.*/\(.*\),\1,')" >> $GITHUB_ENV
+          echo "GPG_TTY=$(tty)" >> $GITHUB_ENV
+
+      - name: Setup branch and GPG public key
+        run: |
+          # Strip git ref prefix from version
+          echo ${{ env.BRANCH_NAME }}
+          echo ${{ env.GPG_TTY }}
+
+          sudo apt-get --yes install gnupg2
+          gpg2 --import ./.github/keys/mosipgpgkey_pub.gpg 
+          gpg2 --quiet --batch --passphrase=${{secrets.gpg_secret}}  --allow-secret-key-import --import ./.github/keys/mosipgpgkey_sec.gpg
+
+      - name: Setup Firebase
+        run: |
+          cd android
+          if [ ! -z "$FIREBASE_SECRET" ] && [ -f app/google-services.json.gpg ];then rm -f app/google-services.json;gpg2 --quiet --batch --passphrase=$FIREBASE_SECRET --pinentry-mode loopback --decrypt --output app/google-services.json app/mosip-google-services.json.gpg;fi
+        env:
+          FIREBASE_SECRET: ${{ secrets.GPG_SECRET }}
+
+      - name: Generate keystore
+        run: |
+          echo "$ANDROID_KEYSTORE_FILE" > release.keystore.b64
+          base64 -d -i release.keystore.b64 > android/app/release.keystore
+        env:
+          ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
+
+      - name: Create Google Play Config file
+        run: |
+          cd android
+          echo "$INJI_ANDROID_PLAY_STORE_CONFIG_JSON" > play_config.json.b64
+          base64 -d -i play_config.json.b64 > play_config.json
+        env:
+          INJI_ANDROID_PLAY_STORE_CONFIG_JSON: ${{ secrets.INJI_ANDROID_PLAY_STORE_CONFIG_JSON }}
+
+      - name: Run Build for upload
+        run: |
+          npx jetify
+          cd android
+          ./gradlew :app:assembleMosipRelease
+        env:
+          MIMOTO_HOST: ${{ github.event.inputs.mimotoBackendServiceUrl }}
+          ESIGNET_HOST: ${{ github.event.inputs.esignetBackendServiceUrl }}
+          APPLICATION_THEME: ${{ github.event.inputs.theme }}
+          RELEASE_KEYSTORE_ALIAS: androidreleasekey
+          RELEASE_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_RELEASE_STOREPASS}}'
+          CREDENTIAL_REGISTRY_EDIT: ${{ github.event.inputs.registry_edit }}
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3.1.1
+        with:
+          name: ${{ github.event.inputs.buildname }}
+          path: android/app/build/outputs/apk/mosip/release/
+          retention-days: 10
