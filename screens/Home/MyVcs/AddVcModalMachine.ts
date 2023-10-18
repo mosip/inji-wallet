@@ -33,6 +33,9 @@ const model = createModel(
       VALIDATE_INPUT: () => ({}),
       READY: (idInputRef: TextInput) => ({idInputRef}),
       DISMISS: () => ({}),
+      CANCEL: () => ({}),
+      WAIT: () => ({}),
+      CANCEL_DOWNLOAD: () => ({}),
       SELECT_ID_TYPE: (idType: VcIdType) => ({idType}),
     },
   },
@@ -171,6 +174,10 @@ export const AddVcModalMachine =
               actions: 'setOtp',
               target: 'requestingCredential',
             },
+            CANCEL_DOWNLOAD: {
+              actions: ['printContext'],
+              target: 'cancelDownload',
+            },
             DISMISS: {
               actions: 'resetIdInputRef',
               target: 'acceptingIdInput',
@@ -200,6 +207,18 @@ export const AddVcModalMachine =
             },
           },
         },
+        cancelDownload: {
+          entry: 'printContext',
+          on: {
+            CANCEL: {
+              actions: 'resetIdInputRef',
+              target: 'confirmCancel',
+            },
+            WAIT: {
+              target: 'acceptingOtpInput',
+            },
+          },
+        },
         requestingCredential: {
           invoke: {
             src: 'requestCredential',
@@ -225,6 +244,9 @@ export const AddVcModalMachine =
         done: {
           type: 'final',
           data: context => new VCMetadata(context),
+        },
+        confirmCancel: {
+          type: 'final',
         },
       },
     },
@@ -317,6 +339,8 @@ export const AddVcModalMachine =
 
         clearOtp: assign({otp: ''}),
 
+        printContext: context => console.log('>>>>>>>>> context ', context),
+
         focusInput: context => context.idInputRef.focus(),
       },
 
@@ -336,7 +360,7 @@ export const AddVcModalMachine =
         requestCredential: async context => {
           // force wait to fix issue with hanging overlay
           await new Promise(resolve => setTimeout(resolve, 1000));
-
+          console.log('>>>>>>>> start requestCredential ', context);
           const response = await request(
             'POST',
             '/residentmobileapp/credentialshare/request',
@@ -347,6 +371,7 @@ export const AddVcModalMachine =
               transactionID: context.transactionId,
             },
           );
+          console.log('>>>>> requestCredential ', response.response.requestId);
           return response.response.requestId;
         },
       },
@@ -408,4 +433,8 @@ export function selectIsRequestingOtp(state: State) {
 
 export function selectIsRequestingCredential(state: State) {
   return state.matches('requestingCredential');
+}
+
+export function selectIsCancellingDownload(state: State) {
+  return state.matches('cancelDownload');
 }
