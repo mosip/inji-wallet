@@ -10,7 +10,7 @@ name: Push-Triggers
 on:
   push:
     <<: *branches
-   release:
+  release:
     types: [published]
   pull_request:
     types: [opened, reopened, synchronize]
