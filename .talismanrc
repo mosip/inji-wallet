@@ -39,3 +39,5 @@ fileignoreconfig:
   checksum: 01c3fdcd2f1c1757eae0c6a27fe04eb70c2aaf8660c604f3301997484592b66c
 - filename: screens/Home/MyVcs/GetIdInputModal.tsx
   checksum: 5c736ed79a372d0ffa7c02eb33d0dc06edbbb08d120978ff287f5f06cd6c7746
+- filename: shared/openId4VCI/Utils.ts
+  checksum: 2bd39d84099d700e5bddeebe87dfb3b0e3075edc0a4d06ce48b428b0a85e238f
