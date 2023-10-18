@@ -173,7 +173,10 @@ export const ExistingMosipVCItemMachine =
                   actions: ['setMaxDownloadCount', 'setDownloadInterval'],
                 },
                 onError: {
-                  actions: log((_, event) => (event.data as Error).message),
+                  actions: [
+                    log((_, event) => (event.data as Error).message),
+                    'sendDownloadLimitExpire',
+                  ],
                   target: 'checkingStatus',
                 },
               },
@@ -801,6 +804,18 @@ export const ExistingMosipVCItemMachine =
             return {
               type: 'REMOVE_VC_FROM_CONTEXT',
               vcMetadata: context.vcMetadata,
+            };
+          },
+          {
+            to: context => context.serviceRefs.vc,
+          },
+        ),
+
+        sendDownloadLimitExpire: send(
+          (_context, event) => {
+            return {
+              type: 'DOWNLOAD_LIMIT_EXPIRED',
+              vcMetadata: _context.vcMetadata,
             };
           },
           {

@@ -22,6 +22,7 @@ const model = createModel(
     areAllVcsDownloaded: false as boolean,
     walletBindingSuccess: false,
     tamperedVcs: [] as VCMetadata[],
+    downloadingFailedVcs: [] as VCMetadata[],
   },
   {
     events: {
@@ -52,6 +53,8 @@ const model = createModel(
       RESET_ARE_ALL_VCS_DOWNLOADED: () => ({}),
       TAMPERED_VC: (VC: VCMetadata) => ({VC}),
       REMOVE_TAMPERED_VCS: () => ({}),
+      DOWNLOAD_LIMIT_EXPIRED: (vcMetadata: VCMetadata) => ({vcMetadata}),
+      DELETE_VC: () => ({}),
     },
   },
 );
@@ -201,12 +204,38 @@ export const vcMachine =
               actions: 'setTamperedVcs',
               target: 'tamperedVCs',
             },
+            DOWNLOAD_LIMIT_EXPIRED: {
+              actions: [
+                'removeVcFromInProgressDownlods',
+                'setDownloadingFailedVcs',
+              ],
+              target: 'downloadLimitExpired',
+            },
           },
         },
         tamperedVCs: {
           on: {
             REMOVE_TAMPERED_VCS: {
               actions: ['removeTamperedVcs', 'logTamperedVCsremoved'],
+              target: '#vc.ready.myVcs.refreshing',
+            },
+          },
+        },
+        downloadLimitExpired: {
+          on: {
+            DELETE_VC: {
+              target: 'deletingFailedVcs',
+            },
+          },
+        },
+        deletingFailedVcs: {
+          entry: 'removeDownloadFailedVcsFromStorage',
+          on: {
+            STORE_RESPONSE: {
+              actions: [
+                'removeDownloadingFailedVcsFromMyVcs',
+                'resetDownloadFailedVcs',
+              ],
               target: '#vc.ready.myVcs.refreshing',
             },
           },
@@ -252,6 +281,17 @@ export const vcMachine =
           tamperedVcs: (context, event) => [event.VC, ...context.tamperedVcs],
         }),
 
+        setDownloadingFailedVcs: model.assign({
+          downloadingFailedVcs: (context, event) => [
+            event.vcMetadata,
+            ...context.downloadingFailedVcs,
+          ],
+        }),
+
+        resetDownloadFailedVcs: model.assign({
+          downloadingFailedVcs: (context, event) => [],
+        }),
+
         setDownloadedVc: (context, event) => {
           const vcUniqueId = VCMetadata.fromVC(event.vc).getVcKey();
           context.vcs[vcUniqueId] = event.vc;
@@ -271,7 +311,10 @@ export const vcMachine =
           inProgressVcDownloads: (context, event) => {
             let paresedInProgressList: Set<string> =
               context.inProgressVcDownloads;
-            const removeVcRequestID = event.requestId;
+            const removeVcRequestID =
+              event.type === 'REMOVE_VC_FROM_IN_PROGRESS_DOWNLOADS'
+                ? event.requestId
+                : event.vcMetadata.requestId;
             paresedInProgressList.delete(removeVcRequestID);
             return paresedInProgressList;
           },
@@ -322,6 +365,26 @@ export const vcMachine =
               (vc: VCMetadata) => !vc.equals(event.vcMetadata),
             ),
         }),
+
+        removeDownloadingFailedVcsFromMyVcs: model.assign({
+          myVcs: (context, event) =>
+            context.myVcs.filter(
+              value =>
+                !context.downloadingFailedVcs.some(item => item?.equals(value)),
+            ),
+        }),
+
+        removeDownloadFailedVcsFromStorage: send(
+          context => {
+            return StoreEvents.REMOVE_ITEMS(
+              MY_VCS_STORE_KEY,
+              context.downloadingFailedVcs.map(m => m.getVcKey()),
+            );
+          },
+          {
+            to: context => context.serviceRefs.store,
+          },
+        ),
 
         removeTamperedVcs: model.assign({
           myVcs: (context, event) =>
@@ -461,4 +524,12 @@ export function selectWalletBindingSuccess(state: State) {
 
 export function selectIsTampered(state: State) {
   return state.matches('tamperedVCs');
+}
+
+export function selectIsDownloadLimitExpired(state: State) {
+  return state.matches('downloadLimitExpired');
+}
+
+export function selectDownloadingFailedVcs(state: State) {
+  return state.context.downloadingFailedVcs;
 }

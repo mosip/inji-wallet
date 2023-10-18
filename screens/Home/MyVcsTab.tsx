@@ -77,6 +77,14 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
     }
   }, [controller.areAllVcsLoaded, controller.inProgressVcDownloads]);
 
+  let failedVCsList = [];
+  controller.downloadFailedVcs.forEach(vc => {
+    failedVCsList.push(`${vc.idType}:${vc.id}\n`);
+  });
+  const downloadFailedVcsErrorMessage = `${t(
+    'errors.downloadLimitExpires.message',
+  )}\n${failedVCsList}`;
+
   return (
     <React.Fragment>
       <Column fill style={{display: props.isVisible ? 'flex' : 'none'}}>
@@ -173,7 +181,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                       type="gradient"
                       disabled={controller.isRefreshingVcs}
                       title={t('downloadCard')}
-                      onPress={onPressHandler()}
+                      onPress={onPressHandler}
                     />
                   </React.Fragment>
                 )}
@@ -233,6 +241,16 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         buttonText={t('common:ok')}
         customHeight={'auto'}
       />
+
+      <MessageOverlay
+        isVisible={controller.isDownloadLimitExpires}
+        title={t('errors.downloadLimitExpires.title')}
+        message={downloadFailedVcsErrorMessage}
+        onButtonPress={controller.DELETE_VC}
+        buttonText={t('common:ok')}
+        customHeight={'auto'}
+      />
+
       {controller.isNetworkOff && (
         <Error
           testID={`networkOffError`}

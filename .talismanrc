@@ -27,11 +27,15 @@ fileignoreconfig:
   checksum: 71917c8c543a4a5b7ab61df259b785d233a80718123b0c8edf6ec81e1b3a81e0
 - filename: shared/telemetry/TelemetryUtils.js
   checksum: 9a61cd59a3718adf1f14faf3024fec66a3295ef373878a878a28e5cb1287afaa
+- filename: machines/store.ts
+  checksum: bbee269bd9703644c2a345819291caa42479b5ad0d5288713da780495b2ffb49
+- filename: shared/fileStorage.ts
+  checksum: 07cb337dc1d5b0f0eef56270ac4f4f589260ee5e490183c024cf98a2aeafb139
+- filename: shared/storage.ts
+  checksum: cc8486029ec4e08b70b0a2103dbd5214fba25557daaff79e30cad95202f38b16
 - filename: screens/Home/IntroSlidersScreen.tsx
   checksum: 72ef913857448ef05763e52e32356faa2d1f3de8130a1c638d1897f44823031f
 - filename: shared/commonUtil.ts
   checksum: 01c3fdcd2f1c1757eae0c6a27fe04eb70c2aaf8660c604f3301997484592b66c
-- filename: shared/storage.ts
-  checksum: cc8486029ec4e08b70b0a2103dbd5214fba25557daaff79e30cad95202f38b16
 - filename: screens/Home/MyVcs/GetIdInputModal.tsx
   checksum: 5c736ed79a372d0ffa7c02eb33d0dc06edbbb08d120978ff287f5f06cd6c7746
