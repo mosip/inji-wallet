@@ -2,7 +2,7 @@ import {format, formatDistanceToNow, parse} from 'date-fns';
 import React from 'react';
 import * as DateFnsLocale from 'date-fns/locale';
 import {useTranslation} from 'react-i18next';
-import {Image, ImageBackground, View} from 'react-native';
+import {Dimensions, Image, ImageBackground, View} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {CredentialSubject, VC} from '../../../types/VC/ExistingMosipVC/vc';
 import {Button, Column, Row, Text} from '../../ui';
@@ -75,7 +75,7 @@ export const MosipVCItemDetails: React.FC<
   }
 
   return (
-    <Column margin="10 0 10 0">
+    <Column margin="10 4 10 4">
       <ImageBackground
         imageStyle={{width: '100%'}}
         resizeMethod="scale"
@@ -108,6 +108,7 @@ export const MosipVCItemDetails: React.FC<
               <Text
                 testID="fullNameValue"
                 weight="semibold"
+                style={{maxWidth: 190}}
                 size="smaller"
                 color={Theme.Colors.Details}>
                 {getLocalizedField(
@@ -146,6 +147,7 @@ export const MosipVCItemDetails: React.FC<
                   <Text
                     testID="nationalCard"
                     weight="bold"
+                    style={{MinWidth: 65}}
                     size="smaller"
                     color={Theme.Colors.Details}>
                     {t('nationalCard')}
@@ -209,6 +211,7 @@ export const MosipVCItemDetails: React.FC<
                 <Column margin="20 0 0 0">
                   <Text
                     testID="dateOfBirth"
+                    style={{maxWidth: 121}}
                     weight="regular"
                     size="smaller"
                     color={Theme.Colors.DetailsLabel}>
@@ -222,7 +225,8 @@ export const MosipVCItemDetails: React.FC<
                     {formattedDateOfBirth()}
                   </Text>
                 </Column>
-                <Column margin="25 0 0 0">
+                <Column
+                  style={{marginTop: Dimensions.get('window').height * 0.04}}>
                   <Text
                     testID="status"
                     weight="regular"
@@ -238,6 +242,7 @@ export const MosipVCItemDetails: React.FC<
                     {props.vc?.isVerified && <VerifiedIcon />}
                     <Text
                       testID="valid"
+                      style={{maxWidth: 63}}
                       weight="semibold"
                       size="smaller"
                       color={Theme.Colors.Details}>
@@ -245,9 +250,11 @@ export const MosipVCItemDetails: React.FC<
                     </Text>
                   </Row>
                 </Column>
-                <Column margin="92 0 0 0">
+                <Column
+                  style={{marginTop: Dimensions.get('window').height * 0.1}}>
                   <Text
                     testID="phoneNumber"
+                    style={{maxWidth: 80}}
                     weight="regular"
                     size="smaller"
                     color={Theme.Colors.DetailsLabel}>
