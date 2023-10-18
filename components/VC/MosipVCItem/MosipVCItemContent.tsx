@@ -167,7 +167,7 @@ export const MosipVCItemContent: React.FC<
             </ImageBackground>
 
             <Column margin="0 0 10 20" height={96} align="space-between">
-              <Column>
+              <Column style={{maxWidth: 230}}>
                 <Text
                   testID="fullNameTitle"
                   weight="regular"

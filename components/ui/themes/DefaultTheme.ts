@@ -225,8 +225,8 @@ export const DefaultTheme = {
       height: 30,
       backgroundColor: Colors.Grey,
       marginVertical: 8,
-      marginLeft: -35,
-      marginRight: 15,
+      marginLeft: -25,
+      marginRight: 12,
     },
     closeCardBgContainer: {
       borderRadius: 10,
@@ -1217,6 +1217,15 @@ export const DefaultTheme = {
       marginBottom: 25,
       marginHorizontal: 40,
       color: Colors.mediumDarkGrey,
+    },
+  }),
+  SetupLanguageScreenStyle: StyleSheet.create({
+    columnStyle: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'space-around',
+      backgroundColor: Colors.White,
+      maxHeight: Dimensions.get('window').height,
     },
   }),
 

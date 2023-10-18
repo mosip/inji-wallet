@@ -181,7 +181,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                       type="gradient"
                       disabled={controller.isRefreshingVcs}
                       title={t('downloadCard')}
-                      onPress={onPressHandler()}
+                      onPress={onPressHandler}
                     />
                   </React.Fragment>
                 )}
