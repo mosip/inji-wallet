@@ -1,0 +1,30 @@
+name: SonarQube checks
+on:
+  push:
+    branches:
+      - develop
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.1.0
+        with:
+          fetch-depth: 0
+      - name: Install npm dependencies
+        run: |
+          npm ci
+      - uses: sonarsource/sonarqube-scan-action@master
+        with:
+          args:
+            -Dsonar.organization=${{ secrets.ORG_KEY }}
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: https://sonarcloud.io
+          SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
+      # If you wish to fail your job when the Quality Gate is red, uncomment the
+      # following lines. This would typically be used to fail a deployment.
+      # - uses: sonarsource/sonarqube-quality-gate-action@master
+      #   timeout-minutes: 5
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
