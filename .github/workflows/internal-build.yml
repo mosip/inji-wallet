@@ -81,7 +81,7 @@ jobs:
       SLACK_URL: '${{ secrets.SLACK_WEBHOOK }}'
 
   build-android-beta:
-    if: ${{ inputs.beta-release == 'Yes' }}
+    if: ${{ inputs.beta-release == 'true' }}
     uses: tw-mosip/kattu/.github/workflows/android-publish.yml@add-inji-workflows
     with:
       BETA_RELEASE: ${{ inputs.beta-release }}
