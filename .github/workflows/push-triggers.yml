@@ -39,3 +39,4 @@ jobs:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       SONAR_HOST_URL: https://sonarcloud.io
       SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
+      SLACK_URL: '${{ secrets.SLACK_WEBHOOK }}'
