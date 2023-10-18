@@ -46,7 +46,6 @@ export const MessageOverlay: React.FC<MessageOverlayProps> = props => {
               {props.message}
             </Text>
           )}
-
           {props.progress && <Progress progress={props.progress} />}
           {props.hint && (
             <Text

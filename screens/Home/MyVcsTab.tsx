@@ -78,8 +78,8 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   }, [controller.areAllVcsLoaded, controller.inProgressVcDownloads]);
 
   let failedVCsList = [];
-  controller.downloadFailedVcs.forEach(v => {
-    failedVCsList.push(`${v.idType}:${v.id}\n`);
+  controller.downloadFailedVcs.forEach(Vc => {
+    failedVCsList.push(`${Vc.idType}:${Vc.id}\n`);
   });
   const downloadFailedVcsErrorMessage = `${t(
     'errors.downloadLimitExpires.message',
