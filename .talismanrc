@@ -33,3 +33,7 @@ fileignoreconfig:
   checksum: 07cb337dc1d5b0f0eef56270ac4f4f589260ee5e490183c024cf98a2aeafb139
 - filename: shared/storage.ts
   checksum: c8d874aa373bdf526bf59192139822f56915e702ef673bac4e0d7549b0fea3d0
+- filename: .github/workflows/push-triggers.yml
+  checksum: 529fb410af4bfba432f218dcaf41b8fd63da12dddf429d28e89c3155f50dfca5
+- filename: .github/workflows/internal-build.yml
+  checksum: 9534127d1d01294985bb49e249fe83fd565e1f89c4ca04a60c26c9842274b263
