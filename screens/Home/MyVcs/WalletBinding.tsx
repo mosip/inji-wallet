@@ -14,12 +14,35 @@ import testIDProps from '../../../shared/commonUtil';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {
   TelemetryConstants,
-  getImpressionEventData,
-  sendImpressionEvent,
+  getEndEventData,
+  getErrorEventData,
+  sendEndEvent,
+  sendErrorEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
 
 export const WalletBinding: React.FC<WalletBindingProps> = props => {
   const controller = useKebabPopUp(props);
+
+  useEffect(() => {
+    if (
+      controller.walletBindingError ===
+      'Something is wrong. Please try again later!'
+    ) {
+      sendErrorEvent(
+        getErrorEventData(
+          TelemetryConstants.FlowType.vcActivationFromKebab,
+          TelemetryConstants.ErrorId.activationFailed,
+          controller.walletBindingError,
+        ),
+      );
+      sendEndEvent(
+        getEndEventData(
+          TelemetryConstants.FlowType.vcActivationFromKebab,
+          TelemetryConstants.EndEventStatus.failure,
+        ),
+      );
+    }
+  }, [controller.walletBindingError]);
 
   const WalletVerified: React.FC = () => {
     return (

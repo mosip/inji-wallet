@@ -71,6 +71,7 @@ const model = createModel(
     walletBindingSuccess: false,
     publicKey: '',
     privateKey: '',
+    isMachineInKebabPopupState: false,
   },
   {
     events: {
@@ -282,8 +283,12 @@ export const ExistingMosipVCItemMachine =
           },
         },
         kebabPopUp: {
+          entry: assign({isMachineInKebabPopupState: () => true}),
           on: {
             DISMISS: {
+              actions: assign({
+                isMachineInKebabPopupState: () => false,
+              }),
               target: 'idle',
             },
             ADD_WALLET_BINDING_ID: {
@@ -307,21 +312,7 @@ export const ExistingMosipVCItemMachine =
             showBindingWarning: {
               on: {
                 CONFIRM: {
-                  actions: [
-                    () => {
-                      sendStartEvent(
-                        getStartEventData(
-                          TelemetryConstants.FlowType.vcActivation,
-                        ),
-                      );
-                      sendInteractEvent(
-                        getInteractEventData(
-                          TelemetryConstants.FlowType.vcActivation,
-                          TelemetryConstants.InteractEventSubtype.click,
-                        ),
-                      );
-                    },
-                  ],
+                  actions: 'sendActivationStartEvent',
                   target: '#vc-item.kebabPopUp.requestingBindingOtp',
                 },
                 CANCEL: {
@@ -441,13 +432,7 @@ export const ExistingMosipVCItemMachine =
                     'setWalletBindingErrorEmpty',
                     'sendWalletBindingSuccess',
                     'logWalletBindingSuccess',
-                    () =>
-                      sendEndEvent(
-                        getEndEventData(
-                          TelemetryConstants.FlowType.vcActivation,
-                          TelemetryConstants.EndEventStatus.success,
-                        ),
-                      ),
+                    'sendActivationSuccessEvent',
                   ],
                   target: '#vc-item.kebabPopUp',
                 },
@@ -664,17 +649,7 @@ export const ExistingMosipVCItemMachine =
         showBindingWarning: {
           on: {
             CONFIRM: {
-              actions: () => {
-                sendStartEvent(
-                  getStartEventData(TelemetryConstants.FlowType.vcActivation),
-                );
-                sendInteractEvent(
-                  getInteractEventData(
-                    TelemetryConstants.FlowType.vcActivation,
-                    TelemetryConstants.InteractEventSubtype.click,
-                  ),
-                );
-              },
+              actions: 'sendActivationStartEvent',
               target: 'requestingBindingOtp',
             },
             CANCEL: {
@@ -788,6 +763,7 @@ export const ExistingMosipVCItemMachine =
                 'updateVc',
                 'setWalletBindingErrorEmpty',
                 'setWalletBindingSuccess',
+                'sendActivationSuccessEvent',
                 'logWalletBindingSuccess',
                 () =>
                   sendEndEvent(
@@ -861,13 +837,6 @@ export const ExistingMosipVCItemMachine =
             const errorMessage = i18n.t(`errors.genericError`, {
               ns: 'common',
             });
-            sendErrorEvent(
-              getErrorEventData(
-                TelemetryConstants.FlowType.qrLogin,
-                TelemetryConstants.ErrorId.activationFailed,
-                errorMessage,
-              ),
-            );
             return errorMessage;
           },
         }),
@@ -895,10 +864,30 @@ export const ExistingMosipVCItemMachine =
           },
         ),
 
-        sendActivationFailedEndEvent: () =>
+        sendActivationStartEvent: context => {
+          sendStartEvent(
+            getStartEventData(
+              context.isMachineInKebabPopupState
+                ? TelemetryConstants.FlowType.vcActivationFromKebab
+                : TelemetryConstants.FlowType.vcActivation,
+            ),
+          );
+          sendInteractEvent(
+            getInteractEventData(
+              context.isMachineInKebabPopupState
+                ? TelemetryConstants.FlowType.vcActivationFromKebab
+                : TelemetryConstants.FlowType.vcActivation,
+              TelemetryConstants.InteractEventSubtype.click,
+            ),
+          );
+        },
+
+        sendActivationFailedEndEvent: context =>
           sendEndEvent(
             getEndEventData(
-              TelemetryConstants.FlowType.vcActivation,
+              context.isMachineInKebabPopupState
+                ? TelemetryConstants.FlowType.vcActivationFromKebab
+                : TelemetryConstants.FlowType.vcActivation,
               TelemetryConstants.EndEventStatus.failure,
               {
                 errorId: TelemetryConstants.ErrorId.userCancel,
@@ -908,10 +897,12 @@ export const ExistingMosipVCItemMachine =
             ),
           ),
 
-        sendActivationSuccessEvent: () =>
+        sendActivationSuccessEvent: context =>
           sendEndEvent(
             getEndEventData(
-              TelemetryConstants.FlowType.vcActivation,
+              context.isMachineInKebabPopupState
+                ? TelemetryConstants.FlowType.vcActivationFromKebab
+                : TelemetryConstants.FlowType.vcActivation,
               TelemetryConstants.EndEventStatus.success,
             ),
           ),

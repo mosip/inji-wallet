@@ -25,6 +25,7 @@ import {NETWORK_REQUEST_FAILED, REQUEST_TIMEOUT} from '../shared/constants';
 import {VCMetadata} from '../shared/VCMetadata';
 import {
   TelemetryConstants,
+  getEndEventData,
   getImpressionEventData,
   getInteractEventData,
   getStartEventData,
@@ -475,16 +476,21 @@ export const IssuersMachine = model.createMachine(
         },
       ),
       sendSuccessEndEvent: () => {
-        sendEndEvent({
-          type: TelemetryConstants.FlowType.vcDownload,
-          status: TelemetryConstants.EndEventStatus.success,
-        });
+        sendEndEvent(
+          getEndEventData(
+            TelemetryConstants.FlowType.vcDownload,
+            TelemetryConstants.EndEventStatus.success,
+          ),
+        );
       },
+
       sendErrorEndEvent: () => {
-        sendEndEvent({
-          type: TelemetryConstants.FlowType.vcDownload,
-          status: TelemetryConstants.EndEventStatus.failure,
-        });
+        sendEndEvent(
+          getEndEventData(
+            TelemetryConstants.FlowType.vcDownload,
+            TelemetryConstants.EndEventStatus.failure,
+          ),
+        );
       },
     },
     services: {

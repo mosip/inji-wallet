@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Column} from '../../components/ui';
 import {Modal} from '../../components/ui/Modal';
 import {MessageOverlay} from '../../components/MessageOverlay';
@@ -13,8 +13,10 @@ import {BindingVcWarningOverlay} from './MyVcs/BindingVcWarningOverlay';
 import {VcDetailsContainer} from '../../components/VC/VcDetailsContainer';
 import {
   TelemetryConstants,
-  getImpressionEventData,
-  sendImpressionEvent,
+  getEndEventData,
+  getErrorEventData,
+  sendEndEvent,
+  sendErrorEvent,
 } from '../../shared/telemetry/TelemetryUtils';
 
 export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
@@ -29,6 +31,27 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       onPress: controller.CONFIRM_REVOKE_VC,
     },
   ];
+
+  useEffect(() => {
+    if (
+      controller.walletBindingError ===
+      'Something is wrong. Please try again later!'
+    ) {
+      sendErrorEvent(
+        getErrorEventData(
+          TelemetryConstants.FlowType.vcActivation,
+          TelemetryConstants.ErrorId.activationFailed,
+          controller.walletBindingError,
+        ),
+      );
+      sendEndEvent(
+        getEndEventData(
+          TelemetryConstants.FlowType.vcActivation,
+          TelemetryConstants.EndEventStatus.failure,
+        ),
+      );
+    }
+  }, [controller.walletBindingError]);
 
   return (
     <Modal

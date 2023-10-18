@@ -23,11 +23,11 @@ export const OtpVerificationModal: React.FC<
   useEffect(() => {
     sendImpressionEvent(
       getImpressionEventData(
-        TelemetryConstants.FlowType.vcActivation,
+        props.flow,
         TelemetryConstants.Screens.otpVerificationModal,
       ),
     );
-  }, []);
+  }, [props.flow]);
 
   useEffect(() => {
     if (timer === 0) return;
@@ -55,7 +55,7 @@ export const OtpVerificationModal: React.FC<
     props.resend();
   };
 
-  const handleOtpSuccess = otp => {
+  const handleEnteredOtp = (otp: string) => {
     resetRetryCount();
     props.onInputDone(otp);
   };
@@ -94,7 +94,7 @@ export const OtpVerificationModal: React.FC<
             margin="16 0 0 0">
             {props.error}
           </Text>
-          <PinInput testID="pinInput" length={6} onDone={handleOtpSuccess} />
+          <PinInput testID="pinInput" length={6} onDone={handleEnteredOtp} />
           <Text
             margin="36 0 0 0"
             color={Theme.Colors.resendCodeTimer}
