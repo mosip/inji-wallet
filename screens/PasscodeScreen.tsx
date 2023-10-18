@@ -10,15 +10,16 @@ import {usePasscodeScreen} from './PasscodeScreenController';
 import {hashData} from '../shared/commonUtil';
 import {argon2iConfig} from '../shared/constants';
 import {
-  EndEventStatus,
+  TelemetryConstants,
   getEndEventData,
   getEventType,
   getImpressionEventData,
+  resetRetryCount,
   sendEndEvent,
   sendImpressionEvent,
 } from '../shared/telemetry/TelemetryUtils';
 import {BackHandler} from 'react-native';
-import {incrementPasscodeRetryCount} from '../shared/telemetry/TelemetryUtils';
+import {incrementRetryCount} from '../shared/telemetry/TelemetryUtils';
 
 export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
   const {t} = useTranslation('PasscodeScreen');
@@ -27,16 +28,23 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
 
   useEffect(() => {
     sendImpressionEvent(
-      getImpressionEventData(getEventType(isSettingUp), 'Passcode'),
+      getImpressionEventData(
+        getEventType(isSettingUp),
+        TelemetryConstants.Screens.passcode,
+      ),
     );
   }, [isSettingUp]);
 
   const handleBackButtonPress = () => {
     sendEndEvent(
-      getEndEventData(getEventType(isSettingUp), EndEventStatus.failure, {
-        errorId: 'user_cancel',
-        errorMessage: 'Authentication canceled',
-      }),
+      getEndEventData(
+        getEventType(isSettingUp),
+        TelemetryConstants.EndEventStatus.failure,
+        {
+          errorId: TelemetryConstants.ErrorId.userCancel,
+          errorMessage: TelemetryConstants.ErrorMessage.authenticationCancelled,
+        },
+      ),
     );
     return false;
   };
@@ -58,7 +66,10 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
   };
 
   const handlePasscodeMismatch = (error: string) => {
-    incrementPasscodeRetryCount(getEventType(isSettingUp));
+    incrementRetryCount(
+      getEventType(isSettingUp),
+      TelemetryConstants.Screens.passcode,
+    );
     controller.setError(error);
   };
 
@@ -105,7 +116,10 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
           </Text>
         </Column>
         <PasscodeVerify
-          onSuccess={controller.SETUP_PASSCODE}
+          onSuccess={() => {
+            resetRetryCount();
+            controller.SETUP_PASSCODE();
+          }}
           onError={handlePasscodeMismatch}
           passcode={controller.passcode}
           salt={controller.storedSalt}
@@ -134,7 +148,10 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
             {t('enterPasscode')}
           </Text>
           <PasscodeVerify
-            onSuccess={controller.LOGIN}
+            onSuccess={() => {
+              resetRetryCount();
+              controller.LOGIN();
+            }}
             onError={handlePasscodeMismatch}
             passcode={controller.storedPasscode}
             salt={controller.storedSalt}

@@ -18,8 +18,7 @@ import {
   getInteractEventData,
   sendInteractEvent,
   sendStartEvent,
-  FlowType,
-  InteractEventSubtype,
+  TelemetryConstants,
 } from '../shared/telemetry/TelemetryUtils';
 
 export function useWelcomeScreen(props: RootRouteProps) {
@@ -65,11 +64,11 @@ export function useWelcomeScreen(props: RootRouteProps) {
       if (!isSettingUp && isBiometricUnlockEnabled && biometrics !== '') {
         props.navigation.navigate('Biometric', {setup: isSettingUp});
       } else if (!isSettingUp && passcode !== '') {
-        sendStartEvent(getStartEventData(FlowType.appLogin));
+        sendStartEvent(getStartEventData(TelemetryConstants.FlowType.appLogin));
         sendInteractEvent(
           getInteractEventData(
-            FlowType.appLogin,
-            InteractEventSubtype.click,
+            TelemetryConstants.FlowType.appLogin,
+            TelemetryConstants.InteractEventSubtype.click,
             'Unlock application button',
           ),
         );

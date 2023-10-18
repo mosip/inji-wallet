@@ -1,13 +1,14 @@
 import React from 'react';
-import { MessageOverlay } from '../../../components/MessageOverlay';
-import { AddVcModalProps, useAddVcModal } from './AddVcModalController';
-import { OtpVerificationModal } from './OtpVerificationModal';
-import { IdInputModal } from './IdInputModal';
-import { useTranslation } from 'react-i18next';
-import { GET_INDIVIDUAL_ID } from '../../../shared/constants';
+import {MessageOverlay} from '../../../components/MessageOverlay';
+import {AddVcModalProps, useAddVcModal} from './AddVcModalController';
+import {OtpVerificationModal} from './OtpVerificationModal';
+import {IdInputModal} from './IdInputModal';
+import {useTranslation} from 'react-i18next';
+import {GET_INDIVIDUAL_ID} from '../../../shared/constants';
+import {TelemetryConstants} from '../../../shared/telemetry/TelemetryUtils';
 
-export const AddVcModal: React.FC<AddVcModalProps> = (props) => {
-  const { t } = useTranslation('AddVcModal');
+export const AddVcModal: React.FC<AddVcModalProps> = props => {
+  const {t} = useTranslation('AddVcModal');
   const controller = useAddVcModal(props);
 
   const shouldShowAddVcModal = () => {
@@ -39,6 +40,7 @@ export const AddVcModal: React.FC<AddVcModalProps> = (props) => {
         onInputDone={controller.INPUT_OTP}
         error={controller.otpError}
         resend={controller.RESEND_OTP}
+        flow={TelemetryConstants.FlowType.vcDownload}
       />
 
       <MessageOverlay

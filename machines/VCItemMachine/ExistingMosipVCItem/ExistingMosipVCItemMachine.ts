@@ -35,8 +35,11 @@ import {
   getStartEventData,
   getEndEventData,
   sendEndEvent,
-  FlowType,
-  EndEventStatus,
+  TelemetryConstants,
+  sendInteractEvent,
+  getInteractEventData,
+  sendErrorEvent,
+  getErrorEventData,
 } from '../../../shared/telemetry/TelemetryUtils';
 
 const model = createModel(
@@ -305,8 +308,19 @@ export const ExistingMosipVCItemMachine =
               on: {
                 CONFIRM: {
                   actions: [
-                    () =>
-                      sendStartEvent(getStartEventData(FlowType.vcActivation)),
+                    () => {
+                      sendStartEvent(
+                        getStartEventData(
+                          TelemetryConstants.FlowType.vcActivation,
+                        ),
+                      );
+                      sendInteractEvent(
+                        getInteractEventData(
+                          TelemetryConstants.FlowType.vcActivation,
+                          TelemetryConstants.InteractEventSubtype.click,
+                        ),
+                      );
+                    },
                   ],
                   target: '#vc-item.kebabPopUp.requestingBindingOtp',
                 },
@@ -349,7 +363,11 @@ export const ExistingMosipVCItemMachine =
                 },
                 DISMISS: {
                   target: '#vc-item.kebabPopUp',
-                  actions: ['clearOtp', 'clearTransactionId'],
+                  actions: [
+                    'sendActivationFailedEndEvent',
+                    'clearOtp',
+                    'clearTransactionId',
+                  ],
                 },
               },
             },
@@ -389,6 +407,7 @@ export const ExistingMosipVCItemMachine =
                       'updateVc',
                       'setWalletBindingErrorEmpty',
                       'sendWalletBindingSuccess',
+                      'sendActivationSuccessEvent',
                       'logWalletBindingSuccess',
                     ],
                   },
@@ -425,8 +444,8 @@ export const ExistingMosipVCItemMachine =
                     () =>
                       sendEndEvent(
                         getEndEventData(
-                          FlowType.vcActivation,
-                          EndEventStatus.success,
+                          TelemetryConstants.FlowType.vcActivation,
+                          TelemetryConstants.EndEventStatus.success,
                         ),
                       ),
                   ],
@@ -645,8 +664,17 @@ export const ExistingMosipVCItemMachine =
         showBindingWarning: {
           on: {
             CONFIRM: {
-              actions: () =>
-                sendStartEvent(getStartEventData(FlowType.vcActivation)),
+              actions: () => {
+                sendStartEvent(
+                  getStartEventData(TelemetryConstants.FlowType.vcActivation),
+                );
+                sendInteractEvent(
+                  getInteractEventData(
+                    TelemetryConstants.FlowType.vcActivation,
+                    TelemetryConstants.InteractEventSubtype.click,
+                  ),
+                );
+              },
               target: 'requestingBindingOtp',
             },
             CANCEL: {
@@ -687,7 +715,11 @@ export const ExistingMosipVCItemMachine =
             },
             DISMISS: {
               target: 'idle',
-              actions: ['clearOtp', 'clearTransactionId'],
+              actions: [
+                'sendActivationFailedEndEvent',
+                'clearOtp',
+                'clearTransactionId',
+              ],
             },
           },
         },
@@ -726,6 +758,7 @@ export const ExistingMosipVCItemMachine =
                   'storeContext',
                   'updateVc',
                   'setWalletBindingErrorEmpty',
+                  'sendActivationSuccessEvent',
                   'logWalletBindingSuccess',
                 ],
               },
@@ -759,8 +792,8 @@ export const ExistingMosipVCItemMachine =
                 () =>
                   sendEndEvent(
                     getEndEventData(
-                      FlowType.vcActivation,
-                      EndEventStatus.success,
+                      TelemetryConstants.FlowType.vcActivation,
+                      TelemetryConstants.EndEventStatus.success,
                     ),
                   ),
               ],
@@ -824,10 +857,19 @@ export const ExistingMosipVCItemMachine =
         ),
 
         setWalletBindingError: assign({
-          walletBindingError: () =>
-            i18n.t(`errors.genericError`, {
+          walletBindingError: () => {
+            const errorMessage = i18n.t(`errors.genericError`, {
               ns: 'common',
-            }),
+            });
+            sendErrorEvent(
+              getErrorEventData(
+                TelemetryConstants.FlowType.qrLogin,
+                TelemetryConstants.ErrorId.activationFailed,
+                errorMessage,
+              ),
+            );
+            return errorMessage;
+          },
         }),
 
         setWalletBindingErrorEmpty: assign({
@@ -852,6 +894,28 @@ export const ExistingMosipVCItemMachine =
             to: context => context.serviceRefs.vc,
           },
         ),
+
+        sendActivationFailedEndEvent: () =>
+          sendEndEvent(
+            getEndEventData(
+              TelemetryConstants.FlowType.vcActivation,
+              TelemetryConstants.EndEventStatus.failure,
+              {
+                errorId: TelemetryConstants.ErrorId.userCancel,
+                errorMessage:
+                  TelemetryConstants.ErrorMessage.authenticationCancelled,
+              },
+            ),
+          ),
+
+        sendActivationSuccessEvent: () =>
+          sendEndEvent(
+            getEndEventData(
+              TelemetryConstants.FlowType.vcActivation,
+              TelemetryConstants.EndEventStatus.success,
+            ),
+          ),
+
         setPublicKey: assign({
           publicKey: (context, event) => {
             if (!isCustomSecureKeystore()) {
@@ -1044,8 +1108,8 @@ export const ExistingMosipVCItemMachine =
         ),
         sendTelemetryEvents: () => {
           sendEndEvent({
-            type: FlowType.vcDownload,
-            status: EndEventStatus.success,
+            type: TelemetryConstants.FlowType.vcDownload,
+            status: TelemetryConstants.EndEventStatus.success,
           });
         },
 

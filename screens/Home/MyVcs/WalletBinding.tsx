@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Icon, ListItem} from 'react-native-elements';
 import {Row, Text} from '../../../components/ui';
 import {Theme} from '../../../components/ui/styleUtils';
@@ -12,6 +12,11 @@ import {ActorRefFrom} from 'xstate';
 import {ExistingMosipVCItemMachine} from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import testIDProps from '../../../shared/commonUtil';
 import {VCMetadata} from '../../../shared/VCMetadata';
+import {
+  TelemetryConstants,
+  getImpressionEventData,
+  sendImpressionEvent,
+} from '../../../shared/telemetry/TelemetryUtils';
 
 export const WalletBinding: React.FC<WalletBindingProps> = props => {
   const controller = useKebabPopUp(props);
@@ -66,6 +71,7 @@ export const WalletBinding: React.FC<WalletBindingProps> = props => {
         onInputDone={controller.INPUT_OTP}
         error={controller.otpError}
         resend={controller.RESEND_OTP}
+        flow={TelemetryConstants.FlowType.vcActivationFromKebab}
       />
       <MessageOverlay
         isVisible={controller.isWalletBindingError}

@@ -11,8 +11,7 @@ import {
   getInteractEventData,
   sendInteractEvent,
   sendStartEvent,
-  FlowType,
-  InteractEventSubtype,
+  TelemetryConstants,
 } from '../shared/telemetry/TelemetryUtils';
 
 export const AuthScreen: React.FC<RootRouteProps> = props => {
@@ -20,11 +19,13 @@ export const AuthScreen: React.FC<RootRouteProps> = props => {
   const controller = useAuthScreen(props);
 
   const handleUsePasscodeButtonPress = () => {
-    sendStartEvent(getStartEventData(FlowType.appOnboarding));
+    sendStartEvent(
+      getStartEventData(TelemetryConstants.FlowType.appOnboarding),
+    );
     sendInteractEvent(
       getInteractEventData(
-        FlowType.appOnboarding,
-        InteractEventSubtype.click,
+        TelemetryConstants.FlowType.appOnboarding,
+        TelemetryConstants.InteractEventSubtype.click,
         'Use Passcode Button',
       ),
     );

@@ -8,10 +8,14 @@ import {OIDcAuthenticationModal} from '../../components/OIDcAuth';
 import {useViewVcModal, ViewVcModalProps} from './ViewVcModalController';
 import {useTranslation} from 'react-i18next';
 import {BannerNotification} from '../../components/BannerNotification';
-import {TextEditOverlay} from '../../components/TextEditOverlay';
 import {OtpVerificationModal} from './MyVcs/OtpVerificationModal';
 import {BindingVcWarningOverlay} from './MyVcs/BindingVcWarningOverlay';
 import {VcDetailsContainer} from '../../components/VC/VcDetailsContainer';
+import {
+  TelemetryConstants,
+  getImpressionEventData,
+  sendImpressionEvent,
+} from '../../shared/telemetry/TelemetryUtils';
 
 export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
   const {t} = useTranslation('ViewVcModal');
@@ -68,6 +72,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
           onInputDone={controller.inputOtp}
           error={controller.otpError}
           resend={controller.RESEND_OTP}
+          flow={TelemetryConstants.FlowType.vcLockOrRevoke}
         />
       )}
 
@@ -78,6 +83,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
           onInputDone={controller.inputOtp}
           error={controller.otpError}
           resend={controller.RESEND_OTP}
+          flow={TelemetryConstants.FlowType.vcActivation}
         />
       )}
 

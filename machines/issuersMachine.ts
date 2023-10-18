@@ -24,12 +24,10 @@ import {
 import {NETWORK_REQUEST_FAILED, REQUEST_TIMEOUT} from '../shared/constants';
 import {VCMetadata} from '../shared/VCMetadata';
 import {
-  EndEventStatus,
-  FlowType,
+  TelemetryConstants,
   getImpressionEventData,
   getInteractEventData,
   getStartEventData,
-  InteractEventSubtype,
   sendEndEvent,
   sendImpressionEvent,
   sendInteractEvent,
@@ -478,14 +476,14 @@ export const IssuersMachine = model.createMachine(
       ),
       sendSuccessEndEvent: () => {
         sendEndEvent({
-          type: FlowType.vcDownload,
-          status: EndEventStatus.success,
+          type: TelemetryConstants.FlowType.vcDownload,
+          status: TelemetryConstants.EndEventStatus.success,
         });
       },
       sendErrorEndEvent: () => {
         sendEndEvent({
-          type: FlowType.vcDownload,
-          status: EndEventStatus.failure,
+          type: TelemetryConstants.FlowType.vcDownload,
+          status: TelemetryConstants.EndEventStatus.failure,
         });
       },
     },
@@ -496,14 +494,14 @@ export const IssuersMachine = model.createMachine(
       checkInternet: async () => await NetInfo.fetch(),
       downloadIssuerConfig: async (context, _) => {
         sendStartEvent(
-          getStartEventData(FlowType.vcDownload, {
+          getStartEventData(TelemetryConstants.FlowType.vcDownload, {
             id: context.selectedIssuerId,
           }),
         );
         sendInteractEvent(
           getInteractEventData(
-            FlowType.vcDownload,
-            InteractEventSubtype.click,
+            TelemetryConstants.FlowType.vcDownload,
+            TelemetryConstants.InteractEventSubtype.click,
             'Issuer Type',
           ),
         );
@@ -532,8 +530,8 @@ export const IssuersMachine = model.createMachine(
       invokeAuthorization: async context => {
         sendImpressionEvent(
           getImpressionEventData(
-            FlowType.vcDownload,
-            context.selectedIssuer.id + ' Web View Page',
+            TelemetryConstants.FlowType.vcDownload,
+            context.selectedIssuer.id + TelemetryConstants.Screens.webViewPage,
           ),
         );
         return await authorize(context.selectedIssuer);

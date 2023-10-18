@@ -26,9 +26,8 @@ import {
   sendEndEvent,
   sendInteractEvent,
   sendStartEvent,
-  FlowType,
-  EndEventStatus,
-  InteractEventSubtype,
+  TelemetryConstants,
+  resetRetryCount,
 } from '../shared/telemetry/TelemetryUtils';
 
 export function useBiometricScreen(props: RootRouteProps) {
@@ -51,11 +50,11 @@ export function useBiometricScreen(props: RootRouteProps) {
 
   useEffect(() => {
     if (isAvailable) {
-      sendStartEvent(getStartEventData(FlowType.appLogin));
+      sendStartEvent(getStartEventData(TelemetryConstants.FlowType.appLogin));
       sendInteractEvent(
         getInteractEventData(
-          FlowType.appLogin,
-          InteractEventSubtype.click,
+          TelemetryConstants.FlowType.appLogin,
+          TelemetryConstants.InteractEventSubtype.click,
           'Unlock with Biometrics button',
         ),
       );
@@ -64,7 +63,12 @@ export function useBiometricScreen(props: RootRouteProps) {
 
   useEffect(() => {
     if (isAuthorized) {
-      sendEndEvent(getEndEventData(FlowType.appLogin, EndEventStatus.success));
+      sendEndEvent(
+        getEndEventData(
+          TelemetryConstants.FlowType.appLogin,
+          TelemetryConstants.EndEventStatus.success,
+        ),
+      );
       props.navigation.reset({
         index: 0,
         routes: [{name: 'Main'}],
@@ -87,11 +91,15 @@ export function useBiometricScreen(props: RootRouteProps) {
 
     if (errorMsgBio && !isReEnabling) {
       sendEndEvent(
-        getEndEventData(FlowType.appLogin, EndEventStatus.failure, {
-          errorId: errorResponse.res.error,
-          errorMessage: errorResponse.res.warning,
-          stackTrace: errorResponse.stacktrace,
-        }),
+        getEndEventData(
+          TelemetryConstants.FlowType.appLogin,
+          TelemetryConstants.EndEventStatus.failure,
+          {
+            errorId: errorResponse.res.error,
+            errorMessage: errorResponse.res.warning,
+            stackTrace: errorResponse.stacktrace,
+          },
+        ),
       );
     }
 
@@ -100,11 +108,11 @@ export function useBiometricScreen(props: RootRouteProps) {
         index: 0,
         routes: [{name: 'Passcode'}],
       });
-      sendStartEvent(getStartEventData(FlowType.appLogin));
+      sendStartEvent(getStartEventData(TelemetryConstants.FlowType.appLogin));
       sendInteractEvent(
         getInteractEventData(
-          FlowType.appLogin,
-          InteractEventSubtype.click,
+          TelemetryConstants.FlowType.appLogin,
+          TelemetryConstants.InteractEventSubtype.click,
           'Unlock application button',
         ),
       );
@@ -136,11 +144,11 @@ export function useBiometricScreen(props: RootRouteProps) {
   };
 
   const useBiometrics = () => {
-    sendStartEvent(getStartEventData(FlowType.appLogin));
+    sendStartEvent(getStartEventData(TelemetryConstants.FlowType.appLogin));
     sendInteractEvent(
       getInteractEventData(
-        FlowType.appLogin,
-        InteractEventSubtype.click,
+        TelemetryConstants.FlowType.appLogin,
+        TelemetryConstants.InteractEventSubtype.click,
         'Unlock with biometrics button',
       ),
     );
@@ -148,6 +156,7 @@ export function useBiometricScreen(props: RootRouteProps) {
   };
 
   const onSuccess = () => {
+    resetRetryCount();
     bioSend({type: 'AUTHENTICATE'});
     setError('');
   };
@@ -158,10 +167,14 @@ export function useBiometricScreen(props: RootRouteProps) {
 
   const onDismiss = () => {
     sendEndEvent(
-      getEndEventData(FlowType.appLogin, EndEventStatus.failure, {
-        errorId: 'user_cancel',
-        errorMessage: 'Authentication canceled',
-      }),
+      getEndEventData(
+        TelemetryConstants.FlowType.appLogin,
+        TelemetryConstants.EndEventStatus.failure,
+        {
+          errorId: 'user_cancel',
+          errorMessage: 'Authentication canceled',
+        },
+      ),
     );
     setReEnabling(false);
   };
