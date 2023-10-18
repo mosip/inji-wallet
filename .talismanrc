@@ -43,7 +43,7 @@ fileignoreconfig:
 - filename: machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine.ts
   checksum: 3ac59db154914fec7770e14b0451f21f98a0fe8bb0b0243e800ae3aac8a2941d
 - filename: machines/issuersMachine.ts
-  checksum: fa1db95fbe9f635979f481d57793cb99114f34a8a5e17fbc4e0c41ef6197d783
+  checksum: f86249731a374b108891be4661bfaffb42b6e7115ee82aa69e99e0fce6319534
 - filename: machines/issuersMachine.typegen.ts
   checksum: 31bb8e3b650b076815dd1186487918bd48f46195c8ec82c916d7f7a16c0b5df2
 version: ""

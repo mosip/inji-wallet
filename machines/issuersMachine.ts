@@ -119,7 +119,7 @@ export const IssuersMachine = model.createMachine(
             },
             {
               description: 'not fetched issuers config yet',
-              actions: ['setLoadingReasonAsDisplayIssuers', 'resetError'],
+              actions: ['setLoadingReasonAsSettingUp', 'resetError'],
               target: 'downloadIssuerConfig',
             },
           ],
@@ -136,7 +136,7 @@ export const IssuersMachine = model.createMachine(
             actions: sendParent('DOWNLOAD_ID'),
           },
           SELECTED_ISSUER: {
-            actions: 'setSelectedIssuerId',
+            actions: ['setSelectedIssuerId', 'setLoadingReasonAsSettingUp'],
             target: 'downloadIssuerConfig',
           },
         },
@@ -219,7 +219,7 @@ export const IssuersMachine = model.createMachine(
       },
       checkKeyPair: {
         description: 'checks whether key pair is generated',
-        entry: [send('CHECK_KEY_PAIR'), 'setLoadingReasonAsSettingUp'],
+        entry: ['setLoadingReasonAsSettingUp', send('CHECK_KEY_PAIR')],
         on: {
           CHECK_KEY_PAIR: [
             {
@@ -530,7 +530,7 @@ export const IssuersMachine = model.createMachine(
           constructAuthorizationConfiguration(context.selectedIssuer),
         );
       },
-      generateKeyPair: async context => {
+      generateKeyPair: async () => {
         if (!isCustomKeystore) {
           return await generateKeys();
         }

@@ -1,3 +1,5 @@
+// This file was automatically generated. Edits will be overwritten
+
 export interface Typegen0 {
   '@@xstate/typegen': true;
   internalEvents: {
@@ -103,7 +105,10 @@ export interface Typegen0 {
     setIssuers: 'done.invoke.issuersMachine.displayIssuers:invocation[0]';
     setLoadingReasonAsDisplayIssuers: 'TRY_AGAIN';
     setLoadingReasonAsDownloadingCredentials: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
-    setLoadingReasonAsSettingUp: 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
+    setLoadingReasonAsSettingUp:
+      | 'SELECTED_ISSUER'
+      | 'TRY_AGAIN'
+      | 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
     setNoInternet: 'done.invoke.checkInternet';
     setOIDCConfigError: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     setPrivateKey: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
