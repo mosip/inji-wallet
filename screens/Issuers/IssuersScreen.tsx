@@ -11,7 +11,11 @@ import {HomeRouteProps} from '../../routes/main';
 import {useIssuerScreenController} from './IssuerScreenController';
 import {Loader} from '../../components/ui/Loader';
 import testIDProps, {removeWhiteSpace} from '../../shared/commonUtil';
-import {ErrorMessage} from '../../shared/openId4VCI/Utils';
+import {
+  ErrorMessage,
+  getDisplayObjectForCurrentLanguage,
+  Protocols,
+} from '../../shared/openId4VCI/Utils';
 import {
   getInteractEventData,
   getStartEventData,
@@ -52,16 +56,14 @@ export const IssuersScreen: React.FC<
     controller.isStoring,
   ]);
 
-  const onPressHandler = (id: string) => {
+  const onPressHandler = (id: string, protocol: string) => {
     sendStartEvent(getStartEventData('VC Download', {id: id}));
     sendInteractEvent(
       getInteractEventData('VC Download', 'CLICK', `IssuerType: ${id}`),
     );
-    if (id !== 'UIN, VID, AID') {
-      controller.SELECTED_ISSUER(id);
-    } else {
-      controller.DOWNLOAD_ID();
-    }
+    protocol === Protocols.OTP
+      ? controller.DOWNLOAD_ID()
+      : controller.SELECTED_ISSUER(id);
   };
 
   const isGenericError = () => {
@@ -139,15 +141,21 @@ export const IssuersScreen: React.FC<
             {controller.issuers.length > 0 && (
               <FlatList
                 data={controller.issuers}
-                scrollEnabled={false}
                 renderItem={({item}) => (
                   <Issuer
-                    testID={removeWhiteSpace(item.id)}
-                    key={item.id}
-                    id={item.id}
-                    displayName={item.displayName}
-                    logoUrl={item.logoUrl}
-                    onPress={() => onPressHandler(item.id)}
+                    testID={removeWhiteSpace(item.credential_issuer)}
+                    key={item.credential_issuer}
+                    id={item.credential_issuer}
+                    displayName={
+                      getDisplayObjectForCurrentLanguage(item.display)?.name
+                    }
+                    logoUrl={
+                      getDisplayObjectForCurrentLanguage(item.display)?.logo
+                        ?.url
+                    }
+                    onPress={() =>
+                      onPressHandler(item.credential_issuer, item.protocol)
+                    }
                     {...props}
                   />
                 )}
