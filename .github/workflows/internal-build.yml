@@ -62,7 +62,7 @@ on:
 
 jobs:
   build-android:
-    uses: mosip/kattu/.github/workflows/android-publish.yml@master
+    uses: tw-mosip/kattu/.github/workflows/android-publish.yml@add-inji-workflows
     with:
       NODE_VERSION: '16.x'
       RELEASE_KEYSTORE_ALIAS: androidreleasekey
@@ -81,7 +81,7 @@ jobs:
 
   build-android-beta:
     if: ${{ inputs.beta-release == 'Yes' }}
-    uses: mosip/kattu/.github/workflows/android-publish.yml@master
+    uses: tw-mosip/kattu/.github/workflows/android-publish.yml@add-inji-workflows
     with:
       BETA_RELEASE: ${{ inputs.beta-release }}
       NODE_VERSION: '16.x'
@@ -100,7 +100,7 @@ jobs:
       SLACK_URL: '${{ secrets.SLACK_WEBHOOK }}'
 
   build-ios:
-    uses: mosip/kattu/.github/workflows/ios-publish.yml@master
+    uses: tw-mosip/kattu/.github/workflows/ios-publish.yml@add-inji-workflows
     with:
       NODE_VERSION: '18.x'
       MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
@@ -127,9 +127,10 @@ jobs:
       SLACK_URL: '${{ secrets.SLACK_WEBHOOK }}'
   
   sonar-check:
-    uses: mosip/kattu/.github/workflows/sonar.yml@master
+    uses: tw-mosip/kattu/.github/workflows/sonar.yml@add-inji-workflows
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       SONAR_HOST_URL: https://sonarcloud.io
       SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
+      SLACK_URL: '${{ secrets.SLACK_WEBHOOK }}'
   

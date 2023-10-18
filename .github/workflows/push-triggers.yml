@@ -20,7 +20,7 @@ on:
 
 jobs:
   build-android:
-    uses: mosip/kattu/.github/workflows/android-build.yml@master
+    uses: tw-mosip/kattu/.github/workflows/android-build.yml@add-inji-workflows
     with:
       NODE_VERSION: "16.x"
     secrets:
@@ -28,13 +28,13 @@ jobs:
       DEBUG_KEYSTORE_PASSWORD: "dummypassword"
 
   build-ios:
-    uses: mosip/kattu/.github/workflows/ios-build.yml@master
+    uses: tw-mosip/kattu/.github/workflows/ios-build.yml@add-inji-workflows
     with:
       NODE_VERSION: "16.x"
 
   sonar-check:
     if: ${{ github.event_name == 'push' }}
-    uses: mosip/kattu/.github/workflows/sonar.yml@master
+    uses: tw-mosip/kattu/.github/workflows/sonar.yml@add-inji-workflows
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       SONAR_HOST_URL: https://sonarcloud.io
