@@ -1,38 +1,42 @@
 name: Push-Triggers
 
-.anchor-branches-tags: &branches-tags
+.anchor-branches: &branches
   branches:
     - main
     - develop
     - qa-develop
     - "release-**"
-  tags:
-    - "*"
 
 on:
   push:
-    <<: *branches-tags
+    <<: *branches
+  release:
+    types: [published]
   pull_request:
-    types: [opened, synchronize]
-    <<: *branches-tags
+    types: [opened, reopened, synchronize]
+    paths:
+      - 'charts/**'
+    <<: *branches
 
 jobs:
   build-android:
-    uses: mosip/kattu/.github/workflows/android-build.yml@master
+    uses: tw-mosip/kattu/.github/workflows/android-build.yml@add-inji-workflows
     with:
       NODE_VERSION: "16.x"
+    secrets:
       DEBUG_KEYSTORE_ALIAS: androiddebugkey
       DEBUG_KEYSTORE_PASSWORD: "dummypassword"
 
   build-ios:
-    uses: mosip/kattu/.github/workflows/ios-build.yml@master
+    uses: tw-mosip/kattu/.github/workflows/ios-build.yml@add-inji-workflows
     with:
       NODE_VERSION: "16.x"
 
   sonar-check:
     if: ${{ github.event_name == 'push' }}
-    uses: mosip/kattu/.github/workflows/sonar.yml@master
+    uses: tw-mosip/kattu/.github/workflows/sonar.yml@add-inji-workflows
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       SONAR_HOST_URL: https://sonarcloud.io
       SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
+      SLACK_URL: '${{ secrets.SLACK_WEBHOOK }}'
