@@ -180,12 +180,6 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         title={controller.walletBindingError}
         onButtonPress={controller.DISMISS}
       />
-      <ErrorMessageOverlay
-        translationPath={'MyVcsTab'}
-        isVisible={controller.isMinimumStorageLimitReached}
-        error={'errors.storageLimitReached'}
-        onDismiss={controller.DISMISS}
-      />
       <MessageOverlay
         isVisible={controller.isTampered}
         title={t('errors.vcIsTampered.title')}
