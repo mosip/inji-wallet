@@ -7,11 +7,11 @@ on:
       beta-release:
         description: 'Beta release?'
         required: true
-        default: 'No'
+        default: "false"
         type: choice
         options:
-          - Yes
-          - No
+          - false
+          - true
       buildname:
         description: 'Build App For'
         required: true
@@ -64,6 +64,7 @@ jobs:
   build-android:
     uses: tw-mosip/kattu/.github/workflows/android-publish.yml@add-inji-workflows
     with:
+      BETA_RELEASE: ${{ inputs.beta-release }}
       NODE_VERSION: '16.x'
       RELEASE_KEYSTORE_ALIAS: androidreleasekey
       MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
