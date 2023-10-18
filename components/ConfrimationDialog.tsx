@@ -45,8 +45,8 @@ export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = props => {
         </Column>
         <Button
           type="gradient"
-          title={t(props.confirmButtonText)}
-          onPress={props.onConfirmButtonPress}
+          title={t(props.waitButtonText)}
+          onPress={props.onWaitButtonPress}
           styles={Theme.MessageOverlayStyles.button}
         />
         <Button
@@ -63,10 +63,10 @@ export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = props => {
 export interface ConfirmationDialogProps {
   isVisible: boolean;
   title: string;
-  confirmButtonText: string;
+  waitButtonText: string;
   cancelButtonText: string;
   message?: string;
-  onConfirmButtonPress: () => void;
+  onWaitButtonPress: () => void;
   onCancelButtonPress: () => void;
   onBackdropPress?: () => void;
   customHeight?: number;
