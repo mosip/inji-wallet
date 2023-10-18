@@ -25,5 +25,5 @@ export default function testIDProps(id) {
 }
 
 export const removeWhiteSpace = (str: string) => {
-  return str.replace(/\s/g, '');
+  return str ? str.replace(/\s/g, '') : str;
 };
