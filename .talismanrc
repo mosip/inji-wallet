@@ -29,3 +29,9 @@ fileignoreconfig:
   checksum: 9a61cd59a3718adf1f14faf3024fec66a3295ef373878a878a28e5cb1287afaa
 - filename: ios/Podfile.lock
   checksum: cc123c3e1f04d41b394ceb16843b15c08bac3ba619ae853ff322717739761a85
+- filename: machines/store.ts
+  checksum: bbee269bd9703644c2a345819291caa42479b5ad0d5288713da780495b2ffb49
+- filename: shared/fileStorage.ts
+  checksum: 07cb337dc1d5b0f0eef56270ac4f4f589260ee5e490183c024cf98a2aeafb139
+- filename: shared/storage.ts
+  checksum: c8d874aa373bdf526bf59192139822f56915e702ef673bac4e0d7549b0fea3d0

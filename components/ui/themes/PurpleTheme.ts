@@ -227,8 +227,8 @@ export const PurpleTheme = {
       height: 30,
       backgroundColor: Colors.Grey,
       marginVertical: 8,
-      marginLeft: -35,
-      marginRight: 15,
+      marginLeft: -25,
+      marginRight: 12,
     },
     closeCardBgContainer: {
       borderRadius: 10,
@@ -1259,7 +1259,6 @@ export const PurpleTheme = {
   protectPrivacy: require('../../../assets/intro-unlock-method.png'),
   NoInternetConnection: require('../../../assets/no-internet-connection.png'),
   SomethingWentWrong: require('../../../assets/something-went-wrong.png'),
-  DigitIcon: require('../../../assets/digit-icon.png'),
 
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/

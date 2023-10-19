@@ -303,6 +303,10 @@
       "noInternetConnection": {
         "title": "No internet connection",
         "message": "Please check your connection and retry"
+      },
+      "downloadLimitExpires":{
+        "title": "Download Error",
+        "message": "There was an issue downloading following cards. Please try again"
       }
     }
   },
