@@ -25,9 +25,9 @@ export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = props => {
           {props.title && (
             <Text
               align="center"
-              weight="bold"
+              weight="semibold"
               margin="0 0 10 0"
-              size={'subHeader'}
+              size={'large'}
               color={Theme.Colors.Details}>
               {props.title}
             </Text>
@@ -36,9 +36,9 @@ export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = props => {
             <Text
               align="center"
               weight="semibold"
-              size="small"
+              size="regular"
               margin="10 0 12 0"
-              color={Theme.Colors.Details}>
+              color={Theme.Colors.DetailsLabel}>
               {props.message}
             </Text>
           )}
