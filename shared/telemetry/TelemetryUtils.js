@@ -208,6 +208,7 @@ export const TelemetryConstants = {
     resendOtp: 'Otp is requested multiple times',
     hardwareKeyStore:
       'Some security features will be unavailable as hardware key store is not available',
+    activationCancelled: 'Activation Cancelled',
   }),
 
   ErrorId: Object.freeze({

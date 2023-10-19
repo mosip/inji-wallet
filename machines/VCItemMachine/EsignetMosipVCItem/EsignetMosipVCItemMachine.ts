@@ -41,10 +41,8 @@ const model = createModel(
     verifiableCredential: null as VerifiableCredential,
     isPinned: false,
     hashedId: '',
-
     publicKey: '',
     privateKey: '',
-
     otp: '',
     otpError: '',
     idError: '',
@@ -54,6 +52,7 @@ const model = createModel(
     walletBindingError: '',
     walletBindingSuccess: false,
     isMachineInKebabPopupState: false,
+    bindingAuthFailedMessage: '' as string,
   },
   {
     events: {
@@ -634,14 +633,22 @@ export const EsignetMosipVCItemMachine = model.createMachine(
       ),
 
       setWalletBindingError: assign({
-        walletBindingError: (context, event) =>
+        walletBindingError: () =>
           i18n.t(`errors.genericError`, {
             ns: 'common',
           }),
+        bindingAuthFailedMessage: (_context, event) => {
+          const error = JSON.parse(JSON.stringify(event.data)).name;
+          if (error) {
+            return error + '-';
+          }
+          return '';
+        },
       }),
 
       setWalletBindingErrorEmpty: assign({
         walletBindingError: () => '',
+        bindingAuthFailedMessage: () => '',
       }),
 
       setWalletBindingSuccess: assign({
@@ -677,6 +684,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
               ? TelemetryConstants.FlowType.vcActivationFromKebab
               : TelemetryConstants.FlowType.vcActivation,
             TelemetryConstants.InteractEventSubtype.click,
+            'Activate Button',
           ),
         );
       },
@@ -690,8 +698,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
             TelemetryConstants.EndEventStatus.failure,
             {
               errorId: TelemetryConstants.ErrorId.userCancel,
-              errorMessage:
-                TelemetryConstants.ErrorMessage.authenticationCancelled,
+              errorMessage: TelemetryConstants.ErrorMessage.activationCancelled,
             },
           ),
         ),
@@ -947,7 +954,11 @@ export function selectEmptyWalletBindingId(state: State) {
 }
 
 export function selectWalletBindingError(state: State) {
-  return state.context.walletBindingError;
+  let error = state.context.walletBindingError;
+  if (state.context.bindingAuthFailedMessage !== '') {
+    error = state.context.bindingAuthFailedMessage + error;
+  }
+  return error;
 }
 
 export function selectKebabPopUpAcceptingBindingOtp(state: State) {

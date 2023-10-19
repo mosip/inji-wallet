@@ -72,6 +72,7 @@ const model = createModel(
     publicKey: '',
     privateKey: '',
     isMachineInKebabPopupState: false,
+    bindingAuthFailedMessage: '' as string,
   },
   {
     events: {
@@ -839,10 +840,18 @@ export const ExistingMosipVCItemMachine =
             });
             return errorMessage;
           },
+          bindingAuthFailedMessage: (_context, event) => {
+            const error = JSON.parse(JSON.stringify(event.data)).name;
+            if (error) {
+              return error + '-';
+            }
+            return '';
+          },
         }),
 
         setWalletBindingErrorEmpty: assign({
           walletBindingError: () => '',
+          bindingAuthFailedMessage: () => '',
         }),
 
         setWalletBindingSuccess: assign({
@@ -878,6 +887,7 @@ export const ExistingMosipVCItemMachine =
                 ? TelemetryConstants.FlowType.vcActivationFromKebab
                 : TelemetryConstants.FlowType.vcActivation,
               TelemetryConstants.InteractEventSubtype.click,
+              'Activate Button',
             ),
           );
         },
@@ -892,7 +902,7 @@ export const ExistingMosipVCItemMachine =
               {
                 errorId: TelemetryConstants.ErrorId.userCancel,
                 errorMessage:
-                  TelemetryConstants.ErrorMessage.authenticationCancelled,
+                  TelemetryConstants.ErrorMessage.activationCancelled,
               },
             ),
           ),
@@ -1569,7 +1579,11 @@ export function selectEmptyWalletBindingId(state: State) {
 }
 
 export function selectWalletBindingError(state: State) {
-  return state.context.walletBindingError;
+  let error = state.context.walletBindingError;
+  if (state.context.bindingAuthFailedMessage !== '') {
+    error = state.context.bindingAuthFailedMessage + error;
+  }
+  return error;
 }
 
 export function selectRequestBindingOtp(state: State) {

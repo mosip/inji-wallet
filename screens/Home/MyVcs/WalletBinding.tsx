@@ -22,22 +22,24 @@ import {
 
 export const WalletBinding: React.FC<WalletBindingProps> = props => {
   const controller = useKebabPopUp(props);
+  let bindingError: string = controller.walletBindingError.includes(
+    'binding_auth_failed',
+  )
+    ? controller.walletBindingError.split('-')[1]
+    : controller.walletBindingError;
 
   useEffect(() => {
-    if (
-      controller.walletBindingError ===
-      'Something is wrong. Please try again later!'
-    ) {
+    if (bindingError) {
       sendErrorEvent(
         getErrorEventData(
-          TelemetryConstants.FlowType.vcActivationFromKebab,
+          TelemetryConstants.FlowType.vcActivation,
           TelemetryConstants.ErrorId.activationFailed,
           controller.walletBindingError,
         ),
       );
       sendEndEvent(
         getEndEventData(
-          TelemetryConstants.FlowType.vcActivationFromKebab,
+          TelemetryConstants.FlowType.vcActivation,
           TelemetryConstants.EndEventStatus.failure,
         ),
       );
@@ -88,17 +90,20 @@ export const WalletBinding: React.FC<WalletBindingProps> = props => {
         onCancel={controller.CANCEL}
       />
 
-      <OtpVerificationModal
-        isVisible={controller.isAcceptingOtpInput}
-        onDismiss={controller.DISMISS}
-        onInputDone={controller.INPUT_OTP}
-        error={controller.otpError}
-        resend={controller.RESEND_OTP}
-        flow={TelemetryConstants.FlowType.vcActivationFromKebab}
-      />
+      {controller.isAcceptingOtpInput && (
+        <OtpVerificationModal
+          isVisible={controller.isAcceptingOtpInput}
+          onDismiss={controller.DISMISS}
+          onInputDone={controller.INPUT_OTP}
+          error={controller.otpError}
+          resend={controller.RESEND_OTP}
+          flow={TelemetryConstants.FlowType.vcActivationFromKebab}
+        />
+      )}
+
       <MessageOverlay
         isVisible={controller.isWalletBindingError}
-        title={controller.walletBindingError}
+        title={bindingError}
         onButtonPress={controller.CANCEL}
       />
       <MessageOverlay

@@ -22,6 +22,11 @@ import {
 export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
   const {t} = useTranslation('ViewVcModal');
   const controller = useViewVcModal(props);
+  let bindingError: string = controller.walletBindingError.includes(
+    'binding_auth_failed',
+  )
+    ? controller.walletBindingError.split('-')[1]
+    : controller.walletBindingError;
 
   const DATA = [
     {
@@ -33,10 +38,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
   ];
 
   useEffect(() => {
-    if (
-      controller.walletBindingError ===
-      'Something is wrong. Please try again later!'
-    ) {
+    if (bindingError) {
       sendErrorEvent(
         getErrorEventData(
           TelemetryConstants.FlowType.vcActivation,
@@ -118,7 +120,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
 
       <MessageOverlay
         isVisible={controller.isBindingError}
-        title={controller.walletBindingError}
+        title={bindingError}
         onButtonPress={() => {
           controller.CANCEL();
         }}
