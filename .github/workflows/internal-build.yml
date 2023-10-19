@@ -7,7 +7,7 @@ on:
       beta-release:
         description: 'Beta release?'
         required: true
-        default: "false"
+        default: 'false'
         type: choice
         options:
           - false
