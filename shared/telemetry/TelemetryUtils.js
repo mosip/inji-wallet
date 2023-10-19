@@ -224,5 +224,6 @@ export const TelemetryConstants = {
     passcode: 'Passcode',
     webViewPage: 'Web View Page',
     otpVerificationModal: 'Otp Verification Modal',
+    issuerList: 'Issuer List',
   }),
 };

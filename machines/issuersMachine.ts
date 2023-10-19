@@ -500,6 +500,14 @@ export const IssuersMachine = model.createMachine(
           ),
         );
       },
+      sendImpressionEvent: () => {
+        sendImpressionEvent(
+          getImpressionEventData(
+            TelemetryConstants.FlowType.vcDownload,
+            TelemetryConstants.Screens.issuerList,
+          ),
+        );
+      },
     },
     services: {
       downloadIssuersList: async () => {
