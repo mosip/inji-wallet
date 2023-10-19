@@ -1,4 +1,5 @@
 import {VC, VcIdType} from '../types/VC/ExistingMosipVC/vc';
+import {Protocols} from './openId4VCI/Utils';
 
 const VC_KEY_PREFIX = 'VC';
 const VC_ITEM_STORE_KEY_REGEX = '^VC_[a-zA-Z0-9_-]+$';
@@ -57,7 +58,7 @@ export class VCMetadata {
   }
 
   isFromOpenId4VCI() {
-    return this.protocol !== '' && this.issuer !== '';
+    return this.protocol === Protocols.OpenId4VCI;
   }
 
   // Used for mmkv storage purposes and as a key for components and vc maps

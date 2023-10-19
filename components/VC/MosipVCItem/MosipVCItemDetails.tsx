@@ -4,7 +4,7 @@ import * as DateFnsLocale from 'date-fns/locale';
 import {useTranslation} from 'react-i18next';
 import {Dimensions, Image, ImageBackground, View} from 'react-native';
 import {Icon} from 'react-native-elements';
-import {VC, CredentialSubject} from '../../../types/VC/ExistingMosipVC/vc';
+import {CredentialSubject, VC} from '../../../types/VC/ExistingMosipVC/vc';
 import {Button, Column, Row, Text} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import {TextItem} from '../../ui/TextItem';
@@ -20,10 +20,17 @@ import {
   VerifiablePresentation,
 } from '../../../types/VC/EsignetMosipVC/vc';
 import {WalletBindingResponse} from '../../../shared/cryptoutil/cryptoUtil';
+import {logoType} from '../../../machines/issuersMachine';
 
-const getIssuerLogo = (isOpenId4VCI: boolean, issuerLogo: string) => {
+const getIssuerLogo = (isOpenId4VCI: boolean, issuerLogo: logoType) => {
   if (isOpenId4VCI) {
-    return <Image src={issuerLogo} style={Theme.Styles.issuerLogo} />;
+    return (
+      <Image
+        src={issuerLogo?.url}
+        alt={issuerLogo?.alt_text}
+        style={Theme.Styles.issuerLogo}
+      />
+    );
   }
   return <Image source={Theme.MosipLogo} style={Theme.Styles.vcDetailsLogo} />;
 };

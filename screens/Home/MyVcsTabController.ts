@@ -9,6 +9,8 @@ import {
   selectAreAllVcsDownloaded,
   selectInProgressVcDownloads,
   selectIsTampered,
+  selectIsDownloadLimitExpired,
+  selectDownloadingFailedVcs,
 } from '../../machines/vc';
 import {
   selectWalletBindingError,
@@ -24,7 +26,6 @@ import {
   selectIsRequestSuccessful,
   selectGetVcModal,
   selectIsSavingFailedInIdle,
-  selectIsMinimumStorageLimitReached,
   selectIsNetworkOff,
 } from './MyVcsTabMachine';
 import {
@@ -52,10 +53,6 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
     walletBindingError: useSelector(service, selectWalletBindingError),
     isBindingError: useSelector(service, selectShowWalletBindingError),
     isBindingSuccess: useSelector(vcService, selectWalletBindingSuccess),
-    isMinimumStorageLimitReached: useSelector(
-      service,
-      selectIsMinimumStorageLimitReached,
-    ),
     isNetworkOff: useSelector(service, selectIsNetworkOff),
     showHardwareKeystoreNotExistsAlert: useSelector(
       settingsService,
@@ -65,6 +62,13 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
     inProgressVcDownloads: useSelector(vcService, selectInProgressVcDownloads),
 
     isTampered: useSelector(vcService, selectIsTampered),
+
+    isDownloadLimitExpires: useSelector(
+      vcService,
+      selectIsDownloadLimitExpired,
+    ),
+
+    downloadFailedVcs: useSelector(vcService, selectDownloadingFailedVcs),
 
     SET_STORE_VC_ITEM_STATUS: () =>
       service.send(MyVcsTabEvents.SET_STORE_VC_ITEM_STATUS()),
@@ -100,5 +104,6 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
       settingsService.send(SettingsEvents.ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS()),
 
     REMOVE_TAMPERED_VCS: () => vcService?.send(VcEvents.REMOVE_TAMPERED_VCS()),
+    DELETE_VC: () => vcService?.send(VcEvents.DELETE_VC()),
   };
 }

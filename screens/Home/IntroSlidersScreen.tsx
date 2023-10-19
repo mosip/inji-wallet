@@ -80,7 +80,11 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
               )}
             </Column>
           </Row>
-          <Image source={item.image} />
+          <Image
+            source={item.image}
+            resizeMode="contain"
+            style={{height: Dimensions.get('screen').height * 0.6}}
+          />
           <Column
             testID="introSlide"
             style={Theme.OnboardingOverlayStyles.bottomContainer}
