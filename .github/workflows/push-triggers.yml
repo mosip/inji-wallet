@@ -1,22 +1,21 @@
 name: Push-Triggers
-
-.anchor-branches: &branches
-  branches:
+  
+on:
+  push:
+    branches:
     - main
     - develop
     - qa-develop
     - "release-**"
-
-on:
-  push:
-    <<: *branches
-   release:
+  release:
     types: [published]
   pull_request:
     types: [opened, reopened, synchronize]
-    paths:
-      - 'charts/**'
-    <<: *branches
+    branches:
+    - main
+    - develop
+    - qa-develop
+    - "release-**"
 
 jobs:
   build-android:
@@ -25,7 +24,7 @@ jobs:
       NODE_VERSION: "16.x"
     secrets:
       DEBUG_KEYSTORE_ALIAS: androiddebugkey
-      DEBUG_KEYSTORE_PASSWORD: "dummypassword"
+      DEBUG_KEYSTORE_PASSWORD: 'dummypassword'
 
   build-ios:
     uses: tw-mosip/kattu/.github/workflows/ios-build.yml@add-inji-workflows
