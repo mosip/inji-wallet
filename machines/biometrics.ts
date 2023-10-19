@@ -1,7 +1,7 @@
-import { createModel } from 'xstate/lib/model';
+import {createModel} from 'xstate/lib/model';
 import * as LocalAuthentication from 'expo-local-authentication';
-import { EventFrom, MetaObject, StateFrom } from 'xstate';
-import { Platform } from 'react-native';
+import {EventFrom, MetaObject, StateFrom} from 'xstate';
+import {Platform} from 'react-native';
 
 // ----- CREATE MODEL ---------------------------------------------------------
 const model = createModel(
@@ -15,10 +15,10 @@ const model = createModel(
   },
   {
     events: {
-      SET_IS_AVAILABLE: (data: boolean) => ({ data }),
-      SET_AUTH: (data: unknown[]) => ({ data }),
-      SET_IS_ENROLLED: (data: boolean) => ({ data }),
-      SET_STATUS: (data: boolean) => ({ data }),
+      SET_IS_AVAILABLE: (data: boolean) => ({data}),
+      SET_AUTH: (data: unknown[]) => ({data}),
+      SET_IS_ENROLLED: (data: boolean) => ({data}),
+      SET_STATUS: (data: boolean) => ({data}),
 
       AUTHENTICATE: () => ({}),
       RETRY_AUTHENTICATE: () => ({}),
@@ -239,7 +239,7 @@ export const biometricsMachine = model.createMachine(
       sendFailedEndEvent: model.assign({
         error: (_context, event) => {
           const res = JSON.parse((event.data as Error).message);
-          return { res: res, stacktrace: event };
+          return {res: res, stacktrace: event};
         },
       }),
 
@@ -277,7 +277,7 @@ export function selectFailMessage(state: State) {
 }
 
 export function selectIsEnabled(state: State) {
-  return state.matches('available') || state.matches({ failure: 'unenrolled' });
+  return state.matches('available') || state.matches({failure: 'unenrolled'});
 }
 
 export function selectIsAvailable(state: State) {
@@ -285,11 +285,11 @@ export function selectIsAvailable(state: State) {
 }
 
 export function selectIsUnvailable(state: State) {
-  return state.matches({ failure: 'unavailable' });
+  return state.matches({failure: 'unavailable'});
 }
 
 export function selectIsUnenrolled(state: State) {
-  return state.matches({ failure: 'unenrolled' });
+  return state.matches({failure: 'unenrolled'});
 }
 
 export function selectIsSuccess(state: State) {
@@ -297,11 +297,11 @@ export function selectIsSuccess(state: State) {
 }
 
 export function selectError(state: State) {
-  return state.matches({ failure: 'error' }) ? selectFailMessage(state) : null;
+  return state.matches({failure: 'error'}) ? selectFailMessage(state) : null;
 }
 
 export function selectUnenrolledNotice(state: State) {
-  return state.matches({ failure: 'unenrolled' }) && state.context.retry
+  return state.matches({failure: 'unenrolled'}) && state.context.retry
     ? selectFailMessage(state)
     : null;
 }

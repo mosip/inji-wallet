@@ -2,7 +2,7 @@ fileignoreconfig:
 - filename: package.json
   checksum: 30e3a548809705ba38385a1c286b312629ac5dd7dea0d6e26ffb9daf8def312d
 - filename: package-lock.json
-  checksum: 4d595248dfa13967eef07ffee65f86809672a0d145d74b9df55b296bdbe29f78
+  checksum: a4c1fe2521067e1a279610f079446c600e8b7d5cf1553934dc419c3c476b4844
 - filename: components/PasscodeVerify.tsx
   checksum: 14654c0f038979fcd0d260170a45894a072f81e0767ca9a0e66935d33b5cc703
 - filename: i18n.ts
@@ -27,3 +27,9 @@ fileignoreconfig:
   checksum: d8fe74404c80bf435459f4d20427a661fb622f0ee9f754345616abd346b98d14
 - filename: shared/telemetry/TelemetryUtils.js
   checksum: 9a61cd59a3718adf1f14faf3024fec66a3295ef373878a878a28e5cb1287afaa
+- filename: machines/store.ts
+  checksum: bbee269bd9703644c2a345819291caa42479b5ad0d5288713da780495b2ffb49
+- filename: shared/fileStorage.ts
+  checksum: 07cb337dc1d5b0f0eef56270ac4f4f589260ee5e490183c024cf98a2aeafb139
+- filename: shared/storage.ts
+  checksum: c8d874aa373bdf526bf59192139822f56915e702ef673bac4e0d7549b0fea3d0

@@ -9,8 +9,7 @@ export const Issuer: React.FC<IssuerProps> = (props: IssuerProps) => {
   const {t} = useTranslation('IssuersScreen');
 
   function getIssuerLogo() {
-    if (props.logoUrl) return {uri: props.logoUrl};
-    return Theme.DigitIcon;
+    return {uri: props.logoUrl};
   }
 
   return (

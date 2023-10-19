@@ -21,16 +21,11 @@ export const API_URLS = {
 
 export const API = {
   fetchIssuers: async () => {
-    const defaultIssuer = {
-      id: 'UIN, VID, AID',
-      displayName: 'UIN, VID, AID',
-    };
-
     const response = await request(
       API_URLS.issuersList.method,
       API_URLS.issuersList.buildURL(),
     );
-    return [defaultIssuer, ...(response.response.issuers || [])];
+    return response.response.issuers || [];
   },
 
   fetchIssuerConfig: async (issuerId: string) => {

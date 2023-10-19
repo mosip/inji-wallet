@@ -11,7 +11,6 @@ import {TabRef} from './HomeScreenMachine';
 import {useTranslation} from 'react-i18next';
 import {ActorRefFrom} from 'xstate';
 import {ExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
-import {isOpenId4VCIEnabled} from '../../shared/openId4VCI/Utils';
 import LinearGradient from 'react-native-linear-gradient';
 import {EsignetMosipVCItemMachine} from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 import {ErrorMessageOverlay} from '../../components/MessageOverlay';
@@ -76,7 +75,7 @@ export const HomeScreen: React.FC<HomeRouteProps> = props => {
           </Column>
         )}
       </Column>
-      {isOpenId4VCIEnabled() && <DownloadFABIcon />}
+      <DownloadFABIcon />
       <ErrorMessageOverlay
         translationPath={'MyVcsTab'}
         isVisible={controller.isMinimumStorageLimitReached}
