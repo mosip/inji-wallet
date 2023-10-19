@@ -1,22 +1,21 @@
 name: Push-Triggers
-
-.anchor-branches: &branches
-  branches:
+  
+on:
+  push:
+    branches:
     - main
     - develop
     - qa-develop
     - "release-**"
-
-on:
-  push:
-    <<: *branches
   release:
     types: [published]
   pull_request:
     types: [opened, reopened, synchronize]
-    paths:
-      - 'charts/**'
-    <<: *branches
+    branches:
+    - main
+    - develop
+    - qa-develop
+    - "release-**"
 
 jobs:
   build-android:
