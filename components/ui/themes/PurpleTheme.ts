@@ -1181,11 +1181,13 @@ export const PurpleTheme = {
       fontFamily: 'Inter_600SemiBold',
       fontSize: 14,
       lineHeight: 17,
+      paddingTop: 1.7,
     },
     issuerDescription: {
       fontSize: 11,
       lineHeight: 14,
       color: Colors.ShadeOfGrey,
+      paddingTop: 1.4,
     },
     issuerIcon: {
       resizeMode: 'contain',

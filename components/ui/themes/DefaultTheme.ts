@@ -1181,6 +1181,7 @@ export const DefaultTheme = {
       lineHeight: 17,
       paddingHorizontal: 3,
       paddingBottom: 4,
+      paddingTop: 1.7,
     },
     issuerDescription: {
       fontSize: 11,
@@ -1188,6 +1189,7 @@ export const DefaultTheme = {
       color: Colors.ShadeOfGrey,
       paddingVertical: 5,
       paddingHorizontal: 3,
+      paddingTop: 1.4,
     },
     issuerIcon: {
       resizeMode: 'contain',
