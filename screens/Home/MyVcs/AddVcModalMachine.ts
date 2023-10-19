@@ -332,8 +332,6 @@ export const AddVcModalMachine =
 
         clearOtp: assign({otp: ''}),
 
-        printContext: context => console.log('>>>>>>>>> context ', context),
-
         focusInput: context => context.idInputRef.focus(),
       },
 
@@ -353,7 +351,6 @@ export const AddVcModalMachine =
         requestCredential: async context => {
           // force wait to fix issue with hanging overlay
           await new Promise(resolve => setTimeout(resolve, 1000));
-          console.log('>>>>>>>> start requestCredential ', context);
           const response = await request(
             'POST',
             '/residentmobileapp/credentialshare/request',
@@ -364,7 +361,6 @@ export const AddVcModalMachine =
               transactionID: context.transactionId,
             },
           );
-          console.log('>>>>> requestCredential ', response.response.requestId);
           return response.response.requestId;
         },
       },
