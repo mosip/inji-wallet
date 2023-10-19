@@ -33,13 +33,15 @@ const LanguageSetting: React.FC = () => {
           />
           <ListItem.Content>
             <ListItem.Title>
-              <Text weight="semibold">{t('language')}</Text>
+              <Text weight="semibold" color={Theme.Colors.settingsLabel}>
+                {t('language')}
+              </Text>
             </ListItem.Title>
           </ListItem.Content>
           <Icon
             name="chevron-right"
             size={21}
-            color={Theme.Colors.profileLanguageValue}
+            color={Theme.Colors.chevronRightColor}
             style={{marginRight: 15}}
           />
         </ListItem>
@@ -130,7 +132,7 @@ export const SettingScreen: React.FC<
               />
               <ListItem.Content>
                 <ListItem.Title>
-                  <Text weight="semibold" color={Theme.Colors.profileLabel}>
+                  <Text weight="semibold" color={Theme.Colors.settingsLabel}>
                     {t('bioUnlock')}
                   </Text>
                 </ListItem.Title>
@@ -171,6 +173,7 @@ export const SettingScreen: React.FC<
                 Icon="star"
                 errorMessage={t('errorMessage')}
                 progress={controller.isResetInjiProps}
+                titleColor={Theme.Colors.settingsLabel}
               />
             )}
 
@@ -188,7 +191,7 @@ export const SettingScreen: React.FC<
               />
               <ListItem.Content>
                 <ListItem.Title>
-                  <Text weight="semibold" color={Theme.Colors.profileLabel}>
+                  <Text weight="semibold" color={Theme.Colors.settingsLabel}>
                     {t('injiTourGuide')}
                   </Text>
                 </ListItem.Title>
@@ -205,7 +208,7 @@ export const SettingScreen: React.FC<
               />
               <ListItem.Content>
                 <ListItem.Title>
-                  <Text weight="semibold" color={Theme.Colors.profileLabel}>
+                  <Text weight="semibold" color={Theme.Colors.settingsLabel}>
                     {t('logout')}
                   </Text>
                 </ListItem.Title>

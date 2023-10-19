@@ -323,7 +323,7 @@ export const MosipVCItemContent: React.FC<
 
   function faceImageSource() {
     return !verifiableCredential
-      ? Theme.ProfileIcon
+      ? Theme.cardFaceIcon
       : {
           uri: props.vcMetadata.isFromOpenId4VCI()
             ? verifiableCredential?.credentialSubject.face

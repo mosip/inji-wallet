@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Markdown from 'react-native-simple-markdown';
-import { useTranslation } from 'react-i18next';
-import { Image, SafeAreaView, View } from 'react-native';
-import { Divider, Icon, ListItem, Overlay } from 'react-native-elements';
+import {useTranslation} from 'react-i18next';
+import {Image, SafeAreaView, View} from 'react-native';
+import {Divider, Icon, ListItem, Overlay} from 'react-native-elements';
 
-import { Button, Text, Row, Column } from '../../components/ui';
-import { Theme } from '../../components/ui/styleUtils';
+import {Button, Text, Row, Column} from '../../components/ui';
+import {Theme} from '../../components/ui/styleUtils';
 import creditsContent from '../../Credits.md';
 
-export const Credits: React.FC<CreditsProps> = (props) => {
-  const { t } = useTranslation('Credits');
+export const Credits: React.FC<CreditsProps> = props => {
+  const {t} = useTranslation('Credits');
   const [isViewing, setIsViewing] = useState(false);
   const images = {
     'docs/images/newlogic_logo.png': require('../../docs/images/newlogic_logo.png'),
@@ -36,7 +36,7 @@ export const Credits: React.FC<CreditsProps> = (props) => {
       react: (node, output, state) => (
         <View key={`image-${state.key}`}>
           <Image
-            style={{ maxWidth: 150, height: 100 }}
+            style={{maxWidth: 150, height: 100}}
             source={images[node.target]}
             resizeMode="contain"
           />
@@ -63,10 +63,10 @@ export const Credits: React.FC<CreditsProps> = (props) => {
       <Icon
         name="chevron-right"
         size={21}
-        color={Theme.Colors.profileLanguageValue}
+        color={Theme.Colors.chevronRightColor}
       />
       <Overlay
-        overlayStyle={{ padding: 24 }}
+        overlayStyle={{padding: 24}}
         isVisible={isViewing}
         onBackdropPress={() => setIsViewing(false)}>
         <SafeAreaView>

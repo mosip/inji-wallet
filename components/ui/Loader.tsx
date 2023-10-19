@@ -26,7 +26,7 @@ export const Loader: React.FC<LoaderProps> = props => {
               {props.subTitle && (
                 <Text
                   style={Theme.TextStyles.subHeader}
-                  color={Theme.Colors.profileValue}
+                  color={Theme.Colors.textLabel}
                   testID="loaderSubTitle">
                   {props.subTitle}
                 </Text>

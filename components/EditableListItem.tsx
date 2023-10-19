@@ -38,16 +38,16 @@ export const EditableListItem: React.FC<EditableListItemProps> = props => {
       />
       <ListItem.Content>
         <ListItem.Title>
-          <Text weight="semibold" color={Theme.Colors.profileLabel}>
+          <Text weight="semibold" color={props.titleColor}>
             {props.title}
           </Text>
         </ListItem.Title>
-        <Text color={Theme.Colors.profileValue}>{props.content}</Text>
+        <Text color={Theme.Colors.textLabel}>{props.content}</Text>
       </ListItem.Content>
       <Icon
         name="chevron-right"
         size={21}
-        color={Theme.Colors.profileLanguageValue}
+        color={Theme.Colors.chevronRightColor}
       />
       <Overlay
         overlayStyle={{padding: 24, elevation: 6}}
@@ -120,6 +120,7 @@ interface EditableListItemProps {
   onCancel: () => void;
   progress?: boolean;
   errorMessage?: string;
+  titleColor: string;
 }
 
 interface ListItemProps {
