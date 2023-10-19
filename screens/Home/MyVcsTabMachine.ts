@@ -139,15 +139,7 @@ export const MyVcsTabMachine = model.createMachine(
         invoke: {
           id: 'AddVcModal',
           src: AddVcModalMachine,
-          onDone: [
-            {
-              cond: 'isDownloadCancelled',
-              target: '#idle',
-            },
-            {
-              target: '.storing',
-            },
-          ],
+          onDone: '.storing',
         },
         on: {
           DISMISS: 'idle',
@@ -241,7 +233,6 @@ export const MyVcsTabMachine = model.createMachine(
     guards: {
       isMinimumStorageLimitReached: (_context, event) => Boolean(event.data),
       isNetworkOn: (_context, event) => Boolean(event.data),
-      isDownloadCancelled: (context, event) => !Boolean(event.data),
     },
   },
 );

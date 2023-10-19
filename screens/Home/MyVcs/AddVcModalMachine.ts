@@ -204,10 +204,10 @@ export const AddVcModalMachine =
         cancelDownload: {
           on: {
             CANCEL: {
-              actions: 'resetIdInputRef',
-              target: 'confirmCancel',
+              actions: ['resetIdInputRef', 'forwardToParent'],
             },
             WAIT: {
+              actions: ['printContext'],
               target: 'acceptingOtpInput',
             },
           },
@@ -238,14 +238,13 @@ export const AddVcModalMachine =
           type: 'final',
           data: context => new VCMetadata(context),
         },
-        confirmCancel: {
-          type: 'final',
-        },
       },
     },
     {
       actions: {
         forwardToParent: sendParent('DISMISS'),
+
+        printContext: context => console.log('>>>>>>>>> context ', context),
 
         setId: model.assign({
           id: (_context, event) => event.id,
