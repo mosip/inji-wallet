@@ -1236,6 +1236,16 @@ export const PurpleTheme = {
       color: Colors.mediumDarkGrey,
     },
   }),
+  SetupLanguageScreenStyle: StyleSheet.create({
+    columnStyle: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'space-around',
+      backgroundColor: Colors.White,
+      maxHeight: Dimensions.get('window').height,
+    },
+  }),
+
   ICON_SMALL_SIZE: 16,
   ICON_MID_SIZE: 22,
   PinIcon: require('../../../assets/pin_icon.png'),
@@ -1261,14 +1271,13 @@ export const PurpleTheme = {
   InjiHomeLogo: require('../../../assets/inji-home-logo.png'),
   MagnifierZoom: require('../../../assets/magnifier-zoom.png'),
   HelpIcon: require('../../../assets/help-icon.png'),
-  sharingIntro: require('../../../assets/Secure-Sharing.png'),
+  sharingIntro: require('../../../assets/intro-secure-sharing.png'),
   walletIntro: require('../../../assets/intro-wallet-binding.png'),
   IntroScanner: require('../../../assets/intro-scanner.png'),
   injiSmallLogo: require('../../../assets/inji_small_logo.png'),
-  protectPrivacy: require('../../../assets/phone_mockup_1.png'),
+  protectPrivacy: require('../../../assets/intro-unlock-method.png'),
   NoInternetConnection: require('../../../assets/no-internet-connection.png'),
   SomethingWentWrong: require('../../../assets/something-went-wrong.png'),
-  DigitIcon: require('../../../assets/digit-icon.png'),
 
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/

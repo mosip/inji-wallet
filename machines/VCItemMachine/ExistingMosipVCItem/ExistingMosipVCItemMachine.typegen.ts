@@ -225,6 +225,7 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]'
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
+    sendDownloadLimitExpire: 'error.platform.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]';
     sendTamperedVc: 'TAMPERED_VC';
     sendTelemetryEvents: 'STORE_RESPONSE';
     sendVcUpdated: 'PIN_CARD';

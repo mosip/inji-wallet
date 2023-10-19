@@ -13,7 +13,6 @@ import {
   MessageOverlay,
 } from '../../components/MessageOverlay';
 import {groupBy} from '../../shared/javascript';
-import {isOpenId4VCIEnabled} from '../../shared/openId4VCI/Utils';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
 import {BannerNotification} from '../../components/BannerNotification';
 import {
@@ -22,6 +21,12 @@ import {
   sendErrorEvent,
 } from '../../shared/telemetry/TelemetryUtils';
 import {Error} from '../../components/ui/Error';
+import {
+  getInteractEventData,
+  getStartEventData,
+  sendInteractEvent,
+  sendStartEvent,
+} from '../../shared/telemetry/TelemetryUtils';
 
 const pinIconProps = {iconName: 'pushpin', iconType: 'antdesign'};
 
@@ -63,6 +68,14 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
       );
     }
   }, [controller.areAllVcsLoaded, controller.inProgressVcDownloads]);
+
+  let failedVCsList = [];
+  controller.downloadFailedVcs.forEach(vc => {
+    failedVCsList.push(`${vc.idType}:${vc.id}\n`);
+  });
+  const downloadFailedVcsErrorMessage = `${t(
+    'errors.downloadLimitExpires.message',
+  )}\n${failedVCsList}`;
 
   return (
     <React.Fragment>
@@ -113,15 +126,6 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                   );
                 })}
               </Column>
-              {!isOpenId4VCIEnabled() && (
-                <Button
-                  testID="downloadCard"
-                  type="gradient"
-                  disabled={controller.isRefreshingVcs}
-                  title={t('downloadCard')}
-                  onPress={controller.DOWNLOAD_ID}
-                />
-              )}
             </React.Fragment>
           )}
           {controller.vcMetadatas.length === 0 && (
@@ -136,34 +140,13 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                   lineHeight={1}>
                   {t('bringYourDigitalID')}
                 </Text>
-
-                {isOpenId4VCIEnabled() && (
-                  <Text
-                    style={Theme.TextStyles.bold}
-                    color={Theme.Colors.textLabel}
-                    align="center"
-                    margin="0 12 30 12">
-                    {t('generateVcFABDescription')}
-                  </Text>
-                )}
-                {!isOpenId4VCIEnabled() && (
-                  <React.Fragment>
-                    <Text
-                      style={Theme.TextStyles.bold}
-                      color={Theme.Colors.textLabel}
-                      align="center"
-                      margin="0 12 30 12">
-                      {t('generateVcDescription')}
-                    </Text>
-                    <Button
-                      testID="downloadCard"
-                      type="gradient"
-                      disabled={controller.isRefreshingVcs}
-                      title={t('downloadCard')}
-                      onPress={controller.DOWNLOAD_ID}
-                    />
-                  </React.Fragment>
-                )}
+                <Text
+                  style={Theme.TextStyles.bold}
+                  color={Theme.Colors.textLabel}
+                  align="center"
+                  margin="0 12 30 12">
+                  {t('generateVcFABDescription')}
+                </Text>
               </Column>
             </React.Fragment>
           )}
@@ -206,12 +189,6 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         title={controller.walletBindingError}
         onButtonPress={controller.DISMISS}
       />
-      <ErrorMessageOverlay
-        translationPath={'MyVcsTab'}
-        isVisible={controller.isMinimumStorageLimitReached}
-        error={'errors.storageLimitReached'}
-        onDismiss={controller.DISMISS}
-      />
       <MessageOverlay
         isVisible={controller.isTampered}
         title={t('errors.vcIsTampered.title')}
@@ -220,6 +197,16 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         buttonText={t('common:ok')}
         customHeight={'auto'}
       />
+
+      <MessageOverlay
+        isVisible={controller.isDownloadLimitExpires}
+        title={t('errors.downloadLimitExpires.title')}
+        message={downloadFailedVcsErrorMessage}
+        onButtonPress={controller.DELETE_VC}
+        buttonText={t('common:ok')}
+        customHeight={'auto'}
+      />
+
       {controller.isNetworkOff && (
         <Error
           testID={`networkOffError`}

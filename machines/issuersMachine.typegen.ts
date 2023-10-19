@@ -74,7 +74,7 @@ export interface Typegen0 {
     verifyCredential: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
   };
   missingImplementations: {
-    actions: never;
+    actions: 'sendImpressionEvent';
     delays: never;
     guards: never;
     services: never;
@@ -94,6 +94,7 @@ export interface Typegen0 {
       | 'error.platform.issuersMachine.downloadIssuerConfig:invocation[0]'
       | 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     sendErrorEndEvent: 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
+    sendImpressionEvent: 'done.invoke.issuersMachine.displayIssuers:invocation[0]';
     sendSuccessEndEvent: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
     setCredentialWrapper: 'done.invoke.issuersMachine.downloadCredentials:invocation[0]';
     setError:

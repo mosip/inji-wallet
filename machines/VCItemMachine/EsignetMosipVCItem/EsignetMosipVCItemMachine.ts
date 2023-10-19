@@ -9,7 +9,7 @@ import {
   WalletBindingResponse,
 } from '../../../shared/cryptoutil/cryptoUtil';
 import {log} from 'xstate/lib/actions';
-import {OpenId4VCIProtocol} from '../../../shared/openId4VCI/Utils';
+import {Protocols} from '../../../shared/openId4VCI/Utils';
 import {StoreEvents} from '../../../machines/store';
 import {MIMOTO_BASE_URL, MY_VCS_STORE_KEY} from '../../../shared/constants';
 import {VcEvents} from '../../../machines/vc';
@@ -531,7 +531,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         context => ({
           type: 'GET_VC_ITEM',
           vcMetadata: context.vcMetadata,
-          protocol: OpenId4VCIProtocol,
+          protocol: Protocols.OpenId4VCI,
         }),
         {
           to: context => context.serviceRefs.vc,
