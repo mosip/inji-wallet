@@ -23,7 +23,7 @@ export const AddVcModal: React.FC<AddVcModalProps> = props => {
 
       <OtpVerificationModal
         isVisible={controller.isAcceptingOtpInput}
-        onDismiss={controller.CANCEL_DOWNLOAD}
+        onDismiss={controller.DISMISS}
         onInputDone={controller.INPUT_OTP}
         error={controller.otpError}
         resend={controller.RESEND_OTP}

@@ -26,8 +26,6 @@ export function useAddVcModal({service}: AddVcModalProps) {
 
     DISMISS: () => service.send(AddVcModalEvents.DISMISS()),
 
-    CANCEL_DOWNLOAD: () => service.send(AddVcModalEvents.CANCEL_DOWNLOAD()),
-
     WAIT: () => service.send(AddVcModalEvents.WAIT()),
 
     CANCEL: () => service.send(AddVcModalEvents.CANCEL()),

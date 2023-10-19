@@ -35,7 +35,6 @@ const model = createModel(
       DISMISS: () => ({}),
       CANCEL: () => ({}),
       WAIT: () => ({}),
-      CANCEL_DOWNLOAD: () => ({}),
       SELECT_ID_TYPE: (idType: VcIdType) => ({idType}),
     },
   },
@@ -174,13 +173,8 @@ export const AddVcModalMachine =
               actions: 'setOtp',
               target: 'requestingCredential',
             },
-            CANCEL_DOWNLOAD: {
-              actions: ['printContext'],
-              target: 'cancelDownload',
-            },
             DISMISS: {
-              actions: 'resetIdInputRef',
-              target: 'acceptingIdInput',
+              target: 'cancelDownload',
             },
             RESEND_OTP: {
               target: '.resendOTP',
@@ -208,7 +202,6 @@ export const AddVcModalMachine =
           },
         },
         cancelDownload: {
-          entry: 'printContext',
           on: {
             CANCEL: {
               actions: 'resetIdInputRef',
