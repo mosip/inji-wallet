@@ -301,6 +301,10 @@
       "noInternetConnection": {
         "title": "Pakisuri ang iyong koneksyon at subukang muli",
         "message": "Mangyaring kumonekta sa internet at subukang muli."
+      },
+      "downloadLimitExpires":{
+        "title": "Error sa Pag-download",
+        "message": "Nagkaroon ng isyu sa pag-download ng mga sumusunod na card. Pakisubukang muli"
       }
     }
   },
@@ -363,7 +367,7 @@
     "version": "Bersyon",
     "useBle": "Pinapatakbo ng BLE"
   },
-  "QrScreen": {
+  "QrLogin": {
     "title": "QR Login",
     "alignQr": "I-align ang QR code sa loob ng frame para i-scan",
     "confirmation": "Kumpirmasyon",
@@ -380,8 +384,8 @@
     "domainWarning": "Pakikumpirma ang domain ng website kung saan mo ini-scan ang QR code mula sa ibaba",
     "access": " ay humihiling ng access sa",
     "status": "Katayuan",
-    "successMessage": "Ikaw ay Matagumpay na Naka-log In ",
-    "okay": "Sige",
+    "successMessage": "Matagumpay kang naka-log in sa ",
+    "ok": "OK",
     "allow": "Payagan",
     "cancel": "Kanselahin",
     "essentialClaims": "Mahahalagang Claim",
@@ -466,7 +470,7 @@
   },
   "ScanScreen": {
     "header": "I-scan ang QR Code",
-    "noShareableVcs": "Walang magagamit na maibabahaging card..",
+    "noShareableVcs": "Walang magagamit na mga card na maibabahagi.",
     "sharingVc": "Pagbabahagi ng card",
     "bluetoothStateIos": "Naka-OFF ang Bluetooth, paki-ON ito mula sa control center",
     "bluetoothStateAndroid": "Naka-OFF ang Bluetooth, paki-ON ito mula sa control center",
@@ -569,8 +573,7 @@
   },
   "WelcomeScreen": {
     "title": "Open Source Identity Solution",
-    "getStarted": "Magsimula",
-    "unlockApp": "Buksan ang aplikasyon",
+    "unlockApplication": "I-unlock ang Application",
     "failedToReadKeys": "Nabigong basahin ang mga susi",
     "retryRead": "Gustong subukang muli?",
     "errors": {

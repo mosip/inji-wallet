@@ -16,9 +16,10 @@ const WalletUnverifiedIcon: React.FC = () => {
       size={Theme.ICON_MID_SIZE}
       type="material-community"
       containerStyle={{
-        marginStart: 10,
+        marginStart: 1,
+        marginEnd: 1,
         bottom: 1,
-        marginLeft: 10,
+        marginRight: -2,
       }}
     />
   );
@@ -48,13 +49,14 @@ const WalletUnverifiedActivationDetails: React.FC<
         crossAlign="center"
         style={{
           flex: 1,
+          maxWidth: 255,
         }}>
         {props.verifiableCredential && <WalletUnverifiedIcon />}
         <Text
           color={Theme.Colors.Details}
           testID="activationPending"
           weight="regular"
-          margin="8 10 10 5"
+          margin="8"
           style={
             !props.verifiableCredential
               ? Theme.Styles.loadingTitle

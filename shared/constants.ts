@@ -6,6 +6,7 @@ import {
   DEBUG_MODE,
 } from 'react-native-dotenv';
 import {Argon2iConfig} from './commonUtil';
+import {VcIdType} from '../types/vc';
 
 export let MIMOTO_BASE_URL = MIMOTO_HOST;
 export let ESIGNET_BASE_URL = ESIGNET_HOST;
@@ -20,10 +21,10 @@ export const RECEIVED_VCS_STORE_KEY = 'receivedVCs';
 
 export const MY_LOGIN_STORE_KEY = 'myLogins';
 
-export let individualId = '';
+export let individualId = {id: '', idType: 'UIN' as VcIdType};
 
-export const GET_INDIVIDUAL_ID = (ind_Id: string) => {
-  individualId = ind_Id;
+export const GET_INDIVIDUAL_ID = (currentIndividualId: IndividualId) => {
+  individualId = currentIndividualId;
 };
 
 export const ACTIVITY_LOG_STORE_KEY = 'activityLog';
@@ -69,5 +70,9 @@ export const argon2iConfigForUinVid: Argon2iConfig = {
 export const argon2iSalt =
   '1234567891011121314151617181920212223242526272829303132333435363';
 
+export type IndividualId = {
+  id: string;
+  idType: VcIdType;
+};
 export const NETWORK_REQUEST_FAILED = 'Network request failed';
 export const REQUEST_TIMEOUT = 'request timedout';

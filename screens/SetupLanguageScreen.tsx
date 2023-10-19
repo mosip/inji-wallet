@@ -11,7 +11,6 @@ import {Theme} from '../components/ui/styleUtils';
 import {Icon} from 'react-native-elements';
 import {RootRouteProps} from '../routes';
 import {useWelcomeScreen} from './WelcomeScreenController';
-import {__SelectedLanguage} from '../shared/GlobalVariables';
 
 export const SetupLanguageScreen: React.FC<RootRouteProps> = props => {
   const {t} = useTranslation('SetupLanguage');
@@ -23,7 +22,6 @@ export const SetupLanguageScreen: React.FC<RootRouteProps> = props => {
   const changeLanguage = async (language: string) => {
     if (language !== i18n.language) {
       await i18n.changeLanguage(language).then(async () => {
-        __SelectedLanguage.setValue(language);
         await Storage.setItem('language', i18n.language);
         const isRTL = i18next.dir(language) === 'rtl' ? true : false;
         if (isRTL !== I18nManager.isRTL) {
@@ -41,11 +39,7 @@ export const SetupLanguageScreen: React.FC<RootRouteProps> = props => {
   };
 
   return (
-    <Column
-      align="space-around"
-      crossAlign="center"
-      backgroundColor={Theme.Colors.whiteBackgroundColor}
-      height={Dimensions.get('window').height * 0.9}>
+    <Column style={Theme.SetupLanguageScreenStyle.columnStyle}>
       <Icon
         name="globe"
         type="simple-line-icon"
@@ -53,14 +47,10 @@ export const SetupLanguageScreen: React.FC<RootRouteProps> = props => {
         size={58}
       />
       <Column crossAlign="center">
-        <Text testID="chooseLanguage" margin="0 0 10 0" weight="semibold">
+        <Text testID="chooseLanguage" margin="10 0 10 0" weight="semibold">
           {t('header')}
         </Text>
-        <Text
-          style={{paddingVertical: 18}}
-          weight="semibold"
-          align="center"
-          color={Theme.Colors.GrayText}>
+        <Text weight="semibold" align="center" color={Theme.Colors.GrayText}>
           {t('description')}
         </Text>
       </Column>

@@ -13,10 +13,19 @@ import {
   MessageOverlay,
 } from '../../components/MessageOverlay';
 import {groupBy} from '../../shared/javascript';
-import {isOpenId4VCIEnabled} from '../../shared/openId4VCI/Utils';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
 import {BannerNotification} from '../../components/BannerNotification';
+import {
+  getErrorEventData,
+  sendErrorEvent,
+} from '../../shared/telemetry/TelemetryUtils';
 import {Error} from '../../components/ui/Error';
+import {
+  getInteractEventData,
+  getStartEventData,
+  sendInteractEvent,
+  sendStartEvent,
+} from '../../shared/telemetry/TelemetryUtils';
 
 const pinIconProps = {iconName: 'pushpin', iconType: 'antdesign'};
 
@@ -36,7 +45,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   };
 
   const clearIndividualId = () => {
-    GET_INDIVIDUAL_ID('');
+    GET_INDIVIDUAL_ID({id: '', idType: 'UIN'});
   };
 
   useEffect(() => {
@@ -44,10 +53,29 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
       controller.RESET_STORE_VC_ITEM_STATUS();
       controller.RESET_ARE_ALL_VCS_DOWNLOADED();
     }
-    if (controller.inProgressVcDownloadsCount > 0) {
+    if (controller.inProgressVcDownloads?.size > 0) {
       controller.SET_STORE_VC_ITEM_STATUS();
     }
-  }, [controller.areAllVcsLoaded, controller.inProgressVcDownloadsCount]);
+
+    if (controller.showHardwareKeystoreNotExistsAlert) {
+      sendErrorEvent(
+        getErrorEventData(
+          'App Onboarding',
+          'does_not_exist',
+          'Some security features will be unavailable as hardware key store is not available',
+        ),
+      );
+    }
+  }, [controller.areAllVcsLoaded, controller.inProgressVcDownloads]);
+
+  let failedVCsList = [];
+  controller.downloadFailedVcs.forEach(vc => {
+    failedVCsList.push(`${vc.idType}:${vc.id}\n`);
+  });
+  const downloadFailedVcsErrorMessage = `${t(
+    'errors.downloadLimitExpires.message',
+  )}\n${failedVCsList}`;
+
   return (
     <React.Fragment>
       <Column fill style={{display: props.isVisible ? 'flex' : 'none'}}>
@@ -90,19 +118,13 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                       vcMetadata={vcMetadata}
                       margin="0 2 8 2"
                       onPress={controller.VIEW_VC}
+                      isDownloading={controller.inProgressVcDownloads?.has(
+                        vcMetadata.getVcKey(),
+                      )}
                     />
                   );
                 })}
               </Column>
-              {!isOpenId4VCIEnabled() && (
-                <Button
-                  testID="downloadCard"
-                  type="gradient"
-                  disabled={controller.isRefreshingVcs}
-                  title={t('downloadCard')}
-                  onPress={controller.DOWNLOAD_ID}
-                />
-              )}
             </React.Fragment>
           )}
           {controller.vcMetadatas.length === 0 && (
@@ -117,34 +139,13 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                   lineHeight={1}>
                   {t('bringYourDigitalID')}
                 </Text>
-
-                {isOpenId4VCIEnabled() && (
-                  <Text
-                    style={Theme.TextStyles.bold}
-                    color={Theme.Colors.textLabel}
-                    align="center"
-                    margin="0 12 30 12">
-                    {t('generateVcFABDescription')}
-                  </Text>
-                )}
-                {!isOpenId4VCIEnabled() && (
-                  <React.Fragment>
-                    <Text
-                      style={Theme.TextStyles.bold}
-                      color={Theme.Colors.textLabel}
-                      align="center"
-                      margin="0 12 30 12">
-                      {t('generateVcDescription')}
-                    </Text>
-                    <Button
-                      testID="downloadCard"
-                      type="gradient"
-                      disabled={controller.isRefreshingVcs}
-                      title={t('downloadCard')}
-                      onPress={controller.DOWNLOAD_ID}
-                    />
-                  </React.Fragment>
-                )}
+                <Text
+                  style={Theme.TextStyles.bold}
+                  color={Theme.Colors.textLabel}
+                  align="center"
+                  margin="0 12 30 12">
+                  {t('generateVcFABDescription')}
+                </Text>
               </Column>
             </React.Fragment>
           )}
@@ -187,12 +188,6 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         title={controller.walletBindingError}
         onButtonPress={controller.DISMISS}
       />
-      <ErrorMessageOverlay
-        translationPath={'MyVcsTab'}
-        isVisible={controller.isMinimumStorageLimitReached}
-        error={'errors.storageLimitReached'}
-        onDismiss={controller.DISMISS}
-      />
       <MessageOverlay
         isVisible={controller.isTampered}
         title={t('errors.vcIsTampered.title')}
@@ -201,6 +196,16 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         buttonText={t('common:ok')}
         customHeight={'auto'}
       />
+
+      <MessageOverlay
+        isVisible={controller.isDownloadLimitExpires}
+        title={t('errors.downloadLimitExpires.title')}
+        message={downloadFailedVcsErrorMessage}
+        onButtonPress={controller.DELETE_VC}
+        buttonText={t('common:ok')}
+        customHeight={'auto'}
+      />
+
       {controller.isNetworkOff && (
         <Error
           testID={`networkOffError`}

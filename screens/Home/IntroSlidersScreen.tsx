@@ -25,13 +25,13 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
       key: 'two',
       title: t('stepTwoTitle'),
       text: t('stepTwoText'),
-      image: Theme.sharingIntro,
+      image: Theme.walletIntro,
     },
     {
       key: 'three',
       title: t('stepThreeTitle'),
       text: t('stepThreeText'),
-      image: Theme.walletIntro,
+      image: Theme.sharingIntro,
     },
     {
       key: 'four',
@@ -80,7 +80,11 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
               )}
             </Column>
           </Row>
-          <Image source={item.image} />
+          <Image
+            source={item.image}
+            resizeMode="contain"
+            style={{height: Dimensions.get('screen').height * 0.6}}
+          />
           <Column
             testID="introSlide"
             style={Theme.OnboardingOverlayStyles.bottomContainer}

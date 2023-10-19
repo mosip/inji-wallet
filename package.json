@@ -1,6 +1,7 @@
 {
   "scripts": {
     "prepare": "husky install",
+    "jetify": "jetify",
     "start": "react-native start",
     "android:mosip": "react-native run-android --variant=mosipDebug",
     "ios": "react-native run-ios",
@@ -8,7 +9,7 @@
     "i18n:compile-strings": "node scripts/compile-strings.js",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "test": "jest",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package && npm run jetify && sh tools/talisman/talisman-precommit.sh"
   },
   "dependencies": {
     "@digitalbazaar/ed25519-signature-2018": "digitalbazaar/ed25519-signature-2018",
@@ -86,7 +87,8 @@
     "react-native-vector-icons": "^10.0.0",
     "short-unique-id": "^4.4.4",
     "simple-pem2jwk": "^0.2.4",
-    "telemetry-sdk": "git://github.com/mosip/sunbird-telemetry-sdk.git#develop",
+    "telemetry-sdk": "git://github.com/mosip/sunbird-telemetry-sdk.git#f762be5732ee552c0c70bdd540aa4e2701554c71",  
+    "telemetry-sdk": "git://github.com/mosip/sunbird-telemetry-sdk.git#develop",  
     "xstate": "^4.35.0"
   },
   "devDependencies": {

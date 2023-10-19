@@ -32,8 +32,8 @@ import SecureKeystore from 'react-native-secure-keystore';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {
   sendStartEvent,
-  getData,
-  getEndData,
+  getStartEventData,
+  getEndEventData,
   sendEndEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
 
@@ -173,7 +173,10 @@ export const ExistingMosipVCItemMachine =
                   actions: ['setMaxDownloadCount', 'setDownloadInterval'],
                 },
                 onError: {
-                  actions: log((_, event) => (event.data as Error).message),
+                  actions: [
+                    log((_, event) => (event.data as Error).message),
+                    'sendDownloadLimitExpire',
+                  ],
                   target: 'checkingStatus',
                 },
               },
@@ -216,6 +219,7 @@ export const ExistingMosipVCItemMachine =
                     'setVerifiableCredential',
                     'updateVc',
                     'logDownloaded',
+                    'sendTelemetryEvents',
                     'removeVcFromInProgressDownloads',
                   ],
                   target: '#vc-item.checkingVerificationStatus',
@@ -301,7 +305,9 @@ export const ExistingMosipVCItemMachine =
             showBindingWarning: {
               on: {
                 CONFIRM: {
-                  actions: [() => sendStartEvent(getData('VC activation'))],
+                  actions: [
+                    () => sendStartEvent(getStartEventData('VC activation')),
+                  ],
                   target: '#vc-item.kebabPopUp.requestingBindingOtp',
                 },
                 CANCEL: {
@@ -416,7 +422,8 @@ export const ExistingMosipVCItemMachine =
                     'setWalletBindingErrorEmpty',
                     'sendWalletBindingSuccess',
                     'logWalletBindingSuccess',
-                    () => sendEndEvent(getEndData('VC activation')),
+                    () =>
+                      sendEndEvent(getEndEventData('VC activation', 'SUCCESS')),
                   ],
                   target: '#vc-item.kebabPopUp',
                 },
@@ -633,7 +640,7 @@ export const ExistingMosipVCItemMachine =
         showBindingWarning: {
           on: {
             CONFIRM: {
-              actions: () => sendStartEvent(getData('VC activation')),
+              actions: () => sendStartEvent(getStartEventData('VC activation')),
               target: 'requestingBindingOtp',
             },
             CANCEL: {
@@ -743,7 +750,7 @@ export const ExistingMosipVCItemMachine =
                 'setWalletBindingErrorEmpty',
                 'setWalletBindingSuccess',
                 'logWalletBindingSuccess',
-                () => sendEndEvent(getEndData('VC activation')),
+                () => sendEndEvent(getEndEventData('VC activation', 'SUCCESS')),
               ],
               target: 'idle',
             },
@@ -797,6 +804,18 @@ export const ExistingMosipVCItemMachine =
             return {
               type: 'REMOVE_VC_FROM_CONTEXT',
               vcMetadata: context.vcMetadata,
+            };
+          },
+          {
+            to: context => context.serviceRefs.vc,
+          },
+        ),
+
+        sendDownloadLimitExpire: send(
+          (_context, event) => {
+            return {
+              type: 'DOWNLOAD_LIMIT_EXPIRED',
+              vcMetadata: _context.vcMetadata,
             };
           },
           {
@@ -1000,7 +1019,11 @@ export const ExistingMosipVCItemMachine =
               };
             case 'GET_VC_RESPONSE':
             case 'CREDENTIAL_DOWNLOADED':
-              return {...context, ...event.vc, vcMetadata: context.vcMetadata};
+              return {
+                ...context,
+                ...event.vc,
+                vcMetadata: context.vcMetadata,
+              };
           }
         }),
 
@@ -1019,6 +1042,9 @@ export const ExistingMosipVCItemMachine =
             to: context => context.serviceRefs.activityLog,
           },
         ),
+        sendTelemetryEvents: () => {
+          sendEndEvent({type: 'VC Download', status: 'SUCCESS'});
+        },
 
         logWalletBindingSuccess: send(
           context =>
