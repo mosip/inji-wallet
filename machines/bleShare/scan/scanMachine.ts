@@ -435,7 +435,10 @@ export const scanMachine =
           },
           entry: [
             'sendScanData',
-            () => sendStartEvent(getStartEventData(FlowType.qrLogin)),
+            () =>
+              sendStartEvent(
+                getStartEventData(TelemetryConstants.FlowType.qrLogin),
+              ),
           ],
         },
         connecting: {

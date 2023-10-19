@@ -33,3 +33,7 @@ fileignoreconfig:
   checksum: 07cb337dc1d5b0f0eef56270ac4f4f589260ee5e490183c024cf98a2aeafb139
 - filename: shared/storage.ts
   checksum: c8d874aa373bdf526bf59192139822f56915e702ef673bac4e0d7549b0fea3d0
+- filename: machines/issuersMachine.ts
+  checksum: 8e5c4cf8c4a1803ae889dee1fd3390aa59ae4b39901fb55135b196fe039617b1
+- filename: screens/Issuers/IssuersScreen.tsx
+  checksum: bc12c43ccc27ac04e5763fa6a6ed3cee63e4362ba5666c160b5e53269de924ab

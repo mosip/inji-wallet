@@ -34,14 +34,16 @@ export const AddVcModal: React.FC<AddVcModalProps> = props => {
         onPress={props.onPress}
       />
 
-      <OtpVerificationModal
-        isVisible={controller.isAcceptingOtpInput}
-        onDismiss={controller.DISMISS}
-        onInputDone={controller.INPUT_OTP}
-        error={controller.otpError}
-        resend={controller.RESEND_OTP}
-        flow={TelemetryConstants.FlowType.vcDownload}
-      />
+      {controller.isAcceptingOtpInput && (
+        <OtpVerificationModal
+          isVisible={controller.isAcceptingOtpInput}
+          onDismiss={controller.DISMISS}
+          onInputDone={controller.INPUT_OTP}
+          error={controller.otpError}
+          resend={controller.RESEND_OTP}
+          flow={TelemetryConstants.FlowType.vcDownload}
+        />
+      )}
 
       <MessageOverlay
         isVisible={controller.isRequestingCredential}

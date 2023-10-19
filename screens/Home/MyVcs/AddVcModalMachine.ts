@@ -14,10 +14,8 @@ import i18n from '../../../i18n';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {
   getErrorEventData,
-  getImpressionEventData,
   getInteractEventData,
   sendErrorEvent,
-  sendImpressionEvent,
   sendInteractEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
 
@@ -157,7 +155,6 @@ export const AddVcModalMachine =
                 src: 'requestOtp',
                 onDone: [
                   {
-                    actions: 'sendImpressionEvent',
                     target: '#AddVcModal.acceptingOtpInput',
                   },
                 ],
@@ -334,12 +331,6 @@ export const AddVcModalMachine =
         clearOtp: assign({otp: ''}),
 
         focusInput: context => context.idInputRef.focus(),
-
-        sendImpressionEvent: () => {
-          sendImpressionEvent(
-            getImpressionEventData('VC Download', 'OTP Verification'),
-          );
-        },
       },
 
       services: {
