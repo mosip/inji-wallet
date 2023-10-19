@@ -364,11 +364,6 @@
     "confirmPasscode": "Confirm passcode",
     "enterPasscode": "Enter your passcode"
   },
-  "AppMetaData": {
-    "header": "About Inji",
-    "version": "Version",
-    "useBle": "Powered by BLE"
-  },
   "QrLogin": {
     "title": "QR Login",
     "alignQr": "Align the QR code within the frame to scan",

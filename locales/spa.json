@@ -254,11 +254,6 @@
 		"confirmPasscode": "Confirma tu código de acceso",
 		"enterPasscode": "Ingresa tu código de acceso"
 	},
-	"AppMetaData": {
-		"header": "Acerca de Inji",
-		"version": "Versión",
-		"useBle": "Impulsado por BLE"
-	},
 	"SettingScreen": {
 		"header": "Ajustes",
 		"injiAsVerifierApp": "Inji como aplicación verificadora",
@@ -733,11 +728,6 @@
     "header": "Establece un código de acceso para proteger tu aplicación",
     "confirmPasscode": "Confirma tu código de acceso",
     "enterPasscode": "Ingresa tu código de acceso"
-  },
-  "AppMetaData": {
-    "header": "Acerca de Inji",
-    "version": "Versión",
-    "useBle": "Impulsado por BLE"
   },
   "SettingScreen": {
     "header": "Ajustes",

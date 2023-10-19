@@ -356,11 +356,6 @@
     "confirmPasscode": "Kumpirmahin ang passcode",
     "enterPasscode": "Ilagay ang iyong passcode"
   },
-  "AppMetaData": {
-    "header": "Tungkol kay Inji",
-    "version": "Bersyon",
-    "useBle": "Pinapatakbo ng BLE"
-  },
   "QrLogin": {
     "title": "QR Login",
     "alignQr": "I-align ang QR code sa loob ng frame para i-scan",
