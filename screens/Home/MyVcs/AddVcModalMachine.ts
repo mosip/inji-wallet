@@ -207,7 +207,6 @@ export const AddVcModalMachine =
               actions: ['resetIdInputRef', 'forwardToParent'],
             },
             WAIT: {
-              actions: ['printContext'],
               target: 'acceptingOtpInput',
             },
           },
@@ -243,8 +242,6 @@ export const AddVcModalMachine =
     {
       actions: {
         forwardToParent: sendParent('DISMISS'),
-
-        printContext: context => console.log('>>>>>>>>> context ', context),
 
         setId: model.assign({
           id: (_context, event) => event.id,

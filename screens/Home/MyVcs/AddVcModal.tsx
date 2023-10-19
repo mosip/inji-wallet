@@ -15,7 +15,9 @@ export const AddVcModal: React.FC<AddVcModalProps> = props => {
       <IdInputModal
         service={props.service}
         isVisible={
-          !controller.isAcceptingOtpInput && !controller.isRequestingCredential
+          (!controller.isAcceptingOtpInput &&
+            !controller.isRequestingCredential) ||
+          !controller.isDownloadCancelled
         }
         onDismiss={controller.DISMISS}
         onPress={props.onPress}
