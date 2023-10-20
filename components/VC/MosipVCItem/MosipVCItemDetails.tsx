@@ -147,7 +147,7 @@ export const MosipVCItemDetails: React.FC<
                   <Text
                     testID="nationalCard"
                     weight="bold"
-                    style={{MinWidth: 65}}
+                    style={{minWidth: 65}}
                     size="smaller"
                     color={Theme.Colors.Details}>
                     {t('nationalCard')}
