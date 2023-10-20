@@ -26,13 +26,11 @@ fileignoreconfig:
 - filename: screens/WelcomeScreenController.ts
   checksum: 71917c8c543a4a5b7ab61df259b785d233a80718123b0c8edf6ec81e1b3a81e0
 - filename: shared/telemetry/TelemetryUtils.js
-  checksum: 9a61cd59a3718adf1f14faf3024fec66a3295ef373878a878a28e5cb1287afaa
-- filename: machines/store.ts
-  checksum: bbee269bd9703644c2a345819291caa42479b5ad0d5288713da780495b2ffb49
+  checksum: ffe9aac2dcc590b98b0d588885c088eff189504ade653a77f74b67312bfd27ad
 - filename: shared/fileStorage.ts
   checksum: 07cb337dc1d5b0f0eef56270ac4f4f589260ee5e490183c024cf98a2aeafb139
 - filename: shared/storage.ts
-  checksum: cc8486029ec4e08b70b0a2103dbd5214fba25557daaff79e30cad95202f38b16
+  checksum: c8d874aa373bdf526bf59192139822f56915e702ef673bac4e0d7549b0fea3d0
 - filename: screens/Home/IntroSlidersScreen.tsx
   checksum: 72ef913857448ef05763e52e32356faa2d1f3de8130a1c638d1897f44823031f
 - filename: shared/commonUtil.ts
@@ -41,3 +39,17 @@ fileignoreconfig:
   checksum: 5c736ed79a372d0ffa7c02eb33d0dc06edbbb08d120978ff287f5f06cd6c7746
 - filename: shared/openId4VCI/Utils.ts
   checksum: 2bd39d84099d700e5bddeebe87dfb3b0e3075edc0a4d06ce48b428b0a85e238f
+- filename: machines/issuersMachine.ts
+  checksum: b925df13236145867fc7a1a2a703faca854e8c937dac9451008399e3937592fb
+- filename: machines/issuersMachine.typegen.ts
+  checksum: f5e2c89f9029b1e590173e37b2cf6586d5229ecb7d4dfd4c5f050f9416d3c1cd
+- filename: machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine.ts
+  checksum: eec77ca61540327ff7cab3489ebdfd47aa373fd20b3ff87a6c322cd48d35fe8f
+- filename: machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine.typegen.ts
+  checksum: f1f504bd8c14496ee71f8eb7f40d54411cc05be03347d644dcc2cca187a20678
+- filename: machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine.ts
+  checksum: 237a2640b7db70770d65da67c79f2929581e32f1162517e50b8d37e409f3387d
+- filename: machines/store.ts
+  checksum: 0695d833df9ec1e1f6ae2bd81631630bb1039dec387718acb153bcb843c952cd
+- filename: shared/cryptoutil/cryptoUtil.ts
+  checksum: b785ff3f01ab9530119072c4d38195048bfeee6155c54ea7dd031559acb722f3

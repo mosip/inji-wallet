@@ -18,6 +18,11 @@ export function generateKeys(): Promise<KeyPair> {
   return Promise.resolve(RSA.generateKeys(4096));
 }
 
+/**
+ * isCustomKeystore is a cached check of existence of a hardware keystore.
+ */
+export const isHardwareKeystoreExists = isCustomSecureKeystore();
+
 export async function getJwt(
   privateKey: string,
   individualId: string,
@@ -70,7 +75,7 @@ export async function createSignature(
 ) {
   let signature64;
 
-  if (!isCustomSecureKeystore()) {
+  if (!isHardwareKeystoreExists) {
     const key = forge.pki.privateKeyFromPem(privateKey);
     const md = forge.md.sha256.create();
     md.update(preHash, 'utf8');
@@ -98,7 +103,13 @@ export function encodeB64(str: string) {
   return replaceCharactersInB64(encodedB64);
 }
 
-export function isCustomSecureKeystore() {
+/**
+ * DO NOT USE DIRECTLY and/or REPEATEDLY in application lifeycle.
+ *
+ * This can make a call to the Android native layer hence taking up more time,
+ *  use the isCustomKeystore constant in the app lifeycle instead.
+ */
+function isCustomSecureKeystore() {
   return !isIOS() ? SecureKeystore.deviceSupportsHardware() : false;
 }
 
@@ -112,7 +123,7 @@ export interface WalletBindingResponse {
 export async function clear() {
   try {
     console.log('clearing entire storage');
-    if (isCustomSecureKeystore()) {
+    if (isHardwareKeystoreExists) {
       SecureKeystore.clearKeys();
     }
     await Storage.clear();
@@ -131,7 +142,7 @@ export async function encryptJson(
     return JSON.stringify(data);
   }
 
-  if (!isCustomSecureKeystore()) {
+  if (!isHardwareKeystoreExists) {
     return CryptoJS.AES.encrypt(data, encryptionKey).toString();
   }
   return await SecureKeystore.encryptData(ENCRYPTION_ID, data);
@@ -147,7 +158,7 @@ export async function decryptJson(
       return JSON.parse(encryptedData);
     }
 
-    if (!isCustomSecureKeystore()) {
+    if (!isHardwareKeystoreExists) {
       return CryptoJS.AES.decrypt(encryptedData, encryptionKey).toString(
         CryptoJS.enc.Utf8,
       );

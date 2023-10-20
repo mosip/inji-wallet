@@ -11,7 +11,7 @@ import {
   decryptJson,
   encryptJson,
   HMAC_ALIAS,
-  isCustomSecureKeystore,
+  isHardwareKeystoreExists,
 } from './cryptoutil/cryptoUtil';
 import {VCMetadata} from './VCMetadata';
 import {ENOENT, getItem} from '../machines/store';
@@ -30,7 +30,7 @@ async function generateHmac(
   encryptionKey: string,
   data: string,
 ): Promise<string> {
-  if (!isCustomSecureKeystore()) {
+  if (!isHardwareKeystoreExists) {
     return CryptoJS.HmacSHA256(encryptionKey, data).toString();
   }
   return await SecureKeystore.generateHmacSha(HMAC_ALIAS, data);
