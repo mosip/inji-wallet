@@ -74,7 +74,7 @@ export interface Typegen0 {
     verifyCredential: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
   };
   missingImplementations: {
-    actions: 'sendImpressionEvent';
+    actions: never;
     delays: never;
     guards: never;
     services: never;

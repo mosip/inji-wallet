@@ -640,7 +640,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         bindingAuthFailedMessage: (_context, event) => {
           const error = JSON.parse(JSON.stringify(event.data)).name;
           if (error) {
-            return error + '-';
+            return error;
           }
           return '';
         },
@@ -954,11 +954,11 @@ export function selectEmptyWalletBindingId(state: State) {
 }
 
 export function selectWalletBindingError(state: State) {
-  let error = state.context.walletBindingError;
-  if (state.context.bindingAuthFailedMessage !== '') {
-    error = state.context.bindingAuthFailedMessage + error;
-  }
-  return error;
+  return state.context.walletBindingError;
+}
+
+export function selectBindingAuthFailedError(state: State) {
+  return state.context.bindingAuthFailedMessage;
 }
 
 export function selectKebabPopUpAcceptingBindingOtp(state: State) {

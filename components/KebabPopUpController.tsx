@@ -3,6 +3,7 @@ import {ActorRefFrom} from 'xstate';
 import {
   ExistingMosipVCItemEvents,
   ExistingMosipVCItemMachine,
+  selectBindingAuthFailedError,
   selectEmptyWalletBindingId,
   selectIsPinned,
   selectKebabPopUp,
@@ -66,6 +67,10 @@ export function useKebabPopUp(props) {
   let isWalletBindingError = useSelector(service, selectShowWalletBindingError);
   let otpError = useSelector(service, selectOtpError);
   let walletBindingError = useSelector(service, selectWalletBindingError);
+  let bindingAuthFailedError = useSelector(
+    service,
+    selectBindingAuthFailedError,
+  );
   let WalletBindingInProgress = useSelector(
     service,
     selectKebabPopUpWalletBindingInProgress,
@@ -94,6 +99,7 @@ export function useKebabPopUp(props) {
     );
     otpError = useSelector(service, esignetSelectOtpError);
     walletBindingError = useSelector(service, esignetSelectWalletBindingError);
+    bindingAuthFailedError = useSelector(service, selectBindingAuthFailedError);
     WalletBindingInProgress = useSelector(
       service,
       esignetSelectKebabPopUpWalletBindingInProgress,
@@ -124,6 +130,7 @@ export function useKebabPopUp(props) {
     isAcceptingOtpInput,
     isWalletBindingError,
     walletBindingError,
+    bindingAuthFailedError,
     otpError,
     WalletBindingInProgress,
     emptyWalletBindingId,

@@ -22,19 +22,18 @@ import {
 
 export const WalletBinding: React.FC<WalletBindingProps> = props => {
   const controller = useKebabPopUp(props);
-  let bindingError: string = controller.walletBindingError.includes(
-    'binding_auth_failed',
-  )
-    ? controller.walletBindingError.split('-')[1]
-    : controller.walletBindingError;
 
   useEffect(() => {
-    if (bindingError) {
+    let error = controller.walletBindingError;
+    if (error) {
+      error = controller.bindingAuthFailedError
+        ? controller.bindingAuthFailedError + '-' + error
+        : error;
       sendErrorEvent(
         getErrorEventData(
           TelemetryConstants.FlowType.vcActivation,
           TelemetryConstants.ErrorId.activationFailed,
-          controller.walletBindingError,
+          error,
         ),
       );
       sendEndEvent(
@@ -103,7 +102,7 @@ export const WalletBinding: React.FC<WalletBindingProps> = props => {
 
       <MessageOverlay
         isVisible={controller.isWalletBindingError}
-        title={bindingError}
+        title={controller.walletBindingError}
         onButtonPress={controller.CANCEL}
       />
       <MessageOverlay

@@ -23,6 +23,7 @@ import {
   selectShowWalletBindingError,
   selectWalletBindingSuccess,
   selectBindingWarning,
+  selectBindingAuthFailedError,
 } from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {selectPasscode} from '../../machines/auth';
 import {biometricsMachine, selectIsSuccess} from '../../machines/biometrics';
@@ -112,6 +113,10 @@ export function useViewVcModal({
     toastVisible,
     vc,
     otpError: useSelector(vcItemActor, selectOtpError),
+    bindingAuthFailedError: useSelector(
+      vcItemActor,
+      selectBindingAuthFailedError,
+    ),
     reAuthenticating,
     isRevoking,
 
