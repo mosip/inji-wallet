@@ -29,6 +29,7 @@ import {
   TelemetryConstants,
   resetRetryCount,
 } from '../shared/telemetry/TelemetryUtils';
+import {isAndroid} from '../shared/constants';
 
 export function useBiometricScreen(props: RootRouteProps) {
   const {appService} = useContext(GlobalContext);
@@ -127,7 +128,7 @@ export function useBiometricScreen(props: RootRouteProps) {
   ]);
 
   const checkBiometricsChange = () => {
-    if (Platform.OS === 'android') {
+    if (isAndroid()) {
       RNFingerprintChange.hasFingerPrintChanged().then(
         async (biometricsHasChanged: boolean) => {
           //if new biometrics are added, re-enable Biometrics Authentication

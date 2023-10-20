@@ -49,7 +49,7 @@ const getProfileImage = (
       return {uri: props.vc?.credential.biometrics.face};
     }
   }
-  return Theme.ProfileIcon;
+  return Theme.cardFaceIcon;
 };
 
 export const MosipVCItemDetails: React.FC<

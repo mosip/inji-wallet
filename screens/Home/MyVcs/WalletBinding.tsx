@@ -59,15 +59,6 @@ export const WalletBinding: React.FC<WalletBindingProps> = props => {
 
   return controller.emptyWalletBindingId ? (
     <ListItem bottomDivider onPress={controller.ADD_WALLET_BINDING_ID}>
-      {props.Icon && (
-        <Icon
-          name={props.Icon}
-          type="font-awesome"
-          size={20}
-          style={Theme.Styles.profileIconBg}
-          color={Theme.Colors.Icon}
-        />
-      )}
       <ListItem.Content>
         <ListItem.Title {...testIDProps('pendingActivationOrActivated')}>
           <Text weight="bold" size="small">
@@ -136,7 +127,6 @@ interface WalletBindingProps {
   testID?: string;
   label: string;
   content?: string;
-  Icon?: string;
   service: ActorRefFrom<typeof ExistingMosipVCItemMachine>;
   vcMetadata: VCMetadata;
 }

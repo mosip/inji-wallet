@@ -12,7 +12,10 @@ import {MY_VCS_STORE_KEY, ESIGNET_BASE_URL} from '../shared/constants';
 import {StoreEvents} from './store';
 import {linkTransactionResponse, VC} from '../types/VC/ExistingMosipVC/vc';
 import {request} from '../shared/request';
-import {getJwt, isCustomSecureKeystore} from '../shared/cryptoutil/cryptoUtil';
+import {
+  getJwt,
+  isHardwareKeystoreExists,
+} from '../shared/cryptoutil/cryptoUtil';
 import {
   getBindingCertificateConstant,
   getPrivateKey,
@@ -372,7 +375,7 @@ export const qrLoginMachine =
         sendAuthenticate: async context => {
           let privateKey;
           const individualId = context.selectedVc.vcMetadata.id;
-          if (!isCustomSecureKeystore()) {
+          if (!isHardwareKeystoreExists) {
             privateKey = await getPrivateKey(
               context.selectedVc.walletBindingResponse?.walletBindingId,
             );
@@ -406,7 +409,7 @@ export const qrLoginMachine =
         sendConsent: async context => {
           let privateKey;
           const individualId = context.selectedVc.vcMetadata.id;
-          if (!isCustomSecureKeystore()) {
+          if (!isHardwareKeystoreExists) {
             privateKey = await getPrivateKey(
               context.selectedVc.walletBindingResponse?.walletBindingId,
             );

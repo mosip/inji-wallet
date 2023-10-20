@@ -1,6 +1,7 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 import {Dimensions, Platform, StyleSheet, ViewStyle} from 'react-native';
 import {Spacing} from '../styleUtils';
+import {isIOS} from '../../../shared/constants';
 
 const Colors = {
   Black: '#231F20',
@@ -64,11 +65,7 @@ export const PurpleTheme = {
     whiteBackgroundColor: Colors.White,
     lightGreyBackgroundColor: Colors.LightGrey,
     errorGrayText: Colors.mediumDarkGrey,
-    profileLanguageValue: Colors.Grey,
     aboutVersion: Colors.Gray40,
-    profileAuthFactorUnlock: Colors.Grey,
-    profileLabel: Colors.Black,
-    profileValue: Colors.Grey,
     switchHead: Colors.Purple,
     switchTrackTrue: Colors.LightPurple,
     switchTrackFalse: Colors.Grey,
@@ -92,7 +89,6 @@ export const PurpleTheme = {
     OnboardingCloseIcon: Colors.White,
     WarningIcon: Colors.Warning,
     DefaultToggle: Colors.LightPurple,
-    ProfileIconBg: Colors.LightPurple,
     GrayText: Colors.GrayText,
     gradientBtn: Colors.GradientColors,
     dotColor: Colors.dorColor,
@@ -110,6 +106,8 @@ export const PurpleTheme = {
     statusMessage: Colors.Gray40,
     blackIcon: Colors.Black,
     uncheckedIcon: Colors.uncheckedIcon,
+    settingsLabel: Colors.Black,
+    chevronRightColor: Colors.Grey,
   },
   Styles: StyleSheet.create({
     title: {
@@ -527,9 +525,9 @@ export const PurpleTheme = {
       width: Dimensions.get('window').width * 0.32,
       borderBottomWidth: 1,
       marginBottom: 2,
-      borderColor: Platform.OS === 'ios' ? 'transparent' : Colors.Grey,
-      bottom: Platform.OS === 'ios' ? 50 : 24,
-      height: Platform.OS === 'ios' ? 100 : 'auto',
+      borderColor: isIOS() ? 'transparent' : Colors.Grey,
+      bottom: isIOS() ? 50 : 24,
+      height: isIOS() ? 100 : 'auto',
     },
     idInputBottom: {
       borderBottomColor: Colors.Orange,
@@ -1260,7 +1258,7 @@ export const PurpleTheme = {
   CardBackground: require('../../../assets/card_bg.png'),
   OpenCard: require('../../../assets/card_bg.png'),
   activationPending: require('../../../assets/pending_activation.png'),
-  ProfileIcon: require('../../../purpleAssets/profile_icon.png'),
+  cardFaceIcon: require('../../../purpleAssets/profile_icon.png'),
   MosipSplashLogo: require('../../../assets/icon.png'),
   MosipLogo: require('../../../assets/mosip-logo.png'),
   CameraFlipIcon: require('../../../assets/camera-flip-icon.png'),
@@ -1330,17 +1328,16 @@ export const PurpleTheme = {
 };
 
 function generateBoxShadowStyle() {
-  if (Platform.OS === 'ios') {
+  if (isIOS()) {
     return {
       shadowColor: '#000',
       shadowOffset: {width: 1, height: 1.2},
       shadowOpacity: 0.3,
       shadowRadius: 2.5,
     };
-  } else if (Platform.OS === 'android') {
-    return {
-      elevation: 4,
-      shadowColor: '#000',
-    };
   }
+  return {
+    elevation: 4,
+    shadowColor: '#000',
+  };
 }

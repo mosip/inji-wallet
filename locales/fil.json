@@ -201,6 +201,12 @@
   },
   "AddVcModal": {
     "requestingCredential": "Humihiling ng kredensyal...",
+    "confirmationDialog": {
+      "title": "Gusto mo bang kanselahin ang pag-download?",
+      "message": "Kapag nakansela, hindi na mada-download ang iyong card at kailangan mong simulan muli ang pag-download.",
+      "wait": "Hindi, maghihintay ako",
+      "cancel": "Oo, Kanselahin"
+    },
     "errors": {
       "input": {
         "empty": "Hindi maaaring walang laman ang input",
@@ -355,11 +361,6 @@
     "reEnterPassword": "Ipasok muli ang bagong passcode",
     "confirmPasscode": "Kumpirmahin ang passcode",
     "enterPasscode": "Ilagay ang iyong passcode"
-  },
-  "AppMetaData": {
-    "header": "Tungkol kay Inji",
-    "version": "Bersyon",
-    "useBle": "Pinapatakbo ng BLE"
   },
   "QrLogin": {
     "title": "QR Login",

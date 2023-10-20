@@ -17,6 +17,7 @@ import {
 import {MainBottomTabParamList} from '../../routes/main';
 import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
 import {ProgressingModal} from '../../components/ProgressingModal';
+import {isIOS} from '../../shared/constants';
 
 type RequestStackParamList = {
   RequestScreen: undefined;
@@ -106,9 +107,7 @@ const BluetoothPrompt: React.FC<RequestScreenProps> = ({t}) => {
   return (
     <Centered fill>
       <Text color={Theme.Colors.errorMessage} align="center" margin="0 10">
-        {t(
-          Platform.OS === 'ios' ? 'bluetoothStateIos' : 'bluetoothStateAndroid',
-        )}
+        {t(isIOS() ? 'bluetoothStateIos' : 'bluetoothStateAndroid')}
       </Text>
     </Centered>
   );

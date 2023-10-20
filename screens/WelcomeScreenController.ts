@@ -29,13 +29,7 @@ export function useWelcomeScreen(props: RootRouteProps) {
   const isSettingUp = useSelector(authService, selectSettingUp);
   const passcode = useSelector(authService, selectPasscode);
 
-  const isPasscodeSet = () => {
-    if (passcode) {
-      return false;
-    } else {
-      return true;
-    }
-  };
+  const isPasscodeSet = () => !!passcode;
 
   const biometrics = useSelector(authService, selectBiometrics);
   const isLanguagesetup = useSelector(authService, selectLanguagesetup);

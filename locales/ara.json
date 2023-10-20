@@ -202,6 +202,12 @@
   },
   "AddVcModal": {
     "requestingCredential": "جارٍ طلب بيانات الاعتماد...",
+    "confirmationDialog": {
+      "title": "هل تريد إلغاء التنزيل؟",
+      "message": "بمجرد الإلغاء، لن يتم تنزيل بطاقتك وستحتاج إلى إعادة بدء التنزيل.",
+      "wait": "لا، سأنتظر",
+      "cancel": "نعم، إلغاء"
+    },
     "errors": {
       "input": {
         "empty": "فارغًا",
@@ -356,11 +362,6 @@
     "reEnterPassword": "أعد إدخال رمز المرور الجديد",
     "confirmPasscode": "قم بتأكيد رمز المرور",
     "enterPasscode": "أدخل رمز المرور الخاص"
-  },
-  "AppMetaData": {
-    "header": "حول إنجي",
-    "version": "الإصدار",
-    "useBle": "مدعوم من BLE"
   },
   "QrLogin": {
     "title": "QR تسجيل الدخول",

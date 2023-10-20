@@ -6,7 +6,6 @@
     "android:mosip": "react-native run-android --variant=mosipDebug",
     "ios": "react-native run-ios",
     "build:android:mosip": "cd android && ./gradlew :app:assembleMosipRelease && cd ..",
-    "i18n:compile-strings": "node scripts/compile-strings.js",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "test": "jest",
     "postinstall": "patch-package && npm run jetify && sh tools/talisman/talisman-precommit.sh"
@@ -127,8 +126,7 @@
   "name": "mosip-resident-app",
   "version": "1.0.0",
   "lint-staged": {
-    "*.{ts,tsx,js,css,md}": "prettier --write",
-    "*.strings.json": "node scripts/compile-strings.js"
+    "*.{ts,tsx,js,css,md}": "prettier --write"
   },
   "overrides": {
     "react": "18.2.0",
