@@ -21,7 +21,7 @@ export function generateKeys(): Promise<KeyPair> {
 /**
  * isCustomKeystore is a cached check of existence of a hardware keystore.
  */
-export const isCustomKeystore = isCustomSecureKeystore();
+export const isHardwareKeystoreExists = isCustomSecureKeystore();
 
 export async function getJwt(
   privateKey: string,
@@ -75,7 +75,7 @@ export async function createSignature(
 ) {
   let signature64;
 
-  if (!isCustomKeystore) {
+  if (!isHardwareKeystoreExists) {
     const key = forge.pki.privateKeyFromPem(privateKey);
     const md = forge.md.sha256.create();
     md.update(preHash, 'utf8');
@@ -123,7 +123,7 @@ export interface WalletBindingResponse {
 export async function clear() {
   try {
     console.log('clearing entire storage');
-    if (isCustomKeystore) {
+    if (isHardwareKeystoreExists) {
       SecureKeystore.clearKeys();
     }
     await Storage.clear();
@@ -142,7 +142,7 @@ export async function encryptJson(
     return JSON.stringify(data);
   }
 
-  if (!isCustomKeystore) {
+  if (!isHardwareKeystoreExists) {
     return CryptoJS.AES.encrypt(data, encryptionKey).toString();
   }
   return await SecureKeystore.encryptData(ENCRYPTION_ID, data);
@@ -158,7 +158,7 @@ export async function decryptJson(
       return JSON.parse(encryptedData);
     }
 
-    if (!isCustomKeystore) {
+    if (!isHardwareKeystoreExists) {
       return CryptoJS.AES.decrypt(encryptedData, encryptionKey).toString(
         CryptoJS.enc.Utf8,
       );

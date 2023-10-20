@@ -26,24 +26,20 @@ fileignoreconfig:
 - filename: screens/WelcomeScreenController.ts
   checksum: d8fe74404c80bf435459f4d20427a661fb622f0ee9f754345616abd346b98d14
 - filename: machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine.ts
-  checksum: b02bd62a768257e835d035cab0b01480f35035a0dfa0ffd18bcadf282f1fab84
+  checksum: 237a2640b7db70770d65da67c79f2929581e32f1162517e50b8d37e409f3387d
 - filename: machines/store.ts
-  checksum: 71a3e3972b176c7c3f3a6b4c59b92f0d1856241ac884b9e27ff5ab81b0a71bcd
+  checksum: b9884f86b498dfbff75816d1f0d521c79971c8c28afa7824122d025b2699cdc4
 - filename: shared/cryptoutil/cryptoUtil.ts
-  checksum: 439e238178fbd6a8c113127f408a5fae3b6075a84ba13c3c37a72a653d5733f5
+  checksum: b785ff3f01ab9530119072c4d38195048bfeee6155c54ea7dd031559acb722f3
 - filename: shared/telemetry/TelemetryUtils.js
-  checksum: 9a61cd59a3718adf1f14faf3024fec66a3295ef373878a878a28e5cb1287afaa
-- filename: machines/store.ts
-  checksum: bbee269bd9703644c2a345819291caa42479b5ad0d5288713da780495b2ffb49
+  checksum: ffe9aac2dcc590b98b0d588885c088eff189504ade653a77f74b67312bfd27ad
 - filename: shared/fileStorage.ts
   checksum: 07cb337dc1d5b0f0eef56270ac4f4f589260ee5e490183c024cf98a2aeafb139
 - filename: shared/storage.ts
   checksum: c8d874aa373bdf526bf59192139822f56915e702ef673bac4e0d7549b0fea3d0
   checksum: f9711b617b986af9bb733a31373e49494667ef07b74988fbf09688cb50ca73bd
 - filename: machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine.ts
-  checksum: 3ac59db154914fec7770e14b0451f21f98a0fe8bb0b0243e800ae3aac8a2941d
-- filename: machines/issuersMachine.ts
-  checksum: f86249731a374b108891be4661bfaffb42b6e7115ee82aa69e99e0fce6319534
-- filename: machines/issuersMachine.typegen.ts
-  checksum: 31bb8e3b650b076815dd1186487918bd48f46195c8ec82c916d7f7a16c0b5df2
+  checksum: eec77ca61540327ff7cab3489ebdfd47aa373fd20b3ff87a6c322cd48d35fe8f
+- filename: machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine.typegen.ts
+  checksum: f1f504bd8c14496ee71f8eb7f40d54411cc05be03347d644dcc2cca187a20678
 version: ""

@@ -5,7 +5,7 @@ import {VCMetadata} from '../../../shared/VCMetadata';
 import {VC} from '../../../types/VC/ExistingMosipVC/vc';
 import {
   generateKeys,
-  isCustomKeystore,
+  isHardwareKeystoreExists,
   WalletBindingResponse,
 } from '../../../shared/cryptoutil/cryptoUtil';
 import {log} from 'xstate/lib/actions';
@@ -632,7 +632,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
       ),
       setPublicKey: assign({
         publicKey: (context, event) => {
-          if (!isCustomKeystore) {
+          if (!isHardwareKeystoreExists) {
             return (event.data as KeyPair).public;
           }
           return event.data as string;
@@ -788,7 +788,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         return walletResponse;
       },
       generateKeyPair: async context => {
-        if (!isCustomKeystore) {
+        if (!isHardwareKeystoreExists) {
           return await generateKeys();
         }
         const isBiometricsEnabled = SecureKeystore.hasBiometricsEnabled();
@@ -825,7 +825,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         return vc != null;
       },
 
-      isCustomSecureKeystore: () => isCustomKeystore,
+      isCustomSecureKeystore: () => isHardwareKeystoreExists,
     },
   },
 );

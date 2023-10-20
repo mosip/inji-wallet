@@ -15,7 +15,7 @@ import {verifyCredential} from '../../../shared/vcjs/verifyCredential';
 import {log} from 'xstate/lib/actions';
 import {
   generateKeys,
-  isCustomKeystore,
+  isHardwareKeystoreExists,
   WalletBindingResponse,
 } from '../../../shared/cryptoutil/cryptoUtil';
 import {KeyPair} from 'react-native-rsa-native';
@@ -854,7 +854,7 @@ export const ExistingMosipVCItemMachine =
         ),
         setPublicKey: assign({
           publicKey: (context, event) => {
-            if (!isCustomKeystore) {
+            if (!isHardwareKeystoreExists) {
               return (event.data as KeyPair).public;
             }
             return event.data as string;
@@ -1250,7 +1250,7 @@ export const ExistingMosipVCItemMachine =
         },
 
         generateKeyPair: async context => {
-          if (!isCustomKeystore) {
+          if (!isHardwareKeystoreExists) {
             return await generateKeys();
           }
           const isBiometricsEnabled = SecureKeystore.hasBiometricsEnabled();
@@ -1425,7 +1425,7 @@ export const ExistingMosipVCItemMachine =
           return context.isVerified;
         },
 
-        isCustomSecureKeystore: () => isCustomKeystore,
+        isCustomSecureKeystore: () => isHardwareKeystoreExists,
       },
     },
   );
