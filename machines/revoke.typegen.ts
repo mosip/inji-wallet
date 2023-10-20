@@ -2,7 +2,7 @@
 
 export interface Typegen0 {
   '@@xstate/typegen': true;
-  'internalEvents': {
+  internalEvents: {
     'done.invoke.RevokeVids.acceptingVIDs.requestingOtp:invocation[0]': {
       type: 'done.invoke.RevokeVids.acceptingVIDs.requestingOtp:invocation[0]';
       data: unknown;
@@ -12,19 +12,19 @@ export interface Typegen0 {
       type: 'error.platform.RevokeVids.acceptingVIDs.requestingOtp:invocation[0]';
       data: unknown;
     };
-    'xstate.init': { type: 'xstate.init' };
+    'xstate.init': {type: 'xstate.init'};
   };
-  'invokeSrcNameMap': {
+  invokeSrcNameMap: {
     requestOtp: 'done.invoke.RevokeVids.acceptingVIDs.requestingOtp:invocation[0]';
     requestRevoke: 'done.invoke.RevokeVids.requestingRevoke:invocation[0]';
   };
-  'missingImplementations': {
+  missingImplementations: {
     actions: never;
     delays: never;
     guards: never;
     services: never;
   };
-  'eventsCausingActions': {
+  eventsCausingActions: {
     clearOtp:
       | 'DISMISS'
       | 'ERROR'
@@ -39,13 +39,13 @@ export interface Typegen0 {
     setTransactionId: 'DISMISS' | 'REVOKE_VCS' | 'xstate.init';
     setVIDs: 'REVOKE_VCS';
   };
-  'eventsCausingDelays': {};
-  'eventsCausingGuards': {};
-  'eventsCausingServices': {
+  eventsCausingDelays: {};
+  eventsCausingGuards: {};
+  eventsCausingServices: {
     requestOtp: never;
     requestRevoke: 'INPUT_OTP';
   };
-  'matchesStates':
+  matchesStates:
     | 'acceptingOtpInput'
     | 'acceptingVIDs'
     | 'acceptingVIDs.idle'
@@ -57,6 +57,6 @@ export interface Typegen0 {
     | 'loggingRevoke'
     | 'requestingRevoke'
     | 'revokingVc'
-    | { acceptingVIDs?: 'idle' | 'requestingOtp'; invalid?: 'backend' | 'otp' };
-  'tags': never;
+    | {acceptingVIDs?: 'idle' | 'requestingOtp'; invalid?: 'backend' | 'otp'};
+  tags: never;
 }
