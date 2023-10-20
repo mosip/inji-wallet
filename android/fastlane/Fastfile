@@ -10,14 +10,15 @@ SLACK_URL = ENV["SLACK_URL"]
 CREDENTIAL_REGISTRY_EDIT = ENV["CREDENTIAL_REGISTRY_EDIT"]
 
 desc "Verify Build for Android"
-lane :android_build_verify do
-  gradle(
-    task: "assembleMosipDebug",
-  )
+lane :android_build do
+  gradle(task: "assembleMosipDebug")
 end
 
 desc "Deploy an Internal testing version to the Google Play"
 lane :android_build_internal do
+
+  gradle(task: "assembleMosipRelease")
+
   previous_build_number = google_play_track_version_codes(
     package_name: "io.mosip.residentapp",
     track: "internal",
@@ -53,6 +54,8 @@ end
 
 desc "Deploy an Beta version to the Google Play"
 lane :android_build_beta do
+
+  gradle(task: "assembleBetaDebug")
 
   git_tag = sh('git describe --abbrev=0 --tags --exact-match HEAD').strip
 
