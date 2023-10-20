@@ -22,9 +22,9 @@ jobs:
     uses: tw-mosip/kattu/.github/workflows/android-build.yml@add-inji-workflows
     with:
       NODE_VERSION: "16.x"
-    secrets:
       DEBUG_KEYSTORE_ALIAS: androiddebugkey
-      DEBUG_KEYSTORE_PASSWORD: "dummypassword"
+    secrets:
+      DEBUG_KEYSTORE_PASSWORD: ${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}
 
   build-ios:
     uses: tw-mosip/kattu/.github/workflows/ios-build.yml@add-inji-workflows
