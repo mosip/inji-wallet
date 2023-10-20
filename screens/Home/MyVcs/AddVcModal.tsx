@@ -56,6 +56,7 @@ export const AddVcModal: React.FC<AddVcModalProps> = props => {
         customHeight={250}>
         <Column>
           <Button
+            type="gradient"
             title={t('confirmationDialog.wait')}
             onPress={controller.WAIT}
             margin={[0, 0, 8, 0]}
