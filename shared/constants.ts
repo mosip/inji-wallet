@@ -50,6 +50,10 @@ export function isIOS(): boolean {
   return Platform.OS === 'ios';
 }
 
+export function isAndroid(): boolean {
+  return Platform.OS === 'android';
+}
+
 // Configuration for argon2i hashing algorithm
 export const argon2iConfig: Argon2iConfig = {
   iterations: 5,

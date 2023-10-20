@@ -40,7 +40,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
           />
           <ListItem.Content>
             <ListItem.Title>
-              <Text weight="semibold" color={Theme.Colors.profileLabel}>
+              <Text weight="semibold" color={Theme.Colors.settingsLabel}>
                 {t('aboutInji')}
               </Text>
             </ListItem.Title>

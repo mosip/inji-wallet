@@ -1,5 +1,8 @@
 import {Platform} from 'react-native';
 import argon2 from 'react-native-argon2';
+import {AnyState} from 'xstate';
+import {getDeviceNameSync} from 'react-native-device-info';
+import {isAndroid} from './constants';
 
 export const hashData = async (
   data: string,
@@ -19,7 +22,7 @@ export interface Argon2iConfig {
 }
 
 export default function testIDProps(id) {
-  return Platform.OS === 'android'
+  return isAndroid()
     ? {accessible: true, accessibilityLabel: id}
     : {testID: id};
 }
@@ -27,3 +30,25 @@ export default function testIDProps(id) {
 export const removeWhiteSpace = (str: string) => {
   return str ? str.replace(/\s/g, '') : str;
 };
+
+export function logState(state: AnyState) {
+  const data = JSON.stringify(
+    state.event,
+    (key, value) => {
+      if (key === 'type') return undefined;
+      if (typeof value === 'string' && value.length >= 100) {
+        return value.slice(0, 100) + '...';
+      }
+      return value;
+    },
+    2,
+  );
+  console.log(
+    `[${getDeviceNameSync()}] ${state.machine.id}: ${
+      state.event.type
+    } -> ${state.toStrings().pop()}\n${
+      data.length > 300 ? data.slice(0, 300) + '...' : data
+    }
+    `,
+  );
+}

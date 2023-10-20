@@ -357,11 +357,6 @@
     "confirmPasscode": "قم بتأكيد رمز المرور",
     "enterPasscode": "أدخل رمز المرور الخاص"
   },
-  "AppMetaData": {
-    "header": "حول إنجي",
-    "version": "الإصدار",
-    "useBle": "مدعوم من BLE"
-  },
   "QrLogin": {
     "title": "QR تسجيل الدخول",
     "alignQr": "قم بمحاذاة رمز الاستجابة السريعة داخل الإطار للمسح الضوئي",

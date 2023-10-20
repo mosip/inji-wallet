@@ -15,7 +15,7 @@ import {
 } from './cryptoutil/cryptoUtil';
 import {VCMetadata} from './VCMetadata';
 import {ENOENT, getItem} from '../machines/store';
-import {MY_VCS_STORE_KEY, RECEIVED_VCS_STORE_KEY} from './constants';
+import {isAndroid, MY_VCS_STORE_KEY, RECEIVED_VCS_STORE_KEY} from './constants';
 import FileStorage, {getFilePath, vcDirectoryPath} from './fileStorage';
 
 export const MMKV = new MMKVLoader().initialize();
@@ -197,7 +197,7 @@ class Storage {
     const minimumStorageLimitInBytes = configurations[limitInMB] * 1000 * 1000;
 
     const freeDiskStorageInBytes =
-      Platform.OS === 'android' && Platform.Version < 29
+      isAndroid() && Platform.Version < 29
         ? getFreeDiskStorageOldSync()
         : getFreeDiskStorageSync();
 
