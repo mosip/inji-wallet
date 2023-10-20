@@ -1,13 +1,21 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Image, SafeAreaView, View} from 'react-native';
+import {BackHandler, Image, SafeAreaView, View} from 'react-native';
 import Spinner from 'react-native-spinkit';
 import {Button, Centered, Column, Row, Text} from '../../components/ui';
-import {Theme} from '../../components/ui/styleUtils';
+import {Theme} from './styleUtils';
 import testIDProps from '../../shared/commonUtil';
 
 export const Loader: React.FC<LoaderProps> = props => {
   const {t} = useTranslation('ScanScreen');
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      () => true,
+    );
+    return () => backHandler.remove();
+  }, []);
 
   return (
     <Fragment>
