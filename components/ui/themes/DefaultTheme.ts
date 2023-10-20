@@ -134,6 +134,8 @@ export const DefaultTheme = {
     statusLabel: {
       color: Colors.Gray30,
       fontSize: 12,
+      flexWrap: 'wrap',
+      flexShrink: 1,
     },
     activationTab: {
       display: 'flex',
@@ -230,21 +232,26 @@ export const DefaultTheme = {
     },
     verticalLine: {
       width: 1,
-      height: 30,
       backgroundColor: Colors.Grey,
       marginVertical: 8,
     },
     verticalLineWrapper: {
-      flex: 0.1,
       display: 'flex',
+      flex: 0.1,
+      height: '100%',
       justifyContent: 'center',
     },
-    vcActivationStatusWrapper: {
+    vcActivationStatusContainer: {
       display: 'flex',
       flex: 7,
       alignItems: 'center',
       width: '100%',
       height: '100%',
+      padding: 5,
+    },
+    vcActivationDetailsWrapper: {
+      display: 'flex',
+      alignItems: 'flex-start',
     },
     closeCardBgContainer: {
       borderRadius: 10,

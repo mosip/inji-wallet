@@ -16,10 +16,8 @@ const WalletUnverifiedIcon: React.FC = () => {
       size={Theme.ICON_MID_SIZE}
       type="material-community"
       containerStyle={{
-        marginStart: 5,
-        marginEnd: 1,
+        marginEnd: 5,
         bottom: 1,
-        marginRight: -2,
       }}
     />
   );
@@ -32,10 +30,8 @@ const WalletVerifiedIcon: React.FC = () => {
       color={Theme.Colors.VerifiedIcon}
       size={Theme.ICON_MID_SIZE}
       containerStyle={{
-        marginStart: 5,
-        marginEnd: 1,
+        marginEnd: 5,
         bottom: 1,
-        marginRight: -2,
       }}
     />
   );
@@ -46,20 +42,19 @@ const WalletUnverifiedActivationDetails: React.FC<
 > = props => {
   const {t} = useTranslation('VcDetails');
   return (
-    <>
+    <Row style={Theme.Styles.vcActivationDetailsWrapper}>
       {props.verifiableCredential && <WalletUnverifiedIcon />}
       <Text
         color={Theme.Colors.Details}
         testID="activationPending"
         weight="regular"
-        margin="0 0 0 5"
         style={
           !props.verifiableCredential
             ? Theme.Styles.loadingTitle
             : Theme.Styles.statusLabel
         }
         children={t('offlineAuthDisabledHeader')}></Text>
-    </>
+    </Row>
   );
 };
 
@@ -68,7 +63,7 @@ const WalletVerifiedActivationDetails: React.FC<
 > = props => {
   const {t} = useTranslation('WalletBinding');
   return (
-    <>
+    <Row style={Theme.Styles.vcActivationDetailsWrapper}>
       <WalletVerifiedIcon />
       <Text
         color={Theme.Colors.statusLabel}
@@ -82,7 +77,7 @@ const WalletVerifiedActivationDetails: React.FC<
             : Theme.Styles.statusLabel
         }
         children={t('profileAuthenticated')}></Text>
-    </>
+    </Row>
   );
 };
 
@@ -90,7 +85,7 @@ export const MosipVCItemActivationStatus: React.FC<
   ExistingMosipVCItemActivationStatusProps
 > = props => {
   return (
-    <Row style={Theme.Styles.vcActivationStatusWrapper}>
+    <Row style={Theme.Styles.vcActivationStatusContainer}>
       {props.emptyWalletBindingId ? (
         <WalletUnverifiedActivationDetails
           verifiableCredential={props.verifiableCredential}
