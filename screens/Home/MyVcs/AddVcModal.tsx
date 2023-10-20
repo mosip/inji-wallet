@@ -4,7 +4,6 @@ import {AddVcModalProps, useAddVcModal} from './AddVcModalController';
 import {OtpVerificationModal} from './OtpVerificationModal';
 import {IdInputModal} from './IdInputModal';
 import {useTranslation} from 'react-i18next';
-import {ConfirmationDialog} from '../../../components/ConfrimationDialog';
 import {GET_INDIVIDUAL_ID} from '../../../shared/constants';
 
 export const AddVcModal: React.FC<AddVcModalProps> = props => {
@@ -17,7 +16,7 @@ export const AddVcModal: React.FC<AddVcModalProps> = props => {
     }
     return (
       (!controller.isAcceptingOtpInput && !controller.isRequestingCredential) ||
-       !controller.isDownloadCancelled
+      !controller.isDownloadCancelled
     );
   };
 
@@ -49,15 +48,25 @@ export const AddVcModal: React.FC<AddVcModalProps> = props => {
         progress
       />
 
-      <ConfirmationDialog
+      <MessageOverlay
         isVisible={controller.isDownloadCancelled}
         title={t('confirmationDialog.title')}
-        message={t('confirmationDialog.message')}
-        waitButtonText={t('confirmationDialog.wait')}
-        onWaitButtonPress={controller.WAIT}
-        cancelButtonText={t('confirmationDialog.cancel')}
-        onCancelButtonPress={controller.CANCEL}
-      />
+        message={t('confirmationDialog.message')}>
+        <Row>
+          <Button
+            fill
+            type="clear"
+            title={t('confirmationDialog.wait')}
+            onPress={controller.WAIT}
+            margin={[0, 8, 0, 0]}
+          />
+          <Button
+            fill
+            title={t('confirmationDialog.cancel')}
+            onPress={controller.CANCEL}
+          />
+        </Row>
+      </MessageOverlay>
     </React.Fragment>
   );
 };
