@@ -1,6 +1,6 @@
 fileignoreconfig:
 - filename: package.json
-  checksum: 30e3a548809705ba38385a1c286b312629ac5dd7dea0d6e26ffb9daf8def312d
+  checksum: fdd5905228a1afbfb004c710fd6c61adf073a12840200327c0592b76bea5e7e3
 - filename: package-lock.json
   checksum: a4c1fe2521067e1a279610f079446c600e8b7d5cf1553934dc419c3c476b4844
 - filename: components/PasscodeVerify.tsx
@@ -37,3 +37,5 @@ fileignoreconfig:
   checksum: 8e5c4cf8c4a1803ae889dee1fd3390aa59ae4b39901fb55135b196fe039617b1
 - filename: screens/Issuers/IssuersScreen.tsx
   checksum: bc12c43ccc27ac04e5763fa6a6ed3cee63e4362ba5666c160b5e53269de924ab
+- filename: package.json
+  checksum: fdd5905228a1afbfb004c710fd6c61adf073a12840200327c0592b76bea5e7e3
