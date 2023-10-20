@@ -50,6 +50,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = props => {
               />
               <Text
                 testID="noHistory"
+                style={{paddingTop: 3}}
                 align="center"
                 weight="semibold"
                 margin="0 0 4 0">

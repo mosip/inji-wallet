@@ -32,7 +32,7 @@ const LanguageSetting: React.FC = () => {
             containerStyle={Theme.Styles.settingsIconBg}
           />
           <ListItem.Content>
-            <ListItem.Title>
+            <ListItem.Title style={{paddingTop: 3}}>
               <Text weight="semibold">{t('language')}</Text>
             </ListItem.Title>
           </ListItem.Content>
@@ -75,6 +75,7 @@ export const SettingScreen: React.FC<
             style={{display: Platform.OS !== 'ios' ? 'flex' : 'none'}}
             backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
             <Text
+              style={{paddingTop: 3}}
               testID="injiAsVerifierApp"
               weight="semibold"
               margin="10"
@@ -92,7 +93,7 @@ export const SettingScreen: React.FC<
                     source={Theme.ReceiveCardIcon}
                     style={{alignSelf: 'center'}}
                   />
-                  <Text margin="6" weight="semibold">
+                  <Text margin="6" style={{paddingTop: 3}} weight="semibold">
                     {t('receiveCard')}
                   </Text>
                 </Column>
@@ -103,6 +104,7 @@ export const SettingScreen: React.FC<
 
             <Text
               weight="semibold"
+              style={{paddingTop: 3}}
               margin="10"
               color={Theme.Colors.aboutVersion}>
               {t('basicSettings')}
@@ -129,7 +131,7 @@ export const SettingScreen: React.FC<
                 style={{marginRight: 15}}
               />
               <ListItem.Content>
-                <ListItem.Title>
+                <ListItem.Title style={{paddingTop: 3}}>
                   <Text weight="semibold" color={Theme.Colors.profileLabel}>
                     {t('bioUnlock')}
                   </Text>
@@ -187,7 +189,7 @@ export const SettingScreen: React.FC<
                 style={{marginRight: 15}}
               />
               <ListItem.Content>
-                <ListItem.Title>
+                <ListItem.Title style={{paddingTop: 3}}>
                   <Text weight="semibold" color={Theme.Colors.profileLabel}>
                     {t('injiTourGuide')}
                   </Text>
@@ -204,7 +206,7 @@ export const SettingScreen: React.FC<
                 containerStyle={Theme.Styles.settingsIconBg}
               />
               <ListItem.Content>
-                <ListItem.Title>
+                <ListItem.Title style={{paddingTop: 3}}>
                   <Text weight="semibold" color={Theme.Colors.profileLabel}>
                     {t('logout')}
                   </Text>
@@ -218,6 +220,7 @@ export const SettingScreen: React.FC<
                   weight="semibold"
                   align="center"
                   size="smaller"
+                  style={{paddingTop: 3}}
                   color={Theme.Colors.profileValue}>
                   {controller.backendInfo.application.name}:{' '}
                   {controller.backendInfo.application.version}
@@ -226,6 +229,7 @@ export const SettingScreen: React.FC<
                   weight="semibold"
                   align="center"
                   size="smaller"
+                  style={{paddingTop: 3}}
                   color={Theme.Colors.profileValue}>
                   MOSIP: {controller.backendInfo.config['mosip.host']}
                 </Text>

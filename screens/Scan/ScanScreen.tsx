@@ -47,7 +47,11 @@ export const ScanScreen: React.FC = () => {
 
   function noShareableVcText() {
     return (
-      <Text align="center" color={Theme.Colors.errorMessage} margin="0 10">
+      <Text
+        align="center"
+        style={{paddingTop: 3}}
+        color={Theme.Colors.errorMessage}
+        margin="0 10">
         {t('noShareableVcs')}
       </Text>
     );

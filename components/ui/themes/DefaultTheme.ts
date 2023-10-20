@@ -613,14 +613,14 @@ export const DefaultTheme = {
       fontFamily: 'Inter_700Bold',
       fontSize: 18,
       lineHeight: 19,
-      paddingTop: 4,
+      paddingTop: 5,
     },
     subHeader: {
       color: Colors.mediumLightGrayText,
       fontFamily: 'Inter_600SemiBold',
       lineHeight: 19,
       fontSize: 13,
-      paddingTop: 3,
+      paddingTop: 4,
     },
     semiBoldHeader: {
       color: Colors.Black,

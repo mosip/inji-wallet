@@ -68,11 +68,12 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
           <Text
             testID="setPasscode"
             align="center"
-            style={Theme.TextStyles.header}>
+            style={{...Theme.TextStyles.header, paddingTop: 7}}>
             {t('header')}
           </Text>
           <Text
             align="center"
+            style={{paddingTop: 3}}
             weight="semibold"
             color={Theme.Colors.GrayText}
             margin="6 0">
@@ -92,11 +93,12 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
           <Text
             testID="confirmPasscode"
             align="center"
-            style={Theme.TextStyles.header}>
+            style={{...Theme.TextStyles.header, paddingTop: 7}}>
             {t('confirmPasscode')}
           </Text>
           <Text
             align="center"
+            style={{paddingTop: 3}}
             weight="semibold"
             color={Theme.Colors.GrayText}
             margin="6 0">
@@ -126,6 +128,7 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
         <Column fill align="space-around" width="100%">
           <Text
             testID="enterPasscode"
+            style={{paddingTop: 3}}
             align="center"
             weight="semibold"
             color={Theme.Colors.GrayText}
