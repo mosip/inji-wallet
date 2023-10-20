@@ -7,7 +7,7 @@ import {AppServices} from '../shared/GlobalContext';
 import NetInfo from '@react-native-community/netinfo';
 import {
   generateKeys,
-  isCustomSecureKeystore,
+  isHardwareKeystoreExists,
 } from '../shared/cryptoutil/cryptoUtil';
 import SecureKeystore from 'react-native-secure-keystore';
 import {KeyPair} from 'react-native-rsa-native';
@@ -122,7 +122,7 @@ export const IssuersMachine = model.createMachine(
             },
             {
               description: 'not fetched issuers config yet',
-              actions: ['setLoadingReasonAsDisplayIssuers', 'resetError'],
+              actions: ['setLoadingReasonAsSettingUp', 'resetError'],
               target: 'downloadIssuerConfig',
             },
           ],
@@ -139,7 +139,7 @@ export const IssuersMachine = model.createMachine(
             actions: sendParent('DOWNLOAD_ID'),
           },
           SELECTED_ISSUER: {
-            actions: 'setSelectedIssuerId',
+            actions: ['setSelectedIssuerId', 'setLoadingReasonAsSettingUp'],
             target: 'downloadIssuerConfig',
           },
         },
@@ -222,7 +222,7 @@ export const IssuersMachine = model.createMachine(
       },
       checkKeyPair: {
         description: 'checks whether key pair is generated',
-        entry: [send('CHECK_KEY_PAIR')],
+        entry: ['setLoadingReasonAsSettingUp', send('CHECK_KEY_PAIR')],
         on: {
           CHECK_KEY_PAIR: [
             {
@@ -457,7 +457,7 @@ export const IssuersMachine = model.createMachine(
       }),
       setPublicKey: assign({
         publicKey: (_, event) => {
-          if (!isCustomSecureKeystore()) {
+          if (!isHardwareKeystoreExists) {
             return (event.data as KeyPair).public;
           }
           return event.data as string;
@@ -533,8 +533,8 @@ export const IssuersMachine = model.createMachine(
           constructAuthorizationConfiguration(context.selectedIssuer),
         );
       },
-      generateKeyPair: async context => {
-        if (!isCustomSecureKeystore()) {
+      generateKeyPair: async () => {
+        if (!isHardwareKeystoreExists) {
           return await generateKeys();
         }
         const isBiometricsEnabled = SecureKeystore.hasBiometricsEnabled();
@@ -579,7 +579,7 @@ export const IssuersMachine = model.createMachine(
         );
       },
       shouldFetchIssuersAgain: context => context.issuers.length === 0,
-      isCustomSecureKeystore: () => isCustomSecureKeystore(),
+      isCustomSecureKeystore: () => isHardwareKeystoreExists,
     },
   },
 );
