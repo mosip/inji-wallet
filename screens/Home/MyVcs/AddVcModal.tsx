@@ -5,6 +5,7 @@ import {OtpVerificationModal} from './OtpVerificationModal';
 import {IdInputModal} from './IdInputModal';
 import {useTranslation} from 'react-i18next';
 import {GET_INDIVIDUAL_ID} from '../../../shared/constants';
+import {Button, Column} from '../../../components/ui';
 
 export const AddVcModal: React.FC<AddVcModalProps> = props => {
   const {t} = useTranslation('AddVcModal');
@@ -51,21 +52,21 @@ export const AddVcModal: React.FC<AddVcModalProps> = props => {
       <MessageOverlay
         isVisible={controller.isDownloadCancelled}
         title={t('confirmationDialog.title')}
-        message={t('confirmationDialog.message')}>
-        <Row>
+        message={t('confirmationDialog.message')}
+        customHeight={250}>
+        <Column>
           <Button
-            fill
-            type="clear"
+            type="gradient"
             title={t('confirmationDialog.wait')}
             onPress={controller.WAIT}
-            margin={[0, 8, 0, 0]}
+            margin={[0, 0, 8, 0]}
           />
           <Button
-            fill
+            type="clear"
             title={t('confirmationDialog.cancel')}
             onPress={controller.CANCEL}
           />
-        </Row>
+        </Column>
       </MessageOverlay>
     </React.Fragment>
   );
