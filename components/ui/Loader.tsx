@@ -1,13 +1,21 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Image, SafeAreaView, View} from 'react-native';
+import {BackHandler, Image, SafeAreaView, View} from 'react-native';
 import Spinner from 'react-native-spinkit';
 import {Button, Centered, Column, Row, Text} from '../../components/ui';
-import {Theme} from '../../components/ui/styleUtils';
+import {Theme} from './styleUtils';
 import testIDProps from '../../shared/commonUtil';
 
 export const Loader: React.FC<LoaderProps> = props => {
   const {t} = useTranslation('ScanScreen');
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      () => true,
+    );
+    return () => backHandler.remove();
+  }, []);
 
   return (
     <Fragment>
@@ -17,7 +25,7 @@ export const Loader: React.FC<LoaderProps> = props => {
             fill
             align={'flex-start'}
             style={Theme.LoaderStyles.titleContainer}>
-            <View style={Theme.issuersScreenStyles.loaderHeadingText}>
+            <View style={Theme.LoaderStyles.heading}>
               <Text
                 style={Theme.TextStyles.semiBoldHeader}
                 testID="loaderTitle">
@@ -26,7 +34,7 @@ export const Loader: React.FC<LoaderProps> = props => {
               {props.subTitle && (
                 <Text
                   style={Theme.TextStyles.subHeader}
-                  color={Theme.Colors.profileValue}
+                  color={Theme.Colors.textLabel}
                   testID="loaderSubTitle">
                   {props.subTitle}
                 </Text>
@@ -81,7 +89,7 @@ export const Loader: React.FC<LoaderProps> = props => {
 
 export interface LoaderProps {
   isVisible: boolean;
-  title?: string;
+  title: string;
   subTitle?: string;
   label?: string;
   hint?: string;

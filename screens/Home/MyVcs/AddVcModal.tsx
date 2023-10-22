@@ -15,7 +15,8 @@ export const AddVcModal: React.FC<AddVcModalProps> = props => {
       GET_INDIVIDUAL_ID({id: '', idType: 'UIN'});
     }
     return (
-      !controller.isAcceptingOtpInput && !controller.isRequestingCredential
+      (!controller.isAcceptingOtpInput && !controller.isRequestingCredential) ||
+      !controller.isDownloadCancelled
     );
   };
 
@@ -46,6 +47,26 @@ export const AddVcModal: React.FC<AddVcModalProps> = props => {
         title={t('requestingCredential')}
         progress
       />
+
+      <MessageOverlay
+        isVisible={controller.isDownloadCancelled}
+        title={t('confirmationDialog.title')}
+        message={t('confirmationDialog.message')}>
+        <Row>
+          <Button
+            fill
+            type="clear"
+            title={t('confirmationDialog.wait')}
+            onPress={controller.WAIT}
+            margin={[0, 8, 0, 0]}
+          />
+          <Button
+            fill
+            title={t('confirmationDialog.cancel')}
+            onPress={controller.CANCEL}
+          />
+        </Row>
+      </MessageOverlay>
     </React.Fragment>
   );
 };

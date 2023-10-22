@@ -26,6 +26,7 @@ import {GlobalContext} from '../shared/GlobalContext';
 import {selectIsActive} from '../machines/app';
 import {RotatingIcon} from './RotatingIcon';
 import {Theme} from './ui/styleUtils';
+import {isIOS} from '../shared/constants';
 
 export const FaceScanner: React.FC<FaceScannerProps> = props => {
   const {t} = useTranslation('FaceScanner');

@@ -18,7 +18,7 @@ import {Alert} from 'react-native';
 import {configureTelemetry} from './shared/telemetry/TelemetryUtils';
 import {MessageOverlay} from './components/MessageOverlay';
 import SecureKeystore from 'react-native-secure-keystore';
-import {isCustomSecureKeystore} from './shared/cryptoutil/cryptoUtil';
+import {isHardwareKeystoreExists} from './shared/cryptoutil/cryptoUtil';
 import i18n from './i18n';
 import './shared/flipperConfig';
 
@@ -91,7 +91,7 @@ const AppInitialization: React.FC = () => {
   const {t} = useTranslation('common');
 
   useEffect(() => {
-    if (isCustomSecureKeystore()) {
+    if (isHardwareKeystoreExists) {
       SecureKeystore.updatePopup(
         t('biometricPopup.title'),
         t('biometricPopup.description'),
