@@ -730,6 +730,10 @@ export const DefaultTheme = {
       marginBottom: 17,
       marginTop: 22,
     },
+    heading: {
+      flex: 1,
+      flexDirection: 'column',
+    },
   }),
   ButtonStyles: StyleSheet.create({
     fill: {
@@ -1175,6 +1179,7 @@ export const DefaultTheme = {
       lineHeight: 17,
       paddingHorizontal: 3,
       paddingBottom: 4,
+      paddingTop: 1.7,
     },
     issuerDescription: {
       fontSize: 11,
@@ -1182,6 +1187,7 @@ export const DefaultTheme = {
       color: Colors.ShadeOfGrey,
       paddingVertical: 5,
       paddingHorizontal: 3,
+      paddingTop: 1.4,
     },
     issuerIcon: {
       resizeMode: 'contain',
@@ -1190,10 +1196,6 @@ export const DefaultTheme = {
       marginBottom: 9,
       marginTop: 8,
       marginLeft: 2.5,
-    },
-    loaderHeadingText: {
-      flex: 1,
-      flexDirection: 'column',
     },
   }),
   ErrorStyles: StyleSheet.create({

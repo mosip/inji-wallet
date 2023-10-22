@@ -732,6 +732,10 @@ export const PurpleTheme = {
       marginBottom: 17,
       marginTop: 22,
     },
+    heading: {
+      flex: 1,
+      flexDirection: 'column',
+    },
   }),
   ButtonStyles: StyleSheet.create({
     fill: {
@@ -1175,11 +1179,13 @@ export const PurpleTheme = {
       fontFamily: 'Inter_600SemiBold',
       fontSize: 14,
       lineHeight: 17,
+      paddingTop: 1.7,
     },
     issuerDescription: {
       fontSize: 11,
       lineHeight: 14,
       color: Colors.ShadeOfGrey,
+      paddingTop: 1.4,
     },
     issuerIcon: {
       resizeMode: 'contain',
@@ -1188,10 +1194,6 @@ export const PurpleTheme = {
       marginBottom: 9,
       marginTop: 8,
       marginLeft: 2.5,
-    },
-    loaderHeadingText: {
-      flex: 1,
-      flexDirection: 'column',
     },
   }),
   ErrorStyles: StyleSheet.create({

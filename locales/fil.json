@@ -158,13 +158,15 @@
   },
   "IssuersScreen": {
     "title": "Magdagdag ng bagong card",
-    "header": "Mangyaring pumili ng gustong paraan mula sa ibaba upang magdagdag ng bagong card",
+    "header": "Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.",
+    "itemHeading": "I-download sa pamamagitan ng {{issuer}}",
+    "itemSubHeading": "Ilagay ang iyong national ID para i-download ang iyong card.",
     "loaders": {
       "loading": "Naglo-load...",
       "subTitle": {
-        "displayIssuers": "Fetching Issuers",
-        "settingUp": "Setting up",
-        "downloadingCredentials": "Downloading Credentials",
+        "displayIssuers": "Kinukuha ang mga Isyu",
+        "settingUp": "Inaayos",
+        "downloadingCredentials": "Nagda-download ng Mga Kredensyal"
       }
     },
     "errors": {
