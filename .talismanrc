@@ -1,6 +1,8 @@
 fileignoreconfig:
+- filename: package.json
+  checksum: e0b34f1a1efbdf07b40a3e9e9ecd8884dd7d6835f45c57850e30988d2c6371a2
 - filename: package-lock.json
-  checksum: a4c1fe2521067e1a279610f079446c600e8b7d5cf1553934dc419c3c476b4844
+  checksum: fc26d97edecbacd0b7507032c6fc1acfcea9f01f5dbe66a2a0341506e2f0daca
 - filename: components/PasscodeVerify.tsx
   checksum: 14654c0f038979fcd0d260170a45894a072f81e0767ca9a0e66935d33b5cc703
 - filename: i18n.ts
@@ -24,11 +26,11 @@ fileignoreconfig:
 - filename: screens/WelcomeScreenController.ts
   checksum: 71917c8c543a4a5b7ab61df259b785d233a80718123b0c8edf6ec81e1b3a81e0
 - filename: shared/telemetry/TelemetryUtils.js
-  checksum: ffe9aac2dcc590b98b0d588885c088eff189504ade653a77f74b67312bfd27ad
-- filename: shared/fileStorage.ts
-  checksum: 07cb337dc1d5b0f0eef56270ac4f4f589260ee5e490183c024cf98a2aeafb139
-- filename: shared/storage.ts
-  checksum: c8d874aa373bdf526bf59192139822f56915e702ef673bac4e0d7549b0fea3d0
+  checksum: 9a61cd59a3718adf1f14faf3024fec66a3295ef373878a878a28e5cb1287afaa
+- filename: ios/Podfile.lock
+  checksum: cc123c3e1f04d41b394ceb16843b15c08bac3ba619ae853ff322717739761a85
+- filename: ios/Podfile.lock
+  checksum: cc123c3e1f04d41b394ceb16843b15c08bac3ba619ae853ff322717739761a85
 - filename: screens/Home/IntroSlidersScreen.tsx
   checksum: 72ef913857448ef05763e52e32356faa2d1f3de8130a1c638d1897f44823031f
 - filename: shared/commonUtil.ts
@@ -47,8 +49,6 @@ fileignoreconfig:
   checksum: f1f504bd8c14496ee71f8eb7f40d54411cc05be03347d644dcc2cca187a20678
 - filename: machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine.ts
   checksum: 237a2640b7db70770d65da67c79f2929581e32f1162517e50b8d37e409f3387d
-- filename: machines/store.ts
-  checksum: 0695d833df9ec1e1f6ae2bd81631630bb1039dec387718acb153bcb843c952cd
 - filename: shared/cryptoutil/cryptoUtil.ts
   checksum: b785ff3f01ab9530119072c4d38195048bfeee6155c54ea7dd031559acb722f3
 - filename: package.json
@@ -57,4 +57,3 @@ fileignoreconfig:
   checksum: 6d22bc5c77398316b943c512c208ce0846a9fff674c1ccac79e07f21962acd5f
 - filename: machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine.typegen.ts
   checksum: 10889302ca05646a283386be1bbe7a5fb510c02bb62a308ee45f3c2a872ae64e
-  version: ""

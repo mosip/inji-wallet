@@ -6,6 +6,8 @@ PODS:
   - AppAuth/ExternalUserAgent (1.6.2):
     - AppAuth/Core
   - ASN1Decoder (1.8.0)
+  - BiometricSdk (0.5.4):
+    - TensorFlowLiteObjC (= 2.12.0)
   - boost (1.76.0)
   - BVLinearGradient (2.8.2):
     - React-Core
@@ -78,7 +80,8 @@ PODS:
   - MMKV (1.2.13):
     - MMKVCore (~> 1.2.13)
   - MMKVCore (1.2.16)
-  - mosip-inji-face-sdk (0.1.12):
+  - mosip-mobileid-sdk (0.1.0):
+    - BiometricSdk (= 0.5.4)
     - React-Core
   - Permission-BluetoothPeripheral (3.8.4):
     - RNPermissions
@@ -481,6 +484,13 @@ PODS:
     - React
   - RNSVG (13.4.0):
     - React-Core
+  - TensorFlowLiteC (2.12.0):
+    - TensorFlowLiteC/Core (= 2.12.0)
+  - TensorFlowLiteC/Core (2.12.0)
+  - TensorFlowLiteObjC (2.12.0):
+    - TensorFlowLiteObjC/Core (= 2.12.0)
+  - TensorFlowLiteObjC/Core (2.12.0):
+    - TensorFlowLiteC (= 2.12.0)
   - Yoga (1.14.0)
   - ZXingObjC/Core (3.6.5)
   - ZXingObjC/OneD (3.6.5):
@@ -516,7 +526,7 @@ DEPENDENCIES:
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
   - libevent (~> 2.1.12)
-  - mosip-inji-face-sdk (from `../node_modules/mosip-inji-face-sdk`)
+  - mosip-mobileid-sdk (from `../node_modules/mosip-mobileid-sdk`)
   - Permission-BluetoothPeripheral (from `../node_modules/react-native-permissions/ios/BluetoothPeripheral`)
   - Permission-Camera (from `../node_modules/react-native-permissions/ios/Camera`)
   - Permission-LocationAccuracy (from `../node_modules/react-native-permissions/ios/LocationAccuracy`)
@@ -579,6 +589,7 @@ SPEC REPOS:
   trunk:
     - AppAuth
     - ASN1Decoder
+    - BiometricSdk
     - CatCrypto
     - CrcSwift
     - fmt
@@ -586,6 +597,8 @@ SPEC REPOS:
     - libevent
     - MMKV
     - MMKVCore
+    - TensorFlowLiteC
+    - TensorFlowLiteObjC
     - ZXingObjC
 
 EXTERNAL SOURCES:
@@ -641,8 +654,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
   hermes-engine:
     :podspec: "../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec"
-  mosip-inji-face-sdk:
-    :path: "../node_modules/mosip-inji-face-sdk"
+  mosip-mobileid-sdk:
+    :path: "../node_modules/mosip-mobileid-sdk"
   Permission-BluetoothPeripheral:
     :path: "../node_modules/react-native-permissions/ios/BluetoothPeripheral"
   Permission-Camera:
@@ -759,6 +772,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
   ASN1Decoder: 6110fdeacfdb41559b1481457a1645be716610aa
+  BiometricSdk: 1d16c395413164d92a280b78006abba4307063e6
   boost: 57d2868c099736d80fcd648bf211b4431e51a558
   BVLinearGradient: 916632041121a658c704df89d99f04acb038de0f
   CatCrypto: a477899b6be4954e75be4897e732da098cc0a5a8
@@ -792,7 +806,7 @@ SPEC CHECKSUMS:
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   MMKV: aac95d817a100479445633f2b3ed8961b4ac5043
   MMKVCore: 9cfef4c48c6c46f66226fc2e4634d78490206a48
-  mosip-inji-face-sdk: d5bc0fb66721c25450f92d3297efcb2cf0117271
+  mosip-mobileid-sdk: 6b8182276896194fdcacdde148b02d5d2d16b02a
   Permission-BluetoothPeripheral: 2b88a131074edafd8a46a5cda4ba610ec986d2fb
   Permission-Camera: 7ec9ee99704766ff9b90198183387a7f5d82b0c1
   Permission-LocationAccuracy: a38ddb5c5d0b8e656f3c86e4a500f9bb88bc099d
@@ -848,6 +862,8 @@ SPEC CHECKSUMS:
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
   RNSecureRandom: 07efbdf2cd99efe13497433668e54acd7df49fef
   RNSVG: 07dbd870b0dcdecc99b3a202fa37c8ca163caec2
+  TensorFlowLiteC: 20785a69299185a379ba9852b6625f00afd7984a
+  TensorFlowLiteObjC: 9a46a29a76661c513172cfffd3bf712b11ef25c3
   Yoga: 065f0b74dba4832d6e328238de46eb72c5de9556
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
