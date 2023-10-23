@@ -32,7 +32,7 @@ const LanguageSetting: React.FC = () => {
             containerStyle={Theme.Styles.settingsIconBg}
           />
           <ListItem.Content>
-            <ListItem.Title>
+            <ListItem.Title style={{paddingTop: 3}}>
               <Text weight="semibold" color={Theme.Colors.settingsLabel}>
                 {t('language')}
               </Text>
@@ -77,6 +77,7 @@ export const SettingScreen: React.FC<
             style={{display: Platform.OS !== 'ios' ? 'flex' : 'none'}}
             backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
             <Text
+              style={{paddingTop: 3}}
               testID="injiAsVerifierApp"
               weight="semibold"
               margin="10"
@@ -94,7 +95,7 @@ export const SettingScreen: React.FC<
                     source={Theme.ReceiveCardIcon}
                     style={{alignSelf: 'center'}}
                   />
-                  <Text margin="6" weight="semibold">
+                  <Text margin="6" style={{paddingTop: 3}} weight="semibold">
                     {t('receiveCard')}
                   </Text>
                 </Column>
@@ -105,6 +106,7 @@ export const SettingScreen: React.FC<
 
             <Text
               weight="semibold"
+              style={{paddingTop: 3}}
               margin="10"
               color={Theme.Colors.aboutVersion}>
               {t('basicSettings')}
@@ -131,7 +133,7 @@ export const SettingScreen: React.FC<
                 style={{marginRight: 15}}
               />
               <ListItem.Content>
-                <ListItem.Title>
+                <ListItem.Title style={{paddingTop: 3}}>
                   <Text weight="semibold" color={Theme.Colors.settingsLabel}>
                     {t('bioUnlock')}
                   </Text>
@@ -190,7 +192,7 @@ export const SettingScreen: React.FC<
                 style={{marginRight: 15}}
               />
               <ListItem.Content>
-                <ListItem.Title>
+                <ListItem.Title style={{paddingTop: 3}}>
                   <Text weight="semibold" color={Theme.Colors.settingsLabel}>
                     {t('injiTourGuide')}
                   </Text>
@@ -207,7 +209,7 @@ export const SettingScreen: React.FC<
                 containerStyle={Theme.Styles.settingsIconBg}
               />
               <ListItem.Content>
-                <ListItem.Title>
+                <ListItem.Title style={{paddingTop: 3}}>
                   <Text weight="semibold" color={Theme.Colors.settingsLabel}>
                     {t('logout')}
                   </Text>

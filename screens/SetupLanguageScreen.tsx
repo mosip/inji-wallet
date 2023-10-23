@@ -47,10 +47,18 @@ export const SetupLanguageScreen: React.FC<RootRouteProps> = props => {
         size={58}
       />
       <Column crossAlign="center">
-        <Text testID="chooseLanguage" margin="10 0 10 0" weight="semibold">
+        <Text
+          testID="chooseLanguage"
+          style={{paddingTop: 3}}
+          margin="10 0 10 0"
+          weight="semibold">
           {t('header')}
         </Text>
-        <Text weight="semibold" align="center" color={Theme.Colors.GrayText}>
+        <Text
+          weight="semibold"
+          style={{paddingTop: 3}}
+          align="center"
+          color={Theme.Colors.GrayText}>
           {t('description')}
         </Text>
       </Column>
