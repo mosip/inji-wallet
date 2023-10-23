@@ -7,7 +7,7 @@ import VerifiedIcon from '../../VerifiedIcon';
 import {Column, Row, Text} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import {CheckBox, Icon} from 'react-native-elements';
-import testIDProps from '../../../shared/commonUtil';
+import testIDProps, {getMaskedText} from '../../../shared/commonUtil';
 import {logoType} from '../../../machines/issuersMachine';
 
 const getDetails = (arg1, arg2, verifiableCredential) => {
@@ -83,10 +83,6 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
     );
   }
 };
-
-function getIdNumber(id: string) {
-  return '*'.repeat(id.length - 4) + id.slice(-4);
-}
 
 const getIssuerLogo = (isOpenId4VCI: boolean, issuerLogo: logoType) => {
   if (isOpenId4VCI) {
@@ -243,7 +239,7 @@ export const MosipVCItemContent: React.FC<
                   weight="semibold"
                   size="extraSmall"
                   color={Theme.Colors.statusLabel}>
-                  {getIdNumber(uin)}
+                  {getMaskedText(uin)}
                 </Text>
               </Column>
             ) : null}
@@ -262,7 +258,7 @@ export const MosipVCItemContent: React.FC<
                   weight="semibold"
                   size="extraSmall"
                   color={Theme.Colors.Details}>
-                  {getIdNumber(vid)}
+                  {getMaskedText(vid)}
                 </Text>
               </Column>
             ) : null}

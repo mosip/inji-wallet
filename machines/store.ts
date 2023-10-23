@@ -16,7 +16,6 @@ import {MY_VCS_STORE_KEY} from '../shared/constants';
 import SecureKeystore from 'react-native-secure-keystore';
 import {
   AUTH_TIMEOUT,
-  clear,
   decryptJson,
   DUMMY_KEY_FOR_BIOMETRIC_ALIAS,
   ENCRYPTION_ID,
@@ -275,7 +274,7 @@ export const storeMachine =
       },
 
       services: {
-        clear,
+        clear: () => clear(),
         hasAndroidEncryptionKey: () => async callback => {
           const hasSetCredentials = SecureKeystore.hasAlias(ENCRYPTION_ID);
           if (hasSetCredentials) {
@@ -630,6 +629,18 @@ export async function removeVCMetaData(
   }
 }
 
+export async function clear() {
+  try {
+    console.log('clearing entire storage');
+    if (isHardwareKeystoreExists) {
+      SecureKeystore.clearKeys();
+    }
+    await Storage.clear();
+  } catch (e) {
+    console.error('error clear:', e);
+    throw e;
+  }
+}
 export async function removeItems(
   key: string,
   values: string[],

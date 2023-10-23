@@ -20,6 +20,7 @@ import {
   sendImpressionEvent,
   sendInteractEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
+import {API_URLS} from '../../../shared/api';
 
 const model = createModel(
   {
@@ -358,23 +359,27 @@ export const AddVcModalMachine =
           sendInteractEvent(
             getInteractEventData('VC Download', 'CLICK', 'Requesting OTP'),
           );
-          return request('POST', '/residentmobileapp/req/otp', {
-            id: 'mosip.identity.otp.internal',
-            individualId: context.id,
-            metadata: {},
-            otpChannel: ['PHONE', 'EMAIL'],
-            requestTime: String(new Date().toISOString()),
-            transactionID: context.transactionId,
-            version: '1.0',
-          });
+          return request(
+            API_URLS.requestOtp.method,
+            API_URLS.requestOtp.buildURL(),
+            {
+              id: 'mosip.identity.otp.internal',
+              individualId: context.id,
+              metadata: {},
+              otpChannel: ['PHONE', 'EMAIL'],
+              requestTime: String(new Date().toISOString()),
+              transactionID: context.transactionId,
+              version: '1.0',
+            },
+          );
         },
 
         requestCredential: async context => {
           // force wait to fix issue with hanging overlay
           await new Promise(resolve => setTimeout(resolve, 1000));
           const response = await request(
-            'POST',
-            '/residentmobileapp/credentialshare/request',
+            API_URLS.credentialRequest.method,
+            API_URLS.credentialRequest.buildURL(),
             {
               individualId: context.id,
               individualIdType: context.idType,
