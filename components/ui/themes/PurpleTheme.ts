@@ -1,5 +1,5 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import {Dimensions, Platform, StyleSheet, ViewStyle} from 'react-native';
+import {Dimensions, StyleSheet, ViewStyle} from 'react-native';
 import {Spacing} from '../styleUtils';
 import {isIOS} from '../../../shared/constants';
 
@@ -526,7 +526,7 @@ export const PurpleTheme = {
       borderBottomColor: Colors.platinumGrey,
       borderBottomWidth: 1.3,
     },
-    downloadFabIcon: {
+    downloadFabIconContainer: {
       height: 70,
       width: 70,
       borderRadius: 200,
@@ -538,14 +538,14 @@ export const PurpleTheme = {
       bottom: Dimensions.get('window').width * 0.1,
       right: Dimensions.get('window').width * 0.1,
     },
-    fabIconNormal: {
+    downloadFabIconNormal: {
       borderRadius: 200,
       height: 70,
       width: 70,
       justifyContent: 'center',
       position: 'absolute',
     },
-    fabIconPressed: {
+    downloadFabIconPressed: {
       borderRadius: 200,
       height: 70,
       width: 70,

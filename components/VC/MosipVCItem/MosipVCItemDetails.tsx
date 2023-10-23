@@ -21,7 +21,6 @@ import {
 } from '../../../types/VC/EsignetMosipVC/vc';
 import {WalletBindingResponse} from '../../../shared/cryptoutil/cryptoUtil';
 import {logoType} from '../../../machines/issuersMachine';
-import {getMaskedText} from '../../../shared/commonUtil';
 
 const getIssuerLogo = (isOpenId4VCI: boolean, issuerLogo: logoType) => {
   if (isOpenId4VCI) {
@@ -168,7 +167,7 @@ export const MosipVCItemDetails: React.FC<
                       weight="semibold"
                       size="smaller"
                       color={Theme.Colors.Details}>
-                      {getMaskedText(uin)}
+                      {uin}
                     </Text>
                   </Column>
                 ) : null}
@@ -187,7 +186,7 @@ export const MosipVCItemDetails: React.FC<
                       weight="semibold"
                       size="smaller"
                       color={Theme.Colors.Details}>
-                      {getMaskedText(vid)}
+                      {vid}
                     </Text>
                   </Column>
                 ) : null}

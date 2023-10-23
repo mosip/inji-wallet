@@ -44,13 +44,16 @@ export const HomeScreen: React.FC<HomeRouteProps> = props => {
     return (
       <LinearGradient
         colors={Theme.Colors.gradientBtn}
-        style={Theme.Styles.downloadFabIcon}>
+        style={Theme.Styles.downloadFabIconContainer}>
         <Pressable
           onPress={() => {
             controller.GOTO_ISSUERS();
           }}
+          testID="downloadIcon"
           style={({pressed}) =>
-            pressed ? Theme.Styles.fabIconPressed : Theme.Styles.fabIconNormal
+            pressed
+              ? Theme.Styles.downloadFabIconPressed
+              : Theme.Styles.downloadFabIconNormal
           }>
           {plusIcon}
         </Pressable>
