@@ -3,7 +3,6 @@ import forge from 'node-forge';
 import getAllConfigurations from '../commonprops/commonProps';
 import {DEBUG_MODE_ENABLED, isIOS} from '../constants';
 import SecureKeystore from 'react-native-secure-keystore';
-import Storage from '../storage';
 import CryptoJS from 'crypto-js';
 
 // 5min
@@ -118,19 +117,6 @@ export interface WalletBindingResponse {
   keyId: string;
   thumbprint: string;
   expireDateTime: string;
-}
-
-export async function clear() {
-  try {
-    console.log('clearing entire storage');
-    if (isHardwareKeystoreExists) {
-      SecureKeystore.clearKeys();
-    }
-    await Storage.clear();
-  } catch (e) {
-    console.error('error clear:', e);
-    throw e;
-  }
 }
 
 export async function encryptJson(
