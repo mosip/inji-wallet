@@ -1,7 +1,8 @@
 fileignoreconfig:
+- filename: package.json
+  checksum: e0b34f1a1efbdf07b40a3e9e9ecd8884dd7d6835f45c57850e30988d2c6371a2
 - filename: package-lock.json
-  checksum: 5e45f86a47c0a4c6cc7be7618f2f088729ef474e27c67cff6376607e2a49fa23
-  checksum: 5e45f86a47c0a4c6cc7be7618f2f088729ef474e27c67cff6376607e2a49fa23
+  checksum: fc26d97edecbacd0b7507032c6fc1acfcea9f01f5dbe66a2a0341506e2f0daca
 - filename: components/PasscodeVerify.tsx
   checksum: 14654c0f038979fcd0d260170a45894a072f81e0767ca9a0e66935d33b5cc703
 - filename: i18n.ts
@@ -56,4 +57,3 @@ fileignoreconfig:
   checksum: 6d22bc5c77398316b943c512c208ce0846a9fff674c1ccac79e07f21962acd5f
 - filename: machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine.typegen.ts
   checksum: 10889302ca05646a283386be1bbe7a5fb510c02bb62a308ee45f3c2a872ae64e
-  version: ""
