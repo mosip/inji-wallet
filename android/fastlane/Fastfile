@@ -53,6 +53,8 @@ end
 desc "Deploy an Beta version to the Google Play"
 lane :android_build_beta do
 
+  gradle(task: "assembleBetaDebug")
+
   git_tag = sh('git describe --abbrev=0 --tags --exact-match HEAD').strip
 
   def convert_tag_to_code(version)
