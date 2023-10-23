@@ -1,5 +1,5 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import {Dimensions, Platform, StyleSheet, ViewStyle} from 'react-native';
+import {Dimensions, StyleSheet, ViewStyle} from 'react-native';
 import {Spacing} from '../styleUtils';
 import {isIOS} from '../../../shared/constants';
 
@@ -524,18 +524,32 @@ export const DefaultTheme = {
       borderBottomColor: Colors.platinumGrey,
       borderBottomWidth: 1.3,
     },
-    downloadFabIcon: {
+    downloadFabIconContainer: {
       height: 70,
       width: 70,
       borderRadius: 200,
       padding: 10,
-      backgroundColor: Colors.Orange,
       shadowColor: '#000',
       shadowOpacity: 0.4,
       elevation: 5,
       position: 'absolute',
       bottom: Dimensions.get('window').width * 0.1,
       right: Dimensions.get('window').width * 0.1,
+    },
+    downloadFabIconNormal: {
+      borderRadius: 200,
+      height: 70,
+      width: 70,
+      justifyContent: 'center',
+      position: 'absolute',
+    },
+    downloadFabIconPressed: {
+      borderRadius: 200,
+      height: 70,
+      width: 70,
+      backgroundColor: Colors.Orange,
+      justifyContent: 'center',
+      position: 'absolute',
     },
     boxShadow: generateBoxShadowStyle(),
   }),

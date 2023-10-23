@@ -1,4 +1,3 @@
-import {Platform} from 'react-native';
 import argon2 from 'react-native-argon2';
 import {AnyState} from 'xstate';
 import {getDeviceNameSync} from 'react-native-device-info';
@@ -52,3 +51,7 @@ export function logState(state: AnyState) {
     `,
   );
 }
+
+export const getMaskedText = (id: string): string => {
+  return '*'.repeat(id.length - 4) + id.slice(-4);
+};
