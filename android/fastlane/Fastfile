@@ -17,8 +17,6 @@ end
 desc "Deploy an Internal testing version to the Google Play"
 lane :android_build_internal do
 
-  gradle(task: "assembleMosipRelease")
-
   previous_build_number = google_play_track_version_codes(
     package_name: "io.mosip.residentapp",
     track: "internal",
@@ -79,6 +77,7 @@ lane :android_build_beta do
   track: 'alpha',
   release_status: 'completed',
   version_name: versionName,
+  abb: "app/build/outputs/bundle/betaRelease/app-beta-release.aab",
   )
 
   slack(
