@@ -26,6 +26,7 @@ import {GlobalContext} from '../shared/GlobalContext';
 import {selectIsActive} from '../machines/app';
 import {RotatingIcon} from './RotatingIcon';
 import {Theme} from './ui/styleUtils';
+import {isIOS} from '../shared/constants';
 
 export const FaceScanner: React.FC<FaceScannerProps> = props => {
   const {t} = useTranslation('FaceScanner');
@@ -130,7 +131,7 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
           </Row>
         )}
         {/* TODO: remove warning when iOS SDK is ready */}
-        {Platform.OS === 'ios' && (
+        {isIOS() && (
           <Text size="smaller" color={Theme.Colors.textLabel} align="center">
             (face-matching in iOS is mocked)
           </Text>

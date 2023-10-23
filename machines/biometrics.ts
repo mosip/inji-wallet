@@ -2,6 +2,7 @@ import {createModel} from 'xstate/lib/model';
 import * as LocalAuthentication from 'expo-local-authentication';
 import {EventFrom, MetaObject, StateFrom} from 'xstate';
 import {Platform} from 'react-native';
+import {isAndroid} from '../shared/constants';
 
 // ----- CREATE MODEL ---------------------------------------------------------
 const model = createModel(
@@ -99,7 +100,7 @@ export const biometricsMachine = model.createMachine(
       authenticating: {
         invoke: {
           src: () => async () => {
-            if (Platform.OS === 'android') {
+            if (isAndroid()) {
               await LocalAuthentication.cancelAuthenticate();
             }
             const res = await LocalAuthentication.authenticateAsync({

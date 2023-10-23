@@ -3,11 +3,7 @@ import jwtDecode from 'jwt-decode';
 import jose from 'node-jose';
 import {isIOS} from '../constants';
 import pem2jwk from 'simple-pem2jwk';
-import {
-  displayType,
-  Issuers_Key_Ref,
-  issuerType,
-} from '../../machines/issuersMachine';
+import {displayType, issuerType} from '../../machines/issuersMachine';
 import getAllConfigurations from '../commonprops/commonProps';
 import {CredentialWrapper} from '../../types/VC/EsignetMosipVC/vc';
 import {VCMetadata} from '../VCMetadata';
@@ -17,6 +13,8 @@ export const Protocols = {
   OpenId4VCI: 'OpenId4VCI',
   OTP: 'OTP',
 };
+
+export const Issuers_Key_Ref = 'OpenId4VCI_KeyPair';
 
 export const getIdentifier = (context, credential) => {
   const credId = credential.credential.id.split('/');

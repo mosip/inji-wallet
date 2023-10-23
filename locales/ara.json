@@ -159,13 +159,15 @@
   },
   "IssuersScreen": {
     "title": "أضف بطاقة جديدة",
-    "header": "يرجى تحديد الطريقة المفضلة من الأسفل لإضافة بطاقة جديدة",
+    "header": "يرجى اختيار جهة الإصدار المفضلة لديك من الخيارات أدناه لإضافة بطاقة جديدة.",
+    "itemHeading": "التنزيل عبر {{issuer}}",
+    "itemSubHeading": "أدخل رقم الهوية الوطنية الخاص بك لتنزيل بطاقتك.",
     "loaders": {
       "loading": "جار التحميل...",
       "subTitle": {
-        "displayIssuers": "Fetching Issuers",
-        "settingUp": "Setting up",
-        "downloadingCredentials": "Downloading Credentials",
+        "displayIssuers": "جلب جهات الإصدار",
+        "settingUp": "اعداد",
+        "downloadingCredentials": "تنزيل بيانات الاعتماد"
       }
     },
     "errors":{
@@ -202,6 +204,12 @@
   },
   "AddVcModal": {
     "requestingCredential": "جارٍ طلب بيانات الاعتماد...",
+    "confirmationDialog": {
+      "title": "هل تريد إلغاء التنزيل؟",
+      "message": "بمجرد الإلغاء، لن يتم تنزيل بطاقتك وستحتاج إلى إعادة بدء التنزيل.",
+      "wait": "لا، سأنتظر",
+      "cancel": "نعم، إلغاء"
+    },
     "errors": {
       "input": {
         "empty": "فارغًا",
@@ -356,11 +364,6 @@
     "reEnterPassword": "أعد إدخال رمز المرور الجديد",
     "confirmPasscode": "قم بتأكيد رمز المرور",
     "enterPasscode": "أدخل رمز المرور الخاص"
-  },
-  "AppMetaData": {
-    "header": "حول إنجي",
-    "version": "الإصدار",
-    "useBle": "مدعوم من BLE"
   },
   "QrLogin": {
     "title": "QR تسجيل الدخول",

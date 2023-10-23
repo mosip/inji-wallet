@@ -1,8 +1,9 @@
 import React from 'react';
 import {useInterpret} from '@xstate/react';
-import {appMachine, logState} from '../machines/app';
+import {appMachine} from '../machines/app';
 
 import {GlobalContext} from '../shared/GlobalContext';
+import {logState} from '../shared/commonUtil';
 
 export const GlobalContextProvider: React.FC = props => {
   const appService = useInterpret(appMachine, {devTools: __DEV__});

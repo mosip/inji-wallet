@@ -14,7 +14,7 @@ import {
   TextInput,
 } from 'react-native';
 import {TouchableOpacity} from 'react-native';
-import {individualId} from '../../../shared/constants';
+import {individualId, isIOS} from '../../../shared/constants';
 import {GET_INDIVIDUAL_ID} from '../../../shared/constants';
 import {MessageOverlay} from '../../../components/MessageOverlay';
 import testIDProps from '../../../shared/commonUtil';
@@ -47,7 +47,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = props => {
       headerElevation={2}>
       <KeyboardAvoidingView
         style={{flex: 1}}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        behavior={isIOS() ? 'padding' : 'height'}>
         <Column fill align="space-between" pY={32} pX={24}>
           <Column>
             <Text

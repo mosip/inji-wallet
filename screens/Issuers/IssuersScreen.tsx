@@ -1,10 +1,10 @@
 import React, {useLayoutEffect} from 'react';
 import {useTranslation} from 'react-i18next';
-import {FlatList, Image, Text, View} from 'react-native';
+import {FlatList, Image, View} from 'react-native';
 import {Issuer} from '../../components/openId4VCI/Issuer';
 import {Error} from '../../components/ui/Error';
 import {Header} from '../../components/ui/Header';
-import {Column} from '../../components/ui';
+import {Column, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {RootRouteProps} from '../../routes';
 import {HomeRouteProps} from '../../routes/main';
@@ -132,6 +132,7 @@ export const IssuersScreen: React.FC<
             {...testIDProps('addCardDescription')}
             style={{
               ...Theme.TextStyles.regularGrey,
+              paddingTop: 0.5,
               marginVertical: 14,
               marginHorizontal: 9,
             }}>

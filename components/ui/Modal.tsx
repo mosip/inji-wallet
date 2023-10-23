@@ -57,7 +57,7 @@ export const Modal: React.FC<ModalProps> = props => {
                     color={
                       props.headerLabelColor
                         ? props.headerLabelColor
-                        : Theme.Colors.profileLanguageValue
+                        : Theme.Colors.textLabel
                     }>
                     {props.headerLabel}
                   </Text>
