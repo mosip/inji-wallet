@@ -24,7 +24,7 @@ jobs:
       NODE_VERSION: "16.x"
       DEBUG_KEYSTORE_ALIAS: androiddebugkey
     secrets:
-      DEBUG_KEYSTORE_PASSWORD: ${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}
+      DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
 
   build-ios:
     uses: tw-mosip/kattu/.github/workflows/ios-build.yml@add-inji-workflows
