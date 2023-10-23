@@ -3,8 +3,6 @@ plugins {
 }
 
 apply plugin: "com.android.application"
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: "com.facebook.react"
 
 import com.android.build.OutputFile
@@ -121,7 +119,6 @@ android {
 
         manifestPlaceholders = [
             APP_NAME: APP_NAME_RELEASE,
-            GOOGLE_NEARBY_MESSAGES_API_KEY: "${properties.getProperty('GOOGLE_NEARBY_MESSAGES_API_KEY')}",
             appAuthRedirectScheme: 'io.mosip.residentapp.inji'
         ]
     }
@@ -250,20 +247,8 @@ dependencies {
     } else {
         implementation jscFlavor
     }
-    // Firebase
-    implementation 'com.google.firebase:firebase-crashlytics:17.3.1'
-    implementation 'com.google.firebase:firebase-analytics:18.0.2'
     implementation 'com.jakewharton.timber:timber:4.7.1'
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
 apply from: "./eas-build.gradle"
-
-try {
-    def servicesJSON = file('google-services.json')
-    if (servicesJSON.text) {
-        apply plugin: 'com.google.gms.google-services'
-    }
-} catch(Exception e) {
-    logger.warn("google-services.json not found, google-services plugin not applied. Push Notifications won't work")
-}
