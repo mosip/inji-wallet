@@ -37,3 +37,5 @@ fileignoreconfig:
   checksum: 4c63a5c142288337f6fad670957005d932a139b95705cc5ec3e55dc63295146d
 - filename: .github/workflows/internal-build.yml
   checksum: 9534127d1d01294985bb49e249fe83fd565e1f89c4ca04a60c26c9842274b263
+- filename: android/fastlane/Fastfile
+  checksum: 16c5147be4ae327d63d580b174be0d6f83f1d4bb915f2b62856016331a082463
