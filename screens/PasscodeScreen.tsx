@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Image} from 'react-native';
 import {MAX_PIN, PasscodeVerify} from '../components/PasscodeVerify';
@@ -9,14 +9,56 @@ import {PasscodeRouteProps} from '../routes';
 import {usePasscodeScreen} from './PasscodeScreenController';
 import {hashData} from '../shared/commonUtil';
 import {argon2iConfig} from '../shared/constants';
+import {
+  getEndEventData,
+  getEventType,
+  getImpressionEventData,
+  sendEndEvent,
+  sendImpressionEvent,
+} from '../shared/telemetry/TelemetryUtils';
+import {BackHandler} from 'react-native';
+import {incrementPasscodeRetryCount} from '../shared/telemetry/TelemetryUtils';
 
 export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
   const {t} = useTranslation('PasscodeScreen');
   const controller = usePasscodeScreen(props);
+  const isSettingUp = props.route.params?.setup;
+
+  useEffect(() => {
+    sendImpressionEvent(
+      getImpressionEventData(getEventType(isSettingUp), 'Passcode'),
+    );
+  }, [isSettingUp]);
+
+  const handleBackButtonPress = () => {
+    sendEndEvent(
+      getEndEventData(getEventType(isSettingUp), 'FAILURE', {
+        errorId: 'user_cancel',
+        errorMessage: 'Authentication canceled',
+      }),
+    );
+    return false;
+  };
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      handleBackButtonPress,
+    );
+
+    return () => {
+      backHandler.remove();
+    };
+  }, []);
 
   const setPasscode = async (passcode: string) => {
     const data = await hashData(passcode, controller.storedSalt, argon2iConfig);
     controller.setPasscode(data);
+  };
+
+  const handlePasscodeMismatch = (error: string) => {
+    incrementPasscodeRetryCount(getEventType(isSettingUp));
+    controller.setError(error);
   };
 
   const passcodeSetup =
@@ -26,11 +68,12 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
           <Text
             testID="setPasscode"
             align="center"
-            style={Theme.TextStyles.header}>
+            style={{...Theme.TextStyles.header, paddingTop: 7}}>
             {t('header')}
           </Text>
           <Text
             align="center"
+            style={{paddingTop: 3}}
             weight="semibold"
             color={Theme.Colors.GrayText}
             margin="6 0">
@@ -50,11 +93,12 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
           <Text
             testID="confirmPasscode"
             align="center"
-            style={Theme.TextStyles.header}>
+            style={{...Theme.TextStyles.header, paddingTop: 7}}>
             {t('confirmPasscode')}
           </Text>
           <Text
             align="center"
+            style={{paddingTop: 3}}
             weight="semibold"
             color={Theme.Colors.GrayText}
             margin="6 0">
@@ -63,7 +107,7 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
         </Column>
         <PasscodeVerify
           onSuccess={controller.SETUP_PASSCODE}
-          onError={controller.setError}
+          onError={handlePasscodeMismatch}
           passcode={controller.passcode}
           salt={controller.storedSalt}
         />
@@ -76,7 +120,7 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
       padding="32"
       backgroundColor={Theme.Colors.whiteBackgroundColor}>
       <Image source={Theme.LockIcon} style={{alignSelf: 'center'}} />
-      {props.route.params?.setup ? (
+      {isSettingUp ? (
         <Column fill align="space-around" width="100%">
           {passcodeSetup}
         </Column>
@@ -84,6 +128,7 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
         <Column fill align="space-around" width="100%">
           <Text
             testID="enterPasscode"
+            style={{paddingTop: 3}}
             align="center"
             weight="semibold"
             color={Theme.Colors.GrayText}
@@ -92,7 +137,7 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
           </Text>
           <PasscodeVerify
             onSuccess={controller.LOGIN}
-            onError={controller.setError}
+            onError={handlePasscodeMismatch}
             passcode={controller.storedPasscode}
             salt={controller.storedSalt}
           />

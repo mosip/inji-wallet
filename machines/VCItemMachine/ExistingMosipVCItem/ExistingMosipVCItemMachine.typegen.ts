@@ -208,15 +208,19 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]'
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
     markVcValid: 'done.invoke.vc-item.verifyingCredential:invocation[0]';
+    refreshMyVcs: 'STORE_RESPONSE';
+    removeTamperedVcItem: 'TAMPERED_VC';
     removeVcFromInProgressDownloads: 'STORE_RESPONSE';
     removeVcItem: 'CONFIRM';
     removeVcMetaDataFromStorage: 'STORE_ERROR';
     removeVcMetaDataFromVcMachine: 'DISMISS';
-    removedVc: 'STORE_RESPONSE';
     requestStoredContext: 'GET_VC_RESPONSE' | 'REFRESH';
     requestVcContext: 'DISMISS' | 'xstate.init';
     resetWalletBindingSuccess: 'DISMISS';
     revokeVID: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
+    sendDownloadLimitExpire: 'error.platform.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]';
+    sendTamperedVc: 'TAMPERED_VC';
+    sendTelemetryEvents: 'STORE_RESPONSE';
     sendVcUpdated: 'PIN_CARD';
     sendWalletBindingSuccess:
       | 'done.invoke.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]'

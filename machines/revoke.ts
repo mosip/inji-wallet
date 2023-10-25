@@ -1,5 +1,5 @@
 import {TextInput} from 'react-native';
-import {assign, ErrorPlatformEvent, StateFrom, send, EventFrom} from 'xstate';
+import {assign, ErrorPlatformEvent, EventFrom, send, StateFrom} from 'xstate';
 import {log} from 'xstate/lib/actions';
 
 import i18n from '../i18n';
@@ -11,6 +11,7 @@ import {request} from '../shared/request';
 import {VcIdType} from '../types/VC/ExistingMosipVC/vc';
 import {MY_VCS_STORE_KEY} from '../shared/constants';
 import {VCMetadata} from '../shared/VCMetadata';
+import {API_URLS} from '../shared/api';
 
 const model = createModel(
   {
@@ -236,12 +237,16 @@ export const revokeVidsMachine =
       services: {
         requestOtp: async context => {
           const transactionId = String(new Date().valueOf()).substring(3, 13);
-          return request('POST', '/residentmobileapp/req/otp', {
-            individualId: context.VIDsMetadata[0].id,
-            individualIdType: 'VID',
-            otpChannel: ['EMAIL', 'PHONE'],
-            transactionID: transactionId,
-          });
+          return request(
+            API_URLS.requestOtp.method,
+            API_URLS.requestOtp.buildURL(),
+            {
+              individualId: context.VIDsMetadata[0].id,
+              individualIdType: 'VID',
+              otpChannel: ['EMAIL', 'PHONE'],
+              transactionID: transactionId,
+            },
+          );
         },
 
         requestRevoke: context => async callback => {
@@ -253,8 +258,8 @@ export const revokeVidsMachine =
                   13,
                 );
                 return request(
-                  'PATCH',
-                  `/residentmobileapp/vid/${metadata.id}`,
+                  API_URLS.requestRevoke.method,
+                  API_URLS.requestRevoke.buildURL(metadata.id),
                   {
                     transactionID: transactionId,
                     vidStatus: 'REVOKED',

@@ -2,8 +2,6 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Dimensions} from 'react-native';
 import {Icon} from 'react-native-elements';
-import {ActorRefFrom} from 'xstate';
-import {ExistingMosipVCItemMachine} from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {VerifiableCredential} from '../../../types/VC/ExistingMosipVC/vc';
 import {Row, Text} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
@@ -16,9 +14,10 @@ const WalletUnverifiedIcon: React.FC = () => {
       size={Theme.ICON_MID_SIZE}
       type="material-community"
       containerStyle={{
-        marginStart: 10,
+        marginStart: 1,
+        marginEnd: 1,
         bottom: 1,
-        marginLeft: 10,
+        marginRight: -2,
       }}
     />
   );
@@ -48,13 +47,14 @@ const WalletUnverifiedActivationDetails: React.FC<
         crossAlign="center"
         style={{
           flex: 1,
+          maxWidth: 255,
         }}>
         {props.verifiableCredential && <WalletUnverifiedIcon />}
         <Text
           color={Theme.Colors.Details}
           testID="activationPending"
           weight="regular"
-          margin="8 10 10 5"
+          margin="8"
           style={
             !props.verifiableCredential
               ? Theme.Styles.loadingTitle
@@ -106,13 +106,11 @@ export const MosipVCItemActivationStatus: React.FC<
       {props.emptyWalletBindingId ? (
         <WalletUnverifiedActivationDetails
           verifiableCredential={props.verifiableCredential}
-          onPress={props.onPress}
         />
       ) : (
         <WalletVerifiedActivationDetails
           verifiableCredential={props.verifiableCredential}
           showOnlyBindedVc={props.showOnlyBindedVc}
-          onPress={props.onPress}
         />
       )}
     </Row>
@@ -121,18 +119,15 @@ export const MosipVCItemActivationStatus: React.FC<
 
 interface ExistingMosipVCItemActivationStatusProps {
   showOnlyBindedVc: boolean;
-  onPress: (vcRef?: ActorRefFrom<typeof ExistingMosipVCItemMachine>) => void;
   verifiableCredential: VerifiableCredential;
   emptyWalletBindingId: boolean;
 }
 
 interface WalletVerifiedDetailsProps {
   showOnlyBindedVc: boolean;
-  onPress: (vcRef?: ActorRefFrom<typeof ExistingMosipVCItemMachine>) => void;
   verifiableCredential: VerifiableCredential;
 }
 
 interface WalletUnVerifiedDetailsProps {
-  onPress: (vcRef?: ActorRefFrom<typeof ExistingMosipVCItemMachine>) => void;
   verifiableCredential: VerifiableCredential;
 }

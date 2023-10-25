@@ -39,8 +39,8 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
             style={{marginRight: 15}}
           />
           <ListItem.Content>
-            <ListItem.Title>
-              <Text weight="semibold" color={Theme.Colors.profileLabel}>
+            <ListItem.Title style={{paddingTop: 3}}>
+              <Text weight="semibold" color={Theme.Colors.settingsLabel}>
                 {t('aboutInji')}
               </Text>
             </ListItem.Title>
@@ -57,18 +57,20 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
           setShowAboutInji(!showAboutInji);
         }}>
         <Row testID="appID" style={Theme.Styles.primaryRow}>
-          <Text style={Theme.TextStyles.semibold}>
+          <Text style={{...Theme.TextStyles.semibold, paddingTop: 3}}>
             {t('appID')} : {appId}
           </Text>
           <CopyButton content={appId} />
         </Row>
         <Column fill padding="12" align="space-between">
           <Column>
-            <Text testID="aboutDetails" style={Theme.TextStyles.aboutDetailes}>
+            <Text
+              testID="aboutDetails"
+              style={{...Theme.TextStyles.aboutDetailes, paddingTop: 5}}>
               {t('aboutDetailes')}
             </Text>
             <Row crossAlign="center">
-              <Text style={Theme.TextStyles.aboutDetailes}>
+              <Text style={{...Theme.TextStyles.aboutDetailes, paddingTop: 7}}>
                 {t('forMoreDetailes')}
               </Text>
               <TouchableOpacity
@@ -76,7 +78,10 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
                 onPress={() => {
                   aboutInjiUrl && Linking.openURL(aboutInjiUrl);
                 }}>
-                <Text color={Theme.Colors.AddIdBtnBg} weight="bold">
+                <Text
+                  color={Theme.Colors.AddIdBtnBg}
+                  style={{paddingTop: 3}}
+                  weight="bold">
                   {t('clickHere')}
                 </Text>
               </TouchableOpacity>
@@ -89,13 +94,14 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
             crossAlign="center"
             style={Theme.Styles.versionContainer}>
             <Text
-              style={Theme.TextStyles.bold}
+              style={{...Theme.TextStyles.bold, paddingTop: 3}}
               color={Theme.Colors.aboutVersion}>
               {t('version')}: {__InjiVersion.getValue()}
             </Text>
             {__TuvaliVersion.getpackageVersion() != 'unknown' && (
               <Text
                 weight="semibold"
+                style={{paddingTop: 3}}
                 margin="32 0 5 0"
                 align="center"
                 size="small"

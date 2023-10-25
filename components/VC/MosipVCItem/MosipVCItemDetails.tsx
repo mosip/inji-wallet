@@ -2,9 +2,9 @@ import {format, formatDistanceToNow, parse} from 'date-fns';
 import React from 'react';
 import * as DateFnsLocale from 'date-fns/locale';
 import {useTranslation} from 'react-i18next';
-import {Image, ImageBackground, View} from 'react-native';
+import {Dimensions, Image, ImageBackground, View} from 'react-native';
 import {Icon} from 'react-native-elements';
-import {VC, CredentialSubject} from '../../../types/VC/ExistingMosipVC/vc';
+import {CredentialSubject, VC} from '../../../types/VC/ExistingMosipVC/vc';
 import {Button, Column, Row, Text} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import {TextItem} from '../../ui/TextItem';
@@ -20,10 +20,17 @@ import {
   VerifiablePresentation,
 } from '../../../types/VC/EsignetMosipVC/vc';
 import {WalletBindingResponse} from '../../../shared/cryptoutil/cryptoUtil';
+import {logoType} from '../../../machines/issuersMachine';
 
-const getIssuerLogo = (isOpenId4VCI: boolean, issuerLogo: string) => {
+const getIssuerLogo = (isOpenId4VCI: boolean, issuerLogo: logoType) => {
   if (isOpenId4VCI) {
-    return <Image src={issuerLogo} style={Theme.Styles.issuerLogo} />;
+    return (
+      <Image
+        src={issuerLogo?.url}
+        alt={issuerLogo?.alt_text}
+        style={Theme.Styles.issuerLogo}
+      />
+    );
   }
   return <Image source={Theme.MosipLogo} style={Theme.Styles.vcDetailsLogo} />;
 };
@@ -42,7 +49,7 @@ const getProfileImage = (
       return {uri: props.vc?.credential.biometrics.face};
     }
   }
-  return Theme.ProfileIcon;
+  return Theme.cardFaceIcon;
 };
 
 export const MosipVCItemDetails: React.FC<
@@ -68,14 +75,14 @@ export const MosipVCItemDetails: React.FC<
   }
 
   return (
-    <Column margin="10">
+    <Column margin="10 4 10 4">
       <ImageBackground
         imageStyle={{width: '100%'}}
         resizeMethod="scale"
         resizeMode="stretch"
         style={Theme.Styles.openCardBgContainer}
         source={Theme.OpenCard}>
-        <Row align="space-between" padding="10" margin="0 10 0 10">
+        <Row align="space-between" padding="10" margin="0 10 0 8">
           <Column align="space-evenly" crossAlign="center">
             <Image
               source={getProfileImage(
@@ -101,6 +108,7 @@ export const MosipVCItemDetails: React.FC<
               <Text
                 testID="fullNameValue"
                 weight="semibold"
+                style={{maxWidth: 190}}
                 size="smaller"
                 color={Theme.Colors.Details}>
                 {getLocalizedField(
@@ -139,6 +147,7 @@ export const MosipVCItemDetails: React.FC<
                   <Text
                     testID="nationalCard"
                     weight="bold"
+                    style={{minWidth: 65}}
                     size="smaller"
                     color={Theme.Colors.Details}>
                     {t('nationalCard')}
@@ -198,10 +207,11 @@ export const MosipVCItemDetails: React.FC<
                   </Text>
                 </Column>
               </Column>
-              <Column margin="0 0 0 40">
+              <Column margin="0 0 0 38">
                 <Column margin="20 0 0 0">
                   <Text
                     testID="dateOfBirth"
+                    style={{maxWidth: 121}}
                     weight="regular"
                     size="smaller"
                     color={Theme.Colors.DetailsLabel}>
@@ -215,7 +225,8 @@ export const MosipVCItemDetails: React.FC<
                     {formattedDateOfBirth()}
                   </Text>
                 </Column>
-                <Column margin="25 0 0 0">
+                <Column
+                  style={{marginTop: Dimensions.get('window').height * 0.04}}>
                   <Text
                     testID="status"
                     weight="regular"
@@ -231,6 +242,7 @@ export const MosipVCItemDetails: React.FC<
                     {props.vc?.isVerified && <VerifiedIcon />}
                     <Text
                       testID="valid"
+                      style={{maxWidth: 63}}
                       weight="semibold"
                       size="smaller"
                       color={Theme.Colors.Details}>
@@ -238,9 +250,11 @@ export const MosipVCItemDetails: React.FC<
                     </Text>
                   </Row>
                 </Column>
-                <Column margin="92 0 0 0">
+                <Column
+                  style={{marginTop: Dimensions.get('window').height * 0.1}}>
                   <Text
                     testID="phoneNumber"
+                    style={{maxWidth: 80}}
                     weight="regular"
                     size="smaller"
                     color={Theme.Colors.DetailsLabel}>

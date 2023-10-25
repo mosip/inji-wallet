@@ -109,20 +109,6 @@ jobs:
           gpg2 --import ./.github/keys/mosipgpgkey_pub.gpg 
           gpg2 --quiet --batch --passphrase=${{secrets.gpg_secret}}  --allow-secret-key-import --import ./.github/keys/mosipgpgkey_sec.gpg
 
-      - name: Setup Firebase
-        run: |
-          cd android
-          
-          if [ ! -z "$FIREBASE_SECRET" ] && [ -f app/google-services.json.gpg ];
-          then 
-            rm -f app/google-services.json;gpg2 --quiet --batch --passphrase=$FIREBASE_SECRET --pinentry-mode loopback --decrypt --output app/google-services.json app/mosip-google-services.json.gpg;
-          else 
-            echo "Using Dummy Google Service JSON for firebase"
-            echo "$DUMMY_GOOGLE_SERVICE_JSON" > app/google-services.json
-          fi
-        env:
-          FIREBASE_SECRET: ${{ secrets.GPG_SECRET }}
-
       - name: Generate keystore
         run: |
           keytool \

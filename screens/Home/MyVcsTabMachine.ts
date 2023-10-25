@@ -15,7 +15,6 @@ import {AppServices} from '../../shared/GlobalContext';
 import {MY_VCS_STORE_KEY} from '../../shared/constants';
 import {AddVcModalMachine} from './MyVcs/AddVcModalMachine';
 import {GetVcModalMachine} from './MyVcs/GetVcModalMachine';
-import Storage from '../../shared/storage';
 import {VCMetadata} from '../../shared/VCMetadata';
 import {EsignetMosipVCItemMachine} from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 import NetInfo from '@react-native-community/netinfo';
@@ -75,32 +74,12 @@ export const MyVcsTabMachine = model.createMachine(
               onDone: [
                 {
                   cond: 'isNetworkOn',
-                  target: 'checkStorage',
+                  target: '#MyVcsTab.addingVc',
                 },
                 {
                   target: 'networkOff',
                 },
               ],
-            },
-          },
-
-          checkStorage: {
-            invoke: {
-              src: 'checkStorageAvailability',
-              onDone: [
-                {
-                  cond: 'isMinimumStorageLimitReached',
-                  target: 'storageLimitReached',
-                },
-                {
-                  target: '#MyVcsTab.addingVc',
-                },
-              ],
-            },
-          },
-          storageLimitReached: {
-            on: {
-              DISMISS: '#idle',
             },
           },
           networkOff: {
@@ -188,11 +167,6 @@ export const MyVcsTabMachine = model.createMachine(
   },
   {
     services: {
-      checkStorageAvailability: () => async () => {
-        return Promise.resolve(
-          Storage.isMinimumLimitReached('minStorageRequired'),
-        );
-      },
       checkNetworkStatus: async () => {
         const state = await NetInfo.fetch();
         return state.isConnected;
@@ -231,7 +205,6 @@ export const MyVcsTabMachine = model.createMachine(
     },
 
     guards: {
-      isMinimumStorageLimitReached: (_context, event) => Boolean(event.data),
       isNetworkOn: (_context, event) => Boolean(event.data),
     },
   },
@@ -262,9 +235,6 @@ export function selectIsSavingFailedInIdle(state: State) {
   return state.matches('addingVc.savingFailed.idle');
 }
 
-export function selectIsMinimumStorageLimitReached(state: State) {
-  return state.matches('addVc.storageLimitReached');
-}
 export function selectIsNetworkOff(state: State) {
   return state.matches('addVc.networkOff');
 }
