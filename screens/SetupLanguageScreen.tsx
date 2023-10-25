@@ -39,11 +39,7 @@ export const SetupLanguageScreen: React.FC<RootRouteProps> = props => {
   };
 
   return (
-    <Column
-      align="space-around"
-      crossAlign="center"
-      backgroundColor={Theme.Colors.whiteBackgroundColor}
-      height={Dimensions.get('window').height * 0.9}>
+    <Column style={Theme.SetupLanguageScreenStyle.columnStyle}>
       <Icon
         name="globe"
         type="simple-line-icon"
@@ -51,12 +47,16 @@ export const SetupLanguageScreen: React.FC<RootRouteProps> = props => {
         size={58}
       />
       <Column crossAlign="center">
-        <Text testID="chooseLanguage" margin="0 0 10 0" weight="semibold">
+        <Text
+          testID="chooseLanguage"
+          style={{paddingTop: 3}}
+          margin="10 0 10 0"
+          weight="semibold">
           {t('header')}
         </Text>
         <Text
-          style={{paddingVertical: 18}}
           weight="semibold"
+          style={{paddingTop: 3}}
           align="center"
           color={Theme.Colors.GrayText}>
           {t('description')}

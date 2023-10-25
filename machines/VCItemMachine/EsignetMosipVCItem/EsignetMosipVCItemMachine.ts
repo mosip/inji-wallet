@@ -5,11 +5,11 @@ import {VCMetadata} from '../../../shared/VCMetadata';
 import {VC} from '../../../types/VC/ExistingMosipVC/vc';
 import {
   generateKeys,
-  isCustomSecureKeystore,
+  isHardwareKeystoreExists,
   WalletBindingResponse,
 } from '../../../shared/cryptoutil/cryptoUtil';
 import {log} from 'xstate/lib/actions';
-import {OpenId4VCIProtocol} from '../../../shared/openId4VCI/Utils';
+import {Protocols} from '../../../shared/openId4VCI/Utils';
 import {StoreEvents} from '../../../machines/store';
 import {MIMOTO_BASE_URL, MY_VCS_STORE_KEY} from '../../../shared/constants';
 import {VcEvents} from '../../../machines/vc';
@@ -23,6 +23,7 @@ import {ActivityLogEvents} from '../../../machines/activityLog';
 import {request} from '../../../shared/request';
 import SecureKeystore from 'react-native-secure-keystore';
 import {VerifiableCredential} from './vc';
+import {API_URLS} from '../../../shared/api';
 
 const model = createModel(
   {
@@ -500,7 +501,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         context => ({
           type: 'GET_VC_ITEM',
           vcMetadata: context.vcMetadata,
-          protocol: OpenId4VCIProtocol,
+          protocol: Protocols.OpenId4VCI,
         }),
         {
           to: context => context.serviceRefs.vc,
@@ -632,7 +633,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
       ),
       setPublicKey: assign({
         publicKey: (context, event) => {
-          if (!isCustomSecureKeystore()) {
+          if (!isHardwareKeystoreExists) {
             return (event.data as KeyPair).public;
           }
           return event.data as string;
@@ -751,8 +752,8 @@ export const EsignetMosipVCItemMachine = model.createMachine(
       },
       addWalletBindnigId: async context => {
         const response = await request(
-          'POST',
-          '/residentmobileapp/wallet-binding',
+          API_URLS.walletBinding.method,
+          API_URLS.walletBinding.buildURL(),
           {
             requestTime: String(new Date().toISOString()),
             request: {
@@ -788,7 +789,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         return walletResponse;
       },
       generateKeyPair: async context => {
-        if (!isCustomSecureKeystore()) {
+        if (!isHardwareKeystoreExists) {
           return await generateKeys();
         }
         const isBiometricsEnabled = SecureKeystore.hasBiometricsEnabled();
@@ -800,8 +801,8 @@ export const EsignetMosipVCItemMachine = model.createMachine(
       },
       requestBindingOtp: async context => {
         const response = await request(
-          'POST',
-          '/residentmobileapp/binding-otp',
+          API_URLS.bindingOtp.method,
+          API_URLS.bindingOtp.buildURL(),
           {
             requestTime: String(new Date().toISOString()),
             request: {
@@ -825,7 +826,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         return vc != null;
       },
 
-      isCustomSecureKeystore: () => isCustomSecureKeystore(),
+      isCustomSecureKeystore: () => isHardwareKeystoreExists,
     },
   },
 );

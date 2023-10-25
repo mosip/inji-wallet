@@ -117,6 +117,12 @@
 	},
 	"AddVcModal": {
 		"requestingCredential": "Solicitando credencial...",
+    "confirmationDialog": {
+      "title": "Quieres cancelar la descarga?",
+      "message": "OUna vez cancelada, su tarjeta no se descargará y deberá reiniciar la descarga.",
+      "wait": "No, esperaré",
+      "cancel": "Sí, cancelar"
+    },
 		"errors": {
 			"input": {
 				"empty": "El campo no puede estar vacío",
@@ -206,6 +212,10 @@
         "title": "Sin conexión a Internet",
         "message": "Por favor verifique su conexión y vuelva a intentarlo"
       },
+      "downloadLimitExpires":{
+        "title": "Error de descarga",
+        "message": "Hubo un problema al descargar las siguientes tarjetas. Inténtalo de nuevo"
+      }
 		}
 	},
 	"OnboardingOverlay": {
@@ -250,11 +260,6 @@
 		"confirmPasscode": "Confirma tu código de acceso",
 		"enterPasscode": "Ingresa tu código de acceso"
 	},
-	"AppMetaData": {
-		"header": "Acerca de Inji",
-		"version": "Versión",
-		"useBle": "Impulsado por BLE"
-	},
 	"SettingScreen": {
 		"header": "Ajustes",
 		"injiAsVerifierApp": "Inji como aplicación verificadora",
@@ -266,6 +271,30 @@
 		"injiTourGuide": "Guía turístico Inji",
 		"logout": "Cerrar sesión",
 		"resetInjiProps": "Restableciendo accesorios Inji..."
+	},
+  "IssuersScreen": {
+		"title": "Agregar nueva tarjeta",
+		"header": "Elija su emisor preferido entre las opciones siguientes para agregar una nueva tarjeta.",
+		"itemHeading": "Descargar vía {{issuer}}",
+    "itemSubHeading": "Introduce tu DNI para descargar tu tarjeta.",
+    "loaders": {
+      "loading": "Cargando...",
+      "subTitle": {
+        "displayIssuers": "Obteniendo emisores",
+        "settingUp": "Configurando",
+        "downloadingCredentials": "Descarga de credenciales"
+      }
+    },
+    "errors": {
+      "noInternetConnection": {
+        "title": "Sin conexión a Internet",
+        "message": "Por favor verifique su conexión y vuelva a intentarlo"
+      },
+      "generic": {
+        "title": "¡Algo salió mal!",
+        "message": "Estamos teniendo algunos problemas con su solicitud. Inténtalo de nuevo."
+      }
+    }
 	},
 	"QrLogin": {
 		"title": "Inicio de sesión con código QR",
@@ -729,11 +758,6 @@
     "header": "Establece un código de acceso para proteger tu aplicación",
     "confirmPasscode": "Confirma tu código de acceso",
     "enterPasscode": "Ingresa tu código de acceso"
-  },
-  "AppMetaData": {
-    "header": "Acerca de Inji",
-    "version": "Versión",
-    "useBle": "Impulsado por BLE"
   },
   "SettingScreen": {
     "header": "Ajustes",

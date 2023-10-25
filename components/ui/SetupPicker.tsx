@@ -40,7 +40,7 @@ export const SetupPicker: Picker = (props: PickerProps<unknown>) => {
           onPress={() => selectItem(index)}
           key={index}>
           <ListItem.Content>
-            <ListItem.Title>
+            <ListItem.Title style={{paddingTop: 3}}>
               <Text
                 color={selectedIndex === index ? Theme.Colors.Icon : null}
                 weight={selectedIndex === index ? 'semibold' : 'regular'}>

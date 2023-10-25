@@ -25,12 +25,16 @@ export interface Typegen0 {
     store: 'done.invoke._store';
   };
   missingImplementations: {
-    actions: 'logKey';
+    actions: never;
     delays: never;
     guards: never;
     services: never;
   };
   eventsCausingActions: {
+    cacheVCFilesData:
+      | 'KEY_RECEIVED'
+      | 'READY'
+      | 'done.invoke.store.resettingStorage:invocation[0]';
     forwardStoreRequest:
       | 'APPEND'
       | 'CLEAR'
@@ -41,7 +45,6 @@ export interface Typegen0 {
       | 'REMOVE_VC_METADATA'
       | 'SET'
       | 'UPDATE';
-    logKey: 'KEY_RECEIVED';
     notifyParent:
       | 'KEY_RECEIVED'
       | 'READY'

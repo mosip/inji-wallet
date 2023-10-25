@@ -14,7 +14,7 @@ import {getDeviceNameSync} from 'react-native-device-info';
 import {StoreEvents} from '../../store';
 import {VC} from '../../../types/VC/ExistingMosipVC/vc';
 import {AppServices} from '../../../shared/GlobalContext';
-import {RECEIVED_VCS_STORE_KEY} from '../../../shared/constants';
+import {isAndroid, RECEIVED_VCS_STORE_KEY} from '../../../shared/constants';
 import {ActivityLogEvents, ActivityLogType} from '../../activityLog';
 import {VcEvents} from '../../vc';
 import {subscribe} from '../../../shared/openIdBLE/verifierEventHandler';
@@ -736,7 +736,7 @@ export const requestMachine =
         },
 
         checkNearByDevicesPermission: () => callback => {
-          if (Platform.OS === 'android' && Platform.Version >= 31) {
+          if (isAndroid() && Platform.Version >= 31) {
             const result = checkMultiple([
               PERMISSIONS.ANDROID.BLUETOOTH_ADVERTISE,
               PERMISSIONS.ANDROID.BLUETOOTH_CONNECT,

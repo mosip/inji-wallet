@@ -3,7 +3,7 @@ import Storage, {API_CACHED_STORAGE_KEYS} from './storage';
 import {COMMON_PROPS_KEY} from './commonprops/commonProps';
 import {INITIAL_CONFIG} from './InitialConfig';
 
-export const API_URLS = {
+export const API_URLS: ApiUrls = {
   issuersList: {
     method: 'GET',
     buildURL: (): `/${string}` => '/residentmobileapp/issuers',
@@ -17,20 +17,60 @@ export const API_URLS = {
     method: 'GET',
     buildURL: (): `/${string}` => '/residentmobileapp/allProperties',
   },
+  getIndividualId: {
+    method: 'POST',
+    buildURL: (): `/${string}` => '/residentmobileapp/aid/get-individual-id',
+  },
+  reqIndividualOTP: {
+    method: 'POST',
+    buildURL: (): `/${string}` => '/residentmobileapp/req/individualId/otp',
+  },
+  walletBinding: {
+    method: 'POST',
+    buildURL: (): `/${string}` => '/residentmobileapp/wallet-binding',
+  },
+  bindingOtp: {
+    method: 'POST',
+    buildURL: (): `/${string}` => '/residentmobileapp/binding-otp',
+  },
+  requestOtp: {
+    method: 'POST',
+    buildURL: (): `/${string}` => '/residentmobileapp/req/otp',
+  },
+  credentialRequest: {
+    method: 'POST',
+    buildURL: (): `/${string}` => '/residentmobileapp/credentialshare/request',
+  },
+  credentialStatus: {
+    method: 'GET',
+    buildURL: (id: string): `/${string}` =>
+      `/residentmobileapp/credentialshare/request/status/${id}`,
+  },
+  credentialDownload: {
+    method: 'POST',
+    buildURL: (): `/${string}` => '/residentmobileapp/credentialshare/download',
+  },
+  authLock: {
+    method: 'POST',
+    buildURL: (): `/${string}` => '/residentmobileapp/req/auth/lock',
+  },
+  authUnLock: {
+    method: 'POST',
+    buildURL: (): `/${string}` => '/residentmobileapp/req/auth/unlock',
+  },
+  requestRevoke: {
+    method: 'PATCH',
+    buildURL: (id: string): `/${string}` => `/residentmobileapp/vid/${id}`,
+  },
 };
 
 export const API = {
   fetchIssuers: async () => {
-    const defaultIssuer = {
-      id: 'UIN, VID, AID',
-      displayName: 'UIN, VID, AID',
-    };
-
     const response = await request(
       API_URLS.issuersList.method,
       API_URLS.issuersList.buildURL(),
     );
-    return [defaultIssuer, ...(response.response.issuers || [])];
+    return response.response.issuers || [];
   },
 
   fetchIssuerConfig: async (issuerId: string) => {
@@ -166,3 +206,25 @@ async function generateCacheAPIFunctionWithAPIPreference(
     }
   }
 }
+
+type Api_Params = {
+  method: 'GET' | 'POST' | 'PATCH'; // Define the HTTP methods
+  buildURL: (param?: string) => `/${string}`; // Define the buildURL function signature
+};
+
+type ApiUrls = {
+  issuersList: Api_Params;
+  issuerConfig: Api_Params;
+  allProperties: Api_Params;
+  getIndividualId: Api_Params;
+  reqIndividualOTP: Api_Params;
+  walletBinding: Api_Params;
+  bindingOtp: Api_Params;
+  requestOtp: Api_Params;
+  credentialRequest: Api_Params;
+  credentialStatus: Api_Params;
+  credentialDownload: Api_Params;
+  authLock: Api_Params;
+  authUnLock: Api_Params;
+  requestRevoke: Api_Params;
+};

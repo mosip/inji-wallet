@@ -158,13 +158,15 @@
   },
   "IssuersScreen": {
     "title": "Magdagdag ng bagong card",
-    "header": "Mangyaring pumili ng gustong paraan mula sa ibaba upang magdagdag ng bagong card",
+    "header": "Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.",
+    "itemHeading": "I-download sa pamamagitan ng {{issuer}}",
+    "itemSubHeading": "Ilagay ang iyong national ID para i-download ang iyong card.",
     "loaders": {
       "loading": "Naglo-load...",
       "subTitle": {
-        "displayIssuers": "Fetching Issuers",
-        "settingUp": "Setting up",
-        "downloadingCredentials": "Downloading Credentials",
+        "displayIssuers": "Kinukuha ang mga Isyu",
+        "settingUp": "Inaayos",
+        "downloadingCredentials": "Nagda-download ng Mga Kredensyal"
       }
     },
     "errors": {
@@ -201,6 +203,12 @@
   },
   "AddVcModal": {
     "requestingCredential": "Humihiling ng kredensyal...",
+    "confirmationDialog": {
+      "title": "Gusto mo bang kanselahin ang pag-download?",
+      "message": "Kapag nakansela, hindi na mada-download ang iyong card at kailangan mong simulan muli ang pag-download.",
+      "wait": "Hindi, maghihintay ako",
+      "cancel": "Oo, Kanselahin"
+    },
     "errors": {
       "input": {
         "empty": "Hindi maaaring walang laman ang input",
@@ -295,6 +303,10 @@
       "noInternetConnection": {
         "title": "Pakisuri ang iyong koneksyon at subukang muli",
         "message": "Mangyaring kumonekta sa internet at subukang muli."
+      },
+      "downloadLimitExpires":{
+        "title": "Error sa Pag-download",
+        "message": "Nagkaroon ng isyu sa pag-download ng mga sumusunod na card. Pakisubukang muli"
       }
     }
   },
@@ -351,11 +363,6 @@
     "reEnterPassword": "Ipasok muli ang bagong passcode",
     "confirmPasscode": "Kumpirmahin ang passcode",
     "enterPasscode": "Ilagay ang iyong passcode"
-  },
-  "AppMetaData": {
-    "header": "Tungkol kay Inji",
-    "version": "Bersyon",
-    "useBle": "Pinapatakbo ng BLE"
   },
   "QrLogin": {
     "title": "QR Login",

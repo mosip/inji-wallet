@@ -17,7 +17,7 @@ import getAllConfigurations, {
 import Storage from '../shared/storage';
 import ShortUniqueId from 'short-unique-id';
 import {__AppId} from '../shared/GlobalVariables';
-import {isCustomSecureKeystore} from '../shared/cryptoutil/cryptoUtil';
+import {isHardwareKeystoreExists} from '../shared/cryptoutil/cryptoUtil';
 
 const model = createModel(
   {
@@ -93,7 +93,6 @@ export const settingsMachine = model.createMachine(
         },
       },
       idle: {
-        entry: ['injiTourGuide'],
         on: {
           TOGGLE_BIOMETRIC_UNLOCK: {
             actions: ['toggleBiometricUnlock', 'storeContext'],
@@ -113,6 +112,9 @@ export const settingsMachine = model.createMachine(
           },
           CANCEL: {
             actions: ['resetCredentialRegistry'],
+          },
+          INJI_TOUR_GUIDE: {
+            target: 'showInjiTourGuide',
           },
           ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS: {
             actions: [
@@ -143,13 +145,6 @@ export const settingsMachine = model.createMachine(
           CANCEL: {
             actions: ['resetCredentialRegistry'],
             target: 'idle',
-          },
-        },
-      },
-      injiTourGuide: {
-        on: {
-          INJI_TOUR_GUIDE: {
-            target: 'showInjiTourGuide',
           },
         },
       },
@@ -274,7 +269,7 @@ function generateAppId() {
 }
 
 function deviceSupportsHardwareKeystore() {
-  return isIOS() ? true : isCustomSecureKeystore();
+  return isIOS() ? true : isHardwareKeystoreExists;
 }
 
 type State = StateFrom<typeof settingsMachine>;

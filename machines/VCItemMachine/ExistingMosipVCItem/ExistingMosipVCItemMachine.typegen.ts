@@ -218,7 +218,9 @@ export interface Typegen0 {
     requestVcContext: 'DISMISS' | 'xstate.init';
     resetWalletBindingSuccess: 'DISMISS';
     revokeVID: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
+    sendDownloadLimitExpire: 'error.platform.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]';
     sendTamperedVc: 'TAMPERED_VC';
+    sendTelemetryEvents: 'STORE_RESPONSE';
     sendVcUpdated: 'PIN_CARD';
     sendWalletBindingSuccess:
       | 'done.invoke.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]'
