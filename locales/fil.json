@@ -203,12 +203,6 @@
   },
   "AddVcModal": {
     "requestingCredential": "Humihiling ng kredensyal...",
-    "confirmationDialog": {
-      "title": "Gusto mo bang kanselahin ang pag-download?",
-      "message": "Kapag nakansela, hindi na mada-download ang iyong card at kailangan mong simulan muli ang pag-download.",
-      "wait": "Hindi, maghihintay ako",
-      "cancel": "Oo, Kanselahin"
-    },
     "errors": {
       "input": {
         "empty": "Hindi maaaring walang laman ang input",
