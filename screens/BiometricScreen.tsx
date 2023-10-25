@@ -1,16 +1,25 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { TouchableOpacity } from 'react-native';
-import { Icon } from 'react-native-elements';
-import { Button, Centered, Column } from '../components/ui';
-import { Theme } from '../components/ui/styleUtils';
-import { RootRouteProps } from '../routes';
-import { useBiometricScreen } from './BiometricScreenController';
-import { Passcode } from '../components/Passcode';
+import React, {useEffect} from 'react';
+import {useTranslation} from 'react-i18next';
+import {TouchableOpacity} from 'react-native';
+import {Icon} from 'react-native-elements';
+import {Button, Centered, Column} from '../components/ui';
+import {Theme} from '../components/ui/styleUtils';
+import {RootRouteProps} from '../routes';
+import {useBiometricScreen} from './BiometricScreenController';
+import {Passcode} from '../components/Passcode';
+import {
+  getEventType,
+  incrementPasscodeRetryCount,
+} from '../shared/telemetry/TelemetryUtils';
 
-export const BiometricScreen: React.FC<RootRouteProps> = (props) => {
-  const { t } = useTranslation('BiometricScreen');
+export const BiometricScreen: React.FC<RootRouteProps> = props => {
+  const {t} = useTranslation('BiometricScreen');
   const controller = useBiometricScreen(props);
+
+  const handlePasscodeMismatch = (error: string) => {
+    incrementPasscodeRetryCount(getEventType(props.route.params?.setup));
+    controller.onError(error);
+  };
 
   return (
     <Column
@@ -34,10 +43,11 @@ export const BiometricScreen: React.FC<RootRouteProps> = (props) => {
         <Passcode
           message="Enter your passcode to re-enable biometrics authentication."
           onSuccess={() => controller.onSuccess()}
-          onError={(value: string) => controller.onError(value)}
+          onError={handlePasscodeMismatch}
           storedPasscode={controller.storedPasscode}
           onDismiss={() => controller.onDismiss()}
           error={controller.error}
+          salt={controller.passcodeSalt}
         />
       )}
     </Column>

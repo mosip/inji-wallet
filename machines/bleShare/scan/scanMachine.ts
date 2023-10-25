@@ -17,7 +17,7 @@ import {getDeviceNameSync} from 'react-native-device-info';
 import {VC, VerifiablePresentation} from '../../../types/VC/ExistingMosipVC/vc';
 import {AppServices} from '../../../shared/GlobalContext';
 import {ActivityLogEvents, ActivityLogType} from '../../activityLog';
-import {MY_LOGIN_STORE_KEY} from '../../../shared/constants';
+import {isAndroid, isIOS, MY_LOGIN_STORE_KEY} from '../../../shared/constants';
 import {subscribe} from '../../../shared/openIdBLE/walletEventHandler';
 import {
   check,
@@ -38,14 +38,14 @@ import {StoreEvents} from '../../store';
 import {WalletDataEvent} from 'react-native-tuvali/lib/typescript/types/events';
 import {BLEError} from '../types';
 import Storage from '../../../shared/storage';
-import {logState} from '../../app';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {
-  getData,
-  getEndData,
+  getStartEventData,
+  getEndEventData,
   sendStartEvent,
   sendEndEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
+import {logState} from '../../../shared/commonUtil';
 
 const {wallet, EventTypes, VerificationStatus} = tuvali;
 
@@ -432,7 +432,10 @@ export const scanMachine =
             },
             navigatingToHistory: {},
           },
-          entry: ['sendScanData', () => sendStartEvent(getData('QR login'))],
+          entry: [
+            'sendScanData',
+            () => sendStartEvent(getStartEventData('QR login')),
+          ],
         },
         connecting: {
           invoke: {
@@ -567,7 +570,10 @@ export const scanMachine =
               },
             },
             accepted: {
-              entry: ['logShared', () => sendEndEvent(getEndData('VC share'))],
+              entry: [
+                'logShared',
+                () => sendEndEvent(getEndEventData('VC share', 'SUCCESS')),
+              ],
               on: {
                 DISMISS: {
                   target: 'navigatingToHome',
@@ -715,7 +721,7 @@ export const scanMachine =
             value: context.linkCode,
           }),
         openBluetoothSettings: () => {
-          Platform.OS === 'android'
+          isAndroid()
             ? BluetoothStateManager.openSettings().catch()
             : Linking.openURL('App-Prefs:Bluetooth');
         },
@@ -899,7 +905,7 @@ export const scanMachine =
             // Passing Granted for android since permission status is always granted even if its denied.
             let response: PermissionStatus = RESULTS.GRANTED;
 
-            if (Platform.OS === 'ios') {
+            if (isIOS()) {
               response = await check(PERMISSIONS.IOS.BLUETOOTH_PERIPHERAL);
             }
 
@@ -1006,7 +1012,7 @@ export const scanMachine =
         },
 
         startConnection: context => callback => {
-          sendStartEvent(getData('VC share'));
+          sendStartEvent(getStartEventData('VC share'));
           wallet.startConnection(context.openId4VpUri);
           const statusCallback = (event: WalletDataEvent) => {
             if (event.type === EventTypes.onSecureChannelEstablished) {
@@ -1101,9 +1107,9 @@ export const scanMachine =
           }
         },
 
-        uptoAndroid11: () => Platform.OS === 'android' && Platform.Version < 31,
+        uptoAndroid11: () => isAndroid() && Platform.Version < 31,
 
-        isIOS: () => Platform.OS === 'ios',
+        isIOS: () => isIOS(),
 
         isMinimumStorageRequiredForAuditEntryReached: (_context, event) =>
           Boolean(event.data),

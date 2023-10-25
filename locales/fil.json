@@ -158,13 +158,15 @@
   },
   "IssuersScreen": {
     "title": "Magdagdag ng bagong card",
-    "header": "Mangyaring pumili ng gustong paraan mula sa ibaba upang magdagdag ng bagong card",
+    "header": "Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.",
+    "itemHeading": "I-download sa pamamagitan ng {{issuer}}",
+    "itemSubHeading": "Ilagay ang iyong national ID para i-download ang iyong card.",
     "loaders": {
       "loading": "Naglo-load...",
       "subTitle": {
-        "displayIssuers": "Fetching Issuers",
-        "settingUp": "Setting up",
-        "downloadingCredentials": "Downloading Credentials",
+        "displayIssuers": "Kinukuha ang mga Isyu",
+        "settingUp": "Inaayos",
+        "downloadingCredentials": "Nagda-download ng Mga Kredensyal"
       }
     },
     "errors": {
@@ -201,6 +203,12 @@
   },
   "AddVcModal": {
     "requestingCredential": "Humihiling ng kredensyal...",
+    "confirmationDialog": {
+      "title": "Gusto mo bang kanselahin ang pag-download?",
+      "message": "Kapag nakansela, hindi na mada-download ang iyong card at kailangan mong simulan muli ang pag-download.",
+      "wait": "Hindi, maghihintay ako",
+      "cancel": "Oo, Kanselahin"
+    },
     "errors": {
       "input": {
         "empty": "Hindi maaaring walang laman ang input",
@@ -295,6 +303,10 @@
       "noInternetConnection": {
         "title": "Pakisuri ang iyong koneksyon at subukang muli",
         "message": "Mangyaring kumonekta sa internet at subukang muli."
+      },
+      "downloadLimitExpires":{
+        "title": "Error sa Pag-download",
+        "message": "Nagkaroon ng isyu sa pag-download ng mga sumusunod na card. Pakisubukang muli"
       }
     }
   },
@@ -352,12 +364,7 @@
     "confirmPasscode": "Kumpirmahin ang passcode",
     "enterPasscode": "Ilagay ang iyong passcode"
   },
-  "AppMetaData": {
-    "header": "Tungkol kay Inji",
-    "version": "Bersyon",
-    "useBle": "Pinapatakbo ng BLE"
-  },
-  "QrScreen": {
+  "QrLogin": {
     "title": "QR Login",
     "alignQr": "I-align ang QR code sa loob ng frame para i-scan",
     "confirmation": "Kumpirmasyon",
@@ -374,8 +381,8 @@
     "domainWarning": "Pakikumpirma ang domain ng website kung saan mo ini-scan ang QR code mula sa ibaba",
     "access": " ay humihiling ng access sa",
     "status": "Katayuan",
-    "successMessage": "Ikaw ay Matagumpay na Naka-log In ",
-    "okay": "Sige",
+    "successMessage": "Matagumpay kang naka-log in sa ",
+    "ok": "OK",
     "allow": "Payagan",
     "cancel": "Kanselahin",
     "essentialClaims": "Mahahalagang Claim",
@@ -460,7 +467,7 @@
   },
   "ScanScreen": {
     "header": "I-scan ang QR Code",
-    "noShareableVcs": "Walang magagamit na maibabahaging card..",
+    "noShareableVcs": "Walang magagamit na mga card na maibabahagi.",
     "sharingVc": "Pagbabahagi ng card",
     "bluetoothStateIos": "Naka-OFF ang Bluetooth, paki-ON ito mula sa control center",
     "bluetoothStateAndroid": "Naka-OFF ang Bluetooth, paki-ON ito mula sa control center",
@@ -563,8 +570,7 @@
   },
   "WelcomeScreen": {
     "title": "Open Source Identity Solution",
-    "getStarted": "Magsimula",
-    "unlockApp": "Buksan ang aplikasyon",
+    "unlockApplication": "I-unlock ang Application",
     "failedToReadKeys": "Nabigong basahin ang mga susi",
     "retryRead": "Gustong subukang muli?",
     "errors": {

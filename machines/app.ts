@@ -1,17 +1,13 @@
 import NetInfo, {NetInfoStateType} from '@react-native-community/netinfo';
 import {AppState, AppStateStatus, Platform} from 'react-native';
-import {
-  getDeviceId,
-  getDeviceName,
-  getDeviceNameSync,
-} from 'react-native-device-info';
-import {EventFrom, spawn, StateFrom, send, assign, AnyState} from 'xstate';
+import {getDeviceId, getDeviceName} from 'react-native-device-info';
+import {assign, EventFrom, send, spawn, StateFrom} from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {authMachine, createAuthMachine} from './auth';
 import {createSettingsMachine, settingsMachine} from './settings';
 import {StoreEvents, storeMachine} from './store';
 import {createVcMachine, vcMachine} from './vc';
-import {createActivityLogMachine, activityLogMachine} from './activityLog';
+import {activityLogMachine, createActivityLogMachine} from './activityLog';
 import {
   createRequestMachine,
   requestMachine,
@@ -20,19 +16,19 @@ import {createScanMachine, scanMachine} from './bleShare/scan/scanMachine';
 import {createRevokeMachine, revokeVidsMachine} from './revoke';
 import {pure, respond} from 'xstate/lib/actions';
 import {AppServices} from '../shared/GlobalContext';
-import {request} from '../shared/request';
 import {
   changeCrendetialRegistry,
-  SETTINGS_STORE_KEY,
-  MIMOTO_BASE_URL,
-  ESIGNET_BASE_URL,
   changeEsignetUrl,
+  ESIGNET_BASE_URL,
+  isAndroid,
+  MIMOTO_BASE_URL,
+  SETTINGS_STORE_KEY,
 } from '../shared/constants';
+import {logState} from '../shared/commonUtil';
 
 const model = createModel(
   {
     info: {} as AppInfo,
-    backendInfo: {} as BackendInfo,
     serviceRefs: {} as AppServices,
     isReadError: false,
     isDecryptError: false,
@@ -51,7 +47,6 @@ const model = createModel(
       REQUEST_DEVICE_INFO: () => ({}),
       READY: (data?: unknown) => ({data}),
       APP_INFO_RECEIVED: (info: AppInfo) => ({info}),
-      BACKEND_INFO_RECEIVED: (info: BackendInfo) => ({info}),
       STORE_RESPONSE: (response: unknown) => ({response}),
       RESET_KEY_INVALIDATE_ERROR_DISMISS: () => ({}),
     },
@@ -135,19 +130,8 @@ export const appMachine = model.createMachine(
             },
             on: {
               APP_INFO_RECEIVED: {
-                target: 'devinfo',
-                actions: ['setAppInfo'],
-              },
-            },
-          },
-          devinfo: {
-            invoke: {
-              src: 'getBackendInfo',
-            },
-            on: {
-              BACKEND_INFO_RECEIVED: {
                 target: '#ready',
-                actions: ['setBackendInfo'],
+                actions: ['setAppInfo'],
               },
             },
           },
@@ -286,7 +270,7 @@ export const appMachine = model.createMachine(
             scanMachine.id,
           );
 
-          if (Platform.OS === 'android') {
+          if (isAndroid()) {
             serviceRefs.request = spawn(
               createRequestMachine(serviceRefs),
               requestMachine.id,
@@ -310,7 +294,7 @@ export const appMachine = model.createMachine(
           context.serviceRefs.activityLog.subscribe(logState);
           context.serviceRefs.scan.subscribe(logState);
 
-          if (Platform.OS === 'android') {
+          if (isAndroid()) {
             context.serviceRefs.request.subscribe(logState);
           }
 
@@ -320,10 +304,6 @@ export const appMachine = model.createMachine(
 
       setAppInfo: model.assign({
         info: (_, event) => event.info,
-      }),
-
-      setBackendInfo: model.assign({
-        backendInfo: (_, event) => event.info,
       }),
 
       loadCredentialRegistryHostFromStorage: send(
@@ -363,23 +343,6 @@ export const appMachine = model.createMachine(
         callback(model.events.APP_INFO_RECEIVED(appInfo));
       },
 
-      getBackendInfo: () => async callback => {
-        let backendInfo = {
-          application: {
-            name: '',
-            version: '',
-          },
-          build: {},
-          config: {},
-        };
-        try {
-          backendInfo = await request('GET', '/residentmobileapp/info');
-          callback(model.events.BACKEND_INFO_RECEIVED(backendInfo));
-        } catch {
-          callback(model.events.BACKEND_INFO_RECEIVED(backendInfo));
-        }
-      },
-
       checkFocusState: () => callback => {
         const changeHandler = (newState: AppStateStatus) => {
           switch (newState) {
@@ -398,8 +361,7 @@ export const appMachine = model.createMachine(
 
         AppState.addEventListener('change', changeHandler);
 
-        // android only
-        if (Platform.OS === 'android') {
+        if (isAndroid()) {
           AppState.addEventListener('blur', blurHandler);
           AppState.addEventListener('focus', focusHandler);
         }
@@ -407,7 +369,7 @@ export const appMachine = model.createMachine(
         return () => {
           AppState.removeEventListener('change', changeHandler);
 
-          if (Platform.OS === 'android') {
+          if (isAndroid()) {
             AppState.removeEventListener('blur', blurHandler);
             AppState.removeEventListener('focus', focusHandler);
           }
@@ -432,25 +394,11 @@ interface AppInfo {
   deviceName: string;
 }
 
-interface BackendInfo {
-  application: {
-    name: string;
-    version: string;
-  };
-  build: object;
-  config: object;
-}
-
 type State = StateFrom<typeof appMachine>;
 
 export function selectAppInfo(state: State) {
   return state.context.info;
 }
-
-export function selectBackendInfo(state: State) {
-  return state.context.backendInfo;
-}
-
 export function selectIsReady(state: State) {
   return state.matches('ready');
 }
@@ -465,28 +413,6 @@ export function selectIsActive(state: State) {
 
 export function selectIsFocused(state: State) {
   return state.matches('ready.focus');
-}
-
-export function logState(state: AnyState) {
-  const data = JSON.stringify(
-    state.event,
-    (key, value) => {
-      if (key === 'type') return undefined;
-      if (typeof value === 'string' && value.length >= 100) {
-        return value.slice(0, 100) + '...';
-      }
-      return value;
-    },
-    2,
-  );
-  console.log(
-    `[${getDeviceNameSync()}] ${state.machine.id}: ${
-      state.event.type
-    } -> ${state.toStrings().pop()}\n${
-      data.length > 300 ? data.slice(0, 300) + '...' : data
-    }
-    `,
-  );
 }
 
 export function selectIsReadError(state: State) {

@@ -1,13 +1,14 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {Image, ImageBackground, View} from 'react-native';
+import {Image, ImageBackground} from 'react-native';
 import {getLocalizedField} from '../../../i18n';
 import {VerifiableCredential} from '../../../types/VC/ExistingMosipVC/vc';
 import VerifiedIcon from '../../VerifiedIcon';
 import {Column, Row, Text} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import {CheckBox, Icon} from 'react-native-elements';
-import testIDProps from '../../../shared/commonUtil';
+import testIDProps, {getMaskedText} from '../../../shared/commonUtil';
+import {logoType} from '../../../machines/issuersMachine';
 
 const getDetails = (arg1, arg2, verifiableCredential) => {
   if (arg1 === 'Status') {
@@ -83,15 +84,12 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
   }
 };
 
-function getIdNumber(id: string) {
-  return '*'.repeat(id.length - 4) + id.slice(-4);
-}
-
-const getIssuerLogo = (isOpenId4VCI: boolean, issuerLogo: string) => {
+const getIssuerLogo = (isOpenId4VCI: boolean, issuerLogo: logoType) => {
   if (isOpenId4VCI) {
     return (
       <Image
-        src={issuerLogo}
+        src={issuerLogo?.url}
+        alt={issuerLogo?.alt_text}
         style={Theme.Styles.issuerLogo}
         resizeMethod="scale"
         resizeMode="contain"
@@ -111,7 +109,9 @@ const getIssuerLogo = (isOpenId4VCI: boolean, issuerLogo: string) => {
 export const MosipVCItemContent: React.FC<
   ExistingMosipVCItemContentProps | EsignetMosipVCItemContentProps
 > = props => {
-  const verifiableCredential = props.vcMetadata.isFromOpenId4VCI()
+  const verifiableCredential = props.isDownloading
+    ? null
+    : props.vcMetadata.isFromOpenId4VCI()
     ? props.verifiableCredential?.credential
     : props.verifiableCredential;
 
@@ -165,7 +165,7 @@ export const MosipVCItemContent: React.FC<
             </ImageBackground>
 
             <Column margin="0 0 10 20" height={96} align="space-between">
-              <Column>
+              <Column style={{maxWidth: 230}}>
                 <Text
                   testID="fullNameTitle"
                   weight="regular"
@@ -239,7 +239,7 @@ export const MosipVCItemContent: React.FC<
                   weight="semibold"
                   size="extraSmall"
                   color={Theme.Colors.statusLabel}>
-                  {getIdNumber(uin)}
+                  {getMaskedText(uin)}
                 </Text>
               </Column>
             ) : null}
@@ -258,7 +258,7 @@ export const MosipVCItemContent: React.FC<
                   weight="semibold"
                   size="extraSmall"
                   color={Theme.Colors.Details}>
-                  {getIdNumber(vid)}
+                  {getMaskedText(vid)}
                 </Text>
               </Column>
             ) : null}
@@ -319,7 +319,7 @@ export const MosipVCItemContent: React.FC<
 
   function faceImageSource() {
     return !verifiableCredential
-      ? Theme.ProfileIcon
+      ? Theme.cardFaceIcon
       : {
           uri: props.vcMetadata.isFromOpenId4VCI()
             ? verifiableCredential?.credentialSubject.face
@@ -338,6 +338,7 @@ interface ExistingMosipVCItemContentProps {
   iconType?: string;
   service: any;
   onPress?: () => void;
+  isDownloading?: boolean;
 }
 
 export interface EsignetMosipVCItemContentProps {
@@ -350,4 +351,5 @@ export interface EsignetMosipVCItemContentProps {
   iconType?: string;
   service: any;
   onPress?: () => void;
+  isDownloading?: boolean;
 }

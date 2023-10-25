@@ -1,17 +1,27 @@
 import React, {useLayoutEffect} from 'react';
 import {useTranslation} from 'react-i18next';
-import {FlatList, Image, Text, View} from 'react-native';
+import {FlatList, Image, View} from 'react-native';
 import {Issuer} from '../../components/openId4VCI/Issuer';
 import {Error} from '../../components/ui/Error';
 import {Header} from '../../components/ui/Header';
-import {Column} from '../../components/ui';
+import {Column, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {RootRouteProps} from '../../routes';
 import {HomeRouteProps} from '../../routes/main';
 import {useIssuerScreenController} from './IssuerScreenController';
 import {Loader} from '../../components/ui/Loader';
 import testIDProps, {removeWhiteSpace} from '../../shared/commonUtil';
-import {ErrorMessage} from '../../shared/openId4VCI/Utils';
+import {
+  ErrorMessage,
+  getDisplayObjectForCurrentLanguage,
+  Protocols,
+} from '../../shared/openId4VCI/Utils';
+import {
+  getInteractEventData,
+  getStartEventData,
+  sendInteractEvent,
+  sendStartEvent,
+} from '../../shared/telemetry/TelemetryUtils';
 
 export const IssuersScreen: React.FC<
   HomeRouteProps | RootRouteProps
@@ -46,12 +56,14 @@ export const IssuersScreen: React.FC<
     controller.isStoring,
   ]);
 
-  const onPressHandler = (id: string) => {
-    if (id !== 'UIN, VID, AID') {
-      controller.SELECTED_ISSUER(id);
-    } else {
-      controller.DOWNLOAD_ID();
-    }
+  const onPressHandler = (id: string, protocol: string) => {
+    sendStartEvent(getStartEventData('VC Download', {id: id}));
+    sendInteractEvent(
+      getInteractEventData('VC Download', 'CLICK', `IssuerType: ${id}`),
+    );
+    protocol === Protocols.OTP
+      ? controller.DOWNLOAD_ID()
+      : controller.SELECTED_ISSUER(id);
   };
 
   const isGenericError = () => {
@@ -120,6 +132,7 @@ export const IssuersScreen: React.FC<
             {...testIDProps('addCardDescription')}
             style={{
               ...Theme.TextStyles.regularGrey,
+              paddingTop: 0.5,
               marginVertical: 14,
               marginHorizontal: 9,
             }}>
@@ -129,15 +142,21 @@ export const IssuersScreen: React.FC<
             {controller.issuers.length > 0 && (
               <FlatList
                 data={controller.issuers}
-                scrollEnabled={false}
                 renderItem={({item}) => (
                   <Issuer
-                    testID={removeWhiteSpace(item.id)}
-                    key={item.id}
-                    id={item.id}
-                    displayName={item.displayName}
-                    logoUrl={item.logoUrl}
-                    onPress={() => onPressHandler(item.id)}
+                    testID={removeWhiteSpace(item.credential_issuer)}
+                    key={item.credential_issuer}
+                    id={item.credential_issuer}
+                    displayName={
+                      getDisplayObjectForCurrentLanguage(item.display)?.name
+                    }
+                    logoUrl={
+                      getDisplayObjectForCurrentLanguage(item.display)?.logo
+                        ?.url
+                    }
+                    onPress={() =>
+                      onPressHandler(item.credential_issuer, item.protocol)
+                    }
                     {...props}
                   />
                 )}
