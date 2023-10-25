@@ -764,7 +764,7 @@ export const DefaultTheme = {
       borderColor: Colors.Orange,
     },
     container: {
-      height: 45,
+      height: 'auto',
       flexDirection: 'row',
     },
     disabled: {
