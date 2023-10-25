@@ -2,7 +2,7 @@ fileignoreconfig:
 - filename: package.json
   checksum: fdd5905228a1afbfb004c710fd6c61adf073a12840200327c0592b76bea5e7e3
 - filename: package-lock.json
-  checksum: a4c1fe2521067e1a279610f079446c600e8b7d5cf1553934dc419c3c476b4844
+  checksum: fc26d97edecbacd0b7507032c6fc1acfcea9f01f5dbe66a2a0341506e2f0daca
 - filename: components/PasscodeVerify.tsx
   checksum: 14654c0f038979fcd0d260170a45894a072f81e0767ca9a0e66935d33b5cc703
 - filename: i18n.ts
@@ -33,6 +33,11 @@ fileignoreconfig:
   checksum: c8d874aa373bdf526bf59192139822f56915e702ef673bac4e0d7549b0fea3d0
 - filename: screens/Issuers/IssuersScreen.tsx
   checksum: bc12c43ccc27ac04e5763fa6a6ed3cee63e4362ba5666c160b5e53269de924ab
+  checksum: 9a61cd59a3718adf1f14faf3024fec66a3295ef373878a878a28e5cb1287afaa
+- filename: ios/Podfile.lock
+  checksum: cc123c3e1f04d41b394ceb16843b15c08bac3ba619ae853ff322717739761a85
+- filename: ios/Podfile.lock
+  checksum: cc123c3e1f04d41b394ceb16843b15c08bac3ba619ae853ff322717739761a85
 - filename: screens/Home/IntroSlidersScreen.tsx
   checksum: 72ef913857448ef05763e52e32356faa2d1f3de8130a1c638d1897f44823031f
 - filename: shared/commonUtil.ts
@@ -51,7 +56,5 @@ fileignoreconfig:
   checksum: f1f504bd8c14496ee71f8eb7f40d54411cc05be03347d644dcc2cca187a20678
 - filename: machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine.ts
   checksum: 237a2640b7db70770d65da67c79f2929581e32f1162517e50b8d37e409f3387d
-- filename: machines/store.ts
-  checksum: 0695d833df9ec1e1f6ae2bd81631630bb1039dec387718acb153bcb843c952cd
 - filename: shared/cryptoutil/cryptoUtil.ts
   checksum: b785ff3f01ab9530119072c4d38195048bfeee6155c54ea7dd031559acb722f3

@@ -49,6 +49,7 @@ export const ReceivedCardsModal: React.FC<ReceivedCardsProps> = ({
               />
               <Text
                 testID="noReceivedVcsTitle"
+                style={{paddingTop: 3}}
                 align="center"
                 weight="semibold"
                 margin="0 0 4 0">
@@ -56,6 +57,7 @@ export const ReceivedCardsModal: React.FC<ReceivedCardsProps> = ({
               </Text>
               <Text
                 testID="noReceivedVcsText"
+                style={{paddingTop: 3}}
                 align="center"
                 color={Theme.Colors.textLabel}>
                 {t('noReceivedVcsText')}

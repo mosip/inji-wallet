@@ -1,15 +1,15 @@
 import React from 'react';
-import { RefreshControl } from 'react-native';
-import { Icon } from 'react-native-elements';
-import { useTranslation } from 'react-i18next';
-import { Centered, Column, Text } from '../../components/ui';
-import { useHistoryTab } from './HistoryScreenController';
-import { ActivityLogText } from '../../components/ActivityLogText';
-import { MainRouteProps } from '../../routes/main';
-import { Theme } from '../../components/ui/styleUtils';
+import {RefreshControl} from 'react-native';
+import {Icon} from 'react-native-elements';
+import {useTranslation} from 'react-i18next';
+import {Centered, Column, Text} from '../../components/ui';
+import {useHistoryTab} from './HistoryScreenController';
+import {ActivityLogText} from '../../components/ActivityLogText';
+import {MainRouteProps} from '../../routes/main';
+import {Theme} from '../../components/ui/styleUtils';
 
 export const HistoryScreen: React.FC<MainRouteProps> = () => {
-  const { t } = useTranslation('HistoryScreen');
+  const {t} = useTranslation('HistoryScreen');
   const controller = useHistoryTab();
 
   return (
@@ -23,7 +23,7 @@ export const HistoryScreen: React.FC<MainRouteProps> = () => {
             onRefresh={controller.REFRESH}
           />
         }>
-        {controller.activities.map((activity) => (
+        {controller.activities.map(activity => (
           <ActivityLogText
             key={`${activity.timestamp}-${activity._vcKey}`}
             activity={activity}
@@ -32,11 +32,15 @@ export const HistoryScreen: React.FC<MainRouteProps> = () => {
         {controller.activities.length === 0 && (
           <Centered fill>
             <Icon
-              style={{ marginBottom: 20 }}
+              style={{marginBottom: 20}}
               size={40}
               name="sentiment-dissatisfied"
             />
-            <Text align="center" weight="semibold" margin="0 0 4 0">
+            <Text
+              align="center"
+              style={{paddingTop: 3}}
+              weight="semibold"
+              margin="0 0 4 0">
               {t('noHistory')}
             </Text>
           </Centered>

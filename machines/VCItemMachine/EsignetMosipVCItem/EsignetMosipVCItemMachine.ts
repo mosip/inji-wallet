@@ -32,6 +32,7 @@ import {
   sendStartEvent,
   TelemetryConstants,
 } from '../../../shared/telemetry/TelemetryUtils';
+import {API_URLS} from '../../../shared/api';
 
 const model = createModel(
   {
@@ -834,8 +835,8 @@ export const EsignetMosipVCItemMachine = model.createMachine(
       },
       addWalletBindnigId: async context => {
         const response = await request(
-          'POST',
-          '/residentmobileapp/wallet-binding',
+          API_URLS.walletBinding.method,
+          API_URLS.walletBinding.buildURL(),
           {
             requestTime: String(new Date().toISOString()),
             request: {
@@ -883,8 +884,8 @@ export const EsignetMosipVCItemMachine = model.createMachine(
       },
       requestBindingOtp: async context => {
         const response = await request(
-          'POST',
-          '/residentmobileapp/binding-otp',
+          API_URLS.bindingOtp.method,
+          API_URLS.bindingOtp.buildURL(),
           {
             requestTime: String(new Date().toISOString()),
             request: {

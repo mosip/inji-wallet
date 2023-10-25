@@ -47,12 +47,14 @@ export const AuthScreen: React.FC<RootRouteProps> = props => {
         <Column margin="30 0 0 0">
           <Text
             testID="selectAppUnlockMethod"
+            style={{paddingTop: 3}}
             align="center"
             style={Theme.TextStyles.header}>
             {t('header')}
           </Text>
           <Text
             align="center"
+            style={{paddingTop: 3}}
             weight="semibold"
             color={Theme.Colors.GrayText}
             margin="6 0">

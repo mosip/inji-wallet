@@ -4,10 +4,10 @@ import {MIMOTO_BASE_URL, MY_VCS_STORE_KEY} from '../../../shared/constants';
 import {AppServices} from '../../../shared/GlobalContext';
 import {CredentialDownloadResponse, request} from '../../../shared/request';
 import {
-  VC,
-  VerifiableCredential,
-  VcIdType,
   DecodedCredential,
+  VC,
+  VcIdType,
+  VerifiableCredential,
 } from '../../../types/VC/ExistingMosipVC/vc';
 import {StoreEvents} from '../../store';
 import {ActivityLogEvents} from '../../activityLog';
@@ -31,16 +31,15 @@ import i18n from '../../../i18n';
 import SecureKeystore from 'react-native-secure-keystore';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {
-  sendStartEvent,
-  getStartEventData,
   getEndEventData,
+  getStartEventData,
   sendEndEvent,
   TelemetryConstants,
   sendInteractEvent,
   getInteractEventData,
-  sendErrorEvent,
-  getErrorEventData,
+  sendStartEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
+import {API_URLS} from '../../../shared/api';
 
 const model = createModel(
   {
@@ -1286,8 +1285,8 @@ export const ExistingMosipVCItemMachine =
 
         addWalletBindnigId: async context => {
           const response = await request(
-            'POST',
-            '/residentmobileapp/wallet-binding',
+            API_URLS.walletBinding.method,
+            API_URLS.walletBinding.buildURL(),
             {
               requestTime: String(new Date().toISOString()),
               request: {
@@ -1346,8 +1345,8 @@ export const ExistingMosipVCItemMachine =
 
         requestBindingOtp: async context => {
           const response = await request(
-            'POST',
-            '/residentmobileapp/binding-otp',
+            API_URLS.bindingOtp.method,
+            API_URLS.bindingOtp.buildURL(),
             {
               requestTime: String(new Date().toISOString()),
               request: {
@@ -1370,8 +1369,10 @@ export const ExistingMosipVCItemMachine =
           onReceive(async event => {
             if (event.type === 'POLL_STATUS') {
               const response = await request(
-                'GET',
-                `/residentmobileapp/credentialshare/request/status/${context.vcMetadata.requestId}`,
+                API_URLS.credentialStatus.method,
+                API_URLS.credentialStatus.buildURL(
+                  context.vcMetadata.requestId,
+                ),
               );
               switch (response.response?.statusCode) {
                 case 'NEW':
@@ -1396,8 +1397,8 @@ export const ExistingMosipVCItemMachine =
           onReceive(async event => {
             if (event.type === 'POLL_DOWNLOAD') {
               const response: CredentialDownloadResponse = await request(
-                'POST',
-                '/residentmobileapp/credentialshare/download',
+                API_URLS.credentialDownload.method,
+                API_URLS.credentialDownload.buildURL(),
                 {
                   individualId: context.vcMetadata.id,
                   requestId: context.vcMetadata.requestId,
@@ -1431,12 +1432,16 @@ export const ExistingMosipVCItemMachine =
 
         requestOtp: async context => {
           try {
-            return request('POST', '/residentmobileapp/req/otp', {
-              individualId: context.vcMetadata.id,
-              individualIdType: context.vcMetadata.idType,
-              otpChannel: ['EMAIL', 'PHONE'],
-              transactionID: context.transactionId,
-            });
+            return request(
+              API_URLS.requestOtp.method,
+              API_URLS.requestOtp.buildURL(),
+              {
+                individualId: context.vcMetadata.id,
+                individualIdType: context.vcMetadata.idType,
+                otpChannel: ['EMAIL', 'PHONE'],
+                transactionID: context.transactionId,
+              },
+            );
           } catch (error) {
             console.error(error);
           }
@@ -1446,8 +1451,8 @@ export const ExistingMosipVCItemMachine =
           let response = null;
           if (context.locked) {
             response = await request(
-              'POST',
-              '/residentmobileapp/req/auth/unlock',
+              API_URLS.authUnLock.method,
+              API_URLS.authUnLock.buildURL(),
               {
                 individualId: context.vcMetadata.id,
                 individualIdType: context.vcMetadata.idType,
@@ -1459,8 +1464,8 @@ export const ExistingMosipVCItemMachine =
             );
           } else {
             response = await request(
-              'POST',
-              '/residentmobileapp/req/auth/lock',
+              API_URLS.authLock.method,
+              API_URLS.authLock.buildURL(),
               {
                 individualId: context.vcMetadata.id,
                 individualIdType: context.vcMetadata.idType,
@@ -1476,8 +1481,8 @@ export const ExistingMosipVCItemMachine =
         requestRevoke: async context => {
           try {
             return request(
-              'PATCH',
-              `/residentmobileapp/vid/${context.vcMetadata.id}`,
+              API_URLS.requestRevoke.method,
+              API_URLS.requestRevoke.buildURL(context.vcMetadata.id),
               {
                 transactionID: context.transactionId,
                 vidStatus: 'REVOKED',

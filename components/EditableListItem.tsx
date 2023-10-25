@@ -37,7 +37,7 @@ export const EditableListItem: React.FC<EditableListItemProps> = props => {
         color={Theme.Colors.Icon}
       />
       <ListItem.Content>
-        <ListItem.Title>
+        <ListItem.Title style={{paddingTop: 3}}>
           <Text weight="semibold" color={props.titleColor}>
             {props.title}
           </Text>

@@ -46,7 +46,7 @@ export interface Typegen0 {
     clearId: 'SELECT_ID_TYPE';
     clearIdError: 'INPUT_ID' | 'SELECT_ID_TYPE' | 'VALIDATE_INPUT';
     clearOtp:
-      | 'DISMISS'
+      | 'WAIT'
       | 'done.invoke.AddVcModal.acceptingIdInput.requestingOtp:invocation[0]'
       | 'error.platform.AddVcModal.acceptingOtpInput.resendOTP:invocation[0]'
       | 'error.platform.AddVcModal.requestingCredential:invocation[0]'
@@ -59,8 +59,8 @@ export interface Typegen0 {
       | 'error.platform.AddVcModal.acceptingOtpInput.resendOTP:invocation[0]'
       | 'error.platform.AddVcModal.requestingCredential:invocation[0]'
       | 'xstate.after(100)#AddVcModal.acceptingIdInput.focusing';
-    forwardToParent: 'DISMISS';
-    resetIdInputRef: 'DISMISS';
+    forwardToParent: 'CANCEL' | 'DISMISS';
+    resetIdInputRef: 'CANCEL';
     setId: 'INPUT_ID';
     setIdBackendError:
       | 'error.platform.AddVcModal.acceptingIdInput.requestingOtp:invocation[0]'
@@ -74,7 +74,6 @@ export interface Typegen0 {
     setOtpError: 'error.platform.AddVcModal.requestingCredential:invocation[0]';
     setRequestId: 'done.invoke.AddVcModal.requestingCredential:invocation[0]';
     setTransactionId:
-      | 'DISMISS'
       | 'error.platform.AddVcModal.acceptingOtpInput.resendOTP:invocation[0]'
       | 'error.platform.AddVcModal.requestingCredential:invocation[0]'
       | 'xstate.init';
@@ -102,6 +101,7 @@ export interface Typegen0 {
     | 'acceptingOtpInput'
     | 'acceptingOtpInput.idle'
     | 'acceptingOtpInput.resendOTP'
+    | 'cancelDownload'
     | 'done'
     | 'requestingCredential'
     | {

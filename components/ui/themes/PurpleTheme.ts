@@ -1,5 +1,5 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import {Dimensions, Platform, StyleSheet, ViewStyle} from 'react-native';
+import {Dimensions, StyleSheet, ViewStyle} from 'react-native';
 import {Spacing} from '../styleUtils';
 import {isIOS} from '../../../shared/constants';
 
@@ -552,18 +552,32 @@ export const PurpleTheme = {
       borderBottomColor: Colors.platinumGrey,
       borderBottomWidth: 1.3,
     },
-    downloadFabIcon: {
+    downloadFabIconContainer: {
       height: 70,
       width: 70,
       borderRadius: 200,
       padding: 10,
-      backgroundColor: Colors.Purple,
       shadowColor: '#000',
       shadowOpacity: 0.4,
       elevation: 5,
       position: 'absolute',
       bottom: Dimensions.get('window').width * 0.1,
       right: Dimensions.get('window').width * 0.1,
+    },
+    downloadFabIconNormal: {
+      borderRadius: 200,
+      height: 70,
+      width: 70,
+      justifyContent: 'center',
+      position: 'absolute',
+    },
+    downloadFabIconPressed: {
+      borderRadius: 200,
+      height: 70,
+      width: 70,
+      backgroundColor: Colors.Purple,
+      justifyContent: 'center',
+      position: 'absolute',
     },
     boxShadow: generateBoxShadowStyle(),
   }),
@@ -639,14 +653,14 @@ export const PurpleTheme = {
       fontFamily: 'Inter_700Bold',
       fontSize: 18,
       lineHeight: 19,
-      paddingTop: 4,
+      paddingTop: 5,
     },
     subHeader: {
       color: Colors.mediumLightGrayText,
       fontFamily: 'Inter_600SemiBold',
       lineHeight: 19,
       fontSize: 13,
-      paddingTop: 3,
+      paddingTop: 4,
     },
     semiBoldHeader: {
       color: Colors.Black,
@@ -757,6 +771,10 @@ export const PurpleTheme = {
       marginLeft: Dimensions.get('screen').width * 0.001,
       marginBottom: 17,
       marginTop: 22,
+    },
+    heading: {
+      flex: 1,
+      flexDirection: 'column',
     },
   }),
   ButtonStyles: StyleSheet.create({
@@ -1201,11 +1219,13 @@ export const PurpleTheme = {
       fontFamily: 'Inter_600SemiBold',
       fontSize: 14,
       lineHeight: 17,
+      paddingTop: 1.7,
     },
     issuerDescription: {
       fontSize: 11,
       lineHeight: 14,
       color: Colors.ShadeOfGrey,
+      paddingTop: 1.4,
     },
     issuerIcon: {
       resizeMode: 'contain',
@@ -1214,10 +1234,6 @@ export const PurpleTheme = {
       marginBottom: 9,
       marginTop: 8,
       marginLeft: 2.5,
-    },
-    loaderHeadingText: {
-      flex: 1,
-      flexDirection: 'column',
     },
   }),
   ErrorStyles: StyleSheet.create({

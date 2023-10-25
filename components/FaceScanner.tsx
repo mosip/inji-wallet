@@ -130,12 +130,6 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
             </Centered>
           </Row>
         )}
-        {/* TODO: remove warning when iOS SDK is ready */}
-        {isIOS() && (
-          <Text size="smaller" color={Theme.Colors.textLabel} align="center">
-            (face-matching in iOS is mocked)
-          </Text>
-        )}
       </Centered>
     </View>
   );

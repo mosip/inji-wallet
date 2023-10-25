@@ -21,12 +21,6 @@ import {
   sendErrorEvent,
 } from '../../shared/telemetry/TelemetryUtils';
 import {Error} from '../../components/ui/Error';
-import {
-  getInteractEventData,
-  getStartEventData,
-  sendInteractEvent,
-  sendStartEvent,
-} from '../../shared/telemetry/TelemetryUtils';
 
 const pinIconProps = {iconName: 'pushpin', iconType: 'antdesign'};
 
@@ -103,6 +97,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
               <Column
                 scroll
                 margin="0 0 20 0"
+                padding="0 0 100 0"
                 backgroundColor={Theme.Colors.lightGreyBackgroundColor}
                 refreshControl={
                   <RefreshControl
@@ -134,6 +129,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                 <Image source={Theme.DigitalIdentityLogo} />
                 <Text
                   testID="bringYourDigitalID"
+                  style={{paddingTop: 3}}
                   align="center"
                   weight="bold"
                   margin="33 0 6 0"
@@ -141,7 +137,10 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                   {t('bringYourDigitalID')}
                 </Text>
                 <Text
-                  style={Theme.TextStyles.bold}
+                  style={{
+                    ...Theme.TextStyles.bold,
+                    paddingTop: 3,
+                  }}
                   color={Theme.Colors.textLabel}
                   align="center"
                   margin="0 12 30 12">

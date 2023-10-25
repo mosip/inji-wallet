@@ -73,7 +73,6 @@ export const MosipVCItem: React.FC<
               vcMetadata={props.vcMetadata}
               verifiableCredential={verifiableCredential}
               emptyWalletBindingId={emptyWalletBindingId}
-              onPress={() => props.onPress(service)}
               showOnlyBindedVc={props.showOnlyBindedVc}
             />
             <Row style={Theme.Styles.verticalLineWrapper}>
