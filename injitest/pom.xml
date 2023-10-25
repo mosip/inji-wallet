@@ -141,12 +141,6 @@
             <artifactId>java-client</artifactId>
             <version>9.0.0</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
-<dependency>
-    <groupId>com.google.guava</groupId>
-    <artifactId>guava</artifactId>
-    <version>32.1.3-jre</version>
-</dependency>
 
         <dependency>
             <groupId>org.testng</groupId>
