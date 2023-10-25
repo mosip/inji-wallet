@@ -7,6 +7,13 @@ import {ModalProps} from '../../components/ui/Modal';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {
   selectOtpError,
+  selectWalletBindingError,
+  selectEmptyWalletBindingId,
+  selectShowWalletBindingError,
+  selectWalletBindingSuccess,
+  selectBindingAuthFailedError,
+} from '../../machines/VCItemMachine/commonSelectors';
+import {
   selectIsAcceptingOtpInput,
   selectIsAcceptingRevokeInput,
   selectIsLockingVc,
@@ -15,15 +22,10 @@ import {
   selectVc,
   ExistingMosipVCItemEvents,
   ExistingMosipVCItemMachine,
-  selectWalletBindingError,
   selectRequestBindingOtp,
   selectAcceptingBindingOtp,
-  selectEmptyWalletBindingId,
   selectWalletBindingInProgress,
-  selectShowWalletBindingError,
-  selectWalletBindingSuccess,
   selectBindingWarning,
-  selectBindingAuthFailedError,
 } from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {selectPasscode} from '../../machines/auth';
 import {biometricsMachine, selectIsSuccess} from '../../machines/biometrics';

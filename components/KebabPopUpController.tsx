@@ -1,8 +1,6 @@
 import {useSelector} from '@xstate/react';
 import {ActorRefFrom} from 'xstate';
 import {
-  ExistingMosipVCItemEvents,
-  ExistingMosipVCItemMachine,
   selectBindingAuthFailedError,
   selectEmptyWalletBindingId,
   selectIsPinned,
@@ -15,22 +13,14 @@ import {
   selectShowActivities,
   selectShowWalletBindingError,
   selectWalletBindingError,
+} from '../machines/VCItemMachine/commonSelectors';
+import {
+  ExistingMosipVCItemEvents,
+  ExistingMosipVCItemMachine,
 } from '../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
-
 import {
   EsignetMosipVCItemEvents,
   EsignetMosipVCItemMachine,
-  selectEmptyWalletBindingId as esignetSelectEmptyWalletBindingId,
-  selectIsPinned as esignetSelectIsPinned,
-  selectKebabPopUp as esignetSelectKebabPopUp,
-  selectKebabPopUpAcceptingBindingOtp as esignetSelectKebabPopUpAcceptingBindingOtp,
-  selectKebabPopUpBindingWarning as esignetSelectKebabPopUpBindingWarning,
-  selectKebabPopUpWalletBindingInProgress as esignetSelectKebabPopUpWalletBindingInProgress,
-  selectOtpError as esignetSelectOtpError,
-  selectRemoveWalletWarning as esignetSelectRemoveWalletWarning,
-  selectShowActivities as esignetSelectShowActivities,
-  selectShowWalletBindingError as esignetSelectShowWalletBindingError,
-  selectWalletBindingError as esignetSelectWalletBindingError,
 } from '../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 import {selectActivities} from '../machines/activityLog';
 import {GlobalContext} from '../shared/GlobalContext';
@@ -57,60 +47,31 @@ export function useKebabPopUp(props) {
   const SHOW_ACTIVITY = () => service.send(vcEvents.SHOW_ACTIVITY());
   const INPUT_OTP = (otp: string) => service.send(vcEvents.INPUT_OTP(otp));
   const RESEND_OTP = () => service.send(vcEvents.RESEND_OTP());
-  let isPinned = useSelector(service, selectIsPinned);
-  let isBindingWarning = useSelector(service, selectKebabPopUpBindingWarning);
-  let isRemoveWalletWarning = useSelector(service, selectRemoveWalletWarning);
-  let isAcceptingOtpInput = useSelector(
+  const isPinned = useSelector(service, selectIsPinned);
+  const isBindingWarning = useSelector(service, selectKebabPopUpBindingWarning);
+  const isRemoveWalletWarning = useSelector(service, selectRemoveWalletWarning);
+  const isAcceptingOtpInput = useSelector(
     service,
     selectKebabPopUpAcceptingBindingOtp,
   );
-  let isWalletBindingError = useSelector(service, selectShowWalletBindingError);
-  let otpError = useSelector(service, selectOtpError);
-  let walletBindingError = useSelector(service, selectWalletBindingError);
-  let bindingAuthFailedError = useSelector(
+  const isWalletBindingError = useSelector(
+    service,
+    selectShowWalletBindingError,
+  );
+  const otpError = useSelector(service, selectOtpError);
+  const walletBindingError = useSelector(service, selectWalletBindingError);
+  const bindingAuthFailedError = useSelector(
     service,
     selectBindingAuthFailedError,
   );
-  let WalletBindingInProgress = useSelector(
+  const WalletBindingInProgress = useSelector(
     service,
     selectKebabPopUpWalletBindingInProgress,
   );
-  let emptyWalletBindingId = useSelector(service, selectEmptyWalletBindingId);
-  let isKebabPopUp = useSelector(service, selectKebabPopUp);
-  let isShowActivities = useSelector(service, selectShowActivities);
+  const emptyWalletBindingId = useSelector(service, selectEmptyWalletBindingId);
+  const isKebabPopUp = useSelector(service, selectKebabPopUp);
+  const isShowActivities = useSelector(service, selectShowActivities);
 
-  if (props.vcMetadata.isFromOpenId4VCI()) {
-    isPinned = useSelector(service, esignetSelectIsPinned);
-    isBindingWarning = useSelector(
-      service,
-      esignetSelectKebabPopUpBindingWarning,
-    );
-    isRemoveWalletWarning = useSelector(
-      service,
-      esignetSelectRemoveWalletWarning,
-    );
-    isAcceptingOtpInput = useSelector(
-      service,
-      esignetSelectKebabPopUpAcceptingBindingOtp,
-    );
-    isWalletBindingError = useSelector(
-      service,
-      esignetSelectShowWalletBindingError,
-    );
-    otpError = useSelector(service, esignetSelectOtpError);
-    walletBindingError = useSelector(service, esignetSelectWalletBindingError);
-    bindingAuthFailedError = useSelector(service, selectBindingAuthFailedError);
-    WalletBindingInProgress = useSelector(
-      service,
-      esignetSelectKebabPopUpWalletBindingInProgress,
-    );
-    emptyWalletBindingId = useSelector(
-      service,
-      esignetSelectEmptyWalletBindingId,
-    );
-    isKebabPopUp = useSelector(service, esignetSelectKebabPopUp);
-    isShowActivities = useSelector(service, esignetSelectShowActivities);
-  }
   const {appService} = useContext(GlobalContext);
   const activityLogService = appService.children.get('activityLog');
 
