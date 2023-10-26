@@ -128,7 +128,7 @@ export interface Typegen0 {
     sendWalletBindingSuccess:
       | 'done.invoke.vc-item-openid4vci.kebabPopUp.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item-openid4vci.kebabPopUp.updatingPrivateKey:invocation[0]';
-    setContext: 'STORE_RESPONSE';
+    setContext: 'GET_VC_RESPONSE' | 'STORE_RESPONSE';
     setGeneratedOn: 'GET_VC_RESPONSE';
     setOtp: 'INPUT_OTP';
     setPinCard: 'PIN_CARD';

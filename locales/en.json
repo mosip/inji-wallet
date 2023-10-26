@@ -160,13 +160,9 @@
   },
   "IssuersScreen": {
     "title": "Add new card",
-    "header": "Please select a preferred method from below to add a new card",
+    "header": "Please choose your preferred issuer from the options below to add a new card.",
     "itemHeading": "Download via {{issuer}}",
-    "itemSubHeading": "Enter the mentioned ID and get your card",
-    "modal": {
-      "title": "In Progress",
-      "hint": "downloading your credential from issuer"
-    },
+    "itemSubHeading": "Enter your national ID to download your card.",
     "loaders": {
       "loading": "Loading...",
       "subTitle": {
@@ -303,6 +299,10 @@
       "noInternetConnection": {
         "title": "No internet connection",
         "message": "Please check your connection and retry"
+      },
+      "downloadLimitExpires":{
+        "title": "Download Error",
+        "message": "There was an issue downloading following cards. Please try again"
       }
     }
   },
@@ -360,12 +360,7 @@
     "confirmPasscode": "Confirm passcode",
     "enterPasscode": "Enter your passcode"
   },
-  "AppMetaData": {
-    "header": "About Inji",
-    "version": "Version",
-    "useBle": "Powered by BLE"
-  },
-  "QrScreen": {
+  "QrLogin": {
     "title": "QR Login",
     "alignQr": "Align the QR code within the frame to scan",
     "confirmation": "Confirmation",
@@ -382,8 +377,8 @@
     "domainWarning": "Please confirm the domain of the website you are scanning the QR code from below",
     "access": " is requesting access to",
     "status": "Status",
-    "successMessage": "You are successfully logged in ",
-    "okay": "All right",
+    "successMessage": "You are successfully logged in to ",
+    "ok": "OK",
     "allow": "Allow",
     "cancel": "Cancel",
     "essentialClaims": "Important Claims",
@@ -464,7 +459,7 @@
   },
   "ScanScreen": {
     "header": "Scan QR Code",
-    "noShareableVcs": "No shareable card are available.",
+    "noShareableVcs": "No shareable cards are available.",
     "sharingVc": "Sharing card",
     "bluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
     "bluetoothStateAndroid": "Bluetooth is turned OFF, please turn it ON from Quick settings menu",
@@ -567,18 +562,17 @@
   },
   "WelcomeScreen": {
     "title": "Open Source Identity Solution",
-    "getStarted": "Get started",
-    "unlockApp": "Unlock application",
+    "unlockApplication": "Unlock Application",
     "failedToReadKeys": "Failed to read keys",
     "retryRead": "Want to retry?",
-    "ignore": "Ignore",
     "errors": {
       "decryptionFailed": "Failed to decrypt data",
       "invalidateKeyError": {
         "title": "App was Reset",
         "message": "Due to the fingerprint / facial recognition update, app security was impacted, and downloaded cards were removed. Please download again."
       }
-    }
+    },
+    "ignore": "Ignore"
   },
   "SetupLanguage": {
     "header": "Choose Language",

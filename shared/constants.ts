@@ -1,11 +1,7 @@
 import {Platform} from 'react-native';
-import {
-  MIMOTO_HOST,
-  ESIGNET_HOST,
-  GOOGLE_NEARBY_MESSAGES_API_KEY,
-  DEBUG_MODE,
-} from 'react-native-dotenv';
+import {MIMOTO_HOST, ESIGNET_HOST, DEBUG_MODE} from 'react-native-dotenv';
 import {Argon2iConfig} from './commonUtil';
+import {VcIdType} from '../types/vc';
 
 export let MIMOTO_BASE_URL = MIMOTO_HOST;
 export let ESIGNET_BASE_URL = ESIGNET_HOST;
@@ -20,20 +16,15 @@ export const RECEIVED_VCS_STORE_KEY = 'receivedVCs';
 
 export const MY_LOGIN_STORE_KEY = 'myLogins';
 
-export let individualId = '';
+export let individualId = {id: '', idType: 'UIN' as VcIdType};
 
-export const GET_INDIVIDUAL_ID = (ind_Id: string) => {
-  individualId = ind_Id;
+export const GET_INDIVIDUAL_ID = (currentIndividualId: IndividualId) => {
+  individualId = currentIndividualId;
 };
 
 export const ACTIVITY_LOG_STORE_KEY = 'activityLog';
 
 export const SETTINGS_STORE_KEY = 'settings';
-
-export const GNM_API_KEY = GOOGLE_NEARBY_MESSAGES_API_KEY;
-
-// https://developers.google.com/android/reference/com/google/android/gms/nearby/messages/Message#MAX_CONTENT_SIZE_BYTES
-export const GNM_MESSAGE_LIMIT = 102400 - 6400; // allowance for metadata
 
 export const APP_ID_LENGTH = 12;
 
@@ -47,6 +38,10 @@ export const APP_ID_DICTIONARY = [
 
 export function isIOS(): boolean {
   return Platform.OS === 'ios';
+}
+
+export function isAndroid(): boolean {
+  return Platform.OS === 'android';
 }
 
 // Configuration for argon2i hashing algorithm
@@ -69,5 +64,9 @@ export const argon2iConfigForUinVid: Argon2iConfig = {
 export const argon2iSalt =
   '1234567891011121314151617181920212223242526272829303132333435363';
 
+export type IndividualId = {
+  id: string;
+  idType: VcIdType;
+};
 export const NETWORK_REQUEST_FAILED = 'Network request failed';
 export const REQUEST_TIMEOUT = 'request timedout';

@@ -58,6 +58,10 @@ export interface Typegen0 {
       type: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
       data: unknown;
     };
+    'error.platform.issuersMachine.verifyingCredential:invocation[0]': {
+      type: 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
+      data: unknown;
+    };
     'xstate.init': {type: 'xstate.init'};
   };
   invokeSrcNameMap: {
@@ -89,6 +93,9 @@ export interface Typegen0 {
       | 'error.platform.issuersMachine.downloadCredentials:invocation[0]'
       | 'error.platform.issuersMachine.downloadIssuerConfig:invocation[0]'
       | 'error.platform.issuersMachine.performAuthorization:invocation[0]';
+    sendErrorEndEvent: 'error.platform.issuersMachine.verifyingCredential:invocation[0]';
+    sendImpressionEvent: 'done.invoke.issuersMachine.displayIssuers:invocation[0]';
+    sendSuccessEndEvent: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
     setCredentialWrapper: 'done.invoke.issuersMachine.downloadCredentials:invocation[0]';
     setError:
       | 'error.platform.issuersMachine.displayIssuers:invocation[0]'
@@ -98,7 +105,10 @@ export interface Typegen0 {
     setIssuers: 'done.invoke.issuersMachine.displayIssuers:invocation[0]';
     setLoadingReasonAsDisplayIssuers: 'TRY_AGAIN';
     setLoadingReasonAsDownloadingCredentials: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
-    setLoadingReasonAsSettingUp: 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
+    setLoadingReasonAsSettingUp:
+      | 'SELECTED_ISSUER'
+      | 'TRY_AGAIN'
+      | 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
     setNoInternet: 'done.invoke.checkInternet';
     setOIDCConfigError: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     setPrivateKey: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';

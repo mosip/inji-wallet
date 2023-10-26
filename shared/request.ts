@@ -16,7 +16,7 @@ export class BackendResponseError extends Error {
 
 export async function request(
   method: HTTP_METHOD,
-  path: `/${string}`,
+  path: `/${string}` | string,
   body?: Record<string, unknown>,
   host = MIMOTO_BASE_URL,
   headers: Record<string, string> = {

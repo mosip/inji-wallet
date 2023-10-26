@@ -12,14 +12,20 @@ import {MY_VCS_STORE_KEY, ESIGNET_BASE_URL} from '../shared/constants';
 import {StoreEvents} from './store';
 import {linkTransactionResponse, VC} from '../types/VC/ExistingMosipVC/vc';
 import {request} from '../shared/request';
-import {getJwt, isCustomSecureKeystore} from '../shared/cryptoutil/cryptoUtil';
+import {
+  getJwt,
+  isHardwareKeystoreExists,
+} from '../shared/cryptoutil/cryptoUtil';
 import {
   getBindingCertificateConstant,
   getPrivateKey,
 } from '../shared/keystore/SecureKeystore';
 import i18n from '../i18n';
 import {parseMetadatas, VCMetadata} from '../shared/VCMetadata';
-import {getEndData, sendEndEvent} from '../shared/telemetry/TelemetryUtils';
+import {
+  getEndEventData,
+  sendEndEvent,
+} from '../shared/telemetry/TelemetryUtils';
 
 const model = createModel(
   {
@@ -31,7 +37,7 @@ const model = createModel(
     linkTransactionResponse: {} as linkTransactionResponse,
     authFactors: [],
     authorizeScopes: null,
-    clientName: '',
+    clientName: {},
     configs: {},
     essentialClaims: [],
     linkTransactionId: '',
@@ -224,7 +230,7 @@ export const qrLoginMachine =
           },
         },
         success: {
-          entry: [() => sendEndEvent(getEndData('QR login'))],
+          entry: [() => sendEndEvent(getEndEventData('QR login', 'SUCCESS'))],
           on: {
             CONFIRM: {
               target: 'done',
@@ -345,7 +351,7 @@ export const qrLoginMachine =
         linkTransaction: async context => {
           const response = await request(
             'POST',
-            '/v1/esignet/linked-authorization/link-transaction',
+            '/v1/esignet/linked-authorization/v2/link-transaction',
             {
               requestTime: String(new Date().toISOString()),
               request: {
@@ -360,7 +366,7 @@ export const qrLoginMachine =
         sendAuthenticate: async context => {
           let privateKey;
           const individualId = context.selectedVc.vcMetadata.id;
-          if (!isCustomSecureKeystore()) {
+          if (!isHardwareKeystoreExists) {
             privateKey = await getPrivateKey(
               context.selectedVc.walletBindingResponse?.walletBindingId,
             );
@@ -394,7 +400,7 @@ export const qrLoginMachine =
         sendConsent: async context => {
           let privateKey;
           const individualId = context.selectedVc.vcMetadata.id;
-          if (!isCustomSecureKeystore()) {
+          if (!isHardwareKeystoreExists) {
             privateKey = await getPrivateKey(
               context.selectedVc.walletBindingResponse?.walletBindingId,
             );

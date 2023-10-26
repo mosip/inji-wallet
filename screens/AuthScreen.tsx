@@ -6,11 +6,24 @@ import {Button, Column, Text} from '../components/ui';
 import {Theme} from '../components/ui/styleUtils';
 import {RootRouteProps} from '../routes';
 import {useAuthScreen} from './AuthScreenController';
+import {
+  getStartEventData,
+  getInteractEventData,
+  sendInteractEvent,
+  sendStartEvent,
+} from '../shared/telemetry/TelemetryUtils';
 
 export const AuthScreen: React.FC<RootRouteProps> = props => {
   const {t} = useTranslation('AuthScreen');
   const controller = useAuthScreen(props);
 
+  const handleUsePasscodeButtonPress = () => {
+    sendStartEvent(getStartEventData('App Onboarding'));
+    sendInteractEvent(
+      getInteractEventData('App Onboarding', 'TOUCH', 'Use Passcode Button'),
+    );
+    controller.usePasscode();
+  };
   return (
     <Column
       fill
@@ -27,12 +40,14 @@ export const AuthScreen: React.FC<RootRouteProps> = props => {
         <Column margin="30 0 0 0">
           <Text
             testID="selectAppUnlockMethod"
+            style={{paddingTop: 3}}
             align="center"
             style={Theme.TextStyles.header}>
             {t('header')}
           </Text>
           <Text
             align="center"
+            style={{paddingTop: 3}}
             weight="semibold"
             color={Theme.Colors.GrayText}
             margin="6 0">
@@ -54,7 +69,7 @@ export const AuthScreen: React.FC<RootRouteProps> = props => {
           testID="usePasscode"
           type="clear"
           title={t('usePasscode')}
-          onPress={controller.usePasscode}
+          onPress={() => handleUsePasscodeButtonPress()}
         />
       </Column>
     </Column>

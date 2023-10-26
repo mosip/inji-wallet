@@ -1,7 +1,0 @@
-{
-  "reasonForSharing": "Reason for sharing (optional)",
-  "acceptRequest": "Share",
-  "acceptRequestAndVerify": "Accept request and verify",
-  "reject": "Reject",
-  "consentToPhotoVerification": "I give consent to have my photo taken for authentication"
-}

@@ -15,11 +15,6 @@ declare module 'react-native-dotenv' {
   export const OBSRV_HOST: string;
 
   /**
-   * API key to use Google Nearby Messages API
-   */
-  export const GOOGLE_NEARBY_MESSAGES_API_KEY: string;
-
-  /**
    * Flag for Toggling Purple Theme and Default Theme
    */
   export const APPLICATION_THEME: string;

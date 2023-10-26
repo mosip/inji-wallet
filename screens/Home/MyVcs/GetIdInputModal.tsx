@@ -1,21 +1,22 @@
 import React from 'react';
-import { Dimensions, I18nManager } from 'react-native';
-import { Icon, Input } from 'react-native-elements';
-import { Button, Centered, Column, Row, Text } from '../../../components/ui';
-import { Modal } from '../../../components/ui/Modal';
-import { Theme } from '../../../components/ui/styleUtils';
+import {Dimensions, I18nManager} from 'react-native';
+import {Icon, Input} from 'react-native-elements';
+import {Button, Centered, Column, Row, Text} from '../../../components/ui';
+import {Modal} from '../../../components/ui/Modal';
+import {Theme} from '../../../components/ui/styleUtils';
 import {
   GetIdInputModalProps,
   useGetIdInputModal,
 } from './GetIdInputModalController';
-import { KeyboardAvoidingView, Platform } from 'react-native';
-import { useTranslation } from 'react-i18next';
-import { MessageOverlay } from '../../../components/MessageOverlay';
+import {KeyboardAvoidingView, Platform} from 'react-native';
+import {useTranslation} from 'react-i18next';
+import {MessageOverlay} from '../../../components/MessageOverlay';
 import Tooltip from '../../../lib/react-native-elements/tooltip/Tooltip';
-import { color } from 'react-native-elements/dist/helpers';
+import {color} from 'react-native-elements/dist/helpers';
+import {isIOS} from '../../../shared/constants';
 
-export const GetIdInputModal: React.FC<GetIdInputModalProps> = (props) => {
-  const { t } = useTranslation('GetIdInputModal');
+export const GetIdInputModal: React.FC<GetIdInputModalProps> = props => {
+  const {t} = useTranslation('GetIdInputModal');
   const controller = useGetIdInputModal(props);
 
   const inputLabel = t('enterApplicationId');
@@ -27,13 +28,13 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = (props) => {
       headerTitle={t('header')}
       headerElevation={2}>
       <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        style={{flex: 1}}
+        behavior={isIOS() ? 'padding' : 'height'}>
         <Column fill align="space-between" padding="32 24">
           <Column>
             <Text
               margin="10"
-              style={{ color: Theme.Colors.GrayText }}
+              style={{color: Theme.Colors.GrayText}}
               weight="regular">
               {t('applicationIdLabel')}
             </Text>
@@ -86,10 +87,10 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = (props) => {
                     </Centered>
                   </Tooltip>
                 }
-                errorStyle={{ color: Theme.Colors.errorMessage }}
+                errorStyle={{color: Theme.Colors.errorMessage}}
                 errorMessage={controller.idError}
                 onChangeText={controller.INPUT_ID}
-                ref={(node) => !controller.idInputRef && controller.READY(node)}
+                ref={node => !controller.idInputRef && controller.READY(node)}
               />
             </Row>
           </Column>

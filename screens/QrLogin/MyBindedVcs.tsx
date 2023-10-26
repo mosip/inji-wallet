@@ -10,7 +10,7 @@ import {VcItemContainer} from '../../components/VC/VcItemContainer';
 
 export const MyBindedVcs: React.FC<MyBindedVcsProps> = props => {
   const controller = useQrLogin(props);
-  const {t} = useTranslation('QrScreen');
+  const {t} = useTranslation('QrLogin');
 
   return (
     <Modal
@@ -42,6 +42,7 @@ export const MyBindedVcs: React.FC<MyBindedVcsProps> = props => {
                               showOnlyBindedVc
                               selectable
                               selected={index === controller.selectedIndex}
+                              isSharingVc
                             />
                           ),
                         )}

@@ -13,6 +13,7 @@ export const PasscodeVerify: React.FC<PasscodeVerifyProps> = props => {
   useEffect(() => {
     if (isVerified) {
       props.onSuccess();
+      setIsVerified(false);
     }
   }, [isVerified]);
 
@@ -21,11 +22,17 @@ export const PasscodeVerify: React.FC<PasscodeVerifyProps> = props => {
   );
 
   async function verify(value: string) {
-    const hashedPasscode = await hashData(value, props.salt, argon2iConfig);
-    if (props.passcode === hashedPasscode) {
-      setIsVerified(true);
-    } else {
-      props.onError(t('passcodeMismatchError'));
+    try {
+      const hashedPasscode = await hashData(value, props.salt, argon2iConfig);
+      if (props.passcode === hashedPasscode) {
+        setIsVerified(true);
+      } else {
+        if (props.onError) {
+          props.onError(t('passcodeMismatchError'));
+        }
+      }
+    } catch (error) {
+      console.log('error:', error);
     }
   }
 };
