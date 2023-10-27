@@ -159,6 +159,7 @@
   "IssuersScreen": {
     "title": "Magdagdag ng bagong card",
     "addCardDescription": "Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.",
+    "searchByIssuersName": "Maghanap ayon sa pangalan ng Nag-isyu",
     "itemHeading": "I-download sa pamamagitan ng {{issuer}}",
     "itemSubHeading": "Ilagay ang iyong national ID para i-download ang iyong card.",
     "loaders": {

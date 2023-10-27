@@ -160,6 +160,7 @@
   "IssuersScreen": {
     "title": "أضف بطاقة جديدة",
     "addCardDescription": "يرجى اختيار جهة الإصدار المفضلة لديك من الخيارات أدناه لإضافة بطاقة جديدة.",
+    "searchByIssuersName": "البحث حسب اسم المصدر",
     "itemHeading": "التنزيل عبر {{issuer}}",
     "itemSubHeading": "أدخل رقم الهوية الوطنية الخاص بك لتنزيل بطاقتك.",
     "loaders": {

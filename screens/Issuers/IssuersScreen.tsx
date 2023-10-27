@@ -155,7 +155,7 @@ export const IssuersScreen: React.FC<
           <TextInput
             testID="issuerSearchBar"
             style={Theme.IssuersScreenStyles.issuersSearchBar}
-            placeholder="Search by Issuers name"
+            placeholder={t('searchByIssuersName')}
             value={search}
             onChangeText={text => searchIssuer(text)}
           />
