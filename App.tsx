@@ -15,15 +15,10 @@ import {
 import {DualMessageOverlay} from './components/DualMessageOverlay';
 import {useApp} from './screens/AppController';
 import {Alert} from 'react-native';
-import {
-  getAppInfoData,
-  getTelemetryConfigData,
-  initializeTelemetry,
-  sendAppInfoEvent,
-} from './shared/telemetry/TelemetryUtils';
+import {configureTelemetry} from './shared/telemetry/TelemetryUtils';
 import {MessageOverlay} from './components/MessageOverlay';
 import SecureKeystore from 'react-native-secure-keystore';
-import {isCustomSecureKeystore} from './shared/cryptoutil/cryptoUtil';
+import {isHardwareKeystoreExists} from './shared/cryptoutil/cryptoUtil';
 import i18n from './i18n';
 import './shared/flipperConfig';
 
@@ -42,11 +37,6 @@ const DecryptErrorAlert = (controller, t) => {
     },
   ]);
 };
-function configureTelemetry() {
-  const config = getTelemetryConfigData();
-  initializeTelemetry(config);
-  sendAppInfoEvent(getAppInfoData());
-}
 
 const AppLayoutWrapper: React.FC = () => {
   const {appService} = useContext(GlobalContext);
@@ -101,7 +91,7 @@ const AppInitialization: React.FC = () => {
   const {t} = useTranslation('common');
 
   useEffect(() => {
-    if (isCustomSecureKeystore()) {
+    if (isHardwareKeystoreExists) {
       SecureKeystore.updatePopup(
         t('biometricPopup.title'),
         t('biometricPopup.description'),

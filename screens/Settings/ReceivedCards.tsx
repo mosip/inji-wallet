@@ -21,7 +21,7 @@ export const ReceivedCards: React.FC = () => {
             source={Theme.ReceivedCardsIcon}
             style={{marginLeft: 10, marginRight: 9}}
           />
-          <Text margin="6" weight="semibold">
+          <Text margin="6" style={{paddingTop: 3}} weight="semibold">
             {t('receivedCards')}
           </Text>
         </Column>

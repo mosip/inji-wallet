@@ -12,6 +12,15 @@ import {BackendResponseError, request} from '../../../shared/request';
 import {VcIdType} from '../../../types/VC/ExistingMosipVC/vc';
 import i18n from '../../../i18n';
 import {VCMetadata} from '../../../shared/VCMetadata';
+import {
+  getErrorEventData,
+  getImpressionEventData,
+  getInteractEventData,
+  sendErrorEvent,
+  sendImpressionEvent,
+  sendInteractEvent,
+} from '../../../shared/telemetry/TelemetryUtils';
+import {API_URLS} from '../../../shared/api';
 
 const model = createModel(
   {
@@ -33,6 +42,8 @@ const model = createModel(
       VALIDATE_INPUT: () => ({}),
       READY: (idInputRef: TextInput) => ({idInputRef}),
       DISMISS: () => ({}),
+      CANCEL: () => ({}),
+      WAIT: () => ({}),
       SELECT_ID_TYPE: (idType: VcIdType) => ({idType}),
     },
   },
@@ -56,6 +67,9 @@ export const AddVcModalMachine =
       on: {
         INPUT_ID: {
           actions: 'setId',
+        },
+        SELECT_ID_TYPE: {
+          actions: ['clearIdError', 'setIdType'],
         },
       },
       states: {
@@ -146,6 +160,7 @@ export const AddVcModalMachine =
                 src: 'requestOtp',
                 onDone: [
                   {
+                    actions: 'sendImpressionEvent',
                     target: '#AddVcModal.acceptingOtpInput',
                   },
                 ],
@@ -172,8 +187,7 @@ export const AddVcModalMachine =
               target: 'requestingCredential',
             },
             DISMISS: {
-              actions: 'resetIdInputRef',
-              target: 'acceptingIdInput',
+              target: 'cancelDownload',
             },
             RESEND_OTP: {
               target: '.resendOTP',
@@ -197,6 +211,16 @@ export const AddVcModalMachine =
                   },
                 ],
               },
+            },
+          },
+        },
+        cancelDownload: {
+          on: {
+            CANCEL: {
+              actions: ['resetIdInputRef', 'forwardToParent'],
+            },
+            WAIT: {
+              target: 'acceptingOtpInput',
             },
           },
         },
@@ -269,13 +293,17 @@ export const AddVcModalMachine =
                 context.idType === 'UIN' ? 'invalidUin' : 'invalidVid',
               'VID is expired/deactivated': 'deactivatedVid',
             };
-            return ID_ERRORS_MAP[message]
+            const backendError = ID_ERRORS_MAP[message]
               ? i18n.t(`errors.backend.${ID_ERRORS_MAP[message]}`, {
                   ns: 'AddVcModal',
                 })
               : i18n.t(`errors.genericError`, {
                   ns: 'common',
                 });
+            sendErrorEvent(
+              getErrorEventData('VC Download', message, backendError),
+            );
+            return backendError;
           },
         }),
 
@@ -318,28 +346,40 @@ export const AddVcModalMachine =
         clearOtp: assign({otp: ''}),
 
         focusInput: context => context.idInputRef.focus(),
+
+        sendImpressionEvent: () => {
+          sendImpressionEvent(
+            getImpressionEventData('VC Download', 'OTP Verification'),
+          );
+        },
       },
 
       services: {
         requestOtp: async context => {
-          return request('POST', '/residentmobileapp/req/otp', {
-            id: 'mosip.identity.otp.internal',
-            individualId: context.id,
-            metadata: {},
-            otpChannel: ['PHONE', 'EMAIL'],
-            requestTime: String(new Date().toISOString()),
-            transactionID: context.transactionId,
-            version: '1.0',
-          });
+          sendInteractEvent(
+            getInteractEventData('VC Download', 'CLICK', 'Requesting OTP'),
+          );
+          return request(
+            API_URLS.requestOtp.method,
+            API_URLS.requestOtp.buildURL(),
+            {
+              id: 'mosip.identity.otp.internal',
+              individualId: context.id,
+              metadata: {},
+              otpChannel: ['PHONE', 'EMAIL'],
+              requestTime: String(new Date().toISOString()),
+              transactionID: context.transactionId,
+              version: '1.0',
+            },
+          );
         },
 
         requestCredential: async context => {
           // force wait to fix issue with hanging overlay
           await new Promise(resolve => setTimeout(resolve, 1000));
-
           const response = await request(
-            'POST',
-            '/residentmobileapp/credentialshare/request',
+            API_URLS.credentialRequest.method,
+            API_URLS.credentialRequest.buildURL(),
             {
               individualId: context.id,
               individualIdType: context.idType,
@@ -408,4 +448,8 @@ export function selectIsRequestingOtp(state: State) {
 
 export function selectIsRequestingCredential(state: State) {
   return state.matches('requestingCredential');
+}
+
+export function selectIsCancellingDownload(state: State) {
+  return state.matches('cancelDownload');
 }

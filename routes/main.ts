@@ -3,13 +3,22 @@ import {
   BottomTabNavigationOptions,
   BottomTabScreenProps,
 } from '@react-navigation/bottom-tabs';
-import {Image} from 'react-native';
 import {RootStackParamList} from './index';
 import {ScanLayout} from '../screens/Scan/ScanLayout';
 import {HistoryScreen} from '../screens/History/HistoryScreen';
 import i18n from '../i18n';
 import {BOTTOM_TAB_ROUTES} from './routesConstants';
 import {HomeScreenLayout} from '../screens/HomeScreenLayout';
+
+let tabBarVisible = {
+  display: 'flex',
+  height: 75,
+  paddingHorizontal: 10,
+};
+
+export const changeTabBarVisible = (visible: string) => {
+  tabBarVisible.display = visible;
+};
 
 const home: TabScreen = {
   name: BOTTOM_TAB_ROUTES.home,
@@ -27,6 +36,7 @@ export const scan: TabScreen = {
   options: {
     title: i18n.t('MainLayout:scan'),
     headerShown: false,
+    tabBarStyle: tabBarVisible,
   },
 };
 

@@ -4,10 +4,10 @@ import {MIMOTO_BASE_URL, MY_VCS_STORE_KEY} from '../../../shared/constants';
 import {AppServices} from '../../../shared/GlobalContext';
 import {CredentialDownloadResponse, request} from '../../../shared/request';
 import {
-  VC,
-  VerifiableCredential,
-  VcIdType,
   DecodedCredential,
+  VC,
+  VcIdType,
+  VerifiableCredential,
 } from '../../../types/VC/ExistingMosipVC/vc';
 import {StoreEvents} from '../../store';
 import {ActivityLogEvents} from '../../activityLog';
@@ -15,7 +15,7 @@ import {verifyCredential} from '../../../shared/vcjs/verifyCredential';
 import {log} from 'xstate/lib/actions';
 import {
   generateKeys,
-  isCustomSecureKeystore,
+  isHardwareKeystoreExists,
   WalletBindingResponse,
 } from '../../../shared/cryptoutil/cryptoUtil';
 import {KeyPair} from 'react-native-rsa-native';
@@ -31,11 +31,12 @@ import i18n from '../../../i18n';
 import SecureKeystore from 'react-native-secure-keystore';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {
-  sendStartEvent,
-  getData,
-  getEndData,
+  getEndEventData,
+  getStartEventData,
   sendEndEvent,
+  sendStartEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
+import {API_URLS} from '../../../shared/api';
 
 const model = createModel(
   {
@@ -173,7 +174,10 @@ export const ExistingMosipVCItemMachine =
                   actions: ['setMaxDownloadCount', 'setDownloadInterval'],
                 },
                 onError: {
-                  actions: log((_, event) => (event.data as Error).message),
+                  actions: [
+                    log((_, event) => (event.data as Error).message),
+                    'sendDownloadLimitExpire',
+                  ],
                   target: 'checkingStatus',
                 },
               },
@@ -216,6 +220,7 @@ export const ExistingMosipVCItemMachine =
                     'setVerifiableCredential',
                     'updateVc',
                     'logDownloaded',
+                    'sendTelemetryEvents',
                     'removeVcFromInProgressDownloads',
                   ],
                   target: '#vc-item.checkingVerificationStatus',
@@ -301,7 +306,9 @@ export const ExistingMosipVCItemMachine =
             showBindingWarning: {
               on: {
                 CONFIRM: {
-                  actions: [() => sendStartEvent(getData('VC activation'))],
+                  actions: [
+                    () => sendStartEvent(getStartEventData('VC activation')),
+                  ],
                   target: '#vc-item.kebabPopUp.requestingBindingOtp',
                 },
                 CANCEL: {
@@ -416,7 +423,8 @@ export const ExistingMosipVCItemMachine =
                     'setWalletBindingErrorEmpty',
                     'sendWalletBindingSuccess',
                     'logWalletBindingSuccess',
-                    () => sendEndEvent(getEndData('VC activation')),
+                    () =>
+                      sendEndEvent(getEndEventData('VC activation', 'SUCCESS')),
                   ],
                   target: '#vc-item.kebabPopUp',
                 },
@@ -633,7 +641,7 @@ export const ExistingMosipVCItemMachine =
         showBindingWarning: {
           on: {
             CONFIRM: {
-              actions: () => sendStartEvent(getData('VC activation')),
+              actions: () => sendStartEvent(getStartEventData('VC activation')),
               target: 'requestingBindingOtp',
             },
             CANCEL: {
@@ -743,7 +751,7 @@ export const ExistingMosipVCItemMachine =
                 'setWalletBindingErrorEmpty',
                 'setWalletBindingSuccess',
                 'logWalletBindingSuccess',
-                () => sendEndEvent(getEndData('VC activation')),
+                () => sendEndEvent(getEndEventData('VC activation', 'SUCCESS')),
               ],
               target: 'idle',
             },
@@ -804,6 +812,18 @@ export const ExistingMosipVCItemMachine =
           },
         ),
 
+        sendDownloadLimitExpire: send(
+          (_context, event) => {
+            return {
+              type: 'DOWNLOAD_LIMIT_EXPIRED',
+              vcMetadata: _context.vcMetadata,
+            };
+          },
+          {
+            to: context => context.serviceRefs.vc,
+          },
+        ),
+
         setWalletBindingError: assign({
           walletBindingError: () =>
             i18n.t(`errors.genericError`, {
@@ -835,7 +855,7 @@ export const ExistingMosipVCItemMachine =
         ),
         setPublicKey: assign({
           publicKey: (context, event) => {
-            if (!isCustomSecureKeystore()) {
+            if (!isHardwareKeystoreExists) {
               return (event.data as KeyPair).public;
             }
             return event.data as string;
@@ -1000,7 +1020,11 @@ export const ExistingMosipVCItemMachine =
               };
             case 'GET_VC_RESPONSE':
             case 'CREDENTIAL_DOWNLOADED':
-              return {...context, ...event.vc, vcMetadata: context.vcMetadata};
+              return {
+                ...context,
+                ...event.vc,
+                vcMetadata: context.vcMetadata,
+              };
           }
         }),
 
@@ -1019,6 +1043,9 @@ export const ExistingMosipVCItemMachine =
             to: context => context.serviceRefs.activityLog,
           },
         ),
+        sendTelemetryEvents: () => {
+          sendEndEvent({type: 'VC Download', status: 'SUCCESS'});
+        },
 
         logWalletBindingSuccess: send(
           context =>
@@ -1177,8 +1204,8 @@ export const ExistingMosipVCItemMachine =
 
         addWalletBindnigId: async context => {
           const response = await request(
-            'POST',
-            '/residentmobileapp/wallet-binding',
+            API_URLS.walletBinding.method,
+            API_URLS.walletBinding.buildURL(),
             {
               requestTime: String(new Date().toISOString()),
               request: {
@@ -1224,7 +1251,7 @@ export const ExistingMosipVCItemMachine =
         },
 
         generateKeyPair: async context => {
-          if (!isCustomSecureKeystore()) {
+          if (!isHardwareKeystoreExists) {
             return await generateKeys();
           }
           const isBiometricsEnabled = SecureKeystore.hasBiometricsEnabled();
@@ -1237,8 +1264,8 @@ export const ExistingMosipVCItemMachine =
 
         requestBindingOtp: async context => {
           const response = await request(
-            'POST',
-            '/residentmobileapp/binding-otp',
+            API_URLS.bindingOtp.method,
+            API_URLS.bindingOtp.buildURL(),
             {
               requestTime: String(new Date().toISOString()),
               request: {
@@ -1261,8 +1288,10 @@ export const ExistingMosipVCItemMachine =
           onReceive(async event => {
             if (event.type === 'POLL_STATUS') {
               const response = await request(
-                'GET',
-                `/residentmobileapp/credentialshare/request/status/${context.vcMetadata.requestId}`,
+                API_URLS.credentialStatus.method,
+                API_URLS.credentialStatus.buildURL(
+                  context.vcMetadata.requestId,
+                ),
               );
               switch (response.response?.statusCode) {
                 case 'NEW':
@@ -1287,8 +1316,8 @@ export const ExistingMosipVCItemMachine =
           onReceive(async event => {
             if (event.type === 'POLL_DOWNLOAD') {
               const response: CredentialDownloadResponse = await request(
-                'POST',
-                '/residentmobileapp/credentialshare/download',
+                API_URLS.credentialDownload.method,
+                API_URLS.credentialDownload.buildURL(),
                 {
                   individualId: context.vcMetadata.id,
                   requestId: context.vcMetadata.requestId,
@@ -1322,12 +1351,16 @@ export const ExistingMosipVCItemMachine =
 
         requestOtp: async context => {
           try {
-            return request('POST', '/residentmobileapp/req/otp', {
-              individualId: context.vcMetadata.id,
-              individualIdType: context.vcMetadata.idType,
-              otpChannel: ['EMAIL', 'PHONE'],
-              transactionID: context.transactionId,
-            });
+            return request(
+              API_URLS.requestOtp.method,
+              API_URLS.requestOtp.buildURL(),
+              {
+                individualId: context.vcMetadata.id,
+                individualIdType: context.vcMetadata.idType,
+                otpChannel: ['EMAIL', 'PHONE'],
+                transactionID: context.transactionId,
+              },
+            );
           } catch (error) {
             console.error(error);
           }
@@ -1337,8 +1370,8 @@ export const ExistingMosipVCItemMachine =
           let response = null;
           if (context.locked) {
             response = await request(
-              'POST',
-              '/residentmobileapp/req/auth/unlock',
+              API_URLS.authUnLock.method,
+              API_URLS.authUnLock.buildURL(),
               {
                 individualId: context.vcMetadata.id,
                 individualIdType: context.vcMetadata.idType,
@@ -1350,8 +1383,8 @@ export const ExistingMosipVCItemMachine =
             );
           } else {
             response = await request(
-              'POST',
-              '/residentmobileapp/req/auth/lock',
+              API_URLS.authLock.method,
+              API_URLS.authLock.buildURL(),
               {
                 individualId: context.vcMetadata.id,
                 individualIdType: context.vcMetadata.idType,
@@ -1367,8 +1400,8 @@ export const ExistingMosipVCItemMachine =
         requestRevoke: async context => {
           try {
             return request(
-              'PATCH',
-              `/residentmobileapp/vid/${context.vcMetadata.id}`,
+              API_URLS.requestRevoke.method,
+              API_URLS.requestRevoke.buildURL(context.vcMetadata.id),
               {
                 transactionID: context.transactionId,
                 vidStatus: 'REVOKED',
@@ -1399,7 +1432,7 @@ export const ExistingMosipVCItemMachine =
           return context.isVerified;
         },
 
-        isCustomSecureKeystore: () => isCustomSecureKeystore(),
+        isCustomSecureKeystore: () => isHardwareKeystoreExists,
       },
     },
   );

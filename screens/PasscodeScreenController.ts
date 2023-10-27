@@ -1,16 +1,21 @@
-import { useSelector } from '@xstate/react';
-import { useContext, useEffect, useState } from 'react';
+import {useSelector} from '@xstate/react';
+import {useContext, useEffect, useState} from 'react';
 import {
   AuthEvents,
   selectAuthorized,
   selectPasscode,
   selectPasscodeSalt,
 } from '../machines/auth';
-import { PasscodeRouteProps } from '../routes';
-import { GlobalContext } from '../shared/GlobalContext';
+import {PasscodeRouteProps} from '../routes';
+import {GlobalContext} from '../shared/GlobalContext';
+import {
+  getEndEventData,
+  getEventType,
+  sendEndEvent,
+} from '../shared/telemetry/TelemetryUtils';
 
 export function usePasscodeScreen(props: PasscodeRouteProps) {
-  const { appService } = useContext(GlobalContext);
+  const {appService} = useContext(GlobalContext);
   const authService = appService.children.get('auth');
 
   const isAuthorized = useSelector(authService, selectAuthorized);
@@ -20,9 +25,12 @@ export function usePasscodeScreen(props: PasscodeRouteProps) {
 
   useEffect(() => {
     if (isAuthorized) {
+      sendEndEvent(
+        getEndEventData(getEventType(props.route.params?.setup), 'SUCCESS'),
+      );
       props.navigation.reset({
         index: 0,
-        routes: [{ name: 'Main' }],
+        routes: [{name: 'Main'}],
       });
     }
   }, [isAuthorized]);

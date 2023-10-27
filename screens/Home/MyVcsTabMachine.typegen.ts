@@ -13,15 +13,15 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
-    'done.invoke.MyVcsTab.addVc.checkStorage:invocation[0]': {
-      type: 'done.invoke.MyVcsTab.addVc.checkStorage:invocation[0]';
+    'done.invoke.MyVcsTab.addVc.checkNetwork:invocation[0]': {
+      type: 'done.invoke.MyVcsTab.addVc.checkNetwork:invocation[0]';
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
     'xstate.init': {type: 'xstate.init'};
   };
   invokeSrcNameMap: {
-    checkStorageAvailability: 'done.invoke.MyVcsTab.addVc.checkStorage:invocation[0]';
+    checkNetworkStatus: 'done.invoke.MyVcsTab.addVc.checkNetwork:invocation[0]';
   };
   missingImplementations: {
     actions: never;
@@ -30,8 +30,6 @@ export interface Typegen0 {
     services: never;
   };
   eventsCausingActions: {
-    refreshMyVc: 'IS_TAMPERED';
-    resetIsTampered: 'IS_TAMPERED';
     resetStoringVcItemStatus: 'RESET_STORE_VC_ITEM_STATUS';
     sendVcAdded: 'STORE_RESPONSE';
     setStoringVcItemStatus: 'SET_STORE_VC_ITEM_STATUS' | 'STORE_RESPONSE';
@@ -40,19 +38,19 @@ export interface Typegen0 {
   };
   eventsCausingDelays: {};
   eventsCausingGuards: {
-    isMinimumStorageLimitReached: 'done.invoke.MyVcsTab.addVc.checkStorage:invocation[0]';
+    isNetworkOn: 'done.invoke.MyVcsTab.addVc.checkNetwork:invocation[0]';
   };
   eventsCausingServices: {
     AddVcModal:
       | 'done.invoke.GetVcModal'
-      | 'done.invoke.MyVcsTab.addVc.checkStorage:invocation[0]';
+      | 'done.invoke.MyVcsTab.addVc.checkNetwork:invocation[0]';
     GetVcModal: 'GET_VC';
-    checkStorageAvailability: 'ADD_VC';
+    checkNetworkStatus: 'ADD_VC' | 'TRY_AGAIN';
   };
   matchesStates:
     | 'addVc'
-    | 'addVc.checkStorage'
-    | 'addVc.storageLimitReached'
+    | 'addVc.checkNetwork'
+    | 'addVc.networkOff'
     | 'addingVc'
     | 'addingVc.savingFailed'
     | 'addingVc.savingFailed.idle'
@@ -63,7 +61,7 @@ export interface Typegen0 {
     | 'idle'
     | 'viewingVc'
     | {
-        addVc?: 'checkStorage' | 'storageLimitReached';
+        addVc?: 'checkNetwork' | 'networkOff';
         addingVc?:
           | 'savingFailed'
           | 'storing'

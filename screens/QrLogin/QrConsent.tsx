@@ -1,16 +1,17 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Button, Column, Row, Text } from '../../components/ui';
-import { Theme } from '../../components/ui/styleUtils';
-import { useQrLogin } from './QrLoginController';
-import { Image, View } from 'react-native';
-import { Icon, ListItem, Switch } from 'react-native-elements';
-import { Modal } from '../../components/ui/Modal';
-import { QrLoginRef } from '../../machines/QrLoginMachine';
-import { ScrollView } from 'react-native';
+import {useTranslation} from 'react-i18next';
+import {Button, Column, Row, Text} from '../../components/ui';
+import {Theme} from '../../components/ui/styleUtils';
+import {useQrLogin} from './QrLoginController';
+import {Image, View} from 'react-native';
+import {Icon, ListItem, Switch} from 'react-native-elements';
+import {Modal} from '../../components/ui/Modal';
+import {QrLoginRef} from '../../machines/QrLoginMachine';
+import {ScrollView} from 'react-native';
+import {getLocalizedField} from '../../i18n';
 
-export const QrConsent: React.FC<QrConsentProps> = (props) => {
-  const { t } = useTranslation('QrScreen');
+export const QrConsent: React.FC<QrConsentProps> = props => {
+  const {t} = useTranslation('QrLogin');
   const controller = useQrLogin(props);
 
   return (
@@ -24,14 +25,14 @@ export const QrConsent: React.FC<QrConsentProps> = (props) => {
         fill
         align="space-between"
         padding="24 24 0 24"
-        style={{ display: props.isVisible ? 'flex' : 'none' }}
+        style={{display: props.isVisible ? 'flex' : 'none'}}
         backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
         <Column>
           {controller.linkTransactionResponse && (
             <Row margin={'0 0 0 9'} crossAlign="center" align="center">
               <Image
-                source={controller.logoUrl ? { uri: controller.logoUrl } : null}
-                style={{ width: 65, height: 65 }}
+                source={controller.logoUrl ? {uri: controller.logoUrl} : null}
+                style={{width: 65, height: 65}}
               />
             </Row>
           )}
@@ -39,7 +40,7 @@ export const QrConsent: React.FC<QrConsentProps> = (props) => {
             style={Theme.TextStyles.small}
             weight="bold"
             margin={'10 0 0 0'}>
-            {controller.clientName} {t('access')}
+            {getLocalizedField(controller.clientName)} {t('access')}
           </Text>
         </Column>
         <ScrollView>
@@ -56,7 +57,7 @@ export const QrConsent: React.FC<QrConsentProps> = (props) => {
             {controller.essentialClaims.map((claim, index) => (
               <Row key={index} align={'space-between'} margin={'10 0 0 20'}>
                 <Text
-                  color={Theme.Colors.profileLabel}
+                  color={Theme.Colors.Details}
                   style={Theme.TextStyles.base}>
                   {t(claim[0].toUpperCase() + claim.slice(1))
                     .split('_')
@@ -90,7 +91,7 @@ export const QrConsent: React.FC<QrConsentProps> = (props) => {
                 containerStyle={Theme.claimsContainer.container}>
                 <ListItem.Content>
                   <ListItem.Title>
-                    <Text color={Theme.Colors.profileLabel}>
+                    <Text color={Theme.Colors.Details}>
                       {t(claim[0].toUpperCase() + claim.slice(1))
                         .split('_')
                         .join(' ')}

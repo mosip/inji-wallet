@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {Icon, Tab} from 'react-native-elements';
-import {Button, Column, Text} from '../../components/ui';
+import {Column, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {HomeRouteProps} from '../../routes/main';
 import {MyVcsTab} from './MyVcsTab';
@@ -11,10 +11,10 @@ import {TabRef} from './HomeScreenMachine';
 import {useTranslation} from 'react-i18next';
 import {ActorRefFrom} from 'xstate';
 import {ExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
-import {isOpenId4VCIEnabled} from '../../shared/openId4VCI/Utils';
 import LinearGradient from 'react-native-linear-gradient';
 import {EsignetMosipVCItemMachine} from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 import {ErrorMessageOverlay} from '../../components/MessageOverlay';
+import {Pressable} from 'react-native';
 
 export const HomeScreen: React.FC<HomeRouteProps> = props => {
   const {t} = useTranslation('HomeScreen');
@@ -44,16 +44,19 @@ export const HomeScreen: React.FC<HomeRouteProps> = props => {
     return (
       <LinearGradient
         colors={Theme.Colors.gradientBtn}
-        style={Theme.Styles.downloadFabIcon}>
-        <Button
-          testID="downloadIcon"
-          icon={plusIcon}
+        style={Theme.Styles.downloadFabIconContainer}>
+        <Pressable
           onPress={() => {
             controller.GOTO_ISSUERS();
           }}
-          type={'clearAddIdBtnBg'}
-          fill
-        />
+          testID="downloadIcon"
+          style={({pressed}) =>
+            pressed
+              ? Theme.Styles.downloadFabIconPressed
+              : Theme.Styles.downloadFabIconNormal
+          }>
+          {plusIcon}
+        </Pressable>
       </LinearGradient>
     );
   };
@@ -76,7 +79,7 @@ export const HomeScreen: React.FC<HomeRouteProps> = props => {
           </Column>
         )}
       </Column>
-      {isOpenId4VCIEnabled() && <DownloadFABIcon />}
+      <DownloadFABIcon />
       <ErrorMessageOverlay
         translationPath={'MyVcsTab'}
         isVisible={controller.isMinimumStorageLimitReached}
