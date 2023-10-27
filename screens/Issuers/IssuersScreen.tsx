@@ -1,10 +1,10 @@
-import React, {useLayoutEffect} from 'react';
+import React, {useLayoutEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {FlatList, Image, View} from 'react-native';
+import {FlatList, Image, View, TextInput} from 'react-native';
 import {Issuer} from '../../components/openId4VCI/Issuer';
 import {Error} from '../../components/ui/Error';
 import {Header} from '../../components/ui/Header';
-import {Column, Text} from '../../components/ui';
+import {Column} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {RootRouteProps} from '../../routes';
 import {HomeRouteProps} from '../../routes/main';
@@ -28,6 +28,10 @@ export const IssuersScreen: React.FC<
 > = props => {
   const controller = useIssuerScreenController(props);
   const {t} = useTranslation('IssuersScreen');
+
+  const issuers = controller.issuers;
+  let [issuersData, setIssuersData] = useState(issuers);
+  const [search, setSearch] = useState('');
 
   useLayoutEffect(() => {
     if (controller.loadingReason || controller.errorMessageType) {
@@ -124,24 +128,41 @@ export const IssuersScreen: React.FC<
     );
   }
 
+  const searchIssuer = text => {
+    if (text === '') {
+      setIssuersData(issuers);
+      setSearch(text);
+    } else {
+      let filterdData = issuers.filter(item => {
+        if (
+          getDisplayObjectForCurrentLanguage(item.display)
+            ?.name.toLowerCase()
+            .includes(text.toLowerCase())
+        ) {
+          return getDisplayObjectForCurrentLanguage(item.display);
+        }
+      }, []);
+
+      setIssuersData(filterdData);
+      setSearch(text);
+    }
+  };
+
   return (
     <React.Fragment>
       {controller.issuers.length > 0 && (
-        <Column style={Theme.issuersScreenStyles.issuerListOuterContainer}>
-          <Text
-            {...testIDProps('addCardDescription')}
-            style={{
-              ...Theme.TextStyles.regularGrey,
-              paddingTop: 0.5,
-              marginVertical: 14,
-              marginHorizontal: 9,
-            }}>
-            {t('header')}
-          </Text>
-          <View style={Theme.issuersScreenStyles.issuersContainer}>
+        <Column style={Theme.IssuersScreenStyles.issuerListOuterContainer}>
+          <TextInput
+            testID="issuerSearchBar"
+            style={Theme.IssuersScreenStyles.issuersSearchBar}
+            placeholder="Search by Issuers name"
+            value={search}
+            onChangeText={text => searchIssuer(text)}
+          />
+          <View style={Theme.IssuersScreenStyles.issuersContainer}>
             {controller.issuers.length > 0 && (
               <FlatList
-                data={controller.issuers}
+                data={issuersData}
                 renderItem={({item}) => (
                   <Issuer
                     testID={removeWhiteSpace(item.credential_issuer)}

@@ -160,7 +160,7 @@
   },
   "IssuersScreen": {
     "title": "Add new card",
-    "header": "Please choose your preferred issuer from the options below to add a new card.",
+    "addCardDescription": "Please choose your preferred issuer from the options below to add a new card.",
     "itemHeading": "Download via {{issuer}}",
     "itemSubHeading": "Enter your national ID to download your card.",
     "loaders": {

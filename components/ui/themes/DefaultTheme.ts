@@ -1156,7 +1156,15 @@ export const DefaultTheme = {
       backgroundColor: Colors.Transparent,
     },
   }),
-  issuersScreenStyles: StyleSheet.create({
+  IssuersScreenStyles: StyleSheet.create({
+    issuersSearchBar: {
+      borderWidth: 1,
+      height: 45,
+      paddingLeft: 15,
+      margin: 5,
+      borderRadius: 10,
+      borderColor: Colors.Gray50,
+    },
     issuerListOuterContainer: {
       padding: 10,
       flex: 1,
