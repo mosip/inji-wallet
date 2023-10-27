@@ -1,12 +1,11 @@
 import React, {useContext, useEffect, useRef} from 'react';
-import {Input} from 'react-native-elements';
 import {useTranslation} from 'react-i18next';
 import {Button, Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {MessageOverlay} from '../../components/MessageOverlay';
 import {useSendVcScreen} from './SendVcScreenController';
 import {VerifyIdentityOverlay} from '../VerifyIdentityOverlay';
-import {BackHandler, I18nManager} from 'react-native';
+import {BackHandler} from 'react-native';
 import {useInterpret} from '@xstate/react';
 import {createExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {GlobalContext} from '../../shared/GlobalContext';
