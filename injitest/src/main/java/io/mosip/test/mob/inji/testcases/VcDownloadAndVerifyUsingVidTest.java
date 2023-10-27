@@ -1,6 +1,8 @@
 package io.mosip.test.mob.inji.testcases;
 
 import org.testng.annotations.Test;
+
+import io.mosip.test.mob.inji.driver.TestRunner;
 import io.mosip.test.mob.inji.pages.*;
 import io.mosip.test.mob.inji.utils.TestDataReader;
 
@@ -30,10 +32,9 @@ public class VcDownloadAndVerifyUsingVidTest extends BaseTest {
         RetrieveIdPage retrieveIdPage = homePage.downloadCard();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        OtpVerification otpVerification = retrieveIdPage.clickOnVid(target).setEnterIdTextBox(TestDataReader.readData("vid")).clickOnGenerateCardButton();
-
+        OtpVerification otpVerification = retrieveIdPage.clickOnVid(target).setEnterIdTextBox(TestRunner.perpetualVid).clickOnGenerateCardButton();
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(TestDataReader.readData("otp"), target);
+        otpVerification.enterOtp(NewOtp, target);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
     }
