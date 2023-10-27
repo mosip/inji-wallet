@@ -8,6 +8,7 @@ import io.appium.java_client.ios.options.XCUITestOptions;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.mosip.test.mob.inji.constants.Target;
 import io.mosip.test.mob.inji.exceptions.PlatformNotSupportException;
+import io.mosip.test.mob.inji.utils.PropertiesReader;
 import io.mosip.test.mob.inji.utils.TestDataReader;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -50,7 +51,18 @@ public class DriverManager {
     throw new PlatformNotSupportException("Please provide supported OS");
   }
   
-  public static void startAppiumServer() {}
+  public static void startAppiumServer() {
+	  
+//	  PropertiesReader propertiesReader = new PropertiesReader();
+	  //
+//	          String ipAddress = System.getProperty("ipAddress") != null ? System.getProperty("ipAddress") : propertiesReader.getIpAddress();
+//	          int port = System.getProperty("port") != null ? Integer.parseInt(Objects.requireNonNull(System.getProperty("ipAddress"))) : propertiesReader.getPortNumber();
+	  //
+//	          AppiumServiceBuilder builder = new AppiumServiceBuilder().withAppiumJS(new File(propertiesReader.getAppiumServerExecutable())).usingDriverExecutable(new File(propertiesReader.getNodePath())).withIPAddress(ipAddress).usingPort(port).withArgument(GeneralServerFlag.LOCAL_TIMEZONE).withLogFile(new File(propertiesReader.getAppiumLogFilePath()));
+	  //
+//	          service = AppiumDriverLocalService.buildService(builder);
+//	          service.start();
+  }
   
   public static void stopAppiumServer() {
     if (service != null)
