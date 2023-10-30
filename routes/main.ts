@@ -9,15 +9,10 @@ import {HistoryScreen} from '../screens/History/HistoryScreen';
 import i18n from '../i18n';
 import {BOTTOM_TAB_ROUTES} from './routesConstants';
 import {HomeScreenLayout} from '../screens/HomeScreenLayout';
-
-let tabBarVisible = {
-  display: 'flex',
-  height: 75,
-  paddingHorizontal: 10,
-};
+import {Theme} from '../components/ui/styleUtils';
 
 export const changeTabBarVisible = (visible: string) => {
-  tabBarVisible.display = visible;
+  Theme.BottomTabBarStyle.tabBarStyle.display = visible;
 };
 
 const home: TabScreen = {
@@ -36,7 +31,6 @@ export const scan: TabScreen = {
   options: {
     title: i18n.t('MainLayout:scan'),
     headerShown: false,
-    tabBarStyle: tabBarVisible,
   },
 };
 
