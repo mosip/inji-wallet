@@ -792,7 +792,7 @@ export const PurpleTheme = {
       borderColor: Colors.Purple,
     },
     container: {
-      height: 45,
+      height: 'auto',
       flexDirection: 'row',
     },
     disabled: {

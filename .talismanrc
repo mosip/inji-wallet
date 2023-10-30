@@ -61,4 +61,10 @@ fileignoreconfig:
 - filename: machines/store.typegen.ts
   checksum: 6d22bc5c77398316b943c512c208ce0846a9fff674c1ccac79e07f21962acd5f
 - filename: machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine.typegen.ts
-  checksum: 533785a3c8096ea93afc59c65025679c24d379e824e784e745ab298a0978cd2a
+  checksum: 10889302ca05646a283386be1bbe7a5fb510c02bb62a308ee45f3c2a872ae64e
+- filename: .github/workflows/internal-build.yml
+  checksum: 3a3b4dea51cb496729c4e568113fc19cf5b008481bb4a5d157f211a2128b951b
+- filename: .github/workflows/push-triggers.yml
+  checksum: c5de3d912e2cbd55f6898e2f4a24413abbee8f084c99ea11ce6265504a520ce0
+- filename: android/fastlane/Fastfile
+  checksum: 41d1409adf8df9c843fd2dba89142cd55c471f3060ced57d48ee96dc8793ffcd
