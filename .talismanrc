@@ -1,8 +1,8 @@
 fileignoreconfig:
 - filename: package.json
-  checksum: e0b34f1a1efbdf07b40a3e9e9ecd8884dd7d6835f45c57850e30988d2c6371a2
+  checksum: fdd5905228a1afbfb004c710fd6c61adf073a12840200327c0592b76bea5e7e3
 - filename: package-lock.json
-  checksum: fc26d97edecbacd0b7507032c6fc1acfcea9f01f5dbe66a2a0341506e2f0daca
+  checksum: 4515c3d663d9435eab0f56b75480c93c5209aa59befb2b71f2b3fe7c9051d80a
 - filename: components/PasscodeVerify.tsx
   checksum: 14654c0f038979fcd0d260170a45894a072f81e0767ca9a0e66935d33b5cc703
 - filename: i18n.ts
@@ -26,6 +26,13 @@ fileignoreconfig:
 - filename: screens/WelcomeScreenController.ts
   checksum: 71917c8c543a4a5b7ab61df259b785d233a80718123b0c8edf6ec81e1b3a81e0
 - filename: shared/telemetry/TelemetryUtils.js
+  checksum: ffe9aac2dcc590b98b0d588885c088eff189504ade653a77f74b67312bfd27ad
+- filename: shared/fileStorage.ts
+  checksum: 07cb337dc1d5b0f0eef56270ac4f4f589260ee5e490183c024cf98a2aeafb139
+- filename: shared/storage.ts
+  checksum: c8d874aa373bdf526bf59192139822f56915e702ef673bac4e0d7549b0fea3d0
+- filename: screens/Issuers/IssuersScreen.tsx
+  checksum: bc12c43ccc27ac04e5763fa6a6ed3cee63e4362ba5666c160b5e53269de924ab
   checksum: 9a61cd59a3718adf1f14faf3024fec66a3295ef373878a878a28e5cb1287afaa
 - filename: ios/Podfile.lock
   checksum: cc123c3e1f04d41b394ceb16843b15c08bac3ba619ae853ff322717739761a85
@@ -51,8 +58,6 @@ fileignoreconfig:
   checksum: 237a2640b7db70770d65da67c79f2929581e32f1162517e50b8d37e409f3387d
 - filename: shared/cryptoutil/cryptoUtil.ts
   checksum: b785ff3f01ab9530119072c4d38195048bfeee6155c54ea7dd031559acb722f3
-- filename: package.json
-  checksum: 1a9d02d94424c1266503d58038cae2318ab71261ab50cf930c5f98e07c0f3ccd
 - filename: machines/store.typegen.ts
   checksum: 6d22bc5c77398316b943c512c208ce0846a9fff674c1ccac79e07f21962acd5f
 - filename: machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine.typegen.ts

@@ -124,6 +124,13 @@ export interface Typegen0 {
     requestStoredContext: 'GET_VC_RESPONSE' | 'REFRESH';
     requestVcContext: 'DISMISS' | 'xstate.init';
     resetWalletBindingSuccess: 'DISMISS';
+    sendActivationFailedEndEvent: 'DISMISS';
+    sendActivationStartEvent: 'CONFIRM';
+    sendActivationSuccessEvent:
+      | 'done.invoke.vc-item-openid4vci.addingWalletBindingId:invocation[0]'
+      | 'done.invoke.vc-item-openid4vci.kebabPopUp.addingWalletBindingId:invocation[0]'
+      | 'done.invoke.vc-item-openid4vci.kebabPopUp.updatingPrivateKey:invocation[0]'
+      | 'done.invoke.vc-item-openid4vci.updatingPrivateKey:invocation[0]';
     sendVcUpdated: 'STORE_RESPONSE';
     sendWalletBindingSuccess:
       | 'done.invoke.vc-item-openid4vci.kebabPopUp.addingWalletBindingId:invocation[0]'

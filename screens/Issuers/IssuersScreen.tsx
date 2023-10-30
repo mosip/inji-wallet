@@ -17,6 +17,7 @@ import {
   Protocols,
 } from '../../shared/openId4VCI/Utils';
 import {
+  TelemetryConstants,
   getInteractEventData,
   getStartEventData,
   sendInteractEvent,
@@ -57,9 +58,15 @@ export const IssuersScreen: React.FC<
   ]);
 
   const onPressHandler = (id: string, protocol: string) => {
-    sendStartEvent(getStartEventData('VC Download', {id: id}));
+    sendStartEvent(
+      getStartEventData(TelemetryConstants.FlowType.vcDownload, {id: id}),
+    );
     sendInteractEvent(
-      getInteractEventData('VC Download', 'CLICK', `IssuerType: ${id}`),
+      getInteractEventData(
+        TelemetryConstants.FlowType.vcDownload,
+        TelemetryConstants.InteractEventSubtype.click,
+        `IssuerType: ${id}`,
+      ),
     );
     protocol === Protocols.OTP
       ? controller.DOWNLOAD_ID()

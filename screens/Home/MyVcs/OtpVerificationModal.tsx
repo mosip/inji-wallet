@@ -5,6 +5,13 @@ import {Column, Text} from '../../../components/ui';
 import {ModalProps, Modal} from '../../../components/ui/Modal';
 import {Theme} from '../../../components/ui/styleUtils';
 import {Image, TouchableOpacity} from 'react-native';
+import {
+  TelemetryConstants,
+  getImpressionEventData,
+  incrementRetryCount,
+  resetRetryCount,
+  sendImpressionEvent,
+} from '../../../shared/telemetry/TelemetryUtils';
 
 export const OtpVerificationModal: React.FC<
   OtpVerificationModalProps
@@ -12,6 +19,15 @@ export const OtpVerificationModal: React.FC<
   const {t} = useTranslation('OtpVerificationModal');
 
   const [timer, setTimer] = useState(180); // 30 seconds
+
+  useEffect(() => {
+    sendImpressionEvent(
+      getImpressionEventData(
+        props.flow,
+        TelemetryConstants.Screens.otpVerificationModal,
+      ),
+    );
+  }, [props.flow]);
 
   useEffect(() => {
     if (timer === 0) return;
@@ -29,6 +45,19 @@ export const OtpVerificationModal: React.FC<
     return `${minutes < 10 ? '0' + minutes : minutes}:${
       Seconds < 10 ? '0' + Seconds : Seconds
     }`;
+  };
+
+  const handleOtpResend = () => {
+    incrementRetryCount(
+      props.flow,
+      TelemetryConstants.Screens.otpVerificationModal,
+    );
+    props.resend();
+  };
+
+  const handleEnteredOtp = (otp: string) => {
+    resetRetryCount();
+    props.onInputDone(otp);
   };
 
   return (
@@ -65,7 +94,7 @@ export const OtpVerificationModal: React.FC<
             margin="16 0 0 0">
             {props.error}
           </Text>
-          <PinInput testID="pinInput" length={6} onDone={props.onInputDone} />
+          <PinInput testID="pinInput" length={6} onDone={handleEnteredOtp} />
           <Text
             margin="36 0 0 0"
             color={Theme.Colors.resendCodeTimer}
@@ -79,7 +108,7 @@ export const OtpVerificationModal: React.FC<
               timer > 0
                 ? null
                 : () => {
-                    props.resend();
+                    handleOtpResend();
                     setTimer(180);
                   }
             }>
@@ -103,4 +132,5 @@ interface OtpVerificationModalProps extends ModalProps {
   onInputDone: (otp: string) => void;
   error?: string;
   resend?: () => void;
+  flow: string;
 }

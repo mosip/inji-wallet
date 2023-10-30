@@ -5,9 +5,11 @@ import {CheckBox} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ActorRefFrom} from 'xstate';
 import {
-  createExistingMosipVCItemMachine,
   selectVerifiableCredential,
   selectGeneratedOn,
+} from '../machines/VCItemMachine/commonSelectors';
+import {
+  createExistingMosipVCItemMachine,
   selectId,
   ExistingMosipVCItemMachine,
 } from '../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';

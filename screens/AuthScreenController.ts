@@ -25,6 +25,7 @@ import {
   getImpressionEventData,
   getEndEventData,
   sendEndEvent,
+  TelemetryConstants,
 } from '../shared/telemetry/TelemetryUtils';
 
 export function useAuthScreen(props: RootRouteProps) {
@@ -61,12 +62,22 @@ export function useAuthScreen(props: RootRouteProps) {
 
   useEffect(() => {
     if (isAuthorized) {
-      sendEndEvent(getEndEventData('App Onboarding', 'SUCCESS'));
+      sendEndEvent(
+        getEndEventData(
+          TelemetryConstants.FlowType.appOnboarding,
+          TelemetryConstants.EndEventStatus.success,
+        ),
+      );
       props.navigation.reset({
         index: 0,
         routes: [{name: 'Main'}],
       });
-      sendImpressionEvent(getImpressionEventData('App Onboarding', 'Home'));
+      sendImpressionEvent(
+        getImpressionEventData(
+          TelemetryConstants.FlowType.appOnboarding,
+          TelemetryConstants.Screens.home,
+        ),
+      );
       return;
     }
 
@@ -80,11 +91,15 @@ export function useAuthScreen(props: RootRouteProps) {
       // handle biometric failure unknown error
     } else if (errorMsgBio) {
       sendEndEvent(
-        getEndEventData('App Onboarding', 'FAILURE', {
-          errorId: errorResponse.res.error,
-          errorMessage: errorResponse.res.warning,
-          stackTrace: errorResponse.stacktrace,
-        }),
+        getEndEventData(
+          TelemetryConstants.FlowType.appOnboarding,
+          TelemetryConstants.EndEventStatus.failure,
+          {
+            errorId: errorResponse.res.error,
+            errorMessage: errorResponse.res.warning,
+            stackTrace: errorResponse.stacktrace,
+          },
+        ),
       );
       // show alert message whenever biometric state gets failure
       if (errorResponse.res.error !== 'user_cancel') {
@@ -97,7 +112,9 @@ export function useAuthScreen(props: RootRouteProps) {
 
       // we dont need to see this page to user once biometric is unavailable on its device
     } else if (isUnavailableBio) {
-      sendStartEvent(getStartEventData('App Onboarding'));
+      sendStartEvent(
+        getStartEventData(TelemetryConstants.FlowType.appOnboarding),
+      );
       usePasscode();
     }
   }, [isSuccessBio, isUnavailableBio, errorMsgBio, unEnrolledNoticeBio]);
@@ -105,11 +122,13 @@ export function useAuthScreen(props: RootRouteProps) {
   const useBiometrics = async () => {
     const isBiometricsEnrolled = await LocalAuthentication.isEnrolledAsync();
     if (isBiometricsEnrolled) {
-      sendStartEvent(getStartEventData('App Onboarding'));
+      sendStartEvent(
+        getStartEventData(TelemetryConstants.FlowType.appOnboarding),
+      );
       sendInteractEvent(
         getInteractEventData(
-          'App Onboarding',
-          'TOUCH',
+          TelemetryConstants.FlowType.appOnboarding,
+          TelemetryConstants.InteractEventSubtype.click,
           'Use Biometrics Button',
         ),
       );
