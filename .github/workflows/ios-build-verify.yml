@@ -41,7 +41,7 @@ jobs:
       - name: Building the IPA
         run: |
           cd ios
-          fastlane build_app
+          fastlane build_app_for_automation_on_simulator
         env:
           APP_STORE_CONNECT_TEAM_ID: '${{ secrets.APP_STORE_CONNECT_TEAM_ID }}'
           DEVELOPER_APP_ID: '${{ secrets.IOS_INJI_DEVELOPER_APP_ID }}'
