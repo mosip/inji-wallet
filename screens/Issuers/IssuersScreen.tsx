@@ -161,8 +161,8 @@ export const IssuersScreen: React.FC<
             <Icon
               testID="search"
               name="search"
-              color={Theme.Colors.blackIcon}
-              size={29}
+              color={Theme.Colors.GrayIcon}
+              size={27}
               style={Theme.IssuersScreenStyles.searchIcon}
             />
             <TextInput
@@ -175,7 +175,7 @@ export const IssuersScreen: React.FC<
             />
           </Row>
 
-          <ScrollView style={Theme.IssuersScreenStyles.issuersContainer}>
+          <View style={Theme.IssuersScreenStyles.issuersContainer}>
             {controller.issuers.length > 0 && (
               <FlatList
                 data={filteredSearchData}
@@ -201,7 +201,7 @@ export const IssuersScreen: React.FC<
                 keyExtractor={item => item.id}
               />
             )}
-          </ScrollView>
+          </View>
         </Column>
       )}
     </React.Fragment>
