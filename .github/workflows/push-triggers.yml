@@ -31,10 +31,10 @@ jobs:
   build-ios:
     uses: tw-mosip/kattu/.github/workflows/ios-build.yml@add-inji-workflows
     with:
-      NODE_VERSION: "16.x"
+      NODE_VERSION: "18.x"
 
   sonar-check:
-    if: ${{ github.event_name == 'push' }}
+    if: ${{ github.event_name != 'pull_request' }}
     uses: tw-mosip/kattu/.github/workflows/sonar.yml@add-inji-workflows
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
