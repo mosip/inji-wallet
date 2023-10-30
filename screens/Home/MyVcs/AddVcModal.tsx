@@ -5,6 +5,7 @@ import {OtpVerificationModal} from './OtpVerificationModal';
 import {IdInputModal} from './IdInputModal';
 import {useTranslation} from 'react-i18next';
 import {GET_INDIVIDUAL_ID} from '../../../shared/constants';
+import {TelemetryConstants} from '../../../shared/telemetry/TelemetryUtils';
 import {Button, Column} from '../../../components/ui';
 
 export const AddVcModal: React.FC<AddVcModalProps> = props => {
@@ -35,15 +36,18 @@ export const AddVcModal: React.FC<AddVcModalProps> = props => {
         onPress={props.onPress}
       />
 
-      <OtpVerificationModal
-        isVisible={
-          controller.isAcceptingOtpInput || controller.isDownloadCancelled
-        }
-        onDismiss={controller.DISMISS}
-        onInputDone={controller.INPUT_OTP}
-        error={controller.otpError}
-        resend={controller.RESEND_OTP}
-      />
+      {(controller.isAcceptingOtpInput || controller.isDownloadCancelled) && (
+        <OtpVerificationModal
+          isVisible={
+            controller.isAcceptingOtpInput || controller.isDownloadCancelled
+          }
+          onDismiss={controller.DISMISS}
+          onInputDone={controller.INPUT_OTP}
+          error={controller.otpError}
+          resend={controller.RESEND_OTP}
+          flow={TelemetryConstants.FlowType.vcDownload}
+        />
+      )}
 
       <MessageOverlay
         isVisible={controller.isRequestingCredential}

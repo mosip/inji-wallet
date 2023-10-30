@@ -23,6 +23,7 @@ import {
 import i18n from '../i18n';
 import {parseMetadatas, VCMetadata} from '../shared/VCMetadata';
 import {
+  TelemetryConstants,
   getEndEventData,
   sendEndEvent,
 } from '../shared/telemetry/TelemetryUtils';
@@ -230,7 +231,15 @@ export const qrLoginMachine =
           },
         },
         success: {
-          entry: [() => sendEndEvent(getEndEventData('QR login', 'SUCCESS'))],
+          entry: [
+            () =>
+              sendEndEvent(
+                getEndEventData(
+                  TelemetryConstants.FlowType.qrLogin,
+                  TelemetryConstants.EndEventStatus.success,
+                ),
+              ),
+          ],
           on: {
             CONFIRM: {
               target: 'done',

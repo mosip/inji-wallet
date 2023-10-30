@@ -23,6 +23,15 @@ import {ActivityLogEvents} from '../../../machines/activityLog';
 import {request} from '../../../shared/request';
 import SecureKeystore from 'react-native-secure-keystore';
 import {VerifiableCredential} from './vc';
+import {
+  getEndEventData,
+  getInteractEventData,
+  getStartEventData,
+  sendEndEvent,
+  sendInteractEvent,
+  sendStartEvent,
+  TelemetryConstants,
+} from '../../../shared/telemetry/TelemetryUtils';
 import {API_URLS} from '../../../shared/api';
 
 const model = createModel(
@@ -33,10 +42,8 @@ const model = createModel(
     verifiableCredential: null as VerifiableCredential,
     isPinned: false,
     hashedId: '',
-
     publicKey: '',
     privateKey: '',
-
     otp: '',
     otpError: '',
     idError: '',
@@ -45,6 +52,8 @@ const model = createModel(
     walletBindingResponse: null as WalletBindingResponse,
     walletBindingError: '',
     walletBindingSuccess: false,
+    isMachineInKebabPopupState: false,
+    bindingAuthFailedMessage: '' as string,
   },
   {
     events: {
@@ -132,6 +141,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
       showBindingWarning: {
         on: {
           CONFIRM: {
+            actions: 'sendActivationStartEvent',
             target: 'requestingBindingOtp',
           },
           CANCEL: {
@@ -172,7 +182,11 @@ export const EsignetMosipVCItemMachine = model.createMachine(
           },
           DISMISS: {
             target: 'idle',
-            actions: ['clearOtp', 'clearTransactionId'],
+            actions: [
+              'sendActivationFailedEndEvent',
+              'clearOtp',
+              'clearTransactionId',
+            ],
           },
           RESEND_OTP: {
             target: '.resendOTP',
@@ -228,6 +242,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
                 'storeContext',
                 'updateVc',
                 'setWalletBindingErrorEmpty',
+                'sendActivationSuccessEvent',
                 'logWalletBindingSuccess',
               ],
             },
@@ -258,6 +273,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
               'setWalletBindingErrorEmpty',
               'setWalletBindingSuccess',
               'logWalletBindingSuccess',
+              'sendActivationSuccessEvent',
             ],
             target: 'idle',
           },
@@ -295,8 +311,16 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         },
       },
       kebabPopUp: {
+        entry: assign({
+          isMachineInKebabPopupState: () => {
+            return true;
+          },
+        }),
         on: {
           DISMISS: {
+            actions: assign({
+              isMachineInKebabPopupState: () => false,
+            }),
             target: 'idle',
           },
           ADD_WALLET_BINDING_ID: {
@@ -320,6 +344,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
           showBindingWarning: {
             on: {
               CONFIRM: {
+                actions: 'sendActivationStartEvent',
                 target: '#vc-item-openid4vci.kebabPopUp.requestingBindingOtp',
               },
               CANCEL: {
@@ -362,7 +387,11 @@ export const EsignetMosipVCItemMachine = model.createMachine(
               },
               DISMISS: {
                 target: '#vc-item-openid4vci.kebabPopUp',
-                actions: ['clearOtp', 'clearTransactionId'],
+                actions: [
+                  'sendActivationFailedEndEvent',
+                  'clearOtp',
+                  'clearTransactionId',
+                ],
               },
               RESEND_OTP: {
                 target: '.resendOTP',
@@ -422,6 +451,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
                     'updateVc',
                     'setWalletBindingErrorEmpty',
                     'sendWalletBindingSuccess',
+                    'sendActivationSuccessEvent',
                     'logWalletBindingSuccess',
                   ],
                 },
@@ -452,6 +482,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
                   'updateVc',
                   'setWalletBindingErrorEmpty',
                   'sendWalletBindingSuccess',
+                  'sendActivationSuccessEvent',
                   'logWalletBindingSuccess',
                 ],
                 target: '#vc-item-openid4vci.kebabPopUp',
@@ -603,14 +634,22 @@ export const EsignetMosipVCItemMachine = model.createMachine(
       ),
 
       setWalletBindingError: assign({
-        walletBindingError: (context, event) =>
+        walletBindingError: () =>
           i18n.t(`errors.genericError`, {
             ns: 'common',
           }),
+        bindingAuthFailedMessage: (_context, event) => {
+          const error = JSON.parse(JSON.stringify(event.data)).name;
+          if (error) {
+            return error;
+          }
+          return '';
+        },
       }),
 
       setWalletBindingErrorEmpty: assign({
         walletBindingError: () => '',
+        bindingAuthFailedMessage: () => '',
       }),
 
       setWalletBindingSuccess: assign({
@@ -631,6 +670,50 @@ export const EsignetMosipVCItemMachine = model.createMachine(
           to: context => context.serviceRefs.vc,
         },
       ),
+
+      sendActivationStartEvent: context => {
+        sendStartEvent(
+          getStartEventData(
+            context.isMachineInKebabPopupState
+              ? TelemetryConstants.FlowType.vcActivationFromKebab
+              : TelemetryConstants.FlowType.vcActivation,
+          ),
+        );
+        sendInteractEvent(
+          getInteractEventData(
+            context.isMachineInKebabPopupState
+              ? TelemetryConstants.FlowType.vcActivationFromKebab
+              : TelemetryConstants.FlowType.vcActivation,
+            TelemetryConstants.InteractEventSubtype.click,
+            'Activate Button',
+          ),
+        );
+      },
+
+      sendActivationFailedEndEvent: context =>
+        sendEndEvent(
+          getEndEventData(
+            context.isMachineInKebabPopupState
+              ? TelemetryConstants.FlowType.vcActivationFromKebab
+              : TelemetryConstants.FlowType.vcActivation,
+            TelemetryConstants.EndEventStatus.failure,
+            {
+              errorId: TelemetryConstants.ErrorId.userCancel,
+              errorMessage: TelemetryConstants.ErrorMessage.activationCancelled,
+            },
+          ),
+        ),
+
+      sendActivationSuccessEvent: context =>
+        sendEndEvent(
+          getEndEventData(
+            context.isMachineInKebabPopupState
+              ? TelemetryConstants.FlowType.vcActivationFromKebab
+              : TelemetryConstants.FlowType.vcActivation,
+            TelemetryConstants.EndEventStatus.success,
+          ),
+        ),
+
       setPublicKey: assign({
         publicKey: (context, event) => {
           if (!isHardwareKeystoreExists) {
@@ -841,84 +924,3 @@ export const createEsignetMosipVCItemMachine = (
     vcMetadata,
   });
 };
-
-type State = StateFrom<typeof EsignetMosipVCItemMachine>;
-
-export function selectVerifiableCredentials(state: State) {
-  return state.context.verifiableCredential;
-}
-
-export function selectKebabPopUp(state: State) {
-  return state.matches('kebabPopUp');
-}
-
-export function selectContext(state: State) {
-  return state.context;
-}
-
-export function selectGeneratedOn(state: State) {
-  return state.context.generatedOn;
-}
-
-export function selectWalletBindingSuccess(state: State) {
-  return state.context.walletBindingSuccess;
-}
-
-export function selectEmptyWalletBindingId(state: State) {
-  var val = state.context.walletBindingResponse
-    ? state.context.walletBindingResponse.walletBindingId
-    : undefined;
-  return val == undefined || val == null || val.length <= 0 ? true : false;
-}
-
-export function selectWalletBindingError(state: State) {
-  return state.context.walletBindingError;
-}
-
-export function selectKebabPopUpAcceptingBindingOtp(state: State) {
-  return state.matches('kebabPopUp.acceptingBindingOtp');
-}
-
-export function selectKebabPopUpShowWalletBindingError(state: State) {
-  return state.matches('kebabPopUp.showingWalletBindingError');
-}
-
-export function selectKebabPopUpWalletBindingInProgress(state: State) {
-  return state.matches('kebabPopUp.requestingBindingOtp') ||
-    state.matches('kebabPopUp.addingWalletBindingId') ||
-    state.matches('kebabPopUp.addKeyPair') ||
-    state.matches('kebabPopUp.updatingPrivateKey')
-    ? true
-    : false;
-}
-
-export function selectKebabPopUpBindingWarning(state: State) {
-  return state.matches('kebabPopUp.showBindingWarning');
-}
-
-export function selectRemoveWalletWarning(state: State) {
-  return state.matches('kebabPopUp.removeWallet');
-}
-
-export function selectIsPinned(state: State) {
-  return state.context.isPinned;
-}
-
-export function selectOtpError(state: State) {
-  return state.context.otpError;
-}
-
-export function selectShowActivities(state: State) {
-  return state.matches('kebabPopUp.showActivities');
-}
-
-export function selectShowWalletBindingError(state: State) {
-  return (
-    state.matches('showingWalletBindingError') ||
-    state.matches('kebabPopUp.showingWalletBindingError')
-  );
-}
-
-export function selectLogoUrl(state: State) {
-  return state.context.logoUrl;
-}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Icon, ListItem} from 'react-native-elements';
 import {Row, Text} from '../../../components/ui';
 import {Theme} from '../../../components/ui/styleUtils';
@@ -12,9 +12,38 @@ import {ActorRefFrom} from 'xstate';
 import {ExistingMosipVCItemMachine} from '../../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import testIDProps from '../../../shared/commonUtil';
 import {VCMetadata} from '../../../shared/VCMetadata';
+import {
+  TelemetryConstants,
+  getEndEventData,
+  getErrorEventData,
+  sendEndEvent,
+  sendErrorEvent,
+} from '../../../shared/telemetry/TelemetryUtils';
 
 export const WalletBinding: React.FC<WalletBindingProps> = props => {
   const controller = useKebabPopUp(props);
+
+  useEffect(() => {
+    let error = controller.walletBindingError;
+    if (error) {
+      error = controller.bindingAuthFailedError
+        ? controller.bindingAuthFailedError + '-' + error
+        : error;
+      sendErrorEvent(
+        getErrorEventData(
+          TelemetryConstants.FlowType.vcActivation,
+          TelemetryConstants.ErrorId.activationFailed,
+          error,
+        ),
+      );
+      sendEndEvent(
+        getEndEventData(
+          TelemetryConstants.FlowType.vcActivation,
+          TelemetryConstants.EndEventStatus.failure,
+        ),
+      );
+    }
+  }, [controller.walletBindingError]);
 
   const WalletVerified: React.FC = () => {
     return (
@@ -51,13 +80,17 @@ export const WalletBinding: React.FC<WalletBindingProps> = props => {
         onCancel={controller.CANCEL}
       />
 
-      <OtpVerificationModal
-        isVisible={controller.isAcceptingOtpInput}
-        onDismiss={controller.DISMISS}
-        onInputDone={controller.INPUT_OTP}
-        error={controller.otpError}
-        resend={controller.RESEND_OTP}
-      />
+      {controller.isAcceptingOtpInput && (
+        <OtpVerificationModal
+          isVisible={controller.isAcceptingOtpInput}
+          onDismiss={controller.DISMISS}
+          onInputDone={controller.INPUT_OTP}
+          error={controller.otpError}
+          resend={controller.RESEND_OTP}
+          flow={TelemetryConstants.FlowType.vcActivationFromKebab}
+        />
+      )}
+
       <MessageOverlay
         isVisible={controller.isWalletBindingError}
         title={controller.walletBindingError}

@@ -16,6 +16,7 @@ import {groupBy} from '../../shared/javascript';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
 import {BannerNotification} from '../../components/BannerNotification';
 import {
+  TelemetryConstants,
   getErrorEventData,
   sendErrorEvent,
 } from '../../shared/telemetry/TelemetryUtils';
@@ -54,9 +55,9 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
     if (controller.showHardwareKeystoreNotExistsAlert) {
       sendErrorEvent(
         getErrorEventData(
-          'App Onboarding',
-          'does_not_exist',
-          'Some security features will be unavailable as hardware key store is not available',
+          TelemetryConstants.FlowType.appOnboarding,
+          TelemetryConstants.ErrorId.doesNotExist,
+          TelemetryConstants.ErrorMessage.hardwareKeyStore,
         ),
       );
     }

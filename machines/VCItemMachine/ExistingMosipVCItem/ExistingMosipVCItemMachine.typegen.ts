@@ -218,6 +218,13 @@ export interface Typegen0 {
     requestVcContext: 'DISMISS' | 'xstate.init';
     resetWalletBindingSuccess: 'DISMISS';
     revokeVID: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
+    sendActivationFailedEndEvent: 'DISMISS';
+    sendActivationStartEvent: 'CONFIRM';
+    sendActivationSuccessEvent:
+      | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'
+      | 'done.invoke.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]'
+      | 'done.invoke.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]'
+      | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
     sendDownloadLimitExpire: 'error.platform.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]';
     sendTamperedVc: 'TAMPERED_VC';
     sendTelemetryEvents: 'STORE_RESPONSE';

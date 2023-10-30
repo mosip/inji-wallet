@@ -132,17 +132,27 @@ export const DefaultTheme = {
     statusLabel: {
       color: Colors.Gray30,
       fontSize: 12,
+      flexWrap: 'wrap',
+      flexShrink: 1,
     },
     activationTab: {
-      justifyContent: 'space-evenly',
+      display: 'flex',
       alignItems: 'center',
-      marginRight: 20,
-      marginStart: 10,
+      overflow: 'hidden',
+      borderBottomLeftRadius: 10,
+      borderBottomRightRadius: 10,
     },
     kebabIcon: {
+      flex: 3,
+      height: '100%',
+    },
+    kebabPressableContainer: {
+      display: 'flex',
+      flexDirection: 'row',
+      width: '100%',
+      height: '100%',
       justifyContent: 'center',
       alignItems: 'center',
-      flex: 1,
     },
     verifiedIconContainer: {
       marginRight: 3,
@@ -220,11 +230,26 @@ export const DefaultTheme = {
     },
     verticalLine: {
       width: 1,
-      height: 30,
       backgroundColor: Colors.Grey,
       marginVertical: 8,
-      marginLeft: -25,
-      marginRight: 12,
+    },
+    verticalLineWrapper: {
+      display: 'flex',
+      flex: 0.1,
+      height: '100%',
+      justifyContent: 'center',
+    },
+    vcActivationStatusContainer: {
+      display: 'flex',
+      flex: 7,
+      alignItems: 'center',
+      width: '100%',
+      height: '100%',
+      padding: 5,
+    },
+    vcActivationDetailsWrapper: {
+      display: 'flex',
+      alignItems: 'flex-start',
     },
     closeCardBgContainer: {
       borderRadius: 10,

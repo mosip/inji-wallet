@@ -9,6 +9,7 @@ import {
 import {PasscodeRouteProps} from '../routes';
 import {GlobalContext} from '../shared/GlobalContext';
 import {
+  TelemetryConstants,
   getEndEventData,
   getEventType,
   sendEndEvent,
@@ -26,7 +27,10 @@ export function usePasscodeScreen(props: PasscodeRouteProps) {
   useEffect(() => {
     if (isAuthorized) {
       sendEndEvent(
-        getEndEventData(getEventType(props.route.params?.setup), 'SUCCESS'),
+        getEndEventData(
+          getEventType(props.route.params?.setup),
+          TelemetryConstants.EndEventStatus.success,
+        ),
       );
       props.navigation.reset({
         index: 0,
