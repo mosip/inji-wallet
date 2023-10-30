@@ -72,4 +72,6 @@ fileignoreconfig:
   checksum: 533785a3c8096ea93afc59c65025679c24d379e824e784e745ab298a0978cd2a
 - filename: shared/telemetry/TelemetryUtils.js
   checksum: a0686e9a5c006176fd720b84bc36ca947db1422caf65c90cd0c2d1102a9e96df
+- filename: ios/fastlane/Fastfile
+  checksum: feea5a7f044ef6961d53e7d1e1ffb92a3e0f72761496424f6e64288e3718d605
   version: ""

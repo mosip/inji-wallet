@@ -142,7 +142,7 @@ jobs:
       - name: Run Build using Fastlane
         run: |
           cd android/scripts
-          ./android-build.sh
+          ./verify-build.sh
         env:
           DEBUG_KEYSTORE_ALIAS: androiddebugkey
           DEBUG_KEYSTORE_PASSWORD: ${{secrets.INJI_ANDROID_DEBUG_STOREPASS || env.DUMMY_INJI_ANDROID_DEBUG_STOREPASS }}
