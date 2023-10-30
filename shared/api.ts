@@ -62,6 +62,20 @@ export const API_URLS: ApiUrls = {
     method: 'PATCH',
     buildURL: (id: string): `/${string}` => `/residentmobileapp/vid/${id}`,
   },
+  linkTransaction: {
+    method: 'POST',
+    buildURL: (): `/${string}` =>
+      '/v1/esignet/linked-authorization/v2/link-transaction',
+  },
+  authenticate: {
+    method: 'POST',
+    buildURL: (): `/${string}` =>
+      '/v1/esignet/linked-authorization/v2/authenticate',
+  },
+  sendConsent: {
+    method: 'POST',
+    buildURL: (): `/${string}` => '/v1/esignet/linked-authorization/v2/consent',
+  },
 };
 
 export const API = {
@@ -227,4 +241,7 @@ type ApiUrls = {
   authLock: Api_Params;
   authUnLock: Api_Params;
   requestRevoke: Api_Params;
+  linkTransaction: Api_Params;
+  authenticate: Api_Params;
+  sendConsent: Api_Params;
 };

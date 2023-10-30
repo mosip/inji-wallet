@@ -155,3 +155,31 @@ export async function decryptJson(
     throw e;
   }
 }
+
+export async function getDetachedSignature(
+  privateKey: any,
+  context: any,
+  individualId: string,
+) {
+  let header: any;
+  header = encodeB64(
+    JSON.stringify({
+      alg: 'RS256',
+      'x5t#S256': context.thumbprint,
+    }),
+  );
+
+  let payload = {};
+  payload.accepted_claims = context.essentialClaims
+    .concat(context.selectedVoluntaryClaims)
+    .sort();
+  payload.permitted_authorized_scopes = context.authorizeScopes;
+  payload = encodeB64(JSON.stringify(payload));
+
+  const signature = await createSignature(
+    privateKey,
+    header + '.' + payload,
+    individualId,
+  );
+  return header + '.' + signature;
+}
