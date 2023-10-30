@@ -1161,18 +1161,30 @@ export const PurpleTheme = {
   IssuersScreenStyles: StyleSheet.create({
     issuersSearchBar: {
       borderWidth: 1,
-      height: 45,
-      paddingLeft: 15,
-      margin: 5,
-      borderRadius: 10,
       borderColor: Colors.Gray50,
+      height: Dimensions.get('window').height * 0.06,
+      width: Dimensions.get('window').width * 0.85,
+      paddingLeft: 15,
+      borderTopRightRadius: 9,
+      borderBottomRightRadius: 9,
+    },
+    searchIcon: {
+      justifyContent: 'center',
+      backgroundColor: Colors.Gray50,
+      height: Dimensions.get('window').height * 0.06,
+      width: Dimensions.get('window').width * 0.1,
+      borderTopLeftRadius: 9,
+      borderBottomLeftRadius: 9,
     },
     issuerListOuterContainer: {
       padding: 10,
       flex: 1,
       backgroundColor: Colors.White,
     },
-    issuersContainer: {marginHorizontal: 3},
+    issuersContainer: {
+      marginHorizontal: 3,
+      marginVertical: 5,
+    },
     issuerBoxContainer: {
       margin: 5,
       flex: 1,
@@ -1281,7 +1293,6 @@ export const PurpleTheme = {
   protectPrivacy: require('../../../assets/intro-unlock-method.png'),
   NoInternetConnection: require('../../../assets/no-internet-connection.png'),
   SomethingWentWrong: require('../../../assets/something-went-wrong.png'),
-
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/
 
