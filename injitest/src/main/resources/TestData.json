@@ -7,6 +7,6 @@
   "generatedOn": "9/5/2023",
   "aid": "10001100660000620230714065538",
   "setExcludedGroups":"AVT,PVT",
-  "androidAppPath":"D:/GitAuto1/inji/inji/injitest/apps/android/Inji.apk",
-  "androidDevice": "Pixel_3a_API_34_extension_level_7_x86_64"
+  "androidAppPath":"D:/GITINJI/inji/injitest/apps/android/Inji_latest.apk",
+  "androidDevice": "Pixel_6a_API_30"
 }
