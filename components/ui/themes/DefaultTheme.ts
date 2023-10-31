@@ -1267,6 +1267,23 @@ export const DefaultTheme = {
       maxHeight: Dimensions.get('window').height,
     },
   }),
+  BottomTabBarStyle: StyleSheet.create({
+    headerRightContainerStyle: {paddingEnd: 13},
+    headerLeftContainerStyle: {paddingEnd: 13},
+    tabBarLabelStyle: {
+      fontSize: 12,
+      fontFamily: 'Inter_600SemiBold',
+    },
+    tabBarStyle: {
+      display: 'flex',
+      height: 75,
+      paddingHorizontal: 10,
+    },
+    tabBarItemStyle: {
+      height: 83,
+      padding: 11,
+    },
+  }),
 
   ICON_SMALL_SIZE: 16,
   ICON_MID_SIZE: 22,

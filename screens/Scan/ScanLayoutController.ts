@@ -3,7 +3,7 @@ import {useSelector} from '@xstate/react';
 import {useContext, useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {MessageOverlayProps} from '../../components/MessageOverlay';
-import {MainBottomTabParamList} from '../../routes/main';
+import {MainBottomTabParamList, changeTabBarVisible} from '../../routes/main';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {
   selectIsConnecting,
@@ -208,12 +208,16 @@ export function useScanLayout() {
 
   useEffect(() => {
     if (isDone) {
+      changeTabBarVisible('flex');
       navigation.navigate(BOTTOM_TAB_ROUTES.home);
     } else if (isReviewing) {
+      changeTabBarVisible('none');
       navigation.navigate(SCAN_ROUTES.SendVcScreen);
     } else if (isScanning) {
+      changeTabBarVisible('flex');
       navigation.navigate(SCAN_ROUTES.ScanScreen);
     } else if (isQrLoginDone) {
+      changeTabBarVisible('flex');
       navigation.navigate(BOTTOM_TAB_ROUTES.history);
     }
   }, [isDone, isReviewing, isScanning, isQrLoginDone, isBleError]);

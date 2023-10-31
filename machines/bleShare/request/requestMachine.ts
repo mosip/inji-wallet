@@ -768,7 +768,10 @@ export const requestMachine =
               callback({type: 'DISCONNECT'});
             }
 
-            if (event.type === EventTypes.onError) {
+            if (
+              event.type === EventTypes.onError &&
+              event.code.includes('TVV')
+            ) {
               callback({
                 type: 'BLE_ERROR',
                 bleError: {message: event.message, code: event.code},

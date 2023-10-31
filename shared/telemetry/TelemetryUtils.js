@@ -195,6 +195,7 @@ export const TelemetryConstants = {
 
   EndEventStatus: Object.freeze({
     success: 'SUCCESS',
+    cancel: 'CANCEL',
     failure: 'FAILURE',
   }),
 
@@ -225,5 +226,8 @@ export const TelemetryConstants = {
     webViewPage: 'Web View Page',
     otpVerificationModal: 'Otp Verification Modal',
     issuerList: 'Issuer List',
+    scanScreen: 'Scan Screen',
+    vcList: 'VC List',
+    vcShareSuccessPage: 'VC Successfully Shared Page',
   }),
 };
