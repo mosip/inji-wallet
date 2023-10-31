@@ -75,9 +75,14 @@ export const MosipVCItem: React.FC<
               emptyWalletBindingId={emptyWalletBindingId}
               showOnlyBindedVc={props.showOnlyBindedVc}
             />
-            <View style={Theme.Styles.verticalLine} />
+            <Row style={Theme.Styles.verticalLineWrapper}>
+              <View style={Theme.Styles.verticalLine} />
+            </Row>
             <Row style={Theme.Styles.kebabIcon}>
-              <Pressable onPress={KEBAB_POPUP} accessible={false}>
+              <Pressable
+                onPress={KEBAB_POPUP}
+                accessible={false}
+                style={Theme.Styles.kebabPressableContainer}>
                 <KebabPopUp
                   vcMetadata={props.vcMetadata}
                   iconName="dots-three-horizontal"

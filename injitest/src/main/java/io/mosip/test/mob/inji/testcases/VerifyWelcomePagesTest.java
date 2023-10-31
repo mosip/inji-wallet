@@ -3,12 +3,11 @@ package io.mosip.test.mob.inji.testcases;
 import org.testng.annotations.Test;
 import io.mosip.test.mob.inji.pages.*;
 
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class VerifyWelcomePagesTest extends BaseTest {
 
-	@Test(groups = "VWPT")
+    @Test
     public void verifyWelcomePagesContent() {
 
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);

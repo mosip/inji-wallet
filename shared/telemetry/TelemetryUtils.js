@@ -135,17 +135,29 @@ export function getAppInfoEventData() {
   };
 }
 
-let passcodeRetryCount = 1;
+let retryCount = 0;
 
-export const incrementPasscodeRetryCount = eventType => {
-  if (passcodeRetryCount < 5) {
-    passcodeRetryCount += 1;
+export const incrementRetryCount = (eventType, screen) => {
+  if (retryCount < 4) {
+    retryCount += 1;
   } else {
-    sendErrorEvent(
-      getErrorEventData(eventType, 'mismatch', 'Passcode did not match'),
-    );
-    passcodeRetryCount = 1;
+    const [errorId, errorMessage] =
+      screen === TelemetryConstants.Screens.passcode
+        ? [
+            TelemetryConstants.ErrorId.mismatch,
+            TelemetryConstants.ErrorMessage.passcodeDidNotMatch,
+          ]
+        : [
+            TelemetryConstants.ErrorId.resend,
+            TelemetryConstants.ErrorMessage.resendOtp,
+          ];
+    sendErrorEvent(getErrorEventData(eventType, errorId, errorMessage));
+    retryCount = 0;
   }
+};
+
+export const resetRetryCount = () => {
+  retryCount = 0;
 };
 
 export function configureTelemetry() {
@@ -155,7 +167,9 @@ export function configureTelemetry() {
 }
 
 export function getEventType(isSettingUp) {
-  return isSettingUp ? 'App Onboarding' : 'App Login';
+  return isSettingUp
+    ? TelemetryConstants.FlowType.appOnboarding
+    : TelemetryConstants.FlowType.appLogin;
 }
 
 const languageCodeMap = {
@@ -165,4 +179,51 @@ const languageCodeMap = {
   hi: 'Hindi',
   kn: 'Kannada',
   ta: 'Tamil',
+};
+export const TelemetryConstants = {
+  FlowType: Object.freeze({
+    vcDownload: 'VC Download',
+    qrLogin: 'QR Login',
+    vcShare: 'VC Share',
+    vcActivation: 'VC Activation',
+    vcActivationFromKebab: 'VC Activation from kebab popup',
+    appOnboarding: 'App Onboarding',
+    appLogin: 'App Login',
+    vcLockOrRevoke: 'VC Lock / VC Revoke',
+    getVcUsingAid: 'Get VC using AID',
+  }),
+
+  EndEventStatus: Object.freeze({
+    success: 'SUCCESS',
+    failure: 'FAILURE',
+  }),
+
+  InteractEventSubtype: Object.freeze({
+    click: 'CLICK',
+  }),
+
+  ErrorMessage: Object.freeze({
+    authenticationCancelled: 'Authentication Cancelled',
+    passcodeDidNotMatch: 'Pass code did not match',
+    resendOtp: 'Otp is requested multiple times',
+    hardwareKeyStore:
+      'Some security features will be unavailable as hardware key store is not available',
+    activationCancelled: 'Activation Cancelled',
+  }),
+
+  ErrorId: Object.freeze({
+    mismatch: 'MISMATCH',
+    doesNotExist: 'DOES_NOT_EXIST',
+    userCancel: 'USER_CANCEL',
+    resend: 'RESEND',
+    activationFailed: 'ACTIVATION_FAILED',
+  }),
+
+  Screens: Object.freeze({
+    home: 'Home',
+    passcode: 'Passcode',
+    webViewPage: 'Web View Page',
+    otpVerificationModal: 'Otp Verification Modal',
+    issuerList: 'Issuer List',
+  }),
 };

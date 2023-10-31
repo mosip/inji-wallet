@@ -31,6 +31,7 @@ import {
 } from '../shared/openId4VCI/Utils';
 import {VCMetadata} from '../shared/VCMetadata';
 import {
+  TelemetryConstants,
   getEndEventData,
   getImpressionEventData,
   sendEndEvent,
@@ -486,14 +487,28 @@ export const IssuersMachine = model.createMachine(
         },
       ),
       sendSuccessEndEvent: () => {
-        sendEndEvent(getEndEventData('VC Download', 'SUCCESS'));
+        sendEndEvent(
+          getEndEventData(
+            TelemetryConstants.FlowType.vcDownload,
+            TelemetryConstants.EndEventStatus.success,
+          ),
+        );
       },
+
       sendErrorEndEvent: () => {
-        sendEndEvent(getEndEventData('VC Download', 'FAILURE'));
+        sendEndEvent(
+          getEndEventData(
+            TelemetryConstants.FlowType.vcDownload,
+            TelemetryConstants.EndEventStatus.failure,
+          ),
+        );
       },
       sendImpressionEvent: () => {
         sendImpressionEvent(
-          getImpressionEventData('VC Download', 'Issuer List'),
+          getImpressionEventData(
+            TelemetryConstants.FlowType.vcDownload,
+            TelemetryConstants.Screens.issuerList,
+          ),
         );
       },
     },
@@ -528,8 +543,9 @@ export const IssuersMachine = model.createMachine(
       invokeAuthorization: async context => {
         sendImpressionEvent(
           getImpressionEventData(
-            'VC Download',
-            context.selectedIssuer.credential_issuer + ' Web View Page',
+            TelemetryConstants.FlowType.vcDownload,
+            context.selectedIssuer.credential_issuer +
+              TelemetryConstants.Screens.webViewPage,
           ),
         );
         return await authorize(

@@ -7,7 +7,7 @@ import org.openqa.selenium.WebElement;
 
 public class HelpPage extends BasePage {
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'Help')]")
+    @AndroidFindBy(accessibility = "helpScreen")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Help\"`]")
     private WebElement helpText;
 
