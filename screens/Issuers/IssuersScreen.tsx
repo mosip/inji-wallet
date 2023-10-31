@@ -129,21 +129,18 @@ export const IssuersScreen: React.FC<
     );
   }
 
-  const filterIssuers = text => {
-    let filterdData = issuers;
-    if (text.length > 0) {
-      filterdData = issuers.filter(item => {
-        if (
-          getDisplayObjectForCurrentLanguage(item.display)
-            ?.name.toLowerCase()
-            .includes(text.toLowerCase())
-        ) {
-          return getDisplayObjectForCurrentLanguage(item.display);
-        }
-      }, []);
-    }
+  const filterIssuers = (searchText: string) => {
+    let filterdData = issuers.filter(item => {
+      if (
+        getDisplayObjectForCurrentLanguage(item.display)
+          ?.name.toLowerCase()
+          .includes(searchText.toLowerCase())
+      ) {
+        return getDisplayObjectForCurrentLanguage(item.display);
+      }
+    });
     setFilteredSearchData(filterdData);
-    setSearch(text);
+    setSearch(searchText);
   };
 
   return (
@@ -151,14 +148,14 @@ export const IssuersScreen: React.FC<
       {controller.issuers.length > 0 && (
         <Column style={Theme.IssuersScreenStyles.issuerListOuterContainer}>
           <Text
-            {...testIDProps('addCardDescription')}
+            {...testIDProps('issuersScreenDescription')}
             style={{
               ...Theme.TextStyles.regularGrey,
               paddingTop: 0.5,
               marginVertical: 14,
               marginHorizontal: 9,
             }}>
-            {t('addCardDescription')}
+            {t('description')}
           </Text>
           <Row margin="3">
             <Icon
@@ -173,8 +170,8 @@ export const IssuersScreen: React.FC<
               style={Theme.IssuersScreenStyles.issuersSearchBar}
               placeholder={t('searchByIssuersName')}
               value={search}
-              onChangeText={text => filterIssuers(text)}
-              onLayout={filterIssuers}
+              onChangeText={searchText => filterIssuers(searchText)}
+              onLayout={() => filterIssuers('')}
             />
           </Row>
 

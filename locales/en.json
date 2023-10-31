@@ -160,7 +160,7 @@
   },
   "IssuersScreen": {
     "title": "Add new card",
-    "addCardDescription": "Please choose your preferred issuer from the options below to add a new card.",
+    "description": "Please choose your preferred issuer from the options below to add a new card.",
     "searchByIssuersName": "Search by Issuer’s name",
     "itemHeading": "Download via {{issuer}}",
     "itemSubHeading": "Enter your national ID to download your card.",

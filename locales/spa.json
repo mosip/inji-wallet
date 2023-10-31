@@ -274,7 +274,7 @@
 	},
   "IssuersScreen": {
 		"title": "Agregar nueva tarjeta",
-		"addCardDescription": "Elija su emisor preferido entre las opciones siguientes para agregar una nueva tarjeta.",
+		"description": "Elija su emisor preferido entre las opciones siguientes para agregar una nueva tarjeta.",
     "searchByIssuersName": "Buscar por nombre del emisor",
 		"itemHeading": "Descargar vía {{issuer}}",
     "itemSubHeading": "Introduce tu DNI para descargar tu tarjeta.",
