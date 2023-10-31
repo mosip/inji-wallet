@@ -43,7 +43,7 @@
           
         };
         eventsCausingGuards: {
-          "isConsentCaptured": "done.invoke.QrLogin.sendingAuthenticate:invocation[0]";
+          "isConsentAlreadyCaptured": "done.invoke.QrLogin.sendingAuthenticate:invocation[0]";
         };
         eventsCausingServices: {
           "linkTransaction": "GET";

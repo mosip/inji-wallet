@@ -13,8 +13,7 @@ import {StoreEvents} from './store';
 import {linkTransactionResponse, VC} from '../types/VC/ExistingMosipVC/vc';
 import {request} from '../shared/request';
 import {
-  getDetachedSignature,
-  getJwt,
+  getJWT,
   isHardwareKeystoreExists,
 } from '../shared/cryptoutil/cryptoUtil';
 import {
@@ -29,6 +28,7 @@ import {
   TelemetryConstants,
 } from '../shared/telemetry/TelemetryUtils';
 import {API_URLS} from '../shared/api';
+import getAllConfigurations from '../shared/commonprops/commonProps';
 
 const model = createModel(
   {
@@ -184,7 +184,7 @@ export const qrLoginMachine =
             src: 'sendAuthenticate',
             onDone: [
               {
-                cond: 'isConsentCaptured',
+                cond: 'isConsentAlreadyCaptured',
                 target: 'success',
               },
               {
@@ -389,11 +389,22 @@ export const qrLoginMachine =
               context.selectedVc.walletBindingResponse?.walletBindingId,
             );
           }
-          const jwt = await getJwt(
-            privateKey,
-            individualId,
-            context.thumbprint,
-          );
+
+          var config = await getAllConfigurations();
+          const header = {
+            alg: 'RS256',
+            'x5t#S256': context.thumbprint,
+          };
+
+          const payload = {
+            iss: config.issuer,
+            sub: individualId,
+            aud: config.audience,
+            iat: Math.floor(new Date().getTime() / 1000),
+            exp: Math.floor(new Date().getTime() / 1000) + 18000,
+          };
+
+          const jwt = await getJWT(header, payload, individualId, privateKey);
 
           const response = await request(
             API_URLS.authenticate.method,
@@ -426,11 +437,20 @@ export const qrLoginMachine =
             );
           }
 
-          const detachedSignature = await getDetachedSignature(
-            privateKey,
-            context,
-            individualId,
-          );
+          const header = {
+            alg: 'RS256',
+            'x5t#S256': context.thumbprint,
+          };
+          const payload = {
+            accepted_claims: context.essentialClaims
+              .concat(context.selectedVoluntaryClaims)
+              .sort(),
+            permitted_authorized_scopes: context.authorizeScopes,
+          };
+
+          const JWT = await getJWT(header, payload, individualId, privateKey);
+          const jwtComponents = JWT.split('.');
+          const detachedSignature = jwtComponents[0] + '.' + jwtComponents[2];
 
           const resp = await request(
             API_URLS.sendConsent.method,
@@ -452,7 +472,7 @@ export const qrLoginMachine =
         },
       },
       guards: {
-        isConsentCaptured: (_, event) =>
+        isConsentAlreadyCaptured: (_, event) =>
           event.data?.consentAction === 'NOCAPTURE',
       },
     },
