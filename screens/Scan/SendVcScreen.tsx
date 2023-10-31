@@ -1,12 +1,11 @@
 import React, {useContext, useEffect, useRef} from 'react';
-import {Input} from 'react-native-elements';
 import {useTranslation} from 'react-i18next';
 import {Button, Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {MessageOverlay} from '../../components/MessageOverlay';
 import {useSendVcScreen} from './SendVcScreenController';
 import {VerifyIdentityOverlay} from '../VerifyIdentityOverlay';
-import {BackHandler, I18nManager} from 'react-native';
+import {BackHandler} from 'react-native';
 import {useInterpret} from '@xstate/react';
 import {createExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {GlobalContext} from '../../shared/GlobalContext';
@@ -70,16 +69,10 @@ export const SendVcScreen: React.FC = () => {
     }, []),
   );
 
-  const reasonLabel = t('reasonForSharing');
-
   return (
     <React.Fragment>
       <Column fill backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
         <Column>
-          <Column
-            padding="24 19 14 19"
-            backgroundColor={Theme.Colors.whiteBackgroundColor}
-            style={{position: 'relative'}}></Column>
           <Text
             margin="15 0 13 24"
             weight="bold"
@@ -101,29 +94,31 @@ export const SendVcScreen: React.FC = () => {
             />
           ))}
         </Column>
-        {!controller.selectedVc.shouldVerifyPresence && (
+        <Column backgroundColor={Theme.Colors.whiteBackgroundColor}>
+          {!controller.selectedVc.shouldVerifyPresence && (
+            <Button
+              type="gradient"
+              title={t('acceptRequestAndVerify')}
+              styles={{marginTop: 12}}
+              disabled={controller.selectedIndex == null}
+              onPress={controller.VERIFY_AND_ACCEPT_REQUEST}
+            />
+          )}
+
           <Button
             type="gradient"
-            title={t('acceptRequestAndVerify')}
-            styles={{marginTop: 12}}
+            title={t('acceptRequest')}
             disabled={controller.selectedIndex == null}
-            onPress={controller.VERIFY_AND_ACCEPT_REQUEST}
+            onPress={controller.ACCEPT_REQUEST}
           />
-        )}
 
-        <Button
-          type="gradient"
-          title={t('acceptRequest')}
-          disabled={controller.selectedIndex == null}
-          onPress={controller.ACCEPT_REQUEST}
-        />
-
-        <Button
-          type="clear"
-          loading={controller.isCancelling}
-          title={t('reject')}
-          onPress={controller.CANCEL}
-        />
+          <Button
+            type="clear"
+            loading={controller.isCancelling}
+            title={t('reject')}
+            onPress={controller.CANCEL}
+          />
+        </Column>
       </Column>
 
       <VerifyIdentityOverlay
