@@ -8,7 +8,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import io.mosip.test.mob.inji.utils.CommonMethods;
 
 import static java.time.Duration.ofSeconds;
 
@@ -31,7 +30,7 @@ public class BasePage {
             ExtentLogger.pass(elementName + " is displayed");
             return true;
         } catch (Exception e) {
-            ExtentLogger.fail(elementName + " is not displayed");
+            //ExtentLogger.fail(elementName + " is not displayed");
             return false;
         }
     }
@@ -42,7 +41,7 @@ public class BasePage {
             ExtentLogger.pass(elementName + " is displayed");
             return true;
         } catch (Exception e) {
-            ExtentLogger.fail(elementName + " is not displayed");
+            //ExtentLogger.fail(elementName + " is not displayed");
             return false;
         }
     }

@@ -8,7 +8,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 public class DeletingVcTest extends BaseTest {
-	@Test(groups = "DVT")
+    @Test
     public void deleteVc() throws InterruptedException {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
@@ -28,10 +28,13 @@ public class DeletingVcTest extends BaseTest {
         HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
-        RetrieveIdPage retrieveIdPage = homePage.downloadCard();
+        AddNewCardPage addNewCardPage = homePage.downloadCard();
+
+        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
+        RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        OtpVerification otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(TestDataReader.readData("otp"), target);

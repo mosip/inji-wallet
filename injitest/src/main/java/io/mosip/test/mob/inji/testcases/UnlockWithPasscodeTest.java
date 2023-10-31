@@ -8,7 +8,7 @@ import static org.testng.Assert.assertTrue;
 
 public class UnlockWithPasscodeTest extends BaseTest {
 
-	@Test(groups = "UWPT")
+    @Test
     public void logoutAndLoginWithPasscode() {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 

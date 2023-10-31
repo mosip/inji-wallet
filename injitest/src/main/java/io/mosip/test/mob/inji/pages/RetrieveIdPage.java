@@ -47,9 +47,9 @@ public class RetrieveIdPage extends BasePage {
         return this;
     }
 
-    public OtpVerification clickOnGenerateCardButton() {
+    public OtpVerificationPage clickOnGenerateCardButton() {
         this.clickOnElement(generateCardButton);
-        return new OtpVerification(driver);
+        return new OtpVerificationPage(driver);
     }
 
     public GenerateUinOrVidPage clickOnGetItNowText() {

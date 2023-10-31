@@ -7,11 +7,11 @@ import org.openqa.selenium.WebElement;
 
 public class SettingsPage extends BasePage {
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'Settings')]")
+    @AndroidFindBy(accessibility = "settingsScreen")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Settings\"`]")
     private WebElement settingsTittle;
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'Logout')]")
+    @AndroidFindBy(accessibility = "logout")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Logout\"`]")
     private WebElement logoutButton;
 

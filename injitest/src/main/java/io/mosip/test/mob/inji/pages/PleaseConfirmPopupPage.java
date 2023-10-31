@@ -18,8 +18,9 @@ public class PleaseConfirmPopupPage extends BasePage {
         return this.isElementDisplayed(yesButton, "Popup confirmation page");
     }
 
-    public void clickOnConfirmButton() {
+    public OtpVerificationPage clickOnConfirmButton() {
         clickOnElement(yesButton);
+        return new OtpVerificationPage(driver);
     }
 
 }
