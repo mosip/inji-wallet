@@ -1,4 +1,4 @@
-package io.mosip.test.mob.inji.utility.pojo;
+package io.mosip.test.mob.inji.api.pojo;
 
 public class Value{
 	 public String address;

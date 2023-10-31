@@ -1,4 +1,4 @@
-package io.mosip.test.mob.inji.utils;
+package io.mosip.test.mob.inji.api;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -11,18 +11,10 @@ import java.util.Properties;
 import java.util.concurrent.CompletionStage;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.json.JSONException;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import io.mosip.test.mob.inji.fw.util.AdminTestUtil;
-import io.mosip.test.mob.inji.kernel.util.ConfigManager;
-import io.mosip.test.mob.inji.utility.pojo.Root;
+import io.mosip.test.mob.inji.api.pojo.Root;
 
 
 public class MockSMTPListener{
@@ -32,9 +24,9 @@ public class MockSMTPListener{
 			.synchronizedMap(new HashMap<Object, Object>());
 
 	public static Boolean bTerminate = false;
-	
+
 	public MockSMTPListener() {
-		
+
 	}
 
 	public void run() {
@@ -156,7 +148,7 @@ public class MockSMTPListener{
 		String additionalRequestId = "";
 
 		int additionalRequestIdLoopCount =10;
-		
+
 		while (counter < additionalRequestIdLoopCount ) {
 			if (emailNotificationMapS.get(emailId) != null) {
 				String html = (String) emailNotificationMapS.get(emailId);
@@ -184,7 +176,7 @@ public class MockSMTPListener{
 		logger.info("OTP not found even after " + additionalRequestIdLoopCount + " retries");
 		return additionalRequestId;
 	}
-	
+
 	public static String parseOtp(String message) {
 
 		Pattern mPattern = Pattern.compile("(|^)\\s\\d{6}\\s");

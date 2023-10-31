@@ -1,4 +1,4 @@
-package io.mosip.test.mob.inji.kernel.util;
+package io.mosip.test.mob.inji.api;
 
 import static io.restassured.RestAssured.given;
 
@@ -12,22 +12,19 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
-import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import io.mosip.test.mob.inji.driver.TestRunner;
-import io.mosip.test.mob.inji.kernel.service.ApplicationLibrary;
-import io.mosip.test.mob.inji.service.BaseTestCase;
 import io.restassured.http.Cookie;
 import io.restassured.response.Response;
 
 public class CommonLibrary extends BaseTestCase {
 	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(CommonLibrary.class);
 	private ApplicationLibrary applicationLibrary = new ApplicationLibrary();
-	
-	
+
+
 	public String getResourcePath() {
 		if(TestRunner.checkRunType().equals("JAR")) {
 			return TestRunner.getResourcePath();
@@ -36,24 +33,24 @@ public class CommonLibrary extends BaseTestCase {
 		}
 		return null;
 	}
-	
+
 	public String getResourcePathForKernel() {
 		String kernelpath=null;
 		if(TestRunner.checkRunType().equals("JAR")) {
 			logger.info("file location for kernal"+TestRunner.getResourcePath() + "/" + "config/"+TestRunner.GetKernalFilename());
 
 			kernelpath = TestRunner.getResourcePath() + "/" + "config/"+TestRunner.GetKernalFilename().toString();
-			}else if(TestRunner.checkRunType().equals("IDE")){
-				logger.info("file location for kernal"+TestRunner.getResourcePath() + "/config/"+TestRunner.GetKernalFilename());
+		}else if(TestRunner.checkRunType().equals("IDE")){
+			logger.info("file location for kernal"+TestRunner.getResourcePath() + "/config/"+TestRunner.GetKernalFilename());
 
-				kernelpath = TestRunner.getResourcePath() + "/config/"+TestRunner.GetKernalFilename().toString();
-			}
+			kernelpath = TestRunner.getResourcePath() + "/config/"+TestRunner.GetKernalFilename().toString();
+		}
 		return kernelpath;
 	}
-	
-	
+
+
 	public boolean isValidToken(String cookie) {
-		
+
 		logger.info("========= Revalidating the token =========");
 		Response response = applicationLibrary.getWithoutParams("/v1/authmanager/authorize/admin/validateToken", cookie);
 		JSONObject responseJson =null;
@@ -65,19 +62,19 @@ public class CommonLibrary extends BaseTestCase {
 		}
 
 		if (responseJson!=null && responseJson.get("errors")==null)
-			{
+		{
 			logger.info("========= Valid Token =========");
 			return true;
-			}
+		}
 		else
 		{
-			
+
 			logger.info("========= InValid Token =========");
 			return false;
 		}
 
 	}
-	
+
 	public Map<String, String> readProperty(String propertyFileName) {
 		Properties prop = new Properties();
 		try {
@@ -94,7 +91,7 @@ public class CommonLibrary extends BaseTestCase {
 
 		return mapProp;
 	}
-	
+
 	// Get Requests:
 	/**
 	 * @param url
@@ -111,8 +108,8 @@ public class CommonLibrary extends BaseTestCase {
 		logger.info("REST-ASSURED: the response Time is: " + getResponse.time());
 		return getResponse;
 	}
-	
-	
+
+
 	/**
 	 * @param response
 	 *            this method is for logging the response in case of error only.
@@ -126,7 +123,7 @@ public class CommonLibrary extends BaseTestCase {
 			logger.info("status code: " + statusCode + "(success)");
 
 	}
-	
+
 	public JSONObject readJsonData(String path, boolean isRelative) {
 		logger.info("path : " + path);
 		if(isRelative)
@@ -150,7 +147,7 @@ public class CommonLibrary extends BaseTestCase {
 		}
 		return jsonData;
 	}
-	
+
 	/**
 	 * @param url
 	 * @param body

@@ -1,15 +1,12 @@
-package io.mosip.test.mob.inji.utils;
+package io.mosip.test.mob.inji.api;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.testng.Reporter;
-
-import io.mosip.test.mob.inji.authentication.fw.precon.JsonPrecondtion;
 
 public class ReportUtil {
-	
+
 	/**
 	 * Publish the request and response headers in text area
 	 * @param content
@@ -25,7 +22,7 @@ public class ReportUtil {
 		sb.append("</textarea> </div>");
 		return sb.toString();
 	}
-	
+
 	/**
 	 * Method to show the output validation result in table format in testng report
 	 * 
@@ -53,21 +50,13 @@ public class ReportUtil {
 							+ "</td>\r\n" + "    <td bgcolor='RED'>" + dto.getStatus() + "</td>\r\n" + "  </tr>\r\n";
 					outputValidationDone = true;
 				}
-				// If it is warning basically we haven't compared or ignored the comparison.
-				// so no point in printing that content in the report.
-				/*
-				 * else if (dto.getStatus().equals("WARNING")) { htmlforReport = htmlforReport +
-				 * "  <tr>\r\n" + "    <td>" + dto.getFieldName() + "</td>\r\n" + "    <td>" +
-				 * dto.getExpValue() + "</td>\r\n" + "    <td>" + dto.getActualValue() +
-				 * "</td>\r\n" + "    <td bgcolor='LIGHTYELLOW'>" + dto.getStatus() +
-				 * "</td>\r\n" + "  </tr>\r\n"; }
-				 */
+
 			}
 		}
 		if (!outputValidationDone) {
 			return "<b> Marking test case as passed. As Output validation not performed and no errors in the response </b>";
 		}
-			
+
 		htmlforReport = temp + htmlforReport + "</table>";
 		return htmlforReport;
 	}

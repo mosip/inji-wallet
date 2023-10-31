@@ -1,12 +1,10 @@
-package io.mosip.test.mob.inji.fw.util;
+package io.mosip.test.mob.inji.api;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Properties;
 import java.util.TimeZone;
 
 import javax.ws.rs.core.MediaType;
@@ -15,13 +13,6 @@ import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import io.mosip.test.mob.inji.authentication.fw.precon.JsonPrecondtion;
-import io.mosip.test.mob.inji.authentication.fw.util.RestClient;
-import io.mosip.test.mob.inji.kernel.util.ConfigManager;
-import io.mosip.test.mob.inji.kernel.util.KernelAuthentication;
-import io.mosip.test.mob.inji.kernel.util.KeycloakUserManager;
-import io.mosip.test.mob.inji.service.BaseTestCase;
-import io.mosip.test.mob.inji.utils.GlobalConstants;
 import io.restassured.response.Response;
 import org.apache.commons.lang.RandomStringUtils;
 
@@ -33,9 +24,9 @@ public class AdminTestUtil extends BaseTestCase {
 	public static String tokenRoleIdRepo = "idrepo";
 	public static String tokenRoleAdmin = "admin";
 	public static boolean initialized = false;
-	
+
 	public static String getUnUsedUIN(String role){
-		
+
 		return JsonPrecondtion
 				.getValueFromJson(
 						RestClient.getRequestWithCookie(ApplnURI + "/v1/idgenerator/uin", MediaType.APPLICATION_JSON,
@@ -43,7 +34,7 @@ public class AdminTestUtil extends BaseTestCase {
 								new KernelAuthentication().getTokenByRole(role)).asString(),
 						"response.uin");
 	}
-	
+
 	public static String getMasterDataSchema(String role){
 		String url = ApplnURI + props.getProperty("masterSchemaURL");
 		kernelAuthLib = new KernelAuthentication();
@@ -54,51 +45,51 @@ public class AdminTestUtil extends BaseTestCase {
 
 		return response.asString();
 	}
-	
+
 	public static String generateCurrentUTCTimeStamp() {
 		Date date = new Date();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 		dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 		return dateFormat.format(date);
 	}
-	
+
 	public static boolean activateUIN(String inputJson, String role) {
 		Response response = null;
-		
+
 		token = kernelAuthLib.getTokenByRole(role);
 		response = RestClient.postRequestWithCookie(ApplnURI + props.getProperty("addIdentityURL"), inputJson, MediaType.APPLICATION_JSON,
 				MediaType.APPLICATION_JSON, COOKIENAME, token);
 		JSONObject responseJson = new JSONObject(response.asString());
-		
-		
+
+
 		System.out.println("responseJson = " + responseJson);
-		
+
 		return responseJson.getJSONObject("response").getString("status").equalsIgnoreCase("ACTIVATED");
 	}
-	
+
 	public static String buildaddIdentityRequestBody(String schemaJson, String uin, String rid) {
-    	org.json.JSONObject schemaresponseJson = new org.json.JSONObject(schemaJson);
-    	
+		org.json.JSONObject schemaresponseJson = new org.json.JSONObject(schemaJson);
+
 		org.json.JSONObject schemaData = (org.json.JSONObject) schemaresponseJson.get("response");
 		Double schemaVersion = (Double) schemaData.get("idVersion");
 		String schemaJsonData = schemaData.getString("schemaJson");
 		String schemaFile = schemaJsonData.toString();
-		
+
 		JSONObject schemaFileJson = new JSONObject(schemaFile); // jObj
 		JSONObject schemaPropsJson = schemaFileJson.getJSONObject("properties"); // objIDJson4
 		JSONObject schemaIdentityJson = schemaPropsJson.getJSONObject("identity"); // objIDJson
 		JSONObject identityPropsJson = schemaIdentityJson.getJSONObject("properties"); // objIDJson2
 		JSONArray requiredPropsArray = schemaIdentityJson.getJSONArray("required"); // objIDJson1
 		System.out.println("requiredPropsArray = " + requiredPropsArray);
-		
+
 		JSONObject requestJson = new JSONObject();
-		
+
 		requestJson.put("id", propsMap.getProperty("id"));
 		requestJson.put("request", new HashMap<>());
 		requestJson.getJSONObject("request").put("registrationId", rid);		
 		JSONObject identityJson = new JSONObject();
 		identityJson.put("UIN", uin);
-		
+
 		for (int i = 0, size = requiredPropsArray.length(); i < size; i++) {
 			String eachRequiredProp = requiredPropsArray.getString(i); // objIDJson3
 
@@ -107,7 +98,7 @@ public class AdminTestUtil extends BaseTestCase {
 			if (eachPropDataJson.has("$ref") && eachPropDataJson.get("$ref").toString().contains("simpleType")) {
 
 				JSONArray eachPropDataArray = new JSONArray(); // jArray
-				
+
 				for (int j = 0; j < BaseTestCase.getLanguageList().size(); j++) {
 					JSONObject eachValueJson = new JSONObject(); // studentJSON
 					eachValueJson.put("language", BaseTestCase.getLanguageList().get(j));
@@ -115,7 +106,7 @@ public class AdminTestUtil extends BaseTestCase {
 					eachPropDataArray.put(eachValueJson);
 				}
 				identityJson.put(eachRequiredProp, eachPropDataArray);
-	        }
+			}
 			else {
 				if (eachRequiredProp.equals("proofOfIdentity")) {
 					identityJson.put(eachRequiredProp, new HashMap<>());
@@ -144,23 +135,23 @@ public class AdminTestUtil extends BaseTestCase {
 					}
 				}				
 			}
-        }
-		
+		}
+
 		JSONArray requestDocArray = new JSONArray();
 		JSONObject docJson = new JSONObject();
 		docJson.put("value", propsBio.getProperty("BioValue"));
 		docJson.put("category", "individualBiometrics");
 		requestDocArray.put(docJson);
-		
+
 		requestJson.getJSONObject("request").put("documents", requestDocArray);
 		requestJson.getJSONObject("request").put("identity", identityJson);
 		requestJson.put("requesttime", generateCurrentUTCTimeStamp());
 		requestJson.put("version", "v1");
-		
+
 		System.out.println(requestJson);
 		return requestJson.toString();
-    }
-	
+	}
+
 	private static String otpExpTime = "";
 	public static int getOtpExpTimeFromActuator() {
 		if (otpExpTime.isEmpty()) {
@@ -197,80 +188,78 @@ public class AdminTestUtil extends BaseTestCase {
 		return Integer.parseInt(otpExpTime);
 	}
 
-	
-	 public static String generateUIN() {
-	    	String uin = "";
-	    	
-	    	initialize();
-	    	
-			DateFormat dateFormatter = new SimpleDateFormat("YYYYMMddHHmmss");
-			Calendar cal = Calendar.getInstance();
-			String timestampValue = dateFormatter.format(cal.getTime());
-			String rid = "27847" + RandomStringUtils.randomNumeric(10) + timestampValue;
-	    	
-	    	// Make Unused UIN Api call to get the UIN Number
-	    	uin = AdminTestUtil.getUnUsedUIN(tokenRoleIdRepo);
-	    	
-	    	// Call Masterdata Schema API To get the Schema Data Of the Env
-	    	String responseString = AdminTestUtil.getMasterDataSchema(tokenRoleAdmin);
-			
-			// Build request body for add identity API
-			String requestjson = AdminTestUtil.buildaddIdentityRequestBody(responseString, uin, rid);
-			
-			
-	    	// Make Add Identity API Call and activate the UIN
-			if (AdminTestUtil.activateUIN(requestjson, tokenRoleIdRepo) == false) {
-				// UIN activation failed
-				return "";
-			}		
-	    	
-	    	return uin;
-	    }
-	 
-	 
-	 public static String generateVID(String uin, String vidType) {
-	    	if (uin.isEmpty() || vidType.isEmpty()) {
-	    		return "";
-	    	}
-	    	
-	    	initialize();
-	    	Response response = null;
-			
-			String token = BaseTestCase.kernelAuthLib.getTokenByRole(tokenRoleIdRepo);
-	    	JSONObject requestJson = new JSONObject();
-	    	
-	    	requestJson.put("id", "mosip.vid.create");
-	    	requestJson.put("metadata", new HashMap<>());
-	    	requestJson.put("requesttime", AdminTestUtil.generateCurrentUTCTimeStamp());
-	    	requestJson.put("version", "v1");
-	    	requestJson.put("request", new HashMap<>());
-	    	requestJson.getJSONObject("request").put("UIN", uin);
-	    	requestJson.getJSONObject("request").put("vidType", vidType);
-	    	
-	    	response = RestClient.postRequestWithCookie(BaseTestCase.ApplnURI + BaseTestCase.props.getProperty("idRepoGenVidURL"), requestJson.toString(), MediaType.APPLICATION_JSON,
-					MediaType.APPLICATION_JSON, BaseTestCase.COOKIENAME, token);
-	    	JSONObject responseJson = new JSONObject(response.asString());
-			
-			
-			System.out.println("responseJson = " + responseJson);
-			
-			if (responseJson.getJSONObject("response").getString("vidStatus").equalsIgnoreCase("ACTIVE")) {
-				return responseJson.getJSONObject("response").getString("VID");
-			}
-			
-	    	return "";
-	    }
-	 public static void initialize() {
-	    	if (initialized == false) {
-	    		ConfigManager.init();
-	        	BaseTestCase.initialize();
-	    		// Initializing or setting up execution
-	    		 //Langauge Independent
-	    		
-	        	// Generate Keycloak Users
-	        	KeycloakUserManager.createUsers();
-	    		initialized = true;
-	    	}
-	    }
-	
+
+	public static String generateUIN() {
+		String uin = "";
+
+		initialize();
+
+		DateFormat dateFormatter = new SimpleDateFormat("YYYYMMddHHmmss");
+		Calendar cal = Calendar.getInstance();
+		String timestampValue = dateFormatter.format(cal.getTime());
+		String rid = "27847" + RandomStringUtils.randomNumeric(10) + timestampValue;
+
+		// Make Unused UIN Api call to get the UIN Number
+		uin = AdminTestUtil.getUnUsedUIN(tokenRoleIdRepo);
+
+		// Call Masterdata Schema API To get the Schema Data Of the Env
+		String responseString = AdminTestUtil.getMasterDataSchema(tokenRoleAdmin);
+
+		// Build request body for add identity API
+		String requestjson = AdminTestUtil.buildaddIdentityRequestBody(responseString, uin, rid);
+
+
+		// Make Add Identity API Call and activate the UIN
+		if (AdminTestUtil.activateUIN(requestjson, tokenRoleIdRepo) == false) {
+			// UIN activation failed
+			return "";
+		}		
+
+		return uin;
+	}
+
+
+	public static String generateVID(String uin, String vidType) {
+		if (uin.isEmpty() || vidType.isEmpty()) {
+			return "";
+		}
+
+		initialize();
+		Response response = null;
+
+		String token = BaseTestCase.kernelAuthLib.getTokenByRole(tokenRoleIdRepo);
+		JSONObject requestJson = new JSONObject();
+
+		requestJson.put("id", "mosip.vid.create");
+		requestJson.put("metadata", new HashMap<>());
+		requestJson.put("requesttime", AdminTestUtil.generateCurrentUTCTimeStamp());
+		requestJson.put("version", "v1");
+		requestJson.put("request", new HashMap<>());
+		requestJson.getJSONObject("request").put("UIN", uin);
+		requestJson.getJSONObject("request").put("vidType", vidType);
+
+		response = RestClient.postRequestWithCookie(BaseTestCase.ApplnURI + BaseTestCase.props.getProperty("idRepoGenVidURL"), requestJson.toString(), MediaType.APPLICATION_JSON,
+				MediaType.APPLICATION_JSON, BaseTestCase.COOKIENAME, token);
+		JSONObject responseJson = new JSONObject(response.asString());
+
+
+		System.out.println("responseJson = " + responseJson);
+
+		if (responseJson.getJSONObject("response").getString("vidStatus").equalsIgnoreCase("ACTIVE")) {
+			return responseJson.getJSONObject("response").getString("VID");
+		}
+
+		return "";
+	}
+	public static void initialize() {
+		if (initialized == false) {
+			ConfigManager.init();
+			BaseTestCase.initialize();
+
+			// Generate Keycloak Users
+			KeycloakUserManager.createUsers();
+			initialized = true;
+		}
+	}
+
 }

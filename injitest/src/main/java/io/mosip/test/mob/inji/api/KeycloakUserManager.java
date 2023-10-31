@@ -1,16 +1,14 @@
-package io.mosip.test.mob.inji.kernel.util;
+package io.mosip.test.mob.inji.api;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
 import javax.ws.rs.core.Response;
 
-import org.apache.log4j.Logger;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.CreatedResponseUtil;
 import org.keycloak.admin.client.Keycloak;
@@ -23,28 +21,27 @@ import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 
 import io.mosip.test.mob.inji.driver.TestRunner;
-import io.mosip.test.mob.inji.service.BaseTestCase;
 
 
 public class KeycloakUserManager {
-	
+
 	private static final org.slf4j.Logger logger= org.slf4j.LoggerFactory.getLogger(KeycloakUserManager.class);
 
 	public static Properties propsKernel = getproperty(TestRunner.getResourcePath() + "/config/"+TestRunner.GetKernalFilename());
 
 	private static Keycloak getKeycloakInstance() {
-		 Keycloak key=null;
+		Keycloak key=null;
 		try {
-			
-	key=KeycloakBuilder.builder().serverUrl(ConfigManager.getIAMUrl()).realm(ConfigManager.getIAMRealmId())
-				.grantType(OAuth2Constants.CLIENT_CREDENTIALS).clientId(ConfigManager.getAutomationClientId()).clientSecret(ConfigManager.getAutomationClientSecret())
-				.build();
-	System.out.println(ConfigManager.getIAMUrl());
-	System.out.println(key.toString() + key.realms());
+
+			key=KeycloakBuilder.builder().serverUrl(ConfigManager.getIAMUrl()).realm(ConfigManager.getIAMRealmId())
+					.grantType(OAuth2Constants.CLIENT_CREDENTIALS).clientId(ConfigManager.getAutomationClientId()).clientSecret(ConfigManager.getAutomationClientSecret())
+					.build();
+			System.out.println(ConfigManager.getIAMUrl());
+			System.out.println(key.toString() + key.realms());
 		}catch(Exception e)
 		{
 			throw e;
-			
+
 		}
 		return key;
 	}
@@ -61,7 +58,7 @@ public class KeycloakUserManager {
 	}
 
 	public static void createUsers() {
-		
+
 		List<String> needsToBeCreatedUsers = List.of(ConfigManager.getIAMUsersToCreate().split(","));
 		Keycloak keycloakInstance = getKeycloakInstance();
 		for (String needsToBeCreatedUser : needsToBeCreatedUsers) {
@@ -72,13 +69,13 @@ public class KeycloakUserManager {
 			}
 			else if(needsToBeCreatedUser.equals("masterdata-220005")){
 				moduleSpecificUser = needsToBeCreatedUser;
-				
+
 			}
-			
+
 			else {
 				moduleSpecificUser = BaseTestCase.currentModule +"-"+ needsToBeCreatedUser;
 			}
-			
+
 			System.out.println(moduleSpecificUser);
 			user.setEnabled(true);
 			user.setUsername(moduleSpecificUser);
@@ -90,8 +87,8 @@ public class KeycloakUserManager {
 			UsersResource usersRessource = realmResource.users();
 			// Create user (requires manage-users role)
 			Response response = null;
-				response = usersRessource.create(user);
- 				System.out.println(response);
+			response = usersRessource.create(user);
+			System.out.println(response);
 			System.out.printf("Repsonse: %s %s%n", response.getStatus(), response.getStatusInfo());
 			if (response.getStatus()==409) {
 				break;
@@ -102,10 +99,10 @@ public class KeycloakUserManager {
 
 			// Define password credential
 			CredentialRepresentation passwordCred = new CredentialRepresentation();
-			
+
 			passwordCred.setTemporary(false);
 			passwordCred.setType(CredentialRepresentation.PASSWORD);
-			
+
 			//passwordCred.setValue(userPassword.get(passwordIndex));
 			passwordCred.setValue("mosip123");
 
@@ -127,11 +124,11 @@ public class KeycloakUserManager {
 			}
 			// Assign realm role tester to user
 			userResource.roles().realmLevel() //
-					.add((availableRoles.isEmpty() ? allRoles : availableRoles));
+			.add((availableRoles.isEmpty() ? allRoles : availableRoles));
 			//passwordIndex ++;
 		}
 	}
-	
+
 	public static void removeUser() {
 		List<String> needsToBeRemovedUsers = List.of(ConfigManager.getIAMUsersToCreate().split(","));
 		Keycloak keycloakInstance = getKeycloakInstance();

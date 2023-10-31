@@ -1,29 +1,20 @@
-package io.mosip.test.mob.inji.service;
+package io.mosip.test.mob.inji.api;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.*;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import io.restassured.response.Response;
 
 import javax.ws.rs.core.MediaType;
 
-import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.json.simple.JSONObject;
 
-import io.mosip.test.mob.inji.authentication.fw.util.RestClient;
 import io.mosip.test.mob.inji.driver.TestRunner;
-import io.mosip.test.mob.inji.kernel.util.CommonLibrary;
-import io.mosip.test.mob.inji.kernel.util.ConfigManager;
-import io.mosip.test.mob.inji.kernel.util.KernelAuthentication;
-import io.mosip.test.mob.inji.utils.GlobalConstants;
-import io.mosip.test.mob.inji.utils.GlobalMethods;
 
 //import org.apache.log4j.Logger;
 
@@ -43,25 +34,38 @@ public class BaseTestCase {
 	public static Properties propsBio = getproperty(
 			TestRunner.getResourcePath() + "/config/bioValue.properties");
 	public static String SEPRATOR = "";
-	public static String currentModule = "injiui";
+	public static String currentModule = "residentui1";
 	public final static String COOKIENAME = "Authorization";
 	public static CommonLibrary kernelCmnLib = null;
 	public static KernelAuthentication kernelAuthLib = null;
 	public String adminCookie = null;
 	public String idrepoCookie = null;
-	public static Map<?, ?> queries;
-	public static Map<?, ?> residentQueries;
-	public static Map<?, ?> partnerQueries;
 	public static String uinEmail;
 	public static String uinPhone;
-	
-	
-    public static void main( String[] args ) {
 
-    	
-    	
-    }
-    
+	public static String uin="";
+	public static String perpetualVid="";
+	public static String onetimeuseVid="";
+	public static String temporaryVid="";
+
+
+	public static void main( String[] args ) {
+
+
+
+	}
+
+	public static void intiateUINGenration() {
+
+		uin = AdminTestUtil.generateUIN();
+
+		if (uin != null) {
+			perpetualVid = AdminTestUtil.generateVID(uin, "perpetual");
+			onetimeuseVid = AdminTestUtil.generateVID(uin, "onetimeuse");
+			temporaryVid= AdminTestUtil.generateVID(uin, "temporary");
+		}
+	}
+
 	public static String getOSType() {
 		String type = System.getProperty("os.name");
 		if (type.toLowerCase().contains("windows")) {
@@ -73,7 +77,7 @@ public class BaseTestCase {
 		}
 		return null;
 	}
-    
+
 	public static List<String> getLanguageList() {
 		logger.info("We have created a Config Manager. Beginning to read properties!");
 
@@ -97,7 +101,7 @@ public class BaseTestCase {
 
 		return languageList;
 	}
-	
+
 	public static Properties getproperty(String path) {
 		Properties prop = new Properties();
 
@@ -109,14 +113,11 @@ public class BaseTestCase {
 		}
 		return prop;
 	}
-	
+
 	public static void initialize() {
 		PropertyConfigurator.configure(getLoggerPropertyConfig());
 		kernelAuthLib = new KernelAuthentication();
 		kernelCmnLib = new CommonLibrary();
-		queries = kernelCmnLib.readProperty("adminQueries");
-		partnerQueries = kernelCmnLib.readProperty("partnerQueries");
-		residentQueries = kernelCmnLib.readProperty("residentServicesQueries");
 		/**
 		 * Make sure test-output is there
 		 */
@@ -132,17 +133,14 @@ public class BaseTestCase {
 		logger.info("Application URI ======" + ApplnURIForKeyCloak);
 		testLevel = System.getProperty("env.testLevel");
 		logger.info("Test Level ======" + testLevel);
-		// languageList =Arrays.asList(System.getProperty("env.langcode").split(","));
-
-		// langcode = System.getProperty("env.langcode");
 		logger.info("Test Level ======" + languageList);
 
 		logger.info("Configs from properties file are set.");
 
 	}
-	
-private static String targetEnvVersion = "";
-	
+
+	private static String targetEnvVersion = "";
+
 	public static boolean isTargetEnvLTS() {
 
 		if (targetEnvVersion.isEmpty()) {
@@ -164,7 +162,7 @@ private static String targetEnvVersion = "";
 		}
 		return targetEnvVersion.contains("1.2");
 	}
-	
+
 	private static Properties getLoggerPropertyConfig() {
 		Properties logProp = new Properties();
 		logProp.setProperty("log4j.rootLogger", "INFO, Appender1,Appender2");
@@ -177,7 +175,7 @@ private static String targetEnvVersion = "";
 		logProp.setProperty("log4j.appender.Appender2.layout.ConversionPattern", "%-7p %d [%t] %c %x - %m%n");
 		return logProp;
 	}
-	
+
 	public static JSONObject getRequestJson(String filepath) {
 		return kernelCmnLib.readJsonData(filepath, true);
 

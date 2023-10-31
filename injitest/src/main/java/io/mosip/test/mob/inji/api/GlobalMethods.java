@@ -1,9 +1,9 @@
-package io.mosip.test.mob.inji.utils;
+package io.mosip.test.mob.inji.api;
 import org.testng.Reporter;
 
 import io.restassured.response.Response;
 public class GlobalMethods {
-	
+
 	public static void reportResponse(String responseHeader, String url, Response response) {
 		String formattedHeader = ReportUtil.getTextAreaForHeaders(responseHeader);
 

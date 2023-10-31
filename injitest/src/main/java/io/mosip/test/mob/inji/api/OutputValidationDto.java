@@ -1,4 +1,4 @@
-package io.mosip.test.mob.inji.utils;
+package io.mosip.test.mob.inji.api;
 
 public class OutputValidationDto {
 

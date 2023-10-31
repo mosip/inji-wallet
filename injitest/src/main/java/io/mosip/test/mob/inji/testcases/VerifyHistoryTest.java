@@ -2,7 +2,7 @@ package io.mosip.test.mob.inji.testcases;
 
 import org.testng.annotations.Test;
 
-import io.mosip.test.mob.inji.driver.TestRunner;
+import io.mosip.test.mob.inji.api.BaseTestCase;
 import io.mosip.test.mob.inji.pages.*;
 import io.mosip.test.mob.inji.utils.TestDataReader;
 
@@ -32,7 +32,7 @@ public class VerifyHistoryTest extends BaseTest {
         RetrieveIdPage retrieveIdPage = homePage.downloadCard();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        OtpVerification otpVerification = retrieveIdPage.setEnterIdTextBox(TestRunner.uin).clickOnGenerateCardButton();
+        OtpVerification otpVerification = retrieveIdPage.setEnterIdTextBox(BaseTestCase.uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(NewOtp, target);
@@ -41,7 +41,7 @@ public class VerifyHistoryTest extends BaseTest {
         HistoryPage historyPage = homePage.clickOnHistoryButton();
 
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
-        assertTrue(historyPage.verifyHistory(TestRunner.uin, target));
+        assertTrue(historyPage.verifyHistory(BaseTestCase.uin, target));
 
     }
 }

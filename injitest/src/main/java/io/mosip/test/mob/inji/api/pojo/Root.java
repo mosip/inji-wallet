@@ -1,4 +1,4 @@
-package io.mosip.test.mob.inji.utility.pojo;
+package io.mosip.test.mob.inji.api.pojo;
 
 import java.util.ArrayList;
 import java.util.Date;

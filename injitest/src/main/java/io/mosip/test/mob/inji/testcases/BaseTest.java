@@ -1,9 +1,9 @@
 package io.mosip.test.mob.inji.testcases;
 
 import io.appium.java_client.AppiumDriver;
+import io.mosip.test.mob.inji.api.MockSMTPListener;
 import io.mosip.test.mob.inji.constants.Target;
 import io.mosip.test.mob.inji.driver.DriverManager;
-import io.mosip.test.mob.inji.utils.MockSMTPListener;
 import io.mosip.test.mob.inji.utils.TestDataReader;
 
 import java.net.MalformedURLException;

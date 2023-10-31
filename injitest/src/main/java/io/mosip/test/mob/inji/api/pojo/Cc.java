@@ -1,8 +1,8 @@
-package io.mosip.test.mob.inji.utility.pojo;
+package io.mosip.test.mob.inji.api.pojo;
 
 import java.util.ArrayList;
 
-public class To{
+public class Cc{
 	 public ArrayList<Value> value;
 	 public String html;
 	 public String text;

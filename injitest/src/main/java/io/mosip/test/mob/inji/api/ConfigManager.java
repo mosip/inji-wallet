@@ -1,4 +1,4 @@
-package io.mosip.test.mob.inji.kernel.util;
+package io.mosip.test.mob.inji.api;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,21 +11,9 @@ import io.mosip.test.mob.inji.driver.TestRunner;
 public class ConfigManager {
 
 	private static final org.slf4j.Logger LOGGER= org.slf4j.LoggerFactory.getLogger(ConfigManager.class);
-	
-	private static String MOSIP_PMS_CLIENT_SECRET = "mosip_pms_client_secret";
-	private static String MOSIP_PMS_CLIENT_ID = "mosip_pms_client_id";
-	private static String MOSIP_PMS_APP_ID = "mosip_pms_app_id";
+
 	private static String USEPRECONFIGOTP = "usePreConfiguredOtp";
 	private static String PRECONFIGOTP = "preconfiguredOtp";
-	
-	
-
-	private static String MOSIP_RESIDENT_CLIENT_SECRET = "mosip_resident_client_secret";
-	private static String MOSIP_RESIDENT_CLIENT_ID = "mosip_resident_client_id";
-	private static String MOSIP_RESIDENT_APP_ID = "mosip_resident_app_id";
-
-	private static String MOSIP_MOBILE_CLIENT_ID = "mpartner_default_mobile_client_id";
-	private static String MOSIP_MOBILE_CLIENT_SECRET = "mpartner_default_mobile_secret";
 
 	private static String MOSIP_IDREPO_CLIENT_SECRET = "mosip_idrepo_client_secret";
 	private static String MOSIP_IDREPO_CLIENT_ID = "mosip_idrepo_client_id";
@@ -39,13 +27,7 @@ public class ConfigManager {
 	private static String MOSIP_REG_CLIENT_ID = "mosip_reg_client_id";
 	private static String MOSIP_REGCLIENT_APP_ID = "mosip_regclient_app_id";
 
-	private static String MOSIP_IDA_CLIENT_SECRET = "mosip_ida_client_secret";
-	private static String MOSIP_IDA_CLIENT_ID = "mosip_ida_client_id";
-	private static String MOSIP_IDA_APP_ID = "mosip_ida_app_id";
 
-	private static String MOSIP_HOTLIST_CLIENT_SECRET = "mosip_hotlist_client_secret";
-	private static String MOSIP_HOTLIST_CLIENT_ID = "mosip_hotlist_client_id";
-	private static String MOSIP_HOTLIST_APP_ID = "mosip_hotlist_app_id";
 
 	private static String MOSIP_AUTOMATION_CLIENT_SECRET = "mosip_testrig_client_secret";
 	private static String MOSIP_AUTOMATION_CLIENT_ID = "mosip_testrig_client_id";
@@ -62,7 +44,6 @@ public class ConfigManager {
 	private static String THREAD_COUNT = "threadCount";
 	private static String LANG_SELECT = "langselect";
 	private static String preconfiguredOtp;
-	
 
 	private static String DB_PORT = "db-port";
 	private static String DB_DOMAIN = "db-server";
@@ -105,19 +86,10 @@ public class ConfigManager {
 	private static String MOUNT_PATH = "mountPath";
 	private static String AUTHCERTS_PATH = "authCertsPath";
 	private static String MOUNT_PATH_FOR_SCENARIO = "mountPathForScenario";
-	
+
 	private static String PACKET_UTILITY_BASE_URL = "packetUtilityBaseUrl";
 
-	private static String pms_client_secret;
-	private static String pms_client_id;
-	private static String pms_app_id;
 	private static String REPORT_EXPIRATION_IN_DAYS = "reportExpirationInDays";
-	private static String resident_client_secret;
-	private static String resident_client_id;
-	private static String resident_app_id;
-
-	private static String mpartner_mobile_client_id;
-	private static String mpartner_mobile_client_secret;
 
 	private static String idrepo_client_secret;
 	private static String idrepo_client_id;
@@ -130,14 +102,6 @@ public class ConfigManager {
 	private static String regproc_client_secret;
 	private static String regproc_client_id;
 	private static String regproc_app_id;
-
-	private static String ida_client_secret;
-	private static String ida_client_id;
-	private static String ida_app_id;
-
-	private static String hotlist_client_secret;
-	private static String hotlist_client_id;
-	private static String hotlist_app_id;
 
 	private static String automation_client_secret;
 	private static String automation_client_id;
@@ -216,14 +180,6 @@ public class ConfigManager {
 		LOGGER.info("file location"+TestRunner.getResourcePath() + "/config/"+TestRunner.GetKernalFilename());
 		propsKernel = getproperty(TestRunner.getResourcePath() + "/config/"+TestRunner.GetKernalFilename());
 
-		pms_client_secret = getValueForKey(MOSIP_PMS_CLIENT_SECRET);
-		pms_client_id = getValueForKey(MOSIP_PMS_CLIENT_ID);
-		pms_app_id = getValueForKey(MOSIP_PMS_APP_ID);
-		resident_client_secret = getValueForKey(MOSIP_RESIDENT_CLIENT_SECRET);
-		resident_client_id = getValueForKey(MOSIP_RESIDENT_CLIENT_ID);
-		resident_app_id = getValueForKey(MOSIP_RESIDENT_APP_ID);
-		mpartner_mobile_client_id = getValueForKey(MOSIP_MOBILE_CLIENT_ID);
-		mpartner_mobile_client_secret = getValueForKey(MOSIP_MOBILE_CLIENT_SECRET);
 		idrepo_client_secret = getValueForKey(MOSIP_IDREPO_CLIENT_SECRET);
 		idrepo_client_id = getValueForKey(MOSIP_IDREPO_CLIENT_ID);
 		idrepo_app_id = getValueForKey(MOSIP_IDREPO_APP_ID);
@@ -233,12 +189,6 @@ public class ConfigManager {
 		regproc_client_secret = getValueForKey(MOSIP_REG_CLIENT_SECRET);
 		regproc_client_id = getValueForKey(MOSIP_REG_CLIENT_ID);
 		regproc_app_id = getValueForKey(MOSIP_REGCLIENT_APP_ID);
-		ida_client_secret = getValueForKey(MOSIP_IDA_CLIENT_SECRET);
-		ida_client_id = getValueForKey(MOSIP_IDA_CLIENT_ID);
-		ida_app_id = getValueForKey(MOSIP_IDA_APP_ID);
-		hotlist_client_secret = getValueForKey(MOSIP_HOTLIST_CLIENT_SECRET);
-		hotlist_client_id = getValueForKey(MOSIP_HOTLIST_CLIENT_ID);
-		hotlist_app_id = getValueForKey(MOSIP_HOTLIST_APP_ID);
 		automation_client_secret = getValueForKey(MOSIP_AUTOMATION_CLIENT_SECRET);
 		automation_client_id = getValueForKey(MOSIP_AUTOMATION_CLIENT_ID);
 		automation_app_id = getValueForKey(MOSIP_AUTOMATION_APP_ID);
@@ -247,21 +197,21 @@ public class ConfigManager {
 		s3_user_key = getValueForKey(S3_USER_KEY);
 		s3_secret_key = getValueForKey(S3_SECRET_KEY);
 		s3_account = getValueForKey(S3_ACCOUNT);
-		
+
 		iam_adminportal_path =System.getenv(IAM_ADMINPORTAL_PATH) == null
 				? propsKernel.getProperty(IAM_ADMINPORTAL_PATH)
-				: System.getenv(IAM_ADMINPORTAL_PATH);
-		
+						: System.getenv(IAM_ADMINPORTAL_PATH);
+
 		LOGGER.info("adminportal_path from config manager::" + iam_adminportal_path);
 		iam_apienvuser = System.getenv(IAM_APIENVUSER) == null
 				? propsKernel.getProperty(IAM_APIENVUSER)
-				: System.getenv(IAM_APIENVUSER);
+						: System.getenv(IAM_APIENVUSER);
 		LOGGER.info("apienvuser from config manager::" + iam_apienvuser);
 		iam_apiinternalendpoint = System.getenv(IAM_APIINTERNALENDPOINT) == null
 				? propsKernel.getProperty(IAM_APIINTERNALENDPOINT)
-				: System.getenv(IAM_APIINTERNALENDPOINT);
+						: System.getenv(IAM_APIINTERNALENDPOINT);
 		LOGGER.info("apiinternalendpoint from config manager::" + iam_apiinternalendpoint);
-//		push_reports_to_s3 = getValueForKey(PUSH_TO_S3);
+		//		push_reports_to_s3 = getValueForKey(PUSH_TO_S3);
 		db_port = getValueForKey(DB_PORT);
 		db_domain = getValueForKey(DB_DOMAIN);
 		hibernate_connection_driver_class = getValueForKey(HIBERNATE_CONNECTION_DRIVER_CLASS);
@@ -288,62 +238,62 @@ public class ConfigManager {
 		System.out.println("keycloakendpoint from config manager::" + iam_external_url);
 		reportExpirationInDays = System.getenv(REPORT_EXPIRATION_IN_DAYS) == null
 				? propsKernel.getProperty(REPORT_EXPIRATION_IN_DAYS)
-				: System.getenv(REPORT_EXPIRATION_IN_DAYS);
+						: System.getenv(REPORT_EXPIRATION_IN_DAYS);
 		propsKernel.setProperty(REPORT_EXPIRATION_IN_DAYS, reportExpirationInDays);	
 		iam_realm_id = getValueForKey(IAM_REALM_ID);
 		iam_users_to_create = getValueForKey(IAM_USERS_TO_CREATE);
 		iam_users_password = getValueForKey(IAM_USERS_PASSWORD);
-		
+
 		usePreConfiguredOtp = System.getenv(USEPRECONFIGOTP) == null ? propsKernel.getProperty(USEPRECONFIGOTP)
 				: System.getenv(USEPRECONFIGOTP);
 		propsKernel.setProperty(USEPRECONFIGOTP, usePreConfiguredOtp);
-		
+
 		preconfiguredOtp = System.getenv(PRECONFIGOTP) == null ? propsKernel.getProperty(PRECONFIGOTP)
 				: System.getenv(PRECONFIGOTP);
 		propsKernel.setProperty(PRECONFIGOTP, preconfiguredOtp);
 
 		admin_client_secret = System.getenv(MOSIP_ADMIN_CLIENT_SECRET) == null
 				? propsKernel.getProperty(MOSIP_ADMIN_CLIENT_SECRET)
-				: System.getenv(MOSIP_ADMIN_CLIENT_SECRET);
+						: System.getenv(MOSIP_ADMIN_CLIENT_SECRET);
 
 		propsKernel.setProperty(MOSIP_ADMIN_CLIENT_SECRET, admin_client_secret);
 
 		authDemoServicePort = System.getenv(AUTH_DEMO_SERVICE_PORT) == null
 				? propsKernel.getProperty(AUTH_DEMO_SERVICE_PORT)
-				: System.getenv(AUTH_DEMO_SERVICE_PORT);
+						: System.getenv(AUTH_DEMO_SERVICE_PORT);
 		propsKernel.setProperty(AUTH_DEMO_SERVICE_PORT, authDemoServicePort);
 
 		authDemoServiceBaseUrl = System.getenv(AUTH_DEMO_SERVICE_BASE_URL) == null
 				? propsKernel.getProperty(AUTH_DEMO_SERVICE_BASE_URL)
-				: System.getenv(AUTH_DEMO_SERVICE_BASE_URL);
+						: System.getenv(AUTH_DEMO_SERVICE_BASE_URL);
 		propsKernel.setProperty(AUTH_DEMO_SERVICE_BASE_URL, authDemoServiceBaseUrl);
 
 		mountPath = System.getenv(MOUNT_PATH) == null ? propsKernel.getProperty(MOUNT_PATH) : System.getenv(MOUNT_PATH);
 		propsKernel.setProperty(MOUNT_PATH, mountPath);
-		
+
 		authCertsPath = System.getenv(AUTHCERTS_PATH) == null ? propsKernel.getProperty(AUTHCERTS_PATH) : System.getenv(AUTHCERTS_PATH);
 		propsKernel.setProperty(AUTHCERTS_PATH, authCertsPath);
-		
+
 		mountPathForScenario = System.getenv(MOUNT_PATH_FOR_SCENARIO) == null ? propsKernel.getProperty(MOUNT_PATH_FOR_SCENARIO) : System.getenv(MOUNT_PATH_FOR_SCENARIO);
 		propsKernel.setProperty(MOUNT_PATH_FOR_SCENARIO, mountPathForScenario);
-		
+
 		packetUtilityBaseUrl = System.getenv(PACKET_UTILITY_BASE_URL) == null ? propsKernel.getProperty(PACKET_UTILITY_BASE_URL) : System.getenv(PACKET_UTILITY_BASE_URL);
 		propsKernel.setProperty(PACKET_UTILITY_BASE_URL, packetUtilityBaseUrl);
-		
+
 		push_reports_to_s3 =System.getenv(PUSH_TO_S3) == null ? propsKernel.getProperty(PUSH_TO_S3) : System.getenv(PUSH_TO_S3);
 		propsKernel.setProperty(PUSH_TO_S3, push_reports_to_s3);
-		
+
 		enableDebug =System.getenv(ENABLE_DEBUG) == null ? propsKernel.getProperty(ENABLE_DEBUG) : System.getenv(ENABLE_DEBUG);
 		propsKernel.setProperty(ENABLE_DEBUG, enableDebug);
-		
+
 		threadCount =System.getenv(THREAD_COUNT) == null ? propsKernel.getProperty(THREAD_COUNT) : System.getenv(THREAD_COUNT);
 		propsKernel.setProperty(THREAD_COUNT, threadCount);
-		
+
 		langselect =System.getenv(LANG_SELECT) == null ? propsKernel.getProperty(LANG_SELECT) : System.getenv(LANG_SELECT);
 		propsKernel.setProperty(LANG_SELECT, langselect);
-		
-		
-		
+
+
+
 		//enableDebug threadCount  langselect
 
 	}
@@ -356,20 +306,20 @@ public class ConfigManager {
 		return authDemoServiceBaseUrl;
 
 	}
-	
-	
+
+
 	public static String getLangselect() {
 		return langselect;
 
 	}
-	
+
 	public static String getThreadCount() {
 		return threadCount;
 
 	}
-	
-	
-	
+
+
+
 	public static String getEnableDebug() {
 		return enableDebug;
 
@@ -378,15 +328,15 @@ public class ConfigManager {
 	public static String getmountPath() {
 		return mountPath;
 	}
-	
+
 	public static String getmountPathForScenario() {
 		return mountPathForScenario;
 	}
-	
+
 	public static String getpacketUtilityBaseUrl() {
 		return packetUtilityBaseUrl;
 	}
-	
+
 	public static String getauthCertsPath() {
 		return authCertsPath;
 	}
@@ -397,42 +347,11 @@ public class ConfigManager {
 		return propsKernel;
 	}
 
-	public static String getPmsClientSecret() {
-		return pms_client_secret;
-	}
-
-	public static String getPmsClientId() {
-		return pms_client_id;
-	}
-
-	public static String getPmsAppId() {
-		return pms_app_id;
-	}
-
-	public static String getResidentClientSecret() {
-		return resident_client_secret;
-	}
-
-	public static String getResidentClientId() {
-		return resident_client_id;
-	}
-
-	public static String getResidentAppId() {
-		return resident_app_id;
-	}
-
-	public static String getMPartnerMobileClientId() {
-		return mpartner_mobile_client_id;
-	}
-
-	public static String getMPartnerMobileClientSecret() {
-		return mpartner_mobile_client_secret;
-	}
 
 	public static String getAdminClientSecret() {
 		return admin_client_secret;
 	}
-	
+
 	public static Boolean IsDebugEnabled() {
 		return enableDebug.equalsIgnoreCase("yes");
 	}
@@ -469,29 +388,6 @@ public class ConfigManager {
 		return regproc_app_id;
 	}
 
-	public static String getIdaClientSecret() {
-		return ida_client_secret;
-	}
-
-	public static String getIdaClientId() {
-		return ida_client_id;
-	}
-
-	public static String getIdaAppId() {
-		return ida_app_id;
-	}
-
-	public static String getHotListClientSecret() {
-		return hotlist_client_secret;
-	}
-
-	public static String getHotListClientId() {
-		return hotlist_client_id;
-	}
-
-	public static String getHotListAppId() {
-		return hotlist_app_id;
-	}
 
 	public static String getAutomationClientSecret() {
 		return automation_client_secret;
@@ -662,11 +558,11 @@ public class ConfigManager {
 	public static String getIAMUsersPassword() {
 		return iam_users_password;
 	}
-	
+
 	public static String getUsePreConfiguredOtp() {
 		return usePreConfiguredOtp;
 	}
-	
+
 	public static String getPreConfiguredOtp() {
 		return preconfiguredOtp;
 
@@ -691,5 +587,5 @@ public class ConfigManager {
 	public static String getAuthDemoServiceUrl() {
 		return ConfigManager.getAuthDemoServiceBaseUrl() + ":" + ConfigManager.getAuthDemoServicePort();
 	}
-	
+
 }

@@ -1,4 +1,4 @@
-package io.mosip.test.mob.inji.authentication.fw.util;
+package io.mosip.test.mob.inji.api;
 
 import org.testng.log4testng.Logger;
 import static io.restassured.RestAssured.given;
@@ -14,10 +14,10 @@ public class RestClient {
 	private static RestAssuredConfig config = RestAssured.config()
 			.httpClient(HttpClientConfig.httpClientConfig().setParam("http.connection.timeout", 500000)
 					.setParam("http.socket.timeout", 500000).setParam("http.connection-manager.timeout", 500000));
-	
-	
-	
-	
+
+
+
+
 	public static Response getRequest(String url, String contentHeader, String acceptHeader) {
 		RESTCLIENT_LOGGER.info("RESSURED: Sending a GET request to " + url);
 		Response getResponse = given().config(config).relaxedHTTPSValidation().log().all().when().get(url).then().log()
@@ -26,7 +26,7 @@ public class RestClient {
 		RESTCLIENT_LOGGER.info("REST-ASSURED: The response Time is: " + getResponse.time());
 		return getResponse;
 	}
-	
+
 	public static Response getRequestWithCookie(String url, String contentHeader, String acceptHeader,
 			String cookieName, String cookieValue) {
 		RESTCLIENT_LOGGER.info("REST-ASSURED: Sending a GET request to " + url);
@@ -36,7 +36,7 @@ public class RestClient {
 		RESTCLIENT_LOGGER.info("REST-ASSURED: The response Time is: " + getResponse.time());
 		return getResponse;
 	}
-	
+
 	public static Response postRequestWithCookie(String url, Object body, String contentHeader, String acceptHeader,
 			String cookieName, String cookieValue) {
 		RESTCLIENT_LOGGER.info("REST-ASSURED: Sending a POST request to " + url);

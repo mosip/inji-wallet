@@ -10,26 +10,19 @@ import java.util.List;
 import org.testng.TestListenerAdapter;
 import org.testng.TestNG;
 
-import io.mosip.test.mob.inji.fw.util.AdminTestUtil;
+import io.mosip.test.mob.inji.api.AdminTestUtil;
+import io.mosip.test.mob.inji.api.BaseTestCase;
 
 
 public class TestRunner {
   public static String jarUrl = TestRunner.class.getProtectionDomain().getCodeSource().getLocation().getPath();
   
   static TestListenerAdapter tla = new TestListenerAdapter();
-  public static String uin="";
-	public static String perpetualVid="";
-	public static String onetimeuseVid="";
-	public static String temporaryVid="";
+
   
   public static void main(String[] args) throws Exception {
-	  uin = AdminTestUtil.generateUIN();
-
-		if (uin != null) {
-			perpetualVid = AdminTestUtil.generateVID(uin, "perpetual");
-			onetimeuseVid = AdminTestUtil.generateVID(uin, "onetimeuse");
-			temporaryVid= AdminTestUtil.generateVID(uin, "temporary");
-		}
+	  BaseTestCase.intiateUINGenration();
+	 
     startTestRunner();
   }
   
