@@ -1,6 +1,8 @@
 package io.mosip.test.mob.inji.testcases;
 
 import org.testng.annotations.Test;
+
+import io.mosip.test.mob.inji.api.BaseTestCase;
 import io.mosip.test.mob.inji.pages.*;
 import io.mosip.test.mob.inji.utils.TestDataReader;
 
@@ -35,10 +37,10 @@ public class PinVcTest extends BaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(BaseTestCase.uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(TestDataReader.readData("otp"), target);
+        otpVerification.enterOtp(GetOtp(), target);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
