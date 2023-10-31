@@ -4,7 +4,7 @@ import {FlatList, Image, View, TextInput, ScrollView} from 'react-native';
 import {Issuer} from '../../components/openId4VCI/Issuer';
 import {Error} from '../../components/ui/Error';
 import {Header} from '../../components/ui/Header';
-import {Column, Row} from '../../components/ui';
+import {Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {RootRouteProps} from '../../routes';
 import {HomeRouteProps} from '../../routes/main';
@@ -129,16 +129,10 @@ export const IssuersScreen: React.FC<
     );
   }
 
-  const showAllIssuers = () => {
-    setFilteredSearchData(issuers);
-  };
-
-  const searchIssuer = text => {
-    if (text === '') {
-      setFilteredSearchData(issuers);
-      setSearch(text);
-    } else {
-      let filterdData = issuers.filter(item => {
+  const filterIssuers = text => {
+    let filterdData = issuers;
+    if (text.length > 0) {
+      filterdData = issuers.filter(item => {
         if (
           getDisplayObjectForCurrentLanguage(item.display)
             ?.name.toLowerCase()
@@ -147,19 +141,28 @@ export const IssuersScreen: React.FC<
           return getDisplayObjectForCurrentLanguage(item.display);
         }
       }, []);
-
-      setFilteredSearchData(filterdData);
-      setSearch(text);
     }
+    setFilteredSearchData(filterdData);
+    setSearch(text);
   };
 
   return (
     <React.Fragment>
       {controller.issuers.length > 0 && (
         <Column style={Theme.IssuersScreenStyles.issuerListOuterContainer}>
+          <Text
+            {...testIDProps('addCardDescription')}
+            style={{
+              ...Theme.TextStyles.regularGrey,
+              paddingTop: 0.5,
+              marginVertical: 14,
+              marginHorizontal: 9,
+            }}>
+            {t('addCardDescription')}
+          </Text>
           <Row margin="3">
             <Icon
-              testID="search"
+              testID="searchIssuerIcon"
               name="search"
               color={Theme.Colors.GrayIcon}
               size={27}
@@ -170,8 +173,8 @@ export const IssuersScreen: React.FC<
               style={Theme.IssuersScreenStyles.issuersSearchBar}
               placeholder={t('searchByIssuersName')}
               value={search}
-              onChangeText={text => searchIssuer(text)}
-              onLayout={() => showAllIssuers()}
+              onChangeText={text => filterIssuers(text)}
+              onLayout={filterIssuers}
             />
           </Row>
 
