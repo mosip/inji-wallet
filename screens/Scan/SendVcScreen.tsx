@@ -14,6 +14,11 @@ import {useFocusEffect} from '@react-navigation/native';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
 import {VCMetadata} from '../../shared/VCMetadata';
 import {createEsignetMosipVCItemMachine} from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
+import {
+  TelemetryConstants,
+  getImpressionEventData,
+  sendImpressionEvent,
+} from '../../shared/telemetry/TelemetryUtils';
 
 export const SendVcScreen: React.FC = () => {
   const {t} = useTranslation('SendVcScreen');
@@ -42,6 +47,14 @@ export const SendVcScreen: React.FC = () => {
     if (service) {
       controller.SELECT_VC_ITEM(0)(service);
     }
+  }, []);
+  useEffect(() => {
+    sendImpressionEvent(
+      getImpressionEventData(
+        TelemetryConstants.FlowType.vcShare,
+        TelemetryConstants.Screens.vcList,
+      ),
+    );
   }, []);
 
   useFocusEffect(
