@@ -8,7 +8,7 @@ import static org.testng.Assert.assertTrue;
 
 public class VerifyHelpPageTest extends BaseTest {
 
-	@Test(groups = "VHPT")
+    @Test
     public void verifyHelpPage() {
 
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);

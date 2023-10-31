@@ -8,7 +8,7 @@ import static org.testng.Assert.assertTrue;
 
 public class GenerateUinOrVidTest extends BaseTest {
 
-	@Test(groups = "GUOVT")
+    @Test
     public void generateUinOrVidUsingAid() {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
@@ -28,13 +28,16 @@ public class GenerateUinOrVidTest extends BaseTest {
         HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
-        RetrieveIdPage retrieveIdPage = homePage.downloadCard();
+        AddNewCardPage addNewCardPage = homePage.downloadCard();
+
+        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
+        RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
         GenerateUinOrVidPage generateUinOrVidPage = retrieveIdPage.clickOnGetItNowText();
 
         assertTrue(generateUinOrVidPage.isGenerateUinOrVidPageLoaded(), "Verify if generate uin or vid page page is displayed");
-        OtpVerification otpVerification = generateUinOrVidPage.enterApplicationID(TestDataReader.readData("aid")).clickOnGetUinOrVidButton();
+        OtpVerificationPage otpVerification = generateUinOrVidPage.enterApplicationID(TestDataReader.readData("aid")).clickOnGetUinOrVidButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(TestDataReader.readData("otp"), target);

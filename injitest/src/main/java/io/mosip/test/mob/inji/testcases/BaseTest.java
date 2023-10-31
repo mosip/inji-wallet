@@ -1,10 +1,12 @@
 package io.mosip.test.mob.inji.testcases;
 
+
+import io.appium.java_client.AppiumDriver;
 import io.mosip.test.mob.inji.constants.Target;
 import io.mosip.test.mob.inji.driver.DriverManager;
 import io.mosip.test.mob.inji.exceptions.PlatformNotSupportException;
-import io.appium.java_client.AppiumDriver;
 import org.testng.annotations.*;
+
 
 import java.net.MalformedURLException;
 
@@ -26,10 +28,12 @@ public class BaseTest {
         } catch (MalformedURLException | PlatformNotSupportException | InterruptedException e) {
             throw new RuntimeException(e);
         }
+        //ScreenRecording.startScreenRecording(driver);
     }
 
     @AfterMethod(alwaysRun = true)
     public void teardown() {
+        //ScreenRecording.stopScreenRecording(driver);
         driver.quit();
     }
 

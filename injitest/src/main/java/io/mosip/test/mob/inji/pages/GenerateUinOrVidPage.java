@@ -32,9 +32,9 @@ public class GenerateUinOrVidPage extends BasePage {
         return this;
     }
 
-    public OtpVerification clickOnGetUinOrVidButton() {
+    public OtpVerificationPage clickOnGetUinOrVidButton() {
         clickOnElement(getUinOrVidButton);
-        return new OtpVerification(driver);
+        return new OtpVerificationPage(driver);
     }
 
 }

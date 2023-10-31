@@ -6,13 +6,13 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
 
-public class OtpVerification extends BasePage {
+public class OtpVerificationPage extends BasePage {
 
     @AndroidFindBy(xpath = "//*[contains(@text,'OTP Verification')]")
     @iOSXCUITFindBy(accessibility = "OTP Verification")
     private WebElement otpVerificationText;
 
-    public OtpVerification(AppiumDriver driver) {
+    public OtpVerificationPage(AppiumDriver driver) {
         super(driver);
     }
 

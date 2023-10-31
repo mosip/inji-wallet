@@ -7,19 +7,19 @@ import org.openqa.selenium.WebElement;
 
 public class WelcomePage extends BasePage {
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'Welcome!')]")
+    @AndroidFindBy(accessibility = "introTitle")
     @iOSXCUITFindBy(accessibility = "Welcome!")
     private WebElement welcomeText;
 
-    @AndroidFindBy(xpath = "(//*[@class='android.widget.TextView'])[3]")
+    @AndroidFindBy(accessibility = "introText")
     @iOSXCUITFindBy(xpath = "//*[contains(@value,'Keep your digital')]")
     private WebElement welcomeTextDescription;
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'Skip')]")
+    @AndroidFindBy(accessibility = "skip")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`label == \"Skip\"`][1]")
     private WebElement skipButton;
 
-    @AndroidFindBy(xpath = "//*[@text='Next']")
+    @AndroidFindBy(accessibility = "next")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"Next\"`][4]")
     private WebElement nextButton;
 

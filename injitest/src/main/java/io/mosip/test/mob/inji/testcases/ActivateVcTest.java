@@ -1,13 +1,14 @@
 package io.mosip.test.mob.inji.testcases;
 
-import org.testng.annotations.Test;
 import io.mosip.test.mob.inji.pages.*;
 import io.mosip.test.mob.inji.utils.TestDataReader;
+import org.testng.annotations.Test;
+
 
 import static org.testng.Assert.assertTrue;
 
 public class ActivateVcTest extends BaseTest {
-    @Test(groups = "AVT")
+    @Test
     public void activateVc() throws InterruptedException {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
@@ -27,10 +28,13 @@ public class ActivateVcTest extends BaseTest {
         HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
-        RetrieveIdPage retrieveIdPage = homePage.downloadCard();
+        AddNewCardPage addNewCardPage = homePage.downloadCard();
+
+        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
+        RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        OtpVerification otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(TestDataReader.readData("otp"), target);
@@ -42,7 +46,10 @@ public class ActivateVcTest extends BaseTest {
         PleaseConfirmPopupPage pleaseConfirmPopupPage = moreOptionsPage.clickOnActivationPending();
 
         assertTrue(pleaseConfirmPopupPage.isPleaseConfirmPopupPageLoaded(), "Verify if pop up page is displayed");
-        pleaseConfirmPopupPage.clickOnConfirmButton();
+        OtpVerificationPage otpVerificationPage = pleaseConfirmPopupPage.clickOnConfirmButton();
+
+        assertTrue(otpVerificationPage.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
+        otpVerificationPage.enterOtp(TestDataReader.readData("passcode"), target);
 
         assertTrue(moreOptionsPage.isVcActivatedForOnlineLogin(), "Verify if VC is activated");
 
