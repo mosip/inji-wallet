@@ -1,9 +1,7 @@
 {
-  "uin": "5740943928",
-  "vid": "61305189560392",
-  "otp": "111111",
+  "externalemail": "Resident_AddIdentity_ValidParam_smoke_Pos@mosip.net",
   "passcode": "111111",
-  "fullName": "fbgfhgfhghd",
+  "fullName": "TEST_FULLNAMEeng",
   "idType": "National card",
   "status": "Valid",
   "generatedOn": "9/5/2023",

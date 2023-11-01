@@ -3,8 +3,9 @@ package io.mosip.test.mob.inji.pages;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
+import io.mosip.test.mob.inji.utils.CommonMethods;
+
 import org.openqa.selenium.WebElement;
-import utils.CommonMethods;
 
 
 public class ChooseLanguagePage extends BasePage {
