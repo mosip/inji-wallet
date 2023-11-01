@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Column} from '../../components/ui';
 import {Modal} from '../../components/ui/Modal';
 import {MessageOverlay} from '../../components/MessageOverlay';
@@ -8,10 +8,16 @@ import {OIDcAuthenticationModal} from '../../components/OIDcAuth';
 import {useViewVcModal, ViewVcModalProps} from './ViewVcModalController';
 import {useTranslation} from 'react-i18next';
 import {BannerNotification} from '../../components/BannerNotification';
-import {TextEditOverlay} from '../../components/TextEditOverlay';
 import {OtpVerificationModal} from './MyVcs/OtpVerificationModal';
 import {BindingVcWarningOverlay} from './MyVcs/BindingVcWarningOverlay';
 import {VcDetailsContainer} from '../../components/VC/VcDetailsContainer';
+import {
+  TelemetryConstants,
+  getEndEventData,
+  getErrorEventData,
+  sendEndEvent,
+  sendErrorEvent,
+} from '../../shared/telemetry/TelemetryUtils';
 
 export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
   const {t} = useTranslation('ViewVcModal');
@@ -25,6 +31,28 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       onPress: controller.CONFIRM_REVOKE_VC,
     },
   ];
+
+  useEffect(() => {
+    let error = controller.walletBindingError;
+    if (error) {
+      error = controller.bindingAuthFailedError
+        ? controller.bindingAuthFailedError + '-' + error
+        : error;
+      sendErrorEvent(
+        getErrorEventData(
+          TelemetryConstants.FlowType.vcActivation,
+          TelemetryConstants.ErrorId.activationFailed,
+          error,
+        ),
+      );
+      sendEndEvent(
+        getEndEventData(
+          TelemetryConstants.FlowType.vcActivation,
+          TelemetryConstants.EndEventStatus.failure,
+        ),
+      );
+    }
+  }, [controller.walletBindingError]);
 
   return (
     <Modal
@@ -68,6 +96,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
           onInputDone={controller.inputOtp}
           error={controller.otpError}
           resend={controller.RESEND_OTP}
+          flow={TelemetryConstants.FlowType.vcLockOrRevoke}
         />
       )}
 
@@ -78,6 +107,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
           onInputDone={controller.inputOtp}
           error={controller.otpError}
           resend={controller.RESEND_OTP}
+          flow={TelemetryConstants.FlowType.vcActivation}
         />
       )}
 

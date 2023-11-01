@@ -134,17 +134,28 @@ export const PurpleTheme = {
     statusLabel: {
       color: Colors.Gray30,
       fontSize: 12,
+      flexWrap: 'wrap',
+      flexShrink: 1,
     },
     activationTab: {
-      justifyContent: 'space-evenly',
+      justifyContent: 'space-between',
+      display: 'flex',
       alignItems: 'center',
-      marginRight: 20,
-      marginStart: 10,
+      overflow: 'hidden',
+      borderBottomLeftRadius: 10,
+      borderBottomRightRadius: 10,
     },
     kebabIcon: {
+      flex: 3,
+      height: '100%',
+    },
+    kebabPressableContainer: {
+      display: 'flex',
+      flexDirection: 'row',
+      width: '100%',
+      height: '100%',
       justifyContent: 'center',
       alignItems: 'center',
-      flex: 1,
     },
     verifiedIconContainer: {
       marginRight: 3,
@@ -222,11 +233,26 @@ export const PurpleTheme = {
     },
     verticalLine: {
       width: 1,
-      height: 30,
       backgroundColor: Colors.Grey,
       marginVertical: 8,
-      marginLeft: -25,
-      marginRight: 12,
+    },
+    verticalLineWrapper: {
+      display: 'flex',
+      flex: 0.1,
+      height: '100%',
+      justifyContent: 'center',
+    },
+    vcActivationStatusContainer: {
+      display: 'flex',
+      flex: 7,
+      alignItems: 'center',
+      width: '100%',
+      height: '100%',
+      padding: 5,
+    },
+    vcActivationDetailsWrapper: {
+      display: 'flex',
+      alignItems: 'flex-start',
     },
     closeCardBgContainer: {
       borderRadius: 10,
@@ -1158,13 +1184,38 @@ export const PurpleTheme = {
       backgroundColor: Colors.Transparent,
     },
   }),
-  issuersScreenStyles: StyleSheet.create({
+  IssuersScreenStyles: StyleSheet.create({
+    issuersSearchBar: {
+      borderWidth: 1,
+      borderColor: Colors.Gray50,
+      height: Dimensions.get('window').height * 0.055,
+      width: Dimensions.get('window').width * 0.84,
+      paddingLeft: 12,
+      borderLeftWidth: 0,
+      borderTopRightRadius: 9,
+      borderBottomRightRadius: 9,
+    },
+    searchIcon: {
+      justifyContent: 'center',
+      backgroundColor: Colors.Gray50,
+      height: Dimensions.get('window').height * 0.055,
+      width: Dimensions.get('window').width * 0.1,
+      borderColor: Colors.Gray50,
+      borderTopWidth: 1,
+      borderBottomWidth: 1,
+      borderLeftWidth: 1,
+      borderTopLeftRadius: 9,
+      borderBottomLeftRadius: 9,
+    },
     issuerListOuterContainer: {
       padding: 10,
       flex: 1,
       backgroundColor: Colors.White,
     },
-    issuersContainer: {marginHorizontal: 3},
+    issuersContainer: {
+      marginHorizontal: 3,
+      marginVertical: 5,
+    },
     issuerBoxContainer: {
       margin: 5,
       flex: 1,
@@ -1240,6 +1291,23 @@ export const PurpleTheme = {
       maxHeight: Dimensions.get('window').height,
     },
   }),
+  BottomTabBarStyle: StyleSheet.create({
+    headerRightContainerStyle: {paddingEnd: 13},
+    headerLeftContainerStyle: {paddingEnd: 13},
+    tabBarLabelStyle: {
+      fontSize: 12,
+      fontFamily: 'Inter_600SemiBold',
+    },
+    tabBarStyle: {
+      display: 'flex',
+      height: 75,
+      paddingHorizontal: 10,
+    },
+    tabBarItemStyle: {
+      height: 83,
+      padding: 11,
+    },
+  }),
 
   ICON_SMALL_SIZE: 16,
   ICON_MID_SIZE: 22,
@@ -1273,7 +1341,6 @@ export const PurpleTheme = {
   protectPrivacy: require('../../../assets/intro-unlock-method.png'),
   NoInternetConnection: require('../../../assets/no-internet-connection.png'),
   SomethingWentWrong: require('../../../assets/something-went-wrong.png'),
-
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/
 

@@ -44,6 +44,11 @@ import {
   getEndEventData,
   sendStartEvent,
   sendEndEvent,
+  TelemetryConstants,
+  sendImpressionEvent,
+  getImpressionEventData,
+  sendErrorEvent,
+  getErrorEventData,
 } from '../../../shared/telemetry/TelemetryUtils';
 import {logState} from '../../../shared/commonUtil';
 
@@ -144,7 +149,7 @@ export const scanMachine =
         },
         BLE_ERROR: {
           target: '.handlingBleError',
-          actions: 'setBleError',
+          actions: ['sendBLEConnectionErrorEvent', 'setBleError'],
         },
         RESET: {
           target: '.checkStorage',
@@ -396,12 +401,12 @@ export const scanMachine =
               {
                 target: 'connecting',
                 cond: 'isOpenIdQr',
-                actions: 'setUri',
+                actions: ['sendTelemetryStartEvent', 'setUri'],
               },
               {
                 target: 'showQrLogin',
                 cond: 'isQrLogin',
-                actions: 'setLinkCode',
+                actions: ['sendTelemetryStartEvent', 'setLinkCode'],
               },
               {
                 target: 'invalid',
@@ -434,7 +439,10 @@ export const scanMachine =
           },
           entry: [
             'sendScanData',
-            () => sendStartEvent(getStartEventData('QR login')),
+            () =>
+              sendStartEvent(
+                getStartEventData(TelemetryConstants.FlowType.qrLogin),
+              ),
           ],
         },
         connecting: {
@@ -500,6 +508,7 @@ export const scanMachine =
                 },
                 CANCEL: {
                   target: 'cancelling',
+                  actions: 'sendVCShareFlowCancelEndEvent',
                 },
                 TOGGLE_USER_CONSENT: {
                   actions: 'toggleShouldVerifyPresence',
@@ -533,11 +542,17 @@ export const scanMachine =
                     },
                     CANCEL: {
                       target: '#scan.reviewing.cancelling',
-                      actions: 'setPromptHint',
+                      actions: [
+                        'setPromptHint',
+                        'sendVCShareFlowTimeoutEndEvent',
+                      ],
                     },
                     RETRY: {
                       target: '#scan.reviewing.cancelling',
-                      actions: 'setPromptHint',
+                      actions: [
+                        'setPromptHint',
+                        'sendVCShareFlowTimeoutEndEvent',
+                      ],
                     },
                   },
                 },
@@ -570,10 +585,7 @@ export const scanMachine =
               },
             },
             accepted: {
-              entry: [
-                'logShared',
-                () => sendEndEvent(getEndEventData('VC share', 'SUCCESS')),
-              ],
+              entry: ['logShared', 'sendVcShareSuccessEvent'],
               on: {
                 DISMISS: {
                   target: 'navigatingToHome',
@@ -895,6 +907,69 @@ export const scanMachine =
             to: context => context.serviceRefs.activityLog,
           },
         ),
+
+        sendVcShareSuccessEvent: () => {
+          sendImpressionEvent(
+            getImpressionEventData(
+              TelemetryConstants.FlowType.vcShare,
+              TelemetryConstants.Screens.vcShareSuccessPage,
+            ),
+          );
+          sendEndEvent(
+            getEndEventData(
+              TelemetryConstants.FlowType.vcShare,
+              TelemetryConstants.EndEventStatus.success,
+            ),
+          );
+        },
+
+        sendBLEConnectionErrorEvent: (context, event) => {
+          sendErrorEvent(
+            getErrorEventData(
+              TelemetryConstants.FlowType.vcShare,
+              event.bleError.code,
+              event.bleError.message,
+            ),
+          );
+          sendEndEvent(
+            getEndEventData(
+              TelemetryConstants.FlowType.vcShare,
+              TelemetryConstants.EndEventStatus.failure,
+            ),
+          );
+        },
+
+        sendTelemetryStartEvent: () => {
+          sendStartEvent(
+            getStartEventData(TelemetryConstants.FlowType.vcShare),
+          );
+          sendImpressionEvent(
+            getImpressionEventData(
+              TelemetryConstants.FlowType.vcShare,
+              TelemetryConstants.Screens.scanScreen,
+            ),
+          );
+        },
+
+        sendVCShareFlowCancelEndEvent: () => {
+          sendEndEvent(
+            getEndEventData(
+              TelemetryConstants.FlowType.vcShare,
+              TelemetryConstants.EndEventStatus.cancel,
+              {comment: 'User cancelled VC share'},
+            ),
+          );
+        },
+
+        sendVCShareFlowTimeoutEndEvent: () => {
+          sendEndEvent(
+            getEndEventData(
+              TelemetryConstants.FlowType.vcShare,
+              TelemetryConstants.EndEventStatus.failure,
+              {comment: 'VC sharing timeout'},
+            ),
+          );
+        },
       },
 
       services: {
@@ -948,7 +1023,10 @@ export const scanMachine =
             if (event.type === EventTypes.onDisconnected) {
               callback({type: 'DISCONNECT'});
             }
-            if (event.type === EventTypes.onError) {
+            if (
+              event.type === EventTypes.onError &&
+              event.code.includes('TVW')
+            ) {
               callback({
                 type: 'BLE_ERROR',
                 bleError: {message: event.message, code: event.code},
@@ -1012,7 +1090,6 @@ export const scanMachine =
         },
 
         startConnection: context => callback => {
-          sendStartEvent(getStartEventData('VC share'));
           wallet.startConnection(context.openId4VpUri);
           const statusCallback = (event: WalletDataEvent) => {
             if (event.type === EventTypes.onSecureChannelEstablished) {

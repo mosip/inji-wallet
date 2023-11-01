@@ -5,13 +5,19 @@ import {PasscodeVerify} from '../components/PasscodeVerify';
 import {Column, Text} from '../components/ui';
 import {Theme} from '../components/ui/styleUtils';
 import {
+  TelemetryConstants,
   getImpressionEventData,
   sendImpressionEvent,
 } from '../shared/telemetry/TelemetryUtils';
 
 export const Passcode: React.FC<PasscodeProps> = props => {
   useEffect(() => {
-    sendImpressionEvent(getImpressionEventData('App Login', 'Passcode'));
+    sendImpressionEvent(
+      getImpressionEventData(
+        TelemetryConstants.FlowType.appLogin,
+        TelemetryConstants.Screens.passcode,
+      ),
+    );
   }, []);
 
   return (

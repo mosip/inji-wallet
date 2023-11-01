@@ -14,10 +14,8 @@ const WalletUnverifiedIcon: React.FC = () => {
       size={Theme.ICON_MID_SIZE}
       type="material-community"
       containerStyle={{
-        marginStart: 1,
-        marginEnd: 1,
+        marginEnd: 5,
         bottom: 1,
-        marginRight: -2,
       }}
     />
   );
@@ -29,7 +27,10 @@ const WalletVerifiedIcon: React.FC = () => {
       name="verified-user"
       color={Theme.Colors.VerifiedIcon}
       size={Theme.ICON_MID_SIZE}
-      containerStyle={{marginStart: 10, bottom: 1, marginLeft: 10}}
+      containerStyle={{
+        marginEnd: 5,
+        bottom: 1,
+      }}
     />
   );
 };
@@ -39,29 +40,18 @@ const WalletUnverifiedActivationDetails: React.FC<
 > = props => {
   const {t} = useTranslation('VcDetails');
   return (
-    <Row
-      width={Dimensions.get('screen').width * 0.8}
-      align="space-between"
-      crossAlign="center">
-      <Row
-        crossAlign="center"
-        style={{
-          flex: 1,
-          maxWidth: 255,
-        }}>
-        {props.verifiableCredential && <WalletUnverifiedIcon />}
-        <Text
-          color={Theme.Colors.Details}
-          testID="activationPending"
-          weight="regular"
-          margin="8"
-          style={
-            !props.verifiableCredential
-              ? Theme.Styles.loadingTitle
-              : Theme.Styles.statusLabel
-          }
-          children={t('offlineAuthDisabledHeader')}></Text>
-      </Row>
+    <Row style={Theme.Styles.vcActivationDetailsWrapper}>
+      {props.verifiableCredential && <WalletUnverifiedIcon />}
+      <Text
+        color={Theme.Colors.Details}
+        testID="activationPending"
+        weight="regular"
+        style={
+          !props.verifiableCredential
+            ? Theme.Styles.loadingTitle
+            : Theme.Styles.statusLabel
+        }
+        children={t('offlineAuthDisabledHeader')}></Text>
     </Row>
   );
 };
@@ -71,29 +61,20 @@ const WalletVerifiedActivationDetails: React.FC<
 > = props => {
   const {t} = useTranslation('WalletBinding');
   return (
-    <Row
-      width={Dimensions.get('screen').width * 0.8}
-      align="space-between"
-      crossAlign="center">
-      <Row
-        crossAlign="center"
-        style={{
-          flex: 1,
-        }}>
-        <WalletVerifiedIcon />
-        <Text
-          color={Theme.Colors.statusLabel}
-          testID="activated"
-          weight="regular"
-          size="smaller"
-          margin="8 10 10 5"
-          style={
-            !props.verifiableCredential
-              ? Theme.Styles.loadingTitle
-              : Theme.Styles.statusLabel
-          }
-          children={t('profileAuthenticated')}></Text>
-      </Row>
+    <Row style={Theme.Styles.vcActivationDetailsWrapper}>
+      <WalletVerifiedIcon />
+      <Text
+        color={Theme.Colors.statusLabel}
+        testID="activated"
+        weight="regular"
+        size="smaller"
+        margin="0 0 0 5"
+        style={
+          !props.verifiableCredential
+            ? Theme.Styles.loadingTitle
+            : Theme.Styles.statusLabel
+        }
+        children={t('profileAuthenticated')}></Text>
     </Row>
   );
 };
@@ -102,7 +83,7 @@ export const MosipVCItemActivationStatus: React.FC<
   ExistingMosipVCItemActivationStatusProps
 > = props => {
   return (
-    <Row margin="0 0 0 -6">
+    <Row style={Theme.Styles.vcActivationStatusContainer}>
       {props.emptyWalletBindingId ? (
         <WalletUnverifiedActivationDetails
           verifiableCredential={props.verifiableCredential}
