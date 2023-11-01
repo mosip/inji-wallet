@@ -32,6 +32,11 @@ public class RetrieveIdPage extends BasePage {
     @AndroidFindBy(xpath = "//*[contains(@text,'Get it now')]")
     @iOSXCUITFindBy(accessibility = "Get it now")
     private WebElement getItNowText;
+    
+    @AndroidFindBy(xpath = "//*[contains(@text,'UIN invalid')]")
+    private WebElement invalidUin;
+    
+    
 
 
     public RetrieveIdPage(AppiumDriver driver) {
@@ -55,6 +60,10 @@ public class RetrieveIdPage extends BasePage {
     public GenerateUinOrVidPage clickOnGetItNowText() {
         this.clickOnElement(getItNowText);
         return new GenerateUinOrVidPage(driver);
+    }
+    
+    public boolean isInvalidUinMassageLoaded() {
+        return this.isElementDisplayed(invalidUin, "UIN invalid");
     }
 
 

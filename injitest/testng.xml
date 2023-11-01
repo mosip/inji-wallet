@@ -10,6 +10,9 @@
             <class name="io.mosip.test.mob.inji.testcases.VcDownloadAndVerifyUsingUinTest">
                 <methods>
                     <include name="downloadAndVerifyVcUsingUin"/>
+                    <include name="downloadWithEmptyUin"/>
+                    <include name="downloadWithInvalidUin"/>
+                    <include name="genrateMultipleVcWithUin"/>
                 </methods>
             </class>
             <class name="io.mosip.test.mob.inji.testcases.VerifyWelcomePagesTest">
@@ -25,9 +28,10 @@
             <class name="io.mosip.test.mob.inji.testcases.UnlockWithPasscodeTest">
                 <methods>
                     <include name="logoutAndLoginWithPasscode"/>
+                    <include name="loginWithInvalidPasscode"/>
                 </methods>
             </class>
-            <class name="io.mosip.test.mob.inji.testcases.VerifyHelpPageTest">
+           <class name="io.mosip.test.mob.inji.testcases.VerifyHelpPageTest">
                 <methods>
                     <include name="verifyHelpPage"/>
                 </methods>

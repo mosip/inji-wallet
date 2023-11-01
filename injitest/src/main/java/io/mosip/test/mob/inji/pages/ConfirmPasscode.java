@@ -11,9 +11,17 @@ public class ConfirmPasscode extends BasePage {
     @iOSXCUITFindBy(accessibility = "Confirm passcode")
     @AndroidFindBy(xpath = "//*[contains(@text,'Confirm passcode')]")
     private WebElement confirmPasscode;
+    
+    
+    @AndroidFindBy(xpath = "//*[contains(@text,'Passcode did not match.')]")
+    private WebElement invalidPasscode;
 
     public ConfirmPasscode(AppiumDriver driver) {
         super(driver);
+    }
+    
+    public boolean isConfirmPassCodeIsInValid() {
+        return this.isElementDisplayed(invalidPasscode, "Passcode did not match.");
     }
 
     public boolean isConfirmPassCodePageLoaded() {
