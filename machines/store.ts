@@ -30,6 +30,7 @@ import {
   sendErrorEvent,
   getErrorEventData,
 } from '../shared/telemetry/TelemetryUtils';
+import {clearLogEntriesAsync} from 'expo-updates';
 
 export const keyinvalidatedString =
   'Key Invalidated due to biometric enrollment';

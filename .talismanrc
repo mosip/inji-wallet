@@ -2,9 +2,9 @@ fileignoreconfig:
 - filename: ios/Podfile.lock
   checksum: cc123c3e1f04d41b394ceb16843b15c08bac3ba619ae853ff322717739761a85  
 - filename: package.json
-  checksum: fdd5905228a1afbfb004c710fd6c61adf073a12840200327c0592b76bea5e7e3
+  checksum: a5a22604f2b9d917adaf3561fdcaeccd4e69b92e1240070480d7498e1eda5162
 - filename: package-lock.json
-  checksum: 179883df6d414d82b7f54353a3a4cc75e6a681224f4b6d1831ce85de27de2726
+  checksum: 50ffeef42fb3593d431e36e69ecca0d8f20ce54fb63f65860a55c7121601bd67
 - filename: components/PasscodeVerify.tsx
   checksum: 14654c0f038979fcd0d260170a45894a072f81e0767ca9a0e66935d33b5cc703
 - filename: i18n.ts
@@ -45,7 +45,7 @@ fileignoreconfig:
   checksum: bc12c43ccc27ac04e5763fa6a6ed3cee63e4362ba5666c160b5e53269de924ab
   checksum: 9a61cd59a3718adf1f14faf3024fec66a3295ef373878a878a28e5cb1287afaa
 - filename: ios/Podfile.lock
-  checksum: cc123c3e1f04d41b394ceb16843b15c08bac3ba619ae853ff322717739761a85
+  checksum: edad9c2d11b0b3ed819cb0dcbfaf0515d31adb8116223c07f7b7b79e6689fe96
 - filename: ios/Podfile.lock
   checksum: cc123c3e1f04d41b394ceb16843b15c08bac3ba619ae853ff322717739761a85
 - filename: screens/Home/IntroSlidersScreen.tsx
