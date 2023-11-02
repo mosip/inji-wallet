@@ -27,4 +27,26 @@ public class CommonMethods {
         }
 
     }
+
+    public static void enableAirplaneMode() {
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder("/bin/bash", "-c", "adb shell cmd connectivity airplane-mode enable");
+            processBuilder.redirectErrorStream(true);
+            processBuilder.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void disableAirplaneMode() {
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder("/bin/bash", "-c", "adb shell cmd connectivity airplane-mode disable");
+            processBuilder.redirectErrorStream(true);
+            processBuilder.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

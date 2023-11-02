@@ -46,6 +46,13 @@ public class HomePage extends BasePage {
     @AndroidFindBy(accessibility = "pinIcon")
     private WebElement pinIcon;
 
+    @AndroidFindBy(accessibility = "bringYourDigitalID")
+    private WebElement bringYourDigitalIdentity;
+
+    @AndroidFindBy(accessibility = "errorTitle")
+    private WebElement noInternetConnection;
+
+
     public HomePage(AppiumDriver driver) {
         super(driver);
     }
@@ -86,13 +93,21 @@ public class HomePage extends BasePage {
     }
 
     public MoreOptionsPage clickOnMoreOptionsButton() throws InterruptedException {
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         clickOnElement(moreOptionsButton);
         return new MoreOptionsPage(driver);
     }
 
     public boolean isPinIconDisplayed() {
         return this.isElementDisplayed(pinIcon, "pin icon");
+    }
+
+    public boolean isNoVCDownloaded() {
+        return this.isElementDisplayed(bringYourDigitalIdentity, "Bring your digital identity");
+    }
+
+    public boolean isNoInternetConnectionDisplayed() {
+        return this.isElementDisplayed(noInternetConnection, "No internet connection");
     }
 
 }
