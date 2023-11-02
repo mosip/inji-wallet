@@ -45,7 +45,7 @@ export const SetupLanguageScreen: React.FC<RootRouteProps> = props => {
         testID="languagePicker"
         items={languages}
         selectedValue={i18n.language}
-        onValueChange={language => changeLanguage(i18n.language, language)}
+        onValueChange={language => changeLanguage(i18n, language)}
       />
 
       <Button

@@ -1,9 +1,9 @@
 import React from 'react';
-import i18n, {SUPPORTED_LANGUAGES} from '../i18n';
+import {SUPPORTED_LANGUAGES} from '../i18n';
 import {I18nManager, View} from 'react-native';
 import {Picker} from './ui/Picker';
 import {useTranslation} from 'react-i18next';
-import i18next from 'i18next';
+import i18next, {i18n} from 'i18next';
 import RNRestart from 'react-native-restart';
 import {setItem} from '../machines/store';
 import Keychain from 'react-native-keychain';
@@ -20,18 +20,15 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = props => {
         testID="language"
         items={languages}
         selectedValue={i18n.language}
-        onValueChange={language => changeLanguage(i18n.language, language)}
+        onValueChange={language => changeLanguage(i18n, language)}
         triggerComponent={props.triggerComponent}
       />
     </View>
   );
 };
 
-export const changeLanguage = async (
-  currentLanguage: string,
-  language: string,
-) => {
-  if (language !== currentLanguage) {
+export const changeLanguage = async (i18n: i18n, language: string) => {
+  if (language !== i18n.language) {
     await i18n.changeLanguage(language).then(async () => {
       const existingCredentials = await Keychain.getGenericPassword();
       await setItem('language', i18n.language, existingCredentials.password);
