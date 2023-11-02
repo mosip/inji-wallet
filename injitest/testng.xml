@@ -39,14 +39,17 @@
             <class name="io.mosip.test.mob.inji.testcases.DeletingVcTest">
                 <methods>
                     <include name="deleteVc"/>
+                    <include name="cancelDeleteVc"/>
+                    <include name="deletVcAudit"/>
+                    <include name="closingEllipsis"/>
                 </methods>
             </class>
-            <class name="io.mosip.test.mob.inji.testcases.VerifyHistoryTest">
+          <class name="io.mosip.test.mob.inji.testcases.VerifyHistoryTest">
                 <methods>
                     <include name="generateAndVerifyHistory"/>
                 </methods>
             </class>
-            <class name="io.mosip.test.mob.inji.testcases.GenerateUinOrVidTest">
+              <class name="io.mosip.test.mob.inji.testcases.GenerateUinOrVidTest">
                 <methods>
                     <include name="generateUinOrVidUsingAid"/>
                 </methods>
