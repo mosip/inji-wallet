@@ -15,12 +15,18 @@ import {
 import {DualMessageOverlay} from './components/DualMessageOverlay';
 import {useApp} from './screens/AppController';
 import {Alert} from 'react-native';
-import {configureTelemetry} from './shared/telemetry/TelemetryUtils';
+import {
+  TelemetryConstants,
+  configureTelemetry,
+  getErrorEventData,
+  sendErrorEvent,
+} from './shared/telemetry/TelemetryUtils';
 import {MessageOverlay} from './components/MessageOverlay';
 import SecureKeystore from 'react-native-secure-keystore';
 import {isHardwareKeystoreExists} from './shared/cryptoutil/cryptoUtil';
 import i18n from './i18n';
 import './shared/flipperConfig';
+import {__AppId} from './shared/GlobalVariables';
 
 // kludge: this is a bad practice but has been done temporarily to surface
 //  an occurance of a bug with minimal residual code changes, this should
@@ -59,6 +65,18 @@ const AppLoadingWrapper: React.FC = () => {
   );
   const controller = useApp();
   const {t} = useTranslation('WelcomeScreen');
+  useEffect(() => {
+    if (isKeyInvalidateError) {
+      configureTelemetry();
+      sendErrorEvent(
+        getErrorEventData(
+          TelemetryConstants.FlowType.appLogin,
+          TelemetryConstants.ErrorId.appWasReset,
+          TelemetryConstants.ErrorMessage.appWasReset,
+        ),
+      );
+    }
+  }, [isKeyInvalidateError]);
   return (
     <>
       <AppLoading />

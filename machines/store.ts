@@ -12,7 +12,7 @@ import {
 import {createModel} from 'xstate/lib/model';
 import {generateSecureRandom} from 'react-native-securerandom';
 import {log} from 'xstate/lib/actions';
-import {MY_VCS_STORE_KEY} from '../shared/constants';
+import {MY_VCS_STORE_KEY, SETTINGS_STORE_KEY} from '../shared/constants';
 import SecureKeystore from 'react-native-secure-keystore';
 import {
   AUTH_TIMEOUT,
@@ -485,8 +485,18 @@ export async function setItem(
   encryptionKey: string,
 ) {
   try {
-    const data = JSON.stringify(value);
-    const encryptedData = await encryptJson(encryptionKey, data);
+    let encryptedData;
+    if (key === SETTINGS_STORE_KEY) {
+      const appId = value.appId;
+      delete value.appId;
+      const settings = {
+        encryptedData: await encryptJson(encryptionKey, JSON.stringify(value)),
+        appId,
+      };
+      encryptedData = JSON.stringify(settings);
+    } else {
+      encryptedData = await encryptJson(encryptionKey, JSON.stringify(value));
+    }
     await Storage.setItem(key, encryptedData, encryptionKey);
   } catch (e) {
     console.error('error setItem:', e);
@@ -502,7 +512,19 @@ export async function getItem(
   try {
     const data = await Storage.getItem(key, encryptionKey);
     if (data != null) {
-      const decryptedData = await decryptJson(encryptionKey, data);
+      let decryptedData;
+      if (key === SETTINGS_STORE_KEY) {
+        let parsedData = JSON.parse(data);
+        if (parsedData.encryptedData) {
+          decryptedData = await decryptJson(
+            encryptionKey,
+            parsedData.encryptedData,
+          );
+          parsedData.encryptedData = JSON.parse(decryptedData);
+        }
+        return parsedData;
+      }
+      decryptedData = await decryptJson(encryptionKey, data);
       return JSON.parse(decryptedData);
     }
     if (data === null && VCMetadata.isVCKey(key)) {

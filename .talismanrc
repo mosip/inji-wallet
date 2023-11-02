@@ -29,8 +29,6 @@ fileignoreconfig:
   checksum: ffe9aac2dcc590b98b0d588885c088eff189504ade653a77f74b67312bfd27ad
 - filename: shared/fileStorage.ts
   checksum: 07cb337dc1d5b0f0eef56270ac4f4f589260ee5e490183c024cf98a2aeafb139
-- filename: shared/storage.ts
-  checksum: c8d874aa373bdf526bf59192139822f56915e702ef673bac4e0d7549b0fea3d0
 - filename: screens/Issuers/IssuersScreen.tsx
   checksum: bc12c43ccc27ac04e5763fa6a6ed3cee63e4362ba5666c160b5e53269de924ab
   checksum: 9a61cd59a3718adf1f14faf3024fec66a3295ef373878a878a28e5cb1287afaa
@@ -62,3 +60,7 @@ fileignoreconfig:
   checksum: 6d22bc5c77398316b943c512c208ce0846a9fff674c1ccac79e07f21962acd5f
 - filename: machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine.typegen.ts
   checksum: 533785a3c8096ea93afc59c65025679c24d379e824e784e745ab298a0978cd2a
+- filename: machines/store.ts
+  checksum: 30a5e44e8192aa686255aa9bcc637226bd55c4e622bee23d79f5abad1c7a6a8a
+- filename: shared/storage.ts
+  checksum: 7ad8b7697614366eb7e372ea80c1c3bf4a4f4bb93bd4fe4b3f1e79e352cce631
