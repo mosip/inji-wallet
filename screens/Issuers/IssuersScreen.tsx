@@ -1,10 +1,10 @@
-import React, {useLayoutEffect} from 'react';
+import React, {useLayoutEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {FlatList, Image, View} from 'react-native';
+import {FlatList, Image, View, TextInput, ScrollView} from 'react-native';
 import {Issuer} from '../../components/openId4VCI/Issuer';
 import {Error} from '../../components/ui/Error';
 import {Header} from '../../components/ui/Header';
-import {Column, Text} from '../../components/ui';
+import {Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {RootRouteProps} from '../../routes';
 import {HomeRouteProps} from '../../routes/main';
@@ -23,12 +23,17 @@ import {
   sendInteractEvent,
   sendStartEvent,
 } from '../../shared/telemetry/TelemetryUtils';
+import {Icon} from 'react-native-elements';
 
 export const IssuersScreen: React.FC<
   HomeRouteProps | RootRouteProps
 > = props => {
   const controller = useIssuerScreenController(props);
   const {t} = useTranslation('IssuersScreen');
+
+  const issuers = controller.issuers;
+  let [filteredSearchData, setFilteredSearchData] = useState(issuers);
+  const [search, setSearch] = useState('');
 
   useLayoutEffect(() => {
     if (controller.loadingReason || controller.errorMessageType) {
@@ -131,24 +136,56 @@ export const IssuersScreen: React.FC<
     );
   }
 
+  const filterIssuers = (searchText: string) => {
+    let filterdData = issuers.filter(item => {
+      if (
+        getDisplayObjectForCurrentLanguage(item.display)
+          ?.name.toLowerCase()
+          .includes(searchText.toLowerCase())
+      ) {
+        return getDisplayObjectForCurrentLanguage(item.display);
+      }
+    });
+    setFilteredSearchData(filterdData);
+    setSearch(searchText);
+  };
+
   return (
     <React.Fragment>
       {controller.issuers.length > 0 && (
-        <Column style={Theme.issuersScreenStyles.issuerListOuterContainer}>
+        <Column style={Theme.IssuersScreenStyles.issuerListOuterContainer}>
           <Text
-            {...testIDProps('addCardDescription')}
+            {...testIDProps('issuersScreenDescription')}
             style={{
               ...Theme.TextStyles.regularGrey,
               paddingTop: 0.5,
               marginVertical: 14,
               marginHorizontal: 9,
             }}>
-            {t('header')}
+            {t('description')}
           </Text>
-          <View style={Theme.issuersScreenStyles.issuersContainer}>
+          <Row margin="3">
+            <Icon
+              testID="searchIssuerIcon"
+              name="search"
+              color={Theme.Colors.GrayIcon}
+              size={27}
+              style={Theme.IssuersScreenStyles.searchIcon}
+            />
+            <TextInput
+              testID="issuerSearchBar"
+              style={Theme.IssuersScreenStyles.issuersSearchBar}
+              placeholder={t('searchByIssuersName')}
+              value={search}
+              onChangeText={searchText => filterIssuers(searchText)}
+              onLayout={() => filterIssuers('')}
+            />
+          </Row>
+
+          <View style={Theme.IssuersScreenStyles.issuersContainer}>
             {controller.issuers.length > 0 && (
               <FlatList
-                data={controller.issuers}
+                data={filteredSearchData}
                 renderItem={({item}) => (
                   <Issuer
                     testID={removeWhiteSpace(item.credential_issuer)}

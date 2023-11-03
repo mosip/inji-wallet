@@ -7,7 +7,7 @@ import org.openqa.selenium.WebElement;
 
 public class UnlockApplicationPage extends BasePage {
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'Unlock application')]")
+    @AndroidFindBy(accessibility = "unlockApplication")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`label == \"Unlock application\"`]")
     private WebElement unlockApplicationButton;
 

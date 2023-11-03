@@ -8,7 +8,7 @@ import static org.testng.Assert.assertTrue;
 
 public class ChangeLanguageTest extends BaseTest {
 
-	@Test(groups = "CLT")
+    @Test
     public void changeLanguage() {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 

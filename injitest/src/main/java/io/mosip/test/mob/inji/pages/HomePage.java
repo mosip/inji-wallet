@@ -7,7 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class HomePage extends BasePage {
-    @AndroidFindBy(xpath = "//*[contains(@text,'Download Card')]")
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"downloadIcon\")")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`label == \"Download Card\"`]")
     private WebElement downloadCardButton;
 
@@ -34,11 +34,23 @@ public class HomePage extends BasePage {
     @AndroidFindBy(xpath = "//*[contains(@text,'Secure Key Storage not found')]")
     private WebElement secureKeyStoragePopup;
 
+    @AndroidFindBy(xpath = "//*[contains(@text,'Some security features will be unavailable')]")
+    private WebElement securityFeatureUnavailablePopup;
+
     @AndroidFindBy(xpath = "//*[contains(@text,'OK, I')]")
     private WebElement riskItButton;
 
+    @AndroidFindBy(xpath = "//*[contains(@text,'Ok')]")
+    private WebElement okButton;
+
     @AndroidFindBy(accessibility = "pinIcon")
     private WebElement pinIcon;
+
+    @AndroidFindBy(accessibility = "bringYourDigitalID")
+    private WebElement bringYourDigitalIdentity;
+
+    @AndroidFindBy(accessibility = "errorTitle")
+    private WebElement noInternetConnection;
 
 
     public HomePage(AppiumDriver driver) {
@@ -46,15 +58,18 @@ public class HomePage extends BasePage {
     }
 
     public boolean isHomePageLoaded() {
-        if (isElementDisplayed(secureKeyStoragePopup, "secure key storage popup")) {
+        /*if (isElementDisplayed(secureKeyStoragePopup, "secure key storage popup")) {
             clickOnElement(riskItButton);
+        }*/
+        if (isElementDisplayed(securityFeatureUnavailablePopup, "security features will be unavailable popup")) {
+            clickOnElement(okButton);
         }
         return this.isElementDisplayed(homeButton, "Home page");
     }
 
-    public RetrieveIdPage downloadCard() {
+    public AddNewCardPage downloadCard() {
         this.clickOnElement(downloadCardButton);
-        return new RetrieveIdPage(driver);
+        return new AddNewCardPage(driver);
     }
 
     public boolean isNameDisplayed(String name) {
@@ -78,13 +93,21 @@ public class HomePage extends BasePage {
     }
 
     public MoreOptionsPage clickOnMoreOptionsButton() throws InterruptedException {
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         clickOnElement(moreOptionsButton);
         return new MoreOptionsPage(driver);
     }
 
     public boolean isPinIconDisplayed() {
         return this.isElementDisplayed(pinIcon, "pin icon");
+    }
+
+    public boolean isNoVCDownloaded() {
+        return this.isElementDisplayed(bringYourDigitalIdentity, "Bring your digital identity");
+    }
+
+    public boolean isNoInternetConnectionDisplayed() {
+        return this.isElementDisplayed(noInternetConnection, "No internet connection");
     }
 
 }

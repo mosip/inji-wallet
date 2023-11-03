@@ -12,6 +12,9 @@ public class HistoryPage extends BasePage {
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"History\"`][5]")
     private WebElement historyHeader;
 
+    @AndroidFindBy(xpath = "//*[contains(@text,'No history available yet')]")
+    private WebElement noHistoryAvailable;
+
     public HistoryPage(AppiumDriver driver) {
         super(driver);
     }
@@ -38,5 +41,9 @@ public class HistoryPage extends BasePage {
                 return verifyHistoryIos(vcNumber);
         }
         return false;
+    }
+
+    public boolean noHistoryAvailable() {
+        return this.isElementDisplayed(noHistoryAvailable, "No history available yet");
     }
 }

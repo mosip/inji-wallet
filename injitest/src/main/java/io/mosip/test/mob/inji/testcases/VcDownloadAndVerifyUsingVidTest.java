@@ -1,13 +1,15 @@
 package io.mosip.test.mob.inji.testcases;
 
 import org.testng.annotations.Test;
+
+import io.mosip.test.mob.inji.api.BaseTestCase;
 import io.mosip.test.mob.inji.pages.*;
 import io.mosip.test.mob.inji.utils.TestDataReader;
 
 import static org.testng.Assert.assertTrue;
 
 public class VcDownloadAndVerifyUsingVidTest extends BaseTest {
-	@Test(groups = "VDAVUVT")
+    @Test
     public void downloadAndVerifyVcUsingVid() {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
@@ -27,13 +29,16 @@ public class VcDownloadAndVerifyUsingVidTest extends BaseTest {
         HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
-        RetrieveIdPage retrieveIdPage = homePage.downloadCard();
+        AddNewCardPage addNewCardPage = homePage.downloadCard();
+
+        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
+        RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        OtpVerification otpVerification = retrieveIdPage.clickOnVid(target).setEnterIdTextBox(TestDataReader.readData("vid")).clickOnGenerateCardButton();
+        OtpVerificationPage otpVerification = retrieveIdPage.clickOnVid(target).setEnterIdTextBox(BaseTestCase.perpetualVid).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(TestDataReader.readData("otp"), target);
+        otpVerification.enterOtp(GetOtp(), target);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
     }
