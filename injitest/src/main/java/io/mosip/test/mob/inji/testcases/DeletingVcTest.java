@@ -11,7 +11,7 @@ import static org.testng.Assert.assertTrue;
 
 public class DeletingVcTest extends BaseTest {
     @Test
-    public void deleteVc() throws InterruptedException {
+    public void deleteVcAndVerifyInHistory() throws InterruptedException {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
@@ -50,7 +50,11 @@ public class DeletingVcTest extends BaseTest {
         assertTrue(pleaseConfirmPopupPage.isPleaseConfirmPopupPageLoaded(), "Verify if pop up page is displayed");
 
         pleaseConfirmPopupPage.clickOnConfirmButton();
-        assertFalse(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if VC is removed");
+        assertFalse(homePage.isNoVCDownloaded(), "Verify if VC is removed");
+
+        HistoryPage historyPage = homePage.clickOnHistoryButton();
+        assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
+        historyPage.verifyHistory(BaseTestCase.uin + " Removed from wallet", target);
 
     }
 }
