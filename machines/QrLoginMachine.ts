@@ -23,7 +23,6 @@ import {
 import i18n from '../i18n';
 import {parseMetadatas, VCMetadata} from '../shared/VCMetadata';
 import {
-  TelemetryConstants,
   getEndEventData,
   sendEndEvent,
   TelemetryConstants,
