@@ -115,6 +115,10 @@ export async function decryptJson(
   encryptedData: string,
 ): Promise<string> {
   try {
+    if (encryptedData === null || encryptedData === undefined) {
+      // to avoid crash in case of null or undefined
+      return '';
+    }
     // Disable Encryption in debug mode
     if (DEBUG_MODE_ENABLED && __DEV__) {
       return JSON.parse(encryptedData);
@@ -124,11 +128,6 @@ export async function decryptJson(
       return CryptoJS.AES.decrypt(encryptedData, encryptionKey).toString(
         CryptoJS.enc.Utf8,
       );
-    }
-
-    if (encryptedData === null || encryptedData === undefined) {
-      // to avoid crash in case of null or undefined
-      return '';
     }
 
     return await SecureKeystore.decryptData(ENCRYPTION_ID, encryptedData);
