@@ -125,6 +125,12 @@ export async function decryptJson(
         CryptoJS.enc.Utf8,
       );
     }
+
+    if (encryptedData === null || encryptedData === undefined) {
+      // to avoid crash in case of null or undefined
+      return '';
+    }
+
     return await SecureKeystore.decryptData(ENCRYPTION_ID, encryptedData);
   } catch (e) {
     console.error('error decryptJson:', e);
