@@ -20,7 +20,7 @@ public class ConfirmPasscode extends BasePage {
         super(driver);
     }
     
-    public boolean isConfirmPassCodeIsInValid() {
+    public boolean isPasscodeInvalidMessageDisplayed() {
         return this.isElementDisplayed(invalidPasscode, "Passcode did not match.");
     }
 

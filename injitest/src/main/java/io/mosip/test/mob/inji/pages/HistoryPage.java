@@ -4,6 +4,9 @@ import io.mosip.test.mob.inji.constants.Target;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
+
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -29,6 +32,21 @@ public class HistoryPage extends BasePage {
         By locator = By.xpath("//*[contains(@text,'" + vcNumber + " downloaded')]");
         return this.isElementDisplayed(locator, "Downloaded VC in android");
     }
+    
+    private int verifyNumberOfRecordsInHistoryAndroid(String vcNumber) throws InterruptedException {
+         Thread.sleep(3000);
+    	By locator = By.xpath("//*[contains(@text,'" + vcNumber + " downloaded')]");
+        List<WebElement> elements = driver.findElements(locator);
+        return elements.size();
+    }
+    
+    private int verifyNumberOfRecordsInHistoryIos(String vcNumber) {
+        By locator = By.xpath("//*[contains(@name,'\" + vcNumber + \" downloaded')]");
+        List<WebElement> elements = driver.findElements(locator);
+        return elements.size();
+    }
+    
+    
 
     public boolean verifyHistory(String vcNumber, Target os) {
         switch (os) {
@@ -39,4 +57,15 @@ public class HistoryPage extends BasePage {
         }
         return false;
     }
+    
+    public int getNumberOfRecordsInHistory(String vcNumber, Target os) throws InterruptedException {
+        switch (os) {
+            case ANDROID:
+                return verifyNumberOfRecordsInHistoryAndroid(vcNumber);
+            case IOS:
+                return verifyNumberOfRecordsInHistoryIos(vcNumber);
+        }
+        return 0;
+    }
+    
 }

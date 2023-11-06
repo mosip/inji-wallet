@@ -1,14 +1,13 @@
 {
   "externalemail": "Resident_AddIdentity_ValidParam_smoke_Pos@mosip.net",
   "passcode": "111111",
-  "invalidpasscode": "123456",
-  "invaliduin": "1234567891",
+  "invalidOtp":"666666",
   "fullName": "TEST_FULLNAMEeng",
   "idType": "National card",
   "status": "Valid",
   "generatedOn": "9/5/2023",
   "aid": "10001100660000620230714065538",
   "setExcludedGroups":"AVT,PVT",
-  "androidAppPath":"D:/GITINJI/inji/injitest/apps/android/Inji_latest.apk",
-  "androidDevice": "Pixel_6a_API_30"
+  "androidAppPath":"/Users/kamalsingh/TestAutomation/Inji/inji/injitest/apps/android/Inji.apk",
+  "androidDevice": "nightwatch-android-11"
 }

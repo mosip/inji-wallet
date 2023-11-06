@@ -11,8 +11,7 @@
                 <methods>
                     <include name="downloadAndVerifyVcUsingUin"/>
                     <include name="downloadWithEmptyUin"/>
-                    <include name="downloadWithInvalidUin"/>
-                    <include name="genrateMultipleVcWithUin"/>
+                    <include name="genrateMultipleVcWithSameUin"/>
                 </methods>
             </class>
             <class name="io.mosip.test.mob.inji.testcases.VerifyWelcomePagesTest">
@@ -23,9 +22,10 @@
             <class name="io.mosip.test.mob.inji.testcases.VcDownloadAndVerifyUsingVidTest">
                 <methods>
                     <include name="downloadAndVerifyVcUsingVid"/>
+                    <include name="downloadTwoVcDeleteUsingVid"/>
                 </methods>
             </class>
-            <class name="io.mosip.test.mob.inji.testcases.UnlockWithPasscodeTest">
+           <class name="io.mosip.test.mob.inji.testcases.UnlockWithPasscodeTest">
                 <methods>
                     <include name="logoutAndLoginWithPasscode"/>
                     <include name="loginWithInvalidPasscode"/>
@@ -40,11 +40,11 @@
                 <methods>
                     <include name="deleteVc"/>
                     <include name="cancelDeleteVc"/>
-                    <include name="deletVcAudit"/>
                     <include name="closingEllipsis"/>
+                    <include name="DownloadingDeletedVc"/>
                 </methods>
             </class>
-          <class name="io.mosip.test.mob.inji.testcases.VerifyHistoryTest">
+         <class name="io.mosip.test.mob.inji.testcases.VerifyHistoryTest">
                 <methods>
                     <include name="generateAndVerifyHistory"/>
                 </methods>
@@ -62,6 +62,7 @@
             <class name="io.mosip.test.mob.inji.testcases.PinVcTest">
                 <methods>
                     <include name="pinVc"/>
+                    <include name="VerifyCameraAfterPinVc"/>
                 </methods>
             </class>
         </classes>

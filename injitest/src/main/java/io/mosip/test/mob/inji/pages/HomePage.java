@@ -45,6 +45,9 @@ public class HomePage extends BasePage {
 
     @AndroidFindBy(accessibility = "pinIcon")
     private WebElement pinIcon;
+    
+    @AndroidFindBy(xpath = "//*[contains(@text,'Scan')]")
+	 private WebElement scan;
 
     public HomePage(AppiumDriver driver) {
         super(driver);
@@ -69,6 +72,11 @@ public class HomePage extends BasePage {
         By fullName = By.xpath("//*[contains(@name,'" + name + "') or contains(@text,'" + name + "')]");
         return this.isElementDisplayed(fullName, 60, "Name on downloaded card");
     }
+    
+    		public boolean isNameDisplayed1(String name) {
+    	        By fullName = By.xpath("(//*[contains(@text,'" + name + "')])[2]");
+    	        return this.isElementDisplayed(fullName, 60, "Name on downloaded card");
+    	    }
 
     public SettingsPage clickOnSettingIcon() {
         clickOnElement(settingButton);
@@ -93,6 +101,11 @@ public class HomePage extends BasePage {
 
     public boolean isPinIconDisplayed() {
         return this.isElementDisplayed(pinIcon, "pin icon");
+    }
+    
+    public Scan clickOnScanButton() {
+        this.clickOnElement(scan);
+        return new Scan(driver);
     }
 
 }

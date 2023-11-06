@@ -62,7 +62,7 @@ public class UnlockWithPasscodeTest extends BaseTest {
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
       HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
 
-        assertTrue(confirmPasscode.isConfirmPassCodeIsInValid(), "verify if passcode is wrong");
+        assertTrue(confirmPasscode.isPasscodeInvalidMessageDisplayed(), "verify if invalid passcode is displayed");
     	
     }
 }
