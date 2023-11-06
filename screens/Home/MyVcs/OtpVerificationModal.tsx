@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {PinInput} from '../../../components/PinInput';
-import {Column, Text} from '../../../components/ui';
+import {Button, Column, Text} from '../../../components/ui';
 import {ModalProps, Modal} from '../../../components/ui/Modal';
 import {Theme} from '../../../components/ui/styleUtils';
 import {Image, TouchableOpacity} from 'react-native';
@@ -12,6 +12,11 @@ import {
   resetRetryCount,
   sendImpressionEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
+import {MessageOverlay} from '../../../components/MessageOverlay';
+import {
+  OtpVerificationModalProps,
+  useOtpVerificationModal,
+} from './OtpVerificationModalController';
 
 export const OtpVerificationModal: React.FC<
   OtpVerificationModalProps
@@ -19,6 +24,8 @@ export const OtpVerificationModal: React.FC<
   const {t} = useTranslation('OtpVerificationModal');
 
   const [timer, setTimer] = useState(180); // 30 seconds
+
+  const controller = useOtpVerificationModal(props);
 
   useEffect(() => {
     sendImpressionEvent(
@@ -124,13 +131,25 @@ export const OtpVerificationModal: React.FC<
           </TouchableOpacity>
         </Column>
       </Column>
+      <MessageOverlay
+        isVisible={controller.isDownloadCancelled}
+        title={t('confirmationDialog.title')}
+        message={t('confirmationDialog.message')}
+        customHeight={250}>
+        <Column>
+          <Button
+            type="gradient"
+            title={t('confirmationDialog.wait')}
+            onPress={controller.WAIT}
+            margin={[0, 0, 8, 0]}
+          />
+          <Button
+            type="clear"
+            title={t('confirmationDialog.cancel')}
+            onPress={controller.CANCEL}
+          />
+        </Column>
+      </MessageOverlay>
     </Modal>
   );
 };
-
-interface OtpVerificationModalProps extends ModalProps {
-  onInputDone: (otp: string) => void;
-  error?: string;
-  resend?: () => void;
-  flow: string;
-}
