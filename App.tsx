@@ -15,7 +15,12 @@ import {
 import {DualMessageOverlay} from './components/DualMessageOverlay';
 import {useApp} from './screens/AppController';
 import {Alert} from 'react-native';
-import {configureTelemetry} from './shared/telemetry/TelemetryUtils';
+import {
+  TelemetryConstants,
+  configureTelemetry,
+  getErrorEventData,
+  sendErrorEvent,
+} from './shared/telemetry/TelemetryUtils';
 import {MessageOverlay} from './components/MessageOverlay';
 import SecureKeystore from 'react-native-secure-keystore';
 import {isHardwareKeystoreExists} from './shared/cryptoutil/cryptoUtil';
@@ -59,6 +64,18 @@ const AppLoadingWrapper: React.FC = () => {
   );
   const controller = useApp();
   const {t} = useTranslation('WelcomeScreen');
+  useEffect(() => {
+    if (isKeyInvalidateError) {
+      configureTelemetry();
+      sendErrorEvent(
+        getErrorEventData(
+          TelemetryConstants.FlowType.appLogin,
+          TelemetryConstants.ErrorId.appWasReset,
+          TelemetryConstants.ErrorMessage.appWasReset,
+        ),
+      );
+    }
+  }, [isKeyInvalidateError]);
   return (
     <>
       <AppLoading />

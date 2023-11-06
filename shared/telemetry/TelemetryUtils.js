@@ -210,6 +210,10 @@ export const TelemetryConstants = {
     hardwareKeyStore:
       'Some security features will be unavailable as hardware key store is not available',
     activationCancelled: 'Activation Cancelled',
+    appWasReset:
+      'Due to the fingerprint / facial recognition update, app security was impacted, and downloaded cards were removed. Please download again',
+    vcsAreTampered:
+      'Tampered cards detected and removed for security reasons. Please download again',
   }),
 
   ErrorId: Object.freeze({
@@ -218,6 +222,8 @@ export const TelemetryConstants = {
     userCancel: 'USER_CANCEL',
     resend: 'RESEND',
     activationFailed: 'ACTIVATION_FAILED',
+    appWasReset: 'APP_WAS_RESET',
+    vcsAreTampered: 'VCS_ARE_TAMPERED',
   }),
 
   Screens: Object.freeze({

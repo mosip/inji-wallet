@@ -18,19 +18,12 @@ export interface Typegen0 {
     resetInjiProps: 'done.invoke.settings.resetInjiProps:invocation[0]';
   };
   missingImplementations: {
-    actions: 'injiTourGuide';
+    actions: never;
     delays: never;
     guards: never;
     services: never;
   };
   eventsCausingActions: {
-    injiTourGuide:
-      | 'ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS'
-      | 'BACK'
-      | 'CANCEL'
-      | 'STORE_RESPONSE'
-      | 'done.invoke.settings.resetInjiProps:invocation[0]'
-      | 'error.platform.settings.resetInjiProps:invocation[0]';
     requestStoredContext: 'xstate.init';
     resetCredentialRegistry: 'CANCEL' | 'UPDATE_MIMOTO_HOST';
     setContext: 'STORE_RESPONSE';
@@ -64,7 +57,6 @@ export interface Typegen0 {
   matchesStates:
     | 'idle'
     | 'init'
-    | 'injiTourGuide'
     | 'resetInjiProps'
     | 'showInjiTourGuide'
     | 'storingDefaults';
