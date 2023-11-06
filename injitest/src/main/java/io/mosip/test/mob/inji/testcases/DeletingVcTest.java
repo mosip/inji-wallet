@@ -1,6 +1,8 @@
 package io.mosip.test.mob.inji.testcases;
 
 import org.testng.annotations.Test;
+
+import io.mosip.test.mob.inji.api.BaseTestCase;
 import io.mosip.test.mob.inji.pages.*;
 import io.mosip.test.mob.inji.utils.TestDataReader;
 
@@ -9,7 +11,7 @@ import static org.testng.Assert.assertTrue;
 
 public class DeletingVcTest extends BaseTest {
     @Test
-    public void deleteVc() throws InterruptedException {
+    public void deleteVcAndVerifyInHistory() throws InterruptedException {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
@@ -34,10 +36,10 @@ public class DeletingVcTest extends BaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(BaseTestCase.uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(TestDataReader.readData("otp"), target);
+        otpVerification.enterOtp(GetOtp(), target);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
 
@@ -48,7 +50,11 @@ public class DeletingVcTest extends BaseTest {
         assertTrue(pleaseConfirmPopupPage.isPleaseConfirmPopupPageLoaded(), "Verify if pop up page is displayed");
 
         pleaseConfirmPopupPage.clickOnConfirmButton();
-        assertFalse(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if VC is removed");
+        assertFalse(homePage.isNoVCDownloaded(), "Verify if VC is removed");
+
+        HistoryPage historyPage = homePage.clickOnHistoryButton();
+        assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
+        historyPage.verifyHistory(BaseTestCase.uin + " Removed from wallet", target);
 
     }
 }

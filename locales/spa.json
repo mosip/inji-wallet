@@ -117,12 +117,6 @@
 	},
 	"AddVcModal": {
 		"requestingCredential": "Solicitando credencial...",
-    "confirmationDialog": {
-      "title": "Quieres cancelar la descarga?",
-      "message": "OUna vez cancelada, su tarjeta no se descargará y deberá reiniciar la descarga.",
-      "wait": "No, esperaré",
-      "cancel": "Sí, cancelar"
-    },
 		"errors": {
 			"input": {
 				"empty": "El campo no puede estar vacío",
@@ -179,7 +173,13 @@
 	},
 	"OtpVerificationModal": {
 		"enterOtp": "Ingresa el código de verificación de 6 dígitos que te hemos enviado",
-		"header": "Verificación de OTP"
+		"header": "Verificación de OTP",
+    "confirmationDialog": {
+      "title": "Quieres cancelar la descarga?",
+      "message": "OUna vez cancelada, su tarjeta no se descargará y deberá reiniciar la descarga.",
+      "wait": "No, esperaré",
+      "cancel": "Sí, cancelar"
+    }
 	},
 	"MyVcsTab": {
 		"addVcButton": "Agregar Tarjeta",
@@ -274,7 +274,8 @@
 	},
   "IssuersScreen": {
 		"title": "Agregar nueva tarjeta",
-		"header": "Elija su emisor preferido entre las opciones siguientes para agregar una nueva tarjeta.",
+		"description": "Elija su emisor preferido entre las opciones siguientes para agregar una nueva tarjeta.",
+    "searchByIssuersName": "Buscar por nombre del emisor",
 		"itemHeading": "Descargar vía {{issuer}}",
     "itemSubHeading": "Introduce tu DNI para descargar tu tarjeta.",
     "loaders": {

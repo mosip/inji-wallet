@@ -8,10 +8,11 @@ import ar from './locales/ara.json';
 import hi from './locales/hin.json';
 import kn from './locales/kan.json';
 import ta from './locales/tam.json';
-import Storage from './shared/storage';
 
 import {iso6393To1} from 'iso-639-3';
 import {LocalizedField} from './types/VC/ExistingMosipVC/vc';
+import Keychain from 'react-native-keychain';
+import {getItem} from './machines/store';
 
 const resources = {en, fil, ar, hi, kn, ta};
 const locale = Localization.locale;
@@ -36,7 +37,12 @@ i18next
     supportedLngs: Object.keys(SUPPORTED_LANGUAGES),
   })
   .then(async () => {
-    const language = await Storage.getItem('language');
+    const existingCredentials = await Keychain.getGenericPassword();
+    const language = await getItem(
+      'language',
+      null,
+      existingCredentials.password,
+    );
     if (language !== i18next.language) {
       i18next.changeLanguage(language);
       populateLanguageCodeMap();

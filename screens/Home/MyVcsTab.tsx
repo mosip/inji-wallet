@@ -62,7 +62,21 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         ),
       );
     }
-  }, [controller.areAllVcsLoaded, controller.inProgressVcDownloads]);
+
+    if (controller.isTampered) {
+      sendErrorEvent(
+        getErrorEventData(
+          TelemetryConstants.FlowType.appLogin,
+          TelemetryConstants.ErrorId.vcsAreTampered,
+          TelemetryConstants.ErrorMessage.vcsAreTampered,
+        ),
+      );
+    }
+  }, [
+    controller.areAllVcsLoaded,
+    controller.inProgressVcDownloads,
+    controller.isTampered,
+  ]);
 
   let failedVCsList = [];
   controller.downloadFailedVcs.forEach(vc => {

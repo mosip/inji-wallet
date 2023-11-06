@@ -162,14 +162,10 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
     LOGOUT: () => {
       setIsVisible(false);
       const navigate = () => {
+        props.navigation.navigate('Welcome');
         authService.send(AuthEvents.LOGOUT());
       };
-
-      if (isIOS()) {
-        setTimeout(() => navigate(), 0);
-      } else {
-        navigate();
-      }
+      setTimeout(() => navigate(), 10);
     },
 
     CANCEL: () => {

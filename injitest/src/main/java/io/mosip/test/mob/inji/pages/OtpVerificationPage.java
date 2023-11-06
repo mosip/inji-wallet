@@ -12,6 +12,9 @@ public class OtpVerificationPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "OTP Verification")
     private WebElement otpVerificationText;
 
+    @AndroidFindBy(xpath = "//*[contains(@text,'OTP is invalid')]")
+    private WebElement invalidOtpMessage;
+
     public OtpVerificationPage(AppiumDriver driver) {
         super(driver);
     }
@@ -24,5 +27,9 @@ public class OtpVerificationPage extends BasePage {
         SetPasscode setPasscode = new SetPasscode(driver);
         setPasscode.enterPasscode(otp, os);
         return new HomePage(driver);
+    }
+
+    public boolean invalidOtpMessageDisplayed() {
+        return this.isElementDisplayed(invalidOtpMessage, "OTP is invalid");
     }
 }

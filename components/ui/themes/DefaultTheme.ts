@@ -1181,13 +1181,38 @@ export const DefaultTheme = {
       backgroundColor: Colors.Transparent,
     },
   }),
-  issuersScreenStyles: StyleSheet.create({
+  IssuersScreenStyles: StyleSheet.create({
+    issuersSearchBar: {
+      borderWidth: 1,
+      borderColor: Colors.Gray50,
+      height: Dimensions.get('window').height * 0.055,
+      width: Dimensions.get('window').width * 0.84,
+      paddingLeft: 12,
+      borderLeftWidth: 0,
+      borderTopRightRadius: 9,
+      borderBottomRightRadius: 9,
+    },
+    searchIcon: {
+      justifyContent: 'center',
+      paddingLeft: 15,
+      height: Dimensions.get('window').height * 0.055,
+      width: Dimensions.get('window').width * 0.1,
+      borderColor: Colors.Gray50,
+      borderTopWidth: 1,
+      borderBottomWidth: 1,
+      borderLeftWidth: 1,
+      borderTopLeftRadius: 9,
+      borderBottomLeftRadius: 9,
+    },
     issuerListOuterContainer: {
       padding: 10,
       flex: 1,
       backgroundColor: Colors.White,
     },
-    issuersContainer: {marginHorizontal: 3},
+    issuersContainer: {
+      marginHorizontal: 3,
+      marginTop: 5,
+    },
     issuerBoxContainer: {
       margin: 5,
       flex: 1,
@@ -1265,6 +1290,23 @@ export const DefaultTheme = {
       justifyContent: 'space-around',
       backgroundColor: Colors.White,
       maxHeight: Dimensions.get('window').height,
+    },
+  }),
+  BottomTabBarStyle: StyleSheet.create({
+    headerRightContainerStyle: {paddingEnd: 13},
+    headerLeftContainerStyle: {paddingEnd: 13},
+    tabBarLabelStyle: {
+      fontSize: 12,
+      fontFamily: 'Inter_600SemiBold',
+    },
+    tabBarStyle: {
+      display: 'flex',
+      height: 75,
+      paddingHorizontal: 10,
+    },
+    tabBarItemStyle: {
+      height: 83,
+      padding: 11,
     },
   }),
 
