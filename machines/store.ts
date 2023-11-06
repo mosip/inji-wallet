@@ -594,8 +594,13 @@ export async function removeItem(
       await removeVCMetaData(MY_VCS_STORE_KEY, key, encryptionKey);
     } else if (key === MY_VCS_STORE_KEY) {
       const data = await Storage.getItem(key, encryptionKey);
-      const decryptedData = await decryptJson(encryptionKey, data);
-      const list = JSON.parse(decryptedData) as Object[];
+      let list: Object[] = [];
+
+      if (data !== null) {
+        const decryptedData = await decryptJson(encryptionKey, data);
+        list = JSON.parse(decryptedData) as Object[];
+      }
+
       const newList = list.filter((vcMetadataObject: Object) => {
         return new VCMetadata(vcMetadataObject).getVcKey() !== value;
       });
@@ -616,8 +621,13 @@ export async function removeVCMetaData(
 ) {
   try {
     const data = await Storage.getItem(key, encryptionKey);
-    const decryptedData = await decryptJson(encryptionKey, data);
-    const list = JSON.parse(decryptedData) as Object[];
+    let list: Object[] = [];
+
+    if (data != null) {
+      const decryptedData = await decryptJson(encryptionKey, data);
+      list = JSON.parse(decryptedData) as Object[];
+    }
+
     const newList = list.filter((vcMetadataObject: Object) => {
       return new VCMetadata(vcMetadataObject).getVcKey() !== vcKey;
     });
@@ -648,8 +658,13 @@ export async function removeItems(
 ) {
   try {
     const data = await Storage.getItem(key, encryptionKey);
-    const decryptedData = await decryptJson(encryptionKey, data);
-    const list = JSON.parse(decryptedData) as Object[];
+    let list: Object[] = [];
+
+    if (data !== null) {
+      const decryptedData = await decryptJson(encryptionKey, data);
+      list = JSON.parse(decryptedData) as Object[];
+    }
+
     const newList = list.filter(
       (vcMetadataObject: Object) =>
         !values.includes(new VCMetadata(vcMetadataObject).getVcKey()),
