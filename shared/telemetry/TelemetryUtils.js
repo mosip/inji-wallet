@@ -228,7 +228,9 @@ export const TelemetryConstants = {
     otpVerificationModal: 'Otp Verification Modal',
     issuerList: 'Issuer List',
     scanScreen: 'Scan Screen',
+    sharingInProgressScreen: 'Sharing in Progress',
     vcList: 'VC List',
     vcShareSuccessPage: 'VC Successfully Shared Page',
+    vcReceivedSuccessPage: 'VC Successfully Received Page',
   }),
 };

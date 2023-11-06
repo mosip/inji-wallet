@@ -23,6 +23,17 @@ import {VerifierDataEvent} from 'react-native-tuvali/src/types/events';
 import {BLEError} from '../types';
 import Storage from '../../../shared/storage';
 import {VCMetadata} from '../../../shared/VCMetadata';
+import {
+  TelemetryConstants,
+  getEndEventData,
+  getErrorEventData,
+  getImpressionEventData,
+  getStartEventData,
+  sendEndEvent,
+  sendErrorEvent,
+  sendImpressionEvent,
+  sendStartEvent,
+} from '../../../shared/telemetry/TelemetryUtils';
 // import { verifyPresentation } from '../shared/vcjs/verifyPresentation';
 
 const {verifier, EventTypes, VerificationStatus} = tuvali;
@@ -107,7 +118,7 @@ export const requestMachine =
         },
         BLE_ERROR: {
           target: '.handlingBleError',
-          actions: 'setBleError',
+          actions: ['sendBLEConnectionErrorEvent', 'setBleError'],
         },
         RESET: {
           target: '.checkNearbyDevicesPermission',
@@ -241,7 +252,11 @@ export const requestMachine =
             },
             CONNECTED: {
               target: 'waitingForVc',
-              actions: ['setSenderInfo', 'setReceiverInfo'],
+              actions: [
+                'setSenderInfo',
+                'setReceiverInfo',
+                'sendVcSharingStartEvent',
+              ],
             },
 
             DISCONNECT: {
@@ -268,6 +283,7 @@ export const requestMachine =
               on: {
                 CANCEL: {
                   target: '#request.cancelling',
+                  actions: 'sendVCShareFlowTimeoutEndEvent',
                 },
               },
             },
@@ -275,6 +291,7 @@ export const requestMachine =
           on: {
             DISCONNECT: {
               target: 'disconnected',
+              actions: ['sendVCSharingDisconnectedEvent'],
             },
             VC_RECEIVED: {
               target: 'reviewing.accepting',
@@ -300,7 +317,10 @@ export const requestMachine =
                 },
                 FACE_INVALID: {
                   target: 'invalidIdentity',
-                  actions: 'setReceiveLogTypeUnverified',
+                  actions: [
+                    'setReceiveLogTypeUnverified',
+                    'sendVcShareFailedEvent',
+                  ],
                 },
                 CANCEL: {
                   target: 'idle',
@@ -394,6 +414,7 @@ export const requestMachine =
                 'sendVcReceived',
                 'setReceiveLogTypeRegular',
                 'logReceived',
+                'sendVcShareSuccessEvent',
               ],
               invoke: {
                 src: 'sendVcResponse',
@@ -408,7 +429,11 @@ export const requestMachine =
               },
             },
             rejected: {
-              entry: ['setReceiveLogTypeDiscarded', 'logReceived'],
+              entry: [
+                'setReceiveLogTypeDiscarded',
+                'logReceived',
+                'sendVcRejectedEvent',
+              ],
               invoke: {
                 src: 'sendVcResponse',
                 data: {
@@ -452,7 +477,11 @@ export const requestMachine =
             },
             savingFailed: {
               initial: 'idle',
-              entry: ['setReceiveLogTypeDiscarded', 'logReceived'],
+              entry: [
+                'setReceiveLogTypeDiscarded',
+                'logReceived',
+                'sendVcRejectedEvent',
+              ],
               invoke: {
                 src: 'sendVcResponse',
                 data: {
@@ -672,6 +701,98 @@ export const requestMachine =
             shouldVerifyPresence: false,
           }),
         }),
+
+        sendVcSharingStartEvent: () => {
+          sendStartEvent(
+            getStartEventData(TelemetryConstants.FlowType.receiverVcShare),
+          );
+          sendImpressionEvent(
+            getImpressionEventData(
+              TelemetryConstants.FlowType.receiverVcShare,
+              TelemetryConstants.Screens.sharingInProgressScreen,
+            ),
+          );
+        },
+
+        sendVCShareFlowTimeoutEndEvent: () => {
+          sendEndEvent(
+            getEndEventData(
+              TelemetryConstants.FlowType.receiverVcShare,
+              TelemetryConstants.EndEventStatus.failure,
+              {comment: 'VC sharing timeout'},
+            ),
+          );
+        },
+
+        sendVcShareSuccessEvent: () => {
+          sendImpressionEvent(
+            getImpressionEventData(
+              TelemetryConstants.FlowType.receiverVcShare,
+              TelemetryConstants.Screens.vcReceivedSuccessPage,
+            ),
+          );
+          sendEndEvent(
+            getEndEventData(
+              TelemetryConstants.FlowType.receiverVcShare,
+              TelemetryConstants.EndEventStatus.success,
+            ),
+          );
+        },
+
+        sendVcShareFailedEvent: () => {
+          sendEndEvent(
+            getEndEventData(
+              TelemetryConstants.FlowType.receiverVcShare,
+              TelemetryConstants.EndEventStatus.failure,
+            ),
+          );
+        },
+
+        sendBLEConnectionErrorEvent: (_, event) => {
+          sendErrorEvent(
+            getErrorEventData(
+              TelemetryConstants.FlowType.receiverVcShare,
+              event.bleError.code,
+              event.bleError.message,
+            ),
+          );
+          sendEndEvent(
+            getEndEventData(
+              TelemetryConstants.FlowType.receiverVcShare,
+              TelemetryConstants.EndEventStatus.failure,
+            ),
+          );
+        },
+
+        sendVcRejectedEvent: () => {
+          sendEndEvent(
+            getEndEventData(
+              TelemetryConstants.FlowType.receiverVcShare,
+              TelemetryConstants.EndEventStatus.failure,
+              {comment: 'VC Rejected by the verifier'},
+            ),
+          );
+        },
+
+        sendVCSharingTerminatedEvent: () => {
+          sendEndEvent(
+            getEndEventData(
+              TelemetryConstants.FlowType.receiverVcShare,
+              TelemetryConstants.EndEventStatus.failure,
+              {comment: 'Verifier Disconnected'},
+            ),
+          );
+        },
+
+        sendVCSharingDisconnectedEvent: () => {
+          sendEndEvent(
+            getEndEventData(
+              TelemetryConstants.FlowType.receiverVcShare,
+              TelemetryConstants.EndEventStatus.failure,
+              {comment: 'VC Sharing cancelled by sender'},
+            ),
+          );
+        },
       },
 
       services: {
@@ -763,6 +884,7 @@ export const requestMachine =
         },
 
         monitorConnection: () => callback => {
+          const verifierErrorCodePrefix = 'TVV';
           const subscription = verifier.handleDataEvents(event => {
             if (event.type === EventTypes.onDisconnected) {
               callback({type: 'DISCONNECT'});
@@ -770,7 +892,7 @@ export const requestMachine =
 
             if (
               event.type === EventTypes.onError &&
-              event.code.includes('TVV')
+              event.code.includes(verifierErrorCodePrefix)
             ) {
               callback({
                 type: 'BLE_ERROR',
