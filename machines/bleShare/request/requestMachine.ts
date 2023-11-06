@@ -261,6 +261,12 @@ export const requestMachine =
 
             DISCONNECT: {
               target: 'disconnected',
+              on: {
+                CANCEL: {
+                  target: '#request.cancelling',
+                  actions: ['sendVCSharingTerminatedEvent'],
+                },
+              },
             },
           },
         },
