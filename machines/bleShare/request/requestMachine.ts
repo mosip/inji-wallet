@@ -24,7 +24,6 @@ import {BLEError} from '../types';
 import Storage from '../../../shared/storage';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {
-  TelemetryConstants,
   getEndEventData,
   getErrorEventData,
   getImpressionEventData,
@@ -34,6 +33,7 @@ import {
   sendImpressionEvent,
   sendStartEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 // import { verifyPresentation } from '../shared/vcjs/verifyPresentation';
 
 const {verifier, EventTypes, VerificationStatus} = tuvali;

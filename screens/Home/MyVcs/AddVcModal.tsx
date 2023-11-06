@@ -5,7 +5,7 @@ import {OtpVerificationModal} from './OtpVerificationModal';
 import {IdInputModal} from './IdInputModal';
 import {useTranslation} from 'react-i18next';
 import {GET_INDIVIDUAL_ID} from '../../../shared/constants';
-import {TelemetryConstants} from '../../../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 import {Button, Column} from '../../../components/ui';
 
 export const AddVcModal: React.FC<AddVcModalProps> = props => {

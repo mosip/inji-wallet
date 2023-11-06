@@ -8,11 +8,11 @@ import {RootRouteProps} from '../routes';
 import {useBiometricScreen} from './BiometricScreenController';
 import {Passcode} from '../components/Passcode';
 import {
-  TelemetryConstants,
   getEventType,
   incrementRetryCount,
   resetRetryCount,
 } from '../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
 
 export const BiometricScreen: React.FC<RootRouteProps> = props => {
   const {t} = useTranslation('BiometricScreen');

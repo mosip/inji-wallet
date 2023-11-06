@@ -9,11 +9,11 @@ import {
 import {PasscodeRouteProps} from '../routes';
 import {GlobalContext} from '../shared/GlobalContext';
 import {
-  TelemetryConstants,
   getEndEventData,
   getEventType,
   sendEndEvent,
 } from '../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
 
 export function usePasscodeScreen(props: PasscodeRouteProps) {
   const {appService} = useContext(GlobalContext);

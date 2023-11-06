@@ -6,12 +6,12 @@ import {ModalProps, Modal} from '../../../components/ui/Modal';
 import {Theme} from '../../../components/ui/styleUtils';
 import {Image, TouchableOpacity} from 'react-native';
 import {
-  TelemetryConstants,
   getImpressionEventData,
   incrementRetryCount,
   resetRetryCount,
   sendImpressionEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 
 export const OtpVerificationModal: React.FC<
   OtpVerificationModalProps

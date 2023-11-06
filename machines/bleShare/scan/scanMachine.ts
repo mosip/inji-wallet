@@ -44,12 +44,13 @@ import {
   getEndEventData,
   sendStartEvent,
   sendEndEvent,
-  TelemetryConstants,
   sendImpressionEvent,
   getImpressionEventData,
   sendErrorEvent,
   getErrorEventData,
 } from '../../../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
+
 import {logState} from '../../../shared/commonUtil';
 
 const {wallet, EventTypes, VerificationStatus} = tuvali;

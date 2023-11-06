@@ -17,8 +17,9 @@ import {
   getInteractEventData,
   sendErrorEvent,
   sendInteractEvent,
-  TelemetryConstants,
 } from '../../../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
+
 import {API_URLS} from '../../../shared/api';
 
 const model = createModel(
