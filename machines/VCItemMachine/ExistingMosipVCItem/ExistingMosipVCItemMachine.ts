@@ -62,8 +62,9 @@ const model = createModel(
     transactionId: '',
     bindingTransactionId: '',
     revoked: false,
-    maxDownloadCount: 10,
-    downloadInterval: 5000,
+    downloadCounter: 0,
+    maxDownloadCount: null as number,
+    downloadInterval: null as number,
     walletBindingResponse: null as WalletBindingResponse,
     walletBindingError: '',
     walletBindingSuccess: false,
@@ -201,7 +202,7 @@ export const ExistingMosipVCItemMachine =
                 },
                 FAILED: [
                   {
-                    actions: ['incrementDownloadCounter', 'sendVcUpdated'],
+                    actions: ['incrementDownloadCounter'],
                     target: 'verifyingDownloadLimitExpiry',
                   },
                 ],
@@ -219,7 +220,6 @@ export const ExistingMosipVCItemMachine =
                     actions: [
                       send('POLL_DOWNLOAD', {to: 'downloadCredential'}),
                       'incrementDownloadCounter',
-                      'sendVcUpdated',
                     ],
                   },
                   {
@@ -232,8 +232,6 @@ export const ExistingMosipVCItemMachine =
                 },
                 STORE_RESPONSE: {
                   actions: [
-                    'deleteCounterFromVcMetadata',
-                    'sendVcUpdated',
                     'setVerifiableCredential',
                     'updateVc',
                     'logDownloaded',
@@ -1078,19 +1076,8 @@ export const ExistingMosipVCItemMachine =
           },
         ),
 
-        incrementDownloadCounter: assign({
-          vcMetadata: context =>
-            new VCMetadata({
-              ...context.vcMetadata,
-              downloadCounter: context.vcMetadata.downloadCounter + 1,
-            }),
-        }),
-
-        deleteCounterFromVcMetadata: assign({
-          vcMetadata: context => {
-            delete context.vcMetadata.downloadCounter;
-            return context.vcMetadata;
-          },
+        incrementDownloadCounter: model.assign({
+          downloadCounter: ({downloadCounter}) => downloadCounter + 1,
         }),
 
         setMaxDownloadCount: model.assign({
@@ -1291,7 +1278,7 @@ export const ExistingMosipVCItemMachine =
           const maxLimit: number = resp.vcDownloadMaxRetry;
           const vcDownloadPoolInterval: number = resp.vcDownloadPoolInterval;
           console.log(maxLimit);
-          if (maxLimit <= context.vcMetadata.downloadCounter) {
+          if (maxLimit <= context.downloadCounter) {
             throw new Error(
               'Download limit expired for request id: ' +
                 context.vcMetadata.requestId,
@@ -1391,23 +1378,27 @@ export const ExistingMosipVCItemMachine =
 
           onReceive(async event => {
             if (event.type === 'POLL_STATUS') {
-              const response = await request(
-                API_URLS.credentialStatus.method,
-                API_URLS.credentialStatus.buildURL(
-                  context.vcMetadata.requestId,
-                ),
-              );
-              switch (response.response?.statusCode) {
-                case 'NEW':
-                  break;
-                case 'ISSUED':
-                case 'printing':
-                  callback(model.events.DOWNLOAD_READY());
-                  break;
-                case 'FAILED':
-                default:
-                  callback(model.events.FAILED());
-                  break;
+              try {
+                const response = await request(
+                  API_URLS.credentialStatus.method,
+                  API_URLS.credentialStatus.buildURL(
+                    context.vcMetadata.requestId,
+                  ),
+                );
+                switch (response.response?.statusCode) {
+                  case 'NEW':
+                    break;
+                  case 'ISSUED':
+                  case 'printing':
+                    callback(model.events.DOWNLOAD_READY());
+                    break;
+                  case 'FAILED':
+                  default:
+                    callback(model.events.FAILED());
+                    break;
+                }
+              } catch (error) {
+                callback(model.events.FAILED());
               }
             }
           });
@@ -1533,9 +1524,7 @@ export const ExistingMosipVCItemMachine =
         },
 
         isDownloadAllowed: _context => {
-          return (
-            _context.vcMetadata.downloadCounter <= _context.maxDownloadCount
-          );
+          return _context.downloadCounter <= _context.maxDownloadCount;
         },
 
         isVcValid: context => {

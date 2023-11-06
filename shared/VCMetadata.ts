@@ -13,7 +13,6 @@ export class VCMetadata {
   issuer?: string = '';
   protocol?: string = '';
   static vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
-  downloadCounter?: number = 0;
 
   constructor({
     idType = '',
@@ -22,7 +21,6 @@ export class VCMetadata {
     id = '',
     issuer = '',
     protocol = '',
-    downloadCounter = 0,
   } = {}) {
     this.idType = idType;
     this.requestId = requestId;
@@ -30,7 +28,6 @@ export class VCMetadata {
     this.id = id;
     this.protocol = protocol;
     this.issuer = issuer;
-    this.downloadCounter = downloadCounter;
   }
 
   //TODO: Remove any typing and use appropriate typing
