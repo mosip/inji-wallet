@@ -401,12 +401,12 @@ export const scanMachine =
               {
                 target: 'connecting',
                 cond: 'isOpenIdQr',
-                actions: ['sendTelemetryStartEvent', 'setUri'],
+                actions: ['sendVcSharingStartEvent', 'setUri'],
               },
               {
                 target: 'showQrLogin',
                 cond: 'isQrLogin',
-                actions: ['sendTelemetryStartEvent', 'setLinkCode'],
+                actions: ['sendVcSharingStartEvent', 'setLinkCode'],
               },
               {
                 target: 'invalid',
@@ -911,13 +911,13 @@ export const scanMachine =
         sendVcShareSuccessEvent: () => {
           sendImpressionEvent(
             getImpressionEventData(
-              TelemetryConstants.FlowType.vcShare,
+              TelemetryConstants.FlowType.senderVcShare,
               TelemetryConstants.Screens.vcShareSuccessPage,
             ),
           );
           sendEndEvent(
             getEndEventData(
-              TelemetryConstants.FlowType.vcShare,
+              TelemetryConstants.FlowType.senderVcShare,
               TelemetryConstants.EndEventStatus.success,
             ),
           );
@@ -926,26 +926,26 @@ export const scanMachine =
         sendBLEConnectionErrorEvent: (context, event) => {
           sendErrorEvent(
             getErrorEventData(
-              TelemetryConstants.FlowType.vcShare,
+              TelemetryConstants.FlowType.senderVcShare,
               event.bleError.code,
               event.bleError.message,
             ),
           );
           sendEndEvent(
             getEndEventData(
-              TelemetryConstants.FlowType.vcShare,
+              TelemetryConstants.FlowType.senderVcShare,
               TelemetryConstants.EndEventStatus.failure,
             ),
           );
         },
 
-        sendTelemetryStartEvent: () => {
+        sendVcSharingStartEvent: () => {
           sendStartEvent(
-            getStartEventData(TelemetryConstants.FlowType.vcShare),
+            getStartEventData(TelemetryConstants.FlowType.senderVcShare),
           );
           sendImpressionEvent(
             getImpressionEventData(
-              TelemetryConstants.FlowType.vcShare,
+              TelemetryConstants.FlowType.senderVcShare,
               TelemetryConstants.Screens.scanScreen,
             ),
           );
@@ -954,7 +954,7 @@ export const scanMachine =
         sendVCShareFlowCancelEndEvent: () => {
           sendEndEvent(
             getEndEventData(
-              TelemetryConstants.FlowType.vcShare,
+              TelemetryConstants.FlowType.senderVcShare,
               TelemetryConstants.EndEventStatus.cancel,
               {comment: 'User cancelled VC share'},
             ),
@@ -964,7 +964,7 @@ export const scanMachine =
         sendVCShareFlowTimeoutEndEvent: () => {
           sendEndEvent(
             getEndEventData(
-              TelemetryConstants.FlowType.vcShare,
+              TelemetryConstants.FlowType.senderVcShare,
               TelemetryConstants.EndEventStatus.failure,
               {comment: 'VC sharing timeout'},
             ),
@@ -1019,13 +1019,14 @@ export const scanMachine =
         },
 
         monitorConnection: () => callback => {
+          const walletErrorCodePrefix = 'TVW';
           const subscription = wallet.handleDataEvents(event => {
             if (event.type === EventTypes.onDisconnected) {
               callback({type: 'DISCONNECT'});
             }
             if (
               event.type === EventTypes.onError &&
-              event.code.includes('TVW')
+              event.code.includes(walletErrorCodePrefix)
             ) {
               callback({
                 type: 'BLE_ERROR',

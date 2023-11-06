@@ -51,7 +51,7 @@ export const SendVcScreen: React.FC = () => {
   useEffect(() => {
     sendImpressionEvent(
       getImpressionEventData(
-        TelemetryConstants.FlowType.vcShare,
+        TelemetryConstants.FlowType.senderVcShare,
         TelemetryConstants.Screens.vcList,
       ),
     );

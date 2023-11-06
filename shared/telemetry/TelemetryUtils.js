@@ -184,7 +184,8 @@ export const TelemetryConstants = {
   FlowType: Object.freeze({
     vcDownload: 'VC Download',
     qrLogin: 'QR Login',
-    vcShare: 'VC Share',
+    senderVcShare: 'Sender VC Share',
+    receiverVcShare: 'Receiver VC Share',
     vcActivation: 'VC Activation',
     vcActivationFromKebab: 'VC Activation from kebab popup',
     appOnboarding: 'App Onboarding',
