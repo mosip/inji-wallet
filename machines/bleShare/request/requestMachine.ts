@@ -261,12 +261,6 @@ export const requestMachine =
 
             DISCONNECT: {
               target: 'disconnected',
-              on: {
-                CANCEL: {
-                  target: '#request.cancelling',
-                  actions: ['sendVCSharingTerminatedEvent'],
-                },
-              },
             },
           },
         },
@@ -277,6 +271,12 @@ export const requestMachine =
           initial: 'inProgress',
           states: {
             inProgress: {
+              on: {
+                CANCEL: {
+                  target: '#request.cancelling',
+                  actions: ['sendVCSharingTerminatedEvent'],
+                },
+              },
               after: {
                 SHARING_TIMEOUT: {
                   target: '#request.waitingForVc.timeout',
