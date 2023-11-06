@@ -224,7 +224,6 @@ export const ExistingMosipVCItemMachine =
                   },
                   {
                     target: 'verifyingDownloadLimitExpiry',
-                    actions: ['sendVcUpdated'],
                   },
                 ],
                 CREDENTIAL_DOWNLOADED: {
