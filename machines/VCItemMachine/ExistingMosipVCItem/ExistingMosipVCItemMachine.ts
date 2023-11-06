@@ -1405,10 +1405,9 @@ export const ExistingMosipVCItemMachine =
                   callback(model.events.DOWNLOAD_READY());
                   break;
                 case 'FAILED':
-                  callback(model.events.FAILED());
-                  break;
                 default:
                   callback(model.events.FAILED());
+                  break;
               }
             }
           });
