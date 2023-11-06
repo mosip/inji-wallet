@@ -527,6 +527,12 @@ export const scanMachine =
               initial: 'inProgress',
               states: {
                 inProgress: {
+                  on: {
+                    CANCEL: {
+                      target: '#scan.reviewing.cancelling',
+                      actions: ['sendVCShareFlowCancelEndEvent'],
+                    },
+                  },
                   after: {
                     SHARING_TIMEOUT: {
                       target: '#scan.reviewing.sendingVc.timeout',
