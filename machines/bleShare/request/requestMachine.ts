@@ -255,7 +255,7 @@ export const requestMachine =
               actions: [
                 'setSenderInfo',
                 'setReceiverInfo',
-                'sendVcSharingStartEvent',
+                'sendVCReceivingStartEvent',
               ],
             },
 
@@ -274,7 +274,7 @@ export const requestMachine =
               on: {
                 CANCEL: {
                   target: '#request.cancelling',
-                  actions: ['sendVCSharingTerminatedEvent'],
+                  actions: ['sendVCReceivingTerminatedEvent'],
                 },
               },
               after: {
@@ -289,7 +289,7 @@ export const requestMachine =
               on: {
                 CANCEL: {
                   target: '#request.cancelling',
-                  actions: 'sendVCShareFlowTimeoutEndEvent',
+                  actions: 'sendVCReceiveFlowTimeoutEndEvent',
                 },
               },
             },
@@ -297,7 +297,7 @@ export const requestMachine =
           on: {
             DISCONNECT: {
               target: 'disconnected',
-              actions: ['sendVCSharingDisconnectedEvent'],
+              actions: ['sendVCReceivingDisconnectedEvent'],
             },
             VC_RECEIVED: {
               target: 'reviewing.accepting',
@@ -325,7 +325,7 @@ export const requestMachine =
                   target: 'invalidIdentity',
                   actions: [
                     'setReceiveLogTypeUnverified',
-                    'sendVcShareFailedEvent',
+                    'sendVCReceiveFailedEvent',
                   ],
                 },
                 CANCEL: {
@@ -420,7 +420,7 @@ export const requestMachine =
                 'sendVcReceived',
                 'setReceiveLogTypeRegular',
                 'logReceived',
-                'sendVcShareSuccessEvent',
+                'sendVCReceiveSuccessEvent',
               ],
               invoke: {
                 src: 'sendVcResponse',
@@ -438,7 +438,7 @@ export const requestMachine =
               entry: [
                 'setReceiveLogTypeDiscarded',
                 'logReceived',
-                'sendVcRejectedEvent',
+                'sendVCReceiveRejectedEvent',
               ],
               invoke: {
                 src: 'sendVcResponse',
@@ -486,7 +486,7 @@ export const requestMachine =
               entry: [
                 'setReceiveLogTypeDiscarded',
                 'logReceived',
-                'sendVcRejectedEvent',
+                'sendVCReceiveRejectedEvent',
               ],
               invoke: {
                 src: 'sendVcResponse',
@@ -708,7 +708,7 @@ export const requestMachine =
           }),
         }),
 
-        sendVcSharingStartEvent: () => {
+        sendVCReceivingStartEvent: () => {
           sendStartEvent(
             getStartEventData(TelemetryConstants.FlowType.receiverVcShare),
           );
@@ -720,7 +720,7 @@ export const requestMachine =
           );
         },
 
-        sendVCShareFlowTimeoutEndEvent: () => {
+        sendVCReceiveFlowTimeoutEndEvent: () => {
           sendEndEvent(
             getEndEventData(
               TelemetryConstants.FlowType.receiverVcShare,
@@ -730,7 +730,7 @@ export const requestMachine =
           );
         },
 
-        sendVcShareSuccessEvent: () => {
+        sendVCReceiveSuccessEvent: () => {
           sendImpressionEvent(
             getImpressionEventData(
               TelemetryConstants.FlowType.receiverVcShare,
@@ -745,7 +745,7 @@ export const requestMachine =
           );
         },
 
-        sendVcShareFailedEvent: () => {
+        sendVCReceiveFailedEvent: () => {
           sendEndEvent(
             getEndEventData(
               TelemetryConstants.FlowType.receiverVcShare,
@@ -770,7 +770,7 @@ export const requestMachine =
           );
         },
 
-        sendVcRejectedEvent: () => {
+        sendVCReceiveRejectedEvent: () => {
           sendEndEvent(
             getEndEventData(
               TelemetryConstants.FlowType.receiverVcShare,
@@ -780,7 +780,7 @@ export const requestMachine =
           );
         },
 
-        sendVCSharingTerminatedEvent: () => {
+        sendVCReceivingTerminatedEvent: () => {
           sendEndEvent(
             getEndEventData(
               TelemetryConstants.FlowType.receiverVcShare,
@@ -790,7 +790,7 @@ export const requestMachine =
           );
         },
 
-        sendVCSharingDisconnectedEvent: () => {
+        sendVCReceivingDisconnectedEvent: () => {
           sendEndEvent(
             getEndEventData(
               TelemetryConstants.FlowType.receiverVcShare,
