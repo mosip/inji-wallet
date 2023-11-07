@@ -91,6 +91,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
 
       {controller.isAcceptingOtpInput && (
         <OtpVerificationModal
+          service={props.vcItemActor}
           isVisible={controller.isAcceptingOtpInput}
           onDismiss={controller.DISMISS}
           onInputDone={controller.inputOtp}
@@ -102,6 +103,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
 
       {controller.isAcceptingBindingOtp && (
         <OtpVerificationModal
+          service={props.vcItemActor}
           isVisible={controller.isAcceptingBindingOtp}
           onDismiss={controller.DISMISS}
           onInputDone={controller.inputOtp}
