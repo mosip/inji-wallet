@@ -89,7 +89,7 @@ public class VcDownloadAndVerifyUsingVidTest extends BaseTest {
         otpVerification.enterOtp(GetOtp(), target);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-        //
+        
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
 
@@ -99,6 +99,8 @@ public class VcDownloadAndVerifyUsingVidTest extends BaseTest {
         pleaseConfirmPopupPage.clickOnConfirmButton();
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         
+        HistoryPage historyPage = homePage.clickOnHistoryButton();
+        assertTrue(historyPage.verifyDeleteHistory(BaseTestCase.uin, target), "Verify if deleted history is displayed");
     }
     
 }

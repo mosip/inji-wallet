@@ -45,8 +45,6 @@ public class VcDownloadAndVerifyUsingUinTest extends BaseTest {
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
         assertTrue(detailedVcViewPage.isDetailedVcViewPageLoaded(), "Verify if detailed Vc view page is displayed");
         assertTrue(detailedVcViewPage.isDetailedVcViewLoaded(TestDataReader.readData("fullName")));
-
-
     }
 
     @Test
@@ -179,8 +177,7 @@ public class VcDownloadAndVerifyUsingUinTest extends BaseTest {
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
         assertTrue(historyPage.verifyHistory(BaseTestCase.uin, target));
         
-        historyPage.getNumberOfRecordsInHistory(BaseTestCase.uin, target,"Verify two download records inhistory page");
-        assertEquals(historyPage.getNumberOfRecordsInHistory(BaseTestCase.uin, target,""),2);
+        assertEquals(historyPage.getNumberOfRecordsInHistory(BaseTestCase.uin, target,"Verify two download records in history page"),2);
       
     }
    
