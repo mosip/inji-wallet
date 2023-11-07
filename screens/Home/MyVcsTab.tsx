@@ -16,10 +16,11 @@ import {groupBy} from '../../shared/javascript';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
 import {BannerNotification} from '../../components/BannerNotification';
 import {
-  TelemetryConstants,
   getErrorEventData,
   sendErrorEvent,
 } from '../../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
+
 import {Error} from '../../components/ui/Error';
 
 const pinIconProps = {iconName: 'pushpin', iconType: 'antdesign'};

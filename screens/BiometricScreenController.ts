@@ -26,9 +26,10 @@ import {
   sendEndEvent,
   sendInteractEvent,
   sendStartEvent,
-  TelemetryConstants,
   resetRetryCount,
 } from '../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
+
 import {isAndroid} from '../shared/constants';
 
 export function useBiometricScreen(props: RootRouteProps) {

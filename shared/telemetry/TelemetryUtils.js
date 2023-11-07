@@ -13,6 +13,7 @@ import {OBSRV_HOST} from 'react-native-dotenv';
 import DeviceInfo from 'react-native-device-info';
 import {isHardwareKeystoreExists} from '../cryptoutil/cryptoUtil';
 import * as RNLocalize from 'react-native-localize';
+import {TelemetryConstants} from './TelemetryConstants';
 
 export function sendStartEvent(data) {
   telemetry.start({}, '', '', data, {});
@@ -179,61 +180,4 @@ const languageCodeMap = {
   hi: 'Hindi',
   kn: 'Kannada',
   ta: 'Tamil',
-};
-export const TelemetryConstants = {
-  FlowType: Object.freeze({
-    vcDownload: 'VC Download',
-    qrLogin: 'QR Login',
-    vcShare: 'VC Share',
-    vcActivation: 'VC Activation',
-    vcActivationFromKebab: 'VC Activation from kebab popup',
-    appOnboarding: 'App Onboarding',
-    appLogin: 'App Login',
-    vcLockOrRevoke: 'VC Lock / VC Revoke',
-    getVcUsingAid: 'Get VC using AID',
-  }),
-
-  EndEventStatus: Object.freeze({
-    success: 'SUCCESS',
-    cancel: 'CANCEL',
-    failure: 'FAILURE',
-  }),
-
-  InteractEventSubtype: Object.freeze({
-    click: 'CLICK',
-  }),
-
-  ErrorMessage: Object.freeze({
-    authenticationCancelled: 'Authentication Cancelled',
-    passcodeDidNotMatch: 'Pass code did not match',
-    resendOtp: 'Otp is requested multiple times',
-    hardwareKeyStore:
-      'Some security features will be unavailable as hardware key store is not available',
-    activationCancelled: 'Activation Cancelled',
-    appWasReset:
-      'Due to the fingerprint / facial recognition update, app security was impacted, and downloaded cards were removed. Please download again',
-    vcsAreTampered:
-      'Tampered cards detected and removed for security reasons. Please download again',
-  }),
-
-  ErrorId: Object.freeze({
-    mismatch: 'MISMATCH',
-    doesNotExist: 'DOES_NOT_EXIST',
-    userCancel: 'USER_CANCEL',
-    resend: 'RESEND',
-    activationFailed: 'ACTIVATION_FAILED',
-    appWasReset: 'APP_WAS_RESET',
-    vcsAreTampered: 'VCS_ARE_TAMPERED',
-  }),
-
-  Screens: Object.freeze({
-    home: 'Home',
-    passcode: 'Passcode',
-    webViewPage: 'Web View Page',
-    otpVerificationModal: 'Otp Verification Modal',
-    issuerList: 'Issuer List',
-    scanScreen: 'Scan Screen',
-    vcList: 'VC List',
-    vcShareSuccessPage: 'VC Successfully Shared Page',
-  }),
 };

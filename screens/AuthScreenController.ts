@@ -25,8 +25,8 @@ import {
   getImpressionEventData,
   getEndEventData,
   sendEndEvent,
-  TelemetryConstants,
 } from '../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
 
 export function useAuthScreen(props: RootRouteProps) {
   const {appService} = useContext(GlobalContext);
