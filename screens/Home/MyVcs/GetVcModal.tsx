@@ -4,7 +4,7 @@ import {useGetVcModal, GetVcModalProps} from './GetVcModalController';
 import {OtpVerificationModal} from './OtpVerificationModal';
 import {GetIdInputModal} from './GetIdInputModal';
 import {useTranslation} from 'react-i18next';
-import {TelemetryConstants} from '../../../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 
 export const GetVcModal: React.FC<GetVcModalProps> = props => {
   const {t} = useTranslation('GetVcModal');

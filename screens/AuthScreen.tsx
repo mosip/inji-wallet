@@ -11,8 +11,8 @@ import {
   getInteractEventData,
   sendInteractEvent,
   sendStartEvent,
-  TelemetryConstants,
 } from '../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
 
 export const AuthScreen: React.FC<RootRouteProps> = props => {
   const {t} = useTranslation('AuthScreen');

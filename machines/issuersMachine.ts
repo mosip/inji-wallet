@@ -31,12 +31,13 @@ import {
 } from '../shared/openId4VCI/Utils';
 import {VCMetadata} from '../shared/VCMetadata';
 import {
-  TelemetryConstants,
   getEndEventData,
   getImpressionEventData,
   sendEndEvent,
   sendImpressionEvent,
 } from '../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
+
 import {
   CredentialWrapper,
   VerifiableCredential,

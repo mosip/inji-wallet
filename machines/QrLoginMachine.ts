@@ -24,9 +24,9 @@ import i18n from '../i18n';
 import {parseMetadatas, VCMetadata} from '../shared/VCMetadata';
 import {
   getEndEventData,
-  sendEndEvent,
-  TelemetryConstants,
+  sendEndEvent
 } from '../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
 import {API_URLS} from '../shared/api';
 import getAllConfigurations from '../shared/commonprops/commonProps';
 
