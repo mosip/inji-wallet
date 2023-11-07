@@ -25,6 +25,9 @@ public class MoreOptionsPage extends BasePage {
     @AndroidFindBy(accessibility = "profileAuthenticated")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"\uE8E8 Activated for online login!\"`][4]")
     private WebElement activatedForOnlineLoginButton;
+    
+    @AndroidFindBy(xpath = "//*[@resource-id=\"iconIcon\"]")
+    private WebElement CloseButton;
 
     public MoreOptionsPage(AppiumDriver driver) {
         super(driver);
@@ -50,5 +53,10 @@ public class MoreOptionsPage extends BasePage {
 
     public boolean isVcActivatedForOnlineLogin() {
         return this.isElementDisplayed(activatedForOnlineLoginButton, "Activated for online login text");
+    }
+    
+    public HomePage ClickOnCloseButton() {
+    	clickOnElement(CloseButton);
+    	return new HomePage(driver);
     }
 }
