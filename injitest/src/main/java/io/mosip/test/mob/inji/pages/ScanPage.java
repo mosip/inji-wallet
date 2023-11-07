@@ -43,10 +43,8 @@ public class ScanPage extends BasePage{
         return this.isElementEnabled(holdCameraSteady);
     }
 	
-	
 	public boolean isFlipCameraClickable() {
 		return this.isElementEnabled(flipCamera);
-		
 	}
 
 }

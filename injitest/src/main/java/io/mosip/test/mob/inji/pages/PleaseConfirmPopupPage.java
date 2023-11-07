@@ -12,10 +12,6 @@ public class PleaseConfirmPopupPage extends BasePage {
     
     @AndroidFindBy(accessibility = "no")
     private WebElement noButton;
-    
-    
-   
-    
 
     public PleaseConfirmPopupPage(AppiumDriver driver) {
         super(driver);
@@ -24,8 +20,6 @@ public class PleaseConfirmPopupPage extends BasePage {
     public boolean isPleaseConfirmPopupPageLoaded() {
         return this.isElementDisplayed(yesButton, "Popup confirmation page");
     }
-    
-    
 
     public OtpVerificationPage clickOnConfirmButton() {
         clickOnElement(yesButton);
@@ -36,7 +30,5 @@ public class PleaseConfirmPopupPage extends BasePage {
         clickOnElement(noButton);
         return new OtpVerificationPage(driver);
     }
-    
-    
 
 }

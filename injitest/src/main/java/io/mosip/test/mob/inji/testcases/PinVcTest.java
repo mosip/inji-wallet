@@ -94,8 +94,6 @@ public class PinVcTest extends BaseTest {
         assertTrue(scanPage.isCameraPageLoaded(), "Verify if pin icon on vc is displayed");
         assertTrue(scanPage.isFlipCameraClickable(),"Verify if flip camera is enabled");
         
-        
-        
     }
     
 }

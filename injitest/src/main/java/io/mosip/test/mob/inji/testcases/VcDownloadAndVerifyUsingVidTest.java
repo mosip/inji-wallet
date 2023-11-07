@@ -1,12 +1,9 @@
 package io.mosip.test.mob.inji.testcases;
 
 import org.testng.annotations.Test;
-
 import io.mosip.test.mob.inji.api.BaseTestCase;
 import io.mosip.test.mob.inji.pages.*;
 import io.mosip.test.mob.inji.utils.TestDataReader;
-
-import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 public class VcDownloadAndVerifyUsingVidTest extends BaseTest {
@@ -47,7 +44,8 @@ public class VcDownloadAndVerifyUsingVidTest extends BaseTest {
         assertTrue(detailedVcViewPage.isDetailedVcViewLoaded(TestDataReader.readData("fullName")));
     }
     
-    public void downloadTwoVcDeletUsingVid() throws InterruptedException {
+    @Test
+    public void downloadTwoVcDeleteOneUsingVid() throws InterruptedException {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
@@ -101,8 +99,6 @@ public class VcDownloadAndVerifyUsingVidTest extends BaseTest {
         pleaseConfirmPopupPage.clickOnConfirmButton();
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         
-        
     }
-    
     
 }

@@ -80,10 +80,11 @@ public class HomePage extends BasePage {
         return this.isElementDisplayed(fullName, 60, "Name on downloaded card");
     }
     
-    		public boolean isNameDisplayed1(String name) {
-    	        By fullName = By.xpath("(//*[contains(@text,'" + name + "')])[2]");
-    	        return this.isElementDisplayed(fullName, 60, "Name on downloaded card");
-    	    }
+   public boolean isSecondNameDisplayed(String name) {
+    	By fullName = By.xpath("(//*[contains(@text,'" + name + "')])[2]");
+    	return this.isElementDisplayed(fullName, 60, "Name on downloaded card");
+    	
+   }
 
     public DetailedVcViewPage openDetailedVcView(String name) {
         By fullName = By.xpath("//*[contains(@name,'" + name + "') or contains(@text,'" + name + "')]");

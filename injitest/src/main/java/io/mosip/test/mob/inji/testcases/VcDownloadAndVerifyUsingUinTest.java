@@ -130,7 +130,7 @@ public class VcDownloadAndVerifyUsingUinTest extends BaseTest {
     }
     
     @Test
-    public void genrateMultipleVcWithSameUin() throws InterruptedException {
+    public void generateMultipleVcWithSameUin() throws InterruptedException {
     	ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
@@ -162,7 +162,6 @@ public class VcDownloadAndVerifyUsingUinTest extends BaseTest {
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         
-        
         homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
@@ -174,23 +173,14 @@ public class VcDownloadAndVerifyUsingUinTest extends BaseTest {
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(GetOtp(), target);
 
-        assertTrue(homePage.isNameDisplayed1(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-        
+        assertTrue(homePage.isSecondNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         HistoryPage historyPage = homePage.clickOnHistoryButton();
 
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
         assertTrue(historyPage.verifyHistory(BaseTestCase.uin, target));
         
-        historyPage.getNumberOfRecordsInHistory(BaseTestCase.uin, target);
-        assertEquals(historyPage.getNumberOfRecordsInHistory(BaseTestCase.uin, target),2);
-        
-        
-        
-        
-        
-        
-  
-        
+        historyPage.getNumberOfRecordsInHistory(BaseTestCase.uin, target,"Verify two download records inhistory page");
+        assertEquals(historyPage.getNumberOfRecordsInHistory(BaseTestCase.uin, target,""),2);
       
     }
    

@@ -50,8 +50,6 @@ public class GenerateUinOrVidTest extends BaseTest {
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
 
-
     }
-    
     
 }

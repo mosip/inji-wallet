@@ -30,9 +30,16 @@ public class HistoryPage extends BasePage {
         By locator = By.xpath("//*[contains(@name,'" + vcNumber + " downloaded')]");
         return this.isElementDisplayed(locator, "Downloaded VC in ios");
     }
+    
+    
 
     private boolean verifyHistoryAndroid(String vcNumber) {
         By locator = By.xpath("//*[contains(@text,'" + vcNumber + " downloaded')]");
+        return this.isElementDisplayed(locator, "Downloaded VC in android");
+    }
+    
+    private boolean verifyDeleteHistoryAndroid(String vcNumber) {
+        By locator = By.xpath("//*[contains(@text,'" + vcNumber + " Removed from wallet')]");
         return this.isElementDisplayed(locator, "Downloaded VC in android");
     }
     
@@ -58,7 +65,7 @@ public class HistoryPage extends BasePage {
         return false;
     }
     
-    public int getNumberOfRecordsInHistory(String vcNumber, Target os) throws InterruptedException {
+    public int getNumberOfRecordsInHistory(String vcNumber, Target os, String string) throws InterruptedException {
         switch (os) {
             case ANDROID:
                 return verifyNumberOfRecordsInHistoryAndroid(vcNumber);
@@ -67,10 +74,17 @@ public class HistoryPage extends BasePage {
         }
         return 0;
     }
-
- 
     
     public boolean noHistoryAvailable() {
         return this.isElementDisplayed(noHistoryAvailable, "No history available yet");
+    }
+    
+    public boolean verifyDeleteHistory(String vcNumber, Target os) {
+        switch (os) {
+            case ANDROID:
+                return verifyDeleteHistoryAndroid(vcNumber);
+            
+        }
+        return false;
     }
 }
