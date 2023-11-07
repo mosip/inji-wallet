@@ -4,7 +4,7 @@ fileignoreconfig:
 - filename: package.json
   checksum: fdd5905228a1afbfb004c710fd6c61adf073a12840200327c0592b76bea5e7e3
 - filename: package-lock.json
-  checksum: 4515c3d663d9435eab0f56b75480c93c5209aa59befb2b71f2b3fe7c9051d80a
+  checksum: 179883df6d414d82b7f54353a3a4cc75e6a681224f4b6d1831ce85de27de2726
 - filename: components/PasscodeVerify.tsx
   checksum: 14654c0f038979fcd0d260170a45894a072f81e0767ca9a0e66935d33b5cc703
 - filename: i18n.ts
@@ -58,6 +58,8 @@ fileignoreconfig:
   checksum: 6d22bc5c77398316b943c512c208ce0846a9fff674c1ccac79e07f21962acd5f
 - filename: machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine.typegen.ts
   checksum: 10889302ca05646a283386be1bbe7a5fb510c02bb62a308ee45f3c2a872ae64e
+- filename: shared/telemetry/TelemetryConstants.js
+  checksum: 9d9acf3981cbde452489eacbbd70ebaa0b853c1c04e9712fa71368c089a9662b
 - filename: .github/workflows/internal-build.yml
   checksum: 3a3b4dea51cb496729c4e568113fc19cf5b008481bb4a5d157f211a2128b951b
 - filename: .github/workflows/push-triggers.yml
@@ -75,3 +77,4 @@ fileignoreconfig:
 - filename: ios/fastlane/Fastfile
   checksum: feea5a7f044ef6961d53e7d1e1ffb92a3e0f72761496424f6e64288e3718d605
   version: ""
+

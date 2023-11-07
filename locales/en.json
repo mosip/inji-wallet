@@ -160,7 +160,8 @@
   },
   "IssuersScreen": {
     "title": "Add new card",
-    "header": "Please choose your preferred issuer from the options below to add a new card.",
+    "description": "Please choose your preferred issuer from the options below to add a new card.",
+    "searchByIssuersName": "Search by Issuer’s name",
     "itemHeading": "Download via {{issuer}}",
     "itemSubHeading": "Enter your national ID to download your card.",
     "loaders": {
@@ -205,12 +206,6 @@
   },
   "AddVcModal": {
     "requestingCredential": "Requesting credential...",
-    "confirmationDialog": {
-      "title": "Do you want to cancel downloading?",
-      "message": "Once cancelled, your card will not be downloaded and you need to reinitiate the download.",
-      "wait": "No, I’ll wait",
-      "cancel": "Yes, Cancel"
-    },
     "errors": {
       "input": {
         "empty": "The input cannot be empty",
@@ -275,7 +270,13 @@
     "title": "OTP Verification",
     "otpSentMessage": "We've sent the 6 digit code to your registered mobile number!",
     "resendTheCode": "You can resend the code in ",
-    "resendCode": "Resend Code"
+    "resendCode": "Resend Code",
+    "confirmationDialog": {
+      "title": "Do you want to cancel downloading?",
+      "message": "Once cancelled, your card will not be downloaded and you need to reinitiate the download.",
+      "wait": "No, I’ll wait",
+      "cancel": "Yes, Cancel"
+    }
   },
   "MyVcsTab": {
     "bringYourDigitalID": "Bring your digital identity",

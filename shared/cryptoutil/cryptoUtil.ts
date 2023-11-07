@@ -1,6 +1,5 @@
 import {KeyPair, RSA} from 'react-native-rsa-native';
 import forge from 'node-forge';
-import getAllConfigurations from '../commonprops/commonProps';
 import {DEBUG_MODE_ENABLED, isIOS} from '../constants';
 import SecureKeystore from 'react-native-secure-keystore';
 import CryptoJS from 'crypto-js';
@@ -22,47 +21,24 @@ export function generateKeys(): Promise<KeyPair> {
  */
 export const isHardwareKeystoreExists = isCustomSecureKeystore();
 
-export async function getJwt(
-  privateKey: string,
+export async function getJWT(
+  header: object,
+  payLoad: object,
   individualId: string,
-  thumbprint: string,
+  privateKey: string,
 ) {
   try {
-    var iat = Math.floor(new Date().getTime() / 1000);
-    var exp = Math.floor(new Date().getTime() / 1000) + 18000;
-
-    var config = await getAllConfigurations();
-
-    const header = {
-      alg: 'RS256',
-      //'kid': keyId,
-      'x5t#S256': thumbprint,
-    };
-
-    const payloadJSON = JSON.stringify({
-      iss: config.issuer,
-      sub: individualId,
-      aud: config.audience,
-      iat: iat,
-      exp: exp,
-    });
-
-    var payload = JSON.parse(payloadJSON);
-    const strHeader = JSON.stringify(header);
-    const strPayload = JSON.stringify(payload);
-    const header64 = encodeB64(strHeader);
-    const payload64 = encodeB64(strPayload);
-    const preHash = header64 + '.' + payload64;
-
+    const header64 = encodeB64(JSON.stringify(header));
+    const payLoad64 = encodeB64(JSON.stringify(payLoad));
+    const preHash = header64 + '.' + payLoad64;
     const signature64 = await createSignature(
       privateKey,
       preHash,
       individualId,
     );
-
-    return header64 + '.' + payload64 + '.' + signature64;
+    return header64 + '.' + payLoad64 + '.' + signature64;
   } catch (e) {
-    console.log(e);
+    console.log('Exception Occured While Constructing JWT ', e);
     throw e;
   }
 }
@@ -139,6 +115,10 @@ export async function decryptJson(
   encryptedData: string,
 ): Promise<string> {
   try {
+    if (encryptedData === null || encryptedData === undefined) {
+      // to avoid crash in case of null or undefined
+      return '';
+    }
     // Disable Encryption in debug mode
     if (DEBUG_MODE_ENABLED && __DEV__) {
       return JSON.parse(encryptedData);
@@ -149,6 +129,7 @@ export async function decryptJson(
         CryptoJS.enc.Utf8,
       );
     }
+
     return await SecureKeystore.decryptData(ENCRYPTION_ID, encryptedData);
   } catch (e) {
     console.error('error decryptJson:', e);

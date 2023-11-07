@@ -19,27 +19,27 @@ export const Issuer: React.FC<IssuerProps> = (props: IssuerProps) => {
       style={({pressed}) =>
         pressed
           ? [
-              Theme.issuersScreenStyles.issuerBoxContainerPressed,
+              Theme.IssuersScreenStyles.issuerBoxContainerPressed,
               Theme.Styles.boxShadow,
             ]
           : [
-              Theme.issuersScreenStyles.issuerBoxContainer,
+              Theme.IssuersScreenStyles.issuerBoxContainer,
               Theme.Styles.boxShadow,
             ]
       }>
       <Image
         {...testIDProps(`issuerIcon-${props.testID}`)}
-        style={Theme.issuersScreenStyles.issuerIcon}
+        style={Theme.IssuersScreenStyles.issuerIcon}
         source={getIssuerLogo()}
       />
       <Text
         testID={`issuerHeading-${props.testID}`}
-        style={Theme.issuersScreenStyles.issuerHeading}>
+        style={Theme.IssuersScreenStyles.issuerHeading}>
         {t('itemHeading', {issuer: props.displayName})}
       </Text>
       <Text
         testID={`issuerDescription-${props.testID}`}
-        style={Theme.issuersScreenStyles.issuerDescription}>
+        style={Theme.IssuersScreenStyles.issuerDescription}>
         {t('itemSubHeading')}
       </Text>
     </Pressable>

@@ -110,6 +110,7 @@ export function useScanLayout() {
     statusOverlay = {
       title: t('status.inProgress'),
       progress: true,
+      onButtonPress: CANCEL,
     };
   } else if (isConnectingTimeout) {
     statusOverlay = {
@@ -144,6 +145,7 @@ export function useScanLayout() {
       title: t('status.sharing.title'),
       hint: t('status.sharing.hint'),
       progress: true,
+      onButtonPress: CANCEL,
     };
   } else if (isSendingVcTimeout) {
     statusOverlay = {

@@ -38,6 +38,9 @@ public class RetrieveIdPage extends BasePage {
     
     
 
+    @AndroidFindBy(xpath = "//*[contains(@text,'The input format is incorrect')]")
+    private WebElement inputFormatErrorMessage;
+
 
     public RetrieveIdPage(AppiumDriver driver) {
         super(driver);
@@ -79,4 +82,9 @@ public class RetrieveIdPage extends BasePage {
         }
         return this;
     }
+
+    public boolean isIncorrectInputFormatErrorMessageDisplayed() {
+        return isElementDisplayed(inputFormatErrorMessage, "The input format is incorrect");
+    }
+
 }

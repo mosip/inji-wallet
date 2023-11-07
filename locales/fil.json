@@ -158,7 +158,8 @@
   },
   "IssuersScreen": {
     "title": "Magdagdag ng bagong card",
-    "header": "Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.",
+    "description": "Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.",
+    "searchByIssuersName": "Maghanap ayon sa pangalan ng Nag-isyu",
     "itemHeading": "I-download sa pamamagitan ng {{issuer}}",
     "itemSubHeading": "Ilagay ang iyong national ID para i-download ang iyong card.",
     "loaders": {
@@ -203,12 +204,6 @@
   },
   "AddVcModal": {
     "requestingCredential": "Humihiling ng kredensyal...",
-    "confirmationDialog": {
-      "title": "Gusto mo bang kanselahin ang pag-download?",
-      "message": "Kapag nakansela, hindi na mada-download ang iyong card at kailangan mong simulan muli ang pag-download.",
-      "wait": "Hindi, maghihintay ako",
-      "cancel": "Oo, Kanselahin"
-    },
     "errors": {
       "input": {
         "empty": "Hindi maaaring walang laman ang input",
@@ -273,7 +268,13 @@
     "title": "Pag-verify ng OTP",
     "otpSentMessage": "Ipinadala namin ang 6 na digit na code sa iyong rehistradong mobile number!",
     "resendTheCode": "Maaari mong ipadala muli ang code sa ",
-    "resendCode": "Ipadala muli ang Code"
+    "resendCode": "Ipadala muli ang Code",
+    "confirmationDialog": {
+      "title": "Gusto mo bang kanselahin ang pag-download?",
+      "message": "Kapag nakansela, hindi na mada-download ang iyong card at kailangan mong simulan muli ang pag-download.",
+      "wait": "Hindi, maghihintay ako",
+      "cancel": "Oo, Kanselahin"
+    }
   },
   "MyVcsTab": {
     "bringYourDigitalID": "Dalhin ang Iyong Digital ID",

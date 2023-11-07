@@ -13,12 +13,12 @@ import {ExistingMosipVCItemMachine} from '../../../machines/VCItemMachine/Existi
 import testIDProps from '../../../shared/commonUtil';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {
-  TelemetryConstants,
   getEndEventData,
   getErrorEventData,
   sendEndEvent,
   sendErrorEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 
 export const WalletBinding: React.FC<WalletBindingProps> = props => {
   const controller = useKebabPopUp(props);
