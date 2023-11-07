@@ -45,9 +45,6 @@ public class HomePage extends BasePage {
 
     @AndroidFindBy(accessibility = "pinIcon")
     private WebElement pinIcon;
-    
-    @AndroidFindBy(xpath = "//*[contains(@text,'Scan')]")
-	 private WebElement scan;
 
     @AndroidFindBy(accessibility = "bringYourDigitalID")
     private WebElement bringYourDigitalIdentity;
@@ -119,11 +116,7 @@ public class HomePage extends BasePage {
         return this.isElementDisplayed(pinIcon, "pin icon");
     }
     
-    public Scan clickOnScanButton() {
-        this.clickOnElement(scan);
-        return new Scan(driver);
-    }
-
+    
     public boolean isNoVCDownloaded() {
         return this.isElementDisplayed(bringYourDigitalIdentity, "Bring your digital identity");
     }
