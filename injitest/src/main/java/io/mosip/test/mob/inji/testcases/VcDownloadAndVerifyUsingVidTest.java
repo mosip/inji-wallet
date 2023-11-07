@@ -41,5 +41,8 @@ public class VcDownloadAndVerifyUsingVidTest extends BaseTest {
         otpVerification.enterOtp(GetOtp(), target);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
+        assertTrue(detailedVcViewPage.isDetailedVcViewPageLoaded(), "Verify if detailed Vc view page is displayed");
+        assertTrue(detailedVcViewPage.isDetailedVcViewLoaded(TestDataReader.readData("fullName")));
     }
 }

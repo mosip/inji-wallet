@@ -9,5 +9,8 @@
   "aid": "10001100660000620230714065538",
   "setExcludedGroups":"AVT,PVT",
   "androidAppPath":"/Users/kamalsingh/TestAutomation/Inji/inji/injitest/apps/android/Inji.apk",
-  "androidDevice": "nightwatch-android-11"
+  "androidDevice": "nightwatch-android-11",
+  "uin": "5417524019",
+  "uin2": "5740943928",
+  "uin2FullName": "fbgfhgfhghd"
 }
