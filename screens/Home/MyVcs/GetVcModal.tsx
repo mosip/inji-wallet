@@ -19,6 +19,7 @@ export const GetVcModal: React.FC<GetVcModalProps> = props => {
       />
 
       <OtpVerificationModal
+        service={props.service}
         isVisible={controller.isAcceptingOtpInput}
         onDismiss={controller.DISMISS}
         onInputDone={controller.INPUT_OTP}
