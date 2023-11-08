@@ -19,6 +19,9 @@ public class HelpPage extends BasePage {
     @AndroidFindBy(uiAutomator = "new UiScrollable(new UiSelector()).scrollIntoView(text(\"How to view activity logs?\"));")
     public WebElement howToViewActivity;
     
+    @AndroidFindBy(xpath = "//*[contains(@text,'How to add a card?')]")
+    public WebElement howToAddCard;
+    
     public HelpPage(AppiumDriver driver) {
         super(driver);
     }
@@ -35,4 +38,7 @@ public class HelpPage extends BasePage {
     	howToViewActivity.click();
     }
     
+    public boolean isHowToAddCardLoad() {
+    	return howToAddCard.getText().isEmpty();
+    }
 }

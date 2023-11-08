@@ -2,13 +2,15 @@ package io.mosip.test.mob.inji.testcases;
 
 import org.testng.annotations.Test;
 import io.mosip.test.mob.inji.pages.*;
+import io.mosip.test.mob.inji.utils.CommonMethods;
 import io.mosip.test.mob.inji.utils.TestDataReader;
 
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 public class VerifyHelpPageTest extends BaseTest {
 
-    @Test
+   @Test
     public void verifyHelpPage() {
 
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -32,6 +34,7 @@ public class VerifyHelpPageTest extends BaseTest {
         HelpPage helpPage = homePage.clickOnHelpIcon();
         
         helpPage.ScrollToViewActivityLog();
+        assertFalse(helpPage.isHowToAddCardLoad(),"verifying text is not empty");
 
         assertTrue(helpPage.isHelpPageLoaded(), "Verify if help page is displayed");
         helpPage.exitHelpPage();

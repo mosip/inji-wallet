@@ -2,12 +2,14 @@ package io.mosip.test.mob.inji.utils;
 
 import io.mosip.test.mob.inji.driver.DriverManager;
 import io.mosip.test.mob.inji.exceptions.PlatformNotSupportException;
+import io.mosip.test.mob.inji.testcases.BaseTest;
+
 import org.openqa.selenium.OutputType;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 
-public class CommonMethods {
+public class CommonMethods extends BaseTest{
 
     public String getBase64Image() {
         try {
@@ -27,6 +29,29 @@ public class CommonMethods {
         }
 
     }
+    
+    
+    public static void enableAirplaneModeAndroid() {
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder("cmd.exe", "/c", "adb shell cmd connectivity airplane-mode enable");
+            processBuilder.redirectErrorStream(true);
+            processBuilder.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    
+    public static void disableAirplaneModeAndroid() {
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder("cmd.exe", "/c", "adb shell cmd connectivity airplane-mode disable");
+            processBuilder.redirectErrorStream(true);
+            processBuilder.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     public static void enableAirplaneMode() {
         try {
@@ -38,6 +63,8 @@ public class CommonMethods {
         }
 
     }
+    
+   
 
     public static void disableAirplaneMode() {
         try {
