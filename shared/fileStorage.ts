@@ -24,34 +24,6 @@ class FileStorage {
     return await readFile(path, 'utf8');
   }
 
-  async readFromCacheFile(path: string) {
-    if (this.cache[path]?.data) {
-      const count = this.cache[path]?.count ?? 0;
-      const data = this.cache[path]?.data;
-
-      if (count != undefined && count <= 1) {
-        this.cache[path] = {};
-      } else {
-        this.cache[path].count = count - 1;
-      }
-
-      return data;
-    }
-
-    return this.readFile(path);
-  }
-
-  async readAndCacheFile(path: string, useCount: number = 1) {
-    const data = await this.readFile(path);
-
-    this.cache[path] = {
-      data,
-      count: useCount,
-    };
-
-    return data;
-  }
-
   async writeFile(path: string, data: string) {
     return await writeFile(path, data, 'utf8');
   }

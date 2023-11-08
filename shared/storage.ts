@@ -147,7 +147,7 @@ class Storage {
   }
 
   private static async readVCFromFile(key: string) {
-    return await FileStorage.readFromCacheFile(getFilePath(key));
+    return await FileStorage.readFile(getFilePath(key));
   }
 
   private static async storeVC(key: string, data: string) {
