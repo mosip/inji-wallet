@@ -102,5 +102,4 @@ public class VcDownloadAndVerifyUsingVidTest extends BaseTest {
         HistoryPage historyPage = homePage.clickOnHistoryButton();
         assertTrue(historyPage.verifyDeleteHistory(BaseTestCase.uin, target), "Verify if deleted history is displayed");
     }
-    
 }

@@ -177,8 +177,8 @@ public class VcDownloadAndVerifyUsingUinTest extends BaseTest {
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
         assertTrue(historyPage.verifyHistory(BaseTestCase.uin, target));
         
-        assertEquals(historyPage.getNumberOfRecordsInHistory(BaseTestCase.uin, target,"Verify two download records in history page"),2);
-      
+        historyPage.getNumberOfRecordsInHistory(BaseTestCase.uin, target,"Verify two download records inhistory page");
+        assertEquals(historyPage.getNumberOfRecordsInHistory(BaseTestCase.uin, target,""),2);
     }
    
 }

@@ -4,7 +4,10 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+
+import com.google.common.collect.ImmutableMap;
 
 public class HelpPage extends BasePage {
 
@@ -16,11 +19,11 @@ public class HelpPage extends BasePage {
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"\uE5CD\"`][2]")
     private WebElement crossIcon;
     
-    @AndroidFindBy(uiAutomator = "new UiScrollable(new UiSelector()).scrollIntoView(text(\"How to view activity logs?\"));")
-    public WebElement howToViewActivity;
+    @AndroidFindBy(uiAutomator = "new UiScrollable(new UiSelector()).scrollIntoView(text(\"What happens when Android keystore biometric is changed?\"));")
+    public WebElement howToViewActivityHeader;
     
-    @AndroidFindBy(xpath = "//*[contains(@text,'How to add a card?')]")
-    public WebElement howToAddCard;
+    @AndroidFindBy(xpath = "//*[contains(@text,''How to add a card?')]")
+    public WebElement helpPageContent;
     
     public HelpPage(AppiumDriver driver) {
         super(driver);
@@ -34,11 +37,11 @@ public class HelpPage extends BasePage {
         this.clickOnElement(crossIcon);
     }
     
-    public void ScrollToViewActivityLog() {
-    	howToViewActivity.click();
+    public void ScrollPerformInHelpPage() {
+    	howToViewActivityHeader.isDisplayed();
     }
     
-    public boolean isHowToAddCardLoad() {
-    	return howToAddCard.getText().isEmpty();
+    public boolean ishelpPageContentEmpty() {
+    	return helpPageContent.getText().isEmpty();
     }
 }
