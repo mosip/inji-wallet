@@ -1,0 +1,60 @@
+pick 85870913 fix(INJI-536):refactor the default switch case
+pick c3b34092 fix(INJI): increase app retention time in actions (#988)
+pick d2d2e37a (Inji-533): fix app crash by adding null check before decrypt json (#984)
+pick 3e03ae9d fix(INJI-362): fix first time logout navigation to language selection screen (#987)
+pick 7a1178ed feat(Inji-436): add telemetry events for app triggered warnings (#986)
+pick 101020c8 fix(INJI-536):fix error handling and avoid usage of VCmetadata
+pick 96e7d0c0 fix(INJI-536):fix error handling and avoid usage of VCmetadata
+pick d3118e6a Inji 299 show cancel Popup for ios (#980)
+pick 9b07e633 [Inji 434 & INJI 441]: Add events in receiver VC sharing flow and cancel button handle (#990)
+pick dc151158 MOSIP-30183 | test cases automated from master sheet (#991)
+pick 23f5eb8b MOSIP-30082 MOSIP-30054 (#983)
+pick ff609184 feat(INJI-299): add service prop to walletBinding and getVc (#993)
+pick 5a3ad48b feat(inji-411): Remove caching for vc files (#995)
+pick 1ce89cbe fix(INJI-536):check status failed while downloading vc (#985)
+pick c29fcda1 fix(INJI-536):refactor verifyingDownloadLimitExpiry state
+drop 6ff3f98d Merge branch 'develop' of https://github.com/mosip/inji into inji-427-refactoring-selectVC-screen-while-sharing
+drop d793b81c Merge branch 'develop' of https://github.com/mosip/inji into inji-427-refactoring-selectVC-screen-while-sharing
+pick 2152c982 MOSIP-28901 | Regression test cases added for android (#1001)
+pick 76122977 fix(INJI-552): handle biometric reject on vc download (#1003)
+pick e84ca55a Fix(INJI-546): Button name in Status page is changed to OK thus fixed (#1009)
+pick a557b679 fix(INJI-367): remove unused permissions (#1008)
+pick b0ebef0a fix(inji-522): enable the location service before initiating the vc sharing. (#1004)
+pick e501f9f2 MOSIP-30292 | New regression test cases added (#1011)
+pick 69fc9e2d Fix sharing screen progress modal in IOS (#1005)
+pick 46aa7591 feat(INJI-560): add error events at multiple places to catch the error scenarios (#1012)
+drop 390ee6ef Merge branch 'develop' of https://github.com/mosip/inji into inji-536-check-status-failed-while-downloading-vc
+pick 67375d7b Revert fix(INJI-536):refactor verifyingDownloadLimitExpiry state
+pick 2d0b6be4 feat(INJI-474): show popup for invalid QR (#999)
+pick 39f3e0ec Fix: (Inji-261): Most of the elements which are still in orange in the purple theme are fixed. (#1021)
+pick e8c89995 MOSIP-30340 | Regression test for IOS added (#1023)
+pick 76a0948e Credential Registry testcases, help page new test cases added , MOSIP-30054 MOSIP-30230 MOSIP-30282 (#1024)
+pick b3118f83 fix(INJI-536): refactor the Check Status FAILED
+
+# Rebase f7e1df0f..b3118f83 onto f7e1df0f (32 commands)
+#
+# Commands:
+# p, pick <commit> = use commit
+# r, reword <commit> = use commit, but edit the commit message
+# e, edit <commit> = use commit, but stop for amending
+# s, squash <commit> = use commit, but meld into previous commit
+# f, fixup [-C | -c] <commit> = like "squash" but keep only the previous
+#                    commit's log message, unless -C is used, in which case
+#                    keep only this commit's message; -c is same as -C but
+#                    opens the editor
+# x, exec <command> = run command (the rest of the line) using shell
+# b, break = stop here (continue rebase later with 'git rebase --continue')
+# d, drop <commit> = remove commit
+# l, label <label> = label current HEAD with a name
+# t, reset <label> = reset HEAD to a label
+# m, merge [-C <commit> | -c <commit>] <label> [# <oneline>]
+# .       create a merge commit using the original merge commit's
+# .       message (or the oneline, if no original merge commit was
+# .       specified); use -c <commit> to reword the commit message
+#
+# These lines can be re-ordered; they are executed from top to bottom.
+#
+# If you remove a line here THAT COMMIT WILL BE LOST.
+#
+# However, if you remove everything, the rebase will be aborted.
+#
