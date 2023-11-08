@@ -22,6 +22,7 @@ import {
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 
 import {Error} from '../../components/ui/Error';
+import {useIsFocused} from '@react-navigation/native';
 
 const pinIconProps = {iconName: 'pushpin', iconType: 'antdesign'};
 
@@ -80,11 +81,17 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
 
   let failedVCsList = [];
   controller.downloadFailedVcs.forEach(vc => {
-    failedVCsList.push(`${vc.idType}:${vc.id}\n`);
+    failedVCsList.push(`\n${vc.idType}:${vc.id}`);
   });
   const downloadFailedVcsErrorMessage = `${t(
     'errors.downloadLimitExpires.message',
-  )}\n${failedVCsList}`;
+  )}${failedVCsList}`;
+
+  const isDownloadFailedVcs =
+    useIsFocused() &&
+    controller.downloadFailedVcs.length >= 1 &&
+    !controller.AddVcModalService &&
+    !controller.GetVcModalService;
 
   return (
     <React.Fragment>
@@ -213,7 +220,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
       />
 
       <MessageOverlay
-        isVisible={controller.isDownloadLimitExpires}
+        isVisible={isDownloadFailedVcs}
         title={t('errors.downloadLimitExpires.title')}
         message={downloadFailedVcsErrorMessage}
         onButtonPress={controller.DELETE_VC}
