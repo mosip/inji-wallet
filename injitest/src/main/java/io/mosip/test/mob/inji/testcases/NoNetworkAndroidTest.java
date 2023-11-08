@@ -6,6 +6,7 @@ import io.mosip.test.mob.inji.utils.CommonMethods;
 import io.mosip.test.mob.inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 public class NoNetworkAndroidTest extends BaseTest {
@@ -75,5 +76,83 @@ public class NoNetworkAndroidTest extends BaseTest {
         CommonMethods.enableAirplaneMode();
         assertTrue(homePage.clickOnScanButton().acceptPermissionPopup().isCameraOpen());
         CommonMethods.disableAirplaneMode();
+    }
+    
+    @Test
+    public void verifyHelpPageOfflineMode() {
+    	CommonMethods.enableAirplaneModeAndroid();
+    	
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+
+        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+
+        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
+
+        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
+
+        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
+
+        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
+        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
+
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+        HelpPage helpPage = homePage.clickOnHelpIcon();
+
+        assertTrue(helpPage.isHelpPageLoaded(), "Verify if help page is displayed");
+        helpPage.exitHelpPage();
+
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+        CommonMethods.disableAirplaneModeAndroid();
+    }
+    
+    @Test
+    public void deleteDownloadedVcInOfflineMode() throws InterruptedException {
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+
+        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+
+        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
+
+        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
+
+        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
+
+        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
+        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
+
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+        AddNewCardPage addNewCardPage = homePage.downloadCard();
+
+        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
+        RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
+
+        assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(BaseTestCase.uin).clickOnGenerateCardButton();
+
+        assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
+        otpVerification.enterOtp(GetOtp(), target);
+
+        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        CommonMethods.enableAirplaneModeAndroid();
+        
+        MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
+        assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
+
+        PleaseConfirmPopupPage pleaseConfirmPopupPage = moreOptionsPage.clickOnRemoveFromWallet();
+        assertTrue(pleaseConfirmPopupPage.isPleaseConfirmPopupPageLoaded(), "Verify if pop up page is displayed");
+
+        pleaseConfirmPopupPage.clickOnConfirmButton();
+        
+        CommonMethods.disableAirplaneModeAndroid();
+        assertTrue(homePage.isNoVCDownloaded(), "Verify if VC is removed");
+        
     }
 }
