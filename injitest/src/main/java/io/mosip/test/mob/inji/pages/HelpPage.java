@@ -20,7 +20,7 @@ public class HelpPage extends BasePage {
     private WebElement crossIcon;
     
     @AndroidFindBy(uiAutomator = "new UiScrollable(new UiSelector()).scrollIntoView(text(\"What happens when Android keystore biometric is changed?\"));")
-    public WebElement howToViewActivityHeader;
+    public WebElement biometricIsChangeTextdHeader;
     
     @AndroidFindBy(xpath = "//*[contains(@text,''How to add a card?')]")
     public WebElement helpPageContent;
@@ -38,7 +38,7 @@ public class HelpPage extends BasePage {
     }
     
     public void ScrollPerformInHelpPage() {
-    	howToViewActivityHeader.isDisplayed();
+    	biometricIsChangeTextdHeader.isDisplayed();
     }
     
     public boolean ishelpPageContentEmpty() {
