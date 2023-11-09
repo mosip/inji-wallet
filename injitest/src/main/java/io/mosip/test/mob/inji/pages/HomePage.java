@@ -55,6 +55,9 @@ public class HomePage extends BasePage {
     @AndroidFindBy(xpath = "//*[contains(@text,'Scan')]")
     private WebElement scanButton;
 
+    @AndroidFindBy(accessibility = "nationalCard")
+    private WebElement idTypeValue;
+
 
     public HomePage(AppiumDriver driver) {
         super(driver);
@@ -85,12 +88,6 @@ public class HomePage extends BasePage {
     	return this.isElementDisplayed(fullName, 60, "Name on downloaded card");
     	
    }
-
-    public DetailedVcViewPage openDetailedVcView(String name) {
-        By fullName = By.xpath("//*[contains(@name,'" + name + "') or contains(@text,'" + name + "')]");
-        clickOnElement(fullName);
-        return new DetailedVcViewPage(driver);
-    }
 
     public DetailedVcViewPage openDetailedVcView(String name) {
         By fullName = By.xpath("//*[contains(@name,'" + name + "') or contains(@text,'" + name + "')]");
@@ -135,6 +132,9 @@ public class HomePage extends BasePage {
     public ScanPage clickOnScanButton(){
         clickOnElement(scanButton);
         return new ScanPage(driver);
+    }
+    public boolean isIdTypeDisplayed() {
+        return this.isElementDisplayed(idTypeValue, "Name on downloaded card");
     }
 
 }
