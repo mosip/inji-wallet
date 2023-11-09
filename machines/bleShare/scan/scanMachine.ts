@@ -403,14 +403,23 @@ export const scanMachine =
               {
                 target: 'connecting',
                 cond: 'isOpenIdQr',
-                actions: ['sendVcSharingStartEvent', 'setUri'],
+                actions: [
+                  'sendVcSharingStartEvent',
+                  'setUri',
+                  'offlineaccepted',
+                ],
               },
               {
                 target: 'showQrLogin',
                 cond: 'isQrLogin',
-                actions: ['sendVcSharingStartEvent', 'setLinkCode'],
+                actions: [
+                  'sendVcSharingStartEvent',
+                  'setLinkCode',
+                  'onlineaccepted',
+                ],
               },
               {
+                actions: 'invalidaccepted',
                 target: 'invalid',
               },
             ],
@@ -744,6 +753,9 @@ export const scanMachine =
     },
     {
       actions: {
+        offlineaccepted: () => console.log('>> offline QR accepted'),
+        onlineaccepted: () => console.log('>> online QR accepted'),
+        invalidaccepted: () => console.log('>> invalid QR accepted'),
         setChildRef: assign({
           QrLoginRef: context => {
             const service = spawn(
@@ -890,6 +902,7 @@ export const scanMachine =
         }),
 
         setLinkCode: assign({
+          // TODO: set link code refactor required
           linkCode: (_context, event) =>
             event.params.substring(
               event.params.indexOf('linkCode=') + 9,
@@ -1205,15 +1218,14 @@ export const scanMachine =
 
       guards: {
         isOpenIdQr: (_context, event) => event.params.includes('OPENID4VP://'),
-
         isQrLogin: (_context, event) => {
-          let linkCode = '';
           try {
-            linkCode = event.params.substring(
-              event.params.indexOf('linkCode=') + 9,
-              event.params.indexOf('&'),
+            let linkCode = new URL(event.params);
+            // does it have a linkCode & an linkExpireDateTime
+            return (
+              linkCode.searchParams.get('linkCode') &&
+              linkCode.searchParams.get('linkExpireDateTime')
             );
-            return linkCode !== null;
           } catch (e) {
             return false;
           }

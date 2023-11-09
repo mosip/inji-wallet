@@ -127,6 +127,9 @@ export const ScanScreen: React.FC = () => {
     if (controller.isEmpty) {
       return noShareableVcText();
     }
+    if (controller.selectIsInvalid) {
+      return invalidQR();
+    }
     if (controller.isNearByDevicesPermissionDenied) {
       return allowNearbyDevicesPermissionComponent();
     }
@@ -151,13 +154,28 @@ export const ScanScreen: React.FC = () => {
   function displayStorageLimitReachedError(): React.ReactNode {
     return (
       !controller.isEmpty && (
-        <ErrorMessageOverlay
+        <MessageOverlay
           isVisible={
             controller.isMinimumStorageRequiredForAuditEntryLimitReached
           }
           translationPath={'ScanScreen'}
           error="errors.storageLimitReached"
-          onDismiss={() => navigation.navigate(BOTTOM_TAB_ROUTES.home)}
+          onBackdropPress={() => navigation.navigate(BOTTOM_TAB_ROUTES.home)}
+        />
+      )
+    );
+  }
+
+  function invalidQR(): React.ReactNode {
+    return (
+      !controller.isEmpty && (
+        <MessageOverlay
+          isVisible={controller.selectIsInvalid}
+          title={t('common.errors.genericError')}
+          // TODO: maybe add a message QR invalid
+          onButtonPress={() => navigation.navigate(BOTTOM_TAB_ROUTES.scan)}
+          buttonText={t('common:tryAgain')}
+          customHeight={'auto'}
         />
       )
     );
