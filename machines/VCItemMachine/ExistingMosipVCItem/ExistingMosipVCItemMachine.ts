@@ -34,11 +34,12 @@ import {
   getEndEventData,
   getStartEventData,
   sendEndEvent,
-  TelemetryConstants,
   sendInteractEvent,
   getInteractEventData,
   sendStartEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
+
 import {API_URLS} from '../../../shared/api';
 
 const model = createModel(
@@ -63,8 +64,8 @@ const model = createModel(
     bindingTransactionId: '',
     revoked: false,
     downloadCounter: 0,
-    maxDownloadCount: 10,
-    downloadInterval: 5000,
+    maxDownloadCount: null as number,
+    downloadInterval: null as number,
     walletBindingResponse: null as WalletBindingResponse,
     walletBindingError: '',
     walletBindingSuccess: false,
@@ -83,6 +84,7 @@ const model = createModel(
       STORE_RESPONSE: (response: VC) => ({response}),
       POLL: () => ({}),
       DOWNLOAD_READY: () => ({}),
+      FAILED: () => ({}),
       GET_VC_RESPONSE: (vc: VC) => ({vc}),
       VERIFY: () => ({}),
       LOCK_VC: () => ({}),
@@ -183,7 +185,6 @@ export const ExistingMosipVCItemMachine =
                     log((_, event) => (event.data as Error).message),
                     'sendDownloadLimitExpire',
                   ],
-                  target: 'checkingStatus',
                 },
               },
             },
@@ -200,6 +201,12 @@ export const ExistingMosipVCItemMachine =
                 DOWNLOAD_READY: {
                   target: 'downloadingCredential',
                 },
+                FAILED: [
+                  {
+                    actions: ['incrementDownloadCounter'],
+                    target: 'verifyingDownloadLimitExpiry',
+                  },
+                ],
               },
             },
             downloadingCredential: {
@@ -215,6 +222,9 @@ export const ExistingMosipVCItemMachine =
                       send('POLL_DOWNLOAD', {to: 'downloadCredential'}),
                       'incrementDownloadCounter',
                     ],
+                  },
+                  {
+                    target: 'verifyingDownloadLimitExpiry',
                   },
                 ],
                 CREDENTIAL_DOWNLOADED: {
@@ -1368,19 +1378,27 @@ export const ExistingMosipVCItemMachine =
 
           onReceive(async event => {
             if (event.type === 'POLL_STATUS') {
-              const response = await request(
-                API_URLS.credentialStatus.method,
-                API_URLS.credentialStatus.buildURL(
-                  context.vcMetadata.requestId,
-                ),
-              );
-              switch (response.response?.statusCode) {
-                case 'NEW':
-                  break;
-                case 'ISSUED':
-                case 'printing':
-                  callback(model.events.DOWNLOAD_READY());
-                  break;
+              try {
+                const response = await request(
+                  API_URLS.credentialStatus.method,
+                  API_URLS.credentialStatus.buildURL(
+                    context.vcMetadata.requestId,
+                  ),
+                );
+                switch (response.response?.statusCode) {
+                  case 'NEW':
+                    break;
+                  case 'ISSUED':
+                  case 'printing':
+                    callback(model.events.DOWNLOAD_READY());
+                    break;
+                  case 'FAILED':
+                  default:
+                    callback(model.events.FAILED());
+                    break;
+                }
+              } catch (error) {
+                callback(model.events.FAILED());
               }
             }
           });

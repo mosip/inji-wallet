@@ -15,8 +15,14 @@ import {
 } from './cryptoutil/cryptoUtil';
 import {VCMetadata} from './VCMetadata';
 import {ENOENT, getItem} from '../machines/store';
-import {isAndroid, MY_VCS_STORE_KEY, RECEIVED_VCS_STORE_KEY} from './constants';
+import {
+  isAndroid,
+  MY_VCS_STORE_KEY,
+  RECEIVED_VCS_STORE_KEY,
+  SETTINGS_STORE_KEY,
+} from './constants';
 import FileStorage, {getFilePath, vcDirectoryPath} from './fileStorage';
+import {__AppId} from './GlobalVariables';
 
 export const MMKV = new MMKVLoader().initialize();
 
@@ -147,7 +153,7 @@ class Storage {
   }
 
   private static async readVCFromFile(key: string) {
-    return await FileStorage.readFromCacheFile(getFilePath(key));
+    return await FileStorage.readFile(getFilePath(key));
   }
 
   private static async storeVC(key: string, data: string) {
@@ -184,7 +190,11 @@ class Storage {
     try {
       (await FileStorage.exists(`${vcDirectoryPath}`)) &&
         (await FileStorage.removeItem(`${vcDirectoryPath}`));
+      const settings = await MMKV.getItem(SETTINGS_STORE_KEY);
+      const appId = JSON.parse(settings).appId;
+      __AppId.setValue(appId);
       MMKV.clearStore();
+      await MMKV.setItem(SETTINGS_STORE_KEY, JSON.stringify({appId: appId}));
     } catch (e) {
       console.log('Error Occurred while Clearing Storage.', e);
     }

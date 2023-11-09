@@ -5,10 +5,10 @@ import {PasscodeVerify} from '../components/PasscodeVerify';
 import {Column, Text} from '../components/ui';
 import {Theme} from '../components/ui/styleUtils';
 import {
-  TelemetryConstants,
   getImpressionEventData,
   sendImpressionEvent,
 } from '../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
 
 export const Passcode: React.FC<PasscodeProps> = props => {
   useEffect(() => {

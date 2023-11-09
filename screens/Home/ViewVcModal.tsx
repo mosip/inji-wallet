@@ -12,12 +12,12 @@ import {OtpVerificationModal} from './MyVcs/OtpVerificationModal';
 import {BindingVcWarningOverlay} from './MyVcs/BindingVcWarningOverlay';
 import {VcDetailsContainer} from '../../components/VC/VcDetailsContainer';
 import {
-  TelemetryConstants,
   getEndEventData,
   getErrorEventData,
   sendEndEvent,
   sendErrorEvent,
 } from '../../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 
 export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
   const {t} = useTranslation('ViewVcModal');
@@ -91,6 +91,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
 
       {controller.isAcceptingOtpInput && (
         <OtpVerificationModal
+          service={props.vcItemActor}
           isVisible={controller.isAcceptingOtpInput}
           onDismiss={controller.DISMISS}
           onInputDone={controller.inputOtp}
@@ -102,6 +103,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
 
       {controller.isAcceptingBindingOtp && (
         <OtpVerificationModal
+          service={props.vcItemActor}
           isVisible={controller.isAcceptingBindingOtp}
           onDismiss={controller.DISMISS}
           onInputDone={controller.inputOtp}

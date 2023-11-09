@@ -12,7 +12,7 @@ import {
 import {createModel} from 'xstate/lib/model';
 import {generateSecureRandom} from 'react-native-securerandom';
 import {log} from 'xstate/lib/actions';
-import {MY_VCS_STORE_KEY} from '../shared/constants';
+import {MY_VCS_STORE_KEY, SETTINGS_STORE_KEY} from '../shared/constants';
 import SecureKeystore from 'react-native-secure-keystore';
 import {
   AUTH_TIMEOUT,
@@ -24,7 +24,6 @@ import {
   isHardwareKeystoreExists,
 } from '../shared/cryptoutil/cryptoUtil';
 import {VCMetadata} from '../shared/VCMetadata';
-import FileStorage, {getFilePath} from '../shared/fileStorage';
 
 export const keyinvalidatedString =
   'Key Invalidated due to biometric enrollment';
@@ -173,7 +172,7 @@ export const storeMachine =
           },
         },
         ready: {
-          entry: ['notifyParent', 'cacheVCFilesData'],
+          entry: 'notifyParent',
           invoke: {
             src: 'store',
             id: '_store',
@@ -259,18 +258,6 @@ export const storeMachine =
         setEncryptionKey: model.assign({
           encryptionKey: (_, event) => event.key,
         }),
-
-        cacheVCFilesData: context => {
-          getItem(MY_VCS_STORE_KEY, [], context.encryptionKey).then(vcList => {
-            if (vcList) {
-              vcList?.forEach((vcMetadataStr: string) => {
-                const vcKey =
-                  VCMetadata.fromVcMetadataString(vcMetadataStr).getVcKey();
-                FileStorage.readAndCacheFile(getFilePath(vcKey));
-              });
-            }
-          });
-        },
       },
 
       services: {
@@ -485,8 +472,18 @@ export async function setItem(
   encryptionKey: string,
 ) {
   try {
-    const data = JSON.stringify(value);
-    const encryptedData = await encryptJson(encryptionKey, data);
+    let encryptedData;
+    if (key === SETTINGS_STORE_KEY) {
+      const appId = value.appId;
+      delete value.appId;
+      const settings = {
+        encryptedData: await encryptJson(encryptionKey, JSON.stringify(value)),
+        appId,
+      };
+      encryptedData = JSON.stringify(settings);
+    } else {
+      encryptedData = await encryptJson(encryptionKey, JSON.stringify(value));
+    }
     await Storage.setItem(key, encryptedData, encryptionKey);
   } catch (e) {
     console.error('error setItem:', e);
@@ -502,7 +499,19 @@ export async function getItem(
   try {
     const data = await Storage.getItem(key, encryptionKey);
     if (data != null) {
-      const decryptedData = await decryptJson(encryptionKey, data);
+      let decryptedData;
+      if (key === SETTINGS_STORE_KEY) {
+        let parsedData = JSON.parse(data);
+        if (parsedData.encryptedData) {
+          decryptedData = await decryptJson(
+            encryptionKey,
+            parsedData.encryptedData,
+          );
+          parsedData.encryptedData = JSON.parse(decryptedData);
+        }
+        return parsedData;
+      }
+      decryptedData = await decryptJson(encryptionKey, data);
       return JSON.parse(decryptedData);
     }
     if (data === null && VCMetadata.isVCKey(key)) {
@@ -594,8 +603,13 @@ export async function removeItem(
       await removeVCMetaData(MY_VCS_STORE_KEY, key, encryptionKey);
     } else if (key === MY_VCS_STORE_KEY) {
       const data = await Storage.getItem(key, encryptionKey);
-      const decryptedData = await decryptJson(encryptionKey, data);
-      const list = JSON.parse(decryptedData) as Object[];
+      let list: Object[] = [];
+
+      if (data !== null) {
+        const decryptedData = await decryptJson(encryptionKey, data);
+        list = JSON.parse(decryptedData) as Object[];
+      }
+
       const newList = list.filter((vcMetadataObject: Object) => {
         return new VCMetadata(vcMetadataObject).getVcKey() !== value;
       });
@@ -616,8 +630,13 @@ export async function removeVCMetaData(
 ) {
   try {
     const data = await Storage.getItem(key, encryptionKey);
-    const decryptedData = await decryptJson(encryptionKey, data);
-    const list = JSON.parse(decryptedData) as Object[];
+    let list: Object[] = [];
+
+    if (data != null) {
+      const decryptedData = await decryptJson(encryptionKey, data);
+      list = JSON.parse(decryptedData) as Object[];
+    }
+
     const newList = list.filter((vcMetadataObject: Object) => {
       return new VCMetadata(vcMetadataObject).getVcKey() !== vcKey;
     });
@@ -648,8 +667,13 @@ export async function removeItems(
 ) {
   try {
     const data = await Storage.getItem(key, encryptionKey);
-    const decryptedData = await decryptJson(encryptionKey, data);
-    const list = JSON.parse(decryptedData) as Object[];
+    let list: Object[] = [];
+
+    if (data !== null) {
+      const decryptedData = await decryptJson(encryptionKey, data);
+      list = JSON.parse(decryptedData) as Object[];
+    }
+
     const newList = list.filter(
       (vcMetadataObject: Object) =>
         !values.includes(new VCMetadata(vcMetadataObject).getVcKey()),

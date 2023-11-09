@@ -79,6 +79,18 @@ public class HomePage extends BasePage {
         By fullName = By.xpath("//*[contains(@name,'" + name + "') or contains(@text,'" + name + "')]");
         return this.isElementDisplayed(fullName, 60, "Name on downloaded card");
     }
+    
+   public boolean isSecondNameDisplayed(String name) {
+    	By fullName = By.xpath("(//*[contains(@text,'" + name + "')])[2]");
+    	return this.isElementDisplayed(fullName, 60, "Name on downloaded card");
+    	
+   }
+
+    public DetailedVcViewPage openDetailedVcView(String name) {
+        By fullName = By.xpath("//*[contains(@name,'" + name + "') or contains(@text,'" + name + "')]");
+        clickOnElement(fullName);
+        return new DetailedVcViewPage(driver);
+    }
 
     public DetailedVcViewPage openDetailedVcView(String name) {
         By fullName = By.xpath("//*[contains(@name,'" + name + "') or contains(@text,'" + name + "')]");
@@ -110,7 +122,8 @@ public class HomePage extends BasePage {
     public boolean isPinIconDisplayed() {
         return this.isElementDisplayed(pinIcon, "pin icon");
     }
-
+    
+    
     public boolean isNoVCDownloaded() {
         return this.isElementDisplayed(bringYourDigitalIdentity, "Bring your digital identity");
     }

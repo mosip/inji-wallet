@@ -17,12 +17,12 @@ import {
   Protocols,
 } from '../../shared/openId4VCI/Utils';
 import {
-  TelemetryConstants,
   getInteractEventData,
   getStartEventData,
   sendInteractEvent,
   sendStartEvent,
 } from '../../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {Icon} from 'react-native-elements';
 
 export const IssuersScreen: React.FC<

@@ -16,11 +16,13 @@ import {groupBy} from '../../shared/javascript';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
 import {BannerNotification} from '../../components/BannerNotification';
 import {
-  TelemetryConstants,
   getErrorEventData,
   sendErrorEvent,
 } from '../../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
+
 import {Error} from '../../components/ui/Error';
+import {useIsFocused} from '@react-navigation/native';
 
 const pinIconProps = {iconName: 'pushpin', iconType: 'antdesign'};
 
@@ -61,15 +63,35 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         ),
       );
     }
-  }, [controller.areAllVcsLoaded, controller.inProgressVcDownloads]);
+
+    if (controller.isTampered) {
+      sendErrorEvent(
+        getErrorEventData(
+          TelemetryConstants.FlowType.appLogin,
+          TelemetryConstants.ErrorId.vcsAreTampered,
+          TelemetryConstants.ErrorMessage.vcsAreTampered,
+        ),
+      );
+    }
+  }, [
+    controller.areAllVcsLoaded,
+    controller.inProgressVcDownloads,
+    controller.isTampered,
+  ]);
 
   let failedVCsList = [];
   controller.downloadFailedVcs.forEach(vc => {
-    failedVCsList.push(`${vc.idType}:${vc.id}\n`);
+    failedVCsList.push(`\n${vc.idType}:${vc.id}`);
   });
   const downloadFailedVcsErrorMessage = `${t(
     'errors.downloadLimitExpires.message',
-  )}\n${failedVCsList}`;
+  )}${failedVCsList}`;
+
+  const isDownloadFailedVcs =
+    useIsFocused() &&
+    controller.downloadFailedVcs.length >= 1 &&
+    !controller.AddVcModalService &&
+    !controller.GetVcModalService;
 
   return (
     <React.Fragment>
@@ -198,7 +220,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
       />
 
       <MessageOverlay
-        isVisible={controller.isDownloadLimitExpires}
+        isVisible={isDownloadFailedVcs}
         title={t('errors.downloadLimitExpires.title')}
         message={downloadFailedVcsErrorMessage}
         onButtonPress={controller.DELETE_VC}

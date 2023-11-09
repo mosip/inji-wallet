@@ -9,7 +9,6 @@ import {
   selectAreAllVcsDownloaded,
   selectInProgressVcDownloads,
   selectIsTampered,
-  selectIsDownloadLimitExpired,
   selectDownloadingFailedVcs,
 } from '../../machines/vc';
 import {
@@ -62,11 +61,6 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
     inProgressVcDownloads: useSelector(vcService, selectInProgressVcDownloads),
 
     isTampered: useSelector(vcService, selectIsTampered),
-
-    isDownloadLimitExpires: useSelector(
-      vcService,
-      selectIsDownloadLimitExpired,
-    ),
 
     downloadFailedVcs: useSelector(vcService, selectDownloadingFailedVcs),
 
