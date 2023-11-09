@@ -77,4 +77,6 @@ fileignoreconfig:
 - filename: ios/fastlane/Fastfile
   checksum: feea5a7f044ef6961d53e7d1e1ffb92a3e0f72761496424f6e64288e3718d605
   version: ""
-
+- filename: locales/spa.json
+  checksum: 4a421519063449f88e021504db1654d4108b6ea1b809af3c57de256c183d0e5d    
+  version: ""
