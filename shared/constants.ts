@@ -68,5 +68,8 @@ export type IndividualId = {
   id: string;
   idType: VcIdType;
 };
+
 export const NETWORK_REQUEST_FAILED = 'Network request failed';
 export const REQUEST_TIMEOUT = 'request timedout';
+export const BIOMETRIC_CANCELLED =
+  'User has cancelled biometric auth code: 10, message: Fingerprint operation canceled by user.';

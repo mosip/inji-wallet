@@ -2,6 +2,7 @@ import {authorize, AuthorizeResult} from 'react-native-app-auth';
 import {assign, EventFrom, send, sendParent, StateFrom} from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {
+  BIOMETRIC_CANCELLED,
   MY_VCS_STORE_KEY,
   NETWORK_REQUEST_FAILED,
   REQUEST_TIMEOUT,
@@ -20,7 +21,6 @@ import {log} from 'xstate/lib/actions';
 import {verifyCredential} from '../shared/vcjs/verifyCredential';
 import {
   getBody,
-  getIdentifier,
   vcDownloadTimeout,
   OIDCErrors,
   ErrorMessage,
@@ -29,7 +29,6 @@ import {
   getVCMetadata,
   Issuers_Key_Ref,
 } from '../shared/openId4VCI/Utils';
-import {VCMetadata} from '../shared/VCMetadata';
 import {
   getEndEventData,
   getImpressionEventData,
@@ -283,6 +282,11 @@ export const IssuersMachine = model.createMachine(
           },
           onError: [
             {
+              cond: 'hasUserCancelledBiometric',
+              actions: ['setError'],
+              target: '.userCancelledBiometric',
+            },
+            {
               actions: ['setError', 'resetLoadingReason'],
               target: 'error',
             },
@@ -291,6 +295,27 @@ export const IssuersMachine = model.createMachine(
         on: {
           CANCEL: {
             target: 'selectingIssuer',
+          },
+        },
+        initial: 'idle',
+        states: {
+          idle: {},
+          userCancelledBiometric: {
+            on: {
+              TRY_AGAIN: [
+                {
+                  actions: [
+                    'resetError',
+                    'setLoadingReasonAsDownloadingCredentials',
+                  ],
+                  target: '#issuersMachine.downloadCredentials',
+                },
+              ],
+              RESET_ERROR: {
+                actions: 'resetError',
+                target: '#issuersMachine.selectingIssuer',
+              },
+            },
           },
         },
       },
@@ -372,6 +397,8 @@ export const IssuersMachine = model.createMachine(
               return ErrorMessage.NO_INTERNET;
             case REQUEST_TIMEOUT:
               return ErrorMessage.REQUEST_TIMEDOUT;
+            case BIOMETRIC_CANCELLED:
+              return ErrorMessage.BIOMETRIC_CANCELLED;
             default:
               return ErrorMessage.GENERIC;
           }
@@ -608,6 +635,8 @@ export const IssuersMachine = model.createMachine(
       },
       shouldFetchIssuersAgain: context => context.issuers.length === 0,
       isCustomSecureKeystore: () => isHardwareKeystoreExists,
+      hasUserCancelledBiometric: (_, event) =>
+        event.data.message.includes(BIOMETRIC_CANCELLED),
     },
   },
 );
@@ -619,8 +648,12 @@ export function selectIssuers(state: State) {
 }
 
 export function selectErrorMessageType(state: State) {
-  return state.context.errorMessage === '' ||
-    state.context.errorMessage === ErrorMessage.NO_INTERNET
+  const nonGenericErrors = [
+    '',
+    ErrorMessage.NO_INTERNET,
+    ErrorMessage.BIOMETRIC_CANCELLED,
+  ];
+  return nonGenericErrors.includes(state.context.errorMessage)
     ? state.context.errorMessage
     : ErrorMessage.GENERIC;
 }
