@@ -10,7 +10,6 @@ import {usePasscodeScreen} from './PasscodeScreenController';
 import {hashData} from '../shared/commonUtil';
 import {argon2iConfig} from '../shared/constants';
 import {
-  TelemetryConstants,
   getEndEventData,
   getEventType,
   getImpressionEventData,
@@ -18,6 +17,8 @@ import {
   sendEndEvent,
   sendImpressionEvent,
 } from '../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
+
 import {BackHandler} from 'react-native';
 import {incrementRetryCount} from '../shared/telemetry/TelemetryUtils';
 

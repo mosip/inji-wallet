@@ -52,6 +52,9 @@ public class HomePage extends BasePage {
     @AndroidFindBy(accessibility = "errorTitle")
     private WebElement noInternetConnection;
 
+    @AndroidFindBy(xpath = "//*[contains(@text,'Scan')]")
+    private WebElement scanButton;
+
 
     public HomePage(AppiumDriver driver) {
         super(driver);
@@ -75,6 +78,18 @@ public class HomePage extends BasePage {
     public boolean isNameDisplayed(String name) {
         By fullName = By.xpath("//*[contains(@name,'" + name + "') or contains(@text,'" + name + "')]");
         return this.isElementDisplayed(fullName, 60, "Name on downloaded card");
+    }
+    
+   public boolean isSecondNameDisplayed(String name) {
+    	By fullName = By.xpath("(//*[contains(@text,'" + name + "')])[2]");
+    	return this.isElementDisplayed(fullName, 60, "Name on downloaded card");
+    	
+   }
+
+    public DetailedVcViewPage openDetailedVcView(String name) {
+        By fullName = By.xpath("//*[contains(@name,'" + name + "') or contains(@text,'" + name + "')]");
+        clickOnElement(fullName);
+        return new DetailedVcViewPage(driver);
     }
 
     public SettingsPage clickOnSettingIcon() {
@@ -101,13 +116,19 @@ public class HomePage extends BasePage {
     public boolean isPinIconDisplayed() {
         return this.isElementDisplayed(pinIcon, "pin icon");
     }
-
+    
+    
     public boolean isNoVCDownloaded() {
         return this.isElementDisplayed(bringYourDigitalIdentity, "Bring your digital identity");
     }
 
     public boolean isNoInternetConnectionDisplayed() {
         return this.isElementDisplayed(noInternetConnection, "No internet connection");
+    }
+
+    public ScanPage clickOnScanButton(){
+        clickOnElement(scanButton);
+        return new ScanPage(driver);
     }
 
 }

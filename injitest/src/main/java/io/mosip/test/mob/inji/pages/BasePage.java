@@ -51,9 +51,25 @@ public class BasePage {
         element.click();
     }
 
+    protected void clickOnElement(By locator) {
+        driver.findElement(locator).click();
+    }
+
     private void waitForElementToBeVisible(WebElement element) {
         WebDriverWait wait = new WebDriverWait(driver, ofSeconds(30));
         wait.until(ExpectedConditions.visibilityOf(element));
+    }
+    
+    protected boolean isElementEnabled(WebElement element) {
+        try {
+            waitForElementToBeVisible(element);
+            element.isEnabled();
+            ExtentLogger.pass(element + " is displayed");
+            return true;
+        } catch (Exception e) {
+            //ExtentLogger.fail(elementName + " is not displayed");
+            return false;
+        }
     }
 
     protected void sendKeysToTextBox(WebElement element, String text, String elementName) {

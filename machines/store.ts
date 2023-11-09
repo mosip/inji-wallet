@@ -24,7 +24,6 @@ import {
   isHardwareKeystoreExists,
 } from '../shared/cryptoutil/cryptoUtil';
 import {VCMetadata} from '../shared/VCMetadata';
-import FileStorage, {getFilePath} from '../shared/fileStorage';
 
 export const keyinvalidatedString =
   'Key Invalidated due to biometric enrollment';
@@ -173,7 +172,7 @@ export const storeMachine =
           },
         },
         ready: {
-          entry: ['notifyParent', 'cacheVCFilesData'],
+          entry: 'notifyParent',
           invoke: {
             src: 'store',
             id: '_store',
@@ -259,18 +258,6 @@ export const storeMachine =
         setEncryptionKey: model.assign({
           encryptionKey: (_, event) => event.key,
         }),
-
-        cacheVCFilesData: context => {
-          getItem(MY_VCS_STORE_KEY, [], context.encryptionKey).then(vcList => {
-            if (vcList) {
-              vcList?.forEach((vcMetadataStr: string) => {
-                const vcKey =
-                  VCMetadata.fromVcMetadataString(vcMetadataStr).getVcKey();
-                FileStorage.readAndCacheFile(getFilePath(vcKey));
-              });
-            }
-          });
-        },
       },
 
       services: {
