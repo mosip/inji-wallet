@@ -171,14 +171,23 @@ export const ExistingMosipVCItemMachine =
         checkingServerData: {
           description:
             "Download VC data from the server. Uses polling method to check when it's available.",
-          initial: 'verifyingDownloadLimitExpiry',
+          initial: 'loadDownloadLimitConfig',
           states: {
+            loadDownloadLimitConfig: {
+              invoke: {
+                src: 'loadDownloadLimitConfig',
+                onDone: {
+                  actions: ['setMaxDownloadCount', 'setDownloadInterval'],
+                  target: 'verifyingDownloadLimitExpiry',
+                },
+              },
+            },
             verifyingDownloadLimitExpiry: {
+              entry: ['incrementDownloadCounter'],
               invoke: {
                 src: 'checkDownloadExpiryLimit',
                 onDone: {
                   target: 'checkingStatus',
-                  actions: ['setMaxDownloadCount', 'setDownloadInterval'],
                 },
                 onError: {
                   actions: [
@@ -203,7 +212,6 @@ export const ExistingMosipVCItemMachine =
                 },
                 FAILED: [
                   {
-                    actions: ['incrementDownloadCounter'],
                     target: 'verifyingDownloadLimitExpiry',
                   },
                 ],
@@ -1273,24 +1281,25 @@ export const ExistingMosipVCItemMachine =
       },
 
       services: {
-        checkDownloadExpiryLimit: async context => {
+        loadDownloadLimitConfig: async context => {
           var resp = await getAllConfigurations();
           const maxLimit: number = resp.vcDownloadMaxRetry;
           const vcDownloadPoolInterval: number = resp.vcDownloadPoolInterval;
-          console.log(maxLimit);
-          if (maxLimit <= context.downloadCounter) {
-            throw new Error(
-              'Download limit expired for request id: ' +
-                context.vcMetadata.requestId,
-            );
-          }
 
           const downloadProps: DownloadProps = {
             maxDownloadLimit: maxLimit,
             downloadInterval: vcDownloadPoolInterval,
           };
-
           return downloadProps;
+        },
+
+        checkDownloadExpiryLimit: async context => {
+          if (context.downloadCounter > context.maxDownloadCount) {
+            throw new Error(
+              'Download limit expired for request id: ' +
+                context.vcMetadata.requestId,
+            );
+          }
         },
 
         addWalletBindnigId: async context => {
