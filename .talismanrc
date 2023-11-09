@@ -26,7 +26,9 @@ fileignoreconfig:
 - filename: screens/Home/IntroSlidersScreen.tsx
   checksum: 9ff212530850e9f921f91d406c01f67ea5dd2a44e9cdb5e63d977749c7a7c5bd    
 - filename: machines/store.ts
-  checksum: fda6511ab88566820cf6b7324178b4646f495fae5168af73a0fb1c3bb52e5b8d    
+  checksum: fda6511ab88566820cf6b7324178b4646f495fae5168af73a0fb1c3bb52e5b8d 
+- filename: machines/issuersMachine.ts
+  checksum: a3134aacb79b2ac78948f0115bf00bbfb132cc8b88844e69e9ec6d3765b39639   
 - filename: screens/Home/MyVcs/IdInputModal.tsx
   checksum: 6f21b2caf20ee1821b69e178a69e755e0b1094275e4a9f9cb4ae5ab515ce5d23    
 - filename: screens/WelcomeScreenController.ts

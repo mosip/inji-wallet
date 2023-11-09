@@ -70,6 +70,7 @@ const model = createModel(
       RESET_ERROR: () => ({}),
       CHECK_KEY_PAIR: () => ({}),
       CANCEL: () => ({}),
+      STORE_RESPONSE: (response?: unknown) => ({response}),
     },
   },
 );
@@ -195,9 +196,7 @@ export const IssuersMachine = model.createMachine(
               'setTokenResponse',
               'setLoadingReasonAsSettingUp',
               'getKeyPairFromStore',
-              'loadKeyPair',
             ],
-            target: 'checkKeyPair',
           },
           onError: [
             {
@@ -223,6 +222,13 @@ export const IssuersMachine = model.createMachine(
               target: 'error',
             },
           ],
+        },
+        on: {
+          STORE_RESPONSE: {
+            actions: 'loadKeyPair',
+            target: 'checkKeyPair',
+          },
+          //TODO:  handle 'failure to get keypair' error
         },
       },
       checkKeyPair: {
@@ -250,18 +256,18 @@ export const IssuersMachine = model.createMachine(
               actions: [
                 'setPublicKey',
                 'setLoadingReasonAsDownloadingCredentials',
-                'setPrivateKey',
                 'storeKeyPair',
               ],
+              cond: 'isCustomSecureKeystore',
               target: 'downloadCredentials',
             },
             {
               actions: [
                 'setPublicKey',
                 'setLoadingReasonAsDownloadingCredentials',
+                'setPrivateKey',
                 'storeKeyPair',
               ],
-              cond: 'isCustomSecureKeystore',
               target: 'downloadCredentials',
             },
           ],
@@ -379,18 +385,20 @@ export const IssuersMachine = model.createMachine(
       }),
 
       loadKeyPair: assign({
-        publicKey: (_, event) => event.publicKey,
+        publicKey: (_, event) => event.response?.publicKey,
         privateKey: (context, event) =>
-          event.privateKey ? event.privateKey : context.privateKey,
+          event.response?.privateKey
+            ? event.response.privateKey
+            : context.privateKey,
       }),
       getKeyPairFromStore: send(StoreEvents.GET(Issuers_Key_Ref), {
         to: context => context.serviceRefs.store,
       }),
       storeKeyPair: send(
-        (_, event) => {
+        context => {
           return StoreEvents.SET(Issuers_Key_Ref, {
-            publicKey: (event.data as KeyPair).public + ``,
-            privateKey: (event.data as KeyPair).private + ``,
+            publicKey: context.publicKey,
+            privateKey: context.privateKey,
           });
         },
         {
@@ -570,7 +578,7 @@ export const IssuersMachine = model.createMachine(
     },
     guards: {
       hasKeyPair: context => {
-        return context.publicKey != null;
+        return context.publicKey !== null && context.publicKey != undefined;
       },
       isInternetConnected: (_, event) => !!event.data.isConnected,
       isOIDCflowCancelled: (_, event) => {
