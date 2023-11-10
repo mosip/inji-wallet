@@ -30,8 +30,6 @@ public class HistoryPage extends BasePage {
         By locator = By.xpath("//*[contains(@name,'" + vcNumber + " downloaded')]");
         return this.isElementDisplayed(locator, "Downloaded VC in ios");
     }
-    
-    
 
     private boolean verifyHistoryAndroid(String vcNumber) {
         By locator = By.xpath("//*[contains(@text,'" + vcNumber + " downloaded')]");
@@ -86,5 +84,45 @@ public class HistoryPage extends BasePage {
             
         }
         return false;
+    }
+
+    public boolean verifyActivationFailedRecordInHistory(String vcNumber, Target os) {
+        switch (os) {
+            case ANDROID:
+                return verifyActivationFailedRecordAndroid(vcNumber);
+            case IOS:
+                return verifyActivationFailedRecordIos(vcNumber);
+        }
+        return false;
+    }
+
+    private boolean verifyActivationFailedRecordIos(String vcNumber) {
+        By locator = By.xpath("//*[contains(@name,'" + vcNumber + " Activation failed')]");
+        return this.isElementDisplayed(locator, "Downloaded VC in ios");
+    }
+
+    private boolean verifyActivationFailedRecordAndroid(String vcNumber) {
+        By locator = By.xpath("//*[contains(@text,'" + vcNumber + " Activation failed')]");
+        return this.isElementDisplayed(locator, "Downloaded VC in android");
+    }
+
+    public boolean verifyActivationSuccessfulRecordInHistory(String vcNumber, Target os) {
+        switch (os) {
+            case ANDROID:
+                return verifyActivationFailedRecordAndroid(vcNumber);
+            case IOS:
+                return verifyActivationFailedRecordIos(vcNumber);
+        }
+        return false;
+    }
+
+    private boolean verifyActivationSuccessfulRecordIos(String vcNumber) {
+        By locator = By.xpath("//*[contains(@name,'" + vcNumber + " Activation successful')]");
+        return this.isElementDisplayed(locator, "Downloaded VC in ios");
+    }
+
+    private boolean verifyActivationSuccessfulRecordAndroid(String vcNumber) {
+        By locator = By.xpath("//*[contains(@text,'" + vcNumber + " Activation successful')]");
+        return this.isElementDisplayed(locator, "Downloaded VC in android");
     }
 }
