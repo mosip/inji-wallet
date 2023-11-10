@@ -15,6 +15,15 @@ public class OtpVerificationPage extends BasePage {
     @AndroidFindBy(xpath = "//*[contains(@text,'OTP is invalid')]")
     private WebElement invalidOtpMessage;
 
+    @AndroidFindBy(xpath = "//*[contains(@text,'Something is wrong. Please try again later!')]")
+    private WebElement invalidOtpMessageInVcActivation;
+
+    @AndroidFindBy(xpath = "//*[contains(@text,'Cancel')]")
+    private WebElement cancelButton;
+
+    @AndroidFindBy(accessibility = "close")
+    private WebElement crossIcon;
+
     public OtpVerificationPage(AppiumDriver driver) {
         super(driver);
     }
@@ -31,5 +40,21 @@ public class OtpVerificationPage extends BasePage {
 
     public boolean invalidOtpMessageDisplayed() {
         return this.isElementDisplayed(invalidOtpMessage, "OTP is invalid");
+    }
+
+    public boolean somethingWetWrongInVcActivationDisplayed() {
+        return this.isElementDisplayed(invalidOtpMessageInVcActivation, "Something is wrong. Please try again later!");
+    }
+
+    public boolean isCancelButtonDisplayed() {
+        return this.isElementDisplayed(cancelButton, "Cancel button");
+    }
+
+    public MoreOptionsPage clickOnCancelButton(){
+        clickOnElement(cancelButton);
+        return new MoreOptionsPage(driver);
+    }
+    public void clickOnCrossIcon(){
+        clickOnElement(crossIcon);
     }
 }

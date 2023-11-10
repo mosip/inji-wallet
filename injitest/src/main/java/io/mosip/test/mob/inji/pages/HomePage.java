@@ -55,6 +55,9 @@ public class HomePage extends BasePage {
     @AndroidFindBy(xpath = "//*[contains(@text,'Scan')]")
     private WebElement scanButton;
 
+    @AndroidFindBy(accessibility = "nationalCard")
+    private WebElement idTypeValue;
+
 
     public HomePage(AppiumDriver driver) {
         super(driver);
@@ -129,6 +132,9 @@ public class HomePage extends BasePage {
     public ScanPage clickOnScanButton(){
         clickOnElement(scanButton);
         return new ScanPage(driver);
+    }
+    public boolean isIdTypeDisplayed() {
+        return this.isElementDisplayed(idTypeValue, "Name on downloaded card");
     }
 
 }
