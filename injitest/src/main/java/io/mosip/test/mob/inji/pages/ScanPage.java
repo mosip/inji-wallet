@@ -18,10 +18,13 @@ public class ScanPage extends BasePage{
 
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Allow\")")
     private WebElement allowButton;
-    
+
+    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"No shareable cards are available.\")")
+    private WebElement noShareableCards;
+
 	@AndroidFindBy(className = "android.widget.ImageView")
 	private WebElement flipCamera;
-	
+
 	@AndroidFindBy(xpath = "//*[contains(@text,'Hold the phone steady and scan the QR code')]")
 	 private WebElement holdCameraSteady;
 
@@ -38,11 +41,15 @@ public class ScanPage extends BasePage{
     public boolean isCameraOpen(){
     return isElementDisplayed(camera, "camera");
     }
-    
+
+    public boolean isNoShareableCardsMessageDisplayed(){
+        return isElementDisplayed(noShareableCards, "No shareable cards are available.");
+    }
+
     public boolean isCameraPageLoaded() {
         return this.isElementEnabled(holdCameraSteady);
     }
-	
+
 	public boolean isFlipCameraClickable() {
 		return this.isElementEnabled(flipCamera);
 	}
