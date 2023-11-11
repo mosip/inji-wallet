@@ -36,7 +36,7 @@ public class VcDownloadAndVerifyUsingVidTest extends BaseTest {
         OtpVerificationPage otpVerification = retrieveIdPage.clickOnVid(target).setEnterIdTextBox(BaseTestCase.perpetualVid).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(GetOtp(), target);
+        otpVerification.enterOtp(BaseTestCase.GetOtp(), target);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
@@ -73,7 +73,7 @@ public class VcDownloadAndVerifyUsingVidTest extends BaseTest {
         OtpVerificationPage otpVerification = retrieveIdPage.clickOnVid(target).setEnterIdTextBox(BaseTestCase.perpetualVid).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(GetOtp(), target);
+        otpVerification.enterOtp(BaseTestCase.GetOtp(), target);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         
@@ -86,7 +86,7 @@ public class VcDownloadAndVerifyUsingVidTest extends BaseTest {
          retrieveIdPage.clickOnVid(target).setEnterIdTextBox(BaseTestCase.perpetualVid).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(GetOtp(), target);
+        otpVerification.enterOtp(BaseTestCase.GetOtp(), target);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         

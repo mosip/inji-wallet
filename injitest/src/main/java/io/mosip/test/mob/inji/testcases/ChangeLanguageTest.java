@@ -4,6 +4,7 @@ import org.testng.annotations.Test;
 import io.mosip.test.mob.inji.pages.*;
 import io.mosip.test.mob.inji.utils.TestDataReader;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class ChangeLanguageTest extends BaseTest {

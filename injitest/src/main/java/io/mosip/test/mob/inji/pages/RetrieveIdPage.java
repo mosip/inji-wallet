@@ -36,11 +36,11 @@ public class RetrieveIdPage extends BasePage {
     @AndroidFindBy(xpath = "//*[contains(@text,'UIN invalid')]")
     private WebElement invalidUin;
     
-    
+    @AndroidFindBy(xpath = "//*[contains(@text,'AID is not ready yet')]")
+    private WebElement aidIsNotReadyYet;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'The input format is incorrect')]")
     private WebElement inputFormatErrorMessage;
-
 
     public RetrieveIdPage(AppiumDriver driver) {
         super(driver);
@@ -48,6 +48,10 @@ public class RetrieveIdPage extends BasePage {
 
     public boolean isRetrieveIdPageLoaded() {
         return this.isElementDisplayed(retrieveIdText, "Retrieve your id page");
+    }
+    
+    public boolean isaidIsNotReadyYetErrorDispled() {
+        return this.isElementDisplayed(aidIsNotReadyYet, "Retrieve your id page");
     }
 
     public RetrieveIdPage setEnterIdTextBox(String uinOrVid) {
@@ -68,7 +72,6 @@ public class RetrieveIdPage extends BasePage {
     public boolean isInvalidUinMassageLoaded() {
         return this.isElementDisplayed(invalidUin, "UIN invalid");
     }
-
 
     public RetrieveIdPage clickOnVid(Target os) {
         switch (os) {

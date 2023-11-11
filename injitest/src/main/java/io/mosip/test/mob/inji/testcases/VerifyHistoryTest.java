@@ -38,7 +38,7 @@ public class VerifyHistoryTest extends BaseTest {
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(BaseTestCase.uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(GetOtp(), target);
+        otpVerification.enterOtp(BaseTestCase.GetOtp(), target);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         HistoryPage historyPage = homePage.clickOnHistoryButton();

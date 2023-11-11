@@ -26,6 +26,12 @@ public class SettingsPage extends BasePage {
     @AndroidFindBy(xpath = "//*[contains(@text,'Wika')]")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Wika\"`]")
     private WebElement wikaButton;
+    
+    @AndroidFindBy(xpath = "//*[contains(@text,'Inji Tour Guide')]")
+    public WebElement InjiTourGuide;
+    
+    @AndroidFindBy(xpath = "//*[contains(@text,'Credential Registry')]")
+    public WebElement ClickOnCredentialRegistry;
 
     public SettingsPage(AppiumDriver driver) {
         super(driver);
@@ -52,5 +58,14 @@ public class SettingsPage extends BasePage {
     public boolean verifyFilipinoLanguage() {
         return this.isElementDisplayed(wikaButton, "Filipino language");
     }
-
+    
+    public SettingsPage clickOnInjiTourGuide() {
+        clickOnElement(InjiTourGuide);
+        return this;
+    }
+    
+    public CredentialRegistryPage clickOnCredentialRegistry() {
+        clickOnElement(ClickOnCredentialRegistry);
+        return new CredentialRegistryPage(driver);
+    }
 }
