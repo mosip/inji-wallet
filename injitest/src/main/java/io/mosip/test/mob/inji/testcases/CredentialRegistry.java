@@ -53,7 +53,6 @@ public class CredentialRegistry extends BaseTest {
 
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         credentialRegistryPage.clickOnBackArrow();
-        
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
@@ -246,7 +245,7 @@ public class CredentialRegistry extends BaseTest {
         assertTrue(generateUinOrVidPage.isGenerateUinOrVidPageLoaded(), "Verify if generate uin or vid page page is displayed");
         OtpVerificationPage otpVerification = generateUinOrVidPage.enterApplicationID(TestDataReader.readData("aid")).clickOnGetUinOrVidButton();
 
-        assertTrue(retrieveIdPage.isaidIsNotReadyYetErrorDispled(), "Verify if aid is not ready displayed");
+        assertTrue(retrieveIdPage.isAidIsNotReadyYetErrorDisplayed(), "Verify if aid is not ready displayed");
 	}
 	
 	public void downloadAndVerifyVcInTwoEnv() throws InterruptedException {
@@ -378,6 +377,6 @@ public class CredentialRegistry extends BaseTest {
         assertTrue(pleaseConfirmPopupPage.isPleaseConfirmPopupPageLoaded(), "Verify if pop up page is displayed");
         OtpVerificationPage otpVerificationPage = pleaseConfirmPopupPage.clickOnConfirmButton();
         
-        assertTrue(credentialRegistryPage.isSomthingIsWrongPopupVisible(), "Verify if somthing went wrong please try again popup displayed");
+        assertTrue(moreOptionsPage.isSomthingIsWrongPopupVisible(), "Verify if somthing went wrong please try again popup displayed");
 	}
 }

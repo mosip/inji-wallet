@@ -50,7 +50,7 @@ public class RetrieveIdPage extends BasePage {
         return this.isElementDisplayed(retrieveIdText, "Retrieve your id page");
     }
     
-    public boolean isaidIsNotReadyYetErrorDispled() {
+    public boolean isAidIsNotReadyYetErrorDisplayed() {
         return this.isElementDisplayed(aidIsNotReadyYet, "Retrieve your id page");
     }
 

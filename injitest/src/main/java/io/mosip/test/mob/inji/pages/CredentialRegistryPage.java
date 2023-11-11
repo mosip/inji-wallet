@@ -21,8 +21,7 @@ public class CredentialRegistryPage extends BasePage {
 	@AndroidFindBy(xpath = "//android.widget.TextView[@resource-id=\"iconIcon\" and @text=\"󰁍\"]")
     public WebElement BackArrow;
 	
-	@AndroidFindBy(xpath = "//*[contains(@text,'Something is wrong. Please try again later!')]")
-    public WebElement SomthingIsWrongPopup;
+	
 	
     public CredentialRegistryPage(AppiumDriver driver) {
         super(driver);
@@ -56,10 +55,5 @@ public class CredentialRegistryPage extends BasePage {
     public String CheckEnvNotChanged() {
     return CredentialRegistryTextBox.getText();
     }
-    
-    public boolean isSomthingIsWrongPopupVisible() {
-        return this.isElementDisplayed(SomthingIsWrongPopup, "Something is wrong. Please try again later!");
-    }
-    
     
 }

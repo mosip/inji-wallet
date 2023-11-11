@@ -28,6 +28,9 @@ public class MoreOptionsPage extends BasePage {
     
     @AndroidFindBy(xpath = "//*[@resource-id=\"iconIcon\"]")
     private WebElement CloseButton;
+    
+    @AndroidFindBy(xpath = "//*[contains(@text,'Something is wrong. Please try again later!')]")
+    public WebElement SomthingIsWrongPopup;
 
     public MoreOptionsPage(AppiumDriver driver) {
         super(driver);
@@ -59,4 +62,10 @@ public class MoreOptionsPage extends BasePage {
     	clickOnElement(CloseButton);
     	return new HomePage(driver);
     }
+    
+    public boolean isSomthingIsWrongPopupVisible() {
+        return this.isElementDisplayed(SomthingIsWrongPopup, "Something is wrong. Please try again later!");
+    }
+    
+    
 }

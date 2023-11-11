@@ -10,7 +10,6 @@ import static org.testng.Assert.assertTrue;
 public class VerifyWelcomePagesTest extends BaseTest {
    @Test
     public void verifyWelcomePagesContent() {
-
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
         WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
@@ -36,7 +35,6 @@ public class VerifyWelcomePagesTest extends BaseTest {
     
     @Test
     public void verifyGoBackFromInjiTourGuide() {
-
     	ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
@@ -86,7 +84,6 @@ public class VerifyWelcomePagesTest extends BaseTest {
     
     @Test
     public void verifyClickOnBackFromInjiTourGuide() {
-
     	ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
@@ -115,6 +112,5 @@ public class VerifyWelcomePagesTest extends BaseTest {
         
         welcomePage.ClickOnBackButton();
         assertTrue(homePage.isNoVCDownloaded(), "Verify if get back to home page");
-        
     }
 }
