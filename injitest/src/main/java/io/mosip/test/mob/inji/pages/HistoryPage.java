@@ -81,6 +81,7 @@ public class HistoryPage extends BasePage {
         switch (os) {
             case ANDROID:
                 return verifyDeleteHistoryAndroid(vcNumber);
+            
         }
         return false;
     }
