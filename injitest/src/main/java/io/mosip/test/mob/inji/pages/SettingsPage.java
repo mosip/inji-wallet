@@ -32,6 +32,12 @@ public class SettingsPage extends BasePage {
     
     @AndroidFindBy(xpath = "//*[contains(@text,'Credential Registry')]")
     public WebElement ClickOnCredentialRegistry;
+    
+    @AndroidFindBy(xpath = "//*[contains(@text,'Receive Card')]")
+    public WebElement ClickOnReceiveCard;
+    
+    @AndroidFindBy(xpath = "//*[contains(@text,'Tumanggap ng Card')]")
+    public WebElement ClickOnReceiveCardInfilipinoLanguage;
 
     public SettingsPage(AppiumDriver driver) {
         super(driver);
@@ -67,5 +73,15 @@ public class SettingsPage extends BasePage {
     public CredentialRegistryPage clickOnCredentialRegistry() {
         clickOnElement(ClickOnCredentialRegistry);
         return new CredentialRegistryPage(driver);
+    }
+    
+    public ReceiveCardPage clickOnReceiveCard() {
+        clickOnElement(ClickOnReceiveCard);
+        return new ReceiveCardPage(driver);
+    }
+    
+    public ReceiveCardPage clickOnReceiveCardFilipinoLanguage() {
+        clickOnElement(ClickOnReceiveCardInfilipinoLanguage);
+        return new ReceiveCardPage(driver);
     }
 }
