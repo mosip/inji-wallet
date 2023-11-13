@@ -201,7 +201,6 @@ export function useScanLayout() {
   const isQrLoginDone = useSelector(scanService, selectIsQrLoginDone);
 
   useEffect(() => {
-    console.log('>> reviewing: ', isReviewing);
     if (isDone) {
       changeTabBarVisible('flex');
       navigation.navigate(BOTTOM_TAB_ROUTES.home);

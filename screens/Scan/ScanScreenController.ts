@@ -24,7 +24,6 @@ import {
   ScanEvents,
   selectIsMinimumStorageRequiredForAuditEntryLimitReached,
 } from '../../machines/bleShare/scan/scanMachine';
-import {scan} from '../../routes/main';
 
 export function useScanScreen() {
   const {t} = useTranslation('ScanScreen');
@@ -88,6 +87,7 @@ export function useScanScreen() {
     isQrRef: useSelector(scanService, selectQrLoginRef),
     LOCATION_REQUEST: () => scanService.send(ScanEvents.LOCATION_REQUEST()),
     GOTO_SETTINGS: () => scanService.send(ScanEvents.GOTO_SETTINGS()),
+    DISMISS: () => scanService.send(ScanEvents.DISMISS()),
     START_PERMISSION_CHECK: () =>
       scanService.send(ScanEvents.START_PERMISSION_CHECK()),
     SCAN: (qrCode: string) => scanService.send(ScanEvents.SCAN(qrCode)),

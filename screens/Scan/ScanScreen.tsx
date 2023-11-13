@@ -1,11 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {
-  ErrorMessageOverlay,
-  MessageOverlay,
-} from '../../components/MessageOverlay';
+import {MessageOverlay} from '../../components/MessageOverlay';
 import {QrScanner} from '../../components/QrScanner';
-import {Button, Centered, Column, Text} from '../../components/ui';
+import {Button, Centered, Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {QrLogin} from '../QrLogin/QrLogin';
 import {useScanScreen} from './ScanScreenController';
@@ -171,12 +168,23 @@ export const ScanScreen: React.FC = () => {
       !controller.isEmpty && (
         <MessageOverlay
           isVisible={controller.selectIsInvalid}
-          title={t('common.errors.genericError')}
-          // TODO: maybe add a message QR invalid
-          onButtonPress={() => navigation.navigate(BOTTOM_TAB_ROUTES.scan)}
-          buttonText={t('common:tryAgain')}
-          customHeight={'auto'}
-        />
+          title={t('invalidQR')}
+          customHeight={'auto'}>
+          <Column>
+            <Button
+              fill
+              type="gradient"
+              title={t('common:ok')}
+              onPress={() => navigation.navigate(BOTTOM_TAB_ROUTES.home)}
+            />
+            <Button
+              fill
+              type="gradient"
+              title={t('common:tryAgain')}
+              onPress={controller.DISMISS}
+            />
+          </Column>
+        </MessageOverlay>
       )
     );
   }

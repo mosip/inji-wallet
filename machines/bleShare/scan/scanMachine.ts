@@ -403,23 +403,14 @@ export const scanMachine =
               {
                 target: 'connecting',
                 cond: 'isOpenIdQr',
-                actions: [
-                  'sendVcSharingStartEvent',
-                  'setUri',
-                  'offlineaccepted',
-                ],
+                actions: ['sendVcSharingStartEvent', 'setUri'],
               },
               {
                 target: 'showQrLogin',
                 cond: 'isQrLogin',
-                actions: [
-                  'sendVcSharingStartEvent',
-                  'setLinkCode',
-                  'onlineaccepted',
-                ],
+                actions: ['sendVcSharingStartEvent', 'setLinkCode'],
               },
               {
-                actions: 'invalidaccepted',
                 target: 'invalid',
               },
             ],
@@ -753,9 +744,6 @@ export const scanMachine =
     },
     {
       actions: {
-        offlineaccepted: () => console.log('>> offline QR accepted'),
-        onlineaccepted: () => console.log('>> online QR accepted'),
-        invalidaccepted: () => console.log('>> invalid QR accepted'),
         setChildRef: assign({
           QrLoginRef: context => {
             const service = spawn(
@@ -902,14 +890,9 @@ export const scanMachine =
         }),
 
         setLinkCode: assign({
-          // TODO: set link code refactor required
           linkCode: (_context, event) =>
-            event.params.substring(
-              event.params.indexOf('linkCode=') + 9,
-              event.params.indexOf('&'),
-            ),
+            new URL(event.params).searchParams.get('linkCode'),
         }),
-
         setStayInProgress: assign({
           stayInProgress: context => !context.stayInProgress,
         }),
@@ -1217,11 +1200,13 @@ export const scanMachine =
       },
 
       guards: {
-        isOpenIdQr: (_context, event) => event.params.includes('OPENID4VP://'),
+        // sample: 'OPENID4VP://connect:?name=OVPMOSIP&key=69dc92a2cc91f02258aa8094d6e2b62877f5b6498924fbaedaaa46af30abb364'
+        isOpenIdQr: (_context, event) =>
+          event.params.startsWith('OPENID4VP://'),
         isQrLogin: (_context, event) => {
           try {
             let linkCode = new URL(event.params);
-            // does it have a linkCode & an linkExpireDateTime
+            // sample: 'inji://landing-page-name?linkCode=sTjp0XVH3t3dGCU&linkExpireDateTime=2023-11-09T06:56:18.482Z'
             return (
               linkCode.searchParams.get('linkCode') &&
               linkCode.searchParams.get('linkExpireDateTime')
