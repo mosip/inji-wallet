@@ -113,7 +113,7 @@ export const IssuersScreen: React.FC<
   };
 
   const filterIssuers = (searchText: string) => {
-    let filterdData = issuers.filter(item => {
+    const filteredData = issuers.filter(item => {
       if (
         getDisplayObjectForCurrentLanguage(item.display)
           ?.name.toLowerCase()
@@ -122,7 +122,7 @@ export const IssuersScreen: React.FC<
         return getDisplayObjectForCurrentLanguage(item.display);
       }
     });
-    setFilteredSearchData(filterdData);
+    setFilteredSearchData(filteredData);
     setSearch(searchText);
   };
 

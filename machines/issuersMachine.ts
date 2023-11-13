@@ -2,7 +2,6 @@ import {authorize, AuthorizeResult} from 'react-native-app-auth';
 import {assign, EventFrom, send, sendParent, StateFrom} from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {
-  BIOMETRIC_CANCELLED,
   MY_VCS_STORE_KEY,
   NETWORK_REQUEST_FAILED,
   REQUEST_TIMEOUT,
@@ -669,11 +668,7 @@ export function selectIssuers(state: State) {
 }
 
 export function selectErrorMessageType(state: State) {
-  const nonGenericErrors = [
-    '',
-    ErrorMessage.NO_INTERNET,
-    ErrorMessage.BIOMETRIC_CANCELLED,
-  ];
+  const nonGenericErrors = ['', ErrorMessage.NO_INTERNET];
   return nonGenericErrors.includes(state.context.errorMessage)
     ? state.context.errorMessage
     : ErrorMessage.GENERIC;
