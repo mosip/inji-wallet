@@ -291,6 +291,10 @@
         "title": "Sin conexión a Internet",
         "message": "Por favor verifique su conexión y vuelva a intentarlo"
       },
+      "biometricsCancelled": {
+        "title": "Quieres cancelar la descarga?",
+        "message": "Se requiere confirmación biométrica para continuar descargando la tarjeta."
+      },
       "generic": {
         "title": "¡Algo salió mal!",
         "message": "Estamos teniendo algunos problemas con su solicitud. Inténtalo de nuevo."

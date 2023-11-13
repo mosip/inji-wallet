@@ -80,7 +80,9 @@ export interface Typegen0 {
     services: never;
   };
   eventsCausingActions: {
-    getKeyPairFromStore: 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
+    getKeyPairFromStore:
+      | 'TRY_AGAIN'
+      | 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
     loadKeyPair: 'STORE_RESPONSE';
     logDownloaded: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
     resetError:
@@ -88,6 +90,7 @@ export interface Typegen0 {
       | 'TRY_AGAIN'
       | 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     resetLoadingReason:
+      | 'RESET_ERROR'
       | 'done.invoke.checkInternet'
       | 'done.invoke.issuersMachine.displayIssuers:invocation[0]'
       | 'error.platform.issuersMachine.downloadCredentials:invocation[0]'
@@ -105,11 +108,12 @@ export interface Typegen0 {
     setIssuers: 'done.invoke.issuersMachine.displayIssuers:invocation[0]';
     setLoadingReasonAsDisplayIssuers: 'TRY_AGAIN';
     setLoadingReasonAsDownloadingCredentials:
+      | 'STORE_ERROR'
+      | 'STORE_RESPONSE'
       | 'TRY_AGAIN'
       | 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
     setLoadingReasonAsSettingUp:
       | 'SELECTED_ISSUER'
-      | 'STORE_RESPONSE'
       | 'TRY_AGAIN'
       | 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
     setNoInternet: 'done.invoke.checkInternet';
@@ -161,9 +165,14 @@ export interface Typegen0 {
     | 'generateKeyPair'
     | 'idle'
     | 'performAuthorization'
+    | 'performAuthorization.idle'
+    | 'performAuthorization.userCancelledBiometric'
     | 'selectingIssuer'
     | 'storing'
     | 'verifyingCredential'
-    | {downloadCredentials?: 'idle' | 'userCancelledBiometric'};
+    | {
+        downloadCredentials?: 'idle' | 'userCancelledBiometric';
+        performAuthorization?: 'idle' | 'userCancelledBiometric';
+      };
   tags: never;
 }

@@ -1,8 +1,9 @@
 import {KeyPair, RSA} from 'react-native-rsa-native';
 import forge from 'node-forge';
-import {DEBUG_MODE_ENABLED, isIOS} from '../constants';
+import {BIOMETRIC_CANCELLED, DEBUG_MODE_ENABLED, isIOS} from '../constants';
 import SecureKeystore from 'react-native-secure-keystore';
 import CryptoJS from 'crypto-js';
+import {BiometricCancellationError} from '../error/BiometricCancellationError';
 
 // 5min
 export const AUTH_TIMEOUT = 5 * 60;
@@ -60,9 +61,12 @@ export async function createSignature(
   } else {
     try {
       signature64 = await SecureKeystore.sign(individualId, preHash);
-    } catch (e) {
-      console.error('Error in creating signature:', e);
-      throw e;
+    } catch (error) {
+      console.error('Error in creating signature:', error);
+      if (error.toString().includes(BIOMETRIC_CANCELLED)) {
+        throw new BiometricCancellationError(error.toString());
+      }
+      throw error;
     }
 
     return replaceCharactersInB64(signature64);
@@ -99,15 +103,23 @@ export async function encryptJson(
   encryptionKey: string,
   data: string,
 ): Promise<string> {
-  // Disable Encryption in debug mode
-  if (DEBUG_MODE_ENABLED && __DEV__) {
-    return JSON.stringify(data);
-  }
+  try {
+    // Disable Encryption in debug mode
+    if (DEBUG_MODE_ENABLED && __DEV__) {
+      return JSON.stringify(data);
+    }
 
-  if (!isHardwareKeystoreExists) {
-    return CryptoJS.AES.encrypt(data, encryptionKey).toString();
+    if (!isHardwareKeystoreExists) {
+      return CryptoJS.AES.encrypt(data, encryptionKey).toString();
+    }
+    return await SecureKeystore.encryptData(ENCRYPTION_ID, data);
+  } catch (error) {
+    console.error('error while encrypting:', error);
+    if (error.toString().includes(BIOMETRIC_CANCELLED)) {
+      throw new BiometricCancellationError(error.toString());
+    }
+    throw error;
   }
-  return await SecureKeystore.encryptData(ENCRYPTION_ID, data);
 }
 
 export async function decryptJson(
@@ -133,6 +145,10 @@ export async function decryptJson(
     return await SecureKeystore.decryptData(ENCRYPTION_ID, encryptedData);
   } catch (e) {
     console.error('error decryptJson:', e);
+
+    if (e.toString().includes(BIOMETRIC_CANCELLED)) {
+      throw new BiometricCancellationError(e.toString());
+    }
     throw e;
   }
 }

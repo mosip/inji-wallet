@@ -43,6 +43,7 @@ import {
 } from '../types/VC/EsignetMosipVC/vc';
 import {CACHED_API} from '../shared/api';
 import {request} from '../shared/request';
+import {BiometricCancellationError} from '../shared/error/BiometricCancellationError';
 
 const model = createModel(
   {
@@ -61,15 +62,16 @@ const model = createModel(
   },
   {
     events: {
-      DISMISS: () => ({}),
       SELECTED_ISSUER: (id: string) => ({id}),
       DOWNLOAD_ID: () => ({}),
+      BIOMETRIC_CANCELLED: (requester?: string) => ({requester}),
       COMPLETED: () => ({}),
       TRY_AGAIN: () => ({}),
       RESET_ERROR: () => ({}),
       CHECK_KEY_PAIR: () => ({}),
       CANCEL: () => ({}),
       STORE_RESPONSE: (response?: unknown) => ({response}),
+      STORE_ERROR: (error: Error, requester?: string) => ({error, requester}),
     },
   },
 );
@@ -115,7 +117,7 @@ export const IssuersMachine = model.createMachine(
         on: {
           TRY_AGAIN: [
             {
-              description: 'not fetched issuers config yet',
+              description: 'not fetched issuers yet',
               cond: 'shouldFetchIssuersAgain',
               actions: ['setLoadingReasonAsDisplayIssuers', 'resetError'],
               target: 'displayIssuers',
@@ -222,17 +224,44 @@ export const IssuersMachine = model.createMachine(
             },
           ],
         },
-        on: {
-          STORE_RESPONSE: {
-            actions: 'loadKeyPair',
-            target: 'checkKeyPair',
+        initial: 'idle',
+        states: {
+          idle: {
+            on: {
+              STORE_RESPONSE: {
+                actions: 'loadKeyPair',
+                target: '#issuersMachine.checkKeyPair',
+              },
+              BIOMETRIC_CANCELLED: {
+                target: 'userCancelledBiometric',
+              },
+              STORE_ERROR: {
+                target: '#issuersMachine.checkKeyPair',
+              },
+            },
           },
-          //TODO:  handle 'failure to get keypair' error
+          userCancelledBiometric: {
+            on: {
+              TRY_AGAIN: [
+                {
+                  actions: ['getKeyPairFromStore'],
+                  target: 'idle',
+                },
+              ],
+              RESET_ERROR: {
+                actions: 'resetLoadingReason',
+                target: '#issuersMachine.selectingIssuer',
+              },
+            },
+          },
         },
       },
       checkKeyPair: {
         description: 'checks whether key pair is generated',
-        entry: ['setLoadingReasonAsSettingUp', send('CHECK_KEY_PAIR')],
+        entry: [
+          'setLoadingReasonAsDownloadingCredentials',
+          send('CHECK_KEY_PAIR'),
+        ],
         on: {
           CHECK_KEY_PAIR: [
             {
@@ -283,7 +312,6 @@ export const IssuersMachine = model.createMachine(
           onError: [
             {
               cond: 'hasUserCancelledBiometric',
-              actions: ['setError'],
               target: '.userCancelledBiometric',
             },
             {
@@ -304,15 +332,12 @@ export const IssuersMachine = model.createMachine(
             on: {
               TRY_AGAIN: [
                 {
-                  actions: [
-                    'resetError',
-                    'setLoadingReasonAsDownloadingCredentials',
-                  ],
+                  actions: ['setLoadingReasonAsDownloadingCredentials'],
                   target: '#issuersMachine.downloadCredentials',
                 },
               ],
               RESET_ERROR: {
-                actions: 'resetError',
+                actions: 'resetLoadingReason',
                 target: '#issuersMachine.selectingIssuer',
               },
             },
@@ -397,8 +422,6 @@ export const IssuersMachine = model.createMachine(
               return ErrorMessage.NO_INTERNET;
             case REQUEST_TIMEOUT:
               return ErrorMessage.REQUEST_TIMEDOUT;
-            case BIOMETRIC_CANCELLED:
-              return ErrorMessage.BIOMETRIC_CANCELLED;
             default:
               return ErrorMessage.GENERIC;
           }
@@ -604,9 +627,7 @@ export const IssuersMachine = model.createMachine(
       },
     },
     guards: {
-      hasKeyPair: context => {
-        return context.publicKey !== null && context.publicKey != undefined;
-      },
+      hasKeyPair: context => !!context.publicKey,
       isInternetConnected: (_, event) => !!event.data.isConnected,
       isOIDCflowCancelled: (_, event) => {
         // iOS & Android have different error strings for user cancelled flow
@@ -636,7 +657,7 @@ export const IssuersMachine = model.createMachine(
       shouldFetchIssuersAgain: context => context.issuers.length === 0,
       isCustomSecureKeystore: () => isHardwareKeystoreExists,
       hasUserCancelledBiometric: (_, event) =>
-        event.data.message.includes(BIOMETRIC_CANCELLED),
+        event.data instanceof BiometricCancellationError,
     },
   },
 );
@@ -664,6 +685,13 @@ export function selectLoadingReason(state: State) {
 
 export function selectIsDownloadCredentials(state: State) {
   return state.matches('downloadCredentials');
+}
+
+export function selectIsBiometricCancelled(state: State) {
+  return (
+    state.matches('downloadCredentials.userCancelledBiometric') ||
+    state.matches('performAuthorization.userCancelledBiometric')
+  );
 }
 
 export function selectIsDone(state: State) {
