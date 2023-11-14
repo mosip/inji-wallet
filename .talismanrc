@@ -4,7 +4,7 @@ fileignoreconfig:
 - filename: package.json
   checksum: a5a22604f2b9d917adaf3561fdcaeccd4e69b92e1240070480d7498e1eda5162
 - filename: package-lock.json
-  checksum: 4d3f0bb3917b1233e82f73ee72c4692840b2592c59d6e8d6789f2468c7288ed5
+  checksum: 910a3751a562d84a05a343bb4cc0f1639efb9ce7ae8dffbc662981fca3aa0d25
 - filename: components/PasscodeVerify.tsx
   checksum: 14654c0f038979fcd0d260170a45894a072f81e0767ca9a0e66935d33b5cc703
 - filename: i18n.ts

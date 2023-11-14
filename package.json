@@ -28,7 +28,7 @@
     "@xstate/react": "^3.0.1",
     "base64url-universal": "^1.1.0",
     "buffer": "^6.0.3",
-    "crypto-js": "^4.2.0",
+    "crypto-js": "^3.3.0",
     "date-fns": "^2.26.0",
     "expo": "^49.0.16",
     "expo-app-loading": "2.1.1",
