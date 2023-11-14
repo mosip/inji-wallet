@@ -125,7 +125,7 @@ export const ScanScreen: React.FC = () => {
       return noShareableVcText();
     }
     if (controller.selectIsInvalid) {
-      return invalidQR();
+      return displayInvalidQR();
     }
     if (controller.isNearByDevicesPermissionDenied) {
       return allowNearbyDevicesPermissionComponent();
@@ -163,7 +163,7 @@ export const ScanScreen: React.FC = () => {
     );
   }
 
-  function invalidQR(): React.ReactNode {
+  function displayInvalidQR(): React.ReactNode {
     return (
       !controller.isEmpty && (
         <MessageOverlay
@@ -174,7 +174,7 @@ export const ScanScreen: React.FC = () => {
             <Button
               fill
               type="gradient"
-              title={t('common:ok')}
+              title={t('common:cancel')}
               onPress={() => navigation.navigate(BOTTOM_TAB_ROUTES.home)}
             />
             <Button

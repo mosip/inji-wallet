@@ -890,7 +890,7 @@ export const scanMachine =
         }),
 
         setLinkCode: assign({
-          linkCode: (_context, event) =>
+          linkCode: (_, event) =>
             new URL(event.params).searchParams.get('linkCode'),
         }),
         setStayInProgress: assign({
@@ -1207,10 +1207,7 @@ export const scanMachine =
           try {
             let linkCode = new URL(event.params);
             // sample: 'inji://landing-page-name?linkCode=sTjp0XVH3t3dGCU&linkExpireDateTime=2023-11-09T06:56:18.482Z'
-            return (
-              linkCode.searchParams.get('linkCode') &&
-              linkCode.searchParams.get('linkExpireDateTime')
-            );
+            return linkCode.searchParams.get('linkCode') !== '';
           } catch (e) {
             return false;
           }
