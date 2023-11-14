@@ -1312,11 +1312,11 @@ export const DefaultTheme = {
 
   ICON_SMALL_SIZE: 16,
   ICON_MID_SIZE: 22,
+  ICON_LARGE_SIZE: 33,
   PinIcon: require('../../../assets/pin_icon.png'),
   CloseCard: require('../../../assets/card_bg.png'),
   CardBackground: require('../../../assets/card_bg.png'),
   OpenCard: require('../../../assets/card_bg.png'),
-  activationPending: require('../../../assets/pending_activation.png'),
   cardFaceIcon: require('../../../assets/placeholder-photo.png'),
   MosipSplashLogo: require('../../../assets/icon.png'),
   MosipLogo: require('../../../assets/mosip-logo.png'),
