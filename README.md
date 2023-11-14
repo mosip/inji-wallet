@@ -52,14 +52,9 @@ Create a `.env.local` file using `.env` as your template:
 
 ```
 MIMOTO_HOST=
-GOOGLE_NEARBY_MESSAGES_API_KEY=
 ```
 
 And `android/local.properties`:
-
-```
-GOOGLE_NEARBY_MESSAGES_API_KEY=
-```
 
 More info here: [Setup Google Nearby Messages in React](https://github.com/mrousavy/react-native-google-nearby-messages#usage)
 

@@ -1,16 +1,16 @@
 import React from 'react';
-import { Button, Column, Text, Centered } from '../../components/ui';
-import { Theme } from '../../components/ui/styleUtils';
-import { useTranslation } from 'react-i18next';
-import { VcItem } from '../../components/VcItem';
-import { useQrLogin } from './QrLoginController';
-import { QrLoginRef } from '../../machines/QrLoginMachine';
-import { Icon } from 'react-native-elements';
-import { Modal } from '../../components/ui/Modal';
+import {Button, Centered, Column, Text} from '../../components/ui';
+import {Theme} from '../../components/ui/styleUtils';
+import {useTranslation} from 'react-i18next';
+import {useQrLogin} from './QrLoginController';
+import {QrLoginRef} from '../../machines/QrLoginMachine';
+import {Icon} from 'react-native-elements';
+import {Modal} from '../../components/ui/Modal';
+import {VcItemContainer} from '../../components/VC/VcItemContainer';
 
-export const MyBindedVcs: React.FC<MyBindedVcsProps> = (props) => {
+export const MyBindedVcs: React.FC<MyBindedVcsProps> = props => {
   const controller = useQrLogin(props);
-  const { t } = useTranslation('QrScreen');
+  const {t} = useTranslation('QrLogin');
 
   return (
     <Modal
@@ -22,27 +22,30 @@ export const MyBindedVcs: React.FC<MyBindedVcsProps> = (props) => {
         controller.DISMISS();
       }}>
       <React.Fragment>
-        <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
+        <Column fill style={{display: props.isVisible ? 'flex' : 'none'}}>
           <Column fill>
-            {controller.vcKeys.length > 0 && (
+            {controller.shareableVcsMetadata.length > 0 && (
               <>
                 <Column
                   fill
                   backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
                   <Column padding="16 0" scroll>
                     <Column pX={14}>
-                      {controller.vcKeys.length > 0 &&
-                        controller.vcKeys.map((vcKey, index) => (
-                          <VcItem
-                            key={vcKey}
-                            vcKey={vcKey}
-                            margin="0 2 8 2"
-                            onPress={controller.SELECT_VC_ITEM(index)}
-                            showOnlyBindedVc
-                            selectable
-                            selected={index === controller.selectedIndex}
-                          />
-                        ))}
+                      {controller.shareableVcsMetadata.length > 0 &&
+                        controller.shareableVcsMetadata.map(
+                          (vcMetadata, index) => (
+                            <VcItemContainer
+                              key={vcMetadata.getVcKey()}
+                              vcMetadata={vcMetadata}
+                              margin="0 2 8 2"
+                              onPress={controller.SELECT_VC_ITEM(index)}
+                              showOnlyBindedVc
+                              selectable
+                              selected={index === controller.selectedIndex}
+                              isSharingVc
+                            />
+                          ),
+                        )}
                     </Column>
                   </Column>
                 </Column>
@@ -64,7 +67,7 @@ export const MyBindedVcs: React.FC<MyBindedVcsProps> = (props) => {
                 </Column>
               </>
             )}
-            {controller.vcKeys.length === 0 && (
+            {controller.shareableVcsMetadata.length === 0 && (
               <React.Fragment>
                 <Centered fill>
                   <Text weight="semibold" margin="0 0 8 0">

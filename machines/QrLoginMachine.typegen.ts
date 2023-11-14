@@ -2,7 +2,7 @@
 
 export interface Typegen0 {
   '@@xstate/typegen': true;
-  'internalEvents': {
+  internalEvents: {
     'done.invoke.QrLogin.linkTransaction:invocation[0]': {
       type: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
       data: unknown;
@@ -25,20 +25,20 @@ export interface Typegen0 {
       type: 'error.platform.QrLogin.sendingConsent:invocation[0]';
       data: unknown;
     };
-    'xstate.init': { type: 'xstate.init' };
+    'xstate.init': {type: 'xstate.init'};
   };
-  'invokeSrcNameMap': {
+  invokeSrcNameMap: {
     linkTransaction: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
     sendAuthenticate: 'done.invoke.QrLogin.sendingAuthenticate:invocation[0]';
     sendConsent: 'done.invoke.QrLogin.sendingConsent:invocation[0]';
   };
-  'missingImplementations': {
+  missingImplementations: {
     actions: never;
     delays: never;
     guards: never;
     services: never;
   };
-  'eventsCausingActions': {
+  eventsCausingActions: {
     SetErrorMessage:
       | 'error.platform.QrLogin.linkTransaction:invocation[0]'
       | 'error.platform.QrLogin.sendingAuthenticate:invocation[0]'
@@ -46,7 +46,7 @@ export interface Typegen0 {
     expandLinkTransResp: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
     forwardToParent: 'DISMISS';
     loadMyVcs: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
-    loadThumbprint: 'CONFIRM';
+    loadThumbprint: 'FACE_VALID';
     resetLinkTransactionId: 'GET';
     resetSelectedVoluntaryClaims: 'GET';
     setClaims: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
@@ -58,14 +58,16 @@ export interface Typegen0 {
     setThumbprint: 'STORE_RESPONSE';
     setlinkTransactionResponse: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
   };
-  'eventsCausingDelays': {};
-  'eventsCausingGuards': {};
-  'eventsCausingServices': {
-    linkTransaction: 'GET';
-    sendAuthenticate: never;
-    sendConsent: 'STORE_RESPONSE';
+  eventsCausingDelays: {};
+  eventsCausingGuards: {
+    isConsentAlreadyCaptured: 'done.invoke.QrLogin.sendingAuthenticate:invocation[0]';
   };
-  'matchesStates':
+  eventsCausingServices: {
+    linkTransaction: 'GET';
+    sendAuthenticate: 'STORE_RESPONSE';
+    sendConsent: 'CONFIRM';
+  };
+  matchesStates:
     | 'ShowError'
     | 'done'
     | 'faceAuth'
@@ -79,5 +81,5 @@ export interface Typegen0 {
     | 'showvcList'
     | 'success'
     | 'waitingForData';
-  'tags': never;
+  tags: never;
 }

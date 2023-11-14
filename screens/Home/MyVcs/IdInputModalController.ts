@@ -1,7 +1,7 @@
-import { useSelector } from '@xstate/react';
-import { ActorRefFrom } from 'xstate';
-import { TextInput } from 'react-native';
-import { ModalProps } from '../../../components/ui/Modal';
+import {useSelector} from '@xstate/react';
+import {ActorRefFrom} from 'xstate';
+import {TextInput} from 'react-native';
+import {ModalProps} from '../../../components/ui/Modal';
 import {
   AddVcModalEvents,
   AddVcModalMachine,
@@ -14,9 +14,9 @@ import {
   selectIdInputRef,
   selectIdType,
 } from './AddVcModalMachine';
-import { VcIdType } from '../../../types/vc';
+import {VcIdType} from '../../../types/VC/ExistingMosipVC/vc';
 
-export function useIdInputModal({ service }: IdInputModalProps) {
+export function useIdInputModal({service}: IdInputModalProps) {
   return {
     id: useSelector(service, selectId),
     idType: useSelector(service, selectIdType),

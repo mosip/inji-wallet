@@ -1,11 +1,25 @@
-import React from 'react';
-import { Modal as RNModal } from 'react-native';
-import { Icon } from 'react-native-elements';
-import { PasscodeVerify } from '../components/PasscodeVerify';
-import { Column, Text } from '../components/ui';
-import { Theme } from '../components/ui/styleUtils';
+import React, {useEffect} from 'react';
+import {Modal as RNModal} from 'react-native';
+import {Icon} from 'react-native-elements';
+import {PasscodeVerify} from '../components/PasscodeVerify';
+import {Column, Text} from '../components/ui';
+import {Theme} from '../components/ui/styleUtils';
+import {
+  getImpressionEventData,
+  sendImpressionEvent,
+} from '../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
 
-export const Passcode: React.FC<PasscodeProps> = (props) => {
+export const Passcode: React.FC<PasscodeProps> = props => {
+  useEffect(() => {
+    sendImpressionEvent(
+      getImpressionEventData(
+        TelemetryConstants.FlowType.appLogin,
+        TelemetryConstants.Screens.passcode,
+      ),
+    );
+  }, []);
+
   return (
     <RNModal
       animationType="slide"

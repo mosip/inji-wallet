@@ -3,7 +3,6 @@ import {TextInput} from 'react-native';
 import {usePinInput} from '../machines/pinInput';
 import {Row} from './ui';
 import {Theme} from './ui/styleUtils';
-import testID from '../shared/commonUtil';
 
 export const PinInput: React.FC<PinInputProps> = props => {
   const {state, send, events} = usePinInput(props.length);
@@ -17,9 +16,10 @@ export const PinInput: React.FC<PinInputProps> = props => {
   }, [state]);
 
   return (
-    <Row width="100%" testID={props.testID}>
+    <Row width="100%" testID={props.testID} removeClippedSubviews={true}>
       {inputRefs.map((input, index) => (
         <TextInput
+          contextMenuHidden={true}
           selectTextOnFocus
           keyboardType="numeric"
           maxLength={1}

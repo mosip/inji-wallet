@@ -1,19 +1,19 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { RefreshControl } from 'react-native';
-import { Icon } from 'react-native-elements';
-import { Centered, Column, Text } from '../../components/ui';
-import { Theme } from '../../components/ui/styleUtils';
-import { HomeScreenTabProps } from './HomeScreen';
-import { useReceivedVcsTab } from './ReceivedVcsTabController';
-import { VcItem } from '../../components/VcItem';
+import {useTranslation} from 'react-i18next';
+import {RefreshControl} from 'react-native';
+import {Icon} from 'react-native-elements';
+import {Centered, Column, Text} from '../../components/ui';
+import {Theme} from '../../components/ui/styleUtils';
+import {HomeScreenTabProps} from './HomeScreen';
+import {useReceivedVcsTab} from './ReceivedVcsTabController';
+import {VcItemContainer} from '../../components/VC/VcItemContainer';
 
-export const ReceivedVcsTab: React.FC<HomeScreenTabProps> = (props) => {
-  const { t } = useTranslation('ReceivedVcsTab');
-  const controller = useReceivedVcsTab(props);
+export const ReceivedVcsTab: React.FC<HomeScreenTabProps> = props => {
+  const {t} = useTranslation('ReceivedVcsTab');
+  const controller = useReceivedVcsTab();
 
   return (
-    <Column fill style={{ display: props.isVisible ? 'flex' : 'none' }}>
+    <Column fill style={{display: props.isVisible ? 'flex' : 'none'}}>
       <Column
         scroll
         padding="32 24"
@@ -23,20 +23,20 @@ export const ReceivedVcsTab: React.FC<HomeScreenTabProps> = (props) => {
             onRefresh={controller.REFRESH}
           />
         }>
-        {controller.vcKeys.map((vcKey) => (
-          <VcItem
-            key={vcKey}
-            vcKey={vcKey}
+        {controller.receivedVcsMetadata.map(vcMetadata => (
+          <VcItemContainer
+            key={vcMetadata.getVcKey()}
+            vcMetadata={vcMetadata}
             margin="0 2 8 2"
             onPress={controller.VIEW_VC}
-            activeTab={props.service.id}
+            isSharingVc
           />
         ))}
-        {controller.vcKeys.length === 0 && (
+        {controller.receivedVcsMetadata.length === 0 && (
           <React.Fragment>
             <Centered fill>
               <Icon
-                style={{ marginBottom: 20 }}
+                style={{marginBottom: 20}}
                 size={40}
                 name="sentiment-dissatisfied"
               />

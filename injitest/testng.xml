@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite" parallel="tests" thread-count="2">
+    <listeners>
+        <listener class-name="io.mosip.test.mob.inji.listeners.Listeners"/>
+    </listeners>
+    <test verbose="2" preserve-order="true" name="android">
+        <parameter name="platformName" value="ANDROID"/>
+        <classes>
+            <class name="io.mosip.test.mob.inji.testcases.VcDownloadAndVerifyUsingUinTest">
+                <methods>
+                    <include name="downloadAndVerifyVcUsingUin"/>
+                    <include name="downloadWithEmptyUin"/>
+                    <include name="genrateMultipleVcWithSameUin"/>
+                </methods>
+            </class>
+            <class name="io.mosip.test.mob.inji.testcases.VerifyWelcomePagesTest">
+                <methods>
+                    <include name="verifyWelcomePagesContent"/>
+                </methods>
+            </class>
+            <class name="io.mosip.test.mob.inji.testcases.VcDownloadAndVerifyUsingVidTest">
+                <methods>
+                    <include name="downloadAndVerifyVcUsingVid"/>
+                    <include name="downloadTwoVcDeleteUsingVid"/>
+                </methods>
+            </class>
+           <class name="io.mosip.test.mob.inji.testcases.UnlockWithPasscodeTest">
+                <methods>
+                    <include name="logoutAndLoginWithPasscode"/>
+                    <include name="loginWithInvalidPasscode"/>
+                </methods>
+            </class>
+           <class name="io.mosip.test.mob.inji.testcases.VerifyHelpPageTest">
+                <methods>
+                    <include name="verifyHelpPage"/>
+                </methods>
+            </class>
+            <class name="io.mosip.test.mob.inji.testcases.DeletingVcTest">
+                <methods>
+                    <include name="deleteVc"/>
+                    <include name="cancelDeleteVc"/>
+                    <include name="closingEllipsis"/>
+                    <include name="DownloadingDeletedVc"/>
+                </methods>
+            </class>
+         <class name="io.mosip.test.mob.inji.testcases.VerifyHistoryTest">
+                <methods>
+                    <include name="generateAndVerifyHistory"/>
+                </methods>
+            </class>
+              <class name="io.mosip.test.mob.inji.testcases.GenerateUinOrVidTest">
+                <methods>
+                    <include name="generateUinOrVidUsingAid"/>
+                </methods>
+            </class>
+            <class name="io.mosip.test.mob.inji.testcases.ActivateVcTest">
+                <methods>
+                    <include name="activateVc"/>
+                </methods>
+            </class>
+            <class name="io.mosip.test.mob.inji.testcases.PinVcTest">
+                <methods>
+                    <include name="pinVc"/>
+                    <include name="VerifyCameraAfterPinVc"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

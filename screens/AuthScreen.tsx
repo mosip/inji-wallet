@@ -1,16 +1,36 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Icon } from 'react-native-elements';
-import { MessageOverlay } from '../components/MessageOverlay';
-import { Button, Column, Text } from '../components/ui';
-import { Theme } from '../components/ui/styleUtils';
-import { RootRouteProps } from '../routes';
-import { useAuthScreen } from './AuthScreenController';
+import {useTranslation} from 'react-i18next';
+import {Icon} from 'react-native-elements';
+import {MessageOverlay} from '../components/MessageOverlay';
+import {Button, Column, Text} from '../components/ui';
+import {Theme} from '../components/ui/styleUtils';
+import {RootRouteProps} from '../routes';
+import {useAuthScreen} from './AuthScreenController';
+import {
+  getStartEventData,
+  getInteractEventData,
+  sendInteractEvent,
+  sendStartEvent,
+} from '../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
 
-export const AuthScreen: React.FC<RootRouteProps> = (props) => {
-  const { t } = useTranslation('AuthScreen');
+export const AuthScreen: React.FC<RootRouteProps> = props => {
+  const {t} = useTranslation('AuthScreen');
   const controller = useAuthScreen(props);
 
+  const handleUsePasscodeButtonPress = () => {
+    sendStartEvent(
+      getStartEventData(TelemetryConstants.FlowType.appOnboarding),
+    );
+    sendInteractEvent(
+      getInteractEventData(
+        TelemetryConstants.FlowType.appOnboarding,
+        TelemetryConstants.InteractEventSubtype.click,
+        'Use Passcode Button',
+      ),
+    );
+    controller.usePasscode();
+  };
   return (
     <Column
       fill
@@ -25,11 +45,16 @@ export const AuthScreen: React.FC<RootRouteProps> = (props) => {
       <Column>
         <Icon name="fingerprint" size={80} color={Theme.Colors.Icon} />
         <Column margin="30 0 0 0">
-          <Text align="center" style={Theme.TextStyles.header}>
+          <Text
+            testID="selectAppUnlockMethod"
+            style={{paddingTop: 3}}
+            align="center"
+            style={Theme.TextStyles.header}>
             {t('header')}
           </Text>
           <Text
             align="center"
+            style={{paddingTop: 3}}
             weight="semibold"
             color={Theme.Colors.GrayText}
             margin="6 0">
@@ -40,6 +65,7 @@ export const AuthScreen: React.FC<RootRouteProps> = (props) => {
 
       <Column>
         <Button
+          testID="useBiometrics"
           title={t('useBiometrics')}
           type="gradient"
           margin="0 0 8 0"
@@ -47,9 +73,10 @@ export const AuthScreen: React.FC<RootRouteProps> = (props) => {
           onPress={controller.useBiometrics}
         />
         <Button
+          testID="usePasscode"
           type="clear"
           title={t('usePasscode')}
-          onPress={controller.usePasscode}
+          onPress={() => handleUsePasscodeButtonPress()}
         />
       </Column>
     </Column>

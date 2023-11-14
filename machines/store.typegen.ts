@@ -3,7 +3,7 @@
 
 export interface Typegen0 {
   '@@xstate/typegen': true;
-  'internalEvents': {
+  internalEvents: {
     'done.invoke._store': {
       type: 'done.invoke._store';
       data: unknown;
@@ -14,10 +14,10 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
-    'error.platform._store': { type: 'error.platform._store'; data: unknown };
-    'xstate.init': { type: 'xstate.init' };
+    'error.platform._store': {type: 'error.platform._store'; data: unknown};
+    'xstate.init': {type: 'xstate.init'};
   };
-  'invokeSrcNameMap': {
+  invokeSrcNameMap: {
     checkStorageInitialisedOrNot: 'done.invoke.store.checkStorageInitialisation:invocation[0]';
     clear: 'done.invoke.store.resettingStorage:invocation[0]';
     generateEncryptionKey: 'done.invoke.store.generatingEncryptionKey:invocation[0]';
@@ -25,13 +25,17 @@ export interface Typegen0 {
     hasAndroidEncryptionKey: 'done.invoke.store.checkEncryptionKey:invocation[0]';
     store: 'done.invoke._store';
   };
-  'missingImplementations': {
-    actions: 'logKey';
+  missingImplementations: {
+    actions: never;
     delays: never;
     guards: never;
     services: never;
   };
-  'eventsCausingActions': {
+  eventsCausingActions: {
+    cacheVCFilesData:
+      | 'KEY_RECEIVED'
+      | 'READY'
+      | 'done.invoke.store.resettingStorage:invocation[0]';
     forwardStoreRequest:
       | 'APPEND'
       | 'CLEAR'
@@ -42,20 +46,17 @@ export interface Typegen0 {
       | 'REMOVE_VC_METADATA'
       | 'SET'
       | 'UPDATE';
-    logKey: 'KEY_RECEIVED';
     notifyParent:
       | 'KEY_RECEIVED'
       | 'READY'
       | 'done.invoke.store.resettingStorage:invocation[0]';
-    resetIsTamperedVc: 'RESET_IS_TAMPERED';
     setEncryptionKey: 'KEY_RECEIVED';
-    setIsTamperedVc: 'TAMPERED_VC';
   };
-  'eventsCausingDelays': {};
-  'eventsCausingGuards': {
+  eventsCausingDelays: {};
+  eventsCausingGuards: {
     isCustomSecureKeystore: 'KEY_RECEIVED';
   };
-  'eventsCausingServices': {
+  eventsCausingServices: {
     checkStorageInitialisedOrNot: 'ERROR';
     clear: 'KEY_RECEIVED';
     generateEncryptionKey: 'ERROR' | 'IGNORE' | 'READY';
@@ -66,7 +67,7 @@ export interface Typegen0 {
       | 'READY'
       | 'done.invoke.store.resettingStorage:invocation[0]';
   };
-  'matchesStates':
+  matchesStates:
     | 'checkEncryptionKey'
     | 'checkStorageInitialisation'
     | 'failedReadingKey'
@@ -74,12 +75,12 @@ export interface Typegen0 {
     | 'gettingEncryptionKey'
     | 'ready'
     | 'resettingStorage';
-  'tags': never;
+  tags: never;
 }
 
 export interface Typegen0 {
   '@@xstate/typegen': true;
-  'internalEvents': {
+  internalEvents: {
     'done.invoke._store': {
       type: 'done.invoke._store';
       data: unknown;
@@ -90,23 +91,23 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
-    'error.platform._store': { type: 'error.platform._store'; data: unknown };
-    'xstate.init': { type: 'xstate.init' };
+    'error.platform._store': {type: 'error.platform._store'; data: unknown};
+    'xstate.init': {type: 'xstate.init'};
   };
-  'invokeSrcNameMap': {
+  invokeSrcNameMap: {
     checkStorageInitialisedOrNot: 'done.invoke.store.checkStorageInitialisation:invocation[0]';
     clear: 'done.invoke.store.resettingStorage:invocation[0]';
     generateEncryptionKey: 'done.invoke.store.generatingEncryptionKey:invocation[0]';
     getEncryptionKey: 'done.invoke.store.gettingEncryptionKey:invocation[0]';
     store: 'done.invoke._store';
   };
-  'missingImplementations': {
+  missingImplementations: {
     actions: 'logKey';
     delays: never;
     guards: never;
     services: never;
   };
-  'eventsCausingActions': {
+  eventsCausingActions: {
     forwardStoreRequest:
       | 'APPEND'
       | 'CLEAR'
@@ -125,21 +126,21 @@ export interface Typegen0 {
     setEncryptionKey: 'KEY_RECEIVED';
     setIsTamperedVc: 'TAMPERED_VC';
   };
-  'eventsCausingDelays': {};
-  'eventsCausingGuards': {};
-  'eventsCausingServices': {
+  eventsCausingDelays: {};
+  eventsCausingGuards: {};
+  eventsCausingServices: {
     checkStorageInitialisedOrNot: 'ERROR';
     clear: 'KEY_RECEIVED';
     generateEncryptionKey: 'IGNORE' | 'READY';
     getEncryptionKey: 'TRY_AGAIN' | 'xstate.init';
     store: 'KEY_RECEIVED' | 'done.invoke.store.resettingStorage:invocation[0]';
   };
-  'matchesStates':
+  matchesStates:
     | 'checkStorageInitialisation'
     | 'failedReadingKey'
     | 'generatingEncryptionKey'
     | 'gettingEncryptionKey'
     | 'ready'
     | 'resettingStorage';
-  'tags': never;
+  tags: never;
 }

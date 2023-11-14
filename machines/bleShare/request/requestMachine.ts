@@ -1,33 +1,42 @@
 import tuvali from 'react-native-tuvali';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
-import { EmitterSubscription, Linking, Platform } from 'react-native';
+import {EmitterSubscription, Linking, Platform} from 'react-native';
 import {
   checkMultiple,
   PERMISSIONS,
   requestMultiple,
   RESULTS,
 } from 'react-native-permissions';
-import { assign, EventFrom, send, StateFrom } from 'xstate';
-import { createModel } from 'xstate/lib/model';
-import { DeviceInfo } from '../../../components/DeviceInfoList';
-import { getDeviceNameSync } from 'react-native-device-info';
-import { StoreEvents } from '../../store';
-import { VC } from '../../../types/vc';
-import { AppServices } from '../../../shared/GlobalContext';
-import {
-  RECEIVED_VCS_STORE_KEY,
-  VC_ITEM_STORE_KEY,
-} from '../../../shared/constants';
-import { ActivityLogEvents, ActivityLogType } from '../../activityLog';
-import { VcEvents } from '../../vc';
-import { subscribe } from '../../../shared/openIdBLE/verifierEventHandler';
-import { log } from 'xstate/lib/actions';
-import { VerifierDataEvent } from 'react-native-tuvali/src/types/events';
-import { BLEError } from '../types';
+import {assign, EventFrom, send, StateFrom} from 'xstate';
+import {createModel} from 'xstate/lib/model';
+import {DeviceInfo} from '../../../components/DeviceInfoList';
+import {getDeviceNameSync} from 'react-native-device-info';
+import {StoreEvents} from '../../store';
+import {VC} from '../../../types/VC/ExistingMosipVC/vc';
+import {AppServices} from '../../../shared/GlobalContext';
+import {isAndroid, RECEIVED_VCS_STORE_KEY} from '../../../shared/constants';
+import {ActivityLogEvents, ActivityLogType} from '../../activityLog';
+import {VcEvents} from '../../vc';
+import {subscribe} from '../../../shared/openIdBLE/verifierEventHandler';
+import {log} from 'xstate/lib/actions';
+import {VerifierDataEvent} from 'react-native-tuvali/src/types/events';
+import {BLEError} from '../types';
 import Storage from '../../../shared/storage';
+import {VCMetadata} from '../../../shared/VCMetadata';
+import {
+  getEndEventData,
+  getErrorEventData,
+  getImpressionEventData,
+  getStartEventData,
+  sendEndEvent,
+  sendErrorEvent,
+  sendImpressionEvent,
+  sendStartEvent,
+} from '../../../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 // import { verifyPresentation } from '../shared/vcjs/verifyPresentation';
 
-const { verifier, EventTypes, VerificationStatus } = tuvali;
+const {verifier, EventTypes, VerificationStatus} = tuvali;
 
 const model = createModel(
   {
@@ -50,12 +59,12 @@ const model = createModel(
       CANCEL: () => ({}),
       RESET: () => ({}),
       DISMISS: () => ({}),
-      VC_RECEIVED: (vc: VC) => ({ vc }),
-      ADV_STARTED: (openId4VpUri: string) => ({ openId4VpUri }),
+      VC_RECEIVED: (vc: VC) => ({vc}),
+      ADV_STARTED: (openId4VpUri: string) => ({openId4VpUri}),
       CONNECTED: () => ({}),
       DISCONNECT: () => ({}),
-      BLE_ERROR: (bleError: BLEError) => ({ bleError }),
-      EXCHANGE_DONE: (senderInfo: DeviceInfo) => ({ senderInfo }),
+      BLE_ERROR: (bleError: BLEError) => ({bleError}),
+      EXCHANGE_DONE: (senderInfo: DeviceInfo) => ({senderInfo}),
       SCREEN_FOCUS: () => ({}),
       SCREEN_BLUR: () => ({}),
       BLUETOOTH_STATE_ENABLED: () => ({}),
@@ -63,18 +72,18 @@ const model = createModel(
       NEARBY_ENABLED: () => ({}),
       NEARBY_DISABLED: () => ({}),
       STORE_READY: () => ({}),
-      STORE_RESPONSE: (response: unknown) => ({ response }),
-      STORE_ERROR: (error: Error) => ({ error }),
-      RECEIVE_DEVICE_INFO: (info: DeviceInfo) => ({ info }),
+      STORE_RESPONSE: (response: unknown) => ({response}),
+      STORE_ERROR: (error: Error) => ({error}),
+      RECEIVE_DEVICE_INFO: (info: DeviceInfo) => ({info}),
       RECEIVED_VCS_UPDATED: () => ({}),
-      VC_RESPONSE: (response: unknown) => ({ response }),
+      VC_RESPONSE: (vcMetadatas: VCMetadata[]) => ({vcMetadatas}),
       GOTO_SETTINGS: () => ({}),
       APP_ACTIVE: () => ({}),
       FACE_VALID: () => ({}),
       FACE_INVALID: () => ({}),
       RETRY_VERIFICATION: () => ({}),
     },
-  }
+  },
 );
 export const RequestEvents = model.events;
 
@@ -109,7 +118,7 @@ export const requestMachine =
         },
         BLE_ERROR: {
           target: '.handlingBleError',
-          actions: 'setBleError',
+          actions: ['sendBLEConnectionErrorEvent', 'setBleError'],
         },
         RESET: {
           target: '.checkNearbyDevicesPermission',
@@ -243,7 +252,11 @@ export const requestMachine =
             },
             CONNECTED: {
               target: 'waitingForVc',
-              actions: ['setSenderInfo', 'setReceiverInfo'],
+              actions: [
+                'setSenderInfo',
+                'setReceiverInfo',
+                'sendVCReceivingStartEvent',
+              ],
             },
 
             DISCONNECT: {
@@ -258,6 +271,12 @@ export const requestMachine =
           initial: 'inProgress',
           states: {
             inProgress: {
+              on: {
+                CANCEL: {
+                  target: '#request.cancelling',
+                  actions: ['sendVCReceivingTerminatedEvent'],
+                },
+              },
               after: {
                 SHARING_TIMEOUT: {
                   target: '#request.waitingForVc.timeout',
@@ -270,6 +289,7 @@ export const requestMachine =
               on: {
                 CANCEL: {
                   target: '#request.cancelling',
+                  actions: 'sendVCReceiveFlowTimeoutEndEvent',
                 },
               },
             },
@@ -277,6 +297,7 @@ export const requestMachine =
           on: {
             DISCONNECT: {
               target: 'disconnected',
+              actions: ['sendVCReceivingDisconnectedEvent'],
             },
             VC_RECEIVED: {
               target: 'reviewing.accepting',
@@ -302,7 +323,10 @@ export const requestMachine =
                 },
                 FACE_INVALID: {
                   target: 'invalidIdentity',
-                  actions: 'setReceiveLogTypeUnverified',
+                  actions: [
+                    'setReceiveLogTypeUnverified',
+                    'sendVCReceiveFailedEvent',
+                  ],
                 },
                 CANCEL: {
                   target: 'idle',
@@ -396,6 +420,7 @@ export const requestMachine =
                 'sendVcReceived',
                 'setReceiveLogTypeRegular',
                 'logReceived',
+                'sendVCReceiveSuccessEvent',
               ],
               invoke: {
                 src: 'sendVcResponse',
@@ -405,12 +430,16 @@ export const requestMachine =
               },
               on: {
                 DISMISS: {
-                  target: 'navigatingToHistory',
+                  target: 'displayingIncomingVC',
                 },
               },
             },
             rejected: {
-              entry: ['setReceiveLogTypeDiscarded', 'logReceived'],
+              entry: [
+                'setReceiveLogTypeDiscarded',
+                'logReceived',
+                'sendVCReceiveRejectedEvent',
+              ],
               invoke: {
                 src: 'sendVcResponse',
                 data: {
@@ -431,14 +460,34 @@ export const requestMachine =
             displayingIncomingVC: {
               on: {
                 GO_TO_RECEIVED_VC_TAB: {
-                  target: 'navigatingToHistory',
+                  target: 'navigatingToReceivedCards',
                 },
               },
             },
-
+            navigatingToReceivedCards: {
+              on: {
+                DISMISS: {
+                  target: 'navigatingToHome',
+                },
+              },
+            },
+            navigatingToHome: {
+              invoke: {
+                src: 'disconnect',
+              },
+              on: {
+                DISCONNECT: {
+                  target: '#request.inactive',
+                },
+              },
+            },
             savingFailed: {
               initial: 'idle',
-              entry: ['setReceiveLogTypeDiscarded', 'logReceived'],
+              entry: [
+                'setReceiveLogTypeDiscarded',
+                'logReceived',
+                'sendVCReceiveRejectedEvent',
+              ],
               invoke: {
                 src: 'sendVcResponse',
                 data: {
@@ -477,15 +526,21 @@ export const requestMachine =
         },
         disconnected: {
           on: {
-            DISMISS: {
+            RESET: {
               target: 'waitingForConnection',
+            },
+            DISMISS: {
+              target: '#request.reviewing.navigatingToHome',
             },
           },
         },
         handlingBleError: {
           on: {
+            RESET: {
+              target: 'checkNearbyDevicesPermission',
+            },
             DISMISS: {
-              target: '#request.clearingConnection',
+              target: '#request.reviewing.navigatingToHome',
             },
           },
         },
@@ -498,7 +553,7 @@ export const requestMachine =
         },
 
         requestReceivedVcs: send(VcEvents.GET_RECEIVED_VCS(), {
-          to: (context) => context.serviceRefs.vc,
+          to: context => context.serviceRefs.vc,
         }),
 
         setReadyForBluetoothStateCheck: model.assign({
@@ -525,13 +580,13 @@ export const requestMachine =
 
         setSenderInfo: assign({
           senderInfo: () => {
-            return { name: 'Wallet', deviceName: 'Wallet', deviceId: '' };
+            return {name: 'Wallet', deviceName: 'Wallet', deviceId: ''};
           },
         }),
 
         setReceiverInfo: assign({
           receiverInfo: () => {
-            return { name: 'Verifier', deviceName: 'Verifier', deviceId: '' };
+            return {name: 'Verifier', deviceName: 'Verifier', deviceId: ''};
           },
         }),
 
@@ -543,11 +598,11 @@ export const requestMachine =
           loggers: () => {
             if (__DEV__) {
               return [
-                verifier.handleDataEvents((event) => {
+                verifier.handleDataEvents(event => {
                   console.log(
                     getDeviceNameSync(),
                     '<Receiver.Event>',
-                    JSON.stringify(event).slice(0, 100)
+                    JSON.stringify(event).slice(0, 100),
                   );
                 }),
               ];
@@ -558,24 +613,26 @@ export const requestMachine =
         }),
 
         removeLoggers: assign({
-          loggers: ({ loggers }) => {
-            loggers?.forEach((logger) => logger.remove());
+          loggers: ({loggers}) => {
+            loggers?.forEach(logger => logger.remove());
             return null;
           },
         }),
 
         prependReceivedVc: send(
-          (context) =>
-            StoreEvents.PREPEND(
+          context => {
+            return StoreEvents.PREPEND(
               RECEIVED_VCS_STORE_KEY,
-              VC_ITEM_STORE_KEY(context.incomingVc)
-            ),
-          { to: (context) => context.serviceRefs.store }
+              VCMetadata.fromVC(context.incomingVc?.vcMetadata),
+            );
+          },
+          {to: context => context.serviceRefs.store},
         ),
 
         requestExistingVc: send(
-          (context) => StoreEvents.GET(VC_ITEM_STORE_KEY(context.incomingVc)),
-          { to: (context) => context.serviceRefs.store }
+          context =>
+            StoreEvents.GET(VCMetadata.fromVC(context.incomingVc).getVcKey()),
+          {to: context => context.serviceRefs.store},
         ),
 
         mergeIncomingVc: send(
@@ -585,18 +642,21 @@ export const requestMachine =
               ...existing,
               reason: existing.reason.concat(context.incomingVc.reason),
             };
-            return StoreEvents.SET(VC_ITEM_STORE_KEY(updated), updated);
+            return StoreEvents.SET(
+              VCMetadata.fromVC(updated).getVcKey(),
+              updated,
+            );
           },
-          { to: (context) => context.serviceRefs.store }
+          {to: context => context.serviceRefs.store},
         ),
 
         storeVc: send(
-          (context) =>
+          context =>
             StoreEvents.SET(
-              VC_ITEM_STORE_KEY(context.incomingVc),
-              context.incomingVc
+              VCMetadata.fromVC(context.incomingVc?.vcMetadata).getVcKey(),
+              context.incomingVc,
             ),
-          { to: (context) => context.serviceRefs.store }
+          {to: context => context.serviceRefs.store},
         ),
 
         setReceiveLogTypeRegular: model.assign({
@@ -616,31 +676,129 @@ export const requestMachine =
         }),
 
         logReceived: send(
-          (context) =>
-            ActivityLogEvents.LOG_ACTIVITY({
-              _vcKey: VC_ITEM_STORE_KEY(context.incomingVc),
+          context => {
+            const vcMetadata = VCMetadata.fromVC(
+              context.incomingVc?.vcMetadata,
+            );
+            return ActivityLogEvents.LOG_ACTIVITY({
+              _vcKey: vcMetadata.getVcKey(),
               type: context.receiveLogType,
               timestamp: Date.now(),
               deviceName:
                 context.senderInfo.name || context.senderInfo.deviceName,
-              vcLabel: context.incomingVc.tag || context.incomingVc.id,
-            }),
-          { to: (context) => context.serviceRefs.activityLog }
+              vcLabel: vcMetadata.id,
+            });
+          },
+          {to: context => context.serviceRefs.activityLog},
         ),
 
         sendVcReceived: send(
-          (context) => {
-            return VcEvents.VC_RECEIVED(VC_ITEM_STORE_KEY(context.incomingVc));
+          context => {
+            return VcEvents.VC_RECEIVED(
+              VCMetadata.fromVC(context.incomingVc?.vcMetadata),
+            );
           },
-          { to: (context) => context.serviceRefs.vc }
+          {to: context => context.serviceRefs.vc},
         ),
 
         clearShouldVerifyPresence: assign({
-          incomingVc: (context) => ({
+          incomingVc: context => ({
             ...context.incomingVc,
             shouldVerifyPresence: false,
           }),
         }),
+
+        sendVCReceivingStartEvent: () => {
+          sendStartEvent(
+            getStartEventData(TelemetryConstants.FlowType.receiverVcShare),
+          );
+          sendImpressionEvent(
+            getImpressionEventData(
+              TelemetryConstants.FlowType.receiverVcShare,
+              TelemetryConstants.Screens.sharingInProgressScreen,
+            ),
+          );
+        },
+
+        sendVCReceiveFlowTimeoutEndEvent: () => {
+          sendEndEvent(
+            getEndEventData(
+              TelemetryConstants.FlowType.receiverVcShare,
+              TelemetryConstants.EndEventStatus.failure,
+              {comment: 'VC sharing timeout'},
+            ),
+          );
+        },
+
+        sendVCReceiveSuccessEvent: () => {
+          sendImpressionEvent(
+            getImpressionEventData(
+              TelemetryConstants.FlowType.receiverVcShare,
+              TelemetryConstants.Screens.vcReceivedSuccessPage,
+            ),
+          );
+          sendEndEvent(
+            getEndEventData(
+              TelemetryConstants.FlowType.receiverVcShare,
+              TelemetryConstants.EndEventStatus.success,
+            ),
+          );
+        },
+
+        sendVCReceiveFailedEvent: () => {
+          sendEndEvent(
+            getEndEventData(
+              TelemetryConstants.FlowType.receiverVcShare,
+              TelemetryConstants.EndEventStatus.failure,
+            ),
+          );
+        },
+
+        sendBLEConnectionErrorEvent: (_, event) => {
+          sendErrorEvent(
+            getErrorEventData(
+              TelemetryConstants.FlowType.receiverVcShare,
+              event.bleError.code,
+              event.bleError.message,
+            ),
+          );
+          sendEndEvent(
+            getEndEventData(
+              TelemetryConstants.FlowType.receiverVcShare,
+              TelemetryConstants.EndEventStatus.failure,
+            ),
+          );
+        },
+
+        sendVCReceiveRejectedEvent: () => {
+          sendEndEvent(
+            getEndEventData(
+              TelemetryConstants.FlowType.receiverVcShare,
+              TelemetryConstants.EndEventStatus.failure,
+              {comment: 'VC Rejected by the verifier'},
+            ),
+          );
+        },
+
+        sendVCReceivingTerminatedEvent: () => {
+          sendEndEvent(
+            getEndEventData(
+              TelemetryConstants.FlowType.receiverVcShare,
+              TelemetryConstants.EndEventStatus.failure,
+              {comment: 'Verifier Disconnected'},
+            ),
+          );
+        },
+
+        sendVCReceivingDisconnectedEvent: () => {
+          sendEndEvent(
+            getEndEventData(
+              TelemetryConstants.FlowType.receiverVcShare,
+              TelemetryConstants.EndEventStatus.failure,
+              {comment: 'VC Sharing cancelled by sender'},
+            ),
+          );
+        },
       },
 
       services: {
@@ -652,8 +810,8 @@ export const requestMachine =
           }
         },
 
-        checkBluetoothService: () => (callback) => {
-          const subscription = BluetoothStateManager.onStateChange((state) => {
+        checkBluetoothService: () => callback => {
+          const subscription = BluetoothStateManager.onStateChange(state => {
             if (state === 'PoweredOn') {
               callback(model.events.BLUETOOTH_STATE_ENABLED());
             } else {
@@ -663,31 +821,31 @@ export const requestMachine =
           return () => subscription.remove();
         },
 
-        requestBluetooth: () => (callback) => {
+        requestBluetooth: () => callback => {
           BluetoothStateManager.requestToEnable()
             .then(() => callback(model.events.BLUETOOTH_STATE_ENABLED()))
             .catch(() => callback(model.events.BLUETOOTH_STATE_DISABLED()));
         },
 
-        advertiseDevice: () => (callback) => {
+        advertiseDevice: () => callback => {
           const openId4VpUri = verifier.startAdvertisement('OVPMOSIP');
-          callback({ type: 'ADV_STARTED', openId4VpUri });
+          callback({type: 'ADV_STARTED', openId4VpUri});
 
           const statusCallback = (event: VerifierDataEvent) => {
             if (event.type === EventTypes.onSecureChannelEstablished) {
-              callback({ type: 'CONNECTED' });
+              callback({type: 'CONNECTED'});
             }
           };
           const subscription = subscribe(statusCallback);
           return () => subscription?.remove();
         },
 
-        requestNearByDevicesPermission: () => (callback) => {
+        requestNearByDevicesPermission: () => callback => {
           requestMultiple([
             PERMISSIONS.ANDROID.BLUETOOTH_ADVERTISE,
             PERMISSIONS.ANDROID.BLUETOOTH_CONNECT,
           ])
-            .then((response) => {
+            .then(response => {
               if (
                 response[PERMISSIONS.ANDROID.BLUETOOTH_ADVERTISE] ===
                   RESULTS.GRANTED &&
@@ -699,19 +857,19 @@ export const requestMachine =
                 callback(model.events.NEARBY_DISABLED());
               }
             })
-            .catch((err) => {
+            .catch(err => {
               callback(model.events.NEARBY_DISABLED());
             });
         },
 
-        checkNearByDevicesPermission: () => (callback) => {
-          if (Platform.OS === 'android' && Platform.Version >= 31) {
+        checkNearByDevicesPermission: () => callback => {
+          if (isAndroid() && Platform.Version >= 31) {
             const result = checkMultiple([
               PERMISSIONS.ANDROID.BLUETOOTH_ADVERTISE,
               PERMISSIONS.ANDROID.BLUETOOTH_CONNECT,
               PERMISSIONS.ANDROID.BLUETOOTH_SCAN,
             ])
-              .then((response) => {
+              .then(response => {
                 if (
                   response[PERMISSIONS.ANDROID.BLUETOOTH_ADVERTISE] ===
                     RESULTS.GRANTED &&
@@ -723,7 +881,7 @@ export const requestMachine =
                   callback(model.events.NEARBY_DISABLED());
                 }
               })
-              .catch((err) => {
+              .catch(err => {
                 callback(model.events.NEARBY_DISABLED());
               });
           } else {
@@ -731,16 +889,20 @@ export const requestMachine =
           }
         },
 
-        monitorConnection: () => (callback) => {
-          const subscription = verifier.handleDataEvents((event) => {
+        monitorConnection: () => callback => {
+          const verifierErrorCodePrefix = 'TVV';
+          const subscription = verifier.handleDataEvents(event => {
             if (event.type === EventTypes.onDisconnected) {
-              callback({ type: 'DISCONNECT' });
+              callback({type: 'DISCONNECT'});
             }
 
-            if (event.type === EventTypes.onError) {
+            if (
+              event.type === EventTypes.onError &&
+              event.code.includes(verifierErrorCodePrefix)
+            ) {
               callback({
                 type: 'BLE_ERROR',
-                bleError: { message: event.message, code: event.code },
+                bleError: {message: event.message, code: event.code},
               });
               console.log('BLE Exception: ' + event.message);
             }
@@ -749,10 +911,10 @@ export const requestMachine =
           return () => subscription.remove();
         },
 
-        receiveVc: () => (callback) => {
+        receiveVc: () => callback => {
           const statusCallback = (event: VerifierDataEvent) => {
             if (event.type === EventTypes.onDataReceived) {
-              callback({ type: 'VC_RECEIVED', vc: JSON.parse(event.data) });
+              callback({type: 'VC_RECEIVED', vc: JSON.parse(event.data)});
             }
           };
           const subscription = subscribe(statusCallback);
@@ -764,7 +926,7 @@ export const requestMachine =
           verifier.sendVerificationStatus(meta.data.status);
         },
 
-        verifyVp: (context) => async () => {
+        verifyVp: context => async () => {
           const vp = context.incomingVc.verifiablePresentation;
 
           // TODO
@@ -782,16 +944,19 @@ export const requestMachine =
 
         checkStorageAvailability: () => async () => {
           return Promise.resolve(
-            Storage.isMinimumLimitReached('minStorageRequired')
+            Storage.isMinimumLimitReached('minStorageRequired'),
           );
         },
       },
 
       guards: {
         hasExistingVc: (context, event) => {
-          const receivedVcs = event.response as string[];
-          const vcKey = VC_ITEM_STORE_KEY(context.incomingVc);
-          return receivedVcs.includes(vcKey);
+          const receivedVcs = event.vcMetadatas;
+          const incomingVcMetadata = VCMetadata.fromVC(context.incomingVc);
+          return receivedVcs?.some(
+            vcMetadata =>
+              vcMetadata.getVcKey() == incomingVcMetadata.getVcKey(),
+          );
         },
 
         isMinimumStorageLimitReached: (_context, event) => Boolean(event.data),
@@ -801,7 +966,7 @@ export const requestMachine =
         DESTROY_TIMEOUT: 500,
         SHARING_TIMEOUT: 15 * 1000,
       },
-    }
+    },
   );
 
 type State = StateFrom<typeof requestMachine>;

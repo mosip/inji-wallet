@@ -9,7 +9,8 @@ import {Theme, Spacing} from './styleUtils';
 import testIDProps from '../../shared/commonUtil';
 
 export const Button: React.FC<ButtonProps> = props => {
-  const type = props.type || 'solid' || 'radius' || 'gradient';
+  const type =
+    props.type || 'solid' || 'radius' || 'gradient' || 'clearAddIdBtnBg';
   const buttonStyle: StyleProp<ViewStyle> = [
     props.fill ? Theme.ButtonStyles.fill : null,
     Theme.ButtonStyles[type],
@@ -44,6 +45,7 @@ export const Button: React.FC<ButtonProps> = props => {
       raised={props.raised}
       title={
         <Text
+          style={{paddingTop: 3}}
           weight="semibold"
           align="center"
           color={
@@ -76,7 +78,7 @@ export const Button: React.FC<ButtonProps> = props => {
       raised={props.raised}
       title={
         <Text
-          style={Theme.TextStyles.bold}
+          style={{...Theme.TextStyles.bold, paddingTop: 3}}
           color={
             type === 'solid' || type === 'gradient' || type === 'radius'
               ? Theme.Colors.whiteText

@@ -14,7 +14,7 @@
     "QRLOGIN_SUCCESFULL": "Matagumpay ang QRLogin",
     "WALLET_BINDING_SUCCESSFULL": "Matagumpay ang pag-activate",
     "WALLET_BINDING_FAILURE": "Nabigo ang pag-activate",
-    "VC_REMOVED":"Inalis sa wallet"
+    "VC_REMOVED": "Inalis sa wallet"
   },
   "DeviceInfoList": {
     "requestedBy": "Hiniling ni",
@@ -27,7 +27,11 @@
   "PasscodeVerify": {
     "passcodeMismatchError": "Hindi tumugma ang passcode."
   },
-  "FaceScanner": {},
+  "FaceScanner": {
+    "imageCaptureGuide": "Hawakan nang matatag ang telepono at panatilihing nakatutok ang iyong mukha sa gitna",
+    "capture": "Kunin",
+    "flipCamera": "I-flip ang Camera"
+  },
   "OIDcAuth": {
     "title": "OIDC Authentication",
     "text": "Papalitan ng OIDC service provider UI",
@@ -57,7 +61,7 @@
     "uin": "UIN",
     "vid": "VID",
     "enableVerification": "I-activate",
-    "profileAuthenticated": "Na-activate para sa online na pag-login!",
+    "profileAuthenticated": "Ang mga kredensyal ay pinagana para sa online na pagpapatotoo.",
     "offlineAuthDisabledHeader": "Nakabinbin ang pag-activate para sa online na pag-login!",
     "offlineAuthDisabledMessage": "Mangyaring i-click ang pindutan sa ibaba upang i-activate ang kredensyal na ito upang magamit para sa online na pag-login.",
     "verificationEnabledSuccess": "Na-activate para sa online na pag-login",
@@ -83,7 +87,7 @@
     "title": "Higit pang mga Opsyon",
     "unPinCard": "I-unpin ang Card",
     "pinCard": "Pin Card",
-    "offlineAuthenticationDisabled!": "Nakabinbin ang pag-activate para sa online na pag-login!",
+    "offlineAuthenticationDisabled!": "Nakabinbin ang pag-activate para sa online na pag-login",
     "offlineAuthDisabledMessage": "Mag-click dito upang paganahin ang mga kredensyal na ito na magamit para sa online na pagpapatotoo.",
     "viewActivityLog": "Tingnan ang log ng aktibidad",
     "removeFromWallet": "Alisin sa wallet",
@@ -92,7 +96,7 @@
   },
   "WalletBinding": {
     "inProgress": "Isinasagawa",
-    "profileAuthenticated": "Na-activate para sa online na pag-login!"
+    "profileAuthenticated": "Na-activate para sa online na pag-login"
   },
   "BindingVcWarningOverlay": {
     "alert": "Pakikumpirma",
@@ -151,6 +155,31 @@
     "clickHere": "Pindutin dito",
     "version": "Bersyon",
     "tuvaliVersion": "Tuvali-bersyon"
+  },
+  "IssuersScreen": {
+    "title": "Magdagdag ng bagong card",
+    "description": "Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.",
+    "searchByIssuersName": "Maghanap ayon sa pangalan ng Nag-isyu",
+    "itemHeading": "I-download sa pamamagitan ng {{issuer}}",
+    "itemSubHeading": "Ilagay ang iyong national ID para i-download ang iyong card.",
+    "loaders": {
+      "loading": "Naglo-load...",
+      "subTitle": {
+        "displayIssuers": "Kinukuha ang mga Isyu",
+        "settingUp": "Inaayos",
+        "downloadingCredentials": "Nagda-download ng Mga Kredensyal"
+      }
+    },
+    "errors": {
+      "noInternetConnection": {
+        "title": "Pakisuri ang iyong koneksyon at subukang muli",
+        "message": "Mangyaring kumonekta sa internet at subukang muli."
+      },
+      "generic": {
+        "title": "may nangyaring mali!",
+        "message": "Nagkakaproblema kami sa iyong kahilingan. Pakisubukang muli."
+      }
+    }
   },
   "HelpScreen": {
     "header": "Tulong",
@@ -239,13 +268,21 @@
     "title": "Pag-verify ng OTP",
     "otpSentMessage": "Ipinadala namin ang 6 na digit na code sa iyong rehistradong mobile number!",
     "resendTheCode": "Maaari mong ipadala muli ang code sa ",
-    "resendCode": "Ipadala muli ang Code"
+    "resendCode": "Ipadala muli ang Code",
+    "confirmationDialog": {
+      "title": "Gusto mo bang kanselahin ang pag-download?",
+      "message": "Kapag nakansela, hindi na mada-download ang iyong card at kailangan mong simulan muli ang pag-download.",
+      "wait": "Hindi, maghihintay ako",
+      "cancel": "Oo, Kanselahin"
+    }
   },
   "MyVcsTab": {
     "bringYourDigitalID": "Dalhin ang Iyong Digital ID",
     "generateVcDescription": "Upang i-download ang iyong card i-tap ang I-download card sa ibaba",
+    "generateVcFABDescription": "Upang i-download ang iyong card i-tap ang + sa ibaba",
     "downloadCard": "I-download ang Card",
     "downloadingYourCard": "Ang pagda-download ng iyong card, maaari itong tumagal nang hanggang 5 minuto",
+    "activated": "Ang mga kredensyal ay pinagana para sa online na pagpapatotoo.",
     "errors": {
       "savingFailed": {
         "title": "Nabigong i-save ang Card",
@@ -256,13 +293,21 @@
         "message": "Hindi ka maaaring magdagdag o tumanggap ng mga card dahil puno na ang Appdata. I-clear ang Appdata para magpatuloy."
       },
       "vcIsTampered": {
-        "title": "Ang ilang mga patunay ng pagkakakilanlan ay pinakialaman",
-        "message": "Ang mga apektadong file ay tinanggal, mangyaring muling i-download."
+        "title": "Inalis ang mga card dahil sa malisyosong aktibidad",
+        "message": "Natukoy at inalis ang mga tampered card para sa mga kadahilanang pangseguridad. Mangyaring i-download muli."
       },
       "keystoreNotExists": {
-        "title": "Hindi nahanap ang Secure Key Storage",
-        "message": "Hindi secure ang key storage sa iyong telepono. Maaaring ma-leak ang iyong mga susi kung na-hack ang telepono.",
-        "riskOkayText": "OK, ipagsapalaran ko ito"
+        "title": "Ang ilang mga tampok sa seguridad ay hindi magagamit",
+        "message": "Hindi sinusuportahan ng iyong kasalukuyang device ang lahat ng feature ng seguridad.",
+        "riskOkayText": "Ok"
+      },
+      "noInternetConnection": {
+        "title": "Pakisuri ang iyong koneksyon at subukang muli",
+        "message": "Mangyaring kumonekta sa internet at subukang muli."
+      },
+      "downloadLimitExpires":{
+        "title": "Error sa Pag-download",
+        "message": "Nagkaroon ng isyu sa pag-download ng mga sumusunod na card. Pakisubukang muli"
       }
     }
   },
@@ -298,7 +343,7 @@
     "revoke": "Bawiin",
     "revoking": "Ang iyong wallet ay naglalaman ng kredensyal na may VID {{vid}}. Ang pagbawi nito ay awtomatikong mag-aalis ng pareho sa wallet. Sigurado ka bang gusto mong magpatuloy?",
     "requestingOtp": "Humihiling ng OTP...",
-    "editTag": "Palitan ang pangalan",
+    "activated": "Ang mga kredensyal ay pinagana para sa online na pagpapatotoo.",
     "redirecting": "Nire-redirect...",
     "success": {
       "unlocked": "Matagumpay na na-unlock ang card.",
@@ -320,12 +365,7 @@
     "confirmPasscode": "Kumpirmahin ang passcode",
     "enterPasscode": "Ilagay ang iyong passcode"
   },
-  "AppMetaData": {
-    "header": "Tungkol kay Inji",
-    "version": "Bersyon",
-    "useBle": "Pinapatakbo ng BLE"
-  },
-  "QrScreen": {
+  "QrLogin": {
     "title": "QR Login",
     "alignQr": "I-align ang QR code sa loob ng frame para i-scan",
     "confirmation": "Kumpirmasyon",
@@ -342,8 +382,8 @@
     "domainWarning": "Pakikumpirma ang domain ng website kung saan mo ini-scan ang QR code mula sa ibaba",
     "access": " ay humihiling ng access sa",
     "status": "Katayuan",
-    "successMessage": "Ikaw ay Matagumpay na Naka-log In ",
-    "okay": "Sige",
+    "successMessage": "Matagumpay kang naka-log in sa ",
+    "ok": "OK",
     "allow": "Payagan",
     "cancel": "Kanselahin",
     "essentialClaims": "Mahahalagang Claim",
@@ -388,6 +428,10 @@
       }
     },
     "status": {
+      "sharing": {
+        "title": "Isinasagawa ang pagbabahagi",
+        "timeoutHint": "Naantala ang pagbabahagi, posibleng dahil sa isang isyu sa koneksyon."
+      },
       "accepted": {
         "title": "Tagumpay!",
         "message": "Tagumpay na nakuha ang card mula kay wallet"
@@ -397,7 +441,7 @@
         "message": "Iwinaksi ang card ni wallet"
       },
       "disconnected": {
-        "title": "Nadiskonekta",
+        "title": "Nabigo ang koneksyon",
         "message": "Naputol ang koneksyon. Pakiulit."
       },
       "waitingConnection": "Naghihintay ng koneksyon...",
@@ -413,7 +457,7 @@
         "message": "Mangyaring kumonekta sa internet upang paganahin ang Online sharing mode"
       },
       "bleError": {
-        "title": "Nabigong ilipat!",
+        "title": "Nabigong ilipat",
         "message": "Nagkaproblema habang inililipat ang card. Pakisubukang muli.",
         "hint": "Error: {{code}}"
       }
@@ -424,7 +468,7 @@
   },
   "ScanScreen": {
     "header": "I-scan ang QR Code",
-    "noShareableVcs": "Walang magagamit na maibabahaging card..",
+    "noShareableVcs": "Walang magagamit na mga card na maibabahagi.",
     "sharingVc": "Pagbabahagi ng card",
     "bluetoothStateIos": "Naka-OFF ang Bluetooth, paki-ON ito mula sa control center",
     "bluetoothStateAndroid": "Naka-OFF ang Bluetooth, paki-ON ito mula sa control center",
@@ -452,8 +496,10 @@
     "status": {
       "inProgress": "Isinasagawa",
       "establishingConnection": "Pagtatatag ng Koneksyon",
-      "sharingInProgress": "Isinasagawa ang pagbabahagi",
+      "connectionInProgress": "Isinasagawa ang koneksyon",
       "connectingTimeout": "Ito ay tumatagal ng ilang sandali upang maitaguyod ang koneksyon. Bukas ba ang ibang device para sa mga koneksyon?",
+      "stayOnTheScreen": "Manatili sa screen",
+      "retry": "Subukan muli",
       "exchangingDeviceInfo": "Nagpapalitan ng impormasyon ng device...",
       "exchangingDeviceInfoTimeout": "Medyo nagtatagal ang palitan ng impormasyon ng device. Maaaring kailanganin mong kumonekta muli.",
       "invalid": "Di-wastong QR Code",
@@ -461,13 +507,13 @@
       "sent": "Naipadala na ang card...",
       "sentHint": "Naghihintay para sa receiver na i-save o itapon ang iyong card",
       "sharing": {
-        "title": "Pagbabahagi...",
-        "hint": "Mangyaring maghintay habang ibinabahagi namin ang napiling card.",
-        "timeoutHint": "Mas tumatagal kaysa sa inaasahan ang pagbabahagi. Maaaring may problema sa koneksyon."
+        "title": "Isinasagawa ang pagbabahagi",
+        "timeoutHint": "Naantala ang pagbabahagi, posibleng dahil sa isang isyu sa koneksyon.",
+        "hint": "Mangyaring maghintay habang ibinabahagi namin ang napiling card."
       },
       "accepted": {
         "title": "Matagumpay na naibahagi ang ID",
-        "message": "Ang iyong card ay matagumpay na naibahagi sa verifier",
+        "message": "Ang iyong ID ay matagumpay na naibahagi sa",
         "gotohome": "Pumunta sa bahay"
       },
       "rejected": {
@@ -517,23 +563,22 @@
     },
     "errors": {
       "invalidIdentity": {
-        "title": "Hindi ma-verify ang pagkakakilanlan",
-        "message": "Hindi nakikilala ang mukha. Pakisubukang muli.",
+        "title": "Nabigo ang pagkilala sa mukha",
+        "message": "Ang na-scan na mukha ay hindi tumutugma sa larawan sa card. Pakisubukang muli.",
         "messageNoRetry": "Face not recognised."
       }
     }
   },
   "WelcomeScreen": {
     "title": "Open Source Identity Solution",
-    "getStarted": "Magsimula",
-    "unlockApp": "Buksan ang aplikasyon",
+    "unlockApplication": "I-unlock ang Application",
     "failedToReadKeys": "Nabigong basahin ang mga susi",
     "retryRead": "Gustong subukang muli?",
     "errors": {
       "decryptionFailed": "Nabigong i-decrypt ang data",
       "invalidateKeyError": {
-        "title": "Ang ilang (mga) patunay ng Pagkakakilanlan ay tinanggal dahil sa mga alalahanin sa seguridad.",
-        "message": "Mangyaring i-download muli."
+        "title": "Na-reset ang app",
+        "message": "Dahil sa update sa fingerprint / facial recognition, naapektuhan ang seguridad ng app, at inalis ang mga na-download na card. Mangyaring i-download muli."
       }
     },
     "ignore": "Huwag pansinin"

@@ -89,7 +89,7 @@ platform :ios do
       workspace: "Inji.xcworkspace",
       scheme: "Inji",
       export_method: "app-store",
-      clean: true,
+      
       export_options: {
         provisioningProfiles: { 
             "#{DEVELOPER_APP_ID}" => "#{PROVISIONING_PROFILE_SPECIFIER}"
@@ -97,21 +97,21 @@ platform :ios do
       }
     )
 
-    # pilot(
-    #    app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
-    #    api_key: api_key,
-    #    ipa: "./Inji.ipa",
-    #    changelog: "#{TESTFLIGHT_BETA_APP_DESCRIPTION}",
-    #    localized_build_info: {
-    #       "default": {
-    #         whats_new: "#{TESTFLIGHT_BETA_APP_DESCRIPTION}", 
-    #       }
-    #   },
-    #    skip_waiting_for_build_processing: false,
-    #    distribute_external: true,
-    #    submit_beta_review: false,  
-    #    groups: ["#{TESTFLIGHT_INTERNAL_TESTERS_GROUP}"],
-    # )
+    pilot(
+       app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
+       api_key: api_key,
+       ipa: "./Inji.ipa",
+       changelog: "#{TESTFLIGHT_BETA_APP_DESCRIPTION}",
+       localized_build_info: {
+          "default": {
+            whats_new: "#{TESTFLIGHT_BETA_APP_DESCRIPTION}", 
+          }
+      },
+       skip_waiting_for_build_processing: false,
+       distribute_external: true,
+       submit_beta_review: false,  
+       groups: ["#{TESTFLIGHT_INTERNAL_TESTERS_GROUP}"],
+    )
 
     delete_temp_keychain(keychain_name)
 
@@ -157,4 +157,21 @@ platform :ios do
     delete_temp_keychain(keychain_name)
 
   end
+  
+  lane :build_app_for_automation_on_simulator do
+
+    custom_output_directory = "./Inji_app_file"
+    sh("mkdir -p '#{custom_output_directory}'")
+
+    archive_path = gym(
+    skip_package_ipa: true,
+    destination: "generic/platform=iOS Simulator",
+    configuration: "Release",
+    build_path: "./build",
+    )
+
+    find_command = "find '../build/' -type d -name 'Products'"
+    app_path = sh(find_command, log: false).strip
+    sh("cp -R '#{app_path}' '#{custom_output_directory}'")
+   end
 end

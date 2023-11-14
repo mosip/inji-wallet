@@ -1,45 +1,51 @@
 import {
   ActorRefFrom,
+  assign,
   DoneInvokeEvent,
   EventFrom,
   send,
   sendParent,
   StateFrom,
 } from 'xstate';
-import { createModel } from 'xstate/lib/model';
-import { StoreEvents, StoreResponseEvent } from '../../machines/store';
-import { VcEvents } from '../../machines/vc';
-import { vcItemMachine } from '../../machines/vcItem';
-import { AppServices } from '../../shared/GlobalContext';
-import {
-  MY_VCS_STORE_KEY,
-  ONBOARDING_STATUS_STORE_KEY,
-} from '../../shared/constants';
-import { AddVcModalMachine } from './MyVcs/AddVcModalMachine';
-import { GetVcModalMachine } from './MyVcs/GetVcModalMachine';
-import Storage from '../../shared/storage';
+import {createModel} from 'xstate/lib/model';
+import {StoreEvents} from '../../machines/store';
+import {VcEvents} from '../../machines/vc';
+import {ExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
+import {AppServices} from '../../shared/GlobalContext';
+import {MY_VCS_STORE_KEY} from '../../shared/constants';
+import {AddVcModalMachine} from './MyVcs/AddVcModalMachine';
+import {GetVcModalMachine} from './MyVcs/GetVcModalMachine';
+import {VCMetadata} from '../../shared/VCMetadata';
+import {EsignetMosipVCItemMachine} from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
+import NetInfo from '@react-native-community/netinfo';
 
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
+    isVcItemStoredSuccessfully: false,
   },
   {
     events: {
-      REFRESH: () => ({}),
-      VIEW_VC: (vcItemActor: ActorRefFrom<typeof vcItemMachine>) => ({
+      VIEW_VC: (
+        vcItemActor:
+          | ActorRefFrom<typeof ExistingMosipVCItemMachine>
+          | ActorRefFrom<typeof EsignetMosipVCItemMachine>,
+      ) => ({
         vcItemActor,
       }),
       DISMISS: () => ({}),
-      STORE_RESPONSE: (response?: unknown) => ({ response }),
-      STORE_ERROR: (error: Error) => ({ error }),
+      TRY_AGAIN: () => ({}),
+      STORE_RESPONSE: (response?: unknown) => ({response}),
+      STORE_ERROR: (error: Error) => ({error}),
       ADD_VC: () => ({}),
       GET_VC: () => ({}),
       STORAGE_AVAILABLE: () => ({}),
       STORAGE_UNAVAILABLE: () => ({}),
-      ONBOARDING_DONE: () => ({}),
-      IS_TAMPERED: () => ({}),
+      SET_STORE_VC_ITEM_STATUS: () => ({}),
+      RESET_STORE_VC_ITEM_STATUS: () => ({}),
+      DOWNLOAD_VIA_ID: () => ({}),
     },
-  }
+  },
 );
 
 export const MyVcsTabEvents = model.events;
@@ -57,51 +63,29 @@ export const MyVcsTabMachine = model.createMachine(
       events: {} as EventFrom<typeof model>,
     },
     id: 'MyVcsTab',
-    initial: 'checkingOnboardingStatus',
+    initial: 'idle',
     states: {
-      checkingOnboardingStatus: {
-        entry: ['getOnboardingStatus'],
-        on: {
-          STORE_RESPONSE: [
-            { cond: 'isOnboardingDone', target: 'idle' },
-            { target: 'onboarding' },
-          ],
-        },
-      },
-      onboarding: {
-        on: {
-          ADD_VC: [
-            {
-              target: 'addVc',
-              actions: ['completeOnboarding'],
-            },
-          ],
-          ONBOARDING_DONE: {
-            target: 'idle',
-            actions: ['completeOnboarding'],
-          },
-        },
-      },
       addVc: {
-        initial: 'checkStorage',
+        initial: 'checkNetwork',
         states: {
-          checkStorage: {
+          checkNetwork: {
             invoke: {
-              src: 'checkStorageAvailability',
+              src: 'checkNetworkStatus',
               onDone: [
                 {
-                  cond: 'isMinimumStorageLimitReached',
-                  target: 'storageLimitReached',
+                  cond: 'isNetworkOn',
+                  target: '#MyVcsTab.addingVc',
                 },
                 {
-                  target: '#MyVcsTab.addingVc',
+                  target: 'networkOff',
                 },
               ],
             },
           },
-          storageLimitReached: {
+          networkOff: {
             on: {
               DISMISS: '#idle',
+              TRY_AGAIN: 'checkNetwork',
             },
           },
         },
@@ -112,9 +96,13 @@ export const MyVcsTabMachine = model.createMachine(
           ADD_VC: 'addVc',
           VIEW_VC: 'viewingVc',
           GET_VC: 'gettingVc',
-          IS_TAMPERED: {
+          SET_STORE_VC_ITEM_STATUS: {
             target: 'idle',
-            actions: ['resetIsTampered', 'refreshMyVc'],
+            actions: 'setStoringVcItemStatus',
+          },
+          RESET_STORE_VC_ITEM_STATUS: {
+            target: 'idle',
+            actions: 'resetStoringVcItemStatus',
           },
         },
       },
@@ -122,6 +110,8 @@ export const MyVcsTabMachine = model.createMachine(
         entry: ['viewVcFromParent'],
         on: {
           DISMISS: 'idle',
+          VIEW_VC: 'viewingVc',
+          ADD_VC: 'addVc',
         },
       },
       addingVc: {
@@ -140,8 +130,8 @@ export const MyVcsTabMachine = model.createMachine(
             entry: ['storeVcItem'],
             on: {
               STORE_RESPONSE: {
-                target: 'addVcSuccessful',
-                actions: ['sendVcAdded'],
+                target: '#idle',
+                actions: ['setStoringVcItemStatus', 'sendVcAdded'],
               },
               STORE_ERROR: {
                 target: '#MyVcsTab.addingVc.savingFailed',
@@ -153,11 +143,6 @@ export const MyVcsTabMachine = model.createMachine(
             states: {
               idle: {},
             },
-            on: {
-              DISMISS: '#idle',
-            },
-          },
-          addVcSuccessful: {
             on: {
               DISMISS: '#idle',
             },
@@ -182,62 +167,47 @@ export const MyVcsTabMachine = model.createMachine(
   },
   {
     services: {
-      checkStorageAvailability: () => async () => {
-        return Promise.resolve(
-          Storage.isMinimumLimitReached('minStorageRequired')
-        );
+      checkNetworkStatus: async () => {
+        const state = await NetInfo.fetch();
+        return state.isConnected;
       },
     },
 
     actions: {
-      refreshMyVc: send((_context, event) => VcEvents.REFRESH_MY_VCS(), {
-        to: (context) => context.serviceRefs.vc,
-      }),
-
-      resetIsTampered: send(() => StoreEvents.RESET_IS_TAMPERED(), {
-        to: (context) => context.serviceRefs.store,
-      }),
-
       viewVcFromParent: sendParent((_context, event: ViewVcEvent) =>
-        model.events.VIEW_VC(event.vcItemActor)
-      ),
-
-      getOnboardingStatus: send(
-        () => StoreEvents.GET(ONBOARDING_STATUS_STORE_KEY),
-        { to: (context) => context.serviceRefs.store }
-      ),
-
-      completeOnboarding: send(
-        () => StoreEvents.SET(ONBOARDING_STATUS_STORE_KEY, true),
-        { to: (context) => context.serviceRefs.store }
+        model.events.VIEW_VC(event.vcItemActor),
       ),
 
       storeVcItem: send(
         (_context, event) => {
           return StoreEvents.PREPEND(
             MY_VCS_STORE_KEY,
-            (event as DoneInvokeEvent<string>).data
+            (event as DoneInvokeEvent<VCMetadata>).data,
           );
         },
-        { to: (context) => context.serviceRefs.store }
+        {to: context => context.serviceRefs.store},
       ),
 
+      setStoringVcItemStatus: assign({
+        isVcItemStoredSuccessfully: () => true,
+      }),
+
+      resetStoringVcItemStatus: assign({
+        isVcItemStoredSuccessfully: () => false,
+      }),
+
       sendVcAdded: send(
-        (_context, event) => VcEvents.VC_ADDED(event.response as string),
+        (_context, event) => VcEvents.VC_ADDED(event.response as VCMetadata),
         {
-          to: (context) => context.serviceRefs.vc,
-        }
+          to: context => context.serviceRefs.vc,
+        },
       ),
     },
 
     guards: {
-      isOnboardingDone: (_context, event: StoreResponseEvent) => {
-        return event.response === true;
-      },
-
-      isMinimumStorageLimitReached: (_context, event) => Boolean(event.data),
+      isNetworkOn: (_context, event) => Boolean(event.data),
     },
-  }
+  },
 );
 
 export function createMyVcsTabMachine(serviceRefs: AppServices) {
@@ -257,18 +227,14 @@ export function selectGetVcModal(state: State) {
   return state.children.GetVcModal as ActorRefFrom<typeof GetVcModalMachine>;
 }
 
-export function selectIsOnboarding(state: State) {
-  return state.matches('onboarding');
-}
-
 export function selectIsRequestSuccessful(state: State) {
-  return state.matches('addingVc.addVcSuccessful');
+  return state.context.isVcItemStoredSuccessfully;
 }
 
 export function selectIsSavingFailedInIdle(state: State) {
   return state.matches('addingVc.savingFailed.idle');
 }
 
-export function selectIsMinimumStorageLimitReached(state: State) {
-  return state.matches('addVc.storageLimitReached');
+export function selectIsNetworkOff(state: State) {
+  return state.matches('addVc.networkOff');
 }

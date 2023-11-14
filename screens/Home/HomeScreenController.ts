@@ -1,7 +1,7 @@
-import { useInterpret, useSelector } from '@xstate/react';
-import { useContext, useEffect, useRef } from 'react';
-import { HomeRouteProps } from '../../routes/main';
-import { GlobalContext } from '../../shared/GlobalContext';
+import {useInterpret, useSelector} from '@xstate/react';
+import {useContext, useEffect, useRef} from 'react';
+import {HomeRouteProps} from '../../routes/main';
+import {GlobalContext} from '../../shared/GlobalContext';
 import {
   HomeScreenEvents,
   HomeScreenMachine,
@@ -10,16 +10,18 @@ import {
   selectTabRefs,
   selectTabsLoaded,
   selectViewingVc,
+  selectIssuersMachine,
+  selectIsMinimumStorageLimitReached,
 } from './HomeScreenMachine';
-import { VcEvents } from '../../machines/vc';
+import {VcEvents} from '../../machines/vc';
 
 export function useHomeScreen(props: HomeRouteProps) {
-  const { appService } = useContext(GlobalContext);
+  const {appService} = useContext(GlobalContext);
   const machine = useRef(
     HomeScreenMachine.withContext({
       ...HomeScreenMachine.context,
       serviceRefs: appService.getSnapshot().context.serviceRefs,
-    })
+    }),
   );
   const service = useInterpret(machine.current);
   const vcService = appService.children.get('vc');
@@ -40,6 +42,14 @@ export function useHomeScreen(props: HomeRouteProps) {
     isViewingVc: useSelector(service, selectViewingVc),
     haveTabsLoaded: useSelector(service, selectTabsLoaded),
 
+    IssuersService: useSelector(service, selectIssuersMachine),
+    isMinimumStorageLimitReached: useSelector(
+      service,
+      selectIsMinimumStorageLimitReached,
+    ),
+
+    DISMISS: () => service.send(HomeScreenEvents.DISMISS()),
+    GOTO_ISSUERS: () => service.send(HomeScreenEvents.GOTO_ISSUERS()),
     SELECT_TAB,
     DISMISS_MODAL: () => service.send(HomeScreenEvents.DISMISS_MODAL()),
     REVOKE: () => {

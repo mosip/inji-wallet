@@ -2,6 +2,46 @@ name: PR - Android build verification
 
 env:
   backendServiceDefaultUrl: https://api.sandbox.mosip.net
+  DUMMY_INJI_ANDROID_DEBUG_STOREPASS: 'password'
+  DUMMY_GOOGLE_SERVICE_JSON: '{
+  "project_info": {
+    "project_number": "mockproject-1234",
+    "project_id": "123456789000",
+    "storage_bucket": "mock-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123456789000:android:f1bf012572b04063",
+        "android_client_info": {
+          "package_name": "io.mosip.residentapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "123456789000-hjugbg6ud799v4c49dim8ce2usclthar.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzbSzCn1N6LWIe6wthYyrgUUSAlUsdqMb-wvTo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "123456789000-e4uksm38sne0bqrj6uvkbo4oiu4hvigl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}'
 
 on:
   push:
@@ -13,12 +53,12 @@ on:
       - 0.9
     tags:
       - '*'
-  pull_request: 
+  pull_request:
     types: [ opened, synchronize ]
     branches:
       - develop
       - 'release-**'
-    tags: 
+    tags:
       - '*'
 
 jobs:
@@ -29,7 +69,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '16.x'
-      
+
       - name: Cache local npm repository
         uses: actions/cache@v3.0.11
         with:
@@ -43,7 +83,14 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-      
+
+      - name: Setup branch and env
+        run: |
+          # Strip git ref prefix from version
+          echo "BRANCH_NAME=$(echo ${{ github.ref }} | sed -e 's,.*/\(.*\),\1,')" >> $GITHUB_ENV
+          echo "GPG_TTY=$(tty)" >> $GITHUB_ENV
+          echo "DUMMY_INJI_ANDROID_DEBUG_STOREPASS=$DUMMY_INJI_ANDROID_DEBUG_STOREPASS" >> $GITHUB_ENV
+
       - name: Install npm dependencies
         run: |
           npm ci
@@ -51,12 +98,6 @@ jobs:
       - name: Create .env.local file
         run: |
           echo "${{ secrets.ENV_FILE }}" > .env.local > android/local.properties
-
-      - name: Setup branch and env
-        run: |
-          # Strip git ref prefix from version
-          echo "BRANCH_NAME=$(echo ${{ github.ref }} | sed -e 's,.*/\(.*\),\1,')" >> $GITHUB_ENV
-          echo "GPG_TTY=$(tty)" >> $GITHUB_ENV   
 
       - name: Setup branch and GPG public key
         run: |
@@ -68,13 +109,6 @@ jobs:
           gpg2 --import ./.github/keys/mosipgpgkey_pub.gpg 
           gpg2 --quiet --batch --passphrase=${{secrets.gpg_secret}}  --allow-secret-key-import --import ./.github/keys/mosipgpgkey_sec.gpg
 
-      - name: Setup Firebase
-        run: |
-          cd android
-          if [ ! -z "$FIREBASE_SECRET" ] && [ -f app/google-services.json.gpg ];then rm -f app/google-services.json;gpg2 --quiet --batch --passphrase=$FIREBASE_SECRET --pinentry-mode loopback --decrypt --output app/google-services.json app/mosip-google-services.json.gpg;fi
-        env:
-          FIREBASE_SECRET: ${{ secrets.GPG_SECRET }}
-      
       - name: Generate keystore
         run: |
           keytool \
@@ -88,16 +122,16 @@ jobs:
           -alias androiddebugkey \
           -keystore android/app/debug.keystore \
           -dname "CN=io.mosip.residentapp,OU=,O=,L=,S=,C=US"
-        env: 
-          DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
+        env:
+          DEBUG_KEYSTORE_PASSWORD: ${{secrets.INJI_ANDROID_DEBUG_STOREPASS || env.DUMMY_INJI_ANDROID_DEBUG_STOREPASS }}
 
       - name: Export variables for keystore
         run: |
           cd android/app
           export DEBUG_KEYSTORE_ALIAS=androiddebugkey
           export DEBUG_KEYSTORE_PASSWORD=$DEBUG_KEYSTORE_PASSWORD
-        env: 
-          DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
+        env:
+          DEBUG_KEYSTORE_PASSWORD: ${{secrets.INJI_ANDROID_DEBUG_STOREPASS || env.DUMMY_INJI_ANDROID_DEBUG_STOREPASS }}
 
       - name: Bump version code
         uses: chkfung/android-version-actions@v1.2.1
@@ -106,9 +140,9 @@ jobs:
           versionCode: ${{github.run_number}}
 
       - name: Run Build using Fastlane
-        run: | 
+        run: |
           cd android/scripts
           ./verify-build.sh
-        env: 
+        env:
           DEBUG_KEYSTORE_ALIAS: androiddebugkey
-          DEBUG_KEYSTORE_PASSWORD: '${{secrets.INJI_ANDROID_DEBUG_STOREPASS}}'
+          DEBUG_KEYSTORE_PASSWORD: ${{secrets.INJI_ANDROID_DEBUG_STOREPASS || env.DUMMY_INJI_ANDROID_DEBUG_STOREPASS }}

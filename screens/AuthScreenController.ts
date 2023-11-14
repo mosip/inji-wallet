@@ -1,14 +1,10 @@
-import { useMachine, useSelector } from '@xstate/react';
-import { useContext, useEffect, useState } from 'react';
+import {useMachine, useSelector} from '@xstate/react';
+import {useContext, useEffect, useState} from 'react';
 import * as LocalAuthentication from 'expo-local-authentication';
 
-import {
-  AuthEvents,
-  selectSettingUp,
-  selectAuthorized,
-} from '../machines/auth';
-import { RootRouteProps } from '../routes';
-import { GlobalContext } from '../shared/GlobalContext';
+import {AuthEvents, selectSettingUp, selectAuthorized} from '../machines/auth';
+import {RootRouteProps} from '../routes';
+import {GlobalContext} from '../shared/GlobalContext';
 import {
   biometricsMachine,
   selectError,
@@ -16,12 +12,24 @@ import {
   selectIsSuccess,
   selectIsUnvailable,
   selectUnenrolledNotice,
+  selectErrorResponse,
 } from '../machines/biometrics';
-import { SettingsEvents } from '../machines/settings';
-import { useTranslation } from 'react-i18next';
+import {SettingsEvents} from '../machines/settings';
+import {useTranslation} from 'react-i18next';
+import {
+  sendStartEvent,
+  sendImpressionEvent,
+  sendInteractEvent,
+  getStartEventData,
+  getInteractEventData,
+  getImpressionEventData,
+  getEndEventData,
+  sendEndEvent,
+} from '../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
 
 export function useAuthScreen(props: RootRouteProps) {
-  const { appService } = useContext(GlobalContext);
+  const {appService} = useContext(GlobalContext);
   const authService = appService.children.get('auth');
   const settingsService = appService.children.get('settings');
 
@@ -38,12 +46,13 @@ export function useAuthScreen(props: RootRouteProps) {
   const isSuccessBio = useSelector(bioService, selectIsSuccess);
   const errorMsgBio = useSelector(bioService, selectError);
   const unEnrolledNoticeBio = useSelector(bioService, selectUnenrolledNotice);
+  const errorResponse = useSelector(bioService, selectErrorResponse);
 
   const usePasscode = () => {
-    props.navigation.navigate('Passcode', { setup: isSettingUp });
+    props.navigation.navigate('Passcode', {setup: isSettingUp});
   };
 
-  const { t } = useTranslation('AuthScreen');
+  const {t} = useTranslation('AuthScreen');
 
   const fetchIsAvailable = async () => {
     const result = await LocalAuthentication.hasHardwareAsync();
@@ -53,10 +62,22 @@ export function useAuthScreen(props: RootRouteProps) {
 
   useEffect(() => {
     if (isAuthorized) {
+      sendEndEvent(
+        getEndEventData(
+          TelemetryConstants.FlowType.appOnboarding,
+          TelemetryConstants.EndEventStatus.success,
+        ),
+      );
       props.navigation.reset({
         index: 0,
-        routes: [{ name: 'Main' }],
+        routes: [{name: 'Main'}],
       });
+      sendImpressionEvent(
+        getImpressionEventData(
+          TelemetryConstants.FlowType.appOnboarding,
+          TelemetryConstants.Screens.home,
+        ),
+      );
       return;
     }
 
@@ -69,8 +90,21 @@ export function useAuthScreen(props: RootRouteProps) {
 
       // handle biometric failure unknown error
     } else if (errorMsgBio) {
+      sendEndEvent(
+        getEndEventData(
+          TelemetryConstants.FlowType.appOnboarding,
+          TelemetryConstants.EndEventStatus.failure,
+          {
+            errorId: errorResponse.res.error,
+            errorMessage: errorResponse.res.warning,
+            stackTrace: errorResponse.stacktrace,
+          },
+        ),
+      );
       // show alert message whenever biometric state gets failure
-      setHasAlertMsg(t(errorMsgBio));
+      if (errorResponse.res.error !== 'user_cancel') {
+        setHasAlertMsg(t(errorMsgBio));
+      }
 
       // handle any unenrolled notice
     } else if (unEnrolledNoticeBio) {
@@ -78,6 +112,9 @@ export function useAuthScreen(props: RootRouteProps) {
 
       // we dont need to see this page to user once biometric is unavailable on its device
     } else if (isUnavailableBio) {
+      sendStartEvent(
+        getStartEventData(TelemetryConstants.FlowType.appOnboarding),
+      );
       usePasscode();
     }
   }, [isSuccessBio, isUnavailableBio, errorMsgBio, unEnrolledNoticeBio]);
@@ -85,12 +122,23 @@ export function useAuthScreen(props: RootRouteProps) {
   const useBiometrics = async () => {
     const isBiometricsEnrolled = await LocalAuthentication.isEnrolledAsync();
     if (isBiometricsEnrolled) {
-      if (biometricState.matches({ failure: 'unenrolled' })) {
-        biometricSend({ type: 'RETRY_AUTHENTICATE' });
+      sendStartEvent(
+        getStartEventData(TelemetryConstants.FlowType.appOnboarding),
+      );
+      sendInteractEvent(
+        getInteractEventData(
+          TelemetryConstants.FlowType.appOnboarding,
+          TelemetryConstants.InteractEventSubtype.click,
+          'Use Biometrics Button',
+        ),
+      );
+
+      if (biometricState.matches({failure: 'unenrolled'})) {
+        biometricSend({type: 'RETRY_AUTHENTICATE'});
         return;
       }
 
-      biometricSend({ type: 'AUTHENTICATE' });
+      biometricSend({type: 'AUTHENTICATE'});
     } else {
       setHasAlertMsg(t('errors.unenrolled'));
     }

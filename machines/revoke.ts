@@ -1,15 +1,17 @@
-import { TextInput } from 'react-native';
-import { assign, ErrorPlatformEvent, StateFrom, send, EventFrom } from 'xstate';
-import { log } from 'xstate/lib/actions';
+import {TextInput} from 'react-native';
+import {assign, ErrorPlatformEvent, EventFrom, send, StateFrom} from 'xstate';
+import {log} from 'xstate/lib/actions';
 
 import i18n from '../i18n';
-import { AppServices } from '../shared/GlobalContext';
-import { ActivityLogEvents } from './activityLog';
-import { StoreEvents } from './store';
-import { createModel } from 'xstate/lib/model';
-import { request } from '../shared/request';
-import { VcIdType } from '../types/vc';
-import { MY_VCS_STORE_KEY } from '../shared/constants';
+import {AppServices} from '../shared/GlobalContext';
+import {ActivityLogEvents} from './activityLog';
+import {StoreEvents} from './store';
+import {createModel} from 'xstate/lib/model';
+import {request} from '../shared/request';
+import {VcIdType} from '../types/VC/ExistingMosipVC/vc';
+import {MY_VCS_STORE_KEY} from '../shared/constants';
+import {VCMetadata} from '../shared/VCMetadata';
+import {API_URLS} from '../shared/api';
 
 const model = createModel(
   {
@@ -20,21 +22,21 @@ const model = createModel(
     otpError: '',
     transactionId: '',
     requestId: '',
-    VIDs: [] as string[],
+    VIDsMetadata: [] as VCMetadata[],
   },
   {
     events: {
-      INPUT_OTP: (otp: string) => ({ otp }),
+      INPUT_OTP: (otp: string) => ({otp}),
       VALIDATE_INPUT: () => ({}),
-      READY: (idInputRef: TextInput) => ({ idInputRef }),
+      READY: (idInputRef: TextInput) => ({idInputRef}),
       DISMISS: () => ({}),
-      SELECT_ID_TYPE: (idType: VcIdType) => ({ idType }),
-      REVOKE_VCS: (vcKeys: string[]) => ({ vcKeys }),
-      STORE_RESPONSE: (response: string[]) => ({ response }),
-      ERROR: (data: Error) => ({ data }),
+      SELECT_ID_TYPE: (idType: VcIdType) => ({idType}),
+      REVOKE_VCS: (vcMetadatas: VCMetadata[]) => ({vcMetadatas}),
+      STORE_RESPONSE: (response: string[]) => ({response}),
+      ERROR: (data: Error) => ({data}),
       SUCCESS: () => ({}),
     },
-  }
+  },
 );
 
 export const revokeVidsMachine =
@@ -165,7 +167,7 @@ export const revokeVidsMachine =
         }),
 
         setVIDs: model.assign({
-          VIDs: (_context, event) => event.vcKeys,
+          VIDsMetadata: (_context, event) => event.vcMetadatas,
         }),
 
         setIdBackendError: assign({
@@ -201,78 +203,88 @@ export const revokeVidsMachine =
           },
         }),
 
-        clearOtp: assign({ otp: '' }),
+        clearOtp: assign({otp: ''}),
 
         logRevoked: send(
-          (context) =>
+          context =>
             ActivityLogEvents.LOG_ACTIVITY(
-              context.VIDs.map((vc) => ({
-                _vcKey: vc,
+              context.VIDsMetadata.map(metadata => ({
+                _vcKey: metadata.getVcKey(),
                 type: 'VC_REVOKED',
                 timestamp: Date.now(),
                 deviceName: '',
-                vcLabel: vc.split(':')[2],
-              }))
+                vcLabel: metadata.id,
+              })),
             ),
           {
-            to: (context) => context.serviceRefs.activityLog,
-          }
+            to: context => context.serviceRefs.activityLog,
+          },
         ),
 
         revokeVID: send(
-          (context) => {
-            return StoreEvents.REMOVE_ITEMS(MY_VCS_STORE_KEY, context.VIDs);
+          context => {
+            return StoreEvents.REMOVE_ITEMS(
+              MY_VCS_STORE_KEY,
+              context.VIDsMetadata.map(m => m.getVcKey()),
+            );
           },
           {
-            to: (context) => context.serviceRefs.store,
-          }
+            to: context => context.serviceRefs.store,
+          },
         ),
       },
 
       services: {
-        requestOtp: async (context) => {
+        requestOtp: async context => {
           const transactionId = String(new Date().valueOf()).substring(3, 13);
-          return request('POST', '/residentmobileapp/req/otp', {
-            individualId: context.VIDs[0].split(':')[2],
-            individualIdType: 'VID',
-            otpChannel: ['EMAIL', 'PHONE'],
-            transactionID: transactionId,
-          });
+          return request(
+            API_URLS.requestOtp.method,
+            API_URLS.requestOtp.buildURL(),
+            {
+              individualId: context.VIDsMetadata[0].id,
+              individualIdType: 'VID',
+              otpChannel: ['EMAIL', 'PHONE'],
+              transactionID: transactionId,
+            },
+          );
         },
 
-        requestRevoke: (context) => async (callback) => {
+        requestRevoke: context => async callback => {
           await Promise.all(
-            context.VIDs.map((vid: string) => {
+            context.VIDsMetadata.map((metadata: VCMetadata) => {
               try {
-                const vidID = vid.split(':')[2];
                 const transactionId = String(new Date().valueOf()).substring(
                   3,
-                  13
+                  13,
                 );
-                return request('PATCH', `/residentmobileapp/vid/${vidID}`, {
-                  transactionID: transactionId,
-                  vidStatus: 'REVOKED',
-                  individualId: vidID,
-                  individualIdType: 'VID',
-                  otp: context.otp,
-                });
+                return request(
+                  API_URLS.requestRevoke.method,
+                  API_URLS.requestRevoke.buildURL(metadata.id),
+                  {
+                    transactionID: transactionId,
+                    vidStatus: 'REVOKED',
+                    individualId: metadata.id,
+                    individualIdType: 'VID',
+                    otp: context.otp,
+                  },
+                );
               } catch (error) {
                 console.log('error.message', error.message);
                 return error;
               }
-            })
+            }),
           )
             .then(() => {
               callback('SUCCESS');
             })
-            .catch((error) => {
-              callback({ type: 'ERROR', data: error });
+            .catch(error => {
+              callback({type: 'ERROR', data: error});
             });
         },
       },
 
       guards: {},
-    }
+    },
   );
 
 export function createRevokeMachine(serviceRefs: AppServices) {

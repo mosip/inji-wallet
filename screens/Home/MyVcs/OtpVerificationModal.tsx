@@ -1,17 +1,40 @@
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { PinInput } from '../../../components/PinInput';
-import { Column, Text } from '../../../components/ui';
-import { ModalProps, Modal } from '../../../components/ui/Modal';
-import { Theme } from '../../../components/ui/styleUtils';
-import { Image, TouchableOpacity } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {PinInput} from '../../../components/PinInput';
+import {Button, Column, Text} from '../../../components/ui';
+import {ModalProps, Modal} from '../../../components/ui/Modal';
+import {Theme} from '../../../components/ui/styleUtils';
+import {Image, TouchableOpacity} from 'react-native';
+import {
+  getImpressionEventData,
+  incrementRetryCount,
+  resetRetryCount,
+  sendImpressionEvent,
+} from '../../../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
+import {MessageOverlay} from '../../../components/MessageOverlay';
+import {
+  OtpVerificationModalProps,
+  useOtpVerificationModal,
+} from './OtpVerificationModalController';
 
-export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
-  props
-) => {
-  const { t } = useTranslation('OtpVerificationModal');
+export const OtpVerificationModal: React.FC<
+  OtpVerificationModalProps
+> = props => {
+  const {t} = useTranslation('OtpVerificationModal');
 
   const [timer, setTimer] = useState(180); // 30 seconds
+
+  const controller = useOtpVerificationModal(props);
+
+  useEffect(() => {
+    sendImpressionEvent(
+      getImpressionEventData(
+        props.flow,
+        TelemetryConstants.Screens.otpVerificationModal,
+      ),
+    );
+  }, [props.flow]);
 
   useEffect(() => {
     if (timer === 0) return;
@@ -23,12 +46,25 @@ export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
     return () => clearInterval(intervalId);
   }, [timer]);
 
-  const formatTime = (seconds) => {
+  const formatTime = seconds => {
     const minutes = Math.floor(seconds / 60);
     const Seconds = seconds % 60;
     return `${minutes < 10 ? '0' + minutes : minutes}:${
       Seconds < 10 ? '0' + Seconds : Seconds
     }`;
+  };
+
+  const handleOtpResend = () => {
+    incrementRetryCount(
+      props.flow,
+      TelemetryConstants.Screens.otpVerificationModal,
+    );
+    props.resend();
+  };
+
+  const handleEnteredOtp = (otp: string) => {
+    resetRetryCount();
+    props.onInputDone(otp);
   };
 
   return (
@@ -40,7 +76,7 @@ export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
         fill
         padding="32"
         backgroundColor={Theme.Colors.whiteBackgroundColor}>
-        <Column fill align="space-between" crossAlign="center">
+        <Column fill crossAlign="center">
           <Column crossAlign="center">
             <Image source={Theme.OtpLogo} resizeMethod="auto" />
             <Text
@@ -65,12 +101,12 @@ export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
             margin="16 0 0 0">
             {props.error}
           </Text>
-          <PinInput testID="pinInput" length={6} onDone={props.onInputDone} />
+          <PinInput testID="pinInput" length={6} onDone={handleEnteredOtp} />
           <Text
             margin="36 0 0 0"
             color={Theme.Colors.resendCodeTimer}
             weight="regular">
-            {` ${t('resendTheCode')} :  ${formatTime(timer)}`}
+            {timer > 0 ? `${t('resendTheCode')} : ${formatTime(timer)}` : ''}
           </Text>
 
           <TouchableOpacity
@@ -79,7 +115,7 @@ export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
               timer > 0
                 ? null
                 : () => {
-                    props.resend();
+                    handleOtpResend();
                     setTimer(180);
                   }
             }>
@@ -94,14 +130,26 @@ export const OtpVerificationModal: React.FC<OtpVerificationModalProps> = (
             </Text>
           </TouchableOpacity>
         </Column>
-        <Column fill></Column>
       </Column>
+      <MessageOverlay
+        isVisible={controller.isDownloadCancelled}
+        title={t('confirmationDialog.title')}
+        message={t('confirmationDialog.message')}
+        customHeight={250}>
+        <Column>
+          <Button
+            type="gradient"
+            title={t('confirmationDialog.wait')}
+            onPress={controller.WAIT}
+            margin={[0, 0, 8, 0]}
+          />
+          <Button
+            type="clear"
+            title={t('confirmationDialog.cancel')}
+            onPress={controller.CANCEL}
+          />
+        </Column>
+      </MessageOverlay>
     </Modal>
   );
 };
-
-interface OtpVerificationModalProps extends ModalProps {
-  onInputDone: (otp: string) => void;
-  error?: string;
-  resend?: () => void;
-}

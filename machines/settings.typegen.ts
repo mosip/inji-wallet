@@ -2,7 +2,7 @@
 
 export interface Typegen0 {
   '@@xstate/typegen': true;
-  'internalEvents': {
+  internalEvents: {
     'done.invoke.settings.resetInjiProps:invocation[0]': {
       type: 'done.invoke.settings.resetInjiProps:invocation[0]';
       data: unknown;
@@ -12,31 +12,26 @@ export interface Typegen0 {
       type: 'error.platform.settings.resetInjiProps:invocation[0]';
       data: unknown;
     };
-    'xstate.init': { type: 'xstate.init' };
+    'xstate.init': {type: 'xstate.init'};
   };
-  'invokeSrcNameMap': {
+  invokeSrcNameMap: {
     resetInjiProps: 'done.invoke.settings.resetInjiProps:invocation[0]';
   };
-  'missingImplementations': {
-    actions: 'injiTourGuide';
+  missingImplementations: {
+    actions: never;
     delays: never;
     guards: never;
     services: never;
   };
-  'eventsCausingActions': {
-    injiTourGuide:
-      | 'BACK'
-      | 'CANCEL'
-      | 'STORE_RESPONSE'
-      | 'done.invoke.settings.resetInjiProps:invocation[0]'
-      | 'error.platform.settings.resetInjiProps:invocation[0]';
+  eventsCausingActions: {
     requestStoredContext: 'xstate.init';
-    resetCredentialRegistry: 'CANCEL' | 'UPDATE_CREDENTIAL_REGISTRY';
+    resetCredentialRegistry: 'CANCEL' | 'UPDATE_MIMOTO_HOST';
     setContext: 'STORE_RESPONSE';
     storeContext:
       | 'ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS'
       | 'STORE_RESPONSE'
       | 'TOGGLE_BIOMETRIC_UNLOCK'
+      | 'UPDATE_ESIGNET_HOST'
       | 'UPDATE_NAME'
       | 'UPDATE_VC_LABEL'
       | 'done.invoke.settings.resetInjiProps:invocation[0]';
@@ -45,25 +40,25 @@ export interface Typegen0 {
     updateCredentialRegistryResponse: 'error.platform.settings.resetInjiProps:invocation[0]';
     updateCredentialRegistrySuccess: 'done.invoke.settings.resetInjiProps:invocation[0]';
     updateDefaults: 'STORE_RESPONSE';
+    updateEsignetHostUrl: 'UPDATE_ESIGNET_HOST';
     updateName: 'UPDATE_NAME';
     updatePartialDefaults: 'STORE_RESPONSE';
     updateUserShownWithHardwareKeystoreNotExists: 'ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS';
     updateVcLabel: 'UPDATE_VC_LABEL';
   };
-  'eventsCausingDelays': {};
-  'eventsCausingGuards': {
+  eventsCausingDelays: {};
+  eventsCausingGuards: {
     hasData: 'STORE_RESPONSE';
     hasPartialData: 'STORE_RESPONSE';
   };
-  'eventsCausingServices': {
-    resetInjiProps: 'UPDATE_CREDENTIAL_REGISTRY';
+  eventsCausingServices: {
+    resetInjiProps: 'UPDATE_MIMOTO_HOST';
   };
-  'matchesStates':
+  matchesStates:
     | 'idle'
     | 'init'
-    | 'injiTourGuide'
     | 'resetInjiProps'
     | 'showInjiTourGuide'
     | 'storingDefaults';
-  'tags': never;
+  tags: never;
 }

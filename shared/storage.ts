@@ -1,17 +1,7 @@
-import { MMKVLoader } from 'react-native-mmkv-storage';
-import { VC_ITEM_STORE_KEY_REGEX } from './constants';
+import {MMKVLoader} from 'react-native-mmkv-storage';
 import CryptoJS from 'crypto-js';
-import {
-  DocumentDirectoryPath,
-  exists,
-  mkdir,
-  readFile,
-  stat,
-  unlink,
-  writeFile,
-} from 'react-native-fs';
 import getAllConfigurations from './commonprops/commonProps';
-import { Platform } from 'react-native';
+import {Platform} from 'react-native';
 import {
   getFreeDiskStorageOldSync,
   getFreeDiskStorageSync,
@@ -21,18 +11,32 @@ import {
   decryptJson,
   encryptJson,
   HMAC_ALIAS,
-  isCustomSecureKeystore,
+  isHardwareKeystoreExists,
 } from './cryptoutil/cryptoUtil';
+import {VCMetadata} from './VCMetadata';
+import {ENOENT, getItem} from '../machines/store';
+import {
+  isAndroid,
+  MY_VCS_STORE_KEY,
+  RECEIVED_VCS_STORE_KEY,
+  SETTINGS_STORE_KEY,
+} from './constants';
+import FileStorage, {getFilePath, vcDirectoryPath} from './fileStorage';
+import {__AppId} from './GlobalVariables';
 
-const MMKV = new MMKVLoader().initialize();
-const vcKeyRegExp = new RegExp(VC_ITEM_STORE_KEY_REGEX);
-const vcDirectoryPath = `${DocumentDirectoryPath}/inji/VC`;
+export const MMKV = new MMKVLoader().initialize();
+
+export const API_CACHED_STORAGE_KEYS = {
+  fetchIssuers: 'CACHE_FETCH_ISSUERS',
+  fetchIssuerConfig: (issuerId: string) =>
+    `CACHE_FETCH_ISSUER_CONFIG_${issuerId}`,
+};
 
 async function generateHmac(
   encryptionKey: string,
-  data: string
+  data: string,
 ): Promise<string> {
-  if (!isCustomSecureKeystore()) {
+  if (!isHardwareKeystoreExists) {
     return CryptoJS.HmacSHA256(encryptionKey, data).toString();
   }
   return await SecureKeystore.generateHmacSha(HMAC_ALIAS, data);
@@ -41,7 +45,7 @@ async function generateHmac(
 class Storage {
   static isVCStorageInitialised = async (): Promise<boolean> => {
     try {
-      const res = await stat(vcDirectoryPath);
+      const res = await FileStorage.getInfo(vcDirectoryPath);
       return res.isDirectory();
     } catch (_) {
       return false;
@@ -51,13 +55,13 @@ class Storage {
   static setItem = async (
     key: string,
     data: string,
-    encryptionKey?: string
+    encryptionKey?: string,
   ) => {
     try {
-      const isSavingVC = vcKeyRegExp.exec(key);
+      const isSavingVC = VCMetadata.isVCKey(key);
       if (isSavingVC) {
-        await this.storeVcHmac(encryptionKey, data, key);
-        return await this.storeVC(key, data);
+        await this.storeVC(key, data);
+        return await this.storeVcHmac(encryptionKey, data, key);
       }
 
       await MMKV.setItem(key, data);
@@ -69,71 +73,128 @@ class Storage {
 
   static getItem = async (key: string, encryptionKey?: string) => {
     try {
-      const isSavingVC = vcKeyRegExp.exec(key);
+      const isVCKey = VCMetadata.isVCKey(key);
 
-      if (isSavingVC) {
+      if (isVCKey) {
         const data = await this.readVCFromFile(key);
         const isCorrupted = await this.isCorruptedVC(key, encryptionKey, data);
+
+        if (isCorrupted) {
+          console.debug(
+            '[Inji-406]: VC is corrupted and will be deleted from storage',
+          );
+          console.debug('[Inji-406]: VC key: ', key);
+          console.debug('[Inji-406]: is Data null', data === null);
+          getItem(MY_VCS_STORE_KEY, [], encryptionKey).then(res => {
+            console.debug('[Inji-406]: vcKeys are ', JSON.stringify(res));
+          });
+          getItem(RECEIVED_VCS_STORE_KEY, null, encryptionKey).then(res => {
+            console.debug(
+              '[Inji-406]: received vcKeys is ',
+              JSON.stringify(res),
+            );
+          });
+        }
 
         return isCorrupted ? null : data;
       }
 
       return await MMKV.getItem(key);
     } catch (error) {
+      const isVCKey = VCMetadata.isVCKey(key);
+
+      if (isVCKey) {
+        const isDownloaded = await this.isVCAlreadyDownloaded(
+          key,
+          encryptionKey,
+        );
+
+        if (isDownloaded && error.message.includes(ENOENT)) {
+          throw new Error(ENOENT);
+        }
+      }
+
       console.log('Error Occurred while retriving from Storage.', error);
       throw error;
     }
   };
 
+  private static async isVCAlreadyDownloaded(
+    key: string,
+    encryptionKey: string,
+  ) {
+    const storedHMACofCurrentVC = await this.readHmacForVC(key, encryptionKey);
+    return storedHMACofCurrentVC !== null;
+  }
+
   private static async isCorruptedVC(
     key: string,
     encryptionKey: string,
-    data: string
+    data: string,
   ) {
     const storedHMACofCurrentVC = await this.readHmacForVC(key, encryptionKey);
     const HMACofVC = await generateHmac(encryptionKey, data);
+
+    if (HMACofVC !== storedHMACofCurrentVC) {
+      console.debug(
+        `[Inji-406]: storedHmacOfCurrentVC: ${storedHMACofCurrentVC}, HMACofVC: ${HMACofVC}`,
+      );
+    }
+
     return HMACofVC !== storedHMACofCurrentVC;
   }
 
   private static async readHmacForVC(key: string, encryptionKey: string) {
-    const encryptedHMACofCurrentVC = await MMKV.getItem(getVCKeyName(key));
-    return decryptJson(encryptionKey, encryptedHMACofCurrentVC);
+    const encryptedHMACofCurrentVC = await MMKV.getItem(key);
+    if (encryptedHMACofCurrentVC) {
+      return decryptJson(encryptionKey, encryptedHMACofCurrentVC);
+    }
+    return null;
   }
 
   private static async readVCFromFile(key: string) {
-    const path = getFilePath(key);
-    return await readFile(path, 'utf8');
+    return await FileStorage.readFile(getFilePath(key));
   }
 
   private static async storeVC(key: string, data: string) {
-    await mkdir(vcDirectoryPath);
+    await FileStorage.createDirectory(vcDirectoryPath);
     const path = getFilePath(key);
-    return await writeFile(path, data, 'utf8');
+    return await FileStorage.writeFile(path, data);
   }
 
   private static async storeVcHmac(
     encryptionKey: string,
     data: string,
-    key: string
+    key: string,
   ) {
     const HMACofVC = await generateHmac(encryptionKey, data);
+    console.log('[Inji-406]: Updating hmac of the vc: ', HMACofVC);
     const encryptedHMACofVC = await encryptJson(encryptionKey, HMACofVC);
-    await MMKV.setItem(getVCKeyName(key), encryptedHMACofVC);
+    await MMKV.setItem(key, encryptedHMACofVC);
   }
 
   static removeItem = async (key: string) => {
-    if (vcKeyRegExp.exec(key)) {
+    if (VCMetadata.isVCKey(key)) {
       const path = getFilePath(key);
-      return await unlink(path);
+      const isFileExists = await FileStorage.exists(path);
+      if (isFileExists) {
+        return await FileStorage.removeItem(path);
+      } else {
+        console.log('file not exist`s');
+      }
     }
     MMKV.removeItem(key);
   };
 
   static clear = async () => {
     try {
-      (await exists(`${vcDirectoryPath}`)) &&
-        (await unlink(`${vcDirectoryPath}`));
+      (await FileStorage.exists(`${vcDirectoryPath}`)) &&
+        (await FileStorage.removeItem(`${vcDirectoryPath}`));
+      const settings = await MMKV.getItem(SETTINGS_STORE_KEY);
+      const appId = JSON.parse(settings).appId;
+      __AppId.setValue(appId);
       MMKV.clearStore();
+      await MMKV.setItem(SETTINGS_STORE_KEY, JSON.stringify({appId: appId}));
     } catch (e) {
       console.log('Error Occurred while Clearing Storage.', e);
     }
@@ -146,7 +207,7 @@ class Storage {
     const minimumStorageLimitInBytes = configurations[limitInMB] * 1000 * 1000;
 
     const freeDiskStorageInBytes =
-      Platform.OS === 'android' && Platform.Version < 29
+      isAndroid() && Platform.Version < 29
         ? getFreeDiskStorageOldSync()
         : getFreeDiskStorageSync();
 
@@ -156,36 +217,5 @@ class Storage {
     return freeDiskStorageInBytes <= minimumStorageLimitInBytes;
   };
 }
-/**
- * The VC file name will not have the pinned / unpinned state, we will splice the state as this will change.
- * replace ':' with '_' in the key to get the file name as ':' are not allowed in filenames
- * eg: "vc:UIN:6732935275:e7426576-112f-466a-961a-1ed9635db628" is changed to "vc_UIN_6732935275_e7426576-112f-466a-961a-1ed9635db628"
- */
-const getFileName = (key: string) => {
-  return key.split(':').splice(0, 4).join('_');
-};
-
-/**
- * iOS: /var/mobile/Containers/Data/Application/196A05AD-6B11-403D-BA2D-6DC1F30075E1/Documents/inji/VC/<filename>
- * android: /data/user/0/io.mosip.residentapp/files/inji/VC/<filename>
- * These paths are coming from DocumentDirectoryPath in react-native-fs.
- */
-const getFilePath = (key: string) => {
-  const fileName = getFileName(key);
-  return `${vcDirectoryPath}/${fileName}.txt`;
-};
-
-/**
- * The VC key will not have the pinned / unpinned state, we will splice the state as this will change.
- * eg: "vc:UIN:6732935275:e7426576-112f-466a-961a-1ed9635db628:true" is changed to "vc:UIN:6732935275:e7426576-112f-466a-961a-1ed9635db628"
- */
-const getVCKeyName = (key: string) => {
-  return key.split(':').splice(0, 4).join(':');
-};
-
-// To print the MMKV data cal this function in getItem
-const getMMKVData = async () => {
-  const mmkvData = await MMKV.indexer.getKeys();
-};
 
 export default Storage;

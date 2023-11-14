@@ -1,4 +1,3 @@
-import React from 'react';
 import {Icon, ListItem, Overlay} from 'react-native-elements';
 import {Theme} from '../components/ui/styleUtils';
 import {Column, Row, Text} from '../components/ui';
@@ -6,11 +5,13 @@ import {WalletBinding} from '../screens/Home/MyVcs/WalletBinding';
 import {Pressable, View} from 'react-native';
 import {useKebabPopUp} from './KebabPopUpController';
 import {ActorRefFrom} from 'xstate';
-import {vcItemMachine} from '../machines/vcItem';
+import {ExistingMosipVCItemMachine} from '../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {useTranslation} from 'react-i18next';
 import {HistoryTab} from '../screens/Home/MyVcs/HistoryTab';
 import {RemoveVcWarningOverlay} from '../screens/Home/MyVcs/RemoveVcWarningOverlay';
 import {ScrollView} from 'react-native-gesture-handler';
+import {VCMetadata} from '../shared/VCMetadata';
+import testIDProps from '../shared/commonUtil';
 
 export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
   const controller = useKebabPopUp(props);
@@ -18,9 +19,12 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
   return (
     <Column>
       <Icon
+        {...testIDProps('ellipsis')}
+        accessible={true}
         name={props.iconName}
         type={props.iconType}
         color={Theme.Colors.GrayIcon}
+        size={Theme.ICON_SMALL_SIZE}
       />
       <Overlay
         isVisible={props.isVisible}
@@ -28,7 +32,9 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
         overlayStyle={Theme.KebabPopUpStyles.kebabPopUp}>
         <Row style={Theme.KebabPopUpStyles.kebabHeaderStyle}>
           <View></View>
-          <Text weight="bold">{t('title')}</Text>
+          <Text testID="kebabTitle" weight="bold">
+            {t('title')}
+          </Text>
           <Icon
             name="close"
             onPress={props.onDismiss}
@@ -39,14 +45,12 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
         <ScrollView>
           <ListItem bottomDivider>
             <ListItem.Content>
-              <ListItem.Title>
-                <Pressable onPress={controller.PIN_CARD}>
-                  <Text size="small" weight="bold">
-                    {props.vcKey.split(':')[4] == 'true'
-                      ? t('unPinCard')
-                      : t('pinCard')}
-                  </Text>
-                </Pressable>
+              <ListItem.Title
+                onPress={controller.PIN_CARD}
+                {...testIDProps('pinOrUnPinCard')}>
+                <Text size="small" weight="bold">
+                  {props.vcMetadata.isPinned ? t('unPinCard') : t('pinCard')}
+                </Text>
               </ListItem.Title>
             </ListItem.Content>
           </ListItem>
@@ -55,22 +59,24 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
             label={t('offlineAuthenticationDisabled!')}
             content={t('offlineAuthDisabledMessage')}
             service={props.service}
+            vcMetadata={props.vcMetadata}
           />
 
           <HistoryTab
+            testID="viewActivityLog"
             service={props.service}
             label={t('viewActivityLog')}
-            vcKey={props.vcKey}
+            vcMetadata={props.vcMetadata}
           />
 
           <ListItem bottomDivider>
             <ListItem.Content>
-              <ListItem.Title>
-                <Pressable onPress={() => controller.REMOVE(props.vcKey)}>
-                  <Text size="small" weight="bold">
-                    {t('removeFromWallet')}
-                  </Text>
-                </Pressable>
+              <ListItem.Title
+                onPress={() => controller.REMOVE(props.vcMetadata)}
+                {...testIDProps('removeFromWallet')}>
+                <Text size="small" weight="bold">
+                  {t('removeFromWallet')}
+                </Text>
               </ListItem.Title>
             </ListItem.Content>
           </ListItem>
@@ -89,8 +95,8 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
 export interface KebabPopUpProps {
   iconName: string;
   iconType?: string;
-  vcKey: string;
+  vcMetadata: VCMetadata;
   isVisible: boolean;
   onDismiss: () => void;
-  service: ActorRefFrom<typeof vcItemMachine>;
+  service: ActorRefFrom<typeof ExistingMosipVCItemMachine>;
 }

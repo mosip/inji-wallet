@@ -1,13 +1,22 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 
-import { Dimensions } from 'react-native';
-import { Overlay, LinearProgress } from 'react-native-elements';
-import { Button, Column, Text } from './ui';
-import { Theme } from './ui/styleUtils';
+import {Dimensions, StyleSheet} from 'react-native';
+import {Overlay, LinearProgress} from 'react-native-elements';
+import {Button, Column, Text} from './ui';
+import {Theme} from './ui/styleUtils';
 
-export const MessageOverlay: React.FC<MessageOverlayProps> = (props) => {
-  const { t } = useTranslation('common');
+export const MessageOverlay: React.FC<MessageOverlayProps> = props => {
+  const {t} = useTranslation('common');
+  const style = StyleSheet.create({
+    customHeight: {
+      height: props.customHeight
+        ? props.customHeight
+        : props.progress
+        ? 100
+        : 150,
+    },
+  });
   return (
     <Overlay
       isVisible={props.isVisible}
@@ -16,14 +25,11 @@ export const MessageOverlay: React.FC<MessageOverlayProps> = (props) => {
       onBackdropPress={props.onBackdropPress}>
       <Column
         width={Dimensions.get('screen').width * 0.8}
-        style={
-          !props.progress
-            ? Theme.MessageOverlayStyles.popupOverLay
-            : { height: 100 }
-        }>
+        style={[Theme.MessageOverlayStyles.popupOverLay, style.customHeight]}>
         <Column padding="21" crossAlign="center">
           {props.title && (
             <Text
+              style={{paddingTop: 3}}
               align="center"
               weight="bold"
               margin="0 0 10 0"
@@ -52,11 +58,11 @@ export const MessageOverlay: React.FC<MessageOverlayProps> = (props) => {
           )}
           {props.children}
         </Column>
-        {!props.children && props.onCancel ? (
+        {!props.children && props.onButtonPress ? (
           <Button
             type="gradient"
-            title={t('cancel')}
-            onPress={props.onCancel}
+            title={props.buttonText ? t(props.buttonText) : t('cancel')}
+            onPress={props.onButtonPress}
             styles={Theme.MessageOverlayStyles.button}
           />
         ) : null}
@@ -71,7 +77,7 @@ export const ErrorMessageOverlay: React.FC<ErrorMessageOverlayProps> = ({
   onDismiss,
   translationPath,
 }) => {
-  const { t } = useTranslation(translationPath);
+  const {t} = useTranslation(translationPath);
 
   return (
     <MessageOverlay
@@ -90,7 +96,7 @@ export interface ErrorMessageOverlayProps {
   translationPath: string;
 }
 
-const Progress: React.FC<Pick<MessageOverlayProps, 'progress'>> = (props) => {
+const Progress: React.FC<Pick<MessageOverlayProps, 'progress'>> = props => {
   return typeof props.progress === 'boolean' ? (
     props.progress && (
       <LinearProgress variant="indeterminate" color={Theme.Colors.Loading} />
@@ -103,11 +109,15 @@ const Progress: React.FC<Pick<MessageOverlayProps, 'progress'>> = (props) => {
 export interface MessageOverlayProps {
   isVisible: boolean;
   title?: string;
+  buttonText?: string;
   message?: string;
   progress?: boolean | number;
   requester?: boolean;
   hint?: string;
-  onCancel?: () => void;
+  onButtonPress?: () => void;
+  onStayInProgress?: () => void;
+  onRetry?: () => void;
   onBackdropPress?: () => void;
   onShow?: () => void;
+  customHeight?: number | string | undefined;
 }

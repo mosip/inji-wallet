@@ -1,18 +1,28 @@
 import React from 'react';
-import { Icon, Overlay } from 'react-native-elements';
+import {Icon, Overlay} from 'react-native-elements';
 
-import { FaceScanner } from '../components/FaceScanner';
-import { Column, Row } from '../components/ui';
-import { Theme } from '../components/ui/styleUtils';
-import { VC } from '../types/vc';
-import { Modal } from '../components/ui/Modal';
-import { t } from 'i18next';
-import { useTranslation } from 'react-i18next';
+import {FaceScanner} from '../components/FaceScanner';
+import {Column, Row} from '../components/ui';
+import {Theme} from '../components/ui/styleUtils';
+import {VC} from '../types/VC/ExistingMosipVC/vc';
+import {Modal} from '../components/ui/Modal';
+import {t} from 'i18next';
+import {useTranslation} from 'react-i18next';
+import {VCMetadata} from '../shared/VCMetadata';
 
-export const VerifyIdentityOverlay: React.FC<VerifyIdentityOverlayProps> = (
-  props
-) => {
-  const { t } = useTranslation('VerifyIdentityOverlay');
+export const VerifyIdentityOverlay: React.FC<
+  VerifyIdentityOverlayProps
+> = props => {
+  const {t} = useTranslation('VerifyIdentityOverlay');
+  const isOpenId4VCI =
+    props.vc?.vcMetadata &&
+    VCMetadata.fromVC(props.vc?.vcMetadata).isFromOpenId4VCI();
+  const credential = isOpenId4VCI
+    ? props.vc?.verifiableCredential
+    : props.vc?.credential;
+  const vcImage = isOpenId4VCI
+    ? props.vc?.verifiableCredential.credential.credentialSubject.face
+    : props.vc?.credential?.biometrics.face;
   return (
     <Modal
       isVisible={props.isVisible}
@@ -23,9 +33,9 @@ export const VerifyIdentityOverlay: React.FC<VerifyIdentityOverlayProps> = (
         fill
         style={Theme.VerifyIdentityOverlayStyles.content}
         align="center">
-        {props.vc?.credential != null && (
+        {credential != null && (
           <FaceScanner
-            vcImage={props.vc.credential.biometrics.face}
+            vcImage={vcImage}
             onValid={props.onFaceValid}
             onInvalid={props.onFaceInvalid}
           />

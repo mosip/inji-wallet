@@ -1,5 +1,11 @@
-import { DecodedCredential, VerifiableCredential } from '../types/vc';
-import { HOST } from './constants';
+import {
+  DecodedCredential,
+  VerifiableCredential,
+} from '../types/VC/ExistingMosipVC/vc';
+import {__AppId} from './GlobalVariables';
+import {MIMOTO_BASE_URL, REQUEST_TIMEOUT} from './constants';
+
+export type HTTP_METHOD = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
 
 export class BackendResponseError extends Error {
   constructor(name: string, message: string) {
@@ -8,58 +14,70 @@ export class BackendResponseError extends Error {
   }
 }
 
-export class AppId {
-  private static value: string;
-
-  public static getValue(): string {
-    return AppId.value;
-  }
-
-  public static setValue(value: string) {
-    this.value = value;
-  }
-}
-
 export async function request(
-  method: 'GET' | 'POST' | 'PATCH',
-  path: `/${string}`,
-  body?: Record<string, unknown>
-) {
-  const headers = {
+  method: HTTP_METHOD,
+  path: `/${string}` | string,
+  body?: Record<string, unknown>,
+  host = MIMOTO_BASE_URL,
+  headers: Record<string, string> = {
     'Content-Type': 'application/json',
-  };
-  if (path.includes('residentmobileapp')) headers['X-AppId'] = AppId.getValue();
-
-  const response = await fetch(HOST + path, {
-    method,
-    headers,
-    body: JSON.stringify(body),
-  });
+  },
+  timeoutMillis?: undefined | number,
+) {
+  if (path.includes('residentmobileapp'))
+    headers['X-AppId'] = __AppId.getValue();
+  let response;
+  if (timeoutMillis === undefined) {
+    response = await fetch(host + path, {
+      method,
+      headers,
+      body: body ? JSON.stringify(body) : undefined,
+    });
+  } else {
+    console.log(`making a web request to ${host + path}`);
+    let controller = new AbortController();
+    setTimeout(() => {
+      controller.abort();
+    }, timeoutMillis);
+    try {
+      response = await fetch(host + path, {
+        method,
+        headers,
+        body: body ? JSON.stringify(body) : undefined,
+        signal: controller.signal,
+      });
+    } catch (error) {
+      console.log(
+        `Error occurred while making request: ${host + path}: ${error}`,
+      );
+      if (error.name === 'AbortError') {
+        throw new Error(REQUEST_TIMEOUT);
+      }
+      throw error;
+    }
+  }
 
   const jsonResponse = await response.json();
 
   if (response.status >= 400) {
-    let backendUrl = HOST + path;
+    let backendUrl = host + path;
     let errorMessage = jsonResponse.message || jsonResponse.error;
     console.error(
-      'The backend API ' +
-        backendUrl +
-        ' returned error code 400 with message --> ' +
-        errorMessage
+      `The backend API ${backendUrl} returned error code ${response.status} with message --> ${errorMessage}`,
     );
     throw new Error(errorMessage);
   }
 
   if (jsonResponse.errors && jsonResponse.errors.length) {
-    let backendUrl = HOST + path;
-    const { errorCode, errorMessage } = jsonResponse.errors.shift();
+    let backendUrl = host + path;
+    const {errorCode, errorMessage} = jsonResponse.errors.shift();
     console.error(
       'The backend API ' +
         backendUrl +
         ' returned error response --> error code is : ' +
         errorCode +
         ' error message is : ' +
-        errorMessage
+        errorMessage,
     );
     throw new BackendResponseError(errorCode, errorMessage);
   }

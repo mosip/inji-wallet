@@ -1,4 +1,4 @@
-import { TextInput } from 'react-native';
+import {TextInput} from 'react-native';
 import {
   assign,
   DoneInvokeEvent,
@@ -7,16 +7,20 @@ import {
   sendParent,
   StateFrom,
 } from 'xstate';
-import { createModel } from 'xstate/lib/model';
-import { BackendResponseError, request } from '../../../shared/request';
-import {
-  argon2iConfigForUinVid,
-  argon2iSalt,
-  VC_ITEM_STORE_KEY,
-} from '../../../shared/constants';
-import { VcIdType } from '../../../types/vc';
+import {createModel} from 'xstate/lib/model';
+import {BackendResponseError, request} from '../../../shared/request';
+import {VcIdType} from '../../../types/VC/ExistingMosipVC/vc';
 import i18n from '../../../i18n';
-import { hashData } from '../../../shared/commonUtil';
+import {VCMetadata} from '../../../shared/VCMetadata';
+import {
+  getErrorEventData,
+  getInteractEventData,
+  sendErrorEvent,
+  sendInteractEvent,
+} from '../../../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
+
+import {API_URLS} from '../../../shared/api';
 
 const model = createModel(
   {
@@ -29,19 +33,20 @@ const model = createModel(
     transactionId: '',
     requestId: '',
     isPinned: false,
-    hashedId: '',
   },
   {
     events: {
-      INPUT_ID: (id: string) => ({ id }),
-      INPUT_OTP: (otp: string) => ({ otp }),
+      INPUT_ID: (id: string) => ({id}),
+      INPUT_OTP: (otp: string) => ({otp}),
       RESEND_OTP: () => ({}),
       VALIDATE_INPUT: () => ({}),
-      READY: (idInputRef: TextInput) => ({ idInputRef }),
+      READY: (idInputRef: TextInput) => ({idInputRef}),
       DISMISS: () => ({}),
-      SELECT_ID_TYPE: (idType: VcIdType) => ({ idType }),
+      CANCEL: () => ({}),
+      WAIT: () => ({}),
+      SELECT_ID_TYPE: (idType: VcIdType) => ({idType}),
     },
-  }
+  },
 );
 
 export const AddVcModalEvents = model.events;
@@ -62,6 +67,9 @@ export const AddVcModalMachine =
       on: {
         INPUT_ID: {
           actions: 'setId',
+        },
+        SELECT_ID_TYPE: {
+          actions: ['clearIdError', 'setIdType'],
         },
       },
       states: {
@@ -178,8 +186,7 @@ export const AddVcModalMachine =
               target: 'requestingCredential',
             },
             DISMISS: {
-              actions: 'resetIdInputRef',
-              target: 'acceptingIdInput',
+              target: 'cancelDownload',
             },
             RESEND_OTP: {
               target: '.resendOTP',
@@ -206,13 +213,23 @@ export const AddVcModalMachine =
             },
           },
         },
+        cancelDownload: {
+          on: {
+            CANCEL: {
+              actions: ['resetIdInputRef', 'forwardToParent'],
+            },
+            WAIT: {
+              target: 'acceptingOtpInput',
+            },
+          },
+        },
         requestingCredential: {
           invoke: {
             src: 'requestCredential',
             onDone: [
               {
                 actions: 'setRequestId',
-                target: 'calculatingHashedId',
+                target: 'done',
               },
             ],
             onError: [
@@ -228,18 +245,9 @@ export const AddVcModalMachine =
             ],
           },
         },
-        calculatingHashedId: {
-          invoke: {
-            src: 'calculateHashedId',
-            onDone: {
-              actions: 'setHashedId',
-              target: 'done',
-            },
-          },
-        },
         done: {
           type: 'final',
-          data: (context) => VC_ITEM_STORE_KEY(context),
+          data: context => new VCMetadata(context),
         },
       },
     },
@@ -284,32 +292,35 @@ export const AddVcModalMachine =
                 context.idType === 'UIN' ? 'invalidUin' : 'invalidVid',
               'VID is expired/deactivated': 'deactivatedVid',
             };
-            return ID_ERRORS_MAP[message]
+            const backendError = ID_ERRORS_MAP[message]
               ? i18n.t(`errors.backend.${ID_ERRORS_MAP[message]}`, {
                   ns: 'AddVcModal',
                 })
               : i18n.t(`errors.genericError`, {
                   ns: 'common',
                 });
+            sendErrorEvent(
+              getErrorEventData(
+                TelemetryConstants.FlowType.vcDownload,
+                message,
+                backendError,
+              ),
+            );
+            return backendError;
           },
         }),
 
-        clearId: model.assign({ id: '' }),
+        clearId: model.assign({id: ''}),
 
-        setHashedId: model.assign({
-          hashedId: (_context, event) =>
-            (event as DoneInvokeEvent<string>).data,
-        }),
-
-        clearIdError: model.assign({ idError: '' }),
+        clearIdError: model.assign({idError: ''}),
 
         setIdErrorEmpty: model.assign({
-          idError: () => i18n.t('errors.input.empty', { ns: 'AddVcModal' }),
+          idError: () => i18n.t('errors.input.empty', {ns: 'AddVcModal'}),
         }),
 
         setIdErrorWrongFormat: model.assign({
           idError: () =>
-            i18n.t('errors.input.invalidFormat', { ns: 'AddVcModal' }),
+            i18n.t('errors.input.invalidFormat', {ns: 'AddVcModal'}),
         }),
 
         setOtpError: assign({
@@ -335,57 +346,52 @@ export const AddVcModalMachine =
           idInputRef: null,
         }),
 
-        clearOtp: assign({ otp: '' }),
+        clearOtp: assign({otp: ''}),
 
-        focusInput: (context) => context.idInputRef.focus(),
+        focusInput: context => context.idInputRef.focus(),
       },
 
       services: {
-        requestOtp: async (context) => {
-          return request('POST', '/residentmobileapp/req/otp', {
-            id: 'mosip.identity.otp.internal',
-            individualId: context.id,
-            metadata: {},
-            otpChannel: ['PHONE', 'EMAIL'],
-            requestTime: String(new Date().toISOString()),
-            transactionID: context.transactionId,
-            version: '1.0',
-          });
+        requestOtp: async context => {
+          sendInteractEvent(
+            getInteractEventData('VC Download', 'CLICK', 'Requesting OTP'),
+          );
+          return request(
+            API_URLS.requestOtp.method,
+            API_URLS.requestOtp.buildURL(),
+            {
+              id: 'mosip.identity.otp.internal',
+              individualId: context.id,
+              metadata: {},
+              otpChannel: ['PHONE', 'EMAIL'],
+              requestTime: String(new Date().toISOString()),
+              transactionID: context.transactionId,
+              version: '1.0',
+            },
+          );
         },
 
-        requestCredential: async (context) => {
+        requestCredential: async context => {
           // force wait to fix issue with hanging overlay
-          await new Promise((resolve) => setTimeout(resolve, 1000));
-
+          await new Promise(resolve => setTimeout(resolve, 1000));
           const response = await request(
-            'POST',
-            '/residentmobileapp/credentialshare/request',
+            API_URLS.credentialRequest.method,
+            API_URLS.credentialRequest.buildURL(),
             {
               individualId: context.id,
               individualIdType: context.idType,
               otp: context.otp,
               transactionID: context.transactionId,
-            }
+            },
           );
           return response.response.requestId;
-        },
-
-        calculateHashedId: async (context) => {
-          const value = context.id;
-          const hashedid = await hashData(
-            value,
-            argon2iSalt,
-            argon2iConfigForUinVid
-          );
-          context.hashedId = hashedid;
-          return hashedid;
         },
       },
 
       guards: {
-        isEmptyId: ({ id }) => !id || !id.length,
+        isEmptyId: ({id}) => !id || !id.length,
 
-        isWrongIdFormat: ({ idType, id }) => {
+        isWrongIdFormat: ({idType, id}) => {
           const validIdType =
             idType === 'UIN' ? id.length === 10 : id.length === 16;
           return !(/^\d{10,16}$/.test(id) && validIdType);
@@ -393,10 +399,10 @@ export const AddVcModalMachine =
 
         isIdInvalid: (_context, event: unknown) =>
           ['IDA-MLC-009', 'RES-SER-29', 'IDA-MLC-018'].includes(
-            (event as BackendResponseError).name
+            (event as BackendResponseError).name,
           ),
       },
-    }
+    },
   );
 
 type State = StateFrom<typeof AddVcModalMachine>;
@@ -439,4 +445,8 @@ export function selectIsRequestingOtp(state: State) {
 
 export function selectIsRequestingCredential(state: State) {
   return state.matches('requestingCredential');
+}
+
+export function selectIsCancellingDownload(state: State) {
+  return state.matches('cancelDownload');
 }
