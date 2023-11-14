@@ -1,3 +1,10 @@
+/**
+ * NOTE: Encryption for MMKV datastore has been disabled temporarily for
+ *  **iOS devices ONLY** to evaluate the cause of an infrequent data loss
+ *  issue. For more information see
+ * https://github.com/mosip/inji/pull/1006/files &
+ * https://mosip.atlassian.net/browse/INJI-149
+ */
 import {KeyPair, RSA} from 'react-native-rsa-native';
 import forge from 'node-forge';
 import {BIOMETRIC_CANCELLED, DEBUG_MODE_ENABLED, isIOS} from '../constants';
@@ -104,11 +111,10 @@ export async function encryptJson(
   data: string,
 ): Promise<string> {
   try {
-    // Disable Encryption in debug mode
-    if (DEBUG_MODE_ENABLED && __DEV__) {
+    // Disable Encryption in debug mode & for iPhones
+    if ((DEBUG_MODE_ENABLED && __DEV__) || isIOS()) {
       return JSON.stringify(data);
     }
-
     if (!isHardwareKeystoreExists) {
       return CryptoJS.AES.encrypt(data, encryptionKey).toString();
     }
@@ -132,7 +138,7 @@ export async function decryptJson(
       return '';
     }
     // Disable Encryption in debug mode
-    if (DEBUG_MODE_ENABLED && __DEV__) {
+    if ((DEBUG_MODE_ENABLED && __DEV__) || isIOS()) {
       return JSON.parse(encryptedData);
     }
 
