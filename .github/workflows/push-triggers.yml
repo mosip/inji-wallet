@@ -31,29 +31,9 @@ jobs:
       DEBUG_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_DEBUG_STOREPASS }}'
 
   build-ios:
-    name: IOS test run
-    runs-on: macos-13
-
-    steps:
-      - uses: actions/checkout@v3.1.0
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '18.x'
-
-      - name: Install npm dependencies
-        run: |
-          npm install
-
-      - name: Install Pod
-        run: |
-          cd ios
-          pod install
-          pod install
-
-      - name: Build iOS for automation on simulator
-        run: |
-          cd ios
-          fastlane build_app_for_automation_on_simulator
+    uses: tw-mosip/kattu/.github/workflows/ios-build.yml@add-inji-workflows
+    with:
+      NODE_VERSION: "18.x"
 
   sonar-check:
     if: ${{ github.event_name != 'pull_request' }}
