@@ -1,0 +1,63 @@
+name: Push-Triggers
+
+on:
+  push:
+    branches:
+    - main
+    - develop
+    - qa-develop
+    - inji-reusable-workflow
+    - 'release-**'
+  release:
+    types: [published]
+  pull_request:
+    types: [opened, reopened, synchronize]
+    branches:
+    - main
+    - develop
+    - qa-develop
+    - inji-reusable-workflow
+    - 'release-**'
+
+jobs:
+  build-android:
+    uses: tw-mosip/kattu/.github/workflows/android-build.yml@add-inji-workflows
+    with:
+      NODE_VERSION: "16.x"
+      DEBUG_KEYSTORE_ALIAS: androiddebugkey
+    secrets:
+      DEBUG_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_DEBUG_STOREPASS }}'
+
+  build-ios:
+    name: IOS test run
+    runs-on: macos-13
+
+    steps:
+      - uses: actions/checkout@v3.1.0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      - name: Install npm dependencies
+        run: |
+          npm install
+
+      - name: Install Pod
+        run: |
+          cd ios
+          pod install
+          pod install
+
+      - name: Build iOS for automation on simulator
+        run: |
+          cd ios
+          fastlane build_app_for_automation_on_simulator
+
+  sonar-check:
+    if: ${{ github.event_name != 'pull_request' }}
+    uses: tw-mosip/kattu/.github/workflows/sonar.yml@add-inji-workflows
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      SONAR_HOST_URL: https://sonarcloud.io
+      SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
+      SLACK_URL: '${{ secrets.SLACK_WEBHOOK }}'
