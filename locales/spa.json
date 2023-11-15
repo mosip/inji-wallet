@@ -408,7 +408,7 @@
 		"enableBluetoothButtonText": "Permitir permisos de Bluetooth",
 		"errors": {
 			"locationDisabled": {
-				"message": "Los servicios de ubicación deben estar habilitados para compartir la tarjeta",
+				"message": "Para continuar, deja que tu dispositivo active la ubicación.",
 				"button": "Habilitar servicios de ubicación"
 			},
 			"locationDenied": {
@@ -497,6 +497,7 @@
 	"common": {
 		"cancel": "Cancelar",
 		"save": "Guardar",
+		"ok": "Ok",
 		"dismiss": "Cerrar",
 		"editLabel": "Editar {{label}}",
 		"tryAgain": "Intentar de nuevo",

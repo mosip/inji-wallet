@@ -1,5 +1,6 @@
 import RNLocation from 'react-native-location';
 import LocationServicesDialogBox from 'react-native-android-location-services-dialog-box';
+import i18n from '../i18n';
 // Initialize RNLocation
 RNLocation.configure({
   distanceFilter: 5.0, // Example configuration, adjust as needed
@@ -49,18 +50,18 @@ export async function checkLocationService(
   onDisabled: () => void,
 ) {
   try {
-    await LocationServicesDialogBox.checkLocationServicesIsEnabled({
-      message:
-        "<h2 style='color: #0af13e'>Use Location ?</h2>This app wants to change your device settings:<br/><br/>Use GPS, Wi-Fi, and cell network for location<br/><br/><a href='#'>Learn more</a>",
-      ok: 'YES',
-      cancel: 'NO',
+    const config = {
+      message: i18n.t('ScanScreen:errors:locationDisabled:message'),
+      ok: i18n.t('common:ok'),
+      cancel: i18n.t('common:dismiss'),
       enableHighAccuracy: true, // true => GPS AND NETWORK PROVIDER, false => GPS OR NETWORK PROVIDER
       showDialog: true, // false => Opens the Location access page directly
       openLocationServices: true, // false => Directly catch method is called if location services are turned off
       preventOutSideTouch: false, //true => To prevent the location services popup from closing when it is clicked outside
       preventBackClick: false, //true => To prevent the location services popup from closing when it is clicked back button
       providerListener: true, // true ==> Trigger "locationProviderStatusChange" listener when the location state changes
-    });
+    };
+    await LocationServicesDialogBox.checkLocationServicesIsEnabled(config);
     onEnabled();
   } catch (e) {
     onDisabled();
