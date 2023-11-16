@@ -50,6 +50,7 @@
     "react": "18.2.0",
     "react-i18next": "^11.16.6",
     "react-native": "0.71.8",
+    "react-native-android-location-services-dialog-box": "^2.8.2",
     "react-native-app-auth": "^7.0.0",
     "react-native-app-intro-slider": "^4.0.4",
     "react-native-argon2": "^2.0.1",
@@ -82,7 +83,7 @@
     "react-native-vector-icons": "^10.0.0",
     "short-unique-id": "^4.4.4",
     "simple-pem2jwk": "^0.2.4",
-    "telemetry-sdk": "git://github.com/mosip/sunbird-telemetry-sdk.git#f762be5732ee552c0c70bdd540aa4e2701554c71", 
+    "telemetry-sdk": "git://github.com/mosip/sunbird-telemetry-sdk.git#f762be5732ee552c0c70bdd540aa4e2701554c71",
     "xstate": "^4.35.0"
   },
   "devDependencies": {

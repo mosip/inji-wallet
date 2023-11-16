@@ -478,7 +478,7 @@
     "sharingVc": "مشاركة بطاقة ",
     "errors": {
       "locationDisabled": {
-        "message": "يجب تمكين خدمات الموقع لمشاركة البطاقة",
+        "message": "للمتابعة، اسمح لجهازك بتشغيل الموقع",
         "button": "تمكين خدمات الموقع"
       },
       "locationDenied": {
@@ -593,6 +593,7 @@
     "cancel": "إلغاء",
     "accept": "يقبل",
     "save": "حفظ",
+    "ok": "نعم",
     "dismiss": "رفض",
     "editLabel": "يحرر {{label}}",
     "tryAgain": "حاول مجددا",
