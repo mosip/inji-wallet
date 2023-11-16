@@ -177,6 +177,10 @@
         "title": "No internet connection",
         "message": "Please check your connection and retry"
       },
+      "biometricsCancelled": {
+        "title": "Do you want to cancel download?",
+        "message": "Biometric confirmation is required to continue downloading the card."
+      },
       "generic": {
         "title": "Something went wrong!",
         "message": "We are having some trouble with your request. Please try again."
@@ -307,7 +311,7 @@
         "title": "No internet connection",
         "message": "Please check your connection and retry"
       },
-      "downloadLimitExpires":{
+      "downloadLimitExpires": {
         "title": "Download Error",
         "message": "There was an issue downloading following cards. Please try again"
       }
