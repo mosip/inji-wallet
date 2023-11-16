@@ -5,7 +5,6 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.WebElement;
 
 public class AboutInjiPage extends BasePage{
-
     @AndroidFindBy(accessibility = "aboutInji")
     private WebElement aboutInjiHeader;
     
@@ -17,8 +16,6 @@ public class AboutInjiPage extends BasePage{
     
     @AndroidFindBy(xpath = "//*[@resource-id=\"iconIcon\"]")
     private WebElement Back;
-  //android.widget.TextView[@resource-id="iconIcon" and @text=""]
-    
     
     public AboutInjiPage(AppiumDriver driver) {
         super(driver);

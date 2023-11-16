@@ -6,10 +6,7 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
 
-
 public class ReceiveCardPage extends BasePage {
-   
-
 	 @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Allow\")")
 	  private WebElement allowButton;
 	 
@@ -19,13 +16,11 @@ public class ReceiveCardPage extends BasePage {
 	 @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Ipakita ang QR code na ito para humiling ng resident card\")")
 	  private WebElement ReceiveCardHederInFilipinoLanguage;
 	 
-	 
 	 @AndroidFindBy(xpath = "//android.view.ViewGroup/descendant::android.view.ViewGroup[last()]")
 	  private WebElement QRCode;
 	 
 	 @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Waiting for connection...\")")
 	  private WebElement watitingForConnection;
-	 
 
     public ReceiveCardPage(AppiumDriver driver) {
         super(driver);
