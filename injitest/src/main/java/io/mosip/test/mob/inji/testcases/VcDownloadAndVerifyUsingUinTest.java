@@ -39,13 +39,16 @@ public class VcDownloadAndVerifyUsingUinTest extends BaseTest {
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(GetOtp(), target);
+        otpVerification.enterOtp(BaseTestCase.GetOtp(), target);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         assertTrue(homePage.isIdTypeDisplayed(), "Verify if id type is displayed");
 
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
-
+        detailedVcViewPage.clickOnQrCodeButton();
+        assertTrue(detailedVcViewPage.isQRCodeDisplayed(), "Verify if QR Code header is displayed");
+        
+        detailedVcViewPage.clickOnCrossIcon();
         assertTrue(detailedVcViewPage.isDetailedVcViewPageLoaded(), "Verify if detailed Vc view page is displayed");
         assertEquals(detailedVcViewPage.getNameInDetailedVcView(), TestDataReader.readData("fullName"), "Verify if full name is displayed");
         assertEquals(detailedVcViewPage.getDateOfBirthInDetailedVcView(), TestDataReader.readData("dateOfBirth"), "Verify if date of birth is displayed");
@@ -87,7 +90,7 @@ public class VcDownloadAndVerifyUsingUinTest extends BaseTest {
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(BaseTestCase.uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(GetOtp(), target);
+        otpVerification.enterOtp(BaseTestCase.GetOtp(), target);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
 
@@ -100,7 +103,7 @@ public class VcDownloadAndVerifyUsingUinTest extends BaseTest {
         retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin2")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(GetOtp(), target);
+        otpVerification.enterOtp(BaseTestCase.GetOtp(), target);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("uin2FullName")), "Verify if second VC is  displayed");
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verifying again if first VC is still exists.");
@@ -167,7 +170,7 @@ public class VcDownloadAndVerifyUsingUinTest extends BaseTest {
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(BaseTestCase.uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(GetOtp(), target);
+        otpVerification.enterOtp(BaseTestCase.GetOtp(), target);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
 
@@ -180,7 +183,7 @@ public class VcDownloadAndVerifyUsingUinTest extends BaseTest {
          retrieveIdPage.setEnterIdTextBox(BaseTestCase.uin).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(GetOtp(), target);
+        otpVerification.enterOtp(BaseTestCase.GetOtp(), target);
 
         assertTrue(homePage.isSecondNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         HistoryPage historyPage = homePage.clickOnHistoryButton();

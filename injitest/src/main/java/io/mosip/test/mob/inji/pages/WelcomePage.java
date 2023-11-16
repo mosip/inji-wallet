@@ -22,7 +22,9 @@ public class WelcomePage extends BasePage {
     @AndroidFindBy(accessibility = "next")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"Next\"`][4]")
     private WebElement nextButton;
-
+    
+    @AndroidFindBy(xpath = "//*[contains(@text,'Back')]")
+    public WebElement ClickBack;
 
     public WelcomePage(AppiumDriver driver) {
         super(driver);
@@ -44,6 +46,10 @@ public class WelcomePage extends BasePage {
 
     public String getWelcomeDescription() {
         return this.getTextFromLocator(welcomeTextDescription);
+    }
+    
+    public void ClickOnBackButton() {
+    	this.clickOnElement(ClickBack);
     }
 
 

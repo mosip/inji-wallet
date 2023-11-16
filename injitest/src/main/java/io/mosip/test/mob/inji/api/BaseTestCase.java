@@ -15,6 +15,7 @@ import org.apache.log4j.PropertyConfigurator;
 import org.json.simple.JSONObject;
 
 import io.mosip.test.mob.inji.driver.TestRunner;
+import io.mosip.test.mob.inji.utils.TestDataReader;
 
 //import org.apache.log4j.Logger;
 
@@ -23,6 +24,7 @@ public class BaseTestCase {
 	public static String environment;
 	public static List<String> languageList = new ArrayList<>();
 	public static String ApplnURI;
+	protected static MockSMTPListener mockSMTPListener = null;
 	public static String ApplnURIForKeyCloak;
 	public static String testLevel;
 	public static Properties props = getproperty(
@@ -63,6 +65,10 @@ public class BaseTestCase {
 			perpetualVid = AdminTestUtil.generateVID(uin, "perpetual");
 			onetimeuseVid = AdminTestUtil.generateVID(uin, "onetimeuse");
 			temporaryVid= AdminTestUtil.generateVID(uin, "temporary");
+			
+			mockSMTPListener = new MockSMTPListener();
+			mockSMTPListener.run();
+			
 		}
 	}
 
@@ -180,4 +186,11 @@ public class BaseTestCase {
 		return kernelCmnLib.readJsonData(filepath, true);
 
 	}
+	
+	  public static String GetOtp() {
+	  	  String otp="";
+	  	  String externalemail = TestDataReader.readData("externalemail");
+	  	  otp = MockSMTPListener.getOtp(externalemail);
+	  	  return otp;
+	    }
 }

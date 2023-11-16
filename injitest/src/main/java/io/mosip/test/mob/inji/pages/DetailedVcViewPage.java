@@ -43,8 +43,18 @@ public class DetailedVcViewPage extends BasePage{
     @AndroidFindBy(accessibility = "profileAuthenticated")
     private WebElement profileAuthenticated;
 
-    @AndroidFindBy(accessibility = "close")
+//    @AndroidFindBy(accessibility = "close")
+//    private WebElement crossIcon;
+//    
+    @AndroidFindBy(xpath = "//*[@resource-id=\"iconIcon\"]")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"\uE5CD\"`][2]")
     private WebElement crossIcon;
+    
+    @AndroidFindBy(xpath = "//android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup[1]/android.view.ViewGroup[1]/android.view.ViewGroup[1]/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup")
+    private WebElement detailedVcViewPageQr;
+    
+    @AndroidFindBy(accessibility = "qrCodeHeader")
+    private WebElement qrCodeHeader;
 
     public DetailedVcViewPage(AppiumDriver driver) {
         super(driver);
@@ -106,5 +116,14 @@ public class DetailedVcViewPage extends BasePage{
     public HomePage clickOnCrossIcon(){
         clickOnElement(crossIcon);
         return new HomePage(driver);
+    }
+    
+    public PleaseConfirmPopupPage clickOnQrCodeButton(){
+        clickOnElement(detailedVcViewPageQr);
+        return new PleaseConfirmPopupPage(driver);
+    }
+    
+    public boolean isQRCodeDisplayed() {
+    	return qrCodeHeader.isDisplayed();
     }
 }

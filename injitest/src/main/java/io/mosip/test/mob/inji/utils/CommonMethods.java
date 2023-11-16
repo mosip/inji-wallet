@@ -27,6 +27,28 @@ public class CommonMethods {
         }
 
     }
+    
+    public static void enableAirplaneModeAndroid() {
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder("cmd.exe", "/c", "adb shell cmd connectivity airplane-mode enable");
+            processBuilder.redirectErrorStream(true);
+            processBuilder.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    
+    public static void disableAirplaneModeAndroid() {
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder("cmd.exe", "/c", "adb shell cmd connectivity airplane-mode disable");
+            processBuilder.redirectErrorStream(true);
+            processBuilder.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     public static void enableAirplaneMode() {
         try {
@@ -38,7 +60,7 @@ public class CommonMethods {
         }
 
     }
-
+    
     public static void disableAirplaneMode() {
         try {
             ProcessBuilder processBuilder = new ProcessBuilder("/bin/bash", "-c", "adb shell cmd connectivity airplane-mode disable");

@@ -12,7 +12,6 @@ public class ConfirmPasscode extends BasePage {
     @AndroidFindBy(xpath = "//*[contains(@text,'Confirm passcode')]")
     private WebElement confirmPasscode;
     
-    
     @AndroidFindBy(xpath = "//*[contains(@text,'Passcode did not match.')]")
     private WebElement invalidPasscode;
 
