@@ -511,12 +511,12 @@
       "sent": "Naipadala na ang card...",
       "sentHint": "Naghihintay para sa receiver na i-save o itapon ang iyong card",
       "sharing": {
-        "title": "Isinasagawa ang pagbabahagi",
+        "title": "Isinasagawa ang pagbabahagi...",
         "timeoutHint": "Naantala ang pagbabahagi, posibleng dahil sa isang isyu sa koneksyon.",
-        "hint": "Mangyaring maghintay habang ibinabahagi namin ang napiling card."
+        "hint": "Mangyaring maghintay habang ibinabahagi namin ang napiling card..."
       },
       "accepted": {
-        "title": "Matagumpay na naibahagi ang ID",
+        "title": "Matagumpay na naibahagi ang ID!",
         "message": "Ang iyong ID ay matagumpay na naibahagi sa",
         "gotohome": "Pumunta sa bahay"
       },
