@@ -175,6 +175,10 @@
         "title": "Pakisuri ang iyong koneksyon at subukang muli",
         "message": "Mangyaring kumonekta sa internet at subukang muli."
       },
+      "biometricsCancelled": {
+        "title": "Gusto mo bang kanselahin ang pag-download?",
+        "message": "Kinakailangan ang biometric confirmation para magpatuloy sa pag-download ng card."
+      },
       "generic": {
         "title": "may nangyaring mali!",
         "message": "Nagkakaproblema kami sa iyong kahilingan. Pakisubukang muli."

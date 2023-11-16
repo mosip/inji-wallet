@@ -80,14 +80,17 @@ export interface Typegen0 {
     services: never;
   };
   eventsCausingActions: {
-    getKeyPairFromStore: 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
-    loadKeyPair: 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
+    getKeyPairFromStore:
+      | 'TRY_AGAIN'
+      | 'done.invoke.issuersMachine.performAuthorization:invocation[0]';
+    loadKeyPair: 'STORE_RESPONSE';
     logDownloaded: 'done.invoke.issuersMachine.verifyingCredential:invocation[0]';
     resetError:
       | 'RESET_ERROR'
       | 'TRY_AGAIN'
       | 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     resetLoadingReason:
+      | 'RESET_ERROR'
       | 'done.invoke.checkInternet'
       | 'done.invoke.issuersMachine.displayIssuers:invocation[0]'
       | 'error.platform.issuersMachine.downloadCredentials:invocation[0]'
@@ -104,7 +107,11 @@ export interface Typegen0 {
       | 'error.platform.issuersMachine.performAuthorization:invocation[0]';
     setIssuers: 'done.invoke.issuersMachine.displayIssuers:invocation[0]';
     setLoadingReasonAsDisplayIssuers: 'TRY_AGAIN';
-    setLoadingReasonAsDownloadingCredentials: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
+    setLoadingReasonAsDownloadingCredentials:
+      | 'STORE_ERROR'
+      | 'STORE_RESPONSE'
+      | 'TRY_AGAIN'
+      | 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
     setLoadingReasonAsSettingUp:
       | 'SELECTED_ISSUER'
       | 'TRY_AGAIN'
@@ -127,6 +134,7 @@ export interface Typegen0 {
   eventsCausingGuards: {
     canSelectIssuerAgain: 'TRY_AGAIN';
     hasKeyPair: 'CHECK_KEY_PAIR';
+    hasUserCancelledBiometric: 'error.platform.issuersMachine.downloadCredentials:invocation[0]';
     isCustomSecureKeystore: 'done.invoke.issuersMachine.generateKeyPair:invocation[0]';
     isInternetConnected: 'done.invoke.checkInternet';
     isOIDCConfigError: 'error.platform.issuersMachine.performAuthorization:invocation[0]';
@@ -150,13 +158,21 @@ export interface Typegen0 {
     | 'displayIssuers'
     | 'done'
     | 'downloadCredentials'
+    | 'downloadCredentials.idle'
+    | 'downloadCredentials.userCancelledBiometric'
     | 'downloadIssuerConfig'
     | 'error'
     | 'generateKeyPair'
     | 'idle'
     | 'performAuthorization'
+    | 'performAuthorization.idle'
+    | 'performAuthorization.userCancelledBiometric'
     | 'selectingIssuer'
     | 'storing'
-    | 'verifyingCredential';
+    | 'verifyingCredential'
+    | {
+        downloadCredentials?: 'idle' | 'userCancelledBiometric';
+        performAuthorization?: 'idle' | 'userCancelledBiometric';
+      };
   tags: never;
 }
