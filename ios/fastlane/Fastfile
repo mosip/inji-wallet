@@ -127,7 +127,7 @@ platform :ios do
     )
   end
 
-  lane :build_ios_app do
+  lane :ios_app_build do
 
     custom_output_directory = "./Inji_app_file"
     sh("mkdir -p '#{custom_output_directory}'")
