@@ -185,7 +185,6 @@ public class CredentialRegistry extends BaseTest {
         credentialRegistryPage.clickOnBackArrow();
         
         AddNewCardPage addNewCardPage = homePage.downloadCard();
-
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
         
@@ -239,7 +238,6 @@ public class CredentialRegistry extends BaseTest {
         credentialRegistryPage.clickOnBackArrow();
         
         AddNewCardPage addNewCardPage = homePage.downloadCard();
-
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
         
@@ -307,7 +305,6 @@ public class CredentialRegistry extends BaseTest {
         credentialRegistryPage.clickOnBackArrow();
         
          homePage.downloadCard();
-
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
          addNewCardPage.clickOnDownloadViaUin();
 

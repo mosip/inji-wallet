@@ -21,8 +21,6 @@ public class CredentialRegistryPage extends BasePage {
 	@AndroidFindBy(xpath = "//android.widget.TextView[@resource-id=\"iconIcon\" and @text=\"󰁍\"]")
     public WebElement BackArrow;
 	
-	
-	
     public CredentialRegistryPage(AppiumDriver driver) {
         super(driver);
     }

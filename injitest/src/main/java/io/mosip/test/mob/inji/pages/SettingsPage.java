@@ -38,7 +38,16 @@ public class SettingsPage extends BasePage {
     
     @AndroidFindBy(xpath = "//*[contains(@text,'Tumanggap ng Card')]")
     public WebElement ClickOnReceiveCardInfilipinoLanguage;
-
+    
+    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"About Inji\")")
+    private WebElement AboutInji;
+    
+    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"عربى\")")
+    private WebElement arabicLanguageButton;
+    
+    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"فتح التطبيق\")")
+    private WebElement chooseLanguageInArabic;
+    
     public SettingsPage(AppiumDriver driver) {
         super(driver);
     }
@@ -65,6 +74,10 @@ public class SettingsPage extends BasePage {
         return this.isElementDisplayed(wikaButton, "Filipino language");
     }
     
+    public boolean verifyArabicLanguage() {
+        return this.isElementDisplayed(chooseLanguageInArabic, "فتح التطبيق");
+    }
+    
     public SettingsPage clickOnInjiTourGuide() {
         clickOnElement(InjiTourGuide);
         return this;
@@ -84,4 +97,14 @@ public class SettingsPage extends BasePage {
         clickOnElement(ClickOnReceiveCardInfilipinoLanguage);
         return new ReceiveCardPage(driver);
     }
+    
+    public AboutInjiPage clickOnAbouInji() {
+        clickOnElement(AboutInji);
+        return new AboutInjiPage(driver);
+    }
+    
+    public void clickOnArabicLanguageButton() {
+        clickOnElement(arabicLanguageButton);
+    }
+    
 }

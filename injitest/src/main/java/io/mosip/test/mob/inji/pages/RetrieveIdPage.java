@@ -37,7 +37,7 @@ public class RetrieveIdPage extends BasePage {
     private WebElement invalidUin;
     
     @AndroidFindBy(xpath = "//*[contains(@text,'AID is not ready yet')]")
-    private WebElement aidIsNotReadyYet;
+    private WebElement aidIsNotReadyYetMessage;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'The input format is incorrect')]")
     private WebElement inputFormatErrorMessage;
@@ -51,7 +51,7 @@ public class RetrieveIdPage extends BasePage {
     }
     
     public boolean isAidIsNotReadyYetErrorDisplayed() {
-        return this.isElementDisplayed(aidIsNotReadyYet, "Retrieve your id page");
+        return this.isElementDisplayed(aidIsNotReadyYetMessage, "Retrieve your id page");
     }
 
     public RetrieveIdPage setEnterIdTextBox(String uinOrVid) {

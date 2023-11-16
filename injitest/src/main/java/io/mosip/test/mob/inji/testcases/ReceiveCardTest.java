@@ -14,7 +14,7 @@ import io.mosip.test.mob.inji.pages.SettingsPage;
 import io.mosip.test.mob.inji.pages.WelcomePage;
 import io.mosip.test.mob.inji.utils.TestDataReader;
 
-public class ReceiveCard extends BaseTest {
+public class ReceiveCardTest extends BaseTest {
 	
 	 @Test
 	    public void VerifyRecivedCard() {
@@ -72,6 +72,5 @@ public class ReceiveCard extends BaseTest {
 	        ReceiveCardPage receiveCardPage =settingsPage.clickOnReceiveCardFilipinoLanguage();
 	        
 	        assertTrue(receiveCardPage.isReceiveCardHederInFilipinoLanguageDisplayed(), "Verify if QR code  header is displayed filipino");
-	        
 	 }
 }

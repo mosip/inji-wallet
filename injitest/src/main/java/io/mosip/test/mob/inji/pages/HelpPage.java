@@ -22,7 +22,7 @@ public class HelpPage extends BasePage {
     @AndroidFindBy(uiAutomator = "new UiScrollable(new UiSelector()).scrollIntoView(text(\"What happens when Android keystore biometric is changed?\"));")
     public WebElement biometricIsChangeTextdHeader;
     
-    @AndroidFindBy(xpath = "//*[contains(@text,''How to add a card?')]")
+    @AndroidFindBy(xpath = "//android.widget.TextView[@text=\"How to add a card?\"]")
     public WebElement helpPageContent;
     
     public HelpPage(AppiumDriver driver) {
@@ -42,6 +42,6 @@ public class HelpPage extends BasePage {
     }
     
     public boolean ishelpPageContentEmpty() {
-    	return helpPageContent.getText().isEmpty();
+    	return helpPageContent.getText().isBlank();
     }
 }

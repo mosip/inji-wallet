@@ -16,7 +16,7 @@ public class HassleFreeAuthenticationPage extends BasePage {
     private WebElement hassleFreeAuthenticationDescription;
     
     @AndroidFindBy(xpath = "//*[contains(@text,'Go Back')]")
-    public WebElement GoBack;
+    public WebElement GoBackButton;
 
     public HassleFreeAuthenticationPage(AppiumDriver driver) {
         super(driver);
@@ -31,7 +31,7 @@ public class HassleFreeAuthenticationPage extends BasePage {
     }
     
     public HassleFreeAuthenticationPage clickOnGoBack() {
-        clickOnElement(GoBack);
+        clickOnElement(GoBackButton);
         return this;
     }
 }
