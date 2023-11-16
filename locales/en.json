@@ -479,7 +479,7 @@
     "scanningGuide": "Hold the phone steady and scan the QR code",
     "errors": {
       "locationDisabled": {
-        "message": "Location services must be enabled to share card",
+        "message": "To continue, let your device turn on location",
         "button": "Enable location services"
       },
       "locationDenied": {

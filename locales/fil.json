@@ -481,7 +481,7 @@
     "scanningGuide": "Panatilihin ang telepono at i-scan ang QR code",
     "errors": {
       "locationDisabled": {
-        "message": "Dapat na nakabukas ang Location services ng iyong mobile para maaaring makapag-scan",
+        "message": "Para magpatuloy, hayaang i-on ng iyong device ang lokasyon",
         "button": "Buksan ang location services"
       },
       "locationDenied": {

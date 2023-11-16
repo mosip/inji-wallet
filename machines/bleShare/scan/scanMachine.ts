@@ -22,13 +22,14 @@ import {subscribe} from '../../../shared/openIdBLE/walletEventHandler';
 import {
   check,
   checkMultiple,
-  PermissionStatus,
   PERMISSIONS,
+  PermissionStatus,
   requestMultiple,
   RESULTS,
 } from 'react-native-permissions';
 import {
   checkLocationPermissionStatus,
+  checkLocationService,
   requestLocationPermission,
 } from '../../../shared/location';
 import {CameraCapturedPicture} from 'expo-camera';
@@ -40,14 +41,14 @@ import {BLEError} from '../types';
 import Storage from '../../../shared/storage';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {
-  getStartEventData,
   getEndEventData,
-  sendStartEvent,
-  sendEndEvent,
-  sendImpressionEvent,
-  getImpressionEventData,
-  sendErrorEvent,
   getErrorEventData,
+  getImpressionEventData,
+  getStartEventData,
+  sendEndEvent,
+  sendErrorEvent,
+  sendImpressionEvent,
+  sendStartEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 
@@ -307,7 +308,7 @@ export const scanMachine =
               always: [
                 {
                   cond: 'uptoAndroid11',
-                  target: '#scan.checkingLocationService',
+                  target: '#scan.checkingLocationState',
                 },
                 {
                   target: '#scan.clearingConnection',
@@ -337,7 +338,7 @@ export const scanMachine =
               always: [
                 {
                   cond: 'uptoAndroid11',
-                  target: '#scan.checkingLocationService',
+                  target: '#scan.checkingLocationState',
                 },
                 {
                   target: '#scan.clearingConnection',
@@ -678,9 +679,22 @@ export const scanMachine =
             },
           },
         },
-        checkingLocationService: {
-          initial: 'checkingPermissionStatus',
+        checkingLocationState: {
+          initial: 'checkLocationService',
           states: {
+            checkLocationService: {
+              invoke: {
+                src: 'checkLocationStatus',
+              },
+              on: {
+                LOCATION_ENABLED: {
+                  target: 'checkingPermissionStatus',
+                },
+                LOCATION_DISABLED: {
+                  target: 'disabled',
+                },
+              },
+            },
             checkingPermissionStatus: {
               invoke: {
                 src: 'checkLocationPermission',
@@ -714,6 +728,13 @@ export const scanMachine =
                 },
                 LOCATION_REQUEST: {
                   actions: 'openAppPermission',
+                },
+              },
+            },
+            disabled: {
+              on: {
+                LOCATION_REQUEST: {
+                  target: 'checkLocationService',
                 },
               },
             },
@@ -1092,6 +1113,12 @@ export const scanMachine =
 
         checkLocationPermission: () => callback => {
           checkLocationPermissionStatus(
+            () => callback(model.events.LOCATION_ENABLED()),
+            () => callback(model.events.LOCATION_DISABLED()),
+          );
+        },
+        checkLocationStatus: () => callback => {
+          return checkLocationService(
             () => callback(model.events.LOCATION_ENABLED()),
             () => callback(model.events.LOCATION_DISABLED()),
           );
