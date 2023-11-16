@@ -155,4 +155,5 @@ export enum ErrorMessage {
   NO_INTERNET = 'noInternetConnection',
   GENERIC = 'generic',
   REQUEST_TIMEDOUT = 'requestTimedOut',
+  BIOMETRIC_CANCELLED = 'biometricCancelled',
 }

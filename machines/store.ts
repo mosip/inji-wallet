@@ -24,6 +24,7 @@ import {
   isHardwareKeystoreExists,
 } from '../shared/cryptoutil/cryptoUtil';
 import {VCMetadata} from '../shared/VCMetadata';
+import {BiometricCancellationError} from '../shared/error/BiometricCancellationError';
 
 export const keyinvalidatedString =
   'Key Invalidated due to biometric enrollment';
@@ -43,6 +44,7 @@ const model = createModel(
       GET: (key: string) => ({key}),
       DECRYPT_ERROR: () => ({}),
       KEY_INVALIDATE_ERROR: () => ({}),
+      BIOMETRIC_CANCELLED: (requester?: string) => ({requester}),
       SET: (key: string, value: unknown) => ({key, value}),
       APPEND: (key: string, value: unknown) => ({key, value}),
       PREPEND: (key: string, value: unknown) => ({key, value}),
@@ -241,6 +243,17 @@ export const storeMachine =
         KEY_INVALIDATE_ERROR: {
           actions: sendParent('KEY_INVALIDATE_ERROR'),
         },
+        BIOMETRIC_CANCELLED: {
+          actions: [
+            send(
+              (_, event) => model.events.BIOMETRIC_CANCELLED(event.requester),
+              {
+                to: (_, event) => event.requester,
+              },
+            ),
+            sendUpdate(),
+          ],
+        },
       },
     },
     {
@@ -403,6 +416,9 @@ export const storeMachine =
               ) {
                 callback(model.events.DECRYPT_ERROR());
                 sendUpdate();
+              } else if (e instanceof BiometricCancellationError) {
+                callback(model.events.BIOMETRIC_CANCELLED(event.requester));
+                sendUpdate();
               } else {
                 console.error(e);
                 callback(model.events.STORE_ERROR(e, event.requester));
@@ -525,6 +541,7 @@ export async function getItem(
       e.message.includes(tamperedErrorMessageString) ||
       e.message.includes(keyinvalidatedString) ||
       e.message === ENOENT ||
+      e instanceof BiometricCancellationError ||
       e.message.includes('Key not found') // this error happens when previous get Item calls failed due to key invalidation and data and keys are deleted
     ) {
       throw e;
