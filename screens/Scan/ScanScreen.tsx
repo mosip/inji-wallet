@@ -2,12 +2,12 @@ import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {MessageOverlay} from '../../components/MessageOverlay';
 import {QrScanner} from '../../components/QrScanner';
-import {Button, Centered, Column, Row, Text} from '../../components/ui';
+import {Button, Centered, Column, Text, Row} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {QrLogin} from '../QrLogin/QrLogin';
 import {useScanScreen} from './ScanScreenController';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
-import {Linking, Platform} from 'react-native';
+import {Linking} from 'react-native';
 import {useNavigation, NavigationProp} from '@react-navigation/native';
 import {MainBottomTabParamList} from '../../routes/main';
 import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
@@ -125,7 +125,7 @@ export const ScanScreen: React.FC = () => {
       return noShareableVcText();
     }
     if (controller.selectIsInvalid) {
-      return displayInvalidQR();
+      return displayInvalidQRpopup();
     }
     if (controller.isNearByDevicesPermissionDenied) {
       return allowNearbyDevicesPermissionComponent();
@@ -163,27 +163,27 @@ export const ScanScreen: React.FC = () => {
     );
   }
 
-  function displayInvalidQR(): React.ReactNode {
+  function displayInvalidQRpopup(): React.ReactNode {
     return (
       !controller.isEmpty && (
         <MessageOverlay
           isVisible={controller.selectIsInvalid}
           title={t('invalidQR')}
           customHeight={'auto'}>
-          <Column>
+          <Row>
             <Button
               fill
-              type="gradient"
+              type="clear"
               title={t('common:cancel')}
               onPress={() => navigation.navigate(BOTTOM_TAB_ROUTES.home)}
+              margin={[0, 8, 0, 0]}
             />
             <Button
               fill
-              type="gradient"
               title={t('common:tryAgain')}
               onPress={controller.DISMISS}
             />
-          </Column>
+          </Row>
         </MessageOverlay>
       )
     );
