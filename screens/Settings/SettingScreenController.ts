@@ -1,7 +1,6 @@
 import {useMachine, useSelector} from '@xstate/react';
 import {useContext, useEffect, useState} from 'react';
 import * as LocalAuthentication from 'expo-local-authentication';
-import {selectBackendInfo} from '../../machines/app';
 import {
   AuthEvents,
   selectBiometrics,
@@ -30,6 +29,7 @@ import {useTranslation} from 'react-i18next';
 import {Platform} from 'react-native';
 import {RequestRouteProps, RootRouteProps} from '../../routes';
 import {REQUEST_ROUTES} from '../../routes/routesConstants';
+import {isIOS} from '../../shared/constants';
 
 export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
   const {appService} = useContext(GlobalContext);
@@ -104,7 +104,6 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
     alertMsg,
     hideAlert,
     appId: useSelector(settingsService, selectAppId),
-    backendInfo: useSelector(appService, selectBackendInfo),
     name: useSelector(settingsService, selectName),
     vcLabel: useSelector(settingsService, selectVcLabel),
     credentialRegistry: useSelector(settingsService, selectCredentialRegistry),
@@ -163,14 +162,10 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
     LOGOUT: () => {
       setIsVisible(false);
       const navigate = () => {
+        props.navigation.navigate('Welcome');
         authService.send(AuthEvents.LOGOUT());
       };
-
-      if (Platform.OS === 'ios') {
-        setTimeout(() => navigate(), 0);
-      } else {
-        navigate();
-      }
+      setTimeout(() => navigate(), 10);
     },
 
     CANCEL: () => {

@@ -1,7 +1,0 @@
-{
-  "header": "Enter your Application ID to get your UIN",
-  "getUIN": "Get UIN/VID",
-  "applicationId": "Application ID",
-  "requestingOTP": "Requesting OTP...",
-  "qstnMarkToolTip": "Application ID is available in the acknowledgement received after enrolment."
-}

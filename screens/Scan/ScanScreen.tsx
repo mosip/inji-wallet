@@ -14,6 +14,7 @@ import {Linking, Platform} from 'react-native';
 import {useNavigation, NavigationProp} from '@react-navigation/native';
 import {MainBottomTabParamList} from '../../routes/main';
 import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
+import {isIOS} from '../../shared/constants';
 
 export const ScanScreen: React.FC = () => {
   type ScanScreenNavigation = NavigationProp<MainBottomTabParamList>;
@@ -47,7 +48,11 @@ export const ScanScreen: React.FC = () => {
 
   function noShareableVcText() {
     return (
-      <Text align="center" color={Theme.Colors.errorMessage} margin="0 10">
+      <Text
+        align="center"
+        style={{paddingTop: 3}}
+        color={Theme.Colors.errorMessage}
+        margin="0 10">
         {t('noShareableVcs')}
       </Text>
     );
@@ -56,9 +61,7 @@ export const ScanScreen: React.FC = () => {
   function bluetoothIsOffText() {
     return (
       <Text align="center" color={Theme.Colors.errorMessage} margin="0 10">
-        {t(
-          Platform.OS === 'ios' ? 'bluetoothStateIos' : 'bluetoothStateAndroid',
-        )}
+        {t(isIOS() ? 'bluetoothStateIos' : 'bluetoothStateAndroid')}
       </Text>
     );
   }

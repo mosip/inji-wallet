@@ -17,7 +17,7 @@ import getAllConfigurations, {
 import Storage from '../shared/storage';
 import ShortUniqueId from 'short-unique-id';
 import {__AppId} from '../shared/GlobalVariables';
-import {isCustomSecureKeystore} from '../shared/cryptoutil/cryptoUtil';
+import {isHardwareKeystoreExists} from '../shared/cryptoutil/cryptoUtil';
 
 const model = createModel(
   {
@@ -93,7 +93,6 @@ export const settingsMachine = model.createMachine(
         },
       },
       idle: {
-        entry: ['injiTourGuide'],
         on: {
           TOGGLE_BIOMETRIC_UNLOCK: {
             actions: ['toggleBiometricUnlock', 'storeContext'],
@@ -113,6 +112,9 @@ export const settingsMachine = model.createMachine(
           },
           CANCEL: {
             actions: ['resetCredentialRegistry'],
+          },
+          INJI_TOUR_GUIDE: {
+            target: 'showInjiTourGuide',
           },
           ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS: {
             actions: [
@@ -146,13 +148,6 @@ export const settingsMachine = model.createMachine(
           },
         },
       },
-      injiTourGuide: {
-        on: {
-          INJI_TOUR_GUIDE: {
-            target: 'showInjiTourGuide',
-          },
-        },
-      },
       showInjiTourGuide: {
         on: {
           BACK: {
@@ -169,8 +164,13 @@ export const settingsMachine = model.createMachine(
       }),
 
       updateDefaults: model.assign({
-        appId: () => {
-          const appId = generateAppId();
+        appId: (_, event) => {
+          const appId =
+            event.response != null &&
+            event.response.encryptedData == null &&
+            event.response.appId != null
+              ? event.response.appId
+              : generateAppId();
           __AppId.setValue(appId);
           return appId;
         },
@@ -251,7 +251,10 @@ export const settingsMachine = model.createMachine(
     },
 
     guards: {
-      hasData: (_, event) => event.response != null,
+      hasData: (_, event) =>
+        event.response != null &&
+        event.response.encryptedData != null &&
+        event.response.appId != null,
       hasPartialData: (_, event) =>
         event.response != null && event.response.appId == null,
     },
@@ -274,7 +277,7 @@ function generateAppId() {
 }
 
 function deviceSupportsHardwareKeystore() {
-  return isIOS() ? true : isCustomSecureKeystore();
+  return isIOS() ? true : isHardwareKeystoreExists;
 }
 
 type State = StateFrom<typeof settingsMachine>;

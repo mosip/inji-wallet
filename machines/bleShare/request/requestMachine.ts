@@ -14,7 +14,7 @@ import {getDeviceNameSync} from 'react-native-device-info';
 import {StoreEvents} from '../../store';
 import {VC} from '../../../types/VC/ExistingMosipVC/vc';
 import {AppServices} from '../../../shared/GlobalContext';
-import {RECEIVED_VCS_STORE_KEY} from '../../../shared/constants';
+import {isAndroid, RECEIVED_VCS_STORE_KEY} from '../../../shared/constants';
 import {ActivityLogEvents, ActivityLogType} from '../../activityLog';
 import {VcEvents} from '../../vc';
 import {subscribe} from '../../../shared/openIdBLE/verifierEventHandler';
@@ -23,6 +23,17 @@ import {VerifierDataEvent} from 'react-native-tuvali/src/types/events';
 import {BLEError} from '../types';
 import Storage from '../../../shared/storage';
 import {VCMetadata} from '../../../shared/VCMetadata';
+import {
+  getEndEventData,
+  getErrorEventData,
+  getImpressionEventData,
+  getStartEventData,
+  sendEndEvent,
+  sendErrorEvent,
+  sendImpressionEvent,
+  sendStartEvent,
+} from '../../../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 // import { verifyPresentation } from '../shared/vcjs/verifyPresentation';
 
 const {verifier, EventTypes, VerificationStatus} = tuvali;
@@ -107,7 +118,7 @@ export const requestMachine =
         },
         BLE_ERROR: {
           target: '.handlingBleError',
-          actions: 'setBleError',
+          actions: ['sendBLEConnectionErrorEvent', 'setBleError'],
         },
         RESET: {
           target: '.checkNearbyDevicesPermission',
@@ -241,7 +252,11 @@ export const requestMachine =
             },
             CONNECTED: {
               target: 'waitingForVc',
-              actions: ['setSenderInfo', 'setReceiverInfo'],
+              actions: [
+                'setSenderInfo',
+                'setReceiverInfo',
+                'sendVCReceivingStartEvent',
+              ],
             },
 
             DISCONNECT: {
@@ -256,6 +271,12 @@ export const requestMachine =
           initial: 'inProgress',
           states: {
             inProgress: {
+              on: {
+                CANCEL: {
+                  target: '#request.cancelling',
+                  actions: ['sendVCReceivingTerminatedEvent'],
+                },
+              },
               after: {
                 SHARING_TIMEOUT: {
                   target: '#request.waitingForVc.timeout',
@@ -268,6 +289,7 @@ export const requestMachine =
               on: {
                 CANCEL: {
                   target: '#request.cancelling',
+                  actions: 'sendVCReceiveFlowTimeoutEndEvent',
                 },
               },
             },
@@ -275,6 +297,7 @@ export const requestMachine =
           on: {
             DISCONNECT: {
               target: 'disconnected',
+              actions: ['sendVCReceivingDisconnectedEvent'],
             },
             VC_RECEIVED: {
               target: 'reviewing.accepting',
@@ -300,7 +323,10 @@ export const requestMachine =
                 },
                 FACE_INVALID: {
                   target: 'invalidIdentity',
-                  actions: 'setReceiveLogTypeUnverified',
+                  actions: [
+                    'setReceiveLogTypeUnverified',
+                    'sendVCReceiveFailedEvent',
+                  ],
                 },
                 CANCEL: {
                   target: 'idle',
@@ -394,6 +420,7 @@ export const requestMachine =
                 'sendVcReceived',
                 'setReceiveLogTypeRegular',
                 'logReceived',
+                'sendVCReceiveSuccessEvent',
               ],
               invoke: {
                 src: 'sendVcResponse',
@@ -408,7 +435,11 @@ export const requestMachine =
               },
             },
             rejected: {
-              entry: ['setReceiveLogTypeDiscarded', 'logReceived'],
+              entry: [
+                'setReceiveLogTypeDiscarded',
+                'logReceived',
+                'sendVCReceiveRejectedEvent',
+              ],
               invoke: {
                 src: 'sendVcResponse',
                 data: {
@@ -452,7 +483,11 @@ export const requestMachine =
             },
             savingFailed: {
               initial: 'idle',
-              entry: ['setReceiveLogTypeDiscarded', 'logReceived'],
+              entry: [
+                'setReceiveLogTypeDiscarded',
+                'logReceived',
+                'sendVCReceiveRejectedEvent',
+              ],
               invoke: {
                 src: 'sendVcResponse',
                 data: {
@@ -672,6 +707,98 @@ export const requestMachine =
             shouldVerifyPresence: false,
           }),
         }),
+
+        sendVCReceivingStartEvent: () => {
+          sendStartEvent(
+            getStartEventData(TelemetryConstants.FlowType.receiverVcShare),
+          );
+          sendImpressionEvent(
+            getImpressionEventData(
+              TelemetryConstants.FlowType.receiverVcShare,
+              TelemetryConstants.Screens.sharingInProgressScreen,
+            ),
+          );
+        },
+
+        sendVCReceiveFlowTimeoutEndEvent: () => {
+          sendEndEvent(
+            getEndEventData(
+              TelemetryConstants.FlowType.receiverVcShare,
+              TelemetryConstants.EndEventStatus.failure,
+              {comment: 'VC sharing timeout'},
+            ),
+          );
+        },
+
+        sendVCReceiveSuccessEvent: () => {
+          sendImpressionEvent(
+            getImpressionEventData(
+              TelemetryConstants.FlowType.receiverVcShare,
+              TelemetryConstants.Screens.vcReceivedSuccessPage,
+            ),
+          );
+          sendEndEvent(
+            getEndEventData(
+              TelemetryConstants.FlowType.receiverVcShare,
+              TelemetryConstants.EndEventStatus.success,
+            ),
+          );
+        },
+
+        sendVCReceiveFailedEvent: () => {
+          sendEndEvent(
+            getEndEventData(
+              TelemetryConstants.FlowType.receiverVcShare,
+              TelemetryConstants.EndEventStatus.failure,
+            ),
+          );
+        },
+
+        sendBLEConnectionErrorEvent: (_, event) => {
+          sendErrorEvent(
+            getErrorEventData(
+              TelemetryConstants.FlowType.receiverVcShare,
+              event.bleError.code,
+              event.bleError.message,
+            ),
+          );
+          sendEndEvent(
+            getEndEventData(
+              TelemetryConstants.FlowType.receiverVcShare,
+              TelemetryConstants.EndEventStatus.failure,
+            ),
+          );
+        },
+
+        sendVCReceiveRejectedEvent: () => {
+          sendEndEvent(
+            getEndEventData(
+              TelemetryConstants.FlowType.receiverVcShare,
+              TelemetryConstants.EndEventStatus.failure,
+              {comment: 'VC Rejected by the verifier'},
+            ),
+          );
+        },
+
+        sendVCReceivingTerminatedEvent: () => {
+          sendEndEvent(
+            getEndEventData(
+              TelemetryConstants.FlowType.receiverVcShare,
+              TelemetryConstants.EndEventStatus.failure,
+              {comment: 'Verifier Disconnected'},
+            ),
+          );
+        },
+
+        sendVCReceivingDisconnectedEvent: () => {
+          sendEndEvent(
+            getEndEventData(
+              TelemetryConstants.FlowType.receiverVcShare,
+              TelemetryConstants.EndEventStatus.failure,
+              {comment: 'VC Sharing cancelled by sender'},
+            ),
+          );
+        },
       },
 
       services: {
@@ -736,7 +863,7 @@ export const requestMachine =
         },
 
         checkNearByDevicesPermission: () => callback => {
-          if (Platform.OS === 'android' && Platform.Version >= 31) {
+          if (isAndroid() && Platform.Version >= 31) {
             const result = checkMultiple([
               PERMISSIONS.ANDROID.BLUETOOTH_ADVERTISE,
               PERMISSIONS.ANDROID.BLUETOOTH_CONNECT,
@@ -763,12 +890,16 @@ export const requestMachine =
         },
 
         monitorConnection: () => callback => {
+          const verifierErrorCodePrefix = 'TVV';
           const subscription = verifier.handleDataEvents(event => {
             if (event.type === EventTypes.onDisconnected) {
               callback({type: 'DISCONNECT'});
             }
 
-            if (event.type === EventTypes.onError) {
+            if (
+              event.type === EventTypes.onError &&
+              event.code.includes(verifierErrorCodePrefix)
+            ) {
               callback({
                 type: 'BLE_ERROR',
                 bleError: {message: event.message, code: event.code},

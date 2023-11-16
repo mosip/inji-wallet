@@ -159,19 +159,26 @@
   },
   "IssuersScreen": {
     "title": "أضف بطاقة جديدة",
-    "header": "يرجى تحديد الطريقة المفضلة من الأسفل لإضافة بطاقة جديدة",
+    "description": "يرجى اختيار جهة الإصدار المفضلة لديك من الخيارات أدناه لإضافة بطاقة جديدة.",
+    "searchByIssuersName": "البحث حسب اسم المصدر",
+    "itemHeading": "التنزيل عبر {{issuer}}",
+    "itemSubHeading": "أدخل رقم الهوية الوطنية الخاص بك لتنزيل بطاقتك.",
     "loaders": {
       "loading": "جار التحميل...",
       "subTitle": {
-        "displayIssuers": "Fetching Issuers",
-        "settingUp": "Setting up",
-        "downloadingCredentials": "Downloading Credentials",
+        "displayIssuers": "جلب جهات الإصدار",
+        "settingUp": "اعداد",
+        "downloadingCredentials": "تنزيل بيانات الاعتماد"
       }
     },
     "errors":{
       "noInternetConnection": {
         "title": "لا يوجد اتصال بالإنترنت",
         "message": "الرجاء التحقق من اتصالك وإعادة المحاولة"
+      },
+      "biometricsCancelled": {
+        "title": "هل تريد إلغاء التنزيل؟",
+        "message": "مطلوب تأكيد البيومترية لمواصلة تنزيل البطاقة."
       },
       "generic": {
         "title": "هناك خطأ ما!",
@@ -266,7 +273,13 @@
     "title": "التحقق من OTP",
     "otpSentMessage": "لقد أرسلنا الرمز المكون من 6 أرقام إلى رقم هاتفك المحمول المسجل!",
     "resendTheCode": "يمكنك إعادة إرسال الرمز بتنسيق ",
-    "resendCode": "أعد إرسال الرمز"
+    "resendCode": "أعد إرسال الرمز",
+    "confirmationDialog": {
+      "title": "هل تريد إلغاء التنزيل؟",
+      "message": "بمجرد الإلغاء، لن يتم تنزيل بطاقتك وستحتاج إلى إعادة بدء التنزيل.",
+      "wait": "لا، سأنتظر",
+      "cancel": "نعم، إلغاء"
+    }
   },
   "MyVcsTab": {
     "bringYourDigitalID": "أحضر هويتك الرقمية",
@@ -356,11 +369,6 @@
     "reEnterPassword": "أعد إدخال رمز المرور الجديد",
     "confirmPasscode": "قم بتأكيد رمز المرور",
     "enterPasscode": "أدخل رمز المرور الخاص"
-  },
-  "AppMetaData": {
-    "header": "حول إنجي",
-    "version": "الإصدار",
-    "useBle": "مدعوم من BLE"
   },
   "QrLogin": {
     "title": "QR تسجيل الدخول",
@@ -470,7 +478,7 @@
     "sharingVc": "مشاركة بطاقة ",
     "errors": {
       "locationDisabled": {
-        "message": "يجب تمكين خدمات الموقع لمشاركة البطاقة",
+        "message": "للمتابعة، اسمح لجهازك بتشغيل الموقع",
         "button": "تمكين خدمات الموقع"
       },
       "locationDenied": {
@@ -500,12 +508,12 @@
       "sent": "تم إرسال بطاقة ...",
       "sentHint": "في انتظار أن يحفظ المستلم بطاقة أو يتجاهلها",
       "sharing": {
-        "title": "جاري المشاركة",
+        "title": "جاري المشاركة...",
         "timeoutHint": "تأخرت المشاركة، ربما بسبب مشكلة في الاتصال.",
-        "hint": "يرجى الانتظار حتى نشارك البطاقة المختارة."
+        "hint": "يرجى الانتظار حتى نشارك البطاقة المختارة..."
       },
       "accepted": {
-        "title": "تمت مشاركة المعرف بنجاح",
+        "title": "تمت مشاركة المعرف بنجاح!",
         "message": "تمت مشاركة هويتك بنجاح مع",
         "gotohome": "اذهب الى المنزل"
       },
@@ -585,6 +593,7 @@
     "cancel": "إلغاء",
     "accept": "يقبل",
     "save": "حفظ",
+    "ok": "نعم",
     "dismiss": "رفض",
     "editLabel": "يحرر {{label}}",
     "tryAgain": "حاول مجددا",

@@ -1,9 +1,9 @@
 import {TextInput} from 'react-native';
 import {
   assign,
+  DoneInvokeEvent,
   ErrorPlatformEvent,
   EventFrom,
-  DoneInvokeEvent,
   sendParent,
   StateFrom,
 } from 'xstate';
@@ -12,6 +12,7 @@ import {BackendResponseError, request} from '../../../shared/request';
 import i18n from '../../../i18n';
 import {AddVcModalMachine} from './AddVcModalMachine';
 import {GET_INDIVIDUAL_ID, IndividualId} from '../../../shared/constants';
+import {API_URLS} from '../../../shared/api';
 
 const model = createModel(
   {
@@ -295,8 +296,8 @@ export const GetVcModalMachine =
       services: {
         requestOtp: async context => {
           return await request(
-            'POST',
-            '/residentmobileapp/req/individualId/otp',
+            API_URLS.reqIndividualOTP.method,
+            API_URLS.reqIndividualOTP.buildURL(),
             {
               id: 'mosip.identity.otp.internal',
               aid: context.id,
@@ -311,8 +312,8 @@ export const GetVcModalMachine =
 
         requestingUinVid: async context => {
           const response = await request(
-            'POST',
-            '/residentmobileapp/aid/get-individual-id',
+            API_URLS.getIndividualId.method,
+            API_URLS.getIndividualId.buildURL(),
             {
               aid: context.id,
               otp: context.otp,

@@ -46,7 +46,7 @@ export interface Typegen0 {
     expandLinkTransResp: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
     forwardToParent: 'DISMISS';
     loadMyVcs: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
-    loadThumbprint: 'CONFIRM';
+    loadThumbprint: 'FACE_VALID';
     resetLinkTransactionId: 'GET';
     resetSelectedVoluntaryClaims: 'GET';
     setClaims: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
@@ -59,11 +59,13 @@ export interface Typegen0 {
     setlinkTransactionResponse: 'done.invoke.QrLogin.linkTransaction:invocation[0]';
   };
   eventsCausingDelays: {};
-  eventsCausingGuards: {};
+  eventsCausingGuards: {
+    isConsentAlreadyCaptured: 'done.invoke.QrLogin.sendingAuthenticate:invocation[0]';
+  };
   eventsCausingServices: {
     linkTransaction: 'GET';
-    sendAuthenticate: never;
-    sendConsent: 'STORE_RESPONSE';
+    sendAuthenticate: 'STORE_RESPONSE';
+    sendConsent: 'CONFIRM';
   };
   matchesStates:
     | 'ShowError'

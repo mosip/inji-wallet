@@ -40,6 +40,10 @@ export function isIOS(): boolean {
   return Platform.OS === 'ios';
 }
 
+export function isAndroid(): boolean {
+  return Platform.OS === 'android';
+}
+
 // Configuration for argon2i hashing algorithm
 export const argon2iConfig: Argon2iConfig = {
   iterations: 5,
@@ -64,5 +68,7 @@ export type IndividualId = {
   id: string;
   idType: VcIdType;
 };
+
 export const NETWORK_REQUEST_FAILED = 'Network request failed';
 export const REQUEST_TIMEOUT = 'request timedout';
+export const BIOMETRIC_CANCELLED = 'User has cancelled biometric';

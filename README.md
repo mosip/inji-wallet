@@ -54,7 +54,9 @@ Create a `.env.local` file using `.env` as your template:
 MIMOTO_HOST=
 ```
 
-And `android/local.properties`.
+And `android/local.properties`:
+
+More info here: [Setup Google Nearby Messages in React](https://github.com/mrousavy/react-native-google-nearby-messages#usage)
 
 ### Android
 

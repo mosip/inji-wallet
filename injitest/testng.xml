@@ -10,21 +10,29 @@
             <class name="io.mosip.test.mob.inji.testcases.VcDownloadAndVerifyUsingUinTest">
                 <methods>
                     <include name="downloadAndVerifyVcUsingUin"/>
+                    <include name="downloadWithEmptyUin"/>
+                    <include name="genrateMultipleVcWithSameUin"/>
+                    <include name="downloadMultipleVcUsingDifferentUin"/>
+                    <include name="verifyInvalidUinErrorMessage"/>
                 </methods>
             </class>
             <class name="io.mosip.test.mob.inji.testcases.VerifyWelcomePagesTest">
                 <methods>
                     <include name="verifyWelcomePagesContent"/>
+                    <include name="verifyWelcomePagesFromInjiTourGuide"/>
                 </methods>
             </class>
             <class name="io.mosip.test.mob.inji.testcases.VcDownloadAndVerifyUsingVidTest">
                 <methods>
                     <include name="downloadAndVerifyVcUsingVid"/>
+                    <include name="downloadTwoVcDeleteUsingVid"/>
+                    <include name="verifyInvalidVidErrorMessage"/>
                 </methods>
             </class>
             <class name="io.mosip.test.mob.inji.testcases.UnlockWithPasscodeTest">
                 <methods>
                     <include name="logoutAndLoginWithPasscode"/>
+                    <include name="loginWithInvalidPasscode"/>
                 </methods>
             </class>
             <class name="io.mosip.test.mob.inji.testcases.VerifyHelpPageTest">
@@ -34,29 +42,61 @@
             </class>
             <class name="io.mosip.test.mob.inji.testcases.DeletingVcTest">
                 <methods>
-                    <include name="deleteVc"/>
+                    <include name="deleteVcAndVerifyInHistory"/>
+                    <include name="cancelDeleteVc"/>
+                    <include name="DownloadingDeletedVc"/>
                 </methods>
             </class>
             <class name="io.mosip.test.mob.inji.testcases.VerifyHistoryTest">
                 <methods>
                     <include name="generateAndVerifyHistory"/>
+                    <include name="verifyActivationFailedRecordInHistory"/>
+                    <include name="verifyActivationFailedRecordInHistoryFromDetailedView"/>
+                    <include name="activateVcAndVerifyInHistory"/>
                 </methods>
             </class>
             <class name="io.mosip.test.mob.inji.testcases.GenerateUinOrVidTest">
                 <methods>
                     <include name="generateUinOrVidUsingAid"/>
+                    <include name="goBackToGenerateUinOrVidUsingAidFromOtpVerificationPage"/>
                 </methods>
             </class>
             <class name="io.mosip.test.mob.inji.testcases.ActivateVcTest">
                 <methods>
                     <include name="activateVc"/>
+                    <include name="noPreDownloadedVCAndNoHistoryInFreshInstallation"/>
+                    <include name="verifyInvalidOtpMessage"/>
+                    <include name="verifyTuvaliVersion"/>
                 </methods>
             </class>
             <class name="io.mosip.test.mob.inji.testcases.PinVcTest">
                 <methods>
                     <include name="pinVc"/>
+                    <include name="VerifyCameraAfterPinVc"/>
+                </methods>
+            </class>
+            <class name="io.mosip.test.mob.inji.testcases.ChangeLanguageTest">
+                <methods>
+                    <include name="changeLanguage"/>
+                    <include name="languageShouldBeInNativeLanguages"/>
+                    <include name="changeLanguage"/>
+                </methods>
+            </class>
+            <class name="io.mosip.test.mob.inji.testcases.ShareVcTest">
+                <methods>
+                    <include name="noCardsAvailableToShare"/>
+                    <include name="verifyReceivedCardTabPresent"/>
+                </methods>
+            </class>
+            <class name="io.mosip.test.mob.inji.testcases.NoNetworkAndroidTest">
+                <methods>
+                    <include name="setupPasscodeAndDownloadCardWithoutInternet"/>
+                    <include name="openCameraOnFlightMode"/>
+                    <include name="activateVcWithoutInternet"/>
+                    <include name="verifyListOfLanguagesInOfflineMode"/>
                 </methods>
             </class>
         </classes>
     </test>
 </suite>
+

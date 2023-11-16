@@ -65,17 +65,19 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
               }}>
               {controller.isPasscodeSet() ? (
                 <Button
-                  testID="skip"
-                  type="plain"
-                  title={t('skip')}
-                  onPress={controller.NEXT}
-                />
-              ) : (
-                <Button
                   testID="back"
                   type="plain"
                   title={t('back')}
                   onPress={controller.BACK}
+                  styles={{height: 150}}
+                />
+              ) : (
+                <Button
+                  testID="skip"
+                  type="plain"
+                  title={t('skip')}
+                  onPress={controller.NEXT}
+                  styles={{height: 150}}
                 />
               )}
             </Column>
@@ -91,11 +93,16 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
             crossAlign="center"
             backgroundColor={Theme.Colors.whiteText}
             width={Dimensions.get('screen').width}>
-            <Text testID="introTitle" weight="semibold" margin="0 0 18 0">
+            <Text
+              testID="introTitle"
+              style={{paddingTop: 3}}
+              weight="semibold"
+              margin="0 0 18 0">
               {item.title}
             </Text>
             <Text
               testID="introText"
+              style={{paddingTop: 7}}
               margin="0 0 150 0"
               size="large"
               color={Theme.Colors.GrayText}>
@@ -115,6 +122,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
           style={{borderRadius: 10, height: 50, marginTop: -10}}>
           <Text
             testID="next"
+            style={{paddingTop: 3}}
             weight="semibold"
             align="center"
             color="#FFFFFF"
@@ -133,11 +141,12 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
           style={{borderRadius: 10, height: 50, marginTop: -10}}>
           <Text
             testID="getStarted"
+            style={{paddingTop: 3}}
             weight="semibold"
             align="center"
             color="#FFFFFF"
             margin="15 0 0 0">
-            {controller.isPasscodeSet() ? t('getStarted') : t('goBack')}
+            {controller.isPasscodeSet() ? t('goBack') : t('getStarted')}
           </Text>
         </LinearGradient>
       </View>
@@ -160,7 +169,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
         dotStyle={{backgroundColor: Theme.Colors.dotColor, marginBottom: 47}}
         renderItem={renderItem}
         onDone={() =>
-          controller.isPasscodeSet() ? controller.NEXT() : controller.BACK()
+          controller.isPasscodeSet() ? controller.BACK() : controller.NEXT()
         }
       />
     </Column>

@@ -17,18 +17,19 @@ import {getDeviceNameSync} from 'react-native-device-info';
 import {VC, VerifiablePresentation} from '../../../types/VC/ExistingMosipVC/vc';
 import {AppServices} from '../../../shared/GlobalContext';
 import {ActivityLogEvents, ActivityLogType} from '../../activityLog';
-import {MY_LOGIN_STORE_KEY} from '../../../shared/constants';
+import {isAndroid, isIOS, MY_LOGIN_STORE_KEY} from '../../../shared/constants';
 import {subscribe} from '../../../shared/openIdBLE/walletEventHandler';
 import {
   check,
   checkMultiple,
-  PermissionStatus,
   PERMISSIONS,
+  PermissionStatus,
   requestMultiple,
   RESULTS,
 } from 'react-native-permissions';
 import {
   checkLocationPermissionStatus,
+  checkLocationService,
   requestLocationPermission,
 } from '../../../shared/location';
 import {CameraCapturedPicture} from 'expo-camera';
@@ -38,14 +39,20 @@ import {StoreEvents} from '../../store';
 import {WalletDataEvent} from 'react-native-tuvali/lib/typescript/types/events';
 import {BLEError} from '../types';
 import Storage from '../../../shared/storage';
-import {logState} from '../../app';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {
-  getStartEventData,
   getEndEventData,
-  sendStartEvent,
+  getErrorEventData,
+  getImpressionEventData,
+  getStartEventData,
   sendEndEvent,
+  sendErrorEvent,
+  sendImpressionEvent,
+  sendStartEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
+
+import {logState} from '../../../shared/commonUtil';
 
 const {wallet, EventTypes, VerificationStatus} = tuvali;
 
@@ -144,7 +151,7 @@ export const scanMachine =
         },
         BLE_ERROR: {
           target: '.handlingBleError',
-          actions: 'setBleError',
+          actions: ['sendBLEConnectionErrorEvent', 'setBleError'],
         },
         RESET: {
           target: '.checkStorage',
@@ -301,7 +308,7 @@ export const scanMachine =
               always: [
                 {
                   cond: 'uptoAndroid11',
-                  target: '#scan.checkingLocationService',
+                  target: '#scan.checkingLocationState',
                 },
                 {
                   target: '#scan.clearingConnection',
@@ -331,7 +338,7 @@ export const scanMachine =
               always: [
                 {
                   cond: 'uptoAndroid11',
-                  target: '#scan.checkingLocationService',
+                  target: '#scan.checkingLocationState',
                 },
                 {
                   target: '#scan.clearingConnection',
@@ -396,12 +403,12 @@ export const scanMachine =
               {
                 target: 'connecting',
                 cond: 'isOpenIdQr',
-                actions: 'setUri',
+                actions: ['sendVcSharingStartEvent', 'setUri'],
               },
               {
                 target: 'showQrLogin',
                 cond: 'isQrLogin',
-                actions: 'setLinkCode',
+                actions: ['sendVcSharingStartEvent', 'setLinkCode'],
               },
               {
                 target: 'invalid',
@@ -434,7 +441,10 @@ export const scanMachine =
           },
           entry: [
             'sendScanData',
-            () => sendStartEvent(getStartEventData('QR login')),
+            () =>
+              sendStartEvent(
+                getStartEventData(TelemetryConstants.FlowType.qrLogin),
+              ),
           ],
         },
         connecting: {
@@ -500,6 +510,7 @@ export const scanMachine =
                 },
                 CANCEL: {
                   target: 'cancelling',
+                  actions: 'sendVCShareFlowCancelEndEvent',
                 },
                 TOGGLE_USER_CONSENT: {
                   actions: 'toggleShouldVerifyPresence',
@@ -518,6 +529,12 @@ export const scanMachine =
               initial: 'inProgress',
               states: {
                 inProgress: {
+                  on: {
+                    CANCEL: {
+                      target: '#scan.reviewing.cancelling',
+                      actions: ['sendVCShareFlowCancelEndEvent'],
+                    },
+                  },
                   after: {
                     SHARING_TIMEOUT: {
                       target: '#scan.reviewing.sendingVc.timeout',
@@ -533,11 +550,17 @@ export const scanMachine =
                     },
                     CANCEL: {
                       target: '#scan.reviewing.cancelling',
-                      actions: 'setPromptHint',
+                      actions: [
+                        'setPromptHint',
+                        'sendVCShareFlowTimeoutEndEvent',
+                      ],
                     },
                     RETRY: {
                       target: '#scan.reviewing.cancelling',
-                      actions: 'setPromptHint',
+                      actions: [
+                        'setPromptHint',
+                        'sendVCShareFlowTimeoutEndEvent',
+                      ],
                     },
                   },
                 },
@@ -570,10 +593,7 @@ export const scanMachine =
               },
             },
             accepted: {
-              entry: [
-                'logShared',
-                () => sendEndEvent(getEndEventData('VC share', 'SUCCESS')),
-              ],
+              entry: ['logShared', 'sendVcShareSuccessEvent'],
               on: {
                 DISMISS: {
                   target: 'navigatingToHome',
@@ -659,9 +679,22 @@ export const scanMachine =
             },
           },
         },
-        checkingLocationService: {
-          initial: 'checkingPermissionStatus',
+        checkingLocationState: {
+          initial: 'checkLocationService',
           states: {
+            checkLocationService: {
+              invoke: {
+                src: 'checkLocationStatus',
+              },
+              on: {
+                LOCATION_ENABLED: {
+                  target: 'checkingPermissionStatus',
+                },
+                LOCATION_DISABLED: {
+                  target: 'disabled',
+                },
+              },
+            },
             checkingPermissionStatus: {
               invoke: {
                 src: 'checkLocationPermission',
@@ -698,6 +731,13 @@ export const scanMachine =
                 },
               },
             },
+            disabled: {
+              on: {
+                LOCATION_REQUEST: {
+                  target: 'checkLocationService',
+                },
+              },
+            },
           },
         },
       },
@@ -721,7 +761,7 @@ export const scanMachine =
             value: context.linkCode,
           }),
         openBluetoothSettings: () => {
-          Platform.OS === 'android'
+          isAndroid()
             ? BluetoothStateManager.openSettings().catch()
             : Linking.openURL('App-Prefs:Bluetooth');
         },
@@ -895,6 +935,69 @@ export const scanMachine =
             to: context => context.serviceRefs.activityLog,
           },
         ),
+
+        sendVcShareSuccessEvent: () => {
+          sendImpressionEvent(
+            getImpressionEventData(
+              TelemetryConstants.FlowType.senderVcShare,
+              TelemetryConstants.Screens.vcShareSuccessPage,
+            ),
+          );
+          sendEndEvent(
+            getEndEventData(
+              TelemetryConstants.FlowType.senderVcShare,
+              TelemetryConstants.EndEventStatus.success,
+            ),
+          );
+        },
+
+        sendBLEConnectionErrorEvent: (context, event) => {
+          sendErrorEvent(
+            getErrorEventData(
+              TelemetryConstants.FlowType.senderVcShare,
+              event.bleError.code,
+              event.bleError.message,
+            ),
+          );
+          sendEndEvent(
+            getEndEventData(
+              TelemetryConstants.FlowType.senderVcShare,
+              TelemetryConstants.EndEventStatus.failure,
+            ),
+          );
+        },
+
+        sendVcSharingStartEvent: () => {
+          sendStartEvent(
+            getStartEventData(TelemetryConstants.FlowType.senderVcShare),
+          );
+          sendImpressionEvent(
+            getImpressionEventData(
+              TelemetryConstants.FlowType.senderVcShare,
+              TelemetryConstants.Screens.scanScreen,
+            ),
+          );
+        },
+
+        sendVCShareFlowCancelEndEvent: () => {
+          sendEndEvent(
+            getEndEventData(
+              TelemetryConstants.FlowType.senderVcShare,
+              TelemetryConstants.EndEventStatus.cancel,
+              {comment: 'User cancelled VC share'},
+            ),
+          );
+        },
+
+        sendVCShareFlowTimeoutEndEvent: () => {
+          sendEndEvent(
+            getEndEventData(
+              TelemetryConstants.FlowType.senderVcShare,
+              TelemetryConstants.EndEventStatus.failure,
+              {comment: 'VC sharing timeout'},
+            ),
+          );
+        },
       },
 
       services: {
@@ -905,7 +1008,7 @@ export const scanMachine =
             // Passing Granted for android since permission status is always granted even if its denied.
             let response: PermissionStatus = RESULTS.GRANTED;
 
-            if (Platform.OS === 'ios') {
+            if (isIOS()) {
               response = await check(PERMISSIONS.IOS.BLUETOOTH_PERIPHERAL);
             }
 
@@ -944,11 +1047,15 @@ export const scanMachine =
         },
 
         monitorConnection: () => callback => {
+          const walletErrorCodePrefix = 'TVW';
           const subscription = wallet.handleDataEvents(event => {
             if (event.type === EventTypes.onDisconnected) {
               callback({type: 'DISCONNECT'});
             }
-            if (event.type === EventTypes.onError) {
+            if (
+              event.type === EventTypes.onError &&
+              event.code.includes(walletErrorCodePrefix)
+            ) {
               callback({
                 type: 'BLE_ERROR',
                 bleError: {message: event.message, code: event.code},
@@ -1010,9 +1117,14 @@ export const scanMachine =
             () => callback(model.events.LOCATION_DISABLED()),
           );
         },
+        checkLocationStatus: () => callback => {
+          return checkLocationService(
+            () => callback(model.events.LOCATION_ENABLED()),
+            () => callback(model.events.LOCATION_DISABLED()),
+          );
+        },
 
         startConnection: context => callback => {
-          sendStartEvent(getStartEventData('VC share'));
           wallet.startConnection(context.openId4VpUri);
           const statusCallback = (event: WalletDataEvent) => {
             if (event.type === EventTypes.onSecureChannelEstablished) {
@@ -1107,9 +1219,9 @@ export const scanMachine =
           }
         },
 
-        uptoAndroid11: () => Platform.OS === 'android' && Platform.Version < 31,
+        uptoAndroid11: () => isAndroid() && Platform.Version < 31,
 
-        isIOS: () => Platform.OS === 'ios',
+        isIOS: () => isIOS(),
 
         isMinimumStorageRequiredForAuditEntryReached: (_context, event) =>
           Boolean(event.data),

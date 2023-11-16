@@ -8,10 +8,16 @@ import {
   getImpressionEventData,
   sendImpressionEvent,
 } from '../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
 
 export const Passcode: React.FC<PasscodeProps> = props => {
   useEffect(() => {
-    sendImpressionEvent(getImpressionEventData('App Login', 'Passcode'));
+    sendImpressionEvent(
+      getImpressionEventData(
+        TelemetryConstants.FlowType.appLogin,
+        TelemetryConstants.Screens.passcode,
+      ),
+    );
   }, []);
 
   return (

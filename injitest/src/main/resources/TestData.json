@@ -1,14 +1,19 @@
 {
-  "uin": "6187360582",
-  "vid": "5037415473849368",
-  "otp": "111111",
+  "externalemail": "Resident_AddIdentity_ValidParam_smoke_Pos@mosip.net",
   "passcode": "111111",
-  "fullName": "santush",
-  "idType": "National card",
+  "invalidOtp":"666666",
+  "fullName": "TEST_FULLNAMEeng",
+  "idType": "National Card",
+  "gender": "MLEeng",
   "status": "Valid",
+  "phoneNumber": "9876543210",
   "generatedOn": "9/5/2023",
+  "dateOfBirth": "01/01/1996",
   "aid": "10001100660000620230714065538",
   "setExcludedGroups":"AVT,PVT",
-  "androidAppPath":"D:/GITINJI/inji/injitest/apps/android/Inji_latest.apk",
-  "androidDevice": "Pixel_6a_API_30"
+  "androidAppPath":"/Users/kamalsingh/TestAutomation/Inji/inji/injitest/apps/android/Inji.apk",
+  "androidDevice": "nightwatch-android-11",
+  "uin": "6920386351",
+  "uin2": "5740943928",
+  "uin2FullName": "fbgfhgfhghd"
 }

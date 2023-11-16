@@ -32,6 +32,14 @@ public class RetrieveIdPage extends BasePage {
     @AndroidFindBy(xpath = "//*[contains(@text,'Get it now')]")
     @iOSXCUITFindBy(accessibility = "Get it now")
     private WebElement getItNowText;
+    
+    @AndroidFindBy(xpath = "//*[contains(@text,'UIN invalid')]")
+    private WebElement invalidUin;
+    
+    
+
+    @AndroidFindBy(xpath = "//*[contains(@text,'The input format is incorrect')]")
+    private WebElement inputFormatErrorMessage;
 
 
     public RetrieveIdPage(AppiumDriver driver) {
@@ -43,18 +51,27 @@ public class RetrieveIdPage extends BasePage {
     }
 
     public RetrieveIdPage setEnterIdTextBox(String uinOrVid) {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         sendKeysToTextBox(enterIdTextBox, uinOrVid, "uin or vid textbox");
         return this;
     }
 
-    public OtpVerification clickOnGenerateCardButton() {
+    public OtpVerificationPage clickOnGenerateCardButton() {
         this.clickOnElement(generateCardButton);
-        return new OtpVerification(driver);
+        return new OtpVerificationPage(driver);
     }
 
     public GenerateUinOrVidPage clickOnGetItNowText() {
         this.clickOnElement(getItNowText);
         return new GenerateUinOrVidPage(driver);
+    }
+    
+    public boolean isInvalidUinMassageLoaded() {
+        return this.isElementDisplayed(invalidUin, "UIN invalid");
     }
 
 
@@ -70,4 +87,9 @@ public class RetrieveIdPage extends BasePage {
         }
         return this;
     }
+
+    public boolean isIncorrectInputFormatErrorMessageDisplayed() {
+        return isElementDisplayed(inputFormatErrorMessage, "The input format is incorrect");
+    }
+
 }

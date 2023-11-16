@@ -8,11 +8,14 @@ import {
 } from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../shared/GlobalContext';
-import {MY_VCS_STORE_KEY, ESIGNET_BASE_URL} from '../shared/constants';
+import {ESIGNET_BASE_URL, MY_VCS_STORE_KEY} from '../shared/constants';
 import {StoreEvents} from './store';
 import {linkTransactionResponse, VC} from '../types/VC/ExistingMosipVC/vc';
 import {request} from '../shared/request';
-import {getJwt, isCustomSecureKeystore} from '../shared/cryptoutil/cryptoUtil';
+import {
+  getJWT,
+  isHardwareKeystoreExists,
+} from '../shared/cryptoutil/cryptoUtil';
 import {
   getBindingCertificateConstant,
   getPrivateKey,
@@ -23,6 +26,9 @@ import {
   getEndEventData,
   sendEndEvent,
 } from '../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
+import {API_URLS} from '../shared/api';
+import getAllConfigurations from '../shared/commonprops/commonProps';
 
 const model = createModel(
   {
@@ -153,7 +159,7 @@ export const qrLoginMachine =
         faceAuth: {
           on: {
             FACE_VALID: {
-              target: 'requestConsent',
+              target: 'loadingThumbprint',
             },
             FACE_INVALID: {
               target: 'invalidIdentity',
@@ -176,10 +182,16 @@ export const qrLoginMachine =
         sendingAuthenticate: {
           invoke: {
             src: 'sendAuthenticate',
-            onDone: {
-              target: 'requestConsent',
-              actions: 'setLinkedTransactionId',
-            },
+            onDone: [
+              {
+                cond: 'isConsentAlreadyCaptured',
+                target: 'success',
+              },
+              {
+                target: 'requestConsent',
+                actions: 'setLinkedTransactionId',
+              },
+            ],
             onError: [
               {
                 actions: 'SetErrorMessage',
@@ -191,7 +203,7 @@ export const qrLoginMachine =
         requestConsent: {
           on: {
             CONFIRM: {
-              target: 'loadingThumbprint',
+              target: 'sendingConsent',
             },
             TOGGLE_CONSENT_CLAIM: {
               actions: 'setConsentClaims',
@@ -208,7 +220,7 @@ export const qrLoginMachine =
           on: {
             STORE_RESPONSE: {
               actions: 'setThumbprint',
-              target: 'sendingConsent',
+              target: 'sendingAuthenticate',
             },
           },
         },
@@ -227,7 +239,15 @@ export const qrLoginMachine =
           },
         },
         success: {
-          entry: [() => sendEndEvent(getEndEventData('QR login', 'SUCCESS'))],
+          entry: [
+            () =>
+              sendEndEvent(
+                getEndEventData(
+                  TelemetryConstants.FlowType.qrLogin,
+                  TelemetryConstants.EndEventStatus.success,
+                ),
+              ),
+          ],
           on: {
             CONFIRM: {
               target: 'done',
@@ -341,14 +361,15 @@ export const qrLoginMachine =
           },
         }),
         setLinkedTransactionId: assign({
-          linkedTransactionId: (context, event) => event.data as string,
+          linkedTransactionId: (context, event) =>
+            event.data.linkedTransactionId as string,
         }),
       },
       services: {
         linkTransaction: async context => {
           const response = await request(
-            'POST',
-            '/v1/esignet/linked-authorization/v2/link-transaction',
+            API_URLS.linkTransaction.method,
+            API_URLS.linkTransaction.buildURL(),
             {
               requestTime: String(new Date().toISOString()),
               request: {
@@ -363,18 +384,31 @@ export const qrLoginMachine =
         sendAuthenticate: async context => {
           let privateKey;
           const individualId = context.selectedVc.vcMetadata.id;
-          if (!isCustomSecureKeystore()) {
+          if (!isHardwareKeystoreExists) {
             privateKey = await getPrivateKey(
               context.selectedVc.walletBindingResponse?.walletBindingId,
             );
           }
 
-          var walletBindingResponse = context.selectedVc.walletBindingResponse;
-          var jwt = await getJwt(privateKey, individualId, context.thumbprint);
+          var config = await getAllConfigurations();
+          const header = {
+            alg: 'RS256',
+            'x5t#S256': context.thumbprint,
+          };
+
+          const payload = {
+            iss: config.issuer,
+            sub: individualId,
+            aud: config.audience,
+            iat: Math.floor(new Date().getTime() / 1000),
+            exp: Math.floor(new Date().getTime() / 1000) + 18000,
+          };
+
+          const jwt = await getJWT(header, payload, individualId, privateKey);
 
           const response = await request(
-            'POST',
-            '/v1/esignet/linked-authorization/authenticate',
+            API_URLS.authenticate.method,
+            API_URLS.authenticate.buildURL(),
             {
               requestTime: String(new Date().toISOString()),
               request: {
@@ -391,62 +425,55 @@ export const qrLoginMachine =
             },
             ESIGNET_BASE_URL,
           );
-          return response.response.linkedTransactionId;
+          return response.response;
         },
 
         sendConsent: async context => {
           let privateKey;
           const individualId = context.selectedVc.vcMetadata.id;
-          if (!isCustomSecureKeystore()) {
+          if (!isHardwareKeystoreExists) {
             privateKey = await getPrivateKey(
               context.selectedVc.walletBindingResponse?.walletBindingId,
             );
           }
 
-          const jwt = await getJwt(
-            privateKey,
-            individualId,
-            context.thumbprint,
-          );
+          const header = {
+            alg: 'RS256',
+            'x5t#S256': context.thumbprint,
+          };
+          const payload = {
+            accepted_claims: context.essentialClaims
+              .concat(context.selectedVoluntaryClaims)
+              .sort(),
+            permitted_authorized_scopes: context.authorizeScopes,
+          };
 
-          const response = await request(
-            'POST',
-            '/v1/esignet/linked-authorization/authenticate',
-            {
-              requestTime: String(new Date().toISOString()),
-              request: {
-                linkedTransactionId: context.linkTransactionId,
-                individualId: individualId,
-                challengeList: [
-                  {
-                    authFactorType: 'WLA',
-                    challenge: jwt,
-                    format: 'jwt',
-                  },
-                ],
-              },
-            },
-            ESIGNET_BASE_URL,
-          );
-          var linkedTrnId = response.response.linkedTransactionId;
+          const JWT = await getJWT(header, payload, individualId, privateKey);
+          const jwtComponents = JWT.split('.');
+          const detachedSignature = jwtComponents[0] + '.' + jwtComponents[2];
 
           const resp = await request(
-            'POST',
-            '/v1/esignet/linked-authorization/consent',
+            API_URLS.sendConsent.method,
+            API_URLS.sendConsent.buildURL(),
             {
               requestTime: String(new Date().toISOString()),
               request: {
-                linkedTransactionId: linkedTrnId,
-                acceptedClaims: context.essentialClaims.concat(
-                  context.selectedVoluntaryClaims,
-                ),
+                linkedTransactionId: context.linkedTransactionId,
+                acceptedClaims: context.essentialClaims
+                  .concat(context.selectedVoluntaryClaims)
+                  .sort(),
                 permittedAuthorizeScopes: context.authorizeScopes,
+                signature: detachedSignature,
               },
             },
             ESIGNET_BASE_URL,
           );
           console.log(resp.response.linkedTransactionId);
         },
+      },
+      guards: {
+        isConsentAlreadyCaptured: (_, event) =>
+          event.data?.consentAction === 'NOCAPTURE',
       },
     },
   );

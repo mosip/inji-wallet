@@ -7,24 +7,27 @@ import org.openqa.selenium.WebElement;
 
 public class MoreOptionsPage extends BasePage {
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'Remove from Wallet')]")
+    @AndroidFindBy(accessibility = "removeFromWallet")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`name == \"listItemTitle\"`][4]")
     private WebElement removeFromWalletButton;
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'More Options')]")
+    @AndroidFindBy(accessibility = "kebabTitle")
     @iOSXCUITFindBy(accessibility = "More Options")
     private WebElement moreOptionsText;
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'Pin Card')]")
+    @AndroidFindBy(accessibility = "pinOrUnPinCard")
     private WebElement pinOrUnPinCardButton;
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'Activation pending for online login!')]")
+    @AndroidFindBy(accessibility = "pendingActivationOrActivated")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Activation pending for online login!\"`]")
     private WebElement activationPending;
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'Activated for online login!')]")
+    @AndroidFindBy(accessibility = "profileAuthenticated")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"\uE8E8 Activated for online login!\"`][4]")
     private WebElement activatedForOnlineLoginButton;
+    
+    @AndroidFindBy(xpath = "//*[@resource-id=\"iconIcon\"]")
+    private WebElement CloseButton;
 
     public MoreOptionsPage(AppiumDriver driver) {
         super(driver);
@@ -50,5 +53,10 @@ public class MoreOptionsPage extends BasePage {
 
     public boolean isVcActivatedForOnlineLogin() {
         return this.isElementDisplayed(activatedForOnlineLoginButton, "Activated for online login text");
+    }
+    
+    public HomePage ClickOnCloseButton() {
+    	clickOnElement(CloseButton);
+    	return new HomePage(driver);
     }
 }

@@ -1,10 +1,9 @@
 import {KeyPair, RSA} from 'react-native-rsa-native';
 import forge from 'node-forge';
-import getAllConfigurations from '../commonprops/commonProps';
-import {DEBUG_MODE_ENABLED, isIOS} from '../constants';
+import {BIOMETRIC_CANCELLED, DEBUG_MODE_ENABLED, isIOS} from '../constants';
 import SecureKeystore from 'react-native-secure-keystore';
-import Storage from '../storage';
 import CryptoJS from 'crypto-js';
+import {BiometricCancellationError} from '../error/BiometricCancellationError';
 
 // 5min
 export const AUTH_TIMEOUT = 5 * 60;
@@ -18,47 +17,29 @@ export function generateKeys(): Promise<KeyPair> {
   return Promise.resolve(RSA.generateKeys(4096));
 }
 
-export async function getJwt(
-  privateKey: string,
+/**
+ * isCustomKeystore is a cached check of existence of a hardware keystore.
+ */
+export const isHardwareKeystoreExists = isCustomSecureKeystore();
+
+export async function getJWT(
+  header: object,
+  payLoad: object,
   individualId: string,
-  thumbprint: string,
+  privateKey: string,
 ) {
   try {
-    var iat = Math.floor(new Date().getTime() / 1000);
-    var exp = Math.floor(new Date().getTime() / 1000) + 18000;
-
-    var config = await getAllConfigurations();
-
-    const header = {
-      alg: 'RS256',
-      //'kid': keyId,
-      'x5t#S256': thumbprint,
-    };
-
-    const payloadJSON = JSON.stringify({
-      iss: config.issuer,
-      sub: individualId,
-      aud: config.audience,
-      iat: iat,
-      exp: exp,
-    });
-
-    var payload = JSON.parse(payloadJSON);
-    const strHeader = JSON.stringify(header);
-    const strPayload = JSON.stringify(payload);
-    const header64 = encodeB64(strHeader);
-    const payload64 = encodeB64(strPayload);
-    const preHash = header64 + '.' + payload64;
-
+    const header64 = encodeB64(JSON.stringify(header));
+    const payLoad64 = encodeB64(JSON.stringify(payLoad));
+    const preHash = header64 + '.' + payLoad64;
     const signature64 = await createSignature(
       privateKey,
       preHash,
       individualId,
     );
-
-    return header64 + '.' + payload64 + '.' + signature64;
+    return header64 + '.' + payLoad64 + '.' + signature64;
   } catch (e) {
-    console.log(e);
+    console.log('Exception Occurred While Constructing JWT ', e);
     throw e;
   }
 }
@@ -70,7 +51,7 @@ export async function createSignature(
 ) {
   let signature64;
 
-  if (!isCustomSecureKeystore()) {
+  if (!isHardwareKeystoreExists) {
     const key = forge.pki.privateKeyFromPem(privateKey);
     const md = forge.md.sha256.create();
     md.update(preHash, 'utf8');
@@ -80,9 +61,12 @@ export async function createSignature(
   } else {
     try {
       signature64 = await SecureKeystore.sign(individualId, preHash);
-    } catch (e) {
-      console.error('Error in creating signature:', e);
-      throw e;
+    } catch (error) {
+      console.error('Error in creating signature:', error);
+      if (error.toString().includes(BIOMETRIC_CANCELLED)) {
+        throw new BiometricCancellationError(error.toString());
+      }
+      throw error;
     }
 
     return replaceCharactersInB64(signature64);
@@ -98,7 +82,13 @@ export function encodeB64(str: string) {
   return replaceCharactersInB64(encodedB64);
 }
 
-export function isCustomSecureKeystore() {
+/**
+ * DO NOT USE DIRECTLY and/or REPEATEDLY in application lifeycle.
+ *
+ * This can make a call to the Android native layer hence taking up more time,
+ *  use the isCustomKeystore constant in the app lifeycle instead.
+ */
+function isCustomSecureKeystore() {
   return !isIOS() ? SecureKeystore.deviceSupportsHardware() : false;
 }
 
@@ -109,32 +99,27 @@ export interface WalletBindingResponse {
   expireDateTime: string;
 }
 
-export async function clear() {
-  try {
-    console.log('clearing entire storage');
-    if (isCustomSecureKeystore()) {
-      SecureKeystore.clearKeys();
-    }
-    await Storage.clear();
-  } catch (e) {
-    console.error('error clear:', e);
-    throw e;
-  }
-}
-
 export async function encryptJson(
   encryptionKey: string,
   data: string,
 ): Promise<string> {
-  // Disable Encryption in debug mode
-  if (DEBUG_MODE_ENABLED && __DEV__) {
-    return JSON.stringify(data);
-  }
+  try {
+    // Disable Encryption in debug mode
+    if (DEBUG_MODE_ENABLED && __DEV__) {
+      return JSON.stringify(data);
+    }
 
-  if (!isCustomSecureKeystore()) {
-    return CryptoJS.AES.encrypt(data, encryptionKey).toString();
+    if (!isHardwareKeystoreExists) {
+      return CryptoJS.AES.encrypt(data, encryptionKey).toString();
+    }
+    return await SecureKeystore.encryptData(ENCRYPTION_ID, data);
+  } catch (error) {
+    console.error('error while encrypting:', error);
+    if (error.toString().includes(BIOMETRIC_CANCELLED)) {
+      throw new BiometricCancellationError(error.toString());
+    }
+    throw error;
   }
-  return await SecureKeystore.encryptData(ENCRYPTION_ID, data);
 }
 
 export async function decryptJson(
@@ -142,19 +127,28 @@ export async function decryptJson(
   encryptedData: string,
 ): Promise<string> {
   try {
+    if (encryptedData === null || encryptedData === undefined) {
+      // to avoid crash in case of null or undefined
+      return '';
+    }
     // Disable Encryption in debug mode
     if (DEBUG_MODE_ENABLED && __DEV__) {
       return JSON.parse(encryptedData);
     }
 
-    if (!isCustomSecureKeystore()) {
+    if (!isHardwareKeystoreExists) {
       return CryptoJS.AES.decrypt(encryptedData, encryptionKey).toString(
         CryptoJS.enc.Utf8,
       );
     }
+
     return await SecureKeystore.decryptData(ENCRYPTION_ID, encryptedData);
   } catch (e) {
     console.error('error decryptJson:', e);
+
+    if (e.toString().includes(BIOMETRIC_CANCELLED)) {
+      throw new BiometricCancellationError(e.toString());
+    }
     throw e;
   }
 }

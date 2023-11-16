@@ -7,7 +7,7 @@ import {log, respond} from 'xstate/lib/actions';
 import {ExistingMosipVCItemEvents} from './VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {MY_VCS_STORE_KEY, RECEIVED_VCS_STORE_KEY} from '../shared/constants';
 import {parseMetadatas, VCMetadata} from '../shared/VCMetadata';
-import {OpenId4VCIProtocol} from '../shared/openId4VCI/Utils';
+import {Protocols} from '../shared/openId4VCI/Utils';
 import {EsignetMosipVCItemEvents} from './VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 import {ActivityLogEvents} from './activityLog';
 import {ActivityLog} from '../components/ActivityLogEvent';
@@ -209,7 +209,10 @@ export const vcMachine =
                 'removeVcFromInProgressDownlods',
                 'setDownloadingFailedVcs',
               ],
-              target: 'downloadLimitExpired',
+              target: '#vc.ready.myVcs.refreshing',
+            },
+            DELETE_VC: {
+              target: 'deletingFailedVcs',
             },
           },
         },
@@ -218,13 +221,6 @@ export const vcMachine =
             REMOVE_TAMPERED_VCS: {
               actions: ['removeTamperedVcs', 'logTamperedVCsremoved'],
               target: '#vc.ready.myVcs.refreshing',
-            },
-          },
-        },
-        downloadLimitExpired: {
-          on: {
-            DELETE_VC: {
-              target: 'deletingFailedVcs',
             },
           },
         },
@@ -251,7 +247,7 @@ export const vcMachine =
 
         getVcItemResponse: respond((context, event) => {
           const vc = context.vcs[event.vcMetadata?.getVcKey()];
-          if (event.protocol === OpenId4VCIProtocol) {
+          if (event.protocol === Protocols.OpenId4VCI) {
             return EsignetMosipVCItemEvents.GET_VC_RESPONSE(vc);
           }
           return ExistingMosipVCItemEvents.GET_VC_RESPONSE(vc);
@@ -283,8 +279,8 @@ export const vcMachine =
 
         setDownloadingFailedVcs: model.assign({
           downloadingFailedVcs: (context, event) => [
-            event.vcMetadata,
             ...context.downloadingFailedVcs,
+            event.vcMetadata,
           ],
         }),
 
@@ -524,10 +520,6 @@ export function selectWalletBindingSuccess(state: State) {
 
 export function selectIsTampered(state: State) {
   return state.matches('tamperedVCs');
-}
-
-export function selectIsDownloadLimitExpired(state: State) {
-  return state.matches('downloadLimitExpired');
 }
 
 export function selectDownloadingFailedVcs(state: State) {

@@ -3,7 +3,7 @@ import {useSelector} from '@xstate/react';
 import {useContext, useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {MessageOverlayProps} from '../../components/MessageOverlay';
-import {MainBottomTabParamList} from '../../routes/main';
+import {MainBottomTabParamList, changeTabBarVisible} from '../../routes/main';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {
   selectIsConnecting,
@@ -110,6 +110,7 @@ export function useScanLayout() {
     statusOverlay = {
       title: t('status.inProgress'),
       progress: true,
+      onButtonPress: CANCEL,
     };
   } else if (isConnectingTimeout) {
     statusOverlay = {
@@ -132,14 +133,7 @@ export function useScanLayout() {
       onButtonPress: CANCEL,
       progress: true,
     };
-  } else if (isSent) {
-    statusOverlay = {
-      message: t('status.sent'),
-      hint: t('status.sentHint'),
-      progress: false,
-      onButtonPress: CANCEL,
-    };
-  } else if (isSendingVc) {
+  } else if (isSendingVc || isSent) {
     statusOverlay = {
       title: t('status.sharing.title'),
       hint: t('status.sharing.hint'),
@@ -208,12 +202,16 @@ export function useScanLayout() {
 
   useEffect(() => {
     if (isDone) {
+      changeTabBarVisible('flex');
       navigation.navigate(BOTTOM_TAB_ROUTES.home);
     } else if (isReviewing) {
+      changeTabBarVisible('none');
       navigation.navigate(SCAN_ROUTES.SendVcScreen);
     } else if (isScanning) {
+      changeTabBarVisible('flex');
       navigation.navigate(SCAN_ROUTES.ScanScreen);
     } else if (isQrLoginDone) {
+      changeTabBarVisible('flex');
       navigation.navigate(BOTTOM_TAB_ROUTES.history);
     }
   }, [isDone, isReviewing, isScanning, isQrLoginDone, isBleError]);

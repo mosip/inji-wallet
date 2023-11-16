@@ -12,20 +12,19 @@ import {
 import {createModel} from 'xstate/lib/model';
 import {generateSecureRandom} from 'react-native-securerandom';
 import {log} from 'xstate/lib/actions';
-import {MY_VCS_STORE_KEY} from '../shared/constants';
+import {MY_VCS_STORE_KEY, SETTINGS_STORE_KEY} from '../shared/constants';
 import SecureKeystore from 'react-native-secure-keystore';
 import {
   AUTH_TIMEOUT,
-  clear,
   decryptJson,
   DUMMY_KEY_FOR_BIOMETRIC_ALIAS,
   ENCRYPTION_ID,
   encryptJson,
   HMAC_ALIAS,
-  isCustomSecureKeystore,
+  isHardwareKeystoreExists,
 } from '../shared/cryptoutil/cryptoUtil';
 import {VCMetadata} from '../shared/VCMetadata';
-import FileStorage, {getFilePath} from '../shared/fileStorage';
+import {BiometricCancellationError} from '../shared/error/BiometricCancellationError';
 
 export const keyinvalidatedString =
   'Key Invalidated due to biometric enrollment';
@@ -45,6 +44,7 @@ const model = createModel(
       GET: (key: string) => ({key}),
       DECRYPT_ERROR: () => ({}),
       KEY_INVALIDATE_ERROR: () => ({}),
+      BIOMETRIC_CANCELLED: (requester?: string) => ({requester}),
       SET: (key: string, value: unknown) => ({key, value}),
       APPEND: (key: string, value: unknown) => ({key, value}),
       PREPEND: (key: string, value: unknown) => ({key, value}),
@@ -82,7 +82,7 @@ export const storeMachine =
         events: {} as EventFrom<typeof model>,
       },
       id: 'store',
-      initial: !isCustomSecureKeystore()
+      initial: !isHardwareKeystoreExists
         ? 'gettingEncryptionKey'
         : 'checkEncryptionKey',
       states: {
@@ -105,7 +105,7 @@ export const storeMachine =
           },
           on: {
             KEY_RECEIVED: {
-              actions: ['setEncryptionKey', 'logKey'],
+              actions: ['setEncryptionKey'],
               target: 'ready',
             },
             ERROR: {
@@ -174,7 +174,7 @@ export const storeMachine =
           },
         },
         ready: {
-          entry: ['notifyParent', 'cacheVCFilesData'],
+          entry: 'notifyParent',
           invoke: {
             src: 'store',
             id: '_store',
@@ -243,6 +243,17 @@ export const storeMachine =
         KEY_INVALIDATE_ERROR: {
           actions: sendParent('KEY_INVALIDATE_ERROR'),
         },
+        BIOMETRIC_CANCELLED: {
+          actions: [
+            send(
+              (_, event) => model.events.BIOMETRIC_CANCELLED(event.requester),
+              {
+                to: (_, event) => event.requester,
+              },
+            ),
+            sendUpdate(),
+          ],
+        },
       },
     },
     {
@@ -260,22 +271,10 @@ export const storeMachine =
         setEncryptionKey: model.assign({
           encryptionKey: (_, event) => event.key,
         }),
-
-        cacheVCFilesData: context => {
-          getItem(MY_VCS_STORE_KEY, [], context.encryptionKey).then(vcList => {
-            if (vcList) {
-              vcList?.forEach((vcMetadataStr: string) => {
-                const vcKey =
-                  VCMetadata.fromVcMetadataString(vcMetadataStr).getVcKey();
-                FileStorage.readAndCacheFile(getFilePath(vcKey));
-              });
-            }
-          });
-        },
       },
 
       services: {
-        clear,
+        clear: () => clear(),
         hasAndroidEncryptionKey: () => async callback => {
           const hasSetCredentials = SecureKeystore.hasAlias(ENCRYPTION_ID);
           if (hasSetCredentials) {
@@ -285,6 +284,8 @@ export const storeMachine =
                 'Dummy',
               );
             } catch (e) {
+              sendErrorEvent(getErrorEventData('ENCRYPTION', '', e));
+
               if (e.message.includes(keyinvalidatedString)) {
                 await clear();
                 callback(model.events.KEY_INVALIDATE_ERROR());
@@ -295,6 +296,13 @@ export const storeMachine =
             }
             callback(model.events.READY());
           } else {
+            sendErrorEvent(
+              getErrorEventData(
+                'ENCRYPTION',
+                '',
+                'Could not get the android Key alias',
+              ),
+            );
             callback(
               model.events.ERROR(
                 new Error('Could not get the android Key alias'),
@@ -401,6 +409,14 @@ export const storeMachine =
               }
               callback(model.events.STORE_RESPONSE(response, event.requester));
             } catch (e) {
+              sendErrorEvent(
+                getErrorEventData(
+                  TelemetryConstants.FlowType.fetchData,
+                  '',
+                  e.message,
+                  {e},
+                ),
+              );
               if (e.message.includes(keyinvalidatedString)) {
                 await clear();
                 callback(model.events.KEY_INVALIDATE_ERROR());
@@ -417,6 +433,9 @@ export const storeMachine =
               ) {
                 callback(model.events.DECRYPT_ERROR());
                 sendUpdate();
+              } else if (e instanceof BiometricCancellationError) {
+                callback(model.events.BIOMETRIC_CANCELLED(event.requester));
+                sendUpdate();
               } else {
                 console.error(e);
                 callback(model.events.STORE_ERROR(e, event.requester));
@@ -430,6 +449,13 @@ export const storeMachine =
             console.log('Credentials successfully loaded for user');
             callback(model.events.KEY_RECEIVED(existingCredentials.password));
           } else {
+            sendErrorEvent(
+              getErrorEventData(
+                TelemetryConstants.FlowType.fetchData,
+                '',
+                'Could not get keychain credentials',
+              ),
+            );
             console.log('Credentials failed to load for user');
             callback(
               model.events.ERROR(
@@ -441,7 +467,7 @@ export const storeMachine =
         generateEncryptionKey: () => async callback => {
           const randomBytes = await generateSecureRandom(32);
           const randomBytesString = binaryToBase64(randomBytes);
-          if (!isCustomSecureKeystore()) {
+          if (!isHardwareKeystoreExists) {
             const hasSetCredentials = await Keychain.setGenericPassword(
               ENCRYPTION_ID,
               randomBytesString,
@@ -450,6 +476,13 @@ export const storeMachine =
             if (hasSetCredentials) {
               callback(model.events.KEY_RECEIVED(randomBytesString));
             } else {
+              sendErrorEvent(
+                getErrorEventData(
+                  TelemetryConstants.FlowType.fetchData,
+                  '',
+                  'Could not generate keychain credentials',
+                ),
+              );
               callback(
                 model.events.ERROR(
                   new Error('Could not generate keychain credentials.'),
@@ -475,7 +508,7 @@ export const storeMachine =
       },
 
       guards: {
-        isCustomSecureKeystore: () => isCustomSecureKeystore(),
+        isCustomSecureKeystore: () => isHardwareKeystoreExists,
       },
     },
   );
@@ -486,8 +519,18 @@ export async function setItem(
   encryptionKey: string,
 ) {
   try {
-    const data = JSON.stringify(value);
-    const encryptedData = await encryptJson(encryptionKey, data);
+    let encryptedData;
+    if (key === SETTINGS_STORE_KEY) {
+      const appId = value.appId;
+      delete value.appId;
+      const settings = {
+        encryptedData: await encryptJson(encryptionKey, JSON.stringify(value)),
+        appId,
+      };
+      encryptedData = JSON.stringify(settings);
+    } else {
+      encryptedData = await encryptJson(encryptionKey, JSON.stringify(value));
+    }
     await Storage.setItem(key, encryptedData, encryptionKey);
   } catch (e) {
     console.error('error setItem:', e);
@@ -503,11 +546,30 @@ export async function getItem(
   try {
     const data = await Storage.getItem(key, encryptionKey);
     if (data != null) {
-      const decryptedData = await decryptJson(encryptionKey, data);
+      let decryptedData;
+      if (key === SETTINGS_STORE_KEY) {
+        let parsedData = JSON.parse(data);
+        if (parsedData.encryptedData) {
+          decryptedData = await decryptJson(
+            encryptionKey,
+            parsedData.encryptedData,
+          );
+          parsedData.encryptedData = JSON.parse(decryptedData);
+        }
+        return parsedData;
+      }
+      decryptedData = await decryptJson(encryptionKey, data);
       return JSON.parse(decryptedData);
     }
     if (data === null && VCMetadata.isVCKey(key)) {
       await removeItem(key, data, encryptionKey);
+      sendErrorEvent(
+        getErrorEventData(
+          TelemetryConstants.FlowType.fetchData,
+          TelemetryConstants.ErrorId.tampered,
+          tamperedErrorMessageString,
+        ),
+      );
       throw new Error(tamperedErrorMessageString);
     } else {
       return defaultValue;
@@ -517,10 +579,25 @@ export async function getItem(
       e.message.includes(tamperedErrorMessageString) ||
       e.message.includes(keyinvalidatedString) ||
       e.message === ENOENT ||
+      e instanceof BiometricCancellationError ||
       e.message.includes('Key not found') // this error happens when previous get Item calls failed due to key invalidation and data and keys are deleted
     ) {
+      sendErrorEvent(
+        getErrorEventData(
+          TelemetryConstants.FlowType.fetchData,
+          TelemetryConstants.ErrorId.tampered,
+          e.message,
+        ),
+      );
       throw e;
     }
+    sendErrorEvent(
+      getErrorEventData(
+        TelemetryConstants.FlowType.fetchData,
+        TelemetryConstants.ErrorId.tampered,
+        `Exception in getting item for ${key}: ${e}`,
+      ),
+    );
     console.error(`Exception in getting item for ${key}: ${e}`);
     return defaultValue;
   }
@@ -595,8 +672,13 @@ export async function removeItem(
       await removeVCMetaData(MY_VCS_STORE_KEY, key, encryptionKey);
     } else if (key === MY_VCS_STORE_KEY) {
       const data = await Storage.getItem(key, encryptionKey);
-      const decryptedData = await decryptJson(encryptionKey, data);
-      const list = JSON.parse(decryptedData) as Object[];
+      let list: Object[] = [];
+
+      if (data !== null) {
+        const decryptedData = await decryptJson(encryptionKey, data);
+        list = JSON.parse(decryptedData) as Object[];
+      }
+
       const newList = list.filter((vcMetadataObject: Object) => {
         return new VCMetadata(vcMetadataObject).getVcKey() !== value;
       });
@@ -617,8 +699,13 @@ export async function removeVCMetaData(
 ) {
   try {
     const data = await Storage.getItem(key, encryptionKey);
-    const decryptedData = await decryptJson(encryptionKey, data);
-    const list = JSON.parse(decryptedData) as Object[];
+    let list: Object[] = [];
+
+    if (data != null) {
+      const decryptedData = await decryptJson(encryptionKey, data);
+      list = JSON.parse(decryptedData) as Object[];
+    }
+
     const newList = list.filter((vcMetadataObject: Object) => {
       return new VCMetadata(vcMetadataObject).getVcKey() !== vcKey;
     });
@@ -630,6 +717,18 @@ export async function removeVCMetaData(
   }
 }
 
+export async function clear() {
+  try {
+    console.log('clearing entire storage');
+    if (isHardwareKeystoreExists) {
+      SecureKeystore.clearKeys();
+    }
+    await Storage.clear();
+  } catch (e) {
+    console.error('error clear:', e);
+    throw e;
+  }
+}
 export async function removeItems(
   key: string,
   values: string[],
@@ -637,8 +736,13 @@ export async function removeItems(
 ) {
   try {
     const data = await Storage.getItem(key, encryptionKey);
-    const decryptedData = await decryptJson(encryptionKey, data);
-    const list = JSON.parse(decryptedData) as Object[];
+    let list: Object[] = [];
+
+    if (data !== null) {
+      const decryptedData = await decryptJson(encryptionKey, data);
+      list = JSON.parse(decryptedData) as Object[];
+    }
+
     const newList = list.filter(
       (vcMetadataObject: Object) =>
         !values.includes(new VCMetadata(vcMetadataObject).getVcKey()),

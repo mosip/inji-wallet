@@ -1,5 +1,5 @@
-import { useSelector } from '@xstate/react';
-import { ActorRefFrom } from 'xstate';
+import {useSelector} from '@xstate/react';
+import {ActorRefFrom} from 'xstate';
 import {
   AddVcModalEvents,
   AddVcModalMachine,
@@ -7,9 +7,10 @@ import {
   selectIsRequestingCredential,
   selectOtpError,
   selectIsAcceptingIdInput,
+  selectIsCancellingDownload,
 } from './AddVcModalMachine';
 
-export function useAddVcModal({ service }: AddVcModalProps) {
+export function useAddVcModal({service}: AddVcModalProps) {
   return {
     isRequestingCredential: useSelector(service, selectIsRequestingCredential),
 
@@ -17,12 +18,17 @@ export function useAddVcModal({ service }: AddVcModalProps) {
 
     isAcceptingUinInput: useSelector(service, selectIsAcceptingIdInput),
     isAcceptingOtpInput: useSelector(service, selectIsAcceptingOtpInput),
+    isDownloadCancelled: useSelector(service, selectIsCancellingDownload),
 
     INPUT_OTP: (otp: string) => service.send(AddVcModalEvents.INPUT_OTP(otp)),
 
     RESEND_OTP: () => service.send(AddVcModalEvents.RESEND_OTP()),
 
     DISMISS: () => service.send(AddVcModalEvents.DISMISS()),
+
+    WAIT: () => service.send(AddVcModalEvents.WAIT()),
+
+    CANCEL: () => service.send(AddVcModalEvents.CANCEL()),
   };
 }
 

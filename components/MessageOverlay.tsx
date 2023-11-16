@@ -29,6 +29,7 @@ export const MessageOverlay: React.FC<MessageOverlayProps> = props => {
         <Column padding="21" crossAlign="center">
           {props.title && (
             <Text
+              style={{paddingTop: 3}}
               align="center"
               weight="bold"
               margin="0 0 10 0"

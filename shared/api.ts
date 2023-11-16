@@ -1,9 +1,11 @@
 import {request} from './request';
-import Storage, {API_CACHED_STORAGE_KEYS} from './storage';
+import {API_CACHED_STORAGE_KEYS} from './storage';
 import {COMMON_PROPS_KEY} from './commonprops/commonProps';
 import {INITIAL_CONFIG} from './InitialConfig';
+import Keychain from 'react-native-keychain';
+import {getItem, setItem} from '../machines/store';
 
-export const API_URLS = {
+export const API_URLS: ApiUrls = {
   issuersList: {
     method: 'GET',
     buildURL: (): `/${string}` => '/residentmobileapp/issuers',
@@ -17,20 +19,74 @@ export const API_URLS = {
     method: 'GET',
     buildURL: (): `/${string}` => '/residentmobileapp/allProperties',
   },
+  getIndividualId: {
+    method: 'POST',
+    buildURL: (): `/${string}` => '/residentmobileapp/aid/get-individual-id',
+  },
+  reqIndividualOTP: {
+    method: 'POST',
+    buildURL: (): `/${string}` => '/residentmobileapp/req/individualId/otp',
+  },
+  walletBinding: {
+    method: 'POST',
+    buildURL: (): `/${string}` => '/residentmobileapp/wallet-binding',
+  },
+  bindingOtp: {
+    method: 'POST',
+    buildURL: (): `/${string}` => '/residentmobileapp/binding-otp',
+  },
+  requestOtp: {
+    method: 'POST',
+    buildURL: (): `/${string}` => '/residentmobileapp/req/otp',
+  },
+  credentialRequest: {
+    method: 'POST',
+    buildURL: (): `/${string}` => '/residentmobileapp/credentialshare/request',
+  },
+  credentialStatus: {
+    method: 'GET',
+    buildURL: (id: string): `/${string}` =>
+      `/residentmobileapp/credentialshare/request/status/${id}`,
+  },
+  credentialDownload: {
+    method: 'POST',
+    buildURL: (): `/${string}` => '/residentmobileapp/credentialshare/download',
+  },
+  authLock: {
+    method: 'POST',
+    buildURL: (): `/${string}` => '/residentmobileapp/req/auth/lock',
+  },
+  authUnLock: {
+    method: 'POST',
+    buildURL: (): `/${string}` => '/residentmobileapp/req/auth/unlock',
+  },
+  requestRevoke: {
+    method: 'PATCH',
+    buildURL: (id: string): `/${string}` => `/residentmobileapp/vid/${id}`,
+  },
+  linkTransaction: {
+    method: 'POST',
+    buildURL: (): `/${string}` =>
+      '/v1/esignet/linked-authorization/v2/link-transaction',
+  },
+  authenticate: {
+    method: 'POST',
+    buildURL: (): `/${string}` =>
+      '/v1/esignet/linked-authorization/v2/authenticate',
+  },
+  sendConsent: {
+    method: 'POST',
+    buildURL: (): `/${string}` => '/v1/esignet/linked-authorization/v2/consent',
+  },
 };
 
 export const API = {
   fetchIssuers: async () => {
-    const defaultIssuer = {
-      id: 'UIN, VID, AID',
-      displayName: 'UIN, VID, AID',
-    };
-
     const response = await request(
       API_URLS.issuersList.method,
       API_URLS.issuersList.buildURL(),
     );
-    return [defaultIssuer, ...(response.response.issuers || [])];
+    return response.response.issuers || [];
   },
 
   fetchIssuerConfig: async (issuerId: string) => {
@@ -105,17 +161,23 @@ async function generateCacheAPIFunctionWithCachePreference(
   fetchCall: (...props: any[]) => any,
   onErrorHardCodedValue?: any,
 ) {
+  const existingCredentials = await Keychain.getGenericPassword();
   try {
-    const response = (await Storage.getItem(cacheKey)) as string;
+    const response = (await getItem(
+      cacheKey,
+      null,
+      existingCredentials?.password,
+    )) as string;
 
     if (response) {
       return JSON.parse(response);
     } else {
       const response = await fetchCall();
-
-      Storage.setItem(cacheKey, JSON.stringify(response)).then(() =>
-        console.log('Cached response for ' + cacheKey),
-      );
+      setItem(
+        cacheKey,
+        JSON.stringify(response),
+        existingCredentials?.password,
+      ).then(() => console.log('Cached response for ' + cacheKey));
 
       return response;
     }
@@ -139,11 +201,14 @@ async function generateCacheAPIFunctionWithAPIPreference(
   fetchCall: (...props: any[]) => any,
   onErrorHardCodedValue?: any,
 ) {
+  const existingCredentials = await Keychain.getGenericPassword();
   try {
     const response = await fetchCall();
-    Storage.setItem(cacheKey, JSON.stringify(response)).then(() =>
-      console.log('Cached response for ' + cacheKey),
-    );
+    setItem(
+      cacheKey,
+      JSON.stringify(response),
+      existingCredentials.password,
+    ).then(() => console.log('Cached response for ' + cacheKey));
     return response;
   } catch (error) {
     console.warn(`Failed to load due to network issue in API preferred api call.
@@ -153,7 +218,11 @@ async function generateCacheAPIFunctionWithAPIPreference(
 
     console.log(error);
 
-    const response = (await Storage.getItem(cacheKey)) as string;
+    const response = (await getItem(
+      cacheKey,
+      null,
+      existingCredentials.password,
+    )) as string;
 
     if (response) {
       return JSON.parse(response);
@@ -166,3 +235,28 @@ async function generateCacheAPIFunctionWithAPIPreference(
     }
   }
 }
+
+type Api_Params = {
+  method: 'GET' | 'POST' | 'PATCH'; // Define the HTTP methods
+  buildURL: (param?: string) => `/${string}`; // Define the buildURL function signature
+};
+
+type ApiUrls = {
+  issuersList: Api_Params;
+  issuerConfig: Api_Params;
+  allProperties: Api_Params;
+  getIndividualId: Api_Params;
+  reqIndividualOTP: Api_Params;
+  walletBinding: Api_Params;
+  bindingOtp: Api_Params;
+  requestOtp: Api_Params;
+  credentialRequest: Api_Params;
+  credentialStatus: Api_Params;
+  credentialDownload: Api_Params;
+  authLock: Api_Params;
+  authUnLock: Api_Params;
+  requestRevoke: Api_Params;
+  linkTransaction: Api_Params;
+  authenticate: Api_Params;
+  sendConsent: Api_Params;
+};

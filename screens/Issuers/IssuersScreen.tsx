@@ -1,29 +1,40 @@
-import React, {useLayoutEffect} from 'react';
+import React, {useLayoutEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {FlatList, Image, Text, View} from 'react-native';
+import {FlatList, Image, TextInput, View} from 'react-native';
 import {Issuer} from '../../components/openId4VCI/Issuer';
 import {Error} from '../../components/ui/Error';
 import {Header} from '../../components/ui/Header';
-import {Column} from '../../components/ui';
+import {Button, Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {RootRouteProps} from '../../routes';
 import {HomeRouteProps} from '../../routes/main';
 import {useIssuerScreenController} from './IssuerScreenController';
 import {Loader} from '../../components/ui/Loader';
 import testIDProps, {removeWhiteSpace} from '../../shared/commonUtil';
-import {ErrorMessage} from '../../shared/openId4VCI/Utils';
+import {
+  ErrorMessage,
+  getDisplayObjectForCurrentLanguage,
+  Protocols,
+} from '../../shared/openId4VCI/Utils';
 import {
   getInteractEventData,
   getStartEventData,
   sendInteractEvent,
   sendStartEvent,
 } from '../../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
+import {Icon} from 'react-native-elements';
+import {MessageOverlay} from '../../components/MessageOverlay';
 
 export const IssuersScreen: React.FC<
   HomeRouteProps | RootRouteProps
 > = props => {
   const controller = useIssuerScreenController(props);
   const {t} = useTranslation('IssuersScreen');
+
+  const issuers = controller.issuers;
+  let [filteredSearchData, setFilteredSearchData] = useState(issuers);
+  const [search, setSearch] = useState('');
 
   useLayoutEffect(() => {
     if (controller.loadingReason || controller.errorMessageType) {
@@ -52,16 +63,20 @@ export const IssuersScreen: React.FC<
     controller.isStoring,
   ]);
 
-  const onPressHandler = (id: string) => {
-    sendStartEvent(getStartEventData('VC Download', {id: id}));
-    sendInteractEvent(
-      getInteractEventData('VC Download', 'CLICK', `IssuerType: ${id}`),
+  const onPressHandler = (id: string, protocol: string) => {
+    sendStartEvent(
+      getStartEventData(TelemetryConstants.FlowType.vcDownload, {id: id}),
     );
-    if (id !== 'UIN, VID, AID') {
-      controller.SELECTED_ISSUER(id);
-    } else {
-      controller.DOWNLOAD_ID();
-    }
+    sendInteractEvent(
+      getInteractEventData(
+        TelemetryConstants.FlowType.vcDownload,
+        TelemetryConstants.InteractEventSubtype.click,
+        `IssuerType: ${id}`,
+      ),
+    );
+    protocol === Protocols.OTP
+      ? controller.DOWNLOAD_ID()
+      : controller.SELECTED_ISSUER(id);
   };
 
   const isGenericError = () => {
@@ -97,6 +112,46 @@ export const IssuersScreen: React.FC<
     );
   };
 
+  const filterIssuers = (searchText: string) => {
+    const filteredData = issuers.filter(item => {
+      if (
+        getDisplayObjectForCurrentLanguage(item.display)
+          ?.name.toLowerCase()
+          .includes(searchText.toLowerCase())
+      ) {
+        return getDisplayObjectForCurrentLanguage(item.display);
+      }
+    });
+    setFilteredSearchData(filteredData);
+    setSearch(searchText);
+  };
+
+  if (controller.isBiometricsCancelled) {
+    return (
+      <MessageOverlay
+        isVisible={controller.isBiometricsCancelled}
+        customHeight={'auto'}
+        title={t('errors.biometricsCancelled.title')}
+        message={t('errors.biometricsCancelled.message')}
+        onBackdropPress={controller.RESET_ERROR}>
+        <Row>
+          <Button
+            fill
+            type="clear"
+            title={t('common:cancel')}
+            onPress={controller.RESET_ERROR}
+            margin={[0, 8, 0, 0]}
+          />
+          <Button
+            fill
+            title={t('common:tryAgain')}
+            onPress={controller.TRY_AGAIN}
+          />
+        </Row>
+      </MessageOverlay>
+    );
+  }
+
   if (controller.errorMessageType) {
     return (
       <Error
@@ -114,7 +169,6 @@ export const IssuersScreen: React.FC<
   if (controller.loadingReason) {
     return (
       <Loader
-        isVisible
         title={t('loaders.loading')}
         subTitle={t(`loaders.subTitle.${controller.loadingReason}`)}
         progress
@@ -125,29 +179,54 @@ export const IssuersScreen: React.FC<
   return (
     <React.Fragment>
       {controller.issuers.length > 0 && (
-        <Column style={Theme.issuersScreenStyles.issuerListOuterContainer}>
+        <Column style={Theme.IssuersScreenStyles.issuerListOuterContainer}>
           <Text
-            {...testIDProps('addCardDescription')}
+            {...testIDProps('issuersScreenDescription')}
             style={{
               ...Theme.TextStyles.regularGrey,
+              paddingTop: 0.5,
               marginVertical: 14,
               marginHorizontal: 9,
             }}>
-            {t('header')}
+            {t('description')}
           </Text>
-          <View style={Theme.issuersScreenStyles.issuersContainer}>
+          <Row margin="3">
+            <Icon
+              testID="searchIssuerIcon"
+              name="search"
+              color={Theme.Colors.GrayIcon}
+              size={27}
+              style={Theme.IssuersScreenStyles.searchIcon}
+            />
+            <TextInput
+              testID="issuerSearchBar"
+              style={Theme.IssuersScreenStyles.issuersSearchBar}
+              placeholder={t('searchByIssuersName')}
+              value={search}
+              onChangeText={searchText => filterIssuers(searchText)}
+              onLayout={() => filterIssuers('')}
+            />
+          </Row>
+
+          <View style={Theme.IssuersScreenStyles.issuersContainer}>
             {controller.issuers.length > 0 && (
               <FlatList
-                data={controller.issuers}
-                scrollEnabled={false}
+                data={filteredSearchData}
                 renderItem={({item}) => (
                   <Issuer
-                    testID={removeWhiteSpace(item.id)}
-                    key={item.id}
-                    id={item.id}
-                    displayName={item.displayName}
-                    logoUrl={item.logoUrl}
-                    onPress={() => onPressHandler(item.id)}
+                    testID={removeWhiteSpace(item.credential_issuer)}
+                    key={item.credential_issuer}
+                    id={item.credential_issuer}
+                    displayName={
+                      getDisplayObjectForCurrentLanguage(item.display)?.name
+                    }
+                    logoUrl={
+                      getDisplayObjectForCurrentLanguage(item.display)?.logo
+                        ?.url
+                    }
+                    onPress={() =>
+                      onPressHandler(item.credential_issuer, item.protocol)
+                    }
                     {...props}
                   />
                 )}
