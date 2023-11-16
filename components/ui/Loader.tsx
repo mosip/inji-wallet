@@ -114,13 +114,12 @@ export const Loader: React.FC<LoaderProps> = props => {
 };
 
 export interface LoaderProps {
-  isVisible: boolean;
   title?: string;
   subTitle?: string;
   label?: string;
   hint?: string;
   onStayInProgress?: () => void;
-  isHintVisible: boolean;
+  isHintVisible?: boolean;
   isBleErrorVisible?: boolean;
   onCancel?: () => void;
   onRetry?: () => void;

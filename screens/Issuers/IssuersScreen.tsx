@@ -1,6 +1,6 @@
 import React, {useLayoutEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {FlatList, Image, View, TextInput, ScrollView} from 'react-native';
+import {FlatList, Image, TextInput, View} from 'react-native';
 import {Issuer} from '../../components/openId4VCI/Issuer';
 import {Error} from '../../components/ui/Error';
 import {Header} from '../../components/ui/Header';
@@ -128,7 +128,6 @@ export const IssuersScreen: React.FC<
   if (controller.loadingReason) {
     return (
       <Loader
-        isVisible
         title={t('loaders.loading')}
         subTitle={t(`loaders.subTitle.${controller.loadingReason}`)}
         progress

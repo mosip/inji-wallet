@@ -20,7 +20,6 @@ export const ScanLayout: React.FC = () => {
   if (controller.statusOverlay != null && !controller.isAccepted) {
     return (
       <Loader
-        isVisible={controller.statusOverlay != null && !controller.isAccepted}
         title={controller.statusOverlay?.title}
         hint={controller.statusOverlay?.hint}
         onCancel={controller.statusOverlay?.onButtonPress}
