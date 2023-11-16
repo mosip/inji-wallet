@@ -3,6 +3,11 @@ import {useTranslation} from 'react-i18next';
 import {PinInput} from './PinInput';
 import {hashData} from '../shared/commonUtil';
 import {argon2iConfig} from '../shared/constants';
+import {
+  getErrorEventData,
+  sendErrorEvent,
+} from '../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
 
 export const MAX_PIN = 6;
 
@@ -32,6 +37,13 @@ export const PasscodeVerify: React.FC<PasscodeVerifyProps> = props => {
         }
       }
     } catch (error) {
+      sendErrorEvent(
+        getErrorEventData(
+          TelemetryConstants.FlowType.appLogin,
+          TelemetryConstants.ErrorId.mismatch,
+          error,
+        ),
+      );
       console.log('error:', error);
     }
   }

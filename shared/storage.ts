@@ -23,6 +23,8 @@ import {
 } from './constants';
 import FileStorage, {getFilePath, vcDirectoryPath} from './fileStorage';
 import {__AppId} from './GlobalVariables';
+import {getErrorEventData, sendErrorEvent} from './telemetry/TelemetryUtils';
+import {TelemetryConstants} from './telemetry/TelemetryConstants';
 
 export const MMKV = new MMKVLoader().initialize();
 
@@ -80,6 +82,13 @@ class Storage {
         const isCorrupted = await this.isCorruptedVC(key, encryptionKey, data);
 
         if (isCorrupted) {
+          sendErrorEvent(
+            getErrorEventData(
+              TelemetryConstants.FlowType.fetchData,
+              TelemetryConstants.ErrorId.tampered,
+              'VC is corrupted and will be deleted from storage',
+            ),
+          );
           console.debug(
             '[Inji-406]: VC is corrupted and will be deleted from storage',
           );
@@ -110,9 +119,23 @@ class Storage {
         );
 
         if (isDownloaded && error.message.includes(ENOENT)) {
+          sendErrorEvent(
+            getErrorEventData(
+              TelemetryConstants.FlowType.fetchData,
+              TelemetryConstants.ErrorId.dataRetrieval,
+              error.message,
+            ),
+          );
           throw new Error(ENOENT);
         }
       }
+      sendErrorEvent(
+        getErrorEventData(
+          TelemetryConstants.FlowType.fetchData,
+          TelemetryConstants.ErrorId.dataRetrieval,
+          'Error Occurred while retriving from Storage',
+        ),
+      );
 
       console.log('Error Occurred while retriving from Storage.', error);
       throw error;
