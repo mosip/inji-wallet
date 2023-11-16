@@ -509,12 +509,12 @@
       "sent": "Card has been sent...",
       "sentHint": "Waiting for receiver to save or discard your Card",
       "sharing": {
-        "title": "Sharing in progress",
-        "hint": "Please wait while we share the chosen card.",
+        "title": "Sharing in progress...",
+        "hint": "Please wait while we share the chosen card...",
         "timeoutHint": "Sharing is delayed, possibly due to a connection issue."
       },
       "accepted": {
-        "title": "ID shared successfully",
+        "title": "ID shared successfully!",
         "message": "Your ID has been successfully shared with",
         "gotohome": "Go to Home"
       },
