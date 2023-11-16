@@ -24,6 +24,7 @@ import io.mosip.test.mob.inji.utils.TestDataReader;
 
 public class CredentialRegistry extends BaseTest {
 
+	@Test
 	public void downloadAndVerifyVcInNewEnv() throws InterruptedException {
 		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
@@ -79,6 +80,7 @@ public class CredentialRegistry extends BaseTest {
         assertTrue(moreOptionsPage.isVcActivatedForOnlineLogin(), "Verify if VC is activated");
 	}
 	
+	@Test
     public void CancelChangeEnvAndVerify() throws InterruptedException {
 		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
@@ -116,6 +118,7 @@ public class CredentialRegistry extends BaseTest {
         assertEquals(credentialRegistryPage.CheckEnvNotChanged(),"https://api.qa-inji.mosip.net");
 	}
 	
+	@Test
 	public void downloadAndVerifyVcInInvalidEnv() throws InterruptedException {
 		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
@@ -150,6 +153,7 @@ public class CredentialRegistry extends BaseTest {
         assertTrue(homePage.isNoInternetConnectionDisplayed(), "Verify if no internet connection is displayed");
 	}
 	
+	@Test
 	public void GenerateUinOrVidInNewEnv() throws InterruptedException {
 		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
@@ -248,6 +252,7 @@ public class CredentialRegistry extends BaseTest {
         assertTrue(retrieveIdPage.isAidIsNotReadyYetErrorDisplayed(), "Verify if aid is not ready displayed");
 	}
 	
+	@Test
 	public void downloadAndVerifyVcInTwoEnv() throws InterruptedException {
 		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
@@ -316,6 +321,7 @@ public class CredentialRegistry extends BaseTest {
         assertTrue(homePage.isSecondNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
 	}
 	
+	@Test
 	public void downloadVcAndActivateItInOtherEnv() throws InterruptedException {
 		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
