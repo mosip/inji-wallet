@@ -102,9 +102,6 @@ android {
 
     namespace 'io.mosip.residentapp'
 
-
-    namespace 'io.mosip.residentapp'
-
     defaultConfig {
         applicationId 'io.mosip.residentapp'
         minSdkVersion rootProject.ext.minSdkVersion
