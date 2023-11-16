@@ -114,7 +114,7 @@ export const Loader: React.FC<LoaderProps> = props => {
 };
 
 export interface LoaderProps {
-  title?: string;
+  title: string;
   subTitle?: string;
   label?: string;
   hint?: string;
