@@ -308,7 +308,7 @@ export const scanMachine =
               always: [
                 {
                   cond: 'uptoAndroid11',
-                  target: '#scan.checkingLocationService',
+                  target: '#scan.checkingLocationState',
                 },
                 {
                   target: '#scan.clearingConnection',
@@ -338,7 +338,7 @@ export const scanMachine =
               always: [
                 {
                   cond: 'uptoAndroid11',
-                  target: '#scan.checkingLocationService',
+                  target: '#scan.checkingLocationState',
                 },
                 {
                   target: '#scan.clearingConnection',
@@ -679,7 +679,7 @@ export const scanMachine =
             },
           },
         },
-        checkingLocationService: {
+        checkingLocationState: {
           initial: 'checkLocationService',
           states: {
             checkLocationService: {
