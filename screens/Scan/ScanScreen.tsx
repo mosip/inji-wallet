@@ -170,17 +170,16 @@ export const ScanScreen: React.FC = () => {
           isVisible={controller.selectIsInvalid}
           title={t('invalidQR')}
           customHeight={'auto'}>
-          <Row>
+          <Row align="space-between" margin={[15, 0, 0, 0]}>
             <Button
-              fill
-              type="clear"
               title={t('common:cancel')}
+              type="clear"
+              styles={{maxWidth: 100, marginRight: 8}}
               onPress={() => navigation.navigate(BOTTOM_TAB_ROUTES.home)}
-              margin={[0, 8, 0, 0]}
             />
             <Button
-              fill
               title={t('common:tryAgain')}
+              styles={{maxWidth: 100, marginLeft: 8}}
               onPress={controller.DISMISS}
             />
           </Row>
