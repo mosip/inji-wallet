@@ -18,7 +18,6 @@ import {
   useOtpVerificationModal,
 } from './OtpVerificationModalController';
 
-
 export const OtpVerificationModal: React.FC<
   OtpVerificationModalProps
 > = props => {
