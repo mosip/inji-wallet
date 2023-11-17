@@ -14,7 +14,7 @@ public class AboutInjiPage extends BasePage{
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Copied\")")
     private WebElement Copied;
     
-    @AndroidFindBy(xpath = "//*[@resource-id=\"iconIcon\"]")
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"iconIcon\")")
     private WebElement Back;
     
     public AboutInjiPage(AppiumDriver driver) {
@@ -29,17 +29,17 @@ public class AboutInjiPage extends BasePage{
         return this.isElementDisplayed(Copied, "Copied");
     }
     
-    public boolean isAppidIsCopy() {
+    public boolean isCopyTextDisplayed() {
         return this.isElementDisplayed(Copy, "Copy");
     }
 
     public AboutInjiPage clickOnCopy(){
         clickOnElement(Copy);
-        return new AboutInjiPage(driver);
+        return this;
     }
     
     public AboutInjiPage clickOnBack(){
         clickOnElement(Copy);
-        return new AboutInjiPage(driver);
+        return this;
     }
 }

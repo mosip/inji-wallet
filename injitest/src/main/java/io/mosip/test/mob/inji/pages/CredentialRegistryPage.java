@@ -5,20 +5,20 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.WebElement;
 
 public class CredentialRegistryPage extends BasePage {
-
-	@AndroidFindBy(xpath = "//android.widget.TextView[@text=\"Edit Credential Registry\"]")
+	
+	@AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Edit Credential Registry\")")
     public WebElement CredentialRegistryTextBoxHeader;
 	
-	@AndroidFindBy(xpath = "(//android.widget.EditText[@resource-id=\"RNE__Input__text-input\"])[1]")
+	@AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"RNE__Input__text-input\")")
 	public WebElement CredentialRegistryTextBox;
 	
-	@AndroidFindBy(xpath = "//*[contains(@text,'Save')]")
+	@AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Save\")")
     public WebElement SaveButton;
 	
-	@AndroidFindBy(xpath = "//*[contains(@text,'Cancel')]")
+	@AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Cancel\")")
     public WebElement CancelButton;
 	
-	@AndroidFindBy(xpath = "//android.widget.TextView[@resource-id=\"iconIcon\" and @text=\"󰁍\"]")
+	@AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"iconIcon\")")
     public WebElement BackArrow;
 	
     public CredentialRegistryPage(AppiumDriver driver) {
@@ -30,24 +30,23 @@ public class CredentialRegistryPage extends BasePage {
     }
     
     public CredentialRegistryPage setEnterIdTextBox(String env) {
-    	CredentialRegistryTextBox.clear();
-        sendKeysToTextBox(CredentialRegistryTextBox, env, "Credential Registry env");
+    	clearTextBoxAndSendKeys(CredentialRegistryTextBox, env, "Credential Registry env");
         return this;
     }
     
     public CredentialRegistryPage clickOnSaveButton() {
-        this.clickOnElement(SaveButton);
-        return new CredentialRegistryPage(driver);
+        clickOnElement(SaveButton);
+        return this;
     }
     
     public CredentialRegistryPage clickOnCancelButton() {
-        this.clickOnElement(CancelButton);
-        return new CredentialRegistryPage(driver);
+        clickOnElement(CancelButton);
+        return this;
     }
     
     public CredentialRegistryPage clickOnBackArrow() {
-        this.clickOnElement(BackArrow);
-        return new CredentialRegistryPage(driver);
+        clickOnElement(BackArrow);
+        return this;
     }
     
     public String CheckEnvNotChanged() {

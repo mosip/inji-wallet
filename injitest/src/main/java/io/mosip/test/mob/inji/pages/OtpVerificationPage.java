@@ -22,7 +22,7 @@ public class OtpVerificationPage extends BasePage {
     private WebElement cancelButton;
     
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"VID not available in database\")")
-	  private WebElement VidNotAvailableMessage;
+	  private WebElement vidNotAvailableMessage;
 
     @AndroidFindBy(accessibility = "close")
     private WebElement crossIcon;
@@ -50,7 +50,7 @@ public class OtpVerificationPage extends BasePage {
     }
     
     public boolean VidNotAvailableDisplayed() {
-        return this.isElementDisplayed(VidNotAvailableMessage, "VID not available in database");
+        return this.isElementDisplayed(vidNotAvailableMessage, "VID not available in database");
     }
 
     public boolean isCancelButtonDisplayed() {

@@ -40,7 +40,7 @@ public class ReceiveCardTest extends BaseTest {
 	        
 	        ReceiveCardPage receiveCardPage = settingsPage.clickOnReceiveCard();
 	        assertTrue(receiveCardPage.isReceiveCardHederDisplayed(), "Verify if QR code  header is displayed");
-	        assertTrue(receiveCardPage.isWaitingForconnectionDisplayed(), "Verify if waiting for connection displayed");
+	        assertTrue(receiveCardPage.isWaitingForConnectionDisplayed(), "Verify if waiting for connection displayed");
 	 }
 	 
 	 @Test

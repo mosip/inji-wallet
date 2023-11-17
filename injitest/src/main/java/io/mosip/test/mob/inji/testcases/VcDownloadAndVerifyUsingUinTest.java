@@ -48,7 +48,7 @@ public class VcDownloadAndVerifyUsingUinTest extends BaseTest {
         detailedVcViewPage.clickOnQrCodeButton();
         assertTrue(detailedVcViewPage.isQRCodeDisplayed(), "Verify if QR Code header is displayed");
         
-        detailedVcViewPage.clickOnCrossIcon();
+        detailedVcViewPage.clickOnQrCrossIcon();
         assertTrue(detailedVcViewPage.isDetailedVcViewPageLoaded(), "Verify if detailed Vc view page is displayed");
         assertEquals(detailedVcViewPage.getNameInDetailedVcView(), TestDataReader.readData("fullName"), "Verify if full name is displayed");
         assertEquals(detailedVcViewPage.getDateOfBirthInDetailedVcView(), TestDataReader.readData("dateOfBirth"), "Verify if date of birth is displayed");

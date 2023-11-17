@@ -31,13 +31,13 @@ public class SettingsPage extends BasePage {
     public WebElement InjiTourGuide;
     
     @AndroidFindBy(xpath = "//*[contains(@text,'Credential Registry')]")
-    public WebElement ClickOnCredentialRegistry;
+    public WebElement clickOnCredentialRegistry;
     
     @AndroidFindBy(xpath = "//*[contains(@text,'Receive Card')]")
-    public WebElement ClickOnReceiveCard;
+    public WebElement clickOnReceiveCard;
     
     @AndroidFindBy(xpath = "//*[contains(@text,'Tumanggap ng Card')]")
-    public WebElement ClickOnReceiveCardInfilipinoLanguage;
+    public WebElement clickOnReceiveCardInfilipinoLanguage;
     
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"About Inji\")")
     private WebElement AboutInji;
@@ -84,17 +84,17 @@ public class SettingsPage extends BasePage {
     }
     
     public CredentialRegistryPage clickOnCredentialRegistry() {
-        clickOnElement(ClickOnCredentialRegistry);
+        clickOnElement(clickOnCredentialRegistry);
         return new CredentialRegistryPage(driver);
     }
     
     public ReceiveCardPage clickOnReceiveCard() {
-        clickOnElement(ClickOnReceiveCard);
+        clickOnElement(clickOnReceiveCard);
         return new ReceiveCardPage(driver);
     }
     
     public ReceiveCardPage clickOnReceiveCardFilipinoLanguage() {
-        clickOnElement(ClickOnReceiveCardInfilipinoLanguage);
+        clickOnElement(clickOnReceiveCardInfilipinoLanguage);
         return new ReceiveCardPage(driver);
     }
     

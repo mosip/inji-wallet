@@ -1,6 +1,5 @@
 package io.mosip.test.mob.inji.testcases;
 
-import io.mosip.test.mob.inji.api.BaseTestCase;
 import io.mosip.test.mob.inji.pages.*;
 import io.mosip.test.mob.inji.utils.TestDataReader;
 import org.testng.annotations.Test;
@@ -39,7 +38,7 @@ public class AboutInjiTest extends BaseTest {
         assertTrue(aboutInjiPage.isAppidIsCopied(),"verify if app id is copied");
         
         aboutInjiPage.clickOnBack();
-        assertTrue(aboutInjiPage.isAppidIsCopy(),"verify if app id is copy");
+        assertTrue(aboutInjiPage.isCopyTextDisplayed(),"verify if app id is copy");
 
     }
 

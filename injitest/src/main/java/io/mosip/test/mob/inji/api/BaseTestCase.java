@@ -53,14 +53,10 @@ public class BaseTestCase {
 
 	public static void main( String[] args ) {
 
-
-
 	}
 
 	public static void intiateUINGenration() {
-
 		uin = AdminTestUtil.generateUIN();
-
 		if (uin != null) {
 			perpetualVid = AdminTestUtil.generateVID(uin, "perpetual");
 			onetimeuseVid = AdminTestUtil.generateVID(uin, "onetimeuse");
@@ -68,7 +64,6 @@ public class BaseTestCase {
 			
 			mockSMTPListener = new MockSMTPListener();
 			mockSMTPListener.run();
-			
 		}
 	}
 
@@ -86,7 +81,6 @@ public class BaseTestCase {
 
 	public static List<String> getLanguageList() {
 		logger.info("We have created a Config Manager. Beginning to read properties!");
-
 		environment = ConfigManager.getiam_apienvuser();
 		logger.info("Environemnt is  ==== :" + environment);
 		ApplnURI = ConfigManager.getiam_apiinternalendpoint();

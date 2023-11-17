@@ -11,13 +11,13 @@ public class ReceiveCardPage extends BasePage {
 	  private WebElement allowButton;
 	 
 	 @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Display this QR code to request resident Card\")")
-	  private WebElement ReceiveCardHeder;
+	  private WebElement receiveCardHeder;
 	 
 	 @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Ipakita ang QR code na ito para humiling ng resident card\")")
-	  private WebElement ReceiveCardHederInFilipinoLanguage;
+	  private WebElement receiveCardHederInFilipinoLanguage;
 	 
 	 @AndroidFindBy(xpath = "//android.view.ViewGroup/descendant::android.view.ViewGroup[last()]")
-	  private WebElement QRCode;
+	  private WebElement qrCode;
 	 
 	 @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Waiting for connection...\")")
 	  private WebElement watitingForConnection;
@@ -32,19 +32,19 @@ public class ReceiveCardPage extends BasePage {
     }
     
     public boolean isReceiveCardHederDisplayed() {
-        return this.isElementDisplayed(ReceiveCardHeder, "Display this QR code to request resident Card");
+        return this.isElementDisplayed(receiveCardHeder, "Display this QR code to request resident Card");
     }
     
     public boolean isReceiveCardHederInFilipinoLanguageDisplayed() {
-        return this.isElementDisplayed(ReceiveCardHederInFilipinoLanguage, "Ipakita ang QR code na ito para humiling ng resident card");
+        return this.isElementDisplayed(receiveCardHederInFilipinoLanguage, "Ipakita ang QR code na ito para humiling ng resident card");
     }
     
-    public boolean isWaitingForconnectionDisplayed() {
+    public boolean isWaitingForConnectionDisplayed() {
         return this.isElementDisplayed(watitingForConnection, "Waiting for connection...");
     }
     
     public boolean isQrCodeEnabled() {
-        return this.isElementEnabled(QRCode);
+        return this.isElementEnabled(qrCode);
     }
 
 }

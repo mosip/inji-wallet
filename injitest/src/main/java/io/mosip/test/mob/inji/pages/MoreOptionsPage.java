@@ -26,10 +26,10 @@ public class MoreOptionsPage extends BasePage {
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"\uE8E8 Activated for online login!\"`][4]")
     private WebElement activatedForOnlineLoginButton;
     
-    @AndroidFindBy(xpath = "//*[@resource-id=\"iconIcon\"]")
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"iconIcon\")")
     private WebElement CloseButton;
     
-    @AndroidFindBy(xpath = "//*[contains(@text,'Something is wrong. Please try again later!')]")
+    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Something is wrong. Please try again later!\")")
     public WebElement SomthingIsWrongPopup;
 
     public MoreOptionsPage(AppiumDriver driver) {

@@ -43,12 +43,12 @@ public class DetailedVcViewPage extends BasePage{
     @AndroidFindBy(accessibility = "profileAuthenticated")
     private WebElement profileAuthenticated;
 
-//    @AndroidFindBy(accessibility = "close")
-//    private WebElement crossIcon;
-//    
-    @AndroidFindBy(xpath = "//*[@resource-id=\"iconIcon\"]")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"\uE5CD\"`][2]")
+    @AndroidFindBy(accessibility = "close")
     private WebElement crossIcon;
+    
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"iconIcon\")")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"\uE5CD\"`][2]")
+    private WebElement qrCloseIcon;
     
     @AndroidFindBy(xpath = "//android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup[1]/android.view.ViewGroup[1]/android.view.ViewGroup[1]/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup")
     private WebElement detailedVcViewPageQr;
@@ -115,6 +115,11 @@ public class DetailedVcViewPage extends BasePage{
 
     public HomePage clickOnCrossIcon(){
         clickOnElement(crossIcon);
+        return new HomePage(driver);
+    }
+    
+    public HomePage clickOnQrCrossIcon(){
+        clickOnElement(qrCloseIcon);
         return new HomePage(driver);
     }
     

@@ -4,10 +4,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-
-import com.google.common.collect.ImmutableMap;
 
 public class HelpPage extends BasePage {
 
@@ -15,14 +12,14 @@ public class HelpPage extends BasePage {
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Help\"`]")
     private WebElement helpText;
 
-    @AndroidFindBy(xpath = "//*[@resource-id=\"iconIcon\"]")
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"iconIcon\")")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"\uE5CD\"`][2]")
     private WebElement crossIcon;
     
     @AndroidFindBy(uiAutomator = "new UiScrollable(new UiSelector()).scrollIntoView(text(\"What happens when Android keystore biometric is changed?\"));")
     public WebElement biometricIsChangeTextdHeader;
     
-    @AndroidFindBy(xpath = "//android.widget.TextView[@text=\"How to add a card?\"]")
+    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"How to add a card?\")")
     public WebElement helpPageContent;
     
     public HelpPage(AppiumDriver driver) {
