@@ -27,6 +27,17 @@ on:
         required: true
         default: 'https://api.sandbox.mosip.net'
         type: string
+      injiFlavor:
+        description: 'Select Inji flavor'
+        required: true
+        default: 'Inji'
+        type: choice
+        options:
+          - residentapp
+          - inji
+          - collab
+          - synergy
+          - mec
       internal-testers:
         description: 'Internal Testers Group'
         required: true
@@ -73,6 +84,7 @@ jobs:
       BUILD_DESCRIPTION: ${{ inputs.buildDescription }}
       ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
       BUILD_NAME: ${{ inputs.buildname }}
+      INJI_FLAVOR: ${{ inputs.injiFlavor }}
     secrets:
       ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
       RELEASE_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}'
@@ -93,6 +105,7 @@ jobs:
       BUILD_DESCRIPTION: ${{ inputs.buildDescription }}
       ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
       BUILD_NAME: ${{ inputs.buildname }}
+      INJI_FLAVOR: ${{ inputs.injiFlavor }}
     secrets:
       ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
       RELEASE_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}'
