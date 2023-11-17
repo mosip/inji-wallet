@@ -110,7 +110,7 @@ public class VerifyWelcomePagesTest extends BaseTest {
         assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
         assertEquals(welcomePage.getWelcomeDescription(), "Keep your digital credential with you at all times. Inji helps you manage and use them effectively. To get started, add cards to your profile.");
         
-        welcomePage.ClickOnBackButton();
+        welcomePage.clickOnBackButton();
         assertTrue(homePage.isNoVCDownloaded(), "Verify if get back to home page");
     }
 }

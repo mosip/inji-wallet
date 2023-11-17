@@ -48,7 +48,7 @@ public class WelcomePage extends BasePage {
         return this.getTextFromLocator(welcomeTextDescription);
     }
     
-    public void ClickOnBackButton() {
+    public void clickOnBackButton() {
     	this.clickOnElement(backButton);
     }
 

@@ -28,7 +28,7 @@ public class SettingsPage extends BasePage {
     private WebElement wikaButton;
     
     @AndroidFindBy(xpath = "//*[contains(@text,'Inji Tour Guide')]")
-    public WebElement InjiTourGuide;
+    public WebElement injiTourGuide;
     
     @AndroidFindBy(xpath = "//*[contains(@text,'Credential Registry')]")
     public WebElement clickOnCredentialRegistry;
@@ -40,7 +40,7 @@ public class SettingsPage extends BasePage {
     public WebElement clickOnReceiveCardInfilipinoLanguage;
     
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"About Inji\")")
-    private WebElement AboutInji;
+    private WebElement aboutInji;
     
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"عربى\")")
     private WebElement arabicLanguageButton;
@@ -79,7 +79,7 @@ public class SettingsPage extends BasePage {
     }
     
     public SettingsPage clickOnInjiTourGuide() {
-        clickOnElement(InjiTourGuide);
+        clickOnElement(injiTourGuide);
         return this;
     }
     
@@ -99,7 +99,7 @@ public class SettingsPage extends BasePage {
     }
     
     public AboutInjiPage clickOnAbouInji() {
-        clickOnElement(AboutInji);
+        clickOnElement(aboutInji);
         return new AboutInjiPage(driver);
     }
     
