@@ -1,7 +1,4 @@
 <resources>
-  <string name="app_name_collab">Inji Wallet Collab</string>
-  <string name="app_name_synergy">Inji Wallet Synergy</string>
-  <string name="app_name_mec">Inji Wallet Mec</string>
   <string name="expo_splash_screen_resize_mode" translatable="false">cover</string>
   <string name="expo_splash_screen_status_bar_translucent" translatable="false">false</string>
   <string name="ExpoLocalization_supportsRTL" translatable="false">undefined</string>
