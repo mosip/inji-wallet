@@ -4,16 +4,16 @@ MIMOTO_HOST = ENV["MIMOTO_HOST"]
 ESIGNET_HOST = ENV["ESIGNET_HOST"]
 APPLICATION_THEME = ENV["APPLICATION_THEME"]
 RELEASE_KEYSTORE_ALIAS = ENV["RELEASE_KEYSTORE_ALIAS"]
+DEBUG_KEYSTORE_ALIAS = ENV["DEBUG_KEYSTORE_ALIAS"]
 RELEASE_KEYSTORE_PASSWORD = ENV["RELEASE_KEYSTORE_PASSWORD"]
+DEBUG_KEYSTORE_PASSWORD = ENV["DEBUG_KEYSTORE_PASSWORD"]
 PLAY_CONSOLE_RELEASE_DESCRIPTION = ENV["PLAY_CONSOLE_RELEASE_DESCRIPTION"]
 SLACK_URL = ENV["SLACK_URL"]
 CREDENTIAL_REGISTRY_EDIT = ENV["CREDENTIAL_REGISTRY_EDIT"]
 
 desc "Verify Build for Android"
-lane :android_build_verify do
-  gradle(
-    task: "assembleMosipDebug",
-  )
+lane :android_build do
+  gradle(task: "assembleMosipDebug")
 end
 
 desc "Upload the build to github Actions"
@@ -41,6 +41,7 @@ end
 
 desc "Deploy an Internal testing version to the Google Play"
 lane :android_build_internal do
+
   previous_build_number = google_play_track_version_codes(
     package_name: "io.mosip.residentapp",
     track: "internal",
@@ -99,6 +100,7 @@ lane :android_build_beta do
   track: 'alpha',
   release_status: 'completed',
   version_name: versionName,
+  abb: "app/build/outputs/bundle/betaRelease/app-beta-release.aab",
   )
 
   slack(

@@ -1,0 +1,35 @@
+name: Tagging of repos
+
+on:
+  workflow_dispatch:
+    inputs:
+      TAG:
+        description: "Tag to be published"
+        required: true
+        type: string
+      BODY:
+        description: "Release body message"
+        required: true
+        default: "Changes in this Release"
+        type: string
+      PRE_RELEASE:
+        description: "Pre-release? True/False"
+        required: true
+        default: False
+        type: string
+      DRAFT:
+        description: "Draft? True/False"
+        required: false
+        default: False
+        type: string
+
+jobs:
+  tag-branch:
+    uses: mosip/kattu/.github/workflows/tag.yml@master
+    with:
+      TAG: ${{ inputs.TAG }}
+      BODY: ${{ inputs.BODY }}
+      PRE_RELEASE: ${{ inputs.PRE_RELEASE }}
+      DRAFT: ${{ inputs.DRAFT }}
+    secrets:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}

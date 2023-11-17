@@ -175,6 +175,10 @@
         "title": "Pakisuri ang iyong koneksyon at subukang muli",
         "message": "Mangyaring kumonekta sa internet at subukang muli."
       },
+      "biometricsCancelled": {
+        "title": "Gusto mo bang kanselahin ang pag-download?",
+        "message": "Kinakailangan ang biometric confirmation para magpatuloy sa pag-download ng card."
+      },
       "generic": {
         "title": "may nangyaring mali!",
         "message": "Nagkakaproblema kami sa iyong kahilingan. Pakisubukang muli."
@@ -477,7 +481,7 @@
     "scanningGuide": "Panatilihin ang telepono at i-scan ang QR code",
     "errors": {
       "locationDisabled": {
-        "message": "Dapat na nakabukas ang Location services ng iyong mobile para maaaring makapag-scan",
+        "message": "Para magpatuloy, hayaang i-on ng iyong device ang lokasyon",
         "button": "Buksan ang location services"
       },
       "locationDenied": {
@@ -507,12 +511,12 @@
       "sent": "Naipadala na ang card...",
       "sentHint": "Naghihintay para sa receiver na i-save o itapon ang iyong card",
       "sharing": {
-        "title": "Isinasagawa ang pagbabahagi",
+        "title": "Isinasagawa ang pagbabahagi...",
         "timeoutHint": "Naantala ang pagbabahagi, posibleng dahil sa isang isyu sa koneksyon.",
-        "hint": "Mangyaring maghintay habang ibinabahagi namin ang napiling card."
+        "hint": "Mangyaring maghintay habang ibinabahagi namin ang napiling card..."
       },
       "accepted": {
-        "title": "Matagumpay na naibahagi ang ID",
+        "title": "Matagumpay na naibahagi ang ID!",
         "message": "Ang iyong ID ay matagumpay na naibahagi sa",
         "gotohome": "Pumunta sa bahay"
       },
@@ -592,6 +596,7 @@
     "cancel": "Kanselahin",
     "accept": "Tanggapin",
     "save": "I-save",
+    "ok": "Ok",
     "dismiss": "Dismissed",
     "editLabel": "Palitan ang {{label}}",
     "tryAgain": "Subukan muli",
