@@ -29,7 +29,7 @@ import {
   getErrorEventData,
   sendErrorEvent,
 } from '../shared/telemetry/TelemetryUtils';
-import { TelemetryConstants } from '../shared/telemetry/TelemetryConstants';
+import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
 
 export const keyinvalidatedString =
   'Key Invalidated due to biometric enrollment';
@@ -550,7 +550,6 @@ export async function getItem(
 ) {
   try {
     const data = await Storage.getItem(key, encryptionKey);
-    console.log('getItem from Storage ==>',data)
     if (data != null) {
       let decryptedData;
       if (key === SETTINGS_STORE_KEY) {
