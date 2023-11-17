@@ -58,6 +58,9 @@ public class HomePage extends BasePage {
     @AndroidFindBy(accessibility = "nationalCard")
     private WebElement idTypeValue;
 
+    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Try again\")")
+    private WebElement tryAgainButton;
+
 
     public HomePage(AppiumDriver driver) {
         super(driver);
@@ -135,6 +138,15 @@ public class HomePage extends BasePage {
     }
     public boolean isIdTypeDisplayed() {
         return this.isElementDisplayed(idTypeValue, "Name on downloaded card");
+    }
+    
+    public boolean isTryAgainButtonDisplayed() {
+        return this.isElementDisplayed(tryAgainButton, "Try again");
+    }
+    
+    public HomePage clickOnTryAgainbutton() {
+    	 clickOnElement(tryAgainButton);
+         return this;
     }
 
 }

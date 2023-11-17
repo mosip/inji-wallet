@@ -106,7 +106,7 @@ public class DeletingVcTest extends BaseTest {
     }
     
   @Test
-  public void DownloadingDeletedVc() throws InterruptedException {
+  public void downloadingDeletedVc() throws InterruptedException {
       ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
       assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");

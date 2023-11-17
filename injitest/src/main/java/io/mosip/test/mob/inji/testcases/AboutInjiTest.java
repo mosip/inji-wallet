@@ -8,7 +8,7 @@ import static org.testng.Assert.*;
 
 public class AboutInjiTest extends BaseTest {
     @Test
-    public void CopyAppId() throws InterruptedException {
+    public void copyAppId() throws InterruptedException {
     	ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");

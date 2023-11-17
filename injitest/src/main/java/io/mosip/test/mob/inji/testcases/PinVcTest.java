@@ -52,7 +52,7 @@ public class PinVcTest extends BaseTest {
     }
     
     @Test
-    public void VerifyCameraOpenAfterPinVc() throws InterruptedException {
+    public void verifyCameraOpenAfterPinVc() throws InterruptedException {
     	ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");

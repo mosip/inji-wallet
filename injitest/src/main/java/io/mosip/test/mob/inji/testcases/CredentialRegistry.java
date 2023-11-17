@@ -81,7 +81,7 @@ public class CredentialRegistry extends BaseTest {
 	}
 	
 	@Test
-    public void CancelChangeEnvAndVerify() throws InterruptedException {
+    public void cancelChangeEnvAndVerify() throws InterruptedException {
 		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");

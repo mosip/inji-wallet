@@ -11,6 +11,10 @@ public class AddNewCardPage extends BasePage{
 
     @AndroidFindBy(accessibility = "issuerHeading-Mosip")
     private WebElement downloadViaUin;
+    
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"iconIcon\")")
+    private WebElement backButton;
+    
     public AddNewCardPage(AppiumDriver driver) {
         super(driver);
     }
@@ -22,6 +26,12 @@ public class AddNewCardPage extends BasePage{
     public RetrieveIdPage clickOnDownloadViaUin(){
         clickOnElement(downloadViaUin);
         return new RetrieveIdPage(driver);
+    }
+    
+    public AddNewCardPage clickOnBack() {
+    	clickOnElement(backButton);
+		return this;
+    	
     }
 
 }

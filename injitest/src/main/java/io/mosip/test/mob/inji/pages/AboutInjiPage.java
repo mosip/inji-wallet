@@ -15,7 +15,7 @@ public class AboutInjiPage extends BasePage{
     private WebElement Copied;
     
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"iconIcon\")")
-    private WebElement Back;
+    private WebElement backButton;
     
     public AboutInjiPage(AppiumDriver driver) {
         super(driver);
