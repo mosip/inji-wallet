@@ -10,17 +10,18 @@ DEBUG_KEYSTORE_PASSWORD = ENV["DEBUG_KEYSTORE_PASSWORD"]
 PLAY_CONSOLE_RELEASE_DESCRIPTION = ENV["PLAY_CONSOLE_RELEASE_DESCRIPTION"]
 SLACK_URL = ENV["SLACK_URL"]
 CREDENTIAL_REGISTRY_EDIT = ENV["CREDENTIAL_REGISTRY_EDIT"]
+INJI_FLAVOR = ENV["INJI_FLAVOR"]
 
 desc "Verify Build for Android"
 lane :android_build do
-  gradle(task: "assembleMosipDebug")
+  gradle(task: "assemble#{INJI_FLAVOR}Debug")
 end
 
 desc "Deploy an Internal testing version to the Google Play"
 lane :android_build_internal do
 
   previous_build_number = google_play_track_version_codes(
-    package_name: "io.mosip.residentapp",
+    package_name: "io.mosip.inji.#{INJI_FLAVOR}",
     track: "internal",
     json_key: "play_config.json",
   )[0]
@@ -37,7 +38,7 @@ lane :android_build_internal do
 
   versionName = "#{git_commit}-#{git_branch}"
 
-  gradle(task: "clean bundleMosipRelease")
+  gradle(task: "clean bundle#{INJI_FLAVOR}Release")
   upload_to_play_store(
   track: 'internal',
   release_status: 'completed',
@@ -45,7 +46,7 @@ lane :android_build_internal do
   )
 
   slack(
-      message: "Inji - #{versionName} (#{current_build_number}) is uploaded to Play store. Description : #{PLAY_CONSOLE_RELEASE_DESCRIPTION}.", 
+      message: "Inji - #{INJI_FLAVOR} Wallet- #{versionName} (#{current_build_number}) is uploaded to Play store. Description : #{PLAY_CONSOLE_RELEASE_DESCRIPTION}.", 
       success: true,
       slack_url: "#{SLACK_URL}",
       default_payloads: [:git_branch, :last_git_commit]
@@ -72,16 +73,15 @@ lane :android_build_beta do
 
   versionName = "Inji #{git_tag}"
 
-  gradle(task: "clean bundleBetaRelease")
+  gradle(task: "clean bundle#{INJI_FLAVOR}Release")
   upload_to_play_store(
   track: 'alpha',
   release_status: 'completed',
   version_name: versionName,
-  abb: "app/build/outputs/bundle/betaRelease/app-beta-release.aab",
   )
 
   slack(
-      message: "Inji [Beta]- #{versionName} is uploaded to Play store. Description : #{PLAY_CONSOLE_RELEASE_DESCRIPTION}.", 
+      message: "Inji - #{INJI_FLAVOR} Wallet- #{versionName} is uploaded to Play store. Description : #{PLAY_CONSOLE_RELEASE_DESCRIPTION}.", 
       success: true,
       slack_url: "#{SLACK_URL}",
       default_payloads: [:git_branch, :last_git_commit]
