@@ -168,18 +168,21 @@ export const ScanScreen: React.FC = () => {
       !controller.isEmpty && (
         <MessageOverlay
           isVisible={controller.selectIsInvalid}
+          customHeight={'auto'}
           title={t('invalidQR')}
-          customHeight={'auto'}>
-          <Row align="space-between" margin={[15, 0, 0, 0]}>
+          message
+          onBackdropPress={controller.DISMISS}>
+          <Row>
             <Button
-              title={t('common:cancel')}
+              fill
               type="clear"
-              styles={{maxWidth: 100, marginRight: 8}}
+              title={t('common:cancel')}
               onPress={() => navigation.navigate(BOTTOM_TAB_ROUTES.home)}
+              margin={[0, 8, 0, 0]}
             />
             <Button
+              fill
               title={t('common:tryAgain')}
-              styles={{maxWidth: 100, marginLeft: 8}}
               onPress={controller.DISMISS}
             />
           </Row>
