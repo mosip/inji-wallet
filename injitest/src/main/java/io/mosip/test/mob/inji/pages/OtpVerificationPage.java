@@ -49,7 +49,7 @@ public class OtpVerificationPage extends BasePage {
         return this.isElementDisplayed(invalidOtpMessageInVcActivation, "Something is wrong. Please try again later!");
     }
     
-    public boolean VidNotAvailableDisplayed() {
+    public boolean vidNotAvailableDisplayed() {
         return this.isElementDisplayed(vidNotAvailableMessage, "VID not available in database");
     }
 

@@ -27,8 +27,8 @@ public class ReceiveCardPage extends BasePage {
     }
     
     public ReceiveCardPage ClickOnAllowButton() {
-    	 this.clickOnElement(allowButton);
-         return new ReceiveCardPage(driver);
+    	 clickOnElement(allowButton);
+         return this;
     }
     
     public boolean isReceiveCardHederDisplayed() {

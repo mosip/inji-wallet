@@ -162,7 +162,7 @@ public class VcDownloadAndVerifyUsingVidTest extends BaseTest {
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
         OtpVerificationPage otpVerification = retrieveIdPage.clickOnVid(target).setEnterIdTextBox(TestDataReader.readData("revokevid")).clickOnGenerateCardButton();
 
-        assertTrue(otpVerification.VidNotAvailableDisplayed(), "Verify if vid is not available message displayed");
+        assertTrue(otpVerification.vidNotAvailableDisplayed(), "Verify if vid is not available message displayed");
     }
     
 }
