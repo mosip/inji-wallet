@@ -507,7 +507,6 @@ export const ExistingMosipVCItemMachine =
           },
         },
         checkingVerificationStatus: {
-          entry: [() => console.log('checkingVerificationStatus ===>>')],
           description:
             'Check if VC verification is still valid. VCs stored on the device must be re-checked once every [N] time has passed.',
           always: [
@@ -1381,8 +1380,6 @@ export const ExistingMosipVCItemMachine =
         },
 
         checkStatus: context => (callback, onReceive) => {
-          console.log('invoking check status api ==>');
-
           const pollInterval = setInterval(
             () => callback(model.events.POLL()),
             context.downloadInterval,
@@ -1391,19 +1388,12 @@ export const ExistingMosipVCItemMachine =
           onReceive(async event => {
             if (event.type === 'POLL_STATUS') {
               try {
-                console.log('download counter ===>', context.downloadCounter);
-                let response = await request(
+                const response = await request(
                   API_URLS.credentialStatus.method,
                   API_URLS.credentialStatus.buildURL(
                     context.vcMetadata.requestId,
                   ),
                 );
-                console.log(
-                  'checkStatus response ===>>',
-                  response.response?.statusCode,
-                );
-
-                response.response.statusCode = 'FAILED';
 
                 switch (response.response?.statusCode) {
                   case 'NEW':
@@ -1538,10 +1528,6 @@ export const ExistingMosipVCItemMachine =
         hasCredential: (_, event) => {
           const vc =
             event.type === 'GET_VC_RESPONSE' ? event.vc : event.response;
-          console.log(
-            'hasCredential ===>>',
-            vc?.credential != null && vc?.verifiableCredential != null,
-          );
           return vc?.credential != null && vc?.verifiableCredential != null;
         },
 
