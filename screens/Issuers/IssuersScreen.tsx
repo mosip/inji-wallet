@@ -1,10 +1,10 @@
 import React, {useLayoutEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {FlatList, Image, View, TextInput, ScrollView} from 'react-native';
+import {FlatList, Image, TextInput, View} from 'react-native';
 import {Issuer} from '../../components/openId4VCI/Issuer';
 import {Error} from '../../components/ui/Error';
 import {Header} from '../../components/ui/Header';
-import {Column, Row, Text} from '../../components/ui';
+import {Button, Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {RootRouteProps} from '../../routes';
 import {HomeRouteProps} from '../../routes/main';
@@ -24,6 +24,7 @@ import {
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {Icon} from 'react-native-elements';
+import {MessageOverlay} from '../../components/MessageOverlay';
 
 export const IssuersScreen: React.FC<
   HomeRouteProps | RootRouteProps
@@ -111,6 +112,46 @@ export const IssuersScreen: React.FC<
     );
   };
 
+  const filterIssuers = (searchText: string) => {
+    const filteredData = issuers.filter(item => {
+      if (
+        getDisplayObjectForCurrentLanguage(item.display)
+          ?.name.toLowerCase()
+          .includes(searchText.toLowerCase())
+      ) {
+        return getDisplayObjectForCurrentLanguage(item.display);
+      }
+    });
+    setFilteredSearchData(filteredData);
+    setSearch(searchText);
+  };
+
+  if (controller.isBiometricsCancelled) {
+    return (
+      <MessageOverlay
+        isVisible={controller.isBiometricsCancelled}
+        customHeight={'auto'}
+        title={t('errors.biometricsCancelled.title')}
+        message={t('errors.biometricsCancelled.message')}
+        onBackdropPress={controller.RESET_ERROR}>
+        <Row>
+          <Button
+            fill
+            type="clear"
+            title={t('common:cancel')}
+            onPress={controller.RESET_ERROR}
+            margin={[0, 8, 0, 0]}
+          />
+          <Button
+            fill
+            title={t('common:tryAgain')}
+            onPress={controller.TRY_AGAIN}
+          />
+        </Row>
+      </MessageOverlay>
+    );
+  }
+
   if (controller.errorMessageType) {
     return (
       <Error
@@ -128,27 +169,12 @@ export const IssuersScreen: React.FC<
   if (controller.loadingReason) {
     return (
       <Loader
-        isVisible
         title={t('loaders.loading')}
         subTitle={t(`loaders.subTitle.${controller.loadingReason}`)}
         progress
       />
     );
   }
-
-  const filterIssuers = (searchText: string) => {
-    let filterdData = issuers.filter(item => {
-      if (
-        getDisplayObjectForCurrentLanguage(item.display)
-          ?.name.toLowerCase()
-          .includes(searchText.toLowerCase())
-      ) {
-        return getDisplayObjectForCurrentLanguage(item.display);
-      }
-    });
-    setFilteredSearchData(filterdData);
-    setSearch(searchText);
-  };
 
   return (
     <React.Fragment>

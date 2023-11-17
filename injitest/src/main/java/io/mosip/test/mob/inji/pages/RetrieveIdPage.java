@@ -51,6 +51,11 @@ public class RetrieveIdPage extends BasePage {
     }
 
     public RetrieveIdPage setEnterIdTextBox(String uinOrVid) {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         sendKeysToTextBox(enterIdTextBox, uinOrVid, "uin or vid textbox");
         return this;
     }

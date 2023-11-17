@@ -24,6 +24,12 @@ import {
   isHardwareKeystoreExists,
 } from '../shared/cryptoutil/cryptoUtil';
 import {VCMetadata} from '../shared/VCMetadata';
+import {BiometricCancellationError} from '../shared/error/BiometricCancellationError';
+import {
+  getErrorEventData,
+  sendErrorEvent,
+} from '../shared/telemetry/TelemetryUtils';
+import { TelemetryConstants } from '../shared/telemetry/TelemetryConstants';
 
 export const keyinvalidatedString =
   'Key Invalidated due to biometric enrollment';
@@ -43,6 +49,7 @@ const model = createModel(
       GET: (key: string) => ({key}),
       DECRYPT_ERROR: () => ({}),
       KEY_INVALIDATE_ERROR: () => ({}),
+      BIOMETRIC_CANCELLED: (requester?: string) => ({requester}),
       SET: (key: string, value: unknown) => ({key, value}),
       APPEND: (key: string, value: unknown) => ({key, value}),
       PREPEND: (key: string, value: unknown) => ({key, value}),
@@ -241,6 +248,17 @@ export const storeMachine =
         KEY_INVALIDATE_ERROR: {
           actions: sendParent('KEY_INVALIDATE_ERROR'),
         },
+        BIOMETRIC_CANCELLED: {
+          actions: [
+            send(
+              (_, event) => model.events.BIOMETRIC_CANCELLED(event.requester),
+              {
+                to: (_, event) => event.requester,
+              },
+            ),
+            sendUpdate(),
+          ],
+        },
       },
     },
     {
@@ -271,6 +289,8 @@ export const storeMachine =
                 'Dummy',
               );
             } catch (e) {
+              sendErrorEvent(getErrorEventData('ENCRYPTION', '', e));
+
               if (e.message.includes(keyinvalidatedString)) {
                 await clear();
                 callback(model.events.KEY_INVALIDATE_ERROR());
@@ -281,6 +301,13 @@ export const storeMachine =
             }
             callback(model.events.READY());
           } else {
+            sendErrorEvent(
+              getErrorEventData(
+                'ENCRYPTION',
+                '',
+                'Could not get the android Key alias',
+              ),
+            );
             callback(
               model.events.ERROR(
                 new Error('Could not get the android Key alias'),
@@ -387,6 +414,14 @@ export const storeMachine =
               }
               callback(model.events.STORE_RESPONSE(response, event.requester));
             } catch (e) {
+              sendErrorEvent(
+                getErrorEventData(
+                  TelemetryConstants.FlowType.fetchData,
+                  '',
+                  e.message,
+                  {e},
+                ),
+              );
               if (e.message.includes(keyinvalidatedString)) {
                 await clear();
                 callback(model.events.KEY_INVALIDATE_ERROR());
@@ -403,6 +438,9 @@ export const storeMachine =
               ) {
                 callback(model.events.DECRYPT_ERROR());
                 sendUpdate();
+              } else if (e instanceof BiometricCancellationError) {
+                callback(model.events.BIOMETRIC_CANCELLED(event.requester));
+                sendUpdate();
               } else {
                 console.error(e);
                 callback(model.events.STORE_ERROR(e, event.requester));
@@ -416,6 +454,13 @@ export const storeMachine =
             console.log('Credentials successfully loaded for user');
             callback(model.events.KEY_RECEIVED(existingCredentials.password));
           } else {
+            sendErrorEvent(
+              getErrorEventData(
+                TelemetryConstants.FlowType.fetchData,
+                '',
+                'Could not get keychain credentials',
+              ),
+            );
             console.log('Credentials failed to load for user');
             callback(
               model.events.ERROR(
@@ -436,6 +481,13 @@ export const storeMachine =
             if (hasSetCredentials) {
               callback(model.events.KEY_RECEIVED(randomBytesString));
             } else {
+              sendErrorEvent(
+                getErrorEventData(
+                  TelemetryConstants.FlowType.fetchData,
+                  '',
+                  'Could not generate keychain credentials',
+                ),
+              );
               callback(
                 model.events.ERROR(
                   new Error('Could not generate keychain credentials.'),
@@ -498,6 +550,7 @@ export async function getItem(
 ) {
   try {
     const data = await Storage.getItem(key, encryptionKey);
+    console.log('getItem from Storage ==>',data)
     if (data != null) {
       let decryptedData;
       if (key === SETTINGS_STORE_KEY) {
@@ -516,6 +569,13 @@ export async function getItem(
     }
     if (data === null && VCMetadata.isVCKey(key)) {
       await removeItem(key, data, encryptionKey);
+      sendErrorEvent(
+        getErrorEventData(
+          TelemetryConstants.FlowType.fetchData,
+          TelemetryConstants.ErrorId.tampered,
+          tamperedErrorMessageString,
+        ),
+      );
       throw new Error(tamperedErrorMessageString);
     } else {
       return defaultValue;
@@ -525,10 +585,25 @@ export async function getItem(
       e.message.includes(tamperedErrorMessageString) ||
       e.message.includes(keyinvalidatedString) ||
       e.message === ENOENT ||
+      e instanceof BiometricCancellationError ||
       e.message.includes('Key not found') // this error happens when previous get Item calls failed due to key invalidation and data and keys are deleted
     ) {
+      sendErrorEvent(
+        getErrorEventData(
+          TelemetryConstants.FlowType.fetchData,
+          TelemetryConstants.ErrorId.tampered,
+          e.message,
+        ),
+      );
       throw e;
     }
+    sendErrorEvent(
+      getErrorEventData(
+        TelemetryConstants.FlowType.fetchData,
+        TelemetryConstants.ErrorId.tampered,
+        `Exception in getting item for ${key}: ${e}`,
+      ),
+    );
     console.error(`Exception in getting item for ${key}: ${e}`);
     return defaultValue;
   }

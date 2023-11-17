@@ -330,11 +330,21 @@ export const AddVcModalMachine =
               'OTP is invalid': 'invalidOtp',
               'OTP has expired': 'expiredOtp',
             };
-            return OTP_ERRORS_MAP[message]
+
+            const otpErrorMessage = OTP_ERRORS_MAP[message]
               ? i18n.t(`errors.backend.${OTP_ERRORS_MAP[message]}`, {
                   ns: 'AddVcModal',
                 })
               : message;
+
+            sendErrorEvent(
+              getErrorEventData(
+                TelemetryConstants.FlowType.vcDownload,
+                message,
+                otpErrorMessage,
+              ),
+            );
+            return otpErrorMessage;
           },
         }),
 
