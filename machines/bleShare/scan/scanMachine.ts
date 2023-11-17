@@ -1207,7 +1207,7 @@ export const scanMachine =
           try {
             let linkCode = new URL(event.params);
             // sample: 'inji://landing-page-name?linkCode=sTjp0XVH3t3dGCU&linkExpireDateTime=2023-11-09T06:56:18.482Z'
-            return linkCode.searchParams.get('linkCode') !== '';
+            return linkCode.searchParams.get('linkCode') !== null;
           } catch (e) {
             return false;
           }
