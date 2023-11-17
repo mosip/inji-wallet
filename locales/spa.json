@@ -291,6 +291,10 @@
         "title": "Sin conexión a Internet",
         "message": "Por favor verifique su conexión y vuelva a intentarlo"
       },
+      "biometricsCancelled": {
+        "title": "Quieres cancelar la descarga?",
+        "message": "Se requiere confirmación biométrica para continuar descargando la tarjeta."
+      },
       "generic": {
         "title": "¡Algo salió mal!",
         "message": "Estamos teniendo algunos problemas con su solicitud. Inténtalo de nuevo."
@@ -408,7 +412,7 @@
 		"enableBluetoothButtonText": "Permitir permisos de Bluetooth",
 		"errors": {
 			"locationDisabled": {
-				"message": "Los servicios de ubicación deben estar habilitados para compartir la tarjeta",
+				"message": "Para continuar, deja que tu dispositivo active la ubicación.",
 				"button": "Habilitar servicios de ubicación"
 			},
 			"locationDenied": {
@@ -497,6 +501,7 @@
 	"common": {
 		"cancel": "Cancelar",
 		"save": "Guardar",
+		"ok": "Ok",
 		"dismiss": "Cerrar",
 		"editLabel": "Editar {{label}}",
 		"tryAgain": "Intentar de nuevo",

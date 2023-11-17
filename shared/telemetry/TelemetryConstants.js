@@ -10,6 +10,7 @@ export const TelemetryConstants = {
     appLogin: 'App Login',
     vcLockOrRevoke: 'VC Lock / VC Revoke',
     getVcUsingAid: 'Get VC using AID',
+    fetchData: 'Fetch Data',
   }),
 
   EndEventStatus: Object.freeze({
@@ -37,6 +38,8 @@ export const TelemetryConstants = {
     userCancel: 'USER_CANCEL',
     resend: 'RESEND',
     activationFailed: 'ACTIVATION_FAILED',
+    tampered: 'TAMPERED',
+    dataRetrieval: 'DATA_RETRIEVAL',
   }),
 
   Screens: Object.freeze({

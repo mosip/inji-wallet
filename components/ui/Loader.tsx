@@ -64,7 +64,33 @@ export const Loader: React.FC<LoaderProps> = props => {
             />
           </View>
         </Column>
+        {(props.isHintVisible || props.isBleErrorVisible) && (
+          <Column style={Theme.SelectVcOverlayStyles.timeoutHintContainer}>
+            <Text
+              align="center"
+              margin="10"
+              color={Theme.Colors.TimoutHintText}
+              size="small"
+              style={Theme.TextStyles.bold}>
+              {props.hint}
+            </Text>
+            {props.onStayInProgress && (
+              <Button
+                type="clear"
+                title={t('status.stayOnTheScreen')}
+                onPress={props.onStayInProgress}
+              />
+            )}
 
+            {props.onRetry && (
+              <Button
+                type="clear"
+                title={t('status.retry')}
+                onPress={props.onRetry}
+              />
+            )}
+          </Column>
+        )}
         <Column style={{display: props.hint ? 'flex' : 'none'}}>
           <Column style={Theme.SelectVcOverlayStyles.timeoutHintContainer}>
             <Text
@@ -88,12 +114,15 @@ export const Loader: React.FC<LoaderProps> = props => {
 };
 
 export interface LoaderProps {
-  isVisible: boolean;
   title: string;
   subTitle?: string;
   label?: string;
   hint?: string;
+  onStayInProgress?: () => void;
+  isHintVisible?: boolean;
+  isBleErrorVisible?: boolean;
   onCancel?: () => void;
+  onRetry?: () => void;
   requester?: boolean;
   progress?: boolean | number;
   onBackdropPress?: () => void;
