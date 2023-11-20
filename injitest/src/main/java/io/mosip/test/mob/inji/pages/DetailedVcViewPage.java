@@ -8,42 +8,55 @@ import org.openqa.selenium.WebElement;
 
 public class DetailedVcViewPage extends BasePage{
     @AndroidFindBy(xpath = "//*[contains(@text,'ID Details')]")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"ID Details\"`]")
     private WebElement detailedVcViewPageTitle;
 
     @AndroidFindBy(accessibility = "fullNameValue")
+    @iOSXCUITFindBy(accessibility = "fullNameValue")
     private WebElement fullNameValue;
 
     @AndroidFindBy(accessibility = "genderValue")
+    @iOSXCUITFindBy(accessibility = "genderValue")
     private WebElement genderValue;
 
     @AndroidFindBy(accessibility = "dateOfBirthValue")
+    @iOSXCUITFindBy(accessibility = "dateOfBirthValue")
     private WebElement dateOfBirthValue;
 
     @AndroidFindBy(accessibility = "nationalCard")
+    @iOSXCUITFindBy(accessibility = "nationalCard")
     private WebElement idTypeValue;
 
     @AndroidFindBy(accessibility = "valid")
+    @iOSXCUITFindBy(accessibility = "valid")
     private WebElement statusValue;
 
     @AndroidFindBy(accessibility = "uinNumber")
+    @iOSXCUITFindBy(accessibility = "uinNumber")
     private WebElement uinNumberValue;
 
     @AndroidFindBy(accessibility = "generatedOnValue")
+    @iOSXCUITFindBy(accessibility = "generatedOnValue")
     private WebElement generatedOnValue;
 
     @AndroidFindBy(accessibility = "phoneNumberValue")
+    @iOSXCUITFindBy(accessibility = "phoneNumberValue")
     private WebElement phoneNumberValue;
 
     @AndroidFindBy(accessibility = "emailIdValue")
+    @iOSXCUITFindBy(accessibility = "emailIdValue")
     private WebElement emailIdValue;
 
     @AndroidFindBy(accessibility = "enableVerification")
+    @iOSXCUITFindBy(accessibility = "enableVerification")
     private WebElement activateButton;
 
     @AndroidFindBy(accessibility = "profileAuthenticated")
+    @iOSXCUITFindBy(accessibility = "profileAuthenticated")
     private WebElement profileAuthenticated;
 
     @AndroidFindBy(accessibility = "close")
+    @iOSXCUITFindBy(accessibility = "close")
     private WebElement crossIcon;
 
     public DetailedVcViewPage(AppiumDriver driver) {

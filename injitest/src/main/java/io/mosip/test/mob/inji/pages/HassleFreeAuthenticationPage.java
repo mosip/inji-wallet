@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 public class HassleFreeAuthenticationPage extends BasePage {
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Hassle free authentication')]")
-    @iOSXCUITFindBy(accessibility = "Hassle free authentication")
+    @iOSXCUITFindBy(iOSNsPredicate = "label == \"Hassle free authentication\"")
     private WebElement hassleFreeAuthenticationText;
 
     @AndroidFindBy(xpath = "(//*[@class='android.widget.TextView'])[3]")
