@@ -42,7 +42,7 @@ public class SettingsPage extends BasePage {
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"About Inji\")")
     private WebElement aboutInji;
     
-    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"عربى\")")
+    @AndroidFindBy(xpath = "(//*[@resource-id=\"padView\"])[3]")
     private WebElement arabicLanguageButton;
     
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"فتح التطبيق\")")
