@@ -23,6 +23,8 @@ jobs:
     with:
       NODE_VERSION: "16.x"
       DEBUG_KEYSTORE_ALIAS: androiddebugkey
+      SERVICE_LOCATION: '.'
+      ANDROID_SERVICE_LOCATION: 'android'
     secrets:
       DEBUG_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_DEBUG_STOREPASS }}'
 
@@ -30,12 +32,16 @@ jobs:
     uses: mosip/kattu/.github/workflows/ios-build.yml@master
     with:
       NODE_VERSION: "18.x"
+      SERVICE_LOCATION: '.'
+      IOS_SERVICE_LOCATION: 'ios'
 
   sonar-check:
     if: ${{ github.event_name != 'pull_request' }}
-    uses: mosip/kattu/.github/workflows/sonar.yml@master
+    uses: mosip/kattu/.github/workflows/gradlew-sonar-analysis.yml@master
+    with:
+      SERVICE_LOCATION: '.'
+      ANDROID_LOCATION: 'android'
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      SONAR_HOST_URL: https://sonarcloud.io
       SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
-      SLACK_URL: '${{ secrets.SLACK_WEBHOOK }}'
+      SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
