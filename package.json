@@ -31,7 +31,6 @@
     "crypto-js": "^3.3.0",
     "date-fns": "^2.26.0",
     "expo": "^49.0.16",
-    "expo-app-loading": "2.1.1",
     "expo-barcode-scanner": "~12.3.2",
     "expo-camera": "^13.6.0",
     "expo-constants": "^14.4.2",
