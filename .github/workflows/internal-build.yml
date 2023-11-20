@@ -88,6 +88,7 @@ jobs:
       SERVICE_LOCATION: '.'
       ANDROID_SERVICE_LOCATION: 'android'
       BUILD_SCRIPT_LOCATION: 'scripts'
+      BUILD_SCRIPT_NAME: ${{ inputs.release }}
     secrets:
       ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
       RELEASE_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}'
@@ -112,6 +113,7 @@ jobs:
       SERVICE_LOCATION: '.'
       ANDROID_SERVICE_LOCATION: 'android'
       BUILD_SCRIPT_LOCATION: 'scripts'
+      BUILD_SCRIPT_NAME: ${{ inputs.release }}
     secrets:
       ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
       RELEASE_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}'
