@@ -853,6 +853,8 @@ export const DefaultTheme = {
       margin: 21,
       paddingHorizontal: 14,
       paddingVertical: 12,
+      borderWidth: 2,
+      borderColor: Colors.TimeoutHintBoxBorder,
       borderRadius: 12,
     },
     sharedSuccessfully: {
