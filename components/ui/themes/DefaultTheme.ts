@@ -789,7 +789,7 @@ export const DefaultTheme = {
       borderColor: Colors.Orange,
     },
     container: {
-      height: 'auto',
+      height: 45,
       flexDirection: 'row',
     },
     disabled: {
