@@ -22,13 +22,14 @@ import {subscribe} from '../../../shared/openIdBLE/walletEventHandler';
 import {
   check,
   checkMultiple,
-  PermissionStatus,
   PERMISSIONS,
+  PermissionStatus,
   requestMultiple,
   RESULTS,
 } from 'react-native-permissions';
 import {
   checkLocationPermissionStatus,
+  checkLocationService,
   requestLocationPermission,
 } from '../../../shared/location';
 import {CameraCapturedPicture} from 'expo-camera';
@@ -40,14 +41,14 @@ import {BLEError} from '../types';
 import Storage from '../../../shared/storage';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {
-  getStartEventData,
   getEndEventData,
-  sendStartEvent,
-  sendEndEvent,
-  sendImpressionEvent,
-  getImpressionEventData,
-  sendErrorEvent,
   getErrorEventData,
+  getImpressionEventData,
+  getStartEventData,
+  sendEndEvent,
+  sendErrorEvent,
+  sendImpressionEvent,
+  sendStartEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 
@@ -307,7 +308,7 @@ export const scanMachine =
               always: [
                 {
                   cond: 'uptoAndroid11',
-                  target: '#scan.checkingLocationService',
+                  target: '#scan.checkingLocationState',
                 },
                 {
                   target: '#scan.clearingConnection',
@@ -337,7 +338,7 @@ export const scanMachine =
               always: [
                 {
                   cond: 'uptoAndroid11',
-                  target: '#scan.checkingLocationService',
+                  target: '#scan.checkingLocationState',
                 },
                 {
                   target: '#scan.clearingConnection',
@@ -678,9 +679,22 @@ export const scanMachine =
             },
           },
         },
-        checkingLocationService: {
-          initial: 'checkingPermissionStatus',
+        checkingLocationState: {
+          initial: 'checkLocationService',
           states: {
+            checkLocationService: {
+              invoke: {
+                src: 'checkLocationStatus',
+              },
+              on: {
+                LOCATION_ENABLED: {
+                  target: 'checkingPermissionStatus',
+                },
+                LOCATION_DISABLED: {
+                  target: 'disabled',
+                },
+              },
+            },
             checkingPermissionStatus: {
               invoke: {
                 src: 'checkLocationPermission',
@@ -714,6 +728,13 @@ export const scanMachine =
                 },
                 LOCATION_REQUEST: {
                   actions: 'openAppPermission',
+                },
+              },
+            },
+            disabled: {
+              on: {
+                LOCATION_REQUEST: {
+                  target: 'checkLocationService',
                 },
               },
             },
@@ -869,13 +890,9 @@ export const scanMachine =
         }),
 
         setLinkCode: assign({
-          linkCode: (_context, event) =>
-            event.params.substring(
-              event.params.indexOf('linkCode=') + 9,
-              event.params.indexOf('&'),
-            ),
+          linkCode: (_, event) =>
+            new URL(event.params).searchParams.get('linkCode'),
         }),
-
         setStayInProgress: assign({
           stayInProgress: context => !context.stayInProgress,
         }),
@@ -1096,6 +1113,12 @@ export const scanMachine =
             () => callback(model.events.LOCATION_DISABLED()),
           );
         },
+        checkLocationStatus: () => callback => {
+          return checkLocationService(
+            () => callback(model.events.LOCATION_ENABLED()),
+            () => callback(model.events.LOCATION_DISABLED()),
+          );
+        },
 
         startConnection: context => callback => {
           wallet.startConnection(context.openId4VpUri);
@@ -1177,16 +1200,14 @@ export const scanMachine =
       },
 
       guards: {
-        isOpenIdQr: (_context, event) => event.params.includes('OPENID4VP://'),
-
+        // sample: 'OPENID4VP://connect:?name=OVPMOSIP&key=69dc92a2cc91f02258aa8094d6e2b62877f5b6498924fbaedaaa46af30abb364'
+        isOpenIdQr: (_context, event) =>
+          event.params.startsWith('OPENID4VP://'),
         isQrLogin: (_context, event) => {
-          let linkCode = '';
           try {
-            linkCode = event.params.substring(
-              event.params.indexOf('linkCode=') + 9,
-              event.params.indexOf('&'),
-            );
-            return linkCode !== null;
+            let linkCode = new URL(event.params);
+            // sample: 'inji://landing-page-name?linkCode=sTjp0XVH3t3dGCU&linkExpireDateTime=2023-11-09T06:56:18.482Z'
+            return linkCode.searchParams.get('linkCode') !== null;
           } catch (e) {
             return false;
           }

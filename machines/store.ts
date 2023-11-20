@@ -25,6 +25,11 @@ import {
 } from '../shared/cryptoutil/cryptoUtil';
 import {VCMetadata} from '../shared/VCMetadata';
 import {BiometricCancellationError} from '../shared/error/BiometricCancellationError';
+import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
+import {
+  sendErrorEvent,
+  getErrorEventData,
+} from '../shared/telemetry/TelemetryUtils';
 
 export const keyinvalidatedString =
   'Key Invalidated due to biometric enrollment';
@@ -284,6 +289,8 @@ export const storeMachine =
                 'Dummy',
               );
             } catch (e) {
+              sendErrorEvent(getErrorEventData('ENCRYPTION', '', e));
+
               if (e.message.includes(keyinvalidatedString)) {
                 await clear();
                 callback(model.events.KEY_INVALIDATE_ERROR());
@@ -294,6 +301,13 @@ export const storeMachine =
             }
             callback(model.events.READY());
           } else {
+            sendErrorEvent(
+              getErrorEventData(
+                'ENCRYPTION',
+                '',
+                'Could not get the android Key alias',
+              ),
+            );
             callback(
               model.events.ERROR(
                 new Error('Could not get the android Key alias'),
@@ -400,6 +414,14 @@ export const storeMachine =
               }
               callback(model.events.STORE_RESPONSE(response, event.requester));
             } catch (e) {
+              sendErrorEvent(
+                getErrorEventData(
+                  TelemetryConstants.FlowType.fetchData,
+                  '',
+                  e.message,
+                  {e},
+                ),
+              );
               if (e.message.includes(keyinvalidatedString)) {
                 await clear();
                 callback(model.events.KEY_INVALIDATE_ERROR());
@@ -432,6 +454,13 @@ export const storeMachine =
             console.log('Credentials successfully loaded for user');
             callback(model.events.KEY_RECEIVED(existingCredentials.password));
           } else {
+            sendErrorEvent(
+              getErrorEventData(
+                TelemetryConstants.FlowType.fetchData,
+                '',
+                'Could not get keychain credentials',
+              ),
+            );
             console.log('Credentials failed to load for user');
             callback(
               model.events.ERROR(
@@ -452,6 +481,13 @@ export const storeMachine =
             if (hasSetCredentials) {
               callback(model.events.KEY_RECEIVED(randomBytesString));
             } else {
+              sendErrorEvent(
+                getErrorEventData(
+                  TelemetryConstants.FlowType.fetchData,
+                  '',
+                  'Could not generate keychain credentials',
+                ),
+              );
               callback(
                 model.events.ERROR(
                   new Error('Could not generate keychain credentials.'),
@@ -532,6 +568,13 @@ export async function getItem(
     }
     if (data === null && VCMetadata.isVCKey(key)) {
       await removeItem(key, data, encryptionKey);
+      sendErrorEvent(
+        getErrorEventData(
+          TelemetryConstants.FlowType.fetchData,
+          TelemetryConstants.ErrorId.tampered,
+          tamperedErrorMessageString,
+        ),
+      );
       throw new Error(tamperedErrorMessageString);
     } else {
       return defaultValue;
@@ -544,8 +587,22 @@ export async function getItem(
       e instanceof BiometricCancellationError ||
       e.message.includes('Key not found') // this error happens when previous get Item calls failed due to key invalidation and data and keys are deleted
     ) {
+      sendErrorEvent(
+        getErrorEventData(
+          TelemetryConstants.FlowType.fetchData,
+          TelemetryConstants.ErrorId.tampered,
+          e.message,
+        ),
+      );
       throw e;
     }
+    sendErrorEvent(
+      getErrorEventData(
+        TelemetryConstants.FlowType.fetchData,
+        TelemetryConstants.ErrorId.tampered,
+        `Exception in getting item for ${key}: ${e}`,
+      ),
+    );
     console.error(`Exception in getting item for ${key}: ${e}`);
     return defaultValue;
   }

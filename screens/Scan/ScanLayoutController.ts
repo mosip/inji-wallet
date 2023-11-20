@@ -133,19 +133,11 @@ export function useScanLayout() {
       onButtonPress: CANCEL,
       progress: true,
     };
-  } else if (isSent) {
-    statusOverlay = {
-      message: t('status.sent'),
-      hint: t('status.sentHint'),
-      progress: false,
-      onButtonPress: CANCEL,
-    };
-  } else if (isSendingVc) {
+  } else if (isSendingVc || isSent) {
     statusOverlay = {
       title: t('status.sharing.title'),
       hint: t('status.sharing.hint'),
       progress: true,
-      onButtonPress: CANCEL,
     };
   } else if (isSendingVcTimeout) {
     statusOverlay = {
