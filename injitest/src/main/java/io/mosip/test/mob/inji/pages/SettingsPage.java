@@ -37,7 +37,7 @@ public class SettingsPage extends BasePage {
     private List<WebElement> languages;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"aboutInji\")")
-    @iOSXCUITFindBy(iOSClassChain ="**/XCUIElementTypeStaticText[`label == \"About Inji\"`]")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"About Inji\"`]")
     private WebElement aboutInji;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Tuvali-version: v')]")
@@ -88,7 +88,7 @@ public class SettingsPage extends BasePage {
         return new HashSet<>(expectedLanguages).equals(new HashSet<>(actualLanguages));
     }
 
-    public SettingsPage clickOnAboutInji(){
+    public SettingsPage clickOnAboutInji() {
         clickOnElement(aboutInji);
         return this;
     }
@@ -97,12 +97,11 @@ public class SettingsPage extends BasePage {
         return this.isElementDisplayed(tuvaliVersion, "Tuvali-version");
     }
 
-    public void clickOnInjiTourGuide(){
+    public void clickOnInjiTourGuide() {
         clickOnElement(injiTourGuide);
     }
 
     public boolean isReceivedCardsPresent() {
         return this.isElementDisplayed(receivedCards, "Received Cards");
     }
-
 }
