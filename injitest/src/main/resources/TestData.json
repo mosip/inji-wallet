@@ -1,6 +1,7 @@
 {
   "externalemail": "Resident_AddIdentity_ValidParam_smoke_Pos@mosip.net",
   "passcode": "111111",
+  "invalidPasscode": "222222",
   "invalidOtp":"666666",
   "fullName": "TEST_FULLNAMEeng",
   "idType": "National Card",

@@ -9,11 +9,11 @@ import org.openqa.selenium.WebElement;
 public class HelpPage extends BasePage {
 
     @AndroidFindBy(accessibility = "helpScreen")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Help\"`]")
+    @iOSXCUITFindBy(accessibility = "helpScreen")
     private WebElement helpText;
 
     @AndroidFindBy(xpath = "//*[@resource-id=\"iconIcon\"]")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"\uE5CD\"`][2]")
+    @iOSXCUITFindBy(accessibility = "close")
     private WebElement crossIcon;
     
     @AndroidFindBy(uiAutomator = "new UiScrollable(new UiSelector()).scrollIntoView(text(\"How to view activity logs?\"));")

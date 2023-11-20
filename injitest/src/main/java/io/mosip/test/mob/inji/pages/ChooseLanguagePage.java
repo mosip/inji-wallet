@@ -11,11 +11,11 @@ import org.openqa.selenium.WebElement;
 public class ChooseLanguagePage extends BasePage {
 
     @AndroidFindBy(accessibility = "chooseLanguage")
-    @iOSXCUITFindBy(accessibility = "Choose Language")
+    @iOSXCUITFindBy(accessibility = "chooseLanguage")
     private WebElement chooseLanguageText;
 
     @AndroidFindBy(accessibility = "savePreference")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`label == \"Save Preference\"`]")
+    @iOSXCUITFindBy(accessibility = "savePreference")
     private WebElement savePreferenceText;
 
     public ChooseLanguagePage(AppiumDriver driver) {

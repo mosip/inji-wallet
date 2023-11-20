@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 public class WelcomePage extends BasePage {
 
     @AndroidFindBy(accessibility = "introTitle")
-    @iOSXCUITFindBy(accessibility = "Welcome!")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Welcome!\"`]")
     private WebElement welcomeText;
 
     @AndroidFindBy(accessibility = "introText")
