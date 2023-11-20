@@ -4,14 +4,14 @@ run-name: ${{ inputs.buildname }}
 on:
   workflow_dispatch:
     inputs:
-      beta-release:
-        description: 'Beta release?'
+      release:
+        description: 'Internal/Beta'
         required: true
-        default: 'false'
+        default: 'internal'
         type: choice
         options:
-          - false
-          - true
+          - internal
+          - beta
       buildname:
         description: 'Build App For'
         required: true
@@ -75,7 +75,7 @@ jobs:
   build-android:
     uses: mosip/kattu/.github/workflows/android-publish.yml@master
     with:
-      BETA_RELEASE: ${{ inputs.beta-release }}
+      RELEASE: ${{ inputs.release }}
       NODE_VERSION: '16.x'
       RELEASE_KEYSTORE_ALIAS: androidreleasekey
       MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
@@ -87,7 +87,7 @@ jobs:
       INJI_FLAVOR: ${{ inputs.injiFlavor }}
       SERVICE_LOCATION: '.'
       ANDROID_SERVICE_LOCATION: 'android'
-      BUILD_SCRIPT: 'scripts'
+      BUILD_SCRIPT_LOCATION: 'scripts'
     secrets:
       ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
       RELEASE_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}'
@@ -96,10 +96,10 @@ jobs:
       SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
 
   build-android-beta:
-    if: ${{ inputs.beta-release == 'true' }}
+    if: ${{ inputs.release == 'beta' }}
     uses: mosip/kattu/.github/workflows/android-publish.yml@master
     with:
-      BETA_RELEASE: ${{ inputs.beta-release }}
+      RELEASE: ${{ inputs.release }}
       NODE_VERSION: '16.x'
       RELEASE_KEYSTORE_ALIAS: androidreleasekey
       MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
@@ -111,7 +111,7 @@ jobs:
       INJI_FLAVOR: ${{ inputs.injiFlavor }}
       SERVICE_LOCATION: '.'
       ANDROID_SERVICE_LOCATION: 'android'
-      BUILD_SCRIPT: 'scripts'
+      BUILD_SCRIPT_LOCATION: 'scripts'
     secrets:
       ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
       RELEASE_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}'

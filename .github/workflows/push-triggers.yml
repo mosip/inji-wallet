@@ -25,7 +25,8 @@ jobs:
       DEBUG_KEYSTORE_ALIAS: androiddebugkey
       SERVICE_LOCATION: '.'
       ANDROID_SERVICE_LOCATION: 'android'
-      BUILD_SCRIPT: 'scripts'
+      BUILD_SCRIPT_LOCATION: 'scripts'
+      BUILD_SCRIPT_NAME: 'android-build'
     secrets:
       DEBUG_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_DEBUG_STOREPASS }}'
 
