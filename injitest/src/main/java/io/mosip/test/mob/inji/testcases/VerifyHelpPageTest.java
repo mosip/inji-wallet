@@ -31,7 +31,7 @@ public class VerifyHelpPageTest extends BaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         HelpPage helpPage = homePage.clickOnHelpIcon();
         
-        helpPage.ScrollToViewActivityLog();
+        //helpPage.ScrollToViewActivityLog();
 
         assertTrue(helpPage.isHelpPageLoaded(), "Verify if help page is displayed");
         helpPage.exitHelpPage();

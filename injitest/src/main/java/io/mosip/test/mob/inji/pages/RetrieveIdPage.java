@@ -13,14 +13,15 @@ public class RetrieveIdPage extends BasePage {
     private WebElement retrieveIdText;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Enter ID')]")
-    @iOSXCUITFindBy(accessibility = "RNE__Input__text-input")
+    @iOSXCUITFindBy(accessibility = "idInput")
     private WebElement enterIdTextBox;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Generate Card')]")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`label == \"Generate Card\"`]")
+    @iOSXCUITFindBy(accessibility = "generateVc")
     private WebElement generateCardButton;
 
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypePickerWheel[`value == \"UIN\"`]")
+    @iOSXCUITFindBy(className = "XCUIElementTypePickerWheel")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"UIN invalid\"`]")
     private WebElement vidDropDownValueIos;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'VID')]")
@@ -30,7 +31,7 @@ public class RetrieveIdPage extends BasePage {
     private WebElement spinnerButton;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Get it now')]")
-    @iOSXCUITFindBy(accessibility = "Get it now")
+    @iOSXCUITFindBy(accessibility = "getItHere")
     private WebElement getItNowText;
     
     @AndroidFindBy(xpath = "//*[contains(@text,'UIN invalid')]")
@@ -39,6 +40,7 @@ public class RetrieveIdPage extends BasePage {
     
 
     @AndroidFindBy(xpath = "//*[contains(@text,'The input format is incorrect')]")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"The input format is incorrect\"`]")
     private WebElement inputFormatErrorMessage;
 
 
