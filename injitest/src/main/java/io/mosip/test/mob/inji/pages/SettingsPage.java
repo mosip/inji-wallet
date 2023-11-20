@@ -14,15 +14,15 @@ import java.util.stream.Collectors;
 public class SettingsPage extends BasePage {
 
     @AndroidFindBy(accessibility = "settingsScreen")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Settings\"`]")
+    @iOSXCUITFindBy(accessibility = "settingsScreen")
     private WebElement settingsTittle;
 
     @AndroidFindBy(accessibility = "logout")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Logout\"`]")
+    @iOSXCUITFindBy(accessibility = "Logout")
     private WebElement logoutButton;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Language')]")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"Language\"`]")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Language\"`]")
     private WebElement languageButton;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Filipino')]")
@@ -37,15 +37,19 @@ public class SettingsPage extends BasePage {
     private List<WebElement> languages;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"aboutInji\")")
+    @iOSXCUITFindBy(iOSClassChain ="**/XCUIElementTypeStaticText[`label == \"About Inji\"`]")
     private WebElement aboutInji;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Tuvali-version: v')]")
+    @iOSXCUITFindBy(xpath = "//*[contains(@name,'Tuvali-version: v')]")
     private WebElement tuvaliVersion;
 
     @AndroidFindBy(accessibility = "injiTourGuide")
+    @iOSXCUITFindBy(accessibility = "injiTourGuide")
     private WebElement injiTourGuide;
 
     @AndroidFindBy(accessibility = "receivedCards")
+    @iOSXCUITFindBy(accessibility = "injiTourGuide")
     private WebElement receivedCards;
 
     public SettingsPage(AppiumDriver driver) {

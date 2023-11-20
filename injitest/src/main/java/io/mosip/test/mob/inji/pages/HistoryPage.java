@@ -16,6 +16,7 @@ public class HistoryPage extends BasePage {
     private WebElement historyHeader;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'No history available yet')]")
+    @iOSXCUITFindBy(accessibility = "No history available yet")
     private WebElement noHistoryAvailable;
 
     public HistoryPage(AppiumDriver driver) {
@@ -40,6 +41,11 @@ public class HistoryPage extends BasePage {
         By locator = By.xpath("//*[contains(@text,'" + vcNumber + " Removed from wallet')]");
         return this.isElementDisplayed(locator, "Downloaded VC in android");
     }
+
+    private boolean verifyDeletedHistoryIos(String vcNumber) {
+        By locator = By.xpath("//*[contains(@name,'" + vcNumber + " Removed from wallet')]");
+        return this.isElementDisplayed(locator, "Downloaded VC in ios");
+    }
     
     private int verifyNumberOfRecordsInHistoryAndroid(String vcNumber) throws InterruptedException {
    	By locator = By.xpath("//*[contains(@text,'" + vcNumber + " downloaded')]");
@@ -48,7 +54,7 @@ public class HistoryPage extends BasePage {
    }
    
    private int verifyNumberOfRecordsInHistoryIos(String vcNumber) {
-       By locator = By.xpath("//*[contains(@name,'\" + vcNumber + \" downloaded')]");
+       By locator = By.xpath("//XCUIElementTypeStaticText[@name=\"" + vcNumber + " downloaded\"]");
        List<WebElement> elements = driver.findElements(locator);
        return elements.size();
    }
@@ -63,7 +69,7 @@ public class HistoryPage extends BasePage {
         return false;
     }
     
-    public int getNumberOfRecordsInHistory(String vcNumber, Target os, String string) throws InterruptedException {
+    public int getNumberOfRecordsInHistory(String vcNumber, Target os) throws InterruptedException {
         switch (os) {
             case ANDROID:
                 return verifyNumberOfRecordsInHistoryAndroid(vcNumber);
@@ -81,7 +87,9 @@ public class HistoryPage extends BasePage {
         switch (os) {
             case ANDROID:
                 return verifyDeleteHistoryAndroid(vcNumber);
-            
+
+            case IOS:
+                return verifyDeletedHistoryIos(vcNumber);
         }
         return false;
     }
@@ -109,9 +117,9 @@ public class HistoryPage extends BasePage {
     public boolean verifyActivationSuccessfulRecordInHistory(String vcNumber, Target os) {
         switch (os) {
             case ANDROID:
-                return verifyActivationFailedRecordAndroid(vcNumber);
+                return verifyActivationSuccessfulRecordAndroid(vcNumber);
             case IOS:
-                return verifyActivationFailedRecordIos(vcNumber);
+                return verifyActivationSuccessfulRecordIos(vcNumber);
         }
         return false;
     }
