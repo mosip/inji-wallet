@@ -39,7 +39,12 @@ public class HistoryPage extends BasePage {
     
     private boolean verifyDeleteHistoryAndroid(String vcNumber) {
         By locator = By.xpath("//*[contains(@text,'" + vcNumber + " Removed from wallet')]");
-        return this.isElementDisplayed(locator, "Downloaded VC in android");
+        return this.isElementDisplayed(locator, "Delete VC in android");
+    }
+
+    private boolean verifyDeletedHistoryIos(String vcNumber) {
+        By locator = By.xpath("//*[contains(@name,'" + vcNumber + " Removed from wallet')]");
+        return this.isElementDisplayed(locator, "Downloaded VC in ios");
     }
 
     private boolean verifyDeletedHistoryIos(String vcNumber) {
