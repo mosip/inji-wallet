@@ -105,7 +105,7 @@
                     <include name="downloadCardWithoutInternetRetryWithInternet"/>
                 </methods>
             </class>
-	     <class name="io.mosip.test.mob.inji.testcases.CredentialRegistry">
+	     <class name="io.mosip.test.mob.inji.testcases.CredentialRegistryTest">
                 <methods>
                     <include name="downloadAndVerifyVcInNewEnv"/>
                     <include name="cancelChangeEnvAndVerify"/>
