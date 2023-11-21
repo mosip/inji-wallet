@@ -319,17 +319,17 @@ export const appMachine = model.createMachine(
 
       loadCredentialRegistryInConstants: (_context, event) => {
         changeCrendetialRegistry(
-          !event.response?.credentialRegistry
+          !event.response?.encryptedData?.credentialRegistry
             ? MIMOTO_BASE_URL
-            : event.response?.credentialRegistry,
+            : event.response?.encryptedData?.credentialRegistry,
         );
       },
 
       loadEsignetHostFromConstants: (_context, event) => {
         changeEsignetUrl(
-          !event.response?.esignetHostUrl
+          !event.response?.encryptedData?.esignetHostUrl
             ? ESIGNET_BASE_URL
-            : event.response?.esignetHostUrl,
+            : event.response?.encryptedData?.esignetHostUrl,
         );
       },
     },
