@@ -181,7 +181,7 @@ public class BaseTestCase {
 		return logProp;
 	}
 	
-	 public static String GetOtp() {
+	 public static String getOtp() {
 	  	  String otp="";
 	  	  String externalemail = TestDataReader.readData("externalemail");
 	  	  otp = MockSMTPListener.getOtp(externalemail);
