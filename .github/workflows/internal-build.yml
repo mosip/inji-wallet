@@ -83,7 +83,7 @@ jobs:
       APPLICATION_THEME: ${{ inputs.theme }}
       BUILD_DESCRIPTION: ${{ inputs.buildDescription }}
       ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
-      INJI_FLAVOR: ${{ inputs.injiFlavor }}
+      APP_FLAVOR: ${{ inputs.injiFlavor }}
       SERVICE_LOCATION: '.'
       ANDROID_SERVICE_LOCATION: 'android'
       BUILD_SCRIPT_LOCATION: 'scripts'
@@ -108,7 +108,7 @@ jobs:
       APPLICATION_THEME: ${{ inputs.theme }}
       BUILD_DESCRIPTION: ${{ inputs.buildDescription }}
       ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
-      INJI_FLAVOR: ${{ inputs.injiFlavor }}
+      APP_FLAVOR: ${{ inputs.injiFlavor }}
       SERVICE_LOCATION: '.'
       ANDROID_SERVICE_LOCATION: 'android'
       BUILD_SCRIPT_LOCATION: 'scripts'
