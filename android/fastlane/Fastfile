@@ -23,7 +23,7 @@ lane :android_build_internal do
   applicationId = "io.mosip."
   applicationId += (INJI_FLAVOR == 'residentapp' || INJI_FLAVOR == 'inji') ? INJI_FLAVOR : "inji.#{INJI_FLAVOR}"
 
-    previous_build_number = google_play_track_version_codes(
+  previous_build_number = google_play_track_version_codes(
     package_name: applicationId,
     track: "internal",
     json_key: "play_config.json",
