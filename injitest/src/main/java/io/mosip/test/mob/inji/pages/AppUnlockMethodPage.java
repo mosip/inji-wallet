@@ -8,11 +8,11 @@ import org.openqa.selenium.WebElement;
 public class AppUnlockMethodPage extends BasePage {
 
     @AndroidFindBy(accessibility = "selectAppUnlockMethod")
-    @iOSXCUITFindBy(accessibility = "selectAppUnlockMethod")
+    @iOSXCUITFindBy(accessibility = "Select App Unlock Method")
     private WebElement selectAppUnlockMethodText;
 
     @AndroidFindBy(accessibility = "usePasscode")
-    @iOSXCUITFindBy(accessibility = "usePasscode")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`label == \"Use Passcode\"`]")
     private WebElement usePasscodeButton;
 
     public AppUnlockMethodPage(AppiumDriver driver) {

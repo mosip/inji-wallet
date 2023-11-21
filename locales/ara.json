@@ -475,7 +475,6 @@
     "enableBluetoothMessage": "يرجى تمكين أذونات البلوتوث لدعم المشاركة المحلية",
     "enableBluetoothButtonText": "السماح لأذونات البلوتوث",
     "scanningGuide": "امسك الهاتف بثبات وامسح رمز الاستجابة السريعة ضوئيًا",
-    "invalidQR": "يرجى مسح QR صالح",
     "sharingVc": "مشاركة بطاقة ",
     "errors": {
       "locationDisabled": {

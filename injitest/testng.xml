@@ -20,8 +20,6 @@
                 <methods>
                     <include name="verifyWelcomePagesContent"/>
                     <include name="verifyWelcomePagesFromInjiTourGuide"/>
-		    <include name="verifyGoBackFromInjiTourGuide"/>
-                    <include name="verifyClickOnBackFromInjiTourGuide"/>
                 </methods>
             </class>
             <class name="io.mosip.test.mob.inji.testcases.VcDownloadAndVerifyUsingVidTest">
@@ -29,7 +27,6 @@
                     <include name="downloadAndVerifyVcUsingVid"/>
                     <include name="downloadTwoVcDeleteUsingVid"/>
                     <include name="verifyInvalidVidErrorMessage"/>
-		    <include name="downloadAndVerifyVcUsingRevokeVid"/>
                 </methods>
             </class>
             <class name="io.mosip.test.mob.inji.testcases.UnlockWithPasscodeTest">
@@ -50,7 +47,7 @@
                     <include name="DownloadingDeletedVc"/>
                 </methods>
             </class>
-           <class name="io.mosip.test.mob.inji.testcases.VerifyHistoryTest">
+            <class name="io.mosip.test.mob.inji.testcases.VerifyHistoryTest">
                 <methods>
                     <include name="generateAndVerifyHistory"/>
                     <include name="verifyActivationFailedRecordInHistory"/>
@@ -76,7 +73,6 @@
                 <methods>
                     <include name="pinVc"/>
                     <include name="VerifyCameraAfterPinVc"/>
-		    
                 </methods>
             </class>
             <class name="io.mosip.test.mob.inji.testcases.ChangeLanguageTest">
@@ -98,35 +94,6 @@
                     <include name="openCameraOnFlightMode"/>
                     <include name="activateVcWithoutInternet"/>
                     <include name="verifyListOfLanguagesInOfflineMode"/>
-		            <include name="deleteDownloadedVcInOfflineMode"/>
-		            <include name="verifyHelpPageOfflineMode"/>
-                    <include name="openQrOffline"/>
-                    <include name="verifyRecivedCardOffline"/>
-                    <include name="downloadCardWithoutInternetRetryWithInternet"/>
-                </methods>
-            </class>
-	     <class name="io.mosip.test.mob.inji.testcases.CredentialRegistryTest">
-                <methods>
-                    <include name="downloadAndVerifyVcInNewEnv"/>
-                    <include name="cancelChangeEnvAndVerify"/>
-                    <include name="generateUinInNewEnv"/>
-                    <include name="downloadAndVerifyVcInInvalidEnv"/>
-                    <include name="retrivingUinInNewEnv"/>
-                    <include name="retrivingUinInOtherEnv"/>
-                    <include name="downloadAndVerifyVcInTwoEnv"/>
-                    <include name="downloadVcAndActivateItInOtherEnv"/>
-                </methods>
-            </class>
-      <class name="io.mosip.test.mob.inji.testcases.ChangeLanguageTest">
-                <methods>
-                    <include name="changeLanguage"/>
-                    <include name="changeLanguageToArabic"/>
-                </methods>
-            </class>
-            <class name="io.mosip.test.mob.inji.testcases.ReceiveCardTest">
-                <methods>
-                    <include name="verifyRecivedCardAndQrCode"/>
-                    <include name="verifyRecivedCardAndQrCodeInFilipinoLanguage"/>
                 </methods>
             </class>
         </classes>

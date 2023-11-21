@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 public class UnlockApplicationPage extends BasePage {
 
     @AndroidFindBy(accessibility = "unlockApplication")
-    @iOSXCUITFindBy(accessibility = "unlockApplication")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`label == \"Unlock application\"`]")
     private WebElement unlockApplicationButton;
 
     public UnlockApplicationPage(AppiumDriver driver) {

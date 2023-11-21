@@ -8,31 +8,26 @@ import org.openqa.selenium.WebElement;
 public class MoreOptionsPage extends BasePage {
 
     @AndroidFindBy(accessibility = "removeFromWallet")
-    @iOSXCUITFindBy(accessibility = "removeFromWallet")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`name == \"listItemTitle\"`][4]")
     private WebElement removeFromWalletButton;
 
     @AndroidFindBy(accessibility = "kebabTitle")
-    @iOSXCUITFindBy(accessibility = "kebabTitle")
+    @iOSXCUITFindBy(accessibility = "More Options")
     private WebElement moreOptionsText;
 
     @AndroidFindBy(accessibility = "pinOrUnPinCard")
-    @iOSXCUITFindBy(accessibility = "pinOrUnPinCard")
     private WebElement pinOrUnPinCardButton;
 
     @AndroidFindBy(accessibility = "pendingActivationOrActivated")
-    @iOSXCUITFindBy(accessibility = "pendingActivationOrActivated")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Activation pending for online login!\"`]")
     private WebElement activationPending;
 
     @AndroidFindBy(accessibility = "profileAuthenticated")
-    @iOSXCUITFindBy(accessibility = "profileAuthenticated")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"\uE8E8 Activated for online login!\"`][4]")
     private WebElement activatedForOnlineLoginButton;
     
-    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"iconIcon\")")
-    @iOSXCUITFindBy(iOSClassChain ="**/XCUIElementTypeOther[`label == \"\uE5CD\"`][1]")
-    private WebElement closeButton;
-
-    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Something is wrong. Please try again later!\")")
-    public WebElement somthingIsWrongPopup;
+    @AndroidFindBy(xpath = "//*[@resource-id=\"iconIcon\"]")
+    private WebElement CloseButton;
 
     public MoreOptionsPage(AppiumDriver driver) {
         super(driver);
@@ -60,12 +55,8 @@ public class MoreOptionsPage extends BasePage {
         return this.isElementDisplayed(activatedForOnlineLoginButton, "Activated for online login text");
     }
     
-    public HomePage clickOnCloseButton() {
-    	clickOnElement(closeButton);
+    public HomePage ClickOnCloseButton() {
+    	clickOnElement(CloseButton);
     	return new HomePage(driver);
-    }
-    
-    public boolean isSomthingIsWrongPopupVisible() {
-        return this.isElementDisplayed(somthingIsWrongPopup, "Something is wrong. Please try again later!");
     }
 }

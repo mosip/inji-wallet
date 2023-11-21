@@ -368,16 +368,7 @@ export const MosipVCItemDetails: React.FC<
         props.isBindingPending ? (
           <Column style={Theme.Styles.openCardBgContainer} padding="10">
             <Column margin={'0 0 4 0'} crossAlign={'flex-start'}>
-              <Icon
-                name="shield-alert"
-                color={Theme.Colors.Icon}
-                size={Theme.ICON_LARGE_SIZE}
-                type="material-community"
-                containerStyle={{
-                  marginEnd: 5,
-                  bottom: 1,
-                }}
-              />
+              <Image source={Theme.activationPending}></Image>
               <Text
                 testID="offlineAuthDisabledHeader"
                 style={{flex: 1}}

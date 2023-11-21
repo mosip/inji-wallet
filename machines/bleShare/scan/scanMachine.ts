@@ -890,9 +890,13 @@ export const scanMachine =
         }),
 
         setLinkCode: assign({
-          linkCode: (_, event) =>
-            new URL(event.params).searchParams.get('linkCode'),
+          linkCode: (_context, event) =>
+            event.params.substring(
+              event.params.indexOf('linkCode=') + 9,
+              event.params.indexOf('&'),
+            ),
         }),
+
         setStayInProgress: assign({
           stayInProgress: context => !context.stayInProgress,
         }),
@@ -1200,14 +1204,16 @@ export const scanMachine =
       },
 
       guards: {
-        // sample: 'OPENID4VP://connect:?name=OVPMOSIP&key=69dc92a2cc91f02258aa8094d6e2b62877f5b6498924fbaedaaa46af30abb364'
-        isOpenIdQr: (_context, event) =>
-          event.params.startsWith('OPENID4VP://'),
+        isOpenIdQr: (_context, event) => event.params.includes('OPENID4VP://'),
+
         isQrLogin: (_context, event) => {
+          let linkCode = '';
           try {
-            let linkCode = new URL(event.params);
-            // sample: 'inji://landing-page-name?linkCode=sTjp0XVH3t3dGCU&linkExpireDateTime=2023-11-09T06:56:18.482Z'
-            return linkCode.searchParams.get('linkCode') !== null;
+            linkCode = event.params.substring(
+              event.params.indexOf('linkCode=') + 9,
+              event.params.indexOf('&'),
+            );
+            return linkCode !== null;
           } catch (e) {
             return false;
           }

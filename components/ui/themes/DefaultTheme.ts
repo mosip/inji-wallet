@@ -33,8 +33,8 @@ const Colors = {
   LightOrange: '#FDF1E6',
   GradientColors: ['#F59B4B', '#E86E04'],
   DisabledColors: ['#C7C7C7', '#C7C7C7'],
+  captureIconBorder: '#F59B4B',
   TimeoutHintBoxColor: '#FFF7E5',
-  TimeoutHintBoxBorder: '#FFF2D6',
   TimoutHintText: '#8B6105',
   resendCodeTimer: '#555555',
   uncheckedIcon: '#DBDBDB',
@@ -789,7 +789,7 @@ export const DefaultTheme = {
       borderColor: Colors.Orange,
     },
     container: {
-      height: 45,
+      height: 'auto',
       flexDirection: 'row',
     },
     disabled: {
@@ -853,8 +853,6 @@ export const DefaultTheme = {
       margin: 21,
       paddingHorizontal: 14,
       paddingVertical: 12,
-      borderWidth: 2,
-      borderColor: Colors.TimeoutHintBoxBorder,
       borderRadius: 12,
     },
     sharedSuccessfully: {
@@ -1314,11 +1312,11 @@ export const DefaultTheme = {
 
   ICON_SMALL_SIZE: 16,
   ICON_MID_SIZE: 22,
-  ICON_LARGE_SIZE: 33,
   PinIcon: require('../../../assets/pin_icon.png'),
   CloseCard: require('../../../assets/card_bg.png'),
   CardBackground: require('../../../assets/card_bg.png'),
   OpenCard: require('../../../assets/card_bg.png'),
+  activationPending: require('../../../assets/pending_activation.png'),
   cardFaceIcon: require('../../../assets/placeholder-photo.png'),
   MosipSplashLogo: require('../../../assets/icon.png'),
   MosipLogo: require('../../../assets/mosip-logo.png'),

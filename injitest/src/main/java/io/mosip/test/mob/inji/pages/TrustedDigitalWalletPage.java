@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 public class TrustedDigitalWalletPage extends BasePage {
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Trusted Digital Wallet')]")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Trusted Digital Wallet\"`]")
+    @iOSXCUITFindBy(accessibility = "Trusted Digital Wallet")
     private WebElement trustedDigitalWalletText;
 
     @AndroidFindBy(xpath = "(//*[@class='android.widget.TextView'])[3]")

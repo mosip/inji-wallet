@@ -479,7 +479,6 @@
     "enableBluetoothMessage": "Mangyaring paganahin ang mga pahintulot ng bluetooth upang suportahan ang lokal na pagbabahagi",
     "enableBluetoothButtonText": "Payagan ang mga pahintulot ng bluetooth",
     "scanningGuide": "Panatilihin ang telepono at i-scan ang QR code",
-    "invalidQR": "Mangyaring mag-scan ng wastong QR",
     "errors": {
       "locationDisabled": {
         "message": "Para magpatuloy, hayaang i-on ng iyong device ang lokasyon",

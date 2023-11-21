@@ -32,7 +32,7 @@ export const MainLayout: React.FC<
           triggerComponent={
             <Image
               {...testIDProps('help')}
-              source={Theme.HelpIcon}
+              source={require('../assets/help-icon.png')}
               style={{width: 36, height: 36}}
             />
           }

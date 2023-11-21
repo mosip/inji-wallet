@@ -8,66 +8,43 @@ import org.openqa.selenium.WebElement;
 
 public class DetailedVcViewPage extends BasePage{
     @AndroidFindBy(xpath = "//*[contains(@text,'ID Details')]")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"ID Details\"`]")
     private WebElement detailedVcViewPageTitle;
 
     @AndroidFindBy(accessibility = "fullNameValue")
-    @iOSXCUITFindBy(accessibility = "fullNameValue")
     private WebElement fullNameValue;
 
     @AndroidFindBy(accessibility = "genderValue")
-    @iOSXCUITFindBy(accessibility = "genderValue")
     private WebElement genderValue;
 
     @AndroidFindBy(accessibility = "dateOfBirthValue")
-    @iOSXCUITFindBy(accessibility = "dateOfBirthValue")
     private WebElement dateOfBirthValue;
 
     @AndroidFindBy(accessibility = "nationalCard")
-    @iOSXCUITFindBy(accessibility = "nationalCard")
     private WebElement idTypeValue;
 
     @AndroidFindBy(accessibility = "valid")
-    @iOSXCUITFindBy(accessibility = "valid")
     private WebElement statusValue;
 
     @AndroidFindBy(accessibility = "uinNumber")
-    @iOSXCUITFindBy(accessibility = "uinNumber")
     private WebElement uinNumberValue;
 
     @AndroidFindBy(accessibility = "generatedOnValue")
-    @iOSXCUITFindBy(accessibility = "generatedOnValue")
     private WebElement generatedOnValue;
 
     @AndroidFindBy(accessibility = "phoneNumberValue")
-    @iOSXCUITFindBy(accessibility = "phoneNumberValue")
     private WebElement phoneNumberValue;
 
     @AndroidFindBy(accessibility = "emailIdValue")
-    @iOSXCUITFindBy(accessibility = "emailIdValue")
     private WebElement emailIdValue;
 
     @AndroidFindBy(accessibility = "enableVerification")
-    @iOSXCUITFindBy(accessibility = "enableVerification")
     private WebElement activateButton;
 
     @AndroidFindBy(accessibility = "profileAuthenticated")
-    @iOSXCUITFindBy(accessibility = "profileAuthenticated")
     private WebElement profileAuthenticated;
 
     @AndroidFindBy(accessibility = "close")
-    @iOSXCUITFindBy(accessibility = "close")
     private WebElement crossIcon;
-    
-    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"iconIcon\")")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"\uE5CD\"`][2]")
-    private WebElement qrCloseIcon;
-
-    @AndroidFindBy(xpath = "//android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup[1]/android.view.ViewGroup[1]/android.view.ViewGroup[1]/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup")
-    private WebElement detailedVcViewPageQr;
-    
-    @AndroidFindBy(accessibility = "qrCodeHeader")
-    private WebElement qrCodeHeader;
 
     public DetailedVcViewPage(AppiumDriver driver) {
         super(driver);
@@ -129,19 +106,5 @@ public class DetailedVcViewPage extends BasePage{
     public HomePage clickOnCrossIcon(){
         clickOnElement(crossIcon);
         return new HomePage(driver);
-    }
-    
-    public HomePage clickOnQrCrossIcon(){
-        clickOnElement(qrCloseIcon);
-        return new HomePage(driver);
-    }
-
-    public PleaseConfirmPopupPage clickOnQrCodeButton(){
-        clickOnElement(detailedVcViewPageQr);
-        return new PleaseConfirmPopupPage(driver);
-    }
-
-    public boolean isQrCodeDisplayed() {
-    	return qrCodeHeader.isDisplayed();
     }
 }

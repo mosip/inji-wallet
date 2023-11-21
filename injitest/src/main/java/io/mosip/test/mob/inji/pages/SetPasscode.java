@@ -9,7 +9,7 @@ import io.mosip.test.mob.inji.constants.Target;
 
 public class SetPasscode extends BasePage {
 
-    @iOSXCUITFindBy(accessibility = "setPasscode")
+    @iOSXCUITFindBy(accessibility = "Set Passcode")
     @AndroidFindBy(xpath = "//*[contains(@text,'Set Passcode')]")
     private WebElement setPasscode;
 

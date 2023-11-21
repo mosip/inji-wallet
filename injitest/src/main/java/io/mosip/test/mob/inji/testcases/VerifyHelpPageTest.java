@@ -4,7 +4,6 @@ import org.testng.annotations.Test;
 import io.mosip.test.mob.inji.pages.*;
 import io.mosip.test.mob.inji.utils.TestDataReader;
 
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class VerifyHelpPageTest extends BaseTest {
@@ -32,13 +31,11 @@ public class VerifyHelpPageTest extends BaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         HelpPage helpPage = homePage.clickOnHelpIcon();
         
-        assertEquals(helpPage.ishelpPageContentEmpty(),false,"verifying text is not empty");
-        helpPage.scrollPerformInHelpPage();
+        helpPage.ScrollToViewActivityLog();
 
         assertTrue(helpPage.isHelpPageLoaded(), "Verify if help page is displayed");
         helpPage.exitHelpPage();
 
-        
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
     }
 

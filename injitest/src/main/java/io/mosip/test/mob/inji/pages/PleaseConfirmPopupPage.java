@@ -7,11 +7,10 @@ import org.openqa.selenium.WebElement;
 
 public class PleaseConfirmPopupPage extends BasePage {
     @AndroidFindBy(accessibility = "yesConfirm")
-    @iOSXCUITFindBy(accessibility = "yesConfirm")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`label == \"Yes, I confirm\"`]")
     private WebElement yesButton;
     
     @AndroidFindBy(accessibility = "no")
-    @iOSXCUITFindBy(accessibility = "no")
     private WebElement noButton;
 
     public PleaseConfirmPopupPage(AppiumDriver driver) {

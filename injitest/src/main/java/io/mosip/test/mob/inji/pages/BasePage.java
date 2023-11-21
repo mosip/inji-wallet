@@ -45,17 +45,6 @@ public class BasePage {
             return false;
         }
     }
-    
-    protected boolean isElementInvisibleYet(WebElement element, String elementName) {
-        try {
-        	waitForElementToBeInvisible(element);
-            ExtentLogger.pass(elementName + " is displayed");
-            return false;
-        } catch (Exception e) {
-            //ExtentLogger.fail(elementName + " is not displayed");
-            return true;
-        }
-    }
 
     protected void clickOnElement(WebElement element) {
         waitForElementToBeVisible(element);
@@ -71,11 +60,6 @@ public class BasePage {
         wait.until(ExpectedConditions.visibilityOf(element));
     }
     
-    private void waitForElementToBeInvisible(WebElement element) {
-    	  WebDriverWait wait = new WebDriverWait(driver, ofSeconds(30));
-    	  wait.until(ExpectedConditions.invisibilityOf(element));
-    	}
-    
     protected boolean isElementEnabled(WebElement element) {
         try {
             waitForElementToBeVisible(element);
@@ -88,13 +72,6 @@ public class BasePage {
         }
     }
 
-    protected void clearTextBoxAndSendKeys(WebElement element, String text, String elementName) {
-        this.waitForElementToBeVisible(element);
-        element.clear();
-        element.sendKeys(text);
-        ExtentLogger.pass(text + " entered in " + elementName);
-    }
-    
     protected void sendKeysToTextBox(WebElement element, String text, String elementName) {
         this.waitForElementToBeVisible(element);
         element.sendKeys(text);

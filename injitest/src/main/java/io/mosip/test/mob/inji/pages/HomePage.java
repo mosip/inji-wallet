@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 
 public class HomePage extends BasePage {
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"downloadIcon\")")
-    @iOSXCUITFindBy(accessibility = "downloadIcon")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`label == \"Download Card\"`]")
     private WebElement downloadCardButton;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Home')]")
@@ -16,18 +16,18 @@ public class HomePage extends BasePage {
     private WebElement homeButton;
 
     @AndroidFindBy(xpath = "//*[@resource-id=\"iconIcon\"]")
-    @iOSXCUITFindBy(accessibility = "\uE09A")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"\uE09A\"`][6]")
     private WebElement settingButton;
 
     @AndroidFindBy(xpath = "(//*[@class=\"android.widget.ImageView\"])[2]")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeNavigationBar[`name == \"RNSScreen\"`]/XCUIElementTypeOther[2]")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"\uE09A\"`][5]/XCUIElementTypeOther[1]")
     private WebElement helpButton;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'History')]")
     @iOSXCUITFindBy(accessibility = "History, tab, 3 of 3")
     private WebElement historyButton;
 
-    @iOSXCUITFindBy(accessibility = "ellipsis")
+    @iOSXCUITFindBy(iOSClassChain = "Need to update")
     @AndroidFindBy(accessibility = "ellipsis")
     private WebElement moreOptionsButton;
 
@@ -44,26 +44,19 @@ public class HomePage extends BasePage {
     private WebElement okButton;
 
     @AndroidFindBy(accessibility = "pinIcon")
-    @iOSXCUITFindBy(accessibility = "pinIcon")
     private WebElement pinIcon;
 
     @AndroidFindBy(accessibility = "bringYourDigitalID")
-    @iOSXCUITFindBy(accessibility = "bringYourDigitalID")
     private WebElement bringYourDigitalIdentity;
 
     @AndroidFindBy(accessibility = "errorTitle")
     private WebElement noInternetConnection;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Scan')]")
-    @iOSXCUITFindBy(accessibility = "Scan, tab, 2 of 3")
     private WebElement scanButton;
 
     @AndroidFindBy(accessibility = "nationalCard")
-    @iOSXCUITFindBy(accessibility = "nationalCard")
     private WebElement idTypeValue;
-    
-    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Try again\")")
-    private WebElement tryAgainButton;
 
 
     public HomePage(AppiumDriver driver) {
@@ -86,18 +79,18 @@ public class HomePage extends BasePage {
     }
 
     public boolean isNameDisplayed(String name) {
-        By fullName = By.xpath("//*[contains(@value,'" + name + "') or contains(@text,'" + name + "')]");
+        By fullName = By.xpath("//*[contains(@name,'" + name + "') or contains(@text,'" + name + "')]");
         return this.isElementDisplayed(fullName, 60, "Name on downloaded card");
     }
     
    public boolean isSecondNameDisplayed(String name) {
-    	By fullName = By.xpath("(//*[contains(@value,'" + name + "') or contains(@text,'" + name + "')])[2]");
-        return this.isElementDisplayed(fullName, 60, "Name on downloaded card");
+    	By fullName = By.xpath("(//*[contains(@text,'" + name + "')])[2]");
+    	return this.isElementDisplayed(fullName, 60, "Name on downloaded card");
     	
    }
 
     public DetailedVcViewPage openDetailedVcView(String name) {
-        By fullName = By.xpath("//*[contains(@value,'" + name + "') or contains(@text,'" + name + "')]");
+        By fullName = By.xpath("//*[contains(@name,'" + name + "') or contains(@text,'" + name + "')]");
         clickOnElement(fullName);
         return new DetailedVcViewPage(driver);
     }
@@ -143,17 +136,5 @@ public class HomePage extends BasePage {
     public boolean isIdTypeDisplayed() {
         return this.isElementDisplayed(idTypeValue, "Name on downloaded card");
     }
-    
-    public boolean isTryAgainButtonDisplayed() {
-        return this.isElementDisplayed(tryAgainButton, "Try again");
-    }
-    
-    public boolean isTryAgainButtonNotDisplayed() {
-        return this.isElementInvisibleYet(tryAgainButton, "Try again");
-    }
 
-    public HomePage clickOnTryAgainButton() {
-    	 clickOnElement(tryAgainButton);
-         return this;
-    }
 }

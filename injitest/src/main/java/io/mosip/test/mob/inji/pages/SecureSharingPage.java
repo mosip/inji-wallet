@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 public class SecureSharingPage extends BasePage {
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Secure Sharing')]")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Secure Sharing\"`]")
+    @iOSXCUITFindBy(accessibility = "Secure Sharing")
     private WebElement secureSharingText;
 
     @AndroidFindBy(xpath = "(//*[@class='android.widget.TextView'])[3]")

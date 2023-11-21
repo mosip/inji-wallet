@@ -9,18 +9,15 @@ import org.openqa.selenium.WebElement;
 public class HelpPage extends BasePage {
 
     @AndroidFindBy(accessibility = "helpScreen")
-    @iOSXCUITFindBy(accessibility = "helpScreen")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Help\"`]")
     private WebElement helpText;
 
-    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"iconIcon\")")
-    @iOSXCUITFindBy(accessibility = "close")
+    @AndroidFindBy(xpath = "//*[@resource-id=\"iconIcon\"]")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"\uE5CD\"`][2]")
     private WebElement crossIcon;
     
-    @AndroidFindBy(uiAutomator = "new UiScrollable(new UiSelector()).scrollIntoView(text(\"What happens when Android keystore biometric is changed?\"));")
-    public WebElement biometricIsChangeTextdHeader;
-
-    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"How to add a card?\")")
-    public WebElement helpPageContent;
+    @AndroidFindBy(uiAutomator = "new UiScrollable(new UiSelector()).scrollIntoView(text(\"How to view activity logs?\"));")
+    public WebElement howToViewActivity;
     
     public HelpPage(AppiumDriver driver) {
         super(driver);
@@ -34,12 +31,8 @@ public class HelpPage extends BasePage {
         this.clickOnElement(crossIcon);
     }
     
-    public void scrollPerformInHelpPage() {
-    	biometricIsChangeTextdHeader.isDisplayed();
-    }
-
-    public boolean ishelpPageContentEmpty() {
-    	return helpPageContent.getText().isBlank();
+    public void ScrollToViewActivityLog() {
+    	howToViewActivity.click();
     }
     
 }

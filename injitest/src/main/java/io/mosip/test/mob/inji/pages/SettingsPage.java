@@ -14,15 +14,15 @@ import java.util.stream.Collectors;
 public class SettingsPage extends BasePage {
 
     @AndroidFindBy(accessibility = "settingsScreen")
-    @iOSXCUITFindBy(accessibility = "settingsScreen")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Settings\"`]")
     private WebElement settingsTittle;
 
     @AndroidFindBy(accessibility = "logout")
-    @iOSXCUITFindBy(accessibility = "Logout")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Logout\"`]")
     private WebElement logoutButton;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Language')]")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Language\"`]")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"Language\"`]")
     private WebElement languageButton;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Filipino')]")
@@ -37,35 +37,16 @@ public class SettingsPage extends BasePage {
     private List<WebElement> languages;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"aboutInji\")")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"About Inji\"`]")
     private WebElement aboutInji;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Tuvali-version: v')]")
-    @iOSXCUITFindBy(xpath = "//*[contains(@name,'Tuvali-version: v')]")
     private WebElement tuvaliVersion;
 
     @AndroidFindBy(accessibility = "injiTourGuide")
-    @iOSXCUITFindBy(accessibility = "injiTourGuide")
     private WebElement injiTourGuide;
 
     @AndroidFindBy(accessibility = "receivedCards")
-    @iOSXCUITFindBy(accessibility = "injiTourGuide")
     private WebElement receivedCards;
-
-    @AndroidFindBy(xpath = "//*[contains(@text,'Credential Registry')]")
-    public WebElement credentialRegistryText;
-
-    @AndroidFindBy(xpath = "//*[contains(@text,'Receive Card')]")
-    public WebElement receiveCardText;
-
-    @AndroidFindBy(xpath = "//*[contains(@text,'Tumanggap ng Card')]")
-    public WebElement receiveCardInfilipinoLanguageText;
-
-    @AndroidFindBy(xpath = "(//*[@resource-id=\"padView\"])[3]")
-    private WebElement arabicLanguageButton;
-
-    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"فتح التطبيق\")")
-    private WebElement chooseLanguageInArabic;
 
     public SettingsPage(AppiumDriver driver) {
         super(driver);
@@ -103,7 +84,7 @@ public class SettingsPage extends BasePage {
         return new HashSet<>(expectedLanguages).equals(new HashSet<>(actualLanguages));
     }
 
-    public SettingsPage clickOnAboutInji() {
+    public SettingsPage clickOnAboutInji(){
         clickOnElement(aboutInji);
         return this;
     }
@@ -112,39 +93,12 @@ public class SettingsPage extends BasePage {
         return this.isElementDisplayed(tuvaliVersion, "Tuvali-version");
     }
 
-    public void clickOnInjiTourGuide() {
+    public void clickOnInjiTourGuide(){
         clickOnElement(injiTourGuide);
     }
 
     public boolean isReceivedCardsPresent() {
         return this.isElementDisplayed(receivedCards, "Received Cards");
     }
-    
-    public boolean verifyArabicLanguage() {
-        return this.isElementDisplayed(chooseLanguageInArabic, "فتح التطبيق");
-    }
 
-    public CredentialRegistryPage clickOnCredentialRegistry() {
-        clickOnElement(credentialRegistryText);
-        return new CredentialRegistryPage(driver);
-    }
-
-    public ReceiveCardPage clickOnReceiveCard() {
-        clickOnElement(receiveCardText);
-        return new ReceiveCardPage(driver);
-    }
-
-    public ReceiveCardPage clickOnReceiveCardFilipinoLanguage() {
-        clickOnElement(receiveCardInfilipinoLanguageText);
-        return new ReceiveCardPage(driver);
-    }
-
-    public AboutInjiPage clickOnAbouInji() {
-        clickOnElement(aboutInji);
-        return new AboutInjiPage(driver);
-    }
-
-    public void clickOnArabicLanguageButton() {
-        clickOnElement(arabicLanguageButton);
-    }
 }

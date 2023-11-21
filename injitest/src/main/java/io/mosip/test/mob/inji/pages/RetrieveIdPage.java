@@ -13,15 +13,14 @@ public class RetrieveIdPage extends BasePage {
     private WebElement retrieveIdText;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Enter ID')]")
-    @iOSXCUITFindBy(accessibility = "idInput")
+    @iOSXCUITFindBy(accessibility = "RNE__Input__text-input")
     private WebElement enterIdTextBox;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Generate Card')]")
-    @iOSXCUITFindBy(accessibility = "generateVc")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`label == \"Generate Card\"`]")
     private WebElement generateCardButton;
 
-    @iOSXCUITFindBy(className = "XCUIElementTypePickerWheel")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"UIN invalid\"`]")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypePickerWheel[`value == \"UIN\"`]")
     private WebElement vidDropDownValueIos;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'VID')]")
@@ -31,18 +30,17 @@ public class RetrieveIdPage extends BasePage {
     private WebElement spinnerButton;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Get it now')]")
-    @iOSXCUITFindBy(accessibility = "getItHere")
+    @iOSXCUITFindBy(accessibility = "Get it now")
     private WebElement getItNowText;
     
     @AndroidFindBy(xpath = "//*[contains(@text,'UIN invalid')]")
     private WebElement invalidUin;
+    
+    
 
     @AndroidFindBy(xpath = "//*[contains(@text,'The input format is incorrect')]")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"The input format is incorrect\"`]")
     private WebElement inputFormatErrorMessage;
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'AID is not ready yet')]")
-    private WebElement aidIsNotReadyYetMessage;
 
     public RetrieveIdPage(AppiumDriver driver) {
         super(driver);
@@ -74,10 +72,6 @@ public class RetrieveIdPage extends BasePage {
     
     public boolean isInvalidUinMassageLoaded() {
         return this.isElementDisplayed(invalidUin, "UIN invalid");
-    }
-    
-    public boolean isAidIsNotReadyYetErrorDisplayed() {
-        return this.isElementDisplayed(aidIsNotReadyYetMessage, "Retrieve your id page");
     }
 
 

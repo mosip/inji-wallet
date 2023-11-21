@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 
 public class EnterYourPasscodePage extends BasePage {
 
-    @iOSXCUITFindBy(accessibility = "enterPasscode")
+    @iOSXCUITFindBy(accessibility = "Enter your passcode")
     @AndroidFindBy(xpath = "//*[contains(@text,'Enter your passcode')]")
     private WebElement enterYourPasscodeText;
 

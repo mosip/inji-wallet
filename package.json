@@ -113,7 +113,6 @@
     "react-native-flipper": "^0.212.0",
     "react-native-flipper-xstate": "^1.0.5",
     "react-native-svg-transformer": "^1.1.0",
-    "react-native-url-polyfill": "^2.0.0",
     "rn-mmkv-storage-flipper": "^1.1.1",
     "typescript": "^4.9.4"
   },
