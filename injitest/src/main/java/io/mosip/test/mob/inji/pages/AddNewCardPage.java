@@ -34,6 +34,5 @@ public class AddNewCardPage extends BasePage{
     public AddNewCardPage clickOnBack() {
     	clickOnElement(backButton);
 		return this;
-
     }
 }

@@ -166,9 +166,7 @@ public class DeletingVcTest extends BaseTest {
 
         assertTrue(historyPage.verifyHistory(TestDataReader.readData("uin"), target));
 
-        //historyPage.getNumberOfRecordsInHistory(TestDataReader.readData("uin"), target, "Verify two download records in history page");
         assertEquals(historyPage.getNumberOfRecordsInHistory(TestDataReader.readData("uin"), target), 2,"Verify two download records in history page");
-
         assertTrue(historyPage.verifyDeleteHistory(TestDataReader.readData("uin"), target), "Verify if deleted history is displayed");
     }
 }

@@ -237,7 +237,6 @@ public class NoNetworkAndroidTest extends BaseTest {
 
         CommonMethods.disableAirplaneMode();
         assertTrue(homePage.isNoVCDownloaded(), "Verify if VC is removed");
-
     }
     
     @Test
@@ -310,8 +309,8 @@ public class NoNetworkAndroidTest extends BaseTest {
         
         ReceiveCardPage receiveCardPage = settingsPage.clickOnReceiveCard();
         assertTrue(receiveCardPage.isReceiveCardHederDisplayed(), "Verify if QR code  header is displayed");
-        assertTrue(receiveCardPage.isWaitingForConnectionDisplayed(), "Verify if waiting for connection displayed");
         
+        assertTrue(receiveCardPage.isWaitingForConnectionDisplayed(), "Verify if waiting for connection displayed");
         CommonMethods.disableAirplaneMode();
     }
     
@@ -345,6 +344,7 @@ public class NoNetworkAndroidTest extends BaseTest {
         CommonMethods.disableAirplaneMode();
         assertTrue(homePage.isTryAgainButtonDisplayed(), "Verify if Try again button displayed");
         Thread.sleep(3000);
+        
         homePage.clickOnTryAgainbutton();
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");        
     }

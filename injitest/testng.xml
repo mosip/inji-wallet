@@ -7,7 +7,7 @@
     <test verbose="2" preserve-order="true" name="android">
         <parameter name="platformName" value="ANDROID"/>
         <classes>
-       <!--     <class name="io.mosip.test.mob.inji.testcases.VcDownloadAndVerifyUsingUinTest">
+            <class name="io.mosip.test.mob.inji.testcases.VcDownloadAndVerifyUsingUinTest">
                 <methods>
                     <include name="downloadAndVerifyVcUsingUin"/>
                     <include name="downloadWithEmptyUin"/>
@@ -42,7 +42,7 @@
                 <methods>
                     <include name="verifyHelpPage"/>
                 </methods>
-            </class>-->
+            </class>
             <class name="io.mosip.test.mob.inji.testcases.DeletingVcTest">
                 <methods>
                     <include name="deleteVcAndVerifyInHistory"/>
@@ -50,7 +50,7 @@
                     <include name="DownloadingDeletedVc"/>
                 </methods>
             </class>
-          <!--  <class name="io.mosip.test.mob.inji.testcases.VerifyHistoryTest">
+           <class name="io.mosip.test.mob.inji.testcases.VerifyHistoryTest">
                 <methods>
                     <include name="generateAndVerifyHistory"/>
                     <include name="verifyActivationFailedRecordInHistory"/>
@@ -127,7 +127,7 @@
                     <include name="verifyRecivedCard"/>
                     <include name="verifyRecivedCardInFilipinoLanguage"/>
                 </methods>
-            </class>-->
+            </class>
         </classes>
     </test>
 </suite>
