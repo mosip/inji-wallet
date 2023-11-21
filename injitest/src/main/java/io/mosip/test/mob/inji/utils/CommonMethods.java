@@ -36,7 +36,6 @@ public class CommonMethods {
                
             } else {
             	processBuilder = new ProcessBuilder("/bin/bash", "-c", "adb shell cmd connectivity airplane-mode enable");
-              
             }
             processBuilder.redirectErrorStream(true);
             processBuilder.start();
@@ -47,16 +46,16 @@ public class CommonMethods {
     
     public static void disableAirplaneMode() {
         try {
+        	ProcessBuilder processBuilder=null;
             String osName = System.getProperty("os.name");
             if (osName.contains("Windows")) {
-                ProcessBuilder processBuilderAndroid = new ProcessBuilder("cmd.exe", "/c", "adb shell cmd connectivity airplane-mode disable");
-                processBuilderAndroid.redirectErrorStream(true);
-                processBuilderAndroid.start();
+            	processBuilder = new ProcessBuilder("cmd.exe", "/c", "adb shell cmd connectivity airplane-mode disable");
+               
             } else {
-                ProcessBuilder processBuilderOtherOS = new ProcessBuilder("/bin/bash\", \"-c\", \"adb shell cmd connectivity airplane-mode disable");
-                processBuilderOtherOS.redirectErrorStream(true);
-                processBuilderOtherOS.start();
+            	processBuilder = new ProcessBuilder("/bin/bash\", \"-c\", \"adb shell cmd connectivity airplane-mode disable");
             }
+            processBuilder.redirectErrorStream(true);
+            processBuilder.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
