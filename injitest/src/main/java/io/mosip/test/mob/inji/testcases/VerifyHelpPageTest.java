@@ -33,7 +33,7 @@ public class VerifyHelpPageTest extends BaseTest {
         HelpPage helpPage = homePage.clickOnHelpIcon();
         
         assertEquals(helpPage.ishelpPageContentEmpty(),false,"verifying text is not empty");
-        helpPage.ScrollPerformInHelpPage();
+        helpPage.scrollPerformInHelpPage();
 
         assertTrue(helpPage.isHelpPageLoaded(), "Verify if help page is displayed");
         helpPage.exitHelpPage();

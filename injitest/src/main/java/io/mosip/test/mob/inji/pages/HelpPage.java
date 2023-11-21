@@ -34,7 +34,7 @@ public class HelpPage extends BasePage {
         this.clickOnElement(crossIcon);
     }
     
-    public void ScrollPerformInHelpPage() {
+    public void scrollPerformInHelpPage() {
     	biometricIsChangeTextdHeader.isDisplayed();
     }
 
