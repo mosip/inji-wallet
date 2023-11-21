@@ -14,7 +14,6 @@ import org.testng.annotations.*;
 import java.net.MalformedURLException;
 
 public class BaseTest {
-	//public static String NewOtp=GetOtp();
     protected AppiumDriver driver;
     Target target = null;
 

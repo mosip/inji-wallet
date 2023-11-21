@@ -72,6 +72,13 @@ public class BasePage {
         }
     }
 
+    protected void clearTextBoxAndSendKeys(WebElement element, String text, String elementName) {
+        this.waitForElementToBeVisible(element);
+        element.clear();
+        element.sendKeys(text);
+        ExtentLogger.pass(text + " entered in " + elementName);
+    }
+    
     protected void sendKeysToTextBox(WebElement element, String text, String elementName) {
         this.waitForElementToBeVisible(element);
         element.sendKeys(text);

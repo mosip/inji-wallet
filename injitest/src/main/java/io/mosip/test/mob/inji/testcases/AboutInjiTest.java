@@ -1,18 +1,15 @@
 package io.mosip.test.mob.inji.testcases;
 
-import org.testng.annotations.Test;
 import io.mosip.test.mob.inji.pages.*;
 import io.mosip.test.mob.inji.utils.TestDataReader;
+import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.*;
 
-public class VerifyHelpPageTest extends BaseTest {
-
+public class AboutInjiTest extends BaseTest {
     @Test
-    public void verifyHelpPage() {
-
-        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+    public void copyAppId() throws InterruptedException {
+    	ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
         WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
@@ -30,16 +27,19 @@ public class VerifyHelpPageTest extends BaseTest {
         HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
-        HelpPage helpPage = homePage.clickOnHelpIcon();
+        SettingsPage settingsPage = homePage.clickOnSettingIcon();
         
-        assertEquals(helpPage.ishelpPageContentEmpty(),false,"verifying text is not empty");
-        helpPage.ScrollPerformInHelpPage();
-
-        assertTrue(helpPage.isHelpPageLoaded(), "Verify if help page is displayed");
-        helpPage.exitHelpPage();
-
+        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+        AboutInjiPage aboutInjiPage = settingsPage.clickOnAbouInji();
         
-        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+        assertTrue(aboutInjiPage.isaboutInjiHeaderDisplayed(),"Verify id about inji page displayed");
+        
+        aboutInjiPage.clickOnCopy();
+        assertTrue(aboutInjiPage.isAppidIsCopied(),"verify if app id is copied");
+        
+        aboutInjiPage.clickOnBack();
+        assertTrue(aboutInjiPage.isCopyTextDisplayed(),"verify if app id is copy");
+
     }
 
 }

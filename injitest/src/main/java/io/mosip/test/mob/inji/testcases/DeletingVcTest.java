@@ -56,6 +56,7 @@ public class DeletingVcTest extends BaseTest {
         HistoryPage historyPage = homePage.clickOnHistoryButton();
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
         historyPage.verifyHistory(TestDataReader.readData("uin") + " Removed from wallet", target);
+        assertTrue(historyPage.verifyDeleteHistory(TestDataReader.readData("uin"), target), "Verify if deleted history is displayed");
 
     }
 
@@ -168,10 +169,6 @@ public class DeletingVcTest extends BaseTest {
         //historyPage.getNumberOfRecordsInHistory(TestDataReader.readData("uin"), target, "Verify two download records in history page");
         assertEquals(historyPage.getNumberOfRecordsInHistory(TestDataReader.readData("uin"), target), 2,"Verify two download records in history page");
 
-
         assertTrue(historyPage.verifyDeleteHistory(TestDataReader.readData("uin"), target), "Verify if deleted history is displayed");
-
-
     }
-
 }

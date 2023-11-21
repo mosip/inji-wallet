@@ -23,7 +23,7 @@ public class DriverManager {
   
   private static AppiumDriver getAndroidDriver() throws MalformedURLException {
     UiAutomator2Options options = new UiAutomator2Options();
-    options.setAvd(TestDataReader.readData("androidDevice"));
+    options.setUdid(TestDataReader.readData("androidDevice"));
     options.setApp(TestDataReader.readData("androidAppPath"));
     options.setAutoGrantPermissions(true);
     appiumDriver.set(new AndroidDriver(new URL("http://127.0.0.1:4723"), (Capabilities)options));

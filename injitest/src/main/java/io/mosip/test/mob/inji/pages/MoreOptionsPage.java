@@ -27,9 +27,12 @@ public class MoreOptionsPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "profileAuthenticated")
     private WebElement activatedForOnlineLoginButton;
     
-    @AndroidFindBy(xpath = "//*[@resource-id=\"iconIcon\"]")
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"iconIcon\")")
     @iOSXCUITFindBy(iOSClassChain ="**/XCUIElementTypeOther[`label == \"\uE5CD\"`][1]")
     private WebElement CloseButton;
+
+    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Something is wrong. Please try again later!\")")
+    public WebElement SomthingIsWrongPopup;
 
     public MoreOptionsPage(AppiumDriver driver) {
         super(driver);
@@ -60,5 +63,9 @@ public class MoreOptionsPage extends BasePage {
     public HomePage ClickOnCloseButton() {
     	clickOnElement(CloseButton);
     	return new HomePage(driver);
+    }
+    
+    public boolean isSomthingIsWrongPopupVisible() {
+        return this.isElementDisplayed(SomthingIsWrongPopup, "Something is wrong. Please try again later!");
     }
 }

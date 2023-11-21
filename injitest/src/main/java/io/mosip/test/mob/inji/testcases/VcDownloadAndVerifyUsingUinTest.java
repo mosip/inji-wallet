@@ -45,7 +45,10 @@ public class VcDownloadAndVerifyUsingUinTest extends BaseTest {
         assertTrue(homePage.isIdTypeDisplayed(), "Verify if id type is displayed");
 
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
+        detailedVcViewPage.clickOnQrCodeButton();
+        assertTrue(detailedVcViewPage.isQRCodeDisplayed(), "Verify if QR Code header is displayed");
 
+        detailedVcViewPage.clickOnQrCrossIcon();
         assertTrue(detailedVcViewPage.isDetailedVcViewPageLoaded(), "Verify if detailed Vc view page is displayed");
         assertEquals(detailedVcViewPage.getNameInDetailedVcView(), TestDataReader.readData("fullName"), "Verify if full name is displayed");
         assertEquals(detailedVcViewPage.getDateOfBirthInDetailedVcView(), TestDataReader.readData("dateOfBirth"), "Verify if date of birth is displayed");
