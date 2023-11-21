@@ -46,6 +46,7 @@ lane :android_build_internal do
   track: 'internal',
   release_status: 'completed',
   version_name: versionName,
+  package_name: applicationId,
   )
 
   slack(
