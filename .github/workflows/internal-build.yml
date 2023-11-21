@@ -83,12 +83,13 @@ jobs:
       APPLICATION_THEME: ${{ inputs.theme }}
       BUILD_DESCRIPTION: ${{ inputs.buildDescription }}
       ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
-      BUILD_NAME: ${{ inputs.buildname }}
       INJI_FLAVOR: ${{ inputs.injiFlavor }}
       SERVICE_LOCATION: '.'
       ANDROID_SERVICE_LOCATION: 'android'
       BUILD_SCRIPT_LOCATION: 'scripts'
-      BUILD_SCRIPT_NAME: ${{ inputs.release }}
+      SCRIPT_NAME: "./${{ inputs.release }}.sh"
+      ANDROID_ARTIFACT_NAME: ${{ inputs.buildname }}
+      ANDROID_ARTIFACT_PATH: "android/app/build/outputs/apk/mosip/release/Inji_universal.apk"
     secrets:
       ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
       RELEASE_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}'
@@ -108,12 +109,13 @@ jobs:
       APPLICATION_THEME: ${{ inputs.theme }}
       BUILD_DESCRIPTION: ${{ inputs.buildDescription }}
       ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
-      BUILD_NAME: ${{ inputs.buildname }}
       INJI_FLAVOR: ${{ inputs.injiFlavor }}
       SERVICE_LOCATION: '.'
       ANDROID_SERVICE_LOCATION: 'android'
       BUILD_SCRIPT_LOCATION: 'scripts'
-      BUILD_SCRIPT_NAME: ${{ inputs.release }}
+      SCRIPT_NAME: "./${{ inputs.release }}.sh"
+      ANDROID_ARTIFACT_NAME: ${{ inputs.buildname }}
+      ANDROID_ARTIFACT_PATH: "android/app/build/outputs/apk/mosip/release/Inji_universal.apk"
     secrets:
       ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
       RELEASE_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}'
@@ -133,6 +135,9 @@ jobs:
       TESTFLIGHT_INTERNAL_TESTERS_GROUP: ${{ inputs.internal-testers }}
       SERVICE_LOCATION: '.'
       IOS_SERVICE_LOCATION: 'ios'
+      SCRIPT_NAME: "fastlane beta"
+      IOS_ARTIFACT_NAME: "Inji"
+      IOS_ARTIFACT_PATH: "ios/fastlane/Inji_app_file/Products/Applications/"
     secrets:
       APP_STORE_CONNECT_TEAM_ID: '${{ secrets.APP_STORE_CONNECT_TEAM_ID }}'
       DEVELOPER_APP_ID: '${{ secrets.IOS_INJI_DEVELOPER_APP_ID }}'

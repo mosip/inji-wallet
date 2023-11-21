@@ -20,8 +20,15 @@ end
 desc "Deploy an Internal testing version to the Google Play"
 lane :android_build_internal do
 
+  applicationId = "io.mosip."
+  if(INJI_FLAVOR == 'residentapp' || INJI_FLAVOR == 'inji')
+    applicationId += INJI_FLAVOR
+  else
+    applicationId += "inji.#{INJI_FLAVOR}"
+  end
+
   previous_build_number = google_play_track_version_codes(
-    package_name: "io.mosip.inji.#{INJI_FLAVOR}",
+    package_name: applicationId,
     track: "internal",
     json_key: "play_config.json",
   )[0]
