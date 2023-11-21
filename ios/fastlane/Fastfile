@@ -125,9 +125,6 @@ platform :ios do
       slack_url: "#{SLACK_URL}",
       default_payloads: [:git_branch, :last_git_commit]
     )
-  end
-
-  lane :ios_app_build do
 
     custom_output_directory = "./Inji_app_file"
     sh("mkdir -p '#{custom_output_directory}'")
@@ -142,5 +139,17 @@ platform :ios do
     find_command = "find '../build/' -type d -name 'Products'"
     app_path = sh(find_command, log: false).strip
     sh("cp -R '#{app_path}' '#{custom_output_directory}'")
+
+  end
+
+  lane :ios_app_build do
+
+    archive_path = gym(
+    skip_package_ipa: true,
+    destination: "generic/platform=iOS Simulator",
+    configuration: "Release",
+    build_path: "./build",
+    )
+    
    end
 end

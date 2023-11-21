@@ -19,23 +19,32 @@ on:
 
 jobs:
   build-android:
-    uses: mosip/kattu/.github/workflows/android-build.yml@master
+    uses: tw-mosip/kattu/.github/workflows/android-build.yml@inji-reusable-workflow
     with:
       NODE_VERSION: "16.x"
       DEBUG_KEYSTORE_ALIAS: androiddebugkey
+      SERVICE_LOCATION: '.'
+      ANDROID_SERVICE_LOCATION: 'android'
+      BUILD_SCRIPT_LOCATION: 'scripts'
+      SCRIPT_NAME: './android-build.sh'
     secrets:
       DEBUG_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_DEBUG_STOREPASS }}'
 
   build-ios:
-    uses: mosip/kattu/.github/workflows/ios-build.yml@master
+    uses: tw-mosip/kattu/.github/workflows/ios-build.yml@inji-reusable-workflow
     with:
       NODE_VERSION: "18.x"
+      SERVICE_LOCATION: '.'
+      IOS_SERVICE_LOCATION: 'ios'
+      SCRIPT_NAME: "fastlane ios_app_build"
 
   sonar-check:
     if: ${{ github.event_name != 'pull_request' }}
-    uses: mosip/kattu/.github/workflows/sonar.yml@master
+    uses: tw-mosip/kattu/.github/workflows/gradlew-sonar-analysis.yml@inji-reusable-workflow
+    with:
+      SERVICE_LOCATION: '.'
+      ANDROID_LOCATION: 'android'
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      SONAR_HOST_URL: https://sonarcloud.io
       SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
-      SLACK_URL: '${{ secrets.SLACK_WEBHOOK }}'
+      SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
