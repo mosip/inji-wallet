@@ -52,6 +52,21 @@ public class SettingsPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "injiTourGuide")
     private WebElement receivedCards;
 
+    @AndroidFindBy(xpath = "//*[contains(@text,'Credential Registry')]")
+    public WebElement credentialRegistryText;
+
+    @AndroidFindBy(xpath = "//*[contains(@text,'Receive Card')]")
+    public WebElement receiveCardText;
+
+    @AndroidFindBy(xpath = "//*[contains(@text,'Tumanggap ng Card')]")
+    public WebElement receiveCardInfilipinoLanguageText;
+
+    @AndroidFindBy(xpath = "(//*[@resource-id=\"padView\"])[3]")
+    private WebElement arabicLanguageButton;
+
+    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"فتح التطبيق\")")
+    private WebElement chooseLanguageInArabic;
+
     public SettingsPage(AppiumDriver driver) {
         super(driver);
     }
@@ -103,5 +118,33 @@ public class SettingsPage extends BasePage {
 
     public boolean isReceivedCardsPresent() {
         return this.isElementDisplayed(receivedCards, "Received Cards");
+    }
+    
+    public boolean verifyArabicLanguage() {
+        return this.isElementDisplayed(chooseLanguageInArabic, "فتح التطبيق");
+    }
+
+    public CredentialRegistryPage clickOnCredentialRegistry() {
+        clickOnElement(credentialRegistryText);
+        return new CredentialRegistryPage(driver);
+    }
+
+    public ReceiveCardPage clickOnReceiveCard() {
+        clickOnElement(receiveCardText);
+        return new ReceiveCardPage(driver);
+    }
+
+    public ReceiveCardPage clickOnReceiveCardFilipinoLanguage() {
+        clickOnElement(receiveCardInfilipinoLanguageText);
+        return new ReceiveCardPage(driver);
+    }
+
+    public AboutInjiPage clickOnAbouInji() {
+        clickOnElement(aboutInji);
+        return new AboutInjiPage(driver);
+    }
+
+    public void clickOnArabicLanguageButton() {
+        clickOnElement(arabicLanguageButton);
     }
 }

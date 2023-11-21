@@ -12,12 +12,15 @@ public class HelpPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "helpScreen")
     private WebElement helpText;
 
-    @AndroidFindBy(xpath = "//*[@resource-id=\"iconIcon\"]")
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"iconIcon\")")
     @iOSXCUITFindBy(accessibility = "close")
     private WebElement crossIcon;
     
-    @AndroidFindBy(uiAutomator = "new UiScrollable(new UiSelector()).scrollIntoView(text(\"How to view activity logs?\"));")
-    public WebElement howToViewActivity;
+    @AndroidFindBy(uiAutomator = "new UiScrollable(new UiSelector()).scrollIntoView(text(\"What happens when Android keystore biometric is changed?\"));")
+    public WebElement biometricIsChangeTextdHeader;
+
+    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"How to add a card?\")")
+    public WebElement helpPageContent;
     
     public HelpPage(AppiumDriver driver) {
         super(driver);
@@ -31,8 +34,12 @@ public class HelpPage extends BasePage {
         this.clickOnElement(crossIcon);
     }
     
-    public void ScrollToViewActivityLog() {
-    	howToViewActivity.click();
+    public void scrollPerformInHelpPage() {
+    	biometricIsChangeTextdHeader.isDisplayed();
+    }
+
+    public boolean ishelpPageContentEmpty() {
+    	return helpPageContent.getText().isBlank();
     }
     
 }
