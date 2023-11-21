@@ -107,9 +107,6 @@ android {
         versionName androidGitVersion.name()
         versionCode 1
 
-        Properties properties = new Properties()
-        properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
         manifestPlaceholders = [
             APP_NAME: APP_NAME_INJI,
             appAuthRedirectScheme: 'io.mosip.residentapp.inji'
