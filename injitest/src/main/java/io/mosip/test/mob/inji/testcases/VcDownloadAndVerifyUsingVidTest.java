@@ -135,7 +135,7 @@ public class VcDownloadAndVerifyUsingVidTest extends BaseTest {
     }
     
     @Test
-    public void downloadAndVerifyVcUsingRevokevid() {
+    public void downloadAndVerifyVcUsingRevokeVid() {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");

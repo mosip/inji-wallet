@@ -102,7 +102,7 @@ public class DeletingVcTest extends BaseTest {
         pleaseConfirmPopupPage.clickOnNoButton();
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
 
-        moreOptionsPage.ClickOnCloseButton();
+        moreOptionsPage.clickOnCloseButton();
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
     }
 

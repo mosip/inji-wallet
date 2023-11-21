@@ -45,6 +45,17 @@ public class BasePage {
             return false;
         }
     }
+    
+    protected boolean isElementInvisibleYet(WebElement element, String elementName) {
+        try {
+        	waitForElementToBeInvisible(element);
+            ExtentLogger.pass(elementName + " is displayed");
+            return false;
+        } catch (Exception e) {
+            //ExtentLogger.fail(elementName + " is not displayed");
+            return true;
+        }
+    }
 
     protected void clickOnElement(WebElement element) {
         waitForElementToBeVisible(element);
@@ -59,6 +70,11 @@ public class BasePage {
         WebDriverWait wait = new WebDriverWait(driver, ofSeconds(30));
         wait.until(ExpectedConditions.visibilityOf(element));
     }
+    
+    private void waitForElementToBeInvisible(WebElement element) {
+    	  WebDriverWait wait = new WebDriverWait(driver, ofSeconds(30));
+    	  wait.until(ExpectedConditions.invisibilityOf(element));
+    	}
     
     protected boolean isElementEnabled(WebElement element) {
         try {

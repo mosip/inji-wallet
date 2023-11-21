@@ -53,13 +53,13 @@ public class SettingsPage extends BasePage {
     private WebElement receivedCards;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Credential Registry')]")
-    public WebElement clickOnCredentialRegistry;
+    public WebElement credentialRegistryText;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Receive Card')]")
-    public WebElement clickOnReceiveCard;
+    public WebElement receiveCardText;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Tumanggap ng Card')]")
-    public WebElement clickOnReceiveCardInfilipinoLanguage;
+    public WebElement receiveCardInfilipinoLanguageText;
 
     @AndroidFindBy(xpath = "(//*[@resource-id=\"padView\"])[3]")
     private WebElement arabicLanguageButton;
@@ -125,17 +125,17 @@ public class SettingsPage extends BasePage {
     }
 
     public CredentialRegistryPage clickOnCredentialRegistry() {
-        clickOnElement(clickOnCredentialRegistry);
+        clickOnElement(credentialRegistryText);
         return new CredentialRegistryPage(driver);
     }
 
     public ReceiveCardPage clickOnReceiveCard() {
-        clickOnElement(clickOnReceiveCard);
+        clickOnElement(receiveCardText);
         return new ReceiveCardPage(driver);
     }
 
     public ReceiveCardPage clickOnReceiveCardFilipinoLanguage() {
-        clickOnElement(clickOnReceiveCardInfilipinoLanguage);
+        clickOnElement(receiveCardInfilipinoLanguageText);
         return new ReceiveCardPage(driver);
     }
 

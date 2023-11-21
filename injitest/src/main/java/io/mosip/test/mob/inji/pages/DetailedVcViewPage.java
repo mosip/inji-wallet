@@ -141,7 +141,7 @@ public class DetailedVcViewPage extends BasePage{
         return new PleaseConfirmPopupPage(driver);
     }
 
-    public boolean isQRCodeDisplayed() {
+    public boolean isQrCodeDisplayed() {
     	return qrCodeHeader.isDisplayed();
     }
 }

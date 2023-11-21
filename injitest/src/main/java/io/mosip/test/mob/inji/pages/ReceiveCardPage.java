@@ -26,7 +26,7 @@ public class ReceiveCardPage extends BasePage {
         super(driver);
     }
     
-    public ReceiveCardPage ClickOnAllowButton() {
+    public ReceiveCardPage clickOnAllowButton() {
     	 clickOnElement(allowButton);
          return this;
     }

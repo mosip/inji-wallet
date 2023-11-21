@@ -17,7 +17,7 @@ import io.mosip.test.mob.inji.utils.TestDataReader;
 public class ReceiveCardTest extends BaseTest {
 	
 	 @Test
-	    public void verifyRecivedCard() {
+	    public void verifyRecivedCardAndQrCode() {
 		 ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
 	        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
@@ -44,7 +44,7 @@ public class ReceiveCardTest extends BaseTest {
 	 }
 	 
 	 @Test
-	    public void verifyRecivedCardInFilipinoLanguage() {
+	    public void verifyRecivedCardAndQrCodeInFilipinoLanguage() {
 	        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
 	        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");

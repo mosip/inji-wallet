@@ -147,8 +147,12 @@ public class HomePage extends BasePage {
     public boolean isTryAgainButtonDisplayed() {
         return this.isElementDisplayed(tryAgainButton, "Try again");
     }
+    
+    public boolean isTryAgainButtonNotDisplayed() {
+        return this.isElementInvisibleYet(tryAgainButton, "Try again");
+    }
 
-    public HomePage clickOnTryAgainbutton() {
+    public HomePage clickOnTryAgainButton() {
     	 clickOnElement(tryAgainButton);
          return this;
     }

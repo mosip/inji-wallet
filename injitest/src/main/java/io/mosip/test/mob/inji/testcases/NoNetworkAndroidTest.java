@@ -40,7 +40,7 @@ public class NoNetworkAndroidTest extends BaseTest {
         
         assertTrue(homePage.isTryAgainButtonDisplayed(), "Verify if Try again button displayed");
 
-        homePage.clickOnTryAgainbutton();
+        homePage.clickOnTryAgainButton();
         assertTrue(homePage.isTryAgainButtonDisplayed(), "Verify if Try again button displayed");
 
         addNewCardPage.clickOnBack();
@@ -276,7 +276,7 @@ public class NoNetworkAndroidTest extends BaseTest {
 
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
         detailedVcViewPage.clickOnQrCodeButton();
-        assertTrue(detailedVcViewPage.isQRCodeDisplayed(), "Verify if QR Code header is displayed");
+        assertTrue(detailedVcViewPage.isQrCodeDisplayed(), "Verify if QR Code header is displayed");
         
         detailedVcViewPage.clickOnQrCrossIcon();
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
@@ -315,8 +315,8 @@ public class NoNetworkAndroidTest extends BaseTest {
     }
     
     @Test
-    public void DownloadCardWithoutInternetRetryWithInternet() throws InterruptedException {
-        CommonMethods.enableAirplaneMode();;
+    public void downloadCardWithoutInternetRetryWithInternet() throws InterruptedException {
+        CommonMethods.enableAirplaneMode();
 
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
@@ -339,13 +339,12 @@ public class NoNetworkAndroidTest extends BaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(homePage.isNoInternetConnectionDisplayed(), "Verify if no internet connection is displayed");
-        assertTrue(homePage.isTryAgainButtonDisplayed(), "Verify if Try again button displayed");
+        assertTrue(homePage.isTryAgainButtonDisplayed(), "Verify if try again button displayed");
 
         CommonMethods.disableAirplaneMode();
-        assertTrue(homePage.isTryAgainButtonDisplayed(), "Verify if Try again button displayed");
-        Thread.sleep(3000);
+        assertTrue(homePage.isTryAgainButtonNotDisplayed(), "Wating for network come online");
         
-        homePage.clickOnTryAgainbutton();
+        homePage.clickOnTryAgainButton();
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");        
     }
 }

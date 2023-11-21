@@ -38,6 +38,6 @@ public class AboutInjiTest extends BaseTest {
         assertTrue(aboutInjiPage.isAppidIsCopied(),"verify if app id is copied");
         
         aboutInjiPage.clickOnBack();
-        assertTrue(aboutInjiPage.isCopyTextDisplayed(),"verify if app id is copy");
+        assertTrue(aboutInjiPage.isCopyTextDisplayed(),"verify if copy text displayed");
     }
 }

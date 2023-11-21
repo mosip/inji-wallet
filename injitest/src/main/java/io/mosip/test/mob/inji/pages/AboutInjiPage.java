@@ -9,10 +9,10 @@ public class AboutInjiPage extends BasePage{
     private WebElement aboutInjiHeader;
     
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Copy\")")
-    private WebElement Copy;
+    private WebElement copy;
     
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Copied\")")
-    private WebElement Copied;
+    private WebElement copied;
     
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"iconIcon\")")
     private WebElement backButton;
@@ -26,20 +26,20 @@ public class AboutInjiPage extends BasePage{
     }
     
     public boolean isAppidIsCopied() {
-        return this.isElementDisplayed(Copied, "Copied");
+        return this.isElementDisplayed(copied, "Copied");
     }
     
     public boolean isCopyTextDisplayed() {
-        return this.isElementDisplayed(Copy, "Copy");
+        return this.isElementDisplayed(copy, "Copy");
     }
 
     public AboutInjiPage clickOnCopy(){
-        clickOnElement(Copy);
+        clickOnElement(copy);
         return this;
     }
     
     public AboutInjiPage clickOnBack(){
-        clickOnElement(Copy);
+        clickOnElement(copy);
         return this;
     }
 }

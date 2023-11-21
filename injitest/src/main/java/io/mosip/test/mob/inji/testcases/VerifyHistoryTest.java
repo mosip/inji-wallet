@@ -95,7 +95,7 @@ public class VerifyHistoryTest extends BaseTest {
         assertTrue(otpVerificationPage.somethingWetWrongInVcActivationDisplayed(), "Verify if Something is wrong. Please try again later displayed");
         assertTrue(otpVerificationPage.isCancelButtonDisplayed(), "Verify if cancel button is displayed");
 
-        HistoryPage historyPage = otpVerificationPage.clickOnCancelButton().ClickOnCloseButton().clickOnHistoryButton();
+        HistoryPage historyPage = otpVerificationPage.clickOnCancelButton().clickOnCloseButton().clickOnHistoryButton();
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
         assertTrue(historyPage.verifyActivationFailedRecordInHistory(TestDataReader.readData("uin"), target));
     }
@@ -197,7 +197,7 @@ public class VerifyHistoryTest extends BaseTest {
         otpVerificationPage.enterOtp(TestDataReader.readData("passcode"), target);
 
         assertTrue(moreOptionsPage.isVcActivatedForOnlineLogin(), "Verify if VC is activated");
-        HistoryPage historyPage = moreOptionsPage.ClickOnCloseButton().clickOnHistoryButton();
+        HistoryPage historyPage = moreOptionsPage.clickOnCloseButton().clickOnHistoryButton();
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
         assertTrue(historyPage.verifyActivationSuccessfulRecordInHistory(TestDataReader.readData("uin"), target));
 

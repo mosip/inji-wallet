@@ -49,7 +49,7 @@ public class CredentialRegistryPage extends BasePage {
         return this;
     }
     
-    public String CheckEnvNotChanged() {
+    public String checkEnvNotChanged() {
     return CredentialRegistryTextBox.getText();
     }
 }

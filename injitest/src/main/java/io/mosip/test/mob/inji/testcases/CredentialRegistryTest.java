@@ -22,7 +22,7 @@ import io.mosip.test.mob.inji.pages.SettingsPage;
 import io.mosip.test.mob.inji.pages.WelcomePage;
 import io.mosip.test.mob.inji.utils.TestDataReader;
 
-public class CredentialRegistry extends BaseTest {
+public class CredentialRegistryTest extends BaseTest {
 
 	@Test
 	public void downloadAndVerifyVcInNewEnv() throws InterruptedException {
@@ -115,7 +115,7 @@ public class CredentialRegistry extends BaseTest {
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
 
         settingsPage.clickOnCredentialRegistry();
-        assertEquals(credentialRegistryPage.CheckEnvNotChanged(),"https://api.qa-inji.mosip.net");
+        assertEquals(credentialRegistryPage.checkEnvNotChanged(),"https://api.qa-inji.mosip.net");
 	}
 	
 	@Test
@@ -154,7 +154,7 @@ public class CredentialRegistry extends BaseTest {
 	}
 	
 	@Test
-	public void GenerateUinOrVidInNewEnv() throws InterruptedException {
+	public void generateUinInNewEnv() throws InterruptedException {
 		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
