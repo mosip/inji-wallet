@@ -19,7 +19,7 @@ on:
 
 jobs:
   build-android:
-    uses: mosip/kattu/.github/workflows/android-build.yml@master
+    uses: tw-mosip/kattu/.github/workflows/android-build.yml@inji-reusable-workflow
     with:
       NODE_VERSION: "16.x"
       DEBUG_KEYSTORE_ALIAS: androiddebugkey
@@ -31,7 +31,7 @@ jobs:
       DEBUG_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_DEBUG_STOREPASS }}'
 
   build-ios:
-    uses: mosip/kattu/.github/workflows/ios-build.yml@master
+    uses: tw-mosip/kattu/.github/workflows/ios-build.yml@inji-reusable-workflow
     with:
       NODE_VERSION: "18.x"
       SERVICE_LOCATION: '.'
@@ -40,7 +40,7 @@ jobs:
 
   sonar-check:
     if: ${{ github.event_name != 'pull_request' }}
-    uses: mosip/kattu/.github/workflows/gradlew-sonar-analysis.yml@master
+    uses: tw-mosip/kattu/.github/workflows/gradlew-sonar-analysis.yml@inji-reusable-workflow
     with:
       SERVICE_LOCATION: '.'
       ANDROID_LOCATION: 'android'

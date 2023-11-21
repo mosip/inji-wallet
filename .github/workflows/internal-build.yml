@@ -73,7 +73,7 @@ on:
 
 jobs:
   build-android:
-    uses: mosip/kattu/.github/workflows/android-publish.yml@master
+    uses: tw-mosip/kattu/.github/workflows/android-publish.yml@inji-reusable-workflow
     with:
       RELEASE: ${{ inputs.release }}
       NODE_VERSION: '16.x'
@@ -99,7 +99,7 @@ jobs:
 
   build-android-beta:
     if: ${{ inputs.release == 'beta' }}
-    uses: mosip/kattu/.github/workflows/android-publish.yml@master
+    uses: tw-mosip/kattu/.github/workflows/android-publish.yml@inji-reusable-workflow
     with:
       RELEASE: ${{ inputs.release }}
       NODE_VERSION: '16.x'
@@ -124,7 +124,7 @@ jobs:
       SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
 
   build-ios:
-    uses: mosip/kattu/.github/workflows/ios-publish.yml@master
+    uses: tw-mosip/kattu/.github/workflows/ios-publish.yml@inji-reusable-workflow
     with:
       NODE_VERSION: '18.x'
       MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
@@ -156,7 +156,7 @@ jobs:
       SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
 
   sonar-check:
-    uses: mosip/kattu/.github/workflows/gradlew-sonar-analysis.yml@master
+    uses: tw-mosip/kattu/.github/workflows/gradlew-sonar-analysis.yml@inji-reusable-workflow
     with:
       SERVICE_LOCATION: '.'
       ANDROID_LOCATION: 'android'
