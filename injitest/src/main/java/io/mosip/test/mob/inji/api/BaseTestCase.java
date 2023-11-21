@@ -15,6 +15,7 @@ import org.apache.log4j.PropertyConfigurator;
 import org.json.simple.JSONObject;
 
 import io.mosip.test.mob.inji.driver.TestRunner;
+import io.mosip.test.mob.inji.utils.TestDataReader;
 
 //import org.apache.log4j.Logger;
 
@@ -25,6 +26,7 @@ public class BaseTestCase {
 	public static String ApplnURI;
 	public static String ApplnURIForKeyCloak;
 	public static String testLevel;
+	protected static MockSMTPListener mockSMTPListener = null;
 	public static Properties props = getproperty(
 			TestRunner.getResourcePath() + "/config/application.properties");
 	public static Properties propsKernel = getproperty(
@@ -63,6 +65,9 @@ public class BaseTestCase {
 			perpetualVid = AdminTestUtil.generateVID(uin, "perpetual");
 			onetimeuseVid = AdminTestUtil.generateVID(uin, "onetimeuse");
 			temporaryVid= AdminTestUtil.generateVID(uin, "temporary");
+			
+			mockSMTPListener = new MockSMTPListener();
+			mockSMTPListener.run();
 		}
 	}
 
@@ -175,6 +180,13 @@ public class BaseTestCase {
 		logProp.setProperty("log4j.appender.Appender2.layout.ConversionPattern", "%-7p %d [%t] %c %x - %m%n");
 		return logProp;
 	}
+	
+	 public static String getOtp() {
+	  	  String otp="";
+	  	  String externalemail = TestDataReader.readData("externalemail");
+	  	  otp = MockSMTPListener.getOtp(externalemail);
+	  	  return otp;
+	    }
 
 	public static JSONObject getRequestJson(String filepath) {
 		return kernelCmnLib.readJsonData(filepath, true);

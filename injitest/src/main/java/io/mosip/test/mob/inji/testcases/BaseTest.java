@@ -14,7 +14,6 @@ import org.testng.annotations.*;
 import java.net.MalformedURLException;
 
 public class BaseTest {
-	//public static String NewOtp=GetOtp();
     protected AppiumDriver driver;
     Target target = null;
 
@@ -46,12 +45,4 @@ public class BaseTest {
         DriverManager.stopAppiumServer();
     }
     
-    public static String GetOtp() {
-  	  /*String otp="";
-  	  String externalemail = TestDataReader.readData("externalemail");
-  	  otp = MockSMTPListener.getOtp(externalemail);
-  	  System.out.println(otp);*/
-  	  return "111111";
-    }
-
 }
