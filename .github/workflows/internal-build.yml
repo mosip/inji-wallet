@@ -83,7 +83,7 @@ jobs:
       APPLICATION_THEME: ${{ inputs.theme }}
       BUILD_DESCRIPTION: ${{ inputs.buildDescription }}
       ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
-      INJI_FLAVOR: ${{ inputs.injiFlavor }}
+      APP_FLAVOR: ${{ inputs.injiFlavor }}
       SERVICE_LOCATION: '.'
       ANDROID_SERVICE_LOCATION: 'android'
       BUILD_SCRIPT_LOCATION: 'scripts'
@@ -94,7 +94,6 @@ jobs:
       ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
       RELEASE_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}'
       INJI_ANDROID_PLAY_STORE_CONFIG_JSON: ${{ secrets.INJI_ANDROID_PLAY_STORE_CONFIG_JSON }}
-      ENV_FILE: ${{ secrets.ENV_FILE }}
       SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
 
   build-android-beta:
@@ -109,7 +108,7 @@ jobs:
       APPLICATION_THEME: ${{ inputs.theme }}
       BUILD_DESCRIPTION: ${{ inputs.buildDescription }}
       ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
-      INJI_FLAVOR: ${{ inputs.injiFlavor }}
+      APP_FLAVOR: ${{ inputs.injiFlavor }}
       SERVICE_LOCATION: '.'
       ANDROID_SERVICE_LOCATION: 'android'
       BUILD_SCRIPT_LOCATION: 'scripts'
@@ -120,7 +119,6 @@ jobs:
       ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
       RELEASE_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}'
       INJI_ANDROID_PLAY_STORE_CONFIG_JSON: ${{ secrets.INJI_ANDROID_PLAY_STORE_CONFIG_JSON }}
-      ENV_FILE: ${{ secrets.ENV_FILE }}
       SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
 
   build-ios:
