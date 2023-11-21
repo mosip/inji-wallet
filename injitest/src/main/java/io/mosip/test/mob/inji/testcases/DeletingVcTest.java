@@ -40,7 +40,7 @@ public class DeletingVcTest extends BaseTest {
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(GetOtp(), target);
+        otpVerification.enterOtp(BaseTestCase.getOtp(), target);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
 
@@ -56,6 +56,7 @@ public class DeletingVcTest extends BaseTest {
         HistoryPage historyPage = homePage.clickOnHistoryButton();
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
         historyPage.verifyHistory(TestDataReader.readData("uin") + " Removed from wallet", target);
+        assertTrue(historyPage.verifyDeleteHistory(TestDataReader.readData("uin"), target), "Verify if deleted history is displayed");
 
     }
 
@@ -88,7 +89,7 @@ public class DeletingVcTest extends BaseTest {
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(GetOtp(), target);
+        otpVerification.enterOtp(BaseTestCase.getOtp(), target);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
 
@@ -101,7 +102,7 @@ public class DeletingVcTest extends BaseTest {
         pleaseConfirmPopupPage.clickOnNoButton();
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
 
-        moreOptionsPage.ClickOnCloseButton();
+        moreOptionsPage.clickOnCloseButton();
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
     }
 
@@ -134,7 +135,7 @@ public class DeletingVcTest extends BaseTest {
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(GetOtp(), target);
+        otpVerification.enterOtp(BaseTestCase.getOtp(), target);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
 
@@ -156,7 +157,7 @@ public class DeletingVcTest extends BaseTest {
         retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(GetOtp(), target);
+        otpVerification.enterOtp(BaseTestCase.getOtp(), target);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
 
@@ -165,13 +166,7 @@ public class DeletingVcTest extends BaseTest {
 
         assertTrue(historyPage.verifyHistory(TestDataReader.readData("uin"), target));
 
-        //historyPage.getNumberOfRecordsInHistory(TestDataReader.readData("uin"), target, "Verify two download records in history page");
         assertEquals(historyPage.getNumberOfRecordsInHistory(TestDataReader.readData("uin"), target), 2,"Verify two download records in history page");
-
-
         assertTrue(historyPage.verifyDeleteHistory(TestDataReader.readData("uin"), target), "Verify if deleted history is displayed");
-
-
     }
-
 }

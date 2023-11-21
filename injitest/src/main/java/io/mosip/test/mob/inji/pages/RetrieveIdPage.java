@@ -36,13 +36,13 @@ public class RetrieveIdPage extends BasePage {
     
     @AndroidFindBy(xpath = "//*[contains(@text,'UIN invalid')]")
     private WebElement invalidUin;
-    
-    
 
     @AndroidFindBy(xpath = "//*[contains(@text,'The input format is incorrect')]")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"The input format is incorrect\"`]")
     private WebElement inputFormatErrorMessage;
 
+    @AndroidFindBy(xpath = "//*[contains(@text,'AID is not ready yet')]")
+    private WebElement aidIsNotReadyYetMessage;
 
     public RetrieveIdPage(AppiumDriver driver) {
         super(driver);
@@ -74,6 +74,10 @@ public class RetrieveIdPage extends BasePage {
     
     public boolean isInvalidUinMassageLoaded() {
         return this.isElementDisplayed(invalidUin, "UIN invalid");
+    }
+    
+    public boolean isAidIsNotReadyYetErrorDisplayed() {
+        return this.isElementDisplayed(aidIsNotReadyYetMessage, "Retrieve your id page");
     }
 
 

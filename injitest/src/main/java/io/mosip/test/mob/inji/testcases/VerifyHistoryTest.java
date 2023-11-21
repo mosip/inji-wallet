@@ -38,7 +38,7 @@ public class VerifyHistoryTest extends BaseTest {
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(GetOtp(), target);
+        otpVerification.enterOtp(BaseTestCase.getOtp(), target);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         HistoryPage historyPage = homePage.clickOnHistoryButton();
@@ -78,7 +78,7 @@ public class VerifyHistoryTest extends BaseTest {
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(GetOtp(), target);
+        otpVerification.enterOtp(BaseTestCase.getOtp(), target);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
@@ -95,7 +95,7 @@ public class VerifyHistoryTest extends BaseTest {
         assertTrue(otpVerificationPage.somethingWetWrongInVcActivationDisplayed(), "Verify if Something is wrong. Please try again later displayed");
         assertTrue(otpVerificationPage.isCancelButtonDisplayed(), "Verify if cancel button is displayed");
 
-        HistoryPage historyPage = otpVerificationPage.clickOnCancelButton().ClickOnCloseButton().clickOnHistoryButton();
+        HistoryPage historyPage = otpVerificationPage.clickOnCancelButton().clickOnCloseButton().clickOnHistoryButton();
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
         assertTrue(historyPage.verifyActivationFailedRecordInHistory(TestDataReader.readData("uin"), target));
     }
@@ -130,7 +130,7 @@ public class VerifyHistoryTest extends BaseTest {
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(GetOtp(), target);
+        otpVerification.enterOtp(BaseTestCase.getOtp(), target);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
@@ -182,7 +182,7 @@ public class VerifyHistoryTest extends BaseTest {
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(GetOtp(), target);
+        otpVerification.enterOtp(BaseTestCase.getOtp(), target);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
@@ -197,7 +197,7 @@ public class VerifyHistoryTest extends BaseTest {
         otpVerificationPage.enterOtp(TestDataReader.readData("passcode"), target);
 
         assertTrue(moreOptionsPage.isVcActivatedForOnlineLogin(), "Verify if VC is activated");
-        HistoryPage historyPage = moreOptionsPage.ClickOnCloseButton().clickOnHistoryButton();
+        HistoryPage historyPage = moreOptionsPage.clickOnCloseButton().clickOnHistoryButton();
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
         assertTrue(historyPage.verifyActivationSuccessfulRecordInHistory(TestDataReader.readData("uin"), target));
 
