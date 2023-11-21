@@ -12,10 +12,10 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 # Available Actions
 
-### android_build_verify
+### android_build
 
 ```sh
-[bundle exec] fastlane android_build_verify
+[bundle exec] fastlane android_build
 ```
 
 Verify Build for Android

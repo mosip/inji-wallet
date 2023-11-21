@@ -26,7 +26,7 @@ jobs:
       SERVICE_LOCATION: '.'
       ANDROID_SERVICE_LOCATION: 'android'
       BUILD_SCRIPT_LOCATION: 'scripts'
-      BUILD_SCRIPT_NAME: 'android-build'
+      SCRIPT_NAME: './android-build.sh'
     secrets:
       DEBUG_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_DEBUG_STOREPASS }}'
 
@@ -36,6 +36,7 @@ jobs:
       NODE_VERSION: "18.x"
       SERVICE_LOCATION: '.'
       IOS_SERVICE_LOCATION: 'ios'
+      SCRIPT_NAME: "fastlane ios_app_build"
 
   sonar-check:
     if: ${{ github.event_name != 'pull_request' }}
