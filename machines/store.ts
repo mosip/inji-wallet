@@ -25,11 +25,11 @@ import {
 } from '../shared/cryptoutil/cryptoUtil';
 import {VCMetadata} from '../shared/VCMetadata';
 import {BiometricCancellationError} from '../shared/error/BiometricCancellationError';
-import {
-  getErrorEventData,
-  sendErrorEvent,
-} from '../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
+import {
+  sendErrorEvent,
+  getErrorEventData,
+} from '../shared/telemetry/TelemetryUtils';
 
 export const keyinvalidatedString =
   'Key Invalidated due to biometric enrollment';

@@ -8,12 +8,13 @@ import org.openqa.selenium.WebElement;
 
 public class ConfirmPasscode extends BasePage {
 
-    @iOSXCUITFindBy(accessibility = "Confirm passcode")
+    @iOSXCUITFindBy(accessibility = "confirmPasscode")
     @AndroidFindBy(xpath = "//*[contains(@text,'Confirm passcode')]")
     private WebElement confirmPasscode;
     
     
     @AndroidFindBy(xpath = "//*[contains(@text,'Passcode did not match.')]")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Passcode did not match.\"`]")
     private WebElement invalidPasscode;
 
     public ConfirmPasscode(AppiumDriver driver) {

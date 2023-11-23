@@ -1,10 +1,10 @@
 fileignoreconfig:
 - filename: ios/Podfile.lock
-  checksum: cc123c3e1f04d41b394ceb16843b15c08bac3ba619ae853ff322717739761a85    
+  checksum: cc123c3e1f04d41b394ceb16843b15c08bac3ba619ae853ff322717739761a85  
 - filename: package.json
   checksum: fdd5905228a1afbfb004c710fd6c61adf073a12840200327c0592b76bea5e7e3
 - filename: package-lock.json
-  checksum: 179883df6d414d82b7f54353a3a4cc75e6a681224f4b6d1831ce85de27de2726
+  checksum: 489ccd69f2deecedb8b2ff9a3a02d74c704dfba01fdfb6179316a9df698c4562
 - filename: components/PasscodeVerify.tsx
   checksum: 14654c0f038979fcd0d260170a45894a072f81e0767ca9a0e66935d33b5cc703
 - filename: i18n.ts
@@ -80,7 +80,43 @@ fileignoreconfig:
   checksum: a0686e9a5c006176fd720b84bc36ca947db1422caf65c90cd0c2d1102a9e96df
 - filename: ios/fastlane/Fastfile
   checksum: feea5a7f044ef6961d53e7d1e1ffb92a3e0f72761496424f6e64288e3718d605
+- filename: machines/bleShare/scan/scanMachine.ts
+  checksum: a514c958ca3da3c5b22a1a95ad680af8f05fb22638fab79b3842aa8fcc1b4a17
   version: ""
 - filename: locales/spa.json
   checksum: 8dc09111bbff5df996703d6bf843f5a2f51bd327014009d12ab492ecfc58dd77    
+  version: ""
+- filename: machines/bleShare/scan/scanMachine.ts
+  checksum: 399f08e25bfa9e25e6505801f2fbc94c20779cbad5010392275d0cd21824b3ac
+- filename: package-lock.json
+  checksum: d1586de91f5118385740f3cd0db39c199ec069d7bd1d5fc8598673ac60c85f0f
+- filename: injitest/src/main/java/io/mosip/test/mob/inji/testcases/ChangeLanguageTest.java
+  checksum: 479d372f179d96529956cad1f8a4c593874e4da8b3bebc3e7d972cf686819b9d
+- filename: injitest/src/main/java/io/mosip/test/mob/inji/pages/CredentialRegistryPage.java
+  checksum: eb9fbe80e519f963fba2da13b2e26c41a1f4e469b6e2e39ef2916948a1bc82b1
+- filename: injitest/src/main/java/io/mosip/test/mob/inji/testcases/DeletingVcTest.java
+  checksum: f2180f64a09311b7f1dc32e22242486e15938763e87733d08052ad86883f21e9
+- filename: injitest/src/main/java/io/mosip/test/mob/inji/testcases/UnlockWithPasscodeTest.java
+  checksum: 8d518d68fd627f6bfd3f6bbbd0a90b3c5635d7e4eeb0caaf359b2bb109424aa5
+- filename: injitest/src/main/java/io/mosip/test/mob/inji/testcases/ReceiveCardTest.java
+  checksum: 81db2472cdf5b150539de491083c08f1011dfde213563ced6e071c7afd8ab2be
+- filename: injitest/src/main/java/io/mosip/test/mob/inji/testcases/VcDownloadAndVerifyUsingVidTest.java
+  checksum: 733b9cb60b804cb7d1e09de6e58c316c0c72cd2bf2e9d68114689bbcf26108f8
+- filename: injitest/src/main/java/io/mosip/test/mob/inji/testcases/CredentialRegistryTest.java
+  checksum: 8f9ae584507b64407257ac7ca05c89eed74d3ceb3a8139d69e3fb19543055da3
+- filename: injitest/src/main/java/io/mosip/test/mob/inji/testcases/NoNetworkAndroidTest.java
+  checksum: 7af40c9d3f0f2485cfddba32f899c3c7dcfa6aeadbc9529858dece8d4576286d
+- filename: injitest/src/main/java/io/mosip/test/mob/inji/testcases/AboutInjiTest.java
+  checksum: 8085f083e51569b242d5cad7681f870181196e479285ec0a8f5528b99f12efd2
+- filename: injitest/src/main/java/io/mosip/test/mob/inji/testcases/VerifyWelcomePagesTest.java
+  checksum: 570e61a37b646d5c5c0ebde1936add37a0dd5b0a6d7715fca48bba5329a282a2
+- filename: injitest/src/main/resources/TestData.json
+  checksum: b42a037962399128f0dff22af77dae71389101af2defa7609a71b213b1c42107
+- filename: injitest/src/main/java/io/mosip/test/mob/inji/pages/BasePage.java
+  checksum: 877e9c9cb8db70ce0d0d3f79434afa1610013689f71c5f50ff355e49d80d27e1
+  version: ""
+- filename: machines/bleShare/scan/scanMachine.ts
+  checksum: 399f08e25bfa9e25e6505801f2fbc94c20779cbad5010392275d0cd21824b3ac
+- filename: package-lock.json
+  checksum: d1586de91f5118385740f3cd0db39c199ec069d7bd1d5fc8598673ac60c85f0f
   version: ""

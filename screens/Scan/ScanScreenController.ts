@@ -1,14 +1,15 @@
-import { useSelector } from '@xstate/react';
-import { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
+import {useSelector} from '@xstate/react';
+import {useContext} from 'react';
+import {useTranslation} from 'react-i18next';
 
-import { selectShareableVcsMetadata } from '../../machines/vc';
-import { GlobalContext } from '../../shared/GlobalContext';
+import {selectShareableVcsMetadata} from '../../machines/vc';
+import {GlobalContext} from '../../shared/GlobalContext';
 import {
   selectIsLocationDenied,
   selectIsLocationDisabled,
   selectIsQrLoginStoring,
   selectIsScanning,
+  selectIsInvalid,
   selectIsShowQrLogin,
   selectQrLoginRef,
 } from '../../machines/bleShare/scan/selectors';
@@ -25,39 +26,39 @@ import {
 } from '../../machines/bleShare/scan/scanMachine';
 
 export function useScanScreen() {
-  const { t } = useTranslation('ScanScreen');
-  const { appService } = useContext(GlobalContext);
+  const {t} = useTranslation('ScanScreen');
+  const {appService} = useContext(GlobalContext);
   const scanService = appService.children.get('scan');
   const vcService = appService.children.get('vc');
 
   const shareableVcsMetadata = useSelector(
     vcService,
-    selectShareableVcsMetadata
+    selectShareableVcsMetadata,
   );
 
   const isLocationDisabled = useSelector(scanService, selectIsLocationDisabled);
   const isLocationDenied = useSelector(scanService, selectIsLocationDenied);
   const isReadyForBluetoothStateCheck = useSelector(
     scanService,
-    selectReadyForBluetoothStateCheck
+    selectReadyForBluetoothStateCheck,
   );
   const isStartPermissionCheck = useSelector(
     scanService,
-    selectIsStartPermissionCheck
+    selectIsStartPermissionCheck,
   );
   const isNearByDevicesPermissionDenied = useSelector(
     scanService,
-    selectIsNearByDevicesPermissionDenied
+    selectIsNearByDevicesPermissionDenied,
   );
   const isBluetoothPermissionDenied = useSelector(
     scanService,
-    selectIsBluetoothPermissionDenied
+    selectIsBluetoothPermissionDenied,
   );
   const isBluetoothDenied = useSelector(scanService, selectIsBluetoothDenied);
-  const locationError = { message: '', button: '' };
+  const locationError = {message: '', button: ''};
   const isMinimumStorageRequiredForAuditEntryLimitReached = useSelector(
     scanService,
-    selectIsMinimumStorageRequiredForAuditEntryLimitReached
+    selectIsMinimumStorageRequiredForAuditEntryLimitReached,
   );
 
   if (isLocationDisabled) {
@@ -80,11 +81,13 @@ export function useScanScreen() {
     isReadyForBluetoothStateCheck,
     isMinimumStorageRequiredForAuditEntryLimitReached,
     isScanning: useSelector(scanService, selectIsScanning),
+    selectIsInvalid: useSelector(scanService, selectIsInvalid),
     isQrLogin: useSelector(scanService, selectIsShowQrLogin),
     isQrLoginstoring: useSelector(scanService, selectIsQrLoginStoring),
     isQrRef: useSelector(scanService, selectQrLoginRef),
     LOCATION_REQUEST: () => scanService.send(ScanEvents.LOCATION_REQUEST()),
     GOTO_SETTINGS: () => scanService.send(ScanEvents.GOTO_SETTINGS()),
+    DISMISS: () => scanService.send(ScanEvents.DISMISS()),
     START_PERMISSION_CHECK: () =>
       scanService.send(ScanEvents.START_PERMISSION_CHECK()),
     SCAN: (qrCode: string) => scanService.send(ScanEvents.SCAN(qrCode)),

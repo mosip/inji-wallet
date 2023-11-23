@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 public class WelcomePage extends BasePage {
 
     @AndroidFindBy(accessibility = "introTitle")
-    @iOSXCUITFindBy(accessibility = "Welcome!")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Welcome!\"`]")
     private WebElement welcomeText;
 
     @AndroidFindBy(accessibility = "introText")
@@ -22,6 +22,9 @@ public class WelcomePage extends BasePage {
     @AndroidFindBy(accessibility = "next")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"Next\"`][4]")
     private WebElement nextButton;
+    
+    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Back\")")
+    public WebElement backButton;
 
 
     public WelcomePage(AppiumDriver driver) {
@@ -46,5 +49,7 @@ public class WelcomePage extends BasePage {
         return this.getTextFromLocator(welcomeTextDescription);
     }
 
-
+    public void clickOnBackButton() {
+    	this.clickOnElement(backButton);
+    }
 }

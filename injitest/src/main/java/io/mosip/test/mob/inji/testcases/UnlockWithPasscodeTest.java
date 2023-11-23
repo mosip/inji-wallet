@@ -45,7 +45,7 @@ public class UnlockWithPasscodeTest extends BaseTest {
     
     @Test
     public void loginWithInvalidPasscode() {
-    	ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
         WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
@@ -57,10 +57,22 @@ public class UnlockWithPasscodeTest extends BaseTest {
         SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
 
         assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("invalidpasscode"), target);
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
         HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
+
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+        SettingsPage settingsPage = homePage.clickOnSettingIcon();
+
+        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+        UnlockApplicationPage unlockApplicationPage = settingsPage.clickOnLogoutButton();
+
+        assertTrue(unlockApplicationPage.isUnlockApplicationPageLoaded(), "Verify if unlock application page is displayed");
+        EnterYourPasscodePage enterYourPasscodePage = unlockApplicationPage.clickOnUnlockApplicationButton();
+
+        assertTrue(enterYourPasscodePage.isEnterYourPasscodePageLoaded(), "Verify if enter your passcode page is displayed");
+        enterYourPasscodePage.enterYourPasscode(TestDataReader.readData("invalidPasscode"), target);
 
         assertTrue(confirmPasscode.isPasscodeInvalidMessageDisplayed(), "verify if invalid passcode is displayed");
     	

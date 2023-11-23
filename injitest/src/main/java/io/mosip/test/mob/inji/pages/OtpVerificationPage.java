@@ -13,16 +13,23 @@ public class OtpVerificationPage extends BasePage {
     private WebElement otpVerificationText;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'OTP is invalid')]")
+    @iOSXCUITFindBy(accessibility = "OTP is invalid")
     private WebElement invalidOtpMessage;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Something is wrong. Please try again later!')]")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Something is wrong. Please try again later!\"`]")
     private WebElement invalidOtpMessageInVcActivation;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Cancel')]")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`label == \"Cancel\"`]")
     private WebElement cancelButton;
 
     @AndroidFindBy(accessibility = "close")
+    @iOSXCUITFindBy(accessibility = "close")
     private WebElement crossIcon;
+    
+    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"VID not available in database\")")
+	  private WebElement vidNotAvailableMessage;
 
     public OtpVerificationPage(AppiumDriver driver) {
         super(driver);
@@ -56,5 +63,9 @@ public class OtpVerificationPage extends BasePage {
     }
     public void clickOnCrossIcon(){
         clickOnElement(crossIcon);
+    }
+    
+    public boolean vidNotAvailableDisplayed() {
+        return this.isElementDisplayed(vidNotAvailableMessage, "VID not available in database");
     }
 }

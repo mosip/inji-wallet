@@ -17,7 +17,11 @@ export const ScanLayout: React.FC = () => {
   const {t} = useTranslation('ScanScreen');
   const controller = useScanLayout();
 
-  if (controller.statusOverlay != null && !controller.isAccepted) {
+  if (
+    controller.statusOverlay != null &&
+    !controller.isAccepted &&
+    !controller.isInvalid
+  ) {
     return (
       <Loader
         title={controller.statusOverlay?.title}
