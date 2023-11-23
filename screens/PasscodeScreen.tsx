@@ -76,48 +76,43 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
 
   const passcodeSetup =
     controller.passcode === '' ? (
-      <React.Fragment>
-        <Column>
-          <Text
-            testID="setPasscode"
-            align="center"
-            style={{...Theme.TextStyles.header, paddingTop: 7}}>
-            {t('header')}
-          </Text>
-          <Text
-            align="center"
-            style={{paddingTop: 3}}
-            weight="semibold"
-            color={Theme.Colors.GrayText}
-            margin="6 0">
-            {t('enterNewPassword')}
-          </Text>
-        </Column>
-
+      <Column align="space-between">
+        <Text
+          testID="setPasscode"
+          align="center"
+          style={{...Theme.TextStyles.header, paddingTop: 27}}>
+          {t('header')}
+        </Text>
+        <Text
+          align="center"
+          style={{paddingTop: 3}}
+          weight="semibold"
+          color={Theme.Colors.GrayText}
+          margin="6 0">
+          {t('enterNewPassword')}
+        </Text>
         <PinInput
           testID="setPasscodePin"
           length={MAX_PIN}
           onDone={setPasscode}
         />
-      </React.Fragment>
+      </Column>
     ) : (
-      <React.Fragment>
-        <Column>
-          <Text
-            testID="confirmPasscode"
-            align="center"
-            style={{...Theme.TextStyles.header, paddingTop: 7}}>
-            {t('confirmPasscode')}
-          </Text>
-          <Text
-            align="center"
-            style={{paddingTop: 3}}
-            weight="semibold"
-            color={Theme.Colors.GrayText}
-            margin="6 0">
-            {t('reEnterPassword')}
-          </Text>
-        </Column>
+      <Column align="space-between">
+        <Text
+          testID="confirmPasscode"
+          align="center"
+          style={{...Theme.TextStyles.header, paddingTop: 27}}>
+          {t('confirmPasscode')}
+        </Text>
+        <Text
+          align="center"
+          style={{paddingTop: 3}}
+          weight="semibold"
+          color={Theme.Colors.GrayText}
+          margin="6 0">
+          {t('reEnterPassword')}
+        </Text>
         <PasscodeVerify
           onSuccess={() => {
             resetRetryCount();
@@ -127,47 +122,47 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
           passcode={controller.passcode}
           salt={controller.storedSalt}
         />
-      </React.Fragment>
+      </Column>
     );
+
+  const unlockPasscode = (
+    <Column align="space-between">
+      <Text
+        testID="enterPasscode"
+        style={{paddingTop: 3}}
+        align="center"
+        weight="semibold"
+        color={Theme.Colors.GrayText}
+        margin="6 0">
+        {t('enterPasscode')}
+      </Text>
+      <PasscodeVerify
+        onSuccess={() => {
+          resetRetryCount();
+          controller.LOGIN();
+        }}
+        onError={handlePasscodeMismatch}
+        passcode={controller.storedPasscode}
+        salt={controller.storedSalt}
+      />
+    </Column>
+  );
 
   return (
     <Column
       fill
-      padding="32"
+      align="space-between"
+      style={{
+        paddingHorizontal: 32,
+      }}
       backgroundColor={Theme.Colors.whiteBackgroundColor}>
       <Image source={Theme.LockIcon} style={{alignSelf: 'center'}} />
-      {isSettingUp ? (
-        <Column fill align="space-around" width="100%">
-          {passcodeSetup}
-        </Column>
-      ) : (
-        <Column fill align="space-around" width="100%">
-          <Text
-            testID="enterPasscode"
-            style={{paddingTop: 3}}
-            align="center"
-            weight="semibold"
-            color={Theme.Colors.GrayText}
-            margin="6 0">
-            {t('enterPasscode')}
-          </Text>
-          <PasscodeVerify
-            onSuccess={() => {
-              resetRetryCount();
-              controller.LOGIN();
-            }}
-            onError={handlePasscodeMismatch}
-            passcode={controller.storedPasscode}
-            salt={controller.storedSalt}
-          />
-        </Column>
-      )}
 
-      <Column fill>
-        <Text align="center" color={Theme.Colors.errorMessage}>
-          {controller.error}
-        </Text>
-      </Column>
+      {isSettingUp ? passcodeSetup : unlockPasscode}
+
+      <Text align="center" color={Theme.Colors.errorMessage}>
+        {controller.error}
+      </Text>
     </Column>
   );
 };

@@ -7,6 +7,8 @@ import {useTranslation} from 'react-i18next';
 import {RootRouteProps} from '../../routes';
 import {useWelcomeScreen} from '../WelcomeScreenController';
 import LinearGradient from 'react-native-linear-gradient';
+import Constants from 'expo-constants';
+import {isIOS} from '../../shared/constants';
 
 export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
   const slider = useRef<AppIntroSlider>();
@@ -62,6 +64,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
               style={{
                 flex: 1,
                 alignItems: 'flex-end',
+                paddingTop: isIOS() ? Constants.statusBarHeight : 0,
               }}>
               {controller.isPasscodeSet() ? (
                 <Button
