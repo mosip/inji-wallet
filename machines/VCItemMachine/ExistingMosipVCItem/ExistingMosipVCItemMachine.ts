@@ -39,7 +39,6 @@ import {
   sendStartEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
-
 import {API_URLS} from '../../../shared/api';
 
 const model = createModel(
@@ -1510,7 +1509,6 @@ export const ExistingMosipVCItemMachine =
         hasCredential: (_, event) => {
           const vc =
             event.type === 'GET_VC_RESPONSE' ? event.vc : event.response;
-
           return vc?.credential != null && vc?.verifiableCredential != null;
         },
 
