@@ -201,12 +201,9 @@ export const ExistingMosipVCItemMachine =
                 DOWNLOAD_READY: {
                   target: 'downloadingCredential',
                 },
-                FAILED: [
-                  {
-                    actions: ['incrementDownloadCounter'],
-                    target: 'verifyingDownloadLimitExpiry',
-                  },
-                ],
+                FAILED: {
+                  actions: 'sendDownloadLimitExpire',
+                },
               },
             },
             downloadingCredential: {
@@ -1090,14 +1087,6 @@ export const ExistingMosipVCItemMachine =
             Number((event.data as DownloadProps).downloadInterval),
         }),
 
-        storeTag: send(
-          context => {
-            const {serviceRefs, ...data} = context;
-            return StoreEvents.SET(context.vcMetadata.getVcKey(), data);
-          },
-          {to: context => context.serviceRefs.store},
-        ),
-
         setCredential: model.assign((context, event) => {
           switch (event.type) {
             case 'STORE_RESPONSE':
@@ -1395,10 +1384,12 @@ export const ExistingMosipVCItemMachine =
                   case 'FAILED':
                   default:
                     callback(model.events.FAILED());
+                    clearInterval(pollInterval);
                     break;
                 }
               } catch (error) {
                 callback(model.events.FAILED());
+                clearInterval(pollInterval);
               }
             }
           });
