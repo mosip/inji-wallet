@@ -135,14 +135,18 @@ android {
         }
         debug {
             def keystore = file('debug.keystore')
-            def keystoreAlias = System.getenv("DEBUG_KEYSTORE_ALIAS")
-            def keystorePass = System.getenv("DEBUG_KEYSTORE_PASSWORD")
-            storeFile file("$keystore")
-            storePassword "$keystorePass"
-            keyAlias "$keystoreAlias"
-            keyPassword "$keystorePass"
-            v2SigningEnabled true
-            v1SigningEnabled false
+            if (keystore.exists()) {
+                def keystoreAlias = System.getenv("DEBUG_KEYSTORE_ALIAS")
+                def keystorePass = System.getenv("DEBUG_KEYSTORE_PASSWORD")
+                storeFile file("$keystore")
+                storePassword "$keystorePass"
+                keyAlias "$keystoreAlias"
+                keyPassword "$keystorePass"
+                v2SigningEnabled true
+                v1SigningEnabled false
+            }else {
+                android.buildTypes.debug.signingConfig = null
+            }
         }
     }
     buildTypes {
