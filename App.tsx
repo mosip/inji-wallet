@@ -50,6 +50,14 @@ const AppLayoutWrapper: React.FC = () => {
   const isDecryptError = useSelector(appService, selectIsDecryptError);
   const controller = useApp();
   const {t} = useTranslation('WelcomeScreen');
+
+  useEffect(() => {
+    async function hideAppLoading() {
+      await SplashScreen.hideAsync();
+    }
+    hideAppLoading();
+  }, []);
+
   if (isDecryptError) {
     DecryptErrorAlert(controller, t);
   }
@@ -116,13 +124,6 @@ const AppInitialization: React.FC = () => {
       );
     }
   }, [i18n.language]);
-
-  useEffect(() => {
-    async function hideAppLoading() {
-      await SplashScreen.hideAsync();
-    }
-    if (isReady && hasFontsLoaded) hideAppLoading();
-  }, [isReady, hasFontsLoaded]);
 
   return isReady && hasFontsLoaded ? (
     <AppLayoutWrapper />
