@@ -25,7 +25,7 @@ export const CopyButton: React.FC<CopyButtonProps> = ({content}) => {
         style={{marginRight: 2}}
         size={19}
       />
-      <Text style={{...Theme.TextStyles.semibold, paddingTop: 3}}>
+      <Text style={{...Theme.TextStyles.semibold, paddingTop: 3, maxWidth: 75}}>
         {buttonText}
       </Text>
     </Pressable>

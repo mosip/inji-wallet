@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {Linking, Pressable, TouchableOpacity} from 'react-native';
+import {Dimensions, Linking, Pressable, TouchableOpacity} from 'react-native';
 import {Modal} from '../../components/ui/Modal';
 import {Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {Icon, ListItem} from 'react-native-elements';
 import getAllConfigurations from '../../shared/commonprops/commonProps';
-import {getVersion} from 'react-native-device-info';
 import {CopyButton} from '../../components/CopyButton';
 import testIDProps from '../../shared/commonUtil';
 import {__InjiVersion, __TuvaliVersion} from '../../shared/GlobalVariables';
@@ -57,20 +56,45 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
           setShowAboutInji(!showAboutInji);
         }}>
         <Row testID="appID" style={Theme.Styles.primaryRow}>
-          <Text style={{...Theme.TextStyles.semibold, paddingTop: 3}}>
-            {t('appID')} : {appId}
-          </Text>
+          <Row>
+            <Text
+              style={{
+                ...Theme.TextStyles.semibold,
+                paddingTop: 3,
+                maxWidth: 110,
+              }}>
+              {t('appID')}
+            </Text>
+            <Text
+              style={{
+                ...Theme.TextStyles.semibold,
+                paddingTop: 3,
+              }}>
+              : {appId}
+            </Text>
+          </Row>
           <CopyButton content={appId} />
         </Row>
-        <Column fill padding="12" align="space-between">
+        <Column padding="12" align="space-between">
           <Column>
             <Text
               testID="aboutDetails"
               style={{...Theme.TextStyles.aboutDetailes, paddingTop: 5}}>
               {t('aboutDetailes')}
             </Text>
-            <Row crossAlign="center">
-              <Text style={{...Theme.TextStyles.aboutDetailes, paddingTop: 7}}>
+            <Row
+              align="space-between"
+              crossAlign="center"
+              style={{
+                maxWidth: Dimensions.get('window').width * 0.94,
+                minHeight: Dimensions.get('window').height * 0.1,
+              }}>
+              <Text
+                style={{
+                  ...Theme.TextStyles.aboutDetailes,
+                  paddingTop: 7,
+                  maxWidth: 150,
+                }}>
                 {t('forMoreDetailes')}
               </Text>
               <TouchableOpacity
@@ -80,7 +104,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
                 }}>
                 <Text
                   color={Theme.Colors.AddIdBtnBg}
-                  style={{paddingTop: 3}}
+                  style={{paddingTop: 3, maxWidth: 150}}
                   weight="bold">
                   {t('clickHere')}
                 </Text>

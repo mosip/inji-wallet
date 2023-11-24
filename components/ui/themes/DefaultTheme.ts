@@ -418,7 +418,7 @@ export const DefaultTheme = {
       backgroundColor: Colors.LightOrange,
     },
     receiveCardsContainer: {
-      height: Dimensions.get('window').height * 0.12,
+      minHeight: Dimensions.get('window').height * 0.17,
       width: Dimensions.get('window').width * 0.47,
       alignItems: 'center',
       borderBottomRightRadius: 0,
@@ -471,7 +471,7 @@ export const DefaultTheme = {
     },
     iconContainer: {
       flexDirection: 'row',
-      alignItems: 'flex-end',
+      alignItems: 'center',
     },
     scannerContainer: {
       borderRadius: 24,

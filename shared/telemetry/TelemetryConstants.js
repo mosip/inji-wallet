@@ -30,6 +30,7 @@ export const TelemetryConstants = {
     hardwareKeyStore:
       'Some security features will be unavailable as hardware key store is not available',
     activationCancelled: 'Activation Cancelled',
+    appWasReset: 'App Was Reset',
   }),
 
   ErrorId: Object.freeze({
@@ -40,6 +41,7 @@ export const TelemetryConstants = {
     activationFailed: 'ACTIVATION_FAILED',
     tampered: 'TAMPERED',
     dataRetrieval: 'DATA_RETRIEVAL',
+    appWasReset: 'APP_WAS_RESET',
   }),
 
   Screens: Object.freeze({

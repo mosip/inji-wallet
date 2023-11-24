@@ -422,7 +422,7 @@ export const PurpleTheme = {
       backgroundColor: Colors.LightPurple,
     },
     receiveCardsContainer: {
-      height: Dimensions.get('window').height * 0.12,
+      height: Dimensions.get('window').height * 0.17,
       width: Dimensions.get('window').width * 0.47,
       alignItems: 'center',
       borderBottomRightRadius: 0,
@@ -475,7 +475,7 @@ export const PurpleTheme = {
     },
     iconContainer: {
       flexDirection: 'row',
-      alignItems: 'flex-end',
+      alignItems: 'center',
     },
     scannerContainer: {
       borderRadius: 24,
@@ -806,7 +806,6 @@ export const PurpleTheme = {
       borderRadius: 9,
       width: Dimensions.get('window').width * 0.72,
       alignSelf: 'center',
-      margin: 3,
       height: 54,
     },
     float: {
