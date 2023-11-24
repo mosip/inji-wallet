@@ -1,15 +1,17 @@
-package io.mosip.test.mob.inji.testcases;
+package io.mosip.test.mob.inji.iosTestCases;
 
-import org.testng.annotations.Test;
-
+import io.mosip.test.mob.inji.BaseTest.BaseTest;
+import io.mosip.test.mob.inji.BaseTest.IosBaseTest;
 import io.mosip.test.mob.inji.api.BaseTestCase;
+import io.mosip.test.mob.inji.constants.Target;
 import io.mosip.test.mob.inji.pages.*;
 import io.mosip.test.mob.inji.utils.TestDataReader;
+import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class VcDownloadAndVerifyUsingUinTest extends BaseTest {
+public class VcDownloadAndVerifyUsingUinTest extends IosBaseTest {
     @Test
     public void downloadAndVerifyVcUsingUin() {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -24,10 +26,10 @@ public class VcDownloadAndVerifyUsingUinTest extends BaseTest {
         SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
 
         assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
+        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
@@ -39,7 +41,7 @@ public class VcDownloadAndVerifyUsingUinTest extends BaseTest {
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(BaseTestCase.getOtp(), target);
+        otpVerification.enterOtp(BaseTestCase.getOtp(), Target.IOS);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         assertTrue(homePage.isIdTypeDisplayed(), "Verify if id type is displayed");
@@ -75,10 +77,10 @@ public class VcDownloadAndVerifyUsingUinTest extends BaseTest {
         SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
 
         assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
+        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
@@ -90,7 +92,7 @@ public class VcDownloadAndVerifyUsingUinTest extends BaseTest {
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(BaseTestCase.getOtp(), target);
+        otpVerification.enterOtp(BaseTestCase.getOtp(), Target.IOS);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
 
@@ -103,7 +105,7 @@ public class VcDownloadAndVerifyUsingUinTest extends BaseTest {
         retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin2")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(BaseTestCase.getOtp(), target);
+        otpVerification.enterOtp(BaseTestCase.getOtp(), Target.IOS);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("uin2FullName")), "Verify if second VC is  displayed");
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verifying again if first VC is still exists.");
@@ -124,10 +126,10 @@ public class VcDownloadAndVerifyUsingUinTest extends BaseTest {
         SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
 
         assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
+        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
@@ -155,10 +157,10 @@ public class VcDownloadAndVerifyUsingUinTest extends BaseTest {
         SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
 
         assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
+        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
@@ -170,7 +172,7 @@ public class VcDownloadAndVerifyUsingUinTest extends BaseTest {
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(BaseTestCase.getOtp(), target);
+        otpVerification.enterOtp(BaseTestCase.getOtp(), Target.IOS);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
 
@@ -183,14 +185,14 @@ public class VcDownloadAndVerifyUsingUinTest extends BaseTest {
          retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(BaseTestCase.getOtp(), target);
+        otpVerification.enterOtp(BaseTestCase.getOtp(), Target.IOS);
 
         assertTrue(homePage.isSecondNameDisplayed(TestDataReader.readData("fullName")), "Verify if second card name is displayed");
         HistoryPage historyPage = homePage.clickOnHistoryButton();
 
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
 
-        assertEquals(historyPage.getNumberOfRecordsInHistory(TestDataReader.readData("uin"), target),2, "Verify two download records in history page");
+        assertEquals(historyPage.getNumberOfRecordsInHistory(TestDataReader.readData("uin"), Target.IOS),2, "Verify two download records in history page");
 
     }
 
@@ -208,10 +210,10 @@ public class VcDownloadAndVerifyUsingUinTest extends BaseTest {
         SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
 
         assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
+        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
 

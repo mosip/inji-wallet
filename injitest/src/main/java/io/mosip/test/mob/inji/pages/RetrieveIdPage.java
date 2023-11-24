@@ -21,7 +21,6 @@ public class RetrieveIdPage extends BasePage {
     private WebElement generateCardButton;
 
     @iOSXCUITFindBy(className = "XCUIElementTypePickerWheel")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"UIN invalid\"`]")
     private WebElement vidDropDownValueIos;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'VID')]")

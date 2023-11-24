@@ -1,7 +1,10 @@
-package io.mosip.test.mob.inji.testcases;
+package io.mosip.test.mob.inji.androidTestCases;
 
 import static org.testng.Assert.assertTrue;
 
+import io.mosip.test.mob.inji.BaseTest.AndroidBaseTest;
+import io.mosip.test.mob.inji.BaseTest.BaseTest;
+import io.mosip.test.mob.inji.constants.Target;
 import org.testng.annotations.Test;
 
 import io.mosip.test.mob.inji.pages.AppUnlockMethodPage;
@@ -14,7 +17,7 @@ import io.mosip.test.mob.inji.pages.SettingsPage;
 import io.mosip.test.mob.inji.pages.WelcomePage;
 import io.mosip.test.mob.inji.utils.TestDataReader;
 
-public class ReceiveCardTest extends BaseTest {
+public class ReceiveCardTest extends AndroidBaseTest {
 	
 	 @Test
 	    public void verifyRecivedCardAndQrCode() {
@@ -30,10 +33,10 @@ public class ReceiveCardTest extends BaseTest {
 	        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
 
 	        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-	        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
+	        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
 	        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-	        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
+	        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
 	        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
 	        SettingsPage settingsPage = homePage.clickOnSettingIcon();
@@ -57,10 +60,10 @@ public class ReceiveCardTest extends BaseTest {
 	        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
 
 	        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-	        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
+	        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
 	        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-	        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
+	        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
 	        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
 	        SettingsPage settingsPage = homePage.clickOnSettingIcon();

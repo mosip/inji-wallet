@@ -1,15 +1,17 @@
-package io.mosip.test.mob.inji.testcases;
+package io.mosip.test.mob.inji.iosTestCases;
 
+import io.mosip.test.mob.inji.BaseTest.IosBaseTest;
+import io.mosip.test.mob.inji.constants.Target;
 import io.mosip.test.mob.inji.pages.*;
 import io.mosip.test.mob.inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
 
-public class ShareVcTest  extends BaseTest{
+public class UnlockWithPasscodeTest extends IosBaseTest {
 
     @Test
-    public void noCardsAvailableToShare() {
+    public void logoutAndLoginWithPasscode() {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
@@ -22,40 +24,59 @@ public class ShareVcTest  extends BaseTest{
         SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
 
         assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
-
-        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
-        ScanPage scanPage = homePage.clickOnScanButton();
-        assertTrue(scanPage.isNoShareableCardsMessageDisplayed(), "Verify if no shareable cards are available message is displayed");
-    }
-
-    @Test
-    public void verifyReceivedCardTabPresent() {
-        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
-
-        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
-        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
-
-        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
-        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
-
-        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
-        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
-
-        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
-
-        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
+        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
-        assertTrue(settingsPage.isReceivedCardsPresent(), "Verify if received cards tab is displayed");
+        UnlockApplicationPage unlockApplicationPage = settingsPage.clickOnLogoutButton();
 
+        assertTrue(unlockApplicationPage.isUnlockApplicationPageLoaded(), "Verify if unlock application page is displayed");
+        EnterYourPasscodePage enterYourPasscodePage = unlockApplicationPage.clickOnUnlockApplicationButton();
+
+        assertTrue(enterYourPasscodePage.isEnterYourPasscodePageLoaded(), "Verify if enter your passcode page is displayed");
+        enterYourPasscodePage.enterYourPasscode(TestDataReader.readData("passcode"), Target.IOS);
+
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+
+    }
+    
+    @Test
+    public void loginWithInvalidPasscode() {
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+
+        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+
+        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
+
+        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
+
+        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
+
+        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
+        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.IOS);
+
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+        SettingsPage settingsPage = homePage.clickOnSettingIcon();
+
+        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+        UnlockApplicationPage unlockApplicationPage = settingsPage.clickOnLogoutButton();
+
+        assertTrue(unlockApplicationPage.isUnlockApplicationPageLoaded(), "Verify if unlock application page is displayed");
+        EnterYourPasscodePage enterYourPasscodePage = unlockApplicationPage.clickOnUnlockApplicationButton();
+
+        assertTrue(enterYourPasscodePage.isEnterYourPasscodePageLoaded(), "Verify if enter your passcode page is displayed");
+        enterYourPasscodePage.enterYourPasscode(TestDataReader.readData("invalidPasscode"), Target.IOS);
+
+        assertTrue(confirmPasscode.isPasscodeInvalidMessageDisplayed(), "verify if invalid passcode is displayed");
+    	
     }
 }

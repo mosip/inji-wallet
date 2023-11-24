@@ -1,17 +1,20 @@
-package io.mosip.test.mob.inji.testcases;
+package io.mosip.test.mob.inji.iosTestCases;
 
-import org.testng.annotations.Test;
-
+import io.mosip.test.mob.inji.BaseTest.BaseTest;
+import io.mosip.test.mob.inji.BaseTest.IosBaseTest;
 import io.mosip.test.mob.inji.api.BaseTestCase;
+import io.mosip.test.mob.inji.constants.Target;
 import io.mosip.test.mob.inji.pages.*;
 import io.mosip.test.mob.inji.utils.TestDataReader;
+import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
 
-public class GenerateUinOrVidTest extends BaseTest {
+public class PinVcTest extends IosBaseTest {
 
     @Test
-    public void generateUinOrVidUsingAid() {
+    public void pinVc() throws InterruptedException  {
+
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
@@ -24,10 +27,10 @@ public class GenerateUinOrVidTest extends BaseTest {
         SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
 
         assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
+        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
@@ -36,27 +39,24 @@ public class GenerateUinOrVidTest extends BaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        GenerateUinOrVidPage generateUinOrVidPage = retrieveIdPage.clickOnGetItNowText();
-
-        assertTrue(generateUinOrVidPage.isGenerateUinOrVidPageLoaded(), "Verify if generate uin or vid page page is displayed");
-        OtpVerificationPage otpVerification = generateUinOrVidPage.enterApplicationID(TestDataReader.readData("aid")).clickOnGetUinOrVidButton();
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(BaseTestCase.getOtp(), target);
-
-        assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        retrieveIdPage.clickOnGenerateCardButton();
-
-        assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(BaseTestCase.getOtp(), target);
+        otpVerification.enterOtp(BaseTestCase.getOtp(), Target.IOS);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
 
+        assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
+        moreOptionsPage.clickOnPinOrUnPinCard();
+
+        assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
     }
-
+    
+    //For IOS bluetooth does not support in simulator, so we can't automate
     @Test
-    public void goBackToGenerateUinOrVidUsingAidFromOtpVerificationPage() {
-        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+    public void VerifyCameraOpenAfterPinVc() throws InterruptedException {
+    	ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
         WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
@@ -68,10 +68,10 @@ public class GenerateUinOrVidTest extends BaseTest {
         SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
 
         assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
+        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
@@ -80,15 +80,23 @@ public class GenerateUinOrVidTest extends BaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        GenerateUinOrVidPage generateUinOrVidPage = retrieveIdPage.clickOnGetItNowText();
-
-        assertTrue(generateUinOrVidPage.isGenerateUinOrVidPageLoaded(), "Verify if generate uin or vid page page is displayed");
-        OtpVerificationPage otpVerification = generateUinOrVidPage.enterApplicationID(TestDataReader.readData("aid")).clickOnGetUinOrVidButton();
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.clickOnCrossIcon();
-        assertTrue(generateUinOrVidPage.isGenerateUinOrVidPageLoaded(), "Verify if generate uin or vid page page is displayed");
+        otpVerification.enterOtp(BaseTestCase.getOtp(), Target.IOS);
 
+        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
+
+        assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
+        moreOptionsPage.clickOnPinOrUnPinCard();
+
+        assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
+        ScanPage scanPage=homePage.clickOnScanButton();
+        
+        assertTrue(scanPage.isCameraPageLoaded(), "Verify if pin icon on vc is displayed");
+        assertTrue(scanPage.isFlipCameraClickable(),"Verify if flip camera is enabled");
+        
     }
     
 }

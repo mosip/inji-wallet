@@ -1,5 +1,8 @@
-package io.mosip.test.mob.inji.testcases;
+package io.mosip.test.mob.inji.androidTestCases;
 
+import io.mosip.test.mob.inji.BaseTest.AndroidBaseTest;
+import io.mosip.test.mob.inji.BaseTest.BaseTest;
+import io.mosip.test.mob.inji.constants.Target;
 import org.testng.annotations.Test;
 
 import io.mosip.test.mob.inji.api.BaseTestCase;
@@ -8,7 +11,7 @@ import io.mosip.test.mob.inji.utils.TestDataReader;
 
 import static org.testng.Assert.assertTrue;
 
-public class PinVcTest extends BaseTest {
+public class PinVcTest extends AndroidBaseTest {
 
     @Test
     public void pinVc() throws InterruptedException  {
@@ -25,10 +28,10 @@ public class PinVcTest extends BaseTest {
         SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
 
         assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
+        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
@@ -40,7 +43,7 @@ public class PinVcTest extends BaseTest {
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(BaseTestCase.getOtp(), target);
+        otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
@@ -51,6 +54,7 @@ public class PinVcTest extends BaseTest {
         assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
     }
     
+    //For IOS bluetooth does not support in simulator, so we can't automate
     @Test
     public void VerifyCameraOpenAfterPinVc() throws InterruptedException {
     	ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -65,10 +69,10 @@ public class PinVcTest extends BaseTest {
         SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
 
         assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
+        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
@@ -80,7 +84,7 @@ public class PinVcTest extends BaseTest {
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(BaseTestCase.getOtp(), target);
+        otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();

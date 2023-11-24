@@ -74,9 +74,9 @@ public class HomePage extends BasePage {
         /*if (isElementDisplayed(secureKeyStoragePopup, "secure key storage popup")) {
             clickOnElement(riskItButton);
         }*/
-        /*if (isElementDisplayed(securityFeatureUnavailablePopup, "security features will be unavailable popup")) {
+        if (isElementDisplayed(securityFeatureUnavailablePopup, "security features will be unavailable popup")) {
             clickOnElement(okButton);
-        }*/
+        }
         return this.isElementDisplayed(homeButton, "Home page");
     }
 

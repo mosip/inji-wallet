@@ -1,28 +1,17 @@
-package io.mosip.test.mob.inji.testcases;
+package io.mosip.test.mob.inji.iosTestCases;
+
+import io.mosip.test.mob.inji.BaseTest.BaseTest;
+import io.mosip.test.mob.inji.BaseTest.IosBaseTest;
+import io.mosip.test.mob.inji.api.BaseTestCase;
+import io.mosip.test.mob.inji.constants.Target;
+import io.mosip.test.mob.inji.pages.*;
+import io.mosip.test.mob.inji.utils.TestDataReader;
+import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-import org.testng.annotations.Test;
-
-import io.mosip.test.mob.inji.api.BaseTestCase;
-import io.mosip.test.mob.inji.pages.AddNewCardPage;
-import io.mosip.test.mob.inji.pages.AppUnlockMethodPage;
-import io.mosip.test.mob.inji.pages.ChooseLanguagePage;
-import io.mosip.test.mob.inji.pages.ConfirmPasscode;
-import io.mosip.test.mob.inji.pages.CredentialRegistryPage;
-import io.mosip.test.mob.inji.pages.GenerateUinOrVidPage;
-import io.mosip.test.mob.inji.pages.HomePage;
-import io.mosip.test.mob.inji.pages.MoreOptionsPage;
-import io.mosip.test.mob.inji.pages.OtpVerificationPage;
-import io.mosip.test.mob.inji.pages.PleaseConfirmPopupPage;
-import io.mosip.test.mob.inji.pages.RetrieveIdPage;
-import io.mosip.test.mob.inji.pages.SetPasscode;
-import io.mosip.test.mob.inji.pages.SettingsPage;
-import io.mosip.test.mob.inji.pages.WelcomePage;
-import io.mosip.test.mob.inji.utils.TestDataReader;
-
-public class CredentialRegistryTest extends BaseTest {
+public class CredentialRegistryTest extends IosBaseTest {
 
 	@Test
 	public void downloadAndVerifyVcInNewEnv() throws InterruptedException {
@@ -38,10 +27,10 @@ public class CredentialRegistryTest extends BaseTest {
         SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
 
         assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
+        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
@@ -63,7 +52,7 @@ public class CredentialRegistryTest extends BaseTest {
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("newuin")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(TestDataReader.readData("otp"), target);
+        otpVerification.enterOtp(TestDataReader.readData("otp"), Target.IOS);
         
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
@@ -75,7 +64,7 @@ public class CredentialRegistryTest extends BaseTest {
         OtpVerificationPage otpVerificationPage = pleaseConfirmPopupPage.clickOnConfirmButton();
         
         assertTrue(otpVerificationPage.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerificationPage.enterOtp(TestDataReader.readData("otp"), target);
+        otpVerificationPage.enterOtp(TestDataReader.readData("otp"), Target.IOS);
 
         assertTrue(moreOptionsPage.isVcActivatedForOnlineLogin(), "Verify if VC is activated");
 	}
@@ -94,10 +83,10 @@ public class CredentialRegistryTest extends BaseTest {
         SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
 
         assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
+        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
@@ -132,10 +121,10 @@ public class CredentialRegistryTest extends BaseTest {
         SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
 
         assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
+        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
@@ -167,10 +156,10 @@ public class CredentialRegistryTest extends BaseTest {
         SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
 
         assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
+        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
@@ -195,13 +184,13 @@ public class CredentialRegistryTest extends BaseTest {
         OtpVerificationPage otpVerification = generateUinOrVidPage.enterApplicationID(TestDataReader.readData("newaid")).clickOnGetUinOrVidButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(TestDataReader.readData("otp"), target);
+        otpVerification.enterOtp(TestDataReader.readData("otp"), Target.IOS);
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
         retrieveIdPage.clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(TestDataReader.readData("otp"), target);
+        otpVerification.enterOtp(TestDataReader.readData("otp"), Target.IOS);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
 	}
@@ -220,10 +209,10 @@ public class CredentialRegistryTest extends BaseTest {
         SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
 
         assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
+        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
@@ -264,10 +253,10 @@ public class CredentialRegistryTest extends BaseTest {
         SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
 
         assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
+        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
@@ -289,7 +278,7 @@ public class CredentialRegistryTest extends BaseTest {
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("newuin")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(TestDataReader.readData("otp"), target);
+        otpVerification.enterOtp(TestDataReader.readData("otp"), Target.IOS);
         
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         homePage.clickOnSettingIcon();
@@ -311,7 +300,7 @@ public class CredentialRegistryTest extends BaseTest {
          retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(BaseTestCase.getOtp(), target);
+        otpVerification.enterOtp(BaseTestCase.getOtp(), Target.IOS);
         
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         assertTrue(homePage.isSecondNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
@@ -331,10 +320,10 @@ public class CredentialRegistryTest extends BaseTest {
         SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
 
         assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
+        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
@@ -356,7 +345,7 @@ public class CredentialRegistryTest extends BaseTest {
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("newuin")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(TestDataReader.readData("otp"), target);
+        otpVerification.enterOtp(TestDataReader.readData("otp"), Target.IOS);
         
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         homePage.clickOnSettingIcon();

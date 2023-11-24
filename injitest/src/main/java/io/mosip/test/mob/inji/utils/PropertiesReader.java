@@ -1,5 +1,7 @@
 package io.mosip.test.mob.inji.utils;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
@@ -8,7 +10,7 @@ import java.util.Properties;
 import io.mosip.test.mob.inji.driver.TestRunner;
 
 public class PropertiesReader {
-    private static final String PROPERTY_FILE = TestRunner.getResourcePath()+"/config.properties";
+    private static final String PROPERTY_FILE = TestRunner.getResourcePath() + "/config.properties";
 
     private final Properties props;
 
@@ -18,14 +20,16 @@ public class PropertiesReader {
 
     private Properties loadPropertyFile() {
         Properties properties = new Properties();
-        try (InputStream stream = Thread.currentThread().getContextClassLoader().getResourceAsStream(PROPERTY_FILE)) {
-            if (stream != null) {
-                properties.load(stream);
-            } else {
-                throw new IOException("Property file not found: " + PROPERTY_FILE);
-            }
+        InputStream input = null;
+        try {
+            input = new FileInputStream(PROPERTY_FILE);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            properties.load(input);
         } catch (IOException e) {
-            throw new RuntimeException("Error loading properties file: " + e.getMessage(), e);
+            throw new RuntimeException(e);
         }
         return properties;
     }
