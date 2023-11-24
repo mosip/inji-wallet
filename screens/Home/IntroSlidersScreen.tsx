@@ -72,7 +72,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
                   type="plain"
                   title={t('back')}
                   onPress={controller.BACK}
-                  styles={{height: 150}}
+                  styles={{height: 40, maxWidth: 115}}
                 />
               ) : (
                 <Button
@@ -80,7 +80,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
                   type="plain"
                   title={t('skip')}
                   onPress={controller.NEXT}
-                  styles={{height: 150}}
+                  styles={{height: 40, width: 115}}
                 />
               )}
             </Column>
