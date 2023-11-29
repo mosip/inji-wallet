@@ -10,8 +10,6 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
 
-import static org.testng.Assert.*;
-
 public class ActivateVcTest extends IosBaseTest {
     @Test
     public void activateVc() throws InterruptedException {

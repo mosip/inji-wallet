@@ -2,7 +2,6 @@ package iosTestCases;
 
 import BaseTest.AndroidBaseTest;
 import BaseTest.IosBaseTest;
-import inji.api.BaseTestCase;
 import inji.constants.Target;
 import inji.pages.*;
 import inji.utils.TestDataReader;
@@ -10,11 +9,9 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
 
-import static org.testng.Assert.*;
-
 public class AboutInjiTest extends IosBaseTest {
     @Test
-    public void copyAppId() throws InterruptedException {
+    public void copyAppId() {
     	ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");

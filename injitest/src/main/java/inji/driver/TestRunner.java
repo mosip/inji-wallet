@@ -17,8 +17,7 @@ public class TestRunner {
 
 
     public static void main(String[] args) throws Exception {
-        BaseTestCase.intiateUINGenration();
-
+        //BaseTestCase.intiateUINGenration();
         startTestRunner();
     }
 

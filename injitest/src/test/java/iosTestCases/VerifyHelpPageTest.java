@@ -1,14 +1,14 @@
 package iosTestCases;
 
+import BaseTest.AndroidBaseTest;
 import BaseTest.IosBaseTest;
-import inji.api.BaseTestCase;
 import inji.constants.Target;
 import inji.pages.*;
-import inji.utils.CommonMethods;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class VerifyHelpPageTest extends IosBaseTest {
 

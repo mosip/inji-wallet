@@ -17,16 +17,20 @@ public class AndroidBaseTest extends BaseTest {
     public void setup(String platformName) {
         try {
             //target = Target.valueOf(platformName);
-            this.driver = DriverManager.getDriver(Target.ANDROID);
+            this.driver = DriverManager.getDriver(Target.ANDROID, isDeviceFarmRun);
         } catch (MalformedURLException | PlatformNotSupportException | InterruptedException e) {
             throw new RuntimeException(e);
         }
-        ScreenRecording.startAndroidScreenRecording(driver);
+        if (!isDeviceFarmRun) {
+            ScreenRecording.startAndroidScreenRecording(driver);
+        }
     }
 
     @AfterMethod(alwaysRun = true)
     public void teardown(ITestResult result) {
-        ScreenRecording.stopAndroidScreenRecording(driver,result.getMethod().getMethodName());
+        if (!isDeviceFarmRun) {
+            ScreenRecording.stopAndroidScreenRecording(driver, result.getMethod().getMethodName());
+        }
         driver.quit();
     }
 }

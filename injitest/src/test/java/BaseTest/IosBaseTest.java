@@ -17,16 +17,20 @@ public class IosBaseTest extends BaseTest {
     public void setup(String platformName) {
         try {
             //Target target = Target.valueOf(platformName);
-            this.driver = DriverManager.getDriver(Target.IOS);
+            this.driver = DriverManager.getDriver(Target.IOS, isDeviceFarmRun);
         } catch (MalformedURLException | PlatformNotSupportException | InterruptedException e) {
             throw new RuntimeException(e);
         }
-        ScreenRecording.startIosScreenRecording(driver);
+        if (!isDeviceFarmRun) {
+            ScreenRecording.startIosScreenRecording(driver);
+        }
     }
 
     @AfterMethod(alwaysRun = true)
     public void teardown(ITestResult result) {
-        ScreenRecording.stopIosScreenRecording(driver,result.getMethod().getMethodName());
+        if (!isDeviceFarmRun) {
+            ScreenRecording.stopIosScreenRecording(driver,result.getMethod().getMethodName());
+        }
         driver.quit();
     }
 }

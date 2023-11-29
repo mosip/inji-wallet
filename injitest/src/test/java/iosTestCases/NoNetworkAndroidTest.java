@@ -1,5 +1,6 @@
 package iosTestCases;
 
+import BaseTest.AndroidBaseTest;
 import BaseTest.IosBaseTest;
 import inji.api.BaseTestCase;
 import inji.constants.Target;
@@ -8,7 +9,7 @@ import inji.utils.CommonMethods;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertTrue;
 
 public class NoNetworkAndroidTest extends IosBaseTest {
 

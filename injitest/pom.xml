@@ -34,6 +34,11 @@
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
     <build>
+        <testResources>
+            <testResource>
+                <directory>${project.basedir}/src/main/resources</directory>
+            </testResource>
+        </testResources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -83,8 +88,8 @@
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
+
     </build>
     <profiles>
         <profile>
@@ -182,7 +187,6 @@
             </build>
         </profile>
     </profiles>
-
 
     <dependencies>
         <dependency>
@@ -309,7 +313,12 @@
             <artifactId>commons-lang</artifactId>
             <version>2.6</version>
         </dependency>
-
+        <!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-s3 -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-s3</artifactId>
+            <version>1.12.597</version>
+        </dependency>
 
     </dependencies>
 

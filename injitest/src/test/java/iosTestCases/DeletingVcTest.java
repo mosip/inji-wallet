@@ -1,5 +1,6 @@
 package iosTestCases;
 
+import BaseTest.AndroidBaseTest;
 import BaseTest.IosBaseTest;
 import inji.api.BaseTestCase;
 import inji.constants.Target;

@@ -180,10 +180,10 @@ public class BaseTestCase {
 	}
 	
 	 public static String getOtp() {
-	  	  String otp="";
+	  	  /*String otp="";
 	  	  String externalemail = TestDataReader.readData("externalemail");
-	  	  otp = MockSMTPListener.getOtp(externalemail);
-	  	  return otp;
+	  	  otp = MockSMTPListener.getOtp(externalemail);*/
+	  	  return "111111";
 	    }
 
 	public static JSONObject getRequestJson(String filepath) {
