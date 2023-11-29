@@ -152,6 +152,7 @@ export async function decryptJson(
 }
 
 function encryptWithForge(text: string, key: string): EncryptedOutput {
+  //iv - initialization vector
   const iv = forge.random.getBytesSync(16);
   const salt = forge.random.getBytesSync(128);
   const encryptionKey = forge.pkcs5.pbkdf2(key, salt, 4, 16);

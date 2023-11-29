@@ -3,7 +3,22 @@
  */
 import {Buffer} from 'buffer';
 
-const forge = require('node-forge');
+import forge, {pki, asn1, util, random, md} from 'node-forge';
+
+type PrivateKey = forge.pki.PrivateKey;
+type PublicKey = forge.pki.PublicKey;
+
+const {
+  publicKeyToAsn1,
+  publicKeyFromAsn1,
+  privateKeyToAsn1,
+  privateKeyFromAsn1,
+  ed25519,
+} = pki;
+const {toDer, fromDer: forgeFromDer} = asn1;
+const {createBuffer} = util;
+const {getBytesSync: getRandomBytes} = random;
+const {sha256} = md;
 
 // used to export node's public keys to buffers
 const publicKeyEncoding = {format: 'der', type: 'spki'};
@@ -24,15 +39,15 @@ const api = {
    * @returns {object} The object with the public and private key material.
    */
   async generateKeyPairFromSeed(seedBytes) {
-    const privateKey: forge.pki.PrivateKey = forgePrivateKey(
+    const privateKey: PrivateKey = forgePrivateKey(
       _privateKeyDerEncode({seedBytes}),
     );
 
     // this expects either a PEM encoded key or a node privateKeyObject
-    const publicKey: forge.pki.PublicKey =
-      createForgePublicKeyFromPrivateKeyBuffer(privateKeyToBuffer(privateKey));
+    const publicKey: PublicKey =
+      createForgePublicKeyFromPrivateKeyBuffer(privateKey);
     const publicKeyBuffer: Buffer = Buffer.from(
-      forge.asn1.toDer(forge.pki.publicKeyToAsn1(publicKey)).getBytes(),
+      toDer(publicKeyToAsn1(publicKey)).getBytes(),
       'binary',
     );
 
@@ -48,7 +63,7 @@ const api = {
     return api.generateKeyPairFromSeed(seed);
   },
   async sign(privateKeyBytes, data) {
-    const privateKey: forge.pki.PrivateKey = forgePrivateKey(
+    const privateKey: PrivateKey = forgePrivateKey(
       _privateKeyDerEncode({privateKeyBytes}),
     );
     const signature: string = forgeSign(data, privateKey);
@@ -65,45 +80,41 @@ const api = {
 
 export default api;
 
-function forgePrivateKey(privateKeyBuffer: Buffer): forge.pki.PrivateKey {
-  return forge.pki.privateKeyFromAsn1(fromDer(privateKeyBuffer));
+function forgePrivateKey(privateKeyBuffer: Buffer): PrivateKey {
+  return privateKeyFromAsn1(fromDer(privateKeyBuffer));
 }
 
 function fromDer(keyBuffer: Buffer) {
-  return forge.asn1.fromDer(keyBuffer.toString('binary'));
+  return forgeFromDer(keyBuffer.toString('binary'));
 }
 
 function createForgePublicKeyFromPrivateKeyBuffer(
-  privateKey: Buffer,
-): forge.pki.PublicKey {
-  const publicKey = forge.pki.ed25519.publicKeyFromPrivateKey({privateKey});
+  privateKeyObject: PrivateKey,
+): PublicKey {
+  const privateKeyBuffer = privateKeyToBuffer(privateKeyObject);
+  const publicKey = ed25519.publicKeyFromPrivateKey({
+    privateKey: privateKeyBuffer,
+  });
   return publicKey;
 }
 
-async function createForgePublicKeyFromPublicKeyBuffer(
+function createForgePublicKeyFromPublicKeyBuffer(
   publicKeyBuffer: Buffer,
-): Promise<string> {
-  const publicKeyObject = forge.pki.publicKeyFromAsn1(fromDer(publicKeyBuffer));
-  const publicKeyDer = forge.asn1
-    .toDer(forge.pki.publicKeyToAsn1(publicKeyObject))
-    .getBytes();
+): string {
+  const publicKeyObject = publicKeyFromAsn1(fromDer(publicKeyBuffer));
+  const publicKeyDer = toDer(publicKeyToAsn1(publicKeyObject)).getBytes();
 
   return publicKeyDer;
 }
 
-function forgeSign(
-  data: string,
-  privateKeyObject: forge.pki.PrivateKey,
-): string {
-  const privateKeyBytes = forge.asn1
-    .toDer(forge.pki.privateKeyToAsn1(privateKeyObject))
-    .getBytes();
+function forgeSign(data: string, privateKeyObject: PrivateKey): string {
+  const privateKeyBytes = toDer(privateKeyToAsn1(privateKeyObject)).getBytes();
 
-  const privateKey = forge.util.createBuffer(privateKeyBytes);
+  const privateKey = createBuffer(privateKeyBytes);
 
-  const signature = forge.pki.ed25519.sign({
+  const signature = ed25519.sign({
     privateKey,
-    md: forge.md.sha256.create(),
+    md: sha256.create(),
     message: data,
   });
 
@@ -115,20 +126,20 @@ function forgeVerifyEd25519(
   publicKey: string,
   signature: string,
 ): boolean {
-  return forge.pki.ed25519.verify({
+  return ed25519.verify({
     publicKey: publicKey,
-    signature: forge.util.createBuffer(signature),
-    message: forge.util.createBuffer(data),
+    signature: createBuffer(signature),
+    message: createBuffer(data),
   });
 }
 
 function randomBytes(length: number) {
-  return Buffer.from(forge.random.getBytesSync(length), 'binary');
+  return Buffer.from(getRandomBytes(length), 'binary');
 }
 
-function privateKeyToBuffer(privateKey: forge.pki.PrivateKey): Buffer {
-  const privateKeyAsn1 = forge.pki.privateKeyToAsn1(privateKey);
-  const privateKeyDer = forge.asn1.toDer(privateKeyAsn1).getBytes();
+function privateKeyToBuffer(privateKey: PrivateKey): Buffer {
+  const privateKeyAsn1 = privateKeyToAsn1(privateKey);
+  const privateKeyDer = toDer(privateKeyAsn1).getBytes();
 
   const privateKeyBuffer = Buffer.from(privateKeyDer, 'binary');
 
