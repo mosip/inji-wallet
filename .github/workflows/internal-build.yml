@@ -163,3 +163,4 @@ jobs:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
       SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
+      SONAR_ARGS: -Dsonarqube
