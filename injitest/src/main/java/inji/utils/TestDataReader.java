@@ -12,6 +12,7 @@ public class TestDataReader {
         return getValueForKey(key);
     }
 
+    //ToDo - Need to remove this once path issue is fixed on device farm
     private static String getValueForKey(String key) {
         switch (key) {
             case "externalemail":

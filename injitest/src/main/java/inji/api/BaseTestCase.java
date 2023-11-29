@@ -178,7 +178,8 @@ public class BaseTestCase {
 		logProp.setProperty("log4j.appender.Appender2.layout.ConversionPattern", "%-7p %d [%t] %c %x - %m%n");
 		return logProp;
 	}
-	
+
+	//ToDo - Need to address this
 	 public static String getOtp() {
 	  	  /*String otp="";
 	  	  String externalemail = TestDataReader.readData("externalemail");
