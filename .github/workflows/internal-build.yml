@@ -158,6 +158,7 @@ jobs:
     with:
       SERVICE_LOCATION: '.'
       ANDROID_LOCATION: 'android'
+      SONAR_ARGS: -Dsonarqube
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
