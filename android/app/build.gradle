@@ -4,6 +4,7 @@ plugins {
 
 apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
+apply plugin: "org.sonarqube"
 
 react {
     /* Folders */
@@ -125,7 +126,7 @@ android {
         release {
             // for sonarqube job we will generate dummy release keystore to sign the app as we are not doing it in workflow
             def hasSonarqube = System.properties.containsKey("sonarqube")
-            def keystore = file('release.keystore')
+            def keystore = file('release.keystore').exists() ? file('release.keystore') : file('dummyrelease.keystore')
             if (hasSonarqube && !keystore.exists() ) {
                 exec {
                     commandLine 'keytool',
@@ -138,7 +139,7 @@ android {
                             '-storepass', System.getenv("RELEASE_KEYSTORE_PASSWORD"),
                             '-keypass', System.getenv("RELEASE_KEYSTORE_PASSWORD"),
                             '-alias', System.getenv("RELEASE_KEYSTORE_ALIAS"),
-                            '-keystore', 'release.keystore',
+                            '-keystore', 'dummyrelease.keystore',
                             '-dname', 'CN=,OU=,O=,L=,S=,C=US'
                 }
             }
@@ -223,6 +224,16 @@ android {
             def datetime = new Date().format('yyyyMMdd_HHmm')
             def architecture = output.getFilter(com.android.build.OutputFile.ABI) ?: "universal"
             outputFileName = "Inji_${architecture}.apk"
+        }
+    }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            if (variant.flavorName == "collab") {
+                sonarqube {
+                    androidVariant variant.name
+                }
+            }
         }
     }
 }

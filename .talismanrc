@@ -81,6 +81,6 @@ fileignoreconfig:
 - filename: ios/fastlane/Fastfile
   checksum: feea5a7f044ef6961d53e7d1e1ffb92a3e0f72761496424f6e64288e3718d605
 - filename: android/app/build.gradle
-  checksum: d2164820003c0565191032cd2cbd19ed89eae5375ee43633ef59363c79878144
+  checksum: c2d2ab90258fc346d2f2d57b360883b6e57540eac5467a8e8438c2d5eada90df
   version: ""
 
