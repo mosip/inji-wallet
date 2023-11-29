@@ -127,6 +127,7 @@ android {
             // for sonarqube job we will generate dummy release keystore to sign the app as we are not doing it in workflow
             def hasSonarqube = System.properties.containsKey("sonarqube")
             def keystore = file('release.keystore').exists() ? file('release.keystore') : file('dummyrelease.keystore')
+            storeFile file("$keystore")
             if (hasSonarqube && !keystore.exists() ) {
                 exec {
                     commandLine 'keytool',
@@ -136,19 +137,23 @@ android {
                             '-keyalg', 'RSA',
                             '-keysize', '2048',
                             '-validity', '10000',
-                            '-storepass', System.getenv("RELEASE_KEYSTORE_PASSWORD"),
-                            '-keypass', System.getenv("RELEASE_KEYSTORE_PASSWORD"),
-                            '-alias', System.getenv("RELEASE_KEYSTORE_ALIAS"),
+                            '-storepass', 'password',
+                            '-keypass', 'password',
+                            '-alias', 'androidreleasekey',
                             '-keystore', 'dummyrelease.keystore',
                             '-dname', 'CN=,OU=,O=,L=,S=,C=US'
                 }
+                storePassword "password"
+                keyAlias "androidreleasekey"
+                keyPassword "password"
             }
-            def keystoreAlias = System.getenv("RELEASE_KEYSTORE_ALIAS")
-            def keystorePass = System.getenv("RELEASE_KEYSTORE_PASSWORD")
-            storeFile file("$keystore")
-            storePassword "$keystorePass"
-            keyAlias "$keystoreAlias"
-            keyPassword "$keystorePass"
+            else{
+                def keystoreAlias = System.getenv("RELEASE_KEYSTORE_ALIAS")
+                def keystorePass = System.getenv("RELEASE_KEYSTORE_PASSWORD")
+                storePassword "$keystorePass"
+                keyAlias "$keystoreAlias"
+                keyPassword "$keystorePass"
+            }
             v2SigningEnabled true
             v1SigningEnabled false
         }
