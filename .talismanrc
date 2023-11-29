@@ -1,10 +1,10 @@
 fileignoreconfig:
-- filename: ios/Podfile.lock
-  checksum: cc123c3e1f04d41b394ceb16843b15c08bac3ba619ae853ff322717739761a85  
 - filename: package.json
-  checksum: fdd5905228a1afbfb004c710fd6c61adf073a12840200327c0592b76bea5e7e3
+  checksum: a5a22604f2b9d917adaf3561fdcaeccd4e69b92e1240070480d7498e1eda5162
 - filename: package-lock.json
-  checksum: 489ccd69f2deecedb8b2ff9a3a02d74c704dfba01fdfb6179316a9df698c4562
+  checksum: 7e8bc0fa27b4eca3b7a825bccdef88ef1c9e7932a5d9af0e5feca2d42d72703b
+- filename: lib/jsonld-signatures/suites/ed255192018/ed25519.ts
+  checksum: 493b6e31144116cb612c24d98b97d8adcad5609c0a52c865a6847ced0a0ddc3a
 - filename: components/PasscodeVerify.tsx
   checksum: 14654c0f038979fcd0d260170a45894a072f81e0767ca9a0e66935d33b5cc703
 - filename: i18n.ts
@@ -45,9 +45,7 @@ fileignoreconfig:
   checksum: bc12c43ccc27ac04e5763fa6a6ed3cee63e4362ba5666c160b5e53269de924ab
   checksum: 9a61cd59a3718adf1f14faf3024fec66a3295ef373878a878a28e5cb1287afaa
 - filename: ios/Podfile.lock
-  checksum: cc123c3e1f04d41b394ceb16843b15c08bac3ba619ae853ff322717739761a85
-- filename: ios/Podfile.lock
-  checksum: cc123c3e1f04d41b394ceb16843b15c08bac3ba619ae853ff322717739761a85
+  checksum: edad9c2d11b0b3ed819cb0dcbfaf0515d31adb8116223c07f7b7b79e6689fe96
 - filename: screens/Home/IntroSlidersScreen.tsx
   checksum: 72ef913857448ef05763e52e32356faa2d1f3de8130a1c638d1897f44823031f
 - filename: shared/commonUtil.ts
@@ -57,7 +55,7 @@ fileignoreconfig:
 - filename: shared/openId4VCI/Utils.ts
   checksum: ba3041b2ce380f44f6f52dc2c3df337d857df4494bd3c8727df9bf6fb5734750    
 - filename: shared/cryptoutil/cryptoUtil.ts
-  checksum: b785ff3f01ab9530119072c4d38195048bfeee6155c54ea7dd031559acb722f3
+  checksum: adbc2ff6df1df412e891c988c9ba03fc82f66c2f6c64339f87d513fc835d14cc
 - filename: machines/store.typegen.ts
   checksum: 6d22bc5c77398316b943c512c208ce0846a9fff674c1ccac79e07f21962acd5f
 - filename: machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine.typegen.ts
@@ -89,4 +87,7 @@ fileignoreconfig:
   checksum: df6c9d18d5610fd893082509b5f7d8cf5ee8b8a3b76915d4593e901971bbb83f   
 - filename: screens/QrLogin/QrConsent.tsx
   checksum: 8563a194a4d38814eff670f0652d1a7af77134cafb350462174b4f147dbd890d   
+  version: ""
+- filename: locales/spa.json
+  checksum: eac9685c6b205ece5759e414669d27ad7ce383453d7b5e7d9f5ce75d290cc860   
   version: ""
