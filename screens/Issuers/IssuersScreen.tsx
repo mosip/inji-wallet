@@ -216,14 +216,9 @@ export const IssuersScreen: React.FC<
                   <Issuer
                     testID={removeWhiteSpace(item.credential_issuer)}
                     key={item.credential_issuer}
-                    id={item.credential_issuer}
-                    displayName={
-                      getDisplayObjectForCurrentLanguage(item.display)?.name
-                    }
-                    logoUrl={
-                      getDisplayObjectForCurrentLanguage(item.display)?.logo
-                        ?.url
-                    }
+                    displayDetails={getDisplayObjectForCurrentLanguage(
+                      item.display,
+                    )}
                     onPress={() =>
                       onPressHandler(item.credential_issuer, item.protocol)
                     }
@@ -231,7 +226,7 @@ export const IssuersScreen: React.FC<
                   />
                 )}
                 numColumns={2}
-                keyExtractor={item => item.id}
+                keyExtractor={item => item.credential_issuer}
               />
             )}
           </View>
