@@ -195,7 +195,8 @@ export const settingsMachine = model.createMachine(
         __AppId.setValue(newContext.appId);
         return {
           ...context,
-          ...newContext,
+          ...newContext.encryptedData,
+          appId: newContext.appId,
         };
       }),
 
