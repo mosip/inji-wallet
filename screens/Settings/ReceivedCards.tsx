@@ -15,6 +15,7 @@ export const ReceivedCards: React.FC = () => {
     <React.Fragment>
       <Pressable onPress={controller.TOGGLE_RECEIVED_CARDS}>
         <Column
+          align="center"
           testID="receivedCards"
           style={Theme.Styles.receiveCardsContainer}>
           <Image

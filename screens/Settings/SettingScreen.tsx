@@ -90,6 +90,7 @@ export const SettingScreen: React.FC<
               <Pressable onPress={controller.RECEIVE_CARD}>
                 <Column
                   testID="receiveCard"
+                  align="center"
                   style={Theme.Styles.receiveCardsContainer}>
                   <Image
                     source={Theme.ReceiveCardIcon}

@@ -91,3 +91,6 @@ fileignoreconfig:
 - filename: locales/spa.json
   checksum: eac9685c6b205ece5759e414669d27ad7ce383453d7b5e7d9f5ce75d290cc860   
   version: ""
+- filename: screens/PasscodeScreen.tsx
+  checksum: 5d3003027b245234f8c00bfc98836f1fb90a5d9525ffacf61c53f3d50954aa6a    
+  version: ""

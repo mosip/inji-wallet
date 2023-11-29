@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Image} from 'react-native';
+import {Dimensions, Image, KeyboardAvoidingView} from 'react-native';
 import {MAX_PIN, PasscodeVerify} from '../components/PasscodeVerify';
 import {PinInput} from '../components/PinInput';
 import {Column, Text} from '../components/ui';
@@ -8,7 +8,7 @@ import {Theme} from '../components/ui/styleUtils';
 import {PasscodeRouteProps} from '../routes';
 import {usePasscodeScreen} from './PasscodeScreenController';
 import {hashData} from '../shared/commonUtil';
-import {argon2iConfig} from '../shared/constants';
+import {argon2iConfig, isIOS} from '../shared/constants';
 import {
   getEndEventData,
   getEventType,
@@ -85,10 +85,13 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
         </Text>
         <Text
           align="center"
-          style={{paddingTop: 3}}
+          style={{
+            paddingTop: 3,
+            marginTop: 6,
+            marginBottom: Dimensions.get('screen').height * 0.1,
+          }}
           weight="semibold"
-          color={Theme.Colors.GrayText}
-          margin="6 0">
+          color={Theme.Colors.GrayText}>
           {t('enterNewPassword')}
         </Text>
         <PinInput
@@ -107,10 +110,13 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
         </Text>
         <Text
           align="center"
-          style={{paddingTop: 3}}
+          style={{
+            paddingTop: 3,
+            marginTop: 6,
+            marginBottom: Dimensions.get('screen').height * 0.1,
+          }}
           weight="semibold"
-          color={Theme.Colors.GrayText}
-          margin="6 0">
+          color={Theme.Colors.GrayText}>
           {t('reEnterPassword')}
         </Text>
         <PasscodeVerify
@@ -129,11 +135,14 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
     <Column align="space-between">
       <Text
         testID="enterPasscode"
-        style={{paddingTop: 3}}
+        style={{
+          paddingTop: 3,
+          marginTop: 6,
+          marginBottom: Dimensions.get('screen').height * 0.1,
+        }}
         align="center"
         weight="semibold"
-        color={Theme.Colors.GrayText}
-        margin="6 0">
+        color={Theme.Colors.GrayText}>
         {t('enterPasscode')}
       </Text>
       <PasscodeVerify
@@ -149,20 +158,23 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
   );
 
   return (
-    <Column
-      fill
-      align="space-between"
-      style={{
-        paddingHorizontal: 32,
-      }}
-      backgroundColor={Theme.Colors.whiteBackgroundColor}>
-      <Image source={Theme.LockIcon} style={{alignSelf: 'center'}} />
-
-      {isSettingUp ? passcodeSetup : unlockPasscode}
-
-      <Text align="center" color={Theme.Colors.errorMessage}>
-        {controller.error}
-      </Text>
-    </Column>
+    <KeyboardAvoidingView
+      style={{flex: 1}}
+      behavior={isIOS() ? 'padding' : 'height'}>
+      <Column
+        fill
+        style={{
+          paddingHorizontal: 32,
+        }}
+        backgroundColor={Theme.Colors.whiteBackgroundColor}>
+        <Image source={Theme.LockIcon} style={{alignSelf: 'center'}} />
+        <Column>
+          {isSettingUp ? passcodeSetup : unlockPasscode}
+          <Text align="center" color={Theme.Colors.errorMessage}>
+            {controller.error}
+          </Text>
+        </Column>
+      </Column>
+    </KeyboardAvoidingView>
   );
 };
