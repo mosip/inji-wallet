@@ -4,7 +4,9 @@ fileignoreconfig:
 - filename: package.json
   checksum: fdd5905228a1afbfb004c710fd6c61adf073a12840200327c0592b76bea5e7e3
 - filename: package-lock.json
-  checksum: 489ccd69f2deecedb8b2ff9a3a02d74c704dfba01fdfb6179316a9df698c4562
+  checksum: 3d98844cbc77fe3721077ea606713cd5adc2f238db1bbc10081141a7e4cd06a9
+- filename: lib/jsonld-signatures/suites/ed255192018/ed25519.ts
+  checksum: 493b6e31144116cb612c24d98b97d8adcad5609c0a52c865a6847ced0a0ddc3a
 - filename: components/PasscodeVerify.tsx
   checksum: 14654c0f038979fcd0d260170a45894a072f81e0767ca9a0e66935d33b5cc703
 - filename: i18n.ts
@@ -57,7 +59,7 @@ fileignoreconfig:
 - filename: shared/openId4VCI/Utils.ts
   checksum: ba3041b2ce380f44f6f52dc2c3df337d857df4494bd3c8727df9bf6fb5734750    
 - filename: shared/cryptoutil/cryptoUtil.ts
-  checksum: b785ff3f01ab9530119072c4d38195048bfeee6155c54ea7dd031559acb722f3
+  checksum: 350524d0d0d18993903b056a1d0a396ec2b2566b6531fd83bd7cafce06d1c332
 - filename: machines/store.typegen.ts
   checksum: 6d22bc5c77398316b943c512c208ce0846a9fff674c1ccac79e07f21962acd5f
 - filename: machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine.typegen.ts
