@@ -18,7 +18,6 @@ import {
   useOtpVerificationModal,
 } from './OtpVerificationModalController';
 
-
 export const OtpVerificationModal: React.FC<
   OtpVerificationModalProps
 > = props => {
@@ -81,12 +80,14 @@ export const OtpVerificationModal: React.FC<
           <Column crossAlign="center">
             <Image source={Theme.OtpLogo} resizeMethod="auto" />
             <Text
+              testID="otpVerificationHeader"
               margin="24 0 6 0"
               weight="bold"
               style={Theme.TextStyles.header}>
               {t('title')}
             </Text>
             <Text
+              testID="otpVerificationDescription"
               margin="0 24 15 24"
               color={Theme.Colors.RetrieveIdLabel}
               weight="semibold"
@@ -97,13 +98,19 @@ export const OtpVerificationModal: React.FC<
           </Column>
 
           <Text
+            testID="otpVerificationError"
             align="center"
             color={Theme.Colors.errorMessage}
             margin="16 0 0 0">
             {props.error}
           </Text>
-          <PinInput testID="pinInput" length={6} onDone={handleEnteredOtp} />
+          <PinInput
+            testID="otpVerificationPinInput"
+            length={6}
+            onDone={handleEnteredOtp}
+          />
           <Text
+            testID="otpVerificationTimer"
             margin="36 0 0 0"
             color={Theme.Colors.resendCodeTimer}
             weight="regular">
@@ -133,18 +140,21 @@ export const OtpVerificationModal: React.FC<
         </Column>
       </Column>
       <MessageOverlay
+        testID="confirmationPopupHeader"
         isVisible={controller.isDownloadCancelled}
         title={t('confirmationDialog.title')}
         message={t('confirmationDialog.message')}
         customHeight={250}>
         <Column>
           <Button
+            testID="wait"
             type="gradient"
             title={t('confirmationDialog.wait')}
             onPress={controller.WAIT}
             margin={[0, 0, 8, 0]}
           />
           <Button
+            testID="cancel"
             type="clear"
             title={t('confirmationDialog.cancel')}
             onPress={controller.CANCEL}
