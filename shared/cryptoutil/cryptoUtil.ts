@@ -2,8 +2,8 @@ import {KeyPair, RSA} from 'react-native-rsa-native';
 import forge from 'node-forge';
 import {BIOMETRIC_CANCELLED, DEBUG_MODE_ENABLED, isIOS} from '../constants';
 import SecureKeystore from 'react-native-secure-keystore';
-import CryptoJS from 'crypto-js';
 import {BiometricCancellationError} from '../error/BiometricCancellationError';
+import {EncryptedOutput} from './encryptedOutput';
 
 // 5min
 export const AUTH_TIMEOUT = 5 * 60;
@@ -110,7 +110,7 @@ export async function encryptJson(
     }
 
     if (!isHardwareKeystoreExists) {
-      return CryptoJS.AES.encrypt(data, encryptionKey).toString();
+      return encryptWithForge(data, encryptionKey).toString();
     }
     return await SecureKeystore.encryptData(ENCRYPTION_ID, data);
   } catch (error) {
@@ -137,9 +137,7 @@ export async function decryptJson(
     }
 
     if (!isHardwareKeystoreExists) {
-      return CryptoJS.AES.decrypt(encryptedData, encryptionKey).toString(
-        CryptoJS.enc.Utf8,
-      );
+      return decryptWithForge(encryptedData, encryptionKey);
     }
 
     return await SecureKeystore.decryptData(ENCRYPTION_ID, encryptedData);
@@ -151,4 +149,44 @@ export async function decryptJson(
     }
     throw e;
   }
+}
+
+function encryptWithForge(text: string, key: string): EncryptedOutput {
+  //iv - initialization vector
+  const iv = forge.random.getBytesSync(16);
+  const salt = forge.random.getBytesSync(128);
+  const encryptionKey = forge.pkcs5.pbkdf2(key, salt, 4, 16);
+  const cipher = forge.cipher.createCipher('AES-CBC', encryptionKey);
+  cipher.start({iv: iv});
+  cipher.update(forge.util.createBuffer(text, 'utf8'));
+  cipher.finish();
+  var cipherText = forge.util.encode64(cipher.output.getBytes());
+  const encryptedData = new EncryptedOutput(
+    cipherText,
+    forge.util.encode64(iv),
+    forge.util.encode64(salt),
+  );
+  return encryptedData;
+}
+
+function decryptWithForge(encryptedData: string, key: string): string {
+  const encryptedOutput = EncryptedOutput.fromString(encryptedData);
+  const salt = forge.util.decode64(encryptedOutput.salt);
+  const encryptionKey = forge.pkcs5.pbkdf2(key, salt, 4, 16);
+  const decipher = forge.cipher.createDecipher('AES-CBC', encryptionKey);
+  decipher.start({iv: forge.util.decode64(encryptedOutput.iv)});
+  decipher.update(
+    forge.util.createBuffer(forge.util.decode64(encryptedOutput.encryptedData)),
+  );
+  decipher.finish();
+  const decryptedData = decipher.output.toString();
+  return decryptedData;
+}
+
+export function hmacSHA(encryptionKey: string, data: string) {
+  const hmac = forge.hmac.create();
+  hmac.start('sha256', encryptionKey);
+  hmac.update(data);
+  const resultBytes = hmac.digest().getBytes().toString();
+  return resultBytes;
 }
