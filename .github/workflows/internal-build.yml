@@ -4,15 +4,24 @@ run-name: ${{ inputs.buildname }}
 on:
   workflow_dispatch:
     inputs:
-      beta-release:
-        description: 'Beta release?'
+      release:
+        description: 'Internal/Beta'
         required: true
-        default: 'false'
+        default: 'internal'
         type: choice
         options:
-          - false
-          - true
-      buildname:
+          - internal
+          - beta
+      buildFor:
+        description: 'Build'
+        required: true
+        default: 'Both[Android and IOS]'
+        type: choice
+        options:
+          - Both[Android and IOS]
+          - Android
+          - IOS
+      buildName:
         description: 'Build App For'
         required: true
         default: 'Sprint-x/Collab/release-x.x.x'
@@ -27,6 +36,17 @@ on:
         required: true
         default: 'https://api.sandbox.mosip.net'
         type: string
+      injiFlavor:
+        description: 'Select Inji flavor'
+        required: true
+        default: 'Inji'
+        type: choice
+        options:
+          - residentapp
+          - inji
+          - collab
+          - synergy
+          - mec
       internal-testers:
         description: 'Internal Testers Group'
         required: true
@@ -62,9 +82,10 @@ on:
 
 jobs:
   build-android:
-    uses: tw-mosip/kattu/.github/workflows/android-publish.yml@add-inji-workflows
+    if: ${{ inputs.buildFor == 'Both[Android and IOS]' || inputs.buildFor == 'Android'}}
+    uses: mosip/kattu/.github/workflows/android-publish.yml@master
     with:
-      BETA_RELEASE: ${{ inputs.beta-release }}
+      RELEASE: ${{ inputs.release }}
       NODE_VERSION: '16.x'
       RELEASE_KEYSTORE_ALIAS: androidreleasekey
       MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
@@ -72,19 +93,24 @@ jobs:
       APPLICATION_THEME: ${{ inputs.theme }}
       BUILD_DESCRIPTION: ${{ inputs.buildDescription }}
       ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
-      BUILD_NAME: ${{ inputs.buildname }}
+      APP_FLAVOR: ${{ inputs.injiFlavor }}
+      SERVICE_LOCATION: '.'
+      ANDROID_SERVICE_LOCATION: 'android'
+      BUILD_SCRIPT_LOCATION: 'scripts'
+      SCRIPT_NAME: './${{ inputs.release }}.sh'
+      ANDROID_ARTIFACT_NAME: ${{ inputs.buildname }}
+      ANDROID_ARTIFACT_PATH: 'android/app/build/outputs/apk/${{ inputs.injiFlavor }}/release/Inji_universal.apk'
     secrets:
       ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
       RELEASE_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}'
       INJI_ANDROID_PLAY_STORE_CONFIG_JSON: ${{ secrets.INJI_ANDROID_PLAY_STORE_CONFIG_JSON }}
-      ENV_FILE: ${{ secrets.ENV_FILE }}
-      SLACK_URL: '${{ secrets.SLACK_WEBHOOK }}'
+      SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
 
   build-android-beta:
-    if: ${{ inputs.beta-release == 'true' }}
-    uses: tw-mosip/kattu/.github/workflows/android-publish.yml@add-inji-workflows
+    if: ${{ inputs.release == 'beta' && (inputs.buildFor == 'Both[Android and IOS]' || inputs.buildFor == 'Android') }}
+    uses: mosip/kattu/.github/workflows/android-publish.yml@master
     with:
-      BETA_RELEASE: ${{ inputs.beta-release }}
+      RELEASE: ${{ inputs.release }}
       NODE_VERSION: '16.x'
       RELEASE_KEYSTORE_ALIAS: androidreleasekey
       MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
@@ -92,16 +118,22 @@ jobs:
       APPLICATION_THEME: ${{ inputs.theme }}
       BUILD_DESCRIPTION: ${{ inputs.buildDescription }}
       ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
-      BUILD_NAME: ${{ inputs.buildname }}
+      APP_FLAVOR: ${{ inputs.injiFlavor }}
+      SERVICE_LOCATION: '.'
+      ANDROID_SERVICE_LOCATION: 'android'
+      BUILD_SCRIPT_LOCATION: 'scripts'
+      SCRIPT_NAME: './${{ inputs.release }}.sh'
+      ANDROID_ARTIFACT_NAME: ${{ inputs.buildname }}
+      ANDROID_ARTIFACT_PATH: 'android/app/build/outputs/apk/${{ inputs.injiFlavor }}/release/Inji_universal.apk'
     secrets:
       ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
       RELEASE_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}'
       INJI_ANDROID_PLAY_STORE_CONFIG_JSON: ${{ secrets.INJI_ANDROID_PLAY_STORE_CONFIG_JSON }}
-      ENV_FILE: ${{ secrets.ENV_FILE }}
-      SLACK_URL: '${{ secrets.SLACK_WEBHOOK }}'
+      SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
 
   build-ios:
-    uses: tw-mosip/kattu/.github/workflows/ios-publish.yml@add-inji-workflows
+    if: ${{ inputs.buildFor == 'Both[Android and IOS]' || inputs.buildFor == 'IOS'}}
+    uses: mosip/kattu/.github/workflows/ios-publish.yml@master
     with:
       NODE_VERSION: '18.x'
       MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
@@ -110,6 +142,11 @@ jobs:
       TESTFLIGHT_BETA_APP_DESCRIPTION: ${{ inputs.buildDescription }}
       ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
       TESTFLIGHT_INTERNAL_TESTERS_GROUP: ${{ inputs.internal-testers }}
+      SERVICE_LOCATION: '.'
+      IOS_SERVICE_LOCATION: 'ios'
+      SCRIPT_NAME: 'fastlane beta'
+      IOS_ARTIFACT_NAME: 'Inji'
+      IOS_ARTIFACT_PATH: 'ios/fastlane/Inji_app_file/Products/Applications/'
     secrets:
       APP_STORE_CONNECT_TEAM_ID: '${{ secrets.APP_STORE_CONNECT_TEAM_ID }}'
       DEVELOPER_APP_ID: '${{ secrets.IOS_INJI_DEVELOPER_APP_ID }}'
@@ -125,12 +162,4 @@ jobs:
       APPLE_ISSUER_ID: '${{ secrets.APPLE_ISSUER_ID }}'
       APPLE_KEY_CONTENT: '${{ secrets.APPLE_KEY_CONTENT }}'
       MATCH_PASSWORD: '${{ secrets.INJI_IOS_MATCH_PASSWORD }}'
-      SLACK_URL: '${{ secrets.SLACK_WEBHOOK }}'
-  
-  sonar-check:
-    uses: tw-mosip/kattu/.github/workflows/sonar.yml@add-inji-workflows
-    secrets:
-      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      SONAR_HOST_URL: https://sonarcloud.io
-      SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
-      SLACK_URL: '${{ secrets.SLACK_WEBHOOK }}'
+      SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
