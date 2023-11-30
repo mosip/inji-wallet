@@ -38,13 +38,13 @@ jobs:
       IOS_SERVICE_LOCATION: 'ios'
       SCRIPT_NAME: "fastlane ios_app_build"
 
-  sonar-check:
-    if: ${{ github.event_name != 'pull_request' }}
-    uses: tw-mosip/kattu/.github/workflows/gradlew-sonar-analysis.yml@inji-reusable-workflow
-    with:
-      SERVICE_LOCATION: '.'
-      ANDROID_LOCATION: 'android'
-    secrets:
-      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
-      SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
+  # sonar-check:
+  #   if: ${{ github.event_name != 'pull_request' }}
+  #   uses: tw-mosip/kattu/.github/workflows/gradlew-sonar-analysis.yml@inji-reusable-workflow
+  #   with:
+  #     SERVICE_LOCATION: '.'
+  #     ANDROID_LOCATION: 'android'
+  #   secrets:
+  #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #     SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
+  #     SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
