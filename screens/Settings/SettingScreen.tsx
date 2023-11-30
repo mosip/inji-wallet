@@ -160,6 +160,7 @@ export const SettingScreen: React.FC<
 
             {CREDENTIAL_REGISTRY_EDIT === 'true' && (
               <EditableListItem
+                testID="credentialRegistry"
                 title={t('credentialRegistry')}
                 content={controller.credentialRegistry}
                 items={[

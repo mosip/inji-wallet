@@ -38,9 +38,7 @@ export const EditableListItem: React.FC<EditableListItemProps> = props => {
         color={Theme.Colors.Icon}
       />
       <ListItem.Content>
-        <ListItem.Title
-          {...testIDProps('credentialRegistry')}
-          style={{paddingTop: 3}}>
+        <ListItem.Title {...testIDProps(props.testID)} style={{paddingTop: 3}}>
           <Text weight="semibold" color={props.titleColor}>
             {props.title}
           </Text>
@@ -112,6 +110,7 @@ export const EditableListItem: React.FC<EditableListItemProps> = props => {
 };
 
 interface EditableListItemProps {
+  testID?: string;
   title: string;
   content: string;
   items: ListItemProps[];
