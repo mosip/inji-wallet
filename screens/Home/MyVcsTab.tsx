@@ -185,7 +185,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         customHeight={'auto'}>
         <Row>
           <Button
-            testID="okButton"
+            testID="ok"
             type="gradient"
             title={t('errors.keystoreNotExists.riskOkayText')}
             onPress={controller.ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS}

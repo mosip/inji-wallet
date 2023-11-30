@@ -147,14 +147,14 @@ export const OtpVerificationModal: React.FC<
         customHeight={250}>
         <Column>
           <Button
-            testID="waitButton"
+            testID="wait"
             type="gradient"
             title={t('confirmationDialog.wait')}
             onPress={controller.WAIT}
             margin={[0, 0, 8, 0]}
           />
           <Button
-            testID="cancelButton"
+            testID="cancel"
             type="clear"
             title={t('confirmationDialog.cancel')}
             onPress={controller.CANCEL}
