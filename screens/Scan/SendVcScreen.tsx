@@ -18,11 +18,17 @@ import {
   sendImpressionEvent,
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
+import {groupBy} from '../../shared/javascript';
 
 export const SendVcScreen: React.FC = () => {
   const {t} = useTranslation('SendVcScreen');
   const {appService} = useContext(GlobalContext);
   const controller = useSendVcScreen();
+  const [pinned, unpinned] = groupBy(
+    controller.shareableVcsMetadata,
+    vcMetadata => vcMetadata.isPinned,
+  );
+  const shareableVcsMetadataOrderedByPinStatus = pinned.concat(unpinned);
   let service;
 
   if (controller.shareableVcsMetadata?.length > 0) {
@@ -82,7 +88,7 @@ export const SendVcScreen: React.FC = () => {
           </Text>
         </Column>
         <Column scroll>
-          {controller.shareableVcsMetadata.map((vcMetadata, index) => (
+          {shareableVcsMetadataOrderedByPinStatus.map((vcMetadata, index) => (
             <VcItemContainer
               key={vcMetadata.getVcKey()}
               vcMetadata={vcMetadata}
@@ -91,6 +97,7 @@ export const SendVcScreen: React.FC = () => {
               selectable
               selected={index === controller.selectedIndex}
               isSharingVc
+              isPinned={vcMetadata.isPinned}
             />
           ))}
         </Column>
