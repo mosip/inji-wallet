@@ -2,55 +2,55 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite" parallel="tests" thread-count="2">
     <listeners>
-        <listener class-name="io.mosip.test.mob.inji.listeners.Listeners"/>
+        <listener class-name="inji.listeners.Listeners"/>
     </listeners>
     <test verbose="2" preserve-order="true" name="android">
         <parameter name="platformName" value="ANDROID"/>
         <classes>
-            <class name="io.mosip.test.mob.inji.testcases.VcDownloadAndVerifyUsingUinTest">
+            <class name="androidTestCases.VcDownloadAndVerifyUsingUinTest">
                 <methods>
                     <include name="downloadAndVerifyVcUsingUin"/>
                     <include name="downloadWithEmptyUin"/>
-                    <include name="genrateMultipleVcWithSameUin"/>
+                    <include name="generateMultipleVcWithSameUin"/>
                     <include name="downloadMultipleVcUsingDifferentUin"/>
                     <include name="verifyInvalidUinErrorMessage"/>
                 </methods>
             </class>
-            <class name="io.mosip.test.mob.inji.testcases.VerifyWelcomePagesTest">
+            <class name="androidTestCases.VerifyWelcomePagesTest">
                 <methods>
                     <include name="verifyWelcomePagesContent"/>
                     <include name="verifyWelcomePagesFromInjiTourGuide"/>
-		    <include name="verifyGoBackFromInjiTourGuide"/>
+                    <include name="verifyGoBackFromInjiTourGuide"/>
                     <include name="verifyClickOnBackFromInjiTourGuide"/>
                 </methods>
             </class>
-            <class name="io.mosip.test.mob.inji.testcases.VcDownloadAndVerifyUsingVidTest">
+            <class name="androidTestCases.VcDownloadAndVerifyUsingVidTest">
                 <methods>
                     <include name="downloadAndVerifyVcUsingVid"/>
                     <include name="downloadTwoVcDeleteUsingVid"/>
                     <include name="verifyInvalidVidErrorMessage"/>
-		    <include name="downloadAndVerifyVcUsingRevokeVid"/>
+                    <include name="downloadAndVerifyVcUsingRevokeVid"/>
                 </methods>
             </class>
-            <class name="io.mosip.test.mob.inji.testcases.UnlockWithPasscodeTest">
+            <class name="androidTestCases.UnlockWithPasscodeTest">
                 <methods>
                     <include name="logoutAndLoginWithPasscode"/>
                     <include name="loginWithInvalidPasscode"/>
                 </methods>
             </class>
-            <class name="io.mosip.test.mob.inji.testcases.VerifyHelpPageTest">
+            <class name="androidTestCases.VerifyHelpPageTest">
                 <methods>
                     <include name="verifyHelpPage"/>
                 </methods>
             </class>
-            <class name="io.mosip.test.mob.inji.testcases.DeletingVcTest">
+            <class name="androidTestCases.DeletingVcTest">
                 <methods>
                     <include name="deleteVcAndVerifyInHistory"/>
                     <include name="cancelDeleteVc"/>
                     <include name="DownloadingDeletedVc"/>
                 </methods>
             </class>
-           <class name="io.mosip.test.mob.inji.testcases.VerifyHistoryTest">
+            <class name="androidTestCases.VerifyHistoryTest">
                 <methods>
                     <include name="generateAndVerifyHistory"/>
                     <include name="verifyActivationFailedRecordInHistory"/>
@@ -58,13 +58,13 @@
                     <include name="activateVcAndVerifyInHistory"/>
                 </methods>
             </class>
-            <class name="io.mosip.test.mob.inji.testcases.GenerateUinOrVidTest">
+            <class name="androidTestCases.GenerateUinOrVidTest">
                 <methods>
                     <include name="generateUinOrVidUsingAid"/>
                     <include name="goBackToGenerateUinOrVidUsingAidFromOtpVerificationPage"/>
                 </methods>
             </class>
-            <class name="io.mosip.test.mob.inji.testcases.ActivateVcTest">
+            <class name="androidTestCases.ActivateVcTest">
                 <methods>
                     <include name="activateVc"/>
                     <include name="noPreDownloadedVCAndNoHistoryInFreshInstallation"/>
@@ -72,40 +72,40 @@
                     <include name="verifyTuvaliVersion"/>
                 </methods>
             </class>
-            <class name="io.mosip.test.mob.inji.testcases.PinVcTest">
+            <class name="androidTestCases.PinVcTest">
                 <methods>
                     <include name="pinVc"/>
                     <include name="VerifyCameraAfterPinVc"/>
-		    
+
                 </methods>
             </class>
-            <class name="io.mosip.test.mob.inji.testcases.ChangeLanguageTest">
+            <class name="androidTestCases.ChangeLanguageTest">
                 <methods>
                     <include name="changeLanguage"/>
                     <include name="languageShouldBeInNativeLanguages"/>
                     <include name="changeLanguage"/>
                 </methods>
             </class>
-            <class name="io.mosip.test.mob.inji.testcases.ShareVcTest">
+            <class name="androidTestCases.ShareVcTest">
                 <methods>
                     <include name="noCardsAvailableToShare"/>
                     <include name="verifyReceivedCardTabPresent"/>
                 </methods>
             </class>
-            <class name="io.mosip.test.mob.inji.testcases.NoNetworkAndroidTest">
+            <class name="androidTestCases.NoNetworkAndroidTest">
                 <methods>
                     <include name="setupPasscodeAndDownloadCardWithoutInternet"/>
                     <include name="openCameraOnFlightMode"/>
                     <include name="activateVcWithoutInternet"/>
                     <include name="verifyListOfLanguagesInOfflineMode"/>
-		            <include name="deleteDownloadedVcInOfflineMode"/>
-		            <include name="verifyHelpPageOfflineMode"/>
+                    <include name="deleteDownloadedVcInOfflineMode"/>
+                    <include name="verifyHelpPageOfflineMode"/>
                     <include name="openQrOffline"/>
                     <include name="verifyRecivedCardOffline"/>
                     <include name="downloadCardWithoutInternetRetryWithInternet"/>
                 </methods>
             </class>
-	     <class name="io.mosip.test.mob.inji.testcases.CredentialRegistryTest">
+            <class name="androidTestCases.CredentialRegistryTest">
                 <methods>
                     <include name="downloadAndVerifyVcInNewEnv"/>
                     <include name="cancelChangeEnvAndVerify"/>
@@ -117,13 +117,13 @@
                     <include name="downloadVcAndActivateItInOtherEnv"/>
                 </methods>
             </class>
-      <class name="io.mosip.test.mob.inji.testcases.ChangeLanguageTest">
+            <class name="androidTestCases.ChangeLanguageTest">
                 <methods>
                     <include name="changeLanguage"/>
                     <include name="changeLanguageToArabic"/>
                 </methods>
             </class>
-            <class name="io.mosip.test.mob.inji.testcases.ReceiveCardTest">
+            <class name="androidTestCases.ReceiveCardTest">
                 <methods>
                     <include name="verifyRecivedCardAndQrCode"/>
                     <include name="verifyRecivedCardAndQrCodeInFilipinoLanguage"/>

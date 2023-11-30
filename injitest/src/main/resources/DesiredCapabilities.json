@@ -1,0 +1,29 @@
+[
+  {
+    "name": "androidDevice",
+    "caps": {
+      "appium:deviceName": "nightwatch-android-11",
+      "appium:automationName": "UiAutomator2",
+      "appium:app": "/Users/kamalsingh/TestAutomation/Inji/inji/injitest/apps/android/Inji.apk",
+      "platformName": "android",
+      "appium:appPackage": "io.mosip.residentapp",
+      "appium:appActivity": "io.mosip.residentapp.MainActivity",
+      "appium:noReset": false,
+      "appium:autoGrantPermissions": true
+    }
+  },
+  {
+    "name": "iosDevice",
+    "caps": {
+      "appium:deviceName": "iPhone 15 Pro",
+      "appium:automationName": "XCUITest",
+      "appium:app": "/Users/kamalsingh/TestAutomation/Inji/inji/injitest/apps/ios/Inji_ios.zip",
+      "platformName": "ios",
+      "appium:noReset": false,
+      "appium:includeSafariInWebviews": true,
+      "appium:newCommandTimeout": 3600,
+      "appium:connectHardwareKeyboard": true,
+      "maxTypingFrequency": 30
+    }
+  }
+]
