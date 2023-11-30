@@ -4,6 +4,7 @@ plugins {
 
 apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
+apply plugin: "org.sonarqube"
 
 react {
     /* Folders */
@@ -95,11 +96,8 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     ext {
-        APP_NAME_RELEASE = "@string/app_name"
-        APP_NAME_MOSIP = "@string/app_name_mosip"
-        APP_NAME_BETA = "@string/app_name_beta"
+        APP_NAME_INJI= "@string/app_name"
     }
-
 
     namespace 'io.mosip.residentapp'
 
@@ -110,14 +108,12 @@ android {
         versionName androidGitVersion.name()
         versionCode 1
 
-        Properties properties = new Properties()
-        properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
         manifestPlaceholders = [
-            APP_NAME: APP_NAME_RELEASE,
+            APP_NAME: APP_NAME_INJI,
             appAuthRedirectScheme: 'io.mosip.residentapp.inji'
         ]
     }
+
     splits {
         abi {
             reset()
@@ -129,26 +125,53 @@ android {
 
     signingConfigs {
         release {
-            def keystore = file('release.keystore')
-            def keystoreAlias = System.getenv("RELEASE_KEYSTORE_ALIAS")
-            def keystorePass = System.getenv("RELEASE_KEYSTORE_PASSWORD")
+            // for sonarqube job we will generate dummy release keystore to sign the app as we are not doing it in workflow
+            def hasSonarqube = System.properties.containsKey("sonarqube")
+            def keystore = file('release.keystore').exists() ? file('release.keystore') : file('dummyrelease.keystore')
             storeFile file("$keystore")
-            storePassword "$keystorePass"
-            keyAlias "$keystoreAlias"
-            keyPassword "$keystorePass"
+            if (hasSonarqube && !keystore.exists() ) {
+                exec {
+                    commandLine 'keytool',
+                            '-genkey',
+                            '-v',
+                            '-storetype', 'PKCS12',
+                            '-keyalg', 'RSA',
+                            '-keysize', '2048',
+                            '-validity', '10000',
+                            '-storepass', 'password',
+                            '-keypass', 'password',
+                            '-alias', 'androidreleasekey',
+                            '-keystore', 'dummyrelease.keystore',
+                            '-dname', 'CN=,OU=,O=,L=,S=,C=US'
+                }
+                storePassword "password"
+                keyAlias "androidreleasekey"
+                keyPassword "password"
+            }
+            else{
+                def keystoreAlias = System.getenv("RELEASE_KEYSTORE_ALIAS")
+                def keystorePass = System.getenv("RELEASE_KEYSTORE_PASSWORD")
+                storePassword "$keystorePass"
+                keyAlias "$keystoreAlias"
+                keyPassword "$keystorePass"
+            }
             v2SigningEnabled true
             v1SigningEnabled false
         }
         debug {
             def keystore = file('debug.keystore')
-            def keystoreAlias = System.getenv("DEBUG_KEYSTORE_ALIAS")
-            def keystorePass = System.getenv("DEBUG_KEYSTORE_PASSWORD")
-            storeFile file("$keystore")
-            storePassword "$keystorePass"
-            keyAlias "$keystoreAlias"
-            keyPassword "$keystorePass"
-            v2SigningEnabled true
-            v1SigningEnabled false
+            if (keystore.exists()) {
+                def keystoreAlias = System.getenv("DEBUG_KEYSTORE_ALIAS")
+                def keystorePass = System.getenv("DEBUG_KEYSTORE_PASSWORD")
+                storeFile file("$keystore")
+                storePassword "$keystorePass"
+                keyAlias "$keystoreAlias"
+                keyPassword "$keystorePass"
+                v2SigningEnabled true
+                v1SigningEnabled false
+            }else {
+                android.buildTypes.debug.signingConfig = null
+            }
         }
     }
     buildTypes {
@@ -171,19 +194,34 @@ android {
     flavorDimensions "inji"
 
     productFlavors {
-        mosip {
+        residentapp {
             versionName defaultConfig.versionName
-            manifestPlaceholders = [
-                    APP_NAME: APP_NAME_MOSIP
-            ]
             dimension "inji"
+            resValue "string", "app_name", "Inji"
         }
-        beta {
+        inji {
+            applicationId "io.mosip.inji"
             versionName defaultConfig.versionName
-            manifestPlaceholders = [
-                    APP_NAME: APP_NAME_BETA
-            ]
             dimension "inji"
+            resValue "string", "app_name", "Inji Wallet"
+        }
+        collab {
+            applicationId "io.mosip.inji.collab"
+            versionName defaultConfig.versionName
+            dimension "inji"
+            resValue "string", "app_name", "Inji Wallet Collab"
+        }
+        synergy {
+            applicationId "io.mosip.inji.synergy"
+            versionName defaultConfig.versionName
+            dimension "inji"
+            resValue "string", "app_name", "Inji Wallet Synergy"
+        }
+        mec {
+            applicationId "io.mosip.inji.mec"
+            versionName defaultConfig.versionName
+            dimension "inji"
+            resValue "string", "app_name", "Inji Wallet Mec"
         }
     }
 
@@ -191,7 +229,17 @@ android {
         variant.outputs.all { output ->
             def datetime = new Date().format('yyyyMMdd_HHmm')
             def architecture = output.getFilter(com.android.build.OutputFile.ABI) ?: "universal"
-            outputFileName = "Inji_${variant.versionName}_${datetime}_${architecture}.apk"
+            outputFileName = "Inji_${architecture}.apk"
+        }
+    }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            if (variant.flavorName == "collab") {
+                sonarqube {
+                    androidVariant variant.name
+                }
+            }
         }
     }
 }
