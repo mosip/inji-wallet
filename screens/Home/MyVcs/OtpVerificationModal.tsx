@@ -140,18 +140,21 @@ export const OtpVerificationModal: React.FC<
         </Column>
       </Column>
       <MessageOverlay
+        testID="confirmationPopupHeader"
         isVisible={controller.isDownloadCancelled}
         title={t('confirmationDialog.title')}
         message={t('confirmationDialog.message')}
         customHeight={250}>
         <Column>
           <Button
+            testID="waitButton"
             type="gradient"
             title={t('confirmationDialog.wait')}
             onPress={controller.WAIT}
             margin={[0, 0, 8, 0]}
           />
           <Button
+            testID="cancelButton"
             type="clear"
             title={t('confirmationDialog.cancel')}
             onPress={controller.CANCEL}

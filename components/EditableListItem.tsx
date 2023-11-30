@@ -4,6 +4,7 @@ import {Icon, ListItem, Overlay, Input} from 'react-native-elements';
 import {Text, Column, Row, Button} from './ui';
 import {Theme} from './ui/styleUtils';
 import {useTranslation} from 'react-i18next';
+import testIDProps from '../shared/commonUtil';
 
 export const EditableListItem: React.FC<EditableListItemProps> = props => {
   const {t} = useTranslation('common');
@@ -37,7 +38,9 @@ export const EditableListItem: React.FC<EditableListItemProps> = props => {
         color={Theme.Colors.Icon}
       />
       <ListItem.Content>
-        <ListItem.Title style={{paddingTop: 3}}>
+        <ListItem.Title
+          {...testIDProps('credentialRegistry')}
+          style={{paddingTop: 3}}>
           <Text weight="semibold" color={props.titleColor}>
             {props.title}
           </Text>

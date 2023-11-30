@@ -14,14 +14,16 @@ export const ReceivedCards: React.FC = () => {
   return (
     <React.Fragment>
       <Pressable onPress={controller.TOGGLE_RECEIVED_CARDS}>
-        <Column
-          testID="receivedCards"
-          style={Theme.Styles.receiveCardsContainer}>
+        <Column style={Theme.Styles.receiveCardsContainer}>
           <Image
             source={Theme.ReceivedCardsIcon}
             style={{marginLeft: 10, marginRight: 9}}
           />
-          <Text margin="6" style={{paddingTop: 3}} weight="semibold">
+          <Text
+            testID="receivedCards"
+            margin="6"
+            style={{paddingTop: 3}}
+            weight="semibold">
             {t('receivedCards')}
           </Text>
         </Column>

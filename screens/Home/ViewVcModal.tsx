@@ -59,6 +59,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       isVisible={props.isVisible}
       onDismiss={props.onDismiss}
       headerTitle={t('title')}
+      testID="idDetailsHeader"
       headerElevation={2}>
       {controller.isBindingSuccess && (
         <BannerNotification
