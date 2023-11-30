@@ -65,7 +65,7 @@ fileignoreconfig:
 - filename: shared/telemetry/TelemetryConstants.js
   checksum: 9d9acf3981cbde452489eacbbd70ebaa0b853c1c04e9712fa71368c089a9662b
 - filename: .github/workflows/internal-build.yml
-  checksum: 3a3b4dea51cb496729c4e568113fc19cf5b008481bb4a5d157f211a2128b951b
+  checksum: 0e114dbacfcd26fc540e15c30bde9b7ee2d5b3be7b1c93637655704d2e2d659e
 - filename: .github/workflows/push-triggers.yml
   checksum: c5de3d912e2cbd55f6898e2f4a24413abbee8f084c99ea11ce6265504a520ce0
 - filename: android/fastlane/Fastfile
