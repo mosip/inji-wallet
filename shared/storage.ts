@@ -1,5 +1,4 @@
 import {MMKVLoader} from 'react-native-mmkv-storage';
-import CryptoJS from 'crypto-js';
 import getAllConfigurations from './commonprops/commonProps';
 import {Platform} from 'react-native';
 import {
@@ -11,6 +10,7 @@ import {
   decryptJson,
   encryptJson,
   HMAC_ALIAS,
+  hmacSHA,
   isHardwareKeystoreExists,
 } from './cryptoutil/cryptoUtil';
 import {VCMetadata} from './VCMetadata';
@@ -39,7 +39,7 @@ async function generateHmac(
   data: string,
 ): Promise<string> {
   if (!isHardwareKeystoreExists) {
-    return CryptoJS.HmacSHA256(encryptionKey, data).toString();
+    return hmacSHA(encryptionKey, data);
   }
   return await SecureKeystore.generateHmacSha(HMAC_ALIAS, data);
 }

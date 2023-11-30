@@ -477,6 +477,7 @@
     "enableBluetoothMessage": "Please enable bluetooth permissions to support local sharing",
     "enableBluetoothButtonText": "Allow bluetooth permissions",
     "scanningGuide": "Hold the phone steady and scan the QR code",
+    "invalidQR": "Please scan a valid QR",
     "errors": {
       "locationDisabled": {
         "message": "To continue, let your device turn on location",
