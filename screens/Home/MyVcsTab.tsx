@@ -24,8 +24,6 @@ import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {Error} from '../../components/ui/Error';
 import {useIsFocused} from '@react-navigation/native';
 
-const pinIconProps = {iconName: 'pushpin', iconType: 'antdesign'};
-
 export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   const {t} = useTranslation('MyVcsTab');
   const controller = useMyVcsTab(props);
@@ -128,10 +126,8 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                   />
                 }>
                 {vcMetadataOrderedByPinStatus.map(vcMetadata => {
-                  const iconProps = vcMetadata.isPinned ? pinIconProps : {};
                   return (
                     <VcItemContainer
-                      {...iconProps}
                       key={vcMetadata.getVcKey()}
                       vcMetadata={vcMetadata}
                       margin="0 2 8 2"
@@ -139,6 +135,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                       isDownloading={controller.inProgressVcDownloads?.has(
                         vcMetadata.getVcKey(),
                       )}
+                      isPinned={vcMetadata.isPinned}
                     />
                   );
                 })}
