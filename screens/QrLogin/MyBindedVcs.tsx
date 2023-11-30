@@ -7,10 +7,16 @@ import {QrLoginRef} from '../../machines/QrLoginMachine';
 import {Icon} from 'react-native-elements';
 import {Modal} from '../../components/ui/Modal';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
+import {groupBy} from '../../shared/javascript';
 
 export const MyBindedVcs: React.FC<MyBindedVcsProps> = props => {
   const controller = useQrLogin(props);
   const {t} = useTranslation('QrLogin');
+  const [pinned, unpinned] = groupBy(
+    controller.shareableVcsMetadata,
+    vcMetadata => vcMetadata.isPinned,
+  );
+  const shareableVcsMetadataOrderedByPinStatus = pinned.concat(unpinned);
 
   return (
     <Modal
@@ -31,8 +37,8 @@ export const MyBindedVcs: React.FC<MyBindedVcsProps> = props => {
                   backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
                   <Column padding="16 0" scroll>
                     <Column pX={14}>
-                      {controller.shareableVcsMetadata.length > 0 &&
-                        controller.shareableVcsMetadata.map(
+                      {shareableVcsMetadataOrderedByPinStatus.length > 0 &&
+                        shareableVcsMetadataOrderedByPinStatus.map(
                           (vcMetadata, index) => (
                             <VcItemContainer
                               key={vcMetadata.getVcKey()}
@@ -43,6 +49,7 @@ export const MyBindedVcs: React.FC<MyBindedVcsProps> = props => {
                               selectable
                               selected={index === controller.selectedIndex}
                               isSharingVc
+                              isPinned={vcMetadata.isPinned}
                             />
                           ),
                         )}
