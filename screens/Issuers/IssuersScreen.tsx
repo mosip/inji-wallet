@@ -1,6 +1,6 @@
 import React, {useLayoutEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {FlatList, Image, TextInput, View} from 'react-native';
+import {FlatList, Image, View} from 'react-native';
 import {Issuer} from '../../components/openId4VCI/Issuer';
 import {Error} from '../../components/ui/Error';
 import {Header} from '../../components/ui/Header';
@@ -23,8 +23,8 @@ import {
   sendStartEvent,
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
-import {Icon} from 'react-native-elements';
 import {MessageOverlay} from '../../components/MessageOverlay';
+import {SearchBar} from '../../components/ui/SearchBar';
 
 export const IssuersScreen: React.FC<
   HomeRouteProps | RootRouteProps
@@ -190,23 +190,14 @@ export const IssuersScreen: React.FC<
             }}>
             {t('description')}
           </Text>
-          <Row margin="3">
-            <Icon
-              testID="searchIssuerIcon"
-              name="search"
-              color={Theme.Colors.GrayIcon}
-              size={27}
-              style={Theme.IssuersScreenStyles.searchIcon}
-            />
-            <TextInput
-              testID="issuerSearchBar"
-              style={Theme.IssuersScreenStyles.issuersSearchBar}
-              placeholder={t('searchByIssuersName')}
-              value={search}
-              onChangeText={searchText => filterIssuers(searchText)}
-              onLayout={() => filterIssuers('')}
-            />
-          </Row>
+          <SearchBar
+            searchIconTestID="searchIssuerIcon"
+            searchBarTestID="issuerSearchBar"
+            search={search}
+            placeholder={t('searchByIssuersName')}
+            onChangeText={filterIssuers}
+            onLayout={() => filterIssuers('')}
+          />
 
           <View style={Theme.IssuersScreenStyles.issuersContainer}>
             {controller.issuers.length > 0 && (
@@ -216,14 +207,9 @@ export const IssuersScreen: React.FC<
                   <Issuer
                     testID={removeWhiteSpace(item.credential_issuer)}
                     key={item.credential_issuer}
-                    id={item.credential_issuer}
-                    displayName={
-                      getDisplayObjectForCurrentLanguage(item.display)?.name
-                    }
-                    logoUrl={
-                      getDisplayObjectForCurrentLanguage(item.display)?.logo
-                        ?.url
-                    }
+                    displayDetails={getDisplayObjectForCurrentLanguage(
+                      item.display,
+                    )}
                     onPress={() =>
                       onPressHandler(item.credential_issuer, item.protocol)
                     }
@@ -231,7 +217,7 @@ export const IssuersScreen: React.FC<
                   />
                 )}
                 numColumns={2}
-                keyExtractor={item => item.id}
+                keyExtractor={item => item.credential_issuer}
               />
             )}
           </View>

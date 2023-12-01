@@ -710,6 +710,8 @@ export interface displayType {
   name: string;
   logo: logoType;
   language: string;
+  title: string;
+  description: string;
 }
 export interface issuerType {
   credential_issuer: string;

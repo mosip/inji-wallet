@@ -78,12 +78,13 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
     controller.passcode === '' ? (
       <Column align="space-between">
         <Text
-          testID="setPasscode"
+          testID="setPasscodeHeader"
           align="center"
           style={{...Theme.TextStyles.header, paddingTop: 27}}>
           {t('header')}
         </Text>
         <Text
+          testID="setPasscodeDescription"
           align="center"
           style={{
             paddingTop: 3,
@@ -103,12 +104,13 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
     ) : (
       <Column align="space-between">
         <Text
-          testID="confirmPasscode"
+          testID="confirmPasscodeHeader"
           align="center"
           style={{...Theme.TextStyles.header, paddingTop: 27}}>
           {t('confirmPasscode')}
         </Text>
         <Text
+          testID="confirmPasscodeDescription"
           align="center"
           style={{
             paddingTop: 3,
@@ -120,6 +122,7 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
           {t('reEnterPassword')}
         </Text>
         <PasscodeVerify
+          testID="confirmPasscodePin"
           onSuccess={() => {
             resetRetryCount();
             controller.SETUP_PASSCODE();
@@ -146,6 +149,7 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
         {t('enterPasscode')}
       </Text>
       <PasscodeVerify
+        testID="enterPasscodePin"
         onSuccess={() => {
           resetRetryCount();
           controller.LOGIN();

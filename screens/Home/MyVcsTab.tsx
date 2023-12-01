@@ -183,6 +183,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
       )}
 
       <MessageOverlay
+        testID="keyStoreNotExists"
         isVisible={controller.showHardwareKeystoreNotExistsAlert}
         title={t('errors.keystoreNotExists.title')}
         message={t('errors.keystoreNotExists.message')}
@@ -191,6 +192,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         customHeight={'auto'}>
         <Row>
           <Button
+            testID="ok"
             type="gradient"
             title={t('errors.keystoreNotExists.riskOkayText')}
             onPress={controller.ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS}
