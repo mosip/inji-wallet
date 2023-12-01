@@ -24,7 +24,7 @@ import i18n from '../i18n';
 import {parseMetadatas, VCMetadata} from '../shared/VCMetadata';
 import {
   getEndEventData,
-  sendEndEvent
+  sendEndEvent,
 } from '../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
 import {API_URLS} from '../shared/api';
@@ -340,10 +340,21 @@ export const qrLoginMachine =
         },
 
         SetErrorMessage: assign({
-          errorMessage: (context, event) =>
-            i18n.t(`errors.genericError`, {
-              ns: 'common',
-            }),
+          errorMessage: (context, event) => {
+            const message = event.data.name;
+            const ID_ERRORS_MAP = {
+              invalid_link_code: 'invalidQR',
+            };
+            const errorMessage = ID_ERRORS_MAP[message]
+              ? i18n.t(`errors.${ID_ERRORS_MAP[message]}`, {
+                  ns: 'QrLogin',
+                })
+              : i18n.t(`errors.genericError`, {
+                  ns: 'common',
+                });
+
+            return errorMessage;
+          },
         }),
 
         setConsentClaims: assign({
