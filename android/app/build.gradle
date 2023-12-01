@@ -96,7 +96,7 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     ext {
-        APP_NAME_INJI= "@string/app_name"
+        APP_NAME= "@string/app_name"
     }
 
     namespace 'io.mosip.residentapp'
@@ -109,7 +109,7 @@ android {
         versionCode 1
 
         manifestPlaceholders = [
-            APP_NAME: APP_NAME_INJI,
+            APP_NAME: APP_NAME,
             appAuthRedirectScheme: 'io.mosip.residentapp.inji'
         ]
     }

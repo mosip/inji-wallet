@@ -10,18 +10,18 @@ DEBUG_KEYSTORE_PASSWORD = ENV["DEBUG_KEYSTORE_PASSWORD"]
 PLAY_CONSOLE_RELEASE_DESCRIPTION = ENV["BUILD_DESCRIPTION"]
 SLACK_URL = ENV["SLACK_WEBHOOK_URL"]
 CREDENTIAL_REGISTRY_EDIT = ENV["CREDENTIAL_REGISTRY_EDIT"]
-INJI_FLAVOR = ENV["APP_FLAVOR"]
+APP_FLAVOR = ENV["APP_FLAVOR"]
 
 desc "Verify Build for Android"
 lane :android_build do
-  gradle(task: "assemble#{INJI_FLAVOR}Debug")
+  gradle(task: "assemble#{APP_FLAVOR}Debug")
 end
 
 desc "Deploy an Internal testing version to the Google Play"
 lane :android_build_internal do
 
   applicationId = "io.mosip."
-  applicationId += (INJI_FLAVOR == 'residentapp' || INJI_FLAVOR == 'inji') ? INJI_FLAVOR : "inji.#{INJI_FLAVOR}"
+  applicationId += (APP_FLAVOR == 'residentapp' || APP_FLAVOR == 'inji') ? APP_FLAVOR : "inji.#{APP_FLAVOR}"
 
   previous_build_number = google_play_track_version_codes(
     package_name: applicationId,
@@ -41,7 +41,7 @@ lane :android_build_internal do
 
   versionName = "#{git_commit}-#{git_branch}"
 
-  gradle(task: "clean bundle#{INJI_FLAVOR}Release")
+  gradle(task: "clean bundle#{APP_FLAVOR}Release")
   upload_to_play_store(
   track: 'internal',
   release_status: 'completed',
@@ -50,7 +50,7 @@ lane :android_build_internal do
   )
 
   slack(
-      message: "Inji - #{INJI_FLAVOR} Wallet- #{versionName} (#{current_build_number}) is uploaded to Play store. Description : #{PLAY_CONSOLE_RELEASE_DESCRIPTION}.", 
+      message: "Inji - #{APP_FLAVOR} Wallet- #{versionName} (#{current_build_number}) is uploaded to Play store. Description : #{PLAY_CONSOLE_RELEASE_DESCRIPTION}.", 
       success: true,
       slack_url: "#{SLACK_URL}",
       default_payloads: [:git_branch, :last_git_commit]
@@ -77,7 +77,7 @@ lane :android_build_beta do
 
   versionName = "Inji #{git_tag}"
 
-  gradle(task: "clean bundle#{INJI_FLAVOR}Release")
+  gradle(task: "clean bundle#{APP_FLAVOR}Release")
   upload_to_play_store(
   track: 'alpha',
   release_status: 'completed',
@@ -85,7 +85,7 @@ lane :android_build_beta do
   )
 
   slack(
-      message: "Inji - #{INJI_FLAVOR} Wallet- #{versionName} is uploaded to Play store. Description : #{PLAY_CONSOLE_RELEASE_DESCRIPTION}.", 
+      message: "Inji - #{APP_FLAVOR} Wallet- #{versionName} is uploaded to Play store. Description : #{PLAY_CONSOLE_RELEASE_DESCRIPTION}.", 
       success: true,
       slack_url: "#{SLACK_URL}",
       default_payloads: [:git_branch, :last_git_commit]
