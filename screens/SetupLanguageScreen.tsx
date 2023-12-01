@@ -8,6 +8,7 @@ import {Icon} from 'react-native-elements';
 import {RootRouteProps} from '../routes';
 import {useWelcomeScreen} from './WelcomeScreenController';
 import {changeLanguage} from '../components/LanguageSelector';
+import {Dimensions} from 'react-native';
 
 export const SetupLanguageScreen: React.FC<RootRouteProps> = props => {
   const {t} = useTranslation('SetupLanguage');
@@ -24,7 +25,7 @@ export const SetupLanguageScreen: React.FC<RootRouteProps> = props => {
         color={Theme.Colors.Icon}
         size={58}
       />
-      <Column crossAlign="center">
+      <Column crossAlign="center" width={Dimensions.get('window').width * 0.8}>
         <Text
           testID="chooseLanguage"
           style={{paddingTop: 3}}

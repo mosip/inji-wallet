@@ -1,85 +1,91 @@
 fileignoreconfig:
-- filename: package.json
-  checksum: a5a22604f2b9d917adaf3561fdcaeccd4e69b92e1240070480d7498e1eda5162
-- filename: package-lock.json
-  checksum: 7e8bc0fa27b4eca3b7a825bccdef88ef1c9e7932a5d9af0e5feca2d42d72703b
-- filename: lib/jsonld-signatures/suites/ed255192018/ed25519.ts
-  checksum: 493b6e31144116cb612c24d98b97d8adcad5609c0a52c865a6847ced0a0ddc3a
-- filename: components/PasscodeVerify.tsx
-  checksum: 14654c0f038979fcd0d260170a45894a072f81e0767ca9a0e66935d33b5cc703
-- filename: i18n.ts
-  checksum: 75dd5536038ba198aa7b12eb6d2c2e7042c9ce292e5a0d5c90883ae5b2312b1e    
-- filename: components/Passcode.tsx
-  checksum: db4a18001be8c63bf7ffb389359861401fa1d22261b10ad729a76fd431c019a7    
-- filename: components/PasscodeVerify.tsx
-  checksum: 14654c0f038979fcd0d260170a45894a072f81e0767ca9a0e66935d33b5cc703    
-- filename: screens/Home/MyVcs/GetIdInputModal.tsx
-  checksum: 5c736ed79a372d0ffa7c02eb33d0dc06edbbb08d120978ff287f5f06cd6c7746    
-- filename: screens/AuthScreen.tsx
-  checksum: 4a096c467bb9b3fa476c220993ef0a58d72a758c40cf741dc2e4ec4db0c692e8    
-- filename: screens/BiometricScreen.tsx
-  checksum: 7a730731aaa7540eec9d05d73de277a665dc06425666280842e0f9ba6e5b8514    
-- filename: screens/AuthScreenController.ts
-  checksum: 18af825821bc95e1056050623b804a5a8e7435b9e3383916a5d63024eeba9553    
-- filename: screens/BiometricScreenController.ts
-  checksum: 4a424adbd2d2404c9d968c54607885af643a07e09acc4a2d37c6e7a7952c4945    
-- filename: screens/Home/IntroSlidersScreen.tsx
-  checksum: 9ff212530850e9f921f91d406c01f67ea5dd2a44e9cdb5e63d977749c7a7c5bd    
-- filename: machines/store.ts
-  checksum: fda6511ab88566820cf6b7324178b4646f495fae5168af73a0fb1c3bb52e5b8d 
-- filename: machines/issuersMachine.ts
-  checksum: 742b8ff561dca61be08ab0b9aef3997ad5d043df298a84c17349dc0206ddcee6
-- filename: machines/issuersMachine.typegen.ts
-  checksum: b17d8cc03347af59098fa4fc439d40cc436998b0d148a2ac922acc2e0288e09c
-- filename: screens/Home/MyVcs/IdInputModal.tsx
-  checksum: 6f21b2caf20ee1821b69e178a69e755e0b1094275e4a9f9cb4ae5ab515ce5d23    
-- filename: screens/WelcomeScreenController.ts
-  checksum: 71917c8c543a4a5b7ab61df259b785d233a80718123b0c8edf6ec81e1b3a81e0
-- filename: shared/telemetry/TelemetryUtils.js
-  checksum: ffe9aac2dcc590b98b0d588885c088eff189504ade653a77f74b67312bfd27ad
-- filename: shared/fileStorage.ts
-  checksum: 07cb337dc1d5b0f0eef56270ac4f4f589260ee5e490183c024cf98a2aeafb139
-- filename: shared/storage.ts
-  checksum: c8d874aa373bdf526bf59192139822f56915e702ef673bac4e0d7549b0fea3d0
-- filename: screens/Issuers/IssuersScreen.tsx
-  checksum: 9c53e3770dbefe26e0de67ee4b7d5cc9c52d9823cbb136a1a5104dcb0a101071
-- filename: ios/Podfile.lock
-  checksum: edad9c2d11b0b3ed819cb0dcbfaf0515d31adb8116223c07f7b7b79e6689fe96
-- filename: screens/Home/IntroSlidersScreen.tsx
-  checksum: 72ef913857448ef05763e52e32356faa2d1f3de8130a1c638d1897f44823031f
-- filename: shared/commonUtil.ts
-  checksum: 01c3fdcd2f1c1757eae0c6a27fe04eb70c2aaf8660c604f3301997484592b66c
-- filename: screens/Home/MyVcs/GetIdInputModal.tsx
-  checksum: 5c736ed79a372d0ffa7c02eb33d0dc06edbbb08d120978ff287f5f06cd6c7746
-- filename: shared/openId4VCI/Utils.ts
-  checksum: ba3041b2ce380f44f6f52dc2c3df337d857df4494bd3c8727df9bf6fb5734750    
-- filename: shared/cryptoutil/cryptoUtil.ts
-  checksum: adbc2ff6df1df412e891c988c9ba03fc82f66c2f6c64339f87d513fc835d14cc
-- filename: machines/store.typegen.ts
-  checksum: 6d22bc5c77398316b943c512c208ce0846a9fff674c1ccac79e07f21962acd5f
-- filename: machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine.typegen.ts
-  checksum: 10889302ca05646a283386be1bbe7a5fb510c02bb62a308ee45f3c2a872ae64e
-- filename: shared/telemetry/TelemetryConstants.js
-  checksum: 9d9acf3981cbde452489eacbbd70ebaa0b853c1c04e9712fa71368c089a9662b
-- filename: .github/workflows/internal-build.yml
-  checksum: 3a3b4dea51cb496729c4e568113fc19cf5b008481bb4a5d157f211a2128b951b
-- filename: .github/workflows/push-triggers.yml
-  checksum: c5de3d912e2cbd55f6898e2f4a24413abbee8f084c99ea11ce6265504a520ce0
-- filename: android/fastlane/Fastfile
-  checksum: 41d1409adf8df9c843fd2dba89142cd55c471f3060ced57d48ee96dc8793ffcd
-- filename: package.json
-  checksum: b982af1813bb72625c63eb31b3d0a6c0d970cd669d57649cc0ac9358252e3cd3
-- filename: machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine.typegen.ts
-  checksum: 15308987b1aab0c51c96bfc646ae55a3d7ae728a1f6e03ab31d5e1b786da03eb
-- filename: machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine.typegen.ts
-  checksum: 533785a3c8096ea93afc59c65025679c24d379e824e784e745ab298a0978cd2a
-- filename: shared/telemetry/TelemetryUtils.js
-  checksum: a0686e9a5c006176fd720b84bc36ca947db1422caf65c90cd0c2d1102a9e96df
-- filename: ios/fastlane/Fastfile
-  checksum: feea5a7f044ef6961d53e7d1e1ffb92a3e0f72761496424f6e64288e3718d605
-- filename: machines/bleShare/scan/scanMachine.ts
-  checksum: a514c958ca3da3c5b22a1a95ad680af8f05fb22638fab79b3842aa8fcc1b4a17
-  version: ""
-- filename: locales/spa.json
-  checksum: eac9685c6b205ece5759e414669d27ad7ce383453d7b5e7d9f5ce75d290cc860   
-  version: ""
+  - filename: package.json
+    checksum: a5a22604f2b9d917adaf3561fdcaeccd4e69b92e1240070480d7498e1eda5162
+  - filename: package-lock.json
+    checksum: 7e8bc0fa27b4eca3b7a825bccdef88ef1c9e7932a5d9af0e5feca2d42d72703b
+  - filename: lib/jsonld-signatures/suites/ed255192018/ed25519.ts
+    checksum: 493b6e31144116cb612c24d98b97d8adcad5609c0a52c865a6847ced0a0ddc3a
+  - filename: components/PasscodeVerify.tsx
+    checksum: 14654c0f038979fcd0d260170a45894a072f81e0767ca9a0e66935d33b5cc703
+  - filename: i18n.ts
+    checksum: 75dd5536038ba198aa7b12eb6d2c2e7042c9ce292e5a0d5c90883ae5b2312b1e
+  - filename: components/Passcode.tsx
+    checksum: db4a18001be8c63bf7ffb389359861401fa1d22261b10ad729a76fd431c019a7
+  - filename: components/PasscodeVerify.tsx
+    checksum: 14654c0f038979fcd0d260170a45894a072f81e0767ca9a0e66935d33b5cc703
+  - filename: screens/Home/MyVcs/GetIdInputModal.tsx
+    checksum: 5c736ed79a372d0ffa7c02eb33d0dc06edbbb08d120978ff287f5f06cd6c7746
+  - filename: screens/AuthScreen.tsx
+    checksum: 4a096c467bb9b3fa476c220993ef0a58d72a758c40cf741dc2e4ec4db0c692e8
+  - filename: screens/BiometricScreen.tsx
+    checksum: 7a730731aaa7540eec9d05d73de277a665dc06425666280842e0f9ba6e5b8514
+  - filename: screens/AuthScreenController.ts
+    checksum: 18af825821bc95e1056050623b804a5a8e7435b9e3383916a5d63024eeba9553
+  - filename: screens/BiometricScreenController.ts
+    checksum: 4a424adbd2d2404c9d968c54607885af643a07e09acc4a2d37c6e7a7952c4945
+  - filename: screens/Home/IntroSlidersScreen.tsx
+    checksum: 9ff212530850e9f921f91d406c01f67ea5dd2a44e9cdb5e63d977749c7a7c5bd
+  - filename: machines/store.ts
+    checksum: fda6511ab88566820cf6b7324178b4646f495fae5168af73a0fb1c3bb52e5b8d
+  - filename: machines/issuersMachine.ts
+    checksum: 742b8ff561dca61be08ab0b9aef3997ad5d043df298a84c17349dc0206ddcee6
+  - filename: machines/issuersMachine.typegen.ts
+    checksum: b17d8cc03347af59098fa4fc439d40cc436998b0d148a2ac922acc2e0288e09c
+  - filename: screens/Home/MyVcs/IdInputModal.tsx
+    checksum: 6f21b2caf20ee1821b69e178a69e755e0b1094275e4a9f9cb4ae5ab515ce5d23
+  - filename: screens/WelcomeScreenController.ts
+    checksum: 71917c8c543a4a5b7ab61df259b785d233a80718123b0c8edf6ec81e1b3a81e0
+  - filename: shared/telemetry/TelemetryUtils.js
+    checksum: ffe9aac2dcc590b98b0d588885c088eff189504ade653a77f74b67312bfd27ad
+  - filename: shared/fileStorage.ts
+    checksum: 07cb337dc1d5b0f0eef56270ac4f4f589260ee5e490183c024cf98a2aeafb139
+  - filename: shared/storage.ts
+    checksum: c8d874aa373bdf526bf59192139822f56915e702ef673bac4e0d7549b0fea3d0
+  - filename: screens/Issuers/IssuersScreen.tsx
+    checksum: 9c53e3770dbefe26e0de67ee4b7d5cc9c52d9823cbb136a1a5104dcb0a101071
+  - filename: ios/Podfile.lock
+    checksum: edad9c2d11b0b3ed819cb0dcbfaf0515d31adb8116223c07f7b7b79e6689fe96
+  - filename: screens/Home/IntroSlidersScreen.tsx
+    checksum: 72ef913857448ef05763e52e32356faa2d1f3de8130a1c638d1897f44823031f
+  - filename: shared/commonUtil.ts
+    checksum: 01c3fdcd2f1c1757eae0c6a27fe04eb70c2aaf8660c604f3301997484592b66c
+  - filename: screens/Home/MyVcs/GetIdInputModal.tsx
+    checksum: 5c736ed79a372d0ffa7c02eb33d0dc06edbbb08d120978ff287f5f06cd6c7746
+  - filename: shared/openId4VCI/Utils.ts
+    checksum: ba3041b2ce380f44f6f52dc2c3df337d857df4494bd3c8727df9bf6fb5734750
+  - filename: shared/cryptoutil/cryptoUtil.ts
+    checksum: adbc2ff6df1df412e891c988c9ba03fc82f66c2f6c64339f87d513fc835d14cc
+  - filename: machines/store.typegen.ts
+    checksum: 6d22bc5c77398316b943c512c208ce0846a9fff674c1ccac79e07f21962acd5f
+  - filename: machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine.typegen.ts
+    checksum: 10889302ca05646a283386be1bbe7a5fb510c02bb62a308ee45f3c2a872ae64e
+  - filename: shared/telemetry/TelemetryConstants.js
+    checksum: 9d9acf3981cbde452489eacbbd70ebaa0b853c1c04e9712fa71368c089a9662b
+  - filename: .github/workflows/internal-build.yml
+    checksum: 3a3b4dea51cb496729c4e568113fc19cf5b008481bb4a5d157f211a2128b951b
+  - filename: .github/workflows/push-triggers.yml
+    checksum: c5de3d912e2cbd55f6898e2f4a24413abbee8f084c99ea11ce6265504a520ce0
+  - filename: android/fastlane/Fastfile
+    checksum: 41d1409adf8df9c843fd2dba89142cd55c471f3060ced57d48ee96dc8793ffcd
+  - filename: package.json
+    checksum: b982af1813bb72625c63eb31b3d0a6c0d970cd669d57649cc0ac9358252e3cd3
+  - filename: machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine.typegen.ts
+    checksum: 15308987b1aab0c51c96bfc646ae55a3d7ae728a1f6e03ab31d5e1b786da03eb
+  - filename: machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine.typegen.ts
+    checksum: 533785a3c8096ea93afc59c65025679c24d379e824e784e745ab298a0978cd2a
+  - filename: shared/telemetry/TelemetryUtils.js
+    checksum: a0686e9a5c006176fd720b84bc36ca947db1422caf65c90cd0c2d1102a9e96df
+  - filename: ios/fastlane/Fastfile
+    checksum: feea5a7f044ef6961d53e7d1e1ffb92a3e0f72761496424f6e64288e3718d605
+  - filename: machines/bleShare/scan/scanMachine.ts
+    checksum: a514c958ca3da3c5b22a1a95ad680af8f05fb22638fab79b3842aa8fcc1b4a17
+    version: ''
+  - filename: locales/spa.json
+    checksum: eac9685c6b205ece5759e414669d27ad7ce383453d7b5e7d9f5ce75d290cc860
+    version: ''
+  - filename: screens/PasscodeScreen.tsx
+    checksum: 5d3003027b245234f8c00bfc98836f1fb90a5d9525ffacf61c53f3d50954aa6a
+    version: ''
+  - filename: screens/PasscodeScreen.tsx
+    checksum: 3330b9db9cfce407782e82b4fe3c0b60a9ecb0f9327af2b69971e254f9e52921
+    version: ''
