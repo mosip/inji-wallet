@@ -132,6 +132,7 @@ jobs:
       ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
       TESTFLIGHT_INTERNAL_TESTERS_GROUP: ${{ inputs.internal-testers }}
       SERVICE_LOCATION: '.'
+      APP_FLAVOR: ${{ inputs.injiFlavor }}
       IOS_SERVICE_LOCATION: 'ios'
       SCRIPT_NAME: "fastlane beta"
       IOS_ARTIFACT_NAME: "Inji Wallet"
