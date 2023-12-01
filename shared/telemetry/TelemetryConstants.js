@@ -30,6 +30,8 @@ export const TelemetryConstants = {
     hardwareKeyStore:
       'Some security features will be unavailable as hardware key store is not available',
     activationCancelled: 'Activation Cancelled',
+    vcsAreTampered:
+      'Tampered cards detected and removed for security reasons. Please download again',
   }),
 
   ErrorId: Object.freeze({
@@ -40,6 +42,7 @@ export const TelemetryConstants = {
     activationFailed: 'ACTIVATION_FAILED',
     tampered: 'TAMPERED',
     dataRetrieval: 'DATA_RETRIEVAL',
+    vcsAreTampered: 'VC_TAMPERED',
   }),
 
   Screens: Object.freeze({

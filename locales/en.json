@@ -394,7 +394,10 @@
     "cancel": "Cancel",
     "essentialClaims": "Important Claims",
     "voluntaryClaims": "Voluntary Claims",
-    "required": "It is necessary"
+    "required": "It is necessary",
+    "errors":{
+      "invalidQR": "QR code is invalid. Please try again!"
+    }
   },
   "ReceiveVcScreen": {
     "header": "Card details",
