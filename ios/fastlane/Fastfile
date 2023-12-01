@@ -21,15 +21,19 @@ TESTFLIGHT_BETA_APP_DESCRIPTION = ENV["TESTFLIGHT_BETA_APP_DESCRIPTION"]
 DEVELOPER_APP_ID = ENV["DEVELOPER_APP_ID"]
 MIMOTO_HOST = ENV["MIMOTO_HOST"]
 ESIGNET_HOST =  ENV["ESIGNET_HOST"]
-APP_FLAVOUR_NAME = ENV["APP_FLAVOUR"]
+APP_FLAVOR = ENV["APP_FLAVOR"]
 APPLICATION_THEME = ENV["APPLICATION_THEME"]
 CREDENTIAL_REGISTRY_EDIT = ENV["CREDENTIAL_REGISTRY_EDIT"]
 
 def generate_app_bundle_id()
-  flavour = APP_FLAVOUR_NAME
-  case flavour
+  flavor = APP_FLAVOR
+  case flavor
   when "residentapp"
-    return "io.mosip.inji.wallet"
+    # the old app flavor
+    return "io.mosip.inji.mobileid"
+  when "inji"
+    # io.mosip.inji is not available in iOS
+    return "io.mosip.wallet"
   when "collab"
     return "io.mosip.inji.collab"
   when "synergy"
@@ -40,9 +44,11 @@ def generate_app_bundle_id()
 end
 
 def generate_app_name()
-  flavour = APP_FLAVOUR_NAME
-  case flavour
+  flavor = APP_FLAVOR
+  case flavor
   when "residentapp"
+    return "Inji"
+  when "inji"
     return "Inji Wallet"
   when "collab"
     return "Inji Wallet Collab"
