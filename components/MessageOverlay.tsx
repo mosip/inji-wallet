@@ -14,7 +14,7 @@ export const MessageOverlay: React.FC<MessageOverlayProps> = props => {
         ? props.customHeight
         : props.progress
         ? 100
-        : 150,
+        : 170,
     },
   });
   return (

@@ -201,7 +201,6 @@ export const ScanScreen: React.FC = () => {
       padding="24 0"
       backgroundColor={Theme.Colors.whiteBackgroundColor}>
       <Centered
-        fill
         align="space-evenly"
         backgroundColor={Theme.Colors.whiteBackgroundColor}>
         {loadQRScanner()}
