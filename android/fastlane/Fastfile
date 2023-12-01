@@ -12,6 +12,38 @@ SLACK_URL = ENV["SLACK_WEBHOOK_URL"]
 CREDENTIAL_REGISTRY_EDIT = ENV["CREDENTIAL_REGISTRY_EDIT"]
 APP_FLAVOR = ENV["APP_FLAVOR"]
 
+def generate_app_bundle_id()
+  flavor = APP_FLAVOR
+  case flavor
+  when "residentapp"
+    return "io.mosip.resident"
+  when "inji"
+    return "io.mosip.inji"
+  when "collab"
+    return "io.mosip.inji.collab"
+  when "synergy"
+    return "io.mosip.inji.synergy"
+  when "mec"
+    return "io.mosip.inji.mec"
+  end
+end
+
+def generate_app_name()
+  flavor = APP_FLAVOR
+  case flavor
+  when "residentapp"
+    return "Inji"
+  when "inji"
+    return "Inji Wallet"
+  when "collab"
+    return "Inji Wallet Collab"
+  when "synergy"
+    return "Inji Wallet Synergy"
+  when "mec"
+    return "Inji Wallet Mec"
+  end
+end
+
 desc "Verify Build for Android"
 lane :android_build do
   gradle(task: "assemble#{APP_FLAVOR}Debug")
@@ -20,11 +52,8 @@ end
 desc "Deploy an Internal testing version to the Google Play"
 lane :android_build_internal do
 
-  applicationId = "io.mosip."
-  applicationId += (APP_FLAVOR == 'residentapp' || APP_FLAVOR == 'inji') ? APP_FLAVOR : "inji.#{APP_FLAVOR}"
-
   previous_build_number = google_play_track_version_codes(
-    package_name: applicationId,
+    package_name: generate_app_bundle_id,
     track: "internal",
     json_key: "play_config.json",
   )[0]
@@ -46,11 +75,11 @@ lane :android_build_internal do
   track: 'internal',
   release_status: 'completed',
   version_name: versionName,
-  package_name: applicationId,
+  package_name: generate_app_bundle_id,
   )
 
   slack(
-      message: "Inji - #{APP_FLAVOR} Wallet- #{versionName} (#{current_build_number}) is uploaded to Play store. Description : #{PLAY_CONSOLE_RELEASE_DESCRIPTION}.", 
+      message: "#{generate_app_name} #{versionName} (#{current_build_number}) is uploaded to Play store. Description : #{PLAY_CONSOLE_RELEASE_DESCRIPTION}.", 
       success: true,
       slack_url: "#{SLACK_URL}",
       default_payloads: [:git_branch, :last_git_commit]
@@ -75,17 +104,18 @@ lane :android_build_beta do
     version_code: versionCode
   )
 
-  versionName = "Inji #{git_tag}"
+  versionName = "#{generate_app_name} #{git_tag}"
 
   gradle(task: "clean bundle#{APP_FLAVOR}Release")
   upload_to_play_store(
   track: 'alpha',
   release_status: 'completed',
   version_name: versionName,
+  package_name: generate_app_bundle_id,
   )
 
   slack(
-      message: "Inji - #{APP_FLAVOR} Wallet- #{versionName} is uploaded to Play store. Description : #{PLAY_CONSOLE_RELEASE_DESCRIPTION}.", 
+      message: "#{generate_app_name} #{versionName} is uploaded to Play store. Description : #{PLAY_CONSOLE_RELEASE_DESCRIPTION}.", 
       success: true,
       slack_url: "#{SLACK_URL}",
       default_payloads: [:git_branch, :last_git_commit]
