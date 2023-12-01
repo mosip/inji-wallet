@@ -5,7 +5,6 @@ APP_STORE_CONNECT_TEAM_ID = ENV["APP_STORE_CONNECT_TEAM_ID"]
 APPLE_ISSUER_ID = ENV["APPLE_ISSUER_ID"]
 APPLE_KEY_CONTENT = ENV["APPLE_KEY_CONTENT"]
 APPLE_KEY_ID = ENV["APPLE_KEY_ID"]
-DEVELOPER_APP_IDENTIFIER = ENV["INJI_IOS_DEVELOPER_APP_IDENTIFIER"]
 TEAM_ID = ENV["INJI_IOS_DEVELOPER_PORTAL_TEAM_ID"]
 FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD = ENV["INJI_IOS_FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD"]
 FASTLANE_USER= ENV["IOS_FASTLANE_APPLE_ID"]
@@ -14,6 +13,7 @@ TEMP_KEYCHAIN_USER = ENV["INJI_IOS_TEMP_KEYCHAIN_USER"]
 TEMP_KEYCHAIN_PASSWORD = ENV["INJI_IOS_TEMP_KEYCHAIN_PASSWORD"]
 GIT_AUTHORIZATION = ENV["GIT_AUTHORIZATION"]
 SLACK_URL = ENV["SLACK_WEBHOOK_URL"]
+APP_FLAVOR = ENV["APP_FLAVOR"]
 MATCH_PASSWORD = ENV["MATCH_PASSWORD"]
 FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT = "120"
 TESTFLIGHT_INTERNAL_TESTERS_GROUP = ENV["TESTFLIGHT_INTERNAL_TESTERS_GROUP"] 
@@ -24,6 +24,40 @@ ESIGNET_HOST =  ENV["ESIGNET_HOST"]
 APP_FLAVOR = ENV["APP_FLAVOR"]
 APPLICATION_THEME = ENV["APPLICATION_THEME"]
 CREDENTIAL_REGISTRY_EDIT = ENV["CREDENTIAL_REGISTRY_EDIT"]
+
+def generate_app_bundle_id()
+  flavor = APP_FLAVOR
+  case flavor
+  when "residentapp"
+    # the old app flavor
+    return "io.mosip.inji.mobileid"
+  when "inji"
+    # io.mosip.inji is not available in iOS
+    return "io.mosip.wallet"
+  when "collab"
+    return "io.mosip.inji.collab"
+  when "synergy"
+    return "io.mosip.inji.synergy"
+  when "mec"
+    return "io.mosip.inji.mec"
+  end
+end
+
+def generate_app_name()
+  flavor = APP_FLAVOR
+  case flavor
+  when "residentapp"
+    return "Inji"
+  when "inji"
+    return "Inji Wallet"
+  when "collab"
+    return "Inji Wallet Collab"
+  when "synergy"
+    return "Inji Wallet Synergy"
+  when "mec"
+    return "Inji Wallet Mec"
+  end
+end
 
 def generate_app_bundle_id()
   flavor = APP_FLAVOR
@@ -99,7 +133,7 @@ platform :ios do
     version = get_version_number(xcodeproj: "Inji.xcodeproj")
 
     previous_build_number = latest_testflight_build_number(
-      app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
+      app_identifier: "#{generate_app_bundle_id}",
       api_key: api_key,
       version: version
     )
@@ -113,7 +147,7 @@ platform :ios do
 
     match(
       type: 'appstore',
-      app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
+      app_identifier: "#{generate_app_bundle_id}",
       git_basic_authorization: Base64.strict_encode64("#{GIT_AUTHORIZATION}"),
       readonly: false,
       keychain_name: keychain_name,
@@ -131,13 +165,13 @@ platform :ios do
       
       export_options: {
         provisioningProfiles: { 
-            "#{generate_app_bundle_id}" => "#{generate_app_name}"
+          "#{generate_app_bundle_id}" => "#{generate_app_name}"
         }
       }
     )
 
     pilot(
-       app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
+       app_identifier: "#{generate_app_bundle_id}",
        api_key: api_key,
        ipa: "./Inji.ipa",
        changelog: "#{TESTFLIGHT_BETA_APP_DESCRIPTION}",
@@ -154,51 +188,6 @@ platform :ios do
 
     delete_temp_keychain(keychain_name)
 
-    slack(
-      message: "Inji - #{version} (#{current_build_number}) is uploaded to testflight.", 
-      success: true,
-      slack_url: "#{SLACK_URL}",
-      default_payloads: [:git_branch, :last_git_commit]
-    )
-  end
-
-  lane :build_verify do
-    keychain_name = TEMP_KEYCHAIN_USER
-    keychain_password = TEMP_KEYCHAIN_PASSWORD
-    ensure_temp_keychain(keychain_name, keychain_password)
-
-    api_key = app_store_connect_api_key(
-      key_id: "#{APPLE_KEY_ID}",
-      issuer_id: "#{APPLE_ISSUER_ID}",
-      key_content: "#{APPLE_KEY_CONTENT}",   
-      duration: 1200,
-      in_house: false,
-      is_key_content_base64: true
-    )
-
-    match(
-      type: 'appstore',
-      app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
-      git_basic_authorization: Base64.strict_encode64("#{GIT_AUTHORIZATION}"),
-      readonly: false,
-      keychain_name: keychain_name,
-      keychain_password: keychain_password,
-      api_key: api_key
-    )
-
-    gym(
-      configuration: "Release",
-      workspace: "Inji.xcworkspace",
-      scheme: "Inji",
-      export_method: "app-store",
-    )
-
-    delete_temp_keychain(keychain_name)
-
-  end
-  
-  lane :build_app_for_automation_on_simulator do
-
     custom_output_directory = "./Inji_app_file"
     sh("mkdir -p '#{custom_output_directory}'")
 
@@ -212,5 +201,23 @@ platform :ios do
     find_command = "find '../build/' -type d -name 'Products'"
     app_path = sh(find_command, log: false).strip
     sh("cp -R '#{app_path}' '#{custom_output_directory}'")
+
+    slack(
+      message: "#{generate_app_name} #{version} (#{current_build_number}) is uploaded to testflight.", 
+      success: true,
+      slack_url: "#{SLACK_URL}",
+      default_payloads: [:git_branch, :last_git_commit]
+    )
+
+  end
+  
+  lane :ios_app_build do
+
+    archive_path = gym(
+    skip_package_ipa: true,
+    destination: "generic/platform=iOS Simulator",
+    configuration: "Release",
+    build_path: "./build",
+    )
    end
 end
