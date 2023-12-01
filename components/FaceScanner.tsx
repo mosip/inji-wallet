@@ -1,12 +1,6 @@
 import React, {useCallback, useContext, useEffect, useRef} from 'react';
 import {Camera} from 'expo-camera';
-import {
-  Platform,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  Image,
-} from 'react-native';
+import {TouchableOpacity, View, Image} from 'react-native';
 import {Button, Centered, Column, Row, Text} from './ui';
 import {useInterpret, useSelector} from '@xstate/react';
 import {useTranslation} from 'react-i18next';
@@ -26,7 +20,6 @@ import {GlobalContext} from '../shared/GlobalContext';
 import {selectIsActive} from '../machines/app';
 import {RotatingIcon} from './RotatingIcon';
 import {Theme} from './ui/styleUtils';
-import {isIOS} from '../shared/constants';
 
 export const FaceScanner: React.FC<FaceScannerProps> = props => {
   const {t} = useTranslation('FaceScanner');
@@ -86,7 +79,7 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
   }
 
   return (
-    <View>
+    <Column fill align="space-between">
       <View style={Theme.Styles.scannerContainer}>
         <Camera
           style={Theme.Styles.scanner}
@@ -98,14 +91,14 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
         align="center"
         weight="semibold"
         style={Theme.TextStyles.base}
-        margin="50 57 0 57">
+        margin="0 57">
         {t('imageCaptureGuide')}
       </Text>
-      <Centered margin="24 0">
+      <Centered>
         {isCapturing || isVerifying ? (
           <RotatingIcon name="sync" size={64} />
         ) : (
-          <Row align="center" style={{marginTop: 42}}>
+          <Row align="center">
             <Centered style={Theme.Styles.imageCaptureButton}>
               <TouchableOpacity
                 onPress={() => service.send(FaceScannerEvents.CAPTURE())}>
@@ -131,7 +124,7 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
           </Row>
         )}
       </Centered>
-    </View>
+    </Column>
   );
 };
 

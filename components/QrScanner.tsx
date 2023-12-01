@@ -73,7 +73,7 @@ export const QrScanner: React.FC<QrScannerProps> = props => {
     );
   };
   return (
-    <View>
+    <Column fill align="space-between">
       {hasPermission == false && <CameraDisabledPopUp />}
       <View style={Theme.Styles.scannerContainer}>
         <Camera
@@ -90,11 +90,11 @@ export const QrScanner: React.FC<QrScannerProps> = props => {
           align="center"
           weight="semibold"
           style={Theme.TextStyles.base}
-          margin="20 57 0 57">
+          margin="0 57">
           {props.title}
         </Text>
       )}
-      <Column margin="18 0" crossAlign="center">
+      <Column crossAlign="center">
         <TouchableOpacity
           onPress={() => {
             setCameraType(
@@ -112,7 +112,7 @@ export const QrScanner: React.FC<QrScannerProps> = props => {
           {t('flipCamera')}
         </Text>
       </Column>
-    </View>
+    </Column>
   );
 
   function onBarcodeScanned(event: BarCodeEvent) {

@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {PinInput} from '../../../components/PinInput';
 import {Button, Column, Text} from '../../../components/ui';
-import {ModalProps, Modal} from '../../../components/ui/Modal';
+import {Modal} from '../../../components/ui/Modal';
 import {Theme} from '../../../components/ui/styleUtils';
-import {Image, TouchableOpacity} from 'react-native';
+import {Image, KeyboardAvoidingView, TouchableOpacity} from 'react-native';
 import {
   getImpressionEventData,
   incrementRetryCount,
@@ -17,6 +17,7 @@ import {
   OtpVerificationModalProps,
   useOtpVerificationModal,
 } from './OtpVerificationModalController';
+import {isIOS} from '../../../shared/constants';
 
 export const OtpVerificationModal: React.FC<
   OtpVerificationModalProps
@@ -72,11 +73,10 @@ export const OtpVerificationModal: React.FC<
       isVisible={props.isVisible}
       onDismiss={props.onDismiss}
       onShow={() => setTimer(180)}>
-      <Column
-        fill
-        padding="32"
-        backgroundColor={Theme.Colors.whiteBackgroundColor}>
-        <Column fill crossAlign="center">
+      <KeyboardAvoidingView
+        style={{flex: 1}}
+        behavior={isIOS() ? 'padding' : 'height'}>
+        <Column pX={24}>
           <Column crossAlign="center">
             <Image source={Theme.OtpLogo} resizeMethod="auto" />
             <Text
@@ -95,50 +95,50 @@ export const OtpVerificationModal: React.FC<
               align="center">
               {t('otpSentMessage')}
             </Text>
-          </Column>
 
-          <Text
-            testID="otpVerificationError"
-            align="center"
-            color={Theme.Colors.errorMessage}
-            margin="16 0 0 0">
-            {props.error}
-          </Text>
-          <PinInput
-            testID="otpVerificationPinInput"
-            length={6}
-            onDone={handleEnteredOtp}
-          />
-          <Text
-            testID="otpVerificationTimer"
-            margin="36 0 0 0"
-            color={Theme.Colors.resendCodeTimer}
-            weight="regular">
-            {timer > 0 ? `${t('resendTheCode')} : ${formatTime(timer)}` : ''}
-          </Text>
-
-          <TouchableOpacity
-            activeOpacity={1}
-            onPress={
-              timer > 0
-                ? null
-                : () => {
-                    handleOtpResend();
-                    setTimer(180);
-                  }
-            }>
             <Text
-              testID="resendCode"
-              color={
-                timer > 0 ? Theme.Colors.GrayText : Theme.Colors.AddIdBtnBg
-              }
-              margin="10 0 0 0"
-              weight="semibold">
-              {t('resendCode')}
+              testID="otpVerificationError"
+              align="center"
+              color={Theme.Colors.errorMessage}
+              margin="16 0 0 0">
+              {props.error}
             </Text>
-          </TouchableOpacity>
+            <PinInput
+              testID="otpVerificationPinInput"
+              length={6}
+              onDone={handleEnteredOtp}
+            />
+            <Text
+              testID="otpVerificationTimer"
+              margin="36 0 0 0"
+              color={Theme.Colors.resendCodeTimer}
+              weight="regular">
+              {timer > 0 ? `${t('resendTheCode')} : ${formatTime(timer)}` : ''}
+            </Text>
+
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={
+                timer > 0
+                  ? null
+                  : () => {
+                      handleOtpResend();
+                      setTimer(180);
+                    }
+              }>
+              <Text
+                testID="resendCode"
+                color={
+                  timer > 0 ? Theme.Colors.GrayText : Theme.Colors.AddIdBtnBg
+                }
+                weight="semibold">
+                {t('resendCode')}
+              </Text>
+            </TouchableOpacity>
+          </Column>
         </Column>
-      </Column>
+      </KeyboardAvoidingView>
+
       <MessageOverlay
         testID="confirmationPopupHeader"
         isVisible={controller.isDownloadCancelled}
