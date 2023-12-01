@@ -31,8 +31,8 @@ export const SendVcScreen: React.FC = () => {
   const shareableVcsMetadataOrderedByPinStatus = pinned.concat(unpinned);
   let service;
 
-  if (controller.shareableVcsMetadata?.length > 0) {
-    const vcMetadata = controller.shareableVcsMetadata[0];
+  if (shareableVcsMetadataOrderedByPinStatus?.length > 0) {
+    const vcMetadata = shareableVcsMetadataOrderedByPinStatus[0];
     const firstVCMachine = useRef(
       VCMetadata.fromVC(vcMetadata).isFromOpenId4VCI()
         ? createEsignetMosipVCItemMachine(
