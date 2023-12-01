@@ -162,8 +162,6 @@
     "title": "Add new card",
     "description": "Please choose your preferred issuer from the options below to add a new card.",
     "searchByIssuersName": "Search by Issuer’s name",
-    "itemHeading": "Download via {{issuer}}",
-    "itemSubHeading": "Enter your national ID to download your card.",
     "loaders": {
       "loading": "Loading...",
       "subTitle": {
