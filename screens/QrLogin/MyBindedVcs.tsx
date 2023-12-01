@@ -7,16 +7,14 @@ import {QrLoginRef} from '../../machines/QrLoginMachine';
 import {Icon} from 'react-native-elements';
 import {Modal} from '../../components/ui/Modal';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
-import {groupBy} from '../../shared/javascript';
+import {getVCsOrderedByPinStatus} from '../../shared/Utils';
 
 export const MyBindedVcs: React.FC<MyBindedVcsProps> = props => {
   const controller = useQrLogin(props);
   const {t} = useTranslation('QrLogin');
-  const [pinned, unpinned] = groupBy(
+  const shareableVcsMetadataOrderedByPinStatus = getVCsOrderedByPinStatus(
     controller.shareableVcsMetadata,
-    vcMetadata => vcMetadata.isPinned,
   );
-  const shareableVcsMetadataOrderedByPinStatus = pinned.concat(unpinned);
 
   return (
     <Modal

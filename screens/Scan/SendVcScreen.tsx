@@ -18,17 +18,15 @@ import {
   sendImpressionEvent,
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
-import {groupBy} from '../../shared/javascript';
+import {getVCsOrderedByPinStatus} from '../../shared/Utils';
 
 export const SendVcScreen: React.FC = () => {
   const {t} = useTranslation('SendVcScreen');
   const {appService} = useContext(GlobalContext);
   const controller = useSendVcScreen();
-  const [pinned, unpinned] = groupBy(
+  const shareableVcsMetadataOrderedByPinStatus = getVCsOrderedByPinStatus(
     controller.shareableVcsMetadata,
-    vcMetadata => vcMetadata.isPinned,
   );
-  const shareableVcsMetadataOrderedByPinStatus = pinned.concat(unpinned);
   let service;
 
   if (shareableVcsMetadataOrderedByPinStatus?.length > 0) {

@@ -12,7 +12,6 @@ import {
   ErrorMessageOverlay,
   MessageOverlay,
 } from '../../components/MessageOverlay';
-import {groupBy} from '../../shared/javascript';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
 import {BannerNotification} from '../../components/BannerNotification';
 import {
@@ -23,16 +22,15 @@ import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 
 import {Error} from '../../components/ui/Error';
 import {useIsFocused} from '@react-navigation/native';
+import {getVCsOrderedByPinStatus} from '../../shared/Utils';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   const {t} = useTranslation('MyVcsTab');
   const controller = useMyVcsTab(props);
   const storeErrorTranslationPath = 'errors.savingFailed';
-  const [pinned, unpinned] = groupBy(
+  const vcMetadataOrderedByPinStatus = getVCsOrderedByPinStatus(
     controller.vcMetadatas,
-    vcMetadata => vcMetadata.isPinned,
   );
-  const vcMetadataOrderedByPinStatus = pinned.concat(unpinned);
 
   const getId = () => {
     controller.DISMISS();
