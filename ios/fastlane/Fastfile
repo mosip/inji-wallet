@@ -139,7 +139,7 @@ platform :ios do
       
       export_options: {
         provisioningProfiles: {
-          "#{generate_app_bundle_id}" => "match appstore #{generate_app_bundle_id}"
+          "#{generate_app_bundle_id}" => "match Appstore #{generate_app_bundle_id}"
         }
       }
     )
