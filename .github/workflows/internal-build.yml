@@ -122,7 +122,7 @@ jobs:
   #     SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
 
   build-ios:
-    uses: tw-mosip/kattu/.github/workflows/ios-publish.yml@inji-reusable-workflow
+    uses: tw-mosip/kattu/.github/workflows/ios-publish.yml@tmp-add-cache
     with:
       NODE_VERSION: '18.x'
       MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}

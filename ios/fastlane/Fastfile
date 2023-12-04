@@ -25,6 +25,13 @@ APP_FLAVOR = ENV["APP_FLAVOR"]
 APPLICATION_THEME = ENV["APPLICATION_THEME"]
 CREDENTIAL_REGISTRY_EDIT = ENV["CREDENTIAL_REGISTRY_EDIT"]
 
+def generate_appID_on_flavor()
+  flavor = APP_FLAVOR
+  when "mec"
+    return 6473444276
+  end
+end
+
 def generate_app_bundle_id()
   flavor = APP_FLAVOR
   case flavor
@@ -164,8 +171,8 @@ platform :ios do
       export_method: "app-store",
       
       export_options: {
-        provisioningProfiles: { 
-          "#{generate_app_bundle_id}" => "#{generate_app_name}"
+        provisioningProfiles: {
+          "#{generate_appID_on_flavor}" => "match appstore #{generate_app_bundle_id}"
         }
       }
     )
@@ -197,6 +204,7 @@ platform :ios do
     configuration: "Release",
     build_path: "./build",
     )
+
 
     find_command = "find '../build/' -type d -name 'Products'"
     app_path = sh(find_command, log: false).strip
