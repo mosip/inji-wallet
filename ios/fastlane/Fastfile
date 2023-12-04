@@ -27,6 +27,7 @@ CREDENTIAL_REGISTRY_EDIT = ENV["CREDENTIAL_REGISTRY_EDIT"]
 
 def generate_appID_on_flavor()
   flavor = APP_FLAVOR
+  case flavor
   when "mec"
     return 6473444276
   end
