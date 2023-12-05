@@ -18,6 +18,15 @@ public class AddNewCardPage extends BasePage{
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"iconIcon\")")
     private WebElement backButton;
     
+    @AndroidFindBy(accessibility = "issuer-ESignet")
+    private WebElement downloadViaEsignet;
+    
+    @AndroidFindBy(accessibility = "goBack")
+    private WebElement gobackButton;
+    
+    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Please choose your preferred issuer from the options below to add a new card.\")")
+    private WebElement addNewCardGuideMessage;
+    
     public AddNewCardPage(AppiumDriver driver) {
         super(driver);
     }
@@ -34,5 +43,22 @@ public class AddNewCardPage extends BasePage{
     public AddNewCardPage clickOnBack() {
     	clickOnElement(backButton);
 		return this;
+    }
+    
+    public boolean isAddNewCardGuideMessageDisplayed() {
+        return this.isElementDisplayed(addNewCardGuideMessage, "Please choose your preferred issuer from the options below to add a new card.");
+    }
+    
+    public boolean isDownloadViaUinDisplayed() {
+        return this.isElementDisplayed(downloadViaUin, "Download via UIN, VID, AID");
+    }
+    
+    public boolean isDownloadViaEsignetDisplayed() {
+        return this.isElementDisplayed(downloadViaEsignet, "Download via e-Signet");
+    }
+    
+    public EsignetLoginPage clickOnDownloadViaEsignet(){
+        clickOnElement(downloadViaEsignet);
+        return new EsignetLoginPage(driver);
     }
 }

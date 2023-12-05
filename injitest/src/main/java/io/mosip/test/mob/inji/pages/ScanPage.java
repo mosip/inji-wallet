@@ -13,8 +13,8 @@ public class ScanPage extends BasePage{
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"io.mosip.residentapp:id/texture_view\")")
     private WebElement camera;
 
-    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Inji wants to turn on Bluetooth\")")
-    private WebElement bluetoothPopup;
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.oplus.wirelesssettings:id/alertTitle\")")
+    private WebElement bluetoothPopUp;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Allow\")")
     private WebElement allowButton;
@@ -32,10 +32,11 @@ public class ScanPage extends BasePage{
         super(driver);
     }
 
-    public ScanPage acceptPermissionPopup(){
-        if(isElementDisplayed(bluetoothPopup, "Inji wants to turn on Bluetooth popup")){
-            clickOnElement(allowButton);
-        }return new ScanPage(driver);
+    public ScanPage acceptPermissionPopup() {
+    	if (isElementDisplayed(bluetoothPopUp, "\"Inji\" wants to turn on Bluetooth")) {
+    		clickOnElement(allowButton);
+        }
+         return this;
     }
 
     public boolean isCameraOpen(){

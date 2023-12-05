@@ -11,6 +11,8 @@ import io.mosip.test.mob.inji.pages.AppUnlockMethodPage;
 import io.mosip.test.mob.inji.pages.ChooseLanguagePage;
 import io.mosip.test.mob.inji.pages.ConfirmPasscode;
 import io.mosip.test.mob.inji.pages.CredentialRegistryPage;
+import io.mosip.test.mob.inji.pages.DetailedVcViewPage;
+import io.mosip.test.mob.inji.pages.EsignetLoginPage;
 import io.mosip.test.mob.inji.pages.GenerateUinOrVidPage;
 import io.mosip.test.mob.inji.pages.HomePage;
 import io.mosip.test.mob.inji.pages.MoreOptionsPage;
@@ -24,64 +26,436 @@ import io.mosip.test.mob.inji.utils.TestDataReader;
 
 public class CredentialRegistryTest extends BaseTest {
 
-	@Test
-	public void downloadAndVerifyVcInNewEnv() throws InterruptedException {
-		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
-
-        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
-        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
-
-        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
-        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
-
-        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
-        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
-
-        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
-
-        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
-
-        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
-        SettingsPage settingsPage = homePage.clickOnSettingIcon();
-        
-        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
-        CredentialRegistryPage credentialRegistryPage =settingsPage.clickOnCredentialRegistry();
-        
-        assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
-        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("newEnv")).clickOnSaveButton();
-
-        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
-        credentialRegistryPage.clickOnBackArrow();
-        AddNewCardPage addNewCardPage = homePage.downloadCard();
-
-        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
-
-        assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("newuin")).clickOnGenerateCardButton();
-
-        assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(TestDataReader.readData("otp"), target);
-        
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-        MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
-
-        assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
-        PleaseConfirmPopupPage pleaseConfirmPopupPage = moreOptionsPage.clickOnActivationPending();
-
-        assertTrue(pleaseConfirmPopupPage.isPleaseConfirmPopupPageLoaded(), "Verify if pop up page is displayed");
-        OtpVerificationPage otpVerificationPage = pleaseConfirmPopupPage.clickOnConfirmButton();
-        
-        assertTrue(otpVerificationPage.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerificationPage.enterOtp(TestDataReader.readData("otp"), target);
-
-        assertTrue(moreOptionsPage.isVcActivatedForOnlineLogin(), "Verify if VC is activated");
-	}
+//	@Test
+//	public void downloadAndVerifyVcInNewEnv() throws InterruptedException {
+//		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+//
+//        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+//        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+//
+//        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+//        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
+//
+//        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+//        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
+//
+//        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
+//        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
+//
+//        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
+//        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
+//
+//        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+//        SettingsPage settingsPage = homePage.clickOnSettingIcon();
+//        
+//        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+//        CredentialRegistryPage credentialRegistryPage =settingsPage.clickOnCredentialRegistry();
+//        
+//        assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
+//        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("newEnv")).clickOnSaveButton();
+//
+//        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+//        credentialRegistryPage.clickOnBackArrow();
+//        AddNewCardPage addNewCardPage = homePage.downloadCard();
+//
+//        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
+//        RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
+//
+//        assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
+//        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("newuin")).clickOnGenerateCardButton();
+//
+//        assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
+//        otpVerification.enterOtp(TestDataReader.readData("otp"), target);
+//        
+//        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+//        MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
+//
+//        assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
+//        PleaseConfirmPopupPage pleaseConfirmPopupPage = moreOptionsPage.clickOnActivationPending();
+//
+//        assertTrue(pleaseConfirmPopupPage.isPleaseConfirmPopupPageLoaded(), "Verify if pop up page is displayed");
+//        OtpVerificationPage otpVerificationPage = pleaseConfirmPopupPage.clickOnConfirmButton();
+//        
+//        assertTrue(otpVerificationPage.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
+//        otpVerificationPage.enterOtp(TestDataReader.readData("otp"), target);
+//
+//        assertTrue(moreOptionsPage.isVcActivatedForOnlineLogin(), "Verify if VC is activated");
+//        moreOptionsPage.clickOnCloseButton();
+//        
+//        DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
+//        assertEquals(detailedVcViewPage.isCredentialRegistryTextDisplayed(),"Verify if is credential registry text displayed");
+//        assertEquals(detailedVcViewPage.isCredentialRegistryValueDisplayed(), TestDataReader.readData("newEnv"), "Verify changed env is displayed in detailed vc");
+//	}
+//	
+//	@Test
+//    public void cancelChangeEnvAndVerify() throws InterruptedException {
+//		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+//
+//        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+//        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+//
+//        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+//        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
+//
+//        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+//        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
+//
+//        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
+//        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
+//
+//        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
+//        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
+//
+//        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+//        SettingsPage settingsPage = homePage.clickOnSettingIcon();
+//        
+//        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+//        CredentialRegistryPage credentialRegistryPage =settingsPage.clickOnCredentialRegistry();
+//        
+//        assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
+//        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("newEnv")).clickOnCancelButton();
+//
+//        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+//        credentialRegistryPage.clickOnBackArrow();
+//        
+//        homePage.clickOnSettingIcon();
+//        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+//
+//        settingsPage.clickOnCredentialRegistry();
+//        assertEquals(credentialRegistryPage.checkEnvNotChanged(),"https://api.qa-inji.mosip.net");
+//	}
+//	
+//	@Test
+//	public void downloadAndVerifyVcInInvalidEnv() throws InterruptedException {
+//		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+//
+//        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+//        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+//
+//        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+//        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
+//
+//        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+//        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
+//
+//        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
+//        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
+//
+//        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
+//        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
+//
+//        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+//        SettingsPage settingsPage = homePage.clickOnSettingIcon();
+//        
+//        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+//        CredentialRegistryPage credentialRegistryPage =settingsPage.clickOnCredentialRegistry();
+//        
+//        assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
+//        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("invalidenv")).clickOnSaveButton();
+//
+//        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+//        credentialRegistryPage.clickOnBackArrow();
+//        
+//        AddNewCardPage addNewCardPage = homePage.downloadCard();
+//        assertTrue(homePage.isNoInternetConnectionDisplayed(), "Verify if no internet connection is displayed");
+//	}
+//	
+//	@Test
+//	public void generateUinInNewEnv() throws InterruptedException {
+//		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+//
+//        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+//        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+//
+//        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+//        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
+//
+//        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+//        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
+//
+//        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
+//        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
+//
+//        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
+//        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
+//
+//        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+//        SettingsPage settingsPage = homePage.clickOnSettingIcon();
+//        
+//        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+//        CredentialRegistryPage credentialRegistryPage =settingsPage.clickOnCredentialRegistry();
+//        
+//        assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
+//        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("newEnv")).clickOnSaveButton();
+//
+//        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+//        credentialRegistryPage.clickOnBackArrow();
+//        
+//        AddNewCardPage addNewCardPage = homePage.downloadCard();
+//        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
+//        RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
+//        
+//        assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
+//        GenerateUinOrVidPage generateUinOrVidPage = retrieveIdPage.clickOnGetItNowText();
+//
+//        assertTrue(generateUinOrVidPage.isGenerateUinOrVidPageLoaded(), "Verify if generate uin or vid page page is displayed");
+//        OtpVerificationPage otpVerification = generateUinOrVidPage.enterApplicationID(TestDataReader.readData("newaid")).clickOnGetUinOrVidButton();
+//
+//        assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
+//        otpVerification.enterOtp(TestDataReader.readData("otp"), target);
+//
+//        assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
+//        retrieveIdPage.clickOnGenerateCardButton();
+//
+//        assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
+//        otpVerification.enterOtp(TestDataReader.readData("otp"), target);
+//
+//        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+//	}
+//	
+//	@Test
+//	public void retrivingUinInOtherEnv() throws InterruptedException {
+//		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+//
+//        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+//        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+//
+//        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+//        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
+//
+//        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+//        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
+//
+//        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
+//        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
+//
+//        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
+//        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
+//
+//        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+//        SettingsPage settingsPage = homePage.clickOnSettingIcon();
+//        
+//        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+//        CredentialRegistryPage credentialRegistryPage =settingsPage.clickOnCredentialRegistry();
+//        
+//        assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
+//        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("newEnv")).clickOnSaveButton();
+//
+//        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+//        credentialRegistryPage.clickOnBackArrow();
+//        
+//        AddNewCardPage addNewCardPage = homePage.downloadCard();
+//        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
+//        RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
+//        
+//        assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
+//        GenerateUinOrVidPage generateUinOrVidPage = retrieveIdPage.clickOnGetItNowText();
+//
+//        assertTrue(generateUinOrVidPage.isGenerateUinOrVidPageLoaded(), "Verify if generate uin or vid page page is displayed");
+//        OtpVerificationPage otpVerification = generateUinOrVidPage.enterApplicationID(TestDataReader.readData("aid")).clickOnGetUinOrVidButton();
+//
+//        assertTrue(retrieveIdPage.isAidIsNotReadyYetErrorDisplayed(), "Verify if aid is not ready displayed");
+//	}
+//	
+//	@Test
+//	public void downloadAndVerifyVcInTwoEnv() throws InterruptedException {
+//		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+//
+//        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+//        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+//
+//        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+//        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
+//
+//        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+//        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
+//
+//        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
+//        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
+//
+//        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
+//        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
+//
+//        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+//        SettingsPage settingsPage = homePage.clickOnSettingIcon();
+//        
+//        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+//        CredentialRegistryPage credentialRegistryPage =settingsPage.clickOnCredentialRegistry();
+//        
+//        assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
+//        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("newEnv")).clickOnSaveButton();
+//
+//        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+//        credentialRegistryPage.clickOnBackArrow();
+//        
+//        AddNewCardPage addNewCardPage = homePage.downloadCard();
+//        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
+//        RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
+//
+//        assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
+//        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("newuin")).clickOnGenerateCardButton();
+//
+//        assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
+//        otpVerification.enterOtp(TestDataReader.readData("otp"), target);
+//        
+//        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+//        homePage.clickOnSettingIcon();
+//        
+//        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+//        settingsPage.clickOnCredentialRegistry();
+//        
+//        assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
+//        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("injiEnv")).clickOnSaveButton();
+//
+//        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+//        credentialRegistryPage.clickOnBackArrow();
+//        
+//         homePage.downloadCard();
+//        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
+//         addNewCardPage.clickOnDownloadViaUin();
+//
+//        assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
+//         retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
+//
+//        assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
+//        otpVerification.enterOtp(BaseTestCase.getOtp(), target);
+//        
+//        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+//        assertTrue(homePage.isSecondNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+//	}
+//	
+//	@Test
+//	public void downloadVcAndActivateItInOtherEnv() throws InterruptedException {
+//		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+//
+//        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+//        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+//
+//        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+//        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
+//
+//        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+//        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
+//
+//        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
+//        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
+//
+//        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
+//        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
+//
+//        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+//        SettingsPage settingsPage = homePage.clickOnSettingIcon();
+//        
+//        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+//        CredentialRegistryPage credentialRegistryPage =settingsPage.clickOnCredentialRegistry();
+//        
+//        assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
+//        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("newEnv")).clickOnSaveButton();
+//
+//        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+//        credentialRegistryPage.clickOnBackArrow();
+//        
+//        AddNewCardPage addNewCardPage = homePage.downloadCard();
+//        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
+//        RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
+//
+//        assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
+//        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("newuin")).clickOnGenerateCardButton();
+//
+//        assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
+//        otpVerification.enterOtp(TestDataReader.readData("otp"), target);
+//        
+//        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+//        homePage.clickOnSettingIcon();
+//        
+//        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+//        settingsPage.clickOnCredentialRegistry();
+//        
+//        assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
+//        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("injiEnv")).clickOnSaveButton();
+//
+//        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+//        credentialRegistryPage.clickOnBackArrow();
+//        
+//        MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
+//
+//        assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
+//        PleaseConfirmPopupPage pleaseConfirmPopupPage = moreOptionsPage.clickOnActivationPending();
+//
+//        assertTrue(pleaseConfirmPopupPage.isPleaseConfirmPopupPageLoaded(), "Verify if pop up page is displayed");
+//        OtpVerificationPage otpVerificationPage = pleaseConfirmPopupPage.clickOnConfirmButton();
+//        
+//        assertTrue(moreOptionsPage.isSomthingIsWrongPopupVisible(), "Verify if somthing went wrong please try again popup displayed");
+//	}
+//	
+//	@Test
+//	public void downloadAndVerifyVcInNewEnvForEsignet() throws InterruptedException {
+//		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+//
+//        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+//        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+//
+//        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+//        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
+//
+//        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+//        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
+//
+//        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
+//        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
+//
+//        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
+//        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
+//
+//        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+//        SettingsPage settingsPage = homePage.clickOnSettingIcon();
+//        
+//        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+//        CredentialRegistryPage credentialRegistryPage =settingsPage.clickOnCredentialRegistry();
+//        
+//        assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
+//        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("newEnv")).setEnterIdToEsignetTextBox(TestDataReader.readData("newEnv")).clickOnSaveButton();
+//       
+//        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+//        credentialRegistryPage.clickOnBackArrow();
+//      
+//        AddNewCardPage addNewCardPage = homePage.downloadCard();
+//        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
+//        
+//        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
+//        assertTrue(esignetLoginPage.isEsignetLoginPageDisplayed(), "Verify if esignet login page displayed");
+//        esignetLoginPage.clickOnEsignetLoginWithOtpButton();
+//        
+//        assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
+//        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(TestDataReader.readData("newuin"));
+//        
+//        esignetLoginPage.clickOnGetOtpButton();
+//        assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
+//        
+//        otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), target);
+//        esignetLoginPage.clickOnVerifyButton();
+//        
+//        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+//        DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
+//        detailedVcViewPage.clickOnQrCodeButton();
+//        assertTrue(detailedVcViewPage.isQrCodeDisplayed(), "Verify if QR Code header is displayed");
+//
+//        detailedVcViewPage.clickOnQrCrossIcon();
+//        assertTrue(detailedVcViewPage.isEsignetLogoDisplayed(), "Verify if detailed Vc esignet logo is displayed");
+//        assertTrue(detailedVcViewPage.isDetailedVcViewPageLoaded(), "Verify if detailed Vc view page is displayed");
+//        assertEquals(detailedVcViewPage.getNameInDetailedVcView(), TestDataReader.readData("fullName"), "Verify if full name is displayed");
+//        assertEquals(detailedVcViewPage.getDateOfBirthInDetailedVcView(), TestDataReader.readData("dateOfBirth"), "Verify if date of birth is displayed");
+//        assertEquals(detailedVcViewPage.getGenderInDetailedVcView(), TestDataReader.readData("gender"), "Verify if gender is displayed");
+//        assertEquals(detailedVcViewPage.getIdTypeValueInDetailedVcView(), TestDataReader.readData("idType"), "Verify if id type is displayed");
+//        assertEquals(detailedVcViewPage.getStatusInDetailedVcView(), TestDataReader.readData("status"), "Verify if status is displayed");
+//        assertEquals(detailedVcViewPage.getUinInDetailedVcView(), TestDataReader.readData("newuin"), "Verify if uin is displayed");
+//        assertEquals(detailedVcViewPage.getPhoneInDetailedVcView(), TestDataReader.readData("phoneNumber"), "Verify if phone number is displayed");
+//        assertEquals(detailedVcViewPage.getEmailInDetailedVcView(), TestDataReader.readData("externalemail"), "Verify if email is displayed");
+//        assertTrue(detailedVcViewPage.isActivateButtonDisplayed(), "Verify if activate vc button displayed");
+//	}
 	
 	@Test
-    public void cancelChangeEnvAndVerify() throws InterruptedException {
+	public void downloadAndVerifyVcInInvalidEnvForEsignet() throws InterruptedException {
 		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
@@ -106,45 +480,7 @@ public class CredentialRegistryTest extends BaseTest {
         CredentialRegistryPage credentialRegistryPage =settingsPage.clickOnCredentialRegistry();
         
         assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
-        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("newEnv")).clickOnCancelButton();
-
-        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
-        credentialRegistryPage.clickOnBackArrow();
-        
-        homePage.clickOnSettingIcon();
-        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
-
-        settingsPage.clickOnCredentialRegistry();
-        assertEquals(credentialRegistryPage.checkEnvNotChanged(),"https://api.qa-inji.mosip.net");
-	}
-	
-	@Test
-	public void downloadAndVerifyVcInInvalidEnv() throws InterruptedException {
-		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
-
-        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
-        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
-
-        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
-        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
-
-        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
-        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
-
-        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
-
-        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
-
-        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
-        SettingsPage settingsPage = homePage.clickOnSettingIcon();
-        
-        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
-        CredentialRegistryPage credentialRegistryPage =settingsPage.clickOnCredentialRegistry();
-        
-        assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
-        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("invalidenv")).clickOnSaveButton();
+        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("invalidenv")).setEnterIdToEsignetTextBox(TestDataReader.readData("invalidenv")).clickOnSaveButton();
 
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         credentialRegistryPage.clickOnBackArrow();
@@ -153,231 +489,4 @@ public class CredentialRegistryTest extends BaseTest {
         assertTrue(homePage.isNoInternetConnectionDisplayed(), "Verify if no internet connection is displayed");
 	}
 	
-	@Test
-	public void generateUinInNewEnv() throws InterruptedException {
-		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
-
-        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
-        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
-
-        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
-        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
-
-        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
-        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
-
-        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
-
-        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
-
-        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
-        SettingsPage settingsPage = homePage.clickOnSettingIcon();
-        
-        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
-        CredentialRegistryPage credentialRegistryPage =settingsPage.clickOnCredentialRegistry();
-        
-        assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
-        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("newEnv")).clickOnSaveButton();
-
-        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
-        credentialRegistryPage.clickOnBackArrow();
-        
-        AddNewCardPage addNewCardPage = homePage.downloadCard();
-        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
-        
-        assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        GenerateUinOrVidPage generateUinOrVidPage = retrieveIdPage.clickOnGetItNowText();
-
-        assertTrue(generateUinOrVidPage.isGenerateUinOrVidPageLoaded(), "Verify if generate uin or vid page page is displayed");
-        OtpVerificationPage otpVerification = generateUinOrVidPage.enterApplicationID(TestDataReader.readData("newaid")).clickOnGetUinOrVidButton();
-
-        assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(TestDataReader.readData("otp"), target);
-
-        assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        retrieveIdPage.clickOnGenerateCardButton();
-
-        assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(TestDataReader.readData("otp"), target);
-
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-	}
-	
-	@Test
-	public void retrivingUinInOtherEnv() throws InterruptedException {
-		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
-
-        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
-        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
-
-        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
-        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
-
-        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
-        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
-
-        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
-
-        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
-
-        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
-        SettingsPage settingsPage = homePage.clickOnSettingIcon();
-        
-        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
-        CredentialRegistryPage credentialRegistryPage =settingsPage.clickOnCredentialRegistry();
-        
-        assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
-        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("newEnv")).clickOnSaveButton();
-
-        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
-        credentialRegistryPage.clickOnBackArrow();
-        
-        AddNewCardPage addNewCardPage = homePage.downloadCard();
-        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
-        
-        assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        GenerateUinOrVidPage generateUinOrVidPage = retrieveIdPage.clickOnGetItNowText();
-
-        assertTrue(generateUinOrVidPage.isGenerateUinOrVidPageLoaded(), "Verify if generate uin or vid page page is displayed");
-        OtpVerificationPage otpVerification = generateUinOrVidPage.enterApplicationID(TestDataReader.readData("aid")).clickOnGetUinOrVidButton();
-
-        assertTrue(retrieveIdPage.isAidIsNotReadyYetErrorDisplayed(), "Verify if aid is not ready displayed");
-	}
-	
-	@Test
-	public void downloadAndVerifyVcInTwoEnv() throws InterruptedException {
-		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
-
-        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
-        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
-
-        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
-        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
-
-        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
-        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
-
-        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
-
-        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
-
-        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
-        SettingsPage settingsPage = homePage.clickOnSettingIcon();
-        
-        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
-        CredentialRegistryPage credentialRegistryPage =settingsPage.clickOnCredentialRegistry();
-        
-        assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
-        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("newEnv")).clickOnSaveButton();
-
-        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
-        credentialRegistryPage.clickOnBackArrow();
-        
-        AddNewCardPage addNewCardPage = homePage.downloadCard();
-        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
-
-        assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("newuin")).clickOnGenerateCardButton();
-
-        assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(TestDataReader.readData("otp"), target);
-        
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-        homePage.clickOnSettingIcon();
-        
-        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
-        settingsPage.clickOnCredentialRegistry();
-        
-        assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
-        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("injiEnv")).clickOnSaveButton();
-
-        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
-        credentialRegistryPage.clickOnBackArrow();
-        
-         homePage.downloadCard();
-        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-         addNewCardPage.clickOnDownloadViaUin();
-
-        assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-         retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
-
-        assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(BaseTestCase.getOtp(), target);
-        
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-        assertTrue(homePage.isSecondNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-	}
-	
-	@Test
-	public void downloadVcAndActivateItInOtherEnv() throws InterruptedException {
-		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
-
-        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
-        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
-
-        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
-        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
-
-        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
-        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
-
-        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), target);
-
-        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), target);
-
-        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
-        SettingsPage settingsPage = homePage.clickOnSettingIcon();
-        
-        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
-        CredentialRegistryPage credentialRegistryPage =settingsPage.clickOnCredentialRegistry();
-        
-        assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
-        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("newEnv")).clickOnSaveButton();
-
-        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
-        credentialRegistryPage.clickOnBackArrow();
-        
-        AddNewCardPage addNewCardPage = homePage.downloadCard();
-        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
-
-        assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("newuin")).clickOnGenerateCardButton();
-
-        assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
-        otpVerification.enterOtp(TestDataReader.readData("otp"), target);
-        
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-        homePage.clickOnSettingIcon();
-        
-        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
-        settingsPage.clickOnCredentialRegistry();
-        
-        assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
-        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("injiEnv")).clickOnSaveButton();
-
-        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
-        credentialRegistryPage.clickOnBackArrow();
-        
-        MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
-
-        assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
-        PleaseConfirmPopupPage pleaseConfirmPopupPage = moreOptionsPage.clickOnActivationPending();
-
-        assertTrue(pleaseConfirmPopupPage.isPleaseConfirmPopupPageLoaded(), "Verify if pop up page is displayed");
-        OtpVerificationPage otpVerificationPage = pleaseConfirmPopupPage.clickOnConfirmButton();
-        
-        assertTrue(moreOptionsPage.isSomthingIsWrongPopupVisible(), "Verify if somthing went wrong please try again popup displayed");
-	}
 }

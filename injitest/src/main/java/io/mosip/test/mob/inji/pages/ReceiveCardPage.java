@@ -21,13 +21,18 @@ public class ReceiveCardPage extends BasePage {
 	 
 	 @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Waiting for connection...\")")
 	  private WebElement watitingForConnection;
+	 
+	 @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.oplus.wirelesssettings:id/alertTitle\")")
+	    private WebElement bluetoothPopUp;
 
     public ReceiveCardPage(AppiumDriver driver) {
         super(driver);
     }
     
     public ReceiveCardPage clickOnAllowButton() {
-    	 clickOnElement(allowButton);
+    	if (isElementDisplayed(bluetoothPopUp, "\"Inji\" wants to turn on Bluetooth")) {
+    		clickOnElement(allowButton);
+        }
          return this;
     }
     

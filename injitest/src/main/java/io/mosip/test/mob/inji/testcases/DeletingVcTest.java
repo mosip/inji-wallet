@@ -12,7 +12,7 @@ import static org.testng.Assert.assertTrue;
 
 public class DeletingVcTest extends BaseTest {
     @Test
-    public void deleteVcAndVerifyInHistory() throws InterruptedException {
+    public void deleteVcAndVerifyInHistoryAndScan() throws InterruptedException {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
@@ -57,7 +57,9 @@ public class DeletingVcTest extends BaseTest {
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
         historyPage.verifyHistory(TestDataReader.readData("uin") + " Removed from wallet", target);
         assertTrue(historyPage.verifyDeleteHistory(TestDataReader.readData("uin"), target), "Verify if deleted history is displayed");
-
+        
+       ScanPage scanPage = homePage.clickOnScanButton();
+        assertTrue(scanPage.isNoShareableCardsMessageDisplayed(), "Verify if no shareable cards are available message is displayed");
     }
 
     @Test

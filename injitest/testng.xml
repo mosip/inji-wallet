@@ -7,7 +7,7 @@
     <test verbose="2" preserve-order="true" name="android">
         <parameter name="platformName" value="ANDROID"/>
         <classes>
-            <class name="io.mosip.test.mob.inji.testcases.VcDownloadAndVerifyUsingUinTest">
+           <class name="io.mosip.test.mob.inji.testcases.VcDownloadAndVerifyUsingUinTest">
                 <methods>
                     <include name="downloadAndVerifyVcUsingUin"/>
                     <include name="downloadWithEmptyUin"/>
@@ -16,7 +16,7 @@
                     <include name="verifyInvalidUinErrorMessage"/>
                 </methods>
             </class>
-            <class name="io.mosip.test.mob.inji.testcases.VerifyWelcomePagesTest">
+             <class name="io.mosip.test.mob.inji.testcases.VerifyWelcomePagesTest">
                 <methods>
                     <include name="verifyWelcomePagesContent"/>
                     <include name="verifyWelcomePagesFromInjiTourGuide"/>
@@ -103,9 +103,14 @@
                     <include name="openQrOffline"/>
                     <include name="verifyRecivedCardOffline"/>
                     <include name="downloadCardWithoutInternetRetryWithInternet"/>
+                    <include name="downloadVcUsingUinViaEsignetWithoutInternate"/>
+                    <include name="downloadVcUsingUinViaEsignetNoInternateWhileDownloading"/>
+                     <include name="downloadVcViaEsignetAndPinUnpinWithNoNetwork"/>
+                     <include name="downloadVcUsingUinViaEsignetNoInternateOpenScan"/>
+                     
                 </methods>
             </class>
-	     <class name="io.mosip.test.mob.inji.testcases.CredentialRegistryTest">
+	      <class name="io.mosip.test.mob.inji.testcases.CredentialRegistryTest">
                 <methods>
                     <include name="downloadAndVerifyVcInNewEnv"/>
                     <include name="cancelChangeEnvAndVerify"/>
@@ -115,9 +120,11 @@
                     <include name="retrivingUinInOtherEnv"/>
                     <include name="downloadAndVerifyVcInTwoEnv"/>
                     <include name="downloadVcAndActivateItInOtherEnv"/>
+                    <include name="downloadAndVerifyVcInNewEnvForEsignet"/>
+                    <include name="downloadAndVerifyVcInInvalidEnvForEsignet"/>
                 </methods>
             </class>
-      <class name="io.mosip.test.mob.inji.testcases.ChangeLanguageTest">
+     <class name="io.mosip.test.mob.inji.testcases.ChangeLanguageTest">
                 <methods>
                     <include name="changeLanguage"/>
                     <include name="changeLanguageToArabic"/>
@@ -127,6 +134,12 @@
                 <methods>
                     <include name="verifyRecivedCardAndQrCode"/>
                     <include name="verifyRecivedCardAndQrCodeInFilipinoLanguage"/>
+                </methods>
+            </class>
+	    <class name="io.mosip.test.mob.inji.testcases.VcDownloadAndVerifyUsingEsignetTest">
+                <methods>
+                    <include name="downloadAndVerifyVcUsingUinViaEsignet"/>
+                    <include name="downloadAndVerifyVcUsingVidViaEsignet"/>
                 </methods>
             </class>
         </classes>

@@ -64,7 +64,7 @@ public class SettingsPage extends BasePage {
     @AndroidFindBy(xpath = "(//*[@resource-id=\"padView\"])[3]")
     private WebElement arabicLanguageButton;
 
-    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"فتح التطبيق\")")
+    @AndroidFindBy(className = "android.widget.TextView")
     private WebElement chooseLanguageInArabic;
 
     public SettingsPage(AppiumDriver driver) {
