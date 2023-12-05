@@ -25,14 +25,6 @@ APP_FLAVOR = ENV["APP_FLAVOR"]
 APPLICATION_THEME = ENV["APPLICATION_THEME"]
 CREDENTIAL_REGISTRY_EDIT = ENV["CREDENTIAL_REGISTRY_EDIT"]
 
-def generate_appID_on_flavor()
-  flavor = APP_FLAVOR
-  case flavor
-  when "mec"
-    return 6473444276
-  end
-end
-
 def generate_app_bundle_id()
   flavor = APP_FLAVOR
   case flavor
@@ -119,6 +111,10 @@ platform :ios do
       build_number: current_build_number
     )
 
+    update_app_identifier(
+      app_identifier: "#{generate_app_bundle_id}",
+      plist_path: "Inji/Info.plist"
+    )
     match(
       type: 'appstore',
       app_identifier: "#{generate_app_bundle_id}",
@@ -131,7 +127,6 @@ platform :ios do
 
     profile_mapping = Actions.lane_context[SharedValues::MATCH_PROVISIONING_PROFILE_MAPPING]
     UI.message("MATCH_PROVISIONING_PROFILE_MAPPING: #{profile_mapping}")
-
     gym(
       configuration: "Release",
       workspace: "Inji.xcworkspace",
@@ -144,7 +139,6 @@ platform :ios do
         }
       }
     )
-
     export_options_value = {
       provisioningProfiles: {
         "#{generate_app_bundle_id}" => "match AppStore #{generate_app_bundle_id}"
