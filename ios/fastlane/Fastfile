@@ -130,6 +130,7 @@ platform :ios do
     )
 
     profile_mapping = Actions.lane_context[SharedValues::MATCH_PROVISIONING_PROFILE_MAPPING]
+    UI.message("MATCH_PROVISIONING_PROFILE_MAPPING: #{profile_mapping}")
 
     gym(
       configuration: "Release",
@@ -139,10 +140,17 @@ platform :ios do
       
       export_options: {
         provisioningProfiles: {
-          "#{generate_app_bundle_id}" => "match Appstore #{generate_app_bundle_id}"
+          "#{generate_app_bundle_id}" => "match AppStore #{generate_app_bundle_id}"
         }
       }
     )
+
+    export_options_value = {
+      provisioningProfiles: {
+        "#{generate_app_bundle_id}" => "match AppStore #{generate_app_bundle_id}"
+      }
+    }
+    UI.message("export_options: #{export_options_value}")
 
     pilot(
        app_identifier: "#{generate_app_bundle_id}",
