@@ -41,6 +41,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = props => {
   return (
     <Modal
       onDismiss={dismissInput}
+      testID="retreiveIdHeader"
       isVisible={props.isVisible}
       onShow={setIndividualID}
       headerTitle={t('header')}

@@ -14,7 +14,7 @@ export const MessageOverlay: React.FC<MessageOverlayProps> = props => {
         ? props.customHeight
         : props.progress
         ? 100
-        : 150,
+        : 170,
     },
   });
   return (
@@ -29,6 +29,7 @@ export const MessageOverlay: React.FC<MessageOverlayProps> = props => {
         <Column padding="21" crossAlign="center">
           {props.title && (
             <Text
+              testID={props.testID}
               style={{paddingTop: 3}}
               align="center"
               weight="bold"
@@ -107,6 +108,7 @@ const Progress: React.FC<Pick<MessageOverlayProps, 'progress'>> = props => {
 };
 
 export interface MessageOverlayProps {
+  testID?: string;
   isVisible: boolean;
   title?: string;
   buttonText?: string;

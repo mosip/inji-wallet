@@ -34,7 +34,7 @@ export const AuthScreen: React.FC<RootRouteProps> = props => {
   return (
     <Column
       fill
-      padding={[32, 32, 32, 32]}
+      padding={[32, 25, 32, 32]}
       backgroundColor={Theme.Colors.whiteBackgroundColor}
       align="space-between">
       <MessageOverlay

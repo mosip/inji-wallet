@@ -67,12 +67,16 @@ export const ScanScreen: React.FC = () => {
     return (
       <Column padding="24" fill align="space-between">
         <Centered fill>
-          <Text align="center" color={Theme.Colors.errorMessage}>
+          <Text
+            align="center"
+            testID="enableBluetoothMessage"
+            color={Theme.Colors.errorMessage}>
             {t('enableBluetoothMessage')}
           </Text>
         </Centered>
 
         <Button
+          testID="enableBluetoothButton"
           title={t('enableBluetoothButtonText')}
           onPress={openSettings}></Button>
       </Column>
@@ -197,7 +201,6 @@ export const ScanScreen: React.FC = () => {
       padding="24 0"
       backgroundColor={Theme.Colors.whiteBackgroundColor}>
       <Centered
-        fill
         align="space-evenly"
         backgroundColor={Theme.Colors.whiteBackgroundColor}>
         {loadQRScanner()}

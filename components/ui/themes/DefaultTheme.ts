@@ -774,6 +774,30 @@ export const DefaultTheme = {
       flexDirection: 'column',
     },
   }),
+  SearchBarStyles: StyleSheet.create({
+    searchIcon: {
+      justifyContent: 'center',
+      paddingLeft: 15,
+      height: Dimensions.get('window').height * 0.055,
+      width: Dimensions.get('window').width * 0.1,
+      borderColor: Colors.Gray50,
+      borderTopWidth: 1,
+      borderBottomWidth: 1,
+      borderLeftWidth: 1,
+      borderTopLeftRadius: 9,
+      borderBottomLeftRadius: 9,
+    },
+    searchBar: {
+      borderWidth: 1,
+      borderColor: Colors.Gray50,
+      height: Dimensions.get('window').height * 0.055,
+      width: Dimensions.get('window').width * 0.84,
+      paddingLeft: 12,
+      borderLeftWidth: 0,
+      borderTopRightRadius: 9,
+      borderBottomRightRadius: 9,
+    },
+  }),
   ButtonStyles: StyleSheet.create({
     fill: {
       flex: 1,
@@ -802,7 +826,6 @@ export const DefaultTheme = {
       borderRadius: 9,
       width: Dimensions.get('window').width * 0.72,
       alignSelf: 'center',
-      margin: 3,
       height: 54,
     },
     float: {
@@ -1184,28 +1207,6 @@ export const DefaultTheme = {
     },
   }),
   IssuersScreenStyles: StyleSheet.create({
-    issuersSearchBar: {
-      borderWidth: 1,
-      borderColor: Colors.Gray50,
-      height: Dimensions.get('window').height * 0.055,
-      width: Dimensions.get('window').width * 0.84,
-      paddingLeft: 12,
-      borderLeftWidth: 0,
-      borderTopRightRadius: 9,
-      borderBottomRightRadius: 9,
-    },
-    searchIcon: {
-      justifyContent: 'center',
-      paddingLeft: 15,
-      height: Dimensions.get('window').height * 0.055,
-      width: Dimensions.get('window').width * 0.1,
-      borderColor: Colors.Gray50,
-      borderTopWidth: 1,
-      borderBottomWidth: 1,
-      borderLeftWidth: 1,
-      borderTopLeftRadius: 9,
-      borderBottomLeftRadius: 9,
-    },
     issuerListOuterContainer: {
       padding: 10,
       flex: 1,

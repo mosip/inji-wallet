@@ -1,15 +1,13 @@
 import React from 'react';
 import {Image, Pressable} from 'react-native';
 import {Theme} from '../ui/styleUtils';
-import {useTranslation} from 'react-i18next';
 import testIDProps from '../../shared/commonUtil';
 import {Text} from '../ui';
+import {displayType} from '../../machines/issuersMachine';
 
 export const Issuer: React.FC<IssuerProps> = (props: IssuerProps) => {
-  const {t} = useTranslation('IssuersScreen');
-
   function getIssuerLogo() {
-    return {uri: props.logoUrl};
+    return {uri: props.displayDetails.logo.url};
   }
 
   return (
@@ -30,26 +28,25 @@ export const Issuer: React.FC<IssuerProps> = (props: IssuerProps) => {
       <Image
         {...testIDProps(`issuerIcon-${props.testID}`)}
         style={Theme.IssuersScreenStyles.issuerIcon}
+        alt={props.displayDetails.logo.alt_text}
         source={getIssuerLogo()}
       />
       <Text
         testID={`issuerHeading-${props.testID}`}
         style={Theme.IssuersScreenStyles.issuerHeading}>
-        {t('itemHeading', {issuer: props.displayName})}
+        {props.displayDetails.title}
       </Text>
       <Text
         testID={`issuerDescription-${props.testID}`}
         style={Theme.IssuersScreenStyles.issuerDescription}>
-        {t('itemSubHeading')}
+        {props.displayDetails.description}
       </Text>
     </Pressable>
   );
 };
 
 interface IssuerProps {
-  id: string;
-  displayName: string;
-  logoUrl: string;
+  displayDetails: displayType;
   onPress: () => void;
   testID: string;
 }
