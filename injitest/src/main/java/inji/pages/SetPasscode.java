@@ -34,6 +34,19 @@ public class SetPasscode extends BasePage {
         return new ConfirmPasscode(driver);
     }
 
+    public ConfirmPasscode enterPasscodeForEsignet(String passcode, Target os) {
+        char[] array = passcode.toCharArray();
+        switch (os) {
+            case ANDROID:
+            	enterOtpAndroidForEsignet(array);
+                break;
+            case IOS:
+                enterOtpIos(array);
+                break;
+        }
+        return new ConfirmPasscode(driver);
+    }
+    
     private void enterOtpAndroid(char[] arr) {
         for (int i = 1; i <= 6; i++) {
             String locator = "(//*[@class='android.widget.EditText'])[" + i + "]";
@@ -47,4 +60,15 @@ public class SetPasscode extends BasePage {
             driver.findElement(By.xpath(locator)).sendKeys(String.valueOf(arr[i - 1]));
         }
     }
+ 
+  private void enterOtpAndroidForEsignet(char[] arr) {
+      for (int i = 3; i <= 8; i++) {
+          int index = i - 3;
+          if (index < arr.length) {
+              String locator = "(//*[@class='android.widget.EditText'])[" + i + "]";
+              driver.findElement(By.xpath(locator)).sendKeys(String.valueOf(arr[index]));
+          }
+      }
+  }
+
 }

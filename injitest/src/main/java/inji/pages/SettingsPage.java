@@ -5,6 +5,7 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -63,7 +64,7 @@ public class SettingsPage extends BasePage {
     @AndroidFindBy(xpath = "(//*[@resource-id=\"padView\"])[3]")
     private WebElement arabicLanguageButton;
 
-    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"فتح التطبيق\")")
+    @AndroidFindBy(className = "android.widget.TextView")
     private WebElement chooseLanguageInArabic;
 
     public SettingsPage(AppiumDriver driver) {
