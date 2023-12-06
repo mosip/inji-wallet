@@ -35,13 +35,13 @@ public class SetPasscode extends BasePage {
     }
 
     public ConfirmPasscode enterPasscodeForEsignet(String passcode, Target os) {
-        char[] arr = passcode.toCharArray();
+        char[] array = passcode.toCharArray();
         switch (os) {
             case ANDROID:
-            	enterOtpAndroidForEsignet(arr);
+            	enterOtpAndroidForEsignet(array);
                 break;
             case IOS:
-                enterOtpIos(arr);
+                enterOtpIos(array);
                 break;
         }
         return new ConfirmPasscode(driver);

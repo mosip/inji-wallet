@@ -40,7 +40,7 @@ public class CredentialRegistryPage extends BasePage {
         return this;
     }
     
-    public CredentialRegistryPage setEnterIdToEsignetTextBox(String env) {
+    public CredentialRegistryPage EnterUrlToEsignetHostTextBox(String env) {
     	clearTextBoxAndSendKeys(credentialRegistryEsignetTextBox, env, "Credential Registry env");
         return this;
     }
