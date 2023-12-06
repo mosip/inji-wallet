@@ -29,7 +29,7 @@ public class ReceiveCardTest extends AndroidBaseTest {
 	        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
 
 	        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-	        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+	        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID.ANDROID);
 
 	        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
 	        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
@@ -38,6 +38,7 @@ public class ReceiveCardTest extends AndroidBaseTest {
 	        SettingsPage settingsPage = homePage.clickOnSettingIcon();
 	        
 	        ReceiveCardPage receiveCardPage = settingsPage.clickOnReceiveCard();
+	        receiveCardPage.clickOnAllowButton();
 	        assertTrue(receiveCardPage.isReceiveCardHederDisplayed(), "Verify if QR code  header is displayed");
 	        assertTrue(receiveCardPage.isWaitingForConnectionDisplayed(), "Verify if waiting for connection displayed");
 	 }

@@ -11,7 +11,7 @@
                 <methods>
                     <include name="downloadAndVerifyVcUsingUin"/>
                     <include name="downloadWithEmptyUin"/>
-                    <include name="generateMultipleVcWithSameUin"/>
+                    <include name="genrateMultipleVcWithSameUin"/>
                     <include name="downloadMultipleVcUsingDifferentUin"/>
                     <include name="verifyInvalidUinErrorMessage"/>
                 </methods>
@@ -98,11 +98,15 @@
                     <include name="openCameraOnFlightMode"/>
                     <include name="activateVcWithoutInternet"/>
                     <include name="verifyListOfLanguagesInOfflineMode"/>
-                    <include name="deleteDownloadedVcInOfflineMode"/>
-                    <include name="verifyHelpPageOfflineMode"/>
+		            <include name="deleteDownloadedVcInOfflineMode"/>
+		            <include name="verifyHelpPageOfflineMode"/>
                     <include name="openQrOffline"/>
                     <include name="verifyRecivedCardOffline"/>
                     <include name="downloadCardWithoutInternetRetryWithInternet"/>
+                    <include name="downloadVcUsingUinViaEsignetWithoutInternate"/>
+                    <include name="downloadVcUsingUinViaEsignetNoInternateWhileDownloading"/>
+                     <include name="downloadVcViaEsignetAndPinUnpinWithNoNetwork"/>
+                     <include name="downloadVcUsingUinViaEsignetNoInternateOpenScan"/>
                 </methods>
             </class>
             <class name="androidTestCases.CredentialRegistryTest">
@@ -115,6 +119,8 @@
                     <include name="retrivingUinInOtherEnv"/>
                     <include name="downloadAndVerifyVcInTwoEnv"/>
                     <include name="downloadVcAndActivateItInOtherEnv"/>
+                    <include name="downloadAndVerifyVcInNewEnvForEsignet"/>
+                    <include name="downloadAndVerifyVcInInvalidEnvForEsignet"/>
                 </methods>
             </class>
             <class name="androidTestCases.ChangeLanguageTest">
@@ -127,6 +133,12 @@
                 <methods>
                     <include name="verifyRecivedCardAndQrCode"/>
                     <include name="verifyRecivedCardAndQrCodeInFilipinoLanguage"/>
+                </methods>
+            </class>
+            <class name="androidTestCases.VcDownloadAndVerifyUsingEsignetTest">
+                <methods>
+                    <include name="downloadAndVerifyVcUsingUinViaEsignet"/>
+                    <include name="downloadAndVerifyVcUsingVidViaEsignet"/>
                 </methods>
             </class>
         </classes>

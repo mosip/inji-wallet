@@ -3,9 +3,10 @@ package inji.pages;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public class DetailedVcViewPage extends BasePage {
+public class DetailedVcViewPage extends BasePage{
     @AndroidFindBy(xpath = "//*[contains(@text,'ID Details')]")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"ID Details\"`]")
     private WebElement detailedVcViewPageTitle;
@@ -67,6 +68,15 @@ public class DetailedVcViewPage extends BasePage {
     
     @AndroidFindBy(accessibility = "qrCodeHeader")
     private WebElement qrCodeHeader;
+    
+    @AndroidFindBy(accessibility = "credentialRegistry")
+    private WebElement credentialRegistryText;
+    
+    @AndroidFindBy(accessibility = "credentialRegistryValue")
+    private WebElement credentialRegistryValue;
+    
+    @AndroidFindBy(accessibility = "esignet-logo")
+    private WebElement esignetLogo;
 
     public DetailedVcViewPage(AppiumDriver driver) {
         super(driver);
@@ -142,5 +152,17 @@ public class DetailedVcViewPage extends BasePage {
 
     public boolean isQrCodeDisplayed() {
     	return qrCodeHeader.isDisplayed();
+    }
+    
+    public boolean isCredentialRegistryTextDisplayed() {
+        return this.isElementDisplayed(credentialRegistryText, "credentialRegistry");
+    }
+    
+    public boolean isCredentialRegistryValueDisplayed() {
+    	return this.isElementDisplayed(credentialRegistryValue, "https://api.qa-trinity.mosip.net");
+    }
+    
+    public boolean isEsignetLogoDisplayed() {
+        return esignetLogo.isDisplayed();
     }
 }
