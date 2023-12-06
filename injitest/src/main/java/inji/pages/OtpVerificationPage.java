@@ -44,6 +44,12 @@ public class OtpVerificationPage extends BasePage {
         setPasscode.enterPasscode(otp, os);
         return new HomePage(driver);
     }
+    
+    public HomePage enterOtpForEsignet(String otp, Target os) {
+        SetPasscode setPasscode = new SetPasscode(driver);
+        setPasscode.enterPasscodeForEsignet(otp, os);
+        return new HomePage(driver);
+    }
 
     public boolean invalidOtpMessageDisplayed() {
         return this.isElementDisplayed(invalidOtpMessage, "OTP is invalid");

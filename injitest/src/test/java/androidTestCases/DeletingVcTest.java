@@ -9,7 +9,9 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 public class DeletingVcTest extends AndroidBaseTest {
     @Test
@@ -58,7 +60,9 @@ public class DeletingVcTest extends AndroidBaseTest {
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
         historyPage.verifyHistory(TestDataReader.readData("uin") + " Removed from wallet", Target.ANDROID);
         assertTrue(historyPage.verifyDeleteHistory(TestDataReader.readData("uin"), Target.ANDROID), "Verify if deleted history is displayed");
-
+        
+       ScanPage scanPage = homePage.clickOnScanButton();
+        assertTrue(scanPage.isNoShareableCardsMessageDisplayed(), "Verify if no shareable cards are available message is displayed");
     }
 
     @Test
