@@ -11,7 +11,7 @@
                 <methods>
                     <include name="downloadAndVerifyVcUsingUin"/>
                     <include name="downloadWithEmptyUin"/>
-                    <include name="genrateMultipleVcWithSameUin"/>
+                    <include name="generateMultipleVcWithSameUin"/>
                     <include name="downloadMultipleVcUsingDifferentUin"/>
                     <include name="verifyInvalidUinErrorMessage"/>
                 </methods>
