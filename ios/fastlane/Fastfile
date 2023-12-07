@@ -7,7 +7,7 @@ APPLE_KEY_CONTENT = ENV["APPLE_KEY_CONTENT"]
 APPLE_KEY_ID = ENV["APPLE_KEY_ID"]
 TEAM_ID = ENV["INJI_IOS_DEVELOPER_PORTAL_TEAM_ID"]
 FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD = ENV["INJI_IOS_FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD"]
-FASTLANE_USER= ENV["INJI_IOS_FASTLANE_APPLE_ID"]
+FASTLANE_USER= ENV["IOS_FASTLANE_APPLE_ID"]
 PROVISIONING_PROFILE_SPECIFIER = ENV["INJI_IOS_PROVISIONING_PROFILE_SPECIFIER"]
 TEMP_KEYCHAIN_USER = ENV["INJI_IOS_TEMP_KEYCHAIN_USER"]
 TEMP_KEYCHAIN_PASSWORD = ENV["INJI_IOS_TEMP_KEYCHAIN_PASSWORD"]
@@ -157,8 +157,8 @@ platform :ios do
       export_method: "app-store",
       
       export_options: {
-        provisioningProfiles: { 
-          "#{generate_app_bundle_id}" => "#{generate_app_name}"
+        provisioningProfiles: {
+          "#{generate_app_bundle_id}" => "match AppStore #{generate_app_bundle_id}"
         }
       }
     )
@@ -213,5 +213,4 @@ platform :ios do
     build_path: "./build",
     )
    end
-
 end
