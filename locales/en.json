@@ -40,7 +40,7 @@
   },
   "QrScanner": {
     "cameraAccessDisabled": "Camera access disabled!",
-    "cameraPermissionGuideLabel": "Go to settings and enable the camera access manually.",
+    "cameraPermissionGuideLabel": "Go to phone settings and enable the camera access manually.",
     "flipCamera": "Flip Camera"
   },
   "VcDetails": {

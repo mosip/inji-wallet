@@ -39,7 +39,7 @@
   },
   "QrScanner": {
     "cameraAccessDisabled": "Naka-disable ang access sa camera!",
-    "cameraPermissionGuideLabel": "Pumunta sa mga setting at manual na paganahin ang access ng camera.",
+    "cameraPermissionGuideLabel": "Pumunta sa mga setting ng telepono at manual na paganahin ang access ng camera.",
     "flipCamera": "I-flip ang Camera"
   },
   "VcDetails": {

@@ -40,7 +40,7 @@
   },
   "QrScanner": {
     "cameraAccessDisabled": "कैमरा पहुंच अक्षम!",
-    "cameraPermissionGuideLabel": "सेटिंग्स में जाएं और कैमरा एक्सेस को मैन्युअल रूप से सक्षम करें।",
+    "cameraPermissionGuideLabel": "फ़ोन सेटिंग में जाएं और कैमरा एक्सेस को मैन्युअल रूप से सक्षम करें।",
     "flipCamera": "कैमरा पलटें"
   },
   "VcDetails": {
