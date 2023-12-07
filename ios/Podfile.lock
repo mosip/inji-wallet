@@ -14,54 +14,58 @@ PODS:
   - CatCrypto (0.3.2)
   - CrcSwift (0.0.3)
   - DoubleConversion (1.1.6)
-  - EASClient (0.5.1):
+  - EASClient (0.6.0):
     - ExpoModulesCore
-  - EXApplication (5.1.1):
+  - EXApplication (5.3.1):
     - ExpoModulesCore
   - EXBarCodeScanner (12.3.2):
     - EXImageLoader
     - ExpoModulesCore
     - ZXingObjC/OneD
     - ZXingObjC/PDF417
-  - EXCamera (13.2.1):
+  - EXCamera (13.6.0):
     - ExpoModulesCore
-  - EXConstants (14.2.1):
+  - EXConstants (14.4.2):
     - ExpoModulesCore
-  - EXFileSystem (15.2.2):
+  - EXFileSystem (15.4.4):
     - ExpoModulesCore
   - EXFont (11.1.1):
     - ExpoModulesCore
   - EXImageLoader (4.1.1):
     - ExpoModulesCore
     - React-Core
-  - EXJSONUtils (0.5.1)
-  - EXManifests (0.5.2):
-    - EXJSONUtils
-  - Expo (48.0.20):
+  - EXJSONUtils (0.7.1)
+  - EXManifests (0.7.2):
     - ExpoModulesCore
-  - ExpoKeepAwake (12.0.1):
+  - Expo (49.0.16):
+    - ExpoModulesCore
+  - ExpoKeepAwake (12.3.0):
     - ExpoModulesCore
   - ExpoLocalAuthentication (13.3.0):
     - ExpoModulesCore
   - ExpoLocalization (14.1.1):
     - ExpoModulesCore
-  - ExpoModulesCore (1.2.7):
+  - ExpoModulesCore (1.5.11):
+    - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - React-RCTAppDelegate
     - ReactCommon/turbomodule/core
-  - EXSplashScreen (0.18.2):
+  - EXSplashScreen (0.22.0):
     - ExpoModulesCore
+    - RCT-Folly (= 2021.07.22.00)
     - React-Core
-  - EXStructuredHeaders (3.1.2)
-  - EXUpdates (0.16.4):
+  - EXStructuredHeaders (3.3.0)
+  - EXUpdates (0.18.17):
     - ASN1Decoder (~> 1.8)
     - EASClient
     - EXManifests
     - ExpoModulesCore
     - EXStructuredHeaders
     - EXUpdatesInterface
+    - RCT-Folly (= 2021.07.22.00)
+    - ReachabilitySwift
     - React-Core
-  - EXUpdatesInterface (0.9.3)
+  - EXUpdatesInterface (0.10.1)
   - FBLazyVector (0.71.8)
   - FBReactNativeSpec (0.71.8):
     - RCT-Folly (= 2021.07.22.00)
@@ -113,6 +117,7 @@ PODS:
     - FBLazyVector (= 0.71.8)
     - RCTRequired (= 0.71.8)
     - React-Core (= 0.71.8)
+  - ReachabilitySwift (5.0.0)
   - React (0.71.8):
     - React-Core (= 0.71.8)
     - React-Core/DevSupport (= 0.71.8)
@@ -597,6 +602,7 @@ SPEC REPOS:
     - libevent
     - MMKV
     - MMKVCore
+    - ReachabilitySwift
     - TensorFlowLiteC
     - TensorFlowLiteObjC
     - ZXingObjC
@@ -778,25 +784,25 @@ SPEC CHECKSUMS:
   CatCrypto: a477899b6be4954e75be4897e732da098cc0a5a8
   CrcSwift: f85dea6b41dddb5f98bb3743fd777ce58b77bc2e
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
-  EASClient: 950674e1098ebc09c4c2cf064a61e42e84d9d4c6
-  EXApplication: d8f53a7eee90a870a75656280e8d4b85726ea903
+  EASClient: 49f8ea858204eb4844d9fb386e5fb7920aee2e30
+  EXApplication: 042aa2e3f05258a16962ea1a9914bf288db9c9a1
   EXBarCodeScanner: 8e23fae8d267dbef9f04817833a494200f1fce35
-  EXCamera: a323a5942b5e7fc8349e17d728e91c18840ad561
-  EXConstants: f348da07e21b23d2b085e270d7b74f282df1a7d9
-  EXFileSystem: 844e86ca9b5375486ecc4ef06d3838d5597d895d
+  EXCamera: 2dc2bd2828bca4e283018a0b5a84aec6639ff0b4
+  EXConstants: ce5bbea779da8031ac818c36bea41b10e14d04e1
+  EXFileSystem: 2b826a3bf1071a4b80a8457e97124783d1ac860e
   EXFont: 6ea3800df746be7233208d80fe379b8ed74f4272
   EXImageLoader: fd053169a8ee932dd83bf1fe5487a50c26d27c2b
-  EXJSONUtils: 48b1e764ac35160e6f54d21ab60d7d9501f3e473
-  EXManifests: 500666d48e8dd7ca5a482c9e729e4a7a6c34081b
-  Expo: b7d2843b0a0027d0ce76121a63085764355a16ed
-  ExpoKeepAwake: 69f5f627670d62318410392d03e0b5db0f85759a
+  EXJSONUtils: 6802be4282d42b97c51682468ddc1026a06f8276
+  EXManifests: cf66451b11b2c2f6464917528d792759f7fd6ce0
+  Expo: fcfd60c1ed6806dee5103b210335ae0c72f675ed
+  ExpoKeepAwake: be4cbd52d9b177cde0fd66daa1913afa3161fc1d
   ExpoLocalAuthentication: 32919307c66fb3661caefa07e7811a95a7539d7b
   ExpoLocalization: f26cd431ad9ea3533c5b08c4fabd879176a794bb
-  ExpoModulesCore: 653958063a301098b541ae4dfed1ac0b98db607b
-  EXSplashScreen: 0e0a9ba0cf7553094e93213099bd7b42e6e237e9
-  EXStructuredHeaders: f3a6d417d5d12ef369fd1a31320d1c188a1b0f4b
-  EXUpdates: 603c4dfec2ed9ef323dfbd9c59c946593d4d9a5c
-  EXUpdatesInterface: e86394c0770f14eb96386cbb32be83fa6a97e8f9
+  ExpoModulesCore: d9d45dcbb86a5dba2ec62253267720cb58516f75
+  EXSplashScreen: 5ed09ea490155ef603d007d9f194c9e04a4b7980
+  EXStructuredHeaders: 324cc3130571d2696357fafd8be7fd9a0b5fdf6e
+  EXUpdates: 8f03b362414e8f9f0998f8a6d6c9fc00f2a9d2f2
+  EXUpdatesInterface: 82ed48d417cdcd376c12ca1c2ce390d35500bed6
   FBLazyVector: f637f31eacba90d4fdeff3fa41608b8f361c173b
   FBReactNativeSpec: 0d9a4f4de7ab614c49e98c00aedfd3bfbda33d59
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
@@ -814,6 +820,7 @@ SPEC CHECKSUMS:
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
   RCTRequired: 8af6a32dfc2b65ec82193c2dee6e1011ff22ac2a
   RCTTypeSafety: bee9dd161c175896c680d47ef1d9eaacf2b587f4
+  ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   React: d850475db9ba8006a8b875d79e1e0d6ac8a0f8b6
   React-callinvoker: 6a0c75475ddc17c9ed54e4ff0478074a18fd7ab5
   React-Codegen: 786571642e87add634e7f4d299c85314ec6cc158
@@ -869,4 +876,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 01f58b130fa221dabb14b2d82d981ef24dcaba53
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.14.2

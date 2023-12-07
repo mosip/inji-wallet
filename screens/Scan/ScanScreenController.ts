@@ -9,6 +9,7 @@ import {
   selectIsLocationDisabled,
   selectIsQrLoginStoring,
   selectIsScanning,
+  selectIsInvalid,
   selectIsShowQrLogin,
   selectQrLoginRef,
 } from '../../machines/bleShare/scan/selectors';
@@ -80,11 +81,13 @@ export function useScanScreen() {
     isReadyForBluetoothStateCheck,
     isMinimumStorageRequiredForAuditEntryLimitReached,
     isScanning: useSelector(scanService, selectIsScanning),
+    selectIsInvalid: useSelector(scanService, selectIsInvalid),
     isQrLogin: useSelector(scanService, selectIsShowQrLogin),
     isQrLoginstoring: useSelector(scanService, selectIsQrLoginStoring),
     isQrRef: useSelector(scanService, selectQrLoginRef),
     LOCATION_REQUEST: () => scanService.send(ScanEvents.LOCATION_REQUEST()),
     GOTO_SETTINGS: () => scanService.send(ScanEvents.GOTO_SETTINGS()),
+    DISMISS: () => scanService.send(ScanEvents.DISMISS()),
     START_PERMISSION_CHECK: () =>
       scanService.send(ScanEvents.START_PERMISSION_CHECK()),
     SCAN: (qrCode: string) => scanService.send(ScanEvents.SCAN(qrCode)),

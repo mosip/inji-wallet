@@ -12,22 +12,29 @@ import {
   sendInteractEvent,
   sendStartEvent,
 } from '../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
 
 export const AuthScreen: React.FC<RootRouteProps> = props => {
   const {t} = useTranslation('AuthScreen');
   const controller = useAuthScreen(props);
 
   const handleUsePasscodeButtonPress = () => {
-    sendStartEvent(getStartEventData('App Onboarding'));
+    sendStartEvent(
+      getStartEventData(TelemetryConstants.FlowType.appOnboarding),
+    );
     sendInteractEvent(
-      getInteractEventData('App Onboarding', 'TOUCH', 'Use Passcode Button'),
+      getInteractEventData(
+        TelemetryConstants.FlowType.appOnboarding,
+        TelemetryConstants.InteractEventSubtype.click,
+        'Use Passcode Button',
+      ),
     );
     controller.usePasscode();
   };
   return (
     <Column
       fill
-      padding={[32, 32, 32, 32]}
+      padding={[32, 25, 32, 32]}
       backgroundColor={Theme.Colors.whiteBackgroundColor}
       align="space-between">
       <MessageOverlay

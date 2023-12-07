@@ -1,7 +1,9 @@
 import {request} from './request';
-import Storage, {API_CACHED_STORAGE_KEYS} from './storage';
+import {API_CACHED_STORAGE_KEYS} from './storage';
 import {COMMON_PROPS_KEY} from './commonprops/commonProps';
 import {INITIAL_CONFIG} from './InitialConfig';
+import Keychain from 'react-native-keychain';
+import {getItem, setItem} from '../machines/store';
 
 export const API_URLS: ApiUrls = {
   issuersList: {
@@ -61,6 +63,20 @@ export const API_URLS: ApiUrls = {
   requestRevoke: {
     method: 'PATCH',
     buildURL: (id: string): `/${string}` => `/residentmobileapp/vid/${id}`,
+  },
+  linkTransaction: {
+    method: 'POST',
+    buildURL: (): `/${string}` =>
+      '/v1/esignet/linked-authorization/v2/link-transaction',
+  },
+  authenticate: {
+    method: 'POST',
+    buildURL: (): `/${string}` =>
+      '/v1/esignet/linked-authorization/v2/authenticate',
+  },
+  sendConsent: {
+    method: 'POST',
+    buildURL: (): `/${string}` => '/v1/esignet/linked-authorization/v2/consent',
   },
 };
 
@@ -145,17 +161,23 @@ async function generateCacheAPIFunctionWithCachePreference(
   fetchCall: (...props: any[]) => any,
   onErrorHardCodedValue?: any,
 ) {
+  const existingCredentials = await Keychain.getGenericPassword();
   try {
-    const response = (await Storage.getItem(cacheKey)) as string;
+    const response = (await getItem(
+      cacheKey,
+      null,
+      existingCredentials?.password,
+    )) as string;
 
     if (response) {
       return JSON.parse(response);
     } else {
       const response = await fetchCall();
-
-      Storage.setItem(cacheKey, JSON.stringify(response)).then(() =>
-        console.log('Cached response for ' + cacheKey),
-      );
+      setItem(
+        cacheKey,
+        JSON.stringify(response),
+        existingCredentials?.password,
+      ).then(() => console.log('Cached response for ' + cacheKey));
 
       return response;
     }
@@ -179,11 +201,14 @@ async function generateCacheAPIFunctionWithAPIPreference(
   fetchCall: (...props: any[]) => any,
   onErrorHardCodedValue?: any,
 ) {
+  const existingCredentials = await Keychain.getGenericPassword();
   try {
     const response = await fetchCall();
-    Storage.setItem(cacheKey, JSON.stringify(response)).then(() =>
-      console.log('Cached response for ' + cacheKey),
-    );
+    setItem(
+      cacheKey,
+      JSON.stringify(response),
+      existingCredentials.password,
+    ).then(() => console.log('Cached response for ' + cacheKey));
     return response;
   } catch (error) {
     console.warn(`Failed to load due to network issue in API preferred api call.
@@ -193,7 +218,11 @@ async function generateCacheAPIFunctionWithAPIPreference(
 
     console.log(error);
 
-    const response = (await Storage.getItem(cacheKey)) as string;
+    const response = (await getItem(
+      cacheKey,
+      null,
+      existingCredentials.password,
+    )) as string;
 
     if (response) {
       return JSON.parse(response);
@@ -227,4 +256,7 @@ type ApiUrls = {
   authLock: Api_Params;
   authUnLock: Api_Params;
   requestRevoke: Api_Params;
+  linkTransaction: Api_Params;
+  authenticate: Api_Params;
+  sendConsent: Api_Params;
 };

@@ -1,12 +1,11 @@
 import React, {useContext, useEffect, useRef} from 'react';
-import {Input} from 'react-native-elements';
 import {useTranslation} from 'react-i18next';
 import {Button, Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {MessageOverlay} from '../../components/MessageOverlay';
 import {useSendVcScreen} from './SendVcScreenController';
 import {VerifyIdentityOverlay} from '../VerifyIdentityOverlay';
-import {BackHandler, I18nManager} from 'react-native';
+import {BackHandler} from 'react-native';
 import {useInterpret} from '@xstate/react';
 import {createExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {GlobalContext} from '../../shared/GlobalContext';
@@ -14,15 +13,24 @@ import {useFocusEffect} from '@react-navigation/native';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
 import {VCMetadata} from '../../shared/VCMetadata';
 import {createEsignetMosipVCItemMachine} from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
+import {
+  getImpressionEventData,
+  sendImpressionEvent,
+} from '../../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
+import {getVCsOrderedByPinStatus} from '../../shared/Utils';
 
 export const SendVcScreen: React.FC = () => {
   const {t} = useTranslation('SendVcScreen');
   const {appService} = useContext(GlobalContext);
   const controller = useSendVcScreen();
+  const shareableVcsMetadataOrderedByPinStatus = getVCsOrderedByPinStatus(
+    controller.shareableVcsMetadata,
+  );
   let service;
 
-  if (controller.shareableVcsMetadata?.length > 0) {
-    const vcMetadata = controller.shareableVcsMetadata[0];
+  if (shareableVcsMetadataOrderedByPinStatus?.length > 0) {
+    const vcMetadata = shareableVcsMetadataOrderedByPinStatus[0];
     const firstVCMachine = useRef(
       VCMetadata.fromVC(vcMetadata).isFromOpenId4VCI()
         ? createEsignetMosipVCItemMachine(
@@ -43,6 +51,14 @@ export const SendVcScreen: React.FC = () => {
       controller.SELECT_VC_ITEM(0)(service);
     }
   }, []);
+  useEffect(() => {
+    sendImpressionEvent(
+      getImpressionEventData(
+        TelemetryConstants.FlowType.senderVcShare,
+        TelemetryConstants.Screens.vcList,
+      ),
+    );
+  }, []);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -57,16 +73,10 @@ export const SendVcScreen: React.FC = () => {
     }, []),
   );
 
-  const reasonLabel = t('reasonForSharing');
-
   return (
     <React.Fragment>
       <Column fill backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
         <Column>
-          <Column
-            padding="24 19 14 19"
-            backgroundColor={Theme.Colors.whiteBackgroundColor}
-            style={{position: 'relative'}}></Column>
           <Text
             margin="15 0 13 24"
             weight="bold"
@@ -76,7 +86,7 @@ export const SendVcScreen: React.FC = () => {
           </Text>
         </Column>
         <Column scroll>
-          {controller.shareableVcsMetadata.map((vcMetadata, index) => (
+          {shareableVcsMetadataOrderedByPinStatus.map((vcMetadata, index) => (
             <VcItemContainer
               key={vcMetadata.getVcKey()}
               vcMetadata={vcMetadata}
@@ -85,32 +95,35 @@ export const SendVcScreen: React.FC = () => {
               selectable
               selected={index === controller.selectedIndex}
               isSharingVc
+              isPinned={vcMetadata.isPinned}
             />
           ))}
         </Column>
-        {!controller.selectedVc.shouldVerifyPresence && (
+        <Column backgroundColor={Theme.Colors.whiteBackgroundColor}>
+          {!controller.selectedVc.shouldVerifyPresence && (
+            <Button
+              type="gradient"
+              title={t('acceptRequestAndVerify')}
+              styles={{marginTop: 12}}
+              disabled={controller.selectedIndex == null}
+              onPress={controller.VERIFY_AND_ACCEPT_REQUEST}
+            />
+          )}
+
           <Button
             type="gradient"
-            title={t('acceptRequestAndVerify')}
-            styles={{marginTop: 12}}
+            title={t('acceptRequest')}
             disabled={controller.selectedIndex == null}
-            onPress={controller.VERIFY_AND_ACCEPT_REQUEST}
+            onPress={controller.ACCEPT_REQUEST}
           />
-        )}
 
-        <Button
-          type="gradient"
-          title={t('acceptRequest')}
-          disabled={controller.selectedIndex == null}
-          onPress={controller.ACCEPT_REQUEST}
-        />
-
-        <Button
-          type="clear"
-          loading={controller.isCancelling}
-          title={t('reject')}
-          onPress={controller.CANCEL}
-        />
+          <Button
+            type="clear"
+            loading={controller.isCancelling}
+            title={t('reject')}
+            onPress={controller.CANCEL}
+          />
+        </Column>
       </Column>
 
       <VerifyIdentityOverlay

@@ -9,16 +9,26 @@ import {useBiometricScreen} from './BiometricScreenController';
 import {Passcode} from '../components/Passcode';
 import {
   getEventType,
-  incrementPasscodeRetryCount,
+  incrementRetryCount,
+  resetRetryCount,
 } from '../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
 
 export const BiometricScreen: React.FC<RootRouteProps> = props => {
   const {t} = useTranslation('BiometricScreen');
   const controller = useBiometricScreen(props);
 
   const handlePasscodeMismatch = (error: string) => {
-    incrementPasscodeRetryCount(getEventType(props.route.params?.setup));
+    incrementRetryCount(
+      getEventType(props.route.params?.setup),
+      TelemetryConstants.Screens.passcode,
+    );
     controller.onError(error);
+  };
+
+  const handleOnSuccess = () => {
+    resetRetryCount();
+    controller.onSuccess();
   };
 
   return (
@@ -42,7 +52,7 @@ export const BiometricScreen: React.FC<RootRouteProps> = props => {
       {controller.isReEnabling && (
         <Passcode
           message="Enter your passcode to re-enable biometrics authentication."
-          onSuccess={() => controller.onSuccess()}
+          onSuccess={handleOnSuccess}
           onError={handlePasscodeMismatch}
           storedPasscode={controller.storedPasscode}
           onDismiss={() => controller.onDismiss()}

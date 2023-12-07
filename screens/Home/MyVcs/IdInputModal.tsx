@@ -41,6 +41,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = props => {
   return (
     <Modal
       onDismiss={dismissInput}
+      testID="retreiveIdHeader"
       isVisible={props.isVisible}
       onShow={setIndividualID}
       headerTitle={t('header')}
@@ -92,7 +93,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = props => {
               type="gradient"
               title={t('generateVc')}
               disabled={!controller.id}
-              margin="24 0 0 0"
+              margin="24 0 6 0"
               onPress={controller.VALIDATE_INPUT}
               loading={controller.isRequestingOtp}
             />
@@ -108,7 +109,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = props => {
                   <Text
                     testID="getItHere"
                     color={Theme.Colors.AddIdBtnBg}
-                    weight="semibold"
+                    weight="bold"
                     size="small"
                     margin="0 0 0 5">
                     {t('getItHere')}

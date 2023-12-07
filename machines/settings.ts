@@ -164,8 +164,13 @@ export const settingsMachine = model.createMachine(
       }),
 
       updateDefaults: model.assign({
-        appId: () => {
-          const appId = generateAppId();
+        appId: (_, event) => {
+          const appId =
+            event.response != null &&
+            event.response.encryptedData == null &&
+            event.response.appId != null
+              ? event.response.appId
+              : generateAppId();
           __AppId.setValue(appId);
           return appId;
         },
@@ -190,7 +195,8 @@ export const settingsMachine = model.createMachine(
         __AppId.setValue(newContext.appId);
         return {
           ...context,
-          ...newContext,
+          ...newContext.encryptedData,
+          appId: newContext.appId,
         };
       }),
 
@@ -246,7 +252,10 @@ export const settingsMachine = model.createMachine(
     },
 
     guards: {
-      hasData: (_, event) => event.response != null,
+      hasData: (_, event) =>
+        event.response != null &&
+        event.response.encryptedData != null &&
+        event.response.appId != null,
       hasPartialData: (_, event) =>
         event.response != null && event.response.appId == null,
     },

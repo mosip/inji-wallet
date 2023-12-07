@@ -1,4 +1,3 @@
-import {createSignature, encodeB64} from '../cryptoutil/cryptoUtil';
 import jwtDecode from 'jwt-decode';
 import jose from 'node-jose';
 import {isIOS} from '../constants';
@@ -8,6 +7,7 @@ import getAllConfigurations from '../commonprops/commonProps';
 import {CredentialWrapper} from '../../types/VC/EsignetMosipVC/vc';
 import {VCMetadata} from '../VCMetadata';
 import i18next from 'i18next';
+import {getJWT} from '../cryptoutil/cryptoUtil';
 
 export const Protocols = {
   OpenId4VCI: 'OpenId4VCI',
@@ -28,7 +28,26 @@ export const getIdentifier = (context, credential) => {
 };
 
 export const getBody = async context => {
-  const proofJWT = await getJWT(context);
+  const header = {
+    alg: 'RS256',
+    jwk: await getJWK(context.publicKey),
+    typ: 'openid4vci-proof+jwt',
+  };
+  const decodedToken = jwtDecode(context.tokenResponse.accessToken);
+  const payload = {
+    iss: context.selectedIssuer.client_id,
+    nonce: decodedToken.c_nonce,
+    aud: context.selectedIssuer.credential_audience,
+    iat: Math.floor(new Date().getTime() / 1000),
+    exp: Math.floor(new Date().getTime() / 1000) + 18000,
+  };
+
+  const proofJWT = await getJWT(
+    header,
+    payload,
+    Issuers_Key_Ref,
+    context.privateKey,
+  );
   return {
     format: 'ldp_vc',
     credential_definition: {
@@ -116,37 +135,6 @@ export const getJWK = async publicKey => {
     );
   }
 };
-export const getJWT = async context => {
-  try {
-    const header64 = encodeB64(
-      JSON.stringify({
-        alg: 'RS256',
-        jwk: await getJWK(context.publicKey),
-        typ: 'openid4vci-proof+jwt',
-      }),
-    );
-    const decodedToken = jwtDecode(context.tokenResponse.accessToken);
-    const payload64 = encodeB64(
-      JSON.stringify({
-        iss: context.selectedIssuer.client_id,
-        nonce: decodedToken.c_nonce,
-        aud: context.selectedIssuer.credential_audience,
-        iat: Math.floor(new Date().getTime() / 1000),
-        exp: Math.floor(new Date().getTime() / 1000) + 18000,
-      }),
-    );
-    const preHash = header64 + '.' + payload64;
-    const signature64 = await createSignature(
-      context.privateKey,
-      preHash,
-      Issuers_Key_Ref,
-    );
-    return header64 + '.' + payload64 + '.' + signature64;
-  } catch (e) {
-    console.log(e);
-    throw e;
-  }
-};
 
 export const vcDownloadTimeout = async (): Promise<number> => {
   const response = await getAllConfigurations();
@@ -167,4 +155,5 @@ export enum ErrorMessage {
   NO_INTERNET = 'noInternetConnection',
   GENERIC = 'generic',
   REQUEST_TIMEDOUT = 'requestTimedOut',
+  BIOMETRIC_CANCELLED = 'biometricCancelled',
 }

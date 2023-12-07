@@ -3,6 +3,11 @@ import {useTranslation} from 'react-i18next';
 import {PinInput} from './PinInput';
 import {hashData} from '../shared/commonUtil';
 import {argon2iConfig} from '../shared/constants';
+import {
+  getErrorEventData,
+  sendErrorEvent,
+} from '../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
 
 export const MAX_PIN = 6;
 
@@ -17,9 +22,7 @@ export const PasscodeVerify: React.FC<PasscodeVerifyProps> = props => {
     }
   }, [isVerified]);
 
-  return (
-    <PinInput testID="confirmPasscodePin" length={MAX_PIN} onDone={verify} />
-  );
+  return <PinInput testID={props.testID} length={MAX_PIN} onDone={verify} />;
 
   async function verify(value: string) {
     try {
@@ -32,6 +35,13 @@ export const PasscodeVerify: React.FC<PasscodeVerifyProps> = props => {
         }
       }
     } catch (error) {
+      sendErrorEvent(
+        getErrorEventData(
+          TelemetryConstants.FlowType.appLogin,
+          TelemetryConstants.ErrorId.mismatch,
+          error,
+        ),
+      );
       console.log('error:', error);
     }
   }
@@ -42,4 +52,5 @@ interface PasscodeVerifyProps {
   onSuccess: () => void;
   onError?: (error: string) => void;
   salt: string;
+  testID: string;
 }

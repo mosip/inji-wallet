@@ -1,15 +1,13 @@
 import React from 'react';
 import {Image, Pressable} from 'react-native';
 import {Theme} from '../ui/styleUtils';
-import {useTranslation} from 'react-i18next';
 import testIDProps from '../../shared/commonUtil';
 import {Text} from '../ui';
+import {displayType} from '../../machines/issuersMachine';
 
 export const Issuer: React.FC<IssuerProps> = (props: IssuerProps) => {
-  const {t} = useTranslation('IssuersScreen');
-
   function getIssuerLogo() {
-    return {uri: props.logoUrl};
+    return {uri: props.displayDetails.logo.url};
   }
 
   return (
@@ -19,37 +17,36 @@ export const Issuer: React.FC<IssuerProps> = (props: IssuerProps) => {
       style={({pressed}) =>
         pressed
           ? [
-              Theme.issuersScreenStyles.issuerBoxContainerPressed,
+              Theme.IssuersScreenStyles.issuerBoxContainerPressed,
               Theme.Styles.boxShadow,
             ]
           : [
-              Theme.issuersScreenStyles.issuerBoxContainer,
+              Theme.IssuersScreenStyles.issuerBoxContainer,
               Theme.Styles.boxShadow,
             ]
       }>
       <Image
         {...testIDProps(`issuerIcon-${props.testID}`)}
-        style={Theme.issuersScreenStyles.issuerIcon}
+        style={Theme.IssuersScreenStyles.issuerIcon}
+        alt={props.displayDetails.logo.alt_text}
         source={getIssuerLogo()}
       />
       <Text
         testID={`issuerHeading-${props.testID}`}
-        style={Theme.issuersScreenStyles.issuerHeading}>
-        {t('itemHeading', {issuer: props.displayName})}
+        style={Theme.IssuersScreenStyles.issuerHeading}>
+        {props.displayDetails.title}
       </Text>
       <Text
         testID={`issuerDescription-${props.testID}`}
-        style={Theme.issuersScreenStyles.issuerDescription}>
-        {t('itemSubHeading')}
+        style={Theme.IssuersScreenStyles.issuerDescription}>
+        {props.displayDetails.description}
       </Text>
     </Pressable>
   );
 };
 
 interface IssuerProps {
-  id: string;
-  displayName: string;
-  logoUrl: string;
+  displayDetails: displayType;
   onPress: () => void;
   testID: string;
 }

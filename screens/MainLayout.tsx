@@ -32,7 +32,7 @@ export const MainLayout: React.FC<
           triggerComponent={
             <Image
               {...testIDProps('help')}
-              source={require('../assets/help-icon.png')}
+              source={Theme.HelpIcon}
               style={{width: 36, height: 36}}
             />
           }
@@ -56,27 +56,9 @@ export const MainLayout: React.FC<
         />
       </Row>
     ),
-    headerTitleStyle: {
-      fontFamily: 'Inter_600SemiBold',
-      fontSize: 30,
-      margin: 4,
-    },
-    headerRightContainerStyle: {paddingEnd: 13},
-    headerLeftContainerStyle: {paddingEnd: 13},
     tabBarShowLabel: true,
     tabBarActiveTintColor: Theme.Colors.IconBg,
-    tabBarLabelStyle: {
-      fontSize: 12,
-      fontFamily: 'Inter_600SemiBold',
-    },
-    tabBarStyle: {
-      height: 75,
-      paddingHorizontal: 10,
-    },
-    tabBarItemStyle: {
-      height: 83,
-      padding: 11,
-    },
+    ...Theme.BottomTabBarStyle,
   };
 
   return (

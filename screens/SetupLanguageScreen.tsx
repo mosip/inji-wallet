@@ -1,16 +1,14 @@
 import React from 'react';
 import i18n, {SUPPORTED_LANGUAGES} from '../i18n';
-import {I18nManager, Dimensions} from 'react-native';
-import Storage from '../shared/storage';
 import {useTranslation} from 'react-i18next';
-import i18next from 'i18next';
-import RNRestart from 'react-native-restart';
 import {SetupPicker} from '../components/ui/SetupPicker';
 import {Button, Column, Text} from '../components/ui';
 import {Theme} from '../components/ui/styleUtils';
 import {Icon} from 'react-native-elements';
 import {RootRouteProps} from '../routes';
 import {useWelcomeScreen} from './WelcomeScreenController';
+import {changeLanguage} from '../components/LanguageSelector';
+import {Dimensions} from 'react-native';
 
 export const SetupLanguageScreen: React.FC<RootRouteProps> = props => {
   const {t} = useTranslation('SetupLanguage');
@@ -18,25 +16,6 @@ export const SetupLanguageScreen: React.FC<RootRouteProps> = props => {
   const languages = Object.entries(SUPPORTED_LANGUAGES).map(
     ([value, label]) => ({label, value}),
   );
-
-  const changeLanguage = async (language: string) => {
-    if (language !== i18n.language) {
-      await i18n.changeLanguage(language).then(async () => {
-        await Storage.setItem('language', i18n.language);
-        const isRTL = i18next.dir(language) === 'rtl' ? true : false;
-        if (isRTL !== I18nManager.isRTL) {
-          try {
-            I18nManager.forceRTL(isRTL);
-            setTimeout(() => {
-              RNRestart.Restart();
-            }, 150);
-          } catch (e) {
-            console.log('error', e);
-          }
-        }
-      });
-    }
-  };
 
   return (
     <Column style={Theme.SetupLanguageScreenStyle.columnStyle}>
@@ -46,7 +25,7 @@ export const SetupLanguageScreen: React.FC<RootRouteProps> = props => {
         color={Theme.Colors.Icon}
         size={58}
       />
-      <Column crossAlign="center">
+      <Column crossAlign="center" width={Dimensions.get('window').width * 0.8}>
         <Text
           testID="chooseLanguage"
           style={{paddingTop: 3}}
@@ -67,7 +46,7 @@ export const SetupLanguageScreen: React.FC<RootRouteProps> = props => {
         testID="languagePicker"
         items={languages}
         selectedValue={i18n.language}
-        onValueChange={changeLanguage}
+        onValueChange={language => changeLanguage(i18n, language)}
       />
 
       <Button

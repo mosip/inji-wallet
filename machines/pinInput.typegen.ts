@@ -2,21 +2,21 @@
 
 export interface Typegen0 {
   '@@xstate/typegen': true;
-  'internalEvents': {
-    '': { type: '' };
+  internalEvents: {
+    '': {type: ''};
     'xstate.after(INITIAL_FOCUS_DELAY)#pinInput.idle': {
       type: 'xstate.after(INITIAL_FOCUS_DELAY)#pinInput.idle';
     };
-    'xstate.init': { type: 'xstate.init' };
+    'xstate.init': {type: 'xstate.init'};
   };
-  'invokeSrcNameMap': {};
-  'missingImplementations': {
+  invokeSrcNameMap: {};
+  missingImplementations: {
     actions: never;
-    services: never;
-    guards: never;
     delays: never;
+    guards: never;
+    services: never;
   };
-  'eventsCausingActions': {
+  eventsCausingActions: {
     clearInput: 'KEY_PRESS';
     focusSelected:
       | 'KEY_PRESS'
@@ -27,15 +27,15 @@ export interface Typegen0 {
     selectPrevInput: 'KEY_PRESS';
     updateInput: 'UPDATE_INPUT';
   };
-  'eventsCausingServices': {};
-  'eventsCausingGuards': {
+  eventsCausingDelays: {
+    INITIAL_FOCUS_DELAY: '' | 'xstate.init';
+  };
+  eventsCausingGuards: {
     canGoBack: 'KEY_PRESS';
     hasNextInput: 'UPDATE_INPUT';
     isBlank: 'UPDATE_INPUT';
   };
-  'eventsCausingDelays': {
-    INITIAL_FOCUS_DELAY: '' | 'xstate.init';
-  };
-  'matchesStates': 'idle' | 'selectingNext' | 'selectingPrev';
-  'tags': never;
+  eventsCausingServices: {};
+  matchesStates: 'idle' | 'selectingNext' | 'selectingPrev';
+  tags: never;
 }
