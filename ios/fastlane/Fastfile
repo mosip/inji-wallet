@@ -16,9 +16,13 @@ SLACK_URL = ENV["SLACK_WEBHOOK_URL"]
 APP_FLAVOR = ENV["APP_FLAVOR"]
 MATCH_PASSWORD = ENV["MATCH_PASSWORD"]
 FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT = "120"
-TESTFLIGHT_INTERNAL_TESTERS_GROUP = ENV["TESTFLIGHT_INTERNAL_TESTERS_GROUP"] 
+TESTFLIGHT_INTERNAL_TESTERS_GROUP = ENV["TESTFLIGHT_INTERNAL_TESTERS_GROUP"]
 TESTFLIGHT_BETA_APP_DESCRIPTION = ENV["TESTFLIGHT_BETA_APP_DESCRIPTION"] 
 DEVELOPER_APP_ID = ENV["DEVELOPER_APP_ID"]
+MIMOTO_HOST = ENV["MIMOTO_HOST"]
+ESIGNET_HOST =  ENV["ESIGNET_HOST"]
+APPLICATION_THEME = ENV["APPLICATION_THEME"]
+CREDENTIAL_REGISTRY_EDIT = ENV["CREDENTIAL_REGISTRY_EDIT"]
 
 def generate_app_bundle_id()
   flavor = APP_FLAVOR
@@ -28,7 +32,7 @@ def generate_app_bundle_id()
     return "io.mosip.inji.mobileid"
   when "inji"
     # io.mosip.inji is not available in iOS
-    return "io.mosip.wallet"
+    return "io.mosip.inji.wallet"
   when "collab"
     return "io.mosip.inji.collab"
   when "synergy"
@@ -36,6 +40,17 @@ def generate_app_bundle_id()
   when "mec"
     return "io.mosip.inji.mec"
   end
+end
+
+def map_flavour_tosuffix()
+  flavor = APP_FLAVOR
+  case flavor
+  when "residentapp"
+    return "mobileid"
+  when "inji"
+    return "wallet"
+  end
+  return flavor
 end
 
 def generate_app_name()
@@ -76,7 +91,6 @@ end
   
 
 platform :ios do
-
   lane :beta do
     keychain_name = TEMP_KEYCHAIN_USER
     keychain_password = TEMP_KEYCHAIN_PASSWORD
@@ -106,6 +120,24 @@ platform :ios do
       build_number: current_build_number
     )
 
+    update_app_identifier(
+      app_identifier: "#{generate_app_bundle_id}",
+      plist_path: "Inji/Info.plist"
+    )
+    # replace bundle ID
+    s = "s/mobileid/#{map_flavour_tosuffix}/g"
+    sh("sed -i '' -e #{s} ios/Inji.xcodeproj/project.pbxproj")
+
+    # replace Product name
+    p = "s|PRODUCT_NAME = Inji|PRODUCT_NAME = \"#{generate_app_name}\"|"
+    sh ("sed -i '' -e #{p} ios/Inji.xcodeproj/project.pbxproj")
+
+    # update app display name
+    update_info_plist(
+      plist_path: 'Inji/Info.plist',
+      display_name: "#{generate_app_name}"
+    )
+
     match(
       type: 'appstore',
       app_identifier: "#{generate_app_bundle_id}",
@@ -117,7 +149,6 @@ platform :ios do
     )
 
     profile_mapping = Actions.lane_context[SharedValues::MATCH_PROVISIONING_PROFILE_MAPPING]
-
     gym(
       configuration: "Release",
       workspace: "Inji.xcworkspace",
@@ -125,8 +156,8 @@ platform :ios do
       export_method: "app-store",
       
       export_options: {
-        provisioningProfiles: { 
-          "#{generate_app_bundle_id}" => "#{generate_app_name}"
+        provisioningProfiles: {
+          "#{generate_app_bundle_id}" => "match AppStore #{generate_app_bundle_id}"
         }
       }
     )
@@ -138,7 +169,7 @@ platform :ios do
        changelog: "#{TESTFLIGHT_BETA_APP_DESCRIPTION}",
        localized_build_info: {
           "default": {
-            whats_new: "#{TESTFLIGHT_BETA_APP_DESCRIPTION}", 
+            whats_new: "#{TESTFLIGHT_BETA_APP_DESCRIPTION}",
           }
       },
        skip_waiting_for_build_processing: false,
@@ -158,6 +189,7 @@ platform :ios do
     configuration: "Release",
     build_path: "./build",
     )
+
 
     find_command = "find '../build/' -type d -name 'Products'"
     app_path = sh(find_command, log: false).strip
@@ -181,5 +213,4 @@ platform :ios do
     build_path: "./build",
     )
    end
-
 end
