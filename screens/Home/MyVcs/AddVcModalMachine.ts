@@ -42,6 +42,8 @@ const model = createModel(
       VALIDATE_INPUT: () => ({}),
       READY: (idInputRef: TextInput) => ({idInputRef}),
       DISMISS: () => ({}),
+      CANCEL: () => ({}),
+      WAIT: () => ({}),
       SELECT_ID_TYPE: (idType: VcIdType) => ({idType}),
     },
   },
@@ -185,8 +187,7 @@ export const AddVcModalMachine =
               target: 'requestingCredential',
             },
             DISMISS: {
-              actions: 'resetIdInputRef',
-              target: 'acceptingIdInput',
+              target: 'cancelDownload',
             },
             RESEND_OTP: {
               target: '.resendOTP',
@@ -210,6 +211,16 @@ export const AddVcModalMachine =
                   },
                 ],
               },
+            },
+          },
+        },
+        cancelDownload: {
+          on: {
+            CANCEL: {
+              actions: ['resetIdInputRef', 'forwardToParent'],
+            },
+            WAIT: {
+              target: 'acceptingOtpInput',
             },
           },
         },
@@ -366,7 +377,6 @@ export const AddVcModalMachine =
         requestCredential: async context => {
           // force wait to fix issue with hanging overlay
           await new Promise(resolve => setTimeout(resolve, 1000));
-
           const response = await request(
             API_URLS.credentialRequest.method,
             API_URLS.credentialRequest.buildURL(),
@@ -438,4 +448,8 @@ export function selectIsRequestingOtp(state: State) {
 
 export function selectIsRequestingCredential(state: State) {
   return state.matches('requestingCredential');
+}
+
+export function selectIsCancellingDownload(state: State) {
+  return state.matches('cancelDownload');
 }

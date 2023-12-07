@@ -205,6 +205,12 @@
   },
   "AddVcModal": {
     "requestingCredential": "Requesting credential...",
+    "confirmationDialog": {
+      "title": "Do you want to cancel downloading?",
+      "message": "Once cancelled, your card will not be downloaded and you need to reinitiate the download.",
+      "wait": "No, I’ll wait",
+      "cancel": "Yes, Cancel"
+    },
     "errors": {
       "input": {
         "empty": "The input cannot be empty",
