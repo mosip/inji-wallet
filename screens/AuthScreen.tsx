@@ -13,6 +13,7 @@ import {
   sendStartEvent,
 } from '../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
+import {SvgImage} from '../components/ui/svg';
 
 export const AuthScreen: React.FC<RootRouteProps> = props => {
   const {t} = useTranslation('AuthScreen');
@@ -42,8 +43,8 @@ export const AuthScreen: React.FC<RootRouteProps> = props => {
         onBackdropPress={controller.hideAlert}
         title={controller.alertMsg}
       />
-      <Column>
-        <Icon name="fingerprint" size={80} color={Theme.Colors.Icon} />
+      <Column crossAlign="center">
+        {SvgImage.FingerPrint()}
         <Column margin="30 0 0 0">
           <Text
             testID="selectAppUnlockMethod"

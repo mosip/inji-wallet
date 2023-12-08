@@ -9,6 +9,7 @@ import {useWelcomeScreen} from '../WelcomeScreenController';
 import LinearGradient from 'react-native-linear-gradient';
 import Constants from 'expo-constants';
 import {isIOS} from '../../shared/constants';
+import {SvgImage} from '../../components/ui/svg';
 
 export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
   const slider = useRef<AppIntroSlider>();
@@ -54,10 +55,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
                 alignItems: 'flex-end',
                 marginRight: 75,
               }}>
-              <Image
-                style={{marginTop: 50, marginBottom: 30}}
-                source={Theme.injiSmallLogo}
-              />
+              <Column margin="50 0">{SvgImage.InjiSmallLogo()}</Column>
             </Column>
 
             <Column

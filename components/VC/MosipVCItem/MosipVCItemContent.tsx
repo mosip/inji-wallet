@@ -9,6 +9,7 @@ import {Theme} from '../../ui/styleUtils';
 import {CheckBox, Icon} from 'react-native-elements';
 import testIDProps, {getMaskedText} from '../../../shared/commonUtil';
 import {logoType} from '../../../machines/issuersMachine';
+import {SvgImage} from '../../ui/svg';
 
 const getDetails = (arg1, arg2, verifiableCredential) => {
   if (arg1 === 'Status') {
@@ -155,13 +156,7 @@ export const MosipVCItemContent: React.FC<
               imageStyle={Theme.Styles.faceImage}
               source={faceImageSource()}
               style={Theme.Styles.closeCardImage}>
-              {props.isPinned && (
-                <Image
-                  source={Theme.PinIcon}
-                  style={Theme.Styles.pinIcon}
-                  {...testIDProps('pinIcon')}
-                />
-              )}
+              {props.isPinned && SvgImage.pinIcon()}
             </ImageBackground>
 
             <Column margin="0 0 10 20" height={96} align="space-between">

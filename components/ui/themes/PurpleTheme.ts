@@ -41,6 +41,10 @@ const Colors = {
   TimoutHintText: '#1C1C1C',
   resendCodeTimer: '#555555',
   uncheckedIcon: '#DBDBDB',
+  startColor: '#8449A5',
+  endColor: '#683386',
+  stroke: '#8449A5',
+  iconBg: '#fbf5ff',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -109,6 +113,9 @@ export const PurpleTheme = {
     uncheckedIcon: Colors.uncheckedIcon,
     settingsLabel: Colors.Black,
     chevronRightColor: Colors.Grey,
+    linearGradientStart: Colors.startColor,
+    linearGradientEnd: Colors.endColor,
+    LinearGradientStroke: Colors.stroke,
   },
   Styles: StyleSheet.create({
     title: {

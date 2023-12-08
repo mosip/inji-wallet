@@ -38,6 +38,10 @@ const Colors = {
   TimoutHintText: '#8B6105',
   resendCodeTimer: '#555555',
   uncheckedIcon: '#DBDBDB',
+  startColor: '#f59b4b',
+  endColor: '#e86e04',
+  stroke: '#ee8123',
+  iconBg: '#ffa85a',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -106,6 +110,9 @@ export const DefaultTheme = {
     uncheckedIcon: Colors.uncheckedIcon,
     settingsLabel: Colors.Black,
     chevronRightColor: Colors.Grey,
+    linearGradientStart: Colors.startColor,
+    linearGradientEnd: Colors.endColor,
+    LinearGradientStroke: Colors.stroke,
   },
   Styles: StyleSheet.create({
     title: {
@@ -1345,7 +1352,7 @@ export const DefaultTheme = {
   protectPrivacy: require('../../../assets/intro-unlock-method.png'),
   NoInternetConnection: require('../../../assets/no-internet-connection.png'),
   SomethingWentWrong: require('../../../assets/something-went-wrong.png'),
-
+  Pin_Icon: require('../../../assets/Pin_Icon.svg').default.src,
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/
 
