@@ -1,4 +1,6 @@
 fileignoreconfig:
+- filename: ios/fastlane/Fastfile
+  checksum: 10e70e4121e610c54871efa3820c409a4b7cc41bc89a0b5f6f0a9334c1fffddd
 - filename: package.json
   checksum: e0b34f1a1efbdf07b40a3e9e9ecd8884dd7d6835f45c57850e30988d2c6371a2
 - filename: package-lock.json
