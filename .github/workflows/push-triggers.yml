@@ -1,0 +1,50 @@
+name: Push-Triggers
+
+on:
+  push:
+    branches:
+    - main
+    - develop
+    - qa-develop
+    - 'release-**'
+  release:
+    types: [published]
+  pull_request:
+    types: [opened, reopened, synchronize]
+    branches:
+    - main
+    - develop
+    - qa-develop
+    - 'release-**'
+
+jobs:
+  build-android:
+    uses: mosip/kattu/.github/workflows/android-build.yml@master
+    with:
+      NODE_VERSION: "16.x"
+      DEBUG_KEYSTORE_ALIAS: androiddebugkey
+      SERVICE_LOCATION: '.'
+      ANDROID_SERVICE_LOCATION: 'android'
+      BUILD_SCRIPT_LOCATION: 'scripts'
+      SCRIPT_NAME: './android-build.sh'
+    secrets:
+      DEBUG_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_DEBUG_STOREPASS }}'
+
+  build-ios:
+    uses: mosip/kattu/.github/workflows/ios-build.yml@master
+    with:
+      NODE_VERSION: "18.x"
+      SERVICE_LOCATION: '.'
+      IOS_SERVICE_LOCATION: 'ios'
+      SCRIPT_NAME: "fastlane ios_app_build"
+
+  # sonar-check:
+  #   if: ${{ github.event_name != 'pull_request' }}
+  #   uses: mosip/kattu/.github/workflows/gradlew-sonar-analysis.yml@master
+  #   with:
+  #     SERVICE_LOCATION: '.'
+  #     ANDROID_LOCATION: 'android'
+  #   secrets:
+  #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #     SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
+  #     SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
