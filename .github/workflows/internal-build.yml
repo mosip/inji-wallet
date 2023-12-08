@@ -164,14 +164,3 @@ jobs:
       APPLE_KEY_CONTENT: '${{ secrets.APPLE_KEY_CONTENT }}'
       MATCH_PASSWORD: '${{ secrets.INJI_IOS_MATCH_PASSWORD }}'
       SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
-
-  # sonar-check:
-  #   uses: tw-mosip/kattu/.github/workflows/gradlew-sonar-analysis.yml@inji-reusable-workflow
-  #   with:
-  #     SERVICE_LOCATION: '.'
-  #     ANDROID_LOCATION: 'android'
-  #     SONAR_ARGS: -Dsonarqube
-  #   secrets:
-  #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-  #     SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
-  #     SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
