@@ -96,15 +96,9 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     ext {
-        APP_NAME_RELEASE = "@string/app_name"
-        APP_NAME_MOSIP = "@string/app_name_mosip"
-        APP_NAME_BETA = "@string/app_name_beta"
+        APP_NAME= "@string/app_name"
     }
 
-
-    namespace 'io.mosip.residentapp'
-
-    
     namespace 'io.mosip.residentapp'
 
     defaultConfig {
@@ -114,11 +108,8 @@ android {
         versionName androidGitVersion.name()
         versionCode 1
 
-        Properties properties = new Properties()
-        properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
         manifestPlaceholders = [
-            APP_NAME: APP_NAME_RELEASE,
+            APP_NAME: APP_NAME,
             appAuthRedirectScheme: 'io.mosip.residentapp.inji'
         ]
     }
@@ -175,19 +166,34 @@ android {
     flavorDimensions "inji"
 
     productFlavors {
-        mosip {
+        residentapp {
             versionName defaultConfig.versionName
-            manifestPlaceholders = [
-                    APP_NAME: APP_NAME_MOSIP
-            ]
             dimension "inji"
+            resValue "string", "app_name", "Inji"
         }
-        beta {
+        inji {
+            applicationId "io.mosip.inji"
             versionName defaultConfig.versionName
-            manifestPlaceholders = [
-                    APP_NAME: APP_NAME_BETA
-            ]
             dimension "inji"
+            resValue "string", "app_name", "Inji Wallet"
+        }
+        collab {
+            applicationId "io.mosip.inji.collab"
+            versionName defaultConfig.versionName
+            dimension "inji"
+            resValue "string", "app_name", "Inji Wallet Collab"
+        }
+        synergy {
+            applicationId "io.mosip.inji.synergy"
+            versionName defaultConfig.versionName
+            dimension "inji"
+            resValue "string", "app_name", "Inji Wallet Synergy"
+        }
+        mec {
+            applicationId "io.mosip.inji.mec"
+            versionName defaultConfig.versionName
+            dimension "inji"
+            resValue "string", "app_name", "Inji Wallet Mec"
         }
     }
 
@@ -195,7 +201,7 @@ android {
         variant.outputs.all { output ->
             def datetime = new Date().format('yyyyMMdd_HHmm')
             def architecture = output.getFilter(com.android.build.OutputFile.ABI) ?: "universal"
-            outputFileName = "Inji_${variant.versionName}_${datetime}_${architecture}.apk"
+            outputFileName = "Inji_${architecture}.apk"
         }
     }
 }
