@@ -9,8 +9,14 @@ public class CredentialRegistryPage extends BasePage {
 	@AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Edit Credential Registry\")")
     public WebElement credentialRegistryTextBoxHeader;
 	
+	@AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Edit Esignet Host\")")
+    public WebElement credentialRegistryEsignetTextBoxHeader;
+	
 	@AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"RNE__Input__text-input\")")
 	public WebElement credentialRegistryTextBox;
+	
+	@AndroidFindBy(xpath = "(//android.widget.EditText[@resource-id=\"RNE__Input__text-input\"])[2]")
+	public WebElement credentialRegistryEsignetTextBox;
 	
 	@AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Save\")")
     public WebElement saveButton;
@@ -31,6 +37,11 @@ public class CredentialRegistryPage extends BasePage {
     
     public CredentialRegistryPage setEnterIdTextBox(String env) {
     	clearTextBoxAndSendKeys(credentialRegistryTextBox, env, "Credential Registry env");
+        return this;
+    }
+    
+    public CredentialRegistryPage EnterUrlToEsignetHostTextBox(String env) {
+    	clearTextBoxAndSendKeys(credentialRegistryEsignetTextBox, env, "Credential Registry env");
         return this;
     }
     

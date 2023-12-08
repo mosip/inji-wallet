@@ -12,7 +12,6 @@ import {
   ErrorMessageOverlay,
   MessageOverlay,
 } from '../../components/MessageOverlay';
-import {groupBy} from '../../shared/javascript';
 import {VcItemContainer} from '../../components/VC/VcItemContainer';
 import {BannerNotification} from '../../components/BannerNotification';
 import {
@@ -23,18 +22,15 @@ import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 
 import {Error} from '../../components/ui/Error';
 import {useIsFocused} from '@react-navigation/native';
-
-const pinIconProps = {iconName: 'pushpin', iconType: 'antdesign'};
+import {getVCsOrderedByPinStatus} from '../../shared/Utils';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   const {t} = useTranslation('MyVcsTab');
   const controller = useMyVcsTab(props);
   const storeErrorTranslationPath = 'errors.savingFailed';
-  const [pinned, unpinned] = groupBy(
+  const vcMetadataOrderedByPinStatus = getVCsOrderedByPinStatus(
     controller.vcMetadatas,
-    vcMetadata => vcMetadata.isPinned,
   );
-  const vcMetadataOrderedByPinStatus = pinned.concat(unpinned);
 
   const getId = () => {
     controller.DISMISS();
@@ -128,10 +124,8 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                   />
                 }>
                 {vcMetadataOrderedByPinStatus.map(vcMetadata => {
-                  const iconProps = vcMetadata.isPinned ? pinIconProps : {};
                   return (
                     <VcItemContainer
-                      {...iconProps}
                       key={vcMetadata.getVcKey()}
                       vcMetadata={vcMetadata}
                       margin="0 2 8 2"
@@ -139,6 +133,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
                       isDownloading={controller.inProgressVcDownloads?.has(
                         vcMetadata.getVcKey(),
                       )}
+                      isPinned={vcMetadata.isPinned}
                     />
                   );
                 })}

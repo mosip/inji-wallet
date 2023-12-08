@@ -90,7 +90,9 @@ export const SettingScreen: React.FC<
               align="space-evenly"
               backgroundColor={Theme.Colors.whiteBackgroundColor}>
               <Pressable onPress={controller.RECEIVE_CARD}>
-                <Column style={Theme.Styles.receiveCardsContainer}>
+                <Column
+                  align="center"
+                  style={Theme.Styles.receiveCardsContainer}>
                   <Image
                     source={Theme.ReceiveCardIcon}
                     style={{alignSelf: 'center'}}
