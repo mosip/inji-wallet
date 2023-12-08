@@ -16,7 +16,7 @@ def generate_app_bundle_id()
   flavor = APP_FLAVOR
   case flavor
   when "residentapp"
-    return "io.mosip.resident"
+    return "io.mosip.residentapp"
   when "inji"
     return "io.mosip.inji"
   when "collab"
