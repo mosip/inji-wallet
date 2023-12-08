@@ -86,7 +86,7 @@ jobs:
     uses: mosip/kattu/.github/workflows/android-publish.yml@master
     with:
       RELEASE: ${{ inputs.release }}
-      NODE_VERSION: '16.x'
+      NODE_VERSION: '18.x'
       RELEASE_KEYSTORE_ALIAS: androidreleasekey
       MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
       ESIGNET_HOST: ${{ inputs.esignetBackendServiceUrl }}
@@ -97,9 +97,9 @@ jobs:
       SERVICE_LOCATION: '.'
       ANDROID_SERVICE_LOCATION: 'android'
       BUILD_SCRIPT_LOCATION: 'scripts'
-      SCRIPT_NAME: './${{ inputs.release }}.sh'
+      SCRIPT_NAME: "./${{ inputs.release }}.sh"
       ANDROID_ARTIFACT_NAME: ${{ inputs.buildname }}
-      ANDROID_ARTIFACT_PATH: 'android/app/build/outputs/apk/${{ inputs.injiFlavor }}/release/Inji_universal.apk'
+      ANDROID_ARTIFACT_PATH: "android/app/build/outputs/apk/${{ inputs.injiFlavor }}/release/Inji_universal.apk"
     secrets:
       ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
       RELEASE_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}'
@@ -111,7 +111,7 @@ jobs:
     uses: mosip/kattu/.github/workflows/android-publish.yml@master
     with:
       RELEASE: ${{ inputs.release }}
-      NODE_VERSION: '16.x'
+      NODE_VERSION: '18.x'
       RELEASE_KEYSTORE_ALIAS: androidreleasekey
       MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
       ESIGNET_HOST: ${{ inputs.esignetBackendServiceUrl }}
@@ -122,9 +122,9 @@ jobs:
       SERVICE_LOCATION: '.'
       ANDROID_SERVICE_LOCATION: 'android'
       BUILD_SCRIPT_LOCATION: 'scripts'
-      SCRIPT_NAME: './${{ inputs.release }}.sh'
+      SCRIPT_NAME: "./${{ inputs.release }}.sh"
       ANDROID_ARTIFACT_NAME: ${{ inputs.buildname }}
-      ANDROID_ARTIFACT_PATH: 'android/app/build/outputs/apk/${{ inputs.injiFlavor }}/release/Inji_universal.apk'
+      ANDROID_ARTIFACT_PATH: "android/app/build/outputs/apk/${{ inputs.injiFlavor }}/release/Inji_universal.apk"
     secrets:
       ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
       RELEASE_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}'
@@ -142,11 +142,12 @@ jobs:
       TESTFLIGHT_BETA_APP_DESCRIPTION: ${{ inputs.buildDescription }}
       ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
       TESTFLIGHT_INTERNAL_TESTERS_GROUP: ${{ inputs.internal-testers }}
+      APP_FLAVOR: ${{ inputs.injiFlavor }}
       SERVICE_LOCATION: '.'
       IOS_SERVICE_LOCATION: 'ios'
-      SCRIPT_NAME: 'fastlane beta'
-      IOS_ARTIFACT_NAME: 'Inji'
-      IOS_ARTIFACT_PATH: 'ios/fastlane/Inji_app_file/Products/Applications/'
+      SCRIPT_NAME: "fastlane beta"
+      IOS_ARTIFACT_NAME: "Inji"
+      IOS_ARTIFACT_PATH: "ios/fastlane/Inji_app_file/Products/Applications/"
     secrets:
       APP_STORE_CONNECT_TEAM_ID: '${{ secrets.APP_STORE_CONNECT_TEAM_ID }}'
       DEVELOPER_APP_ID: '${{ secrets.IOS_INJI_DEVELOPER_APP_ID }}'
