@@ -116,7 +116,7 @@ platform :ios do
     current_build_number = previous_build_number + 1
 
     increment_build_number(
-      xcodeproj: "Inji.xcodeproj", 
+      xcodeproj: "Inji.xcodeproj",
       build_number: current_build_number
     )
 
@@ -130,7 +130,7 @@ platform :ios do
 
     # replace Product name
     p = "s|PRODUCT_NAME = Inji|PRODUCT_NAME = \"#{generate_app_name}\"|"
-    sh ("sed -i '' -e #{p} ../Inji.xcodeproj/project.pbxproj")
+    sh ("sed -i '' -e '#{p}' ../Inji.xcodeproj/project.pbxproj")
 
     # update app display name
     update_info_plist(
