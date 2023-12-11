@@ -16,6 +16,7 @@ import {EditableListItem} from '../../components/EditableListItem';
 import {RequestRouteProps, RootRouteProps} from '../../routes';
 import {ReceivedCards} from './ReceivedCards';
 import testIDProps from '../../shared/commonUtil';
+import {SvgImage} from '../../components/ui/svg';
 
 const LanguageSetting: React.FC = () => {
   const {t} = useTranslation('SettingScreen');
@@ -93,10 +94,7 @@ export const SettingScreen: React.FC<
                 <Column
                   align="center"
                   style={Theme.Styles.receiveCardsContainer}>
-                  <Image
-                    source={Theme.ReceiveCardIcon}
-                    style={{alignSelf: 'center'}}
-                  />
+                  {SvgImage.ReceiveCard()}
                   <Text
                     testID="receiveCard"
                     margin="6"

@@ -7,6 +7,8 @@ import LockIcon from '../../assets/lock_icon.svg';
 import InjiLogo from '../../assets/inji_home_logo.svg';
 import DigitalIdentity from '../../assets/digital_identity_icon.svg';
 import HelpIcon from '../../assets/Help_Icon.svg';
+import ReceiveCard from '../../assets/Receive_Card.svg';
+import ReceivedCards from '../../assets/Received_Cards.svg';
 
 export class SvgImage {
   static pinIcon() {
@@ -64,6 +66,26 @@ export class SvgImage {
   static HelpIcon() {
     return (
       <HelpIcon
+        color1={Theme.Colors.linearGradientStart}
+        color2={Theme.Colors.linearGradientEnd}
+        stroke={Theme.Colors.IconBg}
+      />
+    );
+  }
+
+  static ReceiveCard() {
+    return (
+      <ReceiveCard
+        color1={Theme.Colors.linearGradientStart}
+        color2={Theme.Colors.linearGradientEnd}
+        stroke={Theme.Colors.IconBg}
+      />
+    );
+  }
+
+  static ReceivedCards() {
+    return (
+      <ReceivedCards
         color1={Theme.Colors.linearGradientStart}
         color2={Theme.Colors.linearGradientEnd}
         stroke={Theme.Colors.IconBg}
