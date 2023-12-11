@@ -18,7 +18,7 @@ def generate_app_bundle_id()
   when "residentapp"
     return "io.mosip.residentapp"
   when "inji"
-    return "io.mosip.inji"
+    return "io.mosip.inji.wallet"
   when "collab"
     return "io.mosip.inji.collab"
   when "synergy"
