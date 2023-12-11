@@ -74,7 +74,7 @@ fileignoreconfig:
   - filename: shared/telemetry/TelemetryUtils.js
     checksum: a0686e9a5c006176fd720b84bc36ca947db1422caf65c90cd0c2d1102a9e96df
   - filename: ios/fastlane/Fastfile
-    checksum: feea5a7f044ef6961d53e7d1e1ffb92a3e0f72761496424f6e64288e3718d605
+    checksum: 78edb7772ca7bf64fc0c603cb82771c793e03afff37ccbbfd1b9f578ec0e5369
   - filename: machines/bleShare/scan/scanMachine.ts
     checksum: a514c958ca3da3c5b22a1a95ad680af8f05fb22638fab79b3842aa8fcc1b4a17
   - filename: locales/spa.json
