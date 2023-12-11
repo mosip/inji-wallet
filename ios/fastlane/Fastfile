@@ -165,7 +165,7 @@ platform :ios do
     pilot(
        app_identifier: "#{generate_app_bundle_id}",
        api_key: api_key,
-       ipa: "./Inji.ipa",
+       ipa: "./#{generate_app_name}.ipa",
        changelog: "#{TESTFLIGHT_BETA_APP_DESCRIPTION}",
        localized_build_info: {
           "default": {
