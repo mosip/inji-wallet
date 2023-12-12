@@ -12,7 +12,7 @@ import {
 import {createModel} from 'xstate/lib/model';
 import {generateSecureRandom} from 'react-native-securerandom';
 import {log} from 'xstate/lib/actions';
-import {MY_VCS_STORE_KEY, SETTINGS_STORE_KEY} from '../shared/constants';
+import {isIOS, MY_VCS_STORE_KEY, SETTINGS_STORE_KEY} from '../shared/constants';
 import SecureKeystore from 'react-native-secure-keystore';
 import {
   AUTH_TIMEOUT,
@@ -30,6 +30,7 @@ import {
   sendErrorEvent,
   getErrorEventData,
 } from '../shared/telemetry/TelemetryUtils';
+import RNSecureKeyStore from 'react-native-secure-key-store';
 
 export const keyinvalidatedString =
   'Key Invalidated due to biometric enrollment';
@@ -449,6 +450,9 @@ export const storeMachine =
           });
         },
         getEncryptionKey: () => async callback => {
+          if (isIOS()) {
+            RNSecureKeyStore.setResetOnAppUninstallTo(false);
+          }
           const existingCredentials = await Keychain.getGenericPassword();
           if (existingCredentials) {
             console.log('Credentials successfully loaded for user');
