@@ -21,6 +21,7 @@ import {
 import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
 
 import {API_URLS} from '../../../shared/api';
+import {IndividualId} from '../../../shared/constants';
 
 const model = createModel(
   {
@@ -36,6 +37,10 @@ const model = createModel(
   },
   {
     events: {
+      SET_INDIVIDUAL_ID: (individualId: IndividualId) => ({
+        id: individualId.id,
+        idType: individualId.idType,
+      }),
       INPUT_ID: (id: string) => ({id}),
       INPUT_OTP: (otp: string) => ({otp}),
       RESEND_OTP: () => ({}),
@@ -64,6 +69,11 @@ export const AddVcModalMachine =
       },
       id: 'AddVcModal',
       initial: 'acceptingIdInput',
+      on: {
+        SET_INDIVIDUAL_ID: {
+          actions: ['clearIdError', 'clearId', 'setIdType', 'setId'],
+        },
+      },
       states: {
         acceptingIdInput: {
           entry: ['setTransactionId', 'clearOtp'],
@@ -89,6 +99,9 @@ export const AddVcModalMachine =
             idle: {
               entry: 'focusInput',
               on: {
+                SET_INDIVIDUAL_ID: {
+                  actions: ['clearIdError', 'clearId', 'setIdType', 'setId'],
+                },
                 INPUT_ID: {
                   actions: 'setId',
                 },
@@ -107,7 +120,7 @@ export const AddVcModalMachine =
                   },
                 ],
                 SELECT_ID_TYPE: {
-                  actions: ['clearIdError', 'setIdType'],
+                  actions: ['clearIdError', 'setIdType', 'clearId'],
                 },
               },
             },
