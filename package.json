@@ -3,9 +3,9 @@
     "prepare": "husky install",
     "jetify": "jetify",
     "start": "react-native start",
-    "android:mosip": "react-native run-android --variant=mosipDebug",
+    "android:mosip": "react-native run-android --variant=residentappDebug",
     "ios": "react-native run-ios",
-    "build:android:mosip": "cd android && ./gradlew :app:assembleMosipRelease && cd ..",
+    "build:android:mosip": "cd android && ./gradlew :app:assembleResidentappRelease && cd ..",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "test": "jest",
     "postinstall": "patch-package && npm run jetify && sh tools/talisman/talisman-precommit.sh"
