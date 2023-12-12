@@ -64,14 +64,6 @@ export const AddVcModalMachine =
       },
       id: 'AddVcModal',
       initial: 'acceptingIdInput',
-      on: {
-        INPUT_ID: {
-          actions: 'setId',
-        },
-        SELECT_ID_TYPE: {
-          actions: ['clearIdError', 'setIdType'],
-        },
-      },
       states: {
         acceptingIdInput: {
           entry: ['setTransactionId', 'clearOtp'],
@@ -115,7 +107,7 @@ export const AddVcModalMachine =
                   },
                 ],
                 SELECT_ID_TYPE: {
-                  actions: ['clearIdError', 'setIdType', 'clearId'],
+                  actions: ['clearIdError', 'setIdType'],
                 },
               },
             },
@@ -216,7 +208,7 @@ export const AddVcModalMachine =
         cancelDownload: {
           on: {
             CANCEL: {
-              actions: ['resetIdInputRef', 'forwardToParent'],
+              actions: ['clearId', 'resetIdInputRef', 'forwardToParent'],
             },
             WAIT: {
               target: 'acceptingOtpInput',
