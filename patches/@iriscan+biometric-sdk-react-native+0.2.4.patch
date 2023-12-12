@@ -1,0 +1,13 @@
+diff --git a/node_modules/@iriscan/biometric-sdk-react-native/android/build.gradle b/node_modules/@iriscan/biometric-sdk-react-native/android/build.gradle
+index f22a5f5..e23e6dc 100644
+--- a/node_modules/@iriscan/biometric-sdk-react-native/android/build.gradle
++++ b/node_modules/@iriscan/biometric-sdk-react-native/android/build.gradle
+@@ -74,7 +74,7 @@ dependencies {
+   //noinspection GradleDynamicVersion
+   implementation "com.facebook.react:react-native:+"
+   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+-  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_version"
++  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0-RC"
+   implementation "net.iriscan:biometric-sdk-android:0.5.9"
+ }
+ 
