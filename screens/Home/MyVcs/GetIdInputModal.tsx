@@ -14,6 +14,7 @@ import {MessageOverlay} from '../../../components/MessageOverlay';
 import Tooltip from '../../../lib/react-native-elements/tooltip/Tooltip';
 import {color} from 'react-native-elements/dist/helpers';
 import {isIOS} from '../../../shared/constants';
+import testIDProps from '../../../shared/commonUtil';
 
 export const GetIdInputModal: React.FC<GetIdInputModalProps> = props => {
   const {t} = useTranslation('GetIdInputModal');
@@ -23,6 +24,7 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = props => {
 
   return (
     <Modal
+      testID="getIdHeader"
       onDismiss={props.onDismiss}
       isVisible={props.isVisible}
       headerTitle={t('header')}
@@ -33,6 +35,7 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = props => {
         <Column fill align="space-between" padding="32 24">
           <Column>
             <Text
+              testID="getIdDescription"
               margin="10"
               style={{color: Theme.Colors.GrayText}}
               weight="regular">
@@ -40,6 +43,7 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = props => {
             </Text>
             <Row crossAlign="flex-end">
               <Input
+                {...testIDProps('getIdInput')}
                 placeholder={!controller.id ? inputLabel : ''}
                 labelStyle={{
                   color: controller.isInvalid
@@ -67,6 +71,7 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = props => {
                     <Centered width={32} fill>
                       {controller.isInvalid ? (
                         <Icon
+                          {...testIDProps('getIdError')}
                           name="error"
                           size={18}
                           color={
@@ -77,6 +82,7 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = props => {
                         />
                       ) : (
                         <Icon
+                          {...testIDProps('getIdHelp')}
                           name={'help'}
                           size={18}
                           color={
@@ -96,6 +102,7 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = props => {
           </Column>
           <Column>
             <Button
+              testID="getIdButton"
               title={t('getUIN')}
               margin="24 0 0 0"
               type="gradient"

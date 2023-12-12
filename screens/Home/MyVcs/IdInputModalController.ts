@@ -15,6 +15,7 @@ import {
   selectIdType,
 } from './AddVcModalMachine';
 import {VcIdType} from '../../../types/VC/ExistingMosipVC/vc';
+import {IndividualId} from '../../../shared/constants';
 
 export function useIdInputModal({service}: IdInputModalProps) {
   return {
@@ -28,6 +29,8 @@ export function useIdInputModal({service}: IdInputModalProps) {
     isAcceptingOtpInput: useSelector(service, selectIsAcceptingOtpInput),
     isRequestingOtp: useSelector(service, selectIsRequestingOtp),
 
+    SET_INDIVIDUAL_ID: (individualId: IndividualId) =>
+      service.send(AddVcModalEvents.SET_INDIVIDUAL_ID(individualId)),
     INPUT_ID: (id: string) => service.send(AddVcModalEvents.INPUT_ID(id)),
     SELECT_ID_TYPE: (selectedValue: VcIdType) =>
       service.send(AddVcModalEvents.SELECT_ID_TYPE(selectedValue)),

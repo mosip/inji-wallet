@@ -33,8 +33,8 @@ const Colors = {
   LightOrange: '#FDF1E6',
   GradientColors: ['#F59B4B', '#E86E04'],
   DisabledColors: ['#C7C7C7', '#C7C7C7'],
-  captureIconBorder: '#F59B4B',
   TimeoutHintBoxColor: '#FFF7E5',
+  TimeoutHintBoxBorder: '#FFF2D6',
   TimoutHintText: '#8B6105',
   resendCodeTimer: '#555555',
   uncheckedIcon: '#DBDBDB',
@@ -132,17 +132,27 @@ export const DefaultTheme = {
     statusLabel: {
       color: Colors.Gray30,
       fontSize: 12,
+      flexWrap: 'wrap',
+      flexShrink: 1,
     },
     activationTab: {
-      justifyContent: 'space-evenly',
+      display: 'flex',
       alignItems: 'center',
-      marginRight: 20,
-      marginStart: 10,
+      overflow: 'hidden',
+      borderBottomLeftRadius: 10,
+      borderBottomRightRadius: 10,
     },
     kebabIcon: {
+      flex: 3,
+      height: '100%',
+    },
+    kebabPressableContainer: {
+      display: 'flex',
+      flexDirection: 'row',
+      width: '100%',
+      height: '100%',
       justifyContent: 'center',
       alignItems: 'center',
-      flex: 1,
     },
     verifiedIconContainer: {
       marginRight: 3,
@@ -220,11 +230,26 @@ export const DefaultTheme = {
     },
     verticalLine: {
       width: 1,
-      height: 30,
       backgroundColor: Colors.Grey,
       marginVertical: 8,
-      marginLeft: -25,
-      marginRight: 12,
+    },
+    verticalLineWrapper: {
+      display: 'flex',
+      flex: 0.1,
+      height: '100%',
+      justifyContent: 'center',
+    },
+    vcActivationStatusContainer: {
+      display: 'flex',
+      flex: 7,
+      alignItems: 'center',
+      width: '100%',
+      height: '100%',
+      padding: 5,
+    },
+    vcActivationDetailsWrapper: {
+      display: 'flex',
+      alignItems: 'flex-start',
     },
     closeCardBgContainer: {
       borderRadius: 10,
@@ -749,6 +774,30 @@ export const DefaultTheme = {
       flexDirection: 'column',
     },
   }),
+  SearchBarStyles: StyleSheet.create({
+    searchIcon: {
+      justifyContent: 'center',
+      paddingLeft: 15,
+      height: Dimensions.get('window').height * 0.055,
+      width: Dimensions.get('window').width * 0.1,
+      borderColor: Colors.Gray50,
+      borderTopWidth: 1,
+      borderBottomWidth: 1,
+      borderLeftWidth: 1,
+      borderTopLeftRadius: 9,
+      borderBottomLeftRadius: 9,
+    },
+    searchBar: {
+      borderWidth: 1,
+      borderColor: Colors.Gray50,
+      height: Dimensions.get('window').height * 0.055,
+      width: Dimensions.get('window').width * 0.84,
+      paddingLeft: 12,
+      borderLeftWidth: 0,
+      borderTopRightRadius: 9,
+      borderBottomRightRadius: 9,
+    },
+  }),
   ButtonStyles: StyleSheet.create({
     fill: {
       flex: 1,
@@ -777,7 +826,6 @@ export const DefaultTheme = {
       borderRadius: 9,
       width: Dimensions.get('window').width * 0.72,
       alignSelf: 'center',
-      margin: 3,
       height: 54,
     },
     float: {
@@ -828,6 +876,8 @@ export const DefaultTheme = {
       margin: 21,
       paddingHorizontal: 14,
       paddingVertical: 12,
+      borderWidth: 2,
+      borderColor: Colors.TimeoutHintBoxBorder,
       borderRadius: 12,
     },
     sharedSuccessfully: {
@@ -1156,13 +1206,16 @@ export const DefaultTheme = {
       backgroundColor: Colors.Transparent,
     },
   }),
-  issuersScreenStyles: StyleSheet.create({
+  IssuersScreenStyles: StyleSheet.create({
     issuerListOuterContainer: {
       padding: 10,
       flex: 1,
       backgroundColor: Colors.White,
     },
-    issuersContainer: {marginHorizontal: 3},
+    issuersContainer: {
+      marginHorizontal: 3,
+      marginTop: 5,
+    },
     issuerBoxContainer: {
       margin: 5,
       flex: 1,
@@ -1242,14 +1295,31 @@ export const DefaultTheme = {
       maxHeight: Dimensions.get('window').height,
     },
   }),
+  BottomTabBarStyle: StyleSheet.create({
+    headerRightContainerStyle: {paddingEnd: 13},
+    headerLeftContainerStyle: {paddingEnd: 13},
+    tabBarLabelStyle: {
+      fontSize: 12,
+      fontFamily: 'Inter_600SemiBold',
+    },
+    tabBarStyle: {
+      display: 'flex',
+      height: 75,
+      paddingHorizontal: 10,
+    },
+    tabBarItemStyle: {
+      height: 83,
+      padding: 11,
+    },
+  }),
 
   ICON_SMALL_SIZE: 16,
   ICON_MID_SIZE: 22,
+  ICON_LARGE_SIZE: 33,
   PinIcon: require('../../../assets/pin_icon.png'),
   CloseCard: require('../../../assets/card_bg.png'),
   CardBackground: require('../../../assets/card_bg.png'),
   OpenCard: require('../../../assets/card_bg.png'),
-  activationPending: require('../../../assets/pending_activation.png'),
   cardFaceIcon: require('../../../assets/placeholder-photo.png'),
   MosipSplashLogo: require('../../../assets/icon.png'),
   MosipLogo: require('../../../assets/mosip-logo.png'),

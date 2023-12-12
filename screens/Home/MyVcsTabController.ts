@@ -9,13 +9,12 @@ import {
   selectAreAllVcsDownloaded,
   selectInProgressVcDownloads,
   selectIsTampered,
-  selectIsDownloadLimitExpired,
   selectDownloadingFailedVcs,
 } from '../../machines/vc';
 import {
   selectWalletBindingError,
   selectShowWalletBindingError,
-} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
+} from '../../machines/VCItemMachine/commonSelectors';
 import {ExistingMosipVCItemMachine} from '../../machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine';
 import {GlobalContext} from '../../shared/GlobalContext';
 import {HomeScreenTabProps} from './HomeScreen';
@@ -62,11 +61,6 @@ export function useMyVcsTab(props: HomeScreenTabProps) {
     inProgressVcDownloads: useSelector(vcService, selectInProgressVcDownloads),
 
     isTampered: useSelector(vcService, selectIsTampered),
-
-    isDownloadLimitExpires: useSelector(
-      vcService,
-      selectIsDownloadLimitExpired,
-    ),
 
     downloadFailedVcs: useSelector(vcService, selectDownloadingFailedVcs),
 

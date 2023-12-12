@@ -160,9 +160,8 @@
   },
   "IssuersScreen": {
     "title": "Add new card",
-    "header": "Please choose your preferred issuer from the options below to add a new card.",
-    "itemHeading": "Download via {{issuer}}",
-    "itemSubHeading": "Enter your national ID to download your card.",
+    "description": "Please choose your preferred issuer from the options below to add a new card.",
+    "searchByIssuersName": "Search by Issuer’s name",
     "loaders": {
       "loading": "Loading...",
       "subTitle": {
@@ -175,6 +174,10 @@
       "noInternetConnection": {
         "title": "No internet connection",
         "message": "Please check your connection and retry"
+      },
+      "biometricsCancelled": {
+        "title": "Do you want to cancel download?",
+        "message": "Biometric confirmation is required to continue downloading the card."
       },
       "generic": {
         "title": "Something went wrong!",
@@ -205,12 +208,6 @@
   },
   "AddVcModal": {
     "requestingCredential": "Requesting credential...",
-    "confirmationDialog": {
-      "title": "Do you want to cancel downloading?",
-      "message": "Once cancelled, your card will not be downloaded and you need to reinitiate the download.",
-      "wait": "No, I’ll wait",
-      "cancel": "Yes, Cancel"
-    },
     "errors": {
       "input": {
         "empty": "The input cannot be empty",
@@ -275,7 +272,13 @@
     "title": "OTP Verification",
     "otpSentMessage": "We've sent the 6 digit code to your registered mobile number!",
     "resendTheCode": "You can resend the code in ",
-    "resendCode": "Resend Code"
+    "resendCode": "Resend Code",
+    "confirmationDialog": {
+      "title": "Do you want to cancel downloading?",
+      "message": "Once cancelled, your card will not be downloaded and you need to reinitiate the download.",
+      "wait": "No, I’ll wait",
+      "cancel": "Yes, Cancel"
+    }
   },
   "MyVcsTab": {
     "bringYourDigitalID": "Bring your digital identity",
@@ -306,7 +309,7 @@
         "title": "No internet connection",
         "message": "Please check your connection and retry"
       },
-      "downloadLimitExpires":{
+      "downloadLimitExpires": {
         "title": "Download Error",
         "message": "There was an issue downloading following cards. Please try again"
       }
@@ -389,7 +392,10 @@
     "cancel": "Cancel",
     "essentialClaims": "Important Claims",
     "voluntaryClaims": "Voluntary Claims",
-    "required": "It is necessary"
+    "required": "It is necessary",
+    "errors":{
+      "invalidQR": "QR code is invalid. Please try again!"
+    }
   },
   "ReceiveVcScreen": {
     "header": "Card details",
@@ -472,9 +478,10 @@
     "enableBluetoothMessage": "Please enable bluetooth permissions to support local sharing",
     "enableBluetoothButtonText": "Allow bluetooth permissions",
     "scanningGuide": "Hold the phone steady and scan the QR code",
+    "invalidQR": "Please scan a valid QR",
     "errors": {
       "locationDisabled": {
-        "message": "Location services must be enabled to share card",
+        "message": "To continue, let your device turn on location",
         "button": "Enable location services"
       },
       "locationDenied": {
@@ -504,12 +511,12 @@
       "sent": "Card has been sent...",
       "sentHint": "Waiting for receiver to save or discard your Card",
       "sharing": {
-        "title": "Sharing in progress",
-        "hint": "Please wait while we share the chosen card.",
+        "title": "Sharing in progress...",
+        "hint": "Please wait while we share the chosen card...",
         "timeoutHint": "Sharing is delayed, possibly due to a connection issue."
       },
       "accepted": {
-        "title": "ID shared successfully",
+        "title": "ID shared successfully!",
         "message": "Your ID has been successfully shared with",
         "gotohome": "Go to Home"
       },

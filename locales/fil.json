@@ -158,9 +158,8 @@
   },
   "IssuersScreen": {
     "title": "Magdagdag ng bagong card",
-    "header": "Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.",
-    "itemHeading": "I-download sa pamamagitan ng {{issuer}}",
-    "itemSubHeading": "Ilagay ang iyong national ID para i-download ang iyong card.",
+    "description": "Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.",
+    "searchByIssuersName": "Maghanap ayon sa pangalan ng Nag-isyu",
     "loaders": {
       "loading": "Naglo-load...",
       "subTitle": {
@@ -173,6 +172,10 @@
       "noInternetConnection": {
         "title": "Pakisuri ang iyong koneksyon at subukang muli",
         "message": "Mangyaring kumonekta sa internet at subukang muli."
+      },
+      "biometricsCancelled": {
+        "title": "Gusto mo bang kanselahin ang pag-download?",
+        "message": "Kinakailangan ang biometric confirmation para magpatuloy sa pag-download ng card."
       },
       "generic": {
         "title": "may nangyaring mali!",
@@ -203,12 +206,6 @@
   },
   "AddVcModal": {
     "requestingCredential": "Humihiling ng kredensyal...",
-    "confirmationDialog": {
-      "title": "Gusto mo bang kanselahin ang pag-download?",
-      "message": "Kapag nakansela, hindi na mada-download ang iyong card at kailangan mong simulan muli ang pag-download.",
-      "wait": "Hindi, maghihintay ako",
-      "cancel": "Oo, Kanselahin"
-    },
     "errors": {
       "input": {
         "empty": "Hindi maaaring walang laman ang input",
@@ -273,7 +270,13 @@
     "title": "Pag-verify ng OTP",
     "otpSentMessage": "Ipinadala namin ang 6 na digit na code sa iyong rehistradong mobile number!",
     "resendTheCode": "Maaari mong ipadala muli ang code sa ",
-    "resendCode": "Ipadala muli ang Code"
+    "resendCode": "Ipadala muli ang Code",
+    "confirmationDialog": {
+      "title": "Gusto mo bang kanselahin ang pag-download?",
+      "message": "Kapag nakansela, hindi na mada-download ang iyong card at kailangan mong simulan muli ang pag-download.",
+      "wait": "Hindi, maghihintay ako",
+      "cancel": "Oo, Kanselahin"
+    }
   },
   "MyVcsTab": {
     "bringYourDigitalID": "Dalhin ang Iyong Digital ID",
@@ -474,9 +477,10 @@
     "enableBluetoothMessage": "Mangyaring paganahin ang mga pahintulot ng bluetooth upang suportahan ang lokal na pagbabahagi",
     "enableBluetoothButtonText": "Payagan ang mga pahintulot ng bluetooth",
     "scanningGuide": "Panatilihin ang telepono at i-scan ang QR code",
+    "invalidQR": "Mangyaring mag-scan ng wastong QR",
     "errors": {
       "locationDisabled": {
-        "message": "Dapat na nakabukas ang Location services ng iyong mobile para maaaring makapag-scan",
+        "message": "Para magpatuloy, hayaang i-on ng iyong device ang lokasyon",
         "button": "Buksan ang location services"
       },
       "locationDenied": {
@@ -506,12 +510,12 @@
       "sent": "Naipadala na ang card...",
       "sentHint": "Naghihintay para sa receiver na i-save o itapon ang iyong card",
       "sharing": {
-        "title": "Isinasagawa ang pagbabahagi",
+        "title": "Isinasagawa ang pagbabahagi...",
         "timeoutHint": "Naantala ang pagbabahagi, posibleng dahil sa isang isyu sa koneksyon.",
-        "hint": "Mangyaring maghintay habang ibinabahagi namin ang napiling card."
+        "hint": "Mangyaring maghintay habang ibinabahagi namin ang napiling card..."
       },
       "accepted": {
-        "title": "Matagumpay na naibahagi ang ID",
+        "title": "Matagumpay na naibahagi ang ID!",
         "message": "Ang iyong ID ay matagumpay na naibahagi sa",
         "gotohome": "Pumunta sa bahay"
       },
@@ -591,6 +595,7 @@
     "cancel": "Kanselahin",
     "accept": "Tanggapin",
     "save": "I-save",
+    "ok": "Ok",
     "dismiss": "Dismissed",
     "editLabel": "Palitan ang {{label}}",
     "tryAgain": "Subukan muli",

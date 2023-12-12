@@ -13,6 +13,7 @@ import {
   getEventType,
   sendEndEvent,
 } from '../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
 
 export function usePasscodeScreen(props: PasscodeRouteProps) {
   const {appService} = useContext(GlobalContext);
@@ -26,7 +27,10 @@ export function usePasscodeScreen(props: PasscodeRouteProps) {
   useEffect(() => {
     if (isAuthorized) {
       sendEndEvent(
-        getEndEventData(getEventType(props.route.params?.setup), 'SUCCESS'),
+        getEndEventData(
+          getEventType(props.route.params?.setup),
+          TelemetryConstants.EndEventStatus.success,
+        ),
       );
       props.navigation.reset({
         index: 0,

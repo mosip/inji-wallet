@@ -209,7 +209,10 @@ export const vcMachine =
                 'removeVcFromInProgressDownlods',
                 'setDownloadingFailedVcs',
               ],
-              target: 'downloadLimitExpired',
+              target: '#vc.ready.myVcs.refreshing',
+            },
+            DELETE_VC: {
+              target: 'deletingFailedVcs',
             },
           },
         },
@@ -218,13 +221,6 @@ export const vcMachine =
             REMOVE_TAMPERED_VCS: {
               actions: ['removeTamperedVcs', 'logTamperedVCsremoved'],
               target: '#vc.ready.myVcs.refreshing',
-            },
-          },
-        },
-        downloadLimitExpired: {
-          on: {
-            DELETE_VC: {
-              target: 'deletingFailedVcs',
             },
           },
         },
@@ -283,8 +279,8 @@ export const vcMachine =
 
         setDownloadingFailedVcs: model.assign({
           downloadingFailedVcs: (context, event) => [
-            event.vcMetadata,
             ...context.downloadingFailedVcs,
+            event.vcMetadata,
           ],
         }),
 
@@ -524,10 +520,6 @@ export function selectWalletBindingSuccess(state: State) {
 
 export function selectIsTampered(state: State) {
   return state.matches('tamperedVCs');
-}
-
-export function selectIsDownloadLimitExpired(state: State) {
-  return state.matches('downloadLimitExpired');
 }
 
 export function selectDownloadingFailedVcs(state: State) {

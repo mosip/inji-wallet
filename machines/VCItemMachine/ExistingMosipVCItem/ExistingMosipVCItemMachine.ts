@@ -34,8 +34,12 @@ import {
   getEndEventData,
   getStartEventData,
   sendEndEvent,
+  sendInteractEvent,
+  getInteractEventData,
   sendStartEvent,
 } from '../../../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../../../shared/telemetry/TelemetryConstants';
+
 import {API_URLS} from '../../../shared/api';
 
 const model = createModel(
@@ -45,7 +49,7 @@ const model = createModel(
     idType: '' as VcIdType,
     vcMetadata: {} as VCMetadata,
     myVcs: [] as string[],
-    generatedOn: null as Date,
+    generatedOn: new Date() as Date,
     credential: null as DecodedCredential,
     verifiableCredential: null as VerifiableCredential,
     storeVerifiableCredential: null as VerifiableCredential,
@@ -60,13 +64,15 @@ const model = createModel(
     bindingTransactionId: '',
     revoked: false,
     downloadCounter: 0,
-    maxDownloadCount: 10,
-    downloadInterval: 5000,
+    maxDownloadCount: null as number,
+    downloadInterval: null as number,
     walletBindingResponse: null as WalletBindingResponse,
     walletBindingError: '',
     walletBindingSuccess: false,
     publicKey: '',
     privateKey: '',
+    isMachineInKebabPopupState: false,
+    bindingAuthFailedMessage: '' as string,
   },
   {
     events: {
@@ -78,6 +84,7 @@ const model = createModel(
       STORE_RESPONSE: (response: VC) => ({response}),
       POLL: () => ({}),
       DOWNLOAD_READY: () => ({}),
+      FAILED: () => ({}),
       GET_VC_RESPONSE: (vc: VC) => ({vc}),
       VERIFY: () => ({}),
       LOCK_VC: () => ({}),
@@ -164,21 +171,29 @@ export const ExistingMosipVCItemMachine =
         checkingServerData: {
           description:
             "Download VC data from the server. Uses polling method to check when it's available.",
-          initial: 'verifyingDownloadLimitExpiry',
+          initial: 'loadDownloadLimitConfig',
           states: {
+            loadDownloadLimitConfig: {
+              invoke: {
+                src: 'loadDownloadLimitConfig',
+                onDone: {
+                  actions: ['setMaxDownloadCount', 'setDownloadInterval'],
+                  target: 'verifyingDownloadLimitExpiry',
+                },
+              },
+            },
             verifyingDownloadLimitExpiry: {
+              entry: ['incrementDownloadCounter'],
               invoke: {
                 src: 'checkDownloadExpiryLimit',
                 onDone: {
                   target: 'checkingStatus',
-                  actions: ['setMaxDownloadCount', 'setDownloadInterval'],
                 },
                 onError: {
                   actions: [
                     log((_, event) => (event.data as Error).message),
                     'sendDownloadLimitExpire',
                   ],
-                  target: 'checkingStatus',
                 },
               },
             },
@@ -195,6 +210,9 @@ export const ExistingMosipVCItemMachine =
                 DOWNLOAD_READY: {
                   target: 'downloadingCredential',
                 },
+                FAILED: {
+                  actions: 'sendDownloadLimitExpire',
+                },
               },
             },
             downloadingCredential: {
@@ -210,6 +228,9 @@ export const ExistingMosipVCItemMachine =
                       send('POLL_DOWNLOAD', {to: 'downloadCredential'}),
                       'incrementDownloadCounter',
                     ],
+                  },
+                  {
+                    target: 'verifyingDownloadLimitExpiry',
                   },
                 ],
                 CREDENTIAL_DOWNLOADED: {
@@ -281,8 +302,12 @@ export const ExistingMosipVCItemMachine =
           },
         },
         kebabPopUp: {
+          entry: assign({isMachineInKebabPopupState: () => true}),
           on: {
             DISMISS: {
+              actions: assign({
+                isMachineInKebabPopupState: () => false,
+              }),
               target: 'idle',
             },
             ADD_WALLET_BINDING_ID: {
@@ -306,9 +331,7 @@ export const ExistingMosipVCItemMachine =
             showBindingWarning: {
               on: {
                 CONFIRM: {
-                  actions: [
-                    () => sendStartEvent(getStartEventData('VC activation')),
-                  ],
+                  actions: 'sendActivationStartEvent',
                   target: '#vc-item.kebabPopUp.requestingBindingOtp',
                 },
                 CANCEL: {
@@ -350,7 +373,11 @@ export const ExistingMosipVCItemMachine =
                 },
                 DISMISS: {
                   target: '#vc-item.kebabPopUp',
-                  actions: ['clearOtp', 'clearTransactionId'],
+                  actions: [
+                    'sendActivationFailedEndEvent',
+                    'clearOtp',
+                    'clearTransactionId',
+                  ],
                 },
               },
             },
@@ -390,6 +417,7 @@ export const ExistingMosipVCItemMachine =
                       'updateVc',
                       'setWalletBindingErrorEmpty',
                       'sendWalletBindingSuccess',
+                      'sendActivationSuccessEvent',
                       'logWalletBindingSuccess',
                     ],
                   },
@@ -423,8 +451,7 @@ export const ExistingMosipVCItemMachine =
                     'setWalletBindingErrorEmpty',
                     'sendWalletBindingSuccess',
                     'logWalletBindingSuccess',
-                    () =>
-                      sendEndEvent(getEndEventData('VC activation', 'SUCCESS')),
+                    'sendActivationSuccessEvent',
                   ],
                   target: '#vc-item.kebabPopUp',
                 },
@@ -641,7 +668,7 @@ export const ExistingMosipVCItemMachine =
         showBindingWarning: {
           on: {
             CONFIRM: {
-              actions: () => sendStartEvent(getStartEventData('VC activation')),
+              actions: 'sendActivationStartEvent',
               target: 'requestingBindingOtp',
             },
             CANCEL: {
@@ -682,7 +709,11 @@ export const ExistingMosipVCItemMachine =
             },
             DISMISS: {
               target: 'idle',
-              actions: ['clearOtp', 'clearTransactionId'],
+              actions: [
+                'sendActivationFailedEndEvent',
+                'clearOtp',
+                'clearTransactionId',
+              ],
             },
           },
         },
@@ -721,6 +752,7 @@ export const ExistingMosipVCItemMachine =
                   'storeContext',
                   'updateVc',
                   'setWalletBindingErrorEmpty',
+                  'sendActivationSuccessEvent',
                   'logWalletBindingSuccess',
                 ],
               },
@@ -750,8 +782,15 @@ export const ExistingMosipVCItemMachine =
                 'updateVc',
                 'setWalletBindingErrorEmpty',
                 'setWalletBindingSuccess',
+                'sendActivationSuccessEvent',
                 'logWalletBindingSuccess',
-                () => sendEndEvent(getEndEventData('VC activation', 'SUCCESS')),
+                () =>
+                  sendEndEvent(
+                    getEndEventData(
+                      TelemetryConstants.FlowType.vcActivation,
+                      TelemetryConstants.EndEventStatus.success,
+                    ),
+                  ),
               ],
               target: 'idle',
             },
@@ -825,14 +864,24 @@ export const ExistingMosipVCItemMachine =
         ),
 
         setWalletBindingError: assign({
-          walletBindingError: () =>
-            i18n.t(`errors.genericError`, {
+          walletBindingError: () => {
+            const errorMessage = i18n.t(`errors.genericError`, {
               ns: 'common',
-            }),
+            });
+            return errorMessage;
+          },
+          bindingAuthFailedMessage: (_context, event) => {
+            const error = JSON.parse(JSON.stringify(event.data)).name;
+            if (error) {
+              return error;
+            }
+            return '';
+          },
         }),
 
         setWalletBindingErrorEmpty: assign({
           walletBindingError: () => '',
+          bindingAuthFailedMessage: () => '',
         }),
 
         setWalletBindingSuccess: assign({
@@ -853,6 +902,51 @@ export const ExistingMosipVCItemMachine =
             to: context => context.serviceRefs.vc,
           },
         ),
+
+        sendActivationStartEvent: context => {
+          sendStartEvent(
+            getStartEventData(
+              context.isMachineInKebabPopupState
+                ? TelemetryConstants.FlowType.vcActivationFromKebab
+                : TelemetryConstants.FlowType.vcActivation,
+            ),
+          );
+          sendInteractEvent(
+            getInteractEventData(
+              context.isMachineInKebabPopupState
+                ? TelemetryConstants.FlowType.vcActivationFromKebab
+                : TelemetryConstants.FlowType.vcActivation,
+              TelemetryConstants.InteractEventSubtype.click,
+              'Activate Button',
+            ),
+          );
+        },
+
+        sendActivationFailedEndEvent: context =>
+          sendEndEvent(
+            getEndEventData(
+              context.isMachineInKebabPopupState
+                ? TelemetryConstants.FlowType.vcActivationFromKebab
+                : TelemetryConstants.FlowType.vcActivation,
+              TelemetryConstants.EndEventStatus.failure,
+              {
+                errorId: TelemetryConstants.ErrorId.userCancel,
+                errorMessage:
+                  TelemetryConstants.ErrorMessage.activationCancelled,
+              },
+            ),
+          ),
+
+        sendActivationSuccessEvent: context =>
+          sendEndEvent(
+            getEndEventData(
+              context.isMachineInKebabPopupState
+                ? TelemetryConstants.FlowType.vcActivationFromKebab
+                : TelemetryConstants.FlowType.vcActivation,
+              TelemetryConstants.EndEventStatus.success,
+            ),
+          ),
+
         setPublicKey: assign({
           publicKey: (context, event) => {
             if (!isHardwareKeystoreExists) {
@@ -1002,14 +1096,6 @@ export const ExistingMosipVCItemMachine =
             Number((event.data as DownloadProps).downloadInterval),
         }),
 
-        storeTag: send(
-          context => {
-            const {serviceRefs, ...data} = context;
-            return StoreEvents.SET(context.vcMetadata.getVcKey(), data);
-          },
-          {to: context => context.serviceRefs.store},
-        ),
-
         setCredential: model.assign((context, event) => {
           switch (event.type) {
             case 'STORE_RESPONSE':
@@ -1044,7 +1130,10 @@ export const ExistingMosipVCItemMachine =
           },
         ),
         sendTelemetryEvents: () => {
-          sendEndEvent({type: 'VC Download', status: 'SUCCESS'});
+          sendEndEvent({
+            type: TelemetryConstants.FlowType.vcDownload,
+            status: TelemetryConstants.EndEventStatus.success,
+          });
         },
 
         logWalletBindingSuccess: send(
@@ -1182,24 +1271,25 @@ export const ExistingMosipVCItemMachine =
       },
 
       services: {
-        checkDownloadExpiryLimit: async context => {
+        loadDownloadLimitConfig: async context => {
           var resp = await getAllConfigurations();
           const maxLimit: number = resp.vcDownloadMaxRetry;
           const vcDownloadPoolInterval: number = resp.vcDownloadPoolInterval;
-          console.log(maxLimit);
-          if (maxLimit <= context.downloadCounter) {
-            throw new Error(
-              'Download limit expired for request id: ' +
-                context.vcMetadata.requestId,
-            );
-          }
 
           const downloadProps: DownloadProps = {
             maxDownloadLimit: maxLimit,
             downloadInterval: vcDownloadPoolInterval,
           };
-
           return downloadProps;
+        },
+
+        checkDownloadExpiryLimit: async context => {
+          if (context.downloadCounter > context.maxDownloadCount) {
+            throw new Error(
+              'Download limit expired for request id: ' +
+                context.vcMetadata.requestId,
+            );
+          }
         },
 
         addWalletBindnigId: async context => {
@@ -1287,19 +1377,29 @@ export const ExistingMosipVCItemMachine =
 
           onReceive(async event => {
             if (event.type === 'POLL_STATUS') {
-              const response = await request(
-                API_URLS.credentialStatus.method,
-                API_URLS.credentialStatus.buildURL(
-                  context.vcMetadata.requestId,
-                ),
-              );
-              switch (response.response?.statusCode) {
-                case 'NEW':
-                  break;
-                case 'ISSUED':
-                case 'printing':
-                  callback(model.events.DOWNLOAD_READY());
-                  break;
+              try {
+                const response = await request(
+                  API_URLS.credentialStatus.method,
+                  API_URLS.credentialStatus.buildURL(
+                    context.vcMetadata.requestId,
+                  ),
+                );
+                switch (response.response?.statusCode) {
+                  case 'NEW':
+                    break;
+                  case 'ISSUED':
+                  case 'printing':
+                    callback(model.events.DOWNLOAD_READY());
+                    break;
+                  case 'FAILED':
+                  default:
+                    callback(model.events.FAILED());
+                    clearInterval(pollInterval);
+                    break;
+                }
+              } catch (error) {
+                callback(model.events.FAILED());
+                clearInterval(pollInterval);
               }
             }
           });
@@ -1455,10 +1555,6 @@ export function selectVc(state: State) {
   return data;
 }
 
-export function selectGeneratedOn(state: State) {
-  return new Date(state.context.generatedOn);
-}
-
 export function selectId(state: State) {
   return state.context.vcMetadata.id;
 }
@@ -1471,23 +1567,8 @@ export function selectCredential(state: State) {
   return state.context.credential;
 }
 
-export function selectVerifiableCredential(state: State) {
-  return state.context.verifiableCredential;
-}
-
-export function selectContext(state: State) {
-  return state.context;
-}
-
 export function selectIsOtpError(state: State) {
   return state.context.otpError;
-}
-
-export function selectOtpError(state: State) {
-  return state.context.otpError;
-}
-export function selectIsPinned(state: State) {
-  return state.context.vcMetadata.isPinned;
 }
 
 export function selectIsLockingVc(state: State) {
@@ -1510,34 +1591,12 @@ export function selectIsAcceptingRevokeInput(state: State) {
   return state.matches('acceptingRevokeInput');
 }
 
-export function selectEmptyWalletBindingId(state: State) {
-  var val = state.context.walletBindingResponse
-    ? state.context.walletBindingResponse.walletBindingId
-    : undefined;
-  return val == undefined || val == null || val.length <= 0 ? true : false;
-}
-
-export function selectWalletBindingError(state: State) {
-  return state.context.walletBindingError;
-}
-
 export function selectRequestBindingOtp(state: State) {
   return state.matches('requestingBindingOtp');
 }
 
 export function selectAcceptingBindingOtp(state: State) {
   return state.matches('acceptingBindingOtp');
-}
-
-export function selectShowWalletBindingError(state: State) {
-  return (
-    state.matches('showingWalletBindingError') ||
-    state.matches('kebabPopUp.showingWalletBindingError')
-  );
-}
-
-export function selectWalletBindingSuccess(state: State) {
-  return state.context.walletBindingSuccess;
 }
 
 export function selectWalletBindingInProgress(state: State) {
@@ -1552,41 +1611,9 @@ export function selectWalletBindingInProgress(state: State) {
 export function selectBindingWarning(state: State) {
   return state.matches('showBindingWarning');
 }
-export function selectKebabPopUp(state: State) {
-  return state.matches('kebabPopUp');
-}
 
 export function selectKebabPopUpRequestBindingOtp(state: State) {
   return state.matches('kebabPopUp.requestingBindingOtp');
-}
-
-export function selectKebabPopUpAcceptingBindingOtp(state: State) {
-  return state.matches('kebabPopUp.acceptingBindingOtp');
-}
-
-export function selectKebabPopUpShowWalletBindingError(state: State) {
-  return state.matches('kebabPopUp.showingWalletBindingError');
-}
-
-export function selectKebabPopUpWalletBindingInProgress(state: State) {
-  return state.matches('kebabPopUp.requestingBindingOtp') ||
-    state.matches('kebabPopUp.addingWalletBindingId') ||
-    state.matches('kebabPopUp.addKeyPair') ||
-    state.matches('kebabPopUp.updatingPrivateKey')
-    ? true
-    : false;
-}
-
-export function selectKebabPopUpBindingWarning(state: State) {
-  return state.matches('kebabPopUp.showBindingWarning');
-}
-
-export function selectRemoveWalletWarning(state: State) {
-  return state.matches('kebabPopUp.removeWallet');
-}
-
-export function selectShowActivities(state: State) {
-  return state.matches('kebabPopUp.showActivities');
 }
 
 export function selectIsSavingFailedInIdle(state: State) {

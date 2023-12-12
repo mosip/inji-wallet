@@ -155,7 +155,7 @@ export const MosipVCItemContent: React.FC<
               imageStyle={Theme.Styles.faceImage}
               source={faceImageSource()}
               style={Theme.Styles.closeCardImage}>
-              {props.iconName && (
+              {props.isPinned && (
                 <Image
                   source={Theme.PinIcon}
                   style={Theme.Styles.pinIcon}
@@ -334,8 +334,7 @@ interface ExistingMosipVCItemContentProps {
   generatedOn: string;
   selectable: boolean;
   selected: boolean;
-  iconName?: string;
-  iconType?: string;
+  isPinned?: boolean;
   service: any;
   onPress?: () => void;
   isDownloading?: boolean;
@@ -347,9 +346,12 @@ export interface EsignetMosipVCItemContentProps {
   generatedOn: string;
   selectable: boolean;
   selected: boolean;
-  iconName?: string;
-  iconType?: string;
+  isPinned?: boolean;
   service: any;
   onPress?: () => void;
   isDownloading?: boolean;
 }
+
+MosipVCItemContent.defaultProps = {
+  isPinned: false,
+};

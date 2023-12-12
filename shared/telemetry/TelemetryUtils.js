@@ -13,6 +13,7 @@ import {OBSRV_HOST} from 'react-native-dotenv';
 import DeviceInfo from 'react-native-device-info';
 import {isHardwareKeystoreExists} from '../cryptoutil/cryptoUtil';
 import * as RNLocalize from 'react-native-localize';
+import {TelemetryConstants} from './TelemetryConstants';
 
 export function sendStartEvent(data) {
   telemetry.start({}, '', '', data, {});
@@ -135,17 +136,29 @@ export function getAppInfoEventData() {
   };
 }
 
-let passcodeRetryCount = 1;
+let retryCount = 0;
 
-export const incrementPasscodeRetryCount = eventType => {
-  if (passcodeRetryCount < 5) {
-    passcodeRetryCount += 1;
+export const incrementRetryCount = (eventType, screen) => {
+  if (retryCount < 4) {
+    retryCount += 1;
   } else {
-    sendErrorEvent(
-      getErrorEventData(eventType, 'mismatch', 'Passcode did not match'),
-    );
-    passcodeRetryCount = 1;
+    const [errorId, errorMessage] =
+      screen === TelemetryConstants.Screens.passcode
+        ? [
+            TelemetryConstants.ErrorId.mismatch,
+            TelemetryConstants.ErrorMessage.passcodeDidNotMatch,
+          ]
+        : [
+            TelemetryConstants.ErrorId.resend,
+            TelemetryConstants.ErrorMessage.resendOtp,
+          ];
+    sendErrorEvent(getErrorEventData(eventType, errorId, errorMessage));
+    retryCount = 0;
   }
+};
+
+export const resetRetryCount = () => {
+  retryCount = 0;
 };
 
 export function configureTelemetry() {
@@ -155,7 +168,9 @@ export function configureTelemetry() {
 }
 
 export function getEventType(isSettingUp) {
-  return isSettingUp ? 'App Onboarding' : 'App Login';
+  return isSettingUp
+    ? TelemetryConstants.FlowType.appOnboarding
+    : TelemetryConstants.FlowType.appLogin;
 }
 
 const languageCodeMap = {

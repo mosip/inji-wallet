@@ -94,7 +94,12 @@ export interface Typegen0 {
       | 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection'
       | 'xstate.init';
     resetShouldVerifyPresence: 'CANCEL' | 'CONNECTED' | 'DISMISS' | 'RETRY';
+    sendBLEConnectionErrorEvent: 'BLE_ERROR';
     sendScanData: 'SCAN';
+    sendVCShareFlowCancelEndEvent: 'CANCEL';
+    sendVCShareFlowTimeoutEndEvent: 'CANCEL' | 'RETRY';
+    sendVcShareSuccessEvent: 'VC_ACCEPTED';
+    sendVcSharingStartEvent: 'SCAN';
     setBleError: 'BLE_ERROR';
     setChildRef:
       | 'DISCONNECT'

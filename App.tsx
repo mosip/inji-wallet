@@ -1,5 +1,4 @@
 import React, {useContext, useEffect} from 'react';
-import AppLoading from 'expo-app-loading';
 import {AppLayout} from './screens/AppLayout';
 import {useFont} from './shared/hooks/useFont';
 import {GlobalContextProvider} from './components/GlobalContextProvider';
@@ -15,15 +14,23 @@ import {
 import {DualMessageOverlay} from './components/DualMessageOverlay';
 import {useApp} from './screens/AppController';
 import {Alert} from 'react-native';
-import {configureTelemetry} from './shared/telemetry/TelemetryUtils';
+import {
+  TelemetryConstants,
+  configureTelemetry,
+  getErrorEventData,
+  sendErrorEvent,
+} from './shared/telemetry/TelemetryUtils';
 import {MessageOverlay} from './components/MessageOverlay';
 import SecureKeystore from 'react-native-secure-keystore';
 import {isHardwareKeystoreExists} from './shared/cryptoutil/cryptoUtil';
 import i18n from './i18n';
 import './shared/flipperConfig';
+import * as SplashScreen from 'expo-splash-screen';
+
+SplashScreen.preventAutoHideAsync();
 
 // kludge: this is a bad practice but has been done temporarily to surface
-//  an occurance of a bug with minimal residual code changes, this should
+//  an occurrence of a bug with minimal residual code changes, this should
 //  be removed once the bug cause is determined & fixed, ref: INJI-222
 const DecryptErrorAlert = (controller, t) => {
   const heading = t('errors.decryptionFailed');
@@ -43,6 +50,14 @@ const AppLayoutWrapper: React.FC = () => {
   const isDecryptError = useSelector(appService, selectIsDecryptError);
   const controller = useApp();
   const {t} = useTranslation('WelcomeScreen');
+
+  useEffect(() => {
+    async function hideAppLoading() {
+      await SplashScreen.hideAsync();
+    }
+    hideAppLoading();
+  }, []);
+
   if (isDecryptError) {
     DecryptErrorAlert(controller, t);
   }
@@ -59,9 +74,20 @@ const AppLoadingWrapper: React.FC = () => {
   );
   const controller = useApp();
   const {t} = useTranslation('WelcomeScreen');
+  useEffect(() => {
+    if (isKeyInvalidateError) {
+      configureTelemetry();
+      sendErrorEvent(
+        getErrorEventData(
+          TelemetryConstants.FlowType.appLogin,
+          TelemetryConstants.ErrorId.appWasReset,
+          TelemetryConstants.ErrorMessage.appWasReset,
+        ),
+      );
+    }
+  }, [isKeyInvalidateError]);
   return (
     <>
-      <AppLoading />
       <MessageOverlay
         isVisible={isKeyInvalidateError}
         title={t('errors.invalidateKeyError.title')}

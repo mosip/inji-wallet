@@ -1,9 +1,9 @@
 import {KeyPair, RSA} from 'react-native-rsa-native';
 import forge from 'node-forge';
-import getAllConfigurations from '../commonprops/commonProps';
-import {DEBUG_MODE_ENABLED, isIOS} from '../constants';
+import {BIOMETRIC_CANCELLED, DEBUG_MODE_ENABLED, isIOS} from '../constants';
 import SecureKeystore from 'react-native-secure-keystore';
-import CryptoJS from 'crypto-js';
+import {BiometricCancellationError} from '../error/BiometricCancellationError';
+import {EncryptedOutput} from './encryptedOutput';
 
 // 5min
 export const AUTH_TIMEOUT = 5 * 60;
@@ -22,47 +22,24 @@ export function generateKeys(): Promise<KeyPair> {
  */
 export const isHardwareKeystoreExists = isCustomSecureKeystore();
 
-export async function getJwt(
-  privateKey: string,
+export async function getJWT(
+  header: object,
+  payLoad: object,
   individualId: string,
-  thumbprint: string,
+  privateKey: string,
 ) {
   try {
-    var iat = Math.floor(new Date().getTime() / 1000);
-    var exp = Math.floor(new Date().getTime() / 1000) + 18000;
-
-    var config = await getAllConfigurations();
-
-    const header = {
-      alg: 'RS256',
-      //'kid': keyId,
-      'x5t#S256': thumbprint,
-    };
-
-    const payloadJSON = JSON.stringify({
-      iss: config.issuer,
-      sub: individualId,
-      aud: config.audience,
-      iat: iat,
-      exp: exp,
-    });
-
-    var payload = JSON.parse(payloadJSON);
-    const strHeader = JSON.stringify(header);
-    const strPayload = JSON.stringify(payload);
-    const header64 = encodeB64(strHeader);
-    const payload64 = encodeB64(strPayload);
-    const preHash = header64 + '.' + payload64;
-
+    const header64 = encodeB64(JSON.stringify(header));
+    const payLoad64 = encodeB64(JSON.stringify(payLoad));
+    const preHash = header64 + '.' + payLoad64;
     const signature64 = await createSignature(
       privateKey,
       preHash,
       individualId,
     );
-
-    return header64 + '.' + payload64 + '.' + signature64;
+    return header64 + '.' + payLoad64 + '.' + signature64;
   } catch (e) {
-    console.log(e);
+    console.log('Exception Occurred While Constructing JWT ', e);
     throw e;
   }
 }
@@ -84,9 +61,12 @@ export async function createSignature(
   } else {
     try {
       signature64 = await SecureKeystore.sign(individualId, preHash);
-    } catch (e) {
-      console.error('Error in creating signature:', e);
-      throw e;
+    } catch (error) {
+      console.error('Error in creating signature:', error);
+      if (error.toString().includes(BIOMETRIC_CANCELLED)) {
+        throw new BiometricCancellationError(error.toString());
+      }
+      throw error;
     }
 
     return replaceCharactersInB64(signature64);
@@ -123,15 +103,23 @@ export async function encryptJson(
   encryptionKey: string,
   data: string,
 ): Promise<string> {
-  // Disable Encryption in debug mode
-  if (DEBUG_MODE_ENABLED && __DEV__) {
-    return JSON.stringify(data);
-  }
+  try {
+    // Disable Encryption in debug mode
+    if (DEBUG_MODE_ENABLED && __DEV__) {
+      return JSON.stringify(data);
+    }
 
-  if (!isHardwareKeystoreExists) {
-    return CryptoJS.AES.encrypt(data, encryptionKey).toString();
+    if (!isHardwareKeystoreExists) {
+      return encryptWithForge(data, encryptionKey).toString();
+    }
+    return await SecureKeystore.encryptData(ENCRYPTION_ID, data);
+  } catch (error) {
+    console.error('error while encrypting:', error);
+    if (error.toString().includes(BIOMETRIC_CANCELLED)) {
+      throw new BiometricCancellationError(error.toString());
+    }
+    throw error;
   }
-  return await SecureKeystore.encryptData(ENCRYPTION_ID, data);
 }
 
 export async function decryptJson(
@@ -139,19 +127,66 @@ export async function decryptJson(
   encryptedData: string,
 ): Promise<string> {
   try {
+    if (encryptedData === null || encryptedData === undefined) {
+      // to avoid crash in case of null or undefined
+      return '';
+    }
     // Disable Encryption in debug mode
     if (DEBUG_MODE_ENABLED && __DEV__) {
       return JSON.parse(encryptedData);
     }
 
     if (!isHardwareKeystoreExists) {
-      return CryptoJS.AES.decrypt(encryptedData, encryptionKey).toString(
-        CryptoJS.enc.Utf8,
-      );
+      return decryptWithForge(encryptedData, encryptionKey);
     }
+
     return await SecureKeystore.decryptData(ENCRYPTION_ID, encryptedData);
   } catch (e) {
     console.error('error decryptJson:', e);
+
+    if (e.toString().includes(BIOMETRIC_CANCELLED)) {
+      throw new BiometricCancellationError(e.toString());
+    }
     throw e;
   }
+}
+
+function encryptWithForge(text: string, key: string): EncryptedOutput {
+  //iv - initialization vector
+  const iv = forge.random.getBytesSync(16);
+  const salt = forge.random.getBytesSync(128);
+  const encryptionKey = forge.pkcs5.pbkdf2(key, salt, 4, 16);
+  const cipher = forge.cipher.createCipher('AES-CBC', encryptionKey);
+  cipher.start({iv: iv});
+  cipher.update(forge.util.createBuffer(text, 'utf8'));
+  cipher.finish();
+  var cipherText = forge.util.encode64(cipher.output.getBytes());
+  const encryptedData = new EncryptedOutput(
+    cipherText,
+    forge.util.encode64(iv),
+    forge.util.encode64(salt),
+  );
+  return encryptedData;
+}
+
+function decryptWithForge(encryptedData: string, key: string): string {
+  const encryptedOutput = EncryptedOutput.fromString(encryptedData);
+  const salt = forge.util.decode64(encryptedOutput.salt);
+  const encryptionKey = forge.pkcs5.pbkdf2(key, salt, 4, 16);
+  const decipher = forge.cipher.createDecipher('AES-CBC', encryptionKey);
+  decipher.start({iv: forge.util.decode64(encryptedOutput.iv)});
+  decipher.update(
+    forge.util.createBuffer(forge.util.decode64(encryptedOutput.encryptedData)),
+  );
+  decipher.finish();
+  const decryptedData = decipher.output.toString();
+  return decryptedData;
+}
+
+export function hmacSHA(encryptionKey: string, data: string) {
+  const hmac = forge.hmac.create();
+  hmac.start('sha256', encryptionKey);
+  hmac.update(data);
+  const resultBytes = hmac.digest().getBytes().toString();
+  return resultBytes;
 }

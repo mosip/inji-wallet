@@ -1,5 +1,4 @@
 import {MMKVLoader} from 'react-native-mmkv-storage';
-import CryptoJS from 'crypto-js';
 import getAllConfigurations from './commonprops/commonProps';
 import {Platform} from 'react-native';
 import {
@@ -11,12 +10,21 @@ import {
   decryptJson,
   encryptJson,
   HMAC_ALIAS,
+  hmacSHA,
   isHardwareKeystoreExists,
 } from './cryptoutil/cryptoUtil';
 import {VCMetadata} from './VCMetadata';
 import {ENOENT, getItem} from '../machines/store';
-import {isAndroid, MY_VCS_STORE_KEY, RECEIVED_VCS_STORE_KEY} from './constants';
+import {
+  isAndroid,
+  MY_VCS_STORE_KEY,
+  RECEIVED_VCS_STORE_KEY,
+  SETTINGS_STORE_KEY,
+} from './constants';
 import FileStorage, {getFilePath, vcDirectoryPath} from './fileStorage';
+import {__AppId} from './GlobalVariables';
+import {getErrorEventData, sendErrorEvent} from './telemetry/TelemetryUtils';
+import {TelemetryConstants} from './telemetry/TelemetryConstants';
 
 export const MMKV = new MMKVLoader().initialize();
 
@@ -31,7 +39,7 @@ async function generateHmac(
   data: string,
 ): Promise<string> {
   if (!isHardwareKeystoreExists) {
-    return CryptoJS.HmacSHA256(encryptionKey, data).toString();
+    return hmacSHA(encryptionKey, data);
   }
   return await SecureKeystore.generateHmacSha(HMAC_ALIAS, data);
 }
@@ -74,6 +82,13 @@ class Storage {
         const isCorrupted = await this.isCorruptedVC(key, encryptionKey, data);
 
         if (isCorrupted) {
+          sendErrorEvent(
+            getErrorEventData(
+              TelemetryConstants.FlowType.fetchData,
+              TelemetryConstants.ErrorId.tampered,
+              'VC is corrupted and will be deleted from storage',
+            ),
+          );
           console.debug(
             '[Inji-406]: VC is corrupted and will be deleted from storage',
           );
@@ -104,9 +119,23 @@ class Storage {
         );
 
         if (isDownloaded && error.message.includes(ENOENT)) {
+          sendErrorEvent(
+            getErrorEventData(
+              TelemetryConstants.FlowType.fetchData,
+              TelemetryConstants.ErrorId.dataRetrieval,
+              error.message,
+            ),
+          );
           throw new Error(ENOENT);
         }
       }
+      sendErrorEvent(
+        getErrorEventData(
+          TelemetryConstants.FlowType.fetchData,
+          TelemetryConstants.ErrorId.dataRetrieval,
+          'Error Occurred while retriving from Storage',
+        ),
+      );
 
       console.log('Error Occurred while retriving from Storage.', error);
       throw error;
@@ -147,7 +176,7 @@ class Storage {
   }
 
   private static async readVCFromFile(key: string) {
-    return await FileStorage.readFromCacheFile(getFilePath(key));
+    return await FileStorage.readFile(getFilePath(key));
   }
 
   private static async storeVC(key: string, data: string) {
@@ -184,7 +213,11 @@ class Storage {
     try {
       (await FileStorage.exists(`${vcDirectoryPath}`)) &&
         (await FileStorage.removeItem(`${vcDirectoryPath}`));
+      const settings = await MMKV.getItem(SETTINGS_STORE_KEY);
+      const appId = JSON.parse(settings).appId;
+      __AppId.setValue(appId);
       MMKV.clearStore();
+      await MMKV.setItem(SETTINGS_STORE_KEY, JSON.stringify({appId: appId}));
     } catch (e) {
       console.log('Error Occurred while Clearing Storage.', e);
     }

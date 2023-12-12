@@ -1,11 +1,9 @@
-plugins { 
+plugins {
     id 'com.gladed.androidgitversion' version '0.4.14'
 }
 
 apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
-
-import com.android.build.OutputFile
 
 react {
     /* Folders */
@@ -37,6 +35,7 @@ react {
     //
     //   The entry file for bundle generation. Default is 'index.android.js' or 'index.js'
     // entryFile = file("../js/MyApplication.android.js")
+    entryFile = file("../../index.js")
     //
     //   A list of extra flags to pass to the 'bundle' commands.
     //   See https://github.com/react-native-community/cli/blob/main/docs/commands.md#bundle
@@ -104,9 +103,6 @@ android {
 
     namespace 'io.mosip.residentapp'
 
-    
-    namespace 'io.mosip.residentapp'
-
     defaultConfig {
         applicationId 'io.mosip.residentapp'
         minSdkVersion rootProject.ext.minSdkVersion
@@ -130,7 +126,7 @@ android {
             include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
         }
     }
-    
+
     signingConfigs {
         release {
             def keystore = file('release.keystore')
@@ -232,7 +228,7 @@ dependencies {
             implementation 'com.facebook.fresco:animated-webp:2.0.0'
         }
     }
-
+    compileOnly project(':react-native-android-location-services-dialog-box')
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
