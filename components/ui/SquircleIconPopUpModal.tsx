@@ -1,9 +1,10 @@
 import React from 'react';
-import {Dimensions, Image, View} from 'react-native';
+import {Dimensions, View} from 'react-native';
 import {Centered, Column} from './Layout';
 import {Theme} from './styleUtils';
 import {Text} from './Text';
 import testIDProps from '../../shared/commonUtil';
+import {SvgImage} from '../../components/ui/svg';
 
 export const SquircleIconPopUpModal: React.FC<
   SquircleIconPopUpModalProps
@@ -19,9 +20,7 @@ export const SquircleIconPopUpModal: React.FC<
           height={Dimensions.get('screen').width * 0.8}
           style={Theme.MessageStyles.squircleContainer}>
           <Column>
-            {props.iconName && (
-              <Image source={props.iconName} style={{alignSelf: 'center'}} />
-            )}
+            {SvgImage.SuccessLogo()}
             {props.message && (
               <Text
                 margin="25 0 0 0"
@@ -39,7 +38,6 @@ export const SquircleIconPopUpModal: React.FC<
 
 export interface SquircleIconPopUpModalProps {
   message: string;
-  iconName: any;
   testId: string;
   onBackdropPress?: () => void;
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {Icon} from 'react-native-elements';
 import {MessageOverlay} from '../components/MessageOverlay';
 import {Button, Column, Text} from '../components/ui';
 import {Theme} from '../components/ui/styleUtils';

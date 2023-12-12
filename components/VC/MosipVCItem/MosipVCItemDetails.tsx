@@ -21,6 +21,7 @@ import {
 } from '../../../types/VC/EsignetMosipVC/vc';
 import {WalletBindingResponse} from '../../../shared/cryptoutil/cryptoUtil';
 import {logoType} from '../../../machines/issuersMachine';
+import {SvgImage} from '../../ui/svg';
 
 const getIssuerLogo = (isOpenId4VCI: boolean, issuerLogo: logoType) => {
   if (isOpenId4VCI) {
@@ -32,7 +33,7 @@ const getIssuerLogo = (isOpenId4VCI: boolean, issuerLogo: logoType) => {
       />
     );
   }
-  return <Image source={Theme.MosipLogo} style={Theme.Styles.vcDetailsLogo} />;
+  return SvgImage.MosipLogo(Theme.Styles.vcDetailsLogo);
 };
 
 const getProfileImage = (

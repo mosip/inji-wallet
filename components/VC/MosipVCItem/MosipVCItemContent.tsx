@@ -97,14 +97,7 @@ const getIssuerLogo = (isOpenId4VCI: boolean, issuerLogo: logoType) => {
       />
     );
   }
-  return (
-    <Image
-      source={Theme.MosipSplashLogo}
-      style={Theme.Styles.logo}
-      resizeMethod="scale"
-      resizeMode="contain"
-    />
-  );
+  return SvgImage.MosipLogo(Theme.Styles.logo);
 };
 
 export const MosipVCItemContent: React.FC<
@@ -152,12 +145,7 @@ export const MosipVCItemContent: React.FC<
       <Column>
         <Row align="space-between">
           <Row margin="5 0 0 5">
-            <ImageBackground
-              imageStyle={Theme.Styles.faceImage}
-              source={faceImageSource()}
-              style={Theme.Styles.closeCardImage}>
-              {props.isPinned && SvgImage.pinIcon()}
-            </ImageBackground>
+            {SvgImage.ProfileImage(props)}
 
             <Column margin="0 0 10 20" height={96} align="space-between">
               <Column style={{maxWidth: 230}}>
@@ -311,16 +299,6 @@ export const MosipVCItemContent: React.FC<
       </Column>
     </ImageBackground>
   );
-
-  function faceImageSource() {
-    return !verifiableCredential
-      ? Theme.cardFaceIcon
-      : {
-          uri: props.vcMetadata.isFromOpenId4VCI()
-            ? verifiableCredential?.credentialSubject.face
-            : props.context.credential.biometrics.face,
-        };
-  }
 };
 
 interface ExistingMosipVCItemContentProps {

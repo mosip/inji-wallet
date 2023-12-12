@@ -26,36 +26,6 @@ export const MainLayout: React.FC<
   const scanService = appService.children.get('scan');
 
   const options: BottomTabNavigationOptions = {
-    headerRight: () => (
-      <Row align="space-between">
-        <HelpScreen
-          triggerComponent={
-            <Image
-              {...testIDProps('help')}
-              source={Theme.HelpIcon}
-              style={{width: 36, height: 36}}
-            />
-          }
-          navigation={undefined}
-          route={undefined}
-        />
-
-        <SettingScreen
-          triggerComponent={
-            <Icon
-              {...testIDProps('settings')}
-              name="settings"
-              type="simple-line-icon"
-              size={21}
-              style={Theme.Styles.IconContainer}
-              color={Theme.Colors.Icon}
-            />
-          }
-          navigation={props.navigation}
-          route={undefined}
-        />
-      </Row>
-    ),
     tabBarShowLabel: true,
     tabBarActiveTintColor: Theme.Colors.IconBg,
     ...Theme.BottomTabBarStyle,

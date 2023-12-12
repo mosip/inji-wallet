@@ -235,7 +235,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
           message={t('errors.noInternetConnection.message')}
           onDismiss={controller.DISMISS}
           tryAgain={controller.TRY_AGAIN}
-          image={<Image source={Theme.NoInternetConnection} />}
+          image={SvgImage.NoInternetConnection()}
         />
       )}
     </React.Fragment>

@@ -49,7 +49,15 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
     headerRight: () => (
       <Row align="space-between">
         <HelpScreen
-          triggerComponent={SvgImage.HelpIcon()}
+          triggerComponent={
+            <Icon
+              name="question"
+              type="font-awesome"
+              size={21}
+              style={Theme.Styles.IconContainer}
+              color={Theme.Colors.Icon}
+            />
+          }
           navigation={undefined}
           route={undefined}
         />

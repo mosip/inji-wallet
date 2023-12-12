@@ -8,6 +8,7 @@ import {useQrLogin} from './QrLoginController';
 import {Modal} from '../../components/ui/Modal';
 import {Dimensions, Image} from 'react-native';
 import {QrLoginRef} from '../../machines/QrLoginMachine';
+import {SvgImage} from '../../components/ui/svg';
 
 export const QrLoginWarning: React.FC<QrLoginWarningProps> = props => {
   const {t} = useTranslation('QrLogin');
@@ -27,7 +28,7 @@ export const QrLoginWarning: React.FC<QrLoginWarningProps> = props => {
         style={{display: props.isVisible ? 'flex' : 'none'}}
         backgroundColor={Theme.Colors.lightGreyBackgroundColor}>
         <Column align="space-evenly" crossAlign="center" padding={'16 15 0 15'}>
-          <Image source={Theme.DomainWarningLogo} resizeMethod="auto" />
+          {SvgImage.WarningLogo()}
           <Text
             align="center"
             style={Theme.Styles.detailsText}

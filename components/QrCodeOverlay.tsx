@@ -6,6 +6,7 @@ import QRCode from 'react-native-qrcode-svg';
 import {Theme} from './ui/styleUtils';
 import {Image} from 'react-native';
 import {useTranslation} from 'react-i18next';
+import {SvgImage} from './ui/svg';
 
 export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
   const {t} = useTranslation('VcDetails');
@@ -29,7 +30,7 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
           align="flex-end"
           margin="-35 0 0 67"
           style={Theme.QrCodeStyles.magnifierZoom}>
-          <Image source={Theme.MagnifierZoom} />
+          {SvgImage.MagnifierZoom()}
         </Row>
       </Pressable>
       <Overlay

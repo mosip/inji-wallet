@@ -42,6 +42,7 @@ const Colors = {
   endColor: '#e86e04',
   stroke: '#ee8123',
   iconBg: '#ffa85a',
+  warningLogoBg: '#FFF7E5',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -113,6 +114,7 @@ export const DefaultTheme = {
     linearGradientStart: Colors.startColor,
     linearGradientEnd: Colors.endColor,
     LinearGradientStroke: Colors.stroke,
+    warningLogoBgColor: Colors.warningLogoBg,
   },
   Styles: StyleSheet.create({
     title: {
@@ -355,10 +357,13 @@ export const DefaultTheme = {
       flex: 1,
       justifyContent: 'space-between',
     },
+    welcomeLogo: {
+      width: 160.441,
+      height: 173.276,
+    },
     logo: {
       height: 40,
       width: 40,
-      marginRight: 4,
     },
     issuerLogo: {
       resizeMode: 'contain',
@@ -716,6 +721,7 @@ export const DefaultTheme = {
     bold: {
       fontFamily: 'Inter_700Bold',
       fontSize: 15,
+      justifyContent: 'center',
     },
     small: {
       fontSize: 13,
@@ -782,27 +788,18 @@ export const DefaultTheme = {
     },
   }),
   SearchBarStyles: StyleSheet.create({
+    searchBarContainer: {
+      borderBottomWidth: 1,
+      borderBottomColor: Colors.Gray50,
+    },
     searchIcon: {
       justifyContent: 'center',
-      paddingLeft: 15,
       height: Dimensions.get('window').height * 0.055,
       width: Dimensions.get('window').width * 0.1,
-      borderColor: Colors.Gray50,
-      borderTopWidth: 1,
-      borderBottomWidth: 1,
-      borderLeftWidth: 1,
-      borderTopLeftRadius: 9,
-      borderBottomLeftRadius: 9,
     },
     searchBar: {
-      borderWidth: 1,
-      borderColor: Colors.Gray50,
       height: Dimensions.get('window').height * 0.055,
       width: Dimensions.get('window').width * 0.84,
-      paddingLeft: 12,
-      borderLeftWidth: 0,
-      borderTopRightRadius: 9,
-      borderBottomRightRadius: 9,
     },
   }),
   ButtonStyles: StyleSheet.create({
@@ -818,6 +815,7 @@ export const DefaultTheme = {
     outline: {
       backgroundColor: Colors.Transparent,
       borderColor: Colors.Orange,
+      borderWidth: 1,
     },
     container: {
       height: 45,
@@ -1250,10 +1248,9 @@ export const DefaultTheme = {
     issuerHeading: {
       fontFamily: 'Inter_600SemiBold',
       fontSize: 14,
-      lineHeight: 17,
       paddingHorizontal: 3,
-      paddingBottom: 4,
-      paddingTop: 1.7,
+      marginBottom: 2,
+      marginTop: 5,
     },
     issuerDescription: {
       fontSize: 11,
@@ -1323,36 +1320,13 @@ export const DefaultTheme = {
   ICON_SMALL_SIZE: 16,
   ICON_MID_SIZE: 22,
   ICON_LARGE_SIZE: 33,
-  PinIcon: require('../../../assets/pin_icon.png'),
   CloseCard: require('../../../assets/card_bg.png'),
-  CardBackground: require('../../../assets/card_bg.png'),
   OpenCard: require('../../../assets/card_bg.png'),
   cardFaceIcon: require('../../../assets/placeholder-photo.png'),
-  MosipSplashLogo: require('../../../assets/icon.png'),
-  MosipLogo: require('../../../assets/mosip-logo.png'),
-  CameraFlipIcon: require('../../../assets/camera-flip-icon.png'),
-  ImageCaptureButton: require('../../../assets/capture-button.png'),
-  DomainWarningLogo: require('../../../assets/domain-warning.png'),
-  WarningLogo: require('../../../assets/warningLogo.png'),
-  OtpLogo: require('../../../assets/otp-mobile-logo.png'),
-  SuccessLogo: require('../../../assets/success-logo.png'),
-  ReceiveCardIcon: require('../../../assets/receive-card-icon.png'),
-  ReceivedCardsIcon: require('../../../assets/received-cards-icon.png'),
-  DigitalIdentityLogo: require('../../../assets/digital-identity-icon.png'),
-  InjiLogoWhite: require('../../../assets/inji-logo-white.png'),
-  InjiProgressingLogo: require('../../../assets/progressing-logo.png'),
-  LockIcon: require('../../../assets/lock-icon.png'),
-  InjiHomeLogo: require('../../../assets/inji-home-logo.png'),
-  MagnifierZoom: require('../../../assets/magnifier-zoom.png'),
-  HelpIcon: require('../../../assets/help-icon.png'),
   sharingIntro: require('../../../assets/intro-secure-sharing.png'),
   walletIntro: require('../../../assets/intro-wallet-binding.png'),
   IntroScanner: require('../../../assets/intro-scanner.png'),
-  injiSmallLogo: require('../../../assets/inji_small_logo.png'),
   protectPrivacy: require('../../../assets/intro-unlock-method.png'),
-  NoInternetConnection: require('../../../assets/no-internet-connection.png'),
-  SomethingWentWrong: require('../../../assets/something-went-wrong.png'),
-  Pin_Icon: require('../../../assets/Pin_Icon.svg').default.src,
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/
 

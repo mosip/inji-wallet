@@ -8,6 +8,7 @@ import {Button} from '../../components/ui';
 import {useScanLayout} from './ScanLayoutController';
 import {useSendVcScreen} from './SendVcScreenController';
 import testIDProps from '../../shared/commonUtil';
+import {SvgImage} from '../../components/ui/svg';
 
 export const SharingSuccessModal: React.FC<
   SharingSuccessModalProps
@@ -26,7 +27,7 @@ export const SharingSuccessModal: React.FC<
           margin="64 0"
           crossAlign="center"
           style={Theme.SelectVcOverlayStyles.sharedSuccessfully}>
-          <Image source={Theme.SuccessLogo} height={22} width={22} />
+          {SvgImage.SuccessMessageIcon()}
           <Text margin="20 0" style={Theme.TextStyles.bold} size={'large'}>
             {t('ScanScreen:status.accepted.title')}
           </Text>
