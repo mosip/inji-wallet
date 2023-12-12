@@ -1,4 +1,4 @@
-import {configure} from '@iriscan/biometric-sdk-react-native';
+import {init} from 'mosip-mobileid-sdk';
 import {changeCrendetialRegistry} from '../constants';
 import {CACHED_API} from '../api';
 
@@ -16,28 +16,9 @@ export async function downloadModel() {
     const maxRetryStr = injiProp.modelDownloadMaxRetry;
     const maxRetry = parseInt(maxRetryStr);
     const resp: string = injiProp != null ? injiProp.faceSdkModelUrl : null;
-
-    const config = {
-      withFace: {
-        encoder: {
-          tfModel: {
-            path: resp + '/model.tflite',
-            inputWidth: 160,
-            inputHeight: 160,
-            outputLength: 512,
-            modelChecksum:
-              '797b4d99794965749635352d55da38d4748c28c659ee1502338badee4614ed06',
-          },
-        },
-        matcher: {
-          threshold: 0.8,
-        },
-      },
-    };
-
     if (resp != null) {
       for (let counter = 0; counter < maxRetry; counter++) {
-        var result = await configure(config);
+        var result = await init(resp + '/model.tflite', false);
         console.log('model download result is = ' + result);
         if (result) {
           break;
