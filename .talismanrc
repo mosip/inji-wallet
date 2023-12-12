@@ -1,8 +1,8 @@
 fileignoreconfig:
   - filename: package.json
-    checksum: a5a22604f2b9d917adaf3561fdcaeccd4e69b92e1240070480d7498e1eda5162
+    checksum: 984f91af6d696faf934f7e541801343e146aed1b58d7c950ba11ec02dbd60dda
   - filename: package-lock.json
-    checksum: 7e8bc0fa27b4eca3b7a825bccdef88ef1c9e7932a5d9af0e5feca2d42d72703b
+    checksum: c16e22cf137c123d7f1b1b95758646fc839dc1fa16f7cf74dff3124174475e13
   - filename: lib/jsonld-signatures/suites/ed255192018/ed25519.ts
     checksum: 493b6e31144116cb612c24d98b97d8adcad5609c0a52c865a6847ced0a0ddc3a
   - filename: components/PasscodeVerify.tsx
@@ -67,8 +67,6 @@ fileignoreconfig:
     checksum: c5de3d912e2cbd55f6898e2f4a24413abbee8f084c99ea11ce6265504a520ce0
   - filename: android/fastlane/Fastfile
     checksum: 41d1409adf8df9c843fd2dba89142cd55c471f3060ced57d48ee96dc8793ffcd
-  - filename: package.json
-    checksum: b982af1813bb72625c63eb31b3d0a6c0d970cd669d57649cc0ac9358252e3cd3
   - filename: machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine.typegen.ts
     checksum: 15308987b1aab0c51c96bfc646ae55a3d7ae728a1f6e03ab31d5e1b786da03eb
   - filename: machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine.typegen.ts
@@ -76,21 +74,18 @@ fileignoreconfig:
   - filename: shared/telemetry/TelemetryUtils.js
     checksum: a0686e9a5c006176fd720b84bc36ca947db1422caf65c90cd0c2d1102a9e96df
   - filename: ios/fastlane/Fastfile
-    checksum: feea5a7f044ef6961d53e7d1e1ffb92a3e0f72761496424f6e64288e3718d605
+    checksum: 78edb7772ca7bf64fc0c603cb82771c793e03afff37ccbbfd1b9f578ec0e5369
   - filename: machines/bleShare/scan/scanMachine.ts
     checksum: a514c958ca3da3c5b22a1a95ad680af8f05fb22638fab79b3842aa8fcc1b4a17
-    version: ''
   - filename: locales/spa.json
     checksum: eac9685c6b205ece5759e414669d27ad7ce383453d7b5e7d9f5ce75d290cc860
-    version: ''
   - filename: screens/PasscodeScreen.tsx
     checksum: 5d3003027b245234f8c00bfc98836f1fb90a5d9525ffacf61c53f3d50954aa6a
-    version: ''
   - filename: screens/PasscodeScreen.tsx
     checksum: 3330b9db9cfce407782e82b4fe3c0b60a9ecb0f9327af2b69971e254f9e52921
-    version: ''
   - filename: screens/Home/MyVcs/OtpVerificationModal.tsx
     checksum: a99fe136d9d1348c541d413324d266e179ecad6a1fe6b6bd1e0b2856a5a6d6b5
   - filename: screens/QrLogin/QrConsent.tsx
     checksum: 8563a194a4d38814eff670f0652d1a7af77134cafb350462174b4f147dbd890d
-    version: ''
+  - filename: machines/store.ts
+    checksum: ca2328c39d2757ffebf85c0b6663da1073eb58349f2630c9418b2f16c350cbd1
