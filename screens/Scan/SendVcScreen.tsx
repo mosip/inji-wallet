@@ -99,7 +99,9 @@ export const SendVcScreen: React.FC = () => {
             />
           ))}
         </Column>
-        <Column backgroundColor={Theme.Colors.whiteBackgroundColor}>
+        <Column
+          margin={[1, 0, 1, 0]}
+          backgroundColor={Theme.Colors.whiteBackgroundColor}>
           {!controller.selectedVc.shouldVerifyPresence && (
             <Button
               type="gradient"
