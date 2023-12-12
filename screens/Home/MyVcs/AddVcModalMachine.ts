@@ -72,6 +72,7 @@ export const AddVcModalMachine =
       on: {
         SET_INDIVIDUAL_ID: {
           actions: ['clearIdError', 'clearId', 'setIdType', 'setId'],
+          target: '#AddVcModal.acceptingIdInput.idle',
         },
       },
       states: {
