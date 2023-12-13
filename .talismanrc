@@ -4,7 +4,7 @@ fileignoreconfig:
 - filename: package.json
   checksum: e0b34f1a1efbdf07b40a3e9e9ecd8884dd7d6835f45c57850e30988d2c6371a2
 - filename: package-lock.json
-  checksum: fc26d97edecbacd0b7507032c6fc1acfcea9f01f5dbe66a2a0341506e2f0daca
+  checksum: 85f8d3a110f0a713e1b213c850ff1ceb071a36ad57050bf5a18918cf8814123c
 - filename: components/PasscodeVerify.tsx
   checksum: 14654c0f038979fcd0d260170a45894a072f81e0767ca9a0e66935d33b5cc703
 - filename: i18n.ts
@@ -36,7 +36,7 @@ fileignoreconfig:
 - filename: screens/Home/IntroSlidersScreen.tsx
   checksum: 72ef913857448ef05763e52e32356faa2d1f3de8130a1c638d1897f44823031f
 - filename: shared/commonUtil.ts
-  checksum: 01c3fdcd2f1c1757eae0c6a27fe04eb70c2aaf8660c604f3301997484592b66c
+  checksum: b9ff87d627c74ba1cf2f1d0bfab6c11192573c45a4c581c3beadb3c612bfe1ab
 - filename: screens/Home/MyVcs/GetIdInputModal.tsx
   checksum: 5c736ed79a372d0ffa7c02eb33d0dc06edbbb08d120978ff287f5f06cd6c7746
 - filename: shared/openId4VCI/Utils.ts
