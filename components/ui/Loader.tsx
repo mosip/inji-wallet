@@ -91,23 +91,17 @@ export const Loader: React.FC<LoaderProps> = props => {
             )}
           </Column>
         )}
-        <Column style={{display: props.hint ? 'flex' : 'none'}}>
-          <Column style={Theme.SelectVcOverlayStyles.timeoutHintContainer}>
-            <Text
-              align="center"
-              color={Theme.Colors.TimoutText}
-              style={Theme.TextStyles.bold}>
-              {props.hint}
-            </Text>
-            {props.onCancel && (
+        {props.onCancel && (
+          <Column style={{display: props.hint ? 'flex' : 'none'}}>
+            <Column style={Theme.SelectVcOverlayStyles.timeoutHintContainer}>
               <Button
                 type="clear"
                 title={t('common:cancel')}
                 onPress={props.onCancel}
               />
-            )}
+            </Column>
           </Column>
-        </Column>
+        )}
       </Centered>
     </Fragment>
   );
@@ -123,7 +117,6 @@ export interface LoaderProps {
   isBleErrorVisible?: boolean;
   onCancel?: () => void;
   onRetry?: () => void;
-  requester?: boolean;
   progress?: boolean | number;
   onBackdropPress?: () => void;
 }

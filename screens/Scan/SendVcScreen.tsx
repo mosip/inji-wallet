@@ -101,6 +101,7 @@ export const SendVcScreen: React.FC = () => {
         </Column>
         <Column
           margin={[1, 0, 1, 0]}
+          style={{rowGap: 8}}
           backgroundColor={Theme.Colors.whiteBackgroundColor}>
           {!controller.selectedVc.shouldVerifyPresence && (
             <Button
