@@ -27,7 +27,7 @@ export const SharingSuccessModal: React.FC<
           margin="64 0"
           crossAlign="center"
           style={Theme.SelectVcOverlayStyles.sharedSuccessfully}>
-          {SvgImage.SuccessMessageIcon()}
+          {SvgImage.SuccessLogo()}
           <Text margin="20 0" style={Theme.TextStyles.bold} size={'large'}>
             {t('ScanScreen:status.accepted.title')}
           </Text>

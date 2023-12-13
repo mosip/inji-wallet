@@ -18,7 +18,7 @@ import WarningLogo from '../../assets/alert_icon.svg';
 import OtpVerificationIcon from '../../assets/Otp_Verification_Icon.svg';
 import FlipCameraIcon from '../../assets/Flip_Camera_Icon.svg';
 import CameraCaptureIcon from '../../assets/Camera_Capture_Icon.svg';
-import SuccessMessageIcon from '../../assets/success_message_icon.svg';
+import SuccessLogo from '../../assets/success_message_icon.svg';
 import NoInternetConnection from '../../assets/No internet connection.svg';
 import SomethintWentWrong from '../../assets/Something went wrong!.svg';
 import MagnifierZoom from '../../assets/MagnifierZoom.svg';
@@ -173,8 +173,8 @@ export class SvgImage {
       />
     );
   }
-  static SuccessMessageIcon() {
-    return <SuccessMessageIcon width={22} height={22} />;
+  static SuccessLogo() {
+    return <SuccessLogo />;
   }
   static NoInternetConnection() {
     return <NoInternetConnection />;
