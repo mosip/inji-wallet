@@ -24,8 +24,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = props => {
   const controller = useIdInputModal(props);
 
   const setIndividualID = () => {
-    controller.INPUT_ID(individualId.id);
-    controller.SELECT_ID_TYPE(individualId.idType);
+    controller.SET_INDIVIDUAL_ID(individualId);
   };
 
   const dismissInput = () => {

@@ -17,7 +17,7 @@ import {
   OtpVerificationModalProps,
   useOtpVerificationModal,
 } from './OtpVerificationModalController';
-import {isIOS} from '../../../shared/constants';
+import {GET_INDIVIDUAL_ID, isIOS} from '../../../shared/constants';
 import {SvgImage} from '../../../components/ui/svg';
 
 export const OtpVerificationModal: React.FC<
@@ -67,6 +67,11 @@ export const OtpVerificationModal: React.FC<
   const handleEnteredOtp = (otp: string) => {
     resetRetryCount();
     props.onInputDone(otp);
+  };
+
+  const handleRequestOTPCancel = () => {
+    GET_INDIVIDUAL_ID({id: '', idType: 'UIN'});
+    controller.CANCEL();
   };
 
   return (
@@ -158,7 +163,7 @@ export const OtpVerificationModal: React.FC<
             testID="cancel"
             type="clear"
             title={t('confirmationDialog.cancel')}
-            onPress={controller.CANCEL}
+            onPress={handleRequestOTPCancel}
           />
         </Column>
       </MessageOverlay>
