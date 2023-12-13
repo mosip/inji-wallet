@@ -415,13 +415,6 @@ export const DefaultTheme = {
       marginLeft: 130,
       marginRight: 50,
     },
-    settingsIconBg: {
-      padding: 6,
-      width: 36,
-      marginRight: 4,
-      height: 36,
-      backgroundColor: Colors.Transparent,
-    },
     backArrowContainer: {
       padding: 6,
       width: 36,
