@@ -30,7 +30,6 @@ const LanguageSetting: React.FC = () => {
             size={22}
             type="simple-line-icon"
             color={Theme.Colors.Icon}
-            containerStyle={Theme.Styles.settingsIconBg}
           />
           <ListItem.Content>
             <ListItem.Title
@@ -211,7 +210,6 @@ export const SettingScreen: React.FC<
                 type="fontawesome"
                 size={22}
                 color={Theme.Colors.Icon}
-                containerStyle={Theme.Styles.settingsIconBg}
               />
               <ListItem.Content>
                 <ListItem.Title
