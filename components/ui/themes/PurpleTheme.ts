@@ -1255,15 +1255,6 @@ export const PurpleTheme = {
       color: Colors.ShadeOfGrey,
       paddingTop: 1.4,
     },
-    issuerIcon: {
-      height: 32,
-      width: 32,
-      marginBottom: 9,
-      marginTop: 8,
-      marginLeft: 2.5,
-      borderColor: 'red',
-      borderWidth: 1,
-    },
   }),
   ErrorStyles: StyleSheet.create({
     image: {marginTop: -60, paddingBottom: 26},

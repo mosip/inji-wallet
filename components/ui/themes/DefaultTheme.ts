@@ -1253,14 +1253,6 @@ export const DefaultTheme = {
       paddingHorizontal: 3,
       paddingTop: 1.4,
     },
-    issuerIcon: {
-      resizeMode: 'contain',
-      height: 33,
-      width: 32,
-      marginBottom: 9,
-      marginTop: 8,
-      marginLeft: 2.5,
-    },
   }),
   ErrorStyles: StyleSheet.create({
     image: {marginTop: -60, paddingBottom: 26},
