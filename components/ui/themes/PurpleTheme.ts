@@ -811,7 +811,6 @@ export const PurpleTheme = {
     outline: {
       backgroundColor: Colors.Transparent,
       borderColor: Colors.Purple,
-      borderWidth: 1,
     },
     container: {
       height: 45,

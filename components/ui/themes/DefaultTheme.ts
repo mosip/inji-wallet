@@ -808,7 +808,6 @@ export const DefaultTheme = {
     outline: {
       backgroundColor: Colors.Transparent,
       borderColor: Colors.Orange,
-      borderWidth: 1,
     },
     container: {
       height: 45,

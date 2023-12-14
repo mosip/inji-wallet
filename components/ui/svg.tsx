@@ -2,26 +2,27 @@ import React from 'react';
 import Svg, {Image} from 'react-native-svg';
 import {Theme} from './styleUtils';
 import {Icon} from 'react-native-elements';
-import {ImageBackground} from 'react-native';
+import {ImageBackground, View} from 'react-native';
 import PinICon from '../../assets/Pin_Icon.svg';
-import InjiSmallLogo from '../../assets/inji_small_logo.svg';
-import FingerPrint from '../../assets/fingerprint_icon.svg';
-import LockIcon from '../../assets/lock_icon.svg';
-import InjiLogo from '../../assets/inji_home_logo.svg';
-import DigitalIdentity from '../../assets/digital_identity_icon.svg';
+import InjiSmallLogo from '../../assets/Inji_Logo.svg';
+import FingerPrint from '../../assets/Finger_Print_Icon.svg';
+import LockIcon from '../../assets/Lock_Icon.svg';
+import InjiLogo from '../../assets/Inji_Home_Logo.svg';
+import DigitalIdentity from '../../assets/Digital_Identity_Icon.svg';
 import ReceiveCard from '../../assets/Receive_Card.svg';
 import ReceivedCards from '../../assets/Received_Cards.svg';
-import ProgressIcon from '../../assets/progress_icon.svg';
+import ProgressIcon from '../../assets/Progress_Icon.svg';
 import testIDProps from '../../shared/commonUtil';
-import Logo from '../../assets/MOSIP_LOGO.svg';
-import WarningLogo from '../../assets/alert_icon.svg';
+import Logo from '../../assets/Mosip_Logo.svg';
+import WarningLogo from '../../assets/Warning_Icon.svg';
 import OtpVerificationIcon from '../../assets/Otp_Verification_Icon.svg';
 import FlipCameraIcon from '../../assets/Flip_Camera_Icon.svg';
 import CameraCaptureIcon from '../../assets/Camera_Capture_Icon.svg';
-import SuccessLogo from '../../assets/success_message_icon.svg';
-import NoInternetConnection from '../../assets/No internet connection.svg';
-import SomethintWentWrong from '../../assets/Something went wrong!.svg';
-import MagnifierZoom from '../../assets/MagnifierZoom.svg';
+import SuccessLogo from '../../assets/Success_Message_Icon.svg';
+import NoInternetConnection from '../../assets/No_Internet_Connection.svg';
+import SomethintWentWrong from '../../assets/Something_Went_Wrong.svg';
+import MagnifierZoom from '../../assets/Magnifier_Zoom.svg';
+import OpenCardBg from '../../assets/Open_Card_Bg.svg';
 
 export class SvgImage {
   static MosipLogo(props: LogoProps) {
@@ -90,7 +91,9 @@ export class SvgImage {
       />
     );
   }
-
+  static OpenCardBg() {
+    return OpenCardBg;
+  }
   static ReceiveCard() {
     return (
       <ReceiveCard
