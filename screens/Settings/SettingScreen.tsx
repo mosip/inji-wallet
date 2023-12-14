@@ -1,5 +1,5 @@
 import React from 'react';
-import {Platform, Pressable, View, Image} from 'react-native';
+import {Platform, Pressable, Image} from 'react-native';
 import {Icon, ListItem, Switch} from 'react-native-elements';
 import {Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';

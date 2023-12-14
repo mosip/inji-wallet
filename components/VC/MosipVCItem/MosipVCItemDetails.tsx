@@ -393,7 +393,7 @@ export const MosipVCItemDetails: React.FC<
               style={{flex: 1, lineHeight: 17}}
               weight="regular"
               size="small"
-              margin={'3 0 0 0'}
+              margin={'3 0 10 0'}
               color={Theme.Colors.statusMessage}>
               {t('offlineAuthDisabledMessage')}
             </Text>
