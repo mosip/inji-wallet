@@ -36,7 +36,8 @@ export interface Typegen0 {
     checkBluetoothState:
       | 'done.invoke.scan.checkBluetoothState.checking:invocation[0]'
       | 'done.invoke.scan.recheckBluetoothState.checking:invocation[0]';
-    checkLocationPermission: 'done.invoke.scan.checkingLocationService.checkingPermissionStatus:invocation[0]';
+    checkLocationPermission: 'done.invoke.scan.checkingLocationState.checkingPermissionStatus:invocation[0]';
+    checkLocationStatus: 'done.invoke.scan.checkingLocationState.checkLocationService:invocation[0]';
     checkNearByDevicesPermission: 'done.invoke.scan.checkNearbyDevicesPermission.checking:invocation[0]';
     checkStorageAvailability: 'done.invoke.scan.checkStorage:invocation[0]';
     createVp: 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
@@ -46,7 +47,7 @@ export interface Typegen0 {
     monitorConnection: 'done.invoke.scan:invocation[0]';
     requestBluetooth: 'done.invoke.scan.checkBluetoothState.requesting:invocation[0]';
     requestNearByDevicesPermission: 'done.invoke.scan.checkNearbyDevicesPermission.requesting:invocation[0]';
-    requestToEnableLocationPermission: 'done.invoke.scan.checkingLocationService.requestToEnableLocation:invocation[0]';
+    requestToEnableLocationPermission: 'done.invoke.scan.checkingLocationState.requestToEnableLocation:invocation[0]';
     sendVc: 'done.invoke.scan.reviewing.sendingVc:invocation[0]';
     startConnection: 'done.invoke.scan.connecting:invocation[0]';
   };
@@ -147,7 +148,8 @@ export interface Typegen0 {
       | 'NEARBY_ENABLED'
       | 'START_PERMISSION_CHECK';
     checkBluetoothState: '' | 'APP_ACTIVE';
-    checkLocationPermission: '' | 'APP_ACTIVE';
+    checkLocationPermission: 'APP_ACTIVE' | 'LOCATION_ENABLED';
+    checkLocationStatus: '' | 'LOCATION_REQUEST';
     checkNearByDevicesPermission: 'APP_ACTIVE' | 'START_PERMISSION_CHECK';
     checkStorageAvailability: 'RESET' | 'SCREEN_FOCUS';
     createVp: never;
@@ -177,10 +179,12 @@ export interface Typegen0 {
     | 'checkNearbyDevicesPermission.enabled'
     | 'checkNearbyDevicesPermission.requesting'
     | 'checkStorage'
-    | 'checkingLocationService'
-    | 'checkingLocationService.checkingPermissionStatus'
-    | 'checkingLocationService.denied'
-    | 'checkingLocationService.requestToEnableLocation'
+    | 'checkingLocationState'
+    | 'checkingLocationState.checkLocationService'
+    | 'checkingLocationState.checkingPermissionStatus'
+    | 'checkingLocationState.denied'
+    | 'checkingLocationState.disabled'
+    | 'checkingLocationState.requestToEnableLocation'
     | 'clearingConnection'
     | 'connecting'
     | 'connecting.inProgress'
@@ -218,9 +222,11 @@ export interface Typegen0 {
         checkBluetoothPermission?: 'checking' | 'enabled';
         checkBluetoothState?: 'checking' | 'enabled' | 'requesting';
         checkNearbyDevicesPermission?: 'checking' | 'enabled' | 'requesting';
-        checkingLocationService?:
+        checkingLocationState?:
+          | 'checkLocationService'
           | 'checkingPermissionStatus'
           | 'denied'
+          | 'disabled'
           | 'requestToEnableLocation';
         connecting?: 'inProgress' | 'timeout';
         recheckBluetoothState?: 'checking' | 'enabled';
