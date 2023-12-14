@@ -41,10 +41,10 @@ const model = createModel(
       TOGGLE_BIOMETRIC_UNLOCK: (enable: boolean) => ({enable}),
       STORE_RESPONSE: (response: unknown) => ({response}),
       CHANGE_LANGUAGE: (language: string) => ({language}),
-      UPDATE_MIMOTO_HOST: (credentialRegistry: string) => ({
+      UPDATE_HOST: (credentialRegistry: string, esignetHostUrl: string) => ({
         credentialRegistry,
+        esignetHostUrl,
       }),
-      UPDATE_ESIGNET_HOST: (esignetHostUrl: string) => ({esignetHostUrl}),
       UPDATE_CREDENTIAL_REGISTRY_RESPONSE: (
         credentialRegistryResponse: string,
       ) => ({
@@ -103,12 +103,13 @@ export const settingsMachine = model.createMachine(
           UPDATE_VC_LABEL: {
             actions: ['updateVcLabel', 'storeContext'],
           },
-          UPDATE_MIMOTO_HOST: {
-            actions: ['resetCredentialRegistry'],
+          UPDATE_HOST: {
+            actions: [
+              'resetCredentialRegistry',
+              'updateEsignetHostUrl',
+              'storeContext',
+            ],
             target: 'resetInjiProps',
-          },
-          UPDATE_ESIGNET_HOST: {
-            actions: ['updateEsignetHostUrl', 'storeContext'],
           },
           CANCEL: {
             actions: ['resetCredentialRegistry'],
