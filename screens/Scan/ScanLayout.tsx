@@ -30,7 +30,6 @@ export const ScanLayout: React.FC = () => {
         onStayInProgress={controller.statusOverlay?.onStayInProgress}
         isHintVisible={controller.isStayInProgress || controller.isBleError}
         onRetry={controller.statusOverlay?.onRetry}
-        progress={controller.statusOverlay?.progress}
       />
     );
   }
