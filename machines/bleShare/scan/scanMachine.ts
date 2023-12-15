@@ -17,7 +17,7 @@ import {getDeviceNameSync} from 'react-native-device-info';
 import {VC, VerifiablePresentation} from '../../../types/VC/ExistingMosipVC/vc';
 import {AppServices} from '../../../shared/GlobalContext';
 import {ActivityLogEvents, ActivityLogType} from '../../activityLog';
-import {isAndroid, isIOS, MY_LOGIN_STORE_KEY} from '../../../shared/constants';
+import {androidVersion, isAndroid, isIOS, MY_LOGIN_STORE_KEY} from '../../../shared/constants';
 import {subscribe} from '../../../shared/openIdBLE/walletEventHandler';
 import {
   check,
@@ -950,7 +950,7 @@ export const scanMachine =
           );
         },
 
-        sendBLEConnectionErrorEvent: (context, event) => {
+        sendBLEConnectionErrorEvent: (_context, event) => {
           sendErrorEvent(
             getErrorEventData(
               TelemetryConstants.FlowType.senderVcShare,
@@ -1216,7 +1216,7 @@ export const scanMachine =
           }
         },
 
-        uptoAndroid11: () => isAndroid() && Platform.Version < 31,
+        uptoAndroid11: () => isAndroid() && androidVersion < 31,
 
         isIOS: () => isIOS(),
 
