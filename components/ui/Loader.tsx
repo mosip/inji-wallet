@@ -64,16 +64,18 @@ export const Loader: React.FC<LoaderProps> = props => {
             />
           </View>
         </Column>
-        {props.isHintVisible && (
+        {(props.isHintVisible || props.onCancel) && (
           <Column style={Theme.SelectVcOverlayStyles.timeoutHintContainer}>
-            <Text
-              align="center"
-              margin="10"
-              color={Theme.Colors.TimoutHintText}
-              size="small"
-              style={Theme.TextStyles.bold}>
-              {props.hint}
-            </Text>
+            {props.hint && (
+              <Text
+                align="center"
+                margin="10"
+                color={Theme.Colors.TimoutHintText}
+                size="small"
+                style={Theme.TextStyles.bold}>
+                {props.hint}
+              </Text>
+            )}
             {props.onStayInProgress && (
               <Button
                 type="clear"
