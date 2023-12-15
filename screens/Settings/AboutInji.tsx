@@ -68,6 +68,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
               weight="semibold"
               style={{
                 maxWidth: 110,
+                paddingTop: 3,
               }}>
               {t('appID')}
             </Text>
@@ -107,7 +108,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
                 }}>
                 <Text
                   color={Theme.Colors.AddIdBtnBg}
-                  style={{maxWidth: 150}}
+                  style={{maxWidth: 150, paddingTop: 3}}
                   weight="bold">
                   {t('clickHere')}
                 </Text>

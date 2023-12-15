@@ -17,7 +17,7 @@ export const CopyButton: React.FC<CopyButtonProps> = ({content}) => {
         setTimeout(() => setButtonText(t('clipboard.copy')), 3000);
         Clipboard.setString(content);
       }}>
-      <Row align="center">
+      <Row crossAlign="center">
         <Icon
           type={'material'}
           name={'file-copy'}
@@ -25,7 +25,9 @@ export const CopyButton: React.FC<CopyButtonProps> = ({content}) => {
           style={{marginRight: 2}}
           size={19}
         />
-        <Text weight="semibold">{buttonText}</Text>
+        <Text weight="semibold" align="center" style={{paddingTop: 5}}>
+          {buttonText}
+        </Text>
       </Row>
     </Pressable>
   );
