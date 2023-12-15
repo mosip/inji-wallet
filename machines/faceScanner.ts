@@ -4,8 +4,6 @@ import {Linking} from 'react-native';
 import {assign, EventFrom, StateFrom} from 'xstate';
 import {createModel} from 'xstate/lib/model';
 
-import {faceCompare} from '@iriscan/biometric-sdk-react-native';
-
 const model = createModel(
   {
     cameraRef: {} as Camera,
@@ -220,7 +218,8 @@ export const createFaceScannerMachine = (vcImage: string) =>
           const rxDataURI =
             /data:(?<mime>[\w/\-.]+);(?<encoding>\w+),(?<data>.*)/;
           const matches = rxDataURI.exec(vcImage).groups;
-          return faceCompare(context.capturedImage.base64, matches.data);
+          // ToDo - compare faces to do face match and return the match response
+          return true;
         },
       },
 
