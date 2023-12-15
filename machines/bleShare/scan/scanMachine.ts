@@ -465,7 +465,7 @@ export const scanMachine =
             timeout: {
               on: {
                 STAY_IN_PROGRESS: {
-                  actions: 'setStayInProgress',
+                  actions: 'resetStayInProgress',
                 },
                 CANCEL: {
                   target: '#scan.reviewing.cancelling',
@@ -546,7 +546,7 @@ export const scanMachine =
                 timeout: {
                   on: {
                     STAY_IN_PROGRESS: {
-                      actions: 'setStayInProgress',
+                      actions: 'resetStayInProgress',
                     },
                     CANCEL: {
                       target: '#scan.reviewing.cancelling',
@@ -894,7 +894,10 @@ export const scanMachine =
             new URL(event.params).searchParams.get('linkCode'),
         }),
         setStayInProgress: assign({
-          stayInProgress: context => !context.stayInProgress,
+          stayInProgress: true,
+        }),
+        resetStayInProgress: assign({
+          stayInProgress: false,
         }),
 
         setPromptHint: assign({
