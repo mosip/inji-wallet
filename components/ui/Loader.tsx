@@ -59,16 +59,18 @@ export const Loader: React.FC<LoaderProps> = props => {
             />
           </View>
         </Column>
-        {(props.isHintVisible || props.isBleErrorVisible) && (
+        {(props.isHintVisible || props.onCancel) && (
           <Column style={Theme.SelectVcOverlayStyles.timeoutHintContainer}>
-            <Text
-              align="center"
-              margin="10"
-              color={Theme.Colors.TimoutHintText}
-              size="small"
-              style={Theme.TextStyles.bold}>
-              {props.hint}
-            </Text>
+            {props.hint && (
+              <Text
+                align="center"
+                margin="10"
+                color={Theme.Colors.TimoutHintText}
+                size="small"
+                style={Theme.TextStyles.bold}>
+                {props.hint}
+              </Text>
+            )}
             {props.onStayInProgress && (
               <Button
                 type="clear"
@@ -76,7 +78,6 @@ export const Loader: React.FC<LoaderProps> = props => {
                 onPress={props.onStayInProgress}
               />
             )}
-
             {props.onRetry && (
               <Button
                 type="clear"
@@ -84,16 +85,6 @@ export const Loader: React.FC<LoaderProps> = props => {
                 onPress={props.onRetry}
               />
             )}
-          </Column>
-        )}
-        <Column style={{display: props.hint ? 'flex' : 'none'}}>
-          <Column style={Theme.SelectVcOverlayStyles.timeoutHintContainer}>
-            <Text
-              align="center"
-              color={Theme.Colors.TimoutText}
-              style={Theme.TextStyles.bold}>
-              {props.hint}
-            </Text>
             {props.onCancel && (
               <Button
                 type="clear"
@@ -102,7 +93,7 @@ export const Loader: React.FC<LoaderProps> = props => {
               />
             )}
           </Column>
-        </Column>
+        )}
       </Centered>
     </Fragment>
   );
@@ -111,14 +102,9 @@ export const Loader: React.FC<LoaderProps> = props => {
 export interface LoaderProps {
   title: string;
   subTitle?: string;
-  label?: string;
   hint?: string;
   onStayInProgress?: () => void;
   isHintVisible?: boolean;
-  isBleErrorVisible?: boolean;
   onCancel?: () => void;
   onRetry?: () => void;
-  requester?: boolean;
-  progress?: boolean | number;
-  onBackdropPress?: () => void;
 }

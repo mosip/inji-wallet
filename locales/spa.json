@@ -40,7 +40,7 @@
   },
   "QrScanner": {
     "cameraAccessDisabled": "¡Acceso a la cámara deshabilitado!",
-    "cameraPermissionGuideLabel": "Vaya a configuración y habilite el acceso a la cámara manualmente.",
+    "cameraPermissionGuideLabel": "Vaya a la configuración del teléfono y habilite el acceso a la cámara manualmente.",
     "flipCamera": "Voltear cámara"
   },
   "VcDetails": {

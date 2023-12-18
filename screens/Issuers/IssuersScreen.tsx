@@ -161,7 +161,6 @@ export const IssuersScreen: React.FC<
       <Loader
         title={t('loaders.loading')}
         subTitle={t(`loaders.subTitle.${controller.loadingReason}`)}
-        progress
       />
     );
   }

@@ -14,6 +14,7 @@ const Colors = {
   Gray44: '#707070',
   Gray50: '#999999',
   Gray9: '#171717',
+  Gray89: '#E3E3E3',
   DimGray: '#737373',
   platinumGrey: '#EDEDED',
   Orange: '#F2811D',
@@ -490,14 +491,28 @@ export const DefaultTheme = {
       width: '100%',
       margin: 'auto',
     },
+    disabledScannerContainer: {
+      borderRadius: 24,
+      height: 350,
+      width: '100%',
+      margin: 'auto',
+      backgroundColor: Colors.White,
+      borderWidth: 1,
+      borderColor: Colors.Gray89,
+    },
+    cameraDisabledPopupContainer: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+    },
     cameraDisabledPopUp: {
-      alignItems: 'center',
       justifyContent: 'space-between',
       backgroundColor: Colors.Red,
-      height: 75,
       position: 'relative',
+      padding: 20,
       paddingHorizontal: 15,
-      marginTop: -36,
+      marginTop: -24,
     },
     photoConsentLabel: {
       backgroundColor: Colors.White,
@@ -1251,6 +1266,13 @@ export const DefaultTheme = {
       paddingVertical: 5,
       paddingHorizontal: 3,
       paddingTop: 1.4,
+    },
+  }),
+  SendVcScreenStyles: StyleSheet.create({
+    shareOptionButtonsContainer: {
+      marginBottom: 1,
+      marginTop: 1,
+      rowGap: 8,
     },
   }),
   ErrorStyles: StyleSheet.create({

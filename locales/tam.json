@@ -40,7 +40,7 @@
   },
   "QrScanner": {
     "cameraAccessDisabled": "கேமரா அணுகல் முடக்கப்பட்டுள்ளது!",
-    "cameraPermissionGuideLabel": "அமைப்புகளுக்குச் சென்று கேமரா அணுகலை கைமுறையாக இயக்கவும்.",
+    "cameraPermissionGuideLabel": "தொலைபேசி அமைப்புகளுக்குச் சென்று கேமரா அணுகலை கைமுறையாக இயக்கவும்.",
     "flipCamera": "ஃபிளிப் கேமரா"
   },
   "VcDetails": {
