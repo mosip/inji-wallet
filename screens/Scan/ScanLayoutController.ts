@@ -17,7 +17,6 @@ import {
   selectIsSendingVcTimeout,
   selectIsSent,
   selectIsDone,
-  selectStayInProgress,
 } from '../../machines/bleShare/scan/selectors';
 import {
   selectIsAccepted,
@@ -82,6 +81,7 @@ export function useScanLayout() {
   const isOffline = useSelector(scanService, selectIsOffline);
   const isSendingVc = useSelector(scanService, selectIsSendingVc);
   const isSendingVcTimeout = useSelector(scanService, selectIsSendingVcTimeout);
+  const isStayInProgress = isConnectingTimeout || isSendingVcTimeout;
 
   const onCancel = () => scanService.send(ScanEvents.CANCEL());
   const onStayInProgress = () =>
@@ -216,7 +216,7 @@ export function useScanLayout() {
     isDone,
     isDisconnected: useSelector(scanService, selectIsDisconnected),
     statusOverlay,
-    isStayInProgress: useSelector(scanService, selectStayInProgress),
+    isStayInProgress,
     isBleError,
     DISMISS,
     isAccepted,

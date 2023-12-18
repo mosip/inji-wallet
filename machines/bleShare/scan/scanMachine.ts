@@ -467,10 +467,12 @@ export const scanMachine =
                 },
               },
             },
+            inProgressAfterTimeout: {},
             timeout: {
               on: {
                 STAY_IN_PROGRESS: {
                   actions: 'resetStayInProgress',
+                  target: 'inProgressAfterTimeout',
                 },
                 CANCEL: {
                   target: '#scan.reviewing.cancelling',
@@ -551,10 +553,12 @@ export const scanMachine =
                     },
                   },
                 },
+                inProgressAfterTimeout: {},
                 timeout: {
                   on: {
                     STAY_IN_PROGRESS: {
                       actions: 'resetStayInProgress',
+                      target: 'inProgressAfterTimeout',
                     },
                     CANCEL: {
                       target: '#scan.reviewing.cancelling',
