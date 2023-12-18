@@ -17,7 +17,12 @@ import {getDeviceNameSync} from 'react-native-device-info';
 import {VC, VerifiablePresentation} from '../../../types/VC/ExistingMosipVC/vc';
 import {AppServices} from '../../../shared/GlobalContext';
 import {ActivityLogEvents, ActivityLogType} from '../../activityLog';
-import {androidVersion, isAndroid, isIOS, MY_LOGIN_STORE_KEY} from '../../../shared/constants';
+import {
+  androidVersion,
+  isAndroid,
+  isIOS,
+  MY_LOGIN_STORE_KEY,
+} from '../../../shared/constants';
 import {subscribe} from '../../../shared/openIdBLE/walletEventHandler';
 import {
   check,
@@ -482,6 +487,9 @@ export const scanMachine =
             CONNECTED: {
               target: 'reviewing',
               actions: ['setSenderInfo', 'setReceiverInfo'],
+            },
+            CANCEL: {
+              target: '#scan.reviewing.cancelling',
             },
           },
         },
