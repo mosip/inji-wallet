@@ -28,10 +28,7 @@ export function selectIsScanning(state: State) {
 }
 
 export function selectIsConnecting(state: State) {
-  return (
-    state.matches('connecting.inProgress') ||
-    state.matches('connecting.inProgressAfterTimeout')
-  );
+  return state.matches('connecting.inProgress');
 }
 
 export function selectIsConnectingTimeout(state: State) {
@@ -43,10 +40,7 @@ export function selectIsSelectingVc(state: State) {
 }
 
 export function selectIsSendingVc(state: State) {
-  return (
-    state.matches('reviewing.sendingVc.inProgress') ||
-    state.matches('reviewing.sendingVc.inProgressAfterTimeout')
-  );
+  return state.matches('reviewing.sendingVc.inProgress');
 }
 
 export function selectIsSendingVcTimeout(state: State) {

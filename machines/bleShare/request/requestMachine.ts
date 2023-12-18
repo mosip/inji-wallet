@@ -1,6 +1,6 @@
 import tuvali from 'react-native-tuvali';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
-import {EmitterSubscription, Linking, Platform} from 'react-native';
+import {EmitterSubscription, Linking} from 'react-native';
 import {
   checkMultiple,
   PERMISSIONS,

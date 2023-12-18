@@ -1,6 +1,5 @@
 import {MMKVLoader} from 'react-native-mmkv-storage';
 import getAllConfigurations from './commonprops/commonProps';
-import {Platform} from 'react-native';
 import {
   getFreeDiskStorageOldSync,
   getFreeDiskStorageSync,
