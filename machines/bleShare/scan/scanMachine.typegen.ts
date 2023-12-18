@@ -19,14 +19,8 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
-    'xstate.after(CONNECTION_TIMEOUT)#scan.connecting.inProgress': {
-      type: 'xstate.after(CONNECTION_TIMEOUT)#scan.connecting.inProgress';
-    };
     'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection': {
       type: 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection';
-    };
-    'xstate.after(SHARING_TIMEOUT)#scan.reviewing.sendingVc.inProgress': {
-      type: 'xstate.after(SHARING_TIMEOUT)#scan.reviewing.sendingVc.inProgress';
     };
     'xstate.init': {type: 'xstate.init'};
     'xstate.stop': {type: 'xstate.stop'};
@@ -95,7 +89,6 @@ export interface Typegen0 {
       | 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection'
       | 'xstate.init';
     resetShouldVerifyPresence: 'CANCEL' | 'CONNECTED' | 'DISMISS' | 'RETRY';
-    resetStayInProgress: 'STAY_IN_PROGRESS';
     sendBLEConnectionErrorEvent: 'BLE_ERROR';
     sendScanData: 'SCAN';
     sendVCShareFlowCancelEndEvent: 'CANCEL';
@@ -109,7 +102,6 @@ export interface Typegen0 {
       | 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection';
     setCreatedVp: 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
     setLinkCode: 'SCAN';
-    setPromptHint: 'CANCEL' | 'RETRY';
     setReadyForBluetoothStateCheck: 'BLUETOOTH_PERMISSION_ENABLED';
     setReason: 'UPDATE_REASON';
     setReceiverInfo: 'CONNECTED';
@@ -117,9 +109,6 @@ export interface Typegen0 {
     setSenderInfo: 'CONNECTED';
     setShareLogTypeUnverified: 'ACCEPT_REQUEST';
     setShareLogTypeVerified: 'FACE_VALID';
-    setStayInProgress:
-      | 'xstate.after(CONNECTION_TIMEOUT)#scan.connecting.inProgress'
-      | 'xstate.after(SHARING_TIMEOUT)#scan.reviewing.sendingVc.inProgress';
     setUri: 'SCAN';
     storeLoginItem: 'done.invoke.QrLogin';
     storingActivityLog: 'STORE_RESPONSE';
@@ -188,7 +177,6 @@ export interface Typegen0 {
     | 'clearingConnection'
     | 'connecting'
     | 'connecting.inProgress'
-    | 'connecting.inProgressAfterTimeout'
     | 'connecting.timeout'
     | 'disconnectDevice'
     | 'disconnected'
@@ -211,7 +199,6 @@ export interface Typegen0 {
     | 'reviewing.selectingVc'
     | 'reviewing.sendingVc'
     | 'reviewing.sendingVc.inProgress'
-    | 'reviewing.sendingVc.inProgressAfterTimeout'
     | 'reviewing.sendingVc.sent'
     | 'reviewing.sendingVc.timeout'
     | 'reviewing.verifyingIdentity'
@@ -230,7 +217,7 @@ export interface Typegen0 {
           | 'denied'
           | 'disabled'
           | 'requestToEnableLocation';
-        connecting?: 'inProgress' | 'inProgressAfterTimeout' | 'timeout';
+        connecting?: 'inProgress' | 'timeout';
         recheckBluetoothState?: 'checking' | 'enabled';
         reviewing?:
           | 'accepted'
@@ -242,13 +229,7 @@ export interface Typegen0 {
           | 'selectingVc'
           | 'sendingVc'
           | 'verifyingIdentity'
-          | {
-              sendingVc?:
-                | 'inProgress'
-                | 'inProgressAfterTimeout'
-                | 'sent'
-                | 'timeout';
-            };
+          | {sendingVc?: 'inProgress' | 'sent' | 'timeout'};
         showQrLogin?: 'idle' | 'navigatingToHistory' | 'storing';
       };
   tags: never;

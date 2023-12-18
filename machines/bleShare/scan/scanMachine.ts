@@ -68,7 +68,6 @@ const model = createModel(
     receiverInfo: {} as DeviceInfo,
     selectedVc: {} as VC,
     bleError: {} as BLEError,
-    stayInProgress: false,
     createdVp: null as VC,
     reason: '',
     loggers: [] as EmitterSubscription[],
@@ -457,30 +456,30 @@ export const scanMachine =
             src: 'startConnection',
           },
           initial: 'inProgress',
+          after: {
+            CONNECTION_TIMEOUT: {
+              target: '.timeout',
+              internal: true,
+            },
+          },
           states: {
             inProgress: {
-              after: {
-                CONNECTION_TIMEOUT: {
-                  target: '#scan.connecting.timeout',
-                  actions: 'setStayInProgress',
-                  internal: false,
+              on: {
+                CANCEL: {
+                  target: '#scan.reviewing.cancelling',
                 },
               },
             },
-            inProgressAfterTimeout: {},
             timeout: {
               on: {
                 STAY_IN_PROGRESS: {
-                  actions: 'resetStayInProgress',
-                  target: 'inProgressAfterTimeout',
+                  target: 'inProgress',
                 },
                 CANCEL: {
                   target: '#scan.reviewing.cancelling',
-                  actions: 'setPromptHint',
                 },
                 RETRY: {
                   target: '#scan.reviewing.cancelling',
-                  actions: 'setPromptHint',
                 },
               },
             },
@@ -489,9 +488,6 @@ export const scanMachine =
             CONNECTED: {
               target: 'reviewing',
               actions: ['setSenderInfo', 'setReceiverInfo'],
-            },
-            CANCEL: {
-              target: '#scan.reviewing.cancelling',
             },
           },
         },
@@ -536,6 +532,12 @@ export const scanMachine =
               invoke: {
                 src: 'sendVc',
               },
+              after: {
+                SHARING_TIMEOUT: {
+                  target: '.timeout',
+                  internal: true,
+                },
+              },
               initial: 'inProgress',
               states: {
                 inProgress: {
@@ -545,34 +547,19 @@ export const scanMachine =
                       actions: ['sendVCShareFlowCancelEndEvent'],
                     },
                   },
-                  after: {
-                    SHARING_TIMEOUT: {
-                      target: '#scan.reviewing.sendingVc.timeout',
-                      actions: 'setStayInProgress',
-                      internal: false,
-                    },
-                  },
                 },
-                inProgressAfterTimeout: {},
                 timeout: {
                   on: {
                     STAY_IN_PROGRESS: {
-                      actions: 'resetStayInProgress',
-                      target: 'inProgressAfterTimeout',
+                      target: 'inProgress',
                     },
                     CANCEL: {
                       target: '#scan.reviewing.cancelling',
-                      actions: [
-                        'setPromptHint',
-                        'sendVCShareFlowTimeoutEndEvent',
-                      ],
+                      actions: ['sendVCShareFlowTimeoutEndEvent'],
                     },
                     RETRY: {
                       target: '#scan.reviewing.cancelling',
-                      actions: [
-                        'setPromptHint',
-                        'sendVCShareFlowTimeoutEndEvent',
-                      ],
+                      actions: ['sendVCShareFlowTimeoutEndEvent'],
                     },
                   },
                 },
@@ -904,16 +891,6 @@ export const scanMachine =
         setLinkCode: assign({
           linkCode: (_, event) =>
             new URL(event.params).searchParams.get('linkCode'),
-        }),
-        setStayInProgress: assign({
-          stayInProgress: true,
-        }),
-        resetStayInProgress: assign({
-          stayInProgress: false,
-        }),
-
-        setPromptHint: assign({
-          stayInProgress: context => (context.stayInProgress = false),
         }),
 
         resetShouldVerifyPresence: assign({
