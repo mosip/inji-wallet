@@ -1,6 +1,7 @@
 export const TelemetryConstants = {
   FlowType: Object.freeze({
     vcDownload: 'VC Download',
+    faceModelInit: 'Face SDK initialize',
     qrLogin: 'QR Login',
     senderVcShare: 'Sender VC Share',
     receiverVcShare: 'Receiver VC Share',
