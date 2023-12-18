@@ -105,14 +105,14 @@ export const settingsMachine = model.createMachine(
           },
           UPDATE_HOST: {
             actions: [
-              'resetCredentialRegistry',
+              'resetCredentialRegistryResponse',
               'updateEsignetHostUrl',
               'storeContext',
             ],
             target: 'resetInjiProps',
           },
           CANCEL: {
-            actions: ['resetCredentialRegistry'],
+            actions: ['resetCredentialRegistryResponse'],
           },
           INJI_TOUR_GUIDE: {
             target: 'showInjiTourGuide',
@@ -144,7 +144,7 @@ export const settingsMachine = model.createMachine(
         },
         on: {
           CANCEL: {
-            actions: ['resetCredentialRegistry'],
+            actions: ['resetCredentialRegistryResponse'],
             target: 'idle',
           },
         },
@@ -227,7 +227,7 @@ export const settingsMachine = model.createMachine(
         credentialRegistryResponse: () => 'success',
       }),
 
-      resetCredentialRegistry: model.assign({
+      resetCredentialRegistryResponse: model.assign({
         credentialRegistryResponse: () => '',
       }),
 
@@ -244,7 +244,7 @@ export const settingsMachine = model.createMachine(
       resetInjiProps: async (context, event) => {
         try {
           await Storage.removeItem(COMMON_PROPS_KEY);
-          return await getAllConfigurations(event.credentialRegistry);
+          return await getAllConfigurations(event.credentialRegistry, false);
         } catch (error) {
           console.log('Error from resetInjiProps ', error);
           throw error;
