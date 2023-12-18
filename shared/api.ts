@@ -227,7 +227,9 @@ async function generateCacheAPIFunctionWithAPIPreference(
     if (response) {
       return JSON.parse(response);
     } else {
-      if (onErrorHardCodedValue != undefined) {
+      if (response == null) {
+        throw error;
+      } else if (onErrorHardCodedValue != undefined) {
         return onErrorHardCodedValue;
       } else {
         throw error;
