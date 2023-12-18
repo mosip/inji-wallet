@@ -55,3 +55,23 @@ export function logState(state: AnyState) {
 export const getMaskedText = (id: string): string => {
   return '*'.repeat(id.length - 4) + id.slice(-4);
 };
+
+export const faceMatchConfig = (resp: string) => {
+  return {
+    withFace: {
+      encoder: {
+        tfModel: {
+          path: resp + '/model.tflite',
+          inputWidth: 160,
+          inputHeight: 160,
+          outputLength: 512,
+          modelChecksum:
+            '797b4d99794965749635352d55da38d4748c28c659ee1502338badee4614ed06',
+        },
+      },
+      matcher: {
+        threshold: 0.8,
+      },
+    },
+  };
+};
