@@ -43,7 +43,7 @@ export const AuthScreen: React.FC<RootRouteProps> = props => {
         title={controller.alertMsg}
       />
       <Column crossAlign="center">
-        {SvgImage.FingerPrint()}
+        <Icon name="fingerprint" size={80} color={Theme.Colors.Icon} />
         <Column margin="30 0 0 0">
           <Text
             testID="selectAppUnlockMethod"

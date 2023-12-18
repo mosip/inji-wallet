@@ -94,7 +94,8 @@ export const MosipVCItemDetails: React.FC<
               style={Theme.Styles.openCardImage}
             />
 
-            <QrCodeOverlay qrCodeDetailes={String(verifiableCredential)} />
+            <QrCodeOverlay qrCodeDetails={String(verifiableCredential)} />
+
             <Column margin="20 0 0 0">{issuerLogo}</Column>
           </Column>
           <Column align="space-evenly" padding="10">

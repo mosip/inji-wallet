@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
-import {BackHandler, Image, SafeAreaView, View} from 'react-native';
+import {BackHandler, SafeAreaView, View} from 'react-native';
 import Spinner from 'react-native-spinkit';
 import {Button, Centered, Column, Row, Text} from '../../components/ui';
 import {Theme} from './styleUtils';

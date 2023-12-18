@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Button, Centered, Column, Text} from './ui';
 import {Modal} from './ui/Modal';
