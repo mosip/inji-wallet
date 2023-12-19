@@ -39,7 +39,7 @@ export const Picker: Picker = (props: PickerProps<unknown>) => {
           width={Dimensions.get('window').width * 0.8}>
           {props.items.map((item, index) => (
             <ListItem
-              {...testIDProps(item.label)}
+              {...testIDProps(item.value)}
               topDivider={index !== 0}
               onPress={() => selectItem(index)}
               key={index}>

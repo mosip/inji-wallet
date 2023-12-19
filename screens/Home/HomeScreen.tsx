@@ -36,7 +36,7 @@ export const HomeScreen: React.FC<HomeRouteProps> = props => {
   const DownloadFABIcon: React.FC = () => {
     const plusIcon = (
       <Icon
-        {...testIDProps('plusIcon')}
+        {...testIDProps('plusIcon', 'icon')}
         name={'plus'}
         type={'entypo'}
         size={36}
@@ -51,7 +51,7 @@ export const HomeScreen: React.FC<HomeRouteProps> = props => {
           onPress={() => {
             controller.GOTO_ISSUERS();
           }}
-          {...testIDProps("downloadCardButton")}
+          {...testIDProps('downloadCardButton')}
           style={({pressed}) =>
             pressed
               ? Theme.Styles.downloadFabIconPressed

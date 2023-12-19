@@ -12,7 +12,7 @@ export const CopyButton: React.FC<CopyButtonProps> = ({content}) => {
   const [buttonText, setButtonText] = useState(t('clipboard.copy'));
   return (
     <Pressable
-      {...testIDProps(`${buttonText}Button`)}
+      {...testIDProps(`${buttonText}Button`, 'pressable')}
       style={Theme.Styles.iconContainer}
       onPress={() => {
         setButtonText(t('clipboard.copied'));
@@ -20,7 +20,7 @@ export const CopyButton: React.FC<CopyButtonProps> = ({content}) => {
         Clipboard.setString(content);
       }}>
       <Icon
-        {...testIDProps('fileCopyIcon')}
+        {...testIDProps('fileCopyIcon', 'icon')}
         type={'material'}
         name={'file-copy'}
         color={Theme.Colors.Icon}

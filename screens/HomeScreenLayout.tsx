@@ -53,7 +53,11 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
       <Row align="space-between">
         <HelpScreen
           triggerComponent={
-            <Image {...testIDProps('help')} source={Theme.HelpIcon} style={{width: 36, height: 36}} />
+            <Image
+              {...testIDProps('help')}
+              source={Theme.HelpIcon}
+              style={{width: 36, height: 36}}
+            />
           }
           navigation={undefined}
           route={undefined}
@@ -62,7 +66,7 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
         <SettingScreen
           triggerComponent={
             <Icon
-              {...testIDProps('settings')}
+              {...testIDProps('settings', 'icon')}
               name="settings"
               type="simple-line-icon"
               size={21}
