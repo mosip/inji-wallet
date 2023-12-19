@@ -1318,12 +1318,12 @@ export const PurpleTheme = {
   ICON_SMALL_SIZE: 16,
   ICON_MID_SIZE: 22,
   ICON_LARGE_SIZE: 33,
-  CloseCard: require('../../../assets/card_bg.png'),
-  OpenCard: require('../../../assets/card_bg.png'),
-  sharingIntro: require('../../../assets/intro-secure-sharing.png'),
-  walletIntro: require('../../../assets/intro-wallet-binding.png'),
-  IntroScanner: require('../../../assets/intro-scanner.png'),
-  protectPrivacy: require('../../../assets/intro-unlock-method.png'),
+  CloseCard: require('../../../assets/Card_Bg1.png'),
+  OpenCard: require('../../../assets/Card_Bg1.png'),
+  sharingIntro: require('../../../assets/Intro_Secure_Sharing.png'),
+  walletIntro: require('../../../assets/Intro_Wallet_Binding.png'),
+  IntroScanner: require('../../../assets/Intro_Scanner.png'),
+  protectPrivacy: require('../../../assets/Intro_Unlock_Method.png'),
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/
 

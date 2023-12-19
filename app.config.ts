@@ -22,7 +22,7 @@ export default {
     package: 'io.mosip.residentapp',
     versionCode: 1,
     adaptiveIcon: {
-      foregroundImage: './assets/adaptive-icon.png',
+      foregroundImage: './assets/Adaptive_Icon.png',
       backgroundColor: '#FFFFFF',
     },
   },
