@@ -99,6 +99,7 @@ export const EditableListItem: React.FC<EditableListItemProps> = props => {
 
   function dismiss() {
     setIsEditing(false);
+    setItems(props.items);
     props.onCancel();
   }
 
