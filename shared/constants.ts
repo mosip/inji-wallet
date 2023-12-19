@@ -1,7 +1,7 @@
 import {Platform} from 'react-native';
 import {MIMOTO_HOST, ESIGNET_HOST, DEBUG_MODE} from 'react-native-dotenv';
 import {Argon2iConfig} from './commonUtil';
-import {VcIdType} from '../types/vc';
+import {VcIdType} from '../types/VC/ExistingMosipVC/vc';
 
 export let MIMOTO_BASE_URL = MIMOTO_HOST;
 export let ESIGNET_BASE_URL = ESIGNET_HOST;

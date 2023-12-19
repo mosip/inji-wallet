@@ -38,7 +38,7 @@ export const Issuer: React.FC<IssuerProps> = (props: IssuerProps) => {
   );
 };
 
-interface IssuerProps {
+export interface IssuerProps {
   displayDetails: displayType;
   onPress: () => void;
   testID: string;

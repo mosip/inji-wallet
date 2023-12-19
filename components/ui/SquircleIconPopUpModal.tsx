@@ -19,7 +19,7 @@ export const SquircleIconPopUpModal: React.FC<
           width={Dimensions.get('screen').width * 0.8}
           height={Dimensions.get('screen').width * 0.8}
           style={Theme.MessageStyles.squircleContainer}>
-          <Column>
+          <Column crossAlign="center">
             {SvgImage.SuccessLogo()}
             {props.message && (
               <Text

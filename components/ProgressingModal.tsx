@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Button, Centered, Column, Text} from './ui';
 import {Modal} from './ui/Modal';
@@ -34,7 +34,7 @@ export const ProgressingModal: React.FC<ProgressingModalProps> = props => {
               <Text
                 align="center"
                 margin="10"
-                color={Theme.Colors.TimoutHintText}
+                color={Theme.Colors.TimeoutHintText}
                 size="small"
                 style={Theme.TextStyles.bold}>
                 {props.hint}

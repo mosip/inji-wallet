@@ -7,7 +7,7 @@ import VerifiedIcon from '../../VerifiedIcon';
 import {Column, Row, Text} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import {CheckBox, Icon} from 'react-native-elements';
-import testIDProps, {getMaskedText} from '../../../shared/commonUtil';
+import {getMaskedText} from '../../../shared/commonUtil';
 import {logoType} from '../../../machines/issuersMachine';
 import {SvgImage} from '../../ui/svg';
 
@@ -145,7 +145,7 @@ export const MosipVCItemContent: React.FC<
       <Column>
         <Row align="space-between">
           <Row margin="5 0 0 5">
-            {SvgImage.ProfileImage(props)}
+            {SvgImage.VcItemContainerProfileImage(props)}
 
             <Column margin="0 0 10 20" height={96} align="space-between">
               <Column style={{maxWidth: 230}}>
@@ -301,7 +301,7 @@ export const MosipVCItemContent: React.FC<
   );
 };
 
-interface ExistingMosipVCItemContentProps {
+export interface ExistingMosipVCItemContentProps {
   context: any;
   verifiableCredential: VerifiableCredential;
   generatedOn: string;

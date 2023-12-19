@@ -1,13 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-
 import {Linking, Pressable, TouchableOpacity} from 'react-native';
 import {Modal} from '../../components/ui/Modal';
 import {Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {Icon, ListItem} from 'react-native-elements';
 import getAllConfigurations from '../../shared/commonprops/commonProps';
-import {getVersion} from 'react-native-device-info';
 import {CopyButton} from '../../components/CopyButton';
 import testIDProps from '../../shared/commonUtil';
 import {__InjiVersion, __TuvaliVersion} from '../../shared/GlobalVariables';
@@ -67,12 +65,12 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
           <Column>
             <Text
               testID="aboutDetails"
-              style={{...Theme.TextStyles.aboutDetailes, paddingTop: 5}}>
-              {t('aboutDetailes')}
+              style={{...Theme.TextStyles.aboutDetails, paddingTop: 5}}>
+              {t('aboutDetails')}
             </Text>
             <Row crossAlign="center">
-              <Text style={{...Theme.TextStyles.aboutDetailes, paddingTop: 7}}>
-                {t('forMoreDetailes')}
+              <Text style={{...Theme.TextStyles.aboutDetails, paddingTop: 7}}>
+                {t('forMoreDetails')}
               </Text>
               <TouchableOpacity
                 activeOpacity={1}

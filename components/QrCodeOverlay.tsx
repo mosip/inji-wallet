@@ -1,10 +1,9 @@
-import React, {useEffect, useState} from 'react';
-import {Dimensions, Pressable, View} from 'react-native';
+import React, {useState} from 'react';
+import {Pressable, View} from 'react-native';
 import {Icon, Overlay} from 'react-native-elements';
 import {Centered, Column, Row, Text} from './ui';
 import QRCode from 'react-native-qrcode-svg';
 import {Theme} from './ui/styleUtils';
-import {Image} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {SvgImage} from './ui/svg';
 
@@ -21,7 +20,7 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
           <Row>
             <QRCode
               size={90}
-              value={props.qrCodeDetailes}
+              value={props.qrCodeDetails}
               backgroundColor={Theme.Colors.QRCodeBackgroundColor}
             />
           </Row>
@@ -53,10 +52,10 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
               size={32}
             />
           </Row>
-          <Centered testID="qrCodeDetailes" pY={30}>
+          <Centered testID="qrCodeDetails" pY={30}>
             <QRCode
               size={300}
-              value={props.qrCodeDetailes}
+              value={props.qrCodeDetails}
               backgroundColor={Theme.Colors.QRCodeBackgroundColor}
             />
           </Centered>
@@ -67,5 +66,5 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
 };
 
 interface QrCodeOverlayProps {
-  qrCodeDetailes: string;
+  qrCodeDetails: string;
 }

@@ -4,24 +4,31 @@ import {Theme} from './styleUtils';
 import {Icon} from 'react-native-elements';
 import {ImageBackground} from 'react-native';
 import PinICon from '../../assets/Pin_Icon.svg';
-import InjiSmallLogo from '../../assets/inji_small_logo.svg';
-import FingerPrint from '../../assets/fingerprint_icon.svg';
-import LockIcon from '../../assets/lock_icon.svg';
-import InjiLogo from '../../assets/inji_home_logo.svg';
-import DigitalIdentity from '../../assets/digital_identity_icon.svg';
+import InjiSmallLogo from '../../assets/Inji_Logo.svg';
+import LockIcon from '../../assets/Lock_Icon.svg';
+import InjiLogo from '../../assets/Inji_Home_Logo.svg';
+import DigitalIdentity from '../../assets/Digital_Identity_Icon.svg';
 import ReceiveCard from '../../assets/Receive_Card.svg';
 import ReceivedCards from '../../assets/Received_Cards.svg';
-import ProgressIcon from '../../assets/progress_icon.svg';
+import ProgressIcon from '../../assets/Progress_Icon.svg';
 import testIDProps from '../../shared/commonUtil';
-import Logo from '../../assets/MOSIP_LOGO.svg';
-import WarningLogo from '../../assets/alert_icon.svg';
+import Logo from '../../assets/Mosip_Logo.svg';
+import WarningLogo from '../../assets/Warning_Icon.svg';
 import OtpVerificationIcon from '../../assets/Otp_Verification_Icon.svg';
 import FlipCameraIcon from '../../assets/Flip_Camera_Icon.svg';
 import CameraCaptureIcon from '../../assets/Camera_Capture_Icon.svg';
-import SuccessMessageIcon from '../../assets/success_message_icon.svg';
-import NoInternetConnection from '../../assets/No internet connection.svg';
-import SomethintWentWrong from '../../assets/Something went wrong!.svg';
-import MagnifierZoom from '../../assets/MagnifierZoom.svg';
+import SuccessLogo from '../../assets/Success_Message_Icon.svg';
+import NoInternetConnection from '../../assets/No_Internet_Connection.svg';
+import SomethingWentWrong from '../../assets/Something_Went_Wrong.svg';
+import MagnifierZoom from '../../assets/Magnifier_Zoom.svg';
+import {displayType} from '../../machines/issuersMachine';
+import {IssuerProps} from '../openId4VCI/Issuer';
+import {
+  EsignetMosipVCItemContentProps,
+  ExistingMosipVCItemContentProps,
+} from '../VC/MosipVCItem/MosipVCItemContent';
+import {VCMetadata} from '../../shared/VCMetadata';
+import {VerifiableCredential} from '../../types/VC/ExistingMosipVC/vc';
 
 export class SvgImage {
   static MosipLogo(props: LogoProps) {
@@ -34,6 +41,7 @@ export class SvgImage {
         color1={Theme.Colors.linearGradientStart}
         color2={Theme.Colors.linearGradientEnd}
         style={Theme.Styles.pinIcon}
+        {...testIDProps('pinIcon')}
       />
     );
   }
@@ -49,16 +57,6 @@ export class SvgImage {
         color2={Theme.Colors.linearGradientEnd}
         color3={Theme.Colors.LinearGradientStroke}
         {...testIDProps('progressingLogo')}
-      />
-    );
-  }
-
-  static FingerPrint() {
-    return (
-      <FingerPrint
-        color1={Theme.Colors.linearGradientStart}
-        color2={Theme.Colors.linearGradientEnd}
-        color3={Theme.Colors.LinearGradientStroke}
       />
     );
   }
@@ -111,16 +109,18 @@ export class SvgImage {
     );
   }
 
-  static IssuerIcon(props) {
+  static IssuerIcon(issuer: IssuerProps) {
     return (
-      <Svg height="32" width="32">
+      <Svg
+        width="78"
+        height="35"
+        {...testIDProps(`issuerIcon-${issuer.testID}`)}>
         <Image
-          href={getIssuerLogo(props)}
+          href={getIssuerLogo(issuer.displayDetails)}
           x="0"
           y="0"
           height="32"
           width="32"
-          preserveAspectRatio="xMidYMid slice"
         />
       </Svg>
     );
@@ -141,7 +141,9 @@ export class SvgImage {
       />
     );
   }
-  static ProfileImage(props) {
+  static VcItemContainerProfileImage(
+    props: ExistingMosipVCItemContentProps | EsignetMosipVCItemContentProps,
+  ) {
     return props.verifiableCredential ? (
       <ImageBackground
         imageStyle={Theme.Styles.faceImage}
@@ -173,28 +175,29 @@ export class SvgImage {
       />
     );
   }
-  static SuccessMessageIcon() {
-    return <SuccessMessageIcon width={22} height={22} />;
+  static SuccessLogo() {
+    return <SuccessLogo />;
   }
   static NoInternetConnection() {
-    return <NoInternetConnection />;
+    return (
+      <NoInternetConnection {...testIDProps('noInternetConnectionImage')} />
+    );
   }
 
-  static SomethintWentWrong() {
-    return <SomethintWentWrong />;
+  static SomethingWentWrong() {
+    return <SomethingWentWrong {...testIDProps('somethingWentWrongImage')} />;
   }
 
   static MagnifierZoom() {
     return <MagnifierZoom />;
   }
 }
-1;
 
-function getIssuerLogo(props) {
-  return {uri: props.displayDetails.logo.url};
+function getIssuerLogo(props: displayType) {
+  return {uri: props.logo.url};
 }
 
-function faceImageSource(props) {
+function faceImageSource(props: faceImageSourceProps) {
   return {
     uri: props.vcMetadata.isFromOpenId4VCI()
       ? props.verifiableCredential?.credentialSubject.face
@@ -205,4 +208,10 @@ function faceImageSource(props) {
 interface LogoProps {
   width: number;
   height: number;
+}
+
+interface faceImageSourceProps {
+  vcMetadata: VCMetadata;
+  verifiableCredential: VerifiableCredential;
+  context: any;
 }

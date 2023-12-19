@@ -99,7 +99,9 @@ export const SendVcScreen: React.FC = () => {
             />
           ))}
         </Column>
-        <Column backgroundColor={Theme.Colors.whiteBackgroundColor}>
+        <Column
+          style={Theme.SendVcScreenStyles.shareOptionButtonsContainer}
+          backgroundColor={Theme.Colors.whiteBackgroundColor}>
           {!controller.selectedVc.shouldVerifyPresence && (
             <Button
               type="gradient"

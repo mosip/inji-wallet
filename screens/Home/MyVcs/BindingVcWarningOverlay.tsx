@@ -1,12 +1,14 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {Dimensions, Image} from 'react-native';
+import {Dimensions} from 'react-native';
 import {Overlay} from 'react-native-elements';
 import {Button, Column, Text, Row} from '../../../components/ui';
 import {Theme} from '../../../components/ui/styleUtils';
 import {SvgImage} from '../../../components/ui/svg';
 
-export const BindingVcWarningOverlay: React.FC<QrLoginWarningProps> = props => {
+export const BindingVcWarningOverlay: React.FC<
+  BindingVcWarningProps
+> = props => {
   const {t} = useTranslation('BindingVcWarningOverlay');
 
   return (
@@ -64,7 +66,7 @@ export const BindingVcWarningOverlay: React.FC<QrLoginWarningProps> = props => {
   );
 };
 
-interface QrLoginWarningProps {
+interface BindingVcWarningProps {
   isVisible: boolean;
   onConfirm: () => void;
   onCancel: () => void;

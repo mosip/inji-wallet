@@ -97,7 +97,7 @@ export const IssuersScreen: React.FC<
 
   const getImage = () => {
     if (isGenericError()) {
-      return SvgImage.SomethintWentWrong();
+      return SvgImage.SomethingWentWrong();
     }
     return SvgImage.NoInternetConnection();
   };
@@ -161,7 +161,6 @@ export const IssuersScreen: React.FC<
       <Loader
         title={t('loaders.loading')}
         subTitle={t(`loaders.subTitle.${controller.loadingReason}`)}
-        progress
       />
     );
   }
