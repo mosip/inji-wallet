@@ -44,11 +44,11 @@ fileignoreconfig:
   - filename: screens/Issuers/IssuersScreen.tsx
     checksum: 9c53e3770dbefe26e0de67ee4b7d5cc9c52d9823cbb136a1a5104dcb0a101071
   - filename: ios/Podfile.lock
-    checksum: edad9c2d11b0b3ed819cb0dcbfaf0515d31adb8116223c07f7b7b79e6689fe96
+    checksum: c30eada0d288ef1705e0eeb03bb941863ca7e5663196baaa814cb24e8312655e
   - filename: screens/Home/IntroSlidersScreen.tsx
     checksum: 72ef913857448ef05763e52e32356faa2d1f3de8130a1c638d1897f44823031f
   - filename: shared/commonUtil.ts
-    checksum: 01c3fdcd2f1c1757eae0c6a27fe04eb70c2aaf8660c604f3301997484592b66c
+    checksum: b9ff87d627c74ba1cf2f1d0bfab6c11192573c45a4c581c3beadb3c612bfe1ab
   - filename: screens/Home/MyVcs/GetIdInputModal.tsx
     checksum: 5c736ed79a372d0ffa7c02eb33d0dc06edbbb08d120978ff287f5f06cd6c7746
   - filename: shared/openId4VCI/Utils.ts
