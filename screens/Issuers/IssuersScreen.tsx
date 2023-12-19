@@ -143,6 +143,7 @@ export const IssuersScreen: React.FC<
             margin={[0, 8, 0, 0]}
           />
           <Button
+            testID='tryAgain'
             fill
             title={t('common:tryAgain')}
             onPress={controller.TRY_AGAIN}

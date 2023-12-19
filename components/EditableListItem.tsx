@@ -58,8 +58,9 @@ export const EditableListItem: React.FC<EditableListItemProps> = props => {
           {props.items.map((item: ListItemProps, index) => {
             return (
               <React.Fragment key={index}>
-                <Text>{t('editLabel', {label: item.label})}</Text>
+                <Text testID={item.testID+'Label'}>{t('editLabel', {label: item.label})}</Text>
                 <Input
+                  {...testIDProps(item.testID+'InputField')}
                   autoFocus
                   value={items[index].value}
                   onChangeText={value => updateItems(item.label, value)}
@@ -69,7 +70,7 @@ export const EditableListItem: React.FC<EditableListItemProps> = props => {
                   }}
                 />
                 {index === 0 && props.response === 'error' && (
-                  <Text style={Theme.TextStyles.error}>
+                  <Text testID={item.testID+'ErrorMessage'} style={Theme.TextStyles.error}>
                     {props.errorMessage}
                   </Text>
                 )}
@@ -78,8 +79,9 @@ export const EditableListItem: React.FC<EditableListItemProps> = props => {
           })}
           {props.response === 'success' && overlayOpened && closePopup()}
           <Row>
-            <Button fill type="clear" title={t('cancel')} onPress={dismiss} />
+            <Button testID='cancel' fill type="clear" title={t('cancel')} onPress={dismiss} />
             <Button
+              testID='save'
               fill
               title={t('save')}
               onPress={edit}
@@ -128,4 +130,5 @@ interface EditableListItemProps {
 interface ListItemProps {
   label: string;
   value: string;
+  testID: string;
 }

@@ -102,7 +102,7 @@ export const OtpVerificationModal: React.FC<
             </Text>
 
             <Text
-              testID="otpVerificationError"
+              testID='otpVerificationError'
               align="center"
               color={Theme.Colors.errorMessage}
               margin="16 0 0 0">

@@ -62,7 +62,12 @@ export const MainLayout: React.FC<
   };
 
   return (
-    <Navigator initialRouteName={mainRoutes[0].name} screenOptions={options}>
+    <Navigator
+      initialRouteName={mainRoutes[0].name}
+      screenOptions={({route}) => ({
+        tabBarAccessibilityLabel: route.name,
+        options,
+      })}>
       {mainRoutes.map(route => (
         <Screen
           key={route.name}
@@ -80,7 +85,7 @@ export const MainLayout: React.FC<
             title: t(route.name),
             tabBarIcon: ({focused}) => (
               <Icon
-                {...testIDProps(route.name)}
+                {...testIDProps(route.name+"Icon")}
                 name={route.icon}
                 color={focused ? Theme.Colors.Icon : Theme.Colors.GrayIcon}
                 style={focused ? Theme.Styles.bottomTabIconStyle : null}

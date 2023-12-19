@@ -12,6 +12,7 @@ import {RootRouteProps} from '../routes';
 import {HomeScreen} from './Home/HomeScreen';
 import {IssuersScreen} from './Issuers/IssuersScreen';
 import {SettingScreen} from './Settings/SettingScreen';
+import testIDProps from '../shared/commonUtil';
 
 const {Navigator, Screen} = createNativeStackNavigator();
 export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
@@ -52,7 +53,7 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
       <Row align="space-between">
         <HelpScreen
           triggerComponent={
-            <Image source={Theme.HelpIcon} style={{width: 36, height: 36}} />
+            <Image {...testIDProps('help')} source={Theme.HelpIcon} style={{width: 36, height: 36}} />
           }
           navigation={undefined}
           route={undefined}
@@ -61,6 +62,7 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
         <SettingScreen
           triggerComponent={
             <Icon
+              {...testIDProps('settings')}
               name="settings"
               type="simple-line-icon"
               size={21}

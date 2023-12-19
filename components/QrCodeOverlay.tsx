@@ -6,6 +6,7 @@ import QRCode from 'react-native-qrcode-svg';
 import {Theme} from './ui/styleUtils';
 import {Image} from 'react-native';
 import {useTranslation} from 'react-i18next';
+import testIDProps from '../shared/commonUtil';
 
 export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
   const {t} = useTranslation('VcDetails');
@@ -15,10 +16,11 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
   const toggleQrOverlay = () => setIsQrOverlayVisible(!isQrOverlayVisible);
   return (
     <React.Fragment>
-      <Pressable onPress={toggleQrOverlay}>
+      <Pressable {...testIDProps('qrCodePressable')} onPress={toggleQrOverlay}>
         <View style={Theme.QrCodeStyles.QrView}>
           <Row>
             <QRCode
+              {...testIDProps('qrCode')}
               size={90}
               value={props.qrCodeDetailes}
               backgroundColor={Theme.Colors.QRCodeBackgroundColor}
@@ -26,6 +28,7 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
           </Row>
         </View>
         <Row
+          testID="magnifierZoom"
           align="flex-end"
           margin="-35 0 0 67"
           style={Theme.QrCodeStyles.magnifierZoom}>
@@ -46,14 +49,16 @@ export const QrCodeOverlay: React.FC<QrCodeOverlayProps> = props => {
               {t('qrCodeHeader')}
             </Text>
             <Icon
+              {...testIDProps('qrCodeCloseIcon')}
               name="close"
               onPress={toggleQrOverlay}
               color={Theme.Colors.Details}
               size={32}
             />
           </Row>
-          <Centered testID="qrCodeDetailes" pY={30}>
+          <Centered testID="qrCodeDetails" pY={30}>
             <QRCode
+              {...testIDProps('qrCodeExpandedView')}
               size={300}
               value={props.qrCodeDetailes}
               backgroundColor={Theme.Colors.QRCodeBackgroundColor}

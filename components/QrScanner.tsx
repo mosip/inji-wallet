@@ -10,6 +10,7 @@ import {useSelector} from '@xstate/react';
 import {selectIsActive} from '../machines/app';
 import {useTranslation} from 'react-i18next';
 import {useScanLayout} from '../screens/Scan/ScanLayoutController';
+import testIDProps from '../shared/commonUtil';
 
 export const QrScanner: React.FC<QrScannerProps> = props => {
   const {t} = useTranslation('QrScanner');
@@ -47,16 +48,20 @@ export const QrScanner: React.FC<QrScannerProps> = props => {
 
   const CameraDisabledPopUp: React.FC = () => {
     return (
-      <View style={Theme.Styles.cameraDisabledPopupContainer}>
+      <View
+        {...testIDProps('cameraDisabledPopup')}
+        style={Theme.Styles.cameraDisabledPopupContainer}>
         <Row style={Theme.Styles.cameraDisabledPopUp}>
           <Column style={{flex: 1}}>
             <Text
+              testID="cameraAccessDisabled"
               color={Theme.Colors.whiteText}
               weight="semibold"
               margin="0 0 5 0">
               {t('cameraAccessDisabled')}
             </Text>
             <Text
+              testID="cameraPermissionGuide"
               color={Theme.Colors.whiteText}
               size="regular"
               style={{opacity: 0.8}}>
@@ -65,6 +70,7 @@ export const QrScanner: React.FC<QrScannerProps> = props => {
           </Column>
           <Pressable>
             <Icon
+              testID="close"
               name="close"
               onPress={controller.DISMISS}
               color={Theme.Colors.whiteText}
@@ -80,6 +86,7 @@ export const QrScanner: React.FC<QrScannerProps> = props => {
       <View style={Theme.Styles.scannerContainer}>
         {hasPermission ? (
           <Camera
+            {...testIDProps('camera')}
             style={Theme.Styles.scanner}
             barCodeScannerSettings={{
               barcodeTypes: [BarCodeScanner.Constants.BarCodeType.qr],
@@ -93,6 +100,7 @@ export const QrScanner: React.FC<QrScannerProps> = props => {
       </View>
       {props.title && (
         <Text
+          testID="holdPhoneSteadyMessage"
           align="center"
           weight="semibold"
           style={Theme.TextStyles.base}
@@ -111,11 +119,16 @@ export const QrScanner: React.FC<QrScannerProps> = props => {
             );
           }}>
           <Image
+            {...testIDProps('flipCameraIcon')}
             source={Theme.CameraFlipIcon}
             style={Theme.Styles.cameraFlipIcon}
           />
         </TouchableOpacity>
-        <Text size="small" weight="semibold" margin="8">
+        <Text
+          testID="flipCameraText"
+          size="small"
+          weight="semibold"
+          margin="8">
           {t('flipCamera')}
         </Text>
       </Column>
