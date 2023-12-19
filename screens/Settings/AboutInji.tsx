@@ -36,7 +36,6 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
             name={'file'}
             color={Theme.Colors.Icon}
             size={25}
-            style={{marginRight: 15}}
           />
           <ListItem.Content>
             <ListItem.Title
