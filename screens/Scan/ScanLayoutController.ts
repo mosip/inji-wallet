@@ -60,6 +60,9 @@ export function useScanLayout() {
 
   const DISMISS = () => scanService.send(ScanEvents.DISMISS());
   const CANCEL = () => scanService.send(ScanEvents.CANCEL());
+  const onStayInProgress = () =>
+    scanService.send(ScanEvents.STAY_IN_PROGRESS());
+  const onRetry = () => scanService.send(ScanEvents.RETRY());
 
   const isInvalid = useSelector(scanService, selectIsInvalid);
   const isConnecting = useSelector(scanService, selectIsConnecting);
@@ -83,10 +86,6 @@ export function useScanLayout() {
   const isSendingVcTimeout = useSelector(scanService, selectIsSendingVcTimeout);
   const isStayInProgress = isConnectingTimeout || isSendingVcTimeout;
 
-  const onCancel = () => scanService.send(ScanEvents.CANCEL());
-  const onStayInProgress = () =>
-    scanService.send(ScanEvents.STAY_IN_PROGRESS());
-  const onRetry = () => scanService.send(ScanEvents.RETRY());
   let statusOverlay: Pick<
     MessageOverlayProps,
     | 'title'
@@ -111,7 +110,7 @@ export function useScanLayout() {
     statusOverlay = {
       title: t('status.connectionInProgress'),
       hint: t('status.connectingTimeout'),
-      onButtonPress: onCancel,
+      onButtonPress: CANCEL,
       onStayInProgress,
       onRetry,
       progress: true,
