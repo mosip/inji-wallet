@@ -494,10 +494,13 @@
       }
     },
     "status": {
-      "inProgress": "في تَقَدم",
+      "inProgress": {
+        "title": "في تَقَدم",
+        "hint": "الرجاء الانتظار بينما نقوم بتأسيس الاتصال."
+      },
       "establishingConnection": "اجراء اتصال",
       "connectionInProgress": "الاتصال قيد التقدم",
-      "connectingTimeout": "يستغرق الأمر بعض الوقت لتأسيس الاتصال. هل الجهاز الآخر مفتوح للاتصالات؟",
+      "connectingTimeout": "يستغرق الأمر بعض الوقت لتأسيس الاتصال. هل الجهاز الآخر مفتوح للاتصال؟",
       "stayOnTheScreen": "البقاء على الشاشة",
       "retry": "أعد المحاولة",
       "exchangingDeviceInfo": "تبادل معلومات الجهاز ...",

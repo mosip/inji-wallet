@@ -498,10 +498,13 @@
       }
     },
     "status": {
-      "inProgress": "In progress",
+      "inProgress": {
+        "title": "In progress",
+        "hint": "Please wait while we establish the connection."
+      },
       "establishingConnection": "Establishing connection",
       "connectionInProgress": "Connection in progress",
-      "connectingTimeout": "It's taking a while to establish the connection. Is the other device open for connections?",
+      "connectingTimeout": "It's taking a while to establish the connection. Is the other device open for connection?",
       "stayOnTheScreen": "Stay on the screen",
       "retry": "Retry",
       "exchangingDeviceInfo": "Exchanging device info...",

@@ -102,7 +102,8 @@ export function useScanLayout() {
   > = null;
   if (isConnecting) {
     statusOverlay = {
-      title: t('status.inProgress'),
+      title: t('status.inProgress.title'),
+      hint: t('status.inProgress.hint'),
       progress: true,
       onButtonPress: CANCEL,
     };
