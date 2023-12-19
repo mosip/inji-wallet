@@ -132,6 +132,13 @@ export function useScanLayout() {
     statusOverlay = {
       title: t('status.sharing.title'),
       hint: t('status.sharing.hint'),
+      onButtonPress: CANCEL,
+      progress: true,
+    };
+  } else if (isSent) {
+    statusOverlay = {
+      title: t('status.sharing.title'),
+      hint: t('status.sharing.hint'),
       progress: true,
     };
   } else if (isSendingVcTimeout) {
