@@ -127,7 +127,7 @@ export function useScanLayout() {
       onButtonPress: CANCEL,
       progress: true,
     };
-  } else if (isSendingVc || isSent) {
+  } else if (isSendingVc) {
     statusOverlay = {
       title: t('status.sharing.title'),
       hint: t('status.sharing.hint'),
