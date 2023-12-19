@@ -36,7 +36,7 @@ const Colors = {
   DisabledColors: ['#C7C7C7', '#C7C7C7'],
   TimeoutHintBoxColor: '#FFF7E5',
   TimeoutHintBoxBorder: '#FFF2D6',
-  TimoutHintText: '#8B6105',
+  TimeoutHintText: '#8B6105',
   resendCodeTimer: '#555555',
   uncheckedIcon: '#DBDBDB',
   startColor: '#f59b4b',
@@ -102,7 +102,7 @@ export const DefaultTheme = {
     DisabledColors: Colors.DisabledColors,
     getVidColor: Colors.Zambezi,
     TimeoutHintBoxColor: Colors.TimeoutHintBoxColor,
-    TimoutHintText: Colors.TimoutHintText,
+    TimeoutHintText: Colors.TimeoutHintText,
     walletbindingLabel: Colors.Black,
     walletbindingContent: Colors.Gray40,
     resendCodeTimer: Colors.resendCodeTimer,
@@ -432,16 +432,6 @@ export const DefaultTheme = {
       marginVertical: 18,
       elevation: 1,
     },
-    domainVerifiyIcon: {
-      padding: 20,
-      marginLeft: 120,
-      width: 130,
-      height: 130,
-      borderRadius: 60,
-      borderWidth: 10,
-      borderColor: Colors.White,
-      backgroundColor: Colors.LightOrange,
-    },
     pinIcon: {
       height: 39,
       width: 39,
@@ -691,12 +681,12 @@ export const DefaultTheme = {
       fontFamily: 'Inter_600SemiBold',
       lineHeight: 18,
     },
-    helpDetailes: {
+    helpDetails: {
       margin: 5,
       color: Colors.Gray44,
       fontFamily: 'Inter_600SemiBold',
     },
-    aboutDetailes: {
+    aboutDetails: {
       color: Colors.Black,
       fontSize: 18,
       margin: 7,
@@ -1328,7 +1318,6 @@ export const DefaultTheme = {
   ICON_LARGE_SIZE: 33,
   CloseCard: require('../../../assets/card_bg.png'),
   OpenCard: require('../../../assets/card_bg.png'),
-  cardFaceIcon: require('../../../assets/placeholder-photo.png'),
   sharingIntro: require('../../../assets/intro-secure-sharing.png'),
   walletIntro: require('../../../assets/intro-wallet-binding.png'),
   IntroScanner: require('../../../assets/intro-scanner.png'),

@@ -65,7 +65,7 @@ export const Loader: React.FC<LoaderProps> = props => {
               <Text
                 align="center"
                 margin="10"
-                color={Theme.Colors.TimoutHintText}
+                color={Theme.Colors.TimeoutHintText}
                 size="small"
                 style={Theme.TextStyles.bold}>
                 {props.hint}

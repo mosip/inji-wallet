@@ -50,7 +50,7 @@ const getProfileImage = (
       return {uri: props.vc?.credential.biometrics.face};
     }
   }
-  return Theme.cardFaceIcon;
+  return <Icon name="person" color={Theme.Colors.Icon} size={88} />;
 };
 
 export const MosipVCItemDetails: React.FC<

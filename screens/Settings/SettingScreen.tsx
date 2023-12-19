@@ -130,7 +130,6 @@ export const SettingScreen: React.FC<
                 name={'fingerprint'}
                 color={Theme.Colors.Icon}
                 size={25}
-                style={{marginRight: 15}}
               />
               <ListItem.Content>
                 <ListItem.Title
@@ -191,7 +190,6 @@ export const SettingScreen: React.FC<
                 name={'book'}
                 color={Theme.Colors.Icon}
                 size={25}
-                style={{marginRight: 15}}
               />
               <ListItem.Content>
                 <ListItem.Title

@@ -34,7 +34,7 @@ export const ProgressingModal: React.FC<ProgressingModalProps> = props => {
               <Text
                 align="center"
                 margin="10"
-                color={Theme.Colors.TimoutHintText}
+                color={Theme.Colors.TimeoutHintText}
                 size="small"
                 style={Theme.TextStyles.bold}>
                 {props.hint}
