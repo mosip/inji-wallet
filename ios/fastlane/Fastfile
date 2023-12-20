@@ -126,11 +126,11 @@ platform :ios do
     )
     # replace bundle ID
     s = "s/mobileid/#{map_flavour_tosuffix}/g"
-    sh("sed -i '' -e #{s} ios/Inji.xcodeproj/project.pbxproj")
+    sh("sed -i '' -e #{s} ../Inji.xcodeproj/project.pbxproj")
 
     # replace Product name
     p = "s|PRODUCT_NAME = Inji|PRODUCT_NAME = \"#{generate_app_name}\"|"
-    sh ("sed -i '' -e #{p} ios/Inji.xcodeproj/project.pbxproj")
+    sh ("sed -i '' -e '#{p}' ../Inji.xcodeproj/project.pbxproj")
 
     # update app display name
     update_info_plist(
