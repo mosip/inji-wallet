@@ -1,10 +1,11 @@
 import React, {Fragment, useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
-import {BackHandler, Image, SafeAreaView, View} from 'react-native';
+import {BackHandler, SafeAreaView, View} from 'react-native';
 import Spinner from 'react-native-spinkit';
 import {Button, Centered, Column, Row, Text} from '../../components/ui';
 import {Theme} from './styleUtils';
 import testIDProps from '../../shared/commonUtil';
+import {SvgImage} from './svg';
 
 export const Loader: React.FC<LoaderProps> = props => {
   const {t} = useTranslation('ScanScreen');
@@ -49,13 +50,7 @@ export const Loader: React.FC<LoaderProps> = props => {
         crossAlign="center"
         fill>
         <Column margin="24 0" align="space-around">
-          <Image
-            source={Theme.InjiProgressingLogo}
-            height={2}
-            width={2}
-            style={{marginLeft: -6}}
-            {...testIDProps('progressingLogo')}
-          />
+          {SvgImage.ProgressIcon()}
           <View {...testIDProps('threeDotsLoader')}>
             <Spinner
               type="ThreeBounce"
@@ -70,7 +65,7 @@ export const Loader: React.FC<LoaderProps> = props => {
               <Text
                 align="center"
                 margin="10"
-                color={Theme.Colors.TimoutHintText}
+                color={Theme.Colors.TimeoutHintText}
                 size="small"
                 style={Theme.TextStyles.bold}>
                 {props.hint}

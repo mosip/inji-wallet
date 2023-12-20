@@ -20,6 +20,7 @@ import {GlobalContext} from '../shared/GlobalContext';
 import {selectIsActive} from '../machines/app';
 import {RotatingIcon} from './RotatingIcon';
 import {Theme} from './ui/styleUtils';
+import {SvgImage} from './ui/svg';
 
 export const FaceScanner: React.FC<FaceScannerProps> = props => {
   const {t} = useTranslation('FaceScanner');
@@ -102,7 +103,7 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
             <Centered style={Theme.Styles.imageCaptureButton}>
               <TouchableOpacity
                 onPress={() => service.send(FaceScannerEvents.CAPTURE())}>
-                <Image source={Theme.ImageCaptureButton} />
+                {SvgImage.CameraCaptureIcon()}
               </TouchableOpacity>
               <Text size="small" weight="semibold" margin="8">
                 {t('capture')}
@@ -112,10 +113,7 @@ export const FaceScanner: React.FC<FaceScannerProps> = props => {
             <Centered>
               <TouchableOpacity
                 onPress={() => service.send(FaceScannerEvents.FLIP_CAMERA())}>
-                <Image
-                  source={Theme.CameraFlipIcon}
-                  style={Theme.Styles.cameraFlipIcon}
-                />
+                {SvgImage.FlipCameraIcon()}
               </TouchableOpacity>
               <Text size="smaller" weight="semibold" margin="8">
                 {t('flipCamera')}
