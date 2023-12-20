@@ -86,7 +86,7 @@ jobs:
     uses: mosip/kattu/.github/workflows/android-publish.yml@master
     with:
       RELEASE: ${{ inputs.release }}
-      NODE_VERSION: '16.x'
+      NODE_VERSION: '18.x'
       RELEASE_KEYSTORE_ALIAS: androidreleasekey
       MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
       ESIGNET_HOST: ${{ inputs.esignetBackendServiceUrl }}
@@ -111,7 +111,7 @@ jobs:
     uses: mosip/kattu/.github/workflows/android-publish.yml@master
     with:
       RELEASE: ${{ inputs.release }}
-      NODE_VERSION: '16.x'
+      NODE_VERSION: '18.x'
       RELEASE_KEYSTORE_ALIAS: androidreleasekey
       MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
       ESIGNET_HOST: ${{ inputs.esignetBackendServiceUrl }}
