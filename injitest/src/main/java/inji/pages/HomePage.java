@@ -52,6 +52,7 @@ public class HomePage extends BasePage {
     private WebElement bringYourDigitalIdentity;
 
     @AndroidFindBy(accessibility = "errorTitle")
+    @iOSXCUITFindBy(accessibility = "errorTitle")
     private WebElement noInternetConnection;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Scan')]")
@@ -63,6 +64,7 @@ public class HomePage extends BasePage {
     private WebElement idTypeValue;
     
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Try again\")")
+    @iOSXCUITFindBy(accessibility = "errorTitle")
     private WebElement tryAgainButton;
 
 
@@ -74,9 +76,9 @@ public class HomePage extends BasePage {
         /*if (isElementDisplayed(secureKeyStoragePopup, "secure key storage popup")) {
             clickOnElement(riskItButton);
         }*/
-        if (isElementDisplayed(securityFeatureUnavailablePopup, "security features will be unavailable popup")) {
+        /*if (isElementDisplayed(securityFeatureUnavailablePopup, "security features will be unavailable popup")) {
             clickOnElement(okButton);
-        }
+        }*/
         return this.isElementDisplayed(homeButton, "Home page");
     }
 

@@ -27,9 +27,11 @@ public class TestDataReader {
                 return "7059849273";
             case "revokevid":
                 return "6205860394830280";
+            case "vid":
+                return "8349769368792139";
             case "newaid":
-                return "10001100400008120231110021527";
-            case "invalidpasscode":
+                return "10001100130057620231213201734";
+            case "invalidPasscode":
                 return "123456";
             case "invaliduin":
                 return "1234567891";
@@ -44,7 +46,7 @@ public class TestDataReader {
             case "phoneNumber":
                 return "9876543210";
             case "generatedOn":
-                return "9/5/2023";
+                return "13/12/2023";
             case "dateOfBirth":
                 return "01/01/1996";
             case "aid":
@@ -52,19 +54,19 @@ public class TestDataReader {
             case "setExcludedGroups":
                 return "AVT,PVT";
             case "uin":
-                return "6920386351";
+                return "9685190798";
             case "uin2":
-                return "5740943928";
+                return "2073912798";
             case "uin2FullName":
-                return "fbgfhgfhghd";
+                return "TEST_FULLNAMEeng";
             case "newEnv":
                 return "https://api.qa-trinity.mosip.net";
             case "injiEnv":
-                return "https://api.qa-inji.mosip.net";
+                return "https://api.qa-inji1.mosip.net";
             case "invalidenv":
                 return "https://api.dev3.mosip";
             case "isDeviceFarmRun":
-                return "false";
+                return "true";
             default:
                 return "Key not found";
         }

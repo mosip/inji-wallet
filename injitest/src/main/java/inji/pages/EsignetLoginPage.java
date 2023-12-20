@@ -6,8 +6,14 @@ import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
 
 public class EsignetLoginPage extends BasePage{
-    
+
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"“Inji” Wants to Use “mosip.net” to Sign In\"`]")
+    private WebElement iosSignInPermissionPopup;
+
+    @iOSXCUITFindBy(accessibility = "Continue")
+    private WebElement iosContinueButton;
     @AndroidFindBy(xpath = "//*[contains(@text,'Login with OTP')]")
+    @iOSXCUITFindBy(accessibility = "enterPasscode")
     private WebElement esignetLoginButton;
     
     @AndroidFindBy(xpath = "//*[contains(@text,'Login with e-Signet')]")

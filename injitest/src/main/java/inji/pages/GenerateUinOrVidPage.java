@@ -12,7 +12,7 @@ public class GenerateUinOrVidPage extends BasePage {
     private WebElement retrieveUinVidText;
 
     @AndroidFindBy(className = "android.widget.EditText")
-    @iOSXCUITFindBy(accessibility = "RNE__Input__text-input")
+    @iOSXCUITFindBy(accessibility = "getIdInput")
     private WebElement applicationIdTextBox;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Get UIN/VID')]")

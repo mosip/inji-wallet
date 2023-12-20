@@ -4,13 +4,11 @@ import BaseTest.AndroidBaseTest;
 import inji.api.BaseTestCase;
 import inji.constants.Target;
 import inji.pages.*;
-import inji.utils.CommonMethods;
+import inji.utils.AndroidUtil;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
-
-import static org.testng.Assert.*;
 
 import static org.testng.Assert.assertTrue;
 
@@ -18,7 +16,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
 
     @Test
     public void setupPasscodeAndDownloadCardWithoutInternet() {
-        CommonMethods.enableAirplaneMode();
+        AndroidUtil.enableAirplaneMode();
 
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
@@ -42,7 +40,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
 
         assertTrue(homePage.isNoInternetConnectionDisplayed(), "Verify if no internet connection is displayed");
         assertTrue(homePage.isTryAgainButtonDisplayed(), "Verify if Try again button displayed");
-        CommonMethods.disableAirplaneMode();
+        AndroidUtil.disableAirplaneMode();
         
         assertTrue(homePage.isTryAgainButtonDisplayed(), "Verify if Try again button displayed");
 
@@ -86,9 +84,9 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
 
-        CommonMethods.enableAirplaneMode();
+        AndroidUtil.enableAirplaneMode();
         assertTrue(homePage.clickOnScanButton().acceptPermissionPopup().isCameraOpen());
-        CommonMethods.disableAirplaneMode();
+        AndroidUtil.disableAirplaneMode();
     }
     @Test
     public void activateVcWithoutInternet() throws InterruptedException {
@@ -123,7 +121,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-        CommonMethods.enableAirplaneMode();
+        AndroidUtil.enableAirplaneMode();
 
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
 
@@ -134,13 +132,13 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         OtpVerificationPage otpVerificationPage = pleaseConfirmPopupPage.clickOnConfirmButton();
 
         assertTrue(otpVerificationPage.somethingWetWrongInVcActivationDisplayed(), "Verify if Something is wrong. Please try again later! is displayed");
-        CommonMethods.disableAirplaneMode();
+        AndroidUtil.disableAirplaneMode();
 
     }
 
     @Test
     public void verifyListOfLanguagesInOfflineMode() {
-        CommonMethods.enableAirplaneMode();
+        AndroidUtil.enableAirplaneMode();
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
@@ -165,12 +163,12 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         settingsPage.clickOnLanguage();
 
         assertTrue(settingsPage.verifyLanguagesInLanguageFilter(), "Verify if all languages are shown in language filter");
-        CommonMethods.disableAirplaneMode();
+        AndroidUtil.disableAirplaneMode();
     }
     
     @Test
     public void verifyHelpPageOfflineMode() {
-    	CommonMethods.enableAirplaneMode();
+    	AndroidUtil.enableAirplaneMode();
 
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
@@ -196,7 +194,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         helpPage.exitHelpPage();
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
-        CommonMethods.disableAirplaneMode();
+        AndroidUtil.disableAirplaneMode();
     }
     
     @Test
@@ -231,7 +229,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-        CommonMethods.enableAirplaneMode();
+        AndroidUtil.enableAirplaneMode();
 
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
@@ -241,7 +239,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
 
         pleaseConfirmPopupPage.clickOnConfirmButton();
 
-        CommonMethods.disableAirplaneMode();
+        AndroidUtil.disableAirplaneMode();
         assertTrue(homePage.isNoVCDownloaded(), "Verify if VC is removed");
     }
     
@@ -278,7 +276,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
 
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-        CommonMethods.enableAirplaneMode();
+        AndroidUtil.enableAirplaneMode();
 
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
         detailedVcViewPage.clickOnQrCodeButton();
@@ -287,12 +285,12 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         detailedVcViewPage.clickOnQrCrossIcon();
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         
-        CommonMethods.disableAirplaneMode();
+        AndroidUtil.disableAirplaneMode();
     }
     
     @Test
     public void verifyRecivedCardOffline() throws InterruptedException {
-    	 CommonMethods.enableAirplaneMode();
+    	 AndroidUtil.enableAirplaneMode();
     	ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
@@ -318,12 +316,12 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         assertTrue(receiveCardPage.isReceiveCardHederDisplayed(), "Verify if QR code  header is displayed");
         
         assertTrue(receiveCardPage.isWaitingForConnectionDisplayed(), "Verify if waiting for connection displayed");
-        CommonMethods.disableAirplaneMode();
+        AndroidUtil.disableAirplaneMode();
     }
     
     @Test
     public void downloadCardWithoutInternetRetryWithInternet() throws InterruptedException {
-        CommonMethods.enableAirplaneMode();
+        AndroidUtil.enableAirplaneMode();
 
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
@@ -349,7 +347,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         assertTrue(homePage.isNoInternetConnectionDisplayed(), "Verify if no internet connection is displayed");
         assertTrue(homePage.isTryAgainButtonDisplayed(), "Verify if try again button displayed");
 
-        CommonMethods.disableAirplaneMode();
+        AndroidUtil.disableAirplaneMode();
         assertTrue(homePage.isTryAgainButtonNotDisplayed(), "Wating for network come online");
         
         homePage.clickOnTryAgainButton();
@@ -358,7 +356,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
     
     @Test
     public void downloadVcUsingUinViaEsignetWithoutInternet() throws InterruptedException {
-    	CommonMethods.enableAirplaneMode();
+    	AndroidUtil.enableAirplaneMode();
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
@@ -381,7 +379,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
 
         assertTrue(homePage.isNoInternetConnectionDisplayed(), "Verify if no internet connection is displayed");
         assertTrue(homePage.isTryAgainButtonDisplayed(), "Verify if Try again button displayed");
-        CommonMethods.disableAirplaneMode();
+        AndroidUtil.disableAirplaneMode();
         
         homePage.clickOnTryAgainButton();
         assertTrue(homePage.isTryAgainButtonNotDisplayed(), "Verify if Try again button displayed");
@@ -431,12 +429,12 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         esignetLoginPage.clickOnVerifyButton();
         
         assertTrue(esignetLoginPage.isProgressingLogoDisplayed(),"verify if Progressing page is displayed");
-        CommonMethods.enableAirplaneMode();
+        AndroidUtil.enableAirplaneMode();
         
         assertTrue(homePage.isNoInternetConnectionDisplayed(), "Verify if no internet connection is displayed");
         addNewCardPage.clickOnBack();
         
-        CommonMethods.disableAirplaneMode();
+        AndroidUtil.disableAirplaneMode();
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
     }
     
@@ -478,7 +476,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         esignetLoginPage.clickOnVerifyButton();
         
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-        CommonMethods.enableAirplaneMode();
+        AndroidUtil.enableAirplaneMode();
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
 
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
@@ -489,7 +487,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
 
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");
         moreOptionsPage.clickOnPinOrUnPinCard();
-        CommonMethods.disableAirplaneMode();
+        AndroidUtil.disableAirplaneMode();
     }
     
     @Test
@@ -532,10 +530,10 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         
         assertTrue(esignetLoginPage.isProgressingLogoDisplayed(),"verify if Progressing page is displayed");
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
-        CommonMethods.enableAirplaneMode();
+        AndroidUtil.enableAirplaneMode();
         
         assertTrue(homePage.clickOnScanButton().acceptPermissionPopup().isCameraOpen());
-        CommonMethods.disableAirplaneMode();
+        AndroidUtil.disableAirplaneMode();
     }
     
 }

@@ -41,6 +41,7 @@ public class RetrieveIdPage extends BasePage {
     private WebElement inputFormatErrorMessage;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'AID is not ready yet')]")
+    @iOSXCUITFindBy(accessibility = "AID is not ready yet")
     private WebElement aidIsNotReadyYetMessage;
 
     public RetrieveIdPage(AppiumDriver driver) {
@@ -52,11 +53,7 @@ public class RetrieveIdPage extends BasePage {
     }
 
     public RetrieveIdPage setEnterIdTextBox(String uinOrVid) {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        clickOnElement(generateCardButton);
         sendKeysToTextBox(enterIdTextBox, uinOrVid, "uin or vid textbox");
         return this;
     }

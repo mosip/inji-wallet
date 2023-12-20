@@ -12,9 +12,8 @@ import org.testng.annotations.Parameters;
 import java.net.MalformedURLException;
 
 public class AndroidBaseTest extends BaseTest {
-    @Parameters("platformName")
     @BeforeMethod(alwaysRun = true)
-    public void setup(String platformName) {
+    public void setup() {
         try {
             //target = Target.valueOf(platformName);
             this.driver = DriverManager.getDriver(Target.ANDROID, isDeviceFarmRun);

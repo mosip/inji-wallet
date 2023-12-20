@@ -22,7 +22,7 @@ public class SettingsPage extends BasePage {
     private WebElement logoutButton;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Language')]")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Language\"`]")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"\uE037 Language \uE5CC\"`][1]")
     private WebElement languageButton;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Filipino')]")
@@ -30,10 +30,11 @@ public class SettingsPage extends BasePage {
     private WebElement filipinoLanguageButton;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Wika')]")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Wika\"`]")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"\uE037 Wika \uE5CC\"`][1]")
     private WebElement wikaButton;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"listItemTitle\")")
+    @iOSXCUITFindBy(iOSNsPredicate = "name == \"listItemTitle\"")
     private List<WebElement> languages;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"aboutInji\")")
@@ -41,7 +42,7 @@ public class SettingsPage extends BasePage {
     private WebElement aboutInji;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Tuvali-version: v')]")
-    @iOSXCUITFindBy(xpath = "//*[contains(@name,'Tuvali-version: v')]")
+    @iOSXCUITFindBy(xpath = "//*[contains(@name,'Tuvali-version: 0.4.6')]")
     private WebElement tuvaliVersion;
 
     @AndroidFindBy(accessibility = "injiTourGuide")
@@ -49,10 +50,10 @@ public class SettingsPage extends BasePage {
     private WebElement injiTourGuide;
 
     @AndroidFindBy(accessibility = "receivedCards")
-    @iOSXCUITFindBy(accessibility = "injiTourGuide")
     private WebElement receivedCards;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Credential Registry')]")
+    @iOSXCUITFindBy(accessibility = "credentialRegistry")
     public WebElement credentialRegistryText;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Receive Card')]")
@@ -62,10 +63,8 @@ public class SettingsPage extends BasePage {
     public WebElement receiveCardInfilipinoLanguageText;
 
     @AndroidFindBy(xpath = "(//*[@resource-id=\"padView\"])[3]")
+    @iOSXCUITFindBy(accessibility = "عربى")
     private WebElement arabicLanguageButton;
-
-    @AndroidFindBy(className = "android.widget.TextView")
-    private WebElement chooseLanguageInArabic;
 
     public SettingsPage(AppiumDriver driver) {
         super(driver);
@@ -119,10 +118,6 @@ public class SettingsPage extends BasePage {
     public boolean isReceivedCardsPresent() {
         return this.isElementDisplayed(receivedCards, "Received Cards");
     }
-    
-    public boolean verifyArabicLanguage() {
-        return this.isElementDisplayed(chooseLanguageInArabic, "فتح التطبيق");
-    }
 
     public CredentialRegistryPage clickOnCredentialRegistry() {
         clickOnElement(credentialRegistryText);
@@ -144,7 +139,8 @@ public class SettingsPage extends BasePage {
         return new AboutInjiPage(driver);
     }
 
-    public void clickOnArabicLanguageButton() {
+    public UnlockApplicationPage clickOnArabicLanguageButton() {
         clickOnElement(arabicLanguageButton);
+        return new UnlockApplicationPage(driver);
     }
 }

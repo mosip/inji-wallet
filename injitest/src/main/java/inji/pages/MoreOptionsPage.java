@@ -32,6 +32,7 @@ public class MoreOptionsPage extends BasePage {
     private WebElement closeButton;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Something is wrong. Please try again later!\")")
+    @iOSXCUITFindBy(iOSClassChain ="**/XCUIElementTypeOther[`label == \"Something is wrong. Please try again later!\"`]")
     public WebElement somthingIsWrongPopup;
 
     public MoreOptionsPage(AppiumDriver driver) {

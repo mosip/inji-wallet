@@ -3,7 +3,7 @@ package inji.pages;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
-import inji.utils.CommonMethods;
+import inji.utils.AndroidUtil;
 import org.openqa.selenium.WebElement;
 
 
@@ -24,7 +24,7 @@ public class ChooseLanguagePage extends BasePage {
     public boolean isChooseLanguagePageLoaded() {
         boolean temp = isElementDisplayed(chooseLanguageText, "Choose language page");
         if (!temp) {
-            CommonMethods.invokeAppFromBackGroundAndroid();
+            AndroidUtil.invokeAppFromBackGroundAndroid();
         }
         return true;
     }

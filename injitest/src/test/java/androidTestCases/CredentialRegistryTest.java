@@ -72,8 +72,8 @@ public class CredentialRegistryTest extends AndroidBaseTest {
         moreOptionsPage.clickOnCloseButton();
         
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
-        assertEquals(detailedVcViewPage.isCredentialRegistryTextDisplayed(),"Verify if is credential registry text displayed");
-        assertEquals(detailedVcViewPage.isCredentialRegistryValueDisplayed(), TestDataReader.readData("newEnv"), "Verify changed env is displayed in detailed vc");
+        assertTrue(detailedVcViewPage.isCredentialRegistryTextDisplayed(),"Verify if is credential registry text displayed");
+        assertEquals(detailedVcViewPage.getCredentialRegistryValue(), TestDataReader.readData("newEnv"), "Verify changed env is displayed in detailed vc");
 	}
 	
 	@Test
@@ -403,7 +403,7 @@ public class CredentialRegistryTest extends AndroidBaseTest {
         CredentialRegistryPage credentialRegistryPage =settingsPage.clickOnCredentialRegistry();
         
         assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
-        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("newEnv")).setEnterIdToEsignetTextBox(TestDataReader.readData("newEnv")).clickOnSaveButton();
+        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("newEnv")).enterUrlToEsignetHostTextBox(TestDataReader.readData("newEnv")).clickOnSaveButton();
        
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         credentialRegistryPage.clickOnBackArrow();
@@ -469,7 +469,7 @@ public class CredentialRegistryTest extends AndroidBaseTest {
         CredentialRegistryPage credentialRegistryPage =settingsPage.clickOnCredentialRegistry();
         
         assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
-        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("invalidenv")).setEnterIdToEsignetTextBox(TestDataReader.readData("invalidenv")).clickOnSaveButton();
+        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("invalidenv")).enterUrlToEsignetHostTextBox(TestDataReader.readData("invalidenv")).clickOnSaveButton();
 
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         credentialRegistryPage.clickOnBackArrow();

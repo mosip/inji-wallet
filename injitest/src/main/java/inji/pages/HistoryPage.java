@@ -18,7 +18,7 @@ public class HistoryPage extends BasePage {
     private WebElement historyHeader;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'No history available yet')]")
-    @iOSXCUITFindBy(accessibility = "No history available yet")
+    @iOSXCUITFindBy(accessibility = "noHistory")
     private WebElement noHistoryAvailable;
 
     public HistoryPage(AppiumDriver driver) {

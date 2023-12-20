@@ -15,14 +15,13 @@ public class AddNewCardPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "issuerHeading-Mosip")
     private WebElement downloadViaUin;
     
-    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"iconIcon\")")
+    @AndroidFindBy(accessibility = "goBack")
+    @iOSXCUITFindBy(accessibility = "goBack")
     private WebElement backButton;
     
     @AndroidFindBy(accessibility = "issuer-ESignet")
+    @iOSXCUITFindBy(accessibility = "issuerHeading-ESignet")
     private WebElement downloadViaEsignet;
-    
-    @AndroidFindBy(accessibility = "goBack")
-    private WebElement gobackButton;
     
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Please choose your preferred issuer from the options below to add a new card.\")")
     private WebElement addNewCardGuideMessage;

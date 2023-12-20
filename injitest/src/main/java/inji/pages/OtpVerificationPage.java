@@ -9,11 +9,11 @@ import org.openqa.selenium.WebElement;
 public class OtpVerificationPage extends BasePage {
 
     @AndroidFindBy(xpath = "//*[contains(@text,'OTP Verification')]")
-    @iOSXCUITFindBy(accessibility = "OTP Verification")
+    @iOSXCUITFindBy(accessibility = "otpVerificationHeader")
     private WebElement otpVerificationText;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'OTP is invalid')]")
-    @iOSXCUITFindBy(accessibility = "OTP is invalid")
+    @iOSXCUITFindBy(accessibility = "otpVerificationError")
     private WebElement invalidOtpMessage;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Something is wrong. Please try again later!')]")
@@ -29,6 +29,7 @@ public class OtpVerificationPage extends BasePage {
     private WebElement crossIcon;
     
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"VID not available in database\")")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"VID not available in database\"`]")
 	  private WebElement vidNotAvailableMessage;
 
     public OtpVerificationPage(AppiumDriver driver) {
@@ -52,6 +53,11 @@ public class OtpVerificationPage extends BasePage {
     }
 
     public boolean invalidOtpMessageDisplayed() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         return this.isElementDisplayed(invalidOtpMessage, "OTP is invalid");
     }
 

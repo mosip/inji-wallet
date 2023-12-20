@@ -16,9 +16,11 @@ public class HelpPage extends BasePage {
     private WebElement crossIcon;
     
     @AndroidFindBy(uiAutomator = "new UiScrollable(new UiSelector()).scrollIntoView(text(\"What happens when Android keystore biometric is changed?\"));")
+    @iOSXCUITFindBy(accessibility = "How to add a card?")
     public WebElement biometricIsChangeTextdHeader;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"How to add a card?\")")
+    @iOSXCUITFindBy(accessibility = "How to add a card?")
     public WebElement helpPageContent;
     
     public HelpPage(AppiumDriver driver) {

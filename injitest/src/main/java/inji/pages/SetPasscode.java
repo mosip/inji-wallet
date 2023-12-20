@@ -9,7 +9,7 @@ import org.openqa.selenium.WebElement;
 
 public class SetPasscode extends BasePage {
 
-    @iOSXCUITFindBy(accessibility = "setPasscode")
+    @iOSXCUITFindBy(accessibility = "setPasscodeHeader")
     @AndroidFindBy(xpath = "//*[contains(@text,'Set Passcode')]")
     private WebElement setPasscode;
 
