@@ -106,7 +106,7 @@ export const IssuersScreen: React.FC<
     const filteredData = issuers.filter(item => {
       if (
         getDisplayObjectForCurrentLanguage(item.display)
-          ?.name.toLowerCase()
+          ?.title.toLowerCase()
           .includes(searchText.toLowerCase())
       ) {
         return getDisplayObjectForCurrentLanguage(item.display);
