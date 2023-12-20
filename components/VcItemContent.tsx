@@ -9,6 +9,7 @@ import {Column, Row, Text} from './ui';
 import {Theme} from './ui/styleUtils';
 import {CheckBox, Icon} from 'react-native-elements';
 
+
 const getDetails = (arg1, arg2, verifiableCredential) => {
   if (arg1 === 'Status') {
     return (
@@ -168,7 +169,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = props => {
             {getDetails(
               t('generatedOn'),
               props.generatedOn,
-              props.verifiableCredential,
+              props.verifiableCredential
             )}
           </Column>
           <Column>
