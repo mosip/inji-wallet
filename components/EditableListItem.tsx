@@ -36,7 +36,6 @@ export const EditableListItem: React.FC<EditableListItemProps> = props => {
       onPress={() => setIsEditing(true)}>
       <Icon
         name={props.Icon}
-        containerStyle={Theme.Styles.settingsIconBg}
         type={props.IconType}
         size={25}
         color={Theme.Colors.Icon}
@@ -118,6 +117,7 @@ export const EditableListItem: React.FC<EditableListItemProps> = props => {
 
   function dismiss() {
     setIsEditing(false);
+    setItems(props.items);
     props.onCancel();
   }
 

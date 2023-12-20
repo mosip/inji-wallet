@@ -30,7 +30,7 @@ const Colors = {
   GrayText: '#6F6F6F',
   mediumLightGrayText: '#A7A7A7',
   dorColor: '#CBCBCB',
-  plainText: '#FFD6A7',
+  plainText: '#F3E2FF',
   walletbindingLabel: '#000000',
   GradientColors: ['#373086', '#70308C'],
   DisabledColors: ['#C7C7C7', '#C7C7C7'],
@@ -39,9 +39,14 @@ const Colors = {
   LightPurple: '#F3E2FF',
   TimeoutHintBoxColor: '#FBF5FF',
   TimeoutHintBoxBorder: '#FFF7E5',
-  TimoutHintText: '#1C1C1C',
+  TimeoutHintText: '#1C1C1C',
   resendCodeTimer: '#555555',
   uncheckedIcon: '#DBDBDB',
+  startColor: '#8449A5',
+  endColor: '#683386',
+  stroke: '#8449A5',
+  iconBg: '#fbf5ff',
+  warningLogoBg: '#F3E2FF',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -100,7 +105,7 @@ export const PurpleTheme = {
     DisabledColors: Colors.DisabledColors,
     getVidColor: Colors.Zambezi,
     TimeoutHintBoxColor: Colors.TimeoutHintBoxColor,
-    TimoutHintText: Colors.TimoutHintText,
+    TimeoutHintText: Colors.TimeoutHintText,
     walletbindingLabel: Colors.Black,
     walletbindingContent: Colors.Gray40,
     resendCodeTimer: Colors.resendCodeTimer,
@@ -110,6 +115,10 @@ export const PurpleTheme = {
     uncheckedIcon: Colors.uncheckedIcon,
     settingsLabel: Colors.Black,
     chevronRightColor: Colors.Grey,
+    linearGradientStart: Colors.startColor,
+    linearGradientEnd: Colors.endColor,
+    LinearGradientStroke: Colors.stroke,
+    warningLogoBgColor: Colors.warningLogoBg,
   },
   Styles: StyleSheet.create({
     title: {
@@ -353,10 +362,13 @@ export const PurpleTheme = {
       flex: 1,
       justifyContent: 'space-between',
     },
+    welcomeLogo: {
+      width: 160.441,
+      height: 173.276,
+    },
     logo: {
-      height: 40,
       width: 40,
-      marginRight: 4,
+      height: 40,
     },
     issuerLogo: {
       resizeMode: 'contain',
@@ -364,8 +376,8 @@ export const PurpleTheme = {
       height: 60,
     },
     vcDetailsLogo: {
-      height: 35,
       width: 90,
+      height: 35,
     },
     homeCloseCardDetailsHeader: {
       flex: 1,
@@ -401,19 +413,12 @@ export const PurpleTheme = {
       backgroundColor: Colors.LightPurple,
     },
     cameraFlipIcon: {
-      height: 42,
       width: 42,
+      height: 42,
     },
     imageCaptureButton: {
       marginLeft: 130,
       marginRight: 50,
-    },
-    settingsIconBg: {
-      padding: 6,
-      width: 36,
-      marginRight: 4,
-      height: 36,
-      backgroundColor: Colors.Transparent,
     },
     backArrowContainer: {
       padding: 6,
@@ -423,23 +428,13 @@ export const PurpleTheme = {
       backgroundColor: Colors.LightPurple,
     },
     receiveCardsContainer: {
-      height: Dimensions.get('window').height * 0.12,
+      height: Dimensions.get('window').height * 0.14,
       width: Dimensions.get('window').width * 0.47,
       alignItems: 'center',
       borderBottomRightRadius: 0,
       padding: 15,
       marginVertical: 18,
       elevation: 1,
-    },
-    domainVerifiyIcon: {
-      padding: 20,
-      marginLeft: 120,
-      width: 130,
-      height: 130,
-      borderRadius: 60,
-      borderWidth: 10,
-      borderColor: Colors.White,
-      backgroundColor: Colors.LightPurple,
     },
     pinIcon: {
       height: 39,
@@ -453,9 +448,8 @@ export const PurpleTheme = {
       width: 88,
     },
     closeCardImage: {
-      width: 80,
-      height: 82,
-      borderRadius: 100,
+      width: 88,
+      height: 96,
     },
     openCardImage: {
       width: 100,
@@ -690,12 +684,12 @@ export const PurpleTheme = {
       fontFamily: 'Inter_600SemiBold',
       lineHeight: 18,
     },
-    helpDetailes: {
+    helpDetails: {
       margin: 5,
       color: Colors.Gray44,
       fontFamily: 'Inter_600SemiBold',
     },
-    aboutDetailes: {
+    aboutDetails: {
       color: Colors.Black,
       fontSize: 18,
       margin: 7,
@@ -728,6 +722,7 @@ export const PurpleTheme = {
     bold: {
       fontFamily: 'Inter_700Bold',
       fontSize: 15,
+      justifyContent: 'center',
     },
     small: {
       fontSize: 13,
@@ -794,27 +789,18 @@ export const PurpleTheme = {
     },
   }),
   SearchBarStyles: StyleSheet.create({
+    searchBarContainer: {
+      borderBottomWidth: 1,
+      borderBottomColor: Colors.Gray50,
+    },
     searchIcon: {
       justifyContent: 'center',
-      backgroundColor: Colors.Gray50,
       height: Dimensions.get('window').height * 0.055,
       width: Dimensions.get('window').width * 0.1,
-      borderColor: Colors.Gray50,
-      borderTopWidth: 1,
-      borderBottomWidth: 1,
-      borderLeftWidth: 1,
-      borderTopLeftRadius: 9,
-      borderBottomLeftRadius: 9,
     },
     searchBar: {
-      borderWidth: 1,
-      borderColor: Colors.Gray50,
       height: Dimensions.get('window').height * 0.055,
       width: Dimensions.get('window').width * 0.84,
-      paddingLeft: 12,
-      borderLeftWidth: 0,
-      borderTopRightRadius: 9,
-      borderBottomRightRadius: 9,
     },
   }),
   ButtonStyles: StyleSheet.create({
@@ -1263,22 +1249,15 @@ export const PurpleTheme = {
     issuerHeading: {
       fontFamily: 'Inter_600SemiBold',
       fontSize: 14,
-      lineHeight: 17,
-      paddingTop: 1.7,
+      paddingHorizontal: 3,
+      marginBottom: 2,
+      marginTop: 5,
     },
     issuerDescription: {
       fontSize: 11,
       lineHeight: 14,
       color: Colors.ShadeOfGrey,
       paddingTop: 1.4,
-    },
-    issuerIcon: {
-      resizeMode: 'contain',
-      height: 33,
-      width: 32,
-      marginBottom: 9,
-      marginTop: 8,
-      marginLeft: 2.5,
     },
   }),
   SendVcScreenStyles: StyleSheet.create({
@@ -1339,35 +1318,12 @@ export const PurpleTheme = {
   ICON_SMALL_SIZE: 16,
   ICON_MID_SIZE: 22,
   ICON_LARGE_SIZE: 33,
-  PinIcon: require('../../../assets/pin_icon.png'),
-  CloseCard: require('../../../assets/card_bg.png'),
-  CardBackground: require('../../../assets/card_bg.png'),
-  OpenCard: require('../../../assets/card_bg.png'),
-  cardFaceIcon: require('../../../purpleAssets/profile_icon.png'),
-  MosipSplashLogo: require('../../../assets/icon.png'),
-  MosipLogo: require('../../../assets/mosip-logo.png'),
-  CameraFlipIcon: require('../../../purpleAssets/camera-flip-icon.png'),
-  ImageCaptureButton: require('../../../purpleAssets/capture-button.png'),
-  DomainWarningLogo: require('../../../assets/domain-warning.png'),
-  WarningLogo: require('../../../assets/warningLogo.png'),
-  OtpLogo: require('../../../purpleAssets/otp-mobile-logo.png'),
-  SuccessLogo: require('../../../assets/success-logo.png'),
-  ReceiveCardIcon: require('../../../purpleAssets/receive-card-icon.png'),
-  ReceivedCardsIcon: require('../../../purpleAssets/received-cards-icon.png'),
-  DigitalIdentityLogo: require('../../../purpleAssets/digital-identity-icon.png'),
-  InjiLogoWhite: require('../../../assets/inji-logo-white.png'),
-  InjiProgressingLogo: require('../../../purpleAssets/progressing-logo.png'),
-  LockIcon: require('../../../purpleAssets/lock-icon.png'),
-  InjiHomeLogo: require('../../../purpleAssets/inji-home-logo.png'),
-  MagnifierZoom: require('../../../assets/magnifier-zoom.png'),
-  HelpIcon: require('../../../purpleAssets/help-icon.png'),
-  sharingIntro: require('../../../assets/intro-secure-sharing.png'),
-  walletIntro: require('../../../assets/intro-wallet-binding.png'),
-  IntroScanner: require('../../../assets/intro-scanner.png'),
-  injiSmallLogo: require('../../../assets/inji_small_logo.png'),
-  protectPrivacy: require('../../../assets/intro-unlock-method.png'),
-  NoInternetConnection: require('../../../assets/no-internet-connection.png'),
-  SomethingWentWrong: require('../../../assets/something-went-wrong.png'),
+  CloseCard: require('../../../assets/Card_Bg1.png'),
+  OpenCard: require('../../../assets/Card_Bg1.png'),
+  sharingIntro: require('../../../assets/Intro_Secure_Sharing.png'),
+  walletIntro: require('../../../assets/Intro_Wallet_Binding.png'),
+  IntroScanner: require('../../../assets/Intro_Scanner.png'),
+  protectPrivacy: require('../../../assets/Intro_Unlock_Method.png'),
   elevation(level: ElevationLevel): ViewStyle {
     // https://ethercreative.github.io/react-native-shadow-generator/
 

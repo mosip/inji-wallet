@@ -1,6 +1,6 @@
 import tuvali from 'react-native-tuvali';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
-import {EmitterSubscription, Linking, Platform} from 'react-native';
+import {EmitterSubscription, Linking} from 'react-native';
 import {
   checkMultiple,
   PERMISSIONS,
@@ -14,7 +14,11 @@ import {getDeviceNameSync} from 'react-native-device-info';
 import {StoreEvents} from '../../store';
 import {VC} from '../../../types/VC/ExistingMosipVC/vc';
 import {AppServices} from '../../../shared/GlobalContext';
-import {isAndroid, RECEIVED_VCS_STORE_KEY} from '../../../shared/constants';
+import {
+  androidVersion,
+  isAndroid,
+  RECEIVED_VCS_STORE_KEY,
+} from '../../../shared/constants';
 import {ActivityLogEvents, ActivityLogType} from '../../activityLog';
 import {VcEvents} from '../../vc';
 import {subscribe} from '../../../shared/openIdBLE/verifierEventHandler';
@@ -863,7 +867,7 @@ export const requestMachine =
         },
 
         checkNearByDevicesPermission: () => callback => {
-          if (isAndroid() && Platform.Version >= 31) {
+          if (isAndroid() && androidVersion >= 31) {
             const result = checkMultiple([
               PERMISSIONS.ANDROID.BLUETOOTH_ADVERTISE,
               PERMISSIONS.ANDROID.BLUETOOTH_CONNECT,

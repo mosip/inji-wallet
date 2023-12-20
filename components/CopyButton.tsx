@@ -3,7 +3,7 @@ import {Pressable} from 'react-native';
 import {Theme} from './ui/styleUtils';
 import Clipboard from '@react-native-clipboard/clipboard';
 import {Icon} from 'react-native-elements';
-import {Text} from './ui';
+import {Row, Text} from './ui';
 import {useTranslation} from 'react-i18next';
 import testIDProps from '../shared/commonUtil';
 
@@ -20,20 +20,23 @@ export const CopyButton: React.FC<CopyButtonProps> = ({content}) => {
         setTimeout(() => setButtonText(t('clipboard.copy')), 3000);
         Clipboard.setString(content);
       }}>
-      <Icon
-        {...testIDProps('fileCopyIcon')}
-        accessible={true}
-        type={'material'}
-        name={'file-copy'}
-        color={Theme.Colors.Icon}
-        style={{marginRight: 2}}
-        size={19}
-      />
-      <Text
-        testID={`${buttonText}Text`}
-        style={{...Theme.TextStyles.semibold, paddingTop: 3}}>
-        {buttonText}
-      </Text>
+      <Row crossAlign="center">
+        <Icon
+          {...testIDProps('fileCopyIcon')}
+          type={'material'}
+          name={'file-copy'}
+          color={Theme.Colors.Icon}
+          style={{marginRight: 2}}
+          size={19}
+        />
+        <Text
+          testID={`${buttonText}Text`}
+          weight="semibold"
+          align="center"
+          style={{paddingTop: 5}}>
+          {buttonText}
+        </Text>
+      </Row>
     </Pressable>
   );
 };

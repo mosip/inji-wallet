@@ -2,7 +2,7 @@ fileignoreconfig:
   - filename: package.json
     checksum: 984f91af6d696faf934f7e541801343e146aed1b58d7c950ba11ec02dbd60dda
   - filename: package-lock.json
-    checksum: c16e22cf137c123d7f1b1b95758646fc839dc1fa16f7cf74dff3124174475e13
+    checksum: baf08330efcaedd72275354d8e691f0004e0583d0f494a1e40b821fe7ec9046f
   - filename: lib/jsonld-signatures/suites/ed255192018/ed25519.ts
     checksum: 493b6e31144116cb612c24d98b97d8adcad5609c0a52c865a6847ced0a0ddc3a
   - filename: components/PasscodeVerify.tsx
@@ -44,11 +44,11 @@ fileignoreconfig:
   - filename: screens/Issuers/IssuersScreen.tsx
     checksum: 9c53e3770dbefe26e0de67ee4b7d5cc9c52d9823cbb136a1a5104dcb0a101071
   - filename: ios/Podfile.lock
-    checksum: edad9c2d11b0b3ed819cb0dcbfaf0515d31adb8116223c07f7b7b79e6689fe96
+    checksum: 2487c4e11fb1bd95032cc4511435d9420fc0dfc62f3c015d177213fa089df7f2
   - filename: screens/Home/IntroSlidersScreen.tsx
     checksum: 72ef913857448ef05763e52e32356faa2d1f3de8130a1c638d1897f44823031f
   - filename: shared/commonUtil.ts
-    checksum: 01c3fdcd2f1c1757eae0c6a27fe04eb70c2aaf8660c604f3301997484592b66c
+    checksum: b9ff87d627c74ba1cf2f1d0bfab6c11192573c45a4c581c3beadb3c612bfe1ab
   - filename: screens/Home/MyVcs/GetIdInputModal.tsx
     checksum: 5c736ed79a372d0ffa7c02eb33d0dc06edbbb08d120978ff287f5f06cd6c7746
   - filename: shared/openId4VCI/Utils.ts
@@ -75,6 +75,7 @@ fileignoreconfig:
     checksum: a0686e9a5c006176fd720b84bc36ca947db1422caf65c90cd0c2d1102a9e96df
   - filename: ios/fastlane/Fastfile
     checksum: 78edb7772ca7bf64fc0c603cb82771c793e03afff37ccbbfd1b9f578ec0e5369
+    checksum: 78edb7772ca7bf64fc0c603cb82771c793e03afff37ccbbfd1b9f578ec0e5369
   - filename: machines/bleShare/scan/scanMachine.ts
     checksum: a514c958ca3da3c5b22a1a95ad680af8f05fb22638fab79b3842aa8fcc1b4a17
   - filename: locales/spa.json
@@ -87,5 +88,16 @@ fileignoreconfig:
     checksum: a99fe136d9d1348c541d413324d266e179ecad6a1fe6b6bd1e0b2856a5a6d6b5
   - filename: screens/QrLogin/QrConsent.tsx
     checksum: 8563a194a4d38814eff670f0652d1a7af77134cafb350462174b4f147dbd890d
+  - filename: assets/fingerprint_icon.svg
+    checksum: b2d3a50ca1336f60123d96a8cc8ea663c3316ed2d8c31833bce7e393ca51695b
   - filename: machines/store.ts
     checksum: ca2328c39d2757ffebf85c0b6663da1073eb58349f2630c9418b2f16c350cbd1
+  - filename: assets/Flip_Camera_Icon.svg
+    checksum: 736b5a7ddb86bd4376229ce198dbf8a663e7ac89fc3311bd4f19afd4a2b36ffd    
+  - filename: machines/store.ts
+    checksum: ca2328c39d2757ffebf85c0b6663da1073eb58349f2630c9418b2f16c350cbd1    
+  - filename: ios/fastlane/Fastfile
+    checksum: 086080bc7a04accf5094c457b5acf84d9fec5d7dfa72eaaaf02e433ecf4f996b    
+  - filename: assets/Finger_Print_Icon.svg
+    checksum: 776d4fe4fc4b54d185ccf97daf0511b9fe2c0e0f7c1a809047020e5e8a100db6
+    version: ""

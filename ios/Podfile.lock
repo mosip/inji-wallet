@@ -6,7 +6,10 @@ PODS:
   - AppAuth/ExternalUserAgent (1.6.2):
     - AppAuth/Core
   - ASN1Decoder (1.8.0)
-  - BiometricSdk (0.5.4):
+  - biometric-sdk-react-native (0.2.6):
+    - BiometricSdk (= 0.5.9)
+    - React-Core
+  - BiometricSdk (0.5.9):
     - TensorFlowLiteObjC (= 2.12.0)
   - boost (1.76.0)
   - BVLinearGradient (2.8.2):
@@ -84,9 +87,6 @@ PODS:
   - MMKV (1.2.13):
     - MMKVCore (~> 1.2.13)
   - MMKVCore (1.2.16)
-  - mosip-mobileid-sdk (0.1.0):
-    - BiometricSdk (= 0.5.4)
-    - React-Core
   - Permission-BluetoothPeripheral (3.8.4):
     - RNPermissions
   - Permission-Camera (3.8.4):
@@ -369,11 +369,11 @@ PODS:
     - ReactCommon/turbomodule/core
   - react-native-secure-key-store (2.0.10):
     - React-Core
-  - react-native-secure-keystore (0.1.1):
+  - react-native-secure-keystore (0.1.2):
     - React-Core
   - react-native-spinkit (1.4.1):
     - React
-  - react-native-tuvali (0.4.5):
+  - react-native-tuvali (0.4.6):
     - CrcSwift (~> 0.0.3)
     - GzipSwift
     - React-Core
@@ -504,6 +504,7 @@ PODS:
     - ZXingObjC/Core
 
 DEPENDENCIES:
+  - "biometric-sdk-react-native (from `../node_modules/@iriscan/biometric-sdk-react-native`)"
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
   - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
@@ -531,7 +532,6 @@ DEPENDENCIES:
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
   - libevent (~> 2.1.12)
-  - mosip-mobileid-sdk (from `../node_modules/mosip-mobileid-sdk`)
   - Permission-BluetoothPeripheral (from `../node_modules/react-native-permissions/ios/BluetoothPeripheral`)
   - Permission-Camera (from `../node_modules/react-native-permissions/ios/Camera`)
   - Permission-LocationAccuracy (from `../node_modules/react-native-permissions/ios/LocationAccuracy`)
@@ -608,6 +608,8 @@ SPEC REPOS:
     - ZXingObjC
 
 EXTERNAL SOURCES:
+  biometric-sdk-react-native:
+    :path: "../node_modules/@iriscan/biometric-sdk-react-native"
   boost:
     :podspec: "../node_modules/react-native/third-party-podspecs/boost.podspec"
   BVLinearGradient:
@@ -660,8 +662,6 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
   hermes-engine:
     :podspec: "../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec"
-  mosip-mobileid-sdk:
-    :path: "../node_modules/mosip-mobileid-sdk"
   Permission-BluetoothPeripheral:
     :path: "../node_modules/react-native-permissions/ios/BluetoothPeripheral"
   Permission-Camera:
@@ -778,7 +778,8 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
   ASN1Decoder: 6110fdeacfdb41559b1481457a1645be716610aa
-  BiometricSdk: 1d16c395413164d92a280b78006abba4307063e6
+  biometric-sdk-react-native: d2a3a1279013cc4a7514a1b43fe557eb76e4e4c1
+  BiometricSdk: 303e7329404ea4d922dc14108449d10d21574f77
   boost: 57d2868c099736d80fcd648bf211b4431e51a558
   BVLinearGradient: 916632041121a658c704df89d99f04acb038de0f
   CatCrypto: a477899b6be4954e75be4897e732da098cc0a5a8
@@ -812,7 +813,6 @@ SPEC CHECKSUMS:
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   MMKV: aac95d817a100479445633f2b3ed8961b4ac5043
   MMKVCore: 9cfef4c48c6c46f66226fc2e4634d78490206a48
-  mosip-mobileid-sdk: 6b8182276896194fdcacdde148b02d5d2d16b02a
   Permission-BluetoothPeripheral: 2b88a131074edafd8a46a5cda4ba610ec986d2fb
   Permission-Camera: 7ec9ee99704766ff9b90198183387a7f5d82b0c1
   Permission-LocationAccuracy: a38ddb5c5d0b8e656f3c86e4a500f9bb88bc099d
@@ -840,9 +840,9 @@ SPEC CHECKSUMS:
   react-native-rsa-native: 12132eb627797529fdb1f0d22fd0f8f9678df64a
   react-native-safe-area-context: 39c2d8be3328df5d437ac1700f4f3a4f75716acc
   react-native-secure-key-store: 910e6df6bc33cb790aba6ee24bc7818df1fe5898
-  react-native-secure-keystore: d9e791a495d23c33db7711732f3a761533b882db
+  react-native-secure-keystore: 2396168e3fac38697297bc0b716d87f8683e689f
   react-native-spinkit: da294fd828216ad211fe36a5c14c1e09f09e62db
-  react-native-tuvali: 22b5708e1511f84ace165605778ad94cf9a8f635
+  react-native-tuvali: bd369208d58ff9e1528c2a76dce126f60d7fd35d
   React-perflogger: d21f182895de9d1b077f8a3cd00011095c8c9100
   React-RCTActionSheet: 0151f83ef92d2a7139bba7dfdbc8066632a6d47b
   React-RCTAnimation: 5ec9c0705bb2297549c120fe6473aa3e4a01e215
@@ -876,4 +876,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 01f58b130fa221dabb14b2d82d981ef24dcaba53
 
-COCOAPODS: 1.14.2
+COCOAPODS: 1.14.3

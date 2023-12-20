@@ -21,6 +21,7 @@ import {
 } from '../../../types/VC/EsignetMosipVC/vc';
 import {WalletBindingResponse} from '../../../shared/cryptoutil/cryptoUtil';
 import {logoType} from '../../../machines/issuersMachine';
+import {SvgImage} from '../../ui/svg';
 
 const getIssuerLogo = (isOpenId4VCI: boolean, issuerLogo: logoType) => {
   if (isOpenId4VCI) {
@@ -32,7 +33,7 @@ const getIssuerLogo = (isOpenId4VCI: boolean, issuerLogo: logoType) => {
       />
     );
   }
-  return <Image source={Theme.MosipLogo} style={Theme.Styles.vcDetailsLogo} />;
+  return SvgImage.MosipLogo(Theme.Styles.vcDetailsLogo);
 };
 
 const getProfileImage = (
@@ -49,7 +50,7 @@ const getProfileImage = (
       return {uri: props.vc?.credential.biometrics.face};
     }
   }
-  return Theme.cardFaceIcon;
+  return <Icon name="person" color={Theme.Colors.Icon} size={88} />;
 };
 
 export const MosipVCItemDetails: React.FC<
@@ -93,7 +94,8 @@ export const MosipVCItemDetails: React.FC<
               style={Theme.Styles.openCardImage}
             />
 
-            <QrCodeOverlay qrCodeDetailes={String(verifiableCredential)} />
+            <QrCodeOverlay qrCodeDetails={String(verifiableCredential)} />
+
             <Column margin="20 0 0 0">{issuerLogo}</Column>
           </Column>
           <Column align="space-evenly" padding="10">
@@ -393,7 +395,7 @@ export const MosipVCItemDetails: React.FC<
               style={{flex: 1, lineHeight: 17}}
               weight="regular"
               size="small"
-              margin={'3 0 0 0'}
+              margin={'3 0 10 0'}
               color={Theme.Colors.statusMessage}>
               {t('offlineAuthDisabledMessage')}
             </Text>

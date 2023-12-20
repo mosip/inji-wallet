@@ -17,7 +17,6 @@ import {
   selectIsSendingVcTimeout,
   selectIsSent,
   selectIsDone,
-  selectStayInProgress,
 } from '../../machines/bleShare/scan/selectors';
 import {
   selectIsAccepted,
@@ -61,6 +60,9 @@ export function useScanLayout() {
 
   const DISMISS = () => scanService.send(ScanEvents.DISMISS());
   const CANCEL = () => scanService.send(ScanEvents.CANCEL());
+  const onStayInProgress = () =>
+    scanService.send(ScanEvents.STAY_IN_PROGRESS());
+  const onRetry = () => scanService.send(ScanEvents.RETRY());
 
   const isInvalid = useSelector(scanService, selectIsInvalid);
   const isConnecting = useSelector(scanService, selectIsConnecting);
@@ -82,11 +84,8 @@ export function useScanLayout() {
   const isOffline = useSelector(scanService, selectIsOffline);
   const isSendingVc = useSelector(scanService, selectIsSendingVc);
   const isSendingVcTimeout = useSelector(scanService, selectIsSendingVcTimeout);
+  const isStayInProgress = isConnectingTimeout || isSendingVcTimeout;
 
-  const onCancel = () => scanService.send(ScanEvents.CANCEL());
-  const onStayInProgress = () =>
-    scanService.send(ScanEvents.STAY_IN_PROGRESS());
-  const onRetry = () => scanService.send(ScanEvents.RETRY());
   let statusOverlay: Pick<
     MessageOverlayProps,
     | 'title'
@@ -103,7 +102,8 @@ export function useScanLayout() {
   > = null;
   if (isConnecting) {
     statusOverlay = {
-      title: t('status.inProgress'),
+      title: t('status.inProgress.title'),
+      hint: t('status.inProgress.hint'),
       progress: true,
       onButtonPress: CANCEL,
     };
@@ -111,7 +111,7 @@ export function useScanLayout() {
     statusOverlay = {
       title: t('status.connectionInProgress'),
       hint: t('status.connectingTimeout'),
-      onButtonPress: onCancel,
+      onButtonPress: CANCEL,
       onStayInProgress,
       onRetry,
       progress: true,
@@ -128,7 +128,14 @@ export function useScanLayout() {
       onButtonPress: CANCEL,
       progress: true,
     };
-  } else if (isSendingVc || isSent) {
+  } else if (isSendingVc) {
+    statusOverlay = {
+      title: t('status.sharing.title'),
+      hint: t('status.sharing.hint'),
+      onButtonPress: CANCEL,
+      progress: true,
+    };
+  } else if (isSent) {
     statusOverlay = {
       title: t('status.sharing.title'),
       hint: t('status.sharing.hint'),
@@ -216,7 +223,7 @@ export function useScanLayout() {
     isDone,
     isDisconnected: useSelector(scanService, selectIsDisconnected),
     statusOverlay,
-    isStayInProgress: useSelector(scanService, selectStayInProgress),
+    isStayInProgress,
     isBleError,
     DISMISS,
     isAccepted,

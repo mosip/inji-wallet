@@ -11,6 +11,7 @@ import {selectIsActive} from '../machines/app';
 import {useTranslation} from 'react-i18next';
 import {useScanLayout} from '../screens/Scan/ScanLayoutController';
 import testIDProps from '../shared/commonUtil';
+import {SvgImage} from './ui/svg';
 
 export const QrScanner: React.FC<QrScannerProps> = props => {
   const {t} = useTranslation('QrScanner');
@@ -118,17 +119,9 @@ export const QrScanner: React.FC<QrScannerProps> = props => {
                 : Camera.Constants.Type.back,
             );
           }}>
-          <Image
-            {...testIDProps('flipCameraIcon')}
-            source={Theme.CameraFlipIcon}
-            style={Theme.Styles.cameraFlipIcon}
-          />
+          {SvgImage.FlipCameraIcon()}
         </TouchableOpacity>
-        <Text
-          testID="flipCameraText"
-          size="small"
-          weight="semibold"
-          margin="8">
+        <Text testID="flipCameraText" size="small" weight="semibold" margin="8">
           {t('flipCamera')}
         </Text>
       </Column>
