@@ -428,7 +428,7 @@ export const PurpleTheme = {
       backgroundColor: Colors.LightPurple,
     },
     receiveCardsContainer: {
-      height: Dimensions.get('window').height * 0.12,
+      height: Dimensions.get('window').height * 0.14,
       width: Dimensions.get('window').width * 0.47,
       alignItems: 'center',
       borderBottomRightRadius: 0,

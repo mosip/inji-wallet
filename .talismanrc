@@ -98,4 +98,6 @@ fileignoreconfig:
     checksum: ca2328c39d2757ffebf85c0b6663da1073eb58349f2630c9418b2f16c350cbd1    
   - filename: ios/fastlane/Fastfile
     checksum: 086080bc7a04accf5094c457b5acf84d9fec5d7dfa72eaaaf02e433ecf4f996b    
+  - filename: assets/Finger_Print_Icon.svg
+    checksum: 776d4fe4fc4b54d185ccf97daf0511b9fe2c0e0f7c1a809047020e5e8a100db6
     version: ""

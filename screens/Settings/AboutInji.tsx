@@ -1,6 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Linking, Pressable, TouchableOpacity} from 'react-native';
+import {
+  Dimensions,
+  Linking,
+  Pressable,
+  TouchableOpacity,
+  I18nManager,
+} from 'react-native';
 import {Modal} from '../../components/ui/Modal';
 import {Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
@@ -51,26 +57,48 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
         isVisible={showAboutInji}
         headerTitle={t('header')}
         headerElevation={2}
-        headerRight={<Icon {...testIDProps('closeAboutInji')} name={''} />}
+        arrowLeft={<Icon {...testIDProps('closeAboutInji')} name={''} />}
         onDismiss={() => {
           setShowAboutInji(!showAboutInji);
         }}>
         <Row testID="appID" style={Theme.Styles.primaryRow}>
-          <Text style={{...Theme.TextStyles.semibold, paddingTop: 3}}>
-            {t('appID')} : {appId}
-          </Text>
+          <Row>
+            <Text
+              weight="semibold"
+              style={{
+                maxWidth: 110,
+                paddingTop: 3,
+              }}>
+              {t('appID')}
+            </Text>
+            <Text weight="semibold">
+              {I18nManager.isRTL ? appId : ' : ' + appId}
+            </Text>
+          </Row>
           <CopyButton content={appId} />
         </Row>
-        <Column fill padding="12" align="space-between">
+        <Column padding="12" align="space-between">
           <Column>
             <Text
               testID="aboutDetails"
               style={{...Theme.TextStyles.aboutDetails, paddingTop: 5}}>
               {t('aboutDetails')}
             </Text>
-            <Row crossAlign="center">
-              <Text style={{...Theme.TextStyles.aboutDetails, paddingTop: 7}}>
-                {t('forMoreDetails')}
+            <Row
+              align="space-between"
+              crossAlign="center"
+              style={{
+                maxWidth: Dimensions.get('window').width * 0.94,
+                minHeight: Dimensions.get('window').height * 0.1,
+                marginTop: 7,
+              }}>
+              <Text
+                style={{
+                  ...Theme.TextStyles.aboutDetailes,
+                  maxWidth: 150,
+                  paddingTop: 10,
+                }}>
+                {t('forMoreDetailes')}
               </Text>
               <TouchableOpacity
                 activeOpacity={1}
@@ -79,7 +107,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
                 }}>
                 <Text
                   color={Theme.Colors.AddIdBtnBg}
-                  style={{paddingTop: 3}}
+                  style={{maxWidth: 150, paddingTop: 3}}
                   weight="bold">
                   {t('clickHere')}
                 </Text>
@@ -92,18 +120,25 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
             align="space-between"
             crossAlign="center"
             style={Theme.Styles.versionContainer}>
-            <Text
-              style={{...Theme.TextStyles.bold, paddingTop: 3}}
-              color={Theme.Colors.aboutVersion}>
-              {t('version')}: {__InjiVersion.getValue()}
-            </Text>
-            {__TuvaliVersion.getpackageVersion() != 'unknown' && (
+            <Row>
               <Text
                 weight="semibold"
                 style={{paddingTop: 3}}
-                margin="32 0 5 0"
-                align="center"
-                size="small"
+                color={Theme.Colors.aboutVersion}>
+                {t('version') + ' : '}
+              </Text>
+              <Text
+                weight="semibold"
+                style={{paddingTop: 3, maxWidth: 250}}
+                color={Theme.Colors.aboutVersion}>
+                {__InjiVersion.getValue()}
+              </Text>
+            </Row>
+
+            {__TuvaliVersion.getpackageVersion() != 'unknown' && (
+              <Text
+                weight="semibold"
+                style={{paddingTop: 3, marginTop: 3}}
                 color={Theme.Colors.aboutVersion}>
                 {t('tuvaliVersion')}: {__TuvaliVersion.getValue()}
               </Text>
