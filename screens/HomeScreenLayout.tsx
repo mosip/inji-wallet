@@ -66,7 +66,8 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
         <SettingScreen
           triggerComponent={
             <Icon
-              {...testIDProps('settings', 'icon')}
+              {...testIDProps('settings')}
+              accessible={true}
               name="settings"
               type="simple-line-icon"
               size={21}

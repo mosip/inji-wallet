@@ -20,8 +20,8 @@ export interface Argon2iConfig {
   mode: string;
 }
 
-export default function testIDProps(id, elementType = '') {
-  return isAndroid() || elementType !== ''
+export default function testIDProps(id) {
+  return isAndroid()
     ? {accessible: true, accessibilityLabel: id}
     : {testID: id};
 }

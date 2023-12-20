@@ -37,6 +37,7 @@ export const HomeScreen: React.FC<HomeRouteProps> = props => {
     const plusIcon = (
       <Icon
         {...testIDProps('plusIcon', 'icon')}
+        accessible={true}
         name={'plus'}
         type={'entypo'}
         size={36}
@@ -52,6 +53,7 @@ export const HomeScreen: React.FC<HomeRouteProps> = props => {
             controller.GOTO_ISSUERS();
           }}
           {...testIDProps('downloadCardButton')}
+          accessible={false}
           style={({pressed}) =>
             pressed
               ? Theme.Styles.downloadFabIconPressed

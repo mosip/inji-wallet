@@ -65,7 +65,7 @@ export const SettingScreen: React.FC<
 
   return (
     <React.Fragment>
-      <Pressable onPress={controller.TOGGLE_SETTINGS}>
+      <Pressable accessible={false} onPress={controller.TOGGLE_SETTINGS}>
         {props.triggerComponent}
       </Pressable>
       <Modal
@@ -90,7 +90,9 @@ export const SettingScreen: React.FC<
             <Row
               align="space-evenly"
               backgroundColor={Theme.Colors.whiteBackgroundColor}>
-              <Pressable {...testIDProps('receiveCardPressableArea')} onPress={controller.RECEIVE_CARD}>
+              <Pressable
+                {...testIDProps('receiveCardPressableArea')}
+                onPress={controller.RECEIVE_CARD}>
                 <Column
                   align="center"
                   style={Theme.Styles.receiveCardsContainer}>
