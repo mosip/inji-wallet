@@ -16,6 +16,7 @@ import {EditableListItem} from '../../components/EditableListItem';
 import {RequestRouteProps, RootRouteProps} from '../../routes';
 import {ReceivedCards} from './ReceivedCards';
 import testIDProps from '../../shared/commonUtil';
+import {SvgImage} from '../../components/ui/svg';
 
 const LanguageSetting: React.FC = () => {
   const {t} = useTranslation('SettingScreen');
@@ -29,7 +30,6 @@ const LanguageSetting: React.FC = () => {
             size={22}
             type="simple-line-icon"
             color={Theme.Colors.Icon}
-            containerStyle={Theme.Styles.settingsIconBg}
           />
           <ListItem.Content>
             <ListItem.Title
@@ -93,10 +93,7 @@ export const SettingScreen: React.FC<
                 <Column
                   align="center"
                   style={Theme.Styles.receiveCardsContainer}>
-                  <Image
-                    source={Theme.ReceiveCardIcon}
-                    style={{alignSelf: 'center'}}
-                  />
+                  {SvgImage.ReceiveCard()}
                   <Text
                     testID="receiveCard"
                     margin="6"
@@ -133,7 +130,6 @@ export const SettingScreen: React.FC<
                 name={'fingerprint'}
                 color={Theme.Colors.Icon}
                 size={25}
-                style={{marginRight: 15}}
               />
               <ListItem.Content>
                 <ListItem.Title
@@ -194,7 +190,6 @@ export const SettingScreen: React.FC<
                 name={'book'}
                 color={Theme.Colors.Icon}
                 size={25}
-                style={{marginRight: 15}}
               />
               <ListItem.Content>
                 <ListItem.Title
@@ -213,7 +208,6 @@ export const SettingScreen: React.FC<
                 type="fontawesome"
                 size={22}
                 color={Theme.Colors.Icon}
-                containerStyle={Theme.Styles.settingsIconBg}
               />
               <ListItem.Content>
                 <ListItem.Title

@@ -44,6 +44,8 @@ export function isAndroid(): boolean {
   return Platform.OS === 'android';
 }
 
+export const androidVersion: number = Number(Platform.Version);
+
 // Configuration for argon2i hashing algorithm
 export const argon2iConfig: Argon2iConfig = {
   iterations: 5,

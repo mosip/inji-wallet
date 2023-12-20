@@ -40,7 +40,6 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
             name={'file'}
             color={Theme.Colors.Icon}
             size={25}
-            style={{marginRight: 15}}
           />
           <ListItem.Content>
             <ListItem.Title
@@ -82,8 +81,8 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
           <Column>
             <Text
               testID="aboutDetails"
-              style={{...Theme.TextStyles.aboutDetailes, paddingTop: 5}}>
-              {t('aboutDetailes')}
+              style={{...Theme.TextStyles.aboutDetails, paddingTop: 5}}>
+              {t('aboutDetails')}
             </Text>
             <Row
               align="space-between"

@@ -101,19 +101,6 @@ export const HomeScreen: React.FC<HomeRouteProps> = props => {
   );
 };
 
-function TabItem(title: string) {
-  return (
-    <Tab.Item
-      containerStyle={Theme.Styles.tabContainer}
-      title={
-        <Text align="center" color={Theme.Colors.TabItemText}>
-          {title}
-        </Text>
-      }
-    />
-  );
-}
-
 export interface HomeScreenTabProps {
   isVisible: boolean;
   service: TabRef;

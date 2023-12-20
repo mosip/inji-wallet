@@ -18,6 +18,7 @@ import {
   useOtpVerificationModal,
 } from './OtpVerificationModalController';
 import {GET_INDIVIDUAL_ID, isIOS} from '../../../shared/constants';
+import {SvgImage} from '../../../components/ui/svg';
 
 export const OtpVerificationModal: React.FC<
   OtpVerificationModalProps
@@ -83,7 +84,7 @@ export const OtpVerificationModal: React.FC<
         behavior={isIOS() ? 'padding' : 'height'}>
         <Column pX={24}>
           <Column crossAlign="center">
-            <Image source={Theme.OtpLogo} resizeMethod="auto" />
+            {SvgImage.OtpVerificationIcon()}
             <Text
               testID="otpVerificationHeader"
               margin="24 0 6 0"

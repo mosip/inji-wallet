@@ -23,6 +23,7 @@ import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {Error} from '../../components/ui/Error';
 import {useIsFocused} from '@react-navigation/native';
 import {getVCsOrderedByPinStatus} from '../../shared/Utils';
+import {SvgImage} from '../../components/ui/svg';
 
 export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   const {t} = useTranslation('MyVcsTab');
@@ -143,7 +144,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
           {controller.vcMetadatas.length === 0 && (
             <React.Fragment>
               <Column fill style={Theme.Styles.homeScreenContainer}>
-                <Image source={Theme.DigitalIdentityLogo} />
+                {SvgImage.DigitalIdentity()}
                 <Text
                   testID="bringYourDigitalID"
                   style={{paddingTop: 3}}
@@ -234,7 +235,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
           message={t('errors.noInternetConnection.message')}
           onDismiss={controller.DISMISS}
           tryAgain={controller.TRY_AGAIN}
-          image={<Image source={Theme.NoInternetConnection} />}
+          image={SvgImage.NoInternetConnection()}
         />
       )}
     </React.Fragment>
