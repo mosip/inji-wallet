@@ -36,7 +36,7 @@ export const HomeScreen: React.FC<HomeRouteProps> = props => {
   const DownloadFABIcon: React.FC = () => {
     const plusIcon = (
       <Icon
-        {...testIDProps('plusIcon', 'icon')}
+        {...testIDProps('plusIcon')}
         accessible={true}
         name={'plus'}
         type={'entypo'}
