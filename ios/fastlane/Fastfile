@@ -130,7 +130,7 @@ platform :ios do
 
     # replace Product name
     p = "s|PRODUCT_NAME = Inji|PRODUCT_NAME = \"#{generate_app_name}\"|"
-    sh ("sed -i '' -e #{p} ios/Inji.xcodeproj/project.pbxproj")
+    sh ("sed -i '' -e '#{p}' ios/Inji.xcodeproj/project.pbxproj")
 
     # update app display name
     update_info_plist(
@@ -149,7 +149,10 @@ platform :ios do
     )
 
     profile_mapping = Actions.lane_context[SharedValues::MATCH_PROVISIONING_PROFILE_MAPPING]
-    UI.message("MATCH_PROVISIONING_PROFILE_MAPPING: #{profile_mapping}")
+    
+    custom_output_directory = "./Inji_artifacts"
+    sh("mkdir -p '#{custom_output_directory}'")
+
     gym(
       configuration: "Release",
       workspace: "Inji.xcworkspace",
@@ -162,33 +165,10 @@ platform :ios do
         }
       }
     )
-    export_options_value = {
-      provisioningProfiles: {
-        "#{generate_app_bundle_id}" => "match AppStore #{generate_app_bundle_id}"
-      }
-    }
-    UI.message("export_options: #{export_options_value}")
-
-    pilot(
-       app_identifier: "#{generate_app_bundle_id}",
-       api_key: api_key,
-       ipa: "./Inji.ipa",
-       changelog: "#{TESTFLIGHT_BETA_APP_DESCRIPTION}",
-       localized_build_info: {
-          "default": {
-            whats_new: "#{TESTFLIGHT_BETA_APP_DESCRIPTION}", 
-          }
-      },
-       skip_waiting_for_build_processing: false,
-       distribute_external: true,
-       submit_beta_review: false,  
-       groups: ["#{TESTFLIGHT_INTERNAL_TESTERS_GROUP}"],
-    )
 
     delete_temp_keychain(keychain_name)
 
-    custom_output_directory = "./Inji_app_file"
-    sh("mkdir -p '#{custom_output_directory}'")
+    sh("cp -R '../#{generate_app_name}.ipa' '#{custom_output_directory}'")
 
     archive_path = gym(
     skip_package_ipa: true,
@@ -197,17 +177,16 @@ platform :ios do
     build_path: "./build",
     )
 
-
     find_command = "find '../build/' -type d -name 'Products'"
     app_path = sh(find_command, log: false).strip
     sh("cp -R '#{app_path}' '#{custom_output_directory}'")
 
-    slack(
-      message: "#{generate_app_name} #{version} (#{current_build_number}) is uploaded to testflight.", 
-      success: true,
-      slack_url: "#{SLACK_URL}",
-      default_payloads: [:git_branch, :last_git_commit]
-    )
+    # slack(
+    #   message: "#{generate_app_name} #{version} (#{current_build_number}) is uploaded to testflight.", 
+    #   success: true,
+    #   slack_url: "#{SLACK_URL}",
+    #   default_payloads: [:git_branch, :last_git_commit]
+    # )
 
   end
   
