@@ -160,6 +160,7 @@ export class SvgImage {
     const {width, height} = Theme.Styles.cameraFlipIcon;
     return (
       <FlipCameraIcon
+        {...testIDProps('flipCameraIcon')}
         color1={Theme.Colors.linearGradientStart}
         color2={Theme.Colors.linearGradientEnd}
         width={width}

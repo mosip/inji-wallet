@@ -46,6 +46,7 @@ export const ScanScreen: React.FC = () => {
   function noShareableVcText() {
     return (
       <Text
+        testID="noShareableVcs"
         align="center"
         style={{paddingTop: 3}}
         color={Theme.Colors.errorMessage}
@@ -57,7 +58,7 @@ export const ScanScreen: React.FC = () => {
 
   function bluetoothIsOffText() {
     return (
-      <Text align="center" color={Theme.Colors.errorMessage} margin="0 10">
+      <Text testID="bluetoothIsTurnedOffMessage" align="center" color={Theme.Colors.errorMessage} margin="0 10">
         {t(isIOS() ? 'bluetoothStateIos' : 'bluetoothStateAndroid')}
       </Text>
     );
@@ -87,12 +88,16 @@ export const ScanScreen: React.FC = () => {
     return (
       <Column padding="24" fill align="space-between">
         <Centered fill>
-          <Text align="center" color={Theme.Colors.errorMessage}>
+          <Text
+            testID="allowNearbyDevicesPermissionMessage"
+            align="center"
+            color={Theme.Colors.errorMessage}>
             {t('errors.nearbyDevicesPermissionDenied.message')}
           </Text>
         </Centered>
 
         <Button
+          testID="allowNearbyDevicesPermissionButton"
           title={t('errors.nearbyDevicesPermissionDenied.button')}
           onPress={openSettings}></Button>
       </Column>
@@ -103,12 +108,16 @@ export const ScanScreen: React.FC = () => {
     return (
       <Column padding="24" fill align="space-between">
         <Centered fill>
-          <Text align="center" color={Theme.Colors.errorMessage}>
+          <Text
+            testID="enableLocationServicesMessage"
+            align="center"
+            color={Theme.Colors.errorMessage}>
             {controller.locationError.message}
           </Text>
         </Centered>
 
         <Button
+          testID="enableLocationServicesButton"
           title={controller.locationError.button}
           onPress={controller.LOCATION_REQUEST}
         />
@@ -156,6 +165,7 @@ export const ScanScreen: React.FC = () => {
     return (
       !controller.isEmpty && (
         <MessageOverlay
+          testID="storageLimitReachedError"
           isVisible={
             controller.isMinimumStorageRequiredForAuditEntryLimitReached
           }
@@ -171,13 +181,14 @@ export const ScanScreen: React.FC = () => {
     return (
       !controller.isEmpty && (
         <MessageOverlay
+          testID='invalidQrPopup'
           isVisible={controller.selectIsInvalid}
           customHeight={'auto'}
           title={t('invalidQR')}
-          message
           onBackdropPress={controller.DISMISS}>
           <Row>
             <Button
+              testID='cancel'
               fill
               type="clear"
               title={t('common:cancel')}
@@ -185,6 +196,7 @@ export const ScanScreen: React.FC = () => {
               margin={[0, 8, 0, 0]}
             />
             <Button
+              testID='tryAgain'
               fill
               title={t('common:tryAgain')}
               onPress={controller.DISMISS}
