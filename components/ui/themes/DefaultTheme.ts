@@ -1265,6 +1265,13 @@ export const DefaultTheme = {
       rowGap: 8,
     },
   }),
+  SendVcScreenStyles: StyleSheet.create({
+    shareOptionButtonsContainer: {
+      marginBottom: 1,
+      marginTop: 1,
+      rowGap: 8,
+    },
+  }),
   ErrorStyles: StyleSheet.create({
     image: {marginTop: -60, paddingBottom: 26},
     title: {
