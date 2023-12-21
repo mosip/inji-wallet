@@ -38,24 +38,29 @@ export async function downloadModel() {
           sendImpressionEvent(
             getImpressionEventData(
               TelemetryConstants.FlowType.faceModelInit,
-              TelemetryConstants.EndEventStatus.success,
+              TelemetryConstants.Screens.home,
+              {status: TelemetryConstants.EndEventStatus.success},
             ),
           );
           break;
+        } else if (!result && counter === maxRetry - 1) {
+          sendErrorEvent(
+            getErrorEventData(
+              TelemetryConstants.FlowType.faceModelInit,
+              TelemetryConstants.ErrorId.failure,
+              TelemetryConstants.ErrorMessage.faceModelInitFailed,
+            ),
+          );
         }
-        sendErrorEvent(
-          getErrorEventData(
-            TelemetryConstants.FlowType.faceModelInit,
-            TelemetryConstants.EndEventStatus.failure,
-          ),
-        );
       }
     }
   } catch (error) {
     sendErrorEvent(
       getErrorEventData(
         TelemetryConstants.FlowType.faceModelInit,
-        TelemetryConstants.EndEventStatus.failure,
+        TelemetryConstants.ErrorId.failure,
+        TelemetryConstants.ErrorMessage.faceModelInitFailed,
+        error,
       ),
     );
     console.log(error);
