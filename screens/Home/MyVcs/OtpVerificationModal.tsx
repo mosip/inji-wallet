@@ -20,6 +20,7 @@ import {
 import {GET_INDIVIDUAL_ID, isIOS} from '../../../shared/constants';
 import {SvgImage} from '../../../components/ui/svg';
 
+
 export const OtpVerificationModal: React.FC<
   OtpVerificationModalProps
 > = props => {
