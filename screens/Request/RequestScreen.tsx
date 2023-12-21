@@ -163,7 +163,7 @@ const SharingQR: React.FC<RequestScreenProps> = ({t, controller}) => {
 const StatusMessage: React.FC<RequestScreenProps> = ({t, controller}) => {
   return (
     controller.statusMessage !== '' && (
-      <Column testID="recievedCardStatus" elevation={1} padding="16 24">
+      <Column testID='recievedCardStatus' elevation={1} padding="16 24">
         <Text testID="receiveCardStatusMessage">
           {controller.statusMessage}
         </Text>

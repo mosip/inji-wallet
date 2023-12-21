@@ -121,7 +121,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       />
 
       <MessageOverlay
-        testID="walletBindingError"
+        testID='walletBindingError'
         isVisible={controller.isBindingError}
         title={controller.walletBindingError}
         onButtonPress={() => {

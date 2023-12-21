@@ -67,7 +67,7 @@ export const DualMessageOverlay: React.FC<DualMessageOverlayProps> = props => {
           <Row style={Theme.MessageOverlayStyles.buttonContainer}>
             {!props.children && props.onTryAgain ? (
               <Button
-                testID="tryAgain"
+                testID='tryAgain'
                 title={t('tryAgain')}
                 type="gradient"
                 onPress={props.onTryAgain}
@@ -80,7 +80,7 @@ export const DualMessageOverlay: React.FC<DualMessageOverlayProps> = props => {
             ) : null}
             {!props.children && props.onIgnore ? (
               <Button
-                testID="ignore"
+                testID='ignore'
                 type="gradient"
                 title={t('ignore')}
                 onPress={props.onIgnore}
