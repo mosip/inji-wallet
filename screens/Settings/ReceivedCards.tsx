@@ -6,6 +6,7 @@ import {Theme} from '../../components/ui/styleUtils';
 import {Image} from 'react-native';
 import {useReceivedVcsTab} from '../Home/ReceivedVcsTabController';
 import {ReceivedCardsModal} from './ReceivedCardsModal';
+import testIDProps from '../../shared/commonUtil';
 import {SvgImage} from '../../components/ui/svg';
 
 export const ReceivedCards: React.FC = () => {
@@ -14,7 +15,9 @@ export const ReceivedCards: React.FC = () => {
 
   return (
     <React.Fragment>
-      <Pressable onPress={controller.TOGGLE_RECEIVED_CARDS}>
+      <Pressable
+        {...testIDProps('receivedCardsPressableArea')}
+        onPress={controller.TOGGLE_RECEIVED_CARDS}>
         <Column align="center" style={Theme.Styles.receiveCardsContainer}>
           {SvgImage.ReceivedCards()}
           <Text

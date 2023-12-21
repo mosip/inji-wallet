@@ -15,6 +15,7 @@ export const HelpScreen: React.FC<HelpScreenProps & MainRouteProps> = props => {
   return (
     <React.Fragment>
       <Pressable
+        accessible={false}
         onPress={() => {
           setShowHelpPage(!showHelpPage);
         }}>

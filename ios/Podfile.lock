@@ -6,7 +6,7 @@ PODS:
   - AppAuth/ExternalUserAgent (1.6.2):
     - AppAuth/Core
   - ASN1Decoder (1.8.0)
-  - biometric-sdk-react-native (0.2.4):
+  - biometric-sdk-react-native (0.2.6):
     - BiometricSdk (= 0.5.9)
     - React-Core
   - BiometricSdk (0.5.9):
@@ -369,7 +369,7 @@ PODS:
     - ReactCommon/turbomodule/core
   - react-native-secure-key-store (2.0.10):
     - React-Core
-  - react-native-secure-keystore (0.1.1):
+  - react-native-secure-keystore (0.1.2):
     - React-Core
   - react-native-spinkit (1.4.1):
     - React
@@ -778,7 +778,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
   ASN1Decoder: 6110fdeacfdb41559b1481457a1645be716610aa
-  biometric-sdk-react-native: 5d1207e0d9ee34788cb4ccb59cfc205022d7e3f1
+  biometric-sdk-react-native: d2a3a1279013cc4a7514a1b43fe557eb76e4e4c1
   BiometricSdk: 303e7329404ea4d922dc14108449d10d21574f77
   boost: 57d2868c099736d80fcd648bf211b4431e51a558
   BVLinearGradient: 916632041121a658c704df89d99f04acb038de0f
@@ -840,7 +840,7 @@ SPEC CHECKSUMS:
   react-native-rsa-native: 12132eb627797529fdb1f0d22fd0f8f9678df64a
   react-native-safe-area-context: 39c2d8be3328df5d437ac1700f4f3a4f75716acc
   react-native-secure-key-store: 910e6df6bc33cb790aba6ee24bc7818df1fe5898
-  react-native-secure-keystore: d9e791a495d23c33db7711732f3a761533b882db
+  react-native-secure-keystore: 2396168e3fac38697297bc0b716d87f8683e689f
   react-native-spinkit: da294fd828216ad211fe36a5c14c1e09f09e62db
   react-native-tuvali: bd369208d58ff9e1528c2a76dce126f60d7fd35d
   React-perflogger: d21f182895de9d1b077f8a3cd00011095c8c9100
@@ -876,4 +876,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 01f58b130fa221dabb14b2d82d981ef24dcaba53
 
-COCOAPODS: 1.14.2
+COCOAPODS: 1.14.3

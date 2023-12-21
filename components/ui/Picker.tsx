@@ -3,6 +3,7 @@ import {Dimensions, Pressable} from 'react-native';
 import {Icon, ListItem, Overlay} from 'react-native-elements';
 import {Column} from './Layout';
 import {Text} from './Text';
+import testIDProps from '../../shared/commonUtil';
 
 interface Picker extends React.VFC<PickerProps<unknown>> {
   <T>(props: PickerProps<T>): ReturnType<React.FC>;
@@ -38,7 +39,7 @@ export const Picker: Picker = (props: PickerProps<unknown>) => {
           width={Dimensions.get('window').width * 0.8}>
           {props.items.map((item, index) => (
             <ListItem
-              testID={item.value}
+              {...testIDProps(item.value as string)}
               topDivider={index !== 0}
               onPress={() => selectItem(index)}
               key={index}>

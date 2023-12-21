@@ -11,6 +11,7 @@ import {RootRouteProps} from '../routes';
 import {HomeScreen} from './Home/HomeScreen';
 import {IssuersScreen} from './Issuers/IssuersScreen';
 import {SettingScreen} from './Settings/SettingScreen';
+import testIDProps from '../shared/commonUtil';
 import {SvgImage} from '../components/ui/svg';
 
 const {Navigator, Screen} = createNativeStackNavigator();
@@ -51,6 +52,8 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
         <HelpScreen
           triggerComponent={
             <Icon
+              {...testIDProps('help')}
+              accessible={true}
               name="question"
               type="font-awesome"
               size={21}
@@ -65,6 +68,8 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
         <SettingScreen
           triggerComponent={
             <Icon
+              {...testIDProps('settings')}
+              accessible={true}
               name="settings"
               type="simple-line-icon"
               size={21}
