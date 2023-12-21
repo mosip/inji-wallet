@@ -2,9 +2,9 @@ fileignoreconfig:
 - filename: ios/fastlane/Fastfile
   checksum: 10e70e4121e610c54871efa3820c409a4b7cc41bc89a0b5f6f0a9334c1fffddd
 - filename: package.json
-  checksum: e0b34f1a1efbdf07b40a3e9e9ecd8884dd7d6835f45c57850e30988d2c6371a2
+  checksum: 8027aca1a219fd40efc95437f0ee90840d40f93661ee0bad2348493d8cfa50b5
 - filename: package-lock.json
-  checksum: 5bcd398e0bf11b5e6f06f2b48ffdb2507ff27626b69316a64fa17c9879c5aa2e
+  checksum: 90f356c44e1dcbdce89abe6e4feac7a6c7ac36bcd0f7319c1b5486e3812e9efa
 - filename: components/PasscodeVerify.tsx
   checksum: 14654c0f038979fcd0d260170a45894a072f81e0767ca9a0e66935d33b5cc703
 - filename: i18n.ts
@@ -30,7 +30,7 @@ fileignoreconfig:
 - filename: shared/telemetry/TelemetryUtils.js
   checksum: 9a61cd59a3718adf1f14faf3024fec66a3295ef373878a878a28e5cb1287afaa
 - filename: ios/Podfile.lock
-  checksum: cc123c3e1f04d41b394ceb16843b15c08bac3ba619ae853ff322717739761a85
+  checksum: 06295bcf3f0894a272f5d938159439a323db2a3076fe60dacb85538ef36082af
 - filename: ios/Podfile.lock
   checksum: cc123c3e1f04d41b394ceb16843b15c08bac3ba619ae853ff322717739761a85
 - filename: screens/Home/IntroSlidersScreen.tsx
