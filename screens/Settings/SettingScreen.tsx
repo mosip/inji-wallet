@@ -1,5 +1,5 @@
 import React from 'react';
-import {Platform, Pressable, View, Image} from 'react-native';
+import {Platform, Pressable, Image} from 'react-native';
 import {Icon, ListItem, Switch} from 'react-native-elements';
 import {Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
@@ -16,6 +16,7 @@ import {EditableListItem} from '../../components/EditableListItem';
 import {RequestRouteProps, RootRouteProps} from '../../routes';
 import {ReceivedCards} from './ReceivedCards';
 import testIDProps from '../../shared/commonUtil';
+import {SvgImage} from '../../components/ui/svg';
 
 const LanguageSetting: React.FC = () => {
   const {t} = useTranslation('SettingScreen');
@@ -23,17 +24,16 @@ const LanguageSetting: React.FC = () => {
   return (
     <LanguageSelector
       triggerComponent={
-        <ListItem>
+        <ListItem {...testIDProps('language')}>
           <Icon
             name="globe"
             size={22}
             type="simple-line-icon"
             color={Theme.Colors.Icon}
-            containerStyle={Theme.Styles.settingsIconBg}
           />
           <ListItem.Content>
             <ListItem.Title
-              {...testIDProps('language')}
+              {...testIDProps('languageTitle')}
               style={{paddingTop: 3}}>
               <Text weight="semibold" color={Theme.Colors.settingsLabel}>
                 {t('language')}
@@ -41,6 +41,7 @@ const LanguageSetting: React.FC = () => {
             </ListItem.Title>
           </ListItem.Content>
           <Icon
+            {...testIDProps('chevronRightIcon')}
             name="chevron-right"
             size={21}
             color={Theme.Colors.chevronRightColor}
@@ -64,7 +65,7 @@ export const SettingScreen: React.FC<
 
   return (
     <React.Fragment>
-      <Pressable onPress={controller.TOGGLE_SETTINGS}>
+      <Pressable accessible={false} onPress={controller.TOGGLE_SETTINGS}>
         {props.triggerComponent}
       </Pressable>
       <Modal
@@ -89,14 +90,13 @@ export const SettingScreen: React.FC<
             <Row
               align="space-evenly"
               backgroundColor={Theme.Colors.whiteBackgroundColor}>
-              <Pressable onPress={controller.RECEIVE_CARD}>
+              <Pressable
+                {...testIDProps('receiveCardPressableArea')}
+                onPress={controller.RECEIVE_CARD}>
                 <Column
                   align="center"
                   style={Theme.Styles.receiveCardsContainer}>
-                  <Image
-                    source={Theme.ReceiveCardIcon}
-                    style={{alignSelf: 'center'}}
-                  />
+                  {SvgImage.ReceiveCard()}
                   <Text
                     testID="receiveCard"
                     margin="6"
@@ -133,7 +133,6 @@ export const SettingScreen: React.FC<
                 name={'fingerprint'}
                 color={Theme.Colors.Icon}
                 size={25}
-                style={{marginRight: 15}}
               />
               <ListItem.Content>
                 <ListItem.Title
@@ -169,10 +168,12 @@ export const SettingScreen: React.FC<
                   {
                     label: t('credentialRegistry'),
                     value: controller.credentialRegistry,
+                    testID: 'credentialRegistry',
                   },
                   {
                     label: t('esignethosturl'),
                     value: controller.esignetHostUrl,
+                    testID: 'esignetHost',
                   },
                 ]}
                 response={controller.credentialRegistryResponse}
@@ -194,7 +195,6 @@ export const SettingScreen: React.FC<
                 name={'book'}
                 color={Theme.Colors.Icon}
                 size={25}
-                style={{marginRight: 15}}
               />
               <ListItem.Content>
                 <ListItem.Title
@@ -213,7 +213,6 @@ export const SettingScreen: React.FC<
                 type="fontawesome"
                 size={22}
                 color={Theme.Colors.Icon}
-                containerStyle={Theme.Styles.settingsIconBg}
               />
               <ListItem.Content>
                 <ListItem.Title

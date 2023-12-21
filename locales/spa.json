@@ -40,7 +40,7 @@
   },
   "QrScanner": {
     "cameraAccessDisabled": "¡Acceso a la cámara deshabilitado!",
-    "cameraPermissionGuideLabel": "Vaya a configuración y habilite el acceso a la cámara manualmente.",
+    "cameraPermissionGuideLabel": "Vaya a la configuración del teléfono y habilite el acceso a la cámara manualmente.",
     "flipCamera": "Voltear cámara"
   },
   "VcDetails": {
@@ -152,8 +152,8 @@
     "aboutInji": "Acerca de Inji",
     "header": "ACERCA DE INJI",
     "appID": "ID de aplicación",
-    "aboutDetailes": "Inji es una aplicación móvil que se puede utilizar como billetera digital para almacenar credenciales. ",
-    "forMoreDetailes": "Para más detalles",
+    "aboutDetails": "Inji es una aplicación móvil que se puede utilizar como billetera digital para almacenar credenciales. ",
+    "forMoreDetails": "Para más detalles",
     "clickHere": "haga clic aquí",
     "version": "Versión",
     "tuvaliVersion": "Versión Tuvali"
@@ -494,10 +494,13 @@
       }
     },
     "status": {
-      "inProgress": "En curso",
+      "inProgress": {
+        "title": "En curso",
+        "hint": "Espere mientras establecemos la conexión."
+      },
       "establishingConnection": "Estableciendo conexión",
       "connectionInProgress": "Conexión en progreso",
-      "connectingTimeout": "Está tardando un poco en establecer la conexión. ",
+      "connectingTimeout": "Está tardando un poco en establecer la conexión. ¿Está el otro dispositivo abierto para la conexión?",
       "stayOnTheScreen": "Quédate en la pantalla",
       "retry": "Rever",
       "exchangingDeviceInfo": "Intercambiando información del dispositivo...",

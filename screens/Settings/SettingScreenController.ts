@@ -132,10 +132,9 @@ export function useSettingsScreen(props: RootRouteProps & RequestRouteProps) {
       credentialRegistry: string,
       esignetHostUrl: string,
     ) => {
-      settingsService.send(SettingsEvents.UPDATE_ESIGNET_HOST(esignetHostUrl)),
-        settingsService.send(
-          SettingsEvents.UPDATE_MIMOTO_HOST(credentialRegistry),
-        );
+      settingsService.send(
+        SettingsEvents.UPDATE_HOST(credentialRegistry, esignetHostUrl),
+      );
     },
 
     UPDATE_CREDENTIAL_REGISTRY_RESPONSE: (credentialRegistryResponse: string) =>

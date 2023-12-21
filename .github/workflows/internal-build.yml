@@ -86,7 +86,7 @@ jobs:
     uses: mosip/kattu/.github/workflows/android-publish.yml@master
     with:
       RELEASE: ${{ inputs.release }}
-      NODE_VERSION: '16.x'
+      NODE_VERSION: '18.x'
       RELEASE_KEYSTORE_ALIAS: androidreleasekey
       MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
       ESIGNET_HOST: ${{ inputs.esignetBackendServiceUrl }}
@@ -111,7 +111,7 @@ jobs:
     uses: mosip/kattu/.github/workflows/android-publish.yml@master
     with:
       RELEASE: ${{ inputs.release }}
-      NODE_VERSION: '16.x'
+      NODE_VERSION: '18.x'
       RELEASE_KEYSTORE_ALIAS: androidreleasekey
       MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
       ESIGNET_HOST: ${{ inputs.esignetBackendServiceUrl }}
@@ -146,8 +146,8 @@ jobs:
       SERVICE_LOCATION: '.'
       IOS_SERVICE_LOCATION: 'ios'
       SCRIPT_NAME: "fastlane beta"
-      IOS_ARTIFACT_NAME: "Inji"
-      IOS_ARTIFACT_PATH: "ios/fastlane/Inji_app_file/Products/Applications/"
+      IOS_ARTIFACT_NAME: "ios-artifacts"
+      IOS_ARTIFACT_PATH: "ios/fastlane/Inji_artifacts/"
     secrets:
       APP_STORE_CONNECT_TEAM_ID: '${{ secrets.APP_STORE_CONNECT_TEAM_ID }}'
       DEVELOPER_APP_ID: '${{ secrets.IOS_INJI_DEVELOPER_APP_ID }}'

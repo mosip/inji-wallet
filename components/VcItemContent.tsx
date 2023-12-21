@@ -1,13 +1,13 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Image, ImageBackground, View } from 'react-native';
-import { getLocalizedField } from '../i18n';
-import { VerifiableCredential } from '../types/vc';
-import { VcItemTags } from './VcItemTags';
+import {useTranslation} from 'react-i18next';
+import {Image, ImageBackground, View} from 'react-native';
+import {getLocalizedField} from '../i18n';
+import {VerifiableCredential} from '../types/vc';
+import {VcItemTags} from './VcItemTags';
 import VerifiedIcon from './VerifiedIcon';
-import { Column, Row, Text } from './ui';
-import { Theme } from './ui/styleUtils';
-import { CheckBox, Icon } from 'react-native-elements';
+import {Column, Row, Text} from './ui';
+import {Theme} from './ui/styleUtils';
+import {CheckBox, Icon} from 'react-native-elements';
 
 const getDetails = (arg1, arg2, verifiableCredential) => {
   if (arg1 === 'Status') {

@@ -1,11 +1,10 @@
 import {MMKVLoader} from 'react-native-mmkv-storage';
 import getAllConfigurations from './commonprops/commonProps';
-import {Platform} from 'react-native';
 import {
   getFreeDiskStorageOldSync,
   getFreeDiskStorageSync,
 } from 'react-native-device-info';
-import SecureKeystore from 'react-native-secure-keystore';
+import SecureKeystore from '@mosip/secure-keystore';
 import {
   decryptJson,
   encryptJson,
@@ -16,6 +15,7 @@ import {
 import {VCMetadata} from './VCMetadata';
 import {ENOENT, getItem} from '../machines/store';
 import {
+  androidVersion,
   isAndroid,
   MY_VCS_STORE_KEY,
   RECEIVED_VCS_STORE_KEY,
@@ -230,7 +230,7 @@ class Storage {
     const minimumStorageLimitInBytes = configurations[limitInMB] * 1000 * 1000;
 
     const freeDiskStorageInBytes =
-      isAndroid() && Platform.Version < 29
+      isAndroid() && androidVersion < 29
         ? getFreeDiskStorageOldSync()
         : getFreeDiskStorageSync();
 
