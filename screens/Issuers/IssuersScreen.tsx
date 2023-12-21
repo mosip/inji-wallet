@@ -25,6 +25,7 @@ import {
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {MessageOverlay} from '../../components/MessageOverlay';
 import {SearchBar} from '../../components/ui/SearchBar';
+import {SvgImage} from '../../components/ui/svg';
 
 export const IssuersScreen: React.FC<
   HomeRouteProps | RootRouteProps
@@ -96,27 +97,16 @@ export const IssuersScreen: React.FC<
 
   const getImage = () => {
     if (isGenericError()) {
-      return (
-        <Image
-          source={Theme.SomethingWentWrong}
-          style={{width: 370, height: 150}}
-          {...testIDProps('somethingWentWrongImage')}
-        />
-      );
+      return SvgImage.SomethingWentWrong();
     }
-    return (
-      <Image
-        {...testIDProps('noInternetConnectionImage')}
-        source={Theme.NoInternetConnection}
-      />
-    );
+    return SvgImage.NoInternetConnection();
   };
 
   const filterIssuers = (searchText: string) => {
     const filteredData = issuers.filter(item => {
       if (
         getDisplayObjectForCurrentLanguage(item.display)
-          ?.name.toLowerCase()
+          ?.title.toLowerCase()
           .includes(searchText.toLowerCase())
       ) {
         return getDisplayObjectForCurrentLanguage(item.display);
@@ -171,7 +161,6 @@ export const IssuersScreen: React.FC<
       <Loader
         title={t('loaders.loading')}
         subTitle={t(`loaders.subTitle.${controller.loadingReason}`)}
-        progress
       />
     );
   }
@@ -180,6 +169,14 @@ export const IssuersScreen: React.FC<
     <React.Fragment>
       {controller.issuers.length > 0 && (
         <Column style={Theme.IssuersScreenStyles.issuerListOuterContainer}>
+          <SearchBar
+            searchIconTestID="searchIssuerIcon"
+            searchBarTestID="issuerSearchBar"
+            search={search}
+            placeholder={t('searchByIssuersName')}
+            onChangeText={filterIssuers}
+            onLayout={() => filterIssuers('')}
+          />
           <Text
             {...testIDProps('issuersScreenDescription')}
             style={{
@@ -190,15 +187,6 @@ export const IssuersScreen: React.FC<
             }}>
             {t('description')}
           </Text>
-          <SearchBar
-            searchIconTestID="searchIssuerIcon"
-            searchBarTestID="issuerSearchBar"
-            search={search}
-            placeholder={t('searchByIssuersName')}
-            onChangeText={filterIssuers}
-            onLayout={() => filterIssuers('')}
-          />
-
           <View style={Theme.IssuersScreenStyles.issuersContainer}>
             {controller.issuers.length > 0 && (
               <FlatList

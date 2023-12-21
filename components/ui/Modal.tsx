@@ -30,14 +30,25 @@ export const Modal: React.FC<ModalProps> = props => {
               />
             ) : null}
             {props.arrowLeft ? (
-              <Icon
-                {...testIDProps('arrowLeft')}
-                name="arrow-left"
-                type="material-community"
-                onPress={props.onDismiss}
-                containerStyle={Theme.Styles.backArrowContainer}
-                color={Theme.Colors.Icon}
-              />
+              I18nManager.isRTL ? (
+                <Icon
+                  {...testIDProps('arrowLeft')}
+                  name="arrow-right"
+                  type="material-community"
+                  onPress={props.onDismiss}
+                  containerStyle={Theme.Styles.backArrowContainer}
+                  color={Theme.Colors.Icon}
+                />
+              ) : (
+                <Icon
+                  {...testIDProps('arrowLeft')}
+                  name="arrow-left"
+                  type="material-community"
+                  onPress={props.onDismiss}
+                  containerStyle={Theme.Styles.backArrowContainer}
+                  color={Theme.Colors.Icon}
+                />
+              )
             ) : null}
             <Row
               fill

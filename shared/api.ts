@@ -119,9 +119,9 @@ export const CACHED_API = {
       fetchCall: API.fetchIssuerConfig.bind(null, issuerId),
     }),
 
-  getAllProperties: () =>
+  getAllProperties: (isCachePreferred: boolean) =>
     generateCacheAPIFunction({
-      isCachePreferred: true,
+      isCachePreferred,
       cacheKey: COMMON_PROPS_KEY,
       fetchCall: API.fetchAllProperties,
       onErrorHardCodedValue: INITIAL_CONFIG.allProperties,
@@ -227,7 +227,9 @@ async function generateCacheAPIFunctionWithAPIPreference(
     if (response) {
       return JSON.parse(response);
     } else {
-      if (onErrorHardCodedValue != undefined) {
+      if (response == null) {
+        throw error;
+      } else if (onErrorHardCodedValue != undefined) {
         return onErrorHardCodedValue;
       } else {
         throw error;

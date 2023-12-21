@@ -150,8 +150,8 @@
     "aboutInji": "Tungkol kay Inji",
     "header": "TUNGKOL KAY INJI",
     "appID": "App ID",
-    "aboutDetailes": "Ang Inji ay isang mobile app na maaaring gamitin bilang digital wallet para mag-imbak ng mga kredensyal. Pinapayagan din nito ang pag-verify ng pagkakakilanlan sa parehong offline at online na mga mode, sa anumang lugar at oras.",
-    "forMoreDetailes": "Para sa karagdagang detalye",
+    "aboutDetails": "Ang Inji ay isang mobile app na maaaring gamitin bilang digital wallet para mag-imbak ng mga kredensyal. Pinapayagan din nito ang pag-verify ng pagkakakilanlan sa parehong offline at online na mga mode, sa anumang lugar at oras.",
+    "forMoreDetails": "Para sa karagdagang detalye",
     "clickHere": "Pindutin dito",
     "version": "Bersyon",
     "tuvaliVersion": "Tuvali-bersyon"
@@ -497,10 +497,13 @@
       }
     },
     "status": {
-      "inProgress": "Isinasagawa",
+      "inProgress": {
+        "title": "Isinasagawa",
+        "hint": "Mangyaring maghintay habang itinatag namin ang koneksyon."
+      },
       "establishingConnection": "Pagtatatag ng Koneksyon",
       "connectionInProgress": "Isinasagawa ang koneksyon",
-      "connectingTimeout": "Ito ay tumatagal ng ilang sandali upang maitaguyod ang koneksyon. Bukas ba ang ibang device para sa mga koneksyon?",
+      "connectingTimeout": "Ito ay tumatagal ng ilang sandali upang maitaguyod ang koneksyon. Bukas ba ang ibang device para sa koneksyon?",
       "stayOnTheScreen": "Manatili sa screen",
       "retry": "Subukan muli",
       "exchangingDeviceInfo": "Nagpapalitan ng impormasyon ng device...",

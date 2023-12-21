@@ -19,14 +19,8 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
-    'xstate.after(CONNECTION_TIMEOUT)#scan.connecting.inProgress': {
-      type: 'xstate.after(CONNECTION_TIMEOUT)#scan.connecting.inProgress';
-    };
     'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection': {
       type: 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection';
-    };
-    'xstate.after(SHARING_TIMEOUT)#scan.reviewing.sendingVc.inProgress': {
-      type: 'xstate.after(SHARING_TIMEOUT)#scan.reviewing.sendingVc.inProgress';
     };
     'xstate.init': {type: 'xstate.init'};
     'xstate.stop': {type: 'xstate.stop'};
@@ -108,7 +102,6 @@ export interface Typegen0 {
       | 'xstate.after(DESTROY_TIMEOUT)#scan.clearingConnection';
     setCreatedVp: 'done.invoke.scan.reviewing.creatingVp:invocation[0]';
     setLinkCode: 'SCAN';
-    setPromptHint: 'CANCEL' | 'RETRY';
     setReadyForBluetoothStateCheck: 'BLUETOOTH_PERMISSION_ENABLED';
     setReason: 'UPDATE_REASON';
     setReceiverInfo: 'CONNECTED';
@@ -116,10 +109,6 @@ export interface Typegen0 {
     setSenderInfo: 'CONNECTED';
     setShareLogTypeUnverified: 'ACCEPT_REQUEST';
     setShareLogTypeVerified: 'FACE_VALID';
-    setStayInProgress:
-      | 'STAY_IN_PROGRESS'
-      | 'xstate.after(CONNECTION_TIMEOUT)#scan.connecting.inProgress'
-      | 'xstate.after(SHARING_TIMEOUT)#scan.reviewing.sendingVc.inProgress';
     setUri: 'SCAN';
     storeLoginItem: 'done.invoke.QrLogin';
     storingActivityLog: 'STORE_RESPONSE';
