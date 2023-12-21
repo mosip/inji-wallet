@@ -143,11 +143,12 @@ export class SvgImage {
   }
   static VcItemContainerProfileImage(
     props: ExistingMosipVCItemContentProps | EsignetMosipVCItemContentProps,
+    verifiableCredential: VerifiableCredential,
   ) {
-    return props.verifiableCredential ? (
+    return verifiableCredential ? (
       <ImageBackground
         imageStyle={Theme.Styles.faceImage}
-        source={faceImageSource(props)}
+        source={faceImageSource(props, verifiableCredential)}
         style={Theme.Styles.closeCardImage}>
         {props.isPinned && SvgImage.pinIcon()}
       </ImageBackground>
@@ -198,10 +199,13 @@ function getIssuerLogo(props: displayType) {
   return {uri: props.logo.url};
 }
 
-function faceImageSource(props: faceImageSourceProps) {
+function faceImageSource(
+  props: faceImageSourceProps,
+  verifiableCredential: VerifiableCredential,
+) {
   return {
     uri: props.vcMetadata.isFromOpenId4VCI()
-      ? props.verifiableCredential?.credentialSubject.face
+      ? verifiableCredential?.credentialSubject?.face
       : props.context.credential.biometrics.face,
   };
 }
