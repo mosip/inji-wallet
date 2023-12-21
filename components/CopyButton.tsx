@@ -6,6 +6,7 @@ import {Icon} from 'react-native-elements';
 import {Row, Text} from './ui';
 import {useTranslation} from 'react-i18next';
 import testIDProps from '../shared/commonUtil';
+import i18next from '../i18n';
 
 export const CopyButton: React.FC<CopyButtonProps> = ({content}) => {
   const {t} = useTranslation('common');
@@ -14,13 +15,12 @@ export const CopyButton: React.FC<CopyButtonProps> = ({content}) => {
     <Pressable
       {...testIDProps(`${buttonText}Button`)}
       accessible={false}
-      style={Theme.Styles.iconContainer}
       onPress={() => {
         setButtonText(t('clipboard.copied'));
         setTimeout(() => setButtonText(t('clipboard.copy')), 3000);
         Clipboard.setString(content);
       }}>
-      <Row crossAlign="center">
+      <Row>
         <Icon
           {...testIDProps('fileCopyIcon')}
           type={'material'}
@@ -33,7 +33,11 @@ export const CopyButton: React.FC<CopyButtonProps> = ({content}) => {
           testID={`${buttonText}Text`}
           weight="semibold"
           align="center"
-          style={{paddingTop: 5}}>
+          style={{
+            maxWidth: 130,
+            paddingTop:
+              i18next.language == 'kn' || i18next.language == 'hi' ? 5 : 0,
+          }}>
           {buttonText}
         </Text>
       </Row>
