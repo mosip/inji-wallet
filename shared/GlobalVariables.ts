@@ -10,7 +10,7 @@ function getTuvaliPackageDetails() {
   Object.keys(dependencies).forEach(dependencyName => {
     const dependencyData = dependencies[dependencyName];
 
-    if (dependencyName == 'react-native-tuvali') {
+    if (dependencyName == '@mosip/tuvali') {
       packageVersion = dependencyData.from
         ? dependencyData.from.split('#')[1]
         : 'unknown';

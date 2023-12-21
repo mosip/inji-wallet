@@ -138,6 +138,10 @@ platform :ios do
       display_name: "#{generate_app_name}"
     )
 
+    # folder to copy artifacts to upload to github actions
+    output_directory = "./Inji_artifacts"
+    sh("mkdir -p '#{output_directory}'")
+
     match(
       type: 'appstore',
       app_identifier: "#{generate_app_bundle_id}",
@@ -149,6 +153,7 @@ platform :ios do
     )
 
     profile_mapping = Actions.lane_context[SharedValues::MATCH_PROVISIONING_PROFILE_MAPPING]
+
     gym(
       configuration: "Release",
       workspace: "Inji.xcworkspace",
@@ -161,6 +166,9 @@ platform :ios do
         }
       }
     )
+
+    # copy IPA to the folder
+    sh("cp -R '../#{generate_app_name}.ipa' '#{output_directory}'")
 
     pilot(
        app_identifier: "#{generate_app_bundle_id}",
@@ -180,9 +188,6 @@ platform :ios do
 
     delete_temp_keychain(keychain_name)
 
-    custom_output_directory = "./Inji_app_file"
-    sh("mkdir -p '#{custom_output_directory}'")
-
     archive_path = gym(
     skip_package_ipa: true,
     destination: "generic/platform=iOS Simulator",
@@ -190,10 +195,10 @@ platform :ios do
     build_path: "./build",
     )
 
-
+    # find and copy App file to the folder
     find_command = "find '../build/' -type d -name 'Products'"
     app_path = sh(find_command, log: false).strip
-    sh("cp -R '#{app_path}' '#{custom_output_directory}'")
+    sh("cp -R '#{app_path}' '#{output_directory}'")
 
     slack(
       message: "#{generate_app_name} #{version} (#{current_build_number}) is uploaded to testflight.", 
@@ -212,5 +217,6 @@ platform :ios do
     configuration: "Release",
     build_path: "./build",
     )
+
    end
 end

@@ -1,7 +1,7 @@
 import {KeyPair, RSA} from 'react-native-rsa-native';
 import forge from 'node-forge';
 import {BIOMETRIC_CANCELLED, DEBUG_MODE_ENABLED, isIOS} from '../constants';
-import SecureKeystore from 'react-native-secure-keystore';
+import SecureKeystore from '@mosip/secure-keystore';
 import {BiometricCancellationError} from '../error/BiometricCancellationError';
 import {EncryptedOutput} from './encryptedOutput';
 

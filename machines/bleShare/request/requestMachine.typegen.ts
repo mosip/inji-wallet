@@ -81,6 +81,14 @@ export interface Typegen0 {
       | 'FACE_VALID'
       | 'VC_RECEIVED'
       | 'done.invoke.request.reviewing.verifyingVp:invocation[0]';
+    sendBLEConnectionErrorEvent: 'BLE_ERROR';
+    sendVCReceiveFailedEvent: 'FACE_INVALID';
+    sendVCReceiveFlowTimeoutEndEvent: 'CANCEL';
+    sendVCReceiveRejectedEvent: 'CANCEL' | 'REJECT' | 'STORE_ERROR';
+    sendVCReceiveSuccessEvent: 'STORE_RESPONSE';
+    sendVCReceivingDisconnectedEvent: 'DISCONNECT';
+    sendVCReceivingStartEvent: 'CONNECTED';
+    sendVCReceivingTerminatedEvent: 'CANCEL';
     sendVcReceived: 'STORE_RESPONSE';
     setBleError: 'BLE_ERROR';
     setIncomingVc: 'VC_RECEIVED';

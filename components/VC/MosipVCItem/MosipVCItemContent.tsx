@@ -145,7 +145,7 @@ export const MosipVCItemContent: React.FC<
       <Column>
         <Row align="space-between">
           <Row margin="5 0 0 5">
-            {SvgImage.VcItemContainerProfileImage(props)}
+            {SvgImage.VcItemContainerProfileImage(props, verifiableCredential)}
 
             <Column margin="0 0 10 20" height={96} align="space-between">
               <Column style={{maxWidth: 230}}>

@@ -24,7 +24,7 @@ const LanguageSetting: React.FC = () => {
   return (
     <LanguageSelector
       triggerComponent={
-        <ListItem>
+        <ListItem {...testIDProps('language')}>
           <Icon
             name="globe"
             size={22}
@@ -33,7 +33,7 @@ const LanguageSetting: React.FC = () => {
           />
           <ListItem.Content>
             <ListItem.Title
-              {...testIDProps('language')}
+              {...testIDProps('languageTitle')}
               style={{paddingTop: 3}}>
               <Text weight="semibold" color={Theme.Colors.settingsLabel}>
                 {t('language')}
@@ -41,6 +41,7 @@ const LanguageSetting: React.FC = () => {
             </ListItem.Title>
           </ListItem.Content>
           <Icon
+            {...testIDProps('chevronRightIcon')}
             name="chevron-right"
             size={21}
             color={Theme.Colors.chevronRightColor}
@@ -64,7 +65,7 @@ export const SettingScreen: React.FC<
 
   return (
     <React.Fragment>
-      <Pressable onPress={controller.TOGGLE_SETTINGS}>
+      <Pressable accessible={false} onPress={controller.TOGGLE_SETTINGS}>
         {props.triggerComponent}
       </Pressable>
       <Modal
@@ -89,7 +90,9 @@ export const SettingScreen: React.FC<
             <Row
               align="space-evenly"
               backgroundColor={Theme.Colors.whiteBackgroundColor}>
-              <Pressable onPress={controller.RECEIVE_CARD}>
+              <Pressable
+                {...testIDProps('receiveCardPressableArea')}
+                onPress={controller.RECEIVE_CARD}>
                 <Column
                   align="center"
                   style={Theme.Styles.receiveCardsContainer}>
@@ -165,10 +168,12 @@ export const SettingScreen: React.FC<
                   {
                     label: t('credentialRegistry'),
                     value: controller.credentialRegistry,
+                    testID: 'credentialRegistry',
                   },
                   {
                     label: t('esignethosturl'),
                     value: controller.esignetHostUrl,
+                    testID: 'esignetHost',
                   },
                 ]}
                 response={controller.credentialRegistryResponse}

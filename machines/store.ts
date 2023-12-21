@@ -13,7 +13,7 @@ import {createModel} from 'xstate/lib/model';
 import {generateSecureRandom} from 'react-native-securerandom';
 import {log} from 'xstate/lib/actions';
 import {isIOS, MY_VCS_STORE_KEY, SETTINGS_STORE_KEY} from '../shared/constants';
-import SecureKeystore from 'react-native-secure-keystore';
+import SecureKeystore from '@mosip/secure-keystore';
 import {
   AUTH_TIMEOUT,
   decryptJson,
