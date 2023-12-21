@@ -70,6 +70,7 @@ export const ReceiveVcScreen: React.FC = () => {
             margin={[0, 8, 0, 0]}
           />
           <Button
+            testID="tryAgain"
             fill
             title={t('common:tryAgain')}
             onPress={controller.RETRY_VERIFICATION}

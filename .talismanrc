@@ -44,7 +44,7 @@ fileignoreconfig:
   - filename: screens/Issuers/IssuersScreen.tsx
     checksum: 9c53e3770dbefe26e0de67ee4b7d5cc9c52d9823cbb136a1a5104dcb0a101071
   - filename: ios/Podfile.lock
-    checksum: c30eada0d288ef1705e0eeb03bb941863ca7e5663196baaa814cb24e8312655e
+    checksum: 2487c4e11fb1bd95032cc4511435d9420fc0dfc62f3c015d177213fa089df7f2
   - filename: screens/Home/IntroSlidersScreen.tsx
     checksum: 72ef913857448ef05763e52e32356faa2d1f3de8130a1c638d1897f44823031f
   - filename: shared/commonUtil.ts
@@ -100,4 +100,10 @@ fileignoreconfig:
     checksum: 086080bc7a04accf5094c457b5acf84d9fec5d7dfa72eaaaf02e433ecf4f996b    
   - filename: assets/Finger_Print_Icon.svg
     checksum: 776d4fe4fc4b54d185ccf97daf0511b9fe2c0e0f7c1a809047020e5e8a100db6
+  - filename: ios/Podfile.lock
+    checksum: 06295bcf3f0894a272f5d938159439a323db2a3076fe60dacb85538ef36082af
+  - filename: package-lock.json
+    checksum: 90f356c44e1dcbdce89abe6e4feac7a6c7ac36bcd0f7319c1b5486e3812e9efa
+  - filename: package.json
+    checksum: 281cb75d068b221016a554f70d5078103aed1c80622530a751da8ca5483a37f8
     version: ""

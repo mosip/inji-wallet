@@ -34,7 +34,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
         onPress={() => {
           setShowAboutInji(!showAboutInji);
         }}>
-        <ListItem testID="aboutInji" topDivider bottomDivider>
+        <ListItem {...testIDProps('aboutInji')} topDivider bottomDivider>
           <Icon
             type={'feather'}
             name={'file'}
@@ -43,7 +43,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
           />
           <ListItem.Content>
             <ListItem.Title
-              {...testIDProps('aboutInji')}
+              {...testIDProps('aboutInjiTitle')}
               style={{paddingTop: 3}}>
               <Text weight="semibold" color={Theme.Colors.settingsLabel}>
                 {t('aboutInji')}
@@ -122,6 +122,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
             style={Theme.Styles.versionContainer}>
             <Row>
               <Text
+                testID="tuvaliVersion"
                 weight="semibold"
                 style={{paddingTop: 3}}
                 color={Theme.Colors.aboutVersion}>

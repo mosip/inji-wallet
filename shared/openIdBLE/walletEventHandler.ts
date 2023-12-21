@@ -1,10 +1,10 @@
-import tuvali from 'react-native-tuvali';
-import { WalletDataEvent } from 'react-native-tuvali/src/types/events';
+import tuvali from '@mosip/tuvali';
+import {WalletDataEvent} from '@mosip/tuvali/src/types/events';
 
-const { wallet } = tuvali;
+const {wallet} = tuvali;
 
 export function subscribe(callback: (event: WalletDataEvent) => void) {
-  return wallet.handleDataEvents((e) => {
+  return wallet.handleDataEvents(e => {
     callback(e);
   });
 }
