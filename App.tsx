@@ -15,13 +15,13 @@ import {DualMessageOverlay} from './components/DualMessageOverlay';
 import {useApp} from './screens/AppController';
 import {Alert} from 'react-native';
 import {
-  TelemetryConstants,
   configureTelemetry,
   getErrorEventData,
   sendErrorEvent,
 } from './shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from './shared/telemetry/TelemetryConstants';
 import {MessageOverlay} from './components/MessageOverlay';
-import SecureKeystore from 'react-native-secure-keystore';
+import SecureKeystore from '@mosip/secure-keystore';
 import {isHardwareKeystoreExists} from './shared/cryptoutil/cryptoUtil';
 import i18n from './i18n';
 import './shared/flipperConfig';

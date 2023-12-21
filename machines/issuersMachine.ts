@@ -13,7 +13,7 @@ import {
   generateKeys,
   isHardwareKeystoreExists,
 } from '../shared/cryptoutil/cryptoUtil';
-import SecureKeystore from 'react-native-secure-keystore';
+import SecureKeystore from '@mosip/secure-keystore';
 import {KeyPair} from 'react-native-rsa-native';
 import {ActivityLogEvents} from './activityLog';
 import {log} from 'xstate/lib/actions';

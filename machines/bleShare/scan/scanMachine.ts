@@ -1,5 +1,5 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import tuvali from 'react-native-tuvali';
+import tuvali from '@mosip/tuvali';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import {
   ActorRefFrom,
@@ -41,7 +41,7 @@ import {CameraCapturedPicture} from 'expo-camera';
 import {log} from 'xstate/lib/actions';
 import {createQrLoginMachine, qrLoginMachine} from '../../QrLoginMachine';
 import {StoreEvents} from '../../store';
-import {WalletDataEvent} from 'react-native-tuvali/lib/typescript/types/events';
+import {WalletDataEvent} from '@mosip/tuvali/lib/typescript/types/events';
 import {BLEError} from '../types';
 import Storage from '../../../shared/storage';
 import {VCMetadata} from '../../../shared/VCMetadata';
