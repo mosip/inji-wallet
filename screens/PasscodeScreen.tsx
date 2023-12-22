@@ -21,6 +21,7 @@ import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
 
 import {BackHandler} from 'react-native';
 import {incrementRetryCount} from '../shared/telemetry/TelemetryUtils';
+import {SvgImage} from '../components/ui/svg';
 
 export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
   const {t} = useTranslation('PasscodeScreen');
@@ -171,7 +172,7 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
           paddingHorizontal: 32,
         }}
         backgroundColor={Theme.Colors.whiteBackgroundColor}>
-        <Image source={Theme.LockIcon} style={{alignSelf: 'center'}} />
+        {SvgImage.LockIcon()}
         <Column>
           {isSettingUp ? passcodeSetup : unlockPasscode}
           <Text align="center" color={Theme.Colors.errorMessage}>

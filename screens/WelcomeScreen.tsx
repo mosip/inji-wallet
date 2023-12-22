@@ -5,6 +5,7 @@ import {Button, HorizontallyCentered, Column} from '../components/ui';
 import {Theme} from '../components/ui/styleUtils';
 import {RootRouteProps} from '../routes';
 import {useWelcomeScreen} from './WelcomeScreenController';
+import {SvgImage} from '../components/ui/svg';
 
 export const WelcomeScreen: React.FC<RootRouteProps> = props => {
   const {t} = useTranslation('WelcomeScreen');
@@ -15,7 +16,7 @@ export const WelcomeScreen: React.FC<RootRouteProps> = props => {
       padding="32 32 0"
       backgroundColor={Theme.Colors.whiteBackgroundColor}>
       <HorizontallyCentered fill>
-        <Logo height={182} />
+        {SvgImage.MosipLogo(Theme.Styles.welcomeLogo)}
       </HorizontallyCentered>
       <Button
         testID="unlockApplication"

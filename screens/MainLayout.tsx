@@ -26,43 +26,18 @@ export const MainLayout: React.FC<
   const scanService = appService.children.get('scan');
 
   const options: BottomTabNavigationOptions = {
-    headerRight: () => (
-      <Row align="space-between">
-        <HelpScreen
-          triggerComponent={
-            <Image
-              {...testIDProps('help')}
-              source={Theme.HelpIcon}
-              style={{width: 36, height: 36}}
-            />
-          }
-          navigation={undefined}
-          route={undefined}
-        />
-
-        <SettingScreen
-          triggerComponent={
-            <Icon
-              {...testIDProps('settings')}
-              name="settings"
-              type="simple-line-icon"
-              size={21}
-              style={Theme.Styles.IconContainer}
-              color={Theme.Colors.Icon}
-            />
-          }
-          navigation={props.navigation}
-          route={undefined}
-        />
-      </Row>
-    ),
     tabBarShowLabel: true,
     tabBarActiveTintColor: Theme.Colors.IconBg,
     ...Theme.BottomTabBarStyle,
   };
 
   return (
-    <Navigator initialRouteName={mainRoutes[0].name} screenOptions={options}>
+    <Navigator
+      initialRouteName={mainRoutes[0].name}
+      screenOptions={({route}) => ({
+        tabBarAccessibilityLabel: route.name,
+        ...options
+      })}>
       {mainRoutes.map(route => (
         <Screen
           key={route.name}
@@ -80,7 +55,7 @@ export const MainLayout: React.FC<
             title: t(route.name),
             tabBarIcon: ({focused}) => (
               <Icon
-                {...testIDProps(route.name)}
+                {...testIDProps(route.name + 'Icon')}
                 name={route.icon}
                 color={focused ? Theme.Colors.Icon : Theme.Colors.GrayIcon}
                 style={focused ? Theme.Styles.bottomTabIconStyle : null}

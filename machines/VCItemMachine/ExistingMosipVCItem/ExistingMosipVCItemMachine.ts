@@ -28,7 +28,7 @@ import getAllConfigurations, {
 } from '../../../shared/commonprops/commonProps';
 import {VcEvents} from '../../vc';
 import i18n from '../../../i18n';
-import SecureKeystore from 'react-native-secure-keystore';
+import SecureKeystore from '@mosip/secure-keystore';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {
   getEndEventData,

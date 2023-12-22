@@ -17,7 +17,9 @@ import {
   OtpVerificationModalProps,
   useOtpVerificationModal,
 } from './OtpVerificationModalController';
-import {isIOS} from '../../../shared/constants';
+import {GET_INDIVIDUAL_ID, isIOS} from '../../../shared/constants';
+import {SvgImage} from '../../../components/ui/svg';
+
 
 export const OtpVerificationModal: React.FC<
   OtpVerificationModalProps
@@ -68,6 +70,11 @@ export const OtpVerificationModal: React.FC<
     props.onInputDone(otp);
   };
 
+  const handleRequestOTPCancel = () => {
+    GET_INDIVIDUAL_ID({id: '', idType: 'UIN'});
+    controller.CANCEL();
+  };
+
   return (
     <Modal
       isVisible={props.isVisible}
@@ -78,7 +85,7 @@ export const OtpVerificationModal: React.FC<
         behavior={isIOS() ? 'padding' : 'height'}>
         <Column pX={24}>
           <Column crossAlign="center">
-            <Image source={Theme.OtpLogo} resizeMethod="auto" />
+            {SvgImage.OtpVerificationIcon()}
             <Text
               testID="otpVerificationHeader"
               margin="24 0 6 0"
@@ -157,7 +164,7 @@ export const OtpVerificationModal: React.FC<
             testID="cancel"
             type="clear"
             title={t('confirmationDialog.cancel')}
-            onPress={controller.CANCEL}
+            onPress={handleRequestOTPCancel}
           />
         </Column>
       </MessageOverlay>

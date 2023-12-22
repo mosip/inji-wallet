@@ -4,6 +4,7 @@ import {Dimensions, Image} from 'react-native';
 import {Overlay} from 'react-native-elements';
 import {Button, Column, Text, Row} from '../../../components/ui';
 import {Theme} from '../../../components/ui/styleUtils';
+import {SvgImage} from '../../../components/ui/svg';
 
 export const RemoveVcWarningOverlay: React.FC<
   RemoveVcWarningOverlayProps
@@ -21,7 +22,7 @@ export const RemoveVcWarningOverlay: React.FC<
         width={Dimensions.get('screen').width * 0.8}
         height={Dimensions.get('screen').height * 0}>
         <Row align="center" crossAlign="center" margin={'0 80 -10 0'}>
-          <Image source={Theme.WarningLogo} resizeMethod="auto" />
+          {SvgImage.WarningLogo()}
           <Text
             margin={'0 0 0 -80'}
             color={Theme.Colors.whiteText}

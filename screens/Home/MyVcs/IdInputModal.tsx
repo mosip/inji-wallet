@@ -24,8 +24,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = props => {
   const controller = useIdInputModal(props);
 
   const setIndividualID = () => {
-    controller.INPUT_ID(individualId.id);
-    controller.SELECT_ID_TYPE(individualId.idType);
+    controller.SET_INDIVIDUAL_ID(individualId);
   };
 
   const dismissInput = () => {
@@ -60,7 +59,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = props => {
             <Row crossAlign="flex-end" style={Theme.Styles.idInputContainer}>
               <Column style={Theme.Styles.idInputPicker}>
                 <Picker
-                  testID="selectIdType"
+                  {...testIDProps('selectIdTypePicker')}
                   selectedValue={controller.idType}
                   onValueChange={controller.SELECT_ID_TYPE}>
                   <Picker.Item label="UIN" value="UIN" />
@@ -68,7 +67,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = props => {
                 </Picker>
               </Column>
               <Input
-                {...testIDProps('idInput')}
+                {...testIDProps('idInputModalIndividualId')}
                 placeholder={!controller.id ? inputLabel : ''}
                 inputContainerStyle={
                   controller.id ? Theme.Styles.idInputBottom : null
@@ -107,7 +106,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = props => {
                 </Text>
                 <TouchableOpacity activeOpacity={1} onPress={props.onPress}>
                   <Text
-                    testID="getItHere"
+                    testID="getItNow"
                     color={Theme.Colors.AddIdBtnBg}
                     weight="bold"
                     size="small"

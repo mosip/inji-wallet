@@ -99,7 +99,9 @@ export const SendVcScreen: React.FC = () => {
             />
           ))}
         </Column>
-        <Column backgroundColor={Theme.Colors.whiteBackgroundColor}>
+        <Column
+          style={Theme.SendVcScreenStyles.shareOptionButtonsContainer}
+          backgroundColor={Theme.Colors.whiteBackgroundColor}>
           {!controller.selectedVc.shouldVerifyPresence && (
             <Button
               type="gradient"
@@ -141,6 +143,7 @@ export const SendVcScreen: React.FC = () => {
         onBackdropPress={controller.DISMISS}>
         <Row>
           <Button
+            testID='cancel'
             fill
             type="clear"
             title={t('common:cancel')}
@@ -148,6 +151,7 @@ export const SendVcScreen: React.FC = () => {
             margin={[0, 8, 0, 0]}
           />
           <Button
+            testID='tryAgain'
             fill
             title={t('common:tryAgain')}
             onPress={controller.RETRY_VERIFICATION}
