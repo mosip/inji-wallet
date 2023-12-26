@@ -1,6 +1,7 @@
 export const TelemetryConstants = {
   FlowType: Object.freeze({
     vcDownload: 'VC Download',
+    faceModelInit: 'Face SDK initialize',
     qrLogin: 'QR Login',
     senderVcShare: 'Sender VC Share',
     receiverVcShare: 'Receiver VC Share',
@@ -24,6 +25,7 @@ export const TelemetryConstants = {
   }),
 
   ErrorMessage: Object.freeze({
+    faceModelInitFailed: 'Face model init failed',
     authenticationCancelled: 'Authentication Cancelled',
     passcodeDidNotMatch: 'Pass code did not match',
     resendOtp: 'Otp is requested multiple times',
@@ -37,6 +39,7 @@ export const TelemetryConstants = {
   }),
 
   ErrorId: Object.freeze({
+    failure: 'FAILURE',
     mismatch: 'MISMATCH',
     doesNotExist: 'DOES_NOT_EXIST',
     userCancel: 'USER_CANCEL',
