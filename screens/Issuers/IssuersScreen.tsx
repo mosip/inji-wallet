@@ -190,7 +190,7 @@ export const IssuersScreen: React.FC<
             style={
               tapToSearch
                 ? Theme.SearchBarStyles.searchBarContainer
-                : Theme.SearchBarStyles.idelSearchBarBottomLine
+                : Theme.SearchBarStyles.idleSearchBarBottomLine
             }>
             <SearchBar
               searchIconTestID="searchIssuerIcon"
