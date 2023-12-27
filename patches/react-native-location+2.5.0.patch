@@ -1,14 +1,26 @@
+diff --git a/node_modules/react-native-location/android/build.gradle b/node_modules/react-native-location/android/build.gradle
+index ffc0e4d..bf1e117 100755
+--- a/node_modules/react-native-location/android/build.gradle
++++ b/node_modules/react-native-location/android/build.gradle
+@@ -10,7 +10,7 @@ android {
+   buildToolsVersion rootProject.hasProperty('buildToolsVersion') ? rootProject.buildToolsVersion : DEFAULT_BUILD_TOOLS_VERSION
+ 
+   defaultConfig {
+-    minSdkVersion 16
++    minSdkVersion 18
+     targetSdkVersion rootProject.hasProperty('targetSdkVersion') ? rootProject.targetSdkVersion : DEFAULT_TARGET_SDK_VERSION
+   }
+ 
 diff --git a/node_modules/react-native-location/android/src/main/java/com/github/reactnativecommunity/location/RNPlayServicesLocationProvider.java b/node_modules/react-native-location/android/src/main/java/com/github/reactnativecommunity/location/RNPlayServicesLocationProvider.java
-index 6dbdd3b..1a4de95 100644
+index 6dbdd3b..4514980 100644
 --- a/node_modules/react-native-location/android/src/main/java/com/github/reactnativecommunity/location/RNPlayServicesLocationProvider.java
 +++ b/node_modules/react-native-location/android/src/main/java/com/github/reactnativecommunity/location/RNPlayServicesLocationProvider.java
-@@ -6,8 +6,9 @@ import android.content.Intent;
+@@ -6,8 +6,8 @@ import android.content.Intent;
  import android.content.IntentSender;
  import android.content.pm.PackageManager;
  import android.location.Location;
 -import android.support.annotation.NonNull;
 -import android.support.v4.app.ActivityCompat;
-+
 +import androidx.annotation.NonNull;
 +import androidx.core.app.ActivityCompat;
  

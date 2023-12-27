@@ -1,0 +1,21 @@
+diff --git a/node_modules/@mosip/tuvali/android/src/main/java/io/mosip/tuvali/rnModule/RNEventMapper.kt b/node_modules/@mosip/tuvali/android/src/main/java/io/mosip/tuvali/rnModule/RNEventMapper.kt
+index 1f5128b..0e04199 100644
+--- a/node_modules/@mosip/tuvali/android/src/main/java/io/mosip/tuvali/rnModule/RNEventMapper.kt
++++ b/node_modules/@mosip/tuvali/android/src/main/java/io/mosip/tuvali/rnModule/RNEventMapper.kt
+@@ -35,14 +35,14 @@ class RNEventMapper {
+     }
+ 
+     private fun populateProperties(event: Event, writableMap: WritableMap) {
+-      event::class.memberProperties.forEach { property ->
++      for (property in event::class.memberProperties) {
+         if (property.visibility == KVisibility.PUBLIC) {
+           try {
+             populateProperty(property, event, writableMap)
+           } catch (e: Exception) {
+             println("Unable to populate RN event ${property.name}")
+           }
+-        }
++          }
+       }
+     }
+ 

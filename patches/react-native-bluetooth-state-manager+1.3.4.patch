@@ -1,0 +1,13 @@
+diff --git a/node_modules/react-native-bluetooth-state-manager/android/build.gradle b/node_modules/react-native-bluetooth-state-manager/android/build.gradle
+index 74fb93a..3185e90 100644
+--- a/node_modules/react-native-bluetooth-state-manager/android/build.gradle
++++ b/node_modules/react-native-bluetooth-state-manager/android/build.gradle
+@@ -17,7 +17,7 @@ android {
+     buildToolsVersion "27.0.3"
+ 
+     defaultConfig {
+-        minSdkVersion 18
++        minSdkVersion 21
+         targetSdkVersion 28
+         versionCode 1
+         versionName "1.1.0"

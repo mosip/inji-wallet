@@ -28,7 +28,6 @@
     "@react-navigation/native": "^6.0.8",
     "@react-navigation/native-stack": "^6.1.0",
     "@xstate/react": "^3.0.1",
-    "@iriscan/biometric-sdk-react-native": "^0.2.6",
     "base64url-universal": "^1.1.0",
     "buffer": "^6.0.3",
     "date-fns": "^2.26.0",
