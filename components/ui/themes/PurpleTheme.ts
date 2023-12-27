@@ -789,9 +789,15 @@ export const PurpleTheme = {
     },
   }),
   SearchBarStyles: StyleSheet.create({
-    searchBarContainer: {
+    idleSearchBarBottomLine: {
+      alignItems: 'center',
       borderBottomWidth: 1,
-      borderBottomColor: Colors.Gray50,
+      borderBottomColor: Colors.Gray40,
+    },
+    searchBarContainer: {
+      alignItems: 'center',
+      borderBottomWidth: 1,
+      borderBottomColor: Colors.Purple,
     },
     searchIcon: {
       justifyContent: 'center',
@@ -800,7 +806,7 @@ export const PurpleTheme = {
     },
     searchBar: {
       height: Dimensions.get('window').height * 0.055,
-      width: Dimensions.get('window').width * 0.84,
+      width: Dimensions.get('window').width * 0.8,
     },
   }),
   ButtonStyles: StyleSheet.create({
