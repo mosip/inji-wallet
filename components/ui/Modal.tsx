@@ -108,6 +108,6 @@ export interface ModalProps {
   headerLabelColor?: string;
   headerRight?: React.ReactElement;
   headerLeft?: React.ReactElement;
-  arrowLeft?: React.ReactElement;
+  arrowLeft?: boolean;
   onShow?: () => void;
 }

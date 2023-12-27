@@ -56,7 +56,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       headerTitle={t('title')}
       testID="idDetailsHeader"
       headerElevation={2}
-      arrowLeft={<Icon name={''} />}
+      arrowLeft={true}
       headerRight={
         <HelpScreen
           triggerComponent={
