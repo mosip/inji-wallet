@@ -18,19 +18,14 @@ import {
   sendErrorEvent,
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
+import {HelpScreen} from '../../components/HelpScreen';
+import {Icon} from 'react-native-elements';
+import {Theme} from '../../components/ui/styleUtils';
+import testIDProps from '../../shared/commonUtil';
 
 export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
   const {t} = useTranslation('ViewVcModal');
   const controller = useViewVcModal(props);
-
-  const DATA = [
-    {
-      idType: 'VID',
-      label: t('revoke'),
-      icon: 'close-circle-outline',
-      onPress: controller.CONFIRM_REVOKE_VC,
-    },
-  ];
 
   useEffect(() => {
     let error = controller.walletBindingError;
@@ -60,7 +55,23 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       onDismiss={props.onDismiss}
       headerTitle={t('title')}
       testID="idDetailsHeader"
-      headerElevation={2}>
+      headerElevation={2}
+      arrowLeft={<Icon name={''} />}
+      headerRight={
+        <HelpScreen
+          triggerComponent={
+            <Icon
+              {...testIDProps('help')}
+              accessible={true}
+              name="question"
+              type="font-awesome"
+              size={21}
+              style={Theme.Styles.IconContainer}
+              color={Theme.Colors.Icon}
+            />
+          }
+        />
+      }>
       {controller.isBindingSuccess && (
         <BannerNotification
           message={t('activated')}
@@ -121,7 +132,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       />
 
       <MessageOverlay
-        testID='walletBindingError'
+        testID="walletBindingError"
         isVisible={controller.isBindingError}
         title={controller.walletBindingError}
         onButtonPress={() => {

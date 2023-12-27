@@ -14,9 +14,9 @@ import {SettingScreen} from './Settings/SettingScreen';
 import testIDProps from '../shared/commonUtil';
 import {SvgImage} from '../components/ui/svg';
 
-const {Navigator, Screen} = createNativeStackNavigator();
 export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
   const {t} = useTranslation('IssuersScreen');
+  const {Navigator, Screen} = createNativeStackNavigator();
 
   React.useLayoutEffect(() => {
     const routeName = getFocusedRouteNameFromRoute(props.route);
@@ -61,8 +61,6 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
               color={Theme.Colors.Icon}
             />
           }
-          navigation={undefined}
-          route={undefined}
         />
 
         <SettingScreen

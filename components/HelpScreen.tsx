@@ -3,11 +3,10 @@ import {useTranslation} from 'react-i18next';
 import {Pressable} from 'react-native';
 import {Modal} from './ui/Modal';
 import {ScrollView} from 'react-native-gesture-handler';
-import {MainRouteProps} from '../routes/main';
 import {Column, Text} from './ui';
 import {Theme} from './ui/styleUtils';
 
-export const HelpScreen: React.FC<HelpScreenProps & MainRouteProps> = props => {
+export const HelpScreen: React.FC<HelpScreenProps> = props => {
   const {t} = useTranslation('HelpScreen');
 
   const [showHelpPage, setShowHelpPage] = useState(false);
@@ -75,6 +74,5 @@ export const HelpScreen: React.FC<HelpScreenProps & MainRouteProps> = props => {
 };
 
 interface HelpScreenProps {
-  testID?: string;
   triggerComponent: React.ReactElement;
 }
