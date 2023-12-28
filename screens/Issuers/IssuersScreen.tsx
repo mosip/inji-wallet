@@ -205,6 +205,7 @@ export const IssuersScreen: React.FC<
             {clearSearchIcon && (
               <Pressable onPress={clearSearchText}>
                 <Icon
+                  testID="clearingIssuerSearchIcon"
                   name="circle-with-cross"
                   type="entypo"
                   size={15}
