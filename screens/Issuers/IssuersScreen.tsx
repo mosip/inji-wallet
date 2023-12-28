@@ -26,6 +26,7 @@ import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {MessageOverlay} from '../../components/MessageOverlay';
 import {SearchBar} from '../../components/ui/SearchBar';
 import {SvgImage} from '../../components/ui/svg';
+import {Icon} from 'react-native-elements';
 
 export const IssuersScreen: React.FC<
   HomeRouteProps | RootRouteProps
@@ -203,7 +204,12 @@ export const IssuersScreen: React.FC<
             />
             {clearSearchIcon && (
               <Pressable onPress={clearSearchText}>
-                {SvgImage.IssuerSearchClearingButton()}
+                <Icon
+                  name="circle-with-cross"
+                  type="entypo"
+                  size={15}
+                  color={Theme.Colors.DetailsLabel}
+                />
               </Pressable>
             )}
           </Row>
