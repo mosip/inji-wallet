@@ -18,6 +18,7 @@ import {
   sendErrorEvent,
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
+import {Icon} from 'react-native-elements';
 
 export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
   const {t} = useTranslation('ViewVcModal');
@@ -57,9 +58,10 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
   return (
     <Modal
       isVisible={props.isVisible}
-      onDismiss={props.onDismiss}
+      arrowLeft={<Icon name={''} />}
       headerTitle={t('title')}
       testID="idDetailsHeader"
+      onDismiss={props.onDismiss}
       headerElevation={2}>
       {controller.isBindingSuccess && (
         <BannerNotification
@@ -121,7 +123,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       />
 
       <MessageOverlay
-        testID='walletBindingError'
+        testID="walletBindingError"
         isVisible={controller.isBindingError}
         title={controller.walletBindingError}
         onButtonPress={() => {
