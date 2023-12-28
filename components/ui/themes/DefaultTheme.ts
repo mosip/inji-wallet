@@ -1,5 +1,5 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import {Dimensions, StyleSheet, ViewStyle} from 'react-native';
+import {Dimensions, I18nManager, StyleSheet, ViewStyle} from 'react-native';
 import {Spacing} from '../styleUtils';
 import {isIOS} from '../../../shared/constants';
 
@@ -802,6 +802,7 @@ export const DefaultTheme = {
       width: Dimensions.get('window').width * 0.1,
     },
     searchBar: {
+      textAlign: I18nManager.isRTL ? 'right' : 'left',
       height: Dimensions.get('window').height * 0.055,
       width: Dimensions.get('window').width * 0.8,
     },
