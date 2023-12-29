@@ -62,10 +62,11 @@ const WalletUnverifiedActivationDetails: React.FC<
   );
 };
 
-const WalletVerifiedActivationDetails: React.FC<
-  WalletVerifiedDetailsProps
-> = props => {
-  const {t} = useTranslation('VcDetails');
+
+const WalletVerifiedActivationDetails: React.FC<WalletVerifiedDetailsProps> = (
+  props
+) => {
+  const { t } = useTranslation('VcDetails');
   return (
     <Row
       width={Dimensions.get('screen').width * 0.8}
@@ -93,9 +94,10 @@ const WalletVerifiedActivationDetails: React.FC<
   );
 };
 
-export const VcItemActivationStatus: React.FC<
-  VcItemActivationStatusProps
-> = props => {
+export const VcItemActivationStatus: React.FC<VcItemActivationStatusProps> = (
+  props
+) => {
+
   return (
     <Row>
       {props.emptyWalletBindingId ? (

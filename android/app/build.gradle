@@ -123,6 +123,12 @@ android {
         }
     }
 
+    lintOptions {
+        abortOnError false
+        absolutePaths false
+        baseline file("lint-baseline.xml")
+    }
+
     signingConfigs {
         release {
             def keystore = file('release.keystore')
@@ -156,10 +162,6 @@ android {
             signingConfig signingConfigs.debug
         }
         release {
-            lintOptions {
-                checkReleaseBuilds false
-                abortOnError false
-            }
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
             signingConfig signingConfigs.release

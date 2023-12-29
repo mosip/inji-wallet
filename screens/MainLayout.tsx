@@ -36,7 +36,7 @@ export const MainLayout: React.FC<
       initialRouteName={mainRoutes[0].name}
       screenOptions={({route}) => ({
         tabBarAccessibilityLabel: route.name,
-        options,
+        ...options
       })}>
       {mainRoutes.map(route => (
         <Screen
