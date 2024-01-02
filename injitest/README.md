@@ -4,7 +4,7 @@
 Automated scenario for ios & android covering positive and negative scenarios.
 
 ## Setup
-###for appium setup follwo `src/main/resources>>appiumSetupDoc.docx`
+###for appium setup follow `https://appium.io/docs/en/2.2/quickstart/install/`
 
 
 ## Build
@@ -23,6 +23,6 @@ Automated scenario for ios & android covering positive and negative scenarios.
 
 
 ## Reports
-This project will be in `test-output>>emailableRepots`
+This project reports will be in `test-output>>emailableReports`
 
 
