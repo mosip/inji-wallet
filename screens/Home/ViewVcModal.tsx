@@ -58,9 +58,9 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
   return (
     <Modal
       isVisible={props.isVisible}
-      arrowLeft={<Icon name={''} />}
-      headerTitle={t('title')}
       testID="idDetailsHeader"
+      arrowLeft={true}
+      headerTitle={t('title')}
       onDismiss={props.onDismiss}
       headerElevation={2}>
       {controller.isBindingSuccess && (
