@@ -215,7 +215,7 @@ export const MosipVCItemDetails: React.FC<
                 </Column>
               </Column>
               <Column align="space-evenly" margin="0 0 0 30">
-                <Column margin="28 0 0 0">
+                <Column margin="25 0 0 0">
                   <Text
                     testID="dateOfBirth"
                     style={{maxWidth: 130}}
