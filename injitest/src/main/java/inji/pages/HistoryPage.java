@@ -17,12 +17,21 @@ public class HistoryPage extends BasePage {
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"History\"`][5]")
     private WebElement historyHeader;
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'No history available yet')]")
-    @iOSXCUITFindBy(accessibility = "No history available yet")
+    @AndroidFindBy(accessibility = "noHistory")
+    @iOSXCUITFindBy(accessibility = "noHistory")
     private WebElement noHistoryAvailable;
+    
+    @AndroidFindBy(className = "android.widget.TextView")
+    @iOSXCUITFindBy(className = "android.widget.TextView")
+    private WebElement activityLogHeader;
+    
 
     public HistoryPage(AppiumDriver driver) {
         super(driver);
+    }
+    
+    public String getUinInActivityLogHeader() {
+        return getTextFromLocator(activityLogHeader);
     }
 
     public boolean isHistoryPageLoaded() {
@@ -37,6 +46,21 @@ public class HistoryPage extends BasePage {
     private boolean verifyHistoryAndroid(String vcNumber) {
         By locator = By.xpath("//*[contains(@text,'" + vcNumber + " downloaded')]");
         return this.isElementDisplayed(locator, "Downloaded VC in android");
+    }
+    
+    private boolean verifyActivityHeaderAndroid(String vcNumber) {
+        By locator = By.xpath("//*[contains(@text,'" + vcNumber + "')]");
+        return this.isElementDisplayed(locator, "Downloaded VC in android");
+    }
+    
+    private boolean verifyPinHistoryAndroid(String vcNumber) {
+        By locator = By.xpath("//*[contains(@text,'" + vcNumber + " pined')]");
+        return this.isElementDisplayed(locator, "pined VC in android");
+    }
+    
+    private boolean verifyPinHistoryIos(String vcNumber) {
+        By locator = By.xpath("//*[contains(@text,'" + vcNumber + " pined')]");
+        return this.isElementDisplayed(locator, "pined VC in android");
     }
     
     private boolean verifyDeleteHistoryAndroid(String vcNumber) {
@@ -67,6 +91,24 @@ public class HistoryPage extends BasePage {
                 return verifyHistoryAndroid(vcNumber);
             case IOS:
                 return verifyHistoryIos(vcNumber);
+        }
+        return false;
+    }
+    
+    public boolean verifyActivityLogHeader(String vcNumber, Target os) {
+        switch (os) {
+            case ANDROID:
+                return verifyActivityHeaderAndroid(vcNumber);
+        }
+        return false;
+    }
+    
+    public boolean verifyPinHistory(String vcNumber, Target os) {
+        switch (os) {
+            case ANDROID:
+                return verifyPinHistoryAndroid(vcNumber);
+            case IOS:
+                return verifyPinHistoryIos(vcNumber);
         }
         return false;
     }

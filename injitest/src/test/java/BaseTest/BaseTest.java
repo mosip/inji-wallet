@@ -16,7 +16,7 @@ public class BaseTest {
     public void beforeSuite() {
         if (!isDeviceFarmRun) {
             DriverManager.startAppiumServer();
-            //BaseTestCase.intiateUINGenration();
+          //  BaseTestCase.intiateUINGenration();
         }
     }
 

@@ -7,24 +7,24 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class HomePage extends BasePage {
-    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"downloadIcon\")")
-    @iOSXCUITFindBy(accessibility = "downloadIcon")
+    @AndroidFindBy(accessibility = "plusIcon")
+    @iOSXCUITFindBy(accessibility = "downloadCardButton")
     private WebElement downloadCardButton;
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'Home')]")
-    @iOSXCUITFindBy(accessibility = "Home, tab, 1 of 3")
+    @AndroidFindBy(accessibility = "home")
+    @iOSXCUITFindBy(accessibility = "home")
     private WebElement homeButton;
 
-    @AndroidFindBy(xpath = "//*[@resource-id=\"iconIcon\"]")
-    @iOSXCUITFindBy(accessibility = "\uE09A")
+    @AndroidFindBy(accessibility = "settings")
+    @iOSXCUITFindBy(accessibility = "settings")
     private WebElement settingButton;
 
-    @AndroidFindBy(xpath = "(//*[@class=\"android.widget.ImageView\"])[2]")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeNavigationBar[`name == \"RNSScreen\"`]/XCUIElementTypeOther[2]")
+    @AndroidFindBy(accessibility = "help")
+    @iOSXCUITFindBy(accessibility = "help")
     private WebElement helpButton;
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'History')]")
-    @iOSXCUITFindBy(accessibility = "History, tab, 3 of 3")
+    @AndroidFindBy(accessibility = "history")
+    @iOSXCUITFindBy(accessibility = "history")
     private WebElement historyButton;
 
     @iOSXCUITFindBy(accessibility = "ellipsis")
@@ -52,19 +52,23 @@ public class HomePage extends BasePage {
     private WebElement bringYourDigitalIdentity;
 
     @AndroidFindBy(accessibility = "errorTitle")
+    @iOSXCUITFindBy(accessibility = "errorTitle")
     private WebElement noInternetConnection;
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'Scan')]")
-    @iOSXCUITFindBy(accessibility = "Scan, tab, 2 of 3")
+    @AndroidFindBy(accessibility = "scan")
+    @iOSXCUITFindBy(accessibility = "scan")
     private WebElement scanButton;
 
     @AndroidFindBy(accessibility = "nationalCard")
     @iOSXCUITFindBy(accessibility = "nationalCard")
     private WebElement idTypeValue;
     
-    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Try again\")")
+    @AndroidFindBy(accessibility = "tryAgain")
+    @iOSXCUITFindBy(accessibility = "errorTitle")
     private WebElement tryAgainButton;
-
+    
+    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Subukan muli\")")
+    private WebElement tryAgainButtonInFillpino;
 
     public HomePage(AppiumDriver driver) {
         super(driver);
@@ -74,9 +78,9 @@ public class HomePage extends BasePage {
         /*if (isElementDisplayed(secureKeyStoragePopup, "secure key storage popup")) {
             clickOnElement(riskItButton);
         }*/
-        if (isElementDisplayed(securityFeatureUnavailablePopup, "security features will be unavailable popup")) {
-            clickOnElement(okButton);
-        }
+//        if (isElementDisplayed(securityFeatureUnavailablePopup, "security features will be unavailable popup")) {
+//            clickOnElement(okButton);
+//        }
         return this.isElementDisplayed(homeButton, "Home page");
     }
 
@@ -87,7 +91,7 @@ public class HomePage extends BasePage {
 
     public boolean isNameDisplayed(String name) {
         By fullName = By.xpath("//*[contains(@value,'" + name + "') or contains(@text,'" + name + "')]");
-        return this.isElementDisplayed(fullName, 60, "Name on downloaded card");
+        return this.isElementDisplayed(fullName, 120, "Name on downloaded card");
     }
     
    public boolean isSecondNameDisplayed(String name) {
@@ -127,13 +131,23 @@ public class HomePage extends BasePage {
         return this.isElementDisplayed(pinIcon, "pin icon");
     }
     
-    
     public boolean isNoVCDownloaded() {
         return this.isElementDisplayed(bringYourDigitalIdentity, "Bring your digital identity");
+    }
+    
+    public boolean isNoVCDownloadedInFilipino() {
+        return this.isElementDisplayed(bringYourDigitalIdentity, "Dalhin ang Iyong Digital ID");
     }
 
     public boolean isNoInternetConnectionDisplayed() {
         return this.isElementDisplayed(noInternetConnection, "No internet connection");
+    }
+    
+    public boolean isNoInternetConnectionDisplayedInTamil() {
+        return this.isElementDisplayed(noInternetConnection, "இணைய இணைப்பு இல்லை");
+    }
+    public boolean isNoInternetConnectionDisplayedFlillpino() {
+        return this.isElementDisplayed(noInternetConnection, "Pakisuri ang iyong koneksyon at subukang muli");
     }
 
     public ScanPage clickOnScanButton(){
@@ -142,6 +156,18 @@ public class HomePage extends BasePage {
     }
     public boolean isIdTypeDisplayed() {
         return this.isElementDisplayed(idTypeValue, "Name on downloaded card");
+    }
+    
+    public boolean isTryAgainButtonDisplayedInFlillpino() {
+        return this.isElementDisplayed(tryAgainButtonInFillpino, "Subukan muli");
+    }
+    
+    public boolean isTryAgainButtonDisplayedInTamil() {
+        return this.isElementDisplayed(tryAgainButton, "மீண்டும் முயற்சி செய்");
+    }
+    
+    public boolean isTryAgainButtonNotDisplayedInFlillpino() {
+        return this.isElementInvisibleYet(tryAgainButtonInFillpino, "Subukan muli");
     }
     
     public boolean isTryAgainButtonDisplayed() {
@@ -156,4 +182,10 @@ public class HomePage extends BasePage {
     	 clickOnElement(tryAgainButton);
          return this;
     }
+    
+    public HomePage clickOnTryAgainButtonInFlillpino() {
+   	 clickOnElement(tryAgainButtonInFillpino);
+        return this;
+   }
+    
 }

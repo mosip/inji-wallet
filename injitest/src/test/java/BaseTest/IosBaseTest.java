@@ -12,7 +12,7 @@ import org.testng.annotations.Parameters;
 import java.net.MalformedURLException;
 
 public class IosBaseTest extends BaseTest {
-    @Parameters("platformName")
+   // @Parameters("platformName")
     @BeforeMethod(alwaysRun = true)
     public void setup(String platformName) {
         try {

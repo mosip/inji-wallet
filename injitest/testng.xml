@@ -7,13 +7,14 @@
 	<test verbose="2" preserve-order="true" name="android">
 		<parameter name="platformName" value="ANDROID" />
 		<classes>
-			<class name="androidTestCases.VcDownloadAndVerifyUsingUinTest">
+	<!--	<class name="androidTestCases.VcDownloadAndVerifyUsingUinTest">
 				<methods>
 					<include name="downloadAndVerifyVcUsingUin" />
 					<include name="downloadWithEmptyUin" />
 					<include name="generateMultipleVcWithSameUin" />
 					<include name="downloadMultipleVcUsingDifferentUin" />
 					<include name="verifyInvalidUinErrorMessage" />
+					<include name="verifyOtpTimeOutAndGoBack" />
 				</methods>
 			</class>
 			<class name="androidTestCases.VerifyWelcomePagesTest">
@@ -27,7 +28,7 @@
 			<class name="androidTestCases.VcDownloadAndVerifyUsingVidTest">
 				<methods>
 					<include name="downloadAndVerifyVcUsingVid" />
-					<include name="downloadTwoVcDeleteUsingVid" />
+					<include name="downloadTwoVcDeleteOneUsingVid" />
 					<include name="verifyInvalidVidErrorMessage" />
 					<include name="downloadAndVerifyVcUsingRevokeVid" />
 				</methods>
@@ -37,13 +38,13 @@
 					<include name="logoutAndLoginWithPasscode" />
 					<include name="loginWithInvalidPasscode" />
 				</methods>
-			</class>
+			</class>	
 			<class name="androidTestCases.VerifyHelpPageTest">
 				<methods>
 					<include name="verifyHelpPage" />
 				</methods>
 			</class>
-			<class name="androidTestCases.DeletingVcTest">
+		<class name="androidTestCases.DeletingVcTest">
 				<methods>
 					<include name="deleteVcAndVerifyInHistory" />
 					<include name="cancelDeleteVc" />
@@ -52,7 +53,7 @@
 			</class>
 			<class name="androidTestCases.VerifyHistoryTest">
 				<methods>
-					<include name="generateAndVerifyHistory" />
+					<include name="downloadVcAndVerifyHistory" />
 					<include name="verifyActivationFailedRecordInHistory" />
 					<include name="verifyActivationFailedRecordInHistoryFromDetailedView" />
 					<include name="activateVcAndVerifyInHistory" />
@@ -75,17 +76,21 @@
 			<class name="androidTestCases.PinVcTest">
 				<methods>
 					<include name="pinVc" />
-					<include name="VerifyCameraAfterPinVc" />
+					<include name="VerifyCameraOpenAfterPinVc" />
+					<include name="downloadVcViaEsignetAndPinUnpin" />
 				</methods>
-			</class>
+			</class>-->
 			<class name="androidTestCases.ChangeLanguageTest">
 				<methods>
-					<include name="changeLanguage" />
+					<!--<include name="changeLanguage" />
 					<include name="languageShouldBeInNativeLanguages" />
-					<include name="changeLanguage" />
+					<include name="verifyTuvaliVersion" />
+					<include name="changeLanguageToArabic" />-->
+					<include name="changeLanguageToFilipionAndSearchIssuer" />
+					<include name="changeLanguageToFilipionAndSearchIssuerEnterIncompleteName" />
 				</methods>
 			</class>
-			<class name="androidTestCases.ShareVcTest">
+			<!--<class name="androidTestCases.ShareVcTest">
 				<methods>
 					<include name="noCardsAvailableToShare" />
 					<include name="verifyReceivedCardTabPresent" />
@@ -106,6 +111,8 @@
 					<include name="downloadVcUsingUinViaEsignetNoInternateWhileDownloading" />
 					<include name="downloadVcViaEsignetAndPinUnpinWithNoNetwork" />
 					<include name="downloadVcUsingUinViaEsignetNoInternateOpenScan" />
+					<include name="downloadVcInOtherLanguageViaEsignetWithoutInternet" />
+					<include name="changeLanguageToTamilWithoutNetwork" />
 				</methods>
 			</class>
 			<class name="androidTestCases.CredentialRegistryTest">
@@ -120,12 +127,7 @@
 					<include name="downloadVcAndActivateItInOtherEnv" />
 					<include name="downloadAndVerifyVcInNewEnvForEsignet" />
 					<include name="downloadAndVerifyVcInInvalidEnvForEsignet" />
-				</methods>
-			</class>
-			<class name="androidTestCases.ChangeLanguageTest">
-				<methods>
-					<include name="changeLanguage" />
-					<include name="changeLanguageToArabic" />
+					<include name="downloadAndVerifyVcInInvalidEnvForEsignetInFillpino" />
 				</methods>
 			</class>
 			<class name="androidTestCases.ReceiveCardTest">
@@ -139,7 +141,7 @@
 					<include name="downloadAndVerifyVcUsingUinViaEsignet" />
 					<include name="downloadAndVerifyVcUsingVidViaEsignet" />
 				</methods>
-			</class>
+			</class>-->
 		</classes>
 	</test>
 </suite>

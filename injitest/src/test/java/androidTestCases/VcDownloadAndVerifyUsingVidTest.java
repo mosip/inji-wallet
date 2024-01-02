@@ -38,7 +38,7 @@ public class VcDownloadAndVerifyUsingVidTest extends AndroidBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        OtpVerificationPage otpVerification = retrieveIdPage.clickOnVid(Target.ANDROID).setEnterIdTextBox(BaseTestCase.perpetualVid).clickOnGenerateCardButton();
+        OtpVerificationPage otpVerification = retrieveIdPage.clickOnVid(Target.ANDROID).setEnterIdTextBox(TestDataReader.readData("vid")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
@@ -75,7 +75,7 @@ public class VcDownloadAndVerifyUsingVidTest extends AndroidBaseTest {
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-        OtpVerificationPage otpVerification = retrieveIdPage.clickOnVid(Target.ANDROID).setEnterIdTextBox(BaseTestCase.perpetualVid).clickOnGenerateCardButton();
+        OtpVerificationPage otpVerification = retrieveIdPage.clickOnVid(Target.ANDROID).setEnterIdTextBox(TestDataReader.readData("vid")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
@@ -88,12 +88,12 @@ public class VcDownloadAndVerifyUsingVidTest extends AndroidBaseTest {
          addNewCardPage.clickOnDownloadViaUin();
 
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
-         retrieveIdPage.clickOnVid(Target.ANDROID).setEnterIdTextBox(BaseTestCase.perpetualVid).clickOnGenerateCardButton();
+         retrieveIdPage.clickOnVid(Target.ANDROID).setEnterIdTextBox(TestDataReader.readData("vid")).clickOnGenerateCardButton();
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
 
-        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        assertTrue(homePage.isSecondNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         //
         MoreOptionsPage moreOptionsPage = homePage.clickOnMoreOptionsButton();
         assertTrue(moreOptionsPage.isMoreOptionsPageLoaded(), "Verify if more options page is displayed");

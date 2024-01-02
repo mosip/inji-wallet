@@ -38,6 +38,7 @@ public class VerifyHelpPageTest extends AndroidBaseTest {
         
         assertEquals(helpPage.ishelpPageContentEmpty(),false,"verifying text is not empty");
         helpPage.scrollPerformInHelpPage();
+        assertTrue(helpPage.isBiometricIsChangeTextdDiscription(), "Verify if biometric is  text change displayed");
 
         assertTrue(helpPage.isHelpPageLoaded(), "Verify if help page is displayed");
         helpPage.exitHelpPage();
