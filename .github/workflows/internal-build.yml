@@ -166,14 +166,14 @@ jobs:
   #     SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
 
   sonar-check:
-    uses: tw-mosip/kattu/.github/workflows/gradlew-sonar-analysis.yml@inji-add-release-keystore-step-for-sonar
+    uses: tw-mosip/kattu/.github/workflows/npm-sonar-analysis.yml@inji-add-release-keystore-step-for-sonar
     with:
       SERVICE_LOCATION: '.'
       ANDROID_LOCATION: 'android'
       RELEASE_KEYSTORE_ALIAS: androidreleasekey
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
+      ORG_KEY: ${{ secrets.ORG_KEY }}
       SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
       ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
       RELEASE_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}'
