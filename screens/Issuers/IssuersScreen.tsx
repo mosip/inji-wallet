@@ -1,6 +1,6 @@
 import React, {useLayoutEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {FlatList, Image, View} from 'react-native';
+import {FlatList, Image, Pressable, View} from 'react-native';
 import {Issuer} from '../../components/openId4VCI/Issuer';
 import {Error} from '../../components/ui/Error';
 import {Header} from '../../components/ui/Header';
@@ -26,6 +26,7 @@ import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
 import {MessageOverlay} from '../../components/MessageOverlay';
 import {SearchBar} from '../../components/ui/SearchBar';
 import {SvgImage} from '../../components/ui/svg';
+import {Icon} from 'react-native-elements';
 
 export const IssuersScreen: React.FC<
   HomeRouteProps | RootRouteProps
@@ -36,6 +37,8 @@ export const IssuersScreen: React.FC<
   const issuers = controller.issuers;
   let [filteredSearchData, setFilteredSearchData] = useState(issuers);
   const [search, setSearch] = useState('');
+  const [tapToSearch, setTapToSearch] = useState(false);
+  const [clearSearchIcon, setClearSearchIcon] = useState(false);
 
   useLayoutEffect(() => {
     if (controller.loadingReason || controller.errorMessageType) {
@@ -84,6 +87,15 @@ export const IssuersScreen: React.FC<
     return controller.errorMessageType === ErrorMessage.GENERIC;
   };
 
+  const onFocusSearch = () => {
+    setTapToSearch(true);
+  };
+
+  const clearSearchText = () => {
+    filterIssuers('');
+    setClearSearchIcon(false);
+  };
+
   const goBack = () => {
     if (
       controller.errorMessageType &&
@@ -114,6 +126,11 @@ export const IssuersScreen: React.FC<
     });
     setFilteredSearchData(filteredData);
     setSearch(searchText);
+    if (searchText !== '') {
+      setClearSearchIcon(true);
+    } else {
+      setClearSearchIcon(false);
+    }
   };
 
   if (controller.isBiometricsCancelled) {
@@ -170,14 +187,33 @@ export const IssuersScreen: React.FC<
     <React.Fragment>
       {controller.issuers.length > 0 && (
         <Column style={Theme.IssuersScreenStyles.issuerListOuterContainer}>
-          <SearchBar
-            searchIconTestID="searchIssuerIcon"
-            searchBarTestID="issuerSearchBar"
-            search={search}
-            placeholder={t('searchByIssuersName')}
-            onChangeText={filterIssuers}
-            onLayout={() => filterIssuers('')}
-          />
+          <Row
+            style={
+              tapToSearch
+                ? Theme.SearchBarStyles.searchBarContainer
+                : Theme.SearchBarStyles.idleSearchBarBottomLine
+            }>
+            <SearchBar
+              searchIconTestID="searchIssuerIcon"
+              searchBarTestID="issuerSearchBar"
+              search={search}
+              placeholder={t('searchByIssuersName')}
+              onFocus={onFocusSearch}
+              onChangeText={filterIssuers}
+              onLayout={() => filterIssuers('')}
+            />
+            {clearSearchIcon && (
+              <Pressable onPress={clearSearchText}>
+                <Icon
+                  testID="clearingIssuerSearchIcon"
+                  name="circle-with-cross"
+                  type="entypo"
+                  size={15}
+                  color={Theme.Colors.DetailsLabel}
+                />
+              </Pressable>
+            )}
+          </Row>
           <Text
             {...testIDProps('issuersScreenDescription')}
             style={{
