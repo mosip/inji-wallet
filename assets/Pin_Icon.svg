@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="35" height="35" viewBox="0 0 35 35">
+  <defs>
+    <filter id="Rectangle_6989" x="0" y="0" width="35" height="35" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feFlood flood-opacity="0.078"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="0.942" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="@fill"/>
+      <stop offset="1" stop-color="@fill2"/>
+    </linearGradient>
+  </defs>
+  <g id="pin_icon" transform="translate(-318.347 -147.347)">
+    <g transform="matrix(1, 0, 0, 1, 318.35, 147.35)" filter="url(#Rectangle_6989)">
+      <g id="Rectangle_6989-2" data-name="Rectangle 6989" transform="translate(4.5 1.5)" fill="#fff" stroke="#fff" stroke-width="1">
+        <rect width="26" height="26" rx="6" stroke="none"/>
+        <rect x="0.5" y="0.5" width="25" height="25" rx="5.5" fill="none"/>
+      </g>
+    </g>
+    <g id="pin_icon-2" data-name="pin_icon" transform="matrix(0.996, -0.087, 0.087, 0.996, 327.15, 154.551)">
+      <g id="Group_57367" data-name="Group 57367">
+        <path id="Path_155498" data-name="Path 155498" d="M13.226,4.088a.942.942,0,0,1-.8.568,1.043,1.043,0,0,1-.684-.1c-.08-.042-.108.007-.147.053L8.945,7.692l-.616.717c.016.025.031.05.048.073A1.617,1.617,0,0,1,8.3,10.6a.362.362,0,0,1-.593.018q-.977-.976-1.952-1.953a1.067,1.067,0,0,1-.091-.123c-.06.056-.1.091-.133.126-1.09,1.077-2.14,2.2-3.3,3.2-.534.464-1.087.906-1.634,1.355a1.3,1.3,0,0,1-.19.11H.275c-.306-.131-.359-.36-.148-.628A36.428,36.428,0,0,1,3.2,9.265C3.7,8.782,4.18,8.289,4.67,7.8a.678.678,0,0,1,.121-.078q0-.03,0-.06a.706.706,0,0,1-.12-.079Q3.636,6.556,2.605,5.524a.367.367,0,0,1,.013-.611,1.618,1.618,0,0,1,2.1-.087l.082.064L8.687,1.556c-.015-.036-.028-.071-.043-.105A1.218,1.218,0,0,1,8.906.105.345.345,0,0,1,9.378.083c.037.03.07.065.1.1q1.764,1.763,3.525,3.529a2.044,2.044,0,0,1,.22.326Z" transform="matrix(0.259, -0.966, 0.966, 0.259, 0, 12.775)" fill="url(#linear-gradient)"/>
+      </g>
+    </g>
+  </g>
+</svg>

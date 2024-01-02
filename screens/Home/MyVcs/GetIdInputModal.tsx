@@ -43,7 +43,7 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = props => {
             </Text>
             <Row crossAlign="flex-end">
               <Input
-                {...testIDProps('getIdInput')}
+                {...testIDProps('getIdInputModalIndividualId')}
                 placeholder={!controller.id ? inputLabel : ''}
                 labelStyle={{
                   color: controller.isInvalid

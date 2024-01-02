@@ -6,11 +6,11 @@ import {Theme} from './styleUtils';
 
 export const SearchBar = (props: SearchBarProps) => {
   return (
-    <Row margin="3">
+    <Row style={Theme.SearchBarStyles.searchBarContainer}>
       <Icon
         testID={props.searchIconTestID}
         name="search"
-        color={Theme.Colors.GrayIcon}
+        color={Theme.Colors.Icon}
         size={27}
         style={Theme.SearchBarStyles.searchIcon}
       />

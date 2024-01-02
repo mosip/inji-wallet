@@ -25,10 +25,6 @@ export function useAddVcModal({service}: AddVcModalProps) {
     RESEND_OTP: () => service.send(AddVcModalEvents.RESEND_OTP()),
 
     DISMISS: () => service.send(AddVcModalEvents.DISMISS()),
-
-    WAIT: () => service.send(AddVcModalEvents.WAIT()),
-
-    CANCEL: () => service.send(AddVcModalEvents.CANCEL()),
   };
 }
 

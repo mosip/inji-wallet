@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Button, Centered, Column, Text} from './ui';
 import {Modal} from './ui/Modal';
-import {Image} from 'react-native';
 import {Theme} from './ui/styleUtils';
 import Spinner from 'react-native-spinkit';
+import {SvgImage} from './ui/svg';
 
 export const ProgressingModal: React.FC<ProgressingModalProps> = props => {
   const {t} = useTranslation('ScanScreen');
@@ -20,12 +20,7 @@ export const ProgressingModal: React.FC<ProgressingModalProps> = props => {
         requester={props.requester}>
         <Centered crossAlign="center" fill>
           <Column margin="24 0" align="space-around">
-            <Image
-              source={Theme.InjiProgressingLogo}
-              height={2}
-              width={2}
-              style={{marginBottom: 15, marginLeft: -6}}
-            />
+            {SvgImage.ProgressIcon()}
             {props.progress && (
               <Spinner
                 type="ThreeBounce"
@@ -39,7 +34,7 @@ export const ProgressingModal: React.FC<ProgressingModalProps> = props => {
               <Text
                 align="center"
                 margin="10"
-                color={Theme.Colors.TimoutHintText}
+                color={Theme.Colors.TimeoutHintText}
                 size="small"
                 style={Theme.TextStyles.bold}>
                 {props.hint}

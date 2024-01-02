@@ -69,7 +69,6 @@ export const RequestLayout: React.FC = () => {
         <SquircleIconPopUpModal
           message={t('status.accepted.message')}
           onBackdropPress={controller.DISMISS}
-          iconName={Theme.SuccessLogo}
           testId={'vcAcceptedPopUp'}
         />
       )}

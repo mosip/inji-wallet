@@ -2,7 +2,7 @@ fileignoreconfig:
   - filename: package.json
     checksum: 984f91af6d696faf934f7e541801343e146aed1b58d7c950ba11ec02dbd60dda
   - filename: package-lock.json
-    checksum: c16e22cf137c123d7f1b1b95758646fc839dc1fa16f7cf74dff3124174475e13
+    checksum: baf08330efcaedd72275354d8e691f0004e0583d0f494a1e40b821fe7ec9046f
   - filename: lib/jsonld-signatures/suites/ed255192018/ed25519.ts
     checksum: 493b6e31144116cb612c24d98b97d8adcad5609c0a52c865a6847ced0a0ddc3a
   - filename: components/PasscodeVerify.tsx
@@ -25,8 +25,6 @@ fileignoreconfig:
     checksum: 4a424adbd2d2404c9d968c54607885af643a07e09acc4a2d37c6e7a7952c4945
   - filename: screens/Home/IntroSlidersScreen.tsx
     checksum: 9ff212530850e9f921f91d406c01f67ea5dd2a44e9cdb5e63d977749c7a7c5bd
-  - filename: machines/store.ts
-    checksum: fda6511ab88566820cf6b7324178b4646f495fae5168af73a0fb1c3bb52e5b8d
   - filename: machines/issuersMachine.ts
     checksum: 742b8ff561dca61be08ab0b9aef3997ad5d043df298a84c17349dc0206ddcee6
   - filename: machines/issuersMachine.typegen.ts
@@ -38,17 +36,17 @@ fileignoreconfig:
   - filename: shared/telemetry/TelemetryUtils.js
     checksum: ffe9aac2dcc590b98b0d588885c088eff189504ade653a77f74b67312bfd27ad
   - filename: shared/fileStorage.ts
-    checksum: 07cb337dc1d5b0f0eef56270ac4f4f589260ee5e490183c024cf98a2aeafb139
+    checksum: f86dc7aa4a69e7109310e7ab5529a8599f38f15eb79f3f4da545aceaaf90d731
   - filename: shared/storage.ts
-    checksum: c8d874aa373bdf526bf59192139822f56915e702ef673bac4e0d7549b0fea3d0
+    checksum: c31270346f2ef717a31168a93d0311ce6f925434eb613ec7cf86553222630cdb
   - filename: screens/Issuers/IssuersScreen.tsx
     checksum: 9c53e3770dbefe26e0de67ee4b7d5cc9c52d9823cbb136a1a5104dcb0a101071
   - filename: ios/Podfile.lock
-    checksum: edad9c2d11b0b3ed819cb0dcbfaf0515d31adb8116223c07f7b7b79e6689fe96
+    checksum: 2487c4e11fb1bd95032cc4511435d9420fc0dfc62f3c015d177213fa089df7f2
   - filename: screens/Home/IntroSlidersScreen.tsx
     checksum: 72ef913857448ef05763e52e32356faa2d1f3de8130a1c638d1897f44823031f
   - filename: shared/commonUtil.ts
-    checksum: 01c3fdcd2f1c1757eae0c6a27fe04eb70c2aaf8660c604f3301997484592b66c
+    checksum: b9ff87d627c74ba1cf2f1d0bfab6c11192573c45a4c581c3beadb3c612bfe1ab
   - filename: screens/Home/MyVcs/GetIdInputModal.tsx
     checksum: 5c736ed79a372d0ffa7c02eb33d0dc06edbbb08d120978ff287f5f06cd6c7746
   - filename: shared/openId4VCI/Utils.ts
@@ -61,12 +59,6 @@ fileignoreconfig:
     checksum: 10889302ca05646a283386be1bbe7a5fb510c02bb62a308ee45f3c2a872ae64e
   - filename: shared/telemetry/TelemetryConstants.js
     checksum: 9d9acf3981cbde452489eacbbd70ebaa0b853c1c04e9712fa71368c089a9662b
-  - filename: .github/workflows/internal-build.yml
-    checksum: 3a3b4dea51cb496729c4e568113fc19cf5b008481bb4a5d157f211a2128b951b
-  - filename: .github/workflows/push-triggers.yml
-    checksum: c5de3d912e2cbd55f6898e2f4a24413abbee8f084c99ea11ce6265504a520ce0
-  - filename: android/fastlane/Fastfile
-    checksum: 41d1409adf8df9c843fd2dba89142cd55c471f3060ced57d48ee96dc8793ffcd
   - filename: machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine.typegen.ts
     checksum: 15308987b1aab0c51c96bfc646ae55a3d7ae728a1f6e03ab31d5e1b786da03eb
   - filename: machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine.typegen.ts
@@ -87,5 +79,23 @@ fileignoreconfig:
     checksum: a99fe136d9d1348c541d413324d266e179ecad6a1fe6b6bd1e0b2856a5a6d6b5
   - filename: screens/QrLogin/QrConsent.tsx
     checksum: 8563a194a4d38814eff670f0652d1a7af77134cafb350462174b4f147dbd890d
+  - filename: assets/fingerprint_icon.svg
+    checksum: b2d3a50ca1336f60123d96a8cc8ea663c3316ed2d8c31833bce7e393ca51695b
   - filename: machines/store.ts
     checksum: ca2328c39d2757ffebf85c0b6663da1073eb58349f2630c9418b2f16c350cbd1
+  - filename: assets/Flip_Camera_Icon.svg
+    checksum: 736b5a7ddb86bd4376229ce198dbf8a663e7ac89fc3311bd4f19afd4a2b36ffd
+  - filename: ios/fastlane/Fastfile
+    checksum: 086080bc7a04accf5094c457b5acf84d9fec5d7dfa72eaaaf02e433ecf4f996b    
+  - filename: assets/Finger_Print_Icon.svg
+    checksum: 776d4fe4fc4b54d185ccf97daf0511b9fe2c0e0f7c1a809047020e5e8a100db6
+  - filename: android/app/build.gradle
+    checksum: d5409b8eda2e1bf5b2552a909595a9e0aea4fd4e7572cf1746c99eee1583b83a
+  - filename: .github/workflows/push-triggers.yml
+    checksum: abc19ea38c8d7b79f15695d015709cc88a34a995181aaf12bc8344f940f3cbc4
+  - filename: ios/fastlane/Fastfile
+    checksum: 086080bc7a04accf5094c457b5acf84d9fec5d7dfa72eaaaf02e433ecf4f996b
+  - filename: android/fastlane/Fastfile
+    checksum: a25f155bcbbae7ab09563637c23771f7349738f12a6ddc8ae71c29c61ed535af
+  - filename: .github/workflows/internal-build.yml
+    checksum: e9b85cf0405d777faee9345269f6f9eb861ed205728dca63cf27a5db79c876a7
