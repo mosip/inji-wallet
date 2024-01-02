@@ -8,23 +8,23 @@ import org.openqa.selenium.WebElement;
 
 public class HomePage extends BasePage {
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"downloadIcon\")")
-    @iOSXCUITFindBy(accessibility = "downloadIcon")
+    @iOSXCUITFindBy(accessibility = "downloadCardButton")
     private WebElement downloadCardButton;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Home')]")
-    @iOSXCUITFindBy(accessibility = "Home, tab, 1 of 3")
+    @iOSXCUITFindBy(accessibility = "home")
     private WebElement homeButton;
 
     @AndroidFindBy(xpath = "//*[@resource-id=\"iconIcon\"]")
-    @iOSXCUITFindBy(accessibility = "\uE09A")
+    @iOSXCUITFindBy(accessibility = "settings")
     private WebElement settingButton;
 
     @AndroidFindBy(xpath = "(//*[@class=\"android.widget.ImageView\"])[2]")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeNavigationBar[`name == \"RNSScreen\"`]/XCUIElementTypeOther[2]")
+    @iOSXCUITFindBy(accessibility = "help")
     private WebElement helpButton;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'History')]")
-    @iOSXCUITFindBy(accessibility = "History, tab, 3 of 3")
+    @iOSXCUITFindBy(accessibility = "history")
     private WebElement historyButton;
 
     @iOSXCUITFindBy(accessibility = "ellipsis")
@@ -56,7 +56,7 @@ public class HomePage extends BasePage {
     private WebElement noInternetConnection;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Scan')]")
-    @iOSXCUITFindBy(accessibility = "Scan, tab, 2 of 3")
+    @iOSXCUITFindBy(accessibility = "scan")
     private WebElement scanButton;
 
     @AndroidFindBy(accessibility = "nationalCard")

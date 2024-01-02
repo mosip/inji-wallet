@@ -9,7 +9,7 @@ import org.openqa.selenium.WebElement;
 
 public class DetailedVcViewPage extends BasePage {
     @AndroidFindBy(xpath = "//*[contains(@text,'ID Details')]")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"ID Details\"`]")
+    @iOSXCUITFindBy(accessibility = "idDetailsHeader")
     private WebElement detailedVcViewPageTitle;
 
     @AndroidFindBy(accessibility = "fullNameValue")
@@ -61,11 +61,11 @@ public class DetailedVcViewPage extends BasePage {
     private WebElement crossIcon;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"iconIcon\")")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"\uE5CD\"`][3]")
+    @iOSXCUITFindBy(accessibility = "qrCodeCloseIcon")
     private WebElement qrCloseIcon;
 
     @AndroidFindBy(xpath = "//android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup[1]/android.view.ViewGroup[1]/android.view.ViewGroup[1]/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup")
-    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeOther[contains(@name, \"Full Name\")]/XCUIElementTypeOther[1]/XCUIElementTypeOther[2])[3]")
+    @iOSXCUITFindBy(accessibility = "qrCodePressable")
     private WebElement detailedVcViewPageQr;
 
     @AndroidFindBy(accessibility = "qrCodeHeader")

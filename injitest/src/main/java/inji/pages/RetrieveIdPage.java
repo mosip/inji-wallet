@@ -9,11 +9,11 @@ import org.openqa.selenium.WebElement;
 
 public class RetrieveIdPage extends BasePage {
     @AndroidFindBy(xpath = "//*[contains(@text,'Retrieve your ID')]")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Retrieve your ID\"`]")
+    @iOSXCUITFindBy(accessibility = "retreiveIdHeader")
     private WebElement retrieveIdText;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Enter ID')]")
-    @iOSXCUITFindBy(accessibility = "idInput")
+    @iOSXCUITFindBy(accessibility = "idInputModalIndividualId")
     private WebElement enterIdTextBox;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Generate Card')]")
@@ -37,7 +37,7 @@ public class RetrieveIdPage extends BasePage {
     private WebElement invalidUin;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'The input format is incorrect')]")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"The input format is incorrect\"`]")
+    @iOSXCUITFindBy(accessibility = "idInputModalIndividualId")
     private WebElement inputFormatErrorMessage;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'AID is not ready yet')]")

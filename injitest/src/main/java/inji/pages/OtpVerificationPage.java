@@ -21,7 +21,7 @@ public class OtpVerificationPage extends BasePage {
     private WebElement invalidOtpMessageInVcActivation;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Cancel')]")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`label == \"Cancel\"`]")
+    @iOSXCUITFindBy(accessibility = "cancel")
     private WebElement cancelButton;
 
     @AndroidFindBy(accessibility = "close")

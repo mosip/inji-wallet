@@ -17,8 +17,8 @@
     "caps": {
       "appium:deviceName": "iPhone 15 Pro",
       "appium:automationName": "XCUITest",
-      "appium:app": "/Users/kamalsingh/TestAutomation/Inji/inji/injitest/apps/ios/Inji_ios.zip",
-      "platformName": "ios",
+      "appium:app": "/Users/kamalsingh/TestAutomation/Inji/inji/injitest/apps/ios/Inji_new.zip",
+      "platformName": "iOS",
       "appium:noReset": false,
       "appium:includeSafariInWebviews": true,
       "appium:newCommandTimeout": 3600,

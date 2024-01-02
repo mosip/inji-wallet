@@ -38,7 +38,7 @@ public class CredentialRegistryTest extends IosBaseTest {
         CredentialRegistryPage credentialRegistryPage =settingsPage.clickOnCredentialRegistry();
         
         assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
-        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("newEnv")).clickOnSaveButton();
+        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("newEnv")).clickOnSaveButton().clickOnSaveButton();
 
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         credentialRegistryPage.clickOnBackArrow();
@@ -99,7 +99,7 @@ public class CredentialRegistryTest extends IosBaseTest {
         CredentialRegistryPage credentialRegistryPage =settingsPage.clickOnCredentialRegistry();
         
         assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
-        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("newEnv")).clickOnCancelButton();
+        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("newEnv")).clickOnCancelButton().clickOnCancelButton();
 
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         credentialRegistryPage.clickOnBackArrow();
@@ -137,7 +137,7 @@ public class CredentialRegistryTest extends IosBaseTest {
         CredentialRegistryPage credentialRegistryPage =settingsPage.clickOnCredentialRegistry();
         
         assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
-        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("invalidenv")).clickOnSaveButton();
+        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("invalidenv")).clickOnSaveButton().clickOnSaveButton();
 
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         credentialRegistryPage.clickOnBackArrow();
@@ -172,7 +172,7 @@ public class CredentialRegistryTest extends IosBaseTest {
         CredentialRegistryPage credentialRegistryPage =settingsPage.clickOnCredentialRegistry();
         
         assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
-        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("newEnv")).clickOnSaveButton();
+        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("newEnv")).clickOnSaveButton().clickOnSaveButton();
 
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         credentialRegistryPage.clickOnBackArrow();
@@ -225,7 +225,7 @@ public class CredentialRegistryTest extends IosBaseTest {
         CredentialRegistryPage credentialRegistryPage =settingsPage.clickOnCredentialRegistry();
         
         assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
-        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("newEnv")).clickOnSaveButton();
+        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("newEnv")).clickOnSaveButton().clickOnSaveButton();
 
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         credentialRegistryPage.clickOnBackArrow();
@@ -269,7 +269,7 @@ public class CredentialRegistryTest extends IosBaseTest {
         CredentialRegistryPage credentialRegistryPage =settingsPage.clickOnCredentialRegistry();
         
         assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
-        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("newEnv")).clickOnSaveButton();
+        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("newEnv")).clickOnSaveButton().clickOnSaveButton();
 
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         credentialRegistryPage.clickOnBackArrow();
@@ -291,7 +291,7 @@ public class CredentialRegistryTest extends IosBaseTest {
         settingsPage.clickOnCredentialRegistry();
         
         assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
-        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("injiEnv")).clickOnSaveButton();
+        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("injiEnv")).clickOnSaveButton().clickOnSaveButton();
 
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         credentialRegistryPage.clickOnBackArrow();
@@ -336,7 +336,7 @@ public class CredentialRegistryTest extends IosBaseTest {
         CredentialRegistryPage credentialRegistryPage =settingsPage.clickOnCredentialRegistry();
         
         assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
-        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("newEnv")).clickOnSaveButton();
+        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("newEnv")).clickOnSaveButton().clickOnSaveButton();
 
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         credentialRegistryPage.clickOnBackArrow();
@@ -358,7 +358,7 @@ public class CredentialRegistryTest extends IosBaseTest {
         settingsPage.clickOnCredentialRegistry();
         
         assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
-        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("injiEnv")).clickOnSaveButton();
+        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("injiEnv")).clickOnSaveButton().clickOnSaveButton();
 
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         credentialRegistryPage.clickOnBackArrow();
@@ -400,7 +400,7 @@ public class CredentialRegistryTest extends IosBaseTest {
         CredentialRegistryPage credentialRegistryPage =settingsPage.clickOnCredentialRegistry();
         
         assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
-        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("newEnv")).enterUrlToEsignetHostTextBox(TestDataReader.readData("newEnv")).clickOnSaveButton();
+        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("newEnv")).enterUrlToEsignetHostTextBox(TestDataReader.readData("newEnv")).clickOnSaveButton().clickOnSaveButton();
        
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         credentialRegistryPage.clickOnBackArrow();
@@ -466,7 +466,7 @@ public class CredentialRegistryTest extends IosBaseTest {
         CredentialRegistryPage credentialRegistryPage =settingsPage.clickOnCredentialRegistry();
         
         assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
-        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("invalidenv")).enterUrlToEsignetHostTextBox(TestDataReader.readData("invalidenv")).clickOnSaveButton();
+        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("invalidenv")).enterUrlToEsignetHostTextBox(TestDataReader.readData("invalidenv")).clickOnSaveButton().clickOnSaveButton();
 
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         credentialRegistryPage.clickOnBackArrow();

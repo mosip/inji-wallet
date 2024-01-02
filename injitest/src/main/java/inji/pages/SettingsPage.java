@@ -22,7 +22,7 @@ public class SettingsPage extends BasePage {
     private WebElement logoutButton;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Language')]")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"\uE037 Language \uE5CC\"`][1]")
+    @iOSXCUITFindBy(accessibility = "languageTitle")
     private WebElement languageButton;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Filipino')]")
@@ -38,7 +38,7 @@ public class SettingsPage extends BasePage {
     private List<WebElement> languages;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"aboutInji\")")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"About Inji\"`]")
+    @iOSXCUITFindBy(accessibility = "aboutInjiTitle")
     private WebElement aboutInji;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Tuvali-version: v')]")
@@ -53,7 +53,7 @@ public class SettingsPage extends BasePage {
     private WebElement receivedCards;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Credential Registry')]")
-    @iOSXCUITFindBy(accessibility = "credentialRegistry")
+    @iOSXCUITFindBy(accessibility = "credentialRegistryTitle")
     public WebElement credentialRegistryText;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Receive Card')]")

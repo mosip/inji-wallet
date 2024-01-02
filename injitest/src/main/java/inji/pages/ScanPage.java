@@ -20,7 +20,7 @@ public class ScanPage extends BasePage{
     private WebElement allowButton;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"No shareable cards are available.\")")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"No shareable cards are available.\"`]")
+    @iOSXCUITFindBy(accessibility = "noShareableVcs")
     private WebElement noShareableCards;
 
 	@AndroidFindBy(className = "android.widget.ImageView")

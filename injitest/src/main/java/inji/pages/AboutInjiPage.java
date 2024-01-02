@@ -11,15 +11,15 @@ public class AboutInjiPage extends BasePage {
     private WebElement aboutInjiHeader;
     
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Copy\")")
-    @iOSXCUITFindBy(accessibility = "\uE173 Copy")
+    @iOSXCUITFindBy(accessibility = "CopyText")
     private WebElement copy;
     
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Copied\")")
-    @iOSXCUITFindBy(accessibility = "\uE173 Copied")
+    @iOSXCUITFindBy(accessibility = "CopiedText")
     private WebElement copied;
     
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"iconIcon\")")
-    @iOSXCUITFindBy(accessibility = "closeModal")
+    @iOSXCUITFindBy(accessibility = "arrowLeft")
     private WebElement backButton;
     
     public AboutInjiPage(AppiumDriver driver) {

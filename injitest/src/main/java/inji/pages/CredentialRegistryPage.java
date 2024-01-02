@@ -8,27 +8,27 @@ import org.openqa.selenium.WebElement;
 public class CredentialRegistryPage extends BasePage {
 	
 	@AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Edit Credential Registry\")")
-    @iOSXCUITFindBy(accessibility = "Edit Credential Registry")
+    @iOSXCUITFindBy(accessibility = "credentialRegistryLabel")
     public WebElement credentialRegistryTextBoxHeader;
 	
 	@AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Edit Esignet Host\")")
-    @iOSXCUITFindBy(accessibility = "Edit Esignet Host")
+    @iOSXCUITFindBy(accessibility = "esignetHostLabel")
     public WebElement credentialRegistryEsignetTextBoxHeader;
 	
 	@AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"RNE__Input__text-input\")")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeTextField[`name == \"RNE__Input__text-input\"`]")
+    @iOSXCUITFindBy(accessibility = "credentialRegistryInputField")
 	public WebElement credentialRegistryTextBox;
 	
 	@AndroidFindBy(xpath = "(//android.widget.EditText[@resource-id=\"RNE__Input__text-input\"])[2]")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeTextField[`name == \"RNE__Input__text-input\"`][2]")
+    @iOSXCUITFindBy(accessibility = "esignetHostInputField")
 	public WebElement credentialRegistryEsignetTextBox;
 	
 	@AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Save\")")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`label == \"Save\"`]")
+    @iOSXCUITFindBy(accessibility = "save")
     public WebElement saveButton;
 	
 	@AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Cancel\")")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`label == \"Cancel\"`]")
+    @iOSXCUITFindBy(accessibility = "cancel")
     public WebElement cancelButton;
 	
 	@AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"iconIcon\")")
