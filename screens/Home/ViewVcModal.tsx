@@ -23,15 +23,6 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
   const {t} = useTranslation('ViewVcModal');
   const controller = useViewVcModal(props);
 
-  const DATA = [
-    {
-      idType: 'VID',
-      label: t('revoke'),
-      icon: 'close-circle-outline',
-      onPress: controller.CONFIRM_REVOKE_VC,
-    },
-  ];
-
   useEffect(() => {
     let error = controller.walletBindingError;
     if (error) {
@@ -121,7 +112,7 @@ export const ViewVcModal: React.FC<ViewVcModalProps> = props => {
       />
 
       <MessageOverlay
-        testID='walletBindingError'
+        testID="walletBindingError"
         isVisible={controller.isBindingError}
         title={controller.walletBindingError}
         onButtonPress={() => {

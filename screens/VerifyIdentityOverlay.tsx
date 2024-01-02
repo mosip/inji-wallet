@@ -26,7 +26,7 @@ export const VerifyIdentityOverlay: React.FC<
   return (
     <Modal
       isVisible={props.isVisible}
-      arrowLeft={<Icon name={''} />}
+      arrowLeft={true}
       headerTitle={t('faceAuth')}
       onDismiss={props.onCancel}>
       <Column
