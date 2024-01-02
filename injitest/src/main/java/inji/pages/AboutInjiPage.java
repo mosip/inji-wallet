@@ -2,26 +2,32 @@ package inji.pages;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
+import io.appium.java_client.pagefactory.iOSXCUITFindBy;
+
 import org.openqa.selenium.WebElement;
 
 public class AboutInjiPage extends BasePage {
     @AndroidFindBy(accessibility = "aboutInji")
+    @iOSXCUITFindBy(accessibility = "aboutInji")
     private WebElement aboutInjiHeader;
     
-    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Copy\")")
+    @AndroidFindBy(accessibility = "CopyText")
+    @iOSXCUITFindBy(accessibility = "CopyText")
     private WebElement copy;
     
-    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Copied\")")
+    @AndroidFindBy(uiAutomator = "CopyText")
+    @iOSXCUITFindBy(accessibility = "CopiedText")
     private WebElement copied;
     
-    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"iconIcon\")")
+    @AndroidFindBy(accessibility = "arrowLeft")
+    @iOSXCUITFindBy(accessibility = "arrowLeft")
     private WebElement backButton;
     
     public AboutInjiPage(AppiumDriver driver) {
         super(driver);
     }
 
-    public boolean isaboutInjiHeaderDisplayed() {
+    public boolean isAboutInjiHeaderDisplayed() {
         return this.isElementDisplayed(aboutInjiHeader, "ABOUT INJI");
     }
     

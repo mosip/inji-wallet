@@ -2,29 +2,44 @@ package inji.pages;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
+import io.appium.java_client.pagefactory.iOSXCUITFindBy;
+
 import org.openqa.selenium.WebElement;
 
 public class CredentialRegistryPage extends BasePage {
 	
-	@AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Edit Credential Registry\")")
+	@AndroidFindBy(accessibility = "credentialRegistryLabel")
+	@iOSXCUITFindBy(accessibility = "credentialRegistryLabel")
     public WebElement credentialRegistryTextBoxHeader;
 	
-	@AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Edit Esignet Host\")")
+	@AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Palitan ang Credential Registry\")")
+    public WebElement credentialRegistryTextBoxHeaderInFilipino;
+	
+	@AndroidFindBy(accessibility = "esignetHostLabel")
+	@iOSXCUITFindBy(accessibility = "esignetHostLabel")
     public WebElement credentialRegistryEsignetTextBoxHeader;
 	
-	@AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"RNE__Input__text-input\")")
+	@AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Palitan ang esignethosturl\")")
+    public WebElement credentialRegistryEsignetTextBoxHeaderInFilipino;
+	
+	@AndroidFindBy(accessibility = "credentialRegistryInputField")
+	@iOSXCUITFindBy(accessibility = "credentialRegistryInputField")
 	public WebElement credentialRegistryTextBox;
 	
-	@AndroidFindBy(xpath = "(//android.widget.EditText[@resource-id=\"RNE__Input__text-input\"])[2]")
+	@AndroidFindBy(accessibility = "esignetHostInputField")
+	@iOSXCUITFindBy(accessibility = "esignetHostInputField")
 	public WebElement credentialRegistryEsignetTextBox;
 	
-	@AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Save\")")
+	@AndroidFindBy(accessibility = "save")
+	@iOSXCUITFindBy(accessibility = "save")
     public WebElement saveButton;
 	
-	@AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Cancel\")")
+	@AndroidFindBy(accessibility = "cancel")
+    @iOSXCUITFindBy(accessibility = "cancel")
     public WebElement cancelButton;
 	
 	@AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"iconIcon\")")
+	@iOSXCUITFindBy(accessibility = "arrowLeft")
     public WebElement backArrow;
 	
     public CredentialRegistryPage(AppiumDriver driver) {
@@ -35,12 +50,20 @@ public class CredentialRegistryPage extends BasePage {
         return this.isElementDisplayed(credentialRegistryTextBoxHeader, "Credential Registry Text heder is visible");
     }
     
+    public boolean isCredentialRegistryTextBoxHeaderInFilipinoDisplayed() {
+        return this.isElementDisplayed(credentialRegistryTextBoxHeaderInFilipino, "Palitan ang Credential Registry");
+    }
+    
+    public boolean isCredentialRegistryTextBoxHeaderForEsignetInFilipinoDisplayed() {
+        return this.isElementDisplayed(credentialRegistryEsignetTextBoxHeader, "Palitan ang esignethosturl");
+    }
+    
     public CredentialRegistryPage setEnterIdTextBox(String env) {
     	clearTextBoxAndSendKeys(credentialRegistryTextBox, env, "Credential Registry env");
         return this;
     }
     
-    public CredentialRegistryPage EnterUrlToEsignetHostTextBox(String env) {
+    public CredentialRegistryPage enterUrlToEsignetHostTextBox(String env) {
     	clearTextBoxAndSendKeys(credentialRegistryEsignetTextBox, env, "Credential Registry env");
         return this;
     }

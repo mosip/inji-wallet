@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite" parallel="tests" thread-count="2">
+	<listeners>
+		<listener class-name="inji.listeners.Listeners" />
+	</listeners>
+	<test verbose="2" preserve-order="true" name="ios">
+		<parameter name="platformName" value="IOS" />
+		<classes>
+			<class name="iosTestCases.VcDownloadAndVerifyUsingUinTest">
+				<methods>
+					<include name="downloadAndVerifyVcUsingUin" />
+					<include name="downloadWithEmptyUin" />
+					<include name="generateMultipleVcWithSameUin" />
+					<include name="downloadMultipleVcUsingDifferentUin" />
+					<include name="verifyInvalidUinErrorMessage" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite>

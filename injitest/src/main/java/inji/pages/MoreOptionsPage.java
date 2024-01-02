@@ -15,6 +15,10 @@ public class MoreOptionsPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "kebabTitle")
     private WebElement moreOptionsText;
 
+    @AndroidFindBy(accessibility = "viewActivityLog")
+    @iOSXCUITFindBy(accessibility = "viewActivityLog")
+    private WebElement viewActivityLogButton;
+    
     @AndroidFindBy(accessibility = "pinOrUnPinCard")
     @iOSXCUITFindBy(accessibility = "pinOrUnPinCard")
     private WebElement pinOrUnPinCardButton;
@@ -32,6 +36,7 @@ public class MoreOptionsPage extends BasePage {
     private WebElement closeButton;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Something is wrong. Please try again later!\")")
+    @iOSXCUITFindBy(iOSClassChain ="**/XCUIElementTypeOther[`label == \"Something is wrong. Please try again later!\"`]")
     public WebElement somthingIsWrongPopup;
 
     public MoreOptionsPage(AppiumDriver driver) {
@@ -49,6 +54,11 @@ public class MoreOptionsPage extends BasePage {
 
     public void clickOnPinOrUnPinCard() {
         clickOnElement(pinOrUnPinCardButton);
+    }
+    
+    public HistoryPage clickOnViewActivityLog() {
+        clickOnElement(viewActivityLogButton);
+        return new HistoryPage(driver);
     }
 
     public PleaseConfirmPopupPage clickOnActivationPending() {

@@ -46,6 +46,17 @@ public class BasePage {
         }
     }
     
+    protected boolean isElementDisplayed(WebElement element,int waitTime, String elementName) {
+        try {
+            waitForElementToBeVisible(element,waitTime);
+            ExtentLogger.pass(elementName + " is displayed");
+            return true;
+        } catch (Exception e) {
+            //ExtentLogger.fail(elementName + " is not displayed");
+            return false;
+        }
+    }
+    
     protected boolean isElementInvisibleYet(WebElement element, String elementName) {
         try {
         	waitForElementToBeInvisible(element);
@@ -57,6 +68,16 @@ public class BasePage {
         }
     }
 
+    protected boolean WaitTillElementVisible(WebElement element,int waitTime, String elementName) {
+        try {
+        	waitForElementToBeInvisible(element,waitTime);
+            ExtentLogger.pass(elementName + " is displayed");
+            return false;
+        } catch (Exception e) {
+            //ExtentLogger.fail(elementName + " is not displayed");
+            return true;
+        }
+        }
     protected void clickOnElement(WebElement element) {
         waitForElementToBeVisible(element);
         element.click();
@@ -71,10 +92,20 @@ public class BasePage {
         wait.until(ExpectedConditions.visibilityOf(element));
     }
     
+    private void waitForElementToBeVisible(WebElement element,int waitTime) {
+        WebDriverWait wait = new WebDriverWait(driver, ofSeconds(waitTime));
+        wait.until(ExpectedConditions.visibilityOf(element));
+    }
+    
     private void waitForElementToBeInvisible(WebElement element) {
     	  WebDriverWait wait = new WebDriverWait(driver, ofSeconds(30));
     	  wait.until(ExpectedConditions.invisibilityOf(element));
     	}
+    
+    private void waitForElementToBeInvisible(WebElement element,int waitTime) {
+  	  WebDriverWait wait = new WebDriverWait(driver, ofSeconds(waitTime));
+  	  wait.until(ExpectedConditions.invisibilityOf(element));
+  	}
     
     protected boolean isElementEnabled(WebElement element) {
         try {

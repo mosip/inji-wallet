@@ -24,6 +24,7 @@ public class WelcomePage extends BasePage {
     private WebElement nextButton;
     
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Back\")")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`label == \"Back\"`][1]")
     public WebElement backButton;
 
 

@@ -10,7 +10,7 @@ public class ScanPage extends BasePage{
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.android.permissioncontroller:id/permission_allow_foreground_only_button\")")
     private WebElement allowPermissionPopupButton;
 
-    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"io.mosip.residentapp:id/texture_view\")")
+    @AndroidFindBy(accessibility = "camera")
     private WebElement camera;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.oplus.wirelesssettings:id/alertTitle\")")
@@ -19,13 +19,14 @@ public class ScanPage extends BasePage{
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Allow\")")
     private WebElement allowButton;
 
-    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"No shareable cards are available.\")")
+    @AndroidFindBy(accessibility = "noShareableVcs")
+    @iOSXCUITFindBy(accessibility = "noShareableVcs")
     private WebElement noShareableCards;
 
-	@AndroidFindBy(className = "android.widget.ImageView")
+	@AndroidFindBy(accessibility = "flipCameraIcon")
 	private WebElement flipCamera;
 
-	@AndroidFindBy(xpath = "//*[contains(@text,'Hold the phone steady and scan the QR code')]")
+	@AndroidFindBy(accessibility = "holdPhoneSteadyMessage")
 	 private WebElement holdCameraSteady;
 
     public ScanPage(AppiumDriver driver) {

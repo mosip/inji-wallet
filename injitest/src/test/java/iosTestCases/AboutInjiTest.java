@@ -35,7 +35,7 @@ public class AboutInjiTest extends IosBaseTest {
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         AboutInjiPage aboutInjiPage = settingsPage.clickOnAbouInji();
         
-        assertTrue(aboutInjiPage.isaboutInjiHeaderDisplayed(),"Verify id about inji page displayed");
+        assertTrue(aboutInjiPage.isAboutInjiHeaderDisplayed(),"Verify id about inji page displayed");
         
         aboutInjiPage.clickOnCopy();
         assertTrue(aboutInjiPage.isAppidIsCopied(),"verify if app id is copied");

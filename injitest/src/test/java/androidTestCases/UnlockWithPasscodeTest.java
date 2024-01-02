@@ -77,7 +77,7 @@ public class UnlockWithPasscodeTest extends AndroidBaseTest {
         EnterYourPasscodePage enterYourPasscodePage = unlockApplicationPage.clickOnUnlockApplicationButton();
 
         assertTrue(enterYourPasscodePage.isEnterYourPasscodePageLoaded(), "Verify if enter your passcode page is displayed");
-        enterYourPasscodePage.enterYourPasscode(TestDataReader.readData("invalidPasscode"), Target.ANDROID);
+        enterYourPasscodePage.enterYourPasscode(TestDataReader.readData("invalidpasscode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isPasscodeInvalidMessageDisplayed(), "verify if invalid passcode is displayed");
     	
