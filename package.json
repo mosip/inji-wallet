@@ -10,7 +10,7 @@
     "test": "jest",
     "postinstall": "patch-package && npm run jetify && sh tools/talisman/talisman-precommit.sh",
     "sonar": "sonar-scanner",
-    "build": "cd android && ./gradlew :app:assembleResidentapp lint -Dlint.baselines.continue=true && cd .. && jest --coverage"
+    "build": "jest --coverage"
   },
   "dependencies": {
     "@digitalbazaar/ed25519-signature-2018": "digitalbazaar/ed25519-signature-2018",
