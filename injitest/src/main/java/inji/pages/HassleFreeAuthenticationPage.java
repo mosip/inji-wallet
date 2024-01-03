@@ -14,7 +14,7 @@ public class HassleFreeAuthenticationPage extends BasePage {
     @AndroidFindBy(accessibility = "introText")
     @iOSXCUITFindBy(xpath = "//*[contains(@value,'Authenticate yourself')]")
     private WebElement hassleFreeAuthenticationDescription;
-    
+
     @AndroidFindBy(accessibility = "getStarted")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`label == \"Back\"`][4]")
     public WebElement goBackButton;
@@ -24,15 +24,14 @@ public class HassleFreeAuthenticationPage extends BasePage {
     }
 
     public boolean isHassleFreeAuthenticationPageLoaded() {
-        return this.isElementDisplayed(hassleFreeAuthenticationText, "Hassle free authentication page");
+        return this.isElementDisplayed(hassleFreeAuthenticationText);
     }
 
     public String getHassleFreeAuthenticationDescription() {
         return this.getTextFromLocator(hassleFreeAuthenticationDescription);
     }
-    
-    public HassleFreeAuthenticationPage clickOnGoBack() {
+
+    public void clickOnGoBack() {
         clickOnElement(goBackButton);
-        return this;
     }
 }

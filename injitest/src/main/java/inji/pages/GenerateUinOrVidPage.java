@@ -24,11 +24,11 @@ public class GenerateUinOrVidPage extends BasePage {
     }
 
     public boolean isGenerateUinOrVidPageLoaded() {
-        return this.isElementDisplayed(retrieveUinVidText, "Retrieve your UIN/VID page");
+        return this.isElementDisplayed(retrieveUinVidText);
     }
 
     public GenerateUinOrVidPage enterApplicationID(String applicationId) {
-        sendKeysToTextBox(applicationIdTextBox, applicationId, "application textbox");
+        sendKeysToTextBox(applicationIdTextBox, applicationId);
         return this;
     }
 
