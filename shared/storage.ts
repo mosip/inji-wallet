@@ -152,48 +152,45 @@ class Storage {
   }
 
   private static async isCorruptedVC(
-    key: string,
+    VCkey: string,
     encryptionKey: string,
     data: string,
   ) {
     // TODO: INJI-612 refactor
-    const storedHMACofCurrentVC = await this.readHmacForDataCorruptionCheck(
-      key,
-      encryptionKey,
-    );
-    const HMACofVC = await generateHmac(encryptionKey, data);
-    const hmacStoredinFile = await this.readHmacForVCFromFile(key);
+    const encryptedHMAC_mmkv = await this.getHMAC(VCkey);
+    const plainHMAC_calculated = await generateHmac(encryptionKey, data);
+    const hmacStoredinFile = await this.readHmacForVCFromFile(VCkey);
 
-    if (HMACofVC !== storedHMACofCurrentVC) {
+    if (plainHMAC_calculated !== encryptedHMAC_mmkv) {
       if (__DEV__) {
         sendImpressionEvent(
           getImpressionEventData('VC Corruption Event', 'VC Download', {
-            key: key,
-            'HMAC stored in MMKV': this.hexEncode(storedHMACofCurrentVC!),
-            'Length HMAC stored in MMKV': storedHMACofCurrentVC?.length,
-            'HMAC of VC': this.hexEncode(HMACofVC),
-            'Length of HMAC of VC': HMACofVC.length,
+            key: VCkey,
+            'HMAC stored in MMKV': this.hexEncode(encryptedHMAC_mmkv!),
+            'Length HMAC stored in MMKV': encryptedHMAC_mmkv?.length,
+            'HMAC of VC': this.hexEncode(plainHMAC_calculated),
+            'Length of HMAC of VC': plainHMAC_calculated.length,
             'HMAC stored in file': this.hexEncode(hmacStoredinFile),
             'File vs mmkv data':
-              hmacStoredinFile === this.hexEncode(storedHMACofCurrentVC!),
+              hmacStoredinFile === this.hexEncode(encryptedHMAC_mmkv!),
           }),
         );
       }
       console.log(
         `VC corruption Details: ${JSON.stringify({
-          key: key,
-          'HMAC stored in MMKV': this.hexEncode(storedHMACofCurrentVC!),
-          'Length HMAC stored in MMKV': storedHMACofCurrentVC?.length,
-          'HMAC of VC': this.hexEncode(HMACofVC),
-          'Length of HMAC of VC': HMACofVC.length,
+          key: VCkey,
+          'HMAC stored in MMKV': this.hexEncode(encryptedHMAC_mmkv!),
+          'Length HMAC stored in MMKV': encryptedHMAC_mmkv?.length,
+          'HMAC of VC': this.hexEncode(plainHMAC_calculated),
+          'Length of HMAC of VC': plainHMAC_calculated.length,
           'HMAC stored in file': this.hexEncode(hmacStoredinFile),
           'File vs mmkv data':
-            hmacStoredinFile === this.hexEncode(storedHMACofCurrentVC!),
+            hmacStoredinFile === this.hexEncode(encryptedHMAC_mmkv!),
         })}`,
       );
     }
 
-    return HMACofVC !== storedHMACofCurrentVC;
+    return plainHMAC_calculated !== encryptedHMAC_mmkv;
   }
 
   private static async readHmacForVC(key: string, encryptionKey: string) {
@@ -210,26 +207,29 @@ class Storage {
     return HMACofCurrentVC;
   }
 
+  // getHMAC
+  private static async getHMAC(key: string) {
+    return await MMKV.getItem(key);
+  }
+
   private static async readHmacForDataCorruptionCheck(
     key: string,
     encryptionKey: string,
   ) {
-    const encryptedHMACofCurrentVC = await MMKV.getItem(key);
-    const encryptedHMACofCurrentVCFromMMKVFile = await FileStorage.readFile(
+    const encryptedHMAC_mmkv = await MMKV.getItem(key);
+    const encryptedHMAC_file = await FileStorage.readFile(
       getFilePathOfEncryptedHmac(key),
     );
 
-    if (encryptedHMACofCurrentVC !== encryptedHMACofCurrentVCFromMMKVFile) {
+    if (encryptedHMAC_mmkv !== encryptedHMAC_file) {
       if (__DEV__) {
         sendImpressionEvent(
           getImpressionEventData('Encrypted HMac Corruption', 'VC Download', {
             key: key,
-            'Encrypted HMAC of Current VC from MMKV store':
-              encryptedHMACofCurrentVC,
-            'Encrypted HMAC of Current VC from file':
-              encryptedHMACofCurrentVCFromMMKVFile,
-            'encryptedHMACofCurrentVC vs encryptedHMACofCurrentVCFromMMKVFile': `${
-              encryptedHMACofCurrentVCFromMMKVFile === encryptedHMACofCurrentVC
+            'Encrypted HMAC of Current VC from MMKV store': encryptedHMAC_mmkv,
+            'Encrypted HMAC of Current VC from file': encryptedHMAC_file,
+            'encryptedHMAC_file vs encryptedHMAC_mmkv': `${
+              encryptedHMAC_file === encryptedHMAC_mmkv
             }`,
           }),
         );
@@ -238,19 +238,17 @@ class Storage {
       console.log(
         `VC corruption Details: ${{
           key: key,
-          'Encrypted HMAC of Current VC from MMKV store':
-            encryptedHMACofCurrentVC,
-          'Encrypted HMAC of Current VC from file':
-            encryptedHMACofCurrentVCFromMMKVFile,
+          'Encrypted HMAC of Current VC from MMKV store': encryptedHMAC_mmkv,
+          'Encrypted HMAC of Current VC from file': encryptedHMAC_file,
           'encryptedHMACofCurrentVC vs encryptedHMACofCurrentVCFromMMKVFile': `${
-            encryptedHMACofCurrentVCFromMMKVFile === encryptedHMACofCurrentVC
+            encryptedHMAC_file === encryptedHMAC_mmkv
           }`,
         }}`,
       );
     }
 
-    if (encryptedHMACofCurrentVC) {
-      return decryptJson(encryptionKey, encryptedHMACofCurrentVC);
+    if (encryptedHMAC_mmkv) {
+      return decryptJson(encryptionKey, encryptedHMAC_mmkv);
     }
     return null;
   }
