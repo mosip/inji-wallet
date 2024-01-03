@@ -166,21 +166,10 @@ jobs:
   #     SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
 
   sonar-check:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Generate keystore
-      run: |
-        echo "$ANDROID_KEYSTORE_FILE" > release.keystore.b64
-        base64 -d -i release.keystore.b64 > android/app/release.keystore
-      env:
-        ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
-        RELEASE_KEYSTORE_ALIAS: androidreleasekey
-        RELEASE_KEYSTORE_PASSWORD: "${{secrets.RELEASE_KEYSTORE_PASSWORD}}"
-    - name: Analyse with sonar scanner
-      uses: tw-mosip/kattu/.github/workflows/npm-sonar-analysis.yml@inji-add-release-keystore-step-for-sonar
-      with:
-        SERVICE_LOCATION: '.'
-      secrets:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
-        SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
+    uses: tw-mosip/kattu/.github/workflows/npm-sonar-analysis.yml@inji-add-release-keystore-step-for-sonar
+    with:
+      SERVICE_LOCATION: '.'
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
+      SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
