@@ -17,7 +17,7 @@ export const QrConsent: React.FC<QrConsentProps> = props => {
   return (
     <Modal
       isVisible={props.isVisible}
-      arrowLeft={<Icon name={''} />}
+      arrowLeft={true}
       headerTitle={t('consent')}
       headerElevation={5}
       onDismiss={props.onCancel}>

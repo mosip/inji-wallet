@@ -1,13 +1,8 @@
 package inji.utils;
 
-import inji.driver.DriverManager;
-import inji.exceptions.PlatformNotSupportException;
-import org.openqa.selenium.OutputType;
-
 import java.io.IOException;
-import java.net.MalformedURLException;
 
-public class CommonMethods {
+public class AndroidUtil {
 
     public static void invokeAppFromBackGroundAndroid() {
         try {

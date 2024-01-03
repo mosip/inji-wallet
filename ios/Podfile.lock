@@ -780,7 +780,7 @@ SPEC CHECKSUMS:
   ASN1Decoder: 6110fdeacfdb41559b1481457a1645be716610aa
   biometric-sdk-react-native: d2a3a1279013cc4a7514a1b43fe557eb76e4e4c1
   BiometricSdk: 303e7329404ea4d922dc14108449d10d21574f77
-  boost: 57d2868c099736d80fcd648bf211b4431e51a558
+  boost: 64032b9e9b938fda23325e68a3771f0fabf414dc
   BVLinearGradient: 916632041121a658c704df89d99f04acb038de0f
   CatCrypto: a477899b6be4954e75be4897e732da098cc0a5a8
   CrcSwift: f85dea6b41dddb5f98bb3743fd777ce58b77bc2e

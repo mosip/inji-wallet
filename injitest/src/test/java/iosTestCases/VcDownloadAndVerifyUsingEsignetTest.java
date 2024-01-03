@@ -1,22 +1,16 @@
-package androidTestCases;
-import org.testng.annotations.Test;
+package iosTestCases;
 
-import BaseTest.AndroidBaseTest;
-import BaseTest.BaseTest;
+import BaseTest.IosBaseTest;
 import inji.api.BaseTestCase;
 import inji.constants.Target;
 import inji.pages.*;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertTrue;
-
-import static org.testng.Assert.*;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class VcDownloadAndVerifyUsingEsignetTest extends AndroidBaseTest {
+public class VcDownloadAndVerifyUsingEsignetTest extends IosBaseTest {
     @Test
     public void downloadAndVerifyVcUsingUinViaEsignet() throws InterruptedException {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
@@ -31,26 +25,22 @@ public class VcDownloadAndVerifyUsingEsignetTest extends AndroidBaseTest {
         SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
 
         assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID.ANDROID);
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        assertTrue(addNewCardPage.isIssuerDescriptionMosipDisplayed(), "Verify if issuer description  mosip displayed");
-        assertTrue(addNewCardPage.isIssuerDescriptionEsignetDisplayed(), "Verify if issuer description  esignet displayed");
-        assertTrue(addNewCardPage.isIssuerSearchBarDisplayed(), "Verify if issuer search bar displayed");
-        addNewCardPage.IssuerSearchBar("e-signet");
-        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
         assertTrue(addNewCardPage.isAddNewCardGuideMessageDisplayed(), "Verify if add new card guide message displayed");
+        assertTrue(addNewCardPage.isDownloadViaUinDisplayed(), "Verify if download via uin displayed");
         assertTrue(addNewCardPage.isDownloadViaEsignetDisplayed(), "Verify if download via uin displayed");
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
 
-//      assertTrue(esignetLoginPage.isLoadingPageTextLoaded(), "Verify if loading page displayed");
-//      assertTrue(esignetLoginPage.isSettingUpTextDisplayed(), "Verify if loading page displayed");
+        assertTrue(esignetLoginPage.isLoadingPageTextLoaded(), "Verify if loading page displayed");
+        assertTrue(esignetLoginPage.isSettingUpTextDisplayed(), "Verify if loading page displayed");
         assertTrue(esignetLoginPage.isEsignetLoginPageDisplayed(), "Verify if esignet login page displayed");
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         
@@ -60,7 +50,7 @@ public class VcDownloadAndVerifyUsingEsignetTest extends AndroidBaseTest {
         esignetLoginPage.clickOnGetOtpButton();
         assertTrue(esignetLoginPage.isOtpHasSendMessageDisplayed(),"verify if otp page is displayed");
         
-        otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.ANDROID);
+        otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.IOS);
         esignetLoginPage.clickOnVerifyButton();
         
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
@@ -88,11 +78,13 @@ public class VcDownloadAndVerifyUsingEsignetTest extends AndroidBaseTest {
         pleaseConfirmPopupPage.clickOnConfirmButton();
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
        
-        otpVerification.enterOtp(TestDataReader.readData("passcode"), Target.ANDROID);
+        otpVerification.enterOtp(TestDataReader.readData("passcode"), Target.IOS);
         assertTrue(detailedVcViewPage.isProfileAuthenticatedDisplayed(), "Verify profile authenticated displayed");
         
         detailedVcViewPage.clickOnCrossIcon();
         assertTrue(detailedVcViewPage.isEsignetLogoDisplayed(), "Verify if detailed Vc esignet logo is displayed");
+        
+        
     }
     
     @Test
@@ -109,10 +101,10 @@ public class VcDownloadAndVerifyUsingEsignetTest extends AndroidBaseTest {
         SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
 
         assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
@@ -124,10 +116,10 @@ public class VcDownloadAndVerifyUsingEsignetTest extends AndroidBaseTest {
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
-        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(TestDataReader.readData("vid"));
+        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(BaseTestCase.perpetualVid);
         esignetLoginPage.clickOnGetOtpButton();
         Thread.sleep(3000);
-        otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.ANDROID);
+        otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.IOS);
         esignetLoginPage.clickOnVerifyButton();
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
@@ -153,7 +145,7 @@ public class VcDownloadAndVerifyUsingEsignetTest extends AndroidBaseTest {
         pleaseConfirmPopupPage.clickOnConfirmButton();
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
        
-        otpVerification.enterOtp(TestDataReader.readData("passcode"), Target.ANDROID);
+        otpVerification.enterOtp(TestDataReader.readData("passcode"), Target.IOS);
         assertTrue(detailedVcViewPage.isProfileAuthenticatedDisplayed(), "Verify profile authenticated displayed");
         
     }

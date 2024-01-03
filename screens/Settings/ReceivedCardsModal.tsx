@@ -16,9 +16,9 @@ export const ReceivedCardsModal: React.FC<ReceivedCardsProps> = ({
   const {t} = useTranslation('ReceivedVcsTab');
   return (
     <Modal
-      testID='receivedCardsModal'
+      testID="receivedCardsModal"
       isVisible={isVisible}
-      arrowLeft={<Icon name={''} />}
+      arrowLeft={true}
       headerTitle={t('header')}
       headerElevation={2}
       onDismiss={onDismiss}>

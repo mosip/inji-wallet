@@ -21,27 +21,32 @@ public class SettingsPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "Logout")
     private WebElement logoutButton;
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'Language')]")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Language\"`]")
+    @AndroidFindBy(accessibility = "languageTitle")
+    @iOSXCUITFindBy(accessibility = "languageTitle")
     private WebElement languageButton;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Filipino')]")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Filipino\"`]")
     private WebElement filipinoLanguageButton;
+    
+    @AndroidFindBy(xpath = "//*[contains(@text,'தமிழ்')]")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"தமிழ்\"`]")
+    private WebElement tamilLanguageButton;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Wika')]")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Wika\"`]")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"\uE037 Wika \uE5CC\"`][1]")
     private WebElement wikaButton;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"listItemTitle\")")
+    @iOSXCUITFindBy(iOSNsPredicate = "name == \"listItemTitle\"")
     private List<WebElement> languages;
 
-    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"aboutInji\")")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"About Inji\"`]")
+    @AndroidFindBy(accessibility = "aboutInjiTitle")
+    @iOSXCUITFindBy(accessibility = "aboutInjiTitle")
     private WebElement aboutInji;
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'Tuvali-version: v')]")
-    @iOSXCUITFindBy(xpath = "//*[contains(@name,'Tuvali-version: v')]")
+    @AndroidFindBy(xpath = "//*[contains(@text,'Tuvali-version:')]")
+    @iOSXCUITFindBy(xpath = "//*[contains(@name,'Tuvali-version: 0.4.6')]")
     private WebElement tuvaliVersion;
 
     @AndroidFindBy(accessibility = "injiTourGuide")
@@ -52,20 +57,22 @@ public class SettingsPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "injiTourGuide")
     private WebElement receivedCards;
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'Credential Registry')]")
+    @AndroidFindBy(accessibility = "credentialRegistryTitle")
+    @iOSXCUITFindBy(accessibility = "credentialRegistryTitle")
     public WebElement credentialRegistryText;
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'Receive Card')]")
+    @AndroidFindBy(accessibility = "receiveCard")
     public WebElement receiveCardText;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Tumanggap ng Card')]")
     public WebElement receiveCardInfilipinoLanguageText;
 
     @AndroidFindBy(xpath = "(//*[@resource-id=\"padView\"])[3]")
+    @iOSXCUITFindBy(accessibility = "عربى")
     private WebElement arabicLanguageButton;
-
-    @AndroidFindBy(className = "android.widget.TextView")
-    private WebElement chooseLanguageInArabic;
+    
+    @AndroidFindBy(accessibility = "arrowLeft")
+    private WebElement backButton;
 
     public SettingsPage(AppiumDriver driver) {
         super(driver);
@@ -73,6 +80,10 @@ public class SettingsPage extends BasePage {
 
     public boolean isSettingPageLoaded() {
         return this.isElementDisplayed(settingsTittle, "Setting page");
+    }
+    
+    public boolean isSettingPageLoadedInFilipion() {
+        return this.isElementDisplayed(settingsTittle, "Mga setting");
     }
 
     public UnlockApplicationPage clickOnLogoutButton() {
@@ -88,9 +99,17 @@ public class SettingsPage extends BasePage {
     public void clickOnFilipinoLanguage() {
         clickOnElement(filipinoLanguageButton);
     }
+    
+    public void clickOnTamilLanguage() {
+        clickOnElement(tamilLanguageButton);
+    }
 
     public boolean verifyFilipinoLanguage() {
         return this.isElementDisplayed(wikaButton, "Filipino language");
+    }
+    
+    public boolean verifyTamilLanguage() {
+        return this.isElementDisplayed(languageButton, "மொழி");
     }
 
     public boolean verifyLanguagesInLanguageFilter() {
@@ -119,10 +138,6 @@ public class SettingsPage extends BasePage {
     public boolean isReceivedCardsPresent() {
         return this.isElementDisplayed(receivedCards, "Received Cards");
     }
-    
-    public boolean verifyArabicLanguage() {
-        return this.isElementDisplayed(chooseLanguageInArabic, "فتح التطبيق");
-    }
 
     public CredentialRegistryPage clickOnCredentialRegistry() {
         clickOnElement(credentialRegistryText);
@@ -144,7 +159,13 @@ public class SettingsPage extends BasePage {
         return new AboutInjiPage(driver);
     }
 
-    public void clickOnArabicLanguageButton() {
+    public SettingsPage clickOnBackArrow() {
+        clickOnElement(backButton);
+        return this;
+    }
+    
+    public UnlockApplicationPage clickOnArabicLanguageButton() {
         clickOnElement(arabicLanguageButton);
+        return new UnlockApplicationPage(driver);
     }
 }

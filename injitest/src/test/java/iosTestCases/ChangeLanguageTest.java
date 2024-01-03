@@ -116,8 +116,8 @@ public class ChangeLanguageTest extends IosBaseTest {
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
-        settingsPage.clickOnLanguage().clickOnArabicLanguageButton();
+        UnlockApplicationPage unlockApplicationPage = settingsPage.clickOnLanguage().clickOnArabicLanguageButton();
 
-        assertTrue(settingsPage.verifyArabicLanguage(), "Verify if language is changed to arabic");
+        assertTrue(unlockApplicationPage.isUnlockApplicationPageLoadedInArabic(), "Verify if language is changed to arabic");
     }
 }

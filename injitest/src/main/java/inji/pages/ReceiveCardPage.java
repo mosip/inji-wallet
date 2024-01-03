@@ -9,16 +9,16 @@ public class ReceiveCardPage extends BasePage {
 	 @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Allow\")")
 	  private WebElement allowButton;
 	 
-	 @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Display this QR code to request resident Card\")")
+	 @AndroidFindBy(accessibility = "showQrCode")
 	  private WebElement receiveCardHeder;
 	 
 	 @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Ipakita ang QR code na ito para humiling ng resident card\")")
 	  private WebElement receiveCardHederInFilipinoLanguage;
 	 
-	 @AndroidFindBy(xpath = "//android.view.ViewGroup/descendant::android.view.ViewGroup[last()]")
+	 @AndroidFindBy(accessibility = "qrCode")
 	  private WebElement qrCode;
 	 
-	 @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Waiting for connection...\")")
+	 @AndroidFindBy(accessibility = "receiveCardStatusMessage")
 	  private WebElement watitingForConnection;
 	 
 	 @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.oplus.wirelesssettings:id/alertTitle\")")

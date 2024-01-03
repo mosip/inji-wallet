@@ -6,7 +6,7 @@ import {Theme} from './styleUtils';
 
 export const SearchBar = (props: SearchBarProps) => {
   return (
-    <Row style={Theme.SearchBarStyles.searchBarContainer}>
+    <Row>
       <Icon
         testID={props.searchIconTestID}
         name="search"
@@ -19,6 +19,7 @@ export const SearchBar = (props: SearchBarProps) => {
         style={Theme.SearchBarStyles.searchBar}
         placeholder={props.placeholder}
         value={props.search}
+        onFocus={props.onFocus}
         onChangeText={searchText => props.onChangeText(searchText)}
         onLayout={props.onLayout}
       />
@@ -31,6 +32,7 @@ interface SearchBarProps {
   searchBarTestID: string;
   search: string;
   placeholder: string;
+  onFocus: () => void;
   onChangeText: (searchText: string) => void;
   onLayout: () => void;
 }

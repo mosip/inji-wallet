@@ -22,14 +22,14 @@ public class AndroidBaseTest extends BaseTest {
             throw new RuntimeException(e);
         }
         if (!isDeviceFarmRun) {
-            ScreenRecording.startAndroidScreenRecording(driver);
+          //  ScreenRecording.startAndroidScreenRecording(driver);
         }
     }
 
     @AfterMethod(alwaysRun = true)
     public void teardown(ITestResult result) {
         if (!isDeviceFarmRun) {
-            ScreenRecording.stopAndroidScreenRecording(driver, result.getMethod().getMethodName());
+        //    ScreenRecording.stopAndroidScreenRecording(driver, result.getMethod().getMethodName());
         }
         driver.quit();
     }

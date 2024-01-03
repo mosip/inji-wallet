@@ -16,9 +16,14 @@ public class HelpPage extends BasePage {
     private WebElement crossIcon;
     
     @AndroidFindBy(uiAutomator = "new UiScrollable(new UiSelector()).scrollIntoView(text(\"What happens when Android keystore biometric is changed?\"));")
+    @iOSXCUITFindBy(accessibility = "How to add a card?")
     public WebElement biometricIsChangeTextdHeader;
+    
+    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"The Android keystore holds important information like private keys \")")
+    private WebElement biometricIsChangeTextdDiscription;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"How to add a card?\")")
+    @iOSXCUITFindBy(accessibility = "How to add a card?")
     public WebElement helpPageContent;
     
     public HelpPage(AppiumDriver driver) {
@@ -39,6 +44,10 @@ public class HelpPage extends BasePage {
 
     public boolean ishelpPageContentEmpty() {
     	return helpPageContent.getText().isBlank();
+    }
+    
+    public boolean isBiometricIsChangeTextdDiscription() {
+        return this.isElementDisplayed(biometricIsChangeTextdDiscription, "The Android keystore holds important information like private keys for identity proofs. When you change your biometrics, old keys are no longer safe. To keep things secure, we remove identity proofs signed by those old keys. You can simply download your identity proofs again, and they will be signed with the latest, safer keys.");
     }
     
 }

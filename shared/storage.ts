@@ -21,9 +21,19 @@ import {
   RECEIVED_VCS_STORE_KEY,
   SETTINGS_STORE_KEY,
 } from './constants';
-import FileStorage, {getFilePath, vcDirectoryPath} from './fileStorage';
+import FileStorage, {
+  getFilePath,
+  getFilePathOfEncryptedHmac,
+  getFilePathOfHmac,
+  vcDirectoryPath,
+} from './fileStorage';
 import {__AppId} from './GlobalVariables';
-import {getErrorEventData, sendErrorEvent} from './telemetry/TelemetryUtils';
+import {
+  getErrorEventData,
+  getImpressionEventData,
+  sendErrorEvent,
+  sendImpressionEvent,
+} from './telemetry/TelemetryUtils';
 import {TelemetryConstants} from './telemetry/TelemetryConstants';
 
 export const MMKV = new MMKVLoader().initialize();
@@ -94,15 +104,6 @@ class Storage {
           );
           console.debug('[Inji-406]: VC key: ', key);
           console.debug('[Inji-406]: is Data null', data === null);
-          getItem(MY_VCS_STORE_KEY, [], encryptionKey).then(res => {
-            console.debug('[Inji-406]: vcKeys are ', JSON.stringify(res));
-          });
-          getItem(RECEIVED_VCS_STORE_KEY, null, encryptionKey).then(res => {
-            console.debug(
-              '[Inji-406]: received vcKeys is ',
-              JSON.stringify(res),
-            );
-          });
         }
 
         return isCorrupted ? null : data;
@@ -155,12 +156,40 @@ class Storage {
     encryptionKey: string,
     data: string,
   ) {
-    const storedHMACofCurrentVC = await this.readHmacForVC(key, encryptionKey);
+    // TODO: INJI-612 refactor
+    const storedHMACofCurrentVC = await this.readHmacForDataCorruptionCheck(
+      key,
+      encryptionKey,
+    );
     const HMACofVC = await generateHmac(encryptionKey, data);
+    const hmacStoredinFile = await this.readHmacForVCFromFile(key);
 
     if (HMACofVC !== storedHMACofCurrentVC) {
-      console.debug(
-        `[Inji-406]: storedHmacOfCurrentVC: ${storedHMACofCurrentVC}, HMACofVC: ${HMACofVC}`,
+      if (__DEV__) {
+        sendImpressionEvent(
+          getImpressionEventData('VC Corruption Event', 'VC Download', {
+            key: key,
+            'HMAC stored in MMKV': this.hexEncode(storedHMACofCurrentVC!),
+            'Length HMAC stored in MMKV': storedHMACofCurrentVC?.length,
+            'HMAC of VC': this.hexEncode(HMACofVC),
+            'Length of HMAC of VC': HMACofVC.length,
+            'HMAC stored in file': this.hexEncode(hmacStoredinFile),
+            'File vs mmkv data':
+              hmacStoredinFile === this.hexEncode(storedHMACofCurrentVC!),
+          }),
+        );
+      }
+      console.log(
+        `VC corruption Details: ${JSON.stringify({
+          key: key,
+          'HMAC stored in MMKV': this.hexEncode(storedHMACofCurrentVC!),
+          'Length HMAC stored in MMKV': storedHMACofCurrentVC?.length,
+          'HMAC of VC': this.hexEncode(HMACofVC),
+          'Length of HMAC of VC': HMACofVC.length,
+          'HMAC stored in file': this.hexEncode(hmacStoredinFile),
+          'File vs mmkv data':
+            hmacStoredinFile === this.hexEncode(storedHMACofCurrentVC!),
+        })}`,
       );
     }
 
@@ -169,6 +198,57 @@ class Storage {
 
   private static async readHmacForVC(key: string, encryptionKey: string) {
     const encryptedHMACofCurrentVC = await MMKV.getItem(key);
+    if (encryptedHMACofCurrentVC) {
+      return decryptJson(encryptionKey, encryptedHMACofCurrentVC);
+    }
+    return null;
+  }
+
+  //TODO: added temporarily for INJI-612
+  private static async readHmacForVCFromFile(key: string) {
+    const HMACofCurrentVC = await FileStorage.readFile(getFilePathOfHmac(key));
+    return HMACofCurrentVC;
+  }
+
+  private static async readHmacForDataCorruptionCheck(
+    key: string,
+    encryptionKey: string,
+  ) {
+    const encryptedHMACofCurrentVC = await MMKV.getItem(key);
+    const encryptedHMACofCurrentVCFromMMKVFile = await FileStorage.readFile(
+      getFilePathOfEncryptedHmac(key),
+    );
+
+    if (encryptedHMACofCurrentVC !== encryptedHMACofCurrentVCFromMMKVFile) {
+      if (__DEV__) {
+        sendImpressionEvent(
+          getImpressionEventData('Encrypted HMac Corruption', 'VC Download', {
+            key: key,
+            'Encrypted HMAC of Current VC from MMKV store':
+              encryptedHMACofCurrentVC,
+            'Encrypted HMAC of Current VC from file':
+              encryptedHMACofCurrentVCFromMMKVFile,
+            'encryptedHMACofCurrentVC vs encryptedHMACofCurrentVCFromMMKVFile': `${
+              encryptedHMACofCurrentVCFromMMKVFile === encryptedHMACofCurrentVC
+            }`,
+          }),
+        );
+      }
+
+      console.log(
+        `VC corruption Details: ${{
+          key: key,
+          'Encrypted HMAC of Current VC from MMKV store':
+            encryptedHMACofCurrentVC,
+          'Encrypted HMAC of Current VC from file':
+            encryptedHMACofCurrentVCFromMMKVFile,
+          'encryptedHMACofCurrentVC vs encryptedHMACofCurrentVCFromMMKVFile': `${
+            encryptedHMACofCurrentVCFromMMKVFile === encryptedHMACofCurrentVC
+          }`,
+        }}`,
+      );
+    }
+
     if (encryptedHMACofCurrentVC) {
       return decryptJson(encryptionKey, encryptedHMACofCurrentVC);
     }
@@ -185,14 +265,31 @@ class Storage {
     return await FileStorage.writeFile(path, data);
   }
 
+  // TODO: INJI-612 refactor
+  private static hexEncode(inp: string) {
+    var hex, i;
+    var result = '';
+    for (i = 0; i < inp.length; i++) {
+      hex = inp.charCodeAt(i).toString(16);
+      result += ('000' + hex).slice(-4);
+    }
+    return result;
+  }
+
+  // TODO: INJI-612 refactor
   private static async storeVcHmac(
     encryptionKey: string,
     data: string,
     key: string,
   ) {
     const HMACofVC = await generateHmac(encryptionKey, data);
-    console.log('[Inji-406]: Updating hmac of the vc: ', HMACofVC);
     const encryptedHMACofVC = await encryptJson(encryptionKey, HMACofVC);
+    const keyOfEncodedHmacStorage = getFilePathOfHmac(key);
+    const keyOfEncryptedHmacStorage = getFilePathOfEncryptedHmac(key);
+
+    const encodedHMACofVC = this.hexEncode(HMACofVC);
+    await FileStorage.writeFile(keyOfEncodedHmacStorage, encodedHMACofVC);
+    await FileStorage.writeFile(keyOfEncryptedHmacStorage, encryptedHMACofVC);
     await MMKV.setItem(key, encryptedHMACofVC);
   }
 

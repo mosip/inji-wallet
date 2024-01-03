@@ -7,15 +7,16 @@ import org.openqa.selenium.WebElement;
 
 public class HassleFreeAuthenticationPage extends BasePage {
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'Hassle free authentication')]")
+    @AndroidFindBy(accessibility = "introTitle")
     @iOSXCUITFindBy(iOSNsPredicate = "label == \"Hassle free authentication\"")
     private WebElement hassleFreeAuthenticationText;
 
-    @AndroidFindBy(xpath = "(//*[@class='android.widget.TextView'])[3]")
+    @AndroidFindBy(accessibility = "introText")
     @iOSXCUITFindBy(xpath = "//*[contains(@value,'Authenticate yourself')]")
     private WebElement hassleFreeAuthenticationDescription;
     
-    @AndroidFindBy(xpath = "//*[contains(@text,'Go Back')]")
+    @AndroidFindBy(accessibility = "getStarted")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`label == \"Back\"`][4]")
     public WebElement goBackButton;
 
     public HassleFreeAuthenticationPage(AppiumDriver driver) {
