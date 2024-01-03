@@ -105,7 +105,6 @@ class Storage {
           console.debug('[Inji-406]: VC key: ', key);
           console.debug('[Inji-406]: is Data null', data === null);
         }
-
         return isCorrupted ? null : data;
       }
 
@@ -160,8 +159,7 @@ class Storage {
     const encryptedHMAC_mmkv = await this.getHMAC(VCkey);
     const plainHMAC_calculated = await generateHmac(encryptionKey, data);
     const hmacStoredinFile = await this.readHmacForVCFromFile(VCkey);
-
-    if (plainHMAC_calculated !== encryptedHMAC_mmkv) {
+    if (hmacStoredinFile !== this.hexEncode(plainHMAC_calculated)) {
       if (__DEV__) {
         sendImpressionEvent(
           getImpressionEventData('VC Corruption Event', 'VC Download', {
@@ -189,8 +187,7 @@ class Storage {
         })}`,
       );
     }
-
-    return plainHMAC_calculated !== encryptedHMAC_mmkv;
+    return hmacStoredinFile !== this.hexEncode(plainHMAC_calculated);
   }
 
   private static async readHmacForVC(key: string, encryptionKey: string) {
