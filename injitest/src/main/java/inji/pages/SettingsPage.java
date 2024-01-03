@@ -5,7 +5,6 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -28,7 +27,7 @@ public class SettingsPage extends BasePage {
     @AndroidFindBy(xpath = "//*[contains(@text,'Filipino')]")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Filipino\"`]")
     private WebElement filipinoLanguageButton;
-    
+
     @AndroidFindBy(xpath = "//*[contains(@text,'தமிழ்')]")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"தமிழ்\"`]")
     private WebElement tamilLanguageButton;
@@ -70,7 +69,7 @@ public class SettingsPage extends BasePage {
     @AndroidFindBy(xpath = "(//*[@resource-id=\"padView\"])[3]")
     @iOSXCUITFindBy(accessibility = "عربى")
     private WebElement arabicLanguageButton;
-    
+
     @AndroidFindBy(accessibility = "arrowLeft")
     private WebElement backButton;
 
@@ -79,11 +78,11 @@ public class SettingsPage extends BasePage {
     }
 
     public boolean isSettingPageLoaded() {
-        return this.isElementDisplayed(settingsTittle, "Setting page");
+        return this.isElementDisplayed(settingsTittle);
     }
-    
+
     public boolean isSettingPageLoadedInFilipion() {
-        return this.isElementDisplayed(settingsTittle, "Mga setting");
+        return this.isElementDisplayed(settingsTittle);
     }
 
     public UnlockApplicationPage clickOnLogoutButton() {
@@ -99,17 +98,17 @@ public class SettingsPage extends BasePage {
     public void clickOnFilipinoLanguage() {
         clickOnElement(filipinoLanguageButton);
     }
-    
+
     public void clickOnTamilLanguage() {
         clickOnElement(tamilLanguageButton);
     }
 
     public boolean verifyFilipinoLanguage() {
-        return this.isElementDisplayed(wikaButton, "Filipino language");
+        return this.isElementDisplayed(wikaButton);
     }
-    
+
     public boolean verifyTamilLanguage() {
-        return this.isElementDisplayed(languageButton, "மொழி");
+        return this.isElementDisplayed(languageButton);
     }
 
     public boolean verifyLanguagesInLanguageFilter() {
@@ -128,7 +127,7 @@ public class SettingsPage extends BasePage {
     }
 
     public boolean isTuvaliVersionPresent() {
-        return this.isElementDisplayed(tuvaliVersion, "Tuvali-version");
+        return this.isElementDisplayed(tuvaliVersion);
     }
 
     public void clickOnInjiTourGuide() {
@@ -136,7 +135,7 @@ public class SettingsPage extends BasePage {
     }
 
     public boolean isReceivedCardsPresent() {
-        return this.isElementDisplayed(receivedCards, "Received Cards");
+        return this.isElementDisplayed(receivedCards);
     }
 
     public CredentialRegistryPage clickOnCredentialRegistry() {
@@ -159,11 +158,10 @@ public class SettingsPage extends BasePage {
         return new AboutInjiPage(driver);
     }
 
-    public SettingsPage clickOnBackArrow() {
+    public void clickOnBackArrow() {
         clickOnElement(backButton);
-        return this;
     }
-    
+
     public UnlockApplicationPage clickOnArabicLanguageButton() {
         clickOnElement(arabicLanguageButton);
         return new UnlockApplicationPage(driver);

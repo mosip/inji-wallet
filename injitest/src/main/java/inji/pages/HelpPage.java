@@ -20,7 +20,7 @@ public class HelpPage extends BasePage {
     public WebElement biometricIsChangeTextdHeader;
     
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"The Android keystore holds important information like private keys \")")
-    private WebElement biometricIsChangeTextdDiscription;
+    private WebElement biometricIsChangeTextDescription;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"How to add a card?\")")
     @iOSXCUITFindBy(accessibility = "How to add a card?")
@@ -31,7 +31,7 @@ public class HelpPage extends BasePage {
     }
 
     public boolean isHelpPageLoaded() {
-        return this.isElementDisplayed(helpText, "Help page");
+        return this.isElementDisplayed(helpText);
     }
 
     public void exitHelpPage() {
@@ -42,12 +42,12 @@ public class HelpPage extends BasePage {
     	biometricIsChangeTextdHeader.isDisplayed();
     }
 
-    public boolean ishelpPageContentEmpty() {
+    public boolean isHelpPageContentEmpty() {
     	return helpPageContent.getText().isBlank();
     }
     
-    public boolean isBiometricIsChangeTextdDiscription() {
-        return this.isElementDisplayed(biometricIsChangeTextdDiscription, "The Android keystore holds important information like private keys for identity proofs. When you change your biometrics, old keys are no longer safe. To keep things secure, we remove identity proofs signed by those old keys. You can simply download your identity proofs again, and they will be signed with the latest, safer keys.");
+    public boolean isBiometricIsChangeTextDescription() {
+        return this.isElementDisplayed(biometricIsChangeTextDescription);
     }
     
 }

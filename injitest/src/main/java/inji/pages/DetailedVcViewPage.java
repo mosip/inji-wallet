@@ -3,10 +3,9 @@ package inji.pages;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public class DetailedVcViewPage extends BasePage{
+public class DetailedVcViewPage extends BasePage {
     @AndroidFindBy(accessibility = "idDetailsHeader")
     @iOSXCUITFindBy(accessibility = "idDetailsHeader")
     private WebElement detailedVcViewPageTitle;
@@ -58,7 +57,7 @@ public class DetailedVcViewPage extends BasePage{
     @AndroidFindBy(accessibility = "close")
     @iOSXCUITFindBy(accessibility = "close")
     private WebElement crossIcon;
-    
+
     @AndroidFindBy(accessibility = "qrCodeCloseIcon")
     @iOSXCUITFindBy(accessibility = "qrCodeCloseIcon")
     private WebElement qrCloseIcon;
@@ -66,19 +65,19 @@ public class DetailedVcViewPage extends BasePage{
     @AndroidFindBy(accessibility = "qrCodePressable")
     @iOSXCUITFindBy(accessibility = "qrCodePressable")
     private WebElement detailedVcViewPageQr;
-    
+
     @AndroidFindBy(accessibility = "qrCodeHeader")
     @iOSXCUITFindBy(accessibility = "qrCodeHeader")
     private WebElement qrCodeHeader;
-    
+
     @AndroidFindBy(accessibility = "credentialRegistry")
     @iOSXCUITFindBy(accessibility = "credentialRegistry")
     private WebElement credentialRegistryText;
-    
+
     @AndroidFindBy(accessibility = "credentialRegistryValue")
     @iOSXCUITFindBy(accessibility = "credentialRegistryValue")
     private WebElement credentialRegistryValue;
-    
+
     @AndroidFindBy(accessibility = "esignet-logo")
     @iOSXCUITFindBy(xpath = "(//XCUIElementTypeImage)[3]")
     private WebElement esignetLogo;
@@ -88,7 +87,7 @@ public class DetailedVcViewPage extends BasePage{
     }
 
     public boolean isDetailedVcViewPageLoaded() {
-        return this.isElementDisplayed(detailedVcViewPageTitle, "detailed Vc view page title page");
+        return this.isElementDisplayed(detailedVcViewPageTitle);
     }
 
     public String getNameInDetailedVcView() {
@@ -128,45 +127,45 @@ public class DetailedVcViewPage extends BasePage{
     }
 
     public boolean isActivateButtonDisplayed() {
-        return this.isElementDisplayed(activateButton, "activate button");
+        return this.isElementDisplayed(activateButton);
     }
 
-    public PleaseConfirmPopupPage clickOnActivateButton(){
+    public PleaseConfirmPopupPage clickOnActivateButton() {
         clickOnElement(activateButton);
         return new PleaseConfirmPopupPage(driver);
     }
 
     public boolean isProfileAuthenticatedDisplayed() {
-        return this.isElementDisplayed(profileAuthenticated, "Credentials are enabled for online authentication");
+        return this.isElementDisplayed(profileAuthenticated);
     }
 
-    public HomePage clickOnCrossIcon(){
+    public HomePage clickOnCrossIcon() {
         clickOnElement(crossIcon);
         return new HomePage(driver);
     }
-    
-    public HomePage clickOnQrCrossIcon(){
+
+    public HomePage clickOnQrCrossIcon() {
         clickOnElement(qrCloseIcon);
         return new HomePage(driver);
     }
 
-    public PleaseConfirmPopupPage clickOnQrCodeButton(){
+    public void clickOnQrCodeButton() {
         clickOnElement(detailedVcViewPageQr);
-        return new PleaseConfirmPopupPage(driver);
+        new PleaseConfirmPopupPage(driver);
     }
 
     public boolean isQrCodeDisplayed() {
-    	return qrCodeHeader.isDisplayed();
+        return qrCodeHeader.isDisplayed();
     }
-    
+
     public boolean isCredentialRegistryTextDisplayed() {
-        return this.isElementDisplayed(credentialRegistryText, "Credential Registry");
+        return this.isElementDisplayed(credentialRegistryText);
     }
-    
+
     public String getCredentialRegistryValue() {
         return getTextFromLocator(credentialRegistryValue);
     }
-    
+
     public boolean isEsignetLogoDisplayed() {
         return esignetLogo.isDisplayed();
     }

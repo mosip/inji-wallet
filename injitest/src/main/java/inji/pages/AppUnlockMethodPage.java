@@ -20,7 +20,7 @@ public class AppUnlockMethodPage extends BasePage {
     }
 
     public boolean isAppUnlockMethodPageLoaded() {
-        return this.isElementDisplayed(selectAppUnlockMethodText, "Select app unlock method page");
+        return this.isElementDisplayed(selectAppUnlockMethodText);
     }
 
     public SetPasscode clickOnUsePasscode() {

@@ -46,7 +46,7 @@ public class AddNewCardPage extends BasePage{
     }
 
     public boolean isAddNewCardPageLoaded() {
-        return this.isElementDisplayed(addNewCardHeader, "Home page");
+        return this.isElementDisplayed(addNewCardHeader);
     }
 
     public RetrieveIdPage clickOnDownloadViaUin(){
@@ -54,25 +54,24 @@ public class AddNewCardPage extends BasePage{
         return new RetrieveIdPage(driver);
     }
     
-    public AddNewCardPage clickOnBack() {
+    public void clickOnBack() {
     	clickOnElement(backButton);
-		return this;
     }
     
     public boolean isAddNewCardGuideMessageDisplayed() {
-        return this.isElementDisplayed(addNewCardGuideMessage, "Please choose your preferred issuer from the options below to add a new card.");
+        return this.isElementDisplayed(addNewCardGuideMessage);
     }
     
     public boolean isDownloadViaUinDisplayed() {
-        return this.isElementDisplayed(downloadViaUin, "Download via UIN, VID, AID");
+        return this.isElementDisplayed(downloadViaUin);
     }
     
     public boolean isDownloadViaEsignetDisplayed() {
-        return this.isElementDisplayed(downloadViaEsignet, "Download via e-Signet");
+        return this.isElementDisplayed(downloadViaEsignet);
     }
     
     public boolean isDownloadViaEsignetDisplayedinFillpino() {
-        return this.isElementDisplayed(downloadViaEsignet, "I-download sa pamamagitan ng e-Signet");
+        return this.isElementDisplayed(downloadViaEsignet);
     }
     
     public EsignetLoginPage clickOnDownloadViaEsignet(){
@@ -80,33 +79,32 @@ public class AddNewCardPage extends BasePage{
         return new EsignetLoginPage(driver);
     }
     
-    public boolean isBackButtonDisplayed() {
-        return backButton.isDisplayed() ;
+    public void isBackButtonDisplayed() {
+        backButton.isDisplayed();
     }
     
     public boolean isAddNewCardGuideMessageDisplayedInFillopin() {
-        return this.isElementDisplayed(addNewCardGuideMessageInFillpino, "Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.");
+        return this.isElementDisplayed(addNewCardGuideMessageInFillpino);
     }
     
     public boolean isIssuerDescriptionMosipDisplayed() {
-        return this.isElementDisplayed(issuerDescriptionMosip, "Enter your national ID to download your card.");
+        return this.isElementDisplayed(issuerDescriptionMosip);
     }
     
     public boolean isIssuerDescriptionEsignetDisplayed() {
-        return this.isElementDisplayed(issuerDescriptionEsignet, "Enter your national ID to download your card.");
+        return this.isElementDisplayed(issuerDescriptionEsignet);
     }
     
     public boolean isIssuerSearchBarDisplayed() {
-    	return this.isElementDisplayed(issuerSearchBar, "Search by Issuer’s name");
+    	return this.isElementDisplayed(issuerSearchBar);
     }
     
     public boolean isIssuerSearchBarDisplayedInFilipino() {
-    	return this.isElementDisplayed(issuerSearchBar, "Maghanap ayon sa pangalan ng Nag-isyu");
+    	return this.isElementDisplayed(issuerSearchBar);
     }
     
-    public AddNewCardPage IssuerSearchBar(String env) {
-    	clearTextBoxAndSendKeys(issuerSearchBar, env, "issuer search bar");
-        return this;
+    public void sendTextInIssuerSearchBar(String text) {
+    	clearTextBoxAndSendKeys(issuerSearchBar,text);
     }
 
 

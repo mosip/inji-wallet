@@ -1,9 +1,9 @@
 package inji.pages;
 
+import inji.constants.Target;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
-import inji.constants.Target;
 import org.openqa.selenium.WebElement;
 
 
@@ -32,7 +32,7 @@ public class RetrieveIdPage extends BasePage {
     @AndroidFindBy(accessibility = "getItNow")
     @iOSXCUITFindBy(accessibility = "getItNow")
     private WebElement getItNowText;
-    
+
     @AndroidFindBy(xpath = "//*[contains(@text,'UIN invalid')]")
     private WebElement invalidUin;
 
@@ -49,12 +49,12 @@ public class RetrieveIdPage extends BasePage {
     }
 
     public boolean isRetrieveIdPageLoaded() {
-        return this.isElementDisplayed(retrieveIdText, "Retrieve your id page");
+        return this.isElementDisplayed(retrieveIdText);
     }
 
     public RetrieveIdPage setEnterIdTextBox(String uinOrVid) {
-    	clickOnElement(generateCardButton);
-        sendKeysToTextBox(enterIdTextBox, uinOrVid, "uin or vid textbox");
+        clickOnElement(generateCardButton);
+        sendKeysToTextBox(enterIdTextBox, uinOrVid);
         return this;
     }
 
@@ -67,15 +67,14 @@ public class RetrieveIdPage extends BasePage {
         this.clickOnElement(getItNowText);
         return new GenerateUinOrVidPage(driver);
     }
-    
+
     public boolean isInvalidUinMassageLoaded() {
-        return this.isElementDisplayed(invalidUin, "UIN invalid");
-    }
-    
-    public boolean isAidIsNotReadyYetErrorDisplayed() {
-        return this.isElementDisplayed(aidIsNotReadyYetMessage, "Retrieve your id page");
+        return this.isElementDisplayed(invalidUin);
     }
 
+    public boolean isAidIsNotReadyYetErrorDisplayed() {
+        return this.isElementDisplayed(aidIsNotReadyYetMessage);
+    }
 
     public RetrieveIdPage clickOnVid(Target os) {
         switch (os) {
@@ -84,14 +83,14 @@ public class RetrieveIdPage extends BasePage {
                 clickOnElement(vidDropDownValueAndroid);
                 break;
             case IOS:
-                sendKeysToTextBox(vidDropDownValueIos, "VID", "ios dropdown");
+                sendKeysToTextBox(vidDropDownValueIos, "VID");
                 break;
         }
         return this;
     }
 
     public boolean isIncorrectInputFormatErrorMessageDisplayed() {
-        return isElementDisplayed(inputFormatErrorMessage, "The input format is incorrect");
+        return isElementDisplayed(inputFormatErrorMessage);
     }
 
 }

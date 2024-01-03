@@ -24,16 +24,16 @@ public class TrustedDigitalWalletPage extends BasePage {
     }
 
     public boolean isTrustedDigitalWalletPageLoaded() {
-        return this.isElementDisplayed(trustedDigitalWalletText, "Trusted digital wallet page");
+        return this.isElementDisplayed(trustedDigitalWalletText);
     }
 
     public String getTrustedDigitalWalletDescription() {
         return this.getTextFromLocator(trustedDigitalWalletDescription);
     }
 
-    public AppUnlockMethodPage clickOnNextButton() {
+    public void clickOnNextButton() {
         this.clickOnElement(nextButton);
-        return new AppUnlockMethodPage(driver);
+        new AppUnlockMethodPage(driver);
     }
 
 }

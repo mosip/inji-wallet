@@ -1,7 +1,6 @@
 package androidTestCases;
 
 import BaseTest.AndroidBaseTest;
-import inji.api.BaseTestCase;
 import inji.constants.Target;
 import inji.pages.*;
 import inji.utils.TestDataReader;
@@ -31,14 +30,14 @@ public class VerifyHelpPageTest extends AndroidBaseTest {
         ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         HelpPage helpPage = homePage.clickOnHelpIcon();
         
-        assertEquals(helpPage.ishelpPageContentEmpty(),false,"verifying text is not empty");
+        assertEquals(helpPage.isHelpPageContentEmpty(),false,"verifying text is not empty");
         helpPage.scrollPerformInHelpPage();
-        assertTrue(helpPage.isBiometricIsChangeTextdDiscription(), "Verify if biometric is  text change displayed");
+        assertTrue(helpPage.isBiometricIsChangeTextDescription(), "Verify if biometric is  text change displayed");
 
         assertTrue(helpPage.isHelpPageLoaded(), "Verify if help page is displayed");
         helpPage.exitHelpPage();

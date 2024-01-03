@@ -24,15 +24,15 @@ public class SecureSharingPage extends BasePage {
     }
 
     public boolean isSecureSharingPageLoaded() {
-        return this.isElementDisplayed(secureSharingText, "Secure sharing page");
+        return this.isElementDisplayed(secureSharingText);
     }
 
     public String getSecureSharingDescription() {
         return this.getTextFromLocator(secureSharingDescription);
     }
 
-    public AppUnlockMethodPage clickOnNextButton() {
+    public void clickOnNextButton() {
         this.clickOnElement(nextButton);
-        return new AppUnlockMethodPage(driver);
+        new AppUnlockMethodPage(driver);
     }
 }

@@ -5,7 +5,7 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
 
-public class ScanPage extends BasePage{
+public class ScanPage extends BasePage {
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.android.permissioncontroller:id/permission_allow_foreground_only_button\")")
     private WebElement allowPermissionPopupButton;
@@ -23,37 +23,37 @@ public class ScanPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "noShareableVcs")
     private WebElement noShareableCards;
 
-	@AndroidFindBy(accessibility = "flipCameraIcon")
-	private WebElement flipCamera;
+    @AndroidFindBy(accessibility = "flipCameraIcon")
+    private WebElement flipCamera;
 
-	@AndroidFindBy(accessibility = "holdPhoneSteadyMessage")
-	 private WebElement holdCameraSteady;
+    @AndroidFindBy(accessibility = "holdPhoneSteadyMessage")
+    private WebElement holdCameraSteady;
 
     public ScanPage(AppiumDriver driver) {
         super(driver);
     }
 
     public ScanPage acceptPermissionPopup() {
-    	if (isElementDisplayed(bluetoothPopUp, "\"Inji\" wants to turn on Bluetooth")) {
-    		clickOnElement(allowButton);
+        if (isElementDisplayed(bluetoothPopUp)) {
+            clickOnElement(allowButton);
         }
-         return this;
+        return this;
     }
 
-    public boolean isCameraOpen(){
-    return isElementDisplayed(camera, "camera");
+    public boolean isCameraOpen() {
+        return isElementDisplayed(camera);
     }
 
-    public boolean isNoShareableCardsMessageDisplayed(){
-        return isElementDisplayed(noShareableCards, "No shareable cards are available.");
+    public boolean isNoShareableCardsMessageDisplayed() {
+        return isElementDisplayed(noShareableCards);
     }
 
     public boolean isCameraPageLoaded() {
         return this.isElementEnabled(holdCameraSteady);
     }
 
-	public boolean isFlipCameraClickable() {
-		return this.isElementEnabled(flipCamera);
-	}
+    public boolean isFlipCameraClickable() {
+        return this.isElementEnabled(flipCamera);
+    }
 
 }
