@@ -540,12 +540,12 @@ export const DefaultTheme = {
       bottom: 14,
       borderBottomColor: Colors.Orange,
       borderBottomWidth: 1,
-      minWidth: 200,
+      minWidth: 180,
     },
     idInput: {
       position: 'relative',
       bottom: 14,
-      minWidth: 200,
+      minWidth: 180,
     },
     getId: {
       justifyContent: 'center',
