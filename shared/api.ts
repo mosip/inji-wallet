@@ -98,8 +98,6 @@ export const API = {
       API_URLS.issuerConfig.method,
       API_URLS.issuerConfig.buildURL(issuerId),
     );
-    response.response['.well-known'] =
-      'https://esignet.collab.mosip.net/.well-known/openid-credential-issuer';
     return response.response;
   },
   fetchIssuerWellknownConfig: async (requestUrl: string) => {
