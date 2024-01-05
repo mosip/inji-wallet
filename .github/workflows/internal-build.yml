@@ -170,6 +170,32 @@ jobs:
     with:
       SERVICE_LOCATION: '.'
     secrets:
+      BUILD_SCRIPT: 'npm run build'
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
       SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
+  
+  check-sonar-critical-issues:
+    needs: sonar-check
+    name: Check critical issues in sonar analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install jq
+        run: sudo apt-get -y install jq
+      - name: Check for critical bugs
+        run: |
+          SONAR_HOST_URL=https://sonarcloud.io
+          SONAR_PROJECT_KEY=mosip_inji
+
+          response=$(curl -s "${SONAR_HOST_URL}/api/issues/search?componentKeys=${SONAR_PROJECT_KEY}&severities=CRITICAL&statuses=OPEN")
+          echo "The response is $response"
+
+          issues_count=$(echo "$response" | jq '.issues | length')
+          echo "The number of issues $issues_count"
+
+          if [ "$issues_count" -eq 0 ]; then
+              echo "No critical issues found."
+          else
+              echo "Critical issues found. Failing the pipeline"
+              exit 1
+          fi
