@@ -48,6 +48,7 @@ jobs:
       SERVICE_LOCATION: '.'
       BUILD_SCRIPT: 'npm run build'
       NODE_VERSION: '18.x'
+      NPM_BUILD_TYPE: 'BOB'
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
