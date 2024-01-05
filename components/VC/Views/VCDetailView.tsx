@@ -4,11 +4,10 @@ import * as DateFnsLocale from 'date-fns/locale';
 import {useTranslation} from 'react-i18next';
 import {Image, ImageBackground} from 'react-native';
 import {Icon} from 'react-native-elements';
-import {CredentialSubject, VC} from '../../../types/VC/ExistingMosipVC/vc';
+import {VC} from '../../../types/VC/ExistingMosipVC/vc';
 import {Button, Column, Row, Text} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import {TextItem} from '../../ui/TextItem';
-import {getLocalizedField} from '../../../i18n';
 import {QrCodeOverlay} from '../../QrCodeOverlay';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {
@@ -246,25 +245,4 @@ export interface EsignetVC {
   credentialRegistry: string;
   isPinned?: boolean;
   hashedId: string;
-}
-
-function getFullAddress(credential: CredentialSubject) {
-  if (!credential) {
-    return '';
-  }
-
-  const fields = [
-    'addressLine1',
-    'addressLine2',
-    'addressLine3',
-    'city',
-    'province',
-    'region',
-  ];
-
-  return fields
-    .map(field => getLocalizedField(credential[field]))
-    .concat(credential.postalCode)
-    .filter(Boolean)
-    .join(', ');
 }

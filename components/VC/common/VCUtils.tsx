@@ -55,8 +55,10 @@ export const getFieldName = (field: string, wellknown: any) => {
 export const setBackgroundColour = (wellknown: any) => {
   if (wellknown && wellknown.credentials_supported[0]?.display) {
     return {
-      backgroundColor:
-        wellknown.credentials_supported[0].display[0].background_color,
+      backgroundColor: wellknown.credentials_supported[0].display[0]
+        ?.background_color
+        ? wellknown.credentials_supported[0].display[0].background_color
+        : Theme.Colors.textValue,
     };
   }
 };
@@ -64,7 +66,9 @@ export const setBackgroundColour = (wellknown: any) => {
 export const setTextColor = (wellknown: any) => {
   if (wellknown && wellknown.credentials_supported[0]?.display) {
     return {
-      color: wellknown.credentials_supported[0].display[0].text_color,
+      color: wellknown.credentials_supported[0].display[0]?.text_color
+        ? wellknown.credentials_supported[0].display[0].text_color
+        : Theme.Colors.textValue,
     };
   }
 };

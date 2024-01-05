@@ -4,6 +4,7 @@ import React from 'react';
 import {setTextColor} from './VCUtils';
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
+import {Tooltip} from 'react-native-elements';
 
 export const VCItemField = ({
   verifiableCredential,
@@ -38,12 +39,25 @@ export const VCItemField = ({
         style={[Theme.Styles.subtitle]}>
         {fieldName}
       </Text>
-      <Text
-        testID={`${fieldName}Value`}
-        weight="semibold"
-        style={[Theme.Styles.subtitle, setTextColor(wellknown)]}>
-        {fieldValue}
-      </Text>
+      <Tooltip
+        toggleOnPress={true}
+        containerStyle={{
+          width: 200,
+          height: null,
+          overflow: 'hidden',
+        }}
+        skipAndroidStatusBar={true}
+        backgroundColor={Theme.Colors.Icon}
+        popover={<Text>{fieldValue}</Text>}>
+        <Text
+          testID={`${fieldName}Value`}
+          weight="semibold"
+          numLines={1}
+          ellipsizeMode={'tail'}
+          style={[Theme.Styles.subtitle, setTextColor(wellknown)]}>
+          {fieldValue}
+        </Text>
+      </Tooltip>
     </Column>
   );
 };
