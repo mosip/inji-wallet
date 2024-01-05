@@ -15,6 +15,10 @@ export const API_URLS: ApiUrls = {
     buildURL: (issuerId: string): `/${string}` =>
       `/residentmobileapp/issuers/${issuerId}`,
   },
+  issuerWellknownConfig: {
+    method: 'GET',
+    buildURL: (requestUrl: `/${string}`): `/${string}` => requestUrl,
+  },
   allProperties: {
     method: 'GET',
     buildURL: (): `/${string}` => '/residentmobileapp/allProperties',
@@ -94,9 +98,17 @@ export const API = {
       API_URLS.issuerConfig.method,
       API_URLS.issuerConfig.buildURL(issuerId),
     );
+    response.response['.well-known'] =
+      'https://esignet.collab.mosip.net/.well-known/openid-credential-issuer';
     return response.response;
   },
-
+  fetchIssuerWellknownConfig: async (requestUrl: string) => {
+    const response = await request(
+      API_URLS.issuerWellknownConfig.method,
+      API_URLS.issuerWellknownConfig.buildURL(requestUrl),
+    );
+    return response;
+  },
   fetchAllProperties: async () => {
     const response = await request(
       API_URLS.allProperties.method,
@@ -117,6 +129,11 @@ export const CACHED_API = {
     generateCacheAPIFunction({
       cacheKey: API_CACHED_STORAGE_KEYS.fetchIssuerConfig(issuerId),
       fetchCall: API.fetchIssuerConfig.bind(null, issuerId),
+    }),
+  fetchIssuerWellknownConfig: (issuerId: string, requestUrl: string) =>
+    generateCacheAPIFunction({
+      cacheKey: API_CACHED_STORAGE_KEYS.fetchIssuerWellknownConfig(issuerId),
+      fetchCall: API.fetchIssuerWellknownConfig.bind(null, requestUrl),
     }),
 
   getAllProperties: (isCachePreferred: boolean) =>
@@ -246,6 +263,7 @@ type Api_Params = {
 type ApiUrls = {
   issuersList: Api_Params;
   issuerConfig: Api_Params;
+  issuerWellknownConfig: Api_Params;
   allProperties: Api_Params;
   getIndividualId: Api_Params;
   reqIndividualOTP: Api_Params;

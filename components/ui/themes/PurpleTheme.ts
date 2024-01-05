@@ -342,6 +342,7 @@ export const PurpleTheme = {
       flex: 1,
       padding: 10,
       overflow: 'hidden',
+      borderRadius: 10,
     },
     successTag: {
       backgroundColor: Colors.Green,
@@ -376,8 +377,8 @@ export const PurpleTheme = {
       height: 60,
     },
     vcDetailsLogo: {
-      width: 90,
-      height: 35,
+      width: 50,
+      height: 50,
     },
     homeCloseCardDetailsHeader: {
       flex: 1,
@@ -748,6 +749,7 @@ export const PurpleTheme = {
       color: 'transparent',
       backgroundColor: Colors.Grey5,
       borderRadius: 4,
+      marginBottom: 2,
     },
     subtitle: {
       backgroundColor: 'transparent',

@@ -338,6 +338,7 @@ export const DefaultTheme = {
       flex: 1,
       padding: 10,
       overflow: 'hidden',
+      borderRadius: 10,
     },
     successTag: {
       backgroundColor: Colors.Green,
@@ -372,8 +373,8 @@ export const DefaultTheme = {
       height: 60,
     },
     vcDetailsLogo: {
-      height: 35,
-      width: 90,
+      height: 50,
+      width: 50,
     },
     homeCloseCardDetailsHeader: {
       flex: 1,
@@ -745,6 +746,7 @@ export const DefaultTheme = {
       color: 'transparent',
       backgroundColor: Colors.Grey5,
       borderRadius: 4,
+      marginBottom: 2,
     },
     subtitle: {
       backgroundColor: 'transparent',
