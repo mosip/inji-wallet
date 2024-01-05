@@ -170,6 +170,7 @@ jobs:
     with:
       SERVICE_LOCATION: '.'
       BUILD_SCRIPT: 'npm run build'
+      NODE_VERSION: '18.x'
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
