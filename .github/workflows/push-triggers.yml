@@ -17,7 +17,6 @@ on:
     - develop
     - qa-develop
     - 'release-**'
-    - inji-sonar-qube-android
 
 jobs:
   build-android:
@@ -40,19 +39,6 @@ jobs:
       IOS_SERVICE_LOCATION: 'ios'
       SCRIPT_NAME: "fastlane ios_app_build"
 
-  sonar-check-on-pr:
-    name: Sonar check
-    if: ${{ github.event_name == 'pull_request' }}
-    uses: tw-mosip/kattu/.github/workflows/npm-sonar-analysis.yml@inji-add-release-keystore-step-for-sonar
-    with:
-      SERVICE_LOCATION: '.'
-      SONAR_ARGS: '-Dsonar.branch.name=${{ github.head_ref }} -Dsonar.branch.target=${{ github.base_ref }}'
-      BUILD_SCRIPT: 'npm run build'
-    secrets:
-      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
-      SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
-  
   sonar-check-on-push:
     name: Sonar check
     if: ${{ github.event_name != 'pull_request' }}
@@ -67,10 +53,7 @@ jobs:
       SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
 
   check-sonar-critical-issues:
-    needs: [sonar-check-on-pr, sonar-check-on-push]
-    if: |
-      always() && 
-      (needs.sonar-check-on-pr.result == 'success' || needs.sonar-check-on-push.result == 'success')
+    needs: sonar-check-on-push
     name: Check critical issues in sonar analysis
     runs-on: ubuntu-latest
     steps:
