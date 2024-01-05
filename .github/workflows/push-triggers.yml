@@ -50,7 +50,7 @@ jobs:
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
-      SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
+      SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK_INJI_TEAM }}'
 
   check-sonar-critical-issues:
     needs: sonar-check-on-push

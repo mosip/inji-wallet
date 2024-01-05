@@ -9,7 +9,8 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "test": "jest",
     "postinstall": "patch-package && npm run jetify && sh tools/talisman/talisman-precommit.sh",
-    "build": "cd android && ./gradlew lint && cd .. && jest --coverage --passWithNoTests"
+    "build": "cd android && ./gradlew lint && cd .. && jest --coverage --passWithNoTests",
+    "sonar": "node_modules/sonar-scanner/bin/sonar-scanner"
   },
   "dependencies": {
     "@digitalbazaar/ed25519-signature-2018": "digitalbazaar/ed25519-signature-2018",
