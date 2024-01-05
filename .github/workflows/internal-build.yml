@@ -169,8 +169,8 @@ jobs:
     uses: tw-mosip/kattu/.github/workflows/npm-sonar-analysis.yml@inji-add-release-keystore-step-for-sonar
     with:
       SERVICE_LOCATION: '.'
-    secrets:
       BUILD_SCRIPT: 'npm run build'
+    secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
       SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
