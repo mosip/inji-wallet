@@ -143,7 +143,7 @@ jobs:
       SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
 
   sonar-check:
-    uses: tw-mosip/kattu/.github/workflows/npm-sonar-analysis.yml@inji-add-release-keystore-step-for-sonar
+    uses: tw-mosip/kattu/.github/workflows/npm-sonar-analysis.yml@inji-597-customize-npm-sonar-analysis
     with:
       SERVICE_LOCATION: '.'
       BUILD_SCRIPT: 'npm run build'
