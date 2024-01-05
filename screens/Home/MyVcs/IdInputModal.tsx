@@ -1,18 +1,12 @@
 import React from 'react';
-import {Icon, Input} from 'react-native-elements';
+import {Input} from 'react-native-elements';
 import {Picker} from '@react-native-picker/picker';
 import {Button, Column, Row, Text} from '../../../components/ui';
 import {Modal} from '../../../components/ui/Modal';
 import {Theme} from '../../../components/ui/styleUtils';
 import {IdInputModalProps, useIdInputModal} from './IdInputModalController';
 import {useTranslation} from 'react-i18next';
-import {
-  Dimensions,
-  I18nManager,
-  KeyboardAvoidingView,
-  Platform,
-  TextInput,
-} from 'react-native';
+import {I18nManager, KeyboardAvoidingView, TextInput} from 'react-native';
 import {TouchableOpacity} from 'react-native';
 import {individualId, isIOS} from '../../../shared/constants';
 import {GET_INDIVIDUAL_ID} from '../../../shared/constants';
@@ -40,7 +34,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = props => {
   return (
     <Modal
       onDismiss={dismissInput}
-      testID="retreiveIdHeader"
+      testID="retrieveIdHeader"
       isVisible={props.isVisible}
       onShow={setIndividualID}
       headerTitle={t('header')}
@@ -56,7 +50,7 @@ export const IdInputModal: React.FC<IdInputModalProps> = props => {
               style={Theme.TextStyles.retrieveIdLabel}>
               {t('guideLabel')}
             </Text>
-            <Row crossAlign="flex-end" style={Theme.Styles.idInputContainer}>
+            <Row crossAlign="center" style={Theme.Styles.idInputContainer}>
               <Column style={Theme.Styles.idInputPicker}>
                 <Picker
                   {...testIDProps('selectIdTypePicker')}
@@ -66,24 +60,32 @@ export const IdInputModal: React.FC<IdInputModalProps> = props => {
                   <Picker.Item label="VID" value="VID" />
                 </Picker>
               </Column>
-              <Input
-                {...testIDProps('idInputModalIndividualId')}
-                placeholder={!controller.id ? inputLabel : ''}
-                inputContainerStyle={
-                  controller.id ? Theme.Styles.idInputBottom : null
-                }
-                inputStyle={{
-                  textAlign: I18nManager.isRTL ? 'right' : 'left',
-                  fontWeight: '700',
-                }}
-                selectionColor={Theme.Colors.Cursor}
-                value={controller.id}
-                keyboardType="number-pad"
-                errorStyle={Theme.TextStyles.error}
-                errorMessage={controller.idError}
-                onChangeText={controller.INPUT_ID}
-                ref={setIdInputRef}
-              />
+              <Column
+                align="center"
+                style={{
+                  height: 150,
+                }}>
+                <Input
+                  {...testIDProps('idInputModalIndividualId')}
+                  placeholder={!controller.id ? inputLabel : ''}
+                  inputContainerStyle={
+                    controller.id
+                      ? Theme.Styles.idInputBottom
+                      : Theme.Styles.idInput
+                  }
+                  inputStyle={{
+                    textAlign: I18nManager.isRTL ? 'right' : 'left',
+                    fontWeight: '700',
+                  }}
+                  selectionColor={Theme.Colors.Cursor}
+                  value={controller.id}
+                  keyboardType="number-pad"
+                  errorStyle={Theme.TextStyles.error}
+                  errorMessage={controller.idError}
+                  onChangeText={controller.INPUT_ID}
+                  ref={setIdInputRef}
+                />
+              </Column>
             </Row>
           </Column>
           <Column>

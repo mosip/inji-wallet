@@ -531,14 +531,21 @@ export const DefaultTheme = {
     idInputPicker: {
       width: Dimensions.get('window').width * 0.32,
       borderBottomWidth: 1,
-      marginBottom: 2,
       borderColor: isIOS() ? 'transparent' : Colors.Grey,
-      bottom: isIOS() ? 50 : 24,
+      bottom: isIOS() ? 50 : 20,
       height: isIOS() ? 100 : 'auto',
     },
     idInputBottom: {
+      position: 'relative',
+      bottom: 14,
       borderBottomColor: Colors.Orange,
       borderBottomWidth: 1,
+      minWidth: 180,
+    },
+    idInput: {
+      position: 'relative',
+      bottom: 14,
+      minWidth: 180,
     },
     getId: {
       justifyContent: 'center',
@@ -693,9 +700,13 @@ export const DefaultTheme = {
       lineHeight: 18,
     },
     error: {
+      position: 'absolute',
+      top: 24,
+      left: 5,
       color: Colors.Red,
       fontFamily: 'Inter_600SemiBold',
       fontSize: 12,
+      minWidth: 200,
     },
     base: {
       color: Colors.Black,
