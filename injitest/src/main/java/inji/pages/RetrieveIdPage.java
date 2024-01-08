@@ -91,8 +91,6 @@ public class RetrieveIdPage extends BasePage {
 				} catch (StaleElementReferenceException e) {
 					if (i == maxRetries - 1) {
 						throw e; 
-					} else {
-
 					}
 				}
 			}
@@ -105,7 +103,6 @@ public class RetrieveIdPage extends BasePage {
 			}
 			break;
 		}
-
 		return this;
 	}
 
