@@ -12,11 +12,9 @@ import org.testng.annotations.Parameters;
 import java.net.MalformedURLException;
 
 public class IosBaseTest extends BaseTest {
-    @Parameters("platformName")
     @BeforeMethod(alwaysRun = true)
-    public void setup(String platformName) {
+    public void setup() {
         try {
-            //Target target = Target.valueOf(platformName);
             this.driver = DriverManager.getDriver(Target.IOS, isDeviceFarmRun);
         } catch (MalformedURLException | PlatformNotSupportException | InterruptedException e) {
             throw new RuntimeException(e);

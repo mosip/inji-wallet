@@ -16,9 +16,14 @@ public class HelpPage extends BasePage {
     private WebElement crossIcon;
     
     @AndroidFindBy(uiAutomator = "new UiScrollable(new UiSelector()).scrollIntoView(text(\"What happens when Android keystore biometric is changed?\"));")
+    @iOSXCUITFindBy(accessibility = "How to add a card?")
     public WebElement biometricIsChangeTextdHeader;
+    
+    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"The Android keystore holds important information like private keys \")")
+    private WebElement biometricIsChangeTextDescription;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"How to add a card?\")")
+    @iOSXCUITFindBy(accessibility = "How to add a card?")
     public WebElement helpPageContent;
     
     public HelpPage(AppiumDriver driver) {
@@ -26,7 +31,7 @@ public class HelpPage extends BasePage {
     }
 
     public boolean isHelpPageLoaded() {
-        return this.isElementDisplayed(helpText, "Help page");
+        return this.isElementDisplayed(helpText);
     }
 
     public void exitHelpPage() {
@@ -37,8 +42,12 @@ public class HelpPage extends BasePage {
     	biometricIsChangeTextdHeader.isDisplayed();
     }
 
-    public boolean ishelpPageContentEmpty() {
+    public boolean isHelpPageContentEmpty() {
     	return helpPageContent.getText().isBlank();
+    }
+    
+    public boolean isBiometricIsChangeTextDescription() {
+        return this.isElementDisplayed(biometricIsChangeTextDescription);
     }
     
 }

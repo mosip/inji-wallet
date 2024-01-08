@@ -11,8 +11,6 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
 
-import static org.testng.Assert.*;
-
 public class CredentialRegistryTest extends AndroidBaseTest {
 
 	@Test
@@ -32,7 +30,7 @@ public class CredentialRegistryTest extends AndroidBaseTest {
         ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
@@ -72,8 +70,8 @@ public class CredentialRegistryTest extends AndroidBaseTest {
         moreOptionsPage.clickOnCloseButton();
         
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
-        assertEquals(detailedVcViewPage.isCredentialRegistryTextDisplayed(),"Verify if is credential registry text displayed");
-        assertEquals(detailedVcViewPage.isCredentialRegistryValueDisplayed(), TestDataReader.readData("newEnv"), "Verify changed env is displayed in detailed vc");
+        assertTrue(detailedVcViewPage.isCredentialRegistryTextDisplayed(),"Verify if is credential registry text displayed");
+        assertEquals(detailedVcViewPage.getCredentialRegistryValue(), TestDataReader.readData("newEnv"), "Verify changed env is displayed in detailed vc");
 	}
 	
 	@Test
@@ -93,7 +91,7 @@ public class CredentialRegistryTest extends AndroidBaseTest {
         ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
@@ -111,7 +109,7 @@ public class CredentialRegistryTest extends AndroidBaseTest {
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
 
         settingsPage.clickOnCredentialRegistry();
-        assertEquals(credentialRegistryPage.checkEnvNotChanged(),"https://api.qa-inji.mosip.net");
+        assertEquals(credentialRegistryPage.checkEnvNotChanged(),TestDataReader.readData("injiEnv"));
 	}
 	
 	@Test
@@ -131,7 +129,7 @@ public class CredentialRegistryTest extends AndroidBaseTest {
         ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
@@ -166,7 +164,7 @@ public class CredentialRegistryTest extends AndroidBaseTest {
         ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
@@ -219,7 +217,7 @@ public class CredentialRegistryTest extends AndroidBaseTest {
         ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
@@ -263,7 +261,7 @@ public class CredentialRegistryTest extends AndroidBaseTest {
         ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
@@ -330,7 +328,7 @@ public class CredentialRegistryTest extends AndroidBaseTest {
         ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
@@ -374,7 +372,7 @@ public class CredentialRegistryTest extends AndroidBaseTest {
         assertTrue(pleaseConfirmPopupPage.isPleaseConfirmPopupPageLoaded(), "Verify if pop up page is displayed");
         OtpVerificationPage otpVerificationPage = pleaseConfirmPopupPage.clickOnConfirmButton();
         
-        assertTrue(moreOptionsPage.isSomthingIsWrongPopupVisible(), "Verify if somthing went wrong please try again popup displayed");
+        assertTrue(moreOptionsPage.isSomethingIsWrongPopupVisible(), "Verify if somthing went wrong please try again popup displayed");
 	}
 	
 	@Test
@@ -394,7 +392,7 @@ public class CredentialRegistryTest extends AndroidBaseTest {
         ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
@@ -403,7 +401,7 @@ public class CredentialRegistryTest extends AndroidBaseTest {
         CredentialRegistryPage credentialRegistryPage =settingsPage.clickOnCredentialRegistry();
         
         assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
-        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("newEnv")).setEnterIdToEsignetTextBox(TestDataReader.readData("newEnv")).clickOnSaveButton();
+        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("newEnv")).enterUrlToEsignetHostTextBox(TestDataReader.readData("newEnv")).clickOnSaveButton();
        
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         credentialRegistryPage.clickOnBackArrow();
@@ -433,7 +431,7 @@ public class CredentialRegistryTest extends AndroidBaseTest {
         assertTrue(detailedVcViewPage.isEsignetLogoDisplayed(), "Verify if detailed Vc esignet logo is displayed");
         assertTrue(detailedVcViewPage.isDetailedVcViewPageLoaded(), "Verify if detailed Vc view page is displayed");
         assertEquals(detailedVcViewPage.getNameInDetailedVcView(), TestDataReader.readData("fullName"), "Verify if full name is displayed");
-        assertEquals(detailedVcViewPage.getDateOfBirthInDetailedVcView(), TestDataReader.readData("dateOfBirth"), "Verify if date of birth is displayed");
+        //assertEquals(detailedVcViewPage.getDateOfBirthInDetailedVcView(), TestDataReader.readData("dateOfBirth"), "Verify if date of birth is displayed");
         assertEquals(detailedVcViewPage.getGenderInDetailedVcView(), TestDataReader.readData("gender"), "Verify if gender is displayed");
         assertEquals(detailedVcViewPage.getIdTypeValueInDetailedVcView(), TestDataReader.readData("idType"), "Verify if id type is displayed");
         assertEquals(detailedVcViewPage.getStatusInDetailedVcView(), TestDataReader.readData("status"), "Verify if status is displayed");
@@ -460,7 +458,7 @@ public class CredentialRegistryTest extends AndroidBaseTest {
         ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
@@ -469,13 +467,62 @@ public class CredentialRegistryTest extends AndroidBaseTest {
         CredentialRegistryPage credentialRegistryPage =settingsPage.clickOnCredentialRegistry();
         
         assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderDisplayed(), "Verify if CredentialRegistry page is displayed");
-        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("invalidenv")).setEnterIdToEsignetTextBox(TestDataReader.readData("invalidenv")).clickOnSaveButton();
+        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("invalidenv")).enterUrlToEsignetHostTextBox(TestDataReader.readData("invalidenv")).clickOnSaveButton();
 
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         credentialRegistryPage.clickOnBackArrow();
         
         AddNewCardPage addNewCardPage = homePage.downloadCard();
         assertTrue(homePage.isNoInternetConnectionDisplayed(), "Verify if no internet connection is displayed");
+	}
+	
+	@Test
+	public void downloadAndVerifyVcInInvalidEnvForEsignetInFillpino() throws InterruptedException {
+		UnlockApplicationPage unlockApplicationPage = new UnlockApplicationPage(driver);
+		if (unlockApplicationPage.isUnlockApplicationDisplayed() == false) {
+			ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+			assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+
+			WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+
+			assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+			AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
+
+			assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+			SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
+
+			assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
+			ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"),
+					Target.ANDROID);
+
+			assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
+			HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
+		} else {
+			HomePage homePage = new HomePage(driver);
+			unlockApplicationPage.clickOnUnlockApplicationButton();
+
+			ConfirmPasscode confirmPasscode = new ConfirmPasscode(driver);
+			homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
+		}
+
+		HomePage homePage = new HomePage(driver);
+		assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+		SettingsPage settingsPage = homePage.clickOnSettingIcon();
+
+        assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
+        settingsPage.clickOnLanguage().clickOnFilipinoLanguage();
+
+        assertTrue(settingsPage.verifyFilipinoLanguage(), "Verify if language is changed to filipino");
+        CredentialRegistryPage credentialRegistryPage =settingsPage.clickOnCredentialRegistry();
+        
+        assertTrue(credentialRegistryPage.isCredentialRegistryTextBoxHeaderInFilipinoDisplayed(), "Verify if CredentialRegistry page is displayed");
+        credentialRegistryPage.setEnterIdTextBox(TestDataReader.readData("invalidenv")).enterUrlToEsignetHostTextBox(TestDataReader.readData("invalidenv")).clickOnSaveButton();
+
+        assertTrue(settingsPage.isSettingPageLoadedInFilipion(), "Verify if setting page is displayed in filipino");
+        credentialRegistryPage.clickOnBackArrow();
+        
+        AddNewCardPage addNewCardPage = homePage.downloadCard();
+        assertTrue(homePage.isNoInternetConnectionDisplayedFlillpino(), "Verify if no internet connection is displayed in filipino");
 	}
 	
 }

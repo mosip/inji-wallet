@@ -26,7 +26,7 @@ public class AboutInjiTest extends AndroidBaseTest {
         ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
@@ -34,12 +34,12 @@ public class AboutInjiTest extends AndroidBaseTest {
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         AboutInjiPage aboutInjiPage = settingsPage.clickOnAbouInji();
         
-        assertTrue(aboutInjiPage.isaboutInjiHeaderDisplayed(),"Verify id about inji page displayed");
+        assertTrue(aboutInjiPage.isAboutInjiHeaderDisplayed(),"Verify id about inji page displayed");
         
-        aboutInjiPage.clickOnCopy();
-        assertTrue(aboutInjiPage.isAppidIsCopied(),"verify if app id is copied");
+        aboutInjiPage.clickOnCopyText();
+        assertTrue(aboutInjiPage.isAppIdCopiedTextDisplayed(),"verify if app id is copied");
         
-        aboutInjiPage.clickOnBack();
+        aboutInjiPage.clickOnBackButton();
         assertTrue(aboutInjiPage.isCopyTextDisplayed(),"verify if copy text displayed");
     }
 }

@@ -1,5 +1,5 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import {Dimensions, StyleSheet, ViewStyle} from 'react-native';
+import {Dimensions, I18nManager, StyleSheet, ViewStyle} from 'react-native';
 import {Spacing} from '../styleUtils';
 import {isIOS} from '../../../shared/constants';
 
@@ -342,6 +342,7 @@ export const PurpleTheme = {
       flex: 1,
       padding: 10,
       overflow: 'hidden',
+      borderRadius: 10,
     },
     successTag: {
       backgroundColor: Colors.Green,
@@ -376,8 +377,8 @@ export const PurpleTheme = {
       height: 60,
     },
     vcDetailsLogo: {
-      width: 90,
-      height: 35,
+      width: 50,
+      height: 50,
     },
     homeCloseCardDetailsHeader: {
       flex: 1,
@@ -534,14 +535,21 @@ export const PurpleTheme = {
     idInputPicker: {
       width: Dimensions.get('window').width * 0.32,
       borderBottomWidth: 1,
-      marginBottom: 2,
       borderColor: isIOS() ? 'transparent' : Colors.Grey,
-      bottom: isIOS() ? 50 : 24,
+      bottom: isIOS() ? 50 : 20,
       height: isIOS() ? 100 : 'auto',
     },
     idInputBottom: {
+      position: 'relative',
+      bottom: 14,
       borderBottomColor: Colors.Purple,
       borderBottomWidth: 1,
+      minWidth: 200,
+    },
+    idInput: {
+      position: 'relative',
+      bottom: 14,
+      minWidth: 200,
     },
     getId: {
       justifyContent: 'center',
@@ -696,9 +704,13 @@ export const PurpleTheme = {
       lineHeight: 18,
     },
     error: {
+      position: 'absolute',
+      top: 24,
+      left: 5,
       color: Colors.Red,
       fontFamily: 'Inter_600SemiBold',
       fontSize: 12,
+      minWidth: 200,
     },
     base: {
       color: Colors.Black,
@@ -748,6 +760,7 @@ export const PurpleTheme = {
       color: 'transparent',
       backgroundColor: Colors.Grey5,
       borderRadius: 4,
+      marginBottom: 2,
     },
     subtitle: {
       backgroundColor: 'transparent',
@@ -789,9 +802,15 @@ export const PurpleTheme = {
     },
   }),
   SearchBarStyles: StyleSheet.create({
-    searchBarContainer: {
+    idleSearchBarBottomLine: {
+      alignItems: 'center',
       borderBottomWidth: 1,
-      borderBottomColor: Colors.Gray50,
+      borderBottomColor: Colors.Gray40,
+    },
+    searchBarContainer: {
+      alignItems: 'center',
+      borderBottomWidth: 1,
+      borderBottomColor: Colors.Purple,
     },
     searchIcon: {
       justifyContent: 'center',
@@ -799,8 +818,9 @@ export const PurpleTheme = {
       width: Dimensions.get('window').width * 0.1,
     },
     searchBar: {
+      textAlign: I18nManager.isRTL ? 'right' : 'left',
       height: Dimensions.get('window').height * 0.055,
-      width: Dimensions.get('window').width * 0.84,
+      width: Dimensions.get('window').width * 0.8,
     },
   }),
   ButtonStyles: StyleSheet.create({

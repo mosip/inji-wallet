@@ -7,15 +7,15 @@ import org.openqa.selenium.WebElement;
 
 public class TrustedDigitalWalletPage extends BasePage {
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'Trusted Digital Wallet')]")
+    @AndroidFindBy(accessibility = "introTitle")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Trusted Digital Wallet\"`]")
     private WebElement trustedDigitalWalletText;
 
-    @AndroidFindBy(xpath = "(//*[@class='android.widget.TextView'])[3]")
+    @AndroidFindBy(accessibility = "introText")
     @iOSXCUITFindBy(xpath = "//*[contains(@value,'Store and carry')]")
     private WebElement trustedDigitalWalletDescription;
 
-    @AndroidFindBy(xpath = "//*[@text='Next']")
+    @AndroidFindBy(accessibility = "next")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"Next\"`][4]")
     private WebElement nextButton;
 
@@ -24,16 +24,16 @@ public class TrustedDigitalWalletPage extends BasePage {
     }
 
     public boolean isTrustedDigitalWalletPageLoaded() {
-        return this.isElementDisplayed(trustedDigitalWalletText, "Trusted digital wallet page");
+        return this.isElementDisplayed(trustedDigitalWalletText);
     }
 
     public String getTrustedDigitalWalletDescription() {
         return this.getTextFromLocator(trustedDigitalWalletDescription);
     }
 
-    public AppUnlockMethodPage clickOnNextButton() {
+    public void clickOnNextButton() {
         this.clickOnElement(nextButton);
-        return new AppUnlockMethodPage(driver);
+        new AppUnlockMethodPage(driver);
     }
 
 }

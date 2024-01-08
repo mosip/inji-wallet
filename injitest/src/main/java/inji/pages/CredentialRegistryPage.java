@@ -2,65 +2,87 @@ package inji.pages;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
+import io.appium.java_client.pagefactory.iOSXCUITFindBy;
+
 import org.openqa.selenium.WebElement;
 
 public class CredentialRegistryPage extends BasePage {
-	
-	@AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Edit Credential Registry\")")
+
+    @AndroidFindBy(accessibility = "credentialRegistryLabel")
+    @iOSXCUITFindBy(accessibility = "credentialRegistryLabel")
     public WebElement credentialRegistryTextBoxHeader;
-	
-	@AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Edit Esignet Host\")")
+
+    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Palitan ang Credential Registry\")")
+    public WebElement credentialRegistryTextBoxHeaderInFilipino;
+
+    @AndroidFindBy(accessibility = "esignetHostLabel")
+    @iOSXCUITFindBy(accessibility = "esignetHostLabel")
     public WebElement credentialRegistryEsignetTextBoxHeader;
-	
-	@AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"RNE__Input__text-input\")")
-	public WebElement credentialRegistryTextBox;
-	
-	@AndroidFindBy(xpath = "(//android.widget.EditText[@resource-id=\"RNE__Input__text-input\"])[2]")
-	public WebElement credentialRegistryEsignetTextBox;
-	
-	@AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Save\")")
+
+    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Palitan ang esignethosturl\")")
+    public WebElement credentialRegistryEsignetTextBoxHeaderInFilipino;
+
+    @AndroidFindBy(accessibility = "credentialRegistryInputField")
+    @iOSXCUITFindBy(accessibility = "credentialRegistryInputField")
+    public WebElement credentialRegistryTextBox;
+
+    @AndroidFindBy(accessibility = "esignetHostInputField")
+    @iOSXCUITFindBy(accessibility = "esignetHostInputField")
+    public WebElement credentialRegistryEsignetTextBox;
+
+    @AndroidFindBy(accessibility = "save")
+    @iOSXCUITFindBy(accessibility = "save")
     public WebElement saveButton;
-	
-	@AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Cancel\")")
+
+    @AndroidFindBy(accessibility = "cancel")
+    @iOSXCUITFindBy(accessibility = "cancel")
     public WebElement cancelButton;
-	
-	@AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"iconIcon\")")
+
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"iconIcon\")")
+    @iOSXCUITFindBy(accessibility = "arrowLeft")
     public WebElement backArrow;
-	
+
     public CredentialRegistryPage(AppiumDriver driver) {
         super(driver);
     }
-    
+
     public boolean isCredentialRegistryTextBoxHeaderDisplayed() {
-        return this.isElementDisplayed(credentialRegistryTextBoxHeader, "Credential Registry Text heder is visible");
+        return this.isElementDisplayed(credentialRegistryTextBoxHeader);
     }
-    
-    public CredentialRegistryPage setEnterIdTextBox(String env) {
-    	clearTextBoxAndSendKeys(credentialRegistryTextBox, env, "Credential Registry env");
+
+    public boolean isCredentialRegistryTextBoxHeaderInFilipinoDisplayed() {
+        return this.isElementDisplayed(credentialRegistryTextBoxHeaderInFilipino);
+    }
+
+    public boolean isCredentialRegistryTextBoxHeaderForEsignetInFilipinoDisplayed() {
+        return this.isElementDisplayed(credentialRegistryEsignetTextBoxHeader);
+    }
+
+    public CredentialRegistryPage setEnterIdTextBox(String text) {
+        clearTextBoxAndSendKeys(credentialRegistryTextBox, text);
         return this;
     }
-    
-    public CredentialRegistryPage EnterUrlToEsignetHostTextBox(String env) {
-    	clearTextBoxAndSendKeys(credentialRegistryEsignetTextBox, env, "Credential Registry env");
+
+    public CredentialRegistryPage enterUrlToEsignetHostTextBox(String text) {
+        clearTextBoxAndSendKeys(credentialRegistryEsignetTextBox, text);
         return this;
     }
-    
+
     public CredentialRegistryPage clickOnSaveButton() {
         clickOnElement(saveButton);
         return this;
     }
-    
+
     public CredentialRegistryPage clickOnCancelButton() {
         clickOnElement(cancelButton);
         return this;
     }
-    
-    public CredentialRegistryPage clickOnBackArrow() {
+
+    public void clickOnBackArrow() {
         clickOnElement(backArrow);
-        return this;
     }
-    
+
     public String checkEnvNotChanged() {
-    return credentialRegistryTextBox.getText();
+        return credentialRegistryTextBox.getText();
     }
 }

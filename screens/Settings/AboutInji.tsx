@@ -58,7 +58,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
         isVisible={showAboutInji}
         headerTitle={t('header')}
         headerElevation={2}
-        arrowLeft={<Icon {...testIDProps('closeAboutInji')} name={''} />}
+        arrowLeft={true}
         onDismiss={() => {
           setShowAboutInji(!showAboutInji);
         }}>

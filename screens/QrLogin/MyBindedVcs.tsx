@@ -19,7 +19,7 @@ export const MyBindedVcs: React.FC<MyBindedVcsProps> = props => {
   return (
     <Modal
       isVisible={controller.isShowingVcList}
-      arrowLeft={<Icon name={''} />}
+      arrowLeft={true}
       headerTitle={t('selectId')}
       headerElevation={5}
       onDismiss={() => {
