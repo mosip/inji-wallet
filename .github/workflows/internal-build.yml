@@ -81,95 +81,74 @@ on:
           - true
 
 jobs:
-  # build-android:
-  #   if: ${{ inputs.buildFor == 'Both[Android and IOS]' || inputs.buildFor == 'Android'}}
-  #   uses: mosip/kattu/.github/workflows/android-publish.yml@master
-  #   with:
-  #     RELEASE: ${{ inputs.release }}
-  #     NODE_VERSION: '18.x'
-  #     RELEASE_KEYSTORE_ALIAS: androidreleasekey
-  #     MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
-  #     ESIGNET_HOST: ${{ inputs.esignetBackendServiceUrl }}
-  #     APPLICATION_THEME: ${{ inputs.theme }}
-  #     BUILD_DESCRIPTION: ${{ inputs.buildDescription }}
-  #     ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
-  #     APP_FLAVOR: ${{ inputs.injiFlavor }}
-  #     SERVICE_LOCATION: '.'
-  #     ANDROID_SERVICE_LOCATION: 'android'
-  #     BUILD_SCRIPT_LOCATION: 'scripts'
-  #     SCRIPT_NAME: "./${{ inputs.release }}.sh"
-  #     ANDROID_ARTIFACT_NAME: ${{ inputs.buildname }}
-  #     ANDROID_ARTIFACT_PATH: "android/app/build/outputs/apk/${{ inputs.injiFlavor }}/release/Inji_universal.apk"
-  #   secrets:
-  #     ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
-  #     RELEASE_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}'
-  #     INJI_ANDROID_PLAY_STORE_CONFIG_JSON: ${{ secrets.INJI_ANDROID_PLAY_STORE_CONFIG_JSON }}
-  #     SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
+  build-android:
+    if: ${{ inputs.buildFor == 'Both[Android and IOS]' || inputs.buildFor == 'Android'}}
+    needs: check-sonar-critical-issues
+    uses: mosip/kattu/.github/workflows/android-publish.yml@master
+    with:
+      RELEASE: ${{ inputs.release }}
+      NODE_VERSION: '18.x'
+      RELEASE_KEYSTORE_ALIAS: androidreleasekey
+      MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
+      ESIGNET_HOST: ${{ inputs.esignetBackendServiceUrl }}
+      APPLICATION_THEME: ${{ inputs.theme }}
+      BUILD_DESCRIPTION: ${{ inputs.buildDescription }}
+      ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
+      APP_FLAVOR: ${{ inputs.injiFlavor }}
+      SERVICE_LOCATION: '.'
+      ANDROID_SERVICE_LOCATION: 'android'
+      BUILD_SCRIPT_LOCATION: 'scripts'
+      SCRIPT_NAME: "./${{ inputs.release }}.sh"
+      ANDROID_ARTIFACT_NAME: ${{ inputs.buildname }}
+      ANDROID_ARTIFACT_PATH: "android/app/build/outputs/apk/${{ inputs.injiFlavor }}/release/Inji_universal.apk"
+    secrets:
+      ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
+      RELEASE_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}'
+      INJI_ANDROID_PLAY_STORE_CONFIG_JSON: ${{ secrets.INJI_ANDROID_PLAY_STORE_CONFIG_JSON }}
+      SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
 
-  # build-android-beta:
-  #   if: ${{ inputs.release == 'beta' && (inputs.buildFor == 'Both[Android and IOS]' || inputs.buildFor == 'Android') }}
-  #   uses: mosip/kattu/.github/workflows/android-publish.yml@master
-  #   with:
-  #     RELEASE: ${{ inputs.release }}
-  #     NODE_VERSION: '18.x'
-  #     RELEASE_KEYSTORE_ALIAS: androidreleasekey
-  #     MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
-  #     ESIGNET_HOST: ${{ inputs.esignetBackendServiceUrl }}
-  #     APPLICATION_THEME: ${{ inputs.theme }}
-  #     BUILD_DESCRIPTION: ${{ inputs.buildDescription }}
-  #     ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
-  #     APP_FLAVOR: ${{ inputs.injiFlavor }}
-  #     SERVICE_LOCATION: '.'
-  #     ANDROID_SERVICE_LOCATION: 'android'
-  #     BUILD_SCRIPT_LOCATION: 'scripts'
-  #     SCRIPT_NAME: "./${{ inputs.release }}.sh"
-  #     ANDROID_ARTIFACT_NAME: ${{ inputs.buildname }}
-  #     ANDROID_ARTIFACT_PATH: "android/app/build/outputs/apk/${{ inputs.injiFlavor }}/release/Inji_universal.apk"
-  #   secrets:
-  #     ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
-  #     RELEASE_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}'
-  #     INJI_ANDROID_PLAY_STORE_CONFIG_JSON: ${{ secrets.INJI_ANDROID_PLAY_STORE_CONFIG_JSON }}
-  #     SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
-
-  # build-ios:
-  #   if: ${{ inputs.buildFor == 'Both[Android and IOS]' || inputs.buildFor == 'IOS'}}
-  #   uses: mosip/kattu/.github/workflows/ios-publish.yml@master
-  #   with:
-  #     NODE_VERSION: '18.x'
-  #     MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
-  #     ESIGNET_HOST: ${{ inputs.esignetBackendServiceUrl }}
-  #     APPLICATION_THEME: ${{ inputs.theme }}
-  #     TESTFLIGHT_BETA_APP_DESCRIPTION: ${{ inputs.buildDescription }}
-  #     ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
-  #     TESTFLIGHT_INTERNAL_TESTERS_GROUP: ${{ inputs.internal-testers }}
-  #     APP_FLAVOR: ${{ inputs.injiFlavor }}
-  #     SERVICE_LOCATION: '.'
-  #     IOS_SERVICE_LOCATION: 'ios'
-  #     SCRIPT_NAME: "fastlane beta"
-  #     IOS_ARTIFACT_NAME: "ios-artifacts"
-  #     IOS_ARTIFACT_PATH: "ios/fastlane/Inji_artifacts/"
-  #   secrets:
-  #     APP_STORE_CONNECT_TEAM_ID: '${{ secrets.APP_STORE_CONNECT_TEAM_ID }}'
-  #     DEVELOPER_APP_ID: '${{ secrets.IOS_INJI_DEVELOPER_APP_ID }}'
-  #     INJI_IOS_DEVELOPER_APP_IDENTIFIER: '${{ secrets.INJI_IOS_DEVELOPER_APP_IDENTIFIER }}'
-  #     INJI_IOS_DEVELOPER_PORTAL_TEAM_ID: '${{ secrets.INJI_IOS_DEVELOPER_PORTAL_TEAM_ID }}'
-  #     INJI_IOS_FASTLANE_APPLE_ID: '${{ secrets.INJI_IOS_FASTLANE_APPLE_ID }}'
-  #     INJI_IOS_FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: '${{ secrets.INJI_IOS_FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}'
-  #     GIT_AUTHORIZATION: '${{ secrets.GIT_AUTHORIZATION }}'
-  #     INJI_IOS_PROVISIONING_PROFILE_SPECIFIER: '${{ secrets.INJI_IOS_PROVISIONING_PROFILE_SPECIFIER }}'
-  #     INJI_IOS_TEMP_KEYCHAIN_PASSWORD: '${{ secrets.INJI_IOS_TEMP_KEYCHAIN_PASSWORD }}'
-  #     INJI_IOS_TEMP_KEYCHAIN_USER: '${{ secrets.INJI_IOS_TEMP_KEYCHAIN_USER }}'
-  #     APPLE_KEY_ID: '${{ secrets.APPLE_KEY_ID }}'
-  #     APPLE_ISSUER_ID: '${{ secrets.APPLE_ISSUER_ID }}'
-  #     APPLE_KEY_CONTENT: '${{ secrets.APPLE_KEY_CONTENT }}'
-  #     MATCH_PASSWORD: '${{ secrets.INJI_IOS_MATCH_PASSWORD }}'
-  #     SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
+  build-ios:
+    if: ${{ inputs.buildFor == 'Both[Android and IOS]' || inputs.buildFor == 'IOS'}}
+    needs: check-sonar-critical-issues
+    uses: mosip/kattu/.github/workflows/ios-publish.yml@master
+    with:
+      NODE_VERSION: '18.x'
+      MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
+      ESIGNET_HOST: ${{ inputs.esignetBackendServiceUrl }}
+      APPLICATION_THEME: ${{ inputs.theme }}
+      TESTFLIGHT_BETA_APP_DESCRIPTION: ${{ inputs.buildDescription }}
+      ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
+      TESTFLIGHT_INTERNAL_TESTERS_GROUP: ${{ inputs.internal-testers }}
+      APP_FLAVOR: ${{ inputs.injiFlavor }}
+      SERVICE_LOCATION: '.'
+      IOS_SERVICE_LOCATION: 'ios'
+      SCRIPT_NAME: "fastlane beta"
+      IOS_ARTIFACT_NAME: "ios-artifacts"
+      IOS_ARTIFACT_PATH: "ios/fastlane/Inji_artifacts/"
+    secrets:
+      APP_STORE_CONNECT_TEAM_ID: '${{ secrets.APP_STORE_CONNECT_TEAM_ID }}'
+      DEVELOPER_APP_ID: '${{ secrets.IOS_INJI_DEVELOPER_APP_ID }}'
+      INJI_IOS_DEVELOPER_APP_IDENTIFIER: '${{ secrets.INJI_IOS_DEVELOPER_APP_IDENTIFIER }}'
+      INJI_IOS_DEVELOPER_PORTAL_TEAM_ID: '${{ secrets.INJI_IOS_DEVELOPER_PORTAL_TEAM_ID }}'
+      INJI_IOS_FASTLANE_APPLE_ID: '${{ secrets.INJI_IOS_FASTLANE_APPLE_ID }}'
+      INJI_IOS_FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: '${{ secrets.INJI_IOS_FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}'
+      GIT_AUTHORIZATION: '${{ secrets.GIT_AUTHORIZATION }}'
+      INJI_IOS_PROVISIONING_PROFILE_SPECIFIER: '${{ secrets.INJI_IOS_PROVISIONING_PROFILE_SPECIFIER }}'
+      INJI_IOS_TEMP_KEYCHAIN_PASSWORD: '${{ secrets.INJI_IOS_TEMP_KEYCHAIN_PASSWORD }}'
+      INJI_IOS_TEMP_KEYCHAIN_USER: '${{ secrets.INJI_IOS_TEMP_KEYCHAIN_USER }}'
+      APPLE_KEY_ID: '${{ secrets.APPLE_KEY_ID }}'
+      APPLE_ISSUER_ID: '${{ secrets.APPLE_ISSUER_ID }}'
+      APPLE_KEY_CONTENT: '${{ secrets.APPLE_KEY_CONTENT }}'
+      MATCH_PASSWORD: '${{ secrets.INJI_IOS_MATCH_PASSWORD }}'
+      SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
 
   sonar-check:
-    uses: tw-mosip/kattu/.github/workflows/npm-sonar-analysis.yml@inji-add-release-keystore-step-for-sonar
+    uses: tw-mosip/kattu/.github/workflows/npm-sonar-analysis.yml@inji-597-customize-npm-sonar-analysis
     with:
       SERVICE_LOCATION: '.'
       BUILD_SCRIPT: 'npm run build'
+      NODE_VERSION: '18.x'
+      NPM_BUILD_TYPE: 'BOB'
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}

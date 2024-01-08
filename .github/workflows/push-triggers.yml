@@ -43,10 +43,12 @@ jobs:
     name: Sonar check
     if: ${{ github.event_name != 'pull_request' }}
     needs: [build-android, build-ios]
-    uses: tw-mosip/kattu/.github/workflows/npm-sonar-analysis.yml@inji-add-release-keystore-step-for-sonar
+    uses: tw-mosip/kattu/.github/workflows/npm-sonar-analysis.yml@inji-597-customize-npm-sonar-analysis
     with:
       SERVICE_LOCATION: '.'
       BUILD_SCRIPT: 'npm run build'
+      NODE_VERSION: '18.x'
+      NPM_BUILD_TYPE: 'BOB'
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
