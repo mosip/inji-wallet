@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Pressable, View} from 'react-native';
 import {ActorRefFrom} from 'xstate';
 import {
@@ -17,6 +17,12 @@ import {VCCardSkeleton} from '../common/VCCardSkeleton';
 import {VCCardViewContent} from './VCCardViewContent';
 import {MosipVCItemActivationStatus} from '../MosipVCItem/MosipVCItemActivationStatus';
 import {useVcItemController} from '../MosipVCItem/VcItemController';
+import {getCredentialIssuersWellKnownConfig} from '../../../shared/openId4VCI/Utils';
+import {
+  CARD_VIEW_ADD_ON_FIELDS,
+  CARD_VIEW_DEFAULT_FIELDS,
+} from '../../../shared/constants';
+import {isVCLoaded} from '../common/VCUtils';
 
 export const VCCardView: React.FC<
   ExistingMosipVCItemProps | EsignetMosipVCItemProps
@@ -44,7 +50,26 @@ export const VCCardView: React.FC<
     );
   }, [props.vcMetadata]);
 
-  if (!verifiableCredential) {
+  const credential = props.isDownloading
+    ? null
+    : props.vcMetadata.isFromOpenId4VCI()
+    ? verifiableCredential?.credential
+    : verifiableCredential;
+
+  const [fields, setFields] = useState([]);
+  const [wellknown, setWellknown] = useState(null);
+  useEffect(() => {
+    getCredentialIssuersWellKnownConfig(
+      props?.vcMetadata.issuer,
+      verifiableCredential?.wellKnown,
+      CARD_VIEW_DEFAULT_FIELDS,
+    ).then(response => {
+      setWellknown(response.wellknown);
+      setFields(response.fields.slice(0, 1).concat(CARD_VIEW_ADD_ON_FIELDS));
+    });
+  }, [verifiableCredential?.wellKnown]);
+
+  if (!isVCLoaded(verifiableCredential, fields)) {
     return <VCCardSkeleton />;
   }
 
@@ -63,6 +88,9 @@ export const VCCardView: React.FC<
           vcMetadata={props.vcMetadata}
           context={context}
           verifiableCredential={verifiableCredential}
+          credential={credential}
+          fields={fields}
+          wellknown={wellknown}
           generatedOn={formattedDate}
           selectable={props.selectable}
           selected={props.selected}

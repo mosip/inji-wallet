@@ -1,17 +1,10 @@
-import React, {useEffect, useState} from 'react';
-import {useTranslation} from 'react-i18next';
+import React from 'react';
 import {ImageBackground} from 'react-native';
 import {VerifiableCredential} from '../../../types/VC/ExistingMosipVC/vc';
 import {Column, Row} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import {CheckBox, Icon} from 'react-native-elements';
 import {SvgImage} from '../../ui/svg';
-import {getCredentialIssuersWellKnownConfig} from '../../../shared/openId4VCI/Utils';
-import {
-  CARD_VIEW_ADD_ON_FIELDS,
-  CARD_VIEW_DEFAULT_FIELDS,
-} from '../../../shared/constants';
-import {VCCardInnerSkeleton} from '../common/VCCardInnerSkeleton';
 import {
   fieldItemIterator,
   getIssuerLogo,
@@ -20,33 +13,12 @@ import {
 } from '../common/VCUtils';
 import VerifiedIcon from '../../VerifiedIcon';
 import {VCItemField} from '../common/VCItemField';
+import {useTranslation} from 'react-i18next';
 
 export const VCCardViewContent: React.FC<
   ExistingMosipVCItemContentProps | EsignetMosipVCItemContentProps
 > = props => {
-  const verifiableCredential = props.isDownloading
-    ? null
-    : props.vcMetadata.isFromOpenId4VCI()
-    ? props.verifiableCredential?.credential
-    : props.verifiableCredential;
-
   const {t} = useTranslation('VcDetails');
-  const [fields, setFields] = useState([]);
-  const [wellknown, setWellknown] = useState(null);
-  useEffect(() => {
-    getCredentialIssuersWellKnownConfig(
-      props?.vcMetadata.issuer,
-      props.verifiableCredential?.wellKnown,
-      CARD_VIEW_DEFAULT_FIELDS,
-    ).then(response => {
-      setWellknown(response.wellknown);
-      setFields(response.fields.slice(0, 1).concat(CARD_VIEW_ADD_ON_FIELDS));
-    });
-  }, [props.verifiableCredential?.wellKnown]);
-
-  if (!isVCLoaded(verifiableCredential, fields)) {
-    return <VCCardInnerSkeleton />;
-  }
   const selectableOrCheck = props.selectable ? (
     <CheckBox
       checked={props.selected}
@@ -65,33 +37,33 @@ export const VCCardViewContent: React.FC<
 
   return (
     <ImageBackground
-      source={!verifiableCredential ? null : Theme.CloseCard}
+      source={!props.credential ? null : Theme.CloseCard}
       resizeMode="stretch"
       style={[
-        !verifiableCredential
+        !props.credential
           ? Theme.Styles.vertloadingContainer
           : Theme.Styles.backgroundImageContainer,
-        setBackgroundColour(wellknown),
+        setBackgroundColour(props.wellknown),
       ]}>
       <Column>
         <Row align="space-between">
           <Row margin="5 0 0 5">
-            {SvgImage.VcItemContainerProfileImage(props, verifiableCredential)}
+            {SvgImage.VcItemContainerProfileImage(props, props.credential)}
             <Column margin={'0 0 0 20'}>
               {fieldItemIterator(
-                fields.slice(0, 2),
-                verifiableCredential,
-                wellknown,
+                props.fields.slice(0, 2),
+                props.credential,
+                props.wellknown,
                 props,
               )}
             </Column>
           </Row>
-          <Column>{verifiableCredential ? selectableOrCheck : null}</Column>
+          <Column>{props.credential ? selectableOrCheck : null}</Column>
         </Row>
         {fieldItemIterator(
-          fields.slice(2),
-          verifiableCredential,
-          wellknown,
+          props.fields.slice(2),
+          props.credential,
+          props.wellknown,
           props,
         )}
         <Row align={'space-between'} margin="0 8 5 8">
@@ -99,21 +71,21 @@ export const VCCardViewContent: React.FC<
             key={'status'}
             fieldName={t('status')}
             fieldValue={
-              !isVCLoaded(verifiableCredential, fields) ? null : (
+              !isVCLoaded(props.credential, props.fields) ? null : (
                 <VerifiedIcon />
               )
             }
-            wellknown={wellknown}
-            verifiableCredential={verifiableCredential}
+            wellknown={props.wellknown}
+            verifiableCredential={props.credential}
           />
           <Column
             testID="logo"
             style={{
-              display: verifiableCredential ? 'flex' : 'none',
+              display: props.credential ? 'flex' : 'none',
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            {!isVCLoaded(verifiableCredential, fields)
+            {!isVCLoaded(props.credential, props.fields)
               ? null
               : getIssuerLogo(
                   props.vcMetadata.isFromOpenId4VCI(),
@@ -129,6 +101,9 @@ export const VCCardViewContent: React.FC<
 export interface ExistingMosipVCItemContentProps {
   context: any;
   verifiableCredential: VerifiableCredential;
+  credential: VerifiableCredential;
+  fields: [];
+  wellknown: {};
   generatedOn: string;
   selectable: boolean;
   selected: boolean;
@@ -141,6 +116,8 @@ export interface ExistingMosipVCItemContentProps {
 export interface EsignetMosipVCItemContentProps {
   context: any;
   credential: VerifiableCredential;
+  fields: [];
+  wellknown: {};
   generatedOn: string;
   selectable: boolean;
   selected: boolean;

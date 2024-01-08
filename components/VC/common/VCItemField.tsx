@@ -40,7 +40,7 @@ export const VCItemField = ({
         {fieldName}
       </Text>
       <Tooltip
-        toggleOnPress={true}
+        toggleOnPress={fieldValue.length > 20}
         containerStyle={{
           width: 200,
           height: null,
