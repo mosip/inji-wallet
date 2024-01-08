@@ -28,10 +28,6 @@ public class AboutInjiPage extends BasePage {
     
     @AndroidFindBy(accessibility = "Web View")
     private WebElement WebView;
-    
-    
-    
-  //android.widget.TextView[@text=""]
 
     public AboutInjiPage(AppiumDriver driver) {
         super(driver);
