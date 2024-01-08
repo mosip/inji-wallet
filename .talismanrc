@@ -102,7 +102,7 @@ fileignoreconfig:
   - filename: assets/Issuer_search_clearing_button.svg
     checksum: f4e8a054fc4168e08bc9e9fe3e644cebabacdfc31ef0cbe36dd281766f47df5e
   - filename: injitest/README.md
-  checksum: 4238d11c095e7e12815100c466559d53fd2e27dafaf1f6395716569f878df4eb
+    checksum: 4238d11c095e7e12815100c466559d53fd2e27dafaf1f6395716569f878df4eb
   - filename: injitest/src/test/java/androidTestCases/UnlockWithPasscodeTest.java
     checksum: 363c6ae8dac28a22553870b2ba3f58460895ca749c53442ee039b128375c8337
   - filename: screens/Home/MyVcs/IdInputModal.tsx
@@ -195,4 +195,6 @@ fileignoreconfig:
     checksum: 31ab4455c680963a7d4cfa8a0a9c5e92cbe3212bca7a0eedc4f9233802cc4c71
   - filename: patches/react-native+0.71.8.patch
     checksum: a95394c8cd21212a8c7884786b89cf16f7d917431a288b0b199f1e58ff282adf
-  version: ""
+  - filename: shared/keystore/SecureKeystore.ts
+    checksum: 7b9ae6042973405d1a41fb51b50b4ba09f131547b964cfc952967be919aae9b1
+version: ""

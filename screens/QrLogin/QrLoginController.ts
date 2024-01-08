@@ -49,7 +49,7 @@ export function useQrLogin({service}: QrLoginProps) {
       (index: number) =>
       (
         vcRef: ActorRefFrom<
-          typeof EsignetMosipVCItemMachine | typeof EsignetMosipVCItemMachine
+          typeof ExistingMosipVCItemMachine | typeof EsignetMosipVCItemMachine
         >,
       ) => {
         setSelectedIndex(index);

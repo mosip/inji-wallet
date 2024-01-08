@@ -27,7 +27,7 @@ export function selectWalletBindingSuccess(state: State) {
 }
 
 export function selectEmptyWalletBindingId(state: State) {
-  var val = state.context.walletBindingResponse
+  const val = state.context.walletBindingResponse
     ? state.context.walletBindingResponse.walletBindingId
     : undefined;
   return val == undefined || val == null || val.length <= 0 ? true : false;
