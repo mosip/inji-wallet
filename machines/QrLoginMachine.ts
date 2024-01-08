@@ -401,7 +401,7 @@ export const qrLoginMachine =
             );
           }
 
-          var config = await getAllConfigurations();
+          const config = await getAllConfigurations();
           const header = {
             alg: 'RS256',
             'x5t#S256': context.thumbprint,

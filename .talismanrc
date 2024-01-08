@@ -109,4 +109,6 @@ fileignoreconfig:
     checksum: b5c0463fe4bac47004d6943a20d38ab023ff74c761723e50e8a1c2bfe717b0e1
   - filename: scripts/check-sonar-critical-issues.sh
     checksum: 100f7359a6b57025bd53e84f014326811f6d9fd13a63805de40ecaa64ea90cde
+  - filename: shared/keystore/SecureKeystore.ts
+    checksum: 7b9ae6042973405d1a41fb51b50b4ba09f131547b964cfc952967be919aae9b1
     version: ""

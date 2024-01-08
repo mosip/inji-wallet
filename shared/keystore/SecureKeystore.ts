@@ -1,17 +1,15 @@
-import RNSecureKeyStore, { ACCESSIBLE } from 'react-native-secure-key-store';
+import RNSecureKeyStore, {ACCESSIBLE} from 'react-native-secure-key-store';
 
 const bindingCertificate = '-bindingCertificate';
 
 export async function savePrivateKey(id: string, privateKey: string) {
-  var result = await RNSecureKeyStore.set(id, privateKey, {
+  return await RNSecureKeyStore.set(id, privateKey, {
     accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
   });
-  return result;
 }
 
 export async function getPrivateKey(id: string) {
-  var result = await RNSecureKeyStore.get(id);
-  return result;
+  return await RNSecureKeyStore.get(id);
 }
 
 export function getBindingCertificateConstant(id: string) {

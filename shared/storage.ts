@@ -13,14 +13,8 @@ import {
   isHardwareKeystoreExists,
 } from './cryptoutil/cryptoUtil';
 import {VCMetadata} from './VCMetadata';
-import {ENOENT, getItem} from '../machines/store';
-import {
-  androidVersion,
-  isAndroid,
-  MY_VCS_STORE_KEY,
-  RECEIVED_VCS_STORE_KEY,
-  SETTINGS_STORE_KEY,
-} from './constants';
+import {ENOENT} from '../machines/store';
+import {androidVersion, isAndroid, SETTINGS_STORE_KEY} from './constants';
 import FileStorage, {
   getFilePath,
   getFilePathOfEncryptedHmac,
@@ -43,7 +37,7 @@ export const API_CACHED_STORAGE_KEYS = {
   fetchIssuerConfig: (issuerId: string) =>
     `CACHE_FETCH_ISSUER_CONFIG_${issuerId}`,
   fetchIssuerWellknownConfig: (issuerId: string) =>
-      `CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_${issuerId}`,
+    `CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_${issuerId}`,
 };
 
 async function generateHmac(
@@ -269,8 +263,8 @@ class Storage {
 
   // TODO: INJI-612 refactor
   private static hexEncode(inp: string) {
-    var hex, i;
-    var result = '';
+    let hex, i;
+    let result = '';
     for (i = 0; i < inp.length; i++) {
       hex = inp.charCodeAt(i).toString(16);
       result += ('000' + hex).slice(-4);
