@@ -41,5 +41,8 @@ public class AboutInjiTest extends AndroidBaseTest {
         
         aboutInjiPage.clickOnBackButton();
         assertTrue(aboutInjiPage.isCopyTextDisplayed(),"verify if copy text displayed");
+        
+        aboutInjiPage.clickOnClickHereButton();
+        assertTrue(aboutInjiPage.isWebViewDisplayed(),"verify if web view is displayed");
     }
 }

@@ -26,12 +26,29 @@ public class HassleFreeAuthenticationPage extends BasePage {
     public boolean isHassleFreeAuthenticationPageLoaded() {
         return this.isElementDisplayed(hassleFreeAuthenticationText);
     }
+    
+    public boolean isHassleFreeAuthenticationPageLoadedDisplayedInFilipnio() {
+        return this.isElementDisplayed(hassleFreeAuthenticationText);
+    }
+    
+    public boolean isHassleFreeAuthenticationPageLoadedDisplayedInHindi() {
+        return this.isElementDisplayed(hassleFreeAuthenticationText);
+    }
+    
+    public boolean isHassleFreeAuthenticationPageLoadedDisplayedInTamil() {
+        return this.isElementDisplayed(hassleFreeAuthenticationText);
+    }
 
+    public boolean isHassleFreeAuthenticationPageLoadedDisplayedInKannada() {
+        return this.isElementDisplayed(hassleFreeAuthenticationText);
+    }
+    
     public String getHassleFreeAuthenticationDescription() {
         return this.getTextFromLocator(hassleFreeAuthenticationDescription);
     }
-
-    public void clickOnGoBack() {
+    
+    public HassleFreeAuthenticationPage clickOnGoBack() {
         clickOnElement(goBackButton);
+        return this;
     }
 }

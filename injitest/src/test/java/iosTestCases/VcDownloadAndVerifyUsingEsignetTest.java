@@ -34,6 +34,11 @@ public class VcDownloadAndVerifyUsingEsignetTest extends IosBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
+        assertTrue(addNewCardPage.isIssuerDescriptionMosipDisplayed(), "Verify if issuer description  mosip displayed");
+        assertTrue(addNewCardPage.isIssuerDescriptionEsignetDisplayed(), "Verify if issuer description  esignet displayed");
+        assertTrue(addNewCardPage.isIssuerSearchBarDisplayed(), "Verify if issuer search bar displayed");
+        addNewCardPage.sendTextInIssuerSearchBar("e-signet");
+        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
         assertTrue(addNewCardPage.isAddNewCardGuideMessageDisplayed(), "Verify if add new card guide message displayed");
         assertTrue(addNewCardPage.isDownloadViaUinDisplayed(), "Verify if download via uin displayed");
         assertTrue(addNewCardPage.isDownloadViaEsignetDisplayed(), "Verify if download via uin displayed");
@@ -116,7 +121,7 @@ public class VcDownloadAndVerifyUsingEsignetTest extends IosBaseTest {
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
         
         assertTrue(esignetLoginPage.isEnterYourVidTextDisplayed(), "Verify if enter your vid text is displayed");
-        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(BaseTestCase.perpetualVid);
+        OtpVerificationPage otpVerification= esignetLoginPage.setEnterIdTextBox(TestDataReader.readData("vid"));
         esignetLoginPage.clickOnGetOtpButton();
         Thread.sleep(3000);
         otpVerification.enterOtpForEsignet(TestDataReader.readData("otp"), Target.IOS);

@@ -22,6 +22,16 @@ public class AboutInjiPage extends BasePage {
     @AndroidFindBy(accessibility = "arrowLeft")
     @iOSXCUITFindBy(accessibility = "arrowLeft")
     private WebElement backButton;
+    
+    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Click here\")")
+    public WebElement clickHereButton;
+    
+    @AndroidFindBy(accessibility = "Web View")
+    private WebElement WebView;
+    
+    
+    
+  //android.widget.TextView[@text=""]
 
     public AboutInjiPage(AppiumDriver driver) {
         super(driver);
@@ -38,6 +48,10 @@ public class AboutInjiPage extends BasePage {
     public boolean isCopyTextDisplayed() {
         return this.isElementDisplayed(copy);
     }
+    
+    public boolean isWebViewDisplayed() {
+        return this.isElementDisplayed(WebView);
+    }
 
     public void clickOnCopyText() {
         clickOnElement(copy);
@@ -45,5 +59,9 @@ public class AboutInjiPage extends BasePage {
 
     public void clickOnBackButton() {
         clickOnElement(copy);
+    }
+    
+    public void clickOnClickHereButton() {
+        clickOnElement(clickHereButton);
     }
 }

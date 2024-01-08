@@ -35,6 +35,23 @@ public class WelcomePage extends BasePage {
     public boolean isWelcomePageLoaded() {
         return this.isElementDisplayed(welcomeText);
     }
+    
+    public boolean isWelcomePageLoadedInFilpino() {
+        return this.isElementDisplayed(welcomeText);
+    }
+    
+    public boolean isWelcomePageLoadedInHindi() {
+        return this.isElementDisplayed(welcomeText);
+    }
+    
+    public boolean isWelcomePageLoadedInTamil() {
+        return this.isElementDisplayed(welcomeText);
+    }
+    
+    public boolean isWelcomePageLoadedInKannada() {
+        return this.isElementDisplayed(welcomeText);
+    }
+
 
     public AppUnlockMethodPage clickOnSkipButton() {
         this.clickOnElement(skipButton);

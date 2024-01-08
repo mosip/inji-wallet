@@ -7,6 +7,9 @@ import org.openqa.selenium.WebElement;
 public class ReceiveCardPage extends BasePage {
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Allow\")")
     private WebElement allowButton;
+    
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.android.permissioncontroller:id/permission_allow_foreground_only_button\")")
+    private WebElement allowPermissionPopupButton;
 
     @AndroidFindBy(accessibility = "showQrCode")
     private WebElement receiveCardHeader;
@@ -31,6 +34,13 @@ public class ReceiveCardPage extends BasePage {
         if (isElementDisplayed(bluetoothPopUp)) {
             clickOnElement(allowButton);
         }
+    }
+    
+    public ReceiveCardPage acceptPermissionPopupForLocation() {
+        if (isElementDisplayed(allowPermissionPopupButton)) {
+            clickOnElement(allowButton);
+        }
+        return this;
     }
 
     public boolean isReceiveCardHeaderDisplayed() {

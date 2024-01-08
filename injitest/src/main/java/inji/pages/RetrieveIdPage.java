@@ -4,6 +4,8 @@ import inji.constants.Target;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
+
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 
 
@@ -76,16 +78,47 @@ public class RetrieveIdPage extends BasePage {
         return this.isElementDisplayed(aidIsNotReadyYetMessage);
     }
 
+//    public RetrieveIdPage clickOnVid(Target os) {
+//        switch (os) {
+//            case ANDROID:
+//                clickOnElement(spinnerButton);
+//                clickOnElement(vidDropDownValueAndroid);
+//                break;
+//            case IOS:
+//                sendKeysToTextBox(vidDropDownValueIos, "VID");
+//                break;
+//        }
+//        return this;
+//    }
+    
     public RetrieveIdPage clickOnVid(Target os) {
+        int maxRetries = 3; // Adjust as needed
+
         switch (os) {
             case ANDROID:
-                clickOnElement(spinnerButton);
-                clickOnElement(vidDropDownValueAndroid);
+                for (int i = 0; i < maxRetries; i++) {
+                    try {
+                        clickOnElement(spinnerButton); 
+                        clickOnElement(vidDropDownValueAndroid);
+                        return this; 
+                    } catch (StaleElementReferenceException e) {
+                        if (i == maxRetries - 1) {
+                            throw e; 
+                        } else {
+                            
+                        }
+                    }
+                }
                 break;
             case IOS:
-                sendKeysToTextBox(vidDropDownValueIos, "VID");
+                try {
+                    sendKeysToTextBox(vidDropDownValueIos, "VID");
+                } catch (StaleElementReferenceException e) {
+                	
+                }
                 break;
         }
+
         return this;
     }
 

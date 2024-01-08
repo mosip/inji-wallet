@@ -26,14 +26,30 @@ public class TrustedDigitalWalletPage extends BasePage {
     public boolean isTrustedDigitalWalletPageLoaded() {
         return this.isElementDisplayed(trustedDigitalWalletText);
     }
+    
+    public boolean isTrustedDigitalWalletPageLoadedInFilipino() {
+        return this.isElementDisplayed(trustedDigitalWalletText);
+    }
+    
+    public boolean isTrustedDigitalWalletPageLoadedInHindi() {
+        return this.isElementDisplayed(trustedDigitalWalletText);
+    }
+    
+    public boolean isTrustedDigitalWalletPageLoadedInTamil() {
+        return this.isElementDisplayed(trustedDigitalWalletText);
+    }
+    
+    public boolean isTrustedDigitalWalletPageLoadedInKannada() {
+        return this.isElementDisplayed(trustedDigitalWalletText);
+    }
 
     public String getTrustedDigitalWalletDescription() {
         return this.getTextFromLocator(trustedDigitalWalletDescription);
     }
 
-    public void clickOnNextButton() {
+    public AppUnlockMethodPage clickOnNextButton() {
         this.clickOnElement(nextButton);
-        new AppUnlockMethodPage(driver);
+        return new AppUnlockMethodPage(driver);
     }
 
 }

@@ -26,6 +26,24 @@ public class SecureSharingPage extends BasePage {
     public boolean isSecureSharingPageLoaded() {
         return this.isElementDisplayed(secureSharingText);
     }
+    
+    public boolean isSecureSharingPageLoadedInFilipino() {
+        return this.isElementDisplayed(secureSharingText);
+    }
+    
+    
+    public boolean isSecureSharingPageLoadedInTamil() {
+        return this.isElementDisplayed(secureSharingText);
+    }
+    
+    public boolean isSecureSharingPageLoadedInKannada() {
+        return this.isElementDisplayed(secureSharingText);
+    }
+
+    
+    public boolean isSecureSharingPageLoadedInHindi() {
+        return this.isElementDisplayed(secureSharingText);
+    }
 
     public String getSecureSharingDescription() {
         return this.getTextFromLocator(secureSharingDescription);

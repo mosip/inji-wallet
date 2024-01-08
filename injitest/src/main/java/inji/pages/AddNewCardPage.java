@@ -7,7 +7,7 @@ import org.openqa.selenium.WebElement;
 
 public class AddNewCardPage extends BasePage{
 
-    @AndroidFindBy(accessibility = "issuersScreenHeader")
+    @AndroidFindBy(accessibility = "title")
     @iOSXCUITFindBy(accessibility = "title")
     private WebElement addNewCardHeader;
 
@@ -28,6 +28,9 @@ public class AddNewCardPage extends BasePage{
     
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.\")")
     private WebElement addNewCardGuideMessageInFillpino;
+    
+    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"नया कार्ड जोड़ने के लिए कृपया नीचे दिए गए विकल्पों में से अपना पसंदीदा जारीकर्ता चुनें।\")")
+    private WebElement addNewCardGuideMessageInHindi;
     
     @AndroidFindBy(accessibility = "issuerDescription-Mosip")
     @iOSXCUITFindBy(accessibility = "issuerDescription-Mosip")
@@ -66,7 +69,15 @@ public class AddNewCardPage extends BasePage{
         return this.isElementDisplayed(downloadViaUin);
     }
     
+    public boolean isDownloadViaUinDisplayedInHindi() {
+        return this.isElementDisplayed(downloadViaUin);
+    }
+    
     public boolean isDownloadViaEsignetDisplayed() {
+        return this.isElementDisplayed(downloadViaEsignet);
+    }
+    
+    public boolean isDownloadViaEsignetDisplayedInHindi() {
         return this.isElementDisplayed(downloadViaEsignet);
     }
     
@@ -87,6 +98,9 @@ public class AddNewCardPage extends BasePage{
         return this.isElementDisplayed(addNewCardGuideMessageInFillpino);
     }
     
+    public boolean isAddNewCardGuideMessageDisplayedInHindi() {
+        return this.isElementDisplayed(addNewCardGuideMessageInHindi);
+    }
     public boolean isIssuerDescriptionMosipDisplayed() {
         return this.isElementDisplayed(issuerDescriptionMosip);
     }
@@ -103,9 +117,13 @@ public class AddNewCardPage extends BasePage{
     	return this.isElementDisplayed(issuerSearchBar);
     }
     
-    public void sendTextInIssuerSearchBar(String text) {
-    	clearTextBoxAndSendKeys(issuerSearchBar,text);
+    public boolean isIssuerSearchBarDisplayedInHindi() {
+    	return this.isElementDisplayed(issuerSearchBar);
     }
-
+    
+    public AddNewCardPage sendTextInIssuerSearchBar(String env) {
+    	clearTextBoxAndSendKeys(issuerSearchBar, env);
+        return this;
+    }
 
 }

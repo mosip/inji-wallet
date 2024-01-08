@@ -3,9 +3,10 @@ package inji.pages;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public class DetailedVcViewPage extends BasePage {
+public class DetailedVcViewPage extends BasePage{
     @AndroidFindBy(accessibility = "idDetailsHeader")
     @iOSXCUITFindBy(accessibility = "idDetailsHeader")
     private WebElement detailedVcViewPageTitle;
@@ -49,7 +50,10 @@ public class DetailedVcViewPage extends BasePage {
     @AndroidFindBy(accessibility = "enableVerification")
     @iOSXCUITFindBy(accessibility = "enableVerification")
     private WebElement activateButton;
-
+    
+    @AndroidFindBy(uiAutomator = "new UiScrollable(new UiSelector()).scrollIntoView(text(\"Activate\"));")
+    private WebElement scrollActivateButton;
+    
     @AndroidFindBy(accessibility = "profileAuthenticated")
     @iOSXCUITFindBy(accessibility = "profileAuthenticated")
     private WebElement profileAuthenticated;
@@ -130,7 +134,8 @@ public class DetailedVcViewPage extends BasePage {
         return this.isElementDisplayed(activateButton);
     }
 
-    public PleaseConfirmPopupPage clickOnActivateButton() {
+    public PleaseConfirmPopupPage clickOnActivateButton(){
+    	scrollActivateButton.isDisplayed();
         clickOnElement(activateButton);
         return new PleaseConfirmPopupPage(driver);
     }

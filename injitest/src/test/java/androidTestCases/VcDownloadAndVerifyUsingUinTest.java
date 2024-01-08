@@ -46,7 +46,8 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
-
+        
+        assertTrue(homePage.isDownloadingVcPopupDisplayed(),"verify downloading vc popup displayed");
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         assertTrue(homePage.isIdTypeDisplayed(), "Verify if id type is displayed");
 

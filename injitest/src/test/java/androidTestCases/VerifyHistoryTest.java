@@ -93,6 +93,9 @@ public class VerifyHistoryTest extends AndroidBaseTest {
         assertTrue(otpVerificationPage.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         otpVerificationPage.enterOtp(TestDataReader.readData("invalidOtp"), Target.ANDROID);
 
+        assertTrue(otpVerification.invalidOtpMessageDisplayed(), "Verify if OTP is invalid message is displayed");
+        otpVerificationPage.enterOtp(TestDataReader.readData("invalidOtp"), Target.ANDROID);
+        
         assertTrue(otpVerificationPage.somethingWetWrongInVcActivationDisplayed(), "Verify if Something is wrong. Please try again later displayed");
         assertTrue(otpVerificationPage.isCancelButtonDisplayed(), "Verify if cancel button is displayed");
 

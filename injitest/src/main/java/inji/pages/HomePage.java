@@ -62,13 +62,16 @@ public class HomePage extends BasePage {
     @AndroidFindBy(accessibility = "nationalCard")
     @iOSXCUITFindBy(accessibility = "nationalCard")
     private WebElement idTypeValue;
-
+    
     @AndroidFindBy(accessibility = "tryAgain")
     @iOSXCUITFindBy(accessibility = "errorTitle")
     private WebElement tryAgainButton;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Subukan muli\")")
     private WebElement tryAgainButtonInFillpino;
+    
+    @AndroidFindBy(accessibility = "downloadingVcPopup")
+    private WebElement downloadingVcPopup;
 
     public HomePage(AppiumDriver driver) {
         super(driver);
@@ -138,6 +141,10 @@ public class HomePage extends BasePage {
     public boolean isNoVCDownloadedInFilipino() {
         return this.isElementDisplayed(bringYourDigitalIdentity);
     }
+    
+    public boolean isNoVCDownloadedInHindi() {
+        return this.isElementDisplayed(bringYourDigitalIdentity);
+    }
 
     public boolean isNoInternetConnectionDisplayed() {
         return this.isElementDisplayed(noInternetConnection);
@@ -183,9 +190,14 @@ public class HomePage extends BasePage {
     public void clickOnTryAgainButton() {
         clickOnElement(tryAgainButton);
     }
-
-    public void clickOnTryAgainButtonInFlillpino() {
-        clickOnElement(tryAgainButtonInFillpino);
+    
+    public HomePage clickOnTryAgainButtonInFlillpino() {
+   	 clickOnElement(tryAgainButtonInFillpino);
+        return this;
+   }
+    
+    public boolean isDownloadingVcPopupDisplayed() {
+        return this.isElementDisplayed(downloadingVcPopup);
     }
 
 }
