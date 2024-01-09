@@ -115,4 +115,6 @@ fileignoreconfig:
     checksum: 5fb2f98fb8a4efeb6b691b8a29e62eba64a99e9b2129bc0af1d11bc56bdfb374
   - filename: screens/Settings/DataBackup.tsx
     checksum: 6f3eaf26a58712b3ddd36dfa49d0d608eb873455ca91374545148c23e36fd43b
+  - filename: shared/constants.ts
+    checksum: 062fb9bc4ba7dc7c91558caee5a4fd41ba748b0dcd108c62b50a2fdd06eaa289
     version: ''

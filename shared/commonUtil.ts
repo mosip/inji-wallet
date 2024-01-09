@@ -2,6 +2,7 @@ import argon2 from 'react-native-argon2';
 import {AnyState} from 'xstate';
 import {getDeviceNameSync} from 'react-native-device-info';
 import {isAndroid} from './constants';
+import {generateSecureRandom} from 'react-native-securerandom';
 
 export const hashData = async (
   data: string,
@@ -10,6 +11,15 @@ export const hashData = async (
 ): Promise<string> => {
   const result = await argon2(data, salt, config);
   return result.rawHash as string;
+};
+
+export const generateRandomString = async () => {
+  const randomBytes = await generateSecureRandom(64);
+  const randomString = randomBytes.reduce(
+    (acc, byte) => acc + byte.toString(16).padStart(2, '0'),
+    '',
+  );
+  return randomString;
 };
 
 export interface Argon2iConfig {

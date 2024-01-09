@@ -63,6 +63,21 @@ export const argon2iConfigForUinVid: Argon2iConfig = {
   mode: 'argon2i',
 };
 
+export const argon2iConfigForBackupFileName: Argon2iConfig = {
+  iterations: 5,
+  memory: 16 * 1024,
+  parallelism: 2,
+  hashLength: 8,
+  mode: 'argon2id',
+};
+export const argon2iConfigForPasswordAndPhoneNumber: Argon2iConfig = {
+  iterations: 60000,
+  memory: 16 * 1024,
+  parallelism: 2,
+  hashLength: 30,
+  mode: 'argon2id',
+};
+
 export const argon2iSalt =
   '1234567891011121314151617181920212223242526272829303132333435363';
 
