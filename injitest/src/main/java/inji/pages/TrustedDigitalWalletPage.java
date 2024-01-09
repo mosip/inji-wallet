@@ -22,18 +22,38 @@ public class TrustedDigitalWalletPage extends BasePage {
     public TrustedDigitalWalletPage(AppiumDriver driver) {
         super(driver);
     }
+    
+    
+    public boolean  verifyLanguageforTrustedDigitalWalletPageLoaded(String language){
+    	String actualText = trustedDigitalWalletText.getText();
 
-    public boolean isTrustedDigitalWalletPageLoaded() {
-        return this.isElementDisplayed(trustedDigitalWalletText);
+    	switch (language) {
+    	case "English":
+    		boolean isHederLoadedInEnglish  = (actualText.equals("Trusted Digital Wallet")==true) ? true : false;
+    		return isHederLoadedInEnglish ;
+    	case "Hindi":
+    		boolean isHederLoadedInHindi  = (actualText.equals("विश्वसनीय डिजिटल वॉलेट")==true) ? true : false;
+    		return isHederLoadedInHindi ;
+    	case "Filipino":
+    		boolean isHederLoadedInFilipino  = (actualText.equals("Pinagkakatiwalaang Digital Wallet")==true) ? true : false;
+    		return isHederLoadedInFilipino ;
+    	case "Tamil":
+    		boolean isHederLoadedInTamil  = (actualText.equals("நம்பகமான டிஜிட்டல் வாலட்")==true) ? true : false;
+    		return isHederLoadedInTamil ;
+    	case "Kannada":
+    		boolean isHederLoadedInKannada  = (actualText.equals("ವಿಶ್ವಾಸಾರ್ಹ ಡಿಜಿಟಲ್ ವಾಲೆಟ್")==true) ? true : false;
+    		return isHederLoadedInKannada ;
+    	}
+    	return false;
     }
 
     public String getTrustedDigitalWalletDescription() {
         return this.getTextFromLocator(trustedDigitalWalletDescription);
     }
 
-    public void clickOnNextButton() {
+    public AppUnlockMethodPage clickOnNextButton() {
         this.clickOnElement(nextButton);
-        new AppUnlockMethodPage(driver);
+        return new AppUnlockMethodPage(driver);
     }
 
 }

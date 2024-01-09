@@ -10,7 +10,7 @@ import static org.testng.Assert.assertTrue;
 
 public class AboutInjiTest extends IosBaseTest {
     @Test
-    public void copyAppId() {
+    public void copyAppId() throws InterruptedException {
     	ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
@@ -41,5 +41,8 @@ public class AboutInjiTest extends IosBaseTest {
         
         aboutInjiPage.clickOnBackButton();
         assertTrue(aboutInjiPage.isCopyTextDisplayed(),"verify if copy text displayed");
+        
+        aboutInjiPage.clickOnClickHereButton();
+        assertTrue(aboutInjiPage.isMosipUrlIsDisplayedInChrome(),"verify if mosip url is displayed in chrome");
     }
 }

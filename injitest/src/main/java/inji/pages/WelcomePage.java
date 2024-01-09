@@ -27,15 +27,34 @@ public class WelcomePage extends BasePage {
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`label == \"Back\"`][1]")
     public WebElement backButton;
 
-
     public WelcomePage(AppiumDriver driver) {
         super(driver);
     }
+    
+    public boolean  verifyLanguageforWelcomePageLoaded(String language){
+    	String actualText = welcomeText.getText();
 
+    	switch (language) {
+    	case "Hindi":
+    		boolean isHederLoadedInHindi  = (actualText.equals("सुरक्षित साझाकरण!")==true) ? true : false;
+    		return isHederLoadedInHindi ;
+    	case "Filipino":
+    		boolean isHederLoadedInFilipino  = (actualText.equals("Ligtas na Pagbabahagi!")==true) ? true : false;
+    		return isHederLoadedInFilipino ;
+    	case "Tamil":
+    		boolean isHederLoadedInTamil  = (actualText.equals("பாதுகாப்பான பகிர்வு!")==true) ? true : false;
+    		return isHederLoadedInTamil ;
+    	case "Kannada":
+    		boolean isHederLoadedInKannada  = (actualText.equals("ಸುರಕ್ಷಿತ ಹಂಚಿಕೆ!")==true) ? true : false;
+    		return isHederLoadedInKannada ;
+    	}
+    	return false;
+    }
+    
     public boolean isWelcomePageLoaded() {
         return this.isElementDisplayed(welcomeText);
     }
-
+    
     public AppUnlockMethodPage clickOnSkipButton() {
         this.clickOnElement(skipButton);
         return new AppUnlockMethodPage(driver);

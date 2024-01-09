@@ -102,6 +102,7 @@ public class PinVcTest extends AndroidBaseTest {
         assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
         ScanPage scanPage=homePage.clickOnScanButton();
         
+        scanPage.acceptPermissionPopupForLocation();
         scanPage.acceptPermissionPopup();
         assertTrue(scanPage.isCameraPageLoaded(), "Verify camera page is displayed");
         assertTrue(scanPage.isFlipCameraClickable(),"Verify if flip camera is enabled");

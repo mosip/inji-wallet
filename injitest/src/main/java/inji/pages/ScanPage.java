@@ -13,7 +13,7 @@ public class ScanPage extends BasePage {
     @AndroidFindBy(accessibility = "camera")
     private WebElement camera;
 
-    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.oplus.wirelesssettings:id/alertTitle\")")
+    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Bluetooth\")")
     private WebElement bluetoothPopUp;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Allow\")")
@@ -23,11 +23,11 @@ public class ScanPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "noShareableVcs")
     private WebElement noShareableCards;
 
-    @AndroidFindBy(accessibility = "flipCameraIcon")
-    private WebElement flipCamera;
+	@AndroidFindBy(accessibility = "flipCameraIcon")
+	private WebElement flipCamera;
 
-    @AndroidFindBy(accessibility = "holdPhoneSteadyMessage")
-    private WebElement holdCameraSteady;
+	@AndroidFindBy(accessibility = "holdPhoneSteadyMessage")
+	 private WebElement holdCameraSteady;
 
     public ScanPage(AppiumDriver driver) {
         super(driver);
@@ -39,6 +39,14 @@ public class ScanPage extends BasePage {
         }
         return this;
     }
+    
+    public ScanPage acceptPermissionPopupForLocation() {
+        if (isElementDisplayed(allowPermissionPopupButton)) {
+            clickOnElement(allowButton);
+        }
+        return this;
+    }
+
 
     public boolean isCameraOpen() {
         return isElementDisplayed(camera);

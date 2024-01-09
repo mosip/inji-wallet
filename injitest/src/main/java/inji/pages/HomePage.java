@@ -62,13 +62,17 @@ public class HomePage extends BasePage {
     @AndroidFindBy(accessibility = "nationalCard")
     @iOSXCUITFindBy(accessibility = "nationalCard")
     private WebElement idTypeValue;
-
+    
     @AndroidFindBy(accessibility = "tryAgain")
     @iOSXCUITFindBy(accessibility = "errorTitle")
     private WebElement tryAgainButton;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Subukan muli\")")
     private WebElement tryAgainButtonInFillpino;
+    
+    @AndroidFindBy(accessibility = "downloadingVcPopup")
+    @iOSXCUITFindBy(accessibility = "Downloading your card, this can take upto 5 minutes")
+    private WebElement downloadingVcPopup;
 
     public HomePage(AppiumDriver driver) {
         super(driver);
@@ -130,25 +134,41 @@ public class HomePage extends BasePage {
     public boolean isPinIconDisplayed() {
         return this.isElementDisplayed(pinIcon);
     }
+    
+    public boolean  verifyLanguageForNoVCDownloadedPageLoaded(String language){
+    	String actualText = bringYourDigitalIdentity.getText();
 
-    public boolean isNoVCDownloaded() {
-        return this.isElementDisplayed(bringYourDigitalIdentity);
+    	switch (language) {
+    	case "English":
+    		boolean isEnglishMatch  = (actualText.equals("Bring your digital identity")==true) ? true : false;
+    		return isEnglishMatch ;
+    	case "Hindi":
+    		boolean isHindiMatch  = (actualText.equals("अपनी डिजिटल आईडी लाओ")==true) ? true : false;
+    		return isHindiMatch ;
+    	case "Filipino":
+    		boolean isFilipinoMatch  = (actualText.equals("Dalhin ang Iyong Digital ID")==true) ? true : false;
+    		return isFilipinoMatch ;
+
+    	}
+    	return false;
     }
 
-    public boolean isNoVCDownloadedInFilipino() {
-        return this.isElementDisplayed(bringYourDigitalIdentity);
-    }
+    public boolean  verifyLanguageForNoInternetConnectionDisplayed(String language){
+    	String actualText = noInternetConnection.getText();
 
-    public boolean isNoInternetConnectionDisplayed() {
-        return this.isElementDisplayed(noInternetConnection);
-    }
+    	switch (language) {
+    	case "English":
+    		boolean isEnglishMatch  = (actualText.equals("No internet connection")==true) ? true : false;
+    		return isEnglishMatch ;
+    	case "Tamil":
+    		boolean isTamilMatch  = (actualText.equals("இணைய இணைப்பு இல்லை")==true) ? true : false;
+    		return isTamilMatch ;
+    	case "Filipino":
+    		boolean isFilipinoMatch  = (actualText.equals("Pakisuri ang iyong koneksyon at subukang muli")==true) ? true : false;
+    		return isFilipinoMatch ;
 
-    public boolean isNoInternetConnectionDisplayedInTamil() {
-        return this.isElementDisplayed(noInternetConnection);
-    }
-
-    public boolean isNoInternetConnectionDisplayedFlillpino() {
-        return this.isElementDisplayed(noInternetConnection);
+    	}
+    	return false;
     }
 
     public ScanPage clickOnScanButton() {
@@ -159,21 +179,27 @@ public class HomePage extends BasePage {
     public boolean isIdTypeDisplayed() {
         return this.isElementDisplayed(idTypeValue);
     }
+    
+    public boolean  verifyLanguageForTryAgainButtonDisplayed(String language){
+    	String actualText = tryAgainButton.getText();
 
-    public boolean isTryAgainButtonDisplayedInFlillpino() {
-        return this.isElementDisplayed(tryAgainButtonInFillpino);
-    }
+    	switch (language) {
+    	case "English":
+    		boolean isEnglishMatch  = (actualText.equals("Try again")==true) ? true : false;
+    		return isEnglishMatch ;
+    	case "Tamil":
+    		boolean isTamilMatch  = (actualText.equals("மீண்டும் முயற்சி செய்")==true) ? true : false;
+    		return isTamilMatch ;
+    	case "Filipino":
+    		boolean isFilipinoMatch  = (actualText.equals("Subukan muli")==true) ? true : false;
+    		return isFilipinoMatch ;
 
-    public boolean isTryAgainButtonDisplayedInTamil() {
-        return this.isElementDisplayed(tryAgainButton);
+    	}
+    	return false;
     }
 
     public boolean isTryAgainButtonNotDisplayedInFlillpino() {
         return this.isElementInvisibleYet(tryAgainButtonInFillpino);
-    }
-
-    public boolean isTryAgainButtonDisplayed() {
-        return this.isElementDisplayed(tryAgainButton);
     }
 
     public boolean isTryAgainButtonNotDisplayed() {
@@ -183,9 +209,9 @@ public class HomePage extends BasePage {
     public void clickOnTryAgainButton() {
         clickOnElement(tryAgainButton);
     }
-
-    public void clickOnTryAgainButtonInFlillpino() {
-        clickOnElement(tryAgainButtonInFillpino);
+    
+    public boolean isDownloadingVcPopupDisplayed() {
+        return this.isElementDisplayed(downloadingVcPopup);
     }
 
 }
