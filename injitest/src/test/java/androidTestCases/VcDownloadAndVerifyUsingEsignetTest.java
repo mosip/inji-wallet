@@ -40,7 +40,7 @@ public class VcDownloadAndVerifyUsingEsignetTest extends AndroidBaseTest {
         assertTrue(addNewCardPage.isIssuerSearchBarDisplayed(), "Verify if issuer search bar displayed");
         addNewCardPage.sendTextInIssuerSearchBar("e-signet");
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        assertTrue(addNewCardPage.isAddNewCardGuideMessageDisplayed(), "Verify if add new card guide message displayed");
+        assertTrue(addNewCardPage.verifyLanguageForAddNewCardGuideMessage("English"), "Verify if add new card guide message displayed");
         assertTrue(addNewCardPage.isDownloadViaEsignetDisplayed(), "Verify if download via uin displayed");
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
 

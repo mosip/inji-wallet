@@ -54,7 +54,7 @@ public class DeletingVcTest extends AndroidBaseTest {
         assertTrue(pleaseConfirmPopupPage.isPleaseConfirmPopupPageLoaded(), "Verify if pop up page is displayed");
 
         pleaseConfirmPopupPage.clickOnConfirmButton();
-        assertTrue(homePage.isNoVCDownloaded(), "Verify if VC is removed");
+        assertTrue(homePage.verifyLanguageForNoVCDownloadedPageLoaded("English"), "Verify if VC is removed");
 
         HistoryPage historyPage = homePage.clickOnHistoryButton();
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");

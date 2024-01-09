@@ -14,7 +14,7 @@ public class RetrieveIdPage extends BasePage {
 	@iOSXCUITFindBy(accessibility = "retreiveIdHeader")
 	private WebElement retrieveIdText;
 
-	@AndroidFindBy(xpath = "//*[contains(@text,'Enter ID')]")
+	@AndroidFindBy(accessibility = "idInputModalIndividualId")
 	@iOSXCUITFindBy(accessibility = "idInputModalIndividualId")
 	private WebElement enterIdTextBox;
 

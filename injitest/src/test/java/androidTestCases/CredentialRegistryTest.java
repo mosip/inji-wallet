@@ -144,7 +144,7 @@ public class CredentialRegistryTest extends AndroidBaseTest {
         credentialRegistryPage.clickOnBackArrow();
         
         AddNewCardPage addNewCardPage = homePage.downloadCard();
-        assertTrue(homePage.isNoInternetConnectionDisplayed(), "Verify if no internet connection is displayed");
+        assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("English"), "Verify if no internet connection is displayed");
 	}
 	
 	@Test
@@ -473,41 +473,30 @@ public class CredentialRegistryTest extends AndroidBaseTest {
         credentialRegistryPage.clickOnBackArrow();
         
         AddNewCardPage addNewCardPage = homePage.downloadCard();
-        assertTrue(homePage.isNoInternetConnectionDisplayed(), "Verify if no internet connection is displayed");
+        assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed(null), "Verify if no internet connection is displayed");
 	}
 	
 	@Test
 	public void downloadAndVerifyVcInInvalidEnvForEsignetInFillpino() throws InterruptedException {
-		UnlockApplicationPage unlockApplicationPage = new UnlockApplicationPage(driver);
-		if (unlockApplicationPage.isUnlockApplicationDisplayed() == false) {
-			ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
-			assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+		ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
-			WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
 
-			assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
-			AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
+        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
 
-			assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
-			SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
+        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
 
-			assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
-			ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"),
-					Target.ANDROID);
+        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
-			assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-			HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
-		} else {
-			HomePage homePage = new HomePage(driver);
-			unlockApplicationPage.clickOnUnlockApplicationButton();
+        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
-			ConfirmPasscode confirmPasscode = new ConfirmPasscode(driver);
-			homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
-		}
-
-		HomePage homePage = new HomePage(driver);
-		assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
-		SettingsPage settingsPage = homePage.clickOnSettingIcon();
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+        SettingsPage settingsPage = homePage.clickOnSettingIcon();
 
         assertTrue(settingsPage.isSettingPageLoaded(), "Verify if setting page is displayed");
         settingsPage.clickOnLanguage().clickOnFilipinoLanguage();
@@ -522,7 +511,7 @@ public class CredentialRegistryTest extends AndroidBaseTest {
         credentialRegistryPage.clickOnBackArrow();
         
         AddNewCardPage addNewCardPage = homePage.downloadCard();
-        assertTrue(homePage.isNoInternetConnectionDisplayedFlillpino(), "Verify if no internet connection is displayed in filipino");
+        assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("Filipino"), "Verify if no internet connection is displayed in filipino");
 	}
 	
 }

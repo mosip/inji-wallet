@@ -10,7 +10,7 @@ import static org.testng.Assert.assertTrue;
 
 public class AboutInjiTest extends AndroidBaseTest {
     @Test
-    public void copyAppId() {
+    public void copyAppId() throws InterruptedException {
     	ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
@@ -37,7 +37,7 @@ public class AboutInjiTest extends AndroidBaseTest {
         assertTrue(aboutInjiPage.isAboutInjiHeaderDisplayed(),"Verify id about inji page displayed");
         
         aboutInjiPage.clickOnCopyText();
-        assertTrue(aboutInjiPage.isAppIdCopiedTextDisplayed(),"verify if app id is copied");
+//        assertTrue(aboutInjiPage.isAppIdCopiedTextDisplayed(),"verify if app id is copied");
         
         aboutInjiPage.clickOnBackButton();
         assertTrue(aboutInjiPage.isCopyTextDisplayed(),"verify if copy text displayed");

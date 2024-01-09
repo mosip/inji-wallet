@@ -38,17 +38,17 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
-        assertTrue(homePage.isNoInternetConnectionDisplayed(), "Verify if no internet connection is displayed");
-        assertTrue(homePage.isTryAgainButtonDisplayed(), "Verify if Try again button displayed");
+        assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("English"), "Verify if no internet connection is displayed");
+        assertTrue(homePage.verifyLanguageForTryAgainButtonDisplayed("English"), "Verify if Try again button displayed");
         AndroidUtil.disableAirplaneMode();
         
-        assertTrue(homePage.isTryAgainButtonDisplayed(), "Verify if Try again button displayed");
+        assertTrue(homePage.verifyLanguageForTryAgainButtonDisplayed("English"), "Verify if Try again button displayed");
 
         homePage.clickOnTryAgainButton();
-        assertTrue(homePage.isTryAgainButtonDisplayed(), "Verify if Try again button displayed");
+        assertTrue(homePage.verifyLanguageForTryAgainButtonDisplayed("English"), "Verify if Try again button displayed");
 
         addNewCardPage.clickOnBack();
-        assertTrue(homePage.isNoVCDownloaded(), "Verify if VC is removed");
+        assertTrue(homePage.verifyLanguageForNoVCDownloadedPageLoaded("English"), "Verify if VC is removed");
     }
 
     @Test
@@ -240,7 +240,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         pleaseConfirmPopupPage.clickOnConfirmButton();
 
         AndroidUtil.disableAirplaneMode();
-        assertTrue(homePage.isNoVCDownloaded(), "Verify if VC is removed");
+        assertTrue(homePage.verifyLanguageForNoVCDownloadedPageLoaded("English"), "Verify if VC is removed");
     }
     
     @Test
@@ -344,8 +344,8 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         
-        assertTrue(homePage.isNoInternetConnectionDisplayed(), "Verify if no internet connection is displayed");
-        assertTrue(homePage.isTryAgainButtonDisplayed(), "Verify if try again button displayed");
+        assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("English"), "Verify if no internet connection is displayed");
+        assertTrue(homePage.verifyLanguageForTryAgainButtonDisplayed("English"), "Verify if try again button displayed");
 
         AndroidUtil.disableAirplaneMode();
         assertTrue(homePage.isTryAgainButtonNotDisplayed(), "Wating for network come online");
@@ -377,8 +377,8 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
-        assertTrue(homePage.isNoInternetConnectionDisplayed(), "Verify if no internet connection is displayed");
-        assertTrue(homePage.isTryAgainButtonDisplayed(), "Verify if Try again button displayed");
+        assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("English"), "Verify if no internet connection is displayed");
+        assertTrue(homePage.verifyLanguageForTryAgainButtonDisplayed("English"), "Verify if Try again button displayed");
         AndroidUtil.disableAirplaneMode();
         
         homePage.clickOnTryAgainButton();
@@ -388,7 +388,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
         
         addNewCardPage.clickOnBack();
-        assertTrue(homePage.isNoVCDownloaded(), "Verify if VC is removed");
+        assertTrue(homePage.verifyLanguageForNoVCDownloadedPageLoaded("English"), "Verify if VC is removed");
     }
     
     @Test
@@ -431,7 +431,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         assertTrue(esignetLoginPage.isProgressingLogoDisplayed(),"verify if Progressing page is displayed");
         AndroidUtil.enableAirplaneMode();
         
-        assertTrue(homePage.isNoInternetConnectionDisplayed(), "Verify if no internet connection is displayed");
+        assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("English"), "Verify if no internet connection is displayed");
         addNewCardPage.clickOnBack();
         
         AndroidUtil.disableAirplaneMode();
@@ -577,17 +577,17 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
-        assertTrue(homePage.isNoInternetConnectionDisplayedFlillpino(), "Verify if no internet connection is displayed in flillpino");
-        assertTrue(homePage.isTryAgainButtonDisplayedInFlillpino(), "Verify if Try again button displayed in flillpino");
+        assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("Filipino"), "Verify if no internet connection is displayed in flillpino");
+        assertTrue(homePage.verifyLanguageForTryAgainButtonDisplayed("Filipino"), "Verify if Try again button displayed in flillpino");
         
         addNewCardPage.isBackButtonDisplayed();
         AndroidUtil.disableAirplaneMode();
         
-         homePage.clickOnTryAgainButtonInFlillpino();
+         homePage.clickOnTryAgainButton();
          assertTrue(homePage.isTryAgainButtonNotDisplayedInFlillpino(), "Verify if Try again button displayed");
 //        
-        homePage.clickOnTryAgainButtonInFlillpino();
-        assertTrue(addNewCardPage.isAddNewCardGuideMessageDisplayedInFillopin(), "Verify if add new card page guide is displayed in fillpino");
+        homePage.clickOnTryAgainButton();
+        assertTrue(addNewCardPage.verifyLanguageForAddNewCardGuideMessage("Filipino"), "Verify if add new card page guide is displayed in fillpino");
 //        
        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
        assertTrue(esignetLoginPage.isEsignetLoginPageDisplayed(), "Verify if esignet login page displayed");
@@ -635,8 +635,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         settingsPage.clickOnBackArrow();
         
         homePage.downloadCard();
-        assertTrue(homePage.isNoInternetConnectionDisplayed(), "Verify if no internet connection is displayed");
-        assertTrue(homePage.isNoInternetConnectionDisplayedInTamil(), "Verify if try again in tamil is displayed");
+        assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("Tamil"), "Verify if try again in tamil is displayed");
     }
     
 }

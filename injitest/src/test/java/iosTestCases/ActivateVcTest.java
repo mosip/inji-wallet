@@ -80,7 +80,7 @@ public class ActivateVcTest extends IosBaseTest {
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
 
-        assertTrue(homePage.isNoVCDownloaded(), "Verify if no VC is downloaded");
+        assertTrue(homePage.verifyLanguageForNoVCDownloadedPageLoaded("English"), "Verify if no VC is downloaded");
 
         HistoryPage historyPage = homePage.clickOnHistoryButton();
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");

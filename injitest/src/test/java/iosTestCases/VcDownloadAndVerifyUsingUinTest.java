@@ -267,6 +267,6 @@ public class VcDownloadAndVerifyUsingUinTest extends IosBaseTest {
         otpVerification.clickOnCrossIcon();
         assertTrue(otpVerification.confirmPopupHeaderDisplayed(), "Verify if comfirm popup displayed");
         otpVerification.clickOnCancelPopupButton();
-        assertTrue(homePage.isNoVCDownloaded(), "Verify if VC is removed");
+        assertTrue(homePage.verifyLanguageForNoVCDownloadedPageLoaded("English"), "Verify if VC is removed");
     }
 }

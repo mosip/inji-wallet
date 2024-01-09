@@ -65,7 +65,7 @@ public class DriverManager {
     public static void startAppiumServer() {
         PropertiesReader propertiesReader = new PropertiesReader();
         String ipAddress = System.getProperty("ipAddress") != null ? System.getProperty("ipAddress") : propertiesReader.getIpAddress();
-        AppiumServiceBuilder builder = new AppiumServiceBuilder().withAppiumJS(new File(propertiesReader.getAppiumServerExecutable())).usingDriverExecutable(new File(propertiesReader.getNodePath())).withIPAddress(ipAddress).usingAnyFreePort().withArgument(GeneralServerFlag.LOCAL_TIMEZONE).withLogFile(new File(propertiesReader.getAppiumLogFilePath()));
+        AppiumServiceBuilder builder = new AppiumServiceBuilder().withAppiumJS(new File(propertiesReader.getAppiumServerExecutable())).usingDriverExecutable(new File(propertiesReader.getNodePath())).withIPAddress(ipAddress).usingAnyFreePort().withArgument(GeneralServerFlag.LOCAL_TIMEZONE).withArgument(() -> "--allow-insecure","chromedriver_autodownload").withLogFile(new File(propertiesReader.getAppiumLogFilePath()));
         service = AppiumDriverLocalService.buildService(builder);
         service.start();
     }

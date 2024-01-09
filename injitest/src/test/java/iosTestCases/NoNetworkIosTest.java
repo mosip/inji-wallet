@@ -36,17 +36,17 @@ public class NoNetworkIosTest extends IosBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
-        assertTrue(homePage.isNoInternetConnectionDisplayed(), "Verify if no internet connection is displayed");
-        assertTrue(homePage.isTryAgainButtonDisplayed(), "Verify if Try again button displayed");
+        assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("English"), "Verify if no internet connection is displayed");
+        assertTrue(homePage.verifyLanguageForTryAgainButtonDisplayed("English"), "Verify if Try again button displayed");
         AndroidUtil.disableAirplaneMode();
         
-        assertTrue(homePage.isTryAgainButtonDisplayed(), "Verify if Try again button displayed");
+        assertTrue(homePage.verifyLanguageForTryAgainButtonDisplayed("English"), "Verify if Try again button displayed");
 
         homePage.clickOnTryAgainButton();
-        assertTrue(homePage.isTryAgainButtonDisplayed(), "Verify if Try again button displayed");
+        assertTrue(homePage.verifyLanguageForTryAgainButtonDisplayed("English"), "Verify if Try again button displayed");
 
         addNewCardPage.clickOnBack();
-        assertTrue(homePage.isNoVCDownloaded(), "Verify if VC is removed");
+        assertTrue(homePage.verifyLanguageForNoVCDownloadedPageLoaded("English"), "Verify if VC is removed");
     }
 
     @Test
@@ -238,7 +238,7 @@ public class NoNetworkIosTest extends IosBaseTest {
         pleaseConfirmPopupPage.clickOnConfirmButton();
 
         AndroidUtil.disableAirplaneMode();
-        assertTrue(homePage.isNoVCDownloaded(), "Verify if VC is removed");
+        assertTrue(homePage.verifyLanguageForNoVCDownloadedPageLoaded("English"), "Verify if VC is removed");
     }
     
     @Test
@@ -340,8 +340,8 @@ public class NoNetworkIosTest extends IosBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
-        assertTrue(homePage.isNoInternetConnectionDisplayed(), "Verify if no internet connection is displayed");
-        assertTrue(homePage.isTryAgainButtonDisplayed(), "Verify if try again button displayed");
+        assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("English"), "Verify if no internet connection is displayed");
+        assertTrue(homePage.verifyLanguageForTryAgainButtonDisplayed("English"), "Verify if try again button displayed");
 
         AndroidUtil.disableAirplaneMode();
         assertTrue(homePage.isTryAgainButtonNotDisplayed(), "Wating for network come online");

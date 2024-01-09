@@ -4,6 +4,7 @@ import BaseTest.AndroidBaseTest;
 import inji.api.BaseTestCase;
 import inji.constants.Target;
 import inji.pages.*;
+import inji.utils.AndroidUtil;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
@@ -13,7 +14,7 @@ import static org.testng.Assert.*;
 
 public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
     @Test
-    public void downloadAndVerifyVcUsingUin() {
+    public void downloadAndVerifyVcUsingUin() throws InterruptedException {
         ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
 
         assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
@@ -21,7 +22,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
 
         assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
         AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
-
+        
         assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
         SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
 
@@ -50,7 +51,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         assertTrue(homePage.isDownloadingVcPopupDisplayed(),"verify downloading vc popup displayed");
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         assertTrue(homePage.isIdTypeDisplayed(), "Verify if id type is displayed");
-
+        
         DetailedVcViewPage detailedVcViewPage = homePage.openDetailedVcView(TestDataReader.readData("fullName"));
         detailedVcViewPage.clickOnQrCodeButton();
         assertTrue(detailedVcViewPage.isQrCodeDisplayed(), "Verify if QR Code header is displayed");
@@ -268,6 +269,6 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         otpVerification.clickOnCrossIcon();
         assertTrue(otpVerification.confirmPopupHeaderDisplayed(), "Verify if comfirm popup displayed");
         otpVerification.clickOnCancelPopupButton();
-        assertTrue(homePage.isNoVCDownloaded(), "Verify if VC is removed");
+        assertTrue(homePage.verifyLanguageForNoVCDownloadedPageLoaded("English"), "Verify if VC is removed");
     }
 }

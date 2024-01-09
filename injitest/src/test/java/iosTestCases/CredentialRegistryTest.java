@@ -143,7 +143,7 @@ public class CredentialRegistryTest extends IosBaseTest {
         credentialRegistryPage.clickOnBackArrow();
         
         AddNewCardPage addNewCardPage = homePage.downloadCard();
-        assertTrue(homePage.isNoInternetConnectionDisplayed(), "Verify if no internet connection is displayed");
+        assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("English"), "Verify if no internet connection is displayed");
 	}
 	
 	@Test
@@ -472,7 +472,7 @@ public class CredentialRegistryTest extends IosBaseTest {
         credentialRegistryPage.clickOnBackArrow();
         
         AddNewCardPage addNewCardPage = homePage.downloadCard();
-        assertTrue(homePage.isNoInternetConnectionDisplayed(), "Verify if no internet connection is displayed");
+        assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("English"), "Verify if no internet connection is displayed");
 	}
 	
 	@Test
@@ -521,7 +521,7 @@ public class CredentialRegistryTest extends IosBaseTest {
         credentialRegistryPage.clickOnBackArrow();
         
         AddNewCardPage addNewCardPage = homePage.downloadCard();
-        assertTrue(homePage.isNoInternetConnectionDisplayedFlillpino(), "Verify if no internet connection is displayed in filipino");
+        assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("Filipino"), "Verify if no internet connection is displayed in filipino");
 	}
 	
 }

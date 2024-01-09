@@ -47,12 +47,9 @@ public class DetailedVcViewPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "emailIdValue")
     private WebElement emailIdValue;
 
-    @AndroidFindBy(accessibility = "enableVerification")
+    @AndroidFindBy(uiAutomator = "new UiScrollable(new UiSelector()).scrollIntoView(new UiSelector().description(\"enableVerification\"));")
     @iOSXCUITFindBy(accessibility = "enableVerification")
     private WebElement activateButton;
-    
-    @AndroidFindBy(uiAutomator = "new UiScrollable(new UiSelector()).scrollIntoView(text(\"Activate\"));")
-    private WebElement scrollActivateButton;
     
     @AndroidFindBy(accessibility = "profileAuthenticated")
     @iOSXCUITFindBy(accessibility = "profileAuthenticated")
@@ -135,8 +132,8 @@ public class DetailedVcViewPage extends BasePage{
     }
 
     public PleaseConfirmPopupPage clickOnActivateButton(){
-    	scrollActivateButton.isDisplayed();
         clickOnElement(activateButton);
+    	
         return new PleaseConfirmPopupPage(driver);
     }
 

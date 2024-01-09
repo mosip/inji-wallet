@@ -1,8 +1,11 @@
 package inji.pages;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
+
+import java.util.Set;
 
 import org.openqa.selenium.WebElement;
 
@@ -45,8 +48,19 @@ public class AboutInjiPage extends BasePage {
         return this.isElementDisplayed(copy);
     }
     
-    public boolean isWebViewDisplayed() {
-        return this.isElementDisplayed(WebView);
+    public boolean isWebViewDisplayed() throws InterruptedException {
+    	Thread.sleep(5000);
+    	Set<String> contexts = ((AndroidDriver) driver).getContextHandles();
+    	String actualUrl=null;
+    	 for (String context : contexts) {
+    	              if (context.contains("WEBVIEW"))
+    	              {
+    	             ((AndroidDriver) driver).context(context);
+    	             actualUrl= driver.getCurrentUrl();
+    	              }
+    	 }
+    	 boolean result = (actualUrl.equalsIgnoreCase("https://docs.mosip.io/inji")  == true) ? true : false;
+        return result;
     }
 
     public void clickOnCopyText() {

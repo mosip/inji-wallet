@@ -25,18 +25,19 @@ public class SettingsPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "languageTitle")
     private WebElement languageButton;
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'Filipino')]")
+    @AndroidFindBy(accessibility = "fil")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Filipino\"`]")
     private WebElement filipinoLanguageButton;
     
-    @AndroidFindBy(xpath = "//*[contains(@text,'हिंदी')]")
+    @AndroidFindBy(accessibility = "hi")
+    @iOSXCUITFindBy(accessibility = "हिंदी")
     private WebElement hindiLanguageButton;
     
-    @AndroidFindBy(xpath = "//*[contains(@text,'தமிழ்')]")
+    @AndroidFindBy(accessibility = "ta")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"தமிழ்\"`]")
     private WebElement tamilLanguageButton;
     
-    @AndroidFindBy(xpath = "//*[contains(@text,'ಕನ್ನಡ')]")
+    @AndroidFindBy(accessibility = "kn")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"தமிழ்\"`]")
     private WebElement kannadaLanguageButton;
 
