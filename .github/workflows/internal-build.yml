@@ -155,12 +155,11 @@ jobs:
     needs: sonar-check
     name: Check critical issues in sonar analysis
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: scripts
     steps:
       - name: Check for critical bugs
-        run: ./check-sonar-critical-issues.sh
+        run: |
+          cd scripts
+          ./check-sonar-critical-issues.sh
       - uses: 8398a7/action-slack@v3
         if: failure()
         with:

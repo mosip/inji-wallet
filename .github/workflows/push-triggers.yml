@@ -53,7 +53,6 @@ jobs:
       ORG_KEY: ${{ secrets.ORG_KEY }}
       SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK_INJI_TEAM }}'
 
-#          sonar check for critical issues is analyzed only for newly created issues. Once the existing critical issues ( use createdBefore=2024-01-04 search) are resolved, this createdAfter can be removed
   check-sonar-critical-issues:
     needs: sonar-check-on-push
     name: Check critical issues in sonar analysis
@@ -61,19 +60,12 @@ jobs:
     steps:
       - name: Check for critical bugs
         run: |
-          SONAR_HOST_URL=https://sonarcloud.io
-          SONAR_PROJECT_KEY=mosip_inji
-
-          response=$(curl -s "${SONAR_HOST_URL}/api/issues/search?componentKeys=${SONAR_PROJECT_KEY}&severities=CRITICAL&statuses=OPEN&createdAfter=2024-01-04")
-
-          echo "The response is $response"
-
-          issues_count=$(echo "$response" | jq '.issues | length')
-          echo "The number of issues $issues_count"
-
-          if [ "$issues_count" -eq 0 ]; then
-              echo "No critical issues found."
-          else
-              echo "Critical issues found. Failing the pipeline"
-              exit 1
-          fi
+          cd scripts
+          ./check-sonar-critical-issues.sh
+      - uses: 8398a7/action-slack@v3
+        if: failure()
+        with:
+          status: ${{ job.status }}
+          fields: repo,message,author,commit,workflow,job
+        env:
+          SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK_INJI_TEAM }}'
