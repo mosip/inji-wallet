@@ -86,7 +86,7 @@ fileignoreconfig:
   - filename: assets/Flip_Camera_Icon.svg
     checksum: 736b5a7ddb86bd4376229ce198dbf8a663e7ac89fc3311bd4f19afd4a2b36ffd
   - filename: ios/fastlane/Fastfile
-    checksum: 086080bc7a04accf5094c457b5acf84d9fec5d7dfa72eaaaf02e433ecf4f996b    
+    checksum: 086080bc7a04accf5094c457b5acf84d9fec5d7dfa72eaaaf02e433ecf4f996b
   - filename: assets/Finger_Print_Icon.svg
     checksum: 776d4fe4fc4b54d185ccf97daf0511b9fe2c0e0f7c1a809047020e5e8a100db6
   - filename: android/app/build.gradle
@@ -102,5 +102,17 @@ fileignoreconfig:
   - filename: assets/Issuer_search_clearing_button.svg
     checksum: f4e8a054fc4168e08bc9e9fe3e644cebabacdfc31ef0cbe36dd281766f47df5e
   - filename: screens/Home/MyVcs/IdInputModal.tsx
-    checksum: 7ee46d8ef4761c0e9b59f3e602e6e30be5f47221817c819e91ab10ca2203089f 
-    version: ""
+    checksum: 7ee46d8ef4761c0e9b59f3e602e6e30be5f47221817c819e91ab10ca2203089f
+  - filename: .env
+    checksum: d28aeb5131b94e39fba32694853b2a7ffab01dc74ecf432fd140827fab8c8c54
+  - filename: machines/backup.ts
+    checksum: 49cbc4aaa39ef2a08aa280e2d80298564fec541b17fd517c0cf53ed2725e3269
+  - filename: machines/backup.typegen.ts
+    checksum: 8419efdbd712174cf0d0766d0b5398da117276a517e196f886a9f07821bb255b
+  - filename: screens/Settings/BackupController.tsx
+    checksum: 054665c377b4a8e246ae1bfb419ab86d0cb1c120ae92cdc27ceed9cf1f39679b
+  - filename: screens/Settings/BackupViaPassword.tsx
+    checksum: 5fb2f98fb8a4efeb6b691b8a29e62eba64a99e9b2129bc0af1d11bc56bdfb374
+  - filename: screens/Settings/DataBackup.tsx
+    checksum: 6f3eaf26a58712b3ddd36dfa49d0d608eb873455ca91374545148c23e36fd43b
+    version: ''
