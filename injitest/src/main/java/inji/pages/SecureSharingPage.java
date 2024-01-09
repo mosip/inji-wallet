@@ -7,15 +7,15 @@ import org.openqa.selenium.WebElement;
 
 public class SecureSharingPage extends BasePage {
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'Secure Sharing')]")
+    @AndroidFindBy(accessibility = "introTitle")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Secure Sharing\"`]")
     private WebElement secureSharingText;
 
-    @AndroidFindBy(xpath = "(//*[@class='android.widget.TextView'])[3]")
+    @AndroidFindBy(accessibility = "introText")
     @iOSXCUITFindBy(xpath = "//*[contains(@value,'Share your cards')]")
     private WebElement secureSharingDescription;
 
-    @AndroidFindBy(xpath = "//*[@text='Next']")
+    @AndroidFindBy(accessibility = "next")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"Next\"`][4]")
     private WebElement nextButton;
 
@@ -24,15 +24,15 @@ public class SecureSharingPage extends BasePage {
     }
 
     public boolean isSecureSharingPageLoaded() {
-        return this.isElementDisplayed(secureSharingText, "Secure sharing page");
+        return this.isElementDisplayed(secureSharingText);
     }
 
     public String getSecureSharingDescription() {
         return this.getTextFromLocator(secureSharingDescription);
     }
 
-    public AppUnlockMethodPage clickOnNextButton() {
+    public void clickOnNextButton() {
         this.clickOnElement(nextButton);
-        return new AppUnlockMethodPage(driver);
+        new AppUnlockMethodPage(driver);
     }
 }

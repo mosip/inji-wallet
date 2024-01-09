@@ -1,6 +1,6 @@
 import React from 'react';
-import {StyleProp, TextStyle, Text as RNText} from 'react-native';
-import {Theme, Spacing} from './styleUtils';
+import {StyleProp, Text as RNText, TextStyle} from 'react-native';
+import {Spacing, Theme} from './styleUtils';
 import testIDProps from '../../shared/commonUtil';
 
 export const Text: React.FC<TextProps> = (props: TextProps) => {
@@ -21,6 +21,7 @@ export const Text: React.FC<TextProps> = (props: TextProps) => {
       {...testIDProps(props.testID)}
       style={textStyles}
       numberOfLines={props.numLines}
+      ellipsizeMode={props.ellipsizeMode}
       accessible={props.accessible}>
       {props.children}
     </RNText>
@@ -37,6 +38,7 @@ interface TextProps {
   size?: 'small' | 'extraSmall' | 'smaller' | 'regular' | 'large';
   lineHeight?: number;
   numLines?: number;
+  ellipsizeMode?: 'head' | 'middle' | 'tail' | 'clip' | undefined;
   style?: StyleProp<TextStyle>;
   accessible?: boolean | true;
 }

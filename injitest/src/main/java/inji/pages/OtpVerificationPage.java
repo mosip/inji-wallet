@@ -1,19 +1,19 @@
 package inji.pages;
 
+import inji.constants.Target;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
-import inji.constants.Target;
 import org.openqa.selenium.WebElement;
 
 public class OtpVerificationPage extends BasePage {
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'OTP Verification')]")
-    @iOSXCUITFindBy(accessibility = "OTP Verification")
+    @AndroidFindBy(accessibility = "otpVerificationHeader")
+    @iOSXCUITFindBy(accessibility = "otpVerificationHeader")
     private WebElement otpVerificationText;
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'OTP is invalid')]")
-    @iOSXCUITFindBy(accessibility = "OTP is invalid")
+    @AndroidFindBy(accessibility = "otpVerificationError")
+    @iOSXCUITFindBy(accessibility = "otpVerificationError")
     private WebElement invalidOtpMessage;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Something is wrong. Please try again later!')]")
@@ -21,22 +21,39 @@ public class OtpVerificationPage extends BasePage {
     private WebElement invalidOtpMessageInVcActivation;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Cancel')]")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`label == \"Cancel\"`]")
+    @iOSXCUITFindBy(accessibility = "cancel")
     private WebElement cancelButton;
 
     @AndroidFindBy(accessibility = "close")
     @iOSXCUITFindBy(accessibility = "close")
     private WebElement crossIcon;
-    
+
+    @AndroidFindBy(accessibility = "cancel")
+    @iOSXCUITFindBy(accessibility = "cancel")
+    private WebElement cancelPopupButton;
+
+    @AndroidFindBy(accessibility = "otpVerificationTimer")
+    @iOSXCUITFindBy(accessibility = "otpVerificationTimer")
+    private WebElement otpVerificationTimer;
+
+    @AndroidFindBy(accessibility = "confirmationPopupHeader")
+    @iOSXCUITFindBy(accessibility = "confirmationPopupHeader")
+    private WebElement confirmationPopupHeader;
+
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"VID not available in database\")")
-	  private WebElement vidNotAvailableMessage;
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"VID not available in database\"`]")
+    private WebElement vidNotAvailableMessage;
+
+    @AndroidFindBy(accessibility = "resendCode")
+    @iOSXCUITFindBy(accessibility = "resendCode")
+    private WebElement resendCodeButton;
 
     public OtpVerificationPage(AppiumDriver driver) {
         super(driver);
     }
 
     public boolean isOtpVerificationPageLoaded() {
-        return this.isElementDisplayed(otpVerificationText, "Otp verification page");
+        return this.isElementDisplayed(otpVerificationText);
     }
 
     public HomePage enterOtp(String otp, Target os) {
@@ -44,7 +61,7 @@ public class OtpVerificationPage extends BasePage {
         setPasscode.enterPasscode(otp, os);
         return new HomePage(driver);
     }
-    
+
     public HomePage enterOtpForEsignet(String otp, Target os) {
         SetPasscode setPasscode = new SetPasscode(driver);
         setPasscode.enterPasscodeForEsignet(otp, os);
@@ -52,26 +69,48 @@ public class OtpVerificationPage extends BasePage {
     }
 
     public boolean invalidOtpMessageDisplayed() {
-        return this.isElementDisplayed(invalidOtpMessage, "OTP is invalid");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return this.isElementDisplayed(invalidOtpMessage);
     }
 
     public boolean somethingWetWrongInVcActivationDisplayed() {
-        return this.isElementDisplayed(invalidOtpMessageInVcActivation, "Something is wrong. Please try again later!");
+        return this.isElementDisplayed(invalidOtpMessageInVcActivation);
     }
 
     public boolean isCancelButtonDisplayed() {
-        return this.isElementDisplayed(cancelButton, "Cancel button");
+        return this.isElementDisplayed(cancelButton);
     }
 
-    public MoreOptionsPage clickOnCancelButton(){
+    public MoreOptionsPage clickOnCancelButton() {
         clickOnElement(cancelButton);
         return new MoreOptionsPage(driver);
     }
-    public void clickOnCrossIcon(){
+
+    public void clickOnCrossIcon() {
         clickOnElement(crossIcon);
     }
-    
+
+    public void clickOnCancelPopupButton() {
+        clickOnElement(cancelPopupButton);
+    }
+
     public boolean vidNotAvailableDisplayed() {
-        return this.isElementDisplayed(vidNotAvailableMessage, "VID not available in database");
+        return this.isElementDisplayed(vidNotAvailableMessage);
+    }
+
+    public boolean verifyResendCodeButtonDisplayed() {
+        return this.isElementDisplayed(resendCodeButton);
+    }
+
+    public boolean confirmPopupHeaderDisplayed() {
+        return this.isElementDisplayed(confirmationPopupHeader);
+    }
+
+    public boolean verifyOtpVerificationTimerCompleted() {
+        return this.WaitTillElementVisible(otpVerificationTimer, 180);
     }
 }

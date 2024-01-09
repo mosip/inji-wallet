@@ -11,16 +11,28 @@ public class UnlockApplicationPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "unlockApplication")
     private WebElement unlockApplicationButton;
 
+    @AndroidFindBy(accessibility = "unlockApplication")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`label == \"فتح التطبيق\"`]")
+    private WebElement unlockApplicationButtonInArabic;
+
     public UnlockApplicationPage(AppiumDriver driver) {
         super(driver);
     }
 
     public boolean isUnlockApplicationPageLoaded() {
-        return this.isElementDisplayed(unlockApplicationButton, "Unlock application page");
+        return this.isElementDisplayed(unlockApplicationButton);
+    }
+
+    public boolean isUnlockApplicationPageLoadedInArabic() {
+        return this.isElementDisplayed(unlockApplicationButtonInArabic);
     }
 
     public EnterYourPasscodePage clickOnUnlockApplicationButton() {
         clickOnElement(unlockApplicationButton);
         return new EnterYourPasscodePage(driver);
+    }
+
+    public boolean isUnlockApplicationDisplayed() {
+        return this.isElementDisplayed(unlockApplicationButton, 5);
     }
 }

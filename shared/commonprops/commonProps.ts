@@ -24,7 +24,7 @@ export default async function getAllConfigurations(
 export async function downloadModel() {
   try {
     console.log('restart Face model init');
-    var injiProp = await getAllConfigurations();
+    const injiProp = await getAllConfigurations();
     const maxRetryStr = injiProp.modelDownloadMaxRetry;
     const maxRetry = parseInt(maxRetryStr);
     const resp: string = injiProp != null ? injiProp.faceSdkModelUrl : null;
@@ -32,7 +32,7 @@ export async function downloadModel() {
     if (resp != null) {
       for (let counter = 0; counter < maxRetry; counter++) {
         let config = faceMatchConfig(resp);
-        var result = await configure(config);
+        const result = await configure(config);
         console.log('model download result is = ' + result);
         if (result) {
           sendImpressionEvent(

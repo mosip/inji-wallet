@@ -71,7 +71,7 @@ export const SettingScreen: React.FC<
       <Modal
         testID="settingsScreen"
         isVisible={controller.isVisible}
-        arrowLeft={<Icon name={''} />}
+        arrowLeft={true}
         headerTitle={t('header')}
         headerElevation={2}
         onDismiss={controller.TOGGLE_SETTINGS}>

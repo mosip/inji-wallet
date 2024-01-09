@@ -15,24 +15,38 @@ public class AddNewCardPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "issuerHeading-Mosip")
     private WebElement downloadViaUin;
     
-    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"iconIcon\")")
+    @AndroidFindBy(accessibility = "goBack")
+    @iOSXCUITFindBy(accessibility = "goBack")
     private WebElement backButton;
     
     @AndroidFindBy(accessibility = "issuer-ESignet")
+    @iOSXCUITFindBy(accessibility = "issuerHeading-ESignet")
     private WebElement downloadViaEsignet;
-    
-    @AndroidFindBy(accessibility = "goBack")
-    private WebElement gobackButton;
     
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Please choose your preferred issuer from the options below to add a new card.\")")
     private WebElement addNewCardGuideMessage;
+    
+    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.\")")
+    private WebElement addNewCardGuideMessageInFillpino;
+    
+    @AndroidFindBy(accessibility = "issuerDescription-Mosip")
+    @iOSXCUITFindBy(accessibility = "issuerDescription-Mosip")
+    private WebElement issuerDescriptionMosip;
+    
+    @AndroidFindBy(accessibility = "issuerDescription-ESignet")
+    @iOSXCUITFindBy(accessibility = "issuerDescription-ESignet")
+    private WebElement issuerDescriptionEsignet;
+    
+    @AndroidFindBy(className = "android.widget.EditText")
+    @iOSXCUITFindBy(accessibility = "issuerSearchBar")
+    private WebElement issuerSearchBar;
     
     public AddNewCardPage(AppiumDriver driver) {
         super(driver);
     }
 
     public boolean isAddNewCardPageLoaded() {
-        return this.isElementDisplayed(addNewCardHeader, "Home page");
+        return this.isElementDisplayed(addNewCardHeader);
     }
 
     public RetrieveIdPage clickOnDownloadViaUin(){
@@ -40,25 +54,58 @@ public class AddNewCardPage extends BasePage{
         return new RetrieveIdPage(driver);
     }
     
-    public AddNewCardPage clickOnBack() {
+    public void clickOnBack() {
     	clickOnElement(backButton);
-		return this;
     }
     
     public boolean isAddNewCardGuideMessageDisplayed() {
-        return this.isElementDisplayed(addNewCardGuideMessage, "Please choose your preferred issuer from the options below to add a new card.");
+        return this.isElementDisplayed(addNewCardGuideMessage);
     }
     
     public boolean isDownloadViaUinDisplayed() {
-        return this.isElementDisplayed(downloadViaUin, "Download via UIN, VID, AID");
+        return this.isElementDisplayed(downloadViaUin);
     }
     
     public boolean isDownloadViaEsignetDisplayed() {
-        return this.isElementDisplayed(downloadViaEsignet, "Download via e-Signet");
+        return this.isElementDisplayed(downloadViaEsignet);
+    }
+    
+    public boolean isDownloadViaEsignetDisplayedinFillpino() {
+        return this.isElementDisplayed(downloadViaEsignet);
     }
     
     public EsignetLoginPage clickOnDownloadViaEsignet(){
         clickOnElement(downloadViaEsignet);
         return new EsignetLoginPage(driver);
     }
+    
+    public void isBackButtonDisplayed() {
+        backButton.isDisplayed();
+    }
+    
+    public boolean isAddNewCardGuideMessageDisplayedInFillopin() {
+        return this.isElementDisplayed(addNewCardGuideMessageInFillpino);
+    }
+    
+    public boolean isIssuerDescriptionMosipDisplayed() {
+        return this.isElementDisplayed(issuerDescriptionMosip);
+    }
+    
+    public boolean isIssuerDescriptionEsignetDisplayed() {
+        return this.isElementDisplayed(issuerDescriptionEsignet);
+    }
+    
+    public boolean isIssuerSearchBarDisplayed() {
+    	return this.isElementDisplayed(issuerSearchBar);
+    }
+    
+    public boolean isIssuerSearchBarDisplayedInFilipino() {
+    	return this.isElementDisplayed(issuerSearchBar);
+    }
+    
+    public void sendTextInIssuerSearchBar(String text) {
+    	clearTextBoxAndSendKeys(issuerSearchBar,text);
+    }
+
+
 }

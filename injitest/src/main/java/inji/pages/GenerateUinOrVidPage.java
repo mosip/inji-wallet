@@ -11,11 +11,11 @@ public class GenerateUinOrVidPage extends BasePage {
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Retrieve your UIN/VID\"`]")
     private WebElement retrieveUinVidText;
 
-    @AndroidFindBy(className = "android.widget.EditText")
-    @iOSXCUITFindBy(accessibility = "RNE__Input__text-input")
+    @AndroidFindBy(accessibility = "getIdInputModalIndividualId")
+    @iOSXCUITFindBy(accessibility = "getIdInput")
     private WebElement applicationIdTextBox;
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'Get UIN/VID')]")
+    @AndroidFindBy(accessibility = "getIdButton")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`label == \"Get UIN/VID\"`]")
     private WebElement getUinOrVidButton;
 
@@ -24,11 +24,11 @@ public class GenerateUinOrVidPage extends BasePage {
     }
 
     public boolean isGenerateUinOrVidPageLoaded() {
-        return this.isElementDisplayed(retrieveUinVidText, "Retrieve your UIN/VID page");
+        return this.isElementDisplayed(retrieveUinVidText);
     }
 
     public GenerateUinOrVidPage enterApplicationID(String applicationId) {
-        sendKeysToTextBox(applicationIdTextBox, applicationId, "application textbox");
+        sendKeysToTextBox(applicationIdTextBox, applicationId);
         return this;
     }
 

@@ -22,8 +22,9 @@ public class WelcomePage extends BasePage {
     @AndroidFindBy(accessibility = "next")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"Next\"`][4]")
     private WebElement nextButton;
-    
+
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Back\")")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`label == \"Back\"`][1]")
     public WebElement backButton;
 
 
@@ -32,7 +33,7 @@ public class WelcomePage extends BasePage {
     }
 
     public boolean isWelcomePageLoaded() {
-        return this.isElementDisplayed(welcomeText, "Welcome page");
+        return this.isElementDisplayed(welcomeText);
     }
 
     public AppUnlockMethodPage clickOnSkipButton() {
@@ -40,9 +41,9 @@ public class WelcomePage extends BasePage {
         return new AppUnlockMethodPage(driver);
     }
 
-    public AppUnlockMethodPage clickOnNextButton() {
+    public void clickOnNextButton() {
         this.clickOnElement(nextButton);
-        return new AppUnlockMethodPage(driver);
+        new AppUnlockMethodPage(driver);
     }
 
     public String getWelcomeDescription() {
@@ -50,6 +51,6 @@ public class WelcomePage extends BasePage {
     }
 
     public void clickOnBackButton() {
-    	this.clickOnElement(backButton);
+        this.clickOnElement(backButton);
     }
 }

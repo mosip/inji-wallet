@@ -1272,7 +1272,7 @@ export const ExistingMosipVCItemMachine =
 
       services: {
         loadDownloadLimitConfig: async context => {
-          var resp = await getAllConfigurations();
+          const resp = await getAllConfigurations();
           const maxLimit: number = resp.vcDownloadMaxRetry;
           const vcDownloadPoolInterval: number = resp.vcDownloadPoolInterval;
 

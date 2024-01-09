@@ -1,5 +1,5 @@
 import {Platform} from 'react-native';
-import {MIMOTO_HOST, ESIGNET_HOST, DEBUG_MODE} from 'react-native-dotenv';
+import {DEBUG_MODE, ESIGNET_HOST, MIMOTO_HOST} from 'react-native-dotenv';
 import {Argon2iConfig} from './commonUtil';
 import {VcIdType} from '../types/VC/ExistingMosipVC/vc';
 
@@ -31,9 +31,9 @@ export const APP_ID_LENGTH = 12;
 // Numbers and Upper case Alphabets without confusing characters like 0, 1, 2, I, O, Z
 // prettier-ignore
 export const APP_ID_DICTIONARY = [
-  '3', '4', '5', '6', '7', '8', '9',
-  'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L',
-  'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y',
+    '3', '4', '5', '6', '7', '8', '9',
+    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L',
+    'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y',
 ];
 
 export function isIOS(): boolean {
@@ -74,3 +74,23 @@ export type IndividualId = {
 export const NETWORK_REQUEST_FAILED = 'Network request failed';
 export const REQUEST_TIMEOUT = 'request timedout';
 export const BIOMETRIC_CANCELLED = 'User has cancelled biometric';
+
+export const CARD_VIEW_DEFAULT_FIELDS = ['fullName'];
+
+export const DETAIL_VIEW_DEFAULT_FIELDS = [
+  'fullName',
+  'gender',
+  'phone',
+  'dateOfBirth',
+  'email',
+  'address',
+];
+
+//todo UIN & VID to be removed once we get the fields in the wellknown endpoint
+export const CARD_VIEW_ADD_ON_FIELDS = ['idType', 'UIN', 'VID'];
+export const DETAIL_VIEW_ADD_ON_FIELDS = [
+  'UIN',
+  'VID',
+  'status',
+  'credentialRegistry',
+];
