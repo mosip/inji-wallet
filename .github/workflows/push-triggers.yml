@@ -58,14 +58,12 @@ jobs:
     name: Check critical issues in sonar analysis
     runs-on: ubuntu-latest
     steps:
-      - name: Install jq
-        run: sudo apt-get -y install jq
       - name: Check for critical bugs
         run: |
           SONAR_HOST_URL=https://sonarcloud.io
           SONAR_PROJECT_KEY=mosip_inji
 
-# sonar check for critical issues is analyzed only for newly created issues. Once the existing critical issues ( use createdBefore=2024-01-04 search) are resolved, this createdAfter can be removed
+#          sonar check for critical issues is analyzed only for newly created issues. Once the existing critical issues ( use createdBefore=2024-01-04 search) are resolved, this createdAfter can be removed
           response=$(curl -s "${SONAR_HOST_URL}/api/issues/search?componentKeys=${SONAR_PROJECT_KEY}&severities=CRITICAL&statuses=OPEN&createdAfter=2024-01-04")
 
           echo "The response is $response"

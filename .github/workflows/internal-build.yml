@@ -157,9 +157,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./scripts
+        working-directory: scripts
     steps:
-      - name: Install jq
-        run: sudo apt-get -y install jq
       - name: Check for critical bugs
         run: ./check-sonar-critical-issues.sh
