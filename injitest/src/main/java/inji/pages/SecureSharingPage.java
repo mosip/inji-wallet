@@ -25,26 +25,26 @@ public class SecureSharingPage extends BasePage {
     
     public boolean  verifyLanguageforSecureSharingPageLoaded(String language){
     	String actualText = secureSharingText.getText();
-    	
+
     	switch (language) {
-        case "English":
-            boolean isHederLoadedInEnglish  = (actualText.equals("Secure Sharing")==true) ? true : false;
-            return isHederLoadedInEnglish ;
-        case "Hindi":
-        	 boolean isHederLoadedInHindi  = (actualText.equals("सुरक्षित साझाकरण")==true) ? true : false;
-        	 return isHederLoadedInHindi ;
-        case "Filipino":
-        	boolean isHederLoadedInFilipino  = (actualText.equals("Mabilis na pagpasok")==true) ? true : false;
-       	 return isHederLoadedInFilipino ;
-        case "Tamil":
-       	boolean isHederLoadedInTamil  = (actualText.equals("பாதுகாப்பான பகிர்வு")==true) ? true : false;
-      	 return isHederLoadedInTamil ;
-        case "Kannada":
-           	boolean isHederLoadedInKannada  = (actualText.equals("ಸುರಕ್ಷಿತ ಹಂಚಿಕೆ")==true) ? true : false;
-          	 return isHederLoadedInKannada ;
+    	case "English":
+    		boolean isHederLoadedInEnglish  = (actualText.equals("Secure Sharing")==true) ? true : false;
+    		return isHederLoadedInEnglish ;
+    	case "Hindi":
+    		boolean isHederLoadedInHindi  = (actualText.equals("सुरक्षित साझाकरण")==true) ? true : false;
+    		return isHederLoadedInHindi ;
+    	case "Filipino":
+    		boolean isHederLoadedInFilipino  = (actualText.equals("Mabilis na pagpasok")==true) ? true : false;
+    		return isHederLoadedInFilipino ;
+    	case "Tamil":
+    		boolean isHederLoadedInTamil  = (actualText.equals("பாதுகாப்பான பகிர்வு")==true) ? true : false;
+    		return isHederLoadedInTamil ;
+    	case "Kannada":
+    		boolean isHederLoadedInKannada  = (actualText.equals("ಸುರಕ್ಷಿತ ಹಂಚಿಕೆ")==true) ? true : false;
+    		return isHederLoadedInKannada ;
     	}
     	return false;
-    	}
+    }
 
     public String getSecureSharingDescription() {
         return this.getTextFromLocator(secureSharingDescription);

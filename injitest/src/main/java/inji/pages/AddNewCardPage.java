@@ -51,22 +51,21 @@ public class AddNewCardPage extends BasePage{
     
     public boolean  verifyLanguageForAddNewCardGuideMessage(String language){
     	String actualText = addNewCardGuideMessage.getText();
-    	
+
     	switch (language) {
-        case "Hindi":
-            boolean isMessagePresentInHindi  = (actualText.equals("नया कार्ड जोड़ने के लिए कृपया नीचे दिए गए विकल्पों में से अपना पसंदीदा जारीकर्ता चुनें।")==true) ? true : false;
-            return isMessagePresentInHindi ;
-        case "English":
-        	 boolean isMessagePresentInEnglish  = (actualText.equals("Please choose your preferred issuer from the options below to add a new card.")==true) ? true : false;
-        	 return isMessagePresentInEnglish ;
-        case "Filipino":
-        	boolean isMessagePresentInFilipino  = (actualText.equals("Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.")==true) ? true : false;
-       	 return isMessagePresentInFilipino ;
+    	case "Hindi":
+    		boolean isMessagePresentInHindi  = (actualText.equals("नया कार्ड जोड़ने के लिए कृपया नीचे दिए गए विकल्पों में से अपना पसंदीदा जारीकर्ता चुनें।")==true) ? true : false;
+    		return isMessagePresentInHindi ;
+    	case "English":
+    		boolean isMessagePresentInEnglish  = (actualText.equals("Please choose your preferred issuer from the options below to add a new card.")==true) ? true : false;
+    		return isMessagePresentInEnglish ;
+    	case "Filipino":
+    		boolean isMessagePresentInFilipino  = (actualText.equals("Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.")==true) ? true : false;
+    		return isMessagePresentInFilipino ;
     	}
     	return false;
-    	}
+    }
     
-
     public boolean isAddNewCardPageLoaded() {
         return this.isElementDisplayed(addNewCardHeader);
     }

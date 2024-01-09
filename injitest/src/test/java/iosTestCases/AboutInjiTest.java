@@ -43,7 +43,6 @@ public class AboutInjiTest extends IosBaseTest {
         assertTrue(aboutInjiPage.isCopyTextDisplayed(),"verify if copy text displayed");
         
         aboutInjiPage.clickOnClickHereButton();
-        
-        assertTrue(aboutInjiPage.isWebViewDisplayed(),"verify if web view is displayed");
+        assertTrue(aboutInjiPage.isMosipUrlIsDisplayedInChrome(),"verify if mosip url is displayed in chrome");
     }
 }

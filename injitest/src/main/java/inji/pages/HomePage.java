@@ -137,63 +137,39 @@ public class HomePage extends BasePage {
     
     public boolean  verifyLanguageForNoVCDownloadedPageLoaded(String language){
     	String actualText = bringYourDigitalIdentity.getText();
-    	
+
     	switch (language) {
-        case "English":
-            boolean isEnglishMatch  = (actualText.equals("Bring your digital identity")==true) ? true : false;
-            return isEnglishMatch ;
-        case "Hindi":
-        	 boolean isHindiMatch  = (actualText.equals("अपनी डिजिटल आईडी लाओ")==true) ? true : false;
-        	 return isHindiMatch ;
-        case "Filipino":
-        	boolean isFilipinoMatch  = (actualText.equals("Dalhin ang Iyong Digital ID")==true) ? true : false;
-       	 return isFilipinoMatch ;
-        
+    	case "English":
+    		boolean isEnglishMatch  = (actualText.equals("Bring your digital identity")==true) ? true : false;
+    		return isEnglishMatch ;
+    	case "Hindi":
+    		boolean isHindiMatch  = (actualText.equals("अपनी डिजिटल आईडी लाओ")==true) ? true : false;
+    		return isHindiMatch ;
+    	case "Filipino":
+    		boolean isFilipinoMatch  = (actualText.equals("Dalhin ang Iyong Digital ID")==true) ? true : false;
+    		return isFilipinoMatch ;
+
     	}
     	return false;
-    	}
+    }
 
-//    public boolean isNoVCDownloaded() {
-//        return this.isElementDisplayed(bringYourDigitalIdentity);
-//    }
-//
-//    public boolean isNoVCDownloadedInFilipino() {
-//        return this.isElementDisplayed(bringYourDigitalIdentity);
-//    }
-//    
-//    public boolean isNoVCDownloadedInHindi() {
-//        return this.isElementDisplayed(bringYourDigitalIdentity);
-//    }
-
-    
     public boolean  verifyLanguageForNoInternetConnectionDisplayed(String language){
     	String actualText = noInternetConnection.getText();
-    	
+
     	switch (language) {
-        case "English":
-            boolean isEnglishMatch  = (actualText.equals("No internet connection")==true) ? true : false;
-            return isEnglishMatch ;
-        case "Tamil":
-        	 boolean isTamilMatch  = (actualText.equals("இணைய இணைப்பு இல்லை")==true) ? true : false;
-        	 return isTamilMatch ;
-        case "Filipino":
-        	boolean isFilipinoMatch  = (actualText.equals("Pakisuri ang iyong koneksyon at subukang muli")==true) ? true : false;
-       	 return isFilipinoMatch ;
-        
+    	case "English":
+    		boolean isEnglishMatch  = (actualText.equals("No internet connection")==true) ? true : false;
+    		return isEnglishMatch ;
+    	case "Tamil":
+    		boolean isTamilMatch  = (actualText.equals("இணைய இணைப்பு இல்லை")==true) ? true : false;
+    		return isTamilMatch ;
+    	case "Filipino":
+    		boolean isFilipinoMatch  = (actualText.equals("Pakisuri ang iyong koneksyon at subukang muli")==true) ? true : false;
+    		return isFilipinoMatch ;
+
     	}
     	return false;
-    	}
-//    public boolean isNoInternetConnectionDisplayed() {
-//        return this.isElementDisplayed(noInternetConnection);
-//    }
-//
-//    public boolean isNoInternetConnectionDisplayedInTamil() {
-//        return this.isElementDisplayed(noInternetConnection);
-//    }
-//
-//    public boolean isNoInternetConnectionDisplayedFlillpino() {
-//        return this.isElementDisplayed(noInternetConnection);
-//    }
+    }
 
     public ScanPage clickOnScanButton() {
         clickOnElement(scanButton);
@@ -206,38 +182,25 @@ public class HomePage extends BasePage {
     
     public boolean  verifyLanguageForTryAgainButtonDisplayed(String language){
     	String actualText = tryAgainButton.getText();
-    	
+
     	switch (language) {
-        case "English":
-            boolean isEnglishMatch  = (actualText.equals("Try again")==true) ? true : false;
-            return isEnglishMatch ;
-        case "Tamil":
-        	 boolean isTamilMatch  = (actualText.equals("மீண்டும் முயற்சி செய்")==true) ? true : false;
-        	 return isTamilMatch ;
-        case "Filipino":
-        	boolean isFilipinoMatch  = (actualText.equals("Subukan muli")==true) ? true : false;
-       	 return isFilipinoMatch ;
-        
+    	case "English":
+    		boolean isEnglishMatch  = (actualText.equals("Try again")==true) ? true : false;
+    		return isEnglishMatch ;
+    	case "Tamil":
+    		boolean isTamilMatch  = (actualText.equals("மீண்டும் முயற்சி செய்")==true) ? true : false;
+    		return isTamilMatch ;
+    	case "Filipino":
+    		boolean isFilipinoMatch  = (actualText.equals("Subukan muli")==true) ? true : false;
+    		return isFilipinoMatch ;
+
     	}
     	return false;
-    	}
-
-
-//    public boolean isTryAgainButtonDisplayedInFlillpino() {
-//        return this.isElementDisplayed(tryAgainButtonInFillpino);
-//    }
-//
-//    public boolean isTryAgainButtonDisplayedInTamil() {
-//        return this.isElementDisplayed(tryAgainButton);
-//    }
+    }
 
     public boolean isTryAgainButtonNotDisplayedInFlillpino() {
         return this.isElementInvisibleYet(tryAgainButtonInFillpino);
     }
-
-//    public boolean isTryAgainButtonDisplayed() {
-//        return this.isElementDisplayed(tryAgainButton);
-//    }
 
     public boolean isTryAgainButtonNotDisplayed() {
         return this.isElementInvisibleYet(tryAgainButton);
@@ -246,11 +209,6 @@ public class HomePage extends BasePage {
     public void clickOnTryAgainButton() {
         clickOnElement(tryAgainButton);
     }
-    
-//    public HomePage clickOnTryAgainButtonInFlillpino() {
-//   	 clickOnElement(tryAgainButtonInFillpino);
-//        return this;
-//   }
     
     public boolean isDownloadingVcPopupDisplayed() {
         return this.isElementDisplayed(downloadingVcPopup);

@@ -30,9 +30,6 @@ public class AboutInjiPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "Click here")
     public WebElement clickHereButton;
     
-    @AndroidFindBy(accessibility = "Web View")
-    private WebElement WebView;
-
     public AboutInjiPage(AppiumDriver driver) {
         super(driver);
     }
@@ -49,19 +46,19 @@ public class AboutInjiPage extends BasePage {
         return this.isElementDisplayed(copy);
     }
     
-    public boolean isWebViewDisplayed() throws InterruptedException {
+    public boolean isMosipUrlIsDisplayedInChrome() throws InterruptedException {
     	Thread.sleep(5000);
     	Set<String> contexts = ((AndroidDriver) driver).getContextHandles();
     	String actualUrl=null;
-    	 for (String context : contexts) {
-    	              if (context.contains("WEBVIEW"))
-    	              {
-    	             ((AndroidDriver) driver).context(context);
-    	             actualUrl= driver.getCurrentUrl();
-    	              }
-    	 }
-    	 boolean result = (actualUrl.equalsIgnoreCase("https://docs.mosip.io/inji")  == true) ? true : false;
-        return result;
+    	for (String context : contexts) {
+    		if (context.contains("WEBVIEW"))
+    		{
+    			((AndroidDriver) driver).context(context);
+    			actualUrl= driver.getCurrentUrl();
+    		}
+    	}
+    	boolean result = (actualUrl.equalsIgnoreCase("https://docs.mosip.io/inji")  == true) ? true : false;
+    	return result;
     }
 
     public void clickOnCopyText() {
