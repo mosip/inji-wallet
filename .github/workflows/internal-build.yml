@@ -156,6 +156,7 @@ jobs:
     name: Check critical issues in sonar analysis
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Check for critical bugs
         run: |
           cd scripts
