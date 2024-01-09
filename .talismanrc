@@ -86,7 +86,7 @@ fileignoreconfig:
   - filename: assets/Flip_Camera_Icon.svg
     checksum: 736b5a7ddb86bd4376229ce198dbf8a663e7ac89fc3311bd4f19afd4a2b36ffd
   - filename: ios/fastlane/Fastfile
-    checksum: 086080bc7a04accf5094c457b5acf84d9fec5d7dfa72eaaaf02e433ecf4f996b    
+    checksum: 086080bc7a04accf5094c457b5acf84d9fec5d7dfa72eaaaf02e433ecf4f996b
   - filename: assets/Finger_Print_Icon.svg
     checksum: 776d4fe4fc4b54d185ccf97daf0511b9fe2c0e0f7c1a809047020e5e8a100db6
   - filename: android/app/build.gradle
@@ -197,4 +197,6 @@ fileignoreconfig:
     checksum: a95394c8cd21212a8c7884786b89cf16f7d917431a288b0b199f1e58ff282adf
   - filename: shared/keystore/SecureKeystore.ts
     checksum: 7b9ae6042973405d1a41fb51b50b4ba09f131547b964cfc952967be919aae9b1
+  - filename: scripts/check-sonar-critical-issues.sh
+    checksum: bd85e383b29fc9e55cac473c6500b6c83cf0e5a1ce2a433d7f05824caa900b06
 version: ""
