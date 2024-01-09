@@ -167,6 +167,6 @@ jobs:
           status: ${{ job.status }}
           fields: repo,message,author,commit,workflow,job
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK_INJI_TEAM }}'
 
 
