@@ -72,7 +72,6 @@ public class HomePage extends BasePage {
     
     @AndroidFindBy(accessibility = "downloadingVcPopup")
     @iOSXCUITFindBy(accessibility = "Downloading your card, this can take upto 5 minutes")
-    
     private WebElement downloadingVcPopup;
 
     public HomePage(AppiumDriver driver) {

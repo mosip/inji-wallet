@@ -27,6 +27,7 @@ public class AboutInjiPage extends BasePage {
     private WebElement backButton;
     
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Click here\")")
+    @iOSXCUITFindBy(accessibility = "Click here")
     public WebElement clickHereButton;
     
     @AndroidFindBy(accessibility = "Web View")

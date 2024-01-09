@@ -121,6 +121,11 @@
                     <include name="changeLanguageToArabic"/>
                 </methods>
             </class>
+            <class name="iosTestCases.AboutInjiTest">
+				<methods>
+					<include name="copyAppId" />
+				</methods>
+			</class>
         </classes>
     </test>
 </suite>

@@ -51,6 +51,9 @@ public class DetailedVcViewPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "enableVerification")
     private WebElement activateButton;
     
+    @iOSXCUITFindBy(accessibility = "enableVerification")
+    private WebElement activeButtonIos;
+    
     @AndroidFindBy(accessibility = "profileAuthenticated")
     @iOSXCUITFindBy(accessibility = "profileAuthenticated")
     private WebElement profileAuthenticated;
@@ -131,10 +134,15 @@ public class DetailedVcViewPage extends BasePage{
         return this.isElementDisplayed(activateButton);
     }
 
-    public PleaseConfirmPopupPage clickOnActivateButton(){
+    public PleaseConfirmPopupPage clickOnActivateButtonAndroid(){
         clickOnElement(activateButton);
-    	
         return new PleaseConfirmPopupPage(driver);
+    }
+    
+    public PleaseConfirmPopupPage clickOnActivateButtonIos(){  //Scroll for ios need to be done
+        clickOnElement(activeButtonIos);
+        return new PleaseConfirmPopupPage(driver);
+        
     }
 
     public boolean isProfileAuthenticatedDisplayed() {

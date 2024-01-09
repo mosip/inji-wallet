@@ -36,7 +36,7 @@ public class ReceiveCardPage extends BasePage {
         }
     }
     
-    public ReceiveCardPage acceptPermissionPopupForLocation() {
+    public ReceiveCardPage acceptPermissionPopupForLocationAndroid() {
         if (isElementDisplayed(allowPermissionPopupButton)) {
             clickOnElement(allowButton);
         }
