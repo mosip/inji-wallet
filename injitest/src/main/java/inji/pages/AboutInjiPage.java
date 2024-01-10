@@ -18,7 +18,7 @@ public class AboutInjiPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "CopyText")
     private WebElement copy;
 
-    @AndroidFindBy(uiAutomator = "CopyText")
+    @AndroidFindBy(accessibility = "CopiedText")
     @iOSXCUITFindBy(accessibility = "CopiedText")
     private WebElement copied;
 
