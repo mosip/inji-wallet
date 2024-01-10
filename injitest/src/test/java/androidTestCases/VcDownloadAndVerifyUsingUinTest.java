@@ -408,4 +408,5 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
     }
+    
 }
