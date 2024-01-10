@@ -32,25 +32,25 @@ public class WelcomePage extends BasePage {
         super(driver);
     }
     
-    public boolean  verifyLanguageforWelcomePageLoaded(String language){
-    	String actualText = getTextFromLocator(welcomeText);
+    public String  verifyLanguageforWelcomePageLoaded(){
+    	return getTextFromLocator(welcomeText);
 
-    	switch (language) {
-    	case "Hindi":
-    		boolean isHederLoadedInHindi  = (actualText.equalsIgnoreCase("सुरक्षित साझाकरण!")==true) ? true : false;
-    		return isHederLoadedInHindi ;
-    	case "Filipino":
-    		boolean isHederLoadedInFilipino  = (actualText.equalsIgnoreCase("Ligtas na Pagbabahagi!")==true) ? true : false;
-    		return isHederLoadedInFilipino ;
-    	case "Tamil":
-    		boolean isHederLoadedInTamil  = (actualText.equalsIgnoreCase("பாதுகாப்பான பகிர்வு!")==true) ? true : false;
-    		return isHederLoadedInTamil ;
-    	case "Kannada":
-    		boolean isHederLoadedInKannada  = (actualText.equalsIgnoreCase("ಸುರಕ್ಷಿತ ಹಂಚಿಕೆ!")==true) ? true : false;
-    		return isHederLoadedInKannada ;
-    	}
-    	Assert.fail("noCaseFound");
-    	return false;
+//    	switch (language) {
+//    	case "Hindi":
+//    		boolean isHederLoadedInHindi  = (actualText.equalsIgnoreCase("सुरक्षित साझाकरण!")==true) ? true : false;
+//    		return isHederLoadedInHindi ;
+//    	case "Filipino":
+//    		boolean isHederLoadedInFilipino  = (actualText.equalsIgnoreCase("Ligtas na Pagbabahagi!")==true) ? true : false;
+//    		return isHederLoadedInFilipino ;
+//    	case "Tamil":
+//    		boolean isHederLoadedInTamil  = (actualText.equalsIgnoreCase("பாதுகாப்பான பகிர்வு!")==true) ? true : false;
+//    		return isHederLoadedInTamil ;
+//    	case "Kannada":
+//    		boolean isHederLoadedInKannada  = (actualText.equalsIgnoreCase("ಸುರಕ್ಷಿತ ಹಂಚಿಕೆ!")==true) ? true : false;
+//    		return isHederLoadedInKannada ;
+//    	}
+//    	Assert.fail("noCaseFound");
+//    	return false;
     }
     
     public boolean isWelcomePageLoaded() {

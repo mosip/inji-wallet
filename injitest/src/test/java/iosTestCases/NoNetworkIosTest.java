@@ -8,6 +8,7 @@ import inji.utils.AndroidUtil;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class NoNetworkIosTest extends IosBaseTest {
@@ -46,7 +47,7 @@ public class NoNetworkIosTest extends IosBaseTest {
         assertTrue(homePage.verifyLanguageForTryAgainButtonDisplayed("English"), "Verify if Try again button displayed");
 
         addNewCardPage.clickOnBack();
-        assertTrue(homePage.verifyLanguageForNoVCDownloadedPageLoaded("English"), "Verify if VC is removed");
+        assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
     }
 
     @Test
@@ -238,7 +239,7 @@ public class NoNetworkIosTest extends IosBaseTest {
         pleaseConfirmPopupPage.clickOnConfirmButton();
 
         AndroidUtil.disableAirplaneMode();
-        assertTrue(homePage.verifyLanguageForNoVCDownloadedPageLoaded("English"), "Verify if VC is removed");
+        assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
     }
     
     @Test

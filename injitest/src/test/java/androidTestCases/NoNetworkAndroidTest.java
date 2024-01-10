@@ -8,6 +8,7 @@ import inji.utils.AndroidUtil;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import static org.testng.Assert.assertTrue;
@@ -48,7 +49,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         assertTrue(homePage.verifyLanguageForTryAgainButtonDisplayed("English"), "Verify if Try again button displayed");
 
         addNewCardPage.clickOnBack();
-        assertTrue(homePage.verifyLanguageForNoVCDownloadedPageLoaded("English"), "Verify if VC is removed");
+        assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
     }
 
     @Test
@@ -240,7 +241,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         pleaseConfirmPopupPage.clickOnConfirmButton();
 
         AndroidUtil.disableAirplaneMode();
-        assertTrue(homePage.verifyLanguageForNoVCDownloadedPageLoaded("English"), "Verify if VC is removed");
+        assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
     }
     
     @Test
@@ -387,7 +388,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
         
         addNewCardPage.clickOnBack();
-        assertTrue(homePage.verifyLanguageForNoVCDownloadedPageLoaded("English"), "Verify if VC is removed");
+        assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
     }
     
     @Test
@@ -586,7 +587,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
          assertTrue(homePage.isTryAgainButtonNotDisplayedInFlillpino(), "Verify if Try again button displayed");
 //        
         homePage.clickOnTryAgainButton();
-        assertTrue(addNewCardPage.verifyLanguageForAddNewCardGuideMessage("Filipino"), "Verify if add new card page guide is displayed in fillpino");
+        assertEquals(addNewCardPage.verifyLanguageForAddNewCardGuideMessage(), "Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.");
 //        
        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
        assertTrue(esignetLoginPage.isEsignetLoginPageDisplayed(), "Verify if esignet login page displayed");
