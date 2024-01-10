@@ -357,6 +357,7 @@
   },
   "MainLayout": {
     "home": "Hogar",
+    "share": "Compartir",
     "scan": "Escanear",
     "history": "Historia",
     "request": "Pedido",

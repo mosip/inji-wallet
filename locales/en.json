@@ -357,6 +357,7 @@
   },
   "MainLayout": {
     "home": "Home",
+    "share": "Share",
     "scan": "Scan",
     "history": "History",
     "request": "Request",

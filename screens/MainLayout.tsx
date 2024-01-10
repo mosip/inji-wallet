@@ -5,7 +5,7 @@ import {
 } from '@react-navigation/bottom-tabs';
 import {Icon} from 'react-native-elements';
 import {RequestRouteProps, RootRouteProps} from '../routes';
-import {mainRoutes, scan} from '../routes/main';
+import {mainRoutes, share} from '../routes/main';
 import {Theme} from '../components/ui/styleUtils';
 import {useTranslation} from 'react-i18next';
 import {Row} from '../components/ui';
@@ -36,7 +36,7 @@ export const MainLayout: React.FC<
       initialRouteName={mainRoutes[0].name}
       screenOptions={({route}) => ({
         tabBarAccessibilityLabel: route.name,
-        ...options
+        ...options,
       })}>
       {mainRoutes.map(route => (
         <Screen
@@ -45,7 +45,7 @@ export const MainLayout: React.FC<
           component={route.component}
           listeners={{
             tabPress: e => {
-              if (route.name == scan.name) {
+              if (route.name == share.name) {
                 scanService.send(ScanEvents.RESET());
               }
             },
