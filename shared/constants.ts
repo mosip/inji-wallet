@@ -16,6 +16,14 @@ export const RECEIVED_VCS_STORE_KEY = 'receivedVCs';
 
 export const MY_LOGIN_STORE_KEY = 'myLogins';
 
+export const BACKUP_ENC_KEY = 'backupEncKey';
+
+export const BACKUP_ENC_KEY_TYPE = 'backupEncKeyType';
+
+export const BACKUP_ENC_TYPE_VAL_PASSWORD = 'password';
+
+export const BACKUP_ENC_TYPE_VAL_PHONE = 'phone';
+
 export let individualId = {id: '', idType: 'UIN' as VcIdType};
 
 export const GET_INDIVIDUAL_ID = (currentIndividualId: IndividualId) => {
@@ -71,7 +79,8 @@ export const argon2iConfigForBackupFileName: Argon2iConfig = {
   mode: 'argon2id',
 };
 export const argon2iConfigForPasswordAndPhoneNumber: Argon2iConfig = {
-  iterations: 60000,
+  // TODO: expected iterations for hashing password and phone Number is 600000
+  iterations: 50,
   memory: 16 * 1024,
   parallelism: 2,
   hashLength: 30,

@@ -13,7 +13,7 @@ export const BackupViaPassword: React.FC<BackupViaPasswordProps> = props => {
   const savePasswordAndVerify = () => {
     if (passwordsMatch) {
       // Passwords match, pass value to settings machine
-      controller.SET_PASSWORD(password);
+      controller.SET_BASE_ENC_KEY(password);
     }
   };
 

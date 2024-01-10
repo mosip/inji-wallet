@@ -51,6 +51,7 @@
     "react": "18.2.0",
     "react-i18next": "^11.16.6",
     "react-native": "0.71.8",
+    "react-native-aes-crypto": "^3.0.1",
     "react-native-android-location-services-dialog-box": "^2.8.2",
     "react-native-app-auth": "^7.0.0",
     "react-native-app-intro-slider": "^4.0.4",

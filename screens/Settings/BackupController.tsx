@@ -34,14 +34,11 @@ export function useBackupScreen() {
     PASSWORD: () => {
       backupService.send(BackupEvents.PASSWORD());
     },
-    SET_PASSWORD: (password: string) => {
-      backupService.send(BackupEvents.SET_PASSWORD(password));
+    SET_BASE_ENC_KEY: (key: string) => {
+      backupService.send(BackupEvents.SET_BASE_ENC_KEY(key));
     },
     PHONE_NUMBER: () => {
       backupService.send(BackupEvents.PHONE_NUMBER());
-    },
-    SET_PHONE_NUMBER: (phoneNumber: string) => {
-      backupService.send(BackupEvents.SET_PHONE_NUMBER(phoneNumber));
     },
     SEND_OTP: () => {
       backupService.send(BackupEvents.SEND_OTP());

@@ -117,4 +117,12 @@ fileignoreconfig:
     checksum: 6f3eaf26a58712b3ddd36dfa49d0d608eb873455ca91374545148c23e36fd43b
   - filename: shared/constants.ts
     checksum: 062fb9bc4ba7dc7c91558caee5a4fd41ba748b0dcd108c62b50a2fdd06eaa289
+  - filename: machines/backup.ts
+    checksum: f75f0e0d38126f921f3304e4ccbba2b0b6250dd1c4cf1a230b8f3a0e5c964c14
+  - filename: shared/commonUtil.ts
+    checksum: 4f353f525ce0d2c9c7caf734aa9ce4a7a5ce8d526528a491974052256b8cbe76
+  - filename: screens/Settings/BackupController.tsx
+    checksum: d2a355356bcaf8f7ef3b53ba93710cec15fefd0fdf31efd779eebd2bfab61c19
+  - filename: shared/constants.ts
+    checksum: 3961940d2df158b6c287cb689b8841d278eae273a4e5553ae2ae612340f8b8c8
     version: ''

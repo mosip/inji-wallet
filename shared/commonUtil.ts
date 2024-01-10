@@ -3,6 +3,7 @@ import {AnyState} from 'xstate';
 import {getDeviceNameSync} from 'react-native-device-info';
 import {isAndroid} from './constants';
 import {generateSecureRandom} from 'react-native-securerandom';
+import Aes from 'react-native-aes-crypto';
 
 export const hashData = async (
   data: string,
@@ -21,6 +22,8 @@ export const generateRandomString = async () => {
   );
   return randomString;
 };
+export const generateBackupEncryptionKey = (password, salt, cost, length) =>
+  Aes.pbkdf2(password, salt, cost, length, 'sha256');
 
 export interface Argon2iConfig {
   iterations: number;

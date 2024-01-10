@@ -1,22 +1,31 @@
-import {EventFrom, StateFrom} from 'xstate';
+import {DoneInvokeEvent, EventFrom, StateFrom, send} from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../shared/GlobalContext';
+import {
+  BACKUP_ENC_KEY,
+  BACKUP_ENC_KEY_TYPE,
+  BACKUP_ENC_TYPE_VAL_PASSWORD,
+  BACKUP_ENC_TYPE_VAL_PHONE,
+  argon2iConfigForPasswordAndPhoneNumber,
+  argon2iSalt,
+} from '../shared/constants';
+import {hashData} from './../shared/commonUtil';
+import {StoreEvents} from './store';
 
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
     otp: '',
-    phoneNumber: '',
-    password: '',
+    baseEncKey: '',
+    hashedEncKey: '',
   },
   {
     events: {
       DATA_BACKUP: () => ({}),
       YES: () => ({}),
       PASSWORD: () => ({}),
-      SET_PASSWORD: (password: string) => ({password}),
+      SET_BASE_ENC_KEY: (baseEncKey: string) => ({baseEncKey}),
       PHONE_NUMBER: () => ({}),
-      SET_PHONE_NUMBER: (phoneNumber: string) => ({phoneNumber}),
       SEND_OTP: () => ({}),
       INPUT_OTP: (otp: string) => ({otp}),
       BACK: () => ({}),
@@ -69,17 +78,17 @@ export const backupMachine = model.createMachine(
       },
       passwordBackup: {
         on: {
-          SET_PASSWORD: {
-            actions: 'setPassword',
-            target: 'backingUp',
+          SET_BASE_ENC_KEY: {
+            actions: ['setBaseEncKey', 'storePasswordKeyType'],
+            target: 'hashKey',
           },
         },
       },
 
       phoneNumberBackup: {
         on: {
-          SET_PHONE_NUMBER: {
-            actions: 'setPhoneNumber',
+          SET_BASE_ENC_KEY: {
+            actions: 'setBaseEncKey',
           },
           SEND_OTP: {
             target: 'requestOtp',
@@ -92,8 +101,8 @@ export const backupMachine = model.createMachine(
           CANCEL: {},
           CANCEL_DOWNLOAD: {},
           INPUT_OTP: {
-            actions: 'setOtp', // TODO: we should also do the otp Verification here
-            target: 'backingUp',
+            actions: ['setOtp', 'storePhoneNumberKeyType'], // TODO: we should also do the otp Verification here
+            target: 'hashKey',
           },
         },
         invoke: {
@@ -111,6 +120,15 @@ export const backupMachine = model.createMachine(
           ],
         },
       },
+      hashKey: {
+        invoke: {
+          src: 'hashEncKey',
+          onDone: {
+            target: 'backingUp',
+            actions: ['setHashedKey', 'storeHashedEncKey'],
+          },
+        },
+      },
       backingUp: {},
     },
   },
@@ -121,19 +139,48 @@ export const backupMachine = model.createMachine(
           return event.otp;
         },
       }),
-      setPassword: model.assign({
-        password: (_context, event) => {
-          return event.password;
+      setBaseEncKey: model.assign({
+        baseEncKey: (_context, event) => {
+          return event.baseEncKey;
         },
       }),
-      setPhoneNumber: model.assign({
-        phoneNumber: (_context, event) => {
-          return event.phoneNumber;
-        },
+
+      setHashedKey: model.assign({
+        hashedEncKey: (_context, event) =>
+          (event as DoneInvokeEvent<string>).data,
       }),
+
+      storeHashedEncKey: send(
+        context => StoreEvents.SET(BACKUP_ENC_KEY, context.hashedEncKey),
+        {
+          to: context => context.serviceRefs.store,
+        },
+      ),
+
+      storePasswordKeyType: send(
+        () =>
+          StoreEvents.SET(BACKUP_ENC_KEY_TYPE, BACKUP_ENC_TYPE_VAL_PASSWORD),
+        {
+          to: context => context.serviceRefs.store,
+        },
+      ),
+      storePhoneNumberKeyType: send(
+        () => StoreEvents.SET(BACKUP_ENC_KEY_TYPE, BACKUP_ENC_TYPE_VAL_PHONE),
+        {
+          to: context => context.serviceRefs.store,
+        },
+      ),
     },
 
-    services: {},
+    services: {
+      hashEncKey: async context => {
+        return await hashData(
+          context.baseEncKey,
+          argon2iSalt,
+          argon2iConfigForPasswordAndPhoneNumber,
+        ).then(value => value);
+      },
+    },
 
     guards: {},
   },
