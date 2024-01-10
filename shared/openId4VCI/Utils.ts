@@ -8,6 +8,7 @@ import {CredentialWrapper} from '../../types/VC/EsignetMosipVC/vc';
 import {VCMetadata} from '../VCMetadata';
 import i18next from 'i18next';
 import {getJWT} from '../cryptoutil/cryptoUtil';
+import {CACHED_API} from '../api';
 
 export const Protocols = {
   OpenId4VCI: 'OpenId4VCI',
@@ -66,6 +67,10 @@ export const updateCredentialInformation = (context, credential) => {
   credentialWrapper.verifiableCredential = credential;
   credentialWrapper.identifier = getIdentifier(context, credential);
   credentialWrapper.generatedOn = new Date();
+  credentialWrapper.verifiableCredential.wellKnown =
+    context.selectedIssuer['.well-known'];
+  // credentialWrapper.verifiableCredential.wellKnown =
+  //   'https://esignet.collab.mosip.net/.well-known/openid-credential-issuer';
   credentialWrapper.verifiableCredential.issuerLogo =
     getDisplayObjectForCurrentLanguage(context.selectedIssuer.display)?.logo;
   return credentialWrapper;
@@ -136,6 +141,28 @@ export const getJWK = async publicKey => {
   }
 };
 
+export const getCredentialIssuersWellKnownConfig = async (
+  issuer: string,
+  wellknown: string,
+  defaultFields: string[],
+) => {
+  let fields: string[] = defaultFields;
+  let response = null;
+  if (wellknown) {
+    response = await CACHED_API.fetchIssuerWellknownConfig(issuer, wellknown);
+    fields = !response
+      ? []
+      : Object.keys(
+          response?.credentials_supported[0].credential_definition
+            .credentialSubject,
+        );
+  }
+  return {
+    wellknown: response,
+    fields: fields,
+  };
+};
+
 export const vcDownloadTimeout = async (): Promise<number> => {
   const response = await getAllConfigurations();
 
@@ -150,6 +177,7 @@ export enum OIDCErrors {
   INVALID_TOKEN_SPECIFIED = 'Invalid token specified',
   OIDC_CONFIG_ERROR_PREFIX = 'Config error',
 }
+
 // ErrorMessage is the type of error message shown in the UI
 export enum ErrorMessage {
   NO_INTERNET = 'noInternetConnection',

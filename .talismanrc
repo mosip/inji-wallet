@@ -1,8 +1,8 @@
 fileignoreconfig:
   - filename: package.json
-    checksum: 984f91af6d696faf934f7e541801343e146aed1b58d7c950ba11ec02dbd60dda
+    checksum: e09253939abe4c3509c9322ecd97ce2cdbc25fb25e55ce30ed8c70b6320aa9ca
   - filename: package-lock.json
-    checksum: baf08330efcaedd72275354d8e691f0004e0583d0f494a1e40b821fe7ec9046f
+    checksum: 723cd12daeea0e51e30ec3abdba469b693bdfae12a1de6486fe8782c564340eb
   - filename: lib/jsonld-signatures/suites/ed255192018/ed25519.ts
     checksum: 493b6e31144116cb612c24d98b97d8adcad5609c0a52c865a6847ced0a0ddc3a
   - filename: components/PasscodeVerify.tsx
@@ -101,3 +101,8 @@ fileignoreconfig:
     checksum: e9b85cf0405d777faee9345269f6f9eb861ed205728dca63cf27a5db79c876a7
   - filename: assets/Issuer_search_clearing_button.svg
     checksum: f4e8a054fc4168e08bc9e9fe3e644cebabacdfc31ef0cbe36dd281766f47df5e
+  - filename: screens/Home/MyVcs/IdInputModal.tsx
+    checksum: 7ee46d8ef4761c0e9b59f3e602e6e30be5f47221817c819e91ab10ca2203089f 
+  - filename: screens/Home/MyVcs/OtpVerificationModal.tsx
+    checksum: 1db1f39701019383e1e40e6ed5278177e6c9bb3d28def0935cf6d4bd9e41e63a 
+    version: ""

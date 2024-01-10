@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {Button, Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
-import {Image, RefreshControl} from 'react-native';
+import {RefreshControl} from 'react-native';
 import {useMyVcsTab} from './MyVcsTabController';
 import {HomeScreenTabProps} from './HomeScreen';
 import {AddVcModal} from './MyVcs/AddVcModal';
@@ -185,7 +185,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         message={t('errors.keystoreNotExists.message')}
         onButtonPress={controller.ACCEPT_HARDWARE_SUPPORT_NOT_EXISTS}
         buttonText={t('errors.keystoreNotExists.riskOkayText')}
-        customHeight={'auto'}>
+        minHeight={'auto'}>
         <Row>
           <Button
             testID="ok"
@@ -214,7 +214,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         message={t('errors.vcIsTampered.message')}
         onButtonPress={controller.REMOVE_TAMPERED_VCS}
         buttonText={t('common:ok')}
-        customHeight={'auto'}
+        minHeight={'auto'}
       />
 
       <MessageOverlay
@@ -223,7 +223,7 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         message={downloadFailedVcsErrorMessage}
         onButtonPress={controller.DELETE_VC}
         buttonText={t('common:ok')}
-        customHeight={'auto'}
+        minHeight={'auto'}
       />
 
       {controller.isNetworkOff && (

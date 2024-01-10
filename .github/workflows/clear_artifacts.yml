@@ -7,4 +7,4 @@ jobs:
     uses: mosip/kattu/.github/workflows/clear-artifacts.yml@master
     secrets:
       ACCESS_TOKEN: ${{ secrets.ACTION_PAT }}
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_INJI_TEAM }}

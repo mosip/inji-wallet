@@ -104,7 +104,7 @@ jobs:
       ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
       RELEASE_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}'
       INJI_ANDROID_PLAY_STORE_CONFIG_JSON: ${{ secrets.INJI_ANDROID_PLAY_STORE_CONFIG_JSON }}
-      SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
+      SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK_INJI_TEAM }}'
 
   build-android-beta:
     if: ${{ inputs.release == 'beta' && (inputs.buildFor == 'Both[Android and IOS]' || inputs.buildFor == 'Android') }}
@@ -129,7 +129,7 @@ jobs:
       ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
       RELEASE_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}'
       INJI_ANDROID_PLAY_STORE_CONFIG_JSON: ${{ secrets.INJI_ANDROID_PLAY_STORE_CONFIG_JSON }}
-      SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
+      SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK_INJI_TEAM }}'
 
   build-ios:
     if: ${{ inputs.buildFor == 'Both[Android and IOS]' || inputs.buildFor == 'IOS'}}
@@ -163,7 +163,7 @@ jobs:
       APPLE_ISSUER_ID: '${{ secrets.APPLE_ISSUER_ID }}'
       APPLE_KEY_CONTENT: '${{ secrets.APPLE_KEY_CONTENT }}'
       MATCH_PASSWORD: '${{ secrets.INJI_IOS_MATCH_PASSWORD }}'
-      SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
+      SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK_INJI_TEAM }}'
 
   # sonar-check:
   #   uses: mosip/kattu/.github/workflows/gradlew-sonar-analysis.yml@master
@@ -174,4 +174,4 @@ jobs:
   #   secrets:
   #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   #     SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
-  #     SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
+  #     SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK_INJI_TEAM }}'
