@@ -55,7 +55,7 @@ public class SettingsPage extends BasePage {
     private WebElement aboutInji;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Tuvali-version:')]")
-    @iOSXCUITFindBy(xpath = "//*[contains(@name,'Tuvali-version: 0.4.6')]")
+    @iOSXCUITFindBy(xpath = "//*[contains(@name,'Tuvali-version: 0.')]")
     private WebElement tuvaliVersion;
 
     @AndroidFindBy(accessibility = "injiTourGuide")
@@ -81,6 +81,7 @@ public class SettingsPage extends BasePage {
     private WebElement arabicLanguageButton;
     
     @AndroidFindBy(accessibility = "arrowLeft")
+    @iOSXCUITFindBy(accessibility = "arrowLeft")
     private WebElement backButton;
 
     public SettingsPage(AppiumDriver driver) {

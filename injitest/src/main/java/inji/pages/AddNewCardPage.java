@@ -13,7 +13,7 @@ public class AddNewCardPage extends BasePage{
     private WebElement addNewCardHeader;
 
     @AndroidFindBy(accessibility = "issuerHeading-Mosip")
-    @iOSXCUITFindBy(accessibility = "issuerHeading-Mosip")
+    @iOSXCUITFindBy(accessibility = "issuer-Mosip")
     private WebElement downloadViaUin;
     
     @AndroidFindBy(accessibility = "goBack")
@@ -21,9 +21,12 @@ public class AddNewCardPage extends BasePage{
     private WebElement backButton;
     
     @AndroidFindBy(accessibility = "issuer-ESignet")
-    @iOSXCUITFindBy(accessibility = "issuerHeading-ESignet")
+    @iOSXCUITFindBy(accessibility = "issuer-ESignet")
     private WebElement downloadViaEsignet;
-    
+
+    @iOSXCUITFindBy(accessibility = "Continue")
+    private WebElement continueButton;
+
     @AndroidFindBy(xpath = "(//android.widget.TextView)[4]")
     private WebElement addNewCardGuideMessage;
     
@@ -107,6 +110,10 @@ public class AddNewCardPage extends BasePage{
         clickOnElement(downloadViaEsignet);
         return new EsignetLoginPage(driver);
     }
+
+    public void clickOnContinueButtonInSigninPopupIos(){
+        clickOnElement(continueButton);
+    }
     
     public void isBackButtonDisplayed() {
         backButton.isDisplayed();
@@ -139,9 +146,8 @@ public class AddNewCardPage extends BasePage{
     	return this.isElementDisplayed(issuerSearchBar);
     }
     
-    public AddNewCardPage sendTextInIssuerSearchBar(String text) {
+    public void sendTextInIssuerSearchBar(String text) {
     	clearTextBoxAndSendKeys(issuerSearchBar, text);
-        return this;
     }
 
 }

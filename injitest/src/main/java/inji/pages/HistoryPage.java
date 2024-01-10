@@ -46,8 +46,7 @@ public class HistoryPage extends BasePage {
     }
 
     private boolean verifyActivityHeaderAndroid(String vcNumber) {
-        By locator = By.xpath("//*[contains(@text,'" + vcNumber + "')]");
-        return this.isElementDisplayed(locator);
+        return verifyHistoryAndroid(vcNumber);
     }
 
     private boolean verifyPinHistoryAndroid(String vcNumber) {
