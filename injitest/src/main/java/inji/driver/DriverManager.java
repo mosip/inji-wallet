@@ -24,6 +24,7 @@ public class DriverManager {
     private static AppiumDriver getAndroidDriver(Boolean isDeviceFarmRun) {
         if (isDeviceFarmRun) {
             DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+            desiredCapabilities.setCapability("appium:autoGrantPermissions", true);
             try {
                 appiumDriver.set(new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), desiredCapabilities));
             } catch (MalformedURLException e) {

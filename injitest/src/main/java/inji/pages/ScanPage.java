@@ -5,10 +5,9 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
 
-public class ScanPage extends BasePage {
+import inji.utils.IosUtil;
 
-    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.android.permissioncontroller:id/permission_allow_foreground_only_button\")")
-    private WebElement allowPermissionPopupButton;
+public class ScanPage extends BasePage {
 
     @AndroidFindBy(accessibility = "camera")
     private WebElement camera;
@@ -33,21 +32,13 @@ public class ScanPage extends BasePage {
         super(driver);
     }
 
-    public ScanPage acceptPermissionPopup() {
-        if (isElementDisplayed(bluetoothPopUp)) {
+    public ScanPage acceptPermissionPopupBluetooth() {
+        if (isElementDisplayed(allowButton)) {
             clickOnElement(allowButton);
         }
         return this;
     }
     
-    public ScanPage acceptPermissionPopupForLocation() {
-        if (isElementDisplayed(allowPermissionPopupButton)) {
-            clickOnElement(allowButton);
-        }
-        return this;
-    }
-
-
     public boolean isCameraOpen() {
         return isElementDisplayed(camera);
     }

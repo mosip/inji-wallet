@@ -85,6 +85,10 @@ public class DetailedVcViewPage extends BasePage{
     @AndroidFindBy(accessibility = "esignet-logo")
     @iOSXCUITFindBy(xpath = "(//XCUIElementTypeImage)[3]")
     private WebElement esignetLogo;
+    
+    @AndroidFindBy(accessibility = "arrowLeft")
+    @iOSXCUITFindBy(accessibility = "arrowLeft")
+    public WebElement backArrow;
 
     public DetailedVcViewPage(AppiumDriver driver) {
         super(driver);
@@ -142,15 +146,14 @@ public class DetailedVcViewPage extends BasePage{
     public PleaseConfirmPopupPage clickOnActivateButtonIos(){  //Scroll for ios need to be done
         clickOnElement(activeButtonIos);
         return new PleaseConfirmPopupPage(driver);
-        
     }
 
     public boolean isProfileAuthenticatedDisplayed() {
         return this.isElementDisplayed(profileAuthenticated);
     }
 
-    public HomePage clickOnCrossIcon() {
-        clickOnElement(crossIcon);
+    public HomePage clickOnBackArrow() {
+        clickOnElement(backArrow);
         return new HomePage(driver);
     }
 
