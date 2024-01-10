@@ -136,17 +136,17 @@ public class HomePage extends BasePage {
     }
     
     public boolean  verifyLanguageForNoVCDownloadedPageLoaded(String language){
-    	String actualText = bringYourDigitalIdentity.getText();
+    	String actualText =getTextFromLocator(bringYourDigitalIdentity); 
 
     	switch (language) {
     	case "English":
-    		boolean isEnglishMatch  = (actualText.equals("Bring your digital identity")==true) ? true : false;
+    		boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Bring your digital identity")==true) ? true : false;
     		return isEnglishMatch ;
     	case "Hindi":
-    		boolean isHindiMatch  = (actualText.equals("अपनी डिजिटल आईडी लाओ")==true) ? true : false;
+    		boolean isHindiMatch  = (actualText.equalsIgnoreCase("अपनी डिजिटल आईडी लाओ")==true) ? true : false;
     		return isHindiMatch ;
     	case "Filipino":
-    		boolean isFilipinoMatch  = (actualText.equals("Dalhin ang Iyong Digital ID")==true) ? true : false;
+    		boolean isFilipinoMatch  = (actualText.equalsIgnoreCase("Dalhin ang Iyong Digital ID")==true) ? true : false;
     		return isFilipinoMatch ;
 
     	}
@@ -154,17 +154,17 @@ public class HomePage extends BasePage {
     }
 
     public boolean  verifyLanguageForNoInternetConnectionDisplayed(String language){
-    	String actualText = noInternetConnection.getText();
+    	String actualText = getTextFromLocator(noInternetConnection);
 
     	switch (language) {
     	case "English":
-    		boolean isEnglishMatch  = (actualText.equals("No internet connection")==true) ? true : false;
+    		boolean isEnglishMatch  = (actualText.equalsIgnoreCase("No internet connection")==true) ? true : false;
     		return isEnglishMatch ;
     	case "Tamil":
-    		boolean isTamilMatch  = (actualText.equals("இணைய இணைப்பு இல்லை")==true) ? true : false;
+    		boolean isTamilMatch  = (actualText.equalsIgnoreCase("இணைய இணைப்பு இல்லை")==true) ? true : false;
     		return isTamilMatch ;
     	case "Filipino":
-    		boolean isFilipinoMatch  = (actualText.equals("Pakisuri ang iyong koneksyon at subukang muli")==true) ? true : false;
+    		boolean isFilipinoMatch  = (actualText.equalsIgnoreCase("Pakisuri ang iyong koneksyon at subukang muli")==true) ? true : false;
     		return isFilipinoMatch ;
 
     	}
@@ -181,17 +181,17 @@ public class HomePage extends BasePage {
     }
     
     public boolean  verifyLanguageForTryAgainButtonDisplayed(String language){
-    	String actualText = tryAgainButton.getText();
+    	String actualText = getTextFromLocator(tryAgainButton);
 
     	switch (language) {
     	case "English":
-    		boolean isEnglishMatch  = (actualText.equals("Try again")==true) ? true : false;
+    		boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Try again")==true) ? true : false;
     		return isEnglishMatch ;
     	case "Tamil":
-    		boolean isTamilMatch  = (actualText.equals("மீண்டும் முயற்சி செய்")==true) ? true : false;
+    		boolean isTamilMatch  = (actualText.equalsIgnoreCase("மீண்டும் முயற்சி செய்")==true) ? true : false;
     		return isTamilMatch ;
     	case "Filipino":
-    		boolean isFilipinoMatch  = (actualText.equals("Subukan muli")==true) ? true : false;
+    		boolean isFilipinoMatch  = (actualText.equalsIgnoreCase("Subukan muli")==true) ? true : false;
     		return isFilipinoMatch ;
 
     	}

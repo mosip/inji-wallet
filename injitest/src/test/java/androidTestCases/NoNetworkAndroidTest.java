@@ -85,7 +85,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
 
         AndroidUtil.enableAirplaneMode();
-        assertTrue(homePage.clickOnScanButton().acceptPermissionPopup().isCameraOpen());
+        assertTrue(homePage.clickOnScanButton().acceptPermissionPopupBluetooth().isCameraOpen());
         AndroidUtil.disableAirplaneMode();
     }
     @Test
@@ -312,7 +312,6 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
         
         ReceiveCardPage receiveCardPage = settingsPage.clickOnReceiveCard();
-        receiveCardPage.clickOnAllowButton();
         assertTrue(receiveCardPage.isReceiveCardHeaderDisplayed(), "Verify if QR code  header is displayed");
         
         assertTrue(receiveCardPage.isWaitingForConnectionDisplayed(), "Verify if waiting for connection displayed");
@@ -532,7 +531,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         AndroidUtil.enableAirplaneMode();
         
-        assertTrue(homePage.clickOnScanButton().acceptPermissionPopup().isCameraOpen());
+        assertTrue(homePage.clickOnScanButton().acceptPermissionPopupBluetooth().isCameraOpen());
         AndroidUtil.disableAirplaneMode();
     }
     

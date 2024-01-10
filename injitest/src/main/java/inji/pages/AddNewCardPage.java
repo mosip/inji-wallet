@@ -30,6 +30,9 @@ public class AddNewCardPage extends BasePage{
     @AndroidFindBy(xpath = "(//android.widget.TextView)[4]")
     private WebElement addNewCardGuideMessage;
     
+    @AndroidFindBy(xpath = "(//android.widget.TextView)[5]")//remove once get accesibility id
+    private WebElement addNewCardGuideMessageForEsignet;
+    
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.\")")
     private WebElement addNewCardGuideMessageInFillpino;
     
@@ -53,20 +56,24 @@ public class AddNewCardPage extends BasePage{
     }
     
     public boolean  verifyLanguageForAddNewCardGuideMessage(String language){
-    	String actualText = addNewCardGuideMessage.getText();
+    	String actualText =getTextFromLocator(addNewCardGuideMessage);
 
     	switch (language) {
     	case "Hindi":
-    		boolean isMessagePresentInHindi  = (actualText.equals("नया कार्ड जोड़ने के लिए कृपया नीचे दिए गए विकल्पों में से अपना पसंदीदा जारीकर्ता चुनें।")==true) ? true : false;
+    		boolean isMessagePresentInHindi  = (actualText.equalsIgnoreCase("नया कार्ड जोड़ने के लिए कृपया नीचे दिए गए विकल्पों में से अपना पसंदीदा जारीकर्ता चुनें।")==true) ? true : false;
     		return isMessagePresentInHindi ;
     	case "English":
-    		boolean isMessagePresentInEnglish  = (actualText.equals("Please choose your preferred issuer from the options below to add a new card.")==true) ? true : false;
+    		boolean isMessagePresentInEnglish  = (actualText.equalsIgnoreCase("Please choose your preferred issuer from the options below to add a new card.")==true) ? true : false;
     		return isMessagePresentInEnglish ;
     	case "Filipino":
-    		boolean isMessagePresentInFilipino  = (actualText.equals("Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.")==true) ? true : false;
+    		boolean isMessagePresentInFilipino  = (actualText.equalsIgnoreCase("Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.")==true) ? true : false;
     		return isMessagePresentInFilipino ;
     	}
     	return false;
+    }
+    
+    public boolean isAddNewCardPageGuideMessageForEsignetDisplayed() {
+        return this.isElementDisplayed(addNewCardGuideMessageForEsignet);
     }
     
     public boolean isAddNewCardPageLoaded() {

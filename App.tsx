@@ -94,7 +94,7 @@ const AppLoadingWrapper: React.FC = () => {
         message={t('errors.invalidateKeyError.message')}
         onButtonPress={controller.RESET}
         buttonText={t('common:ok')}
-        customHeight={'auto'}
+        minHeight={'auto'}
       />
 
       {isReadError ? (

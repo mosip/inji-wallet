@@ -49,16 +49,6 @@ public class HistoryPage extends BasePage {
         return verifyHistoryAndroid(vcNumber);
     }
 
-    private boolean verifyPinHistoryAndroid(String vcNumber) {
-        By locator = By.xpath("//*[contains(@text,'" + vcNumber + " pined')]");
-        return this.isElementDisplayed(locator);
-    }
-
-    private boolean verifyPinHistoryIos(String vcNumber) {
-        By locator = By.xpath("//*[contains(@text,'" + vcNumber + " pined')]");
-        return this.isElementDisplayed(locator);
-    }
-
     private boolean verifyDeleteHistoryAndroid(String vcNumber) {
         By locator = By.xpath("//*[contains(@text,'" + vcNumber + " Removed from wallet')]");
         return this.isElementDisplayed(locator);

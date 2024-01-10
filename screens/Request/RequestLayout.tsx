@@ -6,12 +6,10 @@ import {RequestScreen} from './RequestScreen';
 import {useRequestLayout} from './RequestLayoutController';
 import {Message} from '../../components/Message';
 import {ReceiveVcScreen} from './ReceiveVcScreen';
-import {MessageOverlay} from '../../components/MessageOverlay';
 import {ReceivedCardsModal} from '../Settings/ReceivedCardsModal';
 import {useReceivedVcsTab} from '../Home/ReceivedVcsTabController';
 import {REQUEST_ROUTES} from '../../routes/routesConstants';
 import {SquircleIconPopUpModal} from '../../components/ui/SquircleIconPopUpModal';
-import {Theme} from '../../components/ui/styleUtils';
 import {ProgressingModal} from '../../components/ProgressingModal';
 const RequestStack = createNativeStackNavigator();
 

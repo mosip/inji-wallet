@@ -139,8 +139,7 @@ public class SettingsPage extends BasePage {
     }
 
     public boolean verifyLanguagesInLanguageFilter() {
-        List<String> expectedLanguages = Arrays.asList("English", "Filipino", "عربى", "हिंदी", "ಕನ್ನಡ", "தமிழ்");
-
+        List<String> expectedLanguages = Arrays.asList("English", "Filipino","عربى", "हिंदी", "ಕನ್ನಡ", "தமிழ்");
         List<String> actualLanguages = languages.stream()
                 .map(WebElement::getText)
                 .collect(Collectors.toList());

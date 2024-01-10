@@ -103,4 +103,6 @@ fileignoreconfig:
     checksum: f4e8a054fc4168e08bc9e9fe3e644cebabacdfc31ef0cbe36dd281766f47df5e
   - filename: screens/Home/MyVcs/IdInputModal.tsx
     checksum: 7ee46d8ef4761c0e9b59f3e602e6e30be5f47221817c819e91ab10ca2203089f 
+  - filename: screens/Home/MyVcs/OtpVerificationModal.tsx
+    checksum: 1db1f39701019383e1e40e6ed5278177e6c9bb3d28def0935cf6d4bd9e41e63a 
     version: ""

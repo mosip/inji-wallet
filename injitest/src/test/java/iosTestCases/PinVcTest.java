@@ -53,7 +53,6 @@ public class PinVcTest extends IosBaseTest {
         homePage.clickOnMoreOptionsButton();
         HistoryPage historyPage= moreOptionsPage.clickOnViewActivityLog();
         assertTrue(historyPage.verifyHistory(TestDataReader.readData("uin"), Target.IOS));
-        //assertTrue(historyPage.verifyPinHistory(TestDataReader.readData("uin"), Target.IOS));
     }
     
     //For IOS bluetooth does not support in simulator, so we can't automate
@@ -127,7 +126,6 @@ public class PinVcTest extends IosBaseTest {
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
-        addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         assertTrue(esignetLoginPage.isEsignetLoginPageDisplayed(), "Verify if esignet login page displayed");
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();
