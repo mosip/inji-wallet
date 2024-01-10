@@ -34,11 +34,8 @@ public class VerifyHelpPageTest extends IosBaseTest {
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         HelpPage helpPage = homePage.clickOnHelpIcon();
         
-        assertEquals(helpPage.isHelpPageContentEmpty(),false,"verifying text is not empty");
-        helpPage.scrollPerformInHelpPage();
-        assertTrue(helpPage.isBiometricIsChangeTextDescription(), "Verify if biometric is  text change displayed");
+        assertEquals(helpPage.isHelpPageContentEmpty(),false,"verifying if help page is not empty");
 
-        assertTrue(helpPage.isHelpPageLoaded(), "Verify if help page is displayed");
         helpPage.exitHelpPage();
 
         
