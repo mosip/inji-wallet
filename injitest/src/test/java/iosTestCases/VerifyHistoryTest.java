@@ -151,7 +151,7 @@ public class VerifyHistoryTest extends IosBaseTest {
         assertTrue(otpVerificationPage.isCancelButtonDisplayed(), "Verify if cancel button is displayed");
 
         otpVerificationPage.clickOnCancelButton();
-        HistoryPage historyPage = detailedVcViewPage.clickOnCrossIcon().clickOnHistoryButton();
+        HistoryPage historyPage = detailedVcViewPage.clickOnBackArrow().clickOnHistoryButton();
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
         assertTrue(historyPage.verifyActivationFailedRecordInHistory(TestDataReader.readData("uin"), Target.IOS));
     }
