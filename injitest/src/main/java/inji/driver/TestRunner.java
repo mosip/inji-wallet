@@ -25,7 +25,7 @@ public class TestRunner {
         if (checkRunType().equalsIgnoreCase("JAR"))
             return (new File(jarUrl)).getParentFile().getAbsolutePath().toString() + "/resources/";
         if (checkRunType().equalsIgnoreCase("IDE")) {
-            String path = System.getProperty("user.dir") + "/src/test/resources";
+            String path = System.getProperty("user.dir") + "/src/main/resources";
             if (path.contains("test-classes"))
                 path = path.replace("test-classes", "classes");
             return path;
@@ -53,14 +53,13 @@ public class TestRunner {
     }
 
     public static String GetKernalFilename() {
-        String path = System.getProperty("env.user");
+        String path ="Kernel.properties" ;
         String kernalpath = null;
         if (System.getProperty("env.user") == null) {
             kernalpath = "Kernel.properties";
-
         } else {
             kernalpath = "Kernel_" + path + ".properties";
         }
-        return kernalpath;
+        return path;
     }
 }

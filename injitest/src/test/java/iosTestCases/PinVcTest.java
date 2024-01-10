@@ -53,7 +53,6 @@ public class PinVcTest extends IosBaseTest {
         homePage.clickOnMoreOptionsButton();
         HistoryPage historyPage= moreOptionsPage.clickOnViewActivityLog();
         assertTrue(historyPage.verifyHistory(TestDataReader.readData("uin"), Target.IOS));
-        //assertTrue(historyPage.verifyPinHistory(TestDataReader.readData("uin"), Target.IOS));
     }
     
     //For IOS bluetooth does not support in simulator, so we can't automate
@@ -97,8 +96,6 @@ public class PinVcTest extends IosBaseTest {
         assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
         ScanPage scanPage=homePage.clickOnScanButton();
         
-       scanPage.acceptPermissionPopupForLocation();
-        scanPage.acceptPermissionPopup();
         assertTrue(scanPage.isCameraPageLoaded(), "Verify camera page is displayed");
         assertTrue(scanPage.isFlipCameraClickable(),"Verify if flip camera is enabled");
     }

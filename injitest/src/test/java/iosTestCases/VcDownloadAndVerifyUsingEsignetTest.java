@@ -86,7 +86,7 @@ public class VcDownloadAndVerifyUsingEsignetTest extends IosBaseTest {
         otpVerification.enterOtp(TestDataReader.readData("passcode"), Target.IOS);
         assertTrue(detailedVcViewPage.isProfileAuthenticatedDisplayed(), "Verify profile authenticated displayed");
         
-        detailedVcViewPage.clickOnCrossIcon();
+        detailedVcViewPage.clickOnBackArrow();
         assertTrue(detailedVcViewPage.isEsignetLogoDisplayed(), "Verify if detailed Vc esignet logo is displayed");
         
         

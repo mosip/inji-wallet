@@ -35,8 +35,6 @@ public class ReceiveCardTest extends AndroidBaseTest {
 	        SettingsPage settingsPage = homePage.clickOnSettingIcon();
 	        
 	        ReceiveCardPage receiveCardPage = settingsPage.clickOnReceiveCard();
-	        receiveCardPage.acceptPermissionPopupForLocationAndroid();
-	        receiveCardPage.clickOnAllowButton();
 	        assertTrue(receiveCardPage.isReceiveCardHeaderDisplayed(), "Verify if QR code  header is displayed");
 	        assertTrue(receiveCardPage.isWaitingForConnectionDisplayed(), "Verify if waiting for connection displayed");
 	 }
@@ -69,8 +67,6 @@ public class ReceiveCardTest extends AndroidBaseTest {
 	        assertTrue(settingsPage.verifyFilipinoLanguage(), "Verify if language is changed to filipino");
 	        ReceiveCardPage receiveCardPage =settingsPage.clickOnReceiveCardFilipinoLanguage();
 	        
-	        receiveCardPage.acceptPermissionPopupForLocationAndroid();
-	        receiveCardPage.clickOnAllowButton();
 	        assertTrue(receiveCardPage.isReceiveCardHeaderInFilipinoLanguageDisplayed(), "Verify if QR code  header is displayed filipino");
 	 }
 }

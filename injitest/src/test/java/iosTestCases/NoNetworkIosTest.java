@@ -83,7 +83,7 @@ public class NoNetworkIosTest extends IosBaseTest {
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
 
         AndroidUtil.enableAirplaneMode();
-        assertTrue(homePage.clickOnScanButton().acceptPermissionPopup().isCameraOpen());
+        assertTrue(homePage.clickOnScanButton().acceptPermissionPopupBluetooth().isCameraOpen());
         AndroidUtil.disableAirplaneMode();
     }
     @Test
