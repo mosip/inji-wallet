@@ -89,16 +89,6 @@ public class HistoryPage extends BasePage {
         return false;
     }
 
-    public boolean verifyPinHistory(String vcNumber, Target os) {
-        switch (os) {
-            case ANDROID:
-                return verifyPinHistoryAndroid(vcNumber);
-            case IOS:
-                return verifyPinHistoryIos(vcNumber);
-        }
-        return false;
-    }
-
     public int getNumberOfRecordsInHistory(String vcNumber, Target os) throws InterruptedException {
         switch (os) {
             case ANDROID:

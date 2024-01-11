@@ -40,6 +40,9 @@ public class VcDownloadAndVerifyUsingUinTest extends IosBaseTest {
         addNewCardPage.sendTextInIssuerSearchBar("uin");
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
 
+        //we will remove below line once bug is fixed https://mosip.atlassian.net/browse/INJI-712
+        addNewCardPage.clickOnDownloadViaUin();
+
         assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
         OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
 

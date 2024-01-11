@@ -153,17 +153,17 @@ public class ChangeLanguageTest extends IosBaseTest {
 
         assertTrue(settingsPage.verifyFilipinoLanguage(), "Verify if language is changed to filipino");
         settingsPage.clickOnBackArrow();
-        
+
         assertTrue(homePage.verifyLanguageForNoVCDownloadedPageLoaded("Filipino"),"Verify if bring your digital id text is visible in filipino");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
-        
-        assertTrue(addNewCardPage.isAddNewCardGuideMessageDisplayedInFillopin(),"verify if add new card guide message displayed in filipino");
+
+        assertTrue(addNewCardPage.verifyLanguageForAddNewCardGuideMessage("Filipino"),"verify if add new card guide message displayed in filipino");
         assertTrue(addNewCardPage.isIssuerSearchBarDisplayedInFilipino(),"verify if search bar is displayed in filipino");
         addNewCardPage.sendTextInIssuerSearchBar("uin");
-        
+
         assertTrue(addNewCardPage.isDownloadViaUinDisplayed(),"verify if download via uin vid aid");
         addNewCardPage.clickOnBack();
-        
+
         homePage.downloadCard();
         addNewCardPage.sendTextInIssuerSearchBar("e-signet");
         assertTrue(addNewCardPage.isDownloadViaEsignetDisplayed(),"verify if download via e-signet is displayed");
