@@ -40,7 +40,9 @@ export const DataBackup: React.FC = ({} = props => {
         </ListItem>
       </Pressable>
 
-      {showDatabackup && <BackupToggle isVisible={showDatabackup} />}
+      {controller.isBackupEnabled && (
+        <BackupToggle isVisible={controller.isBackupEnabled} />
+      )}
 
       {controller.isBackupPref && (
         <BackupPreference isVisible={controller.isBackupPref} />
@@ -63,12 +65,13 @@ export const DataBackup: React.FC = ({} = props => {
         />
       )} */}
 
-      {controller.isBackingUp && (
+      {/* TODO: move the MessageOverlay to the OtpVerificationModal and BackupViaPassord screen once the backing up is started */}
+      {/* {controller.isBackingUp && (
         <MessageOverlay
           isVisible={controller.isBackingUp}
           title={'Backing up'}
         />
-      )}
+      )} */}
     </React.Fragment>
   );
 });

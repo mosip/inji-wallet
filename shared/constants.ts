@@ -80,7 +80,7 @@ export const argon2iConfigForBackupFileName: Argon2iConfig = {
 };
 export const argon2iConfigForPasswordAndPhoneNumber: Argon2iConfig = {
   // TODO: expected iterations for hashing password and phone Number is 600000
-  iterations: 50,
+  iterations: 500,
   memory: 16 * 1024,
   parallelism: 2,
   hashLength: 30,

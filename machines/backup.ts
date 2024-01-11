@@ -192,6 +192,9 @@ export function createBackupMachine(serviceRefs: AppServices) {
     serviceRefs,
   });
 }
+export function selectIsEnableBackup(state: State) {
+  return state.matches('backUp');
+}
 export function selectIsBackupPref(state: State) {
   return state.matches('selectPref');
 }

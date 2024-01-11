@@ -125,4 +125,6 @@ fileignoreconfig:
     checksum: d2a355356bcaf8f7ef3b53ba93710cec15fefd0fdf31efd779eebd2bfab61c19
   - filename: shared/constants.ts
     checksum: 3961940d2df158b6c287cb689b8841d278eae273a4e5553ae2ae612340f8b8c8
+  - filename: machines/backup.ts
+    checksum: 8eed2aea5b6827ade3a8648be7588fb28d671fedc6da635f9fa4480d888a3795
     version: ''

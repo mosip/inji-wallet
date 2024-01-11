@@ -7,6 +7,7 @@ import {
   selectIsBackupViaPassword,
   selectIsBackupViaPhoneNumber,
   selectIsCancellingDownload,
+  selectIsEnableBackup,
   selectIsRequestOtp,
 } from '../../machines/backup';
 import {GlobalContext} from '../../shared/GlobalContext';
@@ -17,6 +18,7 @@ export function useBackupScreen() {
 
   return {
     isBackupPref: useSelector(backupService, selectIsBackupPref),
+    isBackupEnabled: useSelector(backupService, selectIsEnableBackup),
     isBackupViaPassword: useSelector(backupService, selectIsBackupViaPassword),
     isBackupViaPhoneNumber: useSelector(
       backupService,
