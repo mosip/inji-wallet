@@ -2,13 +2,14 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Theme} from '../../components/ui/styleUtils';
 import {Modal} from '../../components/ui/Modal';
-import {Image} from 'react-native';
-import {Column, Text} from '../../components/ui';
-import {Button} from '../../components/ui';
+import {Pressable} from 'react-native';
+import {Column, Row, Text} from '../../components/ui';
 import {useScanLayout} from './ScanLayoutController';
 import {useSendVcScreen} from './SendVcScreenController';
 import testIDProps from '../../shared/commonUtil';
 import {SvgImage} from '../../components/ui/svg';
+import {Icon} from 'react-native-elements';
+import {Dimensions} from 'react-native';
 
 export const SharingSuccessModal: React.FC<
   SharingSuccessModalProps
@@ -41,13 +42,38 @@ export const SharingSuccessModal: React.FC<
             {sendVcScreenController.receiverInfo.name}
           </Text>
         </Column>
-        <Column margin="0 0  0">
-          <Button
-            type="gradient"
-            title={t('ScanScreen:status.accepted.gotohome')}
-            onPress={scanLayoutController.DISMISS}
-          />
-        </Column>
+        <Row
+          align="space-evenly"
+          style={{marginBottom: Dimensions.get('screen').height * 0.06}}>
+          <Pressable>
+            <Icon
+              name="home"
+              color={Theme.Colors.Icon}
+              size={33}
+              containerStyle={
+                Theme.SelectVcOverlayStyles.sharedSuccessfullyIconStyle
+              }
+              onPress={scanLayoutController.DISMISS}
+            />
+            <Text align="center" weight="bold">
+              {t('ScanScreen:status.accepted.home')}
+            </Text>
+          </Pressable>
+          <Pressable>
+            <Icon
+              name="history"
+              color={Theme.Colors.Icon}
+              size={33}
+              containerStyle={
+                Theme.SelectVcOverlayStyles.sharedSuccessfullyIconStyle
+              }
+              onPress={scanLayoutController.GOTO_HISTORY}
+            />
+            <Text align="center" weight="bold">
+              {t('ScanScreen:status.accepted.history')}
+            </Text>
+          </Pressable>
+        </Row>
       </Modal>
     </React.Fragment>
   );

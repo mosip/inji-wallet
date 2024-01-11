@@ -520,7 +520,8 @@
       "accepted": {
         "title": "Matagumpay na naibahagi ang ID!",
         "message": "Ang iyong ID ay matagumpay na naibahagi sa",
-        "gotohome": "Pumunta sa bahay"
+        "home": "Bahay",
+        "history": "Kasaysayan"
       },
       "rejected": {
         "title": "Pansinin",

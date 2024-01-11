@@ -521,7 +521,8 @@
       "accepted": {
         "title": "ID shared successfully!",
         "message": "Your ID has been successfully shared with",
-        "gotohome": "Go to Home"
+        "home": "Home",
+        "history": "History"
       },
       "rejected": {
         "title": "Notice",

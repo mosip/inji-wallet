@@ -63,6 +63,9 @@ export function useScanLayout() {
   const onStayInProgress = () =>
     scanService.send(ScanEvents.STAY_IN_PROGRESS());
   const onRetry = () => scanService.send(ScanEvents.RETRY());
+  const GOTO_HISTORY = () => {
+    navigation.navigate(BOTTOM_TAB_ROUTES.history);
+  };
 
   const isInvalid = useSelector(scanService, selectIsInvalid);
   const isConnecting = useSelector(scanService, selectIsConnecting);
@@ -221,6 +224,7 @@ export function useScanLayout() {
   return {
     isInvalid,
     isDone,
+    GOTO_HISTORY,
     isDisconnected: useSelector(scanService, selectIsDisconnected),
     statusOverlay,
     isStayInProgress,

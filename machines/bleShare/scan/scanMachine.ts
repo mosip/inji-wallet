@@ -105,6 +105,7 @@ const model = createModel(
       NEARBY_ENABLED: () => ({}),
       NEARBY_DISABLED: () => ({}),
       GOTO_SETTINGS: () => ({}),
+      GOTO_HISTORY: () => ({}),
       START_PERMISSION_CHECK: () => ({}),
       UPDATE_REASON: (reason: string) => ({reason}),
       LOCATION_ENABLED: () => ({}),
@@ -597,6 +598,9 @@ export const scanMachine =
                 DISMISS: {
                   target: 'navigatingToHome',
                 },
+                GOTO_HISTORY: {
+                  target: 'navigatingToHistory',
+                },
               },
             },
             rejected: {
@@ -606,7 +610,16 @@ export const scanMachine =
                 },
               },
             },
-            navigatingToHome: {},
+            navigatingToHome: {
+              invoke: {
+                src: 'disconnect',
+              },
+            },
+            navigatingToHistory: {
+              invoke: {
+                src: 'disconnect',
+              },
+            },
             verifyingIdentity: {
               on: {
                 FACE_VALID: {
