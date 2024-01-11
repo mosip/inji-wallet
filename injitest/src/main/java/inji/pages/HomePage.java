@@ -135,22 +135,22 @@ public class HomePage extends BasePage {
         return this.isElementDisplayed(pinIcon);
     }
     
-    public boolean  verifyLanguageForNoVCDownloadedPageLoaded(String language){
-    	String actualText =getTextFromLocator(bringYourDigitalIdentity); 
+    public String  verifyLanguageForNoVCDownloadedPageLoaded(){
+    	return getTextFromLocator(bringYourDigitalIdentity); 
 
-    	switch (language) {
-    	case "English":
-    		boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Bring your digital identity")==true) ? true : false;
-    		return isEnglishMatch ;
-    	case "Hindi":
-    		boolean isHindiMatch  = (actualText.equalsIgnoreCase("अपनी डिजिटल आईडी लाओ")==true) ? true : false;
-    		return isHindiMatch ;
-    	case "Filipino":
-    		boolean isFilipinoMatch  = (actualText.equalsIgnoreCase("Dalhin ang Iyong Digital ID")==true) ? true : false;
-    		return isFilipinoMatch ;
-
-    	}
-    	return false;
+//    	switch (language) {
+//    	case "English":
+//    		boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Bring your digital identity")==true) ? true : false;
+//    		return isEnglishMatch ;
+//    	case "Hindi":
+//    		boolean isHindiMatch  = (actualText.equalsIgnoreCase("अपनी डिजिटल आईडी लाओ")==true) ? true : false;
+//    		return isHindiMatch ;
+//    	case "Filipino":
+//    		boolean isFilipinoMatch  = (actualText.equalsIgnoreCase("Dalhin ang Iyong Digital ID")==true) ? true : false;
+//    		return isFilipinoMatch ;
+//
+//    	}
+//    	return false;
     }
 
     public boolean  verifyLanguageForNoInternetConnectionDisplayed(String language){

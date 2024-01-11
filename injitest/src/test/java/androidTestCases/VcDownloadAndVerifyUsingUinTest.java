@@ -269,7 +269,7 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         otpVerification.clickOnCrossIcon();
         assertTrue(otpVerification.confirmPopupHeaderDisplayed(), "Verify if comfirm popup displayed");
         otpVerification.clickOnCancelPopupButton();
-        assertTrue(homePage.verifyLanguageForNoVCDownloadedPageLoaded("English"), "Verify if VC is removed");
+        assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
     }
     
     @Test
@@ -408,4 +408,5 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
     }
+    
 }
