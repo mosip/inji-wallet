@@ -64,6 +64,7 @@ export function useScanLayout() {
     scanService.send(ScanEvents.STAY_IN_PROGRESS());
   const onRetry = () => scanService.send(ScanEvents.RETRY());
   const GOTO_HISTORY = () => {
+    scanService.send(ScanEvents.GOTO_HISTORY());
     navigation.navigate(BOTTOM_TAB_ROUTES.history);
   };
 

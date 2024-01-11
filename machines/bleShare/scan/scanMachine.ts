@@ -442,7 +442,11 @@ export const scanMachine =
                 },
               },
             },
-            navigatingToHistory: {},
+            navigatingToHistory: {
+              invoke: {
+                src: 'disconnect',
+              },
+            },
           },
           entry: [
             'sendScanData',
