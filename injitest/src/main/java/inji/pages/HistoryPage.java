@@ -46,18 +46,7 @@ public class HistoryPage extends BasePage {
     }
 
     private boolean verifyActivityHeaderAndroid(String vcNumber) {
-        By locator = By.xpath("//*[contains(@text,'" + vcNumber + "')]");
-        return this.isElementDisplayed(locator);
-    }
-
-    private boolean verifyPinHistoryAndroid(String vcNumber) {
-        By locator = By.xpath("//*[contains(@text,'" + vcNumber + " pined')]");
-        return this.isElementDisplayed(locator);
-    }
-
-    private boolean verifyPinHistoryIos(String vcNumber) {
-        By locator = By.xpath("//*[contains(@text,'" + vcNumber + " pined')]");
-        return this.isElementDisplayed(locator);
+        return verifyHistoryAndroid(vcNumber);
     }
 
     private boolean verifyDeleteHistoryAndroid(String vcNumber) {
@@ -96,16 +85,6 @@ public class HistoryPage extends BasePage {
         switch (os) {
             case ANDROID:
                 return verifyActivityHeaderAndroid(vcNumber);
-        }
-        return false;
-    }
-
-    public boolean verifyPinHistory(String vcNumber, Target os) {
-        switch (os) {
-            case ANDROID:
-                return verifyPinHistoryAndroid(vcNumber);
-            case IOS:
-                return verifyPinHistoryIos(vcNumber);
         }
         return false;
     }
