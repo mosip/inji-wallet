@@ -39,7 +39,7 @@ public class VcDownloadAndVerifyUsingEsignetTest extends IosBaseTest {
         assertTrue(addNewCardPage.isIssuerSearchBarDisplayed(), "Verify if issuer search bar displayed");
         addNewCardPage.sendTextInIssuerSearchBar("e-signet");
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        assertTrue(addNewCardPage.verifyLanguageForAddNewCardGuideMessage("English"), "Verify if add new card guide message displayed");
+        assertEquals(addNewCardPage.verifyLanguageForAddNewCardGuideMessage(), "Please choose your preferred issuer from the options below to add a new card.");
         assertTrue(addNewCardPage.isDownloadViaUinDisplayed(), "Verify if download via uin displayed");
         assertTrue(addNewCardPage.isDownloadViaEsignetDisplayed(), "Verify if download via uin displayed");
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();

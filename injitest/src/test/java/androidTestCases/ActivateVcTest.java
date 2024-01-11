@@ -7,6 +7,7 @@ import inji.pages.*;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class ActivateVcTest extends AndroidBaseTest {
@@ -79,7 +80,7 @@ public class ActivateVcTest extends AndroidBaseTest {
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
 
-        assertTrue(homePage.verifyLanguageForNoVCDownloadedPageLoaded("English"), "Verify if no VC is downloaded");
+        assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
 
         HistoryPage historyPage = homePage.clickOnHistoryButton();
         assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");

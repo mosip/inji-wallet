@@ -55,21 +55,21 @@ public class AddNewCardPage extends BasePage{
         super(driver);
     }
     
-    public boolean  verifyLanguageForAddNewCardGuideMessage(String language){
-    	String actualText =getTextFromLocator(addNewCardGuideMessage);
+    public String  verifyLanguageForAddNewCardGuideMessage(){
+    	 return getTextFromLocator(addNewCardGuideMessage);
 
-    	switch (language) {
-    	case "Hindi":
-    		boolean isMessagePresentInHindi  = (actualText.equalsIgnoreCase("नया कार्ड जोड़ने के लिए कृपया नीचे दिए गए विकल्पों में से अपना पसंदीदा जारीकर्ता चुनें।")==true) ? true : false;
-    		return isMessagePresentInHindi ;
-    	case "English":
-    		boolean isMessagePresentInEnglish  = (actualText.equalsIgnoreCase("Please choose your preferred issuer from the options below to add a new card.")==true) ? true : false;
-    		return isMessagePresentInEnglish ;
-    	case "Filipino":
-    		boolean isMessagePresentInFilipino  = (actualText.equalsIgnoreCase("Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.")==true) ? true : false;
-    		return isMessagePresentInFilipino ;
-    	}
-    	return false;
+//    	switch (language) {
+//    	case "Hindi":
+//    		boolean isMessagePresentInHindi  = (actualText.equalsIgnoreCase("नया कार्ड जोड़ने के लिए कृपया नीचे दिए गए विकल्पों में से अपना पसंदीदा जारीकर्ता चुनें।")==true) ? true : false;
+//    		return isMessagePresentInHindi ;
+//    	case "English":
+//    		boolean isMessagePresentInEnglish  = (actualText.equalsIgnoreCase("Please choose your preferred issuer from the options below to add a new card.")==true) ? true : false;
+//    		return isMessagePresentInEnglish ;
+//    	case "Filipino":
+//    		boolean isMessagePresentInFilipino  = (actualText.equalsIgnoreCase("Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.")==true) ? true : false;
+//    		return isMessagePresentInFilipino ;
+//    	}
+//    	return false;
     }
     
     public boolean isAddNewCardPageGuideMessageForEsignetDisplayed() {

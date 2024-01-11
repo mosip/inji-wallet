@@ -23,27 +23,27 @@ public class HassleFreeAuthenticationPage extends BasePage {
         super(driver);
     }
     
-    public boolean  verifyLanguageforHassleFreeAuthenticationPageLoaded(String language){
-    	String actualText = getTextFromLocator(hassleFreeAuthenticationText);
+    public String  verifyLanguageforHassleFreeAuthenticationPageLoaded(){
+    	return getTextFromLocator(hassleFreeAuthenticationText);
 
-    	switch (language) {
-    	case "English":
-    		boolean isHederLoadedInEnglish  = (actualText.equalsIgnoreCase("Hassle free authentication")==true) ? true : false;
-    		return isHederLoadedInEnglish ;
-    	case "Hindi":
-    		boolean isHederLoadedInHindi  = (actualText.equalsIgnoreCase("परेशानी मुक्त प्रमाणीकरण")==true) ? true : false;
-    		return isHederLoadedInHindi ;
-    	case "Filipino":
-    		boolean isHederLoadedInFilipino  = (actualText.equalsIgnoreCase("Walang problema sa pagpapatotoo")==true) ? true : false;
-    		return isHederLoadedInFilipino ;
-    	case "Tamil":
-    		boolean isHederLoadedInTamil  = (actualText.equalsIgnoreCase("தொந்தரவு இல்லாத அங்கீகாரம்")==true) ? true : false;
-    		return isHederLoadedInTamil ;
-    	case "Kannada":
-    		boolean isHederLoadedInKannada  = (actualText.equalsIgnoreCase("ಜಗಳ ಮುಕ್ತ ದೃಢೀಕರಣ")==true) ? true : false;
-    		return isHederLoadedInKannada ;
-    	}
-    	return false;
+//    	switch (language) {
+//    	case "English":
+//    		boolean isHederLoadedInEnglish  = (actualText.equalsIgnoreCase("Hassle free authentication")==true) ? true : false;
+//    		return isHederLoadedInEnglish ;
+//    	case "Hindi":
+//    		boolean isHederLoadedInHindi  = (actualText.equalsIgnoreCase("परेशानी मुक्त प्रमाणीकरण")==true) ? true : false;
+//    		return isHederLoadedInHindi ;
+//    	case "Filipino":
+//    		boolean isHederLoadedInFilipino  = (actualText.equalsIgnoreCase("Walang problema sa pagpapatotoo")==true) ? true : false;
+//    		return isHederLoadedInFilipino ;
+//    	case "Tamil":
+//    		boolean isHederLoadedInTamil  = (actualText.equalsIgnoreCase("தொந்தரவு இல்லாத அங்கீகாரம்")==true) ? true : false;
+//    		return isHederLoadedInTamil ;
+//    	case "Kannada":
+//    		boolean isHederLoadedInKannada  = (actualText.equalsIgnoreCase("ಜಗಳ ಮುಕ್ತ ದೃಢೀಕರಣ")==true) ? true : false;
+//    		return isHederLoadedInKannada ;
+//    	}
+//    	return false;
     }
 
     public String getHassleFreeAuthenticationDescription() {
