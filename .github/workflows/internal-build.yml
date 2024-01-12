@@ -106,31 +106,6 @@ jobs:
       INJI_ANDROID_PLAY_STORE_CONFIG_JSON: ${{ secrets.INJI_ANDROID_PLAY_STORE_CONFIG_JSON }}
       SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK_INJI_TEAM }}'
 
-  build-android-beta:
-    if: ${{ inputs.release == 'beta' && (inputs.buildFor == 'Both[Android and IOS]' || inputs.buildFor == 'Android') }}
-    uses: mosip/kattu/.github/workflows/android-publish.yml@master
-    with:
-      RELEASE: ${{ inputs.release }}
-      NODE_VERSION: '18.x'
-      RELEASE_KEYSTORE_ALIAS: androidreleasekey
-      MIMOTO_HOST: ${{ inputs.mimotoBackendServiceUrl }}
-      ESIGNET_HOST: ${{ inputs.esignetBackendServiceUrl }}
-      APPLICATION_THEME: ${{ inputs.theme }}
-      BUILD_DESCRIPTION: ${{ inputs.buildDescription }}
-      ALLOW_ENV_EDIT: ${{ inputs.allow_env_edit }}
-      APP_FLAVOR: ${{ inputs.injiFlavor }}
-      SERVICE_LOCATION: '.'
-      ANDROID_SERVICE_LOCATION: 'android'
-      BUILD_SCRIPT_LOCATION: 'scripts'
-      SCRIPT_NAME: "./${{ inputs.release }}.sh"
-      ANDROID_ARTIFACT_NAME: ${{ inputs.buildname }}
-      ANDROID_ARTIFACT_PATH: "android/app/build/outputs/apk/${{ inputs.injiFlavor }}/release/Inji_universal.apk"
-    secrets:
-      ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
-      RELEASE_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}'
-      INJI_ANDROID_PLAY_STORE_CONFIG_JSON: ${{ secrets.INJI_ANDROID_PLAY_STORE_CONFIG_JSON }}
-      SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK_INJI_TEAM }}'
-
   build-ios:
     if: ${{ inputs.buildFor == 'Both[Android and IOS]' || inputs.buildFor == 'IOS'}}
     uses: mosip/kattu/.github/workflows/ios-publish.yml@master
