@@ -2,14 +2,13 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Theme} from '../../components/ui/styleUtils';
 import {Modal} from '../../components/ui/Modal';
-import {Pressable} from 'react-native';
+import {Pressable, Dimensions} from 'react-native';
 import {Column, Row, Text} from '../../components/ui';
 import {useScanLayout} from './ScanLayoutController';
 import {useSendVcScreen} from './SendVcScreenController';
 import testIDProps from '../../shared/commonUtil';
 import {SvgImage} from '../../components/ui/svg';
 import {Icon} from 'react-native-elements';
-import {Dimensions} from 'react-native';
 
 export const SharingSuccessModal: React.FC<
   SharingSuccessModalProps
@@ -45,7 +44,7 @@ export const SharingSuccessModal: React.FC<
         <Row
           align="space-evenly"
           style={{marginBottom: Dimensions.get('screen').height * 0.06}}>
-          <Pressable>
+          <Pressable testID="successfulVcSharedHomeIcon">
             <Icon
               name="home"
               color={Theme.Colors.Icon}
@@ -59,7 +58,7 @@ export const SharingSuccessModal: React.FC<
               {t('ScanScreen:status.accepted.home')}
             </Text>
           </Pressable>
-          <Pressable>
+          <Pressable testID="successfulVcSharedHistoryIcon">
             <Icon
               name="history"
               color={Theme.Colors.Icon}
