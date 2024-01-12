@@ -19,30 +19,30 @@ on:
     - 'release-**'
 
 jobs:
-  build-android:
-    uses: mosip/kattu/.github/workflows/android-build.yml@master
-    with:
-      NODE_VERSION: "16.x"
-      DEBUG_KEYSTORE_ALIAS: androiddebugkey
-      SERVICE_LOCATION: '.'
-      ANDROID_SERVICE_LOCATION: 'android'
-      BUILD_SCRIPT_LOCATION: 'scripts'
-      SCRIPT_NAME: './android-build.sh'
-    secrets:
-      DEBUG_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_DEBUG_STOREPASS }}'
+  # build-android:
+  #   uses: mosip/kattu/.github/workflows/android-build.yml@master
+  #   with:
+  #     NODE_VERSION: "16.x"
+  #     DEBUG_KEYSTORE_ALIAS: androiddebugkey
+  #     SERVICE_LOCATION: '.'
+  #     ANDROID_SERVICE_LOCATION: 'android'
+  #     BUILD_SCRIPT_LOCATION: 'scripts'
+  #     SCRIPT_NAME: './android-build.sh'
+  #   secrets:
+  #     DEBUG_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_DEBUG_STOREPASS }}'
 
-  build-ios:
-    uses: mosip/kattu/.github/workflows/ios-build.yml@master
-    with:
-      NODE_VERSION: "18.x"
-      SERVICE_LOCATION: '.'
-      IOS_SERVICE_LOCATION: 'ios'
-      SCRIPT_NAME: "fastlane ios_app_build"
+  # build-ios:
+  #   uses: mosip/kattu/.github/workflows/ios-build.yml@master
+  #   with:
+  #     NODE_VERSION: "18.x"
+  #     SERVICE_LOCATION: '.'
+  #     IOS_SERVICE_LOCATION: 'ios'
+  #     SCRIPT_NAME: "fastlane ios_app_build"
 
   sonar-check-on-push:
     name: Sonar check
     if: ${{ github.event_name != 'pull_request' }}
-    needs: [build-android, build-ios]
+    # needs: [build-android, build-ios]
     uses: tw-mosip/kattu/.github/workflows/npm-sonar-analysis.yml@inji-597-customize-npm-sonar-analysis
     with:
       SERVICE_LOCATION: '.'

@@ -35,7 +35,7 @@ SplashScreen.preventAutoHideAsync();
 const DecryptErrorAlert = (controller, t) => {
   const heading = t('errors.decryptionFailed');
   const desc = t('errors.decryptionFailed');
-  const ignoreBtnTxt = t('ignore');
+  var ignoreBtnTxt = t('ignore');
   Alert.alert(heading, desc, [
     {
       text: ignoreBtnTxt,
