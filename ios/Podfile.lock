@@ -12,7 +12,7 @@ PODS:
   - BiometricSdk (0.5.9):
     - TensorFlowLiteObjC (= 2.12.0)
   - boost (1.76.0)
-  - BVLinearGradient (2.8.2):
+  - BVLinearGradient (2.8.3):
     - React-Core
   - CatCrypto (0.3.2)
   - CrcSwift (0.0.3)
@@ -470,7 +470,7 @@ PODS:
     - React-Core
   - RNGestureHandler (2.9.0):
     - React-Core
-  - RNKeychain (8.0.0):
+  - RNKeychain (8.1.2):
     - React-Core
   - RNLocalize (3.0.2):
     - React-Core
@@ -780,8 +780,8 @@ SPEC CHECKSUMS:
   ASN1Decoder: 6110fdeacfdb41559b1481457a1645be716610aa
   biometric-sdk-react-native: d2a3a1279013cc4a7514a1b43fe557eb76e4e4c1
   BiometricSdk: 303e7329404ea4d922dc14108449d10d21574f77
-  boost: 64032b9e9b938fda23325e68a3771f0fabf414dc
-  BVLinearGradient: 916632041121a658c704df89d99f04acb038de0f
+  boost: 57d2868c099736d80fcd648bf211b4431e51a558
+  BVLinearGradient: 880f91a7854faff2df62518f0281afb1c60d49a3
   CatCrypto: a477899b6be4954e75be4897e732da098cc0a5a8
   CrcSwift: f85dea6b41dddb5f98bb3743fd777ce58b77bc2e
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
@@ -861,7 +861,7 @@ SPEC CHECKSUMS:
   RNDeviceInfo: aad3c663b25752a52bf8fce93f2354001dd185aa
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNGestureHandler: 071d7a9ad81e8b83fe7663b303d132406a7d8f39
-  RNKeychain: 4f63aada75ebafd26f4bc2c670199461eab85d94
+  RNKeychain: a65256b6ca6ba6976132cc4124b238a5b13b3d9c
   RNLocalize: dbea38dcb344bf80ff18a1757b1becf11f70cae4
   RNPermissions: f1b49dd05fa9b83993cd05a9ee115247944d8f1a
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
@@ -876,4 +876,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 01f58b130fa221dabb14b2d82d981ef24dcaba53
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.14.2

@@ -8,7 +8,9 @@
     "build:android:mosip": "cd android && ./gradlew :app:assembleResidentappRelease && cd ..",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "test": "jest",
-    "postinstall": "patch-package && npm run jetify && sh tools/talisman/talisman-precommit.sh"
+    "postinstall": "patch-package && npm run jetify && sh tools/talisman/talisman-precommit.sh",
+    "build": "cd android && ./gradlew lint && cd .. && jest --coverage --passWithNoTests",
+    "sonar": "node_modules/sonar-scanner/bin/sonar-scanner"
   },
   "dependencies": {
     "@digitalbazaar/ed25519-signature-2018": "digitalbazaar/ed25519-signature-2018",
@@ -63,7 +65,7 @@
     "react-native-elements": "3.4.3",
     "react-native-fs": "^2.18.0",
     "react-native-gesture-handler": "~2.9.0",
-    "react-native-keychain": "^8.0.0",
+    "react-native-keychain": "^8.1.2",
     "react-native-linear-gradient": "^2.8.0",
     "react-native-localize": "^3.0.2",
     "react-native-location": "^2.5.0",

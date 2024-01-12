@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 7.4.2" type="baseline" client="gradle" dependencies="false" name="AGP (7.4.2)" variant="all" version="7.4.2">
+
+    <issue
+            id="ScopedStorage"
+            message="WRITE_EXTERNAL_STORAGE no longer provides write access when targeting Android 10+"
+            errorLine1="  &lt;uses-permission android:name=&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot;/>"
+            errorLine2="                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+                file="src/main/AndroidManifest.xml"
+                line="16"
+                column="34"/>
+    </issue>
+
+    <issue
+            id="NotificationPermission"
+            message="When targeting Android 13 or higher, posting a permission requires holding the `POST_NOTIFICATIONS` permission (usage from com.bumptech.glide.request.target.NotificationTarget)">
+        <location
+                file="src/main/AndroidManifest.xml"/>
+    </issue>
+
+    <issue
+            id="UnusedAttribute"
+            message="Attribute `usesPermissionFlags` is only used in API level 31 and higher (current min is 23)"
+            errorLine1="                     android:usesPermissionFlags=&quot;neverForLocation&quot; />"
+            errorLine2="                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+                file="src/debug/AndroidManifest.xml"
+                line="6"
+                column="22"/>
+    </issue>
+
+    <issue
+            id="UnusedAttribute"
+            message="Attribute `usesPermissionFlags` is only used in API level 31 and higher (current min is 23)"
+            errorLine1="  &lt;uses-permission android:name=&quot;android.permission.BLUETOOTH_SCAN&quot; android:usesPermissionFlags=&quot;neverForLocation&quot;/>"
+            errorLine2="                                                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+                file="src/main/AndroidManifest.xml"
+                line="10"
+                column="69"/>
+    </issue>
+
+    <issue
+            id="RedundantLabel"
+            message="Redundant label can be removed"
+            errorLine1="    &lt;activity android:name=&quot;.MainActivity&quot; android:exported=&quot;true&quot; android:label=&quot;@string/app_name&quot; android:configChanges=&quot;keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|locale|layoutDirection&quot; android:launchMode=&quot;singleTask&quot; android:windowSoftInputMode=&quot;adjustResize&quot; android:theme=&quot;@style/Theme.App.SplashScreen&quot; android:screenOrientation=&quot;portrait&quot;>"
+            errorLine2="                                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+                file="src/main/AndroidManifest.xml"
+                line="30"
+                column="68"/>
+    </issue>
+
+    <issue
+            id="GradleDependency"
+            message="A newer version of com.facebook.soloader:soloader than 0.10.1.+ is available: 0.10.4"
+            errorLine1="    implementation &apos;com.facebook.soloader:soloader:0.10.1+&apos;"
+            errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+                file="build.gradle"
+                line="235"
+                column="20"/>
+    </issue>
+
+    <issue
+            id="GradleDependency"
+            message="A newer version of com.facebook.fresco:fresco than 2.0.0 is available: 2.6.0"
+            errorLine1="        implementation &apos;com.facebook.fresco:fresco:2.0.0&apos;"
+            errorLine2="                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+                file="build.gradle"
+                line="244"
+                column="24"/>
+    </issue>
+
+    <issue
+            id="GradleDependency"
+            message="A newer version of com.facebook.fresco:imagepipeline-okhttp3 than 2.0.0 is available: 2.5.0"
+            errorLine1="        implementation &apos;com.facebook.fresco:imagepipeline-okhttp3:2.0.0&apos;"
+            errorLine2="                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+                file="build.gradle"
+                line="245"
+                column="24"/>
+    </issue>
+
+    <issue
+            id="GradleDependency"
+            message="A newer version of com.squareup.okhttp3:okhttp-urlconnection than 4.4.1 is available: 4.9.2"
+            errorLine1="        implementation &apos;com.squareup.okhttp3:okhttp-urlconnection:4.4.1&apos;"
+            errorLine2="                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+                file="build.gradle"
+                line="246"
+                column="24"/>
+    </issue>
+
+    <issue
+            id="GradleDependency"
+            message="A newer version of androidx.swiperefreshlayout:swiperefreshlayout than 1.0.0 is available: 1.1.0"
+            errorLine1="    implementation &quot;androidx.swiperefreshlayout:swiperefreshlayout:1.0.0&quot;"
+            errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+                file="build.gradle"
+                line="263"
+                column="20"/>
+    </issue>
+
+    <issue
+            id="GradleDynamicVersion"
+            message="Avoid using + in version numbers; can lead to unpredictable and unrepeatable builds (com.facebook.soloader:soloader:0.10.1+)"
+            errorLine1="    implementation &apos;com.facebook.soloader:soloader:0.10.1+&apos;"
+            errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+                file="build.gradle"
+                line="235"
+                column="20"/>
+    </issue>
+
+    <issue
+            id="LockedOrientationActivity"
+            message="Expecting `android:screenOrientation=&quot;unspecified&quot;` or `&quot;fullSensor&quot;` for this activity so the user can use the application in any orientation and provide a great experience on Chrome OS devices"
+            errorLine1="    &lt;activity android:name=&quot;.MainActivity&quot; android:exported=&quot;true&quot; android:label=&quot;@string/app_name&quot; android:configChanges=&quot;keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|locale|layoutDirection&quot; android:launchMode=&quot;singleTask&quot; android:windowSoftInputMode=&quot;adjustResize&quot; android:theme=&quot;@style/Theme.App.SplashScreen&quot; android:screenOrientation=&quot;portrait&quot;>"
+            errorLine2="                                                                                                                                                                                                                                                                                                                                                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+                file="src/main/AndroidManifest.xml"
+                line="30"
+                column="355"/>
+    </issue>
+
+    <issue
+            id="VisibleForTests"
+            message="This method should only be accessed from tests or within private scope"
+            errorLine1="      ReactContext reactContext = reactInstanceManager.getCurrentReactContext();"
+            errorLine2="                                                       ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+                file="src/debug/java/io/mosip/residentapp/ReactNativeFlipper.java"
+                line="54"
+                column="56"/>
+    </issue>
+
+    <issue
+            id="ExtraText"
+            message="Unexpected text found in manifest file: &quot;>&quot;"
+            errorLine1="    &lt;application tools:targetApi=&quot;28&quot; tools:ignore=&quot;GoogleAppIndexingWarning&quot; android:networkSecurityConfig=&quot;@xml/network_security_config&quot;>>"
+            errorLine2="                                                                                                                                           ~">
+        <location
+                file="src/debug/AndroidManifest.xml"
+                line="15"
+                column="140"/>
+    </issue>
+
+    <issue
+            id="LogNotTimber"
+            message="Using &apos;Log&apos; instead of &apos;Timber&apos;"
+            errorLine1="        Log.d(&quot;Main&quot;, &quot;Denied&quot;);"
+            errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+                file="src/main/java/io/mosip/residentapp/MainActivity.java"
+                line="108"
+                column="9"/>
+    </issue>
+
+    <issue
+            id="TrustAllX509TrustManager"
+            message="`checkClientTrusted` is empty, which could cause insecure network traffic due to trusting arbitrary TLS/SSL certificates presented by peers">
+        <location
+                file="$GRADLE_USER_HOME/caches/modules-2/files-2.1/org.bouncycastle/bcpkix-jdk15to18/1.68/f8a3b0a62642ceaca476845241952e559fc8965c/bcpkix-jdk15to18-1.68.jar"/>
+    </issue>
+
+    <issue
+            id="TrustAllX509TrustManager"
+            message="`checkClientTrusted` is empty, which could cause insecure network traffic due to trusting arbitrary TLS/SSL certificates presented by peers">
+        <location
+                file="$GRADLE_USER_HOME/caches/modules-2/files-2.1/org.bouncycastle/bcpkix-jdk15to18/1.68/f8a3b0a62642ceaca476845241952e559fc8965c/bcpkix-jdk15to18-1.68.jar"/>
+    </issue>
+
+    <issue
+            id="TrustAllX509TrustManager"
+            message="`checkServerTrusted` is empty, which could cause insecure network traffic due to trusting arbitrary TLS/SSL certificates presented by peers">
+        <location
+                file="$GRADLE_USER_HOME/caches/modules-2/files-2.1/org.bouncycastle/bcpkix-jdk15to18/1.68/f8a3b0a62642ceaca476845241952e559fc8965c/bcpkix-jdk15to18-1.68.jar"/>
+    </issue>
+
+    <issue
+            id="TrustAllX509TrustManager"
+            message="`checkClientTrusted` is empty, which could cause insecure network traffic due to trusting arbitrary TLS/SSL certificates presented by peers">
+        <location
+                file="node_modules/react-native-app-auth/android/build/.transforms/ebbe563582e7655317ae792249bc3b30/transformed/out/jars/classes.jar"/>
+    </issue>
+
+    <issue
+            id="TrustAllX509TrustManager"
+            message="`checkServerTrusted` is empty, which could cause insecure network traffic due to trusting arbitrary TLS/SSL certificates presented by peers">
+        <location
+                file="node_modules/react-native-app-auth/android/build/.transforms/ebbe563582e7655317ae792249bc3b30/transformed/out/jars/classes.jar"/>
+    </issue>
+
+    <issue
+            id="DataExtractionRules"
+            message="The attribute `android:allowBackup` is deprecated from Android 12 and higher and may be removed in future versions. Consider adding the attribute `android:dataExtractionRules` specifying an `@xml` resource which configures cloud backups and device transfers on Android 12 and higher."
+            errorLine1="  &lt;application tools:replace=&quot;usesCleartextTraffic&quot; android:name=&quot;.MainApplication&quot; android:label=&quot;@string/app_name&quot; android:icon=&quot;@mipmap/ic_launcher&quot; android:roundIcon=&quot;@mipmap/ic_launcher_round&quot; android:allowBackup=&quot;false&quot; android:theme=&quot;@style/AppTheme&quot; android:usesCleartextTraffic=&quot;false&quot;>"
+            errorLine2="                                                                                                                                                                                                                           ~~~~~">
+        <location
+                file="src/main/AndroidManifest.xml"
+                line="24"
+                column="220"/>
+    </issue>
+
+    <issue
+            id="ObsoleteSdkInt"
+            message="Unnecessary; SDK_INT is always >= 23"
+            errorLine1="  @RequiresApi(api = Build.VERSION_CODES.M)"
+            errorLine2="  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+                file="src/main/java/io/mosip/residentapp/MainActivity.java"
+                line="57"
+                column="3"/>
+    </issue>
+
+    <issue
+            id="ObsoleteSdkInt"
+            message="Unnecessary; SDK_INT is always >= 23"
+            errorLine1="    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {"
+            errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+                file="src/main/java/io/mosip/residentapp/MainActivity.java"
+                line="62"
+                column="9"/>
+    </issue>
+
+    <issue
+            id="UnusedResources"
+            message="The resource `R.integer.react_native_dev_server_port` appears to be unused">
+        <location
+                file="build.gradle"/>
+    </issue>
+
+    <issue
+            id="UnusedResources"
+            message="The resource `R.integer.react_native_inspector_proxy_port` appears to be unused">
+        <location
+                file="build.gradle"/>
+    </issue>
+
+    <issue
+            id="UnusedResources"
+            message="The resource `R.color.iconBackground` appears to be unused"
+            errorLine1="  &lt;color name=&quot;iconBackground&quot;>#FFFFFF&lt;/color>"
+            errorLine2="         ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+                file="src/main/res/values/colors.xml"
+                line="3"
+                column="10"/>
+    </issue>
+
+    <issue
+            id="UnusedResources"
+            message="The resource `R.drawable.ic_launcher_background` appears to be unused"
+            errorLine1="&lt;vector"
+            errorLine2="^">
+        <location
+                file="src/main/res/drawable/ic_launcher_background.xml"
+                line="2"
+                column="1"/>
+    </issue>
+
+    <issue
+            id="UnusedResources"
+            message="The resource `R.mipmap.ic_launcher_foreground` appears to be unused">
+        <location
+                file="src/main/res/mipmap-hdpi/ic_launcher_foreground.png"/>
+    </issue>
+
+    <issue
+            id="UnusedResources"
+            message="The resource `R.drawable.splashscreen_image` appears to be unused">
+        <location
+                file="src/main/res/drawable-hdpi/splashscreen_image.png"/>
+    </issue>
+
+    <issue
+            id="UnusedResources"
+            message="The resource `R.string.expo_splash_screen_resize_mode` appears to be unused"
+            errorLine1="  &lt;string name=&quot;expo_splash_screen_resize_mode&quot; translatable=&quot;false&quot;>cover&lt;/string>"
+            errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+                file="src/main/res/values/strings.xml"
+                line="2"
+                column="11"/>
+    </issue>
+
+    <issue
+            id="UnusedResources"
+            message="The resource `R.string.expo_splash_screen_status_bar_translucent` appears to be unused"
+            errorLine1="  &lt;string name=&quot;expo_splash_screen_status_bar_translucent&quot; translatable=&quot;false&quot;>false&lt;/string>"
+            errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+                file="src/main/res/values/strings.xml"
+                line="3"
+                column="11"/>
+    </issue>
+
+    <issue
+            id="UnusedResources"
+            message="The resource `R.string.ExpoLocalization_supportsRTL` appears to be unused"
+            errorLine1="  &lt;string name=&quot;ExpoLocalization_supportsRTL&quot; translatable=&quot;false&quot;>undefined&lt;/string>"
+            errorLine2="          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+                file="src/main/res/values/strings.xml"
+                line="4"
+                column="11"/>
+    </issue>
+
+    <issue
+            id="IconLauncherShape"
+            message="Launcher icons should not fill every pixel of their square region; see the design guide for details">
+        <location
+                file="src/main/res/mipmap-mdpi/ic_launcher.png"/>
+    </issue>
+
+    <issue
+            id="IconLauncherShape"
+            message="Launcher icons should not fill every pixel of their square region; see the design guide for details">
+        <location
+                file="src/main/res/mipmap-mdpi/ic_launcher_mosip.png"/>
+    </issue>
+
+    <issue
+            id="IconLauncherShape"
+            message="Launcher icon used as round icon did not have a circular shape">
+        <location
+                file="src/main/res/mipmap-xxxhdpi/ic_launcher_round.png"/>
+    </issue>
+
+    <issue
+            id="IconLauncherShape"
+            message="Launcher icons should not fill every pixel of their square region; see the design guide for details">
+        <location
+                file="src/main/res/mipmap-hdpi/ic_launcher_round.png"/>
+    </issue>
+
+    <issue
+            id="IconLauncherShape"
+            message="Launcher icons should not fill every pixel of their square region; see the design guide for details">
+        <location
+                file="src/main/res/mipmap-mdpi/ic_launcher_round.png"/>
+    </issue>
+
+    <issue
+            id="IconLocation"
+            message="Found bitmap drawable `res/drawable/splash_image.png` in densityless folder">
+        <location
+                file="src/main/res/drawable/splash_image.png"/>
+    </issue>
+
+    <issue
+            id="IconDuplicates"
+            message="The following unrelated icon files have identical contents: ic_launcher_foreground.png, ic_launcher_mosip.png">
+        <location
+                file="src/main/res/mipmap-hdpi/ic_launcher_mosip.png"/>
+        <location
+                file="src/main/res/mipmap-hdpi/ic_launcher_foreground.png"/>
+    </issue>
+
+    <issue
+            id="IconDuplicates"
+            message="The following unrelated icon files have identical contents: ic_launcher_foreground.png, ic_launcher_mosip.png">
+        <location
+                file="src/main/res/mipmap-mdpi/ic_launcher_mosip.png"/>
+        <location
+                file="src/main/res/mipmap-mdpi/ic_launcher_foreground.png"/>
+    </issue>
+
+    <issue
+            id="IconDuplicates"
+            message="The following unrelated icon files have identical contents: ic_launcher_foreground.png, ic_launcher_mosip.png">
+        <location
+                file="src/main/res/mipmap-xhdpi/ic_launcher_mosip.png"/>
+        <location
+                file="src/main/res/mipmap-xhdpi/ic_launcher_foreground.png"/>
+    </issue>
+
+    <issue
+            id="IconDuplicates"
+            message="The following unrelated icon files have identical contents: ic_launcher_foreground.png, ic_launcher_mosip.png">
+        <location
+                file="src/main/res/mipmap-xxhdpi/ic_launcher_mosip.png"/>
+        <location
+                file="src/main/res/mipmap-xxhdpi/ic_launcher_foreground.png"/>
+    </issue>
+
+    <issue
+            id="IconDuplicates"
+            message="The following unrelated icon files have identical contents: ic_launcher_foreground.png, ic_launcher_mosip.png">
+        <location
+                file="src/main/res/mipmap-xxxhdpi/ic_launcher_mosip.png"/>
+        <location
+                file="src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png"/>
+    </issue>
+
+</issues>

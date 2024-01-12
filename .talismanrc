@@ -1,8 +1,8 @@
 fileignoreconfig:
   - filename: package.json
-    checksum: e09253939abe4c3509c9322ecd97ce2cdbc25fb25e55ce30ed8c70b6320aa9ca
+    checksum: 36092db5daadd744889a8b2797a0e0cf14c1eb3260dcc63d5e08798f00cb28de
   - filename: package-lock.json
-    checksum: 723cd12daeea0e51e30ec3abdba469b693bdfae12a1de6486fe8782c564340eb
+    checksum: 229b7c669673846100642867badeb547061e6caa4332e21d088b00e19c1f46d4
   - filename: lib/jsonld-signatures/suites/ed255192018/ed25519.ts
     checksum: 493b6e31144116cb612c24d98b97d8adcad5609c0a52c865a6847ced0a0ddc3a
   - filename: components/PasscodeVerify.tsx
@@ -42,7 +42,7 @@ fileignoreconfig:
   - filename: screens/Issuers/IssuersScreen.tsx
     checksum: 9c53e3770dbefe26e0de67ee4b7d5cc9c52d9823cbb136a1a5104dcb0a101071
   - filename: ios/Podfile.lock
-    checksum: 2487c4e11fb1bd95032cc4511435d9420fc0dfc62f3c015d177213fa089df7f2
+    checksum: 616fe84ac61ed732245c86b2f30ec2b5000d31fa71f05272925972e81e5188a4
   - filename: screens/Home/IntroSlidersScreen.tsx
     checksum: 72ef913857448ef05763e52e32356faa2d1f3de8130a1c638d1897f44823031f
   - filename: shared/commonUtil.ts
@@ -86,23 +86,27 @@ fileignoreconfig:
   - filename: assets/Flip_Camera_Icon.svg
     checksum: 736b5a7ddb86bd4376229ce198dbf8a663e7ac89fc3311bd4f19afd4a2b36ffd
   - filename: ios/fastlane/Fastfile
-    checksum: 086080bc7a04accf5094c457b5acf84d9fec5d7dfa72eaaaf02e433ecf4f996b    
+    checksum: 086080bc7a04accf5094c457b5acf84d9fec5d7dfa72eaaaf02e433ecf4f996b
   - filename: assets/Finger_Print_Icon.svg
     checksum: 776d4fe4fc4b54d185ccf97daf0511b9fe2c0e0f7c1a809047020e5e8a100db6
   - filename: android/app/build.gradle
     checksum: d5409b8eda2e1bf5b2552a909595a9e0aea4fd4e7572cf1746c99eee1583b83a
   - filename: .github/workflows/push-triggers.yml
-    checksum: abc19ea38c8d7b79f15695d015709cc88a34a995181aaf12bc8344f940f3cbc4
+    checksum: b756907546401ee829074984603070c2c69a682af236b8822c69a7fab8c03256
   - filename: ios/fastlane/Fastfile
     checksum: 086080bc7a04accf5094c457b5acf84d9fec5d7dfa72eaaaf02e433ecf4f996b
   - filename: android/fastlane/Fastfile
     checksum: a25f155bcbbae7ab09563637c23771f7349738f12a6ddc8ae71c29c61ed535af
   - filename: .github/workflows/internal-build.yml
-    checksum: e9b85cf0405d777faee9345269f6f9eb861ed205728dca63cf27a5db79c876a7
+    checksum: 8ebb8304ad1834a0de5eb1ec14cf9e36569361f9d73a656709ce0e8fee9c6261
   - filename: assets/Issuer_search_clearing_button.svg
     checksum: f4e8a054fc4168e08bc9e9fe3e644cebabacdfc31ef0cbe36dd281766f47df5e
   - filename: screens/Home/MyVcs/IdInputModal.tsx
-    checksum: 7ee46d8ef4761c0e9b59f3e602e6e30be5f47221817c819e91ab10ca2203089f 
+    checksum: 7ee46d8ef4761c0e9b59f3e602e6e30be5f47221817c819e91ab10ca2203089f
   - filename: screens/Home/MyVcs/OtpVerificationModal.tsx
-    checksum: 1db1f39701019383e1e40e6ed5278177e6c9bb3d28def0935cf6d4bd9e41e63a 
+    checksum: 1db1f39701019383e1e40e6ed5278177e6c9bb3d28def0935cf6d4bd9e41e63a
+  - filename: android/app/lint-baseline.xml
+    checksum: b5c0463fe4bac47004d6943a20d38ab023ff74c761723e50e8a1c2bfe717b0e1
+  - filename: scripts/check-sonar-critical-issues.sh
+    checksum: 100f7359a6b57025bd53e84f014326811f6d9fd13a63805de40ecaa64ea90cde
     version: ""

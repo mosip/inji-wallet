@@ -123,6 +123,12 @@ android {
         }
     }
 
+    lintOptions {
+        abortOnError false
+        absolutePaths false
+        baseline file("lint-baseline.xml")
+    }
+
     signingConfigs {
         release {
             // for sonarqube job we will generate dummy release keystore to sign the app as we are not doing it in workflow
