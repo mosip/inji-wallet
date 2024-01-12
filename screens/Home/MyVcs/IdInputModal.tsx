@@ -1,12 +1,18 @@
 import React from 'react';
-import {Input} from 'react-native-elements';
+import {Icon, Input, Tooltip} from 'react-native-elements';
 import {Picker} from '@react-native-picker/picker';
 import {Button, Column, Row, Text} from '../../../components/ui';
 import {Modal} from '../../../components/ui/Modal';
 import {Theme} from '../../../components/ui/styleUtils';
 import {IdInputModalProps, useIdInputModal} from './IdInputModalController';
 import {useTranslation} from 'react-i18next';
-import {I18nManager, KeyboardAvoidingView, TextInput} from 'react-native';
+import {
+  Dimensions,
+  I18nManager,
+  KeyboardAvoidingView,
+  TextInput,
+  View,
+} from 'react-native';
 import {TouchableOpacity} from 'react-native';
 import {individualId, isIOS} from '../../../shared/constants';
 import {GET_INDIVIDUAL_ID} from '../../../shared/constants';
@@ -31,6 +37,17 @@ export const IdInputModal: React.FC<IdInputModalProps> = props => {
   const setIdInputRef = (node: TextInput) =>
     !controller.idInputRef && controller.READY(node);
 
+  const tooltipContent = (
+    <Column>
+      <Text weight="semibold">
+        {t('toolTipTitle', {idType: controller.idType})}
+      </Text>
+      <View style={Theme.Styles.tooltipHrLine}></View>
+      <Text weight="regular" style={Theme.Styles.tooltipContentDescription}>
+        {t(`toolTip${controller.idType}Description`)}
+      </Text>
+    </Column>
+  );
   return (
     <Modal
       onDismiss={dismissInput}
@@ -80,6 +97,25 @@ export const IdInputModal: React.FC<IdInputModalProps> = props => {
                   selectionColor={Theme.Colors.Cursor}
                   value={controller.id}
                   keyboardType="number-pad"
+                  rightIcon={
+                    <Tooltip
+                      popover={tooltipContent}
+                      pointerStyle={{marginTop: 100}}
+                      width={Dimensions.get('screen').width * 0.85}
+                      height={Dimensions.get('screen').height * 0.18}
+                      withPointer={false}
+                      withOverlay={false}
+                      skipAndroidStatusBar={true}
+                      containerStyle={Theme.Styles.tooltipContainerStyle}>
+                      {
+                        <Icon
+                          name="infocirlceo"
+                          type="antdesign"
+                          color={Theme.Colors.tooltipIcon}
+                        />
+                      }
+                    </Tooltip>
+                  }
                   errorStyle={Theme.TextStyles.error}
                   errorMessage={controller.idError}
                   onChangeText={controller.INPUT_ID}
