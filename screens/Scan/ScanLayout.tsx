@@ -63,7 +63,7 @@ export const ScanLayout: React.FC = () => {
           component={ScanScreen}
           options={{
             headerTitleStyle: {fontSize: 30, fontFamily: 'Inter_600SemiBold'},
-            title: t('MainLayout:scan'),
+            title: t('header'),
           }}
         />
       </ScanStack.Navigator>
