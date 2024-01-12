@@ -12,11 +12,11 @@ public class GenerateUinOrVidPage extends BasePage {
     private WebElement retrieveUinVidText;
 
     @AndroidFindBy(accessibility = "getIdInputModalIndividualId")
-    @iOSXCUITFindBy(accessibility = "getIdInput")
+    @iOSXCUITFindBy(accessibility = "getIdInputModalIndividualId")
     private WebElement applicationIdTextBox;
 
     @AndroidFindBy(accessibility = "getIdButton")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`label == \"Get UIN/VID\"`]")
+    @iOSXCUITFindBy(accessibility = "getIdButton")
     private WebElement getUinOrVidButton;
 
     public GenerateUinOrVidPage(AppiumDriver driver) {

@@ -92,7 +92,7 @@ export function useScanLayout() {
     | 'message'
     | 'hint'
     | 'onButtonPress'
-    | 'customHeight'
+    | 'minHeight'
     | 'buttonText'
     | 'onStayInProgress'
     | 'onRetry'

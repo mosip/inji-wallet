@@ -13,6 +13,7 @@
                     <include name="generateMultipleVcWithSameUin"/>
                     <include name="downloadMultipleVcUsingDifferentUin"/>
                     <include name="verifyInvalidUinErrorMessage"/>
+                    <include name="verifyOtpTimeOutAndGoBack" />
                 </methods>
             </class>
             <class name="iosTestCases.VerifyWelcomePagesTest">
@@ -51,7 +52,7 @@
             </class>
             <class name="iosTestCases.VerifyHistoryTest">
                 <methods>
-                    <include name="generateAndVerifyHistory"/>
+                    <include name="downloadVcAndVerifyHistory"/>
                     <include name="verifyActivationFailedRecordInHistory"/>
                     <include name="verifyActivationFailedRecordInHistoryFromDetailedView"/>
                     <include name="activateVcAndVerifyInHistory"/>
@@ -74,15 +75,24 @@
             <class name="iosTestCases.PinVcTest">
                 <methods>
                     <include name="pinVc"/>
-                    <include name="VerifyCameraAfterPinVc"/>
-
+                    <include name="VerifyCameraOpenAfterPinVc"/>
+		    <include name="downloadVcViaEsignetAndPinUnpin" />
                 </methods>
             </class>
             <class name="iosTestCases.ChangeLanguageTest">
                 <methods>
                     <include name="changeLanguage"/>
                     <include name="languageShouldBeInNativeLanguages"/>
+		    <include name="verifyTuvaliVersion" />
                     <include name="changeLanguage"/>
+		    <include name="changeLanguageToArabic" />
+		    <include name="changeLanguageToFilipionAndSearchIssuer" />
+		    <include name="changeLanguageToFilipionAndSearchIssuerEnterIncompleteName" />
+		    <include name="changeLanguageToHindiAndSearchIssuer" />
+		    <include name="changeLanguageToFilipionAndcheckInjiTour" />
+		    <include name="changeLanguageToHindiAndcheckInjiTour" />
+		    <include name="changeLanguageToTamilAndcheckInjiTour" />
+		    <include name="changeLanguageToKannadAndcheckInjiTour" />
                 </methods>
             </class>
             <class name="iosTestCases.ShareVcTest">
@@ -100,6 +110,9 @@
                     <include name="retrivingUinInOtherEnv"/>
                     <include name="downloadAndVerifyVcInTwoEnv"/>
                     <include name="downloadVcAndActivateItInOtherEnv"/>
+                    <include name="downloadAndVerifyVcInNewEnvForEsignet" />
+		            <include name="downloadAndVerifyVcInInvalidEnvForEsignet" />
+		            <include name="downloadAndVerifyVcInInvalidEnvForEsignetInFillpino" />
                 </methods>
             </class>
             <class name="iosTestCases.ChangeLanguageTest">
@@ -108,6 +121,11 @@
                     <include name="changeLanguageToArabic"/>
                 </methods>
             </class>
+            <class name="iosTestCases.AboutInjiTest">
+				<methods>
+					<include name="copyAppId" />
+				</methods>
+			</class>
         </classes>
     </test>
 </suite>

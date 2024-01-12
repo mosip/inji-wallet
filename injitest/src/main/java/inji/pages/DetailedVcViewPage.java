@@ -3,9 +3,10 @@ package inji.pages;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public class DetailedVcViewPage extends BasePage {
+public class DetailedVcViewPage extends BasePage{
     @AndroidFindBy(accessibility = "idDetailsHeader")
     @iOSXCUITFindBy(accessibility = "idDetailsHeader")
     private WebElement detailedVcViewPageTitle;
@@ -46,10 +47,13 @@ public class DetailedVcViewPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "emailIdValue")
     private WebElement emailIdValue;
 
-    @AndroidFindBy(accessibility = "enableVerification")
+    @AndroidFindBy(uiAutomator = "new UiScrollable(new UiSelector()).scrollIntoView(new UiSelector().description(\"enableVerification\"));")
     @iOSXCUITFindBy(accessibility = "enableVerification")
     private WebElement activateButton;
-
+    
+    @iOSXCUITFindBy(accessibility = "enableVerification")
+    private WebElement activeButtonIos;
+    
     @AndroidFindBy(accessibility = "profileAuthenticated")
     @iOSXCUITFindBy(accessibility = "profileAuthenticated")
     private WebElement profileAuthenticated;
@@ -81,6 +85,10 @@ public class DetailedVcViewPage extends BasePage {
     @AndroidFindBy(accessibility = "esignet-logo")
     @iOSXCUITFindBy(xpath = "(//XCUIElementTypeImage)[3]")
     private WebElement esignetLogo;
+    
+    @AndroidFindBy(accessibility = "arrowLeft")
+    @iOSXCUITFindBy(accessibility = "arrowLeft")
+    public WebElement backArrow;
 
     public DetailedVcViewPage(AppiumDriver driver) {
         super(driver);
@@ -130,8 +138,13 @@ public class DetailedVcViewPage extends BasePage {
         return this.isElementDisplayed(activateButton);
     }
 
-    public PleaseConfirmPopupPage clickOnActivateButton() {
+    public PleaseConfirmPopupPage clickOnActivateButtonAndroid(){
         clickOnElement(activateButton);
+        return new PleaseConfirmPopupPage(driver);
+    }
+    
+    public PleaseConfirmPopupPage clickOnActivateButtonIos(){  //Scroll for ios need to be done
+        clickOnElement(activeButtonIos);
         return new PleaseConfirmPopupPage(driver);
     }
 
@@ -139,8 +152,8 @@ public class DetailedVcViewPage extends BasePage {
         return this.isElementDisplayed(profileAuthenticated);
     }
 
-    public HomePage clickOnCrossIcon() {
-        clickOnElement(crossIcon);
+    public HomePage clickOnBackArrow() {
+        clickOnElement(backArrow);
         return new HomePage(driver);
     }
 

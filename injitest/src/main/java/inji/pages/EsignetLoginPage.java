@@ -1,6 +1,7 @@
 package inji.pages;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.HidesKeyboard;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
@@ -99,6 +100,7 @@ public class EsignetLoginPage extends BasePage {
     }
 
     public void clickOnVerifyButton() {
+    	((HidesKeyboard) driver).hideKeyboard();
         clickOnElement(verifyButton);
     }
 
