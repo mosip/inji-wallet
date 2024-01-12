@@ -178,7 +178,7 @@ export class SvgImage {
     );
   }
   static SuccessLogo() {
-    return <SuccessLogo />;
+    return <SuccessLogo {...testIDProps('SuccessLogo')} />;
   }
   static NoInternetConnection() {
     return (

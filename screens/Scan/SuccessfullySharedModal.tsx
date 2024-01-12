@@ -29,13 +29,13 @@ export const SharingSuccessModal: React.FC<
           style={Theme.SelectVcOverlayStyles.sharedSuccessfully}>
           {SvgImage.SuccessLogo()}
           <Text margin="20 0" style={Theme.TextStyles.bold} size={'large'}>
-            {t('ScanScreen:status.accepted.title')}
+            {t('status.accepted.title')}
           </Text>
           <Text
             align="center"
             style={Theme.TextStyles.regular}
             color={Theme.Colors.statusMessage}>
-            {t('ScanScreen:status.accepted.message')}
+            {t('status.accepted.message')}
           </Text>
           <Text style={Theme.TextStyles.bold}>
             {sendVcScreenController.receiverInfo.name}
