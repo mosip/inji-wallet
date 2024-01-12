@@ -1,18 +1,16 @@
 import React from 'react';
-import {Dimensions, I18nManager} from 'react-native';
-import {Icon, Input} from 'react-native-elements';
-import {Button, Centered, Column, Row, Text} from '../../../components/ui';
+import {Dimensions, I18nManager, View} from 'react-native';
+import {Icon, Input, Tooltip} from 'react-native-elements';
+import {Button, Column, Row, Text} from '../../../components/ui';
 import {Modal} from '../../../components/ui/Modal';
 import {Theme} from '../../../components/ui/styleUtils';
 import {
   GetIdInputModalProps,
   useGetIdInputModal,
 } from './GetIdInputModalController';
-import {KeyboardAvoidingView, Platform} from 'react-native';
+import {KeyboardAvoidingView} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {MessageOverlay} from '../../../components/MessageOverlay';
-import Tooltip from '../../../lib/react-native-elements/tooltip/Tooltip';
-import {color} from 'react-native-elements/dist/helpers';
 import {isIOS} from '../../../shared/constants';
 import testIDProps from '../../../shared/commonUtil';
 
@@ -22,6 +20,15 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = props => {
 
   const inputLabel = t('enterApplicationId');
 
+  const tooltipContent = (
+    <Column>
+      <Text weight="semibold">{t('toolTipTitle')}</Text>
+      <View style={Theme.Styles.tooltipHrLine}></View>
+      <Text weight="regular" style={Theme.Styles.tooltipContentDescription}>
+        {t(`toolTipDescription`)}
+      </Text>
+    </Column>
+  );
   return (
     <Modal
       testID="getIdHeader"
@@ -60,37 +67,20 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = props => {
                 keyboardType="number-pad"
                 rightIcon={
                   <Tooltip
-                    popover={<Text>{t('qstnMarkToolTip')}</Text>}
-                    width={Dimensions.get('screen').width * 0.8}
-                    height={Dimensions.get('screen').height * 0.2}
-                    backgroundColor={'lightgray'}
-                    withPointer={true}
+                    popover={tooltipContent}
+                    width={Dimensions.get('screen').width * 0.85}
+                    height={Dimensions.get('screen').height * 0.25}
+                    withPointer={false}
+                    withOverlay={false}
                     skipAndroidStatusBar={true}
-                    onOpen={controller.ACTIVATE_ICON_COLOR}
-                    onClose={controller.DEACTIVATE_ICON_COLOR}>
-                    <Centered width={32} fill>
-                      {controller.isInvalid ? (
-                        <Icon
-                          {...testIDProps('getIdError')}
-                          name="error"
-                          size={18}
-                          color={
-                            !controller.iconColor
-                              ? Theme.Colors.errorMessage
-                              : Theme.Colors.Icon
-                          }
-                        />
-                      ) : (
-                        <Icon
-                          {...testIDProps('getIdHelp')}
-                          name={'help'}
-                          size={18}
-                          color={
-                            !controller.iconColor ? null : Theme.Colors.Icon
-                          }
-                        />
-                      )}
-                    </Centered>
+                    containerStyle={Theme.Styles.tooltipContainerStyle}>
+                    {
+                      <Icon
+                        name="infocirlceo"
+                        type="antdesign"
+                        color={Theme.Colors.tooltipIcon}
+                      />
+                    }
                   </Tooltip>
                 }
                 errorStyle={{color: Theme.Colors.errorMessage}}

@@ -44,6 +44,8 @@ const Colors = {
   stroke: '#ee8123',
   iconBg: '#ffa85a',
   warningLogoBg: '#FFF7E5',
+  toolTip: '#B7B7B7',
+  toolTipContent: '#4B4B4B',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -116,6 +118,7 @@ export const DefaultTheme = {
     linearGradientEnd: Colors.endColor,
     LinearGradientStroke: Colors.stroke,
     warningLogoBgColor: Colors.warningLogoBg,
+    tooltipIcon: Colors.toolTip,
   },
   Styles: StyleSheet.create({
     title: {
@@ -538,14 +541,14 @@ export const DefaultTheme = {
     },
     idInputBottom: {
       position: 'relative',
-      bottom: 14,
+      bottom: 18,
       borderBottomColor: Colors.Orange,
       borderBottomWidth: 1,
       minWidth: 180,
     },
     idInput: {
       position: 'relative',
-      bottom: 14,
+      bottom: 18,
       minWidth: 180,
     },
     getId: {
@@ -595,6 +598,22 @@ export const DefaultTheme = {
       position: 'absolute',
     },
     boxShadow: generateBoxShadowStyle(),
+    tooltipContainerStyle: {
+      backgroundColor: '#FAFAFA',
+      borderWidth: 1,
+      borderColor: '#E0E0E0',
+      marginTop: 20,
+      marginLeft: 15,
+    },
+    tooltipContentDescription: {
+      color: Colors.toolTipContent,
+      marginTop: 10,
+    },
+    tooltipHrLine: {
+      borderBottomColor: Colors.Grey5,
+      borderBottomWidth: 1,
+      marginTop: 10,
+    },
   }),
   QrCodeStyles: StyleSheet.create({
     magnifierZoom: {
