@@ -358,7 +358,6 @@
   "MainLayout": {
     "home": "Hogar",
     "share": "Compartir",
-    "scan": "Escanear",
     "history": "Historia",
     "request": "Pedido",
     "settings": "Ajustes"
@@ -468,7 +467,7 @@
     "gotoSettings": "Ir a la configuración"
   },
   "ScanScreen": {
-    "header": "Escanear código QR",
+    "header": "Escanear",
     "noShareableVcs": "No hay tarjetas para compartir disponibles.",
     "sharingVc": "tarjeta compartida",
     "bluetoothStateIos": "Bluetooth está desactivado, actívelo desde el centro de control",

@@ -358,7 +358,6 @@
   "MainLayout": {
     "home": "Home",
     "share": "Share",
-    "scan": "Scan",
     "history": "History",
     "request": "Request",
     "settings": "Settings"
@@ -471,7 +470,7 @@
     "gotoSettings": "Go to settings"
   },
   "ScanScreen": {
-    "header": "Scan QR Code",
+    "header": "Scan",
     "noShareableVcs": "No shareable cards are available.",
     "sharingVc": "Sharing card",
     "bluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
