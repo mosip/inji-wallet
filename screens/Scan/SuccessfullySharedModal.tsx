@@ -55,7 +55,7 @@ export const SharingSuccessModal: React.FC<
               onPress={scanLayoutController.DISMISS}
             />
             <Text align="center" weight="bold">
-              {t('ScanScreen:status.accepted.home')}
+              {t('status.accepted.home')}
             </Text>
           </Pressable>
           <Pressable testID="successfulVcSharedHistoryIcon">
@@ -69,7 +69,7 @@ export const SharingSuccessModal: React.FC<
               onPress={scanLayoutController.GOTO_HISTORY}
             />
             <Text align="center" weight="bold">
-              {t('ScanScreen:status.accepted.history')}
+              {t('status.accepted.history')}
             </Text>
           </Pressable>
         </Row>
