@@ -1,6 +1,6 @@
 import React from 'react';
-import {Dimensions, I18nManager, View} from 'react-native';
-import {Icon, Input, Tooltip} from 'react-native-elements';
+import {I18nManager, KeyboardAvoidingView, Dimensions} from 'react-native';
+import {Icon, Input} from 'react-native-elements';
 import {Button, Column, Row, Text} from '../../../components/ui';
 import {Modal} from '../../../components/ui/Modal';
 import {Theme} from '../../../components/ui/styleUtils';
@@ -8,11 +8,11 @@ import {
   GetIdInputModalProps,
   useGetIdInputModal,
 } from './GetIdInputModalController';
-import {KeyboardAvoidingView} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {MessageOverlay} from '../../../components/MessageOverlay';
 import {isIOS} from '../../../shared/constants';
 import testIDProps from '../../../shared/commonUtil';
+import {CustomTooltip} from '../../../components/ui/ToolTip';
 
 export const GetIdInputModal: React.FC<GetIdInputModalProps> = props => {
   const {t} = useTranslation('GetIdInputModal');
@@ -20,15 +20,6 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = props => {
 
   const inputLabel = t('enterApplicationId');
 
-  const tooltipContent = (
-    <Column>
-      <Text weight="semibold">{t('toolTipTitle')}</Text>
-      <View style={Theme.Styles.tooltipHrLine}></View>
-      <Text weight="regular" style={Theme.Styles.tooltipContentDescription}>
-        {t(`toolTipDescription`)}
-      </Text>
-    </Column>
-  );
   return (
     <Modal
       testID="getIdHeader"
@@ -66,22 +57,19 @@ export const GetIdInputModal: React.FC<GetIdInputModalProps> = props => {
                 value={controller.id}
                 keyboardType="number-pad"
                 rightIcon={
-                  <Tooltip
-                    popover={tooltipContent}
-                    width={Dimensions.get('screen').width * 0.85}
+                  <CustomTooltip
+                    title={t('toolTipTitle')}
+                    description={t(`toolTipDescription`)}
                     height={Dimensions.get('screen').height * 0.25}
-                    withPointer={false}
-                    withOverlay={false}
-                    skipAndroidStatusBar={true}
-                    containerStyle={Theme.Styles.tooltipContainerStyle}>
-                    {
+                    width={Dimensions.get('screen').width * 0.85}
+                    triggerComponent={
                       <Icon
                         name="infocirlceo"
                         type="antdesign"
                         color={Theme.Colors.tooltipIcon}
                       />
                     }
-                  </Tooltip>
+                  />
                 }
                 errorStyle={{color: Theme.Colors.errorMessage}}
                 errorMessage={controller.idError}

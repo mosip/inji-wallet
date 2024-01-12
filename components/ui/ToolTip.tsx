@@ -1,0 +1,38 @@
+import {Tooltip} from 'react-native-elements';
+import {View} from 'react-native';
+import {Column} from './Layout';
+import {Text} from './Text';
+import React from 'react';
+import {Theme} from './styleUtils';
+
+export const CustomTooltip: React.FC<CustomTooltipProps> = props => {
+  const tooltipContent = (
+    <Column>
+      <Text weight="semibold">{props.title}</Text>
+      <View style={Theme.Styles.tooltipHrLine}></View>
+      <Text weight="regular" style={Theme.Styles.tooltipContentDescription}>
+        {props.description}
+      </Text>
+    </Column>
+  );
+  return (
+    <Tooltip
+      popover={tooltipContent}
+      width={props.width}
+      height={props.height}
+      withPointer={false}
+      withOverlay={false}
+      skipAndroidStatusBar={true}
+      containerStyle={Theme.Styles.tooltipContainerStyle}>
+      {props.triggerComponent}
+    </Tooltip>
+  );
+};
+
+interface CustomTooltipProps {
+  title: string;
+  description: string;
+  width: number;
+  height: number;
+  triggerComponent: React.ReactElement;
+}

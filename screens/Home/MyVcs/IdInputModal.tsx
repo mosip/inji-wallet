@@ -1,5 +1,5 @@
 import React from 'react';
-import {Icon, Input, Tooltip} from 'react-native-elements';
+import {Icon, Input} from 'react-native-elements';
 import {Picker} from '@react-native-picker/picker';
 import {Button, Column, Row, Text} from '../../../components/ui';
 import {Modal} from '../../../components/ui/Modal';
@@ -7,17 +7,20 @@ import {Theme} from '../../../components/ui/styleUtils';
 import {IdInputModalProps, useIdInputModal} from './IdInputModalController';
 import {useTranslation} from 'react-i18next';
 import {
-  Dimensions,
   I18nManager,
   KeyboardAvoidingView,
   TextInput,
-  View,
+  TouchableOpacity,
+  Dimensions,
 } from 'react-native';
-import {TouchableOpacity} from 'react-native';
-import {individualId, isIOS} from '../../../shared/constants';
-import {GET_INDIVIDUAL_ID} from '../../../shared/constants';
+import {
+  individualId,
+  isIOS,
+  GET_INDIVIDUAL_ID,
+} from '../../../shared/constants';
 import {MessageOverlay} from '../../../components/MessageOverlay';
 import testIDProps from '../../../shared/commonUtil';
+import {CustomTooltip} from '../../../components/ui/ToolTip';
 
 export const IdInputModal: React.FC<IdInputModalProps> = props => {
   const {t} = useTranslation('IdInputModal');
@@ -37,17 +40,6 @@ export const IdInputModal: React.FC<IdInputModalProps> = props => {
   const setIdInputRef = (node: TextInput) =>
     !controller.idInputRef && controller.READY(node);
 
-  const tooltipContent = (
-    <Column>
-      <Text weight="semibold">
-        {t('toolTipTitle', {idType: controller.idType})}
-      </Text>
-      <View style={Theme.Styles.tooltipHrLine}></View>
-      <Text weight="regular" style={Theme.Styles.tooltipContentDescription}>
-        {t(`toolTip${controller.idType}Description`)}
-      </Text>
-    </Column>
-  );
   return (
     <Modal
       onDismiss={dismissInput}
@@ -98,23 +90,19 @@ export const IdInputModal: React.FC<IdInputModalProps> = props => {
                   value={controller.id}
                   keyboardType="number-pad"
                   rightIcon={
-                    <Tooltip
-                      popover={tooltipContent}
-                      pointerStyle={{marginTop: 100}}
+                    <CustomTooltip
+                      title={t('toolTipTitle', {idType: controller.idType})}
+                      description={t(`toolTip${controller.idType}Description`)}
                       width={Dimensions.get('screen').width * 0.85}
                       height={Dimensions.get('screen').height * 0.18}
-                      withPointer={false}
-                      withOverlay={false}
-                      skipAndroidStatusBar={true}
-                      containerStyle={Theme.Styles.tooltipContainerStyle}>
-                      {
+                      triggerComponent={
                         <Icon
                           name="infocirlceo"
                           type="antdesign"
                           color={Theme.Colors.tooltipIcon}
                         />
                       }
-                    </Tooltip>
+                    />
                   }
                   errorStyle={Theme.TextStyles.error}
                   errorMessage={controller.idError}
