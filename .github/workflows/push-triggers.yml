@@ -65,8 +65,7 @@ jobs:
       - name: Check for critical bugs
         run: |
           cd scripts
-          BRANCH_NAME=${GITHUB_REF##*/}
-          ./check-sonar-critical-issues.sh BRANCH_NAME
+          ./check-sonar-critical-issues.sh
       - uses: 8398a7/action-slack@v3
         if: failure()
         with:
