@@ -137,7 +137,7 @@ export const IssuersScreen: React.FC<
     return (
       <MessageOverlay
         isVisible={controller.isBiometricsCancelled}
-        customHeight={'auto'}
+        minHeight={'auto'}
         title={t('errors.biometricsCancelled.title')}
         message={t('errors.biometricsCancelled.message')}
         onBackdropPress={controller.RESET_ERROR}>

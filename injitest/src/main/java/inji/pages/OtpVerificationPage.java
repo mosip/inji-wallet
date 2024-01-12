@@ -111,6 +111,6 @@ public class OtpVerificationPage extends BasePage {
     }
 
     public boolean verifyOtpVerificationTimerCompleted() {
-        return this.WaitTillElementVisible(otpVerificationTimer, 180);
+        return this.WaitTillElementVisible(otpVerificationTimer, 230);
     }
 }

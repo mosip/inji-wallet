@@ -74,7 +74,7 @@ public class UnlockWithPasscodeTest extends IosBaseTest {
         EnterYourPasscodePage enterYourPasscodePage = unlockApplicationPage.clickOnUnlockApplicationButton();
 
         assertTrue(enterYourPasscodePage.isEnterYourPasscodePageLoaded(), "Verify if enter your passcode page is displayed");
-        enterYourPasscodePage.enterPasscodeOnPasscodePage(TestDataReader.readData("invalidPasscode"), Target.IOS);
+        enterYourPasscodePage.enterPasscodeOnPasscodePage(TestDataReader.readData("invalidpasscode"), Target.IOS);
 
         assertTrue(confirmPasscode.isPasscodeInvalidMessageDisplayed(), "verify if invalid passcode is displayed");
     	

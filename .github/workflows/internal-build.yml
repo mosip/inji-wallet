@@ -168,7 +168,7 @@ jobs:
         if: failure()
         with:
           status: ${{ job.status }}
-          fields: repo,message,author,commit,workflow,job
+          fields: repo,message,author,commit,workflow,job,job_name
         env:
           SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK_INJI_TEAM }}'
 

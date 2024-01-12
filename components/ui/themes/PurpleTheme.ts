@@ -38,7 +38,7 @@ const Colors = {
   Purple: '#70308C',
   LightPurple: '#F3E2FF',
   TimeoutHintBoxColor: '#FBF5FF',
-  TimeoutHintBoxBorder: '#FFF7E5',
+  TimeoutHintBoxBorder: '#F3E2FF',
   TimeoutHintText: '#1C1C1C',
   resendCodeTimer: '#555555',
   uncheckedIcon: '#DBDBDB',
