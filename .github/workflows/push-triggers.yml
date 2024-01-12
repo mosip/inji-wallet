@@ -65,11 +65,12 @@ jobs:
       - name: Check for critical bugs
         run: |
           cd scripts
-          ./check-sonar-critical-issues.sh
+          BRANCH_NAME=${GITHUB_REF##*/}
+          ./check-sonar-critical-issues.sh BRANCH_NAME
       - uses: 8398a7/action-slack@v3
         if: failure()
         with:
           status: ${{ job.status }}
-          fields: repo,message,author,commit,workflow,job
+          fields: repo,message,author,commit,workflow,job,job_name
         env:
           SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK_INJI_TEAM }}'
