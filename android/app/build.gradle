@@ -4,7 +4,6 @@ plugins {
 
 apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
-apply plugin: "org.sonarqube"
 
 react {
     /* Folders */
@@ -131,36 +130,13 @@ android {
 
     signingConfigs {
         release {
-            // for sonarqube job we will generate dummy release keystore to sign the app as we are not doing it in workflow
-            def hasSonarqube = System.properties.containsKey("sonarqube")
-            def keystore = file('release.keystore').exists() ? file('release.keystore') : file('dummyrelease.keystore')
+            def keystore = file('release.keystore')
             storeFile file("$keystore")
-            if (hasSonarqube && !keystore.exists() ) {
-                exec {
-                    commandLine 'keytool',
-                            '-genkey',
-                            '-v',
-                            '-storetype', 'PKCS12',
-                            '-keyalg', 'RSA',
-                            '-keysize', '2048',
-                            '-validity', '10000',
-                            '-storepass', 'password',
-                            '-keypass', 'password',
-                            '-alias', 'androidreleasekey',
-                            '-keystore', 'dummyrelease.keystore',
-                            '-dname', 'CN=,OU=,O=,L=,S=,C=US'
-                }
-                storePassword "password"
-                keyAlias "androidreleasekey"
-                keyPassword "password"
-            }
-            else{
-                def keystoreAlias = System.getenv("RELEASE_KEYSTORE_ALIAS")
-                def keystorePass = System.getenv("RELEASE_KEYSTORE_PASSWORD")
-                storePassword "$keystorePass"
-                keyAlias "$keystoreAlias"
-                keyPassword "$keystorePass"
-            }
+            def keystoreAlias = System.getenv("RELEASE_KEYSTORE_ALIAS")
+            def keystorePass = System.getenv("RELEASE_KEYSTORE_PASSWORD")
+            storePassword "$keystorePass"
+            keyAlias "$keystoreAlias"
+            keyPassword "$keystorePass"
             v2SigningEnabled true
             v1SigningEnabled false
         }
@@ -239,15 +215,6 @@ android {
         }
     }
 
-    android.applicationVariants.all { variant ->
-        variant.outputs.all { output ->
-            if (variant.flavorName == "collab") {
-                sonarqube {
-                    androidVariant variant.name
-                }
-            }
-        }
-    }
 }
 
 dependencies {

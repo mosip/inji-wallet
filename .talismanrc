@@ -90,7 +90,7 @@ fileignoreconfig:
   - filename: assets/Finger_Print_Icon.svg
     checksum: 776d4fe4fc4b54d185ccf97daf0511b9fe2c0e0f7c1a809047020e5e8a100db6
   - filename: android/app/build.gradle
-    checksum: d5409b8eda2e1bf5b2552a909595a9e0aea4fd4e7572cf1746c99eee1583b83a
+    checksum: f8d34e6fb45518fe527ce263b4a22c7e507d8904f215e06a338a55713dc72177
   - filename: .github/workflows/push-triggers.yml
     checksum: b756907546401ee829074984603070c2c69a682af236b8822c69a7fab8c03256
   - filename: ios/fastlane/Fastfile
