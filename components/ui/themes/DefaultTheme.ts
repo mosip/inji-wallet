@@ -46,6 +46,7 @@ const Colors = {
   warningLogoBg: '#FFF7E5',
   toolTip: '#B7B7B7',
   toolTipContent: '#4B4B4B',
+  toolTipPointer: '#E0E0E0',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -119,6 +120,7 @@ export const DefaultTheme = {
     LinearGradientStroke: Colors.stroke,
     warningLogoBgColor: Colors.warningLogoBg,
     tooltipIcon: Colors.toolTip,
+    toolTipPointerColor: Colors.toolTipPointer,
   },
   Styles: StyleSheet.create({
     title: {
@@ -602,7 +604,6 @@ export const DefaultTheme = {
       backgroundColor: '#FAFAFA',
       borderWidth: 1,
       borderColor: '#E0E0E0',
-      marginTop: 20,
       marginLeft: 15,
     },
     tooltipContentDescription: {

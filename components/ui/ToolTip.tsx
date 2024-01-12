@@ -1,6 +1,6 @@
 import {Tooltip} from 'react-native-elements';
 import {View} from 'react-native';
-import {Column} from './Layout';
+import {Centered, Column} from './Layout';
 import {Text} from './Text';
 import React from 'react';
 import {Theme} from './styleUtils';
@@ -20,11 +20,14 @@ export const CustomTooltip: React.FC<CustomTooltipProps> = props => {
       popover={tooltipContent}
       width={props.width}
       height={props.height}
-      withPointer={false}
+      withPointer={true}
       withOverlay={false}
       skipAndroidStatusBar={true}
+      pointerColor={Theme.Colors.toolTipPointerColor}
       containerStyle={Theme.Styles.tooltipContainerStyle}>
-      {props.triggerComponent}
+      <Centered width={32} fill>
+        {props.triggerComponent}
+      </Centered>
     </Tooltip>
   );
 };

@@ -49,6 +49,7 @@ const Colors = {
   warningLogoBg: '#F3E2FF',
   tooltip: '#B7B7B7',
   toolTipContent: '#4B4B4B',
+  toolTipPointer: '#E0E0E0',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -122,6 +123,7 @@ export const PurpleTheme = {
     LinearGradientStroke: Colors.stroke,
     warningLogoBgColor: Colors.warningLogoBg,
     tooltipIcon: Colors.tooltip,
+    toolTipPointerColor: Colors.toolTipPointer,
   },
   Styles: StyleSheet.create({
     title: {
@@ -605,7 +607,6 @@ export const PurpleTheme = {
       backgroundColor: '#FAFAFA',
       borderWidth: 1,
       borderColor: '#E0E0E0',
-      marginTop: 20,
       marginLeft: 15,
     },
     tooltipContentDescription: {
