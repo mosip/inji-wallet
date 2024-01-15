@@ -215,7 +215,7 @@ export const IssuersScreen: React.FC<
             )}
           </Row>
           <Text
-            {...testIDProps('issuersScreenDescription')}
+            testID="issuersScreenDescription"
             style={{
               ...Theme.TextStyles.regularGrey,
               paddingTop: 0.5,
