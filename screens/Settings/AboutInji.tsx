@@ -115,6 +115,7 @@ export const AboutInji: React.FC<AboutInjiProps> = ({appId}) => {
                   aboutInjiUrl && Linking.openURL(aboutInjiUrl);
                 }}>
                 <Text
+                  testID="clickHere"
                   color={Theme.Colors.AddIdBtnBg}
                   style={{maxWidth: 150, paddingTop: 3}}
                   weight="bold">
