@@ -43,7 +43,7 @@ export const API_CACHED_STORAGE_KEYS = {
   fetchIssuerConfig: (issuerId: string) =>
     `CACHE_FETCH_ISSUER_CONFIG_${issuerId}`,
   fetchIssuerWellknownConfig: (issuerId: string) =>
-      `CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_${issuerId}`,
+    `CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_${issuerId}`,
 };
 
 async function generateHmac(
@@ -300,6 +300,13 @@ class Storage {
       const path = getFilePath(key);
       const isFileExists = await FileStorage.exists(path);
       if (isFileExists) {
+        // TEMP: remove .hmac & .hmace files
+        if (await FileStorage.exists(path + '.hmac')) {
+          FileStorage.removeItem(path + '.hmac');
+        }
+        if (await FileStorage.exists(path + '.hmace')) {
+          FileStorage.removeItem(path + '.hmace');
+        }
         return await FileStorage.removeItem(path);
       } else {
         console.log('file not exist`s');
