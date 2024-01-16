@@ -33,9 +33,9 @@ SplashScreen.preventAutoHideAsync();
 //  an occurrence of a bug with minimal residual code changes, this should
 //  be removed once the bug cause is determined & fixed, ref: INJI-222
 const DecryptErrorAlert = (controller, t) => {
-  const heading = t('errors.decryptionFailed');
-  const desc = t('errors.decryptionFailed');
-  var ignoreBtnTxt = t('ignore');
+  var heading = t('errors.decryptionFailed');
+  var desc = t('errors.decryptionFailed');
+  const ignoreBtnTxt = t('ignore');
   Alert.alert(heading, desc, [
     {
       text: ignoreBtnTxt,
