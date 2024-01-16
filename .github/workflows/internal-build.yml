@@ -83,6 +83,7 @@ on:
 jobs:
   build-android:
     if: ${{ inputs.buildFor == 'Both[Android and IOS]' || inputs.buildFor == 'Android'}}
+    needs: check-sonar-critical-issues
     uses: mosip/kattu/.github/workflows/android-publish.yml@master
     with:
       RELEASE: ${{ inputs.release }}
@@ -108,6 +109,7 @@ jobs:
 
   build-ios:
     if: ${{ inputs.buildFor == 'Both[Android and IOS]' || inputs.buildFor == 'IOS'}}
+    needs: check-sonar-critical-issues
     uses: mosip/kattu/.github/workflows/ios-publish.yml@master
     with:
       NODE_VERSION: '18.x'
