@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       runName:
-        description: 'Build App For'
+        description: 'Run name'
         required: true
         default: 'Device-pool/Test-name/Env'
         type: string
@@ -85,59 +85,59 @@ jobs:
 
       - name: Configure AWS CLI 
         run: | # need to add the secrets to update
-          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }} 
-          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws configure set region ${{ secrets.AWS_REGION }}
+          aws configure set aws_access_key_id ${{ secrets.AWS_DEVICE_FARM_ACCESS_KEY }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_DEVICE_FARM_SECRET_KEY }}
+          aws configure set region us-west-2
         
       - name: Android - Automation
         if: ${{ github.event.inputs.buildFor == 'Both[Android and IOS]' || github.event.inputs.buildFor == 'Android'}}
         id: android-run
         run: |
           cd injitest/scripts/ui_automation
-          ./automation_trigger.sh "$PROJECT_ARN" "$PLATFORM" "Android"
+          ./automation_trigger.sh "Android" "$RUN_NAME"
 
-          if [[ ${{ github.event.inputs.buildFor }} == 'Android' ]]; then
-            ./download_artifacts.sh "${{ steps.android-run.outputs.run_arn }}" "Android"
-          fi
+          # if [[ ${{ github.event.inputs.buildFor }} == 'Android' ]]; then
+          #   ./download_artifacts.sh "${{ steps.android-run.outputs.run_arn }}" "Android"
+          # fi
         env:
-          PROJECT_ARN: ${{ secrets.YOUR_DEVICE_FARM_PROJECT_ARN }}
+          RUN_NAME: ${{ github.event.inputs.runName }}
 
-      - name: IOS - Automation
-        if: ${{ github.event.inputs.buildFor == 'Both[Android and IOS]' || github.event.inputs.buildFor == 'IOS'}}
-        id: ios-run
-        run: |
-          cd injitest/scripts/ui_automation
-          ./automation_trigger.sh "$PROJECT_ARN" "$PLATFORM" "IOS"
+      # - name: IOS - Automation
+      #   if: ${{ github.event.inputs.buildFor == 'Both[Android and IOS]' || github.event.inputs.buildFor == 'IOS'}}
+      #   id: ios-run
+      #   run: |
+      #     cd injitest/scripts/ui_automation
+      #     ./automation_trigger.sh "$PROJECT_ARN" "$PLATFORM" "IOS"
 
-          if [[ ${{ github.event.inputs.buildFor }} == 'IOS' ]]; then
-            ./download_artifacts.sh "${{ steps.ios-run.outputs.run_arn }}" "IOS"
-          fi
-        env:
-          PROJECT_ARN: ${{ secrets.YOUR_DEVICE_FARM_PROJECT_ARN }}
+      #     if [[ ${{ github.event.inputs.buildFor }} == 'IOS' ]]; then
+      #       ./download_artifacts.sh "${{ steps.ios-run.outputs.run_arn }}" "IOS"
+      #     fi
+      #   env:
+      #     PROJECT_ARN: ${{ secrets.YOUR_DEVICE_FARM_PROJECT_ARN }}
 
-      - name: Artifacts download
-        if: ${{ github.event.inputs.buildFor == 'Both[Android and IOS]' }}
-        id: artifact-download
-        run: |
-          cd injitest/scripts/ui_automation
-          ./download_artifacts.sh "${{ steps.android-run.outputs.run_arn }}" "Android"
-          ./download_artifacts.sh "${{ steps.ios-run.outputs.run_arn }}" "IOS"
+      # - name: Artifacts download
+      #   if: ${{ github.event.inputs.buildFor == 'Both[Android and IOS]' }}
+      #   id: artifact-download
+      #   run: |
+      #     cd injitest/scripts/ui_automation
+      #     ./download_artifacts.sh "${{ steps.android-run.outputs.run_arn }}" "Android"
+      #     ./download_artifacts.sh "${{ steps.ios-run.outputs.run_arn }}" "IOS"
 
-      - name: Upload Artifact to Actions
-        uses: actions/upload-artifact@v3.1.1
-        with:
-          name: Automation Artifacts
-          path: injitest/scripts/ui_automation/artifacts/
-          retention-days: 5
+      # - name: Upload Artifact to Actions
+      #   uses: actions/upload-artifact@v3.1.1
+      #   with:
+      #     name: Automation Artifacts
+      #     path: injitest/scripts/ui_automation/artifacts/
+      #     retention-days: 5
       
-      - name: Update slack channel
-        if: always()
-        uses: 8398a7/action-slack@v3
-        with:
-          status: ${{ job.status }}
-          fields: repo,message,author,commit,workflow,job
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_INJI_TEAM }}
+      # - name: Update slack channel
+      #   if: always()
+      #   uses: 8398a7/action-slack@v3
+      #   with:
+      #     status: ${{ job.status }}
+      #     fields: repo,message,author,commit,workflow,job
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_INJI_TEAM }}
 
 
 
