@@ -9,11 +9,11 @@ import org.testng.Assert;
 public class WelcomePage extends BasePage {
 
     @AndroidFindBy(accessibility = "introTitle")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Welcome!\"`]")
+    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText[@name=\"introTitle\"])[1]")
     private WebElement welcomeText;
 
     @AndroidFindBy(accessibility = "introText")
-    @iOSXCUITFindBy(xpath = "//*[contains(@value,'Keep your digital')]")
+    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText[@name=\"introText\"])[1]")
     private WebElement welcomeTextDescription;
 
     @AndroidFindBy(accessibility = "skip")
@@ -21,7 +21,7 @@ public class WelcomePage extends BasePage {
     private WebElement skipButton;
 
     @AndroidFindBy(accessibility = "next")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"Next\"`][4]")
+    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeOther[@name=\"Susunod\" or @name=\"next\" or @name=\"अगला\" or @name=\"ಮುಂದೆ\" or @name=\"அடுத்தது\"])[4]\n")
     private WebElement nextButton;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Back\")")
