@@ -8,15 +8,15 @@ import org.openqa.selenium.WebElement;
 public class TrustedDigitalWalletPage extends BasePage {
 
     @AndroidFindBy(accessibility = "introTitle")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Trusted Digital Wallet\"`]")
+    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText[@name=\"introTitle\"])[2]")
     private WebElement trustedDigitalWalletText;
 
     @AndroidFindBy(accessibility = "introText")
-    @iOSXCUITFindBy(xpath = "//*[contains(@value,'Store and carry')]")
+    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText[@name=\"introText\"])[2]")
     private WebElement trustedDigitalWalletDescription;
 
     @AndroidFindBy(accessibility = "next")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"Next\"`][4]")
+    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeOther[@name=\"Susunod\" or @name=\"next\" or @name=\"अगला\" or @name=\"ಮುಂದೆ\" or @name=\"அடுத்தது\"])[4]\n")
     private WebElement nextButton;
 
     public TrustedDigitalWalletPage(AppiumDriver driver) {
