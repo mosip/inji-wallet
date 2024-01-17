@@ -46,7 +46,7 @@ public class NoNetworkIosTest extends IosBaseTest {
         assertTrue(homePage.verifyLanguageForTryAgainButtonDisplayed("English"), "Verify if Try again button displayed");
 
         addNewCardPage.clickOnBack();
-        assertTrue(homePage.verifyLanguageForNoVCDownloadedPageLoaded("English"), "Verify if VC is removed");
+        assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("English"), "Verify if VC is removed");
     }
 
     @Test
@@ -239,7 +239,7 @@ public class NoNetworkIosTest extends IosBaseTest {
         pleaseConfirmPopupPage.clickOnConfirmButton();
 
         IosUtil.disableAirplaneMode();
-        assertTrue(homePage.verifyLanguageForNoVCDownloadedPageLoaded("English"), "Verify if VC is removed");
+        assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("English"), "Verify if VC is removed");
     }
 
     @Test

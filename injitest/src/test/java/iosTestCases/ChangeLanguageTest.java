@@ -156,8 +156,8 @@ public class ChangeLanguageTest extends IosBaseTest {
         
         assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(),"Dalhin ang Iyong Digital ID");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
-        
-        assertTrue(addNewCardPage.isAddNewCardGuideMessageDisplayedInFillopin(),"verify if add new card guide message displayed in filipino");
+
+        assertEquals(addNewCardPage.verifyLanguageForAddNewCardGuideMessage(),"Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.");
         assertTrue(addNewCardPage.isIssuerSearchBarDisplayedInFilipino(),"verify if search bar is displayed in filipino");
         addNewCardPage.sendTextInIssuerSearchBar("uin");
         
@@ -199,8 +199,8 @@ public class ChangeLanguageTest extends IosBaseTest {
         
         assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(),"Dalhin ang Iyong Digital ID");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
-        
-        assertTrue(addNewCardPage.isAddNewCardGuideMessageDisplayedInFillopin(),"verify if add new card guide message displayed in filipino");
+
+        assertEquals(addNewCardPage.verifyLanguageForAddNewCardGuideMessage(),"Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.");
         assertTrue(addNewCardPage.isIssuerSearchBarDisplayedInFilipino(),"verify if search bar is displayed in filipino");
         addNewCardPage.sendTextInIssuerSearchBar("ui");
         
