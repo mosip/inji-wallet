@@ -255,18 +255,22 @@
     "applicationIdLabel": "Please enter your Application ID",
     "enterApplicationId": "Enter Application ID",
     "requestingOTP": "Requesting OTP...",
-    "qstnMarkToolTip": "Application ID is available in the acknowledgement received after enrolment.",
+    "toolTipTitle": "What is AID?",
+    "toolTipDescription": "The Application ID (AID) refers to the unique identifier given to a resident during any ID lifecycle event, such as ID Issuance, ID Update, or Lost ID retrieval, at the registration center. It serves as a distinguishing factor for each specific event and can later be utilized by the resident to check the progress or status of the event.",
     "getUIN": "Get UIN/VID"
   },
   "IdInputModal": {
-    "header": "Retrieve your ID",
-    "guideLabel": "Select ID type and enter the MOSIP provided UIN or VID of the ID you wish to retrieve",
+    "header": "Download your ID",
+    "guideLabel": "Select ID type and enter the MOSIP provided UIN or VID you wish to download. In the next step, you will be asked to enter OTP.",
     "generateVc": "Generate Card",
     "downloadID": "Download ID",
-    "enterId": "Enter ID",
+    "enterId": "Enter {{idType}}",
     "noUIN/VID": "Don’t have UIN/VID? ",
-    "getItHere": "Get it now",
-    "requestingOTP": "Requesting OTP..."
+    "getItHere": "Get it now using your AID.",
+    "requestingOTP": "Requesting OTP...",
+    "toolTipTitle": "What is {{idType}}?",
+    "toolTipUINDescription": "Unique Identification Number (UIN), as the name suggests, is a unique number assigned to a resident. UIN never changes and is non-revocable.",
+    "toolTipVIDDescription": "The VID / Virtual ID is an alias identifier that can be used for authentication transactions. VID is known to the user only and is privacy friendly in a way such that it can be revoked, configured for one time usage and is not linkable."
   },
   "OtpVerificationModal": {
     "title": "OTP Verification",
@@ -393,7 +397,7 @@
     "essentialClaims": "Important Claims",
     "voluntaryClaims": "Voluntary Claims",
     "required": "It is necessary",
-    "errors":{
+    "errors": {
       "invalidQR": "QR code is invalid. Please try again!"
     }
   },

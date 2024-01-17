@@ -44,6 +44,9 @@ const Colors = {
   stroke: '#ee8123',
   iconBg: '#ffa85a',
   warningLogoBg: '#FFF7E5',
+  toolTip: '#B7B7B7',
+  toolTipContent: '#4B4B4B',
+  toolTipPointer: '#E0E0E0',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -116,6 +119,8 @@ export const DefaultTheme = {
     linearGradientEnd: Colors.endColor,
     LinearGradientStroke: Colors.stroke,
     warningLogoBgColor: Colors.warningLogoBg,
+    tooltipIcon: Colors.toolTip,
+    toolTipPointerColor: Colors.toolTipPointer,
   },
   Styles: StyleSheet.create({
     title: {
@@ -536,17 +541,21 @@ export const DefaultTheme = {
       bottom: isIOS() ? 50 : 20,
       height: isIOS() ? 100 : 'auto',
     },
+    picker: {
+      fontFamily: 'Inter_600SemiBold',
+      fontSize: 18,
+    },
     idInputBottom: {
       position: 'relative',
-      bottom: 14,
+      bottom: 18,
       borderBottomColor: Colors.Orange,
       borderBottomWidth: 1,
-      minWidth: 180,
+      minWidth: 210,
     },
     idInput: {
       position: 'relative',
-      bottom: 14,
-      minWidth: 180,
+      bottom: 18,
+      minWidth: 210,
     },
     getId: {
       justifyContent: 'center',
@@ -595,6 +604,21 @@ export const DefaultTheme = {
       position: 'absolute',
     },
     boxShadow: generateBoxShadowStyle(),
+    tooltipContainerStyle: {
+      backgroundColor: '#FAFAFA',
+      borderWidth: 1,
+      borderColor: '#E0E0E0',
+      marginLeft: 15,
+    },
+    tooltipContentDescription: {
+      color: Colors.toolTipContent,
+      marginTop: 10,
+    },
+    tooltipHrLine: {
+      borderBottomColor: Colors.Grey5,
+      borderBottomWidth: 1,
+      marginTop: 10,
+    },
   }),
   QrCodeStyles: StyleSheet.create({
     magnifierZoom: {
@@ -702,7 +726,7 @@ export const DefaultTheme = {
     },
     error: {
       position: 'absolute',
-      top: 24,
+      top: 30,
       left: 5,
       color: Colors.Red,
       fontFamily: 'Inter_600SemiBold',
@@ -1276,13 +1300,6 @@ export const DefaultTheme = {
       paddingVertical: 5,
       paddingHorizontal: 3,
       paddingTop: 1.4,
-    },
-  }),
-  SendVcScreenStyles: StyleSheet.create({
-    shareOptionButtonsContainer: {
-      marginBottom: 1,
-      marginTop: 1,
-      rowGap: 8,
     },
   }),
   SendVcScreenStyles: StyleSheet.create({
