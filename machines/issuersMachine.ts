@@ -576,7 +576,16 @@ export const IssuersMachine = model.createMachine(
       },
       checkInternet: async () => await NetInfo.fetch(),
       downloadIssuerConfig: async (context, _) => {
-        return await CACHED_API.fetchIssuerConfig(context.selectedIssuerId);
+        let issuersConfig = await CACHED_API.fetchIssuerConfig(
+            context.selectedIssuerId,
+        );
+        if (context.selectedIssuer['.well-known']) {
+          await CACHED_API.fetchIssuerWellknownConfig(
+              context.selectedIssuerId,
+              context.selectedIssuer['.well-known'],
+          );
+        }
+        return issuersConfig;
       },
       downloadCredential: async context => {
         const body = await getBody(context);

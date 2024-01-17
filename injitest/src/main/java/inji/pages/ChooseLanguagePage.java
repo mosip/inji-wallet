@@ -20,17 +20,17 @@ public class ChooseLanguagePage extends BasePage {
     @iOSXCUITFindBy(accessibility = "savePreference")
     private WebElement savePreferenceText;
 
-    
+
     @AndroidFindBy(accessibility = "unlockApplication")
     private WebElement unlockApplications;
-    
-    
+
+
     public ChooseLanguagePage(AppiumDriver driver) {
         super(driver);
     }
 
     public boolean isChooseLanguagePageLoaded() {
-        boolean temp = isElementDisplayed(chooseLanguageText, "Choose language page");
+        boolean temp = isElementDisplayed(chooseLanguageText);
         if (!temp) {
             AndroidUtil.invokeAppFromBackGroundAndroid();
         }
@@ -41,13 +41,13 @@ public class ChooseLanguagePage extends BasePage {
         clickOnElement(savePreferenceText);
         return new WelcomePage(driver);
     }
-    
+
     public ChooseLanguagePage clickOnUnlockApplication() {
-     	 clickOnElement(unlockApplications);
-          return this;
-     }
-   
-   public boolean isUnlockApplicationDisplayed() {
-       return this.isElementDisplayed(unlockApplications, "Unlock Application");
-   }
+        clickOnElement(unlockApplications);
+        return this;
+    }
+
+    public boolean isUnlockApplicationDisplayed() {
+        return this.isElementDisplayed(unlockApplications);
+    }
 }

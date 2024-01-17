@@ -72,6 +72,7 @@ export interface VerifiableCredential {
   issuerLogo: logoType;
   format: string;
   credential: Credential;
+  wellKnown: string;
 }
 
 export interface CredentialWrapper {

@@ -18,7 +18,7 @@ public class MoreOptionsPage extends BasePage {
     @AndroidFindBy(accessibility = "viewActivityLog")
     @iOSXCUITFindBy(accessibility = "viewActivityLog")
     private WebElement viewActivityLogButton;
-    
+
     @AndroidFindBy(accessibility = "pinOrUnPinCard")
     @iOSXCUITFindBy(accessibility = "pinOrUnPinCard")
     private WebElement pinOrUnPinCardButton;
@@ -30,21 +30,21 @@ public class MoreOptionsPage extends BasePage {
     @AndroidFindBy(accessibility = "profileAuthenticated")
     @iOSXCUITFindBy(accessibility = "profileAuthenticated")
     private WebElement activatedForOnlineLoginButton;
-    
+
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"iconIcon\")")
-    @iOSXCUITFindBy(iOSClassChain ="**/XCUIElementTypeOther[`label == \"\uE5CD\"`][1]")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"\uE5CD\"`][1]")
     private WebElement closeButton;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Something is wrong. Please try again later!\")")
-    @iOSXCUITFindBy(iOSClassChain ="**/XCUIElementTypeOther[`label == \"Something is wrong. Please try again later!\"`]")
-    public WebElement somthingIsWrongPopup;
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"Something is wrong. Please try again later!\"`]")
+    public WebElement somethingIsWrongPopup;
 
     public MoreOptionsPage(AppiumDriver driver) {
         super(driver);
     }
 
     public boolean isMoreOptionsPageLoaded() {
-        return this.isElementDisplayed(moreOptionsText, "More options page");
+        return this.isElementDisplayed(moreOptionsText);
     }
 
     public PleaseConfirmPopupPage clickOnRemoveFromWallet() {
@@ -55,7 +55,7 @@ public class MoreOptionsPage extends BasePage {
     public void clickOnPinOrUnPinCard() {
         clickOnElement(pinOrUnPinCardButton);
     }
-    
+
     public HistoryPage clickOnViewActivityLog() {
         clickOnElement(viewActivityLogButton);
         return new HistoryPage(driver);
@@ -67,15 +67,15 @@ public class MoreOptionsPage extends BasePage {
     }
 
     public boolean isVcActivatedForOnlineLogin() {
-        return this.isElementDisplayed(activatedForOnlineLoginButton, "Activated for online login text");
+        return this.isElementDisplayed(activatedForOnlineLoginButton);
     }
-    
+
     public HomePage clickOnCloseButton() {
-    	clickOnElement(closeButton);
-    	return new HomePage(driver);
+        clickOnElement(closeButton);
+        return new HomePage(driver);
     }
-    
-    public boolean isSomthingIsWrongPopupVisible() {
-        return this.isElementDisplayed(somthingIsWrongPopup, "Something is wrong. Please try again later!");
+
+    public boolean isSomethingIsWrongPopupVisible() {
+        return this.isElementDisplayed(somethingIsWrongPopup);
     }
 }

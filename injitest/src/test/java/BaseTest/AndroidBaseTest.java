@@ -12,24 +12,22 @@ import org.testng.annotations.Parameters;
 import java.net.MalformedURLException;
 
 public class AndroidBaseTest extends BaseTest {
-    @Parameters("platformName")
     @BeforeMethod(alwaysRun = true)
-    public void setup(String platformName) {
+    public void setup() {
         try {
-            //target = Target.valueOf(platformName);
             this.driver = DriverManager.getDriver(Target.ANDROID, isDeviceFarmRun);
         } catch (MalformedURLException | PlatformNotSupportException | InterruptedException e) {
             throw new RuntimeException(e);
         }
         if (!isDeviceFarmRun) {
-          //  ScreenRecording.startAndroidScreenRecording(driver);
+            ScreenRecording.startAndroidScreenRecording(driver);
         }
     }
 
     @AfterMethod(alwaysRun = true)
     public void teardown(ITestResult result) {
         if (!isDeviceFarmRun) {
-        //    ScreenRecording.stopAndroidScreenRecording(driver, result.getMethod().getMethodName());
+            ScreenRecording.stopAndroidScreenRecording(driver, result.getMethod().getMethodName());
         }
         driver.quit();
     }

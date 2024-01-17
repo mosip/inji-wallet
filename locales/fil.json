@@ -253,18 +253,22 @@
     "applicationIdLabel": "Pakilagay ang iyong Application ID",
     "enterApplicationId": "Ilagay ang Application ID",
     "requestingOTP": "Humihiling ng OTP...",
-    "qstnMarkToolTip": "Available ang Application ID sa natanggap na acknowledgement pagkatapos ng enrollment.",
+    "toolTipTitle": "Ang sinabi ko?",
+    "toolTipDescription": "Ang Application ID (AID) ay tumutukoy sa natatanging identifier na ibinigay sa isang residente sa panahon ng anumang ID lifecycle na kaganapan, gaya ng ID Issuance, ID Update, o Lost ID retrieval, sa registration center. ",
     "getUIN": "Kumuha ng UIN/VID"
   },
   "IdInputModal": {
-    "header": "Kunin ang iyong ID",
-    "guideLabel": "Piliin ang uri ng ID at ilagay ang MOSIP na ibinigay na UIN o VID ng ID na nais mong makuha",
-    "generateVc": "Bumuo ng card",
+    "header": "I-download ang iyong ID",
+    "guideLabel": "Piliin ang uri ng ID at ilagay ang MOSIP na ibinigay na UIN o VID na nais mong i-download. ",
+    "generateVc": "Bumuo ng Card",
     "downloadID": "I-download ang ID",
-    "enterId": "Ipasok ang {{idType}}",
-    "noUIN/VID": "Walang UIN/VID? ",
-    "getItHere": "Kunin mo na",
-    "requestingOTP": "Humihiling ng OTP..."
+    "enterId": "Pumasok {{idType}}",
+    "noUIN/VID": "Walang UIN/VID?",
+    "getItHere": "Kunin ito ngayon gamit ang iyong AID.",
+    "requestingOTP": "Humihiling ng OTP...",
+    "toolTipTitle": "Ano ang {{idType}}?",
+    "toolTipUINDescription": "Ang Unique Identification Number (UIN), gaya ng ipinahihiwatig ng pangalan, ay isang natatanging numero na itinalaga sa isang residente. ",
+    "toolTipVIDDescription": "Ang VID / Virtual ID ay isang alias identifier na maaaring gamitin para sa mga transaksyon sa pagpapatunay. "
   },
   "OtpVerificationModal": {
     "title": "Pag-verify ng OTP",
@@ -307,7 +311,7 @@
         "title": "Pakisuri ang iyong koneksyon at subukang muli",
         "message": "Mangyaring kumonekta sa internet at subukang muli."
       },
-      "downloadLimitExpires":{
+      "downloadLimitExpires": {
         "title": "Error sa Pag-download",
         "message": "Nagkaroon ng isyu sa pag-download ng mga sumusunod na card. Pakisubukang muli"
       }
@@ -355,7 +359,7 @@
   },
   "MainLayout": {
     "home": "Bahay",
-    "scan": "Scan",
+    "share": "Ibahagi",
     "history": "Kasaysayan",
     "request": "Hiling",
     "settings": "mga setting"
@@ -469,7 +473,7 @@
     "gotoSettings": "Pumunta sa setting"
   },
   "ScanScreen": {
-    "header": "I-scan ang QR Code",
+    "header": "Scan",
     "noShareableVcs": "Walang magagamit na mga card na maibabahagi.",
     "sharingVc": "Pagbabahagi ng card",
     "bluetoothStateIos": "Naka-OFF ang Bluetooth, paki-ON ito mula sa control center",

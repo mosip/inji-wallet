@@ -8,9 +8,8 @@ import inji.utils.AndroidUtil;
 import inji.utils.TestDataReader;
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
-
-import static org.testng.Assert.*;
 
 import static org.testng.Assert.assertTrue;
 
@@ -35,22 +34,22 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
-        assertTrue(homePage.isNoInternetConnectionDisplayed(), "Verify if no internet connection is displayed");
-        assertTrue(homePage.isTryAgainButtonDisplayed(), "Verify if Try again button displayed");
+        assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("English"), "Verify if no internet connection is displayed");
+        assertTrue(homePage.verifyLanguageForTryAgainButtonDisplayed("English"), "Verify if Try again button displayed");
         AndroidUtil.disableAirplaneMode();
         
-        assertTrue(homePage.isTryAgainButtonDisplayed(), "Verify if Try again button displayed");
+        assertTrue(homePage.verifyLanguageForTryAgainButtonDisplayed("English"), "Verify if Try again button displayed");
 
         homePage.clickOnTryAgainButton();
-        assertTrue(homePage.isTryAgainButtonDisplayed(), "Verify if Try again button displayed");
+        assertTrue(homePage.verifyLanguageForTryAgainButtonDisplayed("English"), "Verify if Try again button displayed");
 
         addNewCardPage.clickOnBack();
-        assertTrue(homePage.isNoVCDownloaded(), "Verify if VC is removed");
+        assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
     }
 
     @Test
@@ -70,7 +69,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
@@ -87,7 +86,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
 
         AndroidUtil.enableAirplaneMode();
-        assertTrue(homePage.clickOnScanButton().acceptPermissionPopup().isCameraOpen());
+        assertTrue(homePage.clickOnScanButton().acceptPermissionPopupBluetooth().isCameraOpen());
         AndroidUtil.disableAirplaneMode();
     }
     @Test
@@ -107,7 +106,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
 
@@ -156,7 +155,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
@@ -187,7 +186,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         HelpPage helpPage = homePage.clickOnHelpIcon();
@@ -216,7 +215,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
@@ -242,7 +241,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         pleaseConfirmPopupPage.clickOnConfirmButton();
 
         AndroidUtil.disableAirplaneMode();
-        assertTrue(homePage.isNoVCDownloaded(), "Verify if VC is removed");
+        assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
     }
     
     @Test
@@ -262,7 +261,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
 
@@ -308,14 +307,13 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
         
         ReceiveCardPage receiveCardPage = settingsPage.clickOnReceiveCard();
-        receiveCardPage.clickOnAllowButton();
-        assertTrue(receiveCardPage.isReceiveCardHederDisplayed(), "Verify if QR code  header is displayed");
+        assertTrue(receiveCardPage.isReceiveCardHeaderDisplayed(), "Verify if QR code  header is displayed");
         
         assertTrue(receiveCardPage.isWaitingForConnectionDisplayed(), "Verify if waiting for connection displayed");
         AndroidUtil.disableAirplaneMode();
@@ -340,14 +338,14 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         
-        assertTrue(homePage.isNoInternetConnectionDisplayed(), "Verify if no internet connection is displayed");
-        assertTrue(homePage.isTryAgainButtonDisplayed(), "Verify if try again button displayed");
+        assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("English"), "Verify if no internet connection is displayed");
+        assertTrue(homePage.verifyLanguageForTryAgainButtonDisplayed("English"), "Verify if try again button displayed");
 
         AndroidUtil.disableAirplaneMode();
         assertTrue(homePage.isTryAgainButtonNotDisplayed(), "Wating for network come online");
@@ -374,13 +372,13 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
-        assertTrue(homePage.isNoInternetConnectionDisplayed(), "Verify if no internet connection is displayed");
-        assertTrue(homePage.isTryAgainButtonDisplayed(), "Verify if Try again button displayed");
+        assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("English"), "Verify if no internet connection is displayed");
+        assertTrue(homePage.verifyLanguageForTryAgainButtonDisplayed("English"), "Verify if Try again button displayed");
         AndroidUtil.disableAirplaneMode();
         
         homePage.clickOnTryAgainButton();
@@ -390,7 +388,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
         
         addNewCardPage.clickOnBack();
-        assertTrue(homePage.isNoVCDownloaded(), "Verify if VC is removed");
+        assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
     }
     
     @Test
@@ -410,7 +408,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
@@ -433,7 +431,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         assertTrue(esignetLoginPage.isProgressingLogoDisplayed(),"verify if Progressing page is displayed");
         AndroidUtil.enableAirplaneMode();
         
-        assertTrue(homePage.isNoInternetConnectionDisplayed(), "Verify if no internet connection is displayed");
+        assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("English"), "Verify if no internet connection is displayed");
         addNewCardPage.clickOnBack();
         
         AndroidUtil.disableAirplaneMode();
@@ -457,7 +455,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
@@ -509,7 +507,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
@@ -534,7 +532,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
         AndroidUtil.enableAirplaneMode();
         
-        assertTrue(homePage.clickOnScanButton().acceptPermissionPopup().isCameraOpen());
+        assertTrue(homePage.clickOnScanButton().acceptPermissionPopupBluetooth().isCameraOpen());
         AndroidUtil.disableAirplaneMode();
     }
     
@@ -559,13 +557,13 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
 					Target.ANDROID);
 
 			assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-			HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+			HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 		} else {
 			HomePage homePage = new HomePage(driver);
 			unlockApplicationPage.clickOnUnlockApplicationButton();
 
 			ConfirmPasscode confirmPasscode = new ConfirmPasscode(driver);
-			homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+			homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 		}
 
 		HomePage homePage = new HomePage(driver);
@@ -579,17 +577,17 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
-        assertTrue(homePage.isNoInternetConnectionDisplayedFlillpino(), "Verify if no internet connection is displayed in flillpino");
-        assertTrue(homePage.isTryAgainButtonDisplayedInFlillpino(), "Verify if Try again button displayed in flillpino");
+        assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("Filipino"), "Verify if no internet connection is displayed in flillpino");
+        assertTrue(homePage.verifyLanguageForTryAgainButtonDisplayed("Filipino"), "Verify if Try again button displayed in flillpino");
         
         addNewCardPage.isBackButtonDisplayed();
         AndroidUtil.disableAirplaneMode();
         
-         homePage.clickOnTryAgainButtonInFlillpino();
+         homePage.clickOnTryAgainButton();
          assertTrue(homePage.isTryAgainButtonNotDisplayedInFlillpino(), "Verify if Try again button displayed");
 //        
-        homePage.clickOnTryAgainButtonInFlillpino();
-        assertTrue(addNewCardPage.isAddNewCardGuideMessageDisplayedInFillopin(), "Verify if add new card page guide is displayed in fillpino");
+        homePage.clickOnTryAgainButton();
+        assertEquals(addNewCardPage.verifyLanguageForAddNewCardGuideMessage(), "Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.");
 //        
        EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
        assertTrue(esignetLoginPage.isEsignetLoginPageDisplayed(), "Verify if esignet login page displayed");
@@ -625,7 +623,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
@@ -637,8 +635,7 @@ public class NoNetworkAndroidTest extends AndroidBaseTest {
         settingsPage.clickOnBackArrow();
         
         homePage.downloadCard();
-        assertTrue(homePage.isNoInternetConnectionDisplayed(), "Verify if no internet connection is displayed");
-        assertTrue(homePage.isNoInternetConnectionDisplayedInTamil(), "Verify if try again in tamil is displayed");
+        assertTrue(homePage.verifyLanguageForNoInternetConnectionDisplayed("Tamil"), "Verify if try again in tamil is displayed");
     }
     
 }

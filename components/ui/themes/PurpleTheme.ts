@@ -38,7 +38,7 @@ const Colors = {
   Purple: '#70308C',
   LightPurple: '#F3E2FF',
   TimeoutHintBoxColor: '#FBF5FF',
-  TimeoutHintBoxBorder: '#FFF7E5',
+  TimeoutHintBoxBorder: '#F3E2FF',
   TimeoutHintText: '#1C1C1C',
   resendCodeTimer: '#555555',
   uncheckedIcon: '#DBDBDB',
@@ -47,6 +47,9 @@ const Colors = {
   stroke: '#8449A5',
   iconBg: '#fbf5ff',
   warningLogoBg: '#F3E2FF',
+  tooltip: '#B7B7B7',
+  toolTipContent: '#4B4B4B',
+  toolTipPointer: '#E0E0E0',
 };
 
 export type ElevationLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -119,6 +122,8 @@ export const PurpleTheme = {
     linearGradientEnd: Colors.endColor,
     LinearGradientStroke: Colors.stroke,
     warningLogoBgColor: Colors.warningLogoBg,
+    tooltipIcon: Colors.tooltip,
+    toolTipPointerColor: Colors.toolTipPointer,
   },
   Styles: StyleSheet.create({
     title: {
@@ -342,6 +347,7 @@ export const PurpleTheme = {
       flex: 1,
       padding: 10,
       overflow: 'hidden',
+      borderRadius: 10,
     },
     successTag: {
       backgroundColor: Colors.Green,
@@ -376,8 +382,8 @@ export const PurpleTheme = {
       height: 60,
     },
     vcDetailsLogo: {
-      width: 90,
-      height: 35,
+      width: 50,
+      height: 50,
     },
     homeCloseCardDetailsHeader: {
       flex: 1,
@@ -534,14 +540,25 @@ export const PurpleTheme = {
     idInputPicker: {
       width: Dimensions.get('window').width * 0.32,
       borderBottomWidth: 1,
-      marginBottom: 2,
       borderColor: isIOS() ? 'transparent' : Colors.Grey,
-      bottom: isIOS() ? 50 : 24,
+      bottom: isIOS() ? 50 : 20,
       height: isIOS() ? 100 : 'auto',
     },
+    picker: {
+      fontFamily: 'Inter_600SemiBold',
+      fontSize: 18,
+    },
     idInputBottom: {
+      position: 'relative',
+      bottom: 18,
       borderBottomColor: Colors.Purple,
       borderBottomWidth: 1,
+      minWidth: 210,
+    },
+    idInput: {
+      position: 'relative',
+      bottom: 18,
+      minWidth: 210,
     },
     getId: {
       justifyContent: 'center',
@@ -590,6 +607,21 @@ export const PurpleTheme = {
       position: 'absolute',
     },
     boxShadow: generateBoxShadowStyle(),
+    tooltipContainerStyle: {
+      backgroundColor: '#FAFAFA',
+      borderWidth: 1,
+      borderColor: '#E0E0E0',
+      marginLeft: 15,
+    },
+    tooltipContentDescription: {
+      color: Colors.toolTipContent,
+      marginTop: 10,
+    },
+    tooltipHrLine: {
+      borderBottomColor: Colors.Grey5,
+      borderBottomWidth: 1,
+      marginTop: 10,
+    },
   }),
   QrCodeStyles: StyleSheet.create({
     magnifierZoom: {
@@ -696,9 +728,13 @@ export const PurpleTheme = {
       lineHeight: 18,
     },
     error: {
+      position: 'absolute',
+      top: 30,
+      left: 5,
       color: Colors.Red,
       fontFamily: 'Inter_600SemiBold',
       fontSize: 12,
+      minWidth: 200,
     },
     base: {
       color: Colors.Black,
@@ -748,6 +784,7 @@ export const PurpleTheme = {
       color: 'transparent',
       backgroundColor: Colors.Grey5,
       borderRadius: 4,
+      marginBottom: 2,
     },
     subtitle: {
       backgroundColor: 'transparent',

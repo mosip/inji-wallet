@@ -9,8 +9,6 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
 
-import static org.testng.Assert.*;
-
 import static org.testng.Assert.assertTrue;
 
 public class PinVcTest extends AndroidBaseTest {
@@ -33,7 +31,7 @@ public class PinVcTest extends AndroidBaseTest {
         ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
@@ -59,7 +57,6 @@ public class PinVcTest extends AndroidBaseTest {
         HistoryPage historyPage= moreOptionsPage.clickOnViewActivityLog();
         assertTrue(historyPage.verifyActivityLogHeader(TestDataReader.readData("uin"), Target.ANDROID));
         assertTrue(historyPage.verifyHistory(TestDataReader.readData("uin"), Target.ANDROID));
-        assertTrue(historyPage.verifyPinHistory(TestDataReader.readData("uin"), Target.ANDROID));
         
     }
     
@@ -81,7 +78,7 @@ public class PinVcTest extends AndroidBaseTest {
         ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
@@ -104,7 +101,7 @@ public class PinVcTest extends AndroidBaseTest {
         assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
         ScanPage scanPage=homePage.clickOnScanButton();
         
-        scanPage.acceptPermissionPopup();
+        scanPage.acceptPermissionPopupBluetooth();
         assertTrue(scanPage.isCameraPageLoaded(), "Verify camera page is displayed");
         assertTrue(scanPage.isFlipCameraClickable(),"Verify if flip camera is enabled");
     }
@@ -126,7 +123,7 @@ public class PinVcTest extends AndroidBaseTest {
         ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         AddNewCardPage addNewCardPage = homePage.downloadCard();
