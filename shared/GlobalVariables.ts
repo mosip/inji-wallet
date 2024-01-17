@@ -9,8 +9,8 @@ function getTuvaliPackageDetails() {
   Object.keys(dependencies).forEach(dependencyName => {
     const dependencyData = dependencies[dependencyName];
     if (dependencyName == '@mosip/tuvali') {
-      packageVersion = dependencyData.from
-        ? dependencyData.from.split('#')[1]
+      packageVersion = dependencyData?.version
+        ? dependencyData.version
         : 'unknown';
     }
   });
