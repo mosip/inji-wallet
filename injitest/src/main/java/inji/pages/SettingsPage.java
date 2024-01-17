@@ -25,13 +25,22 @@ public class SettingsPage extends BasePage {
     @iOSXCUITFindBy(accessibility = "languageTitle")
     private WebElement languageButton;
 
-    @AndroidFindBy(xpath = "//*[contains(@text,'Filipino')]")
+    @AndroidFindBy(accessibility = "fil")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"Filipino\"`]")
     private WebElement filipinoLanguageButton;
     
-    @AndroidFindBy(xpath = "//*[contains(@text,'தமிழ்')]")
+    @AndroidFindBy(accessibility = "hi")
+    @iOSXCUITFindBy(accessibility = "हिंदी")
+    private WebElement hindiLanguageButton;
+    
+    @AndroidFindBy(accessibility = "ta")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"தமிழ்\"`]")
     private WebElement tamilLanguageButton;
+    
+    @AndroidFindBy(accessibility = "kn")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"தமிழ்\"`]")
+    private WebElement kannadaLanguageButton;
+
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Wika')]")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`label == \"\uE037 Wika \uE5CC\"`][1]")
@@ -46,7 +55,7 @@ public class SettingsPage extends BasePage {
     private WebElement aboutInji;
 
     @AndroidFindBy(xpath = "//*[contains(@text,'Tuvali-version:')]")
-    @iOSXCUITFindBy(xpath = "//*[contains(@name,'Tuvali-version: 0.4.6')]")
+    @iOSXCUITFindBy(xpath = "//*[contains(@name,'Tuvali-version: 0.')]")
     private WebElement tuvaliVersion;
 
     @AndroidFindBy(accessibility = "injiTourGuide")
@@ -72,6 +81,7 @@ public class SettingsPage extends BasePage {
     private WebElement arabicLanguageButton;
     
     @AndroidFindBy(accessibility = "arrowLeft")
+    @iOSXCUITFindBy(accessibility = "arrowLeft")
     private WebElement backButton;
 
     public SettingsPage(AppiumDriver driver) {
@@ -79,11 +89,11 @@ public class SettingsPage extends BasePage {
     }
 
     public boolean isSettingPageLoaded() {
-        return this.isElementDisplayed(settingsTittle, "Setting page");
+        return this.isElementDisplayed(settingsTittle);
     }
     
     public boolean isSettingPageLoadedInFilipion() {
-        return this.isElementDisplayed(settingsTittle, "Mga setting");
+        return this.isElementDisplayed(settingsTittle);
     }
 
     public UnlockApplicationPage clickOnLogoutButton() {
@@ -99,22 +109,37 @@ public class SettingsPage extends BasePage {
     public void clickOnFilipinoLanguage() {
         clickOnElement(filipinoLanguageButton);
     }
-    
+
     public void clickOnTamilLanguage() {
         clickOnElement(tamilLanguageButton);
     }
+    
+    public void clickOnHindiLanguage() {
+        clickOnElement(hindiLanguageButton);
+    }
+    
+    public void clickOnKannadaLanguage() {
+        clickOnElement(kannadaLanguageButton);
+    }
 
     public boolean verifyFilipinoLanguage() {
-        return this.isElementDisplayed(wikaButton, "Filipino language");
+        return this.isElementDisplayed(wikaButton);
     }
     
     public boolean verifyTamilLanguage() {
-        return this.isElementDisplayed(languageButton, "மொழி");
+        return this.isElementDisplayed(languageButton);
+    }
+    
+    public boolean verifyHindiLanguage() {
+        return this.isElementDisplayed(languageButton);
+    }
+    
+    public boolean verifyKannadaLanguage() {
+        return this.isElementDisplayed(languageButton);
     }
 
     public boolean verifyLanguagesInLanguageFilter() {
-        List<String> expectedLanguages = Arrays.asList("English", "Filipino", "عربى", "हिंदी", "ಕನ್ನಡ", "தமிழ்");
-
+        List<String> expectedLanguages = Arrays.asList("English", "Filipino","عربى", "हिंदी", "ಕನ್ನಡ", "தமிழ்");
         List<String> actualLanguages = languages.stream()
                 .map(WebElement::getText)
                 .collect(Collectors.toList());
@@ -128,7 +153,7 @@ public class SettingsPage extends BasePage {
     }
 
     public boolean isTuvaliVersionPresent() {
-        return this.isElementDisplayed(tuvaliVersion, "Tuvali-version");
+        return this.isElementDisplayed(tuvaliVersion);
     }
 
     public void clickOnInjiTourGuide() {
@@ -136,7 +161,7 @@ public class SettingsPage extends BasePage {
     }
 
     public boolean isReceivedCardsPresent() {
-        return this.isElementDisplayed(receivedCards, "Received Cards");
+        return this.isElementDisplayed(receivedCards);
     }
 
     public CredentialRegistryPage clickOnCredentialRegistry() {

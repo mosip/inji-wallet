@@ -4,15 +4,16 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 
 public class AddNewCardPage extends BasePage{
 
-    @AndroidFindBy(accessibility = "issuersScreenHeader")
+    @AndroidFindBy(accessibility = "title")
     @iOSXCUITFindBy(accessibility = "title")
     private WebElement addNewCardHeader;
 
     @AndroidFindBy(accessibility = "issuerHeading-Mosip")
-    @iOSXCUITFindBy(accessibility = "issuerHeading-Mosip")
+    @iOSXCUITFindBy(accessibility = "issuer-Mosip")
     private WebElement downloadViaUin;
     
     @AndroidFindBy(accessibility = "goBack")
@@ -20,14 +21,23 @@ public class AddNewCardPage extends BasePage{
     private WebElement backButton;
     
     @AndroidFindBy(accessibility = "issuer-ESignet")
-    @iOSXCUITFindBy(accessibility = "issuerHeading-ESignet")
+    @iOSXCUITFindBy(accessibility = "issuer-ESignet")
     private WebElement downloadViaEsignet;
-    
-    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Please choose your preferred issuer from the options below to add a new card.\")")
+
+    @iOSXCUITFindBy(accessibility = "Continue")
+    private WebElement continueButton;
+
+    @AndroidFindBy(xpath = "(//android.widget.TextView)[4]")
     private WebElement addNewCardGuideMessage;
+    
+    @AndroidFindBy(xpath = "(//android.widget.TextView)[5]")//remove once get accesibility id
+    private WebElement addNewCardGuideMessageForEsignet;
     
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.\")")
     private WebElement addNewCardGuideMessageInFillpino;
+    
+    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"नया कार्ड जोड़ने के लिए कृपया नीचे दिए गए विकल्पों में से अपना पसंदीदा जारीकर्ता चुनें।\")")
+    private WebElement addNewCardGuideMessageInHindi;
     
     @AndroidFindBy(accessibility = "issuerDescription-Mosip")
     @iOSXCUITFindBy(accessibility = "issuerDescription-Mosip")
@@ -44,9 +54,30 @@ public class AddNewCardPage extends BasePage{
     public AddNewCardPage(AppiumDriver driver) {
         super(driver);
     }
+    
+    public String  verifyLanguageForAddNewCardGuideMessage(){
+    	 return getTextFromLocator(addNewCardGuideMessage);
 
+//    	switch (language) {
+//    	case "Hindi":
+//    		boolean isMessagePresentInHindi  = (actualText.equalsIgnoreCase("नया कार्ड जोड़ने के लिए कृपया नीचे दिए गए विकल्पों में से अपना पसंदीदा जारीकर्ता चुनें।")==true) ? true : false;
+//    		return isMessagePresentInHindi ;
+//    	case "English":
+//    		boolean isMessagePresentInEnglish  = (actualText.equalsIgnoreCase("Please choose your preferred issuer from the options below to add a new card.")==true) ? true : false;
+//    		return isMessagePresentInEnglish ;
+//    	case "Filipino":
+//    		boolean isMessagePresentInFilipino  = (actualText.equalsIgnoreCase("Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.")==true) ? true : false;
+//    		return isMessagePresentInFilipino ;
+//    	}
+//    	return false;
+    }
+    
+    public boolean isAddNewCardPageGuideMessageForEsignetDisplayed() {
+        return this.isElementDisplayed(addNewCardGuideMessageForEsignet);
+    }
+    
     public boolean isAddNewCardPageLoaded() {
-        return this.isElementDisplayed(addNewCardHeader, "Home page");
+        return this.isElementDisplayed(addNewCardHeader);
     }
 
     public RetrieveIdPage clickOnDownloadViaUin(){
@@ -54,60 +85,76 @@ public class AddNewCardPage extends BasePage{
         return new RetrieveIdPage(driver);
     }
     
-    public AddNewCardPage clickOnBack() {
+    public void clickOnBack() {
     	clickOnElement(backButton);
-		return this;
     }
     
     public boolean isAddNewCardGuideMessageDisplayed() {
-        return this.isElementDisplayed(addNewCardGuideMessage, "Please choose your preferred issuer from the options below to add a new card.");
+        return this.isElementDisplayed(addNewCardGuideMessage);
     }
     
     public boolean isDownloadViaUinDisplayed() {
-        return this.isElementDisplayed(downloadViaUin, "Download via UIN, VID, AID");
+        return this.isElementDisplayed(downloadViaUin);
+    }
+    
+    public boolean isDownloadViaUinDisplayedInHindi() {
+        return this.isElementDisplayed(downloadViaUin);
     }
     
     public boolean isDownloadViaEsignetDisplayed() {
-        return this.isElementDisplayed(downloadViaEsignet, "Download via e-Signet");
+        return this.isElementDisplayed(downloadViaEsignet);
+    }
+    
+    public boolean isDownloadViaEsignetDisplayedInHindi() {
+        return this.isElementDisplayed(downloadViaEsignet);
     }
     
     public boolean isDownloadViaEsignetDisplayedinFillpino() {
-        return this.isElementDisplayed(downloadViaEsignet, "I-download sa pamamagitan ng e-Signet");
+        return this.isElementDisplayed(downloadViaEsignet);
     }
     
     public EsignetLoginPage clickOnDownloadViaEsignet(){
         clickOnElement(downloadViaEsignet);
         return new EsignetLoginPage(driver);
     }
+
+    public void clickOnContinueButtonInSigninPopupIos(){
+        clickOnElement(continueButton);
+    }
     
-    public boolean isBackButtonDisplayed() {
-        return backButton.isDisplayed() ;
+    public void isBackButtonDisplayed() {
+        backButton.isDisplayed();
     }
     
     public boolean isAddNewCardGuideMessageDisplayedInFillopin() {
-        return this.isElementDisplayed(addNewCardGuideMessageInFillpino, "Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.");
+        return this.isElementDisplayed(addNewCardGuideMessageInFillpino);
     }
     
+    public boolean isAddNewCardGuideMessageDisplayedInHindi() {
+        return this.isElementDisplayed(addNewCardGuideMessageInHindi);
+    }
     public boolean isIssuerDescriptionMosipDisplayed() {
-        return this.isElementDisplayed(issuerDescriptionMosip, "Enter your national ID to download your card.");
+        return this.isElementDisplayed(issuerDescriptionMosip);
     }
     
     public boolean isIssuerDescriptionEsignetDisplayed() {
-        return this.isElementDisplayed(issuerDescriptionEsignet, "Enter your national ID to download your card.");
+        return this.isElementDisplayed(issuerDescriptionEsignet);
     }
     
     public boolean isIssuerSearchBarDisplayed() {
-    	return this.isElementDisplayed(issuerSearchBar, "Search by Issuer’s name");
+    	return this.isElementDisplayed(issuerSearchBar);
     }
     
     public boolean isIssuerSearchBarDisplayedInFilipino() {
-    	return this.isElementDisplayed(issuerSearchBar, "Maghanap ayon sa pangalan ng Nag-isyu");
+    	return this.isElementDisplayed(issuerSearchBar);
     }
     
-    public AddNewCardPage IssuerSearchBar(String env) {
-    	clearTextBoxAndSendKeys(issuerSearchBar, env, "issuer search bar");
-        return this;
+    public boolean isIssuerSearchBarDisplayedInHindi() {
+    	return this.isElementDisplayed(issuerSearchBar);
     }
-
+    
+    public void sendTextInIssuerSearchBar(String text) {
+    	clearTextBoxAndSendKeys(issuerSearchBar, text);
+    }
 
 }

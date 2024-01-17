@@ -22,13 +22,13 @@ jobs:
     uses: mosip/kattu/.github/workflows/android-build.yml@master
     with:
       NODE_VERSION: "16.x"
-      DEBUG_KEYSTORE_ALIAS: androiddebugkey
+      KEYSTORE_ALIAS: androidbuildkey
+      KEYSTORE_PASSWORD: 'password'
       SERVICE_LOCATION: '.'
       ANDROID_SERVICE_LOCATION: 'android'
       BUILD_SCRIPT_LOCATION: 'scripts'
       SCRIPT_NAME: './android-build.sh'
-    secrets:
-      DEBUG_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_DEBUG_STOREPASS }}'
+      UPLOAD_TO_ACTIONS: 'false'
 
   build-ios:
     uses: mosip/kattu/.github/workflows/ios-build.yml@master
@@ -47,4 +47,4 @@ jobs:
   #   secrets:
   #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   #     SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
-  #     SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK }}'
+  #     SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK_INJI_TEAM }}'

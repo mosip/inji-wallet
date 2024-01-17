@@ -1,21 +1,131 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="All Test Suite" parallel="tests" thread-count="2">
-	<listeners>
-		<listener class-name="inji.listeners.Listeners" />
-	</listeners>
-	<test verbose="2" preserve-order="true" name="ios">
-		<parameter name="platformName" value="IOS" />
-		<classes>
-			<class name="iosTestCases.VcDownloadAndVerifyUsingUinTest">
+<suite name="All Test Suite">
+    <listeners>
+        <listener class-name="inji.listeners.Listeners"/>
+    </listeners>
+    <test verbose="2" preserve-order="true" name="ios">
+        <classes>
+            <class name="iosTestCases.VcDownloadAndVerifyUsingUinTest">
+                <methods>
+                    <include name="downloadAndVerifyVcUsingUin"/>
+                    <include name="downloadWithEmptyUin"/>
+                    <include name="generateMultipleVcWithSameUin"/>
+                    <include name="downloadMultipleVcUsingDifferentUin"/>
+                    <include name="verifyInvalidUinErrorMessage"/>
+                    <include name="verifyOtpTimeOutAndGoBack" />
+                </methods>
+            </class>
+            <class name="iosTestCases.VerifyWelcomePagesTest">
+                <methods>
+                    <include name="verifyWelcomePagesContent"/>
+                    <include name="verifyWelcomePagesFromInjiTourGuide"/>
+                    <include name="verifyGoBackFromInjiTourGuide"/>
+                    <include name="verifyClickOnBackFromInjiTourGuide"/>
+                </methods>
+            </class>
+            <class name="iosTestCases.VcDownloadAndVerifyUsingVidTest">
+                <methods>
+                    <include name="downloadAndVerifyVcUsingVid"/>
+                    <include name="downloadTwoVcDeleteUsingVid"/>
+                    <include name="verifyInvalidVidErrorMessage"/>
+                    <include name="downloadAndVerifyVcUsingRevokeVid"/>
+                </methods>
+            </class>
+            <class name="iosTestCases.UnlockWithPasscodeTest">
+                <methods>
+                    <include name="logoutAndLoginWithPasscode"/>
+                    <include name="loginWithInvalidPasscode"/>
+                </methods>
+            </class>
+            <class name="iosTestCases.VerifyHelpPageTest">
+                <methods>
+                    <include name="verifyHelpPage"/>
+                </methods>
+            </class>
+            <class name="iosTestCases.DeletingVcTest">
+                <methods>
+                    <include name="deleteVcAndVerifyInHistory"/>
+                    <include name="cancelDeleteVc"/>
+                    <include name="DownloadingDeletedVc"/>
+                </methods>
+            </class>
+            <class name="iosTestCases.VerifyHistoryTest">
+                <methods>
+                    <include name="downloadVcAndVerifyHistory"/>
+                    <include name="verifyActivationFailedRecordInHistory"/>
+                    <include name="verifyActivationFailedRecordInHistoryFromDetailedView"/>
+                    <include name="activateVcAndVerifyInHistory"/>
+                </methods>
+            </class>
+            <class name="iosTestCases.GenerateUinOrVidTest">
+                <methods>
+                    <include name="generateUinOrVidUsingAid"/>
+                    <include name="goBackToGenerateUinOrVidUsingAidFromOtpVerificationPage"/>
+                </methods>
+            </class>
+            <class name="iosTestCases.ActivateVcTest">
+                <methods>
+                    <include name="activateVc"/>
+                    <include name="noPreDownloadedVCAndNoHistoryInFreshInstallation"/>
+                    <include name="verifyInvalidOtpMessage"/>
+                    <include name="verifyTuvaliVersion"/>
+                </methods>
+            </class>
+            <class name="iosTestCases.PinVcTest">
+                <methods>
+                    <include name="pinVc"/>
+                    <include name="VerifyCameraOpenAfterPinVc"/>
+		    <include name="downloadVcViaEsignetAndPinUnpin" />
+                </methods>
+            </class>
+            <class name="iosTestCases.ChangeLanguageTest">
+                <methods>
+                    <include name="changeLanguage"/>
+                    <include name="languageShouldBeInNativeLanguages"/>
+		    <include name="verifyTuvaliVersion" />
+                    <include name="changeLanguage"/>
+		    <include name="changeLanguageToArabic" />
+		    <include name="changeLanguageToFilipionAndSearchIssuer" />
+		    <include name="changeLanguageToFilipionAndSearchIssuerEnterIncompleteName" />
+		    <include name="changeLanguageToHindiAndSearchIssuer" />
+		    <include name="changeLanguageToFilipionAndcheckInjiTour" />
+		    <include name="changeLanguageToHindiAndcheckInjiTour" />
+		    <include name="changeLanguageToTamilAndcheckInjiTour" />
+		    <include name="changeLanguageToKannadAndcheckInjiTour" />
+                </methods>
+            </class>
+            <class name="iosTestCases.ShareVcTest">
+                <methods>
+                    <include name="noCardsAvailableToShare"/>
+                </methods>
+            </class>
+            <class name="iosTestCases.CredentialRegistryTest">
+                <methods>
+                    <include name="downloadAndVerifyVcInNewEnv"/>
+                    <include name="cancelChangeEnvAndVerify"/>
+                    <include name="generateUinInNewEnv"/>
+                    <include name="downloadAndVerifyVcInInvalidEnv"/>
+                    <include name="retrivingUinInNewEnv"/>
+                    <include name="retrivingUinInOtherEnv"/>
+                    <include name="downloadAndVerifyVcInTwoEnv"/>
+                    <include name="downloadVcAndActivateItInOtherEnv"/>
+                    <include name="downloadAndVerifyVcInNewEnvForEsignet" />
+		            <include name="downloadAndVerifyVcInInvalidEnvForEsignet" />
+		            <include name="downloadAndVerifyVcInInvalidEnvForEsignetInFillpino" />
+                </methods>
+            </class>
+            <class name="iosTestCases.ChangeLanguageTest">
+                <methods>
+                    <include name="changeLanguage"/>
+                    <include name="changeLanguageToArabic"/>
+                </methods>
+            </class>
+            <class name="iosTestCases.AboutInjiTest">
 				<methods>
-					<include name="downloadAndVerifyVcUsingUin" />
-					<include name="downloadWithEmptyUin" />
-					<include name="generateMultipleVcWithSameUin" />
-					<include name="downloadMultipleVcUsingDifferentUin" />
-					<include name="verifyInvalidUinErrorMessage" />
+					<include name="copyAppId" />
 				</methods>
 			</class>
-		</classes>
-	</test>
+        </classes>
+    </test>
 </suite>

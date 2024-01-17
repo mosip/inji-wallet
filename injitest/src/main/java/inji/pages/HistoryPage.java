@@ -1,16 +1,13 @@
 package inji.pages;
 
+import inji.constants.Target;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
-import inji.constants.Target;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
-
-import static inji.constants.Target.ANDROID;
-import static inji.constants.Target.IOS;
 
 public class HistoryPage extends BasePage {
     @AndroidFindBy(xpath = "//*[contains(@text,'History')]")
@@ -20,70 +17,59 @@ public class HistoryPage extends BasePage {
     @AndroidFindBy(accessibility = "noHistory")
     @iOSXCUITFindBy(accessibility = "noHistory")
     private WebElement noHistoryAvailable;
-    
+
     @AndroidFindBy(className = "android.widget.TextView")
     @iOSXCUITFindBy(className = "android.widget.TextView")
     private WebElement activityLogHeader;
-    
+
 
     public HistoryPage(AppiumDriver driver) {
         super(driver);
     }
-    
+
     public String getUinInActivityLogHeader() {
         return getTextFromLocator(activityLogHeader);
     }
 
     public boolean isHistoryPageLoaded() {
-        return this.isElementDisplayed(historyHeader, "History page");
+        return this.isElementDisplayed(historyHeader);
     }
 
     private boolean verifyHistoryIos(String vcNumber) {
         By locator = By.xpath("//*[contains(@name,'" + vcNumber + " downloaded')]");
-        return this.isElementDisplayed(locator, "Downloaded VC in ios");
+        return this.isElementDisplayed(locator);
     }
 
     private boolean verifyHistoryAndroid(String vcNumber) {
         By locator = By.xpath("//*[contains(@text,'" + vcNumber + " downloaded')]");
-        return this.isElementDisplayed(locator, "Downloaded VC in android");
+        return this.isElementDisplayed(locator);
     }
-    
+
     private boolean verifyActivityHeaderAndroid(String vcNumber) {
-        By locator = By.xpath("//*[contains(@text,'" + vcNumber + "')]");
-        return this.isElementDisplayed(locator, "Downloaded VC in android");
+        return verifyHistoryAndroid(vcNumber);
     }
-    
-    private boolean verifyPinHistoryAndroid(String vcNumber) {
-        By locator = By.xpath("//*[contains(@text,'" + vcNumber + " pined')]");
-        return this.isElementDisplayed(locator, "pined VC in android");
-    }
-    
-    private boolean verifyPinHistoryIos(String vcNumber) {
-        By locator = By.xpath("//*[contains(@text,'" + vcNumber + " pined')]");
-        return this.isElementDisplayed(locator, "pined VC in android");
-    }
-    
+
     private boolean verifyDeleteHistoryAndroid(String vcNumber) {
         By locator = By.xpath("//*[contains(@text,'" + vcNumber + " Removed from wallet')]");
-        return this.isElementDisplayed(locator, "Delete VC in android");
+        return this.isElementDisplayed(locator);
     }
 
     private boolean verifyDeletedHistoryIos(String vcNumber) {
         By locator = By.xpath("//*[contains(@name,'" + vcNumber + " Removed from wallet')]");
-        return this.isElementDisplayed(locator, "Downloaded VC in ios");
+        return this.isElementDisplayed(locator);
     }
-    
+
     private int verifyNumberOfRecordsInHistoryAndroid(String vcNumber) throws InterruptedException {
-   	By locator = By.xpath("//*[contains(@text,'" + vcNumber + " downloaded')]");
-       List<WebElement> elements = driver.findElements(locator);
-       return elements.size();
-   }
-   
-   private int verifyNumberOfRecordsInHistoryIos(String vcNumber) {
-       By locator = By.xpath("//XCUIElementTypeStaticText[@name=\"" + vcNumber + " downloaded\"]");
-       List<WebElement> elements = driver.findElements(locator);
-       return elements.size();
-   }
+        By locator = By.xpath("//*[contains(@text,'" + vcNumber + " downloaded')]");
+        List<WebElement> elements = driver.findElements(locator);
+        return elements.size();
+    }
+
+    private int verifyNumberOfRecordsInHistoryIos(String vcNumber) {
+        By locator = By.xpath("//XCUIElementTypeStaticText[@name=\"" + vcNumber + " downloaded\"]");
+        List<WebElement> elements = driver.findElements(locator);
+        return elements.size();
+    }
 
     public boolean verifyHistory(String vcNumber, Target os) {
         switch (os) {
@@ -94,7 +80,7 @@ public class HistoryPage extends BasePage {
         }
         return false;
     }
-    
+
     public boolean verifyActivityLogHeader(String vcNumber, Target os) {
         switch (os) {
             case ANDROID:
@@ -102,17 +88,7 @@ public class HistoryPage extends BasePage {
         }
         return false;
     }
-    
-    public boolean verifyPinHistory(String vcNumber, Target os) {
-        switch (os) {
-            case ANDROID:
-                return verifyPinHistoryAndroid(vcNumber);
-            case IOS:
-                return verifyPinHistoryIos(vcNumber);
-        }
-        return false;
-    }
-    
+
     public int getNumberOfRecordsInHistory(String vcNumber, Target os) throws InterruptedException {
         switch (os) {
             case ANDROID:
@@ -122,11 +98,11 @@ public class HistoryPage extends BasePage {
         }
         return 0;
     }
-    
+
     public boolean noHistoryAvailable() {
-        return this.isElementDisplayed(noHistoryAvailable, "No history available yet");
+        return this.isElementDisplayed(noHistoryAvailable);
     }
-    
+
     public boolean verifyDeleteHistory(String vcNumber, Target os) {
         switch (os) {
             case ANDROID:
@@ -150,12 +126,12 @@ public class HistoryPage extends BasePage {
 
     private boolean verifyActivationFailedRecordIos(String vcNumber) {
         By locator = By.xpath("//*[contains(@name,'" + vcNumber + " Activation failed')]");
-        return this.isElementDisplayed(locator, "Downloaded VC in ios");
+        return this.isElementDisplayed(locator);
     }
 
     private boolean verifyActivationFailedRecordAndroid(String vcNumber) {
         By locator = By.xpath("//*[contains(@text,'" + vcNumber + " Activation failed')]");
-        return this.isElementDisplayed(locator, "Downloaded VC in android");
+        return this.isElementDisplayed(locator);
     }
 
     public boolean verifyActivationSuccessfulRecordInHistory(String vcNumber, Target os) {
@@ -170,11 +146,11 @@ public class HistoryPage extends BasePage {
 
     private boolean verifyActivationSuccessfulRecordIos(String vcNumber) {
         By locator = By.xpath("//*[contains(@name,'" + vcNumber + " Activation successful')]");
-        return this.isElementDisplayed(locator, "Downloaded VC in ios");
+        return this.isElementDisplayed(locator);
     }
 
     private boolean verifyActivationSuccessfulRecordAndroid(String vcNumber) {
         By locator = By.xpath("//*[contains(@text,'" + vcNumber + " Activation successful')]");
-        return this.isElementDisplayed(locator, "Downloaded VC in android");
+        return this.isElementDisplayed(locator);
     }
 }

@@ -7,7 +7,7 @@
 	<test verbose="2" preserve-order="true" name="android">
 		<parameter name="platformName" value="ANDROID" />
 		<classes>
-	<!--	<class name="androidTestCases.VcDownloadAndVerifyUsingUinTest">
+		<class name="androidTestCases.VcDownloadAndVerifyUsingUinTest">
 				<methods>
 					<include name="downloadAndVerifyVcUsingUin" />
 					<include name="downloadWithEmptyUin" />
@@ -79,24 +79,29 @@
 					<include name="VerifyCameraOpenAfterPinVc" />
 					<include name="downloadVcViaEsignetAndPinUnpin" />
 				</methods>
-			</class>-->
+			</class>
 			<class name="androidTestCases.ChangeLanguageTest">
 				<methods>
-					<!--<include name="changeLanguage" />
+					<include name="changeLanguage" />
 					<include name="languageShouldBeInNativeLanguages" />
 					<include name="verifyTuvaliVersion" />
-					<include name="changeLanguageToArabic" />-->
+					<include name="changeLanguageToArabic" />
 					<include name="changeLanguageToFilipionAndSearchIssuer" />
 					<include name="changeLanguageToFilipionAndSearchIssuerEnterIncompleteName" />
+					<include name="changeLanguageToHindiAndSearchIssuer" />
+					<include name="changeLanguageToFilipionAndcheckInjiTour" />
+					<include name="changeLanguageToHindiAndcheckInjiTour" />
+					<include name="changeLanguageToTamilAndcheckInjiTour" />
+					<include name="changeLanguageToKannadAndcheckInjiTour" />
 				</methods>
 			</class>
-			<!--<class name="androidTestCases.ShareVcTest">
+			<class name="androidTestCases.ShareVcTest">
 				<methods>
 					<include name="noCardsAvailableToShare" />
 					<include name="verifyReceivedCardTabPresent" />
 				</methods>
 			</class>
-			<class name="androidTestCases.NoNetworkAndroidTest">
+			<!--<class name="androidTestCases.NoNetworkAndroidTest">
 				<methods>
 					<include name="setupPasscodeAndDownloadCardWithoutInternet" />
 					<include name="openCameraOnFlightMode" />
@@ -129,7 +134,7 @@
 					<include name="downloadAndVerifyVcInInvalidEnvForEsignet" />
 					<include name="downloadAndVerifyVcInInvalidEnvForEsignetInFillpino" />
 				</methods>
-			</class>
+			</class>-->
 			<class name="androidTestCases.ReceiveCardTest">
 				<methods>
 					<include name="verifyRecivedCardAndQrCode" />
@@ -141,7 +146,12 @@
 					<include name="downloadAndVerifyVcUsingUinViaEsignet" />
 					<include name="downloadAndVerifyVcUsingVidViaEsignet" />
 				</methods>
-			</class>-->
+			</class>
+			<class name="androidTestCases.AboutInjiTest">
+				<methods>
+					<include name="copyAppId" />
+				</methods>
+			</class>
 		</classes>
 	</test>
 </suite>

@@ -4,7 +4,7 @@ import {PinInput} from '../../../components/PinInput';
 import {Button, Column, Text} from '../../../components/ui';
 import {Modal} from '../../../components/ui/Modal';
 import {Theme} from '../../../components/ui/styleUtils';
-import {Image, KeyboardAvoidingView, TouchableOpacity} from 'react-native';
+import {KeyboardAvoidingView, TouchableOpacity} from 'react-native';
 import {
   getImpressionEventData,
   incrementRetryCount,
@@ -19,7 +19,6 @@ import {
 } from './OtpVerificationModalController';
 import {GET_INDIVIDUAL_ID, isIOS} from '../../../shared/constants';
 import {SvgImage} from '../../../components/ui/svg';
-
 
 export const OtpVerificationModal: React.FC<
   OtpVerificationModalProps
@@ -124,6 +123,8 @@ export const OtpVerificationModal: React.FC<
             </Text>
 
             <TouchableOpacity
+              testID="resendCodeView"
+              disabled={timer > 0}
               activeOpacity={1}
               onPress={
                 timer > 0
@@ -151,7 +152,7 @@ export const OtpVerificationModal: React.FC<
         isVisible={controller.isDownloadCancelled}
         title={t('confirmationDialog.title')}
         message={t('confirmationDialog.message')}
-        customHeight={250}>
+        minHeight={250}>
         <Column>
           <Button
             testID="wait"

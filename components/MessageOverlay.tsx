@@ -10,11 +10,7 @@ export const MessageOverlay: React.FC<MessageOverlayProps> = props => {
   const {t} = useTranslation('common');
   const style = StyleSheet.create({
     customHeight: {
-      height: props.customHeight
-        ? props.customHeight
-        : props.progress
-        ? 100
-        : 170,
+      minHeight: props.minHeight ? props.minHeight : props.progress ? 100 : 170,
     },
   });
   return (
@@ -125,5 +121,5 @@ export interface MessageOverlayProps {
   onRetry?: () => void;
   onBackdropPress?: () => void;
   onShow?: () => void;
-  customHeight?: number | string | undefined;
+  minHeight?: number | string | undefined;
 }

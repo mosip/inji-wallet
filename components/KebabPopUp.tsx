@@ -36,6 +36,7 @@ export const KebabPopUp: React.FC<KebabPopUpProps> = props => {
             {t('title')}
           </Text>
           <Icon
+            {...testIDProps('close')}
             name="close"
             onPress={props.onDismiss}
             color={Theme.Colors.Details}
