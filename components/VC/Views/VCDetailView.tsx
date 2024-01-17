@@ -51,13 +51,21 @@ const getProfileImage = (
   isOpenId4VCI,
 ) => {
   if (isOpenId4VCI) {
-    if (verifiableCredential?.credentialSubject.face) {
-      return {uri: verifiableCredential?.credentialSubject.face};
+    if (verifiableCredential?.credentialSubject?.face) {
+      return (
+        <Image
+          source={{uri: verifiableCredential?.credentialSubject.face}}
+          style={Theme.Styles.openCardImage}
+        />
+      );
     }
-  } else {
-    if (props.vc?.credential?.biometrics?.face) {
-      return {uri: props.vc?.credential.biometrics.face};
-    }
+  } else if (props?.vc?.credential?.biometrics?.face) {
+    return (
+      <Image
+        source={{uri: props?.vc?.credential.biometrics.face}}
+        style={Theme.Styles.openCardImage}
+      />
+    );
   }
   return <Icon name="person" color={Theme.Colors.Icon} size={88} />;
 };
@@ -106,15 +114,7 @@ export const VCDetailView: React.FC<
         source={Theme.OpenCard}>
         <Row padding="10" margin="0 10 0 8">
           <Column crossAlign="center">
-            <Image
-              source={getProfileImage(
-                props,
-                verifiableCredential,
-                isOpenId4VCI,
-              )}
-              style={Theme.Styles.openCardImage}
-            />
-
+            {getProfileImage(props, verifiableCredential, isOpenId4VCI)}
             <QrCodeOverlay qrCodeDetails={String(verifiableCredential)} />
 
             <Column margin="20 0 0 0">{issuerLogo}</Column>
