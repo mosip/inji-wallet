@@ -60,14 +60,12 @@ const getProfileImage = (
       );
     }
   } else if (props?.vc?.credential?.biometrics?.face) {
-    if (props?.vc?.credential?.biometrics?.face) {
-      return (
-        <Image
-          source={{uri: props?.vc?.credential.biometrics.face}}
-          style={Theme.Styles.openCardImage}
-        />
-      );
-    }
+    return (
+      <Image
+        source={{uri: props?.vc?.credential.biometrics.face}}
+        style={Theme.Styles.openCardImage}
+      />
+    );
   }
   return <Icon name="person" color={Theme.Colors.Icon} size={88} />;
 };
