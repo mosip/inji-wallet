@@ -1,7 +1,6 @@
 package androidTestCases;
 
 import BaseTest.AndroidBaseTest;
-import inji.api.BaseTestCase;
 import inji.constants.Target;
 import inji.pages.*;
 import inji.utils.TestDataReader;
@@ -25,17 +24,17 @@ public class VerifyWelcomePagesTest extends AndroidBaseTest {
         welcomePage.clickOnNextButton();
 
         TrustedDigitalWalletPage trustedDigitalWalletPage = new TrustedDigitalWalletPage(driver);
-        assertTrue(trustedDigitalWalletPage.isTrustedDigitalWalletPageLoaded(), "Verify if trusted digital wallet page is loaded");
+        assertEquals(trustedDigitalWalletPage.verifyLanguageforTrustedDigitalWalletPageLoaded(), "Trusted Digital Wallet");
         assertEquals(trustedDigitalWalletPage.getTrustedDigitalWalletDescription(), "Store and carry all your important cards in a single trusted wallet.");
         trustedDigitalWalletPage.clickOnNextButton();
 
         SecureSharingPage secureSharingPage = new SecureSharingPage(driver);
-        assertTrue(secureSharingPage.isSecureSharingPageLoaded(), "Verify if secure sharing page is loaded");
+        assertEquals(secureSharingPage.verifyLanguageforSecureSharingPageLoaded(), "Secure Sharing");
         assertEquals(secureSharingPage.getSecureSharingDescription(), "Share your cards securely in a hassle free way and avail various services.");
         secureSharingPage.clickOnNextButton();
 
         HassleFreeAuthenticationPage hassleFreeAuthenticationPage = new HassleFreeAuthenticationPage(driver);
-        assertTrue(hassleFreeAuthenticationPage.isHassleFreeAuthenticationPageLoaded(), "Verify if hassle free authentication page is loaded");
+        assertEquals(hassleFreeAuthenticationPage.verifyLanguageforHassleFreeAuthenticationPageLoaded(), "Hassle free authentication");
         assertEquals(hassleFreeAuthenticationPage.getHassleFreeAuthenticationDescription(), "Authenticate yourself with ease using the stored digital credential.");
     }
     @Test
@@ -55,7 +54,7 @@ public class VerifyWelcomePagesTest extends AndroidBaseTest {
         ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
@@ -68,17 +67,17 @@ public class VerifyWelcomePagesTest extends AndroidBaseTest {
         welcomePage.clickOnNextButton();
 
         TrustedDigitalWalletPage trustedDigitalWalletPage = new TrustedDigitalWalletPage(driver);
-        assertTrue(trustedDigitalWalletPage.isTrustedDigitalWalletPageLoaded(), "Verify if trusted digital wallet page is loaded");
+        assertEquals(trustedDigitalWalletPage.verifyLanguageforTrustedDigitalWalletPageLoaded(), "Trusted Digital Wallet");
         assertEquals(trustedDigitalWalletPage.getTrustedDigitalWalletDescription(), "Store and carry all your important cards in a single trusted wallet.");
         trustedDigitalWalletPage.clickOnNextButton();
 
         SecureSharingPage secureSharingPage = new SecureSharingPage(driver);
-        assertTrue(secureSharingPage.isSecureSharingPageLoaded(), "Verify if secure sharing page is loaded");
+        assertEquals(secureSharingPage.verifyLanguageforSecureSharingPageLoaded(), "Secure Sharing");
         assertEquals(secureSharingPage.getSecureSharingDescription(), "Share your cards securely in a hassle free way and avail various services.");
         secureSharingPage.clickOnNextButton();
 
         HassleFreeAuthenticationPage hassleFreeAuthenticationPage = new HassleFreeAuthenticationPage(driver);
-        assertTrue(hassleFreeAuthenticationPage.isHassleFreeAuthenticationPageLoaded(), "Verify if hassle free authentication page is loaded");
+        assertEquals(hassleFreeAuthenticationPage.verifyLanguageforHassleFreeAuthenticationPageLoaded(), "Hassle free authentication");
         assertEquals(hassleFreeAuthenticationPage.getHassleFreeAuthenticationDescription(), "Authenticate yourself with ease using the stored digital credential.");
     }
     
@@ -99,7 +98,7 @@ public class VerifyWelcomePagesTest extends AndroidBaseTest {
         ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
@@ -112,23 +111,23 @@ public class VerifyWelcomePagesTest extends AndroidBaseTest {
         welcomePage.clickOnNextButton();
 
         TrustedDigitalWalletPage trustedDigitalWalletPage = new TrustedDigitalWalletPage(driver);
-        assertTrue(trustedDigitalWalletPage.isTrustedDigitalWalletPageLoaded(), "Verify if trusted digital wallet page is loaded");
+        assertEquals(trustedDigitalWalletPage.verifyLanguageforTrustedDigitalWalletPageLoaded(), "Trusted Digital Wallet");
         
         assertEquals(trustedDigitalWalletPage.getTrustedDigitalWalletDescription(), "Store and carry all your important cards in a single trusted wallet.");
         trustedDigitalWalletPage.clickOnNextButton();
 
         SecureSharingPage secureSharingPage = new SecureSharingPage(driver);
-        assertTrue(secureSharingPage.isSecureSharingPageLoaded(), "Verify if secure sharing page is loaded");
+        assertEquals(secureSharingPage.verifyLanguageforSecureSharingPageLoaded(), "Secure Sharing");
         
         assertEquals(secureSharingPage.getSecureSharingDescription(), "Share your cards securely in a hassle free way and avail various services.");
         secureSharingPage.clickOnNextButton();
 
         HassleFreeAuthenticationPage hassleFreeAuthenticationPage = new HassleFreeAuthenticationPage(driver);
-        assertTrue(hassleFreeAuthenticationPage.isHassleFreeAuthenticationPageLoaded(), "Verify if hassle free authentication page is loaded");
+        assertEquals(hassleFreeAuthenticationPage.verifyLanguageforHassleFreeAuthenticationPageLoaded(), "Hassle free authentication");
         assertEquals(hassleFreeAuthenticationPage.getHassleFreeAuthenticationDescription(), "Authenticate yourself with ease using the stored digital credential.");
         
         hassleFreeAuthenticationPage.clickOnGoBack();
-        assertTrue(homePage.isNoVCDownloaded(), "Verify if get back to home page");
+        assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
     }
     
     @Test
@@ -148,7 +147,7 @@ public class VerifyWelcomePagesTest extends AndroidBaseTest {
         ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         SettingsPage settingsPage = homePage.clickOnSettingIcon();
@@ -160,6 +159,6 @@ public class VerifyWelcomePagesTest extends AndroidBaseTest {
         assertEquals(welcomePage.getWelcomeDescription(), "Keep your digital credential with you at all times. Inji helps you manage and use them effectively. To get started, add cards to your profile.");
         
         welcomePage.clickOnBackButton();
-        assertTrue(homePage.isNoVCDownloaded(), "Verify if get back to home page");
+        assertEquals(homePage.verifyLanguageForNoVCDownloadedPageLoaded(), "Bring your digital identity");
     }
 }

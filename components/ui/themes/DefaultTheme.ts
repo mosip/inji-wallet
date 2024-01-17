@@ -338,6 +338,7 @@ export const DefaultTheme = {
       flex: 1,
       padding: 10,
       overflow: 'hidden',
+      borderRadius: 10,
     },
     successTag: {
       backgroundColor: Colors.Green,
@@ -372,8 +373,8 @@ export const DefaultTheme = {
       height: 60,
     },
     vcDetailsLogo: {
-      height: 35,
-      width: 90,
+      height: 50,
+      width: 50,
     },
     homeCloseCardDetailsHeader: {
       flex: 1,
@@ -531,14 +532,21 @@ export const DefaultTheme = {
     idInputPicker: {
       width: Dimensions.get('window').width * 0.32,
       borderBottomWidth: 1,
-      marginBottom: 2,
       borderColor: isIOS() ? 'transparent' : Colors.Grey,
-      bottom: isIOS() ? 50 : 24,
+      bottom: isIOS() ? 50 : 20,
       height: isIOS() ? 100 : 'auto',
     },
     idInputBottom: {
+      position: 'relative',
+      bottom: 14,
       borderBottomColor: Colors.Orange,
       borderBottomWidth: 1,
+      minWidth: 180,
+    },
+    idInput: {
+      position: 'relative',
+      bottom: 14,
+      minWidth: 180,
     },
     getId: {
       justifyContent: 'center',
@@ -693,9 +701,13 @@ export const DefaultTheme = {
       lineHeight: 18,
     },
     error: {
+      position: 'absolute',
+      top: 24,
+      left: 5,
       color: Colors.Red,
       fontFamily: 'Inter_600SemiBold',
       fontSize: 12,
+      minWidth: 200,
     },
     base: {
       color: Colors.Black,
@@ -745,6 +757,7 @@ export const DefaultTheme = {
       color: 'transparent',
       backgroundColor: Colors.Grey5,
       borderRadius: 4,
+      marginBottom: 2,
     },
     subtitle: {
       backgroundColor: 'transparent',

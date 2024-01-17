@@ -14,7 +14,7 @@ public class HassleFreeAuthenticationPage extends BasePage {
     @AndroidFindBy(accessibility = "introText")
     @iOSXCUITFindBy(xpath = "//*[contains(@value,'Authenticate yourself')]")
     private WebElement hassleFreeAuthenticationDescription;
-    
+
     @AndroidFindBy(accessibility = "getStarted")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeButton[`label == \"Back\"`][4]")
     public WebElement goBackButton;
@@ -22,9 +22,28 @@ public class HassleFreeAuthenticationPage extends BasePage {
     public HassleFreeAuthenticationPage(AppiumDriver driver) {
         super(driver);
     }
+    
+    public String  verifyLanguageforHassleFreeAuthenticationPageLoaded(){
+    	return getTextFromLocator(hassleFreeAuthenticationText);
 
-    public boolean isHassleFreeAuthenticationPageLoaded() {
-        return this.isElementDisplayed(hassleFreeAuthenticationText, "Hassle free authentication page");
+//    	switch (language) {
+//    	case "English":
+//    		boolean isHederLoadedInEnglish  = (actualText.equalsIgnoreCase("Hassle free authentication")==true) ? true : false;
+//    		return isHederLoadedInEnglish ;
+//    	case "Hindi":
+//    		boolean isHederLoadedInHindi  = (actualText.equalsIgnoreCase("परेशानी मुक्त प्रमाणीकरण")==true) ? true : false;
+//    		return isHederLoadedInHindi ;
+//    	case "Filipino":
+//    		boolean isHederLoadedInFilipino  = (actualText.equalsIgnoreCase("Walang problema sa pagpapatotoo")==true) ? true : false;
+//    		return isHederLoadedInFilipino ;
+//    	case "Tamil":
+//    		boolean isHederLoadedInTamil  = (actualText.equalsIgnoreCase("தொந்தரவு இல்லாத அங்கீகாரம்")==true) ? true : false;
+//    		return isHederLoadedInTamil ;
+//    	case "Kannada":
+//    		boolean isHederLoadedInKannada  = (actualText.equalsIgnoreCase("ಜಗಳ ಮುಕ್ತ ದೃಢೀಕರಣ")==true) ? true : false;
+//    		return isHederLoadedInKannada ;
+//    	}
+//    	return false;
     }
 
     public String getHassleFreeAuthenticationDescription() {

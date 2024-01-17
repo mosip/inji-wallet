@@ -1,9 +1,9 @@
 package inji.pages;
 
+import inji.constants.Target;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
-import inji.constants.Target;
 import org.openqa.selenium.WebElement;
 
 public class OtpVerificationPage extends BasePage {
@@ -27,33 +27,33 @@ public class OtpVerificationPage extends BasePage {
     @AndroidFindBy(accessibility = "close")
     @iOSXCUITFindBy(accessibility = "close")
     private WebElement crossIcon;
-    
+
     @AndroidFindBy(accessibility = "cancel")
     @iOSXCUITFindBy(accessibility = "cancel")
     private WebElement cancelPopupButton;
-    
+
     @AndroidFindBy(accessibility = "otpVerificationTimer")
     @iOSXCUITFindBy(accessibility = "otpVerificationTimer")
     private WebElement otpVerificationTimer;
-    
+
     @AndroidFindBy(accessibility = "confirmationPopupHeader")
     @iOSXCUITFindBy(accessibility = "confirmationPopupHeader")
     private WebElement confirmationPopupHeader;
-    
+
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"VID not available in database\")")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`label == \"VID not available in database\"`]")
-	  private WebElement vidNotAvailableMessage;
-    
+    private WebElement vidNotAvailableMessage;
+
     @AndroidFindBy(accessibility = "resendCode")
     @iOSXCUITFindBy(accessibility = "resendCode")
     private WebElement resendCodeButton;
-    
+
     public OtpVerificationPage(AppiumDriver driver) {
         super(driver);
     }
 
     public boolean isOtpVerificationPageLoaded() {
-        return this.isElementDisplayed(otpVerificationText, "Otp verification page");
+        return this.isElementDisplayed(otpVerificationText);
     }
 
     public HomePage enterOtp(String otp, Target os) {
@@ -61,7 +61,7 @@ public class OtpVerificationPage extends BasePage {
         setPasscode.enterPasscode(otp, os);
         return new HomePage(driver);
     }
-    
+
     public HomePage enterOtpForEsignet(String otp, Target os) {
         SetPasscode setPasscode = new SetPasscode(driver);
         setPasscode.enterPasscodeForEsignet(otp, os);
@@ -74,42 +74,43 @@ public class OtpVerificationPage extends BasePage {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        return this.isElementDisplayed(invalidOtpMessage, "OTP is invalid");
+        return this.isElementDisplayed(invalidOtpMessage);
     }
 
     public boolean somethingWetWrongInVcActivationDisplayed() {
-        return this.isElementDisplayed(invalidOtpMessageInVcActivation, "Something is wrong. Please try again later!");
+        return this.isElementDisplayed(invalidOtpMessageInVcActivation);
     }
 
     public boolean isCancelButtonDisplayed() {
-        return this.isElementDisplayed(cancelButton, "Cancel button");
+        return this.isElementDisplayed(cancelButton);
     }
 
-    public MoreOptionsPage clickOnCancelButton(){
+    public MoreOptionsPage clickOnCancelButton() {
         clickOnElement(cancelButton);
         return new MoreOptionsPage(driver);
     }
-    public void clickOnCrossIcon(){
+
+    public void clickOnCrossIcon() {
         clickOnElement(crossIcon);
     }
-    
-    public void clickOnCancelPopupButton(){
+
+    public void clickOnCancelPopupButton() {
         clickOnElement(cancelPopupButton);
     }
-    
+
     public boolean vidNotAvailableDisplayed() {
-        return this.isElementDisplayed(vidNotAvailableMessage, "VID not available in database");
+        return this.isElementDisplayed(vidNotAvailableMessage);
     }
-    
+
     public boolean verifyResendCodeButtonDisplayed() {
-        return this.isElementDisplayed(resendCodeButton, "Resend Code");
+        return this.isElementDisplayed(resendCodeButton);
     }
-    
+
     public boolean confirmPopupHeaderDisplayed() {
-        return this.isElementDisplayed(confirmationPopupHeader, "Do you want to cancel downloading?");
+        return this.isElementDisplayed(confirmationPopupHeader);
     }
-    
+
     public boolean verifyOtpVerificationTimerCompleted() {
-        return this.WaitTillElementVisible(otpVerificationTimer, 180,"You can resend the code in  :");
+        return this.WaitTillElementVisible(otpVerificationTimer, 230);
     }
 }

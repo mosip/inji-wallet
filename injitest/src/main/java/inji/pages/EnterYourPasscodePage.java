@@ -1,9 +1,9 @@
 package inji.pages;
 
+import inji.constants.Target;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
-import inji.constants.Target;
 import org.openqa.selenium.WebElement;
 
 public class EnterYourPasscodePage extends BasePage {
@@ -17,13 +17,13 @@ public class EnterYourPasscodePage extends BasePage {
     }
 
     public boolean isEnterYourPasscodePageLoaded() {
-        return this.isElementDisplayed(enterYourPasscodeText, "Enter your passcode page");
+        return this.isElementDisplayed(enterYourPasscodeText);
     }
 
-    public HomePage enterYourPasscode(String passcode, Target os) {
+    public void enterPasscodeOnPasscodePage(String passcode, Target os) {
         SetPasscode setPasscode = new SetPasscode(driver);
         setPasscode.enterPasscode(passcode, os);
-        return new HomePage(driver);
+        new HomePage(driver);
     }
 
 }

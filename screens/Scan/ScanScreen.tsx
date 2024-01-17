@@ -58,7 +58,11 @@ export const ScanScreen: React.FC = () => {
 
   function bluetoothIsOffText() {
     return (
-      <Text testID="bluetoothIsTurnedOffMessage" align="center" color={Theme.Colors.errorMessage} margin="0 10">
+      <Text
+        testID="bluetoothIsTurnedOffMessage"
+        align="center"
+        color={Theme.Colors.errorMessage}
+        margin="0 10">
         {t(isIOS() ? 'bluetoothStateIos' : 'bluetoothStateAndroid')}
       </Text>
     );
@@ -181,14 +185,14 @@ export const ScanScreen: React.FC = () => {
     return (
       !controller.isEmpty && (
         <MessageOverlay
-          testID='invalidQrPopup'
+          testID="invalidQrPopup"
           isVisible={controller.selectIsInvalid}
-          customHeight={'auto'}
+          minHeight={'auto'}
           title={t('invalidQR')}
           onBackdropPress={controller.DISMISS}>
           <Row>
             <Button
-              testID='cancel'
+              testID="cancel"
               fill
               type="clear"
               title={t('common:cancel')}
@@ -196,7 +200,7 @@ export const ScanScreen: React.FC = () => {
               margin={[0, 8, 0, 0]}
             />
             <Button
-              testID='tryAgain'
+              testID="tryAgain"
               fill
               title={t('common:tryAgain')}
               onPress={controller.DISMISS}

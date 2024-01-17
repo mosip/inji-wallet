@@ -47,10 +47,13 @@ public class DetailedVcViewPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "emailIdValue")
     private WebElement emailIdValue;
 
-    @AndroidFindBy(accessibility = "enableVerification")
+    @AndroidFindBy(uiAutomator = "new UiScrollable(new UiSelector()).scrollIntoView(new UiSelector().description(\"enableVerification\"));")
     @iOSXCUITFindBy(accessibility = "enableVerification")
     private WebElement activateButton;
-
+    
+    @iOSXCUITFindBy(accessibility = "enableVerification")
+    private WebElement activeButtonIos;
+    
     @AndroidFindBy(accessibility = "profileAuthenticated")
     @iOSXCUITFindBy(accessibility = "profileAuthenticated")
     private WebElement profileAuthenticated;
@@ -58,7 +61,7 @@ public class DetailedVcViewPage extends BasePage{
     @AndroidFindBy(accessibility = "close")
     @iOSXCUITFindBy(accessibility = "close")
     private WebElement crossIcon;
-    
+
     @AndroidFindBy(accessibility = "qrCodeCloseIcon")
     @iOSXCUITFindBy(accessibility = "qrCodeCloseIcon")
     private WebElement qrCloseIcon;
@@ -66,29 +69,33 @@ public class DetailedVcViewPage extends BasePage{
     @AndroidFindBy(accessibility = "qrCodePressable")
     @iOSXCUITFindBy(accessibility = "qrCodePressable")
     private WebElement detailedVcViewPageQr;
-    
+
     @AndroidFindBy(accessibility = "qrCodeHeader")
     @iOSXCUITFindBy(accessibility = "qrCodeHeader")
     private WebElement qrCodeHeader;
-    
+
     @AndroidFindBy(accessibility = "credentialRegistry")
     @iOSXCUITFindBy(accessibility = "credentialRegistry")
     private WebElement credentialRegistryText;
-    
+
     @AndroidFindBy(accessibility = "credentialRegistryValue")
     @iOSXCUITFindBy(accessibility = "credentialRegistryValue")
     private WebElement credentialRegistryValue;
-    
+
     @AndroidFindBy(accessibility = "esignet-logo")
     @iOSXCUITFindBy(xpath = "(//XCUIElementTypeImage)[3]")
     private WebElement esignetLogo;
+    
+    @AndroidFindBy(accessibility = "arrowLeft")
+    @iOSXCUITFindBy(accessibility = "arrowLeft")
+    public WebElement backArrow;
 
     public DetailedVcViewPage(AppiumDriver driver) {
         super(driver);
     }
 
     public boolean isDetailedVcViewPageLoaded() {
-        return this.isElementDisplayed(detailedVcViewPageTitle, "detailed Vc view page title page");
+        return this.isElementDisplayed(detailedVcViewPageTitle);
     }
 
     public String getNameInDetailedVcView() {
@@ -128,45 +135,50 @@ public class DetailedVcViewPage extends BasePage{
     }
 
     public boolean isActivateButtonDisplayed() {
-        return this.isElementDisplayed(activateButton, "activate button");
+        return this.isElementDisplayed(activateButton);
     }
 
-    public PleaseConfirmPopupPage clickOnActivateButton(){
+    public PleaseConfirmPopupPage clickOnActivateButtonAndroid(){
         clickOnElement(activateButton);
+        return new PleaseConfirmPopupPage(driver);
+    }
+    
+    public PleaseConfirmPopupPage clickOnActivateButtonIos(){  //Scroll for ios need to be done
+        clickOnElement(activeButtonIos);
         return new PleaseConfirmPopupPage(driver);
     }
 
     public boolean isProfileAuthenticatedDisplayed() {
-        return this.isElementDisplayed(profileAuthenticated, "Credentials are enabled for online authentication");
+        return this.isElementDisplayed(profileAuthenticated);
     }
 
-    public HomePage clickOnCrossIcon(){
-        clickOnElement(crossIcon);
+    public HomePage clickOnBackArrow() {
+        clickOnElement(backArrow);
         return new HomePage(driver);
     }
-    
-    public HomePage clickOnQrCrossIcon(){
+
+    public HomePage clickOnQrCrossIcon() {
         clickOnElement(qrCloseIcon);
         return new HomePage(driver);
     }
 
-    public PleaseConfirmPopupPage clickOnQrCodeButton(){
+    public void clickOnQrCodeButton() {
         clickOnElement(detailedVcViewPageQr);
-        return new PleaseConfirmPopupPage(driver);
+        new PleaseConfirmPopupPage(driver);
     }
 
     public boolean isQrCodeDisplayed() {
-    	return qrCodeHeader.isDisplayed();
+        return qrCodeHeader.isDisplayed();
     }
-    
+
     public boolean isCredentialRegistryTextDisplayed() {
-        return this.isElementDisplayed(credentialRegistryText, "Credential Registry");
+        return this.isElementDisplayed(credentialRegistryText);
     }
-    
+
     public String getCredentialRegistryValue() {
         return getTextFromLocator(credentialRegistryValue);
     }
-    
+
     public boolean isEsignetLogoDisplayed() {
         return esignetLogo.isDisplayed();
     }

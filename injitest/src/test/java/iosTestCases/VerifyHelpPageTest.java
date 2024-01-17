@@ -1,6 +1,5 @@
 package iosTestCases;
 
-import BaseTest.AndroidBaseTest;
 import BaseTest.IosBaseTest;
 import inji.constants.Target;
 import inji.pages.*;
@@ -30,15 +29,13 @@ public class VerifyHelpPageTest extends IosBaseTest {
         ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
-        HomePage homePage = confirmPasscode.confirmPasscode(TestDataReader.readData("passcode"), Target.IOS);
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
 
         assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
         HelpPage helpPage = homePage.clickOnHelpIcon();
         
-        assertEquals(helpPage.ishelpPageContentEmpty(),false,"verifying text is not empty");
-        helpPage.scrollPerformInHelpPage();
+        assertEquals(helpPage.isHelpPageContentEmpty(),false,"verifying if help page is not empty");
 
-        assertTrue(helpPage.isHelpPageLoaded(), "Verify if help page is displayed");
         helpPage.exitHelpPage();
 
         

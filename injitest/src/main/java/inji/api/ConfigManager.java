@@ -178,7 +178,7 @@ public class ConfigManager {
 
 	public static void init() {
 		// Loading Kernel property
-		LOGGER.info("file location"+TestRunner.getResourcePath() + "/config/"+TestRunner.GetKernalFilename());
+		//LOGGER.info("file location"+TestRunner.getResourcePath() + "/config/));
 		propsKernel = getproperty(TestRunner.getResourcePath() + "/config/"+TestRunner.GetKernalFilename());
 
 		idrepo_client_secret = getValueForKey(MOSIP_IDREPO_CLIENT_SECRET);
