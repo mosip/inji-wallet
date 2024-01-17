@@ -63,8 +63,12 @@ export function useScanLayout() {
   const onStayInProgress = () =>
     scanService.send(ScanEvents.STAY_IN_PROGRESS());
   const onRetry = () => scanService.send(ScanEvents.RETRY());
+  const GOTO_HOME = () => {
+    scanService.send(ScanEvents.DISCONNECT());
+    navigation.navigate(BOTTOM_TAB_ROUTES.home);
+  };
   const GOTO_HISTORY = () => {
-    scanService.send(ScanEvents.GOTO_HISTORY());
+    scanService.send(ScanEvents.DISCONNECT());
     navigation.navigate(BOTTOM_TAB_ROUTES.history);
   };
 
@@ -225,6 +229,7 @@ export function useScanLayout() {
   return {
     isInvalid,
     isDone,
+    GOTO_HOME,
     GOTO_HISTORY,
     isDisconnected: useSelector(scanService, selectIsDisconnected),
     statusOverlay,

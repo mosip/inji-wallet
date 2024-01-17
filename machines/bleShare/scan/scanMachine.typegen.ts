@@ -146,8 +146,8 @@ export interface Typegen0 {
     createVp: never;
     disconnect:
       | ''
+      | 'DISCONNECT'
       | 'DISMISS'
-      | 'GOTO_HISTORY'
       | 'LOCATION_ENABLED'
       | 'SCREEN_BLUR';
     monitorConnection: 'DISMISS' | 'SCREEN_BLUR' | 'xstate.init';

@@ -105,7 +105,6 @@ const model = createModel(
       NEARBY_ENABLED: () => ({}),
       NEARBY_DISABLED: () => ({}),
       GOTO_SETTINGS: () => ({}),
-      GOTO_HISTORY: () => ({}),
       START_PERMISSION_CHECK: () => ({}),
       UPDATE_REASON: (reason: string) => ({reason}),
       LOCATION_ENABLED: () => ({}),
@@ -595,11 +594,8 @@ export const scanMachine =
             accepted: {
               entry: ['logShared', 'sendVcShareSuccessEvent'],
               on: {
-                DISMISS: {
+                DISCONNECT: {
                   target: 'navigatingToHome',
-                },
-                GOTO_HISTORY: {
-                  target: 'navigatingToHistory',
                 },
               },
             },

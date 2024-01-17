@@ -520,7 +520,7 @@
       },
       "accepted": {
         "title": "ID shared successfully!",
-        "message": "Your ID has been successfully shared with",
+        "message": "Your ID has been successfully shared.",
         "home": "Home",
         "history": "History"
       },

@@ -28,17 +28,19 @@ export const SharingSuccessModal: React.FC<
           crossAlign="center"
           style={Theme.SelectVcOverlayStyles.sharedSuccessfully}>
           {SvgImage.SuccessLogo()}
-          <Text margin="20 0" style={Theme.TextStyles.bold} size={'large'}>
+          <Text
+            testID="successfullySharedTitle"
+            margin="20 0"
+            style={Theme.TextStyles.bold}
+            size={'large'}>
             {t('status.accepted.title')}
           </Text>
           <Text
+            testID="successfullySharedMessage"
             align="center"
             style={Theme.TextStyles.regular}
             color={Theme.Colors.statusMessage}>
             {t('status.accepted.message')}
-          </Text>
-          <Text style={Theme.TextStyles.bold}>
-            {sendVcScreenController.receiverInfo.name}
           </Text>
         </Column>
         <Row
@@ -52,7 +54,7 @@ export const SharingSuccessModal: React.FC<
               containerStyle={
                 Theme.SelectVcOverlayStyles.sharedSuccessfullyIconStyle
               }
-              onPress={scanLayoutController.DISMISS}
+              onPress={scanLayoutController.GOTO_HOME}
             />
             <Text align="center" weight="bold">
               {t('status.accepted.home')}
