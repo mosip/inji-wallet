@@ -359,7 +359,7 @@
   },
   "MainLayout": {
     "home": "Bahay",
-    "scan": "Scan",
+    "share": "Ibahagi",
     "history": "Kasaysayan",
     "request": "Hiling",
     "settings": "mga setting"
@@ -473,7 +473,7 @@
     "gotoSettings": "Pumunta sa setting"
   },
   "ScanScreen": {
-    "header": "I-scan ang QR Code",
+    "header": "Scan",
     "noShareableVcs": "Walang magagamit na mga card na maibabahagi.",
     "sharingVc": "Pagbabahagi ng card",
     "bluetoothStateIos": "Naka-OFF ang Bluetooth, paki-ON ito mula sa control center",

@@ -123,6 +123,8 @@ export const OtpVerificationModal: React.FC<
             </Text>
 
             <TouchableOpacity
+              testID="resendCodeView"
+              disabled={timer > 0}
               activeOpacity={1}
               onPress={
                 timer > 0
