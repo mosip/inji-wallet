@@ -161,7 +161,7 @@ export const scanMachine =
           target: '.checkStorage',
         },
         DISMISS: {
-          target: '#scan.reviewing.navigatingToHome',
+          target: '#scan.reviewing.disconnect',
         },
       },
       states: {
@@ -595,7 +595,7 @@ export const scanMachine =
               entry: ['logShared', 'sendVcShareSuccessEvent'],
               on: {
                 DISMISS: {
-                  target: 'navigatingToHome',
+                  target: 'disconnect',
                 },
               },
             },
@@ -606,7 +606,8 @@ export const scanMachine =
                 },
               },
             },
-            navigatingToHome: {
+            disconnect: {
+              //Renamed this to disconnect from navigateToHome as we are disconnecting the devices.
               invoke: {
                 src: 'disconnect',
               },
@@ -661,7 +662,7 @@ export const scanMachine =
               target: '#scan.reviewing.cancelling',
             },
             DISMISS: {
-              target: '#scan.reviewing.navigatingToHome',
+              target: '#scan.reviewing.disconnect',
             },
           },
         },
