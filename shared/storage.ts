@@ -211,13 +211,6 @@ class Storage {
       const path = getFilePath(key);
       const isFileExists = await FileStorage.exists(path);
       if (isFileExists) {
-        // TEMP(INJI-612-poc): remove .hmac & .hmace files
-        try {
-          FileStorage.removeItem(path + '.hmac');
-        } catch (_) {}
-        try {
-          FileStorage.removeItem(path + '.hmace');
-        } catch (_) {}
         return await FileStorage.removeItem(path);
       } else {
         console.log('file not exist`s');
