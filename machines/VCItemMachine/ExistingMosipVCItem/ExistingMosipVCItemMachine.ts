@@ -379,6 +379,25 @@ export const ExistingMosipVCItemMachine =
                     'clearTransactionId',
                   ],
                 },
+                RESEND_OTP: {
+                  target: '.resendOTP',
+                },
+              },
+              initial: 'idle',
+              states: {
+                idle: {},
+                resendOTP: {
+                  invoke: {
+                    src: 'requestBindingOtp',
+                    onDone: {
+                      target: 'idle',
+                    },
+                    onError: {
+                      actions: 'setWalletBindingError',
+                      target: '#vc-item.kebabPopUp.showingWalletBindingError',
+                    },
+                  },
+                },
               },
             },
             addKeyPair: {
@@ -714,6 +733,25 @@ export const ExistingMosipVCItemMachine =
                 'clearOtp',
                 'clearTransactionId',
               ],
+            },
+            RESEND_OTP: {
+              target: '.resendOTP',
+            },
+          },
+          initial: 'idle',
+          states: {
+            idle: {},
+            resendOTP: {
+              invoke: {
+                src: 'requestBindingOtp',
+                onDone: {
+                  target: 'idle',
+                },
+                onError: {
+                  actions: 'setWalletBindingError',
+                  target: '#vc-item.showingWalletBindingError',
+                },
+              },
             },
           },
         },

@@ -92,6 +92,10 @@ export interface Typegen0 {
       type: 'error.platform.downloadCredential';
       data: unknown;
     };
+    'error.platform.vc-item.acceptingBindingOtp.resendOTP:invocation[0]': {
+      type: 'error.platform.vc-item.acceptingBindingOtp.resendOTP:invocation[0]';
+      data: unknown;
+    };
     'error.platform.vc-item.addKeyPair:invocation[0]': {
       type: 'error.platform.vc-item.addKeyPair:invocation[0]';
       data: unknown;
@@ -102,6 +106,10 @@ export interface Typegen0 {
     };
     'error.platform.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]': {
       type: 'error.platform.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]';
+      data: unknown;
+    };
+    'error.platform.vc-item.kebabPopUp.acceptingBindingOtp.resendOTP:invocation[0]': {
+      type: 'error.platform.vc-item.kebabPopUp.acceptingBindingOtp.resendOTP:invocation[0]';
       data: unknown;
     };
     'error.platform.vc-item.kebabPopUp.addKeyPair:invocation[0]': {
@@ -154,6 +162,8 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.kebabPopUp.addKeyPair:invocation[0]';
     loadDownloadLimitConfig: 'done.invoke.vc-item.checkingServerData.loadDownloadLimitConfig:invocation[0]';
     requestBindingOtp:
+      | 'done.invoke.vc-item.acceptingBindingOtp.resendOTP:invocation[0]'
+      | 'done.invoke.vc-item.kebabPopUp.acceptingBindingOtp.resendOTP:invocation[0]'
       | 'done.invoke.vc-item.kebabPopUp.requestingBindingOtp:invocation[0]'
       | 'done.invoke.vc-item.requestingBindingOtp:invocation[0]';
     requestLock: 'done.invoke.vc-item.requestingLock:invocation[0]';
@@ -272,8 +282,10 @@ export interface Typegen0 {
     setVcMetadata: 'UPDATE_VC_METADATA';
     setVerifiableCredential: 'STORE_RESPONSE';
     setWalletBindingError:
+      | 'error.platform.vc-item.acceptingBindingOtp.resendOTP:invocation[0]'
       | 'error.platform.vc-item.addKeyPair:invocation[0]'
       | 'error.platform.vc-item.addingWalletBindingId:invocation[0]'
+      | 'error.platform.vc-item.kebabPopUp.acceptingBindingOtp.resendOTP:invocation[0]'
       | 'error.platform.vc-item.kebabPopUp.addKeyPair:invocation[0]'
       | 'error.platform.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]'
       | 'error.platform.vc-item.kebabPopUp.requestingBindingOtp:invocation[0]'
@@ -331,7 +343,7 @@ export interface Typegen0 {
     downloadCredential: 'DOWNLOAD_READY';
     generateKeyPair: 'INPUT_OTP';
     loadDownloadLimitConfig: 'STORE_RESPONSE';
-    requestBindingOtp: 'CONFIRM';
+    requestBindingOtp: 'CONFIRM' | 'RESEND_OTP';
     requestLock: 'INPUT_OTP';
     requestOtp: 'LOCK_VC' | 'RESEND_OTP';
     requestRevoke: 'INPUT_OTP';
@@ -342,6 +354,8 @@ export interface Typegen0 {
   };
   matchesStates:
     | 'acceptingBindingOtp'
+    | 'acceptingBindingOtp.idle'
+    | 'acceptingBindingOtp.resendOTP'
     | 'acceptingOtpInput'
     | 'acceptingOtpInput.idle'
     | 'acceptingOtpInput.resendOTP'
@@ -365,6 +379,8 @@ export interface Typegen0 {
     | 'invalid.otp'
     | 'kebabPopUp'
     | 'kebabPopUp.acceptingBindingOtp'
+    | 'kebabPopUp.acceptingBindingOtp.idle'
+    | 'kebabPopUp.acceptingBindingOtp.resendOTP'
     | 'kebabPopUp.addKeyPair'
     | 'kebabPopUp.addingWalletBindingId'
     | 'kebabPopUp.idle'
@@ -388,6 +404,7 @@ export interface Typegen0 {
     | 'updatingPrivateKey'
     | 'verifyingCredential'
     | {
+        acceptingBindingOtp?: 'idle' | 'resendOTP';
         acceptingOtpInput?: 'idle' | 'resendOTP';
         checkingServerData?:
           | 'checkingStatus'
@@ -408,7 +425,8 @@ export interface Typegen0 {
           | 'showActivities'
           | 'showBindingWarning'
           | 'showingWalletBindingError'
-          | 'updatingPrivateKey';
+          | 'updatingPrivateKey'
+          | {acceptingBindingOtp?: 'idle' | 'resendOTP'};
       };
   tags: never;
 }

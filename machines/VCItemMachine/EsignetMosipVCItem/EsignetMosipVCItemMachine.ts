@@ -198,12 +198,14 @@ export const EsignetMosipVCItemMachine = model.createMachine(
           idle: {},
           resendOTP: {
             invoke: {
-              src: 'requestOtp',
-              onDone: [
-                {
-                  target: 'idle',
-                },
-              ],
+              src: 'requestBindingOtp',
+              onDone: {
+                target: 'idle',
+              },
+              onError: {
+                actions: 'setWalletBindingError',
+                target: '#vc-item-openid4vci.showingWalletBindingError',
+              },
             },
           },
         },
@@ -403,12 +405,15 @@ export const EsignetMosipVCItemMachine = model.createMachine(
               idle: {},
               resendOTP: {
                 invoke: {
-                  src: 'requestOtp',
-                  onDone: [
-                    {
-                      target: 'idle',
-                    },
-                  ],
+                  src: 'requestBindingOtp',
+                  onDone: {
+                    target: 'idle',
+                  },
+                  onError: {
+                    actions: 'setWalletBindingError',
+                    target:
+                      '#vc-item-openid4vci.kebabPopUp.showingWalletBindingError',
+                  },
                 },
               },
             },
