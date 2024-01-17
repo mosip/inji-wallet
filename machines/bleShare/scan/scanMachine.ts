@@ -594,7 +594,7 @@ export const scanMachine =
             accepted: {
               entry: ['logShared', 'sendVcShareSuccessEvent'],
               on: {
-                DISCONNECT: {
+                DISMISS: {
                   target: 'navigatingToHome',
                 },
               },
@@ -607,11 +607,6 @@ export const scanMachine =
               },
             },
             navigatingToHome: {
-              invoke: {
-                src: 'disconnect',
-              },
-            },
-            navigatingToHistory: {
               invoke: {
                 src: 'disconnect',
               },
