@@ -544,17 +544,21 @@ export const PurpleTheme = {
       bottom: isIOS() ? 50 : 20,
       height: isIOS() ? 100 : 'auto',
     },
+    picker: {
+      fontFamily: 'Inter_600SemiBold',
+      fontSize: 18,
+    },
     idInputBottom: {
       position: 'relative',
       bottom: 18,
       borderBottomColor: Colors.Purple,
       borderBottomWidth: 1,
-      minWidth: 200,
+      minWidth: 210,
     },
     idInput: {
       position: 'relative',
       bottom: 18,
-      minWidth: 200,
+      minWidth: 210,
     },
     getId: {
       justifyContent: 'center',
@@ -725,7 +729,7 @@ export const PurpleTheme = {
     },
     error: {
       position: 'absolute',
-      top: 24,
+      top: 30,
       left: 5,
       color: Colors.Red,
       fontFamily: 'Inter_600SemiBold',

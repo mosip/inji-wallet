@@ -4,6 +4,7 @@ import {Centered, Column} from './Layout';
 import {Text} from './Text';
 import React from 'react';
 import {Theme} from './styleUtils';
+import testIDProps from '../../shared/commonUtil';
 
 export const CustomTooltip: React.FC<CustomTooltipProps> = props => {
   const tooltipContent = (
@@ -17,6 +18,7 @@ export const CustomTooltip: React.FC<CustomTooltipProps> = props => {
   );
   return (
     <Tooltip
+      {...testIDProps(props.testID)}
       popover={tooltipContent}
       width={props.width}
       height={props.height}
@@ -38,4 +40,5 @@ interface CustomTooltipProps {
   width: number;
   height: number;
   triggerComponent: React.ReactElement;
+  testID?: string;
 }
