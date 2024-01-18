@@ -63,24 +63,18 @@ jobs:
         env:
           ANDROID_KEYSTORE_FILE: ${{ secrets.INJI_ANDROID_RELEASE_KEYSTORE }}
 
-      # - name: Create Android Build
-      #   run: |
-      #     npx jetify
-      #     cd android
-      #     ./gradlew :app:assembleResidentappRelease
-      #   env:
-      #     MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
-      #     ESIGNET_HOST: ${{ github.event.inputs.backendServiceUrl }}
-      #     APPLICATION_THEME: 'orange'
-      #     CREDENTIAL_REGISTRY_EDIT: 'false'
-      #     RELEASE_KEYSTORE_ALIAS: 'androidreleasekey'
-      #     RELEASE_KEYSTORE_PASSWORD: "${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}"
-
-      # - name: Configure AWS CLI 
-      #   run: |
-      #     aws configure set aws_access_key_id ${{ secrets.AWS_DEVICE_FARM_ACCESS_KEY }}
-      #     aws configure set aws_secret_access_key ${{ secrets.AWS_DEVICE_FARM_SECRET_KEY }}
-      #     aws configure set region us-west-2
+      - name: Create Android Build
+        run: |
+          npx jetify
+          cd android
+          ./gradlew :app:assembleResidentappRelease
+        env:
+          MIMOTO_HOST: ${{ github.event.inputs.backendServiceUrl }}
+          ESIGNET_HOST: ${{ github.event.inputs.backendServiceUrl }}
+          APPLICATION_THEME: 'orange'
+          CREDENTIAL_REGISTRY_EDIT: 'false'
+          RELEASE_KEYSTORE_ALIAS: 'androidreleasekey'
+          RELEASE_KEYSTORE_PASSWORD: "${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
