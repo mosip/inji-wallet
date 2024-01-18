@@ -3,6 +3,7 @@
 #get from params
 PLATFORM=$1
 RUN_NAME=$2
+TEST_TYPE=$3
 
 #can be here
 PROJECT_ARN="arn:aws:devicefarm:us-west-2:931337674770:project:b356580b-c561-4fd2-bfdf-8993aebafc5a"
@@ -42,12 +43,20 @@ fi
 
 #update xml based on platform
 update_xml_configuration() {
-    cd ../../
-    if [ "$PLATFORM" == "Android" ]; then
-       cat android.txt > testng.xml
+    cd ../../src/main/resources
+    if [ "$PLATFORM" == "Android" && "$TEST_TYPE" == 'sanity']; then
+       cat androidSanity.txt > testng.xml
     else
-       cat ios.txt > testng.xml
+       cat androidRegression.txt > testng.xml
     fi
+
+    if [ "$PLATFORM" == "IOS" && "$TEST_TYPE" == 'sanity']; then
+       cat iosSanity.txt > testng.xml
+    else
+       cat iosRegression.txt > testng.xml
+    fi
+    
+    cd ../../../
 }
 
 #upload artifacts to device farm
