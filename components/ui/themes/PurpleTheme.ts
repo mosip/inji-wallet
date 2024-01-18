@@ -934,6 +934,13 @@ export const PurpleTheme = {
       flex: 1,
       backgroundColor: Colors.White,
     },
+    sharedSuccessfullyIconStyle: {
+      margin: 16,
+      padding: 8,
+      borderWidth: 2,
+      borderColor: Colors.Purple,
+      borderRadius: 30,
+    },
   }),
   AppMetaDataStyles: StyleSheet.create({
     buttonContainer: {
