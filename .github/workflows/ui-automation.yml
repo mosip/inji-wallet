@@ -76,61 +76,22 @@ jobs:
           RELEASE_KEYSTORE_ALIAS: 'androidreleasekey'
           RELEASE_KEYSTORE_PASSWORD: "${{ secrets.INJI_ANDROID_RELEASE_STOREPASS }}"
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_DEVICE_FARM_ACCESS_KEY }}
-          aws-secret-access-key: ${{ secrets.AWS_DEVICE_FARM_SECRET_KEY }}
-          aws-region: us-west-2
-
-      # - name: Configure xml file
-      #   run: |
-      #     cd injitest/src/main/resources/
-      #     cat androidSanity.txt > testng.xml
-      #     cd ../../../
-      #     mvn clean package -DskipTests=true
+      - name: Configure AWS CLI 
+        run: |
+          aws configure set aws_access_key_id ${{ secrets.AWS_DEVICE_FARM_ACCESS_KEY }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_DEVICE_FARM_SECRET_KEY }}
+          aws configure set region us-west-2
         
-      - name: Create test package upload
-        uses: realm/aws-devicefarm/create-upload@v1
-        id: test-package
-        with:
-          project_arn: arn:aws:devicefarm:us-west-2:931337674770:project:b356580b-c561-4fd2-bfdf-8993aebafc5a
-          name: Android-test
-          type: APPIUM_JAVA_TESTNG_TEST_PACKAGE
-
-      - name: Upload test package
+      - name: Android - Automation
+        id: android-run
         run: |
-          file_path="${{ github.workspace }}/injitest/target/zip-with-dependencies.zip"
-          echo "Absolute path: $file_path"
-          echo "FILE_PATH=$file_path" >> $GITHUB_ENV
-          curl -T "$FILE_PATH" "${{ steps.test-package.outputs.url }}"
-
-      - name: Create app upload
-        uses: realm/aws-devicefarm/create-upload@v1
-        id: app-upload
-        with:
-          project_arn: arn:aws:devicefarm:us-west-2:931337674770:project:b356580b-c561-4fd2-bfdf-8993aebafc5a
-          name: Inji_universal.apk
-          type: ANDROID_APP
-
-      - name: Upload app package
-        run: |
-          file_path="${{ github.workspace }}/android/app/build/outputs/apk/residentapp/Inji_universal.apk"
-          echo "Absolute path: $file_path"
-          echo "APK_PATH=$file_path" >> $GITHUB_ENV
-          curl -T "$APK_PATH" '${{ steps.app-upload.outputs.url }}'
-
-      - name: Schedule a test run
-        uses: realm/aws-devicefarm/schedule-run@v1
-        with:
-          name: Test-Run
-          project_arn: arn:aws:devicefarm:us-west-2:931337674770:project:b356580b-c561-4fd2-bfdf-8993aebafc5a
-          device_pool_arn: arn:aws:devicefarm:us-west-2:931337674770:devicepool:b356580b-c561-4fd2-bfdf-8993aebafc5a/90a0ea5c-bbff-449a-8ea4-5a6179fdb05c
-          app_arn: ${{ steps.app-upload.outputs.arn }}
-          test_type: APPIUM_JAVA_TESTNG
-          test_package_arn: ${{ steps.test-package.outputs.arn }}
-          test_spec_arn: arn:aws:devicefarm:us-west-2::upload:100e31e8-12ac-11e9-ab14-d663b5a4a910
-          
+          cd injitest/scripts/ui_automation
+          RUN_ARN=$(./automation_trigger.sh "Android" "$RUN_NAME" "$TEST_TYPE")
+          echo "The Run ARN is $RUN_ARN"
+        env:
+          RUN_NAME: ${{ github.event.inputs.runName }}
+          TEST_TYPE: ${{ github.event.inputs.testType }}
+        
       # - name: Upload Artifact to Actions
       #   uses: actions/upload-artifact@v3.1.1
       #   with:
