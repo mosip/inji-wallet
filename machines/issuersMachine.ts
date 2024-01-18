@@ -577,12 +577,12 @@ export const IssuersMachine = model.createMachine(
       checkInternet: async () => await NetInfo.fetch(),
       downloadIssuerConfig: async (context, _) => {
         let issuersConfig = await CACHED_API.fetchIssuerConfig(
-            context.selectedIssuerId,
+          context.selectedIssuerId,
         );
         if (context.selectedIssuer['.well-known']) {
           await CACHED_API.fetchIssuerWellknownConfig(
-              context.selectedIssuerId,
-              context.selectedIssuer['.well-known'],
+            context.selectedIssuerId,
+            context.selectedIssuer['.well-known'],
           );
         }
         return issuersConfig;
@@ -731,8 +731,11 @@ export interface issuerType {
   scopes_supported: [string];
   additional_headers: object;
   authorization_endpoint: string;
+  authorization_alias: string;
   token_endpoint: string;
+  proxy_token_endpoint: string;
   credential_endpoint: string;
+  credential_type: [string];
   credential_audience: string;
   display: [displayType];
 }

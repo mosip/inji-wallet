@@ -175,7 +175,10 @@ export const PasscodeScreen: React.FC<PasscodeRouteProps> = props => {
         {SvgImage.LockIcon()}
         <Column>
           {isSettingUp ? passcodeSetup : unlockPasscode}
-          <Text align="center" color={Theme.Colors.errorMessage}>
+          <Text
+            testID="PasscodeError"
+            align="center"
+            color={Theme.Colors.errorMessage}>
             {controller.error}
           </Text>
         </Column>
