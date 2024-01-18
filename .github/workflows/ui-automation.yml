@@ -86,9 +86,9 @@ jobs:
         id: android-run
         run: |
           cd injitest/scripts/ui_automation
-          RUN_ARN=$(./automation_trigger.sh "Android" "$RUN_NAME" "$TEST_TYPE")
-          echo "The Run ARN is $RUN_ARN"
+          ./automation_trigger.sh "$PLATFORM" "$RUN_NAME" "$TEST_TYPE"
         env:
+          PLATFORM: 'Android'
           RUN_NAME: ${{ github.event.inputs.runName }}
           TEST_TYPE: ${{ github.event.inputs.testType }}
 
