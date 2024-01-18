@@ -150,9 +150,9 @@
   "AboutInji": {
     "aboutInji": "حول إنجي",
     "header": "حول إنجي",
-    "appID": "ID طبيق",
-    "aboutDetailes": "إنجي هو تطبيق جوال يمكن استخدامه كمحفظة رقمية لتخزين بيانات الاعتماد. كما يسمح بالتحقق من الهوية في الوضعين غير المتصلين بالإنترنت وفي أي مكان وزمان.",
-    "forMoreDetailes": "لمزيد من التفاصيل",
+    "appID": " : ID طبيق",
+    "aboutDetails": "إنجي هو تطبيق جوال يمكن استخدامه كمحفظة رقمية لتخزين بيانات الاعتماد. كما يسمح بالتحقق من الهوية في الوضعين غير المتصلين بالإنترنت وفي أي مكان وزمان.",
+    "forMoreDetails": "لمزيد من التفاصيل",
     "clickHere": "انقر هنا",
     "version": "الإصدار",
     "tuvaliVersion": "نسخة توفالي"
@@ -161,8 +161,6 @@
     "title": "أضف بطاقة جديدة",
     "description": "يرجى اختيار جهة الإصدار المفضلة لديك من الخيارات أدناه لإضافة بطاقة جديدة.",
     "searchByIssuersName": "البحث حسب اسم المصدر",
-    "itemHeading": "التنزيل عبر {{issuer}}",
-    "itemSubHeading": "أدخل رقم الهوية الوطنية الخاص بك لتنزيل بطاقتك.",
     "loaders": {
       "loading": "جار التحميل...",
       "subTitle": {
@@ -171,7 +169,7 @@
         "downloadingCredentials": "تنزيل بيانات الاعتماد"
       }
     },
-    "errors":{
+    "errors": {
       "noInternetConnection": {
         "title": "لا يوجد اتصال بالإنترنت",
         "message": "الرجاء التحقق من اتصالك وإعادة المحاولة"
@@ -182,7 +180,7 @@
       },
       "generic": {
         "title": "هناك خطأ ما!",
-        "message":"نواجه بعض المشاكل مع طلبك. حاول مرة اخرى."
+        "message": "نواجه بعض المشاكل مع طلبك. حاول مرة اخرى."
       }
     }
   },
@@ -252,22 +250,26 @@
     "backButton": "العودة إلى المنزل"
   },
   "GetIdInputModal": {
-    "header": "استرجع UIN / VID الخاص بك",
+    "header": "استرجع UIN/VID الخاص بك",
     "applicationIdLabel": "الرجاء إدخال معرف التطبيق الخاص بك",
     "enterApplicationId": "أدخل معرف التطبيق",
-    "requestingOTP": "جارٍ طلب OTP ...",
-    "qstnMarkToolTip": "معرف التطبيق متاح في الإقرار الذي تم استلامه بعد التسجيل.",
-    "getUIN": "احصل على UIN / VID"
+    "requestingOTP": "جارٍ طلب كلمة المرور لمرة واحدة (OTP)...",
+    "toolTipTitle": "ما قلته انا؟",
+    "toolTipDescription": "يشير معرف التطبيق (AID) إلى المعرف الفريد الممنوح للمقيم أثناء أي حدث في دورة حياة المعرف، مثل إصدار المعرف، أو تحديث المعرف، أو استرداد المعرف المفقود، في مركز التسجيل. ",
+    "getUIN": "احصل على UIN/VID"
   },
   "IdInputModal": {
-    "header": "استرجع هويتك",
-    "guideLabel": "حدد نوع المعرف وأدخل UIN أو VID المقدم من MOSIP للمعرف الذي ترغب في استرداده",
-    "generateVc": "إنشاء بطاقة",
-    "downloadID": "معرف التنزيل",
-    "enterId": "أدخل {{idType}}",
-    "noUIN/VID": "ليس لديك UIN / VID؟ ",
-    "getItHere": "احصل عليها الآن",
-    "requestingOTP": "جارٍ طلب OTP ..."
+    "header": "قم بتنزيل معرفك",
+    "guideLabel": "حدد نوع المعرف وأدخل UIN أو VID المقدم من MOSIP الذي ترغب في تنزيله. ",
+    "generateVc": "توليد البطاقة",
+    "downloadID": "تحميل معرف",
+    "enterId": "يدخل {{idType}}",
+    "noUIN/VID": "ليس لديك UIN/VID؟",
+    "getItHere": "احصل عليه الآن باستخدام AID الخاص بك.",
+    "requestingOTP": "جارٍ طلب كلمة المرور لمرة واحدة (OTP)...",
+    "toolTipTitle": "ما هو {{idType}}؟",
+    "toolTipUINDescription": "رقم التعريف الفريد (UIN)، كما يوحي الاسم، هو رقم فريد مخصص للمقيم. ",
+    "toolTipVIDDescription": "يعد VID / Virtual ID معرفًا مستعارًا يمكن استخدامه لمعاملات المصادقة. "
   },
   "OtpVerificationModal": {
     "title": "التحقق من OTP",
@@ -310,7 +312,7 @@
         "title": "لا يوجد اتصال بالإنترنت",
         "message": "الرجاء التحقق من اتصالك وإعادة المحاولة"
       },
-      "downloadLimitExpires":{
+      "downloadLimitExpires": {
         "title": "الخطأ تحميل",
         "message": "حدثت مشكلة أثناء تنزيل البطاقات التالية. حاول مرة اخرى"
       }
@@ -358,7 +360,7 @@
   },
   "MainLayout": {
     "home": "المنزل",
-    "scan": "مسح",
+    "share": "يشارك",
     "history": "تاريخ",
     "request": "طلب",
     "settings": "إعدادات"
@@ -468,13 +470,14 @@
     "gotoSettings": "اذهب للاعدادات"
   },
   "ScanScreen": {
-    "header": "مسح رمز الاستجابة السريعة",
+    "header": "مسح",
     "noShareableVcs": "لا تتوفر بطاقات قابلة للمشاركة",
     "bluetoothStateAndroid": "يرجى تشغيل البلوتوث من الإعدادات السريعة لدعم المشاركة المحلية",
     "bluetoothStateIos": "يرجى تشغيل البلوتوث من مركز التحكم لدعم المشاركة المحلية",
     "enableBluetoothMessage": "يرجى تمكين أذونات البلوتوث لدعم المشاركة المحلية",
     "enableBluetoothButtonText": "السماح لأذونات البلوتوث",
     "scanningGuide": "امسك الهاتف بثبات وامسح رمز الاستجابة السريعة ضوئيًا",
+    "invalidQR": "يرجى مسح QR صالح",
     "sharingVc": "مشاركة بطاقة ",
     "errors": {
       "locationDisabled": {
@@ -495,10 +498,13 @@
       }
     },
     "status": {
-      "inProgress": "في تَقَدم",
+      "inProgress": {
+        "title": "في تَقَدم",
+        "hint": "الرجاء الانتظار بينما نقوم بتأسيس الاتصال."
+      },
       "establishingConnection": "اجراء اتصال",
       "connectionInProgress": "الاتصال قيد التقدم",
-      "connectingTimeout": "يستغرق الأمر بعض الوقت لتأسيس الاتصال. هل الجهاز الآخر مفتوح للاتصالات؟",
+      "connectingTimeout": "يستغرق الأمر بعض الوقت لتأسيس الاتصال. هل الجهاز الآخر مفتوح للاتصال؟",
       "stayOnTheScreen": "البقاء على الشاشة",
       "retry": "أعد المحاولة",
       "exchangingDeviceInfo": "تبادل معلومات الجهاز ...",
@@ -514,8 +520,9 @@
       },
       "accepted": {
         "title": "تمت مشاركة المعرف بنجاح!",
-        "message": "تمت مشاركة هويتك بنجاح مع",
-        "gotohome": "اذهب الى المنزل"
+        "message": "لقد تمت مشاركة هويتك بنجاح.",
+        "home": "المنزل",
+        "history": "تاريخ"
       },
       "rejected": {
         "title": "يلاحظ",

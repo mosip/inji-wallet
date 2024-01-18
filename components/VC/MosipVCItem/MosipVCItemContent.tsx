@@ -7,8 +7,9 @@ import VerifiedIcon from '../../VerifiedIcon';
 import {Column, Row, Text} from '../../ui';
 import {Theme} from '../../ui/styleUtils';
 import {CheckBox, Icon} from 'react-native-elements';
-import testIDProps, {getMaskedText} from '../../../shared/commonUtil';
+import {getMaskedText} from '../../../shared/commonUtil';
 import {logoType} from '../../../machines/issuersMachine';
+import {SvgImage} from '../../ui/svg';
 
 const getDetails = (arg1, arg2, verifiableCredential) => {
   if (arg1 === 'Status') {
@@ -88,6 +89,7 @@ const getIssuerLogo = (isOpenId4VCI: boolean, issuerLogo: logoType) => {
   if (isOpenId4VCI) {
     return (
       <Image
+        testID="esignetLogo"
         src={issuerLogo?.url}
         alt={issuerLogo?.alt_text}
         style={Theme.Styles.issuerLogo}
@@ -96,14 +98,7 @@ const getIssuerLogo = (isOpenId4VCI: boolean, issuerLogo: logoType) => {
       />
     );
   }
-  return (
-    <Image
-      source={Theme.MosipSplashLogo}
-      style={Theme.Styles.logo}
-      resizeMethod="scale"
-      resizeMode="contain"
-    />
-  );
+  return SvgImage.MosipLogo(Theme.Styles.logo);
 };
 
 export const MosipVCItemContent: React.FC<
@@ -151,18 +146,7 @@ export const MosipVCItemContent: React.FC<
       <Column>
         <Row align="space-between">
           <Row margin="5 0 0 5">
-            <ImageBackground
-              imageStyle={Theme.Styles.faceImage}
-              source={faceImageSource()}
-              style={Theme.Styles.closeCardImage}>
-              {props.iconName && (
-                <Image
-                  source={Theme.PinIcon}
-                  style={Theme.Styles.pinIcon}
-                  {...testIDProps('pinIcon')}
-                />
-              )}
-            </ImageBackground>
+            {SvgImage.VcItemContainerProfileImage(props, verifiableCredential)}
 
             <Column margin="0 0 10 20" height={96} align="space-between">
               <Column style={{maxWidth: 230}}>
@@ -316,26 +300,15 @@ export const MosipVCItemContent: React.FC<
       </Column>
     </ImageBackground>
   );
-
-  function faceImageSource() {
-    return !verifiableCredential
-      ? Theme.cardFaceIcon
-      : {
-          uri: props.vcMetadata.isFromOpenId4VCI()
-            ? verifiableCredential?.credentialSubject.face
-            : props.context.credential.biometrics.face,
-        };
-  }
 };
 
-interface ExistingMosipVCItemContentProps {
+export interface ExistingMosipVCItemContentProps {
   context: any;
   verifiableCredential: VerifiableCredential;
   generatedOn: string;
   selectable: boolean;
   selected: boolean;
-  iconName?: string;
-  iconType?: string;
+  isPinned?: boolean;
   service: any;
   onPress?: () => void;
   isDownloading?: boolean;
@@ -347,9 +320,12 @@ export interface EsignetMosipVCItemContentProps {
   generatedOn: string;
   selectable: boolean;
   selected: boolean;
-  iconName?: string;
-  iconType?: string;
+  isPinned?: boolean;
   service: any;
   onPress?: () => void;
   isDownloading?: boolean;
 }
+
+MosipVCItemContent.defaultProps = {
+  isPinned: false,
+};

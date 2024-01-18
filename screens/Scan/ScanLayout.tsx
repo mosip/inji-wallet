@@ -17,18 +17,23 @@ export const ScanLayout: React.FC = () => {
   const {t} = useTranslation('ScanScreen');
   const controller = useScanLayout();
 
-  if (controller.statusOverlay != null && !controller.isAccepted) {
+  if (
+    controller.statusOverlay != null &&
+    !controller.isAccepted &&
+    !controller.isInvalid
+  ) {
     return (
       <Loader
         title={controller.statusOverlay?.title}
         hint={controller.statusOverlay?.hint}
         onCancel={controller.statusOverlay?.onButtonPress}
         onStayInProgress={controller.statusOverlay?.onStayInProgress}
-        isHintVisible={controller.isStayInProgress}
-        isBleErrorVisible={controller.isBleError}
+        isHintVisible={
+          controller.isStayInProgress ||
+          controller.isBleError ||
+          controller.isSendingVc
+        }
         onRetry={controller.statusOverlay?.onRetry}
-        progress={controller.statusOverlay?.progress}
-        requester={controller.statusOverlay?.requester}
       />
     );
   }
@@ -58,7 +63,7 @@ export const ScanLayout: React.FC = () => {
           component={ScanScreen}
           options={{
             headerTitleStyle: {fontSize: 30, fontFamily: 'Inter_600SemiBold'},
-            title: t('MainLayout:scan'),
+            title: t('header'),
           }}
         />
       </ScanStack.Navigator>

@@ -40,7 +40,7 @@
   },
   "QrScanner": {
     "cameraAccessDisabled": "Camera access disabled!",
-    "cameraPermissionGuideLabel": "Go to settings and enable the camera access manually.",
+    "cameraPermissionGuideLabel": "Go to phone settings and enable the camera access manually.",
     "flipCamera": "Flip Camera"
   },
   "VcDetails": {
@@ -152,8 +152,8 @@
     "aboutInji": "About Inji",
     "header": "ABOUT INJI",
     "appID": "App ID",
-    "aboutDetailes": "Inji is a mobile app that can be used as a digital wallet to store credentials. It also allows identity verification in both offline and online modes, at any place and time.",
-    "forMoreDetailes": "For more details",
+    "aboutDetails": "Inji is a mobile app that can be used as a digital wallet to store credentials. It also allows identity verification in both offline and online modes, at any place and time.",
+    "forMoreDetails": "For more details",
     "clickHere": "Click here",
     "version": "Version",
     "tuvaliVersion": "Tuvali-version"
@@ -162,8 +162,6 @@
     "title": "Add new card",
     "description": "Please choose your preferred issuer from the options below to add a new card.",
     "searchByIssuersName": "Search by Issuer’s name",
-    "itemHeading": "Download via {{issuer}}",
-    "itemSubHeading": "Enter your national ID to download your card.",
     "loaders": {
       "loading": "Loading...",
       "subTitle": {
@@ -257,18 +255,22 @@
     "applicationIdLabel": "Please enter your Application ID",
     "enterApplicationId": "Enter Application ID",
     "requestingOTP": "Requesting OTP...",
-    "qstnMarkToolTip": "Application ID is available in the acknowledgement received after enrolment.",
+    "toolTipTitle": "What is AID?",
+    "toolTipDescription": "The Application ID (AID) refers to the unique identifier given to a resident during any ID lifecycle event, such as ID Issuance, ID Update, or Lost ID retrieval, at the registration center. It serves as a distinguishing factor for each specific event and can later be utilized by the resident to check the progress or status of the event.",
     "getUIN": "Get UIN/VID"
   },
   "IdInputModal": {
-    "header": "Retrieve your ID",
-    "guideLabel": "Select ID type and enter the MOSIP provided UIN or VID of the ID you wish to retrieve",
+    "header": "Download your ID",
+    "guideLabel": "Select ID type and enter the MOSIP provided UIN or VID you wish to download. In the next step, you will be asked to enter OTP.",
     "generateVc": "Generate Card",
     "downloadID": "Download ID",
-    "enterId": "Enter ID",
+    "enterId": "Enter {{idType}}",
     "noUIN/VID": "Don’t have UIN/VID? ",
-    "getItHere": "Get it now",
-    "requestingOTP": "Requesting OTP..."
+    "getItHere": "Get it now using your AID.",
+    "requestingOTP": "Requesting OTP...",
+    "toolTipTitle": "What is {{idType}}?",
+    "toolTipUINDescription": "Unique Identification Number (UIN), as the name suggests, is a unique number assigned to a resident. UIN never changes and is non-revocable.",
+    "toolTipVIDDescription": "The VID / Virtual ID is an alias identifier that can be used for authentication transactions. VID is known to the user only and is privacy friendly in a way such that it can be revoked, configured for one time usage and is not linkable."
   },
   "OtpVerificationModal": {
     "title": "OTP Verification",
@@ -359,7 +361,7 @@
   },
   "MainLayout": {
     "home": "Home",
-    "scan": "Scan",
+    "share": "Share",
     "history": "History",
     "request": "Request",
     "settings": "Settings"
@@ -394,7 +396,10 @@
     "cancel": "Cancel",
     "essentialClaims": "Important Claims",
     "voluntaryClaims": "Voluntary Claims",
-    "required": "It is necessary"
+    "required": "It is necessary",
+    "errors": {
+      "invalidQR": "QR code is invalid. Please try again!"
+    }
   },
   "ReceiveVcScreen": {
     "header": "Card details",
@@ -469,7 +474,7 @@
     "gotoSettings": "Go to settings"
   },
   "ScanScreen": {
-    "header": "Scan QR Code",
+    "header": "Scan",
     "noShareableVcs": "No shareable cards are available.",
     "sharingVc": "Sharing card",
     "bluetoothStateIos": "Bluetooth is turned OFF, please turn it ON from Control center",
@@ -477,6 +482,7 @@
     "enableBluetoothMessage": "Please enable bluetooth permissions to support local sharing",
     "enableBluetoothButtonText": "Allow bluetooth permissions",
     "scanningGuide": "Hold the phone steady and scan the QR code",
+    "invalidQR": "Please scan a valid QR",
     "errors": {
       "locationDisabled": {
         "message": "To continue, let your device turn on location",
@@ -496,10 +502,13 @@
       }
     },
     "status": {
-      "inProgress": "In progress",
+      "inProgress": {
+        "title": "In progress",
+        "hint": "Please wait while we establish the connection."
+      },
       "establishingConnection": "Establishing connection",
       "connectionInProgress": "Connection in progress",
-      "connectingTimeout": "It's taking a while to establish the connection. Is the other device open for connections?",
+      "connectingTimeout": "It's taking a while to establish the connection. Is the other device open for connection?",
       "stayOnTheScreen": "Stay on the screen",
       "retry": "Retry",
       "exchangingDeviceInfo": "Exchanging device info...",
@@ -515,8 +524,9 @@
       },
       "accepted": {
         "title": "ID shared successfully!",
-        "message": "Your ID has been successfully shared with",
-        "gotohome": "Go to Home"
+        "message": "Your ID has been successfully shared.",
+        "home": "Home",
+        "history": "History"
       },
       "rejected": {
         "title": "Notice",

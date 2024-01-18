@@ -1,5 +1,5 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import tuvali from 'react-native-tuvali';
+import tuvali from '@mosip/tuvali';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import {
   ActorRefFrom,
@@ -11,13 +11,18 @@ import {
   StateFrom,
 } from 'xstate';
 import {createModel} from 'xstate/lib/model';
-import {EmitterSubscription, Linking, Platform} from 'react-native';
+import {EmitterSubscription, Linking} from 'react-native';
 import {DeviceInfo} from '../../../components/DeviceInfoList';
 import {getDeviceNameSync} from 'react-native-device-info';
 import {VC, VerifiablePresentation} from '../../../types/VC/ExistingMosipVC/vc';
 import {AppServices} from '../../../shared/GlobalContext';
 import {ActivityLogEvents, ActivityLogType} from '../../activityLog';
-import {isAndroid, isIOS, MY_LOGIN_STORE_KEY} from '../../../shared/constants';
+import {
+  androidVersion,
+  isAndroid,
+  isIOS,
+  MY_LOGIN_STORE_KEY,
+} from '../../../shared/constants';
 import {subscribe} from '../../../shared/openIdBLE/walletEventHandler';
 import {
   check,
@@ -36,7 +41,7 @@ import {CameraCapturedPicture} from 'expo-camera';
 import {log} from 'xstate/lib/actions';
 import {createQrLoginMachine, qrLoginMachine} from '../../QrLoginMachine';
 import {StoreEvents} from '../../store';
-import {WalletDataEvent} from 'react-native-tuvali/lib/typescript/types/events';
+import {WalletDataEvent} from '@mosip/tuvali/lib/typescript/types/events';
 import {BLEError} from '../types';
 import Storage from '../../../shared/storage';
 import {VCMetadata} from '../../../shared/VCMetadata';
@@ -63,7 +68,6 @@ const model = createModel(
     receiverInfo: {} as DeviceInfo,
     selectedVc: {} as VC,
     bleError: {} as BLEError,
-    stayInProgress: false,
     createdVp: null as VC,
     reason: '',
     loggers: [] as EmitterSubscription[],
@@ -157,7 +161,7 @@ export const scanMachine =
           target: '.checkStorage',
         },
         DISMISS: {
-          target: '#scan.reviewing.navigatingToHome',
+          target: '#scan.reviewing.disconnect',
         },
       },
       states: {
@@ -452,28 +456,30 @@ export const scanMachine =
             src: 'startConnection',
           },
           initial: 'inProgress',
+          after: {
+            CONNECTION_TIMEOUT: {
+              target: '.timeout',
+              internal: true,
+            },
+          },
           states: {
             inProgress: {
-              after: {
-                CONNECTION_TIMEOUT: {
-                  target: '#scan.connecting.timeout',
-                  actions: 'setStayInProgress',
-                  internal: false,
+              on: {
+                CANCEL: {
+                  target: '#scan.reviewing.cancelling',
                 },
               },
             },
             timeout: {
               on: {
                 STAY_IN_PROGRESS: {
-                  actions: 'setStayInProgress',
+                  target: 'inProgress',
                 },
                 CANCEL: {
                   target: '#scan.reviewing.cancelling',
-                  actions: 'setPromptHint',
                 },
                 RETRY: {
                   target: '#scan.reviewing.cancelling',
-                  actions: 'setPromptHint',
                 },
               },
             },
@@ -526,6 +532,12 @@ export const scanMachine =
               invoke: {
                 src: 'sendVc',
               },
+              after: {
+                SHARING_TIMEOUT: {
+                  target: '.timeout',
+                  internal: true,
+                },
+              },
               initial: 'inProgress',
               states: {
                 inProgress: {
@@ -535,32 +547,19 @@ export const scanMachine =
                       actions: ['sendVCShareFlowCancelEndEvent'],
                     },
                   },
-                  after: {
-                    SHARING_TIMEOUT: {
-                      target: '#scan.reviewing.sendingVc.timeout',
-                      actions: 'setStayInProgress',
-                      internal: false,
-                    },
-                  },
                 },
                 timeout: {
                   on: {
                     STAY_IN_PROGRESS: {
-                      actions: 'setStayInProgress',
+                      target: 'inProgress',
                     },
                     CANCEL: {
                       target: '#scan.reviewing.cancelling',
-                      actions: [
-                        'setPromptHint',
-                        'sendVCShareFlowTimeoutEndEvent',
-                      ],
+                      actions: ['sendVCShareFlowTimeoutEndEvent'],
                     },
                     RETRY: {
                       target: '#scan.reviewing.cancelling',
-                      actions: [
-                        'setPromptHint',
-                        'sendVCShareFlowTimeoutEndEvent',
-                      ],
+                      actions: ['sendVCShareFlowTimeoutEndEvent'],
                     },
                   },
                 },
@@ -596,7 +595,7 @@ export const scanMachine =
               entry: ['logShared', 'sendVcShareSuccessEvent'],
               on: {
                 DISMISS: {
-                  target: 'navigatingToHome',
+                  target: 'disconnect',
                 },
               },
             },
@@ -607,7 +606,12 @@ export const scanMachine =
                 },
               },
             },
-            navigatingToHome: {},
+            disconnect: {
+              //Renamed this to disconnect from navigateToHome as we are disconnecting the devices.
+              invoke: {
+                src: 'disconnect',
+              },
+            },
             verifyingIdentity: {
               on: {
                 FACE_VALID: {
@@ -658,7 +662,7 @@ export const scanMachine =
               target: '#scan.reviewing.cancelling',
             },
             DISMISS: {
-              target: '#scan.reviewing.navigatingToHome',
+              target: '#scan.reviewing.disconnect',
             },
           },
         },
@@ -890,19 +894,8 @@ export const scanMachine =
         }),
 
         setLinkCode: assign({
-          linkCode: (_context, event) =>
-            event.params.substring(
-              event.params.indexOf('linkCode=') + 9,
-              event.params.indexOf('&'),
-            ),
-        }),
-
-        setStayInProgress: assign({
-          stayInProgress: context => !context.stayInProgress,
-        }),
-
-        setPromptHint: assign({
-          stayInProgress: context => (context.stayInProgress = false),
+          linkCode: (_, event) =>
+            new URL(event.params).searchParams.get('linkCode'),
         }),
 
         resetShouldVerifyPresence: assign({
@@ -951,7 +944,7 @@ export const scanMachine =
           );
         },
 
-        sendBLEConnectionErrorEvent: (context, event) => {
+        sendBLEConnectionErrorEvent: (_context, event) => {
           sendErrorEvent(
             getErrorEventData(
               TelemetryConstants.FlowType.senderVcShare,
@@ -1204,22 +1197,20 @@ export const scanMachine =
       },
 
       guards: {
-        isOpenIdQr: (_context, event) => event.params.includes('OPENID4VP://'),
-
+        // sample: 'OPENID4VP://connect:?name=OVPMOSIP&key=69dc92a2cc91f02258aa8094d6e2b62877f5b6498924fbaedaaa46af30abb364'
+        isOpenIdQr: (_context, event) =>
+          event.params.startsWith('OPENID4VP://'),
         isQrLogin: (_context, event) => {
-          let linkCode = '';
           try {
-            linkCode = event.params.substring(
-              event.params.indexOf('linkCode=') + 9,
-              event.params.indexOf('&'),
-            );
-            return linkCode !== null;
+            let linkCode = new URL(event.params);
+            // sample: 'inji://landing-page-name?linkCode=sTjp0XVH3t3dGCU&linkExpireDateTime=2023-11-09T06:56:18.482Z'
+            return linkCode.searchParams.get('linkCode') !== null;
           } catch (e) {
             return false;
           }
         },
 
-        uptoAndroid11: () => isAndroid() && Platform.Version < 31,
+        uptoAndroid11: () => isAndroid() && androidVersion < 31,
 
         isIOS: () => isIOS(),
 

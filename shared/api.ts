@@ -15,6 +15,10 @@ export const API_URLS: ApiUrls = {
     buildURL: (issuerId: string): `/${string}` =>
       `/residentmobileapp/issuers/${issuerId}`,
   },
+  issuerWellknownConfig: {
+    method: 'GET',
+    buildURL: (requestUrl: `/${string}`): `/${string}` => requestUrl,
+  },
   allProperties: {
     method: 'GET',
     buildURL: (): `/${string}` => '/residentmobileapp/allProperties',
@@ -96,7 +100,13 @@ export const API = {
     );
     return response.response;
   },
-
+  fetchIssuerWellknownConfig: async (requestUrl: string) => {
+    const response = await request(
+      API_URLS.issuerWellknownConfig.method,
+      API_URLS.issuerWellknownConfig.buildURL(requestUrl),
+    );
+    return response;
+  },
   fetchAllProperties: async () => {
     const response = await request(
       API_URLS.allProperties.method,
@@ -118,10 +128,15 @@ export const CACHED_API = {
       cacheKey: API_CACHED_STORAGE_KEYS.fetchIssuerConfig(issuerId),
       fetchCall: API.fetchIssuerConfig.bind(null, issuerId),
     }),
-
-  getAllProperties: () =>
+  fetchIssuerWellknownConfig: (issuerId: string, requestUrl: string) =>
     generateCacheAPIFunction({
-      isCachePreferred: true,
+      cacheKey: API_CACHED_STORAGE_KEYS.fetchIssuerWellknownConfig(issuerId),
+      fetchCall: API.fetchIssuerWellknownConfig.bind(null, requestUrl),
+    }),
+
+  getAllProperties: (isCachePreferred: boolean) =>
+    generateCacheAPIFunction({
+      isCachePreferred,
       cacheKey: COMMON_PROPS_KEY,
       fetchCall: API.fetchAllProperties,
       onErrorHardCodedValue: INITIAL_CONFIG.allProperties,
@@ -227,7 +242,9 @@ async function generateCacheAPIFunctionWithAPIPreference(
     if (response) {
       return JSON.parse(response);
     } else {
-      if (onErrorHardCodedValue != undefined) {
+      if (response == null) {
+        throw error;
+      } else if (onErrorHardCodedValue != undefined) {
         return onErrorHardCodedValue;
       } else {
         throw error;
@@ -244,6 +261,7 @@ type Api_Params = {
 type ApiUrls = {
   issuersList: Api_Params;
   issuerConfig: Api_Params;
+  issuerWellknownConfig: Api_Params;
   allProperties: Api_Params;
   getIndividualId: Api_Params;
   reqIndividualOTP: Api_Params;

@@ -10,11 +10,7 @@ export const MessageOverlay: React.FC<MessageOverlayProps> = props => {
   const {t} = useTranslation('common');
   const style = StyleSheet.create({
     customHeight: {
-      height: props.customHeight
-        ? props.customHeight
-        : props.progress
-        ? 100
-        : 150,
+      minHeight: props.minHeight ? props.minHeight : props.progress ? 100 : 170,
     },
   });
   return (
@@ -24,11 +20,13 @@ export const MessageOverlay: React.FC<MessageOverlayProps> = props => {
       onShow={props.onShow}
       onBackdropPress={props.onBackdropPress}>
       <Column
+        testID={props.testID}
         width={Dimensions.get('screen').width * 0.8}
         style={[Theme.MessageOverlayStyles.popupOverLay, style.customHeight]}>
         <Column padding="21" crossAlign="center">
           {props.title && (
             <Text
+              testID={props.testID && props.testID + 'Title'}
               style={{paddingTop: 3}}
               align="center"
               weight="bold"
@@ -39,6 +37,7 @@ export const MessageOverlay: React.FC<MessageOverlayProps> = props => {
           )}
           {props.message && (
             <Text
+              testID={props.testID && props.testID + 'Message'}
               align="center"
               weight="semibold"
               size="small"
@@ -50,6 +49,7 @@ export const MessageOverlay: React.FC<MessageOverlayProps> = props => {
           {props.progress && <Progress progress={props.progress} />}
           {props.hint && (
             <Text
+              testID={props.testID && props.testID + 'Hint'}
               size="smaller"
               color={Theme.Colors.textLabel}
               margin={[4, 0, 0, 0]}>
@@ -60,6 +60,7 @@ export const MessageOverlay: React.FC<MessageOverlayProps> = props => {
         </Column>
         {!props.children && props.onButtonPress ? (
           <Button
+            testID="cancel"
             type="gradient"
             title={props.buttonText ? t(props.buttonText) : t('cancel')}
             onPress={props.onButtonPress}
@@ -107,6 +108,7 @@ const Progress: React.FC<Pick<MessageOverlayProps, 'progress'>> = props => {
 };
 
 export interface MessageOverlayProps {
+  testID?: string;
   isVisible: boolean;
   title?: string;
   buttonText?: string;
@@ -119,5 +121,5 @@ export interface MessageOverlayProps {
   onRetry?: () => void;
   onBackdropPress?: () => void;
   onShow?: () => void;
-  customHeight?: number | string | undefined;
+  minHeight?: number | string | undefined;
 }

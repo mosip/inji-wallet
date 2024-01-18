@@ -6,7 +6,7 @@ import {Centered, Button, Column, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {useRequestScreen} from './RequestScreenController';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
-import {Platform} from 'react-native';
+import {Platform, View} from 'react-native';
 import Storage from '../../shared/storage';
 import {ErrorMessageOverlay} from '../../components/MessageOverlay';
 import {
@@ -18,6 +18,7 @@ import {MainBottomTabParamList} from '../../routes/main';
 import {BOTTOM_TAB_ROUTES} from '../../routes/routesConstants';
 import {ProgressingModal} from '../../components/ProgressingModal';
 import {isIOS} from '../../shared/constants';
+import testIDProps from '../../shared/commonUtil';
 
 type RequestStackParamList = {
   RequestScreen: undefined;
@@ -106,7 +107,11 @@ export const RequestScreen: React.FC = () => {
 const BluetoothPrompt: React.FC<RequestScreenProps> = ({t}) => {
   return (
     <Centered fill>
-      <Text color={Theme.Colors.errorMessage} align="center" margin="0 10">
+      <Text
+        testID="bluetoothIsTurnedOffMessage"
+        color={Theme.Colors.errorMessage}
+        align="center"
+        margin="0 10">
         {t(isIOS() ? 'bluetoothStateIos' : 'bluetoothStateAndroid')}
       </Text>
     </Centered>
@@ -117,11 +122,15 @@ const NearByPrompt: React.FC<RequestScreenProps> = ({t, controller}) => {
   return (
     <Column fill align="space-between">
       <Centered fill>
-        <Text color={Theme.Colors.errorMessage} align="center">
+        <Text
+          testID="allowNearbyDevicesPermissionMessage"
+          color={Theme.Colors.errorMessage}
+          align="center">
           {t('errors.nearbyDevicesPermissionDenied.message')}
         </Text>
       </Centered>
       <Button
+        testID="allowNearbyDevicesPermissionButton"
         title={t('errors.nearbyDevicesPermissionDenied.button')}
         onPress={controller.GOTO_SETTINGS}
       />
@@ -132,15 +141,19 @@ const NearByPrompt: React.FC<RequestScreenProps> = ({t, controller}) => {
 const SharingQR: React.FC<RequestScreenProps> = ({t, controller}) => {
   return (
     <React.Fragment>
-      <Text align="center">{t('showQrCode')}</Text>
+      <Text testID="showQrCode" align="center">
+        {t('showQrCode')}
+      </Text>
 
       <Centered fill>
         {controller.openId4VpUri !== '' ? (
-          <QRCode
-            size={200}
-            value={controller.openId4VpUri}
-            backgroundColor={Theme.Colors.QRCodeBackgroundColor}
-          />
+          <View {...testIDProps('qrCode')}>
+            <QRCode
+              size={200}
+              value={controller.openId4VpUri}
+              backgroundColor={Theme.Colors.QRCodeBackgroundColor}
+            />
+          </View>
         ) : null}
       </Centered>
     </React.Fragment>
@@ -150,10 +163,15 @@ const SharingQR: React.FC<RequestScreenProps> = ({t, controller}) => {
 const StatusMessage: React.FC<RequestScreenProps> = ({t, controller}) => {
   return (
     controller.statusMessage !== '' && (
-      <Column elevation={1} padding="16 24">
-        <Text>{controller.statusMessage}</Text>
+      <Column testID="recievedCardStatus" elevation={1} padding="16 24">
+        <Text testID="receiveCardStatusMessage">
+          {controller.statusMessage}
+        </Text>
         {controller.statusHint !== '' && (
-          <Text size="small" color={Theme.Colors.textLabel}>
+          <Text
+            testID="receiveCardStatusHint"
+            size="small"
+            color={Theme.Colors.textLabel}>
             {controller.statusHint}
           </Text>
         )}

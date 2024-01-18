@@ -21,7 +21,7 @@ import {
 } from '../../../shared/keystore/SecureKeystore';
 import {ActivityLogEvents} from '../../../machines/activityLog';
 import {request} from '../../../shared/request';
-import SecureKeystore from 'react-native-secure-keystore';
+import SecureKeystore from '@mosip/secure-keystore';
 import {VerifiableCredential} from './vc';
 import {
   getEndEventData,

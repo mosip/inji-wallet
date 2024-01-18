@@ -6,7 +6,7 @@ export default {
   icon: './assets/icon.png',
   splash: {
     image: './assets/splash.png',
-    resizeMode: 'contain',
+    resizeMode: 'cover',
     backgroundColor: '#ffffff',
   },
   updates: {
@@ -22,7 +22,7 @@ export default {
     package: 'io.mosip.residentapp',
     versionCode: 1,
     adaptiveIcon: {
-      foregroundImage: './assets/adaptive-icon.png',
+      foregroundImage: './assets/Adaptive_Icon.png',
       backgroundColor: '#FFFFFF',
     },
   },

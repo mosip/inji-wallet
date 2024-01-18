@@ -1,5 +1,5 @@
 import React from 'react';
-import {Platform, Pressable, View, Image} from 'react-native';
+import {Platform, Pressable, Image} from 'react-native';
 import {Icon, ListItem, Switch} from 'react-native-elements';
 import {Column, Row, Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
@@ -16,6 +16,7 @@ import {EditableListItem} from '../../components/EditableListItem';
 import {RequestRouteProps, RootRouteProps} from '../../routes';
 import {ReceivedCards} from './ReceivedCards';
 import testIDProps from '../../shared/commonUtil';
+import {SvgImage} from '../../components/ui/svg';
 
 const LanguageSetting: React.FC = () => {
   const {t} = useTranslation('SettingScreen');
@@ -23,22 +24,24 @@ const LanguageSetting: React.FC = () => {
   return (
     <LanguageSelector
       triggerComponent={
-        <ListItem testID="language">
+        <ListItem {...testIDProps('language')}>
           <Icon
             name="globe"
             size={22}
             type="simple-line-icon"
             color={Theme.Colors.Icon}
-            containerStyle={Theme.Styles.settingsIconBg}
           />
           <ListItem.Content>
-            <ListItem.Title style={{paddingTop: 3}}>
+            <ListItem.Title
+              {...testIDProps('languageTitle')}
+              style={{paddingTop: 3}}>
               <Text weight="semibold" color={Theme.Colors.settingsLabel}>
                 {t('language')}
               </Text>
             </ListItem.Title>
           </ListItem.Content>
           <Icon
+            {...testIDProps('chevronRightIcon')}
             name="chevron-right"
             size={21}
             color={Theme.Colors.chevronRightColor}
@@ -62,13 +65,13 @@ export const SettingScreen: React.FC<
 
   return (
     <React.Fragment>
-      <Pressable onPress={controller.TOGGLE_SETTINGS}>
+      <Pressable accessible={false} onPress={controller.TOGGLE_SETTINGS}>
         {props.triggerComponent}
       </Pressable>
       <Modal
         testID="settingsScreen"
         isVisible={controller.isVisible}
-        arrowLeft={<Icon name={''} />}
+        arrowLeft={true}
         headerTitle={t('header')}
         headerElevation={2}
         onDismiss={controller.TOGGLE_SETTINGS}>
@@ -87,15 +90,18 @@ export const SettingScreen: React.FC<
             <Row
               align="space-evenly"
               backgroundColor={Theme.Colors.whiteBackgroundColor}>
-              <Pressable onPress={controller.RECEIVE_CARD}>
+              <Pressable
+                {...testIDProps('receiveCardPressableArea')}
+                onPress={controller.RECEIVE_CARD}>
                 <Column
-                  testID="receiveCard"
+                  align="center"
                   style={Theme.Styles.receiveCardsContainer}>
-                  <Image
-                    source={Theme.ReceiveCardIcon}
-                    style={{alignSelf: 'center'}}
-                  />
-                  <Text margin="6" style={{paddingTop: 3}} weight="semibold">
+                  {SvgImage.ReceiveCard()}
+                  <Text
+                    testID="receiveCard"
+                    margin="6"
+                    style={{paddingTop: 3}}
+                    weight="semibold">
                     {t('receiveCard')}
                   </Text>
                 </Column>
@@ -121,19 +127,17 @@ export const SettingScreen: React.FC<
 
             <LanguageSetting />
 
-            <ListItem
-              {...testIDProps('bioUnlock')}
-              topDivider
-              disabled={!controller.canUseBiometrics}>
+            <ListItem topDivider disabled={!controller.canUseBiometrics}>
               <Icon
                 type={'MaterialCommunityIcons'}
                 name={'fingerprint'}
                 color={Theme.Colors.Icon}
                 size={25}
-                style={{marginRight: 15}}
               />
               <ListItem.Content>
-                <ListItem.Title style={{paddingTop: 3}}>
+                <ListItem.Title
+                  {...testIDProps('bioUnlock')}
+                  style={{paddingTop: 3}}>
                   <Text weight="semibold" color={Theme.Colors.settingsLabel}>
                     {t('bioUnlock')}
                   </Text>
@@ -157,16 +161,19 @@ export const SettingScreen: React.FC<
 
             {CREDENTIAL_REGISTRY_EDIT === 'true' && (
               <EditableListItem
+                testID="credentialRegistry"
                 title={t('credentialRegistry')}
                 content={controller.credentialRegistry}
                 items={[
                   {
                     label: t('credentialRegistry'),
                     value: controller.credentialRegistry,
+                    testID: 'credentialRegistry',
                   },
                   {
                     label: t('esignethosturl'),
                     value: controller.esignetHostUrl,
+                    testID: 'esignetHost',
                   },
                 ]}
                 response={controller.credentialRegistryResponse}
@@ -180,7 +187,6 @@ export const SettingScreen: React.FC<
             )}
 
             <ListItem
-              {...testIDProps('injiTourGuide')}
               topDivider
               bottomDivider
               onPress={() => controller.INJI_TOUR_GUIDE()}>
@@ -189,10 +195,11 @@ export const SettingScreen: React.FC<
                 name={'book'}
                 color={Theme.Colors.Icon}
                 size={25}
-                style={{marginRight: 15}}
               />
               <ListItem.Content>
-                <ListItem.Title style={{paddingTop: 3}}>
+                <ListItem.Title
+                  {...testIDProps('injiTourGuide')}
+                  style={{paddingTop: 3}}>
                   <Text weight="semibold" color={Theme.Colors.settingsLabel}>
                     {t('injiTourGuide')}
                   </Text>
@@ -200,16 +207,17 @@ export const SettingScreen: React.FC<
               </ListItem.Content>
             </ListItem>
 
-            <ListItem {...testIDProps('logout')} onPress={controller.LOGOUT}>
+            <ListItem onPress={controller.LOGOUT}>
               <Icon
                 name="logout"
                 type="fontawesome"
                 size={22}
                 color={Theme.Colors.Icon}
-                containerStyle={Theme.Styles.settingsIconBg}
               />
               <ListItem.Content>
-                <ListItem.Title style={{paddingTop: 3}}>
+                <ListItem.Title
+                  {...testIDProps('logout')}
+                  style={{paddingTop: 3}}>
                   <Text weight="semibold" color={Theme.Colors.settingsLabel}>
                     {t('logout')}
                   </Text>

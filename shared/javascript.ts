@@ -1,6 +1,6 @@
-export function groupBy<T>(array: T[], predicate: (T) => boolean) {
-  const trueElements = [];
-  const falseElements = [];
+export function groupBy<T>(array: T[], predicate: (arg0: T) => boolean) {
+  const trueElements: T[] = [];
+  const falseElements: T[] = [];
 
   array?.forEach(e => {
     if (predicate(e)) {

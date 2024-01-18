@@ -5,22 +5,16 @@ import {APP_ID_LENGTH} from './constants';
 const dependencies = require('../package-lock.json').dependencies;
 
 function getTuvaliPackageDetails() {
-  let packageVersion, packageCommitId;
-
+  let packageVersion;
   Object.keys(dependencies).forEach(dependencyName => {
     const dependencyData = dependencies[dependencyName];
-
-    if (dependencyName == 'react-native-tuvali') {
-      packageVersion = dependencyData.from
-        ? dependencyData.from.split('#')[1]
+    if (dependencyName == '@mosip/tuvali') {
+      packageVersion = dependencyData?.version
+        ? dependencyData.version
         : 'unknown';
-
-      if (packageVersion != 'unknown') {
-        packageCommitId = dependencyData.version.split('#')[1].substring(0, 7);
-      }
     }
   });
-  return {packageVersion, packageCommitId};
+  return {packageVersion};
 }
 export class __AppId {
   private static value: string;
@@ -36,16 +30,12 @@ export class __AppId {
 export class __TuvaliVersion {
   private static packageDetails = getTuvaliPackageDetails();
 
-  public static getPackageCommitId(): string {
-    return __TuvaliVersion.packageDetails.packageCommitId;
-  }
-
   public static getpackageVersion(): string {
     return __TuvaliVersion.packageDetails.packageVersion;
   }
 
   public static getValue(): string {
-    return this.getpackageVersion() + '-' + this.getPackageCommitId();
+    return this.getpackageVersion();
   }
 }
 export class __InjiVersion {

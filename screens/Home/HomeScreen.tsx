@@ -15,6 +15,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {EsignetMosipVCItemMachine} from '../../machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine';
 import {ErrorMessageOverlay} from '../../components/MessageOverlay';
 import {Pressable} from 'react-native';
+import testIDProps from '../../shared/commonUtil';
 
 export const HomeScreen: React.FC<HomeRouteProps> = props => {
   const {t} = useTranslation('HomeScreen');
@@ -35,6 +36,8 @@ export const HomeScreen: React.FC<HomeRouteProps> = props => {
   const DownloadFABIcon: React.FC = () => {
     const plusIcon = (
       <Icon
+        {...testIDProps('plusIcon')}
+        accessible={true}
         name={'plus'}
         type={'entypo'}
         size={36}
@@ -49,7 +52,8 @@ export const HomeScreen: React.FC<HomeRouteProps> = props => {
           onPress={() => {
             controller.GOTO_ISSUERS();
           }}
-          testID="downloadIcon"
+          {...testIDProps('downloadCardButton')}
+          accessible={false}
           style={({pressed}) =>
             pressed
               ? Theme.Styles.downloadFabIconPressed
@@ -100,19 +104,6 @@ export const HomeScreen: React.FC<HomeRouteProps> = props => {
     </React.Fragment>
   );
 };
-
-function TabItem(title: string) {
-  return (
-    <Tab.Item
-      containerStyle={Theme.Styles.tabContainer}
-      title={
-        <Text align="center" color={Theme.Colors.TabItemText}>
-          {title}
-        </Text>
-      }
-    />
-  );
-}
 
 export interface HomeScreenTabProps {
   isVisible: boolean;

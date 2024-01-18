@@ -1,6 +1,6 @@
 import React, {useLayoutEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {FlatList, Image, TextInput, View} from 'react-native';
+import {FlatList, Image, Pressable, View} from 'react-native';
 import {Issuer} from '../../components/openId4VCI/Issuer';
 import {Error} from '../../components/ui/Error';
 import {Header} from '../../components/ui/Header';
@@ -23,8 +23,10 @@ import {
   sendStartEvent,
 } from '../../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../../shared/telemetry/TelemetryConstants';
-import {Icon} from 'react-native-elements';
 import {MessageOverlay} from '../../components/MessageOverlay';
+import {SearchBar} from '../../components/ui/SearchBar';
+import {SvgImage} from '../../components/ui/svg';
+import {Icon} from 'react-native-elements';
 
 export const IssuersScreen: React.FC<
   HomeRouteProps | RootRouteProps
@@ -35,6 +37,8 @@ export const IssuersScreen: React.FC<
   const issuers = controller.issuers;
   let [filteredSearchData, setFilteredSearchData] = useState(issuers);
   const [search, setSearch] = useState('');
+  const [tapToSearch, setTapToSearch] = useState(false);
+  const [clearSearchIcon, setClearSearchIcon] = useState(false);
 
   useLayoutEffect(() => {
     if (controller.loadingReason || controller.errorMessageType) {
@@ -83,6 +87,15 @@ export const IssuersScreen: React.FC<
     return controller.errorMessageType === ErrorMessage.GENERIC;
   };
 
+  const onFocusSearch = () => {
+    setTapToSearch(true);
+  };
+
+  const clearSearchText = () => {
+    filterIssuers('');
+    setClearSearchIcon(false);
+  };
+
   const goBack = () => {
     if (
       controller.errorMessageType &&
@@ -96,27 +109,16 @@ export const IssuersScreen: React.FC<
 
   const getImage = () => {
     if (isGenericError()) {
-      return (
-        <Image
-          source={Theme.SomethingWentWrong}
-          style={{width: 370, height: 150}}
-          {...testIDProps('somethingWentWrongImage')}
-        />
-      );
+      return SvgImage.SomethingWentWrong();
     }
-    return (
-      <Image
-        {...testIDProps('noInternetConnectionImage')}
-        source={Theme.NoInternetConnection}
-      />
-    );
+    return SvgImage.NoInternetConnection();
   };
 
   const filterIssuers = (searchText: string) => {
     const filteredData = issuers.filter(item => {
       if (
         getDisplayObjectForCurrentLanguage(item.display)
-          ?.name.toLowerCase()
+          ?.title.toLowerCase()
           .includes(searchText.toLowerCase())
       ) {
         return getDisplayObjectForCurrentLanguage(item.display);
@@ -124,13 +126,18 @@ export const IssuersScreen: React.FC<
     });
     setFilteredSearchData(filteredData);
     setSearch(searchText);
+    if (searchText !== '') {
+      setClearSearchIcon(true);
+    } else {
+      setClearSearchIcon(false);
+    }
   };
 
   if (controller.isBiometricsCancelled) {
     return (
       <MessageOverlay
         isVisible={controller.isBiometricsCancelled}
-        customHeight={'auto'}
+        minHeight={'auto'}
         title={t('errors.biometricsCancelled.title')}
         message={t('errors.biometricsCancelled.message')}
         onBackdropPress={controller.RESET_ERROR}>
@@ -143,6 +150,7 @@ export const IssuersScreen: React.FC<
             margin={[0, 8, 0, 0]}
           />
           <Button
+            testID="tryAgain"
             fill
             title={t('common:tryAgain')}
             onPress={controller.TRY_AGAIN}
@@ -171,7 +179,6 @@ export const IssuersScreen: React.FC<
       <Loader
         title={t('loaders.loading')}
         subTitle={t(`loaders.subTitle.${controller.loadingReason}`)}
-        progress
       />
     );
   }
@@ -180,8 +187,35 @@ export const IssuersScreen: React.FC<
     <React.Fragment>
       {controller.issuers.length > 0 && (
         <Column style={Theme.IssuersScreenStyles.issuerListOuterContainer}>
+          <Row
+            style={
+              tapToSearch
+                ? Theme.SearchBarStyles.searchBarContainer
+                : Theme.SearchBarStyles.idleSearchBarBottomLine
+            }>
+            <SearchBar
+              searchIconTestID="searchIssuerIcon"
+              searchBarTestID="issuerSearchBar"
+              search={search}
+              placeholder={t('searchByIssuersName')}
+              onFocus={onFocusSearch}
+              onChangeText={filterIssuers}
+              onLayout={() => filterIssuers('')}
+            />
+            {clearSearchIcon && (
+              <Pressable onPress={clearSearchText}>
+                <Icon
+                  testID="clearingIssuerSearchIcon"
+                  name="circle-with-cross"
+                  type="entypo"
+                  size={15}
+                  color={Theme.Colors.DetailsLabel}
+                />
+              </Pressable>
+            )}
+          </Row>
           <Text
-            {...testIDProps('issuersScreenDescription')}
+            testID="issuersScreenDescription"
             style={{
               ...Theme.TextStyles.regularGrey,
               paddingTop: 0.5,
@@ -190,24 +224,6 @@ export const IssuersScreen: React.FC<
             }}>
             {t('description')}
           </Text>
-          <Row margin="3">
-            <Icon
-              testID="searchIssuerIcon"
-              name="search"
-              color={Theme.Colors.GrayIcon}
-              size={27}
-              style={Theme.IssuersScreenStyles.searchIcon}
-            />
-            <TextInput
-              testID="issuerSearchBar"
-              style={Theme.IssuersScreenStyles.issuersSearchBar}
-              placeholder={t('searchByIssuersName')}
-              value={search}
-              onChangeText={searchText => filterIssuers(searchText)}
-              onLayout={() => filterIssuers('')}
-            />
-          </Row>
-
           <View style={Theme.IssuersScreenStyles.issuersContainer}>
             {controller.issuers.length > 0 && (
               <FlatList
@@ -216,14 +232,9 @@ export const IssuersScreen: React.FC<
                   <Issuer
                     testID={removeWhiteSpace(item.credential_issuer)}
                     key={item.credential_issuer}
-                    id={item.credential_issuer}
-                    displayName={
-                      getDisplayObjectForCurrentLanguage(item.display)?.name
-                    }
-                    logoUrl={
-                      getDisplayObjectForCurrentLanguage(item.display)?.logo
-                        ?.url
-                    }
+                    displayDetails={getDisplayObjectForCurrentLanguage(
+                      item.display,
+                    )}
                     onPress={() =>
                       onPressHandler(item.credential_issuer, item.protocol)
                     }
@@ -231,7 +242,7 @@ export const IssuersScreen: React.FC<
                   />
                 )}
                 numColumns={2}
-                keyExtractor={item => item.id}
+                keyExtractor={item => item.credential_issuer}
               />
             )}
           </View>
