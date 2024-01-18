@@ -81,23 +81,49 @@ jobs:
           aws configure set aws_access_key_id ${{ secrets.AWS_DEVICE_FARM_ACCESS_KEY }}
           aws configure set aws_secret_access_key ${{ secrets.AWS_DEVICE_FARM_SECRET_KEY }}
           aws configure set region us-west-2
-        
-      - name: Android - Automation
-        id: android-run
+
+      - name: Configure xml file
         run: |
-          cd injitest/scripts/ui_automation
-          ./automation_trigger.sh "$PLATFORM" "$RUN_NAME" "$TEST_TYPE"
-        env:
-          PLATFORM: 'Android'
-          RUN_NAME: ${{ github.event.inputs.runName }}
-          TEST_TYPE: ${{ github.event.inputs.testType }}
+          cd injitest/src/main/resources/
+          cat androidSanity.txt > testng.xml
+          cd ../../../
+          mvn clean package -DskipTests=true
+        
+      - name: Create test package upload
+        uses: realm/aws-devicefarm/create-upload@v1
+        id: test-package
+        with:
+          project_arn: arn:aws:devicefarm:us-west-2:931337674770:project:b356580b-c561-4fd2-bfdf-8993aebafc5a
+          name: Android-test
+          type: APPIUM_JAVA_TESTNG_TEST_PACKAGE
 
-      # - name: Artifacts download
-      #   id: artifact-download
-      #   run: |
-      #     cd injitest/scripts/ui_automation
-      #     ./download_artifacts.sh "${{ steps.android-run.outputs.run_arn }}" "Android"
+      - name: Upload test package
+        run: |
+          curl -T ../../injitest/target/zip-with-dependencies.zip '${{ steps.test-package.outputs.url }}'
 
+      - name: Create app upload
+        uses: realm/aws-devicefarm/create-upload@v1
+        id: app-upload
+        with:
+          project_arn: arn:aws:devicefarm:us-west-2:931337674770:project:b356580b-c561-4fd2-bfdf-8993aebafc5a
+          name: Inji_universal.apk
+          type: ANDROID_APP
+
+      - name: Upload test package
+        run: |
+          curl -T ../../android/app/build/outputs/apk/residentapp/Inji_universal.apk '${{ steps.app-upload.outputs.url }}'
+
+      - name: Schedule a test run
+        uses: realm/aws-devicefarm/schedule-run@v1
+        with:
+          name: Test-Run
+          project_arn: arn:aws:devicefarm:us-west-2:931337674770:project:b356580b-c561-4fd2-bfdf-8993aebafc5a
+          device_pool_arn: arn:aws:devicefarm:us-west-2:931337674770:devicepool:b356580b-c561-4fd2-bfdf-8993aebafc5a/90a0ea5c-bbff-449a-8ea4-5a6179fdb05c
+          app_arn: ${{ steps.app-upload.outputs.arn }}
+          test_type: APPIUM_JAVA_TESTNG
+          test_package_arn: ${{ steps.test-package.outputs.arn }}
+          test_spec_arn: arn:aws:devicefarm:us-west-2::upload:100e31e8-12ac-11e9-ab14-d663b5a4a910
+          
       # - name: Upload Artifact to Actions
       #   uses: actions/upload-artifact@v3.1.1
       #   with:
