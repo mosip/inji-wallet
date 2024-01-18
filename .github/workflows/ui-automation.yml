@@ -106,7 +106,10 @@ jobs:
 
       - name: Upload test package
         run: |
-          curl -T ../../injitest/target/zip-with-dependencies.zip '${{ steps.test-package.outputs.url }}'
+          file_path="${{ github.workspace }}/injitest/target/zip-with-dependencies.zip"
+          echo "Absolute path: $file_path"
+          echo "FILE_PATH=$file_path" >> $GITHUB_ENV
+          curl -T "$FILE_PATH" "${{ steps.test-package.outputs.url }}"
 
       - name: Create app upload
         uses: realm/aws-devicefarm/create-upload@v1
@@ -116,9 +119,12 @@ jobs:
           name: Inji_universal.apk
           type: ANDROID_APP
 
-      - name: Upload test package
+      - name: Upload app package
         run: |
-          curl -T ../../android/app/build/outputs/apk/residentapp/Inji_universal.apk '${{ steps.app-upload.outputs.url }}'
+          file_path="${{ github.workspace }}/android/app/build/outputs/apk/residentapp/Inji_universal.apk"
+          echo "Absolute path: $file_path"
+          echo "APK_PATH=$file_path" >> $GITHUB_ENV
+          curl -T "$APK_PATH" '${{ steps.app-upload.outputs.url }}'
 
       - name: Schedule a test run
         uses: realm/aws-devicefarm/schedule-run@v1
