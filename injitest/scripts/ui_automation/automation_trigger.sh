@@ -29,18 +29,27 @@ PROJECT_PATH=$(pwd)
     if [ "$PLATFORM" = "Android" ]; then
         echo "<><><>ANDROID IFFFF<><><>"
 
-        file_path="${{ github.workspace }}/injitest/target/zip-with-dependencies.zip"
-        echo "Absolute path: $file_path"
-        
+        original_dir=$(pwd)
+
         DEVICE_POOL_NAME="ANDROID DEVICE POOL"
-        TEST_PACKAGE_PATH="$file_path"
+
+        cd $PROJECT_PATH/../../target
+        package_path=$(pwd)
+        TEST_PACKAGE_PATH="$package_path/zip-with-dependencies.zip"
+        cd $original_dir
+        echo "$TEST_PACKAGE_PATH"
+
         TEST_PACKAGE_NAME="Android-Test"
         TEST_SPEC_ARN="arn:aws:devicefarm:us-west-2::upload:100e31e8-12ac-11e9-ab14-d663b5a4a910"
 
-        
-        app_path="${{ github.workspace }}/android/app/build/outputs/apk/inji/release/Inji_universal.apk"
-        echo "Absolute path: $app_path"
-        APP_PATH="$app_path"
+        cd $PROJECT_PATH/../../../android/app/build/outputs/apk/inji/release/
+        new_PATH=$(pwd)
+        echo "$new_PATH"
+        APP_PATH="$new_PATH/Inji_universal.apk"
+        cd $original_dir
+
+        echo "$APP_PATH"
+
         APP_NAME="Inji_universal.apk"
         APP_TYPE="ANDROID_APP"
 
