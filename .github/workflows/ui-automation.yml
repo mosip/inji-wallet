@@ -82,12 +82,12 @@ jobs:
           aws configure set aws_secret_access_key ${{ secrets.AWS_DEVICE_FARM_SECRET_KEY }}
           aws configure set region us-west-2
 
-      - name: Configure xml file
-        run: |
-          cd injitest/src/main/resources/
-          cat androidSanity.txt > testng.xml
-          cd ../../../
-          mvn clean package -DskipTests=true
+      # - name: Configure xml file
+      #   run: |
+      #     cd injitest/src/main/resources/
+      #     cat androidSanity.txt > testng.xml
+      #     cd ../../../
+      #     mvn clean package -DskipTests=true
         
       - name: Create test package upload
         uses: realm/aws-devicefarm/create-upload@v1
