@@ -9,9 +9,13 @@ echo "$PLATFORM"
 echo "$RUN_NAME"
 echo "$TEST_TYPE"
 
+echo "<><><>Inside Script<><><>"
+
 #can be here
 PROJECT_ARN="arn:aws:devicefarm:us-west-2:931337674770:project:b356580b-c561-4fd2-bfdf-8993aebafc5a"
 TEST_PACKAGE_FILE_TYPE="APPIUM_JAVA_TESTNG_TEST_PACKAGE"
+
+echo "<><><>ARN SET<><><>"
 
 #will be added later in script
 APP_ARN=""
@@ -22,17 +26,25 @@ TEST_PACKAGE_ARN=""
 PROJECT_PATH=$(pwd)
 
 #configure based on platform
-    if [ "$PLATFORM" == "Android" ]; then
+    if [ "$PLATFORM" = "Android" ]; then
+        echo "<><><>ANDROID IFFFF<><><>"
+
+        file_path="${{ github.workspace }}/injitest/target/zip-with-dependencies.zip"
+        echo "Absolute path: $file_path"
+        
         DEVICE_POOL_NAME="ANDROID DEVICE POOL"
-        TEST_PACKAGE_PATH="../../target/zip-with-dependencies.zip"
+        TEST_PACKAGE_PATH="$file_path"
         TEST_PACKAGE_NAME="Android-Test"
         TEST_SPEC_ARN="arn:aws:devicefarm:us-west-2::upload:100e31e8-12ac-11e9-ab14-d663b5a4a910"
 
-        cd $PROJECT_PATH/../../../android/app/build/outputs/apk/inji/release/
-        new_PATH=$(pwd)
-        APP_PATH="$new_PATH/Inji_universal.apk"
+        
+        app_path="${{ github.workspace }}/android/app/build/outputs/apk/inji/release/Inji_universal.apk"
+        echo "Absolute path: $app_path"
+        APP_PATH="$app_path"
         APP_NAME="Inji_universal.apk"
         APP_TYPE="ANDROID_APP"
+
+        echo "<><><>ANDROID IFFFF ENDDDDDDD<><><>"
 
     else
         DEVICE_POOL_NAME="IOS DEVICE POOL"
@@ -49,14 +61,14 @@ PROJECT_PATH=$(pwd)
 update_xml_configuration() {
     cd ../../src/main/resources
     
-    if [ "$PLATFORM" == 'Android' ]; then
-        if [ "$TEST_TYPE" == 'sanity' ]; then
+    if [ "$PLATFORM" = 'Android' ]; then
+        if [ "$TEST_TYPE" = 'sanity' ]; then
             cat androidSanity.txt > testng.xml
         else
             cat androidRegression.txt > testng.xml
         fi
-    elif [ "$PLATFORM" == 'IOS' ]; then
-        if [ "$TEST_TYPE" == 'sanity' ]; then
+    elif [ "$PLATFORM" = 'IOS' ]; then
+        if [ "$TEST_TYPE" = 'sanity' ]; then
             cat iosSanity.txt > testng.xml
         else
             cat iosRegression.txt > testng.xml
@@ -94,11 +106,11 @@ start_run_on_device_farm() {
     echo "$run_arn"
 }
 
-#rewrite the xml file
-update_xml_configuration
+# #rewrite the xml file
+# update_xml_configuration
 
-# #build the test jar
-mvn clean package -DskipTests=true
+# # #build the test jar
+# mvn clean package -DskipTests=true
 
 #upload the jar and apk
 TEST_PACKAGE_ARN=$(upload_to_device_farm $PROJECT_ARN $TEST_PACKAGE_PATH $TEST_PACKAGE_NAME $TEST_PACKAGE_FILE_TYPE)
