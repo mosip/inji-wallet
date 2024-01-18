@@ -39,8 +39,6 @@ fileignoreconfig:
     checksum: b9ff87d627c74ba1cf2f1d0bfab6c11192573c45a4c581c3beadb3c612bfe1ab
   - filename: shared/openId4VCI/Utils.ts
     checksum: ba3041b2ce380f44f6f52dc2c3df337d857df4494bd3c8727df9bf6fb5734750
-  - filename: machines/store.typegen.ts
-    checksum: 6d22bc5c77398316b943c512c208ce0846a9fff674c1ccac79e07f21962acd5f
   - filename: machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine.typegen.ts
     checksum: 10889302ca05646a283386be1bbe7a5fb510c02bb62a308ee45f3c2a872ae64e
   - filename: shared/telemetry/TelemetryConstants.js
@@ -58,13 +56,19 @@ fileignoreconfig:
   - filename: assets/Finger_Print_Icon.svg
     checksum: 776d4fe4fc4b54d185ccf97daf0511b9fe2c0e0f7c1a809047020e5e8a100db6
   - filename: android/fastlane/Fastfile
-    checksum: a25f155bcbbae7ab09563637c23771f7349738f12a6ddc8ae71c29c61ed535af
+    checksum: 9e3f699e60ed99744eb91aa9e6f761c7135b55a7e47ff709c3b062a6881d5760
   - filename: .github/workflows/internal-build.yml
     checksum: e9b85cf0405d777faee9345269f6f9eb861ed205728dca63cf27a5db79c876a7
   - filename: assets/Issuer_search_clearing_button.svg
     checksum: f4e8a054fc4168e08bc9e9fe3e644cebabacdfc31ef0cbe36dd281766f47df5e
   - filename: .github/workflows/android-custom-build.yml
     checksum: 4d155c6e5468effb0b82e62f6878f2bd7ff7e7c9540e16bdd28cb81b80672ac3 
+  - filename: machines/settings.typegen.ts
+    checksum: e4ae05822f1b1c23f3f70d03dd46fd8f29ba6b52d40f2f24c121f536fbb5f2c4
+  - filename: machines/store.typegen.ts
+    checksum: 9b3860fe76fb542781545524d02e13a861e7247dbc40016748b049ed77b746bf
+  - filename: ios/fastlane/Fastfile
+    checksum: ee28da4faf4b29b29d49c8c1c8ecbbb8fea2846af60b34b90ed19a61107eedd4
   - filename: .github/workflows/push-triggers.yml
     checksum: 4a031b46646aa982c8f40e4c7fe0bd3e05a76a6af1ff1c2de7350ba6ebf9a839 
   - filename: .env
@@ -97,8 +101,6 @@ fileignoreconfig:
     checksum: fdb74dbf2528038cb22976a353ab1c4472a61f1b942205ef67d1dc33ae774c1e
   - filename: injitest/src/test/java/iosTestCases/PinVcTest.java
     checksum: baee75832c3f71e5086ecbdca73ef38a3b405eb8f6e7a3d644006e45c5c13999
-  - filename: injitest/src/test/java/iosTestCases/VerifyWelcomePagesTest.java
-    checksum: 1ff04c243fbe14797fd0bb001760574332ed13665ac0f9d5f9657e6d9fd930c9
   - filename: injitest/src/main/java/inji/pages/OtpVerificationPage.java
     checksum: bd694a4ecf6bc824b196aa2e672736779408973fa9c3b18905d4de111a9d8e14
   - filename: injitest/src/test/java/androidTestCases/AboutInjiTest.java
@@ -175,4 +177,6 @@ fileignoreconfig:
     checksum: 76a886fb6cd55703ac0b05583b60a8ad5ac457487b4b06c62566e507f9945d2e
   - filename: locales/spa.json
     checksum: a25ba916fd5848a29e2df45f1aca81730194641202711260867e36c98cfa880a
+  - filename: injitest/src/main/java/io/mosip/test/mob/inji/testcases/VerifyWelcomePagesTest.java
+    checksum: 204b57c96dfc2ff4e600a63325e045831108817bfa28e6b24a8df31aa286009a
     version: ""
