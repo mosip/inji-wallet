@@ -2,7 +2,6 @@ import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {Image} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {HelpScreen} from '../components/HelpScreen';
 import {Row} from '../components/ui';
@@ -12,10 +11,12 @@ import {RootRouteProps} from '../routes';
 import {HomeScreen} from './Home/HomeScreen';
 import {IssuersScreen} from './Issuers/IssuersScreen';
 import {SettingScreen} from './Settings/SettingScreen';
+import testIDProps from '../shared/commonUtil';
+import {SvgImage} from '../components/ui/svg';
 
-const {Navigator, Screen} = createNativeStackNavigator();
 export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
   const {t} = useTranslation('IssuersScreen');
+  const {Navigator, Screen} = createNativeStackNavigator();
 
   React.useLayoutEffect(() => {
     const routeName = getFocusedRouteNameFromRoute(props.route);
@@ -42,25 +43,31 @@ export const HomeScreenLayout: React.FC<RootRouteProps> = props => {
   }, [props.navigation, props.route]);
 
   const HomeScreenOptions = {
-    headerLeft: () =>
-      React.createElement(Image, {
-        source: Theme.InjiHomeLogo,
-        style: {width: 124, height: 27, resizeMode: 'contain'},
-      }),
+    headerLeft: () => {
+      return SvgImage.InjiLogo();
+    },
     headerTitle: '',
     headerRight: () => (
       <Row align="space-between">
         <HelpScreen
           triggerComponent={
-            <Image source={Theme.HelpIcon} style={{width: 36, height: 36}} />
+            <Icon
+              {...testIDProps('help')}
+              accessible={true}
+              name="question"
+              type="font-awesome"
+              size={21}
+              style={Theme.Styles.IconContainer}
+              color={Theme.Colors.Icon}
+            />
           }
-          navigation={undefined}
-          route={undefined}
         />
 
         <SettingScreen
           triggerComponent={
             <Icon
+              {...testIDProps('settings')}
+              accessible={true}
               name="settings"
               type="simple-line-icon"
               size={21}

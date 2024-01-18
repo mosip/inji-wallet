@@ -17,7 +17,7 @@ export const QrConsent: React.FC<QrConsentProps> = props => {
   return (
     <Modal
       isVisible={props.isVisible}
-      arrowLeft={<Icon name={''} />}
+      arrowLeft={true}
       headerTitle={t('consent')}
       headerElevation={5}
       onDismiss={props.onCancel}>
@@ -55,7 +55,7 @@ export const QrConsent: React.FC<QrConsentProps> = props => {
             }
 
             {controller.essentialClaims.map((claim, index) => (
-              <Row key={index} align={'space-between'} margin={'10 0 0 20'}>
+              <Row key={index} align={'space-between'} margin={'10 20 0 15'}>
                 <Text
                   color={Theme.Colors.Details}
                   style={Theme.TextStyles.base}>

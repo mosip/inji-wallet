@@ -1,29 +1,38 @@
 import {MMKVLoader} from 'react-native-mmkv-storage';
-import CryptoJS from 'crypto-js';
 import getAllConfigurations from './commonprops/commonProps';
-import {Platform} from 'react-native';
 import {
   getFreeDiskStorageOldSync,
   getFreeDiskStorageSync,
 } from 'react-native-device-info';
-import SecureKeystore from 'react-native-secure-keystore';
+import SecureKeystore from '@mosip/secure-keystore';
 import {
   decryptJson,
   encryptJson,
   HMAC_ALIAS,
+  hmacSHA,
   isHardwareKeystoreExists,
 } from './cryptoutil/cryptoUtil';
 import {VCMetadata} from './VCMetadata';
 import {ENOENT, getItem} from '../machines/store';
 import {
+  androidVersion,
   isAndroid,
   MY_VCS_STORE_KEY,
   RECEIVED_VCS_STORE_KEY,
   SETTINGS_STORE_KEY,
 } from './constants';
-import FileStorage, {getFilePath, vcDirectoryPath} from './fileStorage';
+import FileStorage, {
+  getFilePath,
+  getFilePathOfEncryptedHmac,
+  vcDirectoryPath,
+} from './fileStorage';
 import {__AppId} from './GlobalVariables';
-import {getErrorEventData, sendErrorEvent} from './telemetry/TelemetryUtils';
+import {
+  getErrorEventData,
+  getImpressionEventData,
+  sendErrorEvent,
+  sendImpressionEvent,
+} from './telemetry/TelemetryUtils';
 import {TelemetryConstants} from './telemetry/TelemetryConstants';
 
 export const MMKV = new MMKVLoader().initialize();
@@ -32,6 +41,8 @@ export const API_CACHED_STORAGE_KEYS = {
   fetchIssuers: 'CACHE_FETCH_ISSUERS',
   fetchIssuerConfig: (issuerId: string) =>
     `CACHE_FETCH_ISSUER_CONFIG_${issuerId}`,
+  fetchIssuerWellknownConfig: (issuerId: string) =>
+    `CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_${issuerId}`,
 };
 
 async function generateHmac(
@@ -39,7 +50,7 @@ async function generateHmac(
   data: string,
 ): Promise<string> {
   if (!isHardwareKeystoreExists) {
-    return CryptoJS.HmacSHA256(encryptionKey, data).toString();
+    return hmacSHA(encryptionKey, data);
   }
   return await SecureKeystore.generateHmacSha(HMAC_ALIAS, data);
 }
@@ -94,15 +105,6 @@ class Storage {
           );
           console.debug('[Inji-406]: VC key: ', key);
           console.debug('[Inji-406]: is Data null', data === null);
-          getItem(MY_VCS_STORE_KEY, [], encryptionKey).then(res => {
-            console.debug('[Inji-406]: vcKeys are ', JSON.stringify(res));
-          });
-          getItem(RECEIVED_VCS_STORE_KEY, null, encryptionKey).then(res => {
-            console.debug(
-              '[Inji-406]: received vcKeys is ',
-              JSON.stringify(res),
-            );
-          });
         }
 
         return isCorrupted ? null : data;
@@ -155,19 +157,27 @@ class Storage {
     encryptionKey: string,
     data: string,
   ) {
-    const storedHMACofCurrentVC = await this.readHmacForVC(key, encryptionKey);
+    // TODO: INJI-612 refactor
+    const storedHMACofCurrentVC = await this.readHmacForDataCorruptionCheck(
+      key,
+      encryptionKey,
+    );
     const HMACofVC = await generateHmac(encryptionKey, data);
-
-    if (HMACofVC !== storedHMACofCurrentVC) {
-      console.debug(
-        `[Inji-406]: storedHmacOfCurrentVC: ${storedHMACofCurrentVC}, HMACofVC: ${HMACofVC}`,
-      );
-    }
-
     return HMACofVC !== storedHMACofCurrentVC;
   }
 
   private static async readHmacForVC(key: string, encryptionKey: string) {
+    const encryptedHMACofCurrentVC = await MMKV.getItem(key);
+    if (encryptedHMACofCurrentVC) {
+      return decryptJson(encryptionKey, encryptedHMACofCurrentVC);
+    }
+    return null;
+  }
+
+  private static async readHmacForDataCorruptionCheck(
+    key: string,
+    encryptionKey: string,
+  ) {
     const encryptedHMACofCurrentVC = await MMKV.getItem(key);
     if (encryptedHMACofCurrentVC) {
       return decryptJson(encryptionKey, encryptedHMACofCurrentVC);
@@ -185,13 +195,13 @@ class Storage {
     return await FileStorage.writeFile(path, data);
   }
 
+  // TODO: INJI-612 refactor
   private static async storeVcHmac(
     encryptionKey: string,
     data: string,
     key: string,
   ) {
     const HMACofVC = await generateHmac(encryptionKey, data);
-    console.log('[Inji-406]: Updating hmac of the vc: ', HMACofVC);
     const encryptedHMACofVC = await encryptJson(encryptionKey, HMACofVC);
     await MMKV.setItem(key, encryptedHMACofVC);
   }
@@ -230,7 +240,7 @@ class Storage {
     const minimumStorageLimitInBytes = configurations[limitInMB] * 1000 * 1000;
 
     const freeDiskStorageInBytes =
-      isAndroid() && Platform.Version < 29
+      isAndroid() && androidVersion < 29
         ? getFreeDiskStorageOldSync()
         : getFreeDiskStorageSync();
 

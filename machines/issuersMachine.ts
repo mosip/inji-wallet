@@ -13,7 +13,7 @@ import {
   generateKeys,
   isHardwareKeystoreExists,
 } from '../shared/cryptoutil/cryptoUtil';
-import SecureKeystore from 'react-native-secure-keystore';
+import SecureKeystore from '@mosip/secure-keystore';
 import {KeyPair} from 'react-native-rsa-native';
 import {ActivityLogEvents} from './activityLog';
 import {log} from 'xstate/lib/actions';
@@ -576,7 +576,16 @@ export const IssuersMachine = model.createMachine(
       },
       checkInternet: async () => await NetInfo.fetch(),
       downloadIssuerConfig: async (context, _) => {
-        return await CACHED_API.fetchIssuerConfig(context.selectedIssuerId);
+        let issuersConfig = await CACHED_API.fetchIssuerConfig(
+          context.selectedIssuerId,
+        );
+        if (context.selectedIssuer['.well-known']) {
+          await CACHED_API.fetchIssuerWellknownConfig(
+            context.selectedIssuerId,
+            context.selectedIssuer['.well-known'],
+          );
+        }
+        return issuersConfig;
       },
       downloadCredential: async context => {
         const body = await getBody(context);
@@ -710,6 +719,8 @@ export interface displayType {
   name: string;
   logo: logoType;
   language: string;
+  title: string;
+  description: string;
 }
 export interface issuerType {
   credential_issuer: string;
@@ -720,8 +731,11 @@ export interface issuerType {
   scopes_supported: [string];
   additional_headers: object;
   authorization_endpoint: string;
+  authorization_alias: string;
   token_endpoint: string;
+  proxy_token_endpoint: string;
   credential_endpoint: string;
+  credential_type: [string];
   credential_audience: string;
   display: [displayType];
 }

@@ -28,7 +28,7 @@ export const Error: React.FC<ErrorProps> = props => {
         {props.tryAgain && (
           <Button
             onPress={props.tryAgain}
-            width={Dimensions.get('screen').width * 0.46}
+            width={Dimensions.get('screen').width * 0.54}
             title={t('tryAgain')}
             type="outline"
             testID="tryAgain"

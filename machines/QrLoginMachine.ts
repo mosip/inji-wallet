@@ -340,10 +340,21 @@ export const qrLoginMachine =
         },
 
         SetErrorMessage: assign({
-          errorMessage: (context, event) =>
-            i18n.t(`errors.genericError`, {
-              ns: 'common',
-            }),
+          errorMessage: (context, event) => {
+            const message = event.data.name;
+            const ID_ERRORS_MAP = {
+              invalid_link_code: 'invalidQR',
+            };
+            const errorMessage = ID_ERRORS_MAP[message]
+              ? i18n.t(`errors.${ID_ERRORS_MAP[message]}`, {
+                  ns: 'QrLogin',
+                })
+              : i18n.t(`errors.genericError`, {
+                  ns: 'common',
+                });
+
+            return errorMessage;
+          },
         }),
 
         setConsentClaims: assign({

@@ -37,6 +37,7 @@ export const HistoryScreen: React.FC<MainRouteProps> = () => {
               name="sentiment-dissatisfied"
             />
             <Text
+              testID="noHistory"
               align="center"
               style={{paddingTop: 3}}
               weight="semibold"

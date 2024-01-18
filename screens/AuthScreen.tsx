@@ -1,6 +1,5 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {Icon} from 'react-native-elements';
 import {MessageOverlay} from '../components/MessageOverlay';
 import {Button, Column, Text} from '../components/ui';
 import {Theme} from '../components/ui/styleUtils';
@@ -13,6 +12,7 @@ import {
   sendStartEvent,
 } from '../shared/telemetry/TelemetryUtils';
 import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
+import {Icon} from 'react-native-elements';
 
 export const AuthScreen: React.FC<RootRouteProps> = props => {
   const {t} = useTranslation('AuthScreen');
@@ -34,7 +34,7 @@ export const AuthScreen: React.FC<RootRouteProps> = props => {
   return (
     <Column
       fill
-      padding={[32, 32, 32, 32]}
+      padding={[32, 25, 32, 32]}
       backgroundColor={Theme.Colors.whiteBackgroundColor}
       align="space-between">
       <MessageOverlay
@@ -42,7 +42,7 @@ export const AuthScreen: React.FC<RootRouteProps> = props => {
         onBackdropPress={controller.hideAlert}
         title={controller.alertMsg}
       />
-      <Column>
+      <Column crossAlign="center">
         <Icon name="fingerprint" size={80} color={Theme.Colors.Icon} />
         <Column margin="30 0 0 0">
           <Text

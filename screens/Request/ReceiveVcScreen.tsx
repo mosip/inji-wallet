@@ -58,7 +58,7 @@ export const ReceiveVcScreen: React.FC = () => {
         isVisible={controller.isInvalidIdentity}
         title={t('VerifyIdentityOverlay:errors.invalidIdentity.title')}
         message={t('VerifyIdentityOverlay:errors.invalidIdentity.message')}
-        customHeight={'auto'}
+        minHeight={'auto'}
         // DOUBT^: when does the above message show up in verifier device if it's never communicated explicitly?
         onBackdropPress={controller.DISMISS}>
         <Row>
@@ -70,6 +70,7 @@ export const ReceiveVcScreen: React.FC = () => {
             margin={[0, 8, 0, 0]}
           />
           <Button
+            testID="tryAgain"
             fill
             title={t('common:tryAgain')}
             onPress={controller.RETRY_VERIFICATION}

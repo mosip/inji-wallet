@@ -39,7 +39,7 @@
   },
   "QrScanner": {
     "cameraAccessDisabled": "Naka-disable ang access sa camera!",
-    "cameraPermissionGuideLabel": "Pumunta sa mga setting at manual na paganahin ang access ng camera.",
+    "cameraPermissionGuideLabel": "Pumunta sa mga setting ng telepono at manual na paganahin ang access ng camera.",
     "flipCamera": "I-flip ang Camera"
   },
   "VcDetails": {
@@ -150,8 +150,8 @@
     "aboutInji": "Tungkol kay Inji",
     "header": "TUNGKOL KAY INJI",
     "appID": "App ID",
-    "aboutDetailes": "Ang Inji ay isang mobile app na maaaring gamitin bilang digital wallet para mag-imbak ng mga kredensyal. Pinapayagan din nito ang pag-verify ng pagkakakilanlan sa parehong offline at online na mga mode, sa anumang lugar at oras.",
-    "forMoreDetailes": "Para sa karagdagang detalye",
+    "aboutDetails": "Ang Inji ay isang mobile app na maaaring gamitin bilang digital wallet para mag-imbak ng mga kredensyal. Pinapayagan din nito ang pag-verify ng pagkakakilanlan sa parehong offline at online na mga mode, sa anumang lugar at oras.",
+    "forMoreDetails": "Para sa karagdagang detalye",
     "clickHere": "Pindutin dito",
     "version": "Bersyon",
     "tuvaliVersion": "Tuvali-bersyon"
@@ -160,8 +160,6 @@
     "title": "Magdagdag ng bagong card",
     "description": "Mangyaring piliin ang iyong gustong tagabigay mula sa mga opsyon sa ibaba upang magdagdag ng bagong card.",
     "searchByIssuersName": "Maghanap ayon sa pangalan ng Nag-isyu",
-    "itemHeading": "I-download sa pamamagitan ng {{issuer}}",
-    "itemSubHeading": "Ilagay ang iyong national ID para i-download ang iyong card.",
     "loaders": {
       "loading": "Naglo-load...",
       "subTitle": {
@@ -255,18 +253,22 @@
     "applicationIdLabel": "Pakilagay ang iyong Application ID",
     "enterApplicationId": "Ilagay ang Application ID",
     "requestingOTP": "Humihiling ng OTP...",
-    "qstnMarkToolTip": "Available ang Application ID sa natanggap na acknowledgement pagkatapos ng enrollment.",
+    "toolTipTitle": "Ang sinabi ko?",
+    "toolTipDescription": "Ang Application ID (AID) ay tumutukoy sa natatanging identifier na ibinigay sa isang residente sa panahon ng anumang ID lifecycle na kaganapan, gaya ng ID Issuance, ID Update, o Lost ID retrieval, sa registration center. ",
     "getUIN": "Kumuha ng UIN/VID"
   },
   "IdInputModal": {
-    "header": "Kunin ang iyong ID",
-    "guideLabel": "Piliin ang uri ng ID at ilagay ang MOSIP na ibinigay na UIN o VID ng ID na nais mong makuha",
-    "generateVc": "Bumuo ng card",
+    "header": "I-download ang iyong ID",
+    "guideLabel": "Piliin ang uri ng ID at ilagay ang MOSIP na ibinigay na UIN o VID na nais mong i-download. ",
+    "generateVc": "Bumuo ng Card",
     "downloadID": "I-download ang ID",
-    "enterId": "Ipasok ang {{idType}}",
-    "noUIN/VID": "Walang UIN/VID? ",
-    "getItHere": "Kunin mo na",
-    "requestingOTP": "Humihiling ng OTP..."
+    "enterId": "Pumasok {{idType}}",
+    "noUIN/VID": "Walang UIN/VID?",
+    "getItHere": "Kunin ito ngayon gamit ang iyong AID.",
+    "requestingOTP": "Humihiling ng OTP...",
+    "toolTipTitle": "Ano ang {{idType}}?",
+    "toolTipUINDescription": "Ang Unique Identification Number (UIN), gaya ng ipinahihiwatig ng pangalan, ay isang natatanging numero na itinalaga sa isang residente. ",
+    "toolTipVIDDescription": "Ang VID / Virtual ID ay isang alias identifier na maaaring gamitin para sa mga transaksyon sa pagpapatunay. "
   },
   "OtpVerificationModal": {
     "title": "Pag-verify ng OTP",
@@ -309,7 +311,7 @@
         "title": "Pakisuri ang iyong koneksyon at subukang muli",
         "message": "Mangyaring kumonekta sa internet at subukang muli."
       },
-      "downloadLimitExpires":{
+      "downloadLimitExpires": {
         "title": "Error sa Pag-download",
         "message": "Nagkaroon ng isyu sa pag-download ng mga sumusunod na card. Pakisubukang muli"
       }
@@ -357,7 +359,7 @@
   },
   "MainLayout": {
     "home": "Bahay",
-    "scan": "Scan",
+    "share": "Ibahagi",
     "history": "Kasaysayan",
     "request": "Hiling",
     "settings": "mga setting"
@@ -471,7 +473,7 @@
     "gotoSettings": "Pumunta sa setting"
   },
   "ScanScreen": {
-    "header": "I-scan ang QR Code",
+    "header": "Scan",
     "noShareableVcs": "Walang magagamit na mga card na maibabahagi.",
     "sharingVc": "Pagbabahagi ng card",
     "bluetoothStateIos": "Naka-OFF ang Bluetooth, paki-ON ito mula sa control center",
@@ -479,6 +481,7 @@
     "enableBluetoothMessage": "Mangyaring paganahin ang mga pahintulot ng bluetooth upang suportahan ang lokal na pagbabahagi",
     "enableBluetoothButtonText": "Payagan ang mga pahintulot ng bluetooth",
     "scanningGuide": "Panatilihin ang telepono at i-scan ang QR code",
+    "invalidQR": "Mangyaring mag-scan ng wastong QR",
     "errors": {
       "locationDisabled": {
         "message": "Para magpatuloy, hayaang i-on ng iyong device ang lokasyon",
@@ -498,10 +501,13 @@
       }
     },
     "status": {
-      "inProgress": "Isinasagawa",
+      "inProgress": {
+        "title": "Isinasagawa",
+        "hint": "Mangyaring maghintay habang itinatag namin ang koneksyon."
+      },
       "establishingConnection": "Pagtatatag ng Koneksyon",
       "connectionInProgress": "Isinasagawa ang koneksyon",
-      "connectingTimeout": "Ito ay tumatagal ng ilang sandali upang maitaguyod ang koneksyon. Bukas ba ang ibang device para sa mga koneksyon?",
+      "connectingTimeout": "Ito ay tumatagal ng ilang sandali upang maitaguyod ang koneksyon. Bukas ba ang ibang device para sa koneksyon?",
       "stayOnTheScreen": "Manatili sa screen",
       "retry": "Subukan muli",
       "exchangingDeviceInfo": "Nagpapalitan ng impormasyon ng device...",
@@ -517,8 +523,9 @@
       },
       "accepted": {
         "title": "Matagumpay na naibahagi ang ID!",
-        "message": "Ang iyong ID ay matagumpay na naibahagi sa",
-        "gotohome": "Pumunta sa bahay"
+        "message": "Ang iyong ID ay matagumpay na naibahagi.",
+        "home": "Bahay",
+        "history": "Kasaysayan"
       },
       "rejected": {
         "title": "Pansinin",

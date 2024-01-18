@@ -7,7 +7,6 @@ on:
     - develop
     - qa-develop
     - 'release-**'
-    - ci-publish
   release:
     types: [published]
   pull_request:
@@ -17,27 +16,35 @@ on:
     - develop
     - qa-develop
     - 'release-**'
-    - ci-publish
 
 jobs:
   build-android:
     uses: mosip/kattu/.github/workflows/android-build.yml@master
     with:
       NODE_VERSION: "16.x"
-      DEBUG_KEYSTORE_ALIAS: androiddebugkey
-    secrets:
-      DEBUG_KEYSTORE_PASSWORD: '${{ secrets.INJI_ANDROID_DEBUG_STOREPASS }}'
+      KEYSTORE_ALIAS: androidbuildkey
+      KEYSTORE_PASSWORD: 'password'
+      SERVICE_LOCATION: '.'
+      ANDROID_SERVICE_LOCATION: 'android'
+      BUILD_SCRIPT_LOCATION: 'scripts'
+      SCRIPT_NAME: './android-build.sh'
+      UPLOAD_TO_ACTIONS: 'false'
 
   build-ios:
     uses: mosip/kattu/.github/workflows/ios-build.yml@master
     with:
       NODE_VERSION: "18.x"
+      SERVICE_LOCATION: '.'
+      IOS_SERVICE_LOCATION: 'ios'
+      SCRIPT_NAME: "fastlane ios_app_build"
 
-  sonar-check:
-    if: ${{ github.event_name != 'pull_request' }}
-    uses: mosip/kattu/.github/workflows/sonar.yml@master
-    secrets:
-      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      SONAR_HOST_URL: https://sonarcloud.io
-      SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
-      SLACK_URL: '${{ secrets.SLACK_WEBHOOK }}'
+  # sonar-check:
+  #   if: ${{ github.event_name != 'pull_request' }}
+  #   uses: mosip/kattu/.github/workflows/gradlew-sonar-analysis.yml@master
+  #   with:
+  #     SERVICE_LOCATION: '.'
+  #     ANDROID_LOCATION: 'android'
+  #   secrets:
+  #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #     SONAR_ORGANIZATION: ${{ secrets.ORG_KEY }}
+  #     SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK_INJI_TEAM }}'

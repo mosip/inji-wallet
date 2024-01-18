@@ -24,6 +24,7 @@ export const GetVcModal: React.FC<GetVcModalProps> = props => {
         onDismiss={controller.DISMISS}
         onInputDone={controller.INPUT_OTP}
         error={controller.otpError}
+        resend={controller.RESEND_OTP}
         flow={TelemetryConstants.FlowType.getVcUsingAid}
       />
 
