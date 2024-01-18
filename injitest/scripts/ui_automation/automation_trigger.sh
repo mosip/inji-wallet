@@ -5,6 +5,10 @@ PLATFORM=$1
 RUN_NAME=$2
 TEST_TYPE=$3
 
+echo "$PLATFORM"
+echo "$RUN_NAME"
+echo "$TEST_TYPE"
+
 #can be here
 PROJECT_ARN="arn:aws:devicefarm:us-west-2:931337674770:project:b356580b-c561-4fd2-bfdf-8993aebafc5a"
 TEST_PACKAGE_FILE_TYPE="APPIUM_JAVA_TESTNG_TEST_PACKAGE"
@@ -18,44 +22,47 @@ TEST_PACKAGE_ARN=""
 PROJECT_PATH=$(pwd)
 
 #configure based on platform
-if [ "$PLATFORM" == "Android" ]; then
-    DEVICE_POOL_NAME="ANDROID DEVICE POOL"
+    if [ "$PLATFORM" == "Android" ]; then
+        DEVICE_POOL_NAME="ANDROID DEVICE POOL"
+        TEST_PACKAGE_PATH="../../target/zip-with-dependencies.zip"
+        TEST_PACKAGE_NAME="Android-Test"
+        TEST_SPEC_ARN="arn:aws:devicefarm:us-west-2::upload:100e31e8-12ac-11e9-ab14-d663b5a4a910"
 
-    TEST_PACKAGE_PATH="$PROJECT_PATH/../../target/zip-with-dependencies.zip"
-    TEST_PACKAGE_NAME="Android-Test"
-    TEST_SPEC_ARN="arn:aws:devicefarm:us-west-2::upload:100e31e8-12ac-11e9-ab14-d663b5a4a910"
+        cd $PROJECT_PATH/../../../android/app/build/outputs/apk/inji/release/
+        new_PATH=$(pwd)
+        APP_PATH="$new_PATH/Inji_universal.apk"
+        APP_NAME="Inji_universal.apk"
+        APP_TYPE="ANDROID_APP"
 
-    APP_PATH="$PROJECT_PATH/../../../android/app/build/outputs/apk/inji/release/Inji_universal.apk"
-    APP_NAME="Inji_universal.apk"
-    APP_TYPE="ANDROID_APP"
+    else
+        DEVICE_POOL_NAME="IOS DEVICE POOL"
+        TEST_PACKAGE_PATH="$PROJECT_PATH/../../target/zip-with-dependencies.zip"
+        TEST_PACKAGE_NAME="IOS-Test"
+        TEST_SPEC_ARN="arn:aws:devicefarm:us-west-2::upload:100e31e8-12ac-11e9-ab14-d663bd873c82"
 
-else
-    DEVICE_POOL_NAME="IOS DEVICE POOL"
-    
-    TEST_PACKAGE_PATH="$PROJECT_PATH/../../target/zip-with-dependencies.zip"
-    TEST_PACKAGE_NAME="IOS-Test"
-    TEST_SPEC_ARN="arn:aws:devicefarm:us-west-2::upload:100e31e8-12ac-11e9-ab14-d663bd873c82"
-
-    APP_PATH="$PROJECT_PATH/../../../ios/fastlane/Inji_artifacts/Inji.ipa"
-    APP_NAME="Inji.ipa"
-    APP_TYPE="IOS_APP"
-fi
+        APP_PATH="$PROJECT_PATH/../../../ios/fastlane/Inji_artifacts/Inji.ipa"
+        APP_NAME="Inji.ipa"
+        APP_TYPE="IOS_APP"
+    fi
 
 #update xml based on platform
 update_xml_configuration() {
     cd ../../src/main/resources
-    if [ "$PLATFORM" == "Android" && "$TEST_TYPE" == 'sanity']; then
-       cat androidSanity.txt > testng.xml
-    else
-       cat androidRegression.txt > testng.xml
+    
+    if [ "$PLATFORM" == 'Android' ]; then
+        if [ "$TEST_TYPE" == 'sanity' ]; then
+            cat androidSanity.txt > testng.xml
+        else
+            cat androidRegression.txt > testng.xml
+        fi
+    elif [ "$PLATFORM" == 'IOS' ]; then
+        if [ "$TEST_TYPE" == 'sanity' ]; then
+            cat iosSanity.txt > testng.xml
+        else
+            cat iosRegression.txt > testng.xml
+        fi
     fi
 
-    if [ "$PLATFORM" == "IOS" && "$TEST_TYPE" == 'sanity']; then
-       cat iosSanity.txt > testng.xml
-    else
-       cat iosRegression.txt > testng.xml
-    fi
-    
     cd ../../../
 }
 
