@@ -20,15 +20,7 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Verify Build for Android
 
-### android_build_internal
-
-```sh
-[bundle exec] fastlane android_build_internal
-```
-
-Deploy an Internal testing version to the Google Play
-
-### android_build_beta
+### build_android
 
 ```sh
 [bundle exec] fastlane android_build_beta

@@ -71,14 +71,14 @@ const getDetails = (arg1, arg2, verifiableCredential) => {
   }
 };
 
-export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
+export const VcItemContent: React.FC<VcItemContentProps> = props => {
   //Assigning the UIN and VID from the VC details to display the idtype label
   const uin = props.verifiableCredential?.credentialSubject.UIN;
   const vid = props.verifiableCredential?.credentialSubject.VID;
   const fullName = !props.verifiableCredential
     ? ''
     : getLocalizedField(props.verifiableCredential.credentialSubject.fullName);
-  const { t } = useTranslation('VcDetails');
+  const {t} = useTranslation('VcDetails');
   const isvalid = !props.verifiableCredential ? '' : t('valid');
   const selectableOrCheck = props.selectable ? (
     <CheckBox
@@ -106,7 +106,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
               source={
                 !props.verifiableCredential
                   ? Theme.ProfileIcon
-                  : { uri: props.context.credential.biometrics.face }
+                  : {uri: props.context.credential.biometrics.face}
               }
               style={Theme.Styles.closeCardImage}>
               {props.iconName && (
@@ -114,7 +114,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
                   name={props.iconName}
                   type={props.iconType}
                   color={Theme.Colors.Icon}
-                  style={{ marginLeft: -80 }}
+                  style={{marginLeft: -80}}
                 />
               )}
             </ImageBackground>
@@ -168,7 +168,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
             {getDetails(
               t('generatedOn'),
               props.generatedOn,
-              props.verifiableCredential
+              props.verifiableCredential,
             )}
           </Column>
           <Column>
@@ -177,7 +177,7 @@ export const VcItemContent: React.FC<VcItemContentProps> = (props) => {
               : null}
           </Column>
           <Column
-            style={{ display: props.verifiableCredential ? 'flex' : 'none' }}>
+            style={{display: props.verifiableCredential ? 'flex' : 'none'}}>
             <Image
               source={Theme.MosipLogo}
               style={Theme.Styles.logo}

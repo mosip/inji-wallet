@@ -520,8 +520,9 @@
       },
       "accepted": {
         "title": "¡Éxito!",
-        "message": "Tu tarjeta ha sido compartida exitosamente con el Verificador",
-        "gotohome": "Ir a casa"
+        "message": "Su identificación se ha compartido correctamente.",
+        "home": "Hogar",
+        "history": "Historia"
       },
       "rejected": {
         "title": "Aviso",

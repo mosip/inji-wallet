@@ -27,6 +27,7 @@ import {MessageOverlay} from '../../components/MessageOverlay';
 import {SearchBar} from '../../components/ui/SearchBar';
 import {SvgImage} from '../../components/ui/svg';
 import {Icon} from 'react-native-elements';
+import {MessageOverlay} from '../../components/MessageOverlay';
 
 export const IssuersScreen: React.FC<
   HomeRouteProps | RootRouteProps

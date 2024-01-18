@@ -930,6 +930,13 @@ export const DefaultTheme = {
       flex: 1,
       backgroundColor: Colors.White,
     },
+    sharedSuccessfullyIconStyle: {
+      margin: 16,
+      padding: 8,
+      borderWidth: 2,
+      borderColor: Colors.Orange,
+      borderRadius: 30,
+    },
   }),
   AppMetaDataStyles: StyleSheet.create({
     buttonContainer: {

@@ -44,7 +44,7 @@ export const QrLogin: React.FC<QrLoginProps> = props => {
           isVisible={controller.isShowingError}
           title={controller.error}
           onButtonPress={controller.DISMISS}
-          testID='qrLoginError'
+          testID="qrLoginError"
         />
 
         <VerifyIdentityOverlay
@@ -69,7 +69,7 @@ export const QrLogin: React.FC<QrLoginProps> = props => {
               margin={[0, 8, 0, 0]}
             />
             <Button
-              testID='tryAgain'
+              testID="tryAgain"
               fill
               title={t('common:tryAgain')}
               onPress={controller.RETRY_VERIFICATION}

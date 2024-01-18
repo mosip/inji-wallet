@@ -14,11 +14,64 @@ TEMP_KEYCHAIN_PASSWORD = ENV["INJI_IOS_TEMP_KEYCHAIN_PASSWORD"]
 GIT_AUTHORIZATION = ENV["GIT_AUTHORIZATION"]
 SLACK_URL = ENV["SLACK_WEBHOOK_URL"]
 APP_FLAVOR = ENV["APP_FLAVOR"]
+SLACK_URL = ENV["SLACK_WEBHOOK_URL"]
+APP_FLAVOR = ENV["APP_FLAVOR"]
 MATCH_PASSWORD = ENV["MATCH_PASSWORD"]
 FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT = "120"
 TESTFLIGHT_INTERNAL_TESTERS_GROUP = ENV["TESTFLIGHT_INTERNAL_TESTERS_GROUP"]
 TESTFLIGHT_BETA_APP_DESCRIPTION = ENV["TESTFLIGHT_BETA_APP_DESCRIPTION"]
+TESTFLIGHT_INTERNAL_TESTERS_GROUP = ENV["TESTFLIGHT_INTERNAL_TESTERS_GROUP"]
+TESTFLIGHT_BETA_APP_DESCRIPTION = ENV["TESTFLIGHT_BETA_APP_DESCRIPTION"]
 DEVELOPER_APP_ID = ENV["DEVELOPER_APP_ID"]
+MIMOTO_HOST = ENV["MIMOTO_HOST"]
+ESIGNET_HOST =  ENV["ESIGNET_HOST"]
+APPLICATION_THEME = ENV["APPLICATION_THEME"]
+CREDENTIAL_REGISTRY_EDIT = ENV["CREDENTIAL_REGISTRY_EDIT"]
+
+def generate_app_bundle_id()
+  flavor = APP_FLAVOR
+  case flavor
+  when "residentapp"
+    # the old app flavor
+    return "io.mosip.inji.mobileid"
+  when "inji"
+    # io.mosip.inji is not available in iOS
+    return "io.mosip.inji.wallet"
+  when "collab"
+    return "io.mosip.inji.collab"
+  when "synergy"
+    return "io.mosip.inji.synergy"
+  when "mec"
+    return "io.mosip.inji.mec"
+  end
+end
+
+def map_flavour_tosuffix()
+  flavor = APP_FLAVOR
+  case flavor
+  when "residentapp"
+    return "mobileid"
+  when "inji"
+    return "wallet"
+  end
+  return flavor
+end
+
+def generate_app_name()
+  flavor = APP_FLAVOR
+  case flavor
+  when "residentapp"
+    return "Inji"
+  when "inji"
+    return "Inji Wallet"
+  when "collab"
+    return "Inji Wallet Collab"
+  when "synergy"
+    return "Inji Wallet Synergy"
+  when "mec"
+    return "Inji Wallet Mec"
+  end
+end
 MIMOTO_HOST = ENV["MIMOTO_HOST"]
 ESIGNET_HOST =  ENV["ESIGNET_HOST"]
 APPLICATION_THEME = ENV["APPLICATION_THEME"]
@@ -143,6 +196,8 @@ platform :ios do
       issuer_id: "#{APPLE_ISSUER_ID}",
       key_content: "#{APPLE_KEY_CONTENT}",
       duration: 1200,
+      key_content: "#{APPLE_KEY_CONTENT}",
+      duration: 1200,
       in_house: false,
       is_key_content_base64: true
     )
@@ -151,6 +206,7 @@ platform :ios do
 
     previous_build_number = latest_testflight_build_number(
       app_identifier: "#{generate_app_bundle_id}",
+      app_identifier: "#{generate_app_bundle_id}",
       api_key: api_key,
       version: version
     )
@@ -158,6 +214,7 @@ platform :ios do
     current_build_number = previous_build_number + 1
 
     increment_build_number(
+      xcodeproj: "Inji.xcodeproj",
       xcodeproj: "Inji.xcodeproj",
       build_number: current_build_number
     )
@@ -184,8 +241,31 @@ platform :ios do
     output_directory = "./Inji_artifacts"
     sh("mkdir -p '#{output_directory}'")
 
+    update_app_identifier(
+      app_identifier: "#{generate_app_bundle_id}",
+      plist_path: "Inji/Info.plist"
+    )
+    # replace bundle ID
+    s = "s/mobileid/#{map_flavour_tosuffix}/g"
+    sh("sed -i '' -e #{s} ../Inji.xcodeproj/project.pbxproj")
+
+    # replace Product name
+    p = "s|PRODUCT_NAME = Inji|PRODUCT_NAME = \"#{generate_app_name}\"|"
+    sh ("sed -i '' -e '#{p}' ../Inji.xcodeproj/project.pbxproj")
+
+    # update app display name
+    update_info_plist(
+      plist_path: 'Inji/Info.plist',
+      display_name: "#{generate_app_name}"
+    )
+
+    # folder to copy artifacts to upload to github actions
+    output_directory = "./Inji_artifacts"
+    sh("mkdir -p '#{output_directory}'")
+
     match(
       type: 'appstore',
+      app_identifier: "#{generate_app_bundle_id}",
       app_identifier: "#{generate_app_bundle_id}",
       git_basic_authorization: Base64.strict_encode64("#{GIT_AUTHORIZATION}"),
       readonly: false,
@@ -205,6 +285,8 @@ platform :ios do
       export_options: {
         provisioningProfiles: {
           "#{generate_app_bundle_id}" => "match AppStore #{generate_app_bundle_id}"
+        provisioningProfiles: {
+          "#{generate_app_bundle_id}" => "match AppStore #{generate_app_bundle_id}"
         }
       }
     )
@@ -212,13 +294,19 @@ platform :ios do
     # copy IPA to the folder
     sh("cp -R '../#{generate_app_name}.ipa' '#{output_directory}'")
 
+    # copy IPA to the folder
+    sh("cp -R '../#{generate_app_name}.ipa' '#{output_directory}'")
+
     pilot(
        app_identifier: "#{generate_app_bundle_id}",
+       app_identifier: "#{generate_app_bundle_id}",
        api_key: api_key,
+       ipa: "./#{generate_app_name}.ipa",
        ipa: "./#{generate_app_name}.ipa",
        changelog: "#{TESTFLIGHT_BETA_APP_DESCRIPTION}",
        localized_build_info: {
           "default": {
+            whats_new: "#{TESTFLIGHT_BETA_APP_DESCRIPTION}",
             whats_new: "#{TESTFLIGHT_BETA_APP_DESCRIPTION}",
           }
       },
@@ -229,6 +317,18 @@ platform :ios do
     )
 
     delete_temp_keychain(keychain_name)
+
+    archive_path = gym(
+    skip_package_ipa: true,
+    destination: "generic/platform=iOS Simulator",
+    configuration: "Release",
+    build_path: "./build",
+    )
+
+    # find and copy App file to the folder
+    find_command = "find '../build/' -type d -name 'Products'"
+    app_path = sh(find_command, log: false).strip
+    sh("cp -R '#{app_path}' '#{output_directory}'")
 
     archive_path = gym(
     skip_package_ipa: true,
