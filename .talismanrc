@@ -2,7 +2,7 @@ fileignoreconfig:
   - filename: package.json
     checksum: e09253939abe4c3509c9322ecd97ce2cdbc25fb25e55ce30ed8c70b6320aa9ca
   - filename: package-lock.json
-    checksum: c515873abe36e8da210378325c48668b74f00eb5f079c33356f823af1285970e
+    checksum: a53fc6cfa6f3308ae8080d6375d5a57d6fe83e16b8fc9260931fe5242be8816e
   - filename: lib/jsonld-signatures/suites/ed255192018/ed25519.ts
     checksum: 493b6e31144116cb612c24d98b97d8adcad5609c0a52c865a6847ced0a0ddc3a
   - filename: components/PasscodeVerify.tsx
@@ -36,13 +36,13 @@ fileignoreconfig:
   - filename: shared/telemetry/TelemetryUtils.js
     checksum: ffe9aac2dcc590b98b0d588885c088eff189504ade653a77f74b67312bfd27ad
   - filename: shared/fileStorage.ts
-    checksum: f86dc7aa4a69e7109310e7ab5529a8599f38f15eb79f3f4da545aceaaf90d731
+    checksum: 5c4c9bc78446e6b25bf6e6ac276918757d6275a27ba93d253338ca629ebc0240
   - filename: shared/storage.ts
-    checksum: c31270346f2ef717a31168a93d0311ce6f925434eb613ec7cf86553222630cdb
+    checksum: a1cff31ddfb1a43e29cfda3881bc3a3b86f01c3c4d3710444eb85fa12786f4ba
   - filename: screens/Issuers/IssuersScreen.tsx
     checksum: 9c53e3770dbefe26e0de67ee4b7d5cc9c52d9823cbb136a1a5104dcb0a101071
   - filename: ios/Podfile.lock
-    checksum: 2487c4e11fb1bd95032cc4511435d9420fc0dfc62f3c015d177213fa089df7f2
+    checksum: 1da328d6edcd284799be962d59281b120a5bb2a6873ca6a01da321857e59a7d3
   - filename: screens/Home/IntroSlidersScreen.tsx
     checksum: 72ef913857448ef05763e52e32356faa2d1f3de8130a1c638d1897f44823031f
   - filename: shared/commonUtil.ts
@@ -82,7 +82,7 @@ fileignoreconfig:
   - filename: assets/fingerprint_icon.svg
     checksum: b2d3a50ca1336f60123d96a8cc8ea663c3316ed2d8c31833bce7e393ca51695b
   - filename: machines/store.ts
-    checksum: ca2328c39d2757ffebf85c0b6663da1073eb58349f2630c9418b2f16c350cbd1
+    checksum: 9970da0ea685018a90f7306fb88945d135dd019439099dd56b6109d915a8a24f
   - filename: assets/Flip_Camera_Icon.svg
     checksum: 736b5a7ddb86bd4376229ce198dbf8a663e7ac89fc3311bd4f19afd4a2b36ffd
   - filename: ios/fastlane/Fastfile
@@ -106,9 +106,9 @@ fileignoreconfig:
   - filename: .env
     checksum: d28aeb5131b94e39fba32694853b2a7ffab01dc74ecf432fd140827fab8c8c54
   - filename: machines/backup.ts
-    checksum: 49cbc4aaa39ef2a08aa280e2d80298564fec541b17fd517c0cf53ed2725e3269
+    checksum: 5e5400f5420b28bc5cd505feb712abc499ed6aacb6ab96bdb697b7e825f9451f
   - filename: machines/backup.typegen.ts
-    checksum: 8419efdbd712174cf0d0766d0b5398da117276a517e196f886a9f07821bb255b
+    checksum: 4ae5dbf36353cb7568a278628256e68caded071f1e91d6e1b25ac9aefb1f81cf
   - filename: screens/Settings/BackupController.tsx
     checksum: 054665c377b4a8e246ae1bfb419ab86d0cb1c120ae92cdc27ceed9cf1f39679b
   - filename: screens/Settings/BackupViaPassword.tsx
@@ -117,16 +117,17 @@ fileignoreconfig:
     checksum: 6f3eaf26a58712b3ddd36dfa49d0d608eb873455ca91374545148c23e36fd43b
   - filename: shared/constants.ts
     checksum: 062fb9bc4ba7dc7c91558caee5a4fd41ba748b0dcd108c62b50a2fdd06eaa289
-  - filename: machines/backup.ts
-    checksum: f75f0e0d38126f921f3304e4ccbba2b0b6250dd1c4cf1a230b8f3a0e5c964c14
   - filename: shared/commonUtil.ts
     checksum: 4f353f525ce0d2c9c7caf734aa9ce4a7a5ce8d526528a491974052256b8cbe76
   - filename: screens/Settings/BackupController.tsx
     checksum: d2a355356bcaf8f7ef3b53ba93710cec15fefd0fdf31efd779eebd2bfab61c19
   - filename: shared/constants.ts
     checksum: 3961940d2df158b6c287cb689b8841d278eae273a4e5553ae2ae612340f8b8c8
-  - filename: machines/backup.ts
-    checksum: 8eed2aea5b6827ade3a8648be7588fb28d671fedc6da635f9fa4480d888a3795
   - filename: shared/api.ts
     checksum: 96a87e2128c30d16526cb1cb91b7da58f266d8c32d830adff11ca4d04e8c459f
+  - filename: machines/backupWithEncryption.ts
+    checksum: 038c12d30b2312fcbd9230a1c6ddb494d2e561fe0d09741335fa80ab67e2c550
+  - filename: machines/backupWithEncryption.typegen.ts
+    checksum: f5f9a71082e3f30f89e98a7913535327b31b942709ee8b5efb40e18c73ddee2a 
+   
     version: ''

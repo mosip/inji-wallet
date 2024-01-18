@@ -3,39 +3,71 @@
 export interface Typegen0 {
   '@@xstate/typegen': true;
   internalEvents: {
-    'error.platform.backup.requestOtp:invocation[0]': {
-      type: 'error.platform.backup.requestOtp:invocation[0]';
+    'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]': {
+      type: 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
+    'done.invoke.backup.backingUp.zipBackupFile:invocation[0]': {
+      type: 'done.invoke.backup.backingUp.zipBackupFile:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
+    'error.platform.backup.backingUp.zipBackupFile:invocation[0]': {
+      type: 'error.platform.backup.backingUp.zipBackupFile:invocation[0]';
       data: unknown;
     };
     'xstate.init': {type: 'xstate.init'};
   };
   invokeSrcNameMap: {
-    requestOtp: 'done.invoke.backup.requestOtp:invocation[0]';
+    checkStorageAvailability: 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]';
+    writeDataToFile: 'done.invoke.backup.backingUp.writeDataToFile:invocation[0]';
+    zipBackupFile: 'done.invoke.backup.backingUp.zipBackupFile:invocation[0]';
   };
   missingImplementations: {
-    actions: '';
+    actions: never;
     delays: never;
     guards: never;
-    services: 'requestOtp';
+    services: never;
   };
   eventsCausingActions: {
-    '': 'error.platform.backup.requestOtp:invocation[0]';
-    setOtp: 'INPUT_OTP';
-    setPassword: 'SET_PASSWORD';
-    setPhoneNumber: 'SET_PHONE_NUMBER';
+    fetchAllDataFromDB: 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]';
+    sendDataBackupFailureEvent:
+      | 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]'
+      | 'error.platform.backup.backingUp.zipBackupFile:invocation[0]';
+    sendDataBackupStartEvent: 'FETCH_DATA';
+    sendDataBackupSuccessEvent: 'done.invoke.backup.backingUp.zipBackupFile:invocation[0]';
+    setDataFromStorage: 'STORE_RESPONSE';
+    setFileName: 'FILE_NAME';
   };
   eventsCausingDelays: {};
-  eventsCausingGuards: {};
+  eventsCausingGuards: {
+    isMinimumStorageRequiredForBackupReached: 'done.invoke.backup.backingUp.checkStorageAvailability:invocation[0]';
+  };
   eventsCausingServices: {
-    requestOtp: 'SEND_OTP';
+    checkStorageAvailability: 'FETCH_DATA';
+    writeDataToFile: 'STORE_RESPONSE';
+    zipBackupFile: 'FILE_NAME';
   };
   matchesStates:
-    | 'backUp'
     | 'backingUp'
+    | 'backingUp.checkStorageAvailability'
+    | 'backingUp.failure'
+    | 'backingUp.fetchDataFromDB'
+    | 'backingUp.idle'
+    | 'backingUp.success'
+    | 'backingUp.writeDataToFile'
+    | 'backingUp.zipBackupFile'
     | 'init'
-    | 'passwordBackup'
-    | 'phoneNumberBackup'
-    | 'requestOtp'
-    | 'selectPref';
+    | {
+        backingUp?:
+          | 'checkStorageAvailability'
+          | 'failure'
+          | 'fetchDataFromDB'
+          | 'idle'
+          | 'success'
+          | 'writeDataToFile'
+          | 'zipBackupFile';
+      };
   tags: never;
 }

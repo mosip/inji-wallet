@@ -299,6 +299,7 @@ export const appMachine = model.createMachine(
           context.serviceRefs.settings.subscribe(logState);
           context.serviceRefs.activityLog.subscribe(logState);
           context.serviceRefs.scan.subscribe(logState);
+          context.serviceRefs.backup.subscribe(logState);
 
           if (isAndroid()) {
             context.serviceRefs.request.subscribe(logState);

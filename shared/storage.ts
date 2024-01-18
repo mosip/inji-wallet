@@ -6,6 +6,7 @@ import {
 } from 'react-native-device-info';
 import SecureKeystore from '@mosip/secure-keystore';
 import {
+  compressData,
   decryptJson,
   encryptJson,
   HMAC_ALIAS,
@@ -13,15 +14,16 @@ import {
   isHardwareKeystoreExists,
 } from './cryptoutil/cryptoUtil';
 import {VCMetadata} from './VCMetadata';
-import {ENOENT, getItem} from '../machines/store';
+import {ENOENT} from '../machines/store';
 import {
   androidVersion,
   isAndroid,
   MY_VCS_STORE_KEY,
-  RECEIVED_VCS_STORE_KEY,
   SETTINGS_STORE_KEY,
 } from './constants';
 import FileStorage, {
+  backupFilePath,
+  getBackupFilePath,
   getFilePath,
   getFilePathOfEncryptedHmac,
   getFilePathOfHmac,
@@ -35,6 +37,7 @@ import {
   sendImpressionEvent,
 } from './telemetry/TelemetryUtils';
 import {TelemetryConstants} from './telemetry/TelemetryConstants';
+import {getBackupFileName} from './commonUtil';
 
 export const MMKV = new MMKVLoader().initialize();
 
@@ -43,7 +46,7 @@ export const API_CACHED_STORAGE_KEYS = {
   fetchIssuerConfig: (issuerId: string) =>
     `CACHE_FETCH_ISSUER_CONFIG_${issuerId}`,
   fetchIssuerWellknownConfig: (issuerId: string) =>
-      `CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_${issuerId}`,
+    `CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_${issuerId}`,
 };
 
 async function generateHmac(
@@ -57,6 +60,64 @@ async function generateHmac(
 }
 
 class Storage {
+  static async writeToBackupFile(data): Promise<string> {
+    const fileName = getBackupFileName();
+    const isDirectoryExists = await FileStorage.exists(backupFilePath);
+    if (isDirectoryExists) {
+      await FileStorage.removeItem(backupFilePath);
+    }
+    await FileStorage.createDirectory(backupFilePath);
+    const path = getBackupFilePath(fileName);
+    await FileStorage.writeFile(path, JSON.stringify(data));
+    return fileName;
+  }
+
+  static async exportData(encryptionKey: string) {
+    const completeBackupData = {};
+    const dataFromDB: Record<string, any> = {};
+
+    const allKeysInDB = await MMKV.indexer.strings.getKeys();
+    const keysToBeExported = allKeysInDB.filter(key =>
+      key.includes('CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_'),
+    );
+    keysToBeExported.push(MY_VCS_STORE_KEY);
+
+    const encryptedDataPromises = keysToBeExported.map(key =>
+      MMKV.getItem(key),
+    );
+
+    Promise.all(encryptedDataPromises).then(encryptedDataList => {
+      keysToBeExported.forEach(async (key, index) => {
+        let encryptedData = encryptedDataList[index];
+        if (encryptedData != null) {
+          const decryptedData = await decryptJson(encryptionKey, encryptedData);
+          dataFromDB[key] = JSON.parse(decryptedData);
+        }
+      });
+    });
+
+    completeBackupData['dataFromDB'] = dataFromDB;
+    completeBackupData['VC_Records'] = {};
+
+    let vcKeys = allKeysInDB.filter(key => key.indexOf('VC_') === 0);
+    for (let ind in vcKeys) {
+      const key = vcKeys[ind];
+      const vc = await Storage.readVCFromFile(key);
+      const decryptedVCData = await decryptJson(encryptionKey, vc);
+      const deactivatedVC = this.deactivateVC(decryptedVCData);
+      completeBackupData['VC_Records'][key] = deactivatedVC;
+    }
+    return completeBackupData;
+  }
+
+  static deactivateVC(data: string) {
+    const vcData = JSON.parse(data);
+    vcData.walletBindingResponse = null;
+    vcData.publicKey = null;
+    vcData.privateKey = null;
+    return vcData;
+  }
+
   static isVCStorageInitialised = async (): Promise<boolean> => {
     try {
       const res = await FileStorage.getInfo(vcDirectoryPath);

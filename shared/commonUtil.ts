@@ -1,7 +1,11 @@
 import argon2 from 'react-native-argon2';
 import {AnyState} from 'xstate';
 import {getDeviceNameSync} from 'react-native-device-info';
-import {isAndroid} from './constants';
+import {
+  argon2iConfigForBackupFileName,
+  argon2iSalt,
+  isAndroid,
+} from './constants';
 import {generateSecureRandom} from 'react-native-securerandom';
 import Aes from 'react-native-aes-crypto';
 
@@ -87,4 +91,8 @@ export const faceMatchConfig = (resp: string) => {
       },
     },
   };
+};
+
+export const getBackupFileName = () => {
+  return `backup_${Date.now()}`;
 };

@@ -1,37 +1,33 @@
-import {DoneInvokeEvent, EventFrom, StateFrom, send} from 'xstate';
+import {EventFrom, StateFrom, send} from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../shared/GlobalContext';
-import {
-  BACKUP_ENC_KEY,
-  BACKUP_ENC_KEY_TYPE,
-  BACKUP_ENC_TYPE_VAL_PASSWORD,
-  BACKUP_ENC_TYPE_VAL_PHONE,
-  argon2iConfigForPasswordAndPhoneNumber,
-  argon2iSalt,
-} from '../shared/constants';
-import {hashData} from './../shared/commonUtil';
 import {StoreEvents} from './store';
+import Storage from '../shared/storage';
+import {compressData} from '../shared/cryptoutil/cryptoUtil';
+import {
+  getEndEventData,
+  getImpressionEventData,
+  getStartEventData,
+  sendEndEvent,
+  sendImpressionEvent,
+  sendStartEvent,
+} from '../shared/telemetry/TelemetryUtils';
+import {TelemetryConstants} from '../shared/telemetry/TelemetryConstants';
 
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
-    otp: '',
-    baseEncKey: '',
-    hashedEncKey: '',
+    dataFromStorage: {},
+    fileName: '',
   },
   {
     events: {
       DATA_BACKUP: () => ({}),
-      YES: () => ({}),
-      PASSWORD: () => ({}),
-      SET_BASE_ENC_KEY: (baseEncKey: string) => ({baseEncKey}),
-      PHONE_NUMBER: () => ({}),
-      SEND_OTP: () => ({}),
-      INPUT_OTP: (otp: string) => ({otp}),
-      BACK: () => ({}),
-      CANCEL: () => ({}),
-      WAIT: () => ({}),
-      CANCEL_DOWNLOAD: () => ({}),
+      OK: () => ({}),
+      FETCH_DATA: () => ({}),
+      DISMISS: () => ({}),
+      STORE_RESPONSE: (response: unknown) => ({response}),
+      FILE_NAME: (filename: string) => ({filename}),
     },
   },
 );
@@ -54,135 +50,155 @@ export const backupMachine = model.createMachine(
         on: {
           DATA_BACKUP: [
             {
-              target: 'backUp',
+              target: 'backingUp',
             },
           ],
         },
       },
-      backUp: {
-        on: {
-          YES: {
-            target: 'selectPref',
-          },
-        },
-      },
-      selectPref: {
-        on: {
-          PASSWORD: {
-            target: 'passwordBackup',
-          },
-          PHONE_NUMBER: {
-            target: 'phoneNumberBackup',
-          },
-        },
-      },
-      passwordBackup: {
-        on: {
-          SET_BASE_ENC_KEY: {
-            actions: ['setBaseEncKey', 'storePasswordKeyType'],
-            target: 'hashKey',
-          },
-        },
-      },
-
-      phoneNumberBackup: {
-        on: {
-          SET_BASE_ENC_KEY: {
-            actions: 'setBaseEncKey',
-          },
-          SEND_OTP: {
-            target: 'requestOtp',
-          },
-        },
-      },
-      requestOtp: {
-        on: {
-          WAIT: {},
-          CANCEL: {},
-          CANCEL_DOWNLOAD: {},
-          INPUT_OTP: {
-            actions: ['setOtp', 'storePhoneNumberKeyType'], // TODO: we should also do the otp Verification here
-            target: 'hashKey',
-          },
-        },
-        invoke: {
-          src: 'requestOtp',
-          onDone: [
-            {
-              target: '',
+      backingUp: {
+        initial: 'idle',
+        states: {
+          idle: {},
+          checkStorageAvailability: {
+            entry: ['sendDataBackupStartEvent'],
+            invoke: {
+              src: 'checkStorageAvailability',
+              onDone: [
+                {
+                  cond: 'isMinimumStorageRequiredForBackupReached',
+                  target: 'failure',
+                },
+                {
+                  target: 'fetchDataFromDB',
+                },
+              ],
             },
-          ],
-          onError: [
-            {
-              actions: '',
-              target: '',
+          },
+          fetchDataFromDB: {
+            entry: ['fetchAllDataFromDB'],
+            on: {
+              STORE_RESPONSE: {
+                actions: 'setDataFromStorage',
+                target: 'writeDataToFile',
+              },
             },
-          ],
+          },
+          writeDataToFile: {
+            invoke: {
+              src: 'writeDataToFile',
+            },
+            on: {
+              FILE_NAME: {
+                actions: 'setFileName',
+                target: 'zipBackupFile',
+              },
+            },
+          },
+          zipBackupFile: {
+            invoke: {
+              src: 'zipBackupFile',
+              onDone: {
+                target: 'success',
+              },
+              onError: {
+                target: 'failure',
+              },
+            },
+          },
+          success: {
+            entry: 'sendDataBackupSuccessEvent',
+          },
+          failure: {
+            entry: 'sendDataBackupFailureEvent',
+          },
         },
-      },
-      hashKey: {
-        invoke: {
-          src: 'hashEncKey',
-          onDone: {
-            target: 'backingUp',
-            actions: ['setHashedKey', 'storeHashedEncKey'],
+        on: {
+          FETCH_DATA: {
+            target: '.checkStorageAvailability',
+          },
+          OK: {
+            target: '.idle',
+          },
+          DISMISS: {
+            target: 'init',
           },
         },
       },
-      backingUp: {},
     },
   },
   {
     actions: {
-      setOtp: model.assign({
-        otp: (_context, event) => {
-          return event.otp;
-        },
-      }),
-      setBaseEncKey: model.assign({
-        baseEncKey: (_context, event) => {
-          return event.baseEncKey;
+      setDataFromStorage: model.assign({
+        dataFromStorage: (_context, event) => {
+          return event.response;
         },
       }),
 
-      setHashedKey: model.assign({
-        hashedEncKey: (_context, event) =>
-          (event as DoneInvokeEvent<string>).data,
+      setFileName: model.assign({
+        fileName: (_context, event) => {
+          return event.filename;
+        },
       }),
 
-      storeHashedEncKey: send(
-        context => StoreEvents.SET(BACKUP_ENC_KEY, context.hashedEncKey),
-        {
-          to: context => context.serviceRefs.store,
-        },
-      ),
+      fetchAllDataFromDB: send(StoreEvents.EXPORT(), {
+        to: context => context.serviceRefs.store,
+      }),
 
-      storePasswordKeyType: send(
-        () =>
-          StoreEvents.SET(BACKUP_ENC_KEY_TYPE, BACKUP_ENC_TYPE_VAL_PASSWORD),
-        {
-          to: context => context.serviceRefs.store,
-        },
-      ),
-      storePhoneNumberKeyType: send(
-        () => StoreEvents.SET(BACKUP_ENC_KEY_TYPE, BACKUP_ENC_TYPE_VAL_PHONE),
-        {
-          to: context => context.serviceRefs.store,
-        },
-      ),
-    },
+      sendDataBackupStartEvent: () => {
+        sendStartEvent(
+          getStartEventData(TelemetryConstants.FlowType.dataBackup),
+        );
+        sendImpressionEvent(
+          getImpressionEventData(
+            TelemetryConstants.FlowType.dataBackup,
+            TelemetryConstants.Screens.dataBackupScreen,
+          ),
+        );
+      },
 
-    services: {
-      hashEncKey: async context => {
-        return await hashData(
-          context.baseEncKey,
-          argon2iSalt,
-          argon2iConfigForPasswordAndPhoneNumber,
-        ).then(value => value);
+      sendDataBackupSuccessEvent: () => {
+        sendEndEvent(
+          getEndEventData(
+            TelemetryConstants.FlowType.dataBackup,
+            TelemetryConstants.EndEventStatus.success,
+          ),
+        );
+      },
+
+      sendDataBackupFailureEvent: () => {
+        sendEndEvent(
+          getEndEventData(
+            TelemetryConstants.FlowType.dataBackup,
+            TelemetryConstants.EndEventStatus.failure,
+          ),
+        );
       },
     },
 
-    guards: {},
+    services: {
+      checkStorageAvailability: () => async () => {
+        return Promise.resolve(
+          Storage.isMinimumLimitReached('minStorageRequired'),
+        );
+      },
+
+      writeDataToFile: context => async callack => {
+        const fileName = await Storage.writeToBackupFile(
+          context.dataFromStorage,
+        );
+        callack(model.events.FILE_NAME(fileName));
+      },
+
+      zipBackupFile: context => async callback => {
+        const result = await compressData(context.fileName);
+        return result;
+      },
+    },
+
+    guards: {
+      isMinimumStorageRequiredForBackupReached: (_context, event) =>
+        Boolean(event.data),
+    },
   },
 );
 
@@ -192,26 +208,13 @@ export function createBackupMachine(serviceRefs: AppServices) {
     serviceRefs,
   });
 }
-export function selectIsEnableBackup(state: State) {
-  return state.matches('backUp');
-}
-export function selectIsBackupPref(state: State) {
-  return state.matches('selectPref');
-}
-export function selectIsBackupViaPassword(state: State) {
-  return state.matches('passwordBackup');
-}
-export function selectIsBackupViaPhoneNumber(state: State) {
-  return state.matches('phoneNumberBackup');
-}
-export function selectIsRequestOtp(state: State) {
-  return state.matches('requestOtp');
-}
 export function selectIsBackingUp(state: State) {
   return state.matches('backingUp');
 }
-export function selectIsCancellingDownload(state: State) {
-  // TODO: check cancelDownload based on state
-  return false;
+export function selectIsBackingUpSuccess(state: State) {
+  return state.matches('backingUp.success');
+}
+export function selectIsBackingUpSFailure(state: State) {
+  return state.matches('backingUp.failure');
 }
 type State = StateFrom<typeof backupMachine>;

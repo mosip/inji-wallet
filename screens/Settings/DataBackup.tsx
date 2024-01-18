@@ -1,17 +1,12 @@
 import React, {useState} from 'react';
 import {Pressable} from 'react-native';
 import {Icon, ListItem} from 'react-native-elements';
-import {MessageOverlay} from '../../components/MessageOverlay';
 import {Text} from '../../components/ui';
 import {Theme} from '../../components/ui/styleUtils';
 import {useBackupScreen} from './BackupController';
-import {BackupPreference} from './BackupPreference';
 import {BackupToggle} from './BackupToggle';
-import {BackupViaPassword} from './BackupViaPassword';
-import {BackupViaPhoneNumber} from './BackupViaPhoneNumber';
 
 export const DataBackup: React.FC = ({} = props => {
-  const [showDatabackup, setDatabackup] = useState(false);
   const controller = useBackupScreen(props);
 
   // TODO : Check if the setup is already done
@@ -20,7 +15,6 @@ export const DataBackup: React.FC = ({} = props => {
     <React.Fragment>
       <Pressable
         onPress={() => {
-          setDatabackup(!showDatabackup);
           controller.DATA_BACKUP();
         }}>
         <ListItem topDivider bottomDivider>
@@ -33,27 +27,18 @@ export const DataBackup: React.FC = ({} = props => {
           <ListItem.Content>
             <ListItem.Title style={{paddingTop: 3}}>
               <Text weight="semibold" color={Theme.Colors.settingsLabel}>
-                Data backup
+                Data Backup
               </Text>
             </ListItem.Title>
           </ListItem.Content>
         </ListItem>
       </Pressable>
 
-      {controller.isBackupEnabled && (
-        <BackupToggle isVisible={controller.isBackupEnabled} />
-      )}
-
-      {controller.isBackupPref && (
-        <BackupPreference isVisible={controller.isBackupPref} />
-      )}
-
-      {controller.isBackupViaPassword && (
-        <BackupViaPassword isVisible={controller.isBackupViaPassword} />
-      )}
-
-      {controller.isBackupViaPhoneNumber && (
-        <BackupViaPhoneNumber isVisible={controller.isBackupViaPhoneNumber} />
+      {controller.isBackingUp && (
+        <BackupToggle
+          isVisible={controller.isBackingUp}
+          onDismiss={() => controller.DISMISS()}
+        />
       )}
 
       {/* TODO: refactor OtpVerificationModal to accept different machines */}

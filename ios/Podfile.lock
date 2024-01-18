@@ -12,7 +12,7 @@ PODS:
   - BiometricSdk (0.5.9):
     - TensorFlowLiteObjC (= 2.12.0)
   - boost (1.76.0)
-  - BVLinearGradient (2.8.2):
+  - BVLinearGradient (2.8.3):
     - React-Core
   - CatCrypto (0.3.2)
   - CrcSwift (0.0.3)
@@ -347,6 +347,8 @@ PODS:
   - React-jsinspector (0.71.8)
   - React-logger (0.71.8):
     - glog
+  - react-native-aes (2.1.2):
+    - React-Core
   - react-native-app-auth (7.0.0):
     - AppAuth (~> 1.6)
     - React-Core
@@ -483,8 +485,16 @@ PODS:
     - React
   - RNSVG (13.4.0):
     - React-Core
+  - RNZipArchive (6.1.0):
+    - React-Core
+    - RNZipArchive/Core (= 6.1.0)
+    - SSZipArchive (~> 2.2)
+  - RNZipArchive/Core (6.1.0):
+    - React-Core
+    - SSZipArchive (~> 2.2)
   - secure-keystore (0.1.5):
     - React-Core
+  - SSZipArchive (2.4.3)
   - TensorFlowLiteC (2.12.0):
     - TensorFlowLiteC/Core (= 2.12.0)
   - TensorFlowLiteC/Core (2.12.0)
@@ -551,6 +561,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
+  - react-native-aes (from `../node_modules/react-native-aes-crypto`)
   - react-native-app-auth (from `../node_modules/react-native-app-auth`)
   - react-native-location (from `../node_modules/react-native-location`)
   - react-native-mmkv-storage (from `../node_modules/react-native-mmkv-storage`)
@@ -586,6 +597,7 @@ DEPENDENCIES:
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSecureRandom (from `../node_modules/react-native-securerandom`)
   - RNSVG (from `../node_modules/react-native-svg`)
+  - RNZipArchive (from `../node_modules/react-native-zip-archive`)
   - "secure-keystore (from `../node_modules/@mosip/secure-keystore`)"
   - "tuvali (from `../node_modules/@mosip/tuvali`)"
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -603,6 +615,7 @@ SPEC REPOS:
     - MMKV
     - MMKVCore
     - ReachabilitySwift
+    - SSZipArchive
     - TensorFlowLiteC
     - TensorFlowLiteObjC
     - ZXingObjC
@@ -698,6 +711,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
+  react-native-aes:
+    :path: "../node_modules/react-native-aes-crypto"
   react-native-app-auth:
     :path: "../node_modules/react-native-app-auth"
   react-native-location:
@@ -768,6 +783,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-securerandom"
   RNSVG:
     :path: "../node_modules/react-native-svg"
+  RNZipArchive:
+    :path: "../node_modules/react-native-zip-archive"
   secure-keystore:
     :path: "../node_modules/@mosip/secure-keystore"
   tuvali:
@@ -781,7 +798,7 @@ SPEC CHECKSUMS:
   biometric-sdk-react-native: d2a3a1279013cc4a7514a1b43fe557eb76e4e4c1
   BiometricSdk: 303e7329404ea4d922dc14108449d10d21574f77
   boost: 64032b9e9b938fda23325e68a3771f0fabf414dc
-  BVLinearGradient: 916632041121a658c704df89d99f04acb038de0f
+  BVLinearGradient: 880f91a7854faff2df62518f0281afb1c60d49a3
   CatCrypto: a477899b6be4954e75be4897e732da098cc0a5a8
   CrcSwift: f85dea6b41dddb5f98bb3743fd777ce58b77bc2e
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
@@ -832,6 +849,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 747911ab5921641b4ed7e4900065896597142125
   React-jsinspector: c712f9e3bb9ba4122d6b82b4f906448b8a281580
   React-logger: 342f358b8decfbf8f272367f4eacf4b6154061be
+  react-native-aes: b580a7919ae1ba5a1b457e7e4914a87eb01de6f4
   react-native-app-auth: 1d12b6874a24152715a381d8e9149398ce7c2c95
   react-native-location: 5a40ec1cc6abf2f6d94df979f98ec76c3a415681
   react-native-mmkv-storage: cfb6854594cfdc5f7383a9e464bb025417d1721c
@@ -867,7 +885,9 @@ SPEC CHECKSUMS:
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
   RNSecureRandom: 07efbdf2cd99efe13497433668e54acd7df49fef
   RNSVG: 07dbd870b0dcdecc99b3a202fa37c8ca163caec2
+  RNZipArchive: ef9451b849c45a29509bf44e65b788829ab07801
   secure-keystore: 21c03ba81520aefa99621383770ce00b3e306c72
+  SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
   TensorFlowLiteC: 20785a69299185a379ba9852b6625f00afd7984a
   TensorFlowLiteObjC: 9a46a29a76661c513172cfffd3bf712b11ef25c3
   tuvali: 9c3aad61844f6fcbd48ec7967cd6805418c3f8da
@@ -876,4 +896,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 01f58b130fa221dabb14b2d82d981ef24dcaba53
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.12.1

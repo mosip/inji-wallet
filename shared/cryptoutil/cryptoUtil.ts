@@ -4,6 +4,12 @@ import {BIOMETRIC_CANCELLED, DEBUG_MODE_ENABLED, isIOS} from '../constants';
 import SecureKeystore from '@mosip/secure-keystore';
 import {BiometricCancellationError} from '../error/BiometricCancellationError';
 import {EncryptedOutput} from './encryptedOutput';
+import * as RNZipArchive from 'react-native-zip-archive';
+import fileStorage, {
+  backupFilePath,
+  getBackupFilePath,
+  zipFilePath,
+} from '../fileStorage';
 
 // 5min
 export const AUTH_TIMEOUT = 5 * 60;
@@ -189,4 +195,10 @@ export function hmacSHA(encryptionKey: string, data: string) {
   hmac.update(data);
   const resultBytes = hmac.digest().getBytes().toString();
   return resultBytes;
+}
+
+export async function compressData(fileName: string): Promise<string> {
+  const result = await RNZipArchive.zip(backupFilePath, zipFilePath(fileName));
+  await fileStorage.removeItem(getBackupFilePath(fileName));
+  return result;
 }
