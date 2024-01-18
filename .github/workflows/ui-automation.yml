@@ -18,6 +18,14 @@ on:
           - Both[Android and IOS]
           - Android
           - IOS
+      testType:
+        description: 'Sanity/Regression'
+        required: true
+        default: 'sanity'
+        type: choice
+        options:
+          - sanity
+          - regression
       backendServiceUrl:
         description: 'Mimoto and Esignet backend service URL'
         required: true
@@ -78,10 +86,11 @@ jobs:
         id: android-run
         run: |
           cd injitest/scripts/ui_automation
-          RUN_ARN=$(./automation_trigger.sh "Android" "$RUN_NAME")
+          RUN_ARN=$(./automation_trigger.sh "Android" "$RUN_NAME" "$TEST_TYPE")
           echo "The Run ARN is $RUN_ARN"
         env:
           RUN_NAME: ${{ github.event.inputs.runName }}
+          TEST_TYPE: ${{ github.event.inputs.testType }}
 
       # - name: Artifacts download
       #   id: artifact-download
@@ -152,10 +161,11 @@ jobs:
       - name: IOS - Automation
         run: |
           cd injitest/scripts/ui_automation
-          RUN_ARN=$(./automation_trigger.sh "Android" "$RUN_NAME")
+          RUN_ARN=$(./automation_trigger.sh "IOS" "$RUN_NAME" "$TEST_TYPE")
           echo "The Run ARN is $RUN_ARN"
         env:
           RUN_NAME: ${{ github.event.inputs.runName }}
+          TEST_TYPE: ${{ github.event.inputs.testType }}
       
       # - name: Artifacts download
       #   id: artifact-download
