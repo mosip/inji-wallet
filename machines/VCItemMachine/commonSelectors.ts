@@ -41,7 +41,7 @@ export function selectBindingAuthFailedError(state: State) {
   return state.context.bindingAuthFailedMessage;
 }
 
-export function selectKebabPopUpAcceptingBindingOtp(state: State) {
+export function selectAcceptingBindingOtp(state: State) {
   return state.matches('acceptingBindingOtp');
 }
 
@@ -49,7 +49,7 @@ export function selectKebabPopUpShowWalletBindingError(state: State) {
   return state.matches('showingWalletBindingError');
 }
 
-export function selectKebabPopUpWalletBindingInProgress(state: State) {
+export function selectWalletBindingInProgress(state: State) {
   return state.matches('requestingBindingOtp') ||
     state.matches('addingWalletBindingId') ||
     state.matches('addKeyPair') ||
@@ -58,7 +58,7 @@ export function selectKebabPopUpWalletBindingInProgress(state: State) {
     : false;
 }
 
-export function selectKebabPopUpBindingWarning(state: State) {
+export function selectBindingWarning(state: State) {
   return state.matches('showBindingWarning');
 }
 

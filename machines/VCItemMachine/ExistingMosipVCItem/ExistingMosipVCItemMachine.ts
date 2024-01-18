@@ -1565,27 +1565,6 @@ export function selectRequestBindingOtp(state: State) {
   return state.matches('requestingBindingOtp');
 }
 
-export function selectAcceptingBindingOtp(state: State) {
-  return state.matches('acceptingBindingOtp');
-}
-
-export function selectWalletBindingInProgress(state: State) {
-  return state.matches('requestingBindingOtp') ||
-    state.matches('addingWalletBindingId') ||
-    state.matches('addKeyPair') ||
-    state.matches('updatingPrivateKey')
-    ? true
-    : false;
-}
-
-export function selectBindingWarning(state: State) {
-  return state.matches('showBindingWarning');
-}
-
-export function selectKebabPopUpRequestBindingOtp(state: State) {
-  return state.matches('requestingBindingOtp');
-}
-
 export function selectIsSavingFailedInIdle(state: State) {
   return state.matches('checkingServerData.savingFailed.idle');
 }
