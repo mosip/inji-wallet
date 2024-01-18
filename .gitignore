@@ -129,4 +129,3 @@ injitest/testng-report/
 # logs from tests ran
 injitest/src/logs/
 # test case class files
-injitest/target/
