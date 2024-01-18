@@ -121,3 +121,12 @@ android/app/debug.keystore
 .expo
 dist/
 web-build/
+
+# automation test results
+# test reports generated after running test
+injitest/report/ 
+injitest/testng-report/
+# logs from tests ran
+injitest/src/logs/
+# test case class files
+injitest/target/

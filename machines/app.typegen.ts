@@ -9,7 +9,6 @@ export interface Typegen0 {
     checkFocusState: 'done.invoke.app.ready.focus:invocation[0]';
     checkNetworkState: 'done.invoke.app.ready.network:invocation[0]';
     getAppInfo: 'done.invoke.app.init.info:invocation[0]';
-    getBackendInfo: 'done.invoke.app.init.devinfo:invocation[0]';
   };
   missingImplementations: {
     actions: never;
@@ -31,7 +30,6 @@ export interface Typegen0 {
     requestDeviceInfo: 'REQUEST_DEVICE_INFO';
     resetKeyInvalidateError: 'READY' | 'RESET_KEY_INVALIDATE_ERROR_DISMISS';
     setAppInfo: 'APP_INFO_RECEIVED';
-    setBackendInfo: 'BACKEND_INFO_RECEIVED';
     setIsDecryptError: 'DECRYPT_ERROR';
     setIsReadError: 'ERROR';
     spawnServiceActors: 'READY';
@@ -46,15 +44,13 @@ export interface Typegen0 {
   eventsCausingDelays: {};
   eventsCausingGuards: {};
   eventsCausingServices: {
-    checkFocusState: 'BACKEND_INFO_RECEIVED';
-    checkNetworkState: 'BACKEND_INFO_RECEIVED';
+    checkFocusState: 'APP_INFO_RECEIVED';
+    checkNetworkState: 'APP_INFO_RECEIVED';
     getAppInfo: 'STORE_RESPONSE';
-    getBackendInfo: 'APP_INFO_RECEIVED';
   };
   matchesStates:
     | 'init'
     | 'init.credentialRegistry'
-    | 'init.devinfo'
     | 'init.info'
     | 'init.services'
     | 'init.store'
@@ -69,7 +65,7 @@ export interface Typegen0 {
     | 'ready.network.online'
     | 'waiting'
     | {
-        init?: 'credentialRegistry' | 'devinfo' | 'info' | 'services' | 'store';
+        init?: 'credentialRegistry' | 'info' | 'services' | 'store';
         ready?:
           | 'focus'
           | 'network'

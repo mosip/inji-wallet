@@ -21,18 +21,20 @@ import {
 } from '../../../types/VC/EsignetMosipVC/vc';
 import {WalletBindingResponse} from '../../../shared/cryptoutil/cryptoUtil';
 import {logoType} from '../../../machines/issuersMachine';
+import {SvgImage} from '../../ui/svg';
 
 const getIssuerLogo = (isOpenId4VCI: boolean, issuerLogo: logoType) => {
   if (isOpenId4VCI) {
     return (
       <Image
+        testID="esignetLogo"
         src={issuerLogo?.url}
         alt={issuerLogo?.alt_text}
         style={Theme.Styles.issuerLogo}
       />
     );
   }
-  return <Image source={Theme.MosipLogo} style={Theme.Styles.vcDetailsLogo} />;
+  return SvgImage.MosipLogo(Theme.Styles.vcDetailsLogo);
 };
 
 const getProfileImage = (
@@ -49,7 +51,7 @@ const getProfileImage = (
       return {uri: props.vc?.credential.biometrics.face};
     }
   }
-  return Theme.cardFaceIcon;
+  return <Icon name="person" color={Theme.Colors.Icon} size={88} />;
 };
 
 export const MosipVCItemDetails: React.FC<
@@ -82,7 +84,7 @@ export const MosipVCItemDetails: React.FC<
         resizeMode="stretch"
         style={Theme.Styles.openCardBgContainer}
         source={Theme.OpenCard}>
-        <Row align="space-between" padding="10" margin="0 10 0 8">
+        <Row padding="10" margin="0 10 0 8">
           <Column align="space-evenly" crossAlign="center">
             <Image
               source={getProfileImage(
@@ -93,10 +95,11 @@ export const MosipVCItemDetails: React.FC<
               style={Theme.Styles.openCardImage}
             />
 
-            <QrCodeOverlay qrCodeDetailes={String(verifiableCredential)} />
+            <QrCodeOverlay qrCodeDetails={String(verifiableCredential)} />
+
             <Column margin="20 0 0 0">{issuerLogo}</Column>
           </Column>
-          <Column align="space-evenly" padding="10">
+          <Column padding="10">
             <Column>
               <Text
                 testID="fullNameTitle"
@@ -116,8 +119,12 @@ export const MosipVCItemDetails: React.FC<
                 )}
               </Text>
             </Column>
-            <Row>
-              <Column>
+            <Row
+              align="space-between"
+              style={{
+                width: Dimensions.get('screen').width * 0.5,
+              }}>
+              <Column align="space-evenly">
                 <Column margin="20 0 0 0">
                   <Text
                     testID="gender"
@@ -190,11 +197,12 @@ export const MosipVCItemDetails: React.FC<
                     </Text>
                   </Column>
                 ) : null}
-                <Column margin="30 0 0 0">
+                <Column margin="25 0 -5 0">
                   <Text
                     testID="generatedOnTitle"
                     weight="regular"
                     size="smaller"
+                    style={{maxWidth: 100}}
                     color={Theme.Colors.DetailsLabel}>
                     {t('generatedOn')}
                   </Text>
@@ -207,11 +215,11 @@ export const MosipVCItemDetails: React.FC<
                   </Text>
                 </Column>
               </Column>
-              <Column margin="0 0 0 38">
-                <Column margin="20 0 0 0">
+              <Column align="space-evenly" margin="0 0 0 30">
+                <Column margin="25 0 0 0">
                   <Text
                     testID="dateOfBirth"
-                    style={{maxWidth: 121}}
+                    style={{maxWidth: 130}}
                     weight="regular"
                     size="smaller"
                     color={Theme.Colors.DetailsLabel}>
@@ -225,8 +233,7 @@ export const MosipVCItemDetails: React.FC<
                     {formattedDateOfBirth()}
                   </Text>
                 </Column>
-                <Column
-                  style={{marginTop: Dimensions.get('window').height * 0.04}}>
+                <Column margin="25 0 0 0">
                   <Text
                     testID="status"
                     weight="regular"
@@ -242,7 +249,7 @@ export const MosipVCItemDetails: React.FC<
                     {props.vc?.isVerified && <VerifiedIcon />}
                     <Text
                       testID="valid"
-                      style={{maxWidth: 63}}
+                      style={{maxWidth: 80}}
                       weight="semibold"
                       size="smaller"
                       color={Theme.Colors.Details}>
@@ -250,11 +257,14 @@ export const MosipVCItemDetails: React.FC<
                     </Text>
                   </Row>
                 </Column>
-                <Column
-                  style={{marginTop: Dimensions.get('window').height * 0.1}}>
+                <Column margin="25 0 0 0">
+                  <Text>{''}</Text>
+                  <Text>{''}</Text>
+                </Column>
+                <Column margin="25 0 0 0">
                   <Text
                     testID="phoneNumber"
-                    style={{maxWidth: 80}}
+                    style={{maxWidth: 100}}
                     weight="regular"
                     size="smaller"
                     color={Theme.Colors.DetailsLabel}>
@@ -368,7 +378,16 @@ export const MosipVCItemDetails: React.FC<
         props.isBindingPending ? (
           <Column style={Theme.Styles.openCardBgContainer} padding="10">
             <Column margin={'0 0 4 0'} crossAlign={'flex-start'}>
-              <Image source={Theme.activationPending}></Image>
+              <Icon
+                name="shield-alert"
+                color={Theme.Colors.Icon}
+                size={Theme.ICON_LARGE_SIZE}
+                type="material-community"
+                containerStyle={{
+                  marginEnd: 5,
+                  bottom: 1,
+                }}
+              />
               <Text
                 testID="offlineAuthDisabledHeader"
                 style={{flex: 1}}
@@ -384,7 +403,7 @@ export const MosipVCItemDetails: React.FC<
               style={{flex: 1, lineHeight: 17}}
               weight="regular"
               size="small"
-              margin={'3 0 0 0'}
+              margin={'3 0 10 0'}
               color={Theme.Colors.statusMessage}>
               {t('offlineAuthDisabledMessage')}
             </Text>

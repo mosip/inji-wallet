@@ -30,6 +30,7 @@ const model = createModel(
       INPUT_ID: (id: string) => ({id}),
       INPUT_OTP: (otp: string) => ({otp}),
       VALIDATE_INPUT: () => ({}),
+      RESEND_OTP: () => ({}),
       ACTIVATE_ICON_COLOR: () => ({}),
       DEACTIVATE_ICON_COLOR: () => ({}),
       READY: (idInputRef: TextInput) => ({idInputRef}),
@@ -177,6 +178,29 @@ export const GetVcModalMachine =
             DISMISS: {
               actions: ['resetIdInputRef'],
               target: '#GetVcModal.acceptingIdInput',
+            },
+            RESEND_OTP: {
+              target: '.resendOTP',
+            },
+          },
+          initial: 'idle',
+          states: {
+            idle: {},
+            resendOTP: {
+              invoke: {
+                src: 'requestOtp',
+                onDone: [
+                  {
+                    target: 'idle',
+                  },
+                ],
+                onError: [
+                  {
+                    actions: 'setIdBackendError',
+                    target: '#GetVcModal.acceptingIdInput.invalid.backend',
+                  },
+                ],
+              },
             },
           },
         },

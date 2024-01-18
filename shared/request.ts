@@ -27,20 +27,21 @@ export async function request(
   if (path.includes('residentmobileapp'))
     headers['X-AppId'] = __AppId.getValue();
   let response;
+  const requestUrl = path.indexOf('https://') != -1 ? path : host + path;
   if (timeoutMillis === undefined) {
-    response = await fetch(host + path, {
+    response = await fetch(requestUrl, {
       method,
       headers,
       body: body ? JSON.stringify(body) : undefined,
     });
   } else {
-    console.log(`making a web request to ${host + path}`);
+    console.log(`making a web request to ${requestUrl}`);
     let controller = new AbortController();
     setTimeout(() => {
       controller.abort();
     }, timeoutMillis);
     try {
-      response = await fetch(host + path, {
+      response = await fetch(requestUrl, {
         method,
         headers,
         body: body ? JSON.stringify(body) : undefined,

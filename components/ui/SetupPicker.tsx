@@ -4,6 +4,7 @@ import {Icon, ListItem} from 'react-native-elements';
 import {Column} from './Layout';
 import {Text} from './Text';
 import {Theme} from './styleUtils';
+import testIDProps from '../../shared/commonUtil';
 
 interface Picker extends React.VFC<PickerProps<unknown>> {
   <T>(props: PickerProps<T>): ReturnType<React.FC>;
@@ -34,13 +35,14 @@ export const SetupPicker: Picker = (props: PickerProps<unknown>) => {
       backgroundColor={Theme.Colors.whiteBackgroundColor}>
       {props.items.map((item, index) => (
         <ListItem
-          testID={item.value}
           bottomDivider
           topDivider={index !== 0}
           onPress={() => selectItem(index)}
           key={index}>
           <ListItem.Content>
-            <ListItem.Title style={{paddingTop: 3}}>
+            <ListItem.Title
+              {...testIDProps(item.value)}
+              style={{paddingTop: 3}}>
               <Text
                 color={selectedIndex === index ? Theme.Colors.Icon : null}
                 weight={selectedIndex === index ? 'semibold' : 'regular'}>

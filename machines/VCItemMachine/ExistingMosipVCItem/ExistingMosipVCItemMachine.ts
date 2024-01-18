@@ -28,7 +28,7 @@ import getAllConfigurations, {
 } from '../../../shared/commonprops/commonProps';
 import {VcEvents} from '../../vc';
 import i18n from '../../../i18n';
-import SecureKeystore from 'react-native-secure-keystore';
+import SecureKeystore from '@mosip/secure-keystore';
 import {VCMetadata} from '../../../shared/VCMetadata';
 import {
   getEndEventData,
@@ -171,14 +171,23 @@ export const ExistingMosipVCItemMachine =
         checkingServerData: {
           description:
             "Download VC data from the server. Uses polling method to check when it's available.",
-          initial: 'verifyingDownloadLimitExpiry',
+          initial: 'loadDownloadLimitConfig',
           states: {
+            loadDownloadLimitConfig: {
+              invoke: {
+                src: 'loadDownloadLimitConfig',
+                onDone: {
+                  actions: ['setMaxDownloadCount', 'setDownloadInterval'],
+                  target: 'verifyingDownloadLimitExpiry',
+                },
+              },
+            },
             verifyingDownloadLimitExpiry: {
+              entry: ['incrementDownloadCounter'],
               invoke: {
                 src: 'checkDownloadExpiryLimit',
                 onDone: {
                   target: 'checkingStatus',
-                  actions: ['setMaxDownloadCount', 'setDownloadInterval'],
                 },
                 onError: {
                   actions: [
@@ -201,12 +210,9 @@ export const ExistingMosipVCItemMachine =
                 DOWNLOAD_READY: {
                   target: 'downloadingCredential',
                 },
-                FAILED: [
-                  {
-                    actions: ['incrementDownloadCounter'],
-                    target: 'verifyingDownloadLimitExpiry',
-                  },
-                ],
+                FAILED: {
+                  actions: 'sendDownloadLimitExpire',
+                },
               },
             },
             downloadingCredential: {
@@ -1090,14 +1096,6 @@ export const ExistingMosipVCItemMachine =
             Number((event.data as DownloadProps).downloadInterval),
         }),
 
-        storeTag: send(
-          context => {
-            const {serviceRefs, ...data} = context;
-            return StoreEvents.SET(context.vcMetadata.getVcKey(), data);
-          },
-          {to: context => context.serviceRefs.store},
-        ),
-
         setCredential: model.assign((context, event) => {
           switch (event.type) {
             case 'STORE_RESPONSE':
@@ -1273,24 +1271,25 @@ export const ExistingMosipVCItemMachine =
       },
 
       services: {
-        checkDownloadExpiryLimit: async context => {
+        loadDownloadLimitConfig: async context => {
           var resp = await getAllConfigurations();
           const maxLimit: number = resp.vcDownloadMaxRetry;
           const vcDownloadPoolInterval: number = resp.vcDownloadPoolInterval;
-          console.log(maxLimit);
-          if (maxLimit <= context.downloadCounter) {
-            throw new Error(
-              'Download limit expired for request id: ' +
-                context.vcMetadata.requestId,
-            );
-          }
 
           const downloadProps: DownloadProps = {
             maxDownloadLimit: maxLimit,
             downloadInterval: vcDownloadPoolInterval,
           };
-
           return downloadProps;
+        },
+
+        checkDownloadExpiryLimit: async context => {
+          if (context.downloadCounter > context.maxDownloadCount) {
+            throw new Error(
+              'Download limit expired for request id: ' +
+                context.vcMetadata.requestId,
+            );
+          }
         },
 
         addWalletBindnigId: async context => {
@@ -1395,10 +1394,12 @@ export const ExistingMosipVCItemMachine =
                   case 'FAILED':
                   default:
                     callback(model.events.FAILED());
+                    clearInterval(pollInterval);
                     break;
                 }
               } catch (error) {
                 callback(model.events.FAILED());
+                clearInterval(pollInterval);
               }
             }
           });

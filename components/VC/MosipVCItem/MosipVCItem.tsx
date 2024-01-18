@@ -61,8 +61,7 @@ export const MosipVCItem: React.FC<
           selectable={props.selectable}
           selected={props.selected}
           service={service}
-          iconName={props.iconName}
-          iconType={props.iconType}
+          isPinned={props.isPinned}
           onPress={() => props.onPress(service)}
           isDownloading={props.isDownloading}
         />
@@ -114,10 +113,9 @@ export interface ExistingMosipVCItemProps {
   showOnlyBindedVc?: boolean;
   onPress?: (vcRef?: ActorRefFrom<typeof ExistingMosipVCItemMachine>) => void;
   onShow?: (vcRef?: ActorRefFrom<typeof ExistingMosipVCItemMachine>) => void;
-  iconName?: string;
-  iconType?: string;
   isSharingVc?: boolean;
   isDownloading?: boolean;
+  isPinned?: boolean;
 }
 
 export interface EsignetMosipVCItemProps {
@@ -128,8 +126,7 @@ export interface EsignetMosipVCItemProps {
   showOnlyBindedVc?: boolean;
   onPress?: (vcRef?: ActorRefFrom<typeof EsignetMosipVCItemMachine>) => void;
   onShow?: (vcRef?: ActorRefFrom<typeof EsignetMosipVCItemMachine>) => void;
-  iconName?: string;
-  iconType?: string;
   isSharingVc?: boolean;
   isDownloading?: boolean;
+  isPinned?: boolean;
 }

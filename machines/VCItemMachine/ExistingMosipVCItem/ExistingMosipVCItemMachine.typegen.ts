@@ -24,6 +24,11 @@ export interface Typegen0 {
       data: unknown;
       __tip: 'See the XState TS docs to learn how to strongly type this.';
     };
+    'done.invoke.vc-item.checkingServerData.loadDownloadLimitConfig:invocation[0]': {
+      type: 'done.invoke.vc-item.checkingServerData.loadDownloadLimitConfig:invocation[0]';
+      data: unknown;
+      __tip: 'See the XState TS docs to learn how to strongly type this.';
+    };
     'done.invoke.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]': {
       type: 'done.invoke.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]';
       data: unknown;
@@ -147,6 +152,7 @@ export interface Typegen0 {
     generateKeyPair:
       | 'done.invoke.vc-item.addKeyPair:invocation[0]'
       | 'done.invoke.vc-item.kebabPopUp.addKeyPair:invocation[0]';
+    loadDownloadLimitConfig: 'done.invoke.vc-item.checkingServerData.loadDownloadLimitConfig:invocation[0]';
     requestBindingOtp:
       | 'done.invoke.vc-item.kebabPopUp.requestingBindingOtp:invocation[0]'
       | 'done.invoke.vc-item.requestingBindingOtp:invocation[0]';
@@ -192,7 +198,9 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]'
       | 'done.invoke.vc-item.verifyingCredential:invocation[0]'
       | 'error.platform.vc-item.verifyingCredential:invocation[0]';
-    incrementDownloadCounter: 'POLL';
+    incrementDownloadCounter:
+      | 'POLL'
+      | 'done.invoke.vc-item.checkingServerData.loadDownloadLimitConfig:invocation[0]';
     logDownloaded: 'STORE_RESPONSE';
     logRevoked: 'STORE_RESPONSE';
     logVCremoved: 'STORE_RESPONSE';
@@ -225,7 +233,9 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]'
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
-    sendDownloadLimitExpire: 'error.platform.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]';
+    sendDownloadLimitExpire:
+      | 'FAILED'
+      | 'error.platform.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]';
     sendTamperedVc: 'TAMPERED_VC';
     sendTelemetryEvents: 'STORE_RESPONSE';
     sendVcUpdated: 'PIN_CARD';
@@ -233,9 +243,9 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.kebabPopUp.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item.kebabPopUp.updatingPrivateKey:invocation[0]';
     setCredential: 'GET_VC_RESPONSE' | 'STORE_RESPONSE';
-    setDownloadInterval: 'done.invoke.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]';
+    setDownloadInterval: 'done.invoke.vc-item.checkingServerData.loadDownloadLimitConfig:invocation[0]';
     setLock: 'done.invoke.vc-item.requestingLock:invocation[0]';
-    setMaxDownloadCount: 'done.invoke.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]';
+    setMaxDownloadCount: 'done.invoke.vc-item.checkingServerData.loadDownloadLimitConfig:invocation[0]';
     setOtp: 'INPUT_OTP';
     setOtpError:
       | 'error.platform.vc-item.requestingLock:invocation[0]'
@@ -314,12 +324,13 @@ export interface Typegen0 {
     addWalletBindnigId:
       | 'done.invoke.vc-item.addKeyPair:invocation[0]'
       | 'done.invoke.vc-item.kebabPopUp.addKeyPair:invocation[0]';
-    checkDownloadExpiryLimit: 'STORE_RESPONSE';
-    checkStatus:
-      | 'done.invoke.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]'
-      | 'error.platform.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]';
+    checkDownloadExpiryLimit:
+      | 'POLL'
+      | 'done.invoke.vc-item.checkingServerData.loadDownloadLimitConfig:invocation[0]';
+    checkStatus: 'done.invoke.vc-item.checkingServerData.verifyingDownloadLimitExpiry:invocation[0]';
     downloadCredential: 'DOWNLOAD_READY';
     generateKeyPair: 'INPUT_OTP';
+    loadDownloadLimitConfig: 'STORE_RESPONSE';
     requestBindingOtp: 'CONFIRM';
     requestLock: 'INPUT_OTP';
     requestOtp: 'LOCK_VC' | 'RESEND_OTP';
@@ -340,6 +351,7 @@ export interface Typegen0 {
     | 'checkingServerData'
     | 'checkingServerData.checkingStatus'
     | 'checkingServerData.downloadingCredential'
+    | 'checkingServerData.loadDownloadLimitConfig'
     | 'checkingServerData.savingFailed'
     | 'checkingServerData.savingFailed.idle'
     | 'checkingServerData.savingFailed.viewingVc'
@@ -380,6 +392,7 @@ export interface Typegen0 {
         checkingServerData?:
           | 'checkingStatus'
           | 'downloadingCredential'
+          | 'loadDownloadLimitConfig'
           | 'savingFailed'
           | 'verifyingDownloadLimitExpiry'
           | {savingFailed?: 'idle' | 'viewingVc'};
