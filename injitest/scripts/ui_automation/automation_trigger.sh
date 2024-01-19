@@ -122,15 +122,23 @@ start_run_on_device_farm() {
 # mvn clean package -DskipTests=true
 
 #upload the jar and apk
+echo "Before test package upload"
 TEST_PACKAGE_ARN=$(upload_to_device_farm $PROJECT_ARN $TEST_PACKAGE_PATH $TEST_PACKAGE_NAME $TEST_PACKAGE_FILE_TYPE)
+echo "After test package upload"
 
 #upload the app file
+echo "before app upload"
 APP_ARN=$(upload_to_device_farm $PROJECT_ARN $APP_PATH $APP_NAME $APP_TYPE)
+echo "after app upload"
 
 #list device pools and filter by name
+echo "before getting device pool arn"
 DEVICE_POOL_ARN=$(aws devicefarm list-device-pools --arn $PROJECT_ARN --query "devicePools[?name=='$DEVICE_POOL_NAME'].arn" --output text)
+echo "after getting device pool arn"
 
 # Start the run
+echo "before starting the run"
 run_arn=$(start_run_on_device_farm $PROJECT_ARN $APP_ARN $DEVICE_POOL_ARN $TEST_PACKAGE_ARN $TEST_SPEC_ARN $RUN_NAME)
+echo "after starting the run"
 
 echo "::set-output name=run_arn::$run_arn"
