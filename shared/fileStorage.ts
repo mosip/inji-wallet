@@ -27,6 +27,10 @@ class FileStorage {
     return await readFile(path, 'utf8');
   }
 
+  async getAllFilesInDirectory(path: string) {
+    return await readDir(path);
+  }
+
   async writeFile(path: string, data: string) {
     return await writeFile(path, data, 'utf8');
   }
@@ -79,4 +83,16 @@ async function compressFile(fileName: string): Promise<string> {
 
 async function removeFile(fileName: string) {
   await new FileStorage().removeItem(getBackupFilePath(fileName));
+}
+export async function getDirectorySize(path: string) {
+  const directorySize = await new FileStorage()
+    .getAllFilesInDirectory(path)
+    .then((result: ReadDirItem[]) => {
+      let folderEntriesSizeInBytes = 0;
+      result.forEach(fileItem => {
+        folderEntriesSizeInBytes += Number(fileItem.size);
+      });
+      return folderEntriesSizeInBytes;
+    });
+  return directorySize;
 }

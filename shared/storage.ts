@@ -24,6 +24,7 @@ import FileStorage, {
   backupDirectoryPath,
   getBackupFilePath,
   getFilePath,
+  getDirectorySize,
   vcDirectoryPath,
 } from './fileStorage';
 import {__AppId} from './GlobalVariables';
@@ -306,4 +307,14 @@ function removeWalletBindingDataBeforeBackup(data: string) {
   vcData.publicKey = null;
   vcData.privateKey = null;
   return vcData;
+}
+
+export async function isMinimumLimitForBackupReached() {
+  const directorySize = await getDirectorySize(vcDirectoryPath);
+  const freeDiskStorageInBytes =
+    isAndroid() && androidVersion < 29
+      ? getFreeDiskStorageOldSync()
+      : getFreeDiskStorageSync();
+
+  return freeDiskStorageInBytes <= 2 * directorySize;
 }

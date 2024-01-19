@@ -2,7 +2,10 @@ import {EventFrom, StateFrom, send} from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../shared/GlobalContext';
 import {StoreEvents} from './store';
-import Storage, {writeToBackupFile} from '../shared/storage';
+import Storage, {
+  isMinimumLimitForBackupReached,
+  writeToBackupFile,
+} from '../shared/storage';
 import {compressAndRemoveFile} from '../shared/fileStorage';
 import {
   getEndEventData,
@@ -177,9 +180,7 @@ export const backupMachine = model.createMachine(
 
     services: {
       checkStorageAvailability: () => async () => {
-        return Promise.resolve(
-          Storage.isMinimumLimitReached('minStorageRequired'),
-        );
+        return Promise.resolve(isMinimumLimitForBackupReached());
       },
 
       writeDataToFile: context => async callack => {
