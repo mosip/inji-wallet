@@ -5,12 +5,24 @@ import inji.api.BaseTestCase;
 import inji.constants.Target;
 import inji.pages.*;
 import inji.utils.AndroidUtil;
+import inji.utils.IosUtil;
 import inji.utils.TestDataReader;
-import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-import static org.testng.Assert.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+import org.testng.annotations.Test;
+
+import com.google.common.collect.ImmutableMap;
+
 
 public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
     @Test
@@ -264,7 +276,9 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
 
         assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
         assertTrue(otpVerification.verifyOtpVerificationTimerCompleted(), "Verify timer has stop for otp verification");
-        assertTrue(otpVerification.verifyResendCodeButtonDisplayed(), "Verify if resend code is displayed");
+        assertTrue(otpVerification.verifyResendCodeButtonDisplayedEnabled(), "Verify if resend code is enabled");
+        otpVerification.clickOnResendButton();
+        assertTrue(otpVerification.verifyOtpVerificationTimerDisplayedAfterClickOnResend(), "verify is You can resend the code displayed again after click on resend button ");
         
         otpVerification.clickOnCrossIcon();
         assertTrue(otpVerification.confirmPopupHeaderDisplayed(), "Verify if comfirm popup displayed");
@@ -295,8 +309,6 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         AddNewCardPage addNewCardPage = homePage.downloadCard();
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
-        assertTrue(addNewCardPage.isIssuerDescriptionMosipDisplayed(), "Verify if issuer description  mosip displayed");
-        assertTrue(addNewCardPage.isIssuerDescriptionEsignetDisplayed(), "Verify if issuer description  esignet displayed");
         assertTrue(addNewCardPage.isIssuerSearchBarDisplayed(), "Verify if issuer search bar displayed");
         addNewCardPage.sendTextInIssuerSearchBar("uin");
         RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
@@ -409,4 +421,128 @@ public class VcDownloadAndVerifyUsingUinTest extends AndroidBaseTest {
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
     }
     
+    @Test
+    public void DownloadMoreThanThirtyVc() throws InterruptedException  {
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+
+        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+
+        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
+
+        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
+
+        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.ANDROID);
+
+        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.ANDROID);
+
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+        AddNewCardPage addNewCardPage = homePage.downloadCard();
+
+        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
+        assertTrue(addNewCardPage.isIssuerSearchBarDisplayed(), "Verify if issuer search bar displayed");
+        addNewCardPage.sendTextInIssuerSearchBar("");
+        RetrieveIdPage retrieveIdPage = addNewCardPage.clickOnDownloadViaUin();
+
+        assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
+        OtpVerificationPage otpVerification = retrieveIdPage.setEnterIdTextBox(TestDataReader.readData("uin")).clickOnGenerateCardButton();
+
+        assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
+        otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
+
+        assertTrue(homePage.isDownloadingVcPopupDisplayed(),"verify downloading vc popup displayed");
+        assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+       
+        List<String> uinList = new ArrayList<>();
+        // Add phone numbers to the list
+        uinList.add("9459241875");
+        uinList.add("4513975465");
+        uinList.add("2351298205");
+        uinList.add("2174529501");
+        uinList.add("5739185314");
+        uinList.add("9024350138");
+        uinList.add("9758967164");
+        uinList.add("9401791507");
+        uinList.add("2068734675");
+        uinList.add("8793103541");
+        uinList.add("2196045920");
+        uinList.add("9184153163");
+        uinList.add("5423017451");
+        uinList.add("5709439647");
+        uinList.add("4609470319");
+        
+        for (String uin :uinList) {
+                    homePage.downloadCard();
+        addNewCardPage.clickOnDownloadViaUin();
+          
+        assertTrue(retrieveIdPage.isRetrieveIdPageLoaded(), "Verify if retrieve id page is displayed");
+        retrieveIdPage.setEnterIdTextBox(uin).clickOnGenerateCardButton();
+
+        assertTrue(otpVerification.isOtpVerificationPageLoaded(), "Verify if otp verification page is displayed");
+        otpVerification.enterOtp(BaseTestCase.getOtp(), Target.ANDROID);
+
+        assertTrue(homePage.isDownloadingVcPopupDisplayed(),"verify downloading vc popup displayed");
+        assertTrue(homePage.isSecondNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
+        
+            }
+        Collections.reverse(uinList);
+       // HomePage homePage= new HomePage(driver);
+        HistoryPage historyPage = homePage.clickOnHistoryButton();
+
+        assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
+     //   assertTrue(historyPage.verifyHistory(BaseTestCase.uin, Target.ANDROID));
+       for(String uin: uinList) {
+    	   WebElement ele= driver.findElement(By.xpath("//*[contains(@text,'" +uin+ " downloaded')]"));
+    	   boolean temp=false;
+    	   try {temp =ele.isDisplayed();
+    	   }
+    	   catch(Exception e){
+    		   temp=false;
+    	   }
+    			   
+    	   if(temp) {
+    		   continue;
+    		   
+    	   }
+    	   else {
+    		   Dimension size = driver.manage().window().getSize();
+    			int startX = size.width / 2;
+    		    int startY = (int) (size.height * 0.8);  // 80% from the bottom
+    		    int endY = (int) (size.height * 0.2);
+    			IosUtil.scrollToElement(driver,startX,startY,startX,endY);
+    			assertTrue(ele.isDisplayed(), "Verify if uin is displayed" + uin);
+    	   }
+    	   
+       }
+        
+       
+        
+     //   homePage.scrollIntoViewByTextAndClick(ele);
+       // assertEquals(historyPage.verifyHistory(TestDataReader.readData("uin"),Target.ANDROID),14);
+        
+        
+    }
+    
+        
+//@Test
+//public void DownloadMoreThanThirt() throws InterruptedException  {
+//	 HistoryPage historyPage = new HistoryPage(driver);
+//	 
+//	
+//	assertTrue(historyPage.isHistoryPageLoaded(), "Verify if history page is displayed");
+//	// WebElement ele= driver.findElement(By.xpath("//*[contains(@text,'" + "9685190798 downloaded')]"));
+//	Dimension size = driver.manage().window().getSize();
+//	int startX = size.width / 2;
+//    int startY = (int) (size.height * 0.8);  // 80% from the bottom
+//    int endY = (int) (size.height * 0.2);
+//	IosUtil.scrollToElement(driver,startX,startY,startX,endY);
+//	HomePage homePage= new HomePage(driver);
+//	 homePage.scrollIntoViewByTextAndClick();
+//
+//}
+
 }

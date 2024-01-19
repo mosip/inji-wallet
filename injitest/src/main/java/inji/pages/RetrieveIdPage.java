@@ -10,7 +10,7 @@ import org.openqa.selenium.WebElement;
 
 
 public class RetrieveIdPage extends BasePage {
-	@AndroidFindBy(accessibility = "retreiveIdHeader")
+	@AndroidFindBy(accessibility = "retrieveIdHeader")
 	@iOSXCUITFindBy(accessibility = "retreiveIdHeader")
 	private WebElement retrieveIdText;
 
@@ -83,9 +83,9 @@ public class RetrieveIdPage extends BasePage {
 
 		switch (os) {
 		case ANDROID:
+			clickOnElement(spinnerButton);
 			for (int i = 0; i < maxRetries; i++) {
 				try {
-					clickOnElement(spinnerButton); 
 					clickOnElement(vidDropDownValueAndroid);
 					return this; 
 				} catch (StaleElementReferenceException e) {

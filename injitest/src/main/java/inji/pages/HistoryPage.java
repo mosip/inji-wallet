@@ -5,7 +5,10 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+
+import com.google.common.collect.ImmutableMap;
 
 import java.util.List;
 
@@ -80,6 +83,24 @@ public class HistoryPage extends BasePage {
         }
         return false;
     }
+    
+
+    
+    public  int countOccurrences(String text, String searchText) {
+    	int count = 0;
+        int index = 0;
+        
+        
+
+        while ((index = text.indexOf(searchText, index)) != -1) {
+            count++;
+            index += searchText.length(); // Move to the next possible occurrence
+            
+        }
+
+        return count;
+    }
+
 
     public boolean verifyActivityLogHeader(String vcNumber, Target os) {
         switch (os) {

@@ -4,7 +4,11 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebElement;
+
+import com.google.common.collect.ImmutableMap;
 
 public class HomePage extends BasePage {
     @AndroidFindBy(accessibility = "plusIcon")
@@ -55,9 +59,9 @@ public class HomePage extends BasePage {
     @iOSXCUITFindBy(accessibility = "errorTitle")
     private WebElement noInternetConnection;
 
-    @AndroidFindBy(accessibility = "scan")
-    @iOSXCUITFindBy(accessibility = "scan")
-    private WebElement scanButton;
+    @AndroidFindBy(accessibility = "share")
+    @iOSXCUITFindBy(accessibility = "share")
+    private WebElement shareButton;
 
     @AndroidFindBy(accessibility = "nationalCard")
     @iOSXCUITFindBy(accessibility = "nationalCard")
@@ -137,20 +141,6 @@ public class HomePage extends BasePage {
     
     public String  verifyLanguageForNoVCDownloadedPageLoaded(){
     	return getTextFromLocator(bringYourDigitalIdentity); 
-
-//    	switch (language) {
-//    	case "English":
-//    		boolean isEnglishMatch  = (actualText.equalsIgnoreCase("Bring your digital identity")==true) ? true : false;
-//    		return isEnglishMatch ;
-//    	case "Hindi":
-//    		boolean isHindiMatch  = (actualText.equalsIgnoreCase("अपनी डिजिटल आईडी लाओ")==true) ? true : false;
-//    		return isHindiMatch ;
-//    	case "Filipino":
-//    		boolean isFilipinoMatch  = (actualText.equalsIgnoreCase("Dalhin ang Iyong Digital ID")==true) ? true : false;
-//    		return isFilipinoMatch ;
-//
-//    	}
-//    	return false;
     }
 
     public boolean  verifyLanguageForNoInternetConnectionDisplayed(String language){
@@ -171,9 +161,9 @@ public class HomePage extends BasePage {
     	return false;
     }
 
-    public ScanPage clickOnScanButton() {
-        clickOnElement(scanButton);
-        return new ScanPage(driver);
+    public SharePage clickOnShareButton() {
+        clickOnElement(shareButton);
+        return new SharePage(driver);
     }
 
     public boolean isIdTypeDisplayed() {

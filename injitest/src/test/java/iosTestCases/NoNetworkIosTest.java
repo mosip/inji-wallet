@@ -84,7 +84,7 @@ public class NoNetworkIosTest extends IosBaseTest {
         assertTrue(homePage.isNameDisplayed(TestDataReader.readData("fullName")), "Verify if full name is displayed");
 
         AndroidUtil.enableAirplaneMode();
-        assertTrue(homePage.clickOnScanButton().acceptPermissionPopupBluetooth().isCameraOpen());
+        assertTrue(homePage.clickOnShareButton().acceptPermissionPopupBluetooth().isCameraOpen());
         AndroidUtil.disableAirplaneMode();
     }
     @Test
@@ -349,5 +349,40 @@ public class NoNetworkIosTest extends IosBaseTest {
         
         homePage.clickOnTryAgainButton();
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");        
+    }
+    
+    @Test
+    public void verifyVcIssuerListWithoutNetwork() throws InterruptedException {
+        ChooseLanguagePage chooseLanguagePage = new ChooseLanguagePage(driver);
+
+        assertTrue(chooseLanguagePage.isChooseLanguagePageLoaded(), "Verify if choose language page is displayed");
+        WelcomePage welcomePage = chooseLanguagePage.clickOnSavePreference();
+
+        assertTrue(welcomePage.isWelcomePageLoaded(), "Verify if welcome page is loaded");
+        AppUnlockMethodPage appUnlockMethodPage = welcomePage.clickOnSkipButton();
+
+        assertTrue(appUnlockMethodPage.isAppUnlockMethodPageLoaded(), "Verify if app unlocked page is displayed");
+        SetPasscode setPasscode = appUnlockMethodPage.clickOnUsePasscode();
+
+        assertTrue(setPasscode.isSetPassCodePageLoaded(), "Verify if set passcode page is displayed");
+        ConfirmPasscode confirmPasscode = setPasscode.enterPasscode(TestDataReader.readData("passcode"), Target.IOS);
+
+        assertTrue(confirmPasscode.isConfirmPassCodePageLoaded(), "Verify if confirm passcode page is displayed");
+        HomePage homePage = confirmPasscode.enterPasscodeInConfirmPasscodePage(TestDataReader.readData("passcode"), Target.IOS);
+
+        assertTrue(homePage.isHomePageLoaded(), "Verify if home page is displayed");
+
+        AddNewCardPage addNewCardPage = homePage.downloadCard();
+
+        assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
+        AndroidUtil.enableAirplaneMode();
+        addNewCardPage.clickOnBack();
+        
+        homePage.downloadCard();
+        assertTrue(addNewCardPage.isIssuerDescriptionMosipDisplayed(), "Verify if issuer description  mosip displayed");
+        assertTrue(addNewCardPage.isIssuerDescriptionEsignetDisplayed(), "Verify if issuer description  esignet displayed");
+        
+        AndroidUtil.disableAirplaneMode();
+
     }
 }
