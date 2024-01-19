@@ -141,6 +141,7 @@ echo "after getting device pool arn"
 
 # Start the run
 echo "before starting the run"
+sleep 100
 run_arn=$(start_run_on_device_farm $PROJECT_ARN $APP_UPLOAD_ARN $DEVICE_POOL_ARN $TEST_PACKAGE_ARN $TEST_SPEC_ARN $RUN_NAME)
 echo "after starting the run"
 
