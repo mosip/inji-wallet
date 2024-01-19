@@ -8,11 +8,11 @@ import org.openqa.selenium.WebElement;
 public class HassleFreeAuthenticationPage extends BasePage {
 
     @AndroidFindBy(accessibility = "introTitle")
-    @iOSXCUITFindBy(iOSNsPredicate = "label == \"Hassle free authentication\"")
+    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText[@name=\"introTitle\"])[4]")
     private WebElement hassleFreeAuthenticationText;
 
     @AndroidFindBy(accessibility = "introText")
-    @iOSXCUITFindBy(xpath = "//*[contains(@value,'Authenticate yourself')]")
+    @iOSXCUITFindBy(xpath = "(//XCUIElementTypeStaticText[@name=\"introText\"])[4]")
     private WebElement hassleFreeAuthenticationDescription;
 
     @AndroidFindBy(accessibility = "getStarted")

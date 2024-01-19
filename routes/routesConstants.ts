@@ -2,7 +2,7 @@ import {MainBottomTabParamList} from './main';
 
 export const BOTTOM_TAB_ROUTES = {
   home: 'home' as keyof MainBottomTabParamList,
-  scan: 'scan' as keyof MainBottomTabParamList,
+  share: 'share' as keyof MainBottomTabParamList,
   history: 'history' as keyof MainBottomTabParamList,
 };
 
