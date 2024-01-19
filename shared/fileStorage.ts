@@ -6,6 +6,8 @@ import {
   stat,
   unlink,
   writeFile,
+  readDir,
+  ReadDirItem,
 } from 'react-native-fs';
 
 interface CacheData {
@@ -17,6 +19,7 @@ interface Cache {
   [key: string]: CacheData;
 }
 
+import * as RNZipArchive from 'react-native-zip-archive';
 class FileStorage {
   cache: Cache = {};
 
@@ -57,10 +60,23 @@ export const getFilePath = (key: string) => {
 };
 
 export const getBackupFilePath = (key: string) => {
-  return `${backupFilePath}/${key}.injibackup`;
+  return `${backupDirectoryPath}/${key}.injibackup`;
 };
 
 export const vcDirectoryPath = `${DocumentDirectoryPath}/inji/VC`;
-export const backupFilePath = `${DocumentDirectoryPath}/inji/backup`;
+export const backupDirectoryPath = `${DocumentDirectoryPath}/inji/backup`;
 export const zipFilePath = (filename: string) =>
   `${DocumentDirectoryPath}/inji/backup/${filename}.zip`;
+
+export async function compressAndRemoveFile(fileName: string): Promise<string> {
+  const result = await compressFile(fileName);
+  await removeFile(fileName);
+  return result;
+}
+async function compressFile(fileName: string): Promise<string> {
+  return await RNZipArchive.zip(backupDirectoryPath, zipFilePath(fileName));
+}
+
+async function removeFile(fileName: string) {
+  await new FileStorage().removeItem(getBackupFilePath(fileName));
+}

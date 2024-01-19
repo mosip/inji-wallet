@@ -2,8 +2,8 @@ import {EventFrom, StateFrom, send} from 'xstate';
 import {createModel} from 'xstate/lib/model';
 import {AppServices} from '../shared/GlobalContext';
 import {StoreEvents} from './store';
-import Storage from '../shared/storage';
-import {compressData} from '../shared/cryptoutil/cryptoUtil';
+import Storage, {writeToBackupFile} from '../shared/storage';
+import {compressAndRemoveFile} from '../shared/fileStorage';
 import {
   getEndEventData,
   getImpressionEventData,
@@ -183,14 +183,12 @@ export const backupMachine = model.createMachine(
       },
 
       writeDataToFile: context => async callack => {
-        const fileName = await Storage.writeToBackupFile(
-          context.dataFromStorage,
-        );
+        const fileName = await writeToBackupFile(context.dataFromStorage);
         callack(model.events.FILE_NAME(fileName));
       },
 
-      zipBackupFile: context => async callback => {
-        const result = await compressData(context.fileName);
+      zipBackupFile: context => async () => {
+        const result = await compressAndRemoveFile(context.fileName);
         return result;
       },
     },

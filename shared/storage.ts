@@ -6,7 +6,6 @@ import {
 } from 'react-native-device-info';
 import SecureKeystore from '@mosip/secure-keystore';
 import {
-  compressData,
   decryptJson,
   encryptJson,
   HMAC_ALIAS,
@@ -22,19 +21,13 @@ import {
   SETTINGS_STORE_KEY,
 } from './constants';
 import FileStorage, {
-  backupFilePath,
+  backupDirectoryPath,
   getBackupFilePath,
   getFilePath,
-  getFilePathOfEncryptedHmac,
   vcDirectoryPath,
 } from './fileStorage';
 import {__AppId} from './GlobalVariables';
-import {
-  getErrorEventData,
-  getImpressionEventData,
-  sendErrorEvent,
-  sendImpressionEvent,
-} from './telemetry/TelemetryUtils';
+import {getErrorEventData, sendErrorEvent} from './telemetry/TelemetryUtils';
 import {TelemetryConstants} from './telemetry/TelemetryConstants';
 import {getBackupFileName} from './commonUtil';
 
@@ -59,19 +52,7 @@ async function generateHmac(
 }
 
 class Storage {
-  static async writeToBackupFile(data): Promise<string> {
-    const fileName = getBackupFileName();
-    const isDirectoryExists = await FileStorage.exists(backupFilePath);
-    if (isDirectoryExists) {
-      await FileStorage.removeItem(backupFilePath);
-    }
-    await FileStorage.createDirectory(backupFilePath);
-    const path = getBackupFilePath(fileName);
-    await FileStorage.writeFile(path, JSON.stringify(data));
-    return fileName;
-  }
-
-  static async exportData(encryptionKey: string) {
+  static exportData = async (encryptionKey: string) => {
     const completeBackupData = {};
     const dataFromDB: Record<string, any> = {};
 
@@ -103,19 +84,12 @@ class Storage {
       const key = vcKeys[ind];
       const vc = await Storage.readVCFromFile(key);
       const decryptedVCData = await decryptJson(encryptionKey, vc);
-      const deactivatedVC = this.deactivateVC(decryptedVCData);
+      const deactivatedVC =
+        removeWalletBindingDataBeforeBackup(decryptedVCData);
       completeBackupData['VC_Records'][key] = deactivatedVC;
     }
     return completeBackupData;
-  }
-
-  static deactivateVC(data: string) {
-    const vcData = JSON.parse(data);
-    vcData.walletBindingResponse = null;
-    vcData.publicKey = null;
-    vcData.privateKey = null;
-    return vcData;
-  }
+  };
 
   static isVCStorageInitialised = async (): Promise<boolean> => {
     try {
@@ -313,3 +287,23 @@ class Storage {
 }
 
 export default Storage;
+
+export async function writeToBackupFile(data): Promise<string> {
+  const fileName = getBackupFileName();
+  const isDirectoryExists = await FileStorage.exists(backupDirectoryPath);
+  if (isDirectoryExists) {
+    await FileStorage.removeItem(backupDirectoryPath);
+  }
+  await FileStorage.createDirectory(backupDirectoryPath);
+  const path = getBackupFilePath(fileName);
+  await FileStorage.writeFile(path, JSON.stringify(data));
+  return fileName;
+}
+
+function removeWalletBindingDataBeforeBackup(data: string) {
+  const vcData = JSON.parse(data);
+  vcData.walletBindingResponse = null;
+  vcData.publicKey = null;
+  vcData.privateKey = null;
+  return vcData;
+}

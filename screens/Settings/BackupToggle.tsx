@@ -12,7 +12,6 @@ export const BackupToggle: React.FC<BackupToggleProps> = props => {
 
   const controller = useBackupScreen(props);
 
-  // TODO : Check if the setup is already done
   const toggleSwitch = () => {
     setDataBackup(!dataBackup);
     if (!dataBackup) {

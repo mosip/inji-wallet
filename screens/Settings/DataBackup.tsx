@@ -40,23 +40,6 @@ export const DataBackup: React.FC = ({} = props => {
           onDismiss={() => controller.DISMISS()}
         />
       )}
-
-      {/* TODO: refactor OtpVerificationModal to accept different machines */}
-      {/*       {controller.isRequestOtp && (
-        <OtpVerificationModal
-          service={backupMachine}
-          onInputDone={controller.INPUT_OTP}
-          isVisible={controller.isRequestOtp}
-        />
-      )} */}
-
-      {/* TODO: move the MessageOverlay to the OtpVerificationModal and BackupViaPassord screen once the backing up is started */}
-      {/* {controller.isBackingUp && (
-        <MessageOverlay
-          isVisible={controller.isBackingUp}
-          title={'Backing up'}
-        />
-      )} */}
     </React.Fragment>
   );
 });
