@@ -1,75 +1,76 @@
-#!/bin/sh
+#!/bin/bash -e
 
-#get from params
+# Get input parameters
 PLATFORM=$1
 RUN_NAME=$2
 TEST_TYPE=$3
 
-echo "$PLATFORM"
-echo "$RUN_NAME"
-echo "$TEST_TYPE"
-
-echo "<><><>Inside Script<><><>"
-
-#can be here
+# Constants
 PROJECT_ARN="arn:aws:devicefarm:us-west-2:931337674770:project:b356580b-c561-4fd2-bfdf-8993aebafc5a"
 TEST_PACKAGE_FILE_TYPE="APPIUM_JAVA_TESTNG_TEST_PACKAGE"
 
-echo "<><><>ARN SET<><><>"
-
-#will be added later in script
+# Variables to be set later
 APP_UPLOAD_ARN=""
 DEVICE_POOL_ARN=""
 TEST_PACKAGE_ARN=""
 
-#to get absolute path
-PROJECT_PATH=$(pwd)
+# Function to set paths and configurations based on platform
+configure_platform() {
+    local platform=$1
+    local project_path=$(pwd)
 
-#configure based on platform
-    if [ "$PLATFORM" = "Android" ]; then
-        echo "<><><>ANDROID IFFFF<><><>"
+    # Set default values
+    DEVICE_POOL_NAME=""
+    APP_NAME=""
+    APP_TYPE=""
+    TEST_PACKAGE_NAME=""
+    TEST_SPEC_ARN=""
+    TEST_PACKAGE_PATH=""
+    APP_PATH=""
 
-        original_dir=$(pwd)
+    # Get the absolute package path
+    cd "$project_path/../../target"
+    local package_path=$(pwd)
+    TEST_PACKAGE_PATH="$package_path/zip-with-dependencies.zip"
+    cd "$project_path"
 
+    # Configure based on platform
+    if [ "$platform" = "Android" ]; then
+
+        # Android configuration
         DEVICE_POOL_NAME="ANDROID DEVICE POOL"
-
-        cd $PROJECT_PATH/../../target
-        package_path=$(pwd)
-        TEST_PACKAGE_PATH="$package_path/zip-with-dependencies.zip"
-        cd $original_dir
-        echo "$TEST_PACKAGE_PATH"
-
+        APP_NAME="Inji_universal.apk"
+        APP_TYPE="ANDROID_APP"
         TEST_PACKAGE_NAME="Android-Test"
         TEST_SPEC_ARN="arn:aws:devicefarm:us-west-2::upload:100e31e8-12ac-11e9-ab14-d663b5a4a910"
 
-        cd $PROJECT_PATH/../../../android/app/build/outputs/apk/residentapp/release
-        new_PATH=$(pwd)
-        echo "$new_PATH"
-        APP_PATH="$new_PATH/Inji_universal.apk"
-        cd $original_dir
-
-        echo "$APP_PATH"
-
-        APP_NAME="Inji_universal.apk"
-        APP_TYPE="ANDROID_APP"
-
-        echo "<><><>ANDROID IFFFF ENDDDDDDD<><><>"
-
+        cd "$project_path/../../../android/app/build/outputs/apk/residentapp/release"
+        local app_path=$(pwd)
+        APP_PATH="$app_path/Inji_universal.apk"
+        cd "$project_path"
     else
+
+        # iOS configuration
         DEVICE_POOL_NAME="IOS DEVICE POOL"
-        TEST_PACKAGE_PATH="$PROJECT_PATH/../../target/zip-with-dependencies.zip"
+        APP_NAME="Inji.ipa"
+        APP_TYPE="IOS_APP"
         TEST_PACKAGE_NAME="IOS-Test"
         TEST_SPEC_ARN="arn:aws:devicefarm:us-west-2::upload:100e31e8-12ac-11e9-ab14-d663bd873c82"
 
-        APP_PATH="$PROJECT_PATH/../../../ios/fastlane/Inji_artifacts/Inji.ipa"
-        APP_NAME="Inji.ipa"
-        APP_TYPE="IOS_APP"
+        cd "$project_path/../../../ios"
+        local app_path=$(pwd)
+        APP_PATH="$app_path/Inji.ipa"
+        cd "$project_path"
     fi
+}
 
-#update xml based on platform
+# Update XML based on platform
 update_xml_configuration() {
+
+    #Go to file path
     cd ../../src/main/resources
     
+    #Update the testng file
     if [ "$PLATFORM" = 'Android' ]; then
         if [ "$TEST_TYPE" = 'sanity' ]; then
             cat androidSanity.txt > testng.xml
@@ -84,6 +85,7 @@ update_xml_configuration() {
         fi
     fi
 
+    #Move back to original path
     cd ../../../
 }
 
@@ -94,10 +96,14 @@ upload_to_device_farm() {
     local file_name=$3
     local file_type=$4
 
+    #Get upload URL Link
     response=$(aws devicefarm create-upload --project-arn "$project_arn" --name "$file_name" --type "$file_type" --query 'upload.{url: url, arn: arn}' --output json)
     upload_url=$(echo "$response" | jq -r '.url')
 
+    #Upload the file to the link
     curl -T $file_path "$upload_url"
+
+    #Return the upload arn
     echo "$response" | jq -r '.arn'
 }
 
@@ -110,8 +116,10 @@ start_run_on_device_farm() {
     local test_spec_arn=$5
     local run_name=$6
 
+    #Start the run
     run_arn=$(aws devicefarm schedule-run --project-arn "$project_arn" --app-arn "$app_arn" --device-pool-arn "$device_pool_arn" --name "$run_name" --test testSpecArn=$test_spec_arn,type=APPIUM_JAVA_TESTNG,testPackageArn="$test_package_arn" --query run.arn --output text)
 
+    #Return the run arn
     echo "$run_arn"
 }
 
@@ -121,28 +129,27 @@ start_run_on_device_farm() {
 # # #build the test jar
 # mvn clean package -DskipTests=true
 
+# Configure defaults based on platform
+configure_platform "$PLATFORM"
+
 #upload the jar and apk
-echo "Before test package upload"
 TEST_PACKAGE_ARN=$(upload_to_device_farm $PROJECT_ARN $TEST_PACKAGE_PATH $TEST_PACKAGE_NAME $TEST_PACKAGE_FILE_TYPE)
 echo "Test arn is ------ $TEST_PACKAGE_ARN"
-echo "After test package upload"
 
 #upload the app file
-echo "before app upload"
 APP_UPLOAD_ARN=$(upload_to_device_farm $PROJECT_ARN $APP_PATH $APP_NAME $APP_TYPE)
 echo "App arn is ------ $APP_UPLOAD_ARN"
-echo "after app upload"
 
 #list device pools and filter by name
-echo "before getting device pool arn"
 DEVICE_POOL_ARN=$(aws devicefarm list-device-pools --arn $PROJECT_ARN --query "devicePools[?name=='$DEVICE_POOL_NAME'].arn" --output text)
 echo "Device pool arn is ------ $DEVICE_POOL_ARN"
-echo "after getting device pool arn"
 
-# Start the run
-echo "before starting the run"
+# Wait for app upload to complete to start the run
 sleep 100
-run_arn=$(start_run_on_device_farm $PROJECT_ARN $APP_UPLOAD_ARN $DEVICE_POOL_ARN $TEST_PACKAGE_ARN $TEST_SPEC_ARN $RUN_NAME)
-echo "after starting the run"
 
-echo "::set-output name=run_arn::$run_arn"
+#Start the run
+RUN_ARN=$(start_run_on_device_farm $PROJECT_ARN $APP_UPLOAD_ARN $DEVICE_POOL_ARN $TEST_PACKAGE_ARN $TEST_SPEC_ARN $RUN_NAME)
+echo "Run ARN is ------- $RUN_ARN"
+echo "Run Started Successfully!"
+
+echo "::set-output name=run_arn::$RUN_ARN"

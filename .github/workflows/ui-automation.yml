@@ -86,7 +86,7 @@ jobs:
         id: android-run
         run: |
           cd injitest/scripts/ui_automation
-          ./automation_trigger.sh "Android" "$RUN_NAME" "$TEST_TYPE"
+          ./automation_trigger.sh "Android" "$RUN_NAME-Android" "$TEST_TYPE"
         env:
           RUN_NAME: ${{ github.event.inputs.runName }}
           TEST_TYPE: ${{ github.event.inputs.testType }}
@@ -144,6 +144,9 @@ jobs:
           INJI_IOS_TEMP_KEYCHAIN_PASSWORD: '${{ secrets.INJI_IOS_TEMP_KEYCHAIN_PASSWORD }}'
           INJI_IOS_TEMP_KEYCHAIN_USER: '${{ secrets.INJI_IOS_TEMP_KEYCHAIN_USER }}'
           GIT_AUTHORIZATION: '${{ secrets.GIT_AUTHORIZATION }}'
+          APPLE_KEY_ID: '${{ secrets.APPLE_KEY_ID }}'
+          APPLE_ISSUER_ID: '${{ secrets.APPLE_ISSUER_ID }}'
+          APPLE_KEY_CONTENT: '${{ secrets.APPLE_KEY_CONTENT }}'
 
       - name: Configure AWS CLI 
         run: |
@@ -154,24 +157,10 @@ jobs:
       - name: IOS - Automation
         run: |
           cd injitest/scripts/ui_automation
-          RUN_ARN=$(./automation_trigger.sh "IOS" "$RUN_NAME" "$TEST_TYPE")
-          echo "The Run ARN is $RUN_ARN"
+          ./automation_trigger.sh "IOS" "$RUN_NAME-IOS" "$TEST_TYPE"
         env:
           RUN_NAME: ${{ github.event.inputs.runName }}
           TEST_TYPE: ${{ github.event.inputs.testType }}
-      
-      # - name: Artifacts download
-      #   id: artifact-download
-      #   run: |
-      #     cd injitest/scripts/ui_automation
-      #     ./download_artifacts.sh "${{ steps.android-run.outputs.run_arn }}" "Android"
-
-      # - name: Upload Artifact to Actions
-      #   uses: actions/upload-artifact@v3.1.1
-      #   with:
-      #     name: Automation Artifacts
-      #     path: injitest/scripts/ui_automation/artifacts/
-      #     retention-days: 5
       
       # - name: Update slack channel
       #   if: always()
