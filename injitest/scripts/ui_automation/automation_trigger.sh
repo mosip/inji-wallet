@@ -18,7 +18,7 @@ TEST_PACKAGE_FILE_TYPE="APPIUM_JAVA_TESTNG_TEST_PACKAGE"
 echo "<><><>ARN SET<><><>"
 
 #will be added later in script
-APP_ARN=""
+APP_UPLOAD_ARN=""
 DEVICE_POOL_ARN=""
 TEST_PACKAGE_ARN=""
 
@@ -124,21 +124,24 @@ start_run_on_device_farm() {
 #upload the jar and apk
 echo "Before test package upload"
 TEST_PACKAGE_ARN=$(upload_to_device_farm $PROJECT_ARN $TEST_PACKAGE_PATH $TEST_PACKAGE_NAME $TEST_PACKAGE_FILE_TYPE)
+echo "Test arn is ------ $TEST_PACKAGE_ARN"
 echo "After test package upload"
 
 #upload the app file
 echo "before app upload"
-APP_ARN=$(upload_to_device_farm $PROJECT_ARN $APP_PATH $APP_NAME $APP_TYPE)
+APP_UPLOAD_ARN=$(upload_to_device_farm $PROJECT_ARN $APP_PATH $APP_NAME $APP_TYPE)
+echo "App arn is ------ $APP_UPLOAD_ARN"
 echo "after app upload"
 
 #list device pools and filter by name
 echo "before getting device pool arn"
 DEVICE_POOL_ARN=$(aws devicefarm list-device-pools --arn $PROJECT_ARN --query "devicePools[?name=='$DEVICE_POOL_NAME'].arn" --output text)
+echo "Device pool arn is ------ $DEVICE_POOL_ARN"
 echo "after getting device pool arn"
 
 # Start the run
 echo "before starting the run"
-run_arn=$(start_run_on_device_farm $PROJECT_ARN $APP_ARN $DEVICE_POOL_ARN $TEST_PACKAGE_ARN $TEST_SPEC_ARN $RUN_NAME)
+run_arn=$(start_run_on_device_farm $PROJECT_ARN $APP_UPLOAD_ARN $DEVICE_POOL_ARN $TEST_PACKAGE_ARN $TEST_SPEC_ARN $RUN_NAME)
 echo "after starting the run"
 
 echo "::set-output name=run_arn::$run_arn"
