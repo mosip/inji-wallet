@@ -97,10 +97,6 @@ platform :ios do
     keychain_password = TEMP_KEYCHAIN_PASSWORD
     ensure_temp_keychain(keychain_name, keychain_password)
 
-    # folder to copy artifacts to upload to aws device farm
-    output_directory = "./Inji_artifact"
-    sh("mkdir -p '#{output_directory}'")
-
     match(
       type: 'appstore',
       app_identifier: "#{generate_app_bundle_id}",
@@ -125,9 +121,6 @@ platform :ios do
         }
       }
     )
-
-    # copy IPA to the folder
-    sh("cp -R '../#{generate_app_name}.ipa' '#{output_directory}'")
 
     delete_temp_keychain(keychain_name)
   
