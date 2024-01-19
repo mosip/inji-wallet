@@ -347,8 +347,6 @@ PODS:
   - React-jsinspector (0.71.8)
   - React-logger (0.71.8):
     - glog
-  - react-native-aes (2.1.2):
-    - React-Core
   - react-native-app-auth (7.0.0):
     - AppAuth (~> 1.6)
     - React-Core
@@ -561,7 +559,6 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
-  - react-native-aes (from `../node_modules/react-native-aes-crypto`)
   - react-native-app-auth (from `../node_modules/react-native-app-auth`)
   - react-native-location (from `../node_modules/react-native-location`)
   - react-native-mmkv-storage (from `../node_modules/react-native-mmkv-storage`)
@@ -711,8 +708,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
-  react-native-aes:
-    :path: "../node_modules/react-native-aes-crypto"
   react-native-app-auth:
     :path: "../node_modules/react-native-app-auth"
   react-native-location:
@@ -849,7 +844,6 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 747911ab5921641b4ed7e4900065896597142125
   React-jsinspector: c712f9e3bb9ba4122d6b82b4f906448b8a281580
   React-logger: 342f358b8decfbf8f272367f4eacf4b6154061be
-  react-native-aes: b580a7919ae1ba5a1b457e7e4914a87eb01de6f4
   react-native-app-auth: 1d12b6874a24152715a381d8e9149398ce7c2c95
   react-native-location: 5a40ec1cc6abf2f6d94df979f98ec76c3a415681
   react-native-mmkv-storage: cfb6854594cfdc5f7383a9e464bb025417d1721c
