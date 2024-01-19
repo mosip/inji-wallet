@@ -59,6 +59,12 @@ export default new FileStorage();
  * android: /data/user/0/io.mosip.residentapp/files/inji/VC/<filename>
  * These paths are coming from DocumentDirectoryPath in react-native-fs.
  */
+
+export const vcDirectoryPath = `${DocumentDirectoryPath}/inji/VC`;
+export const backupDirectoryPath = `${DocumentDirectoryPath}/inji/backup`;
+export const zipFilePath = (filename: string) =>
+  `${DocumentDirectoryPath}/inji/backup/${filename}.zip`;
+
 export const getFilePath = (key: string) => {
   return `${vcDirectoryPath}/${key}.txt`;
 };
@@ -66,11 +72,6 @@ export const getFilePath = (key: string) => {
 export const getBackupFilePath = (key: string) => {
   return `${backupDirectoryPath}/${key}.injibackup`;
 };
-
-export const vcDirectoryPath = `${DocumentDirectoryPath}/inji/VC`;
-export const backupDirectoryPath = `${DocumentDirectoryPath}/inji/backup`;
-export const zipFilePath = (filename: string) =>
-  `${DocumentDirectoryPath}/inji/backup/${filename}.zip`;
 
 export async function compressAndRemoveFile(fileName: string): Promise<string> {
   const result = await compressFile(fileName);
