@@ -42,7 +42,7 @@ PROJECT_PATH=$(pwd)
         TEST_PACKAGE_NAME="Android-Test"
         TEST_SPEC_ARN="arn:aws:devicefarm:us-west-2::upload:100e31e8-12ac-11e9-ab14-d663b5a4a910"
 
-        cd $PROJECT_PATH/../../../android/app/build/outputs/apk/inji/release/
+        cd $PROJECT_PATH/../../../android/app/build/outputs/apk/residentapp/release
         new_PATH=$(pwd)
         echo "$new_PATH"
         APP_PATH="$new_PATH/Inji_universal.apk"
