@@ -144,6 +144,9 @@ jobs:
           INJI_IOS_TEMP_KEYCHAIN_PASSWORD: '${{ secrets.INJI_IOS_TEMP_KEYCHAIN_PASSWORD }}'
           INJI_IOS_TEMP_KEYCHAIN_USER: '${{ secrets.INJI_IOS_TEMP_KEYCHAIN_USER }}'
           GIT_AUTHORIZATION: '${{ secrets.GIT_AUTHORIZATION }}'
+          APPLE_KEY_ID: '${{ secrets.APPLE_KEY_ID }}'
+          APPLE_ISSUER_ID: '${{ secrets.APPLE_ISSUER_ID }}'
+          APPLE_KEY_CONTENT: '${{ secrets.APPLE_KEY_CONTENT }}'
 
       - name: Configure AWS CLI 
         run: |
