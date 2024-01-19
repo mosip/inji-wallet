@@ -728,13 +728,6 @@ export const ExistingMosipVCItemMachine =
                   'sendWalletBindingSuccess',
                   'logWalletBindingSuccess',
                   'sendActivationSuccessEvent',
-                  () =>
-                    sendEndEvent(
-                      getEndEventData(
-                        TelemetryConstants.FlowType.vcActivation,
-                        TelemetryConstants.EndEventStatus.success,
-                      ),
-                    ),
                 ],
                 target: '#vc-item.kebabPopUp',
               },
@@ -749,13 +742,6 @@ export const ExistingMosipVCItemMachine =
                   'setWalletBindingSuccess',
                   'sendActivationSuccessEvent',
                   'logWalletBindingSuccess',
-                  () =>
-                    sendEndEvent(
-                      getEndEventData(
-                        TelemetryConstants.FlowType.vcActivation,
-                        TelemetryConstants.EndEventStatus.success,
-                      ),
-                    ),
                 ],
                 target: 'idle',
               },
