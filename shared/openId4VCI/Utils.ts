@@ -53,7 +53,9 @@ export const getBody = async context => {
     format: 'ldp_vc',
     credential_definition: {
       '@context': ['https://www.w3.org/2018/credentials/v1'],
-      type: ['VerifiableCredential', 'MOSIPVerifiableCredential'],
+      type: context.selectedIssuer?.credential_type
+        ? context.selectedIssuer.credential_type
+        : ['VerifiableCredential', 'MOSIPVerifiableCredential'],
     },
     proof: {
       proof_type: 'jwt',
@@ -107,7 +109,6 @@ export const constructAuthorizationConfiguration = (
     clientId: selectedIssuer.client_id,
     scopes: selectedIssuer.scopes_supported,
     additionalHeaders: selectedIssuer.additional_headers,
-    wellKnownEndpoint: selectedIssuer['.well-known'],
     redirectUrl: selectedIssuer.redirect_uri,
     serviceConfiguration: {
       authorizationEndpoint: selectedIssuer.authorization_endpoint,

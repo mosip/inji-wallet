@@ -94,6 +94,7 @@ public class PinVcTest extends IosBaseTest {
         moreOptionsPage.clickOnPinOrUnPinCard();
 
         assertTrue(homePage.isPinIconDisplayed(), "Verify if pin icon on vc is displayed");
+
         SharePage scanPage=homePage.clickOnShareButton();
         
         assertTrue(scanPage.isCameraPageLoaded(), "Verify camera page is displayed");
@@ -124,7 +125,6 @@ public class PinVcTest extends IosBaseTest {
 
         assertTrue(addNewCardPage.isAddNewCardPageLoaded(), "Verify if add new card page is displayed");
         EsignetLoginPage esignetLoginPage =  addNewCardPage.clickOnDownloadViaEsignet();
-        addNewCardPage.clickOnContinueButtonInSigninPopupIos();
 
         assertTrue(esignetLoginPage.isEsignetLoginPageDisplayed(), "Verify if esignet login page displayed");
         esignetLoginPage.clickOnEsignetLoginWithOtpButton();

@@ -145,10 +145,11 @@ export class SvgImage {
     props: ExistingMosipVCItemContentProps | EsignetMosipVCItemContentProps,
     verifiableCredential: VerifiableCredential,
   ) {
-    return verifiableCredential ? (
+    const imageUri = faceImageSource(props, verifiableCredential);
+    return verifiableCredential && imageUri ? (
       <ImageBackground
         imageStyle={Theme.Styles.faceImage}
-        source={faceImageSource(props, verifiableCredential)}
+        source={{uri: imageUri}}
         style={Theme.Styles.closeCardImage}>
         {props.isPinned && SvgImage.pinIcon()}
       </ImageBackground>
@@ -178,7 +179,7 @@ export class SvgImage {
     );
   }
   static SuccessLogo() {
-    return <SuccessLogo />;
+    return <SuccessLogo {...testIDProps('SuccessLogo')} />;
   }
   static NoInternetConnection() {
     return (
@@ -203,11 +204,9 @@ function faceImageSource(
   props: faceImageSourceProps,
   verifiableCredential: VerifiableCredential,
 ) {
-  return {
-    uri: props.vcMetadata.isFromOpenId4VCI()
-      ? verifiableCredential?.credentialSubject?.face
-      : props.context.credential.biometrics.face,
-  };
+  return props?.vcMetadata?.isFromOpenId4VCI()
+    ? verifiableCredential?.credentialSubject?.face
+    : props?.context?.credential?.biometrics?.face;
 }
 
 interface LogoProps {

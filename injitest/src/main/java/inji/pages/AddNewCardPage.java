@@ -27,7 +27,11 @@ public class AddNewCardPage extends BasePage{
     @iOSXCUITFindBy(accessibility = "Continue")
     private WebElement continueButton;
 
+<<<<<<< HEAD
     @AndroidFindBy(accessibility = "issuersScreenDescription")
+=======
+    @AndroidFindBy(xpath = "(//android.widget.TextView)[4]")
+>>>>>>> upstream/develop
     @iOSXCUITFindBy(accessibility = "issuersScreenDescription")
     private WebElement addNewCardGuideMessage;
     

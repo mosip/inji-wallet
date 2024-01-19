@@ -1,8 +1,8 @@
 fileignoreconfig:
   - filename: package.json
-    checksum: e09253939abe4c3509c9322ecd97ce2cdbc25fb25e55ce30ed8c70b6320aa9ca
+    checksum: 4770aabfda162fbc0b9a8c53d7dee483ce29b82c6cd3e17e81e3e628d93dbadc
   - filename: package-lock.json
-    checksum: 723cd12daeea0e51e30ec3abdba469b693bdfae12a1de6486fe8782c564340eb
+    checksum: 82c06097d5f030255c1aed47bae1f2df241759612fdd0715b4f66b0e1535cbb9
   - filename: lib/jsonld-signatures/suites/ed255192018/ed25519.ts
     checksum: 493b6e31144116cb612c24d98b97d8adcad5609c0a52c865a6847ced0a0ddc3a
   - filename: components/PasscodeVerify.tsx
@@ -85,8 +85,6 @@ fileignoreconfig:
     checksum: ca2328c39d2757ffebf85c0b6663da1073eb58349f2630c9418b2f16c350cbd1
   - filename: assets/Flip_Camera_Icon.svg
     checksum: 736b5a7ddb86bd4376229ce198dbf8a663e7ac89fc3311bd4f19afd4a2b36ffd
-  - filename: ios/fastlane/Fastfile
-    checksum: 086080bc7a04accf5094c457b5acf84d9fec5d7dfa72eaaaf02e433ecf4f996b    
   - filename: assets/Finger_Print_Icon.svg
     checksum: 776d4fe4fc4b54d185ccf97daf0511b9fe2c0e0f7c1a809047020e5e8a100db6
   - filename: android/app/build.gradle
@@ -105,4 +103,10 @@ fileignoreconfig:
     checksum: 7ee46d8ef4761c0e9b59f3e602e6e30be5f47221817c819e91ab10ca2203089f 
   - filename: screens/Home/MyVcs/OtpVerificationModal.tsx
     checksum: 1db1f39701019383e1e40e6ed5278177e6c9bb3d28def0935cf6d4bd9e41e63a 
+  - filename: screens/Home/MyVcs/GetIdInputModal.tsx
+    checksum: e85d18cd3349e0127f1cc7173fcdfd31824e609508512a613997a73756cd4dec 
+  - filename: .github/workflows/android-custom-build.yml
+    checksum: 4d155c6e5468effb0b82e62f6878f2bd7ff7e7c9540e16bdd28cb81b80672ac3 
+  - filename: .github/workflows/push-triggers.yml
+    checksum: 4a031b46646aa982c8f40e4c7fe0bd3e05a76a6af1ff1c2de7350ba6ebf9a839 
     version: ""

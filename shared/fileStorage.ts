@@ -56,14 +56,4 @@ export const getFilePath = (key: string) => {
   return `${vcDirectoryPath}/${key}.txt`;
 };
 
-//TODO: added temporarily for INJI-612
-export const getFilePathOfHmac = (key: string) => {
-  return `${vcDirectoryPath}/${key}.hmac`;
-};
-
-//TODO: added temporarily for INJI-612
-export const getFilePathOfEncryptedHmac = (key: string) => {
-  return `${vcDirectoryPath}/${key}.hmace`;
-};
-
 export const vcDirectoryPath = `${DocumentDirectoryPath}/inji/VC`;

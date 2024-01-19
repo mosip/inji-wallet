@@ -120,5 +120,6 @@ public class OtpVerificationPage extends BasePage {
     
     public boolean verifyOtpVerificationTimerDisplayedAfterClickOnResend() {
         return this.isElementDisplayed(otpVerificationTimer);
+
     }
 }
