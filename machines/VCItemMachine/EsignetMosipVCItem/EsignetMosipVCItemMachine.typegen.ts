@@ -94,6 +94,7 @@ export interface Typegen0 {
     setPinCard: 'PIN_CARD';
     setPrivateKey: 'done.invoke.vc-item-openid4vci.addKeyPair:invocation[0]';
     setPublicKey: 'done.invoke.vc-item-openid4vci.addKeyPair:invocation[0]';
+    setTempWalletBindingResponse: 'done.invoke.vc-item-openid4vci.addingWalletBindingId:invocation[0]';
     setThumbprintForWalletBindingId:
       | 'done.invoke.vc-item-openid4vci.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item-openid4vci.updatingPrivateKey:invocation[0]';
@@ -123,7 +124,6 @@ export interface Typegen0 {
       | 'STORE_RESPONSE'
       | 'done.invoke.vc-item-openid4vci.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item-openid4vci.updatingPrivateKey:invocation[0]';
-    useWalletBindingResponsePostPrivateKeyUpdate: 'done.invoke.vc-item-openid4vci.addingWalletBindingId:invocation[0]';
   };
   eventsCausingDelays: {};
   eventsCausingGuards: {

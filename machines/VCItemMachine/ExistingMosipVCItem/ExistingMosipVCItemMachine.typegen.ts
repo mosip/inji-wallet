@@ -211,6 +211,7 @@ export interface Typegen0 {
     setPublicKey: 'done.invoke.vc-item.addKeyPair:invocation[0]';
     setRevoke: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
     setStoreVerifiableCredential: 'CREDENTIAL_DOWNLOADED';
+    setTempWalletBindingResponse: 'done.invoke.vc-item.addingWalletBindingId:invocation[0]';
     setThumbprintForWalletBindingId:
       | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]';
@@ -249,7 +250,6 @@ export interface Typegen0 {
       | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'
       | 'done.invoke.vc-item.updatingPrivateKey:invocation[0]'
       | 'done.invoke.vc-item.verifyingCredential:invocation[0]';
-    useWalletBindingResponsePostPrivateKeyUpdate: 'done.invoke.vc-item.addingWalletBindingId:invocation[0]';
   };
   eventsCausingDelays: {};
   eventsCausingGuards: {

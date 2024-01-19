@@ -51,7 +51,7 @@ const model = createModel(
     transactionId: '',
     bindingTransactionId: '',
     walletBindingResponse: null as WalletBindingResponse,
-    walletBindingIdResponseForPrivateKeyUpdate: null as WalletBindingResponse,
+    tempWalletBindingIdResponse: null as WalletBindingResponse,
     walletBindingError: '',
     walletBindingSuccess: false,
     isMachineInKebabPopupState: false,
@@ -292,7 +292,11 @@ export const EsignetMosipVCItemMachine = model.createMachine(
             },
             {
               target: 'updatingPrivateKey',
-              actions: 'useWalletBindingResponsePostPrivateKeyUpdate',
+              /*The walletBindingResponse is used for conditional rendering in wallet binding. 
+                However, it wrongly considers activation as successful even when there's an error 
+                in updatingPrivateKey state. So created a temporary context variable to store the binding 
+                response and use it in updatingPrivateKey state*/
+              actions: 'setTempWalletBindingResponse',
             },
           ],
           onError: [
@@ -513,7 +517,12 @@ export const EsignetMosipVCItemMachine = model.createMachine(
 
       storeContext: send(
         context => {
-          const {serviceRefs, isMachineInKebabPopupState, ...data} = context;
+          const {
+            serviceRefs,
+            isMachineInKebabPopupState,
+            tempWalletBindingIdResponse,
+            ...data
+          } = context;
           data.credentialRegistry = MIMOTO_BASE_URL;
           return StoreEvents.SET(
             VCMetadata.fromVC(context.vcMetadata).getVcKey(),
@@ -651,11 +660,11 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         walletBindingResponse: (context, event) => {
           return isHardwareKeystoreExists
             ? (event.data as WalletBindingResponse)
-            : context.walletBindingIdResponseForPrivateKeyUpdate;
+            : context.tempWalletBindingIdResponse;
         },
       }),
-      useWalletBindingResponsePostPrivateKeyUpdate: assign({
-        walletBindingIdResponseForPrivateKeyUpdate: (context, event) =>
+      setTempWalletBindingResponse: assign({
+        tempWalletBindingIdResponse: (context, event) =>
           event.data as WalletBindingResponse,
       }),
       setThumbprintForWalletBindingId: send(
@@ -749,7 +758,7 @@ export const EsignetMosipVCItemMachine = model.createMachine(
     services: {
       updatePrivateKey: async context => {
         const hasSetPrivateKey: boolean = await savePrivateKey(
-          context.walletBindingIdResponseForPrivateKeyUpdate.walletBindingId,
+          context.tempWalletBindingIdResponse.walletBindingId,
           context.privateKey,
         );
         if (!hasSetPrivateKey) {

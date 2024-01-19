@@ -67,7 +67,7 @@ const model = createModel(
     maxDownloadCount: null as number,
     downloadInterval: null as number,
     walletBindingResponse: null as WalletBindingResponse,
-    walletBindingIdResponseForPrivateKeyUpdate: null as WalletBindingResponse,
+    tempWalletBindingIdResponse: null as WalletBindingResponse,
     walletBindingError: '',
     walletBindingSuccess: false,
     publicKey: '',
@@ -697,7 +697,11 @@ export const ExistingMosipVCItemMachine =
               },
               {
                 target: 'updatingPrivateKey',
-                actions: 'useWalletBindingResponsePostPrivateKeyUpdate',
+                /*The walletBindingResponse is used for conditional rendering in wallet binding. 
+                However, it wrongly considers activation as successful even when there's an error 
+                in updatingPrivateKey state. So created a temporary context variable to store the binding 
+                response and use it in updatingPrivateKey state*/
+                actions: 'setTempWalletBindingResponse',
               },
             ],
             onError: [
@@ -930,12 +934,12 @@ export const ExistingMosipVCItemMachine =
           walletBindingResponse: (context, event) => {
             return isHardwareKeystoreExists
               ? (event.data as WalletBindingResponse)
-              : context.walletBindingIdResponseForPrivateKeyUpdate;
+              : context.tempWalletBindingIdResponse;
           },
         }),
 
-        useWalletBindingResponsePostPrivateKeyUpdate: assign({
-          walletBindingIdResponseForPrivateKeyUpdate: (context, event) =>
+        setTempWalletBindingResponse: assign({
+          tempWalletBindingIdResponse: (context, event) =>
             event.data as WalletBindingResponse,
         }),
 
@@ -1043,7 +1047,12 @@ export const ExistingMosipVCItemMachine =
 
         storeContext: send(
           context => {
-            const {serviceRefs, isMachineInKebabPopupState, ...data} = context;
+            const {
+              serviceRefs,
+              isMachineInKebabPopupState,
+              tempWalletBindingIdResponse,
+              ...data
+            } = context;
             data.credentialRegistry = MIMOTO_BASE_URL;
             return StoreEvents.SET(context.vcMetadata.getVcKey(), data);
           },
@@ -1301,7 +1310,7 @@ export const ExistingMosipVCItemMachine =
 
         updatePrivateKey: async context => {
           const hasSetPrivateKey: boolean = await savePrivateKey(
-            context.walletBindingIdResponseForPrivateKeyUpdate.walletBindingId,
+            context.tempWalletBindingIdResponse.walletBindingId,
             context.privateKey,
           );
           if (!hasSetPrivateKey) {
