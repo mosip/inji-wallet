@@ -7,8 +7,6 @@ import {useTranslation} from 'react-i18next';
 import {RootRouteProps} from '../../routes';
 import {useWelcomeScreen} from '../WelcomeScreenController';
 import LinearGradient from 'react-native-linear-gradient';
-import Constants from 'expo-constants';
-import {isIOS} from '../../shared/constants';
 import {SvgImage} from '../../components/ui/svg';
 
 export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
@@ -50,15 +48,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
     return (
       <LinearGradient colors={Theme.Colors.gradientBtn}>
         <Centered>
-          <Row
-            align="space-between"
-            style={{
-              marginTop: isIOS()
-                ? Constants.statusBarHeight + 40
-                : StatusBar.currentHeight + 40,
-              width: '100%',
-              marginBottom: 50,
-            }}>
+          <Row align="space-between" style={Theme.Styles.introSliderHeader}>
             <Column style={{marginLeft: Dimensions.get('screen').width * 0.4}}>
               {SvgImage.InjiSmallLogo()}
             </Column>
@@ -108,7 +98,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
       <View>
         <LinearGradient
           colors={Theme.Colors.gradientBtn}
-          style={{borderRadius: 10, height: 50, marginTop: -10}}>
+          style={Theme.Styles.introSliderButton}>
           <Text
             testID="next"
             style={{paddingTop: 3}}
@@ -127,7 +117,7 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
       <View>
         <LinearGradient
           colors={Theme.Colors.gradientBtn}
-          style={{borderRadius: 10, height: 50, marginTop: -10}}>
+          style={Theme.Styles.introSliderButton}>
           <Text
             testID="getStarted"
             style={{paddingTop: 3}}
