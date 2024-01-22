@@ -44,43 +44,37 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
     },
   ];
 
+  const isPasscodeSet = controller.isPasscodeSet();
+
   const renderItem = ({item}) => {
     return (
       <LinearGradient colors={Theme.Colors.gradientBtn}>
         <Centered>
-          <Row crossAlign="center">
+          <Row>
             <Column
+              margin="50 0"
               style={{
                 flex: 3,
                 alignItems: 'flex-end',
                 marginRight: 75,
               }}>
-              <Column margin="50 0">{SvgImage.InjiSmallLogo()}</Column>
+              {SvgImage.InjiSmallLogo()}
             </Column>
 
             <Column
+              margin="50 0"
               style={{
                 flex: 1,
                 alignItems: 'flex-end',
                 paddingTop: isIOS() ? Constants.statusBarHeight : 0,
               }}>
-              {controller.isPasscodeSet() ? (
-                <Button
-                  testID="back"
-                  type="plain"
-                  title={t('back')}
-                  onPress={controller.BACK}
-                  styles={{height: 40, maxWidth: 115}}
-                />
-              ) : (
-                <Button
-                  testID="skip"
-                  type="plain"
-                  title={t('skip')}
-                  onPress={controller.NEXT}
-                  styles={{height: 40, width: 115}}
-                />
-              )}
+              <Button
+                testID={isPasscodeSet ? 'back' : 'skip'}
+                type="plain"
+                title={isPasscodeSet ? t('back') : t('skip')}
+                onPress={isPasscodeSet ? controller.BACK : controller.NEXT}
+                styles={{height: 40, maxWidth: 115}}
+              />
             </Column>
           </Row>
           <Image
