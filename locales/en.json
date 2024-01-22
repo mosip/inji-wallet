@@ -162,6 +162,7 @@
     "title": "Add new card",
     "description": "Please choose your preferred issuer from the options below to add a new card.",
     "searchByIssuersName": "Search by Issuer’s name",
+    "help": "Help?",
     "loaders": {
       "loading": "Loading...",
       "subTitle": {

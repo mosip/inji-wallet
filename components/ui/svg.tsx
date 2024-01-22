@@ -23,6 +23,7 @@ import SomethingWentWrong from '../../assets/Something_Went_Wrong.svg';
 import MagnifierZoom from '../../assets/Magnifier_Zoom.svg';
 import {displayType} from '../../machines/issuersMachine';
 import {IssuerProps} from '../openId4VCI/Issuer';
+import Info from '../../assets/Info.svg';
 import {
   EsignetMosipVCItemContentProps,
   ExistingMosipVCItemContentProps,
@@ -193,6 +194,17 @@ export class SvgImage {
 
   static MagnifierZoom() {
     return <MagnifierZoom />;
+  }
+
+  static infoIcon() {
+    return (
+      <Info
+        color1={Theme.Colors.linearGradientStart}
+        color2={Theme.Colors.linearGradientEnd}
+        style={Theme.Styles.pinIcon}
+        {...testIDProps('infoIcon')}
+      />
+    );
   }
 }
 

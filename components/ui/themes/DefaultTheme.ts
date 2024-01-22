@@ -1346,6 +1346,29 @@ export const DefaultTheme = {
       maxHeight: Dimensions.get('window').height,
     },
   }),
+  HelpScreenStyle: StyleSheet.create({
+    viewStyle: {
+      width: 100,
+      padding: 7,
+      borderRadius: 8,
+      backgroundColor: Colors.LightOrange,
+    },
+    rowStyle: {
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      width: 45,
+      display: 'flex',
+    },
+    iconStyle: {
+      paddingTop: 7,
+      paddingLeft: 20,
+      paddingRight: 5,
+    },
+    labelStyle: {
+      width: 70,
+      fontWeight: 'bold',
+    },
+  }),
   BottomTabBarStyle: StyleSheet.create({
     headerRightContainerStyle: {paddingEnd: 13},
     headerLeftContainerStyle: {paddingEnd: 13},
