@@ -57,6 +57,7 @@ export const MainLayout: React.FC<
             title: t(route.name),
             tabBarIcon: ({focused}) => (
               <Column
+                {...testIDProps(route.name + 'Icon')}
                 align="center"
                 crossAlign="center"
                 style={focused ? Theme.Styles.bottomTabIconStyle : null}>
