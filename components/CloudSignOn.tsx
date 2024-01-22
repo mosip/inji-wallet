@@ -8,7 +8,7 @@ import {GOOGLE_ANDROID_CLIENT_ID} from 'react-native-dotenv';
 WebBrowser.maybeCompleteAuthSession();
 
 // This component needs to be modified as the token is received and may need to move these logic to backup screen
-export const CloudSignOn: React.FC = props => {
+export const CloudSignOn: React.FC<CloudSignOnProps> = props => {
   const [request, response, promptAsync] = Google.useAuthRequest({
     androidClientId: GOOGLE_ANDROID_CLIENT_ID,
     scopes: ['https://www.googleapis.com/auth/drive.appdata'],
@@ -16,25 +16,23 @@ export const CloudSignOn: React.FC = props => {
 
   useEffect(() => {
     if (response.type == 'success') {
-      console.log('acc tkn :: ', response.authentication.accessToken);
-      //set the token
+      CloudStorage.setGoogleDriveAccessToken(
+        response.authentication.accessToken,
+      );
     }
   });
   return (
     <Button
       type="gradient"
-      title={'Google Sign-In'}
+      title={props.title}
       onPress={() => {
-        console.log('hello world');
         CloudStorage.isCloudAvailable().then(value => {
-          if (value) {
-            console.log('we are good');
-          } else {
+          if (!value) {
             if (Platform.OS == 'android') {
               promptAsync();
             }
             if (Platform.OS == 'ios') {
-              //ask to sign in into  to icloud
+              //todo: ask to sign in into  to icloud
             }
           }
         });
@@ -42,3 +40,7 @@ export const CloudSignOn: React.FC = props => {
     />
   );
 };
+
+export interface CloudSignOnProps {
+  title: string;
+}
