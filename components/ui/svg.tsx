@@ -3,6 +3,9 @@ import Svg, {Image} from 'react-native-svg';
 import {Theme} from './styleUtils';
 import {Icon} from 'react-native-elements';
 import {ImageBackground} from 'react-native';
+import Home from '../../assets/Home_tab_icon.svg';
+import History from '../../assets/History_tab_icon.svg';
+import Share from '../../assets/Scan_tab_icon.svg';
 import PinICon from '../../assets/Pin_Icon.svg';
 import InjiSmallLogo from '../../assets/Inji_Logo.svg';
 import LockIcon from '../../assets/Lock_Icon1.svg';
@@ -34,6 +37,45 @@ export class SvgImage {
   static MosipLogo(props: LogoProps) {
     const {width, height} = props;
     return <Logo width={width} height={height} />;
+  }
+  static home(focused: boolean) {
+    //TODO: Here tab icons names should be same with key "name" in main.ts
+    return (
+      <Home
+        color1={
+          focused ? Theme.Colors.linearGradientStart : Theme.Colors.GrayIcon
+        }
+        color2={
+          focused ? Theme.Colors.linearGradientEnd : Theme.Colors.GrayIcon
+        }
+      />
+    );
+  }
+  static share(focused: boolean) {
+    //TODO: Here tab icons names should be same with key "name" in main.ts
+    return (
+      <Share
+        color1={
+          focused ? Theme.Colors.linearGradientStart : Theme.Colors.GrayIcon
+        }
+        color2={
+          focused ? Theme.Colors.linearGradientEnd : Theme.Colors.GrayIcon
+        }
+      />
+    );
+  }
+  static history(focused: boolean) {
+    //TODO: Here tab icons names should be same with key "name" in main.ts
+    return (
+      <History
+        color1={
+          focused ? Theme.Colors.linearGradientStart : Theme.Colors.GrayIcon
+        }
+        color2={
+          focused ? Theme.Colors.linearGradientEnd : Theme.Colors.GrayIcon
+        }
+      />
+    );
   }
   static pinIcon() {
     return (
