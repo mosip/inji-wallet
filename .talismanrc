@@ -106,7 +106,7 @@ fileignoreconfig:
   - filename: screens/Home/MyVcs/IdInputModal.tsx
     checksum: 7ee46d8ef4761c0e9b59f3e602e6e30be5f47221817c819e91ab10ca2203089f
   - filename: .env
-    checksum: d3023fb22734e6c7bd626f24007ba7b93e791cb0bcb8a086cb8e99f04bc31c7c
+    checksum: bbe4d3f530af4df95437348e77bc8c44ae7c4930d40023923bf8b9bacb4a76bc
   - filename: machines/backup.ts
     checksum: d4b95b075ce39ed80b119014188f8903dbb46d46dd19a3757eea2ae8a06ba7ad
   - filename: machines/backup.typegen.ts
@@ -159,4 +159,8 @@ fileignoreconfig:
     checksum: 451e8873a635d955fe426d9a5fcf191f2d4fd74984a1a4518760e2d10e9e1817
   - filename: screens/Settings/BackupController.tsx
     checksum: daf682b5616e45bd7b9a7c76becc617fea56be83124c3c4db838c2046e977481
+  - filename: machines/backupRestore.ts
+    checksum: e68ccee072fcb743e358f8ef0ad3f33fd6a330d0f0a70ecbd8e3760f47cfbbb2
+  - filename: machines/backupRestore.typegen.ts
+    checksum: 9a061adef9b0eff249298bb399520dc3188397f26da22bec50497c697478fdfc
     version: ""
