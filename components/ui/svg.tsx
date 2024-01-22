@@ -39,7 +39,7 @@ export class SvgImage {
     return <Logo width={width} height={height} />;
   }
   static home(focused: boolean) {
-    //TODO: Here tab icons names should be same with key "name" in main.ts
+    //NOTE: Here tab icons names should be same with key "name" in main.ts
     return (
       <Home
         color1={
@@ -52,7 +52,7 @@ export class SvgImage {
     );
   }
   static share(focused: boolean) {
-    //TODO: Here tab icons names should be same with key "name" in main.ts
+    //NOTE: Here tab icons names should be same with key "name" in main.ts
     return (
       <Share
         color1={
@@ -65,7 +65,7 @@ export class SvgImage {
     );
   }
   static history(focused: boolean) {
-    //TODO: Here tab icons names should be same with key "name" in main.ts
+    //NOTE: Here tab icons names should be same with key "name" in main.ts
     return (
       <History
         color1={
