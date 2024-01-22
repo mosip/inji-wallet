@@ -138,5 +138,5 @@ fileignoreconfig:
   - filename: .github/workflows/push-triggers.yml
     checksum: 4a031b46646aa982c8f40e4c7fe0bd3e05a76a6af1ff1c2de7350ba6ebf9a839 
   - filename: screens/Home/IntroSlidersScreen.tsx
-    checksum: c1a8de7d7ac6dd58221e0a05ddddd4d9f8f4390cf9a52ca0b35c12c6a6e09257 
+    checksum: 24b993e0406a49ace5b95dd05f7c4702220ec3d3f3fc2e774f20c023ef73822a 
     version: ""

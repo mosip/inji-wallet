@@ -50,32 +50,26 @@ export const IntroSlidersScreen: React.FC<RootRouteProps> = props => {
     return (
       <LinearGradient colors={Theme.Colors.gradientBtn}>
         <Centered>
-          <Row>
-            <Column
-              margin="50 0"
-              style={{
-                flex: 3,
-                alignItems: 'flex-end',
-                marginRight: 75,
-              }}>
+          <Row
+            align="space-between"
+            style={{
+              marginTop: isIOS()
+                ? Constants.statusBarHeight + 40
+                : StatusBar.currentHeight + 40,
+              width: '100%',
+              marginBottom: 50,
+            }}>
+            <Column style={{marginLeft: Dimensions.get('screen').width * 0.4}}>
               {SvgImage.InjiSmallLogo()}
             </Column>
 
-            <Column
-              margin="50 0"
-              style={{
-                flex: 1,
-                alignItems: 'flex-end',
-                paddingTop: isIOS() ? Constants.statusBarHeight : 0,
-              }}>
-              <Button
-                testID={isPasscodeSet ? 'back' : 'skip'}
-                type="plain"
-                title={isPasscodeSet ? t('back') : t('skip')}
-                onPress={isPasscodeSet ? controller.BACK : controller.NEXT}
-                styles={{height: 40, maxWidth: 115}}
-              />
-            </Column>
+            <Button
+              testID={isPasscodeSet ? 'back' : 'skip'}
+              type="plain"
+              title={isPasscodeSet ? t('back') : t('skip')}
+              onPress={isPasscodeSet ? controller.BACK : controller.NEXT}
+              styles={{height: 40, maxWidth: 115}}
+            />
           </Row>
           <Image
             source={item.image}
