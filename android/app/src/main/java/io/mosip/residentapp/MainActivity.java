@@ -89,28 +89,6 @@ public class MainActivity extends ReactActivity {
     return true;
   }
 
-  /**
-   * Handles user acceptance (or denial) of our permission request.
-   */
-  @CallSuper
-  @Override
-  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-    if (requestCode != REQUEST_CODE_REQUIRED_PERMISSIONS) {
-      return;
-    }
-
-    for (int grantResult : grantResults) {
-      if (grantResult == PackageManager.PERMISSION_DENIED) {
-        // Toast.makeText(this, R.string.error_missing_permissions, Toast.LENGTH_LONG).show();
-        // connectButton.setEnabled(false);
-        Log.d("Main", "Denied");
-        return;
-      }
-    }
-    recreate();
-  }
 
     /**
    * Returns the instance of the {@link ReactActivityDelegate}. Here we use a util class {@link

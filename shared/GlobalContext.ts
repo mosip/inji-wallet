@@ -9,6 +9,7 @@ import {settingsMachine} from '../machines/settings';
 import {storeMachine} from '../machines/store';
 import {vcMachine} from '../machines/vc';
 import {revokeVidsMachine} from '../machines/revoke';
+import {backupMachine} from '../machines/backup';
 
 export const GlobalContext = createContext({} as GlobalServices);
 
@@ -25,4 +26,5 @@ export interface AppServices {
   request: ActorRefFrom<typeof requestMachine>;
   scan: ActorRefFrom<typeof scanMachine>;
   revoke: ActorRefFrom<typeof revokeVidsMachine>;
+  backup: ActorRefFrom<typeof backupMachine>;
 }
