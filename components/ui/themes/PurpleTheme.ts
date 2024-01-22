@@ -1,7 +1,14 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import {Dimensions, I18nManager, StyleSheet, ViewStyle} from 'react-native';
+import {
+  Dimensions,
+  I18nManager,
+  StatusBar,
+  StyleSheet,
+  ViewStyle,
+} from 'react-native';
 import {Spacing} from '../styleUtils';
 import {isIOS} from '../../../shared/constants';
+import Constants from 'expo-constants';
 
 const Colors = {
   Black: '#231F20',
@@ -621,6 +628,18 @@ export const PurpleTheme = {
       borderBottomColor: Colors.Grey5,
       borderBottomWidth: 1,
       marginTop: 10,
+    },
+    introSliderHeader: {
+      marginTop: isIOS()
+        ? Constants.statusBarHeight + 40
+        : StatusBar.currentHeight + 40,
+      width: '100%',
+      marginBottom: 50,
+    },
+    introSliderButton: {
+      borderRadius: 10,
+      height: 50,
+      marginTop: -10,
     },
   }),
   QrCodeStyles: StyleSheet.create({
