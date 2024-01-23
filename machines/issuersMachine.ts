@@ -59,7 +59,7 @@ const model = createModel(
     verifiableCredential: null as VerifiableCredential | null,
     credentialWrapper: {} as CredentialWrapper,
     serviceRefs: {} as AppServices,
-
+    verificationErrorMessage: '',
     publicKey: ``,
     privateKey: ``,
   },
@@ -75,6 +75,8 @@ const model = createModel(
       CANCEL: () => ({}),
       STORE_RESPONSE: (response?: unknown) => ({response}),
       STORE_ERROR: (error: Error, requester?: string) => ({error, requester}),
+      VERIFY_SUCCESS: () => ({}),
+      VERIFY_ERROR: (errorMessage: string) => ({errorMessage}),
     },
   },
 );
@@ -352,22 +354,22 @@ export const IssuersMachine = model.createMachine(
           'once the credential is downloaded, it is verified before saving',
         invoke: {
           src: 'verifyCredential',
-          onDone: [
-            {
-              actions: ['sendSuccessEndEvent'],
-              target: 'storing',
-            },
-          ],
-          onError: [
-            {
-              actions: [
-                log((_, event) => (event.data as Error).message),
-                'sendErrorEndEvent',
-              ],
-              //TODO: Move to state according to the required flow when verification of VC fails
-              target: 'idle',
-            },
-          ],
+        },
+        on: {
+          VERIFY_SUCCESS: {
+            actions: ['sendSuccessEndEvent'],
+            target: 'storing',
+          },
+          VERIFY_ERROR: {
+            actions: [
+              log('Verification Error.'),
+              'updateVerificationErrorMessage',
+              'sendVerificationError',
+              'sendErrorEndEvent',
+            ],
+            //TODO: Move to state according to the required flow when verification of VC fails
+            target: 'idle',
+          },
         },
       },
       storing: {
@@ -583,6 +585,20 @@ export const IssuersMachine = model.createMachine(
           ),
         );
       },
+      sendVerificationError: send(
+        (_context, event) => {
+          return {
+            type: 'VERIFY_VC_FAILED',
+            errorMessage: _context.verificationErrorMessage,
+          };
+        },
+        {
+          to: context => context.serviceRefs.vc,
+        },
+      ),
+      updateVerificationErrorMessage: assign({
+        verificationErrorMessage: (context, event) => event.errorMessage,
+      }),
     },
     services: {
       isUserSignedAlready: () => async () => {
@@ -647,13 +663,21 @@ export const IssuersMachine = model.createMachine(
           0,
         );
       },
-      verifyCredential: async context => {
+      verifyCredential: context => async (callback, onReceive) => {
         //this issuer specific check has to be removed once vc validation is done.
         if (
           VCMetadata.fromVcMetadataString(getVCMetadata(context)).issuer ===
           Issuers.Sunbird
         ) {
           return true;
+        }
+        const verificationResult = await verifyCredential(
+          context.verifiableCredential?.credential,
+        );
+        if (verificationResult.isVerified) {
+          callback(model.events.VERIFY_SUCCESS());
+        } else {
+          callback(model.events.VERIFY_ERROR(verificationResult.errorMessage));
         }
         return verifyCredential(context.verifiableCredential?.credential);
       },

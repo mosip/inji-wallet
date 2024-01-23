@@ -46,6 +46,8 @@ import Cloud, {
   isSignedInResult,
 } from '../../../shared/CloudBackupAndRestoreUtils';
 
+import {VerificationErrorType} from '../../../shared/vcjs/verifyCredential';
+
 const model = createModel(
   {
     serviceRefs: {} as AppServices,
@@ -77,6 +79,7 @@ const model = createModel(
     privateKey: '',
     isMachineInKebabPopupState: false,
     bindingAuthFailedMessage: '' as string,
+    verificationErrorMessage: '',
   },
   {
     events: {
@@ -107,6 +110,8 @@ const model = createModel(
       UPDATE_VC_METADATA: (vcMetadata: VCMetadata) => ({vcMetadata}),
       TAMPERED_VC: (key: string) => ({key}),
       SHOW_BINDING_STATUS: () => ({}),
+      VERIFY_SUCCESS: () => ({}),
+      VERIFY_ERROR: (errorMessage: string) => ({errorMessage}),
     },
   },
 );
@@ -240,38 +245,8 @@ export const ExistingMosipVCItemMachine =
                   },
                 ],
                 CREDENTIAL_DOWNLOADED: {
-                  actions: ['setStoreVerifiableCredential', 'storeContext'],
-                },
-                STORE_RESPONSE: {
-                  actions: [
-                    'setVerifiableCredential',
-                    'updateVc',
-                    'logDownloaded',
-                    'sendTelemetryEvents',
-                    'removeVcFromInProgressDownloads',
-                  ],
-                  target: '.triggerAutoBackupForVcDownload',
-                },
-                STORE_ERROR: {
-                  target: '#vc-item.checkingServerData.savingFailed',
-                },
-              },
-              states: {
-                idle: {},
-                triggerAutoBackupForVcDownload: {
-                  invoke: {
-                    src: 'isUserSignedAlready',
-                    onDone: [
-                      {
-                        cond: 'isSignedIn',
-                        actions: ['sendBackupEvent'],
-                        target: '#vc-item.checkingVerificationStatus',
-                      },
-                      {
-                        target: '#vc-item.checkingVerificationStatus',
-                      },
-                    ],
-                  },
+                  actions: ['setStoreVerifiableCredential'],
+                  target: '#vc-item.checkingVerificationStatus',
                 },
               },
             },
@@ -411,18 +386,34 @@ export const ExistingMosipVCItemMachine =
         verifyingCredential: {
           invoke: {
             src: 'verifyCredential',
-            onDone: [
-              {
-                actions: ['markVcValid', 'storeContext', 'updateVc'],
-                target: 'idle',
-              },
-            ],
-            onError: [
-              {
-                actions: log((_, event) => (event.data as Error).message),
-                target: 'idle',
-              },
-            ],
+          },
+          on: {
+            VERIFY_SUCCESS: {
+              actions: [
+                log((_, event) => 'Verification Success.'),
+                'storeContext',
+              ],
+            },
+            VERIFY_ERROR: {
+              //To-Do Handle Error Scenarios
+              actions: [
+                log((_, event) => 'Verify Error'),
+                'updateVerificationErrorMessage',
+                'sendVerificationError',
+              ],
+            },
+            STORE_RESPONSE: {
+              actions: [
+                'setVerifiableCredential',
+                'updateVc',
+                'logDownloaded',
+                'sendTelemetryEvents',
+                'removeVcFromInProgressDownloads',
+              ],
+            },
+            STORE_ERROR: {
+              target: '#vc-item.checkingServerData.savingFailed',
+            },
           },
         },
         checkingVerificationStatus: {
@@ -713,9 +704,9 @@ export const ExistingMosipVCItemMachine =
               },
               {
                 target: 'updatingPrivateKey',
-                /*The walletBindingResponse is used for conditional rendering in wallet binding. 
-                However, it wrongly considers activation as successful even when there's an error 
-                in updatingPrivateKey state. So created a temporary context variable to store the binding 
+                /*The walletBindingResponse is used for conditional rendering in wallet binding.
+                However, it wrongly considers activation as successful even when there's an error
+                in updatingPrivateKey state. So created a temporary context variable to store the binding
                 response and use it in updatingPrivateKey state*/
                 actions: 'setTempWalletBindingResponse',
               },
@@ -833,6 +824,21 @@ export const ExistingMosipVCItemMachine =
             to: context => context.serviceRefs.vc,
           },
         ),
+
+        sendVerificationError: send(
+          (_context, event) => {
+            return {
+              type: 'VERIFY_VC_FAILED',
+              errorMessage: _context.verificationErrorMessage,
+            };
+          },
+          {
+            to: context => context.serviceRefs.vc,
+          },
+        ),
+        updateVerificationErrorMessage: assign({
+          verificationErrorMessage: (context, event) => event.errorMessage,
+        }),
 
         setWalletBindingError: assign({
           walletBindingError: () => {
@@ -1180,14 +1186,6 @@ export const ExistingMosipVCItemMachine =
           },
         ),
 
-        markVcValid: assign(context => {
-          return {
-            ...context,
-            isVerified: true,
-            lastVerifiedOn: Date.now(),
-          };
-        }),
-
         setTransactionId: assign({
           transactionId: () => String(new Date().valueOf()).substring(3, 13),
         }),
@@ -1407,7 +1405,6 @@ export const ExistingMosipVCItemMachine =
                   requestId: context.vcMetadata.requestId,
                 },
               );
-
               callback(
                 model.events.CREDENTIAL_DOWNLOADED({
                   credential: response.credential,
@@ -1429,8 +1426,17 @@ export const ExistingMosipVCItemMachine =
           return () => clearInterval(pollInterval);
         },
 
-        verifyCredential: async context => {
-          return verifyCredential(context.verifiableCredential);
+        verifyCredential: context => async (callback, onReceive) => {
+          const verificationResult = await verifyCredential(
+            context.storeVerifiableCredential,
+          );
+          if (verificationResult.isVerified) {
+            callback(model.events.VERIFY_SUCCESS());
+          } else {
+            callback(
+              model.events.VERIFY_ERROR(verificationResult.errorMessage),
+            );
+          }
         },
 
         requestOtp: async context => {

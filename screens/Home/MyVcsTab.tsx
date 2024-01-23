@@ -80,6 +80,10 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
   controller.downloadFailedVcs.forEach(vc => {
     failedVCsList.push(`\n${vc.idType}:${vc.id}`);
   });
+
+  const verificationErrorMessage = controller.verificationErrorMessage;
+  const isVerificationError = verificationErrorMessage !== '';
+
   const downloadFailedVcsErrorMessage = `${t(
     'errors.downloadLimitExpires.message',
   )}${failedVCsList}`;
@@ -217,6 +221,15 @@ export const MyVcsTab: React.FC<HomeScreenTabProps> = props => {
         title={t('errors.downloadLimitExpires.title')}
         message={downloadFailedVcsErrorMessage}
         onButtonPress={controller.DELETE_VC}
+        buttonText={t('common:ok')}
+        minHeight={'auto'}
+      />
+
+      <MessageOverlay
+        isVisible={isVerificationError}
+        title={'Technical Error'}
+        message={verificationErrorMessage}
+        onButtonPress={controller.RESET_VERIFY_ERROR}
         buttonText={t('common:ok')}
         minHeight={'auto'}
       />
