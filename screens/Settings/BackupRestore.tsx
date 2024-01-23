@@ -9,8 +9,6 @@ import {BackupRestoreToggle} from './BackupRestoreToggle';
 export const BackupRestore: React.FC = ({} = props => {
   const controller = useBackupRestoreScreen(props);
 
-  // TODO : Check if the setup is already done
-
   return (
     <React.Fragment>
       <Pressable
@@ -37,7 +35,7 @@ export const BackupRestore: React.FC = ({} = props => {
       {controller.isBackUpRestoring && (
         <BackupRestoreToggle
           isVisible={controller.isBackUpRestoring}
-          onDismiss={() => {}}
+          onDismiss={() => controller.DISMISS()}
         />
       )}
     </React.Fragment>

@@ -49,6 +49,7 @@ const model = createModel(
       IGNORE: () => ({}),
       GET: (key: string) => ({key}),
       EXPORT: () => ({}),
+      RESTORE_BACKUP: (data: {}) => ({data}),
       DECRYPT_ERROR: () => ({}),
       KEY_INVALIDATE_ERROR: () => ({}),
       BIOMETRIC_CANCELLED: (requester?: string) => ({requester}),
@@ -191,6 +192,9 @@ export const storeMachine =
               actions: 'forwardStoreRequest',
             },
             EXPORT: {
+              actions: 'forwardStoreRequest',
+            },
+            RESTORE_BACKUP: {
               actions: 'forwardStoreRequest',
             },
             SET: {
@@ -351,6 +355,13 @@ export const storeMachine =
                 }
                 case 'EXPORT': {
                   response = await exportData(context.encryptionKey);
+                  break;
+                }
+                case 'RESTORE_BACKUP': {
+                  response = await loadBackupData(
+                    event.data,
+                    context.encryptionKey,
+                  );
                   break;
                 }
                 case 'SET': {
@@ -559,6 +570,9 @@ export async function exportData(encryptionKey: string) {
   return Storage.exportData(encryptionKey);
 }
 
+export async function loadBackupData(data, encryptionKey) {
+  await Storage.loadBackupData(data, encryptionKey);
+}
 export async function getItem(
   key: string,
   defaultValue: unknown,

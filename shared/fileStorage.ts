@@ -78,8 +78,19 @@ export async function compressAndRemoveFile(fileName: string): Promise<string> {
   await removeFile(fileName);
   return result;
 }
+
+export async function unZipAndRemoveFile(fileName: string): Promise<string> {
+  const result = unzipFile(fileName);
+  // await removeFile(fileName);
+  return result;
+}
+
 async function compressFile(fileName: string): Promise<string> {
   return await RNZipArchive.zip(backupDirectoryPath, zipFilePath(fileName));
+}
+
+async function unzipFile(fileName: string): Promise<string> {
+  return await RNZipArchive.unzip(zipFilePath(fileName), backupDirectoryPath);
 }
 
 async function removeFile(fileName: string) {

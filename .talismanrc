@@ -38,7 +38,7 @@ fileignoreconfig:
   - filename: shared/fileStorage.ts
     checksum: 5c4c9bc78446e6b25bf6e6ac276918757d6275a27ba93d253338ca629ebc0240
   - filename: shared/storage.ts
-    checksum: 837dda0fd0a3e160e62f10df44003d29e29dfce897550a85a8e74fe77a2a06db
+    checksum: b3ba9c399832e7c92575e91b0482a86a32473b175d0dbaaa08708cd2672d06bb
   - filename: screens/Issuers/IssuersScreen.tsx
     checksum: 9c53e3770dbefe26e0de67ee4b7d5cc9c52d9823cbb136a1a5104dcb0a101071
   - filename: ios/Podfile.lock
@@ -160,7 +160,7 @@ fileignoreconfig:
   - filename: screens/Settings/BackupController.tsx
     checksum: daf682b5616e45bd7b9a7c76becc617fea56be83124c3c4db838c2046e977481
   - filename: machines/backupRestore.ts
-    checksum: e68ccee072fcb743e358f8ef0ad3f33fd6a330d0f0a70ecbd8e3760f47cfbbb2
+    checksum: 3c6e1c309c5eb4a5fa83b0d54a786d71331526e3f172431c6e8eac7359d811f4
   - filename: machines/backupRestore.typegen.ts
-    checksum: 9a061adef9b0eff249298bb399520dc3188397f26da22bec50497c697478fdfc
+    checksum: fdf101a86c853538ea2e18fb4dfbfb8bd68472d3c588e10b717494c9fadb6dbc
     version: ""

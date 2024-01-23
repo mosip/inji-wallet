@@ -92,6 +92,65 @@ class Storage {
     return completeBackupData;
   };
 
+  static loadBackupData = async (data, encryptionKey) => {
+    try {
+      const completeBackupData = JSON.parse(data);
+
+      const allVCs = completeBackupData['VC_Records'];
+      const allVCKeys = Object.keys(allVCs);
+      allVCKeys.forEach(async key => {
+        const vc = allVCs[key];
+        const encryptedVC = await encryptJson(
+          encryptionKey,
+          JSON.stringify(vc),
+        );
+        await this.setItem(key, encryptedVC, encryptionKey);
+      });
+      const dataFromDB = completeBackupData['dataFromDB'];
+
+      const dataFromMyVCKey = dataFromDB[MY_VCS_STORE_KEY];
+      const encryptedMyVCKeyFromMMKV = await MMKV.getItem(MY_VCS_STORE_KEY);
+      let newDataForMyVCKey;
+      if (encryptedMyVCKeyFromMMKV != null) {
+        const myVCKeyFromMMKV = await decryptJson(
+          encryptionKey,
+          encryptedMyVCKeyFromMMKV,
+        );
+        newDataForMyVCKey = [
+          ...JSON.parse(myVCKeyFromMMKV),
+          ...dataFromMyVCKey,
+        ];
+      } else {
+        newDataForMyVCKey = dataFromMyVCKey;
+      }
+      const encryptedDataForMyVCKey = await encryptJson(
+        encryptionKey,
+        JSON.stringify(newDataForMyVCKey),
+      );
+      await this.setItem(
+        MY_VCS_STORE_KEY,
+        encryptedDataForMyVCKey,
+        encryptionKey,
+      );
+
+      const allKeysFromDB = Object.keys(dataFromDB);
+      const cacheKeys = allKeysFromDB.filter(key =>
+        key.includes('CACHE_FETCH_ISSUER_WELLKNOWN_CONFIG_'),
+      );
+      cacheKeys.forEach(async key => {
+        const value = dataFromDB[key];
+        const encryptedValue = await encryptJson(
+          encryptionKey,
+          JSON.stringify(value),
+        );
+        await this.setItem(key, encryptedValue, encryptionKey);
+
+        return true;
+      });
+    } catch (error) {
+      return error;
+    }
+  };
   static isVCStorageInitialised = async (): Promise<boolean> => {
     try {
       const res = await FileStorage.getInfo(vcDirectoryPath);
@@ -290,6 +349,7 @@ class Storage {
 export default Storage;
 
 export async function writeToBackupFile(data): Promise<string> {
+  //TODO: Move to fileStorage
   const fileName = getBackupFileName();
   const isDirectoryExists = await FileStorage.exists(backupDirectoryPath);
   if (isDirectoryExists) {
@@ -317,4 +377,8 @@ export async function isMinimumLimitForBackupReached() {
       : getFreeDiskStorageSync();
 
   return freeDiskStorageInBytes <= 2 * directorySize;
+}
+
+export async function isMinimumLimitForBackupRestorationReached() {
+  return false;
 }
