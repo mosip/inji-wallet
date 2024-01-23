@@ -184,7 +184,9 @@ export interface Typegen0 {
     requestVcContext: 'DISMISS' | 'xstate.init';
     resetWalletBindingSuccess: 'DISMISS';
     revokeVID: 'done.invoke.vc-item.requestingRevoke:invocation[0]';
-    sendActivationFailedEndEvent: 'DISMISS';
+    sendActivationFailedEndEvent:
+      | 'DISMISS'
+      | 'error.platform.vc-item.updatingPrivateKey:invocation[0]';
     sendActivationStartEvent: 'CONFIRM';
     sendActivationSuccessEvent:
       | 'done.invoke.vc-item.addingWalletBindingId:invocation[0]'

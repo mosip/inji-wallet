@@ -79,7 +79,9 @@ export interface Typegen0 {
     requestStoredContext: 'GET_VC_RESPONSE' | 'REFRESH';
     requestVcContext: 'DISMISS' | 'xstate.init';
     resetWalletBindingSuccess: 'DISMISS';
-    sendActivationFailedEndEvent: 'DISMISS';
+    sendActivationFailedEndEvent:
+      | 'DISMISS'
+      | 'error.platform.vc-item-openid4vci.updatingPrivateKey:invocation[0]';
     sendActivationStartEvent: 'CONFIRM';
     sendActivationSuccessEvent:
       | 'done.invoke.vc-item-openid4vci.addingWalletBindingId:invocation[0]'

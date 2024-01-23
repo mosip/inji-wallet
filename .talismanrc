@@ -56,15 +56,15 @@ fileignoreconfig:
   - filename: machines/store.typegen.ts
     checksum: 6d22bc5c77398316b943c512c208ce0846a9fff674c1ccac79e07f21962acd5f
   - filename: shared/telemetry/TelemetryConstants.js
-    checksum: 9d9acf3981cbde452489eacbbd70ebaa0b853c1c04e9712fa71368c089a9662b
+    checksum: df7619021aa023fa62ade9efb60a80fc9c6901da8c52f563014d3f51497c190c
   - filename: machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine.ts
     checksum: cca7657da3a1a91b63e0a10605545d1e0d3d152b083a55f9dbb9eed893646e4b
   - filename: machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine.ts
     checksum: 8bc83e91cd46caedfd99bf5e7c5f729f455da5556dc551e820dc4615ebb6eb76
   - filename: machines/VCItemMachine/EsignetMosipVCItem/EsignetMosipVCItemMachine.typegen.ts
-    checksum: 7f5b83694c296591be0d6c9ecea3bf9ada5bb4d4f915ba16f1b7eae448c26e7b
+    checksum: 3c74c78f0457f2e7abd032e0f57e6f1194676d6e101c91ee6bf14a4e6c07790e
   - filename: machines/VCItemMachine/ExistingMosipVCItem/ExistingMosipVCItemMachine.typegen.ts
-    checksum: 9af6487ad6dc52a0da4f4f0925ae60c3335b7808a24e1409b54a0b5cf603f9be
+    checksum: eceab7e4fea382d030a559668b8a506f451b76616d655d175779589d67e2c4fb
   - filename: shared/telemetry/TelemetryUtils.js
     checksum: a0686e9a5c006176fd720b84bc36ca947db1422caf65c90cd0c2d1102a9e96df
   - filename: ios/fastlane/Fastfile

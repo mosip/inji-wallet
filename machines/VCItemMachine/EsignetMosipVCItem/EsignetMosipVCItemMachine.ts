@@ -342,7 +342,11 @@ export const EsignetMosipVCItemMachine = model.createMachine(
             },
           ],
           onError: {
-            actions: ['setWalletBindingError', 'logWalletBindingFailure'],
+            actions: [
+              'setWalletBindingError',
+              'logWalletBindingFailure',
+              'sendActivationFailedEndEvent',
+            ],
             target: 'showingWalletBindingError',
           },
         },
@@ -616,7 +620,17 @@ export const EsignetMosipVCItemMachine = model.createMachine(
         );
       },
 
-      sendActivationFailedEndEvent: context =>
+      sendActivationFailedEndEvent: (context, event, meta) => {
+        const [errorId, errorMessage] =
+          event.data.message === 'Could not store private key in keystore'
+            ? [
+                TelemetryConstants.ErrorId.updatePrivateKey,
+                TelemetryConstants.ErrorMessage.privateKeyUpdationFailed,
+              ]
+            : [
+                TelemetryConstants.ErrorId.userCancel,
+                TelemetryConstants.ErrorMessage.activationCancelled,
+              ];
         sendEndEvent(
           getEndEventData(
             context.isMachineInKebabPopupState
@@ -624,11 +638,12 @@ export const EsignetMosipVCItemMachine = model.createMachine(
               : TelemetryConstants.FlowType.vcActivation,
             TelemetryConstants.EndEventStatus.failure,
             {
-              errorId: TelemetryConstants.ErrorId.userCancel,
-              errorMessage: TelemetryConstants.ErrorMessage.activationCancelled,
+              errorId: errorId,
+              errorMessage: errorMessage,
             },
           ),
-        ),
+        );
+      },
 
       sendActivationSuccessEvent: context =>
         sendEndEvent(
