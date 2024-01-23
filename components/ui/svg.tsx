@@ -38,6 +38,7 @@ export class SvgImage {
     const {width, height} = props;
     return <Logo width={width} height={height} />;
   }
+
   static home(focused: boolean) {
     //NOTE: Here tab icons names should be same with key "name" in main.ts
     return (
@@ -51,6 +52,7 @@ export class SvgImage {
       />
     );
   }
+
   static share(focused: boolean) {
     //NOTE: Here tab icons names should be same with key "name" in main.ts
     return (
@@ -64,6 +66,7 @@ export class SvgImage {
       />
     );
   }
+
   static history(focused: boolean) {
     //NOTE: Here tab icons names should be same with key "name" in main.ts
     return (
