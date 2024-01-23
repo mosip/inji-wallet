@@ -69,6 +69,7 @@ export function useScanLayout() {
   };
   const GOTO_HISTORY = () => {
     scanService.send(ScanEvents.DISMISS());
+    changeTabBarVisible('flex');
     navigation.navigate(BOTTOM_TAB_ROUTES.history);
   };
 
